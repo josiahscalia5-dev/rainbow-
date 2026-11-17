@@ -458,7 +458,8 @@ export class Course {
       // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
       def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
       def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
-      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
+      // `?match07=1`: the painted river is level (no tilt) → no curvature banking on 07 (frames only; gameplay unchanged)
+      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940, ...(flag05('match07') || flag05('matchall') ? { bank: 0 } : {}) }),
       def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
       def('09', m['09'], m['10'], { width: 6.4, speed: 9.5, refCoins: 2280 }),
       def('10', m['10'], m['11'], { width: 3.8, speed: 7.5, refCoins: 2500 }),

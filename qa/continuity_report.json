@@ -1,20 +1,20 @@
 {
-  "length": 435.1923632433161,
+  "length": 436.09825672809046,
   "marks": {
-    "10": 420.01758627669733,
-    "11": 435.1923632433161,
+    "10": 420.9320725871596,
+    "11": 436.09825672809046,
     "01": 0,
     "02_drain": 22.765736347312888,
     "03": 40.99515264641385,
     "04": 70.4130846582597,
     "05": 114.68830202823246,
     "06": 188.92412082521415,
-    "07": 247.0571025358884,
-    "07_plunge_top": 310.4102628712429,
-    "07_plunge_mid_end": 373.1974418477255,
-    "07_plunge_bottom": 389.1294112762795,
-    "08": 389.2199538803079,
-    "09": 404.7896481881432,
+    "07": 247.0556340077653,
+    "07_plunge_top": 312.41331806416747,
+    "07_plunge_mid_end": 374.13919823028107,
+    "07_plunge_bottom": 390.07116765883507,
+    "08": 390.16171026286344,
+    "09": 405.7313918424028,
     "05_crest": 132.43830202823293
   },
   "ok": true,
@@ -33,8 +33,8 @@
       "to": "03",
       "s": 41,
       "posGap": -0.0001,
-      "tangentAngleDeg": 0.673,
-      "upAngleDeg": 0.544,
+      "tangentAngleDeg": 0.657,
+      "upAngleDeg": 0.498,
       "altitude": -11.87
     },
     {
@@ -42,17 +42,17 @@
       "to": "04",
       "s": 70.41,
       "posGap": 0,
-      "tangentAngleDeg": 0.932,
-      "upAngleDeg": 0.576,
+      "tangentAngleDeg": 0.92,
+      "upAngleDeg": 0.572,
       "altitude": -19.41
     },
     {
       "from": "04",
       "to": "05",
       "s": 114.69,
-      "posGap": 0,
-      "tangentAngleDeg": 0.246,
-      "upAngleDeg": 0.246,
+      "posGap": -0.0002,
+      "tangentAngleDeg": 0.263,
+      "upAngleDeg": 0.263,
       "altitude": -40.63
     },
     {
@@ -60,8 +60,8 @@
       "to": "06",
       "s": 188.92,
       "posGap": 0,
-      "tangentAngleDeg": 0.281,
-      "upAngleDeg": 0.256,
+      "tangentAngleDeg": 0.274,
+      "upAngleDeg": 0.254,
       "altitude": -43.35
     },
     {
@@ -69,68 +69,68 @@
       "to": "07",
       "s": 247.06,
       "posGap": 0,
-      "tangentAngleDeg": 0.114,
-      "upAngleDeg": 0.031,
+      "tangentAngleDeg": 0.122,
+      "upAngleDeg": 0.101,
       "altitude": -48.53
     },
     {
       "from": "07",
       "to": "08",
-      "s": 389.22,
+      "s": 390.16,
       "posGap": 0,
-      "tangentAngleDeg": 0.339,
-      "upAngleDeg": 0.307,
+      "tangentAngleDeg": 0.355,
+      "upAngleDeg": 0.313,
       "altitude": -113.5
     },
     {
       "from": "08",
       "to": "09",
-      "s": 404.79,
+      "s": 405.73,
       "posGap": 0,
-      "tangentAngleDeg": 0.12,
-      "upAngleDeg": 0.195,
+      "tangentAngleDeg": 0.127,
+      "upAngleDeg": 0.205,
       "altitude": -113.59
     },
     {
       "from": "09",
       "to": "10",
-      "s": 420.02,
+      "s": 420.93,
       "posGap": 0,
-      "tangentAngleDeg": 0.08,
-      "upAngleDeg": 0.13,
+      "tangentAngleDeg": 0.097,
+      "upAngleDeg": 0.133,
       "altitude": -113.47
     },
     {
       "from": "10",
       "to": "11",
-      "s": 435.19,
+      "s": 436.1,
       "posGap": 0,
       "tangentAngleDeg": 0.003,
       "upAngleDeg": 0.003,
       "altitude": -110.16
     }
   ],
-  "maxStepTangentDeg": 6.241,
-  "maxStepPos": 0.2555,
+  "maxStepTangentDeg": 7.964,
+  "maxStepPos": 0.2565,
   "plunge": {
     "entryAltitude07": -48.53,
     "plungeTop": {
-      "s": 310.41,
-      "y": -52.31
+      "s": 312.41,
+      "y": -52.48
     },
     "plungeMid": {
-      "s": 349.77,
-      "y": -83.56
+      "s": 351.24,
+      "y": -84.06
     },
     "plungeBottom": {
-      "s": 389.13,
+      "s": 390.07,
       "y": -113.49
     },
     "inlet08": {
-      "s": 389.22,
+      "s": 390.16,
       "y": -113.5
     },
-    "verticalDrop": 61.19,
+    "verticalDrop": 61.02,
     "minPitchDeg": -70
   }
 }

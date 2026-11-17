@@ -1106,3 +1106,208 @@ Static view: **80.3 % of the whole frame within 20 levels (SSIM 0.79)** vs BEFOR
 
 > 🔧 **Bash** `{"command": "cat > tools/match07/motion07.mjs <<'EOF'\n// Screen 07 moving-camera test (read-only): from the 07 checkpoint ride forward / steer with the real game sim and\n// screenshot what the live camera sees; plus the start of the 07→08 drop. usage: node tools/match07/motion07.mjs <outDir> [q]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst OUT = process.argv[2]; const Q = process.argv[3] ?? 'match07=1';\nmkdirSync(OUT, { recursive: true });\nconst { chromium } = loadPlaywright();\nconst vite  …[+2204 chars]`
 
+### 🧑 User — 2026-11-17T16:57:00.556Z
+
+> ↩︎ result: f00_checkpoint s 273.522 lat 0 07 coins 1940
+> f03_forward3u s 276.147 lat 0 07 coins 1940
+> f06_forward6u s 279.101 lat 0 07 coins 1950
+> f10_forward10u s 283.148 lat 0 07 coins 1960
+> f20_forward20u s 293.089 lat 0 07 coins 1970
+> s_left_steer s 279.106 lat -2.25 07 coins 1940
+> s_right_steer s 279.125 lat 2.25 07 coins 1940
+> d0_before_drop_8u s 305.057 lat 0.01 07 coins 2010
+> d1_drop_start s 311.607 lat 0 07 coins 1940
+> d2_drop_4u s 315.482 lat 0 07 coins 1950
+> d3_drop_mid s 351.303 lat 0 07 coins 1940
+
+### 🤖 Claude — 2026-11-17T16:57:05.929Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nD='qa/match/07/m1/motion/'\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','f20_forward20u','s_left_steer','s_right_steer','d0_before_drop_8u','d1_drop_start','d2_drop_4u','d3_drop_mid']\nW,H=216,384; m=Image.new('RGB',(W*5,H*2))\nfor i,n in enumerate(names): m.paste(Image.open(D+n+'.png').convert('RGB').resize((W,H)),((i%5)*W,(i//5)*H))\nm.save('/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/motion.png')\"", "description": "Montage motion frames for review"}`
+
+### 🧑 User — 2026-11-17T16:57:06.900Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:57:07.128Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/motion.png"}`
+
+### 🧑 User — 2026-11-17T16:57:07.197Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:57:26.512Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/m1/motion/s_right_steer.png"}`
+
+### 🧑 User — 2026-11-17T16:57:26.565Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:58:04.734Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/steerprobe.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright(); const vite = await startVite(5279); const browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match07=1`);\n  await page.waitForFunction(() => window.__rainbow?.ready === true, null, { timeout: 24 …[+1524 chars]`
+
+### 🧑 User — 2026-11-17T16:58:15.703Z
+
+> ↩︎ result: cam lat 1.71 up 2.70 along -3.54 rad 1.66 | benny lat 2.00 up -0.10 along 3.61 rad 3.72 | water lat 0.71 up 0.02 along 3.74 rad 3.14 | lat 1.209 right [0.882, -0.451, 0.136]
+
+### 🤖 Claude — 2026-11-17T16:58:23.631Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bank\" src/world/course.ts | head -20", "description": "Find course banking code"}`
+
+### 🧑 User — 2026-11-17T16:58:23.662Z
+
+> ↩︎ result: 21:export type StageProp = 'width' | 'tube' | 'speed' | 'bank';
+> 39:  /** banking strength multiplier */
+> 40:  bank: number;
+> 450:      interactive: true, bank: 1, ...o,
+> 454:      def('02', 0.01, m['03'], { width: 5, interactive: false, speed: 9, bank: 0 }),
+> 455:      def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
+> 457:      // 05: level current (ref 05 shows no tilt) → weak curvature banking. `width` is the hand-over
+> 459:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 460:      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+> 468:    // ---- dense frame table (pos, tangent, banked up) ----
+> 482:    // up: world-up projected off the tangent + curvature banking, then smoothed
+> 491:      // banking from lateral curvature
+> 496:      const bankAngle = THREE.MathUtils.clamp(-k.dot(right) * 6 * st.bank, -0.85, 0.85);
+> 497:      up.applyAxisAngle(t, bankAngle);
+> 563:    // bend leaves a narrow bank for the foam, like a river.
+
+### 🤖 Claude — 2026-11-17T16:58:28.498Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"bank\\|\\.up\\.y\\|tilt\" src/game/Game.ts src/gameplay/*.ts | grep -v \"^.*//\" | head; sed -n 444,452p src/world/course.ts; sed -n 461,463p src/world/course.ts", "description": "Check whether banking affects gameplay"}`
+
+### 🧑 User — 2026-11-17T16:58:28.544Z
+
+> ↩︎ result: src/gameplay/coins.ts:16:/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> src/gameplay/coins.ts:17:export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> src/gameplay/coins.ts:22: * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> src/gameplay/coins.ts:26:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> src/gameplay/coins.ts:31:  const extra = { scale: C05.scale, tilt: C05.tilt };
+> src/gameplay/coins.ts:181:  const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+> src/gameplay/coins.ts:205:      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+> src/gameplay/coins.ts:207:      if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
+>     this.line05x = route.straight[0].a.x;
+> 
+>     // ---- stages ----
+>     const m = this.marks;
+>     const def = (id: StageId, s0: number, s1: number, o: Partial<StageDef>): StageDef => ( …[+438 chars]
+
+### 🤖 Claude — 2026-11-17T16:58:33.189Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),\"\nnew=\"\"\"      // `?match07=1`: the painted river is level (no tilt) → no curvature banking on 07 (frames only; gameplay unchanged)\n      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940, ...(flag05('match07') || flag05('matchall') ? { bank: 0 } : {}) }),\"\"\"\nassert old in s; s=s.replace(old,new,1); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && ech …[+61 chars]`
+
+### 🧑 User — 2026-11-17T16:58:36.157Z
+
+> ↩︎ result: TSC OK
+
+### 🤖 Claude — 2026-11-17T16:58:46.212Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match07/make_plate07.py'; s=open(p).read()\nold=\"\"\"x = np.linspace(*RIV_X, 512); aa = np.linspace(RIV_A[1], RIV_A[0], 512)\nXX, AA = np.meshgrid(x, aa)\nP = base + XX[..., None] * X + AA[..., None] * D\nu, v = proj(P); riv = cv2.remap(P_, u, v, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)\nn = int(0.15 * riv.shape[0]); w = np.linspace(0, 1, n)[:, None, None]\nriv[:n] = riv[:n] * w + riv[-n:] * (1 - w)\"\"\"\nnew=\"\"\"# seamless repeat: the far band (top rows, along a1-B..a1) fades into the stretch just before a0 (what follows the\n# bottom row wh …[+995 chars]`
+
+### 🧑 User — 2026-11-17T16:59:59.104Z
+
+> ↩︎ result: filled share 0.2206
+> f00_checkpoint s 273.567 lat 0 07 coins 1940
+> f03_forward3u s 276.132 lat 0 07 coins 1940
+> f06_forward6u s 279.108 lat 0 07 coins 1950
+> f10_forward10u s 283.119 lat 0 07 coins 1960
+> f20_forward20u s 293.092 lat 0 07 coins 1970
+> s_left_steer s 279.209 lat -2.25 07 coins 1940
+> s_right_steer s 279.09 lat 2.25 07 coins 1940
+> d0_before_drop_8u s 305.057 lat 0.01 07 coins 2010
+> d1_drop_start s 311.631 lat 0 07 coins 1940
+> d2_drop_4u s 315.694 lat 0 07 coins 1950
+> d3_drop_mid s 351.397 lat 0 07 coins 1940
+
+### 🤖 Claude — 2026-11-17T17:00:02.812Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nD='qa/match/07/m1/motion/'\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','f20_forward20u','s_left_steer','s_right_steer']\nW,H=288,512; m=Image.new('RGB',(W*3,H*2))\nfor i,n in enumerate(names): m.paste(Image.open(D+n+'.png').convert('RGB').resize((W,H)),((i%3)*W,(i//3)*H))\nm.save('/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/motion2.png')\"", "description": "Montage updated motion frames"}`
+
+### 🧑 User — 2026-11-17T17:00:03.609Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:00:03.903Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/motion2.png"}`
+
+### 🧑 User — 2026-11-17T17:00:03.963Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:00:08.801Z
+
+Steering now holds (Benny stays on the painted river both sides). Capturing the drop frames without the switch for comparison.
+
+### 🤖 Claude — 2026-11-17T17:00:11.897Z
+
+> 🔧 **Bash** `{"command": "node tools/match07/motion07.mjs qa/match/07/m1/motion_default '' 2>&1 | tail -4 && python3 -I -c \"\nfrom PIL import Image\nnames=['d0_before_drop_8u','d1_drop_start','d2_drop_4u','d3_drop_mid']\nW,H=216,384; m=Image.new('RGB',(W*4,H*2))\nfor r,D in enumerate(['qa/match/07/m1/motion_default/','qa/match/07/m1/motion/']):\n  for i,n in enumerate(names): m.paste(Image.open(D+n+'.png').convert('RGB').resize((W,H)),(i*W,r*H))\nm.save('/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/drop.png')\"", "description": "Capture default drop frames and compare" …[+1 chars]`
+
+### 🤖 Claude — 2026-11-17T17:00:12.901Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/drop.png"}`
+
+### 🧑 User — 2026-11-17T17:01:44.425Z
+
+> ↩︎ result: d0_before_drop_8u s 302.515 lat 0.01 07 coins 2000
+> d1_drop_start s 309.56 lat 0 07 coins 1940
+> d2_drop_4u s 313.675 lat 0 07 coins 1950
+> d3_drop_mid s 349.905 lat 0 07 coins 1940
+
+### 🧑 User — 2026-11-17T17:01:44.454Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:01:54.980Z
+
+> 🔧 **Bash** `{"command": "grep -n \"\\\"[a-z:]*\\\":\" package.json | head -30", "description": "List npm scripts"}`
+
+### 🧑 User — 2026-11-17T17:01:55.016Z
+
+> ↩︎ result: 2:  "name": "rainbow-washer-game",
+> 3:  "private": true,
+> 4:  "version": "0.1.0",
+> 5:  "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+> 6:  "type": "module",
+> 7:  "scripts": {
+> 8:    "dev": "vite --host 0.0.0.0",
+> 9:    "build": "tsc --noEmit && vite build",
+> 10:    "preview": "vite preview --host 0.0.0.0 --port 4173",
+> 11:    "typecheck": "tsc --noEmit",
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 13:    "models:export": "node scripts/export-models.mjs",
+> 14:    "qa:capture": "node scripts/capture.mjs",
+> 15:    "qa:compare": "python3 scripts/compare.py",
+> 16:    "verify:refs": "sha256sum -c scripts/reference.sha256",
+> 17:    "android:sync": "npm run build && npx cap sync android",
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+> 21:  "dependencies": {
+> 25:    "three": "^0.170.0"
+> 30:    "typescript": "^5.6.3",
+> 31:    "vite": "^5.4.11",
+
+### 🤖 Claude — 2026-11-17T17:01:57.970Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function flag05\\|export const flag05\" -A8 src/vfx/waterRibbon.ts | head -14; npm run -s test:continuity 2>&1 | tail -6", "description": "Inspect flag05 and run default continuity test"}`
+
+### 🧑 User — 2026-11-17T17:01:58.798Z
+
+> ↩︎ result: 167:export const flag05 = q05;
+> 168-/**
+> 169- * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+> 170- * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+> 171- * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+> 172- * at half the ride speed while still moving downstream in the world.
+> 173- */
+> 174-export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 175-/**
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+

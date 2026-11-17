@@ -67,12 +67,16 @@ wall = cv2.remap(P_, u, v, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
 cv2.imwrite(f"{out}/tile_wall.png", sharpen(wall).astype(np.uint8))
 # river: rows = along (far at the top), columns = lateral
 RIV_X, RIV_A = (-5.0, 5.0), (6.0, 16.0)
-x = np.linspace(*RIV_X, 512); aa = np.linspace(RIV_A[1], RIV_A[0], 512)
-XX, AA = np.meshgrid(x, aa)
-P = base + XX[..., None] * X + AA[..., None] * D
-u, v = proj(P); riv = cv2.remap(P_, u, v, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
-n = int(0.15 * riv.shape[0]); w = np.linspace(0, 1, n)[:, None, None]
-riv[:n] = riv[:n] * w + riv[-n:] * (1 - w)
+# seamless repeat: the far band (top rows, along a1-B..a1) fades into the stretch just before a0 (what follows the
+# bottom row when the tile wraps), so the tile's top row continues exactly into its bottom row
+x = np.linspace(*RIV_X, 512); n = 80; Lr = RIV_A[1] - RIV_A[0]
+aa = np.linspace(RIV_A[1], RIV_A[0], 512); B = Lr * n / 511
+def unwrap(alongs):
+    XX, AA = np.meshgrid(x, alongs); P = base + XX[..., None] * X + AA[..., None] * D
+    u, v = proj(P); return cv2.remap(P_, u, v, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+riv = unwrap(aa); ext = unwrap(aa[:n] - Lr)
+w = np.linspace(1, 0, n)[:, None, None]          # row 0 (along a1) = ext (along a0) -> continuous across the wrap
+riv[:n] = riv[:n] * (1 - w) + ext * w
 cv2.imwrite(f"{out}/tile_river.png", sharpen(riv).astype(np.uint8))
 json.dump({"filled_share": float((M > 0).mean()), "wall": {"theta": [th0, th1], "along": [a2, a3], "bay": a2 - L["rings"]["R1"]},
            "river": {"lateral": RIV_X, "along": RIV_A}}, open(f"{out}/tiles07.json", "w"), indent=1)
