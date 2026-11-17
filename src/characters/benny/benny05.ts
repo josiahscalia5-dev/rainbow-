@@ -148,11 +148,16 @@ const qv = (key: string): string | null => {
   return b ? new URLSearchParams(b).get(key) : null;
 };
 /**
- * `?bake08=1` (2026-11-17, qa/match/08/benny08/NOTES.md): the maps RE-BAKED FROM THE APPROVED SCREEN 08 picture at the
- * locked 08 camera (assets/textures/benny08/: texels the 08 picture shows take its colours, every other texel keeps the
- * benny05 map, feathered seam) replace the benny05 maps. Only while the benny05 look itself is on (`?match08=1` …).
+ * Maps RE-BAKED FROM THE APPROVED SCREEN 08 picture at the locked 08 camera (2026-11-17, qa/match/08/benny08/NOTES.md;
+ * assets/textures/benny08/: body + arm fur baked from the 08 pixels where the picture shows them, the rest of the fur the
+ * benny05 map in the 08 fur tone; crown + cuff = benny05 knit with the 08 colours; pom-pom, star, normals = benny05).
+ * Measured closer to the approved 08 Benny than the benny05 maps -> the DEFAULT of the Screen 08 switches (`?match08=1`,
+ * `?matchall=1`, `?benny08=1`). `?bake08=0` = the previous benny05 maps (A/B); `?bake08=1` = the 08 maps with any switch
+ * of this file (e.g. `?benny05=1&bake08=1`). Only while the benny05 look itself is on; the default build never gets here.
  */
-export const BAKE08: boolean = BENNY05 && qv('bake08') === '1';
+const BAKE08_Q = qv('bake08');
+export const BAKE08: boolean =
+  BENNY05 && (BAKE08_Q === '1' || (BAKE08_Q !== '0' && (flag05('match08') || flag05('matchall') || flag05('benny08'))));
 // two literal paths (not one `${dir}` template): Vite then bundles only these two folders
 const T = (f: string) => (BAKE08 ? new URL(`../../../assets/textures/benny08/${f}`, import.meta.url).href : new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href);
 /** part → baked albedo (sRGB PNG) + colour factor (the map stores albedo / factor so it fits 0..1) + optional normal map */

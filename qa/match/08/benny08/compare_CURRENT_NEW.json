@@ -1,0 +1,648 @@
+{
+ "CURRENT": {
+  "capture": "qa/match/08/benny08/CURRENT_08.png",
+  "parts": {
+   "pom": {
+    "px": 10761,
+    "mean_abs": 82.77,
+    "within_20": 0.0675,
+    "ssim": 0.0413,
+    "approved_median": [
+     126,
+     15,
+     229
+    ],
+    "game_median": [
+     60,
+     166,
+     239
+    ],
+    "detail_r": 0.007,
+    "detail_amp": 0.617,
+    "overlap": {
+     "px": 4524,
+     "mean_abs": 56.47,
+     "within_20": 0.1598,
+     "approved_median": [
+      86,
+      6,
+      209
+     ],
+     "game_median": [
+      148,
+      45,
+      234
+     ]
+    }
+   },
+   "crown": {
+    "px": 13456,
+    "mean_abs": 72.42,
+    "within_20": 0.1488,
+    "ssim": 0.0565,
+    "approved_median": [
+     215,
+     163,
+     237
+    ],
+    "game_median": [
+     159,
+     99,
+     235
+    ],
+    "detail_r": -0.008,
+    "detail_amp": 0.753,
+    "overlap": {
+     "px": 6871,
+     "mean_abs": 66.74,
+     "within_20": 0.1837,
+     "approved_median": [
+      204,
+      133,
+      232
+     ],
+     "game_median": [
+      205,
+      150,
+      239
+     ]
+    }
+   },
+   "cuff": {
+    "px": 10718,
+    "mean_abs": 75.62,
+    "within_20": 0.1291,
+    "ssim": 0.0509,
+    "approved_median": [
+     118,
+     10,
+     234
+    ],
+    "game_median": [
+     177,
+     83,
+     222
+    ],
+    "detail_r": -0.009,
+    "detail_amp": 0.973,
+    "overlap": {
+     "px": 4419,
+     "mean_abs": 39.5,
+     "within_20": 0.2582,
+     "approved_median": [
+      102,
+      7,
+      232
+     ],
+     "game_median": [
+      127,
+      29,
+      233
+     ]
+    }
+   },
+   "star": {
+    "px": 1829,
+    "mean_abs": 112.54,
+    "within_20": 0.0082,
+    "ssim": 0.1305,
+    "approved_median": [
+     250,
+     208,
+     34
+    ],
+    "game_median": [
+     179,
+     158,
+     224
+    ],
+    "detail_r": 0.037,
+    "detail_amp": 1.927,
+    "overlap": {
+     "px": 198,
+     "mean_abs": 63.67,
+     "within_20": 0.0657,
+     "approved_median": [
+      245,
+      150,
+      23
+     ],
+     "game_median": [
+      247,
+      233,
+      97
+     ]
+    }
+   },
+   "body": {
+    "px": 34385,
+    "mean_abs": 36.02,
+    "within_20": 0.3454,
+    "ssim": 0.1427,
+    "approved_median": [
+     242,
+     69,
+     172
+    ],
+    "game_median": [
+     236,
+     77,
+     183
+    ],
+    "detail_r": 0.066,
+    "detail_amp": 1.084,
+    "overlap": {
+     "px": 30329,
+     "mean_abs": 29.79,
+     "within_20": 0.3911,
+     "approved_median": [
+      243,
+      69,
+      172
+     ],
+     "game_median": [
+      240,
+      80,
+      177
+     ]
+    }
+   },
+   "benny": {
+    "px": 71149,
+    "mean_abs": 57.91,
+    "within_20": 0.2249,
+    "ssim": 0.0969,
+    "approved_median": [
+     223,
+     63,
+     204
+    ],
+    "game_median": [
+     215,
+     85,
+     213
+    ],
+    "detail_r": 0.022,
+    "detail_amp": 0.869
+   }
+  },
+  "classes": {
+   "crown white": {
+    "approved_median": [
+     251,
+     220,
+     244
+    ],
+    "game_median": [
+     244,
+     220,
+     235
+    ],
+    "median_diff": 5.33,
+    "percentile_diff": 3.94,
+    "approved_px": 6322,
+    "game_px": 6067
+   },
+   "crown purple": {
+    "approved_median": [
+     130,
+     17,
+     233
+    ],
+    "game_median": [
+     129,
+     28,
+     232
+    ],
+    "median_diff": 4.33,
+    "percentile_diff": 7.2,
+    "approved_px": 4710,
+    "game_px": 4380
+   },
+   "cuff": {
+    "approved_median": [
+     116,
+     10,
+     234
+    ],
+    "game_median": [
+     116,
+     19,
+     231
+    ],
+    "median_diff": 4.0,
+    "percentile_diff": 8.84,
+    "approved_px": 10086,
+    "game_px": 6797
+   },
+   "pom": {
+    "approved_median": [
+     122,
+     13,
+     229
+    ],
+    "game_median": [
+     121,
+     24,
+     224
+    ],
+    "median_diff": 5.67,
+    "percentile_diff": 8.4,
+    "approved_px": 10362,
+    "game_px": 6895
+   },
+   "star": {
+    "approved_median": [
+     251,
+     212,
+     29
+    ],
+    "game_median": [
+     247,
+     209,
+     26
+    ],
+    "median_diff": 3.17,
+    "percentile_diff": 4.52,
+    "approved_px": 1636,
+    "game_px": 1344
+   },
+   "body fur": {
+    "approved_median": [
+     242,
+     68,
+     171
+    ],
+    "game_median": [
+     237,
+     75,
+     172
+    ],
+    "median_diff": 4.33,
+    "percentile_diff": 4.13,
+    "approved_px": 32862,
+    "game_px": 30845
+   }
+  },
+  "regions": {
+   "scenery": {
+    "within_20": 0.973,
+    "ssim": 0.9588,
+    "mean_abs": 4.6
+   },
+   "upper": {
+    "within_20": 0.9888,
+    "ssim": 0.9684,
+    "mean_abs": 3.35
+   },
+   "middle": {
+    "within_20": 0.9063,
+    "ssim": 0.8899,
+    "mean_abs": 12.62
+   },
+   "lower": {
+    "within_20": 0.9923,
+    "ssim": 0.9843,
+    "mean_abs": 1.75
+   },
+   "scenery_nocoins": {
+    "within_20": 0.9898,
+    "ssim": 0.9756,
+    "mean_abs": 2.78
+   },
+   "benny+splash": {
+    "within_20": 0.4982,
+    "ssim": 0.4582,
+    "mean_abs": 39.13
+   },
+   "whole": {
+    "within_20": 0.8328,
+    "ssim": 0.8179,
+    "mean_abs": 14.42
+   }
+  }
+ },
+ "NEW": {
+  "capture": "qa/match/08/benny08/NEW_08.png",
+  "parts": {
+   "pom": {
+    "px": 10761,
+    "mean_abs": 82.8,
+    "within_20": 0.0675,
+    "ssim": 0.0412,
+    "approved_median": [
+     126,
+     15,
+     229
+    ],
+    "game_median": [
+     60,
+     166,
+     239
+    ],
+    "detail_r": 0.007,
+    "detail_amp": 0.617,
+    "overlap": {
+     "px": 4524,
+     "mean_abs": 56.47,
+     "within_20": 0.1598,
+     "approved_median": [
+      86,
+      6,
+      209
+     ],
+     "game_median": [
+      148,
+      45,
+      234
+     ]
+    }
+   },
+   "crown": {
+    "px": 13456,
+    "mean_abs": 72.77,
+    "within_20": 0.1578,
+    "ssim": 0.0573,
+    "approved_median": [
+     215,
+     163,
+     237
+    ],
+    "game_median": [
+     158,
+     85,
+     236
+    ],
+    "detail_r": -0.007,
+    "detail_amp": 0.73,
+    "overlap": {
+     "px": 6871,
+     "mean_abs": 67.39,
+     "within_20": 0.2014,
+     "approved_median": [
+      204,
+      133,
+      232
+     ],
+     "game_median": [
+      211,
+      135,
+      242
+     ]
+    }
+   },
+   "cuff": {
+    "px": 10718,
+    "mean_abs": 75.29,
+    "within_20": 0.1428,
+    "ssim": 0.0544,
+    "approved_median": [
+     118,
+     10,
+     234
+    ],
+    "game_median": [
+     175,
+     75,
+     226
+    ],
+    "detail_r": -0.011,
+    "detail_amp": 0.957,
+    "overlap": {
+     "px": 4419,
+     "mean_abs": 37.64,
+     "within_20": 0.2906,
+     "approved_median": [
+      102,
+      7,
+      232
+     ],
+     "game_median": [
+      125,
+      22,
+      235
+     ]
+    }
+   },
+   "star": {
+    "px": 1829,
+    "mean_abs": 114.9,
+    "within_20": 0.0082,
+    "ssim": 0.1375,
+    "approved_median": [
+     250,
+     208,
+     34
+    ],
+    "game_median": [
+     184,
+     158,
+     228
+    ],
+    "detail_r": 0.047,
+    "detail_amp": 1.98,
+    "overlap": {
+     "px": 198,
+     "mean_abs": 63.67,
+     "within_20": 0.0657,
+     "approved_median": [
+      245,
+      150,
+      23
+     ],
+     "game_median": [
+      247,
+      233,
+      97
+     ]
+    }
+   },
+   "body": {
+    "px": 34385,
+    "mean_abs": 21.16,
+    "within_20": 0.7137,
+    "ssim": 0.6211,
+    "approved_median": [
+     242,
+     69,
+     172
+    ],
+    "game_median": [
+     237,
+     65,
+     174
+    ],
+    "detail_r": 0.524,
+    "detail_amp": 0.982,
+    "overlap": {
+     "px": 30329,
+     "mean_abs": 12.78,
+     "within_20": 0.8087,
+     "approved_median": [
+      243,
+      69,
+      172
+     ],
+     "game_median": [
+      241,
+      68,
+      169
+     ]
+    }
+   },
+   "benny": {
+    "px": 71149,
+    "mean_abs": 50.81,
+    "within_20": 0.4067,
+    "ssim": 0.329,
+    "approved_median": [
+     223,
+     63,
+     204
+    ],
+    "game_median": [
+     214,
+     73,
+     210
+    ],
+    "detail_r": 0.154,
+    "detail_amp": 0.833
+   }
+  },
+  "classes": {
+   "crown white": {
+    "approved_median": [
+     251,
+     220,
+     244
+    ],
+    "game_median": [
+     255,
+     221,
+     247
+    ],
+    "median_diff": 2.67,
+    "percentile_diff": 5.09,
+    "approved_px": 6322,
+    "game_px": 5814
+   },
+   "crown purple": {
+    "approved_median": [
+     130,
+     17,
+     233
+    ],
+    "game_median": [
+     129,
+     17,
+     232
+    ],
+    "median_diff": 0.67,
+    "percentile_diff": 3.9,
+    "approved_px": 4710,
+    "game_px": 4496
+   },
+   "cuff": {
+    "approved_median": [
+     116,
+     10,
+     234
+    ],
+    "game_median": [
+     114,
+     13,
+     234
+    ],
+    "median_diff": 1.67,
+    "percentile_diff": 8.27,
+    "approved_px": 10086,
+    "game_px": 6797
+   },
+   "pom": {
+    "approved_median": [
+     122,
+     13,
+     229
+    ],
+    "game_median": [
+     121,
+     24,
+     224
+    ],
+    "median_diff": 5.67,
+    "percentile_diff": 8.4,
+    "approved_px": 10362,
+    "game_px": 6895
+   },
+   "star": {
+    "approved_median": [
+     251,
+     212,
+     29
+    ],
+    "game_median": [
+     247,
+     209,
+     26
+    ],
+    "median_diff": 3.17,
+    "percentile_diff": 4.52,
+    "approved_px": 1636,
+    "game_px": 1344
+   },
+   "body fur": {
+    "approved_median": [
+     242,
+     68,
+     171
+    ],
+    "game_median": [
+     237,
+     63,
+     165
+    ],
+    "median_diff": 5.33,
+    "percentile_diff": 5.47,
+    "approved_px": 32862,
+    "game_px": 30913
+   }
+  },
+  "regions": {
+   "scenery": {
+    "within_20": 0.973,
+    "ssim": 0.9588,
+    "mean_abs": 4.6
+   },
+   "upper": {
+    "within_20": 0.9888,
+    "ssim": 0.9684,
+    "mean_abs": 3.35
+   },
+   "middle": {
+    "within_20": 0.9063,
+    "ssim": 0.8899,
+    "mean_abs": 12.62
+   },
+   "lower": {
+    "within_20": 0.9923,
+    "ssim": 0.9843,
+    "mean_abs": 1.75
+   },
+   "scenery_nocoins": {
+    "within_20": 0.9898,
+    "ssim": 0.9756,
+    "mean_abs": 2.78
+   },
+   "benny+splash": {
+    "within_20": 0.5721,
+    "ssim": 0.5533,
+    "mean_abs": 36.31
+   },
+   "whole": {
+    "within_20": 0.8425,
+    "ssim": 0.8304,
+    "mean_abs": 14.05
+   }
+  }
+ }
+}
