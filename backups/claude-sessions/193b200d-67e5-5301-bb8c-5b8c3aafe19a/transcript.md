@@ -880,3 +880,282 @@ Testing a fix for the dark band under the beanie; the first hypothesis (bald fur
 
 > ↩︎ result: {"src": "assets/textures/benny08/body.png", "out": "/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/body_r3.png", "rows": [190, 236], "ref_rows": [238, 262], "specks": 5183, "band_lum_before": 87.1, "band_lum_after": 115.8, "ref_lum": 118.6, "changed_px": 50130}
 
+### 🤖 Claude — 2026-11-17T17:33:24.961Z
+
+> 🔧 **Bash** `{"command": "P=qa/match/08/benny08/work/probe3 && S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad && cat > $S/mkswap.sh <<'EOF'\n# usage: mkswap.sh <png> <out.shot.js>  — step that swaps fur_body's map image for <png>\nB64=$(base64 -w0 \"$1\")\ncat > \"$2\" <<JS\nconst m = Q.scene.getObjectByName('Benny').getObjectByName('fur_body');\nconst t = m.material.map; const img = new Image(); img.src = 'data:image/png;base64,$B64';\nawait img.decode(); t.image = img; t.needsUpdate = true; Q.composer.render(); return { ok: true, w: img.width };\nJS\nEOF\nbash $S/mksw …[+447 chars]`
+
+### 🧑 User — 2026-11-17T17:33:45.727Z
+
+> ↩︎ result: bald_0.shot.js {"base":0.41428571428571437,"w":0.41428571428571437,"xyz":[0,0.9992001066609779,-0.03998933418663416,0.41428571428571437]}
+> swap_r3.shot.js {"ok":true,"w":1024}
+> done 17.089
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o1/bald_0.png
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.58
+>   benny+splash  <=20  65.7 %  SSIM 0.602  mean  26.51
+>   whole         <=20  85.4 %  SSIM 0.837  mean  12.75
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o1/swap_r3.png
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.58
+>   benny+splash  <=20  65.3 %  SSIM 0.596  mean  26.67
+>   whole         <=20  85.3 %  SSIM 0.836  mean  12.77
+> body    34385   16.7  0.75  0.249  [242  69 172]  [244  71 176]  bbox {'x0': 262, 'x1': 594, 'y0': 1056, 'y1': 1206, 'w': 333, 'h': 151, 'cx': 425.7, 'cy': 1123.1, 'px': 34385}
+
+### 🤖 Claude — 2026-11-17T17:33:49.926Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nS='$S'\nbox=(250,1000,610,1150)\nims=[Image.open(p).convert('RGB').crop(box) for p in ['references/08_final_spin_chamber.png',S+'/o1/bald_0.png',S+'/o1/swap_r3.png']]\nw,h=ims[0].size;o=Image.new('RGB',(w,(h+6)*3),'white')\nfor i,im in enumerate(ims):o.paste(im,(0,i*(h+6)))\no.resize((w*2,o.size[1]*2)).save(S+'/band.png')\nEOF", "description": "Visual check of band repair"}`
+
+### 🧑 User — 2026-11-17T17:33:50.409Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:33:52.070Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/band.png"}`
+
+### 🧑 User — 2026-11-17T17:33:52.113Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:33:58.301Z
+
+The dark band is gone (bottom strip) but the repaired strip looks a little flat. Trying one refinement: fill it with real fur detail copied from just below instead of only brightening.
+
+### 🤖 Claude — 2026-11-17T17:34:05.720Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/08/benny08/work/fixband08.py'\ns=open(p).read()\ns=s.replace(\"\"\"B = np.clip(A * G[..., None], 0, 255)\n\"\"\",\"\"\"B = np.clip(A * G[..., None], 0, 255)\nif opt.get('mode', 'copy') == 'copy':\n    # fur detail: the band rows take the fur rows just below them (shifted down by the band height), blended by w —\n    # strands keep their downward direction; the lifted tone above stays as the low-pass base\n    sh = y1 - y0 + 2\n    idx = np.clip(np.arange(H) + sh, 0, H - 1)\n    Cp = A[idx]\n    hp = Cp - np.stack([gaussian_filter(Cp[..., c], (3, 10), …[+1155 chars]`
+
+### 🧑 User — 2026-11-17T17:34:24.027Z
+
+> ↩︎ result: {"src": "assets/textures/benny08/body.png", "out": "/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/body_r3b.png", "rows": [190, 236], "ref_rows": [238, 262], "specks": 4695, "band_lum_before": 87.1, "band_lum_after": 116.0, "ref_lum": 118.6, "changed_px": 50457}
+> done 14.331
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.58
+>   benny+splash  <=20  65.1 %  SSIM 0.589  mean  26.76
+>   whole         <=20  85.3 %  SSIM 0.835  mean  12.78
+
+### 🤖 Claude — 2026-11-17T17:34:25.830Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/band.png"}`
+
+### 🧑 User — 2026-11-17T17:34:25.875Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:34:34.487Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'),float)\nfor n in ['bald_0','swap_r3b']:\n    C=np.asarray(Image.open('$S/o1/'+n+'.png').convert('RGB'),float)\n    d=np.abs(A-C).mean(-1)\n    D=np.abs(A-C).max(-1)>0\n    print(n,[ (y, round(float((d[y:y+8,300:560]<=20).mean()),2)) for y in range(1048,1110,8)])\n    # where changed vs bald_0\nC0=np.asarray(Image.open('$S/o1/bald_0.png').convert('RGB'),flo …[+519 chars]`
+
+### 🧑 User — 2026-11-17T17:34:35.550Z
+
+> ↩︎ result: bald_0 [(1048, 0.34), (1056, 0.32), (1064, 0.38), (1072, 0.57), (1080, 0.67), (1088, 0.8), (1096, 0.82), (1104, 0.8)]
+> swap_r3b [(1048, 0.34), (1056, 0.29), (1064, 0.26), (1072, 0.57), (1080, 0.62), (1088, 0.69), (1096, 0.76), (1104, 0.74)]
+> changed 7979 1048 1135 310 563
+> in changed: within20 before 0.6022057901992731 after 0.47148765509462337 mean 23.66324100764507 29.068513180431964
+> approved med [248.  89. 196.] before [239.  73. 178.] after [255.  87. 199.]
+
+### 🤖 Claude — 2026-11-17T17:34:42.832Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/band = (y >= y0 - 10) \\& (y <= y1 + 40)/band = (y >= y0 - 10) \\& (y <= y1 + int(opt.get(\"speck_below\", 10)))/' qa/match/08/benny08/work/fixband08.py && grep -n \"speck_below\" qa/match/08/benny08/work/fixband08.py && S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad && for v in \"c:--mode=copy\" \"g:--mode=gain\"; do n=${v%%:*}; a=${v#*:}; python3 -I qa/match/08/benny08/work/fixband08.py $a --out=$S/body_$n.png >/dev/null && bash $S/mkswap.sh $S/body_$n.png $S/swap_$n.shot.js; done; node qa/match/08/benny08/work/probe08.mjs --q='matc …[+268 chars]`
+
+### 🧑 User — 2026-11-17T17:35:05.949Z
+
+> ↩︎ result: 44:band = (y >= y0 - 10) & (y <= y1 + int(opt.get("speck_below", 10)))
+> done 16.971
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o1/swap_c.png
+>   benny+splash  <=20  65.3 %  SSIM 0.592  mean  26.69
+>   whole         <=20  85.4 %  SSIM 0.836  mean  12.77
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o1/swap_g.png
+>   benny+splash  <=20  65.5 %  SSIM 0.599  mean  26.60
+>   whole         <=20  85.4 %  SSIM 0.837  mean  12.76
+> [This command modified 1 file you've previously read: qa/match/08/benny08/work/fixband08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T17:35:17.314Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad && for k in 1.25 1.5; do n=${k/./p}; cat > $S/arm_$n.shot.js <<EOF\nconst B = Q.scene.getObjectByName('Benny');\nwindow.__armRest = window.__armRest || {};\nconst out = {};\nfor (const nm of ['armL','armR']) { const o = B.getObjectByName(nm); if (!o) { out[nm]='missing'; continue; }\n  if (!window.__armRest[nm]) window.__armRest[nm] = { s: o.scale.clone(), p: o.position.clone() };\n  o.scale.copy(window.__armRest[nm].s).multiplyScalar($k); out[nm] = { s: o.scale.toArray(), p: o.position.toArray(),  …[+362 chars]`
+
+### 🧑 User — 2026-11-17T17:35:38.894Z
+
+> ↩︎ result: swap_c.shot.js {"ok":true,"w":1024}
+> arm_1p25.shot.js {"armL":{"s":[1.25,1.25,1.25],"p":[0.71,-0.06,0],"parent":"body"},"armR":{"s":[1.25,1.25,1.25],"p":[-0.71,-0.06,0],"parent":"body"}}
+> arm_1p5.shot.js {"armL":{"s":[1.5,1.5,1.5],"p":[0.71,-0.06,0],"parent":"body"},"armR":{"s":[1.5,1.5,1.5],"p":[-0.71,-0.06,0],"parent":"body"}}
+> done 19.02
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o2/arm_1p25.png
+>   benny+splash  <=20  64.8 %  SSIM 0.588  mean  26.84
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o2/arm_1p5.png
+>   benny+splash  <=20  64.5 %  SSIM 0.586  mean  27.23
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o2/swap_c.png
+>   benny+splash  <=20  65.3 %  SSIM 0.592  mean  26.69
+
+### 🤖 Claude — 2026-11-17T17:35:45.494Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad && for v in \"u1:1.0:0.12:0\" \"u2:1.0:0.24:0\" \"u3:1.15:0.18:0.06\"; do IFS=: read n k dy dx <<< \"$v\"; cat > $S/armp_$n.shot.js <<EOF\nconst B = Q.scene.getObjectByName('Benny');\nwindow.__armRest = window.__armRest || {};\nfor (const nm of ['armL','armR']) { const o = B.getObjectByName(nm);\n  if (!window.__armRest[nm]) window.__armRest[nm] = { s: o.scale.clone(), p: o.position.clone() };\n  const r = window.__armRest[nm]; o.scale.copy(r.s).multiplyScalar($k); o.position.copy(r.p); o.position. …[+406 chars]`
+
+### 🧑 User — 2026-11-17T17:36:08.612Z
+
+> ↩︎ result: done 20.2
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o3/armp_u1.png
+>   benny+splash  <=20  64.8 %  SSIM 0.588  mean  26.83
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o3/armp_u2.png
+>   benny+splash  <=20  64.1 %  SSIM 0.584  mean  27.97
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o3/armp_u3.png
+>   benny+splash  <=20  64.0 %  SSIM 0.582  mean  28.04
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/o3/swap_c.png
+>   benny+splash  <=20  65.3 %  SSIM 0.592  mean  26.69
+
+### 🤖 Claude — 2026-11-17T17:36:12.825Z
+
+Arm-puff changes (larger, raised, wider) all measured worse (64.0–64.8 % vs 65.3 %) → rejected. Implementing the band repair in the game behind the round-3 switch.
+
+### 🤖 Claude — 2026-11-17T17:36:14.031Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/match/08/benny08/work/fixband08.py --mode=copy --report=qa/match/08/benny08/r3/fixband08_report.json && grep -n \"^const qv\\|function qv\\|qv =\" src/characters/benny/benny05.ts | head -3", "description": "Write repaired map and find query helper"}`
+
+### 🧑 User — 2026-11-17T17:36:16.044Z
+
+> ↩︎ result: {"src": "assets/textures/benny08/body.png", "out": "assets/textures/benny08/body_r3.png", "rows": [190, 236], "ref_rows": [238, 262], "specks": 1309, "band_lum_before": 87.1, "band_lum_after": 116.0, "ref_lum": 118.6, "changed_px": 47076}
+> 141:const qv = (key: string): string | null => {
+
+### 🤖 Claude — 2026-11-17T17:36:19.318Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {\n  fur_body: { map: 'body.png', scale: 1 },", "new_string": "/** benny08 round 3 (qa/match/08/benny08/NOTES.md): with the 08 maps, the body map with the dark strip under the cuff\n *  repaired (work/fixband08.py → body_r3.png); `?b08r3=0` = the round-2 body.png */\nexport const B08R3: boolean = BAKE08 && qv('b08r3') !== '0';\nexport const MAPS05: Record<string, { map: string; scal …[+125 chars]`
+
+### 🧑 User — 2026-11-17T17:36:19.369Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T17:36:23.465Z
+
+> 🔧 **Bash** `{"command": "(npx tsc --noEmit -p . && echo TSC_OK) | tail -2; W=qa/match/08/benny08/r3; mkdir -p $W/new3 $W/r2check; node scripts/capture.mjs 08 --out=$W/new3 --q='match08=1' 2>&1 | tail -1 | cut -c1-60; node scripts/capture.mjs 08 --out=$W/r2check --q='match08=1&b08r3=0' 2>&1 | tail -1 | cut -c1-60; node scripts/capture.mjs 08 --out=$W/default3 2>&1 | tail -1 | cut -c1-60; S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad; python3 -I $S/pxdiff.py $W/new/08.png $W/r2check/08.png; python3 -I $S/pxdiff.py qa/match/08/08_BEFORE_current_game.png $W/default3/08.pn …[+238 chars]`
+
+### 🧑 User — 2026-11-17T17:37:12.680Z
+
+> ↩︎ result: TSC_OK
+> 08 → qa/match/08/benny08/r3/new3/08.png {"stage":"08","s":
+> 08 → qa/match/08/benny08/r3/r2check/08.png {"stage":"08","
+> 08 → qa/match/08/benny08/r3/default3/08.png {"stage":"08",
+> qa/match/08/benny08/r3/r2check/08.png diff px 0 max 0
+> qa/match/08/benny08/r3/default3/08.png diff px 2641 max 1
+> qa/match/08/benny08/r3/new3/08.png diff px 0 max 0
+> qa/match/08/benny08/r3/new3/08.png
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.58
+>   upper         <=20  98.9 %  SSIM 0.968  mean   3.35
+>   middle        <=20  90.6 %  SSIM 0.890  mean  12.62
+>   lower         <=20  99.3 %  SSIM 0.985  mean   1.69
+>   scenery_nocoins <=20  99.0 %  SSIM 0.976  mean   2.75
+>   benny+splash  <=20  65.3 %  SSIM 0.592  mean  26.69
+>   whole         <=20  85.4 %  SSIM 0.836  mean  12.77
+
+### 🤖 Claude — 2026-11-17T17:37:15.752Z
+
+Default capture shows 2,641 px differing by 1 level (max 1) — checking if that's run-to-run noise, since my changes only run under the switch.
+
+### 🤖 Claude — 2026-11-17T17:37:19.415Z
+
+> 🔧 **Bash** `{"command": "W=qa/match/08/benny08/r3; S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad; node scripts/capture.mjs 08 --out=$S/def4 2>&1 | tail -1 | cut -c1-40; python3 -I $S/pxdiff.py qa/match/08/08_BEFORE_current_game.png $S/def4/08.png; python3 -I $S/pxdiff.py $W/default/08.png $W/default3/08.png; python3 -I - <<EOF\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('qa/match/08/08_BEFORE_current_game.png').convert('RGB'),int);b=np.asarray(Image.open('$W/default3/08.png').convert('RGB'),int)\nys,xs=np.nonzero(np.abs(a-b).max(-1)); print(ys. …[+115 chars]`
+
+### 🧑 User — 2026-11-17T17:37:36.290Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/def4/08.png diff px 0 max 0
+> qa/match/08/benny08/r3/default3/08.png diff px 2641 max 1
+> 108 131 98 765
+
+### 🤖 Claude — 2026-11-17T17:37:38.291Z
+
+Recapture is 0 px (the 1-level flicker was in the HUD title text row, run-to-run). Committing the round-3 change.
+
+### 🤖 Claude — 2026-11-17T17:37:43.436Z
+
+> 🔧 **Bash** `{"command": "W=qa/match/08/benny08/r3 && rm -rf $W/default3 && mkdir -p $W/default_after && cp /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/def4/08.png $W/default_after/08.png && git check-attr filter -- assets/textures/benny08/body_r3.png && git add src/characters/benny/benny05.ts assets/textures/benny08/body_r3.png qa/match/08/benny08/work/fixband08.py $W && git commit -qm \"Screen 08 Benny round 3: dark strip under the beanie cuff repaired in the 08 body map (body_r3.png, ?b08r3=0 = round 2) - colour under the cuff now matches the painting; Benny+splash  …[+420 chars]`
+
+### 🧑 User — 2026-11-17T17:37:47.122Z
+
+> ↩︎ result: assets/textures/benny08/body_r3.png: filter: unspecified
+> 672f99198509
+> 672f99198509
+
+### 🤖 Claude — 2026-11-17T17:37:50.434Z
+
+> 🔧 **Bash** `{"command": "git check-attr filter -- assets/textures/benny08/body.png; head -c 600 qa/match/08/benny08/motion/motion.json; echo; ls qa/match/08/motion qa/match/08/other_screens | head -30; grep -rln \"forward3u\\|s_left_steer\" scripts tools qa/match/08 --include=*.mjs | head", "description": "Find motion capture tooling"}`
+
+### 🧑 User — 2026-11-17T17:37:50.484Z
+
+> ↩︎ result: assets/textures/benny08/body.png: filter: unspecified
+> [
+>  {
+>   "name": "f00_checkpoint",
+>   "frames": 0,
+>   "steer": null,
+>   "s": 391.949,
+>   "lat": 0,
+>   "stage": "08"
+>  },
+>  {
+>   "name": "f03_forward3u",
+>   "frames": 19,
+>   "steer": null,
+>   "s": 394.613,
+>   "lat": 0,
+>   "stage": "08"
+>  },
+>  {
+>   "name": "f06_forward6u",
+>   "frames": 38,
+>   "steer": null,
+>   "s": 397.586,
+>   "lat": 0,
+>   "stage": "08"
+>  },
+>  {
+>   "name": "f10_forward10u",
+>   "frames": 63,
+>   "steer": null,
+>   "s": 401.549,
+>   "lat": 0,
+>   "stage": "08"
+>  },
+>  {
+>   "name": "f15_forward15u",
+>   "frames": 95,
+>   "steer": null,
+>   "s": 407.048,
+>   "lat": 0,
+>   "stage": "09"
+>  },
+>  {
+>   "name": "s_left_steer",
+>   "frames": 
+> qa/match/08/motion:
+> f00_checkpoint.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f06_forward6u_ported_benny.png
+> f10_forward10u.png
+> f15_forward15u.png
+> montage.png
+> montage_ported_benny.png
+> motion.json
+> s_left_steer.png
+> s_left_steer_ported_benny.png
+> s_right_steer.png
+> s_right_steer_ported_benny.png
+> 
+> qa/match/08/other_screens:
+> 04_with_match08_benny.png
+> 05_with_match08_benny.png
+> 06_with_match08_benny.png
+> 07_with_match08_benny.png
+> tools/match08/motion08.mjs
+
+### 🤖 Claude — 2026-11-17T17:37:52.173Z
+
+> 🔧 **Bash** `{"command": "head -20 tools/match08/motion08.mjs | grep -E \"^//\"; grep -n \"opt\\.\\|argv\" tools/match08/motion08.mjs | head", "description": "Read motion08 usage"}`
+
+### 🧑 User — 2026-11-17T17:37:52.212Z
+
+> ↩︎ result: // Screen 08 moving-camera test (read-only): from the 08 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node motion08.mjs <outDir> [q]
+> 5:const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match08=1';
+
+### 🤖 Claude — 2026-11-17T17:37:54.910Z
+
+> 🔧 **Bash** `{"command": "W=qa/match/08/benny08/r3 && node tools/match08/motion08.mjs $W/motion 'match08=1' 2>&1 | tail -2 && for s in 04 05 06 07; do :; done && node scripts/capture.mjs 04 05 06 07 --out=$W/other_screens --q='match08=1' 2>&1 | tail -4 | cut -c1-50 && node scripts/capture.mjs 04 05 06 07 --out=$W/other_default 2>&1 | tail -4 | cut -c1-50; ls $W/motion", "description": "Motion frames on 08 and other screens with switch", "timeout": 600000}`
+
