@@ -2526,3 +2526,124 @@ Benny's branch also moved (`dbf846e`), but that could be just the startup autosa
 > AUTOSAVE OK | branch ccr-f983b317-2vt0zh | scheduler daemon | last verified backup 2026-11-17T20:24:30+00:00 (5.1 min ago) | local 57cdccf remote 57cdccf (match) | uncommitted 0
 > [This command modified 2 files you've previously read: docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, docs/PARALLEL_PROGRESS.md. Call Read before editing.]
 
+### 🤖 Claude — 2026-11-17T20:30:03.600Z
+
+Everything is saved and verified (lead branch local == remote `57cdccf`, autosave OK). Closing out the task list.
+
+### 🤖 Claude — 2026-11-17T20:30:04.041Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T20:30:04.052Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-17T20:30:04.396Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T20:30:04.414Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-17T20:30:31.524Z
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+Your game is restored on this account from your newest GitHub saves. Nothing was rebuilt, merged, overwritten or force-pushed, and none of account 4's branches were written to. Both Screen 08 specialists have started work and are confirmed active.
+
+## Branches (newest commits on GitHub)
+| Workstream | Old branch @ newest commit | New continuation branch |
+|---|---|---|
+| Lead (me) | `ccr-067047f0-up5d1m` @ `ffa54f9fb514f92a7d6353767e2952df9145bc25` | `ccr-f983b317-2vt0zh` @ `57cdccfd98b64b9cb49fa780eb98b95ef5d0ed7e` (local == remote) |
+| 08 scenery | `…s08-scenery-c4` @ `5ce044a52d53c5dd6cfb71fd994a82e8647381a4` | `claude/rainbow-s08-scenery-c5` |
+| 08 Benny | `…s08-benny08-bake-c4` @ `fb72cc5052df908b994afeb41e7f598abc24e18d` | `claude/rainbow-s08-benny08-bake-c5` |
+| 08 camera | `…s08-camclear-c4` @ `18687513e3a35e553472a05ae7fb626c2f8108ce` | `claude/rainbow-s08-camclear-c5` |
+| 07 | `…s07-match-c4` @ `835a72dbb5abad1067b538c79b1f759b06e2cbeb` | `claude/rainbow-s07-match-c5` |
+| 06 | `…s06-match-c4` @ `c088718bb9e3374583238f4ee93f25bdee600065` | `claude/rainbow-s06-match-c5` |
+| 05 (line B) | `…s05-match-c4` @ `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b` | `claude/rainbow-s05-match-c5` |
+| 04 | `…s04-match-c4` @ `d1e422faff67a37f837566301fb8abff0bac98db` | `claude/rainbow-s04-match-c5` |
+
+- Five branches had commits newer than your handoff snapshot, but they only contain backup logs and conversation transcripts. No game file changed after the snapshot.
+- Account 4's idle Benny session woke once at 20:12 UTC for a scheduled pull request check, saved its transcript and stopped. That's why every new branch is a separate `-c5` branch.
+- I can't see whether account 4's containers held edits after their last saves (19:47–19:58 UTC). The scenery specialist had been told to save and stop, and its notes say it stopped at a safe point.
+
+## Backup integrity
+- **Approved images:** all 13 are byte-identical to the originals.
+- **Specialist definitions:** all 10 are present and unchanged.
+- **Git LFS:** all 63 distinct files across the 8 branch tips (812 MB) are downloaded as real binaries, and `git lfs fsck` passes on every branch. That includes all the APKs (04/05/06/07 r3–r4, Benny r3–r5b, camera r3–r4) and the gameplay recordings.
+- **Five-minute autosave:** running and confirmed on GitHub.
+- **Gaps:** the startup GitHub fetch failed once; I re-ran it and it succeeded. The previous session ended without an end-of-session backup, and the autosave log shows gaps of up to 6 hours on 11-16.
+
+## Tests (before any game change)
+- **TypeScript check:** clean.
+- **Continuity:** all screen joins line up with no gaps.
+- **Gameplay:** 8/8 checks, **91 coins, 1,330 → 2,240**, 07→08 drop 61.4 units. Same result with your preferred `match08=1&coins08px=1` coin version.
+- **Google Flow test:** checks A and D **failed twice** at first. The cause was the test itself, not the game. In this container the 3D scene takes 8–11 s to start, so the 2.5 s test video had finished before the test looked. A direct check showed the game holds and releases correctly. I gave A and D a 20 s test video without changing what they check, and now **A–E all pass, with E at 91 / 2,240** (commit `227f319`).
+
+## World Labs and fal.ai: needs your input
+- **World Labs:** a key on this account works (free read: **5,190 credits**). It belongs to your *other* World Labs account, the one that made the old Screen 05 test worlds. With it, the Screen 08 world can't be found, and the 5,420-credit account isn't connected. Nothing current needs it and all downloaded World Labs files are safe in Git LFS. Tell me if you want to replace this key with the 5,420-credit account's key.
+- **fal.ai:** there's no key on this account, and the network blocks its address. I'm opening the secure key form now (below) so you can reconnect the same $10 account. Nothing will run; it only allows the free status check.
+- No paid jobs of any kind were run.
+
+## Tools
+Working: Blender 5.3, Android SDK 34 / Java 21 / Gradle, Node 22, Playwright with Chromium 157 and WebGL2, ffmpeg, ImageMagick, and the Python QA libraries. Optional connectors context7, Figma, Slack and the other design tools failed to connect; none are needed. No APK has ever been tested on a real phone.
+
+## Specialists actually running (two, your limit)
+1. **Screen 08 scenery while moving** (`session_013VHsJAQsMA73qb7GCXdQ12`). It's rendering the real-texture moving frames for the saved tear and narrow-lane fixes. Then it must prove your approved view is unchanged, fix the seam across the chamber ceiling and the stray gold fragments, and stop the Screen 08 test switch from changing Screens 04–07.
+2. **Screen 08 Benny round 6** (`session_013VHsJAoze5D4wh6tk7r1hj`). It's working on soft layered fur clumps and pom-pom yarn tufts on the round r5b body, each behind its own new test switch.
+
+Both sessions dropped their first instructions, the same problem account 4 had. I re-sent them and confirmed both started. Paused, in your order: 08 camera (waiting on your phone test), then 07, 05, 06, 04. Each specialist finishes one milestone, saves to GitHub, and reports with full-size APPROVED / BEFORE / NEW pictures.
+
+## Decision for you: Screen 08 coins and the ending video
+Under `?flowplan=1` your 9 painted coins sit far down the S-river. Benny swims through **2** of them, and the ending video takes over and credits the other **7**. The total stays 91 / 2,240. I've changed nothing. If you'd like Benny to swim through all 9 before the video, I can prepare tested options with pictures for you to choose from.
+
+Everything is recorded for the next account switch: the handoff top section, the progress report, the roster file and `CLAUDE.md` all point to the new lead branch and the `-c5` branches.
+
+### 🤖 Claude — 2026-11-17T20:30:32.838Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "queue.fal.run", "header_name": "Authorization", "prefix": "Key", "suggested_type": "bearer", "display_name": "fal.ai API key (existing $10 account)", "reason": "The user asked to reconnect their existing fal.ai account; this environment has no fal key and blocks queue.fal.run. Saving it enables only the free status check of the completed Screen 04 request, no paid jobs."}`
+
+### 🧑 User — 2026-11-17T20:31:05.827Z
+
+> ↩︎ result: {"status":"saved","host":"queue.fal.run","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/403 o …[+443 chars]
+
+### 🤖 Claude — 2026-11-17T20:31:07.807Z
+
+The fal.ai key is saved. Running the free status check on the completed Screen 04 request now (no paid job):
+
+### 🤖 Claude — 2026-11-17T20:31:09.156Z
+
+> 🔧 **Bash** `{"command": "curl -sS --max-time 30 -w \"\\nHTTP %{http_code}\\n\" https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status 2>&1 | tail -3", "description": "Free fal.ai status read of completed Screen 04 request"}`
+
+### 🧑 User — 2026-11-17T20:31:09.497Z
+
+> ↩︎ result: {"status":"COMPLETED","request_id":"01a1ea70-42d8-7943-b035-7bb5f129d872","response_url":null,"status_url":null,"cancel_url":null,"logs":null,"metrics":{"inference_time":18.389999866485596}}
+> HTTP 200
+
+### 🤖 Claude — 2026-11-17T20:31:19.897Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/404). Account 4'\"'\"'s key (5,420 credits, Screen 08 world) is NOT on this environment. fal.ai: NO key on this environment/404). Account 4'\"'\"'s key (5,420 credits, Screen 08 world) is NOT on this environment. fal.ai: RECONNECTED 20:40 UTC by the user via the secure form (host `queue.fal.run`, `Authorization: Key …`); free read of request `01a1ea70` → 200 COMPLETED = the SAME fal account. (Before that: no key/' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md && sed -i 's/  and `queue.fal.run` not in its network allowlist. Neither blocks current work (no paid jobs approved)./  and  …[+914 chars]`
+
+### 🧑 User — 2026-11-17T20:31:22.789Z
+
+> ↩︎ result: 34:  404). Account 4's key (5,420 credits, Screen 08 world) is NOT on this environment. fal.ai: RECONNECTED 20:40 UTC by the user via the secure form (host `que
+> 35:  and `queue.fal.run` blocked.) Neither blocks current work (no paid jobs approved).
+> local d5da1a442af42a8867ba0bfb7b330d04bb077a55 remote d5da1a442af42a8867ba0bfb7b330d04bb077a55
+> [This command modified 1 file you've previously read: docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T20:31:28.222Z
+
+fal.ai is reconnected: you saved the key in the secure form, and the free status check shows it's your **same $10 account**. Your completed Screen 04 clean plate (request `01a1ea70`) reads back as COMPLETED. Nothing ran and nothing was charged. The Screen 06 and 07 fal plates are still not approved and won't run without your OK. This is recorded in the handoff on GitHub (`d5da1a4`, local == remote).
+
+**What still needs you:**
+1. **World Labs:** the key on this account belongs to your *other* World Labs account (5,190 credits), not the 5,420-credit account that holds the Screen 08 world. Should I swap it for the 5,420-credit account's key? I'd open the same secure form. Nothing currently in progress needs it.
+2. **Screen 08 coins and the ending video:** do you want Benny to swim through all 9 painted coins before the ending video starts? Right now he swims through 2 and the video credits 7, with the total still 91 / 2,240. If yes, I'll prepare tested options with pictures for you to choose from before changing anything.
+
+The two Screen 08 specialists (scenery while moving, and Benny's softer fur and pom-pom) are working now. Each will save to GitHub when its milestone is done, and I'll bring you the full-size APPROVED / BEFORE / NEW pictures plus moving views. Nothing is marked approved, and nothing will be merged without your permission.
+
+### 🧑 User — 2026-11-17T20:31:30.507Z
+
+Can you please give me the recording of like the video of all my screens that you built, so I can see how they all look like? Like right now at this moment, make sure they're the most recent ones. Or can you do like a recording and send it to me, the file in the chat when you're done?
+Are my screens looking like the approved screens like I've been wanting? I want you to compare my screens I have now to the exact I want to know if they don't look at my exact approved screens, then can you tell me what I need to do to fix it, or can you fix it or whatever? I just want it to be at least 95%, or I would say more, but 95% close or exactly like my approved screens.
+
