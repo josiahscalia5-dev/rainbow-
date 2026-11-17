@@ -17,7 +17,7 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
    report of §4. Tell the user plainly about every failure and every backup GAP the bootstrap reports.
 The GitHub default branch is an OLD version (a new session starts THERE: no bootstrap, no Blender setup — run the
-fetch line above first). Newest work as of 2026-11-17 ~00:50 UTC: branch **`ccr-694bda6a-x58ntq`** (session `018Sg3AU…`,
+fetch line above first). Newest work as of 2026-11-17 ~00:25 UTC: branch **`ccr-694bda6a-x58ntq`** (session `018Sg3AU…`,
 created from `b81cc34`; Screen 05 full reference match: `qa/pilot05/full_reference_match/COORDINATION.md`). Before it:
 **`ccr-8c4acadc-iybw0n`** (new Claude account, session `01KS3bZt…`; fast-forwarded from `ccr-61131b9d-uj0oqb` @ `aea7e77`; Screen 05
 riding-water experiment `&projnear05=1` IN PROGRESS: `qa/pilot05/proj/near/NOTES.md`; contains every other `ccr-*` /

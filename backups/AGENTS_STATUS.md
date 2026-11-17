@@ -1,6 +1,6 @@
 # Rainbow specialists — roster, responsibilities and status
 
-## ▶ ACCOUNT TRANSFER 2026-11-17 ~00:55 UTC (session 018Sg3AU, branch `ccr-694bda6a-x58ntq`)
+## ▶ ACCOUNT TRANSFER 2026-11-17 ~00:25 UTC (session 018Sg3AU, branch `ccr-694bda6a-x58ntq`)
 Screen 05 full reference match. INTERRUPTED (were running): washer-environment-modeler (`env05`, `env/NOTES.md`), benny-character-artist (`benny05`, `benny/NOTES.md`), animation-and-gameplay-engineer (`hud05` + `coins05`, `hud/NOTES.md`, `coins/NOTES.md`) — all under `qa/pilot05/full_reference_match/`. Done / not done per specialist: COORDINATION.md section "STATE AT ACCOUNT TRANSFER 2026-11-17". Relaunch each from `qa/pilot05/full_reference_match/briefs/<agent>.md` + its NOTES.md. 10/10 definitions present, SHA-256 unchanged.
 
 

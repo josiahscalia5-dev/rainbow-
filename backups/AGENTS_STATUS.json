@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17 ~00:55 UTC",
+ "updated_utc": "2026-11-17 ~00:25 UTC",
  "updated_by_session": "session_018Sg3AUAHEh1rEALJbwfawQ (branch ccr-694bda6a-x58ntq) \u2014 ACCOUNT TRANSFER",
  "running_now": [
   {
@@ -11,7 +11,7 @@
    "notes": "qa/pilot05/full_reference_match/env/NOTES.md",
    "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
    "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:55 UTC",
+   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:25 UTC",
    "done_at_transfer": "step A measured + ring fit; env05 code written (tube.ts warp, proj05Tunnel.ts, environment.ts E05); assets/textures/env05 NOT created yet",
    "next": "steps a-f in env/NOTES.md (textures first)",
    "relaunch": "brief qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
@@ -23,7 +23,7 @@
    "notes": "qa/pilot05/full_reference_match/benny/NOTES.md",
    "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
    "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:55 UTC",
+   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:25 UTC",
    "done_at_transfer": "measured; geometry iteration r2 (IoU 0.915); benny05.ts / runtime.ts / fur.ts written; maps not baked",
    "next": "steps 1-5 in benny/NOTES.md (iteration 3, bake.py, maps)",
    "relaunch": "brief qa/pilot05/full_reference_match/briefs/benny-character-artist.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
@@ -35,14 +35,14 @@
    "notes": "qa/pilot05/full_reference_match/hud/NOTES.md, coins/NOTES.md",
    "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
    "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:55 UTC",
+   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:25 UTC",
    "done_at_transfer": "HUD measured + hud05 markup/CSS/sprites written; 15 coins measured + solved (C05M), coin face texture; no real capture yet",
    "next": "hud/NOTES.md + coins/NOTES.md Remaining lists",
    "relaunch": "brief qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
   }
  ],
  "assignments_now": {
-  "_note": "State at 2026-11-17 ~00:55 UTC: ACCOUNT TRANSFER. The three running_now specialists are INTERRUPTED; each wrote a checkpoint NOTES.md. New account: backups/HANDOFF_NEW_ACCOUNT.md, then COORDINATION.md section \"STATE AT ACCOUNT TRANSFER 2026-11-17\", relaunch each from its brief + NOTES.md.",
+  "_note": "State at 2026-11-17 ~00:25 UTC: ACCOUNT TRANSFER. The three running_now specialists are INTERRUPTED; each wrote a checkpoint NOTES.md. New account: backups/HANDOFF_NEW_ACCOUNT.md, then COORDINATION.md section \"STATE AT ACCOUNT TRANSFER 2026-11-17\", relaunch each from its brief + NOTES.md.",
   "coordinator (main session)": "DONE: projvp05 + projgap05 (dark torn streaks, E-layer gaps, blending) measured, coordinator/NOTES.md. NEXT: gaps > 100 rows, riding contrast, then integrate all switches and produce the order deliverables (03_NEW, 04_DIFFERENCE, 05_OVERLAY, VISUAL_AUDIT.md, metrics JSON)",
   "foam-bubbles-particles": "WAVE 2, not launched yet: splash05m (Benny wake, order part 8) + bub05 (approved bubbles as real 3D / sprites, part 11). Files riderSplash.ts, bubbles.ts, foam.ts, spray.ts; folder qa/pilot05/full_reference_match/splash_bubbles/",
   "android-build-performance": "LAST: experiment APK + performance after the visual parts are in (order parts 18, 19)",

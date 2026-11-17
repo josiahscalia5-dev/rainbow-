@@ -55,6 +55,8 @@ export const HAT05 = {
   starDX: 0.0,
   /** star face scale (its own x, y) */
   starScale: [0.96, 0.89] as [number, number],
+  /** cuff outer radius factor (approved cuff ≈ 297 px wide vs 291) */
+  brimW: 1.02,
   /** crown dome height (GLB 0.53) */
   crownH: 0.58,
 };
@@ -77,18 +79,20 @@ function hatGeometries(cuffH: number, taper: number, crownH: number): { brim: TH
   const yb = D.brimBottom;
   const yt = yb + cuffH;
   const bk = D.brimR / 0.778;
+  const bw = bk * HAT05.brimW;
   const lip = Math.sqrt(D.skin * D.skin - yb * yb) + 0.012;
   const brim = lathe(
     [
       [lip, yb + 0.01],
-      [0.725 * bk, yb - 0.008],
-      [0.758 * bk, yb + 0.02],
-      [0.776 * bk, yb + 0.07],
-      [0.781 * bk, yb + 0.5 * cuffH],
-      [0.776 * bk, yt - 0.075],
-      [0.758 * bk, yt - 0.025],
-      [0.725 * bk, yt - 0.003],
-      [0.68 * bk, yt],
+      [0.725 * bw, yb - 0.008],
+      [0.758 * bw, yb + 0.02],
+      [0.776 * bw, yb + 0.07],
+      [0.781 * bw, yb + 0.5 * cuffH],
+      // fuller rolled top edge (approved: the cuff's upper corners stand higher at the sides)
+      [0.781 * bw, yt - 0.06],
+      [0.772 * bw, yt - 0.022],
+      [0.745 * bw, yt - 0.004],
+      [0.69 * bk, yt],
     ],
     96,
     yb - 0.01,

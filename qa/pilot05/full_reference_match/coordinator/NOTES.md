@@ -1,4 +1,4 @@
-# Coordinator — far river / riding water (session 018Sg3AU, 2026-11-17 ~00:10–00:45 UTC, branch `ccr-694bda6a-x58ntq`)
+# Coordinator — far river / riding water (session 018Sg3AU, 2026-11-17 ~00:00–00:20 UTC, branch `ccr-694bda6a-x58ntq`)
 
 Continues the previous coordinator's unfinished step ("removing a flat blank patch that appears mid-river when Benny
 rides forward", `tools/proj05/bake.py`, 23:41 UTC, never baked). Both new parts are water-only, Screen 05 only, behind

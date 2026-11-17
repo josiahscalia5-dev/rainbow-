@@ -28,9 +28,9 @@ const ICON05 = {
 } as const;
 /** hud05 tuning (measured against the approved glyph boxes with qa/pilot05/full_reference_match/hud/harness.mjs) */
 const H05 = {
-  bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2 },
+  bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2, shadow: true },
   num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
-  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 800, track: 0.0, skew: -8, italic: true, dy: 0 },
+  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 1 },
 };
 /** absolute position inside the bar's padding box, from approved frame px */
 const bx = (x: number) => U(x - H05.bar.x0 - H05.bar.border);
@@ -43,8 +43,8 @@ const CSS05 = () => `
 #hud.m05 .bar { top: calc(${U(H05.bar.y0)} + env(safe-area-inset-top)); left: ${U(H05.bar.x0)}; right: ${U(864 - H05.bar.x1)};
   height: ${U(H05.bar.y1 - H05.bar.y0)}; box-sizing: border-box; border-radius: ${U((H05.bar.y1 - H05.bar.y0) / 2)}; display: block;
   background: linear-gradient(180deg, rgb(97,3,141) 0%, rgb(89,2,128) 16%, rgb(86,2,124) 55%, rgb(86,2,124) 88%, rgb(91,3,130) 100%);
-  border: ${U(H05.bar.border)} solid rgb(238,180,252);
-  box-shadow: inset 0 ${U(2)} ${U(2)} rgba(236,96,246,0.7), inset 0 ${U(-1.5)} ${U(1.5)} rgba(205,120,245,0.45); }
+  border: ${U(H05.bar.border)} solid rgb(226,150,246); border-top-color: rgb(248,178,244); border-bottom-color: rgb(196,110,228);
+  box-shadow: inset 0 ${U(3)} ${U(1.5)} rgba(240,150,245,0.85), inset 0 ${U(8)} ${U(5)} rgba(190,30,215,0.5)${H05.bar.shadow ? `, 0 ${U(2.5)} ${U(3)} rgba(120,10,150,0.6)` : ''}; }
 #hud.m05 .bar > * { position: absolute; display: block; margin: 0; }
 #hud.m05 .pill05 { left: ${U(-H05.bar.border)}; top: ${U(-H05.bar.border)}; width: ${U(331 - 33)}; height: ${U(H05.bar.y1 - H05.bar.y0)};
   box-sizing: border-box; border-radius: ${U((H05.bar.y1 - H05.bar.y0) / 2)}; border: ${U(2)} solid rgba(214,160,255,0.8);
@@ -60,7 +60,8 @@ const CSS05 = () => `
 #hud.m05 .banner { left: ${U(H05.banner.cx)}; top: calc(${U(H05.banner.y0)} + env(safe-area-inset-top)); height: ${U(H05.banner.h)};
   min-width: ${U(H05.banner.minW)}; box-sizing: border-box; padding: 0 ${U(12)}; justify-content: center; border-radius: ${U(H05.banner.h / 2)};
   background: linear-gradient(180deg, rgb(99,3,147) 0%, rgb(96,3,144) 50%, rgb(94,3,140) 100%);
-  border: ${U(2.5)} solid rgb(250,214,168); box-shadow: inset 0 0 0 ${U(1)} rgba(205,112,86,0.85); }
+  border: ${U(2.5)} solid rgb(246,168,72); border-top-color: rgb(255,230,205); border-bottom-color: rgb(252,222,170);
+  box-shadow: inset 0 0 0 ${U(1)} rgba(205,112,86,0.85), inset 0 ${U(-6)} ${U(5)} rgba(175,25,195,0.6); }
 #hud.m05 .banner span { font-size: ${U(H05.banner.size)}; font-weight: ${H05.banner.weight}; position: relative; top: ${U(H05.banner.dy)}; letter-spacing: ${U(H05.banner.track)}; font-style: ${H05.banner.italic ? 'italic' : 'normal'};
   transform: skewX(${H05.banner.skew}deg); line-height: 1;
   background: linear-gradient(180deg, #fff6d8 0%, #ffe9b0 45%, #f6cf8c 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
