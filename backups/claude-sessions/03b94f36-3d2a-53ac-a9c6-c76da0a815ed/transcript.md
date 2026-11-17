@@ -2707,3 +2707,37 @@ fal.ai refused the submission with "403 Forbidden". Checking the request record 
 > FAL submit failed (403): {"detail":"User is locked. Reason: Exhausted balance. Top up your balance at fal.ai/dashboard/billing."}
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-17T12:12:27.220Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/imageblaster/08/NOTES.md <<'EOF'\n\n## Step 1 attempt (user approved ONE fal edit, 2026-11-17 ~12:15 UTC) — BLOCKED, nothing generated, nothing charged\n* Prompt used (bubbles KEPT as scenery, per the user): remove the top HUD bar (5/5 hearts + plus, 2,040 coin counter,\n  pause), the \"08 · FINAL SPIN CHAMBER\" banner, the pink fluffy character with knitted hat + the white splash directly\n  around its body, all gold dollar coins; keep everything else exactly (composition, perspective, framing, colours,\n  lighting, walls, gold rings, washer door, towel + platform, spou …[+1521 chars]`
+
+### 🧑 User — 2026-11-17T12:12:27.987Z
+
+> ↩︎ result: local 6382240 remote 6382240
+> 13
+> ab7d0bc5777bc9b2
+
+### 🤖 Claude — 2026-11-17T12:12:30.343Z
+
+The save step printed no result line, so I'm confirming the notes actually reached GitHub:
+
+### 🤖 Claude — 2026-11-17T12:12:32.104Z
+
+> 🔧 **Bash** `{"command": "git status --porcelain | wc -l; git log -1 --format='%h %ci %s' -- qa/imageblaster/08/NOTES.md; git show HEAD:qa/imageblaster/08/NOTES.md | grep -c \"Exhausted balance\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; echo \"local  $(git rev-parse HEAD)\"", "description": "Confirm the notes commit is on GitHub"}`
+
+### 🧑 User — 2026-11-17T12:12:32.494Z
+
+> ↩︎ result: 1
+> cdc1a4e 2026-11-17 12:09:06 +0000 Image-Blaster Screen 08 test: setup + readiness record, analysis, plan (no paid generation run)
+> 0
+> remote 9734c17b19ba6c38e299dc46fdccdc3248930151
+> local  9734c17b19ba6c38e299dc46fdccdc3248930151
+
+### 🤖 Claude — 2026-11-17T12:12:34.687Z
+
+The notes update isn't in a commit yet (a background save ran at the same moment). Saving again:
+
+### 🤖 Claude — 2026-11-17T12:12:37.335Z
+
+> 🔧 **Bash** `{"command": "sleep 5; timeout 400 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Image-Blaster 08 step 1: blocked by fal balance (nothing generated, nothing charged); Node proxy fix recorded\" 2>&1 | tail -12 | grep -E 'result|commit|pushed|skipping|error'; git status --porcelain | wc -l; git show HEAD:qa/imageblaster/08/NOTES.md | grep -c \"Exhausted balance\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; echo \"local  $(git rev-parse HEAD)\"", "description": "Retry saving the notes and verify on GitHub", "timeout": 450000}`
+

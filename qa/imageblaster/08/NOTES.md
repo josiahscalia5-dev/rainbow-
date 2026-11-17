@@ -94,3 +94,18 @@ ledger note) — not part of Image-Blaster.
 * **Panorama** PNG: 360° image, usable as an environment/reflection map. Thumbnail: preview only.
 * Expectation from the 05 Marble test (`qa/pilot05/marble_feas/NOTES.md`): perspective from the input camera is right,
   exact geometry is not (far end collapses, unseen parts invented) — a reference/asset source, not a copy of the picture.
+
+## Step 1 attempt (user approved ONE fal edit, 2026-11-17 ~12:15 UTC) — BLOCKED, nothing generated, nothing charged
+* Prompt used (bubbles KEPT as scenery, per the user): remove the top HUD bar (5/5 hearts + plus, 2,040 coin counter,
+  pause), the "08 · FINAL SPIN CHAMBER" banner, the pink fluffy character with knitted hat + the white splash directly
+  around its body, all gold dollar coins; keep everything else exactly (composition, perspective, framing, colours,
+  lighting, walls, gold rings, washer door, towel + platform, spouts + streams, water channel, foam banks, all soap
+  bubbles); continue wall / ring / water / foam seamlessly. Flags: `--aspect-ratio 9:16 --resolution 2K`, 1 image.
+* Attempt A: `fetch failed` — Node's built-in fetch ignores HTTPS_PROXY. FIX: run every Image-Blaster script with
+  `NODE_USE_ENV_PROXY=1` (Node 22.23). Verified with free calls (fal status 404, World Labs credits 200 / 7,000).
+* Attempt B/C: fal answered **403 `{"detail":"User is locked. Reason: Exhausted balance. Top up your balance at
+  fal.ai/dashboard/billing."}`** — the fal account has no balance; the key itself is valid. No request id, no output.
+* Local debug change (separate folder only): `.claude/scripts/asset-pipeline/fal-queue.mjs` submit error now includes
+  fal's reply text.
+* Next: the user tops up the fal balance (fal.ai → Dashboard → Billing), then the SAME single edit is re-run.
+  World Labs untouched (7,000 credits).
