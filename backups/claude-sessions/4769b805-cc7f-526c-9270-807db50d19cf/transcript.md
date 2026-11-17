@@ -472,3 +472,241 @@ The difference is only the HUD font (the baseline copy couldn't load fonts throu
 
 > 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/base; S=$(dirname $B)/px; cd $B && rm node_modules && npm ci --silent >/dev/null 2>&1; ls node_modules | wc -l; rm -rf $S/base_default $S/base_m08 $S/base_default2; node scripts/capture.mjs --out=$S/base_default >/dev/null 2>&1; node scripts/capture.mjs 08 --q=match08=1 --out=$S/base_m08 >/dev/null 2>&1; for i in 01 02 03 04 05 06 07 08 09 10 11; do python3 -I $S/../pxdiff.py $S/base_default/$i.png $S/head_default/$i.png; done; python3 -I $S/../pxdiff.py $S/base_m08/08.png $S/head_m08/08.png; pytho …[+136 chars]`
 
+### 🧑 User — 2026-11-17T16:51:21.627Z
+
+> ↩︎ result: 99
+> head_default/01.png: 689 px different
+> head_default/02.png: 0 px different
+> head_default/03.png: 0 px different
+> head_default/04.png: 0 px different
+> head_default/05.png: 0 px different
+> head_default/06.png: 0 px different
+> head_default/07.png: 43 px different
+> head_default/08.png: 0 px different
+> head_default/09.png: 0 px different
+> head_default/10.png: 3645 px different
+> head_default/11.png: 52298 px different
+> head_m08/08.png: 0 px different
+> head_m08cc/08.png: 55668 px different
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:51:26.120Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/base; S=$(dirname $B)/px; node scripts/capture.mjs 01 07 10 11 --out=$S/head_default2 >/dev/null 2>&1; (cd $B && node scripts/capture.mjs 01 07 10 11 --out=$S/base_default2 >/dev/null 2>&1); for i in 01 07 10 11; do python3 -I $S/../pxdiff.py $S/head_default/$i.png $S/head_default2/$i.png; python3 -I $S/../pxdiff.py $S/base_default/$i.png $S/base_default2/$i.png; python3 -I $S/../pxdiff.py $S/base_default2/$i.png $S/head_default2/$i.png; done", "description": "Test repeatability for differing scree …[+23 chars]`
+
+### 🧑 User — 2026-11-17T16:53:07.901Z
+
+> ↩︎ result: head_default2/01.png: 689 px different
+> base_default2/01.png: 689 px different
+> head_default2/01.png: 689 px different
+> head_default2/07.png: 0 px different
+> base_default2/07.png: 43 px different
+> head_default2/07.png: 0 px different
+> head_default2/10.png: 1259 px different
+> base_default2/10.png: 0 px different
+> head_default2/10.png: 2386 px different
+> head_default2/11.png: 10 px different
+> base_default2/11.png: 52298 px different
+> head_default2/11.png: 10 px different
+
+### 🤖 Claude — 2026-11-17T16:53:15.967Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/base_m08/08.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$S/head_m08cc/08.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(2);ys,xs=np.nonzero(m);print(m.shape,ys.min(),ys.max(),xs.min(),xs.max(),m.max(),np.mean(m[m>0]))\nv=np.zeros_like(a);v[...,0]=np.clip(m*4,0,255);v=(0.4*a+v).clip(0,255).astype('uint8')\nImage.fromarray(v).resize((432,768)).save('$S/m08cc_diff.png')\nEOF", "descripti …[+39 chars]`
+
+### 🧑 User — 2026-11-17T16:53:16.570Z
+
+> ↩︎ result: (1536, 864) 559 1299 130 738 12 1.0772975497592872
+
+### 🤖 Claude — 2026-11-17T16:53:20.434Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/m08cc_diff.png"}`
+
+### 🧑 User — 2026-11-17T16:53:20.467Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:53:26.748Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/base_m08/08.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$S/head_m08cc/08.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(2)\nImage.fromarray((np.clip(m*20,0,255)).astype('uint8')).resize((432,768)).save('$S/m08cc_diffonly.png')\nprint((m>2).sum(),(m>5).sum())\nEOF\ngrep -n \"snap\\|desired(\" src/game/cameraRig.ts | head -20; grep -n \"'08'\" scripts/capture.mjs | head", "description": …[+41 chars]`
+
+### 🧑 User — 2026-11-17T16:53:27.145Z
+
+> ↩︎ result: 936 14
+> 83:  desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+> 200:  /** `?camclear=1` only — see desired() */
+> 235:  update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
+> 237:    const p = this.desired(s, lat, dp, dt3, du);
+> 238:    const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
+> 239:    const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
+> 243:    this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
+> 17:if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+
+### 🤖 Claude — 2026-11-17T16:53:28.911Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/m08cc_diffonly.png"}`
+
+### 🧑 User — 2026-11-17T16:53:28.937Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:53:37.287Z
+
+The only difference is a faint change (mostly 1 colour level) in Benny's splash foam and his outline — the scenery is untouched. Checking which foam pieces camclear is thinning out there.
+
+### 🤖 Claude — 2026-11-17T16:53:40.913Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad && cat > $S/patched.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5241);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await browser.newPage({ viewport: { width: 90, height: 160 } });\nawait page.goto(`${vite.url}/?qa=1&dpr=1&match08=1&camclear=1`);\nawait page.waitForFunction(() => window.__rainbow?.ready === true || window.__error …[+370 chars]`
+
+### 🧑 User — 2026-11-17T16:53:48.249Z
+
+> ↩︎ result: ["zone_basin/LatheGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/ShapeGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_basin/TorusGeometry","zone_tubes/TorusGeometry","zone_tubes/TorusGeometry","zone_tubes/TorusGeometry","zone_tubes/TorusGeometry","zone_tubes/TorusGeometry","zone_tubes/LatheGeometry","zone_tubes/LatheGeometry","zone_tubes/LatheGeometry","zone_tubes/LatheGeometry","zone_tubes/LatheGeometry","tube05_far","tube05_far","foam_berm","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_banks/IcosahedronGeometry","foam_whirlp …[+256 chars]
+
+### 🤖 Claude — 2026-11-17T16:53:57.183Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad && cp src/game/camClear.ts $S/camClear.ts.bak && sed -i \"s/  roots.foam?.traverse((o) => {/  if (0) roots.foam?.traverse((o) => {/\" src/game/camClear.ts && grep -n \"if (0)\" src/game/camClear.ts && node scripts/capture.mjs 08 --q=match08=1\\&camclear=1 --out=$S/px/exp_nofoam >/dev/null 2>&1; python3 -I $S/pxdiff.py $S/px/base_m08/08.png $S/px/exp_nofoam/08.png; cp $S/camClear.ts.bak src/game/camClear.ts; git status --short src", "description": "Experiment: camclear without foam patch", "timeout" …[+9 chars]`
+
+### 🧑 User — 2026-11-17T16:54:11.316Z
+
+> ↩︎ result: 114:  if (0) roots.foam?.traverse((o) => {
+> exp_nofoam/08.png: 55668 px different
+
+### 🤖 Claude — 2026-11-17T16:54:15.220Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad && cp src/game/cameraRig.ts $S/cameraRig.ts.bak && sed -i \"s/      if (CAMCLEAR) {/      if (false \\&\\& CAMCLEAR) {/\" src/game/cameraRig.ts && grep -c \"false && CAMCLEAR\" src/game/cameraRig.ts && node scripts/capture.mjs 08 --q=match08=1\\&camclear=1 --out=$S/px/exp_nolock >/dev/null 2>&1; python3 -I $S/pxdiff.py $S/px/base_m08/08.png $S/px/exp_nolock/08.png; cp $S/cameraRig.ts.bak src/game/cameraRig.ts; git status --short src", "description": "Experiment: camclear without 08 camera hold", "t …[+16 chars]`
+
+### 🧑 User — 2026-11-17T16:54:30.088Z
+
+> ↩︎ result: 1
+> exp_nolock/08.png: 0 px different
+
+### 🤖 Claude — 2026-11-17T16:54:32.292Z
+
+The 08 "hold the approved view" change moves the view very slightly. Looking at how it computes Benny's spot.
+
+### 🤖 Claude — 2026-11-17T16:54:32.944Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "offset": 83, "limit": 50}`
+
+### 🧑 User — 2026-11-17T16:54:32.972Z
+
+> ↩︎ result: 83	  desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+> 84	    const p = camParamsAt(this.course, s);
+> 85	    const f = this.course.sample(s);
+> 86	    const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+> 87	    const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+> 88	    let up = f.up.clone();
+> 89	    if (this.axis) {
+> 90	      const a = this.axis;
+> 91	      const w = THREE.MathUtils.smoothstep(s, a.s0, a.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, a.s1 - 10, a.s1));
+> 92	      if (w > 0) {
+> 93	        const af = a.path.frame(s);
+> 94	        dir.lerp(af.tan, w).normalize();
+> 95	        up.lerp(af.up, w).normalize();
+> 96	      }
+> 97	    }
+> 98	    up.addScaledVector(dir, -up.dot(dir)).normalize();
+> 99	    const right = new THREE.Vector3().crossVectors(dir, up).normalize();
+> 100	    const benny = f.pos.clone().addScaledVector(f.right, lat);
+> 101	    const anchor = benny.clone().addScaledVector(right, -lat * (1 - p.latFollow));
+> 102	    // offsets use an 'upright' up: banking only tilts the camera as much as `roll` allows
+> 103	    const upPos = new THREE.Vector3(0, 1, 0).lerp(up, Math.max(p.roll, Math …[+2186 chars]
+
+### 🤖 Claude — 2026-11-17T16:54:37.041Z
+
+> 🔧 **Bash** `{"command": "sed -n 28,70p scripts/capture.mjs; grep -n \"checkpoints\\|'08'\" src/game/Game.ts | head -20", "description": "See how capture reaches screen 08"}`
+
+### 🧑 User — 2026-11-17T16:54:37.077Z
+
+> ↩︎ result: for (const id of ids) {
+>     const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+>     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+>     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
+>     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
+>     await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+>     await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>     const err = await page.evaluate(() => window.__error);
+>     if (err) throw new Error(err);
+>     if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+>     const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+>     // let a few frames render (fonts, bloom) — time is frozen so the image is deterministic
+>     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+>     await page.ev …[+2012 chars]
+
+### 🤖 Claude — 2026-11-17T16:54:49.569Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad && cat > $S/cam08.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5242);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nfor (const q of ['match08=1', 'match08=1&camclear=1']) {\n  const page = await browser.newPage({ viewport: { width: 90, height: 160 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&${q}`);\n  await page.waitForFunction(() => wind …[+589 chars]`
+
+### 🧑 User — 2026-11-17T16:55:06.040Z
+
+> ↩︎ result: match08=1 {"s":391.427,"lat":0,"cam":{"matrixWorld":[0.9986080315163138,0,-0.05274466220493558,0,-0.008521755395209578,0.9868618740267736,-0.16134131918807607,0,0.05205169618847186,0.16156621426636333,0.9854881934003769,0,12.848382064991654,-109.86620136268614,-274.80056164895825,1],"fov":62,"aspect":0.5625,"near":0.05,"far":1200,"width":90,"height":160,"position":[12.848382064991654,-109.86620136268614,-274.80056164895825],"target":[9.812,-119.291,-332.288]},"b":{"x":-0.1,"y":-0.43,"z":0.987,"visible":true,"cam":[12.85,-109.87,-274.8],"benny":[12.21,-113.11,-282.09]}}
+> match08=1&camclear=1 {"s":391.427,"lat":0,"cam":{"matrixWorld":[0.9986080315163138,0,-0.05274466220493558,0,-0.008521755395209578,0.9868618740267736,-0.16134131918807607,0,0.05205169618847186,0.16156621426636333,0.9854881934003769,0,12.848382064991654,-109.86620136268614,-274.80056164895825,1],"fov":62,"aspect":0.5625,"near":0.05,"far":1200,"width":90,"height":160,"position":[12.848382064991654,-109.86620136268614,-274.80056164895825],"target":[9.812,-119.291,-332.288]},"b":{"x":-0.1,"y":-0.43,"z":0.987,"visible":true,"cam":[12.85,-109.87,-274.8],"benny":[12.21,-113.11,-282.09]}}
+
+### 🤖 Claude — 2026-11-17T16:55:08.970Z
+
+Camera is bit-identical, so the change may be run-to-run noise in Benny's fur/splash. Re-capturing the same build twice to check.
+
+### 🤖 Claude — 2026-11-17T16:55:11.725Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad; for k in a b c; do node scripts/capture.mjs 08 --q=match08=1\\&camclear=1 --out=$S/px/cc_$k >/dev/null 2>&1; python3 -I $S/pxdiff.py $S/px/base_m08/08.png $S/px/cc_$k/08.png; done; node scripts/capture.mjs 08 --q=match08=1 --out=$S/px/m08_r2 >/dev/null 2>&1; python3 -I $S/pxdiff.py $S/px/base_m08/08.png $S/px/m08_r2/08.png", "description": "Repeat captures to test noise", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T16:56:07.698Z
+
+> ↩︎ result: cc_a/08.png: 55668 px different
+> cc_b/08.png: 55668 px different
+> cc_c/08.png: 55668 px different
+> m08_r2/08.png: 0 px different
+
+### 🤖 Claude — 2026-11-17T16:56:13.053Z
+
+> 🔧 **Bash** `{"command": "grep -n \"goto(\" src/game/Game.ts | head -3; sed -n \"$(grep -n '    goto(' src/game/Game.ts | head -1 | cut -d: -f1),+30p\" src/game/Game.ts", "description": "Read the goto QA implementation"}`
+
+### 🧑 User — 2026-11-17T16:56:13.118Z
+
+> ↩︎ result: Exit code 1
+> sed: -e expression #1, char 1: unknown command: `,'
+
+### 🤖 Claude — 2026-11-17T16:56:14.556Z
+
+> 🔧 **Grep** `{"pattern": "goto|CHECKPOINTS\\[", "path": "/home/user/rainbow-/src/game/Game.ts", "output_mode": "content"}`
+
+### 🧑 User — 2026-11-17T16:56:14.590Z
+
+> ↩︎ result: 622:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 623:    const cp = CHECKPOINTS[id];
+> 665:    goto: gotoCheckpoint,
+
+### 🤖 Claude — 2026-11-17T16:56:15.948Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 622, "limit": 40}`
+
+### 🧑 User — 2026-11-17T16:56:15.970Z
+
+> ↩︎ result: 622	  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 623	    const cp = CHECKPOINTS[id];
+> 624	    if (!cp) throw new Error('unknown checkpoint ' + id);
+> 625	    resetToIntro();
+> 626	    st.frozen = time;
+> 627	    st.clock = time;
+> 628	    input.override = 0;
+> 629	    const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+> 630	    if (cp.mode === 'intro') {
+> 631	      // replay the cinematic deterministically up to the checkpoint time
+> 632	      const steps = Math.round((cp.t ?? 0) / (1 / 30));
+> 633	      settle(steps, 1 / 30);
+> 634	    } else {
+> 635	      startRide();
+> 636	      hud.showHint(null);
+> 637	      const sTarget = cp.s ?? course.stage('11').s0;
+> 638	      st.s = sTarget;
+> 639	      st.lat = cp.lat ?? 0;
+> 640	      coins.resetUntil(sTarget + 0.5);
+> 641	      setStage(stageOf(sTarget));
+> 642	      if (cp.mode === 'outro') {
+> 643	        startOutro();
+> 644	        settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+> 645	      } else {
+> 646	        // settle camera springs without moving Benny: run with speed frozen
+> 647	        const s0 = st.s;
+> 648	        for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+> 649	        rideCam. …[+463 chars]
+
