@@ -116,6 +116,7 @@ def draw_edges(dr, rin, rout, col, wdt=2):
             if np.isfinite(r0) and np.isfinite(r1) and abs(r0 - r1) < 40: dr.line((x0, y0, x1, y1), fill=col, width=wdt)
 
 
+FIT = os.environ.get('WS_FIT') == '1'
 res = {}
 LINES = []
 for v in variants:
@@ -128,6 +129,17 @@ for v in variants:
         P = real_points(k, d, h, wfn)
         e, px = err(name, P)
         row[name] = e
+        if FIT:
+            from scipy.optimize import least_squares
+            ain, aout = approved_edges(model, name, NT)
+            vin, vout = vis(ain), vis(aout)
+            def resid(p):
+                gin, gout = polar_edges(cam.project(real_points(k, d, h, wfn, p[0], p[1]))[0], NT)
+                return np.concatenate([np.where(vin & np.isfinite(gin), gin - ain, 0), np.where(vout & np.isfinite(gout), gout - aout, 0)])
+            p0 = [knots_at(E05["side"], d), knots_at(E05["up"], d)]
+            sol = least_squares(resid, p0, bounds=([-3, -3], [3, 3]), diff_step=1e-3, loss="soft_l1", f_scale=4.0)
+            e2, _ = err(name, real_points(k, d, h, wfn, *sol.x)); LINES.pop()
+            row[name + "_fit"] = dict(side=round(float(sol.x[0]), 3), up=round(float(sol.x[1]), 3), **e2)
     for i, name in enumerate(far_names[:len(tj["farRingInstances"])]):
         P = far_points(i, E05["hFar"], wfn)
         e, px = err(name, P)

@@ -1508,3 +1508,86 @@ Your request also named `claude mcp list` and two more recovery documents. I'll 
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:report 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"; git lfs ls-files | awk '{print $3}' | while read f; do head -c 40 \"$f\" | grep -q \"git-lfs\" && echo \"STUB $f\"; done | wc -l", "description": "Final save; verify remote SHA and LFS files"}`
 
+### 🧑 User — 2026-11-17T01:21:03.050Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "f06242b4a282ac3813c3350d995445822ed6c9b8",
+> AUTOSAVE OK | branch claude/rainbow-account-transfer-npxahd | scheduler daemon | last verified backup 2026-11-17T01:20:55+00:00 (0.1 min ago) | local f06242b remote f06242b (match) | uncommitted 0
+> LOCAL  f06242b4a282ac3813c3350d995445822ed6c9b8
+> REMOTE f06242b4a282ac3813c3350d995445822ed6c9b8
+> 0
+
+### 🤖 Claude — 2026-11-17T01:21:04.049Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T01:21:04.085Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-17T01:21:04.493Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T01:21:04.506Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-17T01:21:06.546Z
+
+> 🔧 **SendUserFile** `{"files": ["references/05_flow_into_the_current.png", "qa/pilot05/current_default_05.png", "qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png"], "caption": "Screen 05, three separate full-size pictures: 1) your APPROVED image (identical to the one you just uploaded), 2) BEFORE = the game's current default build, 3) NEW = the real game today with ?match05=1 (all saved improvements recovered, specialists' new work not yet in).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T01:21:07.228Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/references/05_flow_into_the_current.png → file_uuid: 8889aec7-21d0-454b-b287-b89786d7b2ac
+>   /home/user/rainbow-/qa/pilot05/current_default_05.png → file_uuid: 14aaf535-e43e-4039-9dc0-1a2abd9075f8
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png → file_uuid: da220c48-6cb5-458f-a894-c385ccefd0a3
+
+### 🤖 Claude — 2026-11-17T01:21:36.660Z
+
+**Can it match your approved Screen 05?** I'm working toward it, but I can't promise 90–95 % yet. The image you uploaded is identical, pixel for pixel, to the approved target the project already uses, so the target hasn't changed.
+
+The real game with all saved improvements (`?match05=1`) currently has **57.0 % of pixels within 20 colour levels** of your image. That is a strict pixel measure, not a visual-quality score. The water (89 %) and foam banks (93 %) are already close. The big gaps are the purple tunnel walls (21 %), Benny and his hat (26 %), the splash behind Benny (38 %) and the coins (30 %). The three specialists now running are working on those, and I'll only report numbers I've measured.
+
+I've sent you three separate full-size pictures: your approved image, the current default game (BEFORE), and the game today with `?match05=1` (NEW).
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+1. **Source:** `claude/rainbow-restore-env-setup-bxn85h`, newest commit `9c50d67`. It was one commit past your `4a19ed9` and held only backup logs. I recovered it into the new branch and left the source branch untouched (it's now protected).
+2. **New working branch:** `claude/rainbow-account-transfer-npxahd` at `f06242b4a282ac3813c3350d995445822ed6c9b8`. `git ls-remote` on GitHub shows the same SHA.
+3. **Blender 5.3.0:** at first the download was blocked, because this account had no Rainbow cloud environment. With your approval I created a personal `rainbow-` environment, then installed Blender. `blender --version` and `bpy` work, and real renders passed: Workbench 2.2 s, EEVEE 13.3 s, Cycles 0.4 s.
+4. **Blender files and GLBs:**
+   - All 7 `.blend` files open.
+   - `benny.glb` (27 meshes) and `rainbow_girl.glb` (165) import; `lids05.glb` imports with all 6 paddles.
+   - GLB export→reimport is geometry-identical.
+   - Your project's scripts work: the paddle-geometry script rebuilt `lids05.glb` byte-identical, the tunnel texture bake reproduced the game textures exactly, and the camera-lock script passed.
+5. **Blender MCP:** not connected. It needs a desktop Blender, which this headless cloud container can't run. Blender's command line plus Python is the working integration.
+6. **GitHub MCP:** works; it lists all 27 branches, and pushes are verified.
+7. **Playwright MCP:** connected; headless Chromium 153 has WebGL2 (software rendering).
+8. **Android:** SDK 34, build-tools 34, Java 21 and Gradle are installed and checked. The APK has not been built yet; that's the last Screen 05 step.
+9. **Ten specialists:** all ten definitions are present and unchanged (fingerprints checked).
+10. **Three specialists relaunched, now running:** tunnel/environment, Benny, and HUD/coins. Each continues from its saved notes' "Remaining" list, not from scratch. Their briefs and status files are updated, so another account can resume them the same way.
+11. **Five-minute autosave:** running and saving to the new branch; local and GitHub match. Git LFS has 34/34 real files, all confirmed on GitHub. Your 13 approved reference images are byte-identical.
+12. **`?match05=1` capture:** identical to the previous account's last result, so no work was lost. The default build and your protected BEFORE also reproduce their saved pictures exactly. Known defects still open, which the specialists are fixing:
+    - side paddles misplaced;
+    - distant tunnel worse than before;
+    - torn wall-texture edges;
+    - beanie stripes flat (no knit yet);
+    - coin trail too short;
+    - splash and bubble work not started yet.
+13. **What's not connected:** none of these need your login for Screen 05.
+    - Context7, a documentation lookup Rainbow doesn't use, fails to connect.
+    - World Labs MCP is disabled for this project, and its API host isn't allowed. No key was requested and no credits were spent.
+
+**Problem I caused and fixed:** while testing the paddle-geometry script, it re-saved one Blender project file, `lids05.blend`. Pushing that file needed GitHub's large-file host `lfs.github.com`, which the new environment blocked, so two autosaves (from 01:18 UTC) stayed local only. After you approved adding that host, the backlog pushed and was verified. I also restored the original `lids05.blend`.
+
+**Automatic startup:** the `rainbow-` environment now allows `download.blender.org`, `dl.google.com` and `lfs.github.com`. Its saved setup script installs Blender and the Android SDK before Claude starts. The script is still untested on a brand-new container; it first runs when a fresh session starts on this environment. No branches are merged automatically. To skip the branch fix-up step in future, start new sessions on the `rainbow-` environment and the newest branch, or make that branch the GitHub default.
+
+Nothing gets promoted to the default game until you approve the full-screen picture. I'll show you the next approved | BEFORE | NEW set when the specialists report back with measured results.
+
+### 🧑 User — 2026-11-17T01:21:38.512Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
