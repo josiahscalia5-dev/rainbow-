@@ -66,3 +66,14 @@ HUD/title (game-drawn, same design). These are pixel statistics, not a "fidelity
 * The projected look is strongest near the locked view; farther along, the tube relies on the ring tiles (less detail
   than the painting, but no smears).
 * No phone test (no device in the cloud).
+
+## MILESTONE 2 (round 4, 2026-11-17) — moving-view fixes
+Kept set: `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1` (details + verdicts: `STATUS.md`).
+* `m07wall` → `assets/textures/match07/tile_wall_clean.png`: the painted paddle rows of the ring-bay tile replaced by the
+  perforated wall from just below (feathered) + a small inpaint at its tip.
+* `m07river` → `tile_river_clean.png`: orange/gold hues of the river tile recoloured to the pink bank hue (brightness kept).
+* `m07fill` → `plate07_fillmask_soft.png`: the fill mask eroded + blurred, clipped to the original mask (fades only inside).
+* `m07gold`: paddles take the picture only within ~14° of the approved view direction, else solid polished gold.
+* `m07coins` (`src/gameplay/coins.ts`): two far trail coins at lateral 0.42 / 1.82, scale 0.45 (`m2/coins/probe_m07coins.json`).
+* `m07ang`: tested in round 3, no visible effect → not kept (code stays, off).
+Pictures: `m2r4/pictures/1_APPROVED_07.png`, `2_BEFORE_M1_07.png`, `3_NEW_M2_07.png`; moving: `m2r4/motion_k5/`.
