@@ -7467,6 +7467,36 @@
    "sha256": "73d091620f3e562a9f7aa320754778f910d9d7c63a33395287b59b2aa61387b4"
   },
   {
+   "path": "qa/recordings/full_playthrough.mp4",
+   "bytes": 36019064,
+   "sha256": "b203680ae4e9a1f9ceb551fa0ed4b0950731f4dd77d9126408ab4dd3da8950b7"
+  },
+  {
+   "path": "qa/recordings/screen_01.mp4",
+   "bytes": 2163770,
+   "sha256": "9336c27c86d191498f3d276cb7061e590313c6101ed5256fdaf22e66576246a0"
+  },
+  {
+   "path": "qa/recordings/screen_02.mp4",
+   "bytes": 3728918,
+   "sha256": "b097d56a1633f79f535040916c364914fff9a18e910efaebc25de20aeeed9ca0"
+  },
+  {
+   "path": "qa/recordings/screen_03.mp4",
+   "bytes": 1591614,
+   "sha256": "6dcf89676ccae8cab095ca0d95700053d8cf008c1a207725995ca1f344084a23"
+  },
+  {
+   "path": "qa/recordings/screen_04.mp4",
+   "bytes": 2025884,
+   "sha256": "5356bc019310beff333f7d41f630de027fa2d19e55789d0afca8c30a735b2b8a"
+  },
+  {
+   "path": "qa/recordings/screen_05.mp4",
+   "bytes": 3407920,
+   "sha256": "df98b3dd46ca91e52ca8b0f137bb5d701d2274c66f87b1ffcc2b0bf298f7e91b"
+  },
+  {
    "path": "qa/recordings/screen_08_preferred_match08.json",
    "bytes": 395,
    "sha256": "66183e5a6e302d4d7a7d4ab224c886c5841621205cdddd75dad5cad16502a0de"
