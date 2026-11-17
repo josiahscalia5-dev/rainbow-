@@ -945,3 +945,59 @@ Now writing STATUS.md, SHARED_CHANGES.md and the NOTES update.
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:milestone 2>&1 | tail -2; python3 -I scripts/autosave-status.py | head -1; git ls-remote origin refs/heads/claude/rainbow-s08-camclear-c2 | cut -c1-8; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s08-camclear-c3 | cut -f1", "description": "Final autosave and verification", "timeout": 300000}`
 
+### 🧑 User — 2026-11-17T18:02:39.724Z
+
+> ↩︎ result: "duration_s": 8
+> }
+> AUTOSAVE OK | branch claude/rainbow-s08-camclear-c3 | scheduler daemon | last verified backup 2026-11-17T18:02:30+00:00 (0.1 min ago) | local 67e07b0 remote 67e07b0 (match) | uncommitted 0
+> 57b6eb8a
+> 67e07b0706180e05b6523be534687cb2dfd17785
+> 67e07b0706180e05b6523be534687cb2dfd17785
+
+### 🤖 Claude — 2026-11-17T18:02:48.745Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCLi5xPVn25aRuxkVwK", "message": "S08 CAMERA (camclear) round 3: milestone done. Branch claude/rainbow-s08-camclear-c3 @ 67e07b07 (started from 57b6eb8a). Remote == HEAD verified, AUTOSAVE OK, 13 references OK.\nWHAT YOU'LL SEE NOW (match08=1&camclear=1):\n- 03→04 drain drop (your video, 7 s): before, a striped water sheet covered the whole screen and hid Benny 60–100 % for ~0.6 s. NEW fix: Benny stays in the frame all the way down the drain. The worst moment is a see-through water veil over up to half of him for ~0.4 s, then a clear view down the gold 04 tunnel.\n …[+1404 chars]`
+
+### 🧑 User — 2026-11-17T18:02:57.142Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T18:03:06.907Z
+
+I've done the round-3 milestone and pushed it: `claude/rainbow-s08-camclear-c3` @ `67e07b07`, started from `57b6eb8a`. The remote matches local, the five-minute autosave reports OK, and the 13 reference images are unchanged.
+
+**Compared with your phone recording** (with `match08=1&camclear=1`):
+- **03→04 drain drop (your 7 s):** this was the only blocker the newer builds still showed. A striped sheet of falling water filled the screen and hid Benny 60–100 % for about 0.6 s. With the new fix he stays in the frame all the way down. The worst moment left is a see-through water veil over up to half of him for about 0.4 s, then a clear view down the gold 04 tunnel.
+- **04 pink wall (8 s), 06 drum wall and gold band (18–20 s), 07 gold band filling the screen (35–36 s):** the earlier camclear work already removed these. At your 35 s, for example, the build is all gold, while camclear shows Benny with only 3 % of him hidden.
+- **08 (38–40 s):** the Screen 08 picture view comes in and holds while Benny rides into it. 09–11 look clean.
+
+**Moving through 07 → 08 → 09:** riding straight or steering right, no wall, ring or foam covers Benny. The worst frame (39 % at 43.75 s) is Benny cut off by the bottom edge of the screen at the top of the big drop, not something in front of him. Holding left the whole time makes Benny hit the wall and restart the level, which is the normal game rule.
+
+**Checks:**
+- Gameplay test passes 8/8 with 91 coins / 2,240, without the switch and with both switch combinations.
+- The 07→08 drop is unchanged at 61.19 u.
+- Without camclear, the match08 build is 0 px different at 8 moments, including your approved 08 view.
+- With camclear, that approved 08 view is also 0 px different. Elsewhere only the floating soap bubbles move, because they appear around the view.
+
+**Still open:**
+- The short water veil at the drain lip. Benny really passes through that water.
+- 07's gold ring bands still cross the upper screen, though they no longer cover Benny.
+- I matched your video to the game stage by stage, so the moments are close but not frame-exact.
+
+The APK `builds/rainbow-debug-08camclear-2026-11-17-r3.apk` has both switches built in. It is **not phone-tested**, since there is no device in the cloud. I sent the lead one status message and am now waiting; nothing here is approved until you approve it.
+
+Pictures:
+- Per moment: `qa/gameplay_video/compare_r3/<time>_1_video.png` (your video), `_2_build.png` (current build), `_3_camclear.png` (with the fix), each full size, plus `_side_by_side.png`.
+- Moving check: `qa/gameplay_video/moving_r3/sheet_steer0.png`, `sheet_steer1.png`, `sheet_steer-1.png`.
+
+Notes are in `qa/gameplay_video/STATUS.md` and `qa/gameplay_video/SHARED_CHANGES.md`.
+
+### 🧑 User — 2026-11-17T18:03:10.117Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
