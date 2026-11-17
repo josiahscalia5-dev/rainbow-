@@ -137,3 +137,14 @@ all in-progress specialist code present; every specialist change is behind its o
 | foam-bubbles-particles | `splash05m`, `bub05` | — (wave 2, never launched) | Benny's wake (order part 8) + approved bubbles as real 3D / sprites (part 11) | brief: COORDINATION table above |
 | android-build-performance | — | — (last) | experiment APK + performance (parts 18, 19) | |
 | reference-match-director / playwright-visual-qa | — | coordinator acts as both | full-frame audit + proof images after integration | |
+
+### Final stop before the transfer (~00:50 UTC) — all three specialists STOPPED cleanly (tsc clean, all behind switches)
+* env05: first env05 layout measured in a probe render (mean ring-edge error px STACK → env05): A 53.6 → 6.6, B 27.4 →
+  14.4, C 10.6 → 7.6, D 5.9 → 4.7; settings refined afterwards (not yet measured). `assets/textures/env05/` = re-laid-out
+  copy of the old atlases only (camera-projection bake NOT run). No env05 game capture yet → no region numbers yet.
+  Next: probe → `tools/env05/proj_bake.py` → capture; paddles onto the moved wall (`lids05e.glb`); see `env/NOTES.md` §4.
+* hud05: harness only (real hud.ts over the no-HUD capture of the same frame; reproduces the real capture's 62.23 with
+  the default HUD): HUD + text 62.2 → 24.76 mean |ΔRGB|, ≈ 13 % → 66 % within 20; whole frame ≈ 34.10 → 30.6. NOT yet
+  a real capture. coins05: 15 coins solved onto the course, approved face texture — NOT yet captured. See `hud/`, `coins/` NOTES.
+* benny05: geometry iteration (part IoU all 0.893 → 0.921, star bbox now 481–553 × 916–983 vs approved 481–553 × 916–984);
+  `benny/work/bake.py` written, NOT run → no baked maps, no look change yet. See `benny/NOTES.md` §4.

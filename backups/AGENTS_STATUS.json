@@ -3,46 +3,8 @@
  "schema": 1,
  "updated_utc": "2026-11-17 ~00:25 UTC",
  "updated_by_session": "session_018Sg3AUAHEh1rEALJbwfawQ (branch ccr-694bda6a-x58ntq) \u2014 ACCOUNT TRANSFER",
- "running_now": [
-  {
-   "agent": "washer-environment-modeler",
-   "switch": "env05",
-   "task": "Screen 05 full reference match: ring placement / walls / fittings / far tunnel (order parts 3-6, 12)",
-   "notes": "qa/pilot05/full_reference_match/env/NOTES.md",
-   "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
-   "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:25 UTC",
-   "done_at_transfer": "step A measured + ring fit; env05 code written (tube.ts warp, proj05Tunnel.ts, environment.ts E05); assets/textures/env05 NOT created yet",
-   "next": "steps a-f in env/NOTES.md (textures first)",
-   "relaunch": "brief qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
-  },
-  {
-   "agent": "benny-character-artist",
-   "switch": "benny05",
-   "task": "Screen 05 full reference match: Benny fur, knit beanie, pom-pom, star, proportions (order part 9)",
-   "notes": "qa/pilot05/full_reference_match/benny/NOTES.md",
-   "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
-   "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:25 UTC",
-   "done_at_transfer": "measured; geometry iteration r2 (IoU 0.915); benny05.ts / runtime.ts / fur.ts written; maps not baked",
-   "next": "steps 1-5 in benny/NOTES.md (iteration 3, bake.py, maps)",
-   "relaunch": "brief qa/pilot05/full_reference_match/briefs/benny-character-artist.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
-  },
-  {
-   "agent": "animation-and-gameplay-engineer",
-   "switch": "hud05, coins05",
-   "task": "Screen 05 full reference match: HUD + banner (part 13), coins look + locked layout (part 10)",
-   "notes": "qa/pilot05/full_reference_match/hud/NOTES.md, coins/NOTES.md",
-   "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
-   "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "INTERRUPTED at the account transfer 2026-11-17 ~00:25 UTC",
-   "done_at_transfer": "HUD measured + hud05 markup/CSS/sprites written; 15 coins measured + solved (C05M), coin face texture; no real capture yet",
-   "next": "hud/NOTES.md + coins/NOTES.md Remaining lists",
-   "relaunch": "brief qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
-  }
- ],
  "assignments_now": {
-  "_note": "State at 2026-11-17 ~00:25 UTC: ACCOUNT TRANSFER. The three running_now specialists are INTERRUPTED; each wrote a checkpoint NOTES.md. New account: backups/HANDOFF_NEW_ACCOUNT.md, then COORDINATION.md section \"STATE AT ACCOUNT TRANSFER 2026-11-17\", relaunch each from its brief + NOTES.md.",
+  "_note": "State at 2026-11-17 ~00:25 UTC: ACCOUNT TRANSFER. The three specialists in stopped_at_transfer were STOPPED cleanly; each wrote a checkpoint NOTES.md. New account: backups/HANDOFF_NEW_ACCOUNT.md, then COORDINATION.md section \"STATE AT ACCOUNT TRANSFER 2026-11-17\", relaunch each from its brief + NOTES.md.",
   "coordinator (main session)": "DONE: projvp05 + projgap05 (dark torn streaks, E-layer gaps, blending) measured, coordinator/NOTES.md. NEXT: gaps > 100 rows, riding contrast, then integrate all switches and produce the order deliverables (03_NEW, 04_DIFFERENCE, 05_OVERLAY, VISUAL_AUDIT.md, metrics JSON)",
   "foam-bubbles-particles": "WAVE 2, not launched yet: splash05m (Benny wake, order part 8) + bub05 (approved bubbles as real 3D / sprites, part 11). Files riderSplash.ts, bubbles.ts, foam.ts, spray.ts; folder qa/pilot05/full_reference_match/splash_bubbles/",
   "android-build-performance": "LAST: experiment APK + performance after the visual parts are in (order parts 18, 19)",
@@ -202,5 +164,44 @@
   "next_instructions": "qa/pilot05/proj/BRIEF_NEXT.md",
   "locked_result": "approved-water pixels within 20 levels 25.9% -> 93.4% (96.8% without the T2-ring-covered corners), SSIM 0.31 -> 0.92, mean 46.1 -> 8.7",
   "checks": "default pixel-identical; 06/07 identical with proj05; gameplay 8/8; continuity OK; relative frame cost 0.98x"
- }
+ },
+ "stopped_at_transfer": [
+  {
+   "agent": "washer-environment-modeler",
+   "switch": "env05",
+   "task": "Screen 05 full reference match: ring placement / walls / fittings / far tunnel (order parts 3-6, 12)",
+   "notes": "qa/pilot05/full_reference_match/env/NOTES.md",
+   "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
+   "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
+   "state": "STOPPED cleanly for the account transfer (~00:50 UTC 2026-11-17); final notes written; relaunch from brief + NOTES.md",
+   "done_at_transfer": "step A measured + ring fit; env05 code written (tube.ts warp, proj05Tunnel.ts, environment.ts E05); assets/textures/env05 NOT created yet",
+   "next": "steps a-f in env/NOTES.md (textures first)",
+   "relaunch": "brief qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
+  },
+  {
+   "agent": "benny-character-artist",
+   "switch": "benny05",
+   "task": "Screen 05 full reference match: Benny fur, knit beanie, pom-pom, star, proportions (order part 9)",
+   "notes": "qa/pilot05/full_reference_match/benny/NOTES.md",
+   "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
+   "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
+   "state": "STOPPED cleanly for the account transfer (~00:50 UTC 2026-11-17); final notes written; relaunch from brief + NOTES.md",
+   "done_at_transfer": "measured; geometry iteration r2 (IoU 0.915); benny05.ts / runtime.ts / fur.ts written; maps not baked",
+   "next": "steps 1-5 in benny/NOTES.md (iteration 3, bake.py, maps)",
+   "relaunch": "brief qa/pilot05/full_reference_match/briefs/benny-character-artist.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
+  },
+  {
+   "agent": "animation-and-gameplay-engineer",
+   "switch": "hud05, coins05",
+   "task": "Screen 05 full reference match: HUD + banner (part 13), coins look + locked layout (part 10)",
+   "notes": "qa/pilot05/full_reference_match/hud/NOTES.md, coins/NOTES.md",
+   "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
+   "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
+   "state": "STOPPED cleanly for the account transfer (~00:50 UTC 2026-11-17); final notes written; relaunch from brief + NOTES.md",
+   "done_at_transfer": "HUD measured + hud05 markup/CSS/sprites written; 15 coins measured + solved (C05M), coin face texture; no real capture yet",
+   "next": "hud/NOTES.md + coins/NOTES.md Remaining lists",
+   "relaunch": "brief qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
+  }
+ ],
+ "running_now": []
 }
