@@ -492,3 +492,412 @@ Step 2 in progress: the fal plate shows no brown marks where coins were removed.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T17:41:43.821Z
+
+Tiles look right. Now wiring the new river into the shader behind `&river04` (on by default under match04, `&river04=0` = milestone 2).
+
+### 🤖 Claude — 2026-11-17T17:41:55.086Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match04.ts'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a; s=s.replace(a,b)\nrep(\"\"\"uniform float uMoved;         // 0 in the approved view, 1 once the camera has moved away from it\n\"\"\",\"\"\"uniform float uMoved;         // 0 in the approved view, 1 once the camera has moved away from it\nuniform float uR3;            // milestone 3 river (&river04=0 = milestone 2): swirl tile from the painted water around Benny\nuniform sampler2D uRiv3;      //   tile_river3.png (pink ribbons, cyan streams, foam banks)\nuniform …[+2616 chars]`
+
+### 🧑 User — 2026-11-17T17:41:57.454Z
+
+> ↩︎ result: 193:  const riv3A = new THREE.Vector4(r3.lateral[1], r3.alongFromBenny[0], r3.alongFromBenny[1] - r3.alongFromBenny[0], 0);
+> 199:      uR3: { value: RIVER04 ? 1 : 0 }, uRiv3: { value: tRiv3 }, uRiv3A: { value: riv3A } },
+> 210:  const T = L.tube;
+> 213:  riv3A.w = T.mouthS;
+> TSC OK
+
+### 🤖 Claude — 2026-11-17T17:42:02.337Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && node scripts/capture.mjs 04 --q=match04=1 --out=$S/v2/m3 2>&1 | tail -1; git checkout -- qa/capture_log.json; python3 -I $S/pxdiff.py qa/match/04/04_NEW_m2_fal04_864x1536.png $S/v2/m3/04.png; node tools/match04/motion04.mjs $S/v2/motion match04=1 2>&1 | tail -8", "description": "Capture approved view and riding frames with new river", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T17:42:44.171Z
+
+> ↩︎ result: 04 → /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v2/m3/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":47,"tris":170432,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> ['m3', '04.png']: 4 px differ (all), 4 below y0, max 34
+> f00_checkpoint s 77.811 lat 0 04 coins 1330
+> f03_forward3u s 80.645 lat 0 04 coins 1330
+> f06_forward6u s 83.576 lat 0 04 coins 1330
+> f10_forward10u s 87.673 lat 0 04 coins 1330
+> f15_forward15u s 92.9 lat 0 04 coins 1330
+> f20_forward20u s 97.688 lat 0 04 coins 1330
+> s_left_steer s 83.613 lat -1.65 04 coins 1350
+> s_right_steer s 83.744 lat 1.65 04 coins 1330
+
+### 🤖 Claude — 2026-11-17T17:42:46.942Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v2/motion && montage f03_forward3u.png f06_forward6u.png f10_forward10u.png f15_forward15u.png f20_forward20u.png s_left_steer.png s_right_steer.png -tile 7x1 -geometry 320x569+2+2 ../strip.png", "description": "Montage new riding frames"}`
+
+### 🧑 User — 2026-11-17T17:42:47.643Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T17:42:48.148Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v2/strip.png"}`
+
+### 🧑 User — 2026-11-17T17:42:48.341Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:42:48.322Z
+
+[Image: original 2268x573, displayed at 2000x505. Multiply coordinates by 1.13 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:42:52.965Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v2/motion/f15_forward15u.png"}`
+
+### 🧑 User — 2026-11-17T17:42:53.007Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:43:13.071Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && mkdir -p qa/match/04/motion_m3/step2_river && cp $S/v2/motion/*.png $S/v2/motion/motion.json qa/match/04/motion_m3/step2_river/ && cat >> qa/match/04/NOTES.md <<'EOF'\n### Step 2 — approved river colours while riding (`&river04=0` = milestone-2 river), on by default under match04\n* Cause: the riding fallback `tile_river.png` was cut from the narrow river INSIDE the tunnel (9.5–14.8 u), which the\n  picture paints almost plain cyan. New `tools/match04/make_river04_m3.py` → `tile_river3.png`: the …[+1600 chars]`
+
+### 🧑 User — 2026-11-17T17:43:17.094Z
+
+> ↩︎ result: 7eb571ec096db11df9f4ceb0a248c8efa21df067	refs/heads/claude/rainbow-s04-match-c3
+> 7eb571ec096db11df9f4ceb0a248c8efa21df067
+
+### 🤖 Claude — 2026-11-17T17:43:27.690Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match04.ts'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a; s=s.replace(a,b)\nrep(\"\"\"uniform float uR3;\"\"\",\"\"\"uniform vec2 uKeep;           // stretch-guard hand-over (milestone 2: 2.5..6; milestone 3 tunnel wall: earlier, sharper rings)\nuniform float uR3;\"\"\")\nrep(\"\"\"float keep = 1.0 - smoothstep(2.5, 6.0, mag);\"\"\",\"\"\"float keep = 1.0 - smoothstep(uKeep.x, uKeep.y, mag);\"\"\")\nrep(\"\"\"const tex = (f: string)\"\"\",\"\"\"// milestone 3: the tunnel wall hands over from the (soft, glowy when magni …[+1109 chars]`
+
+### 🧑 User — 2026-11-17T17:43:50.356Z
+
+> ↩︎ result: TSC OK
+> f20 s 97.638 lat 0 04 coins 1330
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T17:43:52.177Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v3/a.png"}`
+
+### 🧑 User — 2026-11-17T17:43:52.669Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:43:56.264Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v3/a/f15.png"}`
+
+### 🧑 User — 2026-11-17T17:43:56.310Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:43:59.904Z
+
+The rings are now crisp ring lines all the way down instead of a glowy haze. Checking the approved view and measuring the sharpness.
+
+### 🤖 Claude — 2026-11-17T17:44:05.370Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && python3 -I $S/pxdiff.py qa/match/04/04_NEW_m2_fal04_864x1536.png $S/v3/a/f00.png; python3 -I $S/pxdiff.py qa/match/04/motion_m2/NEW_fal04/f00_checkpoint.png $S/v3/a/f00.png; cat > $S/sharp.py <<'EOF'\nimport sys, numpy as np, cv2\nfor f in sys.argv[1:]:\n    g=cv2.imread(f,0).astype(np.float32)[200:900, 60:800]   # tunnel area above Benny/river\n    lap=cv2.Laplacian(g,cv2.CV_32F); gx=cv2.Sobel(g,cv2.CV_32F,1,0); gy=cv2.Sobel(g,cv2.CV_32F,0,1)\n    print(f.split('scratchpad/')[-1] if 'scratchpad …[+452 chars]`
+
+### 🧑 User — 2026-11-17T17:44:06.369Z
+
+> ↩︎ result: ['a', 'f00.png']: 1211956 px differ (all), 1211956 below y0, max 255
+> ['a', 'f00.png']: 1094328 px differ (all), 1094328 below y0, max 255
+> qa/match/04/motion_m3/step2_river/f10_forward10u.png laplacian var 44.2  mean gradient 18.56
+> v3/a/f10.png laplacian var 40.7  mean gradient 19.44
+> qa/match/04/motion_m3/step2_river/f15_forward15u.png laplacian var 44.8  mean gradient 16.72
+> v3/a/f15.png laplacian var 59.3  mean gradient 24.15
+> qa/match/04/motion_m3/step2_river/f20_forward20u.png laplacian var 23.8  mean gradient 16.95
+> v3/a/f20.png laplacian var 81.7  mean gradient 25.57
+> qa/match/04/motion_m3/step2_river/f00_checkpoint.png laplacian var 253.4  mean gradient 51.06
+
+### 🤖 Claude — 2026-11-17T17:44:11.173Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && python3 -I $S/pxdiff.py qa/match/04/motion_m3/step2_river/f00_checkpoint.png $S/v3/a/f00.png; node scripts/capture.mjs 04 --q=match04=1 --out=$S/v3/cap 2>&1 | tail -0; git checkout -- qa/capture_log.json; python3 -I $S/pxdiff.py qa/match/04/04_NEW_m2_fal04_864x1536.png $S/v3/cap/04.png", "description": "Compare approved-view captures before/after ring change", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:44:23.161Z
+
+> ↩︎ result: ['a', 'f00.png']: 1063208 px differ (all), 1063208 below y0, max 255
+> ['cap', '04.png']: 4 px differ (all), 4 below y0, max 34
+
+### 🤖 Claude — 2026-11-17T17:44:27.274Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && convert qa/match/04/motion_m3/step2_river/f00_checkpoint.png $S/v3/a/f00.png +append -resize 50% $S/v3/f00cmp.png", "description": "Side-by-side of checkpoint frames"}`
+
+### 🧑 User — 2026-11-17T17:44:27.590Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:44:28.372Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v3/f00cmp.png"}`
+
+### 🧑 User — 2026-11-17T17:44:28.406Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:44:39.633Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && mkdir -p qa/match/04/motion_m3/step3_rings && for f in f10 f15 f20; do cp $S/v3/a/$f.png qa/match/04/motion_m3/step3_rings/${f}_forward${f#f}u.png; done && cat >> qa/match/04/NOTES.md <<'EOF'\n### Step 3 — sharper far rings (`&rings04=0` = milestone 2; `&keep04=a,b` test override), on by default under match04\n* Cause: deep in the tunnel the rings ahead still came from the approved picture's FAR rings, magnified 2–2.5× (soft,\n  glowy haze). The tunnel wall now hands over from the projection to  …[+1092 chars]`
+
+### 🧑 User — 2026-11-17T17:44:43.234Z
+
+> ↩︎ result: 9d6785232d1b32e2f854b2aa032536ca42ff6d94	refs/heads/claude/rainbow-s04-match-c3
+> 9d6785232d1b32e2f854b2aa032536ca42ff6d94
+
+### 🤖 Claude — 2026-11-17T17:44:44.708Z
+
+Step 4: the approved splash under Benny. Looking at how Screen 08's splash card was done.
+
+### 🤖 Claude — 2026-11-17T17:44:45.504Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"splash08\" src tools | head; grep -rn \"splash08\" src | head -20", "description": "Find the splash08 implementation"}`
+
+### 🧑 User — 2026-11-17T17:44:45.535Z
+
+> ↩︎ result: src/world/match08.ts
+> src/world/match08.ts:194:  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => r.json());
+> src/world/match08.ts:195:  const spTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/splash08.png', import.meta.url).href);
+
+### 🤖 Claude — 2026-11-17T17:44:47.645Z
+
+> 🔧 **Bash** `{"command": "sed -n 180,240p src/world/match08.ts; grep -n \"splash\\|benny\\|Benny\" src/world/match08.ts | head -30; cat assets/textures/match08/splash08.json; ls tools/match08/ | grep -i spl; grep -n \"m08\\.\\|m04\\.\" src/game/Game.ts | head -20", "description": "Read splash08 code and Game hooks"}`
+
+### 🧑 User — 2026-11-17T17:44:47.688Z
+
+> ↩︎ result: add(new THREE.BoxGeometry(T.w, T.h, T.d, 4, 4, 4).translate(T.cx, T.y0 + T.h / 2, T.cz), M.towel, 'towel');
+>   // four half-dome spouts (flat perforated underside down)
+>   for (const [k, s] of Object.entries(L.spouts)) {
+>     const dome = new THREE.SphereGeometry(1, 48, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+>     const cap = new THREE.CircleGeometry(1, 48).rotateX(Math.PI / 2);
+>     for (const [g, nm] of [[dome, 'dome'], [cap, 'under']] as const) {
+>       const o = add(g, M.gold, `spout_${k}_${nm}`);
+>       o.scale.set(s.rx, s.ry, s.rx);
+>       o.position.set(...s.c);
+>     }
+>   }
+> 
+>   // Benny's splash ring, cut from the ORIGINAL approved picture (white crest + droplets around his base; alpha = white,
+>   // low saturation): a card that rides with him, facing the camera, 1.3 u in front of his centre
+>   const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => r.json());
+>   const spTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/splash08.png', import.meta.url).href);
+>   spTex.colorSpace = THREE.NoColorSpace;
+>   const splash = new THREE.Mesh(new THREE. …[+3663 chars]
+
+### 🤖 Claude — 2026-11-17T17:44:49.995Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"splash08\" tools scripts | head; sed -n 550,565p src/game/Game.ts", "description": "Find splash08 maker and Game placement code"}`
+
+### 🧑 User — 2026-11-17T17:44:50.025Z
+
+> ↩︎ result: const hk = m08On ? M08_BENNY.hat : 1;
+>       b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
+>       if (b08.aux) {
+>         const off = new THREE.Vector3(m08On ? M08_BENNY.dx : 0, m08On ? M08_BENNY.lift : 0, 0).applyQuaternion(benny.root.quaternion.clone().invert());
+>         b08.aux.position.copy(b08Rest.pos).add(off);
+>       }
+>       const cm = b08.crown?.material as THREE.MeshStandardMaterial | undefined;
+>       // (the ported benny05 maps carry the approved knit colours: no crown tint any more, the rest colour is kept)
+>       cm?.color.copy(b08Rest.crown);
+>       m08.splash.visible = m08On;
+>       if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+>     }
+>     fill.position.copy(camera.position);
+>     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+>   };
+
+### 🤖 Claude — 2026-11-17T17:44:54.699Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && convert references/04_through_the_five_arrows.png -crop 600x400+120+1120 $S/splcrop.png", "description": "Crop approved area below Benny"}`
+
+### 🧑 User — 2026-11-17T17:44:54.846Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:44:55.896Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/splcrop.png"}`
+
+### 🧑 User — 2026-11-17T17:44:55.921Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:45:05.437Z
+
+> 🔧 **Bash** `{"command": "cat tools/match04/bennypts04.mjs | head -40; python3 -I -c \"\nimport json;L=json.load(open('assets/textures/match04/proj04.json'));print(L['water']);c=json.load(open('assets/textures/match04/cam04_locked.json'));print({k:v for k,v in c.items() if k!='matrixWorld'})\"", "description": "Inspect Benny probe tool and camera data"}`
+
+### 🧑 User — 2026-11-17T17:45:05.519Z
+
+> ↩︎ result: // read-only: world-space vertices (subsampled) of Benny's visible meshes at the 04 checkpoint + the course frame there,
+> // for the offline camera solve (tools/match04/solve_cam04.py). usage: node tools/match04/bennypts04.mjs [query] > out.json
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const q = process.argv[2] || '';
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5267);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   await page.evaluate(() => window.__rainbow.goto('04'));
+>   const out = await page.evaluate(() => {
+>     const R = window.__rainbow; const { scene, camera } = R.qa3d();
+>     let benny = null; scene.traverse((o) => { if (!benny && o.name === 'Benny') benny = o; });
+>     benny.updateWorldMatrix(true, true);
+>     const V = camera.position.constructor; const t = new V(); const pts = [];
+>     benny.traverse((o) => { if (!o.isMes …[+1671 chars]
+
+### 🤖 Claude — 2026-11-17T17:45:10.033Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && node tools/match04/bennypts04.mjs match04=1 > $S/bpts.json 2>/dev/null; python3 -I -c \"\nimport json;d=json.load(open('$S/bpts.json'));print(d['s'],d['root'],d['water'],d['cam'] if len(str(d['cam']))<400 else '')\"", "description": "Probe Benny root position at the 04 checkpoint", "timeout": 400000}`
+
+### 🧑 User — 2026-11-17T17:45:19.186Z
+
+> ↩︎ result: 77.413 [2.008272430465901, -21.89573584663209, -24.967918784482762] [2.0250246938326817, -22.173436542135942, -24.56445581827459]
+
+### 🤖 Claude — 2026-11-17T17:45:28.177Z
+
+Cutting the splash card from the approved picture (white crest + droplets around Benny's base) and placing it in front of Benny, like Screen 08's.
+
+### 🤖 Claude — 2026-11-17T17:45:39.738Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && cat > tools/match04/splash04.py <<'EOF'\n\"\"\"Screen 04 milestone 3: Benny's splash, cut from the ORIGINAL approved picture (white crest + droplets around his base;\nalpha = bright + low saturation, soft elliptical window that leaves out the foam banks and bubbles), as a camera-facing\ncard that rides with Benny (as splash08). Card placed so that in the locked approved camera it covers exactly the\npainted splash, 1.0 u in front of Benny's root along the view.\nusage: python3 -I tools/match04/s …[+2196 chars]`
+
+### 🧑 User — 2026-11-17T17:45:39.988Z
+
+> ↩︎ result: {
+>  "note": "Screen 04 approved splash around Benny (approved x140-624 y1262-1442, alpha = bright/low saturation in an ellipse), camera-facing card 1.0 u in front of Benny's root, offset from Benny's root at the 04 checkpoint",
+>  "offset": [
+>   0.03247794387389025,
+>   0.5410314546330177,
+>   0.8419152881995409
+>  ],
+>  "w": 2.138569355592259,
+>  "h": 0.7953357107574517,
+>  "alphaMean": 0.12895184755325317
+> }
+
+### 🤖 Claude — 2026-11-17T17:45:41.842Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/spl_view.png"}`
+
+### 🧑 User — 2026-11-17T17:45:41.869Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:45:48.969Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match04/splash04.py'; s=open(p).read()\ns=s.replace(\"al *= np.clip((1.0 - ell) / 0.25, 0, 1)\\n\",\"al *= np.clip((1.0 - ell) / 0.25, 0, 1)\\nal *= 1 - np.clip((xx - 0.80 * w) / (0.06 * w), 0, 1) * np.clip((yy - 0.55 * h) / (0.1 * h), 0, 1)   # foam-bank bubbles, lower right\\n\")\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && python3 -I tools/match04/splash04.py references/04_through_the_five_arrows.png assets/textures/match04 2.008272430465901,-21.89573584663209,-24.967918784482762 | …[+231 chars]`
+
+### 🧑 User — 2026-11-17T17:45:49.168Z
+
+> ↩︎ result: "note": "Screen 04 approved splash around Benny (approved x140-624 y1262-1442, alpha = bright/low saturation in an ellipse), camera-facing card 1.0 u in front of Benny's root, offset from Benny's root at the 04 checkpoint",
+>  "alphaMean": 0.1250809133052826
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+>   const m08 = MATCH['08'] ? await buildMatch08() : null;
+>   if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+>   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+>   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+>   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+>   const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().se …[+2868 chars]
+
+### 🤖 Claude — 2026-11-17T17:46:00.873Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert s.count(a)==1, (p,a); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/world/match04.ts', [\n(\"\"\"  sync(renderer: THREE.WebGLRenderer, w: number, h: number, camera?: THREE.Camera): void;\n}\"\"\",\"\"\"  sync(renderer: THREE.WebGLRenderer, w: number, h: number, camera?: THREE.Camera): void;\n  /** milestone 3: the approved splash around Benny (camera-facing card; Game places it at Benny + splashOffset); null = `&splash04=0` */\n  splash: THREE.Mesh | null;\n  splashOffset: T …[+2360 chars]`
+
+### 🧑 User — 2026-11-17T17:46:03.493Z
+
+> ↩︎ result: 566:    fill.position.copy(camera.position);
+> TSC OK
+
+### 🤖 Claude — 2026-11-17T17:46:07.596Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && node scripts/capture.mjs 04 --q=match04=1 --out=$S/v4/cap 2>&1 | tail -0; git checkout -- qa/capture_log.json; python3 -I tools/match04/metrics04.py references/04_through_the_five_arrows.png qa/match/04/04_NEW_m2_fal04_864x1536.png $S/v4/cap/04.png $S/v4/metrics.json 2>&1 | tail -25", "description": "Capture with splash card and measure vs M2", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:46:20.247Z
+
+> ↩︎ result: FULL                                   BEFORE  81.3 %  SSIM 0.812   NEW  81.8 %  SSIM 0.819
+> BELOWHUD                               BEFORE  88.9 %  SSIM 0.873   NEW  89.5 %  SSIM 0.882
+> SCENERY                                BEFORE  98.1 %  SSIM 0.973   NEW  98.2 %  SSIM 0.973
+> upper_room_ringtop_y200_560            BEFORE 100.0 %  SSIM 0.996   NEW 100.0 %  SSIM 0.996
+> middle_tunnel_arrows_coins_y560_960    BEFORE  96.9 %  SSIM 0.955   NEW  96.9 %  SSIM 0.955
+> lower_water_foam_y960_1536_noBenny     BEFORE  97.7 %  SSIM 0.970   NEW  97.7 %  SSIM 0.971
+> BENNY                                  BEFORE  21.1 %  SSIM 0.139   NEW  25.3 %  SSIM 0.207
+
+### 🤖 Claude — 2026-11-17T17:46:23.653Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && convert references/04_through_the_five_arrows.png -crop 600x400+120+1120 qa/match/04/04_NEW_m2_fal04_864x1536.png -crop 600x400+120+1120 $S/v4/cap/04.png -crop 600x400+120+1120 +append $S/v4/splcmp.png", "description": "Crop approved, M2, new splash area side by side"}`
+
+### 🧑 User — 2026-11-17T17:46:23.968Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:46:24.896Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v4/splcmp.png"}`
+
+### 🧑 User — 2026-11-17T17:46:24.933Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:46:28.698Z
+
+The splash shows around Benny's base as in the approved picture. Whole frame 81.3 → 81.8 %, Benny area 21.1 → 25.3 %, scenery 98.1 → 98.2 %. Committing step 4, then step 5 (coins on the water).
+
+### 🤖 Claude — 2026-11-17T17:46:37.958Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && cp $S/v4/cap/04.png qa/match/04/04_NEW_m3_splash_864x1536.png && cp $S/v4/metrics.json qa/match/04/scenery_metrics_M2fal04_vs_M3splash.json && cat >> qa/match/04/NOTES.md <<'EOF'\n### Step 4 — the approved splash under Benny (`&splash04=0` = none), on by default under match04\n* `tools/match04/splash04.py` cuts the white crest + droplets around Benny's base from the APPROVED picture (x 140–624,\n  y 1262–1442; alpha = bright + low saturation inside an ellipse, foam-bank bubbles at the lower righ …[+1590 chars]`
+
+### 🧑 User — 2026-11-17T17:46:41.388Z
+
+> ↩︎ result: d93d65edd4e32ab715ad8a7243e844efb7d78c82	refs/heads/claude/rainbow-s04-match-c3
+> d93d65edd4e32ab715ad8a7243e844efb7d78c82
+
+### 🤖 Claude — 2026-11-17T17:46:45.989Z
+
+> 🔧 **Bash** `{"command": "cat tools/match04/coins04.py; grep -n \"coins04\\|match04\\|faceTo\" src/gameplay/coins.ts | head -20; python3 -I -c \"\nimport json;d=json.load(open('assets/textures/match04/coins04.json'))\nfor c in d['coins']: print(c['px'], round(c['s'],2), round(c['lat'],2), round(c['h'],2), round(c['scale'],2), round(c['dist'],2))\"", "description": "Read the coin placement tool and current coin data"}`
+
+### 🧑 User — 2026-11-17T17:46:46.096Z
+
+> ↩︎ result: """Screen 04 (?match04=1): the approved picture's five coins as real pickups at the painted spots.
+> Each painted coin (centre px, diameter px) is a ray from the locked camera; the coin (1 u diameter x scale) sits where
+> its painted size and its bottom edge on the water agree (bottom on the slide's water plane), expressed as course
+> s / lateral / height (coins.ts). usage: python3 -I tools/match04/coins04.py <proj04.json> <s of the cam04 water point> <out coins04.json>"""
+> import json, sys, math
+> import numpy as np
+> L = json.load(open(sys.argv[1])); s_cp = float(sys.argv[2])
+> W, H = L["camera"]["size"]; fov = L["camera"]["fov"]; t = math.tan(math.radians(fov) / 2); asp = W / H; F = (H / 2) / t
+> MW = np.array(L["camera"]["matrixWorld"]).reshape(4, 4).T; C = MW[:3, 3]; R = MW[:3, :3]
+> D, U, X, base = (np.array(L[k], float) for k in ("D", "U", "X", "water"))
+> def ray(u, v):
+>     d = R @ np.array([(u / W * 2 - 1) * t * asp, (1 - v / H * 2) * t, -1.0]); return d / np.linalg.norm(d)
+> COINS = [(175, 970, 112), (262, 872, 82), (330, 792, 58), (378, 742, 40), (423, 712, 26)]
+> out = []
+> for u, v, d in COINS:
+>     r = ray(u, v); best = None
+>     for k in np.arange(2, 80, 0.01):
+>         P = C + k * r; sc = d *  …[+3124 chars]
+
+### 🤖 Claude — 2026-11-17T17:46:55.312Z
+
+> 🔧 **Bash** `{"command": "grep -n \"radius\\|pick\\|dist\\|< 1\\|lat\" src/gameplay/coins.ts | sed -n 1,40p; grep -rn \"maxLat\\|LAT_MAX\\|latMax\\|clamp(.*lat\" src/game/*.ts src/gameplay/*.ts | head", "description": "Find coin pickup radius and lateral steering limit"}`
+
+### 🧑 User — 2026-11-17T17:46:55.350Z
+
+> ↩︎ result: 2: * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 17:export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 22: * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 23: * so their face reads as a slightly flattened disc with the rim visible underneath, as in the ref.
+> 26:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 28:function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
+> 36:  // latK < 1: the trail winds with the cyan core but stays inside its middle (the core half width is
+> 38:  for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
+> 43:  const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
+> 70:  // 08 — S toward the platform
+> 84:      return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
+> 88:      / …[+1121 chars]
+
