@@ -643,8 +643,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3864,
-   "sha256": "0ec097edcd0d0c398f45540f7e3693f525733cb120b9376a5405ea09ab45b3b3"
+   "bytes": 3867,
+   "sha256": "652a290b1950ad55f5baa9a98cf7c63f4f82a3f5eb7d03938e00dac0e8982729"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -653,8 +653,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11042,
-   "sha256": "828706a6b5436288480d80f06ae8d7379e5453cadb105679815e2c812e5b850a"
+   "bytes": 11051,
+   "sha256": "0cded8cc1f0d0b56e31e80208f8c19111e71e3136335ad902e47cb2b7e9d43fb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1118,8 +1118,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1236,
-   "sha256": "4c425d49a09b30db06ddb94a041e07a830dd4abdb829be0bb8d6e3fdd988827f"
+   "bytes": 1252,
+   "sha256": "befda5aa5b76d06ea6b025d6e33af15de47040fa0135f56bf3f75f4022320c5d"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1362,6 +1362,31 @@
    "sha256": "c2b30f78e3b7fb046f54a42e28295d093a2e1f6e8850e10dfaf229839075611b"
   },
   {
+   "path": "qa/match/06/06_BEFORE_current_game.png",
+   "bytes": 1504499,
+   "sha256": "688609e2f7481e102df6091dd7a697138d3600e2e37da1d29ce19404c57b62ee"
+  },
+  {
+   "path": "qa/match/06/06_BEFORE_screen_match.json",
+   "bytes": 536,
+   "sha256": "8bc8bc07d1451d86a7c86e180d97d54ce5ca10030b8160e295ce8f135284a907"
+  },
+  {
+   "path": "qa/match/06/06_NEW_match06.png",
+   "bytes": 2449363,
+   "sha256": "8c7434b00decb8b07667ce8679f0cbd6afc7b549154338c51b7eb79a931b8137"
+  },
+  {
+   "path": "qa/match/06/06_NEW_screen_match.json",
+   "bytes": 524,
+   "sha256": "058cbd54948e02e0e488b5d1a53a97a2abafa70aecff0024068cb4f7cb6d75e6"
+  },
+  {
+   "path": "qa/match/06/gameplay_test_match06.json",
+   "bytes": 14466,
+   "sha256": "2f4c66767161645b533dcfda73bf70519161c504f4a3c7bf629942e1ab6d8b4c"
+  },
+  {
    "path": "qa/match/06/motion/f00_checkpoint.png",
    "bytes": 2360638,
    "sha256": "08981a3fefb34cd0b5b4cfcc057aa09bfaebe26f013b9f6426ee6421ac21b017"
@@ -1412,9 +1437,19 @@
    "sha256": "09ac84f364d53f04a285012420a7ec3a72b33e95fd0725e68b9e9931fe31c2c4"
   },
   {
+   "path": "qa/match/06/proofs_r3.json",
+   "bytes": 621,
+   "sha256": "da32ba8c5d9dda824add2605419a905cc13b8872a84e9b3744ab27fc74c7c3c5"
+  },
+  {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
    "bytes": 6684,
    "sha256": "191567d369371ca4af86667a10439438230f65bed0db42d90efba8b7d340b43f"
+  },
+  {
+   "path": "qa/match/06/scenery_metrics_BEFORE_NEW.json",
+   "bytes": 1028,
+   "sha256": "782ebefe1fb92a9c83ff9abc2a02c3f3391fa462ef869cf320902ef40ec3e964"
   },
   {
    "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",
@@ -8360,6 +8395,11 @@
    "path": "tools/match06/make_tiles06.py",
    "bytes": 2556,
    "sha256": "ece142a788351d81df1f79becdb76c5212fbd2355deb1fac92281e8110b868f1"
+  },
+  {
+   "path": "tools/match06/measure06.py",
+   "bytes": 2563,
+   "sha256": "0165999262316bfeb398f22729de1205d6220b74bd41532012587e7ea3a5f45b"
   },
   {
    "path": "tools/match06/motion06.mjs",
