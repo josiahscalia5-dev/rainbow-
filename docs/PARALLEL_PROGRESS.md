@@ -5,7 +5,7 @@ branch `ccr-d4240b15-rl1i72` (contains `ccr-9c4a8ad6-xovgsx` @ `752d6d8`).
 **User order 2026-11-17 ~15:46 UTC (supersedes the earlier "save to ccr-9c4a8ad6-xovgsx"):** new session work goes to
 `ccr-d4240b15-rl1i72` and each specialist's own branch until the user has reviewed it; nothing unfinished is merged into
 the original project branch `ccr-9c4a8ad6-xovgsx`.
-Updated: 2026-11-17 ~15:50 UTC.
+Updated: 2026-11-17 ~15:58 UTC.
 
 ## User gameplay recording (received 15:45 UTC)
 `qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4` (trimmed: the last second showed the phone's
@@ -35,9 +35,9 @@ FINAL SPIN COMPLETE). Analysis: camera specialist, `qa/gameplay_video/NOTES.md` 
 | 08 camera / video | path-camera-transition-engineer (subagent, own worktree) | lead container | `claude/rainbow-s08-camclear` | started 15:34 UTC: reproduce the user's gameplay-video windows (7–9, 18–20, 34–37, 38–40, 40–47 s) | – | foam / washer geometry / gold structures obstructing the view (user video) | – | timeline per build, fix only what newer builds still show (`camclear=1`) | in development |
 | 08 integration | lead | lead container | `ccr-d4240b15-rl1i72` → `ccr-9c4a8ad6-xovgsx` | restore verified (see below) | 97.4 % scenery (method approved, screen NOT approved) | waits for the two 08 specialists | `1663b59` (autosave) | integrate, gameplay + steering, 91 coins, APK, full-size previews, motion comparisons | in development |
 | 04 Five Arrows | screen-04 cloud session `session_01AvQv6UQ9kzB2yfcESLZjUB` | own container | `claude/rainbow-s04-match` (from line A `752d6d8`) | started 15:37 UTC | audit today 6.4 % | everything (Phase 2) | – | MILESTONE 1: first `?match04=1` at the approved view + numbers + motion check | in development |
-| 05 Flow Into the Current | screen-05 cloud session `session_01AvQv6ShfugNq5opq6Bd1MX` | own container | `claude/rainbow-s05-match` (from line B `99ab17b`) | started 15:37 UTC | line B `?match05=1` 86.9 % whole frame | inventory of all 05 work first | – | MILESTONE 1: INVENTORY + one measured improvement | in development |
-| 06 Rinse Arch | not launched yet | – | – | – | audit 5.0 % | – | – | launch when 04/05 reach milestone 1 (shared usage limit; 08 has priority) | queued |
-| 07 Washer Tube | not launched yet | – | – | camera/ring measurements in `qa/match/07/` | audit 6.7 % | – | – | launch when 04/05 reach milestone 1 | queued |
+| 05 Flow Into the Current | screen-05 cloud session `session_01AvQv6ShfugNq5opq6Bd1MX` | own container | `claude/rainbow-s05-match` (from line B `99ab17b`) | MILESTONE 1 (15:56 UTC, `d979028`, verified by the lead): INVENTORY + `?tgtvis05=1` (approved water kept around Benny's hat/shoulders) | whole frame 87.8 % → **89.2 %** within 20 (SSIM 0.869 → 0.877), scenery 91.6 → 93.3 %, water 92.8 → 96.5 % | **match05 run has 100 coins / 2,330 — must become 91 / 2,240 before any integration**; teal patch beside Benny while riding; right wall chunk; bottom-left ring arc | `7336e72` | MILESTONE 2: coin total 91 / 2,240, moving quality, then wall/ring | in development (milestone 1 under review) |
+| 06 Rinse Arch | screen-06 cloud session `session_01AvQv6SAwTuXwWRiSwgKaoH` | own container | `claude/rainbow-s06-match` (from line A `752d6d8`) | started 15:57 UTC (after 05 reached milestone 1) | audit 5.0 % | everything (Phase 2); obstruction fixes stay with the camera specialist (`camclear`) | – | MILESTONE 1: first `?match06=1` at the approved view + numbers + motion check | in development |
+| 07 Washer Tube | not launched yet | – | – | camera/ring measurements in `qa/match/07/` | audit 6.7 % | – | – | launch when 04 reaches milestone 1 | queued |
 
 ## Restore verification (2026-11-17 ~15:25 UTC, this account)
 * Repository `josiahscalia5-dev/rainbow-`, branch `ccr-9c4a8ad6-xovgsx` @ `752d6d8` (contains `7694d2f` and the later

@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10195,
-   "sha256": "6b9ba1219ee0fd7646595a94be7c56c8e0ba8d12e6d1747cbece2ab1d4af03fd"
+   "bytes": 10191,
+   "sha256": "e96edcd8dab0673403ec5d5357cae0001871d15c667a521aac73eb52738d0feb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -713,8 +713,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 5798,
-   "sha256": "4ce020d98ecba76767574bc489ef4da3e664d17af2cbe6d7803c067f7411e586"
+   "bytes": 6412,
+   "sha256": "0212be50a98cf027be51cf4d81291fb36fc2644ac1ce1d7dfe8d54c003c0ad58"
   },
   {
    "path": "docs/characters/benny.md",

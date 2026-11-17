@@ -2049,3 +2049,178 @@ Fix the key path (report nests classes).
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 03 04 05 06 07 --q='match08=1' --out=$S/os_cur 2>&1 | grep -c \"→\" && node scripts/capture.mjs 03 04 05 06 07 --q='match08=1&bake08=1' --out=$S/os_new 2>&1 | grep -c \"→\"; git checkout -- qa/capture_log.json", "description": "Capture screens 03-07 with CURRENT and NEW maps", "timeout": 900000}`
 
+### 🧑 User — 2026-11-17T15:54:57.829Z
+
+> ↩︎ result: 5
+> 5
+
+### 🤖 Claude — 2026-11-17T15:55:06.804Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/osdiff.py", "content": "import sys\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nS = sys.argv[1]\nL = lambda p: np.asarray(Image.open(p).convert('RGB')).astype(float)\nREF = {'03': 'references/03_whirlpool_twirl.png', '04': 'references/04_five_arrows.png', '05': 'references/05_flow_into_the_current.png',\n       '06': 'references/06_rinse_arch.png', '07': 'references/07_washer_tube.png'}\nimport glob\nfor k in REF:\n    m = glob.glob(f'references/{k}_*.png')\n    if  …[+1183 chars]`
+
+### 🧑 User — 2026-11-17T15:55:06.823Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/osdiff.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:55:09.107Z
+
+> 🔧 **Bash** `{"command": "ls references/ && python3 -I /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/osdiff.py /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad", "description": "Quantify NEW vs CURRENT changes on 03-07"}`
+
+### 🧑 User — 2026-11-17T15:55:11.338Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> 03: changed px (>3 levels) 53824 (4.82 %), largest changed area box (np.int64(0), np.int64(629), np.int64(302), np.int64(964)) | mean RGB there CURRENT [220, 126, 211] NEW [220, 116, 205] | vs approved 03 in that box: mean 61.4 -> 61.5, <=20 15.0 -> 15.4 %
+> 04: changed px (>3 levels) 18798 (1.42 %), largest changed area box (np.int64(416), np.int64(691), np.int64(631), np.int64(851)) | mean RGB there CURRENT [229, 131, 201] NEW [227, 123, 197] | vs approved 04 in that box: mean 89.1 -> 89.9, <=20 1.8 -> 1.7 %
+> 05: changed px (>3 levels) 71290 (5.37 %), largest changed area box (np.int64(228), np.int64(877), np.int64(617), np.int64(1207)) | mean RGB there CURRENT [206, 100, 202] NEW [205, 91, 199] | vs approved 05 in that box: mean 57.2 -> 55.9, <=20 22.6 -> 25.0 %
+> 06: changed px (>3 levels) 133847 (10.09 %), largest changed area box (np.int64(108), np.int64(1075) …[+414 chars]
+
+### 🤖 Claude — 2026-11-17T15:55:18.488Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I $S/sbs.py $S/v/os05.png 200 850 650 1230 1.0 $S/os_cur/05.png $S/os_new/05.png $S/os_cur/03.png $S/os_new/03.png && python3 -I $S/sbs.py $S/v/os067.png 80 1060 640 1530 0.8 $S/os_cur/06.png $S/os_new/06.png $S/os_cur/07.png $S/os_new/07.png", "description": "Crops of Benny on 03/05/06/07 current vs new"}`
+
+### 🧑 User — 2026-11-17T15:55:19.187Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:55:21.516Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/os05.png"}`
+
+### 🧑 User — 2026-11-17T15:55:21.572Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:55:22.013Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/os067.png"}`
+
+### 🧑 User — 2026-11-17T15:55:22.044Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:55:27.534Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I $S/sbs.py $S/v/os03.png 0 620 320 980 1.0 $S/os_cur/03.png $S/os_new/03.png && python3 -I $S/sbs.py $S/v/os04.png 400 680 640 860 1.5 $S/os_cur/04.png $S/os_new/04.png", "description": "Crops of Benny on 03 and 04"}`
+
+### 🧑 User — 2026-11-17T15:55:27.889Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:55:29.942Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/os03.png"}`
+
+### 🧑 User — 2026-11-17T15:55:29.959Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:55:30.507Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/os04.png"}`
+
+### 🧑 User — 2026-11-17T15:55:30.525Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:55:37.420Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node tools/match08/motion08.mjs $S/mot_new 'match08=1&bake08=1' 2>&1 | tail -8 && node tools/match08/motion08.mjs $S/mot_cur 'match08=1' 2>&1 | tail -3", "description": "Motion frames on 08 with NEW and CURRENT maps", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T15:57:04.081Z
+
+> ↩︎ result: f00_checkpoint s 391.65 lat 0.00 08
+> f03_forward3u s 394.58 lat 0.00 08
+> f06_forward6u s 397.58 lat 0.00 08
+> f10_forward10u s 401.52 lat 0.00 08
+> f15_forward15u s 407.04 lat 0.00 09
+> s_left_steer s 398.00 lat -1.85 08
+> s_right_steer s 397.91 lat 1.85 08
+> f15_forward15u s 407.04 lat 0.00 09
+> s_left_steer s 397.89 lat -1.85 08
+> s_right_steer s 397.99 lat 1.85 08
+
+### 🤖 Claude — 2026-11-17T15:57:11.015Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I $S/sbs.py $S/v/mot_lr.png 60 760 800 1400 0.6 $S/mot_cur/s_left_steer.png $S/mot_new/s_left_steer.png $S/mot_cur/s_right_steer.png $S/mot_new/s_right_steer.png && python3 -I $S/sbs.py $S/v/mot_f.png 60 700 800 1450 0.6 $S/mot_cur/f06_forward6u.png $S/mot_new/f06_forward6u.png $S/mot_cur/f10_forward10u.png $S/mot_new/f10_forward10u.png", "description": "Crops of motion frames current vs new"}`
+
+### 🧑 User — 2026-11-17T15:57:12.020Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:57:14.240Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/mot_lr.png"}`
+
+### 🧑 User — 2026-11-17T15:57:14.275Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:57:14.763Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/mot_f.png"}`
+
+### 🧑 User — 2026-11-17T15:57:14.797Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:57:19.086Z
+
+> 🔧 **Bash** `{"command": "ls src/characters/benny/ && grep -n \"views\\|turntable\" src/characters/benny/benny-lab.html 2>/dev/null | head -10", "description": "Check for Benny lab page for 360 views"}`
+
+### 🧑 User — 2026-11-17T15:57:19.120Z
+
+> ↩︎ result: benny-lab.html
+> benny-lab.ts
+> benny05.ts
+> build.ts
+> fur.ts
+> runtime.ts
+> textures.ts
+
+### 🤖 Claude — 2026-11-17T15:57:21.416Z
+
+> 🔧 **Bash** `{"command": "grep -n \"views\\|turntable\\|__done\\|src=\" src/characters/benny/benny-lab.ts | head -20", "description": "Check lab page view options"}`
+
+### 🧑 User — 2026-11-17T15:57:21.451Z
+
+> ↩︎ result: 3: *   /src/characters/benny/benny-lab.html?src=build|glb&views=refs|turntable|game[&quality=low]
+> 4: * views=refs      → 3 portrait panels framed like the references: 05 rear (gameplay), 03 front 3/4, 02 dizzy
+> 5: * views=turntable → front / three-quarter / side / back / rear-high with full framing
+> 6: * views=game      → the stage-05 ride camera exactly as in Game/cameraRig (back 6.4, up 4.1, look 18 ahead
+> 16:declare global { interface Window { __done?: boolean; __error?: string; __info?: unknown } }
+> 20:// shape A/B: `&dims={"flat":0.6,"stretch":0.05}` overrides BENNY_DIMS before the procedural build (src=build only)
+> 44:    const views = q.get('views') ?? 'refs';
+> 47:      views === 'refs'
+> 53:        : views === 'measure'
+> 54:          ? // proportion check: rear views at the ride height (lifted) at 12° / 18° / 24° / 28° camera elevation,
+> 58:        : views === 'g05'
+> 72:        : views === 'game'
+> 88:    if (views === 'cmp') {
+> 105:    const g05 = views === 'g05';
+> 106:    const measure = views === 'measure' || g05;
+> 107:    const PW = g05 ? 864 : views === 'refs' || views === 'game' || views === 'cmp' || measure ? 432 : 360;
+> 108:    const PH = g05 ? 1536 : views === 'refs' || views === ' …[+352 chars]
+
+### 🤖 Claude — 2026-11-17T15:57:29.652Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/labviews08.mjs", "content": "#!/usr/bin/env node\n// benny08: 360-degree turntable of the REAL runtime Benny (canonical benny.glb + runtime) on the existing lab page\n// src/characters/benny/benny-lab.html (?src=glb&views=turntable), CURRENT maps (benny05) vs NEW maps (bake08).\n// Adapted copy of line B's qa/pilot05/full_reference_match/benny/work/labviews.mjs (read-only source).\n//   node qa/match/08/benny08/work/labviews08.mjs --out=DIR   ->  DIR/turntable_{CURRENT,NEW}.png\nimport { mkdir …[+1449 chars]`
+
+### 🧑 User — 2026-11-17T15:57:29.685Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/labviews08.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:57:31.254Z
+
+> 🔧 **Bash** `{"command": "node qa/match/08/benny08/work/labviews08.mjs --out=qa/match/08/benny08/views 2>&1 | tail -4", "description": "Render 360 turntables CURRENT vs NEW", "timeout": 600000}`
+

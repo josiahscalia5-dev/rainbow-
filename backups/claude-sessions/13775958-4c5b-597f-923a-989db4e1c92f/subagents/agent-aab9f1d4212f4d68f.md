@@ -2183,3 +2183,164 @@ Quick first look at the fix on the worst moments (07 plunge, 06, 03/04), BEFORE 
 
 [Image: original 2700x566, displayed at 2000x419. Multiply coordinates by 1.35 to map to original image.]
 
+### 🤖 Claude — 2026-11-17T15:54:40.720Z
+
+> 🔧 **Bash** `{"command": "ls assets/textures/match08/; python3 -c \"\nimport json; d=json.load(open('assets/textures/match08/cam08_locked.json')); print({k:(v if not isinstance(v,list) or len(v)<5 else v[:16]) for k,v in d.items()})\"", "description": "Inspect the locked 08 camera file"}`
+
+### 🧑 User — 2026-11-17T15:54:40.812Z
+
+> ↩︎ result: cam08_locked.json
+> coins08.json
+> patch_gold.png
+> patch_towel.png
+> patch_wall.png
+> plate08_clean.png
+> plate08_hybrid.png
+> proj08.json
+> river08.json
+> splash08.json
+> splash08.png
+> {'q': 'match08=1', 'st': {'stage': '08', 's': 391.4265062048909, 'y': -113.11179297539425}, 'mw': [0.9986080315163138, 0, -0.05274466220493558, 0, -0.008521755395209578, 0.9868618740267736, -0.16134131918807607, 0, 0.05205169618847186, 0.16156621426636333, 0.9854881934003769, 0, 12.848382064991654, -109.86620136268614, -274.80056164895825, 1], 'pm': [2.958719079734254, 0, 0, 0, 0, 1.664279482350518, 0, 0, 0, 0, -1.0000833368057, -1, 0, 0, -0.10000416684028501, 0], 'cam': [12.848, -109.866, -274.801], 'fwd': [-0.052, -0.162, -0.985], 'up': [0, 1, 0], 'fov': 62, 'aspect': 0.5625, 'benny': [12.213, -113.112, -282.091], 'bennyName': 'Benny', 'doorPx': [482.1, 412.2, 0.9983], 'platPx': [478.4, 577.9, 0.9981], 'quat': [-0.08102, 0.02629, 0.00214, 0.99636]}
+
+### 🤖 Claude — 2026-11-17T15:54:42.303Z
+
+Let me write a camera-trace tool to measure the 08 settle and the 03→04 / 06 camera positions frame by frame.
+
+### 🤖 Claude — 2026-11-17T15:54:56.406Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/camtrace.mjs", "content": "#!/usr/bin/env node\n// Per-frame (60 Hz) camera trace of the real game from app start: camera position / forward / up, Benny, stage, and\n// for Screen 08 the deviation from the approved (locked) 08 camera (assets/textures/match08/cam08_locked.json):\n// position error (u), view-direction error (deg), roll error (deg).\n// Usage: node tools/camclear/camtrace.mjs --q=match08=1 --t0=43 --t1=47 [--every=1] [--steerplan=t:v,...] --out=FILE\nimport { writeFileSync, readFileSync, m …[+3268 chars]`
+
+### 🧑 User — 2026-11-17T15:54:56.449Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/camtrace.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:54:59.919Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node tools/camclear/camtrace.mjs --q=match08=1 --t0=43.5 --t1=46.5 --every=3 --out=qa/gameplay_video/trace/08_before.json && python3 -c \"\nimport json; d=json.load(open('qa/gameplay_video/trace/08_before.json'))\nfor r in d['rows']: print(r['t'], r['stage'], round(r['s'],2), 'dpos', r.get('d08pos'), 'ddir', r.get('d08dir'), 'dup', r.get('d08up'), 'roll', r['roll'])\n\"", "description": "Trace camera vs approved 08 camera during 07-08-09", "timeout": 620000}`
+
+### 🧑 User — 2026-11-17T15:55:06.686Z
+
+> ↩︎ result: qa/gameplay_video/trace/08_before.json 61 rows
+> 43.5 07 379.87 dpos 9.448 ddir 43.92 dup 43.89 roll -0.13
+> 43.55 07 380.47 dpos 8.992 ddir 41.66 dup 41.63 roll -0.2
+> 43.6 07 381.07 dpos 8.561 ddir 39.2 dup 39.16 roll -0.28
+> 43.65 07 381.67 dpos 8.155 ddir 36.65 dup 36.6 roll -0.36
+> 43.7 07 382.27 dpos 7.76 ddir 34.08 dup 34.02 roll -0.42
+> 43.75 07 382.87 dpos 7.368 ddir 31.5 dup 31.41 roll -0.47
+> 43.8 07 383.47 dpos 6.972 ddir 28.95 dup 28.84 roll -0.5
+> 43.85 07 384.07 dpos 6.574 ddir 26.56 dup 26.42 roll -0.52
+> 43.9 07 384.67 dpos 6.17 ddir 24.34 dup 24.18 roll -0.52
+> 43.95 07 385.27 dpos 5.766 ddir 22.37 dup 22.17 roll -0.51
+> 44 07 385.86 dpos 5.362 ddir 20.57 dup 20.34 roll -0.51
+> 44.05 07 386.44 dpos 4.964 ddir 18.93 dup 18.66 roll -0.54
+> 44.1 07 387.02 dpos 4.565 ddir 16.99 dup 16.67 roll -0.54
+> 44.15 07 387.59 dpos 4.164 ddir 14.16 dup 13.83 roll -0.42
+> 44.2 07 388.15 dpos 3.741 ddir 10.87 dup 10.55 roll -0.21
+> 44.25 07 388.71 dpos 3.305 ddir 7.76 dup 7.49 roll 0
+> 44.3 07 389.25 dpos 2.867 ddir 5.16 dup 4.93 roll 0.13
+> 44.35 08 389.79 dpos 2.439 ddir 3.25 dup 3.07 roll 0.18
+> 44.4 08 390.32 dpos 2.025 ddir 1.99 dup 1.87 roll 0.16
+> 44.45 08 390.84 dpos 1.616 ddir 1.21 dup 1.14 roll 0.11
+> 44.5 08 39 …[+2277 chars]
+
+### 🤖 Claude — 2026-11-17T15:55:18.053Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad; V=/root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4; mkdir -p $SP/u30; ffmpeg -v error -y -ss 37.4 -i $V -t 2.6 -vf \"crop=720:1419:0:105,scale=180:-1\" $SP/u30/f_%04d.png; ls $SP/u30 | wc -l; python3 -I $SP/vsheet.py $SP/u30 $SP/u30_sheet.png 30 0 2.6 13", "description": "Extract 30 fps frames around the 07-08 transition"}`
+
+### 🧑 User — 2026-11-17T15:55:19.978Z
+
+> ↩︎ result: 78
+> /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/u30_sheet.png (2340, 2226)
+
+### 🤖 Claude — 2026-11-17T15:55:22.117Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/u30_sheet.png"}`
+
+### 🧑 User — 2026-11-17T15:55:25.166Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T15:55:25.161Z
+
+[Image: original 2340x2226, displayed at 1972x1876. Multiply coordinates by 1.19 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T15:56:01.904Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad; for v in 1 -1; do timeout 900 node tools/camclear/probe.mjs --q=match08=1 --t0=16.5 --t1=19.25 --dt=0.25 --size=180x355 --nometrics --steerplan=0:0,15:$v --out=$SP/st$v > /dev/null 2>&1; python3 -I tools/camclear/sheet.py $SP/st$v/probe.json $SP/st$v.png --cols=12; done", "description": "Try steering plans for the 03-04 transition", "timeout": 1900000}`
+
+### 🧑 User — 2026-11-17T15:56:43.303Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/st1.png (2160, 389) 12 frames
+> /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/st-1.png (2160, 389) 12 frames
+
+### 🤖 Claude — 2026-11-17T15:56:45.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/st1.png"}`
+
+### 🧑 User — 2026-11-17T15:56:45.562Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T15:56:45.558Z
+
+[Image: original 2160x389, displayed at 2000x360. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T15:56:45.901Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/st-1.png"}`
+
+### 🧑 User — 2026-11-17T15:56:46.038Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T15:56:46.029Z
+
+[Image: original 2160x389, displayed at 2000x360. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T15:57:08.175Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,90p src/world/course.ts; sed -n 180,200p src/world/environment.ts; grep -n \"r04 =\\|const r04\" src/world/environment.ts", "description": "Read basin funnel function and 04 pipe setup"}`
+
+### 🧑 User — 2026-11-17T15:57:08.210Z
+
+> ↩︎ result: '10': 'SLIDE INTO HIDING',
+>   '11': 'SAFELY HOME',
+> };
+> 
+> /** Fixed world anchors shared by environment builders (absolute coordinates). */
+> export const WORLD = {
+>   drumA: { center: new THREE.Vector3(0, 0, 0), radius: 5, zBack: -6.5, zDoor: 3.5, doorRadius: 3.2, waterY: -2.5 },
+>   basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY: -10.6, drainRadius: 4.3, drainY: -20.2 },
+>   /** Final Spin Chamber (08–11): drum with axis along Z, door at the far (-Z) end */
+>   chamber: { center: new THREE.Vector3(12, -101.1, 0), radius: 13.5, zBack: -280, zDoor: -332, floorY: -113.6, doorRadius: 6.2 },
+>   platform: { center: new THREE.Vector3(12, -110.6, -325.0), radius: 6.2, topY: -110.6 },
+>   plunge: { topY: -52, bottomY: -113.6 },
+> };
+> 
+> /** funnel surface height of the whirlpool basin as a function of radius from its axis */
+> export function funnelY(r: number): number {
+>   const b = WORLD.basin;
+>   const t = THREE.MathUtils.clamp((r - b.drainRadius * 0.6) / (b.rimRadius - b.drainRadius * 0.6), 0, 1);
+>   return b.drainY + (b.rimY - b.drainY) * Math.pow(t, 0.72);
+> }
+> 
+> const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z);
+> const smooth = (a: number, b: number, x: number) =>  …[+1617 chars]
+
+### 🤖 Claude — 2026-11-17T15:57:21.855Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node tools/camclear/camtrace.mjs --q=match08=1 --t0=16.0 --t1=19.0 --every=6 --steerplan=0:0,15:1 --out=qa/gameplay_video/trace/0304_before.json >/dev/null && python3 - <<'EOF'\nimport json, math\nd=json.load(open('qa/gameplay_video/trace/0304_before.json'))\ncx,cz=2,-19; rim=11.5; rimY=-10.6; dr=4.3; dy=-20.2\ndef fy(r):\n    t=min(1,max(0,(r-dr*0.6)/(rim-dr*0.6))); return dy+(rimY-dy)*t**0.72\nfor r in d['rows']:\n    c=r['cam']; b=r['benny']\n    rc=math.hypot(c[0]-cx,c[2]-cz); rb=math.hypot(b[0]-cx,b[2]-cz)\n    print(r['t'], r['stage'], round(r['s'],1), 'lat',r['l …[+245 chars]`
+
+### 🧑 User — 2026-11-17T15:57:28.875Z
+
+> ↩︎ result: 16 03 59.0 lat 2.95 cam r 5.25 y -8.26 above-funnel 8.36 | benny r 3.16 y -17.39 above 1.91 fwd [-0.253, -0.6389, -0.7265]
+> 16.1 03 59.9 lat 2.95 cam r 5.76 y -8.45 above-funnel 7.63 | benny r 3.51 y -17.69 above 1.07 fwd [-0.26, -0.6315, -0.7305]
+> 16.2 03 60.8 lat 2.671 cam r 6.26 y -8.72 above-funnel 6.85 | benny r 3.35 y -17.78 above 1.22 fwd [-0.2655, -0.6235, -0.7353]
+> 16.3 03 61.7 lat 2.84 cam r 6.71 y -9.02 above-funnel 6.12 | benny r 4.09 y -18.29 above -0.32 fwd [-0.27, -0.6147, -0.7411]
+> 16.4 03 62.6 lat 2.95 cam r 7.04 y -9.25 above-funnel 5.57 | benny r 4.50 y -18.57 above -1.10 fwd [-0.2719, -0.6059, -0.7476]
+> 16.5 03 63.5 lat 2.95 cam r 7.33 y -9.54 above-funnel 5.01 | benny r 4.42 y -18.56 above -1.00 fwd [-0.2712, -0.5974, -0.7547]
+> 16.6 03 64.4 lat 2.95 cam r 7.53 y -9.90 above-funnel 4.47 | benny r 3.21 y -17.66 above 1.57 fwd [-0.2685, -0.5888, -0.7624]
+> 16.7 03 65.3 lat 2.93 cam r 7.54 y -10.29 above-funnel 4.06 | benny r 2.09 y -16.85 above 3.80 fwd [-0.2686, -0.5952, -0.7573]
+> 16.8 03 66.2 lat 2.871 cam r 7.10 y -10.61 above-funnel 4.15 | benny r 1.46 y -16.32 above 4.33 fwd [-0.2932, -0.6588, -0.6928]
+> 16.9 03 67.2 lat 2.777 cam r 6.31 y -10.75 above-funnel 4.78 | ben …[+2758 chars]
+
