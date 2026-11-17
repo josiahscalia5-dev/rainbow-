@@ -1472,3 +1472,17 @@ Now the new Benny-05 module.
 > 840 APP 357-496 w140  GAME 355-484 w130
 > 855 APP  …[+923 chars]
 
+### 🤖 Claude — 2026-11-17T00:22:07.471Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  /** whole beanie lowered along the body's up axis */\n  drop: 0.028,\"\"\",\"\"\"  /** whole beanie lowered along the body's up axis */\n  drop: 0.028,\n  /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body */\n  shiftX: -0.028,\n  /** extra backward tilt of the beanie (rad, about X; − = top toward his back) */\n  tilt: 0,\n  /** crown dome shoulder taper (GLB build 0.18: r ∝ (1 − taper·t)); the approved do …[+2080 chars]`
+
+### 🧑 User — 2026-11-17T00:22:10.511Z
+
+> ↩︎ result: 21:import type { FurHandle, FurParams } from './fur';
+> 26:export const FUR05: Record<string, Partial<FurParams>> = {
+> rc=0
+
+### 🤖 Claude — 2026-11-17T00:22:14.717Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/r2 $W/probe/shot0.shot.js $W/probe/uv.js 2>&1 | grep -v missing | tail -3; python3 $W/geom.py $W/r2/uv.f32", "description": "Probe iteration 2 geometry", "timeout": 600000}`
+

@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "855ad0043d7725f5f82d085955758df4ec54c5fdc4c76c1c38b904d8f27ecca7"
+   "sha256": "9fe01639600f4f98be2e0fbccdd6d6961d7650ca7613374ce72975daffa84db1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1495,6 +1495,16 @@
    "path": "qa/pilot05/full_reference_match/benny/work/r1/uv_vis.png",
    "bytes": 77935,
    "sha256": "6289ea6af0cd538a2dff41a8277c677cbb7515fd90593d66b734765fadaf4dcb"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r2/shot0.png",
+   "bytes": 2179523,
+   "sha256": "24360084376b45cd13ec00a30f565fdd0012e6e5aaafcf155689fbcd3c2e0038"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r2/uv.f32",
+   "bytes": 3379200,
+   "sha256": "9702d4e1cecf7099d6a5dca45304f370e2a52ad7b2e96cfae3479701ca5c0ade"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/ref_classes.png",
@@ -8293,8 +8303,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 14529,
-   "sha256": "8718a5ae80d0d481076f8aaa9a0b06543df021236691a968211f3d8ab5be36a0"
+   "bytes": 14878,
+   "sha256": "ce4a3e42e27b1c55590edb1e804ca17a8ca2ca2e02019f16fa9d54bdf8506af2"
   },
   {
    "path": "src/characters/benny/build.ts",
