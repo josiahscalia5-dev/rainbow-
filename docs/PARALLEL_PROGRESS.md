@@ -40,6 +40,12 @@ re-sent each task with `send_message` at ~17:38 UTC.
   the API, their files are complete in Git LFS. fal.ai: key accepted (free status read HTTP 404 = authenticated); balance
   is not readable through the API (fal dashboard only). Screen 04's ONE fal edit was already run in round 2 (request
   `01a1ea70`, `qa/match/04/fal/` on the 04 branches) — reused, not repeated. No paid job in round 3.
+* Key re-check for the user (~17:40 UTC, free reads only): World Labs `GET /credits` 200 → **5,420**; the Screen 08
+  Image-Blaster world `32b5b2f4…` ("rainbow-08-final-spin-chamber", created 12:54 today, the job that took the balance
+  7,000 → 5,420) reads back 200 → same original account. fal: status of the Screen 04 request `01a1ea70` = 200
+  COMPLETED with the injected key, 404 without it → same fal account. Both keys are network secrets of the `rainbow-`
+  environment that all six round-3 sessions run on; 06, 07 and 08 Benny confirmed World Labs (5,420) from their own
+  containers. The "HTTP 401" in a new container's setup log happens before the secrets are attached — not a key problem.
 * Atlas connector (claude.ai connector `World_Labs_Atlas`) is NOT connected on this account (optional; the API key
   covers Marble). context7 MCP needs sign-in (optional).
 * Autosave: daemon running on `ccr-c0235034-ks6sx3`, remote SHA == local HEAD.
