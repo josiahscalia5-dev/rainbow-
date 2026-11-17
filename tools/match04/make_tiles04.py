@@ -29,11 +29,13 @@ x = np.linspace(*RIV_X, 512); a = np.linspace(*RIV_A, 512)
 XX, AA = np.meshgrid(x, a)
 P = base + XX[..., None] * X + AA[..., None] * D
 u, v = proj(P); riv = cv2.remap(A, u, v, cv2.INTER_CUBIC)
-# make the along-slide repeat seamless: cross-fade the last 12 % into the first rows
-n = int(0.12 * riv.shape[0]); w = np.linspace(0, 1, n)[:, None, None]
+# make the along-slide repeat seamless (milestone 2 fix): drop the first n rows and cross-fade the last n rows into
+# them, so the row after the tile's last row is exactly the tile's first row (no seam line across the river)
+n = int(0.12 * riv.shape[0]); w = np.linspace(0, 1, n)[:, None, None]; da = (RIV_A[1] - RIV_A[0]) / (riv.shape[0] - 1)
 riv[-n:] = riv[-n:] * (1 - w) + riv[:n] * w
+riv = riv[n:]; RIV_A = (RIV_A[0] + n * da, RIV_A[0] + n * da + riv.shape[0] * da)
 cv2.imwrite(f"{d}/tile_river.png", sharpen(riv).astype(np.uint8))
-json.dump({"tunnel": {"angle": [0, math.pi], "axialFromMouth": TUN_A, "size": [256, 1024]}, "river": {"lateral": RIV_X, "alongFromBenny": RIV_A, "size": [512, 512]}},
+json.dump({"tunnel": {"angle": [0, math.pi], "axialFromMouth": TUN_A, "size": [256, 1024]}, "river": {"lateral": RIV_X, "alongFromBenny": RIV_A, "size": [512, riv.shape[0]]}},
           open(f"{d}/tiles04.json", "w"), indent=1)
 print("tiles written")
 

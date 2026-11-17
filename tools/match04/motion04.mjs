@@ -14,7 +14,7 @@ try {
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
   // [name, forward distance (u), steer]
-  const shots = [['f00_checkpoint', 0, null], ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f15_forward15u', 15, null],
+  const shots = process.env.M04_SHOTS ? JSON.parse(process.env.M04_SHOTS) : [['f00_checkpoint', 0, null], ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f15_forward15u', 15, null],
                  ['f20_forward20u', 20, null], ['s_left_steer', 6, -1], ['s_right_steer', 6, 1]];
   for (const [name, dist, steer] of shots) {
     const st = await page.evaluate(async ([dist, steer]) => {

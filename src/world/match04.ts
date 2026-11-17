@@ -109,7 +109,7 @@ void main() {
         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
       }
       // provisional fill (no painted pixels there) gives way to the painted tiles once the camera moves
-      float fill = uMode > 0.5 ? texture2D(uFill, uv).r * uMoved : 0.0;
+      float fill = uMode > 1.5 ? texture2D(uFill, uv).r * uMoved : 0.0;   // water only (the coin fills on the bank stay)
       t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep * (1.0 - fill));
     }
   }

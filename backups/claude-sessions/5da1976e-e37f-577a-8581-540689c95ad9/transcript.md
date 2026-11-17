@@ -560,3 +560,181 @@ Ring tile done (one painted ring, straight and repeating). Now wiring it and the
 
 > 🔧 **Bash** `{"command": "sed -i \"s/\\['f10_forward10u', 10, null\\],/['f10_forward10u', 10, null], ['f15_forward15u', 15, null],/\" tools/match04/motion04.mjs && S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && timeout 900 node tools/match04/motion04.mjs $S/new 2>&1 | tail -9", "description": "Render moving-camera frames with new tiles", "timeout": 900000}`
 
+### 🧑 User — 2026-11-17T16:46:17.312Z
+
+> ↩︎ result: f00_checkpoint s 77.829 lat 0 04 coins 1330
+> f03_forward3u s 80.669 lat 0 04 coins 1330
+> f06_forward6u s 83.663 lat 0 04 coins 1330
+> f10_forward10u s 87.507 lat 0 04 coins 1330
+> f15_forward15u s 92.625 lat 0 04 coins 1330
+> f20_forward20u s 97.512 lat 0 04 coins 1330
+> s_left_steer s 83.67 lat -1.65 04 coins 1350
+> s_right_steer s 83.6 lat 1.65 04 coins 1330
+
+### 🤖 Claude — 2026-11-17T16:46:21.106Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && cd $S/new && convert f03_forward3u.png f06_forward6u.png f10_forward10u.png f15_forward15u.png f20_forward20u.png -resize 346x614 +append $S/n1.png && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/new/f00_checkpoint.png').convert('RGB')).astype(int);b=np.asarray(Image.open('/home/user/rainbow-/qa/match/04/motion/f00_checkpoint.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2);print('checkpoint vs M1 diff px',(d>0).sum(),(d>8).sum())\"", "descripti …[+41 chars]`
+
+### 🧑 User — 2026-11-17T16:46:22.482Z
+
+> ↩︎ result: checkpoint vs M1 diff px 1203108 496945
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:46:24.458Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/n1.png"}`
+
+### 🧑 User — 2026-11-17T16:46:24.526Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:46:38.020Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && sed -i \"s/  const shots = \\[/  const shots = process.env.M04_SHOTS ? JSON.parse(process.env.M04_SHOTS) : [/\" tools/match04/motion04.mjs && M04_SHOTS='[[\"f00_checkpoint\",0,null]]' timeout 600 node tools/match04/motion04.mjs $S/old 'match04=1&tile04=0' 2>&1 | tail -2 && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nL=lambda p:np.asarray(Image.open(p).convert('RGB')).astype(int)\na=L('$S/new/f00_checkpoint.png');b=L('$S/old/f00_checkpoint.png');c=L('qa/match/04/motion/f00_checkp …[+204 chars]`
+
+### 🧑 User — 2026-11-17T16:46:53.031Z
+
+> ↩︎ result: f00_checkpoint s 77.76 lat 0 04 coins 1330
+> new-old 1144786 337416
+> old-M1file 1127034 308103
+
+### 🤖 Claude — 2026-11-17T16:46:56.100Z
+
+Checkpoint frames from the ride test aren't deterministic, so I'm re-checking the approved view with the deterministic capture script instead.
+
+### 🤖 Claude — 2026-11-17T16:46:58.648Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && grep -n \"out=\\|--q\\|dpr\\|viewport\" scripts/capture.mjs | head; timeout 900 node scripts/capture.mjs 04 --q=match04=1 --out=$S/capnew 2>&1 | tail -2; ls $S/capnew", "description": "Deterministic capture of 04 with tiles", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T16:47:12.397Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 30:    const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 04 → /tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/capnew/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":47,"tris":170432,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04.png
+
+### 🤖 Claude — 2026-11-17T16:47:16.058Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && identify $S/capnew/04.png qa/match/04/04_NEW_match04_864x1536.png | cut -c1-120; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nL=lambda p:np.asarray(Image.open(p).convert('RGB')).astype(int)\na=L('$S/capnew/04.png');b=L('qa/match/04/04_NEW_match04_864x1536.png')\nd=np.abs(a-b).max(2);print('vs M1',(d>0).sum(),(d>8).sum(), d.max())\"", "description": "Compare approved-view capture with milestone 1"}`
+
+### 🧑 User — 2026-11-17T16:47:16.495Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/capnew/04.png PNG 864x1536 864x1536+0+
+> qa/match/04/04_NEW_match04_864x1536.png PNG 864x1536 864x1536+0+0 8-bit sRGB 1.97306MiB 0.000u 0:00.000
+> vs M1 4 2 47
+
+### 🤖 Claude — 2026-11-17T16:47:18.653Z
+
+Approved view essentially unchanged (4 of 1.3 M pixels differ). Now fixing the brown smudges where the coins were painted on the tunnel wall.
+
+### 🤖 Claude — 2026-11-17T16:47:20.249Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && convert $S/new/f10_forward10u.png -crop 500x500+100+500 $S/c10.png", "description": "Crop coin area of 10u frame"}`
+
+### 🧑 User — 2026-11-17T16:47:20.486Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:47:22.227Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/c10.png"}`
+
+### 🧑 User — 2026-11-17T16:47:22.255Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:47:31.866Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/      float fill = uMode > 0.5 ? texture2D(uFill, uv).r \\* uMoved : 0.0;/      float fill = uMode > 1.5 ? texture2D(uFill, uv).r * uMoved : 0.0;   \\/\\/ water only (the coin fills on the bank stay)/' src/world/match04.ts && grep -n \"float fill\" src/world/match04.ts", "description": "Restrict fill replacement to water"}`
+
+### 🧑 User — 2026-11-17T16:47:31.904Z
+
+> ↩︎ result: 112:      float fill = uMode > 1.5 ? texture2D(uFill, uv).r * uMoved : 0.0;   // water only (the coin fills on the bank stay)
+> [This command modified 1 file you've previously read: src/world/match04.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T16:47:36.674Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && rm -rf $S/new && timeout 900 node tools/match04/motion04.mjs $S/new 2>&1 | tail -1 && cd $S/new && convert f03_forward3u.png f06_forward6u.png f10_forward10u.png f15_forward15u.png f20_forward20u.png -resize 346x614 +append $S/n1.png", "description": "Re-render moving frames", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T16:48:21.414Z
+
+> ↩︎ result: s_right_steer s 83.768 lat 1.65 04 coins 1330
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:48:23.039Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/n1.png"}`
+
+### 🧑 User — 2026-11-17T16:48:23.107Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:48:26.978Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && convert $S/new/f20_forward20u.png -resize 50% $S/f20h.png", "description": "Half-size 20u frame"}`
+
+### 🧑 User — 2026-11-17T16:48:27.261Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:48:29.370Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/f20h.png"}`
+
+### 🧑 User — 2026-11-17T16:48:29.390Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:48:40.862Z
+
+Fixing a visible repeat seam in the painted river tile (the cross-fade didn't wrap correctly).
+
+### 🤖 Claude — 2026-11-17T16:48:46.523Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match04/make_tiles04.py'; s=open(p).read()\nold=\"\"\"# make the along-slide repeat seamless: cross-fade the last 12 % into the first rows\nn = int(0.12 * riv.shape[0]); w = np.linspace(0, 1, n)[:, None, None]\nriv[-n:] = riv[-n:] * (1 - w) + riv[:n] * w\ncv2.imwrite(f\"{d}/tile_river.png\", sharpen(riv).astype(np.uint8))\njson.dump({\"tunnel\": {\"angle\": [0, math.pi], \"axialFromMouth\": TUN_A, \"size\": [256, 1024]}, \"river\": {\"lateral\": RIV_X, \"alongFromBenny\": RIV_A, \"size\": [512, 512]}},\"\"\"\nnew=\"\"\"# make the along-slide repeat seam …[+1001 chars]`
+
+### 🧑 User — 2026-11-17T16:48:46.938Z
+
+> ↩︎ result: tiles written
+> ring tile written
+> {'lateral': [-4.0, 4.0], 'alongFromBenny': [9.51624266144814, 14.81174168297456], 'size': [512, 451]}
+
+### 🤖 Claude — 2026-11-17T16:48:52.625Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/04/motion_m2 && mkdir -p $O && timeout 900 node tools/match04/motion04.mjs $O/NEW 2>&1 | tail -1 && timeout 900 node tools/match04/motion04.mjs $O/BEFORE_milestone1 'match04=1&tile04=0' 2>&1 | tail -1; ls $O/NEW", "description": "Render final NEW and BEFORE moving frames", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-17T16:50:22.141Z
+
+> ↩︎ result: s_right_steer s 83.744 lat 1.65 04 coins 1330
+> s_right_steer s 83.61 lat 1.65 04 coins 1330
+> f00_checkpoint.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f15_forward15u.png
+> f20_forward20u.png
+> motion.json
+> s_left_steer.png
+> s_right_steer.png
+
+### 🤖 Claude — 2026-11-17T16:50:25.604Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && O=qa/match/04/motion_m2 && for d in BEFORE_milestone1 NEW; do convert $O/$d/f06_forward6u.png $O/$d/f10_forward10u.png $O/$d/f15_forward15u.png $O/$d/f20_forward20u.png $O/$d/s_left_steer.png $O/$d/s_right_steer.png -resize 288x512 +append $S/$d.png; done; convert $S/BEFORE_milestone1.png $S/NEW.png -append $S/ba.png", "description": "BEFORE vs NEW review sheet"}`
+
+### 🧑 User — 2026-11-17T16:50:27.969Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:50:29.987Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/ba.png"}`
+
+### 🧑 User — 2026-11-17T16:50:30.235Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:50:37.872Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && grep -n \"matchNN\\|08\\b\" scripts/capture.mjs | head -5; (timeout 1200 node scripts/capture.mjs 04 05 --out=$S/def_new && timeout 900 node scripts/capture.mjs 08 --q=match08=1 --out=$S/m08_new && timeout 900 node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/ringa) 2>&1 | grep -v \"^\\s*$\" | tail -5", "description": "Capture default, match08 and ringa views with new code", "timeout": 3000000}`
+
