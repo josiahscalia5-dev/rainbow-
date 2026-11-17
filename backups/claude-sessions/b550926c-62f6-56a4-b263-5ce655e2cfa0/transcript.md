@@ -763,3 +763,192 @@ Specialist session created (`session_01KS3bZvdzt2da5S21x21PqW`). I'll check late
 
 > ↩︎ result: The file /home/user/wt-s06/src/game/cameraRig.ts has been updated successfully.
 
+### 🤖 Claude — 2026-11-17T23:28:30.538Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && rm node_modules && npm ci --prefer-offline --no-audit --no-fund 2>&1 | tail -1 && npx tsc --noEmit && echo TSC_OK && SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad && timeout 400 node $SP/probe06.mjs $SP/probe06_cam.json \"match06=1&m06geo=1&m06flow=1&m06cam=1\" 2>&1 | grep \"^d \"", "description": "Install deps, typecheck, probe camera with m06cam", "timeout": 500000}`
+
+### 🧑 User — 2026-11-17T23:28:51.364Z
+
+> ↩︎ result: added 124 packages in 2s
+> TSC_OK
+> d 0 s 199.58 06 pitch -11 benny -0.03 -0.25 ahead10 [ 0.598, 0.204, 0.994 ] ahead40 [ 1.13, 0.552, 0.998 ] ahead80 [ 0.939, 0.475, 0.999 ]
+> d 3 s 203.07 06 pitch -12.2 benny -0.03 -0.11 ahead10 [ 0.627, 0.321, 0.994 ] ahead40 [ 1.129, 0.568, 0.998 ] ahead80 [ 0.93, 0.473, 0.999 ]
+> d 6 s 206.18 06 pitch -13.6 benny -0.02 -0.14 ahead10 [ 0.69, 0.405, 0.994 ] ahead40 [ 1.113, 0.569, 0.998 ] ahead80 [ 0.926, 0.464, 0.999 ]
+> d 10 s 210.03 06 pitch -14.4 benny -0 -0.21 ahead10 [ 0.805, 0.479, 0.994 ] ahead40 [ 1.106, 0.563, 0.998 ] ahead80 [ 0.919, 0.456, 0.999 ]
+> d 15 s 215.17 06 pitch -13.5 benny 0.08 -0.29 ahead10 [ 0.968, 0.571, 0.994 ] ahead40 [ 1.111, 0.558, 0.998 ] ahead80 [ 0.889, 0.457, 0.999 ]
+> d 20 s 220.12 06 pitch -11.7 benny 0.21 -0.52 ahead10 [ 1.1, 0.693, 0.994 ] ahead40 [ 1.091, 0.565, 0.998 ] ahead80 [ 0.884, 0.474, 0.999 ]
+> d 30 s 230.02 06 pitch -6.6 benny 0.38 -0.84 ahead10 [ 1.349, 0.755, 0.993 ] ahead40 [ 1.031, 0.56, 0.998 ] ahead80 [ 1.054, 0.521, 0.999 ]
+> d 40 s 240.12 06 pitch -12.1 benny 0.05 -0.68 ahead10 [ 0.541, 0.446, 0.994 ] ahead40 [ 0.188, 0.402, 0.998 ] ahead80 [ 0.224, 0.472, 0.999 ]
+> d 50 s 250.25 07 pitch -8.7 benny 0.07 -0.5 …[+277 chars]
+
+### 🤖 Claude — 2026-11-17T23:29:24.190Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/game/cameraRig.ts", "old_string": "        if (M06_CAM) {\n          // keep the camera >= 1.6 u above the water directly below it (the chord frame is flatter than the slope)\n          let best = Infinity, wy = -Infinity;\n          for (let k = -14; k <= 4; k += 0.5) {\n            const q = this.course.sample(Math.max(0, s + k)).pos, dx = q.x - cp6.x, dz = q.z - cp6.z;\n            if (dx * dx + dz * dz < best) { best = dx * dx + dz * dz; wy = q.y; }\n          }\n          cp6.y = Math.max(cp6.y, wy + 1.6);\n        }\n        cons …[+1123 chars]`
+
+### 🧑 User — 2026-11-17T23:29:24.225Z
+
+> ↩︎ result: The file /home/user/wt-s06/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T23:29:26.947Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && npx tsc --noEmit && echo TSC_OK && SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad && for LA in 40 25; do echo \"== LA $LA\"; timeout 400 node $SP/probe06.mjs $SP/probe06_cam$LA.json \"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=$LA\" 2>&1 | grep \"^d \" | cut -c1-120; done", "description": "Typecheck and probe camera re-aim with two look-ahead lengths", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T23:30:02.229Z
+
+> ↩︎ result: TSC_OK
+> == LA 40
+> d 0 s 199.59 06 pitch -11 benny -0.03 -0.24 ahead10 [ 0.598, 0.204, 0.994 ] ahead40 [ 1.13, 0.552, 0.998 ] ahead80 [ 0.9
+> d 3 s 203.08 06 pitch -12.2 benny -0.03 -0.11 ahead10 [ 0.627, 0.321, 0.994 ] ahead40 [ 1.129, 0.568, 0.998 ] ahead80 [ 
+> d 6 s 206.01 06 pitch -13.5 benny -0.02 -0.14 ahead10 [ 0.685, 0.401, 0.994 ] ahead40 [ 1.114, 0.569, 0.998 ] ahead80 [ 
+> d 10 s 210.04 06 pitch -14.4 benny -0 -0.21 ahead10 [ 0.805, 0.48, 0.994 ] ahead40 [ 1.106, 0.563, 0.998 ] ahead80 [ 0.9
+> d 15 s 215.18 06 pitch -14.9 benny 0.08 -0.25 ahead10 [ 0.967, 0.551, 0.994 ] ahead40 [ 1.11, 0.538, 0.998 ] ahead80 [ 0
+> d 20 s 220.13 06 pitch -19.4 benny 0.2 -0.28 ahead10 [ 1.085, 0.577, 0.994 ] ahead40 [ 1.088, 0.452, 0.998 ] ahead80 [ 0
+> d 30 s 230.03 06 pitch -21.6 benny 0.34 -0.35 ahead10 [ 1.31, 0.529, 0.993 ] ahead40 [ 1.037, 0.34, 0.998 ] ahead80 [ 1.
+> d 40 s 240.13 06 pitch -13.7 benny 0.05 -0.63 ahead10 [ 0.537, 0.424, 0.994 ] ahead40 [ 0.183, 0.38, 0.998 ] ahead80 [ 0
+> d 50 s 250.26 07 pitch -8.7 benny 0.07 -0.57 ahead10 [ 0.448, 0.477, 0.995 ] ahead40 [ 0.361, 0.446, 0.998 ] ahead80 [ 0
+> d 60 s 260.26 07 pitch -8.5 benny -0.04 -0.6 ahead10 [ 0.12, 0.513, 0.994 ] ahead40 [ 0.455, 0. …[+1287 chars]
+
+### 🤖 Claude — 2026-11-17T23:30:10.462Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && mkdir -p qa/match/06/r7 && timeout 600 node tools/lead_r6/motion_audit.mjs 06 qa/match/06/r7/NEW_cam25 \"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25\" 2>&1 | grep \"^06 \" ; SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad; cd qa/match/06/r7/NEW_cam25 && montage -label '%t' a00_approved_view.png f03_forward3u.png f06_forward6u.png f10_forward10u.png f20_forward20u.png t33_through_screen.png t66_through_screen.png t95_through_screen.png s_left_steer.png s_right_hard.png -tile 5x2 -geometry 300x534+4+4 -pointsize 14 $SP/ …[+120 chars]`
+
+### 🧑 User — 2026-11-17T23:30:54.887Z
+
+> ↩︎ result: 06 a00_approved_view s 199.593 lat 0 stage 06 frames 0
+> 06 f03_forward3u s 202.579 lat 0 stage 06 frames 17
+> 06 f06_forward6u s 205.511 lat 0 stage 06 frames 33
+> 06 f10_forward10u s 209.544 lat 0 stage 06 frames 55
+> 06 f20_forward20u s 219.629 lat 0 stage 06 frames 110
+> 06 s_left_steer s 205.511 lat -2.95 stage 06 frames 33
+> 06 s_right_steer s 205.531 lat 2.95 stage 06 frames 33
+> 06 s_left_hard s 211.561 lat -2.95 stage 06 frames 66
+> 06 s_right_hard s 211.562 lat 2.95 stage 06 frames 66
+> 06 t33_through_screen s 214.129 lat 0.001 stage 06 frames 80
+> 06 t66_through_screen s 228.612 lat 0 stage 06 frames 159
+> 06 t95_through_screen s 241.303 lat 0 stage 06 frames 228
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:30:57.026Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/s06_sheet_cam25.jpg"}`
+
+### 🧑 User — 2026-11-17T23:30:57.170Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:31:49.676Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && python3 -I - <<'EOF'\nimport json, math\nSP='/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad'\nd=json.load(open(SP+'/probe06_c6.json')); P={p['s']:(p['x'],p['y'],p['z']) for p in d['prof']}\nL=json.load(open('assets/textures/match06/proj06.json'))\n# painted tunnel axis = the projector camera's ray through the painted VP (tiles.tube.vp) — use camera matrix\nimport numpy as np\nM=np.array(L['camera']['matrixWorld']).reshape(4,4).T; C=M[:3,3]; fov=L['camera']['fov']; W,H=L['camera']['size']\nvx,vy=L['tiles']['tube']['vp']; t= …[+1024 chars]`
+
+### 🧑 User — 2026-11-17T23:31:49.867Z
+
+> ↩︎ result: cam [   1.72  -35.37 -132.64] VP ray [-0.02  -0.083 -0.996] pitch -4.8 size 864 1536
+> s 186.9 dist from cam-VP line 8.71 axial -3.9
+> s 192.9 dist from cam-VP line 6.14 axial 1.4
+> s 198.9 dist from cam-VP line 2.44 axial 5.9
+> s 204.9 dist from cam-VP line 1.66 axial 11.1
+> s 210.9 dist from cam-VP line 1.67 axial 17.1
+> s 216.9 dist from cam-VP line 0.73 axial 22.7
+> s 222.9 dist from cam-VP line 3.42 axial 27.9
+> s 228.9 dist from cam-VP line 7.23 axial 32.5
+> s 234.9 dist from cam-VP line 10.99 axial 37.1
+> s 240.9 dist from cam-VP line 13.61 axial 42.4
+> line through centroid offset [ 1.96 -4.06  0.3 ] max radius of river 10.12 mean 4.79
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:32:24.440Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && grep -n \"m06\\|match06\\|MATCH\\['06'\\]\\|MATCH\\[\\\"06\\\"\\]\" src/game/Game.ts | head -30", "description": "Find match06 integration points in Game.ts"}`
+
+### 🧑 User — 2026-11-17T23:32:24.482Z
+
+> ↩︎ result: 28:import { buildMatch06 } from '../world/match06';
+> 118:  // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+> 119:  const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+> 120:  if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+> 121:  let m06On = false;
+> 122:  let m06Applied = false;
+> 174:    if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+> 540:    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> 541:    if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+> 542:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On; }
+> 543:      m06Applied = m06On;
+> 592:    // `?match06=1`: no bloom on Screen 06 under the switch (the artwork carries its own glow)
+> 593:    if (m06) {
+> 595:      if (m06On) bloom.strength = 0;
+> 597:      m06.sync(renderer, dbs.x, dbs.y);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:33:04.144Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/world/match06.ts", "old_string": "  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);\n  add(grid(RAD, (_s, j, fr) => {", "new_string": "  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);\n  // r7 `&m06tun=1` (qa/match/06/r7/NOTES.md): the painted tunnel is a STRAIGHT cylinder of concentric rings with the river\n  // winding inside it; the proxy tube above follows the river's crest (+36° / -33°) and 40° turn, so while moving the\n  // rin …[+2876 chars]`
+
+### 🧑 User — 2026-11-17T23:33:04.163Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-17T23:33:05.447Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt-s06/src/world/match06.ts", "offset": 255, "limit": 20}`
+
+### 🧑 User — 2026-11-17T23:33:05.475Z
+
+> ↩︎ result: 255	  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);
+> 256	  add(grid(RAD, (_s, j, fr) => {
+> 257	    const th = (j / RAD) * Math.PI * 2;
+> 258	    let lx = L.R * Math.cos(th);
+> 259	    const ly = L.hA + L.R * Math.sin(th);
+> 260	    if (GEO && R6) {
+> 261	      const t = Math.min(1, Math.max(0, (yTop - ly) / yTop)), k = t * t * (3 - 2 * t);
+> 262	      lx -= Math.sign(lx) * k * (Lw - R6.Wb);
+> 263	    }
+> 264	    const p = GEO ? fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly)
+> 265	      : fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Math.cos(th)).addScaledVector(fr.up, L.R * Math.sin(th));
+> 266	    let a = th; if (a > TT.wallAngle[1]) a -= Math.PI * 2; // continuous over the wall (the part under the water is never seen)
+> 267	    return [p, (a - TT.wallAngle[0]) / TT.anglePeriod];
+> 268	  }, TT.period), mat(tTube), 'tube');
+> 269	  // river floor: the game river's own width + 1 u of foam bank each side (the painted gap between the river loops then
+> 270	  // lands on the tunnel beyond, not on a wide water slab), never wider than the tube
+> 271	  const FC = 32;
+> 272	  // r6 `m06geo`: the painted river is o …[+230 chars]
+
+### 🤖 Claude — 2026-11-17T23:33:22.100Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/world/match06.ts", "old_string": "  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);\n  add(grid(RAD, (_s, j, fr) => {", "new_string": "  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);\n  // r7 `&m06tun=1` (qa/match/06/r7/NOTES.md): the painted tunnel is a STRAIGHT cylinder of concentric rings with the river\n  // winding inside it; the proxy tube below follows the river's crest (+36° / -33°) and 40° turn, so while moving the\n  // rin …[+3140 chars]`
+
+### 🧑 User — 2026-11-17T23:33:22.131Z
+
+> ↩︎ result: The file /home/user/wt-s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T23:33:22.704Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt-s06/src/world/match06.ts", "offset": 318, "limit": 12}`
+
+### 🧑 User — 2026-11-17T23:33:22.727Z
+
+> ↩︎ result: 318	    const half = GEO && R6 ? R6.Wb : Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+> 319	    const l = -half + (2 * half * j) / FC;
+> 320	    const p = fr.pos.clone().addScaledVector(fr.right, l);
+> 321	    if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
+> 322	    return [p, l / TF.lateralPeriod, l];
+> 323	  }, TF.period), mat(tFloor, true), 'floor');
+> 324	  // far end cap of the tunnel (the glowing vanishing point)
+> 325	  const fe = frame(L.s1 + L.ext);
+> 326	  const cap = new THREE.Mesh(new THREE.CircleGeometry(L.R, 64), mat(tTube));
+> 327	  cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));
+> 328	  cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA);
+> 329	  cap.lookAt(cap.position.clone().sub(T1));
+
+### 🤖 Claude — 2026-11-17T23:33:29.686Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/world/match06.ts", "old_string": "  const cap = new THREE.Mesh(new THREE.CircleGeometry(L.R, 64), mat(tTube));\n  cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));\n  cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA);\n  cap.lookAt(cap.position.clone().sub(T1));", "new_string": "  const cap = new THREE.Mesh(new THREE.CircleGeometry(tunCap ? tunCap.r : L.R, 64), mat(tTube));\n  cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new …[+275 chars]`
+
+### 🧑 User — 2026-11-17T23:33:29.712Z
+
+> ↩︎ result: The file /home/user/wt-s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T23:33:33.400Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && npx tsc --noEmit && echo TSC_OK && SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad && B=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25\" && timeout 600 node tools/lead_r6/motion_audit.mjs 06 qa/match/06/r7/NEW_tun \"$B&m06tun=1\" 2>&1 | grep -c \"^06 \" && cd qa/match/06/r7/NEW_tun && montage -label '%t' a00_approved_view.png f03_forward3u.png f06_forward6u.png f10_forward10u.png f20_forward20u.png t33_through_screen.png t66_through_screen.png t95_through_screen.png s_left_steer.png s_right_hard.png -tile 5x2 -geometry …[+150 chars]`
+
