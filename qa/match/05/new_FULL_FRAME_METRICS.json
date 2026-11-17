@@ -1,19 +1,19 @@
 {
- "capture": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/cap_n/05.png",
+ "capture": "qa/match/05/03_NEW_match05_tgtvis05.png",
  "whole_frame": {
   "px": 1327104,
   "share_of_frame": 1.0,
-  "mean_abs": 7.79,
-  "within_10": 0.8149,
-  "within_20": 0.8952,
-  "ssim_lum": 0.8819,
+  "mean_abs": 8.09,
+  "within_10": 0.8104,
+  "within_20": 0.8915,
+  "ssim_lum": 0.8773,
   "mean_signed_rgb": [
-   -1.5,
-   0.1,
+   -1.6,
+   -0.0,
    0.5
   ]
  },
  "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
- "mse": 441.9,
- "psnr_db": 21.68
+ "mse": 485.5,
+ "psnr_db": 21.27
 }
