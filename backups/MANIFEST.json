@@ -669,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12006,
-   "sha256": "852f6c6cd51955c7f107eb2fae7cb55bb615eba7961d63b37e3aa29e19ade1b0"
+   "sha256": "2493958b350901a7262895cc12ceed5af437b3569653e26470c84f6c2aafe955"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1158,8 +1158,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1238,
-   "sha256": "2c06195b3c0053640a75b87ebb51a5d4a5eacdde73afbe6246b0b47912879864"
+   "bytes": 1236,
+   "sha256": "b80af77ce7e199c519bd10a5ab39907f1eea61bff6583badccd965fabfcac56e"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2280,6 +2280,16 @@
    "path": "qa/match/08/benny08/review_r5/final/3_NEW_move_steer_right.png",
    "bytes": 2510027,
    "sha256": "9b865ca8911bf4aa01443585cca2cf65611c18fd5ea0c9d27c7fc2d5bb16dc43"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/tests/gameplay_default.json",
+   "bytes": 14657,
+   "sha256": "6bbf7b772709bb02d1c5a4903063734904e9174d6df8c58a54eed04638c2077c"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/tests/gameplay_match08.json",
+   "bytes": 14649,
+   "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
   },
   {
    "path": "qa/match/08/benny08/screen_match_CURRENT.json",

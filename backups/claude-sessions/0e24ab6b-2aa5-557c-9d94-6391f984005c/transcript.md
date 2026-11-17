@@ -450,3 +450,300 @@ c6 (body-only soft clumps, gentle shading) looks clearly softer and more like th
 
 [Image: original 2400x500, displayed at 2000x417. Multiply coordinates by 1.20 to map to original image.]
 
+### 🤖 Claude — 2026-11-17T20:33:31.828Z
+
+Keeping both: soft body clumps (c6) and yarn-tuft pom (y1). Making them the `?match08=1` default with `=0` switches, active only on the r5b path so the r3b/r4/r2 URLs stay unchanged.
+
+### 🤖 Claude — 2026-11-17T20:33:36.742Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\ns=s.replace(\"export const B08R3: boolean\",\"\"\"/** benny08 round 6 (qa/match/08/benny08/NOTES.md): soft layered body-fur clumps (`b08clump`) and yarn-tuft pom-pom\n *  (`b08yarn`) — DEFAULT on the round-5b path only (match08 with b08full on, taper off); `=0` = off (r5b), `=1` forces on.\n *  The r3b / r4 / r2 / taper URLs (b08full=0, b08r3=0, b08shape=1) are therefore unchanged. */\nconst r6on = (k: string): boolean => { const v = qv(k); return v === '1' || (v !== '0' && qv('b08full') !== '0' && qv('b08sh …[+657 chars]`
+
+### 🧑 User — 2026-11-17T20:33:38.920Z
+
+> ↩︎ result: 171:const r6on = (k: string): boolean => { const v = qv(k); return v === '1' || (v !== '0' && qv('b08full') !== '0' && qv('b08shape') !== '1'); };
+> 295:    if (B08R3 && r6on('b08clump') && (f.mesh.name === 'fur_body' || (qv('b08carm') === '1' && /^fur_arm/.test(f.mesh.name)))) {
+> 301:    if (B08R3 && r6on('b08yarn') && f.mesh.name === 'fur_pom') {
+> TSC OK
+
+### 🤖 Claude — 2026-11-17T20:33:45.682Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; ls qa/match/08/benny08/review_r5/ | head -30\nfor v in \"new:match08=1\" \"r5b:match08=1&b08clump=0&b08yarn=0\" \"r3b:match08=1&b08full=0\" \"r4:match08=1&b08hi=1&b08pom=1&b08full=0\" \"r2:match08=1&b08r3=0\" \"def:\"; do n=${v%%:*}; q=${v#*:}; mkdir -p $S/p/$n; node scripts/capture.mjs 08 --out=$S/p/$n ${q:+--q=$q} >/dev/null 2>&1; echo \"$n done\"; done", "description": "Capture proof frames for all variants"}`
+
+### 🧑 User — 2026-11-17T20:34:48.291Z
+
+> ↩︎ result: 1_APPROVED_08_approved_view.png
+> 1_APPROVED_closeup.png
+> 2_r2_08_approved_view.png
+> 2_r2_closeup.png
+> 2_r2_move_forward.png
+> 2_r2_move_steer_left.png
+> 2_r2_move_steer_right.png
+> 3_r3b_08_approved_view.png
+> 3_r3b_closeup.png
+> 3_r3b_move_forward.png
+> 3_r3b_move_steer_left.png
+> 3_r3b_move_steer_right.png
+> 4_r4_08_approved_view.png
+> 4_r4_closeup.png
+> 4_r4_move_forward.png
+> 4_r4_move_steer_left.png
+> 4_r4_move_steer_right.png
+> 5_r5_NEW_08_approved_view.png
+> 5_r5_NEW_closeup.png
+> 5_r5_NEW_move_forward.png
+> 5_r5_NEW_move_steer_left.png
+> 5_r5_NEW_move_steer_right.png
+> README.md
+> final
+> new done
+> r5b done
+> r3b done
+> r4 done
+> r2 done
+> def done
+
+### 🤖 Claude — 2026-11-17T20:34:53.818Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; R=qa/match/08/benny08/review_r5; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nL=lambda p: np.array(Image.open(p).convert('RGB'))\nfor a,b in [('$S/p/new/08.png','$S/y1/08.png'),('$S/p/r5b/08.png','$S/before/08.png'),('$S/p/r3b/08.png','$R/final/2_BEFORE_r3b_08_approved_view.png'),('$S/p/r3b/08.png','$R/3_r3b_08_approved_view.png'),('$S/p/r4/08.png','$R/4_r4_08_approved_view.png'),('$S/p/r2/08.png','$R/2_r2_08_approved_view.png')]:\n  d=(L(a)!=L(b)).any(2); print(a.split('/')[-2], ' …[+479 chars]`
+
+### 🧑 User — 2026-11-17T20:35:04.189Z
+
+> ↩︎ result: new vs 08.png 0 below205 0
+> r5b vs 08.png 0 below205 0
+> r3b vs 2_BEFORE_r3b_08_approved_view.png 0 below205 0
+> r3b vs 3_r3b_08_approved_view.png 0 below205 0
+> r4 vs 4_r4_08_approved_view.png 0 below205 0
+> r2 vs 2_r2_08_approved_view.png 0 below205 0
+> error: Your local changes to the following files would be overwritten by merge:
+> 	qa/capture_log.json
+> Please commit your changes or stash them before you merge.
+> Aborting
+> The stash entry is kept in case you need it again.
+> default 0 0
+
+### 🤖 Claude — 2026-11-17T20:35:05.722Z
+
+Stash restore hit a capture-log conflict; recovering my edits carefully.
+
+### 🤖 Claude — 2026-11-17T20:35:06.831Z
+
+> 🔧 **Bash** `{"command": "git stash list | head -3 && git checkout -- qa/capture_log.json && git stash pop && git status --short && grep -c r6on src/characters/benny/benny05.ts && grep -c uTuft2 src/characters/benny/fur.ts", "description": "Restore stashed edits"}`
+
+### 🧑 User — 2026-11-17T20:35:06.930Z
+
+> ↩︎ result: stash@{0}: WIP on claude/rainbow-s08-benny08-bake-c5: 340e2915 autosave: Rainbow 2026-11-17 20:33 UTC
+> On branch claude/rainbow-s08-benny08-bake-c5
+> Your branch is up to date with 'origin/claude/rainbow-s08-benny08-bake-c5'.
+> 
+> Changes not staged for commit:
+>   (use "git add <file>..." to update what will be committed)
+>   (use "git restore <file>..." to discard changes in working directory)
+> 	modified:   qa/capture_log.json
+> 
+> no changes added to commit (use "git add" and/or "git commit -a")
+> Dropped refs/stash@{0} (88a3fd058523945afa0976f5c9943f9395855200)
+>  M qa/capture_log.json
+> 3
+> 7
+
+### 🤖 Claude — 2026-11-17T20:35:10.243Z
+
+The autosave had already committed my source edits, so that "default" baseline wasn't a real before. Redoing it with the two files from the start commit.
+
+### 🤖 Claude — 2026-11-17T20:35:14.157Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; git log --oneline -3; cp src/characters/benny/fur.ts src/characters/benny/benny05.ts $S/; git show fb72cc5:src/characters/benny/fur.ts > src/characters/benny/fur.ts; git show fb72cc5:src/characters/benny/benny05.ts > src/characters/benny/benny05.ts; grep -c uTuft src/characters/benny/fur.ts; rm -rf $S/p/def0; mkdir -p $S/p/def0 && node scripts/capture.mjs 08 --out=$S/p/def0 >/dev/null 2>&1; git checkout HEAD -- src/characters/benny/fur.ts src/characters/benny/benny05.ts; cmp src/characters/benny/f …[+357 chars]`
+
+### 🧑 User — 2026-11-17T20:35:24.090Z
+
+> ↩︎ result: 340e2915 autosave: Rainbow 2026-11-17 20:33 UTC
+> 2abd780f autosave: Rainbow 2026-11-17 20:28 UTC
+> dbf846e6 autosave: Rainbow 2026-11-17 20:28 UTC
+> 0
+> RESTORED
+> default 0 0
+
+### 🤖 Claude — 2026-11-17T20:35:26.737Z
+
+All reproducibility proofs pass: default 0 px; r5b, r3b, r4, r2 URLs 0 px. Now numbers, moving frames, gameplay tests.
+
+### 🤖 Claude — 2026-11-17T20:35:29.308Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; for n in r5b new; do echo \"== $n\"; python3 -I qa/match/08/benny08/work/regions08.py $S/p/$n/08.png | grep -E \"scenery |benny|whole\"; python3 -I qa/match/08/benny08/work/parts08.py $S/p/$n/08.png | awk '{print $1,$3}' | head -8; done; head -30 tools/match08/motion08.mjs | grep -n \"usage\\|argv\\|f06\\|steer\" | head", "description": "Region and part numbers for r5b vs new"}`
+
+### 🧑 User — 2026-11-17T20:35:32.958Z
+
+> ↩︎ result: == r5b
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.57
+>   benny+splash  <=20  62.2 %  SSIM 0.537  mean  28.09
+>   whole         <=20  85.0 %  SSIM 0.829  mean  12.94
+> part mean
+> pom 57.1
+> crown 49.2
+> cuff 46.9
+> star 43.9
+> body 21.0
+> ALL 36.27
+> == new
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.57
+>   benny+splash  <=20  60.0 %  SSIM 0.527  mean  29.01
+>   whole         <=20  84.7 %  SSIM 0.827  mean  13.06
+> part mean
+> pom 60.6
+> crown 49.1
+> cuff 46.8
+> star 43.9
+> body 24.4
+> ALL 38.43
+> 1:// Screen 08 moving-camera test (read-only): from the 08 checkpoint ride forward / steer with the real game sim and
+> 2:// screenshot what the live camera sees. usage: node motion08.mjs <outDir> [q]
+> 5:const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match08=1';
+> 16:  const shots = [['f00_checkpoint', 0, null], ['f03_forward3u', 19, null], ['f06_forward6u', 38, null], ['f10_forward10u', 63, null],
+> 17:                 ['f15_forward15u', 95, null], ['s_left_steer', 40, -1], ['s_right_steer', 40, 1]];
+> 18:  for (const [name, n, steer] of shots) {
+> 19:    const st = await page.evaluate(async ([n, steer]) => {
+> 20:      const r = window.__rainbow; r.goto('08'); r.setSteer(steer); const s = r.step(n); r.setSteer(n …[+195 chars]
+
+### 🤖 Claude — 2026-11-17T20:35:36.989Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; for n in r5b new; do python3 -I qa/match/08/benny08/work/parts08.py $S/p/$n/08.png | head -4 | cut -c1-60; done", "description": "Check parts table header"}`
+
+### 🧑 User — 2026-11-17T20:35:39.434Z
+
+> ↩︎ result: part       px   mean  <=20  share  approved_med  game_med
+> pom     10761   57.1  0.19  0.238  [126  15 229]  [112  49 2
+> crown   13456   49.2  0.30  0.257  [215 163 237]  [217 179 2
+> cuff    10718   46.9  0.26  0.195  [118  10 234]  [123  23 2
+> part       px   mean  <=20  share  approved_med  game_med
+> pom     10761   60.6  0.14  0.239  [126  15 229]  [100  45 2
+> crown   13456   49.1  0.30  0.242  [215 163 237]  [219 180 2
+> cuff    10718   46.8  0.26  0.184  [118  10 234]  [123  23 2
+
+### 🤖 Claude — 2026-11-17T20:35:44.725Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; node tools/match08/motion08.mjs $S/p/new/m 'match08=1' 2>&1 | tail -7; node tools/match08/motion08.mjs $S/p/r5b/m 'match08=1&b08clump=0&b08yarn=0' >/dev/null 2>&1; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nL=lambda p: np.array(Image.open(p).convert('RGB'))\nfor f,g in [('f06_forward6u','3_NEW_move_forward'),('s_left_steer','3_NEW_move_steer_left')]:\n  print(f,(L('$S/p/r5b/m/'+f+'.png')!=L('qa/match/08/benny08/review_r5/final/'+g+'.png')).any(2).sum())\n\"", "description": "Rend …[+37 chars]`
+
+### 🧑 User — 2026-11-17T20:36:44.846Z
+
+> ↩︎ result: f00_checkpoint s 392.07 lat 0.00 08
+> f03_forward3u s 395.01 lat 0.00 08
+> f06_forward6u s 398.02 lat 0.00 08
+> f10_forward10u s 401.98 lat 0.00 08
+> f15_forward15u s 407.04 lat 0.00 09
+> s_left_steer s 398.34 lat -1.85 08
+> s_right_steer s 398.33 lat 1.85 08
+> f06_forward6u 469607
+> s_left_steer 480838
+
+### 🤖 Claude — 2026-11-17T20:36:49.842Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; python3 -I -c \"\nfrom PIL import Image\nfs=['f06_forward6u','s_left_steer','s_right_steer']\nc=Image.new('RGB',(6*432,768))\nfor i,f in enumerate(fs):\n  for j,v in enumerate(['r5b','new']):\n    c.paste(Image.open('$S/p/'+v+'/m/'+f+'.png').convert('RGB').resize((432,768)),((2*i+j)*432,0))\nc.save('$S/mv.png')\"", "description": "Side-by-side moving frames for my review"}`
+
+### 🧑 User — 2026-11-17T20:36:50.331Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T20:36:52.081Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/mv.png"}`
+
+### 🧑 User — 2026-11-17T20:36:52.398Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T20:36:52.391Z
+
+[Image: original 2592x768, displayed at 2000x593. Multiply coordinates by 1.30 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T20:36:54.577Z
+
+Moving frames: fur, beanie, pom-pom and splash all stay attached while swimming and steering. Running gameplay tests now.
+
+### 🤖 Claude — 2026-11-17T20:36:55.974Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/08/benny08/r5b/tests/ 2>/dev/null; grep -rn \"gameplay\" qa/match/08/benny08/STATUS.md qa/match/08/benny08/r5b/tests/*.md 2>/dev/null | head -3; ls scripts | grep -i -E \"game|play|test\" ", "description": "Find gameplay test command"}`
+
+### 🧑 User — 2026-11-17T20:36:56.015Z
+
+> ↩︎ result: gameplay_default.json
+> gameplay_match08.json
+> qa/match/08/benny08/STATUS.md:12:* **Test results:** tsc clean; default 0 px; r3b / r4 / r5 URLs reproducible 0 px; gameplay 8/8 + 91 coins / 2,240 default and match08; 04–07 0 px vs round 4
+> aspect-test.mjs
+> cinematic-test.mjs
+> continuity-test.ts
+> gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-17T20:36:59.403Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; head -c 400 qa/match/08/benny08/r5b/tests/gameplay_match08.json; echo; grep -n \"argv\\|--q\\|writeFile\" scripts/gameplay-test.mjs | head", "description": "Inspect gameplay test format"}`
+
+### 🧑 User — 2026-11-17T20:36:59.452Z
+
+> ↩︎ result: {
+>   "checks": {
+>     "pauseFreezes": {
+>       "pass": true,
+>       "sBefore": 45.495,
+>       "sPaused": 45.495,
+>       "sAfter": 49.995
+>     },
+>     "continuousTravel": {
+>       "pass": true,
+>       "nonMonotonicSteps": 0,
+>       "steps": 2139,
+>       "respawns": 0
+>     },
+>     "noCameraCut": {
+>       "pass": true,
+>       "maxCameraJumpPerStep": 0.728
+>     },
+>     "noTeleport": {
+>       "pass": true,
+>       "maxBenn
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 106:  writeFileSync(f, JSON.stringify(result, null, 2));
+> 112:writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> 138:writeFileSync('qa/07_to_08_continuity.md', md.join('\n') + '\n');
+
+### 🤖 Claude — 2026-11-17T20:37:03.509Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/benny08/review_r6/tests && mkdir -p $O && node scripts/gameplay-test.mjs --q=qa=default --out=$O/gameplay_default.json 2>&1 | tail -2; node scripts/gameplay-test.mjs --q=match08=1 --out=$O/gameplay_match08.json 2>&1 | tail -2; for f in $O/*.json; do python3 -I -c \"\nimport json,sys; r=json.load(open('$f')); c=r['checks']; print('$f', sum(v.get('pass',False) for v in c.values()),'/',len(c), {k:r[k] for k in r if 'coin' in k.lower() or 'score' in k.lower()})\"; done", "description": "Run gameplay tests default and match08"}`
+
+### 🧑 User — 2026-11-17T20:37:15.249Z
+
+> ↩︎ result: "errors": []
+> }
+>  "errors": []
+> }
+> qa/match/08/benny08/review_r6/tests/gameplay_default.json 8 / 8 {}
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json 8 / 8 {}
+
+### 🤖 Claude — 2026-11-17T20:37:17.005Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"coin\\|score\" qa/match/08/benny08/review_r6/tests/gameplay_match08.json qa/match/08/benny08/review_r6/tests/gameplay_default.json | head", "description": "Check coins and score"}`
+
+### 🧑 User — 2026-11-17T20:37:17.045Z
+
+> ↩︎ result: qa/match/08/benny08/review_r6/tests/gameplay_match08.json:42:    "realCoinPickups": {
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:44:      "startCoins": 1330,
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:45:      "endCoins": 2240,
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:55:        "coins": 2240,
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:83:      "coins": 1330
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:95:      "coins": 1350
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:107:      "coins": 1370
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:119:      "coins": 1380
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:131:      "coins": 1400
+> qa/match/08/benny08/review_r6/tests/gameplay_match08.json:143:      "coins": 1420
+
+### 🤖 Claude — 2026-11-17T20:37:20.103Z
+
+Gameplay 8/8, 1,330 → 2,240 (91 coins), errors [] both with and without match08. Now checking screens 04–07.
+
+### 🤖 Claude — 2026-11-17T20:37:23.667Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; for st in 04 05 06 07; do for v in \"n:match08=1\" \"b:match08=1&b08clump=0&b08yarn=0\"; do mkdir -p $S/o/${v%%:*}; node scripts/capture.mjs $st --out=$S/o/${v%%:*} --q=\"${v#*:}\" >/dev/null 2>&1; done; done; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor st in ['04','05','06','07']:\n  a=np.array(Image.open('$S/o/n/'+st+'.png').convert('RGB')); b=np.array(Image.open('$S/o/b/'+st+'.png').convert('RGB'))\n  d=(a!=b).any(2); ys,xs=np.nonzero(d); print(st, d.sum(), (xs.min(),xs.max …[+99 chars]`
+
