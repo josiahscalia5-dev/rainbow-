@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11080,
-   "sha256": "565b3abf602df73973b9b5677d0a75ca44a340c1a235cc5076b3e2ada25009bf"
+   "bytes": 11089,
+   "sha256": "f6dbe088fb09b3f30befd7bbf6a46f956a16ab8338a69592549df37252d7a11b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8225,6 +8225,11 @@
    "path": "tools/camclear/timeline.mjs",
    "bytes": 4399,
    "sha256": "c3cdab4b580beecbf8ce3a9b3fffe937bc52c76407e4d5d9ef81fa2a783594f1"
+  },
+  {
+   "path": "tools/camclear/vidmap.py",
+   "bytes": 1009,
+   "sha256": "c330bb3614ae6990a2169432d6e42febd02d326ee07e3f338dda8c59c2a4409c"
   },
   {
    "path": "tools/imageblaster/image-blaster-local.patch",
