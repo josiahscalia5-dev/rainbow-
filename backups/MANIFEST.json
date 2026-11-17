@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10664,
-   "sha256": "fb5d1c0d229487abd68d416da709a25b36223607ea934df7cc55b8f03913d9ad"
+   "sha256": "6a6228b344d5857b8ee7775668a9ef58766b713618ad0f345a212d7070f4dfc5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -713,8 +713,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 9878,
-   "sha256": "9aadc8344b2a286f9557b4f833ea38d1c2d698170c3780da12a5a216d371a620"
+   "bytes": 10086,
+   "sha256": "c04850463e1b79d2f63a06f77f64680b137c987d32991bccb995db03b9096701"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
