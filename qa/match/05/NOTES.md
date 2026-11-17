@@ -60,3 +60,37 @@ the old soft-edged teal patch right of Benny (present in BEFORE) remains — nex
 1. The teal soft patch right of Benny while riding (E ↔ tile hand-over edge of the old dome fill).
 2. Right wall chunk x 772–861 y 773–904 and the bottom-left ring arc (env05 bake) — gold rings / purple walls priority.
 3. Coins face colour (shared `coins.ts`: lead approval needed).
+
+---
+# Milestone 2 (account 2, branch `claude/rainbow-s05-match-c2`, 2026-11-17 ~16:50–17:40 UTC)
+
+## 2.1 Coin total under `?match05=1` — `coins05tot` (on with match05 / coins05; `coins05tot=0` = old layout)
+Problem: the measured 05 arrangement C05M (18 painted coins) replaced 7 default 05 coins → 102 coins, of which 2 were never
+collectable → gameplay 100 coins / 2,330 instead of the default game's **91 / 2,240**.
+
+Why the 2 were missed (trace `qa/match/05` audit, coin-seeking steering): C05M rows 17 + 18 end the painted arc that swings
+from lat +1.0 to −1.3 within 3 u; Benny is at lat +0.8 … +0.2 there and cannot steer across in time.
+
+Fix (`src/gameplay/coins.ts`, switch-guarded, listed in SHARED_CHANGES.md):
+* rows 17 + 18 stay **drawn** exactly where the approved picture paints them; their pickup uses the stream centre line
+  (`pickLat = 0`, new optional CoinDef field; every other coin uses `lat` as before);
+* 11 coins are removed where **no locked view** shows them: 3 behind the 06 checkpoint camera, 4 behind the 07 checkpoint
+  camera (both already "collected" in those views) and the last 4 coins of 06 behind its crest.
+
+Rejected by pixel test (one candidate at a time, `node tools/match05/coin_cp_count.mjs` lists coins behind each camera):
+| candidate | why rejected |
+|---|---|
+| the previous account's version: drop rows 17 + 18 | 17 px at the vanishing point — the approved picture shows them; mean distance to approved on those px 20.8 → 44.8 |
+| 05 trail before the 05 checkpoint (3) | the locked **04** view shows them far down its slide (the 2,296 px box x121–189 y827–1019) |
+| coin behind the 03 camera / behind the 10 camera | 10's coin shows far ahead in the 08 and 09 views (3,817 / 13,601 px incl. bloom) |
+
+Verified (final code, commit after 75ec501):
+* `match05=1` vs `match05=1&coins05tot=0`, screens 02–09: **0 px** each. 01, 10, 11 flip between two capture states run to
+  run with the switch on AND off (01: 745 px, 10: 1,244 px, 11: 52 k px between two identical-URL runs) — pre-existing
+  capture timing, not this change (10's coins are untouched).
+* Coin audit `node tools/match05/coin_audit.mjs --q='match05=1'`: 91 coins, 91 collected, none missed.
+* Gameplay `node scripts/gameplay-test.mjs`: default 8/8, `match05=1` 8/8, `match05=1&tgtvis05=1` 8/8 — all **91 coins,
+  1,330 → 2,240** (`gameplay_m2_*.json`). Continuity test ok. `npx tsc --noEmit -p .` clean.
+* Default `capture.mjs 05` == `qa/pilot05/current_default_05.png` 0 px; protected `?ringa=26&nearfloor05=0` ==
+  `qa/pilot05/wave9/baseline/05.png` 0 px; `match05=1` == `02_BEFORE_match05.png` 0 px; `match05=1&tgtvis05=1` ==
+  `03_NEW_match05_tgtvis05.png` 0 px (milestone-1 water around Benny preserved).
