@@ -75,3 +75,18 @@ or overwritten. Recommended: on the previous account, archive or stop those five
 ## Waiting for the user
 * Screen 08: approval of the whole screen (method approved; screen NOT approved).
 * Previous account: archive/stop its five old sessions so they don't wake at 20:20 UTC and duplicate work.
+
+## Stop / limit / resume log (2026-11-17)
+* ~17:06 UTC: the user said "Stop everything" — the lead interrupted all six sessions and cancelled the 17:48 check-in.
+* ~17:07 UTC: every session's last turn ended with "You've hit your 5-hour limit · resets 9:20pm (UTC)" (this
+  account). Their work up to then was autosaved. Newest commits after the stop (verified 22:31 UTC with `git ls-remote`):
+  04 `255ec5e` (17:06) · 05 `fd94023` (17:07) · 06 `2570f3a` (17:06) · 07 `21a1fdd` (17:07) · 08 Benny `a4c6a5c`
+  (17:12) · 08 camera `57b6eb8` (17:07). Old-account branches unchanged since 16:33 (no second writer).
+* Screen 07 reached its first NEW capture just before the limit: approved view SCENERY 6.0 % → **95.5 %** within 20
+  levels (SSIM 0.950), whole frame 6.7 % → 80.1 %, upper tunnel/rings/paddles 100.0 %, middle 90.3 %, lower 95.6 %,
+  Benny 16.6 % (`qa/match/07/metrics_BEFORE_NEW.json`; not yet verified by the lead).
+* 22:32 UTC: the user asked to continue. The SAME six sessions (they own their `-c2` branches; nothing else writes
+  there, so no `-c3` branches were needed) were sent RESUME messages: continue the current milestone from the last
+  pushed commit, never redo finished steps, push at every checkpoint, no paid jobs (the one Screen 04 fal edit
+  `01a1ea70` is done and reused), no merges. Their containers are being re-created (the old ones were reclaimed while
+  idle). Running status is confirmed only by a new push on each branch.
