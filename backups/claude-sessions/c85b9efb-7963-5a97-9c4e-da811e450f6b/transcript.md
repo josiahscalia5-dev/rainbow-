@@ -1277,3 +1277,24 @@ Bootstrap edits are in; now pointing the autosave at the new working branch, pro
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:restore-checkpoint 2>&1 | tail -4; echo \"--- status\"; python3 -I scripts/autosave-status.py | head -3; echo \"--- remote vs local\"; B=$(git branch --show-current); echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/$B | cut -f1)\"; echo \"source ccr-694bda6a-x58ntq remote: $(git ls-remote origin refs/heads/ccr-694bda6a-x58ntq | cut -f1) (must stay 4e140fa)\"; git status --short | head -5; echo \"--- refs\"; sha256sum -c scripts/reference.sha256 2>/dev/null | grep -c ': OK$'; echo \"--- lfs\" …[+291 chars]`
 
+### 🧑 User — 2026-11-17T00:49:36.243Z
+
+> ↩︎ result: "branch": "claude/rainbow-restore-env-setup-bxn85h",
+>   "commit": "43d4061f37fb345572ec71b6567bbf64248020d6",
+>   "duration_s": 6
+> }
+> --- status
+> AUTOSAVE OK | branch claude/rainbow-restore-env-setup-bxn85h | scheduler daemon | last verified backup 2026-11-17T00:49:28+00:00 (0.1 min ago) | local 43d4061 remote 43d4061 (match) | uncommitted 0
+> --- remote vs local
+> local  43d4061f37fb345572ec71b6567bbf64248020d6
+> remote 43d4061f37fb345572ec71b6567bbf64248020d6
+> source ccr-694bda6a-x58ntq remote: 4e140fa68307d51e4a9aca0b6ff9a2cf78595d6b (must stay 4e140fa)
+> --- refs
+> 13
+> --- lfs
+> 34
+> 0
+> --- daemon
+> 1009 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> 10
+
