@@ -5142,3 +5142,131 @@ They're the 13 test-run log files, which the repository ignores by default (`*.l
 
 > 🔧 **Bash** `{"command": "timeout 900 python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | tail -4; python3 -I scripts/autosave-status.py 2>&1 | tail -2; git status --short | wc -l; ls backups/claude-sessions/1d643cf4-a037-5022-a0b9-c571467e1f20/ 2>/dev/null; git log -1 --format='%h %s' | cut -c1-80", "description": "Run final lead autosave with transcript export", "timeout": 1000000}`
 
+### 🧑 User — 2026-11-17T21:29:46.901Z
+
+> ↩︎ result: "note": "following session branch 'ccr-f983b317-2vt0zh' (config branch 'ccr-9c4a8ad6-xovgsx')",
+>   "commit": "f576e6ff394bac47db5474a7559939368de98086",
+>   "duration_s": 9
+> }
+> AUTOSAVE OK | branch ccr-f983b317-2vt0zh | scheduler daemon | last verified backup 2026-11-17T21:29:37+00:00 (0.1 min ago) | local f576e6f remote f576e6f (match) | uncommitted 0
+> 0
+> transcript.md
+> transcript.sanitized.jsonl
+> f576e6ff autosave: Rainbow 2026-11-17 21:29 UTC
+
+### 🤖 Claude — 2026-11-17T21:29:56.994Z
+
+> 🔧 **Bash** `{"command": "grep -oE \"def [a-z_]+|'(worldlabs|lfs|refs|agents|lfs_remote|remote)'\" scripts/verify-assets.py | head -12; echo \"== branch tips on GitHub\"; for b in ccr-f983b317-2vt0zh claude/rainbow-preview-all-c5 claude/rainbow-s08-scenery-c5 claude/rainbow-s08-benny08-bake-c5 claude/rainbow-s08-camclear-c5 claude/rainbow-s07-match-c5 claude/rainbow-s06-match-c5 claude/rainbow-s05-match-c5 claude/rainbow-s04-match-c5 ccr-067047f0-up5d1m claude/rainbow-s08-scenery-c4 claude/rainbow-s08-benny08-bake-c4 claude/rainbow-s08-camclear-c4 claude/rainbow-s07-match-c4 claude/rainbow-s06-match-c4 cla …[+434 chars]`
+
+### 🧑 User — 2026-11-17T21:30:10.142Z
+
+> ↩︎ result: def git
+> def done
+> def lfs_pointer
+> def lfs_objects
+> def lfs_endpoint
+> def cmd_lfs_remote
+> def cmd_marble
+> def cmd_agents
+> 'agents'
+> 'agents'
+> 'agents'
+> 'agents'
+> == branch tips on GitHub
+> ccr-f983b317-2vt0zh                    f576e6ff394b
+> claude/rainbow-preview-all-c5          965e4ef903e4
+> claude/rainbow-s08-scenery-c5          72d547baf3ab
+> claude/rainbow-s08-benny08-bake-c5     494522c0d82f
+> claude/rainbow-s08-camclear-c5         18687513e3a3
+> claude/rainbow-s07-match-c5            835a72dbb5ab
+> claude/rainbow-s06-match-c5            c088718bb9e3
+> claude/rainbow-s05-match-c5            ebaf6cac7181
+> claude/rainbow-s04-match-c5            d1e422faff67
+> ccr-067047f0-up5d1m                    7d1318ecd584
+> claude/rainbow-s08-scenery-c4          5ce044a52d53
+> claude/rainbow-s08-benny08-bake-c4     fb72cc5052df
+> claude/rainbow-s08-camclear-c4         18687513e3a3
+> claude/rainbow-s07-match-c4            52c67e22e48d
+> claude/rainbow-s06-match-c4            c088718bb9e3
+> claude/rainbow-s05-match-c4            ebaf6cac7181
+> claude/rainbow-s04-match-c4            d1e422faff67
+> == refs
+> 13
+> == agents
+> 10
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: none (relaunch from notes when needed)
+
+### 🤖 Claude — 2026-11-17T21:30:21.167Z
+
+> 🔧 **Bash** `{"command": "timeout 300 git fetch -q origin ccr-067047f0-up5d1m claude/rainbow-s07-match-c4 claude/rainbow-s08-scenery-c5 claude/rainbow-s08-benny08-bake-c5 2>&1 | tail -2; for p in \"ccr-067047f0-up5d1m ffa54f9fb514f92a7d6353767e2952df9145bc25\" \"claude/rainbow-s07-match-c4 835a72dbb5abad1067b538c79b1f759b06e2cbeb\" \"claude/rainbow-s08-scenery-c5 60e7ffe8\" \"claude/rainbow-s08-benny08-bake-c5 c6892676\"; do set -- $p; echo \"== $1 ($2..tip)\"; git log --format='  %h %ci %s' $2..origin/$1 | head -4 | cut -c1-110; echo \"  game/doc files changed (not backups/):\"; git diff --stat $2 origin/ …[+112 chars]`
+
+### 🧑 User — 2026-11-17T21:30:22.267Z
+
+> ↩︎ result: == ccr-067047f0-up5d1m (ffa54f9fb514f92a7d6353767e2952df9145bc25..tip)
+>   7d1318ec 2026-11-17 20:47:08 +0000 autosave: Rainbow 2026-11-17 20:46 UTC
+>   game/doc files changed (not backups/):
+> == claude/rainbow-s07-match-c4 (835a72dbb5abad1067b538c79b1f759b06e2cbeb..tip)
+>   52c67e22 2026-11-17 20:46:59 +0000 autosave: Rainbow 2026-11-17 20:46 UTC
+>   248f19a6 2026-11-17 20:30:34 +0000 autosave: Rainbow 2026-11-17 20:30 UTC
+>   06a6b509 2026-11-17 20:30:16 +0000 autosave: Rainbow 2026-11-17 20:30 UTC
+>   game/doc files changed (not backups/):
+> == claude/rainbow-s08-scenery-c5 (60e7ffe8..tip)
+>   6a944c76 2026-11-17 21:29:54 +0000 autosave: Rainbow 2026-11-17 21:29 UTC
+>   72d547ba 2026-11-17 21:29:29 +0000 autosave: Rainbow 2026-11-17 21:29 UTC
+>   2738bd92 2026-11-17 21:07:20 +0000 autosave: Rainbow 2026-11-17 21:05 UTC
+>   ea731834 2026-11-17 21:00:34 +0000 autosave: Rainbow 2026-11-17 21:00 UTC
+>   game/doc files changed (not backups/):
+> == claude/rainbow-s08-benny08-bake-c5 (c6892676..tip)
+>   494522c0 2026-11-17 21:29:45 +0000 autosave: Rainbow 2026-11-17 21:29 UTC
+>   69365831 2026-11-17 21:29:30 +0000 autosave: Rainbow 2026-11-17 21:29 UTC
+>   1180d72e 2026-11-17 20:51:56 +0000 autosave: Rainbow 2026-11-1 …[+128 chars]
+
+### 🤖 Claude — 2026-11-17T21:30:30.040Z
+
+> 🔧 **Bash** `{"command": "grep -nE \"sys.argv|== ['\\\"](lfs|lfs-remote|lfs_remote|remote)\" scripts/verify-assets.py | head -6; timeout 600 python3 -I scripts/verify-assets.py lfs-remote 2>&1 | tail -3; echo \"== preview branch LFS objects present on GitHub (git lfs push dry-run shows nothing missing)\"; cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && timeout 600 git lfs push --dry-run origin claude/rainbow-preview-all-c5 2>&1 | wc -l", "description": "Verify LFS objects exist on GitHub for lead and preview", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-17T21:30:31.194Z
+
+> ↩︎ result: 304:    if len(sys.argv) < 2:
+> 307:    cmd = sys.argv[1]
+> 308:    if cmd == "lfs-remote":
+> 309:        return cmd_lfs_remote("--download" in sys.argv)
+> 317:        s = sys.argv[sys.argv.index("--session-start") + 1] if "--session-start" in sys.argv else None
+> 320:        return cmd_report(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else "full")
+> @@ ok 59/59 LFS objects (507 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> == preview branch LFS objects present on GitHub (git lfs push dry-run shows nothing missing)
+> 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:30:46.309Z
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+Everything is saved to your GitHub repository `josiahscalia5-dev/rainbow-`, and GitHub matches what's here.
+
+**What's on GitHub:**
+- **Lead branch `ccr-f983b317-2vt0zh`** @ `f576e6ff394bac47db5474a7559939368de98086`, local == GitHub, nothing unsaved. It holds:
+  - the all-screens video and its comparison report (`qa/screen_videos/2026-11-17/`);
+  - all 146 evidence files from this session (`qa/lead_r5/2026-11-17/`, with a README): screenshots of every screen, measurements, one video per screen, test results;
+  - every tool I used (`tools/lead_r5/`);
+  - your decisions, the specialists' final reports, the updated handoff, and this conversation's transcript.
+- **Combined preview branch `claude/rainbow-preview-all-c5`** @ `965e4ef`, including the coin fix (back to 91 / 2,240).
+- **Specialists:**
+  - Screen 08 scenery branch @ `6a944c7`
+  - Screen 08 Benny branch @ `494522c`
+  - 07, 06, 05, 04 and camera `-c5` branches, unchanged and safe.
+- **Account 4's old branches** are untouched. They received only transcript saves (no game changes).
+
+**Backup checks:**
+- **Approved images:** all 13 byte-identical.
+- **Specialist definitions:** all 10 present and unchanged in `.claude/agents/`. Their status, session IDs and next steps are in `backups/AGENTS_STATUS.json`.
+- **Large files:** 59 of 59 Git LFS files (videos, APKs, 3D/Marble assets, 507 MB) confirmed on GitHub's storage. Nothing from the preview branch is missing there.
+- **Five-minute autosave:** running and confirmed.
+
+**What can't be saved to GitHub:**
+- **Live sessions:** the agents' cloud sessions themselves (they're idle). Their work and transcripts are all saved, and the handoff explains how to restart each one from its branch.
+- **Keys:** the World Labs and fal.ai keys stay in this account's secure environment settings, never in GitHub. On this account: the World Labs key is your *other* World Labs account (5,190 credits), and fal.ai is reconnected to your same account.
+- **Phone APKs:** still can't be built here, because the Maven Central download server refuses this environment.
+
+**Where things stopped:** the combined preview is correct when each screen uses its own switches. With all switches on together, Screen 08 breaks (29.5 %), and the cause isn't found yet; that's the first next step in the handoff. Nothing is approved and nothing was merged into your normal game. Tell me when you'd like to continue.
+
