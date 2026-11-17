@@ -909,3 +909,107 @@ The other screens are still recording. The game is up to Screen 02, and the rest
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:screen-recordings 2>&1 | tail -5; python3 -I scripts/autosave-status.py; git ls-remote origin refs/heads/ccr-32bfea9a-ea6he9; git rev-parse HEAD; git lfs ls-files | grep recordings", "description": "Save the recordings to GitHub and verify the backup", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T20:57:03.742Z
+
+> ↩︎ result: "branch": "ccr-32bfea9a-ea6he9",
+>   "note": "following session branch 'ccr-32bfea9a-ea6he9' (config branch 'ccr-9c4a8ad6-xovgsx')",
+>   "commit": "f0ef35fdf83acd818ea3a3aacfd800ef948121dd",
+>   "duration_s": 9
+> }
+> AUTOSAVE OK | branch ccr-32bfea9a-ea6he9 | scheduler daemon | last verified backup 2026-11-17T20:56:53+00:00 (0.1 min ago) | local f0ef35f remote f0ef35f (match) | uncommitted 0
+> f0ef35fdf83acd818ea3a3aacfd800ef948121dd	refs/heads/ccr-32bfea9a-ea6he9
+> f0ef35fdf83acd818ea3a3aacfd800ef948121dd
+> b203680ae4 * qa/recordings/full_playthrough.mp4
+> 9336c27c86 * qa/recordings/screen_01.mp4
+> b097d56a16 * qa/recordings/screen_02.mp4
+> 6dcf89676c * qa/recordings/screen_03.mp4
+> 5356bc0193 * qa/recordings/screen_04.mp4
+> f58639582b * qa/recordings/screen_05.mp4
+> b0efa62d91 * qa/recordings/screen_06.mp4
+> be3a7203a6 * qa/recordings/screen_07.mp4
+> 59a91fa72f * qa/recordings/screen_08.mp4
+> 2c76550071 * qa/recordings/screen_08_preferred_match08.mp4
+> d348a4a673 * qa/recordings/screen_09.mp4
+> 3a8e438ec6 * qa/recordings/screen_10.mp4
+> ed4db9087b * qa/recordings/screen_11.mp4
+
+### 🤖 Claude — 2026-11-17T20:57:05.658Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__github__create_pull_request,mcp__github__get_file_contents", "max_results": 3}`
+
+### 🧑 User — 2026-11-17T20:57:05.667Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T20:57:08.259Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "josiahscalia5-dev:ccr-32bfea9a-ea6he9", "state": "open", "fields": ["number", "html_url", "draft"]}`
+
+### 🤖 Claude — 2026-11-17T20:57:09.098Z
+
+> 🔧 **Bash** `{"command": "ls .github 2>/dev/null; ls .github/PULL_REQUEST_TEMPLATE* pull_request_template.md 2>/dev/null; git remote show origin 2>/dev/null | grep \"HEAD branch\"", "description": "Check for PR template and default branch"}`
+
+### 🧑 User — 2026-11-17T20:57:09.195Z
+
+> ↩︎ result: []
+
+### 🧑 User — 2026-11-17T20:57:09.547Z
+
+> ↩︎ result: HEAD branch: ccr-6f431adf-7h0m8y
+
+### 🤖 Claude — 2026-11-17T20:57:18.514Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "ccr-32bfea9a-ea6he9", "base": "ccr-6f431adf-7h0m8y", "draft": true, "title": "Screen recordings of all 11 screens (01→11) + recording script", "body": "Review only — do not merge without the user's OK (session branch started from the lead line `ccr-067047f0-up5d1m` via `ccr-f983b317-2vt0zh`).\n\n## What\n* `scripts/record-screens.mjs` — records the real running game in headless Chromium frame by frame (60 Hz simulation, 30 fps video, 540×960 portrait), so videos play at true game speed. Benny steers toward the coins like a player.\n*  …[+1037 chars]`
+
+### 🧑 User — 2026-11-17T20:57:24.634Z
+
+> ↩︎ result: {"id":"5364880902","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/19"}
+
+### 🤖 Claude — 2026-11-17T20:57:26.061Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 19}`
+
+### 🧑 User — 2026-11-17T20:57:29.682Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#19. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-17T20:57:39.784Z
+
+All the videos are in the chat now, ready to download: one video of the whole game from start to finish, plus one video for each screen, 01 to 11.
+
+| File | What it shows | Length |
+|---|---|---|
+| `full_playthrough.mp4` | The whole game, 01 → 11 | 57 s |
+| `screen_01.mp4` | 01 · Opening (girl loads the washer) | 7.4 s |
+| `screen_02.mp4` | 02 · Whirlpool tumble | 6.6 s |
+| `screen_03.mp4` | 03 · Whirlpool Twirl | 3.2 s |
+| `screen_04.mp4` | 04 · Through the Five Arrows | 3.2 s |
+| `screen_05.mp4` | 05 · Flow Into the Current | 6.7 s |
+| `screen_06.mp4` | 06 · Crest the Rinse Arch | 5.3 s |
+| `screen_07.mp4` | 07 · Dive the Washer Tube | 11.9 s |
+| `screen_08.mp4` | 08 · Final Spin Chamber (normal version) | 1.6 s |
+| `screen_08_preferred_match08.mp4` (sent earlier) | 08 · your preferred version | 1.4 s |
+| `screen_09.mp4` | 09 · Ride the Final Wave | 1.6 s |
+| `screen_10.mp4` | 10 · Slide Into Hiding | 2.1 s |
+| `screen_11.mp4` | 11 · Safely Home, with FINAL SPIN COMPLETE | 7.0 s |
+
+- **How they were made:** the videos are real gameplay at true speed, in phone (portrait) shape. Benny collects coins along the way and finishes with 2,240 coins and 5/5 hearts.
+- **Short screens:** 08, 09 and 10 really are that short in play, about 1.5–2 seconds each.
+- **01, 02 and 11** show the game's built-in 3D scenes, not your Google Flow videos. Those video files aren't in the project yet.
+- **Not included:** this is the main version of the game. The newer work on 04, 05, 06 and 07 is on separate branches and isn't in these videos. I can record those versions as well if you'd like to compare.
+
+**Backup:** everything is saved to GitHub on branch `ccr-32bfea9a-ea6he9`, commit `f0ef35fdf83acd818ea3a3aacfd800ef948121dd`. GitHub has exactly the same commit as here, and the videos are stored with Git LFS. The five-minute autosave reports OK. One thing failed: when this session started, the step that downloads the newest copies of all branches from GitHub didn't work. That means this session doesn't have the latest copies of the other branches, but nothing was lost.
+
+I also opened draft PR #19 for review only, and it won't be merged without your OK: https://github.com/josiahscalia5-dev/rainbow-/pull/19. I'm watching it for any comments or checks.
+
+### 🧑 User — 2026-11-17T20:57:41.776Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (GitHub activity on a subscribed PR: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
