@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10663,
-   "sha256": "ebdb5f4f980d0c7641442e3167c08e7ad4e501cfd84436676893302884aa9c6d"
+   "sha256": "c7ba8ef7c05be13b5b971b44f5a9954cb551831d9b453ceaa771a2e868190d86"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -715,6 +715,41 @@
    "path": "docs/PARALLEL_PROGRESS.md",
    "bytes": 7405,
    "sha256": "4fb9643d9c9bf4212096c0016a437f810ab7ef68ceeea1a43741735fcbac6425"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
+   "bytes": 6398,
+   "sha256": "ba2196ae428a837be190895a0b807b3c034d958f07364df3c5c790cd4cdb4250"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r2/S04.md",
+   "bytes": 4093,
+   "sha256": "9555d92dff70c718d0aa3c66414522659296d487ed5351450c996c7d5a517c1f"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r2/S05.md",
+   "bytes": 3897,
+   "sha256": "38a45a5148f9cc5e7d78751a14fdec25d6107e5fe3618980e344d533af51035a"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r2/S06.md",
+   "bytes": 3860,
+   "sha256": "36ea77c0d308661bc3fd701d3fb55b774720bdbff10b7c0996c2059fd6758199"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r2/S07.md",
+   "bytes": 4298,
+   "sha256": "6bb3ea4fbb8ea0cd2ce0eef3887ade4895ba8d6cfdd5402c96c627733e9657ad"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r2/S08_BENNY.md",
+   "bytes": 3947,
+   "sha256": "286717c9f1b2d08b753b8d4945fe13599ef43cafec56902307d2b2ef55ce2a9d"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r2/S08_CAMERA.md",
+   "bytes": 3784,
+   "sha256": "7b725e86c93df8a90c25f03cab66373f43f8cec5f0057d02f719483bb9ece1ff"
   },
   {
    "path": "docs/characters/benny.md",

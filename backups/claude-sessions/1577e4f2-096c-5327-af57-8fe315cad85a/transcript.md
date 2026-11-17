@@ -907,3 +907,179 @@ I'll start by verifying the repository state, the bootstrap report and every bra
 > 2. Read: docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, qa/match/NOTES.md (per-screen switch rules, MATCH_CAM table, audit: 06 today 5.0 %, "low camera looking up at the slotted arch hall ribs"), qa/match/06/ (relaunch notes, if any), qa/match/08/NOTES.md (THE METHOD), qa/imageblaster/08/NOTES.md, src/world/match08.ts, src/game/match.ts, tools/match08/*, tools/qa/screen_match.py.
 > 3. Do NOT call World Labs or fal ( …[+5098 chars]
 
+### 🤖 Claude — 2026-11-17T16:32:09.896Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files | grep -E 'mp4|apk' ; ls -la qa/gameplay_video/source/ | head; git check-attr filter qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4", "description": "Check gameplay video and APKs are in Git LFS"}`
+
+### 🧑 User — 2026-11-17T16:32:09.984Z
+
+> ↩︎ result: 7f89d6ba94 * builds/rainbow-debug-T2-default.apk
+> 913d53e2b2 * builds/rainbow-debug-match08-2026-11-17.apk
+> 020009a783 * builds/rainbow-debug-match08-2026-11-17b.apk
+> 7aad3255a8 * builds/rainbow-debug-match08-2026-11-17c-benny.apk
+> fdbf9c695e * builds/rainbow-debug-w12-water.apk
+> dca8d754b7 * builds/rainbow-debug.apk
+> 3099580df1 * qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4
+> a981e19d63 * qa/pilot05/proj/clips/proj05_benny_steering_3s.mp4
+> 655318040b * qa/pilot05/proj/clips/proj05_locked_flow_3s.mp4
+> 1c7a65501c * qa/pilot05/proj/clips/proj05_ride_4s.mp4
+> a52ba378fd * qa/pilot05/proj/flow2/ride/BEFORE_old_flow_ride_3s.mp4
+> d7fab8e52d * qa/pilot05/proj/flow2/ride/NEW_projflow05_2_ride_3s.mp4
+> 58ce0e56bb * qa/pilot05/proj/near/ride/BEFORE_ride_3s_flow_running.mp4
+> a00a92747c * qa/pilot05/proj/near/ride/NEW_ride_3s_flow_running.mp4
+> total 22196
+> drwxr-xr-x 2 root root     4096 Nov 17 16:23 .
+> drwxr-xr-x 3 root root     4096 Nov 17 16:23 ..
+> -rw-r--r-- 1 root root 17196277 Nov 17 16:26 rainbow_gameplay_for_claudia-1_0-48.9s.mp4
+> -rw-r--r-- 1 root root  2537908 Nov 17 16:23 user_video_1fps_00-23s.png
+> -rw-r--r-- 1 root root  2978004 Nov 17 16:23 user_video_1fps_24-48s.png
+> qa/gameplay …[+69 chars]
+
+### 🤖 Claude — 2026-11-17T16:32:49.635Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/COMMON_RULES.md", "content": "# RAINBOW — common rules for every parallel workstream (round 2, account 2, 2026-11-17 ~16:35 UTC)\n\nLead coordinator (\"Lead Claudia\"): session `session_01VCMXob2ipUeLE1o7yXNSsZ` (\"Rainbow Android game parallel\nrestoration\"), branch `ccr-5495e9c4-g0apvl` (continuation of the lead branch `ccr-d4240b15-rl1i72`). It owns\nintegration, shared systems, credentials, paid-job gating and `docs/PARALLEL_PROGRESS.md`.\n\n## Why continuation branches (`…-c2`)\nThe previous Claude account stopped at ~16:01 UTC …[+5935 chars]`
+
+### 🧑 User — 2026-11-17T16:32:49.705Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r2/COMMON_RULES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:33:06.649Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/S08_BENNY.md", "content": "You are the SCREEN 08 BENNY SPECIALIST (benny-character-artist role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s08-benny08-bake-c2`**, continued from `claude/rainbow-s08-benny08-bake` @ `6392658` (newest remote commit of the previous account's Benny specialist). Push ONLY `claude/rainbow-s08-benny08-bak …[+3437 chars]`
+
+### 🧑 User — 2026-11-17T16:33:06.716Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r2/S08_BENNY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:33:20.252Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/S08_CAMERA.md", "content": "You are the SCREEN 08 CAMERA SPECIALIST (path-camera-transition-engineer role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s08-camclear-c2`**, continued from `claude/rainbow-s08-camclear` @ `5547670` (newest remote commit of the previous account's camera specialist). Push ONLY `claude/rainbow-s08-camclea …[+3244 chars]`
+
+### 🧑 User — 2026-11-17T16:33:20.308Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r2/S08_CAMERA.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:33:35.605Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/S04.md", "content": "You are the SCREEN 04 workstream agent (04 · THROUGH THE FIVE ARROWS) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ`? NO — the lead is session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s04-match-c2`**, continued from `claude/rainbow-s04-match` @ `e0bad9c` or newer (line A). Push ONLY `claude/rainbow-s04-match-c2`. Never  …[+3641 chars]`
+
+### 🧑 User — 2026-11-17T16:33:35.668Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r2/S04.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:33:36.842Z
+
+I made a confusing first line in the Screen 04 brief; I'll fix that and write the remaining three briefs.
+
+### 🤖 Claude — 2026-11-17T16:33:38.991Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/S04.md", "old_string": "Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ`? NO — the lead is session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).", "new_string": "Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`)."}`
+
+### 🧑 User — 2026-11-17T16:33:39.045Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-17-r2/S04.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:33:54.090Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/S05.md", "content": "You are the SCREEN 05 workstream agent (05 · FLOW INTO THE CURRENT) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or start Screen 05 from scratch; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s05-match-c2`**, continued from `claude/rainbow-s05-match` @ `90129c8` or newer. This is LINE B (from `ccr-b0757dec-dj6l1o` @ `99ab17b`): NEVER merge or cherry-pick with line A (`ccr-9c4a8 …[+3371 chars]`
+
+### 🧑 User — 2026-11-17T16:33:54.153Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r2/S05.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:34:08.240Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/S06.md", "content": "You are the SCREEN 06 workstream agent (06 · CREST THE RINSE ARCH) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s06-match-c2`**, continued from `claude/rainbow-s06-match` @ `42c9b29` or newer (line A = `ccr-9c4a8ad6-xovgsx` @ `752d6d8` + autosaves; the previous account's Screen 06 session had only read files bef …[+3325 chars]`
+
+### 🧑 User — 2026-11-17T16:34:08.318Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r2/S06.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:34:22.445Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r2/S07.md", "content": "You are the SCREEN 07 workstream agent (07 · DIVE THE WASHER TUBE) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s07-match-c2`**, continued from `claude/rainbow-s07-match` @ `49cf414` or newer (line A = `ccr-9c4a8ad6-xovgsx` @ `752d6d8` + autosaves; the previous account's Screen 07 session stopped right after rea …[+3753 chars]`
+
+### 🧑 User — 2026-11-17T16:34:22.512Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r2/S07.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:34:24.654Z
+
+Now I'll commit and push the briefs so the new sessions can read the common rules from GitHub.
+
+### 🤖 Claude — 2026-11-17T16:34:28.200Z
+
+> 🔧 **Bash** `{"command": "git add docs/briefs/2026-11-17-r2 && git commit -q -m \"Lead (account 2): round-2 parallel briefs + common rules for screens 04-08\n\nContinuation branches *-c2 because the previous account's sessions stopped at its\n5-hour limit and may resume after 20:20 UTC.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXob2ipUeLE1o7yXNSsZ\" && for i in 1 2 3 4; do git push -q -u origin ccr-5495e9c4-g0apvl && break; sleep $((2**i)); done; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-54 …[+173 chars]`
+
+### 🧑 User — 2026-11-17T16:34:31.107Z
+
+> ↩︎ result: local efd4d20079fac8c0dfb156d35c76798368d8ac62
+> remote efd4d20079fac8c0dfb156d35c76798368d8ac62
+> # RAINBOW — common rules for every parallel workstream (round 2, account 2, 2026-11-17 ~16:35 UTC)
+> 
+> Lead coordinator ("Lead Claudia"): session `session_01VCMXob2ipUeLE1o7yXNSsZ` ("Rainbow Android game parallel
+
+### 🤖 Claude — 2026-11-17T16:34:48.883Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S08 Benny specialist (r2)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s08-benny08-bake", "outcome_branch": "claude/rainbow-s08-benny08-bake-c2", "tags": ["rainbow-parallel-r2", "screen-08", "benny"], "prompt": "You are the SCREEN 08 BENNY SPECIALIST (benny-character-artist role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rai …[+3633 chars]`
+
+### 🤖 Claude — 2026-11-17T16:35:02.289Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S08 camera specialist (r2)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s08-camclear", "outcome_branch": "claude/rainbow-s08-camclear-c2", "tags": ["rainbow-parallel-r2", "screen-08", "camera"], "prompt": "You are the SCREEN 08 CAMERA SPECIALIST (path-camera-transition-engineer role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude …[+3433 chars]`
+
+### 🧑 User — 2026-11-17T16:35:06.659Z
+
+> ↩︎ result: {"ccr":{"id":"session_01VCMXoYuzD1BetvXyVLKxre", "title":"Rainbow S08 Benny specialist (r2)", "session_status":"SESSION_STATUS_PENDING", "created_at":"2026-11-17T16:35:06.536229Z", "updated_at":"2026-11-17T16:35:06.536229Z", "environment_id":"env_01LN2RLuvitKKXx9z4iJoMN5", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"claude/rainbow-s08-benny08-bake"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["claude/rainbow-s08-benny08-bake-c2"]}}}], "model":"claude-opus-5-5"}, "origin":"claude_code_mcp_seed", "connection_status":"disconnected", "tags":["rainbow-parallel-r2", "screen-08", "benny", "config:session-created", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "environment_kind":"anthropic_cloud", "parent_session_id":"session_01VCMXob2ipUeLE1o7yXNSsZ", "status_bucket":"SESSION_STATUS_BUCKET_WORKING", "configured_model":"claude-opus-5-5"}}
+
+### 🧑 User — 2026-11-17T16:35:08.005Z
+
+> ↩︎ result: {"ccr":{"id":"session_01VCMXobqY9gmdQoEnarNz81", "title":"Rainbow S08 camera specialist (r2)", "session_status":"SESSION_STATUS_PENDING", "created_at":"2026-11-17T16:35:07.900353Z", "updated_at":"2026-11-17T16:35:07.900353Z", "environment_id":"env_01LN2RLuvitKKXx9z4iJoMN5", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"claude/rainbow-s08-camclear"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["claude/rainbow-s08-camclear-c2"]}}}], "model":"claude-opus-5-5"}, "origin":"claude_code_mcp_seed", "connection_status":"disconnected", "tags":["rainbow-parallel-r2", "screen-08", "camera", "config:session-created", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "environment_kind":"anthropic_cloud", "parent_session_id":"session_01VCMXob2ipUeLE1o7yXNSsZ", "status_bucket":"SESSION_STATUS_BUCKET_WORKING", "configured_model":"claude-opus-5-5"}}
+
+### 🤖 Claude — 2026-11-17T16:35:16.333Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S04 Five Arrows match (r2)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s04-match", "outcome_branch": "claude/rainbow-s04-match-c2", "tags": ["rainbow-parallel-r2", "screen-04"], "prompt": "You are the SCREEN 04 workstream agent (04 · THROUGH THE FIVE ARROWS) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s04-match-c2`**, …[+3760 chars]`
+
+### 🧑 User — 2026-11-17T16:35:17.695Z
+
+> ↩︎ result: {"ccr":{"id":"session_01VCMXoZnQahSncyyVnBsDQS", "title":"Rainbow S04 Five Arrows match (r2)", "session_status":"SESSION_STATUS_PENDING", "created_at":"2026-11-17T16:35:17.586930Z", "updated_at":"2026-11-17T16:35:17.586930Z", "environment_id":"env_01LN2RLuvitKKXx9z4iJoMN5", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"claude/rainbow-s04-match"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["claude/rainbow-s04-match-c2"]}}}], "model":"claude-opus-5-5"}, "origin":"claude_code_mcp_seed", "connection_status":"disconnected", "tags":["rainbow-parallel-r2", "screen-04", "config:session-created", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "environment_kind":"anthropic_cloud", "parent_session_id":"session_01VCMXob2ipUeLE1o7yXNSsZ", "status_bucket":"SESSION_STATUS_BUCKET_WORKING", "configured_model":"claude-opus-5-5"}}
+
+### 🤖 Claude — 2026-11-17T16:35:30.535Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S05 Flow Into the Current match (r2)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s05-match", "outcome_branch": "claude/rainbow-s05-match-c2", "tags": ["rainbow-parallel-r2", "screen-05"], "prompt": "You are the SCREEN 05 workstream agent (05 · FLOW INTO THE CURRENT) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or start Screen 05 from scratch; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rain …[+3561 chars]`
+
+### 🧑 User — 2026-11-17T16:35:31.906Z
+
+> ↩︎ result: {"ccr":{"id":"session_01VCMXoYy3mTRHhDGP8mZcTw", "title":"Rainbow S05 Flow Into the Current match (r2)", "session_status":"SESSION_STATUS_PENDING", "created_at":"2026-11-17T16:35:31.811415Z", "updated_at":"2026-11-17T16:35:31.811415Z", "environment_id":"env_01LN2RLuvitKKXx9z4iJoMN5", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"claude/rainbow-s05-match"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["claude/rainbow-s05-match-c2"]}}}], "model":"claude-opus-5-5"}, "origin":"claude_code_mcp_seed", "connection_status":"disconnected", "tags":["rainbow-parallel-r2", "screen-05", "config:session-created", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "environment_kind":"anthropic_cloud", "parent_session_id":"session_01VCMXob2ipUeLE1o7yXNSsZ", "status_bucket":"SESSION_STATUS_BUCKET_WORKING", "configured_model":"claude-opus-5-5"}}
+
+### 🤖 Claude — 2026-11-17T16:35:44.285Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S06 Rinse Arch match (r2)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s06-match", "outcome_branch": "claude/rainbow-s06-match-c2", "tags": ["rainbow-parallel-r2", "screen-06"], "prompt": "You are the SCREEN 06 workstream agent (06 · CREST THE RINSE ARCH) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s06-match-c2`**, con …[+3504 chars]`
+
+### 🧑 User — 2026-11-17T16:35:46.063Z
+
+> ↩︎ result: {"ccr":{"id":"session_01VCMXocCdACTagSAjpsaqHT", "title":"Rainbow S06 Rinse Arch match (r2)", "session_status":"SESSION_STATUS_PENDING", "created_at":"2026-11-17T16:35:45.962276Z", "updated_at":"2026-11-17T16:35:45.962276Z", "environment_id":"env_01LN2RLuvitKKXx9z4iJoMN5", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"claude/rainbow-s06-match"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["claude/rainbow-s06-match-c2"]}}}], "model":"claude-opus-5-5"}, "origin":"claude_code_mcp_seed", "connection_status":"disconnected", "tags":["rainbow-parallel-r2", "screen-06", "config:session-created", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "environment_kind":"anthropic_cloud", "parent_session_id":"session_01VCMXob2ipUeLE1o7yXNSsZ", "status_bucket":"SESSION_STATUS_BUCKET_WORKING", "configured_model":"claude-opus-5-5"}}
+
+### 🤖 Claude — 2026-11-17T16:35:58.792Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S07 Washer Tube match (r2)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s07-match", "outcome_branch": "claude/rainbow-s07-match-c2", "tags": ["rainbow-parallel-r2", "screen-07"], "prompt": "You are the SCREEN 07 workstream agent (07 · DIVE THE WASHER TUBE) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).\n\nYour branch: **`claude/rainbow-s07-match-c2`**, co …[+3933 chars]`
+
+### 🧑 User — 2026-11-17T16:36:00.139Z
+
+> ↩︎ result: {"ccr":{"id":"session_01VCMXoZAmTEuSmtFMN8ca5t", "title":"Rainbow S07 Washer Tube match (r2)", "session_status":"SESSION_STATUS_PENDING", "created_at":"2026-11-17T16:36:00.034638Z", "updated_at":"2026-11-17T16:36:00.034638Z", "environment_id":"env_01LN2RLuvitKKXx9z4iJoMN5", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"claude/rainbow-s07-match"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["claude/rainbow-s07-match-c2"]}}}], "model":"claude-opus-5-5"}, "origin":"claude_code_mcp_seed", "connection_status":"disconnected", "tags":["rainbow-parallel-r2", "screen-07", "config:session-created", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "environment_kind":"anthropic_cloud", "parent_session_id":"session_01VCMXob2ipUeLE1o7yXNSsZ", "status_bucket":"SESSION_STATUS_BUCKET_WORKING", "configured_model":"claude-opus-5-5"}}
+
+### 🤖 Claude — 2026-11-17T16:36:07.827Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble API key", "suggested_type": "bearer", "reason": "This account's rainbow- environment has no World Labs key, so the free credit-balance check is blocked. Saving the same account's key restores Marble access (no paid job is started)."}`
+
+### 🧑 User — 2026-11-17T16:36:33.435Z
+
+> ↩︎ result: {"status":"saved","host":"api.worldlabs.ai","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/40 …[+446 chars]
+
+### 🤖 Claude — 2026-11-17T16:36:36.147Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "queue.fal.run", "header_name": "Authorization", "prefix": "Key", "display_name": "fal.ai API key", "suggested_type": "bearer", "reason": "This account's rainbow- environment has no fal.ai key. It is needed only for the one Screen 04 clean-plate edit you previously authorised; saving it starts no job and the check used is free."}`
+
+### 🤖 Claude — 2026-11-17T16:36:37.903Z
+
+> 🔧 **Bash** `{"command": "sleep 3; curl -sS -m 20 -o /tmp/wl.json -w 'HTTP %{http_code}\\n' https://api.worldlabs.ai/marble/v1/credits; python3 -c \"import json;d=json.load(open('/tmp/wl.json'));print({k:v for k,v in d.items() if 'credit' in k.lower() or k in ('balance','remaining')})\" 2>&1 | head -3; rm -f /tmp/wl.json", "description": "Free World Labs credit balance check"}`
+
