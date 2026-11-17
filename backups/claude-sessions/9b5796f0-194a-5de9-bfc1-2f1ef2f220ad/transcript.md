@@ -765,3 +765,149 @@ Camera locked: Benny's box within ~4 px, the river crest and the coin trail line
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match06/fit_river06.py'; s=open(p).read()\nold='    shift = np.array([bump(x[5:8], tB), bump(x[8:11], tB), 0.0])'\nnew='    # the probe already carries prev: Benny / his water point move by the CHANGE of the correction at his t\\n    shift = np.array([bump(x[5:8], tB) - bump(prev[\"dx\"], tB), bump(x[8:11], tB) - bump(prev[\"dy\"], tB), 0.0])'\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; python3 -I tools/match06/fit_river06.py $S/probe06_r3.json $S …[+101 chars]`
 
+### 🧑 User — 2026-11-17T16:55:14.384Z
+
+> ↩︎ result: {"off06": [1.1984455471638578, 2.765538753742642, 5.666484518166804], "fwd": [-0.1942014518959492, -0.19722136446766064, -0.9609315945888237], "path06": {"dx": [1.515229931306795, 0.20774037487565933, -0.028140977981446727], "dy": [-1.7310550695572378, -0.4810459348760544, 3.0469960263578724]}, "err": 707.7577020744488, "box": [204.96579162977105, 730.581833506792, 636.3135966994319, 1170.8010609730513], "coin_chain_px": 101.28779918584092, "crest_px": 0.0, "vp": [662.2251896067088, 631.3882196280796]}
+
+### 🤖 Claude — 2026-11-17T16:55:18.863Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; python3 -I -c \"\nimport json;c=json.load(open('$S/cam06_r4.json'));p=json.load(open('assets/textures/match06/path06.json'));p['dx']=c['path06']['dx'];p['dy']=c['path06']['dy'];json.dump(p,open('assets/textures/match06/path06.json','w'),indent=1)\"; node tools/match06/probe06.mjs match06=1 > $S/probe06_r4.json && python3 -I tools/match06/fit_river06.py $S/probe06_r4.json $S/cam06_lock.json $S/cam06_r4.json --fixpath && python3 -I tools/match06/fit_river06.py $S/probe06_r4.json $S/cam06_r5.json $S/ …[+117 chars]`
+
+### 🧑 User — 2026-11-17T16:56:32.950Z
+
+> ↩︎ result: {"off06": [1.179635477616296, 2.67928570693572, 5.677580809622353], "fwd": [-0.19128706672286408, -0.1896931198409855, -0.963029479501825], "path06": {"dx": [1.515229931306795, 0.20774037487565933, -0.028140977981446727], "dy": [-1.7310550695572378, -0.4810459348760544, 3.0469960263578724]}, "err": 531.3205995414726, "box": [203.3283970672862, 732.0772978788708, 638.4909064989579, 1168.5265769141884], "coin_chain_px": 117.12149658828966, "crest_px": 0.0, "vp": [657.9801723683745, 640.0416106161871]}
+> {"off06": [1.1905800179986255, 2.711631000949052, 5.658955053166565], "fwd": [-0.19316611671049302, -0.1955357903506533, -0.9614845844042085], "path06": {"dx": [1.2367556459287088, 0.9052265584137571, -0.1816593053130866], "dy": [-1.9099928935611117, -0.4955232147911466, 2.6038007830535026]}, "err": 753.0427374433264, "box": [202.93214146791968, 732.7917183526597, 638.2004666474778, 1168.549541583
+
+### 🤖 Claude — 2026-11-17T16:56:39.794Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; cp $S/cam06_lock.json assets/textures/match06/cam06_locked.json; cp $S/probe06_r4.json tools/match06/probe06_locked.json; python3 - <<'EOF'\nimport json\nc=json.load(open('assets/textures/match06/cam06_locked.json'))\no=[round(v,4) for v in c['off06']]; f=[round(v,5) for v in c['fwd']]\np='src/game/match.ts'; s=open(p).read()\nold=\"  '07': { back: 9\"\nnew=(f\"  // 06 (2026-11-17, qa/match/06/NOTES.md): solved offline with the 06 river correction (tools/match06/fit_river06.py) so\\n\"\n     f\"   …[+454 chars]`
+
+### 🧑 User — 2026-11-17T16:56:39.938Z
+
+> ↩︎ result: 13:export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> 14:export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> 27:  '06': { fov: 62, roll: 0, off06: [1.1796, 2.6793, 5.6776], dir06: [-0.19129, -0.18969, -0.96303] },
+> -rw-r--r-- 1 root root 192951 Nov 17 16:56 tools/match06/probe06_locked.json
+
+### 🤖 Claude — 2026-11-17T16:56:45.359Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; node tools/match06/probe06.mjs match06=1 > $S/probe_cam.json && python3 -I -c \"\nimport json,numpy as np\nd=json.load(open('$S/probe_cam.json'));c=json.load(open('assets/textures/match06/cam06_locked.json'))\nprint('fov',d['fov'],'s',d['s'],c['s']); a=np.array(d['mw']).reshape(4,4).T;b=np.array(c['mw']).reshape(4,4).T\nprint('pos game',a[:3,3],'locked',b[:3,3]); print('fwd game',-a[:3,2],'locked',-b[:3,2])\"", "description": "Verify live camera equals locked camera", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T16:56:58.960Z
+
+> ↩︎ result: fov 62 s 198.91 198.91
+> pos game [   1.72046994  -35.36951038 -132.64386473] locked [   1.72053548  -35.36941429 -132.64401919]
+> fwd game [-0.19128991 -0.18968991 -0.96302955] locked [-0.19128707 -0.18969312 -0.96302948]
+
+### 🤖 Claude — 2026-11-17T16:57:00.599Z
+
+The live game camera now matches the solved camera exactly. Committing this checkpoint, then building the texture plate and the 3D geometry.
+
+### 🤖 Claude — 2026-11-17T16:57:03.001Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && git add tools/match06 assets/textures/match06 src/world/course.ts src/game/cameraRig.ts src/game/match.ts && git commit -qm \"Screen 06 match06 step 1: locked approved-view camera + 06 river path following the painted river (behind ?match06=1)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXocCdACTagSAjpsaqHT\" && git log --oneline -1", "description": "Typecheck and commit step 1", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T16:57:06.551Z
+
+> ↩︎ result: 87f76bc Screen 06 match06 step 1: locked approved-view camera + 06 river path following the painted river (behind ?match06=1)
+
+### 🤖 Claude — 2026-11-17T16:57:22.312Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nA=cv2.imread('references/06_crest_the_rinse_arch.png'); hsv=cv2.cvtColor(A,cv2.COLOR_BGR2HSV)\ngold=(hsv[...,0]>=8)&(hsv[...,0]<=30)&(hsv[...,1]>110)&(hsv[...,2]>150)\nVP=np.array([660,630.])\nfor ang in (90,135,180,45,0):\n    a=np.radians(ang); runs=[]; prev=False; start=0\n    for r in range(5,900):\n        x=int(VP[0]+r*np.cos(a)); y=int(VP[1]-r*np.sin(a))\n        if not(0<=x<864 and 0<=y<1536): break\n        g=gold[y,x]\n        if g and not prev: start=r\n        if not g and prev and r-start>=3: runs.append((start,r))\n      …[+98 chars]`
+
+### 🧑 User — 2026-11-17T16:57:22.494Z
+
+> ↩︎ result: 90 [(101, 114), (197, 203), (336, 339), (342, 347), (350, 360), (361, 365), (370, 373), (449, 452)]
+> 135 [(338, 371), (381, 385), (563, 566), (568, 573), (585, 596), (634, 638)]
+> 180 [(95, 103), (441, 445), (449, 522)]
+> 45 [(108, 116), (256, 269), (272, 285)]
+> 0 [(23, 29), (169, 196)]
+
+### 🤖 Claude — 2026-11-17T16:57:39.188Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, math, numpy as np\nfrom scipy.optimize import brentq\nd=json.load(open('tools/match06/probe06_locked.json')); c=json.load(open('assets/textures/match06/cam06_locked.json'))\nW,H=864,1536; t=math.tan(math.radians(62)/2); asp=W/H\nMW=np.array(c['mw']).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\ndef ray(u,v):\n    r=[REDACTED-EMAIL]([(u/W*2-1)*t*asp,(1-v/H*2)*t,-1.0]); return r/np.linalg.norm(r)\nD=ray(660,630); cu=R[:,1]; cr=R[:,0]\nu=0.93*cu-0.37*cr; u-=D*(u@D); u/=np.linalg.norm(u)\nfs=np.array([f['s'] for f in d['frames']]); fp=np.array([f['pos'] f …[+519 chars]`
+
+### 🧑 User — 2026-11-17T16:57:39.669Z
+
+> ↩︎ result: 247.87279039922453 292.8727903992245 R 6 river dist/R min 2.33 mean 2.62 max 2.84
+> 247.87279039922453 292.8727903992245 R 8 river dist/R min 1.80 mean 2.02 max 2.18
+> 247.87279039922453 292.8727903992245 R 10 river dist/R min 1.48 mean 1.66 max 1.79
+> 247.87279039922453 292.8727903992245 R 12 river dist/R min 1.27 mean 1.42 max 1.52
+> 247.87279039922453 292.8727903992245 R 15 river dist/R min 1.06 mean 1.17 max 1.26
+> 247.87279039922453 292.8727903992245 R 20 river dist/R min 0.85 mean 0.93 max 1.00
+> 198.91 242.87279039922453 R 6 river dist/R min 0.17 mean 0.99 max 2.56
+> 198.91 242.87279039922453 R 8 river dist/R min 0.14 mean 0.79 max 1.97
+> 198.91 242.87279039922453 R 10 river dist/R min 0.13 mean 0.67 max 1.62
+> 198.91 242.87279039922453 R 12 river dist/R min 0.13 mean 0.59 max 1.39
+> 198.91 242.87279039922453 R 15 river dist/R min 0.14 mean 0.52 max 1.15
+> 198.91 242.87279039922453 R 20 river dist/R min 0.16 mean 0.44 max 0.92
+> cam above water [1.17963548 2.67928571 5.67758081] D [-0.01988709 -0.08192435 -0.99644012]
+
+### 🤖 Claude — 2026-11-17T16:59:02.589Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match06/geo06.py <<'EOF'\n\"\"\"Screen 06 (?match06=1) shared geometry for the offline tools (must match src/world/match06.ts):\nriver frames from the probe (course.sample every 0.5 u WITH the 06 correction), the tube around the river and the river\nfloor. Tube: centre c(s) = pos + hA * up, radius R; floor: pos + l * right, |l| <= L = sqrt(R^2 - hA^2) (meets the wall).\nAfter sEnd both continue straight along the tangent at sEnd (the painted tunnel's far rings stay concentric).\nThe locked camera: assets/textures/match06/cam06_locked.json.\"\"\"\nimport json, math\nimp …[+3643 chars]`
+
+### 🧑 User — 2026-11-17T16:59:03.200Z
+
+> ↩︎ result: 190.4 cam dist to axis 0.91
+> 195.4 cam dist to axis 2.49
+> 200.4 cam dist to axis 2.49
+> 205.4 cam dist to axis 1.57
+> 210.4 cam dist to axis 1.34
+> 215.4 cam dist to axis 2.97
+> 220.4 cam dist to axis 4.26
+> 225.4 cam dist to axis 4.86
+> 230.4 cam dist to axis 5.09
+> 235.4 cam dist to axis 4.72
+> 240.4 cam dist to axis 3.7
+> min margin 2.4081428474881745
+
+### 🤖 Claude — 2026-11-17T16:59:17.538Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match06/make_plate06.py <<'EOF'\n\"\"\"Screen 06 (?match06=1): texture plate = the user's ORIGINAL approved pixels; PROVISIONAL local fill (OpenCV Telea\ninpainting + high frequencies of mirrored artwork patches) only where the HUD bar, title banner, Benny (above his\nripples) and the 15 painted coins are (the game draws those itself). The ripples/splash round Benny stay (scenery).\nA fal nano-banana-2/edit clean plate is prepared (qa/match/06/FAL_PLATE_REQUEST.md) but NOT run.\nusage: python3 -I tools/match06/make_plate06.py <approved.png> <out dir>\"\"\"\nimport sys, …[+2658 chars]`
+
+### 🧑 User — 2026-11-17T16:59:19.706Z
+
+> ↩︎ result: filled share 0.23389274691358025
+
+### 🤖 Claude — 2026-11-17T16:59:21.071Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/assets/textures/match06/plate06_hybrid.png"}`
+
+### 🧑 User — 2026-11-17T16:59:21.125Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:59:36.891Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match06/make_plate06.py'; s=open(p).read()\nold=\"cv2.ellipse(M, (420, 1150), (140, 40), 0, 0, 360, 255, -1)\\n\"\nnew=old+\"\"\"# beanie corners + cuff (the ellipses leave its lower corners) and the fur outline measured on the picture (pink fur pixels)\ncv2.rectangle(M, (252, 860), (582, 1012), 255, -1)\nfur = (A[..., 2].astype(int) > 190) & (A[..., 1].astype(int) < 140) & (A[..., 0].astype(int) > 110) & (A[..., 0].astype(int) < 230)\nroi = np.zeros((H, W), bool); roi[940:1190, 195:650] = True\nM[cv2.dilate((fur & roi).astype(np.uint8), np.ones((9, 9), …[+491 chars]`
+
+### 🧑 User — 2026-11-17T16:59:39.371Z
+
+> ↩︎ result: filled share 0.23869191864390432
+
+### 🤖 Claude — 2026-11-17T16:59:41.282Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/plate_crop.png"}`
+
+### 🧑 User — 2026-11-17T16:59:41.321Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:00:15.883Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match06/make_tiles06.py <<'EOF'\n\"\"\"Screen 06 (?match06=1): proxy layout (proj06.json) + design tiles UNWRAPPED from the plate (original approved pixels)\nthrough the locked camera onto the proxy geometry's own coordinates, for the views the approved picture never resolved\n(moving camera close to the walls / the water):\n  tile_tube.png   the painted tunnel wall (gold rings + slotted purple metal) over the wall ABOVE the water\n                  (angle -asin(hA/R) .. pi + asin(hA/R)) x TUBE_S along the river: ring-structured, mirrored along s\n  tile_floor.png  the …[+2417 chars]`
+
+### 🧑 User — 2026-11-17T17:00:16.561Z
+
+> ↩︎ result: {"tube": {"angle": [-0.41151684606748806, 3.553109499657281], "s": [218.91, 230.91], "period": 12.0}, "floor": {"lateral": [-6.87386354243376, 6.87386354243376], "s": [196.10999999999999, 202.91], "period": 6.800000000000011}} s0 186.91 s1 276.8727903992245
+> (384, 1024) (384, 512)
+
+### 🤖 Claude — 2026-11-17T17:00:18.579Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/tiles.png"}`
+
+### 🧑 User — 2026-11-17T17:00:18.614Z
+
+> ↩︎ result: [image]
+

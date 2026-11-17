@@ -437,9 +437,44 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match06/cam06_locked.json",
+   "bytes": 1172,
+   "sha256": "ea8893358035815dcbaa23dc05983df111211d2f46a5c48dd85f8dbb8decbf63"
+  },
+  {
    "path": "assets/textures/match06/path06.json",
-   "bytes": 321,
-   "sha256": "32f33c581b486bcdd8b96ab4aa171d6113df4f197c49262195a055302a4ce868"
+   "bytes": 329,
+   "sha256": "657af6fc2612f79c4531f96e7b81c0abd5b8c7d0eb64e2d97353d5a60431b2f4"
+  },
+  {
+   "path": "assets/textures/match06/plate06.json",
+   "bytes": 685,
+   "sha256": "e95e930ca34cb12da387b522c0ecf96bde8413881158e0e1c1d7827049d9b2e6"
+  },
+  {
+   "path": "assets/textures/match06/plate06_fillmask.png",
+   "bytes": 9169,
+   "sha256": "b648f0c7d4e2508b4dcc4eccd2190d97d1dcb3b97ff4006e7a4090b277799dc6"
+  },
+  {
+   "path": "assets/textures/match06/plate06_hybrid.png",
+   "bytes": 2597147,
+   "sha256": "ab64b2f51205ebe40ae7bc573767bc818cc06cb543dbaad4a45071bc723113fa"
+  },
+  {
+   "path": "assets/textures/match06/proj06.json",
+   "bytes": 1019,
+   "sha256": "31c095fc69e1a9fa778d1379d7cbee8bcbd4d8d348340b85c2cf0fe829a51c09"
+  },
+  {
+   "path": "assets/textures/match06/tile_floor.png",
+   "bytes": 454963,
+   "sha256": "103e12fb3c2493cf233620d357baa7e3feeb84053fc535de586c40b643e279dc"
+  },
+  {
+   "path": "assets/textures/match06/tile_tube.png",
+   "bytes": 905477,
+   "sha256": "90752f1fd0d332cdabfdb56610a73fa81c87a3f3100b96814ca5f5880ff92d16"
   },
   {
    "path": "assets/textures/match08/cam08_locked.json",
@@ -614,7 +649,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10600,
-   "sha256": "79b9f75a76b4308377795ad0a5e77176f48c35f88838877a1d5377255b7bc7a4"
+   "sha256": "fdee5d6e83587d836917e79d665ae463d82a749e39a9fa9a9b07e5ba6b5d6a4a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7958,8 +7993,8 @@
   },
   {
    "path": "src/game/match.ts",
-   "bytes": 2322,
-   "sha256": "640cd7e53ac698d88d03e0fc985502e44bdb5e64461f506666ebde0d7d0971dc"
+   "bytes": 2672,
+   "sha256": "d7434fd2fafc8acbaf82b2a6fe383d05196f75a747d6a3aa779a7c809486c6e0"
   },
   {
    "path": "src/game/modules.ts",
@@ -8247,6 +8282,21 @@
    "sha256": "85e55ef4d5858fc0631b6cdfc710944ea135c89dea4f196d7491301f8b05e2a7"
   },
   {
+   "path": "tools/match06/geo06.py",
+   "bytes": 3299,
+   "sha256": "3f96f1a2ee2d14c7c29ab95e8283ab5a1b1c15f126ee1e026969e4eff980e5bb"
+  },
+  {
+   "path": "tools/match06/make_plate06.py",
+   "bytes": 3423,
+   "sha256": "3a002099defc0ad0cf7c2768659ec2ccf967626013301c1003d42534876e69bc"
+  },
+  {
+   "path": "tools/match06/make_tiles06.py",
+   "bytes": 2290,
+   "sha256": "d4d36f16b680434562c326b593b90b7f99ca0a73b356a10105fe3743f48aee1c"
+  },
+  {
    "path": "tools/match06/overlay06.py",
    "bytes": 1460,
    "sha256": "9e87a3a90df222a0b8f4e65b37cde6cd58e239f17e85333a1e50848ba75589c3"
@@ -8255,6 +8305,11 @@
    "path": "tools/match06/probe06.mjs",
    "bytes": 2432,
    "sha256": "77c900fc880f9ea432c5d991663a89d3e1a01bd430a8725ad05c3916a9353a30"
+  },
+  {
+   "path": "tools/match06/probe06_locked.json",
+   "bytes": 192951,
+   "sha256": "6d689a924f688cebd4fcc78fb2cc0caefa267ba4e339c8a9d1a99eeab40dc1ab"
   },
   {
    "path": "tools/match06/solve_cam06.py",
