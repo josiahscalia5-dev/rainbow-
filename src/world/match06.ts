@@ -110,7 +110,8 @@ void main() {
   // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
   // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
   float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
-  float keep = 1.0 - smoothstep(2.5, 6.0, mag);
+  // r6 m06flow: on the river the flowing painted-water material takes over sooner from the stretched projection
+  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);
   if (vProj.w > 0.0) {
     vec3 ndc = vProj.xyz / vProj.w;
     vec2 uv = ndc.xy * 0.5 + 0.5;
@@ -129,6 +130,13 @@ void main() {
         float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
         float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
         w *= 1.0 - max(mk.r, mk.g) * away * inWater;
+      }
+      // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
+      // shows the ring-structured wall tile once the camera leaves the approved view (the real river geometry carries
+      // the water there)
+      if (uFloor < 0.5 && uGeo > 0.5 && uUseMask > 0.5) {
+        float awayT = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+        w *= 1.0 - (1.0 - texture2D(uMask, uv).g) * awayT;
       }
       t = mix(pc, texture2D(uPlate, uv).rgb, w);
     }
