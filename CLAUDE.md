@@ -73,8 +73,9 @@ pushes or tests unless verified.
 ## 6. The game (authoritative brief `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`)
 **USER DECISIONS 2026-11-17 ~19:00 UTC (account 4) — full text `docs/briefs/2026-11-17-r4/USER_DECISIONS.md`:**
 Benny: round 3b = preferred base, compare with r2 / r4 / approved; body rounder and fuller, fur soft (not spiky).
-`?match08=1&coins08px=1` = preferred coin version (verify in gameplay before integration). Order: 08 Benny + camera →
-07 → 05 → 06 → 04, only as many parallel sessions as usage allows. Final approval only after full-size APPROVED /
+`?match08=1&coins08px=1` = preferred coin version (lead verified in gameplay 19:05: 8/8, 91 / 2,240, all 9 painted
+coins picked up). Order: 08 Benny + camera → 07 → 08 scenery-in-motion (`S08_SCENERY.md`: the projected 08 scenery tears
+when Benny moves/steers) → 05 → 06 → 04, at most two sessions at once (usage). Final approval only after full-size APPROVED /
 BEFORE / NEW + moving-view comparisons. Never merge PR #16 or unfinished branches without the user's OK.
 
 **NEWEST USER ORDERS (2026-11-17) — win over everything older in this section:**
