@@ -3961,3 +3961,318 @@ Starting Phase 1 (Screen 08). Your approved images and the normal game build wil
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T13:13:58.448Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"'08'|\\\"08\\\"|stage 08|08:|spin|chamber|CHECKPOINT|checkpoint\" src/world/course.ts | head -30 | cut -c1-200; echo ---CAM; sed -n 1,60p src/game/cameraRig.ts | cut -c1-200", "description": "Read Screen 08 course data and camera rig"}`
+
+### 🧑 User — 2026-11-17T13:13:58.500Z
+
+> ↩︎ result: 9: * chamber; the route ends under the purple towel on the platform, where the 11 cinematic plays.
+> 16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 28:  /** enclosing tube radius (0 = open environment such as a drum/basin/chamber) */
+> 56:  '08': 'FINAL SPIN CHAMBER',
+> 67:  chamber: { center: new THREE.Vector3(12, -101.1, 0), radius: 13.5, zBack: -280, zDoor: -332, floorY: -113.6, doorRadius: 6.2 },
+> 112: * checkpoint (u≈uCrest, offset a0 to the LEFT, heading parallel to the tunnel axis), then crests
+> 121:  /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+> 143: *  checkpoint search window (u ≤ uCrest + λ/4) and therefore the LOCKED 05 camera are bit-identical */
+> 266:  // boundaries and the 06 checkpoint, stay exactly where they were
+> 274:      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),
+> 296:  // straight length chosen so the bottom lands exactly on the chamber floor altitude
+> 308:  const zIn = WORLD.chamber.zBack;
+> 310:  mark('08');
+> 428:      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
+> 429:      def('08', m['08'],  …[+4044 chars]
+
+### 🤖 Claude — 2026-11-17T13:13:59.705Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/capture.mjs | cut -c1-200; grep -n -E \"toneMapping|outputColorSpace|bloom|EffectComposer|post05|fog\" src/game/Game.ts src/render/*.ts 2>/dev/null | head -25 | cut -c1-180", "description": "Read capture script and render pipeline settings"}`
+
+### 🧑 User — 2026-11-17T13:13:59.771Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3517 chars]
+
+### 🤖 Claude — 2026-11-17T13:14:08.254Z
+
+> 🔧 **Bash** `{"command": "grep -n -i -E \"inverse|invTone|untone|neutral|toneMapped|fog: false|fog = false|post05|proj05\" src/vfx/waterRibbon.ts src/game/Game.ts src/vfx/proj05Tunnel.ts src/vfx/proj05Apron.ts src/vfx/glsl.ts | cut -c1-200 | head -40", "description": "Find how the 05 projection handles tone mapping"}`
+
+### 🧑 User — 2026-11-17T13:14:08.313Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:101: * Ribbon colours in shader (pre-tonemap, linear) space. NeutralToneMapping desaturates anything
+> src/vfx/waterRibbon.ts:102: * whose peak channel passes ≈0.76·exposure, so these were solved by inverting Neutral at the game's
+> src/vfx/waterRibbon.ts:120: * (exposure 0.86 → Neutral → sRGB → grade.ts saturation 1.36 / contrast 1.15; bloom ignored) so the
+> src/vfx/waterRibbon.ts:154: * `projflow05=2`, read in attachProj05). Without it nothing changes.
+> src/vfx/waterRibbon.ts:156:const MATCH05_KEYS = ['proj05', 'projwall05', 'projring05', 'projframe05', 'projlid05', 'projnear05'];
+> src/vfx/waterRibbon.ts:204: * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+> src/vfx/waterRibbon.ts:205: * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so
+> src/vfx/waterRibbon.ts:210: * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+> src/vfx/waterRibbon.ts:212: * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> src/vfx/waterRibbon.ts:214:export co …[+3487 chars]
+
+### 🤖 Claude — 2026-11-17T13:14:11.556Z
+
+> 🔧 **Bash** `{"command": "sed -n 318,360p src/vfx/waterRibbon.ts; grep -n -E \"uPjPost|uPjRes\" src/vfx/waterRibbon.ts | head -12 | cut -c1-200; ls src/render; grep -n -E \"saturation|contrast|vignette|ShaderPass|OutputPass|grade\" src/game/Game.ts src/render/grade.ts 2>/dev/null | head -20 | cut -c1-180", "description": "Read the post-chain inverse and grade pass"}`
+
+### 🧑 User — 2026-11-17T13:14:11.631Z
+
+> ↩︎ result: /** `?proj05=1`: the inverse of the post chain (needs uniforms uPjPost, uPjRes) — shared with the far river block */
+> export const PROJ05_INVERSE = /* glsl */ `
+> // undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> // post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+> vec3 pjInverse(vec3 t) {
+>   vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+>   float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+>   vec3 c = t / max(vig, 0.5);
+>   c = (c - 0.5) / uPjPost.z + 0.5;
+>   float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+>   c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+>   c = clamp(c, 0.0, 0.975);
+>   c = mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+>   float np = max(c.r, max(c.g, c.b));
+>   if (np >= 0.76) {
+>     float peak = 0.0576 / (1.0 - np) - 0.24 + 0.76;
+>     float g = 1.0 - 1.0 / (0.15 * (peak - np) + 1.0);
+>     c = (c - g * np) / (1.0 - g);
+>     c *= peak / np;
+>   }
+>   float x = min(c.r, min(c.g, c.b));
+>   float off = x >= 0.04 ? 0.04 : (sqrt(max(x, 0.0)) / 2.5 - x);
+>   return (c + off) / uPjPost.x;
+> }
+> `;
+> 
+> const FRAG = /* glsl */ `
+> uniform float uT …[+2615 chars]
+
+### 🤖 Claude — 2026-11-17T13:14:37.640Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"chamber|platform|towel|door|porthole|'08'|stage08|s08|function build|export function\" src/world/environment.ts | cut -c1-170 | head -50", "description": "Find the Screen 08 chamber parts in environment.ts"}`
+
+### 🧑 User — 2026-11-17T13:14:37.682Z
+
+> ↩︎ result: 18:import { buildTowel, TowelMesh } from './towel';
+> 23:  doorA: THREE.Object3D; // hinge pivot (rotation.y opens)
+> 24:  doorC: THREE.Object3D;
+> 27:  towel: TowelMesh; // on the chamber platform (08–11)
+> 31:  zones: Record<'drumA' | 'basin' | 'tubes' | 'chamber', THREE.Group>;
+> 41:export function buildEnvironment(course: Course): Environment {
+> 48:    chamber: new THREE.Group(),
+> 79:  const doorHole = new THREE.Path();
+> 80:  doorHole.absarc(0, 0, dA.doorRadius, 0, Math.PI * 2, true);
+> 81:  frontShape.holes.push(doorHole);
+> 85:  // gold door ring (thick) + chrome inner lip
+> 86:  const ringA = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 0.35, 0.48, 24, 96), goldMat);
+> 89:  const ringA2 = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 1.15, 0.22, 16, 96), goldSoft);
+> 100:  // washer door A (hinged on the left seen from the room: pivot at x=-r)
+> 101:  const doorA = new THREE.Group();
+> 102:  doorA.name = 'doorA_pivot';
+> 103:  doorA.position.set(-(dA.doorRadius + 0.6), 0, dA.zDoor + 0.55);
+> 104:  const doorAInner = new THREE.Group();
+> 105:  doorAInner.position.set(dA.doorRadius + 0.6, 0, 0);
+> 106:  const doorRingA = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 0.2, 0.42, 20, 80 …[+2373 chars]
+
+### 🤖 Claude — 2026-11-17T13:14:38.594Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"__rainbow|goto|qa3d|checkpoint|window\\.__\" src/game/Game.ts | head -30 | cut -c1-200", "description": "Find the QA hooks in Game.ts"}`
+
+### 🧑 User — 2026-11-17T13:14:38.651Z
+
+> ↩︎ result: 9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 356:        // restart this stage with full hearts (checkpoint), coins kept
+> 569:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 571:    if (!cp) throw new Error('unknown checkpoint ' + id);
+> 578:      // replay the cinematic deterministically up to the checkpoint time
+> 599:    // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+> 611:    checkpoints: Object.keys(CHECKPOINTS),
+> 612:    goto: gotoCheckpoint,
+> 687:    qa3d() { return { scene, camera, renderer, composer }; },
+> 694:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-17T13:14:41.638Z
+
+> 🔧 **Bash** `{"command": "sed -n 540,620p src/world/environment.ts | cut -c1-210; grep -n -E \"platform\\s*:|platform =|WORLD = |towel\" src/world/course.ts | head -8 | cut -c1-200", "description": "Read the chamber construction and platform data"}`
+
+### 🧑 User — 2026-11-17T13:14:41.686Z
+
+> ↩︎ result: // =====================================================================================
+>   // Final Spin Chamber (08–11)
+>   // =====================================================================================
+>   const C = WORLD.chamber;
+>   const cLen = C.zBack - C.zDoor;
+>   const chamberGeo = new THREE.CylinderGeometry(C.radius, C.radius, cLen, 120, 30, true);
+>   chamberGeo.rotateX(Math.PI / 2);
+>   chamberGeo.translate(C.center.x, C.center.y, (C.zBack + C.zDoor) / 2);
+>   const chamberMat = perforatedMetal({ color: '#cf45dc', emissive: '#9a24b8', emissiveIntensity: 0.3, slot: 1, repeatU: 92, repeatV: 22, holeSize: 0.46, streaks: 0.45 });
+>   zones.chamber.add(new THREE.Mesh(chamberGeo, chamberMat));
+>   // back wall with the 07 inlet hole
+>   const inletC = tubeCenterAt(perfPath, s08 - 0.05);
+>   const inletR = perfPath.radius(s08 - 0.05);
+>   const cb = new THREE.Shape();
+>   cb.absarc(C.center.x, C.center.y, C.radius, 0, Math.PI * 2, false);
+>   const inHole = new THREE.Path();
+>   inHole.absarc(inletC.x, Math.max(inletC.y, C.center.y - C.radius + inletR + 0.15), inletR - 0.05, 0, Math.PI * 2, true);
+>   cb.holes.push(inHole);
+>   const cbGeo = new THREE.ShapeGeometry(cb, 64);
+>   cbGeo.translate(0, 0, C. …[+4159 chars]
+
+### 🤖 Claude — 2026-11-17T13:14:42.834Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"CHECKPOINTS|'08'\" src/game/Game.ts src/world/course.ts src/game/modules.ts | head -20 | cut -c1-200; sed -n 560,610p src/game/Game.ts | cut -c1-200", "description": "Read checkpoint definitions and goto logic"}`
+
+### 🧑 User — 2026-11-17T13:14:42.888Z
+
+> ↩︎ result: src/game/Game.ts:30:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> src/game/Game.ts:551:  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> src/game/Game.ts:559:    '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+> src/game/Game.ts:566:    '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+> src/game/Game.ts:570:    const cp = CHECKPOINTS[id];
+> src/game/Game.ts:611:    checkpoints: Object.keys(CHECKPOINTS),
+> src/world/course.ts:16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> src/world/course.ts:56:  '08': 'FINAL SPIN CHAMBER',
+> src/world/course.ts:310:  mark('08');
+> src/world/course.ts:428:      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
+> src/world/course.ts:429:      def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
+> src/world/course.ts:605:    if (s > c.marks['07_plunge_top'] && s < c.marks['08']) minPitch = Math.min(minPitch, THREE.MathUtils.radToDeg(Math.asin(cur.tan.y)));
+> src/world/course.ts:612:  const inlet = c.marks['08'];
+>     '09': { …[+2042 chars]
+
+### 🤖 Claude — 2026-11-17T13:16:35.589Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate", "max_results": 2}`
+
+### 🧑 User — 2026-11-17T13:16:35.600Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T13:16:38.803Z
+
+> 🔧 **TaskCreate** `{"subject": "Frame the approved Screen 08 camera under ?match08=1", "description": "MATCH_CAM['08'] so Benny's size/place and the door/vanishing point match references/08 (Benny box ≈ x260-600 y850-1210, door centre ≈ (490,400)); default build unchanged.", "activeForm": "Framing the Screen 08 camera"}`
+
+### 🧑 User — 2026-11-17T13:16:38.823Z
+
+> ↩︎ result: Task #1 created successfully: Frame the approved Screen 08 camera under ?match08=1
+
+### 🤖 Claude — 2026-11-17T13:16:40.355Z
+
+> 🔧 **TaskCreate** `{"subject": "Build Screen 08 3D proxy geometry fitted to the approved picture", "description": "Real meshes behind ?match08=1: floor/river plane, chamber walls, back wall with door, inlet tube walls, gold arch torus, platform, towel, 4 half-dome spouts; positions solved from the approved image + locked camera.", "activeForm": "Building Screen 08 proxy geometry"}`
+
+### 🧑 User — 2026-11-17T13:16:40.368Z
+
+> ↩︎ result: Task #2 created successfully: Build Screen 08 3D proxy geometry fitted to the approved picture
+
+### 🤖 Claude — 2026-11-17T13:16:41.563Z
+
+> 🔧 **TaskCreate** `{"subject": "Project the clean Screen 08 artwork onto the geometry", "description": "Projective texture from the locked camera (clean plate), occlusion test, pjInverse post-chain inverse, no fog; hide default 08 chamber/river/foam visuals only under the switch.", "activeForm": "Projecting the clean artwork"}`
+
+### 🧑 User — 2026-11-17T13:16:41.586Z
+
+> ↩︎ result: Task #3 created successfully: Project the clean Screen 08 artwork onto the geometry
+
+### 🤖 Claude — 2026-11-17T13:16:42.917Z
+
+> 🔧 **TaskCreate** `{"subject": "Capture APPROVED | BEFORE | NEW, measure, motion + Android check", "description": "Three separate full-size images, screen_match numbers, moving-camera frames, default-build pixel identity, tsc, gameplay test, Android feasibility notes; save to qa/match/08/ and commit.", "activeForm": "Capturing and measuring Screen 08"}`
+
+### 🧑 User — 2026-11-17T13:16:42.936Z
+
+> ↩︎ result: Task #4 created successfully: Capture APPROVED | BEFORE | NEW, measure, motion + Android check
+
+### 🤖 Claude — 2026-11-17T13:16:45.329Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T13:16:45.342Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-17T13:16:46.487Z
+
+> 🔧 **Bash** `{"command": "ls scripts/ | grep -i match; head -25 scripts/match-cam-fit.mjs | cut -c1-220; echo ====; head -20 scripts/match-cam-try.mjs 2>/dev/null | cut -c1-220", "description": "Read the camera-fit tool headers"}`
+
+### 🧑 User — 2026-11-17T13:16:46.575Z
+
+> ↩︎ result: match-cam-fit.mjs
+> match-cam-try.mjs
+> match-geo.mjs
+> match-probe.mjs
+> #!/usr/bin/env node
+> // Any screen: search the checkpoint camera framing (STAGE_CAM override, nothing in the source changes) so the game's
+> // Benny lands on the approved picture's Benny: bounding-box IoU of the REAL rendered Benny (Benny-only mask) vs the
+> // target box measured on the approved picture (Benny rendered with his own materials so the fur cards' alpha test
+> // holds; the mask is the render's alpha). Coarse grid, then a local refinement round.
+> //   node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 [--q=match07=1]
+> //        [--grid='{"back":[5.5,6.5,7.5],"up":[3.2,4,4.8],"lookUp":[-2,-0.5,1],"ahead":[16,22],"latFollow":[0.6]}']
+> // Prints the best candidates; writes qa/match/<id>/cam/fit.json.
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const ID = String(opt.id ?? '07');
+> const Q = typeof opt.q === 'string' ? opt.q : `match${ID}=1 …[+2056 chars]
+
+### 🤖 Claude — 2026-11-17T13:16:54.211Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,180p src/game/cameraRig.ts | cut -c1-200", "description": "Read the camera rig update logic"}`
+
+### 🧑 User — 2026-11-17T13:16:54.268Z
+
+> ↩︎ result: }
+>   if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+>   for (const k of KEYS) acc[k] /= w;
+>   return acc;
+> }
+> 
+> export class RideCamera {
+>   readonly pos = new THREE.Vector3();
+>   readonly target = new THREE.Vector3();
+>   readonly up = new THREE.Vector3(0, 1, 0);
+>   fov = 70;
+>   private init = false;
+>   /** optional straight tunnel axis + the s-range where the camera aligns to it */
+>   axis: { path: TubePath; s0: number; s1: number } | null = null;
+> 
+>   constructor(private course: Course) {}
+> 
+>   /** desired pose for Benny at (s, lateral) */
+>   desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+>     const p = camParamsAt(this.course, s);
+>     const f = this.course.sample(s);
+>     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+>     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+>     let up = f.up.clone();
+>     if (this.axis) {
+>       const a = this.axis;
+>       const w = THREE.MathUtils.smoothstep(s, a.s0, a.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, a.s1 - 10, a.s1));
+>       if (w > 0) {
+>         const af = a.path.frame(s);
+>         dir.lerp(af.tan, w).normalize();
+>         up.lerp(af …[+5637 chars]
+
+### 🤖 Claude — 2026-11-17T13:17:11.323Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08 && cat > /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/probe08.mjs <<'EOF'\n// read-only probe of the live game at the 08 checkpoint (no source change)\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst q = process.argv[2] || 'match08=1';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5263);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const …[+1864 chars]`
+
+### 🧑 User — 2026-11-17T13:17:29.577Z
+
+> ↩︎ result: {"q":"match08=1","st":{"stage":"08","s":391.21995388030825,"y":-113.11321459802053},"cam":[12.027,-108.736,-276.004],"fwd":[0.139,-0.239,-0.961],"up":[0.101,0.995,-0.018],"fov":62,"aspect":0.5625,"benny":[12.954,-113.113,-281.801],"bennyName":"Benny","doorPx":[193.9,346.2,0.9982],"platPx":[217.9,524.9,0.998],"quat":[-0.11645,-0.07694,-0.05792,0.98852]}
+
+### 🤖 Claude — 2026-11-17T13:18:43.872Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/solve08.mjs <<'EOF'\n// Solve the Screen 08 locked camera in the live game (read-only): camera position + aim so that, at fov 62,\n// Benny's projected box, the door centre and the platform centre land where the approved picture has them.\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5264);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  cons …[+5421 chars]`
+
