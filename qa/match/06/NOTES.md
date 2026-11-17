@@ -80,4 +80,6 @@ python3 -I tools/match06/make_floor06.py tools/match06/probe06_locked.json asset
   user's OK through the lead).
 * The `?camclear=1` 06 obstruction fix belongs to the Screen 08 camera specialist; under `match06=1` the 06 camera is
   this switch's own (no walls/rings between the view and Benny in the moving frames). Combining both switches is untested.
-* Android APK `builds/rainbow-debug-06-2026-11-17-r3.apk` (`VITE_RAINBOW_Q05="match06=1"`) — NOT phone-tested.
+* Android APK NOT built: `VITE_RAINBOW_Q05="match06=1" npm run android:debug` failed twice (web build + sync OK; Gradle could not
+  download kotlin-stdlib / commons-io POMs — repo.maven.apache.org answered HTTP 429 Too Many Requests). Re-run that command
+  later and copy the APK to `builds/rainbow-debug-06-2026-11-17-r3.apk` (it will be NOT phone-tested).
