@@ -2026,3 +2026,14 @@ One catch: `atan(dv.y, dv.x)` has its seam pointing left, through the left spray
 
 You've hit your 5-hour limit · resets 6:40am (UTC)
 
+### 🧑 User — 2026-11-17T11:49:34.685Z
+
+The coordinator sent a message while you were working:
+Resume your Screen 05 splash + bubbles work: the usage limit stopped you mid-step and it has reset now (2026-11-17 ~11:50 UTC). Continue from where you stopped (you were about to measure the spray-card angle from straight down so its seam points up into Benny's body) and from your `splash_bubbles/NOTES.md` "Remaining" list; do not redo finished steps. Your saved edits are intact and `npx tsc --noEmit` passes. Same rules as before (no git, 2 render slots, default 05 must stay 0 px vs `qa/pilot05/current_default_05.png`, keep only what real captures prove closer, water / foam / Benny must not get worse). Keep NOTES.md updated after every finished step, and finish with your final report (before → after per region and whole frame, files changed, what still differs, default-identity proof, REQUESTS).
+
+Address this before completing your current task.
+
+### 🤖 Claude — 2026-11-17T11:49:37.018Z
+
+You've hit your 5-hour limit · resets 3pm (UTC)
+

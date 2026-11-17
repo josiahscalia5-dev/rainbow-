@@ -2538,3 +2538,93 @@ The MP4 is encoded: H.264, 720×1280, 30 fps, 57.8 s, all 1,735 frames. Checking
 
 > 🔧 **Bash** `{"command": "mkdir -p tools/video && cp /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/record_full.mjs tools/video/record_full.mjs && cp /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/capture_dist.mjs tools/video/capture_dist.mjs && flock -w 90 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:full-game-video 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|rror|skip'; python3 -I scripts/autosave-status.py; git lfs ls-files | grep full-game", "description": "Save recorder tools and pus …[+44 chars]`
 
+### 🧑 User — 2026-11-17T11:49:09.480Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "65f3a89552c3fe7663c0b0b136706588dea052d5",
+> AUTOSAVE OK | branch ccr-b0757dec-dj6l1o | scheduler daemon | last verified backup 2026-11-17T11:48:06+00:00 (0.2 min ago) | local 65f3a89 remote 65f3a89 (match) | uncommitted 0
+> 70d02de5fb * builds/rainbow-full-game-match05-2026-11-17.mp4
+
+### 🤖 Claude — 2026-11-17T11:49:12.050Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/builds/rainbow-full-game-match05-2026-11-17.mp4"], "caption": "Your whole game, start to finish (58 s, 720×1280 HD, no sound): opening 01–02 → ride 03 to 10 → 11 SAFELY HOME / FINAL SPIN COMPLETE. Same game code as the APK; Benny is steered by the game's coin-chasing autopilot.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T11:49:16.816Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/builds/rainbow-full-game-match05-2026-11-17.mp4 → file_uuid: 126c08e2-fcef-42aa-86c7-51d45b980fa4
+
+### 🤖 Claude — 2026-11-17T11:49:20.503Z
+
+The video is sent. Now resuming the two specialists from exactly where the limit stopped them. First a quick check that their unfinished edits left the code in a valid state:
+
+### 🤖 Claude — 2026-11-17T11:49:22.521Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | tail -3; echo \"tsc exit=$?\"; ls qa/pilot05/full_reference_match/splash_bubbles/ 2>/dev/null | head; grep -n \"^## \" qa/pilot05/full_reference_match/splash_bubbles/NOTES.md 2>/dev/null | tail -5; grep -n \"^## \" qa/pilot05/full_reference_match/env/NOTES.md | tail -3; git diff --stat aefa92b HEAD -- src | tail -3", "description": "Check code validity and specialists' saved progress"}`
+
+### 🤖 Claude — 2026-11-17T11:49:23.012Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-17T11:49:28.464Z
+
+> ↩︎ result: tsc exit=0
+> NOTES.md
+> before.png
+> before_FULL_FRAME_METRICS.json
+> before_REGION_METRICS.json
+> move
+> move_before
+> still
+> 17:## Step A — measured (locked frame, cp3 = `../coordinator/checkpoints/cp3_match05_benny_tunnel_done.png`)
+> 32:## Steps B + C — what was built
+> 50:## Measured (real captures, `tools/match05/metrics.py`)
+> 63:## REQUESTS (coordinator)
+> 72:## Remaining
+> 167:## 5. Still different (honest list)
+> 179:## 6. REQUESTS (coordinator)
+> 186:## 7. How to redo / continue (the next account relaunches from here)
+>  src/vfx/spray.ts         |  10 +++
+>  src/world/environment.ts |  14 +++-
+>  5 files changed, 375 insertions(+), 4 deletions(-)
+
+### 🧑 User — 2026-11-17T11:49:28.478Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-17T11:49:31.042Z
+
+The code is valid (TypeScript check passes) and both specialists saved their progress notes before stopping. Resuming them from where they left off:
+
+### 🤖 Claude — 2026-11-17T11:49:34.539Z
+
+> 🔧 **SendMessage** `{"to": "a3ed4b72a3d21b82a", "summary": "Resume splash and bubbles after limit", "message": "Resume your Screen 05 splash + bubbles work: the usage limit stopped you mid-step and it has reset now (2026-11-17 ~11:50 UTC). Continue from where you stopped (you were about to measure the spray-card angle from straight down so its seam points up into Benny's body) and from your `splash_bubbles/NOTES.md` \"Remaining\" list; do not redo finished steps. Your saved edits are intact and `npx tsc --noEmit` passes. Same rules as before (no git, 2 render slots, default 05 must stay 0 px vs `qa/pilot05/curren …[+447 chars]`
+
+### 🧑 User — 2026-11-17T11:49:34.707Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a3ed4b7","resumedAgentId":"a3ed4b72a3d21b82a","pin":{"id":"a3ed4b72a3d21b82a","name":"a3ed4b72a3d21b82a","ref":"045ebb"}}
+
+### 🤖 Claude — 2026-11-17T11:49:37.198Z
+
+> 🔧 **SendMessage** `{"to": "a9d416668d7678967", "summary": "Resume tunnel chunks after limit", "message": "Resume your Screen 05 left-far-bend chunks work: the usage limit stopped you mid-step and it has reset now (2026-11-17 ~11:50 UTC). Continue exactly where you stopped (you were installing s2 / `--paintfittings` and about to capture k4 to verify the predicted side-fittings gain 3.56 → 2.94 for real) and from your `env/NOTES.md`; do not redo finished steps. Your saved edits are intact and `npx tsc --noEmit` passes. Same rules as before (no git, 2 render slots, default 05 and protected BEFORE must stay 0 px, ke …[+409 chars]`
+
+### 🧑 User — 2026-11-17T11:49:37.351Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a9d4166","resumedAgentId":"a9d416668d7678967","pin":{"id":"a9d416668d7678967","name":"a9d416668d7678967","ref":"4a4289"}}
+
+### 🤖 Claude — 2026-11-17T11:49:37.729Z
+
+You've hit your 5-hour limit · resets 3pm (UTC)
+
+### 🧑 User — 2026-11-17T11:49:37.958Z
+
+<task-notification>
+<task-id>a9d416668d7678967</task-id>
+<tool-use-id>toolu_01HM5xzJGtxp2VzaqYYxYCrp</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/a9d416668d7678967.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 left far-bend chunks" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 3pm (UTC) (error type rate_limit, HTTP 429, request id req_011Ch8T1k1zUnWECTJcJhwqZ, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 3pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+
