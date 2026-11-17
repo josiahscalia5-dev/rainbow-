@@ -3101,3 +3101,54 @@ Recording the result in the test notes and saving to GitHub:
 
 > 🔧 **Bash** `{"command": "cat >> qa/imageblaster/08/NOTES.md <<'EOF'\n\n## Step 1 DONE (2026-11-17 12:25 UTC, after the user topped up fal) — ONE paid fal edit, waiting for the user's review\n* fal `fal-ai/nano-banana-2/edit`, request `01a1e977-fbf1-71c1-85c1-99f705c06551`, 26 s, 1 image, 2K, aspect 9:16 asked.\n  Same prompt as above (bubbles kept). Output `1-08-final-spin-chamber-plate_fal_nano-banana-2_2K.png` 1536×2752\n  (aspect 0.5581, not exactly 9:16 = 0.5625). Exact fal charge: see the fal dashboard (not returned by the API).\n* Original `references/08_final_spin_chamber.png` unchanged (sha256 ab7 …[+2302 chars]`
 
+### 🧑 User — 2026-11-17T12:30:10.735Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "e9067fc8b2a0126c46a6ba4547800174180e33e4",
+> 0
+> local  e9067fc8b2a0126c46a6ba4547800174180e33e4
+> remote e9067fc8b2a0126c46a6ba4547800174180e33e4
+> 0
+> key pieces: 0
+
+### 🤖 Claude — 2026-11-17T12:30:28.173Z
+
+Step 1 is done: one paid fal.ai edit, which succeeded on the first try, so your top-up worked. Your two full-size previews are above: **1 = your original**, **2 = the environment-only version**. Your original is unchanged (checksum verified), and World Labs hasn't been touched (still 7,000 credits).
+
+**How close the edited version is to your approved screen**
+
+I scored only the scenery that was supposed to stay (everything except the HUD/banner strip, Benny's area and the coins):
+
+| Measure | Result |
+|---|---|
+| Pixels within 20 colour levels of your original | **92.7 %** |
+| Average colour difference | 8.6 out of 255 |
+| Structural similarity (fine detail) | 0.90 out of 1.0 |
+| Big shapes and colours (blurred comparison) | 100 % within 20 levels |
+| Camera perspective | The same: 1,093 matching points line up to within half a pixel |
+
+By area, within 20 levels:
+- upper chamber (door, towel, rings, upper spouts): 90 %
+- middle (river start, lower spouts): 88 %
+- side walls next to where Benny was: 94 %
+- bottom river and foam: 99 %
+
+**Differences I found**
+1. **Leftover splash.** Benny is gone, but a white splash crest still crosses the river where he was. It isn't in your approved scenery; it could pass as rapids, but it doesn't match your picture.
+2. **Fine details redrawn, same design.** The door, porthole, hinge, towel, platform, spouts, streams, rings, walls, foam and bubbles all keep their look. Small details are re-rendered: drops inside the porthole, the towel's fabric pattern, the edges of the wall slots. That's why the fine-detail score is 0.90 rather than 1.0.
+3. **Newly drawn areas.** Behind the HUD and banner, fal.ai drew more wall slots and the top of the gold ring, in the same pattern as yours. Where the coins were, the river streaks continue.
+4. **Slightly warmer colours.** A touch more red and saturation, about +3 levels out of 255. Hard to see.
+5. **0.8 % zoom.** fal.ai delivered 1536×2752, slightly off exact 9:16, with the picture zoomed in by 0.8 %. I made a free corrected copy at exact 9:16 and 2K that lines up pixel-for-pixel with your approved frame: `qa/imageblaster/08/08_plate_aligned_9x16_1536x2731.png`. I'd use that copy for World Labs.
+
+Everything is saved on GitHub in `qa/imageblaster/08/`, including close-ups of each area (approved on top, edited below) and a difference map. fal.ai doesn't report the charge to me; your fal.ai dashboard shows the exact amount.
+
+**About your 95–100 % goal:** the edited picture itself scores 92.7 % on the kept scenery. The Marble 3D world will lose more on top of that; your earlier Screen 05 test showed Marble keeps the perspective but not exact geometry. I'll measure it honestly after step 2 rather than promise a number.
+
+**Your decision on Screen 08:**
+- **A.** Approve it as is, including the splash crest. Then step 2: World Labs `marble-1.1` with the corrected copy, about 1,580 of your 7,000 credits.
+- **B.** One more fal.ai edit (needs your OK) to remove only the splash crest, then step 2.
+- **C.** Something else you'd like changed.
+
+**For all your screens:** after you approve Screen 08's approach, I'll do the same for the other playable screens, **04, 05, 06 and 07**. That's one fal.ai edit each, shown to you the same way, before any World Labs world. Screens 01, 02, 03, 09, 10 and 11 are videos in your plan; tell me if you also want environment-only versions of those.
+
