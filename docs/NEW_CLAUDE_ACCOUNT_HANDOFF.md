@@ -35,6 +35,17 @@ stopped its check-ins. Per-workstream next tasks: unchanged from the ACCOUNT 4 s
   and `queue.fal.run` blocked.) Neither blocks current work (no paid jobs approved).
 * Launch trap seen again: both new sessions sat idle with no task until the brief was re-sent with `send_message`.
 
+## Round 5 progress (~21:20 UTC) — the user's goal: every playable screen >= 95 % like its approved picture
+* Evidence of the state: `qa/screen_videos/2026-11-17/COMPARISON.md` + `rainbow_all_screens_APPROVED_vs_NOW.mp4` (normal game
+  4–19 %; newest test versions 79–89 % at the approved view; gaps = top bar, Benny on 04–07, coins, look lost while riding).
+* User decisions 21:05 (`docs/briefs/2026-11-17-r5/USER_DECISIONS.md`): hud05 top bar to all screens; ONE combined preview
+  branch **`claude/rainbow-preview-all-c5`** (line A + B allowed there only); focus 04–08; two sessions max.
+* Preview branch built (7 merges, conflicts resolved by keeping both switch-guarded sides; water shader = line B's file
+  whole — a hunk-wise merge made a broken GLSL hybrid). Verification and next steps: `backups/AGENTS_STATUS.json` →
+  `round5_account5.preview_branch`. NOTE: this cloud checkout was shallow (72 commits): `git fetch --unshallow` before merging.
+* Done on -c5: 08 scenery r1 `60e7ffe8` (kept `m08bw` + `m08fill`), 08 Benny r6 `c6892676` (`b08clump` + `b08yarn`).
+  APK builds blocked in this environment (Maven Central 429 / 404).
+
 ## Open lead question for the user — Screen 08 coins vs the ending video (`?flowplan=1`)
 Under `?match08=1&coins08px=1` the 9 painted coins lie at s 396.1 / 400.1 (in 08) and 405.2 / 407.7 / 410.6 / 412.7 (09
 stretch) + 3 more beyond s 418.5; the ending video starts at s 404.37 (start of 09). So Benny swims through 2 and the

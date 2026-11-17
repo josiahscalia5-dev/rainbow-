@@ -1,34 +1,9 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T20:38Z",
+ "updated_utc": "2026-11-17T21:20Z",
  "updated_by_session": "session_013VHsJ9SbWPe9YXRvtUSngc",
- "running_now": [
-  {
-   "agent": "washer-environment-modeler (Screen 08 scenery in motion)",
-   "workstream": "Screen 08 scenery while moving: finish round 1 (m08bw / m08lane real-texture frames, approved view 0 px, ceiling seam fill m08fill, match08 must change 08 only)",
-   "session": "session_013VHsJAQsMA73qb7GCXdQ12",
-   "where": "own cloud container (account 5, environment rainbow-)",
-   "branch": "claude/rainbow-s08-scenery-c5",
-   "continued_from": "claude/rainbow-s08-scenery-c4 @ 5ce044a52d53c5dd6cfb71fd994a82e8647381a4",
-   "started_utc": "2026-11-17T20:21Z",
-   "notes": "qa/match/08/scenery/NOTES.md",
-   "brief": "docs/briefs/2026-11-17-r5/S08_SCENERY.md on ccr-f983b317-2vt0zh",
-   "state": "VERIFIED working 20:27 UTC (initial prompt dropped, brief re-sent; startup check passed, first push 12fb8c5, rendering m08lane frames)"
-  },
-  {
-   "agent": "benny-character-artist (Screen 08 Benny round 6)",
-   "workstream": "Screen 08 Benny: soft layered fur clumps + pom-pom yarn tufts on the r5b round body, each behind a new switch",
-   "session": "session_013VHsJAoze5D4wh6tk7r1hj",
-   "where": "own cloud container (account 5, environment rainbow-)",
-   "branch": "claude/rainbow-s08-benny08-bake-c5",
-   "continued_from": "claude/rainbow-s08-benny08-bake-c4 @ fb72cc5052df908b994afeb41e7f598abc24e18d",
-   "started_utc": "2026-11-17T20:21Z",
-   "notes": "qa/match/08/benny08/NOTES.md",
-   "brief": "docs/briefs/2026-11-17-r5/S08_BENNY.md on ccr-f983b317-2vt0zh",
-   "state": "VERIFIED working 20:28 UTC (startup check passed: branch, push dbf846e, 13 references; reading fur shader, re-capturing r5b BEFORE)"
-  }
- ],
+ "running_now": [],
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
   "_user_priority_2026-11-17": "VISUAL ONLY: scenery and look of the playable screens 04-08 must match their approved pictures (>= 90 %); do not report camera/movement details; show APPROVED | BEFORE | NEW full size + whole-frame numbers",
@@ -446,6 +421,28 @@
    "04": "then M4 (r4 S04.md)"
   },
   "capacity_rule": "at most two specialist sessions at once (user)",
-  "briefs": "docs/briefs/2026-11-17-r5/ (COMMON_RULES, S08_SCENERY, S08_BENNY); other workstreams use their r4 brief with -c5"
+  "briefs": "docs/briefs/2026-11-17-r5/ (COMMON_RULES, S08_SCENERY, S08_BENNY); other workstreams use their r4 brief with -c5",
+  "done": {
+   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (kept ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404 kotlin-stdlib-jdk8 1.9.10)",
+   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c6892676 (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429)"
+  },
+  "preview_branch": {
+   "branch": "claude/rainbow-preview-all-c5",
+   "created_from": "ccr-f983b317-2vt0zh @ f6dddac4",
+   "user_ok": "2026-11-17 ~21:05 UTC (docs/briefs/2026-11-17-r5/USER_DECISIONS.md): combine every best version incl. line B on this branch only",
+   "combined": {
+    "04 M3": "d1e422fa",
+    "06 M1": "c088718b",
+    "07 M2": "835a72db",
+    "08 camera r4": "18687513",
+    "08 scenery r1 checkpoint": "5ce044a5",
+    "08 Benny r5b": "fb72cc50",
+    "05 M2 line B": "ebaf6cac"
+   },
+   "tip": "03d4845a",
+   "preview_switches": "match04=1&match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&match06=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&match08=1&coins08px=1",
+   "state": "verification running (continuity, gameplay default + all, default 0 px, each screen vs its own branch, all-switch captures)",
+   "next": "merge 08 scenery r1 final (60e7ffe8) + Benny r6 (c6892676) after verification; per-screen top-bar banner tuning; Benny on 04-07; moving-view work 07 -> 05 -> 06 -> 04"
+  }
  }
 }
