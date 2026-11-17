@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10636,
-   "sha256": "87db3023df80c6d6aa46bbbb51029565744544f5324a0a1b9f9aa39b6984f3a0"
+   "sha256": "970c7a4b3e19d40e2b9ff9f2249c547a8a092b4063f4e1037b8eaccacd611e2b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1130,6 +1130,11 @@
    "path": "qa/gameplay_test.json",
    "bytes": 14632,
    "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/gameplay_video/NOTES.md",
+   "bytes": 2911,
+   "sha256": "b980e5588918a72726e1353c82905007c15925f49eb2d9c91f5f00212bb81176"
   },
   {
    "path": "qa/gameplay_video/scan/default/probe.json",

@@ -1143,3 +1143,32 @@ Notifications are queued for this session (more may arrive before you read them)
 > 
 > Exactly 1 notification was queued for this session, listed oldest first. This read was made at 2026-11-17T17:06:27.366Z by this machine's clock. A time that a body tells you to treat as current is when that notification fired, which is earlier than now by however long it waited. In each header, "queued at" is when the server queued the notification, by the server's clock, and "reached this session" is how long before this read it arrived here. Where its queued-at time is more than 10 minutes before its arrival here, the header also gives the whole wait, which compares the two clocks and can be off by their difference. Where the header gives no whole wait, count the notification as having waited on …[+2836 chars]
 
+### 🤖 Claude — 2026-11-17T17:06:29.894Z
+
+Lead asks for a commit at every verified step. Writing NOTES.md with the step-1 verification and pushing now.
+
+### 🤖 Claude — 2026-11-17T17:06:44.245Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json 2>/dev/null; cat > qa/gameplay_video/NOTES.md <<'EOF'\n# Screen 08 camera / gameplay-video check (`?camclear=1`) — NOTES\n\nBranch `claude/rainbow-s08-camclear-c2` (continued from `claude/rainbow-s08-camclear` @ `5547670`).\nSource: the user's phone recording of the match08 APK (`qa/gameplay_video/source/…mp4` on the lead branch\n`ccr-5495e9c4-g0apvl`, read with `git show`, not copied).\n\n## What `?camclear=1` does (code from the previous session, `src/game/camClear.ts`, verified here)\n* Gold rings, lids/hoods, gold lips, the 03 drain funnel and  …[+2948 chars]`
+
+### 🧑 User — 2026-11-17T17:06:46.800Z
+
+> ↩︎ result: f360a1991e33d2212c563e184c579e7260623ad6	refs/heads/claude/rainbow-s08-camclear-c2
+> f360a1991e33d2212c563e184c579e7260623ad6
+
+### 🤖 Claude — 2026-11-17T17:06:55.453Z
+
+I've finished and pushed step 1 (checking that camclear doesn't change anything it shouldn't). Your message stopped me in the middle of step 2, the side-by-side comparisons with your video. Nothing is half-saved: the last push is commit `f360a19` on `claude/rainbow-s08-camclear-c2`, and GitHub matches it.
+
+**Step 1 results**
+- **Gameplay:** 8 of 8 checks pass in the normal game, with `camclear=1`, and with `match08=1&camclear=1`. All three collect exactly 91 coins and end at 2,240. The big 07→08 drop is still 61 u, with no gaps between screens.
+- **Normal game (camclear off):** 0 pixels different from the version before camclear on screens 02–06, 08 and 09. Screens 01, 07, 10 and 11 vary by the same amount when I capture the old version twice, so camclear isn't what changes them.
+- **Approved Screen 08 view (`match08=1`):** 0 pixels different without camclear.
+- **Screen 08 with camclear on:** the framing and scenery are identical. The test picture still differs very slightly on Benny, his splash and the coins (about 56,000 pixels, but only by up to 12 colour levels, too small to see). That isn't the strict 0 px you asked for. The cause is a soft light and the splash that follow the view and are placed one frame late in the test tool. With them placed from the final view, the two pictures were 0 px different. I tested that with a temporary edit and removed it afterwards. While riding they update every frame, so nothing differs once you're playing.
+
+**Step 2 so far (screens 03 and 04, just looked at, not written up yet)**
+- **03, 4–5 s:** a white sheet covers the view in both the current build and camclear. camclear only lets Benny show through it; the white sheet is still there.
+- **04, about 8 s:** in the current build the whole frame turns into the pink wall with holes, like your video. With camclear the view is clear: the tunnel, the gold rings and Benny on the river.
+
+**Next:** the remaining moments (06, 07 and the drop, 08–11) are already rendered. I'll put them side by side as separate full-size pictures (your video | current build | camclear) in `qa/gameplay_video/`, fix the 03 white sheet behind camclear, and push after each step. Tell me if you want something different.
+
