@@ -2147,3 +2147,92 @@ Gameplay 8/8 (91 coins / 2,240); on 04–07 only Benny's area changes. Last chec
 
 > 🔧 **Bash** `{"command": "node qa/match/08/benny08/work/labviews08.mjs --out=qa/match/08/benny08/r4/views 2>&1 | tail -2; ls qa/match/08/benny08/r4/views", "description": "Render 360 turntable views", "timeout": 400000}`
 
+### 🧑 User — 2026-11-17T18:09:46.023Z
+
+> ↩︎ result: wrote qa/match/08/benny08/r4/views/turntable_CURRENT.png
+> wrote qa/match/08/benny08/r4/views/turntable_NEW.png
+> turntable_CURRENT.png
+> turntable_NEW.png
+
+### 🤖 Claude — 2026-11-17T18:09:47.332Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/r4/views/turntable_NEW.png"}`
+
+### 🧑 User — 2026-11-17T18:09:47.378Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:09:49.084Z
+
+The 360° views look right: violet eyes, paw pads, knitted star hat and pink fluff all intact. Updating the docs, building the APK and committing.
+
+### 🤖 Claude — 2026-11-17T18:10:05.041Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/08/benny08/NOTES.md'; s=open(p).read()\ns=s.replace(\"## Round 3b (lead review\",\"\"\"## Round 4 (user order via lead, captures `r4/`)\n* KEPT: fur shoulder highlight (`fur.ts uHi` 0.7 on the body: lighter pink tips on the visible upper body, number\n  neutral 65.3 %, visibly closer; `?b08hi=0` off); lighter violet pom-pom (material 1.12/1.0/1.06: pom 22 → 23 %,\n  Benny+splash 65.3 → 65.4 %; `?b08pom=0` off).\n* REJECTED (measured worse, not visibly closer): bigger tufts (`uClumpScale` 0.12 / 0.08: 62.6 %), per-tuft tone\n  (`uClumpVar` 0.3: 65.1 % …[+3223 chars]`
+
+### 🧑 User — 2026-11-17T18:10:26.028Z
+
+> ↩︎ result: exit 0
+> Uploading LFS objects: 100% (1/1), 24 MB | 0 B/s, done.
+> 71aa6d856759236b96b320c99a8e9806186085c9
+> 71aa6d856759236b96b320c99a8e9806186085c9
+
+### 🤖 Claude — 2026-11-17T18:10:33.638Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCLi5xPVn25aRuxkVwK", "message": "S08 BENNY round 4 done — claude/rainbow-s08-benny08-bake-c3 @ 71aa6d856759236b96b320c99a8e9806186085c9 (remote == HEAD).\nKEPT (each behind its own off-switch): 1) fur shoulder highlight — lighter pink tips on the visible upper body like the painted highlights (number neutral, visibly closer; b08hi=0 off); 3) lighter violet pom-pom (pom 22→23 %; b08pom=0 off).\nREJECTED (measured worse and not visibly closer): bigger fur tufts (62.6 %), per-tuft tone (65.1 %), shinier knit for hat highlights (64.7–64.8 %), pom tip contrast, larger  …[+883 chars]`
+
+### 🧑 User — 2026-11-17T18:10:34.087Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T18:10:42.947Z
+
+Round 4 is finished and saved. Two changes were kept: lighter pink highlights on Benny's upper fur and a lighter violet pom-pom. Everything else I tried looked or measured worse. I sent the lead one status message and am stopped, waiting for your feedback.
+
+**Kept:**
+- **Fur highlights:** the visible upper body now has lighter pink tips, like the painted highlights. The score didn't change, but it looks closer.
+- **Pom-pom:** lighter and more violet, slightly closer by the numbers too.
+
+Each change can be switched off on its own (`b08hi=0` for the highlights, `b08pom=0` for the pom-pom).
+
+**Tried and dropped:**
+- Bigger fur tufts.
+- Varying the tone tuft by tuft.
+- Shinier knit to brighten the hat highlights.
+- Brighter pom-pom tips.
+- A larger hat, a shorter body, and a rounder body with a larger hat. His current shape and size already line up with the painted spots, so changing them pulled him away from the picture.
+
+**Numbers** (share of the Benny + splash area within 20 colour levels of the approved picture):
+
+| Version | Score |
+|---|---|
+| Before the re-bake | 49.8 % |
+| Round 2 | 65.7 % |
+| Round 3b | 65.3 % |
+| Round 4 (new) | 65.4 % |
+
+Scenery is unchanged at 97.3 %, and the whole picture is at 85.4 %.
+
+**Checks:**
+- The default game is pixel-for-pixel unchanged.
+- With the two new switches off, round 3b comes back exactly.
+- Gameplay passes 8 of 8 checks, with 91 coins and a total of 2,240.
+- Benny looks right while swimming and steering, and on screens 04–07 only Benny changes.
+- In the 360° views he keeps his violet eyes, paw pads, knitted star hat and pink fluff.
+
+**Still different:** the painting's fur is made of large, soft clumps. Small adjustments to the fur shading can't produce that; it would need a new fur texture or a new strand model. The painted pom-pom also has more distinct yarn tufts.
+
+The new Android build has not been tested on a phone, because there is no device in the cloud. Nothing is approved; only you can approve it. Everything is saved on GitHub (commit `71aa6d8`), and the online copy matches the local one exactly.
+
+Files are in `qa/match/08/benny08/r4/`:
+- APPROVED_08.png
+- PREVIOUS_r3b_08.png
+- NEW_08.png
+- closeup2x_APPROVED.png
+- closeup2x_PREVIOUS_r3b.png
+- closeup2x_NEW_r4.png
+- motion/montage_r4.png
+- views/turntable_NEW.png
+
+The Android build is `builds/rainbow-debug-08benny-2026-11-17-r4.apk`.
+

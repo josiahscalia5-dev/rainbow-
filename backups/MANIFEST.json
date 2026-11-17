@@ -669,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11098,
-   "sha256": "141baca79c11e908a15bbd5b85ed1669c50b2a9783ce175a3439f3214134ef19"
+   "sha256": "676b7d9d70b6d0e57252a91027548592f6939b22a7ea0b26bdce5696dbac8065"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -730,6 +730,11 @@
    "path": "builds/rainbow-debug-08benny-2026-11-17-r3b.apk",
    "bytes": 24501159,
    "sha256": "6b0b92b0df30fbdc81634e735601def251d5417eff832a0bf5fdaaf5106ef938"
+  },
+  {
+   "path": "builds/rainbow-debug-08benny-2026-11-17-r4.apk",
+   "bytes": 24498704,
+   "sha256": "5d5eae72b9d6f83cf3619b998afec1795da3775957ea8149fa0d509c16ceed13"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1493,18 +1498,18 @@
   },
   {
    "path": "qa/match/08/benny08/NOTES.md",
-   "bytes": 6273,
-   "sha256": "83656508d94b4e7b4e5de94dccba09890f56c85537411cebb9aa50b51b3f1bd2"
+   "bytes": 7599,
+   "sha256": "6ed61299669840261a3abd537fcd1c53f92e1995dbe1ff171bd7613f4c3ad391"
   },
   {
    "path": "qa/match/08/benny08/SHARED_CHANGES.md",
-   "bytes": 1337,
-   "sha256": "7baf58770f475ebc41e0b5f0f8e338b7bad92a362270d4a6b04786bf8ff1a88c"
+   "bytes": 1629,
+   "sha256": "54b49c11aeb1ff8c6b2dd88e758871f5982e9963fd81aef4bf245b595d5d9e84"
   },
   {
    "path": "qa/match/08/benny08/STATUS.md",
-   "bytes": 1594,
-   "sha256": "1c3def74b91d77731280e1b6adcf169d51d70e8a9b8d9e9c963dd95a3e19fe6f"
+   "bytes": 1476,
+   "sha256": "aecb61eb18cc66d9ec5c979bc24fa83720516ceef13b42da5359f3407b3ebb5d"
   },
   {
    "path": "qa/match/08/benny08/closeup_APPROVED.png",
@@ -1925,6 +1930,11 @@
    "path": "qa/match/08/benny08/r4/views/turntable_CURRENT.png",
    "bytes": 788795,
    "sha256": "cf0368558509338d0d1241aa90f3cd50f2cc43c1d55278ea77f2f10dd9f34d18"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/views/turntable_NEW.png",
+   "bytes": 753487,
+   "sha256": "d36475d7695a7a0b3fa863c24c5ed73f3fa091b4ec6204c3df6f197adce1f034"
   },
   {
    "path": "qa/match/08/benny08/screen_match_CURRENT.json",
