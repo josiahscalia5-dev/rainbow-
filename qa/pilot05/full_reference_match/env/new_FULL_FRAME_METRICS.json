@@ -3,17 +3,17 @@
  "whole_frame": {
   "px": 1327104,
   "share_of_frame": 1.0,
-  "mean_abs": 20.34,
-  "within_10": 0.6367,
-  "within_20": 0.7198,
-  "ssim_lum": 0.6984,
+  "mean_abs": 18.84,
+  "within_10": 0.6552,
+  "within_20": 0.739,
+  "ssim_lum": 0.7081,
   "mean_signed_rgb": [
-   2.7,
-   -0.0,
-   1.9
+   2.4,
+   0.4,
+   2.4
   ]
  },
  "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
- "mse": 1963.8,
- "psnr_db": 15.2
+ "mse": 1790.7,
+ "psnr_db": 15.6
 }

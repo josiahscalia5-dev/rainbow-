@@ -649,7 +649,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11669,
-   "sha256": "add5a518a43ff24c1eb70e58bcb060885d45a5d6a7fa7d9944f61d725abc6924"
+   "sha256": "2c60410dc8123f78d3dcfb348764ca082ffc5a2ec15cb99611d4caeb49caf0e5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -3213,23 +3213,23 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/env/move/move_00.png",
-   "bytes": 2200709,
-   "sha256": "34a8daba4b290ca21f2ee2b60984259e109b0540ba1deadd48a77edac466e01a"
+   "bytes": 2220176,
+   "sha256": "d77ecd7a7d360dc3e8e95a7ddb801ad53782fd94bd10654b5d468f755acb3dfc"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/move/move_08.png",
-   "bytes": 1960857,
-   "sha256": "4e346b9369947a514474563bef207f910e7000df969957d99b9b15a7a4eaa274"
+   "bytes": 1977572,
+   "sha256": "6ebeb5f43eb3672fef6d1b4b6685908b1f7d7916d343f13a328980f86753e75f"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/move/move_17.png",
-   "bytes": 2006328,
-   "sha256": "b1ba2a2aaa04bfdfce72b3bbdf8d564d21b70e14b42644867e80ab48d4b03502"
+   "bytes": 2020382,
+   "sha256": "f48f84366defdd62b7574087bd8925bb0e2782b064ba3e516f9b961431c4408b"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/move/move_35.png",
-   "bytes": 1860571,
-   "sha256": "3111f38e9dca09b09ef70e0ab8dda42835e64afa6a36ad001bd9266e2ef73486"
+   "bytes": 1849677,
+   "sha256": "bce242399dfcecffcedb49b9b0025d9cc1c48da2ad0acb1b1a5ee45b919cea75"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/move/move_log.json",
@@ -3238,18 +3238,18 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/env/new.png",
-   "bytes": 2200709,
-   "sha256": "34a8daba4b290ca21f2ee2b60984259e109b0540ba1deadd48a77edac466e01a"
+   "bytes": 2220176,
+   "sha256": "d77ecd7a7d360dc3e8e95a7ddb801ad53782fd94bd10654b5d468f755acb3dfc"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/new_FULL_FRAME_METRICS.json",
-   "bytes": 405,
-   "sha256": "fe2de74cba50b9b5d4ef5d62bc6b9b42f83661d6375f69768158938277434707"
+   "bytes": 403,
+   "sha256": "e639f432e12eba359386997fd16be731cb340ced348383ab19419951ed2d01a2"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/new_REGION_METRICS.json",
-   "bytes": 2499,
-   "sha256": "83536568c1a4dae2bfb3ce837d2468846052794c16ce7eca1019eaeb4be8ea4a"
+   "bytes": 2502,
+   "sha256": "b4dede1e13261ee4dcb5553681879cd4cde74514212c6e60c8d9597788f8f419"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/work/ap_top.png",
