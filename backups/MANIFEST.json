@@ -668,8 +668,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 12006,
-   "sha256": "2493958b350901a7262895cc12ceed5af437b3569653e26470c84f6c2aafe955"
+   "bytes": 12007,
+   "sha256": "64d6aa02b7cc363494b22697e266c72247ef7269f1a6c9e164c9c9d2a65a652e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1508,18 +1508,18 @@
   },
   {
    "path": "qa/match/08/benny08/NOTES.md",
-   "bytes": 13320,
-   "sha256": "f9d77738a39fbe4df34ad6bfb645d32bea83f25cd2d6b32785c1efa8c940dceb"
+   "bytes": 16075,
+   "sha256": "6d987b70cf10785f4e4fc39860a74304892c88af77aa398140f664892ad0c051"
   },
   {
    "path": "qa/match/08/benny08/SHARED_CHANGES.md",
-   "bytes": 2415,
-   "sha256": "6c46f15d86880754735dbd837d13cb9b02f98212698a0644197bf997a984c495"
+   "bytes": 2965,
+   "sha256": "ffa80bd15453f1fa4ebae757c0916c92f10b3be1aa2d7b436a36051540baa7c6"
   },
   {
    "path": "qa/match/08/benny08/STATUS.md",
-   "bytes": 1617,
-   "sha256": "e4e35f780739abaa9197f2da35313bed3616a10b771cfef3a43f6beda82743ff"
+   "bytes": 2512,
+   "sha256": "547644b00226f956fc48c1b7074d485768ffe5e443831e294c4d6860ef88b217"
   },
   {
    "path": "qa/match/08/benny08/closeup_APPROVED.png",
@@ -2280,6 +2280,111 @@
    "path": "qa/match/08/benny08/review_r5/final/3_NEW_move_steer_right.png",
    "bytes": 2510027,
    "sha256": "9b865ca8911bf4aa01443585cca2cf65611c18fd5ea0c9d27c7fc2d5bb16dc43"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/1_APPROVED_08_approved_view.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/1_APPROVED_closeup.png",
+   "bytes": 1643386,
+   "sha256": "33b83c2285d74c2a4114c70b2977bd3e94dfa66a46b19a1159e304c1f8e5b95d"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/1_APPROVED_pompom_closeup.png",
+   "bytes": 710726,
+   "sha256": "d37df8e05b7b218b0a65b31f135c8745a3c2cf732cc0424994ca86d1d372142f"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_08_approved_view.png",
+   "bytes": 2602000,
+   "sha256": "a1cc4ae3f547cb236d66b95195bfcc4c8e0bf45cc3612bb7261c90f00ab91af2"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_closeup.png",
+   "bytes": 1655622,
+   "sha256": "01d608ff2d313e1626916e7444b5f94e59763791917b7475289b83c922ab2c11"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_move_f00_checkpoint.png",
+   "bytes": 2620468,
+   "sha256": "d6eb2c0a8a569ef67392f110348ad9d17c6d6b2cfa90da12214a2d77d045533b"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_move_f03_forward3u.png",
+   "bytes": 2603709,
+   "sha256": "aa7e6c762b8fca08e7cbdbb1457f30acf5a158d2b68a6a132742db626c931808"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_move_f10_forward10u.png",
+   "bytes": 2459307,
+   "sha256": "ad98bb51f1965faedb7bcc8e77200375e4198a209e881ee66f735719342c5254"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_move_forward.png",
+   "bytes": 2543723,
+   "sha256": "c21425e8395e22e3fec8968e210ca4eb944984385fd106bf67b105cc43dcb80f"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_move_steer_left.png",
+   "bytes": 2568771,
+   "sha256": "cc5bd9a582fc1a9bc819420f90642602e874ab468aa541e7261ae659eff56f12"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_move_steer_right.png",
+   "bytes": 2510487,
+   "sha256": "e13cffb5232e9345f3919283dca477753ef1b4c86671aea6493dc77fa3263835"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/2_BEFORE_r5b_pompom_closeup.png",
+   "bytes": 671416,
+   "sha256": "cbbb17fe7fc1d4a43f7e8f9f53f67f3e283586ffc30c07ed7156be078f296f0f"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_08_approved_view.png",
+   "bytes": 2601656,
+   "sha256": "cf3bba7d469b67234ceaeb93e854a0dafd5f40f94f7712c718850c839a40fe9f"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_closeup.png",
+   "bytes": 1646731,
+   "sha256": "05c7a85fb069bf90c6b3dfe046e492d801169e8f1ea48ff5f2a8e020b2f80207"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_move_f00_checkpoint.png",
+   "bytes": 2620065,
+   "sha256": "2b5cc30299db67072e13b30c2b27b10cf49f67313ed52b156d299bc834791ac8"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_move_f03_forward3u.png",
+   "bytes": 2603356,
+   "sha256": "885469d78a67a770346ea022bb7a1cab577d340bc585fd0791902a095c706813"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_move_f10_forward10u.png",
+   "bytes": 2458645,
+   "sha256": "f1cc6f3353c8ed35ace35c1acbe59cb203ea23c8898b6c91fa73f630a1296804"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_move_forward.png",
+   "bytes": 2543191,
+   "sha256": "536f58016547589a9090f9f9454985a60b074fd6e4fdd1fa993d252d0cb3b306"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_move_steer_left.png",
+   "bytes": 2567561,
+   "sha256": "97a7833ecebf9522f57f9962701e9a2cb9c6a5a948d0581e4c2d9bf61fdcde68"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_move_steer_right.png",
+   "bytes": 2509961,
+   "sha256": "45acbeae72d11d19c437ef0c83ce3f03512d659d61642dc92cf4220b033c2cb6"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r6/3_NEW_pompom_closeup.png",
+   "bytes": 652614,
+   "sha256": "d5b5ba8d6364ae0bb96d045b67bd3128e26769504bd778b61c05ce330984a8c8"
   },
   {
    "path": "qa/match/08/benny08/review_r6/tests/gameplay_default.json",

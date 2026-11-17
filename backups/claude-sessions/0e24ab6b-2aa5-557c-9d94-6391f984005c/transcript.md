@@ -747,3 +747,285 @@ Gameplay 8/8, 1,330 → 2,240 (91 coins), errors [] both with and without match0
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; for st in 04 05 06 07; do for v in \"n:match08=1\" \"b:match08=1&b08clump=0&b08yarn=0\"; do mkdir -p $S/o/${v%%:*}; node scripts/capture.mjs $st --out=$S/o/${v%%:*} --q=\"${v#*:}\" >/dev/null 2>&1; done; done; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor st in ['04','05','06','07']:\n  a=np.array(Image.open('$S/o/n/'+st+'.png').convert('RGB')); b=np.array(Image.open('$S/o/b/'+st+'.png').convert('RGB'))\n  d=(a!=b).any(2); ys,xs=np.nonzero(d); print(st, d.sum(), (xs.min(),xs.max …[+99 chars]`
 
+### 🧑 User — 2026-11-17T20:38:52.624Z
+
+> ↩︎ result: 04 29531 (np.int64(1), np.int64(863), np.int64(211), np.int64(1291))
+> 05 53828 (np.int64(0), np.int64(863), np.int64(374), np.int64(1534))
+> 06 109445 (np.int64(0), np.int64(863), np.int64(623), np.int64(1535))
+> 07 72228 (np.int64(0), np.int64(863), np.int64(543), np.int64(1535))
+
+### 🤖 Claude — 2026-11-17T20:38:57.872Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; mkdir -p $S/o/b2; node scripts/capture.mjs 06 --out=$S/o/b2 --q='match08=1&b08clump=0&b08yarn=0' >/dev/null 2>&1; python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.array(Image.open('$S/o/b2/06.png').convert('RGB')); b=np.array(Image.open('$S/o/b/06.png').convert('RGB')); print('same-url repeat',(a!=b).any(2).sum())\nn=np.array(Image.open('$S/o/n/06.png').convert('RGB')).astype(int); d=np.abs(n-b.astype(int)).max(2)\nprint('diff>20',(d>20).sum()); ys,xs=np.nonzero(d>20); print(xs.mi …[+175 chars]`
+
+### 🧑 User — 2026-11-17T20:39:10.364Z
+
+> ↩︎ result: same-url repeat 0
+> diff>20 52887
+> 181 563 957 1534
+
+### 🤖 Claude — 2026-11-17T20:39:12.098Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/mask.png"}`
+
+### 🧑 User — 2026-11-17T20:39:12.117Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:39:16.009Z
+
+Screens 04–07: only Benny's pom-pom and body change (everything >20 levels lies inside Benny; elsewhere only faint glow speckle from his new fur). Writing the review pictures.
+
+### 🤖 Claude — 2026-11-17T20:39:21.319Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad; O=qa/match/08/benny08/review_r6; python3 -I qa/match/08/benny08/work/review08.py $O 1_APPROVED && python3 -I qa/match/08/benny08/work/review08.py $O 2_BEFORE_r5b $S/p/r5b && python3 -I qa/match/08/benny08/work/review08.py $O 3_NEW $S/p/new && python3 -I -c \"\nfrom PIL import Image\n# pom-pom close-ups (same crop for each: approved pom spot; game pom sits ~25 px right, so a wider shared crop)\nB=(320,800,520,980)\nfor lab,p in [('1_APPROVED','references/08_final_spin_chamber.png'),('2_BEFORE_r5b', …[+447 chars]`
+
+### 🧑 User — 2026-11-17T20:39:23.147Z
+
+> ↩︎ result: 1_APPROVED written
+> 2_BEFORE_r5b written
+> 3_NEW written
+> 1_APPROVED_08_approved_view.png
+> 1_APPROVED_closeup.png
+> 1_APPROVED_pompom_closeup.png
+> 2_BEFORE_r5b_08_approved_view.png
+> 2_BEFORE_r5b_closeup.png
+> 2_BEFORE_r5b_move_f00_checkpoint.png
+> 2_BEFORE_r5b_move_f03_forward3u.png
+> 2_BEFORE_r5b_move_f10_forward10u.png
+> 2_BEFORE_r5b_move_forward.png
+> 2_BEFORE_r5b_move_steer_left.png
+> 2_BEFORE_r5b_move_steer_right.png
+> 2_BEFORE_r5b_pompom_closeup.png
+> 3_NEW_08_approved_view.png
+> 3_NEW_closeup.png
+> 3_NEW_move_f00_checkpoint.png
+> 3_NEW_move_f03_forward3u.png
+> 3_NEW_move_f10_forward10u.png
+> 3_NEW_move_forward.png
+> 3_NEW_move_steer_left.png
+> 3_NEW_move_steer_right.png
+> 3_NEW_pompom_closeup.png
+> tests
+> 13
+
+### 🤖 Claude — 2026-11-17T20:39:24.585Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/review_r6/3_NEW_closeup.png"}`
+
+### 🧑 User — 2026-11-17T20:39:24.630Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:39:26.905Z
+
+Commit + push before the APK build.
+
+### 🤖 Claude — 2026-11-17T20:39:30.005Z
+
+> 🔧 **Bash** `{"command": "git add qa/match/08/benny08/review_r6 src/characters/benny && git commit -q -m \"Screen 08 Benny round 6: soft layered body-fur clumps (b08clump) + yarn-tuft pom-pom (b08yarn), review_r6 pictures + tests\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJAoze5D4wh6tk7r1hj\" && git push -q origin claude/rainbow-s08-benny08-bake-c5 2>&1 | tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake-c5; grep -rn \"r5b.apk\\|assembleDebug\\|VITE_RAINBOW_Q05\" scripts/*.sh package.json 2>/dev …[+64 chars]`
+
+### 🧑 User — 2026-11-17T20:39:38.866Z
+
+> ↩︎ result: 6d64eeafc0e11868e1fe68be22eb4d4dba75fcde
+> 6d64eeafc0e11868e1fe68be22eb4d4dba75fcde	refs/heads/claude/rainbow-s08-benny08-bake-c5
+> package.json:18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+
+### 🤖 Claude — 2026-11-17T20:39:40.782Z
+
+> 🔧 **Bash** `{"command": "grep -n \"android:sync\\|\\\"build\\\"\" package.json; ls android/app/build/outputs/apk/debug/ 2>/dev/null; echo $ANDROID_HOME $ANDROID_SDK_ROOT", "description": "Check android build scripts"}`
+
+### 🧑 User — 2026-11-17T20:39:40.814Z
+
+> ↩︎ result: 9:    "build": "tsc --noEmit && vite build",
+> 17:    "android:sync": "npm run build && npx cap sync android",
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> /opt/android-sdk /opt/android-sdk
+
+### 🤖 Claude — 2026-11-17T20:39:43.941Z
+
+> 🔧 **Bash** `{"command": "export VITE_RAINBOW_Q05=\"match08=1\" && (npm run android:debug > /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk.log 2>&1; echo exit $?) ; tail -5 /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk.log; ls -la android/app/build/outputs/apk/debug/", "description": "Build match08 debug APK", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T20:40:39.551Z
+
+> ↩︎ result: Exit code 2
+> exit 1
+> > Run with --info or --debug option to get more log output.
+> > Run with --scan to get full insights.
+> > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 50s
+> ls: cannot access 'android/app/build/outputs/apk/debug/': No such file or directory
+
+### 🤖 Claude — 2026-11-17T20:40:41.674Z
+
+> 🔧 **Bash** `{"command": "grep -n -B2 -A12 \"What went wrong\" /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk.log | head -30", "description": "Show gradle failure reason"}`
+
+### 🧑 User — 2026-11-17T20:40:41.701Z
+
+> ↩︎ result: 109-FAILURE: Build failed with an exception.
+> 110-
+> 111:* What went wrong:
+> 112-A problem occurred configuring root project 'android'.
+> 113-> Could not resolve all files for configuration ':classpath'.
+> 114-   > Could not resolve org.slf4j:slf4j-api:1.7.30.
+> 115-     Required by:
+> 116-         project : > com.android.tools.build:gradle:8.2.1 > com.android.tools.build:bundletool:1.15.2
+> 117-      > Could not resolve org.slf4j:slf4j-api:1.7.30.
+> 118-         > Could not get resource 'https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.pom'.
+> 119-            > Could not GET 'https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.pom'. Received status code 429 from server: Too Many Requests
+> 120-   > Could not resolve org.jdom:jdom2:2.0.6.
+> 121-     Required by:
+> 122-         project : > com.android.tools.build:gradle:8.2.1 > com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta10
+> 123-      > Could not resolve org.jdom:jdom2:2.0.6.
+
+### 🤖 Claude — 2026-11-17T20:40:43.381Z
+
+Maven Central rate-limited (429). Retrying offline from the Gradle cache.
+
+### 🤖 Claude — 2026-11-17T20:40:45.745Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && (./gradlew assembleDebug --offline > /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk2.log 2>&1; echo exit $?); grep -E \"BUILD|went wrong\" -A3 /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk2.log | head -8; ls -la app/build/outputs/apk/debug/ 2>/dev/null", "description": "Retry APK build offline", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T20:40:46.384Z
+
+> ↩︎ result: Exit code 2
+> exit 1
+> * What went wrong:
+> A problem occurred configuring root project 'android'.
+> > Could not resolve all files for configuration ':classpath'.
+>    > Could not resolve org.slf4j:slf4j-api:1.7.30.
+> --
+> BUILD FAILED in 495ms
+
+### 🤖 Claude — 2026-11-17T20:40:48.828Z
+
+Updating STATUS / NOTES / SHARED_CHANGES while the rate limit cools, then one more APK try.
+
+### 🤖 Claude — 2026-11-17T20:40:49.487Z
+
+> 🔧 **Bash** `{"command": "head -30 qa/match/08/benny08/SHARED_CHANGES.md", "description": "Read SHARED_CHANGES format"}`
+
+### 🧑 User — 2026-11-17T20:40:49.517Z
+
+> ↩︎ result: # Shared-code changes by the Screen 08 Benny specialist (all switch-guarded; default build 0 px)
+> 
+> | File | Change | Runs only under | Off switch |
+> |---|---|---|---|
+> | `src/characters/benny/benny05.ts` (owned) | `bake08`: 08 maps from `assets/textures/benny08/` | benny05 look on (`match08`/`matchall`/`benny08`, or `benny05=1&bake08=1`) | `bake08=0` |
+> | `src/characters/benny/benny05.ts` (owned) | round 3: `B08R3` → `body_r3.png`; fur uniforms on `mesh.userData.furU` (no render effect) | same | `b08r3=0` |
+> | `src/characters/benny/fur.ts` (owned) | uniforms `uSoft`, `uSoftEdge` (GLSL only inside `#ifdef BENNY05`; 0 = unchanged) | benny05 look on | `b08soft=0` |
+> | `src/characters/benny/benny05.ts` (owned) | round 3b: soft fur 0.6 / edge 1.0, `brim_r3.png` | 08 maps on | `b08soft=0`, `b08crisp=0`, `b08r3=0` |
+> | `src/characters/benny/fur.ts` (owned) | round 4 uniforms `uClumpScale` (0.2 = unchanged), `uClumpVar`, `uHi` (BENNY05 GLSL only) | benny05 look on | — |
+> | `src/characters/benny/benny05.ts` (owned) | round 4: body `uHi` 0.7, pom colour 1.12/1.0/1.06 | 08 maps on | `b08hi=0`, `b08pom=0` |
+> | `src/game/Game.ts` | round 3b: splash card alpha^0.2×2.5 | `match08=1` | `b08r3=0` |
+> | `src/g …[+1192 chars]
+
+### 🤖 Claude — 2026-11-17T20:41:06.414Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nd='qa/match/08/benny08/'\ns=open(d+'SHARED_CHANGES.md').read()\nrow=\"\"\"| `src/characters/benny/fur.ts` (owned) | round 6: uniforms `uTuft`, `uTuft2` — soft layered fur CLUMP branch (GLSL only inside `#ifdef BENNY05`, x = 0 → the old strand branch, unchanged) | benny05 look on | — |\n| `src/characters/benny/benny05.ts` (owned) | round 6: `b08clump` (body fur clumps) + `b08yarn` (pom yarn tufts), DEFAULT only on the r5b path (match08, `b08full` on, taper off) → r3b / r4 / r2 / taper URLs unchanged; QA tuning `b08cs/cc/csh/cp/cf/ct`, `b08carm=1`, `b08ys/yp/ysh/y …[+3129 chars]`
+
+### 🧑 User — 2026-11-17T20:41:06.466Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T20:41:10.345Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && (VITE_RAINBOW_Q05=\"match08=1\" ./gradlew assembleDebug > /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk3.log 2>&1; echo exit $?); grep -E \"BUILD|429\" /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk3.log | head -3; ls app/build/outputs/apk/debug/ 2>/dev/null; grep -c \"b08yarn\" app/src/main/assets/public/assets/*.js 2>/dev/null | grep -v \":0\"", "description": "Retry APK build online", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T20:41:12.492Z
+
+> ↩︎ result: exit 1
+> BUILD FAILED in 1s
+> app/src/main/assets/public/assets/runtime-CQJYjK6i.js:1
+
+### 🤖 Claude — 2026-11-17T20:41:16.549Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && grep -n \"went wrong\" -A6 /tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/apk3.log | head -8; grep -rln \"maven.google\\|init.gradle\\|mirror\" scripts/ 2>/dev/null | head; ls ~/.gradle/caches/modules-2/files-2.1 2>/dev/null | wc -l", "description": "Investigate gradle dependency failure"}`
+
+### 🧑 User — 2026-11-17T20:41:16.611Z
+
+> ↩︎ result: 5:* What went wrong:
+> 6-A problem occurred configuring root project 'android'.
+> 7-> Could not resolve all files for configuration ':classpath'.
+> 8-   > Could not find com.google.j2objc:j2objc-annotations:1.3.
+> 9-     Searched in the following locations:
+> 10-       - https://dl.google.com/dl/android/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.pom
+> 11-       - https://repo.maven.apache.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.pom
+> scripts/setup-blender.sh
+> 69
+
+### 🤖 Claude — 2026-11-17T20:41:19.440Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -15", "description": "Check working tree after build attempts"}`
+
+### 🧑 User — 2026-11-17T20:41:19.475Z
+
+> ↩︎ result: M qa/capture_log.json
+>  M qa/match/08/benny08/NOTES.md
+>  M qa/match/08/benny08/SHARED_CHANGES.md
+
+### 🤖 Claude — 2026-11-17T20:41:21.533Z
+
+APK blocked: Maven Central keeps answering 429 and this fresh container's Gradle cache lacks build-plugin dependencies. Recording that and finishing the status.
+
+### 🤖 Claude — 2026-11-17T20:41:31.329Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/STATUS.md", "content": "# STATUS — Screen 08 Benny (round 6, account 5)\n\n* **Assigned screen:** 08 · Final Spin Chamber (`?match08=1`)\n* **Assigned specialist:** benny-character-artist (Screen 08 Benny specialist)\n* **Working branch:** `claude/rainbow-s08-benny08-bake-c5` — started from `fb72cc5052df908b994afeb41e7f598abc24e18d` (= `-c4` head, created by the lead)\n* **Running-session status:** round 6 done, waiting for the lead / the user's verdict\n* **Latest verified commit:** see `git log` / the lead message (pushed, remote == HEAD …[+1984 chars]`
+
+### 🧑 User — 2026-11-17T20:41:31.368Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/08/benny08/STATUS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T20:41:33.933Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log.json && git add qa/match/08/benny08 && git commit -q -m \"Screen 08 Benny round 6: STATUS, NOTES, SHARED_CHANGES (APK blocked by Maven Central 429)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJAoze5D4wh6tk7r1hj\" && git push -q origin claude/rainbow-s08-benny08-bake-c5 2>&1|tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake-c5; python3 -I scripts/autosave-status.py | head -1", "description": "Commit docs, push, verify remote"}`
+
+### 🧑 User — 2026-11-17T20:41:36.842Z
+
+> ↩︎ result: c68926764849cdaf3e51acf823a06eafb0c522cc
+> c68926764849cdaf3e51acf823a06eafb0c522cc	refs/heads/claude/rainbow-s08-benny08-bake-c5
+> AUTOSAVE OK | branch claude/rainbow-s08-benny08-bake-c5 | scheduler daemon | last verified backup 2026-11-17T20:38:40+00:00 (2.9 min ago) | local c689267 remote c689267 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T20:41:47.002Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_013VHsJ9SbWPe9YXRvtUSngc", "message": "S08 BENNY round 6 DONE — branch claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (remote == HEAD verified, autosave OK). Started from fb72cc50.\n\nKEPT (default on ?match08=1; BEFORE r5b = ?match08=1&b08clump=0&b08yarn=0):\n1. Soft layered fur clumps on the body (b08clump): a new clump model, not a parameter tweak. Rounded fur clumps lie DOWNWARD and overlap like shingles, the way the painting's fur does, with gentle shading. The spiky radial starburst is gone. The full round r5b body is kept: wider tha …[+1676 chars]`
+
+### 🧑 User — 2026-11-17T20:41:58.897Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T20:42:07.682Z
+
+Round 6 is done and pushed, but the Android APK for it could not be built. Nothing is approved yet. The branch `claude/rainbow-s08-benny08-bake-c5` is at `c68926764849cdaf3e51acf823a06eafb0c522cc`, and GitHub matches it.
+
+**What changed on Screen 08 Benny** (this is now the default at `?match08=1`; the old r5b look is at `?match08=1&b08clump=0&b08yarn=0`):
+- **Body fur:** I replaced the thin spiky strands with larger, rounded clumps that point downward and overlap, like the fur in the approved picture, with gentle shading. The round, full body shape stays the same. The arm puffs keep the previous fur, because the new clumps looked ragged on them.
+- **Pom-pom:** it now has separate pointed violet yarn tufts, with darker gaps and lighter tips, instead of a fine fuzzy ball.
+
+**Numbers:** Benny + splash went down from 62.2 % to 60.0 % (share of pixels within 20 levels of the approved picture). This is a visual choice: the new clumps don't line up pixel-for-pixel with the painted ones. Scenery is unchanged at 97.3 %, and the whole frame went from 85.0 % to 84.7 %.
+
+**Checks:**
+- The game builds without type errors.
+- The default game is pixel-identical to before.
+- The r5b, r3b, r4 and r2 versions still reproduce exactly.
+- The gameplay test passes 8/8 and collects 91 coins (1,330 → 2,240), with and without the Screen 08 look.
+- On screens 04–07, only Benny changes.
+- In the moving frames, the fur, hat, pom-pom and splash stay on Benny while he swims and steers.
+
+**Still different from the approved picture:**
+- Pale streaks remain on the upper-left of the body, next to the left arm.
+- The body outline and arm edges still have jagged pixels.
+- The pom-pom tips are lilac, where the painting has deeper violet with white sparkle dots.
+
+**APK:** The build tool couldn't download parts it needs: Maven Central answered "too many requests" (HTTP 429), and this new container doesn't have them saved. The latest APK is still the r5b one. `STATUS.md` has the exact command to retry once the download limit lifts.
+
+I've sent the lead one status message and am now waiting.
+
+Pictures are in `qa/match/08/benny08/review_r6/` (approved, BEFORE r5b and NEW as separate files):
+- `3_NEW_closeup.png`
+- `3_NEW_pompom_closeup.png`
+- `3_NEW_08_approved_view.png`
+- the matching `1_APPROVED_*` and `2_BEFORE_r5b_*` files
+- moving frames named `*_move_*`
+
