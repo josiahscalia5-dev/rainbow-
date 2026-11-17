@@ -16,7 +16,7 @@ merged or overwritten. Recommended for the user: on account 2 (and account 1) st
 | Workstream | Session | Branch (continued from) | Next milestone (brief) |
 |---|---|---|---|
 | 08 Benny | `session_01Q46SCJxXZNaUL12aCQ6mX4` | `claude/rainbow-s08-benny08-bake-c3` (from `-c2` @ `a4c6a5cc`) | verify + NOTES, keep whichever Benny is closer to the approved 08, fur / beanie / cuff / pom / star / splash one factor at a time, motion, APK (`S08_BENNY.md`) |
-| 08 camera | `session_01Q46SCJbynvN5AdSwQ6tynz` | `claude/rainbow-s08-camclear-c3` (from `-c2` @ `57b6eb8a`) | video-moment comparisons, remaining obstruction fixes under `?camclear=1`, moving check 07→08→09, APK (`S08_CAMERA.md`) |
+| 08 camera | `session_01Q46SCLvd1Cb5N4WHTHcHB4` (replaces `session_01Q46SCJbynvN5AdSwQ6tynz`, stuck before doing anything, archived 17:30) | `claude/rainbow-s08-camclear-c3` (from `-c2` @ `57b6eb8a`) | video-moment comparisons, remaining obstruction fixes under `?camclear=1`, moving check 07→08→09, APK (`S08_CAMERA.md`) |
 | 04 Five Arrows | `session_01Q46SCGVVo94Weug9VM7yDG` | `claude/rainbow-s04-match-c3` (from `-c2` @ `255ec5e6`) | M3: verify fal04 default, approved river colours while riding, sharper far rings, splash card, coins on the water (`S04.md`) |
 | 05 Flow | `session_01Q46SCKjcx6k2Jb2JrspXSJ` | `claude/rainbow-s05-match-c3` (from `-c2` @ `fd94023f`, line B) | finish M2: teal patch, right wall, bottom-left ring arc, moving water; keep tgtvis05 + 91 / 2,240 (`S05.md`) |
 | 06 Rinse Arch | `session_01Q46SCL2DLgtfbmDySmRvhY` | `claude/rainbow-s06-match-c3` (from `-c2` @ `2570f3ac`) | finish M1 `?match06=1`: measure, proofs, moving frames, prepared fal request, NOTES / STATUS, APK (`S06.md`) |

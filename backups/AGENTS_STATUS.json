@@ -18,13 +18,14 @@
   {
    "agent": "path-camera-transition-engineer",
    "workstream": "Screen 08 camera / gameplay-video obstructions (?camclear=1) steps 2-4",
-   "session": "session_01Q46SCJbynvN5AdSwQ6tynz",
+   "session": "session_01Q46SCLvd1Cb5N4WHTHcHB4",
    "where": "own cloud container (account 3, environment rainbow-)",
    "branch": "claude/rainbow-s08-camclear-c3",
    "continued_from": "claude/rainbow-s08-camclear-c2 @ 57b6eb8a",
-   "started_utc": "2026-11-17T17:25Z",
+   "started_utc": "2026-11-17T17:30Z",
    "notes": "qa/gameplay_video/NOTES.md",
-   "brief": "docs/briefs/2026-11-17-r3/S08_CAMERA.md on ccr-c0235034-ks6sx3"
+   "brief": "docs/briefs/2026-11-17-r3/S08_CAMERA.md on ccr-c0235034-ks6sx3",
+   "replaces": "session_01Q46SCJbynvN5AdSwQ6tynz (stuck at start, no work, archived)"
   },
   {
    "agent": "screen-04 workstream",
