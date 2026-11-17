@@ -35,3 +35,25 @@ angles) — intended for a world-anchored wall fill.
 2. Prove the approved view is unchanged with the frozen tool: `node scripts/capture.mjs 08 --q=match08=1&coins08px=1[&m08bw=1|&m08lane=1] --out=…` (motion08 f00 frames are NOT deterministic — don't use them for 0 px).
 3. Ceiling seam fix (`&m08fill=1`): replace the mirrored triplanar fallback on chamber walls by a world-anchored fill made from the picture (e.g. resample the visible wall at the same angle shifted along the drum by a whole slot period, brightness matched), soft blend.
 4. 04–07 check, gameplay 8/8 + 91 / 2,240, default 0 px, 07→08 drop, APPROVED/BEFORE/NEW pictures, APK.
+
+## Round 5 results (account 5, 2026-11-17)
+1. **Real-texture frames** `motion_bw_r5/`, `motion_lane_r5/` (vs `motion_BEFORE/`). `m08bw`: the lower-left tear / second
+   river copy stays gone. `m08lane`: NOT visibly better — Benny was already clear of the pipe in these frames, and it adds
+   a gold arch sliver in the top-right corner when steering hard right → not kept.
+2. **Approved view (frozen `scripts/capture.mjs`)**: base deterministic (0 px between two captures). `m08bw` 13,374 px, all
+   on the gold arch's outer rim (1 px; 249 px > 20 levels; those rim pixels are marginally closer to the approved picture:
+   mean error 10.3 → 10.0). `m08lane` 117,694 px (not kept).
+3. **Ceiling seam `m08fill`.** Finding: the chamber ceiling is NEVER visible through the arch from the approved viewpoint
+   (it would need > 55 u of depth; the picture's top inside the arch is the door wall) and the deep drum is too
+   foreshortened to be a sharp source. So the fill comes from the picture's crisp near pipe wall: `tools/match08/unwrap08.py`
+   unrolls it at 1 cm/cell, measures the slot rows (0.49 u along the axis, autocorrelation), cuts a seamless 2.19 × 1.47 u
+   tile (best-matching wrap width, feathered joins), colour-matched to the visible chamber wall (mean RGB 182/79/184, gold
+   excluded) → `assets/textures/match08/fill_drum.png`. Shader: drum wall mapped around the chamber axis (whole tiles around,
+   atan wrap under the floor), door/entrance wall flat; soft 5×5-tap hand-over at the arch shadow line. Both the fill and the
+   soft hand-over fade in only as the camera leaves the approved viewpoint (0.2 → 1.5 u), so the approved view is 0 px.
+   Result `motion_fill_r5/`: the mirrored hearts/X kaleidoscope on the ceiling is gone; continuous slotted wall, softer seam.
+   Still visible: a mild change of slot pattern where the fill meets the painted wall; a faint corner line where drum
+   ceiling meets door wall (f03); the gold arch itself at the frame edges when steering hard (real geometry).
+4. **04–07 under `match08`**: cause 1 (fixed, `course.ts`, guarded): total-length-dependent sample spacing. Remaining (other
+   owners): Benny differs on every screen under match08 (benny05 port + match08 Benny path); 07 coins; a few 04 bubbles.
+5. Proofs: see STATUS.md. APK blocked by a Maven 404 (STATUS.md).
