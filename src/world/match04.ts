@@ -121,12 +121,15 @@ void main() {
 }`;
 
 const TILE04 = new URLSearchParams(location.search).get('tile04') !== '0'; // milestone-2 tiles (A/B: &tile04=0 = milestone 1)
+// `&fal04=1`: the ONE fal clean plate (request 01a1ea70, qa/match/04/fal/) inside the fill mask instead of the provisional
+// fill (tools/match04/fal_plate04.py -> plate04_hybrid_fal.png); then the fill needs no hand-over to the river tile
+const FAL04 = new URLSearchParams(location.search).get('fal04') === '1';
 const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
 
 const _cp = new THREE.Vector3();
 export async function buildMatch04(): Promise<Match04> {
   const L: Layout04 = await fetch(tex('proj04.json')).then((r) => r.json());
-  const plate = await new THREE.TextureLoader().loadAsync(tex('plate04_hybrid.png'));
+  const plate = await new THREE.TextureLoader().loadAsync(tex(FAL04 ? 'plate04_hybrid_fal.png' : 'plate04_hybrid.png'));
   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
   plate.minFilter = THREE.LinearMipmapLinearFilter;
   plate.anisotropy = 8;
@@ -231,7 +234,7 @@ export async function buildMatch04(): Promise<Match04> {
       shared.uUseDepth.value = 1;
     },
     sync(renderer, w, h, camera?: THREE.Camera) {
-      if (camera) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
+      if (camera && !FAL04) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
       shared.uPjPost.value.x = renderer.toneMappingExposure;
       shared.uPjRes.value.set(w, h);
     },
