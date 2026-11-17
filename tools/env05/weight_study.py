@@ -26,7 +26,7 @@ ap = Image.open("references/05_flow_into_the_current.png").convert("RGB")
 
 # environment.ts E05 (keep in sync)
 E05 = dict(hA=0.09, hB=0.12, hFar=0.11, side=[[3, 0], [17, -0.715], [23, -0.715], [35, -0.95], [42, -0.95], [54, -0.6]],
-           up=[[6, 0], [17, 0.3], [23, 0.3], [32, -0.23], [42, -0.23], [54, 0]], sideFar=-0.6)
+           up=[[6, 0], [17, 0.42], [23, 0.42], [32, -0.23], [42, -0.23], [54, 0.45]], sideFar=-0.6)
 
 
 def sstep(x, a, b):
@@ -43,7 +43,9 @@ def knots_at(k, x):
 
 
 def weight_fn(spec):
-    if spec == "cur":
+    if spec == "cur":   # run #3 game weight (environment.ts e05Weight)
+        return lambda t: np.where(np.cos(t) < 0, sstep(np.sin(t), -0.95, -0.5), sstep(np.sin(t), -0.28, 0.05))
+    if spec == "e2":    # the weight of probe e2 (symmetric)
         return lambda t: sstep(np.sin(t), -0.28, 0.05)
     l0, l1, r0, r1 = [float(v) for v in spec.split(":")[1].split(",")]
     return lambda t: np.where(np.cos(t) < 0, sstep(np.sin(t), l0, l1), sstep(np.sin(t), r0, r1))
@@ -88,6 +90,7 @@ def far_points(i, h, wfn, sideFar=None):
     w = wfn(np.arctan2(y, x))
     sf = E05["sideFar"] if sideFar is None else sideFar
     x2 = x + sf * w / (tun["R"] - 0.02)
+    y = y + UPFAR * w / (tun["R"] - 0.02)
     X = np.stack([x2, y, np.broadcast_to(prof[None, :, 1], x.shape), np.ones_like(x)], -1)
     return (X @ M.T)[..., :3]
 
@@ -117,6 +120,7 @@ def draw_edges(dr, rin, rout, col, wdt=2):
 
 
 FIT = os.environ.get('WS_FIT') == '1'
+UPFAR = float(os.environ.get('WS_UPFAR', '0.45'))
 res = {}
 LINES = []
 for v in variants:

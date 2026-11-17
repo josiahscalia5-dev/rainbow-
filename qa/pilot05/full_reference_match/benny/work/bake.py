@@ -48,14 +48,83 @@ def inv_chain(t):
 
 def img(p): return np.asarray(Image.open(p).convert('RGB')).astype(np.float64) / 255.0
 
-PARTS = {  # id: (name, approved part key, tex W, H, central u strip for tiling or None)
-    1: ('body', 'body', 1024, 512, (0.62, 0.88)),
-    2: ('crown', 'crown', 1024, 256, (0.36, 0.64)),
-    3: ('brim', 'cuff', 1024, 128, (0.36, 0.64)),
-    4: ('pom', 'pom', 512, 256, None),
+PARTS = {  # id: (name, approved part key, tex W, H, fill mode for texels the 05 camera never sees)
+    1: ('body', 'body', 1024, 512, 'mirror'),
+    2: ('crown', 'crown', 1024, 256, 'rings'),
+    3: ('brim', 'cuff', 1024, 128, 'mirror'),
+    4: ('pom', 'pom', 512, 256, 'mirror'),
     6: ('armL', 'body', 256, 128, None),
     7: ('armR', 'body', 256, 128, None),
 }
+
+def seen_strip(seen):
+    """largest contiguous u run whose column coverage is >= 50 % of the best column (no wrap needed on Benny's back)"""
+    c = ndi.uniform_filter1d(seen.mean(0), 9, mode='wrap')
+    ok = c >= 0.5 * c.max()
+    lab, k = ndi.label(ok)
+    sz = ndi.sum(ok, lab, range(1, k + 1))
+    cols = np.nonzero(lab == 1 + int(np.argmax(sz)))[0]
+    return int(cols.min()), int(cols.max()) + 1
+
+def mirror_idx(TW, u0, u1):
+    Ls = u1 - u0
+    k = (np.arange(TW) - u0) % (2 * Ls)
+    return u0 + np.where(k < Ls, k, 2 * Ls - 1 - k)
+
+def seen_weight(seen):
+    cover = ndi.uniform_filter(seen.astype(float), size=(1, 9), mode='wrap')
+    return ndi.uniform_filter(np.clip(cover * 1.6, 0, 1), size=(1, 25), mode='wrap')
+
+def ring_shift(filled, seen, u0, u1):
+    """per column u: row shift h(u) of the stripe pattern relative to the centre columns (purple-ness profile,
+    normalised cross-correlation), robust quadratic fit; returns h over all TW columns (constant edge value
+    continued linearly round the unseen arc) and the raw per-column estimates"""
+    TH, TW = seen.shape
+    p = (filled[..., 2] - filled[..., 1]) / (filled[..., 2] + filled[..., 1] + 1e-3)
+    uc = (u0 + u1) // 2
+    ref = p[:, uc - 6:uc + 7].mean(1); refm = seen[:, uc - 6:uc + 7].mean(1) > 0.5
+    est = []
+    for u in range(u0, u1, 4):
+        col = p[:, max(u0, u - 2):u + 3].mean(1); cm = seen[:, max(u0, u - 2):u + 3].mean(1) > 0.5
+        best, bs = -2, 0
+        for s in range(-40, 41):
+            a = np.roll(col, -s); am = np.roll(cm, -s) & refm
+            if am.sum() < 40:
+                continue
+            x, y = a[am] - a[am].mean(), ref[am] - ref[am].mean()
+            r = (x * y).sum() / (np.sqrt((x * x).sum() * (y * y).sum()) + 1e-9)
+            if r > best:
+                best, bs = r, s
+        if best > 0.6:
+            est.append((u, bs, best))
+    est = np.array(est, float)
+    x = (est[:, 0] - uc) / TW
+    w = np.ones(len(x))
+    for _ in range(4):  # iteratively re-weighted quadratic
+        A = np.stack([np.ones_like(x), x, x * x], 1) * w[:, None]
+        cf = np.linalg.lstsq(A, est[:, 1] * w, rcond=None)[0]
+        res = est[:, 1] - (cf[0] + cf[1] * x + cf[2] * x * x)
+        w = 1 / np.maximum(1, np.abs(res) / 3)
+    uu = np.arange(TW)
+    xx = (uu - uc) / TW
+    h = np.clip(cf[0] + cf[1] * xx + cf[2] * xx * xx, -60, 60)
+    # the fit holds over every column the camera sees at all (>5 % coverage), then runs on linearly round the unseen arc
+    cov = ndi.uniform_filter1d(seen.mean(0), 9, mode='wrap') > 0.05
+    e0, e1 = min(u0, int(np.nonzero(cov)[0].min())), max(u1, int(np.nonzero(cov)[0].max()) + 1)
+    a0, a1 = h[e0], h[e1 - 1]
+    span = (e0 + TW) - (e1 - 1)
+    for u in list(range(e1, TW)) + list(range(0, e0)):
+        t = ((u - (e1 - 1)) % TW) / span
+        h[u] = a1 + (a0 - a1) * t
+    return h, est, cf
+
+def shift_rows(img3, h):
+    """out[r, u] = img3[r + h[u], u] (bilinear in r, clamped)"""
+    TH = img3.shape[0]
+    rr = np.arange(TH)[:, None] + h[None, :]
+    r0 = np.clip(np.floor(rr).astype(int), 0, TH - 1); r1 = np.clip(r0 + 1, 0, TH - 1); f = (rr - np.floor(rr))[..., None]
+    cols = np.arange(img3.shape[1])[None, :]
+    return img3[r0, cols] * (1 - f) + img3[r1, cols] * f
 
 def push_pull(num, den):
     """fill den==0 texels from coarser levels (num: HxWxC, den: HxW); u wraps"""
@@ -116,8 +185,11 @@ def main():
         sa = np.median(target[star], 0)
         report['star_albedo_linear'] = [round(float(v), 3) for v in sa]
         report['star_px'] = int(star.sum())
-    for pid, (name, key, TW, TH, strip) in PARTS.items():
-        sel = (ids == pid) & ndi.binary_erosion(P[key], iterations=1) & ndi.binary_erosion(ids == pid, iterations=1) & valid & okc[key]
+    El = (E * LUM).sum(-1)
+    for pid, (name, key, TW, TH, mode) in PARTS.items():
+        # pixels where the part is lit < 45 % of its median are behind translucent water / spray in the game: skip
+        lit = El > 0.45 * np.median(El[ids == pid]) if (ids == pid).any() else valid
+        sel = (ids == pid) & ndi.binary_erosion(P[key], iterations=1) & ndi.binary_erosion(ids == pid, iterations=1) & valid & lit & okc[key]
         u = uvf[..., 0][sel] % 1.0; v = uvf[..., 1][sel]
         num_px = (Lt - S)[sel]; den_px = E[sel]
         num = np.zeros((TH, TW, 3)); den = np.zeros((TH, TW, 3)); cnt = np.zeros((TH, TW))
@@ -128,31 +200,49 @@ def main():
             np.add.at(num, (yi, xi), num_px * w[:, None]); np.add.at(den, (yi, xi), den_px * w[:, None]); np.add.at(cnt, (yi, xi), w)
         seen = cnt > 0.25
         alb = np.where(seen[..., None], num / np.maximum(den, 1e-6), 0)
+        # colour family check per texel (approved foam / spray over the fur, mixed edge pixels): such texels are
+        # treated as unseen and filled from their neighbours, so the fur never carries grey-green blotches in motion
+        R_, G_, B_ = alb[..., 0], alb[..., 1], alb[..., 2]
+        fam = {'body': (G_ < 0.62 * R_) & (R_ > 0.12), 'pom': (G_ < 0.55 * B_) & (B_ > 0.08),
+               'cuff': (G_ < 0.6 * B_), 'crown': np.ones_like(seen)}[key]
+        rejected = int((seen & ~fam).sum())
+        seen &= fam
+        alb = np.where(seen[..., None], alb, 0)
+        cnt = np.where(seen, cnt, 0)
         # push-pull fill (per-texel albedo, weight = coverage)
         filled, _ = push_pull(alb * np.clip(cnt, 0, 1)[..., None], np.clip(cnt, 0, 1))
-        if strip is not None:
-            # unseen texels: mirror-tile the central strip around (knit columns / fur tufts continue), ramp 24 texels
-            u0, u1 = int(strip[0] * TW), int(strip[1] * TW)
-            src = filled[:, u0:u1]
-            Ls = src.shape[1]
-            cover = ndi.uniform_filter(seen.astype(float), size=(1, 9), mode='wrap')
-            idx = np.arange(TW)
-            k = (idx - u0) % (2 * Ls); k = np.where(k < Ls, k, 2 * Ls - 1 - k)
-            tiled = src[:, k]
-            col_seen = ndi.binary_dilation(seen.any(0) & (seen.mean(0) > 0.0), iterations=0)
-            wseen = np.clip(cover * 1.6, 0, 1)
-            wseen = ndi.uniform_filter(wseen, size=(1, 25), mode='wrap')
-            filled = wseen[..., None] * filled + (1 - wseen[..., None]) * tiled
+        extra = {}
+        if mode is not None:
+            u0, u1 = seen_strip(seen)
+            wseen = seen_weight(seen)[..., None]
+            if mode == 'mirror':
+                # unseen texels: mirror-tile the well-seen strip around (knit ribs / fur tufts continue)
+                tiled = filled[:, mirror_idx(TW, u0, u1)]
+            else:
+                # 'rings': the approved stripes sag at his back (illustration bulge, measured per column); straighten
+                # them (rectify by h(u)), mirror-tile the straight bands, then re-apply h, which runs on as level
+                # rings round the unseen arc -> no zig-zag stripes when the beanie turns away from the 05 camera
+                h, est, cf = ring_shift(filled, seen, u0, u1)
+                rect = shift_rows(filled, np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0))
+                rect_t = rect[:, mirror_idx(TW, u0, u1)]
+                tiled = shift_rows(rect_t, -h)
+                extra = dict(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
+                    u0=round(float(h[u0]), 1), centre=round(float(h[(u0 + u1) // 2]), 1), u1=round(float(h[u1 - 1]), 1)),
+                    ring_est_cols=len(est))
+            filled = wseen * filled + (1 - wseen) * tiled
+            extra['strip_u'] = [round(u0 / TW, 3), round(u1 / TW, 3)]
         scale = float(max(1.0, np.percentile(filled, 99.7)))
         stored = np.clip(filled / scale, 0, 1)
         srgb = np.where(stored <= 0.0031308, stored * 12.92, 1.055 * stored ** (1 / 2.4) - 0.055)
         Image.fromarray((srgb * 255 + 0.5).astype(np.uint8)).save(f'{out}/{name}.png')
         Image.fromarray((seen * 255).astype(np.uint8)).save(f'{out}/{name}_seen.png')
-        report[name] = dict(px=int(sel.sum()), seen_texels=int(seen.sum()), scale=round(scale, 3),
-                            median_albedo=[round(float(x), 3) for x in np.median(alb[seen], 0)])
+        report[name] = dict(px=int(sel.sum()), seen_texels=int(seen.sum()), rejected_texels=rejected, scale=round(scale, 3),
+                            median_albedo=[round(float(x), 3) for x in np.median(alb[seen], 0)], **extra)
         if name in ('crown', 'brim') and '--normals' in sys.argv:
+            # stitch relief from RELATIVE luminance (lum / local mean): the stripe colour steps do not become ridges
             lum = (srgb * LUM).sum(-1)
-            hp = lum - ndi.gaussian_filter(lum, (3, 3), mode='wrap')
+            rel = lum / np.maximum(ndi.gaussian_filter(lum, (2.5, 2.5), mode='wrap'), 1e-3) - 1
+            hp = np.clip(rel, -0.35, 0.35)
             hh = ndi.gaussian_filter(hp, 0.6, mode='wrap')
             # u wraps; d/du, d/dv in texels
             dx = (np.roll(hh, -1, 1) - np.roll(hh, 1, 1)) * 0.5

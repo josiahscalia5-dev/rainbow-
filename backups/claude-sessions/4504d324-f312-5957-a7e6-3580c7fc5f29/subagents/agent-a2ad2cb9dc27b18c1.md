@@ -743,3 +743,91 @@ Held-out prediction error dropped from 6–16 % to 0.35–0.66 %, and the crown'
 > 348	        [
 > 349	          [li …[+5289 chars]
 
+### 🤖 Claude — 2026-11-17T01:22:15.550Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nd='qa/pilot05/full_reference_match/benny/work/b2/tex/'\nfor n in ['body','crown','brim','pom','armL','armR']:\n    s=np.asarray(Image.open(d+n+'_seen.png'))>0\n    H,W=s.shape; c=s.mean(0); r=s.mean(1)\n    cols=np.nonzero(c>0.05)[0]; rows=np.nonzero(r>0.02)[0]\n    # u range (handle wrap roughly)\n    print(n,W,H,'cols>5%',cols.min()/W if len(cols) else None,cols.max()/W if len(cols) else None,'n',len(cols),' rows',rows.min()/H,rows.max()/H)\n\"", "description": "Measure seen texel u/v ranges per …[+7 chars]`
+
+### 🧑 User — 2026-11-17T01:22:15.688Z
+
+> ↩︎ result: body 1024 512 cols>5% 0.5673828125 0.94921875 n 371  rows 0.427734375 0.8203125
+> crown 1024 256 cols>5% 0.28515625 0.7353515625 n 445  rows 0.16796875 0.88671875
+> brim 1024 128 cols>5% 0.3095703125 0.71875 n 406  rows 0.0234375 0.953125
+> pom 512 256 cols>5% 0.5625 0.966796875 n 206  rows 0.09765625 0.73828125
+> armL 256 128 cols>5% 0.4453125 0.79296875 n 81  rows 0.3046875 0.8046875
+> armR 256 128 cols>5% 0.47265625 0.765625 n 75  rows 0.296875 0.8359375
+
+### 🤖 Claude — 2026-11-17T01:22:48.374Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/pilot05/full_reference_match/benny/work/b2/tex/crown.png').convert('RGB').crop((380,20,640,240)).resize((780,660),Image.NEAREST)\nim.save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/crown_zoom.png')\"", "description": "Zoom into the baked crown texture"}`
+
+### 🧑 User — 2026-11-17T01:22:48.509Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:22:50.030Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/crown_zoom.png"}`
+
+### 🧑 User — 2026-11-17T01:22:50.054Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:22:53.339Z
+
+The knit columns (~10 texels per stitch column) and both stripe bands come through from the approved pixels. Now the fill rewrite.
+
+### 🤖 Claude — 2026-11-17T01:23:09.046Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "PARTS = {  # id: (name, approved part key, tex W, H, central u strip for tiling or None)\n    1: ('body', 'body', 1024, 512, (0.62, 0.88)),\n    2: ('crown', 'crown', 1024, 256, (0.36, 0.64)),\n    3: ('brim', 'cuff', 1024, 128, (0.36, 0.64)),\n    4: ('pom', 'pom', 512, 256, None),\n    6: ('armL', 'body', 256, 128, None),\n    7: ('armR', 'body', 256, 128, None),\n}", "new_string": "PARTS = {  # id: (name, approved part key, tex W, H, fill mode for texels the 05 camera …[+3362 chars]`
+
+### 🧑 User — 2026-11-17T01:23:09.080Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:23:11.944Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "    for pid, (name, key, TW, TH, strip) in PARTS.items():\n        sel = (ids == pid) & ndi.binary_erosion(P[key], iterations=1) & ndi.binary_erosion(ids == pid, iterations=1) & valid & okc[key]", "new_string": "    El = (E * LUM).sum(-1)\n    for pid, (name, key, TW, TH, mode) in PARTS.items():\n        # pixels where the part is lit < 45 % of its median are behind translucent water / spray in the game: skip\n        lit = El > 0.45 * np.median(El[ids == pid]) if (ids = …[+168 chars]`
+
+### 🧑 User — 2026-11-17T01:23:11.977Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:23:19.751Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "        if strip is not None:\n            # unseen texels: mirror-tile the central strip around (knit columns / fur tufts continue), ramp 24 texels\n            u0, u1 = int(strip[0] * TW), int(strip[1] * TW)\n            src = filled[:, u0:u1]\n            Ls = src.shape[1]\n            cover = ndi.uniform_filter(seen.astype(float), size=(1, 9), mode='wrap')\n            idx = np.arange(TW)\n            k = (idx - u0) % (2 * Ls); k = np.where(k < Ls, k, 2 * Ls - 1 - k) …[+1721 chars]`
+
+### 🧑 User — 2026-11-17T01:23:19.781Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:23:23.799Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "        report[name] = dict(px=int(sel.sum()), seen_texels=int(seen.sum()), scale=round(scale, 3),\n                            median_albedo=[round(float(x), 3) for x in np.median(alb[seen], 0)])\n        if name in ('crown', 'brim') and '--normals' in sys.argv:\n            lum = (srgb * LUM).sum(-1)\n            hp = lum - ndi.gaussian_filter(lum, (3, 3), mode='wrap')\n            hh = ndi.gaussian_filter(hp, 0.6, mode='wrap')", "new_string": "        report[name] = d …[+609 chars]`
+
+### 🧑 User — 2026-11-17T01:23:23.851Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:23:33.501Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; rm -rf $W/b2/tex; timeout 900 python3 $W/bake.py $W/b1,$W/b2 $W/b2/tex --normals 2>&1 | python3 -I -c \"\nimport sys,json; t=sys.stdin.read(); i=t.find('{'); print(t[:i]); d=json.loads(t[i:]); \nfor k,v in d.items(): print(k, v)\"; python3 -I -c \"\nfrom PIL import Image\nd='$W/b2/tex/'\nims=[Image.open(d+f).convert('RGB') for f in ['crown.png','crown_n.png','brim.png','body.png','pom.png']]\nW=1024; hs=[int(i.height*W/i.width) for i in ims]; H=sum(hs)+50\no=Image.new('RGB',(W,H),(40,40,40)); y=0\nfor i,h in zip …[+216 chars]`
+
+### 🧑 User — 2026-11-17T01:23:38.351Z
+
+> ↩︎ result: star_albedo_linear [0.317, 0.39, 0.048]
+> star_px 2195
+> body {'px': 34888, 'seen_texels': 29109, 'scale': 1.0, 'median_albedo': [0.43, 0.165, 0.308], 'strip_u': [0.627, 0.899]}
+> crown {'px': 15586, 'seen_texels': 26056, 'scale': 1.0, 'median_albedo': [0.215, 0.18, 0.236], 'ring_fit_rows': [-0.65, 216.85, -1734.75], 'ring_h_rows': {'u0': -41.7, 'centre': -0.7, 'u1': 3.2}, 'ring_est_cols': 50, 'strip_u': [0.383, 0.591]}
+> brim {'px': 11076, 'seen_texels': 17675, 'scale': 1.0, 'median_albedo': [0.058, 0.024, 0.231], 'strip_u': [0.384, 0.632]}
+> pom {'px': 10846, 'seen_texels': 11612, 'scale': 1.0, 'median_albedo': [0.108, 0.042, 0.32], 'strip_u': [0.635, 0.889]}
+> armL {'px': 1260, 'seen_texels': 1787, 'scale': 1.0, 'median_albedo': [0.399, 0.136, 0.287]}
+> armR {'px': 1173, 'seen_texels': 1717, 'scale': 1.0, 'median_albedo': [0.437, 0.156, 0.322]}
+
+### 🤖 Claude — 2026-11-17T01:23:40.029Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/tex_b2b.png"}`
+
+### 🧑 User — 2026-11-17T01:23:40.068Z
+
+> ↩︎ result: [image]
+

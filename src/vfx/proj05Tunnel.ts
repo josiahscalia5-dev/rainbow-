@@ -61,8 +61,11 @@ export function trayLidGeometry(h: number, segments = 28): THREE.BufferGeometry 
  * paddle pairs and the far slab pucks are left out under the switch.
  */
 let lids05Scene: THREE.Object3D | null = null;
+// `?env05=1`: the same six paddles lifted onto the DISPLACED env05 wall (scripts/proj05-lid-raycast.mjs --q='<STACK>&env05=1'
+// → tools/proj05/lid_blender.py → assets/models/lids05e.glb; qa/pilot05/full_reference_match/env/NOTES.md), else lids05.glb
+const lids05Url = ENV05 ? new URL('../../assets/models/lids05e.glb', import.meta.url).href : new URL('../../assets/models/lids05.glb', import.meta.url).href;
 const lids05Ready: Promise<void> | null = PROJLID05
-  ? new GLTFLoader().loadAsync(new URL('../../assets/models/lids05.glb', import.meta.url).href).then((gltf) => {
+  ? new GLTFLoader().loadAsync(lids05Url).then((gltf) => {
     gltf.scene.traverse((o) => {
       const m = o as THREE.Mesh;
       if (!m.isMesh) return;

@@ -6,13 +6,17 @@
  ],
  "star_px": 2195,
  "body": {
-  "px": 35266,
-  "seen_texels": 29620,
+  "px": 34888,
+  "seen_texels": 29109,
   "scale": 1.0,
   "median_albedo": [
    0.43,
-   0.167,
-   0.309
+   0.165,
+   0.308
+  ],
+  "strip_u": [
+   0.627,
+   0.899
   ]
  },
  "crown": {
@@ -23,45 +27,68 @@
    0.215,
    0.18,
    0.236
+  ],
+  "ring_fit_rows": [
+   -0.65,
+   216.85,
+   -1734.75
+  ],
+  "ring_h_rows": {
+   "u0": -41.7,
+   "centre": -0.7,
+   "u1": 3.2
+  },
+  "ring_est_cols": 50,
+  "strip_u": [
+   0.383,
+   0.591
   ]
  },
  "brim": {
-  "px": 11355,
-  "seen_texels": 18152,
+  "px": 11076,
+  "seen_texels": 17675,
   "scale": 1.0,
   "median_albedo": [
    0.058,
-   0.025,
+   0.024,
    0.231
+  ],
+  "strip_u": [
+   0.384,
+   0.632
   ]
  },
  "pom": {
-  "px": 11086,
-  "seen_texels": 11857,
+  "px": 10846,
+  "seen_texels": 11612,
   "scale": 1.0,
   "median_albedo": [
-   0.107,
-   0.044,
+   0.108,
+   0.042,
    0.32
+  ],
+  "strip_u": [
+   0.635,
+   0.889
   ]
  },
  "armL": {
-  "px": 1336,
-  "seen_texels": 1869,
+  "px": 1260,
+  "seen_texels": 1787,
   "scale": 1.0,
   "median_albedo": [
-   0.402,
-   0.14,
+   0.399,
+   0.136,
    0.287
   ]
  },
  "armR": {
-  "px": 1299,
-  "seen_texels": 1892,
+  "px": 1173,
+  "seen_texels": 1717,
   "scale": 1.0,
   "median_albedo": [
-   0.445,
-   0.163,
+   0.437,
+   0.156,
    0.322
   ]
  }

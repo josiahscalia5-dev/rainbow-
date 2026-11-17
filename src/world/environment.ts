@@ -304,8 +304,12 @@ export function buildEnvironment(course: Course): Environment {
     hA: 0.09, hB: 0.12, hFar: 0.11,               // band crown heights (fraction of the radius; was 0.13 / 0.13 / 0.095)
     farDv: [64.0, 104.7, 165.5, 235.2, 332.1],    // far rings C … G, virtual depths (was 59 / 97 / 161 / 222 / 322)
     side: [[3, 0], [17, -0.715], [23, -0.715], [35, -0.95], [42, -0.95], [54, -0.6]] as [number, number][],
-    up: [[6, 0], [17, 0.3], [23, 0.3], [32, -0.23], [42, -0.23], [54, 0]] as [number, number][],
+    // run #3: ring A up 0.3 → 0.42 (weight_study.py fit with the new weight); the seam knot (54) = upFar so the real
+    // and the forced-perspective walls meet without a step
+    up: [[6, 0], [17, 0.42], [23, 0.42], [32, -0.23], [42, -0.23], [54, 0.45]] as [number, number][],
     sideFar: -0.6,
+    // run #3: far rings C … G + far wall 0.45 u up (the approved far rings sit ≈9 px higher: C edge error 8.5 → 4.3 px)
+    upFar: 0.45,
   } : null;
   const rings05 = E05 ? rings05base.map((s) => (Math.abs(s - sCam05 - 40) < 1 ? sCam05 + E05.dB : s)) : rings05base;
   /** piecewise smoothstep through [x, value] knots, flat outside */
@@ -314,12 +318,20 @@ export function buildEnvironment(course: Course): Environment {
     for (let i = 1; i < k.length; i++) if (x <= k[i][0]) return THREE.MathUtils.lerp(k[i - 1][1], k[i][1], THREE.MathUtils.smoothstep(x, k[i - 1][0], k[i][0]));
     return k[k.length - 1][1];
   };
-  /** env05: share of the displacement at wall angle th (0 at and below the river banks, 1 from the side walls up) */
-  const e05Weight = (th: number) => THREE.MathUtils.smoothstep(Math.sin(th), -0.28, 0.05);
+  /**
+   * env05: share of the displacement at wall angle th (cos th < 0 = screen left). RIGHT half: 0 at and below the river
+   * bank, 1 from the side wall up (the displacement points left = INTO the tunnel there, so it must not cover the river,
+   * foam or the foam apron). LEFT half (run #3): the displacement points OUT of the tunnel, so the whole side wall moves
+   * with the rings down to below the waterline (sin th −0.95 … −0.5, under the river): ring B's left arc stays a smooth
+   * circle (weight_study.py: B left edge error 18.0 → 7.3 px, A 11.7 → 3.2) instead of the S-kink at the bank.
+   */
+  const e05Weight = (th: number) => (Math.cos(th) < 0
+    ? THREE.MathUtils.smoothstep(Math.sin(th), -0.95, -0.5)
+    : THREE.MathUtils.smoothstep(Math.sin(th), -0.28, 0.05));
   const warp05: TubeWarp | undefined = E05 ? (s, th, out) => {
     const d = s - sCam05, w = e05Weight(th);
-    const side = knotsAt05(E05.side, d) * (1 - THREE.MathUtils.smoothstep(d, 54, sGlow05 - sCam05 - 0.5));
-    return out.set(side * w, knotsAt05(E05.up, d) * w);
+    const fade = 1 - THREE.MathUtils.smoothstep(d, 54, sGlow05 - sCam05 - 0.5);   // 0 at the 05 → 06 junction
+    return out.set(knotsAt05(E05.side, d) * fade * w, knotsAt05(E05.up, d) * fade * w);
   } : undefined;
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
@@ -494,7 +506,7 @@ export function buildEnvironment(course: Course): Environment {
     // env05: far rings at the approved radii (virtual depths E05.farDv, placed by tunnel coordinate so the knots — and
     // the far river built on them — stay exactly as they are); the far wall's upper part displaced like the real one
     const uRing = (n: number) => (E05 ? ft.uOfZ(E05.farDv[n] - D0) : knots[n + 1][0]);
-    const warpFar: TubeWarp | undefined = E05 ? (_Z, th, out) => out.set(E05.sideFar * e05Weight(th), 0) : undefined;
+    const warpFar: TubeWarp | undefined = E05 ? (_Z, th, out) => out.set(E05.sideFar * e05Weight(th), E05.upFar * e05Weight(th)) : undefined;
     if (E05) {
       const dZdu = (u: number) => (ft.zOfU(u + 0.01) - ft.zOfU(u - 0.01)) / 0.02;
       const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
@@ -559,7 +571,10 @@ export function buildEnvironment(course: Course): Environment {
       const bandF = { ...band05, height: E05.hFar, segments: 48 };
       const geo = bandGeometry(bandF);
       const pa = geo.getAttribute('position') as THREE.BufferAttribute;
-      for (let i = 0; i < pa.count; i++) pa.setX(i, pa.getX(i) + (E05.sideFar * e05Weight(Math.atan2(pa.getY(i), pa.getX(i)))) / rRing);
+      for (let i = 0; i < pa.count; i++) {
+        const w = e05Weight(Math.atan2(pa.getY(i), pa.getX(i)));
+        pa.setXY(i, pa.getX(i) + (E05.sideFar * w) / rRing, pa.getY(i) + (E05.upFar * w) / rRing);
+      }
       pa.needsUpdate = true;
       geo.computeBoundingSphere();
       farRings = new THREE.InstancedMesh(geo, withEnv05Ring(gold05('ring05v', true, bandF), E5_RING_ROW.C, true, (bandF.width + bandF.groove + bandF.lipWidth) / 2, 'far'), ringItems.length);
