@@ -9,7 +9,7 @@ procedure below with `-c6` branches made from each `-c5` tip (take the NEWEST re
 |---|---|---|---|
 | Lead | `ccr-f983b317-2vt0zh` | `ccr-067047f0-up5d1m` @ `ffa54f9fb514f92a7d6353767e2952df9145bc25` | this session |
 | 08 scenery in motion | `claude/rainbow-s08-scenery-c5` | `5ce044a52d53c5dd6cfb71fd994a82e8647381a4` | RUNNING `session_013VHsJAQsMA73qb7GCXdQ12` (finish round 1, `docs/briefs/2026-11-17-r5/S08_SCENERY.md`) |
-| 08 Benny | `claude/rainbow-s08-benny08-bake-c5` | `fb72cc5052df908b994afeb41e7f598abc24e18d` | started `session_013VHsJAoze5D4wh6tk7r1hj` (round 6 fur clumps + pom tufts, `S08_BENNY.md`) |
+| 08 Benny | `claude/rainbow-s08-benny08-bake-c5` | `fb72cc5052df908b994afeb41e7f598abc24e18d` | RUNNING `session_013VHsJAoze5D4wh6tk7r1hj` (round 6 fur clumps + pom tufts, `S08_BENNY.md`) |
 | 08 camera | `claude/rainbow-s08-camclear-c5` | `18687513e3a35e553472a05ae7fb626c2f8108ce` | paused (r4 done; phone verdict pending) |
 | 07 | `claude/rainbow-s07-match-c5` | `835a72dbb5abad1067b538c79b1f759b06e2cbeb` | paused (next: M3) |
 | 06 | `claude/rainbow-s06-match-c5` | `c088718bb9e3374583238f4ee93f25bdee600065` | paused (next: M2) |

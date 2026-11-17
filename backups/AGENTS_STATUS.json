@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T20:35Z",
+ "updated_utc": "2026-11-17T20:38Z",
  "updated_by_session": "session_013VHsJ9SbWPe9YXRvtUSngc",
  "running_now": [
   {
@@ -26,7 +26,7 @@
    "started_utc": "2026-11-17T20:21Z",
    "notes": "qa/match/08/benny08/NOTES.md",
    "brief": "docs/briefs/2026-11-17-r5/S08_BENNY.md on ccr-f983b317-2vt0zh",
-   "state": "container ready 20:26 UTC; initial prompt dropped, brief re-sent ~20:34 UTC — confirm activity before calling it running"
+   "state": "VERIFIED working 20:28 UTC (startup check passed: branch, push dbf846e, 13 references; reading fur shader, re-capturing r5b BEFORE)"
   }
  ],
  "assignments_now": {

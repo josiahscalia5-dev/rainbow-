@@ -9,7 +9,7 @@ section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`. Briefs: `docs/briefs/2026-11-17
   flowplan A–E pass after the test-harness race fix `227f319e` (A/D had failed twice; game behaviour verified correct).
 * Running (max two): **08 scenery-in-motion** `session_013VHsJAQsMA73qb7GCXdQ12` on `claude/rainbow-s08-scenery-c5`
   (verified working 20:27: startup check passed, rendering `m08lane` real-texture frames); **08 Benny round 6**
-  `session_013VHsJAoze5D4wh6tk7r1hj` on `claude/rainbow-s08-benny08-bake-c5` (brief re-sent after a dropped prompt).
+  `session_013VHsJAoze5D4wh6tk7r1hj` on `claude/rainbow-s08-benny08-bake-c5` (verified working 20:28: startup check passed, building soft fur clumps behind a new switch).
 * Paused, in the user's order: 08 camera (phone verdict) → 07 M3 → 05 M3 → 06 M2 → 04 M4.
 
 # BACKUP VERIFICATION — 2026-11-17 ~19:45 UTC (user's urgent order: account 4 near its usage limit)
