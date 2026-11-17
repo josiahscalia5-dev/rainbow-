@@ -663,8 +663,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10846,
-   "sha256": "394aa185e4a2ada1c1861cb3a7026e601faaf27f4f3c91e33968ee203a4ca397"
+   "bytes": 11033,
+   "sha256": "97e57f446b943e933790a57f016c9aff59e607615ad9f934e2aca88202945e81"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -818,8 +818,8 @@
   },
   {
    "path": "docs/path_graph.md",
-   "bytes": 4602,
-   "sha256": "72ae99874cbd127de60a25ba87af76757ceebe3b4c5cde9e1f8c0c27497f4693"
+   "bytes": 4595,
+   "sha256": "667877a42d21905b642db3699b291322c47fb4dd56454f0c297d0d876df0eca0"
   },
   {
    "path": "docs/reference_inventory.md",
@@ -1178,8 +1178,8 @@
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2708,
-   "sha256": "34ce26ccf8e999012c5e1d49c7eb4189f8eefaa096158e16eee0aedeb5647932"
+   "bytes": 2696,
+   "sha256": "49576a5bbfdcd8a1ef2dbec617f0267b266790152519a7ee0b7a7c15a7bb62e7"
   },
   {
    "path": "qa/gameplay_test.json",
