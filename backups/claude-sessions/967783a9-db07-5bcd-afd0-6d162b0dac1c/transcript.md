@@ -1,4 +1,4 @@
-# Rainbow session — session 967783a9-db07-5bcd-afd0-6d162b0dac1c
+# Claudia World Labs Marble assets — session 967783a9-db07-5bcd-afd0-6d162b0dac1c
 
 ### 🧑 User — 2026-11-17T22:10:02.490Z
 
@@ -921,4 +921,92 @@ I'm staying paused as the lead ordered; the lead's latest notification is an old
 It set a safety rule: make every BEFORE / comparison capture from a separate git worktree, never by swapping in old file versions inside my main checkout. I already work that way. All my BEFORE captures came from a separate worktree of the start commit `c088718b`, made in my scratchpad outside the checkout, and I removed it afterwards.
 
 The other check it asks for, `git diff c088718b HEAD --stat -- src`, shows `src/world/match06.ts` as the only changed source file. All the new code is in it. The checkpoint is pushed at `83bdf2429161ab76c84633474885ba4ed93f7b9a`, and GitHub matches the local copy. I'm doing no more renders or experiments until the lead resumes this work.
+
+### 🧑 User — 2026-11-17T22:28:54.838Z
+
+CLAUDIA — WORLD LABS MARBLE ASSETS
+
+I'm using my phone, not my computer.
+
+Since my existing World Labs Marble assets are already saved in GitHub Git LFS, please reuse those files.
+
+Do not unnecessarily download or regenerate assets.
+
+Only request access to the Marble download server if you genuinely need additional files that aren't already available.
+
+My main priority is improving the visual accuracy of playable Screens 04–08 to at least 8.5/10, ideally 9/10 or better.
+
+Continue using the existing assets and save all progress to GitHub.
+
+### 🤖 Claude — 2026-11-17T22:29:01.321Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files 2>/dev/null | grep -ci worldlabs; git lfs ls-files | grep -i worldlabs | awk '{print $3}' | sed 's|/[^/]*$||' | sort | uniq -c | head; grep -rl \"version https://git-lfs\" qa/worldlabs 2>/dev/null | wc -l", "description": "Check Marble assets are present locally from LFS"}`
+
+### 🧑 User — 2026-11-17T22:29:01.920Z
+
+> ↩︎ result: 17
+>       2 qa/worldlabs/05/blender
+>       5 qa/worldlabs/05/pilot/draft
+>       2 qa/worldlabs/05/pilot/draft/import
+>       6 qa/worldlabs/05/pilot/full
+>       2 qa/worldlabs/05/pilot/full/import
+> 0
+
+### 🤖 Claude — 2026-11-17T22:29:05.666Z
+
+> 🔧 **Bash** `{"command": "node scripts/gameplay-test.mjs --q='match06=1&m06geo=1&m06flow=1' --out=qa/match/06/r6/gameplay_m06geo_flow.json 2>&1 | tail -15", "description": "Run gameplay test with the new switches", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T22:29:11.920Z
+
+> ↩︎ result: "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.316666666666624,
+>   "tBottom": 29.899999999999583,
+>   "t08": 29.91666666666625,
+>   "yTop": -51.941,
+>   "yBottom": -113.144,
+>   "y08": -113.145,
+>   "travelTimeTopToInlet": 6.6,
+>   "verticalDrop": 61.2
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-17T22:29:14.258Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('qa/match/06/r6/gameplay_m06geo_flow.json'));print(d['pass'],{k:v['pass'] for k,v in d['checks'].items()});print({k:v for k,v in d['checks'].items() if 'coin' in k.lower()})\" ; git status --short | grep -v BOOTSTRAP | head", "description": "Summarise gameplay result and coin count"}`
+
+### 🧑 User — 2026-11-17T22:29:14.347Z
+
+> ↩︎ result: True {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> {'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}}
+> ?? qa/match/06/r6/gameplay_m06geo_flow.json
+
+### 🤖 Claude — 2026-11-17T22:29:16.088Z
+
+Gameplay with the new switches passes 8/8, with exactly 91 coins / 2,240. Now the picture-match numbers and a re-check of the protected Screen 05 BEFORE picture.
+
+### 🤖 Claude — 2026-11-17T22:29:17.543Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/match06/measure06.py references/06_crest_the_rinse_arch.png BEFORE=qa/match/06/r6/06_BEFORE_M1_approved_view.png NEW=qa/match/06/r6/06_NEW_r6_approved_view.png 2>&1 | tail -15", "description": "Measure approved-view match BEFORE vs NEW", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T22:29:19.006Z
+
+> ↩︎ result: BEFORE     whole  79.1% ssim 0.785 | scenery  98.8% ssim 0.987 | upper  97.8% ssim 0.976 | middle  98.4% ssim 0.983 | lower  99.8% ssim 0.998 | benny+splash  55.2% ssim 0.525
+> NEW        whole  79.1% ssim 0.785 | scenery  98.8% ssim 0.987 | upper  97.8% ssim 0.976 | middle  98.4% ssim 0.983 | lower  99.8% ssim 0.998 | benny+splash  55.2% ssim 0.525
+
+### 🤖 Claude — 2026-11-17T22:29:21.753Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad; cd /home/user/rainbow- && git worktree add -f $S/wt c088718b >/dev/null 2>&1; cd $S/wt && ln -sf /home/user/rainbow-/node_modules node_modules && git lfs pull >/dev/null 2>&1; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/base_prot >/dev/null 2>&1; cd /home/user/rainbow- && git worktree remove --force $S/wt; python3 -c \"\nimport numpy as np;from PIL import Image\nS='$S'\nL=lambda p:np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor n,a,b in [('base worktree vs stored ba …[+355 chars]`
+
+### 🧑 User — 2026-11-17T22:29:41.670Z
+
+> ↩︎ result: base worktree vs stored baseline 143130 (0, 1121)
+> HEAD vs base worktree 56947 (33, 204)
+
+### 🤖 Claude — 2026-11-17T22:29:54.609Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/STATUS.md'\ns=open(p).read()\ns=s.replace(\"# Screen 06 — STATUS (round 6, 2026-11-17) — PAUSED by the lead (user order: save credits)\",\n\"# Screen 06 — STATUS (round 6, 2026-11-17) — paused by the lead, then the user (phone, ~22:30 UTC) asked to continue with\\n# existing assets: the open proofs below were completed (no Marble/fal use; Screen 06 needs no Marble files)\")\ns=s.replace(\"\"\"* Protected 05 BEFORE (`?ringa=26&nearfloor05=0`) vs `qa/pilot05/wave9/baseline/05.png`: **128,689 px differ (rows\n  0–1121), NOT explained yet**. My code c …[+2277 chars]`
 
