@@ -27,7 +27,7 @@
    "R": 0.45672082185884827,
    "depth": 17.425830430153294,
    "hit": "washer_world > proj05_apron",
-   "alpha_mean": 0.187,
+   "alpha_mean": 0.189,
    "atlas": [
     0,
     0,
@@ -50,7 +50,7 @@
    "R": 0.4431725677798844,
    "depth": 19.875382209930937,
    "hit": "washer_world > proj05_apron",
-   "alpha_mean": 0.092,
+   "alpha_mean": 0.125,
    "atlas": [
     69,
     0,
@@ -73,7 +73,7 @@
    "R": 0.4661327306423224,
    "depth": 25.35299179825145,
    "hit": "washer_world > proj05_apron",
-   "alpha_mean": 0.085,
+   "alpha_mean": 0.084,
    "atlas": [
     128,
     0,
@@ -96,7 +96,7 @@
    "R": 0.42919753094240914,
    "depth": 33.24763436790472,
    "hit": "washer_world > proj05_apron",
-   "alpha_mean": 0.117,
+   "alpha_mean": 0.128,
    "atlas": [
     177,
     0,
@@ -119,7 +119,7 @@
    "R": 0.33253680923956075,
    "depth": 18.890553642451938,
    "hit": "water_system > foam_banks > foam_berm",
-   "alpha_mean": 0.227,
+   "alpha_mean": 0.216,
    "atlas": [
     212,
     0,
@@ -280,7 +280,7 @@
    "R": 0.47857641960124003,
    "depth": 31.369252071546725,
    "hit": "washer_world > zone_tubes > Mesh",
-   "alpha_mean": 0.113,
+   "alpha_mean": 0.173,
    "atlas": [
     102,
     152,
@@ -303,7 +303,7 @@
    "R": 0.6203432705238817,
    "depth": 45.308690014227594,
    "hit": "washer_world > zone_tubes > tube05_far_wall",
-   "alpha_mean": 0.173,
+   "alpha_mean": 0.095,
    "atlas": [
     143,
     152,
@@ -326,7 +326,7 @@
    "R": 0.3812252129169105,
    "depth": 26.33888380591693,
    "hit": "washer_world > proj05_apron",
-   "alpha_mean": 0.088,
+   "alpha_mean": 0.183,
    "atlas": [
     180,
     152,
@@ -533,7 +533,7 @@
    "R": 0.19304184047852896,
    "depth": 19.739171287670626,
    "hit": "washer_world > proj05_apron",
-   "alpha_mean": 0.093,
+   "alpha_mean": 0.106,
    "atlas": [
     56,
     308,
@@ -556,7 +556,7 @@
    "R": 0.2065036455226067,
    "depth": 21.115685700025878,
    "hit": "washer_world > proj05_apron",
-   "alpha_mean": 0.062,
+   "alpha_mean": 0.076,
    "atlas": [
     83,
     308,

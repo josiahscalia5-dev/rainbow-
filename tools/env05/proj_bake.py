@@ -9,13 +9,15 @@ and filled from the same picture), offset-blended so no tone step shows. The tex
 Colour feedback: `--capture=<05.png> --coords_all=<tunnel_coords_all.f32>` scatters (approved − capture) on pixels that
 show the surface and the approved surface, into `<out>/feedback.npz` (accumulated, damped), applied on the next bake.
 Run #4 options (2026-11-17, session 01VCMXob; without them the bake is byte-identical to run #3):
-  --smoothfill   fallback fill (push-pull pyramid) upsampled bilinearly instead of nearest: the coarse levels drew flat
-                 square blocks that showed as flat facets wherever the camera sees a non-own texel
+  --smoothfill   fallback fill (push-pull pyramid) upsampled bilinearly instead of nearest on the texels the locked camera
+                 does NOT see: the coarse levels drew flat square blocks that showed as flat facets while riding
   --bubblefill   approved bubbles in front of the tunnel (masks/bubbles_approved.json): the approved picture is first
                  inpainted in screen space with the best-matching shifted patch of the surrounding wall / ring (boundary
                  SSD), so the wall continues behind the bubble (the bubble itself stays a bubble-specialist object)
   --paintwater   tunnel pixels where the approved picture shows water / foam (bank misregistration, river gaps at the
                  far bends, ring ends at the banks) take that approved pixel, like the foam apron on the lower wall
+  --paintbubbles tunnel pixels where the approved picture shows a bubble take that pixel (painted bubble on the wall /
+                 ring; alternative to --bubblefill, for as long as no 3D bubble is drawn there)
 usage: python3 -I tools/env05/proj_bake.py <out_dir> [--coords=F] [--capture=PNG --coords_all=F] [--reset_feedback]
        [--smoothfill] [--bubblefill] [--paintwater]"""
 import json, math, os, sys
@@ -70,7 +72,7 @@ def up2(est):
     return b
 
 
-def push_pull(val, wt, levels=9):
+def push_pull(val, wt, levels=9, smooth=False):
     """fill zero-weight texels of val (h, w, c) from coarser levels (weighted pyramid), u periodic"""
     pyr = [(val * wt[..., None], wt)]
     for _ in range(levels):
@@ -82,7 +84,7 @@ def push_pull(val, wt, levels=9):
     v, w = pyr[-1]
     est = v / np.maximum(w, 1e-6)[..., None]
     for v, w in reversed(pyr[:-1]):
-        up = up2(est) if "smoothfill" in args else np.repeat(np.repeat(est, 2, 0), 2, 1)
+        up = up2(est) if smooth else np.repeat(np.repeat(est, 2, 0), 2, 1)
         up = np.pad(up, ((0, v.shape[0] - up.shape[0]), (0, v.shape[1] - up.shape[1]), (0, 0)), mode="edge")
         a = np.clip(w, 0, 1)[..., None]
         est = a * (v / np.maximum(w, 1e-6)[..., None]) + (1 - a) * up
@@ -241,21 +243,39 @@ if "regionmask" not in args:
     src_ring = src_ring | (tun & env)
     src_wall = src_wall | ((idx == rid["gold_rings_and_front_frame"]) & env)
 src_ring[1100:] = False                                           # the bottom gold frame is the camera-held near frame
-water_cls = (idx == rid["water"]) | (idx == rid["foam_banks"])
+water_cls = np.zeros_like(src_wall)
+if "paintwater" in args:
+    water_cls |= (idx == rid["water"]) | (idx == rid["foam_banks"])
+if "paintbubbles" in args:
+    water_cls |= idx == rid["bubbles"]
 water_cls[1100:] = False
 
 
 def with_water(srcm, surfm):
-    """--paintwater: tunnel pixels (surfm) where the approved picture shows water / foam take that approved pixel"""
-    return srcm | (water_cls & surfm) if "paintwater" in args else srcm
+    """--paintwater / --paintbubbles: tunnel pixels (surfm) where the approved picture shows water / foam / a bubble take
+    that approved pixel (camera projection, like the foam apron on the lower wall)"""
+    return srcm | (water_cls & surfm)
 
 
-def bake(tex, base, coordm, srcm, a, wrap_u=True):
+def splat_prio(shape, a, m_true, m_paint, vals):
+    """splat true-class pixels; painted (--paint*) pixels only on texels no true-class pixel reaches (a texel shared by
+    the two keeps the true wall / ring colour)"""
+    yy, xx = np.nonzero(m_true)
+    acc, ws = splat(shape, a[yy, xx, 0], a[yy, xx, 1], vals[yy, xx])
+    mp = m_paint & ~m_true
+    if mp.any():
+        yy, xx = np.nonzero(mp)
+        acc_p, ws_p = splat(shape, a[yy, xx, 0], a[yy, xx, 1], vals[yy, xx])
+        pm = ws <= 0.05
+        acc = acc + acc_p * pm[..., None]; ws = ws + ws_p * pm
+    return acc, ws
+
+
+def bake(tex, base, coordm, srcm, a, wrap_u=True, extra=None):
     """own texels = approved pixels; elsewhere base + the own-minus-base offset diffused with a falloff"""
     h, w = tex.shape[:2]
     m = coordm & srcm
-    yy, xx = np.nonzero(m)
-    acc, ws = splat((h, w), a[yy, xx, 0], a[yy, xx, 1], ap[yy, xx], wrap_u)
+    acc, ws = splat_prio((h, w), a, m, coordm & extra if extra is not None else np.zeros_like(m), ap)
     own = ws > 0.2
     ownc = acc / np.maximum(ws, 1e-6)[..., None]
     # texels the camera sees between splat hits (minified areas): interpolate the own colours (push-pull) within the
@@ -270,6 +290,11 @@ def bake(tex, base, coordm, srcm, a, wrap_u=True):
     dist = distance_transform_edt(~own)
     res = base + offd * np.exp(-dist / 10.0)[..., None]
     res[fill_pp] = pp[fill_pp]
+    if "smoothfill" in args:
+        # run #4: texels the locked camera does NOT see (they show while riding) get the bilinear pyramid fill — no
+        # square blocks; seen texels keep the run #3 fill so the locked frame does not change
+        res_s = base + push_pull(off, own.astype(np.float64), smooth=True) * np.exp(-dist / 10.0)[..., None]
+        res = np.where(seen[..., None], res, res_s)
     res[own] = ownc[own]
     return np.clip(res, 0, 255), own, seen
 
@@ -277,8 +302,8 @@ def bake(tex, base, coordm, srcm, a, wrap_u=True):
 if coords:
     a, wallm, ringm = load_coords(coords)
     sw, sr = with_water(src_wall, wallm), with_water(src_ring, ringm)
-    wall, own_w, seen_w = bake(wall, base_wall, wallm, sw, a)
-    ring, own_r, seen_r = bake(ring, base_ring, ringm, sr, a)
+    wall, own_w, seen_w = bake(wall, base_wall, wallm, src_wall, a, extra=water_cls)
+    ring, own_r, seen_r = bake(ring, base_ring, ringm, src_ring, a, extra=water_cls)
     report.update(wall_own_texels=int(own_w.sum()), wall_seen_texels=int(seen_w.sum()), ring_own_texels=int(own_r.sum()), ring_seen_texels=int(seen_r.sum()),
                   wall_pixels_used=int((wallm & sw).sum()), wall_pixels_seen=int(wallm.sum()), ring_pixels_used=int((ringm & sr).sum()), ring_pixels_seen=int(ringm.sum()))
 
@@ -290,11 +315,12 @@ if args.get("capture") and args.get("coords_all"):
     a2, wm2, rm2 = load_coords(args["coords_all"])
     hud = idx == rid["hud_and_text"]
     damp = float(args.get("damp", 0.8))
-    for key, m, srcm, tex in (("wall", wm2, with_water(src_wall, wm2), wall), ("ring", rm2, with_water(src_ring, rm2), ring)):
+    for key, m, srcm, tex in (("wall", wm2, src_wall, wall), ("ring", rm2, src_ring, ring)):
         mm = m & srcm & ~hud
-        yy, xx = np.nonzero(mm)
+        yy, xx = np.nonzero(mm | (m & water_cls & ~hud))
         r = ap[yy, xx] - cap[yy, xx]
-        acc, ws = splat(tex.shape[:2], a2[yy, xx, 0], a2[yy, xx, 1], r)
+        res_img = np.zeros((H, W, 3), np.float32); res_img[yy, xx] = r
+        acc, ws = splat_prio(tex.shape[:2], a2, mm, m & water_cls & ~hud, res_img)
         ok = ws > 0.2
         d = np.where(ok[..., None], acc / np.maximum(ws, 1e-6)[..., None], 0)
         # low-pass the residual (bloom is smooth; per-texel noise would add speckle)

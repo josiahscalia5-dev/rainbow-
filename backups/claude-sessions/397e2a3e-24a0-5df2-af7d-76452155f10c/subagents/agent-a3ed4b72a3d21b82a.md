@@ -1632,3 +1632,155 @@ The explicit-off capture differs from cp3 by 81,744 px. Let me find where (anoth
 > hud_and_text                  17.18 0.737 [-4.0, -2.2, 2.5]
 > distant_tunnel_and_glow        2.65 0.971 [-0.2, 0.4, 1.0]
 
+### 🤖 Claude — 2026-11-17T02:55:07.833Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/splash_bubbles/NOTES.md", "content": "# Screen 05 — Benny's wake (`splash05m`) + approved bubbles (`bub05`) — foam-bubbles-particles\n\nSession 01VCMXob (2026-11-17, from ~02:35 UTC), branch `ccr-b0757dec-dj6l1o`. Brief: `../briefs/foam-bubbles-particles.md`.\nOrder parts: 8 (Benny's wake), 11 (every bubble), 2, 14, 15 phase D/E. **Relaunch: read this file first; continue from\n\"Remaining\"; do not redo finished steps.** (In-progress checkpoint; final numbers at the end when written.)\n\n## Switches (default build: nothing run …[+6585 chars]`
+
+### 🧑 User — 2026-11-17T02:55:07.914Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/splash_bubbles/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T02:55:08.880Z
+
+Now re-probe against the current walls (my parts off, splash/spray hidden) and re-bake.
+
+### 🤖 Claude — 2026-11-17T02:55:14.032Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; node tools/splash05/probe.mjs --q='match05=1&splash05m=0&bub05=0' --out=$S/probe3.json --bg=$S/bg3.png 2>&1 | tail -1 && python3 -I -c \"\nimport json; a=json.load(open('$S/probe.json')); b=json.load(open('$S/probe3.json'))\nprint('camera same:', a['camera']['matrixWorld']==b['camera']['matrixWorld'], 'splash frame same:', a['splash05']['matrixWorld']==b['splash05']['matrixWorld'])\nprint([ (x['hits'][0]['d'] if x['hits'] else None)==(y['hits'][0]['d'] if y['hits'] else N …[+509 chars]`
+
+### 🧑 User — 2026-11-17T02:56:10.618Z
+
+> ↩︎ result: bg → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/bg3.png
+> camera same: True splash frame same: True
+> 0 bubble hits differ
+> #28 missing r 6 depth   6.03 R 0.054 alpha 0.04 hit water_system > water_ribbon
+> #29 painted r13 depth   4.78 R 0.069 alpha 0.25 hit water_system > water_ribbon
+> atlas 512 382
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 9.27, 'within_10': 0.7839, 'within_20': 0.8731, 'ssim_lum': 0.8635, 'mean_signed_rgb': [-0.5, -0.7, 0.2]}
+> water                        px  480736  mean   5.95  <=10 0.893  <=20 0.928  ssim 0.933  signed [0.8, -2.1, -0.9]
+> foam_banks                   px   28862  mean   2.83  <=10 0.957  <=20 0.987  ssim 0.962  signed [-0.2, -0.7, -1.0]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.658  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px   83491  mean  14.59  <=10 0.590  <=20 0.775  ssim 0.770  signed [9.1, 5.1, 1.3]
+> bubbles                      px   29304  mean   2.08  <=10 0.975  <=20 0.997  ssim 0.986  signed [-0.8, -0.1, 0.1]
+
+### 🤖 Claude — 2026-11-17T02:56:14.349Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,60p scripts/proj05-move.mjs", "description": "Read ride frame script usage"}`
+
+### 🧑 User — 2026-11-17T02:56:14.390Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const Q = typeof opt.q === 'string' ? opt.q : '';
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+> const D = typeof opt.d === 'string' ? opt.d.split(',').map(Number) : [];
+>  …[+2653 chars]
+
+### 🤖 Claude — 2026-11-17T02:56:15.539Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 60,120p scripts/proj05-move.mjs", "description": "Read rest of ride frame script"}`
+
+### 🧑 User — 2026-11-17T02:56:15.586Z
+
+> ↩︎ result: console.log('steer', dir, t, JSON.stringify(log.frames.at(-1).lat));
+>       }
+>     }
+>   }
+>   if (opt.zigzag) {
+>     // a steering clip with the clock running: left, right, left (flow + Benny moving across the water)
+>     mkdirSync(`${OUT}/zigzag`, { recursive: true });
+>     const n = Math.round(Number(opt.zigzag) * fps);
+>     await page.evaluate(() => window.__rainbow.goto('05'));
+>     for (let i = 0; i < n; i++) {
+>       const ph = (i / n) * 3;
+>       const dir = ph < 0.5 ? -1 : ph < 1.5 ? 1 : ph < 2.5 ? -1 : 1;
+>       await page.evaluate(([t, dt, dir]) => { const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); }, [12 + i / fps, 1 / fps, dir]);
+>       await shot(`${OUT}/zigzag/${String(i).padStart(4, '0')}.png`, { t: 12 + (i + 1) / fps, steer: dir });
+>     }
+>     console.log('zigzag frames', n);
+>   }
+>   if (opt.clip) {
+>     mkdirSync(`${OUT}/clip`, { recursive: true });
+>     const n = Math.round(Number(opt.clip) * fps);
+>     await page.evaluate(() => window.__rainbow.goto('05'));
+>     for (let i = 0; i < n; i++) {
+>       await page.evaluate(([t, dt]) => { const R = window.__rainbow; R.freezeAt(t); R.step(Math.round(dt * 60) …[+330 chars]
+
+### 🤖 Claude — 2026-11-17T02:56:17.531Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; D=qa/pilot05/full_reference_match/splash_bubbles; time node scripts/proj05-move.mjs --q='match05=1' --out=$D/move --d=0,5,10,20 --steer=-1,1 2>&1 | grep -v \"^move\\|^steer\" | tail -5; ls $D/move", "description": "Capture ride and steering frames with my parts", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-17T02:57:35.738Z
+
+> ↩︎ result: real	1m18.129s
+> user	0m5.160s
+> sys	0m0.634s
+> move_00.png
+> move_05.png
+> move_10.png
+> move_20.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+> steer_R_080.png
+
+### 🤖 Claude — 2026-11-17T02:57:41.080Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; D=qa/pilot05/full_reference_match/splash_bubbles; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nfrom PIL import Image\nD='$D'\nfs=['move_00','move_05','move_10','move_20']\nims=[Image.open(f'{D}/move/{f}.png').convert('RGB').resize((288,512)) for f in fs]\no=Image.new('RGB',(288*4+30,512))\nfor i,im in enumerate(ims): o.paste(im,(i*298,0))\no.save('$S/move_sheet.png')\nfs=['steer_L_025','steer_L_050','steer_L_080','steer_R_025','steer_R_050','steer_R_080']\nims=[Image.open(f'{D}/move/{f}.png').conve …[+263 chars]`
+
+### 🧑 User — 2026-11-17T02:57:41.880Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:57:43.730Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/move_sheet.png"}`
+
+### 🧑 User — 2026-11-17T02:57:43.767Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:57:44.349Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/steer_sheet.png"}`
+
+### 🧑 User — 2026-11-17T02:57:44.394Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:57:57.032Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; D=qa/pilot05/full_reference_match/splash_bubbles; node scripts/proj05-move.mjs --q='match05=1&splash05m=0&bub05=0' --out=$D/move_before --d=0,5,10,20 --steer=-1,1 2>&1 | grep -i error | tail -3; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nD='$D'\nfor f in ['move_00','move_05','move_10','move_20','steer_L_025','steer_L_050','steer_L_080','steer_R_025','steer_R_050','steer_R_080']:\n    a=np.asarray(Image.open(f'{D}/move/{f}.png').convert('RGB')).astype(int …[+336 chars]`
+
+### 🧑 User — 2026-11-17T02:59:42.642Z
+
+> ↩︎ result: move_00 changed px 70157 bbox (np.int64(0), np.int64(862), np.int64(0), np.int64(1352))
+> move_05 changed px 73526 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1209))
+> move_10 changed px 62060 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1221))
+> move_20 changed px 57988 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1196))
+> steer_L_025 changed px 69571 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1466))
+> steer_L_050 changed px 77106 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1183))
+> steer_L_080 changed px 85062 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1152))
+> steer_R_025 changed px 76894 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1535))
+> steer_R_050 changed px 66266 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1201))
+> steer_R_080 changed px 51748 bbox (np.int64(0), np.int64(863), np.int64(0), np.int64(1507))
+
+### 🤖 Claude — 2026-11-17T02:59:45.075Z
+
+Changes reach y = 0, so something else (walls, HUD) also changed between the two runs. Let me look at the diff maps directly.
+
+### 🤖 Claude — 2026-11-17T02:59:49.682Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; D=qa/pilot05/full_reference_match/splash_bubbles; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nD='$D'\nrow=[]\nfor f in ['move_05','steer_L_080','steer_R_080']:\n    a=np.asarray(Image.open(f'{D}/move/{f}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'{D}/move_before/{f}.png').convert('RGB')).astype(int)\n    d=(np.abs(a-b).sum(-1)>12)\n    m=np.zeros_like(a); m[d]=[255,255,0]\n    trip=np.concatenate([b,a,(b*0.4+m*0.6).astype(int)],1)\n    r …[+285 chars]`
+
