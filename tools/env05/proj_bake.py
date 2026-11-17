@@ -18,6 +18,8 @@ Run #4 options (2026-11-17, session 01VCMXob; without them the bake is byte-iden
                  far bends, ring ends at the banks) take that approved pixel, like the foam apron on the lower wall
   --paintbubbles tunnel pixels where the approved picture shows a bubble take that pixel (painted bubble on the wall /
                  ring; alternative to --bubblefill, for as long as no 3D bubble is drawn there)
+  --paintfittings tunnel pixels where the approved picture shows a paddle / fitting the 3D paddle does not cover there
+                 (paddle outline slightly larger than the Blender tray) take that pixel
 usage: python3 -I tools/env05/proj_bake.py <out_dir> [--coords=F] [--capture=PNG --coords_all=F] [--reset_feedback]
        [--smoothfill] [--bubblefill] [--paintwater]"""
 import json, math, os, sys
@@ -248,6 +250,8 @@ if "paintwater" in args:
     water_cls |= (idx == rid["water"]) | (idx == rid["foam_banks"])
 if "paintbubbles" in args:
     water_cls |= idx == rid["bubbles"]
+if "paintfittings" in args:
+    water_cls |= idx == rid["side_fittings"]
 water_cls[1100:] = False
 
 

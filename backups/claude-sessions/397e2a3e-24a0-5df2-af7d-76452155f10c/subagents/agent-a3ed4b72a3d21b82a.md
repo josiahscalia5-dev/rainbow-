@@ -1957,3 +1957,72 @@ Wake 14.60 → 11.57 mean (77.5 → 82.0 %). Foam banks moved 2.84 → 3.00; I n
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; D=qa/pilot05/full_reference_match/splash_bubbles; time node scripts/proj05-move.mjs --q='match05=1' --out=$D/still --still=1.5 --fps=16 2>&1 | grep -i \"error\\|still frames\"; ls $D/still/still | wc -l", "description": "Capture locked-camera animation frames", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-17T03:06:52.477Z
+
+> ↩︎ result: still frames 24
+> 
+> real	2m29.463s
+> user	0m9.430s
+> sys	0m0.718s
+> 24
+
+### 🤖 Claude — 2026-11-17T03:07:00.999Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; D=qa/pilot05/full_reference_match/splash_bubbles; python3 -I -c \"\nimport numpy as np, json\nfrom PIL import Image\nD='$D'\nfr=[np.asarray(Image.open(f'{D}/still/still/{i:04d}.png').convert('RGB')).astype(float) for i in range(24)]\nc6=np.asarray(Image.open('$S/c6/05.png').convert('RGB')).astype(float)\nprint('frame0 (t=12) vs locked capture differing px:', int((np.abs(fr[0]-c6).sum(-1)>0).sum()))\ncard=(slice(1004,1297),slice(144,722))\n# frame-to-frame change inside th …[+1082 chars]`
+
+### 🧑 User — 2026-11-17T03:07:03.781Z
+
+> ↩︎ result: frame0 (t=12) vs locked capture differing px: 243866
+> card mean lum per frame [142.51 142.8  143.06 143.13 142.94 142.59 142.36 142.61 142.61 142.53
+>  142.36 141.96 141.61 141.43 141.03 140.71 140.41 140.02 140.32 140.53
+>  140.63 140.61 140.53 140.38]
+> frame-to-frame mean |d| in card [10.55  9.27  7.82  5.95  8.24  9.9  11.04 11.57 12.04 12.83 13.71 14.24
+>  14.35 14.24 14.54 14.32 14.54 14.08 13.17 12.54 11.92 11.41 10.84]
+> left mean flow px/frame x -0.53 y 1.33
+> right mean flow px/frame x 0.71 y 1.37
+
+### 🤖 Claude — 2026-11-17T03:07:10.821Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/still_strip.png"}`
+
+### 🧑 User — 2026-11-17T03:07:11.089Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T03:07:43.852Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"float vnoise\\|float cells\\|vec3 iridescent\\|float hash12\" src/vfx/glsl.ts; python3 - <<'EOF'\np='src/vfx/riderSplash.ts'\ns=open(p).read()\nold_u=\"\"\"uniform vec2 uFlowO;     // locked-frame pixel the spray streams away from (Benny's base)\nuniform vec3 uFlow;      // stream distance per cycle (px), cycles per second, phase (locks t = 12 to the approved pixels)\"\"\"\nnew_u=\"\"\"uniform vec2 uFlowO;     // locked-frame pixel the spray streams away from (Benny's base)\nuniform vec4 uFlow;      // warp: radial amplitude (px), sideways amplitu …[+2720 chars]`
+
+### 🧑 User — 2026-11-17T03:07:49.938Z
+
+> ↩︎ result: 5:float hash12(vec2 p) {
+> 10:float vnoise(vec2 p) {
+> 23:float cells(vec2 p) {
+> 35:vec3 iridescent(float t) {
+> 494: * Animated: a travelling noise warp streams the spray outward from his base and keeps it re-forming (zero at the frozen QA
+> 518:uniform vec2 uFlowO;     // locked-frame pixel the spray streams away from (Benny's base)
+> 519:uniform vec4 uFlow;      // warp: radial amplitude (px), sideways amplitude (px), outward speed (px/s), t_lock (s)
+> 538:  vec2 dv = px - uFlowO;
+> 543:  vec2 qa = vec2((rad - uTime * uFlow.z) / 22.0, ang);
+> 544:  vec2 qb = vec2((rad - uFlow.w * uFlow.z) / 22.0, ang);
+> 548:  vec4 o = tap(px - dir * wr * uFlow.x - per * wt * uFlow.y);
+> 577:    uFlowO: { value: new THREE.Vector2(423, 1060) },
+> 578:    uFlow: { value: new THREE.Vector4(9, 4, 45, 12) },
+> 618:    (uniforms.uFlow.value as THREE.Vector4).w = meta.t_lock;
+
+### 🤖 Claude — 2026-11-17T03:07:56.550Z
+
+One catch: `atan(dv.y, dv.x)` has its seam pointing left, through the left spray. I'll measure the angle from straight down so the seam points up into Benny's body, where the card is empty.
+
+### 🤖 Claude — 2026-11-17T03:08:01.652Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/riderSplash.ts'\ns=open(p).read()\nold=\"  float ang = atan(dv.y, dv.x) * 7.0;\"\nnew=\"  float ang = atan(dv.x, dv.y) * 7.0;   // measured from straight down: the ±pi seam points up into Benny's body (card empty)\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit 2>&1 | head; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; node scripts/capture.mjs 05 --q='match05=1' --out=$S/c7 2>&1 | grep -i \"error\" ; cp $S/capture_log.backup.json qa/capture_log.json; …[+475 chars]`
+
+### 🧑 User — 2026-11-17T03:08:31.081Z
+
+> ↩︎ result: c6 vs c7 (lock frame) changed px inside card 0 outside 67413
+
+### 🤖 Claude — 2026-11-17T03:08:31.248Z
+
+You've hit your 5-hour limit · resets 6:40am (UTC)
+

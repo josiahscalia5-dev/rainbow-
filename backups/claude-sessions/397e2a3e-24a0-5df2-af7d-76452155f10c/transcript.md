@@ -2435,3 +2435,31 @@ Two new changes appeared within seconds of that save, because both specialists a
 
 The full-game video recording is still running.
 
+### 🧑 User — 2026-11-17T03:08:02.208Z
+
+<task-notification>
+<task-id>a9d416668d7678967</task-id>
+<tool-use-id>toolu_01XtuRUfERkwyiWHY3BB5Zzc</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/a9d416668d7678967.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 left far-bend chunks" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 6:40am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch7mEoihQYRfen8osGEJ7, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 6:40am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>`--paintfittings` predicts side fittings 3.56 → 2.94 (≤20 94.8 → 95.9 %), nothing else changes. Installing s2 and capturing k4 to verify for real.</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T03:08:02.581Z
+
+You've hit your 5-hour limit · resets 6:40am (UTC)
+
+### 🧑 User — 2026-11-17T03:08:31.331Z
+
+<task-notification>
+<task-id>a3ed4b72a3d21b82a</task-id>
+<tool-use-id>toolu_01Pmvj8TGYvqnE1KFryWYoDn</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/a3ed4b72a3d21b82a.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 splash and bubbles" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 6:40am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch7mGxLvNGyG9gV6YonY4, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 6:40am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>One catch: `atan(dv.y, dv.x)` has its seam pointing left, through the left spray. I'll measure the angle from straight down so the seam points up into Benny's body, where the card is empty.</result>
+</task-notification>
+

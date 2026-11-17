@@ -491,8 +491,9 @@ export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
  * water through the inverse post chain, so it blends as light + a little cover over whatever water is under it:
  * out = L + water · (1 − a). Each fragment finds its texel by projecting its local position with the LOCKED 05 camera
  * (uLock: Benny frame → clip), i.e. the card is the approved splash camera-projected onto real geometry attached to Benny.
- * Animated: two-phase flow pushes the spray outward from his base (phase locked so the frozen QA clock t = 12 shows the
- * approved pixels), and it scales with the ride strength. One draw, 2 triangles, no per-frame CPU work besides placement.
+ * Animated: a travelling noise warp streams the spray outward from his base and keeps it re-forming (zero at the frozen QA
+ * clock t = 12, which therefore shows the approved pixels; no cross-fade, so no doubled filaments); it scales with the
+ * ride strength. One draw, 2 triangles, no per-frame CPU work besides placement.
  */
 const CARD_VERT = /* glsl */ `
 varying vec3 vLocal;
@@ -506,6 +507,7 @@ void main() {
 `;
 const CARD_FRAG = /* glsl */ `
 uniform mat4 projectionMatrix;
+${NOISE_GLSL}
 uniform sampler2D uTex;
 uniform mat4 uLock;      // Benny frame -> clip of the locked 05 camera
 uniform vec4 uRect;      // texture origin x, y and size x, y (locked-frame pixels)
@@ -514,7 +516,7 @@ uniform float uLmax;
 uniform float uTime;
 uniform float uStrength; // 1 = the locked ride strength
 uniform vec2 uFlowO;     // locked-frame pixel the spray streams away from (Benny's base)
-uniform vec3 uFlow;      // stream distance per cycle (px), cycles per second, phase (locks t = 12 to the approved pixels)
+uniform vec4 uFlow;      // warp: radial amplitude (px), sideways amplitude (px), outward speed (px/s), t_lock (s)
 uniform float uBias;     // depth bias toward the camera (units): the river's vertex waves must not cut holes into the card
 varying vec3 vLocal;
 varying vec3 vView;
@@ -530,13 +532,21 @@ void main() {
   if (c.w <= 1e-4) discard;
   vec2 ndc = c.xy / c.w;
   vec2 px = vec2((ndc.x * 0.5 + 0.5) * uFrame.x, (0.5 - ndc.y * 0.5) * uFrame.y);
+  // travelling warp: a smooth noise displacement field streams outward along the filaments (polar coordinates about
+  // Benny's base), so the spray keeps re-forming and running outward; it is the difference of the field now and at
+  // t_lock, so the frozen QA clock shows the approved pixels exactly, and nothing is cross-faded (no doubled filaments)
   vec2 dv = px - uFlowO;
-  vec2 dir = dv / max(length(dv), 1.0);
-  float p = fract(uTime * uFlow.y + uFlow.z);
-  float q = fract(p + 0.5);
-  float wA = 1.0 - abs(2.0 * p - 1.0);
-  vec4 o = tap(px - dir * (p - 0.5) * uFlow.x) * wA + tap(px - dir * (q - 0.5) * uFlow.x) * (1.0 - wA);
-  o *= uStrength;
+  float rad = length(dv);
+  vec2 dir = dv / max(rad, 1.0);
+  vec2 per = vec2(-dir.y, dir.x);
+  float ang = atan(dv.x, dv.y) * 7.0;   // measured from straight down: the ±pi seam points up into Benny's body (card empty)
+  vec2 qa = vec2((rad - uTime * uFlow.z) / 22.0, ang);
+  vec2 qb = vec2((rad - uFlow.w * uFlow.z) / 22.0, ang);
+  float wr = vnoise(qa) - vnoise(qb);
+  float wt = vnoise(qa * 1.7 + 13.1) - vnoise(qb * 1.7 + 13.1);
+  float wl = vnoise(qa * 0.8 + 41.7) - vnoise(qb * 0.8 + 41.7);
+  vec4 o = tap(px - dir * wr * uFlow.x - per * wt * uFlow.y);
+  o *= uStrength * (1.0 + 0.25 * wl);
   if (o.a < 0.002 && max(o.r, max(o.g, o.b)) < 0.002) discard;
   vec4 cb = projectionMatrix * vec4(vView * (1.0 - uBias / max(length(vView), uBias + 0.1)), 1.0);
   gl_FragDepth = 0.5 * cb.z / cb.w + 0.5;
@@ -565,7 +575,7 @@ function createWakeCard05(): RiderSplash {
     uTime: { value: 0 },
     uStrength: { value: 0 },
     uFlowO: { value: new THREE.Vector2(423, 1060) },
-    uFlow: { value: new THREE.Vector3(12, 1.4, 0) },
+    uFlow: { value: new THREE.Vector4(9, 4, 45, 12) },
     uBias: { value: CARD_BIAS },
   };
   const mat = new THREE.ShaderMaterial({
@@ -605,9 +615,7 @@ function createWakeCard05(): RiderSplash {
     (uniforms.uRect.value as THREE.Vector4).set(meta.org[0], meta.org[1], meta.size[0], meta.size[1]);
     (uniforms.uFrame.value as THREE.Vector2).set(meta.frame[0], meta.frame[1]);
     uniforms.uLmax.value = meta.LMAX;
-    // flow phase: the frozen QA clock (t_lock) sits at the full-weight, zero-offset point of phase A
-    const f = uniforms.uFlow.value as THREE.Vector3;
-    f.z = 0.5 - ((meta.t_lock * f.y) % 1);
+    (uniforms.uFlow.value as THREE.Vector4).w = meta.t_lock;
     sLock = meta.strength;
     loaded = true;
   }).catch(() => undefined));
