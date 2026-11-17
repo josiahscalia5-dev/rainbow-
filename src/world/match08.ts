@@ -10,7 +10,7 @@
  * Without the switch nothing in this file runs and the game is unchanged.
  */
 import * as THREE from 'three';
-import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
 
 interface Layout {
   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
@@ -139,10 +139,44 @@ export async function buildMatch08(): Promise<Match08> {
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm08_' + name; group.add(o); return o; };
   const C = L.chamber;
 
+  // Scenery-in-motion round (2026-11-17, qa/match/08/scenery/NOTES.md). Every proxy surface shows exactly the approved
+  // picture from the approved view (projection), so the near proxies can be reshaped / enlarged ABOUT THE APPROVED
+  // VIEWPOINT without changing that view; only what a moving camera sees changes.
+  //  `&m08lane=1`: inlet pipe + gold arch scaled ×LANE_K about the approved viewpoint (same picture, a wider swim lane:
+  //   the fitted pipe left only ±1.35 u of water at the waterline, Benny steers to ±1.85 u + his body) and the pipe's
+  //   lower half squared off (walls rise from the water at the lane edge instead of curving into it).
+  //  `&m08bw=1`: the chamber's entrance wall sits flush behind the gold arch (was 3.6 u further in, where it rose out
+  //   of the painted river and showed a stretched second copy of river / wall when riding forward).
+  const fixLane = flag05('m08lane'), fixBw = flag05('m08bw') || fixLane;
+  const LANE_K = 1.45;
+  const toView = new THREE.Matrix4();
+  if (fixLane) {
+    const P = proj.position;
+    toView.makeTranslation(P.x, P.y, P.z).multiply(new THREE.Matrix4().makeScale(LANE_K, LANE_K, LANE_K)).multiply(new THREE.Matrix4().makeTranslation(-P.x, -P.y, -P.z));
+  }
   // inlet pipe around the camera, ending at the arch (the picture's near walls outside the arch)
   const pipeLen = L.pipe.z0 - L.pipe.z1;
-  const pipe = new THREE.CylinderGeometry(L.pipe.r, L.pipe.r, pipeLen, 128, 8, true);
-  pipe.rotateX(Math.PI / 2).translate(L.pipe.cx, L.pipe.cy, (L.pipe.z0 + L.pipe.z1) / 2);
+  let pipe: THREE.BufferGeometry;
+  if (fixLane) {
+    // open tube, circular top half, superellipse (n = 6) lower half: squared-off walls down to the water
+    const NA = 128, NZ = 8, pos: number[] = [], uv: number[] = [], idx: number[] = [];
+    for (let j = 0; j <= NZ; j++) {
+      const z = L.pipe.z0 - (pipeLen * j) / NZ;
+      for (let i = 0; i <= NA; i++) {
+        const a = (i / NA) * Math.PI * 2, c = Math.cos(a), sn = Math.sin(a);
+        const e = sn < 0 ? 1 / 3 : 1; // |c|^(2/n), n = 6
+        const x = L.pipe.r * Math.sign(c) * Math.pow(Math.abs(c), e), y = L.pipe.r * Math.sign(sn) * Math.pow(Math.abs(sn), e);
+        pos.push(L.pipe.cx + x, L.pipe.cy + y, z); uv.push(i / NA, j / NZ);
+      }
+    }
+    for (let j = 0; j < NZ; j++) for (let i = 0; i < NA; i++) { const a = j * (NA + 1) + i, b = a + NA + 1; idx.push(a, b, a + 1, b, b + 1, a + 1); }
+    pipe = new THREE.BufferGeometry();
+    pipe.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); pipe.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    pipe.setIndex(idx); pipe.computeVertexNormals(); pipe.applyMatrix4(toView);
+  } else {
+    pipe = new THREE.CylinderGeometry(L.pipe.r, L.pipe.r, pipeLen, 128, 8, true);
+    pipe.rotateX(Math.PI / 2).translate(L.pipe.cx, L.pipe.cy, (L.pipe.z0 + L.pipe.z1) / 2);
+  }
   add(pipe, M.wall, 'pipe');
   // gold arch: annulus at the chamber entrance, extruded toward the door
   const ring = new THREE.Shape(); ring.absarc(0, 0, L.arch.outer.r, 0, Math.PI * 2, false);
@@ -150,13 +184,22 @@ export async function buildMatch08(): Promise<Match08> {
   ring.holes.push(hole);
   const archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });
   archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth);
+  if (fixLane) archG.applyMatrix4(toView);
   add(archG, M.gold, 'arch');
+  // the arch's back face (where the chamber starts) and its outer ring, after the optional lane scaling
+  const archC = new THREE.Vector3(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth).applyMatrix4(toView);
+  const archR = L.arch.outer.r * (fixLane ? LANE_K : 1);
   // back wall around the pipe mouth (closes the gap between pipe and chamber; seen only when moving in)
-  const bw = new THREE.Shape(); bw.absarc(C.cx, C.cy, C.r, 0, Math.PI * 2, false);
-  const bh = new THREE.Path(); bh.absarc(L.pipe.cx, L.pipe.cy, L.backwall.holeR, 0, Math.PI * 2, true); bw.holes.push(bh);
-  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, L.backwall.z), M.wall, 'backwall');
+  // (m08bw: outer edge 3 u beyond the chamber wall so the bigger opening stays inside the outline — the rim is hidden
+  // behind the chamber wall / under the floor)
+  const bw = new THREE.Shape(); bw.absarc(C.cx, C.cy, C.r + (fixBw ? 3 : 0), 0, Math.PI * 2, false);
+  const bh = new THREE.Path();
+  if (fixBw) bh.absarc(archC.x, archC.y, archR * 0.985, 0, Math.PI * 2, true);
+  else bh.absarc(L.pipe.cx, L.pipe.cy, L.backwall.holeR, 0, Math.PI * 2, true);
+  bw.holes.push(bh);
+  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z), M.wall, 'backwall');
   // chamber walls (from the arch to the door wall) + the door wall
-  const chLen = (L.arch.z - L.arch.depth) - C.zDoor;
+  const chLen = archC.z - C.zDoor;
   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
   ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);
   add(ch, M.wall, 'chamber');
@@ -187,6 +230,13 @@ export async function buildMatch08(): Promise<Match08> {
       o.scale.set(s.rx, s.ry, s.rx);
       o.position.set(...s.c);
     }
+  }
+
+  // QA only `&m08dbg=1`: every fitted surface in its own flat colour (which proxy carries which part of the frame)
+  if (flag05('m08dbg')) {
+    const pal = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff', '#ff8000', '#8000ff', '#008040', '#804000', '#808080'];
+    group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+    console.log('m08dbg', group.children.map((o, i) => `${o.name}=${pal[i % pal.length]}`).join(' '));
   }
 
   // Benny's splash ring, cut from the ORIGINAL approved picture (white crest + droplets around his base; alpha = white,
