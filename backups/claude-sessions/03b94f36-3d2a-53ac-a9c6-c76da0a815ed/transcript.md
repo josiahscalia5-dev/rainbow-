@@ -4276,3 +4276,263 @@ Starting Phase 1 (Screen 08). Your approved images and the normal game build wil
 
 > 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/solve08.mjs <<'EOF'\n// Solve the Screen 08 locked camera in the live game (read-only): camera position + aim so that, at fov 62,\n// Benny's projected box, the door centre and the platform centre land where the approved picture has them.\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5264);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  cons …[+5421 chars]`
 
+### 🧑 User — 2026-11-17T13:19:00.510Z
+
+> ↩︎ result: {"bennyAABB":[[11.953653007933069,-114.01053920671792,-282.79281671278613],[14.040939837514363,-111.49764042984106,-280.78551353411154]],"bennyCenter":[12.997296422723716,-112.75408981827948,-281.7891651234488],"curAABBbox":[266.3603574043248,921.94794523679,784.9258048751291,1652.9647998901685],"pose":[13.34,-110.016,-274.686,9.512,-119.891,-332.288],"err":179.3,"boxPx":[266,843,594,1216],"doorPx":[489,399],"platPx":[483,565],"camMinusBenny":[0.343,3.995,7.103]}
+
+### 🤖 Claude — 2026-11-17T13:19:16.698Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "old_string": "  yaw07?: number;\n  side07?: number;\n}", "new_string": "  yaw07?: number;\n  side07?: number;\n  /** `?match08=1` only (src/game/match.ts): over the 08 stage the camera sits at Benny's water point + this world\n   *  offset and looks at the fixed world point aim08 (the approved picture's view toward the door); absent = no change */\n  off08?: [number, number, number];\n  aim08?: [number, number, number];\n}"}`
+
+### 🧑 User — 2026-11-17T13:19:16.779Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T13:19:22.348Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "old_string": "    // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the", "new_string": "    // `?match08=1`: the approved Screen 08 view — camera at Benny + off08 (world), aimed at aim08 near the chamber door,\n    // level (no bank roll); blended in just before the 08 checkpoint and out before 09 (absent = no change)\n    const p8 = STAGE_CAM['08'];\n    if (p8 && p8.off08 && p8.aim08) {\n      const st8 = this.course.stage('08');\n      const w8 = THREE.MathUtils.smoot …[+441 chars]`
+
+### 🧑 User — 2026-11-17T13:19:22.398Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T13:19:24.915Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/match.ts", "old_string": "  '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },\n};", "new_string": "  '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },\n  // 08 (2026-11-17, qa/match/08/NOTES.md): solved in the live game so Benny's box, the door centre and the platform land\n  // on the approved picture (266,843-594,1216 vs 260,850-600,1210; door 489,399 vs 490,400; platform 483,565 vs 480,560)\n  '08': { fov: 62, roll: 0, off08: [0.386, 3.097, 7.115], aim08: [9.512, -119.891, -332.288] },\n};"}`
+
+### 🧑 User — 2026-11-17T13:19:24.986Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/match.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T13:19:28.144Z
+
+Checking that it compiles, then capturing Screen 08 both ways: the normal game, which must stay pixel-identical, and with `?match08=1`:
+
+### 🤖 Claude — 2026-11-17T13:19:31.932Z
+
+> 🔧 **Bash** `{"command": "timeout 200 npx tsc --noEmit && echo \"tsc clean\"; M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak 2>/dev/null; timeout 500 node scripts/capture.mjs 08 --out=$M/default 2>&1 | tail -1; timeout 500 node scripts/capture.mjs 08 --out=$M/cam --q=match08=1 2>&1 | tail -1; cp $M/capture_log.bak qa/capture_log.json 2>/dev/null; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('qa/match/audit/08_BEFORE_default.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$ …[+266 chars]`
+
+### 🧑 User — 2026-11-17T13:20:15.869Z
+
+> ↩︎ result: tsc clean
+> 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/default/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":160,"tris":610707,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/cam/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":170,"tris":614223,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> default vs audit BEFORE: differing px 0 max 0
+>  M src/game/cameraRig.ts
+>  M src/game/match.ts
+
+### 🤖 Claude — 2026-11-17T13:20:18.192Z
+
+The normal game is still pixel-identical (0 pixels differ). Here's the game's current Screen 08 scenery seen through the new camera:
+
+### 🤖 Claude — 2026-11-17T13:20:19.130Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/cam/08.png"}`
+
+### 🧑 User — 2026-11-17T13:20:19.214Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:20:44.512Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/match.ts'; s=open(p).read()\nold=\"  '08': { fov: 62, roll: 0, off08: [0.386, 3.097, 7.115], aim08: [9.512, -119.891, -332.288] },\"\nnew=\"  '08': { fov: 62, roll: 0, off08: [0.686, 3.697, 7.115], aim08: [9.812, -119.291, -332.288] },\"\nassert s.count(old)==1; open(p,'w').write(s.replace(old,new)); print('ok')\nEOF\nM=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak; timeout 500 node scripts/capture.mjs 08 --out=$M/cam2 --q=match08=1 2>&1 | tail -1 | cut -c1-80; cp $ …[+362 chars]`
+
+### 🧑 User — 2026-11-17T13:21:05.644Z
+
+> ↩︎ result: ok
+> 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/sc
+
+### 🤖 Claude — 2026-11-17T13:21:08.564Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/cam2_blend.png"}`
+
+### 🧑 User — 2026-11-17T13:21:08.620Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:22:13.168Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T13:22:13.181Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-17T13:22:13.471Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T13:22:13.481Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-17T13:22:14.977Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"zones|setStage = |function setStage|const setStage|vfx\\.|foam|bubbles|river|ribbon|env\\.|proj05Pending|ready\" src/game/Game.ts | head -60 | cut -c1-190", "description": "Find stage switching and scenery handles in Game.ts"}`
+
+### 🧑 User — 2026-11-17T13:22:15.050Z
+
+> ↩︎ result: 6: *                   5 hearts (bumping the foam walls costs one), pause/resume.
+> 67:  // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+> 72:  // global by nature. Off: Neutral 0.86 (src/render/env.ts), unchanged.
+> 96:  scene.add(env.group);
+> 112:  rideCam.axis = env.tubeAxis;
+> 136:  const setStage = (id: StageId) => {
+> 143:  const zoneRanges: Record<keyof typeof env.zones, [StageId, StageId]> = {
+> 152:      env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
+> 160:    const anchor = room === 'A' ? env.roomA.anchor : env.roomC.anchor;
+> 192:    const spots = env.roomA.spots;
+> 207:    env.doorA.rotation.y = lerp(doorAOpen, 0, sm(T.doorClose0, T.doorClose1, t));
+> 217:      env.drumTowel.mesh.position.copy(t < 0.35 ? handW : arc);
+> 218:      env.drumTowel.mesh.rotation.set(0, 0.4, 0);
+> 219:      env.drumTowel.setBundle(1);
+> 220:      env.drumTowel.mesh.scale.setScalar(0.62);
+> 238:      // inside Drum A the swirl carries him along the helix itself (no ribbon surface there yet)
+> 257:      env.drumTowel.mesh.position.copy(ft.pos).addScaledVector(ft.up, -0.4);
+> 258: …[+1767 chars]
+
+### 🤖 Claude — 2026-11-17T13:22:18.377Z
+
+> 🔧 **Bash** `{"command": "sed -n 90,158p src/game/Game.ts | cut -c1-200; grep -n -E \"createVfx|vfx =|const vfx|water\\.|bubbles\\.|foam\\.|\\.group|scene\\.add\" src/game/Game.ts | head -25 | cut -c1-170", "description": "Read stage setup and the zone visibility logic"}`
+
+### 🧑 User — 2026-11-17T13:22:18.443Z
+
+> ↩︎ result: window.addEventListener('resize', resize);
+>   resize();
+> 
+>   // ---------------------------------------------------------------- world
+>   const course = new Course();
+>   const env = buildEnvironment(course);
+>   scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+>   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+>   if (hidden.has('water')) water.group.visible = false;
+>   if (hidden.has('coins')) coins.group.visible = false;
+>   const zoneHidden = (k: string) => hidden.has(k);
+>   const hud = createHud();
+>   const input = createInput(canvas);
+>   const rideCam = new RideCamera(course);
+>   rideCam.axis = env.tubeAxis;
+> 
+>   // ---------------------------------------------------------------- state
+>   const st = {
+>     mode: 'intro' as Mode,
+>     t: 0, // time within the current mode
+>     clock: 0, // global animation time (shaders)
+>     frozen: null as number | null, // QA: freeze shader time
+>     s: 0,
+>     lat: 0,
+>      …[+1898 chars]
+
+### 🤖 Claude — 2026-11-17T13:22:21.614Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"group\\.add|name =|export async function loadWater|return \\{\" src/vfx/index.ts | head -30 | cut -c1-180", "description": "List what the water group contains"}`
+
+### 🧑 User — 2026-11-17T13:22:21.663Z
+
+> ↩︎ result: 68:  group.name = 'water_system';
+> 94:  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
+> 160:      return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+> 164:  return {
+
+### 🤖 Claude — 2026-11-17T13:22:27.024Z
+
+> 🔧 **Bash** `{"command": "sed -n 160,200p src/vfx/index.ts | cut -c1-180", "description": "Read the water system's returned API"}`
+
+### 🧑 User — 2026-11-17T13:22:27.080Z
+
+> ↩︎ result: return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+>     };
+>   }
+> 
+>   return {
+>     group,
+>     controls,
+>     parts,
+>     // `?proj05=1` / `?projwall05=1` / `?projring05=1`: wait for the baked textures (nothing pending → no `ready`, as before)
+>     ...(ribbon.ready || proj05Pending.length ? { ready: Promise.all([ribbon.ready, ...proj05Pending]).then(() => undefined) } : {}),
+>     surfaceHeight,
+>     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
+>     update(time, dt, focusS, camera) {
+>       if (Math.abs(focusS - lastFocusSeed) > 25) seed = 0x5eed ^ Math.round(focusS * 16);
+>       lastFocusSeed = focusS;
+>       qaCamera = camera;
+>       focus = focusS;
+>       curTime = time;
+>       ribbon.uniforms.uTime.value = time;
+>       whirl.uniforms.uTime.value = time;
+>       drum.uniforms.uTime.value = time;
+>       drum.uniforms.uAgitation.value = controls.drumAgitation;
+>       drum.swirlUniforms.uSwirl.value = controls.drumSwirl;
+>       drum.swirl.visible = controls.drumSwirl > 0.001;
+>       wave.uniforms.uTim …[+1179 chars]
+
+### 🤖 Claude — 2026-11-17T13:22:30.953Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"const parts|parts =|parts:\" src/vfx/index.ts | head; sed -n \"$(grep -n 'const parts' src/vfx/index.ts | cut -d: -f1),+4p\" src/vfx/index.ts | cut -c1-200; sed -n 200,215p src/vfx/index.ts | cut -c1-180", "description": "Read the exposed water parts and the rest of update"}`
+
+### 🧑 User — 2026-11-17T13:22:31.045Z
+
+> ↩︎ result: 53:  parts: Record<string, THREE.Object3D>;
+> 96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
+>   const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, f
+>   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
+>   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+>   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+>   // `?proj05=1`: the approved picture's own fluffy foam is baked into the river texture, so the three Screen-05-only foam
+>       // crest spray off the final wave
+>       if (wave.mesh.vi …[+729 chars]
+
+### 🤖 Claude — 2026-11-17T13:22:44.649Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; sed -e 's/startVite(5263)/startVite(5265)/' -e 's/return { cam: v(camera.position)/return { mw: camera.matrixWorld.elements, pm: camera.projectionMatrix.elements, cam: v(camera.position)/' $M/probe08.mjs > $M/probe08b.mjs && cd /home/user/rainbow- && timeout 400 node $M/probe08b.mjs 'match08=1' 2>&1 | tail -1 > $M/cam08.json; python3 -I -c \"\nimport json;d=json.load(open('$M/cam08.json')); print({k:d[k] for k in ('cam','fwd','up','fov','benny','doorPx','platPx')})\"", "description": "Read the …[+53 chars]`
+
+### 🤖 Claude — 2026-11-17T13:22:50.900Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nP=np.asarray(Image.open('/home/user/rainbow-/qa/imageblaster/08/08_plate_CLEAN_aligned_9x16_1536x2731.png').convert('RGB').resize((864,1536),Image.LANCZOS))\nImage.fromarray(P).save('$M/clean864.png')\nhsv=cv2.cvtColor(P,cv2.COLOR_RGB2HSV); h,s,v=[hsv[...,i].astype(int) for i in range(3)]\ngold=((h>=8)&(h<=28)&(s>110)&(v>150)).astype(np.uint8)\ngold=cv2.morphologyEx(gold,cv2.MORPH_OPEN,np.ones((3,3),np.uint8))\nImage.fromarray …[+591 chars]`
+
+### 🧑 User — 2026-11-17T13:23:04.316Z
+
+> ↩︎ result: {'cam': [13.474, -109.864, -274.536], 'fwd': [-0.062, -0.161, -0.985], 'up': [0, 1, 0], 'fov': 62, 'benny': [12.954, -113.113, -281.801], 'doorPx': [481.7, 414.1, 0.9983], 'platPx': [476.1, 578.9, 0.9981]}
+
+### 🧑 User — 2026-11-17T13:23:05.755Z
+
+> ↩︎ result: 200 left gold None right gold None
+> 250 left gold (np.int64(218), np.int64(299)) right gold (np.int64(565), np.int64(650))
+> 300 left gold (np.int64(129), np.int64(263)) right gold (np.int64(593), np.int64(732))
+> 350 left gold (np.int64(76), np.int64(258)) right gold (np.int64(623), np.int64(785))
+> 400 left gold (np.int64(34), np.int64(119)) right gold (np.int64(654), np.int64(826))
+> 450 left gold (np.int64(0), np.int64(253)) right gold (np.int64(638), np.int64(853))
+> 500 left gold (np.int64(0), np.int64(248)) right gold (np.int64(626), np.int64(843))
+> 550 left gold (np.int64(0), np.int64(130)) right gold (np.int64(734), np.int64(863))
+> 600 left gold (np.int64(0), np.int64(17)) right gold (np.int64(839), np.int64(863))
+> 650 left gold (np.int64(4), np.int64(199)) right gold (np.int64(846), np.int64(863))
+> 700 left gold (np.int64(0), np.int64(185)) right gold (np.int64(669), np.int64(863))
+> 750 left gold (np.int64(0), np.int64(168)) right gold (np.int64(640), np.int64(863))
+> 800 left gold (np.int64(0), np.int64(44)) right gold (np.int64(728), np.int64(863))
+> 850 left gold (np.int64(0), np.int64(24)) right gold (np.int64(773), np.int64(863))
+> 900 left gold (np.int64(0), np.int64(26)) right gold (np. …[+717 chars]
+
+### 🤖 Claude — 2026-11-17T13:23:36.123Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; python3 -I - <<EOF\nfrom PIL import Image, ImageDraw\nim=Image.open('$M/clean864.png').convert('RGB')\ndef grid(c,x0,y0,x1,y1,step=20):\n    d=ImageDraw.Draw(c)\n    for x in range((x0//step+1)*step,x1,step): d.line([(x-x0,0),(x-x0,y1-y0)],fill=(255,255,255) if x%100==0 else (90,90,90),width=1)\n    for y in range((y0//step+1)*step,y1,step): d.line([(0,y-y0),(x1-x0,y-y0)],fill=(255,255,255) if y%100==0 else (90,90,90),width=1)\n    return c\na=grid(im.crop((250,150,650,330)),250,150,650,330).r …[+259 chars]`
+
+### 🧑 User — 2026-11-17T13:23:36.739Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T13:23:42.402Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/crops_a.png"}`
+
+### 🧑 User — 2026-11-17T13:23:42.443Z
+
+> ↩︎ result: [image]
+
