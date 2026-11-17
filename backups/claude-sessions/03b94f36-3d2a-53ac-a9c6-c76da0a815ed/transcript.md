@@ -7540,3 +7540,9 @@ Starting with Benny as you asked. First a quick check for your gameplay recordin
 
 > 🔧 **Bash** `{"command": "cat >> qa/match/08/NOTES.md <<'EOF'\n\n## BENNY PORT (2026-11-17 ~15:00 UTC) — line B's benny05 transferred WITHOUT a merge\n* Backups: line A was at `25703fa`, line B `ccr-b0757dec-dj6l1o` at `99ab17b` (untouched). Copied only\n  `src/characters/benny/{benny05.ts,runtime.ts,fur.ts}` (this branch's copies were unchanged since the split, so line B's\n  are clean supersets) + `assets/textures/benny05/*.png` (9 maps baked from the APPROVED 05 pixels into Benny's UVs).\n  `benny05.ts` flag adapted: runs under `?benny05=1`, `?benny08=1`, `?match08=1`, `?matchall=1` (this branch's flag0 …[+1827 chars]`
 
+### 🧑 User — 2026-11-17T14:51:32.340Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "7694d2fd66a09110771394041e9ba19da1aaa765",
+> HEAD 7694d2fd66a09110771394041e9ba19da1aaa765 GH 7694d2fd66a09110771394041e9ba19da1aaa765 uncommitted 0 refs 13/13
+
