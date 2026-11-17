@@ -21,7 +21,7 @@ verified on GitHub at writing time; sessions of account 4 may still autosave tra
 | Lead (Claudia) | `ccr-067047f0-up5d1m` | see `docs/PARALLEL_PROGRESS.md` "Backup verification" (final) | this session | restore r4, flowplan test E + race fixes, decisions, briefs, coins08px verified, Screen 06 APK |
 | 08 Benny | `claude/rainbow-s08-benny08-bake-c4` | `b619d701ff97964e7bc54082624dab32f08fee67` | idle, done | round 5b `0067fc7b`: r3b + fuller rounder body (user decision) |
 | 08 camera | `claude/rainbow-s08-camclear-c4` | `a42140304915ea57d2d2c02493b066316207033b` | idle, done | round 4 `aa10fdbb`: drain-lip tilt 16°→1°, Benny hidden 44→25 %, missed coins fade |
-| 08 scenery in motion | `claude/rainbow-s08-scenery-c4` | final SHA in `docs/PARALLEL_PROGRESS.md` "Backup verification" | stopped mid-round 1 (diagnosis) | — (see its `qa/match/08/scenery/STATUS.md`) |
+| 08 scenery in motion | `claude/rainbow-s08-scenery-c4` | `a3f2a7065b8377bce15c06565c0290ef1c47149d` | stopped mid-round 1 (safe checkpoint) | `&m08bw=1` (visibly removes the lower-left tear / second river copy); `&m08lane=1` WIP |
 | 07 Washer Tube | `claude/rainbow-s07-match-c4` | `133d06f3c6359530e5745d16abcea758215238e3` | idle, done | M2 `fd703ee1` |
 | 04 Five Arrows | `claude/rainbow-s04-match-c4` | `d1e422faff67a37f837566301fb8abff0bac98db` | paused | M3 `a4644789` |
 | 05 Flow (LINE B) | `claude/rainbow-s05-match-c4` | `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b` | paused | M2 `a96bfdf4` |
@@ -41,7 +41,13 @@ NEVER merge or close without the user.
 * **08 camera** — r4 (`?camclear=1`): see branch `qa/gameplay_video/STATUS.md`, frames `lip_r4/`, `moving_r4/`. APK
   `builds/rainbow-debug-08camclear-2026-11-17-r4.apk`. **Next:** wait for the user's phone verdict; the 07 bands are
   Screen 07 scenery; the right pipe/arch block belongs to the 08 scenery workstream.
-* **08 scenery in motion** — **Next:** finish round 1 of `S08_SCENERY.md` from its STATUS: the projected picture tears /
+* **08 scenery in motion** — stopped on the backup order with all new code behind switches (`src/world/match08.ts`):
+  `&m08bw=1` = chamber entrance wall flush behind the gold arch, **visibly better** (removes the lower-left tear / second
+  river copy at 6 u and when steering); `&m08lane=1` (implies m08bw) = near pipe + gold arch ×1.45 about the approved
+  viewpoint, squared lower pipe → wider swim lane (geometry correct in debug colours, real-texture frames NOT rendered
+  yet); `&m08dbg=1` = flat debug colours. Not yet proven 0 px. Its `qa/match/08/scenery/STATUS.md` + `NOTES.md` hold
+  the exact next task. **Next:** render m08bw / m08lane with real textures, prove the approved view 0 px, then the
+  remaining items: finish round 1 of `S08_SCENERY.md`: the projected picture tears /
   duplicates the river + wall at 6 u forward and when steering, a gold band fragment top-left, Benny rides into the right
   pipe/arch steering hard right, and `?match08=1` changes screens 04–07 over much of the frame (04 ≈510k px, 07 ≈560k
   px — must be 08-only). Fix with THE METHOD (projection only where valid + world-anchored tiles from the approved

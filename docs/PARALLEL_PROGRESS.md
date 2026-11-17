@@ -1,5 +1,29 @@
 # RAINBOW — parallel workstreams: lead progress report
 
+# BACKUP VERIFICATION — 2026-11-17 ~19:45 UTC (user's urgent order: account 4 near its usage limit)
+* Development stopped; the lead's scheduled check-in (would have started Screen 05) disabled at 19:40. The one active
+  specialist (08 scenery) saved and stopped at a safe checkpoint; Benny, camera and 07 were already idle with their
+  milestones pushed (reported SHAs contained in their tips; only transcript autosaves after them).
+* Branch tips on GitHub at 19:44 UTC (full SHAs):
+  * lead `ccr-067047f0-up5d1m` → the commit that contains this section (see `git ls-remote`; reported to the user)
+  * `claude/rainbow-s08-scenery-c4` `a3f2a7065b8377bce15c06565c0290ef1c47149d`
+  * `claude/rainbow-s08-benny08-bake-c4` `b619d701ff97964e7bc54082624dab32f08fee67`
+  * `claude/rainbow-s08-camclear-c4` `a42140304915ea57d2d2c02493b066316207033b`
+  * `claude/rainbow-s04-match-c4` `d1e422faff67a37f837566301fb8abff0bac98db`
+  * `claude/rainbow-s05-match-c4` `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b`
+  * `claude/rainbow-s06-match-c4` `c088718bb9e3374583238f4ee93f25bdee600065`
+  * `claude/rainbow-s07-match-c4` `133d06f3c6359530e5745d16abcea758215238e3`
+  Account 4's idle containers may still add transcript-only autosaves to their own branches; take the newest tip.
+* Every `-c4` branch contains its full `-c3` history (ancestor check), nothing merged, no force-push.
+* 13/13 approved references byte-identical; 10/10 agent definitions present, SHA-256 unchanged.
+* Git LFS: **62 distinct objects** across the 8 branch tips, all downloaded from GitHub (775 MB local store), `git lfs fsck`
+  OK on all 8, 0 missing; lead branch 47/47 objects confirmed on GitHub LFS (batch API), incl. the new Screen 06 APK and
+  the Screen 08 test clip.
+* Secret scan of all 8 tips: no API keys (the only pattern hit is a `FAL_KEY=your-…` placeholder in a sanitized
+  transcript). Keys live only as environment network secrets (see the handoff).
+* Handoff for the next account: TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` (branch map, next tasks, `-c5`
+  restart procedure, key reconnection, what cannot transfer).
+
 # ROUND 4 (account 4) — CURRENT
 **Lead coordinator ("Lead Claudia") — round 4, account 4:** session `session_01Kbt6BTTnCGMUULjZoCLDTo` ("Rainbow game
 restoration"), branch **`ccr-067047f0-up5d1m`**, started from the round-3 lead branch `ccr-c0235034-ks6sx3` @ `ed23f9e5`

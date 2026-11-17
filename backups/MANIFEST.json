@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11652,
-   "sha256": "f6704b7255e08a5158e8b8a542c9659e4dc9b2008344f12c4e86a442b5e59329"
+   "sha256": "314362b3d8bdb8b5101c11f6e5ba54f00ab966e464ea419056627566e64d9e2f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,13 +723,13 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 24323,
-   "sha256": "d4fc68c82002d13eb13e351555feb8e27db8813d2c6c614cff094803d550f57f"
+   "bytes": 25025,
+   "sha256": "621e1cb2e7726f0fa5b8dd9edb7d99dcacdb4e4cb9d737409da00d39af887c96"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 27566,
-   "sha256": "a6ba5d8d52b9f98b9cc4129c5d382b72f7a70195e1b683e313c44962247e53cf"
+   "bytes": 29676,
+   "sha256": "65e80ad87741436d14f0835fa690a7055aa52ad5b870973d88ac2f5b9337ffad"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
