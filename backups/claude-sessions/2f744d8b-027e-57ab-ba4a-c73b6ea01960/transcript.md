@@ -3312,3 +3312,68 @@ The Screen 06 build is saved to GitHub with a note of exactly how it was made. T
 
 When you try them, tell me what looks wrong on your phone: how each screen looks while Benny swims and steers, any blank or stretched areas, and whether it runs smoothly. That's the real-phone check none of these builds has had yet.
 
+### 🧑 User — 2026-11-17T19:35:16.430Z
+
+Can you record all the screens, or all my screens that are looking like right now, like screen recording or video?
+
+### 🤖 Claude — 2026-11-17T19:35:40.589Z
+
+Yes. I'll make real recordings of the actual game running, not stills.
+
+Two things shape how:
+- Each screen's newest rebuilt version lives on its own branch, and they aren't combined yet. So I'll record one clip per playable screen (04–08), each from its own newest save, then join them into one video.
+- This cloud computer has no graphics card, so recording live would come out choppy. Instead I'll advance the game one exact frame at a time and photograph every frame. The video then plays smoothly at the true speed.
+
+Let me find the existing frame-capture tool so I reuse it rather than writing something new.
+
+### 🤖 Claude — 2026-11-17T19:35:41.536Z
+
+> 🔧 **Grep** `{"pattern": "screenshot\\(|recordVideo|render\\(\\)|renderNow|frame\\(", "path": "/home/user/rainbow-/tools", "output_mode": "files_with_matches"}`
+
+### 🧑 User — 2026-11-17T19:35:41.625Z
+
+> ↩︎ result: Found 3 files
+> tools/qa/axis05.ts
+> tools/match08/coins08px.mjs
+> tools/match08/motion08.mjs
+
+### 🤖 Claude — 2026-11-17T19:35:42.840Z
+
+> 🔧 **Grep** `{"pattern": "render[A-Za-z]*\\(|frame[A-Za-z]*\\(|snap[A-Za-z]*\\(", "path": "/home/user/rainbow-/src/game/Game.ts", "output_mode": "content", "-n": true, "head_limit": 25}`
+
+### 🧑 User — 2026-11-17T19:35:42.873Z
+
+> ↩︎ result: 618:    composer.render();
+> 627:    if (!qaMode || running || dirty) { render(); dirty = false; }
+> 686:    render();
+> 762:      render();
+
+### 🤖 Claude — 2026-11-17T19:35:44.836Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p tools/match08/motion08.mjs; sed -n 600,640p src/game/Game.ts; sed -n 750,770p src/game/Game.ts", "description": "Read motion capture tool and render loop"}`
+
+### 🧑 User — 2026-11-17T19:35:44.898Z
+
+> ↩︎ result: // Screen 08 moving-camera test (read-only): from the 08 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node motion08.mjs <outDir> [q]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match08=1';
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5266);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   const shots = [['f00_checkpoint', 0, null], ['f03_forward3u', 19, null], ['f06_forward6u', 38, null], ['f10_forward10u', 63, null],
+>                  ['f15_forward15u', 95, null], ['s_left_steer', 40, -1], ['s_right_steer', 40, 1]];
+>   for (const [name, n, st …[+3843 chars]
+
+### 🤖 Claude — 2026-11-17T19:36:35.181Z
+
+> 🔧 **Bash** `{"command": "git fetch origin -q; for b in claude/rainbow-s04-match-c4 claude/rainbow-s05-match-c4 claude/rainbow-s06-match-c4 claude/rainbow-s07-match-c3 claude/rainbow-s08-benny08-bake-c4; do echo \"$b: drawList=$(git show origin/$b:src/game/Game.ts | grep -c 'drawList()') qa3d=$(git show origin/$b:src/game/Game.ts | grep -c 'qa3d()') unfreeze=$(git show origin/$b:src/game/Game.ts | grep -c 'unfreeze()') stageApi=$(git show origin/$b:src/game/Game.ts | grep -c 'course,\\|course:')\"; done; nproc; ffmpeg -hide_banner -encoders 2>/dev/null | grep -E \"libx264\" | head -1; fc-list 2>/dev/null | …[+284 chars]`
+
