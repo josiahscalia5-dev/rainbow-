@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-17T18:44:32.303Z",
+  "when": "2026-11-17T18:47:12.944Z",
   "clip": "node_modules/.rainbow-test/flow_test.webm",
   "errors": [],
   "A": {
@@ -23,17 +23,17 @@
     "after": {
       "mode": "ride",
       "stage": "04",
-      "s": 79.026,
+      "s": 78.954,
       "lat": 0,
       "coins": 1420,
       "hearts": 5,
       "paused": false,
-      "bennyY": -22.498,
+      "bennyY": -22.465,
       "bennyVisible": true,
       "cam": [
-        1.13,
-        -14.35,
-        -17.25
+        1.11,
+        -14.36,
+        -17.18
       ]
     },
     "movesOn": true,
@@ -71,11 +71,11 @@
       ]
     },
     "handOver": {
-      "steps": 81,
+      "steps": 80,
       "state": {
         "mode": "outro",
         "stage": "11",
-        "s": 404.925,
+        "s": 404.823,
         "lat": 0,
         "coins": 2230,
         "hearts": 5,
@@ -83,9 +83,9 @@
         "bennyY": -113.255,
         "bennyVisible": true,
         "cam": [
-          11.46,
+          11.48,
           -109.91,
-          -287.54
+          -287.45
         ]
       }
     },
@@ -94,7 +94,7 @@
     "final": {
       "mode": "end",
       "stage": "11",
-      "s": 404.925,
+      "s": 404.823,
       "lat": 0,
       "coins": 2230,
       "hearts": 5,
@@ -149,7 +149,7 @@
     },
     "observed": {
       "videoEnded": false,
-      "t": 2.518767
+      "t": 0.033221
     },
     "tries": 1,
     "pass": true
@@ -201,7 +201,7 @@
       "coins": 2240,
       "hearts": 5,
       "paused": false,
-      "bennyY": -109.503,
+      "bennyY": -109.506,
       "bennyVisible": false,
       "cam": [
         11.2,
