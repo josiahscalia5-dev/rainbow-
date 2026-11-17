@@ -746,3 +746,186 @@ Colours now match (fill 181/74/175 vs painted wall 181/74/179); what remains is 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T20:37:16.268Z
+
+Fill is visibly better while moving (kaleidoscope gone, softer hand-over). Now frozen-capture proofs at the approved view: base after the shader edit, and with `m08bw`+`m08fill`.
+
+### 🤖 Claude — 2026-11-17T20:37:20.474Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && for v in base3:\"\" bwfill:\"&m08bw=1&m08fill=1\"; do n=${v%%:*}; q=${v#*:}; node scripts/capture.mjs 08 \"--q=match08=1&coins08px=1$q\" --out=$P/$n >/dev/null 2>&1; done; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda n:np.asarray(Image.open('$P/'+n+'/08.png').convert('RGB')).astype(int)\nb=L('base');r=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((864,1536),Image.LANCZOS)).astype(int)\nfor n i …[+331 chars]`
+
+### 🧑 User — 2026-11-17T20:37:44.439Z
+
+> ↩︎ result: base3 px 0 >20 0 whole-frame within20 of approved 81.04
+> bw px 13374 >20 249 whole-frame within20 of approved 81.04
+> bwfill px 137615 >20 35264 whole-frame within20 of approved 78.09
+> base within20 81.04
+
+### 🤖 Claude — 2026-11-17T20:38:02.732Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts';s=open(p).read()\nold=\"\"\"        if (uFillMode > 0.5) {\n          // m08fill: soft hand-over to the fill (5 x 5 taps over ~3 % of the frame) instead of a hard shadow line\n          vis = 0.0;\n          for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {\n            float zs = linZ(texture2D(uDepth, uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);\n            vis += 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);\n          }\n          vis = smoothstep(0.0, 1.0, vis / 25.0);\n        } else {\n          floa …[+1967 chars]`
+
+### 🧑 User — 2026-11-17T20:38:38.639Z
+
+> ↩︎ result: base4 px 0 >20 0 within20 81.04
+> fill px 530 >20 521 within20 81.04
+> bwfill px 13688 >20 586 within20 81.04
+
+### 🤖 Claude — 2026-11-17T20:38:43.350Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfrom scipy import ndimage\n\" 2>/dev/null; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda n:np.asarray(Image.open('$P/'+n+'/08.png').convert('RGB')).astype(int)\nd=np.abs(L('fill')-L('base')).max(2)>0;ys,xs=np.nonzero(d)\nH,_,_=np.histogram2d(ys,xs,bins=[16,8],range=[[0,1536],[0,864]]);print(H.astype(int))\"", "description": "Locate fill diffs at approved view"}`
+
+### 🧑 User — 2026-11-17T20:38:44.347Z
+
+> ↩︎ result: [[ 0  0  0  0  0  0  0  0]
+>  [ 0  0  3  5  6  0  0  0]
+>  [ 3 29 22  4  8 24 23  0]
+>  [23  4 19 10 11 15 10 40]
+>  [ 6 14  8  0  0  8  7  9]
+>  [13  0 14  7  0 25 13  5]
+>  [11 32  7  0  0  0 11 24]
+>  [ 0  7 10  0  0  2  1  5]
+>  [ 6  0  0  0  0  0  0  7]
+>  [13  0  0  0  0  0  0  0]
+>  [ 6  0  0  0  0  0  0  0]
+>  [ 0  0  0  0  0  0  0  0]
+>  [ 0  0  0  0  0  0  0  0]
+>  [ 0  0  0  0  0  0  0  0]
+>  [ 0  0  0  0  0  0  0  0]
+>  [ 0  0  0  0  0  0  0  0]]
+
+### 🤖 Claude — 2026-11-17T20:38:53.442Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts';s=open(p).read()\nold=\"\"\"  vec3 pc = uFillMode > 0.5 ? fillColor() : patchColor();\"\"\"\nnew=\"\"\"  // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)\n  vec3 pc = patchColor();\n  if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));\"\"\"\nassert old in s; s=s.replace(old,new,1); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . 2>&1|tail -2; P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratch …[+588 chars]`
+
+### 🧑 User — 2026-11-17T20:39:20.199Z
+
+> ↩︎ result: fill vs base 0  bwfill vs bw 0
+
+### 🤖 Claude — 2026-11-17T20:39:21.700Z
+
+`m08fill` is now proven 0 px at the approved view. Re-rendering the final fill moving frames, then committing.
+
+### 🤖 Claude — 2026-11-17T20:39:25.097Z
+
+> 🔧 **Bash** `{"command": "M08_SHOTS=full timeout 900 node tools/match08/motion08.mjs qa/match/08/scenery/motion_fill_r5 'match08=1&coins08px=1&m08bw=1&m08fill=1' 2>&1 | grep -ci error; git add src/world/match08.ts tools/match08/unwrap08.py assets/textures/match08/fill_drum.png assets/textures/match08/fill_drum.json qa/match/08/scenery/motion_fill_r5 && git commit -qm \"S08 scenery r5: m08fill world-anchored drum wall fill from the picture's pipe wall (0 px at approved view)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJAQsMA73qb7GCXdQ12\"  …[+159 chars]`
+
+### 🧑 User — 2026-11-17T20:40:20.024Z
+
+> ↩︎ result: 0
+> 471d2e5
+
+### 🤖 Claude — 2026-11-17T20:40:21.358Z
+
+Step 4: why `?match08=1` changes screens 04–07. Capturing 04–07 with and without it.
+
+### 🤖 Claude — 2026-11-17T20:40:25.006Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs 04 05 06 07 --out=$P/def >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 \"--q=match08=1&coins08px=1\" --out=$P/m08 >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfor s in ['04','05','06','07']:\n  a=np.asarray(Image.open('$P/def/'+s+'.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$P/m08/'+s+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2);print(s,int((d>0).sum()),int((d …[+147 chars]`
+
+### 🧑 User — 2026-11-17T20:41:59.259Z
+
+> ↩︎ result: 04 510057 38403
+> 05 440635 98164
+> 06 552438 187147
+> 07 571751 123214
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+
+### 🤖 Claude — 2026-11-17T20:42:02.219Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"match08\\|m08\\b\\|m08\\.\\|coins08px\" src --include=*.ts | grep -v \"^src/world/match08.ts\" | head -40", "description": "Find match08 usage outside its file"}`
+
+### 🧑 User — 2026-11-17T20:42:02.254Z
+
+> ↩︎ result: src/characters/benny/benny05.ts:22:// branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+> src/characters/benny/benny05.ts:23:const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+> src/world/course.ts:16:import river08 from '../../assets/textures/match08/river08.json';
+> src/world/course.ts:317:  // `?match08=1` (src/world/match08.ts, qa/match/08/NOTES.md): the 08–10 stream follows the APPROVED picture's painted
+> src/world/course.ts:318:  // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
+> src/world/course.ts:320:  const m08 = flag05('match08') || flag05('matchall');
+> src/world/course.ts:328:    if (!m08) return xDefault;
+> src/game/match.ts:28:  '08': { fov: 62, roll: 0, off08: [0.686, 3.697, 7.115], aim08: [9.812, -119.291, -332.288] },
+> src/game/cameraRig.ts:28:  /** `?match08=1` only (src/game/match.ts): over the 08 stage the camera sits at Benny's water point + this world
+> src/game/cameraRig.ts:29:   *  offset and looks at the fixed world point aim08 (the approved picture's view toward …[+3333 chars]
+
+### 🤖 Claude — 2026-11-17T20:42:05.853Z
+
+> 🔧 **Bash** `{"command": "sed -n 310,345p src/world/course.ts; sed -n 18,40p src/characters/benny/benny05.ts", "description": "Read course and benny05 switch logic"}`
+
+### 🧑 User — 2026-11-17T20:42:05.895Z
+
+> ↩︎ result: const zIn = WORLD.chamber.zBack;
+>   seg(4, (t) => V(p3.x, p3.y, p3.z + (zIn - p3.z) * t));
+>   mark('08');
+>   // ---- 08–10: Final Spin Chamber — winding stream toward the platform & towel ----
+>   const s8 = pts[pts.length - 1].clone();
+>   const plat = WORLD.platform;
+>   const end = V(plat.center.x, plat.topY + 0.45, plat.center.z + 0.6);
+>   // `?match08=1` (src/world/match08.ts, qa/match/08/NOTES.md): the 08–10 stream follows the APPROVED picture's painted
+>   // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
+>   // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
+>   const m08 = flag05('match08') || flag05('matchall');
+>   const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
+>   const riverX = (z: number) => {
+>     if (z >= rz[0]) return rxs[0];
+>     for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); return rxs[i - 1] + (rxs[i] - rxs[i - 1]) * a; }
+>     return rxs[rxs.length - 1];
+>   };
+>   const x08 = (z: number, xDefault: number) => {
+>     if (!m08) return xDefault;
+>     const wIn = smo …[+2177 chars]
+
+### 🤖 Claude — 2026-11-17T20:42:10.327Z
+
+> 🔧 **Bash** `{"command": "sed -n 104,125p src/game/Game.ts; sed -n 160,172p src/game/Game.ts; sed -n 560,620p src/game/Game.ts", "description": "Read Game.ts match08 handling"}`
+
+### 🧑 User — 2026-11-17T20:42:10.363Z
+
+> ↩︎ result: const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+>   const m08 = MATCH['08'] ? await buildMatch08() : null;
+>   if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+>   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+>   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+>   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+>   const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+>   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+>   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.posi …[+4226 chars]
+
+### 🤖 Claude — 2026-11-17T20:42:17.263Z
+
+Game.ts restores everything when leaving 08, so I'm isolating the cause empirically (Benny port vs camera table vs course).
+
+### 🤖 Claude — 2026-11-17T20:42:18.125Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,27p src/game/match.ts; sed -n 29,60p src/game/match.ts | grep -n \"MATCH\\|flag\\|export\" ", "description": "Read match.ts camera table"}`
+
+### 🧑 User — 2026-11-17T20:42:18.162Z
+
+> ↩︎ result: /**
+>  * "Match my approved picture" test switches for the gameplay screens (2026-11-17, qa/match/NOTES.md).
+>  *   `?match02=1` … `?match10=1`  one screen each (05 has its own set; `?match05=1` turns all of those on — see
+>  *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.
+>  * Every change a screen makes lives behind its switch: with no switch the game is byte-for-byte the default build
+>  * (verified by pixel comparison after every change). Packaged experiment builds read the same keys from
+>  * VITE_RAINBOW_Q05 (flag05).
+>  * File ownership (one owner per screen while work runs in parallel): see qa/match/NOTES.md.
+>  */
+> import type { CamParams } from './cameraRig';
+> import { flag05 } from '../vfx/waterRibbon';
+> 
+> export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> const ALL = flag05('matchall');
+> export const MATCH: Record<MatchId, boolean> = Object.fromEntries(MATCH_IDS.map((id) => [id, ALL || flag05('match' + id)])) as Record<MatchId, boolean>;
+> export const matchOn = (id: string): boolean => (MATCH as Record<string, boolean>)[id] === true;
+> 
+> /**
+>  * Came …[+897 chars]
+
+### 🤖 Claude — 2026-11-17T20:42:24.170Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs 04 07 --out=$P/def2 >/dev/null 2>&1; node scripts/capture.mjs 04 07 \"--q=benny08=1\" --out=$P/bn >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int)\nfor s in ['04','07']:\n  for d in ['def2','bn','m08']:\n    x=np.abs(L(d,s)-L('def',s)).max(2);print(s,d,int((x>0).sum()),int((x>20).sum()))\"", "description": "Test determ …[+48 chars]`
+

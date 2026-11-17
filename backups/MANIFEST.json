@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12549,
-   "sha256": "5280b8f218cf9bded510c66e006f188dcbeb199a7af875c6eef6f9a8f10c056a"
+   "sha256": "13349b9f524065906098ef8bceda3b9274a0c8887b933721aaf10ae82a0216ea"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2113,63 +2113,63 @@
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/f00_checkpoint.png",
-   "bytes": 2624906,
-   "sha256": "b56973f3e512ff47bd8f115af9935c869be836adf107371f5ba40e6209228c51"
+   "bytes": 2615672,
+   "sha256": "40f87fb3a17827afbcaa8c6381782c90c66344e6520f3a7a3948a2f731c73dc3"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/f03_forward3u.png",
-   "bytes": 2640213,
-   "sha256": "156ce7a51ff1f8ab537ceff4f7c3e1a75b7957b09faf2552e0e28e9d088cbf41"
+   "bytes": 2640995,
+   "sha256": "dae9da44ce2d4fd82bd45ae15e3863d5b4d03de8cd4e99f1038b75c63b628ff7"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/f06_forward6u.png",
-   "bytes": 2569225,
-   "sha256": "ab5b40fc0322350093c937879a9b9edce95a8650e1091f09214e67b458aec2d2"
+   "bytes": 2569747,
+   "sha256": "c2894094170532519e4ce9f5d980f5a16684f2df1e8998cce4a6ef4823671171"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/f10_forward10u.png",
-   "bytes": 2493010,
-   "sha256": "6eaac70e48dfe73c39eee2e4a1cadf51c0fd48090ba6ecc1531825988991aaf0"
+   "bytes": 2493065,
+   "sha256": "816524d73323e810be5af02a9fa73788c2e5cb4216a0629f22bee6f709629f81"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/f15_forward15u.png",
-   "bytes": 1844379,
-   "sha256": "4f17549d6332c8c65fa5ce5cf225847f34045d715b81ccbf42feaf8acd9acd75"
+   "bytes": 1842610,
+   "sha256": "b52c831534b699903b547980acc7316c19f991df0f3dbfaa094ecb76fea91683"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/motion.json",
-   "bytes": 1228,
-   "sha256": "bedd3c6290b2e1054e54b8914414d5710dff965adcd16307a1a80d3d778f717f"
+   "bytes": 1229,
+   "sha256": "9c6f3c18418344093db6012ab764a020e3ddae76482940fa71141a6a3091e06a"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/s_left_hard.png",
-   "bytes": 1724815,
-   "sha256": "f1e033f125497692dd3e3cdbea94598f44cb333ebdbb6ad1523013d1abd83d4a"
+   "bytes": 1728476,
+   "sha256": "be562ed30a48d4a724e1c802e69121b1f2131717b8ae57700469c69992f19f02"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/s_left_steer.png",
-   "bytes": 2595196,
-   "sha256": "4cbdaa1bd0a2c2768be98dc5fc6c4ecb7200f7f758aec4658c4c6d8f86046b37"
+   "bytes": 2595395,
+   "sha256": "8c9c5d93a7bba0928547c91563a6585135634c5d8f8d65aeb9a3d912d12f8990"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/s_right_hard.png",
-   "bytes": 1851601,
-   "sha256": "92e0d31532761bfc5a13ced8c14504b05e63a0e0b8d8f79156c44fd7148ad0b3"
+   "bytes": 1854162,
+   "sha256": "fdda4cd292b098f582f17b030ce43584b329c9633b067f7ccaffa27440a0d1e9"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/s_right_hard10u.png",
-   "bytes": 2321981,
-   "sha256": "88d5eab55e0c0e8a8717496a4a322814701c45528e22c322b59cf05031a94e23"
+   "bytes": 2322166,
+   "sha256": "58b5e1552be09090b2453d7e5533d0f28a38e7241a3f3ff50a5b5378e95cc28c"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/s_right_hard6u.png",
-   "bytes": 2570914,
-   "sha256": "0134d979a8d15191698c7f808dd78f12e43f3cc57163be33e3b148645dbd91a4"
+   "bytes": 2571170,
+   "sha256": "e8c0e95fb83970f0ff66d02d5812640e11245265ab56967dbce2577af9f36f19"
   },
   {
    "path": "qa/match/08/scenery/motion_fill_r5/s_right_steer.png",
-   "bytes": 2564982,
-   "sha256": "dc8a8ba73648f8dcb3e1e94abafae4c82863fa9d1f133f23e43c3c2ee0b4eb52"
+   "bytes": 2565238,
+   "sha256": "79ce742d03993194a2915a87308920f9eb31ad012f191c5a7aa81cb7b7e01329"
   },
   {
    "path": "qa/match/08/scenery/motion_lane/f00_checkpoint.png",
@@ -8933,8 +8933,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 18973,
-   "sha256": "907d337ce9fb9723f083223cbee48c3ca7f92f48dba4238e47d0f5ff48cc36d6"
+   "bytes": 19380,
+   "sha256": "c1a2e3bf373f4c2fc8a3b85fef01bc3c33f219f57ab7d7d5e5151e2a4f04c1d8"
   },
   {
    "path": "src/world/materials.ts",
