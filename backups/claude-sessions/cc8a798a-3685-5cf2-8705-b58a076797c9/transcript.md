@@ -1420,3 +1420,166 @@ Notes committed. Waiting for the APK build to finish.
 
 Round 3 work is done and pushed. The Android APK is still building; I'll copy it into `builds/` and send the lead my status once the build finishes.
 
+### 🧑 User — 2026-11-17T17:48:55.532Z
+
+<task-notification>
+<task-id>bccrn1zw6</task-id>
+<tool-use-id>toolu_01T4feBppZ9G5cFrdyGh8BY9</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/tasks/bccrn1zw6.output</output-file>
+<status>completed</status>
+<summary>Background command "Build debug APK with match06 switch" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T17:49:00.904Z
+
+> 🔧 **Bash** `{"command": "tail -3 /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk.log; A=$(ls -t android/app/build/outputs/apk/debug/*.apk | head -1); ls -la $A; cp $A builds/rainbow-debug-06-2026-11-17-r3.apk && git status --short | head; git add builds/rainbow-debug-06-2026-11-17-r3.apk && git commit -qm \"Screen 06 r3: debug APK with match06=1 (NOT phone-tested)\" -m \"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCL2DLgtfbmDySmRvhY\" && git push -q origin claude/rainbow-s06-match-c3 2>&1 | tail -2; git …[+235 chars]`
+
+### 🧑 User — 2026-11-17T17:49:01.750Z
+
+> ↩︎ result: > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 55s
+> ls: cannot access 'android/app/build/outputs/apk/debug/*.apk': No such file or directory
+> total 252
+> drwxr-xr-x  19 root root  4096 Nov 17 17:47 .
+> drwxr-xr-x   3 root root  4096 Nov 17 17:25 ..
+> drwxr-xr-x   3 root root  4096 Nov 17 17:26 .claude
+> drwxr-xr-x  10 root root  4096 Nov 17 17:48 .git
+> -rw-r--r--   1 root root   803 Nov 17 17:26 .gitattributes
+> -rw-r--r--   1 root root   653 Nov 17 17:26 .gitignore
+> -rw-r--r--   1 root root   872 Nov 17 17:26 .mcp.json.template
+> -rw-r--r--   1 root root 14078 Nov 17 17:26 CLAUDE.md
+> -rw-r--r--   1 root root  2982 Nov 17 17:26 README_FIRST.md
+> -rw-r--r--   1 root root  5134 Nov 17 17:26 REFERENCE_ORDER.md
+> -rw-r--r--   1 root root 23780 Nov 17 17:26 Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> -rw-r--r--   1 root root  2227 Nov 17 17:26 START_HERE_PASTE_TO_CLAUDE.md
+> -rw-r--r--   1 root root  3539 Nov 17 17:26 TOOL_SETUP_AND_VERIFICATION.md
+> -rw-r--r--   1 root root  3258 Nov 17 17:26 VISUAL_QA_CHECKLIST.md
+> drwxr-xr-x   6 root root  4096 Nov 17 17:48 android
+> drwxr-xr-x   4 root root  4096 Nov 17 17:26 assets
+> drwxr-xr-x   5 root root  4096 Nov 17 17:48 backups
+> drwxr-xr-x   2 root root  …[+1475 chars]
+
+### 🤖 Claude — 2026-11-17T17:49:02.893Z
+
+Gradle build failed; reading why.
+
+### 🤖 Claude — 2026-11-17T17:49:04.891Z
+
+> 🔧 **Bash** `{"command": "grep -n \"What went wrong\" -A8 /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk.log | head -20; git log --oneline -2; grep -i \"android\\|gradle\" backups/BOOTSTRAP_REPORT.md | head -5", "description": "Read Gradle failure reason"}`
+
+### 🧑 User — 2026-11-17T17:49:04.927Z
+
+> ↩︎ result: 114:* What went wrong:
+> 115-A problem occurred configuring root project 'android'.
+> 116-> Could not resolve all files for configuration ':classpath'.
+> 117-   > Could not resolve commons-io:commons-io:2.4.
+> 118-     Required by:
+> 119-         project : > com.android.tools.build:gradle:8.2.1
+> 120-         project : > com.android.tools.build:gradle:8.2.1 > androidx.databinding:databinding-compiler-common:8.2.1
+> 121-      > Could not resolve commons-io:commons-io:2.4.
+> 122-         > Could not parse POM https://repo.maven.apache.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.pom
+> 15f77b7a autosave: Rainbow 2026-11-17 17:48 UTC
+> f0b10a4c Screen 06 r3 step 4-5: final NEW captures (incl. Android size), fal clean-plate request prepared (NOT run), NOTES / STATUS / SHARED_CHANGES, proofs
+> | Game: 11 screens + code | OK | 11 approved screen references 01-11, source tree src/ (47 files), Android project android/, characters assets/models/*.glb | 0 |
+> | Android build tools | OK | Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug | 0 |
+
+### 🤖 Claude — 2026-11-17T17:49:06.429Z
+
+A dependency download failed (Maven POM could not be parsed — likely a network glitch). Retrying once.
+
+### 🤖 Claude — 2026-11-17T17:49:09.030Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && timeout 1500 ./gradlew assembleDebug > /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk2.log 2>&1; echo EXIT $?; grep -n \"What went wrong\" -A6 /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk2.log | head -10; ls app/build/outputs/apk/debug/ 2>/dev/null", "description": "Retry Gradle assemble (web assets already synced)", "timeout": 1600000}`
+
+### 🧑 User — 2026-11-17T17:49:44.218Z
+
+> ↩︎ result: Exit code 2
+> EXIT 1
+> 23:* What went wrong:
+> 24-Execution failed for task ':app:checkDebugAarMetadata'.
+> 25-> Could not resolve all files for configuration ':app:debugRuntimeClasspath'.
+> 26-   > Could not resolve org.jetbrains.kotlin:kotlin-stdlib:1.8.22.
+> 27-     Required by:
+> 28-         project :app > androidx.appcompat:appcompat:1.6.1
+> 29-         project :app > androidx.appcompat:appcompat:1.6.1 > androidx.core:core:1.12.0 > androidx.annotation:annotation-experimental:1.3.0
+
+### 🤖 Claude — 2026-11-17T17:49:47.326Z
+
+> 🔧 **Bash** `{"command": "grep -n \"kotlin-stdlib:1.8.22\" -A6 /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk2.log | sed -n 7,16p; curl -sS -o /dev/null -w \"%{http_code}\\n\" https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.8.22/kotlin-stdlib-1.8.22.pom", "description": "Check the failing dependency fetch"}`
+
+### 🧑 User — 2026-11-17T17:49:47.597Z
+
+> ↩︎ result: 32-            > Could not GET 'https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.8.22/kotlin-stdlib-1.8.22.pom'. Received status code 429 from server: Too Many Requests
+> 33:   > Could not resolve org.jetbrains.kotlin:kotlin-stdlib:1.8.22.
+> 34-     Required by:
+> 35-         project :app > androidx.core:core-splashscreen:1.0.1
+> 36:      > Could not resolve org.jetbrains.kotlin:kotlin-stdlib:1.8.22.
+> 37-         > Could not get resource 'https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.8.22/kotlin-stdlib-1.8.22.pom'.
+> 38-            > Could not GET 'https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.8.22/kotlin-stdlib-1.8.22.pom'. Received status code 429 from server: Too Many Requests
+> 39-   > Could not resolve org.jetbrains.kotlin:kotlin-bom:1.9.10.
+> 40-     Required by:
+> 41-         project :app > project :capacitor-android
+> 429
+
+### 🤖 Claude — 2026-11-17T17:49:50.105Z
+
+Maven Central is answering "429 Too Many Requests", so the APK can't be built right now. That's an outside rate limit, so I won't keep retrying. Recording this and sending the lead my status.
+
+### 🤖 Claude — 2026-11-17T17:49:56.306Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfor p,a,b in [('qa/match/06/NOTES.md',\"* Android APK `builds/rainbow-debug-06-2026-11-17-r3.apk` (`VITE_RAINBOW_Q05=\\\"match06=1\\\"`) — NOT phone-tested.\",\n\"* Android APK NOT built: `VITE_RAINBOW_Q05=\\\"match06=1\\\" npm run android:debug` failed twice (web build + sync OK; Gradle could not\\n  download kotlin-stdlib / commons-io POMs — repo.maven.apache.org answered HTTP 429 Too Many Requests). Re-run that command\\n  later and copy the APK to `builds/rainbow-debug-06-2026-11-17-r3.apk` (it will be NOT phone-tested).\"),\n('qa/match/06/STATUS.md',\"ts …[+899 chars]`
+
+### 🧑 User — 2026-11-17T17:49:59.065Z
+
+> ↩︎ result: b993f6d5918df3d90fa4afaeb6a67fb7d22981de	refs/heads/claude/rainbow-s06-match-c3
+> b993f6d5918df3d90fa4afaeb6a67fb7d22981de
+
+### 🤖 Claude — 2026-11-17T17:50:07.628Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCLi5xPVn25aRuxkVwK", "message": "Screen 06 r3: milestone 1 done. Branch claude/rainbow-s06-match-c3 @ b993f6d5918df3d90fa4afaeb6a67fb7d22981de (remote == HEAD). Started from 581129e9 (-c2 2570f3ac + autosave; -c2 has no newer commits).\nPictures: APPROVED references/06_crest_the_rinse_arch.png | BEFORE qa/match/06/06_BEFORE_current_game.png | NEW qa/match/06/06_NEW_match06.png (+ _android1080x1920.png). Moving frames: qa/match/06/motion/ (round 3, contact_sheet.png), qa/match/06/motion_r2/ (before the fixes).\nNumbers (share within 20 levels, ?match06=1): scenery  …[+1341 chars]`
+
+### 🧑 User — 2026-11-17T17:50:17.551Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:50:29.514Z
+
+Screen 06's first milestone is finished and pushed, and I've sent the lead my status. One deliverable is missing: the Android APK didn't build, because the Maven Central download server refused requests ("429 Too Many Requests") on both tries.
+
+**How close it looks now** (share of pixels within 20 colour levels of your approved picture):
+
+| | Before (current game) | New (`?match06=1`) |
+|---|---|---|
+| Scenery (no HUD, no Benny) | 4.1 % | **98.8 %** |
+| Whole frame | 5.0 % | **79.1 %** |
+
+The whole-frame number is lower mainly because the game's own HUD bar and title don't look like the painted ones, and the game's Benny is larger with a different hat. Benny belongs to the Benny specialist, so I didn't touch him.
+
+**Fixed this round:**
+- **Coins:** 6 of the painted coins in the trail into the tunnel had been placed as tiny coins on the near water, where nobody could reach them. They now sit on the far river, where they're painted. All coins can be collected again: the gameplay test passes 8/8 with exactly 91 coins / 2,240 with and without `match06=1` (before this fix it was 86 / 2,190).
+- **While riding**, three problems are gone:
+  - a white smear on the water just after the start;
+  - an upside-down copy of the tunnel on the water at 6 units forward and when steering;
+  - a mirrored diamond pattern on the water from 10 units forward.
+
+  Nothing comes between the view and Benny. Your approved view is pixel-identical to before, and `&m06v=2` shows the previous version.
+
+**Checks:** the normal game (no switch) is unchanged below the HUD bar, and so is Screen 08 under `?match08=1`; that comparison was against an older copy of the game whose HUD bar draws differently. `?ringa=26&nearfloor05=0` matches your protected Screen 05 picture exactly. The 07→08 drop test, the type check (tsc) and all 13 reference images are unchanged.
+
+**Still open:**
+- **APK:** re-run `VITE_RAINBOW_Q05="match06=1" npm run android:debug` once Maven allows it. Even then, nobody can test it on a phone from the cloud.
+- **fal clean plate:** the request is written in `qa/match/06/FAL_PLATE_REQUEST.md` but not sent. It's a paid job and needs your OK. It would replace the temporary fill where the HUD, Benny and coins were removed from the picture.
+- **Water while riding:** the water texture visibly repeats, and from about 10 units on the river is that texture rather than your painted design.
+- **Far coins:** the far trail coins are turned toward the approved view, so you see them at an angle from behind.
+- **Untested:** this switch together with the Screen 08 camera specialist's `?camclear=1`.
+
+Branch `claude/rainbow-s06-match-c3` @ `b993f6d5918df3d90fa4afaeb6a67fb7d22981de` (GitHub matches). Status: under review — only you approve. I've stopped and am waiting for the lead.
+
+Pictures, each full size:
+- APPROVED: `references/06_crest_the_rinse_arch.png`
+- BEFORE: `qa/match/06/06_BEFORE_current_game.png`
+- NEW: `qa/match/06/06_NEW_match06.png`
+- Riding frames, new: `qa/match/06/motion/contact_sheet.png`
+- Riding frames, previous version: `qa/match/06/motion_r2/contact_sheet.png`
+
