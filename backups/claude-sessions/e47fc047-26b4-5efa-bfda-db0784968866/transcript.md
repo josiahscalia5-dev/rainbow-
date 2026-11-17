@@ -6091,3 +6091,93 @@ The audit and the shared switches are on GitHub (`54ec72f`). Before starting the
 > output_file: /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/a1b82d141150e0ba7.output
 > Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
 
+### 🤖 Claude — 2026-11-17T11:00:54.948Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/match-probe.mjs", "content": "#!/usr/bin/env node\n// Any screen (`?matchNN=1` generic projector, src/vfx/matchProj.ts): read-only probe of the REAL game at the screen's\n// locked checkpoint, with its match switch on (so the matched camera framing is used).\n//   node scripts/match-probe.mjs --id=07 [--q='match07=1'] [--out=qa/match/07/probe]\n// Writes OUT/camera.json (view, projection, view-projection, eye, size), OUT/depth.f32 (W×H float32, top row first:\n// the view depth (clip w) of the first STATIC surface per pixel, 0 = nothing; Benny, coins, …[+6242 chars]`
+
+### 🧑 User — 2026-11-17T11:00:55.016Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/match-probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T11:01:00.254Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && node scripts/match-probe.mjs --id=07 --out=$S/probe07 2>&1 | tail -2 && python3 -I - <<EOF\nimport json, numpy as np\nfrom collections import Counter\nS='$S'\nobjs=json.load(open(S+'/probe07/objects.json'))\nc=Counter((o['chain'].split('<')[1] if '<' in o['chain'] else '-', o['type']) for o in objs if o['visible'])\nfor k,v in sorted(c.items(), key=lambda x:-x[1])[:20]: print(v, k)\nprint([ (o['name'],o['chain'],o['type'],o['count']) for o in objs if o['visible'] and ('foam' in o['chain'].lower( …[+458 chars]`
+
+### 🧑 User — 2026-11-17T11:01:16.023Z
+
+> ↩︎ result: probe 07 size [ 864, 1536 ] eye 11.26,-44.19,-192.84 objects 298
+> 114 ('laundry_room', 'Mesh')
+> 33 ('zone_tubes', 'Mesh')
+> 23 ('zone_chamber', 'Mesh')
+> 22 ('zone_basin', 'Mesh')
+> 20 ('Group', 'Mesh')
+> 11 ('zone_drumA', 'Mesh')
+> 8 ('foam_banks', 'Mesh')
+> 6 ('Mesh', 'Mesh')
+> 6 ('water_puddles', 'Mesh')
+> 4 ('body', 'Mesh')
+> 3 ('blue_sock', 'Mesh')
+> 3 ('eyeL', 'Mesh')
+> 3 ('eyeR', 'Mesh')
+> 3 ('hat', 'Mesh')
+> 2 ('water_system', 'Mesh')
+> 2 ('armL', 'Mesh')
+> 2 ('armR', 'Mesh')
+> 2 ('footL', 'Mesh')
+> 2 ('footR', 'Mesh')
+> 1 ('pink_star_shirt', 'Mesh')
+> [('water_ribbon', 'water_ribbon<water_system<Scene', 'Mesh', None), ('water_drumA_surface', 'water_drumA_surface<water_drumA<water_system<Scene', 'Mesh', None), ('', 'Mesh<water_puddles<water_system<Scene', 'Mesh', None), ('', 'Mesh<water_puddles<water_system<Scene', 'Mesh', None), ('', 'Mesh<water_puddles<water_system<Scene', 'Mesh', None), ('', 'Mesh<water_puddles<water_system<Scene', 'Mesh', None), ('', 'Mesh<water_puddles<water_system<Scene', 'Mesh', None), ('', 'Mesh<water_puddles<water_system<Scene', 'Mesh', None), ('foam_berm', 'foam_berm<foam_banks<water_system<Scene', 'Mesh', None), ('', 'Mesh<foam_banks<water_system<Scene', 'Mesh', 420), ('', 'Mesh<foam_b …[+683 chars]
+
+### 🤖 Claude — 2026-11-17T11:01:53.094Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/match/bake.py", "content": "\"\"\"Any screen (`?matchNN=1`, src/vfx/matchProj.ts): bake the APPROVED picture into the generic projector's textures.\n  assets/textures/match/NN_bg.png     the approved picture with what the GAME draws itself removed (inpainted): Benny +\n                                      splash, the coins, the HUD bar + title banner — otherwise they would be painted onto\n                                      the water / walls behind them and slide around when Benny moves\n  assets/textures/match/NN_depth.png  per pixel the view depth …[+4076 chars]`
+
+### 🧑 User — 2026-11-17T11:01:53.159Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/match/bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T11:01:56.893Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I tools/match/bake.py 07 $S/probe07 --out=$S/bake07 --debug=$S/bake07 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('$S/bake07/07_removed_red.png'); b=Image.open('$S/bake07/07_bg.png'); c=Image.open('$S/probe07/../m1/m07/07.png') if False else Image.open('$S/m1/m07/07.png')\nout=Image.new('RGB',(3*324+20,576),(255,255,255))\nfor k,im in enumerate((a,b,c)): out.paste(im.convert('RGB').resize((324,576),Image.LANCZOS),(k*334,0))\nout.save('$S/bake07_view.png')\"", "description": …[+69 chars]`
+
+### 🤖 Claude — 2026-11-17T11:01:58.046Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/bake07_view.png"}`
+
+### 🧑 User — 2026-11-17T11:02:01.423Z
+
+> ↩︎ result: {"id": "07", "approved": "references/07_dive_the_washer_tube.png", "size": [864, 1536], "far": 70.0, "eye": [11.257970030683198, -44.18530166632836, -192.8394744678947], "share_removed": {"dynamic": 0.1431, "hud": 0.105, "coins": 0.0162, "coin_blobs": 10}, "note": "tools/match/bake.py: approved picture minus what the game draws itself (inpainted) + checkpoint depth"}
+
+### 🧑 User — 2026-11-17T11:02:01.449Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T11:02:28.431Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image, ImageDraw\nS='$S'\nap=np.asarray(Image.open('references/07_dive_the_washer_tube.png').convert('RGB')).astype(int)\nR,G,B=ap[...,0],ap[...,1],ap[...,2]\nhat=(B>180)&(R>70)&(R<190)&(G<120)            # purple knit\nfur=(R>215)&(G>70)&(G<170)&(B>140)&(B<235)&(R-G>70)   # pink fur\nyy,xx=np.mgrid[0:1536,0:864]\nbox=(xx>120)&(xx<740)&(yy>650)&(yy<1300)\nm=((hat|fur)&box).astype(np.uint8)\nm=cv2.morphologyEx(m,cv2.MORPH_OPEN,np.ones(( …[+1072 chars]`
+
+### 🧑 User — 2026-11-17T11:02:28.894Z
+
+> ↩︎ result: approved Benny bbox x 268..585 y 985..1189 (w 317 h 204)
+> game Benny bbox (match07 camera) x 162..424 y 906..1204 (w 262 h 298)
+
+### 🤖 Claude — 2026-11-17T11:02:29.537Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/benny07_boxes.png"}`
+
+### 🧑 User — 2026-11-17T11:02:29.560Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T11:03:03.099Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/match-cam-fit.mjs", "content": "#!/usr/bin/env node\n// Any screen: search the checkpoint camera framing (STAGE_CAM override, nothing in the source changes) so the game's\n// Benny lands on the approved picture's Benny: bounding-box IoU of the REAL rendered Benny (Benny-only mask) vs the\n// target box measured on the approved picture. Coarse grid, then a local refinement round.\n//   node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 [--q=match07=1]\n//        [--grid='{\"back\":[5.5,6.5,7.5],\"up\":[3.2,4,4.8],\"lookUp\":[-2,-0.5,1],\" …[+4693 chars]`
+
+### 🧑 User — 2026-11-17T11:03:03.183Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/match-cam-fit.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T11:03:06.002Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && time node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 --q=match07=1 --out=$S/fit07 --grid='{\"back\":[4.5,5.5,6.5,7.5],\"up\":[2.6,3.4,4.2,5.0],\"lookUp\":[-2.5,-1,0.5],\"ahead\":[12,18,24],\"latFollow\":[0.6,0.9]}' 2>&1 | tail -6", "description": "Fit Screen 07 camera to Benny's approved box", "timeout": 900000}`
+

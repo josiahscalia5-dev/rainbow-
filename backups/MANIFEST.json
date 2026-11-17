@@ -508,8 +508,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9220,
-   "sha256": "bae028dca58e3235019fbccbc62fa3dbca6d8aae2232e40e3911bc8cf23f230a"
+   "bytes": 9233,
+   "sha256": "7477f84243bbd83d5302720cfe3f1c35c3fc013617b7eb29f6e9c4ab7cbd1c75"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7277,9 +7277,19 @@
    "sha256": "67b5cb7270b3c5860146edc38b2ef454d05ba3c76100addd77f34316e56f7e61"
   },
   {
+   "path": "scripts/match-cam-fit.mjs",
+   "bytes": 5123,
+   "sha256": "e4202284e02dc8f03a90795d75e0655b89b611b5160b8c18048a99c830239455"
+  },
+  {
    "path": "scripts/match-cam-try.mjs",
    "bytes": 2608,
    "sha256": "680761d9ee4e67f51e74482ca9b5afeceee6560f5f573c6ff8c0fab2cafcd358"
+  },
+  {
+   "path": "scripts/match-probe.mjs",
+   "bytes": 6662,
+   "sha256": "8954e400a84c114bc3426679257b91ec7fa0bceb15b886dc821e1af4c243a817"
   },
   {
    "path": "scripts/perf05.mjs",
@@ -7675,6 +7685,11 @@
    "path": "tools/marble05/splatlib.py",
    "bytes": 5026,
    "sha256": "8edae45854b1842e90865bfb84d4598e5aa35f08f4330d343c188e0213e129fe"
+  },
+  {
+   "path": "tools/match/bake.py",
+   "bytes": 4468,
+   "sha256": "ebeb633f96663ea6ec10530a103fcea80e3cf8bc5b791cd320761e7e6e0498de"
   },
   {
    "path": "tools/model-lab.html",
