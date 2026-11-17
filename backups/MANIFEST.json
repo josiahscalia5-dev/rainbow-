@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11652,
-   "sha256": "3f75fafc2200031b3dae5c0114cc18ba31085140c03d86a0756fc93f8f95bc6e"
+   "sha256": "6b706e01e34ed140d675328b4d1ac4313e726d6e1f56a4d20d6284dec5ceeb25"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7477,6 +7477,16 @@
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
   },
   {
+   "path": "qa/screen_videos/2026-11-17/08_match08_benny_r5b_ride.json",
+   "bytes": 11578,
+   "sha256": "034f09a8d4c02592bbd74d1692f2a24a0c7ef082ed9a6ea25b2907ed9ed0d46f"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/08_match08_benny_r5b_ride.mp4",
+   "bytes": 3206534,
+   "sha256": "376907ddad7afec51e3a4342ad7fb6538de0328b74f37167c8b71469e1f83dd1"
+  },
+  {
    "path": "qa/worldlabs/05/05_env_mask.png",
    "bytes": 6175,
    "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
@@ -8530,6 +8540,56 @@
    "path": "tools/imageblaster/render08.mjs",
    "bytes": 1924,
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
+  },
+  {
+   "path": "tools/lead_r4/coins08_probe.mjs",
+   "bytes": 2482,
+   "sha256": "6a7ba947875261d2f9e6209772344ac9bd1e2a59034b42369992ddf040463b5e"
+  },
+  {
+   "path": "tools/lead_r4/coins08_probe_full.json",
+   "bytes": 4519,
+   "sha256": "0c1f5d17419007248a6578410cc1b01ad41190572c69a3e5c9316f8aa191eac5"
+  },
+  {
+   "path": "tools/lead_r4/coins08_probe_full.mjs",
+   "bytes": 2456,
+   "sha256": "84d59c2a0c7fb88753a666aea93f74038a8d1ca242dd4115815bee1a95a4df2d"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_diag.json",
+   "bytes": 1397,
+   "sha256": "f6be200c3394d6577cf3de8376befae6a8b6089a63c28e4ecf3f426d186e6152"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_diag.mjs",
+   "bytes": 3466,
+   "sha256": "c4727ce0077c1def798278b92d1587d88b545487681404c2ff29c899b8fa7384"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_e2e.json",
+   "bytes": 1454,
+   "sha256": "30b8dc93c778ef5f94e6032deb598a8851061756c58f5ab2a11a0307c7f5cbb5"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_e2e_probe.mjs",
+   "bytes": 3672,
+   "sha256": "32d25d0f99b3e8d7f594f7f41831061370d86ccd9d135439ac34eba9e767ecd5"
+  },
+  {
+   "path": "tools/lead_r4/gameplay_coins08px.json",
+   "bytes": 14666,
+   "sha256": "e7d06ba84694483b2dc25392468c5b16d31707546c8d30da3afed40282c92e58"
+  },
+  {
+   "path": "tools/lead_r4/pixel_compare.txt",
+   "bytes": 546,
+   "sha256": "3518846d5b614432e269163ddf3e512a1c6fcbaf2bfb3d41ba971e28a1be5ed6"
+  },
+  {
+   "path": "tools/lead_r4/rec_clip.mjs",
+   "bytes": 2891,
+   "sha256": "a29e9a8e88c67f5cd84a5ce385d6a8c54646ee7f3e5444577a2bd9064f0ffe11"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
