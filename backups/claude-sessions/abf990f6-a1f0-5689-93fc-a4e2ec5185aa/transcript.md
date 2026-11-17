@@ -1114,3 +1114,150 @@ Coins now rest on the water while riding, and the splash rides along at Benny's 
 
 > 🔧 **Bash** `{"command": "(VITE_RAINBOW_Q05=\"match04=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk.log 2>&1; echo exit $?) ; tail -3 /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk.log; find android -name \"*.apk\" -newer src/gameplay/coins.ts | head", "description": "Build the debug APK with match04 switch", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-17T17:53:02.721Z
+
+> ↩︎ result: exit 1
+> > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 2m 4s
+
+### 🤖 Claude — 2026-11-17T17:53:05.044Z
+
+> 🔧 **Bash** `{"command": "grep -iE \"error|what went wrong\" -A4 /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk.log | head -30", "description": "Show the build error"}`
+
+### 🧑 User — 2026-11-17T17:53:05.093Z
+
+> ↩︎ result: - Improved suggestions to resolve errors in console output
+>  - Reduced sync memory consumption
+> 
+> For more details see https://docs.gradle.org/8.2.1/release-notes.html
+> 
+> --
+> * What went wrong:
+> A problem occurred configuring root project 'android'.
+> > Could not resolve all files for configuration ':classpath'.
+>    > Could not resolve commons-io:commons-io:2.4.
+>      Required by:
+> --
+>    > Could not resolve com.google.errorprone:error_prone_annotations:2.11.0.
+>      Required by:
+>          project : > com.android.tools.build:gradle:8.2.1 > com.android.tools.build:bundletool:1.15.2
+>       > Could not resolve com.google.errorprone:error_prone_annotations:2.11.0.
+>          > Could not get resource 'https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.11.0/error_prone_annotations-2.11.0.pom'.
+>             > Could not GET 'https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.11.0/error_prone_annotations-2.11.0.pom'. Received status code 429 from server: Too Many Requests
+>    > Could not resolve org.jetbrains.kotlin:kotlin-stdlib:1.9.0.
+>      Required by:
+>          project : > com.android.tools.build:gradle:8.2.1 > com.android.tools.build.jetifi …[+886 chars]
+
+### 🤖 Claude — 2026-11-17T17:53:07.942Z
+
+Maven Central refused the download (HTTP 429, too many requests; seven sessions share this network). Retrying once with Gradle's local cache.
+
+### 🤖 Claude — 2026-11-17T17:53:10.645Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && (./gradlew assembleDebug --offline > /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk2.log 2>&1; echo exit $?); tail -3 /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk2.log; grep -m3 \"Could not\\|No cached\" /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk2.log", "description": "Retry Gradle build offline from cache", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T17:53:11.443Z
+
+> ↩︎ result: exit 1
+> > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 584ms
+> > Could not resolve all files for configuration ':classpath'.
+>    > Could not resolve commons-io:commons-io:2.4.
+>       > No cached version of commons-io:commons-io:2.4 available for offline mode.
+
+### 🤖 Claude — 2026-11-17T17:53:15.722Z
+
+> 🔧 **Bash** `{"command": "(./gradlew assembleDebug > /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk3.log 2>&1; echo exit $?); tail -2 /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk3.log; grep -c \"429\" /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk3.log; find . -name \"*.apk\" -mmin -30", "description": "Retry the Gradle build online once", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T17:54:25.079Z
+
+> ↩︎ result: exit 0
+> BUILD SUCCESSFUL in 1m 9s
+> 82 actionable tasks: 82 executed
+> 0
+> ./app/build/outputs/apk/debug/app-debug.apk
+
+### 🤖 Claude — 2026-11-17T17:54:28.630Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && grep -l \"match04=1\" -r android/app/src/main/assets/public/assets/*.js | head -2; ls android/app/src/main/assets/public/assets | grep -c splash04; cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-04-2026-11-17-r3.apk && ls -la builds/rainbow-debug-04-2026-11-17-r3.apk && git check-attr filter builds/rainbow-debug-04-2026-11-17-r3.apk; git status --short | head", "description": "Verify APK contents and copy to builds"}`
+
+### 🧑 User — 2026-11-17T17:54:28.759Z
+
+> ↩︎ result: android/app/src/main/assets/public/assets/main-BpXTWGes.js
+> 2
+> -rw-r--r-- 1 root root 29876569 Nov 17 17:54 builds/rainbow-debug-04-2026-11-17-r3.apk
+> builds/rainbow-debug-04-2026-11-17-r3.apk: filter: lfs
+> ?? builds/rainbow-debug-04-2026-11-17-r3.apk
+
+### 🤖 Claude — 2026-11-17T17:54:29.699Z
+
+Now STATUS.md with the final picture paths, then commit and push.
+
+### 🤖 Claude — 2026-11-17T17:54:45.395Z
+
+> 🔧 **Bash** `{"command": "cp qa/match/04/04_NEW_m3_splash_864x1536.png qa/match/04/04_NEW_m3_864x1536.png && cp qa/match/04/04_NEW_m2_fal04_864x1536.png qa/match/04/04_BEFORE_m2_864x1536.png && cat > qa/match/04/STATUS.md <<'EOF'\n# Screen 04 — STATUS\n\n* **Assigned screen:** 04 · Through the Five Arrows (`?match04=1`)\n* **Assigned specialist:** Screen 04 workstream session (Claude Code, account 3, session_01Q46SCGVVo94Weug9VM7yDG); lead = session_01Q46SCLi5xPVn25aRuxkVwK\n* **Working branch:** `claude/rainbow-s04-match-c3` — started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave; lin …[+3267 chars]`
+
+### 🧑 User — 2026-11-17T17:54:50.961Z
+
+> ↩︎ result: 13
+> Uploading LFS objects: 100% (1/1), 30 MB | 0 B/s, done.
+> a4644789a73801a7b6735ed3fbb57573f0192141	refs/heads/claude/rainbow-s04-match-c3
+> a4644789a73801a7b6735ed3fbb57573f0192141
+> c84a941aae * builds/rainbow-debug-04-2026-11-17-r3.apk
+> AUTOSAVE OK | branch claude/rainbow-s04-match-c3 | scheduler daemon | last verified backup 2026-11-17T17:52:05+00:00 (2.8 min ago) | local a464478 remote a464478 (match) | uncommitted 0
+> 255ec5e6ed74935a349fe7e3acdf53a801b132ab	refs/heads/claude/rainbow-s04-match-c2
+
+### 🤖 Claude — 2026-11-17T17:54:52.337Z
+
+The `-c2` branch has no newer commits, so nothing needs reporting there. Sending the lead one status message.
+
+### 🤖 Claude — 2026-11-17T17:55:00.881Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCLi5xPVn25aRuxkVwK", "message": "Screen 04 MILESTONE 3 done. Branch claude/rainbow-s04-match-c3 @ a4644789a73801a7b6735ed3fbb57573f0192141 (remote == HEAD, autosave OK). Started from 4d1f5b25 (= -c2 255ec5e6 + transcript autosave); -c2 has no newer commits.\nAll five steps are on by default under ?match04=1, each with its own off switch:\n1) fal04 default verified: 0 px vs the M2 &fal04=1 picture.\n2) River while riding = the painted water around Benny (pink swirl ribbons, foam banks, cyan) + glowing arrows; no brown coin marks (&river04=0 turns it off).\n3) Sharp …[+1477 chars]`
+
+### 🧑 User — 2026-11-17T17:55:09.710Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:55:19.070Z
+
+Milestone 3 for Screen 04 is done and pushed. All five steps are on by default under `?match04=1`, and each can be switched off for comparison. I've sent the lead one status message and am now waiting.
+
+**What changed in the picture (nothing here is approved; only you approve):**
+1. **Clean background plate is now the default.** The one fal edit from round 2 (no new paid job) now shows by default under `?match04=1`. It matches the round-2 picture exactly.
+2. **River while riding.** Around Benny the river now shows your painted pink swirl ribbons, foam banks and the glowing arrows. Before, it turned almost plain cyan. The plate has no brown marks where the coins were removed.
+3. **Sharper far rings.** At 15–20 u down the tunnel, the gold rings are crisp all the way instead of a soft glow. Measured sharpness of the tunnel area rose from about 17 to 24–26.
+4. **Splash under Benny.** The white splash around his base is cut from your approved picture and rides with him.
+5. **Coins on the water.** Your coins can't sit on the water at their painted spots: the painting places them 7–55 px higher than any water Benny can reach. So in the approved view they stay where you painted them, and once the ride starts they settle onto the water. Collecting works as before.
+
+**Numbers for the approved view:**
+
+| | Before (milestone 2) | Now |
+|---|---|---|
+| Whole frame within 20 levels | 81.3 % | 81.8 % |
+| Scenery | 98.1 % | 98.2 % |
+| Benny area | 21.1 % | 25.3 % |
+
+**Checks:**
+- The default game, Screen 05, Screen 08 (`?match08=1`) and your protected baseline are all 0 px different.
+- The gameplay test passed 8/8 with and without the switch, with all 91 coins collected (2,240 total).
+- Your 13 approved images are untouched.
+
+**Still not right:**
+- At 15–20 u, a hard straight edge shows near the camera where the water meets the tunnel wall.
+- The water doesn't flow yet.
+- The swirl pattern repeats every ~4.7 u; the arrows repeat at a slightly different distance, which makes this less obvious.
+- Benny's own look belongs to the Screen 08 Benny specialist.
+
+The debug APK is built but not phone-tested, because there's no device in the cloud.
+
+Everything is in `qa/match/04/` on branch `claude/rainbow-s04-match-c3`, latest commit `a4644789`:
+- **Approved picture:** `04_APPROVED.png`
+- **Before (milestone 2):** `04_BEFORE_m2_864x1536.png`
+- **Now:** `04_NEW_m3_864x1536.png`
+- **Riding frames:** before in `motion_m2/NEW_fal04/`, now in `motion_m3/NEW/`
+- **Status:** `STATUS.md`
+- **APK:** `builds/rainbow-debug-04-2026-11-17-r3.apk`
+

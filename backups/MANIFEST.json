@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11053,
-   "sha256": "69aab8810419f1c72a4b39b64e1f6140d37cd39cec8c47aaae08aa69c0cc7bf3"
+   "sha256": "882f5382e292d14adddfdc5ef9198d6054432218c48cee85e91345980755890a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -760,6 +760,11 @@
    "path": "builds/rainbow-debug-04-2026-11-17-r2.apk",
    "bytes": 26249557,
    "sha256": "445d25a57004922b7152d4089eabae4a29fe0d1e096feb9d438e73cf592fde88"
+  },
+  {
+   "path": "builds/rainbow-debug-04-2026-11-17-r3.apk",
+   "bytes": 29876569,
+   "sha256": "c84a941aaedc511b1bbdd226894778cf17d8899c4d56fbb6b3c18e3f5c4fd50b"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1432,6 +1437,11 @@
    "sha256": "69a7228ada62930f4db2344580774936da1f8e240b439ed8670e971697219914"
   },
   {
+   "path": "qa/match/04/04_BEFORE_m2_864x1536.png",
+   "bytes": 2063482,
+   "sha256": "317b578179c7baaf89ab215d904e9e85596eecc9b72f4a9fea199459a1b6e13b"
+  },
+  {
    "path": "qa/match/04/04_NEW_m2_864x1536.png",
    "bytes": 2068892,
    "sha256": "22cc6476e071e381fa1d7caa1e21639a3e3ee310fe775e15396ecdd98c808341"
@@ -1440,6 +1450,11 @@
    "path": "qa/match/04/04_NEW_m2_fal04_864x1536.png",
    "bytes": 2063482,
    "sha256": "317b578179c7baaf89ab215d904e9e85596eecc9b72f4a9fea199459a1b6e13b"
+  },
+  {
+   "path": "qa/match/04/04_NEW_m3_864x1536.png",
+   "bytes": 2066781,
+   "sha256": "a60203b10b6217294562ade36ba00924f292b4a15c82823ea7788e7893a1d0a6"
   },
   {
    "path": "qa/match/04/04_NEW_m3_splash_864x1536.png",
@@ -1478,8 +1493,8 @@
   },
   {
    "path": "qa/match/04/STATUS.md",
-   "bytes": 2723,
-   "sha256": "4d67ed7613831bbc0cb14e9092bee63d65fdde9cfd0e343adac5c006de8dbb6a"
+   "bytes": 2890,
+   "sha256": "824d12b83ba0fa9e16f0093c606b681f50e60f4daa54f367c3d0981110926564"
   },
   {
    "path": "qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png",
