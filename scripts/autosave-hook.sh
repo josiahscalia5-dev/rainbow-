@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Claude Code hook entry point:  autosave-hook.sh <SessionStart|PreCompact|Stop|SessionEnd>
-# SessionStart -> scripts/claude-bootstrap.sh --hook: merges newer saved work, restores Git LFS, re-arms the
+# SessionStart -> scripts/claude-bootstrap.sh --hook: lists newer branches (NEVER merges), restores Git LFS, re-arms the
 #   five-minute autosave, prints a short recovery summary for Claude and runs the full bootstrap in the background.
 # Stop runs in the background so it never delays a turn (and re-arms the scheduler if it died);
 # PreCompact/SessionEnd run one verified autosave inline (bounded).

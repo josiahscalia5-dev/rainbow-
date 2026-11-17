@@ -1106,3 +1106,62 @@ I'll start by inspecting the checkout and git state before touching anything.
 > 
 > .playwright-mcp/
 
+### 🤖 Claude — 2026-11-17T00:45:15.140Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'PYEOF'\nimport re, pathlib\np = pathlib.Path('scripts/claude-bootstrap.sh'); s = p.read_text()\ndef rep(old, new, count=1):\n    global s\n    assert s.count(old) >= 1, f\"not found: {old[:70]!r}\"\n    assert count != 1 or s.count(old) == 1, f\"not unique ({s.count(old)}): {old[:70]!r}\"\n    s = s.replace(old, new)\n\n# ---- header\nrep('''#   bash scripts/claude-bootstrap.sh            full: resume newest work, LFS, refs, agents, Marble, tools, tests,\n#                                               five-minute autosave, report (backups/BOOTSTRAP_REPORT.md)\n#   …[+6904 chars]`
+
+### 🧑 User — 2026-11-17T00:45:15.230Z
+
+> ↩︎ result: ok
+> SYNTAX_OK
+
+### 🤖 Claude — 2026-11-17T00:46:05.635Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'PYEOF'\nimport pathlib\n# ---------- stable copy of the Blender verification script\nsrc = pathlib.Path('qa/tools_check/blender_transfer_s018/verify_blender.py').read_text()\nhead_old = src[:src.index('import bpy, sys, os, json, time, hashlib, subprocess')]\nnew_head = '''\"\"\"Rainbow - Blender verification, run at every session start by scripts/claude-bootstrap.sh (step \"Blender render +\nGLB check\") and by hand:\n    blender -b --factory-startup --python scripts/verify-blender.py -- <out_dir>\nChecks, all really executed: bpy, the three render engines (Workben …[+9423 chars]`
+
+### 🧑 User — 2026-11-17T00:46:05.729Z
+
+> ↩︎ result: ok
+> SYNTAX_OK
+> #!/usr/bin/env bash
+> # Rainbow (josiahscalia5-dev/rainbow-) cloud-environment setup script: paste it into claude.ai ->
+> # Claude Code -> environment settings -> Setup script. It runs as root before Claude starts, from the folder
+> # that holds the repository checkout, and installs TOOLS only (npm packages, Python QA libraries, Blender 5.3.0,
+> # Android SDK 34, World Labs plugin), skipping anything already installed. It never touches git: the
+> # repository's SessionStart hook (scripts/claude-bootstrap.sh --hook) restores Git LFS, lists newer branches (never merges) and
+> # re-arms the five-minute autosave. Every step is non-fatal so a session always starts.
+> if [ -f rainbow-/scripts/claude-bootstrap.sh ]; then
+> #!/usr/bin/env bash
+> # Claude Code hook entry point:  autosave-hook.sh <SessionStart|PreCompact|Stop|SessionEnd>
+> # SessionStart -> scripts/claude-bootstrap.sh --hook: merges newer saved work, restores Git LFS, re-arms the
+> #   five-minute autosave, prints a short recovery summary for Claude and runs the full bootstrap in the background.
+> # Stop runs in the background so it never delays a turn (and re-arms the scheduler if it died);
+> # PreCompact/SessionEnd run one verified aut …[+208 chars]
+
+### 🤖 Claude — 2026-11-17T00:46:27.881Z
+
+> 🔧 **Bash** `{"command": "grep -n \"commit_trailer\\|\\\"branch\\\"\\|cfg\\[.branch.\\]\\|protected_branches\\|session_branch_patterns\\|CLAUDE_CODE_REMOTE_SESSION_ID\" scripts/rainbow-autosave.py scripts/autosave-status.py | head -30", "description": "Check how the autosave uses the branch, trailer and protection settings"}`
+
+### 🧑 User — 2026-11-17T00:46:27.908Z
+
+> ↩︎ result: scripts/rainbow-autosave.py:48:    t = CFG.get("commit_trailer", "Co-Authored-By: Claude <noreply@anthropic.com>")
+> scripts/rainbow-autosave.py:49:    sid = os.environ.get("CLAUDE_CODE_REMOTE_SESSION_ID", "")
+> scripts/rainbow-autosave.py:252:           "pushed_verified": False, "branch": CFG["branch"]}
+> scripts/rainbow-autosave.py:269:        row["branch"] = branch
+> scripts/rainbow-autosave.py:270:        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+> scripts/rainbow-autosave.py:272:        if branch != CFG["branch"]:
+> scripts/rainbow-autosave.py:275:            pats = CFG.get("session_branch_patterns", [])
+> scripts/rainbow-autosave.py:278:                                   f"session_branch_patterns {pats}; refusing to push")
+> scripts/rainbow-autosave.py:377:        st["branch"] = row.get("branch", CFG["branch"])
+> scripts/autosave-status.py:38:    if branch in CFG.get("protected_branches", []):
+> scripts/autosave-status.py:40:    elif branch != CFG["branch"] and not any(fnmatch.fnmatchcase(branch, p) for p in CFG.get("session_branch_patterns", [])):
+> scripts/autosave-status.py:66:        "time_utc": now.isoformat(), "branch": branch, "sch …[+139 chars]
+
+### 🤖 Claude — 2026-11-17T00:46:30.485Z
+
+Bootstrap edits are in; now pointing the autosave at the new working branch, protecting `ccr-694bda6a-x58ntq`, then running the full no-merge bootstrap.
+
+### 🤖 Claude — 2026-11-17T00:46:43.255Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'PYEOF'\nimport json, os, pathlib\np = pathlib.Path('backups/autosave.config.json'); c = json.loads(p.read_text())\nc['branch'] = 'claude/rainbow-restore-env-setup-bxn85h'\nc['source_branch'] = 'ccr-694bda6a-x58ntq'\nc['auto_merge_on_session_start'] = False\nc['auto_merge_note'] = (\"User's order 2026-11-17: the SessionStart hook and scripts/claude-bootstrap.sh never merge a branch \"\n                        \"on their own; they fetch and LIST newer ccr-*/claude/* branches. Merging happens only on the user's \"\n                        \"request: bash scripts/claud …[+2228 chars]`
+

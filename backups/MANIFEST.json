@@ -584,7 +584,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11179,
-   "sha256": "3061e1902049cb113e164d76d312005a5bbc1795e68b1e23b56eaf6cd21387f7"
+   "sha256": "f0cad18f1c1d4b50847d4cc19393fcce7cd70e86945d2ec19904d9599ef55b05"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -618,8 +618,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 7464,
-   "sha256": "967d40b1d4fcae7fc560f85f54cdbc8610d9cf85aebfd73795a090bf0e49887f"
+   "bytes": 8645,
+   "sha256": "89d44e77c132b702545df3aff6568cd65c71aa3dc37b65c5f909bbb632893ef8"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -8308,8 +8308,8 @@
   },
   {
    "path": "scripts/autosave-hook.sh",
-   "bytes": 1694,
-   "sha256": "1c478330207f5e7af2d231bc42f6c3902565831427617ff8db71c67c54bf196c"
+   "bytes": 1706,
+   "sha256": "7e1df609e9205e901016b25c750fac66eeb38d596fa8b4cca095ecece38ea1df"
   },
   {
    "path": "scripts/autosave-status.py",
@@ -8338,13 +8338,13 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 30119,
-   "sha256": "ec3d99fa255dab72b6232dc426d480328957b6cc94634bb03ba5b9a75ef086c7"
+   "bytes": 37281,
+   "sha256": "acda6601eb89cbc5df73a411c1caeccc91e1baed1ac615ad0efe2e45a42bcad1"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
-   "bytes": 1184,
-   "sha256": "02591d39de0e587850cc839266267b7c58bfcf01257f58190e6b8f46a0cd9dd1"
+   "bytes": 1202,
+   "sha256": "ccc638d30a706d47ef64d496913de2b50f6ea325a71f2016d4a4bd93539b96ca"
   },
   {
    "path": "scripts/compare.py",
@@ -8480,6 +8480,11 @@
    "path": "scripts/verify-assets.py",
    "bytes": 16956,
    "sha256": "71ec20b38287d557c61b2c5d8eff7143955ec7a21feb7fec77382e588445f47f"
+  },
+  {
+   "path": "scripts/verify-blender.py",
+   "bytes": 8091,
+   "sha256": "86f857483c3ca2d8ed715bfdb266fa8e208389d38d857bbce06ef9dd267b5eb6"
   },
   {
    "path": "scripts/water-lab.mjs",

@@ -2,25 +2,30 @@
 # RAINBOW — one-command recovery + environment bootstrap for a new Claude account or cloud session.
 # Safe to run any number of times: every step checks first and only installs / merges what is missing.
 #
-#   bash scripts/claude-bootstrap.sh            full: resume newest work, LFS, refs, agents, Marble, tools, tests,
-#                                               five-minute autosave, report (backups/BOOTSTRAP_REPORT.md)
+#   bash scripts/claude-bootstrap.sh            full: fetch + REPORT newer branches (no merge), LFS, refs, agents, Marble,
+#                                               tools, Blender render check, MCP, tests, five-minute autosave, report
+#                                               (backups/BOOTSTRAP_REPORT.md)
+#   bash scripts/claude-bootstrap.sh --resume   the same, and MERGE every newer ccr-*/claude/* branch. ONLY when the user
+#                                               asks for it: since 2026-11-17 nothing is merged automatically (user's
+#                                               order) - not by the SessionStart hook, not by a plain run
 #   bash scripts/claude-bootstrap.sh --check    report only: no installs, no merges (fetch is still done)
 #   bash scripts/claude-bootstrap.sh --full     full + browser gameplay test + Screen 05 BEFORE pixel check
 #                                               + fresh download of every LFS object from GitHub (SHA-256)
 #   bash scripts/claude-bootstrap.sh --status   last report + autosave verdict (instant)
-#   options: --no-tools (skip Blender/Android/pip/plugin installs)  --skip-resume (no fetch/merge)
+#   options: --no-tools (skip Blender/Android/pip/plugin installs)  --skip-resume (default now: never merge)
 #   internal: --hook (SessionStart hook)  --background (rest of the hook run)  --env-setup (cloud setup script)
 #
 # New account, any start branch (the GitHub default branch is an OLD version):
 #   git fetch origin <newest-branch> && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh
 #
-# Safety: never force-pushes, resets, rebases, deletes files or rewrites history. Merges are normal merge commits;
+# Safety: never force-pushes, resets, rebases, deletes files or rewrites history. NO automatic merges: newer branches
+# are only listed (what they contain, how to merge). With --resume, merges are normal merge commits;
 # a merge that conflicts (outside auto-generated status files) is ABORTED and reported, never left half-done.
 # Never pushes to backups/autosave.config.json -> protected_branches. Never reads, prints or stores credentials.
 # Paid World Labs / Marble jobs are never started (only the free credit-balance read).
 set -uo pipefail
 ORIG_ARGS=("$@")
-MODE=full; DO_RESUME=1; DO_TOOLS=1; FULL_TESTS=0; CONTINUE=0; NO_AUTOSAVE=0
+MODE=full; DO_RESUME=0; DO_TOOLS=1; FULL_TESTS=0; CONTINUE=0; NO_AUTOSAVE=0   # DO_RESUME=1 only with --resume
 UNSHALLOW_TIMEOUT=300; FETCH_TIMEOUT=180   # the SessionStart hook uses shorter limits
 for a in "$@"; do case "$a" in
   --check) MODE=check; DO_RESUME=0; DO_TOOLS=0 ;;
@@ -31,10 +36,11 @@ for a in "$@"; do case "$a" in
   --env-setup) MODE=env-setup; DO_RESUME=0 ;;
   --no-tools|--skip-tools) DO_TOOLS=0 ;;
   --skip-resume) DO_RESUME=0 ;;
+  --resume|--merge) DO_RESUME=1 ;;  # explicit, on the user's request only
   --no-autosave) NO_AUTOSAVE=1 ;;   # tests in a throw-away clone: never install the scheduler or push
   --continue) CONTINUE=1; DO_RESUME=0 ;;
   --tools) ;;   # legacy flag of resume-newest-work.sh: tools are installed by default now
-  -h|--help) sed -n '2,22p' "${BASH_SOURCE[0]}"; exit 0 ;;
+  -h|--help) sed -n '2,27p' "${BASH_SOURCE[0]}"; exit 0 ;;
   *) echo "unknown option: $a (see --help)"; exit 2 ;;
 esac; done
 SELF="$(readlink -f "${BASH_SOURCE[0]}")"
@@ -135,11 +141,11 @@ step_resume() {
     timeout "$UNSHALLOW_TIMEOUT" git fetch -q --unshallow origin 2>/dev/null || true
   fi
   if ! timeout "$FETCH_TIMEOUT" git fetch -q origin '+refs/heads/*:refs/remotes/origin/*' 2>/dev/null; then
-    rec resume "Resume newest work" fail "git fetch from GitHub failed (network / GitHub connection?)" "$t"; return
+    rec resume "Newer saved work (no auto-merge)" fail "git fetch from GitHub failed (network / GitHub connection?)" "$t"; return
   fi
   if [ "$DO_RESUME" = 1 ]; then
     for busy in MERGE_HEAD rebase-merge rebase-apply CHERRY_PICK_HEAD; do
-      [ -e ".git/$busy" ] && { rec resume "Resume newest work" fail "a git $busy is in progress: finish it first, then rerun" "$t"; return; }
+      [ -e ".git/$busy" ] && { rec resume "Newer saved work (no auto-merge)" fail "a git $busy is in progress: finish it first, then rerun" "$t"; return; }
     done
     dirty=$(git status --porcelain --untracked-files=no | wc -l)
     if [ "$dirty" != 0 ]; then   # save the current edits first, so a merge can never touch unsaved work
@@ -164,20 +170,37 @@ step_resume() {
       echo "      autosave lock busy for 3 min: not merging this time"
     fi
   fi
-  for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/ | grep -E '^origin/(ccr-|claude/)'); do
-    total=$((total + 1)); git merge-base --is-ancestor "$ref" HEAD 2>/dev/null && contained=$((contained + 1))
+  # what is NOT in HEAD (never merged here unless --resume): per branch, commits and files outside backups/
+  local newer="" real=0 behind="" n f me; me="$(git symbolic-ref --short HEAD 2>/dev/null)"
+  for ref in $(git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/remotes/origin/ | grep -E '^origin/(ccr-|claude/)'); do
+    total=$((total + 1))
+    if git merge-base --is-ancestor "$ref" HEAD 2>/dev/null; then contained=$((contained + 1)); continue; fi
+    [ "${ref#origin/}" = "$me" ] && continue    # this session's own branch on GitHub: the autosave handles it
+    n=$(git rev-list --count "HEAD..$ref" 2>/dev/null || echo '?')
+    f=$(git diff --name-only "HEAD...$ref" 2>/dev/null | grep -vc '^backups/')
+    [ "$f" != 0 ] && real=$((real + 1))
+    if git merge-base --is-ancestor HEAD "$ref" 2>/dev/null; then behind="${ref#origin/}"; fi
+    newer="$newer ${ref#origin/}@$(git rev-parse --short "$ref") ($n commit(s), $f file(s) outside backups/, $(git log -1 --format=%cd --date=format:'%m-%d %H:%M' "$ref") UTC);"
+    echo "      not in HEAD: ${ref#origin/} @ $(git rev-parse --short "$ref"): $n commit(s), $f file(s) outside backups/"
   done
   local msg head; head="$(git rev-parse --short HEAD)"
   msg="$contained/$total remote ccr-*/claude/* branches contained in HEAD $head"
-  [ -n "$merged" ] && msg="$msg; merged newer work from:$merged"
+  [ -n "$merged" ] && msg="$msg; merged (on request, --resume):$merged"
   if [ -n "$conflicts" ]; then
-    rec resume "Resume newest work" fail "$msg; CONFLICT (merge aborted, nothing changed):$conflicts - merge by hand keeping both sides: git merge origin/<branch>" "$t"
+    rec resume "Newer saved work (no auto-merge)" fail "$msg; CONFLICT (merge aborted, nothing changed):$conflicts - merge by hand keeping both sides: git merge origin/<branch>" "$t"
   elif [ -n "$refused" ]; then
-    rec resume "Resume newest work" fail "$msg; merge refused for:$refused (see git status)" "$t"
-  elif [ "$contained" != "$total" ]; then
-    rec resume "Resume newest work" warn "$msg; not merged ($([ "$DO_RESUME" = 1 ] && echo 'unsaved edits or busy lock' || echo 'check mode')): run bash scripts/claude-bootstrap.sh" "$t"
+    rec resume "Newer saved work (no auto-merge)" fail "$msg; merge refused for:$refused (see git status)" "$t"
+  elif [ -n "$newer" ]; then
+    msg="$msg; NOT merged (automatic merging is OFF, user's order 2026-11-17):$newer"
+    if [ -n "$behind" ]; then
+      rec resume "Newer saved work (no auto-merge)" warn "$msg THIS CHECKOUT IS BEHIND $behind (same line of work): the session probably started from an old branch - follow backups/HANDOFF_NEW_ACCOUNT.md, tell the user" "$t"
+    elif [ "$real" != 0 ]; then
+      rec resume "Newer saved work (no auto-merge)" warn "$msg tell the user what these branches hold; merge ONLY on the user's request: bash scripts/claude-bootstrap.sh --resume" "$t"
+    else
+      rec resume "Newer saved work (no auto-merge)" ok "$msg only autosave bookkeeping under backups/, no game work: nothing to do" "$t"
+    fi
   else
-    rec resume "Resume newest work" ok "$msg" "$t"
+    rec resume "Newer saved work (no auto-merge)" ok "$msg; nothing newer on GitHub; nothing merged" "$t"
   fi
 }
 
@@ -295,8 +318,37 @@ step_blender() {
     if timeout 180 blender -b --factory-startup --python-expr "import bpy; print('BPY_OK', bpy.app.version_string)" 2>/dev/null | grep -q BPY_OK; then
       rec blender "Blender" ok "$v ($was) at $(command -v blender); headless bpy test OK" "$t"
     else rec blender "Blender" fail "$v installed but the headless bpy test failed" "$t"; fi
-  elif [ "$DO_TOOLS" = 1 ]; then rec blender "Blender" fail "install failed (needs download.blender.org) - backups/.live/blender-setup.log" "$t"
+  elif [ "$DO_TOOLS" = 1 ]; then rec blender "Blender" fail "install failed - backups/.live/blender-setup.log. Usual cause on a NEW Claude account: the cloud environment's network does not allow download.blender.org. Fix: propose an environment with hosts download.blender.org + dl.google.com and setup script scripts/cloud-env-setup.sh (create_environment / update_environment; the user approves a card), then rerun bash scripts/claude-bootstrap.sh" "$t"
   else rec blender "Blender" warn "Blender $(manifest tools.blender.version) not installed (run without --check / --no-tools)" "$t"; fi
+}
+
+step_blender_verify() {  # real renders with all three engines, every .blend, the game GLBs, GLB export -> import
+  local t out sm; t=$(now)
+  if ! blender_ok; then rec blender_verify "Blender render + GLB check" skip "Blender is not installed (see the Blender row)" "$t"; return; fi
+  out="$LIVE/blender-verify"; rm -rf "$out"; mkdir -p "$out"
+  timeout 900 blender -b --factory-startup --python scripts/verify-blender.py -- "$out" > "$LIVE/blender-verify.log" 2>&1
+  sm="$(python3 -I -c 'import json,sys
+r=json.load(open(sys.argv[1])); bad=[]
+names={"BLENDER_WORKBENCH":"Workbench","BLENDER_EEVEE":"EEVEE","CYCLES":"Cycles"}
+ren=[]
+for x in r["renders"]:
+    ren.append(names.get(x["engine"],x["engine"])+(" %.1f s"%x["seconds"] if x.get("ok") else " FAILED"))
+    if not x.get("ok"): bad.append("render "+x["engine"])
+bl=r["blends"]; nb=sum(1 for b in bl if b.get("ok"))
+if nb!=len(bl) or not bl: bad.append("blend files")
+g=r["glbs"]; gl=[]
+for k,v in g.items():
+    gl.append(k.split("/")[-1]+" "+(str(v.get("meshes"))+" meshes" if v.get("ok") else "FAILED"))
+    if not v.get("ok"): bad.append("import "+k)
+lids=g.get("assets/models/lids05.glb",{}).get("paddles",{})
+if len(lids)!=6: bad.append("lids05.glb paddles %d/6"%len(lids))
+rt=r["roundtrip"]; a=rt.get("blend_vs_roundtrip_identical",{}); b=rt.get("blend_vs_game_glb_identical",{})
+ok_rt=isinstance(a,dict) and a and all(a.values()); ok_game=isinstance(b,dict) and b and all(b.values())
+if not ok_rt: bad.append("GLB round trip")
+if not ok_game: bad.append("blend vs game lids05.glb")
+print(("fail" if bad else "ok")+" Blender "+r["blender"]+" bpy OK; real renders: "+", ".join(ren)+"; .blend files "+str(nb)+"/"+str(len(bl))+" open; GLB import: "+", ".join(gl)+" (6 paddles "+("OK" if len(lids)==6 else "MISSING")+"); GLB export -> import: "+str(sum(1 for v in a.values() if v) if isinstance(a,dict) else 0)+"/6 paddles geometry-identical"+(", identical to the game lids05.glb" if ok_game else "")+("; PROBLEMS: "+", ".join(bad) if bad else ""))' "$out/results.json" 2>/dev/null)"
+  if [ -z "$sm" ]; then rec blender_verify "Blender render + GLB check" fail "scripts/verify-blender.py did not finish (backups/.live/blender-verify.log): $(grep -E 'Error|Traceback' "$LIVE/blender-verify.log" | tail -1 | cut -c1-160)" "$t"
+  else rec blender_verify "Blender render + GLB check" "${sm%% *}" "${sm#* }" "$t"; fi
 }
 
 step_android() {
@@ -333,11 +385,29 @@ for ev in ("SessionStart","PreCompact","Stop","SessionEnd"):
     out.append(ev+("" if ok else "(MISSING)"))
 print(" ".join(out))' .claude/settings.json "$ROOT" 2>/dev/null)"
   [[ "$hooks" == *MISSING* || -z "$hooks" ]] && st=fail
-  mcp="$(timeout 90 claude mcp list 2>/dev/null)"
-  if grep -qiE 'playwright.*Connected' <<<"$mcp"; then mcp="Playwright MCP connected"
-  else mcp="Playwright MCP NOT connected (enable the 'playwright' plugin in claude.ai settings)"; [ "$st" = ok ] && st=warn; fi
+  local raw servers need="" blender gh
+  raw="$(timeout 90 claude mcp list 2>/dev/null)"
+  # one entry per configured server: "<name> connected" / "<name> NOT connected (<reason>)"
+  servers="$(python3 -I -c 'import sys,re
+out=[]
+for ln in sys.stdin.read().splitlines():
+    if " - " not in ln or ": " not in ln: continue
+    name=ln.split(": ",1)[0].strip(); status=ln.rsplit(" - ",1)[1].strip()
+    ok=("Connected" in status) and ("Failed" not in status) and ("Needs" not in status)
+    out.append(name+(" connected" if ok else " NOT connected ("+re.sub(r"^[^A-Za-z]+","",status)[:90]+")"))
+print("; ".join(out))' <<<"$raw" 2>/dev/null)"
+  if grep -qiE 'playwright.*Connected' <<<"$raw"; then mcp="Playwright MCP connected"
+  else mcp="Playwright MCP NOT connected"; need="$need enable the 'playwright' plugin in claude.ai settings (required);"; [ "$st" = ok ] && st=warn; fi
+  if grep -qi 'blender' <<<"$raw"; then blender="Blender MCP listed: $(grep -i blender <<<"$raw" | head -1 | sed 's/.* - //' | cut -c1-60)"
+  elif [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]; then blender="Blender MCP not configured (a display exists: 'claude mcp add blender uvx mcp-for-blender', enable the add-on in desktop Blender - backups/MCP_SETUP.md)"
+  else blender="Blender MCP NOT connected and not possible here (headless container: no display, so no desktop Blender add-on socket) - Blender command line + Python is the working integration (row 'Blender render + GLB check')"; fi
+  if timeout 45 git ls-remote origin HEAD >/dev/null 2>&1; then gh="GitHub git connection OK (GitHub MCP is a session connector: test in Claude with mcp__github__list_branches)"
+  else gh="GitHub NOT reachable by git"; need="$need connect GitHub + the Claude GitHub App to the repository (required);"; st=fail; fi
+  grep -qiE 'worldlabs.*(Failed|Needs)' <<<"$raw" && need="$need World Labs Atlas MCP not connected (optional, not needed for Screen 05: sign in to the connector only for new World Labs work);"
+  grep -qiE 'context7.*(Failed|Needs)' <<<"$raw" && need="$need context7 not signed in (optional, unused);"
   plugins="$(timeout 60 claude plugin list 2>/dev/null | grep -oE '^\s*> [a-z0-9-]+' | sed 's/.*> //' | sort -u | tr '\n' ' ')"
-  rec claude "Claude hooks / plugins / MCP" "$st" "hooks: ${hooks:-settings.json unreadable}; $mcp; plugins: ${plugins:-none listed}; MCP template .mcp.json.template (no secrets)" "$t"
+  rec claude "Claude hooks / plugins / MCP" "$st" "hooks: ${hooks:-settings.json unreadable}; $mcp; all servers: ${servers:-none listed}; $blender; $gh; plugins: ${plugins:-none listed}; MCP template .mcp.json.template (no secrets)" "$t"
+  rec logins "Logins / authorizations for the user" "$([[ "$need" == *required* ]] && echo warn || echo ok)" "${need:- nothing required: every required connection works}" "$t"
 }
 
 step_tests() {
@@ -424,7 +494,8 @@ hook)
       grep -E '^  (OK|WARN|FAIL|SKIP) ' "$LIVE/bootstrap-hook.log" | sed 's/^  /  /'
       grep -E '^ +(GAP|the previous session|log gap)' "$LIVE/bootstrap-hook.log" | sed -E 's/^ +/  - /' | tail -4
       echo "  LFS binaries: $(git lfs ls-files | awk '$2=="-"' | wc -l) pointer stubs left (0 = all restored)"
-      echo "  Full bootstrap (tools, Blender, Android SDK, Marble, tests, autosave) is running in the background:"
+      echo "  NO branch was merged (automatic merging is off; 'bash scripts/claude-bootstrap.sh --resume' only on the user's request)."
+      echo "  Full bootstrap (tools, Blender install + render check, Android SDK, 10 specialists, MCP, tests, autosave) is running in the background:"
       echo "  'bash scripts/claude-bootstrap.sh --status' -> backups/BOOTSTRAP_REPORT.md. Read CLAUDE.md and"
       echo "  backups/CLAUDE_ACCOUNT_TRANSFER.md, then give the user the backup report described in CLAUDE.md."
     else
@@ -474,7 +545,7 @@ pycheck agents "Specialist agents" agents
 pycheck marble "Marble World Labs assets" marble
 step_worldlabs
 say "3 Tools (installed only when missing)"
-step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_blender_verify; step_android
 step_claude_config
 say "4 Tests"
 step_tests
