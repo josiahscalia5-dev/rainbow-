@@ -23,6 +23,27 @@ y 840–1245; scenery = y ≥ 190 outside that box; share of pixels within 20 le
    Tested and REJECTED (measured worse): body fur grown higher under the cuff (bald threshold +0.03…+0.15: no change);
    arm puffs 1.25× / 1.5× (64.8 / 64.5 %), raised +0.12 / +0.24 (64.8 / 64.1 %), 1.15× raised + wider (64.0 %).
 
+## Round 5b — USER DECISIONS 19:00 UTC (via lead): r3b is the base; rounder FULLER body; soft fur; moving look first
+**Current URLs (after 5b):** r2 `?match08=1&b08r3=0` · r3b (BEFORE) `?match08=1&b08full=0` · r4 `?match08=1&b08hi=1&b08pom=1&b08full=0`
+· r5 taper `?match08=1&b08hi=1&b08pom=1&b08shape=1` · **NEW (5b) `?match08=1`**. All verified 0 px against their earlier captures.
+(The round-5 URLs written further down predate this change: round 4's shoulder highlight and lighter pom are now opt-in `=1`.)
+* KEPT `b08full` (default under match08, `b08full=0` = r3b): body fur ×1.04 wider and the beanie ×0.94, so the round body
+  is now WIDER than the brim like the approved close-up (approved body ≈1.09× the brim, r3b 0.93×, NEW ≈1.1×); full and round
+  down into the splash; stubby arms +0.03 higher, ×1.15 so they show at the sides. Visual choice — numbers LOWER:
+  Benny+splash 65.3 (r3b) → 62.2 % (SSIM 0.595 → 0.537); body part 62 %; pom 19 % / star 31 % (the smaller beanie moves
+  them a little off the painted spots); scenery 97.3 % unchanged; whole 85.0 %.
+* Probes: fuller body without the smaller beanie (×1.06 wide 62.5 %, wider bottom 61.7 %, ×1.08 + taller 62.0 %) looked
+  too heavy/big next to the beanie; ×1.06 body + ×0.92 beanie 61.6 %; ×0.92 beanie alone 64.4 % (body not fuller). Rejected.
+* The 18:55 taper (slimmer toward the water) went the wrong way per the user: kept only as opt-in `b08shape=1`.
+* Fur softer than r3b (uSoft 0.9 / 1.0 + edge 1.6): no visible change, same number — rejected; the painting's soft layered
+  clumps need a new fur clump model or bake.
+* Final pictures `review_r5/final/`: `1_APPROVED_*`, `2_BEFORE_r3b_*`, `3_NEW_*` (approved view, close-up, forward, steer left, steer right).
+* Proofs: tsc clean; default 08 0 px (same container as the verified pre-round-5 default); r3b / r4 / r5-taper URLs 0 px;
+  gameplay 8/8 + 91 coins / 2,240 with and without match08 (`r5b/tests/`); 04–07 with match08: NEW == r3b URL 0 px.
+  FLAG: with match08 on, 04–07 differ from the default build over much of the frame (04 510k px, 07 560k px) — identical
+  with the round-4 settings, so it is not from the Benny work (round 3 recorded only Benny's box); worth a look by the lead.
+* APK `builds/rainbow-debug-08benny-2026-11-17-r5b.apk` (match08=1, Git LFS, sha256 f98d4a97…; gradle BUILD SUCCESSFUL), NOT phone-tested.
+
 ## Round 5 (account 4, lead review of r4; captures `r5/`, review set `review_r5/` + its README)
 Exact URLs: **r2** `?match08=1&b08r3=0` (65.7 %) · **r3b** `?match08=1&b08hi=0&b08pom=0&b08shape=0` (65.3 %) ·
 **r4** `?match08=1&b08shape=0` (65.4 %) · **r5 NEW** `?match08=1` (62.0 %).

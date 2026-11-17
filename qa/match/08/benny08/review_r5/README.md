@@ -19,3 +19,9 @@ toward the water (tapered like the painting instead of a ball), the stubby arms 
 Chosen visually: the strict number is LOWER (Benny+splash 65.4 → 62.0 %, body part 75 → 58 %), because the painted
 fur texels no longer line up pixel-for-pixel with the new outline. Nothing is approved until the user says so.
 (The r3b / r4 URLs gained `&b08shape=0` when r5 became the `match08=1` default; r2's `b08r3=0` already turns it off.)
+
+## Round 5b (user decisions 19:00 UTC) — `final/`
+`final/1_APPROVED_*`, `final/2_BEFORE_r3b_*`, `final/3_NEW_*`: approved view, close-up, moving forward / steer left / steer right.
+NEW = r3b + fuller rounder body wider than the brim, slightly smaller beanie, stubby arms high (`?match08=1`; Benny+splash 62.2 %,
+r3b 65.3 % — a visual choice, the number is lower). Current URLs: r3b `?match08=1&b08full=0`, r4 `?match08=1&b08hi=1&b08pom=1&b08full=0`,
+r5 taper `?match08=1&b08hi=1&b08pom=1&b08shape=1`, r2 `?match08=1&b08r3=0` (the table above predates 5b).
