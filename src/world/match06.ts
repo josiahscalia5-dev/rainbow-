@@ -253,7 +253,53 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   // r6 `m06geo`: the tube's lower walls are drawn in so they rise straight from the foam banks (|l| = Wb at the water
   // line) instead of meeting the water 3.3 u further out under a 2x too wide water slab; above yTop the tube is unchanged
   const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);
-  add(grid(RAD, (_s, j, fr) => {
+  // r7 `&m06tun=1` (qa/match/06/r7/NOTES.md): the painted tunnel is a STRAIGHT cylinder of concentric rings with the river
+  // winding inside it; the proxy tube below follows the river's crest (+36° / -33°) and 40° turn, so while moving the
+  // rings turned into twisted diagonal bands. Here: a straight cylinder (radius `&m06tunr=`, default 14) whose axis is
+  // parallel to the projector's ray through the painted vanishing point (`&m06tunax=chord`: along the 06 stage chord
+  // instead), placed through the river's centroid so the whole 06 river stays inside. Same projection, same tile.
+  const TUN = qs?.get('m06tun') === '1';
+  let tunCap: { pos: THREE.Vector3; dir: THREE.Vector3; r: number } | null = null;
+  if (TUN) {
+    const Rt = Number(qs?.get("m06tunr")) || 14;
+    const vp = (TT as { vp?: [number, number] }).vp ?? [W / 2, H / 2];
+    let ax = new THREE.Vector3((vp[0] / W) * 2 - 1, 1 - (vp[1] / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
+    const sA = L.s0 + 12, sE = L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage
+    if (qs?.get('m06tunax') === 'chord') ax = course.sample(sE).pos.sub(course.sample(sA).pos).normalize();
+    const C = proj.position.clone();
+    // axis through the centroid of the 06 river (perpendicular to ax), lifted `&m06tunh=` (default 3) above it
+    const cen = new THREE.Vector3(); let n = 0;
+    for (let s = L.s0; s <= sE; s += 1) { const q = course.sample(s).pos.sub(C); cen.add(q.addScaledVector(ax, -q.dot(ax))); n++; }
+    cen.multiplyScalar(1 / n);
+    const Ux = new THREE.Vector3(0, 1, 0).addScaledVector(ax, -ax.y).normalize(), Rx = new THREE.Vector3().crossVectors(ax, Ux).normalize();
+    const hq = Number(qs?.get('m06tunh'));
+    const O = C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
+    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = P1.clone().sub(O).dot(ax) + L.ext;
+    const kS = L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
+    const pos: number[] = [], tl: number[] = [], ls: number[] = [], idx: number[] = [];
+    const rows: number[] = [];
+    for (let a = a0; a < a0 + 90; a += 0.5) rows.push(a);
+    for (let a = a0 + 90; a <= a1; a += 2) rows.push(a);
+    for (const a of rows) for (let j = 0; j <= RAD; j++) {
+      const th = (j / RAD) * Math.PI * 2;
+      const p = O.clone().addScaledVector(ax, a).addScaledVector(Rx, Rt * Math.cos(th)).addScaledVector(Ux, Rt * Math.sin(th));
+      pos.push(p.x, p.y, p.z);
+      let aa = th; if (aa > TT.wallAngle[1]) aa -= Math.PI * 2;
+      tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
+    }
+    const nC = RAD + 1;
+    for (let i = 0; i < rows.length - 1; i++) for (let j = 0; j < RAD; j++) { const a = i * nC + j, b = a + 1, c = a + nC, d = c + 1; idx.push(a, c, b, b, c, d); }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('aTile', new THREE.Float32BufferAttribute(tl, 2));
+    g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
+    g.setIndex(idx); g.computeVertexNormals();
+    add(g, mat(tTube), 'tube');
+    tunCap = { pos: O.clone().addScaledVector(ax, a1), dir: ax.clone(), r: Rt };
+    // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the
+    // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage
+    while (sList.length && sList[sList.length - 1] > sE + 20) sList.pop();
+  } else add(grid(RAD, (_s, j, fr) => {
     const th = (j / RAD) * Math.PI * 2;
     let lx = L.R * Math.cos(th);
     const ly = L.hA + L.R * Math.sin(th);
@@ -280,10 +326,11 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   }, TF.period), mat(tFloor, true), 'floor');
   // far end cap of the tunnel (the glowing vanishing point)
   const fe = frame(L.s1 + L.ext);
-  const cap = new THREE.Mesh(new THREE.CircleGeometry(L.R, 64), mat(tTube));
+  const cap = new THREE.Mesh(new THREE.CircleGeometry(tunCap ? tunCap.r : L.R, 64), mat(tTube));
   cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));
-  cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA);
-  cap.lookAt(cap.position.clone().sub(T1));
+  // m06tun: the cap shows the painted glowing vanishing point (the wall/water mask would swap it for a flat tile colour)
+  if (tunCap) { cap.position.copy(tunCap.pos); cap.lookAt(cap.position.clone().sub(tunCap.dir)); (cap.material as THREE.ShaderMaterial).uniforms.uUseMask.value = 0; }
+  else { cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA); cap.lookAt(cap.position.clone().sub(T1)); }
   cap.name = 'm06_end'; cap.frustumCulled = false;
   group.add(cap);
 

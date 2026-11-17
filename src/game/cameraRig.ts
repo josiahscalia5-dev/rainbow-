@@ -8,6 +8,14 @@ import { WORLD } from '../world/course';
 import type { Course, StageId } from '../world/course';
 import type { TubePath } from '../world/tube';
 import { applyMatchCam } from './match';
+import { flag05 } from '../vfx/waterRibbon';
+
+/** r7 `?match06=1&m06cam=1` only: Screen 06 camera frame = chord toward the river this far ahead (`&m06la=`, default 40) */
+const M06_CAM = flag05('m06cam');
+const M06_LA = (() => {
+  const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06la')) : NaN;
+  return Number.isFinite(v) && v > 5 ? v : 40;
+})();
 
 export interface CamParams {
   back: number; // distance behind Benny
@@ -159,14 +167,41 @@ export class RideCamera {
           const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
           return { T, U, R: new THREE.Vector3().crossVectors(T, U).normalize() };
         };
+        // r7 `&m06cam=1` (qa/match/06/r7/NOTES.md): the frame is the CHORD toward the river M06_LA units ahead (where the
+        // painted tunnel's rings converge) instead of the local slope. At the checkpoint the approved camera is reproduced
+        // exactly (offsets are stored in the same frame there); over the crest the local-slope frame tipped the view to
+        // -47° at +10 u and -73° at +30 u (looking straight down at the water, the ring tunnel above the frame).
+        const chord = (x: number) => {
+          const a = this.course.sample(x).pos, b = this.course.sample(Math.min(x + M06_LA, this.course.length - 1)).pos;
+          const T = b.clone().sub(a).normalize();
+          const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+          return { T, U, R: new THREE.Vector3().crossVectors(T, U).normalize() };
+        };
+        const frame6 = M06_CAM ? chord : lvl;
         if (!this.m06 || this.m06.s0 !== st6.s0) {
-          const sB = st6.s0 + 10, F = lvl(sB), o = new THREE.Vector3(...p6.off06), d = new THREE.Vector3(...p6.dir06).normalize();
+          const sB = st6.s0 + 10, F = frame6(sB), o = new THREE.Vector3(...p6.off06), d = new THREE.Vector3(...p6.dir06).normalize();
           this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.dot(F.R), d.dot(F.U), d.dot(F.T)] };
         }
-        const F = lvl(s), M = this.m06;
+        const F = frame6(s), M = this.m06;
         const cp6 = f.pos.clone().addScaledVector(f.right, lat * 0.5)
           .addScaledVector(F.R, M.o[0]).addScaledVector(F.U, M.o[1]).addScaledVector(F.T, M.o[2]);
         const d6 = F.R.clone().multiplyScalar(M.d[0]).addScaledVector(F.U, M.d[1]).addScaledVector(F.T, M.d[2]);
+        if (M06_CAM) {
+          // keep the camera >= 1.6 u above the water directly below it (the chord frame is flatter than the slope), then
+          // turn the view by the same angle so Benny keeps his approved place in the frame
+          let best = Infinity, wy = -Infinity;
+          for (let k = -14; k <= 4; k += 0.5) {
+            const q = this.course.sample(Math.max(0, s + k)).pos, dx = q.x - cp6.x, dz = q.z - cp6.z;
+            if (dx * dx + dz * dz < best) { best = dx * dx + dz * dz; wy = q.y; }
+          }
+          if (cp6.y < wy + 1.6) {
+            const bn = f.pos.clone().addScaledVector(f.right, lat * 0.5);
+            const v0 = bn.clone().sub(cp6).normalize();
+            cp6.y = wy + 1.6;
+            const v1 = bn.sub(cp6).normalize();
+            d6.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(v0, v1));
+          }
+        }
         outPos.lerp(cp6, w6);
         outTarget.lerp(cp6.addScaledVector(d6, 10), w6);
         outUp.lerp(new THREE.Vector3(0, 1, 0), w6).normalize();
