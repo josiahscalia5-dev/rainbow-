@@ -190,7 +190,9 @@ export async function buildMatch08(): Promise<Match08> {
   const archC = new THREE.Vector3(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth).applyMatrix4(toView);
   const archR = L.arch.outer.r * (fixLane ? LANE_K : 1);
   // back wall around the pipe mouth (closes the gap between pipe and chamber; seen only when moving in)
-  const bw = new THREE.Shape(); bw.absarc(C.cx, C.cy, C.r, 0, Math.PI * 2, false);
+  // (m08bw: outer edge 3 u beyond the chamber wall so the bigger opening stays inside the outline — the rim is hidden
+  // behind the chamber wall / under the floor)
+  const bw = new THREE.Shape(); bw.absarc(C.cx, C.cy, C.r + (fixBw ? 3 : 0), 0, Math.PI * 2, false);
   const bh = new THREE.Path();
   if (fixBw) bh.absarc(archC.x, archC.y, archR * 0.985, 0, Math.PI * 2, true);
   else bh.absarc(L.pipe.cx, L.pipe.cy, L.backwall.holeR, 0, Math.PI * 2, true);
