@@ -335,6 +335,12 @@ export function coinLayout(course: Course): CoinDef[] {
     const take = (list: CoinDef[], n: number) => { for (const d of list.slice(0, Math.min(n, extra))) { pick.push(d); extra--; } };
     for (const [id, off, n] of C05TOT_CP) { const a = st(id); take(kept.filter((d) => d.stage === id && d.s < a.s0 + off + 0.5), n); }
     for (const [id, n] of C05TOT_END) take(kept.filter((d) => d.stage === id).slice(-n), n);
+    // preview branch (line A + B, lead r5 2026-11-17): with line A's `?match07=1` the 07 picture coins replace the trail
+    // from 07 start + 14, so only 2 coins lie before the 07 checkpoint (C05TOT_CP wants 4) and the all-or-nothing rule
+    // below kept all 11 extra coins (102 / 2,350). Any shortfall now also comes from the end of 06 (behind its crest,
+    // hidden from the 06 view, the same place C05TOT_END already uses). Without match07 extra is already 0 here:
+    // line B's Screen 05 alone is unchanged.
+    if (extra > 0) for (const [id] of C05TOT_END) take(kept.filter((d) => d.stage === id && !pick.includes(d)).slice(-extra), extra);
     if (extra === 0) { const drop = new Set(pick); return kept.filter((d) => !drop.has(d)); }
   }
   return kept;
