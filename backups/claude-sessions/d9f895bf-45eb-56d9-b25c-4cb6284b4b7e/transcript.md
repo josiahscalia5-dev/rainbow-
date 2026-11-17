@@ -811,3 +811,242 @@ Fix progressing: camera raised over the drain lip cuts the water veil (Benny hid
 
 > 🔧 **Bash** `{"command": "sed -i '206s|stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it|stream 3 u behind Benny, above the water (the water he rides can then hardly come between), aimed at him; it|' src/game/cameraRig.ts && sed -n 203,208p src/game/cameraRig.ts; cat .gitattributes | head; S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; D=qa/gameplay_video/lip_r4; mkdir -p $D; for n in def r3 new; do lab=$([ $n = def ] && echo 1_default || ([ $n = r3 ] && echo 2_camclear_r3 || echo 3_camclear_NEW)); for  …[+392 chars]`
 
+### 🧑 User — 2026-11-17T18:55:47.916Z
+
+> ↩︎ result: * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and beside Benny while he falls down the drain
+>    * chute, so the chute's own falling water passes between the view and Benny for ~0.6 s (60–100 % of him hidden, a
+>    * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the
+>    * stream 3 u behind Benny, above the water (the water he rides can then hardly come between), aimed at him; it
+>    * blends in and back out over a few metres of the ride. Off: unchanged.
+>    * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), the view rides
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> 69
+> 25M	qa/gameplay_video/lip_r4
+> [This com …[+94 chars]
+
+### 🤖 Claude — 2026-11-17T18:55:53.148Z
+
+> 🔧 **Bash** `{"command": "D=qa/gameplay_video/lip_r4 && for t in 17.70 17.80 17.90 18.00 18.10 18.20 18.30 18.40 18.50 18.60; do rm -f $D/t${t}_*.png; done; du -sh $D; git add $D src/game/cameraRig.ts && git commit -qm \"camclear r4: drain lip view 3.4 u above the water, aimed at Benny (hidden max 44% -> 25%); lip frames default|r3|NEW\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BTLnGMkLZVfNSYf45t\" && for i in 1 2 3; do git push -q origin HEAD && break; sleep 5; done; git rev-parse --short HEAD; git ls-remote origin refs/heads/claude/rai …[+100 chars]`
+
+### 🧑 User — 2026-11-17T18:56:02.577Z
+
+> ↩︎ result: 13M	qa/gameplay_video/lip_r4
+> 97fbc56
+> 97fbc56
+
+### 🤖 Claude — 2026-11-17T18:56:12.637Z
+
+Drain-lip step pushed (`97fbc56`). Now step 2: the gold ring bands crossing the upper screen in 07.
+
+### 🤖 Claude — 2026-11-17T18:56:18.343Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=37 --t1=44 --dt=0.25 --size=180x400 --nometrics --out=$S/r07_cc 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],r['s'],end=' | ')\n  except: pass\"; echo; cat > $S/gold.py <<'EOF'\nimport sys,glob,json\nfrom PIL import Image\nimport numpy as np\ndef gold(f, top=0.45):\n    a=np.asarray(Image.open(f).convert('RGB')).astype(int); h=a.shape[0]\n    u=a[int(h*0.09):int(h*top)]  # …[+418 chars]`
+
+### 🧑 User — 2026-11-17T18:56:39.049Z
+
+> ↩︎ result: 37 07 301.874 | 37.25 07 304.874 | 37.5 07 307.874 | 37.75 07 310.874 | 38 07 313.874 | 38.25 07 316.874 | 38.5 07 319.874 | 38.75 07 322.874 | 39 07 325.874 | 39.25 07 328.874 | 39.5 07 331.874 | 39.75 07 334.874 | 40 07 337.874 | 40.25 07 340.874 | 40.5 07 343.874 | 40.75 07 346.874 | 41 07 349.874 | 41.25 07 352.874 | 41.5 07 355.874 | 41.75 07 358.874 | 42 07 361.874 | 42.25 07 364.874 | 42.5 07 367.874 | 42.75 07 370.874 | 43 07 373.874 | 43.25 07 376.874 | 43.5 07 379.874 | 43.75 07 382.874 | 44 07 385.853 | 
+> r07_cc 37.00:11 37.25:6 37.50:6 37.75:6 38.00:7 38.25:3 38.50:5 38.75:8 39.00:5 39.25:12 39.50:19 39.75:27 40.00:29 40.25:29 40.50:31 40.75:31 41.00:33 41.25:35 41.50:34 41.75:35 42.00:35 42.25:33 42.50:30 42.75:32 43.00:31 43.25:21 43.50:7 43.75:8 44.00:10
+
+### 🤖 Claude — 2026-11-17T18:56:42.241Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; cd $S && python3 -c \"\nfrom PIL import Image\nim=[Image.open(f'r07_cc/'+[x for x in __import__('os').listdir('r07_cc') if x.endswith('_t'+t+'.png')][0]) for t in ['39.00','40.00','41.00','42.00','43.00']]\no=Image.new('RGB',(900,400));[o.paste(x,(i*180,0)) for i,x in enumerate(im)];o.save('peek07.png')\"", "description": "Peek sheet of 07 frames"}`
+
+### 🧑 User — 2026-11-17T18:56:42.455Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T18:56:44.295Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/peek07.png"}`
+
+### 🧑 User — 2026-11-17T18:56:44.328Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:56:53.281Z
+
+> 🔧 **Bash** `{"command": "grep -n \"07\" src/game/match.ts | head -20; ls qa/match/07 2>/dev/null | head; grep -rn \"match07\" scripts/*.mjs tools/*/*.mjs 2>/dev/null | head -5", "description": "Find match07 approved view definition"}`
+
+### 🧑 User — 2026-11-17T18:56:53.323Z
+
+> ↩︎ result: 13:export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> 14:export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> 25:  '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },
+> cam
+> geo_match07.json
+> rings
+> scripts/match-cam-fit.mjs:6://   node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 [--q=match07=1]
+> scripts/match-geo.mjs:4://   node scripts/match-geo.mjs --id=07 [--q=match07=1] [--from=-10] [--to=70] [--step=1] [--out=qa/match/07/geo.json]
+> scripts/match-probe.mjs:4://   node scripts/match-probe.mjs --id=07 [--q='match07=1'] [--out=qa/match/07/probe]
+
+### 🤖 Claude — 2026-11-17T18:56:54.340Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"match07\" src tools scripts qa/match 2>/dev/null | head; grep -n \"07\" src/game/cameraRig.ts | grep -i \"STAGE_CAM\\|'07'\" | head", "description": "Find any match07 references"}`
+
+### 🧑 User — 2026-11-17T18:56:54.436Z
+
+> ↩︎ result: src/game/cameraRig.ts
+> scripts/match-cam-fit.mjs
+> scripts/match-probe.mjs
+> scripts/match-geo.mjs
+> qa/match/07/cam/bmask_debug.mjs
+> qa/match/07/cam/benny_boxes_v1.txt
+> qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt
+> 43:  '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+> 118:    const p7 = STAGE_CAM['07'];
+> 120:      const st7 = this.course.stage('07');
+
+### 🤖 Claude — 2026-11-17T18:56:56.434Z
+
+> 🔧 **Bash** `{"command": "grep -n \"match07\\|07\" src/game/cameraRig.ts | sed -n 1,20p; sed -n 1,30p scripts/match-probe.mjs | grep -n \"07\\|stage\\|s0\\|goto\\|qa=\" | head", "description": "How match07 view is set and probed"}`
+
+### 🧑 User — 2026-11-17T18:56:56.477Z
+
+> ↩︎ result: 3: * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+> 4: * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
+> 25:  /** `?match07=1` only (src/game/match.ts): extra view yaw (deg, + = look LEFT → scene moves right) and camera side
+> 26:   *  shift (units along the view right) over the 07 stage; absent = no change */
+> 27:  yaw07?: number;
+> 28:  side07?: number;
+> 43:  '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+> 107:    // 07 pull-up arc); aim: along his heading so he stays centred in winding streams
+> 117:    // `?match07=1`: approved-picture framing in 07 — yaw the view and shift the camera sideways (both 0 / absent by default)
+> 118:    const p7 = STAGE_CAM['07'];
+> 119:    if (p7 && (p7.yaw07 || p7.side07)) {
+> 120:      const st7 = this.course.stage('07');
+> 121:      const sTop = this.course.marks['07_plunge_top'];
+> 125:        fwd.applyAxisAngle(outUp, THREE.MathUtils.degToRad((p7.yaw07 ?? 0) * w7));
+> 126:        const side = new THREE.Vector3().crossVectors(fwd, outUp).normalize().multiplyScalar((p7.side07 ?? 0) * w7);
+> 4://   node scripts/match-probe.mjs …[+163 chars]
+
+### 🤖 Claude — 2026-11-17T18:57:08.094Z
+
+> 🔧 **Bash** `{"command": "grep -n \"07_plunge_top\\|marks\\[\" src/world/course.ts | head -5; sed -n 580,592p src/game/Game.ts", "description": "Check plunge mark and update call site"}`
+
+### 🧑 User — 2026-11-17T18:57:08.130Z
+
+> ↩︎ result: 202:  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 287:  mark('07_plunge_top');
+> 343:  smoothPolyline(pts, marks['03'], 2.2, 3);
+> 346:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 427:    for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+>     // `?match08=1`: the approved artwork already carries its glow — no bloom on Screen 08 under the switch
+>     if (m08) {
+>       if (!glow05) bloom.strength = bloomS0;
+>       if (m08On) bloom.strength = 0;
+>       renderer.getDrawingBufferSize(dbs);
+>       m08.sync(renderer, dbs.x, dbs.y);
+>     }
+>     camClear?.update(camera, benny.root, st.mode === 'ride');
+>     renderer.info.reset();
+>     composer.render();
+>   };
+>   const frame = () => {
+>     const now = performance.now();
+
+### 🤖 Claude — 2026-11-17T18:57:11.931Z
+
+Working on 07: adding a camclear-only fade for gold ring arcs close above the lens during the 07 climb (not at the approved 07 checkpoint view).
+
+### 🤖 Claude — 2026-11-17T18:57:22.739Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/camClear.ts'\ns=open(p).read()\na=\"\"\"const fdecl = (r: [number, number]) => /* glsl */ `\nuniform vec4 uCCB;   // Benny's centre in view space (xyz) + view depth of his front (w)\nuniform vec4 uCCZ;   // x: on (0/1), y: lens fade full (u), z: lens fade end (u)\"\"\"\nb=\"\"\"const fdecl = (r: [number, number], prop: boolean) => /* glsl */ `\nuniform vec4 uCCB;   // Benny's centre in view space (xyz) + view depth of his front (w)\nuniform vec4 uCCZ;   // x: on (0/1), y: lens fade full (u), z: lens fade end (u), w: 07 overhead fade end (u, 0 = off)\ …[+2337 chars]`
+
+### 🧑 User — 2026-11-17T18:57:25.496Z
+
+> ↩︎ result: 34:const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a, b);
+> TSC
+
+### 🤖 Claude — 2026-11-17T18:57:29.582Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=37 --t1=44 --dt=0.25 --size=180x400 --nometrics --out=$S/r07_new >/dev/null 2>&1; python3 $S/gold.py $S/r07_cc $S/r07_new; cd $S && python3 -c \"\nfrom PIL import Image\nimport os\nim=[Image.open(f'r07_new/'+[x for x in os.listdir('r07_new') if x.endswith('_t'+t+'.png')][0]) for t in ['39.00','40.00','41.00','42.00','43.00']]\no=Image.new('RGB',(900,400));[o.paste(x,(i*180,0)) for i,x in enumerate(im)];o.save('peek07n.png')\"", "descr …[+70 chars]`
+
+### 🧑 User — 2026-11-17T18:57:48.854Z
+
+> ↩︎ result: r07_cc 37.00:11 37.25:6 37.50:6 37.75:6 38.00:7 38.25:3 38.50:5 38.75:8 39.00:5 39.25:12 39.50:19 39.75:27 40.00:29 40.25:29 40.50:31 40.75:31 41.00:33 41.25:35 41.50:34 41.75:35 42.00:35 42.25:33 42.50:30 42.75:32 43.00:31 43.25:21 43.50:7 43.75:8 44.00:10
+> r07_new 37.00:11 37.25:6 37.50:6 37.75:6 38.00:7 38.25:3 38.50:5 38.75:8 39.00:5 39.25:12 39.50:19 39.75:27 40.00:29 40.25:29 40.50:31 40.75:31 41.00:33 41.25:35 41.50:34 41.75:35 42.00:35 42.25:33 42.50:30 42.75:32 43.00:31 43.25:21 43.50:7 43.75:8 44.00:10
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T18:57:53.070Z
+
+> 🔧 **Bash** `{"command": "grep -n \"probe(\" src/game/Game.ts | head -3", "description": "Check probe API signature"}`
+
+### 🧑 User — 2026-11-17T18:57:53.103Z
+
+> ↩︎ result: 723:    probe(x = 0, y = 0) {
+
+### 🤖 Claude — 2026-11-17T18:57:54.465Z
+
+> 🔧 **Bash** `{"command": "sed -n 723,740p src/game/Game.ts", "description": "Read probe API"}`
+
+### 🧑 User — 2026-11-17T18:57:54.492Z
+
+> ↩︎ result: probe(x = 0, y = 0) {
+>       const rc = new THREE.Raycaster();
+>       rc.setFromCamera(new THREE.Vector2(x, y), camera);
+>       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+>     },
+>     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+>     drawList() {
+>       const hits = new Map<string, number>();
+>       const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+>       scene.traverse((o) => {
+>         if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;
+>         const prev = o.onAfterRender;
+>         const key = (o.parent?.name ? o.parent.name + '/' : '') + (o.name || o.type);
+>         hooked.push([o, prev]);
+>         o.onAfterRender = (...a: Parame …[+115 chars]
+
+### 🤖 Claude — 2026-11-17T18:58:01.024Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && cat > $S/band.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5239);\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await b.newPage({ viewport: { width: 180, height: 400 } });\nawait page.goto(`${vite.url}/?qa=1&dpr=1&camclear=1`);\nawait page.waitForFunction(() => window.__rainbow?.ready === true, null, { timeout: 240000 });\nconst r = a …[+393 chars]`
+
+### 🧑 User — 2026-11-17T18:58:07.987Z
+
+> ↩︎ result: [{"y":0.7,"h":[{"d":32.58,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12,-100.33,-279.16]},{"d":33.12,"obj":"Mesh<zone_chamber<washer_world<Scene","p":[12,-100.76,-279.5]}]},{"y":0.6,"h":[{"d":47.28,"obj":"water_ribbon<water_system<Scene","p":[12,-113.43,-286.13]},{"d":48.69,"obj":"Mesh<zone_chamber<washer_world<Scene","p":[12,-114.6,-286.93]}]},{"y":0.5,"h":[{"d":45.12,"obj":"water_ribbon<water_system<Scene","p":[12,-112.99,-282.86]},{"d":47.01,"obj":"Mesh<zone_chamber<washer_world<Scene","p":[12,-114.6,-283.84]}]},{"y":0.4,"h":[{"d":44.36,"obj":"water_ribbon<water_system<Scene","p":[12,-113.58,-280.31]},{"d":45.52,"obj":"Mesh<zone_chamber<washer_world<Scene","p":[12,-114.6,-280.86]}]},{"y":0.3,"h":[{"d":42.51,"obj":"water_ribbon<water_system<Scene","p":[12,-113.04,-277.24]},{"d":44.43,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12,-114.78,-278.05]}]}]
+
+### 🤖 Claude — 2026-11-17T18:58:21.205Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && sed -i 's|a.step(Math.round(41 \\* 60), 1 / 60); return \\[0.7, 0.6, 0.5, 0.4, 0.3\\]|const out = []; for (let t = 37; t <= 43.5; t += 0.5) { a.step(t === 37 ? 37 * 60 : 30, 1 / 60); out.push({ t, s: a.state().s, h: [0.85, 0.7, 0.55, 0.4].map((y) => { const q = a.probe(0, y).find((h) => /zone_tubes/.test(h.obj)); return q ? q.d : null; }) }); } return out; return [0]|' $S/band.mjs && timeout 600 node $S/band.mjs 2>&1 | tail -1 | python3 -c \"\nimport json,sys\nfor r in json.loads(sys.stdin.read( …[+103 chars]`
+
+### 🧑 User — 2026-11-17T18:58:28.551Z
+
+> ↩︎ result: {'t': 37, 's': 301.874, 'h': [20.45, 23.01, 25.74, 28.55]}
+> {'t': 37.5, 's': 307.874, 'h': [18.87, 20.46, 22.27, 24.3]}
+> {'t': 38, 's': 313.874, 'h': [17.4, 18.66, 20.15, 21.91]}
+> {'t': 38.5, 's': 319.874, 'h': [17.74, 19.22, 21.06, 23.37]}
+> {'t': 39, 's': 325.874, 'h': [20.26, 22.94, 26.6, 31.73]}
+> {'t': 39.5, 's': 331.874, 'h': [23.87, 28.78, 37.67, None]}
+> {'t': 40, 's': 337.874, 'h': [25.46, 32.34, 44.77, None]}
+> {'t': 40.5, 's': 343.874, 'h': [26.39, 14.38, None, None]}
+> {'t': 41, 's': 349.874, 'h': [27.82, 32.58, 30.01, None]}
+> {'t': 41.5, 's': 355.874, 'h': [27.46, None, None, None]}
+> {'t': 42, 's': 361.874, 'h': [0.45, 0.48, 0.51, 0.47]}
+> {'t': 42.5, 's': 367.874, 'h': [None, None, None, 26.74]}
+> {'t': 43, 's': 373.874, 'h': [None, None, None, 21.8]}
+> {'t': 43.5, 's': 379.874, 'h': [1.12, 1.14, 1, 0.9]}
+
+### 🤖 Claude — 2026-11-17T18:58:33.235Z
+
+> 🔧 **Bash** `{"command": "git checkout src/game/camClear.ts src/game/Game.ts && git status --short | grep -v backups; npx tsc --noEmit && echo TSC", "description": "Revert trial 07 fade"}`
+
+### 🧑 User — 2026-11-17T18:58:35.788Z
+
+> ↩︎ result: Updated 2 paths from the index
+> TSC
+
+### 🤖 Claude — 2026-11-17T18:58:44.659Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 600 node $S/band.mjs 2>&1 | tail -1 > qa/gameplay_video/r07_band_distances_r4.json; for st in 0 1 -1; do echo \"== steer $st\"; if [ $st = -1 ]; then plan=\"--steerplan=0:0,43:-1\"; else plan=\"--steer=$st\"; fi; timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=41 --t1=48 --dt=0.5 --size=360x800 $plan --out=qa/gameplay_video/moving_r4/steer$st 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],round(r['s'] …[+189 chars]`
+

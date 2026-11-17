@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11543,
-   "sha256": "376e3fa0e77d9e5177a0375f206445a1c0378175ab96c511a9792d7f1a237d46"
+   "sha256": "443a764254c9481ade969789a039e3e7e35846f9fba27cc798adbca259ac7b8c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1672,6 +1672,201 @@
    "sha256": "f7f70ab9230f0131647f6833935f43486165608231b44ee84f028e1ed62896fd"
   },
   {
+   "path": "qa/gameplay_video/lip_r4/probe_1_default.json",
+   "bytes": 31523,
+   "sha256": "9290dfc26d290e802f2f5fa51e658a644f60be0681a7c811058bb935e95fd2a8"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/probe_2_camclear_r3.json",
+   "bytes": 29263,
+   "sha256": "0617b8ac244e30381af1e59f3ebe62d9dfdd109042bfa612dca76165a251db30"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/probe_3_camclear_NEW.json",
+   "bytes": 29728,
+   "sha256": "1d4b88f78965f5f0f936bebae47ace7c1f6997fcf1b0e99a7a4247dd8a3c2de5"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.60_1_default.png",
+   "bytes": 446872,
+   "sha256": "051c3c70115c62e488ff9d763b809c70cebfe848e07996204a2e2606e48db8b2"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.60_2_camclear_r3.png",
+   "bytes": 447188,
+   "sha256": "e42b24ec6f80ee1d7cf47262782aaecb2f8072002872f8fcceb18daccfa6d06d"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.60_3_camclear_NEW.png",
+   "bytes": 430557,
+   "sha256": "b18f341b2e864f56978c63edf9fad7972bacdf0e53a5009f5c92e22d8a1fbf39"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.70_1_default.png",
+   "bytes": 392374,
+   "sha256": "865cd3125c6b131a56591c55931427e5d46f461858b43b719baef22f3df7a4d2"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.70_2_camclear_r3.png",
+   "bytes": 392288,
+   "sha256": "3774e40c01560375aa3d7fbb227b77bd7614e0a2cbecd53ed4ede1898166453d"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.70_3_camclear_NEW.png",
+   "bytes": 419768,
+   "sha256": "d160c64b33cd0f1b78811a757b934b55c7fc35d7721ba6437b55119fea7c276a"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.80_1_default.png",
+   "bytes": 377681,
+   "sha256": "08efd790682a683da475b9c804978ba0dbfc5fcd39e74d0c61c7c3605a2f816a"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.80_2_camclear_r3.png",
+   "bytes": 386906,
+   "sha256": "5088391dab065133018f169f460420a8729bba0d3a82ecb3fb8bb0d10127a83e"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.80_3_camclear_NEW.png",
+   "bytes": 388954,
+   "sha256": "5927b815e232569e0a7e139310864e104cc70a6181b969b51204c84757c992ef"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.90_1_default.png",
+   "bytes": 341799,
+   "sha256": "c7a4da2d3b5f5855292354045b405ee9f8621f79edfc434b8b16ec8fcc025fd7"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.90_2_camclear_r3.png",
+   "bytes": 335882,
+   "sha256": "2efdd3cfa2d9bade1c64615e889ef921b51e47538a2a95692ec00dcca7f44c36"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t16.90_3_camclear_NEW.png",
+   "bytes": 376938,
+   "sha256": "124544626a45bff9fcff7fc20d001daba8f3af2819f4b6d188a3f3f68965d262"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.00_1_default.png",
+   "bytes": 336385,
+   "sha256": "7baad438936c23ddb2bd65cb34b4c45181abd1f94d1e89a8b3bf4a792ef8bedb"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.00_2_camclear_r3.png",
+   "bytes": 303954,
+   "sha256": "21d30d37989a031f1181c094679ec1c3f171c74ba2f09a92ee448f7d9a935a5d"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.00_3_camclear_NEW.png",
+   "bytes": 373287,
+   "sha256": "619ba81afcb377a40f6b9efcacb62a31eba25aed467b0419173081fd1e57cc4f"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.10_1_default.png",
+   "bytes": 356579,
+   "sha256": "f576f7938ee8b94849635bef8aa219c74136d16b6cd9ecb618d0dee9d590ade4"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.10_2_camclear_r3.png",
+   "bytes": 260623,
+   "sha256": "8fbb4fa33eacb4d6b0f167fa2932ccef0c241cb9bb46ca82054bf1a316f5b41e"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.10_3_camclear_NEW.png",
+   "bytes": 344706,
+   "sha256": "d38befa32a6b51caf9730edcb5e34e6170371b6c55d625388b124a73d77c01c0"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.20_1_default.png",
+   "bytes": 364019,
+   "sha256": "f59aa4c72a86089e1f81806dd30f8f1d299f15fa301abadd086d9db544da4ab4"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.20_2_camclear_r3.png",
+   "bytes": 270505,
+   "sha256": "0f525ba71021b0b596c73b74afc28916b2af2994e093d92ef1cf69d5b3c82906"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.20_3_camclear_NEW.png",
+   "bytes": 345072,
+   "sha256": "8f3f5475a6796218534cfaefe0d92f8cb4cd06770a92ba9109169bb3a93857bd"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.30_1_default.png",
+   "bytes": 367468,
+   "sha256": "b9fed97789053b070ac78661d5f9a4d7f920f7848c0782023f99fa9181b53dc2"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.30_2_camclear_r3.png",
+   "bytes": 347838,
+   "sha256": "a75c2a75a4fb9c614737029e10d6556486a2b66e4e9d3463b4f4f93b8659d5e7"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.30_3_camclear_NEW.png",
+   "bytes": 367491,
+   "sha256": "dfe0e17d0ba97d79af4da4a157a3cdc5153cd064c182f5df017ae5dbeb073cb4"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.40_1_default.png",
+   "bytes": 382699,
+   "sha256": "4328c52af06ff2d4e8cff039d5e3a7b1ab25fc73e7e5b05b6fd5a74b999d3399"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.40_2_camclear_r3.png",
+   "bytes": 413875,
+   "sha256": "0267d55c3b77b85886b4e0e0b3baf8b71cb131019692431433b0367c9dd11485"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.40_3_camclear_NEW.png",
+   "bytes": 393083,
+   "sha256": "af0bc881202f39ac6281c0969b225af836e3b3676141b6c5e0ecc1b89a8572fc"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.50_1_default.png",
+   "bytes": 387516,
+   "sha256": "15204546235d84d51e20a48c316c036058658caa9e42a641c1a1b4903da0ff33"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.50_2_camclear_r3.png",
+   "bytes": 404913,
+   "sha256": "90c8d3e331dd6677a6de9e6dec861c96ff20344026a9f89aafe6992bb09dd873"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.50_3_camclear_NEW.png",
+   "bytes": 393834,
+   "sha256": "531d7ef5488f7b84831c4ed1b2a3dfc16eccd746654c9f4cccbfce12d8d36a64"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.60_1_default.png",
+   "bytes": 382712,
+   "sha256": "c8aa45f490cd454888a7d6cfa02df648b3f78520e2c5b4fcae6936932e669cb7"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.60_2_camclear_r3.png",
+   "bytes": 408791,
+   "sha256": "e0f8d6fe8882dc82885231be76cf9fae584ea4459866e5c0c5dfa61b134ba977"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/t17.60_3_camclear_NEW.png",
+   "bytes": 414739,
+   "sha256": "fab43e0d40ba62ef76823c5359821cc02b5532806baaaff380a7f00349c3ae4c"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/view_trace_1_default.json",
+   "bytes": 70805,
+   "sha256": "a28fcc6c10d95722cb4387c0a037dd8949ac4ef74e5e36745137c893bee92d9f"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/view_trace_2_camclear_r3.json",
+   "bytes": 70784,
+   "sha256": "818d0a3ad0e3ce6622dc6e96ce962cc78eeb82aea6bf1f843f4c1b5d8c267f7e"
+  },
+  {
+   "path": "qa/gameplay_video/lip_r4/view_trace_3_camclear_NEW.json",
+   "bytes": 73712,
+   "sha256": "9e2ce4286121fe89e67b7e095f37b143f4bc2c8c7c8437b6d8ff6498f4aa3310"
+  },
+  {
    "path": "qa/gameplay_video/moving_r3/sheet_steer-1.png",
    "bytes": 8393418,
    "sha256": "b05b6316ca57ca27a5a7bd44ea61dc37baebabc10beebd47078a0e739941b7dd"
@@ -2165,6 +2360,116 @@
    "path": "qa/gameplay_video/moving_r3/steer1/probe.json",
    "bytes": 45407,
    "sha256": "3e2af927fc8441a4cb11593b933b37c21f2e91ca9912bd6cf09f933b0486a03c"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_000_t41.00.png",
+   "bytes": 475748,
+   "sha256": "87d888daeb60fbb52794cba90219d091e72fd248e54b65e4992655ff41b14114"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_001_t41.50.png",
+   "bytes": 438542,
+   "sha256": "6562498833ba17a8687aec7b5f37179f276206acafdd3dec8ac5adb55fe96b45"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_002_t42.00.png",
+   "bytes": 420784,
+   "sha256": "cab9c19d6a968cd215fe1a794375abdcaa7ece7eabfd5eed7c7b53701a7e82dc"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_003_t42.50.png",
+   "bytes": 430031,
+   "sha256": "b965d5f307b2e42f2e99d6faaded42ac195e6617bed0eac242a2f64a40bde743"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_004_t43.00.png",
+   "bytes": 385847,
+   "sha256": "508362df4048a7b445cab44c6110a5a2b206e7fd887c908d79925463b23b7e9b"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_005_t43.50.png",
+   "bytes": 416285,
+   "sha256": "1acc47537f84a71d05657e78c1cb230f3d21164d2b33f11570f2ded48d88a67f"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_006_t44.00.png",
+   "bytes": 466018,
+   "sha256": "a95b121cfce4b35231fa880c3c68da62c0d0a9f9bc0d84b24826f3c5c2eea8fc"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_007_t44.50.png",
+   "bytes": 637234,
+   "sha256": "b403efea90c2c4e4e67e4f0fda97d34bd431b6dded02cac43d3d83e2bd1f1db5"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_008_t45.00.png",
+   "bytes": 627892,
+   "sha256": "422ab31be5aeea4075d5ef3658b7452cedddae4f4c6830edb408a2e55e7ea1e5"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_009_t45.50.png",
+   "bytes": 623109,
+   "sha256": "b5ce5a12fc872056e53e0bf3b5d790be44032310aa2de843ba35f7d251d7132a"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_010_t46.00.png",
+   "bytes": 445269,
+   "sha256": "4d2297d7a8184bb2451a3374ac37b792b80d0821ad6415518c805df155c996ae"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_011_t46.50.png",
+   "bytes": 464903,
+   "sha256": "3d553f67ad68b3c8422bca9550ca76f9e55912a7682f5a253c7e0f74dc816608"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_012_t47.00.png",
+   "bytes": 472399,
+   "sha256": "1b0728fc62ba782cc30087d603fb03c8c1a68d0439e4be9b1290e93442ce0791"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_013_t47.50.png",
+   "bytes": 463960,
+   "sha256": "326ecc7e818b629a9bb385964b82f5e0912bf3b5273ebd9ae564e4ac5e7cc7f9"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/f_014_t48.00.png",
+   "bytes": 451827,
+   "sha256": "58585215ddf4791978d3534b51af85faf36f832cd390842ee181f8f824cc28a2"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer0/probe.json",
+   "bytes": 19850,
+   "sha256": "dd6aab4fec36ca2fb09140a92b6251b47c924a411d5eb167a3137ff4f8090c36"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer1/f_000_t41.00.png",
+   "bytes": 556524,
+   "sha256": "190e8a135a7a6acd60d16c0aee33b573bdf5b3b015aac2125e240fedbe9708a8"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer1/f_001_t41.50.png",
+   "bytes": 544424,
+   "sha256": "d7f4afb15f0b10721262c9e70f54aca40e33b791d5f053ae52cf4355e49fb621"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer1/f_002_t42.00.png",
+   "bytes": 526013,
+   "sha256": "f37e626af0c8f9f8d884f3cafe84676cd0c99bc3557a7ff80be38de1e53c5c57"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer1/f_003_t42.50.png",
+   "bytes": 509234,
+   "sha256": "755772777e398f8f20c9344e56066583dbd39182b22a64c2389a2cacb9cda9ef"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer1/f_004_t43.00.png",
+   "bytes": 470975,
+   "sha256": "979de416a988652e51264cb7490aa50d44831d0beea151d08eab9b912cebd9f6"
+  },
+  {
+   "path": "qa/gameplay_video/r07_band_distances_r4.json",
+   "bytes": 700,
+   "sha256": "e6dc5f79271462ee5ed13dc28fc94ace3832d2d7674fbf869aeaf05089ef954d"
   },
   {
    "path": "qa/gameplay_video/scan/default/probe.json",
@@ -9058,8 +9363,8 @@
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 18562,
-   "sha256": "f91a31c165b55641aa00b4e2adb23c4b775ecf5e3ce78ae0b76c94e1c3543aa9"
+   "bytes": 18554,
+   "sha256": "9c5ca08f96b251b6b0d45b94ab46df5cdfc73411c582a0eebb4d2c569572549e"
   },
   {
    "path": "src/game/match.ts",
