@@ -1720,3 +1720,80 @@ No CI on the repo, so nothing to watch on PR #17 except reviews. Sending the one
 
 > ↩︎ result: {"fire_at":"2026-11-17T20:12:00Z","now":"2026-11-17T19:21:38Z","trigger_id":"trig_01YEZqR7XXs6DVgwESM8Emvz"}
 
+### 🤖 Claude — 2026-11-17T19:21:47.618Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+**Backup**
+- **Branch and commit:** `claude/rainbow-s08-benny08-bake-c4` @ `0067fc7be277571a51f11220bf12475036477d8e`. GitHub has the same commit; checked with `git ls-remote`.
+- **Five-minute autosave:** running and in sync.
+- **Reference images:** all 13 approved pictures are unchanged.
+- **Git LFS:** the new APK is stored in LFS.
+- **Not re-checked:** specialist status, Marble / World Labs, Blender and the connectors. Nothing paid was run.
+
+**Your 19:00 decisions are in, and Screen 08 now starts from r3b**
+- **Pictures to compare:** `qa/match/08/benny08/review_r5/final/` has APPROVED, BEFORE (r3b) and NEW as separate full-size files. Each has the screen view, a Benny close-up, and three moving frames (swimming forward, steering left, steering right).
+- **NEW body:** the pink body is fuller and rounder, and now wider than the beanie brim, as in the approved picture. The beanie is slightly smaller, and the short arms sit higher so they show at the sides. The fur, knit, star and splash are r3b's.
+- **Numbers:** the strict pixel score went **down**. Benny + splash is 62.2 %, against 65.3 % for r3b. The pom-pom and star score lower because the smaller beanie moves them a little off their painted spots. The scenery is unchanged at 97.3 %.
+- **Earlier versions:** my slimmer-toward-the-water shape from 18:55 went the wrong way. It is now off by default and only appears with `b08shape=1`. r2, r3b and r4 are all still reproducible from their URLs, which are listed in `qa/match/08/benny08/NOTES.md`.
+- **Tried and dropped:**
+  - A fuller body without the smaller beanie looked too heavy.
+  - Making the fur softer than r3b made no visible difference.
+  - The painting's large soft fur clumps and the pom-pom's yarn tufts still need a new fur model; changing settings doesn't get there.
+- **Checks:**
+  - The normal build is unchanged.
+  - Gameplay passes 8/8 checks with 91 coins / 2,240 points, both with and without `match08=1`.
+  - On screens 04–07 the new version looks exactly like r3b.
+- **APK:** `builds/rainbow-debug-08benny-2026-11-17-r5b.apk` built successfully. It has not been tested on a phone.
+- **Possible problem:** with `match08=1`, screens 04–07 differ from the normal build over much of the frame, not just around Benny. The round-4 settings give exactly the same difference, so it doesn't come from the Benny work. I've asked the lead to look into it.
+
+I sent one report to the lead and am now waiting. Draft PR #17 is for review only and is not to be merged. The repository has no automated checks; I'll look at the PR once more around 20:12 UTC.
+
+### 🧑 User — 2026-11-17T19:21:49.178Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
+### 🤖 Claude — 2026-11-17T19:21:50.575Z
+
+> 🔧 **Bash** `{"command": "git status --short | head; git diff --stat | tail -2", "description": "Show uncommitted changes"}`
+
+### 🧑 User — 2026-11-17T19:21:50.651Z
+
+> ↩︎ result: M backups/CONVERSATION_INDEX.md
+>  M backups/claude-sessions/25fbdcde-09fd-5e26-a26e-a6fcde151fae/transcript.md
+>  M backups/claude-sessions/25fbdcde-09fd-5e26-a26e-a6fcde151fae/transcript.sanitized.jsonl
+>  .../transcript.sanitized.jsonl                     | 13 ++++++++
+>  3 files changed, 50 insertions(+), 1 deletion(-)
+
+### 🤖 Claude — 2026-11-17T19:21:51.824Z
+
+Only the conversation backup files changed. Saving them with the project's autosave (it scans for secrets and verifies the push):
+
+### 🤖 Claude — 2026-11-17T19:21:53.379Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json 2>/dev/null; python3 scripts/rainbow-autosave.py --reason manual:end >/dev/null 2>&1; git status --short | head -3; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake-c4 | cut -c1-40; git rev-parse HEAD", "description": "Run autosave and verify remote matches HEAD", "timeout": 180000}`
+
+### 🧑 User — 2026-11-17T19:21:54.076Z
+
+> ↩︎ result: 0067fc7be277571a51f11220bf12475036477d8e
+> 4d068267236bcd96100e0cf5977f5863c884c473
+
+### 🤖 Claude — 2026-11-17T19:21:55.320Z
+
+The commit was made locally but GitHub still has the old commit, so I'm pushing by hand:
+
+### 🤖 Claude — 2026-11-17T19:21:56.827Z
+
+> 🔧 **Bash** `{"command": "for i in 1 2 3; do git push -q origin claude/rainbow-s08-benny08-bake-c4 2>&1 | tail -2 && break; sleep $((i*3)); done; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake-c4 | cut -c1-40; git rev-parse HEAD; git status --short | wc -l", "description": "Push and verify remote equals HEAD", "timeout": 120000}`
+
+### 🧑 User — 2026-11-17T19:21:57.981Z
+
+> ↩︎ result: 4d068267236bcd96100e0cf5977f5863c884c473
+> 4d068267236bcd96100e0cf5977f5863c884c473
+> 0
+
+### 🤖 Claude — 2026-11-17T19:22:00.186Z
+
+The leftover changes were only the conversation backup files (transcript and index). They're now committed and pushed: `claude/rainbow-s08-benny08-bake-c4` @ `4d068267236bcd96100e0cf5977f5863c884c473`, and GitHub has the same commit. The autosave made the commit but didn't push it, so I pushed by hand and checked it. Nothing is left uncommitted, and none of the game work changed. I'm still waiting for the lead.
+
