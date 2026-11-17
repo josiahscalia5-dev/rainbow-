@@ -1074,3 +1074,375 @@ FAL READY received (one paid edit, no retry). Re-checking for an existing record
 
 > 🔧 **Bash** `{"command": "bash scripts/setup-image-blaster.sh 2>&1 | tail -4; D=/home/user/neilsonnn/image-blaster; ls -d $D/worlds/*04* 2>&1; find $D/worlds -iname \"*04*\" 2>/dev/null | head; git log --all --oneline -- 'qa/match/04/fal/*' 'qa/imageblaster/04*' | head", "description": "Set up Image-Blaster and re-check no 04 record", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T16:56:16.487Z
+
+> ↩︎ result: Image-Blaster ready at /home/user/neilsonnn/image-blaster (4acb43b); world rainbow-08-final-spin-chamber restored.
+> Scripts need: NODE_USE_ENV_PROXY=1 (Node fetch ignores HTTPS_PROXY otherwise). Free key checks:
+>   curl -sS https://api.worldlabs.ai/marble/v1/credits      # JSON with remaining_credits
+>   curl -sS -o /dev/null -w '%{http_code}' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status   # 404 = key accepted
+> ls: cannot access '/home/user/neilsonnn/image-blaster/worlds/*04*': No such file or directory
+
+### 🤖 Claude — 2026-11-17T16:56:18.052Z
+
+No Screen 04 fal record anywhere (all branches, Image-Blaster worlds). Free key check, then staging the input.
+
+### 🤖 Claude — 2026-11-17T16:56:19.659Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/neilsonnn/image-blaster && curl -sS -o /dev/null -w '%{http_code}\\n' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status; grep -nE \"argv|--[a-z-]+|resolution|aspect|retry|attempt\" .claude/scripts/image-edit/generate-edit.mjs | head -40", "description": "Free fal key check and inspect edit script"}`
+
+### 🧑 User — 2026-11-17T16:56:20.105Z
+
+> ↩︎ result: 404
+> 98:    resolution,
+> 99:    aspectRatio,
+> 106:  if (!images?.length) throw new Error("At least one --image is required.");
+> 107:  if (!prompt) throw new Error("--prompt is required.");
+> 108:  if (!outputDir) throw new Error("--output-dir is required.");
+> 113:  if (!slug) throw new Error("--output-slug or --role must produce a usable slug.");
+> 141:        resolution,
+> 142:        aspectRatio,
+> 189:      "Usage: node generate-edit.mjs --image <path-or-url> --prompt <prompt> --output-dir <dir> --output-slug <slug> [--role image-edit]"
+> 202:    resolution: one(flags, "resolution"),
+> 203:    aspectRatio: one(flags, "aspect-ratio"),
+> 213:if (import.meta.url === `file://${process.argv[1]}`) {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:56:21.814Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/neilsonnn/image-blaster && sed -n 90,180p .claude/scripts/image-edit/generate-edit.mjs; grep -rn \"retry\\|attempt\\|for (let\" .claude/scripts/lib/*.mjs 2>/dev/null | head", "description": "Check edit script for automatic retries"}`
+
+### 🧑 User — 2026-11-17T16:56:21.869Z
+
+> ↩︎ result: images,
+>     prompt,
+>     outputDir,
+>     outputSlug,
+>     role = "image-edit",
+>     provider,
+>     numImages = 1,
+>     outputFormat = "png",
+>     resolution,
+>     aspectRatio,
+>     quality,
+>     imageSize,
+>     maskImage,
+>     seed
+>   } = options;
+> 
+>   if (!images?.length) throw new Error("At least one --image is required.");
+>   if (!prompt) throw new Error("--prompt is required.");
+>   if (!outputDir) throw new Error("--output-dir is required.");
+> 
+>   await ensureDir(outputDir);
+> 
+>   const slug = slugify(outputSlug || role);
+>   if (!slug) throw new Error("--output-slug or --role must produce a usable slug.");
+> 
+>   const activeRequest = (await requestMetadataFiles(outputDir, { slug })).find(isActiveRequest);
+>   const outputIndex = activeRequest?.index ?? await nextIndex(outputDir);
+>   const extension = `.${String(outputFormat).replace(/^\./, "") || "png"}`;
+>   const outputPath = artifactPath(outputDir, outputIndex, slug, extension);
+>   const metadataPath = activeRequest?.path ?? requestPath(outputDir, outputIndex, slug);
+> 
+>   const metadata = {
+>     index: outputIndex,
+>     role,
+>     output_slug: slug,
+>     input_images: images,
+>     mask_image: maskImage,
+>     provider_alias: provider
+>   };
+> 
+>   const imageEdit = activ …[+1279 chars]
+
+### 🤖 Claude — 2026-11-17T16:56:23.353Z
+
+Running the single authorised fal edit now (`fal-ai/nano-banana-2/edit`, 2K, prepared prompt).
+
+### 🤖 Claude — 2026-11-17T16:56:27.424Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/neilsonnn/image-blaster && W=worlds/rainbow-04-five-arrows/source && mkdir -p $W && cp /home/user/rainbow-/references/04_through_the_five_arrows.png $W/0-04-through-the-five-arrows.png && sha256sum $W/0-04-through-the-five-arrows.png /home/user/rainbow-/references/04_through_the_five_arrows.png | awk '{print $1}' | uniq | wc -l && NODE_USE_ENV_PROXY=1 FAL_KEY=proxy-injected timeout 1200 node .claude/scripts/image-edit/generate-edit.mjs \\\n  --image $W/0-04-through-the-five-arrows.png \\\n  --prompt \"remove the following from the image: the game HUD bar at the top ( …[+742 chars]`
+
+### 🧑 User — 2026-11-17T16:56:49.473Z
+
+> ↩︎ result: 1
+> (node:5959) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> {
+>   "schema_version": 1,
+>   "role": "plate",
+>   "prompt": "remove the following from the image: the game HUD bar at the top (heart counter, coin counter and pause button), the purple title banner reading 04 · THROUGH THE FIVE ARROWS, the pink fluffy character in the knitted purple-and-white hat and its white splash, all five gold dollar coins. Continue the swirling cyan and pink water, the glowing chevron arrows on the water and the room behind (porthole, towels, control panel) naturally where they were hidden. Keep everything else exactly as it is: the gold ring tunnel, its rings, colours, lighting, foam and bubbles.",
+>   "input_images": [
+>     "worlds/rainbow-04-five-arrows/source/0-04-through-the-five-arrows.png"
+>   ],
+>   "output_image": "worlds/rainbow-04-five-arrows/source/1-04-five-arrows-plate.png",
+>   "request_metadata": "worlds/rainbow-04-five-arrows/source/.1-04-five-arrows-plate-request.json"
+> }
+> total 6064
+> drwxr-xr-x 2 root root    4096 Nov 17 16:56 .
+> drwxr-xr-x 3 root root    4096 Nov 17 16:56 ..
+> -rw-r …[+266 chars]
+
+### 🤖 Claude — 2026-11-17T16:56:50.639Z
+
+Fal edit done (one call). Saving the record + result first, then reviewing it.
+
+### 🤖 Claude — 2026-11-17T16:56:55.090Z
+
+> 🔧 **Bash** `{"command": "F=qa/match/04/fal && mkdir -p $F && W=/home/user/neilsonnn/image-blaster/worlds/rainbow-04-five-arrows/source && cp $W/1-04-five-arrows-plate.png $F/1-04-five-arrows-plate_fal_nano-banana-2_2K.png && python3 -I -c \"\nimport json,re;j=json.load(open('$W/.1-04-five-arrows-plate-request.json'))\ns=json.dumps(j); assert not re.search(r'Key [A-Za-z0-9]{8,}',s)\nprint({k:(v if not isinstance(v,(dict,list)) else '...') for k,v in j.items()})\" && cp $W/.1-04-five-arrows-plate-request.json $F/fal_edit1_plate_request.json && identify $F/1-04-five-arrows-plate_fal_nano-banana-2_2K.png; git …[+325 chars]`
+
+### 🧑 User — 2026-11-17T16:56:55.176Z
+
+> ↩︎ result: {'schema_version': 1, 'kind': '2d', 'index': 1, 'role': 'plate', 'output_slug': '04-five-arrows-plate', 'input_images': '...', 'provider': 'fal-ai/nano-banana-2/edit', 'endpoint': 'fal-ai/nano-banana-2/edit', 'status': 'completed', 'request_id': '01a1ea70-42d8-7943-b035-7bb5f129d872', 'submitted_at': '2026-11-17T16:56:27.628Z', 'completed_at': '2026-11-17T16:56:49.452Z', 'prompt': 'remove the following from the image: the game HUD bar at the top (heart counter, coin counter and pause button), the purple title banner reading 04 · THROUGH THE FIVE ARROWS, the pink fluffy character in the knitted purple-and-white hat and its white splash, all five gold dollar coins. Continue the swirling cyan and pink water, the glowing chevron arrows on the water and the room behind (porthole, towels, control panel) naturally where they were hidden. Keep everything else exactly as it is: the gold ring tunnel, its rings, colours, lighting, foam and bubbles.', 'input_files': '...', 'output_files': '...', 'downloaded_files': '...', 'result': '...', 'error': None, 'provider_alias': 'nano-banana', 'updated_at': '2026-11-17T16:56:49.454Z'}
+> qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png PNG …[+464 chars]
+
+### 🤖 Claude — 2026-11-17T16:56:58.033Z
+
+> 🔧 **Bash** `{"command": "cat .gitattributes | head -20; git check-attr filter qa/imageblaster/08/1-08-final-spin-chamber-plate_fal_nano-banana-2_2K.png builds/rainbow-debug.apk; ls android/app/build/outputs/apk/debug/", "description": "Check LFS attributes"}`
+
+### 🧑 User — 2026-11-17T16:56:58.084Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+> qa/imageblaster/08/1-08-final-spin-chamber-plate_fal_nano-banana-2_2K.png: filter: unspecified
+> builds/rainbow-debug.apk: filter: lfs
+> app-debug.apk
+> output-metadata.json
+
+### 🤖 Claude — 2026-11-17T16:57:02.901Z
+
+> 🔧 **Bash** `{"command": "cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-04-2026-11-17-r2.apk && git status --short | head && git add builds/rainbow-debug-04-2026-11-17-r2.apk qa/match/04/fal && git commit -q -m \"Screen 04: fal clean plate (ONE edit, request 01a1ea70) saved unreviewed + debug APK ?match04=1 (not phone-tested)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoZnQahSncyyVnBsDQS\" && git push -q origin claude/rainbow-s04-match-c2; git ls-remote origin refs/heads/claude/rainbow-s04-match-c2; git rev-par …[+95 chars]`
+
+### 🧑 User — 2026-11-17T16:57:09.060Z
+
+> ↩︎ result: ?? builds/rainbow-debug-04-2026-11-17-r2.apk
+> ?? qa/match/04/fal/
+> Uploading LFS objects: 100% (1/1), 26 MB | 0 B/s, done.
+> 27521acf1c86d697ab4462fb9ed4332b2eb9a727	refs/heads/claude/rainbow-s04-match-c2
+> 27521acf1c86d697ab4462fb9ed4332b2eb9a727
+> 445d25a570 * builds/rainbow-debug-04-2026-11-17-r2.apk
+
+### 🤖 Claude — 2026-11-17T16:57:10.081Z
+
+Checkpoint pushed (`27521ac`). Now reviewing the fal plate against the approved picture.
+
+### 🤖 Claude — 2026-11-17T16:57:12.228Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && convert references/04_through_the_five_arrows.png -resize 432x768! $S/a.png && convert qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png -resize 432x768! $S/b.png && convert $S/a.png $S/b.png +append $S/fal_cmp.png", "description": "Side-by-side approved vs fal plate"}`
+
+### 🧑 User — 2026-11-17T16:57:13.059Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:57:13.176Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/fal_cmp.png"}`
+
+### 🧑 User — 2026-11-17T16:57:13.217Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:57:20.272Z
+
+> 🔧 **Bash** `{"command": "cat tools/match04/make_plate04.py | head -45; ls qa/imageblaster/08 | grep -i align", "description": "Read plate composite tool"}`
+
+### 🧑 User — 2026-11-17T16:57:20.313Z
+
+> ↩︎ result: """Screen 04 (?match04=1): texture plate = the user's ORIGINAL approved pixels; PROVISIONAL local fill (OpenCV
+> inpainting, Telea) only where the HUD bar, title banner, Benny and the five coins are (the game draws those itself).
+> A fal nano-banana-2/edit clean plate is prepared (qa/match/04/FAL_PLATE_REQUEST.md) but NOT run.
+> Also cuts the material patches for unseen surfaces (tunnel rings, water, room wall) from the artwork.
+> usage: python3 -I tools/match04/make_plate04.py <approved.png> <out dir>"""
+> import sys, json
+> import numpy as np, cv2
+> 
+> src, out = sys.argv[1], sys.argv[2]
+> A = cv2.imread(src, cv2.IMREAD_COLOR); H, W = A.shape[:2]
+> M = np.zeros((H, W), np.uint8)
+> # HUD bar + title banner (rounded pills)
+> cv2.rectangle(M, (55, 12), (808, 108), 255, -1)
+> cv2.rectangle(M, (98, 112), (768, 190), 255, -1)
+> # Benny: pom-pom, beanie (with star), body + paws; down to where his fur meets the water
+> cv2.ellipse(M, (400, 1032), (84, 78), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (395, 1160), (172, 92), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (392, 1290), (224, 130), 0, 0, 360, 255, -1)
+> # the picture's coins (centre, diameter): they are real pickups in the game
+> COINS = [(175, 970, 112), (262, 872, 82), (330, 79 …[+2001 chars]
+
+### 🤖 Claude — 2026-11-17T16:57:32.630Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match04/fal_plate04.py <<'EOF'\n\"\"\"Screen 04: composite the ONE fal clean plate (qa/match/04/fal/, request 01a1ea70-42d8-7943-b035-7bb5f129d872) into\nthe texture plate - ONLY inside plate04_fillmask.png (HUD, title, Benny, coins); the user's original pixels everywhere\nelse. The plate is aligned to the approved picture first (ECC affine, measured outside the fill mask).\nWrites NEW files (milestone 1/2 plate04_hybrid.png stays untouched): plate04_hybrid_fal.png + plate04_fal_alignment.json.\nusage: python3 -I tools/match04/fal_plate04.py <approved.png> <fal plate.p …[+2279 chars]`
+
+### 🧑 User — 2026-11-17T16:57:33.467Z
+
+> ↩︎ result: {'fal_request_id': '01a1ea70-42d8-7943-b035-7bb5f129d872', 'ecc': 0.9957332039865653, 'affine': [[1.0078049898147583, 1.8897009795182385e-05, -3.3936073780059814], [1.523687933513429e-05, 1.0000457763671875, -0.033302873373031616]], 'outside_mask_within20_before_align': 0.7831158348485596, 'outside_mask_within20_after_align': 0.9447938827075287, 'composited_share': 0.23377369068287038}
+
+### 🤖 Claude — 2026-11-17T16:57:37.152Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && convert assets/textures/match04/plate04_hybrid.png assets/textures/match04/plate04_hybrid_fal.png +append -crop 1728x900+0+636 -resize 50% $S/hyb.png", "description": "Compare old vs fal hybrid plate"}`
+
+### 🧑 User — 2026-11-17T16:57:37.428Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:57:38.149Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/hyb.png"}`
+
+### 🧑 User — 2026-11-17T16:57:38.164Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:57:40.971Z
+
+The fal fill under Benny is a clear improvement over the mirrored provisional fill. Wiring it behind a new switch `&fal04=1` (milestones 1/2 stay reproducible).
+
+### 🤖 Claude — 2026-11-17T16:57:47.235Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match04.ts'; s=open(p).read()\nold=\"const TILE04 = new URLSearchParams(location.search).get('tile04') !== '0'; // milestone-2 tiles (A/B: &tile04=0 = milestone 1)\"\nassert old in s\ns=s.replace(old, old+\"\"\"\n// `&fal04=1`: the ONE fal clean plate (request 01a1ea70, qa/match/04/fal/) inside the fill mask instead of the provisional\n// fill (tools/match04/fal_plate04.py -> plate04_hybrid_fal.png); then the fill needs no hand-over to the river tile\nconst FAL04 = new URLSearchParams(location.search).get('fal04') === '1';\"\"\")\nold2=\"loadAsync(t …[+893 chars]`
+
+### 🧑 User — 2026-11-17T16:58:05.707Z
+
+> ↩︎ result: TSC OK
+> 04 → /tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/sc
+> FULL                                   BEFORE  79.9 %  SSIM 0.798   NEW  81.3 %  SSIM 0.812
+> BELOWHUD                               BEFORE  87.9 %  SSIM 0.863   NEW  88.9 %  SSIM 0.873
+> SCENERY                                BEFORE  97.6 %  SSIM 0.967   NEW  98.1 %  SSIM 0.973
+> upper_room_ringtop_y200_560            BEFORE 100.0 %  SSIM 0.996   NEW 100.0 %  SSIM 0.996
+> middle_tunnel_arrows_coins_y560_960    BEFORE  95.7 %  SSIM 0.943   NEW  96.9 %  SSIM 0.955
+> lower_water_foam_y960_1536_noBenny     BEFORE  97.3 %  SSIM 0.964   NEW  97.7 %  SSIM 0.970
+> BENNY                                  BEFORE  16.5 %  SSIM 0.095   NEW  21.1 %  SSIM 0.139
+
+### 🤖 Claude — 2026-11-17T16:58:07.131Z
+
+Closer on every measure (whole frame 79.9 → 81.3 %, scenery 97.6 → 98.1 %). Checkpoint push, then moving frames with the fal plate.
+
+### 🤖 Claude — 2026-11-17T16:58:10.369Z
+
+> 🔧 **Bash** `{"command": "git add src/world/match04.ts tools/match04/fal_plate04.py assets/textures/match04 qa/match/04 && git commit -q -m \"Screen 04: fal clean plate composited inside the fill mask only, behind &fal04=1 (measured closer)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoZnQahSncyyVnBsDQS\" && git push -q origin claude/rainbow-s04-match-c2; git ls-remote origin refs/heads/claude/rainbow-s04-match-c2 | cut -c1-12; git rev-parse --short=12 HEAD; timeout 900 node tools/match04/motion04.mjs qa/match/04/motion_m2/NEW_fal04 'match …[+115 chars]`
+
+### 🧑 User — 2026-11-17T16:59:05.885Z
+
+> ↩︎ result: 18376727931f
+> 18376727931f
+> s_right_steer s 83.656 lat 1.65 04 coins 1330
+
+### 🤖 Claude — 2026-11-17T16:59:08.918Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad && O=qa/match/04/motion_m2/NEW_fal04 && convert $O/f03_forward3u.png $O/f06_forward6u.png $O/f10_forward10u.png $O/s_left_steer.png $O/s_right_steer.png -resize 346x614 +append $S/fal_m.png", "description": "Contact sheet of fal04 motion"}`
+
+### 🧑 User — 2026-11-17T16:59:09.806Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:59:09.866Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/fal_m.png"}`
+
+### 🧑 User — 2026-11-17T16:59:09.921Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:59:12.891Z
+
+The water under Benny now stays continuous painted swirls while riding and steering. Running the gameplay test with the fal switch, then final docs.
+
+### 🤖 Claude — 2026-11-17T16:59:15.596Z
+
+> 🔧 **Bash** `{"command": "timeout 1500 node scripts/gameplay-test.mjs --q='match04=1&fal04=1' 2>&1 | python3 -I -c \"\nimport sys,json;t=sys.stdin.read();j=json.loads(t[t.index('{'):]);print(j['pass'],sum(j['checks'].values()) if all(isinstance(v,bool) for v in j['checks'].values()) else j['checks'])\"; python3 -I -c \"\nimport json,re;s=open('qa/gameplay_test_switch.json').read();print(re.findall(r'\\\"(startCoins|endCoins)\\\": ?(\\d+)',s))\"; mv qa/gameplay_test_switch.json qa/match/04/gameplay_test_match04_fal04.json; git checkout -- qa/capture_log.json 2>/dev/null; git status --short", "description":  …[+54 chars]`
+
+### 🧑 User — 2026-11-17T16:59:23.791Z
+
+> ↩︎ result: True 8
+> [('startCoins', '1330'), ('endCoins', '2240')]
+> ?? qa/match/04/gameplay_test_match04_fal04.json
+> ?? qa/match/04/motion_m2/NEW_fal04/
+
+### 🤖 Claude — 2026-11-17T16:59:41.127Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/04/NOTES.md'; s=open(p).read()\nold=\"\"\"5. **fal clean plate:** NOT run — no \"FAL READY\" from the lead. Provisional fill stays (`FAL_PLATE_REQUEST.md`).\"\"\"\nnew=\"\"\"5. **fal clean plate — RUN ONCE** after the lead's \"FAL READY\" (16:43 UTC; the user's one authorised edit, no retry):\n   re-checked first, no Screen 04 record on any branch / in Image-Blaster. ONE `fal-ai/nano-banana-2/edit` 2K call with\n   the prepared prompt, request id **`01a1ea70-42d8-7943-b035-7bb5f129d872`** (16:56:27 → 16:56:49 UTC). Result\n   `fal/1-04-five-arrows-pl …[+3549 chars]`
+
+### 🧑 User — 2026-11-17T16:59:45.970Z
+
+> ↩︎ result: 0ae0799f6ac8c1fc4ad41b5b6dc77df6bf656aff	refs/heads/claude/rainbow-s04-match-c2
+> 0ae0799f6ac8c1fc4ad41b5b6dc77df6bf656aff
+> AUTOSAVE OK | branch claude/rainbow-s04-match-c2 | scheduler daemon | last verified backup 2026-11-17T16:56:09+00:00 (3.6 min ago) | local 0
+
+### 🤖 Claude — 2026-11-17T16:59:47.288Z
+
+Pushed and verified (`0ae0799`, remote == HEAD). Sending the lead the one status message.
+
+### 🤖 Claude — 2026-11-17T16:59:56.581Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01VCMXob2ipUeLE1o7yXNSsZ", "message": "S04 MILESTONE 2 DONE — branch claude/rainbow-s04-match-c2 @ 0ae0799f6ac8c1fc4ad41b5b6dc77df6bf656aff (git ls-remote == HEAD). Status: under review.\n1) Deep tunnel: new tile_ring.png = ONE painted gold ring (groove/lip/band read off the picture's tunnel top, colour per angle from the painted tunnel) repeating straight every 6.5 u, world-anchored → real ring structure at 10–20 u, no smears, no mirrored copies.\n2) Water under/around Benny: painted river tile with chevrons (seamless now), world-anchored; provisional fill hands over t …[+1599 chars]`
+
+### 🧑 User — 2026-11-17T17:00:07.442Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:00:21.053Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Screen 04, Milestone 2 is finished and pushed. While riding, the screen now looks much closer to the approved picture, and the fixed view hasn't got worse.
+
+**Backup**
+- **Branch and commit:** `claude/rainbow-s04-match-c2` at `0ae0799f6ac8c1fc4ad41b5b6dc77df6bf656aff`. The copy on GitHub matches the local one.
+- **Autosave:** running and reported OK.
+- **Git LFS:** the new APK is stored on GitHub LFS. The fal picture is stored as a normal PNG, the same way Screen 08's was.
+- **Not re-checked this round:** the ten specialists' status file, Marble, and the Android/Playwright/MCP readiness. The session-start check reported them, and the Playwright connector was not connected.
+
+**What changed while riding** (`?match04=1`)
+- **Gold tunnel:** the deep tunnel now shows real gold rings repeating all the way down. I cut one ring straight out of your approved picture: its groove, lip, polished band and side reflections. The kaleidoscope of mirrored gold patches is gone.
+- **Water under and around Benny:** it now shows your painted cyan river with its glowing chevron arrows, fixed in place as Benny moves. The mirrored pink and white water is gone.
+- **Approved view:** unchanged, with only 4 pixels different. The whole frame is still 79.9 % within 20 levels, and the scenery (without HUD and Benny) is 97.6 %.
+- **Old version:** adding `&tile04=0` to the URL shows Milestone 1 again for comparison.
+
+**The one paid fal edit**
+- I ran it exactly once (request `01a1ea70-42d8-7943-b035-7bb5f129d872`), after the lead's "FAL READY" and after checking that no earlier Screen 04 fal record existed. There was no retry.
+- The result is usable. It kept the rings, porthole, towels and control panel, and removed Benny, the coins and the title. The HUD bar came back as an empty purple strip, but the game's own HUD covers it.
+- I used it only inside the patched-over areas (HUD, title, Benny, coins), and only behind a new switch: `?match04=1&fal04=1`. The earlier version is untouched.
+- With it, the whole frame goes from 79.9 % to 81.3 % and the scenery from 97.6 % to 98.1 %. Under Benny there are now continuous painted swirls instead of a mirrored patch.
+
+**Pictures** (full size, separate files)
+
+| | File |
+|---|---|
+| APPROVED | `qa/match/04/04_APPROVED.png` |
+| BEFORE (Milestone 1) | `qa/match/04/04_NEW_match04_864x1536.png` |
+| NEW | `qa/match/04/04_NEW_m2_864x1536.png` |
+| NEW with fal plate | `qa/match/04/04_NEW_m2_fal04_864x1536.png` |
+| Riding frames | `qa/match/04/motion_m2/BEFORE_milestone1/`, `NEW/` and `NEW_fal04/` (forward 3, 6, 10, 15, 20 u, steering left and right) |
+
+**Checks**
+- The default game's Screen 04 is pixel-identical to before.
+- Screen 05 and Screen 08 (`?match08=1`) are identical below the top HUD strip. That strip differed only when I rendered the Milestone 1 version from a temporary copy of the repo; the default Screen 04 render from this repo matches its saved Milestone 1 picture exactly, HUD included.
+- The protected Screen 05 BEFORE picture still matches exactly.
+- The gameplay test passes 8/8 without the switch, with it, and with the fal switch. The coin total stays 91 coins / 2,240.
+- The 13 approved images are unchanged.
+
+**Debug APK:** `builds/rainbow-debug-04-2026-11-17-r2.apk`. It has the new ring and river look but not the fal plate. It is not tested on a phone, because there's no device in the cloud.
+
+**Still open**
+- The ring and the chevron closest to the camera look soft at 15–20 u.
+- The painted water doesn't flow yet.
+- The splash under Benny isn't done.
+- Whether the fal plate becomes the normal Screen 04 look is your decision.
+
+I've sent this status to the lead and am waiting for their next instructions.
+
