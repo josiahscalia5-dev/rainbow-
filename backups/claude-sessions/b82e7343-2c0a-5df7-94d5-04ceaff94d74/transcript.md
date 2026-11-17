@@ -796,3 +796,102 @@ First fix attempt (keeping the view closer to Benny at the drain drop) only part
 
 > 🔧 **Bash** `{"command": "O=qa/gameplay_video/moving_r3 && for st in 0 -1 1; do node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=40 --t1=47.5 --dt=0.25 --steer=$st --size=270x600 --out=$O/steer$st >/dev/null 2>&1; python3 -c \"\nimport json\nd=json.load(open('$O/steer$st/probe.json'))\nbad=[(r['t'],r['stage'],round(100*((r.get('benny') or {}).get('hidden') or 0)),round(100*(r.get('near2') or 0)),[i['obj'][:20] for i in r.get('inside') or []]) for r in d['rows'] if ((r.get('benny') or {}).get('hidden') or 0)>0.25 or (r.get('near2') or 0)>0.2 or r.get('inside') or (r.get('benny') is None and r[' …[+358 chars]`
 
+### 🧑 User — 2026-11-17T17:57:45.088Z
+
+> ↩︎ result: steer 0 31 frames; flagged: [(43.75, '07', 39, 0, [])] errors []
+> steer -1 31 frames; flagged: [(42, '07', 29, 0, []), (43.25, '07', 25, 0, []), (43.75, '07', 26, 0, []), (44, '07', 29, 0, []), (44.25, '07', 34, 0, []), (47, '07', 26, 0, [])] errors []
+> steer 1 31 frames; flagged: [(40.75, '07', 29, 0, []), (44, '07', 27, 0, []), (44.25, '07', 35, 0, [])] errors []
+
+### 🤖 Claude — 2026-11-17T17:57:47.169Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/gameplay_video/moving_r3/sheet_steer0.png"}`
+
+### 🤖 Claude — 2026-11-17T17:57:47.624Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/gameplay_video/moving_r3/sheet_steer-1.png"}`
+
+### 🧑 User — 2026-11-17T17:57:50.967Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:57:50.959Z
+
+[Image: original 2160x2566, displayed at 1684x2000. Multiply coordinates by 1.28 to map to original image.]
+
+### 🧑 User — 2026-11-17T17:57:52.225Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:57:52.219Z
+
+[Image: original 2160x2566, displayed at 1684x2000. Multiply coordinates by 1.28 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:58:04.288Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/const R_PROP: \\[number, number\\] = \\[1.6, 2.2\\];/const R_PROP: [number, number] = [1.6, 2.7];/' src/game/camClear.ts && grep -n \"R_PROP:\" src/game/camClear.ts && S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && rm -rf $S/rp && node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --times=43.5,43.75,44,44.25,28.12,28.72,29.28,40.75,44.88 --size=270x600 --out=$S/rp >/dev/null 2>&1; python3 -c \"\nimport json\nfor r in json.load(open('$S/rp/probe.json'))['rows']: print(r['t'],r['stage'],(r.get('benny') or {}).get('hidden'),[(o[ …[+164 chars]`
+
+### 🧑 User — 2026-11-17T17:58:49.277Z
+
+> ↩︎ result: 22:const R_PROP: [number, number] = [1.6, 2.7];
+> 43.5 07 0.014 []
+> 43.75 07 0.388 [('coins', 0.022)]
+> 44 07 0.216 []
+> 44.25 07 0.207 [('coins', 0.193)]
+> 28.12 07 0.207 [('coins', 0.193)]
+> 28.72 08 0.066 [('m08_splash', 0.152)]
+> 29.28 08 0.116 [('m08_splash', 0.176), ('m08_floor < match08_projection', 0.039)]
+> 40.75 11 None []
+> 44.88 11 None []
+> [This command modified 1 file you've previously read: src/game/camClear.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T17:58:54.205Z
+
+Wider zone changed nothing: at that moment the "hidden" part of Benny is cut off by the bottom edge of the screen at the top of the big drop. No object covers him. Reverting that experiment.
+
+### 🤖 Claude — 2026-11-17T17:58:58.052Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/const R_PROP: \\[number, number\\] = \\[1.6, 2.7\\];/const R_PROP: [number, number] = [1.6, 2.2];/' src/game/camClear.ts && git diff --stat src/game/camClear.ts; git add qa/gameplay_video/moving_r3 qa/gameplay_video/tests/r3_* && git commit -qm \"camclear r3: tests (8/8, 91 coins/2240, drop 61.19) + moving check 07->08->09 three steering inputs\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCLvd1Cb5N4WHTHcHB4\" && git push -q origin claude/rainbow-s08-camclear-c3 && [ \"$(git ls-remote origin refs/heads/cl …[+248 chars]`
+
+### 🧑 User — 2026-11-17T17:59:04.934Z
+
+> ↩︎ result: REMOTE_MATCH 6282ce7047cde94ec4c091f5b8822e423179f110
+> 48M	qa/gameplay_video/moving_r3
+> 51M	qa/gameplay_video/compare_r3
+> [This command modified 1 file you've previously read: src/game/camClear.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T17:59:07.459Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files | grep -c \"gameplay_video/\\(moving\\|compare\\)_r3\"; ls qa/gameplay_video/compare_r3 | wc -l", "description": "Confirm pictures stored in Git LFS"}`
+
+### 🧑 User — 2026-11-17T17:59:07.604Z
+
+> ↩︎ result: 0
+> 104
+
+### 🤖 Claude — 2026-11-17T17:59:09.851Z
+
+> 🔧 **Bash** `{"command": "grep -n \"png\\|qa/\" .gitattributes | head; git check-attr filter qa/gameplay_video/compare_r3/v04.0s_03_1_video.png qa/gameplay_video/scan/default/$(ls qa/gameplay_video/scan/default | head -1)", "description": "Check LFS rules for pngs"}`
+
+### 🧑 User — 2026-11-17T17:59:09.907Z
+
+> ↩︎ result: qa/gameplay_video/compare_r3/v04.0s_03_1_video.png: filter: unspecified
+> qa/gameplay_video/scan/default/probe.json: filter: unspecified
+
+### 🤖 Claude — 2026-11-17T17:59:12.514Z
+
+Pictures follow the project's normal convention (plain git, no LFS rule for PNG). Next is the APK with `match08=1&camclear=1`.
+
+### 🤖 Claude — 2026-11-17T17:59:13.465Z
+
+> 🔧 **Bash** `{"command": "bash scripts/claude-bootstrap.sh --status 2>&1 | grep -i \"android\\|status\\|progress\" | head -5; grep -n \"android:debug\" package.json", "description": "Check Android toolchain readiness"}`
+
+### 🧑 User — 2026-11-17T17:59:14.139Z
+
+> ↩︎ result: | Game: 11 screens + code | OK | 11 approved screen references 01-11, source tree src/ (47 files), Android project android/, characters assets/models/*.glb | 0 |
+> | Android build tools | OK | Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug | 3 |
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+
+### 🤖 Claude — 2026-11-17T17:59:17.294Z
+
+> 🔧 **Bash** `{"command": "VITE_RAINBOW_Q05=\"match08=1&camclear=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/apk.log 2>&1; tail -3 /tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/apk.log; ls -la android/app/build/outputs/apk/debug/", "description": "Build debug APK with the switches", "timeout": 600000}`
+
