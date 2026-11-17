@@ -633,8 +633,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 18422,
-   "sha256": "da7e4a0e424590aa573418909c7133b691011ba5db562c21ba4f0e61a5b3aeba"
+   "bytes": 18718,
+   "sha256": "3560e686187e57c56e07971c73f15dfdd6876e8c51eb7eb3b90738ade3b3e903"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -654,7 +654,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12148,
-   "sha256": "9b64e35fd807f7d0915c7044bd10b0d26e585ef8f4bd490ee0cd492abf1b711e"
+   "sha256": "4f4d558411893ce97ac5f0d6e640b3258a90fa08ecfcffe468f59633d704e171"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1428,8 +1428,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 24192,
-   "sha256": "8fda9f1a3cea117feba54ae9e141e6110b48dad7099ebbd03c116acd79d4617b"
+   "bytes": 25781,
+   "sha256": "0ca713c5fbfddefaa76001c0c457dec634933767c0fe4b434a2e5a03d7120dd0"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_2026-11-17.md",
@@ -4200,6 +4200,41 @@
    "path": "qa/pilot05/full_reference_match/recovery_s01Q4/match05_REGION_METRICS.json",
    "bytes": 2544,
    "sha256": "fd49e3d5f86c6c855eda55078d2e64c0e2fa892b9c51c11ecea5ff3b98fe757d"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/session_01VCMXob/SCREEN1_ORIGINAL_APPROVED_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/session_01VCMXob/SCREEN2_BEFORE_specialists_proj05.png",
+   "bytes": 1953900,
+   "sha256": "ec395f39dbab8f09da9c0d32df91e48670d739c22505d4a7616df04843172a94"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/session_01VCMXob/SCREEN3_NOW_match05_restored.png",
+   "bytes": 2263523,
+   "sha256": "0f54806ae0545ff94978d4440637fa2c591f502c9ea3581d63b40cff1cf8699a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/session_01VCMXob/before_FULL_FRAME_METRICS.json",
+   "bytes": 447,
+   "sha256": "1f22a6361118b5993a66ed3ac6489ee8460e8ec00fbbcdb6171132f8e3a69672"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/session_01VCMXob/before_REGION_METRICS.json",
+   "bytes": 2550,
+   "sha256": "2333a286365628c02961fd4bdaf79944227589761a0b1b1473932590c4d2115d"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/session_01VCMXob/m_FULL_FRAME_METRICS.json",
+   "bytes": 463,
+   "sha256": "fd7be6cf02cf17466686ae7b8978274aaecf977a48d9bfd218d4c591cef4c118"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/session_01VCMXob/m_REGION_METRICS.json",
+   "bytes": 2557,
+   "sha256": "5e52b06084f64179c5678d15d1076b6dee3ecdbdab85bc027056858eae7dd6fe"
   },
   {
    "path": "qa/pilot05/full_reference_match/stack_2340/05_match05.png",

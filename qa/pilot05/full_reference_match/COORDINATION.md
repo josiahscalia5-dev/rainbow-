@@ -225,3 +225,19 @@ only to the new branch. Everything above still applies; the main session is the 
   within 20 (recovery 29.14 / 57.0 %). Default 0 px (one run had the known 152-px HUD-corner flicker; re-run 0 px), protected
   BEFORE 0 px. washer-environment-modeler resumed for two small chunks at the left far bend. **Wave 2 launched:**
   foam-bubbles-particles (`splash05m`, `bub05`), brief `briefs/foam-bubbles-particles.md`. Worst region now: wake / splash 38.9 %.
+
+---
+## RESUMED 2026-11-17 ~02:35 UTC — NEW ACCOUNT, session 01VCMXob, branch `ccr-b0757dec-dj6l1o` — CURRENT
+Started from `c20d879`; the source branch's newest commit `89eacf0` (backups/ only) merged on the user's request (`cbf4d4d`).
+`claude/rainbow-account-transfer-npxahd` is PROTECTED now; the autosave pushes only to `ccr-b0757dec-dj6l1o`.
+* New account: personal environment `rainbow-` created (download.blender.org, dl.google.com, lfs.github.com; package
+  managers + MCP allowed; setup script = `scripts/cloud-env-setup.sh`); this session moved onto it (allowed hosts 200,
+  example.com refused). Setup script run by hand from /home/user: exit 0.
+* Re-verified, really run: Blender 5.3.0 bootstrap renders (Workbench / EEVEE / Cycles), 8/8 `.blend`, 3 GLBs, round trip;
+  on scratch copies: `camera_lock_05.py` CAMERA_LOCK_OK, `tunnel_bake.py` → wall05 / ring05 pixel-identical, `lid_blender.py`
+  → `lids05e.glb` byte-identical (6 paddles). GitHub MCP list_branches (28). Playwright MCP WebGL2 (SwiftShader).
+* Fresh captures: default == `current_default_05.png` 0 px; protected BEFORE == `wave9/baseline/05.png` 0 px;
+  `?match05=1` == `coordinator/checkpoints/cp3_match05_benny_tunnel_done.png` 0 px (whole 11.87 / 83.6 %).
+* Wave 2 had left NO files (no `splash_bubbles/`): foam-bubbles-particles RELAUNCHED from its brief (fresh start).
+  washer-environment-modeler RELAUNCHED for the two left-far-bend chunks (never started: nothing in `env/NOTES.md`).
+  benny-character-artist: queued after wave 2 (user's priority 3: fur softness / colour / pom), not running now.

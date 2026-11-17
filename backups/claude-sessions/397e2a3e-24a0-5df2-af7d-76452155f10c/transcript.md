@@ -982,3 +982,186 @@ Only my test's side effect (it dropped the `correction` line). Restoring that fi
 
 > 🔧 **Bash** `{"command": "git checkout -- qa/pilot05/proj/tunnel/model/bake_report.json && rm -rf /tb /lid.log /tb.log && git status --short | grep -v \"^ M backups/\"; \nS=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest; mkdir -p $S/model $S/tb2 $S/lid && cp -r qa/pilot05/proj/tunnel/model/. $S/model/ && cp -r qa/pilot05/full_reference_match/env/lid/. $S/lid/\npython3 -I tools/proj05/tunnel_bake.py $S/model $S/tb2 $S/model/correction.npz > $S/tb2.log 2>&1; echo \"tunnel_bake exit=$?\"\nfor f in wall05.png ring05.png; do python3 -I -c \"\nimport sys,numpy as np …[+719 chars]`
 
+### 🧑 User — 2026-11-17T02:31:48.626Z
+
+> ↩︎ result: tunnel_bake exit=0
+> wall05.png (592, 2048, 3) identical
+> ring05.png (64, 2048, 3) identical
+> lid_blender exit=0
+> 02:31:48 | INFO: Extracting primitive: lid05_R2
+> 02:31:48 | INFO: Extracting primitive: lid05_R3
+> LIDS05 {"depth": 0.35, "lids": {"L1": {"verts": 1264, "faces": 2456}, "L2": {"verts": 428, "faces": 814}, "L3": {"verts": 92, "faces": 154}, "R1": {"verts": 1492, "faces": 2876}, "R2": {"verts": 356, "faces": 672}, "R3": {"verts": 104, "faces": 177}}, "glb": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest/lids05e.glb"}
+>       2 978793113ee9433255f396e0a226e82218ab2a61c4687a503a475755aaa014a9
+
+### 🤖 Claude — 2026-11-17T02:31:58.348Z
+
+> 🔧 **Bash** `{"command": "C=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps && mkdir -p $C && cp qa/capture_log.json $C/capture_log.bak 2>/dev/null; (node scripts/capture.mjs 05 --out=$C/default > $C/default.log 2>&1 & node scripts/capture.mjs 05 --q='match05=1' --out=$C/match05 > $C/match05.log 2>&1 & wait); node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$C/before > $C/before.log 2>&1; cp $C/capture_log.bak qa/capture_log.json; ls $C/*/; tail -1 $C/*.log", "description": "Capture default, protected BEFORE and match05 game screens", "timeout": 900000,  …[+26 chars]`
+
+### 🧑 User — 2026-11-17T02:31:58.380Z
+
+> ↩︎ result: Command running in background with ID: b9jlspi0z. Output is being written to: /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/b9jlspi0z.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T02:31:59.156Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_branches,mcp__plugin_playwright_playwright__browser_evaluate,mcp__plugin_playwright_playwright__browser_navigate", "max_results": 3}`
+
+### 🧑 User — 2026-11-17T02:31:59.168Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T02:32:00.527Z
+
+> 🔧 **mcp__github__list_branches** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "perPage": 100}`
+
+### 🤖 Claude — 2026-11-17T02:32:00.778Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_navigate** `{"url": "about:blank"}`
+
+### 🧑 User — 2026-11-17T02:32:01.418Z
+
+> ↩︎ result: [{"name":"ccr-4f6c3e0e-5kxgr0","sha":"0fe0b0c596d27e8626f2aad338fb6e479930a5e1","protected":false},{"name":"ccr-6f431adf-7h0m8y","sha":"81e639e16994713d5f70d0314e796d1c298eeacf","protected":false},{"name":"ccr-8b6fc834-7kd55l","sha":"8a36270c96c27a4495b5b7ec3c36e84cd9578dff","protected":false},{"name":"ccr-8c4acadc-iybw0n","sha":"05941383f2b9e17a909a44483a4ec81656a954d7","protected":false},{"name":"ccr-44f84024-ii5iih","sha":"98ffd8e20fabf69f361faac1a57d315627d9da09","protected":false},{"name":"ccr-57af22a4-lsg7y7","sha":"e27c6fa0eac82a394f230d6e07e11bd529bbd666","protected":false},{"name":"ccr-93add0fa-q17ey6","sha":"08fb461b79e1bbfcef73fd3a0cb1a8c3d2afc6d0","protected":false},{"name":"ccr-251ed97c-ty2xvp","sha":"84298d6be05dc03c89945511a43c9ce275608100","protected":false},{"name":"ccr-451ea8c7-3nqlis","sha":"97dda283bba47b647eabaf84595eecc11672ea1e","protected":false},{"name":"ccr-694bda6a-x58ntq","sha":"4e140fa68307d51e4a9aca0b6ff9a2cf78595d6b","protected":false},{"name":"ccr-937c7fbb-htsrgt","sha":"f6e407128d835a5c4d95e802cc886b4e428b1055","protected":false},{"name":"ccr-61131b9d-uj0oqb","sha":"99690f1b6ef501cbd7e3ec3becdb2e7399929ce1","protected":false},{"name":"ccr-b0757dec-d …[+1785 chars]
+
+### 🧑 User — 2026-11-17T02:32:43.767Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('about:blank');
+> ```
+> ### Page
+> - Page URL: about:blank
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-17T02-32-43-758Z.yml)
+
+### 🤖 Claude — 2026-11-17T02:32:46.770Z
+
+> 🔧 **Bash** `{"command": "C=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps; cat /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/b9jlspi0z.output | tail -15; for f in $C/*.log; do echo \"== $f\"; tail -6 $f; done; cd /home/user/rainbow- && git status --short qa/capture_log.json", "description": "Read capture failure output"}`
+
+### 🧑 User — 2026-11-17T02:32:46.804Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps/before/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps/default/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps/match05/:
+> 05.png
+> tail: option used in invalid context -- 1
+> 
+> [exited with code 1]
+> == /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps/before.log
+> 05 → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps/before/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps/default.log
+> 05 → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps/default/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d- …[+320 chars]
+
+### 🤖 Claude — 2026-11-17T02:32:48.282Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_evaluate** `{"function": "() => { const c = document.createElement('canvas'); const gl = c.getContext('webgl2'); if (!gl) return 'NO WEBGL2'; const d = gl.getExtension('WEBGL_debug_renderer_info'); return { webgl2: true, version: gl.getParameter(gl.VERSION), renderer: d ? gl.getParameter(d.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER), maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE) }; }"}`
+
+### 🧑 User — 2026-11-17T02:32:57.861Z
+
+> ↩︎ result: ### Result
+> {
+>   "webgl2": true,
+>   "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+>   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+>   "maxTex": 8192
+> }
+> ### Ran Playwright code
+> ```js
+> await page.evaluate('() => { const c = document.createElement(\'canvas\'); const gl = c.getContext(\'webgl2\'); if (!gl) return \'NO WEBGL2\'; const d = gl.getExtension(\'WEBGL_debug_renderer_info\'); return { webgl2: true, version: gl.getParameter(gl.VERSION), renderer: d ? gl.getParameter(d.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER), maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE) }; }');
+> ```
+
+### 🤖 Claude — 2026-11-17T02:33:05.330Z
+
+> 🔧 **Bash** `{"command": "C=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps; python3 -I - $C <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nC=sys.argv[1]\ndef diff(a,b,label):\n    A=np.asarray(Image.open(a).convert('RGB')).astype(int); B=np.asarray(Image.open(b).convert('RGB')).astype(int)\n    if A.shape!=B.shape: print(label,'SHAPE',A.shape,B.shape); return\n    d=np.abs(A-B).max(2); n=(d>0).sum()\n    ys,xs=np.nonzero(d)\n    box=f\" box x{xs.min()}-{xs.max()} y{ys.min()}-{ys.max()} max{d.max()}\" if n else \"\"\n    print(f\"{label}: {n} px differ{box}\ …[+638 chars]`
+
+### 🧑 User — 2026-11-17T02:33:07.016Z
+
+> ↩︎ result: default vs current_default_05.png: 0 px differ
+> protected BEFORE vs wave9/baseline/05.png: 0 px differ
+> match05 vs cp3 checkpoint: 0 px differ
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 11.87, 'within_10': 0.7463, 'within_20': 0.8357, 'ssim_lum': 0.8156, 'mean_signed_rgb': [0.0, -0.6, -0.2]}
+> gold_rings_and_front_frame   px  125730  mean   9.36  <=10 0.736  <=20 0.879  ssim 0.823  signed [-3.2, -0.9, 2.8]
+> purple_walls                 px  312706  mean   6.92  <=10 0.833  <=20 0.913  ssim 0.885  signed [-0.4, 0.8, -0.9]
+> side_fittings                px   13776  mean   3.54  <=10 0.890  <=20 0.948  ssim 0.910  signed [-0.5, -0.3, 1.5]
+> water                        px  480736  mean   6.75  <=10 0.880  <=20 0.916  ssim 0.917  signed [0.9, -2.4, -1.9]
+> foam_banks                   px   28862  mean   5.62  <=10 0.921  <=20 0.951  ssim 0.922  signed [-0.1, -4.2, -4.6]
+> benny_and_hat                px   93061  mean  19.24  <=10 0.587  <=20 0.730  ssim 0.655  signed [-5.7, -1.3, 1.0]
+> wake_splash                  px   83491  mean  41.48  <=10 0.221  <=20 0.389  ssim 0.265  signed [19.7, 15.8, 7.9]
+> coins                        px   27437  mean  27.67  <=10 0.277  <=20 0.516  ssim 0.545   …[+374 chars]
+
+### 🤖 Claude — 2026-11-17T02:33:32.754Z
+
+> 🔧 **Bash** `{"command": "grep -E \"Specialist agents\" backups/BOOTSTRAP_REPORT.md | cut -c1-260; cat >> qa/pilot05/full_reference_match/COORDINATION.md <<'EOF'\n\n---\n## RESUMED 2026-11-17 ~02:35 UTC — NEW ACCOUNT, session 01VCMXob, branch `ccr-b0757dec-dj6l1o` — CURRENT\nStarted from `c20d879`; the source branch's newest commit `89eacf0` (backups/ only) merged on the user's request (`cbf4d4d`).\n`claude/rainbow-account-transfer-npxahd` is PROTECTED now; the autosave pushes only to `ccr-b0757dec-dj6l1o`.\n* New account: personal environment `rainbow-` created (download.blender.org, dl.google.com, lfs.gi …[+2565 chars]`
+
+### 🧑 User — 2026-11-17T02:33:32.842Z
+
+> ↩︎ result: | Specialist agents | OK | 10/10 specialist definitions present; all SHA-256 unchanged; running: washer-environment-modeler (recorded running = INTERRUPTED unless relaunched this session), foam-bubbles-particles (recorded running = INTERRUPTED unless relaunche
+> AGENTS_STATUS updated
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+
+### 🤖 Claude — 2026-11-17T02:33:34.464Z
+
+All 10 specialist definitions match their saved SHA-256 fingerprints. Now relaunching the two specialists with unfinished work, in the background:
+
+### 🤖 Claude — 2026-11-17T02:33:44.858Z
+
+> 🔧 **Agent** `{"description": "Screen 05 splash and bubbles", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "RELAUNCH (2026-11-17 ~02:35 UTC, new Claude account, session 01VCMXob, working branch ccr-b0757dec-dj6l1o). The previous account launched you at ~02:15 UTC and ran out of credits at ~02:23 before you wrote anything: there is NO `qa/pilot05/full_reference_match/splash_bubbles/` folder yet, so start your brief from step A.\n\nYour full brief (your rules — read ALL of it first, below its \"ORIGINAL BRIEF\" line):\n`/home/user/rainbow-/qa/pilot05/full_reference_match/bri …[+2316 chars]`
+
+### 🧑 User — 2026-11-17T02:33:44.888Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a3ed4b72a3d21b82a (internal ID - do not mention to user. Use SendMessage with to: 'a3ed4b72a3d21b82a', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/a3ed4b72a3d21b82a.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T02:33:57.461Z
+
+> 🔧 **Agent** `{"description": "Screen 05 left far-bend chunks", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "RELAUNCH (2026-11-17 ~02:35 UTC, new Claude account, session 01VCMXob, working branch ccr-b0757dec-dj6l1o). Your env05 work for Screen 05 is FINISHED and verified (r4 + frame bake: walls 6.92 / 91.3 %, gold 9.36 / 87.9 %, fittings 3.54 / 94.8 %, distant 2.43 / 97.1 % within 20 in the current `?match05=1` capture). Do NOT redo it or re-tune anything already finished.\n\nThe previous account resumed you at ~02:15 UTC for two small leftover chunks and ran out of c …[+3086 chars]`
+
+### 🧑 User — 2026-11-17T02:33:57.484Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a9d416668d7678967 (internal ID - do not mention to user. Use SendMessage with to: 'a9d416668d7678967', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/a9d416668d7678967.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T02:34:06.690Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/full_reference_match && python3 -I - <<'EOF'\nimport numpy as np, glob\nfrom PIL import Image\ndef L(p): return np.asarray(Image.open(p).convert('RGB')).astype(int)\nB=L('02_BEFORE.png'); A=L('01_APPROVED.png'); R=L('../../../references/05_flow_into_the_current.png')\nprint('01_APPROVED == reference:', A.shape==R.shape and (A==R).all(), A.shape)\nprint('02_BEFORE shape', B.shape)\nfor p in sorted(glob.glob('recovery_*/*.png'))+sorted(glob.glob('stack_2340/*.png'))+sorted(glob.glob('before/*.png')):\n    X=L(p)\n    if X.shape==B.shape: print(p, (n …[+183 chars]`
+
+### 🧑 User — 2026-11-17T02:34:07.611Z
+
+> ↩︎ result: 01_APPROVED == reference: True (1536, 864, 3)
+> 02_BEFORE shape (1536, 864, 3)
+> recovery_s018/IMAGE1_ORIGINAL_APPROVED_05.png 1311068 px differ from 02_BEFORE
+> recovery_s018/IMAGE2_RECOVERED_experimental_match05_before_changes.png 1238211 px differ from 02_BEFORE
+> recovery_s018/IMAGE2b_RECOVERED_protected_default_05.png 1001429 px differ from 02_BEFORE
+> recovery_s01Av/05_match05_at_recovery.png 1287690 px differ from 02_BEFORE
+> recovery_s01Q4/05_match05_at_recovery.png 1287690 px differ from 02_BEFORE
+> stack_2340/05_match05.png 1238211 px differ from 02_BEFORE
+> 32:* BEFORE for this whole effort = `02_BEFORE.png` (`?proj05=1`); its numbers: `before/REGION_METRICS.json`.
+
+### 🤖 Claude — 2026-11-17T02:34:12.791Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && D=qa/pilot05/full_reference_match/session_01VCMXob && mkdir -p $D && C=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/caps && cp references/05_flow_into_the_current.png $D/SCREEN1_ORIGINAL_APPROVED_05.png && cp qa/pilot05/full_reference_match/02_BEFORE.png $D/SCREEN2_BEFORE_specialists_proj05.png && cp $C/match05/05.png $D/SCREEN3_NOW_match05_restored.png && cp $C/match05/m_*.json $D/ 2>/dev/null; python3 -I tools/match05/metrics.py $D/SCREEN2_BEFORE_specialists_proj05.png $D/before_ 2>&1 | head -1; ls $D", "description" …[+49 chars]`
+
+### 🧑 User — 2026-11-17T02:34:13.807Z
+
+> ↩︎ result: FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 40.93, 'within_10': 0.3449, 'within_20': 0.432, 'ssim_lum': 0.4637, 'mean_signed_rgb': [9.3, 8.9, 6.7]}
+> SCREEN1_ORIGINAL_APPROVED_05.png
+> SCREEN2_BEFORE_specialists_proj05.png
+> SCREEN3_NOW_match05_restored.png
+> before_FULL_FRAME_METRICS.json
+> before_REGION_METRICS.json
+> m_FULL_FRAME_METRICS.json
+> m_REGION_METRICS.json
+

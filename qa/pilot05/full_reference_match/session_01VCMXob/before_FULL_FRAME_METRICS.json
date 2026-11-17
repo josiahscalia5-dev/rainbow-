@@ -1,0 +1,19 @@
+{
+ "capture": "qa/pilot05/full_reference_match/session_01VCMXob/SCREEN2_BEFORE_specialists_proj05.png",
+ "whole_frame": {
+  "px": 1327104,
+  "share_of_frame": 1.0,
+  "mean_abs": 40.93,
+  "within_10": 0.3449,
+  "within_20": 0.432,
+  "ssim_lum": 0.4637,
+  "mean_signed_rgb": [
+   9.3,
+   8.9,
+   6.7
+  ]
+ },
+ "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
+ "mse": 4193.3,
+ "psnr_db": 11.91
+}

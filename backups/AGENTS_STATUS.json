@@ -1,12 +1,12 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T02:15:00Z",
- "updated_by_session": "01Q46SCH (new account, branch claude/rainbow-account-transfer-npxahd)",
+ "updated_utc": "2026-11-17T02:35:00Z",
+ "updated_by_session": "01VCMXob (branch ccr-b0757dec-dj6l1o)",
  "assignments_now": {
-  "_note": "State at 2026-11-17 ~01:20 UTC (new account, session 01Q46SCH): the three specialists of running_now were RELAUNCHED from their briefs (header 'RESUMED RUN #3') + NOTES.md. If you are a LATER session, treat running_now as INTERRUPTED and relaunch each from qa/pilot05/full_reference_match/briefs/<agent>.md + its NOTES.md ('Remaining'). State: COORDINATION.md, newest RESUMED section.",
+  "_note": "State at 2026-11-17 ~02:35 UTC (new account, session 01VCMXob): foam-bubbles-particles and washer-environment-modeler RELAUNCHED this session. If you are a LATER session, treat them as INTERRUPTED and relaunch from qa/pilot05/full_reference_match/briefs/<agent>.md + its NOTES.md ('Remaining'). State: COORDINATION.md, newest RESUMED section.",
   "coordinator (main session)": "Environment restored + verified; default / BEFORE / STACK pixel-identical; first real match05 capture measured (whole frame 29.14 / 57.0 %, recovery_s01Av/). NEXT: integrate finished specialist parts into ?match05=1, order deliverables, then wave 2 (foam-bubbles-particles) and the Android APK + performance.",
-  "foam-bubbles-particles": "WAVE 2 RUNNING since ~02:15 UTC (brief qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md)",
+  "foam-bubbles-particles": "RUNNING since ~02:35 UTC (wave 2 relaunch; nothing had been written before the cut-off). Brief briefs/foam-bubbles-particles.md, notes splash_bubbles/NOTES.md",
   "android-build-performance": "LAST: experiment APK + performance after the visual parts are in (order parts 18, 19)",
   "previous_assignments": {
    "_note": "State at 2026-11-16 ~15:55 UTC (urgent backup). A running specialist does NOT survive the end of a session or an account switch: if you are a new session, treat 'running' as INTERRUPTED and relaunch from the brief.",
@@ -30,7 +30,9 @@
     "task": "animate the SAME projected design (?projflow05=1 on top of ?proj05=1): layout anchored to the world, liquid detail flowing down the S-curves toward the camera; short clip + measured flow direction; no new procedural water look"
    },
    "others": "the remaining eight specialists are idle (see 'agents'); none is needed for the projection task"
-  }
+  },
+  "washer-environment-modeler": "RUNNING since ~02:35 UTC: two left-far-bend chunks (x 165-200 y 553-592 flat wall under the apron; x 325-400 y 528-590 far wall + cyan wedge), notes env/NOTES.md",
+  "benny-character-artist": "QUEUED after wave 2: fur softness / colour / pom (user priority 3), from benny/NOTES.md"
  },
  "current_focus": "2026-11-16 ~23:20 UTC, branch ccr-8c4acadc-iybw0n (new Claude account): the MAIN session is building ?proj05=1&projnear05=1 (high-resolution near water tile so the approved swirls stay sharp while Benny rides) - qa/pilot05/proj/near/NOTES.md, section 'Still to do'. No specialist is running; none needs relaunching for this. Previous focus: Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
  "agents": [
