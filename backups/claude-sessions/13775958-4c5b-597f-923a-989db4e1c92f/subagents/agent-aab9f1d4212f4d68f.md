@@ -2425,3 +2425,73 @@ Let me write a camera-trace tool to measure the 08 settle and the 03→04 / 06 c
 > tsc-ok
 > [This command modified 1 file you've previously read: src/game/Game.ts. Call Read before editing.]
 
+### 🤖 Claude — 2026-11-17T15:59:47.149Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts", "offset": 80, "limit": 60}`
+
+### 🧑 User — 2026-11-17T15:59:47.175Z
+
+> ↩︎ result: 80	
+> 81	  /** desired pose for Benny at (s, lateral) */
+> 82	  desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+> 83	    const p = camParamsAt(this.course, s);
+> 84	    const f = this.course.sample(s);
+> 85	    const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+> 86	    const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+> 87	    let up = f.up.clone();
+> 88	    if (this.axis) {
+> 89	      const a = this.axis;
+> 90	      const w = THREE.MathUtils.smoothstep(s, a.s0, a.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, a.s1 - 10, a.s1));
+> 91	      if (w > 0) {
+> 92	        const af = a.path.frame(s);
+> 93	        dir.lerp(af.tan, w).normalize();
+> 94	        up.lerp(af.up, w).normalize();
+> 95	      }
+> 96	    }
+> 97	    up.addScaledVector(dir, -up.dot(dir)).normalize();
+> 98	    const right = new THREE.Vector3().crossVectors(dir, up).normalize();
+> 99	    const benny = f.pos.clone().addScaledVector(f.right, lat);
+> 100	    const anchor = benny.clone().addScaledVector(right, -lat * (1 - p.latFollow));
+> 101	    // offsets use an 'upright' up: banking only tilts the camera as much as `roll` allows
+> 102	    const upPos = new …[+2686 chars]
+
+### 🤖 Claude — 2026-11-17T15:59:48.430Z
+
+Now the 08 hold and a 06 aim correction, both only under `camclear`.
+
+### 🤖 Claude — 2026-11-17T15:59:55.230Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts", "old_string": "    const p8 = STAGE_CAM['08'];\n    if (p8 && p8.off08 && p8.aim08) {\n      const st8 = this.course.stage('08');\n      const w8 = THREE.MathUtils.smoothstep(s, st8.s0 - 3, st8.s0 + 1.5) * (1 - THREE.MathUtils.smoothstep(s, st8.s1 - 10, st8.s1 - 1));\n      if (w8 > 0) {\n        outPos.lerp(benny.clone().add(new THREE.Vector3(...p8.off08)), w8);", "new_string": "    const p8 = STAGE_CAM['08'];\n    if (p8 && p8.off08 && p8.aim08) {\n      const st8 = this …[+1091 chars]`
+
+### 🧑 User — 2026-11-17T15:59:55.268Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T15:59:56.937Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts", "old_string": "import { applyMatchCam } from './match';", "new_string": "import { applyMatchCam } from './match';\nimport { CAMCLEAR } from './camClear';"}`
+
+### 🧑 User — 2026-11-17T15:59:56.972Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T16:00:15.309Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts", "old_string": "    // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the", "new_string": "    // `?camclear=1` 06 rinse arch: where the stream climbs the wall the chase camera ends up at the wall itself, looking\n    // up at it (the drum wall + a gold band fill the view). Keep the camera inside the tube (≥ 2.5 u from the wall) while\n    // Benny is inside it, and turn the view toward the tunnel's vanishing point (the approved 06  …[+298 chars]`
+
+### 🧑 User — 2026-11-17T16:00:15.349Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T16:00:24.549Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts", "old_string": "  update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {", "new_string": "  /** `?camclear=1` only — see desired() */\n  private clear06(s: number, p: CamParams, benny: THREE.Vector3, outPos: THREE.Vector3, outTarget: THREE.Vector3) {\n    const a = this.axis;\n    if (!a) return;\n    const st6 = this.course.stage('06');\n    const w6 = THREE.MathUtils.smoothstep(s, st6.s0 + 1, st6.s0 + 6) * (1 - THREE.MathUtils.smoothstep( …[+1728 chars]`
+
+### 🧑 User — 2026-11-17T16:00:24.584Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T16:00:25.951Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit && echo tsc-ok", "description": "Type-check after camera changes", "timeout": 320000}`
+

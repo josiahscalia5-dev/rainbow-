@@ -2321,3 +2321,53 @@ Fix the key path (report nests classes).
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 08 --q='match08=1' --size=1080x1920 --out=$S/v_m08_1080 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 --q='match08=1&bake08=0' --size=1080x1920 --out=$S/v_m08b0_1080 2>&1 | tail -1 | cut -c1-40; ls qa/capture_log*", "description": "Capture 1080x1920 CURRENT and NEW pictures", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T16:00:06.939Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-
+> 08 → /tmp/claude-0/-home-user-rainbow-
+> qa/capture_log.json
+> qa/capture_log_1080x1920.json
+
+### 🤖 Claude — 2026-11-17T16:00:09.133Z
+
+> 🔧 **Bash** `{"command": "git status --short qa/capture_log_1080x1920.json qa/capture_log.json", "description": "Check capture log status"}`
+
+### 🧑 User — 2026-11-17T16:00:09.170Z
+
+> ↩︎ result: M qa/capture_log_1080x1920.json
+
+### 🤖 Claude — 2026-11-17T16:00:11.402Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log_1080x1920.json", "description": "Restore 1080 capture log"}`
+
+### 🧑 User — 2026-11-17T16:00:11.466Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:00:17.569Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/pictures08.py", "content": "\"\"\"Write the separate full-size comparison pictures + 3x Benny close-ups (no grids / collages).\nusage: python3 -I pictures08.py <current_864.png> <new_864.png> [<current_1080x1920.png> <new_1080x1920.png>]\n-> qa/match/08/benny08/{APPROVED_08,CURRENT_08,NEW_08}.png (864x1536, the approved picture's own size, pixel-comparable),\n   {CURRENT,NEW}_08_1080x1920.png (phone-size renders), closeup_{APPROVED,CURRENT,NEW}.png (x 250-610, y 845-1225, 3x)\"\"\"\nimport sys …[+747 chars]`
+
+### 🧑 User — 2026-11-17T16:00:17.593Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/pictures08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:00:21.468Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I qa/match/08/benny08/work/pictures08.py $S/v_m08b0/08.png $S/v_m08/08.png $S/v_m08b0_1080/08.png $S/v_m08_1080/08.png && cmp references/08_final_spin_chamber.png qa/match/08/benny08/APPROVED_08.png && echo SAME && python3 -I qa/match/08/benny08/work/compare08.py $S/p1/uv.f32 CURRENT=qa/match/08/benny08/CURRENT_08.png NEW=qa/match/08/benny08/NEW_08.png --json=qa/match/08/benny08/compare_CURRENT_NEW.json", "description": "Write deliverable pictures and final comparison JSON", "timeout":  …[+7 chars]`
+
+### 🧑 User — 2026-11-17T16:00:27.160Z
+
+> ↩︎ result: written
+> SAME
+> part                      CURRENT                    |                     NEW                     
+> pom      82.8   6.8% ssim 0.041 r 0.007 a 0.617      |  82.8   6.8% ssim 0.041 r 0.007 a 0.617     
+>         CURRENT: approved [126, 15, 229] game [60, 166, 239] | overlap 4524 px: 56.47 / 16.0% approved [86, 6, 209] game [148, 45, 234]
+>         NEW: approved [126, 15, 229] game [60, 166, 239] | overlap 4524 px: 56.47 / 16.0% approved [86, 6, 209] game [148, 45, 234]
+> crown    72.4  14.9% ssim 0.057 r -0.008 a 0.753     |  72.8  15.8% ssim 0.057 r -0.007 a 0.73     
+>         CURRENT: approved [215, 163, 237] game [159, 99, 235] | overlap 6871 px: 66.74 / 18.4% approved [204, 133, 232] game [205, 150, 239]
+>         NEW: approved [215, 163, 237] game [158, 85, 236] | overlap 6871 px: 67.39 / 20.1% approved [204, 133, 232] game [211, 135, 242]
+> cuff     75.6  12.9% ssim 0.051 r -0.009 a 0.973     |  75.3  14.3% ssim 0.054 r -0.011 a 0.957    
+>         CURRENT: approved [118, 10, 234] game [177, 83, 222] | overlap 4419 px: 39.5 / 25.8% approved [102, 7, 232] game [127, 29, 233]
+>         NEW: approved [118, 10, 234] game [175, 75, 226] | overlap 4419 px: 37.64 / 29.1% approved [102,  …[+2199 chars]
+

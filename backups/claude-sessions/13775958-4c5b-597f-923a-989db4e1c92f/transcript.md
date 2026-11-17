@@ -1664,3 +1664,69 @@ All five screens are now running in parallel. Next I'm updating the progress rep
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='docs/PARALLEL_PROGRESS.md'\ns=open(p).read()\nL=s.splitlines()\ndef rep(prefix,new):\n    global s\n    old=[l for l in s.splitlines() if l.startswith(prefix)][0]; s=s.replace(old,new)\nrep('| 04 Five Arrows',\"| 04 Five Arrows | screen-04 cloud session `session_01AvQv6UQ9kzB2yfcESLZjUB` | own container | `claude/rainbow-s04-match` (from line A `752d6d8`) | MILESTONE 1 (15:57 UTC, `8c1732b`, verified by the lead): camera solve, fitted proxies, original pixels projected, picture's 5 coins (total 91 / 2,240 kept) | scenery 5.1 % → **97.6 %** within 20 (SSIM  …[+2878 chars]`
 
+### 🧑 User — 2026-11-17T15:59:53.414Z
+
+> ↩︎ result: ok
+>   "commit": "07e67fb18dbe92ccd1a240cd520cd21d33f6b2da",
+> remote 07e67fb local 07e67fb
+
+### 🤖 Claude — 2026-11-17T15:59:56.899Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/parallel_preview/04/1_APPROVED_04.png", "qa/parallel_preview/04/2_BEFORE_game_04.png", "qa/parallel_preview/04/3_NEW_match04.png", "qa/parallel_preview/04/5_NEW_moving_20u_forward_stretch_issue.png"], "caption": "Screen 04, first checkpoint: your APPROVED picture, the current game (BEFORE), the new 3D reconstruction (NEW, scenery 97.6 % vs 5.1 % before), and a moving frame 20 units in where the tunnel still smears. That smear is the agent's next fix. Not integrated; nothing approved.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T15:59:58.205Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/parallel_preview/04/1_APPROVED_04.png → file_uuid: 5353dfc6-87b3-47a7-a998-9fc925ce01a9
+>   /home/user/rainbow-/qa/parallel_preview/04/2_BEFORE_game_04.png → file_uuid: 8b7b4812-354d-4ace-849d-afef59e5dd14
+>   /home/user/rainbow-/qa/parallel_preview/04/3_NEW_match04.png → file_uuid: edb3c0cb-0635-4d56-ae8c-87522de561e2
+>   /home/user/rainbow-/qa/parallel_preview/04/5_NEW_moving_20u_forward_stretch_issue.png → file_uuid: 8a880908-b672-4f0b-9f91-12dcf0822ecd
+
+### 🤖 Claude — 2026-11-17T15:59:58.852Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/parallel_preview/05/1_APPROVED_05.png", "qa/parallel_preview/05/2_BEFORE_match05.png", "qa/parallel_preview/05/3_NEW_match05_tgtvis05.png"], "caption": "Screen 05, first checkpoint: APPROVED, BEFORE (your newest Screen 05 version, line B), NEW (water around Benny's hat and shoulders now from your picture; whole frame 87.8 % to 89.2 %). Not integrated; nothing approved.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T15:59:59.694Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/parallel_preview/05/1_APPROVED_05.png → file_uuid: a99be822-2616-4303-98e9-b19358ab7062
+>   /home/user/rainbow-/qa/parallel_preview/05/2_BEFORE_match05.png → file_uuid: 0bd09b61-f5c2-430b-829c-f3071329295d
+>   /home/user/rainbow-/qa/parallel_preview/05/3_NEW_match05_tgtvis05.png → file_uuid: 542c379a-0e45-4f6d-b580-f407877de0ba
+
+### 🤖 Claude — 2026-11-17T16:00:03.847Z
+
+> 🔧 **mcp__claude-code-remote__update_trigger** `{"trigger_id": "trig_01UAoVKZH2f1ssZ5LoZGUHKx", "name": "Lead heartbeat: parallel workstreams + backups", "prompt": "Lead heartbeat (all five screen workstreams were launched by 15:59 UTC, so nothing new to launch): (1) ReadNotifications; list_sessions children (04 session_01AvQv6UQ9kzB2yfcESLZjUB, 05 session_01AvQv6ShfugNq5opq6Bd1MX, 06 session_01AvQv6SAwTuXwWRiSwgKaoH, 07 session_01AvQv6SiGdDhWH1exHdH8xX) — any failed/stuck? (2) git ls-remote each specialist branch (claude/rainbow-s0{4,5,6,7}-match, claude/rainbow-s08-benny08-bake, claude/rainbow-s08-camclear) — are the in-container 08 speci …[+228 chars]`
+
+### 🧑 User — 2026-11-17T16:00:14.628Z
+
+> ↩︎ result: {"trigger":{"id":"trig_01UAoVKZH2f1ssZ5LoZGUHKx", "name":"Lead heartbeat: parallel workstreams + backups", "cron_expression":"", "enabled":true, "next_run_at":"2026-11-17T16:30:00Z", "created_at":"2026-11-17T15:49:16.876809Z", "updated_at":"2026-11-17T16:00:14.596709Z", "persist_session":true, "persistent_session_id":"session_01AvQv6UXiBngewM8kSBwFfZ", "mcp_connections":[], "creator":{"account_uuid":"505767f9-b027-484f-8c54-8b3070abf518", "display_name":"Jj"}, "session_request":{"events":[{"payload":{"uuid":"8f4cb008-18c2-47c2-9e81-d3778e9cad19", "type":"user", "internal_anthropic_payload_json":"", "internal_anthropic_catchall":{"isSynthetic":true, "message":{"content":"Lead heartbeat (all five screen workstreams were launched by 15:59 UTC, so nothing new to launch): (1) ReadNotifications; list_sessions children (04 session_01AvQv6UQ9kzB2yfcESLZjUB, 05 session_01AvQv6ShfugNq5opq6Bd1MX, 06 session_01AvQv6SAwTuXwWRiSwgKaoH, 07 session_01AvQv6SiGdDhWH1exHdH8xX) — any failed/stuck? (2) git ls-remote each specialist branch (claude/rainbow-s0{4,5,6,7}-match, claude/rainbow-s08-benny08-bake, claude/rainbow-s08-camclear) — are the in-container 08 specialists pushing? (3) get_session rate_l …[+1519 chars]
+
+### 🤖 Claude — 2026-11-17T16:00:24.274Z
+
+All five screens now have their own agent. Screen 04 reached its first checkpoint, so Screen 07 started in its own session.
+
+**Screen 04 checkpoint.** I verified it on GitHub and sent you the pictures separately at full size: approved, current game, new reconstruction, and one moving frame.
+- At your approved view, scenery went from **5.1 % to 97.6 %** within the 20-level colour tolerance. The whole frame went from 6.4 % to 79.9 %; Benny and the HUD are most of the rest.
+- The coin total stays at 91 / 2,240. Gameplay passes 8/8, and the default game and Screen 08 are pixel-identical.
+- The moving frames still have a problem: 10–20 units into the tunnel, the gold walls smear and the water under Benny turns into a mirrored pattern (the fourth picture). The agent's next job is fixing that, so the view stays true to your artwork while riding.
+- Benny on Screen 04 still has the older flatter beanie. The agent may not edit Benny's files; Benny's look will come from the Screen 08 Benny specialist's work.
+
+**Screen 05 checkpoint.** Its pictures are also sent. The agent is now fixing the coin total (100 back to your 91), then how the scenery looks while riding.
+
+**Decision for you (paid):** the Screen 04 agent prepared one fal image edit, a clean background plate like the two you approved for Screen 08. It would replace the agent's temporary background fill, which covers about 23 % of the frame, mostly the patch under Benny that shows while moving. The cost is one image edit; fal's API doesn't report prices, so the exact charge would show on your fal dashboard. It has **not** been run. If you want it, say "yes, run the Screen 04 fal plate"; downloading the result will need the two fal download addresses (`v3.fal.media`, `v3b.fal.media`) allowed, which I'd propose for your approval.
+
+| Screen | Branch | Now |
+|---|---|---|
+| 08 Benny | `claude/rainbow-s08-benny08-bake` | working |
+| 08 camera / obstructions | `claude/rainbow-s08-camclear` | working |
+| 04 | `claude/rainbow-s04-match` | checkpoint 1 verified; fixing moving quality |
+| 05 | `claude/rainbow-s05-match` | checkpoint 1 verified; fixing the coin total |
+| 06 | `claude/rainbow-s06-match` | working toward checkpoint 1 |
+| 07 | `claude/rainbow-s07-match` | started; must keep the 07→08 drop intact |
+
+**Backup:** my branch `ccr-d4240b15-rl1i72` is verified on GitHub at `07e67fb`. Nothing is merged into `ccr-9c4a8ad6-xovgsx`. I also have a check-in at 16:30 UTC to look for stuck agents and confirm every branch is saving to GitHub.
+
+### 🧑 User — 2026-11-17T16:00:26.796Z
+
+Save everything to my GitHub
+
