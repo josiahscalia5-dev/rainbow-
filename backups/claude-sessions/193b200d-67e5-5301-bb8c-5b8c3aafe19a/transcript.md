@@ -2014,3 +2014,136 @@ Shinier knit (lower roughness) measured worse, so it's rejected. The pom-pom hig
 > v1   benny+splash  <=20  65.4 %  SSIM 0.594  mean  26.82 | pom 0.23 15 229] [132 32 232] bbox
 > v2   benny+splash  <=20  65.3 %  SSIM 0.594  mean  26.84 | pom 0.22 15 229] [130 33 229] bbox
 
+### 🤖 Claude — 2026-11-17T18:04:26.205Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/r4 && python3 -I - <<EOF\nfrom PIL import Image\nS='$S'; box=(340,840,520,980)\nps=['references/08_final_spin_chamber.png',S+'/o4/t1.png',S+'/o4/v1.png',S+'/o4/t3.png']\nims=[Image.open(p).convert('RGB').crop(box) for p in ps]\nw,h=ims[0].size;o=Image.new('RGB',(w*4+18,h),'white')\nfor i,im in enumerate(ims):o.paste(im,(i*(w+6),0))\no.resize((o.size[0]*2,o.size[1]*2)).save(S+'/pom.png')\nEOF", "description": "Build pom closeup comparison"}`
+
+### 🧑 User — 2026-11-17T18:04:26.657Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T18:04:28.436Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/r4/pom.png"}`
+
+### 🧑 User — 2026-11-17T18:04:28.491Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:04:39.370Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/r4\nmk(){ cat > $S/$1.shot.js <<EOF\nconst B = Q.scene.getObjectByName('Benny'); B.getObjectByName('fur_body').userData.furU.uHi.value = 0.7; B.getObjectByName('fur_pom').material.color.setRGB(1.12,1.0,1.06);\nconst body = B.getObjectByName('body'), hat = B.getObjectByName('hat');\nwindow.__pr = window.__pr || { b: body.scale.clone(), h: hat.scale.clone(), hp: hat.position.clone() };\nconst r = window.__pr; body.scale.set(r.b.x * $2, r.b.y * $3, r.b.z * $2);\nhat.scale.set(r.h.x * $4 / $2, r.h.y *  …[+801 chars]`
+
+### 🧑 User — 2026-11-17T18:05:18.078Z
+
+> ↩︎ result: done 24.327
+> p0   benny+splash  <=20  65.4 %  SSIM 0.594  mean  26.82 | pom 0.23 crown 0.29 cuff 0.28 star 0.50 body 0.75 
+> hk105   benny+splash  <=20  64.3 %  SSIM 0.584  mean  28.48 | pom 0.20 crown 0.22 cuff 0.31 star 0.42 body 0.75 
+> hk110   benny+splash  <=20  62.5 %  SSIM 0.570  mean  30.71 | pom 0.16 crown 0.16 cuff 0.32 star 0.32 body 0.75 
+> by94   benny+splash  <=20  63.4 %  SSIM 0.558  mean  27.59 | pom 0.23 crown 0.30 cuff 0.27 star 0.50 body 0.65 
+> round   benny+splash  <=20  61.3 %  SSIM 0.535  mean  29.70 | pom 0.20 crown 0.22 cuff 0.31 star 0.42 body 0.60
+
+### 🤖 Claude — 2026-11-17T18:05:23.582Z
+
+> 🔧 **Bash** `{"command": "grep -n \"color\\b\\|\\.color\\.\\|color:\" src/characters/benny/benny05.ts | sed -n 1,30p; grep -n \"b08soft\" src/characters/benny/benny05.ts", "description": "Find material colour handling in benny05.ts"}`
+
+### 🧑 User — 2026-11-17T18:05:23.643Z
+
+> ↩︎ result: 179:  color: [0.319, 0.39, 0.048] as [number, number, number],
+> 291:  type St = { mesh: THREE.Mesh; mat: THREE.MeshStandardMaterial; map: THREE.Texture | null; color: THREE.Color; fur?: FurHandle; root?: THREE.Color; tip?: THREE.Color };
+> 313:      mat.color.setScalar(spec.scale);
+> 329:    baked.push({ mesh: m, mat, map: mat.map, color: mat.color.clone(), fur, root: fur?.uniforms.uRoot.value.clone(), tip: fur?.uniforms.uTip.value.clone() });
+> 336:    starMat.color.setScalar(1);
+> 337:  } else starMat.color.setRGB(...STAR05.color);
+> 340:  const starCol = starMat.color.clone();
+> 407:      if (k === null) b.mat.color.copy(b.color); else b.mat.color.setScalar(k);
+> 415:    if (k === null) starMat.color.copy(starCol); else starMat.color.setScalar(k);
+> 279:    // shorter fringe where the body turns edge-on (neutral number, smoother outline); `?b08soft=0` = off
+> 280:    if (B08R3 && qv('b08soft') !== '0' && /^fur_(body|arm)/.test(f.mesh.name)) {
+
+### 🤖 Claude — 2026-11-17T18:05:25.144Z
+
+> 🔧 **Bash** `{"command": "sed -n 310,316p src/characters/benny/benny05.ts && sed -n 280,284p src/characters/benny/benny05.ts", "description": "Read colour assignment context"}`
+
+### 🧑 User — 2026-11-17T18:05:25.206Z
+
+> ↩︎ result: fur.uniforms.uTip.value.setRGB(1, 1, 1);
+>       }
+>       mat.map = tex;
+>       mat.color.setScalar(spec.scale);
+>       if (!fur) {
+>         const n = spec.normal ? maps[spec.normal] : null;
+>         mat.normalMap = n;
+>     if (B08R3 && qv('b08soft') !== '0' && /^fur_(body|arm)/.test(f.mesh.name)) {
+>       f.uniforms.uSoft.value = 0.6;
+>       if (f.mesh.name === 'fur_body') f.uniforms.uSoftEdge.value = 1.0;
+>     }
+>     // benny08 round 3: the fur uniforms reachable from the mesh (Game.ts ?match08=1 Benny tweaks, QA probes); no render effect
+
+### 🤖 Claude — 2026-11-17T18:05:33.790Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/benny05.ts'; s=open(p).read()\nold=\"\"\"      if (f.mesh.name === 'fur_body') f.uniforms.uSoftEdge.value = 1.0;\n    }\n\"\"\"\nassert old in s\ns=s.replace(old,old+\"\"\"    // benny08 round 4: lighter pink tips on the visible shoulders / upper body like the painted highlights (number neutral,\n    // visibly closer); `?b08hi=0` = off\n    if (B08R3 && qv('b08hi') !== '0' && f.mesh.name === 'fur_body') f.uniforms.uHi.value = 0.7;\n\"\"\",1)\nold=\"      mat.color.setScalar(spec.scale);\\n\"\nassert s.count(old)==1\ns=s.replace(old,old+\ …[+1283 chars]`
+
+### 🧑 User — 2026-11-17T18:06:35.236Z
+
+> ↩︎ result: TSC_OK
+> 08 → qa/match/08/benny08/r4/
+> 08 → qa/match/08/benny08/r4/
+> 08 → qa/match/08/benny08/r4/
+> qa/match/08/benny08/r4/default/08.png diff px 0 max 0
+> qa/match/08/benny08/r4/prev/08.png diff px 0 max 0
+> qa/match/08/benny08/r4/new/08.png diff px 0 max 0
+> qa/match/08/benny08/r4/new/08.png
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.58
+>   benny+splash  <=20  65.4 %  SSIM 0.594  mean  26.82
+>   whole         <=20  85.4 %  SSIM 0.836  mean  12.79
+> pom 0.23 crown 0.29 cuff 0.28 star 0.50 body 0.75
+
+### 🤖 Claude — 2026-11-17T18:06:37.267Z
+
+Verified: default 0 px, round-3b reproducible exactly with the switches off, scenery unchanged, Benny + splash 65.4 %. Committing, then running motion, the other screens and gameplay.
+
+### 🤖 Claude — 2026-11-17T18:06:48.282Z
+
+> 🔧 **Bash** `{"command": "git add src/characters/benny qa/match/08/benny08/r4 && git commit -qm \"Screen 08 Benny round 4: shoulder highlight on the fur (fur.ts uHi, b08hi=0 off) + lighter violet pom-pom (b08pom=0 off); Benny+splash 65.4 %, scenery 97.3 % unchanged, default 0 px, r3b reproducible 0 px; rejected: bigger tufts, per-tuft tone, shinier knit, larger hat / rounder body (all worse)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCJxXZNaUL12aCQ6mX4\" && git push -q origin HEAD 2>&1|tail -1; git ls-remote origin refs/heads/claude/rain …[+2095 chars]`
+
+### 🧑 User — 2026-11-17T18:09:16.053Z
+
+> ↩︎ result: 8e40c5418105
+> 8e40c5418105
+> s_right_steer s 397.90 lat 1.85 08
+> 07 → qa/match/08/benny08/r4/
+> gameplay 8 8 91 2240
+> 04 changed 4.3 % in largest blob (Benny) 60 %
+> 05 changed 8.1 % in largest blob (Benny) 98 %
+> 06 changed 14.5 % in largest blob (Benny) 98 %
+> 07 changed 11.0 % in largest blob (Benny) 81 %
+
+### 🤖 Claude — 2026-11-17T18:09:17.691Z
+
+Gameplay 8/8 (91 coins / 2,240); on 04–07 only Benny's area changes. Last check: the 360° turntable views.
+
+### 🤖 Claude — 2026-11-17T18:09:18.501Z
+
+> 🔧 **Bash** `{"command": "head -12 qa/match/08/benny08/work/labviews08.mjs | grep \"//\"", "description": "Read turntable tool usage"}`
+
+### 🧑 User — 2026-11-17T18:09:18.591Z
+
+> ↩︎ result: // benny08: 360-degree turntable of the REAL runtime Benny (canonical benny.glb + runtime) on the existing lab page
+> // src/characters/benny/benny-lab.html (?src=glb&views=turntable), CURRENT maps (benny05) vs NEW maps (bake08).
+> // Adapted copy of line B's qa/pilot05/full_reference_match/benny/work/labviews.mjs (read-only source).
+> //   node qa/match/08/benny08/work/labviews08.mjs --out=DIR   ->  DIR/turntable_{CURRENT,NEW}.png
+
+### 🤖 Claude — 2026-11-17T18:09:20.201Z
+
+> 🔧 **Bash** `{"command": "grep -n \"q=\\|bake08\\|match08\" qa/match/08/benny08/work/labviews08.mjs | head", "description": "Check turntable query switches"}`
+
+### 🧑 User — 2026-11-17T18:09:20.279Z
+
+> ↩︎ result: 3:// src/characters/benny/benny-lab.html (?src=glb&views=turntable), CURRENT maps (benny05) vs NEW maps (bake08).
+> 15:  for (const [label, q] of [['CURRENT', '&benny05=1'], ['NEW', '&benny05=1&bake08=1']]) {
+
+### 🤖 Claude — 2026-11-17T18:09:22.792Z
+
+> 🔧 **Bash** `{"command": "node qa/match/08/benny08/work/labviews08.mjs --out=qa/match/08/benny08/r4/views 2>&1 | tail -2; ls qa/match/08/benny08/r4/views", "description": "Render 360 turntable views", "timeout": 400000}`
+

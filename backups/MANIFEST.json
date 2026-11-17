@@ -669,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11098,
-   "sha256": "995541304acd0391cc2e25c708190669bcc87ef7d64f2e79bffcb99d8cd13840"
+   "sha256": "141baca79c11e908a15bbd5b85ed1669c50b2a9783ce175a3439f3214134ef19"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1800,6 +1800,131 @@
    "path": "qa/match/08/benny08/r3b/tests/gameplay_match08.json",
    "bytes": 14649,
    "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/APPROVED_08.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/NEW_08.png",
+   "bytes": 2348975,
+   "sha256": "36e9e8e771fcbd6b55ac7c26ddda0d6f0832ef36dcbf1b796c274491ed352230"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/PREVIOUS_r3b_08.png",
+   "bytes": 2348849,
+   "sha256": "f1a2c91210fd0a18dd21a6c2fd4b43ea419971ad335d73acfa63078ada4b0997"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/closeup2x_APPROVED.png",
+   "bytes": 2018840,
+   "sha256": "ecccd8923ba84db54754dfcd95022f819b2297da59cd0144812c5997eed1b87c"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/closeup2x_NEW_r4.png",
+   "bytes": 1945021,
+   "sha256": "2597b7f4fe105c61021d3bb7f340b135075ce2a0d9d17002ad6ad766d80db84d"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/closeup2x_PREVIOUS_r3b.png",
+   "bytes": 1944522,
+   "sha256": "418ab295c20c593e09dc25d6fdf98be435d034766a843efb54c206f7d5c7be23"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/default/08.png",
+   "bytes": 1428957,
+   "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/f00_checkpoint.png",
+   "bytes": 2358994,
+   "sha256": "f6faf47491e3a798212799805aae2148f8961dd4a88a1ee913908112a7fb0a51"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/f03_forward3u.png",
+   "bytes": 2385838,
+   "sha256": "a06d1f36e3d3e5c721aa21055e2a8333c3e95fd5e1f52e3c9b3128ebd3391968"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/f06_forward6u.png",
+   "bytes": 2300109,
+   "sha256": "489d171c005e9997d0391104d5fde5d2cb3c04a189135c3bc04bd2c5c097f1da"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/f10_forward10u.png",
+   "bytes": 2205024,
+   "sha256": "cb0485ee4f80746602a2a9653a46b886e26864003e796812033a21cd17b3474b"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/f15_forward15u.png",
+   "bytes": 1577519,
+   "sha256": "784a143efcd9601855627d6da179aaa853195535307a9f683ea390803ef7f41c"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/montage_r4.png",
+   "bytes": 2145393,
+   "sha256": "5fcdc825cf1502513b584c0c72206bf2ed881da639049b2e4451a9e7e925ab43"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/motion.json",
+   "bytes": 781,
+   "sha256": "9c829d40e72f97430949e125c6527ac22442f989b53847e8d063002870679fe2"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/s_left_steer.png",
+   "bytes": 2270240,
+   "sha256": "30576e510452d12cea955b2255f291e4d6e40a07301ba81383d17bd0e8f7863e"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/motion/s_right_steer.png",
+   "bytes": 2290415,
+   "sha256": "22d93d116983d29fe7826c1681b207175bae6c55589e687957e3cb5db2fa19b1"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/new/08.png",
+   "bytes": 2348975,
+   "sha256": "36e9e8e771fcbd6b55ac7c26ddda0d6f0832ef36dcbf1b796c274491ed352230"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/other_screens/04.png",
+   "bytes": 1016634,
+   "sha256": "12521c0a0e0486ef3494cd3ac88db50335a346fa33933b40977da4a6ef325f37"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/other_screens/05.png",
+   "bytes": 1793524,
+   "sha256": "03a2bdec45292f7c7bb072e2f0f6382d5a8626f4645ad5fb707329250c444348"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/other_screens/06.png",
+   "bytes": 1619441,
+   "sha256": "85c5ce64824c9145ad703fc58bb4463b486a56bc7811bd2f912e4e8a4269382a"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/other_screens/07.png",
+   "bytes": 1836279,
+   "sha256": "e5df6a115f6a24bb3f9a1fd88bab9e5d954986983f06257a72f1a3e04350ba80"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/prev/08.png",
+   "bytes": 2348849,
+   "sha256": "f1a2c91210fd0a18dd21a6c2fd4b43ea419971ad335d73acfa63078ada4b0997"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/regions_new.json",
+   "bytes": 634,
+   "sha256": "55ab13af491d15a05db3c9969da7f67081081269a8e57245f7895c226d881111"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/tests/gameplay_match08.json",
+   "bytes": 14649,
+   "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
+  },
+  {
+   "path": "qa/match/08/benny08/r4/views/turntable_CURRENT.png",
+   "bytes": 788795,
+   "sha256": "cf0368558509338d0d1241aa90f3cd50f2cc43c1d55278ea77f2f10dd9f34d18"
   },
   {
    "path": "qa/match/08/benny08/screen_match_CURRENT.json",
@@ -8488,8 +8613,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 21394,
-   "sha256": "839b24fbb655a7dcce7010a59db8031e1ef62008062b01c9b7cad240b9785dfa"
+   "bytes": 21875,
+   "sha256": "a02a67ede41254b96fe2bfa441d3b790029ec1a09231e4fe427cf0aae422b46b"
   },
   {
    "path": "src/characters/benny/build.ts",
