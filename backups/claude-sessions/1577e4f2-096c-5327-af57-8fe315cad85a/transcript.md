@@ -2814,3 +2814,11 @@ I'll start by checking what account and limits this session is running under, th
 
 You've hit your 5-hour limit · resets 9:20pm (UTC)
 
+### 🧑 User — 2026-11-17T17:14:15.214Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-17T17:14:16.324Z
+
+You've hit your 5-hour limit · resets 9:20pm (UTC)
+
