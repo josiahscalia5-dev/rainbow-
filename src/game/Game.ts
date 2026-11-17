@@ -27,6 +27,7 @@ import { MATCH } from './match';
 import { buildMatch08 } from '../world/match08';
 import { buildMatch04 } from '../world/match04';
 import { buildMatch06 } from '../world/match06';
+import { buildMatch07 } from '../world/match07';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -127,6 +128,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
   if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
   let m06On = false;
   let m06Applied = false;
+  // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
+  // 07 checkpoint until 8 u before the plunge top (the 07→08 drop keeps the game's own tube); off: nothing is built
+  const m07 = MATCH['07'] ? await buildMatch07() : null;
+  if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
+  const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
+  const m07Range = [course.stage('07').s0 + 14, course.marks['07_plunge_top'] - 8];
+  let m07On = false;
+  let m07Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
   if (hidden.has('water')) water.group.visible = false;
@@ -592,6 +601,17 @@ export async function startGame(canvas: HTMLCanvasElement) {
       m06Applied = m06On;
     }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+    // `?match07=1` on the visible 07 stretch: the projected scenery carries the approved tube, rings, paddles, river,
+    // foam and bubbles (the game's tube zone and river are hidden there and restored outside it)
+    if (m07) {
+      const on = st.stage === '07' && st.s >= m07Range[0] && st.s < m07Range[1];
+      m07.group.visible = on;
+      if (on || m07Applied) {
+        for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !on; }
+        env.zones.tubes.visible = on ? false : !zoneHidden('tubes') && STAGE_ORDER.indexOf(st.stage) >= STAGE_ORDER.indexOf('03') && STAGE_ORDER.indexOf(st.stage) <= STAGE_ORDER.indexOf('09');
+      }
+      m07On = on; m07Applied = on;
+    }
     if (m08 && b08 && b08Rest) {
       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
       const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
@@ -655,6 +675,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
       if (m06On) bloom.strength = 0;
       renderer.getDrawingBufferSize(dbs);
       m06.sync(renderer, dbs.x, dbs.y);
+    }
+    // `?match07=1`: no bloom on the visible 07 stretch under the switch (the artwork carries its own glow)
+    if (m07) {
+      if (!glow05 && !m08 && !(m04 && m04On) && !(m06 && m06On)) bloom.strength = bloomS0; // preview: never undo 04/06
+      if (m07On) bloom.strength = 0;
+      renderer.getDrawingBufferSize(dbs);
+      m07.sync(renderer, dbs.x, dbs.y);
     }
     renderer.info.reset();
     composer.render();

@@ -15,6 +15,7 @@ import * as THREE from 'three';
 import { flag05 } from '../vfx/waterRibbon';
 import river08 from '../../assets/textures/match08/river08.json';
 import path06 from '../../assets/textures/match06/path06.json';
+import river07 from '../../assets/textures/match07/river07.json';
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
@@ -287,8 +288,22 @@ function buildRoute(): RouteData {
   mark('07');
   // ---- 07: winding washer tube (the visible stretch) ----
   const s7 = pts[pts.length - 1].clone();
+  // `?match07=1` (src/world/match07.ts, qa/match/07/NOTES.md): the visible 07 stream follows the APPROVED picture's painted
+  // S-river (Benny's water point + the painted coins cast on the water plane from the locked 07 camera,
+  // assets/textures/match07/river07.json), eased in over 10 u before the 07 checkpoint and out over the last 4 u before
+  // the plunge top, so the 06 join, the plunge and 08 keep their shape. Off: the formula below, unchanged.
+  const m07 = flag05('match07') || flag05('matchall');
+  const x07 = (z: number, xDefault: number) => {
+    if (!m07) return xDefault;
+    const rz = river07.z, rx = river07.x, z0 = rz[0], zEnd = rz[rz.length - 1];
+    let xt = rx[0];
+    if (z <= zEnd) xt = rx[rx.length - 1];
+    else for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); xt = rx[i - 1] + (rx[i] - rx[i - 1]) * a; break; }
+    const w = smooth(0, 10, z0 + 12 - z) * (1 - smooth(0, 4, zEnd - z));
+    return xDefault + (xt - xDefault) * w;
+  };
   seg(32, (t) =>
-    V(s7.x + 3.2 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI * t), s7.y + (WORLD.plunge.topY - s7.y) * t, s7.z - 60 * t),
+    V(x07(s7.z - 60 * t, s7.x + 3.2 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI * t)), s7.y + (WORLD.plunge.topY - s7.y) * t, s7.z - 60 * t),
   );
   mark('07_plunge_top');
   // ---- 07: THE DEEP PLUNGE — pull-down arc, long -70° straight, pull-up arc into the 08 inlet ----
@@ -449,7 +464,8 @@ export class Course {
       // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
       def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
       def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
-      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
+      // `?match07=1`: the painted river is level (no tilt) → no curvature banking on 07 (frames only; gameplay unchanged)
+      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940, ...(flag05('match07') || flag05('matchall') ? { bank: 0 } : {}) }),
       def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
       def('09', m['09'], m['10'], { width: 6.4, speed: 9.5, refCoins: 2280 }),
       def('10', m['10'], m['11'], { width: 3.8, speed: 7.5, refCoins: 2500 }),
