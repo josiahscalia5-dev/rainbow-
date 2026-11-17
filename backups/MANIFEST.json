@@ -603,8 +603,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3887,
-   "sha256": "6666fb42b50023c73b03d71130df71d804e95c26ea49d27d5e234fd6bf2eb8f8"
+   "bytes": 3921,
+   "sha256": "79425ace1b47ac27c02ff3d4656b5db06edec22cfbc2cd82e39f3b81bd1e5ac6"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 12588,
-   "sha256": "919bb1108e30c4badc6b19f12c080a13688d70f045e7bffbb3fa7d26fed734b7"
+   "bytes": 12597,
+   "sha256": "c5b06a44616755a8f1df2150de80ff765c1f66d46d787792569bc52e71fea231"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9445,6 +9445,11 @@
    "path": "tools/lead_r5/verify_preview.sh",
    "bytes": 3863,
    "sha256": "34e3624cbe581a6dbb98964c059d27cef2acba6744aeecc80e32b349854b1ddb"
+  },
+  {
+   "path": "tools/lead_r6/motion_audit.mjs",
+   "bytes": 2965,
+   "sha256": "45fcca22b4c0688fd8b3689032709f6dd309a8e801a502baec9b6c1cbd7f4f71"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
