@@ -3344,3 +3344,235 @@ No seams or ghosting at full resolution. Now the final clean version gets the sa
 
 > 🔧 **Bash** `{"command": "cd /home/user/neilsonnn/image-blaster && export NODE_USE_ENV_PROXY=1 WORLD_LABS_API_KEY=[REDACTED] FAL_KEY=proxy-injected && timeout 590 node .claude/scripts/world/generate-world.mjs --world rainbow-08-final-spin-chamber \\\n  --image worlds/rainbow-08-final-spin-chamber/source/4-08-final-spin-chamber-plate-clean-aligned.png \\\n  --prompt \"Stylized 3D cartoon game environment: the inside of a cylindrical washing-machine drum seen down its axis. Glossy magenta-purple metal walls and floor covered in rows of oblong perforation slots. A very large polished gold ring arch frames the …[+1047 chars]`
 
+### 🧑 User — 2026-11-17T12:59:31.363Z
+
+> ↩︎ result: {
+>   "world": "rainbow-08-final-spin-chamber",
+>   "index": 0,
+>   "operation_id": "0de603c2-c44f-47d1-b3c6-be4c05506dce",
+>   "request_metadata": "worlds/rainbow-08-final-spin-chamber/output/world/.0-world-request.json",
+>   "world_json": "worlds/rainbow-08-final-spin-chamber/output/world/0-world.json",
+>   "plate": "worlds/rainbow-08-final-spin-chamber/output/world/0-world-plate.png",
+>   "spz": {
+>     "500k": "worlds/rainbow-08-final-spin-chamber/output/world/0-world-500k.spz",
+>     "100k": "worlds/rainbow-08-final-spin-chamber/output/world/0-world-100k.spz",
+>     "150k": "worlds/rainbow-08-final-spin-chamber/output/world/0-world-150k.spz",
+>     "full_res": "worlds/rainbow-08-final-spin-chamber/output/world/0-world-full_res.spz"
+>   },
+>   "glb": "worlds/rainbow-08-final-spin-chamber/output/world/0-world.glb",
+>   "pano": "worlds/rainbow-08-final-spin-chamber/output/world/0-world-pano.png",
+>   "thumbnail": "worlds/rainbow-08-final-spin-chamber/output/world/0-world-thumbnail.webp",
+>   "route": "/rainbow-08-final-spin-chamber"
+> }
+> exit=0
+> 12:59:31
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T12:59:34.832Z
+
+The Marble world is done (about 5.5 minutes), and all its files downloaded. Checking the exact credits charged, the file sizes and the world ID:
+
+### 🤖 Claude — 2026-11-17T12:59:37.372Z
+
+> 🔧 **Bash** `{"command": "curl -sS -m 30 https://api.worldlabs.ai/marble/v1/credits; echo; cd /home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/output/world && ls -la; python3 -I -c \"\nimport json;d=json.load(open('0-world.json'))\nprint('world_id', d.get('world_id') or d.get('id')); print('model', d.get('model')); print('keys', list(d.keys()))\na=d.get('assets',{}); print('caption:', str(a.get('caption'))[:300]); print('mesh keys', list((a.get('mesh') or {}).keys())); print('semantics', str(a.get('semantics_metadata'))[:300])\n\"; python3 -I -c \"\nimport trimesh\" 2>/dev/null && ec …[+92 chars]`
+
+### 🧑 User — 2026-11-17T12:59:38.002Z
+
+> ↩︎ result: {"remaining_credits":5420.0}
+> total 64412
+> drwx------ 2 root root     4096 Nov 17 12:59 .
+> drwx------ 4 root root     4096 Nov 17 12:06 ..
+> -rw-r--r-- 1 root root     8095 Nov 17 12:59 .0-world-request.json
+> -rw-r--r-- 1 root root  1451332 Nov 17 12:59 0-world-100k.spz
+> -rw-r--r-- 1 root root  2342749 Nov 17 12:59 0-world-150k.spz
+> -rw-r--r-- 1 root root  7829371 Nov 17 12:59 0-world-500k.spz
+> -rw-r--r-- 1 root root 30057280 Nov 17 12:59 0-world-full_res.spz
+> -rw-r--r-- 1 root root 16060812 Nov 17 12:59 0-world-pano.png
+> -rw-r--r-- 1 root root  6591567 Nov 17 12:59 0-world-plate.png
+> -rw-r--r-- 1 root root    73848 Nov 17 12:59 0-world-thumbnail.webp
+> -rw-r--r-- 1 root root  1510524 Nov 17 12:59 0-world.glb
+> -rw-r--r-- 1 root root     3453 Nov 17 12:59 0-world.json
+> world_id 32b5b2f4-32bc-4fa5-80a5-861129a528c8
+> model None
+> keys ['world_id', 'display_name', 'tags', 'assets', 'created_at', 'updated_at', 'permission', 'world_prompt', 'world_marble_url', 'model']
+> caption: The scene is a highly stylized 3D cartoon game environment, depicting the inside of a cylindrical washing machine drum, presented with vibrant, saturated high-key lighting and a fantastical, playful tone. The glossy magenta-purple m …[+205 chars]
+
+### 🤖 Claude — 2026-11-17T12:59:49.465Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08; mkdir -p $S; W=/home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/output/world; python3 -I -c \"\nfrom PIL import Image\nt=Image.open('$W/0-world-thumbnail.webp'); print('thumb',t.size); t.convert('RGB').save('$S/thumb.png')\np=Image.open('$W/0-world-pano.png'); print('pano',p.size); p.convert('RGB').resize((1600,800),Image.LANCZOS).save('$S/pano_small.png')\n\"; python3 -I -c \"\nimport json;a=json.load(open('$W/0-world.json'))['assets']['mesh']\nfor k,v in a.items(): pri …[+141 chars]`
+
+### 🧑 User — 2026-11-17T12:59:50.902Z
+
+> ↩︎ result: thumb (720, 480)
+> pano (4608, 2304)
+> collider_mesh_url present https://cdn.marble.worldlabs.ai/32b5b2f4-32bc-4fa5-80a5-8611
+> hq_mesh_url EMPTY 
+> full_res_mesh_url EMPTY
+
+### 🤖 Claude — 2026-11-17T12:59:54.348Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08/pano_small.png"}`
+
+### 🧑 User — 2026-11-17T12:59:54.416Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:00:12.583Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/neilsonnn/image-blaster/app/src && grep -n -E \"fov|position|camera|rotation|quaternion|flip|Math.PI|SplatMesh|spz\" modules/splat/SplatRenderer.tsx utils/worldLoader.ts modules/character/spawn.ts components/WorldViewer.tsx 2>/dev/null | cut -c1-170 | head -50", "description": "Find the viewer's camera and splat setup"}`
+
+### 🧑 User — 2026-11-17T13:00:12.674Z
+
+> ↩︎ result: modules/splat/SplatRenderer.tsx:3:import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark'
+> modules/splat/SplatRenderer.tsx:26:const SplatMeshEl = extend(SplatMesh)
+> modules/splat/SplatRenderer.tsx:33:  flipY?: boolean
+> modules/splat/SplatRenderer.tsx:42:  flipY,
+> modules/splat/SplatRenderer.tsx:47:    const splatRef = useRef<SplatMesh>(null)
+> modules/splat/SplatRenderer.tsx:108:        <group position={[0, groundPlaneOffset, 0]} rotation={[flipY ? Math.PI : 0, 0, 0]} scale={metricScaleFactor}>
+> modules/splat/SplatRenderer.tsx:109:          <SplatMeshEl ref={splatRef} args={[splatArgs]} />
+> utils/worldLoader.ts:21:  const urls = world.assets.splats.spz_urls
+> components/WorldViewer.tsx:30:  flip_y: true,
+> components/WorldViewer.tsx:33:function sunPositionFromRotation(rotation: Vec3Tuple): Vec3Tuple {
+> components/WorldViewer.tsx:37:  const [rx, ry, rz] = rotation
+> components/WorldViewer.tsx:171:  const { ground_plane_offset, flip_y, metric_scale_factor } = desiredWorld?.assets.splats.semantics_metadata ?? DEFAULT_WORLD_SEMANTICS
+> components/WorldViewer.tsx:172:  const flipY = flip_y ?? true
+> components/WorldViewer.tsx:196:  const activeSunPosition = sunPositionFromRotation(activeSceneSun?.rot …[+748 chars]
+
+### 🤖 Claude — 2026-11-17T13:00:18.139Z
+
+The viewer flips Marble's splats upside-down to convert their axes and uses a 75° camera. Your repo already rendered Marble splats in the Screen 05 test, so I'll reuse that renderer if there is one:
+
+### 🤖 Claude — 2026-11-17T13:00:19.343Z
+
+> 🔧 **Bash** `{"command": "grep -rl -i -E \"sparkjs|SplatMesh|\\.spz\" --include=*.mjs --include=*.js --include=*.html --include=*.py scripts tools qa/pilot05/marble_feas 2>/dev/null | head; ls qa/pilot05/marble_feas/ | head -20", "description": "Find the existing splat rendering tools"}`
+
+### 🧑 User — 2026-11-17T13:00:19.421Z
+
+> ↩︎ result: tools/marble05/build_meshes.py
+> tools/marble05/spark/render.html
+> tools/marble05/spark/render.mjs
+> NOTES.md
+> blender
+> compare
+> compare_metrics.json
+> geometry
+> marble_renders
+> moved
+> pano_fit_draft.json
+> pano_fit_full.json
+> scene
+> splat_fit_draft.json
+> splat_fit_full.json
+
+### 🤖 Claude — 2026-11-17T13:00:22.219Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/spark && sed -n 1,60p render.mjs | cut -c1-200; echo =====; grep -n -E \"fov|camera|rotation|SplatMesh|import|position|lookAt|quaternion|up\\b\" render.html | cut -c1-200 | head -40; ls; ls /home/user/rainbow-/node_modules/@sparkjsdev 2>/dev/null", "description": "Read the existing Spark splat renderer"}`
+
+### 🧑 User — 2026-11-17T13:00:22.313Z
+
+> ↩︎ result: Exit code 2
+> // usage: node tools/marble05/spark/render.mjs <served_dir> <spz> <out.png> [px py pz]
+> // Serves <served_dir> (render.html + node_modules with three + @sparkjsdev/spark + the .spz) and screenshots the canvas.
+> import http from "node:http"; import fs from "node:fs"; import path from "node:path";
+> import { createRequire } from "node:module";
+> const { chromium } = createRequire(import.meta.url)("playwright");
+> const [dir, spz, out, px = "0", py = "0", pz = "0", frames = "6"] = process.argv.slice(2);
+> const types = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".wasm": "application/wasm", ".json": "application/json" };
+> const srv = http.createServer((req, res) => {
+>   const p = path.join(dir, decodeURIComponent(new URL(req.url, "http://x").pathname));
+>   fs.readFile(p, (e, b) => { if (e) { res.writeHead(404); res.end(); return; }
+>     res.writeHead(200, { "content-type": types[path.extname(p)] || "application/octet-stream" }); res.end(b); });
+> }).listen(0);
+> const port = srv.address().port;
+> const browser = await chromium.launch({ args: ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+> const page =  …[+1458 chars]
+
+### 🤖 Claude — 2026-11-17T13:00:25.236Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/spark && cat render.html | cut -c1-220; echo; grep -n -i -E \"fov|pitch|fit|spark\" /home/user/rainbow-/qa/pilot05/marble_feas/NOTES.md | head -15 | cut -c1-220; cat /home/user/rainbow-/qa/pilot05/marble_feas/splat_fit_full.json 2>/dev/null | head -c 600", "description": "Read the render page and the earlier fit settings"}`
+
+### 🧑 User — 2026-11-17T13:00:25.304Z
+
+> ↩︎ result: <!doctype html>
+> <html><head><meta charset="utf-8"><title>Marble 05 locked render</title>
+> <style>html,body{margin:0;background:#000;overflow:hidden}</style>
+> <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","@sparkjsdev/spark":"./node_modules/@sparkjsdev/spark/dist/spark.module.js"}}</script>
+> </head><body>
+> <script type="module">
+> // Screen 05 Marble feasibility: render the Marble world (Gaussian splats, World Labs Spark renderer) from the camera
+> // that reproduces the approved 864x1536 frame. Query: spz=<file>&px=&py=&pz=&pitch=&f=&cx=&cy=  (Three.js frame of the
+> // Marble world; SplatMesh rotated 180 deg about X, as in World Labs' own examples).
+> import * as THREE from "three";
+> import { SplatMesh, SparkRenderer } from "@sparkjsdev/spark";
+> const q = new URLSearchParams(location.search);
+> const W = 864, H = 1536, f = +(q.get("f") || 700), cx = +(q.get("cx") || 432), cy = +(q.get("cy") || 482.5);
+> const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
+> renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+> const scene = new THREE.Scene(); scene.background = new THREE.Co …[+3280 chars]
+
+### 🤖 Claude — 2026-11-17T13:00:31.422Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && sed -n 1,30p tools/marble05/pano_fit.py | cut -c1-200; grep -n -E \"argv|05|approved|geometry_reference|rows|197|767|def \" tools/marble05/pano_fit.py | cut -c1-180 | head -30", "description": "Read the panorama camera-fit tool"}`
+
+### 🧑 User — 2026-11-17T13:00:31.507Z
+
+> ↩︎ result: """Find where/how Marble placed the input image in its panorama (equirect): focal length, yaw, pitch.
+> usage: python3 -I tools/marble05/pano_fit.py <pano.png> <out.json> [preview.png]"""
+> import json, sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> 
+> pano_p, outp = sys.argv[1], sys.argv[2]
+> pano = np.asarray(Image.open(pano_p).convert("RGB"), float) / 255
+> PH, PW = pano.shape[:2]
+> ref_im = Image.open("qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png").convert("RGB")
+> W0, H0 = ref_im.size
+> k = 4
+> W, H = W0 // k, H0 // k
+> ref = np.asarray(ref_im.resize((W, H), Image.BILINEAR).filter(ImageFilter.GaussianBlur(1)), float) / 255
+> 
+> def view(f, yaw, pitch, cx=None, cy=None, W=W, H=H, scale=k):
+>     cx = W0 / 2 if cx is None else cx; cy = H0 / 2 if cy is None else cy
+>     uu, vv = np.meshgrid((np.arange(W) + 0.5) * scale, (np.arange(H) + 0.5) * scale)
+>     d = np.stack([(uu - cx) / f, (vv - cy) / f, np.ones_like(uu)], -1)
+>     d /= np.linalg.norm(d, axis=-1, keepdims=True)
+>     cp, sp = np.cos(pitch), np.sin(pitch)  # pitch: +ve looks up
+>     y2 = d[..., 1] * cp - d[..., 2] * sp; z2 = d[..., 1] * sp + d[..., 2] * cp
+>     d = np.stack([d[..., 0], y2, z2], -1)
+>     lon = np.arctan2(d[..., 0],  …[+680 chars]
+
+### 🤖 Claude — 2026-11-17T13:00:33.485Z
+
+> 🔧 **Bash** `{"command": "sed -n 30,60p tools/marble05/pano_fit.py | cut -c1-220", "description": "Read the rest of the pano fit search"}`
+
+### 🧑 User — 2026-11-17T13:00:33.544Z
+
+> ↩︎ result: def ncc(a, b):
+>     a = a - a.mean((0, 1)); b = b - b.mean((0, 1))
+>     return float((a * b).sum() / np.sqrt((a * a).sum() * (b * b).sum()))
+> 
+> best = (-2, None)
+> for f in np.arange(250, 1201, 25):
+>     for yaw in np.radians(np.arange(-20, 21, 4)):
+>         for pitch in np.radians(np.arange(-20, 21, 4)):
+>             s = ncc(view(f, yaw, pitch), ref)
+>             if s > best[0]: best = (s, (f, yaw, pitch))
+> s, (f, yaw, pitch) = best
+> for f2 in np.arange(f - 24, f + 25, 4):
+>     for yaw2 in np.radians(np.arange(np.degrees(yaw) - 4, np.degrees(yaw) + 4.1, 1)):
+>         for p2 in np.radians(np.arange(np.degrees(pitch) - 4, np.degrees(pitch) + 4.1, 1)):
+>             s2 = ncc(view(f2, yaw2, p2), ref)
+>             if s2 > best[0]: best = (s2, (f2, yaw2, p2))
+> s, (f, yaw, pitch) = best
+> res = dict(pano=pano_p, pano_size=[PW, PH], image_size=[W0, H0], f_px=float(f), hfov_deg=float(np.degrees(2 * np.arctan(W0 / 2 / f))),
+>            yaw_deg=float(np.degrees(yaw)), pitch_deg=float(np.degrees(pitch)), ncc_blurred_quarter_res=s)
+> json.dump(res, open(outp, "w"), indent=1); print(json.dumps(res))
+> if len(sys.argv) > 3:
+>     v = view(f, yaw, pitch, W=W0, H=H0, scale=1)
+>     full = np.asarray(ref_im, float) / 255
+>     I …[+87 chars]
+
+### 🤖 Claude — 2026-11-17T13:00:51.941Z
+
+> 🔧 **Bash** `{"command": "mkdir -p tools/imageblaster && python3 -I - <<'EOF'\ns=open('tools/marble05/pano_fit.py').read()\ns=s.replace('\"\"\"Find where/how Marble placed the input image in its panorama (equirect): focal length, yaw, pitch.\\nusage: python3 -I tools/marble05/pano_fit.py <pano.png> <out.json> [preview.png]\"\"\"',\n '\"\"\"Any screen: find where/how Marble placed the input image in its panorama (equirect): focal length, yaw, pitch.\\nGeneralised copy of tools/marble05/pano_fit.py (that one is hard-wired to the Screen 05 reference).\\nusage: python3 -I tools/imageblaster/pano_fit.py <pano.p …[+1392 chars]`
+

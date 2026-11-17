@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "703459896d331bf6abc9a7e94618b796646664082d5f50268d81603fa725d743"
+   "sha256": "e34d730cef4d63069bb1b3e37c98d4db4a6940350846e34bce892864ecdf8ade"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7765,6 +7765,11 @@
    "path": "tools/blender/render_05_proof.py",
    "bytes": 4679,
    "sha256": "06e8869bc701026514d5a31e49197017fe2451bbf88029cbfa767fb17df1285f"
+  },
+  {
+   "path": "tools/imageblaster/pano_fit.py",
+   "bytes": 2942,
+   "sha256": "b75e2e8ecf869244ec0988eb855e2cc6f3f43b8bd6e9b97edb686007bdc25520"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
