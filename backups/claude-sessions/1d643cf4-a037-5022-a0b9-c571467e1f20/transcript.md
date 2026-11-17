@@ -2991,3 +2991,295 @@ Quick 1-second test of the recorder on Screen 08 to check it works and to measur
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/s08b && R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; timeout 600 node $R/tools/rec_tour.mjs 08 'match08=1' $R/clips_test/08 5401 1 2>&1 | tail -2; ls $R/clips_test/08 | wc -l; cat $R/cap/done.txt 2>/dev/null", "description": "Test recorder with a 1-second clip of Screen 08", "timeout": 700000}`
 
+### 🧑 User — 2026-11-17T20:35:45.824Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> {"id":"08","frames":31,"stages":["08"],"sec":56.441,"errors":[]}
+> 32
+> s04 exit=0
+> s05 exit=0
+> s06 exit=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T20:36:00.164Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"scratchpad/cap/run.sh\" ; pkill -f \"scripts/capture.mjs\" ; sleep 2; pgrep -fa \"capture.mjs|run.sh\" | head; W=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt; for d in lead s04 s05 s06 s07 s08b; do rm -f $W/$d/node_modules; cp -al /home/user/rainbow-/node_modules $W/$d/node_modules; done; ls -ld $W/*/node_modules | head -3; du -sh $W 2>/dev/null | tail -1; df -h /tmp | tail -1; rm -rf /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571 …[+125 chars]`
+
+### 🧑 User — 2026-11-17T20:36:11.762Z
+
+> ↩︎ result: drwxr-xr-x 104 root root 4096 Nov 17 20:15 /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/lead/node_modules
+> drwxr-xr-x 104 root root 4096 Nov 17 20:15 /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/s04/node_modules
+> drwxr-xr-x 104 root root 4096 Nov 17 20:15 /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/s05/node_modules
+> 15G	/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt
+> /dev/vda        252G   34G  5.6G  86% /
+
+### 🤖 Claude — 2026-11-17T20:36:31.774Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; W=$R/wt; C=$R/cap; K=$R/clips; mkdir -p $C $K; cat > $R/tour.sh <<EOF\nset -u\nW=$W; C=$C; K=$K; T=$R/tools/rec_tour.mjs\nlaneA() {\n  cd \\$W/lead && node scripts/capture.mjs --out=\\$C/default > \\$C/default.log 2>&1; echo \"cap default exit=\\$?\" >> \\$C/done.txt\n  for s in 01 02 03 09 10 11; do cd \\$W/lead && node \\$T \\$s '' \\$K/\\$s 5401 5 >> \\$K/log.txt 2>&1; echo \"clip \\$s done\" >> \\$C/done.txt; done\n}\nlaneB() {\n  cd \\$W/s04 && node scripts/capture.mjs 04 --out=\\$C/s04 '--q= …[+1657 chars]`
+
+### 🧑 User — 2026-11-17T20:36:31.812Z
+
+> ↩︎ result: Command running in background with ID: bxh5qtyai. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/tasks/bxh5qtyai.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T20:36:33.758Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T20:36:33.768Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-17T20:36:34.108Z
+
+> 🔧 **TaskUpdate** `{"taskId": "8", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T20:36:34.144Z
+
+> ↩︎ result: Updated task #8 status
+
+### 🤖 Claude — 2026-11-17T20:36:47.365Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,80p tools/qa/screen_match.py; ffmpeg -hide_banner -filters 2>/dev/null | grep -E \" drawtext | pad | concat \" ", "description": "Read metric output format and check ffmpeg filters"}`
+
+### 🧑 User — 2026-11-17T20:36:47.477Z
+
+> ↩︎ result: def reg(m):
+>     return dict(mean_abs=round(float(d[m].mean()), 2), within_10=round(float((d[m] <= 10).mean()), 4),
+>                 within_20=round(float((d[m] <= 20).mean()), 4), ssim_lum=round(float(sm[m].mean()), 4))
+> 
+> 
+> full = np.ones((H, W), bool)
+> out = dict(label=opt.get("label", args[1]), approved=args[0], capture=args[1], size=[W, H],
+>            FULL=reg(full), BELOWHUD=reg(below),
+>            LAYOUT=dict(mean_abs=round(float(db[below].mean()), 2), within_20=round(float((db[below] <= 20).mean()), 4)),
+>            mean_rgb_approved=[round(float(x), 1) for x in A[below].mean(0)], mean_rgb_capture=[round(float(x), 1) for x in C[below].mean(0)])
+> if "json" in opt:
+>     json.dump(out, open(opt["json"], "w"), indent=1)
+> f, b, l = out["FULL"], out["BELOWHUD"], out["LAYOUT"]
+> print(f"{out['label']:6s} FULL |d| {f['mean_abs']:5.1f} <=20 {f['within_20']:.3f} SSIM {f['ssim_lum']:.3f} | BELOWHUD |d| {b['mean_abs']:5.1f} <=20 {b['within_20']:.3f} | "
+>       f"LAYOUT |d| {l['mean_abs']:5.1f} <=20 {l['within_20']:.3f} | mean RGB approved {out['mean_rgb_approved']} game {out['mean_rgb_capture']}")
+>  T.C drawtext          V->V       Draw text on top of video frames using libfreetype library.
+>  ... pad  …[+180 chars]
+
+### 🤖 Claude — 2026-11-17T20:37:05.919Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/tools/assemble_tour.py", "content": "#!/usr/bin/env python3\n\"\"\"Assemble the user's screen tour: for each screen 01..11 -> APPROVED picture (3 s) then the live game NOW (5 s clip).\nA 80 px label strip sits ABOVE the 540x960 picture (nothing in the image is covered). Output: H.264 MP4, 30 fps.\nusage: python3 -I assemble_tour.py <repo_root> <clips_dir> <out.mp4> <work_dir>\"\"\"\nimport os, subprocess, sys\nfrom pathlib import Path\n\nrepo, clips, out, work = map(Path, sys.argv[1:5])\nwork.mkdir …[+3770 chars]`
+
+### 🧑 User — 2026-11-17T20:37:05.987Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/tools/assemble_tour.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T20:37:08.073Z
+
+Checking progress:
+
+### 🤖 Claude — 2026-11-17T20:37:09.711Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; cat $R/cap/done.txt 2>/dev/null; ls $R/cap/*/ 2>/dev/null | head -20; grep -i \"allow list\\|error\" $R/cap/*.log | head -5; date -u +%H:%M", "description": "Check capture progress and font errors"}`
+
+### 🧑 User — 2026-11-17T20:37:10.144Z
+
+> ↩︎ result: cap s04 exit=0
+> cap s05 exit=0
+> /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/default/:
+> 01.png
+> 02.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/s04/:
+> 04.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/s05/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/s06/:
+> 20:37
+
+### 🤖 Claude — 2026-11-17T20:37:16.196Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; mkdir -p $R/metrics; python3 -I tools/qa/screen_match.py references/04_through_the_five_arrows.png $R/cap/s04/04.png --label=04new --json=$R/metrics/04new.json; python3 -I tools/qa/screen_match.py references/05_flow_into_the_current.png $R/cap/s05/05.png --label=05new --json=$R/metrics/05new.json; python3 -I tools/qa/screen_match.py references/01_inside_washer_girl_and_towel.png $R/cap/default/01.png --label=01def --json=$R/metrics/01def.json", "description": "Measure first captures against approv …[+13 chars]`
+
+### 🧑 User — 2026-11-17T20:37:21.818Z
+
+> ↩︎ result: 04new  FULL |d|  13.1 <=20 0.818 SSIM 0.819 | BELOWHUD |d|   7.9 <=20 0.895 | LAYOUT |d|   5.4 <=20 0.907 | mean RGB approved [179.3, 132.6, 168.6] game [181.1, 132.2, 170.0]
+> 05new  FULL |d|   7.9 <=20 0.894 SSIM 0.879 | BELOWHUD |d|   6.7 <=20 0.916 | LAYOUT |d|   3.3 <=20 0.959 | mean RGB approved [151.2, 124.1, 192.3] game [149.9, 124.2, 192.6]
+> 01def  FULL |d|  65.7 <=20 0.074 SSIM 0.279 | BELOWHUD |d|  64.9 <=20 0.081 | LAYOUT |d|  56.3 <=20 0.076 | mean RGB approved [183.3, 133.0, 205.3] game [204.2, 158.7, 197.8]
+
+### 🤖 Claude — 2026-11-17T20:37:28.889Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; until grep -q \"cap default\" $R/cap/done.txt 2>/dev/null && grep -q \"cap s08b\" $R/cap/done.txt 2>/dev/null; do sleep 10; done; cat $R/cap/done.txt", "description": "Wait until all approved-view captures finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T20:37:28.931Z
+
+> ↩︎ result: Command running in background with ID: brsewso2j. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/tasks/brsewso2j.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T20:37:50.590Z
+
+> 🔧 **Bash** `{"command": "for p in \"04 s04-match-c4\" \"06 s06-match-c4\" \"07 s07-match-c4\"; do set -- $p; echo \"=== $1\"; git show origin/claude/rainbow-$2:qa/match/$1/STATUS.md | grep -iE \"benny|coin|water|river|wall|ring|fill|whole|scenery|band\" | grep -E \"[0-9]+(\\.[0-9])? ?%\" | head -8 | cut -c1-330; done; echo \"=== 08 benny\"; git show origin/claude/rainbow-s08-benny08-bake-c4:qa/match/08/benny08/STATUS.md | grep -E \"%\" | head -3 | cut -c1-300", "description": "Collect per-region numbers from specialist STATUS files"}`
+
+### 🧑 User — 2026-11-17T20:37:50.692Z
+
+> ↩︎ result: === 04
+> * **Latest visual measurements:** approved view (864×1536, `tools/match04/metrics04.py`): whole frame 81.3 → **81.8 %**
+>   within 20 levels (SSIM 0.812 → 0.819), scenery 98.1 → **98.2 %** (SSIM 0.973), bands 100.0 / 96.9 / 97.7 %, Benny area
+> === 06
+> * **Latest visual measurements (within 20 levels):** scenery 4.1 % → **98.8 %** (SSIM 0.987); whole frame 5.0 % →
+>   **79.1 %** (SSIM 0.785); upper 97.8 %, middle 98.4 %, lower 99.8 %, Benny box 55.2 %.
+> === 07
+> `?match07=1`: whole frame 6.7 → 80.1 %, scenery 6.0 → 95.5 % within 20 levels, 07→08 drop intact, 8/8, 91 / 2,240.
+> Numbers, still approved view (`m2r4/metrics_k5.json`, M1 → M2): whole 80.06 → 80.06 %, scenery 95.54 → 95.55 %,
+> river/coins band 90.35 → 90.40 %, upper tube 99.96 → 99.97 %, lower water 95.64 → 95.63 %, Benny 16.6 → 16.4 % (game model).
+> === 08 benny
+> * **Latest visual measurements:** Benny+splash ≤20: r2 65.7, r3b 65.3, r4 65.4, r5 taper 62.0, **r5b NEW 62.2 %** (visual choice, lower number); scenery 97.3 % unchanged; whole 85.0 %
+
+### 🤖 Claude — 2026-11-17T20:38:01.118Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; cat $R/cap/done.txt; ls $R/cap/default/ $R/cap/s06 $R/cap/s07 $R/cap/s08b 2>/dev/null | tr '\\n' ' '; echo; df -h / | tail -1", "description": "Check capture progress and disk space"}`
+
+### 🧑 User — 2026-11-17T20:38:01.180Z
+
+> ↩︎ result: cap s04 exit=0
+> cap s05 exit=0
+> cap s06 exit=0
+> cap s07 exit=0
+> cap s08b exit=0
+> /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/default/: 01.png 02.png 03.png 04.png 05.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/s06: 06.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/s07: 07.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/s08b: 08.png 
+> /dev/vda        252G   34G  5.6G  86% /
+
+### 🤖 Claude — 2026-11-17T20:38:02.784Z
+
+All five newest test versions are captured. Measuring them now (the default captures are still running):
+
+### 🤖 Claude — 2026-11-17T20:38:05.085Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; for p in \"06 s06 06_crest_the_rinse_arch\" \"07 s07 07_dive_the_washer_tube\" \"08 s08b 08_final_spin_chamber\"; do set -- $p; python3 -I tools/qa/screen_match.py references/$3.png $R/cap/$2/$1.png --label=${1}new --json=$R/metrics/${1}new.json; done", "description": "Measure newest 06, 07, 08 against approved"}`
+
+### 🧑 User — 2026-11-17T20:38:09.748Z
+
+> ↩︎ result: 06new  FULL |d|  16.2 <=20 0.791 SSIM 0.785 | BELOWHUD |d|  11.8 <=20 0.856 | LAYOUT |d|   8.9 <=20 0.862 | mean RGB approved [152.8, 131.3, 204.3] game [154.3, 125.1, 204.8]
+> 07new  FULL |d|  15.1 <=20 0.801 SSIM 0.790 | BELOWHUD |d|  10.5 <=20 0.867 | LAYOUT |d|   7.9 <=20 0.878 | mean RGB approved [165.5, 116.4, 188.7] game [168.8, 114.7, 189.1]
+> 08new  FULL |d|  12.9 <=20 0.850 SSIM 0.829 | BELOWHUD |d|   8.1 <=20 0.920 | LAYOUT |d|   4.0 <=20 0.941 | mean RGB approved [168.4, 108.6, 170.2] game [169.3, 108.9, 168.9]
+
+### 🤖 Claude — 2026-11-17T20:38:21.372Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; mkdir -p $R/inspect; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np, glob\nR='$R'\npairs={'04':('s04','04_through_the_five_arrows'),'05':('s05','05_flow_into_the_current'),'06':('s06','06_crest_the_rinse_arch'),'07':('s07','07_dive_the_washer_tube'),'08':('s08b','08_final_spin_chamber')}\nfor k,(d,ref) in pairs.items():\n    A=Image.open(f'references/{ref}.png').convert('RGB'); C=Image.open(f'{R}/cap/{d}/{k}.png').convert('RGB').resize(A.size)\n    a=np.asarray(A,float); c=np.asarra …[+845 chars]`
+
+### 🧑 User — 2026-11-17T20:38:22.766Z
+
+> ↩︎ result: 04 mismatch share by band: {'HUD top13%': '50%', 'upper': '0%', 'middle': '13%', 'lower': '37%'}
+> 05 mismatch share by band: {'HUD top13%': '31%', 'upper': '20%', 'middle': '24%', 'lower': '26%'}
+> 06 mismatch share by band: {'HUD top13%': '40%', 'upper': '8%', 'middle': '39%', 'lower': '13%'}
+> 07 mismatch share by band: {'HUD top13%': '42%', 'upper': '3%', 'middle': '36%', 'lower': '20%'}
+> 08 mismatch share by band: {'HUD top13%': '54%', 'upper': '6%', 'middle': '29%', 'lower': '11%'}
+
+### 🤖 Claude — 2026-11-17T20:38:26.656Z
+
+An important finding: **31–54 % of all mismatched pixels are in the top strip** (title banner, coin counter, hearts), not in the scenery. Let me look at the pictures to see why.
+
+### 🤖 Claude — 2026-11-17T20:38:26.954Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/08_inspect.jpg"}`
+
+### 🧑 User — 2026-11-17T20:38:26.996Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:38:37.116Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/04_inspect.jpg"}`
+
+### 🧑 User — 2026-11-17T20:38:37.148Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:38:37.719Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/07_inspect.jpg"}`
+
+### 🧑 User — 2026-11-17T20:38:37.810Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:39:00.746Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/06_inspect.jpg"}`
+
+### 🤖 Claude — 2026-11-17T20:39:00.767Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/05_inspect.jpg"}`
+
+### 🧑 User — 2026-11-17T20:39:00.820Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T20:39:00.825Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:39:13.236Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nR='$R'\npairs={'04':('s04','04_through_the_five_arrows'),'05':('s05','05_flow_into_the_current'),'06':('s06','06_crest_the_rinse_arch'),'07':('s07','07_dive_the_washer_tube'),'08':('s08b','08_final_spin_chamber')}\nprint('screen  whole-now  whole-if-HUD-matched  HUD-strip-now')\nfor k,(d,ref) in pairs.items():\n    A=np.asarray(Image.open(f'references/{ref}.png').convert('RGB'),float); C=np.asarray(Image.open(f'{R}/cap/{d}/{k}.png').co …[+355 chars]`
+
+### 🧑 User — 2026-11-17T20:39:14.647Z
+
+> ↩︎ result: screen  whole-now  whole-if-HUD-matched  HUD-strip-now
+>   04      81.8%         90.8%             30.5%
+>   05      89.4%         92.7%             74.9%
+>   06      79.1%         87.4%             35.8%
+>   07      80.1%         88.4%             35.4%
+>   08      85.0%         93.1%             37.5%
+
+### 🤖 Claude — 2026-11-17T20:39:20.669Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; cat $R/cap/done.txt; for d in $R/clips/*/; do echo \"$(basename $d): $(ls $d | grep -c jpg) frames\"; done; grep '^{' $R/clips/log.txt; date -u +%H:%M", "description": "Check clip recording progress"}`
+
+### 🧑 User — 2026-11-17T20:39:20.847Z
+
+> ↩︎ result: cap s04 exit=0
+> cap s05 exit=0
+> cap s06 exit=0
+> cap s07 exit=0
+> cap s08b exit=0
+> 04: 87 frames
+> 20:39
+
+### 🤖 Claude — 2026-11-17T20:39:29.100Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; until grep -q \"cap default\" $R/cap/done.txt 2>/dev/null; do sleep 10; done; grep \"cap default\" $R/cap/done.txt; ls $R/cap/default", "description": "Wait for default-game captures to finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T20:39:29.170Z
+
+> ↩︎ result: Command running in background with ID: bcncpiirw. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/tasks/bcncpiirw.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T20:39:33.842Z
+
+While waiting, let me check how Screen 05's line-B HUD match (`hud05`) was built, to judge how much work it would be to give every screen a matched HUD:
+
+### 🤖 Claude — 2026-11-17T20:39:34.612Z
+
+> 🔧 **Bash** `{"command": "git grep -n \"hud05\" origin/claude/rainbow-s05-match-c4 -- src | cut -c1-220 | head -15; git show origin/claude/rainbow-s05-match-c4:qa/match/05/NOTES.md | grep -i -A3 \"hud05\" | head -20 | cut -c1-260", "description": "Inspect Screen 05 HUD matching implementation"}`
+
+### 🧑 User — 2026-11-17T20:39:34.784Z
+
+> ↩︎ result: origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:12: * `?hud05=1` (or `?match05=1`), Screen 05 full reference match (qa/pilot05/full_reference_match/hud/NOTES.md): the top
+> origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:16: * sprites cut from the approved picture (qa/pilot05/full_reference_match/hud/icon_bake.py → assets/textures/hud05/);
+> origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:20:const HUD05 = on05('hud05');
+> origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:22:/** approved icon sprite boxes (frame px; assets/textures/hud05/hud05_icons.json) */
+> origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:24:  heart05: { url: new URL('../../assets/textures/hud05/heart05.png', import.meta.url).href, box: [60, 21, 94, 74] },
+> origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:25:  plus05: { url: new URL('../../assets/textures/hud05/plus05.png', import.meta.url).href, box: [254, 28, 56, 49] },
+> origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:26:  coin05: { url: new URL('../../assets/textures/hud05/coin05.png', import.meta.url).href, box: [375, 13, 90, 89] },
+> origin/claude/rainbow-s05-match-c4:src/ui/hud.ts:27:  pause05: { url: new URL('../../assets/textures/hud05/pause05.png', import.meta.ur …[+385 chars]
+
+### 🤖 Claude — 2026-11-17T20:39:41.946Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; until grep -q \"cap default\" $R/cap/done.txt 2>/dev/null; do sleep 15; done; cat $R/cap/done.txt | tail -3", "description": "Block until default captures finish", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-17T20:39:57.005Z
+
+> ↩︎ result: cap s07 exit=0
+> cap s08b exit=0
+> cap default exit=0
+
+### 🤖 Claude — 2026-11-17T20:40:00.611Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; for f in references/[01][0-9]_*.png; do n=$(basename $f | cut -c1-2); python3 -I tools/qa/screen_match.py $f $R/cap/default/$n.png --label=${n}def --json=$R/metrics/${n}def.json | cut -c1-120; done", "description": "Measure the default game on all 11 screens"}`
+
