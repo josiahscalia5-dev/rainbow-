@@ -3728,3 +3728,36 @@ This session's worker process was restarted. If your previous turn was already c
 
 > 🔧 **Bash** `{"command": "git status --short | head; git add -A qa/pilot05/proj/flow2 2>/dev/null; git diff --cached --quiet || git commit -q -m \"Screen 05 water flow2: gameplay test result (8/8) with projflow05=2\n\nCo-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoaZoa1ZJpGQongqNCd\"; python3 scripts/rainbow-autosave.py --reason manual:user-save 2>&1 | tail -2; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb; git ls-files qa/pilot05/proj/flow2/tests | head -2; python3 -I scripts/autosave-status.py", "description": "Sav …[+62 chars]`
 
+### 🧑 User — 2026-11-17T01:42:30.975Z
+
+> ↩︎ result: "duration_s": 7
+> }
+> 39c95d460e7aac20d10d2e7d5ade2080cfa629fc
+> 39c95d460e7aac20d10d2e7d5ade2080cfa629fc	refs/heads/ccr-61131b9d-uj0oqb
+> qa/pilot05/proj/flow2/tests/gameplay_projflow05_2.json
+> AUTOSAVE OK | branch ccr-61131b9d-uj0oqb | scheduler daemon | last verified backup 2026-11-17T01:42:23+00:00 (0.1 min ago) | local 39c95d4 remote 39c95d4 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T01:42:36.659Z
+
+Everything is saved to your GitHub repository and verified: branch `ccr-61131b9d-uj0oqb` is at commit `39c95d460e7aac20d10d2e7d5ade2080cfa629fc`, GitHub shows the same commit, and there are no unsaved changes.
+
+**What's saved from the water work:**
+- **New water flow (`&projflow05=2`):** the streaks now travel along your painted S-curves, and half the picture stays fixed in place. With the clock running at the starting view, similarity to your unblurred design went from 0.72 to 0.93, and the flow moves toward the camera.
+- **Evidence:** before and after pictures, two 3-second ride clips, the measurements, and notes are in `qa/pilot05/proj/flow2/`.
+- **Checks:** your default game and protected BEFORE are pixel-identical to before, and all 8 gameplay checks pass with the new mode on.
+
+**Not fixed yet:** the water still turns into a pastel blur once Benny has ridden forward. I found the cause: the full-detail copy of your picture is only sharp from the starting position, and the backup layers near Benny are too low-resolution. The fix (a high-resolution tile built from the nearest water in your picture) is written up as a plan in the notes but not built, because you asked me to save at that point.
+
+**Backup gap:** the environment was idle for about three hours (22:12 to 01:07 UTC), so no autosaves ran in that window. Nothing was lost; the autosave is running again now.
+
+Nothing has been promoted to your default game. Say "go" and I'll build the sharp near-water fix next.
+
+### 🧑 User — 2026-11-17T01:42:39.367Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (scheduled trigger (the stored prompt of a routine or task on this account): 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+

@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-17T01:42:11+00:00",
-    "reason": "daemon",
+    "time": "2026-11-17T01:42:23+00:00",
+    "reason": "manual:user-save",
     "result": "committed+pushed",
     "files_staged": 4,
     "pushed_verified": true,
     "branch": "ccr-61131b9d-uj0oqb",
     "note": "following session branch 'ccr-61131b9d-uj0oqb' (config branch 'claude/rainbow-05-water-projection')",
-    "commit": "e32309fa9e035ed90d3a59e09bd329d58989cebe",
-    "duration_s": 11
+    "commit": "39c95d460e7aac20d10d2e7d5ade2080cfa629fc",
+    "duration_s": 7
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-61131b9d-uj0oqb",
-  "last_verified_remote_sha": "e32309fa9e035ed90d3a59e09bd329d58989cebe",
-  "last_successful_backup_utc": "2026-11-17T01:42:11+00:00",
+  "last_verified_remote_sha": "39c95d460e7aac20d10d2e7d5ade2080cfa629fc",
+  "last_successful_backup_utc": "2026-11-17T01:42:23+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=183); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-17T01:45:00+00:00"
