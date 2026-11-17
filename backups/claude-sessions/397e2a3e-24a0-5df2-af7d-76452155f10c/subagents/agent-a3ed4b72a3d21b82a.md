@@ -949,3 +949,139 @@ Fast captures (16 s). Let me view the splash-free background next to the approve
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T02:39:44.169Z
+
+The game's water under the splash is a lighter/hazier fill (coordinator's texture). I'll port the post chain to Python so I can simulate decompositions offline before rendering.
+
+### 🤖 Claude — 2026-11-17T02:39:45.113Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/render/grade.ts | head -80; grep -rn \"NeutralToneMapping\\|toneMappingExposure\" src/game/Game.ts src/render/*.ts | head", "description": "Read grade shader and tone mapping setup"}`
+
+### 🧑 User — 2026-11-17T02:39:45.145Z
+
+> ↩︎ result: /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+>     fragmentShader: /* glsl */ `
+>       uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+>       void main(){
+>         vec4 c = texture2D(tDiffuse, vUv);
+>         float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+>         vec3 col = mix(vec3(l), c.rgb, uSat);
+>         col = (col - 0.5) * uCon + 0.5;
+>         vec2 d = vUv - 0.5; d.x *= 0.75;
+>         col *= 1.0 - uVig * smoothstep(0.25, 0.75, length(d));
+>         gl_FragColor = vec4(clamp(col, 0.0, 1.0), c.a …[+338 chars]
+
+### 🤖 Claude — 2026-11-17T02:40:05.443Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/splash05/post.py", "content": "\"\"\"Screen 05 post chain in numpy (foam-bubbles-particles tools): the game's display colour of a LINEAR scene colour and back.\nMirrors the live chain without bloom: exposure 0.86 -> three.js NeutralToneMapping -> sRGB encode (OutputPass) -> grade\n(src/render/grade.ts: saturation 1.36, contrast 1.15, vignette 0.18, clamp) and its inverse `pjInverse`\n(src/vfx/waterRibbon.ts PROJ05_INVERSE). Values 0..1 floats, arrays (..., 3); xy = pixel coordinates (for the vignette).\"\"\"\nimport numpy as np\n\nEXPOSURE, SAT, CON, VI …[+2250 chars]`
+
+### 🧑 User — 2026-11-17T02:40:05.532Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/splash05/post.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T02:40:07.250Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I tools/splash05/post.py references/05_flow_into_the_current.png; python3 -I tools/splash05/post.py qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png", "description": "Verify post chain round trip"}`
+
+### 🧑 User — 2026-11-17T02:40:07.717Z
+
+> ↩︎ result: round trip max |d| (levels) 1.1324274851176597e-13 mean 1.444576402942488e-14
+> round trip max |d| (levels) 1.1324274851176597e-13 mean 1.505574137583565e-14
+
+### 🤖 Claude — 2026-11-17T02:40:10.903Z
+
+Round trip exact. Now simulate wake decomposition options offline against the splash-free background.
+
+### 🤖 Claude — 2026-11-17T02:40:20.625Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cat > $S/sim.py <<'EOF'\nimport sys, json\nsys.path.insert(0, 'tools/splash05')\nimport numpy as np\nfrom PIL import Image\nfrom post import forward, inverse, grid\nfrom scipy.ndimage import gaussian_filter, binary_dilation, distance_transform_edt\nS = sys.argv[1]\nM = 'qa/pilot05/full_reference_match/masks'\nap = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'), float) / 255\nbg = np.asarray(Image.open(S + '/bg_nosplash.png').convert('RGB') …[+1653 chars]`
+
+### 🧑 User — 2026-11-17T02:40:24.670Z
+
+> ↩︎ result: cp3       wake mean  41.48 <=20 0.387  benny mean  19.24 <=20 0.728
+> bg        wake mean  37.77 <=20 0.401
+> A full    wake mean   0.00 <=20 1.000
+> B add     wake mean  14.79 <=20 0.762
+> C (0.45, 0.62) wake mean  20.09 <=20 0.672 matte px >0.5 21362
+> C (0.5, 0.7) wake mean  19.18 <=20 0.701 matte px >0.5 23632
+
+### 🤖 Claude — 2026-11-17T02:40:31.535Z
+
+Option B (additive) gives 14.8 / 76 %, a whiteness matte gives ~19 / 70 %, and nothing at all already beats the current splash (37.8 vs 41.5). Let me look at what each layer actually contains.
+
+### 🤖 Claude — 2026-11-17T02:40:36.649Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cat > $S/vis.py <<'EOF'\nimport sys\nsys.path.insert(0, 'tools/splash05')\nimport numpy as np\nfrom PIL import Image\nfrom post import forward, inverse, grid\nS = sys.argv[1]\nM = 'qa/pilot05/full_reference_match/masks'\nap = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'), float) / 255\nbg = np.asarray(Image.open(S + '/bg_nosplash.png').convert('RGB'), float) / 255\nwm = np.asarray(Image.open(f'{M}/wake_splash.png').convert('L')) > 127\nxy …[+501 chars]`
+
+### 🧑 User — 2026-11-17T02:40:38.034Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:40:39.894Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/layers.png"}`
+
+### 🧑 User — 2026-11-17T02:40:39.926Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:41:49.749Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cat > $S/foot.py <<'EOF'\nimport json, sys\nimport numpy as np\nfrom PIL import Image\nS = sys.argv[1]\np = json.load(open(S + '/probe.json'))\nMw = np.array(p['camera']['matrixWorld']).reshape(4, 4).T\nP = np.array(p['camera']['projection']).reshape(4, 4).T\nWs = np.array(p['splash05']['matrixWorld']).reshape(4, 4).T\nV = np.linalg.inv(Mw)\ntoLocal = np.linalg.inv(Ws)\ncamL = toLocal @ np.append(Mw[:3, 3], 1)\nprint('camera in Benny local frame (side, up, back):', camL[: …[+1092 chars]`
+
+### 🧑 User — 2026-11-17T02:41:50.029Z
+
+> ↩︎ result: camera in Benny local frame (side, up, back): [0.50848477 3.56191996 6.58163497]
+> h 0.0 x [-1.55 -1.45  0.19  1.53  1.61] z(back) [-1.63 -1.55  0.64  1.44  1.49]
+> h 0.05 x [-1.52 -1.43  0.2   1.51  1.59] z(back) [-1.52 -1.43  0.72  1.51  1.56]
+> (0, 0, 0) px 423.0 1127.4
+> (0.65, 0, 0) px 538.4 1127.9
+> (-0.65, 0, 0) px 308.8 1126.8
+> (0, 0, 0.65) px 415.1 1189.7
+> (0, 0, 1.5) px 402.1 1291.9
+> (1.2, 0, 0.8) px 653.1 1207.9
+> (0, 0.8, 0) px 419.1 994.8
+
+### 🤖 Claude — 2026-11-17T02:42:00.863Z
+
+The footprint fits a ~3.6 × 3.6 u card centred on Benny's waterline. Now let me compare matte variants numerically and visually.
+
+### 🤖 Claude — 2026-11-17T02:42:11.580Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cat > $S/sim2.py <<'EOF'\nimport sys\nsys.path.insert(0, 'tools/splash05')\nimport numpy as np\nfrom PIL import Image\nfrom post import forward, inverse, grid\nfrom scipy.ndimage import gaussian_filter, binary_dilation, distance_transform_edt\nS = sys.argv[1]\nM = 'qa/pilot05/full_reference_match/masks'\nap = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'), float) / 255\nbg = np.asarray(Image.open(S + '/bg_nosplash.png').convert('RGB'), flo …[+1938 chars]`
+
+### 🧑 User — 2026-11-17T02:42:16.700Z
+
+> ↩︎ result: white        wake mean  18.07 <=20 0.726  bubbles mean  25.78 <=20 0.646  benny mean  19.22 <=20 0.729  matte>0.5 26094
+> white+under  wake mean  12.33 <=20 0.812  bubbles mean  25.78 <=20 0.646  benny mean  19.22 <=20 0.729  matte>0.5 35633
+> all          wake mean   0.00 <=20 1.000  bubbles mean  25.74 <=20 0.646  benny mean  19.22 <=20 0.729  matte>0.5 90131
+> bg          wake mean  37.77 <=20 0.401  bubbles mean  25.79 <=20 0.646
+
+### 🤖 Claude — 2026-11-17T02:42:20.104Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nfrom PIL import Image\nS='$S'\nbox=(130,960,740,1320)\nims=[Image.open('references/05_flow_into_the_current.png').convert('RGB').crop(box), Image.open(S+'/sim_white.png').crop(box), Image.open(S+'/sim_white_under.png').crop(box)]\nw,h=ims[0].size\no=Image.new('RGB',(w,h*3+20))\nfor i,im in enumerate(ims): o.paste(im,(0,i*(h+10)))\no.save(S+'/sim_cmp.png')\n\"", "description": "Compose simulation comparison crops"}`
+
+### 🧑 User — 2026-11-17T02:42:20.473Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:42:22.237Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/sim_cmp.png"}`
+
+### 🧑 User — 2026-11-17T02:42:22.266Z
+
+> ↩︎ result: [image]
+

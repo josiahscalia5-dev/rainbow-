@@ -653,8 +653,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 12149,
-   "sha256": "e79acd6999d9f5525aa522fcb2e969bfc068dd68615423ee4a18249ad0a707fa"
+   "bytes": 12157,
+   "sha256": "ddca56c016a430c6564deea09173d0dd200bacbddb3ebab9cecce0630adf69b6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -10408,8 +10408,8 @@
   },
   {
    "path": "scripts/env05-hideshots.mjs",
-   "bytes": 4788,
-   "sha256": "88917a0edcf30ce5ad8c1c95af20aa7b61f23b14298949de3e5830a224b3609f"
+   "bytes": 6454,
+   "sha256": "a1cae5f82a14050a787c90c3e03feebf9fcd7df724ca2b28602c177743901c19"
   },
   {
    "path": "scripts/export-models.mjs",
@@ -11080,6 +11080,11 @@
    "path": "tools/splash05/bubble_audit.py",
    "bytes": 3379,
    "sha256": "5f9e53afcd3309aa58df6f67dbe6304878097e07d8deab4e9b2237def45f85d9"
+  },
+  {
+   "path": "tools/splash05/post.py",
+   "bytes": 2692,
+   "sha256": "6f737a2458d097b18ceb24b12839770706950cd54587bc4c424e7a64a7798e33"
   },
   {
    "path": "tools/splash05/probe.mjs",

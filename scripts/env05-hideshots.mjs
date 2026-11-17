@@ -47,6 +47,32 @@ try {
     });
   }, { pxs });
   writeFileSync(`${out}/hits.json`, JSON.stringify(hits, null, 1));
+  // --grid=x0,y0,x1,y1,step --objs=name|#idx,… : per pixel, the nearest hit distance against EACH object alone
+  // (occlusion order of overlapping surfaces; −1 = no hit) → DIR/grid.json
+  const grid = (args.find((a) => a.startsWith('--grid=')) ?? '').slice(7);
+  const objs = (args.find((a) => a.startsWith('--objs=')) ?? '').slice(7).split(',').filter(Boolean);
+  if (grid && objs.length) {
+    const g = await page.evaluate(async ({ grid, objs }) => {
+      const THREE = await import('/node_modules/three/build/three.module.js');
+      const { scene, camera } = window.__rainbow.qa3d();
+      scene.updateMatrixWorld(true);
+      const zt = scene.getObjectByName('zone_tubes');
+      const find = (n) => (n.startsWith('#') ? zt.children[+n.slice(1)] : (() => { let f = null; scene.traverse((o) => { if (!f && o.name === n && o.visible !== false) f = o; }); return f; })());
+      const list = objs.map((n) => [n, find(n)]);
+      const [x0, y0, x1, y1, st] = grid.split(',').map(Number);
+      const rc = new THREE.Raycaster();
+      const rows = [];
+      for (let y = y0; y <= y1; y += st) for (let x = x0; x <= x1; x += st) {
+        rc.setFromCamera(new THREE.Vector2((x + 0.5) / 864 * 2 - 1, -((y + 0.5) / 1536) * 2 + 1), camera);
+        const r = { x, y };
+        for (const [n, o] of list) { const h = o ? rc.intersectObject(o, true) : []; r[n] = h.length ? +h[0].distance.toFixed(3) : -1; if (h.length) r[n + '_p'] = h[0].point.toArray().map((v) => +v.toFixed(3)); }
+        rows.push(r);
+      }
+      return rows;
+    }, { grid, objs });
+    writeFileSync(`${out}/grid.json`, JSON.stringify(g));
+    console.log('grid', g.length, 'rays');
+  }
   for (const r of hits) {
     console.log(`px ${r.px.join(',')}`);
     for (const h of r.hits) console.log(`   d ${h.d}  ${h.obj}  [${h.key}] v${h.verts} uv ${h.uv} f ${h.face}${h.inst !== undefined ? ' i ' + h.inst : ''}`);
