@@ -23,6 +23,20 @@ y 840–1245; scenery = y ≥ 190 outside that box; share of pixels within 20 le
    Tested and REJECTED (measured worse): body fur grown higher under the cuff (bald threshold +0.03…+0.15: no change);
    arm puffs 1.25× / 1.5× (64.8 / 64.5 %), raised +0.12 / +0.24 (64.8 / 64.1 %), 1.15× raised + wider (64.0 %).
 
+## Round 4 (user order via lead, captures `r4/`)
+* KEPT: fur shoulder highlight (`fur.ts uHi` 0.7 on the body: lighter pink tips on the visible upper body, number
+  neutral 65.3 %, visibly closer; `?b08hi=0` off); lighter violet pom-pom (material 1.12/1.0/1.06: pom 22 → 23 %,
+  Benny+splash 65.3 → 65.4 %; `?b08pom=0` off).
+* REJECTED (measured worse, not visibly closer): bigger tufts (`uClumpScale` 0.12 / 0.08: 62.6 %), per-tuft tone
+  (`uClumpVar` 0.3: 65.1 %), shinier knit (roughness ×0.6 / ×0.4: 64.8 / 64.7 %), pom tip contrast (65.2–65.3 %),
+  hat 1.05× / 1.10× (64.3 / 62.5 %), shorter body (63.4 %), rounder body + larger hat (61.3 %) — the current
+  placement is fitted to the painted spots.
+* NEW (`r4/NEW_08.png`): Benny+splash 65.4 % (SSIM 0.594), scenery 97.3 %, whole 85.4 %; body 75, star 50, crown 29,
+  cuff 28, pom 23 %. Default 0 px; `b08hi=0&b08pom=0` == r3b 0 px; gameplay 8/8, 91 / 2,240; motion `r4/motion/montage_r4.png`;
+  04–07 only Benny changes; 360° `r4/views/turntable_NEW.png` (canonical: violet eyes, paw pads, star hat).
+* Close-ups 2× (x 110–770, y 820–1320): `r4/closeup2x_APPROVED.png`, `closeup2x_PREVIOUS_r3b.png`, `closeup2x_NEW_r4.png`.
+* Remaining: the painted fur's large soft clumps (needs a new fur bake / strand model, not a shader tweak), pom yarn tufts.
+
 ## Round 3b (lead review of the 2x close-ups, captures `r3b/`)
 * Fur: `fur.ts` uniforms `uSoft` (root occlusion + per-strand variation pulled toward their mean) and `uSoftEdge`
   (shorter fur where the body turns edge-on → softer outline); BENNY05 shader only, 0 = unchanged. Used at 0.6 on
