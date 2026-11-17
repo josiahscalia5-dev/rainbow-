@@ -1,5 +1,52 @@
 # RAINBOW — parallel workstreams: lead progress report
 
+# ROUND 3 (account 3) — CURRENT
+**Lead coordinator ("Lead Claudia") — round 3, account 3:** session `session_01Q46SCLi5xPVn25aRuxkVwK` ("Rainbow game
+restoration"), branch **`ccr-c0235034-ks6sx3`**, started from the round-2 lead branch `ccr-5495e9c4-g0apvl` @ `7db2982`
+(newer than the user's checkpoint `ef591fd`: autosaves 17:14 + 17:15 UTC). Briefs: `docs/briefs/2026-11-17-r3/`
+(`COMMON_RULES.md` = round-2 rules + changes, one brief per workstream). Updated: 2026-11-17 ~17:40 UTC.
+
+## Why round 3
+Account 2 (round 2, lead `session_01VCMXob2ipUeLE1o7yXNSsZ`) ran out of usage at ~17:07–17:12 UTC. Everything its six
+sessions pushed is on the `…-c2` branches (verified below). Their containers may keep autosaving and the sessions may
+wake when account 2 resets, so round 3 continues on NEW **`…-c3`** branches created from each `-c2` head. Nothing is
+merged or overwritten. Recommended for the user: on account 2 (and account 1) stop/archive the old sessions.
+
+## Round-3 sessions (all in their own cloud container, environment `rainbow-`, created 17:25 UTC)
+| Workstream | Session | Branch (continued from) | Next milestone (brief) |
+|---|---|---|---|
+| 08 Benny | `session_01Q46SCJxXZNaUL12aCQ6mX4` | `claude/rainbow-s08-benny08-bake-c3` (from `-c2` @ `a4c6a5cc`) | verify + NOTES, keep whichever Benny is closer to the approved 08, fur / beanie / cuff / pom / star / splash one factor at a time, motion, APK (`S08_BENNY.md`) |
+| 08 camera | `session_01Q46SCJbynvN5AdSwQ6tynz` | `claude/rainbow-s08-camclear-c3` (from `-c2` @ `57b6eb8a`) | video-moment comparisons, remaining obstruction fixes under `?camclear=1`, moving check 07→08→09, APK (`S08_CAMERA.md`) |
+| 04 Five Arrows | `session_01Q46SCGVVo94Weug9VM7yDG` | `claude/rainbow-s04-match-c3` (from `-c2` @ `255ec5e6`) | M3: verify fal04 default, approved river colours while riding, sharper far rings, splash card, coins on the water (`S04.md`) |
+| 05 Flow | `session_01Q46SCKjcx6k2Jb2JrspXSJ` | `claude/rainbow-s05-match-c3` (from `-c2` @ `fd94023f`, line B) | finish M2: teal patch, right wall, bottom-left ring arc, moving water; keep tgtvis05 + 91 / 2,240 (`S05.md`) |
+| 06 Rinse Arch | `session_01Q46SCL2DLgtfbmDySmRvhY` | `claude/rainbow-s06-match-c3` (from `-c2` @ `2570f3ac`) | finish M1 `?match06=1`: measure, proofs, moving frames, prepared fal request, NOTES / STATUS, APK (`S06.md`) |
+| 07 Washer Tube | `session_01Q46SCJx6kKaxMCCbLLqta3` | `claude/rainbow-s07-match-c3` (from `-c2` @ `21a1fdd5`) | finish M1 `?match07=1` docs + proofs + APK, then M2 rings / water / foam / coins; 07→08 drop intact (`S07.md`) |
+
+The initial prompts of all six were not delivered by the session service (sessions idle after container setup); the lead
+re-sent each task with `send_message` at ~17:38 UTC.
+
+## Restore verification (round 3, 2026-11-17 ~17:20–17:40 UTC, account 3)
+* Newest remote commits: lead `ccr-5495e9c4-g0apvl` `7db2982` (17:15) · 04-c2 `255ec5e6` · 05-c2 `fd94023f` · 06-c2
+  `2570f3ac` · 07-c2 `21a1fdd5` · 08 Benny-c2 **`a4c6a5cc`** (17:12, autosave after the user's `d855287d`: transcripts +
+  capture log only) · 08 camera-c2 `57b6eb8a`. No `-c2` branch changed after 17:12.
+* 13/13 approved images byte-identical (`sha256sum -c scripts/reference.sha256`); 10/10 agent definitions present.
+* Git LFS: 45/45 on the lead branch real files; all **50** distinct LFS objects of the lead + six `-c2` branches downloaded
+  from GitHub and `git lfs fsck` OK on every branch (checksums verified, not just pointers).
+* Tools (bootstrap): Blender 5.3.0, Android SDK 34 + build-tools 34.0.0 + Java 21, Node 22, Playwright Chromium (WebGL2),
+  ffmpeg, ImageMagick, Python QA libs — OK. tsc OK; continuity OK (07→08 drop 61.19–61.41 u, joins gap 0).
+* Gameplay `node scripts/gameplay-test.mjs` on the lead branch: **8/8**. Coins defined: **91** (default) and 91
+  (`?match08=1`); run total 1,330 + 91 × 10 = 2,240.
+* World Labs: key works (free read **5,420 credits**, same account); the two old Screen 05 pilot worlds return 404 from
+  the API, their files are complete in Git LFS. fal.ai: key accepted (free status read HTTP 404 = authenticated); balance
+  is not readable through the API (fal dashboard only). Screen 04's ONE fal edit was already run in round 2 (request
+  `01a1ea70`, `qa/match/04/fal/` on the 04 branches) — reused, not repeated. No paid job in round 3.
+* Atlas connector (claude.ai connector `World_Labs_Atlas`) is NOT connected on this account (optional; the API key
+  covers Marble). context7 MCP needs sign-in (optional).
+* Autosave: daemon running on `ccr-c0235034-ks6sx3`, remote SHA == local HEAD.
+
+---
+# ROUND 2 (account 2) — history
+
 **Lead coordinator ("Lead Claudia") — round 2, account 2:** session `session_01VCMXob2ipUeLE1o7yXNSsZ` ("Rainbow Android
 game parallel restoration"), branch `ccr-5495e9c4-g0apvl` = continuation of the lead branch `ccr-d4240b15-rl1i72`
 (started from its newest commit `4156164`). Briefs for every workstream: `docs/briefs/2026-11-17-r2/`
