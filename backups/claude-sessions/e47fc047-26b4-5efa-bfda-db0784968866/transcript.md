@@ -5039,3 +5039,16 @@ Still about 2,700 pixels, so my guess about the bank edge was wrong. Rather than
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/fin && mkdir -p $S/fin/def $S/fin/bef $S/fin/combo && node scripts/capture.mjs 05 --out=$S/fin/def >/dev/null 2>&1; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/fin/bef >/dev/null 2>&1; node scripts/capture.mjs 05 --q=\"$B\" --out=$S/fin/combo >/dev/null 2>&1; git checkout qa/capture_log.json; node scripts/proj05-move.mjs --q=\"$B\" --out=$S/fin/still_old --still=1.82 --fps=6.6 >/dev/null 2>&1; nod …[+1049 chars]`
 
+### 🧑 User — 2026-11-17T10:34:37.062Z
+
+> ↩︎ result: Updated 1 path from the index
+> default (no switches) vs session start: 0
+> protected BEFORE vs qa/pilot05/wave9/baseline/05.png: 0
+> tunnel+paddles combo (no projnear05) vs before this change: 0
+> old flow, 12 running-clock frames: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+> flow2, 12 running-clock frames: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+### 🤖 Claude — 2026-11-17T10:34:45.324Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && node scripts/proj05-move.mjs --q=\"$B&projnear05=1\" --out=$S/fin/mvN --d=0,4,8,12,17,25 >/dev/null 2>&1; node scripts/proj05-move.mjs --q=\"$B&projnear05=1&projflow05=2\" --out=$S/fin/rideN --clip=3 --fps=24 2>&1 | tail -1; node scripts/proj05-move.mjs --q=\"$B&projflow05=2\" --out=$S/fin/rideO --clip=3 --fps=24 2>&1 | tail -1; mkdir -p $S/fin/lk && node scripts/capture.mjs 05 --q=\"$B&projnear05=1&projflow05=2\" --out=$S/fin/l …[+819 chars]`
+
