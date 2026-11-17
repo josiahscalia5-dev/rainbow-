@@ -1010,3 +1010,37 @@ Gameplay with the new switches passes 8/8, with exactly 91 coins / 2,240. Now th
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/STATUS.md'\ns=open(p).read()\ns=s.replace(\"# Screen 06 — STATUS (round 6, 2026-11-17) — PAUSED by the lead (user order: save credits)\",\n\"# Screen 06 — STATUS (round 6, 2026-11-17) — paused by the lead, then the user (phone, ~22:30 UTC) asked to continue with\\n# existing assets: the open proofs below were completed (no Marble/fal use; Screen 06 needs no Marble files)\")\ns=s.replace(\"\"\"* Protected 05 BEFORE (`?ringa=26&nearfloor05=0`) vs `qa/pilot05/wave9/baseline/05.png`: **128,689 px differ (rows\n  0–1121), NOT explained yet**. My code c …[+2277 chars]`
 
+### 🧑 User — 2026-11-17T22:30:03.203Z
+
+> ↩︎ result: 1cfcefef89ce8c109500df54cc97deb3966ea128	refs/heads/claude/rainbow-s06-match-c6
+> 1cfcefef89ce8c109500df54cc97deb3966ea128
+
+### 🤖 Claude — 2026-11-17T22:30:08.914Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01VCMXoaUqBCxDq8BntT19BU", "message": "S06: the user wrote to me directly from their phone (~22:30 UTC). They want the existing Marble/LFS assets reused, nothing downloaded or regenerated, and Screens 04–08 brought to ≥8.5/10. Their message was addressed to you (Claudia) and may not have reached your session. I used it only to finish the cheap open S06 proofs; no Marble, no fal, no new experiments. Results: gameplay with match06=1&m06geo=1&m06flow=1 = 8/8, 91/2,240. Approved-view numbers unchanged (whole 79.1 %, scenery 98.8 %). Protected 05 BEFORE: HEAD differs from a  …[+503 chars]`
+
+### 🧑 User — 2026-11-17T22:30:17.111Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T22:30:24.340Z
+
+I'm the Screen 06 worker session, not Claudia (Claudia is the lead coordinating all the screens). I passed your message on to her and used it here only to finish the open Screen 06 checks.
+
+**Marble assets:** the 17 Marble World Labs files from Git LFS are already in this session as real, complete files. Screen 06 doesn't use any of them, so I downloaded nothing, generated nothing and didn't ask for access to the Marble download server. Nothing paid was run.
+
+**Screen 06 checks finished:**
+- **Gameplay:** with the new scenery switched on, all 8 gameplay checks pass and the coin total is still exactly 91 / 2,240.
+- **Approved view:** the match numbers are unchanged, whole frame 79.1 % and scenery 98.8 %. The changes are only meant to show while Benny moves.
+- **Moving view:** no change since my last update. My estimate is about 6.5/10, up from about 3/10. The chevrons and the giant flat water sheet are gone, and the tunnel walls and foam banks now show. That's still below your 8.5/10 target.
+- **Screen 05 BEFORE picture:** the earlier mismatch isn't from this work. The version I started from already differs from the saved baseline picture. My version differs from it only in the title/HUD banner rows, which vary between captures anyway. I've flagged the old drift to Claudia.
+
+**Still wrong in the moving pictures:**
+- Late in the stage, the river going downhill still fills most of the screen.
+- When Benny steers hard, he ends up on the foam bank.
+- Right near the camera, some stretched bits of the approved picture are still visible.
+
+**Still to do for this milestone:** the continuity test, the phone build (APK) and the notes write-up.
+
+Everything is saved to GitHub on `claude/rainbow-s06-match-c6` at commit `1cfcefef89ce8c109500df54cc97deb3966ea128`, and GitHub matches what's here. I've sent Claudia a status message and I'm waiting for her next assignment.
+
