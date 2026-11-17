@@ -9,3 +9,8 @@
   03–07 slightly (04 ≈ 510k px, 07 ≈ 570k px changed). Default build: unchanged (0 px all 11 screens).
 * `src/world/match08.ts`: new switch `m08fill` (fill shader path, uniforms `uFill*`, `uDrum`); `m08bw` kept; `m08lane` NOT kept (left in code, off).
 * New `assets/textures/match08/fill_drum.png` + `.json`, `tools/match08/unwrap08.py`; `motion08.mjs` adds the `f20_forward20u` shot.
+
+# Round 6 (branch claude/rainbow-s08-scenery-c6)
+* `src/world/course.ts`: the round-5 08-only spacing guard (`buildRoute(no08)`) RESTORED (lost by autosave 48af969b).
+* `src/world/match08.ts`: m08fill RESTORED; new switches `m08arch` (+`m08archk`), `m08swim` (+`m08swimw`), `m08seam` (+`m08seamk`, untested).
+* `tools/lead_r6/motion_audit.mjs` copied from the lead branch (unchanged).
