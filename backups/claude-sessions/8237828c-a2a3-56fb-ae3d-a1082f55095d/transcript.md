@@ -2813,3 +2813,241 @@ Sending the Benny specialist my visual review so its next steps target the bigge
 >    and without (default test output byte-identical).
 > 5. **Measured FINAL** (`scenery_metrics_BEFORE_FINAL.json`): scenery 97.4 % within 20 levels (SSIM 0 …[+2034 chars]
 
+### 🤖 Claude — 2026-11-17T17:40:39.491Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/08/*.png 2>/dev/null | head -20; git log --format='%h %ci %s' -5 -- assets/textures/match08/coins08.json src/gameplay/coins.ts | head", "description": "List Screen 08 result pictures and coin file history"}`
+
+### 🧑 User — 2026-11-17T17:40:39.591Z
+
+> ↩︎ result: qa/match/08/08_BEFORE_current_game.png
+> qa/match/08/08_NEW_match08.png
+> qa/match/08/08_NEW_match08_android1080x1920.png
+> qa/match/08/benny_APPROVED_closeup.png
+> qa/match/08/benny_NEW_ported_closeup.png
+> 2f6aac73 2026-11-17 14:10:29 +0000 autosave: Rainbow 2026-11-17 14:10 UTC
+> 93b4c302 2026-11-17 14:05:17 +0000 autosave: Rainbow 2026-11-17 14:05 UTC
+> d0dd4637 2026-11-17 13:54:56 +0000 autosave: Rainbow 2026-11-17 13:54 UTC
+> a85ccf94 2026-11-17 13:47:19 +0000 Screen 08 ?match08=1: approved picture's coins placed where the picture shows them (scenery 96.8%); Flow video story recorded in docs/FLOW_VIDEO.md
+> 093ea8ac 2026-11-16 10:23:10 +0000 autosave: Rainbow 2026-11-16 10:23 UTC
+
+### 🤖 Claude — 2026-11-17T17:40:45.047Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b08; git log -1 --format='%h %ci' -- qa/match/08/08_NEW_match08.png; python3 -I - \"$S\" <<'EOF'\nimport sys\nfrom PIL import Image\nS=sys.argv[1]; box=(230,500,640,960)\na=Image.open(\"qa/match/08/08_NEW_match08.png\").convert(\"RGB\"); print(a.size)\na=a.resize((864,1536)) if a.size!=(864,1536) else a\nb=Image.open(f\"{S}/c08_lead.png\") if False else Image.open(\"/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/c08/08.png\")\na=a.crop(box); b=b.convert(\"RGB\").c …[+235 chars]`
+
+### 🧑 User — 2026-11-17T17:40:45.328Z
+
+> ↩︎ result: 7694d2fd 2026-11-17 14:51:25 +0000
+> (864, 1536)
+
+### 🤖 Claude — 2026-11-17T17:40:47.294Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b08/coins_left_FINISHround_right_leadnow.png"}`
+
+### 🧑 User — 2026-11-17T17:40:47.323Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:41:03.699Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"match08\\|coins08\\|M08\\|bob\\|spin\\|rotation\\|position.set\\|hover\\|y =\" src/gameplay/coins.ts | head -60", "description": "Find match08 coin handling in coins.ts"}`
+
+### 🧑 User — 2026-11-17T17:41:03.732Z
+
+> ↩︎ result: 11:import coins08 from '../../assets/textures/match08/coins08.json';
+> 55:  const m08 = flag05('match08') || flag05('matchall');
+> 56:  if (!m08) { const a = st('08'); for (let i = 0; i < 8; i++) add('08', a.s0 + 3 + i * 1.9, -0.6 + 0.9 * Math.sin(i * 0.8)); }
+> 58:  if (!m08) { const a = st('09'); for (let i = 0; i < 9; i++) add('09', a.s0 + 1.5 + i * 1.7, -1.7 + i * 0.12); }
+> 59:  // `?match08=1` (qa/match/08/NOTES.md): the approved picture's nine coins where the picture shows them
+> 60:  // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
+> 61:  if (m08) {
+> 63:    const cam = coins08.faceTo as [number, number, number];
+> 70:    for (const c of coins08.coins) {
+> 91:  // `?match08=1`: river order (the coins above were appended out of order)
+> 92:  if (m08) out.sort((a, b) => a.s - b.s);
+> 144:  faceTex.rotation = -Math.PI / 2;
+> 165:  const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+> 183:      // `?match08=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
+> 188:      q.setFromRotationMatrix(basis);
+> 190:      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18  …[+70 chars]
+
+### 🤖 Claude — 2026-11-17T17:41:05.301Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,100p src/gameplay/coins.ts; sed -n 160,215p src/gameplay/coins.ts", "description": "Read coin layout and update code"}`
+
+### 🧑 User — 2026-11-17T17:41:05.336Z
+
+> ↩︎ result: export function coinLayout(course: Course): CoinDef[] {
+>   const out: CoinDef[] = [];
+>   const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
+>   const st = (id: StageId) => course.stage(id);
+>   // 03 — spiral trail ahead of Benny toward the drain
+>   { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+>   // 04 — along the left edge of the slide
+>   { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+>   // 05 — on the winding cyan core (see C05)
+>   coins05(course, add);
+>   // 06 — up and over the crest (left of centre like the ref)
+>   { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
+>   // 07 — winding trail, continuing down the plunge
+>   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+>   // 08 — S toward the platform
+>   const m08 = flag05('match08') || flag05('matchall');
+>   if (!m08) { const a = st('08'); …[+5397 chars]
+
+### 🤖 Claude — 2026-11-17T17:41:20.638Z
+
+> 🔧 **Bash** `{"command": "grep -n \"evaluate\\|__rainbow\\.\\|goto\" scripts/capture.mjs | head -20; grep -n \"qaView\\|checkpoint(\\|setView\\|showStage\\|capture(\" src/game/Game.ts | head -10", "description": "See how capture.mjs sets up a screen view"}`
+
+### 🧑 User — 2026-11-17T17:41:20.677Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 35:    const err = await page.evaluate(() => window.__error);
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+> 38:    const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+> 40:    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+> 41:    await page.evaluate(() => document.fonts.ready);
+> 45:    const stats = await page.evaluate(() => window.__rainbow.stats());
+> 49:    await page.evaluate(() => window.__rainbow.drawList?.());
+> 50:    const steady = await page.evaluate(() => window.__rainbow.stats());
+> 52:    const state = await page.evaluate(() => window.__rainbow.state());
+
+### 🤖 Claude — 2026-11-17T17:41:22.066Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,60p scripts/capture.mjs", "description": "Read capture viewport settings"}`
+
+### 🧑 User — 2026-11-17T17:41:22.094Z
+
+> ↩︎ result: mkdirSync(outDir, { recursive: true });
+> mkdirSync('qa', { recursive: true });
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5201);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> try {
+>   for (const id of ids) {
+>     const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+>     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+>     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
+>     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
+>     await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+>     await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>     const err = await page.evaluate(() => window.__error);
+>     if (err) throw new Error(err);
+>     if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.U …[+1769 chars]
+
+### 🤖 Claude — 2026-11-17T17:41:38.263Z
+
+> 🔧 **Bash** `{"command": "mkdir -p tools/match08 && cat > tools/match08/coinprobe08.mjs <<'EOF'\n// Lead QA (read-only): where does each coin land on screen in the approved 08 view (?match08=1 + extra switches)?\n// Compares with the painted coin pixels in assets/textures/match08/coins08.json. No game code is changed.\n//   node tools/match08/coinprobe08.mjs [--q=extra=1] [--out=qa/match/08/coins/probe.json]\nimport { readFileSync, writeFileSync, mkdirSync } from 'node:fs';\nimport { dirname } from 'node:path';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst arg …[+2895 chars]`
+
+### 🧑 User — 2026-11-17T17:41:50.733Z
+
+> ↩︎ result: cam [12.85, -109.87, -274.8] fov 62
+> painted [[335, 862, 42], [400, 786, 35], [467, 737, 29], [497, 686, 24], [428, 662, 20], [383, 633, 18], [420, 616, 15], [454, 608, 13], [479, 601, 12]]
+> {'i': 77, 's': 396.13, 'lat': -0.59, 'taken': False, 'px': [341, 906], 'scale': 0.807, 'dist': 12.28, 'nearestPainted': {'d': 44, 'p': [335, 862, 42]}}
+> {'i': 78, 's': 399.98, 'lat': 0.25, 'taken': False, 'px': [392, 817], 'scale': 0.878, 'dist': 16.01, 'nearestPainted': {'d': 32, 'p': [400, 786, 35]}}
+> {'i': 79, 's': 404.48, 'lat': 0.98, 'taken': False, 'px': [457, 750], 'scale': 0.92, 'dist': 20.26, 'nearestPainted': {'d': 16, 'p': [467, 737, 29]}}
+> {'i': 80, 's': 406.88, 'lat': -0.89, 'taken': False, 'px': [367, 576], 'scale': 0.642, 'dist': 22.78, 'nearestPainted': {'d': 59, 'p': [383, 633, 18]}}
+> {'i': 81, 's': 411.13, 'lat': -0.99, 'taken': False, 'px': [435, 674], 'scale': 0.845, 'dist': 26.93, 'nearestPainted': {'d': 14, 'p': [428, 662, 20]}}
+> {'i': 82, 's': 412.13, 'lat': 0.34, 'taken': False, 'px': [500, 712], 'scale': 1.046, 'dist': 27.83, 'nearestPainted': {'d': 26, 'p': [497, 686, 24]}}
+> {'i': 83, 's': 423.78, 'lat': -0.15, 'taken': False, 'px': [454, 611], 'scale': 0.798, 'dist': 39.01, ' …[+1089 chars]
+
+### 🤖 Claude — 2026-11-17T17:42:31.367Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json; d=json.load(open('qa/gameplay_test.json')); print(d['checks'].get('realCoinPickups'))\"; sed -n 80,95p scripts/gameplay-test.mjs; grep -n \"goto(id\\|goto(\" src/game/Game.ts | head -3", "description": "Read gameplay coin check details"}`
+
+### 🧑 User — 2026-11-17T17:42:31.451Z
+
+> ↩︎ result: {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+>   // let the outro play to the victory
+>   api.step(60 * 7, dt);
+>   const fin = api.state();
+>   out.checks.continuousTravel = { pass: nonMonotonic === 0, nonMonotonicSteps: nonMonotonic, steps, respawns: api.respawns() };
+>   out.checks.noCameraCut = { pass: maxCamJump < 1.5, maxCameraJumpPerStep: +maxCamJump.toFixed(3) };
+>   out.checks.noTeleport = { pass: maxJump < 1.0, maxBennyAltitudeJumpPerStep: +maxJump.toFixed(3), at: out.maxJumpAt };
+>   out.plunge = { tTop, tBottom, t08, yTop, yBottom, y08, travelTimeTopToInlet: t08 && tTop ? +(t08 - tTop).toFixed(2) : null, verticalDrop: yTop !== null && y08 !== null ? +(yTop - y08).toFixed(2) : null };
+>   out.checks.plunge = { pass: out.plunge.travelTimeTopToInlet > 2 && out.plunge.verticalDrop > 50, ...out.plunge };
+>   out.checks.realCoinPickups = { pass: endState.coins > startCoins, startCoins, endCoins: endState.coins, collected: (endState.coins - startCoins) / 10 };
+>   out.checks.victory = { pass: fin.mode === 'end' && fin.stage === '11' && fin.bennyVisible === false, finalState: fin };
+> 
+>   // ---- hearts: hold steer into the wall in 05
+>   api.startRideAt('05');
+>   api.setSteer(1 …[+51 chars]
+
+### 🤖 Claude — 2026-11-17T17:43:17.302Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match08/coins08px.mjs <<'EOF'\n// Screen 08 coins on the painted spots (lead, 2026-11-17 r3; `?match08=1&coins08px=1` only).\n// For each of the approved picture's nine coins (assets/textures/match08/coins08.json `px`), cast the ray of the locked\n// approved 08 camera through the painted pixel and put the coin on that ray at the depth of the game's current picture\n// coin (so size and pickup reach stay as they are). Writes assets/textures/match08/coins08px.json with exact world\n// points; src/gameplay/coins.ts turns them into river s / lateral / height. Read-only on …[+4038 chars]`
+
+### 🧑 User — 2026-11-17T17:43:28.702Z
+
+> ↩︎ result: {"px":[335,862,42],"was_px":[341,906.2],"moved_px":44.6,"world":[11.2948,-112.7257,-286.6421],"dist":12.281,"scale":0.8065,"s":396.227,"lat":-0.688,"h":0.797,"along":0.006}
+> {"px":[400,786,35],"was_px":[391.8,817.3],"moved_px":32.4,"world":[11.617,-112.6747,-290.517],"dist":16.013,"scale":0.8784,"s":400.027,"lat":0.426,"h":0.859,"along":0.021}
+> {"px":[467,737,29],"was_px":[457.1,750.1],"moved_px":16.4,"world":[12.344,-112.6525,-294.8599],"dist":20.258,"scale":0.9202,"s":404.527,"lat":1.172,"h":0.707,"along":0.002}
+> {"px":[383,633,18],"was_px":[366.6,576],"moved_px":59.3,"world":[10.783,-111.1641,-297.4505],"dist":22.781,"scale":0.6417,"s":406.877,"lat":-0.695,"h":2.481,"along":0.032}
+> {"px":[428,662,20],"was_px":[435.3,673.5],"moved_px":13.7,"world":[11.3487,-112.0056,-301.601],"dist":26.928,"scale":0.8446,"s":411.127,"lat":-1.175,"h":1.419,"along":-0.007}
+> {"px":[497,686,24],"was_px":[499.6,712.5],"moved_px":26.6,"world":[12.798,-112.5912,-302.4933],"dist":27.827,"scale":1.0455,"s":412.177,"lat":0.188,"h":0.998,"along":0.008}
+
+### 🤖 Claude — 2026-11-17T17:44:04.978Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/match08/coins08px.mjs'; s=open(p).read()\ns=s.replace(\"\"\"// For each of the approved picture's nine coins (assets/textures/match08/coins08.json `px`), cast the ray of the locked\n// approved 08 camera through the painted pixel and put the coin on that ray at the depth of the game's current picture\n// coin (so size and pickup reach stay as they are).\"\"\",\"\"\"// For each of the approved picture's nine coins (assets/textures/match08/coins08.json `px` = centre + radius in px), cast\n// the ray of the locked approved 08 camera through the painted  …[+2786 chars]`
+
+### 🧑 User — 2026-11-17T17:44:17.286Z
+
+> ↩︎ result: {"px":[335,862,42],"was_px":[341,906.2],"moved_px":44.6,"world":[11.3063,-112.7047,-286.555],"dist":12.19,"was_dist":12.281,"scale":0.8011,"was_scale":0.8065,"s":396.127,"lat":-0.693,"h":0.815,"above_water":0.004,"along":0.016}
+> {"px":[400,786,35],"was_px":[391.8,817.3],"moved_px":32.4,"world":[11.6136,-112.6824,-290.5598],"dist":16.056,"was_dist":16.013,"scale":0.8793,"was_scale":0.8784,"s":400.077,"lat":0.428,"h":0.849,"above_water":0,"along":0.015}
+> {"px":[467,737,29],"was_px":[457.1,750.1],"moved_px":16.4,"world":[12.3286,-112.7379,-295.4747],"dist":20.879,"was_dist":20.258,"scale":0.9474,"was_scale":0.9202,"s":405.177,"lat":1.05,"h":0.675,"above_water":-0.208,"along":-0.018}
+> {"px":[383,633,18],"was_px":[366.6,576],"moved_px":59.3,"world":[10.705,-111.2131,-298.3051],"dist":23.64,"was_dist":22.781,"scale":0.6658,"was_scale":0.6417,"s":407.727,"lat":-1.032,"h":2.399,"above_water":1.656,"along":0.007}
+> {"px":[428,662,20],"was_px":[435.3,673.5],"moved_px":13.7,"world":[11.3801,-111.9608,-301.0399],"dist":26.364,"was_dist":26.928,"scale":0.825,"was_scale":0.8446,"s":410.527,"lat":-1.04,"h":1.503,"above_water":0.68,"along":0.03}
+> {"px":[497,686,24],"was_px":[499.6,712.5],"moved_px":26.6 …[+864 chars]
+
+### 🤖 Claude — 2026-11-17T17:44:36.515Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,39p src/gameplay/coins.ts | grep -n \"import\\|flag05\\|interface CoinDef\\|scale\\|faceTo\\|pickLat\" ", "description": "Read coins.ts imports and CoinDef"}`
+
+### 🧑 User — 2026-11-17T17:44:36.562Z
+
+> ↩︎ result: 7:import * as THREE from 'three';
+> 8:import type { Course, StageId } from '../world/course';
+> 9:import { canvasTexture } from '../world/materials';
+> 10:import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> 11:import coins08 from '../../assets/textures/match08/coins08.json';
+> 15:/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> 16:export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 25:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 30:  const extra = { scale: C05.scale, tilt: C05.tilt };
+
+### 🤖 Claude — 2026-11-17T17:44:45.337Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\na=\"import coins08 from '../../assets/textures/match08/coins08.json';\\n\"\nassert a in s\ns=s.replace(a, a+\"import coins08px from '../../assets/textures/match08/coins08px.json';\\n\",1)\na=\"  const m08 = flag05('match08') || flag05('matchall');\\n\"\nassert a in s\ns=s.replace(a, a+\"  // `&coins08px=1` (with match08; lead r3 2026-11-17): the nine picture coins exactly on their painted pixels, on the water\\n  // (assets/textures/match08/coins08px.json, tools/match08/coins08px.mjs), and stage 10's five coins out …[+1688 chars]`
+
+### 🧑 User — 2026-11-17T17:44:48.821Z
+
+> ↩︎ result: edited
+>  src/gameplay/coins.ts | 20 ++++++++++++++++++--
+>  1 file changed, 18 insertions(+), 2 deletions(-)
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T17:44:53.613Z
+
+TypeScript compiles cleanly. Now checking where every coin lands with the switch on:
+
+### 🤖 Claude — 2026-11-17T17:44:55.513Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node tools/match08/coinprobe08.mjs --q=coins08px=1 --out=qa/match/08/coins08px/probe_coins08px.json 2>&1 | tail -1 | python3 -I -c \"\nimport json,sys\nt=sys.stdin.read(); d=json.loads(t[t.index('{'):])\nfor c in d['coins']: print(c['i'], 's', c['s'], 'lat', c['lat'], 'px', c['px'], 'nearest painted', c['nearestPainted'])\"", "description": "Probe coin screen positions with coins08px", "timeout": 660000}`
+
+### 🧑 User — 2026-11-17T17:45:07.510Z
+
+> ↩︎ result: 82 s 396.14 lat -0.69 px [334, 870] nearest painted {'d': 8, 'p': [335, 862, 42]}
+> 83 s 400.09 lat 0.43 px [400, 788] nearest painted {'d': 2, 'p': [400, 786, 35]}
+> 84 s 405.16 lat 1.05 px [467, 734] nearest painted {'d': 3, 'p': [467, 737, 29]}
+> 85 s 407.73 lat -1.03 px [383, 629] nearest painted {'d': 4, 'p': [383, 633, 18]}
+> 86 s 410.56 lat -1.04 px [428, 660] nearest painted {'d': 2, 'p': [428, 662, 20]}
+> 87 s 412.66 lat 0.14 px [497, 688] nearest painted {'d': 2, 'p': [497, 686, 24]}
+> 88 s 425.63 lat 1.08 px [479, 603] nearest painted {'d': 2, 'p': [479, 601, 12]}
+> 89 s 427.12 lat -0.66 px [420, 617] nearest painted {'d': 1, 'p': [420, 616, 15]}
+> 90 s 427.42 lat 0.52 px [454, 607] nearest painted {'d': 1, 'p': [454, 608, 13]}
+
+### 🤖 Claude — 2026-11-17T17:45:22.346Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/coins08px; mkdir -p $O; S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; rm -rf $S; mkdir -p $S\n# NEW (switch on) and switch-off/default with the edited code\ntimeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/new \"--q=match08=1&coins08px=1\" > $S/log.txt 2>&1\ntimeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/m08 \"--q=match08=1\" >> $S/log.txt 2>&1\ntimeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/def >> $S/log.txt 2>&1\n# the same with the code before this change (stash only coins.ts; the new json is …[+1056 chars]`
+

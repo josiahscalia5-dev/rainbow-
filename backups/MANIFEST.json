@@ -447,6 +447,11 @@
    "sha256": "f25b8b1bf3c323922c25dd48615f906e2d5d71971cf8cfac3a6b630cf51f54d9"
   },
   {
+   "path": "assets/textures/match08/coins08px.json",
+   "bytes": 3562,
+   "sha256": "5d8c40e11f114cbc3e11f8f8e4adb97695f6b250c700a20e19876565592ace72"
+  },
+  {
    "path": "assets/textures/match08/patch_gold.png",
    "bytes": 59480,
    "sha256": "5a0c22726592a5162a6f6147a896bab9a10b9bb8f5c3739360181d0527698bfe"
@@ -609,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11165,
-   "sha256": "313b6e333588c29d826aa89f7599a7e2d853ed52e5479212ed2ac77945595b4c"
+   "sha256": "18d3d7c8b07950943ab0bd7337d5db17e95b06f3778b35d23092eeb2a968d0b7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1495,6 +1500,11 @@
    "path": "qa/match/08/benny_NEW_ported_closeup.png",
    "bytes": 1394890,
    "sha256": "b42632c392de097aeb934c16ebef7b594b7904b14b5ff8edf0c6885779286ae5"
+  },
+  {
+   "path": "qa/match/08/coins08px/probe_coins08px.json",
+   "bytes": 2462,
+   "sha256": "ee7133645038c263ac667afde7e0aae135a8b4910611e03f6df38e225a9f2e09"
   },
   {
    "path": "qa/match/08/gameplay_test_match08.json",
@@ -8098,8 +8108,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 12528,
-   "sha256": "c5bb03eaf037cf9696a528a32371fdf005def642044ce5dbc0ddab50d5657233"
+   "bytes": 13776,
+   "sha256": "59829e1d338a0a64831b279851b7428385284f9e49e37f8773362281845b10ae"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -8380,6 +8390,16 @@
    "path": "tools/match08/coinlat.mjs",
    "bytes": 853,
    "sha256": "c8c3eac2de54d636d18935b72dbe7ac8c980ca67efd99910ccdce2424bb1933f"
+  },
+  {
+   "path": "tools/match08/coinprobe08.mjs",
+   "bytes": 3006,
+   "sha256": "2dde0384e382ca71d621053c6b0176eb66b93616e99b6d38cfd083ad68c78969"
+  },
+  {
+   "path": "tools/match08/coins08px.mjs",
+   "bytes": 5573,
+   "sha256": "77205bcc66953302f26e64a386e68c9f3aedbe0bd948203b8a2223dbeeb4dcba"
   },
   {
    "path": "tools/match08/cointake.mjs",

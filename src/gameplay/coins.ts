@@ -9,6 +9,7 @@ import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05 } from '../vfx/waterRibbon';
 import coins08 from '../../assets/textures/match08/coins08.json';
+import coins08px from '../../assets/textures/match08/coins08px.json';
 
 export const COIN_VALUE = 10;
 
@@ -53,6 +54,9 @@ export function coinLayout(course: Course): CoinDef[] {
   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
   // 08 — S toward the platform
   const m08 = flag05('match08') || flag05('matchall');
+  // `&coins08px=1` (with match08; lead r3 2026-11-17): the nine picture coins exactly on their painted pixels, on the water
+  // (assets/textures/match08/coins08px.json, tools/match08/coins08px.mjs), and stage 10's five coins out of the 08 view
+  const px08 = m08 && flag05('coins08px');
   if (!m08) { const a = st('08'); for (let i = 0; i < 8; i++) add('08', a.s0 + 3 + i * 1.9, -0.6 + 0.9 * Math.sin(i * 0.8)); }
   // 09 — arc along the left (inside of the bend, under the wave)
   if (!m08) { const a = st('09'); for (let i = 0; i < 9; i++) add('09', a.s0 + 1.5 + i * 1.7, -1.7 + i * 0.12); }
@@ -67,7 +71,17 @@ export function coinLayout(course: Course): CoinDef[] {
       const f = course.sample(best);
       return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
     };
-    for (const c of coins08.coins) {
+    if (px08) {
+      // exact world points on the approved camera's rays: refine s so the point lies in the river frame's cross-section
+      for (const c of coins08px.coins) {
+        const T = new THREE.Vector3(c.world[0], c.world[1], c.world[2]);
+        let sx = c.s;
+        for (let k = 0; k < 4; k++) { const f = course.sample(sx); sx += T.clone().sub(f.pos).dot(f.tan); }
+        const f = course.sample(sx), d = T.clone().sub(f.pos);
+        add(course.stageAtS(sx).id, sx, d.dot(f.right), d.dot(f.up), { scale: c.scale, faceTo: coins08px.faceTo as [number, number, number] });
+      }
+    }
+    for (const c of px08 ? [] : coins08.coins) {
       let r = toRiver(c.x, c.z), h = c.h, scale = c.scale;
       // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
       // ray from the approved camera (same pixel in the approved view) to the nearest depth within reach, above the water;
@@ -87,11 +101,13 @@ export function coinLayout(course: Course): CoinDef[] {
     // 08 view — collected on the way in, never in the approved view
     const sIn = st('08').s0;
     for (let i = 0; i < 8; i++) { const s = sIn - 4 + i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin(i * 1.3)); }
+    // `&coins08px=1`: stage 10's five coins showed far down the river in the approved 08 view (the picture has none there)
+    if (px08) for (let i = 0; i < 5; i++) { const s = sIn - 4.8 - i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin((i + 8) * 1.3)); }
   }
   // `?match08=1`: river order (the coins above were appended out of order)
   if (m08) out.sort((a, b) => a.s - b.s);
   // 10 — straight line into the towel tunnel
-  { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
+  if (!px08) { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
   return out;
 }
 
