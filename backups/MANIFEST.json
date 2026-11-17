@@ -659,7 +659,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10640,
-   "sha256": "84d37865aa4e6cf8ff4670a1b6a8a588ab4112578a0678c1d116caab9ea9535a"
+   "sha256": "3a85c7c3bdf9fcc748ef34ae84e65de1a6d01c94ec1fa2047692bcd1ef759e26"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1128,8 +1128,8 @@
   },
   {
    "path": "qa/capture_log_1080x1920.json",
-   "bytes": 10266,
-   "sha256": "81275bfd043598692121efe28a3f8763f584e7f01e0d062077f2f81b064dac47"
+   "bytes": 1242,
+   "sha256": "2789e0911e17b56b8633af395eee1f3b384c3d3cf45eac2e2a8daefe89199363"
   },
   {
    "path": "qa/cinematic_test.json",
@@ -1452,9 +1452,14 @@
    "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
   },
   {
+   "path": "qa/match/08/benny08/BAKEONLY_08.png",
+   "bytes": 2342285,
+   "sha256": "210c2cfb2e86187f31c01a215a97337ea73cf590fc7cf7fa08133c6ccd05425a"
+  },
+  {
    "path": "qa/match/08/benny08/CURRENT_08.png",
-   "bytes": 2346255,
-   "sha256": "c174030b230f5fb4f5172a9efea39a4f3760cd1ce8e132f74b1b437a06f3bdd9"
+   "bytes": 2346273,
+   "sha256": "65abf7abbdc27b9b5173a06fda44dce77e63d3381c4ded02d5decccdc47c4019"
   },
   {
    "path": "qa/match/08/benny08/CURRENT_08_1080x1920.png",
@@ -1463,13 +1468,13 @@
   },
   {
    "path": "qa/match/08/benny08/NEW_08.png",
-   "bytes": 2342285,
-   "sha256": "210c2cfb2e86187f31c01a215a97337ea73cf590fc7cf7fa08133c6ccd05425a"
+   "bytes": 2351190,
+   "sha256": "989e8355567693ecad8f7a14c09722a7180ada9f11342c8257cab778f6a2dd79"
   },
   {
    "path": "qa/match/08/benny08/NEW_08_1080x1920.png",
-   "bytes": 3434125,
-   "sha256": "94c04ee5b36fa7e91373587d0d02bff6036820689e9ab00287c1d317ce3d76f2"
+   "bytes": 3446056,
+   "sha256": "efa75ac560d9dd481f6d53816d5e98855e0a3e8f09eda8e00590bdce3d6c5cec"
   },
   {
    "path": "qa/match/08/benny08/closeup_APPROVED.png",
@@ -1483,8 +1488,8 @@
   },
   {
    "path": "qa/match/08/benny08/closeup_NEW.png",
-   "bytes": 1623999,
-   "sha256": "a857f43833b90d08c33b6866e5898b1118201f9ab098c18e7c6bbe090b9a3a8f"
+   "bytes": 1675361,
+   "sha256": "9d060aa99e9894f32f7a1ab4f1341a4a1264e096bf0c8809855561b92e11c44b"
   },
   {
    "path": "qa/match/08/benny08/compare_CURRENT_NEW.json",
@@ -1532,14 +1537,19 @@
    "sha256": "1ecc989adf8f6a971975166bd0a45c515722e93528bfa3f8033779f9bd6f2e4f"
   },
   {
+   "path": "qa/match/08/benny08/regions_CURRENT_BAKEONLY_NEW.json",
+   "bytes": 2073,
+   "sha256": "8967274a4790e633e82886370a45f173dd2dcdc7b91c96ed48cec8ab76d11dcb"
+  },
+  {
    "path": "qa/match/08/benny08/screen_match_CURRENT.json",
-   "bytes": 530,
-   "sha256": "9b1d4dda713fe8d2befbb55a6867df2084a64adaae138394b30e9ff8565120ae"
+   "bytes": 591,
+   "sha256": "5af5ec9845e09730ce75fb220a90c517838be810da3d0229608cacaa91cdb75b"
   },
   {
    "path": "qa/match/08/benny08/screen_match_NEW.json",
-   "bytes": 522,
-   "sha256": "a1433089bf20846e8ffaf004d17ace16629b570355cec4242bb6690520f8a7de"
+   "bytes": 585,
+   "sha256": "2262b26a1e2fe256e06b6c931be20ea6f3771ebc1060a1650737fe41952545b3"
   },
   {
    "path": "qa/match/08/benny08/tests/gameplay_default.json",
