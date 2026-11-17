@@ -2324,3 +2324,108 @@ Low tier works too: Benny + hat 50.63 → **22.22** (within 20: 22.6 % → 67.5 
 > {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "
 > pass True query proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1&benny05=1
 
+### 🤖 Claude — 2026-11-17T01:50:02.420Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/characters/benny/benny-lab.html; grep -n \"loadBenny\\|createBennyRuntime\\|search\\|URLSearch\\|camera.position\\|angle\\|yaw\\|window\\.\\|screenshot\" src/characters/benny/benny-lab.ts | head -30; ls qa/ | grep -i benny; ls scripts | grep -i benny", "description": "Inspect the Benny lab page and related scripts"}`
+
+### 🧑 User — 2026-11-17T01:50:02.480Z
+
+> ↩︎ result: <!doctype html>
+> <html lang="en">
+>   <head><meta charset="UTF-8" /><title>Benny lab</title>
+>     <style>html,body{margin:0;background:#2a0b46}canvas{display:block}</style></head>
+>   <body><canvas id="lab"></canvas><script type="module" src="./benny-lab.ts"></script></body>
+> </html>
+> 13:import { BENNY_RIDE_LIFT, createBennyRuntime, loadBenny } from './runtime';
+> 18:const q = new URLSearchParams(location.search);
+> 24:  if (q.get('src') === 'glb') return loadBenny({ furQuality });
+> 26:  return createBennyRuntime(b.scene, b.animations, { furQuality });
+> 31:  yaw: number;
+> 38:  /** explicit camera (Benny root at origin, faces +Z); overrides yaw/pitch/dist */
+> 49:            { name: '05-rear', yaw: Math.PI, pitch: 0.24, dist: 4.4, expr: 'happy', swim: 0.8, fov: 40, tumble: false },
+> 50:            { name: '03-front', yaw: 0.55, pitch: 0.12, dist: 4.2, expr: 'happy', swim: 0.3, fov: 40, tumble: false },
+> 51:            { name: '02-dizzy', yaw: 0.0, pitch: 0.05, dist: 4.2, expr: 'dizzy', swim: 0, fov: 40, tumble: true },
+> 57:            (q.get('elev') ?? '12,18,24,28').split(',').map(Number).map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 7.2, expr: 'happy', …[+2359 chars]
+
+### 🤖 Claude — 2026-11-17T01:50:03.758Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "offset": 14, "limit": 160}`
+
+### 🧑 User — 2026-11-17T01:50:03.785Z
+
+> ↩︎ result: 14	import type { BennyRuntime } from '../types';
+> 15	
+> 16	declare global { interface Window { __done?: boolean; __error?: string; __info?: unknown } }
+> 17	
+> 18	const q = new URLSearchParams(location.search);
+> 19	const furQuality = q.get('quality') === 'low' ? 'low' : 'high';
+> 20	// shape A/B: `&dims={"flat":0.6,"stretch":0.05}` overrides BENNY_DIMS before the procedural build (src=build only)
+> 21	if (q.get('dims')) Object.assign(BENNY_DIMS, JSON.parse(q.get('dims')!));
+> 22	
+> 23	async function make(): Promise<BennyRuntime> {
+> 24	  if (q.get('src') === 'glb') return loadBenny({ furQuality });
+> 25	  const b = buildBenny();
+> 26	  return createBennyRuntime(b.scene, b.animations, { furQuality });
+> 27	}
+> 28	
+> 29	interface Panel {
+> 30	  name: string;
+> 31	  yaw: number;
+> 32	  pitch: number;
+> 33	  dist: number;
+> 34	  expr: string;
+> 35	  swim: number;
+> 36	  fov: number;
+> 37	  tumble: boolean;
+> 38	  /** explicit camera (Benny root at origin, faces +Z); overrides yaw/pitch/dist */
+> 39	  cam?: { pos: [number, number, number]; target: [number, number, number] };
+> 40	}
+> 41	
+> 42	(async () => {
+> 43	  try {
+> 44	    const views = q.get('views') ?? 'refs';
+> 45	    const RIDE = 0.8 * 0.55; // Game.ts: root = water surface + benny.rad …[+8634 chars]
+
+### 🤖 Claude — 2026-11-17T01:50:16.557Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/labviews.mjs", "content": "#!/usr/bin/env node\n// benny-character-artist: 360° / identity sheets of the REAL runtime Benny (canonical benny.glb + runtime), via the\n// existing lab page src/characters/benny/benny-lab.html (?src=glb). Switch off vs on (benny05).\n//   node qa/pilot05/full_reference_match/benny/work/labviews.mjs --out=DIR\n// → DIR/{turntable,cmp}_{off,on}.png\nimport { mkdirSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../../../../scripts/lib/pw.mjs';\nconst opt …[+1414 chars]`
+
+### 🧑 User — 2026-11-17T01:50:16.596Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/labviews.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:50:17.680Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 1800 node qa/pilot05/full_reference_match/benny/work/labviews.mjs --out=qa/pilot05/full_reference_match/benny/views 2>&1 | tail -8", "description": "Render 360 and identity lab sheets off and on", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-17T01:50:58.977Z
+
+> ↩︎ result: wrote qa/pilot05/full_reference_match/benny/views/turntable_off.png
+> wrote qa/pilot05/full_reference_match/benny/views/turntable_on.png
+> wrote qa/pilot05/full_reference_match/benny/views/cmp_off.png
+> wrote qa/pilot05/full_reference_match/benny/views/cmp_on.png
+
+### 🤖 Claude — 2026-11-17T01:51:02.625Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nV='qa/pilot05/full_reference_match/benny/views/'\na=Image.open(V+'turntable_off.png'); b=Image.open(V+'turntable_on.png')\no=Image.new('RGB',(a.width,a.height*2)); o.paste(a,(0,0)); o.paste(b,(0,a.height)); o.resize((o.width*2//3,o.height*2//3)).save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/tt.png')\"", "description": "Stack turntable off/on sheets for viewing"}`
+
+### 🧑 User — 2026-11-17T01:51:02.814Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:51:04.892Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/tt.png"}`
+
+### 🧑 User — 2026-11-17T01:51:04.941Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:51:27.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nV='qa/pilot05/full_reference_match/benny/views/'\na=Image.open(V+'cmp_off.png'); b=Image.open(V+'cmp_on.png')\no=Image.new('RGB',(a.width,a.height*2)); o.paste(a,(0,0)); o.paste(b,(0,a.height)); o.resize((o.width//2,o.height//2)).save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cmp.png')\"", "description": "Stack identity sheets off and on"}`
+
+### 🧑 User — 2026-11-17T01:51:28.138Z
+
+> ↩︎ result: (Bash completed with no output)
+

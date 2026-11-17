@@ -2416,3 +2416,85 @@ Stop hook feedback:
 
 Everything is committed and pushed: GitHub's branch is at `5f51e97`, the same as the local copy, and nothing is left unsaved. That save included the Benny specialist's newest captures and measurements (`benny/cap/`) and the session backup files.
 
+### 🧑 User — 2026-11-17T01:50:17.099Z
+
+show me the new screenshots when Benny and the tunnel finish What does my screen look like now?
+
+### 🤖 Claude — 2026-11-17T01:50:21.121Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; C=qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_match05_hud_coins_done.png; stat -c '%y' $C | cut -c12-16; echo \"== game files changed since cp1:\"; find src assets -newer $C -type f | head -20", "description": "Check for game changes since checkpoint cp1"}`
+
+### 🧑 User — 2026-11-17T01:50:21.167Z
+
+> ↩︎ result: 01:50
+> 01:48
+> == game files changed since cp1:
+> src/characters/benny/benny05.ts
+
+### 🤖 Claude — 2026-11-17T01:50:24.658Z
+
+Since the last pictures (taken 01:48 UTC), only Benny's code has changed. I'll take a fresh capture so you see exactly how the screen looks right now.
+
+### 🤖 Claude — 2026-11-17T01:50:27.859Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | tail -3 && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; R=qa/pilot05/full_reference_match/coordinator/checkpoints\nnode scripts/capture.mjs 05 --q='match05=1' --out=$S/cp2 2>&1 | tail -1 | cut -c1-40; git checkout -q qa/capture_log.json\ncp $S/cp2/05.png $R/cp2_match05_now.png\npython3 -I tools/match05/metrics.py $R/cp2_match05_now.png $R/cp2_ 2>&1 | grep -E \"FULL|benny|wake|purple|gold|coins|hud|bubbles|water|foam|side|distant\" | sed -E 's/ssim.*signed.*//'", "description": "Fresh match05 capture a …[+32 chars]`
+
+### 🧑 User — 2026-11-17T01:51:17.547Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 11.89, 'within_10': 0.7461, 'within_20': 0.8356, '
+> gold_rings_and_front_frame   px  125730  mean   9.43  <=10 0.734  <=20 0.878  
+> purple_walls                 px  312706  mean   6.95  <=10 0.833  <=20 0.912  
+> side_fittings                px   13776  mean   3.54  <=10 0.890  <=20 0.948  
+> water                        px  480736  mean   6.76  <=10 0.879  <=20 0.916  
+> foam_banks                   px   28862  mean   5.73  <=10 0.920  <=20 0.950  
+> benny_and_hat                px   93061  mean  19.24  <=10 0.587  <=20 0.730  
+> wake_splash                  px   83491  mean  41.48  <=10 0.221  <=20 0.389  
+> coins                        px   27437  mean  27.74  <=10 0.277  <=20 0.516  
+> bubbles                      px   29304  mean  25.95  <=10 0.580  <=20 0.645  
+> hud_and_text                 px  125488  mean  17.23  <=10 0.574  <=20 0.737  
+> distant_tunnel_and_glow      px    6513  mean   2.43  <=10 0.926  <=20 0.971
+
+### 🤖 Claude — 2026-11-17T01:51:18.908Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_match05_now.png"}`
+
+### 🧑 User — 2026-11-17T01:51:18.964Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:51:21.024Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_match05_now.png"], "caption": "Your Screen 05 RIGHT NOW (real game capture at the approved camera, ?match05=1, 01:52 UTC). Tunnel and Benny specialists are still refining.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T01:51:21.662Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_match05_now.png → file_uuid: e1cc442a-b1fd-491e-ad8c-587fb6de522e
+
+### 🤖 Claude — 2026-11-17T01:51:27.141Z
+
+I've sent you a fresh capture of your Screen 05 as it is right now (01:52 UTC). It's a real game screenshot at the approved camera, with the improvements switched on (`?match05=1`).
+
+**Whole screen: 83.6 % of pixels within 20 colour levels of your approved picture.** That's up from 57.0 % before this session and 83.4 % in the checkpoint I sent you earlier.
+
+What matches well now:
+- **Tunnel:** purple perforated walls (91 %), gold rings (88 %), all six paddles in place (95 %), and the glowing distant tunnel (97 %).
+- **River:** the cyan-and-pink S-curve water (92 %) and the foam banks (95 %).
+- **HUD:** the bar, heart, counter and "05 • FLOW INTO THE CURRENT" banner in their approved spots.
+- **Coins:** the coin trail runs all the way to the vanishing point.
+- **Benny's beanie:** real purple-and-white knit with the gold star. Benny + hat is now 73 %, up from 71 % in the earlier checkpoint.
+
+What still looks different:
+- **Splash behind Benny:** still the spiky white "wings" (39 %). Your approved splash is a lower, fan-shaped spray. This is the splash/bubble specialist's job, which starts next.
+- **Benny:** his fur is still hotter pink and spikier than your soft fluff, and the pom-pom is spikier. The Benny specialist is still working.
+- **Tunnel:** a few small rough patches remain near the right-hand paddles. The tunnel specialist is still working.
+
+When the Benny and tunnel specialists finish, I'll take the next full capture and send you the three separate pictures again (approved, before, after) with the whole-screen numbers.
+
+### 🧑 User — 2026-11-17T01:51:29.103Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

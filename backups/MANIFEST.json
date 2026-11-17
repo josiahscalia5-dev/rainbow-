@@ -649,7 +649,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11669,
-   "sha256": "d2ad9cf7799d7b179341da84172dbcf620c34380c6d1f5c7893d1422107a14ac"
+   "sha256": "d27f49f7d788a8a5b5dcfef7f2b3d9599c030439c528cc01438606894fc5f0ef"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1697,6 +1697,26 @@
    "sha256": "80f2df94d305cf4efd64366207330c4bff981c7d3741dfee6884a9b62e094909"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/views/cmp_off.png",
+   "bytes": 1334000,
+   "sha256": "c6c816c5e39dbd4152a60e38caabd1012c4f0a2623d933c5c173767ab119f1c0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/views/cmp_on.png",
+   "bytes": 1382799,
+   "sha256": "6c551b99e8558d32b5473bb1cade09590e6f5079490b716bdb9a9169979dcbcb"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/views/turntable_off.png",
+   "bytes": 748205,
+   "sha256": "1145de0f5d4618abb9373388258e399cac8a60a62b10d8cf06932aacca2f1ab8"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/views/turntable_on.png",
+   "bytes": 774262,
+   "sha256": "8e52c513146c25604e0207d30db84ec285d50ee67e2e06686ab4521d897144fb"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/work/b1/calA.png",
    "bytes": 2202525,
    "sha256": "9c583c36036249c2c64cc60d4b3120d98ca1fc0123be869719f6c811fcbe956a"
@@ -2115,6 +2135,11 @@
    "path": "qa/pilot05/full_reference_match/benny/work/geom.py",
    "bytes": 2257,
    "sha256": "80c7e9927f10c49061675078785face9493b88cdcc7f93aadca1cd4d6a638415"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/labviews.mjs",
+   "bytes": 1878,
+   "sha256": "c2823ffe43e51d8ea029e92d6f8bb11249148c823babf88e8c0abb3d1ea6c5e7"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/mask_crop.png",
@@ -2965,6 +2990,21 @@
    "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_match05_hud_coins_done.png",
    "bytes": 2258000,
    "sha256": "c24984ff428a81a214a2d1783cae48b77ae7a48bf3d22c3b380e51d2391875ee"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_FULL_FRAME_METRICS.json",
+   "bytes": 438,
+   "sha256": "254998f6fb7dceabf1b1c894e433201319422a3d072ee0e03c69e4e167456d5d"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_REGION_METRICS.json",
+   "bytes": 2530,
+   "sha256": "d0e2e3072c1052acb42390560376857ed8308bb85e9a35158665c5a0f5e89fc3"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_match05_now.png",
+   "bytes": 2256472,
+   "sha256": "841d02f833dfb48ee7bbe5c34bd6b02063ed75ad06e50783ab44094aec570e8a"
   },
   {
    "path": "qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.json",
