@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3921,
-   "sha256": "3056de738fe30a104151b1c85be610a14e140c88703875b9b78ef1fc4de84acf"
+   "bytes": 3894,
+   "sha256": "15bb6611dbb0c548ba122dd17e50d8af4f7ec51e8ccfaefe53e382e898683920"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -658,8 +658,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10630,
-   "sha256": "5699d93db67de368adbd83ec71ed44955ab423d5d8ea0784c64f294aa9e0593b"
+   "bytes": 10639,
+   "sha256": "d41f410850996a94f166a71fc77193f6a45e37e35ccad2ddbe012a960877d900"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1123,8 +1123,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1236,
-   "sha256": "4c425d49a09b30db06ddb94a041e07a830dd4abdb829be0bb8d6e3fdd988827f"
+   "bytes": 1241,
+   "sha256": "c9884ebd3273b925fea40bb4df570ff449d6d60fbd892462cde5d94520c95ba3"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1500,6 +1500,16 @@
    "path": "qa/match/08/benny08/screen_match_NEW.json",
    "bytes": 522,
    "sha256": "a1433089bf20846e8ffaf004d17ace16629b570355cec4242bb6690520f8a7de"
+  },
+  {
+   "path": "qa/match/08/benny08/tests/gameplay_default.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/match/08/benny08/tests/gameplay_match08.json",
+   "bytes": 14649,
+   "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
   },
   {
    "path": "qa/match/08/benny08/views/turntable_CURRENT.png",
