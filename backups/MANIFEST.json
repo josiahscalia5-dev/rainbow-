@@ -654,7 +654,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12149,
-   "sha256": "62d6610408a72b4ec94ba6eae16aee0c920891c73d798702b67c384d59bb26b4"
+   "sha256": "b3499c02d9e131bf0f2c7a3cfa179772385523237b4107a6350f76a88040c6bf"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -10405,6 +10405,11 @@
    "path": "scripts/continuity-test.ts",
    "bytes": 4002,
    "sha256": "d5cbd1fac1da2cd1a691b5d691728b51a9cc2deeb920cfecf3eae5a29f1a8a89"
+  },
+  {
+   "path": "scripts/env05-hideshots.mjs",
+   "bytes": 4788,
+   "sha256": "88917a0edcf30ce5ad8c1c95af20aa7b61f23b14298949de3e5830a224b3609f"
   },
   {
    "path": "scripts/export-models.mjs",

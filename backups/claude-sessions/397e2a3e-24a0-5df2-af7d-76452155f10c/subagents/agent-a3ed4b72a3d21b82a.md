@@ -663,3 +663,29 @@ Now step A: per-bubble measurement. Let me build a measurement tool and crops.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T02:35:46.559Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; head -60 tools/match05/pixel_probe.mjs; grep -n \"PROJ05_INVERSE\" -A40 src/vfx/waterRibbon.ts | head -90", "description": "Read pixel probe tool and PROJ05_INVERSE"}`
+
+### 🧑 User — 2026-11-17T02:35:46.644Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Coordinator tool (Screen 05 full reference match): which 3D objects lie under given screen pixels of the locked 05
+> // frame? Loads the game exactly like scripts/capture.mjs, goes to checkpoint 05, then raycasts through each pixel with the
+> // live camera and lists every hit (name, parent chain, material type, distance, renderOrder, visible).
+> //   node tools/match05/pixel_probe.mjs --q='match05=1' --px=185,570 --px=350,555 [--hide=<name substring>] [--shot=out.png]
+> // Read-only: the game is not changed. --hide makes matching objects invisible before --shot (diagnostics only).
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const q = (args.find((a) => a.startsWith('--q=')) ?? '--q=').slice(4);
+> const pxs = args.filter((a) => a.startsWith('--px=')).map((a) => a.slice(5).split(',').map(Number));
+> const hide = args.filter((a) => a.startsWith('--hide=')).map((a) => a.slice(7));
+> const shot = (args.find((a) => a.startsWith('--shot=')) ?? '').slice(7);
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5203);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>    …[+6844 chars]
+
