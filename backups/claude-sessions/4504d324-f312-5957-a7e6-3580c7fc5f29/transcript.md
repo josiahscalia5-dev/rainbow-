@@ -747,3 +747,139 @@ The merge is done (`3eec92d`) and `9c50d67` is now in this branch. Next I'll sav
 
 > 🔧 **Bash** `{"command": "grep -c '^<<<<<<<\\|^>>>>>>>' backups/BACKUP_LOG.md; python3 -I -c \"import json;json.load(open('backups/BACKUP_STATUS.json'));print('status json valid')\"; python3 scripts/rainbow-autosave.py --reason manual:start 2>&1 | tail -4; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"; echo \"SRC    $(git ls-remote origin refs/heads/claude/rainbow-restore-env-setup-bxn85h | cut -f1)\"", "description": "Run immediate autosave and verify remote SHA"}`
 
+### 🧑 User — 2026-11-17T01:12:34.726Z
+
+> ↩︎ result: 0
+> status json valid
+>   "branch": "claude/rainbow-account-transfer-npxahd",
+>   "commit": "19ddfb4dcbc74e9d3166925d851780ce41f5e8b4",
+>   "duration_s": 6
+> }
+> LOCAL  19ddfb4dcbc74e9d3166925d851780ce41f5e8b4
+> REMOTE 19ddfb4dcbc74e9d3166925d851780ce41f5e8b4
+> SRC    9c50d6742f258d493606f3c454b88b86eb8cf623
+
+### 🤖 Claude — 2026-11-17T01:12:40.018Z
+
+> 🔧 **Bash** `{"command": "bash scripts/claude-bootstrap.sh --skip-resume > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/bootstrap_full.log 2>&1; echo EXIT=$?; grep -E \"^\\s+(OK|WARN|FAIL)\" /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/bootstrap_full.log | cut -c1-330", "description": "Run full bootstrap verification (no merges)", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T01:12:40.051Z
+
+> ↩︎ result: Command running in background with ID: boajr73id. Output is being written to: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/boajr73id.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T01:12:40.571Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate,mcp__github__list_branches,mcp__github__get_me", "max_results": 4}`
+
+### 🧑 User — 2026-11-17T01:12:40.579Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T01:12:42.097Z
+
+> 🔧 **TaskCreate** `{"subject": "Recover newest branch + start autosave on new branch", "description": "Merged 9c50d67, autosave -> claude/rainbow-account-transfer-npxahd, remote==local verified 19ddfb4.", "activeForm": "Recovering branch"}`
+
+### 🧑 User — 2026-11-17T01:12:42.110Z
+
+> ↩︎ result: Task #1 created successfully: Recover newest branch + start autosave on new branch
+
+### 🤖 Claude — 2026-11-17T01:12:43.491Z
+
+> 🔧 **TaskCreate** `{"subject": "Verify Blender 5.3.0 + Android + full bootstrap", "description": "Full bootstrap --skip-resume: Blender renders, 7 .blend, 3 GLBs, round trip, project Blender scripts; Android SDK 34; Playwright WebGL2; MCP list.", "activeForm": "Verifying tools"}`
+
+### 🧑 User — 2026-11-17T01:12:43.501Z
+
+> ↩︎ result: Task #2 created successfully: Verify Blender 5.3.0 + Android + full bootstrap
+
+### 🤖 Claude — 2026-11-17T01:12:44.540Z
+
+> 🔧 **TaskCreate** `{"subject": "Verify GitHub MCP + Playwright MCP individually", "description": "mcp__github__list_branches, Playwright MCP navigate + WebGL2 check.", "activeForm": "Checking MCP connections"}`
+
+### 🧑 User — 2026-11-17T01:12:44.548Z
+
+> ↩︎ result: Task #3 created successfully: Verify GitHub MCP + Playwright MCP individually
+
+### 🤖 Claude — 2026-11-17T01:12:45.689Z
+
+> 🔧 **TaskCreate** `{"subject": "Save setup script on rainbow- environment", "description": "After install verified, update_environment with scripts/cloud-env-setup.sh content so future sessions install Blender + Android automatically.", "activeForm": "Saving environment setup script"}`
+
+### 🧑 User — 2026-11-17T01:12:45.697Z
+
+> ↩︎ result: Task #4 created successfully: Save setup script on rainbow- environment
+
+### 🤖 Claude — 2026-11-17T01:12:46.841Z
+
+> 🔧 **TaskCreate** `{"subject": "Relaunch 3 specialists (env05, benny05, hud05/coins05)", "description": "From briefs + NOTES.md Remaining; update AGENTS_STATUS.json and COORDINATION.md RESUMED section.", "activeForm": "Relaunching specialists"}`
+
+### 🧑 User — 2026-11-17T01:12:46.852Z
+
+> ↩︎ result: Task #5 created successfully: Relaunch 3 specialists (env05, benny05, hud05/coins05)
+
+### 🤖 Claude — 2026-11-17T01:12:48.002Z
+
+> 🔧 **TaskCreate** `{"subject": "Capture ?match05=1 + default/BEFORE identity + metrics", "description": "Real game captures, tools/match05/metrics.py, show approved | BEFORE | NEW.", "activeForm": "Capturing Screen 05"}`
+
+### 🧑 User — 2026-11-17T01:12:48.014Z
+
+> ↩︎ result: Task #6 created successfully: Capture ?match05=1 + default/BEFORE identity + metrics
+
+### 🤖 Claude — 2026-11-17T01:12:49.128Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T01:12:49.139Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-17T01:12:49.628Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T01:12:49.636Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-17T01:12:50.375Z
+
+> 🔧 **mcp__github__list_branches** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "perPage": 100}`
+
+### 🤖 Claude — 2026-11-17T01:12:51.189Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__plugin_playwright_playwright__browser_navigate,mcp__plugin_playwright_playwright__browser_evaluate,mcp__plugin_playwright_playwright__browser_close", "max_results": 3}`
+
+### 🧑 User — 2026-11-17T01:12:51.202Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🧑 User — 2026-11-17T01:12:51.236Z
+
+> ↩︎ result: [{"name":"ccr-4f6c3e0e-5kxgr0","sha":"0fe0b0c596d27e8626f2aad338fb6e479930a5e1","protected":false},{"name":"ccr-6f431adf-7h0m8y","sha":"81e639e16994713d5f70d0314e796d1c298eeacf","protected":false},{"name":"ccr-8b6fc834-7kd55l","sha":"8a36270c96c27a4495b5b7ec3c36e84cd9578dff","protected":false},{"name":"ccr-8c4acadc-iybw0n","sha":"05941383f2b9e17a909a44483a4ec81656a954d7","protected":false},{"name":"ccr-44f84024-ii5iih","sha":"98ffd8e20fabf69f361faac1a57d315627d9da09","protected":false},{"name":"ccr-57af22a4-lsg7y7","sha":"e27c6fa0eac82a394f230d6e07e11bd529bbd666","protected":false},{"name":"ccr-93add0fa-q17ey6","sha":"08fb461b79e1bbfcef73fd3a0cb1a8c3d2afc6d0","protected":false},{"name":"ccr-251ed97c-ty2xvp","sha":"84298d6be05dc03c89945511a43c9ce275608100","protected":false},{"name":"ccr-451ea8c7-3nqlis","sha":"97dda283bba47b647eabaf84595eecc11672ea1e","protected":false},{"name":"ccr-694bda6a-x58ntq","sha":"4e140fa68307d51e4a9aca0b6ff9a2cf78595d6b","protected":false},{"name":"ccr-937c7fbb-htsrgt","sha":"f6e407128d835a5c4d95e802cc886b4e428b1055","protected":false},{"name":"ccr-61131b9d-uj0oqb","sha":"4a2a325da21769aadb3d65635e6d011d748d4f79","protected":false},{"name":"ccr-d4bb0ad3-8 …[+1687 chars]
+
+### 🤖 Claude — 2026-11-17T01:12:53.885Z
+
+The GitHub MCP connection works: it lists all 27 branches, and this session's branch shows `19ddfb4`, matching local HEAD. Next I'll test the Playwright MCP browser and WebGL2.
+
+### 🤖 Claude — 2026-11-17T01:12:54.279Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_navigate** `{"url": "about:blank"}`
+
+### 🤖 Claude — 2026-11-17T01:12:55.934Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_evaluate** `{"function": "() => { const c=document.createElement('canvas'); const gl=c.getContext('webgl2'); if(!gl) return 'NO WEBGL2'; const d=gl.getExtension('WEBGL_debug_renderer_info'); return {webgl2:true, version: gl.getParameter(gl.VERSION), renderer: d? gl.getParameter(d.UNMASKED_RENDERER_WEBGL): gl.getParameter(gl.RENDERER), maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE), ua: navigator.userAgent}; }"}`
+
+### 🧑 User — 2026-11-17T01:13:04.212Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('about:blank');
+> ```
+> ### Page
+> - Page URL: about:blank
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-17T01-13-04-207Z.yml)
+
