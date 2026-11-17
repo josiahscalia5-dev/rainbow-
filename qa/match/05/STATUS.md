@@ -6,6 +6,6 @@
 * **Completed work:** INVENTORY.md; Milestone 1 `?tgtvis05=1` — the 28,620 px of water the approved picture shows around Benny's hat / shoulders now come from the approved picture instead of the isolated-artwork fill (re-baked exact water layer, 16 px safety margin from Benny chosen by the steering test). Pictures: `01_APPROVED.png`, `02_BEFORE_match05.png`, `03_NEW_match05_tgtvis05.png`, `move/before|new/`.
 * **Visual accuracy measurements (locked frame, tools/match05/metrics.py):** whole frame within 20 levels 87.8 % → **89.2 %**, mean 8.96 → 8.09, SSIM 0.869 → 0.877; scenery (no Benny / HUD / coins) 91.6 % → **93.3 %**; water 92.8 % → 96.5 %. Pixel statistics, not a perceptual score.
 * **Remaining issues:** soft teal patch beside Benny while riding (old fill edge); right wall chunk and bottom-left gold ring arc; coin faces (mean 27); Benny (19) and HUD (17) belong to other agents; wake water between filaments.
-* **Latest saved commit:** see `git log -1 claude/rainbow-s05-match` (updated at each push; verified against `git ls-remote`).
+* **Latest saved commit:** `d9790281a79120cc7f65e8f0a481e3cce4fd640b` (milestone 1, remote verified == HEAD) + later autosaves
 * **Next task:** wait for the lead / user; then item 1 of NOTES.md "Next".
 * **Status:** under review (not approved — only the user approves).
