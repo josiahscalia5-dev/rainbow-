@@ -1283,3 +1283,59 @@ Pausing as ordered. Writing the checkpoint status and saving.
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && echo TSC_OK; cat > qa/match/08/scenery/STATUS.md <<'EOF'\n# Screen 08 scenery-in-motion — STATUS (round 6 = my round 2, PAUSED by lead order 2026-11-17 ~22:50 UTC)\n\n* Branch `claude/rainbow-s08-scenery-c6`. **Start SHA `9a2a531a`** (lead's `700f09e1` + 2 transcript autosaves). Final SHA: `git log -1`.\n* Every change is behind its own `?match08=1` sub-switch; default build code paths untouched (nothing runs without `match08`).\n\n## Done (round 6)\n1. **RESTORED lost code.** The round-5 autosave `48af969b` (20:52 UTC) captured a temporarily reverted work …[+3945 chars]`
 
+### 🧑 User — 2026-11-17T22:26:05.002Z
+
+> ↩︎ result: TSC_OK
+>  src/world/course.ts  |  15 ++++-
+>  src/world/match08.ts | 173 ++++++++++++++++++++++++++++++++++++++++++++++-----
+>  2 files changed, 172 insertions(+), 16 deletions(-)
+>   "duration_s": 7
+> }
+> 1c5e5ae70c6c2327f380d542226d30aaf9f69094	refs/heads/claude/rainbow-s08-scenery-c6
+> 1c5e5ae70c6c2327f380d542226d30aaf9f69094
+
+### 🤖 Claude — 2026-11-17T22:26:11.461Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01VCMXoaUqBCxDq8BntT19BU", "message": "S08 scenery (c6) PAUSED. Final SHA 1c5e5ae70c6c2327f380d542226d30aaf9f69094 on claude/rainbow-s08-scenery-c6, remote == HEAD, tsc clean, everything behind match08 sub-switches.\nIMPORTANT: your r6 BEFORE audit ran WITHOUT m08fill and WITH the 04–07 leak: the round-5 autosave 48af969b had dropped m08fill (match08.ts) and the course.ts 08-only guard from the \"final\" 60e7ffe8. Both are restored now (from 471d2e57 / 8987a305). Real r1 frames: qa/match/08/scenery/r6/R1_restored/.\nNew: &m08arch=1 KEEP (gold ring sweeps past whole, no  …[+480 chars]`
+
+### 🧑 User — 2026-11-17T22:26:20.048Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T22:26:30.333Z
+
+I've paused on your order. All Screen 08 work is saved at commit `1c5e5ae` on `claude/rainbow-s08-scenery-c6`, and the GitHub copy matches the local copy. The type-check passes, and every change only takes effect with `?match08=1` plus its own sub-switch, so the default game code is unchanged.
+
+**Your BEFORE audit was missing two round-1 fixes.** A round-5 autosave saved the files while an experiment had them temporarily rolled back. That dropped two things from round 1's "final" commit `60e7ffe8` (its message said they were in it):
+- `m08fill`, the ceiling wall fill;
+- the `course.ts` guard that stops `match08` from changing Screens 04–07.
+
+So your round-6 BEFORE frames show the old mirrored ceiling, and switching on `match08` was again changing 04–07. I restored both from my earlier commits. Frames of the real round-1 set are in `qa/match/08/scenery/r6/R1_restored/`.
+
+**New this round:**
+- **Gold arch (`m08arch=1`), keep:** the pipe, gold arch and entrance wall are moved further from the approved camera position along its own sight lines. From the approved view the picture stays the same. While moving, the gold ring now sweeps past as a whole ring, with no slivers or smeared pink arcs at the frame edges, going forward or steering.
+  - Approved view is not exactly identical: about 168k pixels change, almost all by 1 colour level, and 448 pixels by more than 20 levels along rim edges.
+  - Frames: `qa/match/08/scenery/r6/arch/`.
+- **Swim-lane water (`m08swim=1`), likely keep:** the painted river's banks spread out under Benny's whole swim lane, so on hard steering he rides on painted water instead of the purple floor. The middle of the river stays as painted and I saw no smearing. I have not yet proven with the frozen capture tool that the approved view is unchanged. Frames: `qa/match/08/scenery/r6/swim/`.
+- **Lost heart at s ≈ 404:** this is not an obstacle. It is the existing foam-wall rule: holding Benny at the edge of the lane for more than 0.6 s costs a heart. The pink tint in those frames is the hurt flash. I didn't change any gameplay rules.
+
+**Not done yet:**
+- The ceiling slot-size fix (`m08seam`) is coded but I haven't rendered or judged it.
+- None of the final checks have been run:
+  - default game 0 px;
+  - 04–07 unchanged with `match08`;
+  - gameplay 8/8 with 91 coins / 2,240;
+  - the 07→08 drop and the continuity check.
+- No check for duplicated river surfaces, no APPROVED / BEFORE / NEW pictures, no ratings and no APK.
+
+The exact next step is written in `qa/match/08/scenery/STATUS.md`. I've sent the lead this status and am stopping now.
+
+### 🧑 User — 2026-11-17T22:26:33.359Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
