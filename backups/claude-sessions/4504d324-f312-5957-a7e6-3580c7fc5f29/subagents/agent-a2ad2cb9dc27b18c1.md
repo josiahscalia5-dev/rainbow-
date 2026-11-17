@@ -1140,3 +1140,13 @@ No "missing baked map" warnings, so all 8 maps loaded. Now the first measurement
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T01:26:51.927Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blob.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom geom import load_uv\nfrom parts import approved_parts\nP,a,m=approved_parts()\nuv=load_uv('qa/pilot05/full_reference_match/benny/work/b3/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\ng=np.asarray(Image.open('qa/pilot05/full_reference_matc …[+914 chars]`
+
+### 🧑 User — 2026-11-17T01:26:52.821Z
+
+> ↩︎ result: 870 0:0.00,0.00 g(np.int64(0), np.int64(165), np.int64(243)) a(np.int64(0), np.int64(160), np.int64(244)) - | 0:0.00,0.00 g(np.int64(0), np.int64(172), np.int64(247)) a(np.int64(0), np.int64(171), np.int64(253)) - | 0:0.00,0.00 g(np.int64(0), np.int64(185), np.int64(247)) a(np.int64(4), np.int64(223), np.int64(253)) - | 0:0.00,0.00 g(np.int64(0), np.int64(180), np.int64(245)) a(np.int64(0), np.int64(187), np.int64(253)) - | 0:0.00,0.00 g(np.int64(0), np.int64(209), np.int64(247)) a(np.int64(0), np.int64(183), np.int64(253)) -
+> 878 0:0.00,0.00 g(np.int64(0), np.int64(177), np.int64(247)) a(np.int64(0), np.int64(169), np.int64(251)) - | 0:0.00,0.00 g(np.int64(0), np.int64(197), np.int64(248)) a(np.int64(0), np.int64(181), np.int64(252)) - | 0:0.00,0.00 g(np.int64(0), np.int64(175), np.int64(244)) a(np.int64(1), np.int64(177), np.int64(252)) - | 0:0.00,0.00 g(np.int64(0), np.int64(195), np.int64(248)) a(np.int64(0), np.int64(178), np.int64(250)) - | 0:0.00,0.00 g(np.int64(0), np.int64(227), np.int64(247)) a(np.int64(5), np.int64(191), np.int64(250)) -
+> 886 0:0.00,0.00 g(np.int64(0), np.int64(198), np.int64(248)) a(np.int64(4), np.int64(204), np.int64(255)) - | 0:0.00,0.00 g(np.int64(0), …[+6630 chars]
+
