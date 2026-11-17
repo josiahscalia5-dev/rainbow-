@@ -2449,3 +2449,35 @@ Low tier works too: Benny + hat 50.63 → **22.22** (within 20: 22.6 % → 67.5 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; timeout 900 python3 $W/bake.py $W/s1 $W/s1/tex_top2 --topfill > $W/s1/bake_top2.log 2>&1; echo rc=$?; python3 -I -c \"\nimport json; c=json.load(open('$W/s1/tex_top2/bake_report.json'))['crown']; print(c.get('topfill'), c.get('botfill'))\"; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfrom scipy import ndimage as ndi\nW='$W'\nold=np.asarray(Image.open(W+'/s1/tex/crown.png').convert('RGB')).astype(int)\nnew=np.asarray(Image.open(W+'/s1/tex_top2/crown.png').convert('RGB')).astype(int)\ninst=np.asar …[+631 chars]`
 
+### 🧑 User — 2026-11-17T01:52:10.254Z
+
+> ↩︎ result: rc=0
+> {'r_top': 91, 'purple_rows': [112, 177]} {'r_bot': 230, 'white_rows': [179, 229]}
+> texels taken from top+bottom fill 108889
+
+### 🤖 Claude — 2026-11-17T01:52:12.496Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/crown_f5.png"}`
+
+### 🧑 User — 2026-11-17T01:52:12.516Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:52:35.919Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\na=\"\"\"                    r_bot = int(np.nonzero(cov > 0.5)[0].max())\n                    q0 = next((r for r in range(p1, r_bot) if prof[r] <= thr), p1)\n                    wb = rect_t[q0 + 2:r_bot - 1]\n                    nw = wb.shape[0]\n                    if nw >= 6:\n                        for r in range(r_bot + 1, TH):\n                            w = np.clip((r - r_bot) / 3.0, 0, 1)\n                        …[+2180 chars]`
+
+### 🧑 User — 2026-11-17T01:52:41.919Z
+
+> ↩︎ result: rc=0
+> {'r_top': 91, 'purple_rows': [112, 177]} {'r_bot': 230, 'white_rows': [179, 203], 'from_row': 203}
+> texels taken from top+bottom fill 127894
+
+### 🤖 Claude — 2026-11-17T01:52:43.908Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/crown_f5.png"}`
+
+### 🧑 User — 2026-11-17T01:52:43.926Z
+
+> ↩︎ result: [image]
+

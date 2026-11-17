@@ -1093,8 +1093,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1196,
-   "sha256": "1cddabf9ac083a31e8a9c5a971d55bddca1ae7276bb3bfad5393b0de64efa5ef"
+   "bytes": 1235,
+   "sha256": "367c2202d8abf0ce7c694343e6bf19170e5bff9c65c07c9841f1986258f7ba83"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1878,8 +1878,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/bake.py",
-   "bytes": 16132,
-   "sha256": "c2aeffffa1d17412963999af455895e1a882acc19c11a479919c9aa73b361e7e"
+   "bytes": 16398,
+   "sha256": "1f7a29935c1bdc845b4483f28170bfe80ca0596bb3c11d66c7d0e39e0c98760b"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/bands.py",
@@ -2085,6 +2085,11 @@
    "path": "qa/pilot05/full_reference_match/benny/work/f4/crown_before_topfill.png",
    "bytes": 271133,
    "sha256": "095ec91acf48297ebf83b2e8338995e318395b9a117f43ddee0753e4271ab55c"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/f5/crown.png",
+   "bytes": 314410,
+   "sha256": "a550281b40933d5070cd9186eb955d81ffbcfdc07dc4f190757f525714d7d11b"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/fur_x3.png",
@@ -2818,6 +2823,81 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top/star_seen.png",
+   "bytes": 1851,
+   "sha256": "f0749a429dea5b5823e0003bb986a22405ee6db0c737ad5ec98693044b2ddfd2"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/armL.png",
+   "bytes": 17360,
+   "sha256": "8a690b1c23eff67d66efec57cd5e3b724258e23c79f22624f2c449ffd73f8718"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/armL_seen.png",
+   "bytes": 1338,
+   "sha256": "da023fcab5b77b6b982587de90be103f19ce947096e5470192ba96c52b6da9ce"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/armR.png",
+   "bytes": 16488,
+   "sha256": "a40bb023b8b913ae899ecde3c1585d3f154b9d0f6a8a535f52fb4e7411b5569b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/armR_seen.png",
+   "bytes": 1238,
+   "sha256": "266d4a77479dc809c31c4a89ea1efb0c08876dc6a8a9f927ac0aa6616d7005af"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/bake_report.json",
+   "bytes": 1597,
+   "sha256": "bd7225b1723d9af8988c69b7cf40915003633a94f08cbad647b1364feddf0ee8"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/body.png",
+   "bytes": 238247,
+   "sha256": "d2bede3aa920a7cca331bee956138c846ae5ab7c491f322c6e7d51544313d889"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/body_seen.png",
+   "bytes": 13370,
+   "sha256": "f3671111fb09d5d3c17087e009e422141b7ba42d5b8ef6698476fb598fe3eb33"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/brim.png",
+   "bytes": 137683,
+   "sha256": "3c21ff333a001de87ea7f74d917094f81e6c33b0708214274b801b6f9b761446"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/brim_seen.png",
+   "bytes": 6267,
+   "sha256": "040c77b02b0f9ea48636f2acd2083afe1aeffca5602cdfd4416e7475d3223908"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/crown.png",
+   "bytes": 283840,
+   "sha256": "7974326620599f0fe92310e11e7e20c67947bf89bbcd82d244d8872a2e037810"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/crown_seen.png",
+   "bytes": 10594,
+   "sha256": "ac786b6d01a097ad408d0fe5f96fbcf1a491a136654fc2223fb8f9d71b9f197d"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/pom.png",
+   "bytes": 109644,
+   "sha256": "24e29200be2a21ee3de0ff97fc53f53aa3fddcde4928464aba65ba6ef97b38de"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/pom_seen.png",
+   "bytes": 5815,
+   "sha256": "f75adab04f6d8c5f7436b476f9a1ea063338a327e2a926bd31d7e613f3aef925"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/star.png",
+   "bytes": 49132,
+   "sha256": "9087d67215588a0b790d6483b0d814ec96d54932232cca5ef9044d6c614ff914"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/s1/tex_top2/star_seen.png",
    "bytes": 1851,
    "sha256": "f0749a429dea5b5823e0003bb986a22405ee6db0c737ad5ec98693044b2ddfd2"
   },
@@ -10548,8 +10628,8 @@
   },
   {
    "path": "tools/env05/weight_study.py",
-   "bytes": 7755,
-   "sha256": "b18589b6f29bd7cd708a834ca5f04d5edd5b9240b4863c83b3a22ceea4f5025a"
+   "bytes": 7806,
+   "sha256": "e373fbb93d7e21c313a7787e57453e12205785ef92e3402cea4ccb412830aae7"
   },
   {
    "path": "tools/make_env_geometry_ref.py",

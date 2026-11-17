@@ -247,15 +247,18 @@ def main():
                     extra['topfill'] = dict(r_top=r_top, purple_rows=[p0, p1])
                     # rows below everything the 05 camera sees (just above the cuff; shows from the front / from above):
                     # continue the lower white band's knit downward instead of the flat hole fill
+                    # (source = the clean upper 24 rows of that band right under the purple band; its lower rows are
+                    # stitches compressed toward the cuff and tile as vertical streaks)
                     r_bot = int(np.nonzero(cov > 0.5)[0].max())
                     q0 = next((r for r in range(p1, r_bot) if prof[r] <= thr), p1)
-                    wb = rect_t[q0 + 2:r_bot - 1]
+                    wb = rect_t[q0 + 2:min(q0 + 26, r_bot)].copy()
                     nw = wb.shape[0]
+                    r_b = q0 + 2 + nw
                     if nw >= 6:
-                        for r in range(r_bot + 1, TH):
-                            w = np.clip((r - r_bot) / 3.0, 0, 1)
-                            rect_t[r] = w * wb[(r - r_bot - 1) % nw] + (1 - w) * rect_t[r]
-                    extra['botfill'] = dict(r_bot=r_bot, white_rows=[q0 + 2, r_bot - 1])
+                        for r in range(r_b, TH):
+                            w = np.clip((r - r_b + 1) / 3.0, 0, 1)
+                            rect_t[r] = w * wb[(r - r_b) % nw] + (1 - w) * rect_t[r]
+                    extra['botfill'] = dict(r_bot=r_bot, white_rows=[q0 + 2, q0 + 2 + nw], from_row=r_b)
                 tiled = shift_rows(rect_t, -h)
                 extra.update(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
                     u0=round(float(h[u0]), 1), centre=round(float(h[(u0 + u1) // 2]), 1), u1=round(float(h[u1 - 1]), 1)),

@@ -43,8 +43,8 @@ def knots_at(k, x):
 
 
 def weight_fn(spec):
-    if spec == "cur":   # run #3 game weight (environment.ts e05Weight)
-        return lambda t: np.where(np.cos(t) < 0, sstep(np.sin(t), -0.95, -0.5), sstep(np.sin(t), -0.28, 0.05))
+    if spec == "cur":   # run #3 game RING weight (environment.ts e05RingWeight; the wall's right half is −0.28 … 0.05)
+        return lambda t: np.where(np.cos(t) < 0, sstep(np.sin(t), -0.95, -0.5), sstep(np.sin(t), -0.9, -0.1))
     if spec == "e2":    # the weight of probe e2 (symmetric)
         return lambda t: sstep(np.sin(t), -0.28, 0.05)
     l0, l1, r0, r1 = [float(v) for v in spec.split(":")[1].split(",")]
