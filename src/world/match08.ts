@@ -197,8 +197,10 @@ export async function buildMatch08(): Promise<Match08> {
   const pushK = (v: THREE.Vector3) => {
     const dy = v.y - VP.y;
     if (v.y <= L.floorY) return 1;
-    if (dy >= 0) return ARCH_K;
-    return Math.min(ARCH_K, Math.max(1, ((L.floorY + 0.01 - VP.y) / dy)));
+    const k = dy >= 0 ? ARCH_K : Math.min(ARCH_K, Math.max(1, ((L.floorY + 0.01 - VP.y) / dy)));
+    // the lowest band at the water stays where it was fitted (the arch's bottom rim covers Benny's underside exactly as
+    // painted); the push ramps in above it — far below the camera, so it never blocks the view
+    return 1 + (k - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.4, L.floorY + 1.6);
   };
   const pushV = (v: THREE.Vector3) => v.sub(VP).multiplyScalar(pushK(v.clone())).add(VP);
   const pushGeo = (g: THREE.BufferGeometry) => {
