@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13066,
-   "sha256": "4352d3ddde9774cbae35041f2f5f1a9d172587452840a4bf3fe3d55750828126"
+   "sha256": "573a4e5801281a9bb85e46a1dc8153bd7678e9973e4dfb9f5519098f7618405b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -895,6 +895,11 @@
    "path": "docs/briefs/2026-11-17-r6/USER_DECISIONS.md",
    "bytes": 4374,
    "sha256": "d5e53eb9ab71ddb37c8267ce9ed9315983724435a74aef977fc3fb34b2ad1348"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r7/COORDINATION.md",
+   "bytes": 2756,
+   "sha256": "4ac877ccb1b4b5564364da6d7f626cbdd495b84111eeb36a7a5d4393b31b23e1"
   },
   {
    "path": "docs/briefs/2026-11-17-r7/S07.md",
@@ -8685,6 +8690,111 @@
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
+  },
+  {
+   "path": "qa/review_r7/04_1_APPROVED.jpg",
+   "bytes": 405092,
+   "sha256": "c97608fff9e21089778db45a8b4e27edac2f2d7b15246d838092a4f6adea4dd2"
+  },
+  {
+   "path": "qa/review_r7/04_2_CURRENT_swim_forward_10u.jpg",
+   "bytes": 380095,
+   "sha256": "9daaaec2c2853ff841d1fa0cbc0b547f433e727592bb37232b6cd71013f98851"
+  },
+  {
+   "path": "qa/review_r7/04_2_CURRENT_swim_two_thirds_through.jpg",
+   "bytes": 422688,
+   "sha256": "bc37596070b0f6f9489d6be8897fc2bf8d3a7287f59439527f6d1bfa165e1f40"
+  },
+  {
+   "path": "qa/review_r7/05_1_APPROVED.jpg",
+   "bytes": 496777,
+   "sha256": "0fa92db5b4734862713bb166457776a2e6e1c6b28bb2a12d6195f0da98adad64"
+  },
+  {
+   "path": "qa/review_r7/05_2_CURRENT_swim_forward_10u.jpg",
+   "bytes": 629836,
+   "sha256": "0c2764845b408182fd9f4289d72cd2b48cbaed525b63f0f908af5bd31ac6b4c2"
+  },
+  {
+   "path": "qa/review_r7/05_2_CURRENT_swim_two_thirds_through.jpg",
+   "bytes": 583104,
+   "sha256": "67ea86dbde8290001cc63769379f6d01a0986fbbe157bdf44ae6a2cc115c0143"
+  },
+  {
+   "path": "qa/review_r7/06_1_APPROVED.jpg",
+   "bytes": 510796,
+   "sha256": "6e31094fb204b0f7bf131d281aaadb9e18a0ed2ee56706b3b4f68d33ececb245"
+  },
+  {
+   "path": "qa/review_r7/06_2_BEFORE_forward_10u.jpg",
+   "bytes": 510830,
+   "sha256": "109be826451e5d3fc49990b410d23e040e04b5fae257a04b8c40633fa2aec82a"
+  },
+  {
+   "path": "qa/review_r7/06_2_BEFORE_forward_20u.jpg",
+   "bytes": 504732,
+   "sha256": "8a2c3a877ea60d4cf779dfa1b6b6cd84ea73bde46a8acbf5dc6af82c96dffa5f"
+  },
+  {
+   "path": "qa/review_r7/06_2_BEFORE_steering_hard_right.jpg",
+   "bytes": 523695,
+   "sha256": "2a235566bbed2279479e884d23d9e79550f48b7533a0e43dfa5d43814e6c1c97"
+  },
+  {
+   "path": "qa/review_r7/06_2_BEFORE_two_thirds_through.jpg",
+   "bytes": 462815,
+   "sha256": "c7cd0047f319e79d8f4e7ca3ab76ee43d61d3a0765dfb592e7df3edc9621e1e2"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_forward_10u.jpg",
+   "bytes": 605339,
+   "sha256": "802fae3f972f6619ba7bb25ca37cc4af54304d2ac3df2fc3021615595527d8bc"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_forward_20u.jpg",
+   "bytes": 613061,
+   "sha256": "b33466e1276d490dcec4fd9d66504ad94cc2f48ec87107298c579c5c56ce1e15"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_steering_hard_right.jpg",
+   "bytes": 603474,
+   "sha256": "0493cd164c72a54bfd73628cb3e3c20bc5be264d08772f68cd35a169bf4a0ac4"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_two_thirds_through.jpg",
+   "bytes": 586818,
+   "sha256": "780c4f70f8b6f43438edc69e32b1e1b4160042f4706e8ee2dea688eb94b77a9f"
+  },
+  {
+   "path": "qa/review_r7/07_1_APPROVED.jpg",
+   "bytes": 507035,
+   "sha256": "7c080becfe288541e77b22eb7ffa6679676e973ea17b10d5b8f72d4326ada061"
+  },
+  {
+   "path": "qa/review_r7/07_2_CURRENT_swim_forward_10u.jpg",
+   "bytes": 529844,
+   "sha256": "74d5ab2644755695d943d9b3f2ce8d1926afa69b82ac1372d449c890f06b7954"
+  },
+  {
+   "path": "qa/review_r7/07_2_CURRENT_swim_two_thirds_through.jpg",
+   "bytes": 433335,
+   "sha256": "a2ba434547346b0ff775b9be440603a11497c5e6123bad7e18b74f43595c468a"
+  },
+  {
+   "path": "qa/review_r7/08_1_APPROVED.jpg",
+   "bytes": 505446,
+   "sha256": "da9273635c7642493118b5c2c51cd593f3024d5a151aac3b6aa7843c819c1497"
+  },
+  {
+   "path": "qa/review_r7/08_2_CURRENT_swim_forward_10u.jpg",
+   "bytes": 645459,
+   "sha256": "89c74f8ef47a8e5cd3260f6555e895db9401ef80ffa693fcb0d11f0eb3a41f2d"
+  },
+  {
+   "path": "qa/review_r7/08_2_CURRENT_swim_two_thirds_through.jpg",
+   "bytes": 659818,
+   "sha256": "6d96f69895b89ac886bf9f0a7594658a3af86ecf82651005d2ad3f34696d2bc7"
   },
   {
    "path": "qa/scene_comparisons.md",
