@@ -848,3 +848,56 @@ Lead says pause. Saving the work and stopping, with no more renders.
 
 > 🔧 **Bash** `{"command": "git add src/world/match06.ts tools/match06 tools/lead_r6 assets/textures/match06 qa/match/06 && git commit -qm \"Screen 06 r6: narrow fitted river + foam banks + walls to banks (m06geo), flowing painted water (m06flow); paused checkpoint\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXobyXNaU99Bgt9q6WBM\" && git diff c088718b HEAD --stat -- src && python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | tail -2; git ls-remote origin refs/heads/claude/rainbow-s06-match-c6; git rev-parse HEAD", "description": "Co …[+55 chars]`
 
+### 🧑 User — 2026-11-17T22:25:51.692Z
+
+> ↩︎ result: src/world/match06.ts | 89 ++++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 79 insertions(+), 10 deletions(-)
+>   "duration_s": 13
+> }
+> 83bdf2429161ab76c84633474885ba4ed93f7b9a	refs/heads/claude/rainbow-s06-match-c6
+> 83bdf2429161ab76c84633474885ba4ed93f7b9a
+
+### 🤖 Claude — 2026-11-17T22:25:57.846Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01VCMXoaUqBCxDq8BntT19BU", "message": "S06 PAUSED. Checkpoint pushed: claude/rainbow-s06-match-c6 @ 83bdf2429161ab76c84633474885ba4ed93f7b9a (remote == HEAD verified; start c088718b). Only src/world/match06.ts changed, and all new code is behind switches: &m06geo=1 (water only as wide as the painted river ≈4.6 u, foam banks, tunnel walls coming down to the banks) and &m06flow=1 (flowing water built from the approved 06 painting, no mirroring or chevrons). Your diagnosis is confirmed: the painted river is ~4.5 u wide but the old floor was 9 u. Moving view, my rating: BEF …[+490 chars]`
+
+### 🧑 User — 2026-11-17T22:26:06.332Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T22:26:15.819Z
+
+I've paused Screen 06 as the lead ordered and saved a checkpoint. The new scenery fixes most of the "giant flat water wall" while Benny moves, but the ride still isn't at the 8.5/10 target and several checks haven't been run yet.
+
+The work is pushed to `claude/rainbow-s06-match-c6` at commit `83bdf2429161ab76c84633474885ba4ed93f7b9a`, and GitHub matches the local copy.
+
+**What was wrong:** The lead's diagnosis was correct. The approved picture's river is only about 4.5 game units wide, roughly twice Benny's width. The game's water surface was 9 units wide. So the tunnel walls, the hole under the crest loop and the foam banks from the picture had all been painted onto water. Once the camera moved, that became a giant flat sheet of water. The repeated pink chevrons came from a tiny water patch mirrored across the river.
+
+**What changed (only in `src/world/match06.ts`, each behind its own switch; the default game is untouched):**
+- **`&m06geo=1`:** water only as wide as the painted river, a foam bank on each side, and the tunnel walls now come down to meet the banks.
+- **`&m06flow=1`:** the river surface is made from the approved painting's own water (cyan centre, magenta sides, white streaks). It flows downstream, with no mirroring and no visible repeat.
+
+**How it looks:** The approved view is visually unchanged; only 111 pixels differ by more than 20 colour levels, and you can't see them. While moving, I'd rate it about 3/10 before and about 6.5/10 now: no chevrons, no water wall, and the walls and foam banks show on both sides. To compare, look at `qa/match/06/r6/BEFORE_lead/` against `qa/match/06/r6/NEW_moving/` (12 shots each).
+
+**Still wrong in the picture:**
+- About two-thirds of the way through the stage, the descending river still fills most of the frame.
+- When steering hard, Benny rides on the foam bank, because the painted river is narrower than the game's river.
+- In the first few units forward and when steering, stretched pixels from the approved picture are still visible near the camera.
+
+**Not yet checked:**
+- The protected Screen 05 BEFORE picture came out 128,689 pixels different from its saved baseline. My code can't run on Screen 05, but that's unexplained and needs a re-check before anyone says it's unchanged.
+- Not yet run: the gameplay test (8/8, 91 coins / 2,240) with the new switches, the continuity test, the measured match numbers and the APK.
+
+Default Screens 05–08 and the `?match08=1` Screen 08 view differ from the starting version only in the title/HUD banner rows, which is known capture noise.
+
+The next steps are written in `qa/match/06/STATUS.md`. I've sent the lead one status message and I'm now idle.
+
+### 🧑 User — 2026-11-17T22:26:18.487Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
