@@ -36,7 +36,7 @@ change. New mode at the frozen clock vs old: 100 px differ by 1 level (rounding 
 this change: default-build capture, protected BEFORE, gameplay test with `projflow05=2` (the code is inside
 `#ifdef PROJ05`, so the default program should be unchanged — verify first thing next time).
 
-## Part 2 (diagnosed, NOT built): the water turns into a pastel smear while RIDING, with either flow
+## Part 2 (BUILT 2026-11-17 as `&projnear05=1`, see `../near/NOTES.md`): the water turned into a pastel smear while RIDING
 `ride/BEFORE_old_flow_17u_ahead.png` / `ride/NEW_projflow05_2_17u_ahead.png` (ride clips `ride/*.mp4`): 17 u into the
 ride the near water is a blur with both flows. Layer map `ride/layer_map_0_8_17u_…png` (green exact E, blue near N, red
 tile T): E is only sharp from the locked camera; as the camera advances the near field switches to N then T, both

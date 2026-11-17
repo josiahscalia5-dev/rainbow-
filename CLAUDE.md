@@ -89,7 +89,9 @@ Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted
 visual result** (user, 2026-11-16 ~11:50). Candidates waiting for the user: W2 `?wall05=1`, G1b `?gold05=1`, W10 `?water05=1`, S1 `?fars05=1`, W11 `?river05=1`
 (user: "too grainy"), **tunnel bake `?projwall05=1&projring05=1&projframe05=1&projlid05=1`** (walls, rings, near gold frame, Blender paddles; with `proj05=1`;
 `qa/pilot05/proj/tunnel/NOTES.md`, 2026-11-16 ~20:50; paddles approved by the user ~21:45, NOT promoted), **water flow `&projflow05=2`** (flow along the
-approved streaks, design stays crisp; riding blur diagnosed, near-tile plan NOT built: `qa/pilot05/proj/flow2/NOTES.md`), **P1 `?proj05=1`** (the approved water itself baked onto the game river; `qa/pilot05/proj/NOTES.md`, 2026-11-16 ~18:45), **W12 `?silk05=1&puff05=1`** (newest water: smooth long streaks, deep cyan, bubbly foam banks;
+approved streaks, design stays crisp: `qa/pilot05/proj/flow2/NOTES.md`), **sharp riding water `&projnear05=1`** (approved
+near tile + near flares where the camera has approached; 2–3× crisper while riding, start view unchanged:
+`qa/pilot05/proj/near/NOTES.md`, 2026-11-17), **P1 `?proj05=1`** (the approved water itself baked onto the game river; `qa/pilot05/proj/NOTES.md`, 2026-11-16 ~18:45), **W12 `?silk05=1&puff05=1`** (newest water: smooth long streaks, deep cyan, bubbly foam banks;
 `qa/pilot05/wave12/NOTES.md`; experiment APK via `VITE_RAINBOW_Q05`). The user's **BEFORE stays protected**:
 `?ringa=26&nearfloor05=0` reproduces `qa/pilot05/wave9/baseline/05.png` pixel-for-pixel (`claude-bootstrap.sh --full`
 checks both). No more tunnel-position experiments (user, 2026-11-16): next are the rings' polished gold, the purple
