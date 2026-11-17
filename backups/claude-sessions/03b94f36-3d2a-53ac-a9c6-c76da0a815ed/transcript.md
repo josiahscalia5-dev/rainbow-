@@ -3576,3 +3576,156 @@ The viewer flips Marble's splats upside-down to convert their axes and uses a 75
 
 > 🔧 **Bash** `{"command": "mkdir -p tools/imageblaster && python3 -I - <<'EOF'\ns=open('tools/marble05/pano_fit.py').read()\ns=s.replace('\"\"\"Find where/how Marble placed the input image in its panorama (equirect): focal length, yaw, pitch.\\nusage: python3 -I tools/marble05/pano_fit.py <pano.png> <out.json> [preview.png]\"\"\"',\n '\"\"\"Any screen: find where/how Marble placed the input image in its panorama (equirect): focal length, yaw, pitch.\\nGeneralised copy of tools/marble05/pano_fit.py (that one is hard-wired to the Screen 05 reference).\\nusage: python3 -I tools/imageblaster/pano_fit.py <pano.p …[+1392 chars]`
 
+### 🧑 User — 2026-11-17T13:03:33.644Z
+
+> ↩︎ result: written
+> {"pano": "/home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/output/world/0-world-pano.png", "reference": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08/clean_864.png", "pano_size": [4608, 2304], "image_size": [864, 1536], "f_px": 442.0, "hfov_deg": 88.68894097281938, "yaw_deg": 23.0, "pitch_deg": -12.000000000000002, "ncc_blurred_quarter_res": 0.3813147694946965}
+> 
+> real	2m40.484s
+> user	2m36.657s
+> sys	0m2.077s
+
+### 🤖 Claude — 2026-11-17T13:03:37.753Z
+
+The fit came back weak: correlation 0.38 (Screen 05 reached 0.63), with a suspicious 23° sideways turn. Looking at what it matched before trusting it:
+
+### 🤖 Claude — 2026-11-17T13:03:40.546Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('$S/pano_fit_preview.png'); w,h=im.size\na=im.crop((0,0,w,h//2)); b=im.crop((0,h//2,w,h))\no=Image.new('RGB',(w*2+8,h//2),(255,255,255)); o.paste(a,(0,0)); o.paste(b,(w+8,0)); o.resize(((w*2+8)//2,h//4)).save('$S/pano_fit_side.png')\"", "description": "Make side-by-side of fit preview"}`
+
+### 🧑 User — 2026-11-17T13:03:41.230Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T13:03:43.732Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08/pano_fit_side.png"}`
+
+### 🧑 User — 2026-11-17T13:03:43.791Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:04:00.046Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08; cd $S && python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\npano=np.asarray(Image.open('/home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/output/world/0-world-pano.png').convert('RGB'))\nPH,PW=pano.shape[:2]; W0,H0=864,1536\nref=np.asarray(Image.open('clean_864.png').convert('RGB').resize((216,384)),float)/255\ndef view(f,yaw,pitch,W=216,H=384,scale=4):\n    uu,vv=np.meshgrid((np.arange(W)+0.5)*scale,(np.arange(H)+0.5)*scale)\n    d=np.stack([(uu-W0/2)/f,(vv …[+947 chars]`
+
+### 🧑 User — 2026-11-17T13:04:01.178Z
+
+> ↩︎ result: yaw0 f 300 pitch -15 ncc 0.267
+> yaw0 f 300 pitch 0 ncc 0.281
+> yaw0 f 450 pitch -15 ncc 0.211
+> yaw0 f 450 pitch 0 ncc 0.146
+> yaw0 f 650 pitch -15 ncc 0.147
+> yaw0 f 650 pitch 0 ncc 0.147
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T13:04:03.694Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08/yaw0_views.png"}`
+
+### 🧑 User — 2026-11-17T13:04:03.735Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:04:19.217Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08; mkdir -p $R && cd $R && [ -d node_modules/@sparkjsdev/spark ] || (echo '{\"private\":true}' > package.json && timeout 300 npm install --no-audit --no-fund @sparkjsdev/spark@0.1.10 three@0.178.0 2>&1 | tail -2); python3 -I - <<'EOF'\ns=open('/home/user/rainbow-/tools/marble05/spark/render.html').read()\ns=s.replace('cam.rotation.set(THREE.MathUtils.degToRad(+(q.get(\"pitch\") || 6)), 0, 0);',\n 'cam.rotation.order = \"YXZ\"; cam.rotation.set(THREE.MathUtils.degToRad(+(q.get(\"pitch\") || 6) …[+436 chars]`
+
+### 🧑 User — 2026-11-17T13:04:22.735Z
+
+> ↩︎ result: added 3 packages in 3s
+> render.html with yaw ready
+> node_modules
+> package-lock.json
+> package.json
+> render.html
+> w500k.spz
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T13:04:29.202Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08; cd $R && python3 -I - <<'EOF'\ns=open('/home/user/rainbow-/tools/marble05/spark/render.mjs').read()\ns=s.replace('&frames=${frames}`);','&frames=${frames}${process.env.QS ? \"&\" + process.env.QS : \"\"}`);')\nopen('render08.mjs','w').write(s); print('ok')\nEOF\ncd /home/user/rainbow- && time QS=\"f=450&cx=432&cy=768&pitch=-8&yaw=0\" timeout 600 node $R/render08.mjs $R w500k.spz $R/splat_yaw0_f450_p-8.png 0 0 0 6 2>&1 | grep -v -E \"^console: log frame\" | tail -5", "description": "Render  …[+55 chars]`
+
+### 🧑 User — 2026-11-17T13:05:12.829Z
+
+> ↩︎ result: ok
+> console: log initialized 1.5
+> wrote /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08/splat_yaw0_f450_p-8.png
+> 
+> real	0m43.537s
+> user	0m1.260s
+> sys	0m0.597s
+
+### 🤖 Claude — 2026-11-17T13:05:16.978Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08; python3 -I -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/08_final_spin_chamber.png').convert('RGB').resize((432,768))\nb=Image.open('$R/splat_yaw0_f450_p-8.png').convert('RGB').resize((432,768))\no=Image.new('RGB',(872,768),(255,255,255)); o.paste(a,(0,0)); o.paste(b,(440,0)); o.save('$R/side_approved_vs_splat.png')\"", "description": "Put approved and splat render side by side"}`
+
+### 🧑 User — 2026-11-17T13:05:17.465Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T13:05:20.580Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08/side_approved_vs_splat.png"}`
+
+### 🧑 User — 2026-11-17T13:05:20.632Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:05:34.804Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08; cd /home/user/rainbow- && for z in -2 -4 -6; do QS=\"f=450&cx=432&cy=768&pitch=-8&yaw=0\" timeout 400 node $R/render08.mjs $R w500k.spz $R/splat_z${z}.png 0 0.3 $z 6 2>&1 | grep -E \"wrote|error\" ; done; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('/home/user/rainbow-/references/08_final_spin_chamber.png').convert('RGB').resize((288,512))]+[Image.open('$R/splat_z%d.png'%z).convert('RGB').resize((288,512)) for z in (-2,-4,-6)]\no=Image.new('RGB',(288*4+18,512),(255,255,255))\n …[+172 chars]`
+
+### 🧑 User — 2026-11-17T13:06:14.129Z
+
+> ↩︎ result: wrote /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08/splat_z-2.png
+> wrote /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08/splat_z-4.png
+> wrote /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08/splat_z-6.png
+
+### 🤖 Claude — 2026-11-17T13:06:16.262Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08/forward_series.png"}`
+
+### 🧑 User — 2026-11-17T13:06:16.302Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:06:35.693Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08; cd /home/user/rainbow- && python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png $R/splat_yaw0_f450_p-8.png --label=MARBLE08 --json=$R/marble08_vs_approved.json; python3 -I tools/qa/screen_match.py qa/imageblaster/08/08_plate_CLEAN_aligned_9x16_1536x2731.png $R/splat_yaw0_f450_p-8.png --label=M_vs_IN --json=$R/marble08_vs_input.json; grep -n -E \"png|webp\" .gitattributes | head -3", "description": "Score the Marble render against approved and input"}`
+
+### 🧑 User — 2026-11-17T13:06:42.256Z
+
+> ↩︎ result: MARBLE08 FULL |d|  71.8 <=20 0.064 SSIM 0.241 | BELOWHUD |d|  72.9 <=20 0.061 | LAYOUT |d|  58.7 <=20 0.075 | mean RGB approved [168.4, 108.6, 170.2] game [160.7, 87.6, 164.0]
+> M_vs_IN FULL |d|  71.1 <=20 0.096 SSIM 0.404 | BELOWHUD |d|  74.3 <=20 0.068 | LAYOUT |d|  65.4 <=20 0.079 | mean RGB approved [161.6, 111.9, 177.3] game [160.7, 87.7, 164.0]
+
+### 🤖 Claude — 2026-11-17T13:06:56.609Z
+
+> 🔧 **Bash** `{"command": "W=/home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/output/world; Q=/home/user/rainbow-/qa/imageblaster/08/world; R=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/spark08; mkdir -p $Q/renders && cd $W && cp -p 0-world-100k.spz 0-world-150k.spz 0-world-500k.spz 0-world-full_res.spz 0-world.glb 0-world-pano.png 0-world-thumbnail.webp $Q/ && python3 -I - <<EOF\nimport json,re\ndef strip(o):\n    if isinstance(o,dict): return {k:strip(v) for k,v in o.items()}\n    if isinstance(o,list): return [strip(v) for v in o]\n    if isins …[+1051 chars]`
+
+### 🧑 User — 2026-11-17T13:06:56.808Z
+
+> ↩︎ result: json saved (signed URLs stripped)
+> /home/user/rainbow-/qa/imageblaster/08/world/0-world-request.json:0
+> /home/user/rainbow-/qa/imageblaster/08/world/0-world.json:0
+> 67M	/home/user/rainbow-/qa/imageblaster/08/world
+> 0-world-100k.spz
+> 0-world-150k.spz
+> 0-world-500k.spz
+> 0-world-full_res.spz
+> 0-world-pano.png
+> 0-world-request.json
+> 0-world-thumbnail.webp
+> 0-world.glb
+> 0-world.json
+> renders
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T13:07:00.590Z
+
+Recording results in the notes and the credit ledger, then saving to GitHub:
+
+### 🤖 Claude — 2026-11-17T13:07:19.745Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/imageblaster/08/NOTES.md <<'EOF'\n\n## Step 1b — splash-crest cleanup (user Option B, 2026-11-17 12:51 UTC) — ONE more paid fal edit\n* Input = the reviewed plate aligned to exact 9:16 (`2-…-plate-aligned`). fal `nano-banana-2/edit` request\n  `01a1e98f-f07f-7e42-ab22-c7e268dc85a3`, 32 s, 2K. Raw output `3-08-plate-nosplash_fal_edit2_raw.png` (again\n  1536×2752, again ≈0.8 % zoom, and the WHOLE picture re-rendered: mean change 6.6 levels outside the crest).\n* So only the crest area was taken from edit 2 (aligned by 1,573 SIFT inliers, 0.54 px): change > 25 levels insid …[+3972 chars]`
+

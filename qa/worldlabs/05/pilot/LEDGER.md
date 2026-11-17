@@ -55,3 +55,8 @@ Input for both worlds: `qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png
 * Splat measurements (`draft/analysis/splat_measure.json`): wall radius 1.71; ring spacing median 1.49
   (gaps 1.43/1.61/1.49/1.53) → **spacing/radius ≈ 0.87**; river width ≈ **0.71 × diameter**; wall mean
   rgb(184,71,160). Unrolled wall: `draft/analysis/wall_unrolled.png`.
+
+| UTC (2026-11-17) | Call | Result | Credits before → after | Spent (this key/account) |
+|---|---|---|---:|---:|
+| 12:54 | `GET /credits` (new key, user-saved via secure form on the `rainbow-` environment) | 200 | 7,000 | 0 |
+| 12:54 | `worlds:generate` **marble-1.1**, Screen 08 environment-only clean plate (Image-Blaster test, user-approved) → world `32b5b2f4-32bc-4fa5-80a5-861129a528c8`, op `0de603c2-c44f-47d1-b3c6-be4c05506dce` | done ≈5.5 min; files in `qa/imageblaster/08/world/` | 7,000 → **5,420** | **1,580** |

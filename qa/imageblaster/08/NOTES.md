@@ -130,3 +130,33 @@ ledger note) — not part of Image-Blaster.
   Benny → river continued; a white splash crest stays across the river where his splash was (y ≈ 1060–1230) —
   not part of the approved environment.
 * NEXT: user reviews; Step 2 (World Labs marble-1.1, ≈1,580 credits) only after the user's OK.
+
+## Step 1b — splash-crest cleanup (user Option B, 2026-11-17 12:51 UTC) — ONE more paid fal edit
+* Input = the reviewed plate aligned to exact 9:16 (`2-…-plate-aligned`). fal `nano-banana-2/edit` request
+  `01a1e98f-f07f-7e42-ab22-c7e268dc85a3`, 32 s, 2K. Raw output `3-08-plate-nosplash_fal_edit2_raw.png` (again
+  1536×2752, again ≈0.8 % zoom, and the WHOLE picture re-rendered: mean change 6.6 levels outside the crest).
+* So only the crest area was taken from edit 2 (aligned by 1,573 SIFT inliers, 0.54 px): change > 25 levels inside the
+  crest box, cleaned, widened 22 px, feathered 8 px (`08_clean_blend_mask.png`); 5.8 % of the frame blended, 2.6 % fully
+  replaced; every other pixel is byte-identical to the reviewed plate (checked).
+* RESULT `08_plate_CLEAN_aligned_9x16_1536x2731.png`: exact 9:16, aligned to the approved frame (scale 1.000, shift
+  0.0 px, 1,130 inliers). Kept scenery 92.4 % within 20 levels, SSIM 0.896 (`clean_plate_vs_approved_08_metrics.json`).
+
+## Step 2 — World Labs Marble world (user-approved, 2026-11-17 12:54–12:59 UTC)
+* `generate-world.mjs` (marble-1.1), input = the CLEAN plate (PNG, base64 inline) + the empty-environment WORLD PROMPT
+  above. World `32b5b2f4-32bc-4fa5-80a5-861129a528c8`, operation `0de603c2-c44f-47d1-b3c6-be4c05506dce`, ≈5.5 min.
+  Credits 7,000 → **5,420 (1,580 spent)**. HQ / full-res mesh links: not included (collider mesh only).
+* Saved `world/`: splats 100k / 150k / 500k / full_res (30 MB), collider `0-world.glb`, 360° pano (4608×2304),
+  thumbnail, world JSON (signed URLs stripped).
+* RESULT — composition NOT preserved. Marble rebuilt the chamber as a long deep tunnel: door + towel + platform tiny at
+  the far end, river long and narrow, the four spout fixtures not in the forward view; invented extras around/behind the
+  camera (more washer doors, more dome fixtures, extra gold ring loops, a second towel on a stool).
+  Pano camera fit (`tools/imageblaster/pano_fit.py`): best NCC only 0.38 and at a WRONG view (yaw 23°); straight-ahead
+  views 0.15–0.28 (`renders/pano_straight_ahead_views.png`). Real 3D splat render from the origin (Spark 0.1.10,
+  `tools/imageblaster/render.html` + `render08.mjs`, 500k, f 450, pitch −8): vs approved FULL 6.4 % within 20 levels,
+  SSIM 0.24, LAYOUT 7.5 % (`renders/marble08_vs_approved.json`); colours/materials similar (purple slotted metal, gold,
+  cyan-pink water, foam). Moving the camera forward (z −2/−4/−6) does not recover the layout; splats smear, the camera
+  enters the water (`renders/marble08_forward_z*.png`).
+* Conclusion: Marble (via Image-Blaster) gives a stylistically similar but compositionally different world for 08 — far
+  below the 90–95 % target. Same finding as the 05 Marble test. Usable: material/colour reference, distant backdrop,
+  collider for scale. The CLEAN PLATE itself (92.4 % kept scenery, no Benny/HUD/coins) is the valuable output: the
+  right source for camera-projecting the approved look onto the game's own 08 geometry (the 05 method).

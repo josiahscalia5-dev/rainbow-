@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "e34d730cef4d63069bb1b3e37c98d4db4a6940350846e34bce892864ecdf8ade"
+   "sha256": "e6ceaef92b86c75504ff9fe25ec689eaeabe4579160214e80cb05136aad49971"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1048,8 +1048,8 @@
   },
   {
    "path": "qa/imageblaster/08/NOTES.md",
-   "bytes": 12204,
-   "sha256": "198703e6a0f3d34e5737d9363034af640ba03402f5059d896cf578eb00322696"
+   "bytes": 15242,
+   "sha256": "a7071d70ccc4bfe1029af6a1cd873266933f4dd2764dfa722e5e338a1207dcc0"
   },
   {
    "path": "qa/imageblaster/08/clean_plate_vs_approved_08_metrics.json",
@@ -1095,6 +1095,91 @@
    "path": "qa/imageblaster/08/plate_vs_approved_08_metrics.json",
    "bytes": 3820,
    "sha256": "aac3af6cae4cba225f355ed8afa6d0a51ed3e1e2fbc75c7831b06c438b905897"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world-100k.spz",
+   "bytes": 1451332,
+   "sha256": "a618d7e3a95b82eb9664028676bd3db2d91dbb7b54bea125a2837314b4cc4258"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world-150k.spz",
+   "bytes": 2342749,
+   "sha256": "35fed311974a117217c26966f1fefcf358eea1aacba7ec974b33bbb083a7607e"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world-500k.spz",
+   "bytes": 7829371,
+   "sha256": "da7da56cdd6f4f18dcba442ecf62e1c885cfed140eb5c239d2fb3a095435f36f"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world-full_res.spz",
+   "bytes": 30057280,
+   "sha256": "c2c0cff0dd94811cc6a1f06e1ba5b2a737d6a8a9f1ea109785c5caa4c641d634"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world-pano.png",
+   "bytes": 16060812,
+   "sha256": "bba8bf55ab3877be0d3dce3c3447a00b5278c2f150a7379a0f0a16318ab9ff81"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world-request.json",
+   "bytes": 7765,
+   "sha256": "588ccef5a054c7ac73271969d6464f4ef582f2f390cdee288d49caccf6ba3122"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world-thumbnail.webp",
+   "bytes": 73848,
+   "sha256": "4a07a882cccedc5f12ca392302bbc473c5193c148bbaf54b83fe89b9f09c76f9"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world.glb",
+   "bytes": 1510524,
+   "sha256": "e5bb181d8d6b9eae22865db65c593ad4b3b980cfbf46f04bb992f50c28809a9f"
+  },
+  {
+   "path": "qa/imageblaster/08/world/0-world.json",
+   "bytes": 3368,
+   "sha256": "0af67fd42b41a0a99751d89432c51c0b8530a8abc09df1de3614945aec24739d"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/marble08_forward_z-2.png",
+   "bytes": 2574536,
+   "sha256": "73d843b5df4d30e71805d2a9472b7c9eb47aba7c06670ec03128d7ae3d297df6"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/marble08_forward_z-4.png",
+   "bytes": 2353572,
+   "sha256": "45a553fda71bd26ae050c781f267f0ecacde055570dbf8eeafd39d0428d1e202"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/marble08_forward_z-6.png",
+   "bytes": 1939508,
+   "sha256": "72e5c32fcd1d73e2d0c3e0986285806c474b57644869f6b65258b7a2e2633dd2"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/marble08_start_view_spark_500k.png",
+   "bytes": 2700473,
+   "sha256": "ab4ba698ce1fcca918e977fc96a2ec1a1ecc19104105fcbb5bbf35e45b115360"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/marble08_vs_approved.json",
+   "bytes": 610,
+   "sha256": "ea9f4b1c4b8fcfa1705028c056de95151f71366f164f6f033d282c3e2ad5affd"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/marble08_vs_input.json",
+   "bytes": 634,
+   "sha256": "65951263c6c7b6175a428dd0fe7059bb3a824b90c410b9c44bff9246aadeb3f6"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/pano_fit_08.json",
+   "bytes": 452,
+   "sha256": "8f1b6b17a6cf22ed2bb6f14afd1720d252e8e96f921d8b8963afeb824b752284"
+  },
+  {
+   "path": "qa/imageblaster/08/world/renders/pano_straight_ahead_views.png",
+   "bytes": 1101770,
+   "sha256": "c2b30f78e3b7fb046f54a42e28295d093a2e1f6e8850e10dfaf229839075611b"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -6838,8 +6923,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 5526,
-   "sha256": "41828e673477fdcbd0757428f9161b97695e21f1f47ea22ec9eafd22f1eaa254"
+   "bytes": 6058,
+   "sha256": "41701b34b3d528bf2472a8df75c1800ef2895f06359fe37f7d828a5b3da9dd34"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",
@@ -7770,6 +7855,16 @@
    "path": "tools/imageblaster/pano_fit.py",
    "bytes": 2942,
    "sha256": "b75e2e8ecf869244ec0988eb855e2cc6f3f43b8bd6e9b97edb686007bdc25520"
+  },
+  {
+   "path": "tools/imageblaster/render.html",
+   "bytes": 2933,
+   "sha256": "9d24291af1b44000e539ba1e16203301e59e71cd620562cb9f2f9fcae5873063"
+  },
+  {
+   "path": "tools/imageblaster/render08.mjs",
+   "bytes": 1924,
+   "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
