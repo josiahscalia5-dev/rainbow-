@@ -3780,3 +3780,184 @@ This is the same result as your earlier Screen 05 Marble test. Marble reinvents 
 
 Your fal.ai dashboard shows the exact charge for the two Screen 08 edits; fal.ai doesn't report it to me.
 
+### 🧑 User — 2026-11-17T13:13:05.978Z
+
+CLAUDIA — APPROVED: BOTH OPTIONS, SCREEN 08 FIRST
+
+Yes, I approve both recommendations, but please follow this order.
+
+PHASE 1 — SCREEN 08
+
+Start by applying my cleaned environment-only Screen 08 artwork to the actual 3D game environment, using the test switch you suggested.
+
+My requirements:
+
+1. Keep the existing game and original approved images completely unchanged.
+2. Use actual 3D geometry with appropriate texture mapping or projection, not simply a flat picture pretending to be a 3D world.
+3. Match my approved camera angle, scenery proportions, architecture, waterway, colors, lighting, and details.
+4. Use the exact cleaned artwork wherever possible to preserve the appearance of my approved scenery.
+5. Correct mismatched geometry manually in Blender or Three.js rather than accepting an inaccurate layout.
+6. Show me three separate, large, full-size previews: original approved Screen 08, current game rendering, and new improved 3D rendering.
+7. Measure how closely the new rendering matches my approved screen, and identify what still needs correcting.
+8. Check that the visual technique can work with a moving 3D camera in an eventual playable Android game.
+
+PHASE 2 — SCREENS 04, 05, 06 AND 07
+
+After validating the new Screen 08 method, I approve using my existing fal.ai balance to prepare clean environment-only versions of Screens 04, 05, 06 and 07.
+
+Preserve each original approved image unchanged. Show each cleaned image separately at full size, and make targeted corrections only where necessary.
+
+Then use the best-performing visual reconstruction method to reproduce their actual 3D game environments.
+
+MOST IMPORTANT
+
+I want ALL my approved screens eventually reproduced, not just Screens 04–08.
+
+My goal is the highest technically achievable visual fidelity to my original approved screens.
+
+I am willing to spend money and credits to achieve that quality, but use them wisely. Do not purchase additional credits or start more Marble generations without discussing why they would improve the results.
+
+Please start with the Screen 08 texture-matching test now.
+
+DO NOT REDESIGN MY APPROVED SCENERY.
+
+### 🤖 Claude — 2026-11-17T13:13:21.518Z
+
+Starting Phase 1 (Screen 08). Your approved images and the normal game build will stay unchanged, and everything new goes behind a test switch. First I need to understand how the game currently builds Screen 08 and how the existing match tooling works:
+
+### 🤖 Claude — 2026-11-17T13:13:22.421Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p src/game/match.ts | cut -c1-200; echo; ls qa/match/audit/ | head -30", "description": "Read the match framework and audit list"}`
+
+### 🧑 User — 2026-11-17T13:13:22.532Z
+
+> ↩︎ result: /**
+>  * "Match my approved picture" test switches for the gameplay screens (2026-11-17, qa/match/NOTES.md).
+>  *   `?match02=1` … `?match10=1`  one screen each (05 has its own set; `?match05=1` turns all of those on — see
+>  *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.
+>  * Every change a screen makes lives behind its switch: with no switch the game is byte-for-byte the default build
+>  * (verified by pixel comparison after every change). Packaged experiment builds read the same keys from
+>  * VITE_RAINBOW_Q05 (flag05).
+>  * File ownership (one owner per screen while work runs in parallel): see qa/match/NOTES.md.
+>  */
+> import type { CamParams } from './cameraRig';
+> import { flag05 } from '../vfx/waterRibbon';
+> 
+> export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> const ALL = flag05('matchall');
+> export const MATCH: Record<MatchId, boolean> = Object.fromEntries(MATCH_IDS.map((id) => [id, ALL || flag05('match' + id)])) as Record<MatchId, boolean>;
+> export const matchOn = (id: string): boolean => (MATCH as Record<string, boolean>)[id] === true;
+> 
+> /**
+>  * Came …[+1080 chars]
+
+### 🤖 Claude — 2026-11-17T13:13:23.527Z
+
+> 🔧 **Bash** `{"command": "ls src src/game src/world src/vfx src/characters 2>/dev/null | head -80; wc -l src/world/environment.ts src/world/course.ts src/game/Game.ts src/game/cameraRig.ts 2>/dev/null", "description": "List the game source layout"}`
+
+### 🧑 User — 2026-11-17T13:13:23.588Z
+
+> ↩︎ result: src:
+> characters
+> game
+> gameplay
+> main.ts
+> render
+> ui
+> vfx
+> world
+> 
+> src/characters:
+> benny
+> girl
+> types.ts
+> 
+> src/game:
+> Game.ts
+> cameraRig.ts
+> match.ts
+> modules.ts
+> 
+> src/vfx:
+> bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> flow05.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> proj05Apron.ts
+> proj05Tunnel.ts
+> puddles.ts
+> riderSplash.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 
+> src/world:
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> materials.ts
+> towel.ts
+> tube.ts
+>    915 src/world/environment.ts
+>    629 src/world/course.ts
+>    696 src/game/Game.ts
+>    180 src/game/cameraRig.ts
+>   2420 total
+
+### 🤖 Claude — 2026-11-17T13:13:27.758Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/audit/08_metrics.json | head -40; grep -n -i -E \"08|spin|chamber\" qa/match/NOTES.md | head -20 | cut -c1-220", "description": "Read the Screen 08 audit metrics and notes"}`
+
+### 🧑 User — 2026-11-17T13:13:27.803Z
+
+> ↩︎ result: {
+>  "label": "08",
+>  "approved": "references/08_final_spin_chamber.png",
+>  "capture": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/before/08.png",
+>  "size": [
+>   864,
+>   1536
+>  ],
+>  "FULL": {
+>   "mean_abs": 84.19,
+>   "within_10": 0.0112,
+>   "within_20": 0.0401,
+>   "ssim_lum": 0.2039
+>  },
+>  "BELOWHUD": {
+>   "mean_abs": 86.29,
+>   "within_10": 0.0101,
+>   "within_20": 0.0336,
+>   "ssim_lum": 0.2088
+>  },
+>  "LAYOUT": {
+>   "mean_abs": 75.93,
+>   "within_20": 0.0224
+>  },
+>  "mean_rgb_approved": [
+>   168.4,
+>   108.6,
+>   170.2
+>  ],
+>  "mean_rgb_capture": [
+>   203.2,
+>   125.0,
+>   226.9
+>  ]
+> }3:User order (2026-11-17): match Screens 02, 03, 04, 06, 07, 08, 09, 10 to their own approved pictures
+> 6:eight, then 04 and 06 (they touch 05), then 02, 03, 07, 08, 09, 10; batches, commit as you go.
+> 40:| 08 chamber | gold-ringed tunnel ending at a porthole with a towel on a round table, waterfalls | pink room, porthole top-left, foam walls | 84.2 / 4.0 % | 2.2 % | 2/10 |
+
+### 🤖 Claude — 2026-11-17T13:13:28.160Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/audit/08_BEFORE_default.png"}`
+
+### 🧑 User — 2026-11-17T13:13:28.230Z
+
+> ↩︎ result: [image]
+
