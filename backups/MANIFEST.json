@@ -673,8 +673,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10593,
-   "sha256": "e39a5e0466484fc7b852ece1acb710c06feb02a77e782e11cc9595aa91f2f1b4"
+   "bytes": 10602,
+   "sha256": "64b2c3159d1a6ad725a60a155471f2879d83f2a1c6ddb3fe83b6c626741cfffd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1397,6 +1397,11 @@
    "sha256": "69a7228ada62930f4db2344580774936da1f8e240b439ed8670e971697219914"
   },
   {
+   "path": "qa/match/04/04_NEW_m2_864x1536.png",
+   "bytes": 2068892,
+   "sha256": "22cc6476e071e381fa1d7caa1e21639a3e3ee310fe775e15396ecdd98c808341"
+  },
+  {
    "path": "qa/match/04/04_NEW_match04.png",
    "bytes": 2862493,
    "sha256": "82599eda64a762ad36119ec0e5dac50823cec1745cef1319ac625d7e6f5d952f"
@@ -1418,21 +1423,26 @@
   },
   {
    "path": "qa/match/04/NOTES.md",
-   "bytes": 6728,
-   "sha256": "715a72510ba28717c60a7443037806091076765414a4aedde4f88c1e79eb9f07"
+   "bytes": 10295,
+   "sha256": "e6f84d5f9ed679f8572c139b51e42d35bdec702153fd2d0c6016341cd3b8b313"
   },
   {
    "path": "qa/match/04/SHARED_CHANGES.md",
-   "bytes": 2002,
-   "sha256": "58e1774244df5e606d1432c700205078b639ca91222ff23f1740cbe5bcad243e"
+   "bytes": 2066,
+   "sha256": "42c3c33fd1b0c64b7164ad4ed0392622915f076ab563bcc326f6274248b3ea2c"
   },
   {
    "path": "qa/match/04/STATUS.md",
-   "bytes": 2034,
-   "sha256": "5c14f277f6e3f0ad6b8702bece69b3bab8f64f8d237529b88b31789e05d536c3"
+   "bytes": 2420,
+   "sha256": "1f672ccd573d93773daef23ac4b4ff68046e107f98e299982cfa680bda4af92c"
   },
   {
    "path": "qa/match/04/gameplay_test_match04.json",
+   "bytes": 14657,
+   "sha256": "110efa09172868567b1c5d88583957c00693ceaaca73a5b2b8ce906c7b49cfdd"
+  },
+  {
+   "path": "qa/match/04/gameplay_test_match04_m2.json",
    "bytes": 14657,
    "sha256": "110efa09172868567b1c5d88583957c00693ceaaca73a5b2b8ce906c7b49cfdd"
   },
@@ -1570,6 +1580,11 @@
    "path": "qa/match/04/scenery_metrics_BEFORE_NEW.json",
    "bytes": 1341,
    "sha256": "b96b63fea012f1ea6d437251816ab71af8715436167085ad85fc4c54a5c2f630"
+  },
+  {
+   "path": "qa/match/04/scenery_metrics_M1_M2.json",
+   "bytes": 1335,
+   "sha256": "4b8d32500769af864bf7d7438f24021a14b87cf3b819660ef43bff0f0ce7c413"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -8343,8 +8358,8 @@
   },
   {
    "path": "src/world/match04.ts",
-   "bytes": 12607,
-   "sha256": "443baeda9eae45ef48ab7730837d325e4d79e72a81b4559a536cfd209b8728cc"
+   "bytes": 12992,
+   "sha256": "fc25648266a5ca302f19e796ffcacea67de3abeae6a6f288e3c8a6730d93f7f3"
   },
   {
    "path": "src/world/match08.ts",
