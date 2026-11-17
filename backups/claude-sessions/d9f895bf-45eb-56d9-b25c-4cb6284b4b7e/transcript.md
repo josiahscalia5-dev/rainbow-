@@ -22,3 +22,52 @@ Your milestone (round 4), each fix minimal and camclear-guarded:
 
 Coordination: You own `src/game/camClear.ts`, `tools/camclear/`, `qa/gameplay_video/` and the camclear-guarded parts of `cameraRig.ts` / `Game.ts`. Never change Benny files or any screen's scenery/texture files (match04–08). The Screen 08 Benny specialist works in parallel on `claude/rainbow-s08-benny08-bake-c4`; the Screen 07 workstream (paused) on `claude/rainbow-s07-match-c4`. No paid jobs of any kind. Work lean (usage: three earlier accounts ran out). When done: push, verify remote SHA == HEAD, ONE `send_message` to `session_01Kbt6BTTnCGMUULjZoCLDTo`, then stop and wait.
 
+### 🤖 Claude — 2026-11-17T18:39:33.092Z
+
+> 🔧 **Bash** `{"command": "git status --short | head; git log --oneline -3; for i in 1 2 3; do git fetch origin ccr-067047f0-up5d1m && break; sleep 3; done; git show FETCH_HEAD:docs/briefs/2026-11-17-r4/COMMON_RULES.md", "description": "Check repo state and read r4 common rules"}`
+
+### 🧑 User — 2026-11-17T18:39:39.723Z
+
+> ↩︎ result: M backups/CONVERSATION_INDEX.md
+> ?? backups/claude-sessions/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/
+> c03f391 autosave: Rainbow 2026-11-17 18:03 UTC
+> 7c24779 autosave: Rainbow 2026-11-17 18:03 UTC
+> 67e07b0 autosave: Rainbow 2026-11-17 18:02 UTC
+> From https://github.com/josiahscalia5-dev/rainbow-
+>  * branch            ccr-067047f0-up5d1m -> FETCH_HEAD
+>  * [new branch]      ccr-067047f0-up5d1m -> origin/ccr-067047f0-up5d1m
+> # RAINBOW — common rules, round 4 (account 4, 2026-11-17 ~18:35 UTC)
+> 
+> **The round-3 and round-2 rules stay binding word for word:** `docs/briefs/2026-11-17-r3/COMMON_RULES.md` and
+> `docs/briefs/2026-11-17-r2/COMMON_RULES.md` (startup, git, visual goal, protected behaviour, money and secrets,
+> reporting, saving, pace). Read both first. Only these points change:
+> 
+> ## What changed
+> * **Lead coordinator ("Lead Claudia") = session `session_01Kbt6BTTnCGMUULjZoCLDTo`** ("Rainbow game restoration",
+>   account 4), branch **`ccr-067047f0-up5d1m`** (started from the round-3 lead branch `ccr-c0235034-ks6sx3` @ `ed23f9e5`).
+>   Every `send_message` that older rules address to an earlier lead goes to **`session_01Kbt6BTTnCGMUULjZoCLDTo`**.
+>   Read these briefs with `git fetch origin ccr-067047f0- …[+3477 chars]
+
+### 🤖 Claude — 2026-11-17T18:39:41.727Z
+
+> 🔧 **Bash** `{"command": "git branch --show-current; git rev-parse HEAD; git show FETCH_HEAD:docs/briefs/2026-11-17-r3/COMMON_RULES.md | head -80; echo ======; git show FETCH_HEAD:docs/briefs/2026-11-17-r3/S08_CAMERA.md | head -60", "description": "Read r3 rules and r3 camera brief"}`
+
+### 🧑 User — 2026-11-17T18:39:41.775Z
+
+> ↩︎ result: claude/rainbow-s08-camclear-c4
+> 5da9623f9aaa144e46e15e23c8248de11c6a90ab
+> # RAINBOW — common rules, round 3 (account 3, 2026-11-17 ~17:30 UTC)
+> 
+> **The round-2 rules stay binding word for word:** `docs/briefs/2026-11-17-r2/COMMON_RULES.md` (startup, git, visual goal,
+> protected behaviour, money and secrets, reporting, saving, pace). Read it first. Only these points change:
+> 
+> ## What changed
+> * **Lead coordinator ("Lead Claudia") = session `session_01Q46SCLi5xPVn25aRuxkVwK`** ("Rainbow game restoration",
+>   account 3), branch **`ccr-c0235034-ks6sx3`** (started from the round-2 lead branch `ccr-5495e9c4-g0apvl` @ `7db2982`).
+>   Every `send_message` that the round-2 rules address to `session_01VCMXob2ipUeLE1o7yXNSsZ` goes to
+>   **`session_01Q46SCLi5xPVn25aRuxkVwK`** instead. Read these briefs with
+>   `git fetch origin ccr-c0235034-ks6sx3 && git show FETCH_HEAD:docs/briefs/2026-11-17-r3/<file>`.
+> * **Why `-c3` branches:** account 2 (round 2) ran out of usage at ~17:07–17:12 UTC. Its six sessions and their
+>   containers may still autosave to the `…-c2` branches, and they may wake when that account resets. Every round-3
+>   workstream continues on its OWN **`…-c3`** branch, created from the newest remo …[+4841 chars]
+
