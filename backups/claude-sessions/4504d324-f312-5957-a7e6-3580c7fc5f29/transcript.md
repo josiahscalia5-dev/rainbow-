@@ -1648,3 +1648,12 @@ The three specialists are still running and will keep changing files. The five-m
 I didn't refuse the GitHub audio save from saving new Blender.
 I didn't refuse the GitHub auto to save for Blender, the new Blender.
 
+### 🤖 Claude — 2026-11-17T01:22:07.947Z
+
+You're right: you didn't refuse anything, and I'm sorry my wording suggested you did.
+
+- **What blocked the save:** the brand-new `rainbow-` environment I created for this account didn't list GitHub's large-file host (`lfs.github.com`). New `.blend` and `.glb` files go through that host, so it refused them. That was a gap in the setup, not something you did.
+- **What fixed it:** you approved adding that host. Right after that, the two stuck saves went through, including the one carrying the new Blender file, and the push was verified.
+- **Now:** new Blender files (`.blend`, `.glb`) and large captures save to GitHub automatically with the five-minute autosave. The last check showed GitHub and the local copy both at `03b3b8f`, with nothing left unsaved.
+- **Future sessions:** the host is recorded in the handoff notes, so it's in place from the start next time.
+
