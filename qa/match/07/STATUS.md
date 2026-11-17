@@ -22,7 +22,7 @@
   20 u; mirrored diamond in the near water at 3 u; Benny's look differs from the painted Benny (not this workstream's file)
 * **Test results (round 3 re-run):** 0 px default 06/07/08 vs pre-change `3c7fca9`, `?match08=1` 08 0 px, protected 05
   BEFORE 0 px (`m3/proofs_0px_r3.json`); continuity all joins gap 0, drop 61.19 u / 61.02 u (`m3/continuity_*.json`);
-  gameplay with / without `match07=1`: `m3/gameplay_*.json`; tsc clean
+  gameplay 8/8 with and without `match07=1`, 91 coins collected, total 2,240 both (`m3/gameplay_*.json`); tsc clean
 * **Next task:** MILESTONE 2 (one factor at a time): gold rings to the bright end, pink-and-blue water, bubbles + tall
   foam walls, coins at the painted spots — consistent while moving (fix the 20 u doubled rings and the 3 u mirrored tile)
 * **Approval status:** under review (only the user approves)
