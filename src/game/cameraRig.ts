@@ -8,6 +8,7 @@ import { WORLD } from '../world/course';
 import type { Course, StageId } from '../world/course';
 import type { TubePath } from '../world/tube';
 import { applyMatchCam } from './match';
+import { CAMCLEAR } from './camClear';
 
 export interface CamParams {
   back: number; // distance behind Benny
@@ -130,13 +131,31 @@ export class RideCamera {
     const p8 = STAGE_CAM['08'];
     if (p8 && p8.off08 && p8.aim08) {
       const st8 = this.course.stage('08');
-      const w8 = THREE.MathUtils.smoothstep(s, st8.s0 - 3, st8.s0 + 1.5) * (1 - THREE.MathUtils.smoothstep(s, st8.s1 - 10, st8.s1 - 1));
+      const wIn8 = THREE.MathUtils.smoothstep(s, st8.s0 - 3, st8.s0 + 1.5);
+      let wOut8 = 1 - THREE.MathUtils.smoothstep(s, st8.s1 - 10, st8.s1 - 1);
+      let b8 = benny;
+      if (CAMCLEAR) {
+        // `?camclear=1`: the projected 08 scenery is exact only from the approved viewpoint, so the camera stops THERE (the
+        // '08' checkpoint, s0 + 2) and holds it while Benny rides on into the picture, whatever his steering (lateral → 0
+        // as the view blends in); it leaves for 09 only over the last 3 u of 08. At and before the checkpoint with lat 0
+        // this is exactly the previous pose (approved still view unchanged).
+        const sLock = st8.s0 + 2.0;
+        if (s > sLock) wOut8 = Math.max(wOut8, 1 - THREE.MathUtils.smoothstep(s, st8.s1 - 3, st8.s1 + 2));
+        const f8 = this.course.sample(Math.min(s, sLock));
+        b8 = f8.pos.clone().addScaledVector(f8.right, lat * (1 - wIn8));
+      }
+      const w8 = wIn8 * wOut8;
       if (w8 > 0) {
-        outPos.lerp(benny.clone().add(new THREE.Vector3(...p8.off08)), w8);
+        outPos.lerp(b8.clone().add(new THREE.Vector3(...p8.off08)), w8);
         outTarget.lerp(new THREE.Vector3(...p8.aim08), w8);
         outUp.lerp(new THREE.Vector3(0, 1, 0), w8).normalize();
       }
     }
+    // `?camclear=1` 06 rinse arch: where the stream climbs the wall the chase camera ends up at the wall itself, looking
+    // up at it (the drum wall + a gold band fill the view). Keep the camera inside the tube (≥ 2.5 u from the wall) while
+    // Benny is inside it, and turn the view toward the tunnel's vanishing point (the approved 06 looks down the tunnel,
+    // ≈9° below its axis), only as far as Benny stays well inside the frame. Off: unchanged.
+    if (CAMCLEAR && this.axis) this.clear06(s, p, benny, outPos, outTarget);
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
     const st3 = this.course.stage('03');
@@ -176,6 +195,41 @@ export class RideCamera {
       outUp.lerp(U, w5).normalize();
     }
     return p;
+  }
+
+  /** `?camclear=1` only — see desired() */
+  private clear06(s: number, p: CamParams, benny: THREE.Vector3, outPos: THREE.Vector3, outTarget: THREE.Vector3) {
+    const a = this.axis;
+    if (!a) return;
+    const st6 = this.course.stage('06');
+    const w6 = THREE.MathUtils.smoothstep(s, st6.s0 + 1, st6.s0 + 6) * (1 - THREE.MathUtils.smoothstep(s, st6.s1 - 4, st6.s1 + 2));
+    if (w6 <= 0) return;
+    const axisAt = (ss: number) => {
+      const f = a.path.frame(ss);
+      return { f, c: f.pos.clone().addScaledVector(f.up, a.path.radius(ss) - a.path.depth(ss)), R: a.path.radius(ss) };
+    };
+    const radial = (q: THREE.Vector3, ax: ReturnType<typeof axisAt>) => {
+      const d = q.clone().sub(ax.c);
+      return d.addScaledVector(ax.f.tan, -d.dot(ax.f.tan));
+    };
+    // 1. inside the tube while Benny is: radial distance of the camera ≤ R − 2.5
+    const axB = axisAt(s);
+    const bennyIn = 1 - THREE.MathUtils.smoothstep(radial(benny, axB).length(), axB.R - 2.5, axB.R - 1.0);
+    const axC = axisAt(Math.max(0, s - p.back));
+    const rv = radial(outPos, axC);
+    const rMax = axC.R - 2.5;
+    const rl = rv.length();
+    if (rl > rMax && bennyIn > 0) outPos.addScaledVector(rv, -(1 - rMax / rl) * w6 * bennyIn);
+    // 2. look toward the tunnel's vanishing point (axis tangent pitched ≈9° down), while Benny stays inside ±20° of it
+    const T = axC.f.tan.clone();
+    const Up = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+    const look = T.multiplyScalar(Math.cos(0.157)).addScaledVector(Up, -Math.sin(0.157)).normalize();
+    const cur = outTarget.clone().sub(outPos);
+    const dist = cur.length();
+    const toB = benny.clone().sub(outPos).normalize();
+    const off = Math.acos(THREE.MathUtils.clamp(look.dot(toB), -1, 1));
+    const k = w6 * (1 - THREE.MathUtils.smoothstep(off, 0.26, 0.42));
+    if (k > 0) outTarget.copy(outPos).add(cur.normalize().lerp(look, k).normalize().multiplyScalar(dist));
   }
 
   update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
