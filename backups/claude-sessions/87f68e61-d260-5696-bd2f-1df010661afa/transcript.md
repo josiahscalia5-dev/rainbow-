@@ -1565,3 +1565,199 @@ At 20 u Benny is already in Screen 09 (projection off), so both are the same the
 
 > 🔧 **Bash** `{"command": "(VITE_RAINBOW_Q05='match08=1&coins08px=1&m08bw=1&m08fill=1' timeout 1500 npm run android:debug > /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk.log 2>&1; echo exit $?); tail -3 /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk.log; ls -la android/app/build/outputs/apk/debug/*.apk", "description": "Build APK with kept switches", "timeout": 1600000}`
 
+### 🧑 User — 2026-11-17T20:58:14.340Z
+
+> ↩︎ result: Exit code 2
+> exit 1
+> > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 31s
+> ls: cannot access 'android/app/build/outputs/apk/debug/*.apk': No such file or directory
+
+### 🤖 Claude — 2026-11-17T20:58:16.794Z
+
+> 🔧 **Bash** `{"command": "grep -n \"What went wrong\" -A8 /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk.log | head -15; bash scripts/claude-bootstrap.sh --status 2>&1 | grep -i \"android\\|FAIL\" | head", "description": "Read APK build error"}`
+
+### 🧑 User — 2026-11-17T20:58:19.728Z
+
+> ↩︎ result: 103:* What went wrong:
+> 104-A problem occurred configuring root project 'android'.
+> 105-> Could not resolve all files for configuration ':classpath'.
+> 106-   > Could not find org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0.
+> 107-     Searched in the following locations:
+> 108-       - https://dl.google.com/dl/android/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.0/kotlin-stdlib-jdk8-1.9.0.pom
+> 109-       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.0/kotlin-stdlib-jdk8-1.9.0.pom
+> 110-     Required by:
+> 111-         project : > com.android.tools.build:gradle:8.2.1
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Game: 11 screens + code | OK | 11 approved screen references 01-11, source tree src/ (46 files), Android project android/, characters assets/models/*.glb | 0 |
+> | Android build tools | OK | Android SDK platform 34 + build-tools 34.0.0 + platform-tools (installed now, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug | 0 |
+
+### 🤖 Claude — 2026-11-17T20:58:23.934Z
+
+> 🔧 **Bash** `{"command": "curl -sS -o /dev/null -w \"%{http_code}\\n\" https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.0/kotlin-stdlib-jdk8-1.9.0.pom; curl -sS -o /dev/null -w \"%{http_code}\\n\" https://dl.google.com/dl/android/maven2/index.html; ls ~/.gradle/caches/modules-2/files-2.1 2>/dev/null | head -3; grep -n \"Could not GET\\|403\\|refused\" /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk.log | head -3", "description": "Probe Maven network access"}`
+
+### 🧑 User — 2026-11-17T20:58:24.622Z
+
+> ↩︎ result: 200
+> 302
+> androidx.databinding
+> com.android
+> com.android.databinding
+
+### 🤖 Claude — 2026-11-17T20:58:27.280Z
+
+> 🔧 **Bash** `{"command": "grep -n -i -A6 \"gradle\\|java\" /root/.ccr/README.md | head -30; cat ~/.gradle/gradle.properties 2>/dev/null | sed 's/password.*/password=***/I'", "description": "Proxy notes for Gradle/Java"}`
+
+### 🧑 User — 2026-11-17T20:58:27.320Z
+
+> ↩︎ result: 14:   (javaTrustStorePath, toolTrustFailureCodes, gitSshRewrite,
+> 15-   gitConfigConflicts), and the most recent proxy-side failures.
+> 16-2. Find the failure class below and apply the matching fix; gitConfigConflicts
+> 17-   codes map to the git section, toolTrustFailureCodes to the JVM section.
+> 18-3. Never disable TLS verification, never unset HTTPS_PROXY, and do not retry
+> 19-   policy denials (403/407) — report them instead.
+> 20-
+> --
+> 35:  gradle.properties / MAVEN_OPTS "-Djavax.net.ssl.trustStore".
+> 36:- JVM tools (Maven, Gradle, plain Java): when a JDK is present,
+> 37:  JAVA_TOOL_OPTIONS points JVMs at a truststore that holds the proxy CA: the
+> 38-  JDK's own store if the system trust install already added the CA there,
+> 39:  otherwise /root/.ccr/java-truststore.p12 (password "changeit"). Confirm
+> 40:  javaTrustStorePath is set in the status output before pointing a build at it
+> 41-  (toolTrustFailureCodes explains why it is missing). If the image or the
+> 42-  build sets its own trustStore, that one wins — import the proxy CA into it
+> 43-  with
+> 44-  keytool -importcert -noprompt -alias ccr-agent-proxy -file /root/.ccr/agent-proxy-ca.crt -keystore <their store>
+> 45-  or point the build at the r …[+364 chars]
+
+### 🤖 Claude — 2026-11-17T20:58:29.440Z
+
+Gradle can't fetch dependencies (curl can) — checking its proxy/truststore settings.
+
+### 🤖 Claude — 2026-11-17T20:58:31.936Z
+
+> 🔧 **Bash** `{"command": "echo \"JTO=$JAVA_TOOL_OPTIONS\"; echo \"proxy=${HTTPS_PROXY%%@*}\" | sed 's#//.*:#//***:#'; grep -n -i \"offline\\|proxy\\|PKIX\\|Caused\\|Connect\" /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk.log | head -5; cat /home/user/rainbow-/android/gradle.properties | grep -iv \"pass\" | head -20", "description": "Inspect JVM/Gradle proxy settings"}`
+
+### 🧑 User — 2026-11-17T20:58:31.973Z
+
+> ↩︎ result: JTO=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=45051 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes=
+> proxy=http://***:45051
+> 85:Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=45051 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi. …[+1551 chars]
+
+### 🤖 Claude — 2026-11-17T20:58:37.143Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && ./gradlew --stop >/dev/null 2>&1; (timeout 1500 ./gradlew assembleDebug --refresh-dependencies > /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk2.log 2>&1; echo exit $?); tail -3 /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk2.log; grep -n \"Could not\\|status code\\|403\" /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk2.log | head -5", "description": "Retry Gradle with refreshed dependencies", "timeout": 1600000}`
+
+### 🧑 User — 2026-11-17T20:59:16.836Z
+
+> ↩︎ result: exit 1
+> 
+> BUILD FAILED in 38s
+> 33 actionable tasks: 33 executed
+> 58:> Could not resolve all files for configuration ':capacitor-android:debugCompileClasspath'.
+> 60:      > Could not find kotlin-stdlib-jdk8-1.9.10.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10).
+
+### 🤖 Claude — 2026-11-17T20:59:20.077Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && sed -n 56,75p /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk2.log; curl -sS -o /dev/null -w \"%{http_code}\\n\" https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.10/kotlin-stdlib-jdk8-1.9.10.jar", "description": "Read jar resolution failure"}`
+
+### 🧑 User — 2026-11-17T20:59:20.473Z
+
+> ↩︎ result: * What went wrong:
+> Execution failed for task ':capacitor-android:compileDebugJavaWithJavac'.
+> > Could not resolve all files for configuration ':capacitor-android:debugCompileClasspath'.
+>    > Failed to transform kotlin-stdlib-jdk8-1.9.10.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10) to match attributes {artifactType=android-classes-jar, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+>       > Could not find kotlin-stdlib-jdk8-1.9.10.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10).
+>         Searched in the following locations:
+>             https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.10/kotlin-stdlib-jdk8-1.9.10.jar
+> 
+> * Try:
+> > Run with --stacktrace option to get the stack trace.
+> > Run with --info or --debug option to get more log output.
+> > Run with --scan to get full insights.
+> > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 38s
+> 33 actionable tasks: 33 executed
+> 404
+
+### 🤖 Claude — 2026-11-17T20:59:25.179Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -20; cat qa/match/08/scenery/SHARED_CHANGES.md", "description": "Check working tree and shared-changes file"}`
+
+### 🧑 User — 2026-11-17T20:59:25.223Z
+
+> ↩︎ result: # SHARED_CHANGES (s08 scenery r1)
+> * `src/world/match08.ts`: new switches `m08bw`, `m08lane`, `m08dbg` (match08 only; off = unchanged).
+> * `tools/match08/motion08.mjs`: optional `M08_SHOTS=full` extra frames; new `tools/match08/lane08.mjs`, `tools/match08/sheet08.py`.
+
+### 🤖 Claude — 2026-11-17T20:59:48.328Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/match/08/scenery/SHARED_CHANGES.md <<'EOF'\n\n# Round 5 (account 5, branch claude/rainbow-s08-scenery-c5)\n* **`src/world/course.ts` (shared file, guarded by `match08` / `matchall`)**: `buildRoute(no08 = false)` parameter; under\n  the switch the frame table keeps the DEFAULT build's sample spacing (`ds`), computed from a second default route.\n  Reason: the 08 river path changes the course's total length, and `ds = length / (N − 1)` shifted every sample on\n  03–07 slightly (04 ≈ 510k px, 07 ≈ 570k px changed). Default build: unchanged (0 px all 11 screens).\n* `src/wor …[+4948 chars]`
+
+### 🧑 User — 2026-11-17T20:59:51.340Z
+
+> ↩︎ result: 60e7ffe821b8e95e9c5c3860e4dd3c1b71391063
+> 60e7ffe821b8e95e9c5c3860e4dd3c1b71391063	refs/heads/claude/rainbow-s08-scenery-c5
+> 60e7ffe S08 scenery r5: 08-only course spacing fix, final pictures, notes/status
+>  .../08/scenery/final_r5/1_APPROVED_original.png    | Bin 0 -> 492730 bytes
+>  qa/match/08/scenery/final_r5/2_BEFORE_match08.png  | Bin 0 -> 2601017 bytes
+>  .../final_r5/3_NEW_match08_m08bw_m08fill.png       | Bin 0 -> 2600838 bytes
+>  qa/match/08/scenery/final_r5/gp_a.json             | 947 +++++++++++++++++++++
+>  qa/match/08/scenery/final_r5/gp_b.json             | 947 +++++++++++++++++++++
+>  .../final_r5/moving_BEFORE/f00_checkpoint.png      | Bin 0 -> 2617995 bytes
+>  .../final_r5/moving_BEFORE/f03_forward3u.png       | Bin 0 -> 2597189 bytes
+>  .../final_r5/moving_BEFORE/f06_forward6u.png       | Bin 0 -> 2530000 bytes
+>  .../final_r5/moving_BEFORE/f10_forward10u.png      | Bin 0 -> 2430061 bytes
+
+### 🤖 Claude — 2026-11-17T20:59:53.526Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 | grep -c OK; python3 -I scripts/autosave-status.py 2>&1 | tail -1", "description": "Final reference and autosave check"}`
+
+### 🧑 User — 2026-11-17T20:59:54.012Z
+
+> ↩︎ result: 13
+> AUTOSAVE OK | branch claude/rainbow-s08-scenery-c5 | scheduler daemon | last verified backup 2026-11-17T20:57:54+00:00 (2.0 min ago) | local 60e7ffe remote 60e7ffe (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T21:00:05.706Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_013VHsJ9SbWPe9YXRvtUSngc", "message": "S08 scenery round 1 is finished. Branch claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (remote == HEAD, autosave OK; I started from 12fb8c5).\n\nKEEP: ?match08=1&coins08px=1&m08bw=1&m08fill=1. NOT kept: m08lane.\n\nPictures, each saved separately in qa/match/08/scenery/final_r5/:\n- 1_APPROVED_original.png, 2_BEFORE_match08.png, 3_NEW_match08_m08bw_m08fill.png\n- Moving frames in moving_BEFORE/ and moving_NEW/: checkpoint, forward 3/6/10/15/20 u, steering left, steering right, hard left, hard right, hard right at 6 and 10 u.\n\nWhat chan …[+2402 chars]`
+
+### 🧑 User — 2026-11-17T21:00:14.044Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T21:00:24.920Z
+
+I finished the Screen 08 scenery round and sent the lead the report. The APK could not be built, and `?match08=1` still changes screens 04–07 a little — those parts belong to other workstreams.
+
+The full-size pictures are separate files in `qa/match/08/scenery/final_r5/`: `1_APPROVED_original.png`, `2_BEFORE_match08.png`, `3_NEW_match08_m08bw_m08fill.png`. The BEFORE and NEW moving frames are in `moving_BEFORE/` and `moving_NEW/` there. They cover the checkpoint, forward 3 / 6 / 10 / 15 / 20 u, steering left and right, and hard steering.
+
+**What I recommend keeping:** `?match08=1&coins08px=1&m08bw=1&m08fill=1`.
+- **`m08bw`:** the jagged tear and the second copy of the river in the lower left stay gone while Benny rides forward or steers.
+- **`m08fill`:** the mirrored "hearts and X" pattern on the upper chamber ceiling is gone. It's replaced by a continuous slotted wall taken from the approved picture's own near pipe wall, colour-matched to the painted wall. The hard curved seam is now a soft blend.
+- **`m08lane`:** not kept. With the real textures it wasn't better: Benny was already clear of the pipe, and it adds a gold arch sliver in the top-right corner when steering hard right.
+
+**Checks:**
+- **Approved 08 view:**
+  - `m08fill` changes 0 px.
+  - `m08bw` changes 13,374 px, a 1-pixel sliver along the gold arch's outer rim. Only 249 px differ by more than 20 levels, and they are slightly closer to the approved picture.
+  - The whole frame (Benny and HUD included) stays at 81.04 % within 20 levels.
+- **Default game:** unchanged, 0 px on all 11 screens. Screens 01, 10 and 11 also vary between two captures of the same build; a re-capture matched exactly.
+- **Gameplay:** passes, with all 91 coins collected (total 2,240), the path continuous and the 07→08 drop intact at about 61 u. This holds with `match08` alone and with my switches.
+
+**Still open:**
+- **04–07 under `match08`:** I found and fixed the main cause, in the shared file `src/world/course.ts`. The fix only runs under the switch and is listed in `SHARED_CHANGES.md`. The 08 river was changing the course's total length, which slightly moved the whole path on 03–07. Screen 04 went from 510k to 234k changed pixels. What remains belongs to other owners:
+  - Benny looks different under `match08` (Benny specialist)
+  - the coins on 07 (lead)
+  - a few bubbles on 04 (water)
+- **Visual gaps:**
+  - a mild change of slot pattern where the fill meets the painted wall
+  - a faint corner line at the top of the frame, where the ceiling meets the door wall, at 3 u forward
+  - the real gold arch showing at the frame edges when steering hard
+  - at 20 u forward Benny is already on Screen 09, so BEFORE and NEW look the same there
+- **APK:** Gradle stops because one Kotlin library (`kotlin-stdlib-jdk8-1.9.10.jar`) returns "not found" from Maven Central in this environment; a direct download gets the same error. The exact build command is in `STATUS.md` for when it works.
+
+Everything is pushed to `claude/rainbow-s08-scenery-c5` at `60e7ffe`, the GitHub copy matches, the autosave is running, and the 13 approved images are unchanged. I'm stopping here and waiting for the lead.
+
