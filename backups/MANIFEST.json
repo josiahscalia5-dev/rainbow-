@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12116,
-   "sha256": "d84690f8e00d245c95f6859f1ae832e297ee5452e11e10faccb9ae5783781278"
+   "sha256": "5cf1fd1fb82a96c50c81fa413d8bf09224867151ce56bc61d4f610d8840b8f3c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -865,6 +865,11 @@
    "path": "docs/briefs/2026-11-17-r5/S08_SCENERY.md",
    "bytes": 5683,
    "sha256": "b250ed345f4dd98b29ced589af5a58f22ab054e6e5a9554319ec9a25dedc13c9"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r5/USER_DECISIONS.md",
+   "bytes": 1748,
+   "sha256": "fc064036c13752a2e8f2bbb2ebf9e3def928c343ca7e28ebcadf617da2685229"
   },
   {
    "path": "docs/characters/benny.md",
@@ -7502,6 +7507,96 @@
    "sha256": "376907ddad7afec51e3a4342ad7fb6538de0328b74f37167c8b71469e1f83dd1"
   },
   {
+   "path": "qa/screen_videos/2026-11-17/COMPARISON.md",
+   "bytes": 3292,
+   "sha256": "35d076751d0211de4972ea846317c4ff5ecc1729155db9c59ee4477789f982a9"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/01def.json",
+   "bytes": 606,
+   "sha256": "a8d4a1522ec6c53dee60eec808397a8f61b8c69f5b25c66123e834faf11c22ae"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/02def.json",
+   "bytes": 602,
+   "sha256": "9e8ed8cf22ffdf6b0f9ce63513379191afe366c9317b86db417bdc0e7079c4d6"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/03def.json",
+   "bytes": 592,
+   "sha256": "2a02ec4e94472bd40fcc38c0954ae8ec13189b94f0931295aebba46bbc452477"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/04def.json",
+   "bytes": 599,
+   "sha256": "62aea9bb810b4bef385e39b59bb0e8448e991d17768257675303b5bf2ea23d0d"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/04new.json",
+   "bytes": 594,
+   "sha256": "a77f519cffedbd603d0098e0e20aab4a0c762bef84a3c6112764fccd2f7738b0"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/05def.json",
+   "bytes": 597,
+   "sha256": "da2c4dafcd188b0a7181966b5bba32f482dca2a22209dc13d509298dd8e5bb0b"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/05new.json",
+   "bytes": 590,
+   "sha256": "2d2bf3655976326d38e65605b197a72f0badc5be7e4b592b6817c283d88a09ed"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/06def.json",
+   "bytes": 597,
+   "sha256": "d151fff2799f1156ef5b2f6077ae20e972011e8df5b2729b08a230f2da61134f"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/06new.json",
+   "bytes": 592,
+   "sha256": "df8a01c72d34d389437a2f326c9f2206c1556429127f9e1655073ef3eb4bae9c"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/07def.json",
+   "bytes": 598,
+   "sha256": "cff24099543bfe201e37661328e2fca0662d84159357c5a76e5e055a01a975b1"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/07new.json",
+   "bytes": 592,
+   "sha256": "24a0c8999612f5b69041354eac8041f235c06233893ca1edbb354185d71eb03c"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/08def.json",
+   "bytes": 596,
+   "sha256": "27a4900f2b266ce220458952a37db389fa5889c4b6b48f71a280ece7c0bd02c7"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/08new.json",
+   "bytes": 591,
+   "sha256": "9c6588135ceada2723a30a20fda3b179e96f3dbce644b56dd67e26db24563bd0"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/09def.json",
+   "bytes": 596,
+   "sha256": "073def57744606f042bebcde949968913e0a798193beee6179d2392923cbe52a"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/10def.json",
+   "bytes": 594,
+   "sha256": "497354004285e36a5b8da27bfc13731a9d145e4dbc45f53ea5d04c4b0497528f"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/metrics/11def.json",
+   "bytes": 600,
+   "sha256": "c08c9d24645efaff14c004191a31c879d2a17f12c50c4e4932278d8c35db309a"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/rainbow_all_screens_APPROVED_vs_NOW.mp4",
+   "bytes": 43876704,
+   "sha256": "baf1af4a879a049dbcec0f2244df1a8b64c0a1424e19297b00b4d33552b497d3"
+  },
+  {
    "path": "qa/worldlabs/05/05_env_mask.png",
    "bytes": 6175,
    "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
@@ -8557,6 +8652,11 @@
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
   },
   {
+   "path": "tools/lead_r4/assemble_tour.py",
+   "bytes": 4430,
+   "sha256": "a6cc3aeeac4deeb58f1f65f7d079eb45b3811f651396798cfac4f8459df4a3ef"
+  },
+  {
    "path": "tools/lead_r4/coins08_probe.mjs",
    "bytes": 2482,
    "sha256": "6a7ba947875261d2f9e6209772344ac9bd1e2a59034b42369992ddf040463b5e"
@@ -8605,6 +8705,11 @@
    "path": "tools/lead_r4/rec_clip.mjs",
    "bytes": 2891,
    "sha256": "a29e9a8e88c67f5cd84a5ce385d6a8c54646ee7f3e5444577a2bd9064f0ffe11"
+  },
+  {
+   "path": "tools/lead_r4/rec_tour.mjs",
+   "bytes": 3106,
+   "sha256": "c6ffb2e25d57bb9e18b38ade6a815147e6bff8f3fb2610efc856dc3f90a3fed1"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
