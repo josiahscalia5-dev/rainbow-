@@ -669,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11557,
-   "sha256": "2781d952cd9c069867b5ccc5368b5d1affccc687be3f1ecd1ac75c48fc52b0a0"
+   "sha256": "3064f2e0b364aadb15d03760720fa6cd06dcf6ff53d56d0b48306f972fe15e9c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -740,6 +740,11 @@
    "path": "builds/rainbow-debug-08benny-2026-11-17-r5.apk",
    "bytes": 24437234,
    "sha256": "906b4f3489c62cccaf5f9bbe270e714f99367e17589d43e441da81c5021b422d"
+  },
+  {
+   "path": "builds/rainbow-debug-08benny-2026-11-17-r5b.apk",
+   "bytes": 24437215,
+   "sha256": "f98d4a9708faa12bc589c8d2fe14137b95aeaf86613146844f0f860adf44959e"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1503,18 +1508,18 @@
   },
   {
    "path": "qa/match/08/benny08/NOTES.md",
-   "bytes": 10919,
-   "sha256": "5ab6fb481c3c1471c6c3df0355d06c94301d8049a2d8d9baaa33288211c5c95a"
+   "bytes": 13320,
+   "sha256": "f9d77738a39fbe4df34ad6bfb645d32bea83f25cd2d6b32785c1efa8c940dceb"
   },
   {
    "path": "qa/match/08/benny08/SHARED_CHANGES.md",
-   "bytes": 2035,
-   "sha256": "5e92855d4bc208bf9f79fe63eee1379a3d8d5c48b373f54e776af631e0dd7f02"
+   "bytes": 2415,
+   "sha256": "6c46f15d86880754735dbd837d13cb9b02f98212698a0644197bf997a984c495"
   },
   {
    "path": "qa/match/08/benny08/STATUS.md",
-   "bytes": 1487,
-   "sha256": "a911c5a639fd4b984707816184ced85de672ae7a782413e5258b716c8da6a3b4"
+   "bytes": 1617,
+   "sha256": "e4e35f780739abaa9197f2da35313bed3616a10b771cfef3a43f6beda82743ff"
   },
   {
    "path": "qa/match/08/benny08/closeup_APPROVED.png",
@@ -2052,6 +2057,56 @@
    "sha256": "5e6ec3c098c870063ed1942c71d291bd1e3fa0fa373720bf6ab835e80354e93e"
   },
   {
+   "path": "qa/match/08/benny08/r5b/new/05.png",
+   "bytes": 2131120,
+   "sha256": "e22b1207be9adaaeaca215ae4f8b5508ac82a652934562534d2d733bb6410e5f"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/new/06.png",
+   "bytes": 1943101,
+   "sha256": "e2451ff5f8e04dc3fed650bedbbc92f37d0cb995afba501d528c04a80e31d99c"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/new/07.png",
+   "bytes": 2164895,
+   "sha256": "b2b76b12dab1996db861d3c544c7ad6d14898c47e35b7bb5bc9deeae798b27b2"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/new/08.png",
+   "bytes": 2602000,
+   "sha256": "a1cc4ae3f547cb236d66b95195bfcc4c8e0bf45cc3612bb7261c90f00ab91af2"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/r3b/04.png",
+   "bytes": 1442300,
+   "sha256": "5e6ec3c098c870063ed1942c71d291bd1e3fa0fa373720bf6ab835e80354e93e"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/r3b/05.png",
+   "bytes": 2131120,
+   "sha256": "e22b1207be9adaaeaca215ae4f8b5508ac82a652934562534d2d733bb6410e5f"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/r3b/06.png",
+   "bytes": 1943101,
+   "sha256": "e2451ff5f8e04dc3fed650bedbbc92f37d0cb995afba501d528c04a80e31d99c"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/r3b/07.png",
+   "bytes": 2164895,
+   "sha256": "b2b76b12dab1996db861d3c544c7ad6d14898c47e35b7bb5bc9deeae798b27b2"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/tests/gameplay_default.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/tests/gameplay_match08.json",
+   "bytes": 14649,
+   "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
+  },
+  {
    "path": "qa/match/08/benny08/review_r5/1_APPROVED_08_approved_view.png",
    "bytes": 492730,
    "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
@@ -2163,8 +2218,68 @@
   },
   {
    "path": "qa/match/08/benny08/review_r5/README.md",
-   "bytes": 1697,
-   "sha256": "7dcaf49ea1551f1a9d4b90ab28f7476f7f9fc1f7e5c79294267b3844b2ccba28"
+   "bytes": 2258,
+   "sha256": "cb32d2982cbafae1f13b9f4f395e061778d9b30dfbd6396835ca8fad9f2ff82b"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/1_APPROVED_08_approved_view.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/1_APPROVED_closeup.png",
+   "bytes": 1643386,
+   "sha256": "33b83c2285d74c2a4114c70b2977bd3e94dfa66a46b19a1159e304c1f8e5b95d"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/2_BEFORE_r3b_08_approved_view.png",
+   "bytes": 2601442,
+   "sha256": "4c3da1349ef54d495476463ed0edd394ba1ca03297b96ea386b6655e4b676ff3"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/2_BEFORE_r3b_closeup.png",
+   "bytes": 1661326,
+   "sha256": "5d22cd6f4dbab69f805ae18909a2be60e642b78f793b5e611c16cbfae259da4c"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/2_BEFORE_r3b_move_forward.png",
+   "bytes": 2544663,
+   "sha256": "133d956e52119041a1e624f1515bbb2cfec2a27676aacb23d3e9abfd5ccfca2c"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/2_BEFORE_r3b_move_steer_left.png",
+   "bytes": 2569293,
+   "sha256": "157e5d76cf0f6e3cae5244c658be2866124a15755ced25763d375c8bdddda773"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/2_BEFORE_r3b_move_steer_right.png",
+   "bytes": 2511489,
+   "sha256": "ceeae0083170f230f61f867a38e39530d6f51cf476e47d0fa98674006a18c28e"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/3_NEW_08_approved_view.png",
+   "bytes": 2602000,
+   "sha256": "a1cc4ae3f547cb236d66b95195bfcc4c8e0bf45cc3612bb7261c90f00ab91af2"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/3_NEW_closeup.png",
+   "bytes": 1655622,
+   "sha256": "01d608ff2d313e1626916e7444b5f94e59763791917b7475289b83c922ab2c11"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/3_NEW_move_forward.png",
+   "bytes": 2543486,
+   "sha256": "53e75349c8dd453be9860aaec94af33e79e3b295029d9dbbe703e16daa7dcecc"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/3_NEW_move_steer_left.png",
+   "bytes": 2568425,
+   "sha256": "f43467cee490610c828e1f06e06d2dc02667693c5b9afa551a8047a12a477124"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/final/3_NEW_move_steer_right.png",
+   "bytes": 2510027,
+   "sha256": "9b865ca8911bf4aa01443585cca2cf65611c18fd5ea0c9d27c7fc2d5bb16dc43"
   },
   {
    "path": "qa/match/08/benny08/screen_match_CURRENT.json",

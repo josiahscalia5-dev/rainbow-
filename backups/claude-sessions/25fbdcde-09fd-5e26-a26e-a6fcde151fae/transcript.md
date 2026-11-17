@@ -1590,3 +1590,97 @@ All exact (0 px). Committing, then the softer-fur probe.
 
 > 🔧 **Bash** `{"command": "git checkout src/characters/benny/benny05.ts && npx tsc --noEmit -p . && echo TSC OK; R=qa/match/08/benny08/r5b; mkdir -p $R/tests; node scripts/capture.mjs 08 04 05 06 07 --out=$R/default >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 08 --out=$R/new --q=\"match08=1\" >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 --out=$R/r3b --q=\"match08=1&b08full=0\" >/dev/null 2>&1; python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nR='qa/match/08/benny08/r5b'\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nm=np.abs(L(f'{R}/default/08.png')-L('q …[+544 chars]`
 
+### 🧑 User — 2026-11-17T19:18:38.668Z
+
+> ↩︎ result: Updated 1 path from the index
+> TSC OK
+> default 08 vs round-5 default (same container, pre-change verified) 0
+> 04 new vs r3b-url 0 | vs default changed 509812 bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> 05 new vs r3b-url 0 | vs default changed 424539 bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> 06 new vs r3b-url 0 | vs default changed 531685 bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> 07 new vs r3b-url 0 | vs default changed 559578 bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+
+### 🤖 Claude — 2026-11-17T19:18:43.445Z
+
+Screens 04–07 now differ from the normal build across the whole frame, not just around Benny. Checking whether that is new or was already so in round 4:
+
+### 🤖 Claude — 2026-11-17T19:18:47.093Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor s in ['04','07']:\n  print(s,'default r5b vs r5', (np.abs(L(f'qa/match/08/benny08/r5b/default/{s}.png')-L(f'qa/match/08/benny08/r5/default/{s}.png')).max(2)>0).sum(),\n   '| round4-url(match08) vs default (r5 run)', (np.abs(L(f'qa/match/08/benny08/r5/other_r4/{s}.png')-L(f'qa/match/08/benny08/r5/default/{s}.png')).max(2)>0).sum())\n  d=np.abs(L(f'qa/match/08/benny08/r5b/new/{s}.png')-L(f'qa/match/08/benny08/r5b/default/{s}.png')).max(2)\n  print('  …[+224 chars]`
+
+### 🧑 User — 2026-11-17T19:18:48.211Z
+
+> ↩︎ result: 04 default r5b vs r5 0 | round4-url(match08) vs default (r5 run) 509817
+>   rows changed >20 levels: 37879 max 255 mean of changed 9.02
+> 07 default r5b vs r5 0 | round4-url(match08) vs default (r5 run) 559581
+>   rows changed >20 levels: 119757 max 255 mean of changed 23.15
+> 04.png
+> 05.png
+> 06.png
+
+### 🤖 Claude — 2026-11-17T19:18:56.211Z
+
+> 🔧 **Bash** `{"command": "T=qa/match/08/benny08/r5b/tests; node scripts/gameplay-test.mjs --q=match08=1 --out=$T/gameplay_match08.json > /dev/null 2>&1; node scripts/gameplay-test.mjs --out=$T/gameplay_default.json > /dev/null 2>&1; for f in $T/gameplay_*.json; do python3 -I -c \"\nimport json; d=json.load(open('$f')); c=d['checks']; print('$f'.split('/')[-1], sum(v.get('pass',False) for v in c.values()),'/',len(c))\"; grep -m1 '\"collected\"' $f; grep -m1 '\"coins\": 2240' $f; done", "description": "Gameplay tests with and without match08", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T19:19:10.828Z
+
+> ↩︎ result: gameplay_default.json 8 / 8
+>       "collected": 91
+>         "coins": 2240,
+> gameplay_match08.json 8 / 8
+>       "collected": 91
+>         "coins": 2240,
+
+### 🤖 Claude — 2026-11-17T19:19:11.611Z
+
+Now the final picture set (APPROVED | BEFORE r3b | NEW + moving frames):
+
+### 🤖 Claude — 2026-11-17T19:19:16.404Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/fin; mkdir -p $S/new; cp qa/match/08/benny08/r5b/new/08.png $S/new/08.png; node tools/match08/motion08.mjs $S/new/m \"match08=1\" >/dev/null 2>&1; F=qa/match/08/benny08/review_r5/final; mkdir -p $F; RV=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/rv; python3 -I qa/match/08/benny08/work/review08.py $F 1_APPROVED; python3 -I qa/match/08/benny08/work/review08.py $F 2_BEFORE_r3b $RV/r3b; python3 -I qa/match/08/benny08/work/review08.py $F 3_NEW $S/new; python3 -I qa/ …[+267 chars]`
+
+### 🧑 User — 2026-11-17T19:20:01.295Z
+
+> ↩︎ result: 1_APPROVED written
+> 2_BEFORE_r3b written
+> 3_NEW written
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.57
+>   benny+splash  <=20  62.2 %  SSIM 0.537  mean  28.09
+>   whole         <=20  85.0 %  SSIM 0.829  mean  12.94
+> part       px   mean  <=20  share 
+> pom     10761   57.1  0.19  0.238 
+> crown   13456   49.2  0.30  0.257 
+> cuff    10718   46.9  0.26  0.195 
+> star     1829   43.9  0.31  0.031 
+> body    34385   21.0  0.62  0.279 
+> ALL 71149 36.27 0.433
+> 12
+
+### 🤖 Claude — 2026-11-17T19:20:03.481Z
+
+Pom-pom and star score lower (19 % and 31 %) because the smaller beanie moves them slightly off their painted spots; I'll say so in the report. Building the APK:
+
+### 🤖 Claude — 2026-11-17T19:20:06.879Z
+
+> 🔧 **Bash** `{"command": "rm -f android/app/build/outputs/apk/debug/app-debug.apk; VITE_RAINBOW_Q05=\"match08=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk3.log 2>&1; echo exit $?; grep -E \"BUILD|Task :app:packageDebug$|What went wrong\" -A1 /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk3.log | head -6; A=android/app/build/outputs/apk/debug/app-debug.apk; ls -la $A && unzip -tq $A | tail -1 && unzip -p $A 'assets/public/assets/*.js' | grep -o \"b08full\" | head -1", "description": "Rebuild APK with m …[+29 chars]`
+
+### 🧑 User — 2026-11-17T19:20:23.715Z
+
+> ↩︎ result: exit 0
+> > Task :app:packageDebug
+> > Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> --
+> BUILD SUCCESSFUL in 9s
+> 82 actionable tasks: 37 executed, 45 up-to-date
+> -rw-r--r-- 1 root root 24437215 Nov 17 19:20 android/app/build/outputs/apk/debug/app-debug.apk
+> No errors detected in compressed data of android/app/build/outputs/apk/debug/app-debug.apk.
+> b08full
+
+### 🤖 Claude — 2026-11-17T19:20:25.550Z
+
+Build succeeded this time. Saving it as the r5b APK (keeping r5), then updating the docs.
+
+### 🤖 Claude — 2026-11-17T19:20:50.510Z
+
+> 🔧 **Bash** `{"command": "cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-08benny-2026-11-17-r5b.apk; H=$(sha256sum builds/rainbow-debug-08benny-2026-11-17-r5b.apk | cut -c1-8); git status --short | grep -v \"backups\\|transcript\\|r5b/\\|review_r5/final\\|r5b.apk\"; python3 - \"$H\" <<'EOF'\nimport sys; H=sys.argv[1]\nB='qa/match/08/benny08/'\np=B+'NOTES.md'; s=open(p).read()\nadd=f'''## Round 5b — USER DECISIONS 19:00 UTC (via lead): r3b is the base; rounder FULLER body; soft fur; moving look first\n**Current URLs (after 5b):** r2 `?match08=1&b08r3=0` · r3b (BEFORE) `?match08=1& …[+5540 chars]`
+
