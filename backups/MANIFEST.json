@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 12576,
-   "sha256": "da162caccf3c6b3f09b0c32a3bb73b1e30d692fb8a639a28597fc2b5dbe67a74"
+   "bytes": 12578,
+   "sha256": "7f88b83ca31af315b7e859205b4bd700c1bbee2aa52b04cf0174f08172cb0a5e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7465,6 +7465,11 @@
    "path": "qa/pilot05/wave9b/rings/rings.md",
    "bytes": 782,
    "sha256": "73d091620f3e562a9f7aa320754778f910d9d7c63a33395287b59b2aa61387b4"
+  },
+  {
+   "path": "qa/recordings/approved_vs_game_today_04-08.jpg",
+   "bytes": 1935134,
+   "sha256": "01aa7051ef44700f28c56b85d5b98cc619cb1ec752c2af6dd2211452b503b349"
   },
   {
    "path": "qa/recordings/full_playthrough.json",
