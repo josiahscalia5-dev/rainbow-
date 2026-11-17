@@ -4693,3 +4693,161 @@ TypeScript is clean, no conflict markers remain anywhere, and the water shader i
 
 > 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; sed -i \"s|const c = {}; for (const d of window.__rainbow.coinDefs()) c\\[d.stage\\] = (c\\[d.stage\\] ?? 0) + 1;|const R = window.__rainbow, c = {}; for (const d of R.coinDefs()) { const id = R.course.stageAtS(d.s).id; c[id] = (c[id] ?? 0) + 1; }|\" $R/tools/coin_census.mjs; grep -c \"stageAtS\" $R/tools/coin_census.mjs; cd $R/wt/preview && grep -n \"stageAtS\" src/world/course.ts | head -2; F5='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1'; timeout 1500 node $R/tools/coin_census.mjs \"{\\\"defau …[+412 chars]`
 
+### 🧑 User — 2026-11-17T21:16:22.070Z
+
+> ↩︎ result: 1
+> 502:      const st = this.stageAtS(i * this.ds);
+> 539:  stageAtS(s: number): StageDef {
+> default  {"10":5,"03":9,"04":8,"05":10,"06":18,"07":24,"08":7,"09":10,"total":91}
+> 05       {"10":5,"03":9,"04":8,"05":21,"06":11,"07":20,"08":7,"09":10,"total":91}
+> 05+04    {"10":5,"03":9,"04":8,"05":21,"06":11,"07":20,"08":7,"09":10,"total":91}
+> 05+06    {"10":5,"03":9,"04":8,"05":21,"06":11,"07":20,"08":7,"09":10,"total":91}
+> 05+07    {"10":5,"03":9,"04":8,"05":21,"06":18,"07":24,"08":7,"09":10,"total":102}
+> 05+08px  {"10":3,"03":9,"04":8,"05":21,"06":11,"07":30,"08":5,"09":4,"total":91}
+> 04+06+07+08px {"10":3,"03":9,"04":8,"05":10,"06":18,"07":34,"08":5,"09":4,"total":91}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:16:39.868Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && grep -n \"C05TOT\\|COINS05TOT\\|COINS05 \\|const COINS05\" src/gameplay/coins.ts | head -20; sed -n \"$(grep -n 'const C05TOT_CP' src/gameplay/coins.ts | cut -d: -f1),+12p\" src/gameplay/coins.ts; grep -n \"m07coins\\|coins07\" src/gameplay/coins.ts | head", "description": "Read coins05 total-keeping code and 07 coin usage"}`
+
+### 🧑 User — 2026-11-17T21:16:39.929Z
+
+> ↩︎ result: 20:const COINS05 = on05('coins05');
+> 28: *     are picked up on the stream centre line instead (pickLat = C05TOT_PICKLAT);
+> 30: *     checkpoint camera (already collected there): 06 (3) and 07 (4) (C05TOT_CP mirrors Game.ts CHECKPOINTS), and the
+> 31: *     last 4 coins of 06 behind its crest (C05TOT_END: hidden from the 06 view, behind the 07 camera).
+> 36:const C05TOT_PICK_MEAS = [16, 17];
+> 37:const C05TOT_PICKLAT = 0;
+> 38:const C05TOT_CP: [StageId, number, number][] = [['06', 10, 3], ['07', 26, 4]]; // [stage, checkpoint offset from s0, coins]
+> 39:const C05TOT_END: [StageId, number][] = [['06', 4]]; // [stage, last n coins]
+> 40:const COINS05TOT = COINS05 && (() => {
+> 331:  if (COINS05TOT) {
+> 332:    for (const k of C05TOT_PICK_MEAS) meas[k].pickLat = C05TOT_PICKLAT;
+> 336:    for (const [id, off, n] of C05TOT_CP) { const a = st(id); take(kept.filter((d) => d.stage === id && d.s < a.s0 + off + 0.5), n); }
+> 337:    for (const [id, n] of C05TOT_END) take(kept.filter((d) => d.stage === id).slice(-n), n);
+> 394:  const geo = new THREE.CylinderGeometry(0.5, 0.5, COINS05 ? C05LOOK.thick : 0.2, 48, 1);
+> 402:  if (COINS05 && face05) {
+> const C05TOT_CP: [StageId, number, number][] = [['06', 10, 3], ['07', 2 …[+2101 chars]
+
+### 🤖 Claude — 2026-11-17T21:17:21.611Z
+
+> 🔧 **Bash** `{"command": "V=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify; until grep -q ALLDONE $V/done.txt; do sleep 15; done; cat $V/done.txt; ls $V/cap_default $V/all $V/own0* 2>/dev/null | tr '\\n' ' '", "description": "Wait for verification run to finish", "timeout": 2400000}`
+
+### 🧑 User — 2026-11-17T21:18:21.686Z
+
+> ↩︎ result: start 21:13
+> continuity exit=0
+> gp default exit=0
+> gp all exit=0
+> cap default exit=0
+> cap own exit=0
+> cap all exit=0
+> ALLDONE 21:18
+> /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify/all: 04.png 05.png 06.png 07.png 08.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify/cap_default: 01.png 02.png 03.png 04.png 05.png 06.png 07.png 08.png 09.png 10.png 11.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify/own04: 04.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify/own05: 05.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify/own06: 06.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify/own07: 07.png  /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/verify/own08: 08.png
+
+### 🤖 Claude — 2026-11-17T21:18:31.042Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nR='$R'\ndef diff(a,b):\n    A=np.asarray(Image.open(a).convert('RGB'),int); B=np.asarray(Image.open(b).convert('RGB'),int)\n    if A.shape!=B.shape: return 'size %s vs %s'%(A.shape,B.shape)\n    d=np.abs(A-B).max(-1); n=(d>0).sum(); n20=(d>20).sum()\n    ys=np.where(d.max(1)>0)[0]\n    return f'{n:8d} px differ ({n20} > 20 levels){\"\" if n==0 else f\"  rows {ys.min()}-{ys.max()}\"}'\nprint('DEFAULT GAME: preview vs lead')\nfor k in [' …[+450 chars]`
+
+### 🧑 User — 2026-11-17T21:18:33.643Z
+
+> ↩︎ result: DEFAULT GAME: preview vs lead
+>   01      693 px differ (3 > 20 levels)  rows 441-1283
+>   02        0 px differ (0 > 20 levels)
+>   03        0 px differ (0 > 20 levels)
+>   04        0 px differ (0 > 20 levels)
+>   05        0 px differ (0 > 20 levels)
+>   06        0 px differ (0 > 20 levels)
+>   07        0 px differ (0 > 20 levels)
+>   08        0 px differ (0 > 20 levels)
+>   09        0 px differ (0 > 20 levels)
+>   10     1303 px differ (6 > 20 levels)  rows 206-1144
+>   11     2822 px differ (11 > 20 levels)  rows 354-1473
+> EACH SCREEN: preview vs its own branch (same switches)
+>   04        0 px differ (0 > 20 levels)
+>   05        0 px differ (0 > 20 levels)
+>   06     1098 px differ (14 > 20 levels)  rows 21-160
+>   07        0 px differ (0 > 20 levels)
+>   08        0 px differ (0 > 20 levels)
+
+### 🤖 Claude — 2026-11-17T21:18:47.237Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; cd $R/wt/preview && node scripts/capture.mjs 01 10 11 06 --out=$R/verify/recap > /dev/null 2>&1; node scripts/capture.mjs 06 --out=$R/verify/recap06own '--q=match06=1' > /dev/null 2>&1; git checkout -- qa/capture_log.json 2>/dev/null; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nR='$R'\ndef diff(a,b):\n    A=np.asarray(Image.open(a).convert('RGB'),int); B=np.asarray(Image.open(b).convert('RGB'),int)\n    d=np.abs(A-B).max(-1); n=(d>0).sum(); ys=np.where(d.max(1)>0)[0]\n    return …[+555 chars]`
+
+### 🧑 User — 2026-11-17T21:19:41.778Z
+
+> ↩︎ result: preview vs preview (same build, two captures):
+>   01      0 px
+>   10   1302 px  rows 206-1005
+>   11  17484 px  rows 1173-1473
+>  06 match06 second capture vs own branch:   1098 px  rows 21-160
+>  06 match06 second vs first preview capture:      0 px
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:19:57.305Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; node scripts/capture.mjs 01 --out=$R/verify/lead01 > /dev/null 2>&1; git checkout -- qa/capture_log.json 2>/dev/null; git status --short | head -3; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nR='$R'\nA=np.asarray(Image.open(f'{R}/verify/lead01/01.png').convert('RGB'),int); B=np.asarray(Image.open(f'{R}/verify/cap_default/01.png').convert('RGB'),int)\nprint('01 lead recapture vs preview:', (np.abs(A-B).max(-1)>0).sum(), 'px')\na=Image.open(f'{R}/cap/s06/06.png').convert('RGB').cr …[+437 chars]`
+
+### 🧑 User — 2026-11-17T21:20:08.057Z
+
+> ↩︎ result: 01 lead recapture vs preview: 0 px
+> 06 diff columns 77 786
+
+### 🤖 Claude — 2026-11-17T21:20:10.845Z
+
+**01 is settled: the lead recaptured now is identical to the preview (0 px)**, so the earlier difference was noise. Now the 06 top strip, its own branch (top) vs the preview (bottom):
+
+### 🤖 Claude — 2026-11-17T21:20:11.673Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/06_hud_diff.png"}`
+
+### 🧑 User — 2026-11-17T21:20:11.698Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T21:20:26.392Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && sed -n 330,342p src/gameplay/coins.ts", "description": "Show the coins05 total-keeping block"}`
+
+### 🧑 User — 2026-11-17T21:20:26.432Z
+
+> ↩︎ result: kept.splice(first, 0, ...meas);
+>   if (COINS05TOT) {
+>     for (const k of C05TOT_PICK_MEAS) meas[k].pickLat = C05TOT_PICKLAT;
+>     let extra = kept.length - out.length;
+>     const pick: CoinDef[] = [];
+>     const take = (list: CoinDef[], n: number) => { for (const d of list.slice(0, Math.min(n, extra))) { pick.push(d); extra--; } };
+>     for (const [id, off, n] of C05TOT_CP) { const a = st(id); take(kept.filter((d) => d.stage === id && d.s < a.s0 + off + 0.5), n); }
+>     for (const [id, n] of C05TOT_END) take(kept.filter((d) => d.stage === id).slice(-n), n);
+>     if (extra === 0) { const drop = new Set(pick); return kept.filter((d) => !drop.has(d)); }
+>   }
+>   return kept;
+> }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:20:33.297Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview/src/gameplay/coins.ts", "old_string": "    for (const [id, n] of C05TOT_END) take(kept.filter((d) => d.stage === id).slice(-n), n);\n    if (extra === 0) { const drop = new Set(pick); return kept.filter((d) => !drop.has(d)); }", "new_string": "    for (const [id, n] of C05TOT_END) take(kept.filter((d) => d.stage === id).slice(-n), n);\n    // preview branch (line A + B, lead r5 2026-11-17): with line A's `?match07=1` the 07 picture coins replace the trail\n    // fr …[+624 chars]`
+
+### 🧑 User — 2026-11-17T21:20:33.340Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T21:20:36.705Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; cd $R/wt/preview && npx tsc --noEmit 2>&1 | tail -3; echo \"tsc exit=${PIPESTATUS[0]}\"; F5='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1'; ALL=\"match04=1&$F5&match06=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&match08=1&coins08px=1\"; timeout 1500 node $R/tools/coin_census.mjs \"{\\\"default\\\":\\\"\\\",\\\"05\\\":\\\"$F5\\\",\\\"05+07\\\":\\\"$F5&match07=1&m07coins=1\\\",\\\"ALL\\\":\\\"$ALL\\\"}\" 2>&1 | grep -v \"allow list\"", "description": "Typecheck and recount coins  …[+35 chars]`
+
+### 🧑 User — 2026-11-17T21:21:03.364Z
+
+> ↩︎ result: tsc exit=0
+> default  {"10":5,"03":9,"04":8,"05":10,"06":18,"07":24,"08":7,"09":10,"total":91}
+> 05       {"10":5,"03":9,"04":8,"05":21,"06":11,"07":20,"08":7,"09":10,"total":91}
+> 05+07    {"10":5,"03":9,"04":8,"05":21,"06":9,"07":22,"08":7,"09":10,"total":91}
+> ALL      {"10":3,"03":9,"04":8,"05":21,"06":9,"07":32,"08":5,"09":4,"total":91}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:21:17.384Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; V=$R/verify; cd $R/wt/preview && ALL='match04=1&match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&match06=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&match08=1&coins08px=1'; node scripts/capture.mjs 04 05 06 07 08 --out=$V/all_fix \"--q=$ALL\" > $V/cap_all_fix.log 2>&1; echo \"cap exit=$?\"; node scripts/gameplay-test.mjs \"--q=$ALL\" --out=$V/gp_all_fix.json > $V/gp_all_fix.log 2>&1; echo \"gp exit=$?\"; git checkout -- qa/capture_log.json 2>/dev/null; python3 -I - <<EOF\nimport js …[+752 chars]`
+
