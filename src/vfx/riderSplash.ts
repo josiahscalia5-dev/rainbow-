@@ -505,6 +505,7 @@ void main() {
 }
 `;
 const CARD_FRAG = /* glsl */ `
+uniform mat4 projectionMatrix;
 uniform sampler2D uTex;
 uniform mat4 uLock;      // Benny frame -> clip of the locked 05 camera
 uniform vec4 uRect;      // texture origin x, y and size x, y (locked-frame pixels)

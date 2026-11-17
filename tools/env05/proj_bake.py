@@ -117,13 +117,17 @@ report = {}
 coords = args.get("coords")
 if "bubblefill" in args:
     # run #4: approved bubbles in front of the tunnel → inpaint the approved picture behind them (screen space) with the
-    # best-matching shifted patch of the surrounding tunnel (SSD over a boundary annulus), class taken from the source
+    # best-matching transformed patch of the surrounding tunnel: translations and rotations about the tunnel's screen
+    # centres (ring_model.json origin + each ring's fitted centre: rings and slot rows are circles about them), scored by
+    # SSD over a boundary annulus; Laplace-blended offset so no circular seam shows; class taken from the source
     tunvis = None
     if coords:
         _c = np.fromfile(coords, np.float32).reshape(H, W, 4)[..., 3]
         tunvis = (np.abs(_c - 77) < 1e-3) | (np.abs(_c - 78) < 1e-3)
     tuncls = [rid[k] for k in ("purple_walls", "gold_rings_and_front_frame", "distant_tunnel_and_glow", "side_fittings")]
     bubs = json.load(open(f"{MK}/bubbles_approved.json"))
+    rmb = json.load(open("qa/pilot05/proj/tunnel/model/ring_model.json"))
+    centres = [tuple(rmb["origin"])] + [(rmb["origin"][0] + 0.5 * (g["in"][1] + g["out"][1]), rmb["origin"][1] - 0.5 * (g["in"][2] + g["out"][2])) for n, g in rmb["rings"].items() if n in "ABCD"]
     yy_, xx_ = np.mgrid[0:H, 0:W]
     bubm = idx == rid["bubbles"]
     for b in bubs:
@@ -132,6 +136,20 @@ if "bubblefill" in args:
     ap0, idx0 = ap.copy(), idx.copy()
     idx = idx.copy()
     fills = []
+
+    def xform(cand, py, px):
+        if cand[0] == "t":
+            return py + cand[2], px + cand[1]
+        _, ccx, ccy, al = cand
+        c, s_ = math.cos(al), math.sin(al)
+        ex, ey = px - ccx, py - ccy
+        return ccy + s_ * ex + c * ey, ccx + c * ex - s_ * ey
+
+    def bilin(img, fy, fx):
+        y0 = np.clip(np.floor(fy).astype(int), 0, H - 2); x0 = np.clip(np.floor(fx).astype(int), 0, W - 2)
+        wy = np.clip(fy - y0, 0, 1)[:, None]; wx = np.clip(fx - x0, 0, 1)[:, None]
+        return (img[y0, x0] * (1 - wy) * (1 - wx) + img[y0, x0 + 1] * (1 - wy) * wx + img[y0 + 1, x0] * wy * (1 - wx) + img[y0 + 1, x0 + 1] * wy * wx)
+
     for b in bubs:
         cx, cy, R = b["x"], b["y"], b["r"] + 3
         d2 = (xx_ - cx) ** 2 + (yy_ - cy) ** 2
@@ -140,46 +158,71 @@ if "bubblefill" in args:
         if need.sum() < max(20, 0.05 * hole.sum()):
             continue
         ann = (d2 <= (R + 8) ** 2) & ~hole & validsrc
-        hy, hx = np.nonzero(hole); ny, nx = np.nonzero(need); ay, ax = np.nonzero(ann)
+        ny, nx = np.nonzero(need); ay, ax = np.nonzero(ann)
         if len(ay) < 30:
             fills.append({"bubble": [cx, cy, b["r"]], "skipped": "no tunnel boundary"}); continue
-        Ra = int(np.ceil(R))
 
-        def score(dy, dx):
-            sy, sx = ny + dy, nx + dx
-            if sy.min() < 0 or sx.min() < 0 or sy.max() >= H or sx.max() >= W or not validsrc[sy, sx].all():
+        def score(cand):
+            sy, sx = xform(cand, ny, nx)
+            iy, ix = np.rint(sy).astype(int), np.rint(sx).astype(int)
+            if iy.min() < 0 or ix.min() < 0 or iy.max() >= H or ix.max() >= W or not validsrc[iy, ix].all():
                 return None
-            ty, tx = ay + dy, ax + dx
+            ty, tx = xform(cand, ay, ax)
+            ty, tx = np.rint(ty).astype(int), np.rint(tx).astype(int)
             ok = (ty >= 0) & (tx >= 0) & (ty < H) & (tx < W)
             ok[ok] = validsrc[ty[ok], tx[ok]]
             if ok.mean() < 0.7:
                 return None
             e = ((ap0[ay[ok], ax[ok]] - ap0[ty[ok], tx[ok]]) ** 2).mean()
+            dy, dx = sy.mean() - ny.mean(), sx.mean() - nx.mean()
             return e * (1 + 0.05 * math.hypot(dx, dy) / R)
+        Ra = int(np.ceil(R))
+        cands = [("t", dx, dy) for dy in range(-4 * Ra, 4 * Ra + 1, 2) for dx in range(-4 * Ra, 4 * Ra + 1, 2) if dx * dx + dy * dy >= (2 * R) ** 2]
+        for (ccx, ccy) in centres:
+            rho = math.hypot(cx - ccx, cy - ccy)
+            if rho < 3 * R:
+                continue
+            for d in range(int(2 * R), int(6 * R) + 1, 2):
+                cands += [("r", ccx, ccy, sg * d / rho) for sg in (1, -1)]
         best = None
-        for dy in range(-4 * Ra, 4 * Ra + 1, 2):
-            for dx in range(-4 * Ra, 4 * Ra + 1, 2):
-                if dx * dx + dy * dy < (2 * R) ** 2:
-                    continue
-                s = score(dy, dx)
-                if s is not None and (best is None or s < best[0]):
-                    best = (s, dy, dx)
+        for cand in cands:
+            s_ = score(cand)
+            if s_ is not None and (best is None or s_ < best[0]):
+                best = (s_, cand)
         if best is None:
             fills.append({"bubble": [cx, cy, b["r"]], "skipped": "no valid source"}); continue
-        for dy in range(best[1] - 1, best[1] + 2):
-            for dx in range(best[2] - 1, best[2] + 2):
-                s = score(dy, dx)
-                if s is not None and s < best[0]:
-                    best = (s, dy, dx)
-        _, dy, dx = best
-        wgt = np.clip(distance_transform_edt(hole)[hy, hx] / 3.0, 0, 1)[:, None]
-        ap[hy, hx] = wgt * ap0[hy + dy, hx + dx] + (1 - wgt) * ap0[hy, hx]
-        idx[hy, hx] = np.where(validsrc[hy + dy, hx + dx], idx0[hy + dy, hx + dx], idx0[hy, hx])
-        fills.append({"bubble": [cx, cy, b["r"]], "shift": [int(dx), int(dy)], "rms": round(float(math.sqrt(best[0])), 1), "hole_px": int(hole.sum()), "tunnel_px": int(need.sum())})
+        c0 = best[1]
+        refine = [("t", c0[1] + i, c0[2] + j) for i in (-1, 0, 1) for j in (-1, 0, 1)] if c0[0] == "t" else [("r", c0[1], c0[2], c0[3] + k * 0.5 / math.hypot(cx - c0[1], cy - c0[2])) for k in (-2, -1, 1, 2)]
+        for cand in refine:
+            s_ = score(cand)
+            if s_ is not None and s_ < best[0]:
+                best = (s_, cand)
+        cand = best[1]
+        # patch on the hole + its 1-px boundary, then a Laplace offset field (boundary = original − patch, low-passed)
+        bnd = binary_dilation(hole, iterations=1) & ~hole
+        y0b, y1b = max(0, cy - R - 4), min(H, cy + R + 5); x0b, x1b = max(0, cx - R - 4), min(W, cx + R + 5)
+        hc, bc = hole[y0b:y1b, x0b:x1b], bnd[y0b:y1b, x0b:x1b]
+        py, px = np.nonzero(hc | bc)
+        sy, sx = xform(cand, py + y0b, px + x0b)
+        patch = np.zeros((y1b - y0b, x1b - x0b, 3), np.float32)
+        patch[py, px] = bilin(ap0, sy, sx)
+        dif = np.where(bc[..., None], ap0[y0b:y1b, x0b:x1b] - patch, 0)
+        num = np.stack([gaussian_filter(dif[..., k], 2.0) for k in range(3)], -1); den = gaussian_filter(bc.astype(np.float32), 2.0)
+        off = np.where(bc[..., None], num / np.maximum(den, 1e-6)[..., None], 0)
+        off[hc] = (num / np.maximum(den, 1e-6)[..., None])[bc].mean(0)
+        for _ in range(300):
+            nb = (np.roll(off, 1, 0) + np.roll(off, -1, 0) + np.roll(off, 1, 1) + np.roll(off, -1, 1)) / 4
+            off[hc] = nb[hc]
+        hy, hx = np.nonzero(hc)
+        ap[hy + y0b, hx + x0b] = patch[hy, hx] + off[hy, hx]
+        iy, ix = xform(cand, hy + y0b, hx + x0b)
+        iy, ix = np.clip(np.rint(iy).astype(int), 0, H - 1), np.clip(np.rint(ix).astype(int), 0, W - 1)
+        idx[hy + y0b, hx + x0b] = np.where(validsrc[iy, ix], idx0[iy, ix], idx0[hy + y0b, hx + x0b])
+        fills.append({"bubble": [cx, cy, b["r"]], "transform": [cand[0]] + [round(float(v), 4) for v in cand[1:]], "rms": round(float(math.sqrt(best[0])), 1), "hole_px": int(hole.sum()), "tunnel_px": int(need.sum())})
     report["bubblefill"] = fills
     if "debug" in args:
         Image.fromarray(np.clip(ap, 0, 255).astype(np.uint8)).save(os.path.join(out, "approved_bubblefill.png"))
-src_wall =(idx == rid["purple_walls"]) | (idx == rid["distant_tunnel_and_glow"])
+src_wall = (idx == rid["purple_walls"]) | (idx == rid["distant_tunnel_and_glow"])
 src_ring = (idx == rid["gold_rings_and_front_frame"]) | (idx == rid["distant_tunnel_and_glow"])
 if "regionmask" not in args:
     # run #3 (2026-11-17): the region masks are colour classes — the approved rings' white-pink marquee highlights and

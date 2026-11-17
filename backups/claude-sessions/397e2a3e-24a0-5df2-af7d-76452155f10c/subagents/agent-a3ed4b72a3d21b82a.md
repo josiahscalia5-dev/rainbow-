@@ -1497,3 +1497,11 @@ Same technique already exists in foam.ts. Applying it to the card.
 > wake_splash                  px   83491  mean  37.02  <=10 0.239  <=20 0.414  ssim 0.338  signed [-21.1, -6.4, 4.4]
 > bubbles                      px   29304  mean   2.08  <=10 0.975  <=20 0.997  ssim 0.986  signed [-0.8, -0.1, 0.1]
 
+### 🤖 Claude — 2026-11-17T02:51:56.839Z
+
+`projectionMatrix` isn't declared in ShaderMaterial fragment shaders; declaring it there (three.js sets it by name, as foam.ts relies on).
+
+### 🤖 Claude — 2026-11-17T02:52:00.862Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"uniform mat4 projectionMatrix\" src/vfx/foam.ts | head -2; python3 - <<'EOF'\np='src/vfx/riderSplash.ts'\ns=open(p).read()\ns=s.replace(\"\"\"const CARD_FRAG = /* glsl */ `\nuniform sampler2D uTex;\"\"\",\"\"\"const CARD_FRAG = /* glsl */ `\nuniform mat4 projectionMatrix;\nuniform sampler2D uTex;\"\"\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit 2>&1 | head; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; node scripts/capture.mjs 05 --q='match05=1' --out=$S/c2 2>&1 | grep -i \"error\\|→\" | tail -3; cp $S/c …[+235 chars]`
+
