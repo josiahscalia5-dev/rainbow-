@@ -5144,3 +5144,167 @@ That tool doesn't implement the forward shift. Checking what the game's QA inter
 >  M assets/textures/match08/proj08.json
 >  M assets/textures/m …[+51 chars]
 
+### 🤖 Claude — 2026-11-17T13:39:25.686Z
+
+Both runs report no errors. The normal-build test produced byte-identical output to the saved result, so nothing changed there. Reading the individual checks:
+
+### 🤖 Claude — 2026-11-17T13:39:28.338Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json\nfor f in ('qa/gameplay_test.json','qa/gameplay_test_switch.json'):\n    d=json.load(open(f)); ch=d.get('checks') or {}\n    if isinstance(ch,dict): items=list(ch.items())\n    else: items=[(c.get('name'),c.get('ok',c.get('pass'))) for c in ch]\n    ok=sum(1 for k,v in items if (v is True) or (isinstance(v,dict) and v.get('ok')))\n    print(f, 'checks', ok,'/',len(items), '| q', d.get('q') or d.get('query'), '| errors', d.get('errors'))\n    for k,v in items: print('   ', k, v if not isinstance(v,dict) else v.get('ok'))\n\"", "description": "Summarise …[+27 chars]`
+
+### 🧑 User — 2026-11-17T13:39:28.411Z
+
+> ↩︎ result: qa/gameplay_test.json checks 0 / 8 | q None | errors []
+>     pauseFreezes None
+>     continuousTravel None
+>     noCameraCut None
+>     noTeleport None
+>     plunge None
+>     realCoinPickups None
+>     victory None
+>     heartsLostOnWallBump None
+> qa/gameplay_test_switch.json checks 0 / 8 | q match08=1 | errors []
+>     pauseFreezes None
+>     continuousTravel None
+>     noCameraCut None
+>     noTeleport None
+>     plunge None
+>     realCoinPickups None
+>     victory None
+>     heartsLostOnWallBump None
+
+### 🤖 Claude — 2026-11-17T13:39:31.082Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json\nfor f in ('qa/gameplay_test.json','qa/gameplay_test_switch.json'):\n    d=json.load(open(f)); print(f, json.dumps(d['checks'])[:700])\"", "description": "Show the raw gameplay check values"}`
+
+### 🧑 User — 2026-11-17T13:39:31.161Z
+
+> ↩︎ result: qa/gameplay_test.json {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "colle
+> qa/gameplay_test_switch.json {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 341.074, "s1": 341.274, "stage": "07", "y0": -75.243, "y1": -75.433, "t": 26.267}}, "plunge": {"pass": true, "tTop": 23.699999999 …[+252 chars]
+
+### 🤖 Claude — 2026-11-17T13:39:35.248Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json\nfor f in ('qa/gameplay_test.json','qa/gameplay_test_switch.json'):\n    d=json.load(open(f)); c=d['checks']; print(f, sum(1 for v in c.values() if v.get('pass')),'/',len(c), 'passed;', 'coins', c['realCoinPickups'].get('startCoins'),'->',c['realCoinPickups'].get('endCoins'))\"; mkdir -p qa/match/08 && git mv -f qa/gameplay_test_switch.json qa/match/08/gameplay_test_match08.json 2>/dev/null || mv qa/gameplay_test_switch.json qa/match/08/gameplay_test_match08.json; ls qa/match/08", "description": "Count passed checks and file the switch result"}`
+
+### 🧑 User — 2026-11-17T13:39:35.354Z
+
+> ↩︎ result: qa/gameplay_test.json 8 / 8 passed; coins 1330 -> 2240
+> qa/gameplay_test_switch.json 8 / 8 passed; coins 1330 -> 2240
+> gameplay_test_match08.json
+
+### 🤖 Claude — 2026-11-17T13:39:53.884Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; Q=/home/user/rainbow-/qa/match/08; cd /home/user/rainbow- && python3 -I - <<EOF\nimport json, numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'),float)\ndef ssim_map(a,b):\n    la,lb=(a*[0.2126,0.7152,0.0722]).sum(-1),(b*[0.2126,0.7152,0.0722]).sum(-1); s=1.5; C1,C2=(0.01*255)**2,(0.03*255)**2\n    ma,mb=gaussian_filter(la,s),gaussian_filter(lb,s); va,vb=gaussian_filter(la*la,s)-ma*ma,gau …[+1656 chars]`
+
+### 🧑 User — 2026-11-17T13:39:55.476Z
+
+> ↩︎ result: scenery (no HUD, no Benny)   BEFORE <=20   3.3%  SSIM 0.221   NEW <=20  90.5%  SSIM 0.866  |d| 12.07
+> upper chamber y190-600       BEFORE <=20   2.1%  SSIM 0.173   NEW <=20  91.8%  SSIM 0.875  |d| 9.36
+> middle y600-840              BEFORE <=20   3.0%  SSIM 0.169   NEW <=20  75.9%  SSIM 0.724  |d| 27.22
+> lower y840-1536 (no Benny)   BEFORE <=20   4.4%  SSIM 0.284   NEW <=20  96.1%  SSIM 0.925  |d| 7.22
+> /home/user/rainbow-/qa/match/08:
+> 08_BEFORE_current_game.png
+> 08_NEW_match08.png
+> 08_NEW_screen_match.json
+> gameplay_test_match08.json
+> motion
+> scenery_metrics_BEFORE_NEW.json
+> 
+> /home/user/rainbow-/qa/match/08/motion:
+> f00_checkpoint.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f15_forward15u.png
+> montage.png
+> motion.json
+> s_left_steer.png
+> s_right_steer.png
+
+### 🤖 Claude — 2026-11-17T13:40:19.891Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter, binary_dilation\nP=Image.open('qa/imageblaster/08/08_plate_CLEAN_aligned_9x16_1536x2731.png').convert('RGB'); PW,PH=P.size\nA=Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((PW,PH),Image.LANCZOS)\nPa,Aa=np.asarray(P,np.float32),np.asarray(A,np.float32)\nk=PW/864.0\nd=gaussian_filter(np.abs(Pa-Aa).mean(-1),2.0*k)\nyy,xx=np.mgrid[:PH,: …[+1102 chars]`
+
+### 🧑 User — 2026-11-17T13:40:23.887Z
+
+> ↩︎ result: fal pixels used: 20.8 % of the frame (approved original everywhere else)
+> 74:  const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
+> [This command modified 1 file you've previously read: src/world/match08.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T13:40:28.763Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/hybrid_mask_small.png"}`
+
+### 🧑 User — 2026-11-17T13:40:28.786Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:40:35.290Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && timeout 200 npx tsc --noEmit && echo tsc clean; cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/new3 --q=match08=1 2>&1 | tail -1 | cut -c1-200; cp $M/capture_log.bak qa/capture_log.json; python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png $M/new3/08.png --label=NEW08h --json=$M/new3_metrics.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nA= …[+1013 chars]`
+
+### 🧑 User — 2026-11-17T13:40:56.494Z
+
+> ↩︎ result: tsc clean
+> 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/new3/08.png {"stage":"08","s":391.427,"y":-113.112,"calls":81,"tris":384690,"modules":{"water":"vfx/index.t
+> NEW08h FULL |d|  17.4 <=20 0.806 SSIM 0.783 | BELOWHUD |d|  13.2 <=20 0.871 | LAYOUT |d|   8.8 <=20 0.876 | mean RGB approved [168.4, 108.6, 170.2] game [170.1, 109.1, 167.1]
+> scenery  <=20  95.4%  <=10  92.1%  SSIM 0.935  |d| 6.64
+> upper    <=20  98.5%  <=10  94.1%  SSIM 0.959  |d| 3.44
+> middle   <=20  83.5%  <=10  78.9%  SSIM 0.821  |d| 21.35
+> lower    <=20  98.5%  <=10  96.6%  SSIM 0.968  |d| 2.38
+
+### 🤖 Claude — 2026-11-17T13:41:12.056Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; Q=/home/user/rainbow-/qa/match/08; cd /home/user/rainbow- && timeout 900 node tools/match08/motion08.mjs $Q/motion 2>&1 | tail -3; python3 -I -c \"\nfrom PIL import Image\nnames=['f00_checkpoint','f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer']\nims=[Image.open('$Q/motion/%s.png'%n).convert('RGB').resize((288,512)) for n in names]\no=Image.new('RGB',(288*3+12,512*2+6),(255,255,255))\nfor i,im in enumerate(ims): o.paste(im,((i%3)*294,(i//3)*518))\no.save('$Q/moti …[+298 chars]`
+
+### 🧑 User — 2026-11-17T13:41:57.876Z
+
+> ↩︎ result: f15_forward15u s 407.04 lat 0.00 09
+> s_left_steer s 397.92 lat -1.85 08
+> s_right_steer s 397.89 lat 1.85 08
+> total 12400
+> drwxr-xr-x 2 root root    4096 Nov 17 13:40 .
+> drwxr-xr-x 5 root root    4096 Nov 17 13:28 ..
+> -rw-r--r-- 1 root root     684 Nov 17 13:35 cam08_locked.json
+> -rw-r--r-- 1 root root 6591567 Nov 17 13:28 plate08_clean.png
+> -rw-r--r-- 1 root root 6078171 Nov 17 13:40 plate08_hybrid.png
+> -rw-r--r-- 1 root root    2987 Nov 17 13:35 proj08.json
+> -rw-r--r-- 1 root root    5703 Nov 17 13:35 river08.json
+> assets/textures/match08/plate08_hybrid.png: filter: unspecified
+
+### 🤖 Claude — 2026-11-17T13:42:05.464Z
+
+Writing the Screen 08 notes (method, files, numbers, moving-camera findings, Android assessment, what's left), with short pointers in the handoff and `CLAUDE.md`:
+
+### 🤖 Claude — 2026-11-17T13:42:30.564Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/08/NOTES.md", "content": "# Screen 08 — approved scenery on real 3D geometry (`?match08=1`, 2026-11-17, session 03b94f36)\n\nUser order (2026-11-17): apply the cleaned environment-only Screen 08 artwork to the actual 3D game environment behind a\ntest switch; real geometry + texture projection (not a flat picture); match camera, proportions, architecture,\nwaterway, colours, lighting; correct mismatched geometry; APPROVED | BEFORE | NEW as separate full-size pictures;\nmeasure; check that it can work with a moving camera on Android. **Default build u …[+6110 chars]`
+
+### 🧑 User — 2026-11-17T13:42:30.607Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/08/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T13:42:34.445Z
+
+Fixing two paths in the copied tool scripts (they pointed at an absolute location), and adding short pointers in `CLAUDE.md` and the handoff:
+
+### 🤖 Claude — 2026-11-17T13:42:41.561Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#'/home/user/rainbow-/scripts/lib/pw.mjs'#'../../scripts/lib/pw.mjs'#\" tools/match08/probe08b.mjs tools/match08/motion08.mjs && grep -n \"pw.mjs\" tools/match08/*.mjs && python3 -I - <<'EOF'\np='CLAUDE.md'; s=open(p).read()\nold=\"  (APPROVED | BEFORE | NEW full-size pictures + whole-frame numbers), not camera or movement details.\\n\"\nnew=(old+\"* **Screen 08 method (2026-11-17, `qa/match/08/NOTES.md`): `?match08=1`** = fal clean environment plate + the user's ORIGINAL\\n\"\n     \"  pixels (hybrid texture) camera-projected onto real 3D geometry fitted to the approved …[+1166 chars]`
+
+### 🧑 User — 2026-11-17T13:42:44.786Z
+
+> ↩︎ result: tools/match08/motion08.mjs:4:import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> tools/match08/probe08b.mjs:2:import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> docs updated
+> tsc clean
+> [This command modified 2 files you've previously read: CLAUDE.md, backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T13:42:47.580Z
+
+Saving everything to GitHub with a named checkpoint and verifying:
+
+### 🤖 Claude — 2026-11-17T13:42:51.267Z
+
+> 🔧 **Bash** `{"command": "timeout 600 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Screen 08 ?match08=1: approved scenery projected on fitted 3D geometry (camera solve, painted-river path, proxies, hybrid texture); scenery 95.4% within 20 levels; default unchanged\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|skipping|unstaged'; git status --porcelain | wc -l; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; sha256sum -c scripts/reference.sha256 2>/dev/null | grep -c ': OK'; echo \"key pieces …[+274 chars]`
+

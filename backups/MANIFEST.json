@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 13244,
-   "sha256": "1ca7e95c4aa30de5b68ba005a7cf4abf218a816ff85dc8e4cc59111a370b1dc6"
+   "bytes": 13736,
+   "sha256": "7ee0af33d9cdb0ac15014809c758deaea206360249e4ccb4d756c7405c2fde7d"
   },
   {
    "path": "README_FIRST.md",
@@ -402,6 +402,11 @@
    "sha256": "b66ecf984a565122e79912fa22b5a96916298c093334d7bf316df8c88f763d57"
   },
   {
+   "path": "assets/textures/match08/plate08_hybrid.png",
+   "bytes": 6078171,
+   "sha256": "f7f7230c31fb5e9c252a6c716a1af0889109c137a99d3be557345eea22b3c496"
+  },
+  {
    "path": "assets/textures/match08/proj08.json",
    "bytes": 2987,
    "sha256": "c839818082995627eb39a9d2fec325fdcdced5c11048c96e9683b6847f9d1dad"
@@ -529,7 +534,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "d71dacd6960bbb2291c177dff86abcc838e0fa2524b94d48fb09027cca1240e7"
+   "sha256": "0f26cc0ee3827992162472921c7b5ba140e78b7a581ce1fdd9079ac2c241e30a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -538,8 +543,8 @@
   },
   {
    "path": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
-   "bytes": 16737,
-   "sha256": "c172efcb44069acef237a955577a9956df2583c3f37b4dac233d45cc300928d3"
+   "bytes": 17166,
+   "sha256": "b9be8242a4dcbccbd5be86593b5fffb58c1df6961a5448123a8088aa99c1a6a4"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1032,11 +1037,6 @@
    "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
   },
   {
-   "path": "qa/gameplay_test_switch.json",
-   "bytes": 14656,
-   "sha256": "6d6de3a5505ab1b859d8df3abee2a2f6906348f332561f9591cb2859f00691b0"
-  },
-  {
    "path": "qa/glb_validation.txt",
    "bytes": 293,
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
@@ -1260,6 +1260,81 @@
    "path": "qa/match/07/rings/guess_approved.json",
    "bytes": 206,
    "sha256": "73083d12ea3367af9171b0d877b9c85ed8fcaee88bda860d08bae7bb326fc7da"
+  },
+  {
+   "path": "qa/match/08/08_BEFORE_current_game.png",
+   "bytes": 1428957,
+   "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
+   "path": "qa/match/08/08_NEW_match08.png",
+   "bytes": 2303844,
+   "sha256": "5793905a78fb5fa52d83663b56d1c1a223346b599e4af972fc8848d6a8750c43"
+  },
+  {
+   "path": "qa/match/08/08_NEW_screen_match.json",
+   "bytes": 592,
+   "sha256": "54bffc235e5b38ffd72af83945a39579faa7d2dc4c78ff6d4a8475f1d3018b1a"
+  },
+  {
+   "path": "qa/match/08/NOTES.md",
+   "bytes": 6631,
+   "sha256": "51dcf913e403e17ad8a87d1dd9fe1eb9fcab7099a07f5efa557684b2a07b2425"
+  },
+  {
+   "path": "qa/match/08/gameplay_test_match08.json",
+   "bytes": 14656,
+   "sha256": "6d6de3a5505ab1b859d8df3abee2a2f6906348f332561f9591cb2859f00691b0"
+  },
+  {
+   "path": "qa/match/08/motion/f00_checkpoint.png",
+   "bytes": 2308302,
+   "sha256": "56be419d429263848e86aa9fd07946db286e7856cdd007b185e1c620ce5906af"
+  },
+  {
+   "path": "qa/match/08/motion/f03_forward3u.png",
+   "bytes": 2063362,
+   "sha256": "eb3682fc9a5f55b391fe66fb73ef340f1efa6dbdc7c22cd93ebb5d011e42b398"
+  },
+  {
+   "path": "qa/match/08/motion/f06_forward6u.png",
+   "bytes": 1781563,
+   "sha256": "9b471bd719201f27b78f24e070a60e511b509241714637b8d6e6afd9b6cca1b5"
+  },
+  {
+   "path": "qa/match/08/motion/f10_forward10u.png",
+   "bytes": 1786028,
+   "sha256": "3fb9b8742bcd9c38d161e4dc75bfb7ca5735a80e10c6a7deec0d0d213af99467"
+  },
+  {
+   "path": "qa/match/08/motion/f15_forward15u.png",
+   "bytes": 1522658,
+   "sha256": "8cfbbdfb602e14b5b00350a92de96c6df0065337a3893f1ac285ea856a4efb82"
+  },
+  {
+   "path": "qa/match/08/motion/montage.png",
+   "bytes": 1651525,
+   "sha256": "c099fd74e69df04fbac29837cc7ba43367631af89f86b7ee2b08aaf792b53c04"
+  },
+  {
+   "path": "qa/match/08/motion/motion.json",
+   "bytes": 782,
+   "sha256": "7832015373b12c8d7c1f296747d89c3fe885d8bec1e6546ac94a8fe93464e61d"
+  },
+  {
+   "path": "qa/match/08/motion/s_left_steer.png",
+   "bytes": 1838945,
+   "sha256": "425f013d9dd534da1be4aa7b77e2052ce94520ea9a6fcbd34b4b10bf18e4e00f"
+  },
+  {
+   "path": "qa/match/08/motion/s_right_steer.png",
+   "bytes": 1828416,
+   "sha256": "c078e44cd23ead8e6ffa3176d10aaeb8dcbc182e66ac2c300225d35cb11f1c7b"
+  },
+  {
+   "path": "qa/match/08/scenery_metrics_BEFORE_NEW.json",
+   "bytes": 821,
+   "sha256": "241d0f63b525336b10919c687d0762cd5dbf572139363430fa85bd973dc87598"
   },
   {
    "path": "qa/match/NOTES.md",
@@ -7833,8 +7908,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 9581,
-   "sha256": "ba673c49fca606dfa5741b951166ce88ee3a416566fa67bc41dc876d1d7dca31"
+   "bytes": 9582,
+   "sha256": "fd1e4f92b46ed41d30696d1dca798f2f2c0124f806c2bf0b9cb322fc6fe6e9d3"
   },
   {
    "path": "src/world/materials.ts",
@@ -7975,6 +8050,26 @@
    "path": "tools/match08/fit_proxies.py",
    "bytes": 7025,
    "sha256": "8a597d4ddc6a4f1463bff812e281a2cb7249f6ab669ed9c7bf58adb3730897b9"
+  },
+  {
+   "path": "tools/match08/motion08.mjs",
+   "bytes": 1959,
+   "sha256": "c7dc4a053adc8cacec083c67d36b22648703ffdfd20609dc160be7d1aab16f42"
+  },
+  {
+   "path": "tools/match08/probe08b.mjs",
+   "bytes": 2010,
+   "sha256": "4a8c939c559f0caff7278b068d29b1c8d67bba1841b151d236b6d93897b1e247"
+  },
+  {
+   "path": "tools/match08/river_centre_px_approved08.json",
+   "bytes": 3012,
+   "sha256": "bf3e2bcf2396a0f51bdf127a297b6285040c47540f099b1e4d65cf8ddf3eefb6"
+  },
+  {
+   "path": "tools/match08/river_proj.py",
+   "bytes": 832,
+   "sha256": "828aafcf198f462720c70108da43699de11f560d2f2772ecd3c42026d9ef7133"
   },
   {
    "path": "tools/model-lab.html",

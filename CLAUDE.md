@@ -81,6 +81,10 @@ pushes or tests unless verified.
   camera or the movements"). Spend effort on scenery, walls, rings, water, foam, colours, lighting, props, Benny's look.
   Change camera framing only where the scenery cannot line up otherwise, and report results to the user in visual terms
   (APPROVED | BEFORE | NEW full-size pictures + whole-frame numbers), not camera or movement details.
+* **Screen 08 method (2026-11-17, `qa/match/08/NOTES.md`): `?match08=1`** = fal clean environment plate + the user's ORIGINAL
+  pixels (hybrid texture) camera-projected onto real 3D geometry fitted to the approved picture (tools/match08/), river path
+  following the painted S-river. Scenery 95.4 % within 20 levels (BEFORE 3.3 %). Waiting for the user's verdict; then the
+  same method for 04, 05, 06, 07 (fal clean plates approved by the user; no new Marble worlds without discussing why).
 
 Fresh isolated game: do not import anything from prior games. Preserve `references/*.png`,
 `references/water/05_water_isolated_original.png` (the user's original isolated Screen 05 water artwork) and

@@ -98,6 +98,11 @@ VIDEOS: 01 existing opening · 02 whirlpool tumble · 03 Whirlpool Twirl · 09 f
   Substance 3D Painter (paid) paints onto UV'd meshes → glTF PBR maps, useful only once geometry is right; generators
   (Meshy/Tripo/Rodin/World Labs) do not reproduce a given 2D composition exactly (`qa/pilot05/marble_feas/NOTES.md`).
 
+## 4b. Screen 08 — DONE as a test, waiting for the user (2026-11-17 ~13:45 UTC)
+`?match08=1`: hybrid approved artwork projected onto fitted 3D geometry; scenery 95.4 % / whole frame 80.6 % within 20
+levels; gameplay 8/8; default 0 px. Details, remaining corrections (coins, Benny's look, arch inner faces when moving)
+and Android notes: `qa/match/08/NOTES.md`. Image-Blaster/Marble test record: `qa/imageblaster/08/NOTES.md`.
+
 ## 5. Specialists (`.claude/agents/`, 10 files, SHA-256 unchanged) — NONE is running now
 Running agents do not survive a session or account switch. Relaunch from the brief + notes; do not repeat finished steps.
 

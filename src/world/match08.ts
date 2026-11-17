@@ -71,7 +71,7 @@ void main() {
 
 export async function buildMatch08(): Promise<Match08> {
   const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
-  const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_clean.png', import.meta.url).href);
+  const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
   plate.minFilter = THREE.LinearMipmapLinearFilter;
   plate.anisotropy = 8;
