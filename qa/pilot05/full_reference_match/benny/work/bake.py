@@ -245,6 +245,17 @@ def main():
                         w = np.clip((r_top - r) / 3.0, 0, 1)
                         rect_t[r] = w * band[(r_top - 1 - r) % nb] + (1 - w) * rect_t[r]
                     extra['topfill'] = dict(r_top=r_top, purple_rows=[p0, p1])
+                    # rows below everything the 05 camera sees (just above the cuff; shows from the front / from above):
+                    # continue the lower white band's knit downward instead of the flat hole fill
+                    r_bot = int(np.nonzero(cov > 0.5)[0].max())
+                    q0 = next((r for r in range(p1, r_bot) if prof[r] <= thr), p1)
+                    wb = rect_t[q0 + 2:r_bot - 1]
+                    nw = wb.shape[0]
+                    if nw >= 6:
+                        for r in range(r_bot + 1, TH):
+                            w = np.clip((r - r_bot) / 3.0, 0, 1)
+                            rect_t[r] = w * wb[(r - r_bot - 1) % nw] + (1 - w) * rect_t[r]
+                    extra['botfill'] = dict(r_bot=r_bot, white_rows=[q0 + 2, r_bot - 1])
                 tiled = shift_rows(rect_t, -h)
                 extra.update(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
                     u0=round(float(h[u0]), 1), centre=round(float(h[(u0 + u1) // 2]), 1), u1=round(float(h[u1 - 1]), 1)),

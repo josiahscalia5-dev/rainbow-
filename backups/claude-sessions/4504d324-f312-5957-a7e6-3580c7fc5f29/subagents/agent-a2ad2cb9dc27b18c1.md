@@ -2437,3 +2437,15 @@ Low tier works too: Benny + hat 50.63 → **22.22** (within 20: 22.6 % → 67.5 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T01:51:59.618Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "                    extra['topfill'] = dict(r_top=r_top, purple_rows=[p0, p1])", "new_string": "                    extra['topfill'] = dict(r_top=r_top, purple_rows=[p0, p1])\n                    # rows below everything the 05 camera sees (just above the cuff; shows from the front / from above):\n                    # continue the lower white band's knit downward instead of the flat hole fill\n                    r_bot = int(np.nonzero(cov > 0.5)[0].max())\n              …[+497 chars]`
+
+### 🧑 User — 2026-11-17T01:51:59.656Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T01:52:04.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; timeout 900 python3 $W/bake.py $W/s1 $W/s1/tex_top2 --topfill > $W/s1/bake_top2.log 2>&1; echo rc=$?; python3 -I -c \"\nimport json; c=json.load(open('$W/s1/tex_top2/bake_report.json'))['crown']; print(c.get('topfill'), c.get('botfill'))\"; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfrom scipy import ndimage as ndi\nW='$W'\nold=np.asarray(Image.open(W+'/s1/tex/crown.png').convert('RGB')).astype(int)\nnew=np.asarray(Image.open(W+'/s1/tex_top2/crown.png').convert('RGB')).astype(int)\ninst=np.asar …[+631 chars]`
+
