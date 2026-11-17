@@ -29,6 +29,10 @@ export interface CamParams {
    *  offset and looks at the fixed world point aim08 (the approved picture's view toward the door); absent = no change */
   off08?: [number, number, number];
   aim08?: [number, number, number];
+  /** `?match04=1` only (src/game/match.ts): over the 04 stage the camera sits at Benny's water point + this world offset
+   *  and looks along the fixed world direction dir04 (the approved picture's view down the gold tunnel); absent = no change */
+  off04?: [number, number, number];
+  dir04?: [number, number, number];
 }
 
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
@@ -149,6 +153,19 @@ export class RideCamera {
       outPos.lerp(wp, w3);
       outTarget.lerp(wt, w3);
       outUp.lerp(new THREE.Vector3(0, 1, 0), w3).normalize();
+    }
+    // `?match04=1`: the approved Screen 04 view — camera at Benny + off04 (world), looking along dir04, level; blended in
+    // around the 04 start and out before 05 (absent = no change)
+    const p4 = STAGE_CAM['04'];
+    if (p4 && p4.off04 && p4.dir04) {
+      const st4 = this.course.stage('04');
+      const w4 = THREE.MathUtils.smoothstep(s, st4.s0 - 3, st4.s0 + 1.5) * (1 - THREE.MathUtils.smoothstep(s, st4.s1 - 10, st4.s1 - 1));
+      if (w4 > 0) {
+        const cp4 = benny.clone().add(new THREE.Vector3(...p4.off04));
+        outPos.lerp(cp4, w4);
+        outTarget.lerp(cp4.addScaledVector(new THREE.Vector3(...p4.dir04), 10), w4);
+        outUp.lerp(new THREE.Vector3(0, 1, 0), w4).normalize();
+      }
     }
     // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
     // along the tunnel axis (not Benny's S-curve heading) so the gold rings stay concentric on ONE

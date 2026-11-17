@@ -10,11 +10,14 @@ import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05 } from '../vfx/waterRibbon';
 import coins08 from '../../assets/textures/match08/coins08.json';
 import coins08px from '../../assets/textures/match08/coins08px.json';
+import coins04 from '../../assets/textures/match04/coins04.json';
 
 export const COIN_VALUE = 10;
 
 /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
-export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number];
+  /** `?match04=1` milestone 3: resting height on the water, reached while the ride moves from settle[0] to settle[1] (s) */
+  h1?: number; settle?: [number, number] }
 
 /**
  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
@@ -45,7 +48,27 @@ export function coinLayout(course: Course): CoinDef[] {
   // 03 — spiral trail ahead of Benny toward the drain
   { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
   // 04 — along the left edge of the slide
-  { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+  const m04 = flag05('match04') || flag05('matchall');
+  if (!m04) { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+  // `?match04=1` (qa/match/04/NOTES.md): the approved picture's five coins where the picture shows them (world positions
+  // from the locked 04 camera, assets/textures/match04/coins04.json) + the other 3 of the 04 row on the slide entry before
+  // the 04 view (the run's coin total is unchanged)
+  if (m04) {
+    const a = st('04');
+    const cw04 = new URLSearchParams(globalThis.location?.search ?? '').get('coinwater04') !== '0';
+    for (let i = 0; i < 3; i++) add('04', a.s0 + 2 + i * 1.5, -0.3 + 0.3 * i);
+    for (const c of coins04.coins) {
+      const P = new THREE.Vector3(...(c.pos as [number, number, number]));
+      let sb = c.s, bd = Infinity;
+      for (let s = c.s - 3; s <= c.s + 3; s += 0.02) { const d = Math.abs(P.clone().sub(course.sample(s).pos).dot(course.sample(s).tan)); if (d < bd) { bd = d; sb = s; } }
+      const f = course.sample(sb), r = P.clone().sub(f.pos);
+      // milestone 3 (`&coinwater04=0` = off): in the approved view the coin sits at the painted spot (its view ray, which
+      // floats it 1.5-2.7 u over the water); as soon as the ride moves on it settles onto the water (height only, the
+      // pickup position s / lateral is unchanged) so it no longer floats when seen from the side
+      const settle: Partial<CoinDef> = cw04 ? { h1: 0.5 * c.scale + 0.05, settle: [77.413 + 0.3, 77.413 + 4] } : {};
+      add('04', sb, r.dot(f.right), r.dot(f.up), { scale: c.scale, faceTo: coins04.faceTo as [number, number, number], ...settle });
+    }
+  }
   // 05 — on the winding cyan core (see C05)
   coins05(course, add);
   // 06 — up and over the crest (left of centre like the ref)
@@ -182,6 +205,7 @@ export function createCoins(course: Course): CoinSystem {
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
 
+  let curS = -1; // ride position (only read by `?match04=1` settling coins)
   const place = (time: number) => {
     defs.forEach((d, i) => {
       const f = course.sample(d.s);
@@ -191,12 +215,14 @@ export function createCoins(course: Course): CoinSystem {
         const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
         if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
         scale = 1 + k * 0.8;
-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+        const h = d.settle ? THREE.MathUtils.lerp(d.h, d.h1 ?? d.h, THREE.MathUtils.smoothstep(curS, d.settle[0], d.settle[1])) : d.h;
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, h + k * 1.6);
       } else {
-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+        const h = d.settle ? THREE.MathUtils.lerp(d.h, d.h1 ?? d.h, THREE.MathUtils.smoothstep(curS, d.settle[0], d.settle[1])) : d.h;
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, h + 0.08 * Math.sin(time * 3 + i));
       }
       back.copy(f.tan).negate();
-      // `?match08=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
+      // `?match08=1` / `?match04=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
       if (d.faceTo) back.set(d.faceTo[0] - p.x, 0, d.faceTo[2] - p.z).normalize();
       const upV = d.faceTo ? new THREE.Vector3(0, 1, 0) : f.up;
       const right = new THREE.Vector3().crossVectors(upV, back).normalize();
@@ -218,6 +244,7 @@ export function createCoins(course: Course): CoinSystem {
     defs,
     collected,
     update(time, _dt, s, lat) {
+      curS = s;
       let picked = 0;
       for (let i = 0; i < defs.length; i++) {
         if (collected[i]) continue;
@@ -235,6 +262,7 @@ export function createCoins(course: Course): CoinSystem {
     },
     resetUntil(s) {
       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+      curS = s - 0.5;
       place(0);
     },
   };
