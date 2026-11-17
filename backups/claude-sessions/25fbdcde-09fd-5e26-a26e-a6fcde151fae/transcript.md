@@ -1096,3 +1096,155 @@ Progress: gameplay passes 8/8 with 91 coins / 2,240 points with match08, and 8/8
 
 > 🔧 **Bash** `{"command": "grep -n '\"collected\"' qa/match/08/benny08/r5/tests/gameplay_default.json; R=qa/match/08/benny08/r5; node scripts/capture.mjs 08 04 05 06 07 --out=$R/default >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 08 --out=$R/other_screens --q=\"match08=1\" >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 --out=$R/other_r4 --q=\"match08=1&b08shape=0\" >/dev/null 2>&1; python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nR='qa/match/08/benny08/r5'\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nm=np.abs(L(f'{R}/default/08.png')-L('qa/match/08/benn …[+454 chars]`
 
+### 🧑 User — 2026-11-17T19:01:33.480Z
+
+> ↩︎ result: 46:      "collected": 91
+> default 08 vs r4 default: total 162777 below banner y>=190 58968
+> 04 r5 vs r4 (match08) changed px 0 bbox None
+> 05 r5 vs r4 (match08) changed px 0 bbox None
+> 06 r5 vs r4 (match08) changed px 0 bbox None
+> 07 r5 vs r4 (match08) changed px 0 bbox None
+
+### 🤖 Claude — 2026-11-17T19:01:42.890Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/wt && git worktree add -q --detach $W 88ee720 2>&1 | tail -1; ln -s /home/user/rainbow-/node_modules $W/node_modules; cd $W && git lfs pull 2>/dev/null; (node scripts/capture.mjs 08 --out=$W/out >/dev/null 2>&1); cd /home/user/rainbow- && python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nm=np.abs(L('$W/out/08.png')-L('qa/match/08/benny08/r5/default/08.png')).max(2)>0\nprint('default: pre-round-5 vs round-5', m.sum(), 'y> …[+253 chars]`
+
+### 🧑 User — 2026-11-17T19:02:04.538Z
+
+> ↩︎ result: default: pre-round-5 vs round-5 34999 y>=190 1776
+> pre-round-5 here vs saved r4 default 176195
+
+### 🤖 Claude — 2026-11-17T19:02:09.706Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/wt; node scripts/capture.mjs 08 --out=$W/cur2 >/dev/null 2>&1; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nm=np.abs(L('$W/cur2/08.png')-L('qa/match/08/benny08/r5/default/08.png')).max(2)>0\nprint('same build twice', m.sum(), 'y>=190', m[190:].sum())\nm=np.abs(L('$W/out/08.png')-L('$W/cur2/08.png')).max(2)\nys,xs=np.nonzero(m[190:]>0); print('pre vs cur2 y>=190', (m[190:]>0).sum(), 'max', m[190:].max(), (xs.min(),ys …[+130 chars]`
+
+### 🧑 User — 2026-11-17T19:02:26.510Z
+
+> ↩︎ result: same build twice 0 y>=190 0
+> pre vs cur2 y>=190 1776 max 17 (np.int64(122), np.int64(190), np.int64(741), np.int64(204))
+
+### 🤖 Claude — 2026-11-17T19:02:29.642Z
+
+The normal build only differs in rows 190–204, the bottom of the animated title banner. So it is unchanged (0 px) everywhere else. Now the NEW (r5) review pictures.
+
+### 🤖 Claude — 2026-11-17T19:02:33.302Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/wt; git worktree remove --force $W; S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/rv; mkdir -p $S/r5; cp qa/match/08/benny08/r5/other_screens/08.png $S/r5/08.png; node tools/match08/motion08.mjs $S/r5/m \"match08=1\" > /dev/null 2>&1; python3 -I qa/match/08/benny08/work/review08.py qa/match/08/benny08/review_r5 5_r5_NEW $S/r5; python3 -I qa/match/08/benny08/work/regions08.py $S/r5/08.png; python3 -I qa/match/08/benny08/work/parts08.py $S/r5/08.png | cut -c1-80" …[+76 chars]`
+
+### 🧑 User — 2026-11-17T19:03:24.917Z
+
+> ↩︎ result: 5_r5_NEW written
+> /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/rv/r5/08.png
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.57
+>   upper         <=20  98.9 %  SSIM 0.968  mean   3.34
+>   middle        <=20  90.6 %  SSIM 0.890  mean  12.62
+>   lower         <=20  99.3 %  SSIM 0.985  mean   1.69
+>   scenery_nocoins <=20  99.0 %  SSIM 0.976  mean   2.74
+>   benny+splash  <=20  62.0 %  SSIM 0.544  mean  27.99
+>   whole         <=20  84.9 %  SSIM 0.829  mean  12.93
+> part       px   mean  <=20  share  approved_med  game_med
+> pom     10761   51.9  0.23  0.216  [126  15 229]  [132  32 232]  bbox {'x0': 362
+> crown   13456   51.3  0.29  0.267  [215 163 237]  [221 176 238]  bbox {'x0': 304
+> cuff    10718   44.3  0.28  0.184  [118  10 234]  [118  16 228]  bbox {'x0': 296
+> star     1829   27.2  0.50  0.019  [250 208  34]  [248 220  20]  bbox {'x0': 478
+> body    34385   23.6  0.58  0.314  [242  69 172]  [245  75 180]  bbox {'x0': 262
+> ALL 71149 36.31 0.427
+
+### 🤖 Claude — 2026-11-17T19:03:27.628Z
+
+Body fit drops from 75 % to 58 % on the strict number, and I'll say that plainly. Quick look at a moving frame to make sure the new shape holds up while steering.
+
+### 🤖 Claude — 2026-11-17T19:03:30.217Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad && python3 -I -c \"\nfrom PIL import Image\nw=Image.new('RGB',(864,768))\nfor i,n in enumerate(['5_r5_NEW_move_steer_left','5_r5_NEW_move_steer_right']):\n  im=Image.open('qa/match/08/benny08/review_r5/'+n+'.png').convert('RGB').resize((432,768)); w.paste(im,(i*432,0))\nw.save('$S/mv.png')\"", "description": "Debug view of steering frames"}`
+
+### 🧑 User — 2026-11-17T19:03:30.587Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:03:31.268Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/mv.png"}`
+
+### 🧑 User — 2026-11-17T19:03:31.316Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:03:33.263Z
+
+The shape holds while steering. Building the APK with `match08=1` (a new change was kept).
+
+### 🤖 Claude — 2026-11-17T19:03:34.615Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"08benny.*r4.apk\\|VITE_RAINBOW_Q05\" qa/match/08/benny08/*.md qa/match/08/benny08/r4 2>/dev/null | head -5; ls scripts | grep -i -E \"apk|android|build\" ", "description": "Find APK build method"}`
+
+### 🧑 User — 2026-11-17T19:03:34.700Z
+
+> ↩︎ result: qa/match/08/benny08/STATUS.md:11:* **Android:** `builds/rainbow-debug-08benny-2026-11-17-r4.apk (round 4; r3/r3b APKs kept)` (`VITE_RAINBOW_Q05="match08=1"`, Git LFS) — NOT phone-tested (no device in the cloud)
+> apk-web-check.mjs
+> setup-android-sdk.sh
+
+### 🤖 Claude — 2026-11-17T19:03:35.469Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p scripts/build-apk.sh | grep -E \"^#|VITE|OUT|apk\" | head -20", "description": "Read APK build script header"}`
+
+### 🧑 User — 2026-11-17T19:03:35.501Z
+
+> ↩︎ result: sed: can't read scripts/build-apk.sh: No such file or directory
+
+### 🤖 Claude — 2026-11-17T19:03:37.599Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"\\\"(build|android|apk)[^\\\"]*\\\":\" package.json; grep -rln \"VITE_RAINBOW_Q05\" --include=*.md . 2>/dev/null | head -3", "description": "Find APK npm scripts"}`
+
+### 🧑 User — 2026-11-17T19:03:37.668Z
+
+> ↩︎ result: 9:    "build": "tsc --noEmit && vite build",
+> 17:    "android:sync": "npm run build && npx cap sync android",
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> ./backups/CLAUDE_ACCOUNT_TRANSFER.md
+> ./backups/claude-sessions/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/subagents/agent-a402eb7fdaf675cab.md
+> ./backups/claude-sessions/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/transcript.md
+
+### 🤖 Claude — 2026-11-17T19:03:42.041Z
+
+> 🔧 **Bash** `{"command": "export ANDROID_HOME=${ANDROID_HOME:-/opt/android-sdk}; ls $ANDROID_HOME >/dev/null 2>&1 || ls -d /root/android-sdk* /opt/android* 2>/dev/null; VITE_RAINBOW_Q05=\"match08=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk.log 2>&1; echo exit $?; tail -3 /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk.log; ls -la android/app/build/outputs/apk/debug/*.apk", "description": "Build debug APK with match08=1", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T19:05:28.669Z
+
+> ↩︎ result: Exit code 2
+> exit 1
+> > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 1m 38s
+> ls: cannot access 'android/app/build/outputs/apk/debug/*.apk': No such file or directory
+
+### 🤖 Claude — 2026-11-17T19:05:31.271Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"What went wrong|SDK location|error:|Could not\" -A3 /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk.log | head -15; cat android/local.properties 2>/dev/null; grep -i android backups/TOOL_MANIFEST.json | head -5", "description": "Diagnose gradle failure"}`
+
+### 🧑 User — 2026-11-17T19:05:31.332Z
+
+> ↩︎ result: 111:* What went wrong:
+> 112-A problem occurred configuring root project 'android'.
+> 113:> Could not resolve all files for configuration ':classpath'.
+> 114:   > Could not resolve org.apache.httpcomponents:httpmime:4.5.6.
+> 115-     Required by:
+> 116-         project : > com.android.tools.build:gradle:8.2.1
+> 117-         project : > com.android.tools.build:gradle:8.2.1 > com.android.tools:sdklib:31.2.1
+> --
+> 119:      > Could not resolve org.apache.httpcomponents:httpmime:4.5.6.
+> 120:         > Could not parse POM https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6.pom
+> 121:            > Could not resolve org.apache.httpcomponents:httpcomponents-client:4.5.6.
+> 122:               > Could not resolve org.apache.httpcomponents:httpcomponents-client:4.5.6.
+> 123:                  > Could not get resource 'https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcomponents-client/4.5.6/httpcomponents-client-4.5.6.pom'.
+> 124:                     > Could not GET 'https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcomponents-client/4.5.6/httpcomponents-client-4.5.6.pom'. Received status code 429 from server: Too Many Requests
+> 125:   > Could  …[+1760 chars]
+
+### 🤖 Claude — 2026-11-17T19:05:32.764Z
+
+Maven Central returned 429 (too many requests). Retrying once.
+
+### 🤖 Claude — 2026-11-17T19:05:35.087Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && ./gradlew assembleDebug > /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk2.log 2>&1; echo exit $?; grep -E \"BUILD|429\" /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk2.log | head -3; ls -la app/build/outputs/apk/debug/*.apk 2>/dev/null", "description": "Retry gradle assembleDebug", "timeout": 900000}`
+

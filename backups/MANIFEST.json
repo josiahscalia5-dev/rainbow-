@@ -669,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11556,
-   "sha256": "5b01092898dab4f0d78bc736b2a8e711ee97240b3ee278b16f9ac39879d68804"
+   "sha256": "9461bb84d03a50f7e9da63c2bbbd9ed818d5320f09540eec655b4079e8b61a94"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1148,8 +1148,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5204,
-   "sha256": "8a4f6243af21b8172e048d4445459d7113baa9724741edcb44f9cc56ce2a422e"
+   "bytes": 1241,
+   "sha256": "7227c81c2028ad94914ca744289557a1a779d233289b71c25950788ec64fcaf3"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1967,6 +1967,21 @@
    "sha256": "f3c0ac8b56e6d8bfc3e9af5fdae08042841c5efdb1dca411f7e30c2c85c0eb21"
   },
   {
+   "path": "qa/match/08/benny08/r5/other_r4/05.png",
+   "bytes": 2130839,
+   "sha256": "0b5075a1d2dfe1a105daa339e755484ea89fcd37b9452206aee62c9bf34b570d"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_r4/06.png",
+   "bytes": 1943141,
+   "sha256": "a4204ba816f7aeaffc4bfcfc86b66042a53a0318781d14805681292ac1c4d99a"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_r4/07.png",
+   "bytes": 2164412,
+   "sha256": "36719b4faf5c47a1b4fd786f5c09daaade51b4e41b7e47e2a8139ad36f02d081"
+  },
+  {
    "path": "qa/match/08/benny08/r5/other_screens/04.png",
    "bytes": 1442264,
    "sha256": "f3c0ac8b56e6d8bfc3e9af5fdae08042841c5efdb1dca411f7e30c2c85c0eb21"
@@ -2085,6 +2100,31 @@
    "path": "qa/match/08/benny08/review_r5/4_r4_move_steer_right.png",
    "bytes": 2511553,
    "sha256": "9c99050bf402094ac4aac311619042451b4f1718a0bee885a421d54b34b9afa1"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/5_r5_NEW_08_approved_view.png",
+   "bytes": 2604391,
+   "sha256": "30f6cfe0e916e930a133a110f68659ee53eb672aa7b0a7802a63038b3fa3ec1e"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/5_r5_NEW_closeup.png",
+   "bytes": 1689304,
+   "sha256": "8f5b8ed1200b145c5e751ee4126a1c75e7c91888cb4a3d0ef32ded4088ec399d"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/5_r5_NEW_move_forward.png",
+   "bytes": 2545371,
+   "sha256": "8d1683389f72a64fbc18dede7dfc79e549b582da2b6e4c087ff88156934d05a8"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/5_r5_NEW_move_steer_left.png",
+   "bytes": 2569720,
+   "sha256": "8a6f340bdb713f706ffdb863d352dfdccb49f5aa3ab747ed5c0b68a2d989ed99"
+  },
+  {
+   "path": "qa/match/08/benny08/review_r5/5_r5_NEW_move_steer_right.png",
+   "bytes": 2512409,
+   "sha256": "e737952c2780f203f5f46a2623019cbed95883edf1e162b547a3d2b130785d90"
   },
   {
    "path": "qa/match/08/benny08/review_r5/README.md",
