@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 12539,
-   "sha256": "a986a27e67668f82a9de1ad8393e3eb52bf89f273c0480a41de80ce07463da95"
+   "bytes": 12540,
+   "sha256": "c21544b30a56f4cd76b597c78bd179c91ef073f3841e940ce708fd90de7c2f44"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2100,6 +2100,16 @@
    "path": "qa/match/08/scenery/motion_lane/s_right_steer.png",
    "bytes": 2435455,
    "sha256": "e62cd735c30e888cc2ce86c82279b22bd0c7daa7f050919128db057befaffeb5"
+  },
+  {
+   "path": "qa/match/08/scenery/motion_lane_r5/f00_checkpoint.png",
+   "bytes": 2614562,
+   "sha256": "b89b73be9dc89dab030aedcdd052d352b26fc6dbe5938011be835d65f0382a6b"
+  },
+  {
+   "path": "qa/match/08/scenery/motion_lane_r5/f03_forward3u.png",
+   "bytes": 2587363,
+   "sha256": "580ad3c8872ceb58d733d878e7267127d14ae5abf7aa4ddfe0029b2909a7645a"
   },
   {
    "path": "qa/match/08/scenery_metrics_BEFORE_FINAL.json",
