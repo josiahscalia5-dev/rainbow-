@@ -205,8 +205,10 @@ export class RideCamera {
    * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the
    * stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it
    * blends in and back out over a few metres of the ride. Off: unchanged.
-   * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), and the
-   * returned weight steadies the picture's "up" over the lip (see steadyUp0304).
+   * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), the view rides
+   * 3.4 u above the water (was 1.6: the curling chute water then filled the lower screen) aimed at Benny himself (was
+   * 1.5 u ahead: he sat cut off at the left screen edge), never looks down steeper than ~56°, and the returned weight
+   * steadies the picture's "up" over the lip (see steadyUp0304). Lip probe: Benny hidden max 44 % → 25 %.
    */
   private clear0304(s: number, lat: number): number {
     const s3 = this.course.stage('03').s1;
@@ -218,7 +220,7 @@ export class RideCamera {
     const p = f.pos.clone().addScaledVector(f.right, lat).add(new THREE.Vector3(0, 3.4, 0));
     this.pos.lerp(p, w);
     // aim at Benny (a little below his centre line ahead), so he stays in the frame while the view swings behind him
-    const fb = this.course.sample(s + 1.5);
+    const fb = this.course.sample(s + 0.5);
     this.target.lerp(fb.pos.clone().addScaledVector(fb.right, lat), w);
     // never look down steeper than ~56° while the view swings over (it tipped to ~70° for a moment): same heading,
     // aim point raised; Benny stays well inside the frame (at most ~15° below its centre)

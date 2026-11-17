@@ -732,3 +732,82 @@ Measured round-3 build through the drain lip; now the same for the new fix and t
 
 > 🔧 **Bash** `{"command": "sed -i 's|new THREE.Vector3(0, 2.6, 0));|new THREE.Vector3(0, 3.4, 0));|' src/game/cameraRig.ts && S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=16.7 --t1=17.5 --dt=0.1 --size=360x800 --out=$S/lip_h34 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],r.get('bennyHidden'),r.get('near2'))\n  except: pass\"", "description": "Try camera 1.8 u higher over the lip", "timeout": 1000000}`
 
+### 🧑 User — 2026-11-17T18:50:16.606Z
+
+> ↩︎ result: 16.7 03 0.026 0
+> 16.8 03 0.183 0
+> 16.9 03 0.268 0
+> 17 03 0.174 0.0102
+> 17.1 03 0.189 0.0908
+> 17.2 03 0.141 0.3841
+> 17.3 04 0.033 0.4065
+> 17.4 04 0.008 0.1266
+> 17.5 04 0.006 0
+> [This command modified 1 file you've previously read: src/game/cameraRig.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T18:50:21.644Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; cd $S && python3 -c \"\nfrom PIL import Image\nimport glob\nfs=[sorted(glob.glob(d+'/f_*_t17.10.png'))[0] for d in ['lip_def','lip_r3','lip_h34']]+[sorted(glob.glob('lip_h34/f_*_t16.90.png'))[0]]\nim=[Image.open(f).resize((180,400)) for f in fs]\no=Image.new('RGB',(720,400));[o.paste(x,(i*180,0)) for i,x in enumerate(im)];o.save('peek.png')\"", "description": "Make a small peek sheet for my own check"}`
+
+### 🧑 User — 2026-11-17T18:50:22.194Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T18:50:23.671Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/peek.png"}`
+
+### 🧑 User — 2026-11-17T18:50:23.702Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:50:27.827Z
+
+Fix progressing: camera raised over the drain lip cuts the water veil (Benny hidden max ~48 % → ~27 %). Trying one more tweak to keep Benny off the screen edge.
+
+### 🤖 Claude — 2026-11-17T18:50:31.587Z
+
+> 🔧 **Bash** `{"command": "grep -n \"this.course.sample(s + 1.5)\" src/game/cameraRig.ts && sed -i 's|const fb = this.course.sample(s + 1.5);|const fb = this.course.sample(s + 0.5);|' src/game/cameraRig.ts && S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=16.7 --t1=17.5 --dt=0.1 --size=360x800 --out=$S/lip_a05 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],r.get('bennyHidden'),r.get('near2'))\n  except: pass\"; python3 -c \"\nimport json\nfor d in …[+214 chars]`
+
+### 🧑 User — 2026-11-17T18:51:13.349Z
+
+> ↩︎ result: 221:    const fb = this.course.sample(s + 1.5);
+> 16.7 03 0.027 0
+> 16.8 03 0.218 0
+> 16.9 03 0.252 0
+> 17 03 0.151 0
+> 17.1 03 0.16 0.0212
+> 17.2 03 0.115 0.2389
+> 17.3 04 0.034 0.3085
+> 17.4 04 0.008 0.0598
+> 17.5 04 0.005 0
+> lip_h34 [(16.8, [0, 0.409, 0.608, 0.738]), (16.9, [0, 0.387, 0.528, 0.734]), (17, [0, 0.422, 0.461, 0.755]), (17.1, [0, 0.45, 0.456, 0.78]), (17.2, [0, 0.425, 0.492, 0.758])]
+> lip_a05 [(16.8, [0.033, 0.39, 0.731, 0.731]), (16.9, [0.081, 0.366, 0.7, 0.719]), (17, [0.061, 0.375, 0.675, 0.73]), (17.1, [0.042, 0.401, 0.661, 0.754]), (17.2, [0.022, 0.392, 0.647, 0.741])]
+> [This command modified 1 file you've previously read: src/game/cameraRig.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T18:51:21.140Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && rm -rf $S/lip_new && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=16.6 --t1=18.6 --dt=0.1 --size=360x800 --out=$S/lip_new >/dev/null 2>&1; timeout 600 node tools/camclear/camtrace.mjs --q=camclear=1 --t0=16 --t1=19.5 --out=$S/ct_new.json >/dev/null 2>&1; python3 -c \"\nimport json,math\nfor n in ['def','r3','new']:\n  R=json.load(open('$S/lip_'+n+'/probe.json'))['rows']; h=[r['benny'].get('hidden',0) for r in R]\n  print(n,'Benny hidden max %.0f%%, frames>25%%: %d, >50%%: %d, Be …[+660 chars]`
+
+### 🧑 User — 2026-11-17T18:52:47.848Z
+
+> ↩︎ result: def Benny hidden max 100%, frames>25%: 11, >50%: 10, Benny cut by screen edge (box x=0): 5
+> r3 Benny hidden max 44%, frames>25%: 5, >50%: 0, Benny cut by screen edge (box x=0): 12
+> new Benny hidden max 25%, frames>25%: 1, >50%: 0, Benny cut by screen edge (box x=0): 2
+> ct_def view turn/frame max 2.6, max down 59, max |tilt| 14, min up.y 0.51
+> ct_r3 view turn/frame max 10.8, max down 59, max |tilt| 16, min up.y 0.51
+> ct_new view turn/frame max 9.1, max down 57, max |tilt| 1, min up.y 0.54
+
+### 🤖 Claude — 2026-11-17T18:52:54.470Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'\ns=open(p).read()\na=\"\"\"   * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), and the\n   * returned weight steadies the picture's \"up\" over the lip (see steadyUp0304).\"\"\"\nb=\"\"\"   * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), the view rides\n   * 3.4 u above the water (was 1.6: the curling chute water then filled the lower screen) aimed at Benny himself (was\n   * 1.5 u ahead: he sat cut off at the left screen edge), neve …[+647 chars]`
+
+### 🧑 User — 2026-11-17T18:52:57.111Z
+
+> ↩︎ result: 206:   * stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it
+> TSC
+
+### 🤖 Claude — 2026-11-17T18:53:02.493Z
+
+> 🔧 **Bash** `{"command": "sed -i '206s|stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it|stream 3 u behind Benny, above the water (the water he rides can then hardly come between), aimed at him; it|' src/game/cameraRig.ts && sed -n 203,208p src/game/cameraRig.ts; cat .gitattributes | head; S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; D=qa/gameplay_video/lip_r4; mkdir -p $D; for n in def r3 new; do lab=$([ $n = def ] && echo 1_default || ([ $n = r3 ] && echo 2_camclear_r3 || echo 3_camclear_NEW)); for  …[+392 chars]`
+
