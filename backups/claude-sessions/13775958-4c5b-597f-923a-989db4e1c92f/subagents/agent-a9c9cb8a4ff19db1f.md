@@ -2432,3 +2432,82 @@ Fix the key path (report nests classes).
 
 > 🔧 **Bash** `{"command": "git add src/characters/benny/benny05.ts qa/match/08/benny08 && git commit -q -m \"WIP: Screen 08 Benny bake08 - comparison pictures, 360 views, match08 now uses the 08 maps (bake08=0 = previous)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6UXiBngewM8kSBwFfZ\" && git push -q origin claude/rainbow-s08-benny08-bake 2>&1 | tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake", "description": "WIP commit, push, verify remote", "timeout": 180000}`
 
+### 🧑 User — 2026-11-17T16:01:04.825Z
+
+> ↩︎ result: 63926584aceb04586bf7e52064008aec5fcd6112
+> 63926584aceb04586bf7e52064008aec5fcd6112	refs/heads/claude/rainbow-s08-benny08-bake
+
+### 🤖 Claude — 2026-11-17T16:01:06.283Z
+
+Saved per coordinator request (pushed, remote == HEAD `6392658`). Continuing with the HUD-band check.
+
+### 🤖 Claude — 2026-11-17T16:01:07.280Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/hud.png"}`
+
+### 🧑 User — 2026-11-17T16:01:07.309Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:01:10.948Z
+
+> 🔧 **Bash** `{"command": "head -20 scripts/gameplay-test.mjs | grep -n \"q\\b\\|--q\\|out\\|json\" ", "description": "Check gameplay test options"}`
+
+### 🧑 User — 2026-11-17T16:01:10.987Z
+
+> ↩︎ result: 10:// Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+
+### 🤖 Claude — 2026-11-17T16:01:13.784Z
+
+> 🔧 **Bash** `{"command": "node scripts/gameplay-test.mjs --q=match08=1 --out=qa/match/08/benny08/gameplay_match08.json 2>&1 | tail -4; node scripts/gameplay-test.mjs 2>&1 | tail -4; git status --short", "description": "Run gameplay tests with and without match08", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-17T16:01:27.480Z
+
+> ↩︎ result: "verticalDrop": 61.31
+>  },
+>  "errors": []
+> }
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> ?? qa/match/08/benny08/gameplay_match08.json
+
+### 🤖 Claude — 2026-11-17T16:01:32.447Z
+
+> 🔧 **Bash** `{"command": "for f in qa/match/08/benny08/gameplay_match08.json qa/gameplay_test.json; do python3 -c \"\nimport json,sys;d=json.load(open('$f'))\nks=list(d.keys());print('$f',ks[:12])\nfor k in ('checks','results','tests'):\n  if k in d: r=d[k]; print(k, sum(1 for x in (r.values() if isinstance(r,dict) else r) if (x.get('pass') if isinstance(x,dict) else x)), len(r))\ns=json.dumps(d); import re; print(re.findall(r'\\\"(coins[A-Za-z]*|score[A-Za-z]*|passed|total)\\\": ?([0-9.]+)',s)[:8])\"; done", "description": "Summarise gameplay test results"}`
+
+### 🧑 User — 2026-11-17T16:01:32.533Z
+
+> ↩︎ result: qa/match/08/benny08/gameplay_match08.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> checks 8 8
+> [('coins', '2240'), ('coins', '1330'), ('coins', '1350'), ('coins', '1370'), ('coins', '1380'), ('coins', '1400'), ('coins', '1420'), ('coins', '1420')]
+> qa/gameplay_test.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass']
+> checks 8 8
+> [('coins', '2240'), ('coins', '1330'), ('coins', '1350'), ('coins', '1370'), ('coins', '1380'), ('coins', '1400'), ('coins', '1420'), ('coins', '1420')]
+
+### 🤖 Claude — 2026-11-17T16:01:36.092Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nfor f in ['qa/match/08/benny08/gameplay_match08.json','qa/gameplay_test.json']:\n  d=json.load(open(f)); print(f, d['pass'], [ (k, v.get('detail', v) if isinstance(v,dict) else v) for k,v in (d['checks'].items() if isinstance(d['checks'],dict) else enumerate(d['checks']))][:8])\" | cut -c1-900; sha256sum -c scripts/reference.sha256 | grep -c OK", "description": "Gameplay check details and reference hashes"}`
+
+### 🧑 User — 2026-11-17T16:01:36.160Z
+
+> ↩︎ result: qa/match/08/benny08/gameplay_match08.json True [('pauseFreezes', {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}), ('continuousTravel', {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}), ('noCameraCut', {'pass': True, 'maxCameraJumpPerStep': 0.728}), ('noTeleport', {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 341.074, 's1': 341.274, 'stage': '07', 'y0': -75.243, 'y1': -75.433, 't': 26.267}}), ('plunge', {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.29999999999956, 't08': 30.29999999999956, 'yTop': -51.835, 'yBottom': -113.147, 'y08': -113.147, 'travelTimeTopToInlet': 6.6, 'verticalDrop': 61.31}), ('realCoinPickups', {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}), ('victory', {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 434.801, 'lat': -0.046, 'coins': 2240, 'hearts': 5, 'p
+> qa/gameplay_test.json True [('pauseFreezes', {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}), ('continuousTravel', {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}), ('noCameraCut', {'pass': True, 'maxCameraJumpPerStep': 0.728}), ('noTeleport', {'pass': T …[+604 chars]
+
+### 🤖 Claude — 2026-11-17T16:01:42.185Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && mkdir -p qa/match/08/benny08/motion qa/match/08/benny08/other_screens && for f in s_left_steer s_right_steer f06_forward6u f10_forward10u; do cp $S/mot_new/$f.png qa/match/08/benny08/motion/${f}_NEW.png; cp $S/mot_cur/$f.png qa/match/08/benny08/motion/${f}_CURRENT.png; done && cp $S/mot_new/motion.json qa/match/08/benny08/motion/motion_NEW.json && for s in 03 04 05 06 07; do cp $S/os_cur/$s.png qa/match/08/benny08/other_screens/${s}_CURRENT.png; cp $S/os_new/$s.png qa/match/08/benny08/other_scre …[+110 chars]`
+
+### 🧑 User — 2026-11-17T16:01:42.277Z
+
+> ↩︎ result: 49M	qa/match/08/benny08
+
+### 🤖 Claude — 2026-11-17T16:01:42.644Z
+
+You've hit your 5-hour limit · resets 8:20pm (UTC)
+
