@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 14078,
-   "sha256": "97821aead028d10094b56621913a5a1edc6880219e1eeaf5e9671c1141e3ba4a"
+   "bytes": 14652,
+   "sha256": "69b07bafa54ae4e9b312064a4fd42e2423ef4bf5a595a078c18fbe7181ff4dec"
   },
   {
    "path": "README_FIRST.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "50792bd41e0715df84cfa876dda23967c28e1a7b378fdaf509a7bb74ad58ff29"
+   "sha256": "352af82f80d32c98689f7cca55ef6ef305d7c04e8815d0cf6c60c7284c38e8d6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -718,8 +718,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 24545,
-   "sha256": "97905e03a7eb83d6ee0905f4de6d63779992064a53c03c668330957d2b057c4e"
+   "bytes": 25354,
+   "sha256": "5360d3c274f9a9005519ca8cd300c7508509ca9d66134a53948ccad51f24e6ef"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -802,19 +802,44 @@
    "sha256": "84fbae15824e90e356104067aaa06adf9fea9769ca495affe6d853f9718867f6"
   },
   {
+   "path": "docs/briefs/2026-11-17-r4/S04.md",
+   "bytes": 3411,
+   "sha256": "3babfbb67f1e2e6179169b727afcb00bd891fbed8d8d1cbdfba8cb18282437e8"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S05.md",
+   "bytes": 3812,
+   "sha256": "0317ed6f4e80f1293fff5d8bf730be6b7d5416b5bd55f6b6c36439616fbb17f4"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S06.md",
+   "bytes": 3531,
+   "sha256": "f61b6bde7c356ca649b8cb617db5445c00d15f6f097828c407b3fefbe0156c6e"
+  },
+  {
    "path": "docs/briefs/2026-11-17-r4/S07.md",
-   "bytes": 3267,
-   "sha256": "8071522b2537caa95f38f63963849479226c8fbe04185fb9704677b9337bd582"
+   "bytes": 3509,
+   "sha256": "d111b1ebea065ae2a7a14f24e02d58dfbdb094b575386cd078541cfbc2ff1876"
   },
   {
    "path": "docs/briefs/2026-11-17-r4/S08_BENNY.md",
-   "bytes": 3851,
-   "sha256": "40940bb04b0429fe3cb25c17e9b28f2213589ef93d096a30531b2255b0543295"
+   "bytes": 4201,
+   "sha256": "719ea37307d47723653a3ff5f6c047e4afa7858d85a0927281f780089a5a6617"
   },
   {
    "path": "docs/briefs/2026-11-17-r4/S08_CAMERA.md",
    "bytes": 3491,
    "sha256": "5e2d8bf226c3233a93b60128bdd250e333c3869edace2f4e940d676d13592c7c"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S08_SCENERY.md",
+   "bytes": 4569,
+   "sha256": "418008bb495baf0b22c25e7d71201f26040a00cc89cf85bdecc76c229f350ed8"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/USER_DECISIONS.md",
+   "bytes": 3733,
+   "sha256": "4910ef54c611cd6a8ca60a7916283cbae5a2582517cb781dcb01357307c7fb7b"
   },
   {
    "path": "docs/characters/benny.md",

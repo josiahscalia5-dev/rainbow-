@@ -2073,3 +2073,365 @@ Please show me separate full-size approved, before, and new images, plus moving-
 
 Continue from our latest successful work without rebuilding or redesigning anything.
 
+### 🤖 Claude — 2026-11-17T18:59:24.083Z
+
+Thank you — clear decisions. The most time-sensitive one is Benny, since that specialist is working right now (on round 4 as its base). Let me see exactly where it is before redirecting it to round 3b.
+
+### 🤖 Claude — 2026-11-17T18:59:26.131Z
+
+> 🔧 **Bash** `{"command": "git fetch origin -q && date -u +%H:%M && for b in claude/rainbow-s08-benny08-bake-c4 claude/rainbow-s08-camclear-c4; do echo \"== $b\"; git log --format='%h %cd %s' --date=format:%H:%M origin/claude/${b#claude/} -12 | grep -v \"autosave:\" | head -5 | cut -c1-200; git log -1 --format='tip %h %cd' --date=format:%H:%M origin/$b; done", "description": "Check Benny and camera sessions' latest real commits"}`
+
+### 🧑 User — 2026-11-17T18:59:31.894Z
+
+> ↩︎ result: 18:59
+> == claude/rainbow-s08-benny08-bake-c4
+> 50258638 18:55 Screen 08 Benny round 5 (d): body fur tapered (as wide as the brim under it, slimmer toward the water), arms seated higher; b08shape=0 = round 4 (0 px); (c) whiter stripes tested, rejec
+> 88ee7200 18:44 Screen 08 Benny round 5 step 1: variant review set r2 / r3b / r4 (approved view, close-up, forward, steer left/right; exact URLs in NOTES)
+> 71aa6d85 18:10 Screen 08 Benny round 4: motion, 04-07, 360 views, APPROVED/PREVIOUS/NEW pictures, docs, debug APK with match08=1 (not phone-tested)
+> 8e40c541 18:06 Screen 08 Benny round 4: shoulder highlight on the fur (fur.ts uHi, b08hi=0 off) + lighter violet pom-pom (b08pom=0 off); Benny+splash 65.4 %, scenery 97.3 % unchanged, default 0 px, r3
+> tip c73eb45c 18:55
+> == claude/rainbow-s08-camclear-c4
+> 97fbc56c 18:55 camclear r4: drain lip view 3.4 u above the water, aimed at Benny (hidden max 44% -> 25%); lip frames default|r3|NEW
+> c98cfe99 18:43 camclear r4: steady world-anchored up over the 03->04 drain lip (tilt 16 deg -> 1 deg), gentler blend, no steeper than 56 deg
+> 0f12867b 18:02 camclear r3: STATUS, SHARED_CHANGES, NOTES + debug APK match08=1&camclear=1 (not phone-tested)
+> tip 97fbc56c 18: …[+2 chars]
+
+### 🤖 Claude — 2026-11-17T18:59:34.111Z
+
+Important catch: Benny's latest step (18:55) made the body **"slimmer toward the water"**, which is the opposite of your "rounder and fuller". Let me read that commit fully before I correct course.
+
+### 🤖 Claude — 2026-11-17T18:59:34.968Z
+
+> 🔧 **Bash** `{"command": "git log -1 --format=%B 50258638 | head -20; git show --stat 50258638 | grep -E \"png|ts\" | head -20", "description": "Read Benny round 5 body-shape commit"}`
+
+### 🧑 User — 2026-11-17T18:59:35.024Z
+
+> ↩︎ result: Screen 08 Benny round 5 (d): body fur tapered (as wide as the brim under it, slimmer toward the water), arms seated higher; b08shape=0 = round 4 (0 px); (c) whiter stripes tested, rejected
+> 
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> Claude-Session: https://claude.ai/code/session_01Kbt6BUy2s16F5FhJR2yJ6z
+> 
+>  src/game/Game.ts                    | 25 +++++++++++++++++++++----
+
+### 🤖 Claude — 2026-11-17T18:59:36.961Z
+
+> 🔧 **Bash** `{"command": "git show 50258638 -- src/game/Game.ts | head -60; git ls-tree -r --name-only origin/claude/rainbow-s08-benny08-bake-c4 qa/match/08/benny08/review_r5/ | head -30", "description": "Inspect Benny body-shape diff and review set files"}`
+
+### 🧑 User — 2026-11-17T18:59:37.004Z
+
+> ↩︎ result: commit 502586381221d37efec28c1874525b271e47b297
+> Author: Claude <noreply@anthropic.com>
+> Date:   Tue Nov 17 18:55:16 2026 +0000
+> 
+>     Screen 08 Benny round 5 (d): body fur tapered (as wide as the brim under it, slimmer toward the water), arms seated higher; b08shape=0 = round 4 (0 px); (c) whiter stripes tested, rejected
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_01Kbt6BUy2s16F5FhJR2yJ6z
+> 
+> diff --git a/src/game/Game.ts b/src/game/Game.ts
+> index 50c551da..74bb1d35 100644
+> --- a/src/game/Game.ts
+> +++ b/src/game/Game.ts
+> @@ -125,13 +125,29 @@ export async function startGame(canvas: HTMLCanvasElement) {
+>      sm.needsUpdate = true;
+>    }
+>    const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+> -  // benny08 round 5 (d) body shape (`?b08shape=1` probe / tuning: b08bw body width, b08ay/b08ax/b08ak arm raise / inward / size):
+> -  // wider round body under the brim, stubby arms seated high on the sides. Off unless the switch is set.
+> -  const B08SHAPE = !!b …[+4548 chars]
+
+### 🤖 Claude — 2026-11-17T18:59:54.762Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Kbt6BUy2s16F5FhJR2yJ6z", "priority": "next", "message": "LEAD → Benny specialist: THE USER'S DECISIONS (2026-11-17 ~19:00 UTC) — these override the round-5 brief where they differ.\n\n1. **Starting point = round 3b** (the user's preferred base for now). Build new changes on top of r3b. Still compare carefully with r2, r4 and the ORIGINAL approved Benny before any final choice; keep r2 / r4 and every r4/r5 switch reproducible (do NOT delete them). Benny and Screen 08 stay NOT approved.\n2. **Body: rounder and FULLER, like the approved picture.** Your 18:55 change (d) ( …[+1503 chars]`
+
+### 🧑 User — 2026-11-17T18:59:55.077Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T18:59:59.032Z
+
+Delivered. Now recording your decisions where every future session (and any future account) will read them, starting with the decisions file and the permanent `CLAUDE.md` orders.
+
+### 🤖 Claude — 2026-11-17T19:00:07.236Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/USER_DECISIONS.md", "content": "# The user's decisions — 2026-11-17 ~19:00 UTC (account 4, after reviewing the Screen 08 pictures + restore report)\n\nBinding for every workstream; they override older briefs where they differ. Nothing is approved until the user says so.\n\n1. **Benny (Screen 08) — keep refining.** Round **3b** is the preferred starting point for now; compare it carefully with\n   round 2, round 4 and the ORIGINAL approved Benny before any final choice. Body **rounder and fuller** like the\n   approved picture (widest …[+2193 chars]`
+
+### 🧑 User — 2026-11-17T19:00:07.265Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/USER_DECISIONS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:00:10.237Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "**NEWEST USER ORDERS (2026-11-17) — win over everything older in this section:**", "new_string": "**USER DECISIONS 2026-11-17 ~19:00 UTC (account 4) — full text `docs/briefs/2026-11-17-r4/USER_DECISIONS.md`:**\nBenny: round 3b = preferred base, compare with r2 / r4 / approved; body rounder and fuller, fur soft (not spiky).\n`?match08=1&coins08px=1` = preferred coin version (verify in gameplay before integration). Order: 08 Benny + camera →\n07 → 05 → 06 → 04, only as many parallel sessions as usage allows. Fina …[+234 chars]`
+
+### 🧑 User — 2026-11-17T19:00:10.291Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T19:00:12.639Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_BENNY.md", "old_string": "You are the SCREEN 08 BENNY SPECIALIST", "new_string": "> **USER DECISIONS 19:00 UTC (override this brief where they differ, full text `USER_DECISIONS.md`):** round 3b is\n> the preferred base; compare with r2 / r4 / approved; body rounder and FULLER (not tapered toward the water — the\n> 18:55 taper `b08shape` stays as an off-by-default switch); fur soft and natural, not spiky; preserve best details.\n\nYou are the SCREEN 08 BENNY SPECIALIST"}`
+
+### 🧑 User — 2026-11-17T19:00:12.682Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_BENNY.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:00:14.774Z
+
+> 🔧 **TaskCreate** `{"subject": "Verify coins08px in actual gameplay (pickup + moving look)", "description": "Real ride through 08 with match08=1&coins08px=1: each of the 9 picture coins collected, 91/2240, moving frames forward/left/right; save evidence.", "activeForm": "Verifying coins08px in gameplay"}`
+
+### 🧑 User — 2026-11-17T19:00:14.787Z
+
+> ↩︎ result: Task #6 created successfully: Verify coins08px in actual gameplay (pickup + moving look)
+
+### 🤖 Claude — 2026-11-17T19:00:16.121Z
+
+> 🔧 **TaskCreate** `{"subject": "Write r4 briefs for 05, 06, 04 (moving-view emphasis)", "description": "From r3 NEXT_MILESTONES; order 05 > 06 > 04; include user's moving-quality rule.", "activeForm": "Writing briefs for 05/06/04"}`
+
+### 🧑 User — 2026-11-17T19:00:16.131Z
+
+> ↩︎ result: Task #7 created successfully: Write r4 briefs for 05, 06, 04 (moving-view emphasis)
+
+### 🤖 Claude — 2026-11-17T19:00:17.421Z
+
+> 🔧 **TaskCreate** `{"subject": "Launch 07 when a Screen 08 session reaches a safe checkpoint", "description": "Capacity-aware sequencing: 08 Benny + camera -> 07 -> 05 -> 06 -> 04, max 2 parallel.", "activeForm": "Sequencing workstream launches"}`
+
+### 🧑 User — 2026-11-17T19:00:17.431Z
+
+> ↩︎ result: Task #8 created successfully: Launch 07 when a Screen 08 session reaches a safe checkpoint
+
+### 🤖 Claude — 2026-11-17T19:00:18.673Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p qa/match/08/coins08px/NOTES.md; echo ---; grep -n -E \"process.argv|location|\\?seed|goto\\(\" scripts/gameplay-test.mjs | head -8", "description": "Read coins08px notes and gameplay-test URL handling"}`
+
+### 🧑 User — 2026-11-17T19:00:18.713Z
+
+> ↩︎ result: # Screen 08 — coins on the painted spots (`?match08=1&coins08px=1`) — lead, round 3, 2026-11-17 ~18:00 UTC
+> 
+> Status: **under review** (the user approves; nothing is promoted). Default build and `?match08=1` unchanged.
+> 
+> ## What was wrong (found while comparing the Benny pictures)
+> * The nine picture coins of `?match08=1` landed **3–59 px** away from the painted coins (probe:
+>   `node tools/match08/coinprobe08.mjs`): the near three ≈0.4 u too low (their height was measured from the painted water
+>   level, y −113.11, but applied from the river centre line, ≈0.41 u lower), the (383,633) coin 57 px too high.
+> * Stage 10's own five coins ("straight line into the towel tunnel", s 420–428) showed far down the river in the approved
+>   08 view as an extra cluster — the painting has no coins there.
+> * Not a regression: the 14:51 FINISH-round picture `qa/match/08/08_NEW_match08.png` shows the same layout.
+> 
+> ## The change (switch-guarded, `src/gameplay/coins.ts`, 18 lines)
+> * `tools/match08/coins08px.mjs` → `assets/textures/match08/coins08px.json`: for each painted coin (centre + radius px from
+>   `coins08.json`), the locked approved camera's ray through the painted pixel; on that ray the depth where the …[+2096 chars]
+
+### 🤖 Claude — 2026-11-17T19:00:43.544Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/coins08_probe.mjs", "content": "// Per-coin pickup check for Screen 08 under ?match08=1&coins08px=1 (real ride from 03, coin-seeking steering) and a\n// no-steering ride (shows which 08 coins need the player to steer). Scratch only; run from the repo root.\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst OUT = process.argv[2];\nconst { chromium } = loadPlaywright();\nconst vite = await startVit …[+2062 chars]`
+
+### 🧑 User — 2026-11-17T19:00:43.569Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/coins08_probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:00:47.448Z
+
+> 🔧 **Bash** `{"command": "A=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit && node $A/coins08_probe.mjs $A/coins08_probe.json 2>&1 | tail -3; node scripts/gameplay-test.mjs --q=\"match08=1&coins08px=1\" --out=$A/gameplay_coins08px.json 2>&1 | grep -E '\"pass\"|realCoinPickups' | tail -2; python3 -I -c \"\nimport json,sys;d=json.load(open(sys.argv[1]));c=d['checks'];print('gameplay coins08px: pass',d['pass'],'| checks', sum(1 for v in c.values() if v.get('pass')),'/',len(c),'| coins',c['realCoinPickups'],'| errors',d['errors'])\" $A/gameplay_coins08px.json", "descrip …[+108 chars]`
+
+### 🧑 User — 2026-11-17T19:00:47.502Z
+
+> ↩︎ result: Command running in background with ID: bvrxeve12. Output is being written to: /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/tasks/bvrxeve12.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T19:00:51.520Z
+
+> 🔧 **Bash** `{"command": "for p in \"05:qa/match/05/STATUS.md\" \"06:qa/match/06/STATUS.md\" \"04:qa/match/04/STATUS.md\"; do n=${p%%:*}; f=${p#*:}; b=claude/rainbow-s${n}-match-c3; echo \"===== $n\"; git show origin/$b:$f 2>/dev/null | grep -E -i \"^\\* \\*\\*(Latest visual|Unfinished|Next task|Pictures|Android)\" | cut -c1-900; done", "description": "Read 05/06/04 STATUS next-task lines"}`
+
+### 🧑 User — 2026-11-17T19:00:51.595Z
+
+> ↩︎ result: ===== 05
+> * **Latest visual measurements (locked frame, pixel statistics, not a perceptual score):** whole frame within 20 levels 89.15 % → **89.44 %**, mean 8.09 → 7.93, SSIM 0.877 → 0.879; scenery 93.3 % → **93.7 %**; purple walls 92.2 % → 94.2 %; water 96.5 % (kept); coins 52.0 % → 48.6 % and bubbles 97.4 % → 93.4 % (worse, see problems). screen_match.py FULL 89.1 → 89.4 %, BELOWHUD 91.3 → 91.6 %, LAYOUT 95.6 → 95.9 %.
+> * **Unfinished problems:** soft cyan rings around the coins in the locked view (hole fill; game coin rims); the big bubble at the right wall looks dimmer (dark wall through it); bottom-left frame bevel detail; wake water between the filaments (not started); coin edge look (needs the lead's decision, shared coins.ts).
+> * **Next task:** wait for the lead / user. Candidates: coin-hole rings (smaller coin holes behind a switch, moving test decides), bubble brightness at the right wall, wake water.
+> ===== 06
+> * **Latest visual measurements (within 20 levels):** scenery 4.1 % → **98.8 %** (SSIM 0.987); whole frame 5.0 % →
+> * **Unfinished problems:** provisional local fill (fal clean plate prepared, needs the user's OK); floor tile repetition
+> * **Next task:** wait for the lea …[+435 chars]
+
+### 🤖 Claude — 2026-11-17T19:01:08.056Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S05.md", "content": "You are the SCREEN 05 workstream agent (05 · FLOW INTO THE CURRENT) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or start Screen 05 from scratch; never discard earlier work. Lead = session `session_01Kbt6BTTnCGMUULjZoCLDTo` (branch `ccr-067047f0-up5d1m`). The user's priority after Screen 08 and 07: **05 first**, then 06, then 04.\n\nYour branch: **`claude/rainbow-s05-match-c4`**, continued from `claude/rainbow-s05-match-c3` @ `ebaf6cac` (M2 done `a96bfdf4`). This is LINE B: NEVER merge …[+3289 chars]`
+
+### 🧑 User — 2026-11-17T19:01:08.095Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/S05.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:01:21.159Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S06.md", "content": "You are the SCREEN 06 workstream agent (06 · CREST THE RINSE ARCH) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work; never fall back to a generic washing-machine design. Lead = session `session_01Kbt6BTTnCGMUULjZoCLDTo` (branch `ccr-067047f0-up5d1m`). The user's order after 08 and 07: 05, then **06**, then 04.\n\nYour branch: **`claude/rainbow-s06-match-c4`**, continued from `claude/rainbow-s06-match-c3` @ `c088718b` (M1 done `b993f6d5`, line …[+3018 chars]`
+
+### 🧑 User — 2026-11-17T19:01:21.192Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/S06.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:01:33.710Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S04.md", "content": "You are the SCREEN 04 workstream agent (04 · THROUGH THE FIVE ARROWS) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead = session `session_01Kbt6BTTnCGMUULjZoCLDTo` (branch `ccr-067047f0-up5d1m`). The user's order after 08 and 07: 05, then 06, then **04**.\n\nYour branch: **`claude/rainbow-s04-match-c4`**, continued from `claude/rainbow-s04-match-c3` @ `d1e422fa` (M3 done `a4644789`, line A). Push ONLY your `-c4` branch.\n\nFIRST read (f …[+2889 chars]`
+
+### 🧑 User — 2026-11-17T19:01:33.738Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/S04.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:01:35.820Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S07.md", "old_string": "FIRST read: `docs/briefs/2026-11-17-r4/COMMON_RULES.md`, then the r3 and r2 COMMON_RULES", "new_string": "FIRST read: `docs/briefs/2026-11-17-r4/COMMON_RULES.md` and `docs/briefs/2026-11-17-r4/USER_DECISIONS.md` (the user wants Screen 07 finished: water, foam, gold rings, coin positions, moving-view problems; the 07→08 transition preserved; final quality = how it looks while Benny swims and steers), then the r3 and r2 COMMON_RULES"}`
+
+### 🧑 User — 2026-11-17T19:01:35.866Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-17-r4/S07.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:01:39.306Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/tasks/bvrxeve12.output | tail -5; python3 -I -c \"\nimport json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/coins08_probe.json'))\nfor m in d:\n  print(m)\n  for c in d[m]['stage08']: print('  s',c['s'],'lat',c['lat'],'taken',c['taken'],'picked',c['pickedAt'])\"", "description": "Show coins08px probe and gameplay results"}`
+
+### 🧑 User — 2026-11-17T19:01:39.368Z
+
+> ↩︎ result: "pass": true,
+>   "realCoinPickups": true,
+> gameplay coins08px: pass True | checks 8 / 8 | coins {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} | errors []
+> 
+> [exited with code 0]
+> seek
+>   s 389.43 lat 0.08 taken True picked {'atS': 388.52, 'benLat': -0.07}
+>   s 390.23 lat 0.35 taken True picked {'atS': 389.25, 'benLat': -0.08}
+>   s 391.03 lat 0.11 taken True picked {'atS': 390.14, 'benLat': -0.03}
+>   s 396.14 lat -0.69 taken True picked {'atS': 395.26, 'benLat': -0.9}
+>   s 400.09 lat 0.43 taken True picked {'atS': 399.22, 'benLat': 0.53}
+> straight
+>   s 389.43 lat 0.08 taken True picked {'atS': 388.52, 'benLat': 0}
+>   s 390.23 lat 0.35 taken True picked {'atS': 389.25, 'benLat': 0}
+>   s 391.03 lat 0.11 taken True picked {'atS': 390.14, 'benLat': 0}
+>   s 396.14 lat -0.69 taken True picked {'atS': 395.26, 'benLat': 0}
+>   s 400.09 lat 0.43 taken True picked {'atS': 399.22, 'benLat': 0}
+
+### 🤖 Claude — 2026-11-17T19:01:48.593Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/coins08_probe.json'))\nfor m in d: print(m,'run coins',d[m]['coins'],'taken',d[m]['takenTotal'],'/',d[m]['total'])\"; python3 -I -c \"\nimport json;d=json.load(open('assets/textures/match08/coins08px.json'));print(type(d).__name__, list(d.keys())[:10] if isinstance(d,dict) else len(d))\npts=d.get('coins') or d.get('points') or d\nfor p in (pts if isinstance(pts,list) else [])[:12]: print({k:(round(v,2) if isinstance(v,float) else v) for k,v in p.i …[+208 chars]`
+
+### 🧑 User — 2026-11-17T19:01:48.684Z
+
+> ↩︎ result: seek run coins 2180 taken 85 / 91
+> straight run coins 2010 taken 68 / 91
+> dict ['note', 'faceTo', 'coins']
+> {'px': [335, 862, 42], 's': 396.13, 'lat': -0.69}
+> {'px': [400, 786, 35], 's': 400.08, 'lat': 0.43}
+> {'px': [467, 737, 29], 's': 405.18, 'lat': 1.05}
+> {'px': [383, 633, 18], 's': 407.73, 'lat': -1.03}
+> {'px': [428, 662, 20], 's': 410.53, 'lat': -1.04}
+> {'px': [497, 686, 24], 's': 412.68, 'lat': 0.14}
+> {'px': [479, 601, 12], 's': 425.28, 'lat': 1.05}
+> {'px': [420, 616, 15], 's': 426.93, 'lat': -0.67}
+> {'px': [454, 608, 13], 's': 427.13, 'lat': 0.5}
+> 12:import coins08px from '../../assets/textures/match08/coins08px.json';
+> 57:  // `&coins08px=1` (with match08; lead r3 2026-11-17): the nine picture coins exactly on their painted pixels, on the water
+> 58:  // (assets/textures/match08/coins08px.json, tools/match08/coins08px.mjs), and stage 10's five coins out of the 08 view
+> 59:  const px08 = m08 && flag05('coins08px');
+> 76:      for (const c of coins08px.coins) {
+> 81:        add(course.stageAtS(sx).id, sx, d.dot(f.right), d.dot(f.up), { scale: c.scale, faceTo: coins08px.faceTo as [number, number, number] });
+> 104:    // `&coins08px=1`: stage 10's five coins showed far down the river in the approve …[+38 chars]
+
+### 🤖 Claude — 2026-11-17T19:02:04.453Z
+
+> 🔧 **Bash** `{"command": "A=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit && sed -e \"s/if (st.s >= s09 + 1 || st.mode !== 'ride') break;/if (st.mode !== 'ride') break;/\" -e \"s/filter((d) => d.s >= s08 \\&\\& d.s < s09)/filter((d) => d.s >= s08 - 0.5)/\" $A/coins08_probe.mjs > $A/coins08_probe_full.mjs && grep -c \"st.mode !== 'ride') break\" $A/coins08_probe_full.mjs && node $A/coins08_probe_full.mjs $A/coins08_probe_full.json 2>&1 | tail -2 && python3 -I -c \"\nimport json;d=json.load(open('$A/coins08_probe_full.json'))\npic=[396.13,400.08,405.18,407.73,410.53, …[+368 chars]`
+
+### 🧑 User — 2026-11-17T19:02:18.282Z
+
+> ↩︎ result: 1
+> seek run coins 2240 taken 91/91 | 08 coins taken 12/12
+> straight run coins 2070 taken 74/91 | 08 coins taken 12/12
+> seek run 2240 taken 91 / 91
+>   s 389.43 lat 0.08 taken True 
+>   s 390.23 lat 0.35 taken True 
+>   s 391.03 lat 0.11 taken True 
+>   s 396.14 lat -0.69 taken True PICTURE
+>   s 400.09 lat 0.43 taken True PICTURE
+>   s 405.16 lat 1.05 taken True PICTURE
+>   s 407.73 lat -1.03 taken True PICTURE
+>   s 410.56 lat -1.04 taken True PICTURE
+>   s 412.66 lat 0.14 taken True PICTURE
+>   s 425.63 lat 1.08 taken True 
+>   s 427.12 lat -0.66 taken True PICTURE
+>   s 427.42 lat 0.52 taken True 
+> straight run 2070 taken 74 / 91
+>   s 389.43 lat 0.08 taken True 
+>   s 390.23 lat 0.35 taken True 
+>   s 391.03 lat 0.11 taken True 
+>   s 396.14 lat -0.69 taken True PICTURE
+>   s 400.09 lat 0.43 taken True PICTURE
+>   s 405.16 lat 1.05 taken True PICTURE
+>   s 407.73 lat -1.03 taken True PICTURE
+>   s 410.56 lat -1.04 taken True PICTURE
+>   s 412.66 lat 0.14 taken True PICTURE
+>   s 425.63 lat 1.08 taken True 
+>   s 427.12 lat -0.66 taken True PICTURE
+>   s 427.42 lat 0.52 taken True
+
+### 🤖 Claude — 2026-11-17T19:02:27.013Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/coins08px/motion_NEW/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-17T19:02:27.075Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:02:34.831Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/coins08px/motion_NEW/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-17T19:02:34.884Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:02:35.314Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/coins08px/motion_NEW/f15_forward15u.png"}`
+
+### 🧑 User — 2026-11-17T19:02:35.360Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:03:22.174Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_SCENERY.md", "content": "You are the SCREEN 08 SCENERY-IN-MOTION specialist (washer-environment-modeler role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead = session `session_01Kbt6BTTnCGMUULjZoCLDTo` (branch `ccr-067047f0-up5d1m`). Screen 08 is the user's top approval priority and the user's #1 quality rule is: **the scenery must stay beautiful and accurate while Benny swims forward and steers — not only in the still approved view.**\n\nYour branch: …[+4060 chars]`
+
+### 🧑 User — 2026-11-17T19:03:22.199Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_SCENERY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:03:27.671Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/USER_DECISIONS.md", "old_string": "Order of work (lead): 08 Benny + 08 camera (running) → 07 (finish M2) → 05 → 06 → 04, never more sessions in\nparallel than the account's usage allows (default: at most two at a time).", "new_string": "Order of work (lead): 08 Benny + 08 camera (running) → 07 (finish M2) → **08 scenery-in-motion** (`S08_SCENERY.md`,\nadded 19:10 UTC: the lead found that Screen 08's projected scenery tears and duplicates once Benny moves forward 6 u\nor steers — the user's #1 quality rule) → 05  …[+944 chars]`
+
+### 🧑 User — 2026-11-17T19:03:27.710Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-17-r4/USER_DECISIONS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:03:28.968Z
+
+> 🔧 **Bash** `{"command": "tip=$(git rev-parse HEAD) && git ls-remote --exit-code origin refs/heads/claude/rainbow-s08-scenery-c4 >/dev/null 2>&1 && echo \"exists already\" || echo \"will create from lead after commit\"", "description": "Check whether the scenery branch already exists"}`
+
+### 🧑 User — 2026-11-17T19:03:29.585Z
+
+> ↩︎ result: will create from lead after commit
+
+### 🤖 Claude — 2026-11-17T19:03:30.475Z
+
+Now updating the progress doc with your decisions and the queue, then committing and pushing everything.
+
+### 🤖 Claude — 2026-11-17T19:03:36.376Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/PARALLEL_PROGRESS.md", "old_string": "## Waiting for the user\n* Screen 08: Benny r2 vs r3b vs r4 (review set coming in round 5); keep `coins08px`? camclear on the phone.\n* Screens 04 / 05 / 06: milestone results to review; which to resume. Screen 07: resume M2 when capacity allows?\n* fal clean plates for 06 / 07 (one paid edit each, prepared, not run).\n* Making `?flowplan=1` default — after the user's Flow videos are uploaded and tested.", "new_string": "## User decisions 2026-11-17 ~19:00 UTC (`docs/briefs/2026-11-17-r4/USER_DE …[+1142 chars]`
+
+### 🧑 User — 2026-11-17T19:03:36.425Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/PARALLEL_PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T19:03:39.920Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:lead-r4 --message \"Lead r4: user decisions 19:00 UTC (Benny r3b base + fuller body, coins08px preferred, queue 08 -> 07 -> 08 scenery-in-motion -> 05 -> 06 -> 04); coins08px gameplay verification (8/8, 91/2,240, all 9 painted coins picked up); briefs S05/S06/S04/S08_SCENERY; CLAUDE.md decision summary\" 2>&1 | grep -E '\"commit\"|rror'; git push -q origin HEAD:refs/heads/claude/rainbow-s08-scenery-c4 2>&1 | tail -1; echo \"lead remote $(git ls-remote origin refs/heads/ccr-067047f0-up5d1m | cut -c1-12) local $(git rev-parse --sho …[+198 chars]`
+

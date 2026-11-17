@@ -54,11 +54,20 @@ seven sessions). 07 next when capacity allows; 04 / 05 / 06 milestones are compl
 * Not available: World Labs Atlas connector (optional, not needed — the direct API key works); context7 MCP failed to
   connect (optional). No Android phone in the cloud: **no APK has been tested on a real phone.**
 
-## Waiting for the user
-* Screen 08: Benny r2 vs r3b vs r4 (review set coming in round 5); keep `coins08px`? camclear on the phone.
-* Screens 04 / 05 / 06: milestone results to review; which to resume. Screen 07: resume M2 when capacity allows?
+## User decisions 2026-11-17 ~19:00 UTC (`docs/briefs/2026-11-17-r4/USER_DECISIONS.md`)
+* Benny: round 3b = preferred base (compare with r2 / r4 / approved); rounder, fuller body; soft natural fur. Sent to
+  the running Benny session 19:01 (its 18:55 "slimmer toward the water" taper stays as an off-by-default switch).
+* `coins08px` approved as the preferred test version; lead verified it in gameplay (8/8, 91 / 2,240; all 9 painted
+  coins physically picked up, even riding straight).
+* Queue (max two sessions at a time): 08 Benny + 08 camera (running) → 07 → 08 scenery-in-motion (new, lead finding
+  19:10: projected scenery tears/duplicates when moving 6 u or steering) → 05 → 06 → 04. Briefs ready for all.
+* Never merge PR #16 or unfinished branches without the user's OK. Google Flow split unchanged; no video credits.
+
+## Still waiting for the user
 * fal clean plates for 06 / 07 (one paid edit each, prepared, not run).
-* Making `?flowplan=1` default — after the user's Flow videos are uploaded and tested.
+* Making `?flowplan=1` default — after the user's Flow videos are uploaded and tested (note: 7 of the 9 coins painted
+  in the 08 picture lie past the 08→video hand-over, so under flowplan they are credited, not swum through).
+* camclear and every APK on a real phone.
 
 ---
 # ROUND 3 (account 3) — history

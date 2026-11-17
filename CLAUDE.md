@@ -71,6 +71,12 @@ update that file when its state changes. Tool versions, plugins, MCP servers, ho
 pushes or tests unless verified.
 
 ## 6. The game (authoritative brief `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`)
+**USER DECISIONS 2026-11-17 ~19:00 UTC (account 4) — full text `docs/briefs/2026-11-17-r4/USER_DECISIONS.md`:**
+Benny: round 3b = preferred base, compare with r2 / r4 / approved; body rounder and fuller, fur soft (not spiky).
+`?match08=1&coins08px=1` = preferred coin version (verify in gameplay before integration). Order: 08 Benny + camera →
+07 → 05 → 06 → 04, only as many parallel sessions as usage allows. Final approval only after full-size APPROVED /
+BEFORE / NEW + moving-view comparisons. Never merge PR #16 or unfinished branches without the user's OK.
+
 **NEWEST USER ORDERS (2026-11-17) — win over everything older in this section:**
 * **Structure.** VIDEOS: 01 existing opening · 02 whirlpool tumble · 03 Whirlpool Twirl · 09 final wave · 10 return to
   hiding · 11 existing ending. REAL PLAYABLE 3D: 04 Five Arrows · 05 Flow Into the Current · 06 Rinse Arch · 07 Washer
