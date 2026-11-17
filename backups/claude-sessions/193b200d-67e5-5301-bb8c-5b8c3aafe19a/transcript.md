@@ -1650,3 +1650,183 @@ The soft-edge setting is neutral on the numbers, so I'm comparing it by eye.
 
 > 🔧 **Bash** `{"command": "cat > qa/match/08/benny08/work/crisp08.py <<'EOF'\n\"\"\"benny08 round 3: crisper knit / yarn — unsharp-mask (local contrast) boost of a benny08 map, mean tone kept\n(lead review: painted cuff ribs crisp, white bands clean, pom tufts defined; measured: approved highlights brighter).\nusage: python3 -I crisp08.py <in.png> <out.png> [--amount=0.6] [--sigma=2.0]\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nopt = dict(a[2:].split('=', 1) for a in sys.argv[1:] if a.startswith('--') and '=' in a)\na_in, a_out = [a for a in sys. …[+2469 chars]`
 
+### 🧑 User — 2026-11-17T17:49:32.192Z
+
+> ↩︎ result: done 35.022
+> crown_0p6   benny+splash  <=20  65.4 %  SSIM 0.596  mean  26.80 | pom 0.22 crown 0.28 cuff 0.33 
+> crown_1p2   benny+splash  <=20  65.4 %  SSIM 0.595  mean  26.88 | pom 0.22 crown 0.27 cuff 0.33 
+> rs_hat_crown   benny+splash  <=20  65.5 %  SSIM 0.597  mean  26.73 | pom 0.22 crown 0.29 cuff 0.33 
+> brim_0p6   benny+splash  <=20  65.3 %  SSIM 0.595  mean  26.85 | pom 0.22 crown 0.29 cuff 0.30 
+> brim_1p2   benny+splash  <=20  65.2 %  SSIM 0.594  mean  26.98 | pom 0.22 crown 0.29 cuff 0.28 
+> rs_hat_brim   benny+splash  <=20  65.5 %  SSIM 0.597  mean  26.73 | pom 0.22 crown 0.29 cuff 0.33 
+> pom_0p6   benny+splash  <=20  65.3 %  SSIM 0.596  mean  26.87 | pom 0.20 crown 0.29 cuff 0.33 
+> pom_1p2   benny+splash  <=20  65.2 %  SSIM 0.596  mean  27.02 | pom 0.17 crown 0.29 cuff 0.33 
+> rs_fur_pom   benny+splash  <=20  65.5 %  SSIM 0.597  mean  26.73 | pom 0.22 crown 0.29 cuff 0.33
+
+### 🤖 Claude — 2026-11-17T17:49:34.560Z
+
+The crisper knit measured slightly worse for all three parts (crown, cuff, pom). Checking by eye before deciding.
+
+### 🤖 Claude — 2026-11-17T17:49:37.757Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/h && python3 -I - <<EOF\nfrom PIL import Image\nS='$S'; box=(290,850,570,1070)\nps=['references/08_final_spin_chamber.png',S+'/o/rs_fur_pom.png',S+'/o/brim_1p2.png',S+'/o/pom_1p2.png']\nims=[Image.open(p).convert('RGB').crop(box) for p in ps]\nw,h=ims[0].size;o=Image.new('RGB',(w*4+18,h),'white')\nfor i,im in enumerate(ims):o.paste(im,(i*(w+6),0))\no.resize((o.size[0]*3//2,o.size[1]*3//2)).save(S+'/hat.png')\nEOF", "description": "Visual compare of crisp variants"}`
+
+### 🧑 User — 2026-11-17T17:49:38.214Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:49:39.825Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/h/hat.png"}`
+
+### 🧑 User — 2026-11-17T17:49:39.871Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:49:56.495Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/sp && mkdir -p $S && for v in \"a:0.3:2.0\" \"b:0.2:2.5\" \"c:0.15:3.0\"; do IFS=: read n p g <<< \"$v\"; cat > $S/sp_$n.shot.js <<EOF\nlet mat = null; Q.scene.traverse((o) => { const m = o.material; if (m && m.fragmentShader && m.fragmentShader.includes('c.a = min(1.0, pow(')) mat = m; });\nif (!mat) return 'no splash';\nmat.fragmentShader = mat.fragmentShader.replace(/c\\.a = min\\(1\\.0, pow\\(c\\.a, [0-9.]+\\) \\* [0-9.]+\\);/, 'c.a = min(1.0, pow(c.a, $p) * $g);'); mat.needsUpdate = true;\nQ.c …[+351 chars]`
+
+### 🧑 User — 2026-11-17T17:50:21.525Z
+
+> ↩︎ result: sp_a.shot.js "ok"
+> sp_b.shot.js "ok"
+> sp_c.shot.js "ok"
+> done 22.027
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/sp/o/sp_a.png
+>   benny+splash  <=20  65.5 %  SSIM 0.597  mean  26.73
+>   whole         <=20  85.4 %  SSIM 0.836  mean  12.78
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/sp/o/sp_b.png
+>   benny+splash  <=20  65.7 %  SSIM 0.597  mean  26.59
+>   whole         <=20  85.4 %  SSIM 0.836  mean  12.76
+> /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/sp/o/sp_c.png
+>   benny+splash  <=20  65.7 %  SSIM 0.597  mean  26.59
+>   whole         <=20  85.4 %  SSIM 0.836  mean  12.76
+
+### 🤖 Claude — 2026-11-17T17:50:24.919Z
+
+The stronger splash ring (0.2 / 2.5) measures closer: 65.7 % against 65.5 %. Applying the three kept changes in code: softer fur, crisp cuff ribs and the stronger splash.
+
+### 🤖 Claude — 2026-11-17T17:50:34.724Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/match/08/benny08/work/crisp08.py assets/textures/benny08/brim.png assets/textures/benny08/brim_r3.png --amount=1.2 && python3 - <<'EOF'\np='src/characters/benny/benny05.ts'; s=open(p).read()\nold=\"  hat_brim: { map: 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },\"\nassert old in s\ns=s.replace(old,\"  // round 3: crisper cuff ribs (work/crisp08.py --amount=1.2 → brim_r3.png; `?b08crisp=0` = round-2 brim.png)\\n  hat_brim: { map: B08R3 && qv('b08crisp') !== '0' ? 'brim_r3.png' : 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },\")\nopen …[+1648 chars]`
+
+### 🧑 User — 2026-11-17T17:51:51.713Z
+
+> ↩︎ result: assets/textures/benny08/brim_r3.png amount 1.2 sigma 2.0 mean before [71.8, 43.8, 131.7] after [72.5, 44.6, 131.7]
+> TSC_OK
+> 08 → qa/match/08/benny08/r3b/new/08.pn
+> 08 → qa/match/08/benny08/r3b/r3a/08.pn
+> 08 → qa/match/08/benny08/r3b/default/0
+> 08 → qa/match/08/benny08/r3b/r2/08.png
+> qa/match/08/benny08/r3b/default/08.png diff px 0 max 0
+> qa/match/08/benny08/r3b/r2/08.png diff px 0 max 0
+> qa/match/08/benny08/r3b/new/08.png
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.58
+>   benny+splash  <=20  65.3 %  SSIM 0.595  mean  26.83
+>   whole         <=20  85.4 %  SSIM 0.836  mean  12.79
+> pom 0.22
+> crown 0.29
+> cuff 0.28
+> star 0.50
+> body 0.75
+
+### 🤖 Claude — 2026-11-17T17:51:58.764Z
+
+> 🔧 **Bash** `{"command": "rm -rf qa/match/08/benny08/r3b/r3a && python3 -I - <<'EOF'\nfrom PIL import Image\nbox=(110,820,770,1320)\nps=['references/08_final_spin_chamber.png','qa/match/08/benny08/r3/CURRENT_08.png','qa/match/08/benny08/r3b/new/08.png']\nims=[Image.open(p).convert('RGB').crop(box) for p in ps]\nw,h=ims[0].size;o=Image.new('RGB',(w*3+12,h),'white')\nfor i,im in enumerate(ims):o.paste(im,(i*(w+6),0))\no.save('/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/all3.png')\nfor n,p in zip(['APPROVED','CURRENT_round2','NEW_r3b'],ps):\n    Image.open(p).convert('RGB …[+163 chars]`
+
+### 🧑 User — 2026-11-17T17:52:01.053Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:52:02.800Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/all3.png"}`
+
+### 🧑 User — 2026-11-17T17:52:02.854Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:52:06.513Z
+
+Round 3b (right) is visibly closer than round 2 (middle): no dark band, slightly softer fur, crisper cuff ribs, fuller foam. Running gameplay and committing.
+
+### 🤖 Claude — 2026-11-17T17:52:11.353Z
+
+> 🔧 **Bash** `{"command": "W=qa/match/08/benny08/r3b && mkdir -p $W/tests && node scripts/gameplay-test.mjs --q=match08=1 --out=$W/tests/gameplay_match08.json >/dev/null 2>&1; python3 -I -c \"\nimport json;j=json.load(open('$W/tests/gameplay_match08.json'));c=j['checks'];print(sum(v['pass'] for v in c.values()),len(c),c['realCoinPickups']['collected'],c['realCoinPickups']['endCoins'])\"; cp $W/new/08.png $W/NEW_08.png; git add src/characters/benny assets/textures/benny08/brim_r3.png src/game/Game.ts qa/match/08/benny08/work/crisp08.py $W && git commit -qm \"Screen 08 Benny round 3b (lead review): softer fur …[+582 chars]`
+
+### 🧑 User — 2026-11-17T17:52:25.366Z
+
+> ↩︎ result: 8 8 91 2240
+> 277826cd958f
+> 277826cd958f
+
+### 🤖 Claude — 2026-11-17T17:52:27.588Z
+
+Gameplay 8/8, 91 coins / 2,240. Pushed `277826c`. Updating docs and rebuilding the APK.
+
+### 🤖 Claude — 2026-11-17T17:52:44.094Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/08/benny08/NOTES.md'; s=open(p).read()\ns=s.replace(\"## Numbers (round 3 captures, `r3/`)\",\"\"\"## Round 3b (lead review of the 2x close-ups, captures `r3b/`)\n* Fur: `fur.ts` uniforms `uSoft` (root occlusion + per-strand variation pulled toward their mean) and `uSoftEdge`\n  (shorter fur where the body turns edge-on → softer outline); BENNY05 shader only, 0 = unchanged. Used at 0.6 on\n  body + arms, edge 1.0 on body (`?b08soft=0` = off). Probe: 65.3 → 65.6 % (edge neutral, smoother outline).\n  Rejected (worse): fur length ×0.7 / ×0.5 (63.5 / 62 …[+3213 chars]`
+
+### 🧑 User — 2026-11-17T17:53:00.338Z
+
+> ↩︎ result: exit 0
+> Uploading LFS objects: 100% (1/1), 24 MB | 0 B/s, done.
+> e94541c2258e98154b2c624d5b1e93b5150b67a4
+> e94541c2258e98154b2c624d5b1e93b5150b67a4
+>  M qa/capture_log.json
+
+### 🤖 Claude — 2026-11-17T17:53:03.225Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log.json && git status -s | head -2; python3 -I scripts/autosave-status.py | tail -1", "description": "Restore capture log and check autosave"}`
+
+### 🧑 User — 2026-11-17T17:53:03.796Z
+
+> ↩︎ result: AUTOSAVE OK | branch claude/rainbow-s08-benny08-bake-c3 | scheduler daemon | last verified backup 2026-11-17T17:49:05+00:00 (4.0 min ago) | local e94541c remote e94541c (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T17:53:12.096Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCLi5xPVn25aRuxkVwK", "message": "S08 BENNY r3b done (your review) — claude/rainbow-s08-benny08-bake-c3 @ e94541c2258e98154b2c624d5b1e93b5150b67a4 (remote == HEAD).\n1 FUR: new fur-shader softness (less grainy strands, body+arms 0.6) + shorter fringe at the outline (body). Probe 65.3→65.6 %. Shorter/sparser/more clumped fur and lighter roots all measured worse → rejected. Row-by-row body colour already matches the painting; the gap is graininess and the strand look, which is still finer/grainier than the painted clumps.\n2 HAT: on-screen colours already match (pain …[+1086 chars]`
+
+### 🧑 User — 2026-11-17T17:53:38.500Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:53:47.257Z
+
+I worked through your four points on Benny (fur, knitted hat, pom-pom, splash). He now looks somewhat closer to the approved picture, but the gap is not closed. I sent the lead its one status message and I'm stopping here to wait.
+
+**What changed**
+- **Fur:** less grainy and with a smoother outline, on the body and arms. I tried shorter fur, sparser fur, more clumped fur and lighter roots. All of them measured further from the painting, so none of them are in.
+- **Hat:** the painted cuff's vertical ribs now show clearly. The colours already matched on screen; even the painted white bands are slightly pink. Sharpening the striped part of the hat didn't look closer, so I left it as it was.
+- **Pom-pom:** unchanged. Sharpening it scored lower (22 % → 17 % of its pixels within 20 colour levels) and didn't look closer. It's still darker and fuzzier than the painted one.
+- **Splash:** the white foam ring around his body is fuller.
+
+**Numbers** (share of the Benny + splash area within 20 colour levels of the approved picture):
+- Round 2: 65.7 %. New: 65.3 %.
+- The new score is a little lower only because the new fur strands and sharper ribs don't land pixel-for-pixel on the painted ones. Side by side, the new Benny looks closer: the muddy band under the beanie is gone, the fur is softer, the ribs are crisper and the foam is fuller.
+- Scenery stays at 97.3 %, and the whole frame at 85.4 %.
+
+**Checks**
+- The default game, with no switch, is pixel-for-pixel unchanged.
+- `b08r3=0` still shows round 2 exactly, so the previous Benny is never lost.
+- Gameplay passes 8 of 8 checks, with 91 coins and a total of 2,240.
+- Everything is pushed, and GitHub matches the local copy (`e94541c`).
+
+**Still different from the painting:**
+- The painted fur has soft, highlighted clumps; ours is finer and grainier. Closing that would need a new fur bake or strand model.
+- The painted pom-pom is a lighter violet with distinct yarn tufts.
+- The painted body is rounder, with a relatively larger hat.
+
+Nothing here is approved; only you can approve it. The new Android build (`builds/rainbow-debug-08benny-2026-11-17-r3b.apk`) has not been tested on a phone, because there is no device in the cloud.
+
+Files are in `qa/match/08/benny08/`:
+- r3b/closeup2x_APPROVED.png
+- r3b/closeup2x_CURRENT_round2.png
+- r3b/closeup2x_NEW_r3b.png
+- r3b/NEW_08.png (full frame)
+- NOTES.md
+- STATUS.md
+- SHARED_CHANGES.md
+

@@ -467,6 +467,11 @@
    "sha256": "316550a43fb5f03b8be21beb7fdf20fee44eb5fa0741e6fa7522b3fa65a75af2"
   },
   {
+   "path": "assets/textures/benny08/brim_r3.png",
+   "bytes": 242587,
+   "sha256": "575b77b39cf5af5c2fdf0666b1e13eb1dd1d11110228d8ec24af7e2fcd06cd56"
+  },
+  {
    "path": "assets/textures/benny08/crown.png",
    "bytes": 374422,
    "sha256": "7ae0bcdcb8265f6a013f38896fb80d29428cf374b1ced4e613168dcd10c85974"
@@ -664,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11098,
-   "sha256": "0cd022405000aa027b11834a7469dcff61edfe0a52cc899fbb888b7968840119"
+   "sha256": "a7fd6a1ccb8602b75d51101946dc3ff348608e0a988955107cd1da9975549e74"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -720,6 +725,11 @@
    "path": "builds/rainbow-debug-08benny-2026-11-17-r3.apk",
    "bytes": 24193011,
    "sha256": "5d246c42016a6c70cd7f1f54db9f0dc7e9b0701d7e212dc59fbc7de30df39feb"
+  },
+  {
+   "path": "builds/rainbow-debug-08benny-2026-11-17-r3b.apk",
+   "bytes": 24501159,
+   "sha256": "6b0b92b0df30fbdc81634e735601def251d5417eff832a0bf5fdaaf5106ef938"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1483,18 +1493,18 @@
   },
   {
    "path": "qa/match/08/benny08/NOTES.md",
-   "bytes": 4709,
-   "sha256": "53e261d92fa45359dd96fa02426cb6c7cea092a110de4b819d59d6dd9ba89453"
+   "bytes": 6273,
+   "sha256": "83656508d94b4e7b4e5de94dccba09890f56c85537411cebb9aa50b51b3f1bd2"
   },
   {
    "path": "qa/match/08/benny08/SHARED_CHANGES.md",
-   "bytes": 943,
-   "sha256": "c7c5afb2f7ebc0f1b68b2c5536f129599df38e7a164b6647a5cc163cd1090d3b"
+   "bytes": 1337,
+   "sha256": "7baf58770f475ebc41e0b5f0f8e338b7bad92a362270d4a6b04786bf8ff1a88c"
   },
   {
    "path": "qa/match/08/benny08/STATUS.md",
-   "bytes": 1487,
-   "sha256": "b90d09a2b09b165d3128c95bd43c6bbcee5c35871444af3ee469c01c192e3719"
+   "bytes": 1594,
+   "sha256": "1c3def74b91d77731280e1b6adcf169d51d70e8a9b8d9e9c963dd95a3e19fe6f"
   },
   {
    "path": "qa/match/08/benny08/closeup_APPROVED.png",
@@ -1743,6 +1753,51 @@
   },
   {
    "path": "qa/match/08/benny08/r3/tests/gameplay_match08_r3.json",
+   "bytes": 14649,
+   "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/NEW_08.png",
+   "bytes": 2348849,
+   "sha256": "f1a2c91210fd0a18dd21a6c2fd4b43ea419971ad335d73acfa63078ada4b0997"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/closeup2x_APPROVED.png",
+   "bytes": 2018840,
+   "sha256": "ecccd8923ba84db54754dfcd95022f819b2297da59cd0144812c5997eed1b87c"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/closeup2x_CURRENT_round2.png",
+   "bytes": 1952418,
+   "sha256": "2c6e739015019237c6c96c9f1285da836714571685bf2912cfacbdbd1ec88acb"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/closeup2x_NEW_r3b.png",
+   "bytes": 1944522,
+   "sha256": "418ab295c20c593e09dc25d6fdf98be435d034766a843efb54c206f7d5c7be23"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/default/08.png",
+   "bytes": 1428957,
+   "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/new/08.png",
+   "bytes": 2348849,
+   "sha256": "f1a2c91210fd0a18dd21a6c2fd4b43ea419971ad335d73acfa63078ada4b0997"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/r2/08.png",
+   "bytes": 2351190,
+   "sha256": "989e8355567693ecad8f7a14c09722a7180ada9f11342c8257cab778f6a2dd79"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/regions_new.json",
+   "bytes": 634,
+   "sha256": "447aa8b210f8e98855dcf065039f0ff66dabd7ccab19f613ae10bbbd30aa6a0e"
+  },
+  {
+   "path": "qa/match/08/benny08/r3b/tests/gameplay_match08.json",
    "bytes": 14649,
    "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
   },
@@ -8433,8 +8488,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 21231,
-   "sha256": "51798a8b111c1e8543980483b910ff9e9b3afd0590019115206a10f616c10c0b"
+   "bytes": 21394,
+   "sha256": "839b24fbb655a7dcce7010a59db8031e1ef62008062b01c9b7cad240b9785dfa"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -8488,8 +8543,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 41122,
-   "sha256": "1c4821f7c309a4ba4fa4756b9f72814baa009d8004e11b44dcf6f5d69c8866e0"
+   "bytes": 41306,
+   "sha256": "9ddee456c88a58e66fe36c1f4b0668f2e153c9df114b09540e934166505873c7"
   },
   {
    "path": "src/game/cameraRig.ts",
