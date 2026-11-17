@@ -2285,3 +2285,42 @@ Low tier works too: Benny + hat 50.63 → **22.22** (within 20: 22.6 % → 67.5 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 2400 node scripts/gameplay-test.mjs --q=\"$STACK&benny05=1\" --out=$B/gameplay.json > $B/gameplay.log 2>&1; echo rc=$?; tail -15 $B/gameplay.log", "description": "Run gameplay test with benny05 on", "timeout": 2400000}`
 
+### 🧑 User — 2026-11-17T01:49:51.062Z
+
+> ↩︎ result: rc=0
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-17T01:49:53.490Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; python3 -I -c \"\nimport json; d=json.load(open('$B/gameplay.json'))\nprint([k for k in d]); \nfor k,v in d.items():\n  if isinstance(v,dict) and any(isinstance(x,bool) for x in v.values()): print(k,{a:b for a,b in v.items() if isinstance(b,bool)})\nprint('errors',d.get('errors'))\n\"; grep -iE \"pass|fail\" $B/gameplay.log | head -20", "description": "Summarise gameplay test results"}`
+
+### 🧑 User — 2026-11-17T01:49:53.587Z
+
+> ↩︎ result: ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> errors []
+>  "pass": true,
+
+### 🤖 Claude — 2026-11-17T01:49:55.625Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport json; d=json.load(open('qa/pilot05/full_reference_match/benny/gameplay.json'))\nc=d['checks']; print(type(c).__name__, len(c)); print(json.dumps(c)[:900]); print('pass',d['pass'],'query',d['query'])\"", "description": "Print gameplay check details"}`
+
+### 🧑 User — 2026-11-17T01:49:55.676Z
+
+> ↩︎ result: dict 8
+> {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "
+> pass True query proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1&benny05=1
+
