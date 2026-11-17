@@ -1075,3 +1075,368 @@ Specialist session created (`session_01KS3bZvdzt2da5S21x21PqW`). I'll check late
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && sed -i 's/const Rt = Number(qs?.get(.m06tunr.)) || 11;/const Rt = Number(qs?.get(\"m06tunr\")) || 14;/; s/rings turned into twisted diagonal bands. Here: a straight cylinder (radius `&m06tunr=`, default 11)/rings turned into twisted diagonal bands. Here: a straight cylinder (radius `\\&m06tunr=`, default 14)/' src/world/match06.ts && grep -n \"m06tunr\" src/world/match06.ts && npx tsc --noEmit && echo TSC_OK && B=\"match06=1&m06geo=1&m06flow=1\" && N=\"$B&m06cam=1&m06la=25&m06tun=1\" && (timeout 600 node tools/lead_r6/motion_audit.mjs 06 qa/match/06/r7/AFTE …[+238 chars]`
 
+### 🧑 User — 2026-11-17T23:39:28.790Z
+
+> ↩︎ result: The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed. Correction to the text above: this call was stopped while running, not refused before it ran. It may have run in part or in full, and its changes may have been written. No permission prompt was involved. Work it started elsewhere (a remote command, a background process) may still be running, so check before starting the same work again. The instruction to stop and wait still stands.
+
+### 🧑 User — 2026-11-17T23:39:28.794Z
+
+[Request interrupted by user for tool use]
+
+### 🧑 User — 2026-11-17T23:39:28.834Z
+
+CLAUDIA — ACTIVATE AND VERIFY WORLD LABS MARBLE, API KEYS, PLUGINS, SERVERS AND ALL AGENTS
+
+I want you to perform a COMPLETE ACTIVATION AND CONNECTION CHECK of my existing Rainbow game development environment.
+
+GitHub repository:
+https://github.com/josiahscalia5-dev/rainbow-
+
+Please use my newest verified working branch and existing project. Do not start a new game.
+
+1. WORLD LABS MARBLE — ACTIVATE EVERYTHING
+
+Immediately check:
+
+- Is the official World Labs Marble plugin installed, enabled, and loading successfully?
+- Is my existing World Labs API key connected and authenticating?
+- Is my World Labs account accessible?
+- Can you read my available credits?
+- Can you access my existing Marble worlds?
+- Can you access my saved Screen 08 world?
+- Are the Marble meshes, splats, panoramas, and other 3D assets available?
+- Does the Marble asset download server work?
+- Can Blender import my existing Marble assets?
+- Can the authorized specialist sessions access the required tools and assets?
+
+IMPORTANT: I previously used two different World Labs accounts.
+
+One had approximately 5,420 credits and access to the Screen 08 world. Another had approximately 5,190 credits and access to Screen 05 pilot worlds.
+
+Verify which account is currently connected. Do not assume they are interchangeable.
+
+If the wrong account is connected, request the correct API key through a secure credential form.
+
+Never ask me to paste API keys into chat or store them in GitHub.
+
+2. FIX WORLD LABS CONNECTION ISSUES
+
+Previously, the Marble API worked, but this download host was blocked:
+
+"cdn.marble.worldlabs.ai"
+
+Please test its accessibility.
+
+If it is blocked, request the necessary cloud-environment network permission.
+
+If permission cannot be granted, use my existing Marble assets already backed up in GitHub Git LFS and report the limitation.
+
+Do not waste credits downloading or regenerating assets that we already have.
+
+3. CHECK WORLD LABS ATLAS
+
+Verify whether the World Labs Atlas connector is installed, connected, and responding.
+
+If it is missing and actually required, guide me through the necessary account authorization.
+
+Distinguish the Atlas connector from the Marble API. One being disconnected does not necessarily mean the other is broken.
+
+4. ACTIVATE FAL.AI
+
+Check that my existing fal.ai API key works and belongs to the account where I purchased credits.
+
+Verify access to my completed Screen 04 request and existing saved results.
+
+Test the connection using free, non-billable requests only.
+
+5. ACTIVATE ALL REQUIRED PLUGINS AND SERVERS
+
+Check and enable every supported required integration:
+
+- GitHub and Git LFS.
+- World Labs Marble plugin.
+- World Labs Atlas, if needed.
+- Playwright MCP.
+- Parallax Three.js development tools.
+- Blender.
+- Three.js / WebGL2.
+- Android SDK, Java, and Gradle.
+- Node.js and project dependencies.
+- All required MCP servers.
+- Image-Blaster setup scripts.
+- GitHub autosave hooks.
+
+For each integration, verify that it ACTUALLY WORKS.
+
+Do not just tell me it is installed.
+
+Do not waste time activating unrelated optional integrations.
+
+If something requires my permission, clearly tell me exactly what to authorize.
+
+6. ACTIVATE MY MULTIPLE DESIGN AGENTS
+
+My ten specialist-agent definitions are saved in ".claude/agents/".
+
+Verify all ten load correctly.
+
+Restore my seven existing specialist workstreams for Screens 04–08 from their newest saved GitHub branches.
+
+I want multiple specialist agents to be capable of working on different screens simultaneously.
+
+Start no more than TWO active specialist sessions at a time to conserve Claude credits.
+
+Verify that each started session actually receives its instructions and is doing real work. Having an agent installed or a branch created does not count as running.
+
+7. PROTECT MY PROJECT
+
+Do not restart, redesign, overwrite, or delete any completed work.
+
+Preserve my original approved screenshots, 3D environments, existing Marble assets, fal.ai results, specialist branches, and saved progress.
+
+Keep the five-minute GitHub autosave working for active sessions.
+
+Do not merge unfinished work without my approval.
+
+8. MY MAIN PRIORITY
+
+My goal is to make my playable Rainbow Screens 04–08 look at least 8.5/10 like my ORIGINAL APPROVED SCREENS, ideally 9/10 or better, throughout gameplay.
+
+Screens 01–03 and 09–11 are Google Flow videos. Do not spend development time rebuilding those.
+
+9. GIVE ME PROOF THAT EVERYTHING IS WORKING
+
+After running the connection tests, give me a simple report showing:
+
+SERVICE | ACTIVATED | CONNECTED | TESTED WORKING | PROBLEM IF ANY
+
+Include World Labs Marble, both World Labs accounts where accessible, API authentication, world access, asset downloads, Atlas, fal.ai, GitHub, plugins, servers, and all ten agent definitions.
+
+Also list which specialist sessions are actually running.
+
+NO PAID WORLD LABS OR FAL.AI JOBS WITHOUT MY APPROVAL.
+
+Please activate and verify everything you can right now, request any required secure permissions immediately, and report anything that cannot be activated.
+
+Do not claim everything is ready until it has passed actual tests.
+
+Once the required environment is working, continue improving my original approved playable screens.
+
+### 🤖 Claude — 2026-11-17T23:39:56.184Z
+
+Understood. I'll stop the Screen 06 rendering and do the full activation and connection check first. First, making sure the interrupted run left nothing behind:
+
+### 🤖 Claude — 2026-11-17T23:39:57.430Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep -E \"motion_audit|vite|chrom\" | grep -v grep | awk '{print $2, $11, $12, $13}' | head; cd /home/user/wt-s06 && git status --short | head; grep -n 'm06tunr\")) ||' src/world/match06.ts; ls qa/match/06/r7/", "description": "Check leftover processes and S06 worktree state"}`
+
+### 🧑 User — 2026-11-17T23:39:57.535Z
+
+> ↩︎ result: M src/game/cameraRig.ts
+>  M src/world/match06.ts
+> ?? qa/match/06/r7/
+> 264:    const Rt = Number(qs?.get("m06tunr")) || 14;
+> AFTER
+> BEFORE
+> NEW_cam25
+> NEW_tun
+> NEW_tun_r11
+> NEW_tun_r14
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:39:59.456Z
+
+Nothing is still running. I'll save the Screen 06 work to its own branch right away so nothing is lost. Everything is behind switches, so the default game is unchanged.
+
+### 🤖 Claude — 2026-11-17T23:40:03.047Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && git add src/game/cameraRig.ts src/world/match06.ts qa/match/06/r7 && git commit -q -m \"06 r7 WIP: &m06cam=1 (chord-frame camera over the crest) + &m06tun=1 (straight painted ring tunnel, r=14)\n\nBoth switch-guarded under ?match06=1; default build and existing match06 switches unchanged.\nMoving audits: qa/match/06/r7/ (NEW_cam25, NEW_tun, NEW_tun_r11, NEW_tun_r14; AFTER/BEFORE partial).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZsVTaecBXyvFd9EQGg\" && git push -q origin claude/rainbow- …[+202 chars]`
+
+### 🧑 User — 2026-11-17T23:40:24.016Z
+
+> ↩︎ result: local 72aff4b7270a71aae58124374eb2f038ac7db700 remote 72aff4b7270a71aae58124374eb2f038ac7db700
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:40:25.234Z
+
+Saved (`72aff4b7`, remote == local). Now the connection checks, several in parallel:
+
+### 🤖 Claude — 2026-11-17T23:40:26.783Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/verify-assets.py | grep -n -i -E \"def |worldlabs|world|url|host\" | head -20; echo ----; timeout 120 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -15", "description": "Run free World Labs key and world check", "timeout": 150000}`
+
+### 🤖 Claude — 2026-11-17T23:40:26.983Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-17T23:40:27.743Z
+
+> ↩︎ result: 6:    python3 -I scripts/verify-assets.py marble                     both Marble worlds' files present, real, checksummed
+> 23:import urllib.error
+> 24:import urllib.request
+> 31:def git(*args: str, timeout: int = 120) -> str:
+> 36:def done(status: str, summary: str) -> int:
+> ----
+> @@ ok Marble API key authenticated (free read: 5190 credits); worlds draft 200, full 200; no paid job started
+
+### 🤖 Claude — 2026-11-17T23:40:27.835Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Atlas__list_projects,ListPlugins,mcp__plugin_playwright_playwright__browser_navigate,mcp__plugin_playwright_playwright__browser_evaluate", "max_results": 5}`
+
+### 🧑 User — 2026-11-17T23:40:27.844Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🧑 User — 2026-11-17T23:40:31.314Z
+
+> ↩︎ result: {"environment_id":"env_01FyZzgXX4jXDQx4THkh99d4","name":"rainbow-","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":true,"setup_script":"#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-) container setup: real LFS assets, Android SDK, Blender 5.3,\n# World Labs Claude Code plugin. Every step is non-fatal so a session always starts.\nif [ -d rainbow- ]; then\n  (cd rainbow- \u0026\u0026 git lfs pull) || echo \"rainbow: git lfs pull failed\"\nfi\nSDK=/opt/android-sdk\nif [ ! -x \"$SDK/cmdline-tools/latest/bin/sdkmanager\" ]; then\n  mkdir -p \"$SDK\" \u0026\u0026 cd \"$SDK\" \\\n    \u0026\u0026 curl -sSL -o clt.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip \\\n    \u0026\u0026 unzip -q -o clt.zip -d tmp \u0026\u0026 mkdir -p cmdline-tools \u0026\u0026 rm -rf cmdline-tools/latest \\\n    \u0026\u0026 mv tmp/cmdline-tools cmdline-tools/latest \u0026\u0026 rm -rf tmp clt.zip; cd - \u003e /dev/null\nfi\nif [ -x \"$SDK/cmdline-tools/latest/bin/sdkmanager\" ]; then\n  ye …[+2880 chars]
+
+### 🤖 Claude — 2026-11-17T23:40:39.213Z
+
+> 🔧 **Bash** `{"command": "grep -n \"api.worldlabs.ai\\|/worlds\\|credits\\|WLT\" scripts/verify-assets.py | head -12; python3 -I -c \"\nimport json;m=json.load(open('backups/TOOL_MANIFEST.json'));s=json.dumps(m)\nimport re;print(sorted(set(re.findall(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',s))))\"; ls qa/worldlabs/05/pilot/ | head", "description": "Find World Labs endpoints and saved world IDs"}`
+
+### 🧑 User — 2026-11-17T23:40:39.275Z
+
+> ↩︎ result: 154:                      f"{len(tracked)} files tracked under qa/worldlabs; credits spent {b['spent_credits']} of cap {b['user_cap_credits']}")
+> 184:    """Free, read-only Marble World API checks (no credits): balance + both pilot worlds. The key is injected by
+> 187:    api = "https://api.worldlabs.ai/marble/v1"
+> 199:    code, d = get("/credits")
+> 202:                            "(request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git")
+> 208:        c, _ = get(f"/worlds/{w['world_id']}")
+> 212:    return done(status, f"Marble API key authenticated (free read: {d.get('remaining_credits', '?'):.0f} credits); worlds "
+> ['12a08430-f687-4a09-bdc7-3a469c76363d', '4a549a9d-3de2-424b-8324-db24a8d1b9bd', '5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f', 'c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9', 'f0be2178-4291-4f90-848f-6506b53cc87d']
+> LEDGER.md
+> draft
+> full
+> prompt_05.txt
+
+### 🤖 Claude — 2026-11-17T23:40:39.359Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🤖 Claude — 2026-11-17T23:40:39.658Z
+
+> 🔧 **ListPlugins** `{}`
+
+### 🧑 User — 2026-11-17T23:40:39.716Z
+
+> ↩︎ result: {"results":[]}
+
+### 🤖 Claude — 2026-11-17T23:40:39.913Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_navigate** `{"url": "about:blank"}`
+
+### 🧑 User — 2026-11-17T23:40:39.985Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🧑 User — 2026-11-17T23:40:45.117Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('about:blank');
+> ```
+> ### Page
+> - Page URL: about:blank
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-17T23-40-45-110Z.yml)
+
+### 🤖 Claude — 2026-11-17T23:40:47.118Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_evaluate** `{"function": "() => { const c = document.createElement('canvas'); const gl = c.getContext('webgl2'); return gl ? { webgl2: true, renderer: gl.getParameter(gl.RENDERER), version: gl.getParameter(gl.VERSION) } : { webgl2: false }; }"}`
+
+### 🤖 Claude — 2026-11-17T23:40:59.515Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/wlcheck.py <<'EOF'\n# Free, read-only World Labs Marble checks (GET only; the proxy injects the key; nothing printed but status codes)\nimport json, urllib.request, urllib.error, sys\nAPI = \"https://api.worldlabs.ai/marble/v1\"\ndef get(p):\n    r = urllib.request.Request(API + p, headers={\"WLT-Api-Key\": \"[REDACTED]\"})\n    try:\n        with urllib.request.urlopen(r, timeout=40) as f: return f.status, json.loads(f.read() or b\"{}\")\n    except urllib.error.HTTPError as e: return e.code,  …[+1968 chars]`
+
+### 🧑 User — 2026-11-17T23:43:07.682Z
+
+> ↩︎ result: ### Result
+> {
+>   "webgl2": true,
+>   "renderer": "WebKit WebGL",
+>   "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+> }
+> ### Ran Playwright code
+> ```js
+> await page.evaluate('() => { const c = document.createElement(\'canvas\'); const gl = c.getContext(\'webgl2\'); return gl ? { webgl2: true, renderer: gl.getParameter(gl.RENDERER), version: gl.getParameter(gl.VERSION) } : { webgl2: false }; }');
+> ```
+
+### 🧑 User — 2026-11-17T23:43:09.957Z
+
+> ↩︎ result: credits 200 {'remaining_credits': 5190.0}
+> screen08_world 32b5b2f4 404 
+> manifest_0 12a08430 404 
+> manifest_1 4a549a9d 404 
+> manifest_2 5fd3d7a7 200 Rainbow 05 draft (approved tunnel)
+> manifest_3 c0c9dc57 200 Rainbow 05 full (approved tunnel)
+> manifest_4 f0be2178 429 
+> sample asset hosts: ['cdn.marble.worldlabs.ai']
+> --- CDN reachability (HEAD, no download):
+> asset HEAD 200 host https://cdn.marble.worldlabs.ai/…
+> cdn root 403
+> --- fal.ai (no key in this environment):
+> fal status 404
+
+### 🤖 Claude — 2026-11-17T23:43:32.244Z
+
+> 🔧 **Bash** `{"command": "echo \"== plugins (local CLI)\"; (claude plugin list 2>&1 || /opt/node22/bin/claude plugin list 2>&1) | head -20; echo \"== MCP template\"; python3 -I -c \"import json;d=json.load(open('.mcp.json.template'));print(list(d.get('mcpServers',d).keys()))\" 2>&1; ls .mcp.json 2>/dev/null; echo \"== references\"; sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"; sha256sum -c scripts/reference.sha256 2>&1 | grep -v \": OK\" | head -3; echo \"== agents\"; python3 -I - <<'EOF'\nimport json, hashlib, glob, os\na = json.load(open('backups/AGENTS_STATUS.json'))\ns = json.dumps(a)\ …[+665 chars]`
+
+### 🧑 User — 2026-11-17T23:43:33.686Z
+
+> ↩︎ result: == plugins (local CLI)
+> Installed plugins:
+> 
+>   > worldlabs@worldlabs
+>     Version: 0.2.2
+>     Scope: user
+>     Status: √ enabled
+> 
+> Synced from claude.ai:
+> 
+>   > playwright@synced
+>     Version: unknown
+>     Path: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/22bf1341-d051-4d92-9363-8d0dc8349035
+>     Status: √ loaded
+> 
+>   > frontend-design@synced
+>     Version: 1.1.1
+>     Path: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/2ca4e30e-2482-4c94-8644-6c26adf27391
+>     Status: √ loaded
+> 
+>   > context7@synced
+> == MCP template
+> ['playwright', 'blender', '_meshy', 'hyper3d-rodin', '_worldlabs']
+> == references
+> 13
+> == agents
+> 10 agent files
+> android-build-performance.md b0c45161860a checksum-recorded
+> animation-and-gameplay-engineer.md c48094c3ed3d checksum-recorded
+> benny-character-artist.md cde203afa8b9 checksum-recorded
+> cartoon-girl-character-artist.md 52058503a355 checksum-recorded
+> foam-bubbles-particles.md f6341dcde1ea checksum-recorded
+> path-camera-transition-engineer.md 4244cc824900 checksum-recorded
+> playwright-visual-qa.md 0f14c32fb4af checksum-recorded
+> reference-match-director.md b977e3f7592f checksu …[+428 chars]
+
+### 🤖 Claude — 2026-11-17T23:43:50.617Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad && (timeout 900 node scripts/gameplay-test.mjs > $SP/gameplay_default.log 2>&1; echo \"EXIT $?\" >> $SP/gameplay_default.log) > /dev/null 2>&1 &\ncat > $SP/lfs_all.sh <<'EOF'\ncd /home/user/rainbow-\nTIPS=\"claude/rainbow-lead-c7 claude/rainbow-s06-match-c7 claude/rainbow-s08-scenery-c7 claude/rainbow-preview-all-c6 claude/rainbow-s08-benny08-bake-c5 claude/rainbow-s08-camclear-c5 claude/rainbow-s07-match-c5 claude/rainbow-s05-match-c5 claude/rainbow-s04-match-c5\"\nfor t in $TIPS; do git fetch -q …[+1901 chars]`
+
+### 🧑 User — 2026-11-17T23:43:53.193Z
+
+> ↩︎ result: Marble assets sample:
+> qa/worldlabs/05/blender/screen05_layout.glb
+> qa/worldlabs/05/pilot/draft/collider.glb
+> qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb
+> importing: qa/worldlabs/05/blender/screen05_layout.glb (2.7M)
+> BLENDER_IMPORT_OK objects 17 vertices 77148 version 5.3.0
+
+### 🤖 Claude — 2026-11-17T23:43:53.519Z
+
+> 🔧 **Bash** `{"command": "java -version 2>&1 | head -1; ls /opt/android-sdk/platforms /opt/android-sdk/build-tools 2>&1 | tr '\\n' ' '; echo; /opt/android-sdk/build-tools/34.0.0/aapt2 version 2>&1 | head -1; (cd android && timeout 120 ./gradlew --version --offline 2>&1 | grep -E \"^Gradle|Kotlin|JVM\" ); ls -la builds/*.apk android/app/build/outputs/apk/*/*.apk 2>/dev/null | awk '{print $5, $6, $7, $8, $9}' | tail -5; echo \"== image-blaster setup script header:\"; sed -n 1,25p scripts/setup-image-blaster.sh | grep -E \"^#\" | head -12", "description": "Check Java, Android SDK, Gradle, existing APKs, Image …[+29 chars]`
+
