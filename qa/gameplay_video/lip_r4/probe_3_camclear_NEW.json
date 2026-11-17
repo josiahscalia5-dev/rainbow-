@@ -1,0 +1,1653 @@
+{
+ "q": "camclear=1",
+ "apk": null,
+ "size": [
+  360,
+  800
+ ],
+ "steer": null,
+ "steerPlan": null,
+ "patched": [
+  "zone_basin/LatheGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/ShapeGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "tube05_far",
+  "tube05_far",
+  "foam_berm",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_whirlpool/IcosahedronGeometry"
+ ],
+ "rows": [
+  {
+   "t": 16.6,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_000_t16.60.png",
+   "mode": "ride",
+   "stage": "03",
+   "s": 64.395,
+   "lat": 0,
+   "coins": 1400,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -16.33,
+   "bennyVisible": true,
+   "cam": [
+    7.73,
+    -11.62,
+    -18.66
+   ],
+   "near2": 0.0011,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1658,
+    "hidden": 0.005,
+    "box": [
+     0,
+     0.576,
+     0.528,
+     1
+    ],
+    "depth": 4.63,
+    "fgFrame": 0.0807,
+    "fgOnBenny": 0.001,
+    "occluders": [],
+    "centreY": -16.256,
+    "up": [
+     0.529,
+     0.616,
+     0.584
+    ],
+    "rootY": -16.33,
+    "surfaceY": -15.943,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -1.529,
+    "centreAboveSurface": -0.509
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 3.59,
+      "obj": "water_ribbon<water_system<Scene",
+      "p": [
+       6.15,
+       -14.6,
+       -19.89
+      ]
+     },
+     {
+      "d": 6.52,
+      "obj": "foam_berm<foam_banks<water_system<Scene",
+      "p": [
+       4.86,
+       -17.03,
+       -20.89
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 16.7,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_001_t16.70.png",
+   "mode": "ride",
+   "stage": "03",
+   "s": 65.297,
+   "lat": 0,
+   "coins": 1410,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -16.554,
+   "bennyVisible": true,
+   "cam": [
+    7.12,
+    -11.79,
+    -19.62
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1555,
+    "hidden": 0.027,
+    "box": [
+     0,
+     0.524,
+     0.717,
+     0.8
+    ],
+    "depth": 4.95,
+    "fgFrame": 0.0688,
+    "fgOnBenny": 0.001,
+    "occluders": [],
+    "centreY": -16.481,
+    "up": [
+     0.349,
+     0.606,
+     0.715
+    ],
+    "rootY": -16.554,
+    "surfaceY": -16.37,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -1.162,
+    "centreAboveSurface": -0.184
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 9.96,
+      "obj": "water_ribbon<water_system<Scene",
+      "p": [
+       3.01,
+       -20.06,
+       -15.89
+      ]
+     },
+     {
+      "d": 11.06,
+      "obj": "water_ribbon<water_system<Scene",
+      "p": [
+       2.55,
+       -20.97,
+       -15.47
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 16.8,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_002_t16.80.png",
+   "mode": "ride",
+   "stage": "03",
+   "s": 66.213,
+   "lat": 0,
+   "coins": 1410,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -16.866,
+   "bennyVisible": true,
+   "cam": [
+    6.85,
+    -12.06,
+    -19.4
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1462,
+    "hidden": 0.218,
+    "box": [
+     0.033,
+     0.39,
+     0.731,
+     0.731
+    ],
+    "depth": 5.32,
+    "fgFrame": 0.1357,
+    "fgOnBenny": 0.068,
+    "occluders": [
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.051
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.013
+     }
+    ],
+    "centreY": -16.796,
+    "up": [
+     0.082,
+     0.584,
+     0.808
+    ],
+    "rootY": -16.866,
+    "surfaceY": -16.867,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.898,
+    "centreAboveSurface": 0.123
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 4.68,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       5.21,
+       -15.94,
+       -17.37
+      ]
+     },
+     {
+      "d": 4.75,
+      "obj": "hat_crown<hat<body<benny_root<AuxScene",
+      "p": [
+       5.19,
+       -15.99,
+       -17.35
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 16.9,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_003_t16.90.png",
+   "mode": "ride",
+   "stage": "03",
+   "s": 67.158,
+   "lat": 0,
+   "coins": 1410,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -17.308,
+   "bennyVisible": true,
+   "cam": [
+    6.55,
+    -12.42,
+    -18.78
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1391,
+    "hidden": 0.252,
+    "box": [
+     0.081,
+     0.366,
+     0.7,
+     0.719
+    ],
+    "depth": 5.49,
+    "fgFrame": 0.2171,
+    "fgOnBenny": 0.16,
+    "occluders": [
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.155
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.031
+     }
+    ],
+    "centreY": -17.242,
+    "up": [
+     -0.265,
+     0.551,
+     0.791
+    ],
+    "rootY": -17.308,
+    "surfaceY": -17.45,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.606,
+    "centreAboveSurface": 0.377
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 4.84,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       4.48,
+       -16.44,
+       -17.05
+      ]
+     },
+     {
+      "d": 5.11,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       4.36,
+       -16.66,
+       -16.96
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 17,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_004_t17.00.png",
+   "mode": "ride",
+   "stage": "03",
+   "s": 68.143,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -17.882,
+   "bennyVisible": true,
+   "cam": [
+    6.11,
+    -12.89,
+    -18.05
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1355,
+    "hidden": 0.151,
+    "box": [
+     0.061,
+     0.375,
+     0.675,
+     0.73
+    ],
+    "depth": 5.57,
+    "fgFrame": 0.3052,
+    "fgOnBenny": 0.111,
+    "occluders": [
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.098
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.04
+     }
+    ],
+    "centreY": -17.819,
+    "up": [
+     -0.59,
+     0.52,
+     0.618
+    ],
+    "rootY": -17.882,
+    "surfaceY": -18.097,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.485,
+    "centreAboveSurface": 0.535
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 5.02,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       3.49,
+       -17.05,
+       -17.07
+      ]
+     },
+     {
+      "d": 5.41,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       3.29,
+       -17.38,
+       -16.99
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 17.1,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_005_t17.10.png",
+   "mode": "ride",
+   "stage": "03",
+   "s": 69.182,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -18.527,
+   "bennyVisible": true,
+   "cam": [
+    5.51,
+    -13.45,
+    -17.42
+   ],
+   "near2": 0.0212,
+   "near05": 0,
+   "nearBy": [
+    {
+     "obj": "foam_berm < foam_banks < water_system",
+     "share": 0.0126
+    },
+    {
+     "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+     "share": 0.0081
+    },
+    {
+     "obj": "water_ribbon < water_system",
+     "share": 0.003
+    }
+   ],
+   "benny": {
+    "maskShare": 0.136,
+    "hidden": 0.16,
+    "box": [
+     0.042,
+     0.401,
+     0.661,
+     0.754
+    ],
+    "depth": 5.58,
+    "fgFrame": 0.5101,
+    "fgOnBenny": 0.118,
+    "occluders": [
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.104
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.049
+     }
+    ],
+    "centreY": -18.466,
+    "up": [
+     -0.795,
+     0.51,
+     0.328
+    ],
+    "rootY": -18.527,
+    "surfaceY": -18.759,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.404,
+    "centreAboveSurface": 0.575
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 5.29,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       2.58,
+       -17.84,
+       -17.76
+      ]
+     },
+     {
+      "d": 8.97,
+      "obj": "foam_berm<foam_banks<water_system<Scene",
+      "p": [
+       0.54,
+       -20.89,
+       -17.99
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 17.2,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_006_t17.20.png",
+   "mode": "ride",
+   "stage": "03",
+   "s": 70.284,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -19.108,
+   "bennyVisible": true,
+   "cam": [
+    4.74,
+    -14.13,
+    -17.05
+   ],
+   "near2": 0.2389,
+   "near05": 0,
+   "nearBy": [
+    {
+     "obj": "water_ribbon < water_system",
+     "share": 0.2165
+    },
+    {
+     "obj": "foam_berm < foam_banks < water_system",
+     "share": 0.0343
+    },
+    {
+     "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+     "share": 0.0176
+    }
+   ],
+   "benny": {
+    "maskShare": 0.1413,
+    "hidden": 0.115,
+    "box": [
+     0.022,
+     0.392,
+     0.647,
+     0.741
+    ],
+    "depth": 5.47,
+    "fgFrame": 0.5884,
+    "fgOnBenny": 0.066,
+    "occluders": [
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.059
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.018
+     }
+    ],
+    "centreY": -19.036,
+    "up": [
+     -0.799,
+     0.599,
+     0.056
+    ],
+    "rootY": -19.108,
+    "surfaceY": -19.36,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.479,
+    "centreAboveSurface": 0.541
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 5.1,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       2.42,
+       -18.36,
+       -18.69
+      ]
+     },
+     {
+      "d": 8.02,
+      "obj": "water_ribbon<water_system<Scene",
+      "p": [
+       1.09,
+       -20.79,
+       -19.64
+      ]
+     }
+    ]
+   },
+   "inside": [
+    {
+     "dir": [
+      -0.58,
+      0.58,
+      -0.58
+     ],
+     "d": 1.45,
+     "obj": "Mesh < foam_banks < water_system"
+    }
+   ]
+  },
+  {
+   "t": 17.3,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_007_t17.30.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 71.456,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -19.548,
+   "bennyVisible": true,
+   "cam": [
+    3.87,
+    -14.9,
+    -17.1
+   ],
+   "near2": 0.3085,
+   "near05": 0,
+   "nearBy": [
+    {
+     "obj": "water_ribbon < water_system",
+     "share": 0.2973
+    },
+    {
+     "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+     "share": 0.0113
+    },
+    {
+     "obj": "foam_berm < foam_banks < water_system",
+     "share": 0.0029
+    }
+   ],
+   "benny": {
+    "maskShare": 0.1424,
+    "hidden": 0.034,
+    "box": [
+     0.008,
+     0.343,
+     0.686,
+     0.686
+    ],
+    "depth": 5.29,
+    "fgFrame": 0.5611,
+    "fgOnBenny": 0.009,
+    "occluders": [],
+    "centreY": -19.461,
+    "up": [
+     -0.68,
+     0.724,
+     -0.118
+    ],
+    "rootY": -19.548,
+    "surfaceY": -19.838,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.443,
+    "centreAboveSurface": 0.522
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 4.79,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.48,
+       -18.88,
+       -19.38
+      ]
+     },
+     {
+      "d": 4.79,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.48,
+       -18.88,
+       -19.38
+      ]
+     }
+    ]
+   },
+   "inside": [
+    {
+     "dir": [
+      -0.58,
+      0.58,
+      -0.58
+     ],
+     "d": 1.13,
+     "obj": "Mesh < foam_banks < water_system"
+    }
+   ]
+  },
+  {
+   "t": 17.4,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_008_t17.40.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 72.701,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -19.927,
+   "bennyVisible": true,
+   "cam": [
+    3.1,
+    -15.66,
+    -17.71
+   ],
+   "near2": 0.0598,
+   "near05": 0,
+   "nearBy": [
+    {
+     "obj": "water_ribbon < water_system",
+     "share": 0.0592
+    },
+    {
+     "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+     "share": 0.0034
+    },
+    {
+     "obj": "foam_berm < foam_banks < water_system",
+     "share": 0.0021
+    }
+   ],
+   "benny": {
+    "maskShare": 0.1584,
+    "hidden": 0.008,
+    "box": [
+     0.075,
+     0.255,
+     0.758,
+     0.635
+    ],
+    "depth": 5.07,
+    "fgFrame": 0.3441,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -19.826,
+    "up": [
+     -0.488,
+     0.844,
+     -0.222
+    ],
+    "rootY": -19.927,
+    "surfaceY": -20.272,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.49,
+    "centreAboveSurface": 0.528
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 4.39,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.39,
+       -19.3,
+       -20.05
+      ]
+     },
+     {
+      "d": 4.39,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.39,
+       -19.3,
+       -20.05
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 17.5,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_009_t17.50.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 74.014,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -20.34,
+   "bennyVisible": true,
+   "cam": [
+    2.58,
+    -16.27,
+    -18.73
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1643,
+    "hidden": 0.005,
+    "box": [
+     0.103,
+     0.228,
+     0.819,
+     0.614
+    ],
+    "depth": 4.97,
+    "fgFrame": 0.3942,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -20.232,
+    "up": [
+     -0.287,
+     0.898,
+     -0.333
+    ],
+    "rootY": -20.34,
+    "surfaceY": -18.066,
+    "surfaceObj": "Mesh(MeshStandardMaterial#ffcf4d,1843v) < zone_basin < washer_world",
+    "bottomAboveSurface": -3.399,
+    "centreAboveSurface": -2.412
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 4.27,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.21,
+       -19.76,
+       -21.15
+      ]
+     },
+     {
+      "d": 4.27,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.21,
+       -19.76,
+       -21.15
+      ]
+     }
+    ]
+   },
+   "inside": [
+    {
+     "dir": [
+      0,
+      0,
+      -1
+     ],
+     "d": 0.17,
+     "obj": "Mesh < foam_banks < water_system"
+    },
+    {
+     "dir": [
+      0.58,
+      -0.58,
+      -0.58
+     ],
+     "d": 1.19,
+     "obj": "Mesh < foam_banks < water_system"
+    }
+   ]
+  },
+  {
+   "t": 17.6,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_010_t17.60.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 75.381,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -20.865,
+   "bennyVisible": true,
+   "cam": [
+    2.28,
+    -16.76,
+    -19.97
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1621,
+    "hidden": 0.012,
+    "box": [
+     0.111,
+     0.213,
+     0.847,
+     0.6
+    ],
+    "depth": 5.01,
+    "fgFrame": 0.3131,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -20.758,
+    "up": [
+     -0.141,
+     0.896,
+     -0.421
+    ],
+    "rootY": -20.865,
+    "surfaceY": -21.274,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.43,
+    "centreAboveSurface": 0.576
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 4.3,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.11,
+       -20.31,
+       -22.39
+      ]
+     },
+     {
+      "d": 4.3,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.11,
+       -20.31,
+       -22.39
+      ]
+     }
+    ]
+   },
+   "inside": [
+    {
+     "dir": [
+      1,
+      0,
+      0
+     ],
+     "d": 0.82,
+     "obj": "Mesh < foam_banks < water_system"
+    }
+   ]
+  },
+  {
+   "t": 17.7,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_011_t17.70.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 76.777,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -21.468,
+   "bennyVisible": true,
+   "cam": [
+    2.13,
+    -17.24,
+    -21.26
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1542,
+    "hidden": 0.024,
+    "box": [
+     0.128,
+     0.228,
+     0.844,
+     0.605
+    ],
+    "depth": 5.1,
+    "fgFrame": 0.3179,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -21.361,
+    "up": [
+     -0.06,
+     0.893,
+     -0.446
+    ],
+    "rootY": -21.468,
+    "surfaceY": -21.888,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.427,
+    "centreAboveSurface": 0.59
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 4.37,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.05,
+       -20.86,
+       -23.7
+      ]
+     },
+     {
+      "d": 4.37,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.05,
+       -20.86,
+       -23.7
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 17.8,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_012_t17.80.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 78.177,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -22.112,
+   "bennyVisible": true,
+   "cam": [
+    2.04,
+    -17.67,
+    -22.38
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1387,
+    "hidden": 0.011,
+    "box": [
+     0.156,
+     0.251,
+     0.844,
+     0.611
+    ],
+    "depth": 5.34,
+    "fgFrame": 0.3307,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -22.006,
+    "up": [
+     -0.024,
+     0.889,
+     -0.458
+    ],
+    "rootY": -22.112,
+    "surfaceY": -22.522,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.398,
+    "centreAboveSurface": 0.58
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 0.4,
+      "obj": "Mesh<zone_basin<washer_world<Scene",
+      "p": [
+       2.04,
+       -18,
+       -22.6
+      ]
+     },
+     {
+      "d": 4.62,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       2.01,
+       -21.49,
+       -24.99
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 17.9,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_013_t17.90.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 79.577,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -22.786,
+   "bennyVisible": true,
+   "cam": [
+    1.99,
+    -17.93,
+    -23.23
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.1111,
+    "hidden": 0.018,
+    "box": [
+     0.197,
+     0.305,
+     0.817,
+     0.625
+    ],
+    "depth": 5.91,
+    "fgFrame": 0.3656,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -22.68,
+    "up": [
+     -0.016,
+     0.883,
+     -0.469
+    ],
+    "rootY": -22.786,
+    "surfaceY": -23.171,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.463,
+    "centreAboveSurface": 0.556
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 5.08,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       1.99,
+       -21.97,
+       -26.3
+      ]
+     },
+     {
+      "d": 5.19,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       1.99,
+       -22.06,
+       -26.37
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 18,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_014_t18.00.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 80.977,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -23.477,
+   "bennyVisible": true,
+   "cam": [
+    1.81,
+    -17.74,
+    -23.41
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0724,
+    "hidden": 0.014,
+    "box": [
+     0.267,
+     0.368,
+     0.775,
+     0.625
+    ],
+    "depth": 7.25,
+    "fgFrame": 0.4114,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -23.373,
+    "up": [
+     -0.012,
+     0.87,
+     -0.493
+    ],
+    "rootY": -23.477,
+    "surfaceY": -23.84,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.447,
+    "centreAboveSurface": 0.537
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 6.41,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       1.89,
+       -22.56,
+       -27.63
+      ]
+     },
+     {
+      "d": 6.6,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       1.9,
+       -22.71,
+       -27.76
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 18.1,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_015_t18.10.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 82.377,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -24.2,
+   "bennyVisible": true,
+   "cam": [
+    1.63,
+    -16.85,
+    -22.83
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0405,
+    "hidden": 0.03,
+    "box": [
+     0.344,
+     0.406,
+     0.722,
+     0.595
+    ],
+    "depth": 9.65,
+    "fgFrame": 0.4358,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -24.098,
+    "up": [
+     -0.008,
+     0.852,
+     -0.524
+    ],
+    "rootY": -24.2,
+    "surfaceY": -24.555,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.469,
+    "centreAboveSurface": 0.537
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 0.29,
+      "obj": "Mesh<zone_basin<washer_world<Scene",
+      "p": [
+       1.63,
+       -17.07,
+       -23.03
+      ]
+     },
+     {
+      "d": 8.83,
+      "obj": "hat_brim<hat<body<benny_root<AuxScene",
+      "p": [
+       1.79,
+       -23.28,
+       -28.88
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 18.2,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_016_t18.20.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 83.777,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -24.918,
+   "bennyVisible": true,
+   "cam": [
+    1.69,
+    -16.36,
+    -23.02
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0299,
+    "hidden": 0.031,
+    "box": [
+     0.367,
+     0.426,
+     0.692,
+     0.586
+    ],
+    "depth": 11.22,
+    "fgFrame": 0.4632,
+    "fgOnBenny": 0.002,
+    "occluders": [],
+    "centreY": -24.816,
+    "up": [
+     -0.002,
+     0.851,
+     -0.526
+    ],
+    "rootY": -24.918,
+    "surfaceY": -25.287,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.463,
+    "centreAboveSurface": 0.554
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 0.54,
+      "obj": "Mesh<zone_basin<washer_world<Scene",
+      "p": [
+       1.69,
+       -16.75,
+       -23.4
+      ]
+     },
+     {
+      "d": 0.71,
+      "obj": "water_whirlpool<water_system<Scene",
+      "p": [
+       1.69,
+       -16.87,
+       -23.51
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 18.3,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_017_t18.30.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 85.177,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -25.642,
+   "bennyVisible": true,
+   "cam": [
+    1.8,
+    -16.41,
+    -23.88
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0261,
+    "hidden": 0.044,
+    "box": [
+     0.364,
+     0.438,
+     0.669,
+     0.586
+    ],
+    "depth": 11.95,
+    "fgFrame": 0.4924,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -25.54,
+    "up": [
+     0.001,
+     0.849,
+     -0.528
+    ],
+    "rootY": -25.642,
+    "surfaceY": -26.026,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.406,
+    "centreAboveSurface": 0.572
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 0.03,
+      "obj": "water_whirlpool<water_system<Scene",
+      "p": [
+       1.8,
+       -16.44,
+       -23.9
+      ]
+     },
+     {
+      "d": 0.41,
+      "obj": "Mesh<zone_basin<washer_world<Scene",
+      "p": [
+       1.81,
+       -16.72,
+       -24.16
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 18.4,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_018_t18.40.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 86.577,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -26.38,
+   "bennyVisible": true,
+   "cam": [
+    1.89,
+    -16.76,
+    -24.99
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0248,
+    "hidden": 0.055,
+    "box": [
+     0.361,
+     0.439,
+     0.656,
+     0.586
+    ],
+    "depth": 12.3,
+    "fgFrame": 0.5084,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -26.278,
+    "up": [
+     0,
+     0.848,
+     -0.53
+    ],
+    "rootY": -26.38,
+    "surfaceY": -26.767,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.443,
+    "centreAboveSurface": 0.576
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 11.58,
+      "obj": "hat_crown<hat<body<benny_root<AuxScene",
+      "p": [
+       1.93,
+       -25.38,
+       -32.72
+      ]
+     },
+     {
+      "d": 11.82,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       1.93,
+       -25.56,
+       -32.88
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 18.5,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_019_t18.50.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 87.977,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -27.13,
+   "bennyVisible": true,
+   "cam": [
+    1.94,
+    -17.28,
+    -26.18
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.024,
+    "hidden": 0.026,
+    "box": [
+     0.358,
+     0.445,
+     0.653,
+     0.589
+    ],
+    "depth": 12.47,
+    "fgFrame": 0.5184,
+    "fgOnBenny": 0.005,
+    "occluders": [],
+    "centreY": -27.028,
+    "up": [
+     0,
+     0.848,
+     -0.53
+    ],
+    "rootY": -27.13,
+    "surfaceY": -27.508,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.418,
+    "centreAboveSurface": 0.566
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 11.79,
+      "obj": "hat_crown<hat<body<benny_root<AuxScene",
+      "p": [
+       1.96,
+       -26.13,
+       -33.98
+      ]
+     },
+     {
+      "d": 12.1,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       1.96,
+       -26.36,
+       -34.18
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 18.6,
+   "file": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/lip_new/f_020_t18.60.png",
+   "mode": "ride",
+   "stage": "04",
+   "s": 89.377,
+   "lat": 0,
+   "coins": 1420,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -27.881,
+   "bennyVisible": true,
+   "cam": [
+    1.96,
+    -17.9,
+    -27.41
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0237,
+    "hidden": 0.024,
+    "box": [
+     0.358,
+     0.448,
+     0.65,
+     0.591
+    ],
+    "depth": 12.54,
+    "fgFrame": 0.5161,
+    "fgOnBenny": 0,
+    "occluders": [],
+    "centreY": -27.78,
+    "up": [
+     0,
+     0.848,
+     -0.53
+    ],
+    "rootY": -27.881,
+    "surfaceY": -28.25,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.452,
+    "centreAboveSurface": 0.555
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 11.87,
+      "obj": "hat_crown<hat<body<benny_root<AuxScene",
+      "p": [
+       1.98,
+       -26.85,
+       -35.2
+      ]
+     },
+     {
+      "d": 12.21,
+      "obj": "fur_body<body<benny_root<AuxScene<Benny",
+      "p": [
+       1.98,
+       -27.11,
+       -35.43
+      ]
+     }
+    ]
+   },
+   "inside": []
+  }
+ ],
+ "errors": []
+}

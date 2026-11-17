@@ -8,6 +8,7 @@ import { WORLD } from '../world/course';
 import type { Course, StageId } from '../world/course';
 import type { TubePath } from '../world/tube';
 import { applyMatchCam } from './match';
+import { CAMCLEAR } from './camClear';
 
 export interface CamParams {
   back: number; // distance behind Benny
@@ -86,6 +87,8 @@ export class RideCamera {
   readonly up = new THREE.Vector3(0, 1, 0);
   fov = 70;
   private init = false;
+  /** `?camclear=1`: the 03 drain chute's fixed downhill heading (horizontal), for steadyUp0304 */
+  private lipHeading: THREE.Vector3 | null = null;
   /** optional straight tunnel axis + the s-range where the camera aligns to it */
   axis: { path: TubePath; s0: number; s1: number } | null = null;
   /** `?match06=1`: off06 / dir06 in the river's level frame at the 06 checkpoint (computed once) */
@@ -145,9 +148,22 @@ export class RideCamera {
     const p8 = STAGE_CAM['08'];
     if (p8 && p8.off08 && p8.aim08) {
       const st8 = this.course.stage('08');
-      const w8 = THREE.MathUtils.smoothstep(s, st8.s0 - 3, st8.s0 + 1.5) * (1 - THREE.MathUtils.smoothstep(s, st8.s1 - 10, st8.s1 - 1));
+      const wIn8 = THREE.MathUtils.smoothstep(s, st8.s0 - 3, st8.s0 + 1.5);
+      let wOut8 = 1 - THREE.MathUtils.smoothstep(s, st8.s1 - 10, st8.s1 - 1);
+      let b8 = benny;
+      if (CAMCLEAR) {
+        // `?camclear=1`: the projected 08 scenery is exact only from the approved viewpoint, so the camera stops THERE (the
+        // '08' checkpoint, s0 + 2) and holds it while Benny rides on into the picture, whatever his steering (lateral → 0
+        // as the view blends in); it leaves for 09 only over the last 3 u of 08. At and before the checkpoint with lat 0
+        // this is exactly the previous pose (approved still view unchanged).
+        const sLock = st8.s0 + 2.0;
+        if (s > sLock) wOut8 = Math.max(wOut8, 1 - THREE.MathUtils.smoothstep(s, st8.s1 - 3, st8.s1 + 2));
+        const f8 = this.course.sample(Math.min(s, sLock));
+        b8 = f8.pos.clone().addScaledVector(f8.right, lat * (1 - wIn8));
+      }
+      const w8 = wIn8 * wOut8;
       if (w8 > 0) {
-        outPos.lerp(benny.clone().add(new THREE.Vector3(...p8.off08)), w8);
+        outPos.lerp(b8.clone().add(new THREE.Vector3(...p8.off08)), w8);
         outTarget.lerp(new THREE.Vector3(...p8.aim08), w8);
         outUp.lerp(new THREE.Vector3(0, 1, 0), w8).normalize();
       }
@@ -193,6 +209,11 @@ export class RideCamera {
         outUp.lerp(new THREE.Vector3(0, 1, 0), w7).normalize();
       }
     }
+    // `?camclear=1` 06 rinse arch: where the stream climbs the wall the chase camera ends up at the wall itself, looking
+    // up at it (the drum wall + a gold band fill the view). Keep the camera inside the tube (≥ 2.5 u from the wall) while
+    // Benny is inside it, and turn the view toward the tunnel's vanishing point (the approved 06 looks down the tunnel,
+    // ≈9° below its axis), only as far as Benny stays well inside the frame. Off: unchanged.
+    if (CAMCLEAR && this.axis) this.clear06(s, p, benny, outPos, outTarget);
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
     const st3 = this.course.stage('03');
@@ -247,6 +268,97 @@ export class RideCamera {
     return p;
   }
 
+  /**
+   * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and beside Benny while he falls down the drain
+   * chute, so the chute's own falling water passes between the view and Benny for ~0.6 s (60–100 % of him hidden, a
+   * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the
+   * stream 3 u behind Benny, above the water (the water he rides can then hardly come between), aimed at him; it
+   * blends in and back out over a few metres of the ride. Off: unchanged.
+   * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), the view rides
+   * 3.4 u above the water (was 1.6: the curling chute water then filled the lower screen) aimed at Benny himself (was
+   * 1.5 u ahead: he sat cut off at the left screen edge), never looks down steeper than ~56°, and the returned weight
+   * steadies the picture's "up" over the lip (see steadyUp0304). Lip probe: Benny hidden max 44 % → 25 %.
+   */
+  private clear0304(s: number, lat: number): number {
+    const s3 = this.course.stage('03').s1;
+    const w = THREE.MathUtils.smoothstep(s, s3 - 8, s3 - 2) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));
+    if (w <= 0) return 0;
+    // world up, not the stream's own up: the chute water twists over the drain lip, and a view tied to its up would
+    // swing underneath it
+    const f = this.course.sample(Math.max(0, s - 3));
+    const p = f.pos.clone().addScaledVector(f.right, lat).add(new THREE.Vector3(0, 3.4, 0));
+    this.pos.lerp(p, w);
+    // aim at Benny (a little below his centre line ahead), so he stays in the frame while the view swings behind him
+    const fb = this.course.sample(s + 0.5);
+    this.target.lerp(fb.pos.clone().addScaledVector(fb.right, lat), w);
+    // never look down steeper than ~56° while the view swings over (it tipped to ~70° for a moment): same heading,
+    // aim point raised; Benny stays well inside the frame (at most ~15° below its centre)
+    const d = this.target.clone().sub(this.pos);
+    const h = Math.hypot(d.x, d.z), len = d.length();
+    const maxDown = 0.83 * len; // sin(56°)
+    if (-d.y > maxDown && h > 1e-3) {
+      const y = -maxDown, hh = Math.sqrt(len * len - y * y);
+      const lim = new THREE.Vector3(d.x / h * hh, y, d.z / h * hh);
+      this.target.copy(this.pos).add(d.lerp(lim, Math.min(1, w * 4)));
+    }
+    return w;
+  }
+
+  /**
+   * `?camclear=1` only — the picture's "up" over the 03 → 04 drain lip, anchored to the world instead of the twisting
+   * chute water: world up made square to the view, leaning toward the chute's fixed downhill heading as the view turns
+   * steeply down (so it is never undefined and can never flip), blended in with the drop weight `w`. Applied AFTER the
+   * usual easing of the up vector: it follows the view direction exactly, so the fast swing over the lip adds no tilt.
+   */
+  private steadyUp0304(w: number, up: THREE.Vector3) {
+    if (w <= 0) return;
+    if (!this.lipHeading) {
+      const t = this.course.sample(this.course.stage('03').s1).tan;
+      this.lipHeading = new THREE.Vector3(t.x, 0, t.z).normalize();
+    }
+    const d = this.target.clone().sub(this.pos).normalize();
+    const v = THREE.MathUtils.smoothstep(Math.abs(d.y), 0.9, 0.99);
+    const ref = new THREE.Vector3(0, 1, 0).multiplyScalar(1 - v).addScaledVector(this.lipHeading, v * Math.sign(-d.y || 1));
+    ref.addScaledVector(d, -ref.dot(d));
+    if (ref.lengthSq() < 1e-6) return;
+    up.lerp(ref.normalize(), w).normalize();
+  }
+
+  /** `?camclear=1` only — see desired() */
+  private clear06(s: number, p: CamParams, benny: THREE.Vector3, outPos: THREE.Vector3, outTarget: THREE.Vector3) {
+    const a = this.axis;
+    if (!a) return;
+    const st6 = this.course.stage('06');
+    const w6 = THREE.MathUtils.smoothstep(s, st6.s0 + 1, st6.s0 + 6) * (1 - THREE.MathUtils.smoothstep(s, st6.s1 - 4, st6.s1 + 2));
+    if (w6 <= 0) return;
+    const axisAt = (ss: number) => {
+      const f = a.path.frame(ss);
+      return { f, c: f.pos.clone().addScaledVector(f.up, a.path.radius(ss) - a.path.depth(ss)), R: a.path.radius(ss) };
+    };
+    const radial = (q: THREE.Vector3, ax: ReturnType<typeof axisAt>) => {
+      const d = q.clone().sub(ax.c);
+      return d.addScaledVector(ax.f.tan, -d.dot(ax.f.tan));
+    };
+    // 1. inside the tube while Benny is: radial distance of the camera ≤ R − 2.5
+    const axB = axisAt(s);
+    const bennyIn = 1 - THREE.MathUtils.smoothstep(radial(benny, axB).length(), axB.R - 2.5, axB.R - 1.0);
+    const axC = axisAt(Math.max(0, s - p.back));
+    const rv = radial(outPos, axC);
+    const rMax = axC.R - 2.5;
+    const rl = rv.length();
+    if (rl > rMax && bennyIn > 0) outPos.addScaledVector(rv, -(1 - rMax / rl) * w6 * bennyIn);
+    // 2. look toward the tunnel's vanishing point (axis tangent pitched ≈9° down), while Benny stays inside ±20° of it
+    const T = axC.f.tan.clone();
+    const Up = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+    const look = T.multiplyScalar(Math.cos(0.157)).addScaledVector(Up, -Math.sin(0.157)).normalize();
+    const cur = outTarget.clone().sub(outPos);
+    const dist = cur.length();
+    const toB = benny.clone().sub(outPos).normalize();
+    const off = Math.acos(THREE.MathUtils.clamp(look.dot(toB), -1, 1));
+    const k = w6 * (1 - THREE.MathUtils.smoothstep(off, 0.26, 0.42));
+    if (k > 0) outTarget.copy(outPos).add(cur.normalize().lerp(look, k).normalize().multiplyScalar(dist));
+  }
+
   update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
     const dp = new THREE.Vector3(), dt3 = new THREE.Vector3(), du = new THREE.Vector3();
     const p = this.desired(s, lat, dp, dt3, du);
@@ -254,7 +366,9 @@ export class RideCamera {
     const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
     this.pos.lerp(dp, k);
     this.target.lerp(dt3, kt);
+    const w0304 = CAMCLEAR ? this.clear0304(s, lat) : 0;
     this.up.lerp(du, kt).normalize();
+    if (w0304 > 0) this.steadyUp0304(Math.min(1, w0304 * 4), this.up);
     this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
     this.init = true;
     cam.position.copy(this.pos);

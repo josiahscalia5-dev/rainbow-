@@ -28,6 +28,7 @@ import { buildMatch08 } from '../world/match08';
 import { buildMatch04 } from '../world/match04';
 import { buildMatch06 } from '../world/match06';
 import { buildMatch07 } from '../world/match07';
+import { CAMCLEAR, createCamClear } from './camClear';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -136,6 +137,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const m07Range = [course.stage('07').s0 + 14, course.marks['07_plunge_top'] - 8];
   let m07On = false;
   let m07Applied = false;
+  // `?camclear=1` (src/game/camClear.ts): rings / lids / gold lips / foam banks never hide Benny or fill the lens while
+  // riding; respawn re-frames the camera at once instead of flying it back through the tube. Off: nothing is created.
+  const camClear = CAMCLEAR ? createCamClear({ env: env.group, foam: water.parts?.foam, coins: coins.group }) : null;
+  let camSnap = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
   if (hidden.has('water')) water.group.visible = false;
@@ -397,6 +402,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
         st.s = stg.s0;
         st.lat = 0;
         st.respawns++;
+        if (camClear) camSnap = true;
       }
     }
     // coins
@@ -418,7 +424,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     // so the wake/splash footprint matches the real waterline instead of the unlifted root
     water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
-    rideCam.update(dt, st.s, st.lat, camera);
+    rideCam.update(dt, st.s, st.lat, camera, camSnap);
+    camSnap = false;
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
     env.towel.setTent(sm(course.stage('09').s1 - 6, course.stage('10').s0 + 2, st.s));
     // girl at the counter behind the door glass in 10 (back turned — never sees Benny)
@@ -683,6 +690,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       renderer.getDrawingBufferSize(dbs);
       m07.sync(renderer, dbs.x, dbs.y);
     }
+    camClear?.update(camera, benny.root, st.mode === 'ride');
     renderer.info.reset();
     composer.render();
   };
@@ -798,6 +806,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return out;
     },
     respawns() { return st.respawns; },
+    /** QA: `?camclear=1` patched occluders (null = switch off) */
+    camClear() { return camClear?.patched ?? null; },
     /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
     camera() {
       camera.updateMatrixWorld();
