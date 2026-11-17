@@ -756,3 +756,309 @@ Switches written; committing, then rendering the moving frames for the candidate
 
 > 🔧 **Bash** `{"command": "git add src/gameplay/coins.ts src/world/match07.ts assets/textures/match07/tile_wall_clean.png assets/textures/match07/plate07_fillmask_soft.png qa/match/07/m2/coins/probe_m07coins.json && git commit -qm \"Screen 07 M2 r4: m07coins (two far trail coins continue the painted coin line, painted size), m07wall (ring-bay wall tile without the repeated painted paddle), m07fill feathered edge\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BT7VJEKLkAskyb5T9U\" && git push -q origin claude/rainbow-s07-match-c4 2>&1|tail -1;  …[+227 chars]`
 
+### 🧑 User — 2026-11-17T19:24:09.648Z
+
+> ↩︎ result: f00_checkpoint s 273.807 lat 0 07 coins 1940
+> f03_forward3u s 276.66 lat 0 07 coins 1940
+> f06_forward6u s 279.657 lat 0 07 coins 1950
+> f10_forward10u s 283.658 lat 0 07 coins 1960
+> f20_forward20u s 293.657 lat 0 07 coins 1970
+> s_left_steer s 279.657 lat -2.25 07 coins 1940
+> s_right_steer s 279.657 lat 2.25 07 coins 1940
+> d0_before_drop_8u s 305.057 lat 0.006 07 coins 2010
+> d1_drop_start s 312.016 lat 0 07 coins 1940
+> d2_drop_4u s 316.016 lat 0 07 coins 1940
+> d3_drop_mid s 351.845 lat 0 07 coins 1940
+
+### 🤖 Claude — 2026-11-17T19:24:13.168Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/'\nfor f in ['f03_forward3u','f20_forward20u','f10_forward10u','s_left_steer','s_right_steer','d0_before_drop_8u']:\n  a=Image.open('m1/motion/'+f+'.png'); b=Image.open('m2r4/motion_k4/'+f+'.png')\n  w,h=a.size; c=Image.new('RGB',(w*2,h)); c.paste(a,(0,0)); c.paste(b,(w,0)); c.resize((w,h//2)).save(S+'k4_'+f+'.png')\n\"", "description": "Side-by-side M1 vs candidate frames"}`
+
+### 🧑 User — 2026-11-17T19:24:15.111Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:24:16.862Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/k4_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-17T19:24:16.925Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:24:17.481Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/k4_f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-17T19:24:17.517Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:24:22.750Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/'\nfor f in ['f20_forward20u','f10_forward10u']:\n  ims=[Image.open(d+'/'+f+'.png').crop((0,150,600,800)) for d in ['m1/motion','m2r4/motion_k4']]\n  c=Image.new('RGB',(1200,650)); [c.paste(im,(i*600,0)) for i,im in enumerate(ims)]; c.save(S+'ul_'+f+'.png')\"", "description": "Crop upper-left 10u/20u M1 vs k4"}`
+
+### 🧑 User — 2026-11-17T19:24:23.585Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:24:25.437Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/ul_f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-17T19:24:25.476Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:24:26.058Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/ul_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-17T19:24:26.110Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:24:36.326Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 - <<'E'\np='src/world/match07.ts'; s=open(p).read()\nold=\"\"\"      if (uAng.x > 0.0) w *= smoothstep(uAng.y, uAng.x, dot(normalize(cameraPosition - vW), normalize(uProjPos - vW)));\"\"\"\nnew=old+\"\"\"\n      // m07gold (round 4): the paddle blocks show the picture only near the approved view direction; seen from beside or\n      // below while passing they are solid polished gold (no picture of the wall smeared over their faces)\n      if (uGoldLit > 0.5 && uMode < 0.5) w *= smoothstep(0.970, 0.995, dot(normalize(cameraPosition - vW), normaliz …[+358 chars]`
+
+### 🧑 User — 2026-11-17T19:25:49.209Z
+
+> ↩︎ result: TSC_OK
+> d2_drop_4u s 316.016 lat 0 07 coins 1940
+> d3_drop_mid s 351.842 lat 0 07 coins 1940
+
+### 🤖 Claude — 2026-11-17T19:25:53.775Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/'\nims=[Image.open('m2r4/motion_k4/'+f+'.png').crop((0,100,600,750)) for f in ['f10_forward10u','f20_forward20u']]\nc=Image.new('RGB',(1200,650)); [c.paste(im,(i*600,0)) for i,im in enumerate(ims)]; c.save(S+'gold2.png')\na=Image.open('m1/motion/s_left_steer.png'); b=Image.open('m2r4/motion_k4/s_left_steer.png'); c2=Image.open('m2r4/motion_k4/s_right_steer.png')\nw,h=a.size; c=Image.new('RGB',(w*3,h)); [c.paste(im,(i*w,0 …[+140 chars]`
+
+### 🧑 User — 2026-11-17T19:25:54.654Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:25:56.562Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/gold2.png"}`
+
+### 🧑 User — 2026-11-17T19:25:56.595Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:25:57.179Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/steer.png"}`
+
+### 🧑 User — 2026-11-17T19:25:57.223Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:26:08.132Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/'\nims=[Image.open(d+'/s_right_steer.png').crop((300,800,864,1536)) for d in ['m1/motion','m2/motion_fag','m2r4/motion_k4']]\nc=Image.new('RGB',(564*3,736)); [c.paste(im,(i*564,0)) for i,im in enumerate(ims)]; c.save(S+'rs.png')\"", "description": "Compare steer-right lower right"}`
+
+### 🧑 User — 2026-11-17T19:26:08.770Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:26:10.722Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/rs.png"}`
+
+### 🧑 User — 2026-11-17T19:26:10.769Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:26:22.197Z
+
+Steering right shows orange smears on the near water: they come from the river tile, which contains a slice of a painted gold ring. Cleaning that tile.
+
+### 🤖 Claude — 2026-11-17T19:26:28.154Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 - <<'E'\nimport numpy as np, cv2\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/'\nt=np.asarray(Image.open('assets/textures/match07/tile_river.png').convert('RGB')).astype(np.float32)\nhsv=cv2.cvtColor(t.astype(np.uint8),cv2.COLOR_RGB2HSV).astype(np.float32)\nH,Sa,V=hsv[...,0],hsv[...,1],hsv[...,2]\n# orange / yellow-gold hues (OpenCV H 0..180: ~8..35), saturated\nm=((H>=6)&(H<=38)&(Sa>70)).astype(np.float32)\nm=cv2.GaussianBlur(cv2.dilate(m,np.ones((5,5),np.uint8)),(0,0),3)\nm=np.cli …[+572 chars]`
+
+### 🧑 User — 2026-11-17T19:26:28.648Z
+
+> ↩︎ result: orange share 0.060306549072265625
+
+### 🤖 Claude — 2026-11-17T19:26:30.606Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/tr_cmp.png"}`
+
+### 🧑 User — 2026-11-17T19:26:30.630Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:26:36.589Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'E'\np='src/world/match07.ts'; s=open(p).read()\ns=s.replace(\"\"\"  const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)\n\"\"\",\"\"\"  const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)\n  const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)\n\"\"\")\ns=s.replace(\"load('tile_river.png', THREE.RepeatWrapping)\",\"load(fixRiver ? 'tile_ …[+397 chars]`
+
+### 🧑 User — 2026-11-17T19:27:47.229Z
+
+> ↩︎ result: 2
+> TSC_OK
+> d3_drop_mid s 351.873 lat 0 07 coins 1940
+
+### 🤖 Claude — 2026-11-17T19:27:50.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/'\nims=[Image.open(d+'/s_right_steer.png').crop((300,800,864,1536)) for d in ['m1/motion','m2r4/motion_k5']]+[Image.open(d+'/f06_forward6u.png').crop((300,800,864,1536)) for d in ['m1/motion','m2r4/motion_k5']]\nc=Image.new('RGB',(564*4,736)); [c.paste(im,(i*564,0)) for i,im in enumerate(ims)]; c.resize((564*2,368)).save(S+'rs5.png')\"", "description": "Compare steer-right with m07river"}`
+
+### 🧑 User — 2026-11-17T19:27:51.458Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:27:53.192Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/rs5.png"}`
+
+### 🧑 User — 2026-11-17T19:27:53.232Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:27:56.141Z
+
+Steering right: the orange smear is now a pink stream. Next: still-view capture and numbers for the full candidate set.
+
+### 🤖 Claude — 2026-11-17T19:27:57.099Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && head -15 tools/match07/metrics07.py; head -12 tools/match07/probe07.mjs; ls scripts | grep -i -E \"capture|shot|proof|gameplay|continuity\" ", "description": "Check capture/metric tool usage"}`
+
+### 🧑 User — 2026-11-17T19:27:57.165Z
+
+> ↩︎ result: """Screen 07: approved vs capture by region (same measures as tools/qa/screen_match.py: share within 20 levels, SSIM).
+> SCENERY = below the HUD/title (rows >= 13 %) without Benny (his ellipses from tools/match07/make_plate07.py).
+> usage: python3 -I tools/match07/metrics07.py <approved.png> <before.png> <new.png> <out.json>"""
+> import json, sys
+> import numpy as np, cv2
+> from PIL import Image
+> from scipy.ndimage import gaussian_filter
+> ap = Image.open(sys.argv[1]).convert("RGB"); W, H = ap.size
+> load = lambda p: np.asarray(Image.open(p).convert("RGB").resize((W, H), Image.LANCZOS), float)
+> A = np.asarray(ap, float)
+> def ssim_map(a, b):
+>     la, lb = (a * [0.2126, 0.7152, 0.0722]).sum(-1), (b * [0.2126, 0.7152, 0.0722]).sum(-1)
+>     s = 1.5; C1, C2 = (0.01 * 255) ** 2, (0.03 * 255) ** 2
+>     ma, mb = gaussian_filter(la, s), gaussian_filter(lb, s)
+>     va, vb = gaussian_filter(la * la, s) - ma * ma, gaussian_filter(lb * lb, s) - mb * mb
+> // read-only probe of the live game at the 07 checkpoint (no source change): course samples over 06..08, Benny's visible
+> // mesh vertices (subsampled, world), his water point + frame, the live camera. usage: node tools/match07/probe07.mjs [query] > out.json
+> import {  …[+630 chars]
+
+### 🤖 Claude — 2026-11-17T19:27:59.515Z
+
+> 🔧 **Bash** `{"command": "head -30 scripts/capture.mjs | grep -E \"usage|argv|--\" | head; git log --all --oneline -1 -- qa/match/07/m2/cap_fag/07.png; git show a5d2b392 -- qa/match/07/m2 2>/dev/null | grep -i \"capture\" | head -3; grep -rn \"capture.mjs\" qa/match/07/*.md | head -5", "description": "Find how captures were made"}`
+
+### 🧑 User — 2026-11-17T19:27:59.611Z
+
+> ↩︎ result: //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> a5d2b392 Screen 07 M2: m07fill (river tile instead of mirrored fill on the water), m07ang (picture only near the approved view direction), m07gold (solid rounded gold paddles) — moving frames + metrics
+
+### 🤖 Claude — 2026-11-17T19:28:01.466Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,20p scripts/capture.mjs | head -20; grep -n \"opt.q\\|opt\\.\\w*\" scripts/capture.mjs | head -15", "description": "Read capture.mjs options"}`
+
+### 🧑 User — 2026-11-17T19:28:01.520Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+755 chars]
+
+### 🤖 Claude — 2026-11-17T19:28:06.070Z
+
+> 🔧 **Bash** `{"command": "Q=\"match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1\" && timeout 600 node scripts/capture.mjs 07 --out=qa/match/07/m2r4/cap_k5 \"--q=$Q\" 2>&1 | tail -2; git checkout -q qa/capture_log.json 2>/dev/null; python3 -I tools/match07/metrics07.py qa/match/07/07_APPROVED.png qa/match/07/m3/07_NEW_match07_r3.png qa/match/07/m2r4/cap_k5/07.png qa/match/07/m2r4/metrics_k5.json >/dev/null && python3 -c \"\nimport json;d=json.load(open('qa/match/07/m2r4/metrics_k5.json'))\nfor k in d['NEW']: print(k, d['BEFORE'][k]['within_20'], '->', d['NEW'][k]['within_20'], d['BEFORE'][k]['ss …[+110 chars]`
+
+### 🧑 User — 2026-11-17T19:28:19.978Z
+
+> ↩︎ result: 07 → qa/match/07/m2r4/cap_k5/07.png {"stage":"07","s":273.056,"y":-49.642,"calls":153,"tris":287709,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> FULL 0.8006 -> 0.8006 0.7896 -> 0.7896
+> BELOWHUD 0.8672 -> 0.8671 0.8536 -> 0.8536
+> SCENERY 0.9554 -> 0.9555 0.9498 -> 0.9499
+> upper_tunnel_rings_paddles_y200_560 0.9996 -> 0.9997 0.9978 -> 0.9977
+> middle_river_coins_far_rings_y560_900 0.9035 -> 0.904 0.8954 -> 0.896
+> lower_water_foam_y900_1536_noBenny 0.9564 -> 0.9563 0.9497 -> 0.9495
+> BENNY 0.1661 -> 0.1642 0.0888 -> 0.0884
+
+### 🤖 Claude — 2026-11-17T19:28:22.270Z
+
+Still view holds (whole 80.1 %, scenery 95.5 %, middle band slightly up from the coin fix). Quick look at the far coins, then the proofs.
+
+### 🤖 Claude — 2026-11-17T19:28:25.076Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/'\nims=[Image.open(p).convert('RGB').crop((560,560,760,680)).resize((400,240)) for p in ['qa/match/07/07_APPROVED.png','qa/match/07/m3/07_NEW_match07_r3.png','qa/match/07/m2r4/cap_k5/07.png']]\nc=Image.new('RGB',(1200,240)); [c.paste(im,(i*400,0)) for i,im in enumerate(ims)]; c.save(S+'far2.png')\"", "description": "Zoom far coins approved/M1/new"}`
+
+### 🧑 User — 2026-11-17T19:28:25.409Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:28:27.292Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/v/far2.png"}`
+
+### 🧑 User — 2026-11-17T19:28:27.328Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:28:32.712Z
+
+> 🔧 **Bash** `{"command": "git add -A src/world/match07.ts assets/textures/match07/tile_river_clean.png qa/match/07/m2r4 && git commit -qm \"Screen 07 M2 r4: m07river (river tile without the painted gold-ring slice), paddles solid gold off the approved direction; moving frames k4/k5, still capture + metrics k5\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BT7VJEKLkAskyb5T9U\" && git push -q origin claude/rainbow-s07-match-c4 2>&1|tail -1; head -c 1500 qa/match/07/m3/proofs_0px_r3.json; echo; ls tools/qa 2>/dev/null | head -30", "description" …[+39 chars]`
+
+### 🧑 User — 2026-11-17T19:28:44.284Z
+
+> ↩︎ result: {
+>  "note": "round 3 re-run: pixels differing (any channel); default/match08 vs pre-change commit 3c7fca9 (worktree captures), 05 vs protected baseline, match07 vs the round-2 NEW picture",
+>  "started_from": "e34e02582e2730d944a20ff661b0cb4aed95330e",
+>  "differing_px": {
+>   "default_06": 0,
+>   "default_07": 0,
+>   "default_08": 0,
+>   "match08_08": 0,
+>   "05_ringa26_nearfloor0_vs_wave9_baseline": 0,
+>   "match07_07_vs_r2_NEW": 0
+>  },
+>  "match08_note": "first current-tree capture differed by 2,280 px of at most 1 level, only in the title-banner text (y 108-131); it also differed by the same 2,280 px from a repeat capture of the SAME current tree, i.e. text anti-aliasing noise. Repeat: old 3c7fca9 vs current = 0 px (old vs old repeat 0 px)."
+> }
+> axis05.ts
+> diff05.py
+> gold05.py
+> proj05_align.py
+> proj05_footprint.py
+> ring_fit05.py
+> screen_match.py
+> water05_grain.py
+
+### 🤖 Claude — 2026-11-17T19:28:50.969Z
+
+Now the 0-px proofs: capture the current tree and the start commit `72fb6129` side by side.
+
+### 🤖 Claude — 2026-11-17T19:28:53.719Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof && mkdir -p $P && (git worktree add -q --detach $P/old 72fb6129 2>&1 | tail -1); ln -sfn /home/user/rainbow-/node_modules $P/old/node_modules; cd $P/old && git lfs pull 2>&1 | tail -1; ls -la assets/textures/match07/plate07_hybrid.png | awk '{print $5}'", "description": "Create worktree of start commit", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T19:29:00.978Z
+
+> ↩︎ result: 2540369
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T19:29:04.743Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof\nrun(){ (cd $1 && timeout 900 node scripts/capture.mjs $3 --out=$P/$2 ${4:+\"--q=$4\"} >/dev/null 2>&1; git checkout -q qa/capture_log.json 2>/dev/null); }\nR=/home/user/rainbow-; O=$P/old\nrun $R cur_def \"06 07 08\"; run $O old_def \"06 07 08\"\nrun $R cur_m08 08 match08=1; run $O old_m08 08 match08=1\nrun $R cur_m07 07 match07=1; run $O old_m07 07 match07=1\nrun $R cur_05 05 \"ringa=26&nearfloor05=0\"\nls $P/*/", "description": "Capture proof screenshots current vs old", "timeout": 3600000 …[+1 chars]`
+
