@@ -1,5 +1,7 @@
 # Paste this into Claude Code on the next Claude account
 
+**NEWEST (2026-11-17 ~14:30 UTC): use the one-message prompt in `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` — it supersedes the prompt below.**
+
 (Updated 2026-11-17 ~11:50 UTC, session 03b94f36. Replaces the 2026-11-16 version, whose hook description — "merges every
 newer branch" — is no longer true: since 2026-11-17 NOTHING is merged automatically.)
 

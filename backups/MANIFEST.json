@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 13975,
-   "sha256": "c52d98f2f4154e67036424f5cb8e5871f51697cc6f58b2128ee7c2da866b8700"
+   "bytes": 14078,
+   "sha256": "97821aead028d10094b56621913a5a1edc6880219e1eeaf5e9671c1141e3ba4a"
   },
   {
    "path": "README_FIRST.md",
@@ -543,8 +543,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 12165,
-   "sha256": "9513f886e39587f4f2074ac2e1d927775946fa146f381aee2b7b00d9caa9f2ca"
+   "bytes": 12444,
+   "sha256": "15ab55cfc56c157f028ad92e6d819a1c90f6b597ed248255395e0c3e2b2a60c8"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "95e65a41a6259ffda3ddb5042c2cc53bb76905fbdff988520270e87a9270e4db"
+   "sha256": "0e28d1719e48f0a795f68a4cf850b52e926720891786733ea8d2b4db4f37ac81"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -588,8 +588,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 4224,
-   "sha256": "ac3860c8cbe7102af99cec6601e5472b32fc7140d2ffe0e25c29790e237627bf"
+   "bytes": 4364,
+   "sha256": "c49a93a5c66540829696cc465e8407cdc39a3fac2f55af0ff26fea61d2fe628d"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -650,6 +650,11 @@
    "path": "docs/FLOW_VIDEO.md",
    "bytes": 4597,
    "sha256": "6bc1006fbc1da91024fe46b31b6c5be652cdc84c4803beff2621af173ecade1e"
+  },
+  {
+   "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
+   "bytes": 11380,
+   "sha256": "5faaf05ebb30913a82ee8df68ca6e7e5b77b81711bb45df6682a44e4c0f60d08"
   },
   {
    "path": "docs/characters/benny.md",
@@ -1147,7 +1152,22 @@
    "sha256": "732ab7742d5ffd6932e0f8b38613fa648c79877168c1013a0d90caa9f883fa77"
   },
   {
+   "path": "qa/imageblaster/08/fal_requests/fal_edit1_plate_request.json",
+   "bytes": 2549,
+   "sha256": "e921a86f15fd700a7b19e58c92a8a7dd7ceda9b838321629efa046b9cf0ae753"
+  },
+  {
+   "path": "qa/imageblaster/08/fal_requests/fal_edit2_nosplash_request.json",
+   "bytes": 2200,
+   "sha256": "73af2da564cb3247813be6433cf727c743a576c5fc94be378a4cd9090afd66aa"
+  },
+  {
    "path": "qa/imageblaster/08/image_analysis.json",
+   "bytes": 7888,
+   "sha256": "66a7e11a5364b51246a361491f2be7381de7d8a540291c48e73da232e2faf52f"
+  },
+  {
+   "path": "qa/imageblaster/08/image_blaster_source_analysis.json",
    "bytes": 7888,
    "sha256": "66a7e11a5364b51246a361491f2be7381de7d8a540291c48e73da232e2faf52f"
   },
@@ -7727,6 +7747,11 @@
    "sha256": "e3a4e07ec3e8acb7441b407c6119496da18768dd0455c4691e3abad9e29a4038"
   },
   {
+   "path": "scripts/setup-image-blaster.sh",
+   "bytes": 3628,
+   "sha256": "1283ba0eca9f5bd357f00c82f63c2261d115178e8b7e9466574e0e4daba8ec30"
+  },
+  {
    "path": "scripts/setup-worldlabs-plugin.sh",
    "bytes": 1790,
    "sha256": "0b65d7bc65d941268635e0380c16e914110eb0b39fc273b5538171cc94c6794f"
@@ -8002,9 +8027,19 @@
    "sha256": "06e8869bc701026514d5a31e49197017fe2451bbf88029cbfa767fb17df1285f"
   },
   {
+   "path": "tools/imageblaster/image-blaster-local.patch",
+   "bytes": 664,
+   "sha256": "aa01399263ab9feddb095692d3d0c515d7d7c038c9046e78e0d71c85462b8612"
+  },
+  {
    "path": "tools/imageblaster/pano_fit.py",
    "bytes": 2942,
    "sha256": "b75e2e8ecf869244ec0988eb855e2cc6f3f43b8bd6e9b97edb686007bdc25520"
+  },
+  {
+   "path": "tools/imageblaster/plate_compare.py",
+   "bytes": 6254,
+   "sha256": "2d531a2b79596d57868f1a2469d2cf78529c739900630d1aad29a274d9d2b20c"
   },
   {
    "path": "tools/imageblaster/render.html",
@@ -8092,6 +8127,21 @@
    "sha256": "2ea5c23a56f3e1405fe102fe5fae6bbeea6e3f2c7c584501a3306a61c613e8c1"
   },
   {
+   "path": "tools/match08/bennytree.mjs",
+   "bytes": 1157,
+   "sha256": "4f61b3dbaf374ba3e3000c26914ba71b522feacdb8cd216b3c42d2284ee8a0d5"
+  },
+  {
+   "path": "tools/match08/coinlat.mjs",
+   "bytes": 853,
+   "sha256": "c8c3eac2de54d636d18935b72dbe7ac8c980ca67efd99910ccdce2424bb1933f"
+  },
+  {
+   "path": "tools/match08/cointake.mjs",
+   "bytes": 1189,
+   "sha256": "13a5fd9dde3fce969a00e522e3e178672c88e72a103b16496ad9f9f5aa7132b3"
+  },
+  {
    "path": "tools/match08/fit_proxies.py",
    "bytes": 7025,
    "sha256": "8a597d4ddc6a4f1463bff812e281a2cb7249f6ab669ed9c7bf58adb3730897b9"
@@ -8115,6 +8165,11 @@
    "path": "tools/match08/river_proj.py",
    "bytes": 832,
    "sha256": "828aafcf198f462720c70108da43699de11f560d2f2772ecd3c42026d9ef7133"
+  },
+  {
+   "path": "tools/match08/solve08.mjs",
+   "bytes": 5572,
+   "sha256": "8f9bee468e9096a9a5f8744c256384587b6d6712bb7ba070e0da2602fa369cec"
   },
   {
    "path": "tools/model-lab.html",
