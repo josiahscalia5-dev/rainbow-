@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 11863,
-   "sha256": "238f475e8a117d04b5a5c341f90b394d9b01783358061a75ce7bd5199e4d9da2"
+   "bytes": 12128,
+   "sha256": "f8e7eb2f82242b34d37ff4766a7a153e954cb8c283009b52a8b0e417cd40e7ef"
   },
   {
    "path": "README_FIRST.md",
@@ -533,13 +533,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 53117,
-   "sha256": "6331420101710fdce05f2b0d6a94835e1388a0184d0e00de95624a5257bba199"
+   "bytes": 55175,
+   "sha256": "172c548c8379fe7bdcac889608e6601046527503a9052309c544eda9f4514e37"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "e8a36462abe9c39a2134b9a32e8b5ce9b43fd93740486ba520ccd4708e8111f7"
+   "sha256": "1e6db07d522342a0fb7a9a37e9d25b86cce00ca2539eab353158de20a26577f4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1368,8 +1368,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs",
-   "bytes": 2464,
-   "sha256": "870397b9be24f6d5f63c7c5962a5cdb57651b54ea5868ee648c775e8d9326b16"
+   "bytes": 2593,
+   "sha256": "f7ecc5c9bb5f36d98bbfca4267e131b534e83c8553686007d1007d5a61986902"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/fur_x3.png",
@@ -1397,9 +1397,34 @@
    "sha256": "2e8419310bf56cd3557e9f2b65fa1b7e48493bfa5099faafa9939a96f77d1c8f"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/calA.shot.js",
+   "bytes": 69,
+   "sha256": "3dd40f84abbb7e4a5d9e25a551637ddeca3a945e073c7f37a21cf92151b1e0fc"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/calB.shot.js",
+   "bytes": 69,
+   "sha256": "f5287c40270bc1456822bd3ac7c3b50e669f54757dc3b0fe1815e2ef19a3356f"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/work/probe/info.js",
    "bytes": 1600,
    "sha256": "72367d74e4f21791e5bdb1efde360b642394fc88cd42386a862bd235e94d8ad0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/restore.shot.js",
+   "bytes": 74,
+   "sha256": "01d51d8d2eeee57790a77065ad70ec0fdb99c76a598169fdc85018a1cde3bc5b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/shot0.shot.js",
+   "bytes": 13,
+   "sha256": "3750eb1fea554f6c4d616b2bb160de0c4dbe1f53038b41458212f882368c9244"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/uv.js",
+   "bytes": 116,
+   "sha256": "90e4f7bdd79c052146ac2713c9dfd1efcbf5ee079d679ab14dd580125230fc98"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/profile.py",
@@ -1457,9 +1482,24 @@
    "sha256": "5ea20a6cb8b029ae709e177bb716812af03a929a5159d8748a93826b89dfc752"
   },
   {
+   "path": "qa/pilot05/full_reference_match/coordinator/IMAGE3_NEW_locked_STACK+projvp05+projgap05.png",
+   "bytes": 2179834,
+   "sha256": "8fc91c4b688122bef831ae283a5aade20db06ba976c6cfa159662e5df2b5bead"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/coordinator/NOTES.md",
    "bytes": 4297,
    "sha256": "e244f3efd7c236fe01e0c6006e4307095eaea934d89a65efe7b20099895d0d6b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/RIDE10_BEFORE_STACK.png",
+   "bytes": 1975772,
+   "sha256": "63d23e7bc6914c202b205f2c30b30b2d516571e19c79a6962e82f265f33d110f"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/RIDE10_NEW_STACK+projvp05+projgap05.png",
+   "bytes": 1976045,
+   "sha256": "a7d715387714745e8f937a06dc9ddd78ec63f50fd03402ce77776f03de6df258"
   },
   {
    "path": "qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.json",
@@ -8182,6 +8222,11 @@
    "sha256": "8571f4ece727b54b91bf48a465db48f949af809927d5ac4b1c3e29281af5d7b6"
   },
   {
+   "path": "src/characters/benny/benny05.ts",
+   "bytes": 14529,
+   "sha256": "8718a5ae80d0d481076f8aaa9a0b06543df021236691a968211f3d8ab5be36a0"
+  },
+  {
    "path": "src/characters/benny/build.ts",
    "bytes": 24248,
    "sha256": "7f0cf0e0740197cab5c1cb347d95fe37be3d3f442e27bb07fcee6e9d07c307ad"
@@ -8193,8 +8238,8 @@
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 12537,
-   "sha256": "21cfc091a4c4b00a95e9886868f30479ba3b3d4a70375a11eb2744f832f2d5f3"
+   "bytes": 13153,
+   "sha256": "a6247dd1763620602833b47ba6df23f381dcb197306596ed0bc9d6604c41f175"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -8248,8 +8293,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 12885,
-   "sha256": "00c5242f8d1dcfacc79548dbcc30ad8a75f56e98d4e7a25122eaebf03aa92611"
+   "bytes": 16870,
+   "sha256": "00f2ba0daa3f2817928aa612ec86abe37e2b12d97aca95fbea1c81a0a64bf4b0"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -8383,8 +8428,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 41087,
-   "sha256": "5c15377b00d15cebec9b32f32b293f6839ee74253f1dd20b175e133dbd549e6c"
+   "bytes": 43432,
+   "sha256": "ab6620d86483d02bc5ea96a28d55c69700e096efe388ab70cb3642ba9f019ea5"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

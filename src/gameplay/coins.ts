@@ -11,6 +11,60 @@ import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRi
 
 export const COIN_VALUE = 10;
 
+/** `?coins05=1` / `?match05=1`: Screen 05 reference coins (measured 05 layout C05M + approved coin look, all screens) */
+const COINS05 = on05('coins05');
+/**
+ * coins05 LOOK: the face texture IS the approved nearest coin (qa/pilot05/full_reference_match/coins/coin_bake.py →
+ * assets/textures/coins05/coin05_face.png: un-foreshortened to a disc, texel = display colour) and the milled edge uses the
+ * approved coin's edge-band colours; both are drawn unlit through the post-chain inverse PROJ05_INVERSE, so the screen
+ * shows the approved yellow-gold instead of the tone-mapped orange. The game waits for the texture before `ready`.
+ */
+const C05LOOK = { thick: 0.13 };
+let face05: THREE.Texture | null = null;
+if (COINS05) {
+  proj05Pending.push(new Promise<void>((res) => {
+    face05 = new THREE.TextureLoader().load(new URL('../../assets/textures/coins05/coin05_face.png', import.meta.url).href, () => res(), undefined, (e) => {
+      console.error('[rainbow] coins05: coin05_face.png failed', e); res();
+    });
+    face05.colorSpace = THREE.NoColorSpace; // the texels ARE display values: the shader undoes the post chain
+    face05.anisotropy = 4;
+  }));
+}
+const post05 = { uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) } };
+const rt05 = new THREE.Vector2();
+/** unlit material whose map holds DISPLAY colours: the fragment shows pjInverse(map) (the post chain then restores it) */
+function coin05Material(map: THREE.Texture): THREE.MeshBasicMaterial {
+  const mat = new THREE.MeshBasicMaterial({ map, fog: false });
+  mat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, post05);
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;\n${PROJ05_INVERSE}\nvoid main() {`)
+      .replace('#include <dithering_fragment>', `#include <dithering_fragment>\ngl_FragColor = vec4(pjInverse(diffuseColor.rgb), 1.0); // coins05`);
+  };
+  mat.customProgramCacheKey = () => 'coin05';
+  mat.onBeforeRender = (renderer) => {
+    const rt = renderer.getRenderTarget();
+    if (rt) rt05.set(rt.width, rt.height); else renderer.getDrawingBufferSize(rt05);
+    post05.uPjRes.value.copy(rt05);
+    post05.uPjPost.value.x = renderer.toneMappingExposure;
+  };
+  return mat;
+}
+/** approved coin edge band (display colours, measured below the face of approved coin 1: face side → back) + ridges */
+function edge05Texture(): THREE.Texture {
+  const band = [[231, 164, 29], [215, 139, 35], [195, 118, 43], [175, 103, 48], [165, 99, 53], [161, 99, 54], [157, 98, 53], [155, 97, 52], [153, 97, 52], [147, 96, 53], [135, 96, 60]];
+  return canvasTexture(256, band.length, (c, w) => {
+    band.forEach(([r, g, b], y) => {
+      for (let x = 0; x < w; x++) {
+        const k = x % 4; // 64 milled ridges round the coin: a light (water-lit) ridge, a dark groove
+        const d = k === 0 ? [30, 38, 48] : k === 2 ? [-14, -12, -10] : [0, 0, 0];
+        c.fillStyle = `rgb(${Math.min(255, Math.max(0, r + d[0]))},${Math.min(255, Math.max(0, g + d[1]))},${Math.min(255, Math.max(0, b + d[2]))})`;
+        c.fillRect(x, y, 1, 1);
+      }
+    });
+  }, false);
+}
+
 /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
 export interface CoinDef {
   s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number;
@@ -155,14 +209,22 @@ export function createCoins(course: Course): CoinSystem {
   const edgeTex = canvasTexture(256, 8, (c, w, h) => {
     for (let x = 0; x < w; x += 4) { c.fillStyle = (x / 4) % 2 ? '#c08000' : '#ffe070'; c.fillRect(x, 0, 4, h); }
   });
-  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 48, 1);
+  const geo = new THREE.CylinderGeometry(0.5, 0.5, COINS05 ? C05LOOK.thick : 0.2, 48, 1);
   geo.rotateX(Math.PI / 2); // faces along ±Z
   // Gold is carried mostly by EMISSIVE art (blue ≈ 0) so the pink-white candy environment and the
   // Neutral tone mapping cannot wash it to pale peach (ref face ≈ #F4C400); a dark-gold metal base
   // keeps a reflective sheen on top.
   const side = new THREE.MeshStandardMaterial({ color: '#6a4a00', metalness: 0.75, roughness: 0.3, emissive: '#ffffff', emissiveMap: edgeTex, emissiveIntensity: 1.0 });
   const face = new THREE.MeshStandardMaterial({ map: faceTex, color: '#7a5200', metalness: 0.7, roughness: 0.3, emissive: '#ffffff', emissiveMap: faceTex, emissiveIntensity: 1.15 });
-  const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
+  let mats: THREE.Material[] = [side, face, face];
+  if (COINS05 && face05) {
+    const f05 = face05 as THREE.Texture;
+    f05.center.set(0.5, 0.5);
+    f05.rotation = faceTex.rotation; // same cap orientation as the default art
+    const face5 = coin05Material(f05);
+    mats = [coin05Material(edge05Texture()), face5, face5];
+  }
+  const mesh = new THREE.InstancedMesh(geo, mats, defs.length);
   mesh.frustumCulled = false;
   const group = new THREE.Group();
   group.name = 'coins';
@@ -175,9 +237,11 @@ export function createCoins(course: Course): CoinSystem {
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
 
+  let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
   const place = (time: number) => {
     defs.forEach((d, i) => {
       const f = course.sample(d.s);
+      const ph = d.phase ?? i;
       let scale = 1;
       if (collected[i]) {
         if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
@@ -186,17 +250,23 @@ export function createCoins(course: Course): CoinSystem {
         scale = 1 + k * 0.8;
         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
       } else {
-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));
       }
       back.copy(f.tan).negate();
       const right = new THREE.Vector3().crossVectors(f.up, back).normalize();
       basis.makeBasis(right, f.up, back);
       q.setFromRotationMatrix(basis);
       // tilted coins (05) only wobble a little so the face stays toward the camera
-      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + ph * 0.7));
       q.multiply(spin);
       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
-      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+      let base = d.scale ?? 1;
+      if (d.far) {
+        // coins05: the measured checkpoint size while at least (checkpoint distance − 1) ahead, full size 15 u closer
+        const k = THREE.MathUtils.clamp((d.far[1] - 1 - (d.s - lastS)) / 15, 0, 1);
+        base = d.far[0] + (base - d.far[0]) * k;
+      }
+      m.compose(p, q, sc.setScalar(base * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
       mesh.setMatrixAt(i, m);
     });
     mesh.instanceMatrix.needsUpdate = true;
@@ -208,6 +278,7 @@ export function createCoins(course: Course): CoinSystem {
     defs,
     collected,
     update(time, _dt, s, lat) {
+      lastS = s;
       let picked = 0;
       for (let i = 0; i < defs.length; i++) {
         if (collected[i]) continue;
@@ -224,6 +295,7 @@ export function createCoins(course: Course): CoinSystem {
       return picked;
     },
     resetUntil(s) {
+      lastS = s - 0.5;
       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
       place(0);
     },

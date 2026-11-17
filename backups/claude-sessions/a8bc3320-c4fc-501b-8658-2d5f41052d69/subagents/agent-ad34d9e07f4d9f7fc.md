@@ -1329,3 +1329,74 @@ Now I have a clear picture. Let me make the fur shader changes (behind defines s
 > 151:        #if defined(BENNY_UV) && defined(BENNY05)
 > 159:    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY_UV !== undefined ? '-uv' : ''}`;
 
+### 🤖 Claude — 2026-11-17T00:18:05.740Z
+
+Now the new Benny-05 module.
+
+### 🤖 Claude — 2026-11-17T00:18:54.215Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "content": "/**\n * Screen 05 FULL REFERENCE MATCH — Benny (`?benny05=1`, or the master `?match05=1`; qa/pilot05/full_reference_match/benny/).\n *\n * Applied to Benny HIMSELF (every screen sees the same corrected character while the switch is on), on top of the\n * unchanged canonical assets/models/benny.glb, rig and clips. Off (default): nothing in this file runs, every material,\n * geometry and shader program is the previous one.\n *\n *  1. Beanie geometry (visual only, hat-local): cuff band thinner and the whole beanie  …[+13635 chars]`
+
+### 🧑 User — 2026-11-17T00:18:54.392Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/benny/benny05.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:19:30.277Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  type St = { mesh: THREE.Mesh; mat: THREE.MeshStandardMaterial; map: THREE.Texture | null; color: THREE.Color };\"\"\",\"\"\"  type St = { mesh: THREE.Mesh; mat: THREE.MeshStandardMaterial; map: THREE.Texture | null; color: THREE.Color; fur?: FurHandle; root?: THREE.Color; tip?: THREE.Color };\"\"\")\ns=s.replace(\"\"\"    mat.needsUpdate = true;\n    baked.push({ mesh: m, mat, map: mat.map, color: mat.color.clone() });\"\"\",\"\"\"    mat.needsUpdate = true;\n    b …[+3758 chars]`
+
+### 🧑 User — 2026-11-17T00:19:33.413Z
+
+> ↩︎ result: 3: * and drives expressions + procedural secondary motion on top of the GLB clips.
+> 9:import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+> 34:  const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
+> 36:  const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;
+> 37:  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });
+> 76:  clips: THREE.AnimationClip[],
+> 92:    if (BENNY05 && FUR05[m.name]) Object.assign(p, FUR05[m.name]);
+> 100:  const b05 = BENNY05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
+> 101:  if (BENNY05) clips = dampedClips(clips);
+> 128:    const c = clips.find((k) => k.name === name);
+> 226:    const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body), b05 };
+
+### 🤖 Claude — 2026-11-17T00:19:37.821Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit -p . ; echo rc=$?; cat package.json | grep -n '\"scripts\"' -A15 | head -20", "description": "Confirm typecheck result and scripts"}`
+
+### 🧑 User — 2026-11-17T00:19:41.088Z
+
+> ↩︎ result: rc=0
+> 7:  "scripts": {
+> 8-    "dev": "vite --host 0.0.0.0",
+> 9-    "build": "tsc --noEmit && vite build",
+> 10-    "preview": "vite preview --host 0.0.0.0 --port 4173",
+> 11-    "typecheck": "tsc --noEmit",
+> 12-    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 13-    "models:export": "node scripts/export-models.mjs",
+> 14-    "qa:capture": "node scripts/capture.mjs",
+> 15-    "qa:compare": "python3 scripts/compare.py",
+> 16-    "verify:refs": "sha256sum -c scripts/reference.sha256",
+> 17-    "android:sync": "npm run build && npx cap sync android",
+> 18-    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> 19-    "test:cinematic": "node scripts/cinematic-test.mjs"
+> 20-  },
+> 21-  "dependencies": {
+> 22-    "@capacitor/android": "^6.2.0",
+
+### 🤖 Claude — 2026-11-17T00:19:52.749Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work; python3 - <<'EOF'\np='bennyprobe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"    console.log(basename(s), JSON.stringify(res));\"\"\",\"\"\"    if (res && res.saveAs && res.b64) { writeFileSync(`${out}/${res.saveAs}`, Buffer.from(res.b64, 'base64')); delete res.b64; }\n    console.log(basename(s), JSON.stringify(res));\"\"\")\nopen(p,'w').write(s)\nEOF\ncd probe\necho \"return null;\" > shot0.shot.js\necho \"return { saveAs: 'uv.f32', b64: window.__bennyQA.b05.uvPass(Q.renderer, Q.scene, Q.camera, [200, 740, 440, 480 …[+375 chars]`
+
+### 🧑 User — 2026-11-17T00:19:52.846Z
+
+> ↩︎ result: calA.shot.js
+> calB.shot.js
+> info.js
+> restore.shot.js
+> shot0.shot.js
+> uv.js
+
+### 🤖 Claude — 2026-11-17T00:19:57.209Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; time node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/r1 $W/probe/shot0.shot.js $W/probe/info.js $W/probe/uv.js $W/probe/calA.shot.js $W/probe/calB.shot.js $W/probe/restore.shot.js 2>&1 | tail -12", "description": "Run first bake probe session with benny05 on", "timeout": 600000}`
+

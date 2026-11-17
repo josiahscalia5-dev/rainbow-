@@ -27,6 +27,7 @@ try {
   for (const s of steps) {
     const body = readFileSync(s, 'utf8');
     const res = await page.evaluate(async (b) => { const R = window.__rainbow, Q = R.qa3d(); const f = new Function('R', 'Q', `return (async () => { ${b} })()`); return await f(R, Q); }, body);
+    if (res && res.saveAs && res.b64) { writeFileSync(`${out}/${res.saveAs}`, Buffer.from(res.b64, 'base64')); delete res.b64; }
     console.log(basename(s), JSON.stringify(res));
     if (s.endsWith('.shot.js')) {
       await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));

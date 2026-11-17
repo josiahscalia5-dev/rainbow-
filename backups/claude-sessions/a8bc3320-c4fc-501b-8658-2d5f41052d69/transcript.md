@@ -2814,3 +2814,127 @@ Notes are written. Now an immediate verified save of this work to GitHub:
 
 > 🔧 **Bash** `{"command": "timeout 600 python3 scripts/rainbow-autosave.py --reason manual:far-river-vp-gap --quiet; python3 -I scripts/autosave-status.py | head -1; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/ccr-694bda6a-x58ntq | cut -f1)\"; git show --stat HEAD | grep -E 'waterRibbon|bake.py|far2|coordinator/NOTES' | head", "description": "Run verified autosave and confirm remote SHA", "timeout": 700000}`
 
+### 🧑 User — 2026-11-17T00:18:45.255Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-694bda6a-x58ntq | scheduler daemon | last verified backup 2026-11-17T00:18:35+00:00 (0.1 min ago) | local 312d1a2 remote 312d1a2 (match) | uncommitted 0
+> LOCAL  312d1a246c2334f3e499b9cb5a637438b0922e92
+> REMOTE 312d1a246c2334f3e499b9cb5a637438b0922e92
+>  .../full_reference_match/coordinator/NOTES.md      | 38 ++++++++++++++++
+
+### 🤖 Claude — 2026-11-17T00:18:49.763Z
+
+Saved: GitHub matches local HEAD at `312d1a246c2334f3e499b9cb5a637438b0922e92`, with nothing uncommitted. Here are the new full-size real renders, kept separate as you asked:
+
+### 🤖 Claude — 2026-11-17T00:18:51.769Z
+
+> 🔧 **Bash** `{"command": "C=qa/pilot05/full_reference_match/coordinator && cp $C/gap05/locked/05.png \"$C/IMAGE3_NEW_locked_STACK+projvp05+projgap05.png\" && cp qa/pilot05/full_reference_match/recovery_s018/move_match05/move_10.png \"$C/RIDE10_BEFORE_STACK.png\" && cp $C/gap05/ride/move_10.png \"$C/RIDE10_NEW_STACK+projvp05+projgap05.png\" && ls $C/*.png", "description": "Save labeled new locked and ride images"}`
+
+### 🧑 User — 2026-11-17T00:18:51.858Z
+
+> ↩︎ result: qa/pilot05/full_reference_match/coordinator/IMAGE3_NEW_locked_STACK+projvp05+projgap05.png
+> qa/pilot05/full_reference_match/coordinator/RIDE10_BEFORE_STACK.png
+> qa/pilot05/full_reference_match/coordinator/RIDE10_NEW_STACK+projvp05+projgap05.png
+
+### 🤖 Claude — 2026-11-17T00:18:57.569Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/IMAGE3_NEW_locked_STACK+projvp05+projgap05.png", "/home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/RIDE10_BEFORE_STACK.png", "/home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/RIDE10_NEW_STACK+projvp05+projgap05.png"], "caption": "Image 3: new locked-camera render with the two far-river fixes; it differs from Image 2 on only 10,036 water pixels, all closer to your approved image. Then the riding test 10 units ahead, before vs new: the dark torn stripes across the river near the coins are go …[+62 chars]`
+
+### 🧑 User — 2026-11-17T00:18:58.202Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/IMAGE3_NEW_locked_STACK+projvp05+projgap05.png → file_uuid: ddb87f1d-50f3-450e-a6df-e05ede9c89f5
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/RIDE10_BEFORE_STACK.png → file_uuid: ab8d5762-6108-4154-a32b-b0e663ef826c
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/RIDE10_NEW_STACK+projvp05+projgap05.png → file_uuid: f78956e0-3aee-4361-bc6e-6cdee15a59ca
+
+### 🤖 Claude — 2026-11-17T00:19:01.309Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "completed", "subject": "Coordinator: far-river riding fixes (projvp05 + projgap05)"}`
+
+### 🧑 User — 2026-11-17T00:19:01.329Z
+
+> ↩︎ result: Updated task #7 subject, status
+
+### 🤖 Claude — 2026-11-17T00:19:03.539Z
+
+> 🔧 **Bash** `{"command": "cd /home/user && git -C rainbow- show 81e639e:scripts/setup-blender.sh >/dev/null 2>&1 && echo \"default branch has setup-blender.sh\" || echo \"default branch LACKS setup-blender.sh\"; git -C rainbow- show 81e639e:scripts/claude-bootstrap.sh >/dev/null 2>&1 && echo \"default has bootstrap\" || echo \"default LACKS bootstrap\"; time (bash rainbow-/scripts/cloud-env-setup.sh 2>&1 | grep -E '^  (OK|WARN|FAIL)|Rainbow env' | cut -c1-160)", "description": "Test the project's cloud setup script end to end", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T00:19:07.045Z
+
+> ↩︎ result: default branch LACKS setup-blender.sh
+> default LACKS bootstrap
+> == Rainbow env-setup: tools (/home/user/rainbow-)
+>   OK   Node.js                        v22.23.4, npm 10.9.9
+>   OK   npm dependencies               node_modules up to date with package-lock.json (npm ci skipped)
+>   OK   Python QA libraries            Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>   OK   Playwright + Chromium          headless Chromium 153.0.8010.12 with WebGL2 (SwiftShader); preinstalled, never reinstall
+>   OK   ffmpeg / ImageMagick           ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-98 (Flow video + image checks)
+>   OK   Blender                        Blender 5.3.0 (present) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-
+>   WARN World Labs integration         Marble API authentication FAILED (HTTP 401): reconnect with the secure credential form (request_credential host api.worldl
+> 
+> real	0m3.458s
+> user	0m2.276s
+> sys	0m0.611s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T00:19:38.711Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ccr-8c4acadc-iybw0n\\|approved-screen-implementation\" CLAUDE.md backups/START_NEW_CLAUDE_ACCOUNT.md backups/CLAUDE_ACCOUNT_TRANSFER.md backups/CURRENT_STATE.md 2>/dev/null | cut -c1-220 | head -20", "description": "Find stale newest-branch pointers in hand-over docs"}`
+
+### 🧑 User — 2026-11-17T00:19:38.754Z
+
+> ↩︎ result: CLAUDE.md:12:   `git fetch origin ccr-8c4acadc-iybw0n && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
+> CLAUDE.md:20:**`ccr-8c4acadc-iybw0n`** (new Claude account, session `01KS3bZt…`; fast-forwarded from `ccr-61131b9d-uj0oqb` @ `aea7e77`; Screen 05
+> backups/CLAUDE_ACCOUNT_TRANSFER.md:1:# Rainbow — Claude account transfer guide (newest: session 01KS3bZt, branch `ccr-8c4acadc-iybw0n`, 2026-11-16 ~23:20 UTC)
+> backups/CLAUDE_ACCOUNT_TRANSFER.md:5:## ▶ NEWEST (2026-11-16 22:18 → ~23:20 UTC, NEW Claude account, session `01KS3bZt…`, branch `ccr-8c4acadc-iybw0n`) — READ THIS FIRST
+> backups/CLAUDE_ACCOUNT_TRANSFER.md:7:* **Transfer:** the session branch `ccr-8c4acadc-iybw0n` was an old ancestor (81e639e) → fast-forwarded to `aea7e77` (no merge
+> backups/CLAUDE_ACCOUNT_TRANSFER.md:24:* Next account: start from **`ccr-8c4acadc-iybw0n`** (or whatever branch is newest by `git ls-remote`), run the bootstrap,
+
+### 🤖 Claude — 2026-11-17T00:19:42.181Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "limit": 30}`
+
+### 🧑 User — 2026-11-17T00:19:42.202Z
+
+> ↩︎ result: 1	# Rainbow — Claude account transfer guide (newest: session 01KS3bZt, branch `ccr-8c4acadc-iybw0n`, 2026-11-16 ~23:20 UTC)
+> 2	
+> 3	Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
+> 4	
+> 5	## ▶ NEWEST (2026-11-16 22:18 → ~23:20 UTC, NEW Claude account, session `01KS3bZt…`, branch `ccr-8c4acadc-iybw0n`) — READ THIS FIRST
+> 6	The previous account (branch `ccr-61131b9d-uj0oqb`, last commit `aea7e77`, 22:12 UTC) ran out of credits. This session:
+> 7	* **Transfer:** the session branch `ccr-8c4acadc-iybw0n` was an old ancestor (81e639e) → fast-forwarded to `aea7e77` (no merge
+> 8	  commit, no history rewrite). All 19 remote `ccr-*` / `claude/*` branches are contained; the 3 `codex/*` branches stay
+> 9	  separate (never auto-merged). `scripts/claude-bootstrap.sh --skip-resume` → BOOTSTRAP OK (LFS 34 / 34 + on GitHub LFS,
+> 10	  references 13 / 13, 10 / 10 specialists unchanged, Blender 5.3.0, Android SDK 34 + Java 21, Playwright WebGL2, tsc,
+> 11	  continuity). `backups/autosave.config.json`: `branch` = this branch; `ccr-61131b9d-uj0oqb`, `ccr-e546a360-cxmton`,
+> 12	  `ccr-57af22a4-lsg7y7`, `claude/rainbow-05-water-projection` and the two newer `codex/*` branches added to `protec …[+1798 chars]
+
+### 🤖 Claude — 2026-11-17T00:19:44.379Z
+
+I'll prepend this session's hand-over section to the transfer guide and update the newest-branch pointers in `CLAUDE.md`.
+
+### 🤖 Claude — 2026-11-17T00:19:58.121Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='backups/CLAUDE_ACCOUNT_TRANSFER.md'; s=open(p).read()\nold_title=s.split('\\n',1)[0]\nnew_title='# Rainbow — Claude account transfer guide (newest: session 018Sg3AU, branch `ccr-694bda6a-x58ntq`, 2026-11-17 ~00:50 UTC)'\nblock='''\n## ▶ NEWEST (2026-11-16 23:51 → 2026-11-17, NEW Claude account, session `018Sg3AU…`, branch `ccr-694bda6a-x58ntq`) — READ THIS FIRST\nThe previous account (branch `claude/approved-screen-implementation-g3loqu`, last commit `b81cc34`, 23:44 UTC) hit its limit.\n* **Transfer:** the session started on the OLD GitHub default branch (`8 …[+2953 chars]`
+
+### 🧑 User — 2026-11-17T00:19:58.216Z
+
+> ↩︎ result: 12:   `git fetch origin ccr-694bda6a-x58ntq && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
+> 20:fetch line above first). Newest work as of 2026-11-17 ~00:50 UTC: branch **`ccr-694bda6a-x58ntq`** (session `018Sg3AU…`,
+> # Rainbow — Claude account transfer guide (newest: session 018Sg3AU, branch `ccr-694bda6a-x58ntq`, 2026-11-17 ~00:50 UTC)
+> 
+> Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
+> 
+> ## ▶ NEWEST (2026-11-16 23:51 → 2026-11-17, NEW Claude account, session `018Sg3AU…`, branch `ccr-694bda6a-x58ntq`) — READ THIS FIRST
+> The previous account (branch `claude/approved-screen-implementation-g3loqu`, last commit `b81cc34`, 23:44 UTC) hit its limit.
+> * **Transfer:** the session started on the OLD GitHub default branch (`81e639e`: no bootstrap, no Blender setup; its
+>   SessionStart hook only started an old autosave that refused to push). `ccr-694bda6a-x58ntq` was re-created directly
+
+### 🤖 Claude — 2026-11-17T00:20:07.017Z
+
+> 🔧 **Bash** `{"command": "ls .github 2>/dev/null; find . -maxdepth 3 -iname '*pull_request_template*' -not -path './node_modules/*' 2>/dev/null; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:handover-docs --quiet; echo \"LOCAL $(git rev-parse HEAD) REMOTE $(git ls-remote origin refs/heads/ccr-694bda6a-x58ntq | cut -f1)\"", "description": "Check PR template and push hand-over docs", "timeout": 400000}`
+
+### 🤖 Claude — 2026-11-17T00:20:07.570Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__create_pull_request,mcp__github__list_pull_requests", "max_results": 2}`
+

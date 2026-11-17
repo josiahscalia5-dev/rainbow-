@@ -761,3 +761,45 @@ Deliver in `qa/pilot05/full_reference_match/env/` as the brief says. Your final 
 > const DIR = typeof opt.dir === 'string' ? opt.dir : 'qa/pilot05/proj/tunnel/lid';
 > const mesh2d = JSON.parse(readFileSync(`${DIR}/mesh2d.json`, 'utf8') …[+4501 chars]
 
+### 🤖 Claude — 2026-11-17T00:19:01.223Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,40p src/vfx/proj05Apron.ts | head -60; grep -n \"inset\\|radius\\|theta\\|ang\" src/vfx/proj05Apron.ts | head -30", "description": "Inspect apron geometry parameters"}`
+
+### 🧑 User — 2026-11-17T00:19:01.281Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection test (`?proj05=1`, qa/pilot05/proj/NOTES.md): a thin VISUAL-ONLY strip that hugs the tunnel wall
+>  * from the river's edge up ≈ 2.5 u, on 05 only. At the far bends the approved picture's fluffy foam banks lie beyond the
+>  * game river's edge (on the lower wall); this strip carries them (baked from the approved picture through the locked
+>  * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: steering, coins and the
+>  * camera are untouched. Where it would be magnified (camera close) or where the approved picture shows no foam/water,
+>  * it dithers away and the wall shows as before. `?projbank05=0` leaves it out.
+>  * attribute aPj = (t · side, s): t 0 at the river edge → 1 at the top of the strip, side −1 left / +1 right.
+>  */
+> import * as THREE from 'three';
+> import type { Course } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> import { tubeCenterAt } from '../world/tube';
+> import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending } from './waterRibbon';
+> 
+> /** s range covered by proj05_A.png (must match tools/proj05/bake.py: A_S0, A_S1) */
+> export const PJ_A_S0 = 126, PJ_A_S1 = 190;
+> 
+> const VERT = /* glsl * …[+1060 chars]
+
+### 🤖 Claude — 2026-11-17T00:19:37.259Z
+
+Now I have a clear diagnosis: the main ring error is lateral (approved rings sit 0.6-1.0 u further left relative to the camera). Let me implement the env05 geometry hooks in tube.ts.
+
+### 🤖 Claude — 2026-11-17T00:19:51.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/world/tube.ts'\ns=open(p).read()\nold=\"\"\"  oval?: (s: number) => number;\n}\n\nexport function buildTubeGeometry(\"\"\"\nnew=\"\"\"  oval?: (s: number) => number;\n  /**\n   * `?env05=1` (Screen 05 only, visual): sideways displacement (world units along the frame's `right`) of the wall point\n   * at tunnel coordinate s and angle th (th as below: cos th → right, sin th → up). Positions only; normals, uv and the\n   * strip attributes stay those of the circle. Undefined = unchanged geometry.\n   */\n  warp?: (s: number, th: numbe …[+3419 chars]`
+
+### 🧑 User — 2026-11-17T00:19:51.135Z
+
+> ↩︎ result: 87:    const tan = b.clone().sub(a).normalize();
+> 89:    const up = cu.addScaledVector(tan, -cu.dot(tan)).normalize();
+> 90:    const right = new THREE.Vector3().crossVectors(tan, up).normalize();
+> 137:      const tan = A.tan.clone().lerp(B.tan, f).normalize();
+> 139:      up.addScaledVector(tan, -up.dot(tan)).normalize();
+
