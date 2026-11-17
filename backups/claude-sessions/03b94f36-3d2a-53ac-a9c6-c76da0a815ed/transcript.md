@@ -7665,3 +7665,74 @@ Starting the Android rebuild with the new Benny in the background:
 
 > 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; Q=/home/user/rainbow-/qa/match/08; cd /home/user/rainbow- && python3 -I -c \"\nfrom PIL import Image\nfor src,dst in (('references/08_final_spin_chamber.png','$Q/benny_APPROVED_closeup.png'),('$M/p3/08.png','$Q/benny_NEW_ported_closeup.png')):\n    Image.open(src).convert('RGB').crop((200,800,680,1280)).resize((960,960),Image.LANCZOS).save(dst)\n\"; cp $M/mb/montage.png $Q/motion/montage_ported_benny.png; for n in f06_forward6u s_left_steer s_right_steer; do cp $M/mb/$n.png $Q/motion/${n}_port …[+2200 chars]`
 
+### 🧑 User — 2026-11-17T15:13:29.709Z
+
+> ↩︎ result: 23012001
+>   "result": "committed+pushed",
+>   "commit": "91ae1ca6e856a96a292bbd620c07fac342185de5",
+> HEAD 91ae1ca6e856a96a292bbd620c07fac342185de5 GH 91ae1ca6e856a96a292bbd620c07fac342185de5 uncommitted 0 refs 13/13 LFS-missing 0
+
+### 🤖 Claude — 2026-11-17T15:13:32.507Z
+
+Saved and verified on GitHub (`91ae1ca`). Here are your previews, sent separately. **Your approved Benny:**
+
+### 🤖 Claude — 2026-11-17T15:13:33.549Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/benny_APPROVED_closeup.png"], "caption": "APPROVED Benny (close-up from your original Screen 08)", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T15:13:34.219Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/benny_APPROVED_closeup.png → file_uuid: 6dddc717-6401-47f1-bb7c-d5caf0b3670c
+
+### 🤖 Claude — 2026-11-17T15:13:34.848Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/benny_NEW_ported_closeup.png"], "caption": "NEWEST Benny in the real game (same close-up, Screen 08 with the test switch)", "display": "render", "status": "normal"}`
+
+### 🤖 Claude — 2026-11-17T15:13:35.997Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_NEW_match08.png"], "caption": "Complete Screen 08 with the newest Benny (scenery unchanged, 97.4 %)", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T15:13:36.736Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_NEW_match08.png → file_uuid: df9a3153-8040-442e-b269-556efa7addee
+
+### 🧑 User — 2026-11-17T15:13:36.883Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/benny_NEW_ported_closeup.png → file_uuid: 96aaa4cd-e57a-45a0-afcf-67c5183c6b0c
+
+### 🤖 Claude — 2026-11-17T15:13:37.199Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/motion/montage_ported_benny.png"], "caption": "Moving camera with the newest Benny (real game simulation): checkpoint, 3, 6 and 10 units forward, steering left, steering right", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T15:13:37.791Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/motion/montage_ported_benny.png → file_uuid: 247ae57a-6480-4135-9357-1052afab51c5
+
+### 🤖 Claude — 2026-11-17T15:13:38.352Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/builds/rainbow-debug-match08-2026-11-17c-benny.apk"], "caption": "Android APK with the newest Benny and the Screen 08 reconstruction (not yet tested on a real phone)", "display": "attach", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T15:13:41.134Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/builds/rainbow-debug-match08-2026-11-17c-benny.apk → file_uuid: 120005e8-1845-4a12-bc5e-942bc14862bb
+
+### 🤖 Claude — 2026-11-17T15:13:52.484Z
+
+I've tested the new Benny moving through Screen 08, checked him on 04–07, and rebuilt the APK. Screen 08 is still waiting for your approval. Above are separate large previews: your approved Benny, the newest Benny, the complete Screen 08, and the moving-camera views; the new APK is attached.
+
+1. **Benny in motion:** his knitted beanie, yarn pom-pom, gold star and fur stay attached to him while he swims, rides forward and steers left and right. They're part of his 3D model, not a painted overlay, so they don't slide. His size and position stay steady across all the views.
+2. **Comparison and re-baking:** the newest Benny is clearly closer to your painting. The remaining differences are the fur colour, which is a bit lighter and pinker than your deeper magenta, and the slightly flatter beanie dome. I haven't tried re-baking his colours from your Screen 08 picture yet; it needs the full colour-calibration setup from the other branch. It's the next Benny step, and I'll keep whichever version is closer.
+3. **Scenery:** unchanged at 97.4 %, along with the camera, river, lighting and geometry.
+4. **Screens 04–07:** with the switch on, their scenery is unchanged. Only Benny himself (his new look and calmer swim wobble) and a few coin poses differ, so nothing there is damaged.
+5. **Your gameplay recording:** it still hasn't reached me; no video file has appeared in this session. Please attach it again. I'll then go through the camera obstructions, the 34–37 s gold structure and dark area, the 38–40 s Screen 08 camera switch, stretching and transitions.
+6. **APK:** `rainbow-debug-match08-2026-11-17c-benny.apk` (23 MB) has the newest Benny. Gameplay passed 8/8 with all 91 coins, and the code hasn't changed since then. It's **not tested on a phone yet**.
+7. **Previews:** sent above.
+8. **Saved:** on `ccr-9c4a8ad6-xovgsx`, commit `91ae1ca`, with local and GitHub matching. All earlier versions and APKs are kept, and your 13 approved images are unchanged.
+
+**Next:** re-bake Benny's colours from your Screen 08 picture and keep whichever version is closer, review your recording once it's attached, and fix what it shows. Then I'll ask for your Screen 08 approval. Phase 2 waits until then.
+
