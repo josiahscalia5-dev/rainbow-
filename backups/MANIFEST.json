@@ -462,6 +462,11 @@
    "sha256": "5477d982b01fb4649e785f755fc1e72f2dfaa7472274cc4d8f3b12aa1bf43ab6"
   },
   {
+   "path": "assets/textures/match07/plate07_fillmask_soft.png",
+   "bytes": 36782,
+   "sha256": "2571b773348fac8dcc7e93bf9dcdcde7cce75819dfce56c5f0d2568e9b331326"
+  },
+  {
    "path": "assets/textures/match07/plate07_hybrid.png",
    "bytes": 2540369,
    "sha256": "81a25186e3473ac4d6851d0ee1cd46e98784700629985d4b6356cd4b124cff14"
@@ -485,6 +490,11 @@
    "path": "assets/textures/match07/tile_wall.png",
    "bytes": 878381,
    "sha256": "b79ef258b3e09145662f60702824ab852c08deb6c8c8c81b70e355a48e1df78c"
+  },
+  {
+   "path": "assets/textures/match07/tile_wall_clean.png",
+   "bytes": 780654,
+   "sha256": "bf990817d2a787d8b77fc987122e43795c7bcac719db3409d89095f5cd532ddf"
   },
   {
    "path": "assets/textures/match07/tiles07.json",
@@ -653,8 +663,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3867,
-   "sha256": "181c0f98130b76ef10e91551301624f5d19bca9bea259d47e8c94b901e27a1c2"
+   "bytes": 3871,
+   "sha256": "bac6dcecbce2dbdbea32d4ee59285d77c0d0cfd2605fe58d339c8ee4e469b34f"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -663,8 +673,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11485,
-   "sha256": "8726ee3985d0f8aabc85394374c295a52fc60d61888ca40202f629a81222dc8f"
+   "bytes": 11494,
+   "sha256": "537d791d23e8091aee53c7934531fbb311aa501456ca584b387f16409dbd5b3a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1647,6 +1657,11 @@
    "sha256": "0b0dcf646febf1438a63043b3fafb8348315d5e43085e96abed427d3d15ef4a6"
   },
   {
+   "path": "qa/match/07/m2/coins/probe_m07coins.json",
+   "bytes": 9940,
+   "sha256": "006f78fb05a234174667c9560a5344c3da9bbffe612f939ee09c1dca77541997"
+  },
+  {
    "path": "qa/match/07/m2/coins/probe_m1.json",
    "bytes": 9935,
    "sha256": "b5bc3d1081b1f85919dbb2cfb4507df4ffd441083ff36819453d07191a7280d9"
@@ -1845,6 +1860,46 @@
    "path": "qa/match/07/m2/motion_fill/s_right_steer.png",
    "bytes": 2079131,
    "sha256": "77721ed0d35bae7c9c3f7d72bd2c86612216a5ca6ea7a508408548bdcd0612d5"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/d0_before_drop_8u.png",
+   "bytes": 1906228,
+   "sha256": "46b15db0110abed48b2a751f5f379b9afb0586daa1fc10b08c9c537b022afe95"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/f00_checkpoint.png",
+   "bytes": 2567233,
+   "sha256": "37a42c25492da7957c7c1526a526584b9d6fa84dee575be61b5b463ad67beef2"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/f03_forward3u.png",
+   "bytes": 2366904,
+   "sha256": "cc111538f72f46f9d4402f5535815cf18bdd207dc40411584784c8b87b52c160"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/f06_forward6u.png",
+   "bytes": 2264784,
+   "sha256": "507e78d8d079393f168888e91bda30dbed60d54f41fd57f3837c613c08a3e7d5"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/f10_forward10u.png",
+   "bytes": 2178613,
+   "sha256": "1438e2697af564e37fa56f0d1f476c0d16c9a51aad51f2eaa23ac3325068b56b"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/f20_forward20u.png",
+   "bytes": 2179761,
+   "sha256": "8cfc0ca885db172c7f956505aca419cf29f4e057c5db66c49fea6bd816fb2587"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/s_left_steer.png",
+   "bytes": 2222348,
+   "sha256": "000059fee7581090059e6b89ef03864dfa5082195f75bec2b33c93ef012bd8f4"
+  },
+  {
+   "path": "qa/match/07/m2r4/motion_k4/s_right_steer.png",
+   "bytes": 2331292,
+   "sha256": "3b6429e6e07ddadd7fbbaa5fd1432cf35af788c42e2a0262960957ed28998e11"
   },
   {
    "path": "qa/match/07/m3/07_NEW_match07_r3.png",
@@ -8488,8 +8543,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 13639,
-   "sha256": "af676c6f4a9816ed263fcc2a0e7e7a03b256245c2b6ceab641ddb6a2f0e2fa07"
+   "bytes": 14271,
+   "sha256": "44e2c3fd4a97728228364f9a101f6066170aa22e195c72909ff7b6e3c4a90d7c"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -8613,8 +8668,8 @@
   },
   {
    "path": "src/world/match07.ts",
-   "bytes": 13859,
-   "sha256": "8b2dbf3b1072d4560b003b6ad69727defa10dfb9e1b5109225106b897c671e3c"
+   "bytes": 14180,
+   "sha256": "ea34721656cff63250d75200f3572253f9ae707a0e35e5b79715689622aeb7fa"
   },
   {
    "path": "src/world/match08.ts",
