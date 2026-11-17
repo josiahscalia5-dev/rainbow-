@@ -3051,3 +3051,49 @@ TypeScript compiles cleanly. Now checking where every coin lands with the switch
 
 > 🔧 **Bash** `{"command": "O=qa/match/08/coins08px; mkdir -p $O; S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; rm -rf $S; mkdir -p $S\n# NEW (switch on) and switch-off/default with the edited code\ntimeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/new \"--q=match08=1&coins08px=1\" > $S/log.txt 2>&1\ntimeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/m08 \"--q=match08=1\" >> $S/log.txt 2>&1\ntimeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/def >> $S/log.txt 2>&1\n# the same with the code before this change (stash only coins.ts; the new json is …[+1056 chars]`
 
+### 🧑 User — 2026-11-17T17:50:07.225Z
+
+> ↩︎ result: No stash entries found.
+> <stdin>:5: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+> 07 | default: edited vs before = 0 px | match08: edited vs before = 0 px | coins08px vs match08 = 32 px
+> 08 | default: edited vs before = 0 px | match08: edited vs before = 0 px | coins08px vs match08 = 30071 px
+> 09 | default: edited vs before = 1499 px | match08: edited vs before = 0 px | coins08px vs match08 = 92774 px
+> 10 | default: edited vs before = 0 px | match08: edited vs before = 1694 px | coins08px vs match08 = 117095 px
+
+### 🤖 Claude — 2026-11-17T17:50:11.834Z
+
+The stash restore reported "No stash entries found". The five-minute autosave probably ran in the middle. Checking right away that my coins.ts change is safe:
+
+### 🤖 Claude — 2026-11-17T17:50:13.134Z
+
+> 🔧 **Bash** `{"command": "grep -c \"px08\" src/gameplay/coins.ts; git log --format='%h %ci %s' -4; git log -3 --format=%h -- src/gameplay/coins.ts; git stash list | head; git status --short | head; grep -n \"stash\" scripts/rainbow-autosave.py | head", "description": "Check whether the coins.ts change survived"}`
+
+### 🧑 User — 2026-11-17T17:50:13.211Z
+
+> ↩︎ result: 5
+> 7dcfe7f1 2026-11-17 17:45:52 +0000 autosave: Rainbow 2026-11-17 17:45 UTC
+> 58cc0051 2026-11-17 17:40:44 +0000 autosave: Rainbow 2026-11-17 17:40 UTC
+> 7a7b48ce 2026-11-17 17:35:18 +0000 autosave: Rainbow 2026-11-17 17:35 UTC
+> c83b8f1b 2026-11-17 17:35:03 +0000 Lead r3: World Labs + fal key verification (free reads, same accounts)
+> 7dcfe7f1
+> 2f6aac73
+> 93b4c302
+
+### 🤖 Claude — 2026-11-17T17:50:31.889Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; df -h /tmp | tail -1; git worktree add -q --detach $S/wt c83b8f1b 2>&1 | tail -2; ls $S/wt/assets/models | head -3; ln -s /home/user/rainbow-/node_modules $S/wt/node_modules; cd $S/wt && grep -c px08 src/gameplay/coins.ts; head -c 200 assets/models/$(ls assets/models | head -1) | file -", "description": "Create temporary worktree at the commit before the change"}`
+
+### 🧑 User — 2026-11-17T17:50:48.006Z
+
+> ↩︎ result: /dev/vda        252G   16G   23G  42% /
+> benny.glb
+> lids05.glb
+> rainbow_girl.glb
+> 0
+> /dev/stdin: glTF binary model, version 2, length 1126892 bytes
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T17:50:53.867Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; cd $S/wt && timeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/def_before > $S/log2.txt 2>&1; timeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/m08_before \"--q=match08=1\" >> $S/log2.txt 2>&1; cd /home/user/rainbow- && python3 -I - $S <<'EOF'\nimport sys; import numpy as np; from PIL import Image\nS=sys.argv[1]\ndef n(a,b):\n    a=np.asarray(Image.open(a).convert(\"RGB\")).astype(int); b=np.asarray(Image.open(b).convert(\"RGB\")).astype(int)\n    return int((np.abs(a-b).max(2)>0 …[+530 chars]`
+
