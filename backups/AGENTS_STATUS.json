@@ -494,7 +494,11 @@
    "specialists": "S06 + S08 scenery told at ~22:30 to checkpoint, push, write STATUS.md and stop; check their final SHAs on their -c6 branches",
    "marble_cdn": "update_environment add cdn.marble.worldlabs.ai was DENIED at the approval prompt -> still blocked; user can add it in the environment settings (Network access -> Allowed domains, keep package managers ticked)",
    "apk": "still failing: repo.maven.apache.org / repo1.maven.org answer intermittent 404 for existing files through this network (same file 200,200,404); a container-local init script remapping to repo1 did not fix it (removed). Idea not yet tried: a local retrying Maven mirror (localhost) feeding Gradle. No project file changed.",
-   "next": "when the user resumes: read the S06 / S08 STATUS.md, show APPROVED/BEFORE/NEW + moving frames; then 07 -> 05 -> 04 (two sessions max)"
+   "next": "when the user resumes: read the S06 / S08 STATUS.md, show APPROVED/BEFORE/NEW + moving frames; then 07 -> 05 -> 04 (two sessions max)",
+   "final_checkpoints": {
+    "S06": "claude/rainbow-s06-match-c6 @ 83bdf2429161ab76c84633474885ba4ed93f7b9a: &m06geo=1 (water only as wide as the painted river ~4.6 u, foam banks, walls to the banks) + &m06flow=1 (flowing water from the approved 06 painting); specialist rating moving 3 -> 6.5/10 (not lead-reviewed); proofs/gameplay/APK not run; open: protected 05 BEFORE differed 128k px in its container (re-check); next: qa/match/06/STATUS.md",
+    "S08 scenery": "claude/rainbow-s08-scenery-c6 @ 1c5e5ae70c6c2327f380d542226d30aaf9f69094: m08fill + 08-only course guard restored; &m08arch=1 KEEP (no corner gold slivers); &m08swim=1 KEEP-candidate (water under hard steering); &m08seam untested; heart loss at s~404 = foam-wall rule, not an obstacle; proofs/pictures/APK not run; next: qa/match/08/scenery/STATUS.md"
+   }
   }
  }
 }
