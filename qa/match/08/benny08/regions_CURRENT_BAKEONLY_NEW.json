@@ -1,0 +1,113 @@
+{
+ "/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad/v/p2/08.png": {
+  "scenery": {
+   "within_20": 0.973,
+   "ssim": 0.9588,
+   "mean_abs": 4.6
+  },
+  "upper": {
+   "within_20": 0.9888,
+   "ssim": 0.9684,
+   "mean_abs": 3.35
+  },
+  "middle": {
+   "within_20": 0.9063,
+   "ssim": 0.8899,
+   "mean_abs": 12.62
+  },
+  "lower": {
+   "within_20": 0.9923,
+   "ssim": 0.9843,
+   "mean_abs": 1.75
+  },
+  "scenery_nocoins": {
+   "within_20": 0.9898,
+   "ssim": 0.9756,
+   "mean_abs": 2.78
+  },
+  "benny+splash": {
+   "within_20": 0.4982,
+   "ssim": 0.4582,
+   "mean_abs": 39.13
+  },
+  "whole": {
+   "within_20": 0.8328,
+   "ssim": 0.8179,
+   "mean_abs": 14.42
+  }
+ },
+ "/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad/v/n2/08.png": {
+  "scenery": {
+   "within_20": 0.973,
+   "ssim": 0.9588,
+   "mean_abs": 4.6
+  },
+  "upper": {
+   "within_20": 0.9888,
+   "ssim": 0.9684,
+   "mean_abs": 3.35
+  },
+  "middle": {
+   "within_20": 0.9063,
+   "ssim": 0.8899,
+   "mean_abs": 12.62
+  },
+  "lower": {
+   "within_20": 0.9923,
+   "ssim": 0.9843,
+   "mean_abs": 1.75
+  },
+  "scenery_nocoins": {
+   "within_20": 0.9898,
+   "ssim": 0.9756,
+   "mean_abs": 2.78
+  },
+  "benny+splash": {
+   "within_20": 0.5721,
+   "ssim": 0.5533,
+   "mean_abs": 36.31
+  },
+  "whole": {
+   "within_20": 0.8425,
+   "ssim": 0.8304,
+   "mean_abs": 14.05
+  }
+ },
+ "/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad/v/r5/08.png": {
+  "scenery": {
+   "within_20": 0.9734,
+   "ssim": 0.959,
+   "mean_abs": 4.58
+  },
+  "upper": {
+   "within_20": 0.9888,
+   "ssim": 0.9684,
+   "mean_abs": 3.35
+  },
+  "middle": {
+   "within_20": 0.9063,
+   "ssim": 0.8899,
+   "mean_abs": 12.62
+  },
+  "lower": {
+   "within_20": 0.9933,
+   "ssim": 0.9849,
+   "mean_abs": 1.69
+  },
+  "scenery_nocoins": {
+   "within_20": 0.9903,
+   "ssim": 0.9759,
+   "mean_abs": 2.75
+  },
+  "benny+splash": {
+   "within_20": 0.657,
+   "ssim": 0.6023,
+   "mean_abs": 26.51
+  },
+  "whole": {
+   "within_20": 0.854,
+   "ssim": 0.837,
+   "mean_abs": 12.75
+  }
+ }
+}
