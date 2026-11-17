@@ -23,6 +23,10 @@ y 840–1245; scenery = y ≥ 190 outside that box; share of pixels within 20 le
    Tested and REJECTED (measured worse): body fur grown higher under the cuff (bald threshold +0.03…+0.15: no change);
    arm puffs 1.25× / 1.5× (64.8 / 64.5 %), raised +0.12 / +0.24 (64.8 / 64.1 %), 1.15× raised + wider (64.0 %).
 
+## Round 5 — variant review set (`review_r5/`, see its README)
+Exact URLs: **r2** `?match08=1&b08r3=0` (65.7 %) · **r3b** `?match08=1&b08hi=0&b08pom=0` (65.3 %) · **r4** `?match08=1` (65.4 %).
+Files `review_r5/{1_APPROVED,2_r2,3_r3b,4_r4}_*.png`: approved-view frame, close-up (closeup_APPROVED crop), forward / steer left / steer right.
+
 ## Round 4 (user order via lead, captures `r4/`)
 * KEPT: fur shoulder highlight (`fur.ts uHi` 0.7 on the body: lighter pink tips on the visible upper body, number
   neutral 65.3 %, visibly closer; `?b08hi=0` off); lighter violet pom-pom (material 1.12/1.0/1.06: pom 22 → 23 %,
