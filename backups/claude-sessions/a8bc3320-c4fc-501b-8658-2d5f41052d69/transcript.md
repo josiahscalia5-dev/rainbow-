@@ -4021,3 +4021,187 @@ The new uncommitted changes kept coming from the three specialists, who were sti
 
 The autosave keeps pushing every five minutes while this session runs. Wait for my message that the final backup is verified before switching accounts.
 
+### 🧑 User — 2026-11-17T00:29:53.257Z
+
+<system-reminder>
+<tools-used-before-summary>TaskStop</tools-used-before-summary>
+</system-reminder>
+
+### 🧑 User — 2026-11-17T00:29:53.257Z
+
+<task-notification>
+<task-id>ad84c7ee93858c1d0</task-id>
+<tool-use-id>toolu_01QdZAvwSvoZsYHe2Evm6fsV</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/ad84c7ee93858c1d0.output</output-file>
+<status>completed</status>
+<summary>Agent "Screen 05 tunnel and rings match (resumed)" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've stopped for the account transfer. The env05 ring layout is in the code, but I have **no before → after region or whole-frame numbers yet**: no env05 game capture exists. The only measured results so far are ring outline errors from a probe render.
+
+**Stopped cleanly.** `npx tsc --noEmit` is clean, the probe script passes `node --check`, and every change is behind `on05('env05')`. The one cycle I had started (probe → bake → capture) was still waiting for a render slot when I stopped it, so it wrote nothing. A leftover render-slot folder belongs to a dead process; `pw.mjs` takes those over by itself.
+
+**What the measurements show (STACK = before):**
+- Before numbers are confirmed: whole frame mean 34.1, 51.6 % within 20; purple walls 53.8; gold rings + frame 37.7; side fittings 26.9; distant tunnel 29.8.
+- Wall error: the biggest part (52 % of the wall region's error) is wall pixels sitting in the wrong place. The next biggest is the game's ring A covering approved wall: 44.5k px, mean 75.7.
+- Ring error is mainly sideways. The approved rings sit 0.6–1.0 u further left of the camera than the game's.
+  - Changing ring depth and thickness alone barely helps: A 46 → 24 px, B 26 → 24 px.
+  - Shifting them sideways fixes most of it in the fit: A 52 → 1.7 px, B 26 → 4.1 px, C 12.5 → 1.5 px.
+- First env05 layout, measured in a probe render (mean ring-edge error, px):
+
+| ring | STACK | env05 |
+|---|---|---|
+| A | 53.6 | 6.6 |
+| B | 27.4 | 14.4 |
+| C | 10.6 | 7.6 |
+| D | 5.9 | 4.7 |
+
+- Rings E–G are unchanged at about 5 px. The far rings' meeting point is still about 9 px too low.
+- I refined the settings after that probe but have not measured them; the fit predicts about 10 px for ring B. That is the limit while nothing moves at or below the river banks.
+
+**What env05 changes:**
+- Only the upper tunnel moves sideways: walls and rings above the river banks. The river, foam, apron, floor, camera, course and collisions are untouched.
+- Ring B is 1.5 u nearer, and the far rings are at the approved sizes.
+- Each real ring has its own texture row, and the near bays get their own wall rows.
+
+**Files changed:**
+- `src/world/tube.ts`, `src/world/environment.ts`, `src/vfx/proj05Tunnel.ts`.
+- `scripts/proj05-tunnel-probe.mjs`: gives each env05 ring a separate tag; unchanged when there is a single ring mesh.
+- New tools in `tools/env05/`: `err_by_surface.py`, `ringproj.py`, `ring_table.py`, `ring_validate.py`, `ring_fit.py`, `warp_fit.py`, `proj_bake.py`.
+- New textures in `assets/textures/env05/`. These are only a starting copy of the old textures re-laid out; the camera-projection bake has not run yet.
+
+**Remaining, in order (exact commands are in NOTES.md section 4):**
+1. Run the probe → bake → capture cycle.
+2. Check water (9.40) and foam (8.43) do not get worse than STACK.
+3. Optionally adjust where the sideways shift starts, to fix ring B's lower sides.
+4. Run the colour feedback pass.
+5. Rebuild the paddles onto the moved wall (`lids05e.glb`). Without this, the right-side paddles would sink into it.
+6. Deliverables: `before.png` and `new.png`, region numbers, ride frames, gameplay and continuity tests, the default pixel-identity check, and 04/06/07 with env05 on vs off.
+
+**REQUESTS:** none. The far river geometry is unchanged: the far rings are placed without changing the far tunnel's depth layout.
+
+The relaunch notes are in `/home/user/rainbow-/qa/pilot05/full_reference_match/env/NOTES.md`.</result>
+<usage><subagent_tokens>328226</subagent_tokens><tool_uses>64</tool_uses><duration_ms>1468664</duration_ms></usage>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T00:29:57.400Z
+
+The tunnel specialist has stopped cleanly. Its code type-checks, everything is behind `env05`, and its notes give exact relaunch steps. I'll save its final notes now while the other two wrap up.
+
+### 🤖 Claude — 2026-11-17T00:30:01.615Z
+
+> 🔧 **Bash** `{"command": "git status --short | head; exec 9>backups/.autosave.lock && flock -w 300 9 && git add -A qa/pilot05/full_reference_match src assets tools scripts backups 2>/dev/null; git reset -q -- '**/__pycache__/**' backups/.live 2>/dev/null; if ! git diff --cached --quiet; then git -c commit.gpgsign=false commit -q -m \"Env specialist stopped for account transfer: final env05 notes\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3AUAHEh1rEALJbwfawQ\"; fi; for i in 1 2 3 4; do git push -q -u origin HEAD:refs/heads/ccr-694bda6a-x58 …[+353 chars]`
+
+### 🧑 User — 2026-11-17T00:30:04.859Z
+
+> ↩︎ result: M qa/pilot05/full_reference_match/benny/NOTES.md
+>  M qa/pilot05/full_reference_match/coins/NOTES.md
+>  M qa/pilot05/full_reference_match/env/NOTES.md
+>  M qa/pilot05/full_reference_match/hud/NOTES.md
+>  M src/ui/hud.ts
+> LOCAL  898d6783aa78edcd7a712533ccd86762605c8465
+> REMOTE 898d6783aa78edcd7a712533ccd86762605c8465
+> MATCH
+> uncommitted: 0
+
+### 🤖 Claude — 2026-11-17T00:30:19.195Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/full_reference_match/COORDINATION.md <<'EOF'\n\n### Final stop before the transfer (~00:50 UTC) — all three specialists STOPPED cleanly (tsc clean, all behind switches)\n* env05: first env05 layout measured in a probe render (mean ring-edge error px STACK → env05): A 53.6 → 6.6, B 27.4 →\n  14.4, C 10.6 → 7.6, D 5.9 → 4.7; settings refined afterwards (not yet measured). `assets/textures/env05/` = re-laid-out\n  copy of the old atlases only (camera-projection bake NOT run). No env05 game capture yet → no region numbers yet.\n  Next: probe → `tools/env05/proj_bake. …[+1268 chars]`
+
+### 🧑 User — 2026-11-17T00:30:22.311Z
+
+> ↩︎ result: tsc OK
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: none (relaunch from notes when needed)
+
+### 🤖 Claude — 2026-11-17T00:30:31.232Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nd['assignments_now']['_note']=d['assignments_now']['_note'].replace('The three running_now specialists are INTERRUPTED','The three specialists in stopped_at_transfer were STOPPED cleanly')\njson.dump(d,open(p,'w'),indent=1); open(p,'a').write('\\n')\nEOF\nO=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/final_def && rm -rf $O && node scripts/capture.mjs 05 --out=$O > /dev/null 2>&1; echo \"cap rc=$?\"; git checkout -q -- qa/capture_log.json; python3 -I -c \"\nfr …[+372 chars]`
+
+### 🧑 User — 2026-11-17T00:30:49.458Z
+
+> ↩︎ result: cap rc=0
+> FINAL default vs current_default_05: differing px 0
+
+### 🤖 Claude — 2026-11-17T00:30:52.085Z
+
+The protected default game is still pixel-identical with the specialists' final code. Now the final commit, push and full verification:
+
+### 🤖 Claude — 2026-11-17T00:31:00.587Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 300 9 && git add -A qa/pilot05/full_reference_match src assets tools scripts backups CLAUDE.md .claude 2>/dev/null; git reset -q -- '**/__pycache__/**' backups/.live 2>/dev/null; git diff --cached --name-only | xargs -r grep -IlE '(sk-ant-[A-Za-z0-9]|ghp_[A-Za-z0-9]{20}|github_pat_[A-Za-z0-9]|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY)' 2>/dev/null; if ! git diff --cached --quiet; then git -c commit.gpgsign=false commit -q -m \"Account-transfer FINAL backup: all specialists stopped cleanly, final notes, coordination + agent status\n\nC …[+1393 chars]`
+
+### 🧑 User — 2026-11-17T00:31:05.229Z
+
+> ↩︎ result: BRANCH   ccr-694bda6a-x58ntq
+> LOCAL    b154ca12438fa7bfd6b7e6bf66cb691bf72ec8e1
+> REMOTE   b154ca12438fa7bfd6b7e6bf66cb691bf72ec8e1
+> PUSH     VERIFIED (match)
+> UNCOMMITTED 0
+> LFS      34 files, stubs 0, to upload 0
+> REFS     13/13 unchanged
+> AGENTS   10 definitions; ok 10/10 specialist definitions present; all SHA-256 unch
+> AUTOSAVE AUTOSAVE OK | branch ccr-694bda6a-x58ntq | scheduler daemon | last verified backup 2026-11-17T00:28:53+00:00 (2.2 min ago) | local b154ca1 r
+>  2473       33:34
+> SOURCE   claude/approved-screen-implementation-g3loqu = b81cc34ae55d616e8d1cd931e51e491d67dc2b34
+
+### 🤖 Claude — 2026-11-17T00:31:10.683Z
+
+Everything is verified. One cleanup: the follow-up check I scheduled for 01:12 UTC would wake this old session after you've switched accounts, so I'll cancel it.
+
+### 🤖 Claude — 2026-11-17T00:31:11.378Z
+
+> 🔧 **mcp__claude-code-remote__delete_trigger** `{"trigger_id": "trig_017vJGNh9C57yfj3dHEidJmU"}`
+
+### 🧑 User — 2026-11-17T00:31:24.028Z
+
+> ↩︎ result: {"trigger":{"id":"trig_017vJGNh9C57yfj3dHEidJmU","name":"Re-check PR #13 + specialists","cron_expression":"","enabled":true,"next_run_at":"2026-11-17T01:12:00Z","created_at":"2026-11-17T00:21:54.836836Z","updated_at":"2026-11-17T00:21:54.836836Z","persist_session":true,"persistent_session_id":"session_018Sg3AUAHEh1rEALJbwfawQ","mcp_connections":[],"creator":{"account_uuid":"3c459f59-4e74-461e-b4e6-c52936eda7c5","display_name":"josiah"},"api_token_hint":"","enabled_plugins":[],"extra_marketplaces":[],"run_once_at":"2026-11-17T01:12:00Z","ended_reason":"","created_via":"meta_mcp","suspension_reason":"","derived_state":{"folders_state":"FOLDERS_STATE_NONE","folders":[],"prompt":"Safety-net check-in: re-check draft PR josiahscalia5-dev/rainbow-#13 (CI, comments, conflicts) and act on anything actionable; also check whether the three Screen 05 specialists (env05, benny05, hud05/coins05) have reported, and that the autosave is still pushing (python3 -I scripts/autosave-status.py). If nothing changed on the PR, tell no one and re-arm (stop after 3 empty check-ins).","model":"","files":[]},"created_surface":"ROUTINE_CREATED_SURFACE_UNSPECIFIED","created_kind":"ROUTINE_CREATED_KIND_REMINDER …[+158 chars]
+
+### 🤖 Claude — 2026-11-17T00:31:28.245Z
+
+> 🔧 **TaskUpdate** `{"taskId": "8", "status": "completed", "subject": "Account-transfer backup: specialists stopped, final notes saved, verified"}`
+
+### 🧑 User — 2026-11-17T00:31:28.267Z
+
+> ↩︎ result: Updated task #8 subject, status
+
+### 🤖 Claude — 2026-11-17T00:31:42.422Z
+
+The final backup is saved and checked, so it's safe to switch accounts. All three specialists stopped cleanly and their final notes are included.
+
+| | |
+|---|---|
+| **Branch** | `ccr-694bda6a-x58ntq` |
+| **Commit** | **`b154ca12438fa7bfd6b7e6bf66cb691bf72ec8e1`** |
+| **Push** | GitHub has the same commit as local; nothing uncommitted or untracked |
+| **Large files (Git LFS)** | 34/34 on GitHub (`.blend` files, Benny, girl and paddle models, APK, Marble assets), nothing left to upload |
+| **Approved references** | 13/13 byte-identical |
+| **Specialists** | 10/10 definitions present and unchanged |
+| **Protected game** | Final default Screen 05 capture is pixel-identical to the saved default; the code type-checks |
+| **Source branch** | `claude/approved-screen-implementation-g3loqu` still at `b81cc34`, untouched |
+| **Autosave** | Running every 5 minutes on this branch (daemon alive 33 minutes); it can't run once this session closes |
+
+Nothing was force-pushed, merged, deleted or promoted.
+
+**To resume in the new account:** start with `backups/HANDOFF_NEW_ACCOUNT.md`. New sessions open on GitHub's old default branch, so run the first block of commands in that file before anything else; it also has a ready-to-paste prompt. Where each specialist stopped is at the end of `qa/pilot05/full_reference_match/COORDINATION.md`, with exact next steps in each one's notes and relaunch briefs in `qa/pilot05/full_reference_match/briefs/`.
+
+**Where each part stands:**
+- **Far-river water (the task I was on):** both fixes are in place behind switches and measured, in `coordinator/NOTES.md`.
+  - `projgap05` fills the gaps behind wave crests from your approved water. Torn-stripe pixels while riding went from 3,063 to 62.
+  - `projvp05` keeps contrast where two water pictures blend.
+  - Still open: 10 long gaps still show the old tile, and riding contrast is below your approved water.
+- **Tunnel and rings (env05):** the new layout is in code, behind its switch. Measured in a probe render (not a real game capture), the nearest ring's edge error dropped from 53.6 to 6.6 px. The projection bake, a real capture and moving the paddles onto the shifted wall are still to do.
+- **HUD (hud05):** in a test setup, not a real game capture, its region error went from 62.2 to 24.8. A real capture is still needed.
+- **Coins (coins05):** all 15 coins are placed on your approved positions and use your approved coin face. They haven't been captured yet.
+- **Benny (benny05):** the hat's shape now lines up better with your image (overlap score 0.893 → 0.921). The knitted-hat and fur colour bake script is written but hasn't run, so Benny looks unchanged so far.
+
+**Not saved or not done:**
+- No real game captures exist yet with the tunnel, HUD, coin or Benny switches on, so I don't know whether `?match05=1` works with all their parts together. Capture it once before relying on it.
+- Not started: splash and bubbles, the Android build, and the final full-screen proof images.
+- Deliberately left out of Git:
+  - test log text files (their result files are saved);
+  - Python caches;
+  - the installed tools and Android SDK, which the setup scripts rebuild;
+  - about 64 MB of temporary probe data, which takes about a minute to regenerate.
+- Logins don't transfer: the Marble API key and the World Labs Atlas sign-in. Neither is needed for Screen 05.
+
+I also cancelled my 01:12 UTC follow-up check so this old session won't wake up after you switch.
+

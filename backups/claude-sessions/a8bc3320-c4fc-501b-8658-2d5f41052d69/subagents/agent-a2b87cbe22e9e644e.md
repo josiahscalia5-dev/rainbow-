@@ -1591,3 +1591,117 @@ Writing checkpoint notes now; tsc passed with no errors, so the touched sources 
 
 > 🔧 **Bash** `{"command": "sleep 20; cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/bipniijqw.output", "description": "Wait for in-flight harness sweep to finish and restore file"}`
 
+### 🧑 User — 2026-11-17T00:29:04.286Z
+
+> ↩︎ result: a: HUD 24.88 bar 18.22 banner 35.21 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [150, 133, 735, 172] g0 [[150, 133, 174, 159, 342], [175, 133, 199, 159, 300]]
+> b: HUD 25.31 bar 18.22 banner 36.31 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [151, 133, 735, 172] g0 [[151, 134, 174, 159, 326], [176, 134, 199, 159, 292]]
+> c: HUD 25.91 bar 18.22 banner 37.84 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [149, 133, 735, 172] g0 [[149, 133, 172, 160, 356], [173, 134, 198, 160, 322]]
+> d: HUD 24.76 bar 18.22 banner 34.91 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [150, 132, 735, 172] g0 [[150, 132, 174, 158, 342], [175, 132, 199, 158, 300]]
+> e: HUD 25.49 bar 18.22 banner 36.76 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [150, 134, 735, 172] g0 [[150, 134, 174, 160, 342], [175, 134, 199, 160, 300]]
+> f: HUD 24.89 bar 18.22 banner 35.23 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [151, 133, 735, 172] g0 [[151, 133, 174, 159, 344], [176, 133, 198, 159, 308]]
+> 
+> [exit …[+15 chars]
+
+### 🤖 Claude — 2026-11-17T00:29:08.582Z
+
+The sweep finished and put hud.ts back. Its best variant is banner `dy: 0`, so I'm applying that one-number edit and then checking that the code compiles.
+
+### 🤖 Claude — 2026-11-17T00:29:10.169Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's/skew: -4, italic: true, dy: 1, stroke: 0 },/skew: -4, italic: true, dy: 0, stroke: 0 },/' src/ui/hud.ts; grep -n \"const H05\" -A 4 src/ui/hud.ts; grep -c \"600.css\" src/ui/hud.ts; npx tsc --noEmit -p . && echo TSC_OK; git status --short src assets | head", "description": "Apply best banner offset and typecheck"}`
+
+### 🧑 User — 2026-11-17T00:29:13.255Z
+
+> ↩︎ result: 30:const H05 = {
+> 31-  bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2, shadow: true },
+> 32-  num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
+> 33-  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 0, stroke: 0 },
+> 34-};
+> 0
+> TSC_OK
+>  M src/ui/hud.ts
+
+### 🤖 Claude — 2026-11-17T00:29:18.585Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -c \"COINS05\\|C05M\" src/gameplay/coins.ts; ls assets/textures/coins05 assets/textures/hud05; git log --oneline -1", "description": "Confirm coins changes and assets are present"}`
+
+### 🧑 User — 2026-11-17T00:29:18.631Z
+
+> ↩︎ result: 16
+> assets/textures/coins05:
+> coin05_face.png
+> 
+> assets/textures/hud05:
+> coin05.png
+> heart05.png
+> hud05_icons.json
+> pause05.png
+> plus05.png
+> 0242ee3 autosave: Rainbow 2026-11-17 00:28 UTC
+
+### 🤖 Claude — 2026-11-17T00:29:21.625Z
+
+Next I'm updating both NOTES files with what changed since the checkpoint.
+
+### 🤖 Claude — 2026-11-17T00:29:37.425Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/hud/NOTES.md", "old_string": "## In progress right now\nRunning the HUD harness (default vs hud05) to measure glyph boxes and tune `H05.num.top`, `H05.num.size`,\n`H05.banner.size/track/skew` against the approved glyph boxes above.\n\n## Remaining, step by step\n1. Harness: `node qa/pilot05/full_reference_match/hud/harness.mjs --out=/tmp/…/h.png` (hud05) and `--q=x=1` (default);\n   measure with `/tmp/claude-0/hc05/hudmeasure.py` logic (colour boxes: white digits in bar, cream banner glyphs) and the\n   HU …[+3085 chars]`
+
+### 🧑 User — 2026-11-17T00:29:37.593Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/hud/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:29:39.633Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/coins/NOTES.md", "old_string": "## In progress right now\nFirst real capture with `coins05=1` not yet taken (HUD harness running first).", "new_string": "## In progress right now\nUPDATE ~01:05 UTC (run stopped for the account transfer): no coin change since the checkpoint; the first real capture with\n`coins05=1` has still NOT been taken. `src/gameplay/coins.ts` typechecks (`npx tsc --noEmit` clean). Step 1 below is next.\n(The autosave at 00:28 already contains coins.ts, coin05_face.png and the hud05 spr …[+8 chars]`
+
+### 🧑 User — 2026-11-17T00:29:39.800Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/coins/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:29:56.276Z
+
+I stopped for the account transfer. Neither part has been checked in a real game capture: the HUD numbers below come from a quick harness, and the coin changes have no capture at all yet. All source files compile (`npx tsc --noEmit` clean), the coin counter is still live, and I ran no git commands. Default build: everything new is behind `on05('hud05')` or `on05('coins05')`, and the default HUD code is unchanged. I have not yet run the required capture that proves the default build is pixel-identical.
+
+**HUD (`hud05`), harness numbers only.** The harness puts the real `src/ui/hud.ts` over a game capture of the same locked 05 frame with the HUD hidden; no 3D rendering is involved. With the default HUD it gives exactly the real capture's number (62.23), so it matches the game. Mean |ΔRGB| (lower is better) and share of pixels within 20 levels of the approved image:
+
+| | HUD + text region | within 20 levels | whole frame |
+|---|---:|---:|---:|
+| before (current game build, all approved-image switches on) | 62.2 | 13 % | 34.10 |
+| after, harness | 24.76 | about 66 % | about 30.6 |
+
+- **What changed:**
+  - The bar is opaque purple at x 33–825, y 13–100 (approved fill is about (88, 2, 127)), with a light rim, its own drop shadow, a capsule around the hearts section, and dividers at x 344 and 707.
+  - The banner box is x 120–746, y 113–181, with Baloo 2 700 italic text, a −4° extra slant, and colours sampled from the approved image.
+  - The heart, plus, coin icon and pause button are images cut from the approved picture. "5/5", the counter and the banner title are still live text.
+- **Positions:** the "5" and the counter digits now land within 0–3 px of the approved boxes ("5" at 165–187 × 36–68, exact).
+- **Still different:**
+  - About 29 % of the remaining HUD error is the 3D scene showing inside the region's rectangles, outside the rounded bar and banner, so the HUD can't fix it.
+  - The banner letters are slightly heavier and wider than the approved ones; Baloo 2 is the only font in the project. Weight 600 and a text outline both measured worse, so I left them out.
+
+**Coins (`coins05`), not verified.**
+- **Layout:** I measured 15 coins in the approved image, including the far line into the light, and solved each one back onto the course with the game's camera. Every target projects exactly onto its approved centre.
+- **Look:** the coin face now uses the approved nearest coin. The edge uses the approved edge colours. Both are shown through `PROJ05_INVERSE` so they come out yellow-gold instead of the current orange.
+- **What stays the same:** collection, points, the counter, other screens' coin positions, the course, steering and collisions.
+- **Open risks:**
+  - The game's tube ends sooner than the painted one, so coins 8–15 sit at reduced size where the course starts to climb. They grow back as Benny gets closer.
+  - I don't yet know whether those far coins are hidden behind the far end of the tunnel in the game.
+  - I haven't checked that the $ renders upright.
+
+**Remaining steps** (also in both NOTES.md files):
+1. Real before/new captures with the probe script and the region numbers for both parts.
+2. Coin checks: positions, $ orientation, coin thickness and tilt.
+3. The default-build pixel-identity capture.
+4. Screens 04 and 06 with the switches on.
+5. The gameplay test, continuity test, and ride frames at 0, 8 and 17.
+
+No REQUESTS so far.
+
+Files are in `/home/user/rainbow-/`:
+- `src/ui/hud.ts`
+- `src/gameplay/coins.ts`
+- `assets/textures/hud05/` (four icon images + `hud05_icons.json`)
+- `assets/textures/coins05/coin05_face.png`
+- `qa/pilot05/full_reference_match/hud/` (`NOTES.md`, `probe05.mjs`, `harness.html`, `harness.mjs`, `icon_bake.py`, `harness_bg_stack_nohud.png`)
+- `qa/pilot05/full_reference_match/coins/` (`NOTES.md`, `coin_bake.py`)
+

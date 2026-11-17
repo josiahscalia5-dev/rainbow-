@@ -1083,3 +1083,106 @@ It is still in the first probe (waiting on a render slot). Nothing has been writ
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sleep 2; pgrep -af \"proj05-tunnel-probe|capture.mjs\" | grep -v pgrep; ls /tmp/rainbow-render-slot-* 2>/dev/null; for d in /tmp/rainbow-render-slot-*; do [ -f $d/pid ] && echo \"$d $(cat $d/pid)\"; done; npx tsc --noEmit -p . && echo TSC_OK; node --check scripts/proj05-tunnel-probe.mjs && echo PROBE_OK; git status --short | head", "description": "Verify no leftover probe, tsc clean, status"}`
 
+### 🧑 User — 2026-11-17T00:28:57.180Z
+
+> ↩︎ result: pid
+> /tmp/rainbow-render-slot-1 14938
+> TSC_OK
+> PROBE_OK
+>  M backups/CONVERSATION_INDEX.md
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/subagents/agent-a2b87cbe22e9e644e.md
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/subagents/agent-a2b87cbe22e9e644e.sanitized.jsonl
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/subagents/agent-ad34d9e07f4d9f7fc.md
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/subagents/agent-ad34d9e07f4d9f7fc.sanitized.jsonl
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/subagents/agent-ad84c7ee93858c1d0.md
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/subagents/agent-ad84c7ee93858c1d0.sanitized.jsonl
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/transcript.md
+>  M backups/claude-sessions/a8bc3320-c4fc-501b-8658-2d5f41052d69/transcript.sanitized.jsonl
+
+### 🤖 Claude — 2026-11-17T00:29:02.483Z
+
+> 🔧 **Bash** `{"command": "ps -o pid,args -p 14938 2>/dev/null | cut -c1-150; git -C /home/user/rainbow- status --short src scripts tools assets qa/capture_log.json | head", "description": "Identify render slot owner and my changed files"}`
+
+### 🧑 User — 2026-11-17T00:29:02.555Z
+
+> ↩︎ result: PID COMMAND
+
+### 🤖 Claude — 2026-11-17T00:29:07.836Z
+
+The stale render slot belongs to a dead process (pw.mjs takes those over automatically). My source edits were already picked up by the autosave. Now updating NOTES.md sections 2–4.
+
+### 🤖 Claude — 2026-11-17T00:29:33.638Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/env/NOTES.md'\ns=open(p).read()\na=s.index(\"## 2. Changed\")\nb=s.index(\"## 5. REQUESTS\")\nnew = \"\"\"## 2. Changed (all behind `env05`; default and STACK-without-env05 unchanged by construction; `npx tsc --noEmit` clean)\n* `src/world/tube.ts`: `type TubeWarp`; optional `TubeGeoOptions.warp` in buildTubeGeometry (positions only); optional\n  `warp` arg of `ForcedTunnel.geometry`; new `buildWarpedBandRing` (one-instance InstancedMesh). Unused by default.\n* `src/vfx/proj05Tunnel.ts`: `ENV05` flag; `P …[+5783 chars]`
+
+### 🧑 User — 2026-11-17T00:29:33.741Z
+
+> ↩︎ result: 6:## 1. Measured (step A, done)
+> 37:## 2. Changed (all behind `env05`; default and STACK-without-env05 unchanged by construction; `npx tsc --noEmit` clean)
+> 72:## 3. In progress (stopped for the account transfer)
+> 80:## 4. Remaining, step by step
+> 100:## 5. REQUESTS
+
+### 🤖 Claude — 2026-11-17T00:29:38.571Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; head -5 qa/pilot05/full_reference_match/env/NOTES.md; wc -l qa/pilot05/full_reference_match/env/NOTES.md; tail -3 qa/pilot05/full_reference_match/env/NOTES.md", "description": "Confirm NOTES.md content is current"}`
+
+### 🧑 User — 2026-11-17T00:29:38.623Z
+
+> ↩︎ result: # env05 — washer-environment-modeler (Screen 05 tunnel: rings, walls, fittings, far tunnel)
+> 
+> Status: IN PROGRESS — stopped for the account transfer (2026-11-17 ~00:30 UTC by the file clock, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with
+> `?match05=1`). STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.
+> 
+> 101 qa/pilot05/full_reference_match/env/NOTES.md
+> 
+> ## 5. REQUESTS
+> * none yet (far river geometry is NOT changed: knots kept, rings placed by tunnel coordinate).
+
+### 🤖 Claude — 2026-11-17T00:29:53.140Z
+
+I've stopped for the account transfer. The env05 ring layout is in the code, but I have **no before → after region or whole-frame numbers yet**: no env05 game capture exists. The only measured results so far are ring outline errors from a probe render.
+
+**Stopped cleanly.** `npx tsc --noEmit` is clean, the probe script passes `node --check`, and every change is behind `on05('env05')`. The one cycle I had started (probe → bake → capture) was still waiting for a render slot when I stopped it, so it wrote nothing. A leftover render-slot folder belongs to a dead process; `pw.mjs` takes those over by itself.
+
+**What the measurements show (STACK = before):**
+- Before numbers are confirmed: whole frame mean 34.1, 51.6 % within 20; purple walls 53.8; gold rings + frame 37.7; side fittings 26.9; distant tunnel 29.8.
+- Wall error: the biggest part (52 % of the wall region's error) is wall pixels sitting in the wrong place. The next biggest is the game's ring A covering approved wall: 44.5k px, mean 75.7.
+- Ring error is mainly sideways. The approved rings sit 0.6–1.0 u further left of the camera than the game's.
+  - Changing ring depth and thickness alone barely helps: A 46 → 24 px, B 26 → 24 px.
+  - Shifting them sideways fixes most of it in the fit: A 52 → 1.7 px, B 26 → 4.1 px, C 12.5 → 1.5 px.
+- First env05 layout, measured in a probe render (mean ring-edge error, px):
+
+| ring | STACK | env05 |
+|---|---|---|
+| A | 53.6 | 6.6 |
+| B | 27.4 | 14.4 |
+| C | 10.6 | 7.6 |
+| D | 5.9 | 4.7 |
+
+- Rings E–G are unchanged at about 5 px. The far rings' meeting point is still about 9 px too low.
+- I refined the settings after that probe but have not measured them; the fit predicts about 10 px for ring B. That is the limit while nothing moves at or below the river banks.
+
+**What env05 changes:**
+- Only the upper tunnel moves sideways: walls and rings above the river banks. The river, foam, apron, floor, camera, course and collisions are untouched.
+- Ring B is 1.5 u nearer, and the far rings are at the approved sizes.
+- Each real ring has its own texture row, and the near bays get their own wall rows.
+
+**Files changed:**
+- `src/world/tube.ts`, `src/world/environment.ts`, `src/vfx/proj05Tunnel.ts`.
+- `scripts/proj05-tunnel-probe.mjs`: gives each env05 ring a separate tag; unchanged when there is a single ring mesh.
+- New tools in `tools/env05/`: `err_by_surface.py`, `ringproj.py`, `ring_table.py`, `ring_validate.py`, `ring_fit.py`, `warp_fit.py`, `proj_bake.py`.
+- New textures in `assets/textures/env05/`. These are only a starting copy of the old textures re-laid out; the camera-projection bake has not run yet.
+
+**Remaining, in order (exact commands are in NOTES.md section 4):**
+1. Run the probe → bake → capture cycle.
+2. Check water (9.40) and foam (8.43) do not get worse than STACK.
+3. Optionally adjust where the sideways shift starts, to fix ring B's lower sides.
+4. Run the colour feedback pass.
+5. Rebuild the paddles onto the moved wall (`lids05e.glb`). Without this, the right-side paddles would sink into it.
+6. Deliverables: `before.png` and `new.png`, region numbers, ride frames, gameplay and continuity tests, the default pixel-identity check, and 04/06/07 with env05 on vs off.
+
+**REQUESTS:** none. The far river geometry is unchanged: the far rings are placed without changing the far tunnel's depth layout.
+
+The relaunch notes are in `/home/user/rainbow-/qa/pilot05/full_reference_match/env/NOTES.md`.
+

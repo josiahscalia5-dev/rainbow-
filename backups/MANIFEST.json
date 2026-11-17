@@ -563,8 +563,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 15993,
-   "sha256": "50beef324a6fb6fe55cceabb52ab2197d75c4346a101b7b8b5382c7539341447"
+   "bytes": 16217,
+   "sha256": "4beacb98a0c591420f7ebf4afd94e658967cac5d11a7a7979075de3bb1fcbe55"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -584,7 +584,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "64c836370b461081f1c6bec76a57d98606589ae7dc4dd65db49218310c434523"
+   "sha256": "3a8e2980e86106b0260b7cbf784654d43b62782313f2f002ee0c3432044d8b3e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1358,8 +1358,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 14979,
-   "sha256": "dc4c36f96da52170b7546c1dabcb124325022fb959afb4a4df353d0910ac2da0"
+   "bytes": 16219,
+   "sha256": "26e7f550826684503c297d2b8e4e791da2a59c97a19ba93b6bbc80686d85414e"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md",
@@ -1378,8 +1378,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/NOTES.md",
-   "bytes": 6489,
-   "sha256": "5e8519c35b659d0dcf597c21471667696a286c8672b0128fa5728a6842d443be"
+   "bytes": 9241,
+   "sha256": "cd98e9f9ac2bf1d694ff4135b3bc1e87bec4955597ee6a92a3fa04b2de2041d0"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/before.png",
@@ -1673,8 +1673,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/coins/NOTES.md",
-   "bytes": 4902,
-   "sha256": "4f816405611cfee0e48f528bbf23e4273976b61d16bf1fbb446e2f48306e1b15"
+   "bytes": 5159,
+   "sha256": "4b21a2f7cff7ff803525b4bd43ff859891176110e4f0d8eb26c24145c4876ce8"
   },
   {
    "path": "qa/pilot05/full_reference_match/coins/coin_bake.py",
@@ -1858,8 +1858,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/env/NOTES.md",
-   "bytes": 5900,
-   "sha256": "3c6d8d819f6bffea543725512ee76cff62e0cf1e514e222db439d1199c7ca38a"
+   "bytes": 8910,
+   "sha256": "ef40acfa55b7b396368091f4107cef7f3a402cc9163f4f4cc1af0f84c6560e6d"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/work/ap_top.png",
@@ -1928,8 +1928,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/NOTES.md",
-   "bytes": 6632,
-   "sha256": "b74437b9da956f75911749e350877528a5f67542ebe1fd2372896d26cdc05a17"
+   "bytes": 8935,
+   "sha256": "135ee8d080b16d0e8479f96e193b5531da810faff0c824d785888c85250e4cea"
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/harness.html",
@@ -8564,7 +8564,7 @@
   {
    "path": "src/ui/hud.ts",
    "bytes": 17864,
-   "sha256": "e7631ff1a58725cd6c0f15f06d2a1419d77e3b3f7e164544d4ac224216811098"
+   "sha256": "5804b5dcda0eb27f5c5971a6605837113464797f368ffc3733b3d606738e754d"
   },
   {
    "path": "src/vfx/bubbles.ts",

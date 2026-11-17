@@ -1786,3 +1786,148 @@ Checkpoint written. Continuing with geometry iteration 3.
 
 > ↩︎ result: {"message":"Successfully stopped task: bpflaunxk (cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\ns=s.replace(\"\"\"    report = {}\"\"\",\"\"\"    report = {}\n    from bennyseg import rgb2hsv, colour_classes\n    Hh, Ss, Vv = rgb2hsv(a8); cls = colour_classes(a8)\n    okc = {'body': ((Hh > 280) | (Hh < 20)) & (Ss > 0.2), 'crown': np.isin(cls, [2, 3]), 'cuff': (Hh > 230) & (Hh < 300) & (Ss > 0.35),\n           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2)}\n\n... [452 characters truncated] ...\n\n5=1&projfar05=1'; node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/b1 $W/probe/uv.js $W/probe/calA.shot.js $W/probe/calB.shot.js $W/probe/restore.shot.js 2>&1 | grep -v missing | tail -1; python3 $W/geom.py $W/b1/uv.f32 2>/dev/null| sed -n '8,13p'; python3 $W/bake.py $W/b1 $W/b1/tex --normals)","task_id":"bpflaunxk","task_type":"local_bash","command":"cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\ns=s.replace(\"\"\"    report = {}\"\"\",\"\"\"    report = {}\n    from bennyseg import rgb2hsv, colour_classes\n    Hh, Ss, Vv = rgb2hsv(a8); cls = co …[+601 chars]
 
+### 🤖 Claude — 2026-11-17T00:28:59.440Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -c \"okc\" qa/pilot05/full_reference_match/benny/work/bake.py; python3 -c \"import ast;ast.parse(open('qa/pilot05/full_reference_match/benny/work/bake.py').read());print('bake.py ok')\"; pgrep -af bennyprobe || echo \"no probe running\"; ls qa/pilot05/full_reference_match/benny/work/b1 2>/dev/null || echo \"b1 empty/absent\"; sed -n 36,62p src/characters/benny/benny05.ts", "description": "Verify bake edit, no stray probe, current HAT05 values"}`
+
+### 🧑 User — 2026-11-17T00:28:59.563Z
+
+> ↩︎ result: 2
+> bake.py ok
+> no probe running
+> export const HAT05 = {
+>   /** whole beanie lowered along the body's up axis */
+>   drop: 0.028,
+>   /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body */
+>   shiftX: -0.028,
+>   /** extra backward tilt of the beanie (rad, about X; − = top toward his back) */
+>   tilt: 0,
+>   /** crown dome shoulder taper (GLB build 0.18: r ∝ (1 − taper·t)); the approved dome is fuller near the top */
+>   crownTaper: 0.0,
+>   /** folded cuff band height */
+>   cuffH: 0.226,
+>   /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale */
+>   pomDX: -0.057,
+>   pomDY: -0.016,
+>   /** toward his back (−Z ≈ toward the rear chase camera): the approved pom-pom overhangs the crown's back slope */
+>   pomDZ: -0.16,
+>   pomScale: 0.97,
+>   /** star: extra offset in hat-local units after following the cuff top */
+>   starDY: 0.069,
+>   starDX: 0.0,
+>   /** star face scale (its own x, y) */
+>   starScale: [0.96, 0.89] as [number, number],
+>   /** cuff outer radius factor (approved cuff ≈ 297 px wide vs 291) */
+>   brimW: 1.0,
+>   /** crown dome height (GLB 0.53) */
+>   crownH: 0.58,
+> };
+
+### 🤖 Claude — 2026-11-17T00:29:03.433Z
+
+Stopped cleanly: tsc is clean and no probe is running. The b1 bake session never got a render slot, so it produced nothing. Now I'll update NOTES.md sections 2–4.
+
+### 🤖 Claude — 2026-11-17T00:29:13.940Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "old_string": "## 2. Changed files (all behind `on05('benny05')`; default build: no code path runs, shaders compile identically)\n* `src/characters/benny/benny05.ts` (NEW): `BENNY05` flag, `FUR05` fur overrides, `HAT05` beanie geometry (drop 0.028,\n  shiftX −0.028, cuffH 0.226, crownTaper 0, pomDX −0.057, starDY 0.047, tilt 0), `ROLL05` 0.3 (swim body roll damping via\n  a cloned clip), `MAPS05` baked-map table (assets/textures/benny05/*.png — NOT YET BAKED, missing files are tolerated:\n …[+2127 chars]`
+
+### 🧑 User — 2026-11-17T00:29:14.120Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:29:30.541Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "old_string": "## 3. In progress\n* Probe harness `benny/work/bennyprobe.mjs` (loads the game once, goto 05, runs step files in `work/probe/`, takes\n  screenshots; ~20–30 s; uses a render slot). `work/r1` = first benny05 probe incl. UV pass + calibration renders\n  (calA k=0.2, calB k=0.6); `work/r2` = geometry iteration 2 (current numbers above). Tools: `work/measure.py`,\n  `work/parts.py`, `work/bands.py`, `work/geom.py <uv.f32>`, `work/outline.py <uv.f32> <out.png>`.\n\n## 4. Remainin …[+4191 chars]`
+
+### 🧑 User — 2026-11-17T00:29:30.743Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:29:34.086Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n '/^## 4/,$p' qa/pilot05/full_reference_match/benny/NOTES.md | tail -12; npx tsc --noEmit -p .; echo tsc_rc=$?", "description": "Check tail of NOTES and final typecheck"}`
+
+### 🧑 User — 2026-11-17T00:29:37.269Z
+
+> ↩︎ result: 5. Real captures: `node scripts/capture.mjs 05 --q='<STACK>&benny05=1' --out=qa/pilot05/full_reference_match/benny/cap/new`
+>    → copy to `benny/new.png`; `python3 -I tools/match05/metrics.py benny/new.png benny/cap/new/`; `work/parts.py` per part;
+>    default capture (`node scripts/capture.mjs 05 --out=<scratch>`) must equal `qa/pilot05/current_default_05.png`
+>    (0 px), then `git checkout -q qa/capture_log.json`. Keep only changes that lower the region error / raise whole frame.
+> 4. Real captures: `node scripts/capture.mjs 05 --q='<STACK>&benny05=1' --out=benny/cap/new` → `benny/new.png`;
+>    metrics `python3 -I tools/match05/metrics.py`; default capture must equal `qa/pilot05/current_default_05.png`
+>    (then `git checkout -q qa/capture_log.json`).
+> 5. 04 and 06 with benny05 on (identity check), steering frames (`scripts/proj05-move.mjs … --d=0,8,17 --steer=-1,1`),
+>    gameplay test → `benny/gameplay.json`; finish this file (per-mismatch table, before → after).
+> 
+> ## 5. REQUESTS
+> * none yet.
+> tsc_rc=0
+
+### 🤖 Claude — 2026-11-17T00:29:41.191Z
+
+Two step lists overlapped, so I'm removing the leftover old steps 4–5 and renumbering the last step.
+
+### 🤖 Claude — 2026-11-17T00:29:43.002Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "old_string": "4. Real captures: `node scripts/capture.mjs 05 --q='<STACK>&benny05=1' --out=benny/cap/new` → `benny/new.png`;\n   metrics `python3 -I tools/match05/metrics.py`; default capture must equal `qa/pilot05/current_default_05.png`\n   (then `git checkout -q qa/capture_log.json`).\n5. 04 and 06 with benny05 on", "new_string": "6. 04 and 06 with benny05 on"}`
+
+### 🧑 User — 2026-11-17T00:29:43.220Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:30:01.025Z
+
+I stopped for the account transfer before the bake. The game's look is unchanged so far: no baked textures, no real `capture.mjs` captures with the switch on, and no before → after region numbers yet. Every source file typechecks cleanly (`npx tsc --noEmit` passes), all new code is behind `on05('benny05')`, and nothing is running. The bake session I had started was still waiting for a render slot when I stopped it, so it produced no output.
+
+**Before numbers (stack capture, Benny + hat region, 93,061 px):** mean |ΔRGB| 49.71, within 20 levels 23.5 %, SSIM 0.087. Whole frame: mean 34.1, within 20 levels 51.6 %.
+
+Where the Benny + hat error comes from:
+
+| part | share of error | mean |ΔRGB| | cause |
+|---|---:|---:|---|
+| body fur | 39 % | 40.9 | hot, saturated pink with no tuft shading (approved mean 225,85,181; game 254,68,177) |
+| crown stripes | 26 % | 65.2 | stripes cream-pink, not white, and about 12 px too high |
+| pom-pom | 16 % | 56.8 | about 20 px left and 13 px high, uniform colour |
+| cuff | 15 % | 47.3 | 6 px too thick, beanie sits too high |
+| star | 4 % | 69.8 | too orange (255,191,63 vs 252,217,32) |
+
+**Geometry, measured from my probe renders (not real captures):** these come from a flat part-ID render with the water hidden, so they are not region metrics. Overlap of each game part with the approved part (intersection over union) went from before → iteration 1 → current:
+
+| | pom | crown | cuff | star | body | all |
+|---|---:|---:|---:|---:|---:|---:|
+| before | not measured this way | | | | | |
+| iteration 1 | 0.834 | 0.73 | 0.72 | 0.615 | 0.853 | 0.893 |
+| current | 0.883 | 0.817 | 0.776 | 0.801 | 0.86 | 0.921 |
+
+Bounding boxes (x range, y range, size, centre):
+
+| part | approved | before (game) | current (benny05) |
+|---|---|---|---|
+| all | 234–608, 775–1188 (375×414), c(423,1003) | 229–614, 764–1192 (386×429), c(418,1003) | 230–613, 775–1198 (384×424), c(422,1006) |
+| pom | 355–499, 778–899, c(428,843) | 333–480, 764–892, c(406,830) | 355–500, 775–907, c(426,841) |
+| cuff | 277–573, 936–1031 | 270–560, 930–1026 | 278–568, 948–1031 |
+| star | 481–553, 916–984 (73×69) | 470–545, 909–984 (76×76) | 481–553, 916–983 (73×68) |
+
+- **Cause of the sideways lean:** the swim animation's side roll (−0.049 rad at the locked frame) tipped the beanie left. With the switch on I damp that roll to 0.3×; the paddling, bob, steering lean and gameplay are untouched.
+- **Rejected:** tilting the hat back pushed the cuff 9 px too low (cuff overlap fell to 0.62), so I took it out. A 2 % wider cuff gave nothing, so it is back to 1.0.
+
+**Files changed**
+- `src/characters/benny/benny05.ts` (new): beanie geometry offsets, swim-roll damping, fur overrides, the table of baked maps to load, and test hooks for a part-ID render and calibration renders.
+- `src/characters/benny/runtime.ts`: calls the new module only when the switch is on.
+- `src/characters/benny/fur.ts`: new paths compiled only when the switch's define is set; the default shader is unchanged.
+- `assets/models/benny.glb` is untouched.
+
+**What still differs and why:** all the colour and texture differences in the first table. The fix is a bake of the approved pixels into each part's own texture space, and the script for it, `qa/pilot05/full_reference_match/benny/work/bake.py`, is written but has not been run. Remaining geometry gaps: the cuff's upper corners sit about 12 px lower than approved, and the body's bottom rows are narrower.
+
+**Remaining steps** (exact commands are in section 4 of `qa/pilot05/full_reference_match/benny/NOTES.md`):
+1. Run the bake session and `bake.py` on the current geometry.
+2. Copy the maps to new files in `assets/textures/benny05/` and set the colour scales and star colour.
+3. Re-run the calibration with the final knit normal maps and bake once more.
+4. Tune the fur.
+5. Make the real `capture.mjs` captures with the switch on (`new.png`) and run the metrics, and check that the default build is still pixel-identical.
+6. Capture screens 04 and 06 with the switch on, then run the steering frames and the gameplay test.
+
+**REQUESTS:** none.
+
+The notes and my measurement scripts are all in `qa/pilot05/full_reference_match/benny/`.
+
