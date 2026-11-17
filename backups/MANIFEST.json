@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 13332,
-   "sha256": "23d4f8bd03e0c5bbbaffd6bb2539c033a137b5455122dc3c03515bf4a1d6302c"
+   "bytes": 13849,
+   "sha256": "315be705d886d829fa2eb6289a8f5b1ae252274a11278c099845af5b1273e570"
   },
   {
    "path": "README_FIRST.md",
@@ -584,7 +584,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11668,
-   "sha256": "ba73f1980b02968a1df466604fd6b8c50843d70f08966168ab8e0d4f1630aba7"
+   "sha256": "4eab8990fcd01e361a1f246f463d447b31f3fa15c6e06861d028a3641ca50174"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/HANDOFF_NEW_ACCOUNT.md",
-   "bytes": 11508,
-   "sha256": "bef9cfc0f5128d2b601361bf81870954f9a6e2e2c2ed3f3a17ec484a5e16b835"
+   "bytes": 12651,
+   "sha256": "099728249503edac8ae49ff7ad69f2b6cffbfd74caa7e87682e67638693db0dc"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -8955,6 +8955,11 @@
    "path": "tools/env05/warp_fit.py",
    "bytes": 2488,
    "sha256": "50f68d697c51f0821da17db0c80d8cb78d1ada7d6e4a2ecf895aa8ec2214664f"
+  },
+  {
+   "path": "tools/env05/weight_study.py",
+   "bytes": 6597,
+   "sha256": "b91215aee01b889b5a48e9827e8ec7da385b9c1874a4f72137e095282b9e46c1"
   },
   {
    "path": "tools/make_env_geometry_ref.py",

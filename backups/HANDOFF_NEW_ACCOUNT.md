@@ -1,4 +1,17 @@
-# RAINBOW — new-account handoff (rewritten 2026-11-17 ~00:55 UTC by session 01AvQv6S)
+# RAINBOW — new-account handoff (top block 2026-11-17 ~01:25 UTC by session 01Q46SCH)
+
+**Branch to recover: `claude/rainbow-account-transfer-npxahd`** (take its NEWEST commit with `git ls-remote`; it contains all of
+`claude/rainbow-restore-env-setup-bxn85h`, now PROTECTED). Same 3 steps as below, with that branch name.
+* Cloud environment for a NEW account: personal `rainbow-`, hosts **`download.blender.org`, `dl.google.com`, `lfs.github.com`**
+  (the last one is needed to PUSH new Git LFS files: without it the autosave fails with `…/verify: Forbidden`), package managers
+  + MCP allowed, setup script = `scripts/cloud-env-setup.sh`. Session 01Q46SCH had to create it (none existed on that account).
+* Running at the end of 01Q46SCH: washer-environment-modeler, benny-character-artist, animation-and-gameplay-engineer
+  (briefs header "RESUMED RUN #3"); relaunch from brief + NOTES.md "Remaining" if interrupted.
+* Careful: `tools/proj05/lid_blender.py` re-saves `<lid_dir>/lids05.blend`; run it on a COPY of `qa/pilot05/proj/tunnel/lid`
+  when only testing (01Q46SCH restored the original from `60ed5ff`).
+
+---
+# (previous top block) RAINBOW — new-account handoff (rewritten 2026-11-17 ~00:55 UTC by session 01AvQv6S)
 
 **Branch to recover: `claude/rainbow-restore-env-setup-bxn85h`** on `josiahscalia5-dev/rainbow-`. Take its NEWEST commit
 (`git ls-remote origin refs/heads/claude/rainbow-restore-env-setup-bxn85h`): the five-minute autosave keeps pushing until

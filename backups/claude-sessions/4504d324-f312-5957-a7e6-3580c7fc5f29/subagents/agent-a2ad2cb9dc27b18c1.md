@@ -666,3 +666,34 @@ Held-out prediction error dropped from 6–16 % to 0.35–0.66 %, and the crown'
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T01:20:35.198Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/stripes.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom parts import approved_parts\nfrom geom import load_uv\nfrom bennyseg import colour_classes\nfrom scipy import ndimage as ndi\nP,a,m=approved_parts()\ncls=colour_classes(a)\nuv=load_uv('qa/pilot05/full_reference_match/benny/work/b1/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[.. …[+1323 chars]`
+
+### 🧑 User — 2026-11-17T01:20:36.371Z
+
+> ↩︎ result: x | approved transitions (y) in crown rows 870-1000 | game crown v at those y (centre-relative)
+> 300 | -860 W928 -936 | []
+> 320 | -860 W898 P907 W911 W960 -964 | [(907, 0.617), (911, 0.593), (960, 0.221)]
+> 340 | -860 W881 P891 W934 -969 | [(891, 0.762), (934, 0.454)]
+> 360 | -860 W879 P906 W943 -974 | [(879, 0.865), (906, 0.681), (943, 0.399)]
+> 380 | -860 P887 W888 P913 W949 -977 | [(888, 0.821), (913, 0.638), (949, 0.359)]
+> 400 | -860 P894 W895 P920 W953 -978 | [(920, 0.587), (953, 0.329)]
+> 420 | -860 P898 W899 P922 W957 -981 | [(898, 0.75), (899, 0.743), (922, 0.57), (957, 0.295)]
+> 440 | -860 W899 P923 W957 -981 | [(899, 0.736), (923, 0.555), (957, 0.288)]
+> 460 | -860 W895 P921 W955 -979 | [(921, 0.559), (955, 0.293)]
+> 480 | -860 P886 W887 P915 P943 W952 -976 | [(886, 0.798), (887, 0.791), (915, 0.588), (943, 0.372), (952, 0.3)]
+> 500 | -860 W881 P909 P984 -985 | [(881, 0.788), (909, 0.609)]
+> 520 | -860 W884 P893 -977 | [(893, 0.654)]
+> 540 | -860 W919 P984 -985 | [(919, 0.425)]
+> game v-contours: y(x) for v=0.3,0.5,0.7
+> 300 [943, None, None]
+> 320 [950, 924, None]
+> 340 [953, 928, 901]
+> 360 [955, 930, 903]
+> 380 [956, 931, 905]
+> 400 [957, 931, 905]
+> 420 [956, 931, 905]
+> 440 [956, 930, 904]
+> 460 [954, 929, 90 …[+88 chars]
+

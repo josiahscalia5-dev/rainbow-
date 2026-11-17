@@ -21,7 +21,7 @@ from an old branch: follow `backups/HANDOFF_NEW_ACCOUNT.md` and tell the user.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
    report of §4. Tell the user plainly about every failure and every backup GAP the bootstrap reports.
 The GitHub default branch is an OLD version (a new session starts THERE: no bootstrap, no Blender setup — run the
-fetch line above first). Newest work as of 2026-11-17 ~01:00 UTC: branch **`claude/rainbow-restore-env-setup-bxn85h`**
+fetch line above first). Newest work as of 2026-11-17 ~01:20 UTC: branch **`claude/rainbow-account-transfer-npxahd`** (new Claude account, session `01Q46SCH…`; contains all of `claude/rainbow-restore-env-setup-bxn85h` incl. `9c50d67`; personal environment `rainbow-` with hosts download.blender.org, dl.google.com, lfs.github.com + setup script; three specialists relaunched, COORDINATION "RESUMED 2026-11-17 ~01:20 UTC"). Before it: **`claude/rainbow-restore-env-setup-bxn85h`** (protected)
 (new Claude account, session `01AvQv6S…`, started from `ccr-694bda6a-x58ntq` @ `4e140fa`; environment restore, no-auto-merge
 bootstrap, Screen 05 full reference match continued: `qa/pilot05/full_reference_match/COORDINATION.md`, newest "RESUMED"
 section). Before it: **`ccr-694bda6a-x58ntq`** (session `018Sg3AU…`, created from `b81cc34`; protected). Before that:
@@ -34,7 +34,7 @@ new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before 
 34, npm, Python libs, World Labs plugin): never reinstall a working tool by hand, never run `playwright install`.
 Blender MCP (`mcp-for-blender`) needs a desktop Blender with its add-on socket: in the headless cloud container it is NOT
 connected — never report it as connected; Blender command line + Python is the tested integration. On a NEW Claude account
-the cloud environment does not exist yet: Blender / Android downloads need hosts `download.blender.org` + `dl.google.com`
+the cloud environment does not exist yet: Blender / Android downloads need hosts `download.blender.org` + `dl.google.com`, and pushing NEW Git LFS files (Blender / GLB / large captures) needs `lfs.github.com` (else the autosave fails with LFS "verify: Forbidden")
 (propose the environment with `scripts/cloud-env-setup.sh` as its setup script; the user approves a card).
 
 ## 2. Five-minute GitHub autosave — the user's standing order (2026-11-15/16), never ask about routine saves

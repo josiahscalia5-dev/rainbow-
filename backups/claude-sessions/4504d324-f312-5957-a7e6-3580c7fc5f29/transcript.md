@@ -1461,3 +1461,50 @@ Before showing it to you, I'll save the new recovery documents and captures to G
 
 > 🔧 **Bash** `{"command": "flock -w 120 backups/.autosave.lock git checkout 60ed5ff -- qa/pilot05/proj/tunnel/lid/lids05.blend && git lfs pointer --file=qa/pilot05/proj/tunnel/lid/lids05.blend 2>/dev/null | grep oid; python3 scripts/rainbow-autosave.py --reason manual:lfs-host-fixed 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"'; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"", "description": "Restore original blend; retry autosave push"}`
 
+### 🧑 User — 2026-11-17T01:20:28.416Z
+
+> ↩︎ result: oid sha256:8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0
+>   "pushed_verified": true,
+>   "commit": "6fc78a6afbcb79fbdb772cee94da009916a05165",
+> LOCAL  6fc78a6afbcb79fbdb772cee94da009916a05165
+> REMOTE 6fc78a6afbcb79fbdb772cee94da009916a05165
+
+### 🤖 Claude — 2026-11-17T01:20:43.741Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='CLAUDE.md'; t=open(p).read()\nold=\"the cloud environment does not exist yet: Blender / Android downloads need hosts `download.blender.org` + `dl.google.com`\"\nnew=(\"the cloud environment does not exist yet: Blender / Android downloads need hosts `download.blender.org` + `dl.google.com`, \"\n     \"and pushing NEW Git LFS files (Blender / GLB / large captures) needs `lfs.github.com` (else the autosave fails with LFS \\\"verify: Forbidden\\\")\")\nassert old in t; t=t.replace(old,new)\nold2=\"Newest work as of 2026-11-17 ~01:00 UTC: branch **`claude/rainb …[+2295 chars]`
+
+### 🧑 User — 2026-11-17T01:20:43.784Z
+
+> ↩︎ result: docs updated
+> CLAUDE.md:2
+> backups/HANDOFF_NEW_ACCOUNT.md:1
+
+### 🤖 Claude — 2026-11-17T01:20:46.430Z
+
+Your request also named `claude mcp list` and two more recovery documents. I'll run the command myself and skim those documents for anything missed.
+
+### 🤖 Claude — 2026-11-17T01:20:48.329Z
+
+> 🔧 **Bash** `{"command": "timeout 90 claude mcp list 2>&1 | sed 's/?[^ ]*/?[redacted]/' | head -12; echo \"== MCP_SETUP headings\"; grep -nE \"^#|required|Required\" backups/MCP_SETUP.md | head -20; echo \"== ACCOUNT_TRANSFER top\"; sed -n 1,25p backups/CLAUDE_ACCOUNT_TRANSFER.md | cut -c1-220", "description": "Run claude mcp list; skim MCP and transfer docs", "timeout": 120000}`
+
+### 🧑 User — 2026-11-17T01:20:49.992Z
+
+> ↩︎ result: Checking MCP server health…
+> 
+> plugin:playwright:playwright: npx @playwright/mcp@latest - √ Connected
+> plugin:context7:context7: https://mcp.context7.com/mcp?[redacted] (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Error dialing https://mcp.context7.com/mcp?[redacted]=REDACTED (ERR_PROXY_TUNNEL)
+> plugin:worldlabs:worldlabs: https://api.atlas.worldlabs.ai/mcp (HTTP) - ⊘ Disabled for this project (re-enable via /mcp)
+> == MCP_SETUP headings
+> 1:# Rainbow — tool / MCP reconnection (no secrets stored)
+> 6:## Newest check — session 01AvQv6S (branch `claude/rainbow-restore-env-setup-bxn85h`, 2026-11-17 00:40–00:55 UTC, new account, personal environment `rainbow-`, limited network)
+> 19:## Newest check — session 01Kbt6BT (branch `ccr-251ed97c-ty2xvp`, 2026-11-16 10:40–11:20 UTC, `Default` environment, unrestricted)
+> 31:## Newest check — session 012NR93N (branch `ccr-44f84024-ii5iih`, 2026-11-16 03:10–10:35 UTC)
+> 44:## Newest check — recovery session 01Kbt6BV (new Claude account, 2026-11-16 ~02:15–02:45 UTC)
+> 68:| context7 (docs) | needs authentication | Not required for Rainbow | via claude.ai connector settings |
+> == ACCOUNT_TRANSFER top
+> # Rainbow — Claude account transfer guide (newest: session 018S …[+2428 chars]
+
+### 🤖 Claude — 2026-11-17T01:20:55.601Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:report 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"; git lfs ls-files | awk '{print $3}' | while read f; do head -c 40 \"$f\" | grep -q \"git-lfs\" && echo \"STUB $f\"; done | wc -l", "description": "Final save; verify remote SHA and LFS files"}`
+
