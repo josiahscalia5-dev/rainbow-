@@ -5,7 +5,7 @@
  * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
  *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
  *     into 07, continued straight along the river's heading so the painted far rings stay concentric
- *   * the river floor = the water surface across the tube (|lateral| <= Lfloor, meets the wall)
+ *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
  *   * a dark end cap far down the tunnel
  * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
  * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
@@ -180,10 +180,12 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     let a = th; if (a > TT.wallAngle[1]) a -= Math.PI * 2; // continuous over the wall (the part under the water is never seen)
     return [p, (a - TT.wallAngle[0]) / TT.anglePeriod];
   }, TT.period), mat(tTube), 'tube');
-  // river floor across the tube
+  // river floor: the game river's own width + 1 u of foam bank each side (the painted gap between the river loops then
+  // lands on the tunnel beyond, not on a wide water slab), never wider than the tube
   const FC = 32;
-  add(grid(FC, (_s, j, fr) => {
-    const l = -L.Lfloor + (2 * L.Lfloor * j) / FC;
+  add(grid(FC, (s, j, fr) => {
+    const half = Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+    const l = -half + (2 * half * j) / FC;
     return [fr.pos.clone().addScaledVector(fr.right, l), l / TF.lateralPeriod];
   }, TF.period), mat(tFloor), 'floor');
   // far end cap of the tunnel (the glowing vanishing point)

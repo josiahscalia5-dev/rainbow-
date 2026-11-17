@@ -654,7 +654,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10601,
-   "sha256": "1a74fd1a872d27b83333e9882ff17bb67c3e52c50e963b491c5e47c07ca97665"
+   "sha256": "481dd0de1ab5764d7cbddeec716f7ee2394f8ea90f7f12493177d944982e3aef"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1363,23 +1363,23 @@
   },
   {
    "path": "qa/match/06/motion/f00_checkpoint.png",
-   "bytes": 2354095,
-   "sha256": "80e74418af32450d310d166abf244dd8562cf8bda93c86c34a04831add617fc7"
+   "bytes": 2360638,
+   "sha256": "08981a3fefb34cd0b5b4cfcc057aa09bfaebe26f013b9f6426ee6421ac21b017"
   },
   {
    "path": "qa/match/06/motion/f03_forward3u.png",
-   "bytes": 2144413,
-   "sha256": "665df69240cd60314e083cf99ac013b4f2f826d4cffc483a4cbb4c35962a2e6d"
+   "bytes": 2131225,
+   "sha256": "e36d9e177255039bf9ddf47ce5bb0d9be3b1ededf65cb9635efe3f128b527bba"
   },
   {
    "path": "qa/match/06/motion/f06_forward6u.png",
-   "bytes": 2071710,
-   "sha256": "591966c3dc3da96e386009763114eba9692a10222e777ffaaac0b97fb3668803"
+   "bytes": 1931751,
+   "sha256": "14a39a9c73b3818fcebd2344ff36e950482bad14ff0701469e24615771e99d69"
   },
   {
    "path": "qa/match/06/motion/f10_forward10u.png",
-   "bytes": 1869654,
-   "sha256": "11188f59c42acbc0004e7daa702d26b230f7e71db65c82708fc075d34301a6f6"
+   "bytes": 1696196,
+   "sha256": "8e46af7c727c2e330286c03cf7b52ca906ca5558649969c04acf29a1918201d9"
   },
   {
    "path": "qa/match/06/motion/f15_forward15u.png",
@@ -8183,8 +8183,8 @@
   },
   {
    "path": "src/world/match06.ts",
-   "bytes": 10432,
-   "sha256": "034793b781f0f4224c7a81484e7167f56069ab86bdf0fc6c13d30ec5693a0a74"
+   "bytes": 10689,
+   "sha256": "50b4f99ffee5f91105303f95fb88d4b93a2bac8105441d753a33f93a77ac3689"
   },
   {
    "path": "src/world/match08.ts",
