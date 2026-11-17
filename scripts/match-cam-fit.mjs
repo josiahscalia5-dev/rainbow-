@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Any screen: search the checkpoint camera framing (STAGE_CAM override, nothing in the source changes) so the game's
 // Benny lands on the approved picture's Benny: bounding-box IoU of the REAL rendered Benny (Benny-only mask) vs the
-// target box measured on the approved picture. Coarse grid, then a local refinement round.
+// target box measured on the approved picture (Benny rendered with his own materials so the fur cards' alpha test
+// holds; the mask is the render's alpha). Coarse grid, then a local refinement round.
 //   node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 [--q=match07=1]
 //        [--grid='{"back":[5.5,6.5,7.5],"up":[3.2,4,4.8],"lookUp":[-2,-0.5,1],"ahead":[16,22],"latFollow":[0.6]}']
 // Prints the best candidates; writes qa/match/<id>/cam/fit.json.
@@ -41,14 +42,15 @@ try {
       R.goto(id);
       camera.updateMatrixWorld();
       const saved = [];
-      scene.traverse((o) => { if (o.isMesh || o.isPoints || o.isSprite || o.isLine) { saved.push([o, o.visible, o.material]); const b = o.isMesh && /benny/.test(chain(o)); o.visible = o.visible && b; if (b) o.material = white; } });
+      // Benny with his OWN materials (the fur cards need their alpha test), everything else hidden: alpha = mask
+      scene.traverse((o) => { if (o.isMesh || o.isPoints || o.isSprite || o.isLine) { saved.push([o, o.visible, o.material]); const b = o.isMesh && /benny/.test(chain(o)); o.visible = o.visible && b; } });
       const bg = scene.background; scene.background = null;
       renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(scene, camera); renderer.setRenderTarget(null);
       scene.background = bg;
       for (const [o, v, m] of saved) { o.visible = v; o.material = m; }
       const px = new Uint8Array(sw * sh * 4); renderer.readRenderTargetPixels(rt, 0, 0, sw, sh, px);
       let x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
-      for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) if (px[(y * sw + x) * 4] > 127) { const Y = sh - 1 - y; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, Y); y1 = Math.max(y1, Y); }
+      for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) if (px[(y * sw + x) * 4 + 3] > 127) { const Y = sh - 1 - y; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, Y); y1 = Math.max(y1, Y); }
       if (x1 < 0) { out.push({ cand, iou: 0, box: null }); continue; }
       const b = [x0 * 4, y0 * 4, (x1 + 1) * 4, (y1 + 1) * 4];
       const ix = Math.max(0, Math.min(b[2], T[2]) - Math.max(b[0], T[0])), iy = Math.max(0, Math.min(b[3], T[3]) - Math.max(b[1], T[1]));

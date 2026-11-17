@@ -6610,3 +6610,54 @@ Starting implementation, Screen 07 structure first, in your order. Step 1 is Ben
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && time timeout 900 node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 --q=match07=1 --out=$S/fit07 --grid='{\"back\":[4.5,5.5,6.5],\"up\":[2.8,3.6,4.4],\"lookUp\":[-2,-0.5,1],\"ahead\":[12,18],\"latFollow\":[0.9]}' 2>&1 | tail -6", "description": "Search camera so Benny matches approved 07", "timeout": 960000}`
 
+### 🧑 User — 2026-11-17T11:11:58.845Z
+
+> ↩︎ result: iou 0.319 {"back":6.5,"up":2.8,"lookUp":1,"ahead":12,"latFollow":0.75} box [72,568,800,1344]
+> iou 0.301 {"back":6.5,"up":2.8,"lookUp":1,"ahead":12,"latFollow":0.9} box [68,532,824,1324]
+> iou 0.292 {"back":6.5,"up":2.5,"lookUp":1,"ahead":12,"latFollow":0.9} box [56,572,788,1416]
+> iou 0.289 {"back":6.9,"up":2.8,"lookUp":1,"ahead":12,"latFollow":0.9} box [100,564,788,1472]
+> iou 0.282 {"back":6.5,"up":2.8,"lookUp":1.5,"ahead":12,"latFollow":0.9} box [0,596,828,1368]
+> 
+> real	2m38.140s
+> user	0m1.595s
+> sys	0m0.502s
+
+### 🤖 Claude — 2026-11-17T11:12:08.764Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nimport json\nobjs=json.load(open('$S/probe07/objects.json'))\nfor o in objs:\n    if 'benny' in o['chain'].lower(): print(o['visible'], o['type'], o['name'], '|', o['chain'], o['mat'])\n\" | head -30", "description": "List objects attached to Benny"}`
+
+### 🧑 User — 2026-11-17T11:12:08.836Z
+
+> ↩︎ result: True Mesh eyeL_happy | eyeL_happy<eyeL<eyes<body<benny_root MeshStandardMaterial
+> False Mesh eyeL_dizzy | eyeL_dizzy<eyeL<eyes<body<benny_root MeshStandardMaterial
+> True Mesh lash_L_05 | lash_L_05<eyeL<eyes<body<benny_root MeshStandardMaterial
+> True Mesh lash_L_085 | lash_L_085<eyeL<eyes<body<benny_root MeshStandardMaterial
+> True Mesh eyeR_happy | eyeR_happy<eyeR<eyes<body<benny_root MeshStandardMaterial
+> False Mesh eyeR_dizzy | eyeR_dizzy<eyeR<eyes<body<benny_root MeshStandardMaterial
+> True Mesh lash_R_05 | lash_R_05<eyeR<eyes<body<benny_root MeshStandardMaterial
+> True Mesh lash_R_085 | lash_R_085<eyeR<eyes<body<benny_root MeshStandardMaterial
+> True Mesh blushL | blushL<body<benny_root<AuxScene<Benny MeshStandardMaterial
+> True Mesh blushR | blushR<body<benny_root<AuxScene<Benny MeshStandardMaterial
+> True Mesh nose | nose<body<benny_root<AuxScene<Benny MeshStandardMaterial
+> True Mesh mouth_happy | mouth_happy<mouth<body<benny_root<AuxScene MeshStandardMaterial
+> False Mesh mouth_dizzy | mouth_dizzy<mouth<body<benny_root<AuxScene MeshStandardMaterial
+> False Mesh mouth_peek | mouth_peek<mouth<body<benny_root<AuxScene MeshStandardMaterial
+> True Mesh palmL | palmL<armL<body<benny_root<AuxScene MeshSt …[+968 chars]
+
+### 🤖 Claude — 2026-11-17T11:12:28.713Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/match-cam-fit.mjs'; s=open(p).read()\nold=\"\"\"      scene.traverse((o) => { if (o.isMesh || o.isPoints || o.isSprite || o.isLine) { saved.push([o, o.visible, o.material]); const b = o.isMesh && /benny/.test(chain(o)); o.visible = o.visible && b; if (b) o.material = white; } });\"\"\"\nnew=\"\"\"      // Benny with his OWN materials (the fur cards need their alpha test), everything else hidden: alpha = mask\n      scene.traverse((o) => { if (o.isMesh || o.isPoints || o.isSprite || o.isLine) { saved.push([o, o.visible, o.material]); const b = o.isM …[+1183 chars]`
+
+### 🧑 User — 2026-11-17T11:15:44.671Z
+
+> ↩︎ result: ok
+> iou 0.348 {"back":7.5,"up":3.6,"lookUp":-0.5,"ahead":14,"latFollow":0.9} box [132,536,864,1244]
+> iou 0.348 {"back":7.5,"up":3.6,"lookUp":-0.5,"ahead":12,"latFollow":0.9} box [124,448,796,1220]
+> iou 0.347 {"back":7.5,"up":3.6,"lookUp":-0.5,"ahead":10,"latFollow":0.9} box [132,488,824,1240]
+> iou 0.319 {"back":7.5,"up":3.3,"lookUp":-0.5,"ahead":12,"latFollow":0.9} box [88,500,864,1228]
+> iou 0.314 {"back":7.5,"up":3.6,"lookUp":0,"ahead":12,"latFollow":0.9} box [108,552,864,1312]
+> 
+> real	3m15.900s
+> user	0m1.514s
+> sys	0m0.378s
+
