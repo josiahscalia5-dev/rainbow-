@@ -563,8 +563,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 17380,
-   "sha256": "6d9331d39e7e1086848a91ac86deac7c584d5ac7f5dc4989f6f9fb4d5d865861"
+   "bytes": 17531,
+   "sha256": "20bcd995ae6010105c8e3f194cf0160d1a3a8281dc0a1cc7ae8a1ed16d491b34"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -583,8 +583,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11667,
-   "sha256": "e503d249679ccf9c05089c177e19a7777300db73ca8be677f0cbccd44ae41b12"
+   "bytes": 11668,
+   "sha256": "e407ba024c26d4dee8ee971f61d0a035383a375578caac3ea318cbaa8ca1bcdb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1517,6 +1517,16 @@
    "sha256": "7ea7fce0ba41e0d6d6354928fb2d611e1cd69aab08aa98de7d0e63f34287dd21"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/calD.shot.js",
+   "bytes": 69,
+   "sha256": "92f8a09e508723dd68a5bc02d20e57ced632a62bc7d431d7c944a4490a18b885"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/calE.shot.js",
+   "bytes": 68,
+   "sha256": "41b328629de00e2a5f38ef86e667df081387ce6e1112c6be262ee36d2601a674"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/work/probe/info.js",
    "bytes": 1600,
    "sha256": "72367d74e4f21791e5bdb1efde360b642394fc88cd42386a862bd235e94d8ad0"
@@ -2240,6 +2250,21 @@
    "path": "qa/pilot05/full_reference_match/recovery_s01Av/match05_REGION_METRICS.json",
    "bytes": 2571,
    "sha256": "4e4575f574f495e875be75c5bbb9bed4dfc6f7f437234619f49845966f48e0fe"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png",
+   "bytes": 2154090,
+   "sha256": "e5706b96c42cfb4d0bd1ce0281b1b50ef0f80705c721bca466b667beb87e2d22"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s01Q4/match05_FULL_FRAME_METRICS.json",
+   "bytes": 434,
+   "sha256": "0bb1a57c99209c5c7e3e4c6fc4e92c257b9b7d2f4281c7e3062712552906389e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s01Q4/match05_REGION_METRICS.json",
+   "bytes": 2544,
+   "sha256": "fd49e3d5f86c6c855eda55078d2e64c0e2fa892b9c51c11ecea5ff3b98fe757d"
   },
   {
    "path": "qa/pilot05/full_reference_match/stack_2340/05_match05.png",

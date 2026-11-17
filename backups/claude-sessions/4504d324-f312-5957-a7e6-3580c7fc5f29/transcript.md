@@ -1265,3 +1265,125 @@ Now the coordination section the briefs point to, then the three launches.
 
 > ↩︎ result: ok
 
+### 🤖 Claude — 2026-11-17T01:15:45.113Z
+
+> 🔧 **Agent** `{"description": "Env05 tunnel, rings, paddles", "subagent_type": "washer-environment-modeler", "prompt": "You are the washer-environment-modeler for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).\n\nYour complete task is written in the file `qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md`. Read that file FIRST and in full: the top paragraph \"RESUMED RUN #3\" (this relaunch, written for you now), the \"YOUR FOCUS NOW\" paragraph, the older RESUMED paragraph, and the \"ORIGINAL BRIEF (unchanged)\" below them. Then read `qa/pilot05/f …[+1646 chars]`
+
+### 🧑 User — 2026-11-17T01:15:45.140Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a9780416a29e85217 (internal ID - do not mention to user. Use SendMessage with to: 'a9780416a29e85217', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/a9780416a29e85217.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T01:15:51.514Z
+
+> 🔧 **Agent** `{"description": "Benny05 fur, beanie, bake", "subagent_type": "benny-character-artist", "prompt": "You are the benny-character-artist for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).\n\nYour complete task is written in the file `qa/pilot05/full_reference_match/briefs/benny-character-artist.md`. Read that file FIRST and in full: the top paragraph \"RESUMED RUN #3\" (this relaunch, written for you now), the \"YOUR FOCUS NOW\" paragraph, the older RESUMED paragraph, and the \"ORIGINAL BRIEF (unchanged)\". Then read `qa/pilot05/full_reference_match/COORDI …[+1606 chars]`
+
+### 🧑 User — 2026-11-17T01:15:51.528Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a2ad2cb9dc27b18c1 (internal ID - do not mention to user. Use SendMessage with to: 'a2ad2cb9dc27b18c1', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/a2ad2cb9dc27b18c1.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T01:15:58.372Z
+
+> 🔧 **Agent** `{"description": "HUD05 + coins05 finish", "subagent_type": "animation-and-gameplay-engineer", "prompt": "You are the animation-and-gameplay-engineer for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).\n\nYour complete task is written in the file `qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md`. Read that file FIRST and in full: the top paragraph \"RESUMED RUN #3\" (this relaunch, written for you now), the \"YOUR FOCUS NOW\" paragraph, the older RESUMED paragraph, and the \"ORIGINAL BRIEF (unchanged)\". Then read `qa/pilot05/ful …[+1757 chars]`
+
+### 🧑 User — 2026-11-17T01:15:58.395Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ae2100bc45217d150 (internal ID - do not mention to user. Use SendMessage with to: 'ae2100bc45217d150', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/ae2100bc45217d150.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T01:16:07.514Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; s=json.load(open(p))\ns['updated_utc']='2026-11-17T01:22:00Z'; s['updated_by_session']='01Q46SCH (new account, branch claude/rainbow-account-transfer-npxahd)'\nfor r in s['running_now']:\n    r['launched']='2026-11-17 ~01:20 UTC, session 01Q46SCH (relaunch #3; the 01:00 run of session 01AvQv6S was interrupted after ~10 min)'\ns['assignments_now']['_note']=(\"State at 2026-11-17 ~01:20 UTC (new account, session 01Q46SCH): the three specialists of running_now were RELAUNCHED \"\n \"from their briefs (header 'RESUMED  …[+1057 chars]`
+
+### 🧑 User — 2026-11-17T01:16:19.592Z
+
+> ↩︎ result: AGENTS_STATUS updated
+> 05 → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap/default/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> DEFAULT vs current_default_05.png: differing px = 0
+
+### 🤖 Claude — 2026-11-17T01:16:21.039Z
+
+The default build is pixel-identical to the protected default picture (0 differing pixels). Next: the protected BEFORE and the fresh `?match05=1`.
+
+### 🤖 Claude — 2026-11-17T01:16:25.992Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; R=qa/pilot05/full_reference_match/recovery_s01Q4\nnode scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/before 2>&1 | tail -1 | cut -c1-120; git checkout -q qa/capture_log.json\nnode scripts/capture.mjs 05 --q='match05=1' --out=$S/match05 2>&1 | tail -1 | cut -c1-120; git checkout -q qa/capture_log.json\npython3 -I -c \"\nfrom PIL import Image;import numpy as np\ndef d(x,y):\n  a=np.asarray(Image.open(x).convert('RGB'),int);b=np.asarray(Image.open(y).convert('RGB'),int);return int( …[+557 chars]`
+
+### 🧑 User — 2026-11-17T01:16:53.871Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap/before/05.png {"stage":"05"
+> 05 → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap/match05/05.png {"stage":"05
+> BEFORE ?ringa=26&nearfloor05=0 vs wave9/baseline/05.png: differing px = 155
+> match05 now vs match05 at recovery (01Av): differing px = 0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 29.14, 'within_10': 0.4733, 'within_20': 0.57, 'ssim_lum': 0.5576, 'mean_signed_rgb': [0.4, -4.7, 0.0]}
+> gold_rings_and_front_frame   px  125730  mean  32.98  <=10 0.388  <=20 0.507  ssim 0.571  signed [-22.5, -21.3, 11.7]
+> purple_walls                 px  312706  mean  52.85  <=10 0.086  <=20 0.211  ssim 0.191  signed [1.9, -3.1, -5.1]
+> side_fittings                px   13776  mean  44.87  <=10 0.356  <=20 0.394  ssim 0.429  signed [-14.1, -33.5, 40.4]
+> water                        px  480736  mean   8.73  <=10 0.855  <=20 0.889  ssim 0.901  signed [3.6, -2.8, -4.1]
+> foam_banks                   px   28862  mean   7.99  <=10 0.899  <=20 0.929  ssim 0.900  signed [0.3, -6.2, -8.3]
+> benny_and_hat                px   93061  mean  44.31  <=10 0.075  <=20 0.260  ssim 0. …[+610 chars]
+
+### 🤖 Claude — 2026-11-17T01:17:01.331Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; git status --short -- src assets tools scripts | head; python3 -I -c \"\nfrom PIL import Image;import numpy as np\na=np.asarray(Image.open('$S/before/05.png').convert('RGB'),int);b=np.asarray(Image.open('qa/pilot05/wave9/baseline/05.png').convert('RGB'),int)\nm=(a!=b).any(2);ys,xs=np.nonzero(m);d=np.abs(a-b).max(2)[m]\nprint('bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max(),'max diff',d.max(),'mean diff',round(d.mean(),1))\nimport collections;print('rows histogram (by 100):',sorted(collections. …[+99 chars]`
+
+### 🧑 User — 2026-11-17T01:17:01.633Z
+
+> ↩︎ result: bbox x 59 805 y 21 104 max diff 37 mean diff 2.9
+> rows histogram (by 100): [(0, 114), (100, 41)]
+
+### 🤖 Claude — 2026-11-17T01:17:14.295Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; python3 -I -c \"\nfrom PIL import Image, ImageChops\na=Image.open('$S/before/05.png').convert('RGB').crop((40,10,830,115));b=Image.open('qa/pilot05/wave9/baseline/05.png').convert('RGB').crop((40,10,830,115))\nd=ImageChops.difference(a,b).point(lambda v:min(255,v*8))\nW,H=a.size;out=Image.new('RGB',(W,H*3+10),'white');out.paste(b,(0,0));out.paste(a,(0,H+5));out.paste(d,(0,2*H+10))\nout=out.resize((W*2,(H*3+10)*2),Image.NEAREST);out.save('$S/before_hud_cmp.png')\"; echo done", "description": "B …[+32 chars]`
+
+### 🧑 User — 2026-11-17T01:17:14.503Z
+
+> ↩︎ result: done
+
+### 🤖 Claude — 2026-11-17T01:17:16.110Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap/before_hud_cmp.png"}`
+
+### 🧑 User — 2026-11-17T01:17:16.150Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:17:24.317Z
+
+> 🔧 **Bash** `{"command": "git status --short -- src index.html public | head; git log -1 --format='%h %ci' -- src/ui; S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/before2 2>&1 | tail -1 | cut -c1-60; git checkout -q qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image;import numpy as np\nL=lambda p:np.asarray(Image.open(p).convert('RGB'),int)\nb=L('qa/pilot05/wave9/baseline/05.png');x=L('$S/before2/05.png');y=L('$S/before/05.png')\nprint('BEFORE run 2 vs baseline:',int((x!=b).any(2).sum()), …[+134 chars]`
+
+### 🧑 User — 2026-11-17T01:17:39.998Z
+
+> ↩︎ result: 898d678 2026-11-17 00:30:01 +0000
+> 05 → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-
+> BEFORE run 2 vs baseline: 0 px; run 2 vs run 1: 155 px
+
+### 🤖 Claude — 2026-11-17T01:17:48.381Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png"}`
+
+### 🧑 User — 2026-11-17T01:17:48.428Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:17:57.802Z
+
+Before showing it to you, I'll save the new recovery documents and captures to GitHub and confirm the remote matches.
+
+### 🤖 Claude — 2026-11-17T01:18:00.162Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:recovery-verified 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"files_staged\"|error' ; python3 -I scripts/autosave-status.py; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"; echo \"SOURCE (protected) $(git ls-remote origin refs/heads/claude/rainbow-restore-env-setup-bxn85h | cut -f1)\"; git lfs ls-files | wc -l; pgrep -af autosave-daemon | head -2", "description": "Save now and verify remote SHA, LFS, daemon"}`
+
