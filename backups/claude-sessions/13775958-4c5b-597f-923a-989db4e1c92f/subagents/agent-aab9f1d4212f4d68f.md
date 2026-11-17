@@ -1658,3 +1658,166 @@ Let me write the timeline script that runs either the current source (Vite) or a
 
 > ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/cmp.py (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-17T15:43:52.784Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/cmp.py qa/gameplay_video/scan/default/probe.json qa/gameplay_video/scan/match08/probe.json 12", "description": "Compare default and match08 scans"}`
+
+### 🧑 User — 2026-11-17T15:43:52.842Z
+
+> ↩︎ result: 12 02 A near2 0.629 hid 0.454 | B near2 0.629 hid 0.465 occ [('water_drumA_swirl < water_drumA < wate', 0.477)] near [('water_drumA_swirl < water_drum', 0.4159), ('water_drumA_surface < water_dr', 0.2135)] water 0.22 water_ribbon < water_syst
+> 12.5 02 A near2 0.000 hid 0.06 | B near2 0.000 hid 0.059 occ [] near [] water -3.443 foam_berm < foam_banks < 
+> 13 02 A near2 0.096 hid 0.074 | B near2 0.096 hid 0.072 occ [] near [('water_ribbon < water_system', 0.0856), ('Mesh(MeshStandardMaterial#ffcf', 0.0105)] water -3.432 foam_berm < foam_banks < 
+> 13.5 02 A near2 0.166 hid 0.041 | B near2 0.166 hid 0.043 occ [] near [('Mesh(MeshStandardMaterial#e94a', 0.1145), ('Mesh(MeshStandardMaterial#ffcf', 0.1022)] water -0.333 water_ribbon < water_syst
+> 14 03 A near2 0.129 hid 0.101 | B near2 0.129 hid 0.098 occ [] near [('water_ribbon < water_system', 0.1239), ('foam_berm < foam_banks < water', 0.0054)] water -0.459 water_ribbon < water_syst
+> 14.5 03 A near2 0.000 hid 1 | B near2 0.000 hid 1 occ [('foam_berm < foam_banks < water_system', 1), ('water_ribbon < water_system', 0.279)] near [] water -1.599 water_ribbon < water_syst
+> 15 03 A near2 0.000 hid 0.081 | B near2 0.000 hid 0.1 occ [('rider_splash  …[+10862 chars]
+
+### 🤖 Claude — 2026-11-17T15:43:56.783Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/camclear/sheet.py qa/gameplay_video/scan/match08/probe.json /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/s_m08.png 43 50 --cols=8", "description": "Contact sheet of match08 frames 43-50 s"}`
+
+### 🧑 User — 2026-11-17T15:43:57.414Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/s_m08.png (2160, 1028) 15 frames
+
+### 🤖 Claude — 2026-11-17T15:43:58.727Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/s_m08.png"}`
+
+### 🧑 User — 2026-11-17T15:43:59.224Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T15:43:59.217Z
+
+[Image: original 2160x1028, displayed at 2000x952. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T15:44:55.240Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/ringpos.mjs", "content": "#!/usr/bin/env node\n// Where is the ride camera relative to the 06/07 gold rings? For each sample time: the ring whose plane is nearest to\n// the camera, the camera's and Benny's radial distance from that ring's axis in ring radii (>1 = outside the ring),\n// and the axial distance to its plane. Usage: node tools/camclear/ringpos.mjs --q=... --times=28,31.5,40,42\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst arg = (k, d = '') =>  …[+2361 chars]`
+
+### 🧑 User — 2026-11-17T15:44:55.282Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/ringpos.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:44:57.978Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node tools/camclear/ringpos.mjs --times=27.5,28,29,30,31,31.5,32,33,35,37.5,38,39,40,40.5,41,42,43,43.5,44 2>&1 | tail -25", "description": "Measure camera position relative to 06/07 rings", "timeout": 620000}`
+
+### 🧑 User — 2026-11-17T15:45:05.031Z
+
+> ↩︎ result: {"t":27.5,"stage":"06","s":192.803,"ring":[null,{"i":0,"camRadial":0.66,"camAxial":1.22,"bennyRadial":0.676,"bennyAxial":-5.32,"ringR":14.85}]}
+> {"t":28,"stage":"06","s":198.303,"ring":[null,{"i":1,"camRadial":1.042,"camAxial":3.72,"bennyRadial":0.915,"bennyAxial":-2.25,"ringR":14.95}]}
+> {"t":29,"stage":"06","s":209.303,"ring":[null,null]}
+> {"t":30,"stage":"06","s":220.303,"ring":[null,{"i":2,"camRadial":0.743,"camAxial":-0.79,"bennyRadial":1.052,"bennyAxial":-7.34,"ringR":14.78}]}
+> {"t":31,"stage":"06","s":231.303,"ring":[null,null]}
+> {"t":31.5,"stage":"06","s":236.803,"ring":[null,{"i":3,"camRadial":0.963,"camAxial":0.74,"bennyRadial":1.399,"bennyAxial":-3.23,"ringR":14.91}]}
+> {"t":32,"stage":"06","s":242.304,"ring":[null,{"i":4,"camRadial":0.758,"camAxial":4.37,"bennyRadial":1.103,"bennyAxial":-0.15,"ringR":14.52}]}
+> {"t":33,"stage":"07","s":253.874,"ring":[null,{"i":5,"camRadial":0.628,"camAxial":0.53,"bennyRadial":0.92,"bennyAxial":-6.97,"ringR":14.64}]}
+> {"t":35,"stage":"07","s":277.874,"ring":[null,{"i":9,"camRadial":0.069,"camAxial":5.72,"bennyRadial":0.648,"bennyAxial":-2.06,"ringR":6.83}]}
+> {"t":37.5,"stage":"07","s":307.874,"ring":[null,{"i":12,"camRadial":0.18,"camAxial":2.53,"b …[+1248 chars]
+
+### 🤖 Claude — 2026-11-17T15:45:18.544Z
+
+> 🔧 **Bash** `{"command": "grep -n \"plunge\" src/world/environment.ts src/world/tube.ts | head -20; sed -n 62,120p src/world/tube.ts", "description": "Look for plunge handling in tube construction"}`
+
+### 🧑 User — 2026-11-17T15:45:18.578Z
+
+> ↩︎ result: src/world/environment.ts:4: * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> src/world/environment.ts:197:  // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+> src/world/environment.ts:234:  // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+> src/world/environment.ts:695:    tubeAxis: { path: perfPath, s0: s05, s1: course.marks['07_plunge_top'] },
+> src/world/tube.ts:3: * 04 slide, the 06 arch and the full 07 plunge with no seams.
+>   const wXZ = new Array<number>(n).fill(0);
+>   const runDepth = new Array<number>(n).fill(0);
+>   for (const r of course.straightAxes ?? []) {
+>     if (r.s1 <= s0 || r.s0 >= s1) continue;
+>     const ab = r.b.clone().sub(r.a);
+>     const ab2 = ab.lengthSq();
+>     for (let i = 0; i < n; i++) {
+>       const s = S(i);
+>       const wIn = THREE.MathUtils.smoothstep(s, r.s0, r.s0 + 12);
+>       const w = wIn * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 6, r.s1 + 2));
+>       const wl = wIn * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 18, r.s1 + 2));
+>       if (wl <= wXZ[i]) continue;
+>       wXZ[i] = wl;
+>       wRun[i] = w;
+>       runDepth[i] = r.floorDepth;
+>       const u = cp[i].clone().sub(r.a …[+2487 chars]
+
+### 🤖 Claude — 2026-11-17T15:46:16.469Z
+
+> 🔧 **Bash** `{"command": "sed -n 600,660p src/vfx/foam.ts && sed -n 860,890p src/vfx/foam.ts && grep -n \"group.add\\|return {\" src/vfx/foam.ts | sed -n 1,40p", "description": "Inspect foam group structure"}`
+
+### 🧑 User — 2026-11-17T15:46:16.504Z
+
+> ↩︎ result: geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+>   geo.setIndex(idx);
+>   geo.computeVertexNormals();
+>   const st05 = course.stage('05');
+>   const uniforms = withFog({
+>     uTime: { value: 0 },
+>     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
+>     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+>     // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
+>     uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+>   });
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: BERM_VERT,
+>     fragmentShader: BERM_FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
+>   });
+>   const mesh = new THREE.Mesh(geo, mat);
+>   mesh.name = 'foam_berm';
+>   mesh.frustumCulled = false;
+>   return { mesh, uniforms };
+> }
+> 
+> export function createFoam(
+>   course: Course,
+>   opts: { s0: number; s1: number; quality: 'high' | 'low'; height?: (s: number, lat: number, t: number) => number },
+> ): FoamSystem {
+>   const { s0, s1, quality } = opts;
+>   const heigh …[+3239 chars]
+
+### 🤖 Claude — 2026-11-17T15:46:21.934Z
+
+> 🔧 **Bash** `{"command": "sed -n 808,840p src/vfx/foam.ts; sed -n 676,684p src/vfx/foam.ts", "description": "Check flank and berm material sharing"}`
+
+### 🧑 User — 2026-11-17T15:46:21.972Z
+
+> ↩︎ result: // ---- 05 flank banks: lather sheet + world-anchored bubble puffs fitted to the frame edges ----
+>   const st05 = course.stage('05');
+>   const sm = (a: number, b: number, x: number) => {
+>     const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+>     return t * t * (3 - 2 * t);
+>   };
+>   const R = quality === 'high' ? 40 : 22; // sheet rows per side
+>   const C = quality === 'high' ? 7 : 5; // sheet columns (inner edge → beyond the frame edge)
+>   const bankPos = new Float32Array(2 * R * C * 3);
+>   const bankFoam = new Float32Array(2 * R * C * 3);
+>   const bankIdx: number[] = [];
+>   for (let sd = 0; sd < 2; sd++) {
+>     for (let i = 0; i < R - 1; i++) {
+>       for (let j = 0; j < C - 1; j++) {
+>         const a = (sd * R + i) * C + j, b = a + 1, c = a + C, d = c + 1;
+>         quadIdx(bankIdx, sd, a, b, c, d);
+>       }
+>     }
+>   }
+>   const bankGeo = new THREE.BufferGeometry();
+>   bankGeo.setAttribute('position', new THREE.BufferAttribute(bankPos, 3).setUsage(THREE.DynamicDrawUsage));
+>   bankGeo.setAttribute('aFoam', new THREE.BufferAttribute(bankFoam, 3).setUsage(THREE.DynamicDrawUsage));
+>   bankGeo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(2 * R * C * 3), 3).setUsage(THREE.DynamicDr …[+831 chars]
+
+### 🤖 Claude — 2026-11-17T15:46:30.314Z
+
+> 🔧 **Bash** `{"command": "which ffmpeg ffprobe; ls -la /home/user/rainbow-/qa/gameplay_video/source/ 2>&1; ls -la /root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/ 2>&1 | head", "description": "Check ffmpeg and the user's recording files"}`
+
+### 🧑 User — 2026-11-17T15:46:30.358Z
+
+> ↩︎ result: This agent is isolated in the worktree /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f, but this command runs a string through source, which can't be verified to stay inside the worktree. Refusing to run it — a worktree-isolated agent's git operations must target its own worktree. Run git directly with literal arguments from /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f.
+

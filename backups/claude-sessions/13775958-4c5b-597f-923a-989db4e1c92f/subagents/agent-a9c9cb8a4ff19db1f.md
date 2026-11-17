@@ -1514,3 +1514,125 @@ Now the bake script, adapted for 08 (seen texels from 08, unseen texels keep the
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T15:44:03.987Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nims=[Image.open(p).convert('RGB').crop((250,1040,610,1240)) for p in ['references/08_final_spin_chamber.png','$S/base_m08/08.png','$S/c_b1/08.png']]\no=Image.new('RGB',(720,1220),(255,255,255))\nfor i,im in enumerate(ims): o.paste(im.resize((720,400),Image.LANCZOS),(0,i*410))\no.save('$S/v/body_b1.png')\nEOF", "description": "Body close-up approved/current/new b1 stacked"}`
+
+### 🧑 User — 2026-11-17T15:44:04.424Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:44:06.313Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/body_b1.png"}`
+
+### 🧑 User — 2026-11-17T15:44:06.345Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:44:20.188Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I - <<EOF\nimport sys; sys.path.insert(0,'qa/match/08/benny08/work')\nimport numpy as np\nfrom bennyseg08 import *\nfrom parts08 import approved_parts\nfrom geom08 import load_uv, game_ids\nP,a,m=approved_parts(); g=load('$S/base_m08/08.png'); ids=game_ids(load_uv('$S/p1/uv.f32'))\ndef runs(lab,y0,y1):\n  res=[];prev=None;st=y0\n  for y in range(y0,y1):\n    if lab[y]!=prev:\n      if prev is not None and y-st>=2: res.append(f'{prev}{st}-{y-1}')\n      prev=lab[y]; st=y\n  res.append(f' …[+726 chars]`
+
+### 🧑 User — 2026-11-17T15:44:20.212Z
+
+> ↩︎ result: This agent is isolated in the worktree /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f, but this command is too complex to verify that it stays inside the worktree. Refusing to run it — a worktree-isolated agent's git operations must target its own worktree. Split it into plain, separate commands and run them from /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f.
+
+### 🤖 Claude — 2026-11-17T15:44:28.392Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/bands_cols.py", "content": "import sys\nsys.path.insert(0, 'qa/match/08/benny08/work')\nimport numpy as np\nfrom bennyseg08 import load, colour_classes, H\nfrom parts08 import approved_parts\nfrom geom08 import load_uv, game_ids\n\nS = sys.argv[1]\nP, a, m = approved_parts()\ng = load(S + '/base_m08/08.png')\nids = game_ids(load_uv(S + '/p1/uv.f32'))\n\n\ndef runs(lab, y0, y1):\n    res = []; prev = None; st = y0\n    for y in range(y0, y1):\n        if lab[y] != prev:\n            if prev is not N …[+969 chars]`
+
+### 🧑 User — 2026-11-17T15:44:28.417Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/bands_cols.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:44:30.590Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/bands_cols.py /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad", "description": "Per-column band structure approved vs game"}`
+
+### 🧑 User — 2026-11-17T15:44:32.256Z
+
+> ↩︎ result: 320 APP  -840-982 CP983-991 CW992-996 CP997-998 CP1000-1001 U1002-1056 -1057-1099
+> 320 GAME -840-1099
+> 350 APP  -840-945 Co946-947 CW948-953 CU954-957 CW958-959 CU960-987 CW988-998 CP1001-1005 CW1006-1016 U1017-1060 -1061-1099
+> 350 GAME -840-995 CW997-1018 U1020-1055 -1056-1099
+> 380 APP  -840-879 p880-948 CW949-956 CP957-958 CW959-970 CU971-998 CW999-1021 U1023-1061 -1062-1099
+> 380 GAME -840-966 CU967-991 CU993-996 CW997-1030 U1031-1064 -1065-1099
+> 410 APP  -840-859 p860-964 CP965-966 CW967-979 CU980-1002 CW1003-1022 U1024-1063 -1064-1099
+> 410 GAME -840-931 -933-939 -941-944 p945-946 -947-954 p956-957 CW959-984 CU985-1013 CW1014-1038 U1039-1075 -1076-1099
+> 440 APP  -840-860 p861-964 CW966-982 CU983-1007 CW1008-1022 CP1023-1024 U1025-1063 -1064-1099
+> 440 GAME -840-898 p899-978 CU979-980 CW981-999 CU1000-1023 CW1024-1044 U1045-1079 -1080-1099
+> 470 APP  -840-869 p870-952 CU953-957 CW959-969 CP970-972 CW973-977 CU978-1001 CW1002-1023 CP1024-1025 U1026-1062 -1063-1099
+> 470 GAME -840-893 p894-982 CU983-985 CW986-1003 CU1004-1030 CW1031-1048 U1049-1083 -1084-1099
+> 500 APP  -840-938 CW940-961 CU963-974 S976-1026 U1027-1062 -1063-1099
+> 500 GAME -840-908 p909-912 p914-979 CW981-1001 CU1002-1020 S1021-102 …[+202 chars]
+
+### 🤖 Claude — 2026-11-17T15:45:10.846Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/reg08.py", "content": "\"\"\"Part registration game -> approved for the Screen 08 beanie (benny-character-artist, 2026-11-17).\nAt the locked 08 frame the game beanie sits ~18 px lower and ~13 px further image-right than the painted one and is a\nlittle narrower (UV pass vs approved part masks: pom IoU 0.33, crown 0.39, cuff 0.32, star 0.06). A strict per-pixel\nbake (line B's method, made for 05 after the hat geometry had been fitted to IoU 0.92) therefore paints the approved\nstripes / cuff  …[+4361 chars]`
+
+### 🧑 User — 2026-11-17T15:45:10.872Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/reg08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:45:13.349Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && time python3 -I qa/match/08/benny08/work/reg08.py $S/p1/uv.f32 $S/base_m08/08.png $S/reg08.json", "description": "Fit hat/pom/star registration", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T15:45:17.714Z
+
+> ↩︎ result: {
+>  "hat": {
+>   "M": [
+>    0.9375,
+>    0.8625,
+>    438.4,
+>    1027.3,
+>    -32.0,
+>    -20.0
+>   ],
+>   "score": 0.7929,
+>   "identity_score": 0.3874
+>  },
+>  "pom": {
+>   "M": [
+>    1.0579,
+>    1.01,
+>    463.2,
+>    940.2,
+>    -37.2,
+>    -27.9
+>   ],
+>   "score": 0.9991,
+>   "identity_score": 0.5918
+>  },
+>  "star": {
+>   "M": [
+>    0.9926,
+>    0.9182,
+>    523.7,
+>    1035.4,
+>    -13.4,
+>    -34.0
+>   ],
+>   "score": 0.8944,
+>   "identity_score": 0.1316
+>  },
+>  "note": "M = (sx, sy, cx, cy, tx, ty): approved = (s*(game - c) + c + t); score = share of game part pixels landing on the same approved class"
+> }
+> 
+> real	0m4.317s
+> user	0m4.799s
+> sys	0m0.227s
+
+### 🤖 Claude — 2026-11-17T15:45:42.164Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='qa/match/08/benny08/work/reg08.py'; s=open(p).read()\nold='''def fit(game_lab, appr_lab, weights, cx, cy, sxs, sys_, txs, tys):\n    \"\"\"maximise the share of game part pixels whose approved label (at M(p)) is the same class\"\"\"\n    ys, xs = np.nonzero(game_lab > 0); gl = game_lab[ys, xs]\n    best = (-1, None)\n    for sx, sy, tx, ty in itertools.product(sxs, sys_, txs, tys):\n        al = warp_lookup(appr_lab, (sx, sy, cx, cy, tx, ty), ys, xs)\n        sc = sum(w * ((gl == k) & (al == k)).sum() / max((gl == k).sum(), 1) for k, w in weights.items())\ …[+2450 chars]`
+
+### 🧑 User — 2026-11-17T15:45:59.990Z
+
+> ↩︎ result: {"hat":{"M":[1.3,1.0125,438.4,1027.3,-37.0,-22.0],"score":0.7574,"identity_score":0.4334},"pom":{"M":[1.2479,1.15,463.2,940.2,-35.2,-26.4],"score":0.9446,"identity_score":0.5061},"star":{"M":[1.0926,1.1182,523.7,1035.4,-11.9,-32.5],"score":0.7914,"identity_score":0.1199},"note":"M=(sx,sy,cx,cy,tx,ty):approved=(s*(game-c)+c+t);score=shareofgamepartpixelslandingonthesameapprovedclass"}
+> real	0m17.757s
+> user	0m18.126s
+> sys	0m0.216s
+

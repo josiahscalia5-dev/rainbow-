@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10194,
-   "sha256": "b4e7b2ae41d54983102f817ccf4393fe487bc6998341d198e1bfb80589d72421"
+   "bytes": 10190,
+   "sha256": "385ddd9d3289d174a4ddaffbc33d4fad118c1491588cd89a985df7344991880f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -713,8 +713,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 4787,
-   "sha256": "5ecd90bacf591d5d8c6c9efeef70eaaaa4bfef992900e3050f75656927f04c33"
+   "bytes": 5798,
+   "sha256": "4ce020d98ecba76767574bc489ef4da3e664d17af2cbe6d7803c067f7411e586"
   },
   {
    "path": "docs/characters/benny.md",
@@ -1135,6 +1135,21 @@
    "path": "qa/gameplay_test.json",
    "bytes": 14632,
    "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4",
+   "bytes": 17196277,
+   "sha256": "3099580df193e497666901110b9d4df411caa3cecabeda1dc8491b3d06c628e1"
+  },
+  {
+   "path": "qa/gameplay_video/source/user_video_1fps_00-23s.png",
+   "bytes": 2537908,
+   "sha256": "0a81549f11fc35fb21f104053017ef4d02b571ad23801ce1f4a043b35ea4e6f0"
+  },
+  {
+   "path": "qa/gameplay_video/source/user_video_1fps_24-48s.png",
+   "bytes": 2978004,
+   "sha256": "6eb1acb0e8864557624fd898b777f91258e8f7cfe717cd56e6ea56c484ef90b6"
   },
   {
    "path": "qa/glb_validation.txt",

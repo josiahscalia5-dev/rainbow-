@@ -1,9 +1,20 @@
 # RAINBOW — parallel workstreams: lead progress report
 
 Lead coordinator: session `session_01AvQv6UXiBngewM8kSBwFfZ` ("Rainbow game restoration and parallel agents"), lead
-branch `ccr-d4240b15-rl1i72` (contains `ccr-9c4a8ad6-xovgsx` @ `752d6d8`; the user's verified branch
-`ccr-9c4a8ad6-xovgsx` receives the integrated Screen 08 result at the end of each round, user order 2026-11-17).
-Updated: 2026-11-17 ~15:45 UTC.
+branch `ccr-d4240b15-rl1i72` (contains `ccr-9c4a8ad6-xovgsx` @ `752d6d8`).
+**User order 2026-11-17 ~15:46 UTC (supersedes the earlier "save to ccr-9c4a8ad6-xovgsx"):** new session work goes to
+`ccr-d4240b15-rl1i72` and each specialist's own branch until the user has reviewed it; nothing unfinished is merged into
+the original project branch `ccr-9c4a8ad6-xovgsx`.
+Updated: 2026-11-17 ~15:50 UTC.
+
+## User gameplay recording (received 15:45 UTC)
+`qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4` (trimmed: the last second showed the phone's
+notification shade; original 49.8 s, 720×1602, 30 fps, sha256 `8501d078…`, kept out of git) + 1 fps sheets
+`user_video_1fps_00-23s.png`, `user_video_1fps_24-48s.png`. Lead's first read: 03 at 4–6 s (white sheet over the view),
+04 at 7–10 s (white sheet, then the whole frame inside a pink wall at 8 s), 05 11–16 s, 06 17–25 s (drum wall + gold
+band fill the view 18–20 s), 07 26–37 s (gold ring band fills the frame 33–36 s), **08 38–39 s = the match08
+reconstruction** (so the recording is from a match08 APK), 09 40 s, 10 41–43 s, 11 44–48 s (girl + towel,
+FINAL SPIN COMPLETE). Analysis: camera specialist, `qa/gameplay_video/NOTES.md` on `claude/rainbow-s08-camclear`.
 
 ## Rules for every workstream
 * Own branch, own worktree / own cloud container. No merges or cherry-picks between line A (`ccr-9c4a8ad6-xovgsx`) and

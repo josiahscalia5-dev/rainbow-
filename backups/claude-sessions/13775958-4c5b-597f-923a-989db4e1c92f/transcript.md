@@ -1017,3 +1017,149 @@ Your game is restored and checked, and four specialists are working now. Your ga
 ## I need from you: the video
 Please re-send it. If the app won't attach it, upload it on GitHub into a folder `qa/gameplay_video/` on branch `ccr-9c4a8ad6-xovgsx` (web upload limit 25 MB). Screenshots at those five times would also work. Without it I can't say for certain which build you recorded.
 
+### 🧑 User — 2026-11-17T15:45:09.767Z
+
+@"/root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4" Claudia, thank you for restoring my Rainbow game and launching the parallel agents.
+
+I am attaching my gameplay recording now. Please verify that you can open the actual video before analyzing it.
+
+Have the camera specialist examine the recording, particularly the visual obstructions, transitions, and Screen 08 camera behavior.
+
+Keep the Screen 08 Benny specialist working on the approved fur, beanie, pom-pom, colors, and splash.
+
+Continue the separate Screen 04 and Screen 05 agents. Start Screens 06 and 07 when the other agents reach safe checkpoints and sufficient account capacity is available.
+
+IMPORTANT:
+
+- Protect my successful Screen 08 scenery reconstruction.
+- Preserve all 13 original approved images.
+- Keep the existing 91 coins and gameplay functionality.
+- Do not merge unfinished changes into my original project branch.
+- Save new session work to "ccr-d4240b15-rl1i72" and each specialist's separate branch until changes have been reviewed.
+- Verify GitHub backups regularly.
+- Do not spend additional Marble or fal.ai credits unnecessarily.
+
+Once the Screen 08 specialists finish, show me my original approved screen, the improved 3D game screen, and moving-camera comparisons separately at full size.
+
+I still want to approve Screen 08 personally.
+
+My priority is making every playable 3D environment look as close as possible to my original approved artwork.
+
+Please continue the parallel work without restarting or redesigning my game.
+
+### 🤖 Claude — 2026-11-17T15:45:13.491Z
+
+Checking first that the video actually opens.
+
+### 🤖 Claude — 2026-11-17T15:45:15.196Z
+
+> 🔧 **Bash** `{"command": "F=\"/root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4\"; ls -la \"$F\"; sha256sum \"$F\"; ffprobe -v error -show_entries format=duration,size:stream=codec_name,width,height,r_frame_rate,nb_frames -of default=nw=1 \"$F\"", "description": "Probe the uploaded gameplay video"}`
+
+### 🧑 User — 2026-11-17T15:45:15.388Z
+
+> ↩︎ result: -rw------- 1 root root 17325411 Nov 17 15:45 /root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4
+> 8501d0789d6cfb2f0cf9dac6ea20797f2cde02798797e87a70139b5786ebd3e4  /root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4
+> codec_name=h264
+> width=720
+> height=1602
+> r_frame_rate=30/1
+> nb_frames=1495
+> codec_name=aac
+> r_frame_rate=0/0
+> nb_frames=2147
+> duration=49.833333
+> size=17325411
+
+### 🤖 Claude — 2026-11-17T15:45:18.667Z
+
+The video opens fine: 49.8 s, 720×1602 portrait, 30 fps, H.264, 17.3 MB. Next I'm pulling one frame per second to look at it myself before briefing the camera specialist.
+
+### 🤖 Claude — 2026-11-17T15:45:22.674Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/video; mkdir -p $S/f1; F=\"/root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4\"; ffmpeg -v error -i \"$F\" -vf \"fps=1,scale=180:-1,drawtext=text='%{eif\\:t\\:d}s':x=4:y=4:fontsize=22:fontcolor=yellow:box=1:boxcolor=black@0.6\" $S/f1/t_%02d.png 2>&1 | tail -2; ls $S/f1 | wc -l; cd $S/f1 && montage t_0[0-9].png t_1[0-9].png t_2[0-4].png -tile 10x -geometry +2+2 $S/sheet_00_24.png && montage t_2[5-9].png t_[34][0-9].png t_50.png -tile 10x -geometry  …[+112 chars]`
+
+### 🧑 User — 2026-11-17T15:45:26.238Z
+
+> ↩︎ result: 50
+> -rw-r--r-- 1 root root 2537908 Nov 17 15:45 /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/video/sheet_00_24.png
+> -rw-r--r-- 1 root root 3028656 Nov 17 15:45 /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/video/sheet_25_50.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T15:45:28.680Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/video/sheet_00_24.png"}`
+
+### 🧑 User — 2026-11-17T15:45:28.885Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:45:29.287Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/video/sheet_25_50.png"}`
+
+### 🧑 User — 2026-11-17T15:45:29.524Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:45:54.715Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-17T15:45:54.725Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-17T15:45:57.190Z
+
+Next I'm saving a backup copy of the video to the lead branch. I'm trimming off the last second, which shows your phone's notification shade with your Wi-Fi name, and keeping the original untouched.
+
+### 🤖 Claude — 2026-11-17T15:46:01.172Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/gameplay_video/source && F=\"/root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4\"; ffmpeg -v error -y -i \"$F\" -t 48.9 -c copy qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4 && ffprobe -v error -show_entries format=duration,size -of default=nw=1 qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4; git check-attr filter qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4; cp /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/video/shee …[+319 chars]`
+
+### 🧑 User — 2026-11-17T15:46:01.435Z
+
+> ↩︎ result: duration=48.966667
+> size=17196277
+> qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4: filter: lfs
+> total 22244
+> drwxr-xr-x 2 root root     4096 Nov 17 15:46 .
+> drwxr-xr-x 3 root root     4096 Nov 17 15:46 ..
+> -rw-r--r-- 1 root root 17196277 Nov 17 15:46 rainbow_gameplay_for_claudia-1_0-48.9s.mp4
+> -rw-r--r-- 1 root root  2537908 Nov 17 15:46 user_video_1fps_00-23s.png
+> -rw-r--r-- 1 root root  3028656 Nov 17 15:46 user_video_1fps_24-49s.png
+
+### 🤖 Claude — 2026-11-17T15:46:05.413Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/video/f1; cd $S && montage t_2[5-9].png t_[34][0-9].png -tile 10x -geometry +2+2 /home/user/rainbow-/qa/gameplay_video/source/user_video_1fps_24-48s.png && rm /home/user/rainbow-/qa/gameplay_video/source/user_video_1fps_24-49s.png; cd /home/user/rainbow- && ls qa/gameplay_video/source/", "description": "Rebuild contact sheet without the 49 s private frame"}`
+
+### 🧑 User — 2026-11-17T15:46:06.012Z
+
+> ↩︎ result: rainbow_gameplay_for_claudia-1_0-48.9s.mp4
+> user_video_1fps_00-23s.png
+> user_video_1fps_24-48s.png
+
+### 🤖 Claude — 2026-11-17T15:46:17.625Z
+
+> 🔧 **SendMessage** `{"to": "aab9f1d4212f4d68f", "summary": "Send user video + timeline map to camera agent", "message": "The user's gameplay recording has arrived; analyse it directly in addition to your reproduction.\n\nFILES (read-only; do NOT commit the original — it ends on the phone's notification shade with private info):\n* Original: /root/.claude/uploads/13775958-4c5b-597f-923a-989db4e1c92f/2c83caac-rainbow_gameplay_for_claudia-1.mp4 (49.8 s, 720×1602, 30 fps, H.264; sha256 8501d078…)\n* Trimmed copy for the record (0–48.9 s, already in the LEAD tree, committed by the lead — don't copy it into your branch …[+2127 chars]`
+
+### 🧑 User — 2026-11-17T15:46:17.646Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aab9f1d4212f4d68f at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aab9f1d4212f4d68f","name":"aab9f1d4212f4d68f","ref":"e63845"}}
+
+### 🤖 Claude — 2026-11-17T15:46:20.675Z
+
+The camera specialist has the video. Next I'm recording your new branch rule in the progress report: nothing goes to `ccr-9c4a8ad6-xovgsx` until you've reviewed it. Then a verified checkpoint save.
+
+### 🤖 Claude — 2026-11-17T15:46:27.349Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/PARALLEL_PROGRESS.md", "old_string": "branch `ccr-d4240b15-rl1i72` (contains `ccr-9c4a8ad6-xovgsx` @ `752d6d8`; the user's verified branch\n`ccr-9c4a8ad6-xovgsx` receives the integrated Screen 08 result at the end of each round, user order 2026-11-17).\nUpdated: 2026-11-17 ~15:45 UTC.", "new_string": "branch `ccr-d4240b15-rl1i72` (contains `ccr-9c4a8ad6-xovgsx` @ `752d6d8`).\n**User order 2026-11-17 ~15:46 UTC (supersedes the earlier \"save to ccr-9c4a8ad6-xovgsx\"):** new session work goes to\n`ccr-d4240b15-rl1i72` and each special …[+1015 chars]`
+
+### 🧑 User — 2026-11-17T15:46:27.389Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/PARALLEL_PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:46:29.703Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"User gameplay recording received (trimmed copy, LFS) + 1 fps sheets; lead read of the windows; branch rule: session work stays on ccr-d4240b15-rl1i72 + specialist branches until reviewed\" 2>&1 | tail -3; echo \"remote: $(git ls-remote origin refs/heads/ccr-d4240b15-rl1i72 | cut -c1-40)\"; echo \"local:  $(git rev-parse HEAD)\"; git lfs ls-files | grep gameplay_video", "description": "Checkpoint save and verify remote SHA"}`
+
