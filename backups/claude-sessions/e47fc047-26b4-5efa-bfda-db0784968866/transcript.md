@@ -6181,3 +6181,432 @@ The audit and the shared switches are on GitHub (`54ec72f`). Before starting the
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && time node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 --q=match07=1 --out=$S/fit07 --grid='{\"back\":[4.5,5.5,6.5,7.5],\"up\":[2.6,3.4,4.2,5.0],\"lookUp\":[-2.5,-1,0.5],\"ahead\":[12,18,24],\"latFollow\":[0.6,0.9]}' 2>&1 | tail -6", "description": "Fit Screen 07 camera to Benny's approved box", "timeout": 900000}`
 
+### 🧑 User — 2026-11-17T11:06:28.362Z
+
+> ↩︎ result: The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed. Correction to the text above: this call was stopped while running, not refused before it ran. It may have run in part or in full, and its changes may have been written. No permission prompt was involved. Work it started elsewhere (a remote command, a background process) may still be running, so check before starting the same work again. The instruction to stop and wait still stands.
+
+### 🧑 User — 2026-11-17T11:06:28.366Z
+
+[Request interrupted by user for tool use]
+
+### 🧑 User — 2026-11-17T11:06:28.461Z
+
+CLAUDIA — RAINBOW FINAL GAME STRUCTURE: FOUR CINEMATIC SCREENS, FIVE REAL PLAYABLE SCREENS
+
+IMPORTANT: I HAVE DECIDED WHICH SCREENS SHOULD BE VIDEOS AND WHICH MUST REMAIN REAL 3D GAMEPLAY.
+
+THIS IS A CHANGE TO THE PREVIOUS PLAN. FOLLOW THIS NEW INSTRUCTION.
+
+1. MY FINAL GAME STRUCTURE
+
+SCREEN 01 — EXISTING OPENING VIDEO
+
+The girl loads the washing machine with the laundry, without noticing Benny hidden in the towel.
+
+I already have this video. DO NOT RECREATE IT.
+
+SCREENS 02 AND 03 — NEW CINEMATIC VIDEOS
+
+These are the first comparison images I uploaded.
+
+Use these exact approved references:
+
+"references/02_mascot_tumbles_in_whirlpool.png"
+
+"references/03_whirlpool_twirl.png"
+
+Screen 02: Benny tumbles into the colorful swirling washer water, dizzy, with the same purple-and-white knitted hat, gold star, pink fur, bubble effects and approved environment.
+
+Screen 03: Benny spins through the colorful whirlpool toward the drain and the glowing tunnel leading into Screen 04.
+
+These should be short, exciting, seamlessly connected cinematic animations.
+
+SCREENS 04, 05, 06, 07 AND 08 — REAL PLAYABLE 3D GAME
+
+These five screens are the playable middle of my game.
+
+They MUST NOT become videos.
+
+They must have real Three.js gameplay, character movement, steering, collisions, coin collection, water movement, camera tracking and continuous level transitions.
+
+Approved references:
+
+"references/04_through_the_five_arrows.png"
+
+"references/05_flow_into_the_current.png"
+
+"references/06_crest_the_rinse_arch.png"
+
+"references/07_dive_the_washer_tube.png"
+
+"references/08_final_spin_chamber.png"
+
+Each must aim for at least 9/10 visual similarity to its OWN approved image.
+
+Screen 05 already has extensive completed visual matching work. Preserve it. Do not rebuild it.
+
+SCREENS 09 AND 10 — NEW CINEMATIC VIDEOS
+
+These are the second comparison images I uploaded.
+
+Use:
+
+"references/09_ride_the_final_wave.png"
+
+"references/10_slide_into_hiding.png"
+
+Screen 09: Benny rides the final beautiful turquoise-and-pink rinse wave through the washer toward the towel. The laundry-room window and girl are visible in the background as approved.
+
+Screen 10: Benny slides into the purple towel and hides before the girl returns and notices anything.
+
+Animate these as cinematic scenes, preserving the exact approved character, colors, scenery, water and camera composition.
+
+SCREEN 11 — EXISTING ENDING VIDEO
+
+The girl returns and retrieves the towel/laundry, unaware of Benny's adventure.
+
+I already have the ending video. DO NOT RECREATE IT.
+
+2. DO NOT IMMEDIATELY DELETE ANY EXISTING GAMEPLAY
+
+Preserve the existing implementations of Screens 02, 03, 09 and 10 on GitHub.
+
+Implement the new video-based route reversibly.
+
+Keep approved images untouched.
+
+Do not delete their original code until I have approved and tested the entire new video sequence.
+
+3. BEST METHOD FOR CREATING MY CINEMATICS
+
+First evaluate Google Flow's image-to-video and Frames-to-Video options using the exact approved reference images.
+
+Use the original approved frames, the official Benny character model and consistent scenery references.
+
+I want:
+
+- Same exact pink fluffy Benny.
+- Same purple-and-white knitted hat.
+- Same gold star and purple pom-pom.
+- Same pink-and-cyan flowing water.
+- Same purple metallic washing-machine world.
+- Same glossy gold architecture.
+- Same foam, bubbles and light effects.
+- Natural, fluid movement.
+- No character redesigns.
+- No unexplained changes in environment.
+- No portals or unrelated scenery.
+
+Use portrait 9:16 video compatible with the Android game.
+
+Suggested cinematic timing:
+
+Screen 02: approximately 4 seconds.
+Screen 03: approximately 4 seconds.
+Screen 09: approximately 6 seconds.
+Screen 10: approximately 4 seconds.
+
+These are flexible targets, not requirements to add unnecessary slow motion.
+
+Do not create long, unskippable cinematics.
+
+IMPORTANT CREDIT-SAVING TEST
+
+Before spending credits generating all four cinematic screens, create ONE short test using the approved Screen 03 reference and character.
+
+Check character accuracy, water quality, environment preservation and motion.
+
+Show me the test and explain any visible differences.
+
+If Google Flow cannot preserve the approved look, stop repeating unsuccessful generations.
+
+Use our already-installed Blender 5.3.0 and existing 3D characters/environment models to create deterministic animated cinematics instead.
+
+Do not buy another generator or spend paid credits without my permission.
+
+If you cannot directly operate Google Flow, prepare the exact input frames, reference upload instructions and Flow-ready production prompt for me.
+
+4. HANDLE HUD AND COINS CORRECTLY
+
+Do not rely on the AI video generator to reproduce exact text, coin counters or HUD numbers.
+
+Create the clean cinematic footage and use the existing game's HUD system to overlay the correct approved UI when needed.
+
+Ensure the counters correspond to the actual player's saved gameplay state.
+
+The cinematics are noninteractive. They must not pretend that players are collecting coins they didn't actually earn.
+
+Real coin collecting happens during playable Screens 04–08.
+
+5. THE ENTIRE EXPERIENCE MUST FEEL CONTINUOUS
+
+The flow is:
+
+Existing opening video → Screen 02 video → Screen 03 video → real 3D gameplay Screen 04 → Screen 05 → Screen 06 → Screen 07 → Screen 08 → Screen 09 video → Screen 10 video → existing ending video.
+
+Make the transitions seamless.
+
+Screen 03 must end with a visually convincing handoff to the beginning of playable Screen 04.
+
+Screen 08 must hand off naturally into the beginning of Screen 09's cinematic.
+
+Screen 10 must lead directly into my existing video of the girl collecting the towel.
+
+Benny must remain hidden from the girl until the correct point in my story.
+
+No black flashes, random teleportation, visual redesigns or abrupt camera changes.
+
+Allow players to skip the cinematics while retaining correct story and game state.
+
+6. KEEP THE PLAYABLE GAME LONG ENOUGH
+
+Because Screens 02–03 and 09–10 become videos, Screens 04–08 are the main playable portion.
+
+These sections must contain substantial, exciting gameplay, not merely five brief screenshots.
+
+Extend the real route through their existing approved environments without redesigning the approved compositions.
+
+Keep:
+
+- Fast but controllable swimming/sliding.
+- Natural turning and camera tilt.
+- Moving water and obstacle interactions.
+- Gold coin collection.
+- Real collisions and power-ups.
+- Character animation.
+- Continuity between levels.
+
+The approved reference camera checkpoints must match the original art, but gameplay must also look good while moving.
+
+7. VIDEO FILE HANDOFF
+
+Check "public/video/" and the existing game's cinematic playback code.
+
+Do not invent or silently replace the two original videos.
+
+Create a video manifest recording each clip, its source, expected duration, target Android format, predecessor, successor and playback trigger.
+
+If files need to be supplied or generated externally, clearly identify them.
+
+Import final approved video files into the Android game without altering their appearance.
+
+8. VISUAL ACCEPTANCE REQUIREMENTS
+
+For each of the four new video screens, compare the approved image against the corresponding cinematic keyframe.
+
+For each of the five playable screens, compare the approved image against the real game's approved-camera capture AND its moving frames.
+
+My goal is 9/10 or better visual similarity for every screen.
+
+Do not confuse RGB pixel-tolerance percentages with visual similarity scores.
+
+Keep all approved references byte-identical.
+
+Do not promote an incomplete result.
+
+9. SAVE AND REPORT
+
+Use the existing ten specialist definitions, Blender, Three.js and visual testing pipeline as needed.
+
+Keep the five-minute GitHub autosave running.
+
+First save a verified checkpoint of the present game.
+
+Then report:
+
+1. Confirmation of the nine-screen division.
+2. Which original videos are accessible and which files are missing.
+3. The safe video handoff/integration approach.
+4. The lowest-cost first Screen 03 cinematic test.
+5. Confirmation Screens 04–08 remain fully playable.
+6. Confirmation all approved images and Screen 05 improvements remain intact.
+
+THEN BEGIN IMPLEMENTATION.
+
+FINAL COMMAND: SCREENS 02, 03, 09 AND 10 ARE CINEMATIC VIDEOS. SCREENS 04, 05, 06, 07 AND 08 ARE REAL PLAYABLE 3D GAMEPLAY. SCREENS 01 AND 11 REMAIN MY EXISTING VIDEOS. DO NOT CHANGE THIS DIVISION WITHOUT ASKING ME.
+CLAUDIA — CORRECT THE STRUCTURAL DIFFERENCES BEFORE CONTINUING TEXTURE PROJECTION
+
+I've reviewed your Screen 07 comparison images.
+
+You said Screen 07 already matches my approved picture apart from surface details. I disagree. The actual game still has major differences in geometry, camera perspective, water path, foam-bank height and Benny's position.
+
+MY GOAL IS AT LEAST 9/10 VISUAL SIMILARITY TO MY EXACT APPROVED IMAGE, NOT JUST APPROVED COLORS PROJECTED OVER INCORRECT GEOMETRY.
+
+For Screen 07, follow this order:
+
+1. Match Benny's exact position, size and camera-relative proportions to the approved image.
+2. Match the tunnel perspective, gold-ring positions and vanishing point.
+3. Reconstruct the winding S-shaped water path so its curves and elevation match the approved artwork.
+4. Correct the foam-bank geometry instead of covering incorrect white walls with projected artwork.
+5. Align the actual 3D coin trail to the approved positions.
+6. THEN perform image projection, UV baking and texture refinements.
+
+Do not bake Benny, coins or HUD into the static environment textures. Keep them as real, interactive or animated objects.
+
+Your projection tests currently show object-removal artifacts and triangular texture problems. Diagnose and remove those defects before calling the reconstruction successful.
+
+For Screen 06, continue the environment specialist's work on its correct approved geometry. Do not replace the approved perforated tunnel with the existing generic rinse hall.
+
+Preserve the real 3D continuity from Screen 05 through 06 into 07.
+
+After the next meaningful correction, give me THREE separate full-size images:
+
+APPROVED SCREEN 07
+
+BEFORE SCREEN 07
+
+NEW REAL GAME SCREEN 07
+
+Also provide a moving-gameplay test to show that the scenery doesn't fall apart when Benny swims forward.
+
+Measure whole-screen similarity and individual geometry/camera differences. Do not declare Screen 07 close enough based only on surface textures.
+
+Keep the proven Screen 05 implementation protected and maintain verified five-minute GitHub backups.
+
+DO NOT REBUILD FINISHED WORK. FIX THE REAL STRUCTURAL DIFFERENCES FIRST, THEN APPLY THE APPROVED ARTWORK.
+
+### 🤖 Claude — 2026-11-17T11:07:14.371Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"match-cam-fit.mjs\" ; sleep 1; pgrep -af \"match-cam-fit|capture.mjs|proj05-move|gameplay-test\" | grep -v pgrep | head -5; echo \"--- git\"; git status --short | head -10; git log --oneline -3; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb", "description": "Stop leftover fit run and check git state"}`
+
+### 🧑 User — 2026-11-17T11:07:16.129Z
+
+> ↩︎ result: --- git
+> 33d0d19 autosave: Rainbow 2026-11-17 11:05 UTC
+> 066b2ff autosave: Rainbow 2026-11-17 11:00 UTC
+> 54ec72f Match all screens: audit of 02-10, ?matchNN=1 switches, ?match05=1
+> 33d0d19033209d654f0147483f58161713c8d5c2
+> 33d0d19033209d654f0147483f58161713c8d5c2	refs/heads/ccr-61131b9d-uj0oqb
+
+### 🤖 Claude — 2026-11-17T11:07:25.102Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK'; npx tsc --noEmit -p . 2>&1 | tail -2; echo TSC_DONE; S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && rm -rf $S/ck && mkdir -p $S/ck && node scripts/capture.mjs 04 05 06 07 08 --out=$S/ck >/dev/null 2>&1; git checkout qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef cmp(a,b):\n    A=np.asarray(Image.open(a).convert('RGB')).astype(int); B=np.asarray(Image.open(b).convert('RGB')).astype(int)\n    return int((np.abs(A-B).max(-1)>0).sum())\nS='$S'\n …[+289 chars]`
+
+### 🧑 User — 2026-11-17T11:08:41.101Z
+
+> ↩︎ result: 13
+> TSC_DONE
+> Updated 1 path from the index
+> 04 default vs audit capture: 0
+> 06 default vs audit capture: 0
+> 07 default vs audit capture: 0
+> 08 default vs audit capture: 0
+> 05 default vs session start: 0
+
+### 🤖 Claude — 2026-11-17T11:08:46.878Z
+
+> 🔧 **Bash** `{"command": "wc -l src/ui/cinematicVideo.ts; grep -n \"export function\\|export async function\\|export const\" src/ui/cinematicVideo.ts | head; grep -n \"playIntroVideo\\|startOutro\\|const startRide\\|function startRide\\|endingVideo\\|introVideo\\|playVideo\\|setStage(\\|'11'\\|stage('11')\\|mode = 'outro'\\|mode === 'intro'\" src/game/Game.ts | head -40", "description": "Map the existing video and ride-start code"}`
+
+### 🧑 User — 2026-11-17T11:08:46.948Z
+
+> ↩︎ result: 161 src/ui/cinematicVideo.ts
+> 26:export const COVER_MIN_KEEP = 0.78;
+> 28:export function chooseVideoFit(videoW: number, videoH: number, screenW: number, screenH: number): { fit: VideoFit; keep: number } {
+> 56:export async function findCinematic(name: CinematicName): Promise<string | null> {
+> 73:export function playCinematic(
+> 30:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> 139:    hud.setStage(id);
+> 147:    chamber: ['07', '11'],
+> 215:    if (t >= T.spin && st.stage === '01') { st.stage = '02'; hud.setStage('02'); }
+> 321:  const startRide = () => {
+> 327:    setStage('03');
+> 340:    st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
+> 367:    setStage(stageOf(st.s));
+> 394:    if (st.s >= course.stage('11').s0 - 0.01) startOutro();
+> 399:  const startOutro = () => {
+> 400:    st.mode = 'outro';
+> 402:    setStage('11');
+> 411:    const sEnd = course.stage('11').s0;
+> 461:  hud.setStage('03');
+> 467:    if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
+> 474:  const [introVideo, endingVideo] = await Promise.all([findCinematic('intro'), findCinematic('ending')]);
+> 475:  cinematic.ending = endingVideo; …[+454 chars]
+
+### 🤖 Claude — 2026-11-17T11:08:49.338Z
+
+> 🔧 **Bash** `{"command": "sed -n 50,100p src/ui/cinematicVideo.ts; sed -n 316,330p src/game/Game.ts; sed -n 396,412p src/game/Game.ts; sed -n 468,500p src/game/Game.ts", "description": "Read video lookup, ride start and outro code"}`
+
+### 🧑 User — 2026-11-17T11:08:49.388Z
+
+> ↩︎ result: setTimeout(() => finish(false), timeoutMs);
+>     v.src = url;
+>   });
+> }
+> 
+> /** Returns the URL of the cinematic if one is installed (and allowed), otherwise null. */
+> export async function findCinematic(name: CinematicName): Promise<string | null> {
+>   const q = new URLSearchParams(location.search);
+>   if (q.has('qa') || q.get('video') === '0') return null;
+>   const override = q.get(`${name}Video`);
+>   const candidates = override && override.startsWith('/') && !override.startsWith('//')
+>     ? [override]
+>     : [`./video/${name}.mp4`, `./video/${name}.webm`];
+>   for (const url of candidates) {
+>     if (await canLoad(url)) return url;
+>   }
+>   return null;
+> }
+> 
+> /**
+>  * Plays a cinematic full-screen over the game. `onEnding` fires as the cross-fade starts (release the
+>  * held 3D scene there), and the promise resolves once the overlay is gone. Tap to skip after 0.6 s.
+>  */
+> export function playCinematic(
+>   url: string,
+>   opts: { onEnding?: (r: CinematicResult) => void; fadeMs?: number; focus?: string } = {},
+> ): Promise<CinematicResult> {
+>   const fadeMs = opts.fadeMs ?? 700;
+>   const focus = opts.focus ?? new URLSearchParams(location.search).get('videoFocus') ?? '50% 50%';
+>   return new Promise((resolve) => { …[+3792 chars]
+
+### 🤖 Claude — 2026-11-17T11:09:17.855Z
+
+Here's the report you asked for before implementation. The checkpoint above is saved and verified.
+
+**1. The nine-screen division (confirmed, I won't change it without asking you)**
+
+| Screen | What it is |
+|---|---|
+| 01 | your existing opening video |
+| 02, 03 | new cinematic videos |
+| 04, 05, 06, 07, 08 | real playable 3D |
+| 09, 10 | new cinematic videos |
+| 11 | your existing ending video |
+
+**2. Videos: what's there and what's missing**
+
+None of the videos are in the repository. `public/video/` holds only a placeholder note. Missing:
+
+- `intro.mp4` (01) and `ending.mp4` (11): yours, please upload them.
+- `c02.mp4`, `c03.mp4`, `c09.mp4`, `c10.mp4`: still to be made.
+
+The game can already play `intro.mp4` and `ending.mp4` over the live 3D scene, with a cross-fade and tap-to-skip.
+
+**3. Safe hand-over plan (reversible)**
+
+- **Switch:** a new route switch, `?route=v2`, plus a video manifest. Your default game stays as it is.
+- **Order:** with the switch on, the clips play in story order. Gameplay starts at 04, and when Benny reaches the end of 08, clips 09 and 10 play, then your ending video.
+- **Seamless joins:** while a clip plays, the live 3D game waits underneath, already at the exact frame the clip must end on (the start of 04, or the end of 08). Making each clip's last frame a real game capture lets the fade land on the same picture.
+- **Fallback:** a missing clip plays the existing real-time version of that part, so nothing breaks.
+- **Old code kept:** the existing 02, 03, 09 and 10 code is not deleted.
+- **HUD:** shown above the clips with your real coin and heart counts, never invented numbers.
+- **Skipping:** a tap skips a clip.
+
+**4. The cheapest first test (Screen 03 only)**
+
+I can't operate Google Flow myself (no connection to it here). So I'll prepare one Frames-to-Video job for you: first frame = your approved 03, last frame = the real game's first frame of 04, plus the exact prompt. One ~4-second generation tells us whether Flow keeps Benny and the water right. If it doesn't, we switch to deterministic Blender/engine renders and spend no more Flow credits.
+
+**5. 04–08 stay fully playable 3D**
+
+Steering, collisions, coins, water and camera are all kept, and every change sits behind a switch with the 8-point gameplay test.
+
+**6. Protected work**
+
+All 13 approved pictures are byte-identical, Screen 05's work is untouched, and `?match05=1` is pixel-identical to its full switch list.
+
+Starting implementation, Screen 07 structure first, in your order. Step 1 is Benny's position and size via the camera. I'll re-run the camera search I started earlier, with a smaller grid so it finishes quickly.
+
+### 🤖 Claude — 2026-11-17T11:09:20.657Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && time timeout 900 node scripts/match-cam-fit.mjs --id=07 --target=200,790,640,1200 --q=match07=1 --out=$S/fit07 --grid='{\"back\":[4.5,5.5,6.5],\"up\":[2.8,3.6,4.4],\"lookUp\":[-2,-0.5,1],\"ahead\":[12,18],\"latFollow\":[0.9]}' 2>&1 | tail -6", "description": "Search camera so Benny matches approved 07", "timeout": 960000}`
+
