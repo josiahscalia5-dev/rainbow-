@@ -688,8 +688,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13094,
-   "sha256": "24112889d7bc9e5e42aa5c8474daa84bde4146e15e83e5f33e88466a82561543"
+   "bytes": 13095,
+   "sha256": "8502ecdb8b97fb106c1d822163d2680d24c40569b7b4a166a006cdeff8acc96d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1238,13 +1238,13 @@
   },
   {
    "path": "qa/match/05/NOTES.md",
-   "bytes": 4873,
-   "sha256": "81ad09947d4bd9766e9873d18002101b2dfee05b0a49df08bc586c9c7aa5124e"
+   "bytes": 7620,
+   "sha256": "1cae2f0f6f5577138d8c2081899a47f251931ee32710b8cef71522865c5ebca8"
   },
   {
    "path": "qa/match/05/SHARED_CHANGES.md",
-   "bytes": 559,
-   "sha256": "f5705ada6666578b3225c43a01f2d44ac94391ff611980c7c505ffbf6ffa7739"
+   "bytes": 948,
+   "sha256": "b2bd848de79a0017ebd6c8aabe2955bcaaf64de0f010e806c44ff13652dde854"
   },
   {
    "path": "qa/match/05/STATUS.md",
@@ -1262,14 +1262,19 @@
    "sha256": "9beea70a40b9ea036cedeaec3dd2901e7499f3025baf9f35cc9daa40275e1472"
   },
   {
+   "path": "qa/match/05/gameplay_m2_default.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
    "path": "qa/match/05/gameplay_m2_match05_1.json",
-   "bytes": 14657,
-   "sha256": "a9856bd47c10315112fa4ce2536e4ecf49e8e2a268e42370f18cb53ce3d5821e"
+   "bytes": 14655,
+   "sha256": "8a80232f7fd9a7dfd543f8e40e55293f1dcc90d370268683234817d8629744de"
   },
   {
    "path": "qa/match/05/gameplay_m2_match05_1_tgtvis05_1.json",
-   "bytes": 14668,
-   "sha256": "fce743adfd06f94626d95c1bcd67e1f29d60bf60f30822f7e360d65a57740a3a"
+   "bytes": 14666,
+   "sha256": "1770244a1d19f1a0720b901748fdb52b6036fd473ac68ea9c2a778e821564e68"
   },
   {
    "path": "qa/match/05/gameplay_match05_1.json",
@@ -5463,8 +5468,8 @@
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",
-   "bytes": 1200,
-   "sha256": "e4c60f4a6995e84546b72c3d118d719e74514bda92801ce1a0339b3d7dfd3d6a"
+   "bytes": 1208,
+   "sha256": "069511f3a872376c6bbb728d611a4cfa053d526a092af8b82f06a266d3d37465"
   },
   {
    "path": "qa/pilot05/proj/probe/camera_proj05_session.json",
@@ -11513,8 +11518,8 @@
   },
   {
    "path": "tools/match05/make_target_vis.py",
-   "bytes": 8716,
-   "sha256": "272b36d60633737b582da5e328646bd4b2c8a59b0cf9f75d842b18b4ef1faa2a"
+   "bytes": 10006,
+   "sha256": "edd0bbcc4111e422087ea1f5a869c8a41e90c17ef5951005d55c0f3e5b708528"
   },
   {
    "path": "tools/match05/metrics.py",
