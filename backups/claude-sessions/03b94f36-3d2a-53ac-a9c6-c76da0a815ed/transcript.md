@@ -7162,3 +7162,71 @@ First, a read-only look at what the Screen 05 Benny work on `ccr-b0757dec-dj6l1o
 
 > 🔧 **Bash** `{"command": "echo \"repo $(git remote get-url origin) branch $(git branch --show-current)\"; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Screen 08 Benny round: placed on the painted Benny (fur centre 432 vs 428), rounder body, stronger approved splash; Benny+splash 66.2%, scenery 97.4%; APK 17b; handoff + install guide\" 2>&1 | grep -E '\"result\"|\"commit\"'; sleep 2; [ \"$(git status --porcelain | wc -l)\" = 0 ] || timeout 600 python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | grep -E '\"result\"|\"commit\"'; H=$(git rev-parse HEAD); R=$ …[+714 chars]`
 
+### 🧑 User — 2026-11-17T14:32:53.680Z
+
+> ↩︎ result: repo https://github.com/josiahscalia5-dev/rainbow- branch ccr-9c4a8ad6-xovgsx
+>   "result": "committed+pushed",
+>   "commit": "2246c3415e6d542f770ccda7fe209f754f5f1c94",
+> HEAD 2246c3415e6d542f770ccda7fe209f754f5f1c94
+> GH   2246c3415e6d542f770ccda7fe209f754f5f1c94
+> MATCH
+> uncommitted 0 | refs 13/13 | agents 10 | LFS missing 0 | key pieces 0
+> 1
+> AUTOSAVE OK | branch ccr-9c4a8ad6-xovgsx | scheduler daemon | last verified backup 2026-11-17T14:32:33+00:00 (0.3 min ago) | local 2246c34 remote 2246c34 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T14:32:55.612Z
+
+Sending the updated Screen 08 at full size:
+
+### 🤖 Claude — 2026-11-17T14:32:56.913Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_NEW_match08.png"], "caption": "Screen 08 now (?match08=1): Benny placed on your painted Benny, rounder body, your white splash ring; scenery unchanged at 97.4 %", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T14:32:57.695Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_NEW_match08.png → file_uuid: a53d53ca-734c-464c-8bd9-7f4b150eac7c
+
+### 🤖 Claude — 2026-11-17T14:33:10.894Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Benny is closer to your approved Screen 08, but not finished. Above is the updated screen at full size.
+
+**Benny this round**
+- **Position:** his fur centre is now at 432 vs 428 in your picture, the same width, and the top edge within 1 px. My earlier note was wrong: he was about 23–35 px too far **left**, not right; I measured it this time.
+- **Shape:** a rounder body, the beanie kept at your proportions, white-and-purple stripes, and your painted white splash ring, now stronger.
+- **Score:** the Benny-and-splash area improved from 64.5 % to **66.2 %** similar.
+- **Still a real 3D character:** I only adjusted his look, so he still swims and steers, and coin pickups and the camera behave exactly as before.
+
+**Still different:** your painting's soft, shaded fur, the beanie's visible knit stitches and ribbed cuff, the pom-pom's yarn, and the star's shape.
+
+**The Screen 05 Benny work** on `ccr-b0757dec-dj6l1o` is the right tool for that. It bakes approved-picture colours onto Benny's own surfaces, so they stay attached while he moves, and it gives him finer fur. I checked it read-only and didn't bring it over: it changes Benny on every screen and touches files that changed here too, so it needs its own careful porting and testing round. The exact step-by-step plan, without merging, is in `qa/match/08/NOTES.md` under "BENNY ROUND → NEXT". Screen 08 stays **not approved** until you say so.
+
+**Kept as it was**
+- Scenery still at **97.4 %**; the whole screen is now **83.4 %**.
+- The camera, 3D geometry and river are unchanged; no Marble credits spent.
+- All **91 coins (2,240)**, same as the normal game; gameplay passes 8/8.
+- The normal game is unchanged, pixel for pixel.
+
+**Android:** a new APK with this version, `builds/rainbow-debug-match08-2026-11-17b.apk` (21.7 MB), is backed up; the previous APK is kept too. **It has not been tested on a phone.**
+1. On GitHub, open that file on your branch and tap **Download**.
+2. On your phone, allow "Install unknown apps" for your browser or files app, then open the APK and install it.
+3. Play through to 08 · FINAL SPIN CHAMBER and check the look, the coins and the smoothness, then tell me how it went.
+
+These steps are also in `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` §11.
+
+**Backup**
+- **Repository:** https://github.com/josiahscalia5-dev/rainbow-, branch `ccr-9c4a8ad6-xovgsx`.
+- **Latest commit:** `2246c3415e6d542f770ccda7fe209f754f5f1c94`, the same on GitHub and locally, nothing uncommitted.
+- **Contents:** your 13 approved images unchanged, 10 agents, every large file on GitHub's LFS storage, and no API keys anywhere.
+- **Handoff:** updated with Benny's status, the porting plan and the phone test steps. It's ready to paste into your other account.
+
+**Next:**
+1. You try the APK on your phone.
+2. The next session ports the Screen 05 Benny detail into a Screen 08 version.
+3. You approve Screen 08.
+4. Screens 04, 05, 06 and 07, one at a time.
+
+The Google Flow opening and ending, and all 13 approved images, remain in the plan.
+
