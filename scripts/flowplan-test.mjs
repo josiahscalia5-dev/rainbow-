@@ -7,6 +7,7 @@
 //      real-time 11 victory frame (Benny hidden, FINAL SPIN COMPLETE) follows.
 //   C. flowplan WITHOUT videos: the real-time 01 opening plays exactly as before (fallback scenes preserved).
 //   D. default game with an intro video and NO flowplan: unchanged (held at 01, continues into 02/03).
+//   E. both videos + flowplan, full coin-seeking run 04–08: exactly 91 coins / 2,240 at the victory (account 4).
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
@@ -80,11 +81,41 @@ try {
   const duringD = await page.evaluate(() => window.__rainbow.state());
   out.D = { overlayShown: shownD, during: duringD, pass: shownD && duringD.mode === 'intro' && duringD.paused === true };
   await page.close();
+
+  // ---- E. full run with BOTH videos + flowplan (account 4, 2026-11-17): intro -> held on 04 -> real coin-seeking ride
+  //      04..08 (same steering rule as gameplay-test.mjs) -> ending video -> victory. Must end at exactly 91 / 2,240.
+  //      (B's final number is not a run total: goto('08') shows the approved HUD value 2,040 and B rides straight.)
+  page = await open(`&flowplan=1&introVideo=/${clip}&endingVideo=/${clip}`, 'E');
+  await page.waitForSelector('[data-cinematic]', { timeout: 15000 });
+  const introE = await page.evaluate(() => window.__rainbow.state());
+  await page.waitForSelector('[data-cinematic]', { state: 'detached', timeout: 30000 });
+  await page.evaluate(() => window.__rainbow.run(false));
+  const driveE = await page.evaluate(() => {
+    const a = window.__rainbow, dt = 1 / 60;
+    for (let i = 0; i < 60 * 120; i++) {
+      const st = a.state();
+      if (st.mode !== 'ride') return { steps: i, state: st };
+      const next = a.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
+      a.setSteer(Math.max(-1, Math.min(1, ((next ? next.lat : 0) - st.lat) * 0.9)));
+      a.step(1, dt);
+    }
+    return null;
+  });
+  const shownE = await page.waitForSelector('[data-cinematic]', { timeout: 15000 }).then(() => true).catch(() => false);
+  await page.waitForSelector('[data-cinematic]', { state: 'detached', timeout: 30000 }).catch(() => {});
+  await page.evaluate(() => { window.__rainbow.setSteer(null); window.__rainbow.run(true); });
+  const endE = await page.waitForFunction(() => window.__rainbow.state().mode === 'end', null, { timeout: 120000 }).then(() => true).catch(() => false);
+  const finE = await page.evaluate(() => window.__rainbow.state());
+  const takenE = await page.evaluate(() => window.__rainbow.coinDefs().filter((d) => d.taken).length);
+  out.E = { introHeld: introE, handOver: driveE, endingShown: shownE, reachedVictory: endE, final: finE, coinsTaken: takenE,
+    pass: introE.stage === '04' && introE.paused === true && !!driveE && driveE.state.stage === '11' && shownE && endE
+      && finE.coins === 2240 && takenE === 91 && finE.bennyVisible === false };
+  await page.close();
 } finally {
-  out.pass = !!(out.A?.pass && out.B?.pass && out.C?.pass && out.D?.pass && out.errors.length === 0);
+  out.pass = !!(out.A?.pass && out.B?.pass && out.C?.pass && out.D?.pass && out.E?.pass && out.errors.length === 0);
   writeFileSync('qa/flowplan/flowplan_test.json', JSON.stringify(out, null, 2));
   await browser.close();
   await vite.close();
 }
-console.log(JSON.stringify({ pass: out.pass, A: out.A?.pass, B: out.B?.pass, C: out.C?.pass, D: out.D?.pass, errors: out.errors.slice(0, 5) }));
+console.log(JSON.stringify({ pass: out.pass, A: out.A?.pass, B: out.B?.pass, C: out.C?.pass, D: out.D?.pass, E: out.E?.pass, finalE: out.E?.final?.coins, errors: out.errors.slice(0, 5) }));
 process.exit(out.pass ? 0 : 1);

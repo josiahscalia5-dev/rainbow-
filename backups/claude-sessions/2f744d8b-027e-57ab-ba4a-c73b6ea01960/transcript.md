@@ -785,3 +785,328 @@ I'll write a throwaway end-to-end probe (in the scratchpad, not the repo): intro
 
 > 🔧 **Bash** `{"command": "timeout 600 node /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/flowplan_e2e_probe.mjs /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/flowplan_e2e.json 2>&1 | tail -5", "description": "Run end-to-end flowplan coin probe", "timeout": 660000}`
 
+### 🧑 User — 2026-11-17T18:28:44.888Z
+
+> ↩︎ result: {"pass":true,"info":{"total":91,"perStage":{"10":5,"03":9,"04":8,"05":10,"06":18,"07":24,"08":7,"09":10},"before08goto":69,"refCoins08":2040},"introHeld":{"mode":"ride","stage":"04","s":77.413,"lat":0,"coins":1420,"hearts":5,"paused":true,"bennyY":-21.872,"bennyVisible":true,"cam":[0.72,-14.48,-15.82]},"afterDriveCoins":2240,"untaken":[],"final":2240,"taken":91,"errors":[]}
+
+### 🤖 Claude — 2026-11-17T18:29:03.668Z
+
+> 🔧 **Bash** `{"command": "ls tools/qa/ 2>/dev/null; git grep -l -i \"0 px\\|zero_px\\|proofs_0px\\|pixel-identical\" -- 'scripts/*.mjs' 'tools/**/*.mjs' 'tools/**/*.py' | head; git log --format='%h %ci' -1 52a941ff^", "description": "Find existing pixel-identity proof tooling"}`
+
+### 🧑 User — 2026-11-17T18:29:03.729Z
+
+> ↩︎ result: axis05.ts
+> diff05.py
+> gold05.py
+> proj05_align.py
+> proj05_footprint.py
+> ring_fit05.py
+> screen_match.py
+> water05_grain.py
+> c03a0f72 2026-11-17 18:01:23 +0000
+
+### 🤖 Claude — 2026-11-17T18:29:05.507Z
+
+> 🔧 **Bash** `{"command": "git grep -l -E \"zeroPx|0px|identical\" -- scripts tools | head -12; sed -n 1,25p scripts/capture.mjs | head -30", "description": "Search for capture/identity scripts"}`
+
+### 🧑 User — 2026-11-17T18:29:05.557Z
+
+> ↩︎ result: scripts/claude-bootstrap.sh
+> scripts/landmarks05.py
+> tools/make_env_geometry_ref.py
+> #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04' …[+492 chars]
+
+### 🤖 Claude — 2026-11-17T18:29:27.812Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit && git worktree add --detach $S/wt_pre c03a0f72 >/dev/null 2>&1 && git worktree add --detach $S/wt_now HEAD >/dev/null 2>&1 && for w in wt_pre wt_now; do ln -s /home/user/rainbow-/node_modules $S/$w/node_modules; done && ls $S/wt_pre/references | head -2 && file $S/wt_now/references/08_final_spin_chamber.png | cut -c1-120", "description": "Create two temporary worktrees for pixel comparison"}`
+
+### 🧑 User — 2026-11-17T18:29:42.357Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/wt_now/references/08_final_spin_
+
+### 🤖 Claude — 2026-11-17T18:29:45.419Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit; file $S/wt_now/references/08_final_spin_chamber.png | grep -o \"PNG image[^,]*, [0-9]* x [0-9]*\"; git -C $S/wt_now lfs ls-files | head -3; head -c 60 $S/wt_now/assets/models/*.glb 2>/dev/null | head -c 200 | tr -c '[:print:]' '.'", "description": "Confirm worktree has real binary files, not LFS pointers"}`
+
+### 🧑 User — 2026-11-17T18:29:45.939Z
+
+> ↩︎ result: 40633fdd02 * assets/models/benny.glb
+> f2cd3abeaa * assets/models/lids05.glb
+> fa846773af * assets/models/rainbow_girl.glb
+> ==> /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/wt_now/assets/models/benny.glb <==.glTF.....1......JSON{"asset":{"version":"2.0","generator":"T.==> /tmp/cla
+
+### 🤖 Claude — 2026-11-17T18:29:47.698Z
+
+Real binaries in both worktrees. Running both 11-screen captures in the background (sequential, to keep CPU sane).
+
+### 🤖 Claude — 2026-11-17T18:29:52.601Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit; (cd $S/wt_pre && node scripts/capture.mjs --out=$S/cap_pre > $S/cap_pre.log 2>&1); (cd $S/wt_now && node scripts/capture.mjs --out=$S/cap_now > $S/cap_now.log 2>&1); python3 -I -c \"\nimport sys,glob,os\nfrom PIL import Image, ImageChops\nS=sys.argv[1]\nfor f in sorted(glob.glob(S+'/cap_pre/*.png')):\n    g=S+'/cap_now/'+os.path.basename(f)\n    if not os.path.exists(g): print(os.path.basename(f),'MISSING in now'); continue\n    a=Image.open(f).convert('RGB'); b=Image.open(g).convert('RGB')\ …[+414 chars]`
+
+### 🧑 User — 2026-11-17T18:29:52.635Z
+
+> ↩︎ result: Command running in background with ID: bjmlpobhc. Output is being written to: /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/tasks/bjmlpobhc.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T18:29:55.156Z
+
+> 🔧 **Bash** `{"command": "git fetch origin --prune -q 2>&1 | tail -2; date -u +%H:%M; for b in ccr-c0235034-ks6sx3 claude/rainbow-s04-match-c3 claude/rainbow-s05-match-c3 claude/rainbow-s06-match-c3 claude/rainbow-s07-match-c3 claude/rainbow-s08-benny08-bake-c3 claude/rainbow-s08-camclear-c3; do echo \"$b $(git log -1 --format='%h %cd' --date=format:%H:%M origin/$b)\"; done; echo; git for-each-ref --sort=-committerdate --format='%(committerdate:format:%H:%M) %(refname:short)' refs/remotes/origin | head -12", "description": "Re-fetch to detect old-account sessions still writing"}`
+
+### 🧑 User — 2026-11-17T18:29:55.803Z
+
+> ↩︎ result: 18:29
+> ccr-c0235034-ks6sx3 ed23f9e5 18:11
+> claude/rainbow-s04-match-c3 d1e422fa 17:57
+> claude/rainbow-s05-match-c3 ebaf6cac 17:59
+> claude/rainbow-s06-match-c3 c088718b 17:58
+> claude/rainbow-s07-match-c3 72fb6129 18:13
+> claude/rainbow-s08-benny08-bake-c3 c64ff28b 18:10
+> claude/rainbow-s08-camclear-c3 c03f391c 18:03
+> 
+> 18:28 origin/ccr-067047f0-up5d1m
+> 18:13 origin/claude/rainbow-s07-match-c3
+> 18:11 origin/ccr-c0235034-ks6sx3
+> 18:10 origin/claude/rainbow-s08-benny08-bake-c3
+> 18:03 origin/claude/rainbow-s08-camclear-c3
+> 17:59 origin/claude/rainbow-s05-match-c3
+> 17:58 origin/claude/rainbow-s06-match-c3
+> 17:57 origin/claude/rainbow-s04-match-c3
+> 17:49 origin/ccr-9c4a8ad6-xovgsx
+> 17:15 origin/ccr-5495e9c4-g0apvl
+> 17:12 origin/claude/rainbow-s08-benny08-bake-c2
+> 17:07 origin/claude/rainbow-s07-match-c2
+
+### 🤖 Claude — 2026-11-17T18:30:00.527Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s08-benny08-bake-c3:qa/match/08/benny08/STATUS.md | grep -i -E -A3 \"next|unfinished|measure|variant|r2|r3b|r4\" | head -40; echo ======CAM; git show origin/claude/rainbow-s08-camclear-c3:qa/gameplay_video/STATUS.md | grep -i -E -A3 \"next|unfinished|veil|remain|world-up|flip\" | head -30", "description": "Read Benny and camera STATUS next-task notes"}`
+
+### 🧑 User — 2026-11-17T18:30:00.580Z
+
+> ↩︎ result: * **Latest visual measurements:** Benny+splash ≤20: pre-bake 49.8 → bake 57.2 → r2 65.7 → r3b 65.3 → r4 65.4 %; scenery 97.3 % unchanged; whole 85.4 %
+> * **Unfinished problems:** painted large soft fur clumps (needs a new fur bake/strand model); pom yarn tufts; proportion changes all measured worse
+> * **Android:** `builds/rainbow-debug-08benny-2026-11-17-r4.apk (round 4; r3/r3b APKs kept)` (`VITE_RAINBOW_Q05="match08=1"`, Git LFS) — NOT phone-tested (no device in the cloud)
+> * **Test results:** tsc clean; default 0 px; `bake08=0&b08r2=0` = previous match08 0 px; gameplay 8/8 + 91 coins / 2,240 default and match08; motion OK; 04–07 only Benny changes
+> * **Next task:** pom-pom look, fur edge softness — waiting for the lead
+> * **Approval status:** under review
+> ======CAM
+>   - Round 3: **03→04 drain drop** — the falling chute water no longer covers the whole screen. Before, a striped water sheet hid Benny 60–100 % for ~0.6 s. Now Benny stays in the frame all the way down: the worst moment is a see-through water veil over up to half of him for ~0.4 s, then a clear view down the 04 gold tunnel.
+> * **Latest visual measurements** (share of Benny hidden, probe `tools/camclear/probe.mjs`):
+>   - 03→04 …[+895 chars]
+
+### 🤖 Claude — 2026-11-17T18:30:21.316Z
+
+> 🔧 **mcp__claude-code-remote__get_session** `{}`
+
+### 🤖 Claude — 2026-11-17T18:30:21.330Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/FLOW_VIDEO.md"}`
+
+### 🧑 User — 2026-11-17T18:30:21.363Z
+
+> ↩︎ result: 1	# Google Flow opening / ending videos
+> 2	
+> 3	## The user's story and rules (2026-11-17 — authoritative)
+> 4	* **Opening (Google Flow video):** a human girl does her laundry; Benny (pink, fluffy) is secretly hidden inside a
+> 5	  purple towel. She carries the laundry to the washing machine and puts the clothes and the towel with Benny inside,
+> 6	  not knowing he is there, closes the washer and walks away. Benny stays inside → the magical washing-machine adventure.
+> 7	* **Ending (Google Flow video):** after his adventure Benny must get back into the laundry and hide inside the towel
+> 8	  before the girl notices he was missing. She comes back and grabs the towel, unaware of his adventure. The ending
+> 9	  must connect naturally to the beginning (same girl, towel, laundry room, washer).
+> 10	* Rules: both made with Google Flow (by the user — Claude never generates videos or spends video credits); keep the
+> 11	  approved characters, colours, laundry-room scenery and style; **screens 04–08 stay real playable 3D Android
+> 12	  gameplay**; never rebuild the opening/ending as playable Marble or Three.js environments; the videos must hand over
+> 13	  naturally into and out of the playable game (below); do n …[+3546 chars]
+
+### 🧑 User — 2026-11-17T18:30:21.517Z
+
+> ↩︎ result: {"ccr":{"id":"session_01Kbt6BTTnCGMUULjZoCLDTo", "title":"Rainbow game restoration", "session_status":"SESSION_STATUS_RUNNING", "created_at":"2026-11-17T18:18:50.314460Z", "updated_at":"2026-11-17T18:26:57.958380Z", "environment_id":"env_01T5A1uKKLDH8CRFjNscRtow", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"refs/heads/ccr-c0235034-ks6sx3"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["ccr-067047f0-up5d1m"]}}}], "model":"claude-opus-5-5", "effort_level":"ultracode"}, "origin":"android", "connection_status":"connected", "tags":["config:agent-config-recorded", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "task_summary":"recovery audit: refs OK, World Labs key 401; reading STATUS", "external_metadata":{"autocompact_state":{"effective_window":980000, "enabled":true, "enforced":true, "source":"model-default", "threshold":901600}, "container_cc_version":"2.1.326", "context_usage":{"max_tokens":1000000, "used_tokens":0}, "cross_session_inbound":"available", "current_branches":{"":"ccr-067047f0-up5d1m"}, "last_served_model":"claude-opus-5-5", "rate_limit_ …[+1108 chars]
+
+### 🤖 Claude — 2026-11-17T18:30:25.430Z
+
+Now updating `docs/FLOW_VIDEO.md` to your current `01–03 / 04–08 / 09–11` split, keeping the default-build fallback description accurate.
+
+### 🤖 Claude — 2026-11-17T18:30:38.787Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/FLOW_VIDEO.md", "old_string": "The game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D\ngame without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.\n\n## Where to put the files\n\n| File | Plays | Hand-off |\n|---|---|---|\n| `public/video/intro.mp4` (or `.webm`) | at launch and on Replay, instead of the real-time 01 | the live 3D intro is held at the \"girl walks away\" moment (`T.cp01`) under the video, then revealed by a 0.7 s cross-fade and con …[+3397 chars]`
+
+### 🧑 User — 2026-11-17T18:30:38.870Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/FLOW_VIDEO.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T18:30:45.389Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/FLOW_VIDEO.md", "old_string": "## Status (2026-11-15, account 3)\n\nNo Flow video is in the repository yet: `public/video/` holds only a placeholder note, so the game plays the\nreal-time 3D 01 opening. When the MP4 is ready, upload it and Claude will copy it to `public/video/intro.mp4`,\nrun `npm run test:cinematic`, rebuild the APK and push. No code change is needed.", "new_string": "## Status (2026-11-17 ~18:30 UTC, account 4)\n\nNo Flow video is in the repository yet: `public/video/` holds only a placeholder note, so every build …[+1276 chars]`
+
+### 🧑 User — 2026-11-17T18:30:45.467Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/FLOW_VIDEO.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T18:30:46.413Z
+
+Now adding check E (exact end-to-end 2,240) to the saved flowplan test so the discrepancy can't hide again.
+
+### 🤖 Claude — 2026-11-17T18:30:54.868Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/flowplan-test.mjs", "old_string": "  out.D = { overlayShown: shownD, during: duringD, pass: shownD && duringD.mode === 'intro' && duringD.paused === true };\n  await page.close();\n} finally {\n  out.pass = !!(out.A?.pass && out.B?.pass && out.C?.pass && out.D?.pass && out.errors.length === 0);", "new_string": "  out.D = { overlayShown: shownD, during: duringD, pass: shownD && duringD.mode === 'intro' && duringD.paused === true };\n  await page.close();\n\n  // ---- E. full run with BOTH videos + flowplan (account 4, 2026-11-17): …[+2253 chars]`
+
+### 🧑 User — 2026-11-17T18:30:54.925Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/flowplan-test.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T18:30:56.767Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/flowplan-test.mjs", "old_string": "console.log(JSON.stringify({ pass: out.pass, A: out.A?.pass, B: out.B?.pass, C: out.C?.pass, D: out.D?.pass, errors: out.errors.slice(0, 5) }));", "new_string": "console.log(JSON.stringify({ pass: out.pass, A: out.A?.pass, B: out.B?.pass, C: out.C?.pass, D: out.D?.pass, E: out.E?.pass, finalE: out.E?.final?.coins, errors: out.errors.slice(0, 5) }));"}`
+
+### 🧑 User — 2026-11-17T18:30:56.810Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/flowplan-test.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T18:30:58.420Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/flowplan-test.mjs", "old_string": "//   D. default game with an intro video and NO flowplan: unchanged (held at 01, continues into 02/03).", "new_string": "//   D. default game with an intro video and NO flowplan: unchanged (held at 01, continues into 02/03).\n//   E. both videos + flowplan, full coin-seeking run 04–08: exactly 91 coins / 2,240 at the victory (account 4)."}`
+
+### 🧑 User — 2026-11-17T18:30:58.485Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/flowplan-test.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T18:30:59.593Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T18:30:59.610Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-17T18:30:59.993Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T18:31:00.005Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-17T18:31:03.337Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/pixel_compare.txt 2>/dev/null; tail -3 /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/cap_pre.log /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/cap_now.log 2>/dev/null; ls /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/cap_pre /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/cap_now 2>/dev/null | tr '\\n' ' '", "description": "Che …[+38 chars]`
+
+### 🧑 User — 2026-11-17T18:31:03.387Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/cap_pre: 01.png 02.png 03.png 04.png
+
+### 🤖 Claude — 2026-11-17T18:31:35.323Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/COMMON_RULES.md", "content": "# RAINBOW — common rules, round 4 (account 4, 2026-11-17 ~18:35 UTC)\n\n**The round-3 and round-2 rules stay binding word for word:** `docs/briefs/2026-11-17-r3/COMMON_RULES.md` and\n`docs/briefs/2026-11-17-r2/COMMON_RULES.md` (startup, git, visual goal, protected behaviour, money and secrets,\nreporting, saving, pace). Read both first. Only these points change:\n\n## What changed\n* **Lead coordinator (\"Lead Claudia\") = session `session_01Kbt6BTTnCGMUULjZoCLDTo`** (\"Rainbow game restoration\",\n  acc …[+3812 chars]`
+
+### 🧑 User — 2026-11-17T18:31:35.357Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/COMMON_RULES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T18:31:48.529Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_BENNY.md", "content": "You are the SCREEN 08 BENNY SPECIALIST (benny-character-artist role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work or earlier Benny variants. Lead = session `session_01Kbt6BTTnCGMUULjZoCLDTo` (branch `ccr-067047f0-up5d1m`). Screen 08 is my highest priority.\n\nYour branch: **`claude/rainbow-s08-benny08-bake-c4`**, continued from `claude/rainbow-s08-benny08-bake-c3` @ `c64ff28b` (round 4 done: `71aa6d85`, `8e40c541`). Push ONLY your ` …[+2758 chars]`
+
+### 🧑 User — 2026-11-17T18:31:48.576Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_BENNY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T18:32:01.826Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_CAMERA.md", "content": "You are the SCREEN 08 CAMERA SPECIALIST (path-camera-transition-engineer role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead = session `session_01Kbt6BTTnCGMUULjZoCLDTo` (branch `ccr-067047f0-up5d1m`). Screen 08 is my highest priority.\n\nYour branch: **`claude/rainbow-s08-camclear-c4`**, continued from `claude/rainbow-s08-camclear-c3` @ `c03f391c` (round 3 done: `491c2d56`, `6282ce70`, `0f12867b`). Push ONLY your `-c4` branch …[+2980 chars]`
+
+### 🧑 User — 2026-11-17T18:32:01.871Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/S08_CAMERA.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T18:32:14.333Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r4/S07.md", "content": "You are the SCREEN 07 workstream agent (07 · DIVE THE WASHER TUBE) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead = session `session_01Kbt6BTTnCGMUULjZoCLDTo` (branch `ccr-067047f0-up5d1m`).\n\nYour branch: **`claude/rainbow-s07-match-c4`**, continued from `claude/rainbow-s07-match-c3` @ `72fb6129` (line A). Push ONLY your `-c4` branch.\n\nFIRST read: `docs/briefs/2026-11-17-r4/COMMON_RULES.md`, then the r3 and r2 COMMON_RULES and `do …[+2751 chars]`
+
+### 🧑 User — 2026-11-17T18:32:14.374Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r4/S07.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T18:32:16.820Z
+
+Now creating the six `-c4` continuation branches on GitHub, each pointing at its exact newest `-c3` commit (new refs only — nothing on `-c3` is touched).
+
+### 🤖 Claude — 2026-11-17T18:32:22.564Z
+
+> 🔧 **Bash** `{"command": "git fetch origin -q && for p in \"s04-match d1e422faff67a37f837566301fb8abff0bac98db\" \"s05-match ebaf6cac71812ad5c00a9088ba48b6febdb42b2b\" \"s06-match c088718bb9e3374583238f4ee93f25bdee600065\" \"s07-match 72fb6129f9bb59dbe07f0ed9387ce312ae618a11\" \"s08-benny08-bake c64ff28bcc8a14c41f661c8aa9690b47f1b7a903\" \"s08-camclear c03f391cee241eb87641ceb2de47c1050382e965\"; do set -- $p; old=claude/rainbow-$1-c3; new=claude/rainbow-$1-c4; tip=$(git rev-parse origin/$old); [ \"$tip\" != \"$2\" ] && { echo \"TIP MOVED on $old: $tip (expected $2) - skipping\"; continue; }; git ls-remote  …[+323 chars]`
+
+### 🧑 User — 2026-11-17T18:32:38.850Z
+
+> ↩︎ result: remote: 
+> claude/rainbow-s04-match-c4 -> d1e422faff67 (from claude/rainbow-s04-match-c3 d1e422faff67)
+> remote: 
+> claude/rainbow-s05-match-c4 -> ebaf6cac7181 (from claude/rainbow-s05-match-c3 ebaf6cac7181)
+> remote: 
+> claude/rainbow-s06-match-c4 -> c088718bb9e3 (from claude/rainbow-s06-match-c3 c088718bb9e3)
+> remote: 
+> claude/rainbow-s07-match-c4 -> 72fb6129f9bb (from claude/rainbow-s07-match-c3 72fb6129f9bb)
+> remote: 
+> claude/rainbow-s08-benny08-bake-c4 -> c64ff28bcc8a (from claude/rainbow-s08-benny08-bake-c3 c64ff28bcc8a)
+> remote: 
+> claude/rainbow-s08-camclear-c4 -> c03f391cee24 (from claude/rainbow-s08-camclear-c3 c03f391cee24)
+
+### 🤖 Claude — 2026-11-17T18:32:42.273Z
+
+All six `-c4` branches created, each byte-for-byte at its `-c3` tip. Checking the pixel-identity capture.
+
+### 🤖 Claude — 2026-11-17T18:32:43.911Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit; ls $S/cap_pre $S/cap_now 2>/dev/null | tr '\\n' ' '; echo; cat $S/pixel_compare.txt 2>/dev/null", "description": "Check capture progress"}`
+
+### 🧑 User — 2026-11-17T18:32:44.041Z
+
+> ↩︎ result: Exit code 1
+> /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/audit/cap_pre: 01.png 02.png 03.png 04.png 05.png 06.png 07.png 08.png 09.png 10.png 11.png
+
+### 🤖 Claude — 2026-11-17T18:32:50.816Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"add_argument|LOCK|lock\" scripts/rainbow-autosave.py | head -15; git status --short | head -20", "description": "Check autosave lock and options; show working changes"}`
+
+### 🧑 User — 2026-11-17T18:32:50.887Z
+
+> ↩︎ result: 9:  2. takes an exclusive lock and skips if another git operation is in progress
+> 44:LOCK = REPO / "backups" / ".autosave.lock"
+> 80:    if p.returncode != 0 and "index.lock" in p.stderr:
+> 243:    ap.add_argument("--reason", default="manual")
+> 244:    ap.add_argument("--message", default="")
+> 245:    ap.add_argument("--no-push", action="store_true")
+> 246:    ap.add_argument("--quiet", action="store_true")
+> 254:    LOCK.parent.mkdir(parents=True, exist_ok=True)
+> 255:    lockfh = open(LOCK, "w")
+> 257:        fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+> 258:    except BlockingIOError:
+> 281:        for busy in ("index.lock", "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD"):
+> 394:        fcntl.flock(lockfh, fcntl.LOCK_UN)
+> 395:        lockfh.close()
+>  M docs/FLOW_VIDEO.md
+>  M scripts/flowplan-test.mjs
+> ?? docs/briefs/2026-11-17-r4/
+
+### 🤖 Claude — 2026-11-17T18:32:52.726Z
+
+The autosave script takes the lock and accepts `--message`; I'll commit through it so it can't race the daemon.
+
+### 🤖 Claude — 2026-11-17T18:32:55.729Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:lead-r4 --message \"Lead r4 (account 4): round-4 briefs + -c4 branch mapping; FLOW_VIDEO.md = user's 01-03 / 04-08 / 09-11 split under ?flowplan=1 (default build unchanged); flowplan-test check E (full run with both videos must end at exactly 91 / 2,240; B's 2,230 explained: goto('08') shows the approved HUD value 2,040 and B rides straight)\" 2>&1 | tail -4; git log -1 --format='%h %s' | cut -c1-120; echo \"remote: $(git ls-remote origin refs/heads/ccr-067047f0-up5d1m | cut -c1-12)  local: $(git rev-parse --short=12 HEAD)\"", "d …[+87 chars]`
+

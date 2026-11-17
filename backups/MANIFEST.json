@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11650,
-   "sha256": "02ecae3e13de0f4bb3103f4c33a9415bdabc2fe091021be6a3107ee3a5ecb7ed"
+   "bytes": 11651,
+   "sha256": "768c0ac72bf0ba5d5f154c853c7c3a7d38d427b189fc10450fac0d32a82eb0e7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -708,8 +708,8 @@
   },
   {
    "path": "docs/FLOW_VIDEO.md",
-   "bytes": 4597,
-   "sha256": "6bc1006fbc1da91024fe46b31b6c5be652cdc84c4803beff2621af173ecade1e"
+   "bytes": 7698,
+   "sha256": "71c0a0fc9613904aedd755fda371b90c7044cb9735151ce94b186c63b1b652c7"
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
@@ -795,6 +795,26 @@
    "path": "docs/briefs/2026-11-17-r3/S08_CAMERA.md",
    "bytes": 3284,
    "sha256": "33ebee839f754915eabf43d13d603418efec941f5928c01cbec24bc351b4abb2"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/COMMON_RULES.md",
+   "bytes": 4285,
+   "sha256": "84fbae15824e90e356104067aaa06adf9fea9769ca495affe6d853f9718867f6"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S07.md",
+   "bytes": 3267,
+   "sha256": "8071522b2537caa95f38f63963849479226c8fbe04185fb9704677b9337bd582"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S08_BENNY.md",
+   "bytes": 3267,
+   "sha256": "bdb111cc9ede17973634d792fc17fd5030b43b1d950b10f75d4949dfb31b9b6e"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S08_CAMERA.md",
+   "bytes": 3491,
+   "sha256": "5e2d8bf226c3233a93b60128bdd250e333c3869edace2f4e940d676d13592c7c"
   },
   {
    "path": "docs/characters/benny.md",
@@ -8058,8 +8078,8 @@
   },
   {
    "path": "scripts/flowplan-test.mjs",
-   "bytes": 6507,
-   "sha256": "ffe38bbb388fdbd2345612b09e5bb25790a8dfbb182a785a69b4c4d0a6874d07"
+   "bytes": 8851,
+   "sha256": "5e411f4ef7873f35f0102c4d3b75e938bc701664732509517063ffc606f12949"
   },
   {
    "path": "scripts/gameplay-test.mjs",
