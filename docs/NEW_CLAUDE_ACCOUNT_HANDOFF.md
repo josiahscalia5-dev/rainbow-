@@ -1,4 +1,48 @@
-# ▶▶ NEWEST — ACCOUNT 4 → NEXT ACCOUNT HANDOFF (2026-11-17 ~19:45 UTC, lead session `session_01Kbt6BTTnCGMUULjZoCLDTo`)
+# ▶▶ NEWEST — ACCOUNT 5 (round 5) STATE (2026-11-17 ~20:35 UTC, lead session `session_013VHsJ9SbWPe9YXRvtUSngc`)
+
+Account 5 restored account 4's work without rebuilding or merging anything. **Lead branch now: `ccr-f983b317-2vt0zh`**
+(started from `ccr-067047f0-up5d1m` @ `ffa54f9f`, its newest commit). If account 5 runs out, the next account repeats the
+procedure below with `-c6` branches made from each `-c5` tip (take the NEWEST remote commit of every branch).
+
+## Branch map (round 5; nothing merged, no -c4 or older branch written)
+| Role | Branch | Started at (= newest -c4 tip, 20:15 UTC) | State |
+|---|---|---|---|
+| Lead | `ccr-f983b317-2vt0zh` | `ccr-067047f0-up5d1m` @ `ffa54f9fb514f92a7d6353767e2952df9145bc25` | this session |
+| 08 scenery in motion | `claude/rainbow-s08-scenery-c5` | `5ce044a52d53c5dd6cfb71fd994a82e8647381a4` | RUNNING `session_013VHsJAQsMA73qb7GCXdQ12` (finish round 1, `docs/briefs/2026-11-17-r5/S08_SCENERY.md`) |
+| 08 Benny | `claude/rainbow-s08-benny08-bake-c5` | `fb72cc5052df908b994afeb41e7f598abc24e18d` | started `session_013VHsJAoze5D4wh6tk7r1hj` (round 6 fur clumps + pom tufts, `S08_BENNY.md`) |
+| 08 camera | `claude/rainbow-s08-camclear-c5` | `18687513e3a35e553472a05ae7fb626c2f8108ce` | paused (r4 done; phone verdict pending) |
+| 07 | `claude/rainbow-s07-match-c5` | `835a72dbb5abad1067b538c79b1f759b06e2cbeb` | paused (next: M3) |
+| 06 | `claude/rainbow-s06-match-c5` | `c088718bb9e3374583238f4ee93f25bdee600065` | paused (next: M2) |
+| 05 (line B) | `claude/rainbow-s05-match-c5` | `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b` | paused (next: M3) |
+| 04 | `claude/rainbow-s04-match-c5` | `d1e422faff67a37f837566301fb8abff0bac98db` | paused (next: M4) |
+The commits on the `-c4` tips after the account-4 handoff snapshot are transcript/backup files only (checked with
+`git diff --stat`); no game file changed. Account 4's idle Benny session woke once (20:12 UTC, PR #17 check-in) and
+stopped its check-ins. Per-workstream next tasks: unchanged from the ACCOUNT 4 section below.
+
+## Restore audit (account 5, 20:05–20:35 UTC)
+* 13/13 approved images byte-identical; 10/10 agent definitions present, SHA-256 unchanged.
+* Git LFS: 63 distinct objects across the 8 tips (812 MB), all downloaded, `git lfs fsck` OK on all 8, 0 missing.
+* Lead code: tsc clean; continuity joins gap 0; gameplay **8/8, 91 coins, 1,330 → 2,240**, 07→08 drop 61.4 u (default and
+  `match08=1&coins08px=1`).
+* `flowplan-test.mjs`: A and D FAILED twice in this container — test-harness race, not a game bug (Chromium 157 +
+  SwiftShader: the page main thread is busy 8–11 s after `ready`, so the 2.5 s clip ended before the first read; probe:
+  hold correct). Fix `227f319e`: A/D use a 20 s clip, assertions unchanged → **A–E pass, E = 91 / 2,240**.
+* Tools: Node 22, Blender 5.3.0, Android SDK 34 + Java 21 + Gradle 8.2.1, Playwright Chromium **157** (account 4: 153),
+  ffmpeg, ImageMagick, Python QA libs — all OK (bootstrap). context7 + design MCP servers fail to connect (optional).
+* **Keys:** this account's `rainbow-` environment has a World Labs key that authenticates (free read **5,190** credits)
+  but it is the user's OTHER World Labs account (it sees the Screen 05 pilot worlds; the Screen 08 world `32b5b2f4…` reads
+  404). Account 4's key (5,420 credits, Screen 08 world) is NOT on this environment. fal.ai: NO key on this environment
+  and `queue.fal.run` not in its network allowlist. Neither blocks current work (no paid jobs approved).
+* Launch trap seen again: both new sessions sat idle with no task until the brief was re-sent with `send_message`.
+
+## Open lead question for the user — Screen 08 coins vs the ending video (`?flowplan=1`)
+Under `?match08=1&coins08px=1` the 9 painted coins lie at s 396.1 / 400.1 (in 08) and 405.2 / 407.7 / 410.6 / 412.7 (09
+stretch) + 3 more beyond s 418.5; the ending video starts at s 404.37 (start of 09). So Benny swims through 2 and the
+video credits 7 (total stays 91 / 2,240). Do not change the hand-over rule without the user's approval.
+
+---
+
+# ACCOUNT 4 → NEXT ACCOUNT HANDOFF (2026-11-17 ~19:45 UTC, lead session `session_01Kbt6BTTnCGMUULjZoCLDTo`)
 
 Written at the user's urgent backup order (account 4 near its usage limit). Everything below this section is OLDER
 history. Repository **https://github.com/josiahscalia5-dev/rainbow-** (ONE repo, all branches). The SHAs below were

@@ -1,5 +1,17 @@
 # RAINBOW — parallel workstreams: lead progress report
 
+# ROUND 5 (account 5) — CURRENT (2026-11-17 ~20:35 UTC)
+**Lead ("Lead Claudia"):** session `session_013VHsJ9SbWPe9YXRvtUSngc`, branch **`ccr-f983b317-2vt0zh`** (from
+`ccr-067047f0-up5d1m` @ `ffa54f9f`). Branch map, restore audit, key situation and the open coin/video question: TOP
+section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`. Briefs: `docs/briefs/2026-11-17-r5/`.
+* Restore: 8 tips fetched (post-snapshot commits = transcripts only); 7 `-c5` branches created at the newest `-c4` tips;
+  13/13 references, 10/10 agents, LFS 63/63 + fsck OK on all 8 tips; tsc OK, continuity gap 0, gameplay 8/8 + 91 / 2,240;
+  flowplan A–E pass after the test-harness race fix `227f319e` (A/D had failed twice; game behaviour verified correct).
+* Running (max two): **08 scenery-in-motion** `session_013VHsJAQsMA73qb7GCXdQ12` on `claude/rainbow-s08-scenery-c5`
+  (verified working 20:27: startup check passed, rendering `m08lane` real-texture frames); **08 Benny round 6**
+  `session_013VHsJAoze5D4wh6tk7r1hj` on `claude/rainbow-s08-benny08-bake-c5` (brief re-sent after a dropped prompt).
+* Paused, in the user's order: 08 camera (phone verdict) → 07 M3 → 05 M3 → 06 M2 → 04 M4.
+
 # BACKUP VERIFICATION — 2026-11-17 ~19:45 UTC (user's urgent order: account 4 near its usage limit)
 * Development stopped; the lead's scheduled check-in (would have started Screen 05) disabled at 19:40. The one active
   specialist (08 scenery) saved and stopped at a safe checkpoint; Benny, camera and 07 were already idle with their
