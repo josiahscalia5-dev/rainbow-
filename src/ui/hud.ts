@@ -18,8 +18,6 @@ import { on05 } from '../vfx/waterRibbon';
  * A global HUD change: with the switch on, every ride screen shows this layout (default build unchanged).
  */
 const HUD05 = on05('hud05');
-// hud05 only: the lighter Baloo 2 weight (same font package as the 700 / 800 above; no new package)
-if (HUD05) void import('@fontsource/baloo-2/600.css');
 const U = (px: number) => `calc(var(--u) * ${(px / 15.36 + 1e-5).toFixed(5)})`; // +1e-5: Chrome floors border widths
 /** approved icon sprite boxes (frame px; assets/textures/hud05/hud05_icons.json) */
 const ICON05 = {
@@ -31,8 +29,8 @@ const ICON05 = {
 /** hud05 tuning (measured against the approved glyph boxes with qa/pilot05/full_reference_match/hud/harness.mjs) */
 const H05 = {
   bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2, shadow: true },
-  num: { size: 53, weight: 600, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
-  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 600, track: 0.0, skew: -4, italic: true, dy: 1, stroke: 0 },
+  num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
+  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 1, stroke: 0 },
 };
 /** absolute position inside the bar's padding box, from approved frame px */
 const bx = (x: number) => U(x - H05.bar.x0 - H05.bar.border);

@@ -300,11 +300,11 @@ export function buildEnvironment(course: Course): Environment {
   // displacement is zero at the camera and before 06. Ring B 1.5 u nearer, far rings at the approved radii, band heights
   // as measured. Camera, course, steering, coins: untouched. Off = exactly the previous layout.
   const E05 = ENV05 ? {
-    dB: 38.5,                                     // ring B: tunnel coordinate − sCam05 (was 40)
+    dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)
     hA: 0.09, hB: 0.12, hFar: 0.11,               // band crown heights (fraction of the radius; was 0.13 / 0.13 / 0.095)
     farDv: [64.0, 104.7, 165.5, 235.2, 332.1],    // far rings C … G, virtual depths (was 59 / 97 / 161 / 222 / 322)
-    side: [[3, 0], [17, -0.715], [23, -0.715], [35, -1.006], [42, -1.006], [54, -0.6]] as [number, number][],
-    up: [[6, 0], [17, 0.42], [23, 0.42], [30, 0]] as [number, number][],
+    side: [[3, 0], [17, -0.715], [23, -0.715], [35, -0.95], [42, -0.95], [54, -0.6]] as [number, number][],
+    up: [[6, 0], [17, 0.3], [23, 0.3], [32, -0.23], [42, -0.23], [54, 0]] as [number, number][],
     sideFar: -0.6,
   } : null;
   const rings05 = E05 ? rings05base.map((s) => (Math.abs(s - sCam05 - 40) < 1 ? sCam05 + E05.dB : s)) : rings05base;
