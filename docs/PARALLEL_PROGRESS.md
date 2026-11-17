@@ -63,6 +63,19 @@ seven sessions). 07 next when capacity allows; 04 / 05 / 06 milestones are compl
   19:10: projected scenery tears/duplicates when moving 6 u or steering) → 05 → 06 → 04. Briefs ready for all.
 * Never merge PR #16 or unfinished branches without the user's OK. Google Flow split unchanged; no video credits.
 
+## Round-4 results / roster (updated 19:16 UTC)
+* **08 camera r4 DONE** (`claude/rainbow-s08-camclear-c4` @ `aa10fdbb`, 19:13, verified on GitHub): at the 03→04 drain
+  lip the picture no longer tilts (16° → 1°), Benny hidden max 44 → 25 % (default 100 %), frames > 25 % hidden 5 → 1;
+  in 08 missed coins no longer fill the lower third when steering off the coin line; 07's upper gold bands are the 07
+  tube's own rings 14–45 u ahead (Screen 07 scenery, left to the 07 workstream). Open → `S08_SCENERY.md`: steering hard
+  right into 08 rides into `m08_pipe` / `m08_arch`. 8/8, 91 / 2,240, drop 61.41 u; APK
+  `builds/rainbow-debug-08camclear-2026-11-17-r4.apk` (NOT phone-tested). Paused, waiting for the user.
+* **08 Benny round 5** (`…benny08-bake-c4`): report 19:09 (pre-decision taper kept, APK r5 = taper) — then switched to
+  the user's decision at 19:09: taper opt-in (`b08shape=1`), probing fuller round bodies on r3b (approved body ≈ 1.09×
+  the brim width vs r3b 0.93×; beanie ≈ 9 % too big). RUNNING. Its Draft PR #17 = review only.
+* **07 STARTED 19:14** `session_01Kbt6BT7VJEKLkAskyb5T9U` on `claude/rainbow-s07-match-c4` (finish M2, `S07.md`).
+* Next when a slot frees: 08 scenery-in-motion → 05 → 06 → 04.
+
 ## Still waiting for the user
 * fal clean plates for 06 / 07 (one paid edit each, prepared, not run).
 * Making `?flowplan=1` default — after the user's Flow videos are uploaded and tested (note: 7 of the 9 coins painted

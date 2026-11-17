@@ -9,6 +9,7 @@ At the approved checkpoint Screen 08 matches the picture (scenery 98.0 % within 
 * **6 u forward** (`f06_forward6u.png`): the lower-left of the screen tears along a jagged diagonal seam — below it a second, displaced copy of the river and the purple wall; a hard curved seam across the upper chamber ceiling.
 * **Steering left** (`s_left_steer.png`): the whole lower third of the screen is a separate displaced copy of river / wall / bubble below a diagonal seam; a large gold band fragment sweeps the upper-left corner.
 These are projection artifacts: surfaces near the camera receive the wrong part of the picture (or a stretched/duplicated part) once the view leaves the approved direction.
+* **Steering hard RIGHT into 08** (camera specialist r4, 19:13 UTC, `claude/rainbow-s08-camclear-c4` @ `aa10fdbb`, `qa/gameplay_video/moving_r4/steer1/`): Benny rides into the right pipe / arch of the fitted 08 geometry (`m08_pipe` / `m08_arch`) — 45 % of him hidden at ~44.5 s of the moving check. Fix it as scenery (geometry fitted so the swim lane stays clear, look unchanged from the approved view), not by moving the camera.
 
 ## Your milestone (round 1), one factor at a time, each behind its own switch (e.g. `&m08move=1`), keep only what is VISIBLY better
 1. Reproduce: full-size frames with `?match08=1&coins08px=1` at the checkpoint, forward 3 / 6 / 10 u, steering left and right (and with `&camclear=1`); mark every tear, seam, duplicate and stretch region. Commit + push.

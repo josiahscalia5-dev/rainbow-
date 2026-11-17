@@ -1,7 +1,7 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-17T18:36Z",
+  "updated_utc": "2026-11-17T19:16Z",
   "updated_by_session": "session_01Kbt6BTTnCGMUULjZoCLDTo",
   "running_now": [
     {
@@ -16,15 +16,15 @@
       "brief": "docs/briefs/2026-11-17-r4/S08_BENNY.md on ccr-067047f0-up5d1m"
     },
     {
-      "agent": "path-camera-transition-engineer",
-      "workstream": "Screen 08 camera round 4 (steady view at the 03 drain lip, 07 ring bands, moving check 07-08-09)",
-      "session": "session_01Kbt6BTLnGMkLZVfNSYf45t",
+      "agent": "washer-environment-modeler (Screen 07 workstream)",
+      "workstream": "Screen 07 finish milestone 2 (m07fill/m07ang/m07gold verify, coins at painted spots, rings/water/foam while moving, 07->08 drop intact)",
+      "session": "session_01Kbt6BT7VJEKLkAskyb5T9U",
       "where": "own cloud container (account 4, environment rainbow-)",
-      "branch": "claude/rainbow-s08-camclear-c4",
-      "continued_from": "claude/rainbow-s08-camclear-c3 @ c03f391c",
-      "started_utc": "2026-11-17T18:33Z",
-      "notes": "qa/gameplay_video/NOTES.md",
-      "brief": "docs/briefs/2026-11-17-r4/S08_CAMERA.md on ccr-067047f0-up5d1m"
+      "branch": "claude/rainbow-s07-match-c4",
+      "continued_from": "claude/rainbow-s07-match-c3 @ 72fb6129",
+      "started_utc": "2026-11-17T19:14Z",
+      "notes": "qa/match/07/NOTES.md",
+      "brief": "docs/briefs/2026-11-17-r4/S07.md on ccr-067047f0-up5d1m"
     }
   ],
   "assignments_now": {
@@ -366,5 +366,16 @@
         "brief": "docs/briefs/2026-11-17-r3/S07.md on ccr-c0235034-ks6sx3"
       }
     ]
-  }
+  },
+  "round4_done": [
+    {
+      "agent": "path-camera-transition-engineer",
+      "session": "session_01Kbt6BTLnGMkLZVfNSYf45t",
+      "branch": "claude/rainbow-s08-camclear-c4",
+      "commit": "aa10fdbb6b7efa305edd0d3a40e2da4d0e9c074c",
+      "when_utc": "2026-11-17T19:13Z",
+      "result": "camclear r4: 03->04 lip tilt 16->1 deg, Benny hidden max 44->25 %, missed coins fade between lens and Benny in 08; 07 upper bands = 07 tube rings 14-45 u ahead (Screen 07 scenery); open: steering hard right into 08 rides into m08_pipe/m08_arch (08 scenery workstream). 8/8, 91/2,240, APK r4 not phone-tested",
+      "state": "paused, waiting for the user"
+    }
+  ]
 }
