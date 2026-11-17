@@ -1248,3 +1248,86 @@ Maven Central returned 429 (too many requests). Retrying once.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && ./gradlew assembleDebug > /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk2.log 2>&1; echo exit $?; grep -E \"BUILD|429\" /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk2.log | head -3; ls -la app/build/outputs/apk/debug/*.apk 2>/dev/null", "description": "Retry gradle assembleDebug", "timeout": 900000}`
 
+### 🧑 User — 2026-11-17T19:06:38.612Z
+
+> ↩︎ result: exit 1
+>          > Could not GET 'https://repo.maven.apache.org/maven2/org/codehaus/groovy/groovy/3.0.10/groovy-3.0.10.jar'. Received status code 429 from server: Too Many Requests
+>          > Could not GET 'https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpclient/4.5.6/httpclient-4.5.6.jar'. Received status code 429 from server: Too Many Requests
+>          > Could not GET 'https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar'. Received status code 429 from server: Too Many Requests
+> -rw-r--r-- 1 root root 24437234 Nov 17 19:06 app/build/outputs/apk/debug/app-debug.apk
+
+### 🤖 Claude — 2026-11-17T19:06:44.597Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && date -u +%H:%M; L=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk2.log; grep -n -E \"What went wrong|Execution failed|BUILD\" -A2 $L | head -10; grep -c \"Task :app:package\" $L; unzip -l android/app/build/outputs/apk/debug/app-debug.apk | grep -c \"assets/public\"; unzip -p android/app/build/outputs/apk/debug/app-debug.apk 'assets/public/assets/*.js' 2>/dev/null | grep -c \"b08shape\"", "description": "Inspect APK build outcome"}`
+
+### 🧑 User — 2026-11-17T19:06:44.711Z
+
+> ↩︎ result: 19:06
+> 111:* What went wrong:
+> 112:Execution failed for task ':capacitor-android:extractDebugAnnotations'.
+> 113-> Could not resolve all files for configuration ':capacitor-android:detachedConfiguration1'.
+> 114-   > Could not download groovy-3.0.10.jar (org.codehaus.groovy:groovy:3.0.10)
+> --
+> 130:BUILD FAILED in 1m 3s
+> 131-64 actionable tasks: 64 executed
+> 2
+> 71
+> 1
+
+### 🤖 Claude — 2026-11-17T19:06:48.455Z
+
+The build failed only in a library annotation step (Maven Central 429), but the app APK was packaged. Checking that it is complete and signed:
+
+### 🤖 Claude — 2026-11-17T19:06:50.911Z
+
+> 🔧 **Bash** `{"command": "A=android/app/build/outputs/apk/debug/app-debug.apk; /opt/android-sdk/build-tools/34.0.0/apksigner verify --print-certs $A 2>&1 | head -2; unzip -tq $A | tail -1; unzip -l $A | grep -E \"classes.dex|capacitor\" | head -4; grep -E \"Task :app:(package|assemble)\" /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/apk2.log", "description": "Verify APK signature and contents"}`
+
+### 🧑 User — 2026-11-17T19:06:51.777Z
+
+> ↩︎ result: Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=33819 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes=
+> Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+> No errors detected in compressed data of android/app/build/outputs/apk/debug/app-debug.apk.
+>   7013376  1981-01-01 01:01   classes.dex
+>       130  1981-01-01 01:01   assets/capacitor.config.json
+>         3  1981-01-01 01:01   assets/capacitor.plugins.json
+> > Task :app:packageDebugResources
+> > Task :app:packageDebug
+
+### 🤖 Claude — 2026-11-17T19:06:55.616Z
+
+> 🔧 **Bash** `{"command": "A=android/app/build/outputs/apk/debug/app-debug.apk; unzip -p $A 'assets/public/assets/*.js' | grep -o 'match08=1' | head -1; cp $A builds/rainbow-debug-08benny-2026-11-17-r5.apk; git check-attr filter builds/rainbow-debug-08benny-2026-11-17-r5.apk; sha256sum builds/rainbow-debug-08benny-2026-11-17-r5.apk | cut -c1-16; git status --short | grep -v \"backups\\|transcript\"", "description": "Copy APK to builds and check LFS"}`
+
+### 🧑 User — 2026-11-17T19:06:55.733Z
+
+> ↩︎ result: match08=1
+> builds/rainbow-debug-08benny-2026-11-17-r5.apk: filter: lfs
+> 906b4f3489c62ccc
+> ?? builds/rainbow-debug-08benny-2026-11-17-r5.apk
+
+### 🤖 Claude — 2026-11-17T19:06:58.928Z
+
+APK saved (Git LFS). Now the docs.
+
+### 🤖 Claude — 2026-11-17T19:06:59.580Z
+
+> 🔧 **Bash** `{"command": "head -30 qa/match/08/benny08/SHARED_CHANGES.md", "description": "Read SHARED_CHANGES format"}`
+
+### 🧑 User — 2026-11-17T19:06:59.606Z
+
+> ↩︎ result: # Shared-code changes by the Screen 08 Benny specialist (all switch-guarded; default build 0 px)
+> 
+> | File | Change | Runs only under | Off switch |
+> |---|---|---|---|
+> | `src/characters/benny/benny05.ts` (owned) | `bake08`: 08 maps from `assets/textures/benny08/` | benny05 look on (`match08`/`matchall`/`benny08`, or `benny05=1&bake08=1`) | `bake08=0` |
+> | `src/characters/benny/benny05.ts` (owned) | round 3: `B08R3` → `body_r3.png`; fur uniforms on `mesh.userData.furU` (no render effect) | same | `b08r3=0` |
+> | `src/characters/benny/fur.ts` (owned) | uniforms `uSoft`, `uSoftEdge` (GLSL only inside `#ifdef BENNY05`; 0 = unchanged) | benny05 look on | `b08soft=0` |
+> | `src/characters/benny/benny05.ts` (owned) | round 3b: soft fur 0.6 / edge 1.0, `brim_r3.png` | 08 maps on | `b08soft=0`, `b08crisp=0`, `b08r3=0` |
+> | `src/characters/benny/fur.ts` (owned) | round 4 uniforms `uClumpScale` (0.2 = unchanged), `uClumpVar`, `uHi` (BENNY05 GLSL only) | benny05 look on | — |
+> | `src/characters/benny/benny05.ts` (owned) | round 4: body `uHi` 0.7, pom colour 1.12/1.0/1.06 | 08 maps on | `b08hi=0`, `b08pom=0` |
+> | `src/game/Game.ts` | round 3b: splash card alpha^0.2×2.5 | `match08=1` | `b08r3=0` |
+> | `src/g …[+416 chars]
+
+### 🤖 Claude — 2026-11-17T19:07:30.795Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nB='qa/match/08/benny08/'\np=B+'SHARED_CHANGES.md'; s=open(p).read()\ns=s.replace(\"| `assets/textures/benny08/*` (owned)\",\"| `src/game/Game.ts` | round 5 (d) body shape: second position buffer on the `fur_body` geometry (tapered: ×1.12 at the top under the brim → ×0.92 at the bottom), swapped in only while Screen 08 is shown; arm joints +0.04 up, ×1.1 (QA tuning params `b08tt/tb/bw/bh/ly/ay/ax/ak`) | `match08=1` on Screen 08 (restored when leaving 08; 04–07 0 px vs round 4) | `b08shape=0` (also off with `b08r3=0`) |\\n| `assets/textures/benny08/*` (owned)\",1) …[+6869 chars]`
+
