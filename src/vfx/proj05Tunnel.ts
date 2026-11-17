@@ -184,8 +184,9 @@ function loadTextures() {
   }
   if (PROJFRAME05) {
     jobs.push(Promise.all([
-      load(new URL('../../assets/textures/tunnel05/frame05.png', import.meta.url).href),
-      fetch(new URL('../../assets/textures/tunnel05/frame05.json', import.meta.url).href).then((r) => r.json()),
+      // `?env05=1`: the frame pieces fitted to the approved outline wear their own bake (tools/proj05/frame_bake.py --pieces)
+      load(ENV05 ? new URL('../../assets/textures/env05/frame05.png', import.meta.url).href : new URL('../../assets/textures/tunnel05/frame05.png', import.meta.url).href),
+      fetch(ENV05 ? new URL('../../assets/textures/env05/frame05.json', import.meta.url).href : new URL('../../assets/textures/tunnel05/frame05.json', import.meta.url).href).then((r) => r.json()),
     ]).then(([t, meta]) => {
       t.wrapS = THREE.ClampToEdgeWrapping;          // the frame bands are open arcs, not closed rings
       t.needsUpdate = true;

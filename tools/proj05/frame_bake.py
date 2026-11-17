@@ -5,7 +5,9 @@ existing 3D frame wears the approved gold instead of the hand-picked palette tha
 Hidden texels (bubbles, foam, water, splash in front of the gold) are filled along the band; the result is then
 smoothed ALONG the arc (sigma_u) so it is the band's material profile + broad lighting, not a pixel copy.
 Atlas frame05.png, rows top-down: left corner (NV) | gutter | right corner (NV) | gutter | bottom lip (NV); NU columns.
-usage: python3 -I tools/proj05/frame_bake.py <out_dir> [sigma_u_texels] [--capture=05.png [--gain=0.8] [--reset=1]]"""
+usage: python3 -I tools/proj05/frame_bake.py <out_dir> [sigma_u_texels] [--capture=05.png [--gain=0.8] [--reset=1]]
+       [--pieces=<frame_fit.json> --corr=<correction.npy>]   (env05, 2026-11-17: the pieces fitted by tools/env05/frame_fit.py,
+       "pieces_after"; own colour-feedback file; out_dir assets/textures/env05)"""
 import json, math, os, sys
 import numpy as np, cv2
 from PIL import Image
@@ -21,7 +23,7 @@ sig_u = float(pos[1]) if len(pos) > 1 else 3.0
 # --capture=<05.png with ?projframe05=1>: colour feedback (bloom spill the shader cannot undo). The capture is sampled at
 # the same band coordinates (the frame projects onto its designed outline), e = capture - current texture, smoothed hard
 # along the arc, and gain * e is accumulated into CORR (qa/pilot05/proj/tunnel/model/frame_correction.npy).
-CORR = "qa/pilot05/proj/tunnel/model/frame_correction.npy"
+CORR = opt.get("corr", "qa/pilot05/proj/tunnel/model/frame_correction.npy")
 cap8 = np.asarray(Image.open(opt["capture"]).convert("RGB")) if "capture" in opt else None
 gain = float(opt.get("gain", 0.8))
 corr_prev = np.load(CORR) if os.path.exists(CORR) and opt.get("reset") != "1" else None
@@ -44,6 +46,8 @@ PIECES = {
     "right": (432, 1060, 457, 190, 1, -17, -58),
     "lip": (432, 2121, 655, 130, -1, 122, 58),
 }
+if "pieces" in opt:
+    PIECES = {k: tuple(v) for k, v in json.load(open(opt["pieces"]))["pieces_after"].items()}
 
 
 def sample_piece(cx, cy, a0, w, d, th0, th1, src=None):

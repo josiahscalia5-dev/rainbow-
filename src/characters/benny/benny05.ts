@@ -145,7 +145,30 @@ export const MAPS05: Record<string, { map: string; scale: number; normal?: strin
 };
 /** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report
  *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */
-export const STAR05 = { color: [0.319, 0.39, 0.048] as [number, number, number] };
+export const STAR05 = {
+  color: [0.319, 0.39, 0.048] as [number, number, number],
+  /** optional baked star map (planar UVs on the star's face plane, see starUVs): face, bevel rim and highlights from the
+   *  approved pixels; missing → the flat solved colour above */
+  map: 'star.png',
+};
+
+/** planar UVs on the star's own face plane (x, y → 0..1, square, 2 % margin): the bevel ring lands on the map's outer ring.
+ *  The GLB star keeps its own UVs (a benny05 copy of the geometry gets these). */
+function starUVs(src: THREE.BufferGeometry): THREE.BufferGeometry {
+  const g = src.clone();
+  g.computeBoundingBox();
+  const b = g.boundingBox!;
+  const cx = (b.min.x + b.max.x) / 2, cy = (b.min.y + b.max.y) / 2;
+  const size = Math.max(b.max.x - b.min.x, b.max.y - b.min.y) * 1.04;
+  const p = g.attributes.position as THREE.BufferAttribute;
+  const uv = new Float32Array(p.count * 2);
+  for (let i = 0; i < p.count; i++) {
+    uv[2 * i] = (p.getX(i) - cx) / size + 0.5;
+    uv[2 * i + 1] = (p.getY(i) - cy) / size + 0.5;
+  }
+  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  return g;
+}
 
 let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
 /** load every baked map once (missing files → null: that part keeps its GLB look) */
@@ -153,6 +176,7 @@ export function loadBenny05Maps(): Promise<Record<string, THREE.Texture | null>>
   if (loaded) return loaded;
   const files = new Set<string>();
   for (const m of Object.values(MAPS05)) { files.add(m.map); if (m.normal) files.add(m.normal); }
+  files.add(STAR05.map);
   const tl = new THREE.TextureLoader();
   loaded = Promise.all(
     [...files].map(async (f) => {
@@ -160,7 +184,8 @@ export function loadBenny05Maps(): Promise<Record<string, THREE.Texture | null>>
         const t = await tl.loadAsync(T(f));
         t.colorSpace = f.endsWith('_n.png') ? THREE.NoColorSpace : THREE.SRGBColorSpace;
         t.wrapS = THREE.RepeatWrapping;
-        t.anisotropy = 4;
+        // 16 (three.js clamps to the GPU's maximum): keeps the knit stitches on the beanie's grazing flanks (4 blurred them out)
+        t.anisotropy = 16;
         t.needsUpdate = true;
         return [f, t] as const;
       } catch {
@@ -209,6 +234,7 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   // the roll would also turn the star 2.6° about its face: the approved star keeps its upright pose (the star's local +Z
   // faces back toward the camera, opposite to the hat's forward axis, hence +roll; measured: −roll gave star IoU 0.728)
   star.rotateZ(HAT05.roll);
+  star.geometry = starUVs(star.geometry);
   const pom = get('pom')!;
   pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
   pom.position.x += HAT05.pomDX;
@@ -265,7 +291,13 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
     baked.push({ mesh: m, mat, map: mat.map, color: mat.color.clone(), fur, root: fur?.uniforms.uRoot.value.clone(), tip: fur?.uniforms.uTip.value.clone() });
   });
   const starMat = (star.material as THREE.MeshStandardMaterial).clone();
-  starMat.color.setRGB(...STAR05.color);
+  const starTex = maps[STAR05.map] ?? null;
+  if (starTex) {
+    starTex.wrapS = starTex.wrapT = THREE.ClampToEdgeWrapping;
+    starMat.map = starTex;
+    starMat.color.setScalar(1);
+  } else starMat.color.setRGB(...STAR05.color);
+  starMat.needsUpdate = true;
   star.material = starMat;
   const starCol = starMat.color.clone();
 
@@ -343,6 +375,7 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
       b.mat.needsUpdate = true;
     }
     if (k === null) starMat.color.copy(starCol); else starMat.color.setScalar(k);
+    if (starTex) { starMat.map = k === null ? starTex : white; starMat.needsUpdate = true; }
   };
   return { uvPass, calib };
 }

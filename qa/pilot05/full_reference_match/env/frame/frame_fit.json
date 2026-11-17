@@ -61,5 +61,6 @@
  "missed_before": 13796,
  "water_covered_before": 29057,
  "missed_after": 3786,
- "water_covered_after": 19218
+ "water_covered_after": 19218,
+ "note": "tried w 240 for the corner pieces (cover the screen corners): gold region 9.45 -> 9.74 (worse), back to 190"
 }

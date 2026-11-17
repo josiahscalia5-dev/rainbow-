@@ -55,6 +55,7 @@ PARTS = {  # id: (name, approved part key, tex W, H, fill mode for texels the 05
     4: ('pom', 'pom', 512, 256, 'mirror'),
     6: ('armL', 'body', 256, 128, None),
     7: ('armR', 'body', 256, 128, None),
+    5: ('star', 'star', 256, 256, None),
 }
 
 def seen_strip(seen):
@@ -179,7 +180,7 @@ def main():
     from bennyseg import rgb2hsv, colour_classes
     Hh, Ss, Vv = rgb2hsv(a8); cls = colour_classes(a8)
     okc = {'body': ((Hh > 280) | (Hh < 20)) & (Ss > 0.2), 'crown': np.isin(cls, [2, 3]), 'cuff': (Hh > 230) & (Hh < 300) & (Ss > 0.35),
-           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2)}
+           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2), 'star': np.ones(a8.shape[:2], bool)}
     star = (ids == 5) & ndi.binary_erosion(P['star'], iterations=1) & valid
     if star.sum():
         sa = np.median(target[star], 0)
@@ -204,7 +205,7 @@ def main():
         # treated as unseen and filled from their neighbours, so the fur never carries grey-green blotches in motion
         R_, G_, B_ = alb[..., 0], alb[..., 1], alb[..., 2]
         fam = {'body': (G_ < 0.62 * R_) & (R_ > 0.12), 'pom': (G_ < 0.55 * B_) & (B_ > 0.08),
-               'cuff': (G_ < 0.6 * B_), 'crown': alb.max(-1) > 0.1}[key]
+               'cuff': (G_ < 0.6 * B_), 'crown': alb.max(-1) > 0.1, 'star': np.ones_like(seen)}[key]
         rejected = int((seen & ~fam).sum())
         seen &= fam
         alb = np.where(seen[..., None], alb, 0)

@@ -1960,3 +1960,188 @@ Stop hook feedback:
 
 Committed and pushed: GitHub is at `0ef4b8d`, the same as the local copy, with nothing unsaved. That save included the specialists' newest work in progress (Benny's code and the tunnel's first test capture). The five-minute autosave will keep saving what they write. I'll send the Screen 05 pictures as soon as the first specialist finishes.
 
+### 🧑 User — 2026-11-17T01:39:58.393Z
+
+How's it looking so far?
+
+### 🤖 Claude — 2026-11-17T01:40:02.679Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; D=qa/pilot05/full_reference_match; for f in env benny hud coins; do echo \"--- $f NOTES $(stat -c '%y' $D/$f/NOTES.md | cut -c12-16)\"; done; echo \"== recent captures/metrics (newest first)\"; find $D/env $D/benny $D/hud $D/coins -newer $D/briefs/foam-bubbles-particles.md \\( -name '*.png' -o -name '*FULL*json' -o -name '*full*json' \\) -printf '%TH:%TM %p\\n' | sort -r | head -15; git status --short -- src | head", "description": "List specialists' newest captures and metrics"}`
+
+### 🧑 User — 2026-11-17T01:40:02.722Z
+
+> ↩︎ result: 01:40
+> --- env NOTES 01:35
+> --- benny NOTES 01:37
+> --- hud NOTES 01:10
+> --- coins NOTES 01:27
+> == recent captures/metrics (newest first)
+> 01:39 qa/pilot05/full_reference_match/env/work/e9/FULL_FRAME_METRICS.json
+> 01:39 qa/pilot05/full_reference_match/env/work/e9/05.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/ref_parts.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/out/star.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/out/pom.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/out/crown.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/out/brim.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/out/body.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/out/armR.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/out/armL.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/in/star.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/in/pom.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/in/crown.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/in/brim.png
+> 01:39 qa/pilot05/full_reference_match/benny/work/f3/in/body.png
+>  M src/characters/benny/benny05.ts
+>  M src/vfx/proj05Tunnel.ts
+>  M src/world/environment.ts
+
+### 🤖 Claude — 2026-11-17T01:40:07.805Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/full_reference_match; for e in $(ls -d $D/env/work/e* 2>/dev/null | sort -V); do [ -f $e/FULL_FRAME_METRICS.json ] && python3 -I -c \"\nimport json,sys;p='$e';f=json.load(open(p+'/FULL_FRAME_METRICS.json'))\nr={}\ntry: r=json.load(open(p+'/REGION_METRICS.json'))\nexcept Exception: pass\ndef g(k):\n  v=r.get(k) if isinstance(r,dict) else None\n  if isinstance(v,dict): return '%.1f/%.0f%%'%(v.get('mean_abs',0),100*v.get('within_20',0))\n  return '-'\nF=f.get('FULL',f)\nprint(p.split('/')[-1],'whole %.2f/%.1f%%'%(F['mean_abs'],100*F['within_20']),'walls',g('purple_walls' …[+308 chars]`
+
+### 🧑 User — 2026-11-17T01:40:08.134Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 11, in <module>
+>     print(p.split('/')[-1],'whole %.2f/%.1f%%'%(F['mean_abs'],100*F['within_20']),'walls',g('purple_walls'),'rings',g('gold_rings_and_front_frame'),'fittings',g('side_fittings'),'far',g('distant_tunnel_and_glow'),'water',g('water'),'foam',g('foam_banks'))
+>                                                 ~^^^^^^^^^^^^
+> KeyError: 'mean_abs'
+> Traceback (most recent call last):
+>   File "<string>", line 11, in <module>
+>     print(p.split('/')[-1],'whole %.2f/%.1f%%'%(F['mean_abs'],100*F['within_20']),'walls',g('purple_walls'),'rings',g('gold_rings_and_front_frame'),'fittings',g('side_fittings'),'far',g('distant_tunnel_and_glow'),'water',g('water'),'foam',g('foam_banks'))
+>                                                 ~^^^^^^^^^^^^
+> KeyError: 'mean_abs'
+> Traceback (most recent call last):
+>   File "<string>", line 11, in <module>
+>     print(p.split('/')[-1],'whole %.2f/%.1f%%'%(F['mean_abs'],100*F['within_20']),'walls',g('purple_walls'),'rings',g('gold_rings_and_front_frame'),'fittings',g('side_fittings'),'far',g('distant_tunnel_and_glow'),'water',g('water'),'foam',g('foam_banks'))
+>                                           …[+2440 chars]
+
+### 🤖 Claude — 2026-11-17T01:40:10.305Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/full_reference_match; head -c 400 $D/env/work/e9/FULL_FRAME_METRICS.json; echo; ls $D/env/work/e9/; grep -n \"e[0-9]\\b\\|e[0-9] \\|whole\" $D/env/NOTES.md | tail -15", "description": "Inspect metrics format and env notes"}`
+
+### 🧑 User — 2026-11-17T01:40:10.356Z
+
+> ↩︎ result: {
+>  "capture": "qa/pilot05/full_reference_match/env/work/e9/05.png",
+>  "whole_frame": {
+>   "px": 1327104,
+>   "share_of_frame": 1.0,
+>   "mean_abs": 19.0,
+>   "within_10": 0.6532,
+>   "within_20": 0.7369,
+>   "ssim_lum": 0.7069,
+>   "mean_signed_rgb": [
+>    2.5,
+>    0.6,
+>    2.1
+>   ]
+>  },
+>  "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
+>  "mse": 1810.5,
+>  "psnr_d
+> 05.png
+> FULL_FRAME_METRICS.json
+> REGION_METRICS.json
+> 60:### Measured after the first env05 geometry (probe e1, before the knot refinement; id buffer, mean band-edge error px)
+> 61:| ring | STACK | env05 e1 |
+> 68:`warp_fit.py` on e1: B needs side −0.95, up −0.23, axial −0.16 (→ ≈9.9 px; the weight leaves B's lower sides near the
+> 77:  foam / apron); LEFT half smoothstep(sin th, −0.95, −0.5) (points OUT of the tunnel: the whole left side wall moves with
+> 81:  Probe e3 (id buffer, `ring_table.py`, mean |edge| px, STACK → e2 → **e3**): A 59.1 → 10.0 → **2.9**, B 28.6 → 13.6 →
+> 84:  **e3 0.646** (walls 0.636 → 0.755, gold 0.198 → 0.359).
+> 88:* **Camera-projection bake (step a/c):** `tools/env05/proj_bake.py` with the e3 coords probe. Source masks widened (run #3):
+> 93:  | region | STACK | e3 (bake) | e4 …[+932 chars]
+
+### 🤖 Claude — 2026-11-17T01:40:13.042Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/NOTES.md", "offset": 72, "limit": 50}`
+
+### 🧑 User — 2026-11-17T01:40:13.090Z
+
+> ↩︎ result: 72	## 2b. RUN #3 (2026-11-17 ~01:25 UTC, session 01Q46SCH) — done so far, all behind `env05`, `npx tsc --noEmit` clean
+> 73	* **Weight (ring B left-arc bulge):** `tools/env05/weight_study.py` (new; analytic replica of the warped real rings A, B and
+> 74	  the far rings C..G through the probe camera, band edges vs `ring_model.json`, draws outlines on the approved picture)
+> 75	  showed the S-kink came from `e05Weight` = 0 at the river bank on BOTH sides. Now asymmetric (`environment.ts`): RIGHT
+> 76	  half unchanged smoothstep(sin th, −0.28, 0.05) (the displacement points INTO the tunnel there: must not cover river /
+> 77	  foam / apron); LEFT half smoothstep(sin th, −0.95, −0.5) (points OUT of the tunnel: the whole left side wall moves with
+> 78	  its rings down below the waterline). Ring A up 0.3 → 0.42 (fit), far rings + far wall `upFar` 0.45 (approved far rings
+> 79	  ≈9 px higher), seam knot up[54] = upFar, and the up displacement now fades to 0 toward the 05 → 06 junction like `side`.
+> 80	  Analytic edge error (px, mean, visible rays): A 13.7 → 7.8, B left arc 18.0 → 7.3, C 9.1 → 4.3, D 4.9 → 1.7.
+> 81	  Probe e3 (id buffer, `ring_table.py`, mean |edge| px, STACK → e2 → **e3**): A 59.1 → 10.0  …[+3984 chars]
+
+### 🤖 Claude — 2026-11-17T01:40:18.377Z
+
+The tunnel specialist has made large measured gains. I'll look at its newest real game capture myself before telling you about it.
+
+### 🤖 Claude — 2026-11-17T01:40:18.821Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/work/e9/05.png"}`
+
+### 🧑 User — 2026-11-17T01:40:18.881Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:40:27.349Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/full_reference_match; python3 -I -c \"\nimport json\nfor t in ['e6','e7','e8','e9']:\n  try:\n    f=json.load(open('$D/env/work/'+t+'/FULL_FRAME_METRICS.json'))['whole_frame'];r=json.load(open('$D/env/work/'+t+'/REGION_METRICS.json'))\n    rr=r.get('regions',r)\n    def g(k):\n      v=rr.get(k,{});return '%.1f/%.0f%%'%(v.get('mean_abs',0),100*v.get('within_20',0)) if v else '-'\n    print(t,'whole %.2f/%.1f%%'%(f['mean_abs'],100*f['within_20']),'| walls',g('purple_walls'),'| rings',g('gold_rings_and_front_frame'),'| fittings',g('side_fittings'),'| far',g('distant_tunn …[+382 chars]`
+
+### 🧑 User — 2026-11-17T01:40:27.429Z
+
+> ↩︎ result: e6 whole 20.34/72.0% | walls 7.0/91% | rings 16.8/79% | fittings 4.1/94% | far 2.4/97% | water 9.2/88% | foam 5.7/95%
+> e7 whole 19.01/73.7% | walls 7.0/91% | rings 9.4/88% | fittings 4.1/94% | far 2.4/97% | water 7.4/91% | foam 5.7/95%
+> e8 whole 19.03/73.6% | walls 7.0/91% | rings 9.7/87% | fittings 4.1/94% | far 2.4/97% | water 7.4/91% | foam 5.7/95%
+> e9 whole 19.00/73.7% | walls 7.0/91% | rings 9.4/88% | fittings 4.1/94% | far 2.4/97% | water 7.4/91% | foam 5.7/95%
+> == coins notes newest
+> ## In progress right now
+> UPDATE ~01:05 UTC (run stopped for the account transfer): no coin change since the checkpoint; the first real capture with
+> `coins05=1` has still NOT been taken. `src/gameplay/coins.ts` typechecks (`npx tsc --noEmit` clean). Step 1 below is next.
+> (The autosave at 00:28 already contains coins.ts, coin05_face.png and the hud05 sprites.)
+> 
+> ## RUN #3 (session 01Q46SCH, 2026-11-17 ~01:20 UTC) — progress
+> 1. DONE — first real probe with `STACK&hud05=1&coins05=1 --vis` (/tmp/claude-0/hc05/r3/p1): coins 1–6 drawn at the
+>    approved centres; coins 7–15 NOT visible. Cause (raycast through each coin centre): the far end of the 05 tube is a
+>    forced-perspective relief (`environment.ts` `tu …[+1671 chars]
+
+### 🤖 Claude — 2026-11-17T01:40:37.146Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/full_reference_match/env/work/e9/05.png"], "caption": "INTERIM, real game capture (not final): the tunnel specialist's newest tunnel correction at the approved camera. Only the tunnel, rings, paddles and distant tunnel changed here; Benny, HUD and coins are still the old versions in this picture.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T01:40:37.751Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/env/work/e9/05.png → file_uuid: 8c29ac5e-092f-4b9a-9be9-93d881ddbab1
+
+### 🤖 Claude — 2026-11-17T01:40:54.288Z
+
+It's looking much closer in the tunnel, and I've sent you the tunnel specialist's newest real game capture. It's an interim picture: only the tunnel, rings, paddles and distant tunnel are new in it. Benny, the HUD and the coins are still the old versions there.
+
+**Tunnel (measured on the real capture, before → now, mean colour difference / share of pixels within 20 levels):**
+
+| Area | Before | Now |
+|---|---|---|
+| Purple tunnel walls | 53.8 / 21 % | **7.0 / 91 %** |
+| Gold rings + front frame | 37.7 / 50 % | **9.4 / 88 %** |
+| Side paddles | 26.9 / 60 % (44.9 / 39 % in the last full capture) | **4.1 / 94 %** |
+| Distant tunnel + glow | 29.8 / 45 % (34.5 / 34 % in the last full capture) | **2.4 / 97 %** |
+| Water | 9.4 / 88 % | 7.4 / 91 % (better, not broken) |
+| Foam banks | 8.4 / 93 % | 5.7 / 95 % (better) |
+| **Whole screen** | 34.1 / 51.6 % | **19.0 / 73.7 %** |
+
+- **Paddles:** all six paddles now sit on the corrected wall, so the sunken right-side paddles are fixed. The ring B bulge is gone, and the rings line up with your rings to within about 3–9 pixels.
+- **How it was done:** your artwork's wall, ring and paddle pixels are projected onto the real 3D tunnel from the approved camera, the same method as the water. That's why the approved view matches so closely. While riding, the specialist saw stretched texture near the screen edges, which still needs work.
+- **Still visible:** a few small rough patches near the right-hand paddles.
+- **Checks passed:** the default game is still pixel-identical to your protected default, Screens 06 and 07 are unchanged, and the gameplay test passed 8/8. Screen 04 differs only in its distant view into the 05 tunnel.
+
+**Benny:** his textures are baked and installed. In his test render of the same frame, Benny + hat went from 23.5 % to 62.5 % within tolerance. That's not a full game capture yet; the specialist is still working on the beanie cuff.
+
+**Coins:** the specialist found why only 6 coins showed. Coins 7–15 were placed behind the compressed far end of the tunnel, so they were hidden, and the coin face art was upside down. It's fixing both now; no real capture of the new coins yet.
+
+**HUD:** no new update from the specialist since the relaunch yet.
+
+When the specialists finish, I'll combine everything into one `?match05=1` capture and send you the three separate pictures with whole-screen numbers.
+
+### 🧑 User — 2026-11-17T01:40:55.876Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

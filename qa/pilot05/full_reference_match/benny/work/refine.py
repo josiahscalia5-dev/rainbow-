@@ -32,7 +32,7 @@ def main():
     from bennyseg import rgb2hsv, colour_classes
     Hh, Ss, Vv = rgb2hsv(a8); cls = colour_classes(a8)
     okc = {'body': ((Hh > 280) | (Hh < 20)) & (Ss > 0.2), 'crown': np.isin(cls, [2, 3]), 'cuff': (Hh > 230) & (Hh < 300) & (Ss > 0.35),
-           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2)}
+           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2), 'star': np.ones(a8.shape[:2], bool)}
     rep = {}
     for pid, (name, key, TW, TH, mode) in PARTS.items():
         if only and name not in only:

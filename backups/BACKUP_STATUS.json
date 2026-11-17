@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-17T01:32:05+00:00",
+    "time": "2026-11-17T01:37:18+00:00",
     "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 99,
+    "files_staged": 61,
     "pushed_verified": true,
     "branch": "claude/rainbow-account-transfer-npxahd",
-    "commit": "e0b2dac0b8a7b86c5fb056e64ac275661cdfc448",
-    "duration_s": 13
+    "commit": "4742ce899ce060f0048ecdfd4636bd5e1f66db0c",
+    "duration_s": 8
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/rainbow-account-transfer-npxahd",
-  "last_verified_remote_sha": "e0b2dac0b8a7b86c5fb056e64ac275661cdfc448",
-  "last_successful_backup_utc": "2026-11-17T01:32:05+00:00",
+  "last_verified_remote_sha": "4742ce899ce060f0048ecdfd4636bd5e1f66db0c",
+  "last_successful_backup_utc": "2026-11-17T01:37:18+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=605); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-17T01:35:00+00:00"
+  "next_scheduled_utc": "2026-11-17T01:40:00+00:00"
 }

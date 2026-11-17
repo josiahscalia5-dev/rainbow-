@@ -1758,3 +1758,162 @@ Now install the refined maps (originals kept in `work/f1/in` for a clean revert)
 > star     2683   37.0  0.41    0.052  [252 217  3
 > body    44566   21.4  0.70  …[+43 chars]
 
+### 🤖 Claude — 2026-11-17T01:37:21.804Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "old_string": "* Next: b3 probe = shot0 with maps + calD/E/A/C with the final normal maps → re-bake WITHOUT `--normals` (keep normals) →\n  install → capture.", "new_string": "* b3 (maps from b2 installed, probe frame): Benny + hat 49.71 → 25.01 mean, 23.5 → 62.5 % ≤20. Seen there: the approved cuff\n  is ROLLED vs ours (bottom edge rises 2.65° to the image-left, top 3–6 px higher) → crown showed where approved has cuff.\n* Geometry r8 / r9 / r9c (new HAT05 fields): `roll` 0.046 (hat about …[+1647 chars]`
+
+### 🧑 User — 2026-11-17T01:37:21.865Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:37:42.213Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "offset": 136, "limit": 80}`
+
+### 🧑 User — 2026-11-17T01:37:42.236Z
+
+> ↩︎ result: 136	const T = (f: string) => new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href;
+> 137	/** part → baked albedo (sRGB PNG) + colour factor (the map stores albedo / factor so it fits 0..1) + optional normal map */
+> 138	export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {
+> 139	  fur_body: { map: 'body.png', scale: 1 },
+> 140	  fur_armL: { map: 'armL.png', scale: 1 },
+> 141	  fur_armR: { map: 'armR.png', scale: 1 },
+> 142	  fur_pom: { map: 'pom.png', scale: 1 },
+> 143	  hat_crown: { map: 'crown.png', scale: 1, normal: 'crown_n.png', normalScale: 0.8 },
+> 144	  hat_brim: { map: 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },
+> 145	};
+> 146	/** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report
+> 147	 *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */
+> 148	export const STAR05 = { color: [0.319, 0.39, 0.048] as [number, number, number] };
+> 149	
+> 150	let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
+> 151	/** load every baked map once (missing files → null: that part keeps its GLB lo …[+3139 chars]
+
+### 🤖 Claude — 2026-11-17T01:37:50.166Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\nrep=[\n(\"\"\"export const STAR05 = { color: [0.319, 0.39, 0.048] as [number, number, number] };\"\"\",\n\"\"\"export const STAR05 = {\n  color: [0.319, 0.39, 0.048] as [number, number, number],\n  /** optional baked star map (planar UVs on the star's face plane, see starUVs): face, bevel rim and highlights from the\n   *  approved pixels; missing → the flat solved colour above */\n  map: 'star.png',\n};\n\n/** planar UVs on the star's own face plane (x, y → 0..1, square, 2 % margin): …[+1439 chars]`
+
+### 🧑 User — 2026-11-17T01:37:50.216Z
+
+> ↩︎ result: 292:  const starMat = (star.material as THREE.MeshStandardMaterial).clone();
+> 293-  starMat.color.setRGB(...STAR05.color);
+> 294-  star.material = starMat;
+> 295-  const starCol = starMat.color.clone();
+> 296-
+> 370:    if (k === null) starMat.color.copy(starCol); else starMat.color.setScalar(k);
+
+### 🤖 Claude — 2026-11-17T01:37:54.624Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\nrep=[\n(\"\"\"  const starMat = (star.material as THREE.MeshStandardMaterial).clone();\n  starMat.color.setRGB(...STAR05.color);\n  star.material = starMat;\n  const starCol = starMat.color.clone();\n\"\"\",\n\"\"\"  const starMat = (star.material as THREE.MeshStandardMaterial).clone();\n  const starTex = maps[STAR05.map] ?? null;\n  if (starTex) {\n    starTex.wrapS = starTex.wrapT = THREE.ClampToEdgeWrapping;\n    starMat.map = starTex;\n    starMat.color.setScalar(1);\n  } else sta …[+660 chars]`
+
+### 🧑 User — 2026-11-17T01:37:56.943Z
+
+> ↩︎ result: tsc_rc=0
+
+### 🤖 Claude — 2026-11-17T01:37:59.962Z
+
+Now add the star as a bakeable part in `bake.py` (its approved mask, no colour-family filter, no tiling: the whole face is visible).
+
+### 🤖 Claude — 2026-11-17T01:38:06.900Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\nrep=[\n(\"\"\"    7: ('armR', 'body', 256, 128, None),\n}\"\"\",\"\"\"    7: ('armR', 'body', 256, 128, None),\n    5: ('star', 'star', 256, 256, None),\n}\"\"\"),\n(\"\"\"           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2)}\n    star =\"\"\",\"\"\"           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2), 'star': np.ones(a8.shape[:2], bool)}\n    star =\"\"\"),\n(\"\"\"'crown': alb.max(-1) > 0.1}[key]\"\"\",\"\"\"'crown': alb.max(-1) > 0.1, 'star': np.ones_like(see …[+1153 chars]`
+
+### 🧑 User — 2026-11-17T01:38:39.085Z
+
+> ↩︎ result: ok
+> console: [benny05] missing baked map star.png
+> loaded 3.506
+> shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> calA.shot.js "calA"
+> calC.shot.js "calC"
+> restore.shot.js "restored"
+> done 31.613
+> rc=0
+
+### 🤖 Claude — 2026-11-17T01:38:45.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; python3 -I -c \"\nimport sys; sys.path.insert(0,'$W')\nimport numpy as np\na=np.fromfile('$W/s1/uv.f32',np.float32).reshape(480,440,4); b=np.fromfile('$W/r9c/uv.f32',np.float32).reshape(480,440,4)\nida=np.rint(a[...,2]); idb=np.rint(b[...,2])\nprint('id map identical', (ida==idb).all(), ' star px', (ida==5).sum())\ns=ida==5; print('star uv range u',a[...,0][s].min(),a[...,0][s].max(),' v',a[...,1][s].min(),a[...,1][s].max())\no=~s&(ida>0); print('non-star uv identical', np.abs(a[o]-b[o]).max())\n\"; timeout 900  …[+472 chars]`
+
+### 🧑 User — 2026-11-17T01:38:50.406Z
+
+> ↩︎ result: id map identical True  star px 2522
+> star uv range u 0.021920372 0.9442413  v 0.054020796 0.9483712
+> non-star uv identical 0.0
+> bake_rc=0
+> {'px': 2064, 'seen_texels': 3314, 'rejected_texels': 0, 'scale': 1.0, 'median_albedo': [0.319, 0.393, 0.05]} [0.319, 0.39, 0.048]
+
+### 🤖 Claude — 2026-11-17T01:38:52.204Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/star_tex.png"}`
+
+### 🧑 User — 2026-11-17T01:38:52.226Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:38:59.856Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; cp $W/s1/tex/star.png assets/textures/benny05/star.png; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1\" --out=$B/cap/new_s1 > $SP/cap_s1.log 2>&1; echo cap_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I to …[+236 chars]`
+
+### 🧑 User — 2026-11-17T01:39:24.822Z
+
+> ↩︎ result: cap_rc=0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 31.84, 'within_10': 0.4642, 'within_20': 0.5511, 'ssim_lum': 0.5489, 'mean_signed_rgb': [2.3, 0.6, -1.1]}
+> benny_and_hat                px   93061  mean  19.95  <=10 0.566  <=20 0.721  ssim 0.640  signed [-5.2, -0.7, 1.0]
+> pom     12764   22.1  0.67    0.152  [124  20 23
+> crown   18362   18.1  0.75    0.179  [223 168 24
+> cuff    14689   15.4  0.80    0.122  [112  16 23
+> star     2683   24.5  0.72    0.035  [252 217  3
+> body    44566   21.4  0.70    0.513  [242  79 18
+> ALL 93061 19.95 0.721
+
+### 🤖 Claude — 2026-11-17T01:39:37.532Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; mkdir -p $W/f3/in; cp assets/textures/benny05/{body,crown,brim,pom,armL,armR,star}.png $W/f3/in/; timeout 600 python3 $W/refine.py $W/s1 $B/cap/new_s1/05.png $W/f3/in $W/f3/out --lam 0.8 --seen $W/s1/tex | python3 -I -c \"\nimport sys,json; d=json.load(sys.stdin)\nfor k,v in d.items(): print(k,v)\"; for f in body crown brim pom armL armR star; do cp $W/f3/out/$f.png assets/textures/benny05/$f.png; done; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc …[+598 chars]`
+
+### 🧑 User — 2026-11-17T01:39:59.837Z
+
+> ↩︎ result: body {'px': 34916, 'texels': 24181, 'mean_abs_corr': 0.0158, 'mean_change': 0.0069, 'pixel_err_before_lin': 0.0478}
+> crown {'px': 15648, 'texels': 25744, 'mean_abs_corr': 0.019, 'mean_change': 0.0062, 'pixel_err_before_lin': 0.0211}
+> brim {'px': 12578, 'texels': 20027, 'mean_abs_corr': 0.0114, 'mean_change': 0.0041, 'pixel_err_before_lin': 0.0129}
+> pom {'px': 10824, 'texels': 10486, 'mean_abs_corr': 0.0183, 'mean_change': 0.0077, 'pixel_err_before_lin': 0.0356}
+> armL {'px': 1260, 'texels': 1702, 'mean_abs_corr': 0.015, 'mean_change': 0.0069, 'pixel_err_before_lin': 0.0268}
+> armR {'px': 1174, 'texels': 1612, 'mean_abs_corr': 0.016, 'mean_change': 0.0079, 'pixel_err_before_lin': 0.0282}
+> star {'px': 2064, 'texels': 3314, 'mean_abs_corr': 0.017, 'mean_change': 0.0016, 'pixel_err_before_lin': 0.0178}
+> cap_rc=0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 31.8, 'within_10': 0.4657, 'within_20': 0.5517, 'ssim_lum': 0.5498, 'mean_signed_rgb': [2.3, 0.6, -1.1]}
+> benny_and_hat                px   93061  mean  19.35  <=10 0.588  <=20 0.730  ssim 0.651  signed [-5.3, -0.6, 1.0]
+> pom     12764   21.4  0.68    0.152  [124  20 23
+> crown   18362   17.2  0.76    0.175  [223 168 24
+> cuff    14689   …[+152 chars]
+
+### 🤖 Claude — 2026-11-17T01:40:08.294Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((214,760,634,1210))\nc=Image.open('qa/pilot05/full_reference_match/benny/cap/new_f3/05.png').convert('RGB').crop((214,760,634,1210))\no=Image.new('RGB',(840,450)); o.paste(a,(0,0)); o.paste(c,(420,0)); o=o.resize((1260,675)); o.save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/ac_f3.png')\"", "description": "Approved vs current capture crop"}`
+
+### 🧑 User — 2026-11-17T01:40:08.652Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:40:10.595Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/ac_f3.png"}`
+
+### 🧑 User — 2026-11-17T01:40:10.627Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:40:32.310Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "        t.anisotropy = 4;", "new_string": "        // 16 (three.js clamps to the GPU's maximum): keeps the knit stitches on the beanie's grazing flanks (4 blurred them out)\n        t.anisotropy = 16;"}`
+
+### 🧑 User — 2026-11-17T01:40:32.371Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-17T01:40:37.268Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1\" --out=$B/cap/new_an16 > $SP/cap_an.log 2>&1; echo cap_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I tool …[+527 chars]`
+

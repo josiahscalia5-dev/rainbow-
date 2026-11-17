@@ -325,9 +325,10 @@ export function buildEnvironment(course: Course): Environment {
    * with the rings down to below the waterline (sin th −0.95 … −0.5, under the river): ring B's left arc stays a smooth
    * circle (weight_study.py: B left edge error 18.0 → 7.3 px, A 11.7 → 3.2) instead of the S-kink at the bank.
    */
+  const e05R0 = qaNum05('e05r0', -0.28), e05R1 = qaNum05('e05r1', 0.05);   // QA knobs (right-half ramp), env05 only
   const e05Weight = (th: number) => (Math.cos(th) < 0
     ? THREE.MathUtils.smoothstep(Math.sin(th), -0.95, -0.5)
-    : THREE.MathUtils.smoothstep(Math.sin(th), -0.28, 0.05));
+    : THREE.MathUtils.smoothstep(Math.sin(th), e05R0, e05R1));
   const warp05: TubeWarp | undefined = E05 ? (s, th, out) => {
     const d = s - sCam05, w = e05Weight(th);
     const fade = 1 - THREE.MathUtils.smoothstep(d, 54, sGlow05 - sCam05 - 0.5);   // 0 at the 05 → 06 junction
@@ -731,7 +732,10 @@ export function buildEnvironment(course: Course): Environment {
   // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
   {
     // `?projframe05=1` (src/vfx/proj05Tunnel.ts): the approved gold band on the same frame; default unchanged
-    const frame = new THREE.Mesh(nearFrameGeometry(), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
+    // `?env05=1`: the three pieces fitted to the approved frame outline (tools/env05/frame_fit.py → env/frame/frame_fit.json:
+    // approved frame px missed 13,796 → 3,786); their own approved-gold bake assets/textures/env05/frame05.png
+    const frame05e = ENV05 ? { left: [434, 1028, 456, 190, 1, -157, -127], right: [427, 1026, 453, 190, 1, -22.5, -55], lip: [423, 2118, 655, 130, -1, 122, 58] } as Parameters<typeof nearFrameGeometry>[0] : undefined;
+    const frame = new THREE.Mesh(nearFrameGeometry(frame05e), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
     frame.name = 'tube05_near_frame';
     frame.frustumCulled = false;
     frame.matrixAutoUpdate = false;
