@@ -109,7 +109,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
-  const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.22, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+  const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
@@ -542,7 +542,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
         b08.aux.position.copy(b08Rest.pos).add(off);
       }
       const cm = b08.crown?.material as THREE.MeshStandardMaterial | undefined;
-      cm?.color.copy(m08On ? M08_BENNY.crown : b08Rest.crown);
+      // (the ported benny05 maps carry the approved knit colours: no crown tint any more, the rest colour is kept)
+      cm?.color.copy(b08Rest.crown);
       m08.splash.visible = m08On;
       if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
     }

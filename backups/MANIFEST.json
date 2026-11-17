@@ -387,6 +387,51 @@
    "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
   },
   {
+   "path": "assets/textures/benny05/armL.png",
+   "bytes": 18814,
+   "sha256": "cc2c7e3eba5a7966665926f86a84e5878d68d226127f71d25c36fda801d99991"
+  },
+  {
+   "path": "assets/textures/benny05/armR.png",
+   "bytes": 17815,
+   "sha256": "a3f5006b3858b874d8b818f1b5e88eff2a9c69972a3b623896bd31b733aa28b6"
+  },
+  {
+   "path": "assets/textures/benny05/body.png",
+   "bytes": 317146,
+   "sha256": "c7484ccce17b59e601a7148495c9af50ff85599f630d0527994bb890645a6c43"
+  },
+  {
+   "path": "assets/textures/benny05/brim.png",
+   "bytes": 198166,
+   "sha256": "2c617695e20e8b33c676fc70c2e57df8c7df32dadfa69d8736f023cea0b9e453"
+  },
+  {
+   "path": "assets/textures/benny05/brim_n.png",
+   "bytes": 185217,
+   "sha256": "316550a43fb5f03b8be21beb7fdf20fee44eb5fa0741e6fa7522b3fa65a75af2"
+  },
+  {
+   "path": "assets/textures/benny05/crown.png",
+   "bytes": 375665,
+   "sha256": "1964a315f26e82a350dedae63c5ad6cf5aefce32776fbef2fd9755f0841ad641"
+  },
+  {
+   "path": "assets/textures/benny05/crown_n.png",
+   "bytes": 294541,
+   "sha256": "e91874b81cf1ad64227011b24cca8c4b29ef644f2805056bbb1894160ef84a38"
+  },
+  {
+   "path": "assets/textures/benny05/pom.png",
+   "bytes": 145907,
+   "sha256": "38c806472caf72506ded6fb1b3ed6f8e3394a6acdb55e6673f0c2283aa0b8f3a"
+  },
+  {
+   "path": "assets/textures/benny05/star.png",
+   "bytes": 49535,
+   "sha256": "932bbbd451e36b7129938b581cef4f8060730cefd4e7ed47c08df32909193cce"
+  },
+  {
    "path": "assets/textures/marble05_env_1024.jpg",
    "bytes": 51147,
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
@@ -564,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "247612f427d91da2ac9beadefb99d8c3508352165ed3f9f163ec03efddeeda4a"
+   "sha256": "9c1c3cf5da8bf100ebcdc393198bfdc1ea2820278721908354e4670a5dd0f156"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1328,8 +1373,8 @@
   },
   {
    "path": "qa/match/08/08_NEW_match08.png",
-   "bytes": 2305979,
-   "sha256": "b18bb9893c1833f7746e6c795ffadbf374974c6fd4aeb049247b165675fa1192"
+   "bytes": 2346273,
+   "sha256": "65abf7abbdc27b9b5173a06fda44dce77e63d3381c4ded02d5decccdc47c4019"
   },
   {
    "path": "qa/match/08/08_NEW_match08_android1080x1920.png",
@@ -1343,8 +1388,8 @@
   },
   {
    "path": "qa/match/08/NOTES.md",
-   "bytes": 12682,
-   "sha256": "51fced25010d548d70435cd651f6a22853f384ef4c7a99ee242e094b8671e580"
+   "bytes": 14309,
+   "sha256": "27fca1ea807840b0359c232a5652c4c1138945be74b6cf6855244a4c111e65e9"
   },
   {
    "path": "qa/match/08/gameplay_test_match08.json",
@@ -7787,19 +7832,24 @@
    "sha256": "8571f4ece727b54b91bf48a465db48f949af809927d5ac4b1c3e29281af5d7b6"
   },
   {
+   "path": "src/characters/benny/benny05.ts",
+   "bytes": 18758,
+   "sha256": "b03ac60c2e4d711beed90a36c01249e5354d51ce37a09a96a992ccb916ead914"
+  },
+  {
    "path": "src/characters/benny/build.ts",
    "bytes": 24248,
    "sha256": "7f0cf0e0740197cab5c1cb347d95fe37be3d3f442e27bb07fcee6e9d07c307ad"
   },
   {
    "path": "src/characters/benny/fur.ts",
-   "bytes": 6194,
-   "sha256": "8fd897055b834224cb3dcf3ec4d9406041835130bfdd9ed3718f41157ffc161e"
+   "bytes": 7423,
+   "sha256": "057cd9d702260f0e1751279fee3c1eeee50164970a4ecfc5774147d3e57c8a57"
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 12537,
-   "sha256": "21cfc091a4c4b00a95e9886868f30479ba3b3d4a70375a11eb2744f832f2d5f3"
+   "bytes": 13153,
+   "sha256": "a6247dd1763620602833b47ba6df23f381dcb197306596ed0bc9d6604c41f175"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -7838,8 +7888,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 38766,
-   "sha256": "d69c5b7aaca5a90f7952e0e74fa0fe32824a684b15101118f8a01e2f74cf433e"
+   "bytes": 38856,
+   "sha256": "c9090ddb593d86a7ba77ec9706d2329e0f239a2e18baa9db10c5d0372c2a6401"
   },
   {
    "path": "src/game/cameraRig.ts",

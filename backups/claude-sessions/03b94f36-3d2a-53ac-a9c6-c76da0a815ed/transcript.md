@@ -7358,3 +7358,185 @@ Then I'll show you approved and new side by side for your decision on Screen 08.
 
 **Should I start the Benny work now?**
 
+### 🧑 User — 2026-11-17T14:47:30.551Z
+
+CLAUDIA — IMPORTANT GAMEPLAY VIDEO REVIEW AND APPROVED-SCREEN ACCURACY
+
+I've reviewed my latest Android gameplay recording, and I want to make sure we're improving the actual playable game, not just individual screenshots.
+
+My number-one priority is making ALL my playable 3D environments match their ORIGINAL APPROVED SCREENS as closely as technically possible.
+
+FIRST — FINISH SCREEN 08
+
+Yes, please continue with the planned Benny surface-detail improvements, including the fur, beanie knit, ribbed cuff, pom-pom, and gold star.
+
+Preserve the successful Screen 08 scenery reconstruction, camera calibration, textures, river, and gameplay systems.
+
+Screen 08 is not fully approved until I personally approve it.
+
+SECOND — REVIEW MY ACTUAL GAMEPLAY VIDEO
+
+Please inspect the gameplay recording and look specifically for these problems:
+
+1. CAMERA OBSTRUCTIONS: Large washer parts and white foam sometimes block much of the view. Adjust camera collision, clipping, framing, and object placement without changing the approved designs.
+
+2. SCENERY CONSISTENCY: Match each playable screen's original approved scenery, including precise architecture, colors, lighting, metallic reflections, textures, water formations, and overall visual quality.
+
+3. SCREEN TRANSITIONS: Around 34–37 seconds in the recording, a large gold structure and dark region obstruct the camera. Investigate the actual cause and fix it so the transition feels continuous.
+
+4. SCREEN 08 CAMERA: Around 38–40 seconds, check whether the gameplay camera correctly uses the new Screen 08 matching setup. The approved view must be reproduced at the appropriate checkpoint, and the scenery should remain convincing when the camera advances or steers.
+
+5. WATERWAY: Match each approved river's exact curves, width, blue/pink distribution, highlights, foam, splashes, and surrounding washer geometry.
+
+6. BENNY: Make sure Benny remains visually consistent with the approved character across every gameplay section. Preserve his rounded fluffy body, proper knitted hat, star, pom-pom, and convincing interaction with the water.
+
+7. COINS: Keep collectible coins aligned with each approved screen while preserving all gameplay and reward functionality. Avoid oversized, overlapping, or visually cluttered arrangements.
+
+8. PERFORMANCE: Check for clipping, stretched textures, texture seams, sudden camera jumps, rendering artifacts, and frame-rate problems on Android.
+
+THIRD — TEST ACTUAL GAMEPLAY
+
+I want proof that the scene works as genuine 3D, not just that one static screenshot matches.
+
+For each playable screen, test:
+
+- The exact approved checkpoint view.
+- The camera moving forward.
+- Steering left and right.
+- Transitions into the next section.
+- Benny's position, animations, and water interaction.
+- Coin collection and unchanged gameplay behavior.
+- Actual Android performance.
+
+Show full-size previews of the approved original, the new game view, and representative moving-camera positions separately.
+
+Report similarity measurements accurately, distinguishing fixed-camera scenery from Benny and moving-camera quality.
+
+FOURTH — KEEP MY GOOGLE FLOW CINEMATICS SEPARATE
+
+The opening and ending scenes involving the cartoon girl are intended for Google Flow.
+
+Do not spend time redesigning those cinematic scenes as playable 3D levels. Keep their transition points ready for my final videos.
+
+FIFTH — CONTINUE ALL MY APPROVED SCREENS
+
+Once I approve Screen 08, continue with Screens 04, 05, 06, and 07, one by one.
+
+Give every screen the same level of visual precision and attention that you gave Screen 08.
+
+Preserve all 13 original approved images unchanged and keep a complete progress checklist so no screen is forgotten.
+
+Save everything regularly to GitHub branch "ccr-9c4a8ad6-xovgsx", after verifying the correct repository and branch.
+
+Do not discard the existing successful work, restart the game, or spend unnecessary Marble credits.
+
+MOST IMPORTANT: I WANT MY APPROVED ARTWORK BROUGHT TO LIFE AS A REAL PLAYABLE 3D ANDROID GAME — NOT ANOTHER REDESIGN OF THE SCENERY.
+
+Finish Benny on Screen 08 first, then address the gameplay-video findings before requesting my final Screen 08 approval.
+
+### 🤖 Claude — 2026-11-17T14:47:40.441Z
+
+Starting with Benny as you asked. First a quick check for your gameplay recording, since nothing was attached to this message. Then a read-only check of exactly what the Screen 05 Benny files need from the other branch:
+
+### 🤖 Claude — 2026-11-17T14:47:44.301Z
+
+> 🔧 **Bash** `{"command": "find /home/user /tmp -maxdepth 4 -type f \\( -iname '*.mp4' -o -iname '*.mov' -o -iname '*.webm' -o -iname '*.3gp' -o -iname '*.mkv' \\) -mmin -600 2>/dev/null | grep -v node_modules | head -5; echo \"--- line B Benny files vs this branch:\"; cd /home/user/rainbow- && B=origin/ccr-b0757dec-dj6l1o; for f in src/characters/benny/benny05.ts src/characters/benny/runtime.ts src/characters/benny/fur.ts; do echo \"$f: B $(git show $B:$f 2>/dev/null | wc -l) lines, here $(wc -l < $f 2>/dev/null || echo 0), changed here since split: $(git diff --quiet aea7e77 HEAD -- $f && echo no || echo  …[+421 chars]`
+
+### 🧑 User — 2026-11-17T14:47:44.581Z
+
+> ↩︎ result: --- line B Benny files vs this branch:
+> /bin/bash: line 2: src/characters/benny/benny05.ts: No such file or directory
+> src/characters/benny/benny05.ts: B 382 lines, here 0, changed here since split: no
+> src/characters/benny/runtime.ts: B 281 lines, here 274, changed here since split: no
+> src/characters/benny/fur.ts: B 171 lines, here 137, changed here since split: no
+> import * as THREE from 'three';
+> import { on05 } from '../../vfx/waterRibbon';
+> import type { FurHandle, FurParams } from './fur';
+> import * as THREE from 'three';
+> import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> import type { BennyRuntime } from '../types';
+> import { makeFur, type FurHandle, type FurParams } from './fur';
+> import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+> import * as THREE from 'three';
+> origin/ccr-b0757dec-dj6l1o:src/vfx/waterRibbon.ts:213:export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> assets/textures/benny05/armL.png
+> assets/textures/benny05/armR.png
+> assets/textures/benny05/body.png
+> assets/textures/benny05/brim.png
+> assets/textures/benny05/brim_n.png
+> assets/textures/benny05/crown.png
+> assets/textures/benny05/crown_n.png
+> assets/textur …[+51 chars]
+
+### 🤖 Claude — 2026-11-17T14:48:05.895Z
+
+> 🔧 **Bash** `{"command": "B=origin/ccr-b0757dec-dj6l1o; echo \"backup SHAs: line A $(git rev-parse --short HEAD), line B $(git rev-parse --short $B)\"; git diff --quiet aea7e77 $B -- src/characters/types.ts && echo \"types.ts unchanged on B\" || echo \"types.ts CHANGED on B\"; for f in src/characters/benny/benny05.ts src/characters/benny/runtime.ts src/characters/benny/fur.ts; do git show $B:$f > $f; done; git checkout $B -- assets/textures/benny05 && ls assets/textures/benny05 | wc -l; python3 -I - <<'EOF'\np='src/characters/benny/benny05.ts'; s=open(p).read()\nold=\"import { on05 } from '../../vfx/waterR …[+803 chars]`
+
+### 🧑 User — 2026-11-17T14:48:10.615Z
+
+> ↩︎ result: backup SHAs: line A 25703fa, line B 99ab17b
+> types.ts unchanged on B
+> 9
+> benny05 flag adapted
+> tsc clean
+> A  assets/textures/benny05/armL.png
+> A  assets/textures/benny05/armR.png
+> A  assets/textures/benny05/body.png
+> A  assets/textures/benny05/brim.png
+> A  assets/textures/benny05/brim_n.png
+> A  assets/textures/benny05/crown.png
+> A  assets/textures/benny05/crown_n.png
+> A  assets/textures/benny05/pom.png
+> A  assets/textures/benny05/star.png
+>  M src/characters/benny/fur.ts
+
+### 🤖 Claude — 2026-11-17T14:48:24.443Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/p1d 2>&1 | tail -1 | cut -c1-12; timeout 600 node scripts/capture.mjs 08 --out=$M/p1 --q=match08=1 2>&1 | tail -1 | cut -c1-12; cp $M/capture_log.bak qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\na=np.asarray(Image.open('qa/match/audit/08_BEFORE_default.png').convert('RGB')).astype(int); b=np.asarr …[+1614 chars]`
+
+### 🧑 User — 2026-11-17T14:49:08.971Z
+
+> ↩︎ result: 08 → /tmp/
+> 08 → /tmp/
+> default identical: 0 px differ
+> before port  Benny+splash  66.2% SSIM 0.636 | scenery  97.4% | whole  83.4%
+> with port    Benny+splash  65.9% SSIM 0.629 | scenery  97.4% | whole  83.3%
+
+### 🤖 Claude — 2026-11-17T14:49:12.290Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/benny_port1.png"}`
+
+### 🧑 User — 2026-11-17T14:49:12.361Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T14:49:30.081Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nold=\"      cm?.color.copy(m08On ? M08_BENNY.crown : b08Rest.crown);\\n\"\nnew=\"      // (the ported benny05 maps carry the approved knit colours: no crown tint any more, the rest colour is kept)\\n      cm?.color.copy(b08Rest.crown);\\n\"\nassert s.count(old)==1; open(p,'w').write(s.replace(old,new)); print('crown tint removed')\nEOF\ntimeout 200 npx tsc --noEmit && echo tsc clean; M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak; timeou …[+957 chars]`
+
+### 🧑 User — 2026-11-17T14:49:55.123Z
+
+> ↩︎ result: crown tint removed
+> tsc clean
+> 08 → /tmp/
+> approved  fur centre x  428.0 box x 263-593 y 1049-1200 w 330 h 151
+> port      fur centre x  422.5 box x 266-587 y 1043-1221 w 321 h 178
+
+### 🤖 Claude — 2026-11-17T14:50:09.096Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/lift: 0.06, dx: 0.22,/lift: 0.06, dx: 0.26,/\" src/game/Game.ts && grep -c \"dx: 0.26\" src/game/Game.ts && timeout 200 npx tsc --noEmit && echo tsc clean; M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/p3 --q=match08=1 2>&1 | tail -1 | cut -c1-12; timeout 600 node scripts/capture.mjs 08 --out=$M/p3d 2>&1 | tail -1 | cut -c1-12; cp $M/capture_log.bak qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nfrom  …[+1754 chars]`
+
+### 🧑 User — 2026-11-17T14:51:02.524Z
+
+> ↩︎ result: 1
+> tsc clean
+> 08 → /tmp/
+> 08 → /tmp/
+> default identical: 0 px differ
+> ported Benny: Benny+splash  65.8% SSIM 0.632 | scenery  97.4% | whole  83.3% SSIM 0.818
+> gameplay match08: 8 / 8 | coins 1330 -> 2240 | errors []
+
+### 🤖 Claude — 2026-11-17T14:51:18.249Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/match/08/NOTES.md <<'EOF'\n\n## BENNY PORT (2026-11-17 ~15:00 UTC) — line B's benny05 transferred WITHOUT a merge\n* Backups: line A was at `25703fa`, line B `ccr-b0757dec-dj6l1o` at `99ab17b` (untouched). Copied only\n  `src/characters/benny/{benny05.ts,runtime.ts,fur.ts}` (this branch's copies were unchanged since the split, so line B's\n  are clean supersets) + `assets/textures/benny05/*.png` (9 maps baked from the APPROVED 05 pixels into Benny's UVs).\n  `benny05.ts` flag adapted: runs under `?benny05=1`, `?benny08=1`, `?match08=1`, `?matchall=1` (this branch's flag0 …[+1827 chars]`
+

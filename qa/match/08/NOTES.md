@@ -130,3 +130,19 @@ node scripts/capture.mjs 08 --q=match08=1 --out=<dir>; node tools/match08/motion
   (4) re-run the bake with the 08 approved picture and the locked 08 camera (`assets/textures/match08/cam08_locked.json`)
   → `assets/textures/benny08/*.png`; (5) verify default 0 px, 05/07 unchanged, Benny+splash score, gameplay 8/8, motion.
 * Android: `builds/rainbow-debug-match08-2026-11-17b.apk` (this round; the earlier `…-17.apk` kept). NOT phone-tested.
+
+## BENNY PORT (2026-11-17 ~15:00 UTC) — line B's benny05 transferred WITHOUT a merge
+* Backups: line A was at `25703fa`, line B `ccr-b0757dec-dj6l1o` at `99ab17b` (untouched). Copied only
+  `src/characters/benny/{benny05.ts,runtime.ts,fur.ts}` (this branch's copies were unchanged since the split, so line B's
+  are clean supersets) + `assets/textures/benny05/*.png` (9 maps baked from the APPROVED 05 pixels into Benny's UVs).
+  `benny05.ts` flag adapted: runs under `?benny05=1`, `?benny08=1`, `?match08=1`, `?matchall=1` (this branch's flag05) —
+  on every screen while the switch is on, so Benny stays consistent; default build 0 px (verified).
+* Effect: knitted beanie with stitches + white/purple stripes + ribbed cuff, yarn pom-pom, approved gold star, softer
+  denser shell fur, damped swim roll. The 08 crown tint was removed (maps carry the colours); placement re-measured
+  (fur centre 422 → nudged dx 0.26).
+* Measured: Benny + splash 65.8 % within 20 levels (SSIM 0.632; 66.2 % before the port — pixel tolerance does not
+  reward the new fine knit/fur detail, visual match is clearly closer), scenery 97.4 % unchanged, whole 83.3 %.
+  Gameplay 8/8, 91 coins / 2,240. NOT yet re-checked: Benny in motion on the other screens; APK not rebuilt with the port.
+* Still to do before asking for approval: user's gameplay-video findings (camera obstructions by washer parts/foam,
+  34–37 s gold structure + dark region at a transition, 38–40 s whether the 08 camera engages) — needs the recording
+  (not received in this session); optional re-bake of the maps from the 08 picture with the locked 08 camera.
