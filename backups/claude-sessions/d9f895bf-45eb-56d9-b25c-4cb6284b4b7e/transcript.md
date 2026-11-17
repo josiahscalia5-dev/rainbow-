@@ -613,3 +613,122 @@ Still debugging why the view tilt persists at the drain lip — adding a tempora
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; cd $S/wt_r3 && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=16.6 --t1=18.6 --dt=0.1 --size=360x800 --out=$S/lip_r3 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],r.get('bennyHidden'),r.get('near2'))\n  except: print(l.strip()[:150])\"", "description": "Probe r3 build through the lip", "timeout": 1000000}`
 
+### 🧑 User — 2026-11-17T18:45:28.697Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> 16.6 03 0.054 0.2634
+> 16.7 03 0.058 0.3969
+> 16.8 03 0.354 0.355
+> 16.9 03 0.31 0
+> 17 03 0.375 0.43
+> 17.1 03 0.435 0.7494
+> 17.2 03 0.323 0.7005
+> 17.3 04 0.083 0.4319
+> 17.4 04 0.046 0.2313
+> 17.5 04 0.032 0.178
+> 17.6 04 0.021 0.1656
+> 17.7 04 0.031 0.1606
+> 17.8 04 0.031 0.1242
+> 17.9 04 0.022 0.0311
+> 18 04 0.041 0
+> 18.1 04 0.025 0
+> 18.2 04 0.042 0
+> 18.3 04 0.039 0
+> 18.4 04 0.053 0
+> 18.5 04 0.026 0
+> 18.6 04 0.026 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T18:45:30.416Z
+
+Measured round-3 build through the drain lip; now the same for the new fix and the default build.
+
+### 🤖 Claude — 2026-11-17T18:45:33.345Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; cd /home/user/rainbow- && for v in new:camclear=1 def:; do n=${v%%:*}; q=${v#*:}; echo \"== $n\"; timeout 900 node tools/camclear/probe.mjs --q=$q --t0=16.6 --t1=18.6 --dt=0.1 --size=360x800 --out=$S/lip_$n 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],r.get('bennyHidden'),r.get('near2'))\n  except: pass\"; done", "description": "Probe new and default through the lip", "timeout": 2000000}`
+
+### 🧑 User — 2026-11-17T18:48:30.558Z
+
+> ↩︎ result: == new
+> 16.6 03 0.006 0.011
+> 16.7 03 0.036 0
+> 16.8 03 0.154 0
+> 16.9 03 0.343 0.0068
+> 17 03 0.41 0.4563
+> 17.1 03 0.483 0.7786
+> 17.2 03 0.341 0.728
+> 17.3 04 0.087 0.4426
+> 17.4 04 0.048 0.173
+> 17.5 04 0.032 0.1417
+> 17.6 04 0.022 0.1518
+> 17.7 04 0.032 0.1563
+> 17.8 04 0.031 0.1228
+> 17.9 04 0.022 0.0304
+> 18 04 0.04 0
+> 18.1 04 0.026 0
+> 18.2 04 0.041 0
+> 18.3 04 0.04 0
+> 18.4 04 0.052 0
+> 18.5 04 0.026 0
+> 18.6 04 0.025 0
+> == def
+> 16.6 03 0.054 0.2634
+> 16.7 03 0.058 0.3969
+> 16.8 03 0.369 0.3978
+> 16.9 03 0.544 0.2651
+> 17 03 0.169 0.0087
+> 17.1 03 0.213 0
+> 17.2 03 0.58 0
+> 17.3 04 0.801 0
+> 17.4 04 1 0
+> 17.5 04 1 0
+> 17.6 04 1 0
+> 17.7 04 0.742 0
+> 17.8 04 0.142 0.0416
+> 17.9 04 0.235 0.236
+> 18 04 0.655 0.0096
+> 18.1 04 0.111 0
+> 18.2 04 1 0.0022
+> 18.3 04 1 1
+> 18.4 04 0.054 0
+> 18.5 04 0.028 0
+> 18.6 04 0.026 0
+
+### 🤖 Claude — 2026-11-17T18:48:36.342Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; python3 -c \"\nimport json\nR=json.load(open('$S/lip_new/probe.json'))['rows']\nfor r in R[2:8]: print(r['t'], r.get('nearBy'), {k:r['benny'].get(k) for k in ('hidden','hiddenBy','box') if k in r['benny']})\" | cut -c1-600", "description": "What veils Benny at the lip"}`
+
+### 🧑 User — 2026-11-17T18:48:36.406Z
+
+> ↩︎ result: 16.8 [] {'hidden': 0.154, 'box': [0, 0.256, 0.653, 0.7]}
+> 16.9 [{'obj': 'water_ribbon < water_system', 'share': 0.0068}] {'hidden': 0.343, 'box': [0, 0.244, 0.544, 0.666]}
+> 17 [{'obj': 'water_ribbon < water_system', 'share': 0.4543}, {'obj': 'Mesh(MeshStandardMaterial#ffcf4d,1843v) < zone_basin < washer_world', 'share': 0.0129}] {'hidden': 0.41, 'box': [0, 0.252, 0.444, 0.656]}
+> 17.1 [{'obj': 'water_ribbon < water_system', 'share': 0.7786}] {'hidden': 0.483, 'box': [0, 0.296, 0.442, 0.696]}
+> 17.2 [{'obj': 'water_ribbon < water_system', 'share': 0.728}] {'hidden': 0.341, 'box': [0, 0.333, 0.497, 0.731]}
+> 17.3 [{'obj': 'water_ribbon < water_system', 'share': 0.4426}] {'hidden': 0.087, 'box': [0, 0.267, 0.639, 0.728]}
+
+### 🤖 Claude — 2026-11-17T18:48:42.938Z
+
+> 🔧 **Bash** `{"command": "grep -n \"new THREE.Vector3(0, 1.6, 0)\" src/game/cameraRig.ts && sed -i 's|addScaledVector(f.right, lat).add(new THREE.Vector3(0, 1.6, 0));|addScaledVector(f.right, lat).add(new THREE.Vector3(0, 2.6, 0));|' src/game/cameraRig.ts && S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=16.7 --t1=17.5 --dt=0.1 --size=360x800 --out=$S/lip_h26 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],r.get('bennyHidden'),r.get('near2'))\n  e …[+88 chars]`
+
+### 🧑 User — 2026-11-17T18:49:27.348Z
+
+> ↩︎ result: 218:    const p = f.pos.clone().addScaledVector(f.right, lat).add(new THREE.Vector3(0, 1.6, 0));
+> 16.7 03 0.029 0
+> 16.8 03 0.16 0
+> 16.9 03 0.291 0
+> 17 03 0.235 0.0178
+> 17.1 03 0.275 0.4408
+> 17.2 03 0.191 0.5286
+> 17.3 04 0.047 0.4135
+> 17.4 04 0.017 0.0538
+> 17.5 04 0.009 0.0022
+> [This command modified 1 file you've previously read: src/game/cameraRig.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T18:49:32.049Z
+
+> 🔧 **Bash** `{"command": "sed -i 's|new THREE.Vector3(0, 2.6, 0));|new THREE.Vector3(0, 3.4, 0));|' src/game/cameraRig.ts && S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 900 node tools/camclear/probe.mjs --q=camclear=1 --t0=16.7 --t1=17.5 --dt=0.1 --size=360x800 --out=$S/lip_h34 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],r.get('bennyHidden'),r.get('near2'))\n  except: pass\"", "description": "Try camera 1.8 u higher over the lip", "timeout": 1000000}`
+

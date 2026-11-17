@@ -215,7 +215,7 @@ export class RideCamera {
     // world up, not the stream's own up: the chute water twists over the drain lip, and a view tied to its up would
     // swing underneath it
     const f = this.course.sample(Math.max(0, s - 3));
-    const p = f.pos.clone().addScaledVector(f.right, lat).add(new THREE.Vector3(0, 1.6, 0));
+    const p = f.pos.clone().addScaledVector(f.right, lat).add(new THREE.Vector3(0, 3.4, 0));
     this.pos.lerp(p, w);
     // aim at Benny (a little below his centre line ahead), so he stays in the frame while the view swings behind him
     const fb = this.course.sample(s + 1.5);

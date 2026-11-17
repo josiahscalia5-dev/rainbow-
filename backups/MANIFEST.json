@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11543,
-   "sha256": "7580c4636347ee5b01e687acbd949a99b998569fbd6b1fbe5c0b34abf3929c12"
+   "sha256": "877c1d7aeeec955476f47edd08ccb1c88ee3e9b12c51ffc1e517cb6d12cbb25d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9059,7 +9059,7 @@
   {
    "path": "src/game/cameraRig.ts",
    "bytes": 18289,
-   "sha256": "6c59cdfaf58536f57a3110a12ce7e4bfa736a25faa5a2c255792716e2ce53edf"
+   "sha256": "eb181ecc474dd5b61f806716a484d05b21d209ad63e1e9d18f22795f97b2df86"
   },
   {
    "path": "src/game/match.ts",
