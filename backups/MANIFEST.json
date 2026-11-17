@@ -492,6 +492,11 @@
    "sha256": "6cb5ecf23b1a0b3bb9724fa8fd4e31d7344f0c05e9f08220f52f0af48df0d2e6"
   },
   {
+   "path": "assets/textures/match06/water06.json",
+   "bytes": 4998,
+   "sha256": "b933c9f1d51b6e1860e94a62d20955764d675727cc28f6b895155c8a021b41cb"
+  },
+  {
    "path": "assets/textures/match08/cam08_locked.json",
    "bytes": 684,
    "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
@@ -653,8 +658,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3867,
-   "sha256": "652a290b1950ad55f5baa9a98cf7c63f4f82a3f5eb7d03938e00dac0e8982729"
+   "bytes": 3885,
+   "sha256": "2ca6902d8cd1fe5163dc2045256bf75df5596cbc9c33f590b7d0eca739961f39"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -663,8 +668,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11493,
-   "sha256": "80d8dd9ba37b54512f5e691b1ec42012e0a10206be9ef45cafa151068c9aeba8"
+   "bytes": 11502,
+   "sha256": "f155efa561ed7f32b16fedb705633dfe67e1f559d4960d3100c5be98195493f2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1540,6 +1545,76 @@
    "path": "qa/match/06/proofs_r3.json",
    "bytes": 991,
    "sha256": "45532389bf0b63694a98bb27608204d9618f436d00964adb8a13b7365f3682fc"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/a00_approved_view.jpg",
+   "bytes": 704242,
+   "sha256": "7dd4373fe042a2363a1322c1ddd282c95b49bf83122fffb05a7b0c5b7c93c973"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/f03_forward3u.jpg",
+   "bytes": 605374,
+   "sha256": "5c4abd7e4f46f486f76f46f5b2926dfe0eabcd22cefdfb8d12e4ef88e992bcb7"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/f06_forward6u.jpg",
+   "bytes": 586574,
+   "sha256": "5e077f2d64b90cfbcb1e0f7e2040f7ecbf72a36ffc807c2ec36f096f05849167"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/f10_forward10u.jpg",
+   "bytes": 600991,
+   "sha256": "2d08faa90401ec7276af4ec44f372ce14f57de72bb1244d4dcffbcfa753f0637"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/f20_forward20u.jpg",
+   "bytes": 605752,
+   "sha256": "735723561cceb40a9d51cdb05c95c03bed795ffb7ea6e5eee1406f3b70103978"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/motion.json",
+   "bytes": 4598,
+   "sha256": "eac3b276755b5c86058f237dc73441260add798cc484f8c6bf48a77c4166370d"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/s_left_hard.jpg",
+   "bytes": 562350,
+   "sha256": "3026567c77ca4fdfced5bf9f5be3ed4c96ef413bd5eec5102a1b640c878704cd"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/s_left_steer.jpg",
+   "bytes": 558943,
+   "sha256": "ea2d0d4c38968bced431920c0c7590d84fafde199c2ae4fbdb1f7db9ea5c04a5"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/s_right_hard.jpg",
+   "bytes": 625877,
+   "sha256": "ea8a81944bbc8739e57d45deb7dd12cdfa8c55ace2266a6b97b01429fdb48abe"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/s_right_steer.jpg",
+   "bytes": 568915,
+   "sha256": "90d0cad8cf3e98f85caad589ee09c852c25f79f3691eb974f237f57be1ba988b"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/t33_through_screen.jpg",
+   "bytes": 609252,
+   "sha256": "d5065950ae38209f9248aa05b455b9d6197adf458b114f0274dac48996a7969d"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/t66_through_screen.jpg",
+   "bytes": 566287,
+   "sha256": "82df99478c3b6d2ddf13c9d0ce7bd6015c9c53229015e514f762c4784dea8849"
+  },
+  {
+   "path": "qa/match/06/r6/BEFORE_lead/t95_through_screen.jpg",
+   "bytes": 645802,
+   "sha256": "057987bc1c22545dc27a30f55773a8f04dbf69648a94ba4d3966f62c87fbaa04"
+  },
+  {
+   "path": "qa/match/06/r6/water06_fit_check.png",
+   "bytes": 2580293,
+   "sha256": "8d0330f23f4e892e8f6ef5a79ff30377cbbc297927793136371e34088803d718"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -8397,6 +8472,16 @@
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
   },
   {
+   "path": "tools/lead_r6/motion_audit.mjs",
+   "bytes": 2965,
+   "sha256": "45fcca22b4c0688fd8b3689032709f6dd309a8e801a502baec9b6c1cbd7f4f71"
+  },
+  {
+   "path": "tools/lead_r6/motion_metrics.py",
+   "bytes": 1639,
+   "sha256": "8b7fe03e6dfa5ac495b43e795ffc70dacd6c263ae88deb748dbae1f97ec80045"
+  },
+  {
    "path": "tools/make_env_geometry_ref.py",
    "bytes": 3755,
    "sha256": "d2ebc3f4d980db18255dad39ae2fa80e55cbbdacdb38ef52e72afce77c7cd940"
@@ -8485,6 +8570,11 @@
    "path": "tools/match06/fit_river06.py",
    "bytes": 6483,
    "sha256": "85e55ef4d5858fc0631b6cdfc710944ea135c89dea4f196d7491301f8b05e2a7"
+  },
+  {
+   "path": "tools/match06/fit_water06.py",
+   "bytes": 6353,
+   "sha256": "eef84eb9aae09b14f3f61db542dd549a25db60d6f8265ed224e92711c129907a"
   },
   {
    "path": "tools/match06/geo06.py",
