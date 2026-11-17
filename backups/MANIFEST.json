@@ -393,8 +393,8 @@
   },
   {
    "path": "assets/textures/match08/cam08_locked.json",
-   "bytes": 17,
-   "sha256": "3e55181011b5ddc492b53dba6295045f86343f8e9603150c61779d6650cd2194"
+   "bytes": 684,
+   "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
   },
   {
    "path": "assets/textures/match08/plate08_clean.png",
@@ -403,13 +403,13 @@
   },
   {
    "path": "assets/textures/match08/proj08.json",
-   "bytes": 3008,
-   "sha256": "0d76da58b5207491680328321fea629778d2847038a8ba698b0b81045614ee05"
+   "bytes": 2987,
+   "sha256": "c839818082995627eb39a9d2fec325fdcdced5c11048c96e9683b6847f9d1dad"
   },
   {
    "path": "assets/textures/match08/river08.json",
-   "bytes": 5716,
-   "sha256": "a8271f738e2611e42907d1ca78d198e68ce8490351619b170d62fd779eb3a107"
+   "bytes": 5703,
+   "sha256": "4ac472a53107aaa1c80f423e0511cf11f7f91add02009dd36188d2fa4ee32558"
   },
   {
    "path": "assets/textures/tunnel05/frame05.json",
@@ -529,7 +529,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "2a67c137374120450e50e07f0148e5518a5c07dd6208bf74bf11aa599724fcb1"
+   "sha256": "d71dacd6960bbb2291c177dff86abcc838e0fa2524b94d48fb09027cca1240e7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1030,6 +1030,11 @@
    "path": "qa/gameplay_test.json",
    "bytes": 14632,
    "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/gameplay_test_switch.json",
+   "bytes": 14656,
+   "sha256": "6d6de3a5505ab1b859d8df3abee2a2f6906348f332561f9591cb2859f00691b0"
   },
   {
    "path": "qa/glb_validation.txt",

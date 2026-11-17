@@ -4922,3 +4922,225 @@ No runtime import cycle (the water module only imports type names from the cours
 >     raise JSONDecodeError("Expecting value", s, err.value) from None
 > json.decoder.JSONDecodeError: Expecting value: line 1 col …[+6705 chars]
 
+### 🤖 Claude — 2026-11-17T13:34:15.372Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I -c \"\nimport json;L=json.load(open('assets/textures/match08/proj08.json'));c=L['camera']\njson.dump({'mw':c['matrixWorld'],'fov':c['fov'],'cam':c['pos'],'restored_from':'proj08.json'},open('$M/cam08_prev.json','w'));print('restored camera', [round(x,3) for x in c['pos']])\"; python3 -I tools/match08/fit_proxies.py $M/cam08_prev.json assets/textures/match08/proj08.json >/dev/null && python3 -I -c \"import json;print('backwall', json.load(open('assets/textur …[+555 chars]`
+
+### 🧑 User — 2026-11-17T13:35:01.755Z
+
+> ↩︎ result: restored camera [13.474, -109.864, -274.536]
+> backwall {'z': -284.53598192515716, 'holeR': 4.301417830369395}
+> iter 1 cam [13.071, -109.865, -274.712] benny [12.448, -113.105, -281.999] door [481.9, 412.9, 0.9983]
+> iter 2 cam [12.928, -109.866, -274.775] benny [12.297, -113.11, -282.065] door [482, 412.4, 0.9983]
+> iter 3 cam [12.877, -109.866, -274.793] benny [12.243, -113.111, -282.083] door [482, 412.3, 0.9983]
+
+### 🤖 Claude — 2026-11-17T13:35:12.414Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && for it in 4 5; do timeout 400 node $M/probe08b.mjs 'match08=1' > $M/probe_out.txt 2>&1; tail -1 $M/probe_out.txt > $M/cam08.json; python3 -I -c \"import json;d=json.load(open('$M/cam08.json'));print('iter $it cam',d['cam'],'benny',d['benny'],'door',d['doorPx'],'plat',d['platPx'])\" && python3 -I $M/river_proj.py $M/cam08.json $M/river_centre_px.json assets/textures/match08/river08.json; done; timeout 400 node $M/probe08b.mjs 'match08=1' > $M/probe_out.txt 2>&1; tail - …[+447 chars]`
+
+### 🧑 User — 2026-11-17T13:36:02.972Z
+
+> ↩︎ result: iter 4 cam [12.858, -109.866, -274.798] benny [12.223, -113.112, -282.088] door [482.1, 412.3, 0.9983] plat [478.3, 577.9, 0.9981]
+> iter 5 cam [12.851, -109.866, -274.8] benny [12.215, -113.112, -282.09] door [482.1, 412.3, 0.9983] plat [478.4, 577.9, 0.9981]
+> final cam [12.848, -109.866, -274.801] benny [12.213, -113.112, -282.091]
+> {"pipe": {"cx": 12.376735924463707, "cy": -111.01146278742368, "r": 2.9185458098908463, "z0": -266.80056164895825, "z1": -281.2164245171123}, "platform": {"cx": 12.01853569828291, "cz": -325.0, "r": 8.545661353037843, "topY": -109.49424440576783, "rimBottomY": -110.56571929613797, "legsBottomY": -11
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T13:36:12.317Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/new2 --q=match08=1 2>&1 | tail -1 | cut -c1-150; timeout 600 node scripts/capture.mjs 08 --out=$M/default3 2>&1 | tail -1 | cut -c1-40; cp $M/capture_log.bak qa/capture_log.json; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('qa/match/audit/08_BEFORE_default.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$M/default3/08.png').c …[+450 chars]`
+
+### 🧑 User — 2026-11-17T13:36:54.338Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/new2/08.png {"stage":"08","s":391.427,"y":-113.112,"calls
+> 08 → /tmp/claude-0/-home-user-rainbow-
+> default identical: 0 px differ
+> NEW08  FULL |d|  21.7 <=20 0.766 SSIM 0.729 | BELOWHUD |d|  18.1 <=20 0.826 | LAYOUT |d|  11.2 <=20 0.876 | mean RGB approved [168.4, 108.6, 170.2] game [173.7, 107.1, 168.7]
+> BEFORE08 FULL |d|  84.2 <=20 0.040 SSIM 0.204 | BELOWHUD |d|  86.3 <=20 0.034 | LAYOUT |d|  75.9 <=20 0.022 | mean RGB approved [168.4, 108.6, 170.2] game [203.2, 125.0, 226.9]
+
+### 🤖 Claude — 2026-11-17T13:36:59.474Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/new2/08.png"}`
+
+### 🧑 User — 2026-11-17T13:36:59.543Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:37:14.140Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T13:37:14.157Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-17T13:37:14.569Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T13:37:14.579Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-17T13:37:15.020Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T13:37:15.029Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-17T13:37:16.185Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,60p scripts/match-cam-try.mjs | grep -n -E \"ds|goto|lat|stage\\(\" | head -12 | cut -c1-200", "description": "Check how match-cam-try shifts along the river"}`
+
+### 🧑 User — 2026-11-17T13:37:16.256Z
+
+> ↩︎ result: 4:  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> 11:      return window.__rainbow.goto(id);
+> 22:  writeFileSync(`${OUT}/cands.json`, JSON.stringify(log, null, 1));
+
+### 🤖 Claude — 2026-11-17T13:37:18.618Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,45p scripts/match-cam-try.mjs | cut -c1-220", "description": "Read the candidate loop in match-cam-try"}`
+
+### 🧑 User — 2026-11-17T13:37:18.664Z
+
+> ↩︎ result: try {
+>   const page = await browser.newPage({ viewport: { width: ID === '03' ? 727 : 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   for (let i = 0; i < CANDS.length; i++) {
+>     const res = await page.evaluate(async ([id, cand]) => {
+>       const { STAGE_CAM } = await import('/src/game/cameraRig.ts');
+>       window.__camBase ??= JSON.parse(JSON.stringify(STAGE_CAM[id]));
+>       STAGE_CAM[id] = { ...window.__camBase, ...cand };
+>       return window.__rainbow.goto(id);
+>     }, [ID, CANDS[i]]);
+>     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+>     await page.waitForTimeout(200);
+>     const file = `${OUT}/cand_${String(i).padStart(2, '0')}.png`;
+>     await page.screenshot({ path: file });
+>     const cam = await page.evaluate(() => window.__rainbow.camera?.());
+>     log.push({ i, cand: CANDS[i], file, cam, checkpoint: res });
+>     console.log(i, JSON.stringify(CANDS[i]), '→', file);
+>   }
+> } finally {
+>   writeFileSync(`${ …[+97 chars]
+
+### 🤖 Claude — 2026-11-17T13:37:21.914Z
+
+That tool doesn't implement the forward shift. Checking what the game's QA interface offers for moving Benny along the ride:
+
+### 🤖 Claude — 2026-11-17T13:37:23.171Z
+
+> 🔧 **Bash** `{"command": "sed -n \"$(grep -n 'const api = {' src/game/Game.ts | cut -d: -f1),+75p\" src/game/Game.ts | grep -n -E \"^\\s{4}[a-zA-Z0-9_]+[:(]\" | cut -c1-160 | head -30", "description": "List the QA API functions"}`
+
+### 🧑 User — 2026-11-17T13:37:23.224Z
+
+> ↩︎ result: 2:    ready: true,
+> 3:    checkpoints: Object.keys(CHECKPOINTS),
+> 4:    goto: gotoCheckpoint,
+> 5:    run(v = true) { running = v; last = performance.now(); },
+> 6:    unfreeze() { st.frozen = null; input.override = null; },
+> 8:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 9:    setSteer(v: number | null) { input.override = v; },
+> 11:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 12:    startRideAt(id: StageId = '03') {
+> 16:    state() {
+> 19:    log() { return st.log; },
+> 20:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 22:    coinScreen() {
+> 41:    respawns() { return st.respawns; },
+> 43:    camera() {
+> 49:    bennyScreen() {
+> 54:    probe(x = 0, y = 0) {
+> 62:    drawList() {
+
+### 🤖 Claude — 2026-11-17T13:37:29.630Z
+
+> 🔧 **Bash** `{"command": "grep -n \"dirty = true\\|dirty=true\" src/game/Game.ts | head; sed -n \"$(grep -n '    step(n: number' src/game/Game.ts | cut -d: -f1),+1p\" src/game/Game.ts", "description": "Check whether step marks the frame for redraw"}`
+
+### 🧑 User — 2026-11-17T13:37:29.686Z
+
+> ↩︎ result: 536:  let dirty = true;
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+
+### 🤖 Claude — 2026-11-17T13:37:46.397Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/motion08.mjs <<'EOF'\n// Screen 08 moving-camera test (read-only): from the 08 checkpoint ride forward / steer with the real game sim and\n// screenshot what the live camera sees. usage: node motion08.mjs <outDir> [q]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst OUT = process.argv[2]; const Q = process.argv[3] ?? 'match08=1';\nmkdirSync(OUT, { recursive: true });\nconst { chrom …[+1797 chars]`
+
+### 🧑 User — 2026-11-17T13:38:31.308Z
+
+> ↩︎ result: f00_checkpoint s 391.62 lat 0.00 08
+> f03_forward3u s 394.58 lat 0.00 08
+> f06_forward6u s 397.57 lat 0.00 08
+> f10_forward10u s 401.53 lat 0.00 08
+> f15_forward15u s 407.04 lat 0.00 09
+> s_left_steer s 397.90 lat -1.85 08
+> s_right_steer s 397.95 lat 1.85 08
+
+### 🤖 Claude — 2026-11-17T13:38:37.582Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/motion; python3 -I -c \"\nfrom PIL import Image\nnames=['f00_checkpoint','f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer']\nims=[Image.open('$M/%s.png'%n).convert('RGB').resize((288,512)) for n in names]\no=Image.new('RGB',(288*3+12,512*2+6),(255,255,255))\nfor i,im in enumerate(ims): o.paste(im,((i%3)*294,(i//3)*518))\no.save('$M/montage.png')\"", "description": "Build a montage of the motion frames"}`
+
+### 🧑 User — 2026-11-17T13:38:38.364Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T13:38:41.369Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/motion/montage.png"}`
+
+### 🧑 User — 2026-11-17T13:38:41.435Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:39:02.710Z
+
+> 🔧 **Bash** `{"command": "head -12 scripts/gameplay-test.mjs | grep -E \"usage|//\" | head -5; M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak 2>/dev/null; ls qa/*.json | head; (timeout 900 node scripts/gameplay-test.mjs 2>&1 | tail -12) ; echo ======; (timeout 900 node scripts/gameplay-test.mjs --q=match08=1 2>&1 | tail -12); git status --short | head -20", "description": "Run the gameplay test with and without the switch", "timeout": 1900000}`
+
+### 🧑 User — 2026-11-17T13:39:21.057Z
+
+> ↩︎ result: // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> qa/capture_log.json
+> qa/capture_log_1080x1920.json
+> qa/cinematic_test.json
+> qa/continuity_report.json
+> qa/gameplay_test.json
+> qa/report_metrics.json
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> ======
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.29999999999956,
+>   "t08": 30.29999999999956,
+>   "yTop": -51.835,
+>   "yBottom": -113.094,
+>   "y08": -113.094,
+>   "travelTimeTopToInlet": 6.6,
+>   "verticalDrop": 61.26
+>  },
+>  "errors": []
+> }
+>  M assets/textures/match08/cam08_locked.json
+>  M assets/textures/match08/proj08.json
+>  M assets/textures/m …[+51 chars]
+
