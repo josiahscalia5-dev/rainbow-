@@ -3448,3 +3448,502 @@ None of the three has written its `NOTES.md` yet; their progress exists only as 
 
 > ↩︎ result: {"success":true,"message":"Message queued for delivery to a2b87cbe22e9e644e at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a2b87cbe22e9e644e","name":"a2b87cbe22e9e644e","ref":"0b129c"}}
 
+### 🤖 Claude — 2026-11-17T00:23:21.918Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/handoff_def && rm -rf $O && mkdir -p $O && (npx tsc --noEmit > $O/tsc.log 2>&1; echo \"tsc rc=$?\" > $O/rc; node scripts/capture.mjs 05 --out=$O > $O/cap.log 2>&1; echo \"cap rc=$?\" >> $O/rc; git checkout -q -- qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$O/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('default vs current_default_05: differing px',  …[+207 chars]`
+
+### 🧑 User — 2026-11-17T00:23:22.003Z
+
+> ↩︎ result: src/characters/benny/benny05.ts | 326 ++++++++++++++++++++++++++++++++++++++++
+>  src/characters/benny/fur.ts     |  40 ++++-
+>  src/characters/benny/runtime.ts |  13 +-
+>  src/gameplay/coins.ts           | 133 +++++++++++++++-
+>  src/ui/hud.ts                   |  72 ++++++++-
+>  src/vfx/proj05Tunnel.ts         |  78 +++++++++-
+>  src/vfx/waterRibbon.ts          |  38 ++++-
+>  src/world/tube.ts               |  52 ++++++-
+>  8 files changed, 726 insertions(+), 26 deletions(-)
+> 
+> ?? qa/pilot05/full_reference_match/hud/harness.html
+> ?? qa/pilot05/full_reference_match/hud/harness.mjs
+> ?? qa/pilot05/full_reference_match/hud/harness_bg_stack_nohud.png
+
+### 🤖 Claude — 2026-11-17T00:23:25.936Z
+
+Next, a check that each specialist's code edits are gated behind its switch:
+
+### 🤖 Claude — 2026-11-17T00:23:28.105Z
+
+> 🔧 **Bash** `{"command": "for f in src/characters/benny/benny05.ts src/characters/benny/fur.ts src/characters/benny/runtime.ts src/gameplay/coins.ts src/ui/hud.ts src/vfx/proj05Tunnel.ts src/world/tube.ts; do echo \"== $f: $(grep -oE \"on05\\('[a-z0-9]+'\\)|BENNY05|ENV05|HUD05|COINS05\" $f | sort | uniq -c | tr '\\n' ' ')\"; done; git diff b81cc34 HEAD -- src/world/tube.ts | grep '^+' | grep -vE '^\\+\\+\\+' | head -12", "description": "Check specialist edits are switch-gated"}`
+
+### 🧑 User — 2026-11-17T00:23:28.211Z
+
+> ↩︎ result: == src/characters/benny/benny05.ts:       5 BENNY05       1 on05('benny05') 
+> == src/characters/benny/fur.ts:       8 BENNY05 
+> == src/characters/benny/runtime.ts:       5 BENNY05 
+> == src/gameplay/coins.ts:       5 COINS05       1 on05('coins05') 
+> == src/ui/hud.ts:       4 HUD05       1 on05('coin05')       1 on05('heart05')       1 on05('hud05')       1 on05('plus05') 
+> == src/vfx/proj05Tunnel.ts:       7 ENV05 
+> == src/world/tube.ts: 
+> +/** `?env05=1` wall / ring displacement, see TubeGeoOptions.warp */
+> +export type TubeWarp = (s: number, th: number, out: THREE.Vector2) => THREE.Vector2;
+> +
+> +  /**
+> +   * `?env05=1` (Screen 05 only, visual): displacement of the wall point at tunnel coordinate s and angle th (th as
+> +   * below: cos th → right, sin th → up), written into `out` as (along the frame's right, along its up), world units.
+> +   * Positions only; normals, uv and the strip attributes stay those of the circle. Undefined = unchanged geometry.
+> +   */
+> +  warp?: TubeWarp;
+> +  const wv = new THREE.Vector2();
+> +      if (o.warp) {
+> +        o.warp(s, th, wv);
+
+### 🤖 Claude — 2026-11-17T00:23:32.907Z
+
+Every specialist edit is gated: `tube.ts` only gained an optional warp hook that runs when the env05 code passes one. While the regression capture runs, I'll write the new-account handoff.
+
+### 🤖 Claude — 2026-11-17T00:23:35.120Z
+
+> 🔧 **Bash** `{"command": "until [ \"$(wc -l < /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/handoff_def/rc 2>/dev/null || echo 0)\" -ge 3 ]; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/handoff_def/rc; tail -3 /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/handoff_def/tsc.log", "description": "Wait for default-build regression result", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T00:23:44.194Z
+
+> ↩︎ result: tsc rc=0
+> cap rc=0
+> default vs current_default_05: differing px 0
+
+### 🤖 Claude — 2026-11-17T00:23:48.632Z
+
+> 🔧 **Bash** `{"command": "for d in env benny hud coins; do f=qa/pilot05/full_reference_match/$d/NOTES.md; [ -f $f ] && echo \"== $f ($(wc -l <$f) lines, $(date -r $f +%H:%M:%S))\" || echo \"== $f not yet\"; done; date -u +%H:%M:%S", "description": "Check for specialists' checkpoint notes"}`
+
+### 🧑 User — 2026-11-17T00:23:48.688Z
+
+> ↩︎ result: == qa/pilot05/full_reference_match/env/NOTES.md not yet
+> == qa/pilot05/full_reference_match/benny/NOTES.md (75 lines, 00:23:40)
+> == qa/pilot05/full_reference_match/hud/NOTES.md not yet
+> == qa/pilot05/full_reference_match/coins/NOTES.md not yet
+> 00:23:48
+
+### 🤖 Claude — 2026-11-17T00:23:51.291Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md"}`
+
+### 🧑 User — 2026-11-17T00:23:51.320Z
+
+> ↩︎ result: 1	# Benny (benny05) — Screen 05 full reference match · benny-character-artist
+> 2	
+> 3	STATUS: IN PROGRESS (checkpoint written 2026-11-17 on coordinator request). Switch: `benny05` (`?benny05=1` or `?match05=1`).
+> 4	All source files touched are syntactically valid (`npx tsc --noEmit -p .` → rc 0 after every edit).
+> 5	
+> 6	## 1. Measured (BEFORE = STACK capture `benny/before.png` = `stack_2340/05_match05.png`, byte-identical)
+> 7	Region `benny_and_hat` (93,061 px, approved mask): mean |ΔRGB| **49.71**, ≤20 levels **23.5 %**, SSIM 0.087, signed (−0.7, −14.6, +8.5).
+> 8	Whole frame: mean 34.1, ≤20 51.57 %, SSIM 0.509.
+> 9	
+> 10	Per approved part (tool `benny/work/parts.py <capture> [<mask capture>]`):
+> 11	| part | px | mean abs | ≤20 | share of region error | approved median | game median |
+> 12	|---|---:|---:|---:|---:|---|---|
+> 13	| body fur (incl. arms) | 44,566 | 40.9 | 25 % | 39 % | 242,79,181 (mean 225,85,181) | 255,70,177 (mean 254,68,177) |
+> 14	| crown (stripes) | 18,362 | 65.2 | 24 % | 26 % | white 251,228,245 / purple 118,19,232 | white 255,211,233 / purple 104,14,255 |
+> 15	| pom-pom | 12,764 | 56.8 | 15 % | 16 % | 124,20,233 (mean 130,44,213) | 141,0,255 |
+> 16	| ribbed cuff | 14,689 | 47.3 | 26 % …[+5339 chars]
+
+### 🤖 Claude — 2026-11-17T00:23:54.705Z
+
+The Benny specialist's checkpoint note is complete: measurements, files changed, work in progress, and numbered remaining steps. I'll save it right away as checkpoint 2, then keep collecting.
+
+### 🤖 Claude — 2026-11-17T00:23:58.912Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -20; exec 9>backups/.autosave.lock && flock -w 300 9 && git add -A qa/pilot05/full_reference_match src assets tools scripts backups/claude-sessions backups/CONVERSATION_INDEX.md 2>/dev/null; git reset -q -- '**/__pycache__/**' 2>/dev/null; if ! git diff --cached --quiet; then git -c commit.gpgsign=false commit -q -m \"Checkpoint 2 before account transfer: Benny specialist checkpoint notes + in-progress work\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3AUAHEh1rEALJbwfawQ\" && for i in 1 2  …[+395 chars]`
+
+### 🧑 User — 2026-11-17T00:24:02.693Z
+
+> ↩︎ result: M src/characters/benny/benny05.ts
+>  M src/world/environment.ts
+> ?? qa/pilot05/full_reference_match/benny/NOTES.md
+> ?? qa/pilot05/full_reference_match/hud/NOTES.md
+> ?? qa/pilot05/full_reference_match/hud/harness.html
+> ?? qa/pilot05/full_reference_match/hud/harness.mjs
+> ?? qa/pilot05/full_reference_match/hud/harness_bg_stack_nohud.png
+> LOCAL  f600e41c7237890e7bd1d4b47be49c133c22ca25
+> REMOTE f600e41c7237890e7bd1d4b47be49c133c22ca25
+> uncommitted: 0
+
+### 🤖 Claude — 2026-11-17T00:24:08.149Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/full_reference_match/hud/NOTES.md | head -80; echo; echo \"environment.ts gating: $(grep -cE \"ENV05|on05\\('env05'\\)\" src/world/environment.ts)\"; for d in env coins; do f=qa/pilot05/full_reference_match/$d/NOTES.md; [ -f $f ] && echo \"== $f exists ($(wc -l <$f))\" || echo \"== $f not yet\"; done", "description": "Read HUD notes, check env gating and remaining notes"}`
+
+### 🧑 User — 2026-11-17T00:24:08.208Z
+
+> ↩︎ result: # Screen 05 HUD (`hud05`): animation-and-gameplay-engineer, CHECKPOINT NOTES (work in progress)
+> 
+> Status at checkpoint (2026-11-17 ~00:50 UTC): HUD code is written and typechecks (`npx tsc --noEmit` clean). It has
+> NOT been measured in a real game capture yet. The default build is untouched: every change is behind
+> `on05('hud05')` (true for `?hud05=1` or `?match05=1`).
+> 
+> ## Files changed / created
+> | file | what | gated? |
+> |---|---|---|
+> | `src/ui/hud.ts` | `HUD05 = on05('hud05')`; adds class `m05` on `#hud`, appends `CSS05()` rules (`#hud.m05 …`) and, only when HUD05, a different bar markup (capsule `.pill05`, dividers `.div05`, icon `<img>` sprites, live `data-k="hearts"` / `data-k="coins"` spans, `.pbtn.p05` pause button keeps `data-k="pause"` + the click handler). Default CSS string and default markup are unchanged (same text). Tunables are in `H05` (bar box, number font size/weight/left/top, banner centre/top/height/min-width/font size/skew). | yes |
+> | `assets/textures/hud05/{heart05,plus05,coin05,pause05}.png` + `hud05_icons.json` | static icon sprites cut from the approved picture (feathered rect/circle crops) | only loaded when HUD05 |
+> | `qa/pilot05/full_reference_match/hud/icon_ …[+5410 chars]
+
+### 🤖 Claude — 2026-11-17T00:24:25.526Z
+
+> 🔧 **Bash** `{"command": "wc -l backups/START_NEW_CLAUDE_ACCOUNT.md && grep -n \"ccr-\\|claude/\\|b81cc34\\|branch\" backups/START_NEW_CLAUDE_ACCOUNT.md | head -20 | cut -c1-200", "description": "Inspect new-account prompt for branch references"}`
+
+### 🧑 User — 2026-11-17T00:24:25.561Z
+
+> ↩︎ result: 69 backups/START_NEW_CLAUDE_ACCOUNT.md
+> 10:3. Start a Claude Code cloud session on `josiahscalia5-dev/rainbow-`; pick branch
+> 11:   **`claude/rainbow-05-water-projection`** if the app lets you choose (any branch works — the repo's SessionStart hook
+> 12:   merges the newest `ccr-*` / `claude/*` work into the new session's own branch; it never overwrites a branch).
+> 16:> any branch.
+> 17:> Repository: `josiahscalia5-dev/rainbow-`. Newest work: branch `claude/rainbow-05-water-projection` (it contains my
+> 18:> working version `ccr-451ea8c7-3nqlis`, which stays protected). Do not merge the `codex/*` branches unless I ask.
+> 21:>    `git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`).
+> 28:> 4. Keep the five-minute autosave running on your own session branch and verify remote SHA == local HEAD.
+> 38:1. The hook (≈ 10 s) merges every newer `ccr-*` / `claude/*` branch into the new session branch (normal merges; a
+> 43:2. The autosave follows the new session branch by itself (`session_branch_patterns`) and puts the current session in
+> 44:   the `Claude-Session:` trailer. Update `backups/autosave.config.json` → `branch` and  …[+441 chars]
+
+### 🤖 Claude — 2026-11-17T00:24:31.125Z
+
+That prompt still points at an older branch. I'll write a fresh, complete handoff document with a ready-to-paste prompt for the new account, and point the old prompt at it.
+
+### 🤖 Claude — 2026-11-17T00:24:54.424Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/HANDOFF_NEW_ACCOUNT.md", "content": "# RAINBOW — new-account handoff (written 2026-11-17 ~00:55 UTC by session 018Sg3AU)\n\n**Branch to recover: `ccr-694bda6a-x58ntq`** on `josiahscalia5-dev/rainbow-`. Take its NEWEST commit\n(`git ls-remote origin refs/heads/ccr-694bda6a-x58ntq`): the five-minute autosave kept pushing until this session's\ncontainer closed. Last verified commit when this file was written: `f600e41c7237890e7bd1d4b47be49c133c22ca25`\n(the final SHA of the transfer backup is reported to the user in chat and in `backups/BACKUP_LOG.md`).\ …[+5187 chars]`
+
+### 🧑 User — 2026-11-17T00:24:54.574Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/backups/HANDOFF_NEW_ACCOUNT.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:25:00.881Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='backups/START_NEW_CLAUDE_ACCOUNT.md'; s=open(p).read()\nnote=(\"> **NEWEST (2026-11-17, session 018Sg3AU): use `backups/HANDOFF_NEW_ACCOUNT.md` instead of this page** — branch\\n\"\n      \"> `ccr-694bda6a-x58ntq`, paste-ready prompt, and the old-default-branch trap. The text below is from an older account.\\n\\n\")\nif 'HANDOFF_NEW_ACCOUNT.md' not in s:\n    lines=s.split('\\n',1); s=lines[0]+'\\n\\n'+note+lines[1]\n    open(p,'w').write(s)\np='backups/CLAUDE_ACCOUNT_TRANSFER.md'; s=open(p).read()\nif 'HANDOFF_NEW_ACCOUNT.md' not in s:\n    s=s.replace(\"##  …[+885 chars]`
+
+### 🧑 User — 2026-11-17T00:25:00.996Z
+
+> ↩︎ result: CLAUDE.md:1
+> backups/START_NEW_CLAUDE_ACCOUNT.md:1
+> backups/CLAUDE_ACCOUNT_TRANSFER.md:1
+> == qa/pilot05/full_reference_match/env/NOTES.md exists (69)
+> == qa/pilot05/full_reference_match/coins/NOTES.md exists (57)
+
+### 🤖 Claude — 2026-11-17T00:25:03.966Z
+
+All four specialist notes now exist. I'll read the environment and coins notes, then save immediately.
+
+### 🤖 Claude — 2026-11-17T00:25:04.765Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,69p qa/pilot05/full_reference_match/env/NOTES.md | cut -c1-260", "description": "Read environment specialist checkpoint notes"}`
+
+### 🧑 User — 2026-11-17T00:25:04.791Z
+
+> ↩︎ result: # env05 — washer-environment-modeler (Screen 05 tunnel: rings, walls, fittings, far tunnel)
+> 
+> Status: IN PROGRESS (checkpoint 2026-11-17 ~00:45 UTC, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with
+> `?match05=1`). STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.
+> 
+> ## 1. Measured (step A, done)
+> * BEFORE = STACK capture `recovery_s018/stack/05.png` (= `stack_2340/05_match05.png`, byte-identical). Region numbers
+>   (`python3 -I tools/match05/metrics.py`, `env/work/before_*.json`): whole frame mean 34.1 / ≤20 51.6 %; purple walls
+>   53.8 / 21.1 %; gold rings + frame 37.7 / 50.0 %; side fittings 26.9 / 59.7 %; distant tunnel 29.8 / 45.1 %.
+> * Probe of STACK (`node scripts/proj05-tunnel-probe.mjs --q='<STACK>' --out=env/work/probe --raw=<scratch>`): game rings
+>   real r@12u (instance 1), A (s = sCam05 + 20), B (sCam05 + 40); far rings at virtual depth 59/97/161/222/322.
+> * Where the tunnel error comes from (`tools/env05/err_by_surface.py`, probe id buffer): purple-wall region: game WALL
+>   153,207 px mean 56.6 (52 % of the region's error = perforation rows / bays misregistered), game RING A on approved wall
+>   44,545 px m …[+4629 chars]
+
+### 🤖 Claude — 2026-11-17T00:25:05.568Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,57p qa/pilot05/full_reference_match/coins/NOTES.md | cut -c1-260", "description": "Read coins checkpoint notes"}`
+
+### 🧑 User — 2026-11-17T00:25:05.626Z
+
+> ↩︎ result: # Screen 05 coins (`coins05`): animation-and-gameplay-engineer, CHECKPOINT NOTES (work in progress)
+> 
+> Status at checkpoint (2026-11-17 ~00:50 UTC): layout and look are written in `src/gameplay/coins.ts` and typecheck
+> (`npx tsc --noEmit` clean). They have NOT been verified in a real game capture yet. Everything is behind
+> `on05('coins05')` (true for `?coins05=1` or `?match05=1`); with the switch off the code path is the same as before.
+> 
+> ## Files changed / created
+> | file | what | gated? |
+> |---|---|---|
+> | `src/gameplay/coins.ts` | `COINS05 = on05('coins05')`. LAYOUT: table `C05M` (15 measured coins [ds from `05_crest`, lat, scale]) replaces the 05 coins after the checkpoint (pre-checkpoint trail and all other screens' coins unchanged; every coin keeps its old
+> | `assets/textures/coins05/coin05_face.png` | approved nearest coin (face ellipse centre (474.0, 723.25), semi-axes 48.5 × 36.25) un-foreshortened to a 256² disc | only loaded when COINS05 |
+> | `qa/pilot05/full_reference_match/coins/coin_bake.py` | makes the face texture | tool |
+> 
+> Collection, points and the live counter are untouched (`update()` distance test, `COIN_VALUE`, Game.ts `hud.setCoins`).
+> Course, steering, collisions untou …[+3054 chars]
+
+### 🤖 Claude — 2026-11-17T00:25:18.612Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 300 9 && git add -A qa/pilot05/full_reference_match src assets tools scripts backups CLAUDE.md 2>/dev/null; git reset -q -- '**/__pycache__/**' backups/.live 2>/dev/null; git diff --cached --name-only | grep -iE '\\.env$|credential|secret|\\.pem$|id_rsa' ; if ! git diff --cached --quiet; then git -c commit.gpgsign=false commit -q -m \"Checkpoint 3 before account transfer: all specialist checkpoint notes + new-account handoff\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3AUA …[+399 chars]`
+
+### 🧑 User — 2026-11-17T00:25:22.942Z
+
+> ↩︎ result: LOCAL  9f946f0796e161d2771eeb67cd238f5dd9d8cc05
+> REMOTE 9f946f0796e161d2771eeb67cd238f5dd9d8cc05
+> uncommitted: 0
+
+### 🤖 Claude — 2026-11-17T00:25:26.237Z
+
+**Checkpoint 3 is saved and verified:** `9f946f0796e161d2771eeb67cd238f5dd9d8cc05`. Next I'll write the exact per-specialist state into `COORDINATION.md` and the agent-status files.
+
+### 🤖 Claude — 2026-11-17T00:25:54.380Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/full_reference_match/COORDINATION.md <<'EOF'\n\n---\n## STATE AT ACCOUNT TRANSFER 2026-11-17 ~00:55 UTC (session 018Sg3AU, branch `ccr-694bda6a-x58ntq`) — RESUME FROM HERE\nThe user moved to another Claude account. Every specialist below was RUNNING and is now INTERRUPTED (processes never\nsurvive a session). Each wrote a checkpoint NOTES.md on request. Relaunch each with its brief\n`briefs/<agent>.md` + this instruction: \"read your NOTES.md first; continue from its 'Remaining' list; do not redo\nfinished steps\". New-account steps: `backups/HANDOFF_NEW_ACCOUNT. …[+6806 chars]`
+
+### 🧑 User — 2026-11-17T00:25:54.560Z
+
+> ↩︎ result: @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: washer-environment-modeler (recorded running = INTERRUPTED unles
+
+### 🤖 Claude — 2026-11-17T00:26:04.887Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/HANDOFF_NEW_ACCOUNT.md", "old_string": "  Whole frame at the locked camera (STACK): mean |ΔRGB| 34.1, 51.6 % of pixels within 20 levels — NOT a 95 % match.", "new_string": "  Whole frame at the locked camera (STACK): mean |ΔRGB| 34.1, 51.6 % of pixels within 20 levels — NOT a 95 % match.\n  ⚠ At the transfer `assets/textures/env05/` did not exist yet (env specialist step a), so `?env05=1` — and therefore\n  `?match05=1` — may fail to load its tunnel textures. Until the env specialist creates them, A/B with\n  STACK + the individu …[+71 chars]`
+
+### 🧑 User — 2026-11-17T00:26:05.086Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/HANDOFF_NEW_ACCOUNT.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:26:08.397Z
+
+> 🔧 **Bash** `{"command": "echo \"BRANCH $(git branch --show-current)\"; git status --short | head -20; echo \"--- staged-candidate secret scan\"; git add -A qa/pilot05/full_reference_match src assets tools scripts backups CLAUDE.md .claude 2>/dev/null; git reset -q -- '**/__pycache__/**' backups/.live 2>/dev/null; git diff --cached --name-only | head -30; git diff --cached --name-only | xargs -r grep -IlE '(sk-ant-[A-Za-z0-9]|ghp_[A-Za-z0-9]{20}|github_pat_[A-Za-z0-9]|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY|xox[bp]-[0-9])' 2>/dev/null; echo \"scan exit (1 = nothing found): $?\"; git diff --cached -- …[+142 chars]`
+
+### 🧑 User — 2026-11-17T00:26:08.865Z
+
+> ↩︎ result: BRANCH ccr-694bda6a-x58ntq
+>  M backups/AGENTS_STATUS.json
+>  M backups/AGENTS_STATUS.md
+>  M backups/HANDOFF_NEW_ACCOUNT.md
+>  M qa/pilot05/full_reference_match/COORDINATION.md
+>  M scripts/proj05-tunnel-probe.mjs
+>  M src/characters/benny/benny05.ts
+>  M src/ui/hud.ts
+> ?? assets/textures/env05/
+> ?? qa/pilot05/full_reference_match/benny/work/r5/
+> ?? tools/env05/proj_bake.py
+> --- staged-candidate secret scan
+> assets/textures/env05/bake_report.json
+> assets/textures/env05/env05.json
+> assets/textures/env05/ring05e.png
+> assets/textures/env05/wall05e.png
+> backups/AGENTS_STATUS.json
+> backups/AGENTS_STATUS.md
+> backups/HANDOFF_NEW_ACCOUNT.md
+> qa/pilot05/full_reference_match/COORDINATION.md
+> qa/pilot05/full_reference_match/benny/work/r5/outline.png
+> qa/pilot05/full_reference_match/benny/work/r5/shot0.png
+> qa/pilot05/full_reference_match/benny/work/r5/uv.f32
+> scripts/proj05-tunnel-probe.mjs
+> src/characters/benny/benny05.ts
+> src/ui/hud.ts
+> tools/env05/proj_bake.py
+> scan exit (1 = nothing found): 123
+
+### 🤖 Claude — 2026-11-17T00:26:21.140Z
+
+> 🔧 **Bash** `{"command": "du -sh qa/pilot05/full_reference_match/benny/work/r5/uv.f32 assets/textures/env05/*; python3 - <<'EOF'\nfor p,old,new in (\n ('backups/HANDOFF_NEW_ACCOUNT.md',\n  \"  ⚠ At the transfer `assets/textures/env05/` did not exist yet (env specialist step a), so `?env05=1` — and therefore\\n  `?match05=1` — may fail to load its tunnel textures. Until the env specialist creates them, A/B with\\n  STACK + the individual switches (`projvp05`, `projgap05`, `benny05`, `hud05`, `coins05`).\",\n  \"  ⚠ `assets/textures/env05/` (env specialist step a, + `tools/env05/proj_bake.py` step c) appeare …[+964 chars]`
+
+### 🧑 User — 2026-11-17T00:26:21.238Z
+
+> ↩︎ result: 3.3M	qa/pilot05/full_reference_match/benny/work/r5/uv.f32
+> 4.0K	assets/textures/env05/bake_report.json
+> 4.0K	assets/textures/env05/env05.json
+> 1.1M	assets/textures/env05/ring05e.png
+> 2.9M	assets/textures/env05/wall05e.png
+> updated
+
+### 🤖 Claude — 2026-11-17T00:26:23.740Z
+
+Now the final commit and push, under the autosave lock:
+
+### 🤖 Claude — 2026-11-17T00:26:28.029Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 300 9 && git add -A qa/pilot05/full_reference_match src assets tools scripts backups CLAUDE.md .claude 2>/dev/null; git reset -q -- '**/__pycache__/**' backups/.live 2>/dev/null; if ! git diff --cached --quiet; then git -c commit.gpgsign=false commit -q -m \"Account-transfer backup: COORDINATION + agent status with exact done/remaining per specialist, new-account handoff, env05 textures, latest specialist work\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3AUAHEh1rEALJbwfawQ …[+411 chars]`
+
+### 🧑 User — 2026-11-17T00:26:32.661Z
+
+> ↩︎ result: LOCAL  072343c0f0aef04ac86c6b2aa6081683a7ccd15a
+> REMOTE 072343c0f0aef04ac86c6b2aa6081683a7ccd15a
+> uncommitted: 0
+
+### 🤖 Claude — 2026-11-17T00:26:35.429Z
+
+Pushed. Now the full verification: Git LFS on GitHub, the 13 references, the 10 specialists, required assets, and the autosave.
+
+### 🤖 Claude — 2026-11-17T00:26:41.473Z
+
+> 🔧 **Bash** `{"command": "echo \"== 4. Git LFS\"; echo \"local LFS files: $(git lfs ls-files | wc -l), pointer stubs: $(git lfs ls-files | awk '$2==\"-\"' | wc -l)\"; git lfs fsck >/dev/null 2>&1 && echo \"git lfs fsck OK\"; echo \"LFS objects still to upload: $(git lfs push --dry-run origin ccr-694bda6a-x58ntq 2>/dev/null | wc -l)\"; timeout 600 python3 -I scripts/verify-assets.py lfs-remote 2>&1 | grep '^@@' ; echo \"== 7. references\"; sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK$'; sha256sum -c scripts/reference.sha256 2>&1 | grep -v ': OK$' | head -3; echo \"== 8. specialists\"; ls .clau …[+1007 chars]`
+
+### 🧑 User — 2026-11-17T00:26:43.753Z
+
+> ↩︎ result: == 4. Git LFS
+> local LFS files: 34, pointer stubs: 0
+> git lfs fsck OK
+> LFS objects still to upload: 0
+> @@ ok 34/34 LFS objects (231 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> == 7. references
+> 13
+> == 8. specialists
+> 10
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: washer-environ
+> == required assets present (tracked)
+>   tracked  assets/models/benny.glb
+>   tracked  assets/models/lids05.glb
+>   tracked  assets/models/rainbow_girl.glb
+>   tracked  qa/pilot05/proj/tunnel/lid/lids05.blend
+>   tracked  assets/textures/water05/far1/proj05_E.png
+>   tracked  assets/textures/water05/far2/proj05_E.png
+>   tracked  assets/textures/env05/wall05e.png
+>   tracked  assets/textures/hud05/coin05.png
+>   tracked  assets/textures/coins05/coin05_face.png
+>   tracked  src/characters/benny/benny05.ts
+>   tracked  src/vfx/waterRibbon.ts
+>   tracked  tools/proj05/bake.py
+>   tracked  scripts/setup-blender.sh
+>   tracked  scripts/setup-android-sdk.sh
+>   tracked  qa/tools_check/blender_transfer_s018/verify_blender.py
+>   tracked  backups/HANDOFF_NEW_ACCOUNT.md
+>   tracked  .mcp.json.template
+> blend files tracked: 7, glb: 9
+
+### 🤖 Claude — 2026-11-17T00:26:50.170Z
+
+> 🔧 **Bash** `{"command": "echo \"== 9. autosave\"; python3 -I scripts/autosave-status.py | head -1; P=$(cat ~/.rainbow-autosave/daemon.pid); ps -o pid=,etime=,cmd= -p $P; tail -3 backups/BACKUP_LOG.md | cut -c1-150; echo \"== not in git (ignored, inside repo)\"; git status --ignored --short | grep '^!!' | grep -v node_modules | head -20", "description": "Verify autosave daemon and list ignored files"}`
+
+### 🧑 User — 2026-11-17T00:26:50.994Z
+
+> ↩︎ result: == 9. autosave
+> AUTOSAVE OK | branch ccr-694bda6a-x58ntq | scheduler daemon | last verified backup 2026-11-17T00:23:14+00:00 (3.6 min ago) | local 072343c remote 072343c (match) | uncommitted 2
+>  2473       29:20 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> | 2026-11-17T00:21:33+00:00 | hook:Stop | committed+pushed | `c01cc1d59cbe` | `ccr-694bda6a-x58ntq` | 4 | True |  |
+> | 2026-11-17T00:21:59+00:00 | hook:Stop | committed+pushed | `bc149cbaac35` | `ccr-694bda6a-x58ntq` | 12 | True |  |
+> | 2026-11-17T00:22:30+00:00 | hook:Stop | committed+pushed | `a80f5fb94861` | `ccr-694bda6a-x58ntq` | 8 | True |  |
+> == not in git (ignored, inside repo)
+> !! android/local.properties
+> !! backups/.autosave.lock
+> !! backups/.live/
+> !! qa/pilot05/full_reference_match/benny/__pycache__/
+> !! qa/pilot05/full_reference_match/benny/work/__pycache__/
+> !! qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.log
+> !! qa/pilot05/full_reference_match/recovery_s018/tests/continuity.log
+> !! qa/pilot05/full_reference_match/recovery_s018/tests/gameplay_default.log
+> !! qa/pilot05/full_reference_match/recovery_s018/tests/gameplay_match05.log
+> !! qa/pilot05/full_reference_match/recovery_s018/tests/queue.log
+> !! tools/env …[+15 chars]
+
+### 🤖 Claude — 2026-11-17T00:27:05.199Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M:%S && python3 - <<'EOF'\nimport re\nfiles=['backups/HANDOFF_NEW_ACCOUNT.md','qa/pilot05/full_reference_match/COORDINATION.md','backups/AGENTS_STATUS.json','backups/AGENTS_STATUS.md','backups/CLAUDE_ACCOUNT_TRANSFER.md','backups/START_NEW_CLAUDE_ACCOUNT.md','qa/pilot05/full_reference_match/coordinator/NOTES.md','CLAUDE.md']\nrep=[('2026-11-17 ~00:55 UTC','2026-11-17 ~00:25 UTC'),('2026-11-17 ~00:55','2026-11-17 ~00:25'),('~00:55 UTC','~00:25 UTC'),\n     ('appeared at ~00:57 UTC','appeared at ~00:24 UTC'),('files appeared ~00:57 UTC','files appeared ~00:24 UTC'),\n   …[+801 chars]`
+
+### 🧑 User — 2026-11-17T00:27:05.526Z
+
+> ↩︎ result: 00:27:05
+> fixed backups/HANDOFF_NEW_ACCOUNT.md
+> fixed qa/pilot05/full_reference_match/COORDINATION.md
+> fixed backups/AGENTS_STATUS.json
+> fixed backups/AGENTS_STATUS.md
+> fixed backups/CLAUDE_ACCOUNT_TRANSFER.md
+> fixed qa/pilot05/full_reference_match/coordinator/NOTES.md
+> fixed CLAUDE.md
+
+### 🤖 Claude — 2026-11-17T00:27:09.075Z
+
+Times are corrected. The final commit and push, verified against GitHub:
+
+### 🤖 Claude — 2026-11-17T00:27:15.132Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 300 9 && git add -A qa/pilot05/full_reference_match src assets tools scripts backups CLAUDE.md .claude 2>/dev/null; git reset -q -- '**/__pycache__/**' backups/.live 2>/dev/null; git diff --cached --name-only | xargs -r grep -IlE '(sk-ant-[A-Za-z0-9]|ghp_[A-Za-z0-9]{20}|github_pat_[A-Za-z0-9]|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY)' 2>/dev/null; if ! git diff --cached --quiet; then git -c commit.gpgsign=false commit -q -m \"Account-transfer backup (final): corrected handoff timestamps + latest specialist files\n\nCo-Authored-By: Cl …[+791 chars]`
+
+### 🧑 User — 2026-11-17T00:27:19.690Z
+
+> ↩︎ result: BRANCH ccr-694bda6a-x58ntq
+> LOCAL  f267ec46bd4de6454b943da151dbabc9ba667c62
+> REMOTE f267ec46bd4de6454b943da151dbabc9ba667c62
+> MATCH
+> uncommitted: 3
+> 13
+> source branch untouched: b81cc34ae55d
+
+### 🤖 Claude — 2026-11-17T00:27:24.010Z
+
+The final commit is pushed and matches. Three more files appeared from the still-running specialists; checking what they are:
+
+### 🤖 Claude — 2026-11-17T00:27:24.667Z
+
+> 🔧 **Bash** `{"command": "git status --short", "description": "List files written after final commit"}`
+
+### 🧑 User — 2026-11-17T00:27:24.707Z
+
+> ↩︎ result: M qa/pilot05/full_reference_match/benny/work/r7/outline.png
+>  M src/ui/hud.ts
+> ?? qa/pilot05/full_reference_match/env/work/rings_e1.json
+
+### 🤖 Claude — 2026-11-17T00:27:27.937Z
+
+These are edits made in the last seconds by specialists who are still working. I'll save them too:
+
+### 🤖 Claude — 2026-11-17T00:27:32.500Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 300 9 && git add -A qa/pilot05/full_reference_match src assets tools scripts backups 2>/dev/null; git reset -q -- '**/__pycache__/**' backups/.live 2>/dev/null; if ! git diff --cached --quiet; then git -c commit.gpgsign=false commit -q -m \"Account-transfer backup: latest in-progress specialist edits (hud05, env05 ring table, benny r7)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3AUAHEh1rEALJbwfawQ\"; fi; for i in 1 2 3 4; do git push -q -u origin HEAD:refs/heads/ccr-694bd …[+421 chars]`
+
+### 🧑 User — 2026-11-17T00:27:38.706Z
+
+> ↩︎ result: LOCAL  8c69b8bf70e8b16bdf85a0f65e1ce2801b14e427
+> REMOTE 8c69b8bf70e8b16bdf85a0f65e1ce2801b14e427
+> MATCH
+> uncommitted: 0
+> tsc OK at this commit
+
+### 🤖 Claude — 2026-11-17T00:27:54.313Z
+
+Your whole project is saved to GitHub, and the copy there exactly matches local.
+
+- **Branch:** `ccr-694bda6a-x58ntq`
+- **Commit:** `8c69b8bf70e8b16bdf85a0f65e1ce2801b14e427`, with nothing left uncommitted. The project's type check passes at this commit.
+
+**Checks**
+1. The branch is correct.
+2. I reviewed the files before saving and scanned them for secrets: no keys, tokens or passwords found, and no file over 45 MB.
+3. Everything is committed. I saved in stages: an immediate checkpoint (`a80f5fb…`) before anything else, then after collecting the specialists' notes, then the final save.
+4. Git LFS: all 34 large files (the `.blend` files, the GLB models, the APK and the Marble assets) are confirmed on GitHub, with nothing left to upload.
+5. and 6. Pushed without force; GitHub returns the same commit as local.
+7. All 13 approved reference images are byte-identical.
+8. All 10 specialist definitions are present and unchanged.
+9. The five-minute autosave is running (daemon alive for 29 minutes) and pushes to this branch only.
+10. The new-account handoff is in `backups/HANDOFF_NEW_ACCOUNT.md`, and `CLAUDE.md` points to it.
+
+Your protected game is unchanged: the default Screen 05 capture is still pixel-identical to the saved default. Your source branch is still at `b81cc34`. Nothing was promoted, merged or deleted.
+
+**What's saved for resuming**
+- **The water task I was on:** both fixes, with their measurements and numbered next steps, in `qa/pilot05/full_reference_match/coordinator/NOTES.md`.
+  - The dark torn streaks came from gaps in the water texture the starting camera never saw. They are now filled from your approved texture (`projgap05`).
+  - The milky blur came from blending two water pictures. The new blend keeps their contrast (`projvp05`).
+- **The three specialists:** each wrote a checkpoint note listing what it finished and its remaining steps (`env/`, `benny/`, `hud/`, `coins/` under `qa/pilot05/full_reference_match/`).
+- **Where to resume:** `COORDINATION.md` now ends with a section titled "STATE AT ACCOUNT TRANSFER" showing done and not-done for each specialist. Their relaunch briefs are in `qa/pilot05/full_reference_match/briefs/`.
+
+**In the new account**
+- New sessions start on GitHub's old default branch, which has none of the recovery setup. The first commands to run are at the top of `HANDOFF_NEW_ACCOUNT.md`, along with a ready-to-paste prompt.
+- To fix this permanently, set the GitHub default branch to `ccr-694bda6a-x58ntq` (Settings → Branches).
+
+**Not saved, or unfinished**
+- **The three specialists' live processes.** These can't survive an account change. Their work is saved up to this commit; anything they write between now and when this session closes is pushed by the autosave while the session stays open.
+- **Unverified tunnel textures.** The tunnel specialist created them (`assets/textures/env05/`) at about 00:24, but nobody has checked them in a real capture yet. Capture `?match05=1` once before relying on it.
+- **Other work not done yet:**
+  - Benny's knitted-hat and fur textures aren't baked.
+  - The HUD and coin changes aren't checked in a real capture yet.
+  - Splash and bubbles, the Android build, and the final full-screen proof images haven't started.
+- **Deliberately left out of Git:**
+  - test log text files (their result files are saved);
+  - Python caches;
+  - the local tool and Android SDK installs, which the setup scripts rebuild;
+  - about 64 MB of temporary probe data, which takes about 1 minute to regenerate.
+- **Logins that don't transfer:** the Marble API key and the World Labs Atlas sign-in. Neither is needed for Screen 05.
+
+### 🧑 User — 2026-11-17T00:27:57.805Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

@@ -1349,3 +1349,224 @@ I'll read the brief first.
 
 > ↩︎ result: (Bash completed with no output)
 
+### 🤖 Claude — 2026-11-17T00:23:19.578Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/full_reference_match/hud && cp /tmp/claude-0/hc05/p1/stack_nohud.png /home/user/rainbow-/qa/pilot05/full_reference_match/hud/harness_bg_stack_nohud.png && cat > /home/user/rainbow-/qa/pilot05/full_reference_match/hud/harness.html <<'EOF'\n<!doctype html>\n<html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<style>html,body{margin:0;background:#000;overflow:hidden} #bg{position:fixed;left:0;top:0;width:100vw;height:100vh}</style></head>\n<body><img id=\"bg\" alt=\"\">\n<script type=\"mo …[+3189 chars]`
+
+### 🧑 User — 2026-11-17T00:23:23.666Z
+
+> ↩︎ result: Command was moved to the background (ID: b2bxbxj5e) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/b2bxbxj5e.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-17T00:23:27.014Z
+
+Writing checkpoint notes now; tsc passed with no errors, so the touched sources compile.
+
+### 🤖 Claude — 2026-11-17T00:23:56.351Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/hud/NOTES.md", "content": "# Screen 05 HUD (`hud05`): animation-and-gameplay-engineer, CHECKPOINT NOTES (work in progress)\n\nStatus at checkpoint (2026-11-17 ~00:50 UTC): HUD code is written and typechecks (`npx tsc --noEmit` clean). It has\nNOT been measured in a real game capture yet. The default build is untouched: every change is behind\n`on05('hud05')` (true for `?hud05=1` or `?match05=1`).\n\n## Files changed / created\n| file | what | gated? |\n|---|---|---|\n| `src/ui/hud.ts` | `HUD05 = on05('hud05')`; adds class `m05` …[+6045 chars]`
+
+### 🧑 User — 2026-11-17T00:23:56.600Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/hud/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:24:19.044Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/coins/NOTES.md", "content": "# Screen 05 coins (`coins05`): animation-and-gameplay-engineer, CHECKPOINT NOTES (work in progress)\n\nStatus at checkpoint (2026-11-17 ~00:50 UTC): layout and look are written in `src/gameplay/coins.ts` and typecheck\n(`npx tsc --noEmit` clean). They have NOT been verified in a real game capture yet. Everything is behind\n`on05('coins05')` (true for `?coins05=1` or `?match05=1`); with the switch off the code path is the same as before.\n\n## Files changed / created\n| file | what | gated? |\n|---|- …[+4417 chars]`
+
+### 🧑 User — 2026-11-17T00:24:19.224Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/coins/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:24:20.099Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/b2bxbxj5e.output", "description": "Read harness output"}`
+
+### 🧑 User — 2026-11-17T00:24:20.128Z
+
+> ↩︎ result: {"0:bar":[35.3,17.7,828.7,108.1],"1:seg hearts":[38.3,20.7,363.4,105.1],"2:seg coins":[363.4,20.7,715.5,105.1],"3:seg pause":[715.5,20.7,825.7,105.1],"4:banner":[123.1,116,740.9,184.9],"5:SPAN[title]":[167.9,119.9,696.1,180.9]}
+> 
+> real	0m2.848s
+> user	0m1.506s
+> sys	0m0.224s
+> {"0:bar":[33,13,825,100],"1:pill05":[32,12,330,99],"2:i05":[59,20,153,94],"3:num n05h[hearts]":[164,24,236.6,75.6],"4:i05":[253,27,309,76],"5:div05 d1":[342,26,344,85],"6:i05":[374,12,464,101],"7:num n05c[coins]":[497,24,619.3,75.6],"8:div05 d2":[705,26,707,85],"9:pbtn p05[pause]":[726,8,822,104],"10:banner":[117.1,113,748.8,181],"11:SPAN[title]":[140,125,725.9,169]}
+> 
+> real	0m2.836s
+> user	0m1.404s
+> sys	0m0.233s
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-17T00:24:35.440Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's|const U = (px: number) => `calc(var(--u) \\* ${(px / 15.36).toFixed(4)})`;|const U = (px: number) => `calc(var(--u) * ${(px / 15.36 + 1e-5).toFixed(5)})`; // +1e-5: Chrome floors border widths|' src/ui/hud.ts; grep -n \"const U = \" src/ui/hud.ts; cat > /tmp/claude-0/hc05/hudm.py <<'EOF'\nimport numpy as np, sys\nfrom PIL import Image\nsys.path.insert(0,'/tmp/claude-0/hc05')\nfrom hudmeasure import measure\nM=\"qa/pilot05/full_reference_match/masks\"\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(fl …[+750 chars]`
+
+### 🧑 User — 2026-11-17T00:24:37.453Z
+
+> ↩︎ result: 21:const U = (px: number) => `calc(var(--u) * ${(px / 15.36 + 1e-5).toFixed(5)})`; // +1e-5: Chrome floors border widths
+> qa/pilot05/full_reference_match/stack_2340/05_match05.png: HUD mean 62.23 <=20 0.134 | bar-part 64.57 | banner-part 58.60 | whole 34.10
+> /tmp/claude-0/hc05/h_def.png: HUD mean 62.23 <=20 0.133 | bar-part 64.57 | banner-part 58.60 | whole 34.10
+> /tmp/claude-0/hc05/h1.png: HUD mean 32.75 <=20 0.587 | bar-part 30.01 | banner-part 37.00 | whole 31.31
+> /tmp/claude-0/hc05/h1.png
+>   heart [[40, 10, 200, 105, 3714]]
+>   5/5 [[167, 28, 234, 69, 1310]]
+>   plus [[260, 34, 301, 67, 550]]
+>   coin_icon [[360, 17, 458, 110, 4499]]
+>   counter [[498, 32, 616, 69, 1965]]
+>   counter_glyphs [[498, 32, 513, 63, 325], [517, 55, 527, 69, 117], [532, 32, 559, 63, 507], [563, 32, 585, 63, 457], [590, 32, 616, 64, 559]]
+>   55_glyphs [[167, 33, 189, 64, 492], [192, 28, 208, 69, 324], [212, 33, 234, 64, 494]]
+>   pause_light [[715, 13, 824, 99, 1774]]
+>   pause_bars [[806, 30, 808, 32, 5], [755, 35, 765, 71, 348], [779, 35, 789, 72, 370], [797, 76, 807, 85, 20], [745, 82, 748, 85, 8]]
+>   banner_text [[147, 132, 724, 158, 7216]]
+>   banner_glyphs [[147, 132, 172, 158, 374], [172, 132, 197, 158, 329], [206, 14 …[+503 chars]
+
+### 🤖 Claude — 2026-11-17T00:24:57.803Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/ui/hud.ts'\ns=open(p).read()\ns=s.replace(\"num: { size: 51.6, weight: 800, track: 0.0, hX: 165, cX: 498, top: 25 },\",\"num: { size: 53, weight: 800, track: 0.0, hX: 165, cX: 498, top: 28.5 },\")\ns=s.replace(\"min-width: ${U(H05.banner.minW)}; box-sizing: border-box; padding: 0 ${U(24)};\",\"min-width: ${U(H05.banner.minW)}; box-sizing: border-box; padding: 0 ${U(12)};\")\nopen(p,'w').write(s)\nEOF\nnode qa/pilot05/full_reference_match/hud/harness.mjs --out=/tmp/claude-0/hc05/h2.png >/tmp/claude-0/hc05/h2.json && python3 /tmp/cla …[+695 chars]`
+
+### 🧑 User — 2026-11-17T00:25:02.305Z
+
+> ↩︎ result: /tmp/claude-0/hc05/h2.png: HUD mean 27.56 <=20 0.643 | bar-part 21.91 | banner-part 36.32 | whole 30.82
+>   5/5 [[168, 33, 237, 75, 1378]]
+>   plus [[261, 35, 302, 68, 550]]
+>   counter [[499, 37, 621, 75, 2050]]
+>   banner_text [[147, 122, 735, 172, 7212]]
+
+### 🤖 Claude — 2026-11-17T00:25:05.239Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/h2_cmp0.png"}`
+
+### 🧑 User — 2026-11-17T00:25:05.273Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:25:05.593Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/h2_cmp1.png"}`
+
+### 🧑 User — 2026-11-17T00:25:05.640Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:25:22.227Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/hc05/sweep.py <<'EOF'\nimport subprocess, re, sys, json, numpy as np\nfrom PIL import Image\nsys.path.insert(0,'/tmp/claude-0/hc05')\nfrom hudmeasure import measure\nP='src/ui/hud.ts'\norig=open(P).read()\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(float)\nm=np.asarray(Image.open(\"qa/pilot05/full_reference_match/masks/hud_and_text.png\").convert(\"L\"))>127\nbar=np.zeros_like(m); bar[12:107,30:833]=1; bar&=m; ban=m&~bar\ndef run(num, banner, tag):\n    s=re.sub(r\"num: \\{[^}]*\\}\", \ …[+1376 chars]`
+
+### 🧑 User — 2026-11-17T00:25:35.863Z
+
+> ↩︎ result: w800: HUD 27.56 bar 21.91 banner 36.32 | 55 [[168, 38, 190, 70, 516]] cnt [[499, 38, 514, 69, 329]] [499, 37, 621, 75] ban [147, 122, 735, 172] g0 [[147, 132, 172, 158, 377], [172, 132, 197, 158, 330]]
+> w700: HUD 27.02 bar 21.03 banner 36.32 | 55 [[168, 38, 190, 70, 454]] cnt [[499, 38, 513, 69, 274]] [499, 37, 617, 75] ban [147, 122, 735, 172] g0 [[147, 132, 172, 158, 377], [172, 132, 197, 158, 330]]
+> w600: HUD 27.02 bar 21.03 banner 36.32 | 55 [[168, 38, 190, 70, 454]] cnt [[499, 38, 513, 69, 274]] [499, 37, 617, 75] ban [147, 122, 735, 172] g0 [[147, 132, 172, 158, 377], [172, 132, 197, 158, 330]]
+> w700s55: HUD 27.65 bar 22.06 banner 36.32 | 55 [[168, 37, 191, 70, 493]] cnt [[499, 36, 514, 69, 317]] [499, 36, 622, 75] ban [147, 122, 735, 172] g0 [[147, 132, 172, 158, 377], [172, 132, 197, 158, 330]]
+
+### 🤖 Claude — 2026-11-17T00:25:47.127Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/ui/hud.ts'\ns=open(p).read()\ns=s.replace(\"num: { size: 53, weight: 800, track: 0.0, hX: 165, cX: 498, top: 28.5 },\",\"num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },\")\ns=s.replace(\"banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, track: 0.0, skew: -8, italic: true },\",\"banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 800, track: 0.0, skew: -8, italic: true, dy: 0 },\")\ns=s.replace(\"\"\"#hud.m05 .banner span { font-size: ${U(H05.banner.size)}; letter-spacing\"\"\",\"\"\"#hud …[+1019 chars]`
+
+### 🧑 User — 2026-11-17T00:26:04.862Z
+
+> ↩︎ result: b800: HUD 27.03 bar 20.96 banner 36.45 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [147, 122, 735, 172] g0 [[147, 133, 172, 159, 378], [172, 133, 197, 159, 330]]
+> b700: HUD 26.66 bar 20.96 banner 35.50 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [150, 122, 735, 172] g0 [[150, 133, 174, 159, 335], [175, 133, 200, 159, 290]]
+> b700k4: HUD 26.65 bar 20.96 banner 35.48 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [150, 122, 735, 172] g0 [[150, 134, 174, 159, 332], [175, 134, 199, 159, 294]]
+> b700k0: HUD 26.92 bar 20.96 banner 36.18 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [150, 122, 735, 172] g0 [[150, 133, 173, 159, 348], [175, 134, 197, 160, 302]]
+> b700n12: HUD 29.80 bar 20.96 banner 43.50 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [148, 122, 735, 172] g0 [[148, 133, 170, 160, 334], [173, 134, 194, 160, 299]]
+
+### 🤖 Claude — 2026-11-17T00:26:17.920Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(float)\nc=np.asarray(Image.open(\"/tmp/claude-0/hc05/sw_b700k4.png\").convert(\"RGB\")).astype(float)\nm=np.asarray(Image.open(\"qa/pilot05/full_reference_match/masks/hud_and_text.png\").convert(\"L\"))>127\nd=np.abs(c-ap).mean(-1)\nyy,xx=np.mgrid[0:1536,0:864]\ndef pill(x0,y0,x1,y1):\n    r=(y1-y0)/2; cy=(y0+y1)/2\n    inside=(xx>=x0+r)&(xx<=x1-r)&(yy>=y0)&(yy<=y1)\n    inside|=np.hypot(xx-(x0+r),yy-cy …[+1129 chars]`
+
+### 🧑 User — 2026-11-17T00:26:18.881Z
+
+> ↩︎ result: bar pill                     px  67964 mean  15.90  sum-share 0.323  signed [-6.8  0.2 -2.6]
+> bar outside pill (scene)     px   8321 mean  62.29  sum-share 0.155  signed [ 42.1  43.6 -10.8]
+> banner pill                  px  42127 mean  31.00  sum-share 0.391  signed [-9.6 -7.1  8.2]
+> banner outside (scene)       px   7076 mean  62.13  sum-share 0.131  signed [27.3 29.6 13.8]
+> banner rim                               px   5268 mean  59.82 signed [-31.6 -32.5   6.5]
+> banner inner text-ish (approved cream)   px   4779 mean  41.56 signed [-33.  -39.4   2.8]
+> banner inner fill                        px  32080 mean  24.69 signed [-2.5  1.9  9.3]
+> bar rim 51.75395559101184 [15.8 32.4 10. ]
+
+### 🤖 Claude — 2026-11-17T00:26:22.281Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/err_hud.png"}`
+
+### 🧑 User — 2026-11-17T00:26:22.306Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:26:32.343Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(int)\nc=np.asarray(Image.open(\"/tmp/claude-0/hc05/sw_b700k4.png\").convert(\"RGB\")).astype(int)\ndef avg(a,y,x0,x1): return tuple(a[y,x0:x1].mean(0).astype(int))\nprint(\"banner x 500-540 (approved | game)\")\nfor y in list(range(108,124))+list(range(170,186)): print(y, avg(ap,y,500,540), avg(c,y,500,540))\nprint(\"bar x 600-690\")\nfor y in list(range(9,26))+list(range(90,106)): print(y, avg(ap,y,600 …[+268 chars]`
+
+### 🧑 User — 2026-11-17T00:26:32.819Z
+
+> ↩︎ result: banner x 500-540 (approved | game)
+> 108 (np.int64(145), np.int64(24), np.int64(146)) (np.int64(221), np.int64(90), np.int64(88))
+> 109 (np.int64(160), np.int64(24), np.int64(153)) (np.int64(221), np.int64(90), np.int64(88))
+> 110 (np.int64(176), np.int64(19), np.int64(159)) (np.int64(221), np.int64(90), np.int64(88))
+> 111 (np.int64(178), np.int64(19), np.int64(155)) (np.int64(221), np.int64(90), np.int64(88))
+> 112 (np.int64(165), np.int64(20), np.int64(139)) (np.int64(151), np.int64(45), np.int64(189))
+> 113 (np.int64(230), np.int64(123), np.int64(190)) (np.int64(250), np.int64(214), np.int64(168))
+> 114 (np.int64(255), np.int64(234), np.int64(215)) (np.int64(250), np.int64(214), np.int64(168))
+> 115 (np.int64(242), np.int64(194), np.int64(150)) (np.int64(189), np.int64(95), np.int64(95))
+> 116 (np.int64(212), np.int64(117), np.int64(110)) (np.int64(98), np.int64(3), np.int64(146))
+> 117 (np.int64(162), np.int64(49), np.int64(94)) (np.int64(99), np.int64(3), np.int64(147))
+> 118 (np.int64(111), np.int64(9), np.int64(120)) (np.int64(98), np.int64(3), np.int64(146))
+> 119 (np.int64(98), np.int64(2), np.int64(146)) (np.int64(99), np.int64(3), np.int64(147))
+> 120 (np.int64(97), np.int64(2), np.int64(147)) ( …[+6731 chars]
+
+### 🤖 Claude — 2026-11-17T00:27:10.397Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/ui/hud.ts'\ns=open(p).read()\nold_bar_border=\"\"\"  border: ${U(H05.bar.border)} solid rgb(238,180,252);\n  box-shadow: inset 0 ${U(2)} ${U(2)} rgba(236,96,246,0.7), inset 0 ${U(-1.5)} ${U(1.5)} rgba(205,120,245,0.45); }\"\"\"\nnew_bar_border=\"\"\"  border: ${U(H05.bar.border)} solid rgb(226,150,246); border-top-color: rgb(248,178,244); border-bottom-color: rgb(196,110,228);\n  box-shadow: inset 0 ${U(3)} ${U(1.5)} rgba(240,150,245,0.85), inset 0 ${U(8)} ${U(5)} rgba(190,30,215,0.5)${H05.bar.shadow ? `, 0 ${U(2.5)} ${U(3)} rgba(1 …[+1806 chars]`
+
+### 🧑 User — 2026-11-17T00:27:20.793Z
+
+> ↩︎ result: const H05 = {
+>   bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2, shadow: true },
+>   num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
+>   banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 1 },
+> };
+> /tmp/claude-0/hc05/sw_b700k4.png: HUD mean 26.65 <=20 0.649 | bar-part 20.96 | banner-part 35.48 | whole 30.74
+> /tmp/claude-0/hc05/h3.png: HUD mean 25.00 <=20 0.657 | bar-part 18.22 | banner-part 35.51 | whole 30.58
+> /tmp/claude-0/hc05/h3n.png: HUD mean 25.62 <=20 0.655 | bar-part 19.24 | banner-part 35.51 | whole 30.64
+
+### 🤖 Claude — 2026-11-17T00:27:28.978Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's/border: 2, shadow: false }/border: 2, shadow: true }/' src/ui/hud.ts; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(int)\nc=np.asarray(Image.open(\"/tmp/claude-0/hc05/h3.png\").convert(\"RGB\")).astype(int)\n# cream pixels per row inside the banner text box\nfor name,a in [(\"approved\",ap),(\"game\",c)]:\n    R,G,B=a[...,0],a[...,1],a[...,2]\n    cr=(R>200)&(G>150)&(B<220)&(R-B>30)\n    print(name)\n    for y in range(128,166,2):\n       …[+169 chars]`
+
+### 🧑 User — 2026-11-17T00:27:29.331Z
+
+> ↩︎ result: approved
+>   132 3 [253 222 217]
+>   134 230 [247 220 179]
+>   136 278 [249 218 166]
+>   138 161 [248 218 170]
+>   140 157 [248 217 171]
+>   142 165 [247 216 171]
+>   144 206 [247 217 174]
+>   146 233 [246 215 167]
+>   148 209 [246 212 165]
+>   150 181 [249 216 168]
+>   152 178 [248 213 166]
+>   154 197 [246 210 165]
+>   156 256 [247 213 168]
+>   158 220 [250 213 161]
+> game
+>   134 287 [252 236 197]
+>   136 322 [252 235 193]
+>   138 257 [242 220 182]
+>   140 198 [249 228 184]
+>   142 203 [248 225 179]
+>   144 251 [249 226 176]
+>   146 283 [251 227 173]
+>   148 266 [251 226 170]
+>   150 224 [247 220 166]
+>   152 208 [246 218 164]
+>   154 222 [245 215 161]
+>   156 283 [246 216 158]
+>   158 249 [245 212 155]
+
+### 🤖 Claude — 2026-11-17T00:27:52.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/ui/hud.ts'\ns=open(p).read()\ns=s.replace(\"\"\"const HUD05 = on05('hud05');\n\"\"\",\"\"\"const HUD05 = on05('hud05');\n// hud05 only: the lighter Baloo 2 weight (same font package as the 700 / 800 above; no new package)\nif (HUD05) void import('@fontsource/baloo-2/600.css');\n\"\"\")\ns=s.replace(\"background: linear-gradient(180deg, #fff6d8 0%, #ffe9b0 45%, #f6cf8c 100%); -webkit-background-clip: text; background-clip: text; color: transparent;\\n  filter: drop-shadow(0 ${U(1.2)} 0 rgba(90,10,70,0.85)); }\",\n \"background: line …[+1289 chars]`
+

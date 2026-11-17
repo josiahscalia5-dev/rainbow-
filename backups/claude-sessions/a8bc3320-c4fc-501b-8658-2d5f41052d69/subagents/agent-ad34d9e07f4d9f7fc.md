@@ -1527,3 +1527,218 @@ Now the new Benny-05 module.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T00:23:12.636Z
+
+Writing the checkpoint NOTES.md now (tsc already passes on all touched files).
+
+### 🤖 Claude — 2026-11-17T00:23:40.862Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "content": "# Benny (benny05) — Screen 05 full reference match · benny-character-artist\n\nSTATUS: IN PROGRESS (checkpoint written 2026-11-17 on coordinator request). Switch: `benny05` (`?benny05=1` or `?match05=1`).\nAll source files touched are syntactically valid (`npx tsc --noEmit -p .` → rc 0 after every edit).\n\n## 1. Measured (BEFORE = STACK capture `benny/before.png` = `stack_2340/05_match05.png`, byte-identical)\nRegion `benny_and_hat` (93,061 px, approved mask): mean |ΔRGB| **49.71**, ≤20 levels **23 …[+5894 chars]`
+
+### 🧑 User — 2026-11-17T00:23:41.040Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:23:49.372Z
+
+Checkpoint written. Continuing with geometry iteration 3.
+
+### 🤖 Claude — 2026-11-17T00:23:55.542Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  starDY: 0.047,\n  starDX: 0.0,\"\"\",\"\"\"  starDY: 0.069,\n  starDX: 0.0,\n  /** star face scale (its own x, y) */\n  starScale: [0.96, 0.89] as [number, number],\n  /** crown dome height (GLB 0.53) */\n  crownH: 0.58,\"\"\")\ns=s.replace(\"\"\"  tilt: 0,\"\"\",\"\"\"  tilt: -0.05,\"\"\")\ns=s.replace(\"\"\"  pomDY: -0.0,\"\"\",\"\"\"  pomDY: -0.05,\"\"\")\ns=s.replace(\"\"\"function hatGeometries(cuffH: number, taper: number): {\"\"\",\"\"\"function hatGeometrie …[+1212 chars]`
+
+### 🧑 User — 2026-11-17T00:23:58.787Z
+
+> ↩︎ result: 49:  pomDY: -0.05,
+> 57:  crownH: 0.58,
+> 63:const D = { skin: 0.7, brimBottom: 0.22, cuffH: 0.265, brimR: 0.8, crownH: 0.53 };
+> 74:function hatGeometries(cuffH: number, taper: number, crownH: number): { brim: THREE.BufferGeometry; crown: THREE.BufferGeometry; yt: number; crownTop: number } {
+> 99:    prof.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)) * (1 - taper * t), crownY0 + t * crownH]);
+> 101:  const crown = lathe(prof, 96, crownY0, crownY0 + crownH);
+> 102:  return { brim, crown, yt, crownTop: crownY0 + crownH };
+> 186:  const g = hatGeometries(HAT05.cuffH, HAT05.crownTaper, HAT05.crownH);
+> 197:  pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
+> rc=0
+
+### 🤖 Claude — 2026-11-17T00:24:04.917Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/r3 $W/probe/shot0.shot.js $W/probe/uv.js 2>&1 | grep -v missing | tail -1; python3 $W/geom.py $W/r3/uv.f32 | head -16; python3 $W/outline.py $W/r3/uv.f32 $W/r3/outline.png", "description": "Probe geometry iteration 3", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T00:24:24.229Z
+
+> ↩︎ result: done 16.28
+> part   | approved bbox x0-x1, y0-y1 (w x h) centre        | game
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 779-1198 (384x420) c(422.2,1007.1) 92357px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 355-501, 779-896 (147x118) c(427.9,840.2) 11758px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 291-553, 871-992 (263x122) c(410.7,935.7) 22083px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 277-569, 947-1039 (293x93) c(421.5,1006.0) 13019px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-554, 922-990 (74x69) c(517.5,959.2) 2559px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 1005-1198 (384x194) c(421.0,1092.6) 42938px
+> pom IoU 0.87
+> crown IoU 0.733
+> cuff IoU 0.62
+> star IoU 0.624
+> body IoU 0.83
+> all IoU 0.919
+> GAME centre -760-783 P784-784 -785-785 P786-888 C889-991 U992-1038 B1039-1183 -1184-1199
+> APPR centre -760-777 B778-784 P785-899 C900-980 U981-1030 B1031-1162 -1163-1176 B1177-1184 -1185-1199
+> 780 APP 407-445 w39  GAME -
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/geom.py", line 44, in <module>
+>     print( …[+107 chars]
+
+### 🤖 Claude — 2026-11-17T00:24:31.671Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's/^  tilt: -0.05,/  tilt: 0,/' src/characters/benny/benny05.ts; grep -n \"^  tilt\" src/characters/benny/benny05.ts; W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/r4 $W/probe/shot0.shot.js $W/probe/uv.js 2>&1 | grep -v missing | tail -1; python3 $W/geom.py $W/r4/uv.f32 2>/dev/null| head -40; python3 $W/outline.py $W/r4/uv.f32 $W/r4/outline.png", "description": "Probe geometry iteration 4 …[+45 chars]`
+
+### 🧑 User — 2026-11-17T00:24:53.173Z
+
+> ↩︎ result: 42:  tilt: 0,
+> done 18.471
+> part   | approved bbox x0-x1, y0-y1 (w x h) centre        | game
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 776-1198 (384x423) c(422.3,1006.6) 92476px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 355-501, 776-891 (147x116) c(428.5,837.0) 11351px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 292-553, 870-983 (262x114) c(410.4,930.8) 20819px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 278-568, 948-1031 (291x84) c(421.7,1000.0) 13160px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-553, 916-983 (73x68) c(517.3,952.5) 2531px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 999-1198 (384x200) c(421.0,1090.2) 44615px
+> pom IoU 0.823
+> crown IoU 0.784
+> cuff IoU 0.776
+> star IoU 0.801
+> body IoU 0.86
+> all IoU 0.919
+> GAME centre -760-781 P782-884 C885-983 U984-1031 B1032-1183 -1184-1199
+> APPR centre -760-777 B778-784 P785-899 C900-980 U981-1030 B1031-1162 -1163-1176 B1177-1184 -1185-1199
+> 780 APP 407-445 w39  GAME 413-451 w39
+> 795 APP 380-474 w95  GAME 382-471 w90
+> 810 APP 367-486 w120  GAME 374-482 w109
+> 825 APP 361-493 w133  GAME 368-490 w123
+> 840 APP 357-496 w140  …[+942 chars]
+
+### 🤖 Claude — 2026-11-17T00:25:15.542Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  pomDY: -0.05,\"\"\",\"\"\"  pomDY: -0.083,\n  /** toward his back (−Z ≈ toward the rear chase camera): the approved pom-pom overhangs the crown's back slope */\n  pomDZ: -0.06,\"\"\")\ns=s.replace(\"\"\"  pom.position.x += HAT05.pomDX;\"\"\",\"\"\"  pom.position.x += HAT05.pomDX;\n  pom.position.z += HAT05.pomDZ;\"\"\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projfr …[+389 chars]`
+
+### 🧑 User — 2026-11-17T00:25:40.975Z
+
+> ↩︎ result: done 19.511
+> part   | approved bbox x0-x1, y0-y1 (w x h) centre        | game
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 784-1198 (384x415) c(422.2,1008.5) 91692px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 354-503, 784-899 (150x116) c(428.1,844.0) 11500px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 292-553, 872-983 (262x112) c(409.7,932.9) 19886px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 278-568, 948-1031 (291x84) c(421.7,1000.0) 13160px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-553, 916-983 (73x68) c(517.3,952.5) 2531px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 999-1198 (384x200) c(421.0,1090.2) 44615px
+> pom IoU 0.861
+> crown IoU 0.81
+> cuff IoU 0.776
+> star IoU 0.801
+> body IoU 0.86
+> all IoU 0.912
+> GAME centre -760-788 P789-890 C891-983 U984-1031 B1032-1183 -1184-1199
+> APPR centre -760-777 B778-784 P785-899 C900-980 U981-1030 B1031-1162 -1163-1176 B1177-1184 -1185-1199
+> 780 APP 407-445 w39  GAME -
+> 795 APP 380-474 w95  GAME 397-465 w69
+> 810 APP 367-486 w120  GAME 375-479 w105
+> 825 APP 361-493 w133  GAME 367-499 w133
+> 840 APP 357-496 w140  GAME 364-493 w130
+> 855 AP …[+153 chars]
+
+### 🤖 Claude — 2026-11-17T00:26:00.295Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's/^  pomDY: -0.083,/  pomDY: -0.016,/; s/^  pomDZ: -0.06,/  pomDZ: -0.16,/; s/^  pomScale: 1.0,/  pomScale: 0.97,/' src/characters/benny/benny05.ts; grep -n \"^  pom\" src/characters/benny/benny05.ts; npx tsc --noEmit -p . && W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/r6 $W/probe/shot0.shot.js $W/probe/uv.js 2>&1 | grep -v missing | tail -1; python3 $W/geom.py $W/r6/uv.f32 2>/dev/null …[+154 chars]`
+
+### 🧑 User — 2026-11-17T00:26:27.019Z
+
+> ↩︎ result: 48:  pomDX: -0.057,
+> 49:  pomDY: -0.016,
+> 51:  pomDZ: -0.16,
+> 52:  pomScale: 0.97,
+> 199:  pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
+> 200:  pom.position.x += HAT05.pomDX;
+> 201:  pom.position.z += HAT05.pomDZ;
+> 202:  pom.scale.setScalar(HAT05.pomScale);
+> done 20.153
+> part   | approved bbox x0-x1, y0-y1 (w x h) centre        | game
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 775-1198 (384x424) c(422.0,1006.0) 92715px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 355-500, 775-907 (146x133) c(426.1,840.5) 12760px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 292-553, 870-983 (262x114) c(409.8,933.3) 19649px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 278-568, 948-1031 (291x84) c(421.7,1000.0) 13160px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-553, 916-983 (73x68) c(517.3,952.5) 2531px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 999-1198 (384x200) c(421.0,1090.2) 44615px
+> pom IoU 0.883
+> crown IoU 0.817
+> cuff IoU 0.776
+> star IoU 0.801
+> body IoU 0.86
+> all IoU 0.921
+> GAME centre -760-780 P781-896 C897-983 U984-1031 B1032-1183 -1184-1199
+> APPR centre -760-777 B7 …[+548 chars]
+
+### 🤖 Claude — 2026-11-17T00:26:34.266Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "offset": 70, "limit": 40}`
+
+### 🧑 User — 2026-11-17T00:26:34.291Z
+
+> ↩︎ result: 70	  const uv = g.attributes.uv as THREE.BufferAttribute;
+> 71	  for (let i = 0; i < p.count; i++) uv.setXY(i, uv.getX(i), (p.getY(i) - v0) / (v1 - v0));
+> 72	  return g;
+> 73	}
+> 74	
+> 75	/** the GLB's beanie profiles (build.ts) with the HAT05 cuff height; u = once around (+Z front = 0, back = 0.5) */
+> 76	function hatGeometries(cuffH: number, taper: number, crownH: number): { brim: THREE.BufferGeometry; crown: THREE.BufferGeometry; yt: number; crownTop: number } {
+> 77	  const yb = D.brimBottom;
+> 78	  const yt = yb + cuffH;
+> 79	  const bk = D.brimR / 0.778;
+> 80	  const lip = Math.sqrt(D.skin * D.skin - yb * yb) + 0.012;
+> 81	  const brim = lathe(
+> 82	    [
+> 83	      [lip, yb + 0.01],
+> 84	      [0.725 * bk, yb - 0.008],
+> 85	      [0.758 * bk, yb + 0.02],
+> 86	      [0.776 * bk, yb + 0.07],
+> 87	      [0.781 * bk, yb + 0.5 * cuffH],
+> 88	      [0.776 * bk, yt - 0.075],
+> 89	      [0.758 * bk, yt - 0.025],
+> 90	      [0.725 * bk, yt - 0.003],
+> 91	      [0.68 * bk, yt],
+> 92	    ],
+> 93	    96,
+> 94	    yb - 0.01,
+> 95	    yt + 0.005,
+> 96	  );
+> 97	  const crownY0 = yt - 0.045;
+> 98	  const R0 = 0.705 * bk;
+> 99	  const prof: [number, number][] = [];
+> 100	  for (const t of [0, 0.08, 0.16, 0.25, 0.34, 0.43, 0.52, 0.6, 0.68, 0.75, 0.8 …[+524 chars]
+
+### 🤖 Claude — 2026-11-17T00:26:44.700Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\ns=s.replace(\"\"\"      [0.725 * bk, yb - 0.008],\n      [0.758 * bk, yb + 0.02],\n      [0.776 * bk, yb + 0.07],\n      [0.781 * bk, yb + 0.5 * cuffH],\n      [0.776 * bk, yt - 0.075],\n      [0.758 * bk, yt - 0.025],\n      [0.725 * bk, yt - 0.003],\n      [0.68 * bk, yt],\"\"\",\"\"\"      [0.725 * bw, yb - 0.008],\n      [0.758 * bw, yb + 0.02],\n      [0.776 * bw, yb + 0.07],\n      [0.781 * bw, yb + 0.5 * cuffH],\n      // fuller rolled top edge (approved: the cuff's upper corne …[+1056 chars]`
+
+### 🧑 User — 2026-11-17T00:27:15.346Z
+
+> ↩︎ result: done 22.767
+> part   | approved bbox x0-x1, y0-y1 (w x h) centre        | game
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 775-1198 (384x424) c(422.1,1005.9) 93163px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 355-500, 775-907 (146x133) c(426.1,840.5) 12760px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 292-553, 870-983 (262x114) c(409.8,933.2) 19620px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 274-571, 945-1032 (298x88) c(421.6,999.6) 13971px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-553, 916-983 (73x68) c(517.3,952.4) 2523px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 1005-1198 (384x194) c(421.1,1090.7) 44289px
+> pom IoU 0.883
+> crown IoU 0.818
+> cuff IoU 0.776
+> star IoU 0.803
+> body IoU 0.857
+> all IoU 0.921
+> GAME centre -760-780 P781-896 C897-983 U984-1031 B1032-1183 -1184-1199
+> 945 APP 284-563 w280  GAME 294-554 w261
+> 960 APP 281-569 w289  GAME 280-570 w291
+> 975 APP 279-569 w291  GAME 274-571 w298
+> 990 APP 281-572 w292  GAME 275-568 w294
+> 1005 APP 281-562 w282  GAME 277-558 w282
+> 1020 APP 263-580 w318  GAME 250-603 w354
+

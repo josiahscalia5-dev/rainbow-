@@ -872,3 +872,149 @@ Now the environment.ts changes (ring layout, warp, far rings), all behind `ENV05
 > 14:import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 > 15:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05 …[+1803 chars]
 
+### 🤖 Claude — 2026-11-17T00:23:53.355Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\nrep=[\n(\"\"\"import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';\"\"\",\n \"\"\"import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, type TubeWarp } from './tube';\"\"\"),\n …[+10293 chars]`
+
+### 🧑 User — 2026-11-17T00:23:56.689Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:24:00.853Z
+
+The coordinator asked for a checkpoint. All touched sources type-check (`tsc` clean). Writing NOTES.md now.
+
+### 🤖 Claude — 2026-11-17T00:24:26.706Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/NOTES.md", "content": "# env05 — washer-environment-modeler (Screen 05 tunnel: rings, walls, fittings, far tunnel)\n\nStatus: IN PROGRESS (checkpoint 2026-11-17 ~00:45 UTC, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with\n`?match05=1`). STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.\n\n## 1. Measured (step A, done)\n* BEFORE = STACK capture `recovery_s018/stack/05.png` (= `stack_2340/05_match05.png`, byte-identical). Region numbers\n  (`python3  …[+5395 chars]`
+
+### 🧑 User — 2026-11-17T00:24:26.871Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/env/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:24:30.311Z
+
+Now merge the duplicated far-wall segs block.
+
+### 🤖 Claude — 2026-11-17T00:24:32.667Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\na=s.index(\"    if (E05 && !PROJWALL05) {\")\nb=s.index(\"    } else if (PROJWALL05) {\")\nblock=s[a:b]\nsecond=block.index(\"    if (PROJWALL05 && E05) {\")\nnew = block[second:].replace(\"    if (PROJWALL05 && E05) {\",\"    if (E05) {\",1)\ns=s[:a]+new+s[b:]\nopen(p,'w').write(s)\nEOF\ngrep -n \"if (E05) {\\|else if (PROJWALL05)\" src/world/environment.ts; npx tsc --noEmit -p . 2>&1 | head -5", "description": "Merge duplicate far-wall segs block"}`
+
+### 🧑 User — 2026-11-17T00:24:38.416Z
+
+> ↩︎ result: 421:  if (E05) {
+> 498:    if (E05) {
+> 507:    } else if (PROJWALL05) {
+> 556:    if (E05) {
+
+### 🤖 Claude — 2026-11-17T00:25:10.312Z
+
+Now the bake tool (initial textures first, then camera-projection scatter + feedback).
+
+### 🤖 Claude — 2026-11-17T00:25:48.111Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/env05/proj_bake.py", "content": "\"\"\"Screen 05 env05 — CAMERA-PROJECTION bake of the 05 tunnel walls and rings (`?env05=1`, src/vfx/proj05Tunnel.ts).\nThe game's own wall / ring shaders write, per screen pixel of the locked 05 frame, the texture coordinate they sample\n(`node scripts/proj05-tunnel-probe.mjs --coords --q='<STACK>&env05=1' --raw=DIR` → tunnel_coords.f32: wall (u, v, 7, 77),\nring (u, v, 8, 78)). Every visible texel therefore receives exactly the approved pixel the camera sees there (bilinear\nsplat), only where the APPROVED picture show …[+9565 chars]`
+
+### 🧑 User — 2026-11-17T00:25:48.306Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/env05/proj_bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:25:52.979Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; time python3 -I tools/env05/proj_bake.py assets/textures/env05 && ls -la assets/textures/env05 && cat assets/textures/env05/env05.json | head -30", "description": "Generate initial env05 textures"}`
+
+### 🧑 User — 2026-11-17T00:25:55.432Z
+
+> ↩︎ result: {}
+> 
+> real	0m2.399s
+> user	0m2.730s
+> sys	0m0.106s
+> total 3956
+> drwxr-xr-x 2 root root    4096 Nov 17 00:25 .
+> drwxr-xr-x 7 root root    4096 Nov 17 00:25 ..
+> -rw-r--r-- 1 root root       2 Nov 17 00:25 bake_report.json
+> -rw-r--r-- 1 root root     744 Nov 17 00:25 env05.json
+> -rw-r--r-- 1 root root 1075857 Nov 17 00:25 ring05e.png
+> -rw-r--r-- 1 root root 2953945 Nov 17 00:25 wall05e.png
+> {
+>  "wall": {
+>   "w": 2048,
+>   "h": 992,
+>   "rows": {
+>    "AB": {
+>     "y0": 8,
+>     "h": 256
+>    },
+>    "BC": {
+>     "y0": 272,
+>     "h": 128
+>    },
+>    "CD": {
+>     "y0": 408,
+>     "h": 64
+>    },
+>    "DE": {
+>     "y0": 480,
+>     "h": 32
+>    },
+>    "EF": {
+>     "y0": 520,
+>     "h": 16
+>    },
+>    "FG": {
+>     "y0": 544,
+>     "h": 16
+>    },
+>    "GX": {
+
+### 🤖 Claude — 2026-11-17T00:26:02.977Z
+
+Now update the probe so the separate env05 ring meshes get distinct tags (default behaviour unchanged when there is one ring mesh).
+
+### 🤖 Claude — 2026-11-17T00:26:08.339Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='scripts/proj05-tunnel-probe.mjs'\ns=open(p).read()\na=\"\"\"    else for (const s of saved) if (s.cls) { s.o.material = mats[s.cls]; probed[s.cls] = (probed[s.cls] ?? 0) + 1; }\"\"\"\nb=\"\"\"    else {\n      // `?env05=1` builds every real 05 ring as its own one-instance mesh: tag 20 + mesh index (scene order) then\n      const ringMeshes = saved.filter((s) => s.cls === 'ring');\n      for (const s of saved) if (s.cls) {\n        const k = ringMeshes.indexOf(s);\n        s.o.material = s.cls === 'ring' && ringMeshes.length > 1 ? idMa …[+900 chars]`
+
+### 🧑 User — 2026-11-17T00:26:08.482Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T00:26:15.421Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad; mkdir -p $S/raw_e1; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; node scripts/proj05-tunnel-probe.mjs --q=\"$STACK&env05=1\" --out=qa/pilot05/full_reference_match/env/work/probe_e1 --raw=$S/raw_e1 2>&1 | tail -5 && node scripts/proj05-tunnel-probe.mjs --coords --q=\"$STACK&env05=1\" --out=qa/pilot05/full_reference_match/env/work/probe_e1 --raw=$S/raw_e1 2>&1 | tail -3; ls -la $S/raw_e1", "description": "Probe en …[+47 chars]`
+
+### 🧑 User — 2026-11-17T00:27:07.885Z
+
+> ↩︎ result: probed {"wall":2,"ring":4,"farWall":1,"farRing":1,"farLid":1} tunnel {"sCam05":126.03830202823289,"s05":114.68830202823243,"sGlow05":183.02412082521383,"sF05":180.0383020282329,"bay05":14,"rings05":[124.03830202823289,138.0383020282329,146.0383020282329,164.5383020282329],"ringDv":[59,97,161,222,322],"knots":[[0,0],[7,5.751032430368738],[21,43.75103243036874],[35,107.75103243036874],[49,168.75103243036875],[63,268.75103243036875]],"realSeamRing":false,"D0":53.24896756963126,"L":6,"zEnd":376.75103243036875,"R":7.6,"band05":{"height":0.095,"width":0.78,"lipHeight":0.045,"lipWidth":0.26,"groove":0.07},"band05near":{"height":0.13,"width":0.8,"lipHeight":0.065,"lipWidth":0.32,"groove":0.1},"eye":[1.920288434729371,-37.94339912418104,-68.28062556286872]}
+> probed {} tunnel {"sCam05":126.03830202823289,"s05":114.68830202823243,"sGlow05":183.02412082521383,"sF05":180.0383020282329,"bay05":14,"rings05":[124.03830202823289,138.0383020282329,146.0383020282329,164.5383020282329],"ringDv":[59,97,161,222,322],"knots":[[0,0],[7,5.751032430368738],[21,43.75103243036874],[35,107.75103243036874],[49,168.75103243036875],[63,268.75103243036875]],"realSeamRing":false,"D0":53.24896756963126,"L":6,"zEnd":3 …[+498 chars]
+
+### 🤖 Claude — 2026-11-17T00:27:17.366Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad; python3 -I tools/env05/ring_table.py qa/pilot05/full_reference_match/env/work/probe_e1/tunnel.json $S/raw_e1/tunnel_id.f32 qa/pilot05/full_reference_match/env/work/rings_e1.json; python3 -I - <<EOF\nimport numpy as np, json, math, sys\nsys.path.insert(0,'tools/env05')\nfrom ringproj import *\nmodel=json.load(open('qa/pilot05/proj/tunnel/model/ring_model.json'))\nfor f,lab in (('$S/raw/tunnel_id.f32','before'),('$S/raw_e1/tunnel_id.f32','env05')):\n    a=np.fromfile(f,np.flo …[+832 chars]`
+
+### 🧑 User — 2026-11-17T00:27:19.080Z
+
+> ↩︎ result: ring game   rays |  APPROVED centre  r_mid  band |      GAME centre  r_mid  band | dr_in dr_out |d|
+> A    r22      35 | [np.float64(463.7), np.float64(507.5)]  475.5  65.4 | [np.float64(435.6), np.float64(474.3)]  436.8  70.0 |  -7.0  -5.4   9.8
+> B    r23     452 | [np.float64(468.1), np.float64(461.0)]  249.7  40.0 | [np.float64(481.8), np.float64(451.2)]  247.4  38.0 |   1.2  -0.5  14.7
+> C    f0      507 | [np.float64(486.4), np.float64(457.0)]  149.1  20.4 | [np.float64(490.0), np.float64(466.3)]  147.9  18.5 |  -4.1  -4.8   7.6
+> D    f1      524 | [np.float64(491.4), np.float64(466.2)]   90.8  11.7 | [np.float64(493.6), np.float64(471.4)]   89.9  10.5 |  -2.8  -2.7   4.7
+> E    f2      572 | [np.float64(497.0), np.float64(466.0)]   57.0   8.0 | [np.float64(495.4), np.float64(474.3)]   56.9   6.5 |  -1.4  -2.8   5.2
+> F    f3      594 | [np.float64(497.0), np.float64(467.0)]   40.0   6.0 | [np.float64(496.5), np.float64(475.6)]   40.3   5.0 |  -1.2  -2.3   5.1
+> G    f4      642 | [np.float64(497.0), np.float64(468.0)]   28.0   5.0 | [np.float64(497.2), np.float64(476.8)]   28.7   3.5 |  -0.1  -1.8   5.3
+> before A: 53.6px(202) B: 27.4px(956) C: 10.6px(1014) D:  5.9px(994) E:  4.6px(1130) F …[+146 chars]
+
+### 🤖 Claude — 2026-11-17T00:27:38.443Z
+
+Ring A improved 53.6 → 6.6 px, B 27.4 → 14.4, C 10.6 → 7.6. Let me refine B (and A) by fitting the warp amounts with the warped-ring model directly.
+
+### 🤖 Claude — 2026-11-17T00:27:50.049Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/tools/env05/warp_fit.py <<'EOF'\n\"\"\"env05 refinement: fit the sideways / upward displacement of a REAL ring under the env05 warp (weight\nsmoothstep(sin th, -0.28, 0.05), as src/world/environment.ts e05Weight) to the approved band edges.\nusage: python3 -I tools/env05/warp_fit.py <tunnel.json of an env05 probe> <ring name A|B> <mesh index> <h> [axial shift]\"\"\"\nimport json, math, sys, os\nimport numpy as np\nfrom scipy.optimize import least_squares\nsys.path.insert(0, os.path.dirname(__file__))\nfrom ringproj import *\ntj = json.load(open(sys.argv[1 …[+2321 chars]`
+
+### 🧑 User — 2026-11-17T00:27:52.029Z
+
+> ↩︎ result: B extra (side, up, axial) relative to this probe: [-0.953 -0.226 -0.16 ] edge err 27.3 -> 9.9 px
+> A extra (side, up, axial) relative to this probe: [-0.702  0.295 -0.199] edge err 44.3 -> 12.1 px
+

@@ -18,6 +18,8 @@ import { on05 } from '../vfx/waterRibbon';
  * A global HUD change: with the switch on, every ride screen shows this layout (default build unchanged).
  */
 const HUD05 = on05('hud05');
+// hud05 only: the lighter Baloo 2 weight (same font package as the 700 / 800 above; no new package)
+if (HUD05) void import('@fontsource/baloo-2/600.css');
 const U = (px: number) => `calc(var(--u) * ${(px / 15.36 + 1e-5).toFixed(5)})`; // +1e-5: Chrome floors border widths
 /** approved icon sprite boxes (frame px; assets/textures/hud05/hud05_icons.json) */
 const ICON05 = {
@@ -30,7 +32,7 @@ const ICON05 = {
 const H05 = {
   bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2, shadow: true },
   num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
-  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 1 },
+  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 1, stroke: 1.5 },
 };
 /** absolute position inside the bar's padding box, from approved frame px */
 const bx = (x: number) => U(x - H05.bar.x0 - H05.bar.border);
@@ -64,8 +66,8 @@ const CSS05 = () => `
   box-shadow: inset 0 0 0 ${U(1)} rgba(205,112,86,0.85), inset 0 ${U(-6)} ${U(5)} rgba(175,25,195,0.6); }
 #hud.m05 .banner span { font-size: ${U(H05.banner.size)}; font-weight: ${H05.banner.weight}; position: relative; top: ${U(H05.banner.dy)}; letter-spacing: ${U(H05.banner.track)}; font-style: ${H05.banner.italic ? 'italic' : 'normal'};
   transform: skewX(${H05.banner.skew}deg); line-height: 1;
-  background: linear-gradient(180deg, #fff6d8 0%, #ffe9b0 45%, #f6cf8c 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
-  filter: drop-shadow(0 ${U(1.2)} 0 rgba(90,10,70,0.85)); }
+  background: linear-gradient(180deg, #fadcb2 0%, #f8d8aa 50%, #f6d2a2 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  ${H05.banner.stroke ? `-webkit-text-stroke: ${U(H05.banner.stroke)} rgba(105,25,85,0.9);` : ''} filter: drop-shadow(0 ${U(1.2)} 0 rgba(90,10,70,0.85)); }
 `;
 
 const CSS = `
