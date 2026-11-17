@@ -235,3 +235,268 @@ Status: startup checks done (branch -c3 pushed, 13 references OK). Now extractin
 
 > 🔧 **Bash** `{"command": "T=14.54,15.62,16.71,17.66,18.47,19.28,20.09,28.12,28.71,29.29,40,41,42,43,44,44.5,44.88,45.62,46.75,47.88,48.62,49.38,50.12,50.86,51.6,52.34 && S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && time node tools/camclear/probe.mjs --q=match08=1 --times=$T --size=360x800 --out=$S/p_m08 > $S/p_m08.log 2>&1; tail -3 $S/p_m08.log; ls $S/p_m08 | head -3", "description": "Render match08 build at video moments", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T17:36:09.619Z
+
+> ↩︎ result: real	1m39.172s
+> user	0m4.866s
+> sys	0m0.843s
+> {"t":50.87,"mode":"outro","stage":"11","s":434.801,"near2":0,"near05":0,"inside":0}
+> {"t":51.6,"mode":"outro","stage":"11","s":434.801,"near2":0,"near05":0,"inside":0}
+> {"t":52.33,"mode":"outro","stage":"11","s":434.801,"near2":0,"near05":0,"inside":0}
+> f_000_t14.53.png
+> f_001_t15.62.png
+> f_002_t16.72.png
+
+### 🤖 Claude — 2026-11-17T17:36:10.970Z
+
+Rendering the build at each problem moment of your video (match08 done; now with camclear).
+
+### 🤖 Claude — 2026-11-17T17:36:15.645Z
+
+> 🔧 **Bash** `{"command": "T=14.54,15.62,16.71,17.66,18.47,19.28,20.09,28.12,28.71,29.29,40,41,42,43,44,44.5,44.88,45.62,46.75,47.88,48.62,49.38,50.12,50.86,51.6,52.34 && S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --times=$T --size=360x800 --out=$S/p_cc > $S/p_cc.log 2>&1; tail -1 $S/p_cc.log; for v in 4 5 6 7 8 9 10 18 19 20 33 34 35 36 37 37.5 38 39 40 41 42 43 44 45 46 47; do ffmpeg -loglevel error -y -ss $v -i $S/vid/user.mp4 -frames:v 1 -vf scale=360:800 $S/vid/v_$v.png; done; ls $S/vid | wc -l\npython3 …[+381 chars]`
+
+### 🧑 User — 2026-11-17T17:37:59.071Z
+
+> ↩︎ result: {"t":52.33,"mode":"outro","stage":"11","s":434.801,"near2":0,"near05":0,"inside":0}
+> 31
+> p_m08 [(14.53, '03', 0, 100), (15.62, '03', 0, 0), (16.72, '03', 41, 14), (17.67, '04', 0, 98), (18.47, '04', 0, 8), (19.28, '04', 0, 4), (20.08, '04', 0, 3), (28.12, '06', 1, 3), (28.72, '06', 0, 10), (29.28, '06', 0, 14), (40, '07', 0, 60), (41, '07', 0, 36), (42, '07', 100, 100), (43, '07', 0, 10), (44, '07', 0, 22), (44.5, '08', 0, 22), (44.88, '08', 0, 8), (45.62, '08', 0, 4), (46.75, '09', 0, 21), (47.88, '10', 0, 12), (48.62, '10', 0, 4), (49.38, '10', 0, 14), (50.12, '11', 0, 16), (50.87, '11', 0, None), (51.6, '11', 0, None), (52.33, '11', 0, None)]
+> p_cc [(14.53, '03', 0, 3), (15.62, '03', 0, 0), (16.72, '03', 41, 14), (17.67, '04', 0, 98), (18.47, '04', 0, 8), (19.28, '04', 0, 4), (20.08, '04', 0, 3), (28.12, '06', 0, 3), (28.72, '06', 0, 9), (29.28, '06', 0, 14), (40, '07', 0, 3), (41, '07', 0, 4), (42, '07', 0, 3), (43, '07', 0, 10), (44, '07', 0, 22), (44.5, '08', 0, 22), (44.88, '08', 0, 12), (45.62, '08', 0, 9), (46.75, '09', 0, 21), (47.88, '10', 0, 12), (48.62, '10', 0, 4), (49.38, '10', 0, 12), (50.12, '11', 0, 16), (50.87, '11', 0, None), (51.6, '11', 0, None), (52.33, '11', 0, …[+7 chars]
+
+### 🤖 Claude — 2026-11-17T17:38:09.374Z
+
+> 🔧 **Bash** `{"command": "cat > tools/camclear/triptych.py <<'EOF'\n#!/usr/bin/env python3\n\"\"\"Side-by-side frames for each problem moment of the user's recording: VIDEO | BUILD (match08=1) | CAMCLEAR\n(match08=1&camclear=1), each full size (360x800), plus the three separate pictures.\nusage: python3 -I tools/camclear/triptych.py <video_frames_dir> <probe_build_dir> <probe_cc_dir> <out_dir> v1 v2 ...\n(video frames named v_<t>.png; probe rows in the same order as the video times)\"\"\"\nimport json, sys, shutil, os\nfrom PIL import Image, ImageDraw, ImageFont\nvd, pb, pc, out = sys.argv[1:5]\nvts = sys. …[+1420 chars]`
+
+### 🧑 User — 2026-11-17T17:38:21.467Z
+
+> ↩︎ result: v04.0s_03_side_by_side.png
+> v05.0s_03_side_by_side.png
+> v06.0s_03_side_by_side.png
+> v07.0s_04_side_by_side.png
+> v08.0s_04_side_by_side.png
+> v09.0s_04_side_by_side.png
+> v10.0s_04_side_by_side.png
+> v18.0s_06_side_by_side.png
+> v19.0s_06_side_by_side.png
+> v20.0s_06_side_by_side.png
+> v33.0s_07_side_by_side.png
+> v34.0s_07_side_by_side.png
+> v35.0s_07_side_by_side.png
+> v36.0s_07_side_by_side.png
+> v37.0s_07_side_by_side.png
+> v37.5s_08_side_by_side.png
+> v38.0s_08_side_by_side.png
+> v39.0s_08_side_by_side.png
+> v40.0s_09_side_by_side.png
+> v41.0s_10_side_by_side.png
+> v42.0s_10_side_by_side.png
+> v43.0s_10_side_by_side.png
+> v44.0s_11_side_by_side.png
+> v45.0s_11_side_by_side.png
+> v46.0s_11_side_by_side.png
+> v47.0s_11_side_by_side.png
+
+### 🤖 Claude — 2026-11-17T17:38:25.980Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/gameplay_video/compare_r3 && S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && python3 -c \"\nfrom PIL import Image\nimport sys\nfor grp,name in [(['v04.0s_03','v05.0s_03','v06.0s_03','v07.0s_04'],'a'),(['v08.0s_04','v18.0s_06','v20.0s_06','v35.0s_07'],'b'),(['v36.0s_07','v37.0s_07','v38.0s_08','v39.0s_08'],'c'),(['v40.0s_09','v42.0s_10','v44.0s_11','v46.0s_11'],'d')]:\n  ims=[Image.open(g+'_side_by_side.png') for g in grp]\n  w,h=ims[0].size; s=Image.new('RGB',(w*2,h*2))\n  for i,im in enumerate(ims): s.paste(im,((i%2 …[+119 chars]`
+
+### 🧑 User — 2026-11-17T17:38:27.568Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:38:29.377Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/ov_a.png"}`
+
+### 🧑 User — 2026-11-17T17:38:29.425Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:38:30.041Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/ov_b.png"}`
+
+### 🧑 User — 2026-11-17T17:38:30.083Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:38:30.697Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/ov_c.png"}`
+
+### 🧑 User — 2026-11-17T17:38:30.748Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:38:31.301Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/ov_d.png"}`
+
+### 🧑 User — 2026-11-17T17:38:31.360Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:38:45.215Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && python3 -c \"\nimport json\nd=json.load(open('$S/p_cc/probe.json'))\nr=[x for x in d['rows'] if x['t']==17.67][0]\nprint(json.dumps(r,indent=0)[:3000])\"", "description": "Inspect probe metrics at 04 start"}`
+
+### 🧑 User — 2026-11-17T17:38:45.288Z
+
+> ↩︎ result: {
+> "t": 17.67,
+> "file": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/p_cc/f_003_t17.67.png",
+> "mode": "ride",
+> "stage": "04",
+> "s": 76.311,
+> "lat": 0,
+> "coins": 1420,
+> "hearts": 5,
+> "paused": false,
+> "bennyY": -21.261,
+> "bennyVisible": true,
+> "cam": [
+> 4.66,
+> -12.56,
+> -14.73
+> ],
+> "near2": 0,
+> "near05": 0,
+> "nearBy": [],
+> "benny": {
+> "maskShare": 0.0231,
+> "hidden": 0.978,
+> "box": [
+> 0.283,
+> 0.427,
+> 0.558,
+> 0.569
+> ],
+> "depth": 12.82,
+> "fgFrame": 0.9592,
+> "fgOnBenny": 0.976,
+> "occluders": [
+> {
+> "obj": "water_ribbon < water_system",
+> "onBenny": 0.976
+> }
+> ],
+> "centreY": -21.261,
+> "up": [
+> -0.079,
+> 0.895,
+> -0.44
+> ],
+> "rootY": -21.261,
+> "surfaceY": -21.68,
+> "surfaceObj": "water_ribbon < water_system",
+> "bottomAboveSurface": -0.511,
+> "centreAboveSurface": 0.468
+> },
+> "ray": {
+> "centre": [
+> {
+> "d": 4.56,
+> "obj": "water_ribbon<water_system<Scene",
+> "p": [
+> 3.9,
+> -15.58,
+> -18.06
+> ]
+> },
+> {
+> "d": 6.76,
+> "obj": "water_ribbon<water_system<Scene",
+> "p": [
+> 3.53,
+> -17.04,
+> -19.67
+> ]
+> }
+> ]
+> },
+> "inside": []
+> }
+
+### 🤖 Claude — 2026-11-17T17:38:50.410Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,15p tools/camclear/camtrace.mjs; python3 -c \"\nimport json\nd=json.load(open('qa/gameplay_video/trace/0304_before.json'));print(type(d), list(d.keys()) if isinstance(d,dict) else '')\nr=d['rows'] if isinstance(d,dict) else d\nfor x in r[::3][:60]: print(json.dumps(x)[:230])\" | head -70", "description": "Look at the 03-04 camera trace"}`
+
+### 🧑 User — 2026-11-17T17:38:50.499Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Per-frame (60 Hz) camera trace of the real game from app start: camera position / forward / up, Benny, stage, and
+> // for Screen 08 the deviation from the approved (locked) 08 camera (assets/textures/match08/cam08_locked.json):
+> // position error (u), view-direction error (deg), roll error (deg).
+> // Usage: node tools/camclear/camtrace.mjs --q=match08=1 --t0=43 --t1=47 [--every=1] [--steerplan=t:v,...] --out=FILE
+> import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
+> import { dirname } from 'node:path';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const arg = (k, d = '') => { const a = process.argv.find((x) => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : d; };
+> const q = arg('q'), t0 = Number(arg('t0', '43')), t1 = Number(arg('t1', '47')), every = Number(arg('every', '1'));
+> const out = arg('out', 'qa/gameplay_video/camtrace.json');
+> const steerPlan = arg('steerplan') ? arg('steerplan').split(',').map((p) => p.split(':').map(Number)) : [];
+> const lock = JSON.parse(readFileSync('assets/textures/match08/cam08_locked.json', 'utf8'));
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(52 …[+2234 chars]
+
+### 🤖 Claude — 2026-11-17T17:38:58.022Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"camclear\\|CAMCLEAR\" src/game/cameraRig.ts src/game/Game.ts | head -40", "description": "Find camclear-guarded code in rig and game"}`
+
+### 🧑 User — 2026-11-17T17:38:58.071Z
+
+> ↩︎ result: src/game/cameraRig.ts:11:import { CAMCLEAR } from './camClear';
+> src/game/cameraRig.ts:137:      if (CAMCLEAR) {
+> src/game/cameraRig.ts:138:        // `?camclear=1`: the projected 08 scenery is exact only from the approved viewpoint, so the camera stops THERE (the
+> src/game/cameraRig.ts:154:    // `?camclear=1` 06 rinse arch: where the stream climbs the wall the chase camera ends up at the wall itself, looking
+> src/game/cameraRig.ts:158:    if (CAMCLEAR && this.axis) this.clear06(s, p, benny, outPos, outTarget);
+> src/game/cameraRig.ts:200:  /** `?camclear=1` only — see desired() */
+> src/game/Game.ts:28:import { CAMCLEAR, createCamClear } from './camClear';
+> src/game/Game.ts:118:  // `?camclear=1` (src/game/camClear.ts): rings / lids / gold lips / foam banks never hide Benny or fill the lens while
+> src/game/Game.ts:120:  const camClear = CAMCLEAR ? createCamClear({ env: env.group, foam: water.parts?.foam }) : null;
+> src/game/Game.ts:381:        if (camClear) camSnap = true;
+> src/game/Game.ts:587:    camClear?.update(camera, benny.root, st.mode === 'ride');
+> src/game/Game.ts:703:    /** QA: `?camclear=1` patched occluders (null = switch off) */
+> src/game/Game.ts:704:    camClear() { return camCl …[+24 chars]
+
+### 🤖 Claude — 2026-11-17T17:38:59.889Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,240p src/game/cameraRig.ts", "description": "Read camera rig logic"}`
+
+### 🧑 User — 2026-11-17T17:38:59.939Z
+
+> ↩︎ result: if (!p) continue;
+>     const a = THREE.MathUtils.smoothstep(s, st.s0 - blend, st.s0 + blend) * (1 - THREE.MathUtils.smoothstep(s, st.s1 - blend, st.s1 + blend));
+>     if (a <= 0) continue;
+>     for (const k of KEYS) acc[k] += p[k] * a;
+>     w += a;
+>   }
+>   if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+>   for (const k of KEYS) acc[k] /= w;
+>   return acc;
+> }
+> 
+> export class RideCamera {
+>   readonly pos = new THREE.Vector3();
+>   readonly target = new THREE.Vector3();
+>   readonly up = new THREE.Vector3(0, 1, 0);
+>   fov = 70;
+>   private init = false;
+>   /** optional straight tunnel axis + the s-range where the camera aligns to it */
+>   axis: { path: TubePath; s0: number; s1: number } | null = null;
+> 
+>   constructor(private course: Course) {}
+> 
+>   /** desired pose for Benny at (s, lateral) */
+>   desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+>     const p = camParamsAt(this.course, s);
+>     const f = this.course.sample(s);
+>     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+>     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+>     let up = f.up.clone();
+>     if (this.axis) {
+>       const a …[+9542 chars]
+
+### 🤖 Claude — 2026-11-17T17:39:09.599Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=16.6 --t1=18.6 --dt=0.1 --size=270x600 --out=$S/p_0304 > $S/p_0304.log 2>&1; python3 -c \"\nimport json\nd=json.load(open('$S/p_0304/probe.json'))\nfor r in d['rows']:\n  b=r.get('benny') or {}\n  print(r['t'],r['stage'],r['s'],r['cam'],'hid',b.get('hidden'),[ (o['obj'],o['onBenny']) for o in b.get('occluders',[])][:2], 'fg',b.get('fgFrame'),'dep',b.get('depth'))\"", "description": "Fine probe of 03-04 handoff with camclear", "timeout …[+10 chars]`
+
