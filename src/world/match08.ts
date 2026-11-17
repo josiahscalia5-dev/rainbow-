@@ -121,6 +121,19 @@ void main() {
   gl_FragColor = vec4(pjInverse(t), 1.0);
 }`;
 
+/** several (nu × nv) vertex grids f(u, v) → one indexed geometry (m08arch: fine tessellation for per-vertex pushes) */
+function gridGeo(parts: [number, number, (u: number, v: number) => THREE.Vector3][]): THREE.BufferGeometry {
+  const pos: number[] = [], idx: number[] = [];
+  for (const [nu, nv, f] of parts) {
+    const b = pos.length / 3;
+    for (let j = 0; j <= nv; j++) for (let i = 0; i <= nu; i++) { const p = f(i / nu, j / nv); pos.push(p.x, p.y, p.z); }
+    for (let j = 0; j < nv; j++) for (let i = 0; i < nu; i++) { const a = b + j * (nu + 1) + i, c = a + nu + 1; idx.push(a, c, a + 1, c, c + 1, a + 1); }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+  return g;
+}
+
 export async function buildMatch08(): Promise<Match08> {
   const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
   const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
@@ -202,7 +215,7 @@ export async function buildMatch08(): Promise<Match08> {
     // painted); the push ramps in above it — far below the camera, so it never blocks the view
     return 1 + (k - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.4, L.floorY + 1.6);
   };
-  const pushV = (v: THREE.Vector3) => v.sub(VP).multiplyScalar(pushK(v.clone())).add(VP);
+  const pushV = (v: THREE.Vector3) => { const k = pushK(v); return v.sub(VP).multiplyScalar(k).add(VP); };
   const pushGeo = (g: THREE.BufferGeometry) => {
     if (!fixArch) return g;
     const a = g.getAttribute('position') as THREE.BufferAttribute, v = new THREE.Vector3();
@@ -244,8 +257,23 @@ export async function buildMatch08(): Promise<Match08> {
   const ring = new THREE.Shape(); ring.absarc(0, 0, L.arch.outer.r, 0, Math.PI * 2, false);
   const hole = new THREE.Path(); hole.absarc(L.arch.inner.cx - L.arch.outer.cx, L.arch.inner.cy - L.arch.outer.cy, L.arch.inner.r, 0, Math.PI * 2, true);
   ring.holes.push(hole);
-  const archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });
-  archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth);
+  let archG: THREE.BufferGeometry;
+  if (fixArch) {
+    // m08arch: the same ring as fine grids (front, bore, outer side, back), so every small piece moves along its own ray
+    const oc = new THREE.Vector2(L.arch.outer.cx, L.arch.outer.cy), ic = new THREE.Vector2(L.arch.inner.cx, L.arch.inner.cy);
+    const zF = L.arch.z, zB = L.arch.z - L.arch.depth;
+    const cp = (c: THREE.Vector2, r: number, a: number, z: number) => new THREE.Vector3(c.x + r * Math.cos(a), c.y + r * Math.sin(a), z);
+    const NA = 256;
+    archG = gridGeo([
+      [NA, 6, (u, t) => cp(ic, L.arch.inner.r, u * 2 * Math.PI, zF).lerp(cp(oc, L.arch.outer.r, u * 2 * Math.PI, zF), t)],
+      [NA, 6, (u, t) => cp(ic, L.arch.inner.r, u * 2 * Math.PI, zF + (zB - zF) * t)],
+      [NA, 6, (u, t) => cp(oc, L.arch.outer.r, u * 2 * Math.PI, zF + (zB - zF) * t)],
+      [NA, 6, (u, t) => cp(ic, L.arch.inner.r, u * 2 * Math.PI, zB).lerp(cp(oc, L.arch.outer.r, u * 2 * Math.PI, zB), t)],
+    ]);
+  } else {
+    archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });
+    archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth);
+  }
   if (fixLane) archG.applyMatrix4(toView);
   pushGeo(archG);
   add(archG, M.gold, 'arch');
@@ -262,7 +290,14 @@ export async function buildMatch08(): Promise<Match08> {
   if (fixBw) bh.absarc(archC.x, archC.y, archR * 0.985, 0, Math.PI * 2, true);
   else bh.absarc(L.pipe.cx, L.pipe.cy, L.backwall.holeR, 0, Math.PI * 2, true);
   bw.holes.push(bh);
-  add(pushGeo(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z)), M.disc, 'backwall');
+  if (fixArch) {
+    // m08arch: entrance wall as a fine polar grid between the arch outline and the outer rim (pushed piece by piece)
+    const zW = archC.z - 0.02, ro = C.r + 3;
+    add(pushGeo(gridGeo([[192, 24, (u, t) => {
+      const a = u * 2 * Math.PI, ca = Math.cos(a), sa = Math.sin(a);
+      return new THREE.Vector3(archC.x + archR * 0.985 * ca, archC.y + archR * 0.985 * sa, zW).lerp(new THREE.Vector3(C.cx + ro * ca, C.cy + ro * sa, zW), t);
+    }]])), M.disc, 'backwall');
+  } else add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z), M.disc, 'backwall');
   // chamber walls (from the arch to the door wall) + the door wall
   const chLen = chamberZ0 - C.zDoor;
   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);

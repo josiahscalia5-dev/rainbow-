@@ -828,3 +828,267 @@ Approved view is not 0 px yet: 150k px differ, almost all by 1–2 levels across
 > (500, 1222) (0, 255, 0)
 > (450, 1240) (0, 255, 0)
 
+### 🤖 Claude — 2026-11-17T22:14:33.410Z
+
+The gold arch's own bottom band (green in debug) hid that fur in the round-1 set. Keeping the arch's lowest band (near the water) unpushed, ramping to the full push above it.
+
+### 🤖 Claude — 2026-11-17T22:14:36.210Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/match08.ts", "old_string": "    if (dy >= 0) return ARCH_K;\n    return Math.min(ARCH_K, Math.max(1, ((L.floorY + 0.01 - VP.y) / dy)));\n  };", "new_string": "    const k = dy >= 0 ? ARCH_K : Math.min(ARCH_K, Math.max(1, ((L.floorY + 0.01 - VP.y) / dy)));\n    // the lowest band at the water stays where it was fitted (the arch's bottom rim covers Benny's underside exactly as\n    // painted); the push ramps in above it — far below the camera, so it never blocks the view\n    return 1 + (k - 1) * THREE.MathUtils.smoothstep(v.y,  …[+40 chars]`
+
+### 🧑 User — 2026-11-17T22:14:36.244Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/match08.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-17T22:14:39.112Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && O=qa/match/08/scenery/r6/proof && node scripts/capture.mjs 08 --q='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1' --out=$O/arch 2>&1 | tail -0; python3 /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/pxdiff.py $O/r1/08.png $O/arch/08.png /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/archmask.png", "description": "Re-capture approved view and diff", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T22:14:51.404Z
+
+> ↩︎ result: qa/match/08/scenery/r6/proof/arch/08.png: diff px 150386  >20 levels 1016  max 243  bbox x0-863 y0-1535
+
+### 🤖 Claude — 2026-11-17T22:14:54.551Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/capture.mjs | grep -n \"vite\\|build\\|dist\\|startVite\" ; ls -la qa/match/08/scenery/r6/proof/arch/", "description": "Check how capture.mjs serves the game"}`
+
+### 🧑 User — 2026-11-17T22:14:54.585Z
+
+> ↩︎ result: 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 24:const vite = await startVite(5201);
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> total 2552
+> drwxr-xr-x 2 root root    4096 Nov 17 22:13 .
+> drwxr-xr-x 5 root root    4096 Nov 17 22:14 ..
+> -rw-r--r-- 1 root root 2600966 Nov 17 22:14 08.png
+
+### 🤖 Claude — 2026-11-17T22:14:58.201Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/scenery/r6/proof && node scripts/capture.mjs 08 --q='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1' --out=$O/arch 2>&1 | tail -3; python3 /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/pxdiff.py $O/r1/08.png $O/arch/08.png /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/archmask.png", "description": "Re-run capture with visible output", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T22:15:08.930Z
+
+> ↩︎ result: 08 → qa/match/08/scenery/r6/proof/arch/08.png {"stage":"08","s":391.427,"y":-113.112,"calls":80,"tris":404845,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> qa/match/08/scenery/r6/proof/arch/08.png: diff px 150386  >20 levels 1016  max 243  bbox x0-863 y0-1535
+
+### 🤖 Claude — 2026-11-17T22:15:21.706Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/scenery/r6/proof && node scripts/capture.mjs 08 --q='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08dbg=1' --out=$O/dbg_arch 2>&1 | tail -0; python3 -c \"\nfrom PIL import Image\na=Image.open('$O/dbg_r1/08.png').convert('RGB');b=Image.open('$O/dbg_arch/08.png').convert('RGB')\nfor p in [(450,1225),(400,1230),(500,1222),(450,1240),(450,1200),(450,1260)]: print(p,a.getpixel(p),b.getpixel(p))\na.crop((200,1100,700,1350)).save('/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/d1.png');b.crop((200,1100,700,1350)).save('/tmp/claude-0/ …[+151 chars]`
+
+### 🧑 User — 2026-11-17T22:15:29.794Z
+
+> ↩︎ result: (450, 1225) (218, 117, 206) (218, 117, 206)
+> (400, 1230) (0, 255, 0) (255, 0, 255)
+> (500, 1222) (0, 255, 0) (255, 0, 255)
+> (450, 1240) (0, 255, 0) (255, 0, 255)
+> (450, 1200) (210, 60, 147) (210, 60, 147)
+> (450, 1260) (255, 0, 255) (255, 0, 255)
+
+### 🤖 Claude — 2026-11-17T22:15:36.110Z
+
+> 🔧 **Bash** `{"command": "sed -n 188,215p src/world/match08.ts", "description": "Show current pushK code"}`
+
+### 🧑 User — 2026-11-17T22:15:36.142Z
+
+> ↩︎ result: //  `&m08bw=1`: the chamber's entrance wall sits flush behind the gold arch (was 3.6 u further in, where it rose out
+>   //   of the painted river and showed a stretched second copy of river / wall when riding forward).
+>   const fixLane = flag05('m08lane'), fixArch = !fixLane && flag05('m08arch'), fixBw = flag05('m08bw') || fixLane || fixArch;
+>   // `&m08arch=1` (scenery round r6): inlet pipe, gold arch and entrance wall pushed AWAY from the approved viewpoint
+>   // along the projector's own rays (×ARCH_K = 2.6), so the approved view stays the same picture while the camera, which
+>   // passed only ~0.4 u inside the fitted arch ring when steering, gets ~2 u of room. A point whose ray meets the floor
+>   // before ×ARCH_K stops on the floor (no gold or wall copied flat onto the floor; points already below it stay put).
+>   const ARCH_K = Number(new URLSearchParams(location.search).get('m08archk') ?? '') || 2.6;
+>   const VP = proj.position.clone();
+>   const pushK = (v: THREE.Vector3) => {
+>     const dy = v.y - VP.y;
+>     if (v.y <= L.floorY) return 1;
+>     const k = dy >= 0 ? ARCH_K : Math.min(ARCH_K, Math.max(1, ((L.floorY + 0.01 - VP.y) / dy)));
+>     // the lowest band at the water stays where it w …[+798 chars]
+
+### 🤖 Claude — 2026-11-17T22:15:48.998Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const ring = new THREE.Shape\\|const archG\\|archG.translate\\|const bw = new\\|bw.holes.push\\|add(pushGeo(new THREE.ShapeGeometry\" src/world/match08.ts", "description": "Locate arch and backwall construction lines"}`
+
+### 🧑 User — 2026-11-17T22:15:49.021Z
+
+> ↩︎ result: 244:  const ring = new THREE.Shape(); ring.absarc(0, 0, L.arch.outer.r, 0, Math.PI * 2, false);
+> 247:  const archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });
+> 248:  archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth);
+> 260:  const bw = new THREE.Shape(); bw.absarc(C.cx, C.cy, C.r + (fixBw ? 3 : 0), 0, Math.PI * 2, false);
+> 264:  bw.holes.push(bh);
+> 265:  add(pushGeo(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z)), M.disc, 'backwall');
+
+### 🤖 Claude — 2026-11-17T22:15:50.782Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/match08.ts", "offset": 242, "limit": 25}`
+
+### 🧑 User — 2026-11-17T22:15:50.830Z
+
+> ↩︎ result: 242	  add(pipe, M.wall, 'pipe');
+> 243	  // gold arch: annulus at the chamber entrance, extruded toward the door
+> 244	  const ring = new THREE.Shape(); ring.absarc(0, 0, L.arch.outer.r, 0, Math.PI * 2, false);
+> 245	  const hole = new THREE.Path(); hole.absarc(L.arch.inner.cx - L.arch.outer.cx, L.arch.inner.cy - L.arch.outer.cy, L.arch.inner.r, 0, Math.PI * 2, true);
+> 246	  ring.holes.push(hole);
+> 247	  const archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });
+> 248	  archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth);
+> 249	  if (fixLane) archG.applyMatrix4(toView);
+> 250	  pushGeo(archG);
+> 251	  add(archG, M.gold, 'arch');
+> 252	  // the arch's back face (where the chamber starts) and its outer ring, after the optional lane scaling
+> 253	  const archC = new THREE.Vector3(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth).applyMatrix4(toView);
+> 254	  // (m08arch: the entrance wall is built at the unpushed arch and pushed with it; the chamber starts at the pushed wall)
+> 255	  const chamberZ0 = fixArch ? VP.z + ARCH_K * (archC.z - VP.z) : archC.z;
+> 256	  const archR = L.arch.outer.r * (fixLane ? LANE_K : 1);
+> 257	  // b …[+805 chars]
+
+### 🤖 Claude — 2026-11-17T22:15:55.990Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"BufferGeometryUtils\" src | head -3", "description": "Check BufferGeometryUtils import path"}`
+
+### 🧑 User — 2026-11-17T22:15:56.022Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:16:10.332Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\nold_arch=\"\"\"  const archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });\n  archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth);\"\"\"\nnew_arch=\"\"\"  let archG: THREE.BufferGeometry;\n  if (fixArch) {\n    // m08arch: the same ring as fine grids (front, bore, outer side, back), so every small piece moves along its own ray\n    const oc = new THREE.Vector2(L.arch.outer.cx, L.arch.outer.cy), ic = new THREE.Vector2(L.arch.inner.cx, L.arch.in …[+2850 chars]`
+
+### 🧑 User — 2026-11-17T22:16:12.418Z
+
+> ↩︎ result: OK
+
+### 🤖 Claude — 2026-11-17T22:16:17.053Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/scenery/r6/proof && node scripts/capture.mjs 08 --q='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1' --out=$O/arch 2>&1 | grep -c \"→\"; python3 /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/pxdiff.py $O/r1/08.png $O/arch/08.png /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/archmask.png", "description": "Re-capture approved view and diff", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T22:16:27.972Z
+
+> ↩︎ result: 1
+> qa/match/08/scenery/r6/proof/arch/08.png: diff px 172390  >20 levels 1046  max 243  bbox x0-863 y0-1535
+
+### 🤖 Claude — 2026-11-17T22:16:32.438Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/scenery/r6/proof && python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nO='qa/match/08/scenery/r6/proof'\na=np.asarray(Image.open(O+'/r1/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open(O+'/arch/08.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); ys,xs=np.nonzero(d>20)\nprint(np.percentile(ys,[0,10,50,90,100]),np.percentile(xs,[0,10,50,90,100]))\nImage.fromarray(np.concatenate([a[1150:1300],b[1150:1300]],0).astype(np.uint8)).save('/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/crop.png')\nEOF", "descri …[+46 chars]`
+
+### 🧑 User — 2026-11-17T22:16:32.758Z
+
+> ↩︎ result: [ 185.   264.5 1217.  1228.  1241. ] [  0. 110. 452. 741. 863.]
+
+### 🤖 Claude — 2026-11-17T22:16:36.080Z
+
+Still working on making the approved view pixel-identical with `m08arch` (fur-edge strip under Benny still differs); checking which surface covers it now.
+
+### 🤖 Claude — 2026-11-17T22:16:39.538Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/scenery/r6/proof && node scripts/capture.mjs 08 --q='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08dbg=1' --out=$O/dbg_arch 2>&1 | grep -c \"→\"; python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$O/dbg_r1/08.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$O/dbg_arch/08.png').convert('RGB')).astype(int)\ng1=(a==[0,255,0]).all(2); g2=(b==[0,255,0]).all(2)\nprint('arch px r1',g1.sum(),'arch',g2.sum(),'r1 only',(g1&~g2).sum(),'arch only',(g2&~g1).sum())\nys,xs=np.nonzero(g1&~g2); print(ys.min(),ys.max(),xs.min(),xs.max …[+138 chars]`
+
+### 🧑 User — 2026-11-17T22:16:49.218Z
+
+> ↩︎ result: 1
+> arch px r1 209420 arch 108435 r1 only 101023 arch only 38
+> 277 1260 0 863
+> [255   0 255] [255   0 255]
+
+### 🤖 Claude — 2026-11-17T22:17:01.831Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json,numpy as np,math\nL=json.load(open('assets/textures/match08/proj08.json'))\nM=np.array(L['camera']['matrixWorld']).reshape(4,4).T\nP=M[:3,3]; R=M[:3,:3]\ndef ray(px,py):\n  t=math.tan(math.radians(31)); a=864/1536\n  x=(2*(px+0.5)/864-1)*t*a; y=(1-2*(py+0.5)/1536)*t\n  d=[REDACTED-EMAIL]([x,y,-1.0]); return d/np.linalg.norm(d)\nfor px,py in [(400,1230),(450,1240),(500,1222)]:\n  d=ray(px,py)\n  tf=(L['floorY']-P[1])/d[1]; pf=P+tf*d\n  tz=(L['arch']['z']-P[2])/d[2]; pz=P+tz*d\n  oc=np.array([L['arch']['outer']['cx'],L['arch']['outer']['cy']]); ic=np.a …[+314 chars]`
+
+### 🧑 User — 2026-11-17T22:17:01.945Z
+
+> ↩︎ result: 400 1230 floor hit [  12.319 -113.6   -281.465] dist 7.66 | arch plane hit [  12.338 -113.461 -281.216] r_in 2.479 r_out 2.449 dist 7.37
+> 450 1240 floor hit [  12.604 -113.6   -281.373] dist 7.56 | arch plane hit [  12.61  -113.511 -281.216] r_in 2.538 r_out 2.51 dist 7.38
+> 500 1222 floor hit [  12.881 -113.6   -281.583] dist 7.74 | arch plane hit [  12.879 -113.398 -281.216] r_in 2.465 r_out 2.439 dist 7.32
+
+### 🤖 Claude — 2026-11-17T22:17:20.948Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/scenery/r6/proof && node scripts/capture.mjs 08 --q='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08archk=1&m08dbg=1' --out=$O/dbg_k1 2>&1 | grep -c \"→\"; python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$O/dbg_r1/08.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$O/dbg_k1/08.png').convert('RGB')).astype(int)\ng1=(a==[0,255,0]).all(2); g2=(b==[0,255,0]).all(2)\nprint('arch px r1',g1.sum(),'k1',g2.sum()); print(b[1230,400], b[1222,500], (np.abs(a-b).max(2)>0).sum())\"", "description": "Debug capture with push factor …[+23 chars]`
+
+### 🧑 User — 2026-11-17T22:17:30.753Z
+
+> ↩︎ result: 1
+> arch px r1 209420 k1 209414
+> [  0 255   0] [  0 255   0] 127
+
+### 🤖 Claude — 2026-11-17T22:17:47.667Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/k.mjs <<'EOF'\nimport * as THREE from '/home/user/rainbow-/node_modules/three/build/three.module.js';\nimport fs from 'fs';\nconst L=JSON.parse(fs.readFileSync('/home/user/rainbow-/assets/textures/match08/proj08.json'));\nconst M=new THREE.Matrix4().fromArray(L.camera.matrixWorld); const VP=new THREE.Vector3().setFromMatrixPosition(M);\nconst K=2.6;\nconst pushK=(v)=>{const dy=v.y-VP.y; if(v.y<=L.floorY) return 1; const k=dy>=0?K:Math.min(K,Math.max(1,(L.floorY+0.01-VP.y)/dy)); return 1+(k-1)*T …[+447 chars]`
+
+### 🧑 User — 2026-11-17T22:17:47.750Z
+
+> ↩︎ result: 0 -113.548 1.000
+> 5 -113.538 1.000
+> 10 -113.509 1.000
+> 20 -113.393 1.000
+> 30 -113.204 1.000
+> 40 -112.948 1.024
+> 60 -112.265 1.483
+> 90 -110.982 2.600
+> VP Vector3 {
+>   x: 12.848382064991654,
+>   y: -109.86620136268614,
+>   z: -274.80056164895825
+> }
+
+### 🤖 Claude — 2026-11-17T22:18:00.555Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow = \\|window.__rainbow\\b\" src -r | head -3; grep -n \"scene\" src/game/Game.ts | grep -n \"__rainbow\\|qa\" | head", "description": "Check QA hooks exposing the scene"}`
+
+### 🧑 User — 2026-11-17T22:18:00.601Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:776:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> 10:70:  // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+> 23:769:    qa3d() { return { scene, camera, renderer, composer }; },
+
+### 🤖 Claude — 2026-11-17T22:18:08.546Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/geo.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5299);\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const p = await b.newPage({ viewport: { width: 432, height: 768 } });\n  await p.goto(`${vite.url}/?qa=1&dpr=1&match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1`);\n  a …[+867 chars]`
+
+### 🧑 User — 2026-11-17T22:18:13.812Z
+
+> ↩︎ result: {"m08_pipe":[4257,-120.39556121826172,-254.00057983398438,[0,0,0],true,"match08_projection"],"m08_arch":[7196,-120.29205322265625,-291.4818115234375,[0,0,0],true,"match08_projection"],"m08_backwall":[4825,-123.42743682861328,-293.873779296875,[0,0,0],true,"match08_projection"],"m08_chamber":[4025,-114.58959197998047,-293.8218078613281,[0,0,0],true,"match08_projection"],"m08_doorwall":[98,1000000000,0,[0,0,0],true,"match08_projection"],"m08_floor":[2145,1000000000,0,[0,0,0],true,"match08_projection"],"m08_platform_top":[98,1000000000,0,[12.01853569828291,-109.49424440576783,-325],true,"match08_projection"],"m08_platform_rim":[194,-110.56571960449219,-316.4726257324219,[0,0,0],true,"match08_projection"],"m08_platform_legs":[194,-113.5999984741211,-317.7517395019531,[0,0,0],true,"match08_projection"],"m08_towel":[150,1000000000,0,[0,0,0],true,"match08_projection"],"m08_spout_UL_dome":[833,1000000000,0,[3.1710933558756533,-103.34538602777661,-322],true,"match08_projection"],"m08_spout_UL_under":[50,1000000000,0,[3.1710933558756533,-103.34538602777661,-322],true,"match08_projection"],"m08_spout_UR_dome":[833,1000000000,0,[20.31350571523367,-104.8372219034162,-322],true,"match08_projecti …[+657 chars]
+
+### 🤖 Claude — 2026-11-17T22:18:18.266Z
+
+Found the bug: in `pushV` the vector was shifted before its push factor was computed, so the floor cap never applied (the arch bottom went 7 u under the floor). Fixing.
+
+### 🤖 Claude — 2026-11-17T22:18:22.127Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\no=\"  const pushV = (v: THREE.Vector3) => v.sub(VP).multiplyScalar(pushK(v.clone())).add(VP);\"\nassert o in s\ns=s.replace(o,\"  const pushV = (v: THREE.Vector3) => { const k = pushK(v); return v.sub(VP).multiplyScalar(k).add(VP); };\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && O=qa/match/08/scenery/r6/proof && node scripts/capture.mjs 08 --q='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1' --out=$O/arch 2>&1 | grep -c \"→\"; python3 /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/ …[+224 chars]`
+
+### 🧑 User — 2026-11-17T22:18:34.076Z
+
+> ↩︎ result: 1
+> qa/match/08/scenery/r6/proof/arch/08.png: diff px 162344  >20 levels 314  max 240  bbox x0-863 y0-1535
+
+### 🤖 Claude — 2026-11-17T22:18:37.659Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport numpy as np, glob\nfrom PIL import Image\nO='qa/match/08/scenery/r6/proof'\na=np.asarray(Image.open(O+'/r1/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open(O+'/arch/08.png').convert('RGB')).astype(int)\nref=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((864,1536))).astype(int)\nd=np.abs(a-b).max(2)\nfor t in [0,1,2,5,20]: print(t,(d>t).sum())\nys,xs=np.nonzero(d>20); print(np.percentile(ys,[0,10,50,90,100]),np.percentile(xs,[0,10,50,90,100]))\nm=d>2; print('err to approved on changed px r1',np.abs(a-ref)[ …[+124 chars]`
+
+### 🧑 User — 2026-11-17T22:18:38.033Z
+
+> ↩︎ result: 0 162344
+> 1 11214
+> 2 2217
+> 5 356
+> 20 314
+> [ 185.   198.   321.  1043.7 1235. ] [  0.   37.  373.  830.7 863. ]
+> err to approved on changed px r1 12.19 arch 11.36
+
+### 🤖 Claude — 2026-11-17T22:18:49.467Z
+
+> 🔧 **Bash** `{"command": "rm -rf qa/match/08/scenery/r6/arch qa/match/08/scenery/r6/arch26 && timeout 600 node tools/lead_r6/motion_audit.mjs 08 qa/match/08/scenery/r6/arch 'match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1' 2>&1 | grep -i error | head; cd qa/match/08/scenery/r6 && python3 -c \"\nfrom PIL import Image\nD='/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/'\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer','s_left_hard','s_right_hard','t66_through_screen']\nW=Image.new('RGB',(288*4,512*2))\nfor i,n in enumerate(names): W. …[+195 chars]`
+
+### 🧑 User — 2026-11-17T22:19:32.230Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:19:34.158Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/arch_fixed.png"}`
+
+### 🧑 User — 2026-11-17T22:19:34.300Z
+
+> ↩︎ result: [image]
+
