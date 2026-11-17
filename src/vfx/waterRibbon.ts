@@ -234,6 +234,12 @@ export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
  * isolated-artwork fill (tools/match05/make_target_vis.py; registration, colour match, LUT, F unchanged). Needs projgap05.
  */
 export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');
+/**
+ * `?coinfill05=1` (Screen 05 agent, milestone 2, qa/match/05/NOTES.md; explicit, needs tgtvis05): layer E of tgtvis05 with
+ * the texels under the painted coins (and Benny's dome) re-baked from a target whose blend no longer carries the coins'
+ * yellow / Benny's pink into the fill (make_target_vis.py TGTFILL05=2): no dull green-teal discs when Benny moves aside.
+ */
+export const COINFILL05: boolean = TGTVIS05 && q05('coinfill05');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -1720,7 +1726,8 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   const urls = {
-    E: TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png', import.meta.url).href
+    E: COINFILL05 ? new URL('../../assets/textures/match05/coinfill05/proj05_E.png', import.meta.url).href
+      : TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png', import.meta.url).href
       : PROJGAP05 ? new URL('../../assets/textures/water05/far2/proj05_E.png', import.meta.url).href
       : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
     N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,

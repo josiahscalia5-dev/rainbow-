@@ -973,3 +973,227 @@ Saved (`2a2863b`). Next: bake the new water texture from variant 2 and wire it b
 
 You've hit your 5-hour limit · resets 9:20pm (UTC)
 
+### 🧑 User — 2026-11-17T22:34:10.772Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-17T22:34:14.275Z
+
+The worker restarted. Checking what survived before continuing the coin-spot water test.
+
+### 🤖 Claude — 2026-11-17T22:34:16.226Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; git log --oneline -3; S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; ls $S 2>&1 | head; ls $S/bake2 $S/t2 2>&1 | head -3; python3 -I scripts/autosave-status.py 2>&1 | tail -2", "description": "Check state after restart"}`
+
+### 🧑 User — 2026-11-17T22:34:22.171Z
+
+> ↩︎ result: 22:34
+> fd94023 autosave: Rainbow 2026-11-17 17:07 UTC
+> 2a2863b Screen 05 M2: make_target_vis TGTFILL05 options (coin-hole fill without occluder colours); default reproduces tgtvis05 target 0 px
+> 30fa730 Screen 05 M2: coin total verified (91 / 2,240, 0 px on every locked view), notes + shared changes
+> bake0
+> bake2
+> cmp_01.png
+> cmp_08.png
+> cmp_09.png
+> cmp_10.png
+> coins_far.png
+> def
+> fill.png
+> fill_top.png
+> /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/bake2:
+> proj05_A.png
+> proj05_D.png
+> AUTOSAVE PROBLEM | branch claude/rainbow-s05-match-c2 | scheduler daemon | last verified backup 2026-11-17T17:07:04+00:00 (327.3 min ago) | local fd94023 remote fd94023 (match) | uncommitted 3
+>   - GAP: last verified backup was 327.3 min ago (2026-11-17T17:07:04+00:00); the environment may have been closed or the scheduler stopped
+
+### 🤖 Claude — 2026-11-17T22:34:25.055Z
+
+The environment was closed about 5.5 hours (17:07–22:34 UTC). No autosave could run then, and nothing was lost: GitHub matches local `fd94023`. Running a save now, then continuing.
+
+### 🤖 Claude — 2026-11-17T22:34:27.946Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:resume 2>&1 | tail -2; S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; ls $S/bake0; git fetch -q origin claude/rainbow-s05-match ccr-b0757dec-dj6l1o; git rev-parse --short origin/claude/rainbow-s05-match origin/ccr-b0757dec-dj6l1o", "description": "Autosave, inspect bake0, check old branches", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T22:35:10.225Z
+
+> ↩︎ result: Exit code 128
+> another autosave is running; skipping
+> fatal: Needed a single revision
+
+### 🤖 Claude — 2026-11-17T22:35:12.838Z
+
+> 🔧 **Bash** `{"command": "git ls-remote origin refs/heads/claude/rainbow-s05-match refs/heads/ccr-b0757dec-dj6l1o; S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; ls -la $S/bake0 | head", "description": "Check old branch heads and bake0 output"}`
+
+### 🧑 User — 2026-11-17T22:35:14.749Z
+
+> ↩︎ result: e0e81306ed00e9d6cb32ef9e9aa4f3256e0970d2	refs/heads/ccr-b0757dec-dj6l1o
+> 90129c84ab536f035841aeb239212b398d3659d0	refs/heads/claude/rainbow-s05-match
+> total 8
+> drwxr-xr-x  2 root root 4096 Nov 17 17:06 .
+> drwx------ 16 root root 4096 Nov 17 17:06 ..
+
+### 🤖 Claude — 2026-11-17T22:35:20.741Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; timeout 1200 python3 -I tools/proj05/bake.py $S/probe $S/t0 $S/bake0 far gapfill 2>&1 | tail -3; cmp $S/bake0/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png && echo REPRO_OK", "description": "Reproduce committed tgtvis05 bake", "timeout": 1250000}`
+
+### 🧑 User — 2026-11-17T22:35:43.836Z
+
+> ↩︎ result: Exit code 1
+> {"E_unseen_texels": 0, "E_texels": 1494016}
+> {"E_gapfilled_texels": 72607, "E_texels": 1494016}
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9344103409869774, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/bake0/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png differ: char 46, line 3
+
+### 🤖 Claude — 2026-11-17T22:35:46.695Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$S/bake0/proj05_E.png')).astype(int); b=np.asarray(Image.open('assets/textures/match05/tgtvis05/proj05_E.png')).astype(int)\nprint(a.shape,b.shape,(np.abs(a-b).max(-1)>0).sum())\"", "description": "Compare reproduction bake pixel-wise"}`
+
+### 🧑 User — 2026-11-17T22:35:47.050Z
+
+> ↩︎ result: (1459, 1024, 4) (1459, 1024, 4) 788997
+
+### 🤖 Claude — 2026-11-17T22:35:52.499Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$S/bake0/proj05_E.png')).astype(int); b=np.asarray(Image.open('assets/textures/match05/tgtvis05/proj05_E.png')).astype(int)\nd=np.abs(a-b).max(-1); print(d.max(), (d>2).sum(), (d>8).sum(), [ (np.abs(a-b)[...,i]>0).sum() for i in range(4)])\"; grep -rn \"proj05-probe\" qa/pilot05/proj/far*/NOTES.md qa/match/05/NOTES.md 2>/dev/null | head -5", "description": "Measure reproduction difference magnitude"}`
+
+### 🧑 User — 2026-11-17T22:35:53.205Z
+
+> ↩︎ result: 70 322897 96218 [np.int64(621092), np.int64(393218), np.int64(175760), np.int64(0)]
+> qa/match/05/NOTES.md:18:* Re-bake: `python3 -I tools/proj05/bake.py <probe> <target> <out> far gapfill` (probe: `node scripts/proj05-probe.mjs
+
+### 🤖 Claude — 2026-11-17T22:36:07.453Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; mkdir -p assets/textures/match05/coinfill05 && python3 -c \"\nimport numpy as np; from PIL import Image\nb0=np.asarray(Image.open('$S/bake0/proj05_E.png')).astype(int); b2=np.asarray(Image.open('$S/bake2/proj05_E.png')).astype(int)\nE=np.asarray(Image.open('assets/textures/match05/tgtvis05/proj05_E.png')).astype(int)\nm=np.abs(b2-b0).max(-1)>0; print('texels changed by fill', m.sum())\nout=np.where(m[...,None], b2, E).astype(np.uint8); Image.fromarray(out,'RGBA').save('assets/textures/match05/coin …[+250 chars]`
+
+### 🧑 User — 2026-11-17T22:36:08.989Z
+
+> ↩︎ result: texels changed by fill 522600
+>  */
+> export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
+> /**
+>  * `?tgtvis05=1` (Screen 05 agent, 2026-11-17, branch claude/rainbow-s05-match, qa/match/05/NOTES.md; explicit switch, NOT
+>  * in match05 yet): exact layer E from assets/textures/match05/tgtvis05/ — far2's E re-baked from a target in which the
+>  * 39,360 px of water the APPROVED picture shows around Benny's hat / shoulders keep the approved pixels instead of the
+>  * isolated-artwork fill (tools/match05/make_target_vis.py; registration, colour match, LUT, F unchanged). Needs projgap05.
+>  */
+> export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');
+> /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> export const proj05Pending: Promise<unknown>[] = [];
+> 
+> /**
+>   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
+>   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+>   const urls = {
+>     E: TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png', import.meta.url).href
+>       : PROJGAP …[+349 chars]
+
+### 🤖 Claude — 2026-11-17T22:36:14.002Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\nt=open(p).read()\na=\"export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');\\n\"\nb=a+\"\"\"/**\n * `?coinfill05=1` (Screen 05 agent, milestone 2, qa/match/05/NOTES.md; explicit, needs tgtvis05): layer E of tgtvis05 with\n * the texels under the painted coins (and Benny's dome) re-baked from a target whose blend no longer carries the coins'\n * yellow / Benny's pink into the fill (make_target_vis.py TGTFILL05=2): no dull green-teal discs when Benny moves aside.\n */\nexport const COINFILL05: boolean = TGTVIS05 && q05('coinfil …[+435 chars]`
+
+### 🧑 User — 2026-11-17T22:36:18.594Z
+
+> ↩︎ result: TSC OK
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+
+### 🤖 Claude — 2026-11-17T22:36:19.876Z
+
+Switch wired. Capturing the locked view and the riding/steering frames with `coinfill05`.
+
+### 🤖 Claude — 2026-11-17T22:36:20.670Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,15p scripts/proj05-move.mjs | grep -E \"usage|--\" | head -5", "description": "Check move script usage"}`
+
+### 🧑 User — 2026-11-17T22:36:20.699Z
+
+> ↩︎ result: //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+
+### 🤖 Claude — 2026-11-17T22:36:25.344Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; mkdir -p $S/cf; timeout 900 node scripts/capture.mjs --q='match05=1&tgtvis05=1&coinfill05=1' --out=$S/cf 05 >/dev/null 2>&1; timeout 1500 node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&coinfill05=1' --out=qa/match/05/move/coinfill05 --d=0,3,6,12 --steer=-1,1 2>&1 | tail -1; ls qa/match/05/move/coinfill05; git checkout qa/capture_log.json 2>/dev/null; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nd=np.abs(L('$S/cf …[+202 chars]`
+
+### 🧑 User — 2026-11-17T22:37:20.779Z
+
+> ↩︎ result: steer 1 0.8 4.556
+> move_00.png
+> move_03.png
+> move_06.png
+> move_12.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+> steer_R_080.png
+> locked vs M1 111094 43881
+
+### 🤖 Claude — 2026-11-17T22:37:22.861Z
+
+The locked view changed 111 k px against milestone 1. Measuring whether it moved closer or further from the approved picture:
+
+### 🤖 Claude — 2026-11-17T22:37:25.309Z
+
+> 🔧 **Bash** `{"command": "head -20 tools/match05/metrics.py | grep -i -E \"usage|argv\"; S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; python3 -I tools/match05/metrics.py qa/match/05/03_NEW_match05_tgtvis05.png 2>&1 | tail -4; python3 -I tools/match05/metrics.py $S/cf/05.png 2>&1 | tail -4", "description": "Run metrics for M1 and coinfill05"}`
+
+### 🧑 User — 2026-11-17T22:37:25.838Z
+
+> ↩︎ result: usage: python3 -I tools/match05/metrics.py <capture.png> <out_prefix> [--proof <before.png>]
+> cap, pre = sys.argv[1], sys.argv[2]
+>   File "/home/user/rainbow-/tools/match05/metrics.py", line 14, in <module>
+>     cap, pre = sys.argv[1], sys.argv[2]
+>                             ~~~~~~~~^^^
+> IndexError: list index out of range
+>   File "/home/user/rainbow-/tools/match05/metrics.py", line 14, in <module>
+>     cap, pre = sys.argv[1], sys.argv[2]
+>                             ~~~~~~~~^^^
+> IndexError: list index out of range
+
+### 🤖 Claude — 2026-11-17T22:37:26.006Z
+
+You've hit your 5-hour limit · resets 2:40am (UTC)
+
+### 🧑 User — 2026-11-17T22:37:26.027Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T22:37:26.428Z
+
+You've hit your 5-hour limit · resets 2:40am (UTC)
+
+### 🧑 User — 2026-11-17T22:37:26.489Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T22:37:26.846Z
+
+You've hit your 5-hour limit · resets 2:40am (UTC)
+
+### 🧑 User — 2026-11-17T22:37:26.910Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T22:37:27.241Z
+
+You've hit your 5-hour limit · resets 2:40am (UTC)
+

@@ -517,6 +517,16 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match05/coinfill05/proj05_E.png",
+   "bytes": 2073823,
+   "sha256": "865cda1cef3dea6fb6134cd037def72b3be054872a76a0da9fb53f908685b391"
+  },
+  {
+   "path": "assets/textures/match05/coinfill05/target_05.png",
+   "bytes": 2177829,
+   "sha256": "f18385757f018620f89122952cdab4cc06a23657a33fade43b6c2fc5eb1cdcd4"
+  },
+  {
    "path": "assets/textures/match05/tgtvis05/fill_mask.png",
    "bytes": 11184,
    "sha256": "67c92394e05e9069c60bba434b97d71257fbf1aae8d14889770671f224eb2db7"
@@ -689,7 +699,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13095,
-   "sha256": "497a0ae992e16bacffb9bf6b773c39b04a3ae6ee0782eb84c2fa5478d46f9a64"
+   "sha256": "77fa0899e9daa2c04bb726ca1cfe953842b329c51344b4a99e44952e09c632ab"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1345,6 +1355,61 @@
    "path": "qa/match/05/move/changed_px_gt8.json",
    "bytes": 247,
    "sha256": "7bbbf0246389e231d8a56c383cfac43542194d000e1b0c59d449e61585929e85"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/move_00.png",
+   "bytes": 2282811,
+   "sha256": "e678b9e83d293207589655537a672480983487d158bc264cf33377daf5a9a0ac"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/move_03.png",
+   "bytes": 2074516,
+   "sha256": "f501963cd98d92b32104bd21ef441b044a6bcba08471f0e55da6906de506a008"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/move_06.png",
+   "bytes": 2047966,
+   "sha256": "ba6d0c4b487c1e0a76fc0b660bf40a82aa51b880ff1ff2e3bf2d288ac35eec4b"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/move_12.png",
+   "bytes": 2017806,
+   "sha256": "3412ef8c692aaaf15b0b1ec6af3b015ec561b991ea3ad6e8caace699538ced59"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/move_log.json",
+   "bytes": 1756,
+   "sha256": "6bf25250d3c5008d96e8eb13f1eaa5b653c3a95ca5d4a944860db0a2b2a89bcf"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/steer_L_025.png",
+   "bytes": 2098954,
+   "sha256": "e0171a3a1151b75494445764917cdd75e73627f0a104268bca4dc10f46d0bf43"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/steer_L_050.png",
+   "bytes": 2022105,
+   "sha256": "6d4a6211a4ce5a8bc58e89f51b3c424ed7fa916ef5fea1059ff8f87e359f1f41"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/steer_L_080.png",
+   "bytes": 2000872,
+   "sha256": "b5d91a306621060347f35751fbe6f8b37c6cf2f87d0f3d8c5c1f4a764d86f0fc"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/steer_R_025.png",
+   "bytes": 2086091,
+   "sha256": "762bfe1ebb8c1af688a659f1bf45b3c55ab2b11fdbdc95f3953bede9f271559b"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/steer_R_050.png",
+   "bytes": 2062028,
+   "sha256": "41f2ca9831536c727ced0163f8c7504ee07ffb9b1bcafccc58fef50fc3750aa5"
+  },
+  {
+   "path": "qa/match/05/move/coinfill05/steer_R_080.png",
+   "bytes": 2041206,
+   "sha256": "0f18063858d8365b9ccbdb27b0477cea745f633a93cbc8e63e5d3e4c124140ec"
   },
   {
    "path": "qa/match/05/move/new/move_00.png",
@@ -11308,8 +11373,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 107491,
-   "sha256": "f49661758259a7cc0dcbf71887836ff9f33854277e72038a767eab63df018cf8"
+   "bytes": 108040,
+   "sha256": "60c926d2d39136305f0bce7999d8fff6f9071223665e809384abbfb29dc0efc8"
   },
   {
    "path": "src/vfx/whirlpool.ts",
