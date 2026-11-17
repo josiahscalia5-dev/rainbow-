@@ -254,3 +254,11 @@ Starting Screen 06 match work: branch pushed, reading the Screen 08 method; next
 
 You've hit your 5-hour limit · resets 8:20pm (UTC)
 
+### 🧑 User — 2026-11-17T16:13:22.810Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-17T16:13:23.729Z
+
+You've hit your 5-hour limit · resets 8:20pm (UTC)
+
