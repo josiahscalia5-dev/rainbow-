@@ -3982,3 +3982,64 @@ A backtick in my shader comment broke the template string. Fixing:
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/c4z.jpg"}`
 
+### 🧑 User — 2026-11-18T15:13:27.219Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:13:27.232Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:13:40.477Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && C4=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C4.q); C5=$(echo \"$C4\" | sed 's/m04a3b0=2.6/m04a3b0=3.0/; s/m04a3b1=4.0/m04a3b1=4.4/'); echo \"$C5\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C5.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s5_lane/C5 \"$C5\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd qa/match/04/r13/s5_lane/C5 && for f in f06_forward6u f20_for …[+308 chars]`
+
+### 🤖 Claude — 2026-11-18T15:13:41.730Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/c5z.jpg"}`
+
+### 🧑 User — 2026-11-18T15:14:23.183Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:14:23.193Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:14:36.587Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && C5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C5.q); C=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/clipC5; rm -rf $C; timeout 900 node tools/lead_r13/swim_clip.mjs 04 $C 2.2 \"$C5\" 2>&1 | grep frames; R=/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path; mkdir -p $R; ffmpeg -loglevel error -y -framerate 24 -i $C/%04d.png -c:v libx264 -pix_fmt yuv420p -crf 20 $R/07_NEW_real_gameplay_swim_2s.mp4; B=qa/match/04/r13/s2_arr/E4; N=qa/match/04/r13/s5_lane/C5; cp /home/user/ …[+750 chars]`
+
+### 🤖 Claude — 2026-11-18T15:14:37.870Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/clipC5.jpg"}`
+
+### 🧑 User — 2026-11-18T15:15:36.989Z
+
+> ↩︎ result: frames 53
+> 00_APPROVED.png
+> 01a_BEFORE_straight.png
+> 01b_NEW_straight.png
+> 02a_BEFORE_hard_left.png
+> 02b_NEW_hard_left.png
+> 03a_BEFORE_hard_right.png
+> 03b_NEW_hard_right.png
+> 04a_BEFORE_end.png
+> 04b_NEW_end.png
+> 07_NEW_real_gameplay_swim_2s.mp4
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:15:37.001Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:15:38.881Z
+
+The clip shows real swimming: the clean blue path down the gold tunnel, arrows ahead while steering, and coins collected (1,330 → 1,340). Committing and saving now.
+
+### 🤖 Claude — 2026-11-18T15:15:53.132Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && C5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C5.q); cat >> qa/match/04/r13/PROGRESS.md <<EOF\n\n## REBUILD step 3 — user order ~15:30 UTC \"gold tunnel + clean blue centre path + five glowing arrows\" — C5 = GOOD IMPROVEMENT — shown to the user\nQuery (C5): \\`$C5\\`\n* Path: rings R4 (\\`m04ringp=3.9 m04ringgw=1.8 m04tb=0 m04ts=0.22 m04paint=0.9\\`: fewer bands, dark grooves) → water W3/W5\n  (\\`m04pink\\`, wider cyan lane, deep-blue arrow halo \\`m04a3hb\\`) → user correction → C1–C5: side water LOWER (\\`m04 …[+2591 chars]`
+
