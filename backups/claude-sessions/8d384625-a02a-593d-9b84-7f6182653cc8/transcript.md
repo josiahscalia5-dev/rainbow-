@@ -2780,3 +2780,81 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "flock -w 90 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep '\"commit\"'; git status --short | head -3; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-restore-c9-40w64b | cut -f1) local $(git rev-parse HEAD)\"", "description": "Commit and push the new blueprint pictures, verify remote matches", "timeout": 150000}`
 
+### 🧑 User — 2026-11-18T03:14:46.398Z
+
+> ↩︎ result: "commit": "fbf13918fe228151f4fad2fb72453cc19fb94201",
+> remote fbf13918fe228151f4fad2fb72453cc19fb94201 local fbf13918fe228151f4fad2fb72453cc19fb94201
+
+### 🤖 Claude — 2026-11-18T03:14:48.090Z
+
+The Screen 06, 07 and 08 blueprint pictures were the only unsaved files. They're now committed and pushed, and the GitHub copy matches this branch exactly (`fbf1391`).
+
+The Screen 04 and 05 specialists are still building the first real 3D foundation for those two screens. I'll send separate APPROVED / BEFORE / NEW pictures once the result has been checked against your artwork.
+
+### 🧑 User — 2026-11-18T03:14:49.518Z
+
+CLAUDIA — IMPORTANT CORRECTION: DO NOT THROW AWAY SUCCESSFUL VISUAL IMPROVEMENTS
+
+Claudia, I want to clarify something before you change or remove any of my existing work.
+
+MY NUMBER-ONE PRIORITY IS THE EXACT VISUAL APPEARANCE OF MY ORIGINAL APPROVED SCREENS.
+
+I am NOT demanding that every single piece of scenery be physically modeled in 3D.
+
+You are allowed to combine:
+
+- Real 3D environments and geometry.
+- Original approved artwork and texture projection.
+- Properly mapped textures.
+- Background scenery and image planes.
+- Visual effects and materials.
+
+USE WHATEVER COMBINATION PRODUCES THE MOST ACCURATE VISUAL RESULT IN MY ACTUAL PLAYABLE 3D GAME.
+
+The important rule is that the result must remain convincing while Benny swims and steers.
+
+I do not want obvious flat pictures following Benny, stretched scenery, duplicated surfaces, incorrect perspectives, or backgrounds that visibly break apart.
+
+However, if an existing technique works visually, DO NOT remove it simply because it uses projection or a moving texture.
+
+PRESERVE SCREEN 05'S SUCCESSFUL WORK
+
+You mentioned two existing Screen 05 improvements:
+
+1. The water appearance around Benny.
+2. The distant tunnel and river.
+
+Do not discard these improvements automatically.
+
+Test whether they preserve my approved appearance during actual gameplay.
+
+If they work visually, KEEP THEM.
+
+If they create noticeable distortion, fix the specific distortion while preserving everything that already looks correct.
+
+SCREEN 04
+
+A flat laundry-room backdrop is acceptable for distant scenery if it looks correct and does not visibly break during gameplay.
+
+But the washer opening, nearby gold structure, river, and other foreground scenery must have convincing visual depth and match my approved design.
+
+Do not replace my approved laundry-room environment with another generic orange tunnel.
+
+ALL FIVE SCREENS
+
+Apply this rule to Screens 04, 05, 06, 07, and 08.
+
+I want the exact approved scenery, colors, water formations, lighting, backgrounds, foam, bubbles, gold structures, and Benny's appearance.
+
+VISUAL FIDELITY IS THE GOAL. THE TECHNIQUE IS A MEANS TO ACHIEVE IT.
+
+Do not restart successful work or rebuild everything unnecessarily.
+
+Use the existing two specialist agents and continue improving my five screens efficiently.
+
+Show me separate APPROVED / BEFORE / NEW pictures so I can judge the actual appearance.
+
+Nothing is approved until I personally approve it.
+
+PLEASE KEEP EVERY SUCCESSFUL IMPROVEMENT AND FIX ONLY WHAT IS VISUALLY WRONG.
+

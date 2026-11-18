@@ -1568,3 +1568,7 @@ Now I'll write the mouth tile tool.
 > t66_through_screen.png
 > t95_through_screen.png
 
+### 🤖 Claude — 2026-11-18T03:14:44.566Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='qa/match/04/r9/BLUEPRINT.md'\ns=open(p).read()\nold=s[s.index(\"## 3. Geometric constraint\"):]\ns=s.replace(old, \"\"\"## 3. Geometric constraint for any re-layout (measured, with pictures)\n* Painted composition = camera 3.39 u above Benny's water, 13.1 u from the opening along its axis, 1.12 u above the\n  axis, opening r 3.58 u (ratios to the distance: height 0.26, radius 0.27, above-axis 0.085).\n* Course/camera untouched ⇒ the camera stays 3.39 u above Benny's water for the whole stage and travels 37 u down\n  the straight 32° …[+5045 chars]`
+
