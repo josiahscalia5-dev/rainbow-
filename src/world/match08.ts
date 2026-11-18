@@ -75,6 +75,9 @@ uniform vec4 uClipIn;       // m08far collar only: discard inside this x/y circl
 uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on
 uniform vec4 uCeil;         // m08ceil (door wall only): painted door centre x, y on the door plane, plane z, w > 0.5 = on
 uniform vec4 uCeilW;        // m08ceil source window: angle start, angle width (rad), radius band start, end (world u)
+uniform sampler2D uRingT;   // m08ring: periodic slot-ring tile (ring08.py): u = angle, v = radius (repeat-wrapped)
+uniform vec4 uRing;         // m08ring: angle start, angle period (rad), radius start, radius period (u)
+uniform float uRingOn;
 uniform vec2 uCeilD;        // m08drum (chamber drum only): x > 0.5 = on, y = fade length (u) from the door plane toward the arch
 uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from the approved picture's own near band (near08.py)
 uniform vec4 uNear;         // z at tile v = 0, world length of one tile period along the river, tile lateral half range A, w > 0.5 = on
@@ -116,7 +119,15 @@ vec3 ceilColorAt(vec2 pxy) {
   float rs = r;
   if (r > uCeilW.w) { float w2 = uCeilW.w - uCeilW.z, fr = mod(r - uCeilW.w, 2.0 * w2); rs = fr < w2 ? uCeilW.w - fr : uCeilW.z + (fr - w2); }
   vec4 q = uProjVP * vec4(uCeil.xy + rs * vec2(cos(as), sin(as)), uCeil.z, 1.0);
-  return texture2D(uPlate, q.xy / q.w * 0.5 + 0.5).rgb;
+  vec3 c = texture2D(uPlate, q.xy / q.w * 0.5 + 0.5).rgb;
+  // m08ring (r12): the slot band and beyond repeat the same window PERIODICALLY (no mirror lines -> no chevrons / diamonds);
+  // explicit gradients from the continuous point (the atan wrap would break the implicit mip selection)
+  vec2 ex = dFdx(pxy), ey = dFdy(pxy);
+  float r2 = max(r * r, 1e-6), r1 = max(r, 1e-3);
+  vec2 gx = vec2((d.x * ex.y - d.y * ex.x) / r2 / uRing.y, dot(d, ex) / r1 / uRing.w);
+  vec2 gy = vec2((d.x * ey.y - d.y * ey.x) / r2 / uRing.y, dot(d, ey) / r1 / uRing.w);
+  vec3 rc = textureGrad(uRingT, vec2((a - uRing.x) / uRing.y, (r - uRing.z) / uRing.w), gx, gy).rgb;
+  return mix(c, rc, uRingOn * smoothstep(uCeilW.z, uCeilW.z + 0.15, r));
 }
 vec3 riv(float z) {
   float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;
@@ -355,6 +366,15 @@ export async function buildMatch08(): Promise<Match08> {
     nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = THREE.ClampToEdgeWrapping; nearTex.wrapT = THREE.RepeatWrapping;
     nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
   }
+  // `&m08ring=1` (r12): periodic slot-ring tile for m08ceil / m08drum (tools/match08/ring08.py)
+  let ringTex: THREE.Texture | null = null;
+  let RG: { a0Deg: number; aPeriodDeg: number; r0: number; rPeriod: number } | null = null;
+  if (flag05('m08ceil') && flag05('m08ring')) {
+    RG = await fetch(new URL('../../assets/textures/match08/ring08.json', import.meta.url).href).then((r) => r.json());
+    ringTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/ring08.png', import.meta.url).href);
+    ringTex.colorSpace = THREE.NoColorSpace; ringTex.wrapS = ringTex.wrapT = THREE.RepeatWrapping;
+    ringTex.minFilter = THREE.LinearMipmapLinearFilter; ringTex.anisotropy = 8;
+  }
   const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
@@ -364,6 +384,7 @@ export async function buildMatch08(): Promise<Match08> {
       uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
       uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) },
       uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) },
+      uRingT: { value: ringTex ?? plate }, uRing: { value: new THREE.Vector4(0, 1, 0, 1) }, uRingOn: { value: 0 },
       uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
       uNearC: { value: new THREE.Vector2(0, 1) },
       uCup: { value: new THREE.Vector4(0, 0, 0, 0) }, uCupM: { value: new THREE.Vector3(1, 0, 0) } },
@@ -523,6 +544,10 @@ export async function buildMatch08(): Promise<Match08> {
     const d2r = THREE.MathUtils.degToRad;
     (doorM as THREE.ShaderMaterial).uniforms.uCeil.value.set(11.952, -103.725, C.zDoor, 1);
     (doorM as THREE.ShaderMaterial).uniforms.uCeilW.value.set(d2r(num('m08ceila', 187)), d2r(num('m08ceilw', 30)), num('m08ceilr0', 7.25), num('m08ceilr1', 8.1));
+    if (RG) {
+      const u = (doorM as THREE.ShaderMaterial).uniforms;
+      u.uRing.value.set(d2r(RG.a0Deg), d2r(RG.aPeriodDeg), RG.r0, RG.rPeriod); u.uRingOn.value = 1;
+    }
     // `&m08drum=1` (r12): the drum's top corners next to the door (hidden behind the arch ring in the approved view, a fill
     // tile with a soft curved edge against the door wall while swimming) continue the door wall's painted rings (FRAG)
     if (flag05('m08drum')) {
@@ -530,6 +555,7 @@ export async function buildMatch08(): Promise<Match08> {
       du.uCeil.value.set(11.952, -103.725, C.zDoor, 0);
       du.uCeilW.value.copy((doorM as THREE.ShaderMaterial).uniforms.uCeilW.value);
       du.uCeilD.value.set(1, num('m08druml', 16));
+      du.uRing.value.copy((doorM as THREE.ShaderMaterial).uniforms.uRing.value); du.uRingOn.value = (doorM as THREE.ShaderMaterial).uniforms.uRingOn.value;
     }
   }
   add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), doorM, 'doorwall');

@@ -73,3 +73,22 @@ Kept query: `K11&m08cup=1&m08rw=1&m08drum=1`
 * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step3_m08drum/1_APPROVED.png`,
   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f10_forward10u`, `t66_through_screen`, `t95_through_screen`
   (BEFORE = `K11&m08cup=1&m08rw=1`, NEW = `+&m08drum=1`, rendered fresh, same positions).
+
+## Step 4 — `&m08ring=1` (defect B: mirror chevrons / diamonds in the slot rows, top right) — KEPT
+Kept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1`
+* Cause: m08ceil (and now m08drum) continue the painted end wall from one clean window of the user's wall beside the door,
+  MIRRORED in angle (12× around) and in radius. The painted slot rows are slightly slanted against the door centre, so every
+  mirror line drew a V: kaleidoscope chevrons and diamonds in the slot rows above / right of the door while swimming.
+* What changed: `tools/match08/ring08.py` unrolls the SAME window (user's own pixels, angle × radius) into
+  `assets/textures/match08/ring08.png/.json` and makes it periodic instead of mirrored (last 20 % of each direction
+  cross-faded into the start; 24° period = exactly 15 repeats around, so no seam at the angle wrap). The shader uses it for
+  the slot band and beyond (radius ≥ 7.25 u, soft 0.15 u hand-over; chrome rim and gold bulb ring unchanged), with explicit
+  mip gradients. Approved view: 0 px differ against the previous kept set (deterministic capture).
+* What looks closer: at the stage end, forward 10 u and two-thirds through, the wall above and right of the door shows
+  regular concentric slot rows curving round the door like the approved picture — BEFORE kaleidoscope diamonds / X shapes
+  and radial mirror lines cut through the rows.
+* Still wrong: the continued rows are a little softer than the painted rows next to the door (the source window is small in
+  the picture); the upper-right spout cup's top wedge (step 1) is still visible next to it.
+* Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step4_m08ring/1_APPROVED.png`,
+  `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `t95_through_screen`, `f10_forward10u`, `t66_through_screen`
+  (BEFORE = `...&m08drum=1`, NEW = `+&m08ring=1`, rendered fresh, same positions).
