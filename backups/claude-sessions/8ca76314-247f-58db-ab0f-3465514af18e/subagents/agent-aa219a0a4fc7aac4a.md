@@ -988,3 +988,36 @@ Let me view the current near tile and then run the quilting helper into the scra
 > 290 -0.32 -0.08 +0.16 +0.47 +0.65 +0.74 +0.87 +0.87 +0.84 +0.48 +0.18 +0.18 +0.04 -0.02 +0.00 +0.14
 > coh 0.44 0.49 0.77 0.92 0.90 0.86 0.87 0.80 0.81 0.79 0.79 0.79 0.73 0.41 0.26 0.55
 
+### 🤖 Claude — 2026-11-18T16:58:10.988Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "print('source band', SW, 'x', SH, 'texels (', round(2 * A * HW, 2), 'u x', round(Z0 - Z1, 2), 'u ), half width', round(HW, 3))", "new_string": "print('source band', SW, 'x', SH, 'texels (', round(2 * A * HW, 2), 'u x', round(Z0 - Z1, 2), 'u ), half width', round(HW, 3))\nsrc_raw = src.copy()\n\n# --- rectification (v3): the painted streaks are S-curved INSIDE the band (~30 deg one way at its near end, ~30 deg the\n# other way at its far end), so stacked pieces of it drew wavy \"scales\". The streak di …[+1556 chars]`
+
+### 🧑 User — 2026-11-18T16:58:11.028Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T16:58:14.591Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "WL, WR, FL, FR, FW = -0.81, 0.72, -0.92, 0.84, 0.25   # water edges, foam centres (a), fringe width at the bank (u)\nKX = [-WT, -LANE, -(LANE - FW), -RC, RC, LANE - FW, LANE, WT]\nKA = [FL - 0.10 / HW, FL, WL, c - RC / HW, c + RC / HW, WR, FR, FR + 0.10 / HW]\nlay = lambda xb: np.interp(xb, KX, KA)", "new_string": "WL, WR = -0.81, 0.72                         # painted water edges (a, no foam); the tile is water only: in the lane's outer\n                                             # 15 % the game fa …[+246 chars]`
+
+### 🧑 User — 2026-11-18T16:58:14.615Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T16:58:16.590Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "        lo_c = int(max(0, min(SW - BW, tc - BW / 2 - jit))); hi_c = int(max(0, min(SW - BW, tc - BW / 2 + jit)))", "new_string": "        cw0, cw1 = int(math.ceil(a2col(WL))), int(a2col(WR)) - BW          # blocks lie wholly inside the painted water\n        lo_c = int(max(cw0, min(cw1, tc - BW / 2 - jit))); hi_c = int(max(cw0, min(cw1, tc - BW / 2 + jit)))"}`
+
+### 🧑 User — 2026-11-18T16:58:16.631Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T16:58:18.110Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's/^\\* layout across the lane (x_b = lateral offset from the lane centre, u): the middle +-RC is the painted band 1:1 (painted$/* layout across the lane (x_b = lateral offset from the lane centre, u): the middle +-RC is the painted band 1:1 (painted/' tools/match08/nq08.py && grep -n \"Image.fromarray(src.astype\" tools/match08/nq08.py", "description": "Locate debug output line"}`
+
+### 🧑 User — 2026-11-18T16:58:18.184Z
+
+> ↩︎ result: 203:    Image.fromarray(src.astype(np.uint8)).save(f'{dbg}/nq08_source_band.png')
+> [This command modified 1 file you've previously read: ../wt/s08/tools/match08/nq08.py. Call Read before editing.]
+
