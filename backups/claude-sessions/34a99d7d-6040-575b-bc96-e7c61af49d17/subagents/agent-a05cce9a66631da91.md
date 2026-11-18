@@ -1830,3 +1830,79 @@ Next most visible flaw while swimming: the near tunnel walls get blurry/stretche
 >   const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
 >     const m = withBandShading(withFarGlow(gold({ color: ' …[+5004 chars]
 
+### 🤖 Claude — 2026-11-18T02:31:06.985Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"far05Debug\" src -r | grep -v \"^src/world/environment.ts:12\\|Object.assign(far05\" | head -5; grep -n \"const bay05\\|const rings05\\|const sCam05\\|RING_A05_DEPTH =\\|const sF05\\|const sGlow05\\|ringSlots05\" src/world/environment.ts | head -12", "description": "Find bay and ring constants"}`
+
+### 🧑 User — 2026-11-18T02:31:07.040Z
+
+> ↩︎ result: src/world/far05.ts:23:export const far05Debug: Record<string, unknown> = {};
+> 262:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 263:  const bay05 = 14;
+> 264:  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+> 265:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> 269:  const ringSlots05: number[] = [];
+> 270:  for (let s = sF05; s >= s05 + 2; s -= bay05) ringSlots05.unshift(s);
+> 282:  const RING_A05_DEPTH = qaNum05('ringa', 20);
+> 294:  const rings05base = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+> 316:  const rings05 = E05 ? rings05base.map((s) => (Math.abs(s - sCam05 - 40) < 1 ? sCam05 + E05.dB : s)) : rings05base;
+> 376:    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+> 488:  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+
+### 🤖 Claude — 2026-11-18T02:31:17.814Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport json; m=json.load(open('assets/textures/env05/env05.json')); print({k:(v if len(str(v))<300 else str(v)[:300]) for k,v in m.items()})\nfrom PIL import Image\nim=Image.open('assets/textures/env05/wall05e.png'); print(im.size, im.mode)\n\"", "description": "Inspect wall atlas metadata"}`
+
+### 🧑 User — 2026-11-18T02:31:17.910Z
+
+> ↩︎ result: {'wall': {'w': 2048, 'h': 992, 'rows': {'AB': {'y0': 8, 'h': 256}, 'BC': {'y0': 272, 'h': 128}, 'CD': {'y0': 408, 'h': 64}, 'DE': {'y0': 480, 'h': 32}, 'EF': {'y0': 520, 'h': 16}, 'FG': {'y0': 544, 'h': 16}, 'GX': {'y0': 568, 'h': 16}, 'N1': {'y0': 592, 'h': 256}, 'N2': {'y0': 856, 'h': 128}}, 'gutter': 8}, 'ring': {'w': 2048, 'h': 384, 'rowH': 48, 'rows': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'N']}, 'note': 'env05 camera-projection bake (tools/env05/proj_bake.py); wall u = angle round the tube (+0.25), ring u = object angle, v = axial'}
+> (2048, 992) RGB
+
+### 🤖 Claude — 2026-11-18T02:31:21.061Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/env05/wall05e.png')\nim.resize((1024,496)).save('$S/wall_atlas.png')\"", "description": "Preview the wall atlas"}`
+
+### 🧑 User — 2026-11-18T02:31:21.318Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:31:23.425Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wall_atlas.png"}`
+
+### 🧑 User — 2026-11-18T02:31:23.457Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:31:29.225Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"dB:\\|dB =\\|farDv\" src/world/environment.ts | head -5; grep -rn \"dB:\" src/world/*.ts src/vfx/proj05Tunnel.ts | head -3; grep -n \"05_crest\" src/world/course.ts | head -3", "description": "Find ring B depth constant"}`
+
+### 🧑 User — 2026-11-18T02:31:29.266Z
+
+> ↩︎ result: 305:    dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)
+> 307:    farDv: [64.0, 104.7, 165.5, 235.2, 332.1],    // far rings C … G, virtual depths (was 59 / 97 / 161 / 222 / 322)
+> 443:    // E05.farDv[0] there, the BC rows t ≈ 0.64–0.74 were drawn on both walls (texel collisions on the seam circle)
+> 444:    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(E05 ? E05.farDv[0] : 59, sF05 - sCam05 - 0.75) });
+> 525:    // env05: far rings at the approved radii (virtual depths E05.farDv, placed by tunnel coordinate so the knots — and
+> src/world/environment.ts:305:    dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)
+> 142:/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
+> 482:    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+> 489:    this.marks['05_crest'] = best;
+
+### 🤖 Claude — 2026-11-18T02:32:13.780Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^import\\|^export const ENV05\\|^export const PROJWALL05\" src/vfx/proj05Tunnel.ts | head", "description": "Check proj05Tunnel imports and flags"}`
+
+### 🧑 User — 2026-11-18T02:32:13.812Z
+
+> ↩︎ result: 16:import * as THREE from 'three';
+> 17:import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+> 20:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 22:export const PROJWALL05: boolean = flag05('projwall05');
+> 35:export const ENV05: boolean = flag05('env05');
+
+### 🤖 Claude — 2026-11-18T02:32:15.419Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 16,40p src/vfx/proj05Tunnel.ts", "description": "Read proj05Tunnel flag definitions"}`
+

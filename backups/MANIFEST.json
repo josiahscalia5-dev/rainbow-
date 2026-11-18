@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13551,
-   "sha256": "a7b55c561c2e81ec9fab4d139b03528ed1e8bc23657702286c2bfbf6cf4dfd8c"
+   "sha256": "527bad374bf78e5c9ab6be2c26e8bd0b566004cd66b4182fa554b5f5474a9b74"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,8 +723,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 43253,
-   "sha256": "4385c17b45d1dc3cfb03fe7f156fdd8009df7410d7e3ff4d5470c294e4b09633"
+   "bytes": 43254,
+   "sha256": "56a1e2043addd251052a9e43c31d1f242d57083612cf5e19d865ffef8c667024"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -9075,6 +9075,31 @@
    "path": "qa/review_r8/04_step1_rings/3_NEW_one_third_through.jpg",
    "bytes": 422010,
    "sha256": "7beed52d01958ee2a11fb319fb933093906c89f02401ca30709917e3a78cf24e"
+  },
+  {
+   "path": "qa/review_r8/04_step2_river/1_APPROVED_04.jpg",
+   "bytes": 390315,
+   "sha256": "d51066d73987794ddb2bbda71994c24fec73c7f580b2c104dfec056084b0e96c"
+  },
+  {
+   "path": "qa/review_r8/04_step2_river/2_BEFORE_f06_forward6u.jpg",
+   "bytes": 407707,
+   "sha256": "4762f4e272adf3bc248fbc3737b5feb6231dfcc508747469c17c9e2e497bc6d0"
+  },
+  {
+   "path": "qa/review_r8/04_step2_river/2_BEFORE_t33_through_screen.jpg",
+   "bytes": 365043,
+   "sha256": "2972536ffd4424c2fa57da8688355fbaaf148d2e3c3b7c961d5e6e410760afa0"
+  },
+  {
+   "path": "qa/review_r8/04_step2_river/3_NEW_f06_forward6u.jpg",
+   "bytes": 509494,
+   "sha256": "8cabf69af0aac1c10b050b56bb6e6822de468b26d80a2dc5f93c686171b06b10"
+  },
+  {
+   "path": "qa/review_r8/04_step2_river/3_NEW_t33_through_screen.jpg",
+   "bytes": 460425,
+   "sha256": "db166bfb2f58c9abe72d4d8a6ce891d3bc7bd0dba006ca6ee4f0c9d10ce9660c"
   },
   {
    "path": "qa/review_r8/05_BEFORE/1_APPROVED_05.jpg",
