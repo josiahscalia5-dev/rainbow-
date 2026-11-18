@@ -543,3 +543,120 @@ Now rank 3: the start-view flash at +1.1 u. First let me see it.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T21:02:36.549Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "limit": 225}`
+
+### 🧑 User — 2026-11-18T21:02:36.564Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.
+> 3	 * REAL 3D proxy geometry of "Crest the Rinse Arch", built around the game's own 06 river (which under the switch follows
+> 4	 * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera
+> 5	 * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
+> 6	 *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
+> 7	 *     into 07, continued straight along the river's heading so the painted far rings stay concentric
+> 8	 *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 9	 *   * a dark end cap far down the tunnel
+> 10	 * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+> 11	 * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+> 12	 * and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or showed edge …[+11727 chars]
+
+### 🤖 Claude — 2026-11-18T21:03:19.667Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"uDbg\\|m06dbg\\|uMask\\|mask06\\|uRing\\b\\|uRing:\\|ringMat\\|m06ring\\|uUseMask\\|R6 =\\|const GEO\\|hb\\b\" src/world/match06.ts | head -50", "description": "Find debug tint, mask and ring wiring in match06.ts"}`
+
+### 🧑 User — 2026-11-18T21:03:19.706Z
+
+> ↩︎ result: 35:    r6?: { Wc: number; Wb: number; hb: number; river: { period: number }; foamPeriod: number };
+> 77:uniform vec3 uDbg;
+> 78:uniform sampler2D uMask;
+> 80:uniform float uUseMask;
+> 81:// r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+> 89:// r7 m06ring: modeled gold rings (uRing = 1) around the straight tunnel axis (origin, direction, right, up)
+> 90:uniform float uRing;
+> 125:  if (uRing > 0.5) {
+> 158:  if (uPanel > 0.5 && uFloor < 0.5 && uRing < 0.5) {
+> 159:    // r7b m06ring: crisp perforated lilac washer metal between the rings (the painted panels: rows of short dark rounded
+> 203:      if (uFloor > 0.5 && uUseMask > 0.5) {
+> 204:        vec4 mk = texture2D(uMask, uv);
+> 212:      if (uFloor < 0.5 && uGeo > 0.5 && uUseMask > 0.5) {
+> 214:        w *= 1.0 - (1.0 - texture2D(uMask, uv).g) * awayT;
+> 216:      // m06ring: the modeled rings show the approved pixels only AT the approved view, their own 3D gold once away
+> 217:      if (uRing > 0.5) w *= 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+> 222:  if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
+> 346:  const R6 = !v2 ? L. …[+2675 chars]
+
+### 🤖 Claude — 2026-11-18T21:03:20.964Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 300, "limit": 345}`
+
+### 🧑 User — 2026-11-18T21:03:21.074Z
+
+> ↩︎ result: 300	
+> 301	const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
+> 302	
+> 303	export async function buildMatch06(course: Course): Promise<Match06> {
+> 304	  const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
+> 305	  const loader = new THREE.TextureLoader();
+> 306	  const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
+> 307	  plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+> 308	  plate.minFilter = THREE.LinearMipmapLinearFilter;
+> 309	  plate.anisotropy = 8;
+> 310	
+> 311	  // the projector = the locked game camera the picture was matched to (far enough for the deep painted tunnel)
+> 312	  const [W, H] = L.camera.size;
+> 313	  const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.3, L.ext + 160);
+> 314	  proj.matrixWorld.fromArray(L.camera.matrixWorld);
+> 315	  proj.matrixWorld.decompose(proj.position, proj.quaternion, proj.scale);
+> 316	  proj.matrixWorldInverse.copy(proj.matrixWorld).invert();
+> 317	  proj.updateProjectionMatrix();
+> 318	  const projVP = new THREE.Matrix4().multiplyMatrices(proj.projectionMatrix, proj.matrixWorldInverse);
+> 319	
+> 320	  const depthRT = new THREE. …[+25466 chars]
+
+### 🤖 Claude — 2026-11-18T21:03:26.441Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 644, "limit": 20}`
+
+### 🧑 User — 2026-11-18T21:03:26.470Z
+
+> ↩︎ result: 644	    if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
+> 645	    return [p, l / TF.lateralPeriod, l];
+> 646	  }, TF.period), mat(tFloor, true), 'floor');
+> 647	  // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
+> 648	  // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
+> 649	  // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+> 650	  let foamClouds: THREE.InstancedMesh | null = null;
+> 651	  const foamSprites: THREE.Mesh[] = [];
+> 652	  if (GEO && R6 && qs?.get('m06foam') === '1') {
+> 653	    let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+> 654	    const items: { p: THREE.Vector3; r: number; up: THREE.Vector3 }[] = [];
+> 655	    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
+> 656	      const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
+> 657	      for (let i = 0; i < n; i+ …[+428 chars]
+
+### 🤖 Claude — 2026-11-18T21:03:27.096Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 712, "limit": 50}`
+
+### 🧑 User — 2026-11-18T21:03:27.112Z
+
+> ↩︎ result: 712	      group.add(foamClouds);
+> 713	    }
+> 714	  }
+> 715	  // far end cap of the tunnel (the glowing vanishing point)
+> 716	  const fe = frame(L.s1 + L.ext);
+> 717	  const cap = new THREE.Mesh(new THREE.CircleGeometry(tunCap ? tunCap.r : L.R, 64), mat(tTube));
+> 718	  cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));
+> 719	  // m06tun: the cap shows the painted glowing vanishing point (the wall/water mask would swap it for a flat tile colour)
+> 720	  if (tunCap) { cap.position.copy(tunCap.pos); cap.lookAt(cap.position.clone().sub(tunCap.dir)); (cap.material as THREE.ShaderMaterial).uniforms.uUseMask.value = 0; }
+> 721	  else { cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA); cap.lookAt(cap.position.clone().sub(T1)); }
+> 722	  cap.name = 'm06_end'; cap.frustumCulled = false;
+> 723	  group.add(cap);
+> 724	
+> 725	  // QA only: `&m06dbg=1` tints the tube green and the river floor red (which proxy surface a pixel comes from)
+> 726	  if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06dbg') === '1') {
+> 727	    group.traverse((o) => {
+> 728	      const u = ((o as THREE.Mesh).material as THREE. …[+1289 chars]
+

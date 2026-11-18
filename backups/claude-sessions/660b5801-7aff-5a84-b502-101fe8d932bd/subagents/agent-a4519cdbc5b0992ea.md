@@ -1553,3 +1553,112 @@ Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output
 > 08 s_right_steer s 397.542 lat 1.85 stage 08 frames 38
 > 08 s_left_hard s 403.559 lat -2.17 stage 08 frames 76
 
+### 🤖 Claude — 2026-11-18T21:02:28.886Z
+
+> 🔧 **TaskStop** `{"task_id": "bkzffbhcj"}`
+
+### 🧑 User — 2026-11-18T21:02:28.904Z
+
+> ↩︎ result: {"message":"Successfully stopped task: bkzffbhcj (cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && M08_DET=1 M08_ONLY=a00,f03,f06,f10,s_,t33,t66,t95 node tools/match08/shots08.mjs 08 $S/s2gl \"$(cat $S/K16.txt)&m08gl=1\" > $S/s2gl.log 2>&1; tail -3 $S/s2gl.log)","task_id":"bkzffbhcj","task_type":"local_bash","command":"cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && M08_DET=1 M08_ONLY=a00,f03,f06,f10,s_,t33,t66,t95 node tools/match08/shots08.mjs 08 $S/s2gl \"$(cat $S/K16.txt)&m08gl=1\" > $S/s2gl.log 2>&1; tail -3 $S/s2gl.log"}
+
+### 🤖 Claude — 2026-11-18T21:02:29.238Z
+
+> 🔧 **TaskStop** `{"task_id": "b1u4dngvg"}`
+
+### 🧑 User — 2026-11-18T21:02:29.259Z
+
+> ↩︎ result: {"message":"Successfully stopped task: b1u4dngvg (until [ -f /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2gl/motion.json ]; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2gl.log | grep -E \"^08|rror\" | tail -12)","task_id":"b1u4dngvg","task_type":"local_bash","command":"until [ -f /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2gl/motion.json ]; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2gl.log | grep -E \"^08|rror\" | tail -12"}
+
+### 🤖 Claude — 2026-11-18T21:02:29.553Z
+
+> 🔧 **TaskStop** `{"task_id": "bj0dp22l0"}`
+
+### 🧑 User — 2026-11-18T21:02:29.603Z
+
+> ↩︎ result: {"message":"Successfully stopped task: bj0dp22l0 (tail -n +1 -f /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output | grep --line-buffered -E \"^08 |rror|real|Timeout|pageerror\")","task_id":"bj0dp22l0","task_type":"local_bash","command":"tail -n +1 -f /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output | grep --line-buffered -E \"^08 |rror|real|Timeout|pageerror\""}
+
+### 🤖 Claude — 2026-11-18T21:02:31.679Z
+
+> 🔧 **Bash** `{"command": "sleep 2; pgrep -af \"shots08|chrome-headless|chromium\" | grep -v pgrep | grep -i \"s08\\|5278\\|shots08\" | head; pgrep -af shots08 | grep -v pgrep | head -3", "description": "Verify no s08 render processes remain"}`
+
+### 🧑 User — 2026-11-18T21:02:34.828Z
+
+> ↩︎ result: 18786 grep -i s08\|5278\|shots08
+
+### 🤖 Claude — 2026-11-18T21:02:38.835Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/08/r17/step1_m08vh/3_NEW_a00_approved_view.png $S/s2gl/a00_approved_view.png $S/look/dgl_a00.png 0.1 180 1536 | grep -o '\"diff_pixels\":[0-9]*'; D=qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw && mkdir -p $D && cp $S/s2gl/*.png $D/ && cp $S/gl3/s_right_hard.png $D/s_right_hard.png && ls $D; timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; echo tsc=$?", "description": "Check start view, save partial raw renders, ty …[+10 chars]`
+
+### 🧑 User — 2026-11-18T21:02:46.344Z
+
+> ↩︎ result: "diff_pixels":0
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> tsc=0
+
+### 🤖 Claude — 2026-11-18T21:02:47.776Z
+
+Now the pause note in the log, then commit and push.
+
+### 🤖 Claude — 2026-11-18T21:03:02.488Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat >> qa/match/08/r17/PROGRESS.md <<'EOF'\n\n## Step 2 — `&m08gl=1` (near-water glints with their painted glow) — UNFINISHED, NOT YET PROVEN (paused ~21:10 UTC)\nQuery under test: `K16&m08gl=1` (only with `m08near` + `m08nq`; default build and K16 unchanged).\n* Problem: the near water below Benny shows hard-edged white \"lightning\" cut-outs lying ~30 deg across the streaks (the\n  nq08 tile's glints = only the bright CORES of the painted glints, cut from the UNRECTIFIED band). Painted: white cores\n  inside a soft bright-CYAN glow, stretched along the cu …[+3169 chars]`
+
+### 🧑 User — 2026-11-18T21:03:08.528Z
+
+> ↩︎ result: A  assets/textures/match08/nq08g.json
+> A  assets/textures/match08/nq08g.png
+> M  qa/match/08/r17/PROGRESS.md
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/a00_approved_view.png
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/f03_forward3u.png
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/f06_forward6u.png
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/f10_forward10u.png
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_left_hard.png
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_left_steer.png
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_right_hard.png
+> A  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_right_steer.png
+> M  src/world/match08.ts
+> M  tools/match08/nq08.py
+> 3c0fa97090afb2c0fca41898774db7247e23e522
+> 3c0fa97090afb2c0fca41898774db7247e23e522	refs/heads/claude/rainbow-s08-scenery-c17
+> ?? node_modules
+
+### 🤖 Claude — 2026-11-18T21:03:11.566Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s08 paused, final SHA 3c0fa970", "message": "s08 PAUSED as ordered: final SHA 3c0fa970 on claude/rainbow-s08-scenery-c17 (pushed, remote == HEAD). Kept set K16 = K15&m08vh=1 (step 1, GOOD IMPROVEMENT, small). Step 2 &m08gl=1 (glowing near-water glints) is committed as UNFINISHED and not proven; it only runs behind its switch. The start view is 0 px, and the default build and K16 are unchanged. Where I stopped and the next step are in qa/match/08/r17/PROGRESS.md. The render is stopped and no dev server is running.", "type": "message", "recipient": "main", "recipient_k …[+78 chars]`
+
+### 🧑 User — 2026-11-18T21:03:11.578Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T21:03:21.089Z
+
+Screen 08 is paused as ordered. One step is finished and kept, and a second is saved as unfinished. Everything is pushed to `claude/rainbow-s08-scenery-c17` at `3c0fa97090afb2c0fca41898774db7247e23e522`, and the remote matches it. The render is stopped and no dev server is running.
+
+**Step 1, `&m08vh=1`: kept, GOOD IMPROVEMENT (small).** This was the edit the previous account left unfinished. While Benny swims, the pale glowing edges and washed-out boxes next to the upper-left cup, the foam bank under the platform's left end, and the platform rim and legs are gone. The painted pixels there now stay crisp.
+- The approved start view is pixel-identical and the coins are unchanged.
+- The type check (`npx tsc`) passes.
+- The kept set is now K16 = K15 + `&m08vh=1`.
+- Pictures (APPROVED, BEFORE and NEW, all 12 shots): `/home/user/wt/s08/qa/match/08/r17/step1_m08vh/`. The clearest are `f10_forward10u`, `s_left_hard` and `s_right_hard`.
+
+**Step 2, `&m08gl=1`: unfinished and not proven.** It changes the white sparkles in the water just below and in front of Benny.
+- **Problem:** they look like hard, torn white "lightning" shapes lying across the streaks. In the approved picture they are soft white highlights with a cyan glow, running along the curved streaks.
+- **What I built:** a second version of the water texture, `nq08g`, where each sparkle keeps its painted glow and runs along the streaks. The tool still rebuilds the original texture exactly when the new option is off, and the step only runs behind its own URL switch.
+- **What I saw so far:** at forward 6 u and at hard left and right, the sparkles look closer to the painting. The start view is unchanged.
+- **Why it isn't proven:** the t33, t66, t95 and f20 shots were never rendered, so I have not written a verdict.
+- **Still wrong:** the glow sometimes ends in a slightly square cyan patch. The torn sparkles directly under Benny's splash come from a different part of the water and are a separate fix.
+- Partial renders: `/home/user/wt/s08/qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/`
+
+**When Screen 08 resumes:**
+1. Render the missing shots for step 2, then keep or reject it.
+2. Fix the rectangle of window pixels around the towel at hard left and right: first try `&m08towelm=1` alone (I checked that its mask fits the painted towel), then `&m08occ=1` separately.
+3. Then the remaining brief tasks: wall seams, river-edge foam and coin line, spout cups, and the V in the upper-right cup's gold band.
+
+The full log is in `/home/user/wt/s08/qa/match/08/r17/PROGRESS.md`. I sent "main" both step reports and the final SHA.
+

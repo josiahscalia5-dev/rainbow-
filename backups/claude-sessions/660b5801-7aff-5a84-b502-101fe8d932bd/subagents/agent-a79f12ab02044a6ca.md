@@ -961,3 +961,31 @@ The bands now come in close round Benny and sweep from the bottom corners toward
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"float hug = uNB.w + uNB2.y * max(-d, 0.0) - uNB2.z * exp(-d * d / 1.2);\"\nnew=\"float db = max(-d, 0.0), hug = uNB.w + uNB2.y * (uNB2.y < 0.0 ? -db : db * db) - uNB2.z * exp(-d * d / 1.2);  // < 0: straight widening\"\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"y widening per u\\n\",\"y widening behind Benny (b * d^2; < 0 = straight |b| per u)\\n\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"widening\" src/world/match04m4.ts | head -3; timeout 300 npx tsc --noEmit -p . 2> …[+583 chars]`
 
+### 🧑 User — 2026-11-18T21:03:07.250Z
+
+> ↩︎ result: 317:uniform vec4 uNB2;           // r17 m04nband: x bands back at the normal inner arc this far ahead of Benny (u), y widening behind Benny (b * d^2; < 0 = straight |b| per u)
+> 436:      float db = max(-d, 0.0), hug = uNB.w + uNB2.y * (uNB2.y < 0.0 ? -db : db * db) - uNB2.z * exp(-d * d / 1.2);  // < 0: straight widening
+> 934:        // ahead of him, m04nbb widening per u behind him, m04nbp pinch at his sides, m04nbf lateral follow of Benny (0..1)
+> 04 f10_forward10u s 88.328 lat 0 stage 04 frames 43
+> 04 t66_through_screen s 102.849 lat 0 stage 04 frames 106
+
+### 🤖 Claude — 2026-11-18T21:03:10.230Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/n_nb3_f10.png"}`
+
+### 🧑 User — 2026-11-18T21:03:10.266Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:03:10.836Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/n_nb3_t66.png"}`
+
+### 🧑 User — 2026-11-18T21:03:10.872Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:03:25.412Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"uNB2: { value: new THREE.Vector4(M04.num('m04nba', 3.0), M04.num('m04nbb', 0.05),\"\nnew=\"uNB2: { value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04),\"\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"ahead of him, m04nbb widening per u behind him, m04nbp pinch\",\"ahead of him, m04nbb widening behind him (b * d^2), m04nbr half-stripe width near him (0 = one stretched band), m04nbs tile\\n        // span walked, m04nbp pinch\")\nopen(p,'w').write(s)\ …[+564 chars]`
+

@@ -1,3 +1,25 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 04f08d58..5c6274be 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -284,7 +284,16 @@ void main() {
+       dax -= 6.2831853 * floor(dax / 6.2831853 + 0.5); day -= 6.2831853 * floor(day / 6.2831853 + 0.5);
+       float rj = uRJit * (2.0 * h21(vec2(floor(al / uP), 5.3)) - 1.0);
+       vec2 uvR = vec2((ang + rj) / 6.2831853 + 0.5, sp);
+-      vec3 pr = textureGrad(uRTex, uvR, vec2(dax / 6.2831853, dFdx(al) * sl), vec2(day / 6.2831853, dFdy(al) * sl)).rgb;
++      vec2 gS = vec2(dFdx(al), dFdy(al)) * sl;
++      if (uRVar > 0.5) {
++        // r17 m04rpvar: atlas of the painted inner rings 0, 1, 2 (pink-violet sheen / plain copper / pink-left + violet
++        // glints). The first 3D rings follow the painted order, deeper rings take one of them at random.
++        float ri0 = floor(al / uP);
++        float idx = ri0 < uRVar ? ri0 : min(floor(h21(vec2(ri0, 9.1)) * uRVar), uRVar - 1.0);
++        uvR.y = (idx + clamp(sp, 0.004, 0.996)) / uRVar;
++        gS /= uRVar;
++      }
++      vec3 pr = textureGrad(uRTex, uvR, vec2(dax / 6.2831853, gS.x), vec2(day / 6.2831853, gS.y)).rgb;
+       pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading
+       if (uRWarm.x > 0.0) {
+         // r16 m04rwarm: the painted rings keep their copper near the viewer, then the last rings before the glowing end
 diff --git a/tools/match04/ring_paint04.py b/tools/match04/ring_paint04.py
 index 3fc0066f..b5e6807a 100644
 --- a/tools/match04/ring_paint04.py

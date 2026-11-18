@@ -1732,3 +1732,98 @@ Gameplay with `m05trans` is 8/8 (91 coins, 1,330 → 2,240). Now applying the lo
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt | tr -d '\\n') && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1 && node scripts/capture.mjs 05 --q=\"$K&m05trans=1\" --out=$S/trans2 2>&1 | tail -1 && git checkout -- qa/capture_log.json && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/kept/05.png $S/trans2/05.png $S/diff2.png 0.1 180 1536 && cmp $S/kept/05.png $S/trans2/05.png && echo IDENTICAL_FILES", "description": "Re-capture locked view with fix and diff", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T21:02:46.200Z
+
+> ↩︎ result: ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/kept/05.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/trans2/05.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> IDENTICAL_FILES
+
+### 🤖 Claude — 2026-11-18T21:02:51.718Z
+
+Locked approved view is now byte-identical with `m05trans` on (0 px). I'll re-render the NEW set and re-run the gameplay test on the fixed code so the proof matches what I commit.
+
+### 🤖 Claude — 2026-11-18T21:02:54.140Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt | tr -d '\\n') && rm -rf qa/match/05/r17/step1_trans/new && node tools/match05/r8_shots.mjs qa/match/05/r17/step1_trans/new \"$K&m05trans=1\" t95_through_screen,x97,t98_end,x98p5,x99,x97L,x97R 5275 2>&1 | tail -8 && node scripts/gameplay-test.mjs --q=\"$K&m05trans=1\" --out=qa/match/05/r17/step1_trans/gameplay_m05trans.json 2>&1 | grep -E '\"pass\"|collected|endCoins|error' | head", "description": "Re-render NEW shots and gameplay test on fixed code", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T21:02:54.191Z
+
+> ↩︎ result: Command running in background with ID: b60c53tsv. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b60c53tsv.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T21:03:15.728Z
+
+While that runs, I'll prepare task 2's diagnosis: which atlas row the smeared left wall reads. The tunnel probe script has a coordinates mode.
+
+### 🤖 Claude — 2026-11-18T21:03:17.279Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls scripts | grep -i probe; grep -n \"uPtDbg\\|proj05TunnelShared\\|__rainbow\\.\\w*\" scripts/proj05-tunnel-probe.mjs 2>/dev/null | head -20; grep -rn \"proj05TunnelShared\\|far05Debug\" src --include=*.ts | grep -v \"^src/vfx/proj05Tunnel.ts:1[0-9][0-9]:\" | head", "description": "Find tunnel coordinate probe access"}`
+
+### 🧑 User — 2026-11-18T21:03:17.356Z
+
+> ↩︎ result: proj05-probe.mjs
+> proj05-ride-probe.mjs
+> proj05-tunnel-probe.mjs
+> 19:// Uses window.__rainbow.qa3d() (QA accessor; rendering is unchanged). Nothing in the game is modified.
+> 90:    const ptShared = COORDS ? (await import('/src/vfx/proj05Tunnel.ts')).proj05TunnelShared : null;
+> 91:    if (ptShared) ptShared.uPtDbg.value = 1;
+> 111:    if (ptShared) ptShared.uPtDbg.value = 0;
+> src/world/environment.ts:12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> src/world/environment.ts:566:    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });
+> src/world/far05.ts:23:export const far05Debug: Record<string, unknown> = {};
+
+### 🤖 Claude — 2026-11-18T21:03:19.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 80,125p scripts/proj05-tunnel-probe.mjs", "description": "Read coordinate render method"}`
+
+### 🧑 User — 2026-11-18T21:03:19.119Z
+
+> ↩︎ result: if (/band-ring05/.test(k)) return 'ring';
+>       if (/lid-lid05v/.test(k)) return 'farLid';
+>       if (/lid-lid05/.test(k)) return 'lid';
+>       return null;
+>     };
+>     const all = [];
+>     scene.traverse((o) => { if (o.isMesh || o.isPoints || o.isLine || o.isSprite) all.push(o); });
+>     const saved = all.map((o) => ({ o, mat: o.material, cls: classify(o) }));
+>     const probed = {};
+>     // --coords: no material is replaced; the projwall05 / projring05 shaders themselves write (texture u, v, 7 | 8, 77 | 78)
+>     const ptShared = COORDS ? (await import('/src/vfx/proj05Tunnel.ts')).proj05TunnelShared : null;
+>     if (ptShared) ptShared.uPtDbg.value = 1;
+>     else {
+>       // `?env05=1` builds every real 05 ring as its own one-instance mesh: tag 20 + mesh index (scene order) then
+>       const ringMeshes = saved.filter((s) => s.cls === 'ring');
+>       for (const s of saved) if (s.cls) {
+>         const k = ringMeshes.indexOf(s);
+>         s.o.material = s.cls === 'ring' && ringMeshes.length > 1 ? idMat(`vec4(atan(vPPos.y, vPPos.x), vPPos.z, 3.0, ${20 + k}.0 + floor(vPInst + 0.5))`, 'ring' + k) : mats[s.cls];
+>         probed[s.cls] = (probed[s.cls] ?? 0) + 1;
+>       }
+>     }
+>     const bg = scene.backgrou …[+1460 chars]
+
+### 🤖 Claude — 2026-11-18T21:03:24.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 40,79p scripts/proj05-tunnel-probe.mjs", "description": "Read tunnel probe render target setup"}`
+
+### 🧑 User — 2026-11-18T21:03:24.197Z
+
+> ↩︎ result: const hide = ALL ? '' : '&hide=benny,coins&waterhide=crown,spray,bubbles,splash05,splashCrown,foamRim05,foamFlank,foamRafts';
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${hide}${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   const meta = await page.evaluate(async (COORDS) => {
+>     const R = window.__rainbow;
+>     R.goto('05');
+>     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
+>     const { scene, camera, renderer, composer } = R.qa3d();
+>     const far = scene.getObjectByName('tube05_far_river');
+>     const MBM = far.material.constructor;
+>     const RT = composer.renderTarget1.constructor;
+>     const rt = new RT(innerWidth, innerHeight, { type: 1015 /* FloatType */, format: 1023 /* RGBA */, depthBuffer: true });
+>     const idMat = (expr, tag) => {
+>       const m = new MBM({ color: 0xffffff, fog: false });
+>       m.side = 2;
+>       m.onBeforeCompile = (sh) => {
+>         sh.vertexShader = sh.vertexShader
+>           .replace('#include <common>', '#include <common>\nvarying vec2 vPUv; varying vec3 vPPos; varying float vPInst;')
+>           .replace('#include <begin_verte …[+1424 chars]
+
