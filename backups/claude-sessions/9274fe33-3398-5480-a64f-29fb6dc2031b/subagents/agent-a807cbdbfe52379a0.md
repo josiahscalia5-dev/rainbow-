@@ -600,3 +600,21 @@ Now the start-view check (BEFORE vs NEW, deterministic capture).
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && node scripts/capture.mjs 04 --q=\"$K\" --out=$S/cap_before 2>&1 | grep -v \"allow list\" | tail -2 && node scripts/capture.mjs 04 --q=\"$K&m04sband=1\" --out=$S/cap_new 2>&1 | grep -v \"allow list\" | tail -2 && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/cap_before/04.png $S/cap_new/04.png $S/cap_diff.png 0.1 180 1536; git status --short | head", "description": "Capture approved start view before and after, pixel diff", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:29:52.902Z
+
+> ↩︎ result: '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cap_before/04.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cap_new/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+>  M qa/capture_log.json
+>  M src/world/match04m4.ts
+> ?? assets/textures/match04/tile_side04.png
+> ?? node_modules
+> ?? qa/match/04/r16/
+> ?? tools/match04/sideband04.py
+
+### 🤖 Claude — 2026-11-18T19:30:00.218Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git checkout -- qa/capture_log.json && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && time node tools/lead_r13/swim_clip.mjs 04 $S/clip_new 3.6 \"$K&m04sband=1\" 2>&1 | grep -v \"allow list\" | tail -2 && ffmpeg -loglevel error -y -framerate 24 -i $S/clip_new/%04d.png -vf \"scale=432:768\" -pix_fmt yuv420p -c:v libx264 -crf 23 qa/match/04/r16/s3_sband/NEW_swim_clip.mp4 && ls -la qa/match/04/r16/s3_sband/", "description": "Render NEW swimming clip and encode it", "timeout": 600000}`
+

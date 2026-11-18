@@ -1041,3 +1041,8 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K15=\"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K14.txt)&m08sr=1\" && echo \"$K15\" > /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt && M08_DET=1 M08_ONLY=f10,t95 node tools/match08/shots08.mjs 08 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/dbg \"$K15&m08dbg=1\" 2>&1 | grep -v \"allow list\"", "description": "Render proxy debug colours at forward 10 u and stage end", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:30:06.436Z
+
+> ↩︎ result: 08 f10_forward10u s 401.5 lat 0 stage 08 frames 63
+> 08 t95_through_screen s 403.875 lat 0 stage 08 frames 78
+

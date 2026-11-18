@@ -684,3 +684,35 @@ Making sure no orphaned browser or node process from that clip is left running.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T19:29:46.728Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -I -c \"\nimport json,numpy as np,cv2\nj=json.load(open('assets/textures/match04/ring_paint04.json'))\nprint({k:(v if not isinstance(v,list) or len(v)<8 else len(v)) for k,v in j.items()})\nt=cv2.imread('assets/textures/match04/tile_ring_paint.png').astype(float)\nL=(t@[0.11,0.59,0.3])\n# upper-wall columns (good arc)\nc0,c1=int((-1.5/6.2832+0.5)*2048),int((1.5/6.2832+0.5)*2048)\nm=np.median(L[:,c0:c1],1); mx=np.percentile(L[:,c0:c1],90,1)\nfor r in range(0,160,4): print(r, round(r/160,3), int(m[r]), int(mx[r]), t[r,c0:c1].mean(0).astype(int)[::-1] …[+68 chars]`
+
+### 🧑 User — 2026-11-18T19:29:48.321Z
+
+> ↩︎ result: {'note': 'tools/match04/ring_paint04.py: painted inner gold ring, straightened; cols psi -pi..pi (0 = top, + = screen right), rows s 0 (groove) .. 1 (next groove), going deeper', 'periods': [1], 'size': [2048, 160], 'good': [-1.6788545977046043, 1.8813400617055092], 's_lip': 0.790625, 's_dark': 0.003125, 'groove_circles': [[433.82, 789.44, 331.65], [442.02, 789.42, 262.16], [443.16, 782.93, 206.71], [446.89, 765.99, 160.14]], 'grooves_top_q': [0.075, 1.058, 2.05, 3.008], 'profile': 160}
+> 0 0.0 77 93 [157  50  13]
+> 4 0.025 92 118 [174  68  28]
+> 8 0.05 98 138 [186  81  38]
+> 12 0.075 106 156 [193  91  47]
+> 16 0.1 104 146 [188  87  44]
+> 20 0.125 104 147 [188  87  44]
+> 24 0.15 104 146 [188  87  44]
+> 28 0.175 104 147 [189  88  44]
+> 32 0.2 104 150 [189  88  44]
+> 36 0.225 106 151 [190  89  44]
+> 40 0.25 107 153 [191  89  44]
+> 44 0.275 107 154 [193  90  45]
+> 48 0.3 107 155 [193  90  44]
+> 52 0.325 107 156 [193  90  43]
+> 56 0.35 107 156 [194  91  43]
+> 60 0.375 108 160 [196  92  43]
+> 64 0.4 110 161 [197  95  43]
+> 68 0.425 112 164 [199  97  44]
+> 72 0.45 113 168 [201  99  45]
+> 76 0.475 113 167 [201 100  45]
+> 80 0.5 114 169 [202 101  45]
+> 84 0.525 115 172 [203 103  46]
+> 88 0.55 116 175 [204 104  47]
+> 92 0.575 116 177 [20 …[+505 chars]
+
