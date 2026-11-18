@@ -967,3 +967,101 @@ Now I'll write the mouth tile tool.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -i \"s/M04.num('m04bulbr', 0.24)/M04.num('m04bulbr', 0.28)/\" src/world/match04m4.ts && grep -c \"m04bulbr', 0.28\" src/world/match04m4.ts && npx tsc --noEmit -p . && mkdir -p qa/match/04/r9/step1_m04mouth && node tools/match04/audit04.mjs qa/match/04/r9/step1_m04mouth \"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1\" f03_forward3u,f06_forward6u,s_left_steer,s_right_steer 2>&1 | grep \"^04\"", "description": "Render step 1 audit positions with m04mouth", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T02:57:41.646Z
+
+> ↩︎ result: 1
+> 04 f03_forward3u s 81.307 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.183 lat 0 stage 04 frames 26
+> 04 s_left_steer s 84.183 lat -1.65 stage 04 frames 26
+> 04 s_right_steer s 84.215 lat 1.65 stage 04 frames 26
+> [This command modified 1 file you've previously read: ../wt/s04/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T02:57:42.835Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r9/step1_m04mouth/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-18T02:57:42.882Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:57:43.300Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r9/BEFORE/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-18T02:57:43.363Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:57:45.855Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls tools/lead_r6/ && sed -n 1,25p tools/lead_r6/motion_metrics.py", "description": "Check motion metrics tool usage"}`
+
+### 🧑 User — 2026-11-18T02:57:45.896Z
+
+> ↩︎ result: bisect_preview08.mjs
+> motion_audit.mjs
+> motion_metrics.py
+> """Lead r6: measured (not subjective) numbers for moving-gameplay frames vs the approved picture, below the HUD strip
+> (rows >= 13.5 %). LAYOUT20 = share of pixels within 20 levels after a sigma-8 blur (composition + colour, like
+> tools/qa/screen_match.py LAYOUT). PALETTE = histogram intersection of hue x saturation (24 x 8 bins, value > 0.15) —
+> how close the colour palette stays, independent of where things are. Moving frames are seen from other viewpoints, so
+> LAYOUT naturally falls as the camera travels; PALETTE shows whether the approved look (colours/materials) survives.
+> usage: python3 -I motion_metrics.py <approved.png> <frame.png> [...]  -> one line per frame"""
+> import sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> ref = Image.open(sys.argv[1]).convert('RGB')
+> W, H = ref.size; top = int(H * 0.135)
+> def prep(im):
+>     im = im.convert('RGB').resize((W, H))
+>     return im
+> def hsv_hist(a):
+>     hsv = np.asarray(Image.fromarray(a).convert('HSV'), dtype=np.float32) / 255.0
+>     m = hsv[..., 2] > 0.15
+>     h, _, _ = np.histogram2d(hsv[..., 0][m], hsv[..., 1][m], bins=[24, 8], range=[[0, 1], [0, 1]])
+>     return h / max(h.sum() …[+347 chars]
+
+### 🤖 Claude — 2026-11-18T02:57:48.363Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && for s in f03_forward3u f06_forward6u s_left_steer s_right_steer; do echo \"BEFORE $(python3 -I tools/lead_r6/motion_metrics.py references/04_through_the_five_arrows.png qa/match/04/r9/BEFORE/$s.png)\"; echo \"NEW    $(python3 -I tools/lead_r6/motion_metrics.py references/04_through_the_five_arrows.png qa/match/04/r9/step1_m04mouth/$s.png)\"; done", "description": "Motion metrics BEFORE vs NEW step 1"}`
+
+### 🧑 User — 2026-11-18T02:57:52.266Z
+
+> ↩︎ result: BEFORE f03_forward3u          LAYOUT20   3.5 %  PALETTE  73.4 %
+> NEW    f03_forward3u          LAYOUT20   3.3 %  PALETTE  77.9 %
+> BEFORE f06_forward6u          LAYOUT20   2.8 %  PALETTE  69.0 %
+> NEW    f06_forward6u          LAYOUT20   2.8 %  PALETTE  74.1 %
+> BEFORE s_left_steer           LAYOUT20   2.8 %  PALETTE  70.3 %
+> NEW    s_left_steer           LAYOUT20   3.5 %  PALETTE  75.8 %
+> BEFORE s_right_steer          LAYOUT20   3.5 %  PALETTE  69.8 %
+> NEW    s_right_steer          LAYOUT20   3.2 %  PALETTE  75.4 %
+
+### 🤖 Claude — 2026-11-18T02:58:07.878Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && for s in f03_forward3u f06_forward6u s_left_steer s_right_steer; do python3 -I tools/lead_r6/motion_metrics.py references/04_through_the_five_arrows.png qa/match/04/r9/step1_m04mouth/$s.png; done > qa/match/04/r9/step1_m04mouth/metrics.txt && python3 -I tools/lead_r6/motion_metrics.py references/04_through_the_five_arrows.png qa/match/04/r9/BEFORE/*.png > qa/match/04/r9/BEFORE/metrics.txt && cat qa/match/04/r9/BEFORE/metrics.txt && cat > qa/match/04/r9/PROGRESS.md <<'EOF'\n# Screen 04 — round 9 progress (small steps; continues `qa/match/04/r8/PROGRESS.md`)\ …[+3415 chars]`
+
+### 🧑 User — 2026-11-18T02:58:13.387Z
+
+> ↩︎ result: a00_approved_view      LAYOUT20  44.0 %  PALETTE  93.0 %
+> f03_forward3u          LAYOUT20   3.5 %  PALETTE  73.4 %
+> f06_forward6u          LAYOUT20   2.8 %  PALETTE  69.0 %
+> f10_forward10u         LAYOUT20   2.8 %  PALETTE  63.9 %
+> f20_forward20u         LAYOUT20   2.7 %  PALETTE  68.0 %
+> s_left_hard            LAYOUT20   2.2 %  PALETTE  64.8 %
+> s_left_steer           LAYOUT20   2.8 %  PALETTE  70.3 %
+> s_right_hard           LAYOUT20   2.5 %  PALETTE  60.0 %
+> s_right_steer          LAYOUT20   3.5 %  PALETTE  69.8 %
+> t33_through_screen     LAYOUT20   2.5 %  PALETTE  66.4 %
+> t66_through_screen     LAYOUT20   2.7 %  PALETTE  68.0 %
+> t95_through_screen     LAYOUT20   2.8 %  PALETTE  62.2 %
+> A  assets/textures/match04/mouth04.json
+> A  assets/textures/match04/tile_mouth.png
+>  M qa/capture_log.json
+> A  qa/match/04/r9/BEFORE/a00_approved_view.png
+> A  qa/match/04/r9/BEFORE/f03_forward3u.png
+> A  qa/match/04/r9/BEFORE/f06_forward6u.png
+> A  qa/match/04/r9/BEFORE/f10_forward10u.png
+> A  qa/match/04/r9/BEFORE/f20_forward20u.png
+> A  qa/match/04/r9/BEFORE/metrics.txt
+> A  qa/match/04/r9/BEFORE/motion.json
+

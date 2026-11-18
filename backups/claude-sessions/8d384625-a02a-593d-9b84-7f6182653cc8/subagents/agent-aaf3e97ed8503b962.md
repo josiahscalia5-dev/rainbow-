@@ -1788,3 +1788,52 @@ Now pass `course` from environment.ts (switch-guarded value only).
 > 200 640 [{"obj":"tube05_far_river","s":188.25,"d":6.03,"lat":-6.03,"up":0.03},{"obj":"tube05_far","s":189.75,"d":6.23,"lat":-6.15,"up":-0.95},{"obj":"tube05_far","s":189.75,"d":6.25,"lat":-6.17,"up":-1.01},{"obj":"tube05_far_wall","s":190,"d":6.29,"lat":-6.18,"up":-1.2}]
 > 220 700 [{"obj":"Mesh","s":186.75,"d":5.54,"lat":-5.54,"up":-0.18},{"obj":"tube05_far_wall","s":188.75 …[+1303 chars]
 
+### 🤖 Claude — 2026-11-18T02:57:30.235Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py t66left.png 0 520 430 800 2.0 /home/user/wt/s05/qa/match/05/r9/step1_m05blend/t66_through_screen.png", "description": "Zoom left-bank slab at t66"}`
+
+### 🧑 User — 2026-11-18T02:57:30.532Z
+
+> ↩︎ result: t66left.png (860, 560)
+
+### 🤖 Claude — 2026-11-18T02:57:32.426Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/t66left.png"}`
+
+### 🧑 User — 2026-11-18T02:57:32.454Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:57:59.970Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py apwall.png 0 180 300 720 1.5 /home/user/wt/s05/references/05_flow_into_the_current.png", "description": "Zoom approved left wall"}`
+
+### 🧑 User — 2026-11-18T02:58:00.209Z
+
+> ↩︎ result: apwall.png (450, 810)
+
+### 🤖 Claude — 2026-11-18T02:58:01.997Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/apwall.png"}`
+
+### 🧑 User — 2026-11-18T02:58:02.029Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:58:10.431Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && ls /home/user/wt/s05/qa/pilot05/current_default_05.png && python3 -I crop.py defwall.png 0 180 300 720 1.5 /home/user/wt/s05/qa/pilot05/current_default_05.png", "description": "Zoom default-build 05 wall for comparison"}`
+
+### 🧑 User — 2026-11-18T02:58:10.659Z
+
+> ↩︎ result: /home/user/wt/s05/qa/pilot05/current_default_05.png
+> defwall.png (450, 810)
+
+### 🤖 Claude — 2026-11-18T02:58:12.533Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/defwall.png"}`
+
+### 🧑 User — 2026-11-18T02:58:12.556Z
+
+> ↩︎ result: [image]
+
