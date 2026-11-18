@@ -2794,3 +2794,99 @@ Saved on GitHub as `d5e37379` (Screen 05 branch). Everything from the lead side 
 
 Both specialists are still working. Screen 08 is on the ceiling seam and lower gold arch, and I'll show its first result as soon as it arrives.
 
+### 🧑 User — 2026-11-18T11:54:20.383Z
+
+<task-notification>
+<task-id>bb0rq4kpq</task-id>
+<summary>Monitor event: "specialist activity: new r11 files or pushed commits in s05/s08"</summary>
+<event>s08 NEW COMMIT 36d0978a: Screen 08 r11 step 1: &amp;m08ceil=1 door rings continue over the top while swimming (no curved ceiling seam above</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T11:54:22.416Z
+
+Screen 08 reports its first kept step. Checking it myself before showing you:
+
+### 🤖 Claude — 2026-11-18T11:54:23.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git ls-remote origin refs/heads/claude/rainbow-s08-scenery-c11 | cut -c1-12; git rev-parse --short=12 HEAD; sed -n '/## Step 1/,/## /p' qa/match/08/r11/PROGRESS.md | head -40; ls qa/match/08/r11/step1_*/", "description": "Read Screen 08 step 1 entry and list its images"}`
+
+### 🧑 User — 2026-11-18T11:54:24.093Z
+
+> ↩︎ result: 36d0978a9236
+> 36d0978a9236
+> ## Step 1 — `&m08ceil=1` (defect B: the curved seam / tear in the ceiling above the door) — KEPT
+> Kept query: `K10&m08ceil=1`
+> * Cause (debug view `&m08dbg=1`): the arch ring hides the top of the far door wall from the approved viewpoint, so while
+>   swimming that part (above the door, up to the ceiling) showed a generic tile, cut off from the painted door rings by a
+>   curved line. The painted end wall is concentric around the door (polar unroll, `tools/match08/ceil08.py` analysis:
+>   chrome rim, dark band, gold bulb ring, then slot rows).
+> * What changed: those unseen door-wall parts now take the user's own painted pixels from the SAME distance from the door
+>   centre, out of a clean window of the painted wall beside the door (left of the door, between the spout cup and its
+>   stream: 187°–217°), repeated by angle (mirrored, exactly 6 times around); past the slot band the slot rows repeat
+>   outward. Fades in only away from the approved viewpoint; approved view: scenery unchanged (594 px differ, all inside
+>   the HUD title text, ≤ 12 levels = font-loading noise).
+> * What looks closer: the door keeps its complete gold bulb ring and chrome rim over the top while Benn …[+1002 chars]
+
+### 🤖 Claude — 2026-11-18T11:54:26.490Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r11/step1_m08ceil/1_APPROVED.png"}`
+
+### 🧑 User — 2026-11-18T11:54:26.510Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:54:27.040Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r11/step1_m08ceil/2_BEFORE_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:54:27.080Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:54:27.542Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r11/step1_m08ceil/3_NEW_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:54:27.604Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:54:39.012Z
+
+> 🔧 **Bash** `{"command": "R=/home/user/rainbow-; V=$R/qa/review_c11/2026-11-18/08_step1_m08ceil; mkdir -p $V && cp /home/user/wt/s08/qa/match/08/r11/step1_m08ceil/{1_APPROVED.png,2_BEFORE_t66_through_screen.png,3_NEW_t66_through_screen.png,2_BEFORE_t95_through_screen.png,3_NEW_t95_through_screen.png} $V/ && cat >> $R/docs/briefs/2026-11-18-r11/COORDINATION.md <<'EOF'\n| 2 (~12:10) | 08 step 1 `m08ceil` (door's gold bulb ring + chrome rim continue over the top, perforated wall rings around it, no curved ceiling seam; `36d0978a`) | GOOD IMPROVEMENT, small (top corners keep a softer curved edge; faint mirror  …[+104 chars]`
+
+### 🧑 User — 2026-11-18T11:54:39.065Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T11:54:40.663Z
+
+> 🔧 **SendMessage** `{"to": "a1c0d85aa29788245", "summary": "Ack S08 step 1, continue", "message": "Lead review of S08 step 1 m08ceil (36d0978a): GOOD IMPROVEMENT (small), shown to the user. The door ring now continues over the top. Continue with the lower arch legs while swimming, then near water. The top corners' curved edge can wait.", "type": "message", "recipient": "a1c0d85aa29788245", "recipient_kind": "agent", "content": "Lead review of S08 step 1 m08ceil (36d0978a): GOO…"}`
+
+### 🧑 User — 2026-11-18T11:54:40.675Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a1c0d85aa29788245 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a1c0d85aa29788245","name":"a1c0d85aa29788245","ref":"2c075e"}}
+
+### 🤖 Claude — 2026-11-18T11:54:47.057Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_c11/2026-11-18/08_step1_m08ceil/1_APPROVED.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/08_step1_m08ceil/2_BEFORE_t66_through_screen.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/08_step1_m08ceil/3_NEW_t66_through_screen.png"], "caption": "Screen 08, two-thirds through the stage: APPROVED, then BEFORE, then NEW. Look at the wall directly above the round window door.", "status": "proactive", "display": "render"}`
+
+### 🧑 User — 2026-11-18T11:54:47.786Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/08_step1_m08ceil/1_APPROVED.png → file_uuid: 45ce5f13-b480-4316-a665-2a18f593f570
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/08_step1_m08ceil/2_BEFORE_t66_through_screen.png → file_uuid: cda85e66-9d5a-44e3-8d4b-da15770b0f5d
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/08_step1_m08ceil/3_NEW_t66_through_screen.png → file_uuid: 77d0cbeb-b83f-4994-9e2f-e93c55914856
+
+### 🤖 Claude — 2026-11-18T11:54:52.299Z
+
+Saving the review pictures and log entry to GitHub:
+
+### 🤖 Claude — 2026-11-18T11:54:54.905Z
+
+> 🔧 **Bash** `{"command": "for i in 1 2 3 4 5 6; do out=$(timeout 300 python3 scripts/rainbow-autosave.py --reason manual:s08-step1-review 2>&1 | tail -2); echo \"$out\" | grep -qi \"another autosave\" || break; sleep 15; done; for i in $(seq 1 40); do R=$(git ls-remote origin refs/heads/ccr-3b139b48-0qqkkz | cut -f1); [ \"$R\" = \"$(git rev-parse HEAD)\" ] && [ -z \"$(git status --porcelain)\" ] && break; sleep 5; done; echo \"local $(git rev-parse HEAD)\"; echo \"remote $R\"; echo \"uncommitted: $(git status --porcelain | wc -l)\"", "description": "Save and verify the lead branch on GitHub", "timeout": 60 …[+5 chars]`
+
