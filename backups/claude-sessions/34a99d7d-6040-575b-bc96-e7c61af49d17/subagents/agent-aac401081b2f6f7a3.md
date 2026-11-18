@@ -426,3 +426,80 @@ Meanwhile I'll look at the match04 source.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T01:42:06.588Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/audit_before.log | grep -E \"^04|real\"; head -c 600 /home/user/wt/s04/tools/lead_r6/motion_metrics.py; grep -n \"argv\\|def \\|LAYOUT\\|PALETTE\" /home/user/wt/s04/tools/lead_r6/motion_metrics.py | head -30", "description": "Check audit and metrics script usage"}`
+
+### 🧑 User — 2026-11-18T01:42:06.626Z
+
+> ↩︎ result: 04 a00_approved_view s 78.404 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.204 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.181 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.149 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.181 lat 0 stage 04 frames 86
+> 04 s_left_steer s 84.206 lat -1.65 stage 04 frames 26
+> 04 s_right_steer s 84.204 lat 1.65 stage 04 frames 26
+> 04 s_left_hard s 90.246 lat -1.65 stage 04 frames 52
+> 04 s_right_hard s 90.249 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.481 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.849 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> real	0m43.084s
+> """Lead r6: measured (not subjective) numbers for moving-gameplay frames vs the approved picture, below the HUD strip
+> (rows >= 13.5 %). LAYOUT20 = share of pixels within 20 levels after a sigma-8 blur (composition + colour, like
+> tools/qa/screen_match.py LAYOUT). PALETTE = histogram intersection of hue x saturation (24 x 8 bins, value > 0.15) —
+> how close the colour palette stays, independent of where things are. Moving frames are seen from other viewpoints, so
+> LAYOUT naturally falls as the camera travels; PALETTE shows whether the …[+620 chars]
+
+### 🤖 Claude — 2026-11-18T01:42:09.277Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I tools/lead_r6/motion_metrics.py references/04_through_the_five_arrows.png qa/match/04/r8/BEFORE/*.png | tee qa/match/04/r8/BEFORE/metrics.txt", "description": "Compute BEFORE LAYOUT20/PALETTE metrics"}`
+
+### 🧑 User — 2026-11-18T01:42:11.560Z
+
+> ↩︎ result: a00_approved_view      LAYOUT20  45.8 %  PALETTE  93.2 %
+> f03_forward3u          LAYOUT20  12.1 %  PALETTE  86.6 %
+> f06_forward6u          LAYOUT20   9.2 %  PALETTE  73.7 %
+> f10_forward10u         LAYOUT20   7.8 %  PALETTE  61.6 %
+> f20_forward20u         LAYOUT20   5.2 %  PALETTE  63.9 %
+> s_left_hard            LAYOUT20   4.7 %  PALETTE  58.3 %
+> s_left_steer           LAYOUT20   4.9 %  PALETTE  77.3 %
+> s_right_hard           LAYOUT20   3.7 %  PALETTE  55.5 %
+> s_right_steer          LAYOUT20   5.2 %  PALETTE  82.2 %
+> t33_through_screen     LAYOUT20   7.2 %  PALETTE  62.2 %
+> t66_through_screen     LAYOUT20   4.6 %  PALETTE  63.3 %
+> t95_through_screen     LAYOUT20   2.8 %  PALETTE  61.8 %
+
+### 🤖 Claude — 2026-11-18T01:42:18.832Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='qa/match/04/STATUS.md'\ns=open(p).read()\nhdr='''# Screen 04 — STATUS\n\n* **Running-session status: RUNNING (round 8, account 8, branch claude/rainbow-s04-match-c8)** — milestone M4 started\n  2026-11-18 ~01:40 UTC from `d1e422fa` (= `-c7`/`-c5` tip, M3 done). BEFORE moving audit (`?match04=1`, lead r6 method,\n  12 positions) done: `qa/match/04/r8/BEFORE/` (+ `metrics.txt`: LAYOUT20 45.8 % approved view → 2.8–12.1 % moving;\n  PALETTE 93.2 % → 55.5–86.6 %).\n\n## Previous status (milestone 3, account 3)\n'''\ns=s.replace('# Screen 04 …[+487 chars]`
+
+### 🧑 User — 2026-11-18T01:42:24.107Z
+
+> ↩︎ result: 0ab5659a88f36912884eb9b6af2a7acc2272328b	refs/heads/claude/rainbow-s04-match-c8
+> 0ab5659a88f36912884eb9b6af2a7acc2272328b
+
+### 🤖 Claude — 2026-11-18T01:42:26.156Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r8/BEFORE/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:42:26.197Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:42:26.657Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r8/BEFORE/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T01:42:26.691Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:42:27.064Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r8/BEFORE/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:42:27.110Z
+
+> ↩︎ result: [image]
+

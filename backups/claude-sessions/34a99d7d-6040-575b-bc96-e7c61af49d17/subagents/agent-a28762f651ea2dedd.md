@@ -376,3 +376,263 @@ First checkpoint pushed and verified. Now let me look at the approved picture an
 >       1 flow05
 >       1 farw05
 
+### 🤖 Claude — 2026-11-18T01:41:28.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"MATCH05\\|PROJ05\\|PROJGAP05\\|TGTVIS05\\|TGTFILL\\|TGTWALL\\|PROJNEAR\\|PROJFLOW\\|SILK05\\|function q05\\|q05(\" src/vfx/waterRibbon.ts | head -80", "description": "Find match05 / proj05 switches in waterRibbon"}`
+
+### 🧑 User — 2026-11-18T01:41:28.545Z
+
+> ↩︎ result: 167:export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 189:export const SILK05: boolean = q05('silk05');
+> 190:export const PUFF05: boolean = q05('puff05');
+> 191:export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
+> 192:export const FARW05: boolean = RIVER05 || q05('farw05');
+> 193:export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> 194:export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+> 205: * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> 212:export const MATCH05: boolean = q05('match05');
+> 213:export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> 214:export const PROJ05: boolean = on05('proj05');
+> 222:export const PROJFAR05: boolean = PROJ05 && on05('projfar05');
+> 229:export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
+> 236:export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');
+> 240: * (tools/match05/make_target_vis.py TGTFILL05=3: coin holes only; options 1 / 2 rejected, see NOTES) — removes the soft green-teal patches beside Benny while riding.
+> 252:export const TGTFILL05: boolean = TGTVIS05 && qv05('tgtfill05') === '3';
+> 258:export const TGTWALL05: boolean = TGTFI …[+2160 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:30.170Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 195,362p src/vfx/waterRibbon.ts", "description": "Read proj05 switch documentation in waterRibbon"}`
+
+### 🧑 User — 2026-11-18T01:41:30.208Z
+
+> ↩︎ result: /**
+>  * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+>  * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so
+>  * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the
+>  * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+>  *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+>  *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+>  * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+>  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+>  */
+> /**
+>  * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that turns
+>  * on every Screen-05 reference-match part (proj05 wa …[+7844 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:31.479Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1460,1560p src/vfx/waterRibbon.ts", "description": "Read PROJ05 fragment shader block"}`
+
+### 🧑 User — 2026-11-18T01:41:31.514Z
+
+> ↩︎ result: for (int k = 0; k < 5; k++) {
+>       float y = s - (uChevron.x + float(k) * uChevron.y);
+>       if (abs(y) < 2.4 && abs(x) < 1.6) {
+>         // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+>         float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+>         float arm = smoothstep(1.2, 1.1, abs(x));
+>         float core = smoothstep(0.2, 0.11, dist) * arm;
+>         float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+>         col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+>         col = mix(col, vec3(2.2, 2.4, 2.5), core);
+>       }
+>     }
+>   }
+>   #ifdef PROJ05
+>   {
+>     float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+>     if (pjK > 0.001) {
+>       // exact-layer magnification: texels per screen pixel along the least dense direction
+>       vec4 Lm = pjLut(s);
+>       vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
+>       // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
+>       vec2 ja = dFdx(tp), jb = dFdy(tp);
+>       float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
+>       if (uP …[+4190 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:36.321Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1680,1861p src/vfx/waterRibbon.ts", "description": "Read attachProj05 uniforms and texture setup"}`
+
+### 🧑 User — 2026-11-18T01:41:36.350Z
+
+> ↩︎ result: u5.uRipple = { value: f5.ripple };
+>     u5.uFlowS = { value: f5.sRange };
+>     u5.uPano = flow05Shared.uPano;
+>     u5.uPanoRot = flow05Shared.uPanoRot;
+>     const pk = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('panok') : null;   // QA: ?panok=0 isolates the reflection
+>     u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
+>   }
+>   const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: VERT,
+>     fragmentShader: FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}) },
+>   });
+>   const mesh = new THREE.Mesh(geo, mat);
+>   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
+>   mesh.name = 'water_ribbon';
+>   mesh.frustumCulled = false; // one long mesh spanning the whole course
+>   return {
+>     mesh,
+>     uniforms,
+>     s0,
+>     s1,
+>     heightAt(s, lateral, t) {
+>       const hw = course.widt …[+10922 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:37.816Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 437,560p src/vfx/waterRibbon.ts", "description": "Read pjTarget layer logic"}`
+
+### 🧑 User — 2026-11-18T01:41:37.845Z
+
+> ↩︎ result: #ifdef PROJ05
+> uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+> uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> uniform vec2 uPjESize;     // uPjE texels
+> uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+> uniform vec2 uPjNS;        // s0, s1
+> uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> uniform vec2 uPjTS;        // start s, period L
+> uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+> uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
+> uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+> uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
+> uniform vec2 uPjRes;       // render target size (vignette inverse)
+> uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
+> // ?projnear05=1 (2026-11-16, tools/proj05/near_bake.py): the HIGH-RESOLUTION near tile T2 (≈110 texels per unit
+> // instead of 24, mirrored repeat along s, mipmaps) takes over wherever the exa …[+6064 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:53.486Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,80p src/gameplay/coins.ts && grep -n \"update\\|scale\\|MATCH05\\|coins05\\|q05\\|onBeforeRender\\|visible\" src/gameplay/coins.ts | head -60", "description": "Read coin system"}`
+
+### 🧑 User — 2026-11-18T01:41:53.520Z
+
+> ↩︎ result: /**
+>  * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+>  * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+>  * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+>  * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { canvasTexture } from '../world/materials';
+> import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 
+> export const COIN_VALUE = 10;
+> 
+> /** `?coins05=1` / `?match05=1`: Screen 05 reference coins (measured 05 layout C05M + approved coin look, all screens) */
+> const COINS05 = on05('coins05');
+> /**
+>  * `?coins05tot=1` (on with `?coins05=1` / `?match05=1`; explicit `=0` = off; Screen 05 agent 2026-11-17, qa/match/05/NOTES.md):
+>  * COIN TOTAL KEPT = the default game's 91 coins / 2,240. The measured arrangement C05M (18 coins) replaces 7 default 05
+>  * coins after the checkpoint, so the run had 102 coins (100 reachable). With this switch:
+>  *  1. the two tiniest painted far coins (C05M rows 17 + 18, 4 / 3.5 px wi …[+8410 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:54.988Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 160,240p src/gameplay/coins.ts && sed -n 240,390p src/gameplay/coins.ts", "description": "Read coin layout and update logic"}`
+
+### 🧑 User — 2026-11-18T01:41:55.015Z
+
+> ↩︎ result: * 0.3–0.4 u apart in (ds, lat), the height keeps them apart). Coins grow to C05M_NEAR (capped by the 3-D gap to their
+>  * neighbours) as Benny closes in. The pre-checkpoint trail and every other screen's coins are unchanged (their bob phase
+>  * is kept: CoinDef.phase). Rows: [ds, lat, scale, h?].
+>  */
+> export const C05M: [number, number, number, number?][] = [
+>   [6.177, -0.275, 0.963], [10.752, 0.146, 0.926], [16.528, -0.151, 0.98], [26.221, -0.653, 1.084], [43.068, -1.63, 1.196],
+>   [45.624, -1.994, 0.881], [51.129, 0.094, 0.761, 1.733], [51.125, 0.723, 0.588, 1.93], [51.272, 1.027, 0.436, 2.14], [51.561, 1.02, 0.372, 2.398],
+>   [51.901, 0.8, 0.351, 2.691], [52.265, 0.458, 0.286, 2.935], [52.608, 0.132, 0.243, 3.077], [52.927, -0.144, 0.222, 3.128], [53.214, -0.421, 0.223, 3.104],
+>   [53.491, -0.738, 0.201, 3.136], [53.763, -1.025, 0.179, 3.251], [54.034, -1.279, 0.157, 3.375],
+> ];
+> /** near size of the measured coins (C05.scale = the default 05 coin size), capped by the 3-D gap to the next coin */
+> const C05M_NEAR = (k: number): number => {
+>   const [ds, lat, , h = C05.h] = C05M[k];
+>   const nb = [C05M[k - 1], C05M[k + 1]].filter(Boolean).map(([d2, l2, , h2 = C05.h]) => Math.hypot(d2 - ds, l …[+11327 chars]
+
+### 🤖 Claude — 2026-11-18T01:42:08.615Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"__rainbow\\s*=\" src | head; grep -rn \"__rainbow = {\" -A40 src/game/*.ts | head -80", "description": "Find debug API exposure"}`
+
+### 🧑 User — 2026-11-18T01:42:08.649Z
+
+> ↩︎ result: src/game/Game.ts:703:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-18T01:42:09.904Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 560,705p src/game/Game.ts", "description": "Read debug API in Game.ts"}`
+
+### 🧑 User — 2026-11-18T01:42:09.931Z
+
+> ↩︎ result: const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+>     '11': { mode: 'outro', t: O.cp11 },
+>     '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+>     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
+>     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plunge_bottom'] - 3 },
+>     '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+>   };
+> 
+>   const gotoCheckpoint = (id: string …[+7072 chars]
+
+### 🤖 Claude — 2026-11-18T01:42:13.618Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,80p scripts/lib/pw.mjs; nproc; uptime", "description": "Read Playwright helper and check load"}`
+
+### 🧑 User — 2026-11-18T01:42:13.665Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /**
+>  * Cross-process render slots (2026-11-16, full reference match): several specialists capture the game at the same time on
+>  * 4 shared cores with software WebGL; unlimited parallel captures time out and change timing-dependent HUD pixels. Every
+>  * script that starts the dev server waits here for one of RAINBOW_RENDER_SLOTS (default 2) slots and frees it on close /
+>  * exit. A slot whose owner process is gone is taken over; after 40 minutes of waiting the script runs anyway.
+>  */
+> async function acquireRenderSlot() {
+>   con …[+2022 chars]
+
+### 🤖 Claude — 2026-11-18T01:42:26.600Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/tools/match05/r8_shots.mjs", "content": "// Screen 05 round 8: the lead's motion_audit (tools/lead_r6/motion_audit.mjs) with a shot filter + per-shot probes\n// (coin screen sizes, Benny's screen box). Same shot list / same simulation stepping as the audit, so a shot taken here\n// equals the audit frame of the same name. Run from the checkout:\n//   node tools/match05/r8_shots.mjs <outDir> \"<query>\" [name,name,...|all] [port]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS …[+2698 chars]`
+
+### 🧑 User — 2026-11-18T01:42:26.627Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/r8_shots.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T01:42:28.700Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && time node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/probe1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" \"f03_forward3u,f10_forward10u,f20_forward20u,t66_through_screen\" 2>&1 | tail -20", "description": "Probe coin sizes at audit positions with base set", "timeout": 600000}`
+

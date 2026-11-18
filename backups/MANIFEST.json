@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 32914,
-   "sha256": "ef7e12a1805f96f7460d1ecb527b0e8f5699699f5560ffd81cdbeddd9b41783f"
+   "bytes": 33845,
+   "sha256": "32544a574de8782710abc5e527110955cfc29451732307adb840a2d878025bbe"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13549,
-   "sha256": "1178ab629f95bbf440ce4ef585e3356ccaa5333cfa72661c160a6c86ea9183fb"
+   "bytes": 13550,
+   "sha256": "21fbddb8a6da6b949c235f9ce32af9985e377e7f71a6cc03ae14af47864a137a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -930,6 +930,11 @@
    "path": "docs/briefs/2026-11-17-r7/USER_FEEDBACK_R7B.md",
    "bytes": 1801,
    "sha256": "91e931c4424925268fceadbf90de5907f0c960b2ea645b095d5ca4918c292ebd"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r8/COORDINATION.md",
+   "bytes": 3455,
+   "sha256": "ef441dde5219b84d310190201ec24499050d6de6e1afe6066c011c14f8a13c8b"
   },
   {
    "path": "docs/characters/benny.md",
@@ -9015,6 +9020,31 @@
    "path": "qa/review_r7/now/08_NOW_5_steering_hard_right.jpg",
    "bytes": 670145,
    "sha256": "77c34a93b15f1ab10e242e2f952fabdef3b4d6cef6db1b7b9a06bc2b5c0452ef"
+  },
+  {
+   "path": "qa/review_r8/07_plunge_fix_r7/1_APPROVED_07.jpg",
+   "bytes": 486684,
+   "sha256": "d33d85bb72b90fd89b3d9d2d85665c3735de1726ffd77b40111c661ded691766"
+  },
+  {
+   "path": "qa/review_r8/07_plunge_fix_r7/2_BEFORE_mid_plunge.jpg",
+   "bytes": 392057,
+   "sha256": "12a8e434c8f499b66a9698473a184ad35c5e42fcdd476e9008229a1d6650991b"
+  },
+  {
+   "path": "qa/review_r8/07_plunge_fix_r7/2_BEFORE_plunge_top.jpg",
+   "bytes": 577036,
+   "sha256": "18a5b3ab2300674bcf737679a870c4fd9e991b3c56e724165247c5b2cb45fab8"
+  },
+  {
+   "path": "qa/review_r8/07_plunge_fix_r7/3_NEW_mid_plunge.jpg",
+   "bytes": 620043,
+   "sha256": "f268358209c2ef7b91c9de9ae0f064bf0cdbee6ba6f9e22cafd6831ec11a41ca"
+  },
+  {
+   "path": "qa/review_r8/07_plunge_fix_r7/3_NEW_plunge_top.jpg",
+   "bytes": 488452,
+   "sha256": "d6e47e21fdeaaf00be3a288e5b25c0f849acc55d3da9d9164c5cc2108277df9d"
   },
   {
    "path": "qa/scene_comparisons.md",

@@ -1,9 +1,37 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T22:31Z",
- "updated_by_session": "session_01VCMXoaUqBCxDq8BntT19BU",
- "running_now": [],
+ "updated_utc": "2026-11-18T01:45:00Z",
+ "updated_by_session": "session_013VHsJ9KrSuiLBqJwtdwa8n (account 8, lead branch ccr-58dd182e-m48xwk)",
+ "running_now": {
+  "slot_A": {
+   "screen": "04",
+   "agent": "washer-environment-modeler",
+   "branch": "claude/rainbow-s04-match-c8",
+   "from": "d1e422fa",
+   "worktree": "/home/user/wt/s04",
+   "task": "M4 per docs/briefs/2026-11-17-r7/S04.md",
+   "started_utc": "2026-11-18T01:38Z",
+   "kind": "background agent in the lead container"
+  },
+  "slot_B": {
+   "screen": "05",
+   "agent": "water-fx-specialist",
+   "branch": "claude/rainbow-s05-match-c8",
+   "from": "a34fb925",
+   "worktree": "/home/user/wt/s05",
+   "task": "user's 05 list per docs/briefs/2026-11-17-r7/S05_ROUND2.md",
+   "started_utc": "2026-11-18T01:39Z",
+   "first_checkpoint": "a1f14e7b",
+   "kind": "background agent in the lead container"
+  },
+  "queue": [
+   "07 (m07foam, near water, near coin)",
+   "08 scenery (finish r8)",
+   "06 (rings, wall, foam)"
+  ],
+  "coordination": "docs/briefs/2026-11-18-r8/COORDINATION.md"
+ },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
   "_user_priority_2026-11-17": "VISUAL ONLY: scenery and look of the playable screens 04-08 must match their approved pictures (>= 90 %); do not report camera/movement details; show APPROVED | BEFORE | NEW full size + whole-frame numbers",

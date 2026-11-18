@@ -1391,3 +1391,186 @@ Both specialists are launched in the background. While they start, I'm finishing
 
 > 🔧 **SearchPlugins** `{"keywords": ["parallax threejs", "three.js devtools", "chrome devtools"]}`
 
+### 🧑 User — 2026-11-18T01:41:32.902Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('data:text/html,<canvas id=c></canvas><script>document.title=(document.getElementById(\'c\').getContext(\'webgl2\')?\'WEBGL2_OK\':\'NO_WEBGL2\')</script>');
+> ```
+> ### Page
+> - Page URL: data:text/html,<canvas id=c></canvas><script>document.title=(document.getElementById('c').getContext('webgl2')?%27WEBGL2_OK%27:%27NO_WEBGL2%27)%3C/script%3E
+> - Page Title: WEBGL2_OK
+> - Console: 0 errors, 1 warnings
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-18T01-41-32-897Z.yml)
+> ### Events
+> - New console entries: .playwright-mcp/console-2026-11-18T01-41-32-682Z.log#L1
+
+### 🧑 User — 2026-11-18T01:41:33.427Z
+
+> ↩︎ result: {"results":[{"id":"plugin_01SJe4pCHfcPHj3rpJyyMMBf","name":"b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f","display_name":"parallax-threejs","description":"Three.js/GLSL debugging for Claude Code — correlates scene graph, console, GL state, and pixels into one diagnosis. Plus SHA-indexed visual regression testing.","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-10-05T18:57:26.797035Z","updated_at":"2026-10-05T18:57:26.797035Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"Sean Corbett O'Donnell","email":null,"url":null},"publisher":{"tier":"community","name":null,"basis":"directory_review"},"content_scan":null,"components":[{"type":"skill","name":"b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f:qa-visual-test-harness","description":null,"origin":null},{"type":"mcp_server","name":"chrome-devtools-mcp","description":null,"origin":null},{"type":"mcp_server","name":"playwright-mcp","description":null,"origin":null},{"type":"mcp_server","name":"spector","description":null,"ori …[+31465 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:39.138Z
+
+> 🔧 **ToolSearch** `{"query": "select:SuggestPluginInstall", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T01:41:39.144Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T01:41:39.769Z
+
+> 🔧 **Bash** `{"command": "ls qa/review_r7/ 2>/dev/null | head -40; ls qa/review_r7 | wc -l", "description": "List the round 7 review pictures"}`
+
+### 🧑 User — 2026-11-18T01:41:39.800Z
+
+> ↩︎ result: 04_1_APPROVED.jpg
+> 04_2_CURRENT_swim_forward_10u.jpg
+> 04_2_CURRENT_swim_two_thirds_through.jpg
+> 05_1_APPROVED.jpg
+> 05_2_BEFORE_end_of_stage.jpg
+> 05_2_BEFORE_forward_10u.jpg
+> 05_2_BEFORE_one_third_through.jpg
+> 05_2_BEFORE_steering_hard_right.jpg
+> 05_2_BEFORE_two_thirds_through.jpg
+> 05_2_CURRENT_swim_forward_10u.jpg
+> 05_2_CURRENT_swim_two_thirds_through.jpg
+> 05_3_NEW_end_of_stage.jpg
+> 05_3_NEW_forward_10u.jpg
+> 05_3_NEW_one_third_through.jpg
+> 05_3_NEW_steering_hard_right.jpg
+> 05_3_NEW_two_thirds_through.jpg
+> 06_1_APPROVED.jpg
+> 06_2_BEFORE_end_of_stage.jpg
+> 06_2_BEFORE_forward_10u.jpg
+> 06_2_BEFORE_forward_20u.jpg
+> 06_2_BEFORE_steering_hard_right.jpg
+> 06_2_BEFORE_two_thirds_through.jpg
+> 06_3_NEW_end_of_stage.jpg
+> 06_3_NEW_forward_10u.jpg
+> 06_3_NEW_forward_20u.jpg
+> 06_3_NEW_steering_hard_right.jpg
+> 06_3_NEW_two_thirds_through.jpg
+> 07_1_APPROVED.jpg
+> 07_2_CURRENT_swim_forward_10u.jpg
+> 07_2_CURRENT_swim_two_thirds_through.jpg
+> 08_1_APPROVED.jpg
+> 08_2_BEFORE_forward_10u.jpg
+> 08_2_BEFORE_forward_3u.jpg
+> 08_2_BEFORE_steering_hard_right.jpg
+> 08_2_BEFORE_two_thirds_through.jpg
+> 08_2_CURRENT_swim_forward_10u.jpg
+> 08_2_CURRENT_swim_two_thirds_through.jpg
+> 08_3_NEW_forward_10u.jpg
+> 08_3_NEW_forward_3u.jpg
+> 08_3_NEW_steering_hard_right. …[+6 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:47.836Z
+
+> 🔧 **Bash** `{"command": "git ls-tree --name-only origin/claude/rainbow-s07-match-c7 qa/match/07/r7/NEW/ | head -14; git ls-tree --name-only origin/claude/rainbow-s07-match-c7 qa/match/07/r7/ | head", "description": "List Screen 07 round 7 picture files"}`
+
+### 🧑 User — 2026-11-18T01:41:47.872Z
+
+> ↩︎ result: qa/match/07/r7/NEW/a00_approved_view.png
+> qa/match/07/r7/NEW/f03_forward3u.png
+> qa/match/07/r7/NEW/f06_forward6u.png
+> qa/match/07/r7/NEW/f10_forward10u.png
+> qa/match/07/r7/NEW/f20_forward20u.png
+> qa/match/07/r7/NEW/motion.json
+> qa/match/07/r7/NEW/s_left_hard.png
+> qa/match/07/r7/NEW/s_left_steer.png
+> qa/match/07/r7/NEW/s_right_hard.png
+> qa/match/07/r7/NEW/s_right_steer.png
+> qa/match/07/r7/NEW/t33_through_screen.png
+> qa/match/07/r7/NEW/t66_through_screen.png
+> qa/match/07/r7/NEW/t95_through_screen.png
+> qa/match/07/r7/APPROVED_07.png
+> qa/match/07/r7/BEFORE
+> qa/match/07/r7/NEW
+> qa/match/07/r7/continuity_default.json
+> qa/match/07/r7/gameplay_new.json
+> qa/match/07/r7/metrics_BEFORE.txt
+> qa/match/07/r7/metrics_NEW.txt
+> qa/match/07/r7/probe_before.json
+> qa/match/07/r7/proof_default_0px.json
+> qa/match/07/r7/proof_newset_vs_K_match08.json
+
+### 🤖 Claude — 2026-11-18T01:41:52.155Z
+
+> 🔧 **Bash** `{"command": "O=qa/review_r8/07_plunge_fix_r7 && mkdir -p $O && B=origin/claude/rainbow-s07-match-c7:qa/match/07/r7 && git show $B/APPROVED_07.png > /tmp/a07.png && for f in t66_through_screen t33_through_screen; do git show $B/BEFORE/$f.png > /tmp/b_$f.png; git show $B/NEW/$f.png > /tmp/n_$f.png; done; file /tmp/a07.png /tmp/b_t66_through_screen.png | cut -c1-90; convert /tmp/a07.png -resize 864x1536 -quality 90 $O/1_APPROVED_07.jpg; convert /tmp/b_t66_through_screen.png -quality 90 $O/2_BEFORE_mid_plunge.jpg; convert /tmp/n_t66_through_screen.png -quality 90 $O/3_NEW_mid_plunge.jpg; convert / …[+225 chars]`
+
+### 🧑 User — 2026-11-18T01:41:52.512Z
+
+> ↩︎ result: /tmp/a07.png:                  JPEG image data, JFIF standard 1.01, aspect ratio, density 
+> /tmp/b_t66_through_screen.png: PNG image data, 864 x 1536, 8-bit/color RGB, non-interlaced
+> total 2520
+> drwxr-xr-x 2 root root   4096 Nov 18 01:41 .
+> drwxr-xr-x 3 root root   4096 Nov 18 01:41 ..
+> -rw-r--r-- 1 root root 486684 Nov 18 01:41 1_APPROVED_07.jpg
+> -rw-r--r-- 1 root root 392057 Nov 18 01:41 2_BEFORE_mid_plunge.jpg
+> -rw-r--r-- 1 root root 577036 Nov 18 01:41 2_BEFORE_plunge_top.jpg
+> -rw-r--r-- 1 root root 620043 Nov 18 01:41 3_NEW_mid_plunge.jpg
+> -rw-r--r-- 1 root root 488452 Nov 18 01:41 3_NEW_plunge_top.jpg
+
+### 🤖 Claude — 2026-11-18T01:41:54.546Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r8/07_plunge_fix_r7/2_BEFORE_mid_plunge.jpg"}`
+
+### 🧑 User — 2026-11-18T01:41:54.559Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:41:55.053Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r8/07_plunge_fix_r7/3_NEW_mid_plunge.jpg"}`
+
+### 🧑 User — 2026-11-18T01:41:55.150Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:41:59.757Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; for s in s04 s05; do cd /home/user/wt/$s; b=$(git branch --show-current); echo \"== $s $b local=$(git rev-parse --short=10 HEAD) remote=$(git ls-remote origin refs/heads/$b | cut -c1-10)\"; git log --oneline d1e422fa..HEAD 2>/dev/null | head -3; git status --short | head -5; done; ps aux | grep -E 'motion_audit|chrom|blender|vite' | grep -v grep | wc -l; uptime", "description": "Check specialist worktrees for activity and commits"}`
+
+### 🧑 User — 2026-11-18T01:42:01.344Z
+
+> ↩︎ result: 01:41
+> == s04 claude/rainbow-s04-match-c8 local=d1e422faff remote=d1e422faff
+> ?? node_modules
+> ?? qa/match/04/r8/
+> ?? tools/lead_r6/
+> == s05 claude/rainbow-s05-match-c8 local=a1f14e7b7c remote=a1f14e7b7c
+> a1f14e7b Screen 05 r8: first checkpoint — session RUNNING on claude/rainbow-s05-match-c8 (BEFORE = r7/NEW base set)
+> a34fb925 autosave: Rainbow 2026-11-18 01:15 UTC
+> 0e631db7 autosave: Rainbow 2026-11-18 00:35 UTC
+> ?? node_modules
+> 10
+>  01:42:01 up 19 min,  0 user,  load average: 1.52, 0.83, 0.41
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:42:07.814Z
+
+> 🔧 **Bash** `{"command": "grep -qx 'node_modules' .git/info/exclude 2>/dev/null || echo 'node_modules' >> .git/info/exclude; cd /home/user/wt/s04 && git status --short | head -3", "description": "Exclude the node_modules symlink in all worktrees"}`
+
+### 🧑 User — 2026-11-18T01:42:07.855Z
+
+> ↩︎ result: ?? qa/match/04/r8/
+> ?? tools/lead_r6/
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:42:08.877Z
+
+Now recording the round-8 coordination state so a later session or account can pick it up.
+
+### 🤖 Claude — 2026-11-18T01:42:23.931Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r8/COORDINATION.md", "content": "# Round 8 (account 8) — coordination of the five playable screens (VISUALS ONLY)\n\nStarted 2026-11-18 ~01:26 UTC. User order: all five playable screens 04–08 must look like their ORIGINAL approved\nimages (≥ 8.5/10, ideally 9–9.5) while Benny swims. Faster, visible progress; no redesign; drop methods that show no\nvisible gain; no work on 01–03 / 09–11 (Google Flow); no paid jobs without approval; max TWO specialists at once.\nRules from round 7 still bind: `docs/briefs/2026-11-17-r7/COORDINATION.md`, ` …[+2949 chars]`
+
+### 🧑 User — 2026-11-18T01:42:23.957Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r8/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T01:42:29.482Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\nd=json.load(open(p))\nd['updated_utc']='2026-11-18T01:45:00Z'\nd['updated_by_session']='session_013VHsJ9KrSuiLBqJwtdwa8n (account 8, lead branch ccr-58dd182e-m48xwk)'\nd['running_now']={\n 'slot_A':{'screen':'04','agent':'washer-environment-modeler','branch':'claude/rainbow-s04-match-c8','from':'d1e422fa','worktree':'/home/user/wt/s04','task':'M4 per docs/briefs/2026-11-17-r7/S04.md','started_utc':'2026-11-18T01:38Z','kind':'background agent in the lead container'},\n 'slot_B':{'screen':'05','agent':'water-fx-speciali …[+701 chars]`
+
