@@ -2324,3 +2324,140 @@ No cycles. Implementing the switch now.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; D=qa/match/05/r12/step4_m05fcoin; cp $S/fcloud/t95_left.png $D/2_BEFORE_t95_left.png; K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1'; node tools/match05/r8_shots.mjs $S/fcloud2 \"$K\" t95_through_screen,t98_end 2>&1 | tail -2; cp $S/fcloud2/t95_through_screen.png $D/2_BEFORE_t95_through_screen.png; ls $D", "description" …[+68 chars]`
 
+### 🧑 User — 2026-11-18T13:24:53.857Z
+
+> ↩︎ result: t95_through_screen s 186.88 lat 0 coins 1580 benny -0.13 -0.35 big coins: #38@316,239 d69 #39@318,177 d61
+> t98_end s 188.357 lat 0 coins 1580 benny -0.19 -0.51 big coins: #38@305,383 d71 #39@313,328 d62
+> 1_APPROVED.png
+> 2_BEFORE_t85_through.png
+> 2_BEFORE_t90_through.png
+> 2_BEFORE_t95_left.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_t85_through.png
+> 3_NEW_t90_through.png
+> 3_NEW_t95_left.png
+> 3_NEW_t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T13:24:55.798Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r12/step4_m05fcoin/2_BEFORE_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T13:24:55.849Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:25:11.987Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r12/PROGRESS.md <<'EOF'\n\n## Step 4 — `&m05fcoin=1` (class B/E: coins near the 05 → 06 transition sit on the painted river) — KEPT\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1`\n* Cause (two parts): (1) the painted far-arc coins at the end of 05 (C05M 7–18) are lifted up to 3.4 u so that, in the\n  locked view, they sit on the forced-perspective tunnel end;  …[+3114 chars]`
+
+### 🧑 User — 2026-11-18T13:25:19.286Z
+
+> ↩︎ result: TSC_OK
+> 248779898af0792fd4198337275163bac21acb4b
+> 248779898af0792fd4198337275163bac21acb4b	refs/heads/claude/rainbow-s05-match-c12
+> 13:25
+
+### 🤖 Claude — 2026-11-18T13:25:23.278Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 r12 step 4 m05fcoin kept", "message": "S05 r12 step 4 &m05fcoin=1: GOOD IMPROVEMENT. SHA 24877989 (pushed, remote == HEAD). Near the 05→06 transition the coins now sit on the river and wind into the glowing throat, instead of four coins floating over the left wall at t95 and coins hanging on the walls at t90 and t95_left. This changes the coin look only: pick-ups, 91 coins and the score are unchanged. Locked view 0 px. NEW: /home/user/wt/s05/qa/match/05/r12/step4_m05fcoin/3_NEW_t95_through_screen.png, 3_NEW_t90_through.png, 3_NEW_t95_left.png. BEFORE: the 2_BEFOR …[+162 chars]`
+
+### 🧑 User — 2026-11-18T13:25:23.298Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T13:25:36.954Z
+
+Next item: the distorted tunnel walls. I'll compare a wall crop from the approved picture with the same region while swimming.
+
+### 🤖 Claude — 2026-11-18T13:25:40.064Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\na.crop((0,180,432,560)).save('$S/crop_appr_wallL.png')\nb=Image.open('$S/fcoin/t95_through_screen.png').convert('RGB')\nb.crop((0,180,432,560)).save('$S/crop_t95_wallL.png')\nc=Image.open('$S/fcoin/t85_through.png').convert('RGB')\nc.crop((0,180,432,560)).save('$S/crop_t85_wallL.png')\n\"", "description": "Crop wall regions for comparison"}`
+
+### 🧑 User — 2026-11-18T13:25:40.327Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:25:45.332Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_appr_wallL.png"}`
+
+### 🧑 User — 2026-11-18T13:25:45.349Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:25:46.035Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_t95_wallL.png"}`
+
+### 🧑 User — 2026-11-18T13:25:46.051Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:25:46.595Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_t85_wallL.png"}`
+
+### 🧑 User — 2026-11-18T13:25:46.624Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:25:51.830Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"M05WTILE\\|M05WALL\\|M05WTILE_GLSL\" src/vfx/proj05Tunnel.ts | head -30", "description": "Locate wall tile code"}`
+
+### 🧑 User — 2026-11-18T13:25:51.879Z
+
+> ↩︎ result: 17:import { M05WALL, M05WTILE, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
+> 212: * `&m05wall=1` (Screen 05 round 9, waterRibbon.ts M05WALL): where the projected atlas would be magnified while swimming
+> 220:const M05WALL_GLSL = /* glsl */ `
+> 257: * `&m05wtile=1` (Screen 05 round 11, waterRibbon.ts M05WTILE): a far bay row (BC … GX) magnified while swimming shows the
+> 262:const M05WTILE_GLSL = /* glsl */ `
+> 301:  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE ? { uM05Eye: m05eye } : {}) };
+> 326:  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}
+> 329:    if (M05WALL || M05WTILE) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
+> 332:  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '');
+
+### 🤖 Claude — 2026-11-18T13:25:54.095Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "offset": 150, "limit": 190}`
+
+### 🧑 User — 2026-11-18T13:25:54.122Z
+
+> ↩︎ result: 150	        t.magFilter = THREE.LinearFilter;
+> 151	        t.wrapS = THREE.RepeatWrapping;             // round the tube
+> 152	        t.wrapT = THREE.ClampToEdgeWrapping;
+> 153	        t.needsUpdate = true;
+> 154	        res(t);
+> 155	      }, undefined, rej));
+> 156	  const jobs: Promise<unknown>[] = [];
+> 157	  if (PROJWALL05 || ENV05) {
+> 158	    jobs.push(Promise.all([
+> 159	      load(ENV05 ? new URL('../../assets/textures/env05/wall05e.png', import.meta.url).href : new URL('../../assets/textures/tunnel05/wall05.png', import.meta.url).href),
+> 160	      fetch(ENV05 ? new URL('../../assets/textures/env05/env05.json', import.meta.url).href : new URL('../../assets/textures/tunnel05/tunnel05.json', import.meta.url).href).then((r) => r.json()),
+> 161	    ]).then(([t, meta]) => {
+> 162	      shared.uPtWall.value = t;
+> 163	      shared.uPtWallSize.value.set(meta.wall.w, meta.wall.h);
+> 164	      (Object.keys(PT_ROW) as (keyof typeof PT_ROW)[]).forEach((k) => {
+> 165	        const r = meta.wall.rows[k];
+> 166	        if (r) shared.uPtRows.value[PT_ROW[k]].set(r.y0, r.h);
+> 167	      });
+> 168	    }));
+> 169	  }
+> 170	  if (ENV05) {
+> 171	    jobs.push(Promise.all([
+> 172	      load(new URL('../../assets/textures/env05/ring05 …[+11446 chars]
+
+### 🤖 Claude — 2026-11-18T13:25:57.441Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport json\nm=json.load(open('assets/textures/env05/env05.json'))\nprint({k:v for k,v in m['wall'].items() if k!='rows'}); print(m['wall']['rows'])\n\"; grep -n \"PT_ROW =\" -A3 src/vfx/proj05Tunnel.ts; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/wt/s05/assets/textures/env05/wall05e.png'); print(im.size, im.mode)\"", "description": "Inspect the wall atlas layout"}`
+
+### 🧑 User — 2026-11-18T13:25:57.578Z
+
+> ↩︎ result: {'w': 2048, 'h': 992, 'gutter': 8}
+> {'AB': {'y0': 8, 'h': 256}, 'BC': {'y0': 272, 'h': 128}, 'CD': {'y0': 408, 'h': 64}, 'DE': {'y0': 480, 'h': 32}, 'EF': {'y0': 520, 'h': 16}, 'FG': {'y0': 544, 'h': 16}, 'GX': {'y0': 568, 'h': 16}, 'N1': {'y0': 592, 'h': 256}, 'N2': {'y0': 856, 'h': 128}}
+> 111:export const PT_ROW = { AB: 0, BC: 1, CD: 2, DE: 3, EF: 4, FG: 5, GX: 6, N1: 7, N2: 8 } as const;
+> 112-const N_ROWS = ENV05 ? 9 : 7;
+> 113-/** `?env05=1` ring atlas rows (assets/textures/env05/env05.json: ring.rows) */
+> 114-export const E5_RING_ROW = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, G: 6, N: 7 } as const;
+> (2048, 992) RGB
+

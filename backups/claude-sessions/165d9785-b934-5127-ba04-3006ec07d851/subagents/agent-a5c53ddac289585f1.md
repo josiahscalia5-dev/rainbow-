@@ -2453,3 +2453,80 @@ Now the PROGRESS.md for r12 with step 1.
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_tw.png"}`
 
+### 🧑 User — 2026-11-18T13:24:49.335Z
+
+> ↩︎ result: 08 f06_forward6u s 398.164 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.552 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.352 lat 0 stage 08 frames 78
+
+### 🧑 User — 2026-11-18T13:24:49.357Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:25:11.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_LR.png 500,550,864,1100 0.7 references/08_final_spin_chamber.png $N/f03_forward3u.png $N/f06_forward6u.png $N/s_right_steer.png $N/s_right_hard.png", "description": "Zoom lower-right cup across shots"}`
+
+### 🧑 User — 2026-11-18T13:25:12.076Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:25:12.884Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_LR.png"}`
+
+### 🧑 User — 2026-11-18T13:25:12.915Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:25:37.487Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -I - <<'EOF'\nimport json, math, numpy as np\nL = json.load(open('assets/textures/match08/proj08.json'))\nM = np.array(L['camera']['matrixWorld']).reshape(4, 4).T\nV = np.linalg.inv(M); W, H = 864, 1536; f = 1 / math.tan(math.radians(L['camera']['fov']) / 2); asp = W / H\nVP = M[:3, 3]\ndef proj(p):\n    h = np.append(p, 1) @ V.T; x, y, z = h[0], h[1], -h[2]\n    return (x * f / asp / z * 0.5 + 0.5) * W, (0.5 - y * f / z * 0.5) * H\nfor k, bottom in [('UL', 427), ('UR', 464)]:\n    s = L['spouts'][k]; c = np.array(s['c']); d = VP - c; d[1] = 0; d /= …[+380 chars]`
+
+### 🧑 User — 2026-11-18T13:25:37.624Z
+
+> ↩︎ result: UL rim front px (np.float64(232.19647734685103), np.float64(362.5241326974583)) centre (np.float64(232.49999999999974), np.float64(374.9999999999999))
+>   hb 0.00 front-bottom y 362.5  back-bottom y 386.0
+>   hb 0.25 front-bottom y 370.2  back-bottom y 392.7
+>   hb 0.50 front-bottom y 377.9  back-bottom y 399.5
+>   hb 0.75 front-bottom y 385.6  back-bottom y 406.2
+>   hb 1.00 front-bottom y 393.2  back-bottom y 413.0
+>   hb 1.25 front-bottom y 400.9  back-bottom y 419.7
+>   hb 1.50 front-bottom y 408.5  back-bottom y 426.4
+>   hb 1.75 front-bottom y 416.1  back-bottom y 433.1
+>   hb 2.00 front-bottom y 423.7  back-bottom y 439.8
+>   hb 2.25 front-bottom y 431.3  back-bottom y 446.4
+>   hb 2.50 front-bottom y 438.9  back-bottom y 453.1
+>   hb 2.75 front-bottom y 446.4  back-bottom y 459.7
+>   hb 3.00 front-bottom y 454.0  back-bottom y 466.4
+> UR rim front px (np.float64(712.6819821029534), np.float64(409.7058688015603)) centre (np.float64(712.4999999999998), np.float64(415.00000000000034))
+>   hb 0.00 front-bottom y 409.7  back-bottom y 419.9
+>   hb 0.25 front-bottom y 417.2  back-bottom y 426.9
+>   hb 0.50 front-bottom y 424.8  back-bottom y 433.9
+>   hb 0.75 front-bottom y 432.3  back-bottom y 440.9
+>   hb 1.00 front …[+452 chars]
+
+### 🤖 Claude — 2026-11-18T13:25:56.451Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git diff src/world/match08.ts > qa/match/08/r12/wip_m08twin_not_kept.patch && git checkout -- src/world/match08.ts && grep -n \"four half-dome spouts\" -A 26 src/world/match08.ts", "description": "Save twin patch, revert, show spout code"}`
+
+### 🧑 User — 2026-11-18T13:25:56.565Z
+
+> ↩︎ result: 5: * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+> 6- * Every surface is textured by camera projection of the CLEAN environment-only artwork (Benny, HUD, coins removed;
+> 7- * qa/imageblaster/08/) from that locked camera, so the locked view shows the approved scenery and a moving camera sees
+> 8- * it on geometry (parallax). Surfaces the projector cannot see (behind props) get a plain fallback colour instead of
+> 9- * a smeared copy (projector depth test). The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+> 10- * Without the switch nothing in this file runs and the game is unchanged.
+> 11- */
+> 12-import * as THREE from 'three';
+> 13-import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+> 14-
+> 15-interface Layout {
+> 16-  camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+> 17-  floorY: number;
+> 18-  chamber: { cx: number; cy: number; r: number; zBack: number; zDoor: number };
+> 19-  arch: { z: number; outer: { cx: number; cy: number; r: number }; inner: { cx: number; cy: number; r: number }; depth: number };
+> 20-  pipe: { cx: number; cy: number; r: number; z0: number; z1: number }; …[+2255 chars]
+
