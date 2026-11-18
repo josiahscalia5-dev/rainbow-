@@ -3763,3 +3763,122 @@ Once the test is completed, tell me whether Atlas genuinely helps us recreate my
 MY GOAL IS ALL FIVE APPROVED SCREENS LOOKING VERY CLOSE TO MY ORIGINAL ARTWORK WHILE BENNY SWIMS THROUGH THEM. NO REDESIGN.
 Make sure Make sure you save everything to my GitHub or GitHub repository, everything. So I make sure everything is saved. All the chat history, all the agents, all the tools, all the plugins, all the servers, everything.
 
+### 🤖 Claude — 2026-11-18T17:15:35.930Z
+
+You've approved one Atlas test, on condition that I can confirm the real price first. I can't confirm it yet: the public docs and the connector don't list it. Before saying it's unavailable, I'm checking the remaining free Atlas docs pages for a price.
+
+### 🤖 Claude — 2026-11-18T17:15:39.483Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl; for p in pricing rate-card how-to-use-atlas projects-and-api-keys build-a-scene web-quickstart operations; do code=$(curl -sS -m 30 -o $S/p_$p.md -w \"%{http_code}\" https://docs.atlas.worldlabs.ai/$p.md); echo \"$p HTTP $code $(grep -ciE 'credit|\\$[0-9]|price|cost' $S/p_$p.md 2>/dev/null)\"; done; grep -hiE \"atlasGenerate.*credit|credit.*atlasGenerate|per (view|frame|target|image)|credits per|credits \\(\" $S/*.md | head -10", "description": "Search remaining free Atlas docs for the task pri …[+4 chars]`
+
+### 🧑 User — 2026-11-18T17:15:43.050Z
+
+> ↩︎ result: pricing HTTP 404 0
+> rate-card HTTP 404 0
+> how-to-use-atlas HTTP 200 0
+> projects-and-api-keys HTTP 200 2
+> build-a-scene HTTP 200 1
+> web-quickstart HTTP 200 0
+> operations HTTP 200 0
+>             "description": "Generated RGB frames (image + camera), one per target camera in order. Every frame also carries a `depth` buffer when the request set returnDepth."
+> conversion is 1,000 credits per US dollar. Credits purchased for the account
+> credits ($0.50), charged once, after it ends. It draws on the same credits as
+> Prompt enhancement costs 20 credits ($0.02) a request. An image edit costs 125
+> credits ($0.125) a request. An image upscale costs 10 credits ($0.01) an image.
+> A Chisel caption costs 20 credits ($0.02) a request. A Relight image edit costs
+> - `targetFrames`: 1 to 1440 posed frames, one per view to generate, in
+> generated image and camera per target frame, in request order.
+> and its camera. The task generates one completed view per target frame, in
+> request with one `targetFrames` entry per view in `prepared-scene.json`, the
+
+### 🤖 Claude — 2026-11-18T17:15:47.966Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl; grep -n -iE \"credit|\\\\$[0-9]|price|cost\" $S/p_projects-and-api-keys.md $S/p_build-a-scene.md | head -8", "description": "Show the price mentions found in two docs pages"}`
+
+### 🧑 User — 2026-11-18T17:15:48.326Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl/p_projects-and-api-keys.md:15:- one project per cost center or experimental workload.
+> /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl/p_projects-and-api-keys.md:55:credits, alert thresholds, and task admission.
+> /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl/p_build-a-scene.md:7:check those views before the longer step. The longer step costs more and
+
+### 🤖 Claude — 2026-11-18T17:15:53.767Z
+
+> 🔧 **Bash** `{"command": "ls backups/claude-config/ | tail -5; ls backups/claude-config/$(ls backups/claude-config | tail -1) 2>/dev/null | head -20; grep -rln \"claude-config\" scripts/*.sh scripts/*.py 2>/dev/null | head -5", "description": "Check the saved Claude configuration snapshots"}`
+
+### 🧑 User — 2026-11-18T17:15:53.835Z
+
+> ↩︎ result: 2026-11-18-account12
+> README.md
+> installed_plugins.json
+> known_marketplaces.json
+> user-settings.json
+
+### 🤖 Claude — 2026-11-18T17:15:57.828Z
+
+> 🔧 **Bash** `{"command": "ls -la backups/claude-config/2026-11-18-account12/; head -30 backups/claude-config/README.md; ls ~/.claude/; cat ~/.claude/settings.json 2>/dev/null | python3 -I -c \"import json,sys; d=json.load(sys.stdin); print(list(d.keys()))\"; ls .mcp.json* 2>/dev/null", "description": "Inspect config snapshot layout and current Claude settings"}`
+
+### 🧑 User — 2026-11-18T17:15:57.956Z
+
+> ↩︎ result: total 24
+> drwxr-xr-x 2 root root 4096 Nov 18 16:21 .
+> drwxr-xr-x 3 root root 4096 Nov 18 16:21 ..
+> -rw-r--r-- 1 root root 1931 Nov 18 16:21 README.md
+> -rw-r--r-- 1 root root  391 Nov 18 16:21 installed_plugins.json
+> -rw-r--r-- 1 root root  225 Nov 18 16:21 known_marketplaces.json
+> -rw-r--r-- 1 root root  213 Nov 18 16:21 user-settings.json
+> head: cannot open 'backups/claude-config/README.md' for reading: No such file or directory
+> backups
+> cache
+> environment-manager
+> launcher-settings.json
+> mcp-needs-auth-cache.json
+> plugins
+> policy-limits.json
+> policy-limits.json.signature.json
+> policy-limits.json.stamp.json
+> projects
+> remote-settings.json
+> remote-settings.json.synced-at
+> session-env
+> session-start-setup-script-failure.sh
+> sessions
+> settings.json
+> shell-snapshots
+> skills
+> stop-hook-git-check.sh
+> tasks
+> user-prompt-submit-reply-reminder.py
+> ['extraKnownMarketplaces', 'enabledPlugins']
+> .mcp.json.template
+
+### 🤖 Claude — 2026-11-18T17:16:02.297Z
+
+> 🔧 **Bash** `{"command": "cat backups/claude-config/2026-11-18-account12/README.md; cat ~/.claude/settings.json; cat ~/.claude/plugins/known_marketplaces.json | head -30", "description": "Read the account-12 snapshot README and current settings"}`
+
+### 🧑 User — 2026-11-18T17:16:02.386Z
+
+> ↩︎ result: # Account 12 (2026-11-18) — Claude setup snapshot (NO secrets)
+> Restore on a new account: start the cloud session on the lead branch named in `backups/START_NEW_CLAUDE_ACCOUNT.md`;
+> the SessionStart hook (`.claude/settings.json`) runs `scripts/claude-bootstrap.sh`, which reinstalls tools and plugins.
+> 
+> * **Agents (10, in git):** `.claude/agents/` — android-build-performance, animation-and-gameplay-engineer, benny-character-artist,
+>   cartoon-girl-character-artist, foam-bubbles-particles, path-camera-transition-engineer, playwright-visual-qa,
+>   reference-match-director, washer-environment-modeler, water-fx-specialist. Running state + restart steps: `backups/AGENTS_STATUS.json`
+>   (round12_account12), worktrees /home/user/wt/s04, s05, s08; unfinished edits snapshotted every 5 min in `backups/wip/`.
+> * **Plugins:** `installed_plugins.json` (worldlabs@worldlabs) + `known_marketplaces.json`; the session also had superpowers,
+>   feature-dev, code-review, frontend-design, claude-code-setup, rv-tools, unity, playwright, context7 (context7 needs sign-in; unused).
+> * **MCP servers seen this session:** playwright (plugin, connected), github (claude.ai connector), claude-code-remote,
+>   Claude_Docs, co …[+1163 chars]
+
+### 🤖 Claude — 2026-11-18T17:16:22.285Z
+
+> 🔧 **Bash** `{"command": "D=backups/claude-config/2026-11-18-account14 && mkdir -p $D && cp ~/.claude/plugins/installed_plugins.json $D/ && cp ~/.claude/plugins/known_marketplaces.json $D/ && cp ~/.claude/settings.json $D/user-settings.json && grep -iE \"key|token|secret|password\" $D/*.json | grep -viE \"\\\"(repo|source)\\\"\" | head -3; cat > $D/README.md <<'EOF'\n# Account 14 (2026-11-18) — Claude setup snapshot (NO secrets)\nRestore on a new account: start the cloud session on the lead branch named at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`\n(`ccr-6c7564b1-fmlt1w`); the SessionStart hook (`.c …[+4068 chars]`
+
+### 🧑 User — 2026-11-18T17:16:22.757Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T17:16:32.281Z
+
+> 🔧 **Bash** `{"command": "printf '| 5 (~17:55) | Atlas test for 04 (user approved up to 5,000 credits IF the price is verified first) | NOT SUBMITTED: atlasGenerate price is not in the docs or the connector; user to read it on the Atlas rate card. 0 credits spent. Account-14 setup snapshot `backups/claude-config/2026-11-18-account14/` + `TOOL_MANIFEST.json` → `account14_2026_11_18` |\\n' >> docs/briefs/2026-11-18-r14/COORDINATION.md; until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:save-everything 2>&1 | grep -E '\"result …[+517 chars]`
+
