@@ -870,3 +870,14 @@ Let me look at the current NEW state (step 1 frames) at t66 and the last-third B
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -i \"s|foldNear: M05END ? 3 : 6.5, foldFar: M05END ? 5 : 10,   // m05end (r11): fold at the 06 hand-over|foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06|\" src/world/environment.ts && sed -i \"s|(eye → seam 5 … 3 u = the 06 hand-over)|(eye → seam 6.8 … 5.2 u: Benny ≈ 187.6 … 189, done as Benny enters 06)|\" src/world/match05far.ts && sed -i \"s|\\['t98_end', 't0.98', null\\],|['t98_end', 't0.98', null], ['t102_06', 't1.02', null],|\" tools/match05/r8_shots.mjs && grep -n \"M05END ?\" src/world/envir …[+878 chars]`
 
+### 🧑 User — 2026-11-18T12:14:10.033Z
+
+> ↩︎ result: 636:      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
+> 49:  ['t92_left', 't0.92', -1], ['t92_right', 't0.92', 1], ['t98_end', 't0.98', null], ['t102_06', 't1.02', null],
+> t95_through_screen s 187.079 lat 0 coins 1580 benny -0.15 -0.37 big coins: #38@314,256 d69 #39@318,194 d61
+> t98_end s 188.357 lat 0 coins 1580 benny -0.19 -0.51 big coins: #38@305,383 d71 #39@313,328 d62
+> t102_06 s 190.739 lat 0 coins 1580 benny -0.11 -0.77 big coins: #38@288,640 d77 #39@297,595 d66
+> t102_06 s 190.818 lat 0 coins 1580 benny -0.11 -0.77 big coins: #38@288,646 d77 #39@296,601 d66
+> <string>:4: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+> t102 diff px >20: 1072164
+

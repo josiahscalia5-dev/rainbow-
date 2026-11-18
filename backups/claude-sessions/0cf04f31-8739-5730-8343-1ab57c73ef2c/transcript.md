@@ -4583,3 +4583,74 @@ No payment is needed.
 
 Everything is saved: lead branch `06ce9cdc`, Screen 06 branch `8182130c`.
 
+### 🧑 User — 2026-11-18T12:13:22.095Z
+
+Yes, connect Hugging Face and run the Screen 04 test
+
+### 🤖 Claude — 2026-11-18T12:13:36.457Z
+
+I can't connect the connector myself; that happens in your claude.ai settings. I'll show you the connect card now. Meanwhile I'll try the free route that needs no account: Hugging Face Spaces can be called directly, with a small anonymous GPU quota. That does upload your approved picture to Stability's Space, which you've just approved.
+
+Freeing disk space first: Screen 06 is fully pushed, so its workspace can go. Then I'm setting up Screen 04's workspace.
+
+### 🤖 Claude — 2026-11-18T12:13:37.020Z
+
+> 🔧 **SuggestConnectors** `{"uuids": ["37ed56d5-9d61-4fd4-ad00-b9134c694296"]}`
+
+### 🧑 User — 2026-11-18T12:13:37.243Z
+
+> ↩︎ result: [{"name":"Hugging Face","description":"Access the Hugging Face Hub and thousands of Gradio Apps","directoryUuid":"37ed56d5-9d61-4fd4-ad00-b9134c694296","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false}]
+
+### 🤖 Claude — 2026-11-18T12:13:38.464Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"dirty: $(git status --porcelain | wc -l)\"; git status --porcelain | head -3; [ \"$(git rev-parse HEAD)\" = \"$(git ls-remote origin refs/heads/claude/rainbow-s06-match-c11 | cut -f1)\" ] && echo \"s06 pushed == HEAD\"", "description": "Confirm the 06 worktree is clean and pushed"}`
+
+### 🧑 User — 2026-11-18T12:13:39.414Z
+
+> ↩︎ result: dirty: 0
+> s06 pushed == HEAD
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:13:49.994Z
+
+> 🔧 **Bash** `{"command": "git worktree remove /home/user/wt/s06 && git worktree add -q /home/user/wt/s04 claude/rainbow-s04-match-c11 2>&1 | tail -2; cd /home/user/wt/s04 && ln -sfn /home/user/rainbow-/node_modules node_modules && git branch -q --set-upstream-to=origin/claude/rainbow-s04-match-c11 && echo \"s04 $(git branch --show-current) $(git rev-parse --short HEAD)\"; df -h /home/user | tail -1; sed -n 1,200p qa/match/04/r10/PROGRESS.md | head -80", "description": "Swap the 06 worktree for a Screen 04 worktree", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T12:14:01.966Z
+
+> ↩︎ result: s04 claude/rainbow-s04-match-c11 a24d289c
+> /dev/vda        252G   32G  7.7G  81% /
+> # Screen 04 — round 10 (lead), controlled test with the user's PROVISIONAL reference views V04-1 / V04-2
+> 
+> User 2026-11-18 ~11:15 UTC: V04-1 (just inside) and V04-2 (middle) = PROVISIONAL references for ONE controlled 3D test; V04-3a/b
+> NOT used; never replace the screen with AI artwork; show APPROVED / CURRENT / IMPROVED full size. References:
+> `/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand1.png` (s 88.1) and `.../V04-2_cand2.png` (s 98.2).
+> BEFORE = kept query K `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1` (frames
+> `/home/user/rainbow-/qa/review_c10/2026-11-18/04_*`, all 12 in the lead's scratchpad audit_c10/04).
+> 
+> | Test | Query = K + | By eye vs V04-1 / V04-2 | Verdict |
+> |---|---|---|---|
+> | A | `m04foam3 m04pink m04arr5` | foam rows gone (closer); pink becomes a flat pink sheet with hard straight edges; cyan lane + arrows nearly gone | NOT AN IMPROVEMENT |
+> | B | `m04foam3 m04arr5` | low foam (closer); exposes the flat water ramp's straight edges; arrows invisible (near fade 6.5–9 u) | NOT AN IMPROVEMENT |
+> | C | B + `m04a5n0=2 m04a5n1=3.5 m04a5w=1.6 m04ry=2.2`  …[+952 chars]
+
+### 🤖 Claude — 2026-11-18T12:14:09.396Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls src/world/ | grep -i \"match\\|proj\"; ls src/vfx | grep -i proj; grep -rln \"match04\\|m04ring\" src | head; wc -l src/world/match04.ts src/vfx/matchProj.ts 2>/dev/null", "description": "Locate Screen 04 projection code"}`
+
+### 🧑 User — 2026-11-18T12:14:09.447Z
+
+> ↩︎ result: Exit code 1
+> match04.ts
+> match04m4.ts
+> match08.ts
+> proj05Apron.ts
+> proj05Tunnel.ts
+> src/world/match04.ts
+> src/world/match04m4.ts
+> src/game/match.ts
+> src/game/cameraRig.ts
+> src/game/Game.ts
+> src/gameplay/coins.ts
+>   338 src/world/match04.ts
+>   338 total
+
