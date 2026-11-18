@@ -12,6 +12,11 @@
  *             spacing) instead of the magnified painted arrow tile.
  *  m04wave  — the painted swirl water without the obvious repeat (two offset samples of the swirl tile blended by a
  *             slow world-anchored noise) and flowing down the slide.
+ *  m04mouth — (round 9, needs m04ring) the approved GOLD WASHER OPENING: the painted mouth ring (thick polished band,
+ *             thin bright lips, dark groove) unwrapped from the approved pixels and straightened (tools/match04/mouth04.py
+ *             -> tile_mouth.png) on a modeled mouth ring flush with the painted ring plane, mapped through the projector so
+ *             the approach continues the approved view; its row of glowing bulbs (the painted hot spots on both lips,
+ *             mouth04.json) drawn as crisp glowing bulbs at any distance.
  * Without `?match04=1` nothing here runs; without the sub-switches nothing here is built.
  */
 import * as THREE from 'three';
@@ -27,6 +32,7 @@ export const M04 = {
   wave: on('m04wave'),
   river: on('m04river'),
   gold: on('m04gold'),
+  mouth: on('m04mouth'),
   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
 };
 
@@ -77,6 +83,11 @@ uniform vec4 uTone;        // band base, lip base, opening base, streak strength
 uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
 uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
 uniform float uGoldY;      // m04gold: polished YELLOW-gold ramp (bright yellow-white highlights), fewer magenta tints
+uniform float uMouthT;     // m04mouth: the painted mouth ring texture on the opening (tile_mouth.png)
+uniform sampler2D uMouthTex;
+uniform vec3 uMouthRho;    // tile rows: rho at the top row, rho at the bottom row (fitted mouth plane z0); z: rho offset
+                           // (the painted band lies 0.1 u inside the fitted outer radius: lips onto the modeled lips)
+uniform vec3 uProjPos;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -211,6 +222,22 @@ void main() {
       vec2 p = (gf - o) * vec2(1.0, 0.7);
       float g = smoothstep(0.08, 0.0, length(p)) + 0.4 * smoothstep(0.02, 0.0, abs(p.x)) * smoothstep(0.28, 0.0, abs(p.y)) + 0.4 * smoothstep(0.02, 0.0, abs(p.y)) * smoothstep(0.28, 0.0, abs(p.x));
       col += vec3(1.0, 0.92, 0.70) * g * 0.6 * (1.0 - smoothstep(0.15, 0.35, gfw));
+    }
+    if (mouth && uMouthT > 0.5) {
+      // m04mouth: the painted washer opening. The fragment is carried along the projector ray onto the fitted mouth plane
+      // (homothety about the projector), so the approach continues the approved view; (psi, rho) there index the
+      // straightened painted ring. Deeper parts of the inner lip land on the painted groove / inner band rows.
+      float dP = dot(vW - uProjPos, uAxD), d0 = dot(uAxO - uProjPos, uAxD);
+      vec3 Q = uProjPos + (vW - uProjPos) * (d0 / max(dP, 0.5));
+      vec3 qq = Q - uAxO; qq -= uAxD * dot(qq, uAxD);
+      float rhoQ = length(qq), psQ = atan(dot(qq, uAxR), dot(qq, uAxU));
+      vec2 uvM = vec2(psQ / 6.2831853 + 0.5, (uMouthRho.x - rhoQ - uMouthRho.z) / (uMouthRho.x - uMouthRho.y));
+      // explicit gradients without the psi wrap (the seam lies under the water)
+      vec2 gx = dFdx(uvM), gy = dFdy(uvM);
+      gx.x = abs(gx.x) > 0.5 ? 0.0 : gx.x; gy.x = abs(gy.x) > 0.5 ? 0.0 : gy.x;
+      col = textureGrad(uMouthTex, uvM, gx, gy).rgb;
+      // a soft polished sheen that moves with the view (the painted highlights stay where they were painted)
+      col += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);
     }
   }
   col = clamp(col, 0.0, 1.0);
@@ -355,6 +382,29 @@ void main() {
   gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
 }`;
 
+// m04mouth: a glowing bulb on the washer opening — white-hot core, yellow glow, soft amber halo, a faint vertical light
+// streak across the band (as painted); vS = brightness
+const BULB_FRAG = /* glsl */ `
+uniform vec4 uPjPost;
+uniform vec2 uPjRes;
+uniform float uAlpha;
+varying vec2 vUv;
+varying float vS;
+varying float vF;
+${PROJ05_INVERSE}
+void main() {
+  float r = length(vUv);
+  if (r > 1.0) discard;
+  float core = smoothstep(0.17, 0.09, r);
+  float glow = exp(-r * r / 0.06);
+  float halo = exp(-r * r / 0.30) * (1.0 - smoothstep(0.7, 1.0, r));
+  float streak = exp(-vUv.x * vUv.x / 0.008) * exp(-vUv.y * vUv.y / 0.30) * 0.6;
+  vec3 col = mix(vec3(1.0, 0.62, 0.16), vec3(1.0, 0.86, 0.42), clamp(glow + streak, 0.0, 1.0));
+  col = mix(col, vec3(1.0, 0.99, 0.90), core);
+  float a = clamp(core + 0.85 * glow + 0.35 * halo + streak, 0.0, 1.0) * (0.75 + 0.25 * vS);
+  gl_FragColor = vec4(pjInverse(col), a * uAlpha * vF);
+}`;
+
 function lathe(prof: { r: number; a: number; part: number }[], segs: number, ringIdx: (i: number) => number) {
   const pts = prof.map((p) => new THREE.Vector2(p.r, p.a));
   const g = new THREE.LatheGeometry(pts, segs);
@@ -389,7 +439,7 @@ export function addM04(ctx: M04Ctx) {
       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
-        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
     // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
@@ -436,7 +486,16 @@ export function addM04(ctx: M04Ctx) {
       { r: (R0 + R1) / 2, a: -0.66, part: 3 }, { r: R1 - 0.1, a: -0.62, part: 3 }, { r: R1 - 0.04, a: -0.56, part: 1 },
       { r: R1 + 0.01, a: -0.42, part: 1 }, { r: R1 + 0.02, a: -0.1, part: 1 }, { r: R1 + 0.02, a: 0.05, part: 2 },
     ];
-    const mouth = lathe(mp, 192, () => -1);
+    // round 9 `m04mouth`: the painted ring plane (z0) carries the painted band, so the modeled opening sits nearly flush
+    // with it: a thick polished band (front face 0.15 u proud of the wall) with rounded lips, the inner lip curving
+    // into the tunnel; the painted texture is mapped through the projector (shader), the bulbs drawn on top
+    const mp2: { r: number; a: number; part: number }[] = [
+      { r: R0 - 0.03, a: 0.75, part: 1 }, { r: R0 - 0.07, a: 0.35, part: 1 }, { r: R0 - 0.07, a: 0.02, part: 1 },
+      { r: R0 - 0.04, a: -0.09, part: 1 }, { r: R0 + 0.02, a: -0.14, part: 1 }, { r: R0 + 0.08, a: -0.155, part: 3 },
+      { r: (R0 + R1) / 2, a: -0.165, part: 3 }, { r: R1 - 0.07, a: -0.155, part: 3 }, { r: R1 - 0.02, a: -0.13, part: 1 },
+      { r: R1 + 0.02, a: -0.07, part: 1 }, { r: R1 + 0.03, a: 0.0, part: 1 }, { r: R1 + 0.03, a: 0.03, part: 2 },
+    ];
+    const mouth = lathe(M04.mouth ? mp2 : mp, M04.mouth ? 384 : 192, () => -1);
     mouth.rotateX(-Math.PI / 2).translate(cx, cy, z0);
     const mm = new THREE.Mesh(mouth, gm); mm.name = 'm04_ring_mouth'; group.add(mm);
     // far glow instead of the flat end cap
@@ -446,6 +505,31 @@ export function addM04(ctx: M04Ctx) {
     const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
     ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
     console.info('[match04] m04ring', { period: P, rings: nP });
+    if (M04.mouth) {
+      const mt = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_mouth.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+      mt.colorSpace = THREE.NoColorSpace; mt.flipY = false; mt.wrapS = THREE.RepeatWrapping; mt.wrapT = THREE.ClampToEdgeWrapping;
+      mt.minFilter = THREE.LinearMipmapLinearFilter; mt.anisotropy = 8;
+      gm.uniforms.uMouthTex.value = mt; gm.uniforms.uMouthT.value = 1;
+      // the painted bulbs: from the fitted plane (psi, rho) along the projector ray onto the modeled front face
+      const Cp = shared.uProjPos.value as THREE.Vector3;
+      const faceA = -0.165 - 0.03;
+      void fetch(new URL('../../assets/textures/match04/mouth04.json', import.meta.url).href).then((r) => r.json()).then((mj: { bulbs: { psi: number; rho: number; lum: number; lip: string }[] }) => {
+        const items: { p: THREE.Vector3; r: number; s: number }[] = [];
+        const d0 = axO.clone().sub(Cp).dot(axD), dF = d0 + faceA;  // faceA < 0: toward the camera
+        const inv = Mw.clone().invert();
+        for (const b of mj.bulbs) {
+          const rq = b.rho - (gm.uniforms.uMouthRho.value as THREE.Vector3).z;  // tile rho -> fitted-plane rho
+          const Qw = axO.clone().addScaledVector(axU, rq * Math.cos(b.psi)).addScaledVector(axR, rq * Math.sin(b.psi));
+          const Pw = Cp.clone().add(Qw.sub(Cp).multiplyScalar(dF / d0));
+          const pl = Pw.applyMatrix4(inv);
+          if (pl.y < 0.15) continue;                                       // under the water line
+          const k = THREE.MathUtils.clamp((b.lum - 205) / 45, 0, 1);
+          items.push({ p: pl, r: M04.num('m04bulbr', 0.28) * (0.8 + 0.4 * k), s: 0.5 + 0.5 * k });
+        }
+        sprites(items, BULB_FRAG, 'm04_bulbs', 4, false, [0.5, 1.1]);
+        console.info('[match04] m04mouth bulbs', items.length);
+      }).catch(() => {});
+    }
   }
 
   // `m04river`: the wide painted river trough inside the tunnel (world-anchored, replaces the flat ramp there)
