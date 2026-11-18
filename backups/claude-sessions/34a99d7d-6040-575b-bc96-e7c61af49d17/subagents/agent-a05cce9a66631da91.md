@@ -1074,3 +1074,32 @@ Locked approved view: 0 px difference. I'll render the step-2 pictures from the 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r8/step2_m05ride && mkdir -p $D && timeout 900 node tools/match05/r8_shots.mjs $D \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1\" f03_forward3u,f10_forward10u,t33_through_screen,t66_through_screen 2>&1 | tail -4 && python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png $D/*.png | tee $D/metrics.txt && timeout 300 npx tsc --noEmit -p . && echo TSC_OK", "description": "Render step 2 pictures, metrics, type-check", "timeout": 1250000}`
 
+### 🧑 User — 2026-11-18T02:12:40.449Z
+
+> ↩︎ result: f03_forward3u s 136.202 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@463,789 d118 #21@553,693 d80 #22@476,631 d61
+> f10_forward10u s 143.074 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> t33_through_screen s 151.691 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+> f03_forward3u          LAYOUT20  27.5 %  PALETTE  88.4 %
+> f10_forward10u         LAYOUT20  17.9 %  PALETTE  84.8 %
+> t33_through_screen     LAYOUT20  17.5 %  PALETTE  85.1 %
+> t66_through_screen     LAYOUT20   9.6 %  PALETTE  80.2 %
+> TSC_OK
+
+### 🤖 Claude — 2026-11-18T02:12:52.653Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r8/PROGRESS.md <<'EOF'\n\n## Step 2 — `&m05ride=1` (the approved water design laid out from Benny while swimming)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1`\n* WHAT LOOKS BETTER: while Benny swims, the river around and ahead of him now shows the painted design of the\n  approved picture instead of the marbled swirl sheet: thick magenta streams hugging both banks and curving in an S,\n  the bright cyan middle lane where the coins run, the long white glossy streaks and star glints, the painte …[+2305 chars]`
+
+### 🧑 User — 2026-11-18T02:12:56.458Z
+
+> ↩︎ result: ac54ec2404b4185f47a2b96833fd31b8bf4291cf
+> ac54ec2404b4185f47a2b96833fd31b8bf4291cf	refs/heads/claude/rainbow-s05-match-c8
+
+### 🤖 Claude — 2026-11-18T02:13:01.546Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 step 2 water design progress", "message": "Screen 05 step 2 (SHA ac54ec2404b4185f47a2b96833fd31b8bf4291cf, pushed + verified): &m05ride=1 on base set + m05coin. WHAT LOOKS BETTER: while swimming, the river around/ahead of Benny now shows the approved painted design instead of the marbled swirl sheet: thick magenta streams hugging both banks in an S, bright cyan middle lane with the coins, long white glossy streaks and glints, painted splash ring + bubbles, foam piles, at painted size/sharpness (streaks still flow toward camera). Locked approved view 0 px. LAYOUT2 …[+608 chars]`
+
+### 🧑 User — 2026-11-18T02:13:01.561Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+

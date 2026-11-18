@@ -3485,3 +3485,104 @@ Stop hook feedback:
 
 The unpushed commit is now on GitHub. The lead branch `ccr-58dd182e-m48xwk` is at `f393616`, it matches GitHub, and nothing is left uncommitted. It was a five-minute autosave caught mid-push.
 
+### 🧑 User — 2026-11-18T02:12:59.007Z
+
+<task-notification>
+<task-id>bq47u4bl2</task-id>
+<summary>Monitor event: "new commits by Screen 04 / 05 specialists"</summary>
+<event>s05 new commit ac54ec24 Screen 05 r8 step 2: &amp;m05ride=1 — approved water design (S-banks, cyan lane, glossy streaks) around Benny while swimming; locked view 0 px</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T02:13:00.509Z
+
+Screen 05 pushed step 2 (the approved water design around Benny while swimming). Checking the pictures before showing you:
+
+### 🤖 Claude — 2026-11-18T02:13:02.117Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && echo \"remote=$(git ls-remote origin refs/heads/claude/rainbow-s05-match-c8 | cut -c1-8) head=$(git rev-parse --short=8 HEAD)\"; ls qa/match/05/r8/ ; ls qa/match/05/r8/step2* 2>/dev/null; tail -12 qa/match/05/r8/PROGRESS.md | cut -c1-400", "description": "Read the 05 step 2 progress entry and picture list"}`
+
+### 🧑 User — 2026-11-18T02:13:02.464Z
+
+> ↩︎ result: remote=ac54ec24 head=ac54ec24
+> PROGRESS.md
+> step1_m05coin
+> step2_m05ride
+> f03_forward3u.png
+> f10_forward10u.png
+> metrics.txt
+> shots.json
+> t33_through_screen.png
+> t66_through_screen.png
+> * Numbers (LAYOUT20 / PALETTE vs approved, BEFORE → NEW): f03 24.4/87.9 → 27.5/88.4 · f10 13.7/83.7 → 17.9/84.8 ·
+>   t33 15.4/84.1 → 17.5/85.1 · t66 9.0/81.4 → 9.6/80.2.
+> * Still wrong: a faint outline where the painted patch meets the plain near-water tile at its sides (soft, strongest at
+>   f03 / f10 left of Benny); some painted foam bubbles float mid-water on the left when the camera is wider than the
+>   approved one; the far river at t66 still shows the raised slab edge and the orange piece on the left bank; pale bank
+>   shelves; blurry near walls.
+> * BEFORE: `/home/user/wt/s05/qa/match/05/r7/NEW/f03_forward3u.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/f10_forward10u.png`,
+>   `/home/user/wt/s05/qa/match/05/r7/NEW/t33_through_screen.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/t66_through_screen.png`
+> * NEW: `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/f03_forward3u.png`, `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/f10_forward10u.png`,
+>   `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/t33_through_screen.png …[+359 chars]
+
+### 🤖 Claude — 2026-11-18T02:13:04.098Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r8/step2_m05ride/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T02:13:04.152Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:13:08.975Z
+
+> 🔧 **Bash** `{"command": "O=qa/review_r8/05_step2_water && mkdir -p $O && cp qa/review_r8/05_BEFORE/1_APPROVED_05.jpg $O/1_APPROVED_05.jpg && for n in f10_forward10u t33_through_screen; do convert /home/user/wt/s05/qa/match/05/r7/NEW/$n.png -quality 90 $O/2_BEFORE_$n.jpg; convert /home/user/wt/s05/qa/match/05/r8/step2_m05ride/$n.png -quality 90 $O/3_NEW_$n.jpg; done; ls $O", "description": "Prepare full-size 05 step 2 review pictures"}`
+
+### 🧑 User — 2026-11-18T02:13:09.300Z
+
+> ↩︎ result: 1_APPROVED_05.jpg
+> 2_BEFORE_f10_forward10u.jpg
+> 2_BEFORE_t33_through_screen.jpg
+> 3_NEW_f10_forward10u.jpg
+> 3_NEW_t33_through_screen.jpg
+
+### 🤖 Claude — 2026-11-18T02:13:13.671Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r8/05_step2_water/1_APPROVED_05.jpg", "/home/user/rainbow-/qa/review_r8/05_step2_water/2_BEFORE_f10_forward10u.jpg", "/home/user/rainbow-/qa/review_r8/05_step2_water/3_NEW_f10_forward10u.jpg", "/home/user/rainbow-/qa/review_r8/05_step2_water/2_BEFORE_t33_through_screen.jpg", "/home/user/rainbow-/qa/review_r8/05_step2_water/3_NEW_t33_through_screen.jpg"], "caption": "Screen 05 step 2 — APPROVED · BEFORE / NEW after 10 units · BEFORE / NEW one-third through. NEW = steps 1+2: your painted water design now stays around Benny while swimming (magenta S-strea …[+224 chars]`
+
+### 🧑 User — 2026-11-18T02:13:15.484Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_r8/05_step2_water/1_APPROVED_05.jpg → file_uuid: acffef7f-3908-409b-8a47-44dce2ce74f2
+>   /home/user/rainbow-/qa/review_r8/05_step2_water/2_BEFORE_f10_forward10u.jpg → file_uuid: fc070ddf-94a8-4b91-9ff8-27e6c90edbc6
+>   /home/user/rainbow-/qa/review_r8/05_step2_water/3_NEW_f10_forward10u.jpg → file_uuid: d793c7ad-efa0-4c4b-87c4-17f9f833e845
+>   /home/user/rainbow-/qa/review_r8/05_step2_water/2_BEFORE_t33_through_screen.jpg → file_uuid: 84eb1de6-5179-40ab-9cb2-98e1e5c217c1
+>   /home/user/rainbow-/qa/review_r8/05_step2_water/3_NEW_t33_through_screen.jpg → file_uuid: 71a06105-80dd-4359-9c73-104ab9bc4cae
+
+### 🤖 Claude — 2026-11-18T02:13:20.512Z
+
+Screen 05 step 2 is done and saved on GitHub at `ac54ec24`. I checked that GitHub matches before showing you the pictures above.
+
+**What looks better:** while Benny swims, the river around and ahead of him now shows your painted water design, not the marbled swirl surface. Thick magenta streams curve along both banks in an S, with a bright cyan middle lane carrying the coins. The long white glossy streaks, the splash ring around Benny, the bubbles and the foam piles are at your painted size and sharpness. Step 1 is kept too: the giant coin no longer covers Benny.
+
+The specialist tried another water version and rejected it because it looked blurrier.
+
+**Still wrong on 05:**
+- A faint outline where the painted water meets the plain water at the sides.
+- The far river two-thirds of the way through still has a raised slab edge and an orange piece on the left bank.
+- The bank shelves are pale.
+- The near walls are blurry.
+
+It's continuing on those now.
+
+My honest rating while swimming: about 6.5–7/10, up from about 6. It is not 8.5 yet.
+
+**Status**
+- **Working:** Screen 05 (the edges and seam next) and Screen 04 (gold washer opening with bulbs, laundry-room entrance). Screen 04 has not pushed a visible improvement yet.
+- **Ready next:** 07, then 08, then 06.
+- **Backup:** both branches are verified on GitHub.
+- **Paid credits:** none used. Nothing needs your action.
+
+### 🧑 User — 2026-11-18T02:13:22.268Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
