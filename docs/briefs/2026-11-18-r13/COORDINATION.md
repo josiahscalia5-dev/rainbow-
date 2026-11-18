@@ -38,3 +38,6 @@ If account 13 runs out: `-c14` branches from each NEWEST `-c13` tip (or `-c12` w
 | # | Screen / step | Verdict |
 |---|---|---|
 | 1 (~14:40) | 05 step 1 `m05slot` (account-12 wall-slot capsule edit; `c3fe9423`) | NOT AN IMPROVEMENT (far bays crisper, but near the wall the painted slot blobs stay as a ghost grid = doubled slots while steering) — reverted, patch kept in `qa/match/05/r13/step1_m05slot/` |
+| 2 (~14:55) | 05 step 2 `m05join` (`3b396a91`) | GOOD IMPROVEMENT (lead checked by eye: at t66 / k81 the pale slab and straight line across the far river are gone; pink bands + cyan core run unbroken) — `qa/review_r13/05_step2_join/` |
+| 3 (~14:55) | 08 step 1 `m08bore&m08flange` (`f7dc9625`) | GOOD IMPROVEMENT, small (lead checked: top-left gold ring now curves smoothly while swimming instead of a hard diagonal edge + slot band) — `qa/review_r13/08_step1_ring_edge/` |
+| 4 (~14:55) | 04 lead step 2 `m04arr3d` E4 (`5ecdbd1e`) | GOOD IMPROVEMENT (arrows only): white-cyan chevrons visible down the lane above Benny while swimming and steering (BEFORE none); still pale vs painted neon; tunnel still a dense orange ring corridor + ribbed water sides = next — `qa/review_r13/04_step2_arrows/` + 2.2 s real-gameplay clip |

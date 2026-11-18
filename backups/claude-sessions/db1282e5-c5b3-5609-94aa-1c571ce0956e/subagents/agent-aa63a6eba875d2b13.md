@@ -1454,3 +1454,85 @@ Now the near-bank cloud creation (m05cloud) and where it is clipped.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export const flag05\\|export function flag05\\|export const q05\\|function q05\" src/vfx/*.ts | head; K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && PRE_JS=\"(() => { const { scene } = window.__rainbow.qa3d(); const H = ['tube05_far_wall','tube05_far_river']; scene.traverse((o) => { i …[+237 chars]`
 
+### 🧑 User — 2026-11-18T14:47:20.310Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:161:export const flag05 = q05;
+> t75_through s 175.523 lat 0 coins 1460 benny 0.23 -0.28 big coins: #24@322,853 d171 #25@489,734 d106 #26@582,647 d64
+
+### 🤖 Claude — 2026-11-18T14:47:24.281Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && python3 -c \"\nfrom PIL import Image\nbox=(0,560,500,900)\na=Image.open('j1/k81_kink.png').convert('RGB').crop(box); b=Image.open('dbg_farhide/k81_kink.png').convert('RGB').crop(box)\nW,H=a.size; w=Image.new('RGB',(2*W+10,H),'white'); w.paste(a,(0,0)); w.paste(b,(W+10,0)); w.save('farhide_k81.png')\n\"", "description": "Compare k81 with far block hidden"}`
+
+### 🧑 User — 2026-11-18T14:47:24.532Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T14:47:25.515Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/farhide_k81.png"}`
+
+### 🧑 User — 2026-11-18T14:47:25.551Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:47:41.757Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/b13/t95_left.png"}`
+
+### 🧑 User — 2026-11-18T14:47:41.812Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:47:51.957Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && for v in tube05_far_river foam_berm; do PRE_JS=\"(() => { const { scene } = window.__rainbow.qa3d(); const H = '$v'.split(','); scene.traverse((o) => { if (H.includes(o.name)) o.visible = false; }); })()\" node tools/match05/r13_dbg_shots.mjs $S/db …[+459 chars]`
+
+### 🤖 Claude — 2026-11-18T14:47:53.058Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/diag_t95l.png"}`
+
+### 🧑 User — 2026-11-18T14:49:42.392Z
+
+> ↩︎ result: t95_left s 186.707 lat -3.838 coins 1420 benny -0.36 -0.37 big coins: #34@876,898 d64 #35@800,883 d63
+> t95_left s 186.707 lat -3.838 coins 1420 benny -0.36 -0.37 big coins: #34@876,898 d64 #35@800,883 d63
+
+### 🧑 User — 2026-11-18T14:49:42.458Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:50:13.465Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/materials.ts", "offset": 966, "limit": 14}`
+
+### 🧑 User — 2026-11-18T14:50:13.482Z
+
+> ↩︎ result: 966	  float xB = vRivA.x, hw = vRivA.y, cL = vRivA.z, cR = vRivA.w;
+> 967	  float wL = vRivB.x, wR = vRivB.y, core = vRivB.z, Zv = vRivB.w;
+> 968	  float s = vRivUv.y;                                    // virtual arc length (continues the real s)
+> 969	  float fl = fwidth(lat) + 1e-4;
+> 970	  float aaw = fl * 0.85 + 0.004;
+> 971	  float e = abs(lat - xB) - hw;                          // > 0 outside the water body
+> 972	  float bankN = (rivNoise(vec2(s * 0.9, sign(lat - xB) * 7.0 + lat * 1.3)) - 0.5) * 0.3;
+> 973	  // beyond the foam rim (inner bank of a far bend) the far wall shows down to the foam (ref 05); right behind
+> 974	  // the seam the surface covers the whole floor (the real ribbon's continuation lies under it)
+> 975	  float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));
+> 976	#ifndef FARW05
+> 977	  if (e > bankW + bankN * 2.0) discard;
+> 978	#endif
+> 979	#ifdef WATER05
+
+### 🤖 Claude — 2026-11-18T14:50:31.981Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\na=\"export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');\\n\"\nassert s.count(a)==1\ns=s.replace(a,a+\"\"\"/**\n * `&m05frim=1` (Screen 05 round 13, needs m05fcloud; src/world/materials.ts farRiverMaterial): the far river's banks behind\n * the seam. Beyond its water edge the far river drew a flat pale-lilac foam rim 1.3 … 9 u wide, out to the tube wall — the\n * flat wedge on the left far bank (t66 … t90) and, steering hard left at t95, a big pale floor behind the foam l …[+1878 chars]`
+
+### 🧑 User — 2026-11-18T14:50:34.246Z
+
+> ↩︎ result: src/world/materials.ts:7:import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, M05FRIM, M05JOIN, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
+> src/world/materials.ts:975:  float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));${M05FRIM ? `
+> src/world/materials.ts:1211:    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '') + (M05JOIN ? '-m05join' : '') + (M05FRIM ? '-m05frim' : '');
+> src/vfx/waterRibbon.ts:444:export const M05FRIM: boolean = M05FCLOUD && q05('m05frim');
+
+### 🤖 Claude — 2026-11-18T14:50:40.972Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && node tools/match05/r8_shots.mjs $S/r1 \"$K&m05frim=1\" t66_through_screen,t75_through,k81_kink,k81_kink_left,t85_through,t90_through,t95_left,t95_through_screen 5291 2>&1 | grep -c \"big coins\"; node tools/match05/r8_shots.mjs $S/j1 \"$K\" k81_kin …[+132 chars]`
+
