@@ -1455,3 +1455,16 @@ Now I'll write the mouth tile tool.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T03:11:59.509Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && mkdir -p qa/match/04/r9/lay_test && for f in f10_forward10u f20_forward20u t66_through_screen; do cp /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/lay3/$f.png qa/match/04/r9/lay_test/k3scale_$f.png; done; grep -n \"out.update\\|const updaters\\|uNear: { value\\|const away\\|a5b.z\\|uAxO: { value: axO }\" src/world/match04m4.ts", "description": "Save scale test frames, locate hooks"}`
+
+### 🧑 User — 2026-11-18T03:11:59.552Z
+
+> ↩︎ result: 479:  const away = { value: 0 };
+> 482:  const updaters: ((a: number) => void)[] = [];
+> 491:        uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+> 652:      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value: new THREE.Vector2(near[0], near[1]) } } });
+> 757:  out.update = (cam: THREE.Vector3) => {
+> 759:    a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+
