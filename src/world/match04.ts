@@ -437,7 +437,7 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
         if (MV2) {
           const fade = 1 - Math.max(mvU.uW0.value, mvU.uW1.value);
           for (const o of group.children) {
-            if (o.name !== 'm04_foam' && o.name !== 'm04_bubbles') continue;
+            if (o.name !== 'm04_foam' && o.name !== 'm04_foam_rim' && o.name !== 'm04_bubbles') continue;
             const u = ((o as THREE.Mesh).material as THREE.ShaderMaterial).uniforms.uAlpha;
             u.value *= fade; o.visible = u.value > 0.01;
           }
