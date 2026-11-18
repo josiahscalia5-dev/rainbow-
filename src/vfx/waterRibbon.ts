@@ -10,6 +10,7 @@
  * drain-away for the 11 outro.
  */
 import * as THREE from 'three';
+import { unfoldDelta05 } from './unfold05'; // Screen 05 round 10 (&m05fold=1 only)
 import type { Course, StageId } from '../world/course';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
@@ -345,6 +346,22 @@ export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
  * coins unchanged); never within 3 u ahead of Benny's locked position; off at the locked view and at the seam.
  */
 export const M05GEO: boolean = M05RIDE && q05('m05geo');
+/**
+ * `&m05fold=1` (Screen 05 round 10, needs m05ride; src/vfx/unfold05.ts, qa/match/05/r10/PROGRESS.md): the ribbon no
+ * longer folds over itself in the tight S just before Screen 06 (s ≈ 172–183, bend radius smaller than the river's half
+ * width): its vertices there are smoothed along the river toward the banks (horizontal only), engaged while riding.
+ */
+export const M05FOLD: boolean = M05RIDE && q05('m05fold');
+/**
+ * `&m05foam=1` (Screen 05 round 10, needs m05ride; src/vfx/foam.ts rim05, src/vfx/index.ts): FOAM BANKS WHILE SWIMMING.
+ * The approved picture has soft white foam clusters with bubbles along both river edges; under proj05 the game's own 05
+ * rim foam (fine-foam impostors along both banks, built for the approved 05 look) steps aside because the approved
+ * foam is baked into the water — but riding shows the baked foam only where the painted banks happen to lie, so most of
+ * the stage had bare edges. Under the switch the rim foam grows in after the first metres of riding (`m05foamK`, 0 at
+ * the locked checkpoint: the approved view is unchanged).
+ */
+export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+export const m05foamK = { value: 0 };
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
 export const m05blendTime: { u: THREE.IUniform | null } = { u: null };
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
@@ -412,8 +429,13 @@ varying vec2 vChan;
 #endif
 uniform float uTime;
 uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+#ifdef M05FOLD
+attribute vec3 aUnf;       // m05fold: horizontal displacement that removes the folds at the 05 -> 06 kink (unfold05.ts)
+#endif
+#if defined(M05GEO) || defined(M05FOLD)
+uniform vec4 uPjNear;      // m05geo / m05fold: the ride focus (as the fragment shader's ?projnear05 uniform)
+#endif
 #ifdef M05GEO
-uniform vec4 uPjNear;      // m05geo: the ride focus (as the fragment shader's ?projnear05 uniform)
 uniform sampler2D uGeoCh;  // m05geo: painted channel [uL, uR] per s (encoded (u + 1) / 2), tools/match05/channel05_bp.py
 uniform vec2 uGeoS;        // its s range
 #ifdef M05SEAM
@@ -442,6 +464,10 @@ void main() {
   float s = aUV.y;
   float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
   vec3 p = position + normal * h * (1.0 - aSkirt);
+  #ifdef M05FOLD
+  // m05fold (Screen 05 round 10, see M05FOLD): unfolded while riding only (0 at the locked checkpoint: picture unchanged)
+  p += aUnf * (uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0);
+  #endif
   #ifdef M05GEO
   {
     // m05geo (Screen 05 round 9, see M05GEO): beyond the PAINTED river edge the surface becomes a low foam shelf and
@@ -1847,6 +1873,15 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
   if (chan) geo.setAttribute('aChan', new THREE.BufferAttribute(chan, 2));
   geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
+  if (M05FOLD) {
+    // m05fold (Screen 05 round 10): per-vertex |lateral| / half width, rows of vertsPerRow (skirts count as the edge)
+    const latN = new Float32Array(n), rowS: number[] = [];
+    for (let i = 0; i < rows; i++) {
+      rowS.push(Math.min(s1, s0 + i * ds));
+      for (let c = 0; c < vertsPerRow; c++) latN[i * vertsPerRow + c] = Math.abs(uv[(i * vertsPerRow + c) * 2]);
+    }
+    geo.setAttribute('aUnf', new THREE.BufferAttribute(unfoldDelta05(course, pos, rowS, vertsPerRow, latN), 3));
+  }
   geo.setIndex(idx);
   geo.computeBoundingSphere();
 
@@ -1898,7 +1933,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD ? { M05FOLD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;

@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
+import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, m05foamK } from './waterRibbon';
 import { withClip05 } from './clip05';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
@@ -443,7 +443,10 @@ function makeBankBubbleMaterial() {
     uTime: { value: 0 },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
   });
-  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true });
+  // `&m05foam=1` (Screen 05 round 10, waterRibbon.ts M05FOAM): the lumps grow in with the ride (0 = no lump drawn)
+  const vs = M05FOAM ? BANK_BUB_VERT.replace('void main() {', 'uniform float uGrow05;\nvoid main() {').replace('float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);', 'float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz) * uGrow05;') : BANK_BUB_VERT;
+  if (M05FOAM) (uniforms as Record<string, THREE.IUniform>).uGrow05 = m05foamK;
+  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: vs, fragmentShader: BANK_BUB_FRAG, fog: true });
   return { mat, uniforms };
 }
 

@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
+import { createRibbon, PROJ05, flag05, proj05Pending, M05FOAM, m05foamK } from './waterRibbon';
 import { M05EDGE, withClip05 } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only)
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
@@ -103,7 +103,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
   // `?proj05=1`: the approved picture's own fluffy foam is baked into the river texture, so the three Screen-05-only foam
   // parts (rim puffs, flank sheet, flank puffs) step aside; `?projfoam05=1` keeps them. No other screen's foam changes.
-  if (PROJ05 && !flag05('projfoam05')) qaHide.push('foamRim05', 'foamFlank', 'foamRafts');
+  if (PROJ05 && !flag05('projfoam05')) qaHide.push(...(M05FOAM ? [] : ['foamRim05']), 'foamFlank', 'foamRafts');
   /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
   const qaNoRibbonWake = qaHide.includes('ribbonWake');
   let focus = 0;
@@ -203,6 +203,8 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
       const pjNear = ribbon.uniforms.uPjNear;
       if (pjNear) (pjNear.value as THREE.Vector4).z = focusS;
+      // `&m05foam=1` (Screen 05 round 10): the 05 rim foam grows in after 0.5–2 u of riding (0 at the locked checkpoint)
+      if (M05FOAM && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); }
       bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
       // crest spray off the final wave
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
