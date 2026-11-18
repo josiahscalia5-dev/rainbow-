@@ -1533,3 +1533,47 @@ No visible change, so the pale wedge is not the floor beyond the rim. I need to 
 > 1181	        c.mesh.visible = c.sb > focusS - 12 && c.sa < focusS + 130 && !(outro > 0.3 && c.sb > s08 + 8);
 > 1182	        if (c.mesh.visible) c.mesh.geometry = c.sb > focusS - 12 && c.sa < focusS + 30 ? …[+724 chars]
 
+### 🤖 Claude — 2026-11-18T13:08:08.936Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^import\" src/vfx/whirlpool.ts src/vfx/unfold05.ts src/vfx/clip05.ts src/vfx/glsl.ts | grep -v \"'three'\" ; grep -n \"^const rng\\|^function rng\\|rng = \" src/vfx/foam.ts | head -3; grep -n \"EDGE_LIFT =\" src/vfx/waterRibbon.ts", "description": "Check foam.ts dependency chain for cycles"}`
+
+### 🧑 User — 2026-11-18T13:08:08.985Z
+
+> ↩︎ result: src/vfx/whirlpool.ts:7:import { WORLD, funnelY } from '../world/course';
+> src/vfx/whirlpool.ts:8:import { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/unfold05.ts:14:import type { Course } from '../world/course';
+> src/vfx/clip05.ts:8:import { MATCH05, flag05 } from './waterRibbon';
+> 295:function rng(seed: number) {
+> 22:export const EDGE_LIFT = 0.28;
+
+### 🤖 Claude — 2026-11-18T13:08:10.414Z
+
+No cycles. Implementing the switch now.
+
+### 🤖 Claude — 2026-11-18T13:08:14.344Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05FEDGE: boolean = M05FMAG && q05('m05fedge');", "new_string": "export const M05FEDGE: boolean = M05FMAG && q05('m05fedge');\n/**\n * `&m05fcloud=1` (Screen 05 round 12, needs m05fmag + m05cloud; src/vfx/foam.ts createFarCloud05, src/world/match05far.ts):\n * the far river's banks behind the seam were a flat pale-lilac rim band (the \"wedge\" on the left bank, t66 … t95; huge\n * when steering left at t95) where the painting has puffy white foam clouds along the water's edge. Under the  …[+442 chars]`
+
+### 🧑 User — 2026-11-18T13:08:14.398Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:08:14.911Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/foam.ts", "offset": 290, "limit": 12}`
+
+### 🧑 User — 2026-11-18T13:08:14.936Z
+
+> ↩︎ result: 290	  gl_FragColor = vec4(col, 1.0);
+> 291	  ${FRAG_TAIL}
+> 292	}
+> 293	`;
+> 294	
+> 295	function rng(seed: number) {
+> 296	  let a = seed >>> 0;
+> 297	  return () => {
+> 298	    a = (a + 0x6d2b79f5) >>> 0;
+> 299	    let t = a;
+> 300	    t = Math.imul(t ^ (t >>> 15), t | 1);
+> 301	    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+
