@@ -1786,3 +1786,123 @@ Numbers are flat (±0.4 pt). Let me compare the joint region at full resolution 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:30:18.652Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && D=qa/match/05/r8/step4_m05seam && mkdir -p $D && cp $S/seam1/f20_forward20u.png $S/seam1/t33_through_screen.png $S/seam1/shots.json $D/ && python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png $D/*.png > $D/metrics.txt && cat >> qa/match/05/r8/PROGRESS.md <<'EOF'\n\n## Step 4 — `&m05seam=1` (near river → far river joint; small step)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1`\ …[+1804 chars]`
+
+### 🧑 User — 2026-11-18T02:30:25.398Z
+
+> ↩︎ result: c676a7c526604fdf7cab5212fb2408b3194d584b
+> c676a7c526604fdf7cab5212fb2408b3194d584b	refs/heads/claude/rainbow-s05-match-c8
+> 02:30
+
+### 🤖 Claude — 2026-11-18T02:30:29.774Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 step 4 seam joint small step", "message": "Screen 05 step 4 (SHA c676a7c526604fdf7cab5212fb2408b3194d584b, pushed + verified), small step: &m05seam=1 added (kept set now ...&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1). WHAT LOOKS BETTER (modest): mid-distance cyan coin lane no longer shows angular folded creases, and the pink banks run on into the far river instead of breaking at a step line (f20, t33); t66 about equal; numbers flat (look-only gain). Locked view 0 px. Still wrong: faint line where the far river starts (t66), some soft folds from the bake's  …[+366 chars]`
+
+### 🧑 User — 2026-11-18T02:30:29.790Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T02:30:43.791Z
+
+Next most visible flaw while swimming: the near tunnel walls get blurry/stretched later in the stage (t66 left wall and ceiling). Let me see how the real 05 wall picks its baked atlas rows per bay.
+
+### 🤖 Claude — 2026-11-18T02:30:44.737Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 405,445p src/world/environment.ts; grep -n \"export function withProj05Wall\" -A 40 src/vfx/proj05Tunnel.ts | head -80", "description": "Read real wall segment mapping and wall shader hook"}`
+
+### 🧑 User — 2026-11-18T02:30:44.804Z
+
+> ↩︎ result: withClip05Std(ringMat, 1.5);
+>   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+>   // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+>   // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
+>   // strip lights as marquee spots
+>   const goldEnv05 = washerTubeEnv('gold05');
+>   const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+>   // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
+>   // result underneath only feeds the depth buffer now
+>   // wave 8: the real (near) ring is thicker — ref ring #1 top spans y 188–230 (lip 8 px · groove 3 · body 17 ·
+>   // turned-away flank 7 · contour) where it06 drew 31 px; the far rings (path-camera block) keep band05, the
+>   // reference's deeper rings are thin (ring #2 top ≈12 px)
+>   const band05near = { height: 0.13, width: 0.8, lipHeight: 0.065, lipWidth: 0.32, groove: 0.1 };
+>   const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
+>     const m = withBandShading(withFarGlow(gold({ color: ' …[+5004 chars]
+
+### 🤖 Claude — 2026-11-18T02:31:06.985Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"far05Debug\" src -r | grep -v \"^src/world/environment.ts:12\\|Object.assign(far05\" | head -5; grep -n \"const bay05\\|const rings05\\|const sCam05\\|RING_A05_DEPTH =\\|const sF05\\|const sGlow05\\|ringSlots05\" src/world/environment.ts | head -12", "description": "Find bay and ring constants"}`
+
+### 🧑 User — 2026-11-18T02:31:07.040Z
+
+> ↩︎ result: src/world/far05.ts:23:export const far05Debug: Record<string, unknown> = {};
+> 262:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 263:  const bay05 = 14;
+> 264:  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+> 265:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> 269:  const ringSlots05: number[] = [];
+> 270:  for (let s = sF05; s >= s05 + 2; s -= bay05) ringSlots05.unshift(s);
+> 282:  const RING_A05_DEPTH = qaNum05('ringa', 20);
+> 294:  const rings05base = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+> 316:  const rings05 = E05 ? rings05base.map((s) => (Math.abs(s - sCam05 - 40) < 1 ? sCam05 + E05.dB : s)) : rings05base;
+> 376:    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+> 488:  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+
+### 🤖 Claude — 2026-11-18T02:31:17.814Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport json; m=json.load(open('assets/textures/env05/env05.json')); print({k:(v if len(str(v))<300 else str(v)[:300]) for k,v in m.items()})\nfrom PIL import Image\nim=Image.open('assets/textures/env05/wall05e.png'); print(im.size, im.mode)\n\"", "description": "Inspect wall atlas metadata"}`
+
+### 🧑 User — 2026-11-18T02:31:17.910Z
+
+> ↩︎ result: {'wall': {'w': 2048, 'h': 992, 'rows': {'AB': {'y0': 8, 'h': 256}, 'BC': {'y0': 272, 'h': 128}, 'CD': {'y0': 408, 'h': 64}, 'DE': {'y0': 480, 'h': 32}, 'EF': {'y0': 520, 'h': 16}, 'FG': {'y0': 544, 'h': 16}, 'GX': {'y0': 568, 'h': 16}, 'N1': {'y0': 592, 'h': 256}, 'N2': {'y0': 856, 'h': 128}}, 'gutter': 8}, 'ring': {'w': 2048, 'h': 384, 'rowH': 48, 'rows': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'N']}, 'note': 'env05 camera-projection bake (tools/env05/proj_bake.py); wall u = angle round the tube (+0.25), ring u = object angle, v = axial'}
+> (2048, 992) RGB
+
+### 🤖 Claude — 2026-11-18T02:31:21.061Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/env05/wall05e.png')\nim.resize((1024,496)).save('$S/wall_atlas.png')\"", "description": "Preview the wall atlas"}`
+
+### 🧑 User — 2026-11-18T02:31:21.318Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:31:23.425Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wall_atlas.png"}`
+
+### 🧑 User — 2026-11-18T02:31:23.457Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:31:29.225Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"dB:\\|dB =\\|farDv\" src/world/environment.ts | head -5; grep -rn \"dB:\" src/world/*.ts src/vfx/proj05Tunnel.ts | head -3; grep -n \"05_crest\" src/world/course.ts | head -3", "description": "Find ring B depth constant"}`
+
+### 🧑 User — 2026-11-18T02:31:29.266Z
+
+> ↩︎ result: 305:    dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)
+> 307:    farDv: [64.0, 104.7, 165.5, 235.2, 332.1],    // far rings C … G, virtual depths (was 59 / 97 / 161 / 222 / 322)
+> 443:    // E05.farDv[0] there, the BC rows t ≈ 0.64–0.74 were drawn on both walls (texel collisions on the seam circle)
+> 444:    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(E05 ? E05.farDv[0] : 59, sF05 - sCam05 - 0.75) });
+> 525:    // env05: far rings at the approved radii (virtual depths E05.farDv, placed by tunnel coordinate so the knots — and
+> src/world/environment.ts:305:    dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)
+> 142:/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
+> 482:    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+> 489:    this.marks['05_crest'] = best;
+
+### 🤖 Claude — 2026-11-18T02:32:13.780Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^import\\|^export const ENV05\\|^export const PROJWALL05\" src/vfx/proj05Tunnel.ts | head", "description": "Check proj05Tunnel imports and flags"}`
+
+### 🧑 User — 2026-11-18T02:32:13.812Z
+
+> ↩︎ result: 16:import * as THREE from 'three';
+> 17:import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+> 20:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 22:export const PROJWALL05: boolean = flag05('projwall05');
+> 35:export const ENV05: boolean = flag05('env05');
+
+### 🤖 Claude — 2026-11-18T02:32:15.419Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 16,40p src/vfx/proj05Tunnel.ts", "description": "Read proj05Tunnel flag definitions"}`
+
