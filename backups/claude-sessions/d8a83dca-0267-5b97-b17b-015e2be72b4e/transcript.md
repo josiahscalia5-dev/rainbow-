@@ -974,3 +974,180 @@ The approved-view frame (a00) differs between the BEFORE run and the new runs ev
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T00:31:43.420Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nfor f in ['tile_river_clean.png','tile_wall_clean.png']:\n  im=Image.open('assets/textures/match07/'+f); print(f, im.size)\na=Image.open('assets/textures/match07/tile_river_clean.png'); b=Image.open('assets/textures/match07/tile_wall_clean.png')\nc=Image.new('RGB',(a.width+b.width+20,max(a.height,b.height)),'white'); c.paste(a.convert('RGB'),(0,0)); c.paste(b.convert('RGB'),(a.width+20,0))\nc.thumbnail((1400,1400)); c.save('/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/tiles.png')\"", "description": "Inspect …[+31 chars]`
+
+### 🧑 User — 2026-11-18T00:31:43.705Z
+
+> ↩︎ result: tile_river_clean.png (512, 512)
+> tile_wall_clean.png (512, 1024)
+
+### 🤖 Claude — 2026-11-18T00:31:44.671Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/tiles.png"}`
+
+### 🧑 User — 2026-11-18T00:31:44.710Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:32:00.136Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nim=Image.open('assets/textures/match07/tile_wall_clean.png').convert('RGB')\nhsv=np.asarray(im.convert('HSV')).astype(float)/255\na=np.asarray(im).astype(float)\nH,W=a.shape[:2]\ngold=((hsv[...,0]>0.03)&(hsv[...,0]<0.14)&(hsv[...,1]>0.35)&(hsv[...,2]>0.6)).astype(float)\nang=np.exp(2j*np.pi*np.arange(W)/W)\nfor y in range(0,H,64):\n    z=(gold[y]*ang).sum(); c=(np.angle(z)/(2*np.pi)*W)%W\n    print(y, int(gold[y].sum()), round(c,1), round(abs(z)/max(gold[y].sum(),1),2))\nEOF", "description": "Measure gold band position  …[+26 chars]`
+
+### 🧑 User — 2026-11-18T00:32:00.311Z
+
+> ↩︎ result: 0 0 0.0 0.0
+> 64 0 0.0 0.0
+> 128 115 386.0 0.92
+> 192 64 400.6 0.84
+> 256 55 483.4 0.98
+> 320 45 501.1 0.88
+> 384 83 501.0 0.79
+> 448 27 27.8 0.86
+> 512 76 35.6 0.95
+> 576 20 67.4 0.94
+> 640 109 66.4 0.91
+> 704 144 81.1 0.87
+> 768 137 86.1 0.88
+> 832 124 90.4 0.89
+> 896 105 98.0 0.93
+> 960 88 52.8 0.86
+
+### 🤖 Claude — 2026-11-18T00:32:19.614Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match07/straighten_wall07.py <<'EOF'\n\"\"\"r7 M3 '?m07ring=1': straighten the painted gold rings of the ring-bay wall tile (tile_wall_clean.png).\nIn the unwrap the gold band drifts across the rows (u ~ 0.75 at the top rows to ~0.19 at the bottom: a slanted band),\nso repeated deep in the tube the rings render as twisted diagonal bands instead of round rings. Per row the circular\ncentroid of the gold pixels is measured, smoothed over the rows and each row is rolled (sub-pixel, wrap-around) so the\nband centre lands on u = 0 (= the fitted ring depth R2 the shader anch …[+2537 chars]`
+
+### 🧑 User — 2026-11-18T00:32:23.188Z
+
+> ↩︎ result: {"src": "assets/textures/match07/tile_wall_clean.png", "dst": "assets/textures/match07/tile_wall_ring.png", "shift_px_min_max": [-123.4755070259153, 98.08078937068659], "band_centre_after_px_every64rows": [-8.5, -20.4, 8.8, 8.1, -9.4, -0.5, -2.4, 12.0, -2.6, 1.1, 4.2, -2.1, 3.5, -19.5]}
+
+### 🤖 Claude — 2026-11-18T00:32:25.384Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/ring_tiles.png"}`
+
+### 🧑 User — 2026-11-18T00:32:25.421Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:32:28.622Z
+
+The straightened tile has vertical gold bands and straight slot columns, with only slight wobble at a few band edges. Wiring it in as `m07ring` for both the fitted tube and the plunge.
+
+### 🤖 Claude — 2026-11-18T00:32:35.385Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\na=\"\"\"load(fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\"load(fixRing ? 'tile_wall_ring.png' : fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),\"\"\")\na=\"\"\"  const fixNear = flag05('m07near');\"\"\"\ns=s.replace(a,\"\"\"  // M3: the clean wall tile with its painted gold rings straightened (tools/match07/straighten_wall07.py) — in the unwrap\n  // the ring band drifted ~43 % of a bay across the rows, so deep in th …[+1008 chars]`
+
+### 🧑 User — 2026-11-18T00:33:25.802Z
+
+> ↩︎ result: a00_approved_view      LAYOUT20  40.2 %  PALETTE  90.1 %
+> f03_forward3u          LAYOUT20   8.0 %  PALETTE  84.2 %
+> f06_forward6u          LAYOUT20   6.2 %  PALETTE  76.9 %
+> f10_forward10u         LAYOUT20   7.6 %  PALETTE  76.8 %
+> f20_forward20u         LAYOUT20   4.2 %  PALETTE  71.7 %
+> s_left_hard            LAYOUT20   4.1 %  PALETTE  76.5 %
+> s_left_steer           LAYOUT20   8.5 %  PALETTE  74.5 %
+> s_right_hard           LAYOUT20   4.2 %  PALETTE  70.5 %
+> s_right_steer          LAYOUT20   3.4 %  PALETTE  77.2 %
+> t33_through_screen     LAYOUT20   2.9 %  PALETTE  76.4 %
+> t66_through_screen     LAYOUT20   2.1 %  PALETTE  69.6 %
+> t95_through_screen     LAYOUT20   1.1 %  PALETTE  50.3 %
+
+### 🤖 Claude — 2026-11-18T00:33:28.002Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t5_sheet.png"}`
+
+### 🧑 User — 2026-11-18T00:33:28.666Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:33:36.035Z
+
+> 🔧 **Bash** `{"command": "ls tools/match07/; cat qa/match/07/m2r4/proofs_0px_r4.json | head -30; grep -n \"continuity\" package.json", "description": "Find proof tools and previous proof output"}`
+
+### 🧑 User — 2026-11-18T00:33:36.068Z
+
+> ↩︎ result: axis07.py
+> coinprobe07.mjs
+> fit_proxies07.py
+> lock_projector07.py
+> make_plate07.py
+> metrics07.py
+> motion07.mjs
+> probe07.mjs
+> probe_r7.mjs
+> river_coins07.py
+> river_iter07.py
+> solve_cam07.py
+> straighten_wall07.py
+> {
+>  "note": "round 4: pixels differing (any channel) [count, rows y0-y1, max level diff]; current tree vs start commit 72fb6129 (worktree captures); 05 vs protected baseline",
+>  "differing": {
+>   "default_06": [
+>    39918,
+>    [
+>     33,
+>     204
+>    ],
+>    243
+>   ],
+>   "default_07": [
+>    53061,
+>    [
+>     33,
+>     204
+>    ],
+>    242
+>   ],
+>   "default_08": [
+>    34999,
+>    [
+>     33,
+>     204
+>    ],
+>    242
+>   ],
+>   "match08_08": [
+>    35008,
+>    [
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+
+### 🤖 Claude — 2026-11-18T00:33:45.293Z
+
+> 🔧 **Bash** `{"command": "sed -n 625,650p src/game/Game.ts; grep -n \"goto(\" src/game/Game.ts | head -3", "description": "Check goto presets"}`
+
+### 🧑 User — 2026-11-18T00:33:45.327Z
+
+> ↩︎ result: requestAnimationFrame(frame);
+>   };
+>   requestAnimationFrame(frame);
+> 
+>   // ---------------------------------------------------------------- QA API
+>   const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+>     '11': { mode: 'outro', t: O.cp11 },
+>     '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+>     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
+>     '07c_plunge_bottom': { mode: 'ride', s: course.m …[+256 chars]
+
+### 🤖 Claude — 2026-11-18T00:33:59.328Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match07/proof0px_r7.mjs <<'EOF'\n// r7 (2026-11-18): checkpoint captures for 0-px proofs (default build and switch sets). Run from the checkout to test.\n// usage: node <path>/proof0px_r7.mjs <outDir> <port> [query]\nimport { mkdirSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [OUT, PORT = '5301', Q = ''] = process.argv.slice(2);\nmkdirSync(OUT, { recursive: true });\nconst IDS = ['06', '07', '07a_plunge_top', '07b_plu …[+1471 chars]`
+
+### 🧑 User — 2026-11-18T00:35:05.949Z
+
+> ↩︎ result: Updating files:   5% (109/2013)Updating files:   6% (121/2013)Updating files:   7% (141/2013)Updating files:   8% (162/2013)Updating files:   9% (182/2013)Updating files:  10% (202/2013)Updating files:  11% (222/2013)Updating files:  12% (242/2013)Updating files:  13% (262/2013)Updating files:  14% (282/2013)Updating files:  15% (302/2013)Updating files:  15% (311/2013)Updating files:  15% (314/2013)Updating files:  15% (315/2013)Updating files:  15% (317/2013)Updating files:  15% (319/2013)Updating files:  15% (321/2013)Updating files:  16% (323/2013)Updating files:  17% (343/2013)Updating files:  18% (363/2013)Updating files:  18% (366/2013)Updating files:  18% (371/2013)Updating files:  19% (383/2013)Updating files:  19% (385/2013)Updating files:  20% (403/2013)Updating files:  20% (415/2013)Updating files:  21% (423/2013)Updating files:  21% (430/2013)Updating files:  21% (433/2013)Updating files:  21% (434/2013)Updating files:  22% (443/2013)Updating files:  23% (463/2013)Updating files:  23% (472/2013)Updating files:  24% (484/2013)Updating files:  24% (500/2013)Updating files:  25% (504/2013)Updating files:  25% (519/2013)Updating files:  …[+3986 chars]
+
+### 🤖 Claude — 2026-11-18T00:35:13.186Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad && (timeout 900 node tools/match07/proof0px_r7.mjs $S/p_cur_def 5301 > $S/p1.log 2>&1 &) ; cd $S/wt && timeout 900 node /home/user/rainbow-/tools/match07/proof0px_r7.mjs $S/p_old_def 5302 > $S/p2.log 2>&1; sleep 5; cd /home/user/rainbow- && while pgrep -f \"p_cur_def\" >/dev/null; do sleep 5; done; python3 - <<EOF\nimport numpy as np, os, json\nfrom PIL import Image\nS='$S'; res={}\nfor f in sorted(os.listdir(S+'/p_cur_def')):\n    a=np.asarray(Image.open(S+'/p_cur_def/'+f).convert('RGB')).astype(i …[+485 chars]`
+

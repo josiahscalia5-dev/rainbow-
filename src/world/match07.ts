@@ -185,9 +185,12 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
   const fixGold = flag05('m07gold');
   const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
   const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)
+  // M3: the clean wall tile with its painted gold rings straightened (tools/match07/straighten_wall07.py) — in the unwrap
+  // the ring band drifted ~43 % of a bay across the rows, so deep in the tube the rings rendered as twisted diagonal bands
+  const fixRing = flag05('m07ring');
   const fixNear = flag05('m07near'); // M3: tighter stretch guard — magnified projected near water gives way to the river tile sooner
   const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-    load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
+    load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixRing ? 'tile_wall_ring.png' : fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
     load(fixRiver ? 'tile_river_clean.png' : 'tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
     // m07fill (round 4): feathered inside the filled area so the river tile fades in without a hard-edged patch
     load(fixFill ? 'plate07_fillmask_soft.png' : 'plate07_fillmask.png', THREE.ClampToEdgeWrapping),

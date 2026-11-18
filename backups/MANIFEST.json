@@ -502,6 +502,11 @@
    "sha256": "bf990817d2a787d8b77fc987122e43795c7bcac719db3409d89095f5cd532ddf"
   },
   {
+   "path": "assets/textures/match07/tile_wall_ring.png",
+   "bytes": 775813,
+   "sha256": "0e6f9ac0be877962dec66fd929f56371441d78716a6f7fc0d01c86f49054ede5"
+  },
+  {
    "path": "assets/textures/match07/tiles07.json",
    "bytes": 290,
    "sha256": "c2b5cf97c4e5f544745ce530c34a30f3d41fb994f13298f981bf9bad6c91204c"
@@ -679,7 +684,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11946,
-   "sha256": "b787eb50ccb6df46f0ab20eb6a82e7de21e800b5ddec0d0f4792eec9fce2ba7d"
+   "sha256": "92294074366a512bfc9769a98a1d14320d0deb71f7f9c2c8dc7fe06bffa8b210"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2145,6 +2150,11 @@
    "path": "qa/match/07/r7/probe_before.json",
    "bytes": 6666,
    "sha256": "401b1a5cc7febc54284f86db7d526d454e98cd0e00a22a60d5a7e422ea009e98"
+  },
+  {
+   "path": "qa/match/07/r7/straighten_wall07.json",
+   "bytes": 331,
+   "sha256": "c8fb39862aeb0ec509126846a59de8266c00708a0b7acc4cab0a7be1fbbdc5da"
   },
   {
    "path": "qa/match/07/rings/approved.json",
@@ -8878,8 +8888,8 @@
   },
   {
    "path": "src/world/match07.ts",
-   "bytes": 20599,
-   "sha256": "6eed6df0548cedf9b190a73abc1c822fb219a218507c0e9ad0a65583e745b84a"
+   "bytes": 20918,
+   "sha256": "1cdb192894666aa4e6528835f6241e9fc1ecf26a7d0fcea443567578e0faed93"
   },
   {
    "path": "src/world/match08.ts",
@@ -9087,6 +9097,11 @@
    "sha256": "371b9fcce6e7fa1a6bdcc10e8009c2440d30146bbf39d0d52d493a1ca16d1239"
   },
   {
+   "path": "tools/match07/proof0px_r7.mjs",
+   "bytes": 1411,
+   "sha256": "9aadcd522063f49569935cf0aa0d4ff875e90fa6cd2b7e31971c061d58ff711a"
+  },
+  {
    "path": "tools/match07/river_coins07.py",
    "bytes": 3344,
    "sha256": "0792d60dac6ccba01b1a091883e981363db153a649b945253e8dc1c50f970d73"
@@ -9100,6 +9115,11 @@
    "path": "tools/match07/solve_cam07.py",
    "bytes": 2904,
    "sha256": "017ba1a762de75fb4b69da5d3a2963ab4ba532d274b89f6123d38ea27b772b73"
+  },
+  {
+   "path": "tools/match07/straighten_wall07.py",
+   "bytes": 2511,
+   "sha256": "378ba08e8e3921eb1b23bad7047868bcbda9bc086e5f4db83affddb862e8621c"
   },
   {
    "path": "tools/match08/bennytree.mjs",
