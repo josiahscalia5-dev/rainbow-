@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 49d3e44..33080a0 100644
+index 49d3e44..f8247b5 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -101,6 +101,9 @@ uniform sampler2D uMouthTex;
@@ -37,3 +37,26 @@ index 49d3e44..33080a0 100644
    }
    col = clamp(col, 0.0, 1.0);
    // the approved view shows the approved pixels (the projector IS this camera there)
+@@ -574,10 +595,22 @@ export function addM04(ctx: M04Ctx) {
+       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
+       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
++        uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector3(M04.num('m04rpsl', 0.797), 0, M04.num('m04rpsh', 0.15)) },
+         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+     });
+     const gw = M04.num('m04ringgw', 1);
+     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
++    // r15 `m04rpaint=k`: the user's painted inner ring (straightened from the approved picture) on every inner ring band
++    const rpaint = M04.num('m04rpaint', 0);
++    if (rpaint > 0) {
++      const rt = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring_paint.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
++      rt.colorSpace = THREE.NoColorSpace; rt.flipY = false; rt.wrapS = THREE.RepeatWrapping; rt.wrapT = THREE.RepeatWrapping;
++      rt.minFilter = THREE.LinearMipmapLinearFilter; rt.anisotropy = 8;
++      gm.uniforms.uRTex.value = rt; gm.uniforms.uRPaint.value = rpaint;
++      // painted lip line onto the modeled lip apex (profile below: r - 0.28 gw at a + P - 0.27 gw), overridable
++      (gm.uniforms.uRLip.value as THREE.Vector3).y = M04.num('m04rplu', P - 0.27 * gw);
++      console.info('[match04] m04rpaint', { k: rpaint, lipS: (gm.uniforms.uRLip.value as THREE.Vector3).x, lipU: (gm.uniforms.uRLip.value as THREE.Vector3).y });
++    }
+     // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
+     // painted bands), a rounded lip bead (hot spots), a step back out (the thin dark groove); a = distance down the tunnel
+     const prof: { r: number; a: number; part: number }[] = [];
