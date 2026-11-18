@@ -635,6 +635,7 @@ export function buildEnvironment(course: Course): Environment {
       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
       zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
       riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
+      course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
     }) : null;
     const sync = (cam: THREE.Camera) => {
       const o = ft.openFor(camPos.setFromMatrixPosition(cam.matrixWorld));

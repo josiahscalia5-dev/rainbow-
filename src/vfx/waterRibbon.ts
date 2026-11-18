@@ -290,6 +290,26 @@ export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
  */
 export const M05SEAM: boolean = M05RIDE && q05('m05seam');
 export const m05seam = { value: new THREE.Vector2(0, 0) };
+/**
+ * `&m05blend=1` (Screen 05 round 9, branch claude/rainbow-s05-match-c9, qa/match/05/r9/PROGRESS.md; needs m05seam): the
+ * near river (real ribbon) and the far tunnel's river met at the sliding seam with a hard straight line — the near design
+ * ended there and the far river's own baked approved water (proj05_F.png) began, a different picture of the water. Over
+ * a band before the seam the ribbon now cross-fades into exactly what the far river shows (the same F texture, the same
+ * virtual depth / lateral mapping and post-chain inverse), so the two surfaces show the same water where they meet: the
+ * line dissolves into a soft transition. Uniforms written every frame by src/world/match05far.ts (c0 / axis T / right Rt
+ * of the far tunnel, seam depth zs, band length, half chord, live); locked view + the 06 fold: live = 0, nothing changes.
+ */
+export const M05BLEND: boolean = M05SEAM && q05('m05blend');
+export const m05blend = {
+  uPjF: { value: null as THREE.Texture | null },
+  uPjFZ: { value: 400 },
+  uFbC0: { value: new THREE.Vector3() },
+  uFbT: { value: new THREE.Vector3(0, 0, 1) },
+  uFbRt: { value: new THREE.Vector3(1, 0, 0) },
+  uFbP: { value: new THREE.Vector4(0, 0, 6.5, 0) },
+};
+/** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
+export const m05blendTime: { u: THREE.IUniform | null } = { u: null };
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -512,6 +532,10 @@ float pjT2W(float mE) {
 uniform vec4 uPjVP;
 #ifdef M05SEAM
 uniform vec2 uPjSeam;      // m05seam: (world s of the far tunnel seam, live)
+#endif
+#ifdef M05BLEND
+// m05blend: the far river's baked layer F + the far tunnel frame (origin c0, axis T, right Rt) and (seam depth, band, half chord, live)
+uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
 #endif
 #ifdef M05WD
 uniform vec4 uPjWD;        // m05wd: x = on, y = share of the detail layer kept on the design, z = row smoothing (E rows)
@@ -1541,6 +1565,23 @@ void main() {
   #ifdef PROJ05
   {
     float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+    #ifdef M05BLEND
+    // m05blend: over the band before the far tunnel's seam the ribbon fades into the far river's own picture F (see
+    // M05BLEND): same texture, same mapping (real depth = virtual depth before the seam), same post-chain inverse
+    float fbK = 0.0;
+    vec4 fbC = vec4(0.0);
+    if (uFbP.w > 0.5 && uFbP.y > 0.01) {
+      vec3 fbD = vPosW - uFbC0;
+      float fbZ = dot(fbD, uFbT);
+      float fbW = smoothstep(uFbP.x - uFbP.y, uFbP.x, fbZ);
+      if (fbW > 0.0) {
+        vec2 fbUV = vec2((dot(fbD, uFbRt) + uFbP.z) / (2.0 * uFbP.z), log(1.0 + max(fbZ, 0.0)) / log(1.0 + uPjFZ));
+        fbC = texture2D(uPjF, clamp(fbUV, 0.0, 1.0));
+        fbK = fbW * fbC.a * step(0.0, fbUV.x) * step(fbUV.x, 1.0);
+      }
+    }
+    pjK = max(pjK, fbK);
+    #endif
     float s05r = s;
     float rideK05 = 0.0;
     #ifdef M05RIDE
@@ -1619,6 +1660,10 @@ void main() {
         t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * dW0, 0.0, 1.0);
         tgt = mix(t0, tgt, uPjFlow2.w);
       }
+      #ifdef M05BLEND
+      tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)
+      wEx = mix(wEx, 1.0, fbK);
+      #endif
       if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
       vec3 lin = pjInverse(tgt);
       #ifdef USE_FOG
@@ -1776,7 +1821,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -1801,6 +1846,8 @@ export function proj05Far() {
     uPjF: { value: null }, uPjFZ: { value: 400 },
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
   };
+  // m05blend (Screen 05 round 9): the near ribbon reads the SAME F texture / depth range (shared uniform objects)
+  if (M05BLEND) { u.uPjF = m05blend.uPjF; u.uPjFZ = m05blend.uPjFZ; }
   proj05Pending.push(new Promise<void>((res) => {
     const tex = new THREE.TextureLoader().load(TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_F.png', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
       t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
@@ -1875,6 +1922,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // m05wd (Screen 05 round 8): design layer while riding — on, detail share on the design, row smoothing step (E rows)
   u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
   u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
+  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   const loader = new THREE.TextureLoader();

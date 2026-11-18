@@ -21,7 +21,8 @@ import * as THREE from 'three';
 import type { ForcedTunnel, TubeWarp } from './tube';
 import { tubeCenterAt } from './tube';
 import type { FarRiverLayout, FarRiverRow } from './far05';
-import { EDGE_LIFT, MATCH05, flag05, m05seam } from '../vfx/waterRibbon';
+import type { Course, CourseSample } from './course';
+import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05seam } from '../vfx/waterRibbon';
 import { clip05 } from '../vfx/clip05';
 
 export const M05FAR: boolean = MATCH05 && flag05('m05far');
@@ -52,6 +53,8 @@ export interface LiveFar05Args {
   foldNear: number; foldFar: number;
   /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */
   riverUp: (z: number) => number;
+  /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */
+  course?: Course;
 }
 
 const ROW_KEYS: (keyof FarRiverRow)[] = ['xB', 'hw', 'cL', 'wL', 'cR', 'wR', 'core'];
@@ -112,6 +115,28 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
 
   const d = new THREE.Vector3(), o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
   const wv = new THREE.Vector2();
+  // `&m05blend=1` (round 9): the far river's first rows are laid onto the near ribbon's surface (course frame + trough +
+  // the ribbon's own vertex wave) so the two surfaces meet without a step at the seam (measured at t66 before: the far
+  // row stood 0.36 u above the ribbon on the left and 0.31 u below it on the right — the course banks there, the far
+  // river is level in the tunnel frame)
+  const HB = 3;
+  const cs: CourseSample = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+  const tq = new THREE.Vector3();
+  const onRibbon = (P: THREE.Vector3, sGuess: number, w: number) => {
+    const course = a.course!;
+    let sR = sGuess;
+    for (let it = 0; it < 3; it++) { course.sample(sR, cs); sR += tq.copy(P).sub(cs.pos).dot(cs.tan); }
+    course.sample(sR, cs);
+    const hwR = course.widthAt(sR) / 2;
+    const lat = tq.copy(P).sub(cs.pos).dot(cs.right);
+    const uu = Math.min(1, Math.abs(lat) / hwR);
+    const t = (m05blendTime.u?.value as number | undefined) ?? 0, uS = Math.max(-1, Math.min(1, lat / hwR));
+    const hR = EDGE_LIFT * uu * uu * uu + ampAt(course, sR) * (0.6 * Math.sin(sR * 0.9 - t * 2.4 + uS * 1.7) + 0.4 * Math.sin(sR * 0.41 + t * 1.5 - uS * 2.3));
+    tq.copy(cs.pos).addScaledVector(cs.right, lat).addScaledVector(cs.up, hR).sub(P);
+    // outside the ribbon (its skirt drops away) the far bank keeps its own height
+    const wl = w * (1 - THREE.MathUtils.smoothstep(Math.abs(lat), hwR, hwR + 0.8));
+    P.addScaledVector(U, tq.dot(U) * wl);
+  };
   const rowZ = (i: number, steps: number, zFrom: number) => {
     // uniform in projected radius (1/D), as ForcedTunnel.geometry
     const t = i / steps, Da = D0 + zFrom;
@@ -173,6 +198,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
         }
         o.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + h + lift);
         point(Z, o, p);
+        if (M05BLEND && a.course && zs > 0 && Z < zs + HB) onRibbon(p, sReal, 1 - THREE.MathUtils.smoothstep(Z, zs, zs + HB));
         const k = i * per + j;
         p.toArray(pos, k * 3);
         uv[k * 2] = (x + ch) / (2 * ch); uv[k * 2 + 1] = vv;
@@ -240,6 +266,14 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
     else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
     // `&m05seam=1` (Screen 05 round 8): the seam's course position for the near river's design hand-over (waterRibbon.ts)
     m05seam.value.set(sF + zs, atLock || open > 0.5 ? 0 : 1);
+    if (M05BLEND) {
+      // `&m05blend=1` (Screen 05 round 9): the near ribbon fades into the far river's picture over a band before the
+      // seam (waterRibbon.ts M05BLEND). Band ≈ a quarter of the eye → seam distance (2.5–8 u), never before sF (F has no
+      // rows there); off at the locked eye and while folding
+      m05blend.uFbC0.value.copy(c0); m05blend.uFbT.value.copy(T); m05blend.uFbRt.value.copy(Rt);
+      const band = Math.min(zs, THREE.MathUtils.clamp(0.25 * (D0 + zs), 2.5, 8));
+      m05blend.uFbP.value.set(zs, band, a.lay.chord, atLock || open > 0.5 ? 0 : 1);
+    }
     a.farWall.morphTargetInfluences![0] = open;
     a.farRiver.morphTargetInfluences![0] = open;
     a.glowMat.uniforms.uOpacity.value = 1 - open;
