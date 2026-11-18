@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 5dec8df..01a2950 100644
+index 5dec8df..02fa225 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -284,6 +284,7 @@ uniform vec2 uPjRes;
@@ -58,3 +58,15 @@ index 5dec8df..01a2950 100644
          uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
          uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
          uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
+@@ -789,7 +794,10 @@ export function addM04(ctx: M04Ctx) {
+     const glowC = neon ? new THREE.Color(0.22, 0.86, 1.0) : new THREE.Color(0.10, 0.62, 1.0);
+     for (let a = first; a < len - 6; a += sp) {
+       const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+-      const glow = new THREE.MeshBasicMaterial({ color: glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
++      // r13 `&m04a3hb=1`: a deep-blue halo with NORMAL blending (the painted arrows pop as white bars in a blue glow; an
++      // additive halo only whitened the bright cyan water round them)
++      const hb = M04.num('m04a3hb', 0) > 0;
++      const glow = new THREE.MeshBasicMaterial({ color: hb ? new THREE.Color(0.02, 0.50, 1.0) : glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: hb ? THREE.NormalBlending : THREE.AdditiveBlending });
+       const m = new THREE.Mesh(base, core), g = new THREE.Mesh(halo, glow);
+       m.position.set(cx, 0, z0 - a); g.position.set(cx, 0, z0 - a - 0.002);
+       m.renderOrder = 5; g.renderOrder = 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';

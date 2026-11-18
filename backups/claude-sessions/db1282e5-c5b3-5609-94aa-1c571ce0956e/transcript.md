@@ -3574,3 +3574,113 @@ I'll add a setting that lengthens only the side water (`m04rse`, starting at `m0
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/water2.jpg"}`
 
+### 🧑 User — 2026-11-18T15:02:59.218Z
+
+> ↩︎ result: ok
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:02:59.236Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:03:07.956Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd /home/user/wt/s04/qa/match/04/r13 && convert /home/user/rainbow-/references/04_through_the_five_arrows.png -crop 864x700+0+800 +repage -resize 300x $S/x0.png; convert s3_ring/R4/f20_forward20u.png -crop 864x760+0+700 +repage -resize 300x $S/x1.png; convert s4_water/W1/f20_forward20u.png -crop 864x760+0+700 +repage -resize 300x $S/x2.png; convert s4_water/W1/s_right_hard.png -crop 864x760+0+700 +repage -resize 300x $S/x3.png; convert $S/x0.png $S/x1.png $S/x2.png $S/x3.png +append $S/water3.jpg" …[+57 chars]`
+
+### 🧑 User — 2026-11-18T15:03:08.287Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:03:09.207Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/water3.jpg"}`
+
+### 🧑 User — 2026-11-18T15:03:09.228Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:03:21.486Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && R4=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/R4.q); timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s4_water/W3 \"$R4&m04pink=1&m04pkl=1.8&m04pkw=0.75\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd qa/match/04/r13 && convert s4_water/W3/f20_forward20u.png -crop 864x760+0+700 +repage -resize 300x $S/x4.png; convert s4_water/W3/s_right_hard.png -crop 864x760+0+700 +repage -resize 300x $S/x5.png; convert $S/x0 …[+126 chars]`
+
+### 🤖 Claude — 2026-11-18T15:03:22.708Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/water4.jpg"}`
+
+### 🧑 User — 2026-11-18T15:04:49.492Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:04:49.508Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:04:59.798Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r13 && montage s2_arr/E4/a00_approved_view.png s4_water/W3/a00_approved_view.png s2_arr/E4/t95_through_screen.png s4_water/W3/t95_through_screen.png s2_arr/E4/s_left_hard.png s4_water/W3/s_left_hard.png s2_arr/E4/f06_forward6u.png s4_water/W3/f06_forward6u.png -tile 8x1 -geometry 200x356+2+2 /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W3all.jpg", "description": "Compare W3 with E4 at other positions"}`
+
+### 🧑 User — 2026-11-18T15:05:00.524Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:05:01.007Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W3all.jpg"}`
+
+### 🧑 User — 2026-11-18T15:05:01.037Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:05:09.593Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r13 && convert s4_water/W3/s_left_hard.png -crop 600x520+150+600 +repage -resize 420x /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/lh.png; convert s4_water/W3/s_right_hard.png -crop 600x520+150+600 +repage -resize 420x /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/rh.png; convert /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/lh.png /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/rh.png +append /tmp/claude-0/ …[+132 chars]`
+
+### 🧑 User — 2026-11-18T15:05:09.988Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:05:10.798Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/lrh.jpg"}`
+
+### 🧑 User — 2026-11-18T15:05:10.821Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:05:30.116Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nold=\"\"\"      const glow = new THREE.MeshBasicMaterial({ color: glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });\"\"\"\nnew=\"\"\"      // r13 `&m04a3hb=1`: a deep-blue halo with NORMAL blending (the painted arrows pop as white bars in a blue glow; an\n      // additive halo only whitened the bright cyan water round them)\n      const hb = M04.num('m04a3hb', 0) > 0;\n      const glow = new THREE.MeshBasicMaterial({ c …[+1289 chars]`
+
+### 🤖 Claude — 2026-11-18T15:05:31.418Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/w4.jpg"}`
+
+### 🧑 User — 2026-11-18T15:07:28.299Z
+
+> ↩︎ result: ok
+> m04a3o=1.0
+> m04a3b0=2.6
+> m04a3o=0.55
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04/src/world/match04m4.ts. Call Read before editing.]
+
+### 🧑 User — 2026-11-18T15:07:28.315Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:07:34.779Z
+
+The blue halo came out as solid flat blue shapes, not a glow. The query also held two glow values and the stronger one won. I'll fix that and use a smaller, see-through halo (W5).
+
+### 🤖 Claude — 2026-11-18T15:07:41.925Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && W5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W4.q | sed 's/&m04a3o=0.55//; s/m04a3o=1.0/m04a3o=0.38/; s/m04a3g=3/m04a3g=1.6/'); echo \"$W5\" | grep -o \"m04a3o=[0-9.]*\\|m04a3g=[0-9.]*\\|m04a3hb=1\"; echo \"$W5\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W5.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s4_water/W5 \"$W5\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpa …[+473 chars]`
+
+### 🤖 Claude — 2026-11-18T15:07:43.226Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/w5.jpg"}`
+
