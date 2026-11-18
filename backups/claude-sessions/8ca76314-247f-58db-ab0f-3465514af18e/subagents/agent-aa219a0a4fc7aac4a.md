@@ -1680,3 +1680,81 @@ That base-row index line is needlessly complex (its factor is exactly 1) and wou
 > zone 2 glints placed 51 / 51
 > wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq11/nq08.png (1236, 1336, 3)
 
+### 🤖 Claude — 2026-11-18T17:20:47.500Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq11/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:20:47.557Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:20:59.851Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\na=\"\"\"    if area < 60 or y <= 2 or y + h >= SH - 2: continue          # tiny, or cut by the band's near / far end\n    pad = 6; x0s, y0s, x1s, y1s = max(0, x - pad), max(0, y - pad), min(SW, x + w + pad), min(SH, y + h + pad)\n    own = cv2.dilate((lab[y0s:y1s, x0s:x1s] == k).astype(np.uint8), np.ones((9, 9), np.uint8)) > 0\n    cy = int\"\"\"\nb=\"\"\"    if area < 60 or y <= 2 or y + h >= SH - 2: continue          # tiny, or cut by the band's near / far end\n    if (bub_near & (lab == k)). …[+893 chars]`
+
+### 🧑 User — 2026-11-18T17:21:05.976Z
+
+> ↩︎ result: glints 15 sprites; base / glint split at min(RGB) > 200
+> zone 1 glints placed 40 / 40
+> zone 2 glints placed 51 / 51
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq12/nq08.png (1236, 1336, 3)
+
+### 🤖 Claude — 2026-11-18T17:21:10.290Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq12/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:21:10.344Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:21:28.648Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('$S/nq12/nq08_source_band.png'); print(im.size); im.resize((im.size[0]*2,im.size[1]*2)).save('$S/band2x.png')\na=Image.open('references/08_final_spin_chamber.png').convert('RGB').crop((0,1200,864,1536)); a.save('$S/ref_bottom.png')\n\"", "description": "Enlarge filled source band and approved bottom"}`
+
+### 🧑 User — 2026-11-18T17:21:29.201Z
+
+> ↩︎ result: (737, 294)
+
+### 🤖 Claude — 2026-11-18T17:21:32.659Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/band2x.png"}`
+
+### 🧑 User — 2026-11-18T17:21:32.697Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:21:33.231Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/ref_bottom.png"}`
+
+### 🧑 User — 2026-11-18T17:21:33.248Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:21:47.040Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\na=\"\"\"    if (bub_near & (lab == k)).any(): continue                    # next to a painted bubble (its rim would be copied)\"\"\"\nb=\"\"\"    if (bub_near & (lab == k)).any(): continue                    # next to a painted bubble (its rim would be copied)\n    if -A + 2 * A * x / (SW - 1) < -0.80 or -A + 2 * A * (x + w) / (SW - 1) > 0.70: continue   # foam blobs of the banks\"\"\"\nassert a in s\ns=s.replace(a,b)\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f …[+222 chars]`
+
+### 🧑 User — 2026-11-18T17:21:53.867Z
+
+> ↩︎ result: glints 7 sprites; base / glint split at min(RGB) > 200
+> zone 1 glints placed 40 / 40
+> zone 2 glints placed 43 / 43
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq13/nq08.png (1236, 1336, 3)
+
+### 🤖 Claude — 2026-11-18T17:21:56.651Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq13/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:21:56.769Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:22:03.636Z
+
+Clean now: whole painted lightning glints on the cyan, no foam pieces. The magenta keeps its own painted highlight lines in the satin. Rendering the full audit set in the game with this tile.
+
+### 🤖 Claude — 2026-11-18T17:22:09.051Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq13 && cp $S/nq08.png assets/textures/match08/nq08.png && cp $S/nq08.json assets/textures/match08/nq08.json && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && rm -rf qa/match/08/r14/step1_m08nq/NEW_v6b && node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/NEW_v6b \"$K13&m08nq=1\" 2>&1 | grep -c \"^08\" && python3 -I -c \"\nfrom PIL import Image\nS='$S/..'\na=Image.open('references/08_final_spin_cha …[+605 chars]`
+
