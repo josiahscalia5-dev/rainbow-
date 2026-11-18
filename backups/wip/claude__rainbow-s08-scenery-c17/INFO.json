@@ -1,12 +1,9 @@
 {
  "worktree": "/home/user/wt/s08",
  "branch": "claude/rainbow-s08-scenery-c17",
- "head": "6da32d5777b65d2fd55673c30ead2565de4bbfa6",
- "time": "2026-11-18T20:47:07+00:00",
- "dirty_tracked": [
-  "src/world/match08.ts",
-  "tools/match08/shots08.mjs"
- ],
+ "head": "deca8ec6fb76e89234eeb1d5d4b122052989f8f3",
+ "time": "2026-11-18T20:48:39+00:00",
+ "dirty_tracked": [],
  "untracked_copied": [
   "qa/match/08/r16/step2_m08vh/new_raw/f20_forward20u.png",
   "qa/match/08/r16/step2_m08vh/new_raw/motion.json"

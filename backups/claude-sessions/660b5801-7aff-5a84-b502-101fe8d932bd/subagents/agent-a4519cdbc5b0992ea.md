@@ -328,3 +328,351 @@ I'll start by reading the resume brief and launch brief.
 > 4
 >  20:46:53 up 33 min,  0 user,  load average: 3.54, 0.97, 0.44
 
+### 🤖 Claude — 2026-11-18T20:47:07.394Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s08/qa/match/08/r17 && cat > /home/user/wt/s08/qa/match/08/r17/PROGRESS.md <<'EOF'\n# Screen 08 · Final Spin Chamber — round 17 progress (branch `claude/rainbow-s08-scenery-c17`)\n\nAuthority: `references/08_final_spin_chamber.png`. Brief: `docs/briefs/2026-11-18-r15/S08_LAUNCH.md` (read `-c15` as `-c17`, log\nfolder `r17`) + `docs/briefs/2026-11-18-r17/RESUME_R17.md` section s08 + binding user order\n`docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md` (VISUALS ONLY). History: `qa/match/08/r16/PROGRESS.md`, `r15/PROGRESS.md`.\nStart = `6da32d57` (r16 tip)  …[+1537 chars]`
+
+### 🧑 User — 2026-11-18T20:47:11.527Z
+
+> ↩︎ result: deca8ec6fb76e89234eeb1d5d4b122052989f8f3
+> deca8ec6fb76e89234eeb1d5d4b122052989f8f3	refs/heads/claude/rainbow-s08-scenery-c17
+
+### 🤖 Claude — 2026-11-18T20:47:18.163Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K15='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1' && echo \"$K15\" > /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/K15.txt 2>/dev/null || (mkdir -p /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && echo \"$K15\" > /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/K15.txt); time …[+295 chars]`
+
+### 🧑 User — 2026-11-18T20:47:18.278Z
+
+> ↩︎ result: Command running in background with ID: by823g339. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T20:47:19.696Z
+
+Meanwhile I'll look at the approved picture and the current BEFORE (K15) frames.
+
+### 🤖 Claude — 2026-11-18T20:47:20.167Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/08_final_spin_chamber.png"}`
+
+### 🧑 User — 2026-11-18T20:47:20.219Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:47:20.613Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T20:47:20.930Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:47:24.018Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:47:24.109Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:47:24.509Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:47:24.628Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:47:31.150Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,160p qa/match/08/NOTES.md", "description": "Read Screen 08 NOTES"}`
+
+### 🧑 User — 2026-11-18T20:47:31.251Z
+
+> ↩︎ result: # Screen 08 — approved scenery on real 3D geometry (`?match08=1`, 2026-11-17, session 03b94f36)
+> 
+> User order (2026-11-17): apply the cleaned environment-only Screen 08 artwork to the actual 3D game environment behind a
+> test switch; real geometry + texture projection (not a flat picture); match camera, proportions, architecture,
+> waterway, colours, lighting; correct mismatched geometry; APPROVED | BEFORE | NEW as separate full-size pictures;
+> measure; check that it can work with a moving camera on Android. **Default build unchanged (0 px, verified).**
+> 
+> ## What `?match08=1` does (all behind the switch; files)
+> 1. **Camera** (`src/game/match.ts` MATCH_CAM['08'], `src/game/cameraRig.ts` off08/aim08): solved in the live game so
+>    Benny's box, the door and the platform land on the approved picture at the game's own 62° FOV (Benny box
+>    266,843–594,1216 vs approved 260,850–600,1210; door 489,399 vs 490,400; platform 483,565 vs 480,560). The game's
+>    chamber proportions already agree with the picture — only the camera was off. Camera: Benny + offset, aimed at the
+>    door, level (no bank roll); blended in before the checkpoint, out before 09.
+> 2. **Waterway** (`src/world/course.ts`, `assets/t …[+14077 chars]
+
+### 🤖 Claude — 2026-11-18T20:47:34.186Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rn \"towelm\\|m08occ\" qa/match/08/r1*/PROGRESS.md | cut -c1-400 | head -30; grep -n \"towelm\\|m08occ\\|uOccOn\\|uTMaskOn\" src/world/match08.ts | head -30", "description": "Search history for towelm and occ switches"}`
+
+### 🧑 User — 2026-11-18T20:47:35.035Z
+
+> ↩︎ result: 70:uniform sampler2D uOcc;     // m08occ (door wall only): plate with towel + platform painted out (occ08.py), alpha = usable
+> 71:uniform float uOccOn;
+> 72:uniform sampler2D uTMask;   // m08towelm (towel only): the painted towel's outline in plate coordinates (towelmask08.py)
+> 73:uniform float uTMaskOn;
+> 177:  // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+> 179:  if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
+> 231:      // m08occ: what the approved view could not see behind the towel / platform comes from the occlusion plate (the
+> 234:      if (uOccOn > 0.5) {
+> 408:  // `&m08occ=1` (r8): occlusion plate for the door wall (tools/match08/occ08.py)
+> 410:  if (flag05('m08occ')) {
+> 414:  // `&m08towelm=1` (r8): towel outline mask (tools/match08/towelmask08.py); only the towel material switches it on
+> 416:  if (flag05('m08towelm')) {
+> 459:      uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
+> 471:  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;
+> 643:  if (occTex) (doorM as THREE.ShaderMaterial).uniform …[+19 chars]
+
+### 🤖 Claude — 2026-11-18T20:47:37.228Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/r10 qa/match/08/r11 qa/match/08/r12 qa/match/08/r13 qa/match/08/r14 | head -60; git log --all --oneline -- tools/match08/occ08.py tools/match08/towelmask08.py | head; grep -rln \"towelm\\|m08occ\" qa/ docs/ 2>/dev/null | head", "description": "Locate history of towel mask and occlusion work"}`
+
+### 🧑 User — 2026-11-18T20:47:40.607Z
+
+> ↩︎ result: qa/match/08/r10:
+> NEW
+> PROGRESS.md
+> step1_m08far
+> step2_m08coinv
+> 
+> qa/match/08/r11:
+> BEFORE
+> PROGRESS.md
+> step1_m08ceil
+> step2_m08near
+> 
+> qa/match/08/r12:
+> NEW
+> NEW_before_step5
+> PROGRESS.md
+> step1_m08cup
+> step2_m08rw
+> step3_m08drum
+> step4_m08ring
+> step5_m08cupg
+> wip_m08drot_not_kept.patch
+> wip_m08floor
+> wip_m08floor_not_kept.patch
+> wip_m08glint_not_kept.patch
+> wip_m08twin_not_kept.patch
+> 
+> qa/match/08/r13:
+> BEFORE_K12
+> PROGRESS.md
+> step1_m08bore
+> step2_m08cupw
+> wip_m08urcup
+> wip_m08urcup_not_kept.patch
+> 
+> qa/match/08/r14:
+> BEFORE_K13
+> PROGRESS.md
+> step1_m08nq
+> 65a50bb3 autosave: Rainbow 2026-11-18 00:46 UTC
+> qa/match/08/scenery/r8/towelm/motion.json
+> qa/match/08/scenery/r8/occ/motion.json
+
+### 🤖 Claude — 2026-11-18T20:47:42.971Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/scenery/ qa/match/08/scenery/r8 2>/dev/null | head -40; grep -rn \"towelm\\|occ\" qa/match/08/scenery/*.md qa/match/08/scenery/r8/*.md 2>/dev/null | cut -c1-500 | head -20", "description": "Look at r8 scenery towel mask and occlusion notes"}`
+
+### 🧑 User — 2026-11-18T20:47:43.155Z
+
+> ↩︎ result: qa/match/08/scenery/:
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> dbg_ids
+> dbg_lane
+> final_r5
+> motion_BEFORE
+> motion_bw
+> motion_bw_r5
+> motion_fill_r5
+> motion_lane
+> motion_lane_r5
+> r6
+> r7
+> r8
+> 
+> qa/match/08/scenery/r8:
+> dbg_av
+> occ
+> proof
+> towelm
+> qa/match/08/scenery/NOTES.md:5:be reshaped or scaled ABOUT THE APPROVED VIEWPOINT without changing the approved view — only Benny/coin occlusion and the
+
+### 🤖 Claude — 2026-11-18T20:47:45.221Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"towel\\|occ\" qa/match/08/scenery/NOTES.md qa/match/08/scenery/STATUS.md | cut -c1-600 | head -40; ls qa/match/08/scenery/r8/towelm qa/match/08/scenery/r8/occ", "description": "Read r8 notes on towel and occlusion"}`
+
+### 🧑 User — 2026-11-18T20:47:45.309Z
+
+> ↩︎ result: qa/match/08/scenery/NOTES.md:5:be reshaped or scaled ABOUT THE APPROVED VIEWPOINT without changing the approved view — only Benny/coin occlusion and the
+> qa/match/08/scenery/NOTES.md:63:  projector rays: no torn gold/blue slabs at the frame bottom at forward 3 u), `m08towel` (towel frustum along projector
+> qa/match/08/scenery/NOTES.md:64:  rays: no door-window slab on the towel when steering hard). `m08swim` and `m08seam` = 0 px at the approved view.
+> qa/match/08/scenery/STATUS.md:7:`B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'`
+> qa/match/08/scenery/STATUS.md:22:4. **`&m08towel=1` — NEW, KEEP.** In both hard-steer shots a rectangular slab of door-window pixels sat on the towel
+> qa/match/08/scenery/STATUS.md:23:   (the box's top and sides carried the door painted above and beside it). Fix: towel = frustum whose back corners
+> qa/match/08/scenery/STATUS.md:24:   lie on the projector rays through the front corners. Hard-steer frames `r7/towel/`: the slab is gone and the window
+> qa/match/08/scenery/STATUS.md:25:   runs cleanly behind the towel. Approved view: 6,328 px change (52 > 20), CLOSER to the approved picture (mean error
+> qa/match/08/sce …[+241 chars]
+
+### 🤖 Claude — 2026-11-18T20:47:47.245Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,80p qa/match/08/scenery/STATUS.md | cut -c1-400", "description": "Read scenery STATUS for r8 results"}`
+
+### 🧑 User — 2026-11-18T20:47:47.701Z
+
+> ↩︎ result: # Screen 08 scenery-in-motion — STATUS (round 7, account 7) — MILESTONE DONE, stopped
+> 
+> * Branch `claude/rainbow-s08-scenery-c7` (started at `-c6` @ `cf2e092b`). Final SHA: `git log -1`.
+> * Every change is behind its own `?match08=1` sub-switch; nothing runs without `match08`.
+> 
+> ## Kept switch set (round 7)
+> `B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'`
+> (`m08lane` stays OFF.)
+> 
+> ## Done (round 7)
+> 1. **`&m08seam=1` — KEEP at ×1.6 (default `m08seamk`).** f10 / t95 frames `r7/seam/{base,k16,k22}/`. Without it the
+>    generated ceiling fill is a dense fine mesh, visibly smaller than the painted chamber-wall slots it meets. ×1.6 matches
+>    the painted slot size best; ×2.2 is slightly coarse. Approved view: 0 px (frozen capture, `r7/proof/seam`).
+> 2. **`m08swim` proven 0 px at the approved view** (frozen `scripts/capture.mjs`: `r7/proof/noswim` vs `swim` vs `swim2`:
+>    0 changed pixels; the capture is deterministic, swim vs swim2 = 0).
+> 3. **`&m08sill=1` — NEW, KEEP.** Riding 3 u forward, the frame bottom showed torn gold / blue slabs. `m08dbg` showed
+>    they were the gold arch's unpushed water-level band (2.6× nearer than the rest of the ring). …[+3423 chars]
+
+### 🤖 Claude — 2026-11-18T20:47:49.930Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git log --oneline --all --grep=\"towelm\\|m08occ\" | head; git log --oneline -60 | grep -i \"r8\\|occ\\|towel\" | head", "description": "Search commit history for towelm and occ"}`
+
+### 🧑 User — 2026-11-18T20:47:50.116Z
+
+> ↩︎ result: 26b7acac Screen 08 scenery r7: keep m08seam (x1.6), new m08sill + m08towel, proofs and 12-shot audit (in progress: default/leak proofs)
+
+### 🤖 Claude — 2026-11-18T20:47:51.404Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git log --oneline -80 | sed -n 1,80p | cut -c1-200", "description": "Show longer commit history"}`
+
+### 🧑 User — 2026-11-18T20:47:51.620Z
+
+> ↩︎ result: deca8ec6 Screen 08 r17: round 17 resumed; account-16 unfinished step 2 (&m08vh=1 + QA &m08dbgvk) committed as WIP (not yet proven)
+> 6da32d57 Screen 08 r16 step 1: &m08sr=1 smooth river course + rounded swim-remap corners (no fold lines / chevron kinks in the water while swimming) - GOOD IMPROVEMENT (small)
+> df4a3bb7 Screen 08 r14 step 1: &m08nq=1 near water at the painted scale while swimming (nq08.py v6: rectified painted band, base satin from whole painted columns, painted glints put back whole) - GOOD
+> 30dbbe44 Screen 08 r14 WIP: &m08nq=1 painted-scale near water (nq08.py v4: rectified band + zone quilting) wired; first NEW renders (not yet an improvement: glints cut into fragments)
+> bf7a521d Screen 08 r14: BEFORE set for round 14 (kept set K13, 12 shots + motion.json)
+> 74564445 Screen 08 r14: restarted ~16:45 UTC after interrupt (task a: S-river / near water)
+> b62b9c34 Screen 08 r14: round 14 (account 14) resumed from e36430c4 (task a: S-river / near water)
+> e36430c4 Screen 08 r13->r14: account-13 unfinished helper tools/match08/nq08.py restored from backups/wip
+> 71e7cf54 Screen 08 r13: round 13 resumed (task a: S-river / near water while swimming)
+> bed281f4 Screen 08 r13 step 2: &m08cu …[+5614 chars]
+
+### 🤖 Claude — 2026-11-18T20:47:54.026Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output; ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2new 2>/dev/null; uptime", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-18T20:47:54.059Z
+
+> ↩︎ result: 20:47:54 up 34 min,  0 user,  load average: 16.41, 5.05, 1.87
+
+### 🤖 Claude — 2026-11-18T20:47:56.466Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:47:56.681Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:47:56.979Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T20:47:57.184Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:48:05.217Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,80p src/world/match08.ts", "description": "Read match08.ts header and uniforms"}`
+
+### 🧑 User — 2026-11-18T20:48:05.480Z
+
+> ↩︎ result: /**
+>  * `?match08=1` — Screen 08 approved-picture test (2026-11-17, qa/match/08/NOTES.md).
+>  * REAL 3D proxy geometry of the Final Spin Chamber, solved from the user's approved Screen 08 and the locked game
+>  * camera (tools/match08/fit_proxies.py → assets/textures/match08/proj08.json): inlet pipe, gold arch, chamber walls,
+>  * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+>  * Every surface is textured by camera projection of the CLEAN environment-only artwork (Benny, HUD, coins removed;
+>  * qa/imageblaster/08/) from that locked camera, so the locked view shows the approved scenery and a moving camera sees
+>  * it on geometry (parallax). Surfaces the projector cannot see (behind props) get a plain fallback colour instead of
+>  * a smeared copy (projector depth test). The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+>  * Without the switch nothing in this file runs and the game is unchanged.
+>  */
+> import * as THREE from 'three';
+> import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+> 
+> interface Layout {
+>   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+>   floorY: number;
+>  …[+3574 chars]
+
+### 🤖 Claude — 2026-11-18T20:48:07.683Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output; ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2new 2>/dev/null; uptime", "description": "Check render progress again"}`
+
+### 🧑 User — 2026-11-18T20:48:07.792Z
+
+> ↩︎ result: 20:48:07 up 35 min,  0 user,  load average: 16.47, 5.62, 2.11
+
+### 🤖 Claude — 2026-11-18T20:48:09.699Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 300,460p src/world/match08.ts", "description": "Read shader remainder and build function"}`
+
+### 🧑 User — 2026-11-18T20:48:09.877Z
+
+> ↩︎ result: // m08sr (r15): rounded corner at the edge of the 1:1 middle as well (no crease where the lane is wider than laid)
+>       if (uSr > 0.5) xb = mix(ad, uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3), smoothstep(0.3 * uNq.y, 1.7 * uNq.y, ad));
+>       tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), (uNear.x - vW.z) / uNear.y);
+>     }
+>     float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
+>     if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
+>     // QA only m08dbguv (r15, floor): r = plate u, g = plate v (after the swim remap), b = near-tile weight
+>     if (uDbgUv > 0.5) { vec2 du = pj.xy / max(pj.w, 1e-4) * 0.5 + 0.5; gl_FragColor = vec4(pjInverse(vec3(du, wn)), 1.0); return; }
+>   }
+>   gl_FragColor = vec4(pjInverse(t), 1.0);
+> }`;
+> 
+> /** several (nu × nv) vertex grids f(u, v) → one indexed geometry (m08arch: fine tessellation for per-vertex pushes) */
+> function gridGeo(parts: [number, number, (u: number, v: number) => THREE.Vector3][]): THREE.BufferGeometry {
+>   const pos: number[] = [], idx: number[] = [];
+>   for (const [nu, nv, f] of parts) {
+>     const b = pos.length / 3;
+>     for (let j = 0; j <= nv; j++) for (let i = 0; i < …[+11088 chars]
+
+### 🤖 Claude — 2026-11-18T20:48:17.740Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output; uptime", "description": "Wait and check render progress"}`
+
+### 🧑 User — 2026-11-18T20:48:17.749Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output uptime. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T20:48:18.875Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor,SendMessage", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T20:48:18.974Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T20:48:21.763Z
+
+> 🔧 **Monitor** `{"command": "tail -n +1 -f /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/by823g339.output | grep --line-buffered -E \"^08 |rror|real|Timeout|pageerror\"", "description": "step-2 NEW render shots progress", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-18T20:48:21.873Z
+
+> ↩︎ result: Monitor started (task bj0dp22l0, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+

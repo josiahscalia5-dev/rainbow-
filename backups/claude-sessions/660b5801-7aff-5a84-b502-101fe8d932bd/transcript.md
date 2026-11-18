@@ -1786,3 +1786,120 @@ Context7 still won't reconnect, even though its host now answers. It's optional,
 
 > 🔧 **Bash** `{"command": "df -h /home/user | tail -1; du -sh /home/user/wt 2>/dev/null; python3 scripts/rainbow-autosave.py --reason manual:r17-workers-launched 2>&1 | grep -E '\"pushed_verified\"|\"commit\"|\"error\"|wip' | head -8; python3 -I scripts/autosave-status.py 2>&1 | tail -2; timeout 40 git ls-remote origin refs/heads/ccr-bbe2b27e-oxfh1w; git rev-parse HEAD", "description": "Check disk, save to GitHub and verify remote equals local", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T20:47:22.291Z
+
+> ↩︎ result: /dev/vda        252G   29G   11G  74% /
+> 6.6G	/home/user/wt
+>   "pushed_verified": true,
+>   "wip_snapshots": [
+>   "commit": "34d40c31b298d6e7634066b84da514b55cebbd32",
+> AUTOSAVE OK | branch ccr-bbe2b27e-oxfh1w | scheduler daemon | last verified backup 2026-11-18T20:46:56+00:00 (0.4 min ago) | local 34d40c3 remote 34d40c3 (match) | uncommitted 0
+> 34d40c31b298d6e7634066b84da514b55cebbd32	refs/heads/ccr-bbe2b27e-oxfh1w
+> 34d40c31b298d6e7634066b84da514b55cebbd32
+
+### 🤖 Claude — 2026-11-18T20:47:41.708Z
+
+> 🔧 **Bash** `{"command": "grep -n \"def \\|argv\\|choices\" scripts/verify-assets.py | head -20", "description": "Find the LFS verification mode in verify-assets"}`
+
+### 🧑 User — 2026-11-18T20:47:41.834Z
+
+> ↩︎ result: 31:def git(*args: str, timeout: int = 120) -> str:
+> 36:def done(status: str, summary: str) -> int:
+> 41:def lfs_pointer(data: bytes):
+> 48:def lfs_objects() -> list[dict]:
+> 59:def lfs_endpoint() -> str:
+> 67:def cmd_lfs_remote(download: bool) -> int:
+> 116:def cmd_marble() -> int:
+> 157:def cmd_agents() -> int:
+> 183:def cmd_worldlabs() -> int:
+> 190:    def get(path: str):
+> 216:def parse_iso(s: str) -> dt.datetime:
+> 220:def cmd_gap(session_start: str | None) -> int:
+> 271:def cmd_report(results: str, mode: str) -> int:
+> 303:def main() -> int:
+> 304:    if len(sys.argv) < 2:
+> 307:    cmd = sys.argv[1]
+> 309:        return cmd_lfs_remote("--download" in sys.argv)
+> 317:        s = sys.argv[sys.argv.index("--session-start") + 1] if "--session-start" in sys.argv else None
+> 320:        return cmd_report(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else "full")
+
+### 🤖 Claude — 2026-11-18T20:47:44.842Z
+
+> 🔧 **Bash** `{"command": "sed -n 305,316p scripts/verify-assets.py; timeout 200 python3 -I scripts/verify-assets.py lfs-remote 2>&1 | tail -3; timeout 60 python3 -I scripts/verify-assets.py marble 2>&1 | tail -2; timeout 60 python3 -I scripts/verify-assets.py agents 2>&1 | tail -2", "description": "Verify LFS objects on GitHub, Marble assets and agents", "timeout": 330000}`
+
+### 🧑 User — 2026-11-18T20:47:47.902Z
+
+> ↩︎ result: print(__doc__)
+>         return 2
+>     cmd = sys.argv[1]
+>     if cmd == "lfs-remote":
+>         return cmd_lfs_remote("--download" in sys.argv)
+>     if cmd == "marble":
+>         return cmd_marble()
+>     if cmd == "agents":
+>         return cmd_agents()
+>     if cmd == "worldlabs":
+>         return cmd_worldlabs()
+>     if cmd == "gap":
+> @@ ok 68/68 LFS objects (529 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+>   qa/worldlabs: 71 tracked files; ledger, prompt, input reference and 5 scripts checked
+> @@ ok both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+>   android-build-performance          definition available (no in-process subagent running) next: at the end: rebuild and verify the APK
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: _note
+
+### 🤖 Claude — 2026-11-18T20:48:20.739Z
+
+I've picked up exactly where the last account stopped, at 20:14 UTC today, and all six screen specialists are working again.
+
+This session opened on an older branch (`ccr-5495e9c4-g0apvl`, last saved yesterday at 22:44 UTC). The newest work, rounds 6 to 16, was on the previous account's lead branch `ccr-e42bb3c0-jpif8d`, so I brought it into this session's branch. The older branch only had extra backup logs, so nothing was lost. No screen branch was merged.
+
+Each specialist got back the unfinished edits from the 20:14 save and continues on its own new `-c17` branch:
+
+| Screen | Finishing now |
+|---|---|
+| 04 rings | Small bright light dots on every gold ring edge. The thick, separate rings from step 3 stay. |
+| 04 | The glowing opening at the far end of the tunnel, then pink and cyan swirls in the water around Benny. |
+| 05 | The scenery change from 05 into 06, then the smeared left wall when steering hard left. |
+| 06 | Foam as bubbly clusters, then the brief see-through ring "flash" at the start. |
+| 07 | The water close to Benny on the flat stretch, cut from your painting at its painted size. |
+| 08 | Removing pale outlines around the platform, towel and cups, then the wall seams and the towel. |
+
+I'll show you separate full-size APPROVED | BEFORE | NEW pictures as each one finishes.
+
+**Backup report.** I'm not printing the "RAINBOW 3D BACKUP VERIFIED" line, because three checks failed (listed below). Everything else passed:
+- **GitHub:** branch `ccr-bbe2b27e-oxfh1w`, commit `34d40c31b298d6e7634066b84da514b55cebbd32`. GitHub's copy matches it exactly.
+- **Git LFS:** all 68 large files are real files here, and all 68 are confirmed on GitHub LFS.
+- **Pictures and specialists:** all 13 approved pictures are unchanged, and all 10 specialist definitions are unchanged.
+  - Running: washer-environment-modeler (×2), water-fx-specialist (×2), foam-bubbles-particles, reference-match-director.
+  - Idle: the other four.
+- **Marble World Labs:**
+  - The key works and shows 5,420 credits.
+  - The Atlas connector is connected ("My project"), and the World Labs plugin is installed.
+  - All your saved Marble worlds are present.
+- **fal.ai:** the key is accepted.
+- **Paid jobs:** none were run.
+- **Network:** you approved adding the Marble file server and Context7, and both can now be reached.
+- **Tools:** Blender 5.3.0, Android SDK 34, Playwright with Chromium, Node and the game tests all work.
+- **Plugins enabled:** superpowers, playwright, parallax-threejs, code-review, feature-dev, frontend-design, claude-code-setup, typescript-lsp, worldlabs.
+- **Autosave:** the five-minute autosave is running on this branch, and each save also captures the six specialists' unfinished edits.
+
+**What failed or is missing:**
+1. Downloading all 131 GitHub branches at once times out. I downloaded the ones needed one at a time, and everything needed is here.
+2. The Context7 plugin still won't connect, even though its server is now reachable. The Spector WebGL debugger plugin won't start. Neither is needed for the current work.
+3. The Hugging Face connector that the previous account had isn't connected on this account. It's optional, because the depth maps it made are already saved.
+
+**Backup gap:**
+- The previous account last saved at 20:14 UTC, and this session's first save was at 20:24 UTC.
+- Anything the specialists did after 20:14, before that account stopped, wasn't saved.
+- The bootstrap's "21.6 h" gap only refers to the older branch.
+
+**Not set up:** the Image-Blaster tool. The current steps don't need it, and disk space is tight at about 11 GB free.
+
+**Still waiting on you:**
+- Approval of Screen 08.
+- A decision on Screen 06: at the start, Benny and the nearest coins look bigger than in your painting. The specialists won't change that without your decision.
+
+### 🧑 User — 2026-11-18T20:48:25.506Z
+
+Hello
+
