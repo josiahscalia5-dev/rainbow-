@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13066,
-   "sha256": "54f769c7acdd0fe3faf6bf9570511b40394cdac75cb52a221f8328221e20569c"
+   "bytes": 13067,
+   "sha256": "f64db151f1b96b170daa3f07969234123da3e3aaf61bcc1cd16fe3677ef1b6fc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -898,8 +898,8 @@
   },
   {
    "path": "docs/briefs/2026-11-17-r7/COORDINATION.md",
-   "bytes": 2756,
-   "sha256": "4ac877ccb1b4b5564364da6d7f626cbdd495b84111eeb36a7a5d4393b31b23e1"
+   "bytes": 3741,
+   "sha256": "a7b5f01a79d8e89e9f4f660f9d4a5a0bc666a01185f6fe16cb88a8ae2e57feb5"
   },
   {
    "path": "docs/briefs/2026-11-17-r7/S04.md",
@@ -8737,6 +8737,11 @@
    "sha256": "6e31094fb204b0f7bf131d281aaadb9e18a0ed2ee56706b3b4f68d33ececb245"
   },
   {
+   "path": "qa/review_r7/06_2_BEFORE_end_of_stage.jpg",
+   "bytes": 560967,
+   "sha256": "6ed7346487aacb479456f939994dfbae3345b5913c63917b5ff3681d2aca940a"
+  },
+  {
    "path": "qa/review_r7/06_2_BEFORE_forward_10u.jpg",
    "bytes": 510830,
    "sha256": "109be826451e5d3fc49990b410d23e040e04b5fae257a04b8c40633fa2aec82a"
@@ -8755,6 +8760,26 @@
    "path": "qa/review_r7/06_2_BEFORE_two_thirds_through.jpg",
    "bytes": 462815,
    "sha256": "c7cd0047f319e79d8f4e7ca3ab76ee43d61d3a0765dfb592e7df3edc9621e1e2"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_RINGS_end_of_stage.jpg",
+   "bytes": 603565,
+   "sha256": "287bc7de1ada7a483272a78292905b0a0e9922680f2c3efe9b6e7397d375c72a"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_RINGS_forward_10u.jpg",
+   "bytes": 692049,
+   "sha256": "e1871589aac2802bf7ec1b274e18e4befa7ab9f186f087fbcb4faf95bc6dc13d"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_RINGS_forward_20u.jpg",
+   "bytes": 714337,
+   "sha256": "930c3398ba32c0b1700659e3b5e435955f2df89fd0b7d82f13955470911af94b"
+  },
+  {
+   "path": "qa/review_r7/06_3_NEW_RINGS_two_thirds_through.jpg",
+   "bytes": 681296,
+   "sha256": "838887e59a03f1de0806043f6d1dc8cfab0ccb6478ced0b0c22769862f927a52"
   },
   {
    "path": "qa/review_r7/06_3_NEW_forward_10u.jpg",
