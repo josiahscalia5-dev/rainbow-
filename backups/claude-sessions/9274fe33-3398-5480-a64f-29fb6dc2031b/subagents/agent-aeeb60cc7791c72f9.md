@@ -781,3 +781,107 @@ Step 3 (right): the rings now show dark separating lines with the glints sitting
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && L4=$(cat $SP/L4.txt) && Q3=\"$L4&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28\" && ONLY=a00_approved_view,f03_forward3u,f10_forward10u,t95_through_screen,s_right_hard node $SP/audit.mjs 04 $SP/v3_lip_b \"$Q3\" 2>&1 | grep -v \"outside of Vite\\|403\" | tail -5 && node scripts/capture.mjs 04 --q=\"$Q3\" --out=$SP/cap_v3 2>&1 | grep -v \"outside of Vite\\|403\" | tail -1; git checkout -- qa/capture_log.json; node /home/user/tools-pixelmatch/pixeldiff …[+169 chars]`
 
+### 🧑 User — 2026-11-18T19:34:40.921Z
+
+> ↩︎ result: 04 a00_approved_view s 78.813 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.149 lat 0 stage 04 frames 13
+> 04 f10_forward10u s 88.172 lat 0 stage 04 frames 43
+> 04 s_right_hard s 90.249 lat 1.65 stage 04 frames 52
+> 04 t95_through_screen s 113.676 lat 0.006 stage 04 frames 153
+> ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/cap_before/04.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/cap_v3/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-18T19:34:47.085Z
+
+Approved start view still 0 differing pixels. Let me review the new shots (entering, end, hard right).
+
+### 🤖 Claude — 2026-11-18T19:34:49.422Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && B=/home/user/wt/s04b/qa/match/04/r14/s11_rimfoam/L4 && for s in f03_forward3u t95_through_screen s_right_hard f10_forward10u; do python3 tri.py tri3_$s.png 180 1000 $B/$s.png new_rp1/$s.png v3_lip_b/$s.png; done; echo ok", "description": "Build review strips for remaining shots"}`
+
+### 🤖 Claude — 2026-11-18T19:34:50.629Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/tri3_f03_forward3u.png"}`
+
+### 🤖 Claude — 2026-11-18T19:34:51.493Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/tri3_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:34:51.909Z
+
+> ↩︎ result: ok
+
+### 🧑 User — 2026-11-18T19:34:51.989Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T19:34:51.999Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:34:52.041Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/tri3_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:34:52.095Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:35:07.427Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && D=qa/match/04/r16/ringpaint/step3_lip && mkdir -p $D && for s in f06_forward6u f20_forward20u t66_through_screen s_left_hard; do cp $SP/v3_lip/$s.png $D/3_NEW_$s.png; done && for s in a00_approved_view f03_forward3u f10_forward10u t95_through_screen s_right_hard; do cp $SP/v3_lip_b/$s.png $D/3_NEW_$s.png; done && python3 -c \"\nimport json\na=json.load(open('$SP/v3_lip/motion.json')); b=json.load(open('$SP/v3_lip_b/motion.json'))\na['shots']+=b['shots']; json.dump( …[+256 chars]`
+
+### 🧑 User — 2026-11-18T19:35:07.957Z
+
+> ↩︎ result: 11
+> # Screen 04 — painted-ring test `&m04rpaint` (round 16, continues the cut-off round-15 worker)
+> 
+> Brief: `docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md` + round-16 changes (`docs/briefs/2026-11-18-r16/RESUME_R16.md` "s04tex").
+> Branch `claude/rainbow-s04-ringtex-c16` (from `fc28323a`). History of earlier Screen 04 rounds: `qa/match/04/r15/` and older.
+
+### 🤖 Claude — 2026-11-18T19:35:10.528Z
+
+Starting the BEFORE and NEW (step 3) swim clips in the background now. I'm using a scratch copy of the clip tool with a 432x768 viewport (same framing, about 4x cheaper), run one after the other.
+
+### 🤖 Claude — 2026-11-18T19:35:13.243Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && sed -e \"s/width: 864, height: 1536/width: 432, height: 768/\" /home/user/wt/s04b/tools/lead_r13/swim_clip.mjs > $SP/swim_half.mjs && grep -n \"432\" $SP/swim_half.mjs && L4=$(cat $SP/L4.txt) && echo \"$L4&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28\" > $SP/Q3.txt", "description": "Create half-size clip tool copy and save step 3 query"}`
+
+### 🧑 User — 2026-11-18T19:35:13.306Z
+
+> ↩︎ result: 17:  const page = await browser.newPage({ viewport: { width: 432, height: 768 }, deviceScaleFactor: 1 });
+
+### 🤖 Claude — 2026-11-18T19:35:18.283Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && D=/home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip && node $SP/swim_half.mjs 04 $SP/clipB 3.6 \"$(cat $SP/L4.txt)\" 2>&1 | grep -v \"outside of Vite\\|403\" | tail -2 && ffmpeg -loglevel error -y -framerate 24 -i $SP/clipB/%04d.png -pix_fmt yuv420p -crf 20 $D/clip_BEFORE_swim.mp4 && node $SP/swim_half.mjs 04 $SP/clipN3 3.6 \"$(cat $SP/Q3.txt)\" 2>&1 | grep -v \"outside of Vite\\|403\" | tail -2 && ffmpeg -loglevel error -y -framerate 24 -i $SP/clipN3/%04d.png …[+175 chars]`
+
+### 🧑 User — 2026-11-18T19:35:18.337Z
+
+> ↩︎ result: Command running in background with ID: b8vf0gj9r. Output is being written to: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/b8vf0gj9r.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T19:35:19.641Z
+
+While the clips render, I'll write the step 3 notes, then commit and push the step 3 pictures.
+
+### 🤖 Claude — 2026-11-18T19:35:30.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && cat >> qa/match/04/r16/ringpaint/NOTES.md <<'EOF'\n\n## Step 3 — painted lip line + groove on the visible lip front: `&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28`\n(19:42–20:00 UTC). Full set `step3_lip/3_NEW_<shot>.png` (a00, f03, f06, f10, f20, t66, t95, s_left_hard, s_right_hard; BEFORE =\n`2_BEFORE_<shot>.png` one folder up). Approved start view unchanged: frozen capture BEFORE vs this query, rows 180–1536,\n**0 differing pixels** (`step3_lip/start_view_pixeldiff_BEFORE_vs_NEW.png`). Clip (half size 432×768, same framing, CPU):\n`ste …[+2006 chars]`
+
+### 🧑 User — 2026-11-18T19:35:38.713Z
+
+> ↩︎ result: 29415ddcdcf97bc78772c3daefca3a610d53a491
+> 29415ddcdcf97bc78772c3daefca3a610d53a491	refs/heads/claude/rainbow-s04-ringtex-c16
+
+### 🤖 Claude — 2026-11-18T19:35:44.561Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s04tex step 3 GOOD IMPROVEMENT full set", "message": "s04tex step 3 (Screen 04): the painted rings again read as separate THICK rings. Verdict: GOOD IMPROVEMENT for ring shape and surface; colour is still off.\nSwitch: L4 + &m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28\nBranch claude/rainbow-s04-ringtex-c16, commit 29415ddcdcf97bc78772c3daefca3a610d53a491 (remote == HEAD).\nPictures (full set, full size, separate files): /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/3_NEW_<shot>.png for a00, f03, f06, f10, f20, t66, t95, s_left_hard and s_ri …[+1039 chars]`
+
+### 🧑 User — 2026-11-18T19:35:44.577Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T19:36:20.122Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -I - <<'EOF'\nimport numpy as np, cv2\nA = cv2.imread('assets/textures/match04/plate04_hybrid.png').astype(np.float32)[..., ::-1]  # RGB\nVP, MC, RM = np.array([490., 690.]), np.array([434., 792.]), 347.0\nps = np.linspace(-1.2, 1.2, 241)\nout = []\nfor R in [331, 300, 262, 235, 207, 185, 160, 140, 126, 112, 100, 88, 79, 70, 62, 54, 48, 40, 32, 24, 16]:\n    c = VP + (R / RM) * (MC - VP)\n    x = c[0] + R * np.sin(ps); y = c[1] - R * np.cos(ps)\n    # band samples: take radii R*0.92..R*0.98 (inside the groove)\n    cols = []\n    for f in np.linspa …[+551 chars]`
+

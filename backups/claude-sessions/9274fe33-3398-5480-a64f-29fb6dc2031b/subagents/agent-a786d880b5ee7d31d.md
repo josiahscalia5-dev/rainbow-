@@ -1337,3 +1337,140 @@ Now a type check, then re-render NEW at x98p5 / x99 / x100 (only the frames this
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt) && node tools/match05/r8_shots.mjs qa/match/05/r16/step1_trans/new2 \"$K&m05trans=1\" x98p5,x99,x100,x97 5275 2>&1 | tail -5", "description": "Re-render NEW around the 05-06 boundary", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T19:35:40.340Z
+
+> ↩︎ result: x98p5 s 188.978 lat 0 coins 1580 benny -0.18 -0.59 big coins: -
+> x99 s 189.089 lat 0 coins 1580 benny -0.17 -0.61 big coins: -
+> x100 s 189.641 lat 0 coins 1580 benny -0.16 -0.68 big coins: #38@297,536 d74 #39@306,486 d63
+> x97 s 187.808 lat 0 coins 1580 benny -0.18 -0.44 big coins: -
+
+### 🤖 Claude — 2026-11-18T19:35:46.632Z
+
+> 🔧 **Bash** `{"command": "V=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/v; D=/home/user/wt/s05/qa/match/05/r16/step1_trans/new2; for n in x97 x98p5 x99 x100; do convert $D/$n.png -resize 25% $V/N2_$n.png; done; cd $V && convert N2_x97.png N2_x98p5.png N2_x99.png N2_x100.png B_x99.png +append N2_row.png", "description": "Build preview strip of re-rendered NEW shots"}`
+
+### 🤖 Claude — 2026-11-18T19:35:47.685Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/v/N2_row.png"}`
+
+### 🧑 User — 2026-11-18T19:35:48.117Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-18T19:35:48.143Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:35:54.824Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"far05Coins\" src/gameplay/coins.ts | head -20", "description": "Find far-coin mapping in coins.ts"}`
+
+### 🧑 User — 2026-11-18T19:35:54.929Z
+
+> ↩︎ result: 11:import { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)
+> 380:      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
+> 382:        const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
+> 383:        const o = far05Coins.open;
+> 388:        back.copy(far05Coins.T).negate();
+
+### 🤖 Claude — 2026-11-18T19:35:56.453Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 340,420p src/gameplay/coins.ts", "description": "Read coin update loop around far mapping"}`
+
+### 🧑 User — 2026-11-18T19:35:56.528Z
+
+> ↩︎ result: }
+>   const mesh = new THREE.InstancedMesh(geo, mats, defs.length);
+>   mesh.frustumCulled = false;
+>   const group = new THREE.Group();
+>   group.name = 'coins';
+>   group.add(mesh);
+>   const collected = new Uint8Array(defs.length);
+>   const popT = new Float32Array(defs.length).fill(-1);
+>   const m = new THREE.Matrix4(), q = new THREE.Quaternion(), basis = new THREE.Matrix4();
+>   const p = new THREE.Vector3(), sc = new THREE.Vector3();
+>   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+>   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+>   const back = new THREE.Vector3();
+>   const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();
+>   const fcP = new THREE.Vector3();   // m05fcoin (Screen 05 round 12)
+> 
+>   let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
+>   const place = (time: number) => {
+>     defs.forEach((d, i) => {
+>       const f = course.sample(d.s);
+>       const ph = d.phase ?? i;
+>       let scale = 1;
+>       // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
+>       // forced-perspective relief in the locked view) settle toward the normal coin height over the river as Benny …[+3403 chars]
+
+### 🤖 Claude — 2026-11-18T19:36:06.511Z
+
+> 🔧 **Bash** `{"command": "V=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/v; D=/home/user/wt/s05/qa/match/05/r16/step1_trans; convert $D/new2/x99.png -crop 864x900+0+150 -resize 50% $V/n2x99c.png; convert $D/before/x99.png -crop 864x900+0+150 -resize 50% $V/bx99c.png; convert $V/bx99c.png $V/n2x99c.png +append $V/x99c.png; python3 -c \"\nimport json\nfor d in ['before','new2']:\n  j=json.load(open('$D/'+d+'/shots.json'))\n  for s in j['shots']:\n    if s['name']=='x99': print(d, [(c['i'],c['x'],c['y'],c['d']) for c in s['coinsOnScreen'] if 0<c['x']<864 and 0<c['y']<1536] …[+76 chars]`
+
+### 🤖 Claude — 2026-11-18T19:36:08.000Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/v/x99c.png"}`
+
+### 🧑 User — 2026-11-18T19:36:09.294Z
+
+> ↩︎ result: before [(38, 341, 551, 67), (39, 348, 495, 59), (40, 351, 467, 52), (41, 355, 469, 46), (42, 370, 501, 41), (43, 399, 555, 37), (44, 437, 618, 35), (45, 476, 683, 33), (46, 516, 744, 31), (47, 555, 802, 30), (48, 594, 857, 29), (49, 702, 980, 16)]
+> new2 [(38, 598, 1055, 35), (39, 622, 1040, 31), (40, 640, 1024, 28), (41, 651, 1008, 25), (42, 654, 995, 23), (43, 653, 986, 21), (44, 652, 981, 19), (45, 650, 977, 18), (46, 648, 972, 17), (47, 647, 966, 16), (48, 646, 959, 15), (49, 702, 980, 16)]
+
+### 🧑 User — 2026-11-18T19:36:09.368Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:36:13.741Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"place(\" src/gameplay/coins.ts | head; grep -n \"coins\\.\\(update\\|place\\|tick\\)\" src/game/Game.ts | head", "description": "Find where coin placement runs each frame"}`
+
+### 🧑 User — 2026-11-18T19:36:13.814Z
+
+> ↩︎ result: 93:      .replace('void main() {', 'varying float vC05Dist;\nvoid main() {')
+> 94:      .replace('#include <project_vertex>', '#include <project_vertex>\nvC05Dist = length(mvPosition.xyz);');
+> 98:        .replace('void main() {', `attribute float aC05; uniform vec3 uC05Benny; uniform vec2 uPjRes;
+> 100:        .replace('#include <project_vertex>', `#ifdef USE_INSTANCING
+> 114:      .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes; uniform vec4 uC05Haze; uniform vec2 uC05HazeR; varying float vC05Dist;\n${PROJ05_INVERSE}\nvoid main() {`)
+> 115:      .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+> 419:  place(0);
+> 440:      place(time);
+> 447:      place(0);
+> 365:    const got = coins.update(st.clock, dt, st.s, st.lat);
+
+### 🤖 Claude — 2026-11-18T19:36:19.278Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 420,450p src/gameplay/coins.ts", "description": "Read coin update function"}`
+
+### 🧑 User — 2026-11-18T19:36:19.372Z
+
+> ↩︎ result: return {
+>     group,
+>     defs,
+>     collected,
+>     update(time, _dt, s, lat) {
+>       lastS = s;
+>       if (M05COIN) { const f = course.sample(s); post05.uC05Benny.value.copy(f.pos).addScaledVector(f.right, lat); }
+>       let picked = 0;
+>       for (let i = 0; i < defs.length; i++) {
+>         if (collected[i]) continue;
+>         const d = defs[i];
+>         const ds = d.s - s;
+>         if (ds < -2 || ds > 2) continue;
+>         if (Math.abs(ds) < 1.0 && Math.abs((d.pickLat ?? d.lat) - lat) < 1.25) {
+>           collected[i] = 1;
+>           popT[i] = time;
+>           picked++;
+>         }
+>       }
+>       place(time);
+>       return picked;
+>     },
+>     resetUntil(s) {
+>       lastS = s - 0.5;
+>       if (M05COIN) post05.uC05Benny.value.copy(course.sample(s - 0.5).pos);
+>       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+>       place(0);
+>     },
+>   };
+> }
+

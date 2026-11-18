@@ -1232,3 +1232,79 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T19:33:21.079Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && M08_DET=1 M08_ONLY=a00 node tools/match08/shots08.mjs 08 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/dbg \"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt)&m08dbg=1\" 2>&1 | grep \"^08\"", "description": "Render proxy debug colours at the approved view", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T19:33:56.922Z
+
+> ↩︎ result: 08 a00_approved_view s 391.427 lat 0 stage 08 frames 0
+
+### 🤖 Claude — 2026-11-18T19:34:06.180Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/dbg/a00_approved_view.png"}`
+
+### 🧑 User — 2026-11-18T19:34:06.209Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:34:49.476Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/tools/probe.mjs <<'EOF'\n// QA probe: step to a shot position (like shots08) and ray-probe frame pixels. usage: node probe.mjs <query> <dist> <steer|null> x,y x,y ...\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q, distS, steerS, ...pts] = process.argv.slice(2);\nco …[+1648 chars]`
+
+### 🧑 User — 2026-11-18T19:35:09.012Z
+
+> ↩︎ result: [240, 600] [('m08_collar', 21.89, [7.1, -110.71, -305.54]), ('Mesh', 38.91, [3.27, -111.35, -322.11]), ('Mesh', 39.11, [3.23, -111.36, -322.3])]
+> [280, 600] [('m08_collar', 21.74, [7.78, -110.7, -305.54]), ('m08_chamber', 44.02, [3.43, -111.53, -327.37]), ('Mesh', 44.02, [3.43, -111.53, -327.37])]
+> [280, 630] [('m08_collar', 21.77, [7.77, -111.21, -305.54]), ('Mesh', 38.87, [4.44, -112.23, -322.28]), ('Mesh', 39.11, [4.39, -112.25, -322.51])]
+> [320, 600] [('m08_collar', 21.62, [8.46, -110.7, -305.54]), ('m08_platform_legs', 37.5, [5.84, -111.28, -321.19]), ('m08_platform_legs', 42.98, [4.93, -111.48, -326.59])]
+> [250, 560] [('m08_collar', 21.83, [7.28, -110.05, -305.54]), ('Mesh', 45.93, [2.05, -110.21, -329.06]), ('m08_chamber', 45.94, [2.04, -110.21, -329.07])]
+> [280, 565] [('m08_collar', 21.73, [7.78, -110.13, -305.54]), ('m08_platform_rim', 36.86, [4.84, -110.28, -320.38]), ('m08_platform_rim', 43.13, [3.61, -110.35, -326.53])]
+> [790, 600] [('m08_collar', 21.72, [16.16, -110.6, -305.54]), ('Mesh', 45.79, [20.75, -111.37, -329.15]), ('m08_chamber', 45.82, [20.76, -111.37, -329.18])]
+> [830, 620] [('m08_collar', 21.87, [16.82, -110.91, -305.54]), ('Mesh', 38.18, [20.4, -111.67, -321.44]) …[+51 chars]
+
+### 🤖 Claude — 2026-11-18T19:35:17.111Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && node /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/tools/probe.mjs \"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt)\" 10 null 240,600 280,630 2>&1 | grep -v \"allow list\" | python3 -c \"\nimport json,sys; d=json.load(sys.stdin)\nfor e in d: print(e['px'], [(h['obj'], h['d']) for h in e['hits'][:4]])\"", "description": "Probe again printing full object paths", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T19:35:45.340Z
+
+> ↩︎ result: [240, 600] [('m08_collar<match08_projection<Scene', 21.89), ('Mesh<water_puddles<water_system<Scene', 38.91), ('Mesh<zone_chamber<washer_world<Scene', 39.11), ('m08_chamber<match08_projection<Scene', 39.13)]
+> [280, 630] [('m08_collar<match08_projection<Scene', 21.77), ('Mesh<water_puddles<water_system<Scene', 38.87), ('Mesh<zone_chamber<washer_world<Scene', 39.11), ('m08_chamber<match08_projection<Scene', 39.12)]
+
+### 🤖 Claude — 2026-11-18T19:36:07.271Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"uDbgUv\" src/world/match08.ts && sed -n 236,262p src/world/match08.ts", "description": "Locate debug uniform and visibility code lines"}`
+
+### 🧑 User — 2026-11-18T19:36:07.371Z
+
+> ↩︎ result: 87:uniform float uDbgUv;       // QA only m08dbguv (r15)
+> 296:    if (uDbgUv > 0.5) { vec2 du = pj.xy / max(pj.w, 1e-4) * 0.5 + 0.5; gl_FragColor = vec4(pjInverse(vec3(du, wn)), 1.0); return; }
+> 453:      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uSr: { value: 0 },
+> 477:    if (flag05('m08dbguv')) u.uDbgUv.value = 1;
+>   // across the vertical plane through the cup axis and the projector; off the approved viewpoint only
+>   if (uCup.w > 0.5) {
+>     float mc = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
+>     // (r12: turning the hidden point about the cup axis instead (+-45 / +-90 deg) put wall pixels on the cup top: the
+>     // proxy dome is taller than the painted cup -> mirror only)
+>     vec3 wm = vW - 2.0 * dot(vW - uCup.xyz, uCupM) * uCupM;
+>     vec4 pm = uProjVP * vec4(wm, 1.0);
+>     if (mc > 0.0 && pw < 0.999 && pm.w > 0.0) {
+>       vec3 nd = pm.xyz / pm.w;
+>       vec2 um = nd.xy * 0.5 + 0.5;
+>       if (um.x >= 0.0 && um.x <= 1.0 && um.y >= 0.0 && um.y <= 1.0) {
+>         float zf = linZ(nd.z * 0.5 + 0.5), zs = linZ(texture2D(uDepth, um).r);
+>         float vm = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf  …[+1093 chars]
+
+### 🤖 Claude — 2026-11-18T19:36:16.256Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"uniform float uDbgUv;       // QA only m08dbguv (r15)\\n\",\"uniform float uDbgUv;       // QA only m08dbguv (r15)\\nuniform float uDbgVk;       // QA only m08dbgvk (r16): r = projector visibility, g = stretch guard keep, b = outside the plate\\n\",1)\ns=s.replace(\"  float pw = 0.0;  // weight of the direct projection in t (m08cup fills the rest from the cup's mirrored side)\\n\",\"  float pw = 0.0;  // weight of the direct projection in t (m08cup fills the rest from the cup's mir …[+776 chars]`
+
+### 🧑 User — 2026-11-18T19:36:16.586Z
+
+> ↩︎ result: 88:uniform float uDbgVk;       // QA only m08dbgvk (r16): r = projector visibility, g = stretch guard keep, b = outside the plate
+> 199:  float dv = -1.0;  // QA m08dbgvk
+> 234:      dv = vis;
+> 240:  if (uDbgVk > 0.5) { gl_FragColor = vec4(max(dv, 0.0), keep, dv < 0.0 ? 1.0 : 0.0, 1.0); return; }
+> 457:      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uDbgVk: { value: flag05('m08dbgvk') ? 1 : 0 }, uSr: { value: 0 },
+

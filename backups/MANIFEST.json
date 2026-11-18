@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17467,
-   "sha256": "2bbe470bf69de9c326acd758fd5985085d4afafa999e01161b91deccac392402"
+   "sha256": "7004c5182d49d950be0732014d3a53ddc6e04c0e818864dffb06ecc1b7012812"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1014,7 +1014,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/INFO.json",
    "bytes": 1273,
-   "sha256": "d8f580a1692013bdd8d4f9ad2a48280b91d3dac5506c279cac353529037b0aae"
+   "sha256": "3859cfb79196ff9b6a096c6c2401d4f8928e5fe42807a1f75fa811b06c1edb02"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/tracked.patch",
@@ -1119,7 +1119,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/INFO.json",
    "bytes": 486,
-   "sha256": "04a15d401f2d55264962975594aee82c1be964fbd61bcef6a575f3cf2e5714eb"
+   "sha256": "9cd2a7f566eaeea404500b05d272c455f884e4c2854eda18d7ae63c579a19d59"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1324,7 +1324,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/INFO.json",
    "bytes": 2538,
-   "sha256": "03d5845f599ab3b1678cfd1785e94e0fa2f15ea4fe797ed6b77d72f121e0391e"
+   "sha256": "11850b73417d2a1a7cb85b4593acfc04e0ad17888d539db47024fa02d0f16867"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/tracked.patch",
@@ -1479,12 +1479,12 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/INFO.json",
    "bytes": 504,
-   "sha256": "02f81bfac0ca3c244f39de28c2a8539ff8a9dc2c0f108fecd4b964d36449d632"
+   "sha256": "1b1f0fb758c77f34a898ee4574362355adbf2224de2ba7fbe98a90995bcf3ab2"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/tracked.patch",
-   "bytes": 10339,
-   "sha256": "4551fb3ab8f1e19dacf79ec078bc43e6753671b699303136168d0d991d482031"
+   "bytes": 2308,
+   "sha256": "6149d15e8cf41eea3b603e25f589538ae23b1afeb3a1c062ab5a273ee006c2f6"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -1523,8 +1523,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/INFO.json",
-   "bytes": 839,
-   "sha256": "28e134673a022616b1a30f7203e5bab2aa5ce107ea580e2198526d7c30265ba4"
+   "bytes": 951,
+   "sha256": "fa56dbab9ca92988d0fb4751260f926712188ffe00e5aa3b0792f32156bdfe66"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/tracked.patch",
@@ -1644,7 +1644,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/INFO.json",
    "bytes": 485,
-   "sha256": "adb73c190a17ecb4fc3e6caa155f189fc20b2ca431f4fac146f09c63ed7d2749"
+   "sha256": "91c7cc6c89caf3e726eebbea606a5aaed65f28d73a96172fc509178f352b5251"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -2033,8 +2033,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r16/COORDINATION.md",
-   "bytes": 10241,
-   "sha256": "f3da6af62673cb394a0629adc0a70f4909a5a540d1ea11dd850abec4c110442a"
+   "bytes": 10805,
+   "sha256": "8be34596f6f5dd02d007d9f67e99936e56c474c88c6a10e0347452661155e10c"
   },
   {
    "path": "docs/briefs/2026-11-18-r16/RESUME_R16.md",
@@ -11540,6 +11540,41 @@
    "path": "qa/review_r16/04_ringpaint_step1/3_NEW_s_left_hard.png",
    "bytes": 1617405,
    "sha256": "a3215282bc75309d41faaff447a2bb7d1a459865a57276f2c190f8356182f66f"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/2_BEFORE_f06_forward6u.png",
+   "bytes": 1932758,
+   "sha256": "895acb9a381d0d1e2ef915da82569745a0f1299ab44411735c9bbae4f0c8eb10"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/2_BEFORE_f20_forward20u.png",
+   "bytes": 1662155,
+   "sha256": "7e4796fa186628a0f057854ebc24a1ddfbf6fea41554dc80f1e3114a29eeb8ff"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/2_BEFORE_s_left_hard.png",
+   "bytes": 1587066,
+   "sha256": "aef26cd63396ab37fd64d8ce579e45ad6260424d6be5e2fd14f139ec4d21c3f8"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/3_NEW_f06_forward6u.png",
+   "bytes": 1945140,
+   "sha256": "40f70389e6052f5d28330d0683891493abc82e37d1a5abc634e9e542b3eff973"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/3_NEW_f20_forward20u.png",
+   "bytes": 1689284,
+   "sha256": "1c89bdc067f3b5b094c3f41833397fd30b873c408a8363eb8fa08c684ed9b4df"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/3_NEW_s_left_hard.png",
+   "bytes": 1630149,
+   "sha256": "b4621cafbe46be9c27f066fd7c1db99c3ff6cc5db87b1b8342cff61d97648061"
   },
   {
    "path": "qa/review_r16/06_step1_gold_rings/1_APPROVED.png",
