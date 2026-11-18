@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15506,
-   "sha256": "1b1f888b88a9e77abde187f8e6e6e65f64877758e19b3d1afbb5d9fe5543bd97"
+   "sha256": "47ed8187c93ced7b55208960639e9619edb042d7aeae135a12091ed87e7314e3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -764,7 +764,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c12/INFO.json",
    "bytes": 477,
-   "sha256": "70ba97519d55624c0114025d6bd940a401f7c19c0b3e07b40aa0887467a907e2"
+   "sha256": "1e8d2c2aebbcd2d4f00226860fde2e5b09cfec563a90d4ef27399861f7fefcd2"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -788,18 +788,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/INFO.json",
-   "bytes": 1533,
-   "sha256": "4632b99f6b9bba7aba7a98b3f2ec5e8678ae833bee26e0ca9e979894dcc75968"
+   "bytes": 503,
+   "sha256": "f4c3183d4fea21b4ee14ade55630aa3d889da297294bee90c2e7026a7349bdf8"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/tracked.patch",
-   "bytes": 9307,
-   "sha256": "6f85586a72ce5c508b604415aed42ab84dda720582a805cfb567120f0e2fd026"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c12/untracked/qa/match/05/r12/BEFORE/shots.json",
-   "bytes": 108109,
-   "sha256": "d27d7dfb41270d48b16d618aa5759ae06ba218af2e6a84b2296a94c237975b9e"
+   "bytes": 1231,
+   "sha256": "924ec223eb75371961846bf015b90f889146503447edafdcb1c055ce6be7bd97"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -839,12 +834,12 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/INFO.json",
    "bytes": 545,
-   "sha256": "3cd44ef303c6bb425ff1b765d248a9dcff7c634c406c1d1ab320116b3f782713"
+   "sha256": "001b7fae1f7cf67560842725fe0dbfa1b154e61fc854a3449710607a0081158b"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/tracked.patch",
-   "bytes": 4986,
-   "sha256": "7dec4890f8ce53878d68d67d43a136cab1828c0ee010196705fbb8d5e5d3c8bb"
+   "bytes": 5172,
+   "sha256": "2d9ef6b9193143d862ff536d6e21b1ab4e63e7fb7d368bbd8c19f01cd317efaf"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/tools/match08/cupmask08.py",
