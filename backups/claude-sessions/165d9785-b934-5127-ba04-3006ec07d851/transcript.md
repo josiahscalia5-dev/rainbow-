@@ -2083,3 +2083,271 @@ The Screen 04 verdict is saved on its branch (`0c941001`, matches GitHub). Here 
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r12/COORDINATION.md <<'EOF'\n| 1 (~12:55) | 04 lead: round-11 decisive test `m04mv` (V04-1/V04-2 projected from their game cameras; `0c941001`, log `qa/match/04/r12/PROGRESS.md`) | NOT AN IMPROVEMENT (views reach only the upper tunnel wall; torn gold blocks at the top). Method stopped; V04-1/V04-2 stay by-eye design references for the real 3D rebuild |\nEOF\ntimeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:04-verdict 2>&1 | grep -E '\"result\"|\"commit\"'; python3 -I scripts/autosave-sta …[+96 chars]`
 
+### 🧑 User — 2026-11-18T12:49:26.609Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "36ab788541c5a9a3a6973ead64c98bd2da9b6641",
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T12:49:15+00:00 (0.2 min ago) | local 36ab788 remote 36ab788 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T12:49:31.620Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; B=qa/match/04/r11/BEFORE; convert references/04_through_the_five_arrows.png $B/a00_approved_view.png $B/f03_forward3u.png $B/f06_forward6u.png -resize 330x587! +append $S/early.jpg; echo ok", "description": "Montage approved vs early 04 swim frames"}`
+
+### 🧑 User — 2026-11-18T12:49:32.013Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:49:33.573Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/early.jpg"}`
+
+### 🧑 User — 2026-11-18T12:49:33.611Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:49:42.977Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls qa/match/04/r10/testC | head -20; grep -n \"m04foam3\\|m04arr5\\|m04a5n0\\|m04ry\\|m04pink\\|m04a5w\" src/world/match04m4.ts | head -30", "description": "List test C frames and its switches in code"}`
+
+### 🧑 User — 2026-11-18T12:49:43.050Z
+
+> ↩︎ result: f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> 15: *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+> 17: *  m04pink  — (round 9, with m04river) the broad pink / magenta swirl bands on both sides of the narrow cyan arrow lane.
+> 18: *  m04arr5  — (round 9, with m04river) the five glowing chevrons as painted: fat flat white-cyan bars nested one after
+> 42:  foam3: on('m04foam3'),
+> 43:  pink: on('m04pink'),
+> 44:  arr5: on('m04arr5'),
+> 289:uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength
+> 290:uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+> 291:uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+> 292:uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
+> 320:    // m04pink: the painted broad pink / magenta swirl bands either side of the cyan lane; the swirl structure (the
+> 331:    // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), a …[+415 chars]
+
+### 🤖 Claude — 2026-11-18T12:49:45.871Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert references/04_through_the_five_arrows.png qa/match/04/r11/BEFORE/f10_forward10u.png qa/match/04/r10/testC/f10_forward10u.png qa/match/04/r10/testC/f20_forward20u.png -resize 330x587! +append $S/testC.jpg; python3 -c \"import json;print(json.load(open('qa/match/04/r10/testC/motion.json'))['query'])\"", "description": "Montage approved, BEFORE and test C frames"}`
+
+### 🧑 User — 2026-11-18T12:49:46.710Z
+
+> ↩︎ result: match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04arr5=1&m04a5n0=2&m04a5n1=3.5&m04a5w=1.6&m04ry=2.2
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:49:48.185Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/testC.jpg"}`
+
+### 🧑 User — 2026-11-18T12:49:48.254Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:49:58.178Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 325,360p src/world/match04m4.ts; sed -n 580,600p src/world/match04m4.ts; grep -n \"uA5b.value\\|a5b\\.\\|uA5\\.value\\|a5\\.\\(z\\|set\\)\" src/world/match04m4.ts | head", "description": "Read the five-arrow shader code"}`
+
+### 🧑 User — 2026-11-18T12:49:58.247Z
+
+> ↩︎ result: pk = mix(pk, vec3(1.0, 0.78, 0.96), smoothstep(0.66, 0.95, l));
+>     float n = vn(vec2(fl * 0.22, vS * 0.6 + 11.0));
+>     float keepCyan = smoothstep(0.62, 0.85, n);                       // a few cyan swirls survive inside the pink
+>     col = mix(col, pk, side * uPk.w * (1.0 - 0.75 * keepCyan));
+>   }
+>   if (uA5.x > 0.5) {
+>     // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
+>     float k5 = floor((along - uA5.z) / uA5.y + 0.5);
+>     float ap = uA5.z + k5 * uA5.y;                       // this arrow's apex (front edge at the centre)
+>     // along grows down the slide (away from the camera), the apex points away; v = 0 on the front V line, < 0 toward
+>     // the camera; the bar lies between v = -T and v = 0, its ends cut along the flow at |lat| = half width
+>     float v = (along - ap) + abs(vS) * uA5b.y;
+>     float dIn = max(max(v, -uA5.w - v), abs(vS) - uA5b.x); // < 0 inside the bar (units ~ along-flow)
+>     float cd = ap - uA5b.z;                               // arrow distance ahead of the camera
+>     float vis = (k5 >= 0.0 ? 1.0 : 0.0) * smoothstep(uA5n.x, uA5n.y, cd) * (1.0 - smoothstep(uA5b.w - 6.0, uA5b.w, cd));
+>     float px = fwidth(dIn …[+2740 chars]
+
+### 🤖 Claude — 2026-11-18T12:50:12.884Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls tools/match04/; wc -l tools/lead_r6/motion_audit.mjs; grep -n \"uA5:\\|new THREE.Vector4(1, M04\\|m04a5sp\\|m04a5z\\|m04a5t\" src/world/match04m4.ts | head", "description": "List 04 tools and arrow default params"}`
+
+### 🧑 User — 2026-11-18T12:50:12.955Z
+
+> ↩︎ result: audit04.mjs
+> bennypts04.mjs
+> blueprint04.py
+> coins04.py
+> fal_plate04.py
+> fit_proxies04.py
+> make_plate04.py
+> make_river04_m3.py
+> make_tiles04.py
+> metrics04.py
+> motion04.mjs
+> mouth04.py
+> mv04_prep.py
+> nochev04.py
+> probe04.mjs
+> solve_cam04.py
+> splash04.py
+> 48 tools/lead_r6/motion_audit.mjs
+> 635:        uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:50:14.639Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,8p tools/lead_r6/motion_audit.mjs; sed -n 30,48p tools/lead_r6/motion_audit.mjs", "description": "Read rest of the motion audit tool"}`
+
+### 🧑 User — 2026-11-18T12:50:14.689Z
+
+> ↩︎ result: // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+>       const s0 = r.state().s;
+>       const stg = r.course.stage(id);
+>       const s1 = stg.s1 ?? (stg.s0 + (stg.length ?? 0));
+>       const target = typeof dist === 'string' ? s0 + Number(dist.slice(1)) * Math.max(0, s1 - s0) : s0 + dist;
+>       r.setSteer(steer);
+>       let n = 0; while (r.state().s < target - 1e-3 && n < 4000) { r.step(1); n++; }
+>       r.setSteer(null);
+>       r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
+>       return { ...r.st …[+516 chars]
+
+### 🤖 Claude — 2026-11-18T12:50:18.387Z
+
+I'll write a small test-render tool for Screen 04. It renders only chosen positions, for several setting variants in one run, so each comparison takes minutes instead of a full audit.
+
+### 🤖 Claude — 2026-11-18T12:50:27.313Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/tools/match04/ab04.mjs", "content": "// Round 12 (lead): A/B test renders for Screen 04 — the same shot positions and simulation stepping as\n// tools/lead_r6/motion_audit.mjs, but only the named shots and several query variants in ONE browser/vite session.\n//   node tools/match04/ab04.mjs <outDir> '<shots JSON: [[name, dist|\"tN\", steer|null], ...]>' label1='<query>' label2='<query>' ...\n// Writes <outDir>/<label>/<shot>.png (+ motion.json per label). Run from the worktree root.\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL }  …[+2187 chars]`
+
+### 🧑 User — 2026-11-18T12:50:27.355Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/tools/match04/ab04.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T12:50:42.485Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1' && C=\"$K&m04foam3=1&m04arr5=1&m04a5n0=2&m04a5n1=3.5&m04a5w=1.6&m04ry=2.2\" && nice -n 5 timeout 1500 node tools/match04/ab04.mjs qa/match/04/r12/ab1 '[[\"f06_forward6u\",6,null],[\"f10_forward10u\",10,null],[\"f20_forward20u\",20,null]]' \"C=$C\" \"C2=$C&m04a5t=2.6&m04a5p=4.4\" 2>&1 | grep -v \"Vite serving allow\" | tail -8", "description": "A/B render test C vs thicker arrows", "timeout": 1600000}`
+
+### 🧑 User — 2026-11-18T12:51:39.217Z
+
+> ↩︎ result: C f06_forward6u s 84.32 lat 0
+> C f10_forward10u s 88.15 lat 0
+> C f20_forward20u s 98.18 lat 0
+> C2 f06_forward6u s 84.32 lat 0
+> C2 f10_forward10u s 88.15 lat 0
+> C2 f20_forward20u s 98.18 lat 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:51:42.810Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/ab1 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert C/f06_forward6u.png C2/f06_forward6u.png C/f10_forward10u.png C2/f10_forward10u.png -crop 864x900+0+400 -resize 330x344! +append $S/ab1.jpg; echo ok", "description": "Montage lower half of the arrow variants"}`
+
+### 🧑 User — 2026-11-18T12:51:43.570Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:51:45.685Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/ab1.jpg"}`
+
+### 🧑 User — 2026-11-18T12:51:45.716Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:51:48.639Z
+
+At this size I can't see arrows in either variant. I'll crop the river lane just ahead of Benny at full resolution.
+
+### 🤖 Claude — 2026-11-18T12:51:51.300Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/ab1 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert C/f10_forward10u.png C2/f10_forward10u.png -crop 520x520+172+380 +append $S/ab1crop.jpg; convert /home/user/wt/s04/references/04_through_the_five_arrows.png -crop 520x620+150+330 -resize 420x500 $S/appr_arrows.jpg; echo ok", "description": "Crop the lane ahead of Benny at full size"}`
+
+### 🧑 User — 2026-11-18T12:51:51.628Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:51:53.902Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/ab1crop.jpg"}`
+
+### 🧑 User — 2026-11-18T12:51:53.929Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:51:54.520Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/appr_arrows.jpg"}`
+
+### 🧑 User — 2026-11-18T12:51:54.561Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:52:32.501Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/qa/match/04/r12/BRIEF_NEXT_SLOT.md", "content": "# Screen 04 — brief for the next specialist slot (round 12, written by the account-12 lead ~13:05 UTC)\n\nStart from `claude/rainbow-s04-match-c12` (newest tip). Rules: `docs/briefs/2026-11-18-r8/COMMON_RULES.md`,\n`docs/briefs/2026-11-18-r10/RULES_R10.md`, `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`. Log `qa/match/04/r12/PROGRESS.md`.\nAuthority: `references/04_through_the_five_arrows.png`. The user's PROVISIONAL views V04-1 / V04-2\n(`qa/review_c10/2026-11-18/04_proposed_views/`) are by-eye DESIGN REF …[+2522 chars]`
+
+### 🧑 User — 2026-11-18T12:52:32.559Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/qa/match/04/r12/BRIEF_NEXT_SLOT.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T12:52:37.717Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git add tools/match04/ab04.mjs qa/match/04/r12/BRIEF_NEXT_SLOT.md qa/match/04/r12/ab1 && git commit -q -m \"Screen 04 r12 (lead): A/B tool ab04.mjs, arrow-visibility A/B (thicker bars do not help: class-A water-surface/eye-level difference), brief for the next 04 specialist slot\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCKfdpvqQ7mmysqABBC\" && timeout 300 git push -q origin claude/rainbow-s04-match-c12 2>&1 | grep -v '^remote:' | tail -2; echo \"remote=$(git ls-remote origin refs/heads/c …[+314 chars]`
+
+### 🧑 User — 2026-11-18T12:52:43.008Z
+
+> ↩︎ result: remote=943509989a local=943509989a
+> s05: 38fb442c 2026-11-18 12:52:42 +0000 Screen 05 r12 step 1: &m05fmag=1 — far river behind the sliding seam shows its own  | dirty 1
+> s08: 35b5fc5a 2026-11-18 12:15:35 +0000 Screen 08 r11 step 2: &m08near=1 crisp painted near water while swimming (approved ne | dirty 2
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:52:44.765Z
+
+The 05 specialist has already committed its first kept step (`38fb442c`): the unfinished water fix from account 11. I'll read its entry and check the pictures myself before showing you.
+
+### 🤖 Claude — 2026-11-18T12:52:45.816Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && tail -30 qa/match/05/r12/PROGRESS.md; ls qa/match/05/r12/; ls qa/match/05/r12/step1*/ 2>/dev/null", "description": "Read Screen 05 step 1 log entry"}`
+
+### 🧑 User — 2026-11-18T12:52:45.892Z
+
+> ↩︎ result: Kept set at start (round 11 end):
+> `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1`
+> 
+> BEFORE set (fresh, exactly that query, `tools/match05/r8_shots.mjs` = the lead's motion_audit positions / stepping):
+> `/home/user/wt/s05/qa/match/05/r12/BEFORE/` — the 12 audit shots plus the probe positions k81_kink(_left/_right),
+> t75_through, t85_through, t90_through, t95_left, t95_right, t98_end (positions in `shots.json` there).
+> 
+> ## Step 1 — `&m05fmag=1` (round-11 unfinished work, class B: the far river right behind the sliding seam) — KEPT
+> * Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1`
+> * Cause: the far block wears the approved picture's far water (baked for the locked eye). Swimming close to the seam
+>   magnified it 2–4× into a pale, smeared sheet with dark speckle dashes and an angular pale slab on the left.
+> * Fix (mapping only, geometry untouched): where that baked far water would be magnified and the block is live, the far
+>   river s …[+2128 chars]
+
+### 🤖 Claude — 2026-11-18T12:52:48.952Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r12/step1_m05fmag && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; convert 1_APPROVED.png 2_BEFORE_t85_through.png 3_NEW_t85_through.png 2_BEFORE_t95_through_screen.png 3_NEW_t95_through_screen.png -resize 264x469! +append $S/s05_step1.jpg; echo ok", "description": "Montage 05 step 1 for my own check"}`
+
+### 🧑 User — 2026-11-18T12:52:49.626Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:52:51.771Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s05_step1.jpg"}`
+
+### 🧑 User — 2026-11-18T12:52:51.823Z
+
+> ↩︎ result: [image]
+

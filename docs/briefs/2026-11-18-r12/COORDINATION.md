@@ -33,3 +33,4 @@ If account 12 runs out: `-c13` branches from each NEWEST `-c12` tip (or `-c11` w
 | # | Screen / step | Verdict |
 |---|---|---|
 | 1 (~12:55) | 04 lead: round-11 decisive test `m04mv` (V04-1/V04-2 projected from their game cameras; `0c941001`, log `qa/match/04/r12/PROGRESS.md`) | NOT AN IMPROVEMENT (views reach only the upper tunnel wall; torn gold blocks at the top). Method stopped; V04-1/V04-2 stay by-eye design references for the real 3D rebuild |
+| 2 (~13:08) | 05 step 1 `m05fmag` (far river behind the sliding seam: own painted cyan-core / hot-pink-band continuation instead of the magnified pale smear; `38fb442c`) | GOOD IMPROVEMENT, modest (far continuation flatter than painted; straight join line at t66/t75/k81; pale slab left at t66 unchanged) |

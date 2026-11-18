@@ -1,5 +1,5 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index ae53e6a4..23e450c3 100644
+index ae53e6a4..333d6073 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
 @@ -79,6 +79,8 @@ uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from
@@ -19,7 +19,7 @@ index ae53e6a4..23e450c3 100644
    if (uSwim > 0.5) {
      float ms = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
      if (ms > 0.0) pj = uProjVP * vec4(swimRemap(vW, ms), 1.0);
-@@ -183,6 +186,24 @@ void main() {
+@@ -183,6 +186,26 @@ void main() {
          base = mix(pc, oc.rgb, oc.a * smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
        }
        t = mix(base, texture2D(uPlate, uv).rgb, vis * keep);
@@ -31,6 +31,8 @@ index ae53e6a4..23e450c3 100644
 +  // across the vertical plane through the cup axis and the projector; off the approved viewpoint only
 +  if (uCup.w > 0.5) {
 +    float mc = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
++    // (r12: turning the hidden point about the cup axis instead (+-45 / +-90 deg) put wall pixels on the cup top: the
++    // proxy dome is taller than the painted cup -> mirror only)
 +    vec3 wm = vW - 2.0 * dot(vW - uCup.xyz, uCupM) * uCupM;
 +    vec4 pm = uProjVP * vec4(wm, 1.0);
 +    if (mc > 0.0 && pw < 0.999 && pm.w > 0.0) {
@@ -44,7 +46,7 @@ index ae53e6a4..23e450c3 100644
      }
    }
    // m08near: where the moving camera sees the floor projection magnified (it shows plate pixels the approved view saw far
-@@ -314,7 +335,8 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -314,7 +337,8 @@ export async function buildMatch08(): Promise<Match08> {
        uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) },
        uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) },
        uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
@@ -54,7 +56,7 @@ index ae53e6a4..23e450c3 100644
    });
    // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
    const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
-@@ -505,11 +527,20 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -505,11 +529,20 @@ export async function buildMatch08(): Promise<Match08> {
      ]), M.towel, 'towel');
    } else add(new THREE.BoxGeometry(T.w, T.h, T.d, 4, 4, 4).translate(T.cx, T.y0 + T.h / 2, T.cz), M.towel, 'towel');
    // four half-dome spouts (flat perforated underside down)

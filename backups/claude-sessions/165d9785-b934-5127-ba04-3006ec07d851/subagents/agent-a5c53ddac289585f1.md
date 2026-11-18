@@ -614,3 +614,154 @@ Let me render the BEFORE (kept set) and NEW (+m08cup) at the cup positions. Firs
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T12:49:25.838Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I tools/match08/cupmask08.py $S/cupmask.png $S/cupmask_dbg.png && cat assets/textures/match08/proj08.json | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['spouts']); print(d['chamber'], d['arch'], d['floorY'])\"", "description": "Run cup mask tool and show spout layout"}`
+
+### 🧑 User — 2026-11-18T12:49:26.491Z
+
+> ↩︎ result: R px 19520 G px 1934
+> UL painted px 12519 not covered by the proxy 6040 proxy px outside 1453
+> UR painted px 8935 not covered by the proxy 5349 proxy px outside 377
+> {'UL': {'c': [3.1710933558756533, -103.34538602777661, -322.0], 'rx': 2.994802720331874, 'ry': 1.5609787975448057, 'box': [150, 330, 315, 420], 'dist': 48.620550490974146}, 'UR': {'c': [20.31350571523367, -104.8372219034162, -322.0], 'rx': 1.6675780274254421, 'ry': 1.5469960618334397, 'box': [665, 370, 760, 460], 'dist': 48.05003315471231}, 'LL': {'c': [5.375109478094917, -112.86268785494082, -300.3881314740565], 'rx': 2.742515526831511, 'ry': 2.1045940033639923, 'box': [0, 605, 265, 810], 'dist': 26.824475092918487}, 'LR': {'c': [17.31491754871673, -113.50974018464298, -298.5314700767885], 'rx': 2.2865447507216654, 'ry': 2.208510981338435, 'box': [615, 640, 864, 875], 'dist': 24.42091990864688}}
+> {'cx': 12.0, 'cy': -101.1, 'r': 13.5, 'zBack': -280.0, 'zDoor': -332.0} {'z': -281.2164245171123, 'outer': {'cx': 12.376735924463707, 'cy': -111.01146278742368, 'r': 2.8785458098908463}, 'inner': {'cx': 12.388294771720878, 'cy': -110.98244622251975, 'r': 2.5653852087433306}, 'depth': 0.9, 'feetZ': [-281.1505024527194, -281.282346 …[+77 chars]
+
+### 🤖 Claude — 2026-11-18T12:49:34.547Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/cupmask_dbg.png"}`
+
+### 🧑 User — 2026-11-18T12:49:34.567Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:49:39.300Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K10='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/dbg && M08_ONLY=a00,f06 node tools/match08/shots08.mjs 08 $S/dbg \"$K10&m08ceil=1&m08near=1&m08dbg=1\" 2>&1 | grep -v 'allow list' | tail -4", "description": "Render debug proxy colour view", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T12:50:01.650Z
+
+> ↩︎ result: 08 a00_approved_view s 392.087 lat 0 stage 08 frames 0
+> 08 f06_forward6u s 398.018 lat 0 stage 08 frames 38
+
+### 🤖 Claude — 2026-11-18T12:50:06.199Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/dbg/a00_approved_view.png').convert('RGB')).astype(float)\nr=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((864,1536))).astype(float)\nm=np.asarray(Image.open('$S/cupmask.png').convert('RGB'))\no=(0.5*a+0.5*r)\nedge=(m[...,0]>127)|(m[...,1]>127)\nfrom scipy import ndimage\ne=edge & ~ndimage.binary_erosion(edge,iterations=2)\no[e]=[255,255,255]\nIm …[+158 chars]`
+
+### 🧑 User — 2026-11-18T12:50:07.969Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:50:10.566Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/dbg_overlay.png"}`
+
+### 🧑 User — 2026-11-18T12:50:10.589Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:50:29.798Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_cup_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T12:50:29.833Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:50:33.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/v_f06low.png 0,450,864,1100 0.75 $S/cupB/f06_forward6u.png $S/cupN/f06_forward6u.png", "description": "Compare lower area at f06"}`
+
+### 🧑 User — 2026-11-18T12:50:33.970Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:50:34.568Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_f06low.png"}`
+
+### 🧑 User — 2026-11-18T12:50:34.603Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:50:54.548Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  if (uCup.w > 0.5) {\n    float mc = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));\n    vec3 wm = vW - 2.0 * dot(vW - uCup.xyz, uCupM) * uCupM;\n    vec4 pm = uProjVP * vec4(wm, 1.0);\n    if (mc > 0.0 && pw < 0.999 && pm.w > 0.0) {\n      vec3 nd = pm.xyz / pm.w;\n      vec2 um = nd.xy * 0.5 + 0.5;\n      if (um.x >= 0.0 && um.x <= 1.0 && um.y >= 0.0 && um.y <= 1.0) {\n        float zf = linZ(nd.z * 0.5 + 0.5), zs = linZ(texture2D(uDepth, um).r);\n        float vm = 1.0 - smoothstep(0.015 …[+1408 chars]`
+
+### 🧑 User — 2026-11-18T12:50:54.610Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T12:51:04.857Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && npx tsc --noEmit -p . && export K10='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/cupN2 && M08_ONLY=f06,f10,t66 node tools/match08/shots08.mjs 08 $S/cupN2 \"$K10&m08ceil=1&m08near=1&m08cup=1\" 2>&1 | grep -v 'allow list' | tail -4 && python3 -I $S/bin/sbs.py $S/z2_ur.png 680,260,864,420 2.5 $S/cupB/f06_forward6u.png $S/cupN/f06_forward6u.png $S/cupN2/f06_forward6u.png && python3 -I $S/bin/sb …[+205 chars]`
+
+### 🧑 User — 2026-11-18T12:51:55.409Z
+
+> ↩︎ result: 08 f06_forward6u s 398.165 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.977 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+
+### 🤖 Claude — 2026-11-18T12:51:57.346Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z2_ur.png"}`
+
+### 🧑 User — 2026-11-18T12:51:57.369Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:51:57.907Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z2_urf10.png"}`
+
+### 🧑 User — 2026-11-18T12:51:57.928Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:52:18.448Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "    // candidates: the mirror point first, then the same point turned about the cup axis (+-45, +-90 deg) where the mirror\n    // point is hidden as well (the upper-right cup's top lies behind the arch's inner edge on both sides of the axis)\n    float acc = pw;\n    for (int k = 0; k < 5; k++) {\n      if (mc <= 0.0 || acc >= 0.999) break;\n      vec3 wm;\n      if (k == 0) wm = vW - 2.0 * dot(vW - uCup.xyz, uCupM) * uCupM;\n      else {\n        float ang = (k < 3 ? 0.785398 : 1.570796) * (mod(float …[+1400 chars]`
+
+### 🧑 User — 2026-11-18T12:52:18.497Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T12:52:20.752Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && npx tsc --noEmit -p . && sed -n 1,40p scripts/capture.mjs | head -50", "description": "Type-check and inspect capture script"}`
+
+### 🧑 User — 2026-11-18T12:52:23.480Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+1688 chars]
+
+### 🤖 Claude — 2026-11-18T12:52:27.329Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 40,80p scripts/capture.mjs | grep -n \"writeFileSync\\|log\" ", "description": "Check where capture writes logs"}`
+
+### 🧑 User — 2026-11-18T12:52:27.380Z
+
+> ↩︎ result: 14:    log.shots.push({ id, file: `${outDir}/${name}`, size: [w, h], checkpoint: st, state, stats });
+> 15:    console.log(id, '→', `${outDir}/${name}`, JSON.stringify({ stage: state.stage, s: state.s, y: state.bennyY, calls: stats.calls, tris: stats.triangles, modules: stats.modules }));
+> 19:  writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : `qa/capture_log${size ? '_' + size.join('x') : ''}.json`, JSON.stringify(log, null, 2));
+> 23:if (log.errors.length) console.error('console errors:', log.errors.slice(0, 10));
+
+### 🤖 Claude — 2026-11-18T12:52:34.866Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && node scripts/capture.mjs 08 --out=$S/capK --q=\"$K\" 2>&1 | grep -v 'allow list' | tail -2 && node scripts/capture.mjs 08 --out=$S/capC --q=\"$K&m08cup=1\" 2>&1 | grep -v 'allow list' | tail -2 && git checkout -- qa/capture_log.json 2>/dev/null; git status --short && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na= …[+380 chars]`
+
