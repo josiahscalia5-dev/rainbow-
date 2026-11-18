@@ -76,3 +76,15 @@ only as proof of what the interior should look like at those two spots.
 two pictures → cannot ghost): river sides at the measured ≈ 2.2 u (`m04ry`), painted water tile from V04-1/V04-2 laid along the
 river (the 05 `m05wtile` / 08 `m08near` method), glossy gold ring tile from V04-1 on the game's ring tunnel (uRingTile path),
 the five chevrons as real geometry on the lane, low foam clusters (`m04foam3`).
+
+### Calibration + unrolled-tile check (same session) — stopped
+* Camera direction is right: the tunnel's far end lies at the same place in the projected V04-1 (`mv04_V04-1.png`) and in the
+  game frame from the same camera (grid comparison). The only calibration error was the 0.9 u position offset (fixed, EXACT=1).
+* The real mismatch is SCALE: the AI painted Benny ≈ 1.7× bigger and lower than the game's Benny, and arranged the swirling pool
+  and the lane around that bigger Benny; his masked silhouette hides most of the river 6–15 u ahead in both views.
+* Unrolling V04-1's water into a world-anchored river tile (`tools/match04/vtile04.py`, sides at 2.2 u): 69 % of the tile is
+  hole (under painted Benny / below the frame) → unusable; generated files deleted, script kept for the record.
+**Conclusion for 04:** the AI views are good VISUAL TARGETS but cannot be projected or unrolled into a consistent stage. The 04
+specialist (next slot) rebuilds the interior as real geometry judged by eye against the approved picture + V04-1/V04-2:
+river sides at the measured ≈ 2.2 u (`m04ry`), low foam clusters (`m04foam3`), glossy yellow-gold ring material, the five
+arrows as real geometry; the round-10 test C query is the starting point (see BRIEF_NEXT_SLOT.md).
