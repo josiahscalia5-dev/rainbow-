@@ -671,3 +671,228 @@ Let me view the current near tile and then run the quilting helper into the scra
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T16:47:57.081Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/08_final_spin_chamber.png').convert('RGB'); print(a.size)\na=a.resize((864,1536))\nb=Image.open('qa/match/08/r14/BEFORE_K13/f06_forward6u.png').convert('RGB')\nc=Image.open('qa/match/08/r14/BEFORE_K13/a00_approved_view.png').convert('RGB')\nW=Image.new('RGB',(864*3+20,600),'white')\nW.paste(a.crop((0,936,864,1536)),(0,0)); W.paste(c.crop((0,936,864,1536)),(874,0)); W.paste(b.crop((0,936,864,1536)),(1748,0)) …[+91 chars]`
+
+### 🧑 User — 2026-11-18T16:47:57.752Z
+
+> ↩︎ result: (864, 1536)
+
+### 🤖 Claude — 2026-11-18T16:48:00.206Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp_bottom.png"}`
+
+### 🧑 User — 2026-11-18T16:48:00.429Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T16:48:00.425Z
+
+[Image: original 2612x600, displayed at 2000x459. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T16:48:53.092Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -I -c \"\nimport json; m=json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))\nfor s in m['shots']: print(s['name'], 'dist',s['dist'],'steer',s['steer'],'s',s['s'],'lat',s['lat'],'cam',s['cam'],'stage',s['stage'])\n\" ; sed -n 1,60p tools/match08/shots08.mjs", "description": "Inspect shot positions and capture script"}`
+
+### 🧑 User — 2026-11-18T16:48:53.153Z
+
+> ↩︎ result: a00_approved_view dist 0 steer None s 392.097 lat 0 cam [12.85, -109.87, -275.01] stage 08
+> f03_forward3u dist 3 steer None s 395.01 lat 0 cam [12.76, -109.89, -277.23] stage 08
+> f06_forward6u dist 6 steer None s 398.018 lat 0 cam [12.46, -109.89, -280.35] stage 08
+> f10_forward10u dist 10 steer None s 401.976 lat 0 cam [11.93, -109.9, -284.8] stage 08
+> f20_forward20u dist 20 steer None s 411.951 lat 0 cam [11.39, -109.9, -294.94] stage 09
+> s_left_steer dist 6 steer -1 s 398.019 lat -1.85 cam [10.84, -109.8, -280.14] stage 08
+> s_right_steer dist 6 steer 1 s 398.038 lat 1.85 cam [14.09, -109.99, -280.58] stage 08
+> s_left_hard dist 12 steer -1 s 404.036 lat -2.217 cam [9.9, -110.13, -286.97] stage 08
+> s_right_hard dist 12 steer 1 s 404.035 lat 2.217 cam [13.09, -109.68, -287.03] stage 08
+> t33_through_screen dist t0.33 steer None s 396.277 lat 0.005 cam [12.66, -109.89, -278.49] stage 08
+> t66_through_screen dist t0.66 steer None s 400.557 lat 0 cam [12.15, -109.9, -283.21] stage 08
+> t95_through_screen dist t0.95 steer None s 404.395 lat 0 cam [11.43, -109.9, -287.37] stage 09
+> // Screen 08 r11: copy of tools/lead_r6/motion_audit.mjs (same shot positions, same simulation path) that renders only
+> //  …[+2859 chars]
+
+### 🤖 Claude — 2026-11-18T16:49:33.110Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 90,130p qa/match/08/r12/PROGRESS.md; ls qa/match/08/r12/; wc -l qa/match/08/r12/wip_m08glint_not_kept.patch 2>/dev/null; ls qa/match/08/r12/NEW | head", "description": "Read r12 m08glint notes and files"}`
+
+### 🧑 User — 2026-11-18T16:49:33.158Z
+
+> ↩︎ result: * Still wrong: the continued rows are a little softer than the painted rows next to the door (the source window is small in
+>   the picture); the upper-right spout cup's top wedge (step 1) is still visible next to it.
+> * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step4_m08ring/1_APPROVED.png`,
+>   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `t95_through_screen`, `f10_forward10u`, `t66_through_screen`
+>   (BEFORE = `...&m08drum=1`, NEW = `+&m08ring=1`, rendered fresh, same positions).
+> 
+> ## Tried — `&m08glint=1` (near-water glints at painted size) — NOT KEPT (NOT AN IMPROVEMENT)
+> * Tried: the m08near tile at the painted scale in the lane's middle and along the river (banks take up the rest of the lane,
+>   piecewise like the swim remap). Result at forward 10 u: glints smaller, but the near water then shows visible repeats of
+>   the same small glints and the magenta / cyan banks are stretched sideways ≈ 3.4× into flat smears; the BEFORE (bold
+>   glossy strokes ≈ 2× painted size) reads closer to the approved picture's bold near water. Code saved as
+>   `/home/user/wt/s08/qa/match/08/r12/wip_m08glint_not_kept.patch`, reverted (one honest try; method stopped).
+> 
+> ## Tried — `&m08d …[+3022 chars]
+
+### 🤖 Claude — 2026-11-18T16:49:35.269Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat qa/match/08/r12/wip_m08glint_not_kept.patch", "description": "Read rejected m08glint patch"}`
+
+### 🧑 User — 2026-11-18T16:49:35.310Z
+
+> ↩︎ result: diff --git a/src/world/match08.ts b/src/world/match08.ts
+> index e6f42e0a..ca8efb63 100644
+> --- a/src/world/match08.ts
+> +++ b/src/world/match08.ts
+> @@ -83,6 +83,7 @@ uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from
+>  uniform vec4 uNear;         // z at tile v = 0, world length of one tile period along the river, tile lateral half range A, w > 0.5 = on
+>  uniform vec4 uNearM;        // projection magnification ramp start / end, lateral fade start / end (|lane position|, 1 = bank)
+>  uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)
+> +uniform vec2 uNearG;        // m08glint: x > 0.5 = painted scale in the lane's middle (banks take up the rest), y = painted half width (u)
+>  uniform vec4 uCup;          // m08cup (spout cups only): cup centre xyz, w > 0.5 = on
+>  uniform vec3 uCupM;         // m08cup mirror plane normal (horizontal, perpendicular to the projector's view of the cup)
+>  varying vec4 vProj;
+> @@ -242,7 +243,15 @@ void main() {
+>      vec3 r = riv(vW.z);
+>      float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mn);
+>      float sl = (vW.x - r.x) / h;
+> -    vec2 tuv = vec2(0.5 + (uNearC.x + uNear …[+2406 chars]
+
+### 🤖 Claude — 2026-11-18T16:51:03.617Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\nfor n in ['f06_forward6u','s_left_hard']:\n  b=Image.open('qa/match/08/r14/BEFORE_K13/'+n+'.png').convert('RGB').crop((0,560,864,1200)); b.save('$S/mid_'+n+'.png')\n\" ; python3 -I -c \"\nfrom PIL import Image; im=Image.open('/home/user/wt/s08/assets/textures/match08/plate08_hybrid.png'); print(im.size)\nimport json; L=json.load(open('/home/user/wt/s08/assets/textures/match08/proj08.json')); print({k:L[k] for k in L if k!='camera'} …[+88 chars]`
+
+### 🧑 User — 2026-11-18T16:51:04.208Z
+
+> ↩︎ result: (1536, 2731)
+> {'floorY': -113.6, 'chamber': {'cx': 12.0, 'cy': -101.1, 'r': 13.5, 'zBack': -280.0, 'zDoor': -332.0}, 'arch': {'z': -281.2164245171123, 'outer': {'cx': 12.376735924463707, 'cy': -111.01146278742368, 'r': 2.8785458098908463}, 'inner': {'cx': 12.388294771720878, 'cy': -110.98244622251975, 'r': 2.5653852087433306}, 'depth': 0.9, 'feetZ': [-281.1505024527194, -281.2823465815051], 'check_row600_px': [-126.32118588183108, 961.3329361523465]}, 'pipe': {'cx': 12.376735924463707, 'cy': -111.01146278742368, 'r': 2.9185458098908463, 'z0': -266.80056164895825, 'z1': -281.2164245171123}, 'backwall': {'z': -284.80056164895825, 'holeR': 4.298503804495194}, 'platform': {'cx': 12.01853569828291, 'cz': -325.0, 'r': 8.545661353037843, 'topY': -109.49424440576783, 'rimBottomY': -110.56571929613797, 'legsBottomY': -112.42005720374493, 'floorY': -113.6, 'tiltDeg': 4.836197917371241, 'eyeElevDeg': -0.4244721316010628}, 'towel': {'cx': 12.042312085090048, 'cz': -324.0, 'w': 6.9543227710742705, 'h': 2.90353411713059, 'y0': -109.22751450809737, 'd': 3.2}, 'spouts': {'UL': {'c': [3.1710933558756533, -103.34538602777661, -322.0], 'rx': 2.994802720331874, 'ry': 1.5609787975448057, 'box': [150, 33 …[+1267 chars]
+
+### 🤖 Claude — 2026-11-18T16:51:07.116Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/mid_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T16:51:07.152Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T16:51:07.683Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/mid_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T16:51:07.713Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T16:51:23.183Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -I -c \"\nimport json; R=json.load(open('assets/textures/match08/river08.json')); print(R.keys()); \nfor z,x,w in zip(R['z'],R['x'],R['width']): print(round(z,2),round(x,2),round(w,2))\n\" | head -80; grep -n \"08\" src/game/course.ts 2>/dev/null | head -20; ls src", "description": "Print river08 centre/width table"}`
+
+### 🧑 User — 2026-11-18T16:51:23.274Z
+
+> ↩︎ result: dict_keys(['note', 'floorY', 'z', 'x', 'width'])
+> -281.05 12.56 0.76
+> -281.13 12.56 0.93
+> -281.21 12.55 1.03
+> -281.29 12.54 1.6
+> -281.37 12.54 1.72
+> -281.46 12.52 1.99
+> -281.54 12.48 2.12
+> -281.63 12.47 2.14
+> -281.73 12.47 2.14
+> -281.82 12.47 2.15
+> -281.92 12.47 2.17
+> -282.02 12.48 2.07
+> -282.12 12.5 2.07
+> -282.22 12.52 2.08
+> -282.33 12.56 2.06
+> -282.45 12.61 2.19
+> -282.56 12.66 2.28
+> -282.68 12.71 2.21
+> -282.8 12.76 2.13
+> -282.93 12.8 2.19
+> -283.06 12.84 2.23
+> -283.19 12.87 2.3
+> -283.32 12.89 2.33
+> -283.46 12.91 2.38
+> -283.61 12.93 2.41
+> -283.75 12.94 2.45
+> -283.91 12.96 2.49
+> -284.06 12.97 2.54
+> -284.22 12.97 2.59
+> -284.39 12.96 2.63
+> -284.56 12.93 2.68
+> -284.73 12.84 2.86
+> -284.91 12.74 2.87
+> -285.1 12.63 2.94
+> -285.29 12.52 3.85
+> -285.49 12.41 3.95
+> -285.7 12.3 4.01
+> -285.91 12.2 4.08
+> -286.14 12.16 4.12
+> -286.38 12.14 4.03
+> -286.63 12.11 4.02
+> -286.88 12.08 4.1
+> -287.15 12.05 4.2
+> -287.43 11.95 4.36
+> -287.72 11.84 4.52
+> -288.02 11.71 4.85
+> -288.33 11.58 4.03
+> -288.66 11.45 4.08
+> -289.01 11.32 3.91
+> -289.37 11.16 4.0
+> -289.76 11.08 4.1
+> -290.17 11.01 4.21
+> -290.6 10.95 4.14
+> -291.05 10.87 4.26
+> -291.53 10.8 4.38
+> -292.03 10.74 4.51
+> -292.58 10.73 4.49
+> -293.15 10.75 4.41
+> -293.77 10.82 4.37
+> -294.43 10.9 4.64
+> -295.13 11.05 4.5
+> -295.89 1 …[+379 chars]
+
+### 🤖 Claude — 2026-11-18T16:51:28.264Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rn \"river08\\|match08\\|m08swim\\|SWIM\\|latMax\\|LAT_MAX\\|2\\.22\" src --include=*.ts | grep -v \"src/world/match08.ts\" | head -30", "description": "Find course and lateral limits referencing match08"}`
+
+### 🧑 User — 2026-11-18T16:51:28.334Z
+
+> ↩︎ result: src/characters/girl/build.ts:586:    const skirt = lathe([[0.0, 10.25], [2.45, 10.3], [2.62, 10.75], [2.54, 11.6], [2.38, 12.3], [2.22, 12.75], [1.9, 12.95]], 1.13, 0.86, 44);
+> src/characters/benny/benny05.ts:22:// branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+> src/characters/benny/benny05.ts:23:const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+> src/world/course.ts:16:import river08 from '../../assets/textures/match08/river08.json';
+> src/world/course.ts:318:  // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
+> src/world/course.ts:320:  const m08 = !no08 && (flag05('match08') || flag05('matchall'));
+> src/world/course.ts:321:  const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
+> src/world/course.ts:456:    // `?match08=1` (scenery round r5, qa/match/08/scenery/NOTES.md): the 08 river path changes the course's total length,
+> src/world/course.ts:459:    if (flag05('match08') || flag05('matchall')) {
+> src/game/cameraRig.ts:28:  /** `?match08=1` only (s …[+2151 chars]
+
+### 🤖 Claude — 2026-11-18T16:51:30.461Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 305,350p src/world/course.ts", "description": "Read course 08 river path section"}`
+
+### 🧑 User — 2026-11-18T16:51:30.502Z
+
+> ↩︎ result: const a = -amax + amax * t;
+>     return p2.clone().add(V(0, R * (Math.cos(-amax) - Math.cos(a)), R * (Math.sin(-amax) - Math.sin(a))));
+>   });
+>   mark('07_plunge_bottom');
+>   const p3 = pts[pts.length - 1].clone();
+>   const zIn = WORLD.chamber.zBack;
+>   seg(4, (t) => V(p3.x, p3.y, p3.z + (zIn - p3.z) * t));
+>   mark('08');
+>   // ---- 08–10: Final Spin Chamber — winding stream toward the platform & towel ----
+>   const s8 = pts[pts.length - 1].clone();
+>   const plat = WORLD.platform;
+>   const end = V(plat.center.x, plat.topY + 0.45, plat.center.z + 0.6);
+>   // `?match08=1` (src/world/match08.ts, qa/match/08/NOTES.md): the 08–10 stream follows the APPROVED picture's painted
+>   // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
+>   // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
+>   const m08 = !no08 && (flag05('match08') || flag05('matchall'));
+>   const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
+>   const riverX = (z: number) => {
+>     if (z >= rz[0]) return rxs[0];
+>     for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a =  …[+1277 chars]
+
