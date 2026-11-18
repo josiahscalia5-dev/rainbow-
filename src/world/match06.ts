@@ -95,6 +95,9 @@ uniform vec3 uAxU;
 uniform float uRingH;
 uniform float uBendAng; // r11 m06bend: ring bulb angle per vertex (vTile.x) instead of around the straight axis
 uniform float uPanel;
+// r15 m06gold: the user's painted ring band (tools/match06/make_ring06.py) along each modeled ring's profile
+uniform float uGold;
+uniform sampler2D uRingTex;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -119,7 +122,14 @@ void main() {
     vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
     pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
   }
-  if (uRing > 0.5) {
+  if (uRing > 0.5 && uGold > 0.5) {
+    // r15 m06gold: vTile = (angle around the ring, position across the painted band: 0 = outer face edge .. 1 = far lip);
+    // a light view-dependent sheen keeps the polish alive while moving (painted highlights stay world-anchored)
+    vec3 V = normalize(cameraPosition - vW);
+    float fres = pow(1.0 - abs(dot(nn, V)), 3.0);
+    pc = texture2D(uRingTex, vTile).rgb;
+    pc = mix(pc, vec3(1.0, 0.93, 0.80), fres * 0.18);
+  } else if (uRing > 0.5) {
     // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
     vec3 V = normalize(cameraPosition - vW);
     vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
@@ -273,7 +283,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 },
       uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
       uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
-      uRing: { value: 0 }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
+      uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
       uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
   });
 
@@ -435,11 +445,31 @@ export async function buildMatch06(course: Course): Promise<Match06> {
         return (lo + hi) / 2;
       };
       const aN = solve(485), aF = solve(355), dA = Math.max(2.5, aF - aN);
+      // r15 `&m06gold=1` (qa/match/06/r15/PROGRESS.md): the rings carry the user's PAINTED ring band (straightened from the
+      // approved picture's nearest ring) instead of the procedural shading whose camera-facing faces read as dull
+      // rust-brown hoops. Rows of the band run along the ring profile: the outer painted tier on the camera-facing face,
+      // the wide bright tier with the highlight dashes on the inner cylinder, the yellow lip line at its far end
+      // (`&m06goldf=` share of the band on the face, default 0.37); 4 mirrored repeats around the ring (no seam).
+      const GOLD = qs?.get('m06gold') === '1';
+      let tRing: THREE.Texture | null = null;
+      if (GOLD) {
+        tRing = await loader.loadAsync(tex('tile_ring6.png'));
+        tRing.colorSpace = THREE.NoColorSpace; tRing.wrapS = THREE.MirroredRepeatWrapping; tRing.wrapT = THREE.ClampToEdgeWrapping;
+        tRing.anisotropy = 8; tRing.minFilter = THREE.LinearMipmapLinearFilter;
+      }
+      const VF = Number(qs?.get('m06goldf')) || 0.37;
       const prof: THREE.Vector2[] = [];
       const pr = (r: number, y: number) => prof.push(new THREE.Vector2(r, y));
       const h = Wr / 2;
       pr(0.25, -h); pr(-Dr, -h); pr(-Dr - 0.08, -h + 0.12); pr(-Dr - 0.08, -0.22); pr(-Dr + 0.12, -0.16);
       pr(-Dr + 0.12, 0.16); pr(-Dr - 0.08, 0.22); pr(-Dr - 0.08, h - 0.12); pr(-Dr, h); pr(0.25, h);
+      // m06gold: position across the painted band for each profile point (face 0 -> 2: 0..VF, inner cylinder 2 -> 8: VF..1)
+      const vProf: number[] = [0];
+      { const seg = (i: number) => prof[i].distanceTo(prof[i - 1]);
+        const face = seg(1) + seg(2); let cyl = 0; for (let i = 3; i <= 8; i++) cyl += seg(i);
+        let acc = 0; for (let i = 1; i <= 2; i++) { acc += seg(i); vProf.push((VF * acc) / face); }
+        acc = 0; for (let i = 3; i <= 8; i++) { acc += seg(i); vProf.push(VF + ((1 - VF) * acc) / cyl); }
+        vProf.push(1); }
       const parts: THREE.BufferGeometry[] = [];
       const qRot = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), ax);
       // the lathe's local x/z must line up with Rx/Ux for the bulb angle; build each ring directly in world space
@@ -457,6 +487,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
         for (let i = 0; i < n; i++) lsA[i * 2] = lp[i % lp.length].y / sc; // local axial offset inside the band
         // r11 m06bend: the bulb angle = the lathe's own angle (continuous, the seam column is duplicated) for bent rings
         if (BEND) for (let i = 0; i < n; i++) tA[i * 2] = (Math.floor(i / lp.length) / 128) * Math.PI * 2 - Math.PI;
+        else if (GOLD) for (let i = 0; i < n; i++) { tA[i * 2] = (Math.floor(i / lp.length) / 128) * 4; tA[i * 2 + 1] = vProf[i % lp.length]; }
         lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lsA, 2));
         lg.setAttribute('aTile', new THREE.Float32BufferAttribute(tA, 2));
         lg.deleteAttribute('uv');
@@ -465,7 +496,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       const rg = mergeGeometries(parts);
       rg.computeVertexNormals();
       const rm = mat(tTube);
-      Object.assign(rm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uBendAng: { value: BEND ? 1 : 0 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
+      Object.assign(rm.uniforms, { uRing: { value: 1 }, uGold: { value: GOLD ? 1 : 0 }, uRingTex: { value: tRing ?? tTube }, uRingH: { value: h }, uBendAng: { value: BEND ? 1 : 0 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
         uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
       add(rg, rm, 'rings');
       console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
