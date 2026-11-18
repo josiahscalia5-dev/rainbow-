@@ -2109,3 +2109,163 @@ The painted-ring worker has orders to send its first full APPROVED / BEFORE / NE
 
 The handoff files now point at this branch, so a future account can continue: the "ACCOUNT 16" section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`, `docs/briefs/2026-11-18-r16/COORDINATION.md` and `docs/briefs/2026-11-18-r16/RESUME_R16.md`. I also showed an install card for six plugins your earlier accounts had (Security Guidance, commit-commands and others). They're optional.
 
+### 🧑 User — 2026-11-18T19:21:57.168Z
+
+I don't want to interfere with the specialists or agents that are building it, but I'm just curious of how they look so far on my screens.
+
+### 🤖 Claude — 2026-11-18T19:22:06.546Z
+
+I'll show you the newest pictures the game has already produced, which only means reading files. I won't render anything new, since six workers are sharing the 4 processor cores.
+
+### 🤖 Claude — 2026-11-18T19:22:08.276Z
+
+> 🔧 **Bash** `{"command": "ls -R qa/review_r15 | head -40; for w in s04 s04b s05 s06 s07 s08; do echo \"== $w\"; git -C /home/user/wt/$w log --oneline -2 | cut -c1-110; find /home/user/wt/$w/qa -newer /home/user/rainbow-/docs/briefs/2026-11-18-r16/RESUME_R16.md -name \"*.png\" 2>/dev/null | head -5; done", "description": "List existing review pictures and new worker renders"}`
+
+### 🧑 User — 2026-11-18T19:22:08.607Z
+
+> ↩︎ result: qa/review_r15:
+> 04_ringpaint_texture_interim.png
+> 04_step1_bubble_foam
+> 05_step3_bubbly_bank
+> 08_step1_near_water
+> 
+> qa/review_r15/04_step1_bubble_foam:
+> 1_APPROVED.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_right_hard.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_right_hard.png
+> 4_NEW_swim_clip.mp4
+> 
+> qa/review_r15/05_step3_bubbly_bank:
+> 1_APPROVED.png
+> 2_BEFORE_k81_kink_left.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t75_through.png
+> 3_NEW_k81_kink_left.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t75_through.png
+> 
+> qa/review_r15/08_step1_near_water:
+> 1_APPROVED.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_right_hard.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_right_hard.png
+> == s04
+> 160ce05 Screen 04 r15 step 1: foam as clusters of many small shiny bubbles (m04fclu) — GOOD IMPROVEMENT
+> /home/user/wt/s04/qa/06_overlay.png
+> /home/user/wt/s04/qa/03_overlay.png
+> /home/user/wt/s04/qa/06_diff.png
+> /home/user/wt/s04/qa/10_overlay.png
+> /home/user/wt/s04/qa/01_side_by_side.png
+> == s04b
+> fc28323 Screen 04 r14 step 9: entrance-rim foam clouds on …[+1352 chars]
+
+### 🤖 Claude — 2026-11-18T19:22:14.808Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s06/qa/match/06/r15/ 2>/dev/null; ls /home/user/wt/s06/qa/match/06/r15/* 2>/dev/null | head -20; echo ---; ls /home/user/wt/s07/qa/match/07/r15/step1/NEW/ /home/user/wt/s07/qa/match/07/ 2>/dev/null | head -30", "description": "Find newest Screen 06 and 07 game pictures"}`
+
+### 🧑 User — 2026-11-18T19:22:15.019Z
+
+> ↩︎ result: BEFORE
+> PROGRESS.md
+> /home/user/wt/s06/qa/match/06/r15/PROGRESS.md
+> 
+> /home/user/wt/s06/qa/match/06/r15/BEFORE:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> ---
+> /home/user/wt/s07/qa/match/07/:
+> 07_APPROVED.png
+> 07_BEFORE_current_game.png
+> 07_NEW_match07.png
+> FAL_PLATE_REQUEST.md
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> cam
+> geo_match07.json
+> m1
+> m2
+> m2r4
+> m3
+> metrics_BEFORE_NEW.json
+> r15
+> r16
+> r7
+> r8
+> rings
+> 
+> /home/user/wt/s07/qa/match/07/r15/step1/NEW/:
+> motion.json
+> t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T19:22:16.924Z
+
+The Screen 07 worker has already started saving pictures in its round-16 folder. Let me look at what's there.
+
+### 🤖 Claude — 2026-11-18T19:22:17.925Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s07/qa/match/07/r16/ /home/user/wt/s07/qa/match/07/r16/* 2>/dev/null | head -30; ls /home/user/wt/s07/qa/match/07/r8 | head -20", "description": "List Screen 07 round-16 and round-8 pictures"}`
+
+### 🧑 User — 2026-11-18T19:22:17.995Z
+
+> ↩︎ result: -rw-r--r-- 1 root root   82 Nov 18 19:16 /home/user/wt/s07/qa/match/07/r16/K.txt
+> 
+> /home/user/wt/s07/qa/match/07/r16/:
+> total 16
+> drwxr-xr-x  3 root root 4096 Nov 18 19:16 .
+> drwxr-xr-x 12 root root 4096 Nov 18 19:16 ..
+> -rw-r--r--  1 root root   82 Nov 18 19:16 K.txt
+> drwxr-xr-x  4 root root 4096 Nov 18 19:21 step1
+> 
+> /home/user/wt/s07/qa/match/07/r16/step1:
+> total 16
+> drwxr-xr-x 4 root root 4096 Nov 18 19:21 .
+> drwxr-xr-x 3 root root 4096 Nov 18 19:16 ..
+> drwxr-xr-x 2 root root 4096 Nov 18 19:21 BEFORE
+> drwxr-xr-x 2 root root 4096 Nov 18 19:21 NEW
+> plunge_K
+> plunge_foam
+> plunge_foam2
+> plunge_foam_coinsz
+
+### 🤖 Claude — 2026-11-18T19:22:27.471Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; mkdir -p $S; R=/home/user/rainbow-; \npair(){ convert \"$2\" -resize x900 $S/a.png; convert \"$3\" -resize x900 $S/b.png; convert $S/a.png $S/b.png +append \"$S/$1.jpg\"; identify -format \"$1 %wx%h\\n\" \"$3\"; }\npair 04 $R/qa/review_r15/04_step1_bubble_foam/1_APPROVED.png $R/qa/review_r15/04_step1_bubble_foam/3_NEW_f06_forward6u.png\npair 05 $R/qa/review_r15/05_step3_bubbly_bank/1_APPROVED.png $R/qa/review_r15/05_step3_bubbly_bank/3_NEW_t66_through_screen.png\npair 06 $R/references/06_cres …[+555 chars]`
+
+### 🧑 User — 2026-11-18T19:22:39.880Z
+
+> ↩︎ result: 04 864x1536
+> 05 864x1536
+> 06 864x1536
+> 07 864x1536
+> 08 864x1536
+> 04.jpg
+> 05.jpg
+> 06.jpg
+> 07.jpg
+> 08.jpg
+> a.png
+> b.png
+

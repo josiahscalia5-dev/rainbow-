@@ -464,3 +464,54 @@ Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S04_LAUNCH.md —
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && time node $S/quick.mjs $S/v2 f06_forward6u,t33_through_screen \"A::$K&m04sband=1&m04sbu=0.62&m04sbl=7&m04sbn=0.3&m04sbd0=6&m04sbd1=18|B::$K&m04sband=1&m04sbu=0.62&m04sbl=10&m04sbn=0.5&m04sbs=0.85|C::$K&m04sband=1&m04sbu=0.75&m04sbl=7&m04sbi=2.2&m04sbd0=6&m04sbd1=18\" 2>&1 | grep -v \"allow list\" | tail -8", "description": "Render three side-band variants", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:20:45.865Z
+
+> ↩︎ result: [match04] m04room {k: 1.8, cut: Array(3)}
+> [match04] m04ring {period: 4.6, rings: 20}
+> [match04] m04river {xW: 3.352662290862612, RY: 0.8, XF: 2.6}
+> [match04] m04fclu {bubbles: 6544}
+> [match04] m04arr3d {arrows: 20, sp: 4, tilt: 66}
+> [match04] m04mouth bulbs 20
+> shot C f06_forward6u
+> shot C t33_through_screen
+> 
+> real	3m48.993s
+> user	0m3.079s
+> sys	0m0.712s
+
+### 🤖 Claude — 2026-11-18T19:20:53.363Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\nims=[Image.open(f'v2/{v}/f06_forward6u.png').crop((0,600,864,1400)) for v in 'ABC']\nW=Image.new('RGB',(864*3//2, 400))\nfor i,im in enumerate(ims): W.paste(im.resize((432,400)),(i*432,0))\nW.save('cmp_v2_f06.png')\nims=[Image.open(f'v2/{v}/t33_through_screen.png').crop((0,600,864,1400)) for v in 'ABC']\nW=Image.new('RGB',(864*3//2, 400))\nfor i,im in enumerate(ims): W.paste(im.resize((432,400)),(i*432,0))\nW.save('cmp_v2_t33.png')\n\"", "description":  …[+51 chars]`
+
+### 🧑 User — 2026-11-18T19:20:54.383Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:20:56.164Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_v2_f06.png"}`
+
+### 🧑 User — 2026-11-18T19:20:56.436Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:20:56.714Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_v2_t33.png"}`
+
+### 🧑 User — 2026-11-18T19:20:56.790Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:21:00.499Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/v2/B/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T19:21:00.545Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:21:11.408Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && time node $S/quick.mjs $S/v3 f06_forward6u,t66_through_screen,s_right_hard \"B::$K&m04sband=1&m04sbu=0.62&m04sbl=10&m04sbn=0.5&m04sbs=0.85|D::$K&m04sband=1&m04sbu=0.7&m04sbl=10&m04sbn=0.5&m04sbs=0.95&m04sbi=2.0&m04sbw=0.45\" 2>&1 | grep -v \"allow list\" | grep shot", "description": "Render variants B and D at more views", "timeout": 600000}`
+

@@ -239,3 +239,81 @@ The shader path is consistent (psi convention matches the tile, `h21`, `gl`, `fa
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && L4=$(cat $SP/L4.txt) && time node $SP/audit.mjs 04 $SP/new_rp1 \"$L4&m04rpaint=1\" 2>&1 | tail -25", "description": "Render NEW m04rpaint=1 motion audit set", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T19:21:59.530Z
+
+> ↩︎ result: console info [match04] m04rpaint {k: 1, lipS: 0.79, lipU: 4.276, grooveU: 4.6, jitter: 0}
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> console error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> 04 a00_approved_view s 78.308 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.149 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.183 lat 0 stage 04 frames …[+540 chars]
+
+### 🤖 Claude — 2026-11-18T19:22:03.868Z
+
+Render finished with no shader errors (only HUD font 403s from the symlinked node_modules). Let me compare the key frames visually.
+
+### 🤖 Claude — 2026-11-18T19:22:04.828Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/new_rp1/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T19:22:05.080Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:05.331Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/qa/match/04/r14/s11_rimfoam/L4/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T19:22:05.384Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:09.828Z
+
+Clear change: the NEW inner rings are broad smooth copper-gold bands with pink-violet patches instead of the thin bright cut rings. Let me look at the approved picture for comparison.
+
+### 🤖 Claude — 2026-11-18T19:22:10.145Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/references/04_through_the_five_arrows.png"}`
+
+### 🧑 User — 2026-11-18T19:22:10.380Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:30.564Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && mkdir -p pairs && python3 - <<'EOF'\nfrom PIL import Image\nimport os\nB='/home/user/wt/s04b/qa/match/04/r14/s11_rimfoam/L4/'; N='new_rp1/'\nfor s in ['a00_approved_view','f03_forward3u','f10_forward10u','f20_forward20u','t33_through_screen','t66_through_screen','t95_through_screen','s_left_hard','s_right_hard','s_left_steer','s_right_steer']:\n    a=Image.open(B+s+'.png').convert('RGB'); b=Image.open(N+s+'.png').convert('RGB')\n    w,h=a.size\n    im=Image.new('RGB',(w,h//2*1)); \n    # crop t …[+495 chars]`
+
+### 🧑 User — 2026-11-18T19:22:38.476Z
+
+> ↩︎ result: a00_approved_view.png
+> f03_forward3u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> {"a":"/home/user/wt/s04b/qa/match/04/r14/s11_rimfoam/L4/a00_approved_view.png","b":"new_rp1/a00_approved_view.png","rows":[180,1536],"threshold":0.1,"diff_pixels":509675,"total":1171584,"diff_pct":43.5031}
+
+### 🤖 Claude — 2026-11-18T19:22:42.367Z
+
+43% differs at the approved view in the audit frames — likely animated water (the audit doesn't freeze time). Let me look, then do the proper frozen-time check with `scripts/capture.mjs`.
+
+### 🤖 Claude — 2026-11-18T19:22:42.901Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/pairs/a00_approved_view.png"}`
+
+### 🧑 User — 2026-11-18T19:22:43.218Z
+
+> ↩︎ result: [image]
+
