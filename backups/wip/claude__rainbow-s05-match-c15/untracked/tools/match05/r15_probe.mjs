@@ -6,6 +6,7 @@ import { realpathSync } from 'node:fs';
 const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
 const [Q = '', ONLY = 'x97', PORT = '5275'] = process.argv.slice(2);
 const PRE = process.env.PRE_JS || '';
+const EXTRA = process.env.EXTRA_JS || ''; // async expression evaluated after the render (printed)
 const GRID = (process.env.GRID || '0,0.6;0,0.3;0,0;0,-0.3;0,-0.6;-0.6,0.3;0.6,0.3;-0.8,-0.3;0.8,-0.3;-0.6,0.7;0.6,0.7').split(';').map((p) => p.split(',').map(Number));
 const { chromium } = loadPlaywright();
 const { createServer } = await import('vite');
@@ -21,7 +22,7 @@ try {
   for (const name of ONLY.split(',')) {
     const m = name.match(/^[xt](\d+)([LR]?)/);
     const frac = Number(m[1]) / 100, steer = m[2] === 'L' ? -1 : m[2] === 'R' ? 1 : null;
-    const res = await page.evaluate(async ([frac, steer, PRE, GRID]) => {
+    const res = await page.evaluate(async ([frac, steer, PRE, GRID, EXTRA]) => {
       const r = window.__rainbow; r.goto('05');
       const s0 = r.state().s, stg = r.course.stage('05');
       const s1 = stg.s1 ?? (stg.s0 + (stg.length ?? 0));
@@ -36,9 +37,10 @@ try {
       scene.traverse((o) => { if (o.name === 'tube05_far_wall' && o.morphTargetInfluences) open = o.morphTargetInfluences[0]; });
       const cam = camera.position.toArray().map((v) => +v.toFixed(2));
       const hits = GRID.map(([x, y]) => ({ at: [x, y], h: r.probe(x, y).slice(0, 3) }));
-      return { s: r.state().s, stage: r.state().stage, cam, open, hits };
-    }, [frac, steer, PRE, GRID]);
-    console.log(`== ${name} s ${res.s} stage ${res.stage} cam ${res.cam} far-open ${res.open}`);
+      const extra = EXTRA ? await eval(EXTRA) : null;
+      return { s: r.state().s, stage: r.state().stage, cam, open, hits, extra };
+    }, [frac, steer, PRE, GRID, EXTRA]);
+    console.log(`== ${name} s ${res.s} stage ${res.stage} cam ${res.cam} far-open ${res.open} extra ${JSON.stringify(res.extra)}`);
     for (const h of res.hits) console.log('  ', h.at.join(','), h.h.map((x) => `${x.obj} d${x.d}`).join(' | '));
   }
 } finally { await browser.close(); await server.close(); }

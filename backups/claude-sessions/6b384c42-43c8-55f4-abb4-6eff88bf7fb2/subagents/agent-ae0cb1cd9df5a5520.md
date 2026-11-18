@@ -1528,3 +1528,40 @@ Meanwhile I'll write a small probe that records the `[match04]` console lines (b
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:44:16.604Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 738, "limit": 50}`
+
+### 🧑 User — 2026-11-18T18:44:16.628Z
+
+> ↩︎ result: 738	      if (au <= kf) { x = (au / kf) * XF; y = 0.02; } else { const t = (au - kf) / (1 - kf); x = XF + (xW - XF) * t; y = 0.02 + RY * t * t; }
+> 739	      xs.push({ x: Math.sign(u) * x, y });
+> 740	    }
+> 741	    const arc: number[] = [0]; const mid = nX / 2;
+> 742	    for (let i = mid + 1; i <= nX; i++) arc[i] = (arc[i - 1] ?? 0) + Math.hypot(xs[i].x - xs[i - 1].x, xs[i].y - xs[i - 1].y);
+> 743	    arc[mid] = 0; for (let i = mid - 1; i >= 0; i--) arc[i] = arc[i + 1] - Math.hypot(xs[i].x - xs[i + 1].x, xs[i].y - xs[i + 1].y);
+> 744	    // from BEHIND (aB u before the opening, where the camera starts) to the far end; before the opening the river
+> 745	    // lies flat (no wall to climb), the sides rise over the first 2 u inside the tunnel
+> 746	    const aB = M04.num('m04rb', 14);
+> 747	    const nT = nA + Math.ceil(aB / 0.5);
+> 748	    for (let j = 0; j <= nT; j++) {
+> 749	      const a = -aB + (j / nT) * (len + aB);
+> 750	      const k = THREE.MathUtils.smoothstep(a, -0.6, 1.4);
+> 751	      for (let i = 0; i <= nX; i++) { pos.push(cx + xs[i].x, 0.02 + (xs[i].y - 0.02) * k, z0 - a); aR.push(arc[i], 0); }
+> 752	    }
+> 753	    for (let j = 0; j < nT; j++) for (let i = 0; i < nX; i++) {
+> 754	      const p0 = j …[+3259 chars]
+
+### 🤖 Claude — 2026-11-18T18:44:35.114Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n# uniforms\n(\"\"\"uniform float uPkH;          // r14 m04pkh: pink only where the painted tile is pink (0 = off)\n\"\"\",\"\"\"uniform float uPkH;          // r14 m04pkh: pink only where the painted tile is pink (0 = off)\nuniform sampler2D uSB;       // r15 m04sband: the painted swirl bands (tile_side04: across = lane side .. wall side reversed)\nuniform vec4 uSB0;           // x strength, y inner |arc| where the bands start, z outer |arc| (water edge), w tile length along (u)\nunifor …[+3175 chars]`
+
+### 🧑 User — 2026-11-18T18:44:50.082Z
+
+> ↩︎ result: wrote assets/textures/match04/tile_side04.png 256 x 230
+> ok
+
+### 🤖 Claude — 2026-11-18T18:44:57.664Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; echo \"$(cat $S/K.txt)&m04fclu=1\" > $S/K1.txt; cd /home/user/wt/s04 && K=$(cat $S/K1.txt) && ONLY='[[\"f06_forward6u\",6,null],[\"f10_forward10u\",10,null],[\"s_left_hard\",12,-1],[\"t33_through_screen\",\"t0.33\",null]]' node $S/quick_audit.mjs 04 $S/b1 \"$K&m04sband=1\" 2>&1 | grep -v \"allow list\" | tail -4", "description": "Quick render of side bands", "timeout": 600000}`
+

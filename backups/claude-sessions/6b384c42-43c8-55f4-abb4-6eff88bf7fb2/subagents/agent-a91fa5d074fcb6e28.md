@@ -1564,3 +1564,27 @@ Now the proper implementation: the block is removed when Benny crosses into 06 (
 > 
 > [exited with code 0]
 
+### 🤖 Claude — 2026-11-18T18:44:18.052Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 196,210p src/vfx/index.ts; grep -n \"uBenny.value\\|focus\\b\" src/vfx/index.ts | head; grep -n \"qaHide\\|return;\" src/vfx/index.ts | sed -n 1,20p", "description": "Inspect update flow around the new line"}`
+
+### 🧑 User — 2026-11-18T18:44:18.128Z
+
+> ↩︎ result: wave.mesh.visible = focusS > st08.s0 - 25;
+>       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
+>       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+>       foam.update(time, dt, focusS, controls.outro, camera);
+>       // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+>       // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+>       const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;
+>       // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
+>       const pjNear = ribbon.uniforms.uPjNear;
+>       if (pjNear) (pjNear.value as THREE.Vector4).z = focusS;
+>       m05rideS.value = focusS;   // `&m05trans=1` (Screen 05 round 15): the far block is removed as Benny enters 06
+>       // `&m05foam=1` (Screen 05 round 10): the 05 rim foam grows in after 0.5–2 u of riding (0 at the locked checkpoint)
+>       if ((M05FOAM || M05BERM) && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); } …[+1012 chars]
+
+### 🤖 Claude — 2026-11-18T18:44:28.147Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r15_probe.mjs'\ns=open(p).read()\ns=s.replace(\"const PRE = process.env.PRE_JS || '';\",\"const PRE = process.env.PRE_JS || '';\\nconst EXTRA = process.env.EXTRA_JS || ''; // async expression evaluated after the render (printed)\")\ns=s.replace(\"    const res = await page.evaluate(async ([frac, steer, PRE, GRID]) => {\",\"    const res = await page.evaluate(async ([frac, steer, PRE, GRID, EXTRA]) => {\")\ns=s.replace(\"      return { s: r.state().s, stage: r.state().stage, cam, open, hits };\\n    }, [frac, steer, PRE, G …[+927 chars]`
+

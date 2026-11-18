@@ -2,13 +2,14 @@
  "worktree": "/home/user/wt/s08",
  "branch": "claude/rainbow-s08-scenery-c15",
  "head": "df4a3bb7ea9babad3a34f6a47c1a68a3834bb233",
- "time": "2026-11-18T18:44:18+00:00",
+ "time": "2026-11-18T18:46:34+00:00",
  "dirty_tracked": [
   "src/world/match08.ts",
   "tools/match08/shots08.mjs"
  ],
  "untracked_copied": [
   "qa/match/08/r15/BEFORE_K14/f20_forward20u.png",
+  "qa/match/08/r15/BEFORE_K14/motion.json",
   "qa/match/08/r15/PROGRESS.md"
  ],
  "untracked_skipped": [
@@ -19,7 +20,10 @@
   "qa/match/08/r15/BEFORE_K14/s_left_hard.png",
   "qa/match/08/r15/BEFORE_K14/s_left_steer.png",
   "qa/match/08/r15/BEFORE_K14/s_right_hard.png",
-  "qa/match/08/r15/BEFORE_K14/s_right_steer.png"
+  "qa/match/08/r15/BEFORE_K14/s_right_steer.png",
+  "qa/match/08/r15/BEFORE_K14/t33_through_screen.png",
+  "qa/match/08/r15/BEFORE_K14/t66_through_screen.png",
+  "qa/match/08/r15/BEFORE_K14/t95_through_screen.png"
  ],
  "restore": "git switch claude/rainbow-s08-scenery-c15 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s08-scenery-c15/tracked.patch && copy backups/wip/claude__rainbow-s08-scenery-c15/untracked/* into the worktree"
 }
