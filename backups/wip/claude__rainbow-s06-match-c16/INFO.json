@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s06",
  "branch": "claude/rainbow-s06-match-c16",
  "head": "4b6c637cbcb8b995a81b208ec959a027d117919f",
- "time": "2026-11-18T19:49:15+00:00",
+ "time": "2026-11-18T19:54:37+00:00",
  "dirty_tracked": [
   "src/world/match06.ts",
   "tools/match06/r16_shots.mjs"

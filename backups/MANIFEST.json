@@ -1014,7 +1014,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/INFO.json",
    "bytes": 506,
-   "sha256": "cef9534065629b473d8a7d03a3ccb6e4bffc53145772b6819468f859927daf57"
+   "sha256": "dd94d9d83250e856c0edebad59a9e4ae7b093f04df49248243c4362492add0a9"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/tracked.patch",
@@ -1053,8 +1053,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/INFO.json",
-   "bytes": 486,
-   "sha256": "412ccd2e961e6e8f0d37a8ee571c6a8a3efbb1b4ba5b545316bf0f0cad8527f4"
+   "bytes": 515,
+   "sha256": "2ca4c8e86f5a27c8c88085deab9e95a46ffcd0efc213bf52e341e15bd4aaa185"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-ringtex-c16/tracked.patch",
+   "bytes": 3858,
+   "sha256": "ff90390957b8c05afac835127b06e894dfdd26c1931c3621a44a9dc63fb783a5"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1258,8 +1263,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/INFO.json",
-   "bytes": 2614,
-   "sha256": "80d4ad00e227519a16ea21ca6a3239ff21085e6f1e79a22480582c460b7bcbe0"
+   "bytes": 2706,
+   "sha256": "35aaace0efc0041d2bb129ecd75c16da0bcb21232b7fb9a978f888001b8aec07"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/tracked.patch",
@@ -1378,8 +1383,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/untracked/qa/match/05/r16/step1_trans/new/shots.json",
-   "bytes": 35189,
-   "sha256": "32d7595d602c567196d78598da9a1ec1560dcad4bd5d6136520a20a774c9c7f2"
+   "bytes": 45827,
+   "sha256": "86d2a68e889144408f20b080d95042ef066a4048b72c5895527c2facd51295a4"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/untracked/tools/match05/r15_probe.mjs",
@@ -1414,12 +1419,12 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/INFO.json",
    "bytes": 537,
-   "sha256": "778c83ede66d42d45f2da8403dbd4be5e7af93c217e57ddf88ad3ebc2aa16d61"
+   "sha256": "07bf83b5d6aba5b114c1a8328ba3feb373ffa83434f6f846ec8c591eab74abd4"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/tracked.patch",
-   "bytes": 12836,
-   "sha256": "19b88afd31551a252e21905e1223282ada77eb908570284eb55ccd033bf696ac"
+   "bytes": 13152,
+   "sha256": "266b4d7d54eaebb5675f0c44be47233c6d2e71cef9f08fe6c3aafe32edd70948"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -1458,8 +1463,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/INFO.json",
-   "bytes": 1309,
-   "sha256": "75b6b8a78ad71d3b80cd00257b7a5aa895b3727a6ef7e970987e50aa5e737f98"
+   "bytes": 1361,
+   "sha256": "42c6c112130c9104048c482fa5fbebad9a8b6280bfe4b3cb1dd6167e22c3bad6"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/tracked.patch",
@@ -1485,6 +1490,11 @@
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/qa/match/07/r16/step2_nearw/NEW/motion.json",
    "bytes": 4335,
    "sha256": "ad73380a898b611df2377235057c8cd54471f0239bce0517d0d725c7b0eb628f"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/qa/match/07/r16/step2_nearw/swim_NEW_nearw.mp4",
+   "bytes": 1378696,
+   "sha256": "ada14ed057b2784ef658f7fb1ba08fd5a02376dad64a55a63b232cb52543d1f7"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/tools/match07/near_tiles_r16.py",
@@ -1583,8 +1593,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/INFO.json",
-   "bytes": 846,
-   "sha256": "e38dd4ac4971443d68776f7068322244afbe8e58769ca5c72a9f92e1cd49ad9b"
+   "bytes": 1323,
+   "sha256": "c958eda210ebb772528e860e0e8734d8acb36d3d868d54a93ce85558e1075042"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/tracked.patch",
@@ -1595,6 +1605,11 @@
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/untracked/qa/match/08/r16/step2_m08vh/new_raw/f20_forward20u.png",
    "bytes": 1741750,
    "sha256": "fd4b439c87a8259f59a88af2fbec5e4913693e6720df62b520ebfc16fd7f85eb"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c16/untracked/qa/match/08/r16/step2_m08vh/new_raw/motion.json",
+   "bytes": 4886,
+   "sha256": "7aaf59b579ffcebb9abfaa12be4162503e4d8f1c3d4ddd53067fbd5b2faa9403"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
