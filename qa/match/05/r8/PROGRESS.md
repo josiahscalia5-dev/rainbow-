@@ -37,3 +37,20 @@ Each step = one sub-switch on top of the base set (default build untouched). Bra
   `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/t33_through_screen.png`, `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/t66_through_screen.png`
 * Rejected on the way: the previous instance's `&m05wd=1` (approved design kept as the world-fixed layout, row-smoothed):
   t33 more ordered but soft, t66 a flat blurry sheet with horizontal stretch lines in front of Benny — worse; not kept.
+
+## Step 3 — `&m05edge=1` (disconnected far-river edges)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1`
+* WHAT LOOKS BETTER: the river ahead now winds as ONE continuous S-shaped stream from Benny into the bright gold
+  throat, with the coin trail along it, as in the approved picture. Gone: (1) the raised "slab" of water with a hard
+  pale edge that stood across the far river (it was the start of Screen 06's climbing river showing through Screen 05's
+  far tunnel), and (2) the flat orange tray lying on the left bank (it was the first Screen 06 gold ring showing through
+  at the same place). Visible at f10, f20, t33 and t66. Both are hidden only beyond the far-tunnel seam and only while
+  Screen 05's far tunnel is shown; Screen 06 itself, the locked approved view (0 px) and the 06 hand-over are unchanged.
+* Numbers (LAYOUT20 / PALETTE, BEFORE → step 2 → step 3): f10 13.7/83.7 → 17.9/84.8 → 18.0/84.7 · f20 12.9/81.4 → — →
+  17.1/85.5 · t33 15.4/84.1 → 17.5/85.1 → 17.7/84.9 · t66 9.0/81.4 → 9.6/80.2 → 9.8/79.2 · t95 5.5/57.7 → 6.9/58.4.
+* Still wrong: a faint step line where the near river meets the far river (mid-distance, lighter pink band); pale foam
+  shelves along the far banks; near walls / far rings blurrier than painted; t66 pink right bank wider than painted.
+* BEFORE: `/home/user/wt/s05/qa/match/05/r7/NEW/f20_forward20u.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/t33_through_screen.png`,
+  `/home/user/wt/s05/qa/match/05/r7/NEW/t66_through_screen.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/f10_forward10u.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/f20_forward20u.png`, `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/t33_through_screen.png`,
+  `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/t66_through_screen.png`, `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/f10_forward10u.png`
