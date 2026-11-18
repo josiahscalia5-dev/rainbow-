@@ -3636,3 +3636,210 @@ Both are mid-task: Screen 05 is extending its far scenery (`m05far`), and Screen
 
 > 🔧 **Bash** `{"command": "until [ \"$(ls /home/user/wt-s06/qa/match/06/r7/RING5 2>/dev/null | wc -l)\" -ge 8 ] || ! pgrep -f audit_sel > /dev/null; do sleep 5; done; ls /home/user/wt-s06/qa/match/06/r7/RING5 | wc -l", "description": "Wait for render v5 completion", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T00:28:42.119Z
+
+> ↩︎ result: 8
+
+### 🤖 Claude — 2026-11-18T00:28:46.194Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06/qa/match/06/r7 && montage -label '%d/%t' /tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/ref_small.png RING4/f06_forward6u.png RING5/f06_forward6u.png RING5/f10_forward10u.png RING5/f20_forward20u.png RING5/a00_approved_view.png RING5/t66_through_screen.png RING5/t95_through_screen.png RING5/s_right_hard.png RING4/f20_forward20u.png -tile 5x2 -geometry 300x534+4+4 -pointsize 12 /tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/ring5_cmp.jpg && echo ok", "description": "Build v5 comparison sheet" …[+1 chars]`
+
+### 🧑 User — 2026-11-18T00:28:46.922Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:28:48.532Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/ring5_cmp.jpg"}`
+
+### 🧑 User — 2026-11-18T00:28:48.724Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:29:04.748Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && python3 -I - <<'EOF'\np='src/world/match06.ts'; s=open(p).read()\no=\"      const n = 2 + Math.floor(rnd() * 3);\\n      for (let i = 0; i < n; i++) {\\n        const fr = frame(s + rnd() * 0.6), r = 0.2 + rnd() * 0.4;\"\nassert o in s\ns=s.replace(o,\"      const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)\\n      for (let i = 0; i < n; i++) {\\n        const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;\",1)\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit && echo TSC_OK && (SHO …[+543 chars]`
+
+### 🧑 User — 2026-11-18T00:29:07.305Z
+
+> ↩︎ result: TSC_OK
+> started
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:29:09.995Z
+
+> 🔧 **Bash** `{"command": "until [ \"$(ls /home/user/wt-s06/qa/match/06/r7/RING6 2>/dev/null | wc -l)\" -ge 8 ] || ! pgrep -f audit_sel > /dev/null; do sleep 5; done; ls /home/user/wt-s06/qa/match/06/r7/RING6 | wc -l", "description": "Wait for render v6 completion", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T00:29:50.298Z
+
+> ↩︎ result: 8
+
+### 🤖 Claude — 2026-11-18T00:29:53.519Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06/qa/match/06/r7 && montage -label '%d/%t' RING5/t95_through_screen.png RING6/t95_through_screen.png RING5/s_right_hard.png RING6/s_right_hard.png RING6/f20_forward20u.png -tile 5x1 -geometry 300x534+4+4 -pointsize 12 /tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/ring6_cmp.jpg && echo ok", "description": "Compare foam v5 vs v6"}`
+
+### 🧑 User — 2026-11-18T00:29:53.961Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:29:55.897Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/ring6_cmp.jpg"}`
+
+### 🧑 User — 2026-11-18T00:29:56.005Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:30:05.802Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && O=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/frozen && timeout 500 node scripts/capture.mjs 06 --out=$O/kept6 \"--q=match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1\" > /dev/null 2>&1; python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nO='/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/frozen'\na=np.asarray(Image.open(O+'/before/06.png').convert('RGB')).astype(int); b=np.asarray(Image.open(O+'/kept6/06.png').convert('RGB')).astype(int)\ …[+451 chars]`
+
+### 🧑 User — 2026-11-18T00:30:15.873Z
+
+> ↩︎ result: px >20 levels BEFORE vs KEPT: 415
+> BEFORE whole frame within 20 levels of APPROVED: 76.4%
+> KEPT whole frame within 20 levels of APPROVED: 76.4%
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:30:29.032Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && python3 -I - <<'EOF'\np='qa/match/06/r7/NOTES.md'; s=open(p).read()\ns=s.replace(\"Kept set (lead's proposal, waiting for the user's verdict):\\n`match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1`\",\n\"Kept set (lead's proposal, waiting for the user's verdict):\\n`match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`\")\ns+='''\n## Round 7b/7c (2026-11-18 ~00:50 UTC)\n| switch | change | verdict |\n|---|---|---|\n| ring shading | brighter yellow-white lip lines, 56 bigger warm bulbs per ring with halo, deeper …[+2407 chars]`
+
+### 🧑 User — 2026-11-18T00:30:37.482Z
+
+> ↩︎ result: s06 local b9b63e356355d0553f786184f51ab662f0aab249 remote b9b63e356355d0553f786184f51ab662f0aab249
+> 06_1_APPROVED.jpg 06_2_BEFORE_end_of_stage.jpg 06_2_BEFORE_forward_10u.jpg 06_2_BEFORE_forward_20u.jpg 06_2_BEFORE_steering_hard_right.jpg 06_2_BEFORE_two_thirds_through.jpg 06_3_NEW_end_of_stage.jpg 06_3_NEW_forward_10u.jpg 06_3_NEW_forward_20u.jpg 06_3_NEW_steering_hard_right.jpg 06_3_NEW_two_thirds_through.jpg
+
+### 🤖 Claude — 2026-11-18T00:30:39.096Z
+
+Here is Screen 06 after this round: your approved picture, then BEFORE / NEW at the same five swimming positions:
+
+### 🤖 Claude — 2026-11-18T00:30:42.359Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r7/06_1_APPROVED.jpg", "qa/review_r7/06_2_BEFORE_forward_10u.jpg", "qa/review_r7/06_3_NEW_forward_10u.jpg", "qa/review_r7/06_2_BEFORE_forward_20u.jpg", "qa/review_r7/06_3_NEW_forward_20u.jpg", "qa/review_r7/06_2_BEFORE_two_thirds_through.jpg", "qa/review_r7/06_3_NEW_two_thirds_through.jpg", "qa/review_r7/06_2_BEFORE_end_of_stage.jpg", "qa/review_r7/06_3_NEW_end_of_stage.jpg", "qa/review_r7/06_2_BEFORE_steering_hard_right.jpg", "qa/review_r7/06_3_NEW_steering_hard_right.jpg"], "caption": "Screen 06: APPROVED, then BEFORE / NEW at forward 10 u, 20 u, two-thirds through, end …[+198 chars]`
+
+### 🧑 User — 2026-11-18T00:30:44.450Z
+
+> ↩︎ result: 11 files delivered to user.
+>   /home/user/rainbow-/qa/review_r7/06_1_APPROVED.jpg → file_uuid: 17546eaa-f3cc-4098-af69-e475dc307688
+>   /home/user/rainbow-/qa/review_r7/06_2_BEFORE_forward_10u.jpg → file_uuid: 129afb8b-4f97-47f4-b7c2-5baaba21d538
+>   /home/user/rainbow-/qa/review_r7/06_3_NEW_forward_10u.jpg → file_uuid: 630ea112-a296-418c-a8b4-8d32280adf76
+>   /home/user/rainbow-/qa/review_r7/06_2_BEFORE_forward_20u.jpg → file_uuid: 60620736-9ea8-4fa9-b1c5-96b2fa16ee22
+>   /home/user/rainbow-/qa/review_r7/06_3_NEW_forward_20u.jpg → file_uuid: 22a864a8-539d-4a19-acb1-4ccf13ffb109
+>   /home/user/rainbow-/qa/review_r7/06_2_BEFORE_two_thirds_through.jpg → file_uuid: eb6cdd64-bdf6-44fe-a071-e2fe7d41b8f7
+>   /home/user/rainbow-/qa/review_r7/06_3_NEW_two_thirds_through.jpg → file_uuid: dc089aae-2201-434a-992b-43173fd59393
+>   /home/user/rainbow-/qa/review_r7/06_2_BEFORE_end_of_stage.jpg → file_uuid: 27e13e96-f9e1-4a4e-9280-83f91f89f886
+>   /home/user/rainbow-/qa/review_r7/06_3_NEW_end_of_stage.jpg → file_uuid: 8d95bae1-9066-4263-a311-a61ad286c76c
+>   /home/user/rainbow-/qa/review_r7/06_2_BEFORE_steering_hard_right.jpg → file_uuid: 3a9474db-caac-4651-b639-3dad60de8a19
+>   /home/user/rainbow-/qa/review_r7/06_3_ …[+77 chars]
+
+### 🤖 Claude — 2026-11-18T00:30:48.446Z
+
+Screen 08's specialist also finished a round, so here are its pictures too. Fetching its newest frames from GitHub:
+
+### 🤖 Claude — 2026-11-18T00:30:50.102Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin \"+refs/heads/claude/rainbow-s08-scenery-c7:refs/remotes/origin/claude/rainbow-s08-scenery-c7\" && R=origin/claude/rainbow-s08-scenery-c7 && git ls-tree --name-only $R qa/match/08/scenery/r7/NEW/ | head -14; git ls-tree --name-only $R qa/match/08/scenery/r6/R1_restored/ | head -3", "description": "List Screen 08 BEFORE and NEW frames on its branch"}`
+
+### 🧑 User — 2026-11-18T00:30:52.125Z
+
+> ↩︎ result: qa/match/08/scenery/r7/NEW/a00_approved_view.png
+> qa/match/08/scenery/r7/NEW/f03_forward3u.png
+> qa/match/08/scenery/r7/NEW/f06_forward6u.png
+> qa/match/08/scenery/r7/NEW/f10_forward10u.png
+> qa/match/08/scenery/r7/NEW/f20_forward20u.png
+> qa/match/08/scenery/r7/NEW/motion.json
+> qa/match/08/scenery/r7/NEW/s_left_hard.png
+> qa/match/08/scenery/r7/NEW/s_left_steer.png
+> qa/match/08/scenery/r7/NEW/s_right_hard.png
+> qa/match/08/scenery/r7/NEW/s_right_steer.png
+> qa/match/08/scenery/r7/NEW/t33_through_screen.png
+> qa/match/08/scenery/r7/NEW/t66_through_screen.png
+> qa/match/08/scenery/r7/NEW/t95_through_screen.png
+> qa/match/08/scenery/r6/R1_restored/a00_approved_view.png
+> qa/match/08/scenery/r6/R1_restored/f03_forward3u.png
+> qa/match/08/scenery/r6/R1_restored/f06_forward6u.png
+
+### 🤖 Claude — 2026-11-18T00:30:57.985Z
+
+> 🔧 **Bash** `{"command": "R=origin/claude/rainbow-s08-scenery-c7; T=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/s08; mkdir -p $T; D=qa/review_r7; for p in f03_forward3u:forward_3u f10_forward10u:forward_10u t66_through_screen:two_thirds_through s_right_hard:steering_hard_right; do k=${p%%:*}; n=${p#*:}; for v in r6/R1_restored:BEFORE r7/NEW:NEW; do src=${v%%:*}; tag=${v#*:}; git show $R:qa/match/08/scenery/$src/$k.png > $T/x.png; head -c 60 $T/x.png | grep -q \"git-lfs\" && echo \"LFS pointer: $src/$k\"; o=2; [ $tag = NEW ] && o=3; convert $T/x.png -quality 92 $D/08_${ …[+320 chars]`
+
+### 🧑 User — 2026-11-18T00:31:00.496Z
+
+> ↩︎ result: 08_1_APPROVED.jpg 08_2_BEFORE_forward_10u.jpg 08_2_BEFORE_forward_3u.jpg 08_2_BEFORE_steering_hard_right.jpg 08_2_BEFORE_two_thirds_through.jpg 08_2_CURRENT_swim_forward_10u.jpg 08_2_CURRENT_swim_two_thirds_through.jpg 08_3_NEW_forward_10u.jpg 08_3_NEW_forward_3u.jpg 08_3_NEW_steering_hard_right.jpg 08_3_NEW_two_thirds_through.jpg
+
+### 🤖 Claude — 2026-11-18T00:31:02.785Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/s08/s08_cmp.jpg"}`
+
+### 🧑 User — 2026-11-18T00:31:02.875Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:31:10.436Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r7/08_1_APPROVED.jpg", "qa/review_r7/08_2_BEFORE_forward_3u.jpg", "qa/review_r7/08_3_NEW_forward_3u.jpg", "qa/review_r7/08_2_BEFORE_forward_10u.jpg", "qa/review_r7/08_3_NEW_forward_10u.jpg", "qa/review_r7/08_2_BEFORE_two_thirds_through.jpg", "qa/review_r7/08_3_NEW_two_thirds_through.jpg", "qa/review_r7/08_2_BEFORE_steering_hard_right.jpg", "qa/review_r7/08_3_NEW_steering_hard_right.jpg"], "caption": "Screen 08: APPROVED, then BEFORE / NEW at forward 3 u, 10 u, two-thirds through, steering hard right (specialist round 7: torn gold slabs at the bottom removed, ceiling slots …[+88 chars]`
+
+### 🧑 User — 2026-11-18T00:31:12.080Z
+
+> ↩︎ result: 9 files delivered to user.
+>   /home/user/rainbow-/qa/review_r7/08_1_APPROVED.jpg → file_uuid: 197ddf81-b9ce-416c-ac3c-23f66c72b7d2
+>   /home/user/rainbow-/qa/review_r7/08_2_BEFORE_forward_3u.jpg → file_uuid: 352973ab-2407-44f4-b149-a099f24cbdbb
+>   /home/user/rainbow-/qa/review_r7/08_3_NEW_forward_3u.jpg → file_uuid: 6c0687c9-4c6a-4c33-8ad2-12d88290b7e7
+>   /home/user/rainbow-/qa/review_r7/08_2_BEFORE_forward_10u.jpg → file_uuid: 0bb76ab1-b2fc-4939-8cc2-7712e8332463
+>   /home/user/rainbow-/qa/review_r7/08_3_NEW_forward_10u.jpg → file_uuid: ac569df7-8105-4db5-a0e3-5cf5534b288f
+>   /home/user/rainbow-/qa/review_r7/08_2_BEFORE_two_thirds_through.jpg → file_uuid: 04682cc5-ccf5-4962-a6ab-2468987cd4fa
+>   /home/user/rainbow-/qa/review_r7/08_3_NEW_two_thirds_through.jpg → file_uuid: 5e02a876-20fe-4389-8df6-d87de0636ee3
+>   /home/user/rainbow-/qa/review_r7/08_2_BEFORE_steering_hard_right.jpg → file_uuid: 1e60be76-369b-4e0b-ab31-4b08f472db8c
+>   /home/user/rainbow-/qa/review_r7/08_3_NEW_steering_hard_right.jpg → file_uuid: e9ffad99-ec8a-4d45-a062-22e8c946e903
+
+### 🤖 Claude — 2026-11-18T00:31:16.284Z
+
+> 🔧 **Bash** `{"command": "git add qa/review_r7 && git commit -q -m \"r7 review pictures: Screen 06 kept set, Screen 08 round 7 (APPROVED / BEFORE / NEW)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZsVTaecBXyvFd9EQGg\" && git push -q origin claude/rainbow-lead-c7 2>&1 | tail -1; echo \"lead local $(git rev-parse HEAD) remote $(git ls-remote origin refs/heads/claude/rainbow-lead-c7 | cut -f1)\"; python3 -I scripts/autosave-status.py 2>&1 | tail -1 | cut -c1-110", "description": "Commit review pictures and verify lead push"}`
+
+### 🧑 User — 2026-11-18T00:31:30.230Z
+
+> ↩︎ result: lead local 03e22a8503cf3986f507f0048c9347d05ba2bcb2 remote 03e22a8503cf3986f507f0048c9347d05ba2bcb2
+> AUTOSAVE OK | branch claude/rainbow-lead-c7 | scheduler daemon | last verified backup 2026-11-18T00:28:16+00:0
+
+### 🤖 Claude — 2026-11-18T00:31:40.007Z
+
+I sent you new APPROVED / BEFORE / NEW pictures for Screen 06 and Screen 08 at the same swimming positions. Nothing is approved; Screens 04, 05 and 07 don't have NEW pictures yet.
+
+**Screen 06: about 3.5–4 before → about 7/10 now while swimming.** Still short of 8.5. Your approved starting view is unchanged (whole-frame match 76.4 % before and after).
+
+Kept this round:
+- **Gold rings:** bright yellow-white highlight lines and rows of glowing warm bulbs, converging all the way to the centre.
+- **Foam:** bubbly clusters of small puffs along both banks.
+- **Bubbles:** your iridescent bubbles now float above the river while Benny swims.
+- **Benny's splash:** his white splash and spray come back while swimming.
+
+Tried and dropped, because they looked worse than what was there:
+- **Generated perforated walls**, twice, even with colours measured from your painting. They looked flat and plastic next to your painted wall.
+- **Fewer far rings.** It left an empty hole at the centre.
+- **Rainbow river edges.** I measured your river: next to Benny the edges run magenta → violet → blue → cyan, which ours already matches. The rainbow is only a faint pastel sheen, so painting strong rainbow edges on would be a redesign.
+
+Not working yet:
+- **Gold paddle blades:** I built them, but they don't show in any of the test views. They stay switched off until they do.
+
+Still different from your picture:
+- The walls are softer. They need a sharp texture taken from your actual painting.
+- Benny is smaller and less fluffy than your painted Benny.
+- The paddles are missing while swimming.
+
+**Screen 08: about 7.5/10 straight ahead.** The torn gold slabs at the bottom are gone, the ceiling slots match your painted wall, and the window smear on the towel is gone. Still different: a smeared band low on the left close to the camera, and big coins near the bottom.
+
+**The other three screens, each on its own approved design:**
+
+| Screen | Status |
+|---|---|
+| 05 | Specialist working: extending your S-river and tunnel past the point where the old pink world takes over today. |
+| 07 | Specialist working: removing the orange band that hides Benny in the plunge. |
+| 04 | Brief and branch ready (laundry-room entrance, gold washer opening, thick colourful water, bubbles, foam). Starts when 05 or 07 finishes, keeping two specialists at a time. |
+
+No paid jobs were run, and autosave is running. Everything is on GitHub with remote matching local:
+- Screen 06: `claude/rainbow-s06-match-c7` @ `b9b63e35`
+- Lead: `claude/rainbow-lead-c7` @ `03e22a85`
+
