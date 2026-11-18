@@ -613,3 +613,41 @@ Let me view the texture layers themselves.
 >         // ?projnear05=1: the hand-over to the crisp tile must not follow the WAVES. The per-pixel Jacobian above swings
 >  …[+6331 chars]
 
+### 🤖 Claude — 2026-11-18T02:05:06.051Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && awk 'NR>=1180 && NR<=1500 && /float s =|float u =|float s=|float u=|void main/ {print NR\": \"$0}' src/vfx/waterRibbon.ts; grep -n \"^export const M05WD\\|q05 = \\|function q05\\|const q05\" src/vfx/waterRibbon.ts", "description": "Find s and u declarations in fragment main"}`
+
+### 🧑 User — 2026-11-18T02:05:06.092Z
+
+> ↩︎ result: 151:const q05 = (key: string): boolean => {
+> 269:export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+
+### 🤖 Claude — 2026-11-18T02:05:08.310Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"void main\" src/vfx/waterRibbon.ts; grep -n \"  float s = \\|  float u = \\|float s = vUV\\|float u = vUV\\|vUV.y\\b\" src/vfx/waterRibbon.ts | head -20; sed -n 145,160p src/vfx/waterRibbon.ts", "description": "Locate main function and coordinate variables"}`
+
+### 🧑 User — 2026-11-18T02:05:08.351Z
+
+> ↩︎ result: 346:void main() {
+> 800:void main() {
+> 353:  float u = aUV.x;
+> 354:  float s = aUV.y;
+> 801:  float u = vUV.x;
+> 802:  float s = vUV.y;
+>  */
+> /**
+>  * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+>  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+>  */
+> const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> const q05 = (key: string): boolean => {
+>   try {
+>     if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+>   } catch {
+>     /* no location (vite-node / workers) */
+>   }
+>   return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> };
+> /** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> export const flag05 = q05;
+
