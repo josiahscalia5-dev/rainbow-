@@ -690,3 +690,51 @@ I'll wait for the capture monitor to report.
 
 > ↩︎ result: blue_sock bubbles bubbles_approved05 bubbles_big bubbles_small doorA_pivot doorC_pivot flow05_map flow05_ripple foam_banks foam_berm foam_far05_clouds foam_flank foam_rafts foam_rim05 foam_whirlpool laundry_room marble05_env pink_star_shirt proj05_apron purple_towel rider_splash rider_splash05 spray tube05_end_glow tube05_far_river tube05_lids05 tube05_lids_blender tube05_near_frame washer_world water_drumA water_drumA_surface water_drumA_swirl water_final_wave water_puddles water_ribbon water_system water_whirlpool zone_
 
+### 🤖 Claude — 2026-11-18T16:36:23.577Z
+
+While the captures continue, I'll check the berm/apron geometry near the seam to understand the straight cut (proj05Apron).
+
+### 🤖 Claude — 2026-11-18T16:36:24.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,60p src/vfx/proj05Apron.ts | grep -v \"^import\"", "description": "Read the 05 apron strip header"}`
+
+### 🧑 User — 2026-11-18T16:36:24.634Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection test (`?proj05=1`, qa/pilot05/proj/NOTES.md): a thin VISUAL-ONLY strip that hugs the tunnel wall
+>  * from the river's edge up ≈ 2.5 u, on 05 only. At the far bends the approved picture's fluffy foam banks lie beyond the
+>  * game river's edge (on the lower wall); this strip carries them (baked from the approved picture through the locked
+>  * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: steering, coins and the
+>  * camera are untouched. Where it would be magnified (camera close) or where the approved picture shows no foam/water,
+>  * it dithers away and the wall shows as before. `?projbank05=0` leaves it out.
+>  * attribute aPj = (t · side, s): t 0 at the river edge → 1 at the top of the strip, side −1 left / +1 right.
+>  */
+> 
+> /** `?projedge05=1` (on with `?match05=1`, coordinator 2026-11-17): edge-padded copy of proj05_A.png (tools/proj05/pad_alpha.py:
+>  *  transparent / low-alpha texels take the colour of the nearest opaque texel, alpha unchanged) so bilinear filtering no
+>  *  longer mixes black into the strip's edge: removes the dotted black line along the top of the left foam bank. */
+> const PJEDGE05 = on05('projedg …[+1675 chars]
+
+### 🤖 Claude — 2026-11-18T16:36:27.263Z
+
+> 🔧 **Bash** `{"command": "ls -la --time-style=+%H:%M:%S /home/user/wt/s05/qa/match/05/r14/step1_m05vee/before/ | awk '{print $6, $7}'; date +%H:%M:%S", "description": "Check shot timestamps for capture speed"}`
+
+### 🧑 User — 2026-11-18T16:36:27.350Z
+
+> ↩︎ result: 16:36:02 .
+> 16:34:48 ..
+> 16:35:09 a00_approved_view.png
+> 16:35:19 f03_forward3u.png
+> 16:35:30 f06_forward6u.png
+> 16:35:44 f10_forward10u.png
+> 16:36:02 f20_forward20u.png
+> 16:36:27
+
+### 🤖 Claude — 2026-11-18T16:36:29.789Z
+
+Shots are fast (~15 s each). Let me check again shortly.
+
+### 🤖 Claude — 2026-11-18T16:36:31.184Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s05/qa/match/05/r14/step1_m05vee/before/shots.json ]; do sleep 3; done; cat /home/user/wt/s05/qa/match/05/r14/step1_m05vee/before.log | tail -14", "description": "Wait for BEFORE set to finish", "timeout": 600000}`
+
