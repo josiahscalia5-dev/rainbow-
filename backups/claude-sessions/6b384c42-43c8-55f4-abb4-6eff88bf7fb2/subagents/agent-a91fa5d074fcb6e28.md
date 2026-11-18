@@ -1010,3 +1010,15 @@ Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S05_LAUNCH.md exa
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r15/KEPT_START.txt) && timeout 600 node tools/match05/r15_probe.mjs \"$Q\" x93,x96,x97,t98,x99,x101 5275 2>&1 | tail -80", "description": "Probe layers through the hand-over", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T18:26:22.739Z
+
+> ↩︎ result: == x93 s 185.694 stage 05 cam 2.99,-40.2,-119.24 far-open 0
+>    0,0.6 tube05_far_wall<zone_tubes<washer_world<Scene d14.14 | water_ribbon<water_system<Scene d19.73 | Mesh<zone_tubes<washer_world<Scene d24.06
+>    0,0.3 tube05_far_wall<zone_tubes<washer_world<Scene d14.38 | water_ribbon<water_system<Scene d15.68 | Mesh<zone_tubes<washer_world<Scene d19.74
+>    0,0 water_ribbon<water_system<Scene d12.48 | tube05_far_river<zone_tubes<washer_world<Scene d12.66 | tube05_far_wall<zone_tubes<washer_world<Scene d13.98
+>    0,-0.3 Mesh<coins<Scene d5.95 | fur_body<body<benny_root<AuxScene<Benny d7.48 | fur_body<body<benny_root<AuxScene<Benny d7.48
+>    0,-0.6 water_ribbon<water_system<Scene d6.89 | rider_splash05<water_system<Scene d6.91 | Mesh<zone_tubes<washer_world<Scene d10.22
+>    -0.6,0.3 tube05_far_wall<zone_tubes<washer_world<Scene d14.03 | water_ribbon<water_system<Scene d15.28 | Mesh<zone_tubes<washer_world<Scene d19.27
+>    0.6,0.3 tube05_far_wall<zone_tubes<washer_world<Scene d14.2 | Mesh<foam_banks<water_system<Scene d15.35 | foam_berm<foam_banks<water_system<Scene d15.69
+>    -0.8,-0.3 water_ribbon<water_system<Scene d9.8 | tube05_far<zone_tubes<washer_world<Scene d12.87 | tube05_far_wall<zo …[+7794 chars]
+
