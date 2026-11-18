@@ -1,4 +1,16 @@
-# ▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 13 (round 13) STATE (2026-11-18 ~15:00 UTC, lead branch `claude/rainbow-restore-autosave-1mgga0`)
+# ▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 14 (round 14) STATE (2026-11-18 ~16:40 UTC, lead branch `ccr-6c7564b1-fmlt1w`)
+
+Started from the account-13 lead `claude/rainbow-restore-autosave-1mgga0` (nothing merged; account 13 hit its usage limit at ~15:48
+UTC). Binding visual goal unchanged: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. Branch map, services, verdicts:
+**`docs/briefs/2026-11-18-r14/COORDINATION.md`**. RUNNING: 05 `claude/rainbow-s05-match-c14` (water-fx-specialist, `/home/user/wt/s05`),
+08 `claude/rainbow-s08-scenery-c14` (washer-environment-modeler, `/home/user/wt/s08`); lead continues 04 on
+`claude/rainbow-s04-match-c14` (`/home/user/wt/s04`). Keys: this account's environment injects World Labs (5,420 credits, 08 world
+200) and fal (01a1ea70 COMPLETED) — no form needed. Shallow clone: fetch branch tips one at a time with `--depth=1`.
+If account 14 runs out: `-c15` branches from each NEWEST `-c14` tip; never write `-c14` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶▶ ACCOUNT 13 (round 13) STATE (2026-11-18 ~15:00 UTC, lead branch `claude/rainbow-restore-autosave-1mgga0`)
 
 Started from the account-12 lead `ccr-e908f8da-cy4yc1` @ `d256bc4` (nothing merged). **The user APPROVED the visual-first plan
 (~15:00 UTC): `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` is binding for every specialist and every future account.**

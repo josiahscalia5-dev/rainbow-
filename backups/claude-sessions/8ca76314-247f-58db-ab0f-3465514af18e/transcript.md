@@ -1131,3 +1131,560 @@ While the Screen 04 branch downloads, a quick check that the GitHub and Playwrig
 
 > ↩︎ result: [{"name":"backup/2026-11-17-screen08-transfer","sha":"714f6502447149b8f1a1dd07159e412ed8df8c46","protected":false},{"name":"ccr-3b139b48-0qqkkz","sha":"87ed797a47744c933890696e7760a3b0f8aec292","protected":false}]
 
+### 🧑 User — 2026-11-18T16:32:15.628Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('about:blank');
+> ```
+> ### Page
+> - Page URL: about:blank
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-18T16-32-15-621Z.yml)
+
+### 🤖 Claude — 2026-11-18T16:32:19.330Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/bwk7pf4v3.output; rm -f .playwright-mcp/page-*.yml; rmdir .playwright-mcp 2>/dev/null; grep -q \"^.playwright-mcp\" .git/info/exclude || echo \".playwright-mcp/\" >> .git/info/exclude", "description": "Show fetch result and tidy Playwright snapshot"}`
+
+### 🧑 User — 2026-11-18T16:32:21.816Z
+
+> ↩︎ result: claude/rainbow-s04-match-c13 9ef21200
+> claude/rainbow-s05-match-c13 fatal: Needed a single revision
+> claude/rainbow-s08-scenery-c13 fatal: Needed a single revision
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-18T16:32:23.560Z
+
+Screen 04 tip `9ef21200` is fetched. Now fetching the Screen 05 and Screen 08 tips one at a time, and creating the Screen 04 worktree on its new `-c14` branch.
+
+### 🤖 Claude — 2026-11-18T16:32:26.107Z
+
+> 🔧 **Bash** `{"command": "(for b in claude/rainbow-s05-match-c13 claude/rainbow-s08-scenery-c13; do timeout 900 git fetch --depth=1 origin +$b:refs/remotes/origin/$b >> /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/fetch2.log 2>&1; echo \"$b $(git rev-parse --short=8 --verify -q refs/remotes/origin/$b)\"; done)", "description": "Fetch Screen 05 and 08 tips sequentially", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T16:32:26.130Z
+
+> ↩︎ result: Command running in background with ID: btmgzn938. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/btmgzn938.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T16:32:28.763Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt && git worktree add -b claude/rainbow-s04-match-c14 /home/user/wt/s04 refs/remotes/origin/claude/rainbow-s04-match-c13 2>&1 | tail -2 && cd /home/user/wt/s04 && git apply --check /home/user/rainbow-/backups/wip/claude__rainbow-s04-match-c13/tracked.patch && git apply /home/user/rainbow-/backups/wip/claude__rainbow-s04-match-c13/tracked.patch && cp -rn /home/user/rainbow-/backups/wip/claude__rainbow-s04-match-c13/untracked/. . && ln -sfn /home/user/rainbow-/node_modules node_modules && git status --short | head; git log --oneline -3", "description": "Create S …[+69 chars]`
+
+### 🧑 User — 2026-11-18T16:32:37.165Z
+
+> ↩︎ result: Filtering content: 100% (2/2)Filtering content: 100% (2/2), 53.53 MiB | 20.82 MiB/s, done.
+> HEAD is now at 9ef2120 Screen 04 r13 step 5: painted-style arrows (m04a3tex), rounded bright gold rings (m04bulge), deeper arrow lane — F4 GOOD IMPROVEMENT
+> cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? qa/match/04/r13/s8_glow/
+> 9ef2120 Screen 04 r13 step 5: painted-style arrows (m04a3tex), rounded bright gold rings (m04bulge), deeper arrow lane — F4 GOOD IMPROVEMENT
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T16:32:42.361Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && echo \"node_modules\" >> \"$(git rev-parse --git-common-dir)/info/exclude\"; ls tools/lead_r6 >/dev/null 2>&1 && echo \"lead_r6 present\" || echo \"lead_r6 missing\"; git add src/world/match04m4.ts qa/match/04/r13/s8_glow && git commit -q -m \"Screen 04 r13->r14: account-13 unfinished glow edit &m04a3lum (WIP, not yet judged) + G1/G2 renders\n\nRestored from backups/wip/claude__rainbow-s04-match-c13 (snapshot 15:49 UTC).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6U3gDKWR4hkd5Ky2Pt\" && t …[+245 chars]`
+
+### 🤖 Claude — 2026-11-18T16:32:42.762Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T16:32:45.477Z
+
+> ↩︎ result: lead_r6 present
+>  * [new branch]      claude/rainbow-s04-match-c14 -> claude/rainbow-s04-match-c14
+> branch 'claude/rainbow-s04-match-c14' set up to track 'origin/claude/rainbow-s04-match-c14'.
+> c69b7f331e6484fb655e4f7b4463cc4f5e0906d3
+> c69b7f331e6484fb655e4f7b4463cc4f5e0906d3	refs/heads/claude/rainbow-s04-match-c14
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T16:32:45.488Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-18T16:32:48.092Z
+
+Screen 04 is now on `claude/rainbow-s04-match-c14` at `c69b7f33`, with the unfinished glow edit restored and saved to GitHub. I'm reading the Screen 04 log to see how its proofs were captured.
+
+### 🤖 Claude — 2026-11-18T16:32:49.186Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls qa/match/04/r13/; ls qa/match/04/r13/* -d | head -30; cat qa/match/04/r13/PROGRESS.md 2>/dev/null | tail -60", "description": "Read Screen 04 round-13 progress log"}`
+
+### 🧑 User — 2026-11-18T16:32:49.233Z
+
+> ↩︎ result: PROGRESS.md
+> s2_arr
+> s3_ring
+> s4_water
+> s5_lane
+> s6_rich
+> s7_enter
+> s8_glow
+> qa/match/04/r13/PROGRESS.md
+> qa/match/04/r13/s2_arr
+> qa/match/04/r13/s3_ring
+> qa/match/04/r13/s4_water
+> qa/match/04/r13/s5_lane
+> qa/match/04/r13/s6_rich
+> qa/match/04/r13/s7_enter
+> qa/match/04/r13/s8_glow
+> ## REBUILD step 2 — the five glowing chevrons on the lane while swimming — E4 = GOOD IMPROVEMENT (arrows only) — shown to the user
+> Query: `K13&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=3&m04a3o=1.0&m04a3b=1&m04a3b0=1.8&m04a3b1=3.2&m04a3f0=25&m04a3f1=31&m04a3p=3.6&m04a3w=1.05&m04a3t=0.36&m04a3d=0.62&m04a3f=4&m04a3y=0.1`
+> * Why the painted arrows vanished while swimming: from the game camera (≈ 3 u above the water, Benny ≈ 6.4 u ahead) the lane is
+>   hidden behind Benny up to ≈ 7 u ahead of him; flat arrows are edge-on beyond that. The painted picture shows them stacked just
+>   above his hat, so they are real chevron bars leaning back 66° toward the camera (they rise into the visible strip above the hat).
+> * New r13 settings: `m04a3w2` white core + cyan neon halo (`m04a3g` halo size, `m04a3o` glow), `m04a3b` near fade measured from
+>   BENNY (1.8–3.2 u ahead of him: no chevron ever stands round his body, also at the stage end where  …[+7065 chars]
+
+### 🤖 Claude — 2026-11-18T16:32:52.440Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls tools/lead_r13/ tools/lead_r6/ 2>&1; cat qa/match/04/r13/s8_glow/G2/motion.json | head -30; ls qa/match/04/r13/s7_enter/", "description": "Find the capture scripts and the G2 test settings"}`
+
+### 🧑 User — 2026-11-18T16:32:52.485Z
+
+> ↩︎ result: tools/lead_r13/:
+> swim_clip.mjs
+> 
+> tools/lead_r6/:
+> bisect_preview08.mjs
+> motion_audit.mjs
+> motion_metrics.py
+> {
+>  "screen": "04",
+>  "query": "match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=0.85&m04lcw=1.7&m04a3fa=0.97&m04a3gb=0.12&m04a3tm=0.45&m04a3lum=0.6",
+>  "shots": [
+>   {
+>    "name": "a00_approved_view",
+>    "dist": 0,
+>    "steer": null,
+>    "mode": "ride",
+>    "stage": "04",
+>    "s": 78.212,
+>    "lat": 0,
+>    "coins": 1330,
+>    "hearts": 5,
+>    "paused": false,
+>    "bennyY": -22.16,
+>    "bennyVisible": true,
+>    "cam": [
+>     2.42,
+>     -16.08,
+>     -21.26
+>    ],
+>    "frames": 0,
+>    "s0": 77.413,
+>    "s1": 114.68830202823243,
+>    "target": 77.413
+>   },
+>   {
+>    "name": "f03_forward3u",
+>    "dist": 3,
+> F1
+> F2
+> F3
+> F4
+> Shell  …[+36 chars]
+
+### 🤖 Claude — 2026-11-18T16:32:55.492Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && head -40 tools/lead_r6/motion_audit.mjs | grep -E \"^//|^ \\*|usage|Usage|argv|port|vite|dev\" | head -25; head -20 tools/lead_r13/swim_clip.mjs | grep -E \"^//|argv|Usage\" | head", "description": "Read the capture script usage"}`
+
+### 🧑 User — 2026-11-18T16:32:55.552Z
+
+> ↩︎ result: // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> const vite = await startVite(5270 + Number(SCREEN));
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at …[+536 chars]
+
+### 🤖 Claude — 2026-11-18T16:32:59.503Z
+
+Starting the next Screen 04 test in the background: the brighter, glowing arrow layer (G3), rendered from the real game at all the swimming positions.
+
+### 🤖 Claude — 2026-11-18T16:33:02.251Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && Q=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r13/s8_glow/G2/motion.json'))['query'])\") && mkdir -p qa/match/04/r14/s8_glow/G3 && timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r14/s8_glow/G3 \"$Q\" > /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/g3.log 2>&1; echo \"exit $?\"; ls qa/match/04/r14/s8_glow/G3 | head -20", "description": "Render Screen 04 G3 glow test at all swim positions", "timeout": 1000000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T16:33:02.288Z
+
+> ↩︎ result: Command running in background with ID: bf47xetds. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/bf47xetds.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T16:33:05.485Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/btmgzn938.output; tail -3 /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/fetch2.log", "description": "Check Screen 05/08 fetch progress"}`
+
+### 🧑 User — 2026-11-18T16:33:05.530Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T16:33:08.555Z
+
+While the Screen 05 branch downloads, I'm pulling the exact relaunch instructions Account 13 gave the two specialists from its saved chat, so I can reuse them.
+
+### 🤖 Claude — 2026-11-18T16:33:11.307Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/transcript.sanitized.jsonl'\nrows=[json.loads(l) for l in open(p) if l.strip()]\nn=0\nfor i,r in enumerate(rows):\n    m=r.get('message') or {}\n    c=m.get('content')\n    if not isinstance(c,list): continue\n    for b in c:\n        if isinstance(b,dict) and b.get('type')=='tool_use' and b.get('name')=='Agent':\n            inp=b.get('input',{})\n            print('=====',i,r.get('timestamp'),inp.get('description'),inp.get('subagent_type'), inp.get('name'))\n            if i>1200:  …[+114 chars]`
+
+### 🧑 User — 2026-11-18T16:33:11.463Z
+
+> ↩︎ result: ===== 300 2026-11-18T14:24:46.856Z Screen 05 water specialist round 13 water-fx-specialist s05
+> ===== 346 2026-11-18T14:26:35.006Z Screen 08 scenery specialist round 13 washer-environment-modeler s08
+> ===== 1258 2026-11-18T15:42:02.080Z Resume Screen 05 specialist round 13 water-fx-specialist s05
+> You are the Rainbow project's `water-fx-specialist`, RESUMING Screen 05 "Flow Into the Current" (VISUALS ONLY) after your previous instance was cancelled at ~15:08 UTC by an interruption. Nothing is lost: your kept steps are pushed.
+> 
+> Read first: `/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md` (NN=05, AGENT=water-fx-specialist, WORKTREE=/home/user/wt/s05, BRANCH=claude/rainbow-s05-match-c13) and the BINDING user goal `/home/user/rainbow-/docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. Then `cd /home/user/wt/s05`, read `qa/match/05/r13/PROGRESS.md`, `git log -8` and `git status` (one uncommitted file may be your unfinished edit — check it by eye: keep only if it looks closer, else `git checkout --` it).
+> 
+> State: kept r13 steps m05join (step 2) and m05frim (step 3), both GOOD IMPROVEMENT; m05slot and m05lump rejected. Remaining tasks in order: (a) near foam /  …[+2833 chars]
+
+### 🤖 Claude — 2026-11-18T16:33:16.237Z
+
+> 🔧 **Bash** `{"command": "sleep 45; cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/btmgzn938.output; cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/bf47xetds.output; tail -3 /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/g3.log", "description": "Wait briefly and check fetch and render progress"}`
+
+### 🧑 User — 2026-11-18T16:33:16.244Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 45 followed by: cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/btmgzn938.output cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/bf47xetds.output tail -3 /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/g3.log. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T16:33:25.215Z
+
+While the downloads and the render run, I'm writing the Account 14 handoff notes so a future account can pick up from here.
+
+### 🤖 Claude — 2026-11-18T16:33:26.644Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,40p docs/briefs/2026-11-18-r13/COORDINATION.md | head -5; grep -n \"ACCOUNT 13\" -m3 docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md CLAUDE.md backups/START_NEW_CLAUDE_ACCOUNT.md | head", "description": "Locate places to add account-14 notes"}`
+
+### 🧑 User — 2026-11-18T16:33:26.683Z
+
+> ↩︎ result: * Hugging Face: direct Hub reads work without login (model `depth-anything/DA3-LARGE` → 200); `whoami` → 401 (no HF token, none
+>   needed for public models). The Hugging Face claude.ai connector is NOT installed on this account (user must connect it on claude.ai
+>   if wanted). Stable Virtual Camera + ViewCrafter Spaces → RUNTIME_ERROR (Hugging Face side, same as rounds 11 + 12).
+> * Depth Anything 3: not reinstalled; all five approved pictures' depth maps are in `qa/da3/2026-11-18/depth_npz/`.
+> 
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md:1:# ▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 13 (round 13) STATE (2026-11-18 ~15:00 UTC, lead branch `claude/rainbow-restore-autosave-1mgga0`)
+> CLAUDE.md:16:   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ACCOUNT 13" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map
+> backups/START_NEW_CLAUDE_ACCOUNT.md:12:>    ("ACCOUNT 13"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (my APPROVED visual goal — binding) and
+
+### 🤖 Claude — 2026-11-18T16:33:28.491Z
+
+The Screen 05 tip `ebc9676c` has arrived. Creating its `-c14` worktree and restoring the unfinished near-water edit.
+
+### 🤖 Claude — 2026-11-18T16:33:33.838Z
+
+> 🔧 **Bash** `{"command": "git worktree add -b claude/rainbow-s05-match-c14 /home/user/wt/s05 refs/remotes/origin/claude/rainbow-s05-match-c13 2>&1 | tail -1 && cd /home/user/wt/s05 && git apply --check /home/user/rainbow-/backups/wip/claude__rainbow-s05-match-c13/tracked.patch && git apply /home/user/rainbow-/backups/wip/claude__rainbow-s05-match-c13/tracked.patch && cp -r --update=none /home/user/rainbow-/backups/wip/claude__rainbow-s05-match-c13/untracked/. . && ln -sfn /home/user/rainbow-/node_modules node_modules && ( [ -d tools/lead_r6 ] || cp -r /home/user/wt/s04/tools/lead_r6 tools/ ) && ( [ -d tool …[+689 chars]`
+
+### 🧑 User — 2026-11-18T16:33:49.468Z
+
+> ↩︎ result: HEAD is now at ebc9676 Screen 05 r13: round 13 resumed (log; unfinished m05vee edit found, to verify)
+> branch 'claude/rainbow-s05-match-c14' set up to track 'origin/claude/rainbow-s05-match-c14'.
+> 9735443d257cefbf925b6e334ad296b3071dd661
+> 9735443d257cefbf925b6e334ad296b3071dd661	refs/heads/claude/rainbow-s05-match-c14
+> * Locked approved view: 0 px (`node scripts/capture.mjs 05 --q=<step-2 set>` vs `+m05frim=1`).
+> * Still wrong: just behind the foam on the left the far wall's lowest part is a soft pink-violet smear without slots (k81
+>   left, t95 left); the near lather bank (berm) still ends in a straight cut / square corner at the seam (t75, k81 left) and
+>   near foam lumps behind the seam are cut by the far block's first row.
+> * APPROVED: `/home/user/wt/s05/qa/match/05/r13/step3_m05frim/1_APPROVED.png`
+> * BEFORE (= step 2 set): `/home/user/wt/s05/qa/match/05/r13/step3_m05frim/2_BEFORE_t95_left.png`, `…/2_BEFORE_k81_kink_left.png`,
+>   `…/2_BEFORE_t85_through.png`, `…/2_BEFORE_t75_through.png`, `…/2_BEFORE_t66_through_screen.png`
+> * NEW: `/home/user/wt/s05/qa/match/05/r13/step3_m05frim/3_NEW_t95_left.png`, `…/3_NEW_k81_kink_left.png`,
+>   `…/3_NEW_t85_through.png`, `…/3_NEW_t75_through.png`, `…/ …[+1734 chars]
+
+### 🤖 Claude — 2026-11-18T16:33:54.305Z
+
+Screen 05 is now on `claude/rainbow-s05-match-c14` at `9735443d`, verified on GitHub. Relaunching the Screen 05 water specialist now; Screen 08 follows once its branch finishes downloading.
+
+### 🤖 Claude — 2026-11-18T16:34:07.254Z
+
+> 🔧 **Agent** `{"description": "Screen 05 water specialist round 14", "subagent_type": "water-fx-specialist", "name": "s05", "run_in_background": true, "prompt": "You are the Rainbow project's `water-fx-specialist`, RESUMING Screen 05 \"Flow Into the Current\" (VISUALS ONLY) on a NEW Claude account (account 14). Your account-13 instance was stopped at ~15:48 UTC by that account's usage limit while it was verifying the unfinished edit `&m05vee=1`. Nothing is lost.\n\nRead first: `/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md` (NN=05, AGENT=water-fx-specialist, WORKTREE=/home/use …[+3152 chars]`
+
+### 🧑 User — 2026-11-18T16:34:07.297Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: adb46ac27b23eff4e (internal ID - do not mention to user. Use SendMessage with to: 'adb46ac27b23eff4e', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/adb46ac27b23eff4e.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T16:34:14.325Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/btmgzn938.output && git worktree add -b claude/rainbow-s08-scenery-c14 /home/user/wt/s08 refs/remotes/origin/claude/rainbow-s08-scenery-c13 2>&1 | tail -1 && cd /home/user/wt/s08 && cp -r --update=none /home/user/rainbow-/backups/wip/claude__rainbow-s08-scenery-c13/untracked/. . && ln -sfn /home/user/rainbow-/node_modules node_modules && ( [ -d tools/lead_r6 ] || cp -r /home/user/wt/s04/tools/lead_r6 tools/ ) && ( [ -d tools/lead_r13 ] || cp -r /home/user/wt/s04/tools/lead_r13 tools/ ) && git add -A t …[+560 chars]`
+
+### 🧑 User — 2026-11-18T16:34:25.093Z
+
+> ↩︎ result: claude/rainbow-s05-match-c13 ebc9676c
+> claude/rainbow-s08-scenery-c13 71e7cf54
+> 
+> [exited with code 0]
+> HEAD is now at 71e7cf5 Screen 08 r13: round 13 resumed (task a: S-river / near water while swimming)
+> branch 'claude/rainbow-s08-scenery-c14' set up to track 'origin/claude/rainbow-s08-scenery-c14'.
+> e36430c466c29f032bc1e908675fd0dcf3868033
+> e36430c466c29f032bc1e908675fd0dcf3868033	refs/heads/claude/rainbow-s08-scenery-c14
+>   upright mirror version. Patch: `/home/user/wt/s08/qa/match/08/r13/wip_m08urcup_not_kept.patch` (+ tool, texture and two
+>   NEW frames in `/home/user/wt/s08/qa/match/08/r13/wip_m08urcup/`), reverted.
+> 
+> ## Step 2 — `&m08cupw=1` (gold wedge + X seams on the upper-right cup's top) — KEPT
+> Kept query: `K12&m08bore=1&m08flange=1&m08cupw=1`
+> * Cause (defect B): on the upper-right cup the shader decided "painted" by the projector depth test; along the arch's
+>   inner edge (which crosses the cup diagonally in the approved view) that test passes a few px of the arch's anti-aliased
+>   gold edge -> hard bright lines, mirrored into an X; where a cup point AND its mirror point are behind the arch (the top
+>   next to the axis) only the gold patch was left -> the gold wedge.
+> * What change …[+2143 chars]
+
+### 🤖 Claude — 2026-11-18T16:34:28.413Z
+
+Screen 08 is on `claude/rainbow-s08-scenery-c14` at `e36430c4`, verified on GitHub. Relaunching the Screen 08 scenery specialist.
+
+### 🤖 Claude — 2026-11-18T16:34:39.269Z
+
+> 🔧 **Agent** `{"description": "Screen 08 scenery specialist round 14", "subagent_type": "washer-environment-modeler", "name": "s08", "run_in_background": true, "prompt": "You are the Rainbow project's `washer-environment-modeler`, RESUMING Screen 08 \"Final Spin Chamber\" scenery (VISUALS ONLY) on a NEW Claude account (account 14). Your account-13 instance was stopped at ~15:48 UTC by that account's usage limit while it was comparing the approved near water band with the game's near water (task a). Nothing is lost.\n\nRead first: `/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md` …[+3241 chars]`
+
+### 🧑 User — 2026-11-18T16:34:39.294Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a5185e78e89dbb5e0 (internal ID - do not mention to user. Use SendMessage with to: 'a5185e78e89dbb5e0', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/a5185e78e89dbb5e0.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T16:34:41.988Z
+
+The Screen 05 specialist is confirmed running: its first commit `0dbe931b` is on GitHub, and it is now judging the restored near-water edit by eye. Now looking at the Screen 04 G3 arrow-glow render.
+
+### 🤖 Claude — 2026-11-18T16:34:43.579Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && tail -5 /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/g3.log; ls qa/match/04/r14/s8_glow/G3/; ls qa/match/04/r13/s7_enter/F4/", "description": "List the G3 and F4 renders"}`
+
+### 🧑 User — 2026-11-18T16:34:43.618Z
+
+> ↩︎ result: 04 s_left_hard s 90.246 lat -1.65 stage 04 frames 52
+> 04 s_right_hard s 90.258 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.483 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.848 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T16:34:45.300Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T16:34:45.311Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-18T16:34:45.745Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T16:34:45.756Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-18T16:34:46.200Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T16:34:46.211Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-18T16:34:49.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\nfrom PIL import Image\nimport os\nout='/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad'\nfor shot in ['f06_forward6u','f20_forward20u','s_left_hard']:\n    a=Image.open(f'qa/match/04/r13/s7_enter/F4/{shot}.png').convert('RGB')\n    b=Image.open(f'qa/match/04/r14/s8_glow/G3/{shot}.png').convert('RGB')\n    w,h=a.size\n    c=Image.new('RGB',(w*2+10,h),(0,0,0)); c.paste(a,(0,0)); c.paste(b,(w+10,0))\n    c=c.resize((c.width//2,c.height//2))\n    c.save(f'{out}/cmp_F4_G3_{shot}.png')\nprint('ok')\nEOF", "d …[+71 chars]`
+
+### 🧑 User — 2026-11-18T16:34:50.416Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T16:34:52.711Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp_F4_G3_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T16:34:52.741Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T16:34:53.069Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/04_through_the_five_arrows.png"}`
+
+### 🧑 User — 2026-11-18T16:34:53.092Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T16:35:00.094Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\nfrom PIL import Image\nout='/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad'\nims=[]\nfor d in ['qa/match/04/r13/s7_enter/F4','qa/match/04/r13/s8_glow/G2','qa/match/04/r14/s8_glow/G3']:\n    for shot in ['f06_forward6u','f20_forward20u']:\n        try: a=Image.open(f'{d}/{shot}.png').convert('RGB')\n        except Exception as e: print(d,shot,e); continue\n        ims.append(a.crop((250,620,620,1000)))\nW=sum(i.width for i in ims)+10*len(ims)\nc=Image.new('RGB',(W,380))\nx=0\nfor i in ims: c.paste(i,(x …[+146 chars]`
+
+### 🧑 User — 2026-11-18T16:35:00.731Z
+
+> ↩︎ result: 6
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T16:35:03.361Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/arrows_F4_G2_G3.png"}`
+
+### 🧑 User — 2026-11-18T16:35:03.528Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T16:35:03.524Z
+
+[Image: original 2280x380, displayed at 2000x333. Multiply coordinates by 1.14 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T16:35:13.896Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04a3gb\\|m04a3fa\\|m04a3tm\\|m04a3tex\\|m04a3o'\\|m04a3g'\" src/world/match04m4.ts | head -20", "description": "Find the arrow texture settings in the Screen 04 code"}`
+
+### 🧑 User — 2026-11-18T16:35:13.959Z
+
+> ↩︎ result: 840:    const hg = M04.num('m04a3g', 1);
+> 851:    // r13 `&m04a3tex=1`: the PAINTED arrow look — each chevron drawn once as a glowing image (glassy pale white-cyan bar,
+> 853:    const tex = M04.num('m04a3tex', 0) > 0;
+> 856:      const mg = M04.num('m04a3tm', 0.35) * hw, U = hw + mg, y0 = mg, y1 = -(drop + th) - mg;
+> 868:      c2.shadowColor = 'rgba(30,190,255,1)'; c2.shadowBlur = W * M04.num('m04a3gb', 0.07);
+> 872:      const fa = M04.num('m04a3fa', 0.88);
+> 925:      const go = M04.num('m04a3o', 0.55);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T16:35:16.091Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 851, "limit": 45}`
+
+### 🧑 User — 2026-11-18T16:35:16.119Z
+
+> ↩︎ result: 851	    // r13 `&m04a3tex=1`: the PAINTED arrow look — each chevron drawn once as a glowing image (glassy pale white-cyan bar,
+> 852	    // bright white rim, soft cyan glow round it, square-cut ends along the flow, softened joins) on one leaning panel
+> 853	    const tex = M04.num('m04a3tex', 0) > 0;
+> 854	    let texMat: THREE.MeshBasicMaterial | null = null, texGeo: THREE.BufferGeometry | null = null;
+> 855	    if (tex) {
+> 856	      const mg = M04.num('m04a3tm', 0.35) * hw, U = hw + mg, y0 = mg, y1 = -(drop + th) - mg;
+> 857	      const W = 512, H = Math.max(64, Math.round(W * (y0 - y1) / (2 * U)));
+> 858	      const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+> 859	      const c2 = cv.getContext('2d')!;
+> 860	      const P = (u: number, y: number): [number, number] => [((u + U) / (2 * U)) * W, ((y0 - y) / (y0 - y1)) * H];
+> 861	      const path = () => {
+> 862	        c2.beginPath();
+> 863	        const pts: [number, number][] = [[0, 0], [hw, -drop], [hw, -drop - th], [0, -th], [-hw, -drop - th], [-hw, -drop]];
+> 864	        pts.forEach(([u, y], i) => { const [x, yy] = P(u, y); if (i) c2.lineTo(x, yy); else c2.moveTo(x, yy); });
+> 865	        c2.closePath();
+> 866	      };
+> 867	       …[+2744 chars]
+
+### 🤖 Claude — 2026-11-18T16:35:22.958Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04lcd\\|m04lcw\" src/world/*.ts | head; ", "description": "Find the arrow-lane deep-blue setting"}`
+
+### 🧑 User — 2026-11-18T16:35:23.019Z
+
+> ↩︎ result: src/world/match04m4.ts:301:uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+> src/world/match04m4.ts:364:      // r13 m04lcd: the painted lane is DEEPER blue along the arrow line (the glassy arrows pop on it), brighter turquoise
+> src/world/match04m4.ts:698:        uLane3: { value: new THREE.Vector2(M04.num('m04lcd', 0), M04.num('m04lcw', 1.6)) },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T16:35:25.038Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 360, "limit": 14}`
+
+### 🧑 User — 2026-11-18T16:35:25.061Z
+
+> ↩︎ result: 360	      float sh = h21(si + 17.0);
+> 361	      float tw = 0.5 + 0.5 * sin(uTime * 6.0 + sh * 40.0);
+> 362	      float spk = smoothstep(0.16, 0.0, length(sf - (vec2(h21(si + 3.1), h21(si + 7.7)) - 0.5) * 0.6)) * step(0.86, sh) * tw;
+> 363	      laneC += vec3(1.0) * uLane2.z * spk * (1.0 - smoothstep(0.3, 0.8, fwidth(sc.x)));
+> 364	      // r13 m04lcd: the painted lane is DEEPER blue along the arrow line (the glassy arrows pop on it), brighter turquoise
+> 365	      // toward the pink edges
+> 366	      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
+> 367	    }
+> 368	    col = mix(col, laneC, kl * uLane.z);
+> 369	  }
+> 370	  if (uEdge.x > 0.5) {
+> 371	    // r13 m04edge: soft irregular water edge against the gold wall — pink / magenta current then a lilac-white lacy fringe
+> 372	    // in broken patches (no straight hard line, no tall foam): uEdge.y = half arc to the edge, z = fringe width, w = strength
+> 373	    float e = smoothstep(uEdge.y - uEdge.z, uEdge.y - 0.04, abs(vS));
+
+### 🤖 Claude — 2026-11-18T16:35:33.461Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && Q=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G3/motion.json'))['query'])\") && Q4=$(echo \"$Q\" | sed 's/m04a3lum=0.6/m04a3lum=1.1/; s/m04a3gb=0.12/m04a3gb=0.16/; s/m04lcd=0.85/m04lcd=1.0/') && Q5=\"$Q4&m04a3rw=0.03\" && Q5=$(echo \"$Q5\" | sed 's/m04a3fa=0.97/m04a3fa=1.0/') && mkdir -p qa/match/04/r14/s8_glow/G4 qa/match/04/r14/s8_glow/G5 && timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r14/s8_glow/G4 \"$Q4\" > /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/g4.log 2>&1; ec …[+341 chars]`
+
+### 🧑 User — 2026-11-18T16:35:33.504Z
+
+> ↩︎ result: Command running in background with ID: b53cx5v39. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/b53cx5v39.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T16:35:35.612Z
+
+Now recording the Account 14 state in the handoff files, so the next account starts here instead of at Account 13.
+
+### 🤖 Claude — 2026-11-18T16:35:57.423Z
+
+> 🔧 **Bash** `{"command": "mkdir -p docs/briefs/2026-11-18-r14 && cat > docs/briefs/2026-11-18-r14/COORDINATION.md <<'EOF'\n# Round 14 (account 14) — coordination of the five playable screens (VISUALS ONLY)\n\nLead session branch `ccr-6c7564b1-fmlt1w` (session started from the account-13 lead `claude/rainbow-restore-autosave-1mgga0` @\n`6d6e669`; that branch later got one more account-13 autosave `624c920` (16:20 UTC) with only transcript / backup-status files —\nits newer lead transcript `db1282e5…/transcript.sanitized.jsonl` was copied in; NO code merged). Started 2026-11-18 ~16:22 UTC.\nAccount 13 stoppe …[+4752 chars]`
+
+### 🧑 User — 2026-11-18T16:35:57.697Z
+
+> ↩︎ result: ok
+> # ▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 14 (round 14) STATE (2026-11-18 ~16:40 UTC, lead branch `ccr-6c75
+> 
+> Started from the account-13 lead `claude/rainbow-restore-autosave-1mgga0` (nothing merged; account 13 hit its usage limi
+
+### 🤖 Claude — 2026-11-18T16:36:01.963Z
+
+> 🔧 **Bash** `{"command": "sed -n 14,18p CLAUDE.md; sed -n 1,10p backups/START_NEW_CLAUDE_ACCOUNT.md | cut -c1-160", "description": "Show the pointer lines to update"}`
+
+### 🧑 User — 2026-11-18T16:36:02.011Z
+
+> ↩︎ result: 2. **BINDING, user-approved 2026-11-18 ~15:00 UTC: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`** (the exact approved
+>    scenery of 04–08 THROUGHOUT Benny's swimming; read it before any screen work). Read the TOP section of
+>    **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ACCOUNT 13" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map
+>    `docs/briefs/2026-11-18-r13/COORDINATION.md`); before it "ACCOUNT 12", then "ACCOUNT 11 (round 11) STATE" (2026-11-18,
+>    lead `ccr-3b139b48-0qqkkz`, `-c11` branch map `docs/briefs/2026-11-18-r11/COORDINATION.md`; a new account must re-enter
+> # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶ NEWEST (2026-11-18 ~15:00 UTC, account 13 → next account) — use THIS prompt
+> Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+> Claude Code cloud session on the repo, branch **`claude/rainbow-restore-autosave-1mgga0`** (account-13 lead; NOT the default
+> branch). A new account has its own environment and usually NO keys: Claude checks first with free reads and opens the secure
+> forms only if a check fails (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue. …[+231 chars]
+
+### 🤖 Claude — 2026-11-18T16:36:20.109Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='CLAUDE.md'; s=open(p).read()\nold='— NEWEST: \"ACCOUNT 13\" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map\\n   `docs/briefs/2026-11-18-r13/COORDINATION.md`); before it \"ACCOUNT 12\"'\nnew='— NEWEST: \"ACCOUNT 14\" (lead `ccr-6c7564b1-fmlt1w`, `-c14` map\\n   `docs/briefs/2026-11-18-r14/COORDINATION.md`); before it \"ACCOUNT 13\" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map\\n   `docs/briefs/2026-11-18-r13/COORDINATION.md`), then \"ACCOUNT 12\"'\nassert old in s; s=s.replace(old,new,1); open(p,'w').write(s)\np='backups/START_NEW_ …[+4283 chars]`
+

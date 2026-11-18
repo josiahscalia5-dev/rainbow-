@@ -13,8 +13,9 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
 2. **BINDING, user-approved 2026-11-18 ~15:00 UTC: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`** (the exact approved
    scenery of 04–08 THROUGHOUT Benny's swimming; read it before any screen work). Read the TOP section of
-   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ACCOUNT 13" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map
-   `docs/briefs/2026-11-18-r13/COORDINATION.md`); before it "ACCOUNT 12", then "ACCOUNT 11 (round 11) STATE" (2026-11-18,
+   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ACCOUNT 14" (lead `ccr-6c7564b1-fmlt1w`, `-c14` map
+   `docs/briefs/2026-11-18-r14/COORDINATION.md`); before it "ACCOUNT 13" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map
+   `docs/briefs/2026-11-18-r13/COORDINATION.md`), then "ACCOUNT 12", then "ACCOUNT 11 (round 11) STATE" (2026-11-18,
    lead `ccr-3b139b48-0qqkkz`, `-c11` branch map `docs/briefs/2026-11-18-r11/COORDINATION.md`; a new account must re-enter
    the World Labs + fal keys via the secure form); before it "ACCOUNT 10" (lead `ccr-c526614d-tw0yro`); then "ACCOUNT 9 (round 9) STATE" (2026-11-18,
    lead `claude/rainbow-restore-c9-40w64b`, `-c9` branch map `docs/briefs/2026-11-18-r9/COORDINATION.md`); before it: "ACCOUNT 8 (round 8) STATE" (2026-11-18,

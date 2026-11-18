@@ -1,8 +1,8 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-18T14:30Z",
- "updated_by_session": "session_018Sg3ASTRokNr5EKngTj33B (account 11, lead branch ccr-3b139b48-0qqkkz)",
+ "updated_utc": "2026-11-18T16:40Z",
+ "updated_by_session": "account 14 lead, branch ccr-6c7564b1-fmlt1w",
  "running_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md (ACCOUNT 11) then docs/briefs/2026-11-18-r11/COORDINATION.md",
   "slot_A": {
@@ -123,7 +123,7 @@
    "next": "after approval: Phase 2 = same method for 04, 05, 06, 07 (fal clean plates approved by the user)"
   }
  },
- "current_focus": "Screen 05 water \u2014 NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
+ "current_focus": "Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
  "agents": [
   {
    "name": "washer-environment-modeler",
@@ -447,7 +447,7 @@
   }
  ],
  "backup_2026_11_17_1945": {
-  "why": "user order: account 4 near its usage limit \u2014 save everything, no more development",
+  "why": "user order: account 4 near its usage limit — save everything, no more development",
   "scheduled_checkin": "trig_01CAGS7pWQYyNtb9LAeLDoZz disabled 19:40 UTC (it would have started Screen 05)",
   "handoff": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md top section",
   "restart": "new -c5 branches from each -c4 tip; briefs docs/briefs/2026-11-17-r4/"
@@ -496,8 +496,8 @@
   "capacity_rule": "at most two specialist sessions at once (user)",
   "briefs": "docs/briefs/2026-11-17-r5/ (COMMON_RULES, S08_SCENERY, S08_BENNY); other workstreams use their r4 brief with -c5",
   "done": {
-   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) \u2014 report REPORTS_ROUND5.md",
-   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429) \u2014 report docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md"
+   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) — report REPORTS_ROUND5.md",
+   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429) — report docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md"
   },
   "preview_branch": {
    "branch": "claude/rainbow-preview-all-c5",
@@ -514,7 +514,7 @@
    },
    "tip": "69a1d474 (+ final save commit)",
    "preview_switches": "match04=1&match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&match06=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&match08=1&coins08px=1",
-   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; gameplay 8/8 91/2,240 default and all switches (coin fix 69a1d474). NOT usable with ALL switches together: likeness 04 81.8, 05 83.0, 06 84.3, 07 74.4, 08 29.5 % \u2014 08 projected scene shifted vs camera (cause unknown; bisect of 08 + each other screen's switches interrupted by the user 21:23), 05 Benny look on every screen, hud05 not fitted to 04.",
+   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; gameplay 8/8 91/2,240 default and all switches (coin fix 69a1d474). NOT usable with ALL switches together: likeness 04 81.8, 05 83.0, 06 84.3, 07 74.4, 08 29.5 % — 08 projected scene shifted vs camera (cause unknown; bisect of 08 + each other screen's switches interrupted by the user 21:23), 05 Benny look on every screen, hud05 not fitted to 04.",
    "next": "1) bisect 08 breakage (match08&coins08px + each of 05set / 04 / 06 / 07set; tools/lead_r5/verify_preview.sh pattern); 2) per-screen Benny (05 look only where tuned) and per-screen top bar (04 layout, banner widths); 3) merge 08 scenery r1 final 60e7ffe8 + Benny r6 c6892676; 4) moving-view work 07 -> 05 -> 06 -> 04; APKs blocked by Maven Central in this environment",
    "evidence": "qa/lead_r5/2026-11-17/README.md"
   },
@@ -742,5 +742,43 @@
    "06 (from -c11 8182130c; bend method rejected twice)"
   ],
   "restart_if_lost": "a running specialist does not survive a new session: create -c14 from the newest -c13 tip, apply backups/wip/<branch>/tracked.patch, relaunch the same agent type with docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md + resume from qa/match/<NN>/r13/PROGRESS.md"
+ },
+ "round14_account14": {
+  "updated": "2026-11-18T16:40Z",
+  "lead_branch": "ccr-6c7564b1-fmlt1w",
+  "coordination": "docs/briefs/2026-11-18-r14/COORDINATION.md",
+  "launch_brief": "docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md (read -c13 as -c14)",
+  "running": {
+   "s05": {
+    "agent": "water-fx-specialist",
+    "branch": "claude/rainbow-s05-match-c14",
+    "worktree": "/home/user/wt/s05",
+    "start": "ebc9676c (-c13 tip) + WIP &m05vee=1 committed 9735443d",
+    "log": "qa/match/05/r14/PROGRESS.md",
+    "first_commit": "0dbe931b",
+    "kind": "background agent in the lead container"
+   },
+   "s08": {
+    "agent": "washer-environment-modeler",
+    "branch": "claude/rainbow-s08-scenery-c14",
+    "worktree": "/home/user/wt/s08",
+    "start": "71e7cf54 (-c13 tip) + tools/match08/nq08.py committed e36430c4",
+    "log": "qa/match/08/r14/PROGRESS.md",
+    "first_commit": "b62b9c34",
+    "kind": "background agent in the lead container"
+   },
+   "s04": {
+    "agent": "lead (no subagent)",
+    "branch": "claude/rainbow-s04-match-c14",
+    "worktree": "/home/user/wt/s04",
+    "start": "9ef21200 (-c13 tip) + WIP &m04a3lum committed c69b7f33",
+    "log": "qa/match/04/r14/"
+   }
+  },
+  "queue": [
+   "07 (from -c11 = dbc7678c)",
+   "06 (from -c11 8182130c; bend method rejected twice)"
+  ],
+  "restart_if_lost": "create -c15 from the newest -c14 tip, apply backups/wip/<branch>/tracked.patch, relaunch the same agent type with the r13 SPECIALIST_PROMPT_TEMPLATE + resume from qa/match/<NN>/r14/PROGRESS.md"
  }
 }
