@@ -418,6 +418,41 @@ export async function buildMatch06(course: Course): Promise<Match06> {
         uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
       add(rg, rm, 'rings');
       console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
+      if (qs?.get('m06pad') === '1') {
+        // r7c `&m06pad=1`: the two painted gold paddle blades (drum lifters) on the upper-left wall, as real beveled gold
+        // half-moon blades where the locked camera's rays through the painted paddles (≈ 287,242 and 155,397 px) meet
+        // the tunnel wall, repeated at the ring spacing so they stay while Benny swims; shading = the rings' gold
+        // (no bulbs); approved view = the approved pixels (same fade as the rings)
+        const hitWall = (px: number, py: number) => {
+          const d = new THREE.Vector3((px / W) * 2 - 1, 1 - (py / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
+          const q0 = C.clone().sub(O), qp = q0.clone().addScaledVector(ax, -q0.dot(ax)), dp = d.clone().addScaledVector(ax, -d.dot(ax));
+          const A = dp.dot(dp), Bq = 2 * qp.dot(dp), Cq = qp.dot(qp) - Rt * Rt;
+          const t = (-Bq + Math.sqrt(Math.max(0, Bq * Bq - 4 * A * Cq))) / (2 * A);
+          const p = C.clone().addScaledVector(d, t).sub(O), a = p.dot(ax), rr = p.addScaledVector(ax, -a);
+          return { a, th: Math.atan2(rr.dot(Ux), rr.dot(Rx)) };
+        };
+        const Rp = Number(qs?.get('m06padr')) || 1.6;
+        const sh = new THREE.Shape(); sh.moveTo(-Rp, 0); sh.lineTo(Rp, 0); sh.absarc(0, 0, Rp, 0, Math.PI, false);
+        const blade = new THREE.ExtrudeGeometry(sh, { depth: 0.24, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.06, bevelSegments: 2, curveSegments: 28 });
+        blade.translate(0, 0, -0.12); blade.deleteAttribute('uv');
+        const pads: THREE.BufferGeometry[] = [];
+        for (const pd of [hitWall(287, 242), hitWall(155, 397)]) {
+          for (let k = -1; k <= 12; k++) {
+            const a = pd.a + k * dA; if (a < a0 + 2 || a > a1 - 220) continue;
+            const Ra = radAt(a), rh = Rx.clone().multiplyScalar(Math.cos(pd.th)).addScaledVector(Ux, Math.sin(pd.th));
+            const X = ax.clone(), Y = rh.clone().negate(), Z = new THREE.Vector3().crossVectors(X, Y);
+            const m4 = new THREE.Matrix4().makeBasis(X, Y, Z).setPosition(O.clone().addScaledVector(ax, a).addScaledVector(rh, Ra + 0.05));
+            const bg = blade.clone().applyMatrix4(m4), n = bg.attributes.position.count;
+            bg.setAttribute('aLS', new THREE.Float32BufferAttribute(new Float32Array(n * 2).fill(5), 2));
+            bg.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(n * 2), 2));
+            pads.push(bg);
+          }
+        }
+        const pm = mat(tTube);
+        Object.assign(pm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uUseMask: { value: 0 }, uAxO: { value: O.clone() },
+          uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+        add(mergeGeometries(pads), pm, 'paddles');
+      }
     }
     // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the
     // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage
@@ -455,9 +490,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
     const items: { p: THREE.Vector3; r: number }[] = [];
     for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
-      const n = 2 + Math.floor(rnd() * 3);
+      const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
       for (let i = 0; i < n; i++) {
-        const fr = frame(s + rnd() * 0.6), r = 0.2 + rnd() * 0.4;
+        const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;
         const l = side * (R6.Wc + 0.25 + rnd() * 1.3);
         items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rnd() * 0.12), r });
       }

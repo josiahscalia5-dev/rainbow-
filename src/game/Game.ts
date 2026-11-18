@@ -540,11 +540,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
     }
     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
-      // r7 `&m06bub=1`: the game's iridescent bubbles return once the camera leaves the approved view (the painting
+      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+      // approved view (the painting
       // carries its bubbles only there; while swimming the screen had none)
       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
       m06.setAway(m06On ? m06.away(camera.position) : 0);
-      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && k === 'bubbles'); }
+      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
       m06Applied = m06On;
     }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
