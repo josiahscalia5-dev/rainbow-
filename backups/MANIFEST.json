@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 14553,
-   "sha256": "b9d611b0cdb7cbd9ec1e7e5770d84f4723b065e0b18affa6523305f4d021eac0"
+   "bytes": 14554,
+   "sha256": "b1f1aaafbe2d5f1a081ea42c8ecb6502f01555739b34afbe7f19e60891b9252c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2830,6 +2830,86 @@
    "path": "qa/lead_r6/2026-11-17/preview_c6/gameplay_all_switches.json",
    "bytes": 14614,
    "sha256": "d08fb6c886803e41dc79404e5054825069a5e2d4007ef5b183ce5c644a318650"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/SPEND.json",
+   "bytes": 181,
+   "sha256": "641e3bca557e1d715bd304943c18421eb2e8049cc9e21131f304142e402f94d6"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-1_0_layout_sketch.png",
+   "bytes": 222411,
+   "sha256": "de916b5fdd3e67104230981f9f21d2fa33afef007e175e51dfc983f69c4ddd11"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-1_cand1.png",
+   "bytes": 5877720,
+   "sha256": "dbcdc2ab2ec21597701093b9f10f14feef8f3e47ddce599ccffce01acd1e4824"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-1_cand2.png",
+   "bytes": 5887101,
+   "sha256": "1cc573cf936d1f33c59d24233324dc61997f9265cd131ad10ed1514e2b3967e6"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-1_request.json",
+   "bytes": 2529,
+   "sha256": "22e025f41806f9f6ffa1842907633f275739bf8574b4eb86de12757d1418da8d"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-2_0_layout_sketch.png",
+   "bytes": 220914,
+   "sha256": "def194f67b10e0f8fd5d07b8bbea2ac779dc3e86049c64bc733a94acc42bc857"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-2_cand1.png",
+   "bytes": 6141508,
+   "sha256": "8c73a7c1f2aeb9fa6d5f71b7f252e74dc08ec0b9bd24d71a7c96dedaa91c906b"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-2_cand2.png",
+   "bytes": 5829259,
+   "sha256": "f7fd9460d2817681a319ca3343326f7a9581332dbab9628ea655a631f7eb8b36"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-2_request.json",
+   "bytes": 2345,
+   "sha256": "99412a6d774e17de6753567af6fd9eb08e13b3a8daadef1dc904e40e43435a62"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-3_0_layout_sketch.png",
+   "bytes": 222849,
+   "sha256": "715a26f8906b20115dd946b363154d8c477d6b63254bce4070c4124016b7cb2c"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-3_cand1.png",
+   "bytes": 5630038,
+   "sha256": "49d6d75327098f25d16c92dd1aedc25c92ffb3f0e367563fe13dc018a93b11f1"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-3_cand2.png",
+   "bytes": 5918590,
+   "sha256": "2deca91e5fe8fc12bac3094d972079994e16174b323c6cfdd1284e2bf006a00a"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot/V04-3_request.json",
+   "bytes": 2402,
+   "sha256": "5332de91f8f91bdf274905457ed6fdd92488a2ac11fdf43c3db5a45c8b906a18"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/pilot_retry/V04-3r_0_layout_sketch.png",
+   "bytes": 222849,
+   "sha256": "715a26f8906b20115dd946b363154d8c477d6b63254bce4070c4124016b7cb2c"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/plan_pilot.json",
+   "bytes": 2799,
+   "sha256": "13512dea8598525a323c6e3a8124b22be7cb086e2f128f3c3ce34321f59a0801"
+  },
+  {
+   "path": "qa/match/04/r10/refviews/plan_retry.json",
+   "bytes": 2536,
+   "sha256": "88ac2fcb176b38b4abd5eef060286cbef560801000de458fc5708d607f91ebf9"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -10720,6 +10800,11 @@
    "path": "tools/imageblaster/render08.mjs",
    "bytes": 1924,
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
+  },
+  {
+   "path": "tools/lead_r10/refviews.py",
+   "bytes": 4128,
+   "sha256": "02a2ca946444f39f39ea58785fb2d59c805bf36b054c8cc49c99cf122c37ba7f"
   },
   {
    "path": "tools/lead_r4/assemble_tour.py",

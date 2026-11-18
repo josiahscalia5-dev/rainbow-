@@ -1291,3 +1291,224 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 > 
 >   const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, sp …[+896 chars]
 
+### 🤖 Claude — 2026-11-18T10:48:43.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nanchor=\"\"\"export const M05FOLD: boolean = M05RIDE && q05('m05fold');\"\"\"\ns=s.replace(anchor, anchor+\"\"\"\n/**\n * `&m05foam=1` (Screen 05 round 10, needs m05ride; src/vfx/foam.ts rim05, src/vfx/index.ts): FOAM BANKS WHILE SWIMMING.\n * The approved picture has soft white foam clusters with bubbles along both river edges; under proj05 the game's own 05\n * rim foam (fine-foam impostors along both banks, built for the approved 05 look) steps aside because the approved\n * foam is baked i …[+2621 chars]`
+
+### 🧑 User — 2026-11-18T10:48:45.915Z
+
+> ↩︎ result: src/vfx/foam.ts:17:import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, m05foamK } from './waterRibbon';
+> src/vfx/foam.ts:446:  // `&m05foam=1` (Screen 05 round 10, waterRibbon.ts M05FOAM): the lumps grow in with the ride (0 = no lump drawn)
+> src/vfx/foam.ts:447:  const vs = M05FOAM ? BANK_BUB_VERT.replace('void main() {', 'uniform float uGrow05;\nvoid main() {').replace('float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);', 'float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz) * uGrow05;') : BANK_BUB_VERT;
+> src/vfx/foam.ts:448:  if (M05FOAM) (uniforms as Record<string, THREE.IUniform>).uGrow05 = m05foamK;
+> src/vfx/index.ts:17:import { createRibbon, PROJ05, flag05, proj05Pending, M05FOAM, m05foamK } from './waterRibbon';
+> src/vfx/index.ts:106:  if (PROJ05 && !flag05('projfoam05')) qaHide.push(...(M05FOAM ? [] : ['foamRim05']), 'foamFlank', 'foamRafts');
+> src/vfx/index.ts:207:      if (M05FOAM && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); }
+> src/vfx/waterRibbon.ts:363:export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+> tsc=0
+
+### 🤖 Claude — 2026-11-18T10:48:51.124Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/foam1; timeout 900 node tools/match05/r8_shots.mjs $S \"$Q\" f10_forward10u,t33_through_screen,t66_through_screen 2>&1 | tail -4", "description": "Render m05foam test frames", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T10:49:28.034Z
+
+> ↩︎ result: f10_forward10u s 143.139 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> t33_through_screen s 151.693 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T10:49:30.188Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/foam1/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:49:30.247Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:49:36.437Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/foam1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:49:36.482Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:49:37.099Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/foam1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T10:49:37.145Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:50:03.028Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r10_probe.mjs'\ns=open(p).read()\nold=\"\"\"        : chain.includes('zone_tubes') ? 0x808080 :\"\"\"\nnew=\"\"\"        : chain.includes('zone_tubes') ? (window.__r10tubeIdx = (window.__r10tubeIdx ?? 0) + 1, [0x808080, 0xff0000, 0x00ff00, 0x0000aa, 0xaaaa00, 0x00aaaa, 0xaa00aa, 0x804000, 0x008040, 0x400080][window.__r10tubeIdx % 10]) :\"\"\"\nassert old in s\ns=s.replace(old,new)\nold2=\"\"\"        if (o.isMesh) { const m = new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide });\"\"\"\nnew2=\"\"\"        if ( …[+1297 chars]`
+
+### 🧑 User — 2026-11-18T10:50:23.107Z
+
+> ↩︎ result: TUBEMESH 3  MeshStandardMaterial  -1,-1,-0 1,1,0 true
+> TUBEMESH 4  MeshStandardMaterial  -1,-1,-0 1,1,0 true
+> TUBEMESH 5  MeshStandardMaterial  -1,-1,-0 1,1,0 true
+> TUBEMESH 6  MeshStandardMaterial  -1,-1,-0 1,1,0 true
+> TUBEMESH 7  MeshStandardMaterial  -6,-48,-98 10,-29,-56 true
+> TUBEMESH 8  MeshStandardMaterial  -4,-48,-97 8,-41,-56 true
+> TUBEMESH 9  MeshStandardMaterial  -7,-48,-125 9,-32,-96 true
+> TUBEMESH 0  MeshStandardMaterial  -4,-48,-124 8,-43,-96 true
+> TUBEMESH 1  MeshStandardMaterial  -17,-48,-176 20,-4,-119 true
+> TUBEMESH 2  MeshStandardMaterial  -12,-48,-166 15,-25,-124 true
+> TUBEMESH 3  MeshStandardMaterial  -9,-52,-193 27,-14,-156 true
+> TUBEMESH 4  MeshStandardMaterial  -8,-52,-193 23,-32,-156 true
+> TUBEMESH 5  MeshStandardMaterial  2,-53,-232 25,-31,-192 true
+> TUBEMESH 6  MeshStandardMaterial  4,-53,-231 20,-45,-192 true
+> TUBEMESH 7  MeshStandardMaterial  5,-78,-269 19,-39,-230 true
+> TUBEMESH 8  MeshStandardMaterial  6,-78,-258 18,-50,-230 true
+> TUBEMESH 9  MeshStandardMaterial  5,-114,-281 19,-72,-255 true
+> TUBEMESH 0  MeshStandardMaterial  6,-114,-275 18,-76,-255 true
+> TUBEMESH 1  MeshStandardMaterial  4,-115,-282 19,-100,-273 true
+> TUBEMESH 2  MeshStandardMaterial  6,-115,-280 18,- …[+1352 chars]
+
+### 🤖 Claude — 2026-11-18T10:50:24.847Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/id2_t66.png"}`
+
+### 🧑 User — 2026-11-18T10:50:24.877Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:50:45.559Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,30p scripts/capture.mjs | grep -n \"argv\\|q=\\|out\\|--\" | head -20", "description": "Check capture script arguments"}`
+
+### 🧑 User — 2026-11-18T10:50:45.603Z
+
+> ↩︎ result: 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 6://   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 12:const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> 13:let ids = args.filter((a) => !a.startsWith('--'));
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+
+### 🤖 Claude — 2026-11-18T10:50:47.447Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 20,60p scripts/capture.mjs | grep -n \"q\\b\\|opt.q\\|search\\|goto\" | head", "description": "Check capture query option"}`
+
+### 🧑 User — 2026-11-18T10:50:47.486Z
+
+> ↩︎ result: 14:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 19:    const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+
+### 🤖 Claude — 2026-11-18T10:50:52.437Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; mkdir -p $S/kept $S/foam; timeout 600 node scripts/capture.mjs 05 --q=\"$K\" --out=$S/kept 2>&1 | tail -1; timeout 600 node scripts/capture.mjs 05 --q=\"$K&m05foam=1\" --out=$S/foam 2>&1 | tail -1; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/kept/05.png').convert('RGB'),int); b=np.asarray(Image.open('$S/foam/05.pn …[+179 chars]`
+
+### 🧑 User — 2026-11-18T10:51:36.389Z
+
+> ↩︎ result: ]
+> ]
+> locked diff px 0
+> 05.png
+
+### 🤖 Claude — 2026-11-18T10:51:43.495Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/foam1; timeout 900 node tools/match05/r8_shots.mjs $S \"$Q\" s_left_hard,s_right_hard,f20_forward20u,f03_forward3u,t95_through_screen 2>&1 | tail -5; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(1310,768),'white')\nfor k,n in enumerate(['s_left_hard','s_right_hard','f03_forward3u']): o.paste(Image.open('$S/'+n+'.png').resize((432,768)),(k* …[+130 chars]`
+
+### 🧑 User — 2026-11-18T10:52:51.391Z
+
+> ↩︎ result: f03_forward3u s 136.191 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@463,789 d118 #21@552,693 d80 #22@476,631 d61
+> f20_forward20u s 153.156 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> s_left_hard s 145.088 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> s_right_hard s 145.089 lat 5.063 coins 1420 benny 0.46 -0.2 big coins: #22@-23,712 d106 #23@124,613 d65
+> t95_through_screen s 186.706 lat 0.006 coins 1580 benny -0.11 -0.34 big coins: #38@317,226 d68 #39@319,163 d61
+
+### 🤖 Claude — 2026-11-18T10:52:53.651Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_foam_steer.png"}`
+
+### 🧑 User — 2026-11-18T10:52:53.689Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:53:05.932Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r10/step1_m05foam; mkdir -p $D; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad; cp references/05_flow_into_the_current.png $D/1_APPROVED.png; for n in f10_forward10u t33_through_screen t66_through_screen s_left_hard; do cp $S/audit_c10/05/$n.png $D/2_BEFORE_$n.png; cp $S/r10/foam1/$n.png $D/3_NEW_$n.png; done; cp $S/r10/foam1/shots.json $D/NEW_shots.json 2>/dev/null; ls -la $D; du -sh $D; git check-ignore -v $D/1_APPROVED.png || echo notignored; cat .gitattributes | head", "description": "Assemble step 1 pr …[+12 chars]`
+
+### 🧑 User — 2026-11-18T10:53:06.012Z
+
+> ↩︎ result: total 18652
+> drwxr-xr-x 2 root root    4096 Nov 18 10:53 .
+> drwxr-xr-x 3 root root    4096 Nov 18 10:53 ..
+> -rw-r--r-- 1 root root  484196 Nov 18 10:53 1_APPROVED.png
+> -rw-r--r-- 1 root root 2347727 Nov 18 10:53 2_BEFORE_f10_forward10u.png
+> -rw-r--r-- 1 root root 2330221 Nov 18 10:53 2_BEFORE_s_left_hard.png
+> -rw-r--r-- 1 root root 2339176 Nov 18 10:53 2_BEFORE_t33_through_screen.png
+> -rw-r--r-- 1 root root 2249406 Nov 18 10:53 2_BEFORE_t66_through_screen.png
+> -rw-r--r-- 1 root root 2354373 Nov 18 10:53 3_NEW_f10_forward10u.png
+> -rw-r--r-- 1 root root 2330731 Nov 18 10:53 3_NEW_s_left_hard.png
+> -rw-r--r-- 1 root root 2349005 Nov 18 10:53 3_NEW_t33_through_screen.png
+> -rw-r--r-- 1 root root 2255930 Nov 18 10:53 3_NEW_t66_through_screen.png
+> -rw-r--r-- 1 root root   26109 Nov 18 10:53 NEW_shots.json
+> 19M	qa/match/05/r10/step1_m05foam
+> notignored
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs - …[+136 chars]
+
+### 🤖 Claude — 2026-11-18T10:53:26.284Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/qa/match/05/r10/PROGRESS.md", "content": "# Screen 05 — round 10 progress (small steps, newest last)\n\nBranch `claude/rainbow-s05-match-c10`, started at `de233792` (= newest `-c9` tip). Approved picture (the authority):\n`/home/user/wt/s05/references/05_flow_into_the_current.png`.\nBase set (BEFORE): `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1`\n— BEFORE pictures = the lead's fresh audit (12 positions, exactly that query):\n`/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scr …[+4025 chars]`
+
+### 🧑 User — 2026-11-18T10:53:26.327Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/qa/match/05/r10/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:53:29.109Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && sha256sum -c scripts/reference.sha256 2>&1 | tail -2 && git add src/vfx/unfold05.ts src/vfx/waterRibbon.ts src/vfx/foam.ts src/vfx/index.ts tools/match05/r10_probe.mjs qa/match/05/r10 && git status --short | head -20", "description": "Type-check, verify references, stage step 1", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T10:53:33.486Z
+
+> ↩︎ result: character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+>  M qa/capture_log.json
+> A  qa/match/05/r10/PROGRESS.md
+> A  qa/match/05/r10/step1_m05foam/1_APPROVED.png
+> A  qa/match/05/r10/step1_m05foam/2_BEFORE_f10_forward10u.png
+> A  qa/match/05/r10/step1_m05foam/2_BEFORE_s_left_hard.png
+> A  qa/match/05/r10/step1_m05foam/2_BEFORE_t33_through_screen.png
+> A  qa/match/05/r10/step1_m05foam/2_BEFORE_t66_through_screen.png
+> A  qa/match/05/r10/step1_m05foam/3_NEW_f10_forward10u.png
+> A  qa/match/05/r10/step1_m05foam/3_NEW_s_left_hard.png
+> A  qa/match/05/r10/step1_m05foam/3_NEW_t33_through_screen.png
+> A  qa/match/05/r10/step1_m05foam/3_NEW_t66_through_screen.png
+> A  qa/match/05/r10/step1_m05foam/NEW_shots.json
+> M  src/vfx/foam.ts
+> M  src/vfx/index.ts
+> A  src/vfx/unfold05.ts
+> M  src/vfx/waterRibbon.ts
+> A  tools/match05/r10_probe.mjs
+
+### 🤖 Claude — 2026-11-18T10:53:37.781Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git checkout qa/capture_log.json && git commit -q -F - <<'EOF'\nScreen 05 r10 step 1: &m05foam=1 — soft foam banks along both river edges while swimming (05 rim foam grows in after the first metres); locked view 0 px. Tried, not kept: &m05fold=1 (ribbon fold at the 05->06 kink). Probe tool r10_probe.mjs\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6SpZeUhzBcjgGW7HAA\nEOF\ngit push -q origin claude/rainbow-s05-match-c10 2>&1 | tail -2; echo local $(git rev-parse HEAD); echo remote $(git ls-r …[+111 chars]`
+
+### 🧑 User — 2026-11-18T10:53:43.708Z
+
+> ↩︎ result: Updated 1 path from the index
+> local ed4e1a8810f20670870fad5e59021677782cf2a9
+> remote ed4e1a8810f20670870fad5e59021677782cf2a9 refs/heads/claude/rainbow-s05-match-c10
+
+### 🤖 Claude — 2026-11-18T10:53:44.867Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T10:53:44.875Z
+
+> ↩︎ result: [tool_reference]
+

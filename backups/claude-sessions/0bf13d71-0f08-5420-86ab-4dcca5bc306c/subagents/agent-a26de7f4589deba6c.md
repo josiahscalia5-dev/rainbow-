@@ -855,3 +855,160 @@ The wedge is a new hole at K=4.2. Let me identify it with the debug colouring (`
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T10:48:46.218Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/py && python3 -I -c \"\nimport sys; sys.path.insert(0,'.')\nfrom cam import *\nK=4.2; VP=P\nA=L['arch']; pc=np.array([L['pipe']['cx'],L['pipe']['cy'],0]); ac=np.array([A['outer']['cx'],A['outer']['cy'],A['z']])\ndef push(p): return VP+K*(np.asarray(p)-VP)\npipeC=push([L['pipe']['cx'],L['pipe']['cy'],L['pipe']['z1']]); print('pipe end centre',pipeC,'r',L['pipe']['r']*K)\narchF=push(ac); archB=push(ac-[0,0,A['depth']]); print('arch front',archF,'back',archB,'r_out',A['outer']['r']*K)\no=np.array …[+647 chars]`
+
+### 🧑 User — 2026-11-18T10:48:46.354Z
+
+> ↩︎ result: pipe end centre [  10.86746827 -114.67629935 -301.7471857 ] r 12.257892401541556
+> arch front [  10.86746827 -114.67629935 -301.7471857 ] back [  10.86746827 -114.67629935 -305.5271857 ] r_out 12.089892401541555
+> (20, 600) exits chamber at [   1.28 -110.64 -305.59] t 26.900000000000002
+> (30, 560) exits chamber at [   1.52 -109.85 -305.58] t 26.8
+> (10, 620) exits chamber at [   1.05 -111.04 -305.59] t 27.0
+
+### 🤖 Claude — 2026-11-18T10:50:07.120Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "uniform float uTMaskOn;\nvarying vec4 vProj;", "new_string": "uniform float uTMaskOn;\nuniform vec4 uClipIn;       // m08far collar only: discard inside this x/y circle (the chamber's cross-section) ...\nuniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on\nvarying vec4 vProj;"}`
+
+### 🧑 User — 2026-11-18T10:50:07.158Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:50:08.570Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "void main() {\n  // m08towelm: the towel proxy", "new_string": "void main() {\n  if (uClipIn.w > 0.5 && (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z)) discard;\n  // m08towelm: the towel proxy"}`
+
+### 🧑 User — 2026-11-18T10:50:08.608Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:50:10.474Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "      uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 } },", "new_string": "      uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },\n      uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) } },"}`
+
+### 🧑 User — 2026-11-18T10:50:10.511Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:50:12.032Z
+
+Now the K change and the collar mesh.
+
+### 🤖 Claude — 2026-11-18T10:50:15.226Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  const ARCH_K = Number(new URLSearchParams(location.search).get('m08archk') ?? '') || 2.6;", "new_string": "  // `&m08far=1` (r10): ×4.2 instead of ×2.6. The ring then lies behind the two big near spout cups (as painted: the cups\n  // overlap the arch's legs) and, seen from the moving camera, stays ~1.6× longer in frame as the gold oval framing the\n  // chamber (top band + upper legs) instead of leaving the frame in the first third of the stage. Same approved picture\n  // (uniform push along the pr …[+251 chars]`
+
+### 🧑 User — 2026-11-18T10:50:15.281Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:50:18.879Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  add(ch, M.drum, 'chamber');\n  const doorM", "new_string": "  add(ch, M.drum, 'chamber');\n  if (farOn) {\n    // m08far collar: in the arch's back plane, the part of the (pushed) arch opening that lies outside the drum's circular\n    // cross-section (lower left / right just above the water) — without it the camera looked through that gap into the void\n    const aP = archC.clone().sub(VP).multiplyScalar(ARCH_K).add(VP), rP = archR * ARCH_K + 0.5;\n    const cm = mat('#c25bd0', pWall, 1 / 2.4, 2);\ …[+239 chars]`
+
+### 🧑 User — 2026-11-18T10:50:18.929Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:50:24.558Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc=$?; sed -n 1,30p scripts/capture.mjs | grep -E \"argv|--q|--out|usage|Usage\" ", "description": "Typecheck and inspect capture tool arguments", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T10:50:27.177Z
+
+> ↩︎ result: tsc=0
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> const args = process.argv.slice(2);
+
+### 🤖 Claude — 2026-11-18T10:50:32.225Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && SHOTS=f03_forward3u,f06_forward6u,t33_through_screen,t66_through_screen,t95_through_screen,f10_forward10u,s_left_steer,s_right_steer,s_left_hard,s_right_hard node $S/tools/sel_audit.mjs 08 $S/r/far \"$B7&m08far=1\" 2>&1 | grep -v \"allow list\" | tail -3; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfor n in ['s_left_steer','f06_forward6u','s_left_hard','s_r …[+268 chars]`
+
+### 🧑 User — 2026-11-18T10:51:47.121Z
+
+> ↩︎ result: 08 t33_through_screen s 396.276 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+> s_left_steer void px 17
+> f06_forward6u void px 18
+> s_left_hard void px 14
+> s_right_hard void px 26
+> t95_through_screen void px 30
+
+### 🤖 Claude — 2026-11-18T10:51:49.112Z
+
+Void closed. Now the by-eye comparison, BEFORE vs NEW, for the key shots.
+
+### 🤖 Claude — 2026-11-18T10:51:54.908Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && cat > py/sbs.py <<'EOF'\nimport sys\nfrom PIL import Image\nout = sys.argv[1]; names = sys.argv[2:]\nims = [Image.open(n).convert('RGB').resize((432, 768)) for n in names]\nW = Image.new('RGB', (440 * len(ims) - 8, 768), 'white')\nfor i, im in enumerate(ims): W.paste(im, (i * 440, 0))\nW.save(out)\nEOF\nA=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08\npython3 py/sbs.py c_far1.png $A/t33_through_screen.png r/far/t33_through_screen.png $A/t66_t …[+353 chars]`
+
+### 🤖 Claude — 2026-11-18T10:51:56.404Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_far1.png"}`
+
+### 🧑 User — 2026-11-18T10:51:56.413Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-18T10:51:56.576Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:51:57.108Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_far2.png"}`
+
+### 🧑 User — 2026-11-18T10:51:57.268Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:51:57.716Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_far3.png"}`
+
+### 🧑 User — 2026-11-18T10:51:57.966Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:52:11.508Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = towelBake && o.name === 'm08_towel' ? towelBake : new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });", "new_string": "      // m08far collar: the bake must cut the same circles as the colour pass (a full disc would hide the whole chamber)\n      const clipBake = (u: Record<string, THREE.IUniform>) => new THREE.ShaderMaterial({\n        colorWrite: false, side: THREE.DoubleSide, vertexSh …[+765 chars]`
+
+### 🧑 User — 2026-11-18T10:52:11.557Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:52:20.254Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/far && SHOTS=f03_forward3u,f06_forward6u,t33_through_screen,t66_through_screen,t95_through_screen,f10_forward10u,s_left_steer,s_right_steer,s_left_hard,s_right_hard node $S/tools/sel_audit.mjs 08 $S/r/far \"$B7&m08far=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S && A=/tmp/claude-0/-home-user-rainbow-/0bf …[+539 chars]`
+
+### 🧑 User — 2026-11-18T10:53:36.137Z
+
+> ↩︎ result: 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+
+### 🤖 Claude — 2026-11-18T10:53:38.563Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_far1.png"}`
+
+### 🧑 User — 2026-11-18T10:53:38.774Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:53:39.178Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_far2.png"}`
+
+### 🧑 User — 2026-11-18T10:53:39.339Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:53:39.786Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_far3.png"}`
+
+### 🧑 User — 2026-11-18T10:53:39.940Z
+
+> ↩︎ result: [image]
+

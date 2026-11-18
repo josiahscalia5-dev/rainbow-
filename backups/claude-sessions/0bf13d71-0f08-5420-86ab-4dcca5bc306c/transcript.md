@@ -2539,3 +2539,165 @@ Making the proposed views is a paid step, so I need your approval before spendin
 
 > 🔧 **AskUserQuestion** `{"questions": [{"question": "To make proposed reference views of the parts of Screens 04, 06 and 07 your approved pictures don't show, I'd use fal's nano-banana-2 image-edit model on your existing fal account (the same model that made your 04 and 08 plates). It's about $0.12 per image. Your approved picture is the only design source, and you approve or reject every view before anything is built from it. How much may I spend?", "header": "fal budget", "multiSelect": false, "options": [{"label": "Pilot 04 first (Recommended)", "description": "Screen 04 only: 3 viewpoints inside the washer openin …[+390 chars]`
 
+### 🧑 User — 2026-11-18T10:50:25.511Z
+
+> ↩︎ result: Your questions have been answered: "To make proposed reference views of the parts of Screens 04, 06 and 07 your approved pictures don't show, I'd use fal's nano-banana-2 image-edit model on your existing fal account (the same model that made your 04 and 08 plates). It's about $0.12 per image. Your approved picture is the only design source, and you approve or reject every view before anything is built from it. How much may I spend?"="Pilot 04 first (Recommended)". You can now continue with these answers in mind.
+
+### 🤖 Claude — 2026-11-18T10:51:09.272Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/lead_r10/refviews.py", "content": "\"\"\"Round 10 — proposed reference views for course parts the approved picture does not show (PAID: fal nano-banana-2/edit).\nOnly run with the user's approval for the exact screen and image cap (docs/briefs/2026-11-18-r10/REFERENCE_VIEWS_PLAN.md).\nImage 1 = the APPROVED picture (sole design authority, never modified). Image 2 = a blurred grey layout sketch made from the\ncurrent game frame at that course position (only the tunnel / water direction and Benny's place survive the blur).\nusage: python3 -I tools/lead_r1 …[+3583 chars]`
+
+### 🧑 User — 2026-11-18T10:51:09.300Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/lead_r10/refviews.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:51:19.924Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/r10/refviews/plan_pilot.json", "content": "{\n \"screen\": \"04\",\n \"approval\": \"user 2026-11-18 ~11:00 UTC: 'Pilot 04 first' — Screen 04 only, 3 viewpoints x 2 candidates, hard cap 8 images (~$1)\",\n \"approved\": \"references/04_through_the_five_arrows.png\",\n \"num_images\": 2,\n \"max_images\": 8,\n \"views\": [\n  {\"id\": \"V04-1\", \"s\": 88.1, \"units_ahead\": 10, \"guide\": \"/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/04/f10_forward10u.png\",\n   \"scene\": \"Benny has just swum throu …[+2373 chars]`
+
+### 🧑 User — 2026-11-18T10:51:19.958Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/r10/refviews/plan_pilot.json (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:51:23.130Z
+
+Before spending anything, I'll check the three layout sketches (free) to confirm they carry only layout:
+
+### 🤖 Claude — 2026-11-18T10:51:26.131Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport sys; sys.path.insert(0,'tools/lead_r10')\nimport refviews, json\np=json.load(open('qa/match/04/r10/refviews/plan_pilot.json'))\nfrom PIL import Image\nims=[refviews.sketch(v['guide']).convert('RGB').resize((288,512)) for v in p['views']]\nW=Image.new('RGB',(288*3+20,512),'white')\nfor i,im in enumerate(ims): W.paste(im,(i*298,0))\nW.save('/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/sketch_check.png')\nprint('ok')\"", "description": "Render the three layout sketches for a free check"}`
+
+### 🧑 User — 2026-11-18T10:51:26.493Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T10:51:28.503Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/sketch_check.png"}`
+
+### 🧑 User — 2026-11-18T10:51:28.523Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:51:34.643Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/lead_r10/refviews.py", "old_string": "    g = ImageOps.grayscale(Image.open(path)).filter(ImageFilter.GaussianBlur(6))", "new_string": "    # sigma 16: the current game's wrong details (foam-ball rows, corridor ring texture) must NOT survive, only the massing\n    g = ImageOps.grayscale(Image.open(path)).filter(ImageFilter.GaussianBlur(16))"}`
+
+### 🧑 User — 2026-11-18T10:51:34.695Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/lead_r10/refviews.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:51:37.252Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport sys; sys.path.insert(0,'tools/lead_r10')\nimport refviews, json\np=json.load(open('qa/match/04/r10/refviews/plan_pilot.json'))\nfrom PIL import Image\nims=[refviews.sketch(v['guide']).convert('RGB').resize((288,512)) for v in p['views']]\nW=Image.new('RGB',(288*3+20,512),'white')\nfor i,im in enumerate(ims): W.paste(im,(i*298,0))\nW.save('/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/sketch_check2.png')\nprint('ok')\"", "description": "Re-render sketches with stronger blur"}`
+
+### 🧑 User — 2026-11-18T10:51:37.639Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T10:51:39.414Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/sketch_check2.png"}`
+
+### 🧑 User — 2026-11-18T10:51:39.434Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:51:41.908Z
+
+Now only the layout survives: the tunnel's curve, the water lane converging ahead, and Benny's position. Running the approved pilot (3 requests × 2 images = 6 of the 8-image cap):
+
+### 🤖 Claude — 2026-11-18T10:51:43.162Z
+
+> 🔧 **Bash** `{"command": "timeout 1500 python3 -I tools/lead_r10/refviews.py qa/match/04/r10/refviews/plan_pilot.json qa/match/04/r10/refviews/pilot 2>&1 | tail -15", "description": "Run the approved Screen 04 reference-view pilot on fal", "timeout": 1600000}`
+
+### 🧑 User — 2026-11-18T10:53:05.129Z
+
+> ↩︎ result: V04-1 submitted 01a1ee48-b1c0-7fa1-bba0-028096685268
+> V04-1 COMPLETED files ['qa/match/04/r10/refviews/pilot/V04-1_cand1.png', 'qa/match/04/r10/refviews/pilot/V04-1_cand2.png'] urls []
+> V04-2 submitted 01a1ee49-2fee-70b1-8890-17899932c08b
+> V04-2 COMPLETED files ['qa/match/04/r10/refviews/pilot/V04-2_cand1.png', 'qa/match/04/r10/refviews/pilot/V04-2_cand2.png'] urls []
+> V04-3 submitted 01a1ee49-99da-74f2-9572-bbeb98c966e5
+> V04-3 COMPLETED files ['qa/match/04/r10/refviews/pilot/V04-3_cand1.png', 'qa/match/04/r10/refviews/pilot/V04-3_cand2.png'] urls []
+> images requested 6 of cap 8
+
+### 🤖 Claude — 2026-11-18T10:53:06.918Z
+
+All 6 came back inline, so the extra fal download hosts aren't needed. Spent: **6 images (≈ $0.72)**, 2 spare under the cap. Looking at each candidate before showing you anything:
+
+### 🤖 Claude — 2026-11-18T10:53:07.467Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand1.png"}`
+
+### 🤖 Claude — 2026-11-18T10:53:07.930Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand2.png"}`
+
+### 🧑 User — 2026-11-18T10:53:08.368Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T10:53:08.350Z
+
+[Image: original 1536x2752, displayed at 1116x2000. Multiply coordinates by 1.38 to map to original image.]
+
+### 🧑 User — 2026-11-18T10:53:08.728Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T10:53:08.725Z
+
+[Image: original 1536x2752, displayed at 1116x2000. Multiply coordinates by 1.38 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T10:53:13.604Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-2_cand1.png"}`
+
+### 🤖 Claude — 2026-11-18T10:53:14.110Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-3_cand1.png"}`
+
+### 🧑 User — 2026-11-18T10:53:14.456Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T10:53:14.452Z
+
+[Image: original 1536x2752, displayed at 1116x2000. Multiply coordinates by 1.38 to map to original image.]
+
+### 🧑 User — 2026-11-18T10:53:14.716Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T10:53:14.712Z
+
+[Image: original 1536x2752, displayed at 1116x2000. Multiply coordinates by 1.38 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T10:53:19.316Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-2_cand2.png"}`
+
+### 🤖 Claude — 2026-11-18T10:53:19.776Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-3_cand2.png"}`
+
+### 🧑 User — 2026-11-18T10:53:19.884Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T10:53:19.880Z
+
+[Image: original 1536x2752, displayed at 1116x2000. Multiply coordinates by 1.38 to map to original image.]
+
+### 🧑 User — 2026-11-18T10:53:20.540Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T10:53:20.531Z
+
+[Image: original 1536x2752, displayed at 1116x2000. Multiply coordinates by 1.38 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T10:53:32.970Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np = json.load(open('qa/match/04/r10/refviews/plan_pilot.json'))\nv = [x for x in p['views'] if x['id'] == 'V04-3'][0]\nv = dict(v, id='V04-3r', scene=v['scene'] + \". The camera is INSIDE the tunnel: the outer opening, the laundry room, the porthole, the towels and the control panel of image 1 are BEHIND the camera and must NOT appear anywhere. Benny is close to the camera at the bottom centre, exactly as large as in image 1 (his hat is about one third of the screen width), not small and not far away\")\np.update(views=[v], max_images=2, approval …[+392 chars]`
+
