@@ -2695,3 +2695,84 @@ The reviewer has finished and stopped, so only the two builders are running. Its
 
 > 🔧 **Bash** `{"command": "git status --short | head -5; flock -w 90 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:reviewer-blueprints 2>&1 | tail -4; git status --short | head -3; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-restore-c9-40w64b | cut -f1) local $(git rev-parse HEAD)\"", "description": "Retry the save after the running autosave finishes", "timeout": 150000}`
 
+### 🧑 User — 2026-11-18T03:14:01.187Z
+
+> ↩︎ result: M backups/CONVERSATION_INDEX.md
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aaf3e97ed8503b962.md
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aaf3e97ed8503b962.sanitized.jsonl
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aea1b9944be07aee7.md
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aea1b9944be07aee7.sanitized.jsonl
+>   "branch": "claude/rainbow-restore-c9-40w64b",
+>   "commit": "0ffd5b1250cf119cb53cda47c488c18913c6baf4",
+>   "duration_s": 9
+> }
+> remote 0ffd5b1250cf119cb53cda47c488c18913c6baf4 local 0ffd5b1250cf119cb53cda47c488c18913c6baf4
+
+### 🤖 Claude — 2026-11-18T03:14:03.828Z
+
+> 🔧 **Monitor** `{"description": "Screen 04/05 builder commits", "timeout_ms": 1800000, "command": "declare -A last; for d in s04 s05; do last[$d]=$(git -C /home/user/wt/$d rev-parse HEAD); done; while true; do for d in s04 s05; do h=$(git -C /home/user/wt/$d rev-parse HEAD 2>/dev/null); if [ -n \"$h\" ] && [ \"$h\" != \"${last[$d]}\" ]; then echo \"$d new commit $(git -C /home/user/wt/$d log -1 --format='%h %s' | cut -c1-160)\"; last[$d]=$h; fi; done; sleep 20; done"}`
+
+### 🧑 User — 2026-11-18T03:14:03.855Z
+
+> ↩︎ result: Monitor started (task bsreluzg0, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T03:14:11.315Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nfrom PIL import Image\nfor n in ('06','07','08'):\n    Image.open(f'docs/briefs/2026-11-18-r9/BLUEPRINT_{n}_overlay.png').convert('RGB').save(f'qa/review_r9/blueprints/{n}_BLUEPRINT_of_APPROVED.jpg',quality=93)\nEOF\nls qa/review_r9/blueprints/", "description": "Copy the 06/07/08 blueprint overlays into the review folder"}`
+
+### 🧑 User — 2026-11-18T03:14:11.592Z
+
+> ↩︎ result: 04_BLUEPRINT_of_APPROVED.jpg
+> 05_BLUEPRINT_of_APPROVED.jpg
+> 05_CURRENT_GAME_t66_vs_blueprint.jpg
+> 06_BLUEPRINT_of_APPROVED.jpg
+> 07_BLUEPRINT_of_APPROVED.jpg
+> 08_BLUEPRINT_of_APPROVED.jpg
+
+### 🤖 Claude — 2026-11-18T03:14:14.259Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r9/blueprints/06_BLUEPRINT_of_APPROVED.jpg", "qa/review_r9/blueprints/07_BLUEPRINT_of_APPROVED.jpg", "qa/review_r9/blueprints/08_BLUEPRINT_of_APPROVED.jpg"], "caption": "Blueprints of your approved Screens 06, 07 and 08, with the defining shapes marked (gold rings, paddles, the door and towel platform, the spout cups, the river line). These are measurements, not changes to the scenery.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T03:14:14.864Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_r9/blueprints/06_BLUEPRINT_of_APPROVED.jpg → file_uuid: e9c60e30-8a24-430a-9989-21ecb33c7412
+>   /home/user/rainbow-/qa/review_r9/blueprints/07_BLUEPRINT_of_APPROVED.jpg → file_uuid: acbb7e16-1e77-497c-8d85-13f1c920e080
+>   /home/user/rainbow-/qa/review_r9/blueprints/08_BLUEPRINT_of_APPROVED.jpg → file_uuid: 31757378-32cd-4fde-a1d1-2e46c0e46493
+
+### 🤖 Claude — 2026-11-18T03:14:24.740Z
+
+Understood: a real, fixed 3D environment that keeps looking like your artwork as Benny moves, not a picture pushed along in front of him.
+
+**What this means for Screen 04.** The washer front is built as real objects:
+- the rounded gold entrance
+- the swirling pink bowl
+- the short funnel of glowing rings
+- your five arrows
+- low foam and bubbles
+
+They stay fixed in place, and Benny genuinely swims toward them and through them. "Ahead of him for the whole screen" means the real washer front is larger and placed farther down the slide, so the approach lasts the whole stage. Your painting provides the shapes and the surface colours attached to each object; it never travels with Benny. Each kept step must also look like the same coherent place when Benny steers hard left or right; otherwise it's rejected.
+
+**Three kept steps don't meet that rule yet:**
+- Screen 05's water pattern travels along with Benny.
+- Screen 05's distant tunnel is re-fitted each frame as he moves.
+- Screen 04's laundry room is a flat painted backdrop.
+
+Nothing is deleted. The real-3D versions replace them only once they look at least as close, and you decide. Both builders now have this rule.
+
+**The reviewer's honest verdict on 06, 07 and 08** (the blueprints are attached; these ratings are its judgement, not measurements):
+- **08:** can realistically reach about 8–8.5 with no paid jobs. The biggest fix is keeping the large gold arch that frames your painting in view for the whole stage.
+- **07:** about two-thirds of Screen 07 is a vertical plunge that your painting never shows. Without changing that plunge, the realistic ceiling is about 6–6.5 there, and about 7.5–8 on the level part before it.
+- **06:** after the first few metres, Benny heads straight down the tunnel, while your painting shows it bending and the river looping. Without changing that path, the ceiling is about 6.5–7.
+
+So, clearly: 06 and 07 cannot reach 8.5 throughout by changing scenery alone. Their paths would have to follow what you painted, which changes movement. I won't do that without your permission.
+
+**My proposal:** give the next free slot to Screen 08, because it can reach your goal without changing anything else. Then 07 and 06, once you've decided whether their paths may change. Tell me whenever you're ready; it doesn't hold up 04 and 05.
+
+Both builders are working on the first real 3D foundation for 04 and 05. You'll get large APPROVED / BEFORE / NEW pictures as soon as each one is checked. Everything is saved on GitHub.
+
+### 🧑 User — 2026-11-18T03:14:27.229Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

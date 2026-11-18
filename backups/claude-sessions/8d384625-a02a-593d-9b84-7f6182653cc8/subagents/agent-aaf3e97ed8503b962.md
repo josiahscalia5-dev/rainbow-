@@ -2712,3 +2712,37 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T03:13:57.025Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git diff --stat && git checkout -- src/vfx/waterRibbon.ts && git status --short", "description": "Revert the Benny-relative m05geo shader draft"}`
+
+### 🧑 User — 2026-11-18T03:13:57.110Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+> ?? assets/textures/match05/m05geo/
+> ?? qa/match/05/r9/blueprint/
+> ?? tools/lead_r6/bisect_preview08.mjs
+> ?? tools/match05/blueprint05.py
+> ?? tools/match05/blueprint05_game.mjs
+> ?? tools/match05/channel05.py
+
+### 🤖 Claude — 2026-11-18T03:14:07.753Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I - <<'EOF' | tee qa/match/05/r9/blueprint/painted_vs_course.txt\nimport json\ng = json.load(open('qa/match/05/r9/blueprint/kept/a00_approved_view.geo.json'))\nbp = json.load(open('qa/match/05/r9/blueprint/blueprint.json'))['APPROVED']['rows']\nnear = [p for p in g['near'] if p['L'] and p['R'] and p['C']]\nprint('Approved painted river edges back-projected onto the game river (locked eye, a00 geometry)')\nprint('screen y | s      | course hw | painted left lat | painted right lat | painted width / course width | foam L/R px')\nfor y, r in sorted((( …[+994 chars]`
+
+### 🧑 User — 2026-11-18T03:14:07.807Z
+
+> ↩︎ result: Approved painted river edges back-projected onto the game river (locked eye, a00 geometry)
+> screen y | s      | course hw | painted left lat | painted right lat | painted width / course width | foam L/R px
+>      580 |  173.6 |      5.30 |            -7.58 |              3.34 |                         1.02 | 38/69
+>      600 |  165.6 |      4.84 |            -7.01 |              5.78 |                         1.32 | 40/28
+>      630 |  157.6 |      4.93 |            -5.88 |              6.94 |                         1.30 | 67/23
+>      660 |  152.3 |      5.38 |            -4.23 |              6.76 |                         1.02 | 40/27
+>      700 |  147.4 |      5.70 |            -3.87 |              5.87 |                         0.85 | 129/17
+>      750 |  143.4 |      5.53 |            -5.48 |              3.69 |                         0.83 | 78/58
+>      800 |  140.6 |      5.63 |            -5.99 |              2.67 |                         0.75 | 29/43
+>      900 |  136.9 |      5.62 |              nan |              2.33 |                         0.59 | 0/46
+>     1000 |  134.7 |      5.50 |              nan |               nan |                         0.55 | 0/0
+>     1100 |  133.2 |       …[+505 chars]
+

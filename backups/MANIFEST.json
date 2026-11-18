@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14054,
-   "sha256": "1d8e6d0e12552da15355db7bff8930bd9d71eda17e013d09ef1beeb2ab99ca01"
+   "sha256": "7989619d9098d633c813b78da1bd9b159b4cc06fe3aa62d0fc8e7b0adb93c719"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9360,6 +9360,21 @@
    "path": "qa/review_r9/blueprints/05_CURRENT_GAME_t66_vs_blueprint.jpg",
    "bytes": 477073,
    "sha256": "d9fa6d49bf30df145af0f3be3d14a57a7c31e954375a5f2277b2dd54c9244020"
+  },
+  {
+   "path": "qa/review_r9/blueprints/06_BLUEPRINT_of_APPROVED.jpg",
+   "bytes": 608551,
+   "sha256": "117643d4583d1b08f646ef937d7c59b34986e8f18ab355f50b40c9a2b6b07ff0"
+  },
+  {
+   "path": "qa/review_r9/blueprints/07_BLUEPRINT_of_APPROVED.jpg",
+   "bytes": 622678,
+   "sha256": "9d6a415b8aee2c30e436c6df685bcd116e84ed828aae8d713e9a54c514bcd631"
+  },
+  {
+   "path": "qa/review_r9/blueprints/08_BLUEPRINT_of_APPROVED.jpg",
+   "bytes": 618116,
+   "sha256": "be544170e614061a83c432dcaca1578e01b5b20067fdbdeadd2814adc50a6c7c"
   },
   {
    "path": "qa/scene_comparisons.md",
