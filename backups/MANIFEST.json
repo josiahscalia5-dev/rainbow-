@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17468,
-   "sha256": "853e98cbab5f0e155e8bc849a102a57e1d52ba9659f4e65b19b3a40047280fb5"
+   "sha256": "909d70dcf92fd8b5a23decf6753d5db2cb8cc4f77f2ddd6fe5e96cb4098161fc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1014,7 +1014,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/INFO.json",
    "bytes": 477,
-   "sha256": "814760675f6a6a3e452975aa7b0f8aebe590ce188a7446f67f5b719864ce5619"
+   "sha256": "ce88f9f5baf42daa39343852d97d19ad678bb2f4b9fcff9f4f2035cc9398f8c9"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1048,8 +1048,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/INFO.json",
-   "bytes": 578,
-   "sha256": "4f3938638203117e62fff450eed0c935a989aeefa4b16b20e591f15b40c978d3"
+   "bytes": 637,
+   "sha256": "c2d85158f10c6e5f1588a1649b251966e520330173aa783672202267a3255407"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/tracked.patch",
@@ -1259,7 +1259,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/INFO.json",
    "bytes": 2614,
-   "sha256": "3d233aff1e05790c7ef832e9a3a3bd2cd6d6b1d3de453c77227b6143140d5bbf"
+   "sha256": "e76355e177cd79c87db459a3e6bc9d0aa5ed7808cfc5ef2ff98b4e930bc2dfa1"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/tracked.patch",
@@ -1414,7 +1414,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/INFO.json",
    "bytes": 537,
-   "sha256": "043bbae689608e7fb581540a12d44167fddeee5edece4206fc105dfa939bf767"
+   "sha256": "1032a5e3260d8f95b2a669ae88292ccd664ebbd113b0eecd8f4487c57eff1101"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/tracked.patch",
@@ -1459,7 +1459,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/INFO.json",
    "bytes": 1309,
-   "sha256": "79972372a7fcc1c83a8836673a5b83a01c5baaeff66f305170a975fc1444dab6"
+   "sha256": "a2d541d9734c55c7881e0fbd013031b93c456d61a7db239468dee326b1d00c5d"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/tracked.patch",
@@ -1584,7 +1584,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/INFO.json",
    "bytes": 543,
-   "sha256": "192a84698c77b0e83d2fec689b1c18c67595b83244e057de9d6f5fbe40bc3a95"
+   "sha256": "ffbaecfc222c23c031d3976394f25abbbdb1e75f8041fe79c14652b390c1d734"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/tracked.patch",
@@ -1978,8 +1978,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r16/COORDINATION.md",
-   "bytes": 11912,
-   "sha256": "5002dbc7b92657726aa78b30c96b1b0b2289fc0208482ce70dba51c1898d6c65"
+   "bytes": 12377,
+   "sha256": "10501326c6a544ce1218334b71a2d100633c6abb45bd83eef1af28f8b211b11e"
   },
   {
    "path": "docs/briefs/2026-11-18-r16/RESUME_R16.md",
@@ -11520,6 +11520,16 @@
    "path": "qa/review_r16/04_ringpaint_step3/3_NEW_s_left_hard.png",
    "bytes": 1630149,
    "sha256": "b4621cafbe46be9c27f066fd7c1db99c3ff6cc5db87b1b8342cff61d97648061"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/4_BEFORE_swim_clip.mp4",
+   "bytes": 2498163,
+   "sha256": "b05835f29100273dfc503e16ff441dfd329530f37e614178164c7de2c065c01a"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step3/4_NEW_swim_clip.mp4",
+   "bytes": 2427186,
+   "sha256": "ef67de1ded210cc74bd50168c04ea20120000c9eec454a99c0848db502acac26"
   },
   {
    "path": "qa/review_r16/04_step3_side_swirls/1_APPROVED.png",

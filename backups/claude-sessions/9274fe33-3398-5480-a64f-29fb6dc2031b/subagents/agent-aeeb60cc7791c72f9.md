@@ -1204,3 +1204,104 @@ Rendering step 4b on f06, f20, t66 and t95. I swapped hard-left for t95 because 
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b; ls $SP/clipN3 2>/dev/null | wc -l; cd /home/user/wt/s04b && ONLY=f06_forward6u,f20_forward20u,t66_through_screen,t95_through_screen node $SP/audit.mjs 04 $SP/v4b_warm \"$(cat $SP/Q3.txt)&m04rwarm=1\" 2>&1 | grep -v \"outside of Vite\\|403\" | grep -v \"^console info\" | tail -5 && cd $SP && for s in f06_forward6u f20_forward20u t66_through_screen; do python3 tri.py tri4b_$s.png 180 1000 /home/user/wt/s04b/qa/match/04/r14/s11_rimfoam/L4/$s.png v3_lip/$s.png v4b_warm/$s.png; done; python3 tri. …[+245 chars]`
 
+### 🧑 User — 2026-11-18T19:44:21.543Z
+
+> ↩︎ result: 76
+> 04 f06_forward6u s 84.423 lat 0 stage 04 frames 26
+> 04 f20_forward20u s 98.204 lat 0 stage 04 frames 86
+> 04 t66_through_screen s 102.849 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-18T19:44:24.101Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/tri4b_f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T19:44:24.184Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:44:24.862Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/tri4b_t95.png"}`
+
+### 🧑 User — 2026-11-18T19:44:24.919Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:44:26.071Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/b8vf0gj9r.output; ls -la /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/*.mp4", "description": "Check clip task output files"}`
+
+### 🧑 User — 2026-11-18T19:44:26.283Z
+
+> ↩︎ result: frames 86
+> frames 86
+> -rw-r--r-- 1 root root 2498163 Nov 18 19:39 /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/clip_BEFORE_swim.mp4
+> -rw-r--r-- 1 root root 2427186 Nov 18 19:43 /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/clip_NEW_swim.mp4
+> 
+> [exited with code 0]
+> -rw-r--r-- 1 root root 2498163 Nov 18 19:39 /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/clip_BEFORE_swim.mp4
+> -rw-r--r-- 1 root root 2427186 Nov 18 19:43 /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/clip_NEW_swim.mp4
+
+### 🤖 Claude — 2026-11-18T19:44:35.907Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -rn \"__rainbow = \\|window.__rainbow=\\|(window as any).__rainbow\\|__rainbow:\" src | head -3; grep -n \"num(k\\|num: \\|function num\\|num(\" src/world/match04m4.ts | head -5", "description": "Find debug handle and M04.num implementation"}`
+
+### 🧑 User — 2026-11-18T19:44:36.075Z
+
+> ↩︎ result: src/game/Game.ts:762:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> 47:  num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
+> 610:  const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+> 621:        uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+> 622:        uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector4(M04.num('m04rpsl', 0.79), 0, M04.num('m04rpsh', 0.15), 0) }, uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rww', 0.45)) },
+> 623:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: sha …[+147 chars]
+
+### 🤖 Claude — 2026-11-18T19:44:41.879Z
+
+I'll add a temporary log line (JSON, so it isn't truncated) with the tunnel length and axis, to see where the tunnel actually ends relative to the camera.
+
+### 🤖 Claude — 2026-11-18T19:44:48.992Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='/home/user/wt/s04b/src/world/match04m4.ts'\ns=open(p).read()\nold=\"console.info('[match04] m04rpaint', {\"\nassert s.count(old)==1\ns=s.replace(old,\"console.info('[match04] m04rpaint-probe ' + JSON.stringify({ len, axO: axO.toArray(), axD: axD.toArray(), P })); console.info('[match04] m04rpaint', {\")\nopen(p,'w').write(s)\nEOF\nSP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && cat > $SP/probe.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, sta …[+1315 chars]`
+
+### 🧑 User — 2026-11-18T19:45:05.478Z
+
+> ↩︎ result: [match04] m04rpaint-probe {"len":90,"axO":[1.8439924416132227,-23.871917980527897,-31.566178837071377],"axD":[0,-0.5299989400031787,-0.8479983040050888],"P":4.6}
+> {"keys":["ready","checkpoints","goto","run","unfreeze","freezeAt","setSteer","step","startRideAt","state","log","coinDefs","coinScreen","respawns","camera","bennyScreen","probe","drawList","togglePause","qa3d","stats","course"],"out":[{"d":0,"st":{"mode":"ride","stage":"04","s":77.413,"lat":0,"coins":1330,"hearts":5,"paused":false,"bennyY":-21.896,"bennyVisible":true,"cam":[2.43,-15.97,-21.05]}},{"d":20,"st":{"mode":"ride","stage":"04","s":97.48,"lat":0,"coins":1330,"hearts":5,"paused":false,"bennyY":-32.15,"bennyVisible":true,"cam":[2.4,-25.34,-36.62]}},{"d":33,"st":{"mode":"ride","stage":"05","s":130.602,"lat":0,"coins":1360,"hearts":5,"paused":false,"bennyY":-41.223,"bennyVisible":true,"cam":[1.94,-37.8,-64.97]}}]}
+
+### 🤖 Claude — 2026-11-18T19:45:24.267Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && python3 -c \"\nfrom PIL import Image\nims=[Image.open(p).convert('RGB').crop((272,520,672,880)) for p in ['v3_lip/f20_forward20u.png','v4b_warm/f20_forward20u.png']]\nap=Image.open('/home/user/wt/s04b/references/04_through_the_five_arrows.png').convert('RGB').crop((290,510,690,870))\nP=Image.new('RGB',(1200,360)); [P.paste(im,(i*400,0)) for i,im in enumerate([ap]+ims)]; P.save('centre_cmp.png')\"", "description": "Zoom centre region approved vs step3 vs step4b"}`
+
+### 🧑 User — 2026-11-18T19:45:25.390Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:45:25.471Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/centre_cmp.png"}`
+
+### 🧑 User — 2026-11-18T19:45:25.527Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:46:08.357Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='/home/user/wt/s04b/src/world/match04m4.ts'\ns=open(p).read()\nold=\"console.info('[match04] m04rpaint-probe ' + JSON.stringify({ len, axO: axO.toArray(), axD: axD.toArray(), P })); \"\nassert s.count(old)==1\ns=s.replace(old,\"\")\nopen(p,'w').write(s)\nEOF\ngrep -c \"probe\" src/world/match04m4.ts; SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && D=qa/match/04/r16/ringpaint/step4_warm && mkdir -p $D && for s in f06_forward6u f20_forward20u t66_through_screen t95_through_screen; do cp $SP/v4 …[+2744 chars]`
+
+### 🧑 User — 2026-11-18T19:46:16.638Z
+
+> ↩︎ result: 0
+> ?? node_modules
+> Uploading LFS objects: 100% (2/2), 4.9 MB | 0 B/s, done.
+> 3fdcbc0b1c0376b7a3eb8230084a1fc3f311c706
+> 3fdcbc0b1c0376b7a3eb8230084a1fc3f311c706	refs/heads/claude/rainbow-s04-ringtex-c16
+
+### 🤖 Claude — 2026-11-18T19:46:23.136Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s04tex step 4 warm gold rejected, clips pushed", "message": "s04tex step 4 (Screen 04): the warmer gold toward the glowing centre (&m04rwarm=1, on top of step 3) is NOT AN IMPROVEMENT; it makes no visible change. The step-3 swim clips are now pushed.\nBranch claude/rainbow-s04-ringtex-c16, commit 3fdcbc0b1c0376b7a3eb8230084a1fc3f311c706 (remote == HEAD).\nClips (step 3, real gameplay, 3.6 s straight / left / right / straight, 432x768): /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/clip_BEFORE_swim.mp4 and clip_NEW_swim.mp4.\nStep 4 pictures: .../ringpaint/st …[+913 chars]`
+
+### 🧑 User — 2026-11-18T19:46:23.153Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+

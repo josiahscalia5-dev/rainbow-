@@ -1082,3 +1082,81 @@ Pushed and verified. Now reporting to main.
 >       const cz = -a5b.z;                                                // camera local z (forward = -z)
 >   …[+1519 chars]
 
+### 🤖 Claude — 2026-11-18T19:44:31.843Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"^const BUB_FRAG\\|^/\\*\\* world-space bubble\" src/world/match04m4.ts | head -3", "description": "Find insertion point after river shader"}`
+
+### 🧑 User — 2026-11-18T19:44:31.922Z
+
+> ↩︎ result: 480:/** world-space bubble discs + foam puffs share one tiny shader each (camera-facing sprites in an InstancedMesh) */
+> 501:const BUB_FRAG = /* glsl */ `
+
+### 🤖 Claude — 2026-11-18T19:44:53.985Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "/** world-space bubble discs + foam puffs share one tiny shader each (camera-facing sprites in an InstancedMesh) */", "new_string": "/** r16 `&m04end=1`: the distant glowing opening (own material on the far end disc; the ring shader is untouched). The disc\n * paints the tunnel CONTINUING beyond the modelled rings — a telescoping series of copper-gold rings that shrink toward a\n * small hot white-gold light just above the water, the river converging into that light — instead of a flat orange disc.\n …[+4395 chars]`
+
+### 🧑 User — 2026-11-18T19:44:54.032Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:44:56.153Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 476, "limit": 8}`
+
+### 🧑 User — 2026-11-18T19:44:56.182Z
+
+> ↩︎ result: 476	  }
+> 477	  gl_FragColor = vec4(pjInverse(col), 1.0);
+> 478	}`;
+> 479	
+> 480	/** world-space bubble discs + foam puffs share one tiny shader each (camera-facing sprites in an InstancedMesh) */
+> 481	const SPRITE_VERT = /* glsl */ `
+> 482	attribute vec4 aB;          // xyz world centre, w radius
+> 483	attribute float aS;         // seed
+
+### 🤖 Claude — 2026-11-18T19:45:15.921Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "/** world-space bubble discs + foam puffs share one tiny shader each (camera-facing sprites in an InstancedMesh) */", "new_string": "/** r16 `&m04end=1`: the distant glowing opening (own material on the far end disc; the ring shader is untouched). The disc\n * paints the tunnel CONTINUING beyond the modelled rings — a telescoping series of copper-gold rings that shrink toward a\n * small hot white-gold light just above the water, the river converging into that light — instead of a flat orange disc.\n …[+4395 chars]`
+
+### 🧑 User — 2026-11-18T19:45:16.064Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:45:24.809Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\na=\"\"\"  const updaters: ((a: number) => void)[] = [];\n\n  if (M04.ring) {\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\"  const updaters: ((a: number) => void)[] = [];\n  let endCap: THREE.Mesh | null = null;\n\n  if (M04.ring) {\"\"\")\nb=\"\"\"    const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);\"\"\"\nassert s.count(b)==1\ns=s.replace(b, b+\"\\n    endCap = cm;\")\nc=\"\"\"  const time = { value: 0 };\n\"\"\"\nassert s.count(c)==1\ns=s.replace(c, c+\"\"\"  …[+1179 chars]`
+
+### 🧑 User — 2026-11-18T19:45:38.123Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:45:43.390Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && echo -n \"$(cat $S/K1.txt)&m04sband=1\" > $S/K2.txt && K=$(cat $S/K2.txt) && time node $S/quick.mjs $S/e1 f10_forward10u,t95_through_screen \"E1::$K&m04end=1\" 2>&1 | grep -v \"allow list\" | grep -i \"shot\\|error\\|m04end\"", "description": "Render first glowing-opening test", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T19:46:43.853Z
+
+> ↩︎ result: [match04] m04end {water: -0.6284808076336392}
+> shot E1 f10_forward10u
+> shot E1 t95_through_screen
+> 
+> real	1m0.209s
+> user	0m1.647s
+> sys	0m0.394s
+
+### 🤖 Claude — 2026-11-18T19:46:48.635Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB').crop((330,550,630,850))\nb=Image.open('qa/match/04/r16/s3_sband/NEW/f10_forward10u.png').convert('RGB').crop((282,580,582,880))\nc=Image.open('$S/e1/E1/f10_forward10u.png').convert('RGB').crop((282,580,582,880))\nd=Image.open('$S/e1/E1/t95_through_screen.png').convert('RGB').crop((282,520,582,820))\nW=Image.new('RGB',(1200,300))\nfor i,im in enumerate([a,b,c, …[+150 chars]`
+
+### 🧑 User — 2026-11-18T19:46:49.180Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:46:51.202Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_e1.png"}`
+
+### 🧑 User — 2026-11-18T19:46:51.236Z
+
+> ↩︎ result: [image]
+
