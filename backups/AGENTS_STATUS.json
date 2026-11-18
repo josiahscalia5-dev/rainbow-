@@ -915,9 +915,11 @@
     "from": "6da32d57 + WIP",
     "worktree": "/home/user/wt/s08",
     "port": 5278,
-    "task": "m08vh (no pale outlines round platform/towel/cups), then wall seams, towel, foam + coin line, spout cups"
+    "task": "m08vh (no pale outlines round platform/towel/cups), then wall seams, towel, foam + coin line, spout cups",
+    "state": "PAUSED by the user ~21:10 UTC 2026-11-18 (\"go back to it later; just work on the other screens\"); no approval decision; worker checkpointing and stopping"
    }
   ],
-  "if_account_17_runs_out": "-c18 branches from each NEWEST -c17 tip + backups/wip/ snapshot; never write -c17 from another account"
+  "if_account_17_runs_out": "-c18 branches from each NEWEST -c17 tip + backups/wip/ snapshot; never write -c17 from another account",
+  "user_order_2110": "Screen 08 paused (no approval decision yet); work continues on screens 04-07"
  }
 }

@@ -48,6 +48,12 @@ Worktrees built by `setup_worker.sh` (this folder) under the autosave lock, spar
 Merging needs the user's OK. If account 17 runs out: `-c18` branches from each NEWEST `-c17` tip + `backups/wip/` snapshot; never
 write `-c17` from another account.
 
+## User order ~21:10 UTC — Screen 08 PAUSED
+"Can I not say I approve or not and go back to it later? Just work on the other screens." → no approval decision on Screen 08
+for now (not approved, not rejected); the s08 worker checkpoints, pushes `claude/rainbow-s08-scenery-c17` and stops; screens
+04–07 continue (04 + 04 ring test, 05, 06, 07). Resume 08 only when the user asks; its next step was the torn white near-water
+glints below Benny (see `qa/match/08/r17/PROGRESS.md`).
+
 ## Progress shown to the user (separate full-size APPROVED / BEFORE / NEW)
 | # | Screen / step | Verdict |
 |---|---|---|

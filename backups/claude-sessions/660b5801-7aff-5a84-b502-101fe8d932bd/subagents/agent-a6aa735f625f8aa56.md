@@ -428,3 +428,118 @@ Start view: 0 px differ at the checkpoint and at +1.1 u. A short half-size swimm
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && F=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_fclu && rm -rf $F && timeout 1500 node tools/lead_r13/swim_clip.mjs 06 $F 3.6 \"$K\" 2>&1 | grep -v \"allow list\" | tail -3 && ffmpeg -loglevel error -y -framerate 24 -i $F/%04d.png -vf scale=432:768 -pix_fmt yuv420p qa/match/06/r17/step2_m06fclu/NEW/m06fclu_swim.mp4 && ls -la qa/match/06/r17/step2_m06fclu/NEW/m06fclu_swim.mp4 && ls $F | wc -l", "descriptio …[+75 chars]`
 
+### 🧑 User — 2026-11-18T21:01:33.631Z
+
+> ↩︎ result: frames 86
+> -rw-r--r-- 1 root root 1625441 Nov 18 21:01 qa/match/06/r17/step2_m06fclu/NEW/m06fclu_swim.mp4
+> 86
+
+### 🤖 Claude — 2026-11-18T21:01:36.150Z
+
+Let me inspect two frames from the steering part of the clip for near-camera foam problems.
+
+### 🤖 Claude — 2026-11-18T21:01:38.358Z
+
+> 🔧 **Bash** `{"command": "F=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_fclu && cd $F && ffmpeg -loglevel error -y -i 0045.png -i 0068.png -filter_complex \"[0]scale=432:768[a];[1]scale=432:768[b];[a][b]hstack\" $F/../pair_check.png && echo ok", "description": "Make a side-by-side check image of two clip frames"}`
+
+### 🧑 User — 2026-11-18T21:01:39.372Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T21:01:40.876Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/pair_check.png"}`
+
+### 🧑 User — 2026-11-18T21:01:40.912Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:01:43.692Z
+
+In the right frame (hard right) the foam heaps cover Benny's lower body. Checking whether the old foam did the same at hard right.
+
+### 🤖 Claude — 2026-11-18T21:01:45.696Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s06/qa/match/06/r17/step2_m06fclu && ffmpeg -loglevel error -y -i $D/BEFORE/s_right_hard.png -i $D/NEW/s_right_hard.png -filter_complex \"[0]scale=432:768[a];[1]scale=432:768[b];[a][b]hstack\" /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/pair_right.png && echo ok", "description": "Side-by-side BEFORE/NEW hard right check image"}`
+
+### 🧑 User — 2026-11-18T21:01:46.402Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T21:01:48.378Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/pair_right.png"}`
+
+### 🧑 User — 2026-11-18T21:01:48.410Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:02:06.317Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/PROGRESS.md", "content": "# Screen 06 — round 17 (account 17) — visuals only\n\nBranch `claude/rainbow-s06-match-c17` (from `-c16` tip `4b6c637c` + the r16 worker's unfinished `m06fclu` edit, restored).\nHistory: `qa/match/06/r15/PROGRESS.md` (ranked audit), `qa/match/06/r16/PROGRESS.md` (step 1 `m06gold`, ranking update).\nAuthority: `references/06_crest_the_rinse_arch.png`.\nKept set: `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1`.\nNot touched: camera, framing, Benny (size decision pending wit …[+2672 chars]`
+
+### 🧑 User — 2026-11-18T21:02:06.478Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/qa/match/06/r17/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T21:02:10.970Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && du -sh qa/match/06/r17 && git add src/world/match06.ts tools/match06/r16_shots.mjs qa/match/06/r17 && git status --short | grep -v node_modules | head && git commit -q -m \"Screen 06 r17 step 2: foam as bubbly soap clusters (m06fclu) — GOOD IMPROVEMENT\n\nSame foam layout as m06foam; every smooth pink-white ball becomes a heap of\nfoam lobes + small soap bubbles in the approved picture's own foam colours.\nStart view 0 px (checkpoint and +1.1 u). Deterministic shot mode R16_DET=1.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: h …[+288 chars]`
+
+### 🧑 User — 2026-11-18T21:02:21.649Z
+
+> ↩︎ result: 38M	qa/match/06/r17
+> A  qa/match/06/r17/PROGRESS.md
+> A  qa/match/06/r17/step2_m06fclu/1_APPROVED.png
+> A  qa/match/06/r17/step2_m06fclu/BEFORE/f03_forward3u.png
+> A  qa/match/06/r17/step2_m06fclu/BEFORE/f10_forward10u.png
+> A  qa/match/06/r17/step2_m06fclu/BEFORE/motion.json
+> A  qa/match/06/r17/step2_m06fclu/BEFORE/s_left_hard.png
+> A  qa/match/06/r17/step2_m06fclu/BEFORE/s_right_hard.png
+> A  qa/match/06/r17/step2_m06fclu/BEFORE/t33_through_screen.png
+> A  qa/match/06/r17/step2_m06fclu/BEFORE/t66_through_screen.png
+> A  qa/match/06/r17/step2_m06fclu/NEW/f03_forward3u.png
+> Uploading LFS objects: 100% (1/1), 1.6 MB | 0 B/s, done.
+> c649fcbc35780e11cefce83eb54684f1d55752a5
+> c649fcbc35780e11cefce83eb54684f1d55752a5	refs/heads/claude/rainbow-s06-match-c17
+
+### 🤖 Claude — 2026-11-18T21:02:22.656Z
+
+Pushed and verified. Reporting to "main".
+
+### 🤖 Claude — 2026-11-18T21:02:23.007Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T21:02:23.018Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T21:02:26.930Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s06 step 2 m06fclu done, pushed", "message": "s06 r17 step 2 `&m06fclu=1` (bubbly soap foam): GOOD IMPROVEMENT, commit c649fcbc (claude/rainbow-s06-match-c17, remote verified).\nThe pink plastic foam balls are now white bubbly soap heaps with small bubbles and lilac-blue shadows, in the same places, like the painted corner foam. Start view 0 px (checkpoint and +1.1 u). Same coin score in every shot.\nNEW: /home/user/wt/s06/qa/match/06/r17/step2_m06fclu/NEW (BEFORE/, 1_APPROVED.png, START/ beside it; half-size clip NEW/m06fclu_swim.mp4).\nMost visible remaining differ …[+345 chars]`
+
+### 🧑 User — 2026-11-18T21:02:26.975Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T21:02:28.574Z
+
+Now rank 3: the start-view flash at +1.1 u. First let me see it.
+
+### 🤖 Claude — 2026-11-18T21:02:29.181Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/START/[REDACTED-EMAIL]"}`
+
+### 🧑 User — 2026-11-18T21:02:29.548Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:02:29.685Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/START/BEFORE_checkpoint.png"}`
+
+### 🧑 User — 2026-11-18T21:02:29.736Z
+
+> ↩︎ result: [image]
+

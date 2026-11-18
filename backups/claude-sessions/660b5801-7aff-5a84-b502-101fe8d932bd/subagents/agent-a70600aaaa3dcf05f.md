@@ -1622,3 +1622,113 @@ The locked approved view differs by 1,009 px with `m05trans` on, so it is not 0 
 >     const time = st.frozen ?? st.clock;
 >     env.update(ti …[+2201 chars]
 
+### 🤖 Claude — 2026-11-18T21:01:37.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uPjNear\" src/vfx/waterRibbon.ts | head -12", "description": "Find uPjNear semantics"}`
+
+### 🧑 User — 2026-11-18T21:01:37.236Z
+
+> ↩︎ result: 568:uniform vec4 uPjNear;      // m05geo / m05fold: the ride focus (as the fragment shader's ?projnear05 uniform)
+> 601:  p += aUnf * (uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0);
+> 608:    float gk = uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0;
+> 611:      float sg = s - (uPjNear.z - uPjNear.w);
+> 614:      float gin = smoothstep(uPjNear.w + 3.0, uPjNear.w + 5.0, sg) * step(0.0, tg) * step(tg, 1.0);
+> 732:// the old tile uPjT keeps its role where E / N have no data at the locked view. uPjNear: x = on, y = share of the
+> 734:uniform vec4 uPjNear;
+> 740:float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
+> 824:  float dB = pjVeeS - uPjNear.w;                 // design distance from Benny (< 0: between Benny and the camera)
+> 877:  wE *= mix(1.0, nmK * smoothstep(uPjNear.w - M05NEAR_S0, uPjNear.w - M05NEAR_S0 + 0.3, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+> 879:  wE *= mix(1.0, smoothstep(uPjNear.w - 1.55, uPjNear.w - 0.85, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+> 886:  if (uPjNear.x > 0.5) {
+
+### 🤖 Claude — 2026-11-18T21:01:42.979Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/index.ts", "old_string": "      if (m05farPre.run) { camera.updateMatrixWorld(); m05farPre.run(camera); }   // `&m05trans=1` (round 16): before the draw", "new_string": "      // `&m05trans=1` (round 16): before the draw. Round 17: only once Benny has left the 05 checkpoint (uPjNear.w = its s):\n      // goto('05') settles the camera springs with stepSim while Benny stays on the checkpoint, so a pre-run there saw the\n      // half-settled camera, marked the block live and the coins drew the 06 coins on the far river (1,009 px in t …[+268 chars]`
+
+### 🧑 User — 2026-11-18T21:01:42.989Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T21:01:44.631Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat qa/match/05/r17/step1_trans/gameplay_m05trans.json | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['pass'], {k:v.get('pass') for k,v in d['checks'].items()}); print({k:v for k,v in d.items() if k not in ('checks',)} if False else ''); print(json.dumps(d['checks'])[:1500])\"", "description": "Read gameplay test result for m05trans"}`
+
+### 🧑 User — 2026-11-18T21:01:44.760Z
+
+> ↩︎ result: True {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> 
+> {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}, "heartsLostOnWallBump": {"pass": true, "hearts": 4}}
+
+### 🤖 Claude — 2026-11-18T21:01:46.040Z
+
+Gameplay with `m05trans` is 8/8 (91 coins, 1,330 → 2,240). Now applying the locked-view fix.
+
+### 🤖 Claude — 2026-11-18T21:01:46.687Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/index.ts", "offset": 200, "limit": 12}`
+
+### 🧑 User — 2026-11-18T21:01:46.764Z
+
+> ↩︎ result: 200	      // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+> 201	      // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+> 202	      const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;
+> 203	      // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
+> 204	      const pjNear = ribbon.uniforms.uPjNear;
+> 205	      if (pjNear) (pjNear.value as THREE.Vector4).z = focusS;
+> 206	      m05rideS.value = focusS;   // `&m05trans=1` (Screen 05 round 15): the far block is removed as Benny enters 06
+> 207	      if (m05farPre.run) { camera.updateMatrixWorld(); m05farPre.run(camera); }   // `&m05trans=1` (round 16): before the draw
+> 208	      // `&m05foam=1` (Screen 05 round 10): the 05 rim foam grows in after 0.5–2 u of riding (0 at the locked checkpoint)
+> 209	      if ((M05FOAM || M05BERM) && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); }
+> 210	      bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
+> 211	      // crest spray off the  …[+10 chars]
+
+### 🤖 Claude — 2026-11-18T21:01:50.244Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/index.ts", "old_string": "      if (m05farPre.run) { camera.updateMatrixWorld(); m05farPre.run(camera); }   // `&m05trans=1` (round 16): before the draw", "new_string": "      // `&m05trans=1` (round 16): before the draw. Round 17: only once Benny has left the 05 checkpoint (uPjNear.w = its s):\n      // goto('05') settles the camera springs with stepSim while Benny stays on the checkpoint, so a pre-run there saw the\n      // half-settled camera, marked the block live and the coins drew the 06 coins on the far river (1,009 px in t …[+268 chars]`
+
+### 🧑 User — 2026-11-18T21:01:50.543Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/index.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:01:54.397Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uPjNear\" src/vfx/waterRibbon.ts | grep -v \"^\\(568\\|601\\|608\\|611\\|614\\|732\\|734\\|740\\|824\\|877\\|879\\|886\\):\" | head; timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; echo tsc=$?", "description": "Check uPjNear.w setup and typecheck", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T21:02:01.348Z
+
+> ↩︎ result: 939:  if (uPjNear.x > 0.5) {
+> 1938:    s05r = s - (uPjNear.z - uPjNear.w) * rideK05;
+> 1942:      float lrS = clamp(0.6 * (uPjSeam.x - uPjNear.z), 4.0, 20.0);
+> 1943:      float exS = clamp((uPjLutS.y - 0.6) - (uPjSeam.x - (uPjNear.z - uPjNear.w) * rideK05), 0.0, 2.0 * lrS);
+> 1958:      if (uPjNear.x > 0.5) {
+> 1966:        float rideD = (uPjNear.z - uPjNear.w) * (1.0 - rideK05);
+> 2001:      dW *= 1.0 - (1.0 - wNx) * wT2m * (1.0 - uPjNear.y);
+> 2008:        dW0 *= 1.0 - (1.0 - wN0) * wT2m * (1.0 - uPjNear.y);
+> 2309:  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };
+> 2402:      const nv = u.uPjNear.value as THREE.Vector4;
+> tsc=0
+
+### 🤖 Claude — 2026-11-18T21:02:02.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 2398,2410p src/vfx/waterRibbon.ts", "description": "Read where uPjNear.w is set"}`
+
+### 🧑 User — 2026-11-18T21:02:02.778Z
+
+> ↩︎ result: fetch(new URL('../../assets/textures/water05/proj05_near.json', import.meta.url).href).then((r) => r.json()),
+>     ]).then(([T2, near]) => {
+>       u.uPjT2.value = T2;
+>       (u.uPjT2S.value as THREE.Vector2).set(near.T2.a, near.T2.L);
+>       const nv = u.uPjNear.value as THREE.Vector4;
+>       nv.x = 1; nv.w = near.locked_focus_s;
+>     });
+>   }).then(() => {
+>     if (!FLOW2) return undefined;
+>     return Promise.all([
+>       load(new URL('../../assets/textures/water05/proj05_WN.png', import.meta.url).href, false, false),
+>       tile(new URL('../../assets/textures/water05/proj05_WT.png', import.meta.url).href),
+>       fetch(new URL('../../assets/textures/water05/proj05_flow.json', import.meta.url).href).then((r) => r.json()),
+
+### 🤖 Claude — 2026-11-18T21:02:08.636Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt | tr -d '\\n') && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1 && node scripts/capture.mjs 05 --q=\"$K&m05trans=1\" --out=$S/trans2 2>&1 | tail -1 && git checkout -- qa/capture_log.json && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/kept/05.png $S/trans2/05.png $S/diff2.png 0.1 180 1536 && cmp $S/kept/05.png $S/trans2/05.png && echo IDENTICAL_FILES", "description": "Re-capture locked view with fix and diff", "timeout": 900000}`
+

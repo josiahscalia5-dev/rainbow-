@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 094fb25a..eef0d7b7 100644
+index 094fb25a..5752ff16 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -313,6 +313,10 @@ uniform vec4 uSB0;           // x strength, y inner |arc| where the bands start,
@@ -7,7 +7,7 @@ index 094fb25a..eef0d7b7 100644
                               // (1 = cyan..lilac, less = start nearer the pink ribbon), w slow lateral wander of the bands (u)
  uniform vec2 uSB2;           // far ahead of the camera (x -> y u) the bands smooth into long unbroken stripes (no repeat ribs)
 +uniform vec4 uNB;            // r17 m04nband: x on, y Benny along (local), z Benny lateral, w inner arc hugging Benny (u)
-+uniform vec4 uNB2;           // r17 m04nband: x bands back at the normal inner arc this far ahead of Benny (u), y widening per u
++uniform vec4 uNB2;           // r17 m04nband: x bands back at the normal inner arc this far ahead of Benny (u), y widening behind Benny (b * d^2; < 0 = straight |b| per u)
 +                             // behind Benny, z extra pinch at Benny's sides (u), w lateral follow of Benny (0..1)
 +uniform vec2 uNB3;           // r17 m04nband: x width of one cyan -> pink half stripe near Benny (u; 0 = one stretched band), y tile span
  uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
@@ -25,7 +25,7 @@ index 094fb25a..eef0d7b7 100644
 +      // pixels stay world-anchored and flowing, only where they start follows Benny down the slide
 +      float d = along - uNB.y;
 +      sv = vS - uNB.z * uNB2.w;
-+      float hug = uNB.w + uNB2.y * max(-d, 0.0) - uNB2.z * exp(-d * d / 1.2);
++      float db = max(-d, 0.0), hug = uNB.w + uNB2.y * (uNB2.y < 0.0 ? -db : db * db) - uNB2.z * exp(-d * d / 1.2);  // < 0: straight widening
 +      inner = mix(min(hug, uSB0.y), uSB0.y, smoothstep(0.15 * uNB2.x, uNB2.x, d));
 +    }
 +    float as = abs(sv);

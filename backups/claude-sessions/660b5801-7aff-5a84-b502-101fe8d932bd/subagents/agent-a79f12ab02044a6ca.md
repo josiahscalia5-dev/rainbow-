@@ -936,3 +936,28 @@ The bands now come in close round Benny and sweep from the bottom corners toward
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]\n    s=s.replace(old,new)\nrep(\"\"\"                             // behind Benny, z extra pinch at Benny's sides (u), w lateral follow of Benny (0..1)\n\"\"\",\"\"\"                             // behind Benny, z extra pinch at Benny's sides (u), w lateral follow of Benny (0..1)\nuniform vec2 uNB3;           // r17 m04nband: x width of one cyan -> pink half stripe near Benny (u; 0 = one stretched band), y tile span\n\"\" …[+1942 chars]`
 
+### 🧑 User — 2026-11-18T21:02:03.971Z
+
+> ↩︎ result: 04 f10_forward10u s 88.307 lat 0 stage 04 frames 43
+> 04 s_left_hard s 90.249 lat -1.65 stage 04 frames 52
+
+### 🤖 Claude — 2026-11-18T21:02:06.342Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/n_nb2_f10.png"}`
+
+### 🧑 User — 2026-11-18T21:02:06.384Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:02:06.960Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/n_nb2_lh.png"}`
+
+### 🧑 User — 2026-11-18T21:02:07.008Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:02:26.655Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"float hug = uNB.w + uNB2.y * max(-d, 0.0) - uNB2.z * exp(-d * d / 1.2);\"\nnew=\"float db = max(-d, 0.0), hug = uNB.w + uNB2.y * (uNB2.y < 0.0 ? -db : db * db) - uNB2.z * exp(-d * d / 1.2);  // < 0: straight widening\"\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"y widening per u\\n\",\"y widening behind Benny (b * d^2; < 0 = straight |b| per u)\\n\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"widening\" src/world/match04m4.ts | head -3; timeout 300 npx tsc --noEmit -p . 2> …[+583 chars]`
+
