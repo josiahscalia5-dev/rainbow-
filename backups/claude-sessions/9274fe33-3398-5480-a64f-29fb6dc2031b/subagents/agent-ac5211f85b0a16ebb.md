@@ -1442,3 +1442,25 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T19:41:53.058Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"vis = mix(vis, smoothstep(0.0, 1.0, sv / 25.0), mv);\" src/world/match08.ts", "description": "Locate the soft visibility hand-over line"}`
+
+### 🧑 User — 2026-11-18T19:41:53.354Z
+
+> ↩︎ result: 222:          vis = mix(vis, smoothstep(0.0, 1.0, sv / 25.0), mv);
+
+### 🤖 Claude — 2026-11-18T19:41:59.514Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\nold=\"          vis = mix(vis, smoothstep(0.0, 1.0, sv / 25.0), mv);\\n\"\nnew=\"\"\"          float vs = smoothstep(0.0, 1.0, sv / 25.0);\n          // m08vh (r16): the soft hand-over only on the HIDDEN side of a depth edge; a point the approved view saw keeps its\n          // own painted pixel (the 5 x 5 taps used to fade it toward the fallback tile: pale outlines / boxes along the\n          // platform ends, the towel and the cups' silhouettes while swimming)\n          if (uVh > 0.5) vs =  …[+531 chars]`
+
+### 🧑 User — 2026-11-18T19:42:00.338Z
+
+> ↩︎ result: 89:uniform float uVh;          // m08vh (r16): soft visibility hand-over on the hidden side only
+> 227:          if (uVh > 0.5) vs = max(vs, vis);
+> 464:      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uDbgVk: { value: Number(new URLSearchParams(location.search).get('m08dbgvk') ?? 0) || 0 }, uSr: { value: 0 }, uVh: { value: flag05('m08vh') ? 1 : 0 },
+
+### 🤖 Claude — 2026-11-18T19:42:08.219Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && M08_DET=1 M08_ONLY=f10,t95 node tools/match08/shots08.mjs 08 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/vh1 \"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt)&m08vh=1\" 2>&1 | grep -v \"allow list\" && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\nB='/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_'\nfor n in ['f10_forward10u','t95_through_screen']:\n  a=Image.open(B+n+'.png').convert('RGB …[+290 chars]`
+

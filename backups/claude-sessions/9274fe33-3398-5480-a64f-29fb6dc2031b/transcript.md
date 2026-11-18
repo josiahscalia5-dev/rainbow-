@@ -3359,3 +3359,19 @@ Screen 04's other worker has finished its pink side-swirls step. I'll check it b
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:04-sband-shown 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save the shown pictures and log to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T19:42:08.882Z
+
+> ↩︎ result: "commit": "3265789eb31d2016796aac08f6134322543d54e7",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:41:46+00:00 (0.3 min ago) | local 3265789 remote 3265789 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:42:14.090Z
+
+I sent you Screen 04's pink side-swirls step. I rate it a GOOD IMPROVEMENT, and it's kept.
+
+- **Better:** inside the tunnel, the water climbing the left and right sides used to be one flat pink sheet. It's now streaked satin bands in hot pink, magenta, violet and lilac, with little light glints, closer to your painted swirls. It's most visible two-thirds of the way through and subtler near the start. Nothing stretches when Benny steers hard left or right, and the start view is unchanged.
+- **Still different:** in your painting, the pink and cyan swirls also curve around Benny in the water right in front of him. In the game that water is still plain cyan.
+
+This is a separate worker from the painted rings, so Screen 04 now has two improvements in progress: the side swirls (kept) and the thick painted rings (shape good, colour being fixed). Later they'll be combined into one version for your approval.
+
+Saved as `3265789`, verified on GitHub.
+

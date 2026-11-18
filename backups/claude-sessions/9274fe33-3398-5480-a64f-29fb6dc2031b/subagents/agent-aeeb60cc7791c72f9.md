@@ -1160,3 +1160,39 @@ The frames differ everywhere because the water animates (time is not frozen in t
 > ↩︎ result: v3_lip (np.int64(404), np.int64(729)) [(40, [200, 109, 55]), (60, [198, 108, 43]), (80, [199, 106, 42]), (100, [190, 96, 39]), (130, [188, 93, 42])]
 > v4_warm (np.int64(404), np.int64(729)) [(40, [204, 112, 57]), (60, [203, 112, 45]), (80, [204, 111, 47]), (100, [198, 103, 47]), (130, [194, 98, 48])]
 
+### 🤖 Claude — 2026-11-18T19:42:01.580Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"uniform float uLen\\|uniform vec3 uAxO\\|uniform vec3 uAxD\" src/world/match04m4.ts | head; grep -n \"uLen\" src/world/match04m4.ts | head -5", "description": "Check uLen and axis uniforms in GOLD_FRAG"}`
+
+### 🧑 User — 2026-11-18T19:42:01.842Z
+
+> ↩︎ result: 84:uniform vec3 uAxO;
+> 85:uniform vec3 uAxD;
+> 92:uniform float uLen;
+> 92:uniform float uLen;
+> 622:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+
+### 🤖 Claude — 2026-11-18T19:42:12.528Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "        // r16 m04rwarm: the painted rings keep their copper out to ~100 px from the vanishing point, then the last rings\n        // turn orange -> yellow -> warm white toward the glowing centre (band medians measured on the approved picture,\n        // as gains over the copper of the straightened ring). Screen distance from the vanishing point = focal * tan(angle\n        // between the view ray and the tunnel axis): a light-at-the-end-of-the-tunnel glow, steady while steering.\n        vec3 dv = …[+2159 chars]`
+
+### 🧑 User — 2026-11-18T19:42:12.824Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:42:13.956Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = focal length in px (screen distance from the vanishing point = y * tan)", "new_string": "uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)"}`
+
+### 🧑 User — 2026-11-18T19:42:14.037Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:42:14.912Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "M04.num('m04rwf', 1278)) },", "new_string": "M04.num('m04rww', 0.45)) },"}`
+
+### 🧑 User — 2026-11-18T19:42:16.059Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+

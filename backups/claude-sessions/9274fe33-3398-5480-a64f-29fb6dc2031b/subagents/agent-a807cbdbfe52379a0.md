@@ -844,3 +844,99 @@ Pushed and verified. Now reporting to main.
 >         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
 >         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulb …[+6570 chars]
 
+### 🤖 Claude — 2026-11-18T19:41:55.009Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB').crop((232,450,632,850))\nb=Image.open('qa/match/04/r16/s3_sband/NEW/f10_forward10u.png').convert('RGB').crop((232,500,632,900))\nc=Image.open('qa/match/04/r16/s3_sband/NEW/t66_through_screen.png').convert('RGB').crop((232,500,632,900))\nW=Image.new('RGB',(1200,400))\nfor i,im in enumerate([a,b,c]): W.paste(im,(i*400,0))\nW.save('$S/cmp_end.png')\n\"", "descri …[+47 chars]`
+
+### 🧑 User — 2026-11-18T19:41:55.867Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:41:58.224Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_end.png"}`
+
+### 🧑 User — 2026-11-18T19:41:58.284Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:42:09.984Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r16/s3_sband/NEW/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:42:10.229Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:42:14.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 55,103p src/world/match04m4.ts; grep -n \"part 4\\|vK.x > 3.5\\|== 4\\|> 3.5\" src/world/match04m4.ts | head", "description": "Read ring VERT shader and end-glow part"}`
+
+### 🧑 User — 2026-11-18T19:42:14.705Z
+
+> ↩︎ result: cx: number; cy: number; z0: number; len: number; r: number; outerR: number;
+>   hideOld: (names: string[]) => void;
+> }
+> 
+> const VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> attribute vec2 aK;
+> varying vec4 vProj;
+> varying vec3 vW;
+> varying vec3 vN;
+> varying vec2 vK;
+> void main() {
+>   vec4 wp = modelMatrix * vec4(position, 1.0);
+>   vProj = uProjVP * wp;
+>   vW = wp.xyz;
+>   vK = aK;
+>   vN = normalize(mat3(modelMatrix) * normal);
+>   gl_Position = projectionMatrix * viewMatrix * wp;
+> }`;
+> 
+> // polished gold, art-directed in DISPLAY colours measured on the approved picture (then pjInverse like the plate):
+> // groove (110,35,5) / shadow band (168,70,18) / mid (205,97,28) / lit (245,143,38) / hot lip (255,204,77) / glint.
+> // Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;
+> // the far rings warm toward the glowing vanishing point; violet / pink water reflections on the lower walls.
+> const GOLD_FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAway;
+> uniform vec3 uAxO;
+> uniform vec3 uAxD;
+> uniform vec3 uAxU;
+> uniform vec3 uAxR;
+> uniform float uNB;
+> uniform float uP;
+> uniform float uLipBulb;
+> unifor …[+1138 chars]
+
+### 🤖 Claude — 2026-11-18T19:42:17.686Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 160,200p src/world/match04m4.ts; sed -n 240,278p src/world/match04m4.ts", "description": "Read GOLD_FRAG end part and output stage"}`
+
+### 🧑 User — 2026-11-18T19:42:18.769Z
+
+> ↩︎ result: float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left
+>   vec3 R = reflect(-V, n);
+>   float part = vK.x;
+>   float dc = distance(cameraPosition, vW);
+>   float facing = clamp(dot(n, V), 0.0, 1.0);
+>   vec3 col;
+>   if (part > 3.5) {
+>     // the far glow (painted vanishing point): small warm-white core, orange-gold outside with faint far rings
+>     // soft warm-white core, yellow-orange glow, orange toward the rim (matches the far bands), no hard target rings
+>     float rad = clamp(rr / 3.6, 0.0, 1.0);
+>     col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
+>     col = mix(col, uGoldY > 0.5 ? vec3(0.98, 0.70, 0.22) : vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+>     col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(log(max(rad, 0.01)) / log(0.72)) - 0.5)) * smoothstep(0.35, 0.7, rad);
+>   } else {
+>     bool mouth = vK.y < -0.5;
+>     float ring = floor(vK.y + 0.5);             // integer ring index (the interpolated varying is not exact)
+>     float v, tb = 0.0;
+>     // gloss that moves with the view: the polished metal reflects the bright far end of the tunnel
+>     float gl = pow(max(dot(R, uAxD), 0.0), 6.0);
+>     if (mouth) {
+>       …[+3955 chars]
+
