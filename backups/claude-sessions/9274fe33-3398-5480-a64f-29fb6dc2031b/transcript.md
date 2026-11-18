@@ -343,3 +343,177 @@ The previous lead branch is still receiving autosaves (18:54, 18:59 UTC), so the
 > <summary>Agent "Screen 04 painted-ring texture test" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAtsTc5wPCycjGqRtNZU, model sent to the API: claude-opus-5-5)</summary>
 > <note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This  …[+6404 chars]
 
+### 🤖 Claude — 2026-11-18T19:03:16.854Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate,TaskList,ListConnectors,ListPlugins", "max_results": 5}`
+
+### 🧑 User — 2026-11-18T19:03:16.864Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T19:03:18.622Z
+
+> 🔧 **Bash** `{"command": "cat .claude/settings.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print(json.dumps({k:v for k,v in d.items() if k!='hooks'},indent=1));print('hooks:',list(d.get('hooks',{}).keys()))\"; echo ---; python3 -c \"import json;d=json.load(open('backups/TOOL_MANIFEST.json'));print(list(d.keys()));print(json.dumps(d.get('plugins',d.get('claude_plugins')),indent=1)[:3000])\"", "description": "Show project settings and tool manifest plugins"}`
+
+### 🧑 User — 2026-11-18T19:03:18.709Z
+
+> ↩︎ result: {}
+> hooks: ['SessionStart', 'PreCompact', 'Stop', 'SessionEnd']
+> ---
+> ['_comment', 'schema', 'project', 'repo', 'updated_utc', 'entry_points', 'startup_integration', 'tools', 'claude_plugins', 'mcp_servers', 'credentials', 'network_hosts', 'marble_worldlabs', 'protected', 'cannot_transfer_through_github', 'account14_2026_11_18', 'account15_2026_11_18']
+> {
+>  "synced_from_claude_ai_account": [
+>   "superpowers",
+>   "playwright",
+>   "code-review",
+>   "feature-dev",
+>   "claude-code-setup",
+>   "hubcap",
+>   "typescript-lsp",
+>   "pyright-lsp"
+>  ],
+>  "note_synced": "Account-level plugins follow the Claude account (claude.ai settings), not the repo. On a new account enable at least 'playwright' (Playwright MCP).",
+>  "repo_installed": {
+>   "worldlabs@worldlabs": {
+>    "marketplace": "worldlabsai/skills",
+>    "install": "bash scripts/setup-worldlabs-plugin.sh",
+>    "purpose": "skills atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli; its duplicate MCP copy plugin:worldlabs:worldlabs is disabled for this project"
+>   }
+>  },
+>  "not_needed": [
+>   "context7 (needs OAuth sign-in; not used by Rainbow)",
+>   "design plugin MCP servers: asana / atlassian / figma / intercom / linear / notion / slack (blocked by the en …[+1255 chars]
+
+### 🤖 Claude — 2026-11-18T19:03:21.029Z
+
+> 🔧 **TaskCreate** `{"subject": "Restore + verify backup on this session branch", "description": "Push ccr-e42bb3c0-jpif8d (remote none yet), point autosave config at it, verify ls-remote == HEAD, get the rest of the bootstrap report.", "activeForm": "Restoring the five-minute GitHub autosave"}`
+
+### 🧑 User — 2026-11-18T19:03:21.042Z
+
+> ↩︎ result: Task #1 created successfully: Restore + verify backup on this session branch
+
+### 🤖 Claude — 2026-11-18T19:03:22.578Z
+
+> 🔧 **TaskCreate** `{"subject": "Enable/verify every extension, plugin, connector, key and tool", "description": "Plugins (playwright, superpowers, worldlabs...), MCP (GitHub, Playwright, Hugging Face, World Labs Atlas), keys (World Labs Marble, fal), Blender, Android, npm, Python, tests.", "activeForm": "Checking extensions, connectors and tools"}`
+
+### 🧑 User — 2026-11-18T19:03:22.592Z
+
+> ↩︎ result: Task #2 created successfully: Enable/verify every extension, plugin, connector, key and tool
+
+### 🤖 Claude — 2026-11-18T19:03:24.079Z
+
+> 🔧 **TaskCreate** `{"subject": "Collect round-15 worker state (-c15 tips + unfinished WIP)", "description": "For s04, s04tex, s05, s06, s07, s08: newest -c15 tip on GitHub, newest backups/wip snapshot on ccr-47b10cec-03c7co, PROGRESS.md.", "activeForm": "Collecting where each screen worker stopped"}`
+
+### 🧑 User — 2026-11-18T19:03:24.089Z
+
+> ↩︎ result: Task #3 created successfully: Collect round-15 worker state (-c15 tips + unfinished WIP)
+
+### 🤖 Claude — 2026-11-18T19:03:25.826Z
+
+> 🔧 **TaskCreate** `{"subject": "Relaunch screen workers on -c16 branches", "description": "Create -c16 branches from newest -c15 tips, apply WIP patches, sparse worktrees, relaunch the specialists (respect usage: user rule at most two at once vs account-15's six).", "activeForm": "Relaunching screen workers"}`
+
+### 🧑 User — 2026-11-18T19:03:25.837Z
+
+> ↩︎ result: Task #4 created successfully: Relaunch screen workers on -c16 branches
+
+### 🤖 Claude — 2026-11-18T19:03:26.828Z
+
+> 🔧 **TaskCreate** `{"subject": "Give the user the backup report (CLAUDE.md §4)", "description": "RAINBOW 3D BACKUP VERIFIED line only if every check passed; otherwise list failures.", "activeForm": "Writing the backup report"}`
+
+### 🧑 User — 2026-11-18T19:03:26.845Z
+
+> ↩︎ result: Task #5 created successfully: Give the user the backup report (CLAUDE.md §4)
+
+### 🤖 Claude — 2026-11-18T19:03:27.851Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T19:03:27.862Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-18T19:03:29.301Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print('branch=',d.get('branch'));print('protected n=',len(d.get('protected_branches',[])));print([b for b in d.get('protected_branches',[]) if 'c15' in b or '47b10cec' in b])\"; tail -5 backups/BACKUP_LOG.md", "description": "Inspect autosave config and recent log"}`
+
+### 🧑 User — 2026-11-18T19:03:29.360Z
+
+> ↩︎ result: branch= ccr-47b10cec-03c7co
+> protected n= 58
+> []
+> | 2026-11-18T18:46:44+00:00 | manual:stop-hook | committed+pushed | `1e7cb58b3cf1` | `ccr-47b10cec-03c7co` | 23 | True |  |
+> | 2026-11-18T18:47:09+00:00 | hook:Stop | committed+pushed | `e35414db0d52` | `ccr-47b10cec-03c7co` | 23 | True |  |
+> | 2026-11-18T18:49:26+00:00 | daemon | committed+pushed | `63d12a643ef9` | `ccr-47b10cec-03c7co` | 31 | True |  |
+> | 2026-11-18T18:58:05+00:00 | daemon | committed+pushed | `04771db13658` | `ccr-e42bb3c0-jpif8d` | 4 | True |  |
+> | 2026-11-18T18:58:19+00:00 | bootstrap:background | committed+pushed | `7f04a0e8b0a3` | `ccr-e42bb3c0-jpif8d` | 4 | True |  |
+
+### 🤖 Claude — 2026-11-18T19:03:34.029Z
+
+> 🔧 **Bash** `{"command": "timeout 60 git ls-remote origin refs/heads/ccr-e42bb3c0-jpif8d; git rev-parse HEAD; python3 -I scripts/autosave-status.py", "description": "Verify session branch on GitHub", "timeout": 90000}`
+
+### 🧑 User — 2026-11-18T19:03:34.848Z
+
+> ↩︎ result: d25ed0505c9fd40db41cc203d6f0dc4932c8b059	refs/heads/ccr-e42bb3c0-jpif8d
+> d25ed0505c9fd40db41cc203d6f0dc4932c8b059
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:03:16+00:00 (0.3 min ago) | local d25ed05 remote d25ed05 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:03:37.717Z
+
+Autosave is now pushing this branch: GitHub and local both show `d25ed05`. Next I'll point the autosave config at this branch and protect the account-15 branches so nothing here can write to them.
+
+### 🤖 Claude — 2026-11-18T19:03:38.722Z
+
+> 🔧 **Bash** `{"command": "grep -n '\"branch\"\\|ccr-6c7564b1-fmlt1w\\|rainbow-s05-match-c14' backups/autosave.config.json | head", "description": "Locate config lines to edit"}`
+
+### 🧑 User — 2026-11-18T19:03:38.757Z
+
+> ↩︎ result: 6:  "branch": "ccr-47b10cec-03c7co",
+> 106:    "ccr-6c7564b1-fmlt1w",
+> 108:    "claude/rainbow-s05-match-c14",
+> 111:  "original_branch_note": "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); claude/rainbow-3d-recovery-m4v347 = recovery backup from accounts 2–3 (last 8f869da + autosaves to b83b7e0). Since account 5 (2026-11-15 ~20:53 UTC) the earlier session branches ccr-d4bb0ad3-8ycajb (account 4, last 648f531) and ccr-8b6fc834-7kd55l (account 3, last 8a36270) are protected too: both are fully contained in ccr-e033f912-8b40f5. Since account 6 (2026-11-15 ~21:41 UTC) ccr-e033f912-8b40f5 (account 5, last 3c0fe33) is protected too: it is fully contained in claude/rainbow-3d-account-transfer-syorak. Since account 7 (2026-11-15 ~22:52 UTC) claude/rainbow-3d-account-transfer-syorak (account 6, last 7ae64c3) is protected too: it is fully contained in ccr-93add0fa-q17ey6. Since account 8 (2026-11-16 ~00:50 UTC) ccr-93add0fa-q17ey6 (account 7, last 6cf0b4f) is protected too: it is fully contained in ccr-4f6c3e0e-5kxgr0. Since the account-transfer session 94cf04e3 (2026-11-16 ~01:25 UTC) ccr-4f6c3e0e-5kxgr0 (account 8, …[+1422 chars]
+
+### 🤖 Claude — 2026-11-18T19:03:39.932Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/autosave.config.json", "offset": 104, "limit": 6}`
+
+### 🧑 User — 2026-11-18T19:03:39.962Z
+
+> ↩︎ result: 104	    "claude/rainbow-s05-match-c13",
+> 105	    "claude/rainbow-s08-scenery-c13",
+> 106	    "ccr-6c7564b1-fmlt1w",
+> 107	    "claude/rainbow-s04-match-c14",
+> 108	    "claude/rainbow-s05-match-c14",
+> 109	    "claude/rainbow-s08-scenery-c14"
+
+### 🤖 Claude — 2026-11-18T19:03:42.323Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/autosave.config.json", "old_string": "    \"claude/rainbow-s08-scenery-c14\"", "new_string": "    \"claude/rainbow-s08-scenery-c14\",\n    \"ccr-47b10cec-03c7co\",\n    \"claude/rainbow-s04-match-c15\",\n    \"claude/rainbow-s04-ringtex-c15\",\n    \"claude/rainbow-s05-match-c15\",\n    \"claude/rainbow-s06-match-c15\",\n    \"claude/rainbow-s07-match-c15\",\n    \"claude/rainbow-s08-scenery-c15\""}`
+
+### 🧑 User — 2026-11-18T19:03:42.366Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/autosave.config.json has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:03:43.323Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/autosave.config.json", "old_string": "  \"branch\": \"ccr-47b10cec-03c7co\",", "new_string": "  \"branch\": \"ccr-e42bb3c0-jpif8d\","}`
+
+### 🧑 User — 2026-11-18T19:03:43.355Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/autosave.config.json has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:03:45.276Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/autosave.config.json", "old_string": "account 15 continues on ccr-47b10cec-03c7co and new -c15 branches.\",", "new_string": "account 15 continues on ccr-47b10cec-03c7co and new -c15 branches. Since account 16 (2026-11-18 ~19:05 UTC; account 15 hit its 5-hour limit at 18:49 UTC) the account-15 lead ccr-47b10cec-03c7co and its six -c15 specialist branches are protected too (the account-15 container kept autosaving backup-only snapshots there after the limit); account 16 continues on ccr-e42bb3c0-jpif8d and new -c16 branches.\","}`
+
+### 🧑 User — 2026-11-18T19:03:45.326Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/autosave.config.json has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:03:47.251Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print(d['branch'],len(d['protected_branches']))\" && python3 scripts/rainbow-autosave.py --reason manual:account16-config 2>&1 | tail -3 && python3 -I scripts/autosave-status.py", "description": "Validate config and save immediately", "timeout": 180000}`
+

@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17466,
-   "sha256": "83a83502fd433d05e92d1f12116f821974b7ebc338ad95f38d115b8d637a331a"
+   "sha256": "a7251c6cff9ccf19ab05c0c0f83f9e3ee7fa226dcb669e89305dbb0b71367858"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 8532,
-   "sha256": "7894a536880bdb630ca787049e3c2629583ee9bbb13d72f08097a23b52975291"
+   "bytes": 9116,
+   "sha256": "7109f4ca43f629c20b1355f3e605e8a88e0c843eb9acc56fe563310ddd90ae0a"
   },
   {
    "path": "backups/claude-config/2026-11-18-account12/README.md",
