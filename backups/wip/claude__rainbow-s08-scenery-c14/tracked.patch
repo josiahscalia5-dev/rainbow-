@@ -1,5 +1,5 @@
 diff --git a/tools/match08/nq08.py b/tools/match08/nq08.py
-index 05bd04e..38849b4 100644
+index 05bd04e..a6aecde 100644
 --- a/tools/match08/nq08.py
 +++ b/tools/match08/nq08.py
 @@ -1,15 +1,21 @@
@@ -254,7 +254,7 @@ index 05bd04e..38849b4 100644
 +           'layout': {'x': KX, 'a': KA, 'c': c, 'paintedHalfWidth': HW}, 'block': [BW, BH], 'overlap': [OW, OH],
 +           'note': 'u = 0.5 + x_b / (2 halfWidth), x_b = lateral offset from the lane centre (u; |x| <= core 1:1, beyond: '
 +                   'core + (|x| - core) (lane - core) / (h - core) for a lane of half width h); v = (z0 - z) / period (repeat). '
-+                   'Painted scale; assembled by image quilting from the approved picture\'s own near band (nq08.py v2, r14)'},
++                   'Painted scale; assembled by image quilting from the approved picture\'s own near band (nq08.py v3, r14: rectified along the painted flow)'},
            open(out_json, 'w'), indent=1)
  if dbg:
 -    Image.fromarray(src.astype(np.uint8)).save(f'{dbg}/nq08_source_band.png')
