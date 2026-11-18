@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, m05foamK } from './waterRibbon';
+import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, M05CAUL, m05foamK } from './waterRibbon';
 import { flat05Dy } from './unfold05';
 import { withClip05 } from './clip05';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
@@ -407,10 +407,37 @@ void main() {
   float sc = abs(sin(ang * nS * 0.5 + vInst.y * 31.0));
   float amp = 0.11 * smoothstep(16.0, 34.0, px) * smoothstep(0.45, -0.35, vP.y / max(d, 1e-3));
   float R = 1.0 - amp * (1.0 - sc);
+#ifdef M05CAUL
+  // m05caul (Screen 05 round 11): a big lump = a pile of small bubbles (Voronoi cells ≈ 16 px across in the lump's disc)
+  float subK = smoothstep(22.0, 40.0, px);
+  float subH = 1.0, subE = 1.0; vec2 subL = vec2(0.0);
+  if (subK > 0.0) {
+    float g = clamp(px / 20.0, 2.5, 8.0);
+    vec2 pp = vP * g * 0.5 + vInst.y * 53.0;
+    vec2 ip = floor(pp), fp = fract(pp);
+    float f1 = 8.0, f2 = 8.0; vec2 best = vec2(0.0);
+    for (int yy = -1; yy <= 1; yy++) for (int xx = -1; xx <= 1; xx++) {
+      vec2 gg = vec2(float(xx), float(yy));
+      vec2 h2 = fract(sin(vec2(dot(ip + gg, vec2(127.1, 311.7)), dot(ip + gg, vec2(269.5, 183.3)))) * 43758.5453);
+      vec2 dv = gg + 0.15 + 0.7 * h2 - fp;
+      float dd = dot(dv, dv);
+      if (dd < f1) { f2 = f1; f1 = dd; best = dv; } else if (dd < f2) { f2 = dd; }
+    }
+    f1 = sqrt(f1); f2 = sqrt(f2);
+    subE = f2 - f1;                                   // 0 on a crease between two sub-bubbles
+    subL = -best / 0.62;                              // position inside the sub-bubble (cell radius ≈ 0.62 cells)
+    subH = sqrt(max(1.0 - dot(subL, subL), 0.0));
+    // scalloped outline all round: the rim follows the sub-bubbles (cell middles reach the disc edge, creases dip in)
+    R = mix(R, 1.0 - 0.16 * (1.0 - subH), subK * smoothstep(0.55, 0.9, d));
+  }
+#endif
   if (d > R) discard;
   vec2 q = vP / R;
   float z = sqrt(max(1.0 - dot(q, q), 0.0));
   vec3 Nv = vec3(q, z);
+#ifdef M05CAUL
+  if (subK > 0.0) Nv = normalize(mix(Nv, normalize(Nv * 0.7 + vec3(subL * 1.3, 0.0) * subH + vec3(0.0, 0.0, 0.25 * subH)), subK));
+#endif
   vec4 clip = projectionMatrix * vec4(vCv + vR * vec3(vP, z * R), 1.0);
   gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
   // wave 7 ramp: white top caps, lavender-white bodies, periwinkle / blue undersides; lower / side silhouette = the
@@ -428,6 +455,10 @@ void main() {
   // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)
   // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps
   t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);
+#ifdef M05CAUL
+  // creases between the piled sub-bubbles: blue-violet, as the painted foam's shaded gaps
+  if (subK > 0.0) t += subK * (0.16 * subH - 0.3 * (1.0 - smoothstep(0.0, 0.09, subE)) - 0.1 * (1.0 - subH));
+#endif
   t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;
   vec3 col = soap05(t + 0.04 * vInst.z);
   col = mix(col, vec3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, t) * 0.3);
@@ -454,6 +485,7 @@ function makeBankBubbleMaterial() {
   const vs = M05FOAM ? BANK_BUB_VERT.replace('void main() {', 'uniform float uGrow05;\nvoid main() {').replace('float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);', 'float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz) * uGrow05;') : BANK_BUB_VERT;
   if (M05FOAM) (uniforms as Record<string, THREE.IUniform>).uGrow05 = m05foamK;
   const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: vs, fragmentShader: BANK_BUB_FRAG, fog: true });
+  if (M05CAUL) mat.defines = { ...(mat.defines ?? {}), M05CAUL: '' };   // m05caul (Screen 05 round 11)
   return { mat, uniforms };
 }
 

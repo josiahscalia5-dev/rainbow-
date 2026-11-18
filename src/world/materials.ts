@@ -4,7 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far } from '../vfx/waterRibbon';
+import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, m05blend } from '../vfx/waterRibbon';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -884,6 +884,8 @@ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THR
   // `?proj05=1`: the approved water baked onto the far block (proj05_F.png); off: nothing below is used
   const pj = PROJ05 ? proj05Far() : null;
   if (pj) Object.assign(uniforms, pj.uniforms);
+  // `&m05fbank=1` (Screen 05 round 11): live flag / seam depth of the far block (written by src/world/match05far.ts)
+  if (pj && M05FBANK) Object.assign(uniforms, { uFbP: m05blend.uFbP });
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
@@ -1106,6 +1108,39 @@ float rivCells(vec2 p) {
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\n' + pj.pars)
         .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
+      if (M05FBANK) {
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', '#include <common>\nuniform vec4 uFbP;\n#ifndef FARW05\nuniform float uRivD0;\n#endif')
+          .replace('  diffuseColor.rgb = col;\n}', `  {
+    // m05fbank (Screen 05 round 11): bubbly foam banks beyond the far water edge where the baked F is magnified
+    // magnification of the baked picture: distance from the locked eye (D0 + Z) over the distance from this eye
+    // (F's texels are finer than its painted source, so texel density does not tell how soft it looks)
+    float magB = uFbP.w * smoothstep(1.4, 2.2, (uRivD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5));
+    float eB = abs(vRivLat - vRivA.x) - vRivA.y;                 // > 0 beyond the water edge
+    float sB = vRivUv.y;
+    float nB = (rivNoise(vec2(sB * 0.8, sign(vRivLat - vRivA.x) * 5.0)) - 0.5) * 0.35;
+    float inB = smoothstep(-0.12, 0.1, eB + nB) * magB;
+    if (inB > 0.0) {
+      float flB = fwidth(vRivLat) + 1e-4;
+      vec2 pB = vec2(vRivLat * 2.3, sB * 2.3);
+      float c1 = rivCells(pB), c1u = rivCells(pB + vec2(0.0, 0.12));
+      float c2 = rivCells(vec2(vRivLat * 5.2 + 3.1, sB * 5.2 - 1.7));
+      float k1 = 1.0 - smoothstep(0.08, 0.25, flB * 2.3), k2 = 1.0 - smoothstep(0.08, 0.25, flB * 5.2);
+      float dome = mix(0.6, 1.0 - smoothstep(0.12, 0.8, c1), k1);
+      float lit = clamp((c1u - c1) * 3.0 + 0.6, 0.0, 1.0);
+      // the bank's near edge at the seam (the far river's first row) scalloped by the foam cells, not a straight cut
+      float zIn = vRivB.w - uFbP.x;
+      if (eB + nB > 0.12 && zIn < 0.5 + 1.6 * c1 + 0.8 * rivNoise(vec2(vRivLat * 0.7, 3.3))) discard;
+      vec3 fo = mix(uRivFoamLav * 0.82, uRivFoam * 1.08, clamp(dome * (0.55 + 0.45 * lit) + 0.15 * lit, 0.0, 1.0));
+      fo = mix(fo, mix(uRivFoam * 1.1, uRivFoamLav * 0.75, smoothstep(0.2, 0.8, c2)), k2 * 0.45);
+      fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.02, 0.16, c2)) * k2 * 0.3);
+      fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.0, 0.35, eB + nB)) * 0.35);   // shaded waterline
+      col = mix(col, fo, inB);
+    }
+  }
+  diffuseColor.rgb = col;
+}`);
+      }
     }
   };
   if (WATER05) {
@@ -1116,7 +1151,7 @@ float rivCells(vec2 p) {
   }
   if (pj) {
     const key = mat.customProgramCacheKey;
-    mat.customProgramCacheKey = () => key() + '-proj05';
+    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '');
     mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };
     mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);
   }

@@ -385,6 +385,22 @@ export const M05FOAM: boolean = M05RIDE && q05('m05foam');
 export const M05BERM: boolean = M05RIDE && q05('m05berm');
 /** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
 export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
+/**
+ * `&m05caul=1` (Screen 05 round 11, needs m05cloud; src/vfx/foam.ts BANK_BUB_FRAG): the 05 bank foam lumps that are big on
+ * screen read as smooth round balls; the painted foam is cauliflower — each pile made of many small piled bubbles. Lumps
+ * larger than ≈24 px are drawn as a pile of sub-bubbles (cells ≈ 16 px across, each its own small dome with a blue-violet
+ * crease between them) with a scalloped outline all round. Swimming only (these lumps are not drawn at the locked view).
+ */
+export const M05CAUL: boolean = M05CLOUD && q05('m05caul');
+/**
+ * `&m05fbank=1` (Screen 05 round 11, needs m05blend; src/world/materials.ts farRiverMaterial): the far river's BANKS while
+ * swimming. Beyond the painted river edge the far block carries the approved picture's far foam banks (layer F), baked
+ * for the locked eye: swimming magnifies them into pale lilac / cyan washes, and the far river's first row at the seam
+ * cut that wash off in a straight angular corner on the left. Where F is magnified (fewer than ≈1 texel per pixel) and
+ * the block is live, the floor beyond the water edge is drawn as bubbly white-lavender foam banks (cells anchored to the
+ * virtual tunnel, blue-violet creases, shaded waterline) — continuing the near foam bank into the far river.
+ */
+export const M05FBANK: boolean = M05BLEND && q05('m05fbank');
 /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
 export const m05foamK = { value: 0 };
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
