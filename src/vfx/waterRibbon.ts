@@ -443,6 +443,17 @@ export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
  */
 export const M05FRIM: boolean = M05FCLOUD && q05('m05frim');
 /**
+ * `&m05vee=1` (Screen 05 round 13, needs m05ride + projnear05 (on with match05)): THE NEAR WATER BEHIND BENNY while swimming.
+ * The approved picture paints the water between Benny and the bottom gold frame as a V: two hot-pink satin bands run from
+ * Benny's sides out to the frame corners (on the ribbon: u ≈ ±0.25, measured on the exact layer E at s ≈ 130 … 131.5), cyan
+ * with crisp white glints between them. While swimming that area (behind ≈ 1 u before the locked focus) is the crisp near
+ * tile T2 laid across the full river width, whose pink bands lie at u −0.69 / +0.25 — outside the narrow strip visible
+ * near the camera (≈ ±0.35), so the bottom third was a plain cyan sheet. Under the switch T2's lateral lookup there is
+ * bent (piecewise linear, continuous, blended in over 0.9 u toward Benny) so its own left band / cyan core / right band
+ * land on the painted V; only the coordinate changes (no cross-fade, no second picture). Locked view: pjNearK = 0 → unchanged.
+ */
+export const M05VEE: boolean = M05RIDE && q05('m05vee');
+/**
  * `&m05join=1` (Screen 05 round 13, needs m05fpaint; src/world/match05far.ts, src/world/materials.ts farRiverMaterial):
  * ONE CONTINUOUS RIVER AT THE SEAM while swimming. Where the baked far picture F would be magnified, m05fmag still faded
  * the near ribbon into F over its last 1.5 u and the far river kept F over its first 2.5 u — a narrow band of magnified F
@@ -787,6 +798,30 @@ vec4 pjLut(float s) {
   r.w = step(uPjLutS.x, s) * step(s, uPjLutS.y);
   return r;
 }
+// the lateral coordinate at which the near tile T2 is read (m05vee: bent onto the painted near V behind Benny)
+float pjVeeS = 0.0;   // m05vee: the unflowed design s of this fragment (set in main; the V must not wobble with the flow)
+float pjT2U(float u, float s) {
+#ifdef M05VEE
+  float dB = pjVeeS - uPjNear.w;                 // design distance from Benny (< 0: between Benny and the camera)
+  float w = pjNearK() * (1.0 - smoothstep(-1.2, -0.3, dB));
+  if (w <= 0.0) return u;
+  // the painted V (approved picture, rows y 1260 … 1350, converted with the swim camera): band centres ±(0.12 + 0.045 d),
+  // half width 0.04 + 0.012 d (d = units behind Benny); T2 columns: left band (centre -0.69, inner -0.60) | cyan core |
+  // right band (inner 0.06, centre 0.25)
+  float dd = clamp(-dB, 0.0, 3.5);
+  float c = 0.12 + 0.045 * dd, h = 0.04 + 0.012 * dd;
+  // beyond each band the band's inner side is mirrored (band, then cyan again as painted — not T2's pale bank columns)
+  float um = u < -c ? min(-2.0 * c - u, c - h) : (u > c ? max(2.0 * c - u, -c + h) : u);
+  float g;
+  if (um < -c + h) g = mix(-0.69, -0.60, (um + c) / h);
+  else if (um < 0.0) g = mix(-0.60, -0.27, (um + c - h) / (c - h));
+  else if (um < c - h) g = mix(-0.27, 0.06, um / (c - h));
+  else g = mix(0.06, 0.25, (um - c + h) / h);
+  return mix(u, g, w);
+#else
+  return u;
+#endif
+}
 // display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
 vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
   vec4 L = pjLut(s);
@@ -817,7 +852,7 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
     // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
     // old one exactly)
     float wT2 = pjT2W(mE);
-    t = pjMixVP(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
+    t = pjMixVP(t, texture2D(uPjT2, vec2(pjT2U(u, s) * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
     wN *= 1.0 - wT2;
   }
   vec3 lay = mix(t, n.rgb, wN);
@@ -860,7 +895,7 @@ vec2 pjFlowDir(float u, float s, float mE) {
   if (uPjNear.x > 0.5) {
     // T2's own streak direction where T2 is what is shown; a mirrored period runs its streaks mirrored
     float wT2 = pjT2W(mE);
-    vec3 f2 = texture2D(uPjWT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
+    vec3 f2 = texture2D(uPjWT2, vec2(pjT2U(u, s) * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
     if (mod(floor((s - uPjT2S.x) / uPjT2S.y), 2.0) > 0.5) f2.r = 1.0 - f2.r;
     ft = mix(ft, f2, wT2);
     wn *= 1.0 - wT2;
@@ -1856,6 +1891,7 @@ void main() {
     #endif
     if (pjK > 0.001) {
       float s = s05r;
+      pjVeeS = s05r;
       // exact-layer magnification: texels per screen pixel along the least dense direction
       vec4 Lm = pjLut(s);
       vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
@@ -2117,7 +2153,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05JOIN ? { M05JOIN: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05JOIN ? { M05JOIN: 1 } : {}), ...(M05VEE ? { M05VEE: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
