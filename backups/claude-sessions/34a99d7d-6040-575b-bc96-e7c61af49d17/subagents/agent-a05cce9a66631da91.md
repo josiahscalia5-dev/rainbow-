@@ -1786,3 +1786,47 @@ Numbers are flat (±0.4 pt). Let me compare the joint region at full resolution 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:30:18.652Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && D=qa/match/05/r8/step4_m05seam && mkdir -p $D && cp $S/seam1/f20_forward20u.png $S/seam1/t33_through_screen.png $S/seam1/shots.json $D/ && python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png $D/*.png > $D/metrics.txt && cat >> qa/match/05/r8/PROGRESS.md <<'EOF'\n\n## Step 4 — `&m05seam=1` (near river → far river joint; small step)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1`\ …[+1804 chars]`
+
+### 🧑 User — 2026-11-18T02:30:25.398Z
+
+> ↩︎ result: c676a7c526604fdf7cab5212fb2408b3194d584b
+> c676a7c526604fdf7cab5212fb2408b3194d584b	refs/heads/claude/rainbow-s05-match-c8
+> 02:30
+
+### 🤖 Claude — 2026-11-18T02:30:29.774Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 step 4 seam joint small step", "message": "Screen 05 step 4 (SHA c676a7c526604fdf7cab5212fb2408b3194d584b, pushed + verified), small step: &m05seam=1 added (kept set now ...&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1). WHAT LOOKS BETTER (modest): mid-distance cyan coin lane no longer shows angular folded creases, and the pink banks run on into the far river instead of breaking at a step line (f20, t33); t66 about equal; numbers flat (look-only gain). Locked view 0 px. Still wrong: faint line where the far river starts (t66), some soft folds from the bake's  …[+366 chars]`
+
+### 🧑 User — 2026-11-18T02:30:29.790Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T02:30:43.791Z
+
+Next most visible flaw while swimming: the near tunnel walls get blurry/stretched later in the stage (t66 left wall and ceiling). Let me see how the real 05 wall picks its baked atlas rows per bay.
+
+### 🤖 Claude — 2026-11-18T02:30:44.737Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 405,445p src/world/environment.ts; grep -n \"export function withProj05Wall\" -A 40 src/vfx/proj05Tunnel.ts | head -80", "description": "Read real wall segment mapping and wall shader hook"}`
+
+### 🧑 User — 2026-11-18T02:30:44.804Z
+
+> ↩︎ result: withClip05Std(ringMat, 1.5);
+>   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+>   // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+>   // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
+>   // strip lights as marquee spots
+>   const goldEnv05 = washerTubeEnv('gold05');
+>   const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+>   // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
+>   // result underneath only feeds the depth buffer now
+>   // wave 8: the real (near) ring is thicker — ref ring #1 top spans y 188–230 (lip 8 px · groove 3 · body 17 ·
+>   // turned-away flank 7 · contour) where it06 drew 31 px; the far rings (path-camera block) keep band05, the
+>   // reference's deeper rings are thin (ring #2 top ≈12 px)
+>   const band05near = { height: 0.13, width: 0.8, lipHeight: 0.065, lipWidth: 0.32, groove: 0.1 };
+>   const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
+>     const m = withBandShading(withFarGlow(gold({ color: ' …[+5004 chars]
+
