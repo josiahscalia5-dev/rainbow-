@@ -890,3 +890,244 @@ My fetch was downloading the full history, which the notes say takes too long on
 >  .../transcript.sanitized.jsonl                     |  2 ++
 >  3 files changed, 28 insertions(+), 22 deletions(-)
 
+### 🤖 Claude — 2026-11-18T16:30:56.882Z
+
+Now a manual backup and push, plus the free service checks (World Labs, fal, Hugging Face) running at the same time.
+
+### 🤖 Claude — 2026-11-18T16:30:58.433Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:account14-start 2>&1 | tail -8; echo \"---\"; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-6c7564b1-fmlt1w; python3 -I scripts/autosave-status.py 2>&1 | tail -3", "description": "Run manual autosave and verify remote matches local", "timeout": 400000}`
+
+### 🤖 Claude — 2026-11-18T16:30:59.386Z
+
+> 🔧 **Bash** `{"command": "timeout 120 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -15", "description": "Free World Labs key and world check", "timeout": 150000}`
+
+### 🧑 User — 2026-11-18T16:31:08.978Z
+
+> ↩︎ result: "reason": "manual:account14-start",
+>   "result": "committed+pushed",
+>   "files_staged": 7,
+>   "pushed_verified": true,
+>   "branch": "ccr-6c7564b1-fmlt1w",
+>   "commit": "7cd8786f064570b0a81f856a5ff8a1d45bca3a88",
+>   "duration_s": 10
+> }
+> ---
+> 7cd8786f064570b0a81f856a5ff8a1d45bca3a88
+> 7cd8786f064570b0a81f856a5ff8a1d45bca3a88	refs/heads/ccr-6c7564b1-fmlt1w
+> AUTOSAVE OK | branch ccr-6c7564b1-fmlt1w | scheduler daemon | last verified backup 2026-11-18T16:30:58+00:00 (0.2 min ago) | local 7cd8786 remote 7cd8786 (match) | uncommitted 0
+
+### 🧑 User — 2026-11-18T16:31:10.192Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+
+### 🤖 Claude — 2026-11-18T16:31:12.553Z
+
+Autosave verified: local and GitHub both at `7cd8786`. The World Labs key works (5,420 credits). Now checking the Screen 08 Marble world, the fal.ai request and Hugging Face.
+
+### 🤖 Claude — 2026-11-18T16:31:14.249Z
+
+> 🔧 **Bash** `{"command": "grep -rhoE \"32b5b2f4[0-9a-f-]{20,}\" backups/TOOL_MANIFEST.json docs qa/worldlabs 2>/dev/null | sort -u | head -3; grep -rn \"01a1ea70\" scripts tools 2>/dev/null | head -5; grep -rln \"fal-ai\\|queue.fal.run\" scripts tools 2>/dev/null | head", "description": "Find Screen 08 world ID and fal request scripts"}`
+
+### 🧑 User — 2026-11-18T16:31:14.484Z
+
+> ↩︎ result: 32b5b2f4-32bc-4fa5-80a5-861129a528c8
+> scripts/setup-image-blaster.sh
+> tools/lead_r10/refviews.py
+
+### 🤖 Claude — 2026-11-18T16:31:16.748Z
+
+> 🔧 **Bash** `{"command": "grep -n \"queue.fal.run\\|requests/\" tools/lead_r10/refviews.py | head -8; grep -rn \"01a1ea70\" docs/briefs/2026-11-18-r1*/COORDINATION.md | head -3", "description": "Find how the fal request status was read before"}`
+
+### 🧑 User — 2026-11-18T16:31:16.790Z
+
+> ↩︎ result: 8:The fal key is injected by the environment proxy for queue.fal.run (never in code or files)."""
+> 12:EP = 'https://queue.fal.run/fal-ai/nano-banana-2/edit'
+> 13:BASE = 'https://queue.fal.run/fal-ai/nano-banana-2'
+> 50:            st = call('GET', f'{BASE}/requests/{rid}/status')
+> 53:        res = call('GET', f'{BASE}/requests/{rid}') if st.get('status') == 'COMPLETED' else {'error': st}
+> docs/briefs/2026-11-18-r11/COORDINATION.md:13:* fal.ai: key re-entered via the secure form (host `queue.fal.run`, `Authorization: Key …`) → request `01a1ea70` COMPLETED.
+> docs/briefs/2026-11-18-r12/COORDINATION.md:12:* fal.ai: this environment injects the key for `queue.fal.run` → request `01a1ea70…` (nano-banana-2) COMPLETED. No new paid jobs.
+> docs/briefs/2026-11-18-r13/COORDINATION.md:19:  `01a1ea70-42d8-7943-b035-7bb5f129d872` COMPLETED (= the purchased account). No new paid jobs.
+
+### 🤖 Claude — 2026-11-18T16:31:22.623Z
+
+> 🔧 **Bash** `{"command": "echo \"fal request status:\"; curl -sS -m 40 -o /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/fal.json -w \"HTTP %{http_code}\\n\" https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status; python3 -I -c \"import json;print(json.load(open('/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/fal.json')).get('status'))\" 2>&1; echo \"World Labs Screen 08 world:\"; curl -sS -m 40 -o /dev/null -w \"HTTP %{http_code}\\n\" https://api.worldlabs.ai/marble/v1/worlds/32b5b2f4-32bc-4fa5-8 …[+391 chars]`
+
+### 🧑 User — 2026-11-18T16:31:24.092Z
+
+> ↩︎ result: fal request status:
+> HTTP 200
+> COMPLETED
+> World Labs Screen 08 world:
+> HTTP 200
+> HF public model:
+> HTTP 200
+> HF whoami:
+> HTTP 401
+> DA3-BASE_04.npz
+> DA3-BASE_05.npz
+> DA3-BASE_06.npz
+> DA3-BASE_07.npz
+> DA3-BASE_08.npz
+> DA3MONO-LARGE_04.npz
+> DA3MONO-LARGE_05.npz
+> DA3MONO-LARGE_06.npz
+> DA3MONO-LARGE_07.npz
+> DA3MONO-LARGE_08.npz
+
+### 🤖 Claude — 2026-11-18T16:31:26.992Z
+
+fal.ai request `01a1ea70` reads COMPLETED on your purchased account. The Screen 08 Marble world is readable, and public Hugging Face models are reachable. Now checking the Claude-side connectors.
+
+### 🤖 Claude — 2026-11-18T16:31:27.443Z
+
+> 🔧 **ToolSearch** `{"query": "World Labs Atlas", "max_results": 5}`
+
+### 🧑 User — 2026-11-18T16:31:27.479Z
+
+> ↩︎ result: No matching deferred tools found
+
+### 🤖 Claude — 2026-11-18T16:31:27.938Z
+
+> 🔧 **ToolSearch** `{"query": "hugging face hub model", "max_results": 5}`
+
+### 🧑 User — 2026-11-18T16:31:27.947Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T16:31:34.307Z
+
+> 🔧 **TaskCreate** `{"subject": "Restore + verify autosave, keys, tools (account 14)", "description": "Autosave on ccr-6c7564b1-fmlt1w verified; World Labs, fal, HF, Playwright, GitHub MCP, Blender, Android checks; first report to user", "activeForm": "Verifying restoration"}`
+
+### 🧑 User — 2026-11-18T16:31:34.323Z
+
+> ↩︎ result: Task #1 created successfully: Restore + verify autosave, keys, tools (account 14)
+
+### 🤖 Claude — 2026-11-18T16:31:35.558Z
+
+> 🔧 **TaskCreate** `{"subject": "Create -c14 branches + worktrees for 04/05/08 with WIP applied", "description": "From -c13 tips 9ef2120 / ebc9676 / 71e7cf5, apply backups/wip patches, push each -c14 branch", "activeForm": "Creating -c14 branches"}`
+
+### 🧑 User — 2026-11-18T16:31:35.568Z
+
+> ↩︎ result: Task #2 created successfully: Create -c14 branches + worktrees for 04/05/08 with WIP applied
+
+### 🤖 Claude — 2026-11-18T16:31:37.008Z
+
+> 🔧 **TaskCreate** `{"subject": "Relaunch Screen 05 + Screen 08 specialists", "description": "water-fx-specialist on s05-c14, washer-environment-modeler on s08-scenery-c14, using r13 SPECIALIST_PROMPT_TEMPLATE; then rotate 07, 06", "activeForm": "Relaunching specialists"}`
+
+### 🧑 User — 2026-11-18T16:31:37.018Z
+
+> ↩︎ result: Task #3 created successfully: Relaunch Screen 05 + Screen 08 specialists
+
+### 🤖 Claude — 2026-11-18T16:31:38.359Z
+
+> 🔧 **TaskCreate** `{"subject": "Screen 04 lead: arrow glow (G-series), then pink swirls, rim foam/bubbles, deep tunnel", "description": "Continue from s04-c13 9ef2120 + WIP glow layer in match04m4.ts; APPROVED/BEFORE/NEW full-size proofs", "activeForm": "Working on Screen 04 visuals"}`
+
+### 🧑 User — 2026-11-18T16:31:38.375Z
+
+> ↩︎ result: Task #4 created successfully: Screen 04 lead: arrow glow (G-series), then pink swirls, rim foam/bubbles, deep tunnel
+
+### 🤖 Claude — 2026-11-18T16:31:41.862Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/fetch_*.log 2>/dev/null | tail; ls .claude/agents/; sha256sum -c scripts/reference.sha256 2>&1 | tail -3; bash scripts/claude-bootstrap.sh --status 2>&1 | grep -E \"^\\|\" | cut -c1-200 | tail -22", "description": "Check fetch logs, agent definitions, references, bootstrap status"}`
+
+### 🧑 User — 2026-11-18T16:31:42.797Z
+
+> ↩︎ result: are terminated then try again. If it still fails, a git process
+> may have crashed in this repository earlier:
+> remove the file manually to continue.
+> fatal: Unable to create '/home/user/rainbow-/.git/shallow.lock': File exists.
+> 
+> Another git process seems to be running in this repository, e.g.
+> an editor opened by 'git commit'. Please make sure all processes
+> are terminated then try again. If it still fails, a git process
+> may have crashed in this repository earlier:
+> remove the file manually to continue.
+> android-build-performance.md
+> animation-and-gameplay-engineer.md
+> benny-character-artist.md
+> cartoon-girl-character-artist.md
+> foam-bubbles-particles.md
+> path-camera-transition-engineer.md
+> playwright-visual-qa.md
+> reference-match-director.md
+> washer-environment-modeler.md
+> water-fx-specialist.md
+> references/11_safely_home_final_victory.png: OK
+> character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+> | Step | Result | Details | s |
+> |---|---|---|---|
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-6c7564b1-fmlt1w @ 6d6e669 (session started from claude/rainbow-restore-autosave-1mgga0) | 0 |
+> | Resume newest work | FAIL | git fetch f …[+2667 chars]
+
+### 🤖 Claude — 2026-11-18T16:31:45.264Z
+
+The three fetches clashed with each other on a shallow-clone lock, so I'm running them again one at a time.
+
+### 🤖 Claude — 2026-11-18T16:31:46.617Z
+
+> 🔧 **Bash** `{"command": "sleep 5; pgrep -af \"git fetch\" | head; for b in claude/rainbow-s04-match-c13 claude/rainbow-s05-match-c13 claude/rainbow-s08-scenery-c13; do echo \"$b $(git rev-parse --short=8 --verify -q refs/remotes/origin/$b)\"; done", "description": "See which specialist tips were fetched"}`
+
+### 🧑 User — 2026-11-18T16:31:51.683Z
+
+> ↩︎ result: 2658 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795019225619-c78p2m.sh 2>/dev/null || true && export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk : && \builtin export BUN_OPTIONS="--smol${BUN_OPTIONS:+ $BUN_OPTIONS}" && \builtin shopt -u extglob 2>/dev/null || true && { \builtin unalias -- 'which'; \builtin unset -f -- 'which'; } >/dev/null 2>&1 || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && { { \builtin echo 0 >| /sys/fs/cgroup/pids/process_api/cc-shell/tasks; } 2>/dev/null || :; } && eval '(for b in claude/rainbow-s04-match-c13 claude/rainbow-s05-match-c13 claude/rainbow-s08-scenery-c13; do timeout 900 git fetch --depth=1 origin +$b:refs/remotes/origin/$b > /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/fetch_$(basename $b).log 2>&1 & done; wait; for b in claude/rainbow-s04-match-c13 claude/rainbow-s05-match-c13 claude/rainbow-s08-scenery-c13; do echo "$b $(git rev-parse --short=8 refs/remotes/origin/$b 2>&1)"; done)' < /dev/null && pwd -P >| /tmp/claude-8e41-cwd
+> 2659 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795019225619-c …[+1356 chars]
+
+### 🤖 Claude — 2026-11-18T16:31:56.400Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/04/r13 qa/match/05/r13 qa/match/08/r13 2>&1 | head -20; ls qa/review_r13/ 2>&1; cat backups/wip/claude__rainbow-s04-match-c13/tracked.patch", "description": "Check r13 logs on lead branch and the 04 unfinished patch"}`
+
+### 🧑 User — 2026-11-18T16:31:56.461Z
+
+> ↩︎ result: ls: cannot access 'qa/match/04/r13': No such file or directory
+> ls: cannot access 'qa/match/05/r13': No such file or directory
+> ls: cannot access 'qa/match/08/r13': No such file or directory
+> 04_step2_arrows
+> 04_step3_clean_blue_path
+> 04_step4_rich_water_copper
+> 04_step5_tunnel_arrows_entry
+> 05_step2_join
+> 08_step1_ring_edge
+> diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+> index e5736a6..3f1935b 100644
+> --- a/src/world/match04m4.ts
+> +++ b/src/world/match04m4.ts
+> @@ -892,9 +892,15 @@ export function addM04(ctx: M04Ctx) {
+>        const glow = new THREE.MeshBasicMaterial({ color: hb ? new THREE.Color(0.02, 0.50, 1.0) : glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: hb ? THREE.NormalBlending : THREE.AdditiveBlending });
+>        const coreT = texMat ? texMat.clone() : null;
+>        if (coreT) glow.visible = false;                                   // the painted image carries its own glow
+> -      const m = new THREE.Mesh(texGeo ?? base, coreT ?? core), g = new THREE.Mesh(halo, glow);
+> +      // r13 `&m04a3lum=x`: the painted arrows are LUMINOUS — a second, additive copy of the painted arrow image makes the
+> +      // white core and the cyan  …[+939 chars]
+
+### 🤖 Claude — 2026-11-18T16:31:59.597Z
+
+While the Screen 04 branch downloads, a quick check that the GitHub and Playwright connectors actually respond.
+
+### 🤖 Claude — 2026-11-18T16:32:00.151Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_branches,mcp__plugin_playwright_playwright__browser_navigate", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T16:32:00.159Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T16:32:02.415Z
+
+> 🔧 **mcp__github__list_branches** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "perPage": 2}`
+
+### 🤖 Claude — 2026-11-18T16:32:02.616Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_navigate** `{"url": "about:blank"}`
+
+### 🧑 User — 2026-11-18T16:32:03.378Z
+
+> ↩︎ result: [{"name":"backup/2026-11-17-screen08-transfer","sha":"714f6502447149b8f1a1dd07159e412ed8df8c46","protected":false},{"name":"ccr-3b139b48-0qqkkz","sha":"87ed797a47744c933890696e7760a3b0f8aec292","protected":false}]
+
