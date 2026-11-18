@@ -40,3 +40,13 @@ fal.ai key reconnected: request 01a1ea70 → COMPLETED (same purchased account).
 * 05: session `session_01KS3bZvfAKmzbAswSRdAaqD` RUNNING (BEFORE audit done).
 * 04: brief `S04.md` + branch `claude/rainbow-s04-match-c7` (= d1e422fa) ready; launch when 05 or 07 stops.
 * Specialists must NOT use send_message (permission prompt blocks them); they report via STATUS.md commits.
+
+## Update 2026-11-18 ~00:50 UTC (after the user's feedback `USER_FEEDBACK_R7B.md`)
+* 05: M3 step 2 DONE `claude/rainbow-s05-match-c7` @ 92c8c5e9+ (`m05far=1`: own tunnel + S-river to ~90 % of the stage;
+  two-thirds through ~4 → ~6). Session idle. NEXT (queued): the user's 05 list (stretched water, disconnected edges,
+  Benny's placement vs water/tunnel) + its own next step (crisp wall tile, modeled far rings, far-water seam).
+* 07: specialist RUNNING; user's 07 list sent (plunge orange-gold surface hiding Benny = MAJOR; triangular wall seams,
+  disconnected machinery, distorted textures, oversized coins).
+* 08: specialist session restarted for ROUND 8 (rectangular seams around towel/window/walls/sections; oversized
+  foreground coins + coins covering Benny; coin LOOK only).
+* Active specialists: 07 + 08. Queue: 05 (user's list) → 04 (M4). Lead: 06.
