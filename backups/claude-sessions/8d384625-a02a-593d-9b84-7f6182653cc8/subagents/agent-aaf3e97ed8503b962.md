@@ -3202,3 +3202,77 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 
 > ↩︎ result: The file /home/user/wt/s05/qa/match/05/STATUS.md has been updated successfully.
 
+### 🤖 Claude — 2026-11-18T03:20:22.024Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I -c \"\nfrom PIL import Image\nfor n in ['proj05_N','proj05_T','proj05_T2']:\n  im=Image.open('/home/user/wt/s05/assets/textures/water05/'+n+'.png'); print(n, im.size, im.mode)\nN=Image.open('/home/user/wt/s05/assets/textures/water05/proj05_N.png').convert('RGBA')\n# s 126..166 over 960 rows; rows for s 126-140\nh=N.size[1]; y1=int((140-126)/40*h)\nc=N.crop((0,0,512,y1)); bg=Image.new('RGBA',c.size,(0,0,0,255)); bg.alpha_composite(c); bg.convert('RGB').save('N_near.png'); print('rows' …[+191 chars]`
+
+### 🧑 User — 2026-11-18T03:20:22.272Z
+
+> ↩︎ result: proj05_N (512, 960) RGBA
+> proj05_T (512, 336) RGB
+> proj05_T2 (1024, 768) RGB
+> rows 336
+
+### 🤖 Claude — 2026-11-18T03:20:24.330Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/N_near.png"}`
+
+### 🧑 User — 2026-11-18T03:20:24.344Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:20:24.897Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/T2_small.png"}`
+
+### 🧑 User — 2026-11-18T03:20:24.931Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:20:44.112Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py low_cmp.png 0 1000 864 1536 0.5 /home/user/wt/s05/references/05_flow_into_the_current.png /home/user/wt/s05/qa/match/05/r9/blueprint/kept/f10_forward10u.png /home/user/wt/s05/qa/match/05/r9/blueprint/kept/t33_through_screen.png; tail -2 new.log", "description": "Crop lower river approved vs f10 vs t33"}`
+
+### 🧑 User — 2026-11-18T03:20:44.581Z
+
+> ↩︎ result: low_cmp.png (432, 816)
+> s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> s_right_hard s 145.091 lat 5.063 coins 1420 benny 0.46 -0.2 big coins: #22@-23,712 d106 #23@124,613 d65
+
+### 🤖 Claude — 2026-11-18T03:20:46.411Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/low_cmp.png"}`
+
+### 🧑 User — 2026-11-18T03:20:46.456Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:21:06.005Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/wt/s05/references/water/05_water_isolated_original.png'); print(im.size, im.mode)\nim.convert('RGB').resize((im.size[0]//3, im.size[1]//3)).save('iso.png')\"", "description": "View the user's isolated water artwork"}`
+
+### 🧑 User — 2026-11-18T03:21:06.249Z
+
+> ↩︎ result: (941, 1672) RGBA
+
+### 🤖 Claude — 2026-11-18T03:21:07.966Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/iso.png"}`
+
+### 🧑 User — 2026-11-18T03:21:08.006Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:21:34.011Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"  vec3 lay = mix(t, n.rgb, wN);\" src/vfx/waterRibbon.ts && grep -n \"t = pjMixVP(t, texture2D(uPjT2\" src/vfx/waterRibbon.ts", "description": "Locate tile/N layout lines in pjTarget"}`
+
+### 🧑 User — 2026-11-18T03:21:34.050Z
+
+> ↩︎ result: 662:  vec3 lay = mix(t, n.rgb, wN);
+> 659:    t = pjMixVP(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
+
+### 🤖 Claude — 2026-11-18T03:21:34.296Z
+
+You've hit your 5-hour limit · resets 7:30am (UTC)
+

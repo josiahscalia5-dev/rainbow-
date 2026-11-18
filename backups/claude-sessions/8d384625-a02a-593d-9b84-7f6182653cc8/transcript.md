@@ -3089,3 +3089,31 @@ The Screen 05 specialist will keep working instead of closing its round early. I
 
 The water around Benny and the distant tunnel stay as they are. Each step is kept only if it looks right both swimming straight and steering hard. You'll get APPROVED / BEFORE / NEW pictures for each one that genuinely looks closer.
 
+### 🧑 User — 2026-11-18T03:21:15.970Z
+
+<task-notification>
+<task-id>aea1b9944be07aee7</task-id>
+<tool-use-id>toolu_01Bkb7dvaZY5NDaXuA56p8KV</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/aea1b9944be07aee7.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 specialist round 9" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:30am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch9g4EFCfmvB5WzSt73SS, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:30am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Default build proven 0 px. Now restoring the moving-front foundation per the lead's correction, with foam/bubbles world-anchored.</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T03:21:16.198Z
+
+You've hit your 5-hour limit · resets 7:30am (UTC)
+
+### 🧑 User — 2026-11-18T03:21:34.352Z
+
+<task-notification>
+<task-id>aaf3e97ed8503b962</task-id>
+<tool-use-id>toolu_01AZs9yYct2vfHPj11Bkx3B5</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/aaf3e97ed8503b962.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 specialist round 9" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:30am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch9g5b1t5YD1UeqnUJNbG, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:30am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now the `&amp;m05wall=1` switch: crisp slotted purple metal where the projected wall atlas would be magnified while swimming.</result>
+</task-notification>
+
