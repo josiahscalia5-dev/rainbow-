@@ -12,7 +12,7 @@ index f7dee52..65c878c 100644
              u.value *= fade; o.visible = u.value > 0.01;
            }
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 49d3e44..bb6c3f8 100644
+index 49d3e44..64db419 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -464,7 +464,12 @@ void main() {
@@ -64,8 +64,8 @@ index 49d3e44..bb6c3f8 100644
 +  // brighter, faintly iridescent rim (the bubble film seen edge-on)
 +  float fr = smoothstep(0.60, 0.95, r);
 +  float ang = atan(vUv.y, vUv.x) + vS * 6.2832;
-+  vec3 iri = 0.5 + 0.5 * cos(vec3(0.0, 2.1, 4.2) + ang + r * 4.0);
-+  col = mix(col, mix(vec3(0.99, 0.97, 1.0), iri, 0.28), fr * 0.62);
++  vec3 iri = mix(vec3(1.0, 0.72, 0.95), vec3(0.72, 0.95, 1.0), 0.5 + 0.5 * sin(ang * 2.0 + r * 5.0));   // pink <-> cyan film
++  col = mix(col, mix(vec3(0.99, 0.97, 1.0), iri, 0.30), fr * 0.62);
 +  // crisp window highlight + tiny second glint
 +  float hl = smoothstep(0.21, 0.07, length((vUv - vec2(-0.36, 0.40)) * vec2(1.0, 1.35)));
 +  float hl2 = smoothstep(0.11, 0.03, length(vUv - vec2(0.38, -0.40)));
@@ -80,7 +80,7 @@ index 49d3e44..bb6c3f8 100644
  // m04mouth: a glowing bulb on the washer opening — white-hot core, yellow glow, soft amber halo, a faint vertical light
  // streak across the band (as painted); vS = brightness
  const BULB_FRAG = /* glsl */ `
-@@ -761,12 +811,32 @@ export function addM04(ctx: M04Ctx) {
+@@ -761,12 +811,33 @@ export function addM04(ctx: M04Ctx) {
      // r14 `&m04foamr=L`: the painted foam clouds sit round the ENTRANCE RIM only — the edge banks stop L u inside the
      // opening (user: no foam walls inside the tunnel); the banks before the opening stay
      const rimL = M04.num('m04foamr', 1e9);
@@ -88,20 +88,21 @@ index 49d3e44..bb6c3f8 100644
 +    // kept L4 banks. `m04fch` heap height scale (low heaps), `m04fcs` cluster size scale, `m04fck` bubble count scale,
 +    // `m04fcr` smallest bubble radius (u). A separate random stream keeps every other random layout (bubbles) unchanged.
 +    const clu = M04.num('m04fclu', 0) > 0;
-+    const fch = clu ? M04.num('m04fch', 0.55) : 1, fcs = M04.num('m04fcs', 1.0), fck = M04.num('m04fck', 1.0), fcr = M04.num('m04fcr', 0.022);
++    const fch = clu ? M04.num('m04fch', 0.75) : 1, fcs = M04.num('m04fcs', 1.3), fck = M04.num('m04fck', 1.0), fcr = M04.num('m04fcr', 0.035);
++    const fcb = M04.num('m04fcb', 1.25);   // bubble size scale inside a cluster
 +    let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
 +    const emit = (x: number, y: number, z: number, rad: number, s: number, base: number) => {
 +      if (!clu) { items.push({ p: new THREE.Vector3(x, y, z), r: rad, s }); return; }
 +      const R = rad * fcs;
-+      const n = Math.min(56, Math.max(4, Math.round((6 + 80 * R) * fck)));
++      const n = Math.min(48, Math.max(4, Math.round((5 + 60 * R) * fck)));
 +      for (let i = 0; i < n; i++) {
 +        // a surface-biased point of a flattened dome round the puff centre (the hidden inside needs no bubbles)
 +        const th = rnd2() * Math.PI * 2, c = rnd2() * 1.6 - 0.6, sn = Math.sqrt(Math.max(0, 1 - c * c));
-+        const d = R * (0.5 + 0.5 * Math.sqrt(rnd2()));
-+        const big = rnd2() < 0.12;
-+        const rho = Math.max(fcr, R * (big ? 0.40 + rnd2() * 0.18 : 0.09 + Math.pow(rnd2(), 1.6) * 0.30));
++        const d = R * (0.35 + 0.55 * Math.sqrt(rnd2()));
++        const big = rnd2() < 0.16;
++        const rho = Math.max(fcr, R * fcb * (big ? 0.52 + rnd2() * 0.22 : 0.18 + Math.pow(rnd2(), 1.4) * 0.30));
 +        const py = Math.max(base + rho * 0.45, y + c * d * 0.7);
-+        items.push({ p: new THREE.Vector3(x + sn * Math.cos(th) * d * 1.2, py, z + sn * Math.sin(th) * d * 1.2), r: rho, s: rnd2() });
++        items.push({ p: new THREE.Vector3(x + sn * Math.cos(th) * d * 1.05, py, z + sn * Math.sin(th) * d * 1.05), r: rho, s: rnd2() });
 +      }
 +    };
      for (const side of [-1, 1]) {
@@ -114,7 +115,7 @@ index 49d3e44..bb6c3f8 100644
          const reach = (0.3 + rnd() * 0.5 + H * 0.6) * (f3 ? 0.6 : 1);     // how far the clump spills into the river
          const n = Math.round((6 + cl * (8 + H * 22)) * (f3 ? 0.75 : 1));
          const lean = (rnd() - 0.5) * 0.6;
-@@ -778,11 +848,11 @@ export function addM04(ctx: M04Ctx) {
+@@ -778,11 +849,11 @@ export function addM04(ctx: M04Ctx) {
            const d = Math.min(xW - XF + 0.4, rnd() * reach * env + lean * t * 0.5);   // inward from the wall
            const onWall = rnd() < (f3 ? 0.08 : 0.25);              // some puffs heaped up the lower wall
            const tt = Math.max(0, 1 - Math.max(0, d) / Math.max(0.1, xW - XF));
@@ -129,7 +130,7 @@ index 49d3e44..bb6c3f8 100644
          }
          a += cl + 0.1 + Math.pow(rnd(), 1.5) * 2.2 * (f3 ? 1.6 : 1);   // irregular gaps (wider: the pink water shows)
        }
-@@ -804,12 +874,27 @@ export function addM04(ctx: M04Ctx) {
+@@ -804,12 +875,27 @@ export function addM04(ctx: M04Ctx) {
        for (let i = 0; i < n; i++) {
          const rad = (0.16 + rnd() * 0.34) * (M04.foam3 ? 0.7 : 1);
          const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);

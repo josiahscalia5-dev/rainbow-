@@ -673,3 +673,19 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && K14='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1' && echo \"$K14\" > $S/K14.txt && time M08_ONLY=f03,f06,t33 node tools/match08/shots08.mjs 08 $S/dbg_uv \"$K14&m08dbguv=1\" 2>&1 | tail -5", "description": "Render debug UV frames at forward 3u, 6u, t33", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T18:27:02.157Z
+
+> ↩︎ result: log: [],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+> 
+> real	5m1.160s
+> user	0m1.224s
+> sys	0m0.259s
+
+### 🤖 Claude — 2026-11-18T18:27:11.570Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && M08_ONLY=f03 timeout 400 node tools/match08/shots08.mjs 08 $S/dbg_uv \"$(cat $S/K14.txt)&m08dbguv=1\" 2>&1 | head -30; uptime", "description": "Retry the debug render and show the error", "timeout": 420000}`
+

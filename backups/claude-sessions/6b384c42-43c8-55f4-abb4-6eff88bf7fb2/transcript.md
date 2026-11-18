@@ -2212,3 +2212,151 @@ Tell me which single new tool is most likely to produce a meaningful improvement
 
 THE GOAL IS TO GET MY ORIGINAL APPROVED SCENERY INTO A REAL PLAYABLE 3D GAME FASTER AND MORE ACCURATELY — NOT TO MAKE ANOTHER DESIGN.
 
+### 🤖 Claude — 2026-11-18T18:27:16.174Z
+
+First I'll check that your message didn't stop the three workers (the known trap), then read the five tools' actual pages.
+
+### 🤖 Claude — 2026-11-18T18:27:17.525Z
+
+> 🔧 **Bash** `{"command": "for s in s04 s05 s08; do echo \"$s $(git -C /home/user/wt/$s log -1 --format='%h %cr %s' | cut -c1-110) dirty=$(git -C /home/user/wt/$s status --short | wc -l)\"; done; ps aux | grep -c '[c]hrome-headless-shell.real --type=renderer'", "description": "Check the three workers are still active"}`
+
+### 🧑 User — 2026-11-18T18:27:17.609Z
+
+> ↩︎ result: s04 fc28323 67 minutes ago Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GO dirty=2
+> s05 34aadd1 59 minutes ago Screen 05 r14 step 3: &m05bank=1 - the near lather bank as piled foam bubbles, seam cut dirty=4
+> s08 df4a3bb 58 minutes ago Screen 08 r14 step 1: &m08nq=1 near water at the painted scale while swimming (nq08.py  dirty=1
+> 1
+
+### 🤖 Claude — 2026-11-18T18:27:20.380Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/readmes && cd /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/readmes && for r in p4ymak/eyek Tonysa87/FTC-Fit-The-Camera facebookresearch/sam3 mapbox/pixelmatch Bingeljell/image-to-3dlab; do n=$(echo $r | tr '/' '_'); for b in main master; do code=$(timeout 30 curl -sS -o $n.md -w '%{http_code}' https://raw.githubusercontent.com/$r/$b/README.md); [ \"$code\" = 200 ] && break; done; echo \"$r $code $(wc -c < $n.md 2>/dev/null)\"; done", "description": "Downl …[+34 chars]`
+
+### 🧑 User — 2026-11-18T18:27:22.013Z
+
+> ↩︎ result: p4ymak/eyek 200 1024
+> Tonysa87/FTC-Fit-The-Camera 200 23613
+> facebookresearch/sam3 200 21417
+> mapbox/pixelmatch 200 6490
+> Bingeljell/image-to-3dlab 200 31857
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T18:27:26.173Z
+
+All three workers are still running (edits in progress, a browser rendering). Reading the READMEs.
+
+### 🤖 Claude — 2026-11-18T18:27:27.787Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/readmes && cat p4ymak_eyek.md; echo; echo \"=========== FTC\"; sed -n '1,80p' Tonysa87_FTC-Fit-The-Camera.md | cut -c1-220", "description": "Read Eyek and Fit The Camera READMEs"}`
+
+### 🧑 User — 2026-11-18T18:27:27.833Z
+
+> ↩︎ result: **Blender add-on for texturing by projection mapping multiple images to one UV layer with non-destructive workflow.**
+> 
+> - UDIM support by default.
+> - No need in UV Projection from View, project images on existing UV.
+> - More versatile than Apply Camera Image.
+> - Use Image References (Empties) as decals.
+> - Alpha channel supported.
+> - Project on multiple objects at once.
+> - Projections from multiple cameras and empties execute simultaneously.
+> - Optional shadowing - projections won't pass through objects.
+> - Support and constant updates. Community suggested features.
+> 
+> 
+> **Installation:**
+> 
+> Simply download the latest version as ZIP archive and install it in Blender without unzip: Edit -> Preferences -> Add-ons -> Install -> eyek_x.x.x.zip
+> 
+> When add-on is activated the Eyek panel will appear on the right side of 3D viewport.
+> 
+> **How to use:**
+> 
+> Set Background Images on your Cameras and/or add some Reference Images.
+> Place Cameras/Images as you want them to project on your Objects.
+> Select Cameras/Images and Objects.
+> Run Eyek.
+> 
+> =========== FTC
+> # FTC – Fit The Camera
+> 
+> **English** · [Italiano](README.it.md)
+> 
+> **Get it on [Blender Extensions](https://extensions.blender.org/add-ons/fit-the-camera/)** (or  …[+4417 chars]
+
+### 🤖 Claude — 2026-11-18T18:27:31.994Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/readmes && grep -n -i -E 'gpu|cuda|python|pytorch|torch|hugging|checkpoint|access|license|requirement|install|cpu|params|text prompt|concept' facebookresearch_sam3.md | head -30; echo \"=========== AssetFurnace\"; sed -n '1,60p' Bingeljell_image-to-3dlab.md | cut -c1-200", "description": "Read SAM 3 requirements and AssetFurnace README"}`
+
+### 🧑 User — 2026-11-18T18:27:32.042Z
+
+> ↩︎ result: 1:# SAM 3: Segment Anything with Concepts
+> 43:[[`Paper`](https://ai.meta.com/research/publications/sam-3-segment-anything-with-concepts/)]
+> 49:![SAM 3 architecture](assets/model_diagram.png?raw=true) SAM 3 is a unified foundation model for promptable segmentation in images and videos. It can detect, segment, and track objects using text or visual prompts such as points, boxes, and masks. Compared to its predecessor [SAM 2](https://github.com/facebookresearch/sam2), SAM 3 introduces the ability to exhaustively segment all instances of an open-vocabulary concept specified by a short text phrase or exemplars. Unlike prior work, SAM 3 can handle a vastly larger set of open-vocabulary prompts. It achieves 75-80% of human performance on our new [SA-CO benchmark](https://github.com/facebookresearch/sam3?tab=readme-ov-file#sa-co-dataset) which contains 270K unique concepts, over 50 times more than existing benchmarks.
+> 51:This breakthrough is driven by an innovative data engine that has automatically annotated over 4 million unique concepts, creating the largest high-quality open-vocabulary segmentation dataset to date. In addition, SAM 3 introduces a new model architecture featuring a presen …[+6340 chars]
+
+### 🤖 Claude — 2026-11-18T18:28:14.665Z
+
+Five READMEs read. Now checking what's already installed (Pixelmatch may already be inside Playwright) and whether Eyek has a Linux build for our Blender 5.3.
+
+### 🤖 Claude — 2026-11-18T18:28:16.496Z
+
+> 🔧 **Bash** `{"command": "find node_modules -maxdepth 4 -iname '*pixelmatch*' 2>/dev/null | head -5; grep -rl \"pixelmatch\" node_modules/playwright-core/lib 2>/dev/null | head -3; find / -path /proc -prune -o -iname 'pixelmatch*' -print 2>/dev/null | grep -v '^/proc' | head -5; ls node_modules | grep -i -E '^pngjs|^sharp' ", "description": "Check whether Pixelmatch is already installed"}`
+
+### 🤖 Claude — 2026-11-18T18:28:18.794Z
+
+> 🔧 **Bash** `{"command": "for r in p4ymak/eyek Tonysa87/FTC-Fit-The-Camera; do loc=$(timeout 30 curl -sS -o /dev/null -w '%{redirect_url}' https://github.com/$r/releases/latest); echo \"$r latest -> $loc\"; done; tag=$(timeout 30 curl -sS -o /dev/null -w '%{redirect_url}' https://github.com/p4ymak/eyek/releases/latest | sed 's#.*/tag/##'); echo \"eyek tag=$tag\"; timeout 30 curl -sS \"https://github.com/p4ymak/eyek/releases/expanded_assets/$tag\" | grep -o 'href=\"[^\"]*download[^\"]*\"' | head -10", "description": "Check latest Eyek and FTC releases and their files"}`
+
+### 🧑 User — 2026-11-18T18:28:19.064Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-18T18:28:20.126Z
+
+> ↩︎ result: p4ymak/eyek latest -> 
+> Tonysa87/FTC-Fit-The-Camera latest -> 
+> eyek tag=
+
+### 🤖 Claude — 2026-11-18T18:28:25.156Z
+
+> 🔧 **Bash** `{"command": "timeout 30 curl -sSI https://github.com/p4ymak/eyek/releases/latest 2>&1 | head -5; timeout 30 curl -sS -o /dev/null -w 'api %{http_code}\\n' https://api.github.com/repos/p4ymak/eyek/releases/latest; timeout 30 curl -sS https://raw.githubusercontent.com/p4ymak/eyek/main/__init__.py 2>/dev/null | head -30; timeout 30 curl -sS -o /dev/null -w 'codeload %{http_code}\\n' https://codeload.github.com/p4ymak/eyek/zip/refs/heads/main", "description": "Probe GitHub access paths for the Eyek repository"}`
+
+### 🧑 User — 2026-11-18T18:28:26.394Z
+
+> ↩︎ result: HTTP/1.1 200 Connection Established
+> 
+> HTTP/1.1 403 Forbidden
+> Content-Type: application/json; charset=utf-8
+> Content-Length: 378
+> api 403
+> import bpy
+> import json
+> import mathutils
+> from math import radians, atan, tan
+> from bpy_extras.io_utils import axis_conversion
+> import os
+> import platform
+> import subprocess
+> import time
+> 
+> _EXECUTABLE_NAME = "eyek"
+> 
+> if platform.system() == "Windows":
+>     _EXECUTABLE_NAME += ".exe"
+> if platform.system() == "Darwin":
+>     _EXECUTABLE_NAME += "_mac"
+> 
+> bl_info = {
+>     "name": "Eyek",
+>     "description": "Texturing by projection mapping from multiple Cameras and Image Empties to one UV layer.",
+>     "author": "Roman Chumak [REDACTED-EMAIL]",
+>     "doc_url": "https://github.com/p4ymak/eyek",
+>     "version": (0, 0, 2, 8),
+>     "blender": (3, 6, 0),
+>     "location": "View3D",
+>     "category": "Texturing"}
+> 
+> 
+> class EYEK_Properties(bpy.types.PropertyGroup):
+>     res_x: bpy.props.IntProperty(default=512, min=2, subtype='PIXEL', description="Number of horizontal pixels in the generated texture.")
+> codeload 403
+

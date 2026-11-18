@@ -1022,3 +1022,28 @@ Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S05_LAUNCH.md exa
 >    0.6,0.3 tube05_far_wall<zone_tubes<washer_world<Scene d14.2 | Mesh<foam_banks<water_system<Scene d15.35 | foam_berm<foam_banks<water_system<Scene d15.69
 >    -0.8,-0.3 water_ribbon<water_system<Scene d9.8 | tube05_far<zone_tubes<washer_world<Scene d12.87 | tube05_far_wall<zo …[+7794 chars]
 
+### 🤖 Claude — 2026-11-18T18:26:34.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 330,400p src/world/environment.ts", "description": "Read wall and pinkFlow construction"}`
+
+### 🧑 User — 2026-11-18T18:26:34.415Z
+
+> ↩︎ result: */
+>   const e05R0 = qaNum05('e05r0', -0.28), e05R1 = qaNum05('e05r1', 0.05);   // QA knobs (right-half ramp), env05 only
+>   const e05Weight = (th: number) => (Math.cos(th) < 0
+>     ? THREE.MathUtils.smoothstep(Math.sin(th), -0.95, -0.5)
+>     : THREE.MathUtils.smoothstep(Math.sin(th), e05R0, e05R1));
+>   /**
+>    * env05 run #3: the RINGS' own weight. Left half = the wall's. Right half: the band follows the ring's circle further
+>    * down than its wall may move (the wall there must not cover river / foam), its skirt stays on the wall
+>    * (buildWarpedBandRing skirtWarp), so ring B's lower-right arc stays round instead of kinking outward at the bank.
+>    */
+>   const e05RR0 = qaNum05('e05rr0', -0.9), e05RR1 = qaNum05('e05rr1', -0.1);
+>   const e05RingWeight = (th: number) => (Math.cos(th) < 0 ? e05Weight(th) : THREE.MathUtils.smoothstep(Math.sin(th), e05RR0, e05RR1));
+>   const warpBy05 = (wf: (th: number) => number): TubeWarp => (s, th, out) => {
+>     const d = s - sCam05, w = wf(th);
+>     const fade = 1 - THREE.MathUtils.smoothstep(d, 54, sGlow05 - sCam05 - 0.5);   // 0 at the 05 → 06 junction
+>     return out.set(knotsAt05(E05!.side, d) * fade * w, knotsAt05(E05!.up, d) * fade * w);
+>   };
+>   const war …[+4444 chars]
+
