@@ -5103,3 +5103,107 @@ The Screen 05 specialist is back at work: its restart is pushed (`ebc9676`), and
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/g12.jpg"}`
 
+### 🧑 User — 2026-11-18T15:46:21.340Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> 04 t95_through_screen s 113.673 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:46:21.353Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:46:27.304Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd /home/user/wt/s04/qa/match/04/r13 && for v in s7_enter/F4 s8_glow/G2; do convert $v/f10_forward10u.png -crop 520x560+172+560 +repage -resize 260x $S/ga_$(basename $v).png; convert $v/s_right_hard.png -crop 520x560+172+560 +repage -resize 260x $S/gr_$(basename $v).png; done; convert $S/za_ap.png $S/ga_F4.png $S/ga_G2.png $S/gr_G2.png +append $S/garr.jpg", "description": "Zoom arrows: approved, F4, G2"}`
+
+### 🧑 User — 2026-11-18T15:46:27.868Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:46:28.352Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/garr.jpg"}`
+
+### 🧑 User — 2026-11-18T15:46:28.379Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:46:33.090Z
+
+The luminous layer barely shows. It's being dimmed by an older glow-strength setting (0.38) carried over from earlier versions. G3 raises both.
+
+### 🤖 Claude — 2026-11-18T15:46:37.500Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; G3=$(cat $S/G2.q | sed 's/m04a3o=0.38/m04a3o=1.0/; s/m04a3lum=0.6/m04a3lum=1.2/'); echo \"$G3\" | grep -o \"m04a3o=[0-9.]*\\|m04a3lum=[0-9.]*\"; echo \"$G3\" > $S/G3.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s8_glow/G3 \"$G3\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; cd qa/match/04/r13 && convert s8_glow/G3/f10_forward10u.png -crop 520x560+172+560 +repage -resize 260x $S/ga_G3.png; convert s8_glow/G3/s_right_hard.png -crop 520x560+172+560 +re …[+295 chars]`
+
+### 🤖 Claude — 2026-11-18T15:46:38.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/garr3.jpg"}`
+
+### 🧑 User — 2026-11-18T15:47:22.173Z
+
+> ↩︎ result: m04a3o=1.0
+> m04a3lum=1.2
+> 04 t95_through_screen s 113.677 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:47:22.188Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:47:29.420Z
+
+Found why nothing changes: the glow layer is drawn before the arrow itself, so the nearly opaque arrow covers it. I'll draw the glow on top instead.
+
+### 🤖 Claude — 2026-11-18T15:47:35.080Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nold=\"\"\"      m.renderOrder = 5; g.renderOrder = 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';\"\"\"\nnew=\"\"\"      m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top\"\"\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s); print('ok')\nEOF\nnpx tsc --noEmit -p . 2>&1 | tail -2; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; G4=$(cat $S …[+675 chars]`
+
+### 🤖 Claude — 2026-11-18T15:47:36.130Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/garr4.jpg"}`
+
+### 🧑 User — 2026-11-18T15:48:23.283Z
+
+> ↩︎ result: ok
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04/src/world/match04m4.ts. Call Read before editing.]
+
+### 🧑 User — 2026-11-18T15:48:23.299Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:48:33.527Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r13 && montage s7_enter/F4/f03_forward3u.png s8_glow/G2/f03_forward3u.png s7_enter/F4/s_left_hard.png s8_glow/G2/s_left_hard.png s7_enter/F4/t95_through_screen.png s8_glow/G2/t95_through_screen.png s8_glow/G2/a00_approved_view.png -tile 7x1 -geometry 220x391+2+2 /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/g2all.jpg", "description": "Check G2 at entering, left, end, start"}`
+
+### 🧑 User — 2026-11-18T15:48:33.894Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:48:34.635Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/g2all.jpg"}`
+
+### 🧑 User — 2026-11-18T15:48:34.658Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:48:35.342Z
+
+You've hit your 5-hour limit · resets 7pm (UTC)
+
+### 🧑 User — 2026-11-18T15:48:35.364Z
+
+<task-notification>
+<task-id>a48adf5621388f991</task-id>
+<tool-use-id>toolu_011EStM2VzJsaJvmqVferMq7</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/a48adf5621388f991.output</output-file>
+<status>failed</status>
+<summary>Agent "Resume Screen 08 specialist round 13" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAf3Xh38qczU36Tsznjj, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Let me compare the approved near band with the game's near water at the same scale (crops, for my own inspection only).</result>
+</task-notification>
+
