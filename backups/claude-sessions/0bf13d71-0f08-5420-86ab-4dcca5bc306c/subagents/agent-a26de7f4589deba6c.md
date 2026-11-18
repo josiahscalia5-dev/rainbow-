@@ -2274,3 +2274,24 @@ In debug mode the collar loses its clip (plain material), so it covers the view;
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"uniform float uSoftStep;    // m08fill hand-over tap spacing (0.007 = ~3 % of the frame; m08soft: wider)\\n\",\"\",1)\ns=s.replace(\"uv + vec2(float(i), float(j) * 0.5625) * uSoftStep).r);\",\"uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);\",1)\ns=s.replace(\",\\n      // `&m08soft=1` (r10): wider soft hand-over between the painted chamber wall and the fill (the curved ceiling seam)\\n      uSoftStep: { value: flag05('m08soft') ? Number(new URLSearchParams(location.search).get …[+411 chars]`
 
+### 🧑 User — 2026-11-18T11:19:54.086Z
+
+> ↩︎ result: src/world/match08.ts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> tsc-ok
+> motion_audit.mjs
+> bisect_preview08.mjs
+> motion_audit.mjs
+> motion_metrics.py
+> /home/user/wt/s04/tools/lead_r6/motion_metrics.py
+> /home/user/wt/s05/tools/lead_r6/motion_metrics.py
+> /home/user/rainbow-/tools/lead_r6/motion_metrics.py
+
+### 🤖 Claude — 2026-11-18T11:19:55.271Z
+
+Now the full 12-shot NEW audit with the final kept set.
+
+### 🤖 Claude — 2026-11-18T11:19:57.514Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && KQ='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && node tools/lead_r6/motion_audit.mjs 08 qa/match/08/r10/NEW \"$KQ\" 2>&1 | grep -v \"allow list\" | tail -12 && ls qa/match/08/r10/NEW | wc -l && head -30 /home/user/rainbow-/tools/lead_r6/motion_metrics.py | grep -iE \"usage|argv|python\" ", "description": "Run the full 12-shot NEW audit with the kept set", "timeout": 600000}`
+
