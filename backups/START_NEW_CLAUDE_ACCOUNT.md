@@ -1,6 +1,6 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-18 ~18:35 UTC, account 15 → next account) — use THIS prompt
+## ▶ NEWEST (2026-11-18 ~18:25 UTC, account 15 → next account) — use THIS prompt
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
 Claude Code cloud session on the repo, branch **`ccr-47b10cec-03c7co`** (account-15 lead; NOT the default branch). Claude checks
 the keys first with free reads and opens the secure forms only if a check fails (World Labs `api.worldlabs.ai` header

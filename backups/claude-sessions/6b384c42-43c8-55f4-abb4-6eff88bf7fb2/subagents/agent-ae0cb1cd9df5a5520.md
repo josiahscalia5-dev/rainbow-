@@ -582,3 +582,130 @@ Let me look at the approved picture and the L4 frames.
 > 849:      const x = edge ? side * (xW - 0.3 - rnd() * 0.9) : side * rnd() * 2.6;
 > 19: *             the other ahead of Benny  …[+911 chars]
 
+### 🤖 Claude — 2026-11-18T18:24:03.945Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "  col += vec3(1.0) * 0.45 * smoothstep(0.22, 0.0, length(vUv - vec2(-0.30, 0.36)));\n  col = mix(col, shade * 0.92, 0.30 * smoothstep(0.88, 1.0, r));\n  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);\n}`;", "new_string": "  col += vec3(1.0) * 0.45 * smoothstep(0.22, 0.0, length(vUv - vec2(-0.30, 0.36)));\n  col = mix(col, shade * 0.92, 0.30 * smoothstep(0.88, 1.0, r));\n  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);\n}`;\n\n// r15 `&m04fclu=1`: ONE small shiny foam bubble of …[+2273 chars]`
+
+### 🧑 User — 2026-11-18T18:24:04.165Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:24:07.047Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "void main() {\n  vUv = uv * 2.0 - 1.0;\n  vS = aS;\n  vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);\n  vF = smoothstep(uNear.x, uNear.y, -mv.z);\n  mv.xy += position.xy * aB.w * 2.0;\n  gl_Position = projectionMatrix * mv;\n}`;", "new_string": "void main() {\n  vUv = uv * 2.0 - 1.0;\n  vS = aS;\n  vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);\n  vF = smoothstep(uNear.x, uNear.y, -mv.z);\n#ifdef SHRINK\n  // r15 m04fclu: foam bubbles shrink away as they near the camera (no pale puff popping in the screen corn …[+147 chars]`
+
+### 🧑 User — 2026-11-18T18:24:07.291Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:24:28.440Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    const rimL = M04.num('m04foamr', 1e9);\n    for (const side of [-1, 1]) {\n      let a = 0.2 + rnd() * 0.5;\n      while (heaped && a < Math.min(len - 1, rimL)) {\n        const f3 = M04.foam3;                                     // round 9: low soft banks hugging the river edge\n        const cl = 0.5 + Math.pow(rnd(), 1.3) * 2.4;            // clump length along the river\n        const H = (0.2 + Math.pow(rnd(), 1.8) * 1.1) * (f3 ? 0.35 : 1);   // heap height (a few tall heaps, many low ones)\ …[+4797 chars]`
+
+### 🧑 User — 2026-11-18T18:24:28.610Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:24:43.424Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    for (let a = -7; a < 0; a += M04.foam3 ? 0.5 : 0.35) for (const side of [-1, 1]) {\n      const n = 3 + Math.floor(rnd() * 3);\n      for (let i = 0; i < n; i++) {\n        const rad = (0.16 + rnd() * 0.34) * (M04.foam3 ? 0.7 : 1);\n        const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);\n        items.push({ p: new THREE.Vector3(x, rad * 0.55 + rnd() * 0.3, z0 - a + rnd() * 0.3), r: rad, s: rnd() });\n      }\n    }\n    // r14 m04foamn0 / m04foamn1: fade puffs out this close to the camer …[+1974 chars]`
+
+### 🧑 User — 2026-11-18T18:24:43.576Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:24:53.110Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "      const shrink = (s: string) => SPRITE_VERT.replace('uniform vec2 uNear;', 'uniform vec2 uNear;\\n#define SHRINK') + s;\n      const before = group.children.length;\n      sprites(items, FOAMB_FRAG, 'm04_foam', 3, true, nearF);\n      sprites(items, FOAMB_FRAG.replace('uniform float uAlpha;', 'uniform float uAlpha;\\n#define RIM'), 'm04_foam_rim', 4, false, nearF);\n      for (const m of group.children.slice(before) as THREE.Mesh[]) {\n        const sm = m.material as THREE.ShaderMaterial;\n      …[+658 chars]`
+
+### 🧑 User — 2026-11-18T18:24:53.271Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:24:57.457Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"m04_foam\" src | grep -v \"match04m4.ts:8[0-9][0-9]\" ; npx tsc --noEmit -p . 2>&1 | head", "description": "Check foam name references and type-check"}`
+
+### 🧑 User — 2026-11-18T18:25:01.757Z
+
+> ↩︎ result: src/world/match04.ts:440:            if (o.name !== 'm04_foam' && o.name !== 'm04_bubbles') continue;
+> src/world/match04m4.ts:925:    sprites(items, FOAM_FRAG, 'm04_foam', 3, true, [0.6, 1.2]);
+
+### 🤖 Claude — 2026-11-18T18:25:04.139Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 420,448p src/world/match04.ts", "description": "Read match04.ts foam name usage"}`
+
+### 🧑 User — 2026-11-18T18:25:04.219Z
+
+> ↩︎ result: clone.traverse((o) => { if (o.userData.mv) o.visible = false; });
+>         for (const v of mvViews) { renderer.setRenderTarget(v.rt); renderer.clear(); renderer.render(scene, v.cam); }
+>       }
+>       renderer.setRenderTarget(prevRT);
+>       shared.uUseDepth.value = 1;
+>     },
+>     sync(renderer, w, h, camera?: THREE.Camera) {
+>       if (camera && !FAL04) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
+>       shared.uPjPost.value.x = renderer.toneMappingExposure;
+>       shared.uPjRes.value.set(w, h);
+>       // r13: Benny's world position (Game puts the splash at Benny + splashOffset just before sync) for the m04arr3d fade
+>       if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined);
+>       // r11 m04mv: full weight within 3 u of a view's camera, gone at 8 u (the approved camera is ~10 u from V04-1's)
+>       if (mvViews.length && camera) {
+>         const cp = camera.getWorldPosition(_cp);
+>         mvU.uW0.value = 1 - THREE.MathUtils.smoothstep(cp.distanceTo(mvViews[0].pos), 3, 8);
+>         mvU.uW1.value = mvViews[1] ? 1 - THREE.MathUtils.smoothstep(cp.distanceTo( …[+427 chars]
+
+### 🤖 Claude — 2026-11-18T18:25:09.691Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04.ts'\ns=open(p).read()\na=\"if (o.name !== 'm04_foam' && o.name !== 'm04_bubbles') continue;\"\nb=\"if (o.name !== 'm04_foam' && o.name !== 'm04_foam_rim' && o.name !== 'm04_bubbles') continue;\"\nassert s.count(a)==1\nopen(p,'w').write(s.replace(a,b))\nEOF\nnpx tsc --noEmit -p . && echo TSC OK", "description": "Include rim mesh in foam fade and type-check"}`
+
+### 🧑 User — 2026-11-18T18:25:14.281Z
+
+> ↩︎ result: TSC OK
+
+### 🤖 Claude — 2026-11-18T18:25:18.929Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat scripts/lib/pw.mjs | head -60; ss -ltnp 2>/dev/null | grep -E \":527[0-9]\" ", "description": "Inspect playwright helper and busy ports"}`
+
+### 🧑 User — 2026-11-18T18:25:18.998Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+218 chars]
+
+### 🤖 Claude — 2026-11-18T18:25:27.841Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04 && cat > /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/K.txt <<'EOF'\nmatch04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1& …[+451 chars]`
+
+### 🧑 User — 2026-11-18T18:25:27.916Z
+
+> ↩︎ result: 678 /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/K.txt
+
+### 🤖 Claude — 2026-11-18T18:25:34.613Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && sed 's/^const SHOTS = \\[/const SHOTS = process.env.ONLY ? JSON.parse(process.env.ONLY) : [/' tools/lead_r6/motion_audit.mjs > $S/quick_audit.mjs && grep -n \"const SHOTS\" $S/quick_audit.mjs && K=$(cat $S/K.txt) && time ONLY='[[\"f03_forward3u\",3,null],[\"f06_forward6u\",6,null],[\"s_left_hard\",12,-1]]' node $S/quick_audit.mjs 04 $S/q1 \"$K&m04fclu=1\" 2>&1 | tail -5", "description": "Quick render of three shots with foam clusters", "timeout": 600000}`
+

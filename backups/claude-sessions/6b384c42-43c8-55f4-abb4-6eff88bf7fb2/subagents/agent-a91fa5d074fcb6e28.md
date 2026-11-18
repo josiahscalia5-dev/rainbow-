@@ -965,3 +965,48 @@ Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S05_LAUNCH.md exa
 
 > 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg && cd /home/user/wt/s05 && Q=$(cat qa/match/05/r15/KEPT_START.txt) && PRE_JS='(() => { const { scene } = window.__rainbow.qa3d(); const out = []; scene.traverse((o) => { if (/^tube05_far/.test(o.name)) { o.visible = false; out.push(o.name); } }); return out; })()' timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/nofar \"$Q\" x93,x97,t98_end,x99 5275 2>&1 | tail -5", "description": "Render hand-over views wit …[+43 chars]`
 
+### 🧑 User — 2026-11-18T18:24:13.470Z
+
+> ↩︎ result: t98_end s 188.467 lat 0 coins 1580 benny -0.19 -0.52 big coins: -
+> x93 s 185.607 lat 0 coins 1580 benny -0.01 -0.3 big coins: -
+> x97 s 187.806 lat 0 coins 1580 benny -0.18 -0.44 big coins: -
+> x99 s 189.091 lat 0 coins 1580 benny -0.17 -0.61 big coins: #38@341,551 d67
+
+### 🤖 Claude — 2026-11-18T18:24:16.535Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/nofar/x93.png"}`
+
+### 🧑 User — 2026-11-18T18:24:16.582Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:24:17.149Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/nofar/x97.png"}`
+
+### 🧑 User — 2026-11-18T18:24:17.187Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:24:37.185Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s05/tools/match05 && cat > /home/user/wt/s05/tools/match05/r15_probe.mjs <<'EOF'\n// Screen 05 round 15: layer probe through the 05 -> 06 hand-over (read-only). Same stepping as r8_shots.mjs; at each\n// position runs window.__rainbow.probe on a grid (optionally after PRE_JS) and prints the first hits + camera / far state.\n//   node tools/match05/r15_probe.mjs \"<query>\" x97,t98 [port]\nimport { pathToFileURL } from 'node:url';\nimport { realpathSync } from 'node:fs';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/s …[+2953 chars]`
+
+### 🧑 User — 2026-11-18T18:24:37.262Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:24:40.392Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"course,\" src/game/Game.ts | head -5; grep -n \"^    course\\|  course:\" src/game/Game.ts | head", "description": "Check course is exposed on QA API"}`
+
+### 🧑 User — 2026-11-18T18:24:40.429Z
+
+> ↩︎ result: 5: *   ride   (03–10)  interactive: auto-propelled along the course, steer left/right, real coin pickups,
+> 701:    course,
+> 701:    course,
+
+### 🤖 Claude — 2026-11-18T18:24:44.562Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r15/KEPT_START.txt) && timeout 600 node tools/match05/r15_probe.mjs \"$Q\" x93,x96,x97,t98,x99,x101 5275 2>&1 | tail -80", "description": "Probe layers through the hand-over", "timeout": 600000}`
+

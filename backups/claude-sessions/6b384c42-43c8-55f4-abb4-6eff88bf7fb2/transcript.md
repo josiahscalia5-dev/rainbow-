@@ -1911,3 +1911,175 @@ Now a one-line pointer in CLAUDE.md so the next account finds round 15 first.
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:account15-handoff 2>&1 | tail -4; git log --oneline -1; timeout 60 git ls-remote origin refs/heads/ccr-47b10cec-03c7co; git rev-parse HEAD", "description": "Save handoff docs to GitHub and verify remote SHA"}`
 
+### 🧑 User — 2026-11-18T18:24:02.326Z
+
+> ↩︎ result: ],
+>   "commit": "98242edda3ec39aa413fec940e05dfb00bfeba8b",
+>   "duration_s": 10
+> }
+> 98242ed autosave: Rainbow 2026-11-18 18:23 UTC
+> 98242edda3ec39aa413fec940e05dfb00bfeba8b	refs/heads/ccr-47b10cec-03c7co
+> 98242edda3ec39aa413fec940e05dfb00bfeba8b
+
+### 🤖 Claude — 2026-11-18T18:24:08.860Z
+
+Handoff saved: `98242ed` local = remote. Marking progress, then opening the draft PR for this session branch (marked do-not-merge, as earlier accounts did).
+
+### 🤖 Claude — 2026-11-18T18:24:09.307Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T18:24:09.320Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-18T18:24:10.460Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed", "description": "04/05/08 -c15 branches + worktrees created and pushed (fc28323a / 34aadd11 / df4a3bb7). 07/06 queued for the next free slot (branch created when it starts)."}`
+
+### 🧑 User — 2026-11-18T18:24:10.469Z
+
+> ↩︎ result: Updated task #1 description, status
+
+### 🤖 Claude — 2026-11-18T18:24:11.062Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__create_pull_request,mcp__github__list_pull_requests", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T18:24:11.079Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T18:24:12.018Z
+
+> 🔧 **Bash** `{"command": "ls .github/ 2>/dev/null; ls .github/PULL_REQUEST_TEMPLATE* .github/pull_request_template.md pull_request_template.md 2>/dev/null", "description": "Look for a PR template"}`
+
+### 🧑 User — 2026-11-18T18:24:12.062Z
+
+> ↩︎ result: Exit code 2
+
+### 🤖 Claude — 2026-11-18T18:24:16.407Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "josiahscalia5-dev:ccr-47b10cec-03c7co", "state": "open", "fields": ["number", "title", "html_url"]}`
+
+### 🧑 User — 2026-11-18T18:24:17.290Z
+
+> ↩︎ result: []
+
+### 🤖 Claude — 2026-11-18T18:24:27.116Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "title": "Rainbow account 15 lead: restore + round-15 coordination (DO NOT MERGE)", "head": "ccr-47b10cec-03c7co", "base": "ccr-6f431adf-7h0m8y", "draft": true, "body": "**DO NOT MERGE.** Account-15 lead session branch for the Rainbow game, kept as a draft so the work is visible on GitHub. The base is the protected original branch. Merging anything needs the owner's explicit OK.\n\n## What this branch holds\n- Continues the account-14 lead `ccr-6c7564b1-fmlt1w` @ `58b94d9`. Nothing was merged from any other branch.\n- Five-minute autosave now  …[+1006 chars]`
+
+### 🧑 User — 2026-11-18T18:24:34.291Z
+
+> ↩︎ result: {"id":"5381714066","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/21"}
+
+### 🤖 Claude — 2026-11-18T18:24:37.493Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 21}`
+
+### 🧑 User — 2026-11-18T18:24:40.921Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#21. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-18T18:24:46.312Z
+
+Draft PR #21 is open (marked do-not-merge) and I'm watching it. Final checks before the report: bootstrap result, autosave, and the workers.
+
+### 🤖 Claude — 2026-11-18T18:24:47.558Z
+
+> 🔧 **Bash** `{"command": "bash scripts/claude-bootstrap.sh --status 2>&1 | grep -E '^\\| |BOOTSTRAP|in progress' | cut -c1-230 | head -30", "description": "Show final bootstrap report rows"}`
+
+### 🧑 User — 2026-11-18T18:24:48.379Z
+
+> ↩︎ result: # Rainbow bootstrap report — BOOTSTRAP PROBLEMS
+> The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
+> | Step | Result | Details | s |
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-47b10cec-03c7co @ 58b94d9 (session started from ccr-6c7564b1-fmlt1w) | 0 |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | WARN | GAP: no backup ran from 2026-11-18 17:46 to 2026-11-18 18:08 UTC (0.4 h) - no Claude cloud environment with the autosave was active. Nothing can be saved while an environment is closed; the
+> | Git LFS binaries (local) | OK | 63/63 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 1 |
+> | Git LFS on GitHub | OK | 63/63 LFS objects (520 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
+> | Approved references | OK | 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference) | 0 |
+> | Game: 11 screens + code | OK | 11 approved screen references 01-11, source tree src/ (46 files), Android project android/, characters assets/models/ …[+1988 chars]
+
+### 🤖 Claude — 2026-11-18T18:24:48.913Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py 2>&1 | tail -2; for s in s04 s05 s08; do echo \"$s $(git -C /home/user/wt/$s rev-parse --short HEAD) dirty=$(git -C /home/user/wt/$s status --short | wc -l)\"; done; date -u +%H:%M", "description": "Check autosave and worker worktrees"}`
+
+### 🧑 User — 2026-11-18T18:24:49.680Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-47b10cec-03c7co | scheduler daemon | last verified backup 2026-11-18T18:23:51+00:00 (0.9 min ago) | local 98242ed remote 98242ed (match) | uncommitted 0
+> s04 fc28323 dirty=1
+> s05 34aadd1 dirty=4
+> s08 df4a3bb dirty=1
+> 18:24
+
+### 🤖 Claude — 2026-11-18T18:25:05.808Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/(~18:35)/(~18:25)/g' docs/briefs/2026-11-18-r15/COORDINATION.md && sed -i 's/2026-11-18 ~18:35 UTC, lead branch `ccr-47b10cec-03c7co`/2026-11-18 ~18:25 UTC, lead branch `ccr-47b10cec-03c7co`/' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md && sed -i 's/(2026-11-18 ~18:35 UTC, account 15 → next account)/(2026-11-18 ~18:25 UTC, account 15 → next account)/' backups/START_NEW_CLAUDE_ACCOUNT.md && grep -c '18:25' docs/briefs/2026-11-18-r15/COORDINATION.md docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md backups/START_NEW_CLAUDE_ACCOUNT.md", "description": "Correct timestamps in round-15 handoff docs"}`
+
+### 🧑 User — 2026-11-18T18:25:05.913Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r15/COORDINATION.md:2
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md:1
+> backups/START_NEW_CLAUDE_ACCOUNT.md:1
+> [This command modified 3 files you've previously read: docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, backups/START_NEW_CLAUDE_ACCOUNT.md, docs/briefs/2026-11-18-r15/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T18:25:08.847Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r15/08_step1_near_water/1_APPROVED.png", "/home/user/rainbow-/qa/review_r15/08_step1_near_water/2_BEFORE_f06_forward6u.png", "/home/user/rainbow-/qa/review_r15/08_step1_near_water/3_NEW_f06_forward6u.png", "/home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/1_APPROVED.png", "/home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/2_BEFORE_k81_kink_left.png", "/home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/3_NEW_k81_kink_left.png"], "caption": "Two improvements account 14 kept but never showed you. Screen 08 (APPROVED / BEFORE / NEW at forwar …[+115 chars]`
+
+### 🧑 User — 2026-11-18T18:25:11.682Z
+
+> ↩︎ result: 6 files delivered to user.
+>   /home/user/rainbow-/qa/review_r15/08_step1_near_water/1_APPROVED.png → file_uuid: b07c1894-5824-4882-a37b-25e1bfa7fe88
+>   /home/user/rainbow-/qa/review_r15/08_step1_near_water/2_BEFORE_f06_forward6u.png → file_uuid: 366dad89-bcca-4c5c-af84-b63d3b2b45b8
+>   /home/user/rainbow-/qa/review_r15/08_step1_near_water/3_NEW_f06_forward6u.png → file_uuid: e6c063d0-9ddc-4d8a-aae2-5cdaf007c09f
+>   /home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/1_APPROVED.png → file_uuid: 83e3bc40-c38d-4f8b-b07b-34a37c6addfd
+>   /home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/2_BEFORE_k81_kink_left.png → file_uuid: a55fa5af-e2c2-4fd3-a054-7d43f9d45ef1
+>   /home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/3_NEW_k81_kink_left.png → file_uuid: a0de8872-46cd-4e83-9536-c40c310b6b71
+
+### 🤖 Claude — 2026-11-18T18:25:15.983Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed", "description": "s05 (water-fx-specialist) and s08 (washer-environment-modeler) relaunched ~18:22 UTC and verified active (editing code, rendering)."}`
+
+### 🧑 User — 2026-11-18T18:25:15.994Z
+
+> ↩︎ result: Updated task #2 description, status
+
+### 🤖 Claude — 2026-11-18T18:25:55.373Z
+
+I'm leaving out the "RAINBOW 3D BACKUP VERIFIED" line on purpose. At 18:12 UTC the startup bootstrap logged one failure: its download from GitHub failed. Since then downloading, pushing and the remote checks all work, and every other check passed. One backup gap to report: nothing could save between 17:46 and 18:08 UTC, because no environment was open. Your previous account closed without its end-of-session save. Its last automatic save (17:45) shows its workers had no unsaved code changes, so no work was lost.
+
+## Verification report
+
+| # | Item | Status |
+|---|---|---|
+| 1 | **GitHub** | **CONNECTED.** Repository `josiahscalia5-dev/rainbow-`, branch `ccr-47b10cec-03c7co`, commit `98242edda3ec39aa413fec940e05dfb00bfeba8b`; GitHub's copy matches. It continues `ccr-6c7564b1-fmlt1w` from its newest commit `58b94d9`. Newest screen checkpoints: 04 `fc28323a` (the entrance-foam step is the newest 04 work, not an older one), 05 `34aadd11`, 08 `df4a3bb7`. Nothing was merged or overwritten. |
+| 2 | **Autosave** | **CONNECTED.** Saves every five minutes and pushes to GitHub; four saves so far, latest `98242ed` at 18:23, matching GitHub. Account 14's branches are now protected from being overwritten. It only runs while this cloud session is open. |
+| 3 | **Chat history** | **Recovered** from the saved handoff notes, coordination logs and each screen's progress log: your approvals, verdicts, rejected experiments and unfinished tasks. Live conversations can't move between accounts; full transcripts stay saved in `backups/claude-sessions/`. |
+| 4 | **Agents** | All 10 definitions restored, unchanged. **3 running now, checked by me:** they are editing code and rendering. 04 runs on `foam-bubbles-particles` (I direct it as lead), 05 on `water-fx-specialist`, 08 on `washer-environment-modeler`. Each has its own `-c15` branch, worktree and saved brief. 07, then 06, take the next free slot, following your saved rule of two specialists plus the lead's 04. I can start 07 now as a fourth worker, but your usage runs out faster. |
+| 5 | **Marble** | **CONNECTED.** 5,420 credits; the Screen 08 world is readable; no paid job started. No key form was needed. |
+| 6 | **Atlas** | **NEEDS YOUR ACTION.** This account has no connectors at all. All four skills are **INSTALLED**: atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli. To reconnect: claude.ai → Settings → Connectors → add a custom connector with `https://api.atlas.worldlabs.ai/mcp` → sign in to World Labs. The Screen 04 Atlas test is **not submitted** (0 credits spent). Its price still isn't published; it's on atlas.worldlabs.ai → Settings → Developer Platform (rate card). |
+| 7 | **fal.ai** | **CONNECTED** to the same purchased account: request `01a1ea70…` shows COMPLETED. The balance can't be read with the key; it's on fal.ai → Billing. No need to buy credits again. |
+| 8 | **Hugging Face / Depth Anything 3** | The public Depth Anything 3 model is reachable. The Hugging Face connector isn't connected; that's optional and not needed now. Depth maps for all five approved screens are already saved, so no reinstall. |
+| 9 | **GitHub 3D tools** | **fSpy:** not installed. It's a desktop app where you draw lines by hand, and it fits the 04 tunnel's single vanishing point poorly. The 04 worker answers your proportions question by measuring ring count, ring thickness and field of view before changing any geometry. **TRELLIS.2:** can't run here; it needs a large NVIDIA graphics card and this machine has none. A paid hosted version exists on fal; it only makes single objects. **glTF Transform:** available on demand, not needed yet (models are 1–3.5 MB); final Android build only, with settings that can't change colours. All three are documented in `docs/briefs/2026-11-18-r15/GITHUB_3D_TOOLS.md`. |
+| 10 | **Servers** | GitHub MCP **CONNECTED** (I used it to open draft PR #21, marked DO NOT MERGE). Playwright browser, Blender 5.3.0, Android SDK 34, Node, ffmpeg and Git LFS (63/63 files, local and on GitHub): **OK**. context7 needs a sign-in but isn't used. |
+| 11 | **Game** | All 13 approved pictures are byte-identical to the originals. Build and continuity tests pass. Every kept improvement is on the new branches. |
+| 12 | **Continuation** | **04:** foam as clusters of many small bubbles → few, thick, polished interior rings (measure first) → pink side swirls. **05:** the 05→06 transition → the smeared left wall and cut-off gold-ring piece seen while steering hard left. **08:** leftovers from the near-water step → wall seams → river-edge foam and coin line → spout cups. |
+
+## Pictures (sent above)
+Two results account 14 kept but never showed you:
+- **Screen 08, near water: GOOD IMPROVEMENT (small).** The big blurry white flames under Benny become crisp white glints at the painted size, and the pink band continues down the left. Still wrong: the near streaks look straight and combed, while the painted ones sweep in curves.
+- **Screen 05, near foam bank: GOOD IMPROVEMENT (small).** A flat pale slab beside the river becomes piled foam bubbles. The same hard-left frame shows a much bigger 05 problem: a smeared left wall and a cut-off chunk of gold ring. I've made that 05's next priority.
+
+New results will come as separate full-size APPROVED / BEFORE / NEW pictures as each step finishes.
+
+The next-account handoff is saved on GitHub: the prompt to paste is at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`, and full details are in `docs/briefs/2026-11-18-r15/`. If a message from you arrives while I'm in the middle of a step, the background workers can stop. I'll check and restart them if that happens.
+
+### 🧑 User — 2026-11-18T18:25:56.671Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

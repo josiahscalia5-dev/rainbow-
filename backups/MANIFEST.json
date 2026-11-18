@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16988,
-   "sha256": "f05502530bc531f846cc146e164b6ac9f3438f12267ebfafc7ca8833ffac74f0"
+   "sha256": "3ee0a719d92524bf6ad95a9d8e2b911700e97e732bd14dc691155898d508debc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
    "bytes": 16416,
-   "sha256": "7718a16254e4019a6354e325dfde98cc4b100fb563b04ded7c9c909b970a3e27"
+   "sha256": "87c74bc0e59fe5b41f3ae90475071426c856aa1bcf50fbb2f2ad5e5d3173036a"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -994,7 +994,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c15/INFO.json",
    "bytes": 477,
-   "sha256": "66feb13c84bf12371dfb002361c0435a82b217461eb61c648b069965012b107c"
+   "sha256": "44813f066cc3d7519b2ae447613fa41e1f7db75a4868f880006059aaf916c80d"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1089,7 +1089,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/INFO.json",
    "bytes": 1702,
-   "sha256": "828f43f400eb824a054c14dd8080d1f02da183610ba015236afc887c89030d75"
+   "sha256": "f2ffb13b65ba0247f10b198b71eba393cc352d0f3bb2501062552ef10f9e234a"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/tracked.patch",
@@ -1244,7 +1244,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/INFO.json",
    "bytes": 512,
-   "sha256": "0b05bbf23355f98d7155b759331318b305ac72aef4e30dc478c649e8cd8e8555"
+   "sha256": "ad15036b3743789c7537233b3e38a1987d78e4919acd1d2e8f08e34059ea9369"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/tracked.patch",
@@ -1309,7 +1309,7 @@
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
    "bytes": 51328,
-   "sha256": "848a0ec9c04fdbe2c4bf3f15474fdd8b9015e06a4777978421bc3e2139883020"
+   "sha256": "e9ccce0a4de0405b57afa2ebee0456e3510d43d236fb2daadca3b76a5679ab96"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -1594,7 +1594,7 @@
   {
    "path": "docs/briefs/2026-11-18-r15/COORDINATION.md",
    "bytes": 5191,
-   "sha256": "4e5c49282e32fa65360db15afe9dbb5cc9d6ba064414c4f79a3494c8b457f83f"
+   "sha256": "65927a5c69d6ef6a3d6614f27214067b747540575bad57a7df7b7f218b78673a"
   },
   {
    "path": "docs/briefs/2026-11-18-r15/GITHUB_3D_TOOLS.md",
