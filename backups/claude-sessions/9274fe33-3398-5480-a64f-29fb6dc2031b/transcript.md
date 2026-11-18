@@ -517,3 +517,638 @@ Autosave is now pushing this branch: GitHub and local both show `d25ed05`. Next 
 
 > 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print(d['branch'],len(d['protected_branches']))\" && python3 scripts/rainbow-autosave.py --reason manual:account16-config 2>&1 | tail -3 && python3 -I scripts/autosave-status.py", "description": "Validate config and save immediately", "timeout": 180000}`
 
+### 🧑 User — 2026-11-18T19:03:57.207Z
+
+> ↩︎ result: ccr-e42bb3c0-jpif8d 65
+>   "commit": "bdc747c70e2e2175d9bad16e58795f7efd904ff0",
+>   "duration_s": 9
+> }
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:03:47+00:00 (0.1 min ago) | local bdc747c remote bdc747c (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:03:58.344Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T19:03:58.365Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-18T19:03:58.794Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T19:03:58.804Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-18T19:03:58.948Z
+
+> 🔧 **ListConnectors** `{}`
+
+### 🤖 Claude — 2026-11-18T19:03:59.142Z
+
+> 🔧 **ListPlugins** `{}`
+
+### 🧑 User — 2026-11-18T19:03:59.156Z
+
+> ↩︎ result: []
+
+### 🧑 User — 2026-11-18T19:03:59.199Z
+
+> ↩︎ result: {"results":[]}
+
+### 🤖 Claude — 2026-11-18T19:04:00.054Z
+
+> 🔧 **Bash** `{"command": "(claude plugin list 2>&1 || true) | head -60; echo ---; claude mcp list 2>&1 | head -30", "description": "List installed plugins and MCP servers", "timeout": 120000}`
+
+### 🧑 User — 2026-11-18T19:04:02.926Z
+
+> ↩︎ result: Installed plugins:
+> 
+>   > worldlabs@worldlabs
+>     Version: 0.2.2
+>     Scope: user
+>     Status: √ enabled
+> 
+> Synced from claude.ai:
+> 
+>   > typescript-lsp@synced
+>     Version: 1.0.0
+>     Path: /root/.claude/plugins/synced/fa590c23-7470-4f29-a0ca-a9116186e6c0_bab0c501-199e-46c4-bce7-ec188f96f719/e3f75ee1-558a-4065-8662-81f5cd53917e
+>     Status: √ loaded
+> 
+>   > rv-tools@synced
+>     Version: 0.3.1
+>     Path: /root/.claude/plugins/synced/fa590c23-7470-4f29-a0ca-a9116186e6c0_bab0c501-199e-46c4-bce7-ec188f96f719/777b3cd0-df98-4562-8e49-d2b22d231752
+>     Status: √ loaded
+> 
+>   > superpowers@synced
+>     Version: 7.0.2
+>     Path: /root/.claude/plugins/synced/fa590c23-7470-4f29-a0ca-a9116186e6c0_bab0c501-199e-46c4-bce7-ec188f96f719/6ba53849-2ee0-4cf0-957e-31c122ea1dd1
+>     Status: √ loaded
+> 
+>   > unity@synced
+>     Version: 0.1.9-beta
+>     Path: /root/.claude/plugins/synced/fa590c23-7470-4f29-a0ca-a9116186e6c0_bab0c501-199e-46c4-bce7-ec188f96f719/169de6c5-81d7-4fa0-bead-b376a5fa2550
+>     Status: √ loaded
+> 
+>   > code-review@synced
+>     Version: 1.0.1
+>     Path: /root/.claude/plugins/synced/fa590c23-7470-4f29-a0ca-a9116186e6c0_bab0c501-199e-46c4-bce7-ec188f96f719/59d0c87c-3069-45e4-9a6a-d5a577b71374
+>     Status: √ loaded
+> 
+>   > c …[+1441 chars]
+
+### 🤖 Claude — 2026-11-18T19:04:18.561Z
+
+> 🔧 **Bash** `{"command": "claude plugin list 2>&1 | grep -E \"^\\s+>\" ; echo ---; python3 - <<'EOF'\nimport json,os\np=os.path.expanduser('~/.claude.json')\nd=json.load(open(p))\npr=d.get('projects',{}).get('/home/user/rainbow-',{})\nprint({k:pr.get(k) for k in ['disabledMcpServers','disabledMcpjsonServers','enabledMcpjsonServers','enableAllProjectMcpServers']})\nEOF\nls -la .claude/ ; cat .claude/settings.local.json 2>/dev/null | head -30; ls .mcp.json* 2>/dev/null", "description": "Full plugin list and MCP disable settings", "timeout": 60000}`
+
+### 🧑 User — 2026-11-18T19:04:19.354Z
+
+> ↩︎ result: > worldlabs@worldlabs
+>   > typescript-lsp@synced
+>   > rv-tools@synced
+>   > superpowers@synced
+>   > unity@synced
+>   > code-review@synced
+>   > claude-code-setup@synced
+>   > video-to-code-skill@synced
+>   > frontend-design@synced
+>   > context7@synced
+>   > playwright@synced
+>   > feature-dev@synced
+> ---
+> {'disabledMcpServers': ['plugin:worldlabs:worldlabs'], 'disabledMcpjsonServers': None, 'enabledMcpjsonServers': None, 'enableAllProjectMcpServers': None}
+> total 16
+> drwxr-xr-x  3 root root 4096 Nov 18 18:52 .
+> drwxr-xr-x 18 root root 4096 Nov 18 18:58 ..
+> drwxr-xr-x  2 root root 4096 Nov 18 18:52 agents
+> -rw-r--r--  1 root root  807 Nov 18 18:52 settings.json
+> .mcp.json.template
+
+### 🤖 Claude — 2026-11-18T19:04:19.410Z
+
+> 🔧 **Bash** `{"command": "tail -25 backups/.live/bootstrap.log; grep -n \"fal\" scripts/verify-assets.py | head -10", "description": "Bootstrap progress and fal check helper"}`
+
+### 🧑 User — 2026-11-18T19:04:19.454Z
+
+> ↩︎ result: OK   Specialist agents              10/10 specialist definitions present; all SHA-256 unchanged; running: _note
+>         draft world 5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f (marble-1.0-draft): 7 LFS + 13 files
+>         full  world c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 (marble-1.1): 8 LFS + 13 files
+>         qa/worldlabs: 71 tracked files; ledger, prompt, input reference and 5 scripts checked
+>   OK   Marble World Labs assets       both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+>   WARN World Labs integration         Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started
+> 
+> == 3 Tools (installed only when missing)
+>   OK   Node.js                        v22.23.5, npm 10.9.9
+>   OK   npm dependencies               node_modules up to date with package-lock.json (npm ci skipped)
+>   OK   Python QA libraries            Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>   OK   Playwright + Ch …[+1313 chars]
+
+### 🤖 Claude — 2026-11-18T19:04:27.677Z
+
+> 🔧 **Bash** `{"command": "cp ~/.claude.json \"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/claude.json.bak\" && python3 - <<'EOF'\nimport json,os\np=os.path.expanduser('~/.claude.json')\nd=json.load(open(p))\npr=d['projects']['/home/user/rainbow-']\npr['disabledMcpServers']=[s for s in pr.get('disabledMcpServers',[]) if s!='plugin:worldlabs:worldlabs']\njson.dump(d,open(p,'w'),indent=2)\nprint('now disabled:',pr['disabledMcpServers'])\nEOF\nclaude mcp list 2>&1 | tail -5", "description": "Re-enable World Labs plugin MCP and recheck health", "timeout": 120000}`
+
+### 🧑 User — 2026-11-18T19:04:42.338Z
+
+> ↩︎ result: now disabled: []
+> Checking MCP server health…
+> 
+> plugin:worldlabs:worldlabs: https://api.atlas.worldlabs.ai/mcp (HTTP) - ! Needs authentication
+> plugin:context7:context7: https://mcp.context7.com/mcp?client=claude-code-plugin (HTTP) - ! Needs authentication
+> plugin:playwright:playwright: npx @playwright/mcp@latest - √ Connected
+
+### 🤖 Claude — 2026-11-18T19:04:46.207Z
+
+The World Labs MCP is switched on now, but it needs a sign-in that I can't start from this session, and the same goes for context7. Next I'll check the two paid-service keys with free reads only.
+
+### 🤖 Claude — 2026-11-18T19:04:47.464Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -8; grep -rn \"01a1ea70\" --include=*.md --include=*.py --include=*.sh --include=*.json . 2>/dev/null | grep -v backups/claude-sessions | head -5", "description": "Free World Labs key check and find fal check", "timeout": 120000}`
+
+### 🧑 User — 2026-11-18T19:04:48.579Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+> ./backups/AGENTS_STATUS.json:489:  "keys_2026_11_17_2155": "World Labs key = ORIGINAL Screen 08 account (5,420 credits; world 32b5b2f4 -> 200; 05 pilot worlds 404). fal.ai = same paid account (01a1ea70 COMPLETED). Free reads only, no paid job.",
+> ./backups/claude-config/2026-11-18-account14/README.md:20:  are proxy-injected by this account's environment (verified 16:30 UTC: 5,420 credits, 08 world 200; fal 01a1ea70 COMPLETED).
+> ./backups/claude-config/2026-11-18-account12/README.md:15:  fal 01a1ea70 COMPLETED). A new account re-enters them only via the secure credential form.
+> ./backups/TOOL_MANIFEST.json:404:  "fal": "queue.fal.run key proxy-injected, request 01a1ea70 COMPLETED",
+> ./backups/TOOL_MANIFEST.json:410:  "fal": "queue.fal.run key injected -> request 01a1ea70 COMPLETED; balance only visible on fal.ai -> Billing",
+
+### 🤖 Claude — 2026-11-18T19:04:50.465Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"queue.fal.run/\" --include=*.py --include=*.sh --include=*.md --include=*.mjs --include=*.js tools scripts qa docs 2>/dev/null | grep -i \"requests/\" | head -5", "description": "Find fal queue status URL pattern"}`
+
+### 🧑 User — 2026-11-18T19:04:50.508Z
+
+> ↩︎ result: scripts/setup-image-blaster.sh:42:echo "  curl -sS -o /dev/null -w '%{http_code}' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status   # 404 = key accepted"
+> qa/imageblaster/08/NOTES.md:35:| fal key (free read) | `GET queue.fal.run/.../requests/<fake>/status` → 404 NOT_FOUND (authenticated; a bad key gives 401) |
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md:377:  → 200 (Screen 08 world = same account); `curl https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status`
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md:489:   `curl -sS -o /dev/null -w '%{http_code}' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status` (404 = accepted, 401/403 = key problem).
+
+### 🤖 Claude — 2026-11-18T19:04:53.048Z
+
+> 🔧 **Bash** `{"command": "curl -sS -m 30 https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status | head -c 300; echo; curl -sS -m 30 -o /dev/null -w 'fake-request http=%{http_code}\\n' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status", "description": "Free fal.ai key check (status read only)", "timeout": 90000}`
+
+### 🧑 User — 2026-11-18T19:04:53.204Z
+
+> ↩︎ result: {"status":"COMPLETED","request_id":"01a1ea70-42d8-7943-b035-7bb5f129d872","response_url":null,"status_url":null,"cancel_url":null,"logs":null,"metrics":{"inference_time":18.389999866485596}}
+> fake-request http=404
+
+### 🤖 Claude — 2026-11-18T19:04:56.073Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__get_me,mcp__github__list_branches,SearchMcpRegistry,SuggestConnectors,SearchPlugins,SuggestPluginInstall", "max_results": 6}`
+
+### 🧑 User — 2026-11-18T19:04:56.082Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T19:04:57.046Z
+
+> 🔧 **mcp__github__get_me** `{}`
+
+### 🤖 Claude — 2026-11-18T19:04:57.412Z
+
+> 🔧 **SearchMcpRegistry** `{"keywords": ["World Labs", "Marble", "Atlas 3D worlds", "Hugging Face"]}`
+
+### 🧑 User — 2026-11-18T19:04:57.530Z
+
+> ↩︎ result: {"login":"josiahscalia5-dev","id":322329431,"profile_url":"https://github.com/josiahscalia5-dev","avatar_url":"https://avatars.githubusercontent.com/u/322329431?v=4","details":{"public_repos":11,"public_gists":0,"followers":0,"following":0,"created_at":"2026-08-29T02:18:36Z","updated_at":"2026-10-18T13:41:20Z"}}
+
+### 🧑 User — 2026-11-18T19:04:57.736Z
+
+> ↩︎ result: {"results":[{"name":"Hugging Face","description":"Access the Hugging Face Hub and thousands of Gradio Apps","directoryUuid":"37ed56d5-9d61-4fd4-ad00-b9134c694296","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["hf_whoami","space_search","model_search","model_details","paper_search","dataset_search","dataset_details","hf_doc_search","+2 more"],"connected":false,"enabledInChat":false},{"name":"mabl","description":"Author, run, edit, and analyze end-to-end tests","directoryUuid":"2cb13b65-17e0-4196-88e7-cb0664d55912","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["analyze_mabl_failure","analyze_mabl_results","analyze_test_impact","assign_xray_to_mabl_plan","assign_xray_to_mabl_test","check_release_readiness","compare_mabl_flow_versions","compare_mabl_test_versions","+85 more"],"connected":false,"enabledInChat":false},{"name":"Airtable","description":"Bring your structured data to Claude","directoryUuid":"cb504fab-e494-490f-bff8-bb3ab23a2209","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["create_ …[+3483 chars]
+
+### 🤖 Claude — 2026-11-18T19:04:58.860Z
+
+> 🔧 **SearchMcpRegistry** `{"keywords": ["worldlabs", "World Labs Marble", "Gaussian splats 3D world"]}`
+
+### 🧑 User — 2026-11-18T19:04:59.198Z
+
+> ↩︎ result: {"results":[{"name":"Workable","description":"Your AI assistant for Hiring and HR — inside Workable","directoryUuid":"b788f00c-4417-40b2-9e3c-b0e916eb962f","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["get_candidates","get_candidate","disqualify_candidate","move_candidate","get_candidate_activities","get_candidate_activity","get_disqualification_reasons","add_comment","+37 more"],"connected":false,"enabledInChat":false}],"note":"This search covers only a part of the connector directory. A connector that is not in these results can still exist. The full connector directory is on claude.ai."}
+
+### 🤖 Claude — 2026-11-18T19:05:03.061Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"atlas.worldlabs.ai/mcp\\|Add custom connector\\|custom connector\" docs backups/TOOL_MANIFEST.json backups/START_NEW_CLAUDE_ACCOUNT.md 2>/dev/null | head -8", "description": "Find how Atlas connector was added before"}`
+
+### 🧑 User — 2026-11-18T19:05:03.104Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r14/COORDINATION.md:26:* claude.ai connector `World_Labs_Atlas` (https://api.atlas.worldlabs.ai/mcp) connected by the user on account 14: `list_projects`
+> docs/briefs/2026-11-18-r15/GITHUB_3D_TOOLS.md:8:| **A. World Labs Atlas skills** (`worldlabsai/skills`) | Plugin `worldlabs@worldlabs` 0.2.2 INSTALLED in `~/.claude/plugins/cache/worldlabs/worldlabs/0.2.2/skills/` with all four skills: `atlas-blender`, `atlas-splats`, `atlas-flythrough`, `worldlabs-cli` (account 14 verified it = repo HEAD `6cdb6b9`; not reinstalled). UPDATE ~18:31 UTC: the user connected the Atlas tools on account 15 (claude.ai connector "World_Labs_Marble": `list_projects` → "My project", six task tools, credits available). `worldlabs` CLI not installed (only needed with an Atlas API key). | Only for the pending controlled Screen 04 unseen-scenery test (below). Not needed for the ongoing visual work. | User: claude.ai → Settings → Connectors → add custom connector `https://api.atlas.worldlabs.ai/mcp`, sign in to World Labs (project "My project", Personal workspace). Then Claude checks with the free `list_projects`. Skills restore: `bash scripts/setup-worldlabs-plugin.sh` (bootstrap runs it) …[+399 chars]
+
+### 🤖 Claude — 2026-11-18T19:05:03.415Z
+
+> 🔧 **SuggestConnectors** `{"uuids": ["37ed56d5-9d61-4fd4-ad00-b9134c694296"]}`
+
+### 🧑 User — 2026-11-18T19:05:03.693Z
+
+> ↩︎ result: [{"name":"Hugging Face","description":"Access the Hugging Face Hub and thousands of Gradio Apps","directoryUuid":"37ed56d5-9d61-4fd4-ad00-b9134c694296","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false}]
+
+### 🤖 Claude — 2026-11-18T19:05:06.175Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["commit-commands", "security-guidance", "code-simplifier", "claude-md-management", "pyright-lsp", "hubcap"]}`
+
+### 🧑 User — 2026-11-18T19:05:07.017Z
+
+> ↩︎ result: {"results":[{"id":"plugin_01MsZoTpmgRVtWrC5gZtXVza","name":"30660c6c-4a3b-4c48-84d6-917f249343d9","display_name":"Security Guidance","description":"Security review for Claude-generated code. Pattern-based warnings on edits, LLM-powered diff review on Stop, and an agentic commit reviewer that catches injection, XSS, SSRF, hardcoded secrets, and 25+ other vulnerability classes.","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-09-24T20:07:09.999589Z","updated_at":"2026-11-05T20:55:45.377758Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"David Dworken","email":null,"url":null},"publisher":{"tier":"anthropic","name":"anthropics","basis":"directory_review"},"content_scan":null,"components":[{"type":"hook","name":"PostToolUse","description":null,"origin":null},{"type":"hook","name":"SessionStart","description":null,"origin":null},{"type":"hook","name":"Stop","description":null,"origin":null},{"type":"hook","name":"UserPromptSubmit","description":null,"origin" …[+23284 chars]
+
+### 🤖 Claude — 2026-11-18T19:05:13.407Z
+
+> 🔧 **SuggestPluginInstall** `{"contextLabel": "Plugins your earlier Claude accounts had that aren't on this account yet", "trigger": "user_asked", "plugins": [{"pluginId": "plugin_01MsZoTpmgRVtWrC5gZtXVza", "pluginName": "Security Guidance", "description": "Security review for Claude-generated code: warnings on edits, diff review on Stop, commit reviewer."}, {"pluginId": "plugin_01PssTdS9J9Ryku67vDEthP5", "pluginName": "claude-md-management", "description": "Tools to maintain and improve CLAUDE.md files.", "skills": [{"name": "claude-md-improver"}]}, {"pluginId": "plugin_01KpT4HzVqei8C8FDLAnf37d", "pluginName": "code-simp …[+621 chars]`
+
+### 🧑 User — 2026-11-18T19:05:13.416Z
+
+> ↩︎ result: {"contextLabel":"Plugins your earlier Claude accounts had that aren't on this account yet","plugins":[{"pluginId":"plugin_01MsZoTpmgRVtWrC5gZtXVza","pluginName":"Security Guidance","description":"Security review for Claude-generated code. Pattern-based warnings on edits, LLM-powered diff review on Stop, and an agentic commit reviewer that catches injection, XSS, SSRF, hardcoded secrets, and 25+ other vulnerability classes."},{"pluginId":"plugin_01PssTdS9J9Ryku67vDEthP5","pluginName":"claude-md-management","description":"Tools to maintain and improve CLAUDE.md files - audit quality, capture session learnings, and keep project memory current."},{"pluginId":"plugin_01KpT4HzVqei8C8FDLAnf37d","pluginName":"code-simplifier","description":"Agent that simplifies and refines code for clarity, consistency, and maintainability while preserving functionality"},{"pluginId":"plugin_016Yuj5SeCp9zzVHWwvmjgwZ","pluginName":"commit-commands","description":"Streamline your git workflow with simple commands for committing, pushing, and creating pull requests"},{"pluginId":"plugin_019XVV1ZbujbTWA4oKikBis9","pluginName":"hubcap","description":"Chrome DevTools Protocol CLI skill — control Chrome, scrape  …[+394 chars]
+
+### 🤖 Claude — 2026-11-18T19:05:15.727Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T19:05:15.736Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-18T19:05:15.983Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T19:05:15.992Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-18T19:05:18.685Z
+
+> 🔧 **Bash** `{"command": "for b in s04-match s04-ringtex s05-match s06-match s07-match s08-scenery; do br=\"claude/rainbow-$b-c15\"; echo \"== $br\"; git show \"FETCH_HEAD:backups/wip/claude__rainbow-$b-c15/INFO.json\" 2>/dev/null | python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\nfor k in ['head','head_sha','branch_head','snapshot_utc','updated_utc','dirty_files','tracked_changed','untracked_files','pushed','remote_sha','note']:\n    if k in d: print(' ',k,'=',str(d[k])[:300])\nprint('  keys:',list(d.keys()))\n\"; done", "description": "Read WIP snapshot info for six c15 workers"}`
+
+### 🧑 User — 2026-11-18T19:05:18.869Z
+
+> ↩︎ result: == claude/rainbow-s04-match-c15
+>   head = 160ce059e5f4d1dbf680243720d1d17608dc5bd4
+>   keys: ['worktree', 'branch', 'head', 'time', 'dirty_tracked', 'untracked_copied', 'untracked_skipped', 'restore']
+> == claude/rainbow-s04-ringtex-c15
+>   head = fc28323a5573bd56c34593f6fa0b8709c0bd9fce
+>   keys: ['worktree', 'branch', 'head', 'time', 'dirty_tracked', 'untracked_copied', 'untracked_skipped', 'restore']
+> == claude/rainbow-s05-match-c15
+>   head = 34aadd1131e4825dae12e0c9a9a665ebbb30b720
+>   keys: ['worktree', 'branch', 'head', 'time', 'dirty_tracked', 'untracked_copied', 'untracked_skipped', 'restore']
+> == claude/rainbow-s06-match-c15
+>   head = 050155b5f6f578d6ee53500510a1725118616e12
+>   keys: ['worktree', 'branch', 'head', 'time', 'dirty_tracked', 'untracked_copied', 'untracked_skipped', 'restore']
+> == claude/rainbow-s07-match-c15
+>   head = dbc7678cd067f7d16e0f30ef6a5d26310043991c
+>   keys: ['worktree', 'branch', 'head', 'time', 'dirty_tracked', 'untracked_copied', 'untracked_skipped', 'restore']
+> == claude/rainbow-s08-scenery-c15
+>   head = df4a3bb7ea9babad3a34f6a47c1a68a3834bb233
+>   keys: ['worktree', 'branch', 'head', 'time', 'dirty_tracked', 'untracked_copied', 'untracked_skipped', 'restore']
+
+### 🤖 Claude — 2026-11-18T19:05:22.427Z
+
+> 🔧 **Bash** `{"command": "for b in s04-match s04-ringtex s05-match s06-match s07-match s08-scenery; do echo \"== $b\"; git show \"FETCH_HEAD:backups/wip/claude__rainbow-$b-c15/INFO.json\" | python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\nprint('  time',d['time']); print('  dirty_tracked',d['dirty_tracked']); print('  untracked_copied',d['untracked_copied'][:12], '... n=',len(d['untracked_copied'])); print('  skipped n=',len(d['untracked_skipped']))\n\"; git ls-tree -r --name-only FETCH_HEAD \"backups/wip/claude__rainbow-$b-c15/\" | grep -c . ; done; echo; timeout 120 git ls-remote origin 'refs/head …[+94 chars]`
+
+### 🧑 User — 2026-11-18T19:05:23.177Z
+
+> ↩︎ result: == s04-match
+>   time 2026-11-18T19:00:09+00:00
+>   dirty_tracked ['src/world/match04m4.ts']
+>   untracked_copied ['assets/textures/match04/tile_side04.png', 'tools/match04/sideband04.py'] ... n= 2
+>   skipped n= 0
+> 4
+> == s04-ringtex
+>   time 2026-11-18T19:00:09+00:00
+>   dirty_tracked ['src/world/match04m4.ts']
+>   untracked_copied ['assets/textures/match04/ring_paint04.json', 'assets/textures/match04/tile_ring_paint.png', 'assets/textures/match04/tile_ring_paint_soft.png', 'tools/match04/ring_paint04.py'] ... n= 4
+>   skipped n= 0
+> 6
+> == s05-match
+>   time 2026-11-18T19:00:09+00:00
+>   dirty_tracked ['src/vfx/clip05.ts', 'src/vfx/index.ts', 'src/world/environment.ts', 'src/world/match05far.ts', 'tools/match05/r8_shots.mjs']
+>   untracked_copied ['qa/match/05/r14/step4_trans/before/shots.json', 'qa/match/05/r14/step4_trans/before/t102_06.png', 'qa/match/05/r14/step4_trans/before/x100.png', 'qa/match/05/r14/step4_trans/before/x101.png', 'qa/match/05/r14/step4_trans/before/x103.png', 'qa/match/05/r14/step4_trans/before/x105.png', 'qa/match/05/r14/step4_trans/before/x99.png', 'qa/match/05/r15/KEPT_START.txt', 'qa/match/05/r15/step1_trans/before/shots.json', 'qa/match/05/r15/step1_trans/before/x100.png', 'qa/m …[+1714 chars]
+
+### 🤖 Claude — 2026-11-18T19:05:43.461Z
+
+> 🔧 **Bash** `{"command": "git show FETCH_HEAD:backups/claude-sessions/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/transcript.md | awk '/^### 🧑 User/{p=1;c=0} p{print; c++} c>12{p=0}' | grep -v \"task-notification\\|task-id\\|tool-use-id\\|output-file\\|<status>\\|<summary>\\|<note>\\|<result>\\|</task\" | grep -v \"^$\" | tail -80", "description": "Read user messages from previous lead transcript"}`
+
+### 🧑 User — 2026-11-18T19:05:43.514Z
+
+> ↩︎ result: >   File "<string>", line 6
+> >     def fit(i): return cv2.resize(i,(W,int(i.shape[0]*W/i.shape[1])) if i.shape[1]!=W else i
+> >                                  ^
+> > SyntaxError: '(' was never closed
+> ### 🤖 Claude — 2026-11-18T18:45:25.081Z
+> > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\nimport cv2, numpy as np, json\no = cv2.imread('assets/textures/match04/tile_ring.png'); n = cv2.imread('assets/textures/match04/tile_ring_paint.png')\nprint('old', o.shape, 'new', n.shape)\nW = 1024\no2 = cv2.resize(o, (W, 256))\nn2 = cv2.resize(n, (W, max(256, int(n.shape[0] * W / n.shape[1]))))\na = cv2.imread('references/04_through_the_five_arrows.png')[380:760, 180:700]; a = cv2.resize(a, (W, int(380 * W / 520)))\ndef lab(img, t):\n    img = img.copy(); cv2.rectangle(img, (0, 0), (len(t) * 15 + 20, 34), (0, 0, 0), -1)\n    cv2.putTex …[+565 chars]`
+> ### 🧑 User — 2026-11-18T18:45:25.677Z
+> > ↩︎ result: old (192, 1024, 3) new (160, 2048, 3)
+> > {'note': 'tools/match04/ring_paint04.py: painted inner gold ring, straightened; cols psi -pi..pi (0 = top, + = screen right), rows s 0 (groove) .. 1 (next groove), going deeper', 'periods': [1], 'size': [2048, 160], 'good': [-1.678854597704604 …[+8655 chars]
+
+### 🤖 Claude — 2026-11-18T19:05:46.883Z
+
+> 🔧 **Bash** `{"command": "git show FETCH_HEAD:backups/claude-sessions/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/transcript.md | awk '/^### 🧑 User/{hdr=$0; getline nl; getline l1; if (l1 !~ /^> ↩︎|task-notification|Stop hook|<event>|^$/) {print hdr; print l1; for(i=0;i<4;i++){if((getline l)>0) print l}}}' | head -120", "description": "Extract real user messages from previous lead"}`
+
+### 🧑 User — 2026-11-18T19:05:46.934Z
+
+> ↩︎ result: ### 🧑 User — 2026-11-18T18:12:54.958Z
+> CLAUDIA — COMPLETE RAINBOW GAME RESTORATION, ALL 10 AGENTS, WORLD LABS MARBLE/ATLAS, AI TOOLS, GITHUB BACKUPS AND CONTINUATION
+> 
+> URGENT: I AM SWITCHING TO THIS CLAUDE ACCOUNT BECAUSE MY PREVIOUS ACCOUNT RAN OUT OF USAGE CREDITS.
+> 
+> DO NOT START A NEW GAME. DO NOT REDESIGN ANYTHING. DO NOT REBUILD COMPLETED WORK.
+> ### 🧑 User — 2026-11-18T18:26:32.031Z
+> CLAUDIA — TEST A FASTER WAY TO RECONSTRUCT MY EXACT APPROVED RAINBOW SCENERY
+> 
+> I want you to evaluate a more direct workflow for matching my original approved Screens 04–08.
+> 
+> Instead of repeatedly generating new environments that look different from my artwork, investigate whether we can reuse the actual approved image details on our existing 3D geometry.
+> ### 🧑 User — 2026-11-18T18:29:29.579Z
+> [Request interrupted by user]
+> 
+> ### 🧑 User — 2026-11-18T18:29:29.706Z
+> 
+> CLAUDIA — VERIFY ALL THREE AI CONNECTIONS FOR MY RAINBOW GAME
+> ### 🧑 User — 2026-11-18T18:36:30.008Z
+> Can u work on the other screens to
+> 
+> ### 🤖 Claude — 2026-11-18T18:36:43.634Z
+> 
+> Yes. I'll start Screens 07 and 06 now, which means six workers in total. First I'll check the four running workers and fetch the newest 07 and 06 work (one at a time; the  …[+963 chars]
+
+### 🤖 Claude — 2026-11-18T19:06:00.891Z
+
+> 🔧 **Bash** `{"command": "nproc; free -g | head -2; git rev-parse --is-shallow-repository; git show FETCH_HEAD:backups/wip/claude__rainbow-s05-match-c15/INFO.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print(d['restore']);print(d['worktree']);print(d['untracked_skipped'][:5])\"; git ls-tree -r --name-only FETCH_HEAD backups/wip/claude__rainbow-s05-match-c15/ | head -30", "description": "CPU, memory, shallow state and WIP restore steps"}`
+
+### 🧑 User — 2026-11-18T19:06:00.967Z
+
+> ↩︎ result: 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0          10           0           4          15
+> true
+> git switch claude/rainbow-s05-match-c15 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c15/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c15/untracked/* into the worktree
+> /home/user/wt/s05
+> ['qa/match/05/r15/step1_trans/before/t95_left.png', 'qa/match/05/r15/step1_trans/before/t95_right.png', 'qa/match/05/r15/step1_trans/before/t95_through_screen.png', 'qa/match/05/r15/step1_trans/before/t98_end.png', 'qa/match/05/r15/step1_trans/before/x90.png']
+> backups/wip/claude__rainbow-s05-match-c15/INFO.json
+> backups/wip/claude__rainbow-s05-match-c15/tracked.patch
+> backups/wip/claude__rainbow-s05-match-c15/untracked/qa/match/05/r14/step4_trans/before/shots.json
+> backups/wip/claude__rainbow-s05-match-c15/untracked/qa/match/05/r14/step4_trans/before/t102_06.png
+> backups/wip/claude__rainbow-s05-match-c15/untracked/qa/match/05/r14/step4_trans/before/x100.png
+> backups/wip/claude__rainbow-s05-match-c15/untracked/qa/match/05/r14/step4_trans/before/x101.png
+> backups/wip/claude__rainbow-s05-match …[+1459 chars]
+
+### 🤖 Claude — 2026-11-18T19:06:03.586Z
+
+The clone is shallow, so I'll fetch the six branch tips one at a time in the background. Meanwhile I'll read the launch briefs.
+
+### 🤖 Claude — 2026-11-18T19:06:05.638Z
+
+> 🔧 **Bash** `{"command": "for b in s05-match s08-scenery s04-match s04-ringtex s06-match s07-match; do br=\"claude/rainbow-$b-c15\"; s=$(date +%s); timeout 600 git fetch --depth=1 origin \"+$br:refs/remotes/origin/$br\" >/dev/null 2>&1; echo \"$br rc=$? $(( $(date +%s)-s ))s $(git rev-parse --short refs/remotes/origin/$br 2>/dev/null)\"; done", "description": "Fetch the six c15 branch tips sequentially", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T19:06:05.682Z
+
+> ↩︎ result: Command running in background with ID: bqdzwtlo0. Output is being written to: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bqdzwtlo0.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T19:06:06.091Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r15/S05_LAUNCH.md"}`
+
+### 🧑 User — 2026-11-18T19:06:06.118Z
+
+> ↩︎ result: 1	# Round 15 (account 15) — Screen 05 specialist launch prompt (water-fx-specialist)
+> 2	
+> 3	You are the Rainbow project's `water-fx-specialist`, working ONLY on playable Screen 05 "Flow Into the Current", VISUALS ONLY.
+> 4	(Account 14 ran out of usage at ~17:46 UTC; you continue its work on a NEW branch. Nothing of account 14 was lost.)
+> 5	
+> 6	## Where you work
+> 7	* Git worktree `/home/user/wt/s05` on branch `claude/rainbow-s05-match-c15` (created from `claude/rainbow-s05-match-c14` @ `34aadd11`,
+> 8	  the newest account-14 tip). `node_modules` is a symlink to the lead checkout. Untracked BEFORE shots of the unfinished step 4
+> 9	  (`qa/match/05/r14/step4_trans/before/`, partial: x99 x100 x101 x103 x105 t102_06 + shots.json; t95/t98/x93/x96/x97 were too big
+> 10	  for the WIP snapshot — re-capture what you need).
+> 11	* Commit and `git push -u origin claude/rainbow-s05-match-c15` after every step (kept or rejected). Push ONLY that branch. Never
+> 12	  force-push, rebase, reset, merge, or write any other branch (every `-c14` / `-c13` / older branch is protected).
+> 13	* Use dev-server port 5275 (the lead uses 5273/5274, Screen 08 uses 5278). The lead's five-minute autosave snapshots your
+> 14	  unfinish …[+4312 chars]
+
+### 🤖 Claude — 2026-11-18T19:06:10.952Z
+
+The launch briefs can be reused as they are. To resume and not repeat work, I'll pull the last lines of each worker's saved transcript to see exactly what it was doing when it stopped.
+
+### 🤖 Claude — 2026-11-18T19:06:13.603Z
+
+> 🔧 **Bash** `{"command": "for a in ae0cb1cd9df5a5520:s04 a473760960d881afb:s04tex a91fa5d074fcb6e28:s05 ace8c8034cc58fdda:s06 a06c699d872e14702:s07 a16eaaa7abf16d292:s08; do id=${a%%:*}; n=${a##*:}; echo \"=================== $n\"; git show FETCH_HEAD:backups/claude-sessions/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/subagents/agent-$id.md | grep -v \"^$\" | grep -v \"↩︎ result\" | tail -14 | cut -c1-420; done", "description": "Tail of each worker transcript"}`
+
+### 🧑 User — 2026-11-18T19:06:13.654Z
+
+> ↩︎ result: =================== s04
+> fatal: invalid object name 'FETCH_HEAD'.
+> =================== s04tex
+> fatal: invalid object name 'FETCH_HEAD'.
+> =================== s05
+> fatal: invalid object name 'FETCH_HEAD'.
+> =================== s06
+> fatal: invalid object name 'FETCH_HEAD'.
+> =================== s07
+> fatal: invalid object name 'FETCH_HEAD'.
+> =================== s08
+> fatal: invalid object name 'FETCH_HEAD'.
+
+### 🤖 Claude — 2026-11-18T19:06:17.498Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-47b10cec-03c7co; git rev-parse --short $L; for a in ae0cb1cd9df5a5520:s04 a473760960d881afb:s04tex a91fa5d074fcb6e28:s05 ace8c8034cc58fdda:s06 a06c699d872e14702:s07 a16eaaa7abf16d292:s08; do id=${a%%:*}; n=${a##*:}; echo \"=================== $n\"; git show $L:backups/claude-sessions/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/subagents/agent-$id.md | grep -v \"^$\" | grep -v \"↩︎ result\" | tail -12 | cut -c1-400; done", "description": "Tail of each worker transcript from lead ref"}`
+
+### 🧑 User — 2026-11-18T19:06:17.565Z
+
+> ↩︎ result: 90528de
+> =================== s04
+> ### 🧑 User — 2026-11-18T18:49:47.311Z
+> ### 🤖 Claude — 2026-11-18T18:49:51.183Z
+> > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/b2_far.png"}`
+> ### 🧑 User — 2026-11-18T18:49:51.206Z
+> ### 🤖 Claude — 2026-11-18T18:50:15.160Z
+> > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"\"\"                             // (1 = cyan..lilac, less = start nearer the pink ribbon), w slow lateral wander of the bands (u)\n\"\"\",\"\"\"                             // (1 = cyan..lilac, less = start nearer the pink ribbon), w slow lateral wander of the bands (u)
+> ### 🧑 User — 2026-11-18T18:50:53.168Z
+> > 04 f06_forward6u s 84.395 lat 0 stage 04 frames 26
+> > 04 t66_through_screen s 102.852 lat 0 stage 04 frames 106
+> > 04 s_right_hard s 90.248 lat 1.65 stage 04 frames 52
+> ### 🤖 Claude — 2026-11-18T18:50:53.404Z
+> You've hit your 5-hour limit · resets 11:10pm (UTC)
+> =================== s04tex
+> >     console.log(SCREEN, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'frames', st.frames);
+> >   }
+> > } finally {
+> >   writeFileSync(`${OUT}/motion.json`, J …[+5022 chars]
+
+### 🤖 Claude — 2026-11-18T19:06:26.535Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bqdzwtlo0.output"}`
+
+### 🧑 User — 2026-11-18T19:06:26.558Z
+
+> ↩︎ result: <system-reminder>Warning: the file exists but the contents are empty.</system-reminder>
+
+### 🤖 Claude — 2026-11-18T19:06:29.423Z
+
+> 🔧 **Bash** `{"command": "grep -n \"port\\|527[0-9]\" docs/briefs/2026-11-18-r15/S04_LAUNCH.md docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md docs/briefs/2026-11-18-r15/S06_LAUNCH.md docs/briefs/2026-11-18-r15/S07_LAUNCH.md docs/briefs/2026-11-18-r15/S08_LAUNCH.md | grep -i \"port\" | cut -c1-220; ps aux | grep \"git fetch\\|git-remote\\|lfs\" | grep -v grep | head -3 | cut -c1-200", "description": "Find dev-server ports per brief; fetch progress"}`
+
+### 🧑 User — 2026-11-18T19:06:29.482Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r15/S04_LAUNCH.md:14:  `node tools/lead_r13/swim_clip.mjs 04 <out.mp4> 3.6 "<query>"`. Screen 05 uses port 5275 and Screen 08 port 5278 — if a tool
+> docs/briefs/2026-11-18-r15/S04_LAUNCH.md:15:  takes a port, use 5273/5274. Never commit or print secrets. No paid jobs. Do not reinstall tools.
+> docs/briefs/2026-11-18-r15/S04_LAUNCH.md:20:`references/04_through_the_five_arrows.png` is the BLUEPRINT: pink laundry-room opening (porthole window, control panel with shirt icon,
+> docs/briefs/2026-11-18-r15/S04_LAUNCH.md:53:Separate full-size portrait renders (no collages) under `qa/match/04/r15/<step>/`: APPROVED (`references/04_through_the_five_arrows.png`),
+> docs/briefs/2026-11-18-r15/S04_LAUNCH.md:58:## Reporting
+> docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md:47:   suspects the entrance and the deeper interior have different proportions); if the painted period differs from `m04ringp`, test that
+> docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md:66:  method for the painted magenta swirl bands on the side water ONLY as a separate, second switch (report it separately).
+> docs/briefs/2026-11-18-r15/S06_LAUNCH.md:43:Separate full-size portrait renders (no collages) under `q …[+1510 chars]
+
+### 🤖 Claude — 2026-11-18T19:06:50.183Z
+
+The tip fetch is slow (shallow clone, one branch at a time). While it runs I'll write the round-16 coordination file so this restart is documented for any future account.
+
+### 🤖 Claude — 2026-11-18T19:06:51.230Z
+
+> 🔧 **Bash** `{"command": "cat .gitattributes | head; python3 -c \"\nimport json;d=json.load(open('backups/AGENTS_STATUS.json'));print(list(d.keys())[:40])\"", "description": "Check LFS patterns and agents status keys"}`
+
+### 🧑 User — 2026-11-18T19:06:51.281Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped', 'round3_stopped', 'round4_done', 'backup_2026_11_17_1945', 'round4_stopped_account4', 'round5_account5', 'round6_account6', 'round9_account9', 'running_now_account8_archived', 'round12_account12', 'round13_account13', 'round14_account14', 'round15_account15']
+
+### 🤖 Claude — 2026-11-18T19:06:53.119Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/AGENTS_STATUS.json'));print(json.dumps(d['running_now'],indent=1)[:1500]);print('----');print(json.dumps(d['round15_account15'],indent=1)[:2500])\"", "description": "Show running_now and round15 entries"}`
+
+### 🧑 User — 2026-11-18T19:06:53.184Z
+
+> ↩︎ result: {
+>  "_note": "see round15_account15.running (3 background workers in the account-15 lead container, started ~18:25 UTC)"
+> }
+> ----
+> {
+>  "updated": "2026-11-18T18:35Z",
+>  "lead_branch": "ccr-47b10cec-03c7co",
+>  "coordination": "docs/briefs/2026-11-18-r15/COORDINATION.md",
+>  "running": {
+>   "s04": {
+>    "agent": "foam-bubbles-particles (lead-directed)",
+>    "branch": "claude/rainbow-s04-match-c15",
+>    "worktree": "/home/user/wt/s04",
+>    "start": "fc28323a (-c14 tip)",
+>    "brief": "docs/briefs/2026-11-18-r15/S04_LAUNCH.md",
+>    "log": "qa/match/04/r15/PROGRESS.md",
+>    "kind": "background agent in the lead container"
+>   },
+>   "s05": {
+>    "agent": "water-fx-specialist",
+>    "branch": "claude/rainbow-s05-match-c15",
+>    "worktree": "/home/user/wt/s05",
+>    "start": "34aadd11 (-c14 tip) + untracked step-4 BEFORE shots",
+>    "brief": "docs/briefs/2026-11-18-r15/S05_LAUNCH.md",
+>    "log": "qa/match/05/r15/PROGRESS.md",
+>    "kind": "background agent in the lead container"
+>   },
+>   "s08": {
+>    "agent": "washer-environment-modeler",
+>    "branch": "claude/rainbow-s08-scenery-c15",
+>    "worktree": "/home/user/wt/s08",
+>    "start": "df4a3bb7 (-c14 tip)",
+>    "brief": "docs/briefs/2026-11-18-r15/S08_LAUNCH.md",
+>    "log": "q …[+1427 chars]
+
+### 🤖 Claude — 2026-11-18T19:07:17.294Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md", "content": "# Round 16 (account 16) — coordination of the five playable screens (VISUALS ONLY)\n\nLead session branch **`ccr-e42bb3c0-jpif8d`** (session `session_01Q46SCGQWf9dNTogNZTniy4`, started 2026-11-18 18:51 UTC from the\naccount-15 lead `ccr-47b10cec-03c7co` @ `0aeee2e`; nothing merged). The account-15 lead hit its **5-hour usage limit at 18:49 UTC**\n(resets 23:10 UTC); all six of its background workers were cut off between 18:49 and 18:51 UTC. Its container kept autosaving\nbackup-only snapshots to `ccr-47 …[+5027 chars]`
+
+### 🧑 User — 2026-11-18T19:07:17.490Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:07:18.890Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bqdzwtlo0.output"}`
+
+### 🧑 User — 2026-11-18T19:07:18.914Z
+
+> ↩︎ result: <system-reminder>Warning: the file exists but the contents are empty.</system-reminder>
+
+### 🤖 Claude — 2026-11-18T19:07:25.773Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-47b10cec-03c7co; git ls-tree -r --name-only $L backups/wip/ | grep -i \"progress\\|notes\" ; for b in s05-match s06-match s07-match s04-ringtex; do echo \"== $b skipped:\"; git show $L:backups/wip/claude__rainbow-$b-c15/INFO.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print([x for x in d['untracked_skipped']][:40])\" | cut -c1-900; done", "description": "Look for PROGRESS notes and skipped files in WIP"}`
+
+### 🧑 User — 2026-11-18T19:07:25.921Z
+
+> ↩︎ result: backups/wip/claude__rainbow-s08-scenery-c15/untracked/qa/match/08/r15/PROGRESS.md
+> == s05-match skipped:
+> ['qa/match/05/r15/step1_trans/before/t95_left.png', 'qa/match/05/r15/step1_trans/before/t95_right.png', 'qa/match/05/r15/step1_trans/before/t95_through_screen.png', 'qa/match/05/r15/step1_trans/before/t98_end.png', 'qa/match/05/r15/step1_trans/before/x90.png', 'qa/match/05/r15/step1_trans/before/x93.png', 'qa/match/05/r15/step1_trans/before/x96.png', 'qa/match/05/r15/step1_trans/before/x97.png', 'qa/match/05/r15/step1_trans/before/x97L.png', 'qa/match/05/r15/step1_trans/new/t95_left.png', 'qa/match/05/r15/step1_trans/new/t95_right.png', 'qa/match/05/r15/step1_trans/new/t95_through_screen.png', 'qa/match/05/r15/step1_trans/new/t98_end.png', 'qa/match/05/r15/step1_trans/new/x105.png', 'qa/match/05/r15/step1_trans/new/x90.png', 'qa/match/05/r15/step1_trans/new/x93.png', 'qa/match/05/r15/step1_trans/new/x96.png', 'qa/match/05/r15/step1_trans/new/x97.png', 'qa/match/05/r15/step1_trans/new/x97
+> == s06-match skipped:
+> []
+> == s07-match skipped:
+> ['qa/match/07/r15/step1/BEFORE/a00_approved_view.png', 'qa/match/07/r15/step1/BEFORE/f03_forward3u.png', 'qa/match/07/r15/step1/BEFORE/f06_forward6u …[+779 chars]
+
+### 🤖 Claude — 2026-11-18T19:07:31.749Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-47b10cec-03c7co; P=backups/claude-sessions/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/subagents; for a in a91fa5d074fcb6e28:s05 a06c699d872e14702:s07; do id=${a%%:*}; n=${a##*:}; echo \"=================== $n\"; git show $L:$P/agent-$id.md | grep -v \"^>\" | grep -v \"^###\" | grep -v \"^$\" | tail -30 | cut -c1-500; done", "description": "Narrative notes from s05 and s07 workers"}`
+
+### 🧑 User — 2026-11-18T19:07:31.794Z
+
+> ↩︎ result: =================== s05
+> # Subagent agent-a91fa5d074fcb6e28 — session 6b384c42-43c8-55f4-abb4-6eff88bf7fb2
+> Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S05_LAUNCH.md exactly — it is your complete launch brief (worktree /home/user/wt/s05, branch claude/rainbow-s05-match-c15, binding rules, resume point, task list, proof format, reporting). Work only inside /home/user/wt/s05 (cd there first; every Bash call starts in /home/user/rainbow-, so always use absolute paths or `cd /home/user/wt/s05 && ...`). Start by reading the binding rules files it names and qa/match/05/r14/PROGRESS.md, 
+> Let me add an exploratory switch with tunable fold window to see what the stage end looks like with the 05 block kept intact.
+> Now the proper implementation: the block is removed when Benny crosses into 06 (driven by Benny's course position, not the eye distance).
+> You've hit your 5-hour limit · resets 11:10pm (UTC)
+> =================== s07
+> # Subagent agent-a06c699d872e14702 — session 6b384c42-43c8-55f4-abb4-6eff88bf7fb2
+> Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S07_LAUNCH.md exactly — it is your complete launch brief (worktree /home/user/wt/s07, branch claude/rainbow-s0 …[+530 chars]
+
+### 🤖 Claude — 2026-11-18T19:07:37.885Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-47b10cec-03c7co; git show $L:backups/claude-sessions/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/transcript.sanitized.jsonl | python3 -c \"\nimport json,sys\nfor line in sys.stdin:\n    try: e=json.loads(line)\n    except: continue\n    m=e.get('message',{}) if isinstance(e,dict) else {}\n    c=m.get('content') if isinstance(m,dict) else None\n    if not isinstance(c,list): continue\n    for b in c:\n        if isinstance(b,dict) and b.get('type')=='tool_use' and b.get('name')=='SendMessage':\n            i=b.get('input',{}); print('->',i.get('to'),'|',e.get('timestamp',''), …[+111 chars]`
+
+### 🧑 User — 2026-11-18T19:07:37.979Z
+
+> ↩︎ result: -> s05 | 2026-11-18T18:21:56.867Z | Lead note for Screen 05 (add as task 2, before the m05bank column fix): the biggest visible wrong thing I see while steering is in qa/match/05/r14/step3_m05bank/new/k81_kink_left.png (and before/): the whole LEFT wall is a smeared, radially streaked projection (stretched purple/pink texture from x 0–300, y 200–1100), a flat cut-off chunk of the gold ring / paddle sits at x 150–300 y 440–540, and a hot-pink triangular smear at the bottom-left corner (x 0–60, y 1030–1180). Painted design: crisp purple slotted wall with glossy gold ring bands. Find the cause (projection used outside its valid view / wrong fallback material) and make the walls read as the painted slotted wall + gold bands there — same rules: URL switch, approved view 0 px, BEFORE/NEW proof at hard left, k81 left, t95 left and the standard views. Continue task 1 first if you are mid-way.
+> 
+> -> s04 | 2026-11-18T18:32:49.641Z | Lead note for Screen 04: your task 2 (interior rings) is now handled by a separate controlled test in /home/user/wt/s04b (branch claude/rainbow-s04-ringtex-c15, switch &m04rpaint, painted rings unwrapped from the approved picture onto the ring geometry). Skip task  …[+5954 chars]
+
+### 🤖 Claude — 2026-11-18T19:07:40.902Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bqdzwtlo0.output; date -u +%H:%M:%S; ps aux | grep \"git fetch\" | grep -v grep | awk '{print $NF}' | head -3", "description": "Check tip fetch progress"}`
+
+### 🧑 User — 2026-11-18T19:07:40.954Z
+
+> ↩︎ result: 19:07:40
+> /tmp/claude-70a7-cwd
+> +claude/rainbow-s05-match-c15:refs/remotes/origin/claude/rainbow-s05-match-c15
+> +claude/rainbow-s05-match-c15:refs/remotes/origin/claude/rainbow-s05-match-c15
+
+### 🤖 Claude — 2026-11-18T19:08:05.595Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r16/RESUME_R16.md", "content": "# Round 16 resume notes — where each round-15 worker stopped (account 15 hit its 5-hour limit at 18:49 UTC)\n\nEvery worker below was cut off mid-step. Its committed work is on its `-c15` tip; its UNFINISHED edits (tracked diff + new files)\nwere captured by the account-15 autosave at 19:00:09 UTC in `backups/wip/<branch>/` on `origin/ccr-47b10cec-03c7co` (`90528de`) and\nare applied on top of the new `-c16` branch in the worker's worktree (left UNCOMMITTED, exactly as the worker left them). Large\nrender …[+5805 chars]`
+
+### 🧑 User — 2026-11-18T19:08:05.649Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r16/RESUME_R16.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:08:09.391Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bqdzwtlo0.output; date -u +%H:%M:%S; cd /home/user/rainbow- && du -sh .git/objects 2>/dev/null | tail -1; ls -la .git/objects/pack/ | tail -3", "description": "Check fetch progress and pack growth"}`
+
+### 🧑 User — 2026-11-18T19:08:09.437Z
+
+> ↩︎ result: 19:08:09
+> 3.6G	.git/objects
+> -r--r--r--  1 root root  145334271 Nov 18 18:56 tmp_pack_WWG7Lr
+> -r--r--r--  1 root root 1083596799 Nov 18 19:02 tmp_pack_bLXBZ9
+> -r--r--r--  1 root root  385216511 Nov 18 19:08 tmp_pack_dOR9Jf
+

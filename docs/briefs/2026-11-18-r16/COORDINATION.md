@@ -1,0 +1,55 @@
+# Round 16 (account 16) — coordination of the five playable screens (VISUALS ONLY)
+
+Lead session branch **`ccr-e42bb3c0-jpif8d`** (session `session_01Q46SCGQWf9dNTogNZTniy4`, started 2026-11-18 18:51 UTC from the
+account-15 lead `ccr-47b10cec-03c7co` @ `0aeee2e`; nothing merged). The account-15 lead hit its **5-hour usage limit at 18:49 UTC**
+(resets 23:10 UTC); all six of its background workers were cut off between 18:49 and 18:51 UTC. Its container kept autosaving
+backup-only snapshots to `ccr-47b10cec-03c7co` afterwards (`90528de` 19:00 UTC = the final WIP snapshot of every worker, taken after
+all six had stopped). Those commits are backups only (transcripts, `backups/wip/`), no game code; they are read here with
+`git show origin/ccr-47b10cec-03c7co:<path>`, never merged.
+
+Rules (binding, unchanged): `docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md` (visuals only) +
+`docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` + `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md` +
+`docs/briefs/2026-11-18-r10/RULES_R10.md` + `docs/briefs/2026-11-18-r8/COMMON_RULES.md`. Launch briefs: the r15 ones in
+`docs/briefs/2026-11-18-r15/` (read `-c15` as `-c16`, `r15` as `r16`) + `RESUME_R16.md` in this folder (where each worker stopped).
+
+## Services verified at start (free reads only, ~19:00–19:10 UTC)
+* Five-minute autosave: daemon running; `backups/autosave.config.json` → `branch` = `ccr-e42bb3c0-jpif8d`; the account-15 lead and its
+  six `-c15` branches added to `protected_branches` (65 protected). Save `bdc747c` pushed, `git ls-remote` == HEAD.
+* GitHub: the hook's 18:52 fetch failure was transient; git proxy fetch / push / ls-remote OK; GitHub MCP `get_me` OK
+  (`josiahscalia5-dev`). Shallow clone: fetch tips one at a time with `--depth=1`.
+* World Labs Marble API key (environment-injected): authenticated, **5,420 credits**; no paid job. fal.ai (`queue.fal.run`, injected):
+  request `01a1ea70` COMPLETED, fake request → 404 (= key accepted). No paid job.
+* Plugins on this account: worldlabs@worldlabs 0.2.2 (4 Atlas skills), superpowers, playwright (MCP connected), code-review,
+  feature-dev, frontend-design, claude-code-setup, typescript-lsp, context7, rv-tools, unity, video-to-code-skill. The worldlabs
+  plugin's own MCP (`https://api.atlas.worldlabs.ai/mcp`) was re-enabled for this project (it had been disabled as a duplicate of the
+  claude.ai connector); it reports "Needs authentication" (OAuth cannot be started from a cloud session). context7: needs auth (unused).
+* claude.ai connectors on this account: **none** (`ListConnectors` empty) → World Labs Atlas and Hugging Face are NOT connected
+  (user action in claude.ai → Settings → Connectors; Atlas = custom connector `https://api.atlas.worldlabs.ai/mcp`). Not needed for
+  the running visual work (DA3 depth maps of all five pictures are in `qa/da3/2026-11-18/`).
+* Bootstrap (18:58 UTC): Blender 5.3.0, Android SDK 34 + build-tools 34.0.0, Java 21, Node 22 / npm, Python QA libs, Playwright
+  Chromium (WebGL2), ffmpeg / ImageMagick, tsc + continuity tests: OK. LFS 64/64 local + on GitHub. 13/13 references byte-identical.
+* Container: 4 CPU cores, 15 GB RAM, ~40 GB writable allowance. Account 15 ran six workers on 4 cores (load ≈ 15): renders were slow.
+
+## Workstream map (six background workers inside the lead container — the user authorized six at 18:36 UTC, "Can u work on the other screens to")
+| Screen | Round-16 branch | Started at (= newest -c15 tip + 19:00 WIP) | Agent | Worktree | Port |
+|---|---|---|---|---|---|
+| 04 | `claude/rainbow-s04-match-c16` | `160ce059` + WIP (`match04m4.ts`, side-band tile + tool) | foam-bubbles-particles | `/home/user/wt/s04` | 5273 |
+| 04 test | `claude/rainbow-s04-ringtex-c16` | `fc28323a` + WIP (`match04m4.ts`, painted ring tiles + tool) | washer-environment-modeler | `/home/user/wt/s04b` | 5274 |
+| 05 | `claude/rainbow-s05-match-c16` | `34aadd11` + WIP (5 tracked files, BEFORE/NEW shots, probe) | water-fx-specialist | `/home/user/wt/s05` | 5275 |
+| 06 | `claude/rainbow-s06-match-c16` | `050155b5` + WIP (`match06.ts`, ring tile + tool) | reference-match-director | `/home/user/wt/s06` | 5276 |
+| 07 | `claude/rainbow-s07-match-c16` | `dbc7678c` + WIP (step-1 shots, near-tile tool, audit) | water-fx-specialist | `/home/user/wt/s07` | 5277 |
+| 08 scenery | `claude/rainbow-s08-scenery-c16` | `df4a3bb7` + WIP (`match08.ts`, `shots08.mjs`, step-1 pictures) | washer-environment-modeler | `/home/user/wt/s08` | 5278 |
+
+Worktrees use the sparse checkout from the r15 DISK TRAP note (`/qa/pilot05/ /qa/worldlabs/ /qa/imageblaster/ /builds/ /backups/`
+excluded); `node_modules` is a symlink to the lead checkout; the lead checkout is never sparse (the autosave writes `backups/`).
+Logs: `qa/match/<NN>/r16/PROGRESS.md` (resume from `r15/PROGRESS.md`). Merging needs the user's OK. If account 16 runs out: `-c17`
+branches from each NEWEST `-c16` tip + `backups/wip/` snapshot; never write `-c16` from another account.
+
+## Open user request carried over
+* 18:44 UTC "show me the painted ring test results" (Screen 04 `&m04rpaint`, s04tex). Interim texture shown 18:45 (NOT YET PROVEN);
+  first in-game APPROVED / BEFORE / NEW set still owed → highest priority on resume.
+
+## Progress shown to the user (separate full-size APPROVED / BEFORE / NEW)
+| # | Screen / step | Verdict |
+|---|---|---|
+| (r15 1–3) | see `docs/briefs/2026-11-18-r15/COORDINATION.md` | 08 m08nq, 05 m05bank, 04 m04fclu: GOOD IMPROVEMENT (small) |

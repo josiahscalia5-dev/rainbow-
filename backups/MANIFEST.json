@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 17466,
-   "sha256": "a7251c6cff9ccf19ab05c0c0f83f9e3ee7fa226dcb669e89305dbb0b71367858"
+   "bytes": 17467,
+   "sha256": "519dd396dd0342fe592afce96476fa6b5eab0cef0564fc9ec6d58a2bebba6e2b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1775,6 +1775,16 @@
    "path": "docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md",
    "bytes": 1167,
    "sha256": "faa64bca310ad2676aae5c66a601215fea925f52e4f6f95796411f41c6656ba2"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r16/COORDINATION.md",
+   "bytes": 5494,
+   "sha256": "09ff6c69665f392e6503739003ca9873cb2eab95bcfb2c0699facf36e8d93e66"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r16/RESUME_R16.md",
+   "bytes": 6299,
+   "sha256": "7ab7b20431ce449b129f9c24246f61b46241298d25bdda0dc91feb6f957ed015"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",
