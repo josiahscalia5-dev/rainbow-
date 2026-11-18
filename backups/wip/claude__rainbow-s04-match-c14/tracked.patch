@@ -52,7 +52,7 @@ index c927218..a0668ab 100644
  }
 \ No newline at end of file
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 3f1935b..1b665a1 100644
+index 3f1935b..fef8725 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -299,6 +299,7 @@ uniform sampler2D uRiv;
@@ -68,7 +68,7 @@ index 3f1935b..1b665a1 100644
        // r13 m04lcd: the painted lane is DEEPER blue along the arrow line (the glassy arrows pop on it), brighter turquoise
        // toward the pink edges
 -      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
-+      // r14 `&m04lcn=a,b`: the deep blue only AHEAD of Benny (fades in from a to b u ahead of the camera; Benny ≈ 6.4 u
++      // r14 m04lcn=a,b: the deep blue only AHEAD of Benny (fades in from a to b u ahead of the camera; Benny ≈ 6.4 u
 +      // ahead) — the painted water round / behind him is bright cyan, the deep electric blue lies under the arrows
 +      float rk = uLane4.y > uLane4.x ? smoothstep(uLane4.x, uLane4.y, along - uA5b.z) : 1.0;
 +      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * rk * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));

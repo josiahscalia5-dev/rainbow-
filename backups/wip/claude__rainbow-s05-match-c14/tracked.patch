@@ -1,5 +1,5 @@
 diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
-index fef69a0..4b9e713 100644
+index fef69a0..90f187b 100644
 --- a/src/vfx/waterRibbon.ts
 +++ b/src/vfx/waterRibbon.ts
 @@ -442,6 +442,20 @@ export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
@@ -23,18 +23,21 @@ index fef69a0..4b9e713 100644
  /**
   * `&m05join=1` (Screen 05 round 13, needs m05fpaint; src/world/match05far.ts, src/world/materials.ts farRiverMaterial):
   * ONE CONTINUOUS RIVER AT THE SEAM while swimming. Where the baked far picture F would be magnified, m05fmag still faded
-@@ -787,6 +801,49 @@ vec4 pjLut(float s) {
+@@ -787,6 +801,52 @@ vec4 pjLut(float s) {
    r.w = step(uPjLutS.x, s) * step(s, uPjLutS.y);
    return r;
  }
-+// the lateral coordinate at which the near tile T2 is read; dg = d(coordinate)/du (for the flow direction)
++// m05vee2: the bent lateral coordinate at which the near tile T2 is read behind Benny (the painted V), its slope
++// dg = d(coordinate)/du (for the flow direction) and its share wv (0 beside / ahead of Benny: T2 read straight at u).
++// Over the hand-over (0.3 … 1.2 u behind Benny) the two readings are cross-faded, not the coordinate swept (a swept
++// coordinate runs the streaks sideways across the river when Benny steers far off-centre).
 +float pjVeeS = 0.0;   // m05vee2: the unflowed design s of this fragment (set in main; the V must not wobble with the flow)
-+float pjT2U(float u, float s, out float dg) {
++float pjT2U(float u, float s, out float dg, out float wv) {
 +  dg = 1.0;
++  wv = 0.0;
 +#ifdef M05VEE2
 +  float dB = pjVeeS - uPjNear.w;                 // design distance from Benny (< 0: between Benny and the camera)
-+  float w = pjNearK() * (1.0 - smoothstep(-1.2, -0.3, dB));
-+  if (w <= 0.0) return u;
++  wv = pjNearK() * (1.0 - smoothstep(-1.2, -0.3, dB));
 +  // T2's band columns in the row read here (mirrored repeat; measured on proj05_T2.png: 10 / 90 % of the pink mass per
 +  // 32 rows, quadratic fit, max error 0.03 u): left centre / inner edge, right centre / inner edge
 +  float r = abs(mod((s - uPjT2S.x) / uPjT2S.y + 1.0, 2.0) - 1.0);
@@ -64,8 +67,8 @@ index fef69a0..4b9e713 100644
 +    g = x < 0.0 ? lI + (wc - abs(m - wc)) : rI - (wc - abs(m - wc));
 +    k = m < wc ? -1.0 : 1.0;
 +  }
-+  dg = mix(1.0, k, w);
-+  return mix(u, g, w);
++  dg = k;
++  return g;
 +#else
 +  return u;
 +#endif
@@ -73,33 +76,48 @@ index fef69a0..4b9e713 100644
  // display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
  vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
    vec4 L = pjLut(s);
-@@ -817,7 +874,8 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
+@@ -817,7 +877,15 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
      // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
      // old one exactly)
      float wT2 = pjT2W(mE);
 -    t = pjMixVP(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
-+    float dgT;
-+    t = pjMixVP(t, texture2D(uPjT2, vec2(pjT2U(u, s, dgT) * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
++    float t2v = (s - uPjT2S.x) / uPjT2S.y;
++    vec3 t2 = texture2D(uPjT2, vec2(u * 0.5 + 0.5, t2v)).rgb;
++    #ifdef M05VEE2
++    // m05vee2: both readings sampled unconditionally (mipmapped texture: no lookups in per-pixel branches)
++    float dgT, wvT;
++    float gT = pjT2U(u, s, dgT, wvT);
++    t2 = pjMixVP(t2, texture2D(uPjT2, vec2(gT * 0.5 + 0.5, t2v)).rgb, wvT);
++    #endif
++    t = pjMixVP(t, t2, wT2);
      wN *= 1.0 - wT2;
    }
    vec3 lay = mix(t, n.rgb, wN);
-@@ -860,8 +918,14 @@ vec2 pjFlowDir(float u, float s, float mE) {
+@@ -860,8 +928,21 @@ vec2 pjFlowDir(float u, float s, float mE) {
    if (uPjNear.x > 0.5) {
      // T2's own streak direction where T2 is what is shown; a mirrored period runs its streaks mirrored
      float wT2 = pjT2W(mE);
 -    vec3 f2 = texture2D(uPjWT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
-+    float dgF;
-+    vec3 f2 = texture2D(uPjWT2, vec2(pjT2U(u, s, dgF) * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
-     if (mod(floor((s - uPjT2S.x) / uPjT2S.y), 2.0) > 0.5) f2.r = 1.0 - f2.r;
+-    if (mod(floor((s - uPjT2S.x) / uPjT2S.y), 2.0) > 0.5) f2.r = 1.0 - f2.r;
++    float f2v = (s - uPjT2S.x) / uPjT2S.y;
++    bool f2m = mod(floor(f2v), 2.0) > 0.5;
++    vec3 f2 = texture2D(uPjWT2, vec2(u * 0.5 + 0.5, f2v)).rgb;
++    if (f2m) f2.r = 1.0 - f2.r;
 +    #ifdef M05VEE2
 +    // m05vee2: the tile's streak slope (tile columns per s) → ribbon u per s through the bent lookup (a mirrored part runs
-+    // its streaks mirrored; a squeezed part runs them steeper in tile terms, flatter on the ribbon)
-+    f2.r = 0.5 + (f2.r - 0.5) / (dgF < 0.0 ? min(dgF, -0.5) : max(dgF, 0.5));
++    // its streaks mirrored; a squeezed part runs them steeper in tile terms, flatter on the ribbon); cross-faded like the
++    // colour over the hand-over
++    float dgF, wvF;
++    float gF = pjT2U(u, s, dgF, wvF);
++    vec3 f2g = texture2D(uPjWT2, vec2(gF * 0.5 + 0.5, f2v)).rgb;
++    if (f2m) f2g.r = 1.0 - f2g.r;
++    f2g.r = 0.5 + (f2g.r - 0.5) / (dgF < 0.0 ? min(dgF, -0.5) : max(dgF, 0.5));
++    f2 = mix(f2, f2g, wvF);
 +    #endif
      ft = mix(ft, f2, wT2);
      wn *= 1.0 - wT2;
    }
-@@ -1856,6 +1920,7 @@ void main() {
+@@ -1856,6 +1937,7 @@ void main() {
      #endif
      if (pjK > 0.001) {
        float s = s05r;
@@ -107,7 +125,7 @@ index fef69a0..4b9e713 100644
        // exact-layer magnification: texels per screen pixel along the least dense direction
        vec4 Lm = pjLut(s);
        vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
-@@ -2117,7 +2182,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
+@@ -2117,7 +2199,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
      fragmentShader: FRAG,
      fog: true,
      side: THREE.DoubleSide,

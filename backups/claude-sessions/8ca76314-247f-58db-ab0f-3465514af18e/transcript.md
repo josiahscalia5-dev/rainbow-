@@ -2779,3 +2779,195 @@ Your message arrived without stopping anything. Verifying the Atlas connection n
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl; grep -iE \"generate|posed|chisel|billing|guide|how-to\" $S/llms.txt | head -20; curl -sS -m 30 https://docs.atlas.worldlabs.ai/billing.md -o $S/billing.md; wc -l $S/billing.md; grep -iE \"credit|\\\\$|per |rate|image|frame|generate|splat|mesh|posed\" $S/billing.md | head -40", "description": "Read Atlas pricing and the task list from public docs"}`
 
+### 🧑 User — 2026-11-18T16:52:48.384Z
+
+> ↩︎ result: - [Web quickstart](https://docs.atlas.worldlabs.ai/web-quickstart.md): Start a TypeScript project, pose an image, and generate a new view.
+> - [How to use Atlas](https://docs.atlas.worldlabs.ai/how-to-use-atlas.md): Pose images, explore new views, and edit your scene with Atlas.
+> - [Cameras and posed images](https://docs.atlas.worldlabs.ai/cameras-and-posed-images.md): Bring calibrated images into Atlas without breaking their geometry.
+> - [Build a scene from images](https://docs.atlas.worldlabs.ai/build-a-scene.md): Pose your images, generate views around the scene, and check them before a video or splats.
+> - [Make splats](https://docs.atlas.worldlabs.ai/scene-to-splats.md): Check a set of posed views and reconstruct it once as Gaussian splats.
+> - [Generate, pose, and edit](https://docs.atlas.worldlabs.ai/generated-world-edit-workflow.md): Chain text-to-image, camera estimation, and masked completion.
+> - [Build and edit scenes with AtlasChisel](https://docs.atlas.worldlabs.ai/atlas-chisel-tutorial.md): Choose the right inputs, render a blockout, restyle it, and edit selected regions.
+> ## Task guides
+> - [Text to image](https://docs.atlas.worldlabs.ai/text-to-image.md): Generate image inputs  …[+3581 chars]
+
+### 🤖 Claude — 2026-11-18T16:52:53.711Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl; sed -n '/rate card/,+12p' $S/billing.md | head -20; for p in atlas-generate atlas-walkthrough depth-guided-generation; do curl -sS -m 30 https://docs.atlas.worldlabs.ai/$p.md -o $S/$p.md; echo \"== $p $(wc -l < $S/$p.md) lines\"; grep -iE \"credit|cost|\\\\$[0-9]|per frame|per view|per target|maximum|max |up to|style|prompt|context|target camera\" $S/$p.md | head -14; done", "description": "Read rate-card hint and the new-view task guides"}`
+
+### 🧑 User — 2026-11-18T16:52:55.049Z
+
+> ↩︎ result: The task rate card can change. Use the current rate card shown in
+> the platform when estimating task costs rather than embedding model prices in
+> client code.
+> 
+> ## Frameboy sessions
+> 
+> A Frameboy session in Atlas Studio runs for up to a minute and costs 500
+> credits ($0.50), charged once, after it ends. It draws on the same credits as
+> other Studio work. A session is free if it plays for less than 5 seconds, or if
+> it ends because its server stopped responding.
+> 
+> An account without enough credits cannot start a session: the request returns
+> `402 Payment Required` with `code` set to `CREDITS_UNAVAILABLE`, and no session
+> == atlas-generate 278 lines
+> Generate posed views from image, depth, and camera context.
+> `atlasGenerate` generates posed RGB views at target cameras from one or more
+> posed RGBD context frames. Use it to see the same scene from new camera
+> [atlasChisel](/depth-guided-generation#restyle-a-scene).
+> ## Prepare RGBD context
+> Every `contextFrames` entry requires an `imageAsset`, `depth`, and `camera`.
+> response. All context cameras must declare the same width and height; that
+> resolution may differ from the target cameras' resolution.
+> framing against its depth and camera before supplying  …[+3015 chars]
+
+### 🤖 Claude — 2026-11-18T16:53:02.159Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl; grep -iE \"pric|rate|usage|cost|estimate\" $S/llms.txt | head; grep -n -iE \"credit|cost|bill|estimate|dry\" $S/atlas-generate.md $S/atlas-walkthrough.md | head -12; curl -sS -m 30 https://docs.atlas.worldlabs.ai/api-reference/atlas-generate.md | grep -iE \"credit|cost|estimate|dryRun|quote\" | head -8", "description": "Search Atlas docs for task prices or a cost estimate"}`
+
+### 🧑 User — 2026-11-18T16:53:02.646Z
+
+> ↩︎ result: - [Web quickstart](https://docs.atlas.worldlabs.ai/web-quickstart.md): Start a TypeScript project, pose an image, and generate a new view.
+> - [Projects and API keys](https://docs.atlas.worldlabs.ai/projects-and-api-keys.md): Isolate credentials, assets, usage, and budgets by project.
+> - [Cameras and posed images](https://docs.atlas.worldlabs.ai/cameras-and-posed-images.md): Bring calibrated images into Atlas without breaking their geometry.
+> - [Build a scene from images](https://docs.atlas.worldlabs.ai/build-a-scene.md): Pose your images, generate views around the scene, and check them before a video or splats.
+> - [Generate, pose, and edit](https://docs.atlas.worldlabs.ai/generated-world-edit-workflow.md): Chain text-to-image, camera estimation, and masked completion.
+> - [Text to image](https://docs.atlas.worldlabs.ai/text-to-image.md): Generate image inputs for world-building workflows.
+> - [Images to posed RGBD](https://docs.atlas.worldlabs.ai/images-to-posed-images.md): Estimate cameras and depth for one or more images.
+> - [Depth-guided generation](https://docs.atlas.worldlabs.ai/depth-guided-generation.md): Generate posed RGB views at target cameras from posed depth and a prompt.
+> - [Po …[+659 chars]
+
+### 🤖 Claude — 2026-11-18T16:53:06.854Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl; sed -n 175,195p $S/atlas-generate.md; grep -rn -iE \"atlas.*credit|credits.*atlas|images2PosedRGBD|atlasGenerate\" /home/user/rainbow-/docs/briefs/2026-11-18-r1*/*.md /home/user/rainbow-/qa/worldlabs/05/pilot/LEDGER.md 2>/dev/null | head -8", "description": "Read billing note in the guide and any prior Atlas cost records"}`
+
+### 🧑 User — 2026-11-18T16:53:06.906Z
+
+> ↩︎ result: Before submitting the reconstruction, inspect the returned images and their
+> aligned depth from neighboring cameras. Check that shared objects agree in
+> position and shape, views overlap, and important surfaces have valid depth.
+> Replace inconsistent views or improve the context coverage before proceeding.
+> Keep each returned image, camera, and depth together in the same coordinate
+> system and scale. See [Splat best practices](/splat-best-practices).
+> 
+> ### Submit the reconstruction
+> 
+> After inspecting the frames, pass their images, cameras, and linear depth to
+> `posedImages2Splats`. Each successful task is billed separately; see
+> [splat pricing](/posed-images-to-splats).
+> 
+> ```ts
+> const posedFrames = frames.map((frame) => {
+>   if (!frame.depth || !("depthAsset" in frame.depth)) {
+>     throw new Error("Each view needs linear depth; use returnDepth: true");
+>   }
+>   return {
+>     imageAsset: frame.imageAsset,
+>     camera: frame.camera,
+> /home/user/rainbow-/docs/briefs/2026-11-18-r13/COORDINATION.md:17:  Atlas connector (claude.ai) connected: project "My project", credits available. No paid job started.
+
+### 🤖 Claude — 2026-11-18T16:53:11.654Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/wl; for p in images-to-posed-images posed-images-to-splats atlas-generate depth-guided-generation inpainting; do [ -f $S/$p.md ] || curl -sS -m 30 https://docs.atlas.worldlabs.ai/$p.md -o $S/$p.md; echo \"== $p\"; grep -n -iE \"^#+ .*pric|credits|\\\\$[0-9]\" $S/$p.md | head -8; done", "description": "Look for pricing sections on each Atlas task page"}`
+
+### 🧑 User — 2026-11-18T16:53:12.807Z
+
+> ↩︎ result: == images-to-posed-images
+> == posed-images-to-splats
+> 19:- Refined (the default): 5,000 credits ($5).
+> 20:- Draft, with `refine: false`: 500 credits ($0.50).
+> == atlas-generate
+> == depth-guided-generation
+> == inpainting
+
+### 🤖 Claude — 2026-11-18T16:53:24.235Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Atlas__atlasGenerate,mcp__World_Labs_Atlas__images2PosedRGBD", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T16:53:24.244Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T16:53:39.469Z
+
+No prices in the connector either. Checking the Screen 04 deep-blue quick test that has been rendering meanwhile.
+
+### 🤖 Claude — 2026-11-18T16:53:40.920Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/bxiremwxu.output | tail -5", "description": "Check the I1/I2 quick render result"}`
+
+### 🧑 User — 2026-11-18T16:53:40.958Z
+
+> ↩︎ result: src/world/match04m4.ts(367,22): error TS1005: ',' expected.
+> src/world/match04m4.ts(367,26): error TS1005: ',' expected.
+> tsc exit 2
+
+### 🤖 Claude — 2026-11-18T16:53:43.846Z
+
+My new setting broke the build: I wrote a code-style quote mark inside the water-drawing text, which ends that text early. The test never ran. Fixing it.
+
+### 🤖 Claude — 2026-11-18T16:53:44.896Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "      // r14 `&m04lcn=a,b`: the deep blue only AHEAD of Benny", "new_string": "      // r14 m04lcn=a,b: the deep blue only AHEAD of Benny"}`
+
+### 🧑 User — 2026-11-18T16:53:44.924Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T16:53:45.899Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && timeout 200 npx tsc --noEmit -p . 2>&1 | tail -3; echo \"tsc exit ${PIPESTATUS[0]}\"", "description": "Re-run the type check", "timeout": 250000}`
+
+### 🧑 User — 2026-11-18T16:53:48.829Z
+
+> ↩︎ result: tsc exit 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T16:53:55.410Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && Q5=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G5/motion.json'))['query'])\") && QI1=$(echo \"$Q5\" | sed 's/m04lcd=1.0/m04lcd=2.4/; s/m04lcw=1.7/m04lcw=2.6/')\"&m04lcn=7,10\" && QI2=$(echo \"$Q5\" | sed 's/m04lcd=1.0/m04lcd=3.0/; s/m04lcw=1.7/m04lcw=3.0/')\"&m04lcn=7,10\" && rm -rf $S/xI1 $S/xI2 && ONLY=f06_forward6u,f20_forward20u,s_left_hard timeout 600 node $S/tools/audit_only.mjs 04 $S/xI1 \"$QI1\" > $S/xI1.log 2>&1; ONLY=f06_forward6u …[+309 chars]`
+
+### 🧑 User — 2026-11-18T16:53:55.439Z
+
+> ↩︎ result: Command running in background with ID: bjwlzmv2p. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/bjwlzmv2p.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T16:54:04.963Z
+
+While the deep-blue tests render, I'm recording the Atlas result in the coordination notes and the tool list.
+
+### 🤖 Claude — 2026-11-18T16:54:10.871Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='docs/briefs/2026-11-18-r14/COORDINATION.md'\ns=open(p).read()\nadd='''\n## World Labs Atlas (verified ~17:15 UTC, free reads only)\n* claude.ai connector `World_Labs_Atlas` (https://api.atlas.worldlabs.ai/mcp) connected by the user on account 14: `list_projects`\n  → project \"My project\" (`proj_ad4fdb076f4a4c80934406cfefc4d30b`, Personal workspace), tools atlasChisel / atlasGenerate /\n  atlasTextToImage / images2PosedRGBD / posedImages2Splats / splats2Mesh, `credits_available: true` (amount not reported).\n* Atlas REST (`api.atlas.worldlabs.ai`) without …[+899 chars]`
+
+### 🧑 User — 2026-11-18T16:54:11.093Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T16:54:23.418Z
+
+**ATLAS CONNECTED AND VERIFIED.**
+
+1. **Sign-in works.** A free read found one project, "My project" in your Personal workspace. No credits were spent.
+2. **Credits:** Atlas reports the project has usable credits, but not how many. Your Marble balance (5,420) may be a separate pool. Your exact Atlas balance is on atlas.worldlabs.ai under Settings → Developer Platform.
+3. **The four skills** (atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli) are installed and are the newest version from World Labs' GitHub. I reinstalled nothing, and they now work through your connector. The separate command-line route would need an Atlas key, which we don't need.
+4. **Marble and fal.ai are unchanged.** I haven't touched either key.
+5. **Can Atlas help with the scenery your pictures don't show? Possibly; it hasn't been tested yet.** Its "new views" task takes one picture plus its depth and draws the same scene from new camera positions. For Screen 04 that would mean pictures of your gold tunnel from inside, where Benny swims but your picture never painted. The risk is that it's a generative model: it may change ring shapes, colours or details. So it is only useful if the results look like your tunnel.
+6. **The one test I propose (Screen 04 tunnel):**
+   - **Input:** your approved Screen 04 picture, with Benny and the score bar masked out so they aren't copied. I'll make its depth and camera data here for free, from the game's real 3D tunnel.
+   - **One Atlas task**, producing three portrait views from Benny's real swimming path: entering, middle, and farther inside.
+   - **Then:** I show you your approved picture, the Atlas view and the current game, side by side at each of those positions. Nothing goes into the game before that.
+   - **Cost:** I can't give you the actual figure yet. World Labs publishes prices only for splat scenes (5,000 credits refined, 500 draft; 1,000 credits = $1). The price for this task is only on your account's rate card, which I can't see. Could you check the "atlasGenerate" price on the Settings → Developer Platform page and tell me? Setting a spend limit there first is a good safety net.
+7. **Adopting results:** agreed. Atlas pictures go into the game only if the playable game, while Benny swims, looks closer to your approved artwork. Otherwise I'll label it NOT AN IMPROVEMENT and drop it.
+
+**Meanwhile:**
+- Both specialists are running: Screen 05 on the water behind Benny, Screen 08 on the river around Benny.
+- For Screen 04, I'm testing deep electric-blue water under the arrows. An earlier attempt turned the water around Benny too dark, so this version starts the deep blue only ahead of him.
+- The five-minute autosave is running.
+
+### 🧑 User — 2026-11-18T16:54:25.425Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

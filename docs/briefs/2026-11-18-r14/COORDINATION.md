@@ -22,6 +22,17 @@ Rules unchanged (binding): `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` 
 * Blender 5.3.0, Android SDK 34 + build-tools 34.0.0, Java 21, Node 22 / npm ci, Playwright Chromium (WebGL2) + Playwright MCP,
   ffmpeg / ImageMagick, tsc + continuity tests: all OK (bootstrap 16:27 UTC). 13/13 approved references byte-identical.
 
+## World Labs Atlas (verified ~17:15 UTC, free reads only)
+* claude.ai connector `World_Labs_Atlas` (https://api.atlas.worldlabs.ai/mcp) connected by the user on account 14: `list_projects`
+  → project "My project" (`proj_ad4fdb076f4a4c80934406cfefc4d30b`, Personal workspace), tools atlasChisel / atlasGenerate /
+  atlasTextToImage / images2PosedRGBD / posedImages2Splats / splats2Mesh, `credits_available: true` (amount not reported).
+* Atlas REST (`api.atlas.worldlabs.ai`) without a key → 401: this environment injects only the Marble key (`api.worldlabs.ai`);
+  the connector needs no key. `worldlabs` CLI not installed (npm `@worldlabsai/cli` 0.6.0; only needed with an Atlas key).
+* Plugin `worldlabs@worldlabs` 0.2.2 = `worldlabsai/skills` HEAD `6cdb6b9` (skills atlas-blender, atlas-splats, atlas-flythrough,
+  worldlabs-cli) — current, not reinstalled. Marble key + fal key untouched.
+* Prices: docs publish only splats (refined 5,000 credits, draft 500; 1,000 credits = US$1); atlasGenerate / images2PosedRGBD
+  prices are on the account's rate card (atlas.worldlabs.ai → Settings → Developer Platform). NO paid Atlas task started.
+
 ## Workstream map (two specialists + the lead's own 04 rebuild; rotation 05 + 08 now → 07 → 06)
 | Screen | Round-14 branch | Started at (= newest round-13 tip) + WIP | State |
 |---|---|---|---|
