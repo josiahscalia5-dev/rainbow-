@@ -141,4 +141,4 @@ Kept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1`
   the dome is a little taller than the painted shallow cap.
 * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step5_m08cupg/1_APPROVED.png`,
   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f10_forward10u`, `t95_through_screen`, `t66_through_screen`
-  (BEFORE = kept set before this step (`qa/match/08/r12/NEW` audit frames), NEW = `+&m08cupg=1`, same positions).
+  (BEFORE = kept set before this step (`/home/user/wt/s08/qa/match/08/r12/NEW_before_step5/`, 12-shot audit), NEW = `+&m08cupg=1`, same positions).

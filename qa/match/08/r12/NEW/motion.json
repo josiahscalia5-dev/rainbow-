@@ -1,6 +1,6 @@
 {
  "screen": "08",
- "query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1",
+ "query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1",
  "shots": [
   {
    "name": "a00_approved_view",
@@ -8,12 +8,12 @@
    "steer": null,
    "mode": "ride",
    "stage": "08",
-   "s": 392.04,
+   "s": 392.056,
    "lat": 0,
    "coins": 2040,
    "hearts": 5,
    "paused": false,
-   "bennyY": -113.147,
+   "bennyY": -113.148,
    "bennyVisible": true,
    "cam": [
     12.85,
@@ -31,7 +31,7 @@
    "steer": null,
    "mode": "ride",
    "stage": "08",
-   "s": 395.01,
+   "s": 395.009,
    "lat": 0,
    "coins": 2040,
    "hearts": 5,
@@ -54,7 +54,7 @@
    "steer": null,
    "mode": "ride",
    "stage": "08",
-   "s": 398.017,
+   "s": 398.019,
    "lat": 0,
    "coins": 2050,
    "hearts": 5,
@@ -77,7 +77,7 @@
    "steer": null,
    "mode": "ride",
    "stage": "08",
-   "s": 401.977,
+   "s": 401.976,
    "lat": 0,
    "coins": 2060,
    "hearts": 5,
@@ -100,12 +100,12 @@
    "steer": null,
    "mode": "ride",
    "stage": "09",
-   "s": 411.952,
+   "s": 411.951,
    "lat": 0,
    "coins": 2100,
    "hearts": 5,
    "paused": false,
-   "bennyY": -113.136,
+   "bennyY": -113.135,
    "bennyVisible": true,
    "cam": [
     11.39,
@@ -146,7 +146,7 @@
    "steer": 1,
    "mode": "ride",
    "stage": "08",
-   "s": 398.018,
+   "s": 398.02,
    "lat": 1.85,
    "coins": 2040,
    "hearts": 5,
@@ -156,7 +156,7 @@
    "cam": [
     14.09,
     -109.99,
-    -280.55
+    -280.56
    ],
    "frames": 38,
    "s0": 391.427,
@@ -169,7 +169,7 @@
    "steer": -1,
    "mode": "ride",
    "stage": "08",
-   "s": 404.036,
+   "s": 404.035,
    "lat": -2.217,
    "coins": 2050,
    "hearts": 4,
@@ -177,7 +177,7 @@
    "bennyY": -113.511,
    "bennyVisible": true,
    "cam": [
-    9.9,
+    9.91,
     -110.13,
     -286.97
    ],
@@ -192,7 +192,7 @@
    "steer": 1,
    "mode": "ride",
    "stage": "08",
-   "s": 404.035,
+   "s": 404.036,
    "lat": 2.217,
    "coins": 2040,
    "hearts": 4,
@@ -202,7 +202,7 @@
    "cam": [
     13.09,
     -109.68,
-    -287.03
+    -287.04
    ],
    "frames": 76,
    "s0": 391.427,
@@ -215,7 +215,7 @@
    "steer": null,
    "mode": "ride",
    "stage": "08",
-   "s": 396.276,
+   "s": 396.292,
    "lat": 0.005,
    "coins": 2050,
    "hearts": 5,
@@ -225,7 +225,7 @@
    "cam": [
     12.66,
     -109.89,
-    -278.49
+    -278.5
    ],
    "frames": 27,
    "s0": 391.427,
