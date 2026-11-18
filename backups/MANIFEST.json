@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14053,
-   "sha256": "4e865124384ec96f1438529f72b1b95cdb9e0870c45332eb86f0e449ccd5ccb4"
+   "sha256": "4a6116dd1040b6a2c30c4fd1df5cc662b2ee3dd96af59f971753f8bd739bc87d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9230,6 +9230,21 @@
    "path": "qa/review_r8/07_r8_foam_walls_WIP/3_NEW_mid_plunge_painted_banks.jpg",
    "bytes": 670728,
    "sha256": "bde02f74aeb7f8828846ddbf7be580415247089058154c5c16cbb43a85413a5d"
+  },
+  {
+   "path": "qa/review_r9/04_r9_step1_mouth/1_APPROVED_04.jpg",
+   "bytes": 446002,
+   "sha256": "fa0c7a6020fb40d940a760262e6d9d930a5858e710ff5dfa6b3a661e3568e47c"
+  },
+  {
+   "path": "qa/review_r9/04_r9_step1_mouth/2_BEFORE_f03.jpg",
+   "bytes": 455164,
+   "sha256": "2008bf13deb3c6d1ef3721f735577f60364212849f8b67e4a2b0a4d9fca867b3"
+  },
+  {
+   "path": "qa/review_r9/04_r9_step1_mouth/3_NEW_f03.jpg",
+   "bytes": 461577,
+   "sha256": "7931ec2c16136ceb5172b9be521c79f3190a43a983a523edce50b8fb27786f55"
   },
   {
    "path": "qa/review_r9/04_step3_foam/1_APPROVED_04.jpg",

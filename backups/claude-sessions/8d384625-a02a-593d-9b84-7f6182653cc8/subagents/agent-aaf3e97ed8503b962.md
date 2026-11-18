@@ -1837,3 +1837,32 @@ Now pass `course` from environment.ts (switch-guarded value only).
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:58:18.235Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export function perforatedMetal\" -A90 src/world/materials.ts | head -120", "description": "Read perforatedMetal material"}`
+
+### 🧑 User — 2026-11-18T02:58:18.268Z
+
+> ↩︎ result: 434:export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {
+> 435-  const mat = new THREE.MeshStandardMaterial({
+> 436-    color: o.color ?? '#d13fd6',
+> 437-    metalness: o.metalness ?? 0.72,
+> 438-    roughness: o.roughness ?? 0.26,
+> 439-    emissive: new THREE.Color(o.emissive ?? '#9a1fa8'),
+> 440-    emissiveIntensity: o.emissiveIntensity ?? 0.26,
+> 441-    side: o.side ?? THREE.BackSide,
+> 442-    envMapIntensity: o.envMapIntensity ?? 1.0,
+> 443-  });
+> 444-  if (o.envMap) mat.envMap = o.envMap;
+> 445-  if (o.envMapRotation) mat.envMapRotation.copy(o.envMapRotation);
+> 446-  const relief = o.relief;
+> 447-  // mean hole coverage of one cell (capsule area / cell area): sub-pixel slot rows fade to this instead
+> 448-  // of aliasing into moiré stripes down the tunnel
+> 449-  const hs = o.slotHalf ?? [((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.62 : 0.5)), ((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.24 : 0.5))];
+> 450-  const rr = Math.min(hs[0], hs[1]);
+> 451-  const holeCover = THREE.MathUtils.clamp(4 * hs[0] * hs[1] - (4 - Math.PI) * rr * rr, 0, 1);
+> 452-  const river = o.river;
+> 453-  const uniforms = {
+> 454-    uHoleColor: { value: new THREE.Color(o.holeColor ?? '#2b0640') },
+> 45 …[+3701 chars]
+
