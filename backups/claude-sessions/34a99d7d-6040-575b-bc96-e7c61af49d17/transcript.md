@@ -3932,3 +3932,30 @@ Before showing this, I'm checking it side by side against your approved Screen 0
 
 > 🔧 **Bash** `{"command": "sed -i 's/| specialist RUNNING: step 1 `m04ring` = real modeled gold washer opening + bulb row (match04m4.ts), renders in `qa\\/match\\/04\\/r8\\/step1_m04ring\\/`, not yet judged |/| specialist RUNNING; step 1 `\\&m04ring=1` kept (tip `fbfa0522`): crisp modeled ring tunnel instead of the blur (shown to the user; rings still too red-orange). Lead feedback sent: next = wide swirl water + foam clouds + bubbles, then polished-gold ring colour |/' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md; grep -c 'fbfa0522' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md; for i in 1 2 3 4 5 6 7 8; do out=$(python3 -I sc …[+619 chars]`
 
+### 🧑 User — 2026-11-18T02:24:52.752Z
+
+> ↩︎ result: 1
+> session=cb5ba30eb6 remote=cb5ba30eb6 lead-c8=cb5ba30eb6
+
+### 🤖 Claude — 2026-11-18T02:24:58.986Z
+
+Screen 04's first step is saved (`fbfa0522`, checked on GitHub), and the pictures are above. It's a small step, not a big one.
+
+**What looks better:** while Benny swims, the tunnel is no longer a giant blurred orange glow. It's a long tunnel of sharp nested rings with small light spots, narrowing to a warm glow far ahead. The gold washer opening is now a real 3D ring with its bulb row, but only the start view shows it, and that view is unchanged.
+
+**Still wrong, and why it's only small:**
+- The rings read red-orange. Yours are polished yellow-gold with bright highlights.
+- The biggest area of the screen, the water, is still a narrow flat ramp with hard edges. Your picture has a wide pink-and-cyan swirl river with foam clouds and big bubbles along both sides.
+- The measurements are mixed: the sharper tunnel is less like your picture in some frames than the old blur was, even though it reads better.
+
+I sent the specialist those two gaps as its next order: water with foam clouds and bubbles first, then the gold colour. My honest rating for 04 while swimming is about 4/10, up from 3.5.
+
+**Status**
+- **Working:** Screen 04 (water, foam clouds, bubbles) and Screen 05 (step line between near and far river, pale foam banks, near walls).
+- **Done this round:**
+  - **05:** three steps — coin, water design, continuous far river. About 7/10 now.
+  - **04:** one step — sharp rings.
+- **Ready next:** 07, then 08, then 06.
+- **Saved for your account switch:** `claude/rainbow-lead-c8` now includes the 04 step and the handoff note.
+- **Paid credits:** none used. Nothing needs your action.
+
