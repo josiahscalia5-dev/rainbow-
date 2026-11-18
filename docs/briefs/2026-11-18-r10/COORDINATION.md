@@ -11,9 +11,23 @@ computer later — do not re-request until the user says so).
 |---|---|---|---|
 | 08 scenery | `claude/rainbow-s08-scenery-c10` | `c0d8c97b514fe2e93b42eb73950f841c9d6beb3d` | **RUNNING** slot A (washer-environment-modeler, worktree `/home/user/wt/s08`, log `qa/match/08/r10/`) — arch while moving, top seam, near water, coin size, spout cups |
 | 05 | `claude/rainbow-s05-match-c10` | `de233792051825127a1572f6e5fbee7e3ee3800f` | **RUNNING** slot B (water-fx-specialist, worktree `/home/user/wt/s05`, log `qa/match/05/r10/`) — one continuous S river, foam banks, smeared walls, continuation to the 06 hand-over |
-| 04 | (`-c10` from `05e383c9`) | — | READY next: painted inner funnel (DA3 measurement if approved) |
+| 04 | `claude/rainbow-s04-match-c10` | `05e383c9` (+ lead test `a24d289c`) | Lead controlled test with the user's PROVISIONAL views V04-1/V04-2 = NOT YET PROVEN (tests A/B/C, `qa/match/04/r10/PROGRESS.md`). NEXT free slot: specialist with `S04_R10.md` |
 | 07 | (`-c10` from `dbc7678c`) | — | READY: level stretch + plunge dressing; plunge = user decision |
 | 06 | (`-c10` from `efaf78b7`) | — | READY: bent tunnel / S-loop architecture |
+
+## Progress shown to the user (separate full-size APPROVED / BEFORE / NEW in `qa/review_c10/2026-11-18/`)
+| Time (UTC) | Screen / step | Verdict told to the user |
+|---|---|---|
+| ~11:05 | 05 step 1 `m05foam` (foam lines on both banks) | GOOD IMPROVEMENT, modest |
+| ~11:10 | 08 step 1 `m08far` (gold arch frames top + upper sides while swimming) | GOOD IMPROVEMENT |
+| ~11:20 | 05 step 2 `m05berm` (torn left edge → foam bank) | GOOD IMPROVEMENT, modest |
+| ~11:35 | 05 step 3 `m05flat` (banked S drawn level: one continuous S) | GOOD IMPROVEMENT |
+| ~11:55 | 04 lead tests A/B/C vs provisional V04-1/V04-2 | NOT YET PROVEN (not kept) |
+| ~12:00 | 05 step 4 `m05cloud` (puffy foam clouds) ; 08 step 2 `m08coinv` (coins painted size, none over Benny) | GOOD IMPROVEMENT (both) |
+Paid: 8 fal images (≈ $0.96) for the 04 reference-view pilot (user-approved cap 8). 06/07 views: user said WAIT until 04 proves
+the method in the game. Integration: the 05→06 hand-over shows the default 06 world until the screens' kept sets are combined
+in one build — combining branches needs the user's OK (never merge without it).
+
 Preserved, never written by round 10: every `-c9` / `-c8` / older branch, `codex/*`.
 Note: the end of each screen shows the NEXT screen's DEFAULT world, because each screen's look lives on its own branch;
 judge hand-overs only in a combined preview.

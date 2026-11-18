@@ -2128,3 +2128,53 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 
 > ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
 
+### 🤖 Claude — 2026-11-18T11:09:45.930Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/tools/match05/r10_probe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"  k81_kink: ['t0.81', null],\"\"\",\"\"\"  t88_end: ['t0.88', null], t92_end: ['t0.92', null],\n  k81_kink: ['t0.81', null],\"\"\",1)\nopen(p,'w').write(s)\nEOF\nQ=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/end; mkdir -p $S; for k in t88_end t92_end; do timeout …[+502 chars]`
+
+### 🧑 User — 2026-11-18T11:10:50.719Z
+
+> ↩︎ result: shot t88_end s 182.925 lat 0 cam 3.21,-39.94,-116.58
+> shot t92_end s 185.126 lat 0 cam 2.96,-40.12,-118.68
+> t95_through_screen s 186.801 lat 0 coins 1580 benny -0.12 -0.35 big coins: #38@316,233 d68 #39@319,170 d61
+
+### 🤖 Claude — 2026-11-18T11:10:53.543Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/end/cmp_end.png"}`
+
+### 🧑 User — 2026-11-18T11:10:53.584Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:11:21.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"foldNear\\|foldFar\\|zCap\" src/world/environment.ts | head", "description": "Find fold window parameters"}`
+
+### 🧑 User — 2026-11-18T11:11:21.331Z
+
+> ↩︎ result: 636:      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
+
+### 🤖 Claude — 2026-11-18T11:11:23.856Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 625,640p src/world/environment.ts; grep -n \"^import.*waterRibbon\\|flag05\" src/world/environment.ts | head -5", "description": "Read live far block creation in environment"}`
+
+### 🧑 User — 2026-11-18T11:11:23.904Z
+
+> ↩︎ result: if (PROJ05 && (typeof location === 'undefined' || new URLSearchParams(location.search).get('projbank05') !== '0')) {
+>       root.add(createProj05Apron(course, perfPath, sCam05 + 4, sF05));
+>     }
+>     // open/close with the rider camera (closed at the 05 checkpoint, folded away from ≈18 units before sF)
+>     let openNow = -1;
+>     const camPos = new THREE.Vector3();
+>     // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored
+>     // virtual tunnel, sliding seam, folds only at the stage end) instead of folding away from ≈34 u before the seam
+>     const liveFar = M05FAR ? createLiveFar05({
+>       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+>       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
+>       zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
+>       riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
+>       course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
+>     }) : null;
+>     const sync = (cam: THREE.Camera) => {
+> 13:import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+

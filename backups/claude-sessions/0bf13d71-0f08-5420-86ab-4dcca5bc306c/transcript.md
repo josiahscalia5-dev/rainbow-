@@ -3426,3 +3426,137 @@ Screen 08 step 2 also arrived; I'll review it right after this. First, the Scree
 > 331:    float k5 = floor((along - uA5.z) / uA5.y + 0.5);
 > 332:    float ap = uA5.z + k5 * uA5.y; …[+2743 chars]
 
+### 🤖 Claude — 2026-11-18T11:09:33.569Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\na='uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth\\n'\nassert s.count(a)==1\ns=s.replace(a, a+'uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0\\n')\nb='smoothstep(6.5, 9.0, cd)'\nassert s.count(b)==1; s=s.replace(b,'smoothstep(uA5n.x, uA5n.y, cd)')\nc='        uA5b: { value: a5b } } });'\nassert s.count(c)==1\ns=s.replace(c,\"        uA5b: { value:  …[+557 chars]`
+
+### 🧑 User — 2026-11-18T11:09:56.456Z
+
+> ↩︎ result: patched
+> 04 f10_forward10u s 88.271 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.183 lat 0 stage 04 frames 86
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:09:58.553Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r10/testC/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T11:09:58.602Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:10:06.634Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r10/testC/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T11:10:06.716Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:10:28.761Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat > qa/match/04/r10/PROGRESS.md <<'EOF'\n# Screen 04 — round 10 (lead), controlled test with the user's PROVISIONAL reference views V04-1 / V04-2\n\nUser 2026-11-18 ~11:15 UTC: V04-1 (just inside) and V04-2 (middle) = PROVISIONAL references for ONE controlled 3D test; V04-3a/b\nNOT used; never replace the screen with AI artwork; show APPROVED / CURRENT / IMPROVED full size. References:\n`/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand1.png` (s 88.1) and `.../V04-2_cand2.png` (s 98.2).\nBEFORE = kept query K `match04=1&m04ring=1&m04river=1&m0 …[+2252 chars]`
+
+### 🧑 User — 2026-11-18T11:10:37.424Z
+
+> ↩︎ result: local a24d289c remote a24d289c
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:10:40.330Z
+
+Saved. Now the two specialist results waiting for review. Screen 05 step 4 (puffy foam clouds) and Screen 08 step 2 (coin size):
+
+### 🤖 Claude — 2026-11-18T11:10:40.930Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r10/step4_m05cloud/3_NEW_t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:10:40.971Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:10:41.481Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r10/step2_m08coinv/3_NEW_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:10:41.531Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:10:41.984Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r10/step2_m08coinv/2_BEFORE_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:10:42.071Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:10:49.398Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_c10/2026-11-18; for x in \"05_step4_m05cloud:/home/user/wt/s05/qa/match/05/r10/step4_m05cloud:t33_through_screen:one_third\" \"08_step2_m08coinv:/home/user/wt/s08/qa/match/08/r10/step2_m08coinv:t66_through_screen:two_thirds\"; do IFS=: read n S shot lab <<< \"$x\"; D=$R/$n; mkdir -p $D; convert $S/1_APPROVED.png -quality 92 $D/1_APPROVED.jpg; convert $S/2_BEFORE_$shot.png -quality 92 $D/2_BEFORE_$lab.jpg; convert $S/3_NEW_$shot.png -quality 92 $D/3_NEW_$lab.jpg; done; ls $R/05_step4_m05cloud $R/08_step2_m08coinv", "description": "Copy 05 step 4 and 08 step 2 proof imag …[+4 chars]`
+
+### 🧑 User — 2026-11-18T11:10:49.856Z
+
+> ↩︎ result: qa/review_c10/2026-11-18/05_step4_m05cloud:
+> 1_APPROVED.jpg
+> 2_BEFORE_one_third.jpg
+> 3_NEW_one_third.jpg
+> 
+> qa/review_c10/2026-11-18/08_step2_m08coinv:
+> 1_APPROVED.jpg
+> 2_BEFORE_two_thirds.jpg
+> 3_NEW_two_thirds.jpg
+
+### 🤖 Claude — 2026-11-18T11:10:51.700Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c10/2026-11-18/05_step4_m05cloud/1_APPROVED.jpg", "qa/review_c10/2026-11-18/05_step4_m05cloud/2_BEFORE_one_third.jpg", "qa/review_c10/2026-11-18/05_step4_m05cloud/3_NEW_one_third.jpg"], "caption": "Screen 05 step 4 — GOOD IMPROVEMENT. APPROVED / BEFORE / NEW: puffy foam clouds on both banks instead of a thin bead line. Still: the clumps are rounder and more regular than your painted foam; smeared left wall.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T11:10:52.270Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step4_m05cloud/1_APPROVED.jpg → file_uuid: 8adc1daa-871a-4711-b8a9-757d752ecacb
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step4_m05cloud/2_BEFORE_one_third.jpg → file_uuid: 9c9ceece-435e-4169-aee5-fdaec62bdf0f
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step4_m05cloud/3_NEW_one_third.jpg → file_uuid: ac8ad595-2c25-42fb-bf1c-30bac93aa2ff
+
+### 🤖 Claude — 2026-11-18T11:10:53.803Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c10/2026-11-18/08_step2_m08coinv/1_APPROVED.jpg", "qa/review_c10/2026-11-18/08_step2_m08coinv/2_BEFORE_two_thirds.jpg", "qa/review_c10/2026-11-18/08_step2_m08coinv/3_NEW_two_thirds.jpg"], "caption": "Screen 08 step 2 — GOOD IMPROVEMENT. APPROVED / BEFORE / NEW: no coin over Benny's hat, no giant coin at the bottom; coins along the river at painted size. Still: top seam, arch missing on the lower sides, near water.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T11:10:54.345Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/08_step2_m08coinv/1_APPROVED.jpg → file_uuid: 1d906efb-d5cc-4d08-a00e-232a6126b7cd
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/08_step2_m08coinv/2_BEFORE_two_thirds.jpg → file_uuid: f9728ef4-aded-426a-a105-26ef3e3eaf26
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/08_step2_m08coinv/3_NEW_two_thirds.jpg → file_uuid: 5d344e1f-f6b4-4c57-b105-25d9fd20cd41
+
+### 🤖 Claude — 2026-11-18T11:10:59.591Z
+
+All proofs sent. Now the brief for the Screen 04 specialist, ready to launch the moment the 05 or 08 slot frees, plus a coordination update:
+
+### 🤖 Claude — 2026-11-18T11:11:10.292Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r10/S04_R10.md", "content": "# Screen 04 — round 10 specialist brief (launch in the next free slot; washer-environment-modeler)\n\nBranch `claude/rainbow-s04-match-c10` (worktree `/home/user/wt/s04`), tip includes the lead's controlled test `a24d289c`.\nRules: `docs/briefs/2026-11-18-r8/COMMON_RULES.md` + `RULES_R10.md`. Log: `qa/match/04/r10/PROGRESS.md` (read it first).\n\n## Targets (user 2026-11-18 ~11:15 UTC)\n* Approach (outside the opening, s 77.4 → ~86): the APPROVED picture `references/04_through_the_five_arrows.png` (authority …[+1904 chars]`
+
+### 🧑 User — 2026-11-18T11:11:10.326Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r10/S04_R10.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T11:11:12.595Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r10/COORDINATION.md", "old_string": "| 04 | (`-c10` from `05e383c9`) | — | READY next: painted inner funnel (DA3 measurement if approved) |", "new_string": "| 04 | `claude/rainbow-s04-match-c10` | `05e383c9` (+ lead test `a24d289c`) | Lead controlled test with the user's PROVISIONAL views V04-1/V04-2 = NOT YET PROVEN (tests A/B/C, `qa/match/04/r10/PROGRESS.md`). NEXT free slot: specialist with `S04_R10.md` |"}`
+
+### 🧑 User — 2026-11-18T11:11:12.642Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r10/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T11:11:19.754Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r10/COORDINATION.md", "old_string": "Preserved, never written by round 10:", "new_string": "\n## Progress shown to the user (separate full-size APPROVED / BEFORE / NEW in `qa/review_c10/2026-11-18/`)\n| Time (UTC) | Screen / step | Verdict told to the user |\n|---|---|---|\n| ~11:05 | 05 step 1 `m05foam` (foam lines on both banks) | GOOD IMPROVEMENT, modest |\n| ~11:10 | 08 step 1 `m08far` (gold arch frames top + upper sides while swimming) | GOOD IMPROVEMENT |\n| ~11:20 | 05 step 2 `m05berm` (torn left edge → foam …[+740 chars]`
+
+### 🧑 User — 2026-11-18T11:11:19.795Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r10/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T11:11:22.505Z
+
+> 🔧 **Bash** `{"command": "timeout 400 python3 scripts/rainbow-autosave.py --reason manual:r10-progress 2>&1 | grep -E '\"result\"|\"commit\"' | head -2; echo \"HEAD   $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro | cut -f1)\"; for b in s04-match-c10 s05-match-c10 s08-scenery-c10; do echo \"$b local $(git -C /home/user/wt/${b%%-*} rev-parse --short HEAD) remote $(timeout 60 git ls-remote origin refs/heads/claude/rainbow-$b | cut -c1-8)\"; done", "description": "Save progress and verify all round-10 branches on GitHub", "timeout": 600000}`
+
