@@ -37,6 +37,28 @@ export const M05FAR: boolean = MATCH05 && flag05('m05far');
  * 06 look unchanged; the locked view never uses this (block at its build-time geometry there).
  */
 export const M05END: boolean = M05FAR && flag05('m05end');
+/**
+ * `&m05fcoin=1` (Screen 05 round 12, needs m05far; src/gameplay/coins.ts): coin LOOK only. Past the far seam the real
+ * course climbs away toward 06 while the far block shows the painted 05 river running on into the throat, so the next
+ * coins (06) floated over the far block's left wall (t90 / t95). While the block is live, a coin past the seam is drawn
+ * where the far block shows that stretch of river: on the far river's cyan core at virtual depth Z = s − sF, scaled like
+ * the block (kOf), facing down the tunnel; as the block folds into 06 it moves back to its real place. Positions,
+ * pickups, count and score unchanged. `far05Coins` is written by the live sync below.
+ */
+export const M05FCOIN: boolean = M05FAR && flag05('m05fcoin');
+export const far05Coins = {
+  /** 1 while the far block is live (not at the locked eye, not fully folded) */
+  live: 0,
+  /** course s of the sliding seam */
+  seamS: 0,
+  /** fold factor 0 … 1 */
+  open: 1,
+  /** tunnel axis (coins face down it) */
+  T: new THREE.Vector3(0, 0, 1),
+  /** visual place of a coin at course s, lateral offset dl from the core, height h above the water: writes `out`,
+   *  returns the block's scale there (0 = beyond the throat) */
+  map: null as null | ((s: number, dl: number, h: number, out: THREE.Vector3) => number),
+};
 
 type Item = { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number };
 
@@ -254,6 +276,19 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
   // `&m05fcloud=1` (Screen 05 round 12): far-bank foam clouds on the far layout's water edge, anchored to the virtual
   // tunnel, compressed like the block, only where the block is live and its baked picture magnified (as m05fmag)
   const cm = new THREE.Matrix4(), cp = new THREE.Vector3(), co = new THREE.Vector3();
+  // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)
+  const fco = new THREE.Vector3();
+  if (M05FCOIN) {
+    far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {
+      const Z = s - sF;
+      if (Z > a.zEnd * 0.98) return 0;
+      const r = rowAt(Z);
+      const lift0 = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;
+      fco.copy(Rt).multiplyScalar(THREE.MathUtils.clamp(r.core + dl, r.cL, r.cR)).addScaledVector(U, a.level + lift0 + h);
+      point(Z, fco, out);
+      return kOf(Z);
+    };
+  }
   const placeClouds = (show: boolean) => {
     const c = a.clouds;
     if (!c) return;
@@ -302,6 +337,12 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
       place(a.farLids, a.lidItems, open);
     }
     placeClouds(!atLock && open < 0.999);
+    if (M05FCOIN) {
+      far05Coins.live = !atLock && open < 0.999 ? 1 : 0;
+      far05Coins.seamS = sF + zs;
+      far05Coins.open = open;
+      far05Coins.T.copy(T);
+    }
     // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
     if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
     else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }

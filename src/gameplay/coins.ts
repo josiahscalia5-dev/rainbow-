@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
+import { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)
 
 export const COIN_VALUE = 10;
 
@@ -350,6 +351,7 @@ export function createCoins(course: Course): CoinSystem {
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
   const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();
+  const fcP = new THREE.Vector3();   // m05fcoin (Screen 05 round 12)
 
   let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
   const place = (time: number) => {
@@ -357,16 +359,37 @@ export function createCoins(course: Course): CoinSystem {
       const f = course.sample(d.s);
       const ph = d.phase ?? i;
       let scale = 1;
+      // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
+      // forced-perspective relief in the locked view) settle toward the normal coin height over the river as Benny closes
+      // in (unchanged while ≥ 9 u ahead: the locked view and the mid-stage frames keep the painted arc); their pick-up pop
+      // starts from there too (it rose from 3.4 u, over the left wall)
+      const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * 0.7 * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;
       if (collected[i]) {
         if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
         const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
         if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
         scale = 1 + k * 0.8;
-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, hS + k * 1.6);
       } else {
-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, hS + 0.08 * Math.sin(time * 3 + ph));
       }
-      if (d.axis) {
+      // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the next stage's (06)
+      // coins are drawn on the far river's core where the block shows that stretch of river, back to their real place as
+      // the block folds
+      let fcFace = false;
+      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
+        // half the 06 lateral swing around the far core (the trail weaves), half size (the painted far coins are small)
+        const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
+        const o = far05Coins.open;
+        if (k > 0) { p.copy(fcP.lerp(p, o)); scale *= k + (1 - k) * o; } else scale *= o;
+        fcFace = o < 0.5;
+      }
+      if (fcFace) {
+        back.copy(far05Coins.T).negate();
+        up05.set(0, 1, 0).addScaledVector(back, -back.y).normalize();
+        right05.crossVectors(up05, back).normalize();
+        basis.makeBasis(right05, up05, back);
+      } else if (d.axis) {
         // coins05 measured coins: face down the 05 tube axis, upright (world up), as in the approved picture
         back.copy(d.axis).negate();
         up05.set(0, 1, 0).addScaledVector(back, -back.y).normalize();

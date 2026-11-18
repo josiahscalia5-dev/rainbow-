@@ -91,3 +91,31 @@ t75_through, t85_through, t90_through, t95_left, t95_right, t98_end (positions i
   `…/3_NEW_k81_kink.png`, `…/3_NEW_t90_through.png`, `…/3_NEW_t66_through_screen.png`, `…/3_NEW_t95_left.png`
 * Files: `src/vfx/waterRibbon.ts` (M05FCLOUD), `src/vfx/foam.ts` (createFarCloud05), `src/world/match05far.ts`
   (placeClouds in the live sync), `src/world/environment.ts` (creates the lumps under the switch).
+
+## Step 4 — `&m05fcoin=1` (class B/E: coins near the 05 → 06 transition sit on the painted river) — KEPT
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1`
+* Cause (two parts): (1) the painted far-arc coins at the end of 05 (C05M 7–18) are lifted up to 3.4 u so that, in the
+  locked view, they sit on the forced-perspective tunnel end; swimming up to them showed them hanging in the air over the
+  left wall (t90, t95: "four coins floating over the left wall"; their pick-up pop also started up there); (2) the first
+  06 coins lie on the real course, which climbs away toward 06 behind the seam while the far block shows the 05 river
+  running on — so at t90 / t95_left they floated in front of the walls (upper left / right) instead of on the river.
+* Fix (coin LOOK only — positions for pick-up, count 91, score, rules unchanged): (1) those far-arc coins settle toward the
+  normal coin height over the river during the last 9 → 4 u before Benny reaches them (unchanged further away: the locked
+  view and the mid-stage frames keep the painted arc), and the pop starts from there; (2) while the far block is live, an
+  06 coin beyond the seam is drawn where the far block shows that stretch of river — on the far river's cyan core (weaving
+  half as much as the 06 trail), at half size, facing down the tunnel — and returns to its real place as the block folds
+  into 06.
+* WHAT LOOKS CLOSER: at t90 / t95 the coin trail winds along the river into the glowing throat, small and getting smaller,
+  as in the approved picture's far coin arc, instead of coins hanging over the left wall; steering left at t95 the coins
+  lie on the water in front of Benny and wind on into the tunnel instead of floating high on the right wall.
+* Locked approved view: 0 px (`node scripts/capture.mjs 05 --q=<step-3 set>` vs `+m05fcoin=1`). 06 itself (t102, Benny
+  inside 06): scenery identical (only Benny's swim pose differs between runs).
+* Still wrong: at t95 (frozen QA clock) the coins Benny just picked are still in their pop next to his hat; in live play the
+  pop lasts 0.35 s. At t98 (the fold moment) the far coins briefly sit inside the folding rings.
+* APPROVED: `/home/user/wt/s05/qa/match/05/r12/step4_m05fcoin/1_APPROVED.png`
+* BEFORE (= step 3): `/home/user/wt/s05/qa/match/05/r12/step4_m05fcoin/2_BEFORE_t95_through_screen.png`, `…/2_BEFORE_t90_through.png`,
+  `…/2_BEFORE_t95_left.png`, `…/2_BEFORE_t85_through.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r12/step4_m05fcoin/3_NEW_t95_through_screen.png`, `…/3_NEW_t90_through.png`,
+  `…/3_NEW_t95_left.png`, `…/3_NEW_t85_through.png`
+* Files: `src/world/match05far.ts` (M05FCOIN, `far05Coins` written by the live sync), `src/gameplay/coins.ts` (draw
+  position / height / size under the switch; pick-up untouched).
