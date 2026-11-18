@@ -2269,3 +2269,212 @@ The Screen 07 worker has already started saving pictures in its round-16 folder.
 > a.png
 > b.png
 
+### 🤖 Claude — 2026-11-18T19:22:41.340Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/04.jpg"}`
+
+### 🤖 Claude — 2026-11-18T19:22:42.385Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/05.jpg"}`
+
+### 🧑 User — 2026-11-18T19:22:42.586Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:42.915Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/06.jpg"}`
+
+### 🤖 Claude — 2026-11-18T19:22:43.438Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/07.jpg"}`
+
+### 🧑 User — 2026-11-18T19:22:43.747Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T19:22:43.780Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T19:22:43.859Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:44.008Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/08.jpg"}`
+
+### 🧑 User — 2026-11-18T19:22:44.359Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:52.802Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/references/ | grep \"^0[4-8]\"; find /home/user/wt/s07/qa/match/07 -name \"*.png\" -path \"*r8*\" | grep -iE \"f06|f10|t33|t50\" | head -8; ls /home/user/wt/s07/qa/match/07/r15/step1/ 2>/dev/null", "description": "Find the 07 reference and a kept mid-swim frame"}`
+
+### 🧑 User — 2026-11-18T19:22:53.066Z
+
+> ↩︎ result: 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_K/t33_through_screen.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_K/t50_through_screen.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_foam/t33_through_screen.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_foam/t50_through_screen.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_foam2/t33_through_screen.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_foam2/t50_through_screen.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_foam_coinsz/t33_through_screen.png
+> /home/user/wt/s07/qa/match/07/r8/plunge_foam_coinsz/t50_through_screen.png
+> BEFORE
+> NEW
+
+### 🤖 Claude — 2026-11-18T19:22:57.599Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; W=/home/user/wt/s07/qa/match/07/r8/plunge_K; ls $W | head -20; convert /home/user/rainbow-/references/07_dive_the_washer_tube.png -resize x900 $S/a.png; convert $W/t33_through_screen.png -resize x900 $S/b.png; convert $W/f06_forward6u.png -resize x900 $S/c.png 2>/dev/null; convert $S/a.png $S/b.png $( [ -f $S/c.png ] && echo $S/c.png ) +append $S/07.jpg; cat /home/user/wt/s07/qa/match/07/r16/K.txt", "description": "Preview 07 approved vs kept-version frames"}`
+
+### 🧑 User — 2026-11-18T19:23:01.793Z
+
+> ↩︎ result: motion.json
+> t33_through_screen.png
+> t50_through_screen.png
+> t66_through_screen.png
+> t80_through_screen.png
+> t95_through_screen.png
+> match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1
+
+### 🤖 Claude — 2026-11-18T19:23:03.704Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/07.jpg"}`
+
+### 🧑 User — 2026-11-18T19:23:03.869Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:23:09.792Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s07/qa/match/07/r16/step1/BEFORE/ /home/user/wt/s07/qa/match/07/r16/step1/NEW/ 2>/dev/null | grep png | head -20", "description": "Check fresh Screen 07 renders"}`
+
+### 🧑 User — 2026-11-18T19:23:10.474Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 2531024 Nov 18 19:17 a00_approved_view.png
+> -rw-r--r-- 1 root root 2359664 Nov 18 19:18 f03_forward3u.png
+> -rw-r--r-- 1 root root 2255899 Nov 18 19:18 f06_forward6u.png
+> -rw-r--r-- 1 root root 2172270 Nov 18 19:18 f10_forward10u.png
+> -rw-r--r-- 1 root root 2164061 Nov 18 19:18 f20_forward20u.png
+> -rw-r--r-- 1 root root 1948139 Nov 18 19:19 s_left_hard.png
+> -rw-r--r-- 1 root root 2216693 Nov 18 19:19 s_left_steer.png
+> -rw-r--r-- 1 root root 2227418 Nov 18 19:20 s_right_hard.png
+> -rw-r--r-- 1 root root 2319299 Nov 18 19:19 s_right_steer.png
+> -rw-r--r-- 1 root root 2233903 Nov 18 19:20 t33_through_screen.png
+> -rw-r--r-- 1 root root 2316639 Nov 18 19:20 t50_through_screen.png
+> -rw-r--r-- 1 root root 2283073 Nov 18 19:20 t66_through_screen.png
+> -rw-r--r-- 1 root root 2047158 Nov 18 19:21 t80_through_screen.png
+> -rw-r--r-- 1 root root 1537612 Nov 18 19:21 t95_through_screen.png
+> -rw-r--r-- 1 root root 2563243 Nov 18 19:22 a00_approved_view.png
+> -rw-r--r-- 1 root root 2360167 Nov 18 19:22 f03_forward3u.png
+> -rw-r--r-- 1 root root 2254960 Nov 18 19:22 f06_forward6u.png
+> -rw-r--r-- 1 root root 2170032 Nov 18 19:23 f10_forward10u.png
+
+### 🤖 Claude — 2026-11-18T19:23:13.217Z
+
+The Screen 07 worker has just rendered a fresh set of the current game. Its "BEFORE" pictures are exactly what 07 looks like right now, so I'll use those.
+
+### 🤖 Claude — 2026-11-18T19:23:15.298Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; B=/home/user/wt/s07/qa/match/07/r16/step1/BEFORE; convert $B/f06_forward6u.png -resize x900 $S/b.png; convert $B/t33_through_screen.png -resize x900 $S/c.png; convert $S/a.png $S/b.png $S/c.png +append $S/07b.jpg", "description": "Preview fresh current Screen 07 frames"}`
+
+### 🧑 User — 2026-11-18T19:23:18.364Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:23:20.496Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/07b.jpg"}`
+
+### 🧑 User — 2026-11-18T19:23:20.715Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:23:38.993Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/now; mkdir -p $S; cp /home/user/wt/s06/qa/match/06/r15/BEFORE/f06_forward6u.png $S/06_NOW_swimming.png; cp /home/user/wt/s07/qa/match/07/r16/step1/BEFORE/f06_forward6u.png $S/07_NOW_swimming.png; cp /home/user/wt/s07/qa/match/07/r16/step1/BEFORE/t33_through_screen.png $S/07_NOW_further_in.png; ls -la $S", "description": "Copy worker frames where the app can open them"}`
+
+### 🧑 User — 2026-11-18T19:23:40.016Z
+
+> ↩︎ result: total 6348
+> drwxr-xr-x  2 root root    4096 Nov 18 19:23 .
+> drwx------ 11 root root    4096 Nov 18 19:23 ..
+> -rw-r--r--  1 root root 1998441 Nov 18 19:23 06_NOW_swimming.png
+> -rw-r--r--  1 root root 2233903 Nov 18 19:23 07_NOW_further_in.png
+> -rw-r--r--  1 root root 2255899 Nov 18 19:23 07_NOW_swimming.png
+
+### 🤖 Claude — 2026-11-18T19:23:42.267Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/04_through_the_five_arrows.png", "/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/3_NEW_f06_forward6u.png"], "caption": "Screen 04 — your approved picture, then the game now while Benny swims in", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T19:23:42.954Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/references/04_through_the_five_arrows.png → file_uuid: 1d96a795-d085-4a05-a52a-1db3cb3bdac8
+>   /home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/3_NEW_f06_forward6u.png → file_uuid: 9a2c4fa3-ee6e-4de3-96c3-f86ec88574e8
+
+### 🤖 Claude — 2026-11-18T19:23:43.768Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/05_flow_into_the_current.png", "/home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/3_NEW_t66_through_screen.png"], "caption": "Screen 05 — approved, then the game now (two-thirds of the way through)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T19:23:44.906Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/references/05_flow_into_the_current.png → file_uuid: b4bb04ee-ed72-4013-a81b-9cd7ac4ce149
+>   /home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/3_NEW_t66_through_screen.png → file_uuid: f5114896-358e-4386-b708-77fd95f45b3f
+
+### 🤖 Claude — 2026-11-18T19:23:45.864Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/06_crest_the_rinse_arch.png", "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/now/06_NOW_swimming.png"], "caption": "Screen 06 — approved, then the game now while swimming", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T19:23:46.829Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/references/06_crest_the_rinse_arch.png → file_uuid: 2442bca6-d28f-41d2-ac91-aa33604755a7
+>   /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/now/06_NOW_swimming.png → file_uuid: 22dc7dc7-26bc-4c75-bff7-8834606d0324
+
+### 🤖 Claude — 2026-11-18T19:23:48.580Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/07_dive_the_washer_tube.png", "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/now/07_NOW_swimming.png", "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/now/07_NOW_further_in.png"], "caption": "Screen 07 — approved, then the game now (just after the start, and a third of the way in)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T19:23:49.554Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/references/07_dive_the_washer_tube.png → file_uuid: 952dea08-e573-421d-8d9a-f61b1491d3fc
+>   /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/now/07_NOW_swimming.png → file_uuid: c7a87852-9f6d-4bce-be9a-38400e6ea865
+>   /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/now/07_NOW_further_in.png → file_uuid: 8ed4490d-23f9-4137-977e-9873f649ec6f
+
+### 🤖 Claude — 2026-11-18T19:23:49.837Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/08_final_spin_chamber.png", "/home/user/rainbow-/qa/review_r15/08_step1_near_water/3_NEW_f10_forward10u.png"], "caption": "Screen 08 — approved, then the game now while swimming in", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T19:23:50.821Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/references/08_final_spin_chamber.png → file_uuid: 7cf90e5b-bf23-4f7b-81a7-f81bccba573a
+>   /home/user/rainbow-/qa/review_r15/08_step1_near_water/3_NEW_f10_forward10u.png → file_uuid: ddf8c578-4284-4edb-ac45-a2f705cafb5b
+
+### 🤖 Claude — 2026-11-18T19:24:01.438Z
+
+I sent your approved picture and the game as it looks right now for each screen. I didn't touch the workers to do it: these are pictures the game had already saved. The 06 and 07 pictures were rendered by those screens' own workers (07's only minutes ago), and none of these frames is the approved start view; they're from while Benny swims. Here's how each compares to your picture, honestly:
+
+**08 Final Spin Chamber: the closest.** The big gold ring, the silver door with the porthole, the towel platform, the gold spout cups pouring water, the purple perforated walls and the coin line all match well. The main thing wrong is the water near Benny. It's a stretched pink and blue sheet with white flecks, where yours is a curvy S-river with foamy edges.
+
+**05 Flow Into the Current: close in layout.** The purple slotted tunnel, gold ring bands, paddle lids, cyan-and-pink river, coin line and foam banks are all there. What's off: the walls look smeared and streaky (worst on the left), the water in front is long blurred streaks instead of your smooth satin bands, and the foam banks are smaller than your puffy clouds.
+
+**04 Through the Five Arrows: recognisable but plainer.** The gold tunnel, glowing arrows ahead, coins on the left, bubbles and the new bubbly foam heaps are there. But the rings read as one long orange corridor of thin rings, not your few thick polished ones. The river is mostly plain blue, without your pink swirls curving up the sides. The ring problem is exactly what the painted-ring test is fixing, and its results are the first thing you'll see.
+
+**06 Crest the Rinse Arch: still far off.** Yours has the river cresting and curving left into an off-centre tunnel with paddle lids. The game shows a straight, centred target of thin gold rings and a steep blue water ramp. Its worker is starting with the gold rings, then the foam.
+
+**07 Dive the Washer Tube: the furthest behind.** Just after the start, the tunnel, rings and paddles at the top look close, but the water near Benny is badly smeared, and a coin shows through his body. A third of the way in, the scenery tears: stretched walls, a hard straight cut across the water, nothing like your winding river with pink banks. Its worker is on this now.
+
+In short: 08 and 05 already look like your pictures while Benny swims, 04 is getting there, and 06 and 07 need the most work. I'll send proper APPROVED / BEFORE / NEW sets as each worker finishes a step, starting with the 04 painted rings.
+

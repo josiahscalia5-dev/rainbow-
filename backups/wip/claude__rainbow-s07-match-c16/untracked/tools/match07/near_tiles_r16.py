@@ -33,25 +33,38 @@ hh, ss, vv = hsv[..., 0], hsv[..., 1], hsv[..., 2]
 MAG = (hh >= 138) & (hh <= 172) & (ss > 100) & (vv > 120)
 
 # ---- 1. inner edge of the lower-left magenta band, measured per row (end of the magenta run that starts at the left) ----
-Y0, Y1 = 1252, 1500          # above 1252 the cyan side runs into Benny's splash; below 1500 the band leaves the frame
+Y0, Y1 = 1262, 1490          # above: the cyan side runs into Benny's splash + a bubble on the edge; below: the band leaves the frame
+CYW = (((hh >= 85) & (hh <= 108) & (ss > 80) & (vv > 110)) | ((ss < 70) & (vv > 190)))
 pts = []
-for y in range(Y0, Y1 + 1, 4):
-    m = MAG[y].copy()
-    m = cv2.morphologyEx(m.astype(np.uint8)[None, :], cv2.MORPH_CLOSE, np.ones((1, 9), np.uint8))[0] > 0
-    xs = np.where(m[:620])[0]
+for y in range(Y0, Y1 + 1, 2):
+    # the inner edge = where the first long run (>= 24 px) of cyan / white trim begins, scanning from the left
+    c = CYW[y, :640].astype(np.int32)
+    run = np.convolve(c, np.ones(24, np.int32), 'valid')
+    xs = np.where(run >= 22)[0]
     if not len(xs):
         continue
-    # the first long magenta run from the left edge (the band), its right end = the inner edge
-    x = xs[0]
-    while x + 1 < 620 and m[x + 1]:
-        x += 1
-    if x - xs[0] > 40:
-        pts.append((x, y))
+    x = int(xs[0])
+    if MAG[y, max(0, x - 30):x].mean() > 0.4:   # magenta right before it (the band, not a bubble or the frame edge)
+        pts.append((x - 2, y))
 pts = np.array(pts, np.float32)
+# the big iridescent bubble sitting on the band (picture px) is painted over from the band around it before the unwrap
+bm0 = np.zeros((H, W), np.uint8)
+cv2.circle(bm0, (135, 1433), 36, 255, -1)
+rgb_ip = cv2.inpaint(rgb, bm0, 11, cv2.INPAINT_TELEA)
+im = rgb_ip.astype(np.float32)
 # smooth: x(y) quadratic least squares (the band edge is a gentle curve)
-cf = np.polyfit(pts[:, 1], pts[:, 0], 3)
+YC, YS = 0.5 * (Y0 + Y1), 0.5 * (Y1 - Y0)       # normalised y for a well-conditioned fit
+keep = np.ones(len(pts), bool)
+for _ in range(4):                               # robust: drop bubble / trim-gap outliers, refit
+    cfn = np.polyfit((pts[keep, 1] - YC) / YS, pts[keep, 0], 4)
+    res = np.abs(np.polyval(cfn, (pts[:, 1] - YC) / YS) - pts[:, 0])
+    keep = res < max(10.0, 2.0 * np.median(res))
+cf = np.polyfit(pts[keep, 1], pts[keep, 0], 4) if False else None
+xfit = lambda y: np.polyval(cfn, (np.asarray(y) - YC) / YS)
+print('edge points kept', int(keep.sum()), 'of', len(pts))
+print('edge fit rms px (kept)', round(float(np.sqrt(np.mean((xfit(pts[keep, 1]) - pts[keep, 0]) ** 2))), 1))
 yy = np.arange(Y0, Y1 + 1, 0.25)
-xx = np.polyval(cf, yy)
+xx = xfit(yy)
 D = np.stack([xx, yy], 1)
 seg = np.linalg.norm(np.diff(D, axis=0), axis=1)
 arc = np.concatenate([[0], np.cumsum(seg)])
@@ -118,7 +131,7 @@ foam_t = seam_h(seam_v(f8.astype(np.float32), 28), 24)
 Image.fromarray(np.clip(foam_t, 0, 255).astype(np.uint8)).save(OUT + 'near_foam.png')
 print('near_foam.png', foam_t.shape)
 json.dump({'note': 'r16 m07nearw near-water tiles (tools/match07/near_tiles_r16.py)',
-           'bank': {'edge_poly_x_of_y': cf.tolist(), 'rows_y': [Y0, Y1], 't_out': T_OUT, 't_in': T_IN, 'overlap': OV,
+           'bank': {'edge_poly_x_of_ynorm': cfn.tolist(), 'ynorm': [YC, YS], 'rows_y': [Y0, Y1], 't_out': T_OUT, 't_in': T_IN, 'overlap': OV,
                     'size': list(bank_t.shape[:2]), 'magenta_cols': T_OUT},
            'foam': {'rect': [fx0, fy0, fx1, fy1], 'size': list(foam_t.shape[:2])}},
           open(OUT + 'near07.json', 'w'), indent=1)

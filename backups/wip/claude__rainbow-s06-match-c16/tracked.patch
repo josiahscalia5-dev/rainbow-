@@ -1,5 +1,5 @@
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 5b6f191..15d504e 100644
+index 5b6f191..2e2de9c 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -95,6 +95,9 @@ uniform vec3 uAxU;
@@ -86,3 +86,90 @@ index 5b6f191..15d504e 100644
          uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
        add(rg, rm, 'rings');
        console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
+@@ -537,23 +568,69 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+   // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
+   // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+   let foamClouds: THREE.InstancedMesh | null = null;
++  const foamSprites: THREE.Mesh[] = [];
+   if (GEO && R6 && qs?.get('m06foam') === '1') {
+     let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+-    const items: { p: THREE.Vector3; r: number }[] = [];
++    const items: { p: THREE.Vector3; r: number; up: THREE.Vector3 }[] = [];
+     for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
+       const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
+       for (let i = 0; i < n; i++) {
+         const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;
+         const l = side * (R6.Wc + 0.25 + rnd() * 1.3);
+-        items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rnd() * 0.12), r });
++        items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rnd() * 0.12), r, up: fr.up });
++      }
++    }
++    // r16 `&m06fclu=1` (qa/match/06/r16/PROGRESS.md): the painted 06 foam is soft lilac-white cumulus heaps made of many
++    // round foam lobes and small bubbles (white tops, cool lilac-blue undersides, tiny bubble pores along the lower edges),
++    // not smooth pink-white plastic balls. Same layout as m06foam; every blob becomes a low heap of lobes + small bubbles
++    // (camera-facing sprites, two passes: opaque cores + see-through rims; the Screen 04 `m04fclu` method with 06's own
++    // painted colours), world-anchored, shrinking away right in front of the camera. `&m06fcs=` heap size, `&m06fck=`
++    // bubble count scale, `&m06fcn=` distance (u) below which they shrink away. A separate random stream: every other
++    // layout is unchanged.
++    if (qs?.get('m06fclu') === '1') {
++      const num = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && Number.isFinite(v) ? v : d; };
++      const fcs = num('m06fcs', 1.25), fck = num('m06fck', 1), fcn = num('m06fcn', 1.4);
++      let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
++      const aB: number[] = [], aS: number[] = [];
++      for (const it of items) {
++        const R = it.r * fcs, n = Math.min(24, Math.max(3, Math.round((2 + 30 * R) * fck)));
++        const t1 = new THREE.Vector3().crossVectors(it.up, new THREE.Vector3(1, 0, 0));
++        if (t1.lengthSq() < 1e-4) t1.set(0, 0, 1);
++        t1.normalize(); const t2 = new THREE.Vector3().crossVectors(it.up, t1).normalize();
++        const base = it.p.clone().addScaledVector(it.up, -it.r * 0.35);
++        for (let i = 0; i < n; i++) {
++          // a flattened dome of lobes round the blob centre: bigger lobes on top, small bubbles round the foot
++          const th = rnd2() * Math.PI * 2, d = R * Math.sqrt(rnd2()) * 1.1;
++          const lobe = i === 0 || rnd2() < 0.22;
++          const rho = lobe ? R * (0.45 + rnd2() * 0.25) : Math.max(0.025, R * (0.12 + Math.pow(rnd2(), 1.5) * 0.30));
++          const hgt = lobe ? R * (0.15 + 0.35 * rnd2()) * (1 - d / (1.2 * R)) : rho * 0.5;
++          const p = base.clone().addScaledVector(t1, Math.cos(th) * d).addScaledVector(t2, Math.sin(th) * d).addScaledVector(it.up, rho * 0.55 + Math.max(0, hgt));
++          aB.push(p.x, p.y, p.z, rho); aS.push(rnd2() + (lobe ? 1 : 0)); // aS >= 1: a foam lobe (pores), < 1: a small bubble
++        }
++      }
++      const quad = new THREE.PlaneGeometry(1, 1);
++      const g = new THREE.InstancedBufferGeometry();
++      g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
++      g.setAttribute('aB', new THREE.InstancedBufferAttribute(new Float32Array(aB), 4));
++      g.setAttribute('aS', new THREE.InstancedBufferAttribute(new Float32Array(aS), 1));
++      g.instanceCount = aS.length;
++      for (const rim of [false, true]) {
++        const m = new THREE.ShaderMaterial({ vertexShader: FOAMC_VERT, fragmentShader: (rim ? '#define RIM\n' : '') + FOAMC_FRAG,
++          transparent: rim, depthWrite: !rim, fog: false,
++          uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uNear: { value: new THREE.Vector2(fcn * 0.5, fcn) } } });
++        const o = new THREE.Mesh(g, m);
++        o.name = rim ? 'm06_foamclu_rim' : 'm06_foamclu'; o.frustumCulled = false; o.visible = false; o.renderOrder = rim ? 4 : 3;
++        group.add(o); foamSprites.push(o);
+       }
++      console.info('[match06] m06fclu', { blobs: items.length, sprites: aS.length });
++    } else {
++      const fm = new THREE.MeshStandardMaterial({ color: 0xf7f0ff, roughness: 0.55, metalness: 0, emissive: new THREE.Color(0x9a7ac0), emissiveIntensity: 0.4 });
++      foamClouds = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 2), fm, items.length);
++      const m4 = new THREE.Matrix4();
++      items.forEach((it, i) => { m4.makeScale(it.r, it.r * 0.8, it.r).setPosition(it.p); foamClouds!.setMatrixAt(i, m4); });
++      foamClouds.name = 'm06_foamclouds'; foamClouds.visible = false; foamClouds.frustumCulled = false;
++      group.add(foamClouds);
+     }
+-    const fm = new THREE.MeshStandardMaterial({ color: 0xf7f0ff, roughness: 0.55, metalness: 0, emissive: new THREE.Color(0x9a7ac0), emissiveIntensity: 0.4 });
+-    foamClouds = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 2), fm, items.length);
+-    const m4 = new THREE.Matrix4();
+-    items.forEach((it, i) => { m4.makeScale(it.r, it.r * 0.8, it.r).setPosition(it.p); foamClouds!.setMatrixAt(i, m4); });
+-    foamClouds.name = 'm06_foamclouds'; foamClouds.visible = false; foamClouds.frustumCulled = false;
+-    group.add(foamClouds);
+   }
+   // far end cap of the tunnel (the glowing vanishing point)
+   const fe = frame(L.s1 + L.ext);
+@@ -588,7 +665,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       renderer.setRenderTarget(prevRT);
+       shared.uUseDepth.value = 1;
+     },
+-    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; },
++    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
+     away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+     sync(renderer, w, h) {
+       shared.uPjPost.value.x = renderer.toneMappingExposure;
