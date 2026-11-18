@@ -1505,3 +1505,60 @@ That base-row index line is needlessly complex (its factor is exactly 1) and wou
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq8 && mkdir -p $S && time python3 -I tools/match08/nq08.py $S/nq08.png $S/nq08.json $S 2>&1 | tail -12", "description": "Run nq08 v6", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T17:14:01.377Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> glints 15 sprites; base / glint split at min(RGB) > 168
+> target 1336 x 1320 texels ( 6.1 u x 8.0 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.475 112 cols
+> cyan zone a -0.442 .. 0.714 388 cols
+> zone 1 glints placed 43 / 43
+> zone 0 glints placed 4 / 4
+> zone 2 glints placed 64 / 64
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq8/nq08.png (1320, 1336, 3)
+> 
+> real	0m9.668s
+> user	0m6.172s
+> sys	0m0.215s
+
+### 🤖 Claude — 2026-11-18T17:14:04.564Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq8/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:14:04.673Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:14:24.483Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "tile = acc / np.maximum(wsum, 1e-6)[None, :, None]\nbase_tile = tile.copy()", "new_string": "tile = acc / np.maximum(wsum, 1e-6)[None, :, None]\n# run-level tone: neighbouring runs come from differently lit parts of the band (vertical tone stripes); the wide lateral\n# colour trend is taken from the painted layout (its column means, smoothed), the run's own fine streak lines are kept\ng1 = lambda v, s: cv2.GaussianBlur(v[None].astype(np.float32), (0, 0), sigmaX=s, sigmaY=0.1)[0]\nprof_lay = colm[np.cl …[+129 chars]`
+
+### 🧑 User — 2026-11-18T17:14:24.519Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T17:14:27.230Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's/^XF = 8                                         # cross-fade between runs (columns)/XF = 14                                        # cross-fade between runs (columns)/' tools/match08/nq08.py && grep -n \"^XF\" tools/match08/nq08.py && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq9 && mkdir -p $S && python3 -I tools/match08/nq08.py $S/nq08.png $S/nq08.json $S 2>&1 | tail -3", "description": "Run nq08 v6 with tone equalisation", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T17:14:34.386Z
+
+> ↩︎ result: 177:XF = 14                                        # cross-fade between runs (columns)
+> zone 0 glints placed 4 / 4
+> zone 2 glints placed 64 / 64
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq9/nq08.png (1320, 1336, 3)
+> [This command modified 1 file you've previously read: ../wt/s08/tools/match08/nq08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T17:14:37.560Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq9/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:14:37.627Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:14:45.247Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq9 && cp $S/nq08.png assets/textures/match08/nq08.png && cp $S/nq08.json assets/textures/match08/nq08.json && ls -la assets/textures/match08/nq08.png && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && rm -rf qa/match/08/r14/step1_m08nq/NEW_v6 && time node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/NEW_v6 \"$K13&m08nq=1\" 2>&1 | grep \"^08\"", "description": "Render audit shots with nq08 v6 tile" …[+20 chars]`
+
