@@ -1,0 +1,13 @@
+{
+  "retained": {
+    "branch": "claude/rainbow-s06-match-c17",
+    "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+  },
+  "candidateBranch": "codex/s06-curved-rinse-arch",
+  "candidateSourceCommit": "8a80c70d19b72cfaa6432c9a98f821d5a521c815",
+  "evidenceCommit": "0478646a45ee68dc81656f0da12baf7f06501bf5",
+  "approvedReference": "references/06_crest_the_rinse_arch.png",
+  "approvedSHA256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "retainedSwitches": "match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1",
+  "candidateSwitch": "cx06RinseElbow=1"
+}
