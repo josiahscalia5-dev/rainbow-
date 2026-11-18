@@ -2011,3 +2011,199 @@ Now the PROGRESS.md for r12 with step 1.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K15='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1' && time node tools/lead_r6/motion_audit.mjs 08 qa/match/08/r12/NEW \"$K15\" 2>&1 | grep -v 'allow list' | tail -13", "description": "Run 12-shot motion audit of current kept set", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T13:16:03.839Z
+
+> ↩︎ result: 08 a00_approved_view s 392.04 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 395.01 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.017 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.977 lat 0 stage 08 frames 63
+> 08 f20_forward20u s 411.952 lat 0 stage 09 frames 126
+> 08 s_left_steer s 398.018 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 398.018 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 404.036 lat -2.217 stage 08 frames 76
+> 08 s_right_hard s 404.035 lat 2.217 stage 08 frames 76
+> 08 t33_through_screen s 396.276 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.352 lat 0 stage 08 frames 78
+> 
+> real	1m26.802s
+> user	0m2.464s
+> sys	0m0.601s
+
+### 🤖 Claude — 2026-11-18T13:16:10.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/aud1.png full 0.3 references/08_final_spin_chamber.png $N/a00_approved_view.png $N/f03_forward3u.png $N/f06_forward6u.png $N/f10_forward10u.png $N/f20_forward20u.png && python3 -I $S/bin/sbs.py $S/aud2.png full 0.3 $N/s_left_steer.png $N/s_right_steer.png $N/s_left_hard.png $N/s_right_hard.png $N/t66_through_screen.png $N/t95_through_screen.png", "description": "Contact sheets of the audit for review"}`
+
+### 🧑 User — 2026-11-18T13:16:11.173Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:16:11.336Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/aud2.png"}`
+
+### 🧑 User — 2026-11-18T13:16:11.382Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:16:15.960Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/aud1.png"}`
+
+### 🧑 User — 2026-11-18T13:16:15.999Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:16:22.168Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/aud_f10.png 0,380,864,1000 0.75 $N/f06_forward6u.png $N/f10_forward10u.png", "description": "Zoom middle band of f06/f10"}`
+
+### 🧑 User — 2026-11-18T13:16:22.478Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:16:23.162Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/aud_f10.png"}`
+
+### 🧑 User — 2026-11-18T13:16:23.197Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:16:29.968Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/aud_f10L.png 0,540,330,900 1.2 $N/f10_forward10u.png $N/t66_through_screen.png", "description": "Zoom left floor-drum junction at f10/t66"}`
+
+### 🧑 User — 2026-11-18T13:16:30.275Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:16:31.018Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/aud_f10L.png"}`
+
+### 🧑 User — 2026-11-18T13:16:31.044Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:16:49.490Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"m08drum: a drum point\" src/world/match08.ts && sed -n 150,170p src/world/match08.ts", "description": "Locate drum continuation code in main()"}`
+
+### 🧑 User — 2026-11-18T13:16:49.532Z
+
+> ↩︎ result: 161:  // m08drum: a drum point the approved view could not see (the top corners next to the door, behind the arch ring) continues
+>   return vec3(r.x + sign(d) * o, w.y, w.z);
+> }
+> void main() {
+>   if (uClipIn.w > 0.5 && (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z)) discard;
+>   // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+>   // behind receives the window pixels that the rectangle used to carry at towel depth)
+>   if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
+>   // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
+>   vec3 pc = patchColor();
+>   if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+>   if (uCeil.w > 0.5) pc = mix(pc, ceilColorAt(vW.xy), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+>   // m08drum: a drum point the approved view could not see (the top corners next to the door, behind the arch ring) continues
+>   // the SAME painted rings as the door wall: the projector ray through it is followed  …[+595 chars]
+
+### 🤖 Claude — 2026-11-18T13:17:01.737Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"uniform vec2 uCeilD;        // m08drum\"\"\",\"\"\"uniform float uDrumRot;     // m08drot (chamber drum only): > 0.5 = hidden points take the nearest visible point of the same ring\nuniform vec2 uCeilD;        // m08drum\"\"\")\nrep(\"\"\"  if (uCeil.w > 0.5) pc = mix(pc, ceilColorAt(vW.xy), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));\n  // m08drum:\"\"\",\"\"\"  if (uCeil.w > 0.5) pc = mix(p …[+1999 chars]`
+
+### 🧑 User — 2026-11-18T13:17:04.106Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:17:11.666Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K15='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/dtN && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/dtN \"$K15&m08drot=1\" 2>&1 | grep -v 'allow list' | tail -4 && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_dt.png 0,540,330,900 1.2 $N/f10_forward10u.png $S/dtN/f10_forward10u.png", "description": "R …[+63 chars]`
+
+### 🤖 Claude — 2026-11-18T13:17:12.517Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_dt.png"}`
+
+### 🧑 User — 2026-11-18T13:17:42.042Z
+
+> ↩︎ result: 08 f06_forward6u s 398.134 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.567 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.352 lat 0 stage 08 frames 78
+
+### 🧑 User — 2026-11-18T13:17:42.063Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:17:55.316Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git diff src/world/match08.ts > qa/match/08/r12/wip_m08drot_not_kept.patch && git checkout -- src/world/match08.ts && npx tsc --noEmit -p . && cat >> qa/match/08/r12/PROGRESS.md <<'EOF'\n\n## Tried — `&m08drot=1` (drum wall in the lower spout cups' shadow) — NOT KEPT (NOT AN IMPROVEMENT)\n* Defect (B): behind the lower-left spout cup (forward 10 u, two-thirds through) the drum wall the approved view could not\n  see shows the generic fill tile (fine diagonal slots) with hard straight edges against the painted wall.\n* Tried: a hidden drum point takes the us …[+962 chars]`
+
+### 🧑 User — 2026-11-18T13:18:05.333Z
+
+> ↩︎ result: 336ec1d0e48269eb26abe728fd42e9058bc828c6
+> 336ec1d0e48269eb26abe728fd42e9058bc828c6	refs/heads/claude/rainbow-s08-scenery-c12
+> 13:18
+
+### 🤖 Claude — 2026-11-18T13:18:16.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/aud_t95.png 0,300,864,1100 0.7 $N/t95_through_screen.png $N/t66_through_screen.png", "description": "Zoom t95 and t66 middle band"}`
+
+### 🧑 User — 2026-11-18T13:18:16.859Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:18:17.883Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/aud_t95.png"}`
+
+### 🧑 User — 2026-11-18T13:18:17.917Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:18:25.634Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_under.png 60,180,460,480 1.0 $N/a00_approved_view.png $N/f10_forward10u.png $N/t95_through_screen.png", "description": "Zoom upper-left cup underside across shots"}`
+
+### 🧑 User — 2026-11-18T13:18:25.918Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:18:26.644Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_under.png"}`
+
+### 🧑 User — 2026-11-18T13:18:26.674Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:18:43.034Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfrom scipy import ndimage\na=np.asarray(Image.open('$S/dbg/a00_approved_view.png').convert('RGB')).astype(int)\nr=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((864,1536))).astype(float)\nm=np.asarray(Image.open('$S/cupmask.png').convert('RGB'))\npaint=(m[...,0]>127)\n# debug colours of spouts: find colour at cup centres\nfor name,(x,y) in {'ULdome':(230,350),'ULunder':(230, …[+152 chars]`
+
+### 🧑 User — 2026-11-18T13:18:43.578Z
+
+> ↩︎ result: ULdome [106 103 105]
+> ULunder [255   0 255]
+> URdome [  0 255   0]
+> URunder [255   0 255]
+> wall [  0 255   0]
+
+### 🤖 Claude — 2026-11-18T13:18:53.152Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && cat > $S/bin/cupov.py <<'EOF'\nimport json, math, sys, numpy as np\nfrom PIL import Image, ImageDraw\nL = json.load(open('assets/textures/match08/proj08.json'))\nM = np.array(L['camera']['matrixWorld']).reshape(4, 4).T\nV = np.linalg.inv(M); W, H = 864, 1536; f = 1 / math.tan(math.radians(L['camera']['fov']) / 2); asp = W / H\ndef proj(p):\n    h = np.append(p, 1) @ V.T; x, y, z = h[0], h[1], -h[2]\n    return (x * f / asp / z * 0.5 + 0.5) * W, (0.5 - y * f / z * 0.5) * H …[+916 chars]`
+
+### 🧑 User — 2026-11-18T13:18:53.503Z
+
+> ↩︎ result: UL centre px (np.float64(232.49999999999974), np.float64(374.9999999999999)) top px (np.float64(231.39933330539114), np.float64(329.7586597447936))
+> UR centre px (np.float64(712.4999999999998), np.float64(415.00000000000034)) top px (np.float64(714.0557796087319), np.float64(369.74004734089993))
+> LL centre px (np.float64(132.50000000000003), np.float64(707.5000000000002)) top px (np.float64(128.54497227573896), np.float64(603.6040762666))
+> LR centre px (np.float64(739.5000000000001), np.float64(757.4999999999999)) top px (np.float64(744.1918195937203), np.float64(638.2184747021352))
+
+### 🤖 Claude — 2026-11-18T13:18:54.104Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/cupov.png"}`
+
+### 🧑 User — 2026-11-18T13:18:54.143Z
+
+> ↩︎ result: [image]
+

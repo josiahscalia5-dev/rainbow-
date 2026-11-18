@@ -1,5 +1,5 @@
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index c99178d6..d2eceefe 100644
+index c99178d6..bbc26090 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
 @@ -8,6 +8,7 @@ import * as THREE from 'three';
@@ -18,15 +18,23 @@ index c99178d6..d2eceefe 100644
  
    let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
    const place = (time: number) => {
-@@ -366,7 +368,21 @@ export function createCoins(course: Course): CoinSystem {
+@@ -364,9 +366,28 @@ export function createCoins(course: Course): CoinSystem {
+         scale = 1 + k * 0.8;
+         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
        } else {
-         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));
+-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));
++        // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
++        // forced-perspective relief in the locked view) settle to the normal coin height on the river as Benny closes in
++        // (unchanged while ≥ 9 u ahead: the locked view and the mid-stage frames keep the painted arc)
++        const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;
++        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, hS + 0.08 * Math.sin(time * 3 + ph));
        }
 -      if (d.axis) {
-+      // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the coin is drawn on
-+      // the far river's core where the block shows that stretch of river, back to its real place as the block folds
++      // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the next stage's (06)
++      // coins are drawn on the far river's core where the block shows that stretch of river, back to their real place as
++      // the block folds
 +      let fcFace = false;
-+      if (M05FCOIN && !collected[i] && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
++      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
 +        const k = far05Coins.map(d.s, d.h + 0.08 * Math.sin(time * 3 + ph), fcP);
 +        const o = far05Coins.open;
 +        if (k > 0) { p.copy(fcP.lerp(p, o)); scale *= k + (1 - k) * o; } else scale *= o;

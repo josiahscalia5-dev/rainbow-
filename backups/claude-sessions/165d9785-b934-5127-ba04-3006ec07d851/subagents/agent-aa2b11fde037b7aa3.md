@@ -1972,3 +1972,120 @@ No cycles. Implementing the switch now.
 >    {'i': 65, 'x': 591, 'y': 628, 'd': 7}
 >     …[+1294 chars]
 
+### 🤖 Claude — 2026-11-18T13:15:40.858Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 630,660p src/game/Game.ts", "description": "Read coinScreen debug helper"}`
+
+### 🧑 User — 2026-11-18T13:15:40.903Z
+
+> ↩︎ result: resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+>     /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+>     coinScreen() {
+>       const mesh = coins.group.children[0] as THREE.InstancedMesh;
+>       const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+>       const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+>       camera.updateMatrixWorld();
+>       const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+>       const out: { i: number; x: number; y: number; d: number }[] = [];
+>  …[+726 chars]
+
+### 🤖 Claude — 2026-11-18T13:16:28.851Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/tools/coindefs.mjs <<'EOF'\n// dump coin defs (s, lat) + stage starts; run from the checkout\nimport { pathToFileURL } from 'node:url';\nimport { realpathSync } from 'node:fs';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { createServer } = await import(pathToFileURL(`${process.cwd()}/node_modules/vite/dist/node/index.j …[+1286 chars]`
+
+### 🧑 User — 2026-11-18T13:16:36.023Z
+
+> ↩︎ result: [["05",114.68830202823243,188.92412082521383],["06",188.92412082521383,247.05710253588848],["07",247.05710253588848,389.21995388030825],["08",389.21995388030825,404.7896481881434]]
+> 18 127.84 -0.23
+> 19 131.44 -0.29
+> 20 138.62 -0.28
+> 21 143.19 0.15
+> 22 148.97 -0.15
+> 23 158.66 -0.65
+> 24 175.51 -1.63
+> 25 178.06 -1.99
+> 26 183.57 0.09
+> 27 183.56 0.72
+> 28 183.71 1.03
+> 29 184.00 1.02
+> 30 184.34 0.80
+> 31 184.70 0.46
+> 32 185.05 0.13
+> 33 185.37 -0.14
+> 34 185.65 -0.42
+> 35 185.93 -0.74
+> 36 186.20 -1.02
+> 37 186.47 -1.28
+> 38 201.61 -0.65
+> 39 204.51 -0.60
+> 40 207.41 -0.66
+> 41 210.30 -0.83
+> 42 213.20 -1.07
+> 43 216.09 -1.34
+> 44 218.99 -1.61
+> 45 221.89 -1.83
+> 46 224.78 -1.97
+> 47 227.68 -2.00
+> 48 230.58 -1.92
+> 49 275.08 0.14
+> 50 280.59 -0.35
+> 51 286.10 -0.76
+> 52 291.60 -0.98
+
+### 🤖 Claude — 2026-11-18T13:16:53.882Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"C05M\\|far:\\|axis:\\|pickLat\\|d.h\\b\\|h:\" src/gameplay/coins.ts | head -40", "description": "Find how measured 05 far coins are defined"}`
+
+### 🧑 User — 2026-11-18T13:16:53.916Z
+
+> ↩︎ result: 15:/** `?coins05=1` / `?match05=1`: Screen 05 reference coins (measured 05 layout C05M + approved coin look, all screens) */
+> 19: * COIN TOTAL KEPT = the default game's 91 coins / 2,240. The measured arrangement C05M (18 coins) replaces 7 default 05
+> 20: * coins after the checkpoint, so the run had 102 coins (100 reachable). With this switch:
+> 21: *  1. the two tiniest painted far coins (C05M rows 17 + 18, 4 / 3.5 px wide at the vanishing point) end the painted arc
+> 24: *     are picked up on the stream centre line instead (pickLat = C05TOT_PICKLAT);
+> 47: *  width 0.76 -> 0.66 and edge band / width 0.11-0.13 => thickness ~0.18 u per 1-u coin and ~0.1 rad more lean-back than
+> 51:  /** measured coins face the camera squarely in the approved picture: wobble amplitude (rad) of the C05M coins (was 0.18) */
+> 122:    if (rt) rt05.set(rt.width, rt.height); else renderer.getDrawingBufferSize(rt05);
+> 154:  s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number;
+> 158:   *  15 u closer on (see C05M) */
+> 164:  pickLat?: number;
+> 174:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 178: * the visible coin …[+1728 chars]
+
+### 🤖 Claude — 2026-11-18T13:16:55.954Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "offset": 176, "limit": 30}`
+
+### 🧑 User — 2026-11-18T13:16:55.982Z
+
+> ↩︎ result: 176	/**
+> 177	 * `?coins05=1` (or `?match05=1`), Screen 05 full reference match (qa/pilot05/full_reference_match/coins/NOTES.md):
+> 178	 * the visible coins at the locked 05 checkpoint, MEASURED on the approved picture (centre x, y and face width w, px) and
+> 179	 * solved back onto the course with the live render camera (qa/pilot05/full_reference_match/hud/probe05.mjs --solve:
+> 180	 * course point (s, lat) at the coins' height whose coin centre — same bob as below, clock 12 — projects onto the
+> 181	 * approved centre; scale = approved width / projected width of a 1-u coin). Rows: [ds = s − 05_crest, lat, scale].
+> 182	 * v2 (2026-11-17, targets qa/pilot05/full_reference_match/coins/targets_v2.json): approved coin SILHOUETTE centres
+> 183	 * (face + milled edge; a cylinder's silhouette is centrally symmetric, so its box centre is the projected coin centre)
+> 184	 * 1 (474, 728.5, 97) 2 (548.5, 660.5, 70) 3 (481.5, 612.5, 56) 4 (431.5, 575, 44) 5 (465.5, 546, 30) 6 (495, 532, 21)
+> 185	 * 7 (518.5, 523, 17.5) 8 (532, 516, 13.5) 9 (537, 509, 10) 10 (534, 502.5, 8.5) 11 (526, 497, 8) 12 (515.5, 493, 6.5)
+> 186	 * 13 (506, 490, 5.5) 14 (498, 487.5, 5) 15 (490.5, 486.5, 5) 16 (482.5, 485.5, 4.5) 17 (475. …[+1926 chars]
+
+### 🤖 Claude — 2026-11-18T13:17:45.872Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "old_string": "      } else {\n        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));\n      }\n      // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the coin is drawn on\n      // the far river's core where the block shows that stretch of river, back to its real place as the block folds\n      let fcFace = false;\n      if (M05FCOIN && !collected[i] && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS …[+1066 chars]`
+
+### 🧑 User — 2026-11-18T13:17:45.920Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:17:54.349Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1' && rm -rf /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin \"$K&m05fcoin=1\" t85_through,t90_through,t95_through_screen,k81_kink,t75_through,t66_through_scre …[+98 chars]`
+
