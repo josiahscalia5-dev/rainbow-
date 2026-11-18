@@ -17,7 +17,7 @@
  */
 import * as THREE from 'three';
 import { PROJ05_INVERSE } from '../vfx/waterRibbon';
-import { addM04 } from './match04m4';
+import { addM04, M04 } from './match04m4';
 
 interface Layout04 {
   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
@@ -220,7 +220,8 @@ export async function buildMatch04(): Promise<Match04> {
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm04_' + name; group.add(o); return o; };
 
   const T = L.tube;
-  const cx = T.ax - L.water[0], cy = T.h, z0 = -T.mouthS, len = 48;
+  // round 8 `&m04ring=1`: the tunnel (and the water in it) runs on to 90 u so its far end is the painted small glow, not a disc
+  const cx = T.ax - L.water[0], cy = T.h, z0 = -T.mouthS, len = M04.ring ? M04.num('m04len', 90) : 48;
   const rv = tiles.river;
   riv3A.w = T.mouthS;
   const M = {

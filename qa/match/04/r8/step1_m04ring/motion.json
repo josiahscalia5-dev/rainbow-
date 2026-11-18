@@ -8,17 +8,17 @@
    "steer": null,
    "mode": "ride",
    "stage": "04",
-   "s": 84.545,
+   "s": 84.351,
    "lat": 0,
    "coins": 1330,
    "hearts": 5,
    "paused": false,
-   "bennyY": -25.314,
+   "bennyY": -25.208,
    "bennyVisible": true,
    "cam": [
     2.4,
-    -18.58,
-    -25.74
+    -18.48,
+    -25.57
    ],
    "frames": 26,
    "s0": 77.413,
@@ -26,35 +26,12 @@
    "target": 83.413
   },
   {
-   "name": "f10_forward10u",
-   "dist": 10,
-   "steer": null,
-   "mode": "ride",
-   "stage": "04",
-   "s": 88.151,
-   "lat": 0,
-   "coins": 1330,
-   "hearts": 5,
-   "paused": false,
-   "bennyY": -27.23,
-   "bennyVisible": true,
-   "cam": [
-    2.4,
-    -20.44,
-    -28.76
-   ],
-   "frames": 43,
-   "s0": 77.413,
-   "s1": 114.68830202823243,
-   "target": 87.413
-  },
-  {
    "name": "t33_through_screen",
    "dist": "t0.33",
    "steer": null,
    "mode": "ride",
    "stage": "04",
-   "s": 90.481,
+   "s": 90.48,
    "lat": 0,
    "coins": 1330,
    "hearts": 5,
@@ -77,7 +54,7 @@
    "steer": null,
    "mode": "ride",
    "stage": "04",
-   "s": 102.849,
+   "s": 102.848,
    "lat": 0,
    "coins": 1330,
    "hearts": 5,
@@ -87,12 +64,35 @@
    "cam": [
     2.4,
     -28.22,
-    -41.23
+    -41.22
    ],
    "frames": 106,
    "s0": 77.413,
    "s1": 114.68830202823243,
    "target": 102.0146993386334
+  },
+  {
+   "name": "t95_through_screen",
+   "dist": "t0.95",
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 113.674,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -39.997,
+   "bennyVisible": true,
+   "cam": [
+    2.06,
+    -31.85,
+    -48.83
+   ],
+   "frames": 153,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 112.8245369268208
   }
  ]
 }
