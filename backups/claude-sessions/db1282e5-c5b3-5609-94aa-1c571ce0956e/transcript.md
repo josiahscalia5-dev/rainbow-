@@ -2972,3 +2972,103 @@ Screen 04 step 2 is committed and pushed (`5ecdbd1e`, GitHub matches). Now I'll 
 
 > 🔧 **Bash** `{"command": "R5=qa/review_r13/05_step2_join; R8=qa/review_r13/08_step1_ring_edge; mkdir -p $R5 $R8; S5=/home/user/wt/s05/qa/match/05/r13/step2_m05join; S8=/home/user/wt/s08/qa/match/08/r13/step1_m08bore; cp $S5/1_APPROVED.png $R5/00_APPROVED.png; i=1; for f in t66_through_screen k81_kink t85_through; do cp $S5/2_BEFORE_$f.png $R5/0${i}a_BEFORE_$f.png; cp $S5/3_NEW_$f.png $R5/0${i}b_NEW_$f.png; i=$((i+1)); done; cp $S8/1_APPROVED.png $R8/00_APPROVED.png; i=1; for f in a00_approved_view f06_forward6u f10_forward10u t95_through_screen; do cp $S8/2_BEFORE_$f.png $R8/0${i}a_BEFORE_$f.png; cp $S8/3_ …[+1323 chars]`
 
+### 🧑 User — 2026-11-18T14:51:24.536Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "a4057e47feb3632281879b038eefd3a6c6835ed9",
+> LOCAL a4057e47feb3632281879b038eefd3a6c6835ed9
+> REMOTE a4057e47feb3632281879b038eefd3a6c6835ed9
+
+### 🤖 Claude — 2026-11-18T14:51:26.216Z
+
+Saved and verified on GitHub (`a4057e47`). Here are the Screen 04 pictures, each full size and separate:
+
+### 🤖 Claude — 2026-11-18T14:51:31.724Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r13/04_step2_arrows/00_APPROVED.png", "/home/user/rainbow-/qa/review_r13/04_step2_arrows/01a_BEFORE_start.png", "/home/user/rainbow-/qa/review_r13/04_step2_arrows/01b_NEW_start.png", "/home/user/rainbow-/qa/review_r13/04_step2_arrows/02a_BEFORE_forward_6.png", "/home/user/rainbow-/qa/review_r13/04_step2_arrows/02b_NEW_forward_6.png", "/home/user/rainbow-/qa/review_r13/04_step2_arrows/03a_BEFORE_middle_forward_20.png", "/home/user/rainbow-/qa/review_r13/04_step2_arrows/03b_NEW_middle_forward_20.png", "/home/user/rainbow-/qa/review_r13/04_step2_arrows/04 …[+764 chars]`
+
+### 🤖 Claude — 2026-11-18T14:51:34.921Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r13/05_step2_join/00_APPROVED.png", "/home/user/rainbow-/qa/review_r13/05_step2_join/01a_BEFORE_t66_through_screen.png", "/home/user/rainbow-/qa/review_r13/05_step2_join/01b_NEW_t66_through_screen.png", "/home/user/rainbow-/qa/review_r13/05_step2_join/02a_BEFORE_k81_kink.png", "/home/user/rainbow-/qa/review_r13/05_step2_join/02b_NEW_k81_kink.png", "/home/user/rainbow-/qa/review_r13/05_step2_join/03a_BEFORE_t85_through.png", "/home/user/rainbow-/qa/review_r13/05_step2_join/03b_NEW_t85_through.png"], "caption": "Screen 05, step 2 (one continuous river in …[+144 chars]`
+
+### 🧑 User — 2026-11-18T14:51:35.471Z
+
+> ↩︎ result: 14 files delivered to user.
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/00_APPROVED.png → file_uuid: 0f972482-1b1a-4eaf-b7d8-f5c54932033b
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/01a_BEFORE_start.png → file_uuid: 9dffb891-2674-47f4-988f-c7b998bb8f46
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/01b_NEW_start.png → file_uuid: 39d8542a-df63-47fc-b7df-885add473c83
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/02a_BEFORE_forward_6.png → file_uuid: c1dd0e4d-9500-4cf9-9376-42016a86256a
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/02b_NEW_forward_6.png → file_uuid: 8340eb24-923c-4e96-844d-73776c742137
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/03a_BEFORE_middle_forward_20.png → file_uuid: 54c1504e-1778-48fd-b259-06524f4eb4c5
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/03b_NEW_middle_forward_20.png → file_uuid: b0508277-9736-43f0-b5c3-5b2cf47be0b9
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/04a_BEFORE_end_95pct.png → file_uuid: b02695eb-d9ab-4dbf-b005-af80c2ac33a0
+>   /home/user/rainbow-/qa/review_r13/04_step2_arrows/04b_NEW_end_95pct.png → file_uuid: 3b1280b5-fdc0-49ca-9644-d77c6cf0de1d
+>   /home/user/rainbow-/qa/review_r13/04_ste …[+596 chars]
+
+### 🧑 User — 2026-11-18T14:51:36.677Z
+
+> ↩︎ result: 7 files delivered to user.
+>   /home/user/rainbow-/qa/review_r13/05_step2_join/00_APPROVED.png → file_uuid: b00e423b-430e-461d-9a3f-a10382a3aa1b
+>   /home/user/rainbow-/qa/review_r13/05_step2_join/01a_BEFORE_t66_through_screen.png → file_uuid: de09585e-8f36-4640-8849-56421e155747
+>   /home/user/rainbow-/qa/review_r13/05_step2_join/01b_NEW_t66_through_screen.png → file_uuid: 271b1f40-9263-4f80-814b-24fa0cfe59c4
+>   /home/user/rainbow-/qa/review_r13/05_step2_join/02a_BEFORE_k81_kink.png → file_uuid: 2fca387e-7817-4511-b0f8-7ea85e2b6741
+>   /home/user/rainbow-/qa/review_r13/05_step2_join/02b_NEW_k81_kink.png → file_uuid: 0f3fbc23-5da1-4161-87b3-f8aafb374775
+>   /home/user/rainbow-/qa/review_r13/05_step2_join/03a_BEFORE_t85_through.png → file_uuid: c16f60a8-0218-46bf-9861-a8aab2dffff5
+>   /home/user/rainbow-/qa/review_r13/05_step2_join/03b_NEW_t85_through.png → file_uuid: e26628b6-be1a-4329-a707-feff0ca5cb44
+
+### 🤖 Claude — 2026-11-18T14:51:38.679Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r13/08_step1_ring_edge/00_APPROVED.png", "/home/user/rainbow-/qa/review_r13/08_step1_ring_edge/01a_BEFORE_a00_approved_view.png", "/home/user/rainbow-/qa/review_r13/08_step1_ring_edge/01b_NEW_a00_approved_view.png", "/home/user/rainbow-/qa/review_r13/08_step1_ring_edge/02a_BEFORE_f06_forward6u.png", "/home/user/rainbow-/qa/review_r13/08_step1_ring_edge/02b_NEW_f06_forward6u.png", "/home/user/rainbow-/qa/review_r13/08_step1_ring_edge/03a_BEFORE_f10_forward10u.png", "/home/user/rainbow-/qa/review_r13/08_step1_ring_edge/03b_NEW_f10_forward10u.png", "/home …[+387 chars]`
+
+### 🧑 User — 2026-11-18T14:51:41.313Z
+
+> ↩︎ result: 9 files delivered to user.
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/00_APPROVED.png → file_uuid: b8dd6693-6d7e-4de1-a583-c306a4b73cb4
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/01a_BEFORE_a00_approved_view.png → file_uuid: ee7592dc-677f-45d0-9120-6067380849b9
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/01b_NEW_a00_approved_view.png → file_uuid: 0634dbec-73ad-42e3-8ad8-d8c962bc6988
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/02a_BEFORE_f06_forward6u.png → file_uuid: 9431e990-fcf6-4fbf-acdd-1d1002e823d7
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/02b_NEW_f06_forward6u.png → file_uuid: d2cdcbdc-0138-4638-8902-4d3094c6ed53
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/03a_BEFORE_f10_forward10u.png → file_uuid: a49bad70-f363-45cd-a9b4-b79c7511743c
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/03b_NEW_f10_forward10u.png → file_uuid: 03030d38-996f-4293-9d19-4d5e69a08f4f
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/04a_BEFORE_t95_through_screen.png → file_uuid: e5192f8c-eb09-40c0-9e98-a8b3720ac550
+>   /home/user/rainbow-/qa/review_r13/08_step1_ring_edge/04b_NEW_t95_through_screen.png → file_uuid: 5a69ed38- …[+27 chars]
+
+### 🤖 Claude — 2026-11-18T14:51:52.230Z
+
+Three real-game results are ready for you. All three are improvements, but none of the three screens is close enough to approve yet.
+
+**Screen 04, step 2: the five arrows while swimming — GOOD IMPROVEMENT (the arrows only)**
+- **Closer:** before, the glowing arrows disappeared as soon as Benny started swimming. Now a stack of white-cyan chevrons points down the lane above his hat, going straight and at hard left and right, as in your picture. None of them cut through Benny, including at the end of the screen.
+- **Unchanged:** the start view looks the same, by eye.
+- **Still wrong:** the chevrons are paler and more see-through than your bright neon arrows.
+- **The two biggest differences now:**
+  - The tunnel is a dense corridor of thin orange rings. Yours has fewer, thicker, polished yellow-gold rings with light dots.
+  - The water sides repeat rows of parallel foam ridges.
+- **Clip:** the 2.2-second clip is real gameplay. That is the whole of Screen 04 at game speed, swimming straight, then left, then right.
+
+**Screen 05, step 2: one continuous river — GOOD IMPROVEMENT**
+- **Closer:** about two-thirds and four-fifths of the way through, the pale slab and the straight line across the far river are gone. The pink bands and cyan water now run unbroken into the far tunnel.
+- **Next:** foam patches cut by a straight edge, and the flat pale-lilac left bank in the distance.
+- **Rejected:** the specialist's first test, the unfinished wall-slot fix from the previous account, was NOT AN IMPROVEMENT. It left doubled "ghost" slots near the walls when steering, so it was reverted.
+
+**Screen 08, step 1: the big gold ring's top-left edge — GOOD IMPROVEMENT, small**
+- **Closer:** while swimming, the ring now curves smoothly there. Before, a hard straight diagonal edge and a strip of purple slots cut into it.
+- **Next:** the gold wedge on top of the upper-right spout cup.
+
+The pictures are saved in `qa/review_r13/` and backed up to GitHub (`a4057e47`). Both specialists keep working while I rebuild the Screen 04 rings and water sides.
+
+Please still answer my earlier question: did I understand your visual goal correctly, and do you approve the visual-first plan?
+
+### 🧑 User — 2026-11-18T14:51:52.407Z
+
+YES, CLAUDIA. I approve your visual-first plan for all five original approved Rainbow screens.
+
+Continue focusing on making the actual playable 3D scenery look as close as possible to my approved images while Benny swims forward and steers.
+
+For Screen 04, continue correcting the five glowing arrows, water formations and tunnel scenery. The arrows must remain clearly visible ahead of Benny without overlapping him.
+
+Keep the Screen 05 and 08 specialists working, preserve successful improvements, and continue automatic GitHub backups every five minutes.
+
+Show me the next full-size APPROVED / BEFORE / NEW visual comparisons. Do not consider any screen finished until I approve it.
+
