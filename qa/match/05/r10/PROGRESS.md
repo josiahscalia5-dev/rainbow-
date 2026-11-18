@@ -94,6 +94,24 @@ Each step = one sub-switch on top (default build untouched); judged by eye again
 * Files: `src/vfx/unfold05.ts` (flat05Dy / flat05Up), `src/vfx/waterRibbon.ts` (M05FLAT: aUnf height + heightAt),
   `src/vfx/foam.ts` (berm vertices + rim foam points levelled under the switch). Kink frames: `tools/match05/r10_probe.mjs k81_kink…`.
 
+## Step 4 — `&m05cloud=1` (C: big puffy foam clouds on both banks; lead's review of step 1)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1`
+* WHAT LOOKS CLOSER: step 1's foam read as a thin string of small beads; the painting has big, irregular foam clouds
+  on both banks. Now clusters of 6–12 lumps of mixed size (larger, brighter ones piled in the middle, small bubbles
+  spilling onto the water's edge) sit along both banks about every 1.6 u — at t33 the right bank shows rounded foam
+  clouds and the left bank a lumpy cloud bank; at t66 the left bank is a row of big soft clumps instead of beads.
+  Own random sequence: every other foam / bubble on 05 and on all other screens is unchanged. Swimming only (the rim
+  foam's ride factor).
+* Locked approved view: 0 px vs step 3.
+* Still wrong: the clumps are rounder and more ball-like than the painted cauliflower foam; near the camera on hard
+  steering single lumps are large; the far banks beyond the seam keep the baked foam (softer).
+* APPROVED: `/home/user/wt/s05/qa/match/05/r10/step4_m05cloud/1_APPROVED.png`
+* BEFORE (round start): `/home/user/wt/s05/qa/match/05/r10/step4_m05cloud/2_BEFORE_t33_through_screen.png`, `…/2_BEFORE_t66_through_screen.png`,
+  `…/2_BEFORE_f10_forward10u.png` (step 3: `…/step3_m05flat/3_NEW_*.png`)
+* NEW: `/home/user/wt/s05/qa/match/05/r10/step4_m05cloud/3_NEW_t33_through_screen.png`, `…/3_NEW_t66_through_screen.png`,
+  `…/3_NEW_f10_forward10u.png`
+* Files: `src/vfx/foam.ts` (cloud clusters into the 05 rim impostor list under the switch), `src/vfx/waterRibbon.ts` (M05CLOUD).
+
 ## Tried, not kept
 * `&m05wall=1` (round-9 WIP, crisp procedural slotted metal where the wall picture is magnified) on top of step 2 at
   t66: walls crisp but pale lilac with big regular square slots, and the painted pink light streaks between the rings

@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, m05foamK } from './waterRibbon';
+import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, m05foamK } from './waterRibbon';
 import { flat05Dy } from './unfold05';
 import { withClip05 } from './clip05';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
@@ -780,6 +780,34 @@ export function createFoam(
           const u = r5();
           const r = lace ? 0.025 + 0.03 * u * u : 0.035 + 0.06 * u * u;
           imp05.push({ p: bermPoint(ss, e, side, r * (lace ? 0.2 : -0.1)), r, c: [lace ? 0.95 : 0.75 + 0.25 * r5(), r5(), r5() * 2 - 1] });
+        }
+      }
+    }
+  }
+
+  // `&m05cloud=1` (Screen 05 round 10, waterRibbon.ts M05CLOUD): big puffy foam CLOUDS on both 05 banks — clusters of
+  // 6–12 lumps (radius 0.14–0.42 u, mixed sizes, piled: larger ones low and in the middle) about every 1.6 u per side,
+  // sitting on the bank and spilling a little onto the water's edge, + small bubbles around them. Own RNG: every other
+  // puff / bubble (and every other screen's foam) is unchanged. Shown only while swimming (rim foam ride factor).
+  if (M05CLOUD) {
+    const rc = rng(7171);
+    for (let s = st05b.s0 + 3; s < st05b.s1 - 2.5; s += 0.8 + rc() * 1.6) {
+      for (const side of [-1, 1]) {
+        if (rc() < 0.25) continue;
+        const sc = s + (rc() - 0.5) * 0.8, ec = -0.35 + rc() * 0.7;
+        const n = 6 + ((rc() * 7) | 0);
+        const big = 0.22 + rc() * 0.2;
+        for (let k = 0; k < n; k++) {
+          const a = rc() * Math.PI * 2, d = Math.sqrt(rc());
+          const ss = sc + Math.cos(a) * d * 0.75, e = ec + Math.sin(a) * d * 0.45;
+          const r = big * (0.45 + 0.6 * (1 - d) * rc() + 0.25 * rc());
+          imp05.push({ p: bermPoint(ss, e, side, r * (0.05 + 0.25 * (1 - d))), r, c: [0.78 + 0.22 * (1 - d), rc(), rc() * 2 - 1] });
+        }
+        const nb = 4 + ((rc() * 6) | 0);
+        for (let k = 0; k < nb; k++) {
+          const ss = sc + (rc() - 0.5) * 1.8, e = ec - 0.25 - rc() * 0.4, u = rc();
+          const r = 0.025 + 0.05 * u * u;
+          imp05.push({ p: bermPoint(ss, e, side, r * 0.2), r, c: [0.95, rc(), rc() * 2 - 1] });
         }
       }
     }

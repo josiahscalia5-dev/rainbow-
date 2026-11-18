@@ -374,6 +374,8 @@ export const M05FOAM: boolean = M05RIDE && q05('m05foam');
  * reads as a white foam bank instead of the stretched paint / underlayers that showed there (ride factor m05foamK).
  */
 export const M05BERM: boolean = M05RIDE && q05('m05berm');
+/** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
+export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
 /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
 export const m05foamK = { value: 0 };
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
