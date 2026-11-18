@@ -771,3 +771,119 @@ Meanwhile I'll look at the approved picture and the current BEFORE (K15) frames.
 > X = np.polyval(zc, ZZ) + AA * np.polyval(zh, ZZ)
 > px, py = project(np.stack([X, …[+11591 chars]
 
+### 🤖 Claude — 2026-11-18T20:49:00.076Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/08_final_spin_chamber.png').crop((250,1250,650,1536)).resize((800,572),Image.LANCZOS)\nb=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_f06_forward6u.png').crop((250,1250,650,1536)).resize((800,572),Image.LANCZOS)\nc=Image.new('RGB',(800,1160),'black'); c.paste(a,(0,0)); c.paste(b,(0,588)); c.save('/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/near_cmp.png')\n\"", "description": "Zoomed crop comparison of near water (approved vs game)"}`
+
+### 🧑 User — 2026-11-18T20:49:01.472Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:49:03.273Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/near_cmp.png"}`
+
+### 🧑 User — 2026-11-18T20:49:03.362Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:49:19.295Z
+
+> 🔧 **Bash** `{"command": "ls -la /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2new 2>/dev/null; uptime; ps aux | grep -c chrom", "description": "Check render output files"}`
+
+### 🧑 User — 2026-11-18T20:49:19.446Z
+
+> ↩︎ result: total 9816
+> drwxr-xr-x 2 root root    4096 Nov 18 20:49 .
+> drwx------ 9 root root    4096 Nov 18 20:48 ..
+> -rw-r--r-- 1 root root 2596177 Nov 18 20:48 a00_approved_view.png
+> -rw-r--r-- 1 root root 2502122 Nov 18 20:48 f03_forward3u.png
+> -rw-r--r-- 1 root root 2466323 Nov 18 20:48 f06_forward6u.png
+> -rw-r--r-- 1 root root 2471771 Nov 18 20:49 f10_forward10u.png
+>  20:49:19 up 36 min,  0 user,  load average: 20.56, 9.00, 3.53
+> 53
+
+### 🤖 Claude — 2026-11-18T20:49:23.842Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/08/r16/step1_m08sr/3_NEW_a00_approved_view.png $S/s2new/a00_approved_view.png $S/look/diff_a00.png 0.1 180 1536; for s in f03_forward3u f06_forward6u f10_forward10u; do node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/08/r16/step1_m08sr/3_NEW_$s.png $S/s2new/$s.png $S/look/diff_$s.png 0.1 180 1536; done", "description": "Pixel diff NEW vs K15 for first shots"}`
+
+### 🧑 User — 2026-11-18T20:49:27.399Z
+
+> ↩︎ result: {"a":"qa/match/08/r16/step1_m08sr/3_NEW_a00_approved_view.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2new/a00_approved_view.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"qa/match/08/r16/step1_m08sr/3_NEW_f03_forward3u.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2new/f03_forward3u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":6941,"total":1171584,"diff_pct":0.5924}
+> {"a":"qa/match/08/r16/step1_m08sr/3_NEW_f06_forward6u.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2new/f06_forward6u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":7124,"total":1171584,"diff_pct":0.6081}
+> {"a":"qa/match/08/r16/step1_m08sr/3_NEW_f10_forward10u.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s2new/f10_forward10u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":7573,"total":1171584,"diff_pct":0.6464}
+
+### 🤖 Claude — 2026-11-18T20:49:29.974Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/diff_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T20:49:30.089Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:49:36.937Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -c \"\nfrom PIL import Image\nS='$S'\ndef pair(shot, box, name, k=2):\n    a=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_%s.png'%shot).crop(box); b=Image.open(S+'/s2new/%s.png'%shot).crop(box)\n    w,h=a.size; a=a.resize((w*k,h*k),Image.LANCZOS); b=b.resize((w*k,h*k),Image.LANCZOS)\n    c=Image.new('RGB',(w*k*2+10,h*k),'black'); c.paste(a,(0,0)); c.paste(b,(w*k+10,0)); c.save(S+'/look/'+name)\npair('f10_forward10u',(150,540,400,780),'vh_f10_left.png')\npair('f10 …[+172 chars]`
+
+### 🧑 User — 2026-11-18T20:49:38.037Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:49:40.336Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_f10_left.png"}`
+
+### 🧑 User — 2026-11-18T20:49:40.365Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:49:40.946Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_f10_right.png"}`
+
+### 🧑 User — 2026-11-18T20:49:40.987Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:49:48.102Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_f10_top.png"}`
+
+### 🧑 User — 2026-11-18T20:49:48.124Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:02.091Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && mkdir -p $S/nq && nice -n 10 python3 -I tools/match08/nq08.py $S/nq/nq08_repro.png $S/nq/nq08_repro.json $S/nq 2>&1 | tail -12 && python3 -c \"\nfrom PIL import Image, ImageChops\na=Image.open('assets/textures/match08/nq08.png'); b=Image.open('$S/nq/nq08_repro.png'); print(ImageChops.difference(a,b).getbbox())\"", "description": "Reproduce nq08 tile with debug outputs"}`
+
+### 🧑 User — 2026-11-18T20:50:12.008Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> glints 7 sprites; base / glint split at min(RGB) > 200
+> target 1336 x 1236 texels ( 6.1 u x 7.490909090909091 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.475 112 cols
+> cyan zone a -0.442 .. 0.714 388 cols
+> zone 1 glints placed 40 / 40
+> zone 2 glints placed 43 / 43
+> wrote /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/nq08_repro.png (1236, 1336, 3)
+> None
+
+### 🤖 Claude — 2026-11-18T20:50:15.650Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq && python3 -c \"\nfrom PIL import Image\nims=[Image.open(n) for n in ['nq08_source_band.png','nq08_source_rectified.png','nq08_source_base.png']]\nw,h=ims[0].size; c=Image.new('RGB',(w,h*3+20),'black')\nfor i,im in enumerate(ims): c.paste(im,(0,i*(h+10)))\nc.save('src3.png')\"", "description": "Stack source, rectified, base bands"}`
+
+### 🧑 User — 2026-11-18T20:50:16.279Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:50:18.323Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/src3.png"}`
+
+### 🧑 User — 2026-11-18T20:50:18.352Z
+
+> ↩︎ result: [image]
+

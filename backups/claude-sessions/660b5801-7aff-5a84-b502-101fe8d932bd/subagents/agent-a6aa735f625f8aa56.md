@@ -311,3 +311,77 @@ Rendering BEFORE (kept set + gold) and NEW (+ `m06fclu`) deterministically at th
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1\" && D=qa/match/06/r17/step2_m06fclu && export R16_DET=1 && timeout 900 node tools/match06/r16_shots.mjs $D/BEFORE \"$K\" f03,f10,t33,t66,s_left_hard,s_right_hard 2>&1 | tail -8 && timeout 900 node tools/match06/r16_shots.mjs $D/NEW \"$K&m06fclu=1\" f03,f10,t33,t66,s_left_hard,s_right_hard 2>&1 | tail -9", "description": "Render BEFORE and NEW foam shots deterministically", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-18T20:50:08.113Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> f03_forward3u s 202.027 lat 0 stage 06 frames 17
+> f10_forward10u s 208.993 lat 0 stage 06 frames 55
+> s_left_hard s 211.01 lat -2.95 stage 06 frames 66
+> s_right_hard s 211.01 lat 2.95 stage 06 frames 66
+> t33_through_screen s 213.577 lat 0.01 stage 06 frames 80
+> t66_through_screen s 228.06 lat 0 stage 06 frames 159
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> f03_forward3u s 202.027 lat 0 stage 06 frames 17
+> f10_forward10u s 208.993 lat 0 stage 06 frames 55
+> s_left_hard s 211.01 lat -2.95 stage 06 frames 66
+> s_right_ha …[+150 chars]
+
+### 🤖 Claude — 2026-11-18T20:50:09.759Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/BEFORE/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:50:09.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:10.233Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/NEW/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:50:10.286Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:14.965Z
+
+NEW t66: the pink plastic balls became white-lilac bubbly heaps with cool lilac-blue undersides, closer to the painted foam. Checking the steering and early shots.
+
+### 🤖 Claude — 2026-11-18T20:50:15.457Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:50:15.519Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:15.978Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/BEFORE/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:50:16.164Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:20.996Z
+
+NEW at hard left: the lower-left corner now has white bubbly soap heaps with small bubbles and lilac-blue shadows, matching the painted corner foam far better than the pink balls. Quick check of f03.
+
+### 🤖 Claude — 2026-11-18T20:50:21.442Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/NEW/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T20:50:21.580Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:23.669Z
+
+Foam heaps on both banks now read as white bubbly soap clouds. Now the start-view check (checkpoint and +1.1 u, BEFORE vs NEW) and copying the APPROVED picture.
+
+### 🤖 Claude — 2026-11-18T20:50:27.639Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1\" && D=qa/match/06/r17/step2_m06fclu && cp references/06_crest_the_rinse_arch.png $D/1_APPROVED.png && timeout 900 node tools/match06/r16_start.mjs $D/START BEFORE_checkpoint \"$K\" NEW_checkpoint \"$K&m06fclu=1\" \"BEFORE_forward@1.1\" \"$K\" \"NEW_forward@1.1\" \"$K&m06fclu=1\" 2>&1 | grep -v \"allow list\" | tail -6; for p in checkpoint \"forward@1.1\"; do node /home/user/tools-pixelmatch/pixeldiff.mjs \"$D/START/BEFORE_$p.png\" \"$D/START/NEW_$p.png\" /tmp …[+223 chars]`
+

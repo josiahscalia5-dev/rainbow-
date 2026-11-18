@@ -275,3 +275,149 @@ The unfinished edit matches step 2 (`m07nearw`) plus an extra, separate `m07wfoa
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && mkdir -p qa/match/07/r17/step2_nearw && K=$(cat qa/match/07/r16/K.txt) && time timeout 900 node tools/match07/audit_r16.mjs 07 qa/match/07/r17/step2_nearw/NEW \"$K&m07foam=1&m07coinsz=1&m07nearw=1\" \"a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,f20_forward20u,s_left_steer,s_right_steer,s_left_hard,s_right_hard,t33_through_screen\" 2>&1 | tail -20", "description": "Render step-2 NEW audit shots from the real game", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T20:49:58.009Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> Failed to load resource: the server responded with a status of 403 (Forbidden)
+> Failed to load resource: the server responded with a status of 403 (Forbidden)
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> Failed to load resource: the server responded with a status of 403 (Forbidden)
+> Failed to load resource: the server responded with a status of 403 (Forbidden)
+> 07 a00_approved_view s 273.772 lat 0 stage 07 frames 0
+> 07 f03_forward3u s 276.66 lat 0 stage 07 frames 15
+> 07 f06_forward6u s 279.674 lat 0 stage 07 frames 30
+> 07 f10_forward10u s 283.665 lat 0 stage 07 frames 50
+> 07 f20_forward20u s 293.675 lat 0 stage 07 frames 100
+> 07 s_left_steer s 279.659 lat -2. …[+288 chars]
+
+### 🤖 Claude — 2026-11-18T20:49:59.819Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T20:49:59.932Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:07.129Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T20:50:07.210Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:07.584Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T20:50:07.687Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:11.788Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:50:11.870Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:12.231Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:50:12.290Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:16.407Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:50:16.504Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:16.839Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:50:16.895Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:21.392Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T20:50:21.437Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:21.846Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T20:50:21.925Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:50:24.938Z
+
+Step 2 is clearly visible at forward 10/20 u and hard left/right. Now the deterministic start-view check.
+
+### 🤖 Claude — 2026-11-18T20:50:25.887Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && head -40 scripts/capture.mjs; grep -n \"argv\\|--q\\|outDir\\|OUT\\|writeFile\\|screenshot\" scripts/capture.mjs | head -30", "description": "Read capture script usage"}`
+
+### 🧑 User — 2026-11-18T20:50:26.111Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+2807 chars]
+
+### 🤖 Claude — 2026-11-18T20:50:29.767Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"startVite\" -A25 scripts/lib/pw.mjs | head -45; git diff --quiet scripts/ && echo \"scripts unchanged\"; ls tools/match07/proof0px_r7.mjs && head -20 tools/match07/proof0px_r7.mjs", "description": "Check vite port handling and existing proof tool"}`
+
+### 🧑 User — 2026-11-18T20:50:29.960Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+> scripts unchanged
+> tools/match07/proof0px_r7.mjs
+> // r7 (2026-11-18): checkpoint captures for 0-px proofs (default build and switch sets). Run from the checkout to test.
+> // usage: node <path>/proof0px_r7.mjs <outDir> <port> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, PORT = '5301', Q = ''] = process.argv.sl …[+881 chars]
+

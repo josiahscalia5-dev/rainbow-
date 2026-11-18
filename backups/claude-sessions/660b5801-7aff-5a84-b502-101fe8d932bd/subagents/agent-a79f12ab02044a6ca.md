@@ -512,3 +512,58 @@ The far disc now shows telescoping rings into a small light. Let me zoom on the 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K=$(cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/K17_0.txt); ONLY=f20_forward20u,t95_through_screen timeout 600 node /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/tools/shots.mjs 04 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/e2 \"$K&m04end=1&m04eh=0.55&m04ec=0.14&m04es=1.25&m04eg=-0.28\" 2>&1 | grep \"^04\"; cd /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -I -c \"\nfrom PIL import Image\ndef crop …[+351 chars]`
 
+### 🧑 User — 2026-11-18T20:49:31.696Z
+
+> ↩︎ result: 04 f20_forward20u s 98.31 lat 0 stage 04 frames 86
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-18T20:49:33.468Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/z_e2_f20.png"}`
+
+### 🧑 User — 2026-11-18T20:49:33.497Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:49:34.109Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/z_e2_t95.png"}`
+
+### 🧑 User — 2026-11-18T20:49:34.163Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:49:42.105Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"new THREE.Vector4(M04.num('m04eg', -0.35), M04.num('m04eq', 0.78), M04.num('m04ec', 0.09), M04.num('m04eh', 0.35))\"\nnew=\"new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55))\"\nassert s.count(old)==1; s=s.replace(old,new)\nold2=\"M04.num('m04es', 1.0)\"\nassert s.count(old2)==1; s=s.replace(old2,\"M04.num('m04es', 1.25)\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"m04eg\\|m04es\" src/world/match04m4.ts; sed -n 1,40p scripts/ …[+127 chars]`
+
+### 🧑 User — 2026-11-18T20:49:42.257Z
+
+> ↩︎ result: 834:    // r16 `&m04end=1`: the distant glowing opening (END_FRAG): m04eg glow point height (fraction of r), m04eq ring shrink per
+> 835:    // ring, m04ec core size, m04eh halo size, m04es glow strength, m04el lane half width on the far floor, m04ek ring contrast
+> 840:        uE: { value: new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55)) },
+> 841:        uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.25), M04.num('m04ek', 1.0)) } } });
+> 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+
+### 🤖 Claude — 2026-11-18T20:49:45.028Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"capture_log\\|startVite\\|opt.q\\|\\.q\\b\" scripts/capture.mjs | head", "description": "Check capture log path and query option"}`
+
+### 🧑 User — 2026-11-18T20:49:45.290Z
+
+> ↩︎ result: 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 24:const vite = await startVite(5201);
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 58:  writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : `qa/capture_log${size ? '_' + size.join('x') : ''}.json`, JSON.stringify(log, null, 2));
+
+### 🤖 Claude — 2026-11-18T20:49:48.935Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); timeout 600 node scripts/capture.mjs 04 --out=$SP/sv_before \"--q=$K\" 2>&1 | grep -v \"allow list\" | tail -3; timeout 600 node scripts/capture.mjs 04 --out=$SP/sv_new \"--q=$K&m04end=1\" 2>&1 | grep -v \"allow list\" | tail -3; git checkout qa/capture_log.json 2>/dev/null; node /home/user/tools-pixelmatch/pixeldiff.mjs $SP/sv_before/04.png $SP/sv_new/04.png $SP/sv_diff.png 0.1 180 1536; git status --short", "description": "Verify approved start vi …[+46 chars]`
+
