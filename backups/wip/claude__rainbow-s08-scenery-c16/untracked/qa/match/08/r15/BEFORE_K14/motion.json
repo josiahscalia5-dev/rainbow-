@@ -96,29 +96,6 @@
    "target": 401.427
   },
   {
-   "name": "f20_forward20u",
-   "dist": 20,
-   "steer": null,
-   "mode": "ride",
-   "stage": "09",
-   "s": 411.475,
-   "lat": 0,
-   "coins": 2090,
-   "hearts": 5,
-   "paused": false,
-   "bennyY": -113.105,
-   "bennyVisible": true,
-   "cam": [
-    11.29,
-    -109.9,
-    -294.43
-   ],
-   "frames": 126,
-   "s0": 391.427,
-   "s1": 404.3684155787043,
-   "target": 411.427
-  },
-  {
    "name": "s_left_steer",
    "dist": 6,
    "steer": -1,

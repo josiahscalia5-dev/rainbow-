@@ -313,3 +313,27 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K14='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1' && echo \"$K14\" > /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K14.txt && time (M08_DET=1 M08_ONLY=a00,f03,f06,f10,s_,t33,t66,t95 node tools/match08/shots08.mjs 08 qa/match/08/r15/BEFORE_K14 \"$K14\" 2>&1 | tail -15)", "description": "Render the 11 in-stage BEFORE shots with kept set K14", "timeout": …[+8 chars]`
 
+### 🧑 User — 2026-11-18T19:20:25.346Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 08 a00_approved_view s 391.427 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 394.532 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 397.542 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.5 lat 0 stage 08 frames 63
+> 08 s_left_steer s 397.542 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 397.542 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 403.559 lat -2.17 stage 08 frames 76
+> 08 s_right_hard s 403.559 lat 2.17 stage 08 frames 76
+> 08 t33_through_screen s 395.8 lat 0.009 stage 08 frames 27
+> 08 t66_through_screen s 400.075 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 403.875 lat 0 stage 08 frames 78
+> 
+> real	4m12.59 …[+29 chars]
+
+### 🤖 Claude — 2026-11-18T19:20:30.318Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K14=$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K14.txt) && M08_DET=1 M08_ONLY=a00,f03,f06,f10,s_,t33,t66,t95 node tools/match08/shots08.mjs 08 qa/match/08/r15/step1_m08sr/new_raw \"$K14&m08sr=1\" 2>&1 | grep \"^08\"", "description": "Render the 11 in-stage NEW shots with m08sr switch", "timeout": 900000}`
+

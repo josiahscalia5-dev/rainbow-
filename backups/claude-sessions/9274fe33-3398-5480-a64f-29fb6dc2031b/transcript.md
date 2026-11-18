@@ -2038,3 +2038,74 @@ The autosave uses an `flock` on `backups/.autosave.lock`, so the recipe can take
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:account16-relaunch 2>&1 | grep -E '\"commit\"|error|another' | head -3; python3 -I scripts/autosave-status.py; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-e42bb3c0-jpif8d; for b in s04-match s04-ringtex s05-match s06-match s07-match s08-scenery; do echo \"$b $(git -C /home/user/wt/${b%%-*}$( [ $b = s04-ringtex ] && echo b) rev-parse --short HEAD 2>/dev/null) remote=$(timeout 30 git ls-remote origin refs/heads/claude/rainbow-$b-c16 | cut -c1-8)\"; done; df -h / | tail -1", "description": "Save and verify lea …[+44 chars]`
 
+### 🧑 User — 2026-11-18T19:20:06.182Z
+
+> ↩︎ result: "commit": "9fd3c3a4092f9210e3328850525323d379245899",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:19:30+00:00 (0.5 min ago) | local 9fd3c3a remote 9fd3c3a (match) | uncommitted 0
+> 9fd3c3a4092f9210e3328850525323d379245899
+> 9fd3c3a4092f9210e3328850525323d379245899	refs/heads/ccr-e42bb3c0-jpif8d
+> s04-match 160ce05 remote=160ce059
+> s04-ringtex fc28323 remote=fc28323a
+> s05-match 34aadd1 remote=34aadd11
+> s06-match 050155b remote=050155b5
+> s07-match dbc7678 remote=dbc7678c
+> s08-scenery df4a3bb remote=df4a3bb7
+> /dev/vda        252G   27G   13G  68% /
+
+### 🤖 Claude — 2026-11-18T19:20:16.570Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T19:20:16.581Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-18T19:20:16.922Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T19:20:16.975Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-18T19:20:32.734Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+The one bootstrap failure, the startup fetch from GitHub, was a brief network problem. Fetching has worked ever since, so every check is now green.
+
+**Where we left off:** your previous Claude account hit its 5-hour limit at 18:49 UTC (it resets at 23:10 UTC). That stopped all six screen workers in the middle of their steps. Each one's unfinished work was in the 19:00 backup, so nothing was lost. All six are running again from exactly where they stopped:
+
+| Screen | Work | Branch |
+|---|---|---|
+| 04 | Painted-ring test, your 18:44 "show me the painted ring test results" | `claude/rainbow-s04-ringtex-c16` |
+| 04 | Foam and pink side swirls | `claude/rainbow-s04-match-c16` |
+| 05 | End of 05 into 06, then the smeared left wall at hard left | `claude/rainbow-s05-match-c16` |
+| 06 | Painted gold rings | `claude/rainbow-s06-match-c16` |
+| 07 | Foam/coin proof, then near-water texture from your painting | `claude/rainbow-s07-match-c16` |
+| 08 | Finishing its step-1 pictures | `claude/rainbow-s08-scenery-c16` |
+
+The painted-ring worker has orders to send its first full APPROVED / BEFORE / NEW pictures from the real game before polishing anything. I'll show them to you as soon as they arrive.
+
+**Backup report**
+- **GitHub branch:** `ccr-e42bb3c0-jpif8d`, commit `9fd3c3a4092f9210e3328850525323d379245899`. GitHub matches local exactly (checked with `git ls-remote`). All six worker branches are on GitHub too.
+- **Git LFS:** all 64 large files are real files here (`git lfs fsck` passed) and confirmed on GitHub LFS. Your 13 approved reference pictures are unchanged.
+- **Five-minute autosave:** running and pushing this branch. It also snapshots each worker's unfinished edits.
+- **Backup gap:** the previous account ended without a final backup because it hit its limit, but its automatic saves kept running until 19:00. The log shows 29 gaps longer than 10 minutes in the last 72 hours; the longest was 03:44–10:07 UTC today.
+- **Specialists:** 4 of the 10 are working (two of them on two screens each, so six jobs in all). The other six are idle, as planned.
+- **World Labs:** both connections work.
+  - The connector you just added shows "My project" with credits available.
+  - The API key shows 5,420 credits.
+  - No paid job was started.
+- **Hugging Face:** connected as `josdois`. The sign-in expires 2026-11-19 03:13 UTC.
+- **fal.ai:** key accepted.
+- **Tools:** Blender 5.3.0, Android SDK 34, Playwright browser, GitHub and the 12 plugins are all OK. The World Labs plugin's own server is switched on, but it needs a sign-in I can't start from here; your connector already covers the same tools.
+- **Could not transfer:** the old account's running workers (relaunched here) and its temporary render scripts (the workers recreate what they need).
+
+**Three things you should know:**
+1. **Usage warning:** six workers at once used up the previous account's 5-hour allowance in about 37 minutes, and this account will likely burn through just as fast. Say "two at a time" and I'll pause four, keeping 04 and 05 running.
+2. **Faster downloads:** fetching each screen's branch was taking about 10 minutes and 1 GB because it re-downloaded files we already had. I switched this copy to fetch only the files that are new, and each fetch now takes about 1 second. No history or files changed.
+3. **One problem, fixed:** an automatic save ran at the same moment the Screen 04 folder was being built, and recorded every file as deleted (a 4 GB junk file). I stopped it before anything was committed, deleted the junk, and the next save was normal. The setup recipe now locks out the autosave while it builds a folder. Earlier I wrongly blamed the faster-download setting for this; it wasn't the cause.
+
+The handoff files now point at this branch, so a future account can continue: the "ACCOUNT 16" section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`, `docs/briefs/2026-11-18-r16/COORDINATION.md` and `docs/briefs/2026-11-18-r16/RESUME_R16.md`. I also showed an install card for six plugins your earlier accounts had (Security Guidance, commit-commands and others). They're optional.
+
