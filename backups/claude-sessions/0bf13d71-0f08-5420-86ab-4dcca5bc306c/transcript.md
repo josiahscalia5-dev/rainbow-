@@ -1018,3 +1018,217 @@ I need the exact "kept" switch set for each screen from its own branch notes, so
 > s07-match-c9 dbc7678c lfs-stubs=0
 > s08-scenery-c9 c0d8c97b lfs-stubs=0
 
+### 🤖 Claude — 2026-11-18T10:17:44.562Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/run_audit.sh", "content": "#!/bin/bash\n# Fresh moving-gameplay audit of each screen's NEWEST branch with its kept switch set (read-only worktrees).\nSP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad\nW=$SP/wt; OUT=$SP/audit_c10\nmkdir -p $OUT\nrun() { # branch screen query\n  (cd $W/$1 && timeout 1500 node tools/lead_r6/motion_audit.mjs $2 $OUT/$2 \"$3\" > $OUT/$2.log 2>&1; echo \"exit=$?\" >> $OUT/$2.log)\n}\nrun s08-scenery-c9 08 'match08=1&coins08px=1&m08bw=1& …[+546 chars]`
+
+### 🧑 User — 2026-11-18T10:17:45.084Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/run_audit.sh (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:17:46.363Z
+
+> 🔧 **Bash** `{"command": "bash /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/run_audit.sh", "description": "Render fresh gameplay frames for screens 04-08", "timeout": 5400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T10:17:46.388Z
+
+> ↩︎ result: Command running in background with ID: bn5hvyf6m. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tasks/bn5hvyf6m.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T10:18:02.307Z
+
+> 🔧 **ToolSearch** `{"query": "select:WebSearch,Monitor", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T10:18:02.328Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T10:18:04.295Z
+
+> 🔧 **WebSearch** `{"query": "fal.ai models image to 3D Hunyuan3D TRELLIS depth estimation Depth Anything MoGe API", "mode": "standard"}`
+
+### 🤖 Claude — 2026-11-18T10:18:04.585Z
+
+> 🔧 **WebSearch** `{"query": "World Labs Marble multi-image input world generation API 2026", "mode": "standard"}`
+
+### 🧑 User — 2026-11-18T10:18:08.597Z
+
+> ↩︎ result: Web search results for query: "fal.ai models image to 3D Hunyuan3D TRELLIS depth estimation Depth Anything MoGe API"
+> 
+> Links: [{"title":"> ## Documentation Index","url":"https://fal.ai/docs/model-api-reference/3d-api/overview.md"},{"title":"# Hunyuan3D","url":"https://fal.ai/models/fal-ai/hunyuan3d/v2/turbo/llms.txt"},{"title":"# Hunyuan3d V3","url":"https://fal.ai/models/fal-ai/hunyuan3d-v3/image-to-3d/llms.txt"},{"title":"# Hunyuan 3d Pro Image To 3d","url":"https://fal.ai/models/fal-ai/hunyuan-3d-pro-image-to-3d/v3.1/pro/image-to-3d/llms.txt"},{"title":"# Hunyuan3D","url":"https://fal.ai/models/fal-ai/hunyuan3d/v2/mini/llms.txt"},{"title":"# Hunyuan3D","url":"https://fal.ai/models/fal-ai/hunyuan3d/v2/llms.txt"},{"title":"# Hunyuan3D","url":"https://fal.ai/models/fal-ai/hunyuan3d/v2/mini/turbo/llms.txt"},{"title":"image to 3d model apis","url":"https://fal.ai/explore/image-to-3d-model-apis"},{"title":"# Hunyuan3D","url":"https://fal.ai/models/fal-ai/hunyuan3d/v2/multi-view/turbo/llms.txt"},{"title":"# Hunyuan 3D Rapid Image to 3D","url":"https://fal.ai/models/fal-ai/hunyuan-3d/v3.1/rapid/image-to-3d/llms.txt"},{"title":"fal.ai","url":"https://fal.ai/docs/model-api-reference/3d-api …[+2374 chars]
+
+### 🧑 User — 2026-11-18T10:18:10.015Z
+
+> ↩︎ result: Web search results for query: "World Labs Marble multi-image input world generation API 2026"
+> 
+> Links: [{"title":"announcing the world api","url":"https://worldlabs.ai/blog/announcing-the-world-api"},{"title":"world labs marble 3d worlds","url":"https://invideo.io/blog/world-labs-marble-3d-worlds/"},{"title":"World Labs Releases Marble 1.1: Auto-Expanding 3D World Generation","url":"https://rits.shanghai.nyu.edu/ai/world-labs-releases-marble-1-1-auto-expanding-3d-world-generation"},{"title":"world labs multi image","url":"https://skills.cat/skills/cloudai-x/world-labs-skills/world-labs-multi-image"},{"title":"bridging the gap between digital","url":"https://jimsantana1.substack.com/p/bridging-the-gap-between-digital"},{"title":"Now liveThe Skillselion MCP - thousands of ranked skills, loaded into your agent mid-task. No install.Get it →","url":"https://skillselion.com/skills/cloudai-x/world-labs-skills/world-labs-multi-image"},{"title":"world labs multi image","url":"https://skills.sh/cloudai-x/world-labs-skills/world-labs-multi-image"},{"title":"World Labs Introduces World API for Marble","url":"https://radiancefields.com/world-labs-introduces-world-api-for-marble"},{"title":"Now l …[+3460 chars]
+
+### 🤖 Claude — 2026-11-18T10:18:16.425Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad; tail -3 $SP/audit_c10/*.log 2>/dev/null; ls $SP/audit_c10/*/ 2>/dev/null | head -30; cd /home/user/rainbow- && tail -12 backups/.live/bootstrap.log", "description": "Check render progress and bootstrap log"}`
+
+### 🧑 User — 2026-11-18T10:18:16.548Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/05/:
+> 
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08/:
+> a00_approved_view.png
+>   OK   Blender                        Blender 5.3.0 (present) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug
+>   OK   Claude hooks / plugins / MCP   hooks: SessionStart PreCompact Stop SessionEnd; Playwright MCP connected; plugins: playwright typescript-lsp worldlabs ; MCP template .mcp.json.template (no secrets)
+> 
+> == 4 Tests
+>   OK   Build + game tests             tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19)
+> 
+> == 5 Five-minute autosave
+>   OK   Five-minute GitHub autosave    AUTOSAVE OK | branch ccr-c526614d-tw0yro | scheduler daemon | last verified backup 2026-11-18T10:09:06+00:00 (0.2 min ago) | local 2c09d1c remote 2c09d1c (match) | uncommitted 0
+> 
+> == Report
+> BOOTSTRAP PROBLEMS | branch ccr-c526614d-tw0yro | HEAD 2c09d1c64c88 | written: backups/BOOTSTRAP_REPORT.md
+
+### 🤖 Claude — 2026-11-18T10:18:20.774Z
+
+> 🔧 **Bash** `{"command": "grep -E \"\\| (FAIL|WARN) \\|\" backups/BOOTSTRAP_REPORT.md | cut -c1-300; ls .claude/agents/; cat .claude/settings.json | python3 -c \"import json,sys; d=json.load(sys.stdin); print('enabledPlugins:', d.get('enabledPlugins')); print('hooks:', list(d.get('hooks',{}).keys()))\"", "description": "Show bootstrap failures, agents, and plugin settings"}`
+
+### 🧑 User — 2026-11-18T10:18:20.874Z
+
+> ↩︎ result: | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started | 2 |
+> android-build-performance.md
+> animation-and-gameplay-engineer.md
+> benny-character-artist.md
+> cartoon-girl-character-artist.md
+> foam-bubbles-particles.md
+> path-camera-transition-engineer.md
+> playwright-visual-qa.md
+> reference-match-director.md
+> washer-environment-modeler.md
+> water-fx-specialist.md
+> enabledPlugins: None
+> hooks: ['SessionStart', 'PreCompact', 'Stop', 'SessionEnd']
+
+### 🤖 Claude — 2026-11-18T10:18:26.942Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10; until [ -f $SP/08/motion.json ] && [ -f $SP/05/motion.json ]; do sleep 10; done; tail -4 $SP/08.log $SP/05.log", "description": "Wait for screens 08 and 05 renders to finish", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T10:18:27.038Z
+
+> ↩︎ result: Command running in background with ID: be3wwd6ev. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tasks/be3wwd6ev.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T10:18:28.421Z
+
+While those render, here are the approved pictures for 06 and 07, so I can judge their renders properly:
+
+### 🤖 Claude — 2026-11-18T10:18:28.882Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-18T10:18:28.938Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:18:29.233Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/07_dive_the_washer_tube.png"}`
+
+### 🧑 User — 2026-11-18T10:18:29.271Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:18:47.270Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p tools/lead_r6/motion_metrics.py", "description": "Read motion metrics tool header"}`
+
+### 🧑 User — 2026-11-18T10:18:47.311Z
+
+> ↩︎ result: """Lead r6: measured (not subjective) numbers for moving-gameplay frames vs the approved picture, below the HUD strip
+> (rows >= 13.5 %). LAYOUT20 = share of pixels within 20 levels after a sigma-8 blur (composition + colour, like
+> tools/qa/screen_match.py LAYOUT). PALETTE = histogram intersection of hue x saturation (24 x 8 bins, value > 0.15) —
+> how close the colour palette stays, independent of where things are. Moving frames are seen from other viewpoints, so
+> LAYOUT naturally falls as the camera travels; PALETTE shows whether the approved look (colours/materials) survives.
+> usage: python3 -I motion_metrics.py <approved.png> <frame.png> [...]  -> one line per frame"""
+> import sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> ref = Image.open(sys.argv[1]).convert('RGB')
+> W, H = ref.size; top = int(H * 0.135)
+> def prep(im):
+>     im = im.convert('RGB').resize((W, H))
+>     return im
+> def hsv_hist(a):
+>     hsv = np.asarray(Image.fromarray(a).convert('HSV'), dtype=np.float32) / 255.0
+>     m = hsv[..., 2] > 0.15
+>     h, _, _ = np.histogram2d(hsv[..., 0][m], hsv[..., 1][m], bins=[24, 8], range=[[0, 1], [0, 1]])
+>     return h / max(h.sum(), 1)
+> R = np.asarray(ref)[top:]; Rb = np.asarray(ref.filt …[+291 chars]
+
+### 🤖 Claude — 2026-11-18T10:18:50.697Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10; until [ -f $SP/08/motion.json ] && [ -f $SP/05/motion.json ]; do sleep 10; done; tail -3 $SP/08.log $SP/05.log; ls $SP/08 | wc -l", "description": "Wait until 08 and 05 render sets complete", "timeout": 1500000}`
+
+### 🧑 User — 2026-11-18T10:20:40.857Z
+
+> ↩︎ result: tail: option used in invalid context -- 3
+> 13
+
+### 🤖 Claude — 2026-11-18T10:20:44.218Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10; for s in 08 05; do echo \"== $s\"; tail -n 4 $SP/$s.log; done; cd /home/user/rainbow- && for s in 08 05; do echo \"== $s metrics (LAYOUT20 / PALETTE)\"; python3 -I tools/lead_r6/motion_metrics.py references/$( ls references | grep \"^$s\" ) $SP/$s/*.png 2>&1 | sed \"s#$SP/##\"; done", "description": "Show render logs and measure 08 and 05 frames"}`
+
+### 🧑 User — 2026-11-18T10:20:50.022Z
+
+> ↩︎ result: == 08
+> 08 t33_through_screen s 396.297 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+> exit=0
+> == 05
+> 05 t33_through_screen s 151.691 lat 0.006 stage 05 frames 102
+> 05 t66_through_screen s 170.391 lat 0 stage 05 frames 204
+> 05 t95_through_screen s 186.707 lat 0 stage 05 frames 293
+> exit=0
+> == 08 metrics (LAYOUT20 / PALETTE)
+> a00_approved_view      LAYOUT20  62.1 %  PALETTE  95.4 %
+> f03_forward3u          LAYOUT20  12.4 %  PALETTE  78.5 %
+> f06_forward6u          LAYOUT20   6.9 %  PALETTE  77.0 %
+> f10_forward10u         LAYOUT20   6.6 %  PALETTE  71.4 %
+> f20_forward20u         LAYOUT20   1.5 %  PALETTE  48.6 %
+> s_left_hard            LAYOUT20   5.6 %  PALETTE  74.5 %
+> s_left_steer           LAYOUT20   6.2 %  PALETTE  77.5 %
+> s_right_hard           LAYOUT20   4.6 %  PALETTE  69.1 %
+> s_right_steer          LAYOUT20   7.0 %  PALETTE  74.7 %
+> t33_through_screen     LAYOUT20   8.6 %  PALETTE  77.5 %
+> t66_through_screen     LAYOUT20   7.6 %  PALETTE  71.2 %
+> t95_through_screen     LAYOUT20   5.9 %  PALETTE  71.5 %
+> == 05 metrics (LAYOUT20 / PALETTE)
+> a00_approved_view      LAYOUT20  65.7 %  PALETTE  94.8 %
+> f03_forwar …[+616 chars]
+
+### 🤖 Claude — 2026-11-18T10:20:55.474Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:20:55.544Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:20:56.228Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/05/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:20:56.274Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:20:56.887Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/05/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:20:56.977Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:21:34.913Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10; until [ -f $SP/DONE ]; do sleep 15; done; for s in 04 06 07; do echo \"== $s\"; tail -n 2 $SP/$s.log; done; cd /home/user/rainbow- && for s in 04 06 07; do echo \"== $s metrics\"; python3 -I tools/lead_r6/motion_metrics.py references/$(ls references | grep \"^$s\") $SP/$s/*.png 2>&1 | sed \"s#$SP/##\"; done", "description": "Wait for remaining renders and measure 04, 06, 07", "timeout": 1800000}`
+
