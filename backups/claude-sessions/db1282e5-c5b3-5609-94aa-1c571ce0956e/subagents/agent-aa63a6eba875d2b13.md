@@ -531,3 +531,426 @@ Task 2. First a fresh BEFORE of the kept set at the river-join positions.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && node tools/match05/r8_shots.mjs $S/b13 \"$K\" t66_through_screen,t75_through,k81_kink,k81_kink_left,k81_kink_right,t85_through,t90_through,t95_left,t95_right,t95_through_screen,t98_end 5291 2>&1 | tail -12", "description": "Render BEFORE at join positions",  …[+18 chars]`
 
+### 🧑 User — 2026-11-18T14:31:58.943Z
+
+> ↩︎ result: t66_through_screen s 170.481 lat 0 coins 1460 benny -0 -0.29 big coins: #24@416,724 d111 #25@518,657 d74
+> t95_through_screen s 186.707 lat 0 coins 1580 benny -0.11 -0.34 big coins: -
+> k81_kink s 178.824 lat 0 coins 1460 benny 0.5 -0.29 big coins: #24@50,1022 d249 #25@342,823 d144 #26@512,717 d78
+> k81_kink_left s 178.824 lat -3.843 coins 1420 benny 0.24 -0.44 big coins: #24@767,1399 d342 #26@877,828 d90
+> k81_kink_right s 178.823 lat 3.843 coins 1420 benny 0.66 -0.1 big coins: #26@204,630 d69
+> t75_through s 175.523 lat 0.006 coins 1460 benny 0.23 -0.28 big coins: #24@321,853 d171 #25@489,734 d106 #26@581,647 d64
+> t85_through s 181.025 lat 0 coins 1460 benny 0.33 -0.28 big coins: #25@188,938 d192 #26@463,765 d93 #27@535,742 d71
+> t90_through s 183.957 lat 0 coins 1520 benny 0.09 -0.3 big coins: #25@25,1329 d355
+> t98_end s 188.357 lat 0 coins 1580 benny -0.19 -0.51 big coins: -
+> t95_left s 186.707 lat -3.838 coins 1420 benny -0.36 -0.37 big coins: #34@876,898 d64 #35@800,883 d63
+> t95_right s 186.706 lat 3.838 coins 1420 benny 0.09 -0.26 big coins: -
+
+### 🤖 Claude — 2026-11-18T14:32:00.838Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/b13/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T14:32:00.898Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:32:01.493Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/b13/t75_through.png"}`
+
+### 🧑 User — 2026-11-18T14:32:01.549Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:32:02.095Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/b13/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T14:32:02.145Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:32:10.850Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && wc -l src/vfx/waterRibbon.ts src/world/match05far.ts src/world/materials.ts src/vfx/foam.ts src/world/environment.ts src/vfx/proj05Tunnel.ts && cat qa/match/05/STATUS.md | head -80", "description": "File sizes and 05 status notes"}`
+
+### 🧑 User — 2026-11-18T14:32:10.892Z
+
+> ↩︎ result: 2252 src/vfx/waterRibbon.ts
+>    363 src/world/match05far.ts
+>   1282 src/world/materials.ts
+>   1252 src/vfx/foam.ts
+>   1043 src/world/environment.ts
+>    472 src/vfx/proj05Tunnel.ts
+>   6664 total
+> # Screen 05 — STATUS (round 8)
+> 
+> * **Running-session status: RUNNING (round 8, account 8, branch claude/rainbow-s05-match-c8)** — started 2026-11-18 from `a34fb925` (= `-c7` tip). Task: user list 2026-11-18 (water design while swimming, soft bank edges, disconnected scenery edges, oversized near coin over Benny). BEFORE = `qa/match/05/r7/NEW/` (rendered with exactly the base set `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1`; no source change since).
+> 
+> ## Round 7 record (below, unchanged)
+> 
+> * **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1` set)
+> * **Assigned specialist:** Screen 05 workstream (washer-environment-modeler role), round 7 / account 7; no subagent used
+> * **Working branch:** `claude/rainbow-s05-match-c7`, created by the lead from `claude/rainbow-s05-match-c5` @ `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b`; never merged with line A
+> * **Round-7 session status:** milestone M3 step 2 finished; STOPPED
+> * **Latest verified commit:** the last commit on `claude/rainbow …[+1914 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:13.312Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"M05SEAM\\|M05BLEND\\|M05FMAG\\|M05FPAINT\\|M05FCLOUD\\|M05BERM\\|M05EDGE\\|M05END\\|M05FLAT\\|M05CLOUD\\|M05FOAM\\b\\|export const M05\" src/vfx/waterRibbon.ts | head -80", "description": "Find switch declarations in waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-18T14:32:13.349Z
+
+> ↩︎ result: 270:export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+> 282:export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
+> 292:export const M05SEAM: boolean = M05RIDE && q05('m05seam');
+> 303:export const M05BLEND: boolean = M05SEAM && q05('m05blend');
+> 319:export const M05NEAR: boolean = M05RIDE && q05('m05near');
+> 335:export const M05WALL: boolean = MATCH05 && q05('m05far') && q05('m05wall');
+> 345:export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
+> 357:export const M05GEO: boolean = M05RIDE && q05('m05geo');
+> 363:export const M05FOLD: boolean = M05RIDE && q05('m05fold');
+> 370:export const M05FLAT: boolean = M05RIDE && q05('m05flat');
+> 379:export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+> 385:export const M05BERM: boolean = M05RIDE && q05('m05berm');
+> 387:export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
+> 394:export const M05CAUL: boolean = M05CLOUD && q05('m05caul');
+> 403:export const M05FBANK: boolean = M05BLEND && q05('m05fbank');
+> 413:export const M05FMAG: boolean = M05BLEND && q05('m05fmag');
+> 426:export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
+> 435:export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
+> 520 …[+1589 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:14.859Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 200, "limit": 260}`
+
+### 🧑 User — 2026-11-18T14:32:14.876Z
+
+> ↩︎ result: 200	 * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the
+> 201	 * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+> 202	 *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+> 203	 *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+> 204	 * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+> 205	 * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+> 206	 * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> 207	 */
+> 208	/**
+> 209	 * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that turns
+> 210	 * on every Screen-05 reference-match part (proj05 water + env05 tunnel / rings / fittings + hud05 + coins05 + benny05 +
+> 211	 * splash05m + bub05 …). `on05('part')` = that part's own switch OR the master switch. Default build: all off.
+> 212	 */
+> 213	exp …[+20502 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:16.740Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 495, "limit": 240}`
+
+### 🧑 User — 2026-11-18T14:32:16.761Z
+
+> ↩︎ result: 495	
+> 496	const VERT = /* glsl */ `
+> 497	attribute vec2 aUV;      // x = u (-1..1 across), y = s (arc length)
+> 498	attribute float aHalfW;
+> 499	attribute float aSpeed;
+> 500	attribute float aAmp;
+> 501	attribute float aSkirt;  // 0 surface, 1 skirt bottom
+> 502	attribute vec4 aStyle;   // band layout: gate, offset, half width, free-meander weight (see BAND_STYLE)
+> 503	attribute float aCore;   // 05: core-centre lateral swing (units, see coreLateral)
+> 504	attribute vec3 aTan;     // course tangent (downstream)
+> 505	#ifdef FARW05
+> 506	attribute vec2 aChan;    // W11: visible channel centre / half width (units, see channel05)
+> 507	varying vec2 vChan;
+> 508	#endif
+> 509	uniform float uTime;
+> 510	uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+> 511	#ifdef M05FOLD
+> 512	attribute vec3 aUnf;       // m05fold: horizontal displacement that removes the folds at the 05 -> 06 kink (unfold05.ts)
+> 513	#endif
+> 514	#if defined(M05GEO) || defined(M05FOLD)
+> 515	uniform vec4 uPjNear;      // m05geo / m05fold: the ride focus (as the fragment shader's ?projnear05 uniform)
+> 516	#endif
+> 517	#ifdef M05GEO
+> 518	uniform sampler2D uGeoCh;  // m05geo: painted channel [uL, uR] per s (encoded (u + 1) / 2), tools/match05/c …[+10507 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:18.381Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 1730, "limit": 160}`
+
+### 🧑 User — 2026-11-18T14:32:18.404Z
+
+> ↩︎ result: 1730	      col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
+> 1731	    }
+> 1732	  }
+> 1733	
+> 1734	  // 04: exactly five glowing chevrons pointing downhill (direction of travel)
+> 1735	  if (uChevron.z > 0.5) {
+> 1736	    float x = u * vHalfW;
+> 1737	    for (int k = 0; k < 5; k++) {
+> 1738	      float y = s - (uChevron.x + float(k) * uChevron.y);
+> 1739	      if (abs(y) < 2.4 && abs(x) < 1.6) {
+> 1740	        // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+> 1741	        float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+> 1742	        float arm = smoothstep(1.2, 1.1, abs(x));
+> 1743	        float core = smoothstep(0.2, 0.11, dist) * arm;
+> 1744	        float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+> 1745	        col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+> 1746	        col = mix(col, vec3(2.2, 2.4, 2.5), core);
+> 1747	      }
+> 1748	    }
+> 1749	  }
+> 1750	  #ifdef PROJ05
+> 1751	  {
+> 1752	    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+> 1753	    #ifdef M05BLEND
+> 1754	    // m05blend: over the band before the far tunnel's seam the ribbon …[+7816 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:20.310Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/match05far.ts"}`
+
+### 🧑 User — 2026-11-18T14:32:20.328Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+> 3	 * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every
+> 4	 * frame instead of folding away.
+> 5	 *
+> 6	 * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the
+> 7	 * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the
+> 8	 * camera saw the far rings / river morphing out and the 06 arch hall behind them — the "old pink default world" of
+> 9	 * the lead's audit (t66 / t95 frames). The compression is exact for ANY eye position once its two eye-dependent
+> 10	 * constants (D0 = eye depth of the seam, q = eye offset from the axis) follow the eye, so under this switch:
+> 11	 *   * the VIRTUAL tunnel (virtual depth Z beyond sF05, tunnel coordinate v = sF05 + u(Z)) stays put — rings, wall rows,
+> 12	 *     the baked far water F and the far river layout are anchored to it, so everything approaches like real geometry;
+> 13	 *   * the seam slides ahead of the eye so it never comes nearer than th …[+20804 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:24.660Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat src/vfx/clip05.ts | head -60 && grep -n \"clip05\" src/**/*.ts src/*.ts 2>/dev/null | head -30", "description": "Read clip05 and find its users"}`
+
+### 🧑 User — 2026-11-18T14:32:24.693Z
+
+> ↩︎ result: /**
+>  * `?match05=1&m05far=1` (Screen 05 round 7, src/world/match05far.ts): a clip plane at the far tunnel's sliding seam.
+>  * Real 06 foam behind the seam (the rising 06 banks) would otherwise stand inside the 05 far tunnel as white columns;
+>  * materials that opt in (foam puffs) discard fragments beyond the plane while the switch is on and the far block is
+>  * live (n = 0 disables it). Default build: nothing imports the GLSL below into any program.
+>  */
+> import * as THREE from 'three';
+> import { MATCH05, flag05 } from './waterRibbon';
+> 
+> export const M05CLIP: boolean = MATCH05 && flag05('m05far');
+> export const clip05 = {
+>   uClip05P: { value: new THREE.Vector3() },
+>   uClip05N: { value: new THREE.Vector3() },
+> };
+> /** inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position) */
+> export function withClip05(mat: THREE.ShaderMaterial, posVar: string): void {
+>   if (!M05CLIP) return;
+>   Object.assign(mat.uniforms, clip05);
+>   mat.fragmentShader = mat.fragmentShader.replace('void main() {', `uniform vec3 uClip05P; uniform vec3 uClip05N;
+> void main() {
+>   {  // ?m05far=1: behind the 05 far tunnel seam, inside its tube (axial 0..40 u, within 9 u of the axis) only
+>      …[+3340 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:28.801Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"farRiver\\|renderOrder\\|depthTest\\|depthWrite\\|polygonOffset\" src/world/environment.ts | head -50", "description": "Find far river setup in environment.ts"}`
+
+### 🧑 User — 2026-11-18T14:32:28.829Z
+
+> ↩︎ result: 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+> 12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> 564:    const farLay = farRiverLayout(course, ft, level);
+> 565:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
+> 621:    const parts = [farWall, farRiver, farRings, farLids, glow];
+> 623:    farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+> 637:      ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+> 657:    farRiver.onBeforeRender = (_r, _s, cam) => { sync(cam); farRiver.morphTargetInfluences![0] = openNow; };
+> 788:    frame.renderOrder = 2;
+> 965:  const mat = new THRE …[+148 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:30.396Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/environment.ts", "offset": 530, "limit": 140}`
+
+### 🧑 User — 2026-11-18T14:32:30.414Z
+
+> ↩︎ result: 530	    if (E05) {
+> 531	      const dZdu = (u: number) => (ft.zOfU(u + 0.01) - ft.zOfU(u - 0.01)) / 0.02;
+> 532	      const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
+> 533	      // run #4: t passes through the seam fraction exactly AT the seam (v = sF05, u = 0), where the real wall's BC
+> 534	      // segment ends with the same t (it used to reach it 1 unit earlier → double-drawn texel rows on the seam circle)
+> 535	      const tSeam = ptSeam05(E05.farDv[0], D0), vC = sF05 + uRing(0) - hwF / dZdu(uRing(0));
+> 536	      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: vC, row: PT_ROW.BC, t0: tSeam - (1 - tSeam) / (vC - sF05), t1: 1 }];
+> 537	      // the REAL wall just past the seam shows in a thin sliver along the seam circle: without a bay it tiled the AB row
+> 538	      // (texels of the near left wall → a torn orange-pink line); give it the far wall's BC mapping from the seam on
+> 539	      const rSeg = perf05Mat.userData.ptSeg as THREE.Vector4[] | undefined, rSegT = perf05Mat.userData.ptSegT as THREE.Vector3[] | undefined;
+> 540	      const free = rSeg ? rSeg.findIndex((v) => v.x >= 1e9) : -1;
+> 541	      if (rSeg && rSegT && free >= 0) { rSeg[free].set(sF05, vC, 0, 0); rSegT[free].se …[+10269 chars]
+
+### 🤖 Claude — 2026-11-18T14:32:37.748Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n,box in [('t75_through',(0,560,864,860)),('t66_through_screen',(0,560,864,820)),('k81_kink',(0,620,864,900))]:\n  a=Image.open(f'b13/{n}.png').convert('RGB').crop(box)\n  W,H=a.size\n  a.resize((W*2//1,H*2//1)).crop((0,0,1728,H*2)).save(f'z_{n}.png')\n\"", "description": "Zoom into seam regions"}`
+
+### 🧑 User — 2026-11-18T14:32:38.540Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T14:32:39.100Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/z_t75_through.png"}`
+
+### 🧑 User — 2026-11-18T14:32:39.143Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:33:02.308Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"farRiverMaterial\\|FPAINT\\|fmK\\|M05FMAG\\|M05FBANK\\|uFmD0\\|fbank\" src/world/materials.ts | head -40", "description": "Locate far river material pieces"}`
+
+### 🧑 User — 2026-11-18T14:33:02.346Z
+
+> ↩︎ result: 7:import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
+> 867:const FPAINT_PARS = `uniform sampler2D uFpT2; uniform vec2 uFpT2S; uniform vec4 uFpFlow; uniform float uFpTime;
+> 881:const FPAINT_APPLY = `  {
+> 883:    float fpW = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, Zv);
+> 897:const FMAG_PRE ='float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w);\n  ';
+> 898:export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> 924:  // `&m05fbank=1` (Screen 05 round 11): live flag / seam depth of the far block (written by src/world/match05far.ts)
+> 925:  if (pj && M05FBANK) Object.assign(uniforms, { uFbP: m05blend.uFbP });
+> 927:  if (pj && M05FMAG) { m05fmagD0.value = d0; Object.assign(uniforms, { uFbP: m05blend.uFbP, uFmD0: m05fmagD0 }); }
+> 1149:        .replace('  diffuseColor.rgb = col;\n}', '  ' + (M05FMAG ? FMAG_PRE + pj.apply.replace(/\) …[+736 chars]
+
+### 🤖 Claude — 2026-11-18T14:33:04.118Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/materials.ts", "offset": 860, "limit": 345}`
+
+### 🧑 User — 2026-11-18T14:33:04.138Z
+
+> ↩︎ result: 860	 */
+> 861	/**
+> 862	 * `&m05fpaint=1` (Screen 05 round 12): where m05fmag drops the magnified F, the far river's water wears the approved
+> 863	 * near tile T2 laid band by band onto the far layout (T2 columns measured: left pink band u −0.76 … −0.60 centre −0.69,
+> 864	 * cyan core centre −0.27, right pink band 0.06 … 0.45 centre 0.25), along the virtual arc length, two-phase flow
+> 865	 * toward the camera like the ribbon. Inserted before the VP glow; foam rims (foamIn) stay on top.
+> 866	 */
+> 867	const FPAINT_PARS = `uniform sampler2D uFpT2; uniform vec2 uFpT2S; uniform vec4 uFpFlow; uniform float uFpTime;
+> 868	float fpSeg(float x, float x0, float x1, float u0, float u1) { return mix(u0, u1, clamp((x - x0) / max(x1 - x0, 1e-3), 0.0, 1.0)); }
+> 869	float fpU(float lat, float xB, float hw, float cL, float wL, float cR, float wR, float core) {
+> 870	  float a0 = xB - hw, a1 = cL - wL, a2 = cL, a3 = cL + wL, a4 = core, a5 = cR - wR, a6 = cR, a7 = cR + wR, a8 = xB + hw;
+> 871	  if (lat < a1) return fpSeg(lat, a0, a1, -0.84, -0.76);
+> 872	  if (lat < a2) return fpSeg(lat, a1, a2, -0.76, -0.69);
+> 873	  if (lat < a3) return fpSeg(lat, a2, a3, -0.69, -0.60);
+> 874	  if (lat < a4) return fpSeg(lat, a3, a4, -0 …[+21739 chars]
+
+### 🤖 Claude — 2026-11-18T14:33:29.006Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export function farRiverLayout\" -A 80 src/world/far05.ts | head -130", "description": "Read farRiverLayout implementation"}`
+
+### 🧑 User — 2026-11-18T14:33:29.043Z
+
+> ↩︎ result: 199:export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number): FarRiverLayout {
+> 200-  const q = new THREE.Vector3();
+> 201-  const at = (s: number, l: number) => {
+> 202-    const f = course.sample(s);
+> 203-    q.copy(f.pos).addScaledVector(f.right, l).sub(ft.c0);
+> 204-    return { ax: q.dot(ft.T), x: q.dot(ft.Rt), rx: f.right.dot(ft.Rt) };
+> 205-  };
+> 206-  // the real ribbon's band layout at s, relative to the route centre (ribbon frame, vCore = coreLateral)
+> 207-  // (W11: the visible channel — channel05 returns centre 0 / the full half width unless ?farw05=1)
+> 208-  const relLay = (s: number) => {
+> 209-    const ch = channel05(course, s);
+> 210-    return bandLayout(ch.c, ch.hw, coreLateral(course, s) + coreShiftW10(course, s) - ch.c, sbend05(s), s);
+> 211-  };
+> 212-  const cross = (Z: number, lOf: (s: number) => number) => {
+> 213-    let a = ft.sF - 8, b = ft.sF + 16;
+> 214-    for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (at(m, lOf(m)).ax < Z) a = m; else b = m; }
+> 215-    const s = 0.5 * (a + b), p = at(s, lOf(s));
+> 216-    return { s, x: p.x, rx: Math.max(0.3, p.rx) };
+> 217-  };
+> 218-  const realRow = (Z: number): FarRiverRow => {
+> 219-    const eL = cross(Z, (s) …[+3439 chars]
+
+### 🤖 Claude — 2026-11-18T14:33:41.422Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"__rainbow\\s*=\" src | head -5; grep -rn \"scene:\" src/main.ts 2>/dev/null | head; grep -rn \"window.__rainbow\\b\" src/*.ts | head -3", "description": "Find QA hook exposure"}`
+
+### 🧑 User — 2026-11-18T14:33:41.458Z
+
+> ↩︎ result: src/game/Game.ts:703:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-18T14:33:43.372Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 560,703p src/game/Game.ts | grep -n \"scene\\|const api\\|^\\s*[a-zA-Z]*:\" | head -60", "description": "List QA api members"}`
+
+### 🧑 User — 2026-11-18T14:33:43.400Z
+
+> ↩︎ result: 59:  const api = {
+> 60:    ready: true,
+> 61:    checkpoints: Object.keys(CHECKPOINTS),
+> 62:    goto: gotoCheckpoint,
+> 115:      const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+> 119:    /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+> 123:      scene.traverse((o) => {
+> 135:    /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
+> 137:    qa3d() { return { scene, camera, renderer, composer }; },
+
+### 🤖 Claude — 2026-11-18T14:33:50.826Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/tools && cd /home/user/wt/s05 && sed -e 's|^const \\[OUT, Q = .*|const [OUT, Q = \"\", ONLY = \"all\", PORT = \"5291\"] = process.argv.slice(2); const PRE = process.env.PRE_JS \\|\\| \"\";|' -e 's|    await page.waitForTimeout(150);|    if (PRE) { await page.evaluate(PRE); await page.evaluate(async () => { const r = window.__rainbow; r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false); }); }\\n    await page.waitForTimeout(150);|' to …[+316 chars]`
+
+### 🧑 User — 2026-11-18T14:33:50.887Z
+
+> ↩︎ result: 33:const [OUT, Q = "", ONLY = "all", PORT = "5291"] = process.argv.slice(2); const PRE = process.env.PRE_JS || "";
+> 72:    if (PRE) { await page.evaluate(PRE); await page.evaluate(async () => { const r = window.__rainbow; r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false); }); }
+
+### 🤖 Claude — 2026-11-18T14:34:01.214Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && mv /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/tools/dbg_shots.mjs tools/match05/r13_dbg_shots.mjs && sed -i '1i // Screen 05 round 13: r8_shots.mjs + optional PRE_JS (evaluated in the page before each screenshot, then 2 frames rendered) for layer diagnosis' tools/match05/r13_dbg_shots.mjs && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude …[+525 chars]`
+
+### 🧑 User — 2026-11-18T14:34:36.947Z
+
+> ↩︎ result: t75_through s 175.599 lat 0 coins 1460 benny 0.24 -0.28 big coins: #24@319,855 d172 #25@488,736 d107 #26@582,648 d64
+
+### 🤖 Claude — 2026-11-18T14:34:42.402Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && PRE_JS='(() => { const { scene } = window.__rainbow.qa3d(); const out = []; scene.traverse((o) => { if ((o.isMesh || o.isPoints) && o.visible) out.push((o.parent?.name||\"\") + \"/\" + o.name + \":\" + (o.material?.type||\"\")); }); console.error(\"NAMES \"  …[+233 chars]`
+
+### 🧑 User — 2026-11-18T14:35:13.692Z
+
+> ↩︎ result: 110  laundry_room/:MeshStandardMaterial 
+>      29  zone_tubes/:MeshStandardMaterial 
+>      23  /:MeshStandardMaterial 
+>      21  zone_basin/:MeshStandardMaterial 
+>      17  zone_chamber/:MeshStandardMaterial 
+>       9  zone_drumA/:MeshStandardMaterial 
+>       6  water_puddles/:ShaderMaterial 
+>       6  foam_banks/:ShaderMaterial 
+>       5  zone_chamber/:MeshBasicMaterial 
+>       4  laundry_room/:MeshBasicMaterial 
+>       3  blue_sock/:MeshStandardMaterial 
+>       2  /:MeshPhysicalMaterial 
+>       1 console NAMES zone_drumA/:MeshStandardMaterial 
+>       1  zone_tubes/tube05_near_frame:MeshStandardMaterial 
+>       1  zone_tubes/tube05_far_wall:MeshStandardMaterial 
+>       1  zone_tubes/tube05_far_river:MeshBasicMaterial 
+>       1  zone_tubes/tube05_far:MeshStandardMaterial 
+>       1  zone_tubes/tube05_end_glow:ShaderMaterial 
+>       1  zone_tubes/foam_far05_clouds:ShaderMaterial 
+>       1  zone_drumA/purple_towel:MeshStandardMaterial 
+>       1  zone_chamber/purple_towel:MeshStandardMaterial 
+>       1  zone_basin/:MeshBasicMaterial 
+>       1  water_system/water_ribbon:ShaderMaterial 
+>       1  water_system/spray:ShaderMaterial 
+>       1  water_system/rider_splash05:ShaderMaterial 
+>       1  water_drumA/water_ …[+1784 chars]
+
+### 🤖 Claude — 2026-11-18T14:35:18.139Z
+
+Diagnosis: hide one layer at a time (apron strip, far river, bank foam, far clouds) at t66 / t75 to identify the pale slab and the line.
+
+### 🤖 Claude — 2026-11-18T14:35:22.100Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && for v in proj05_apron tube05_far_river foam_rim05,foam_berm foam_far05_clouds; do PRE_JS=\"(() => { const { scene } = window.__rainbow.qa3d(); const H = '$v'.split(','); scene.traverse((o) => { if (H.includes(o.name)) o.visible = false; }); })()\" node tools …[+175 chars]`
+

@@ -2272,3 +2272,180 @@ The Screen 05 specialist rejected its own first test, the unfinished wall-slot f
 > 769	    const sh = new THREE.Shape();
 > 770	    sh.moveTo(0, 0); sh.lineTo(hw, -drop); sh.lineTo(hw, -drop - th); sh.lineTo(0, -th); sh.lineTo(-hw, -drop - th); sh.lineTo(-hw,  …[+3243 chars]
 
+### 🤖 Claude — 2026-11-18T14:31:35.011Z
+
+The chevron code is clear. Before tuning, I'll find how far ahead of the camera Benny sits, so the chevrons fade out before they could cut through him.
+
+### 🤖 Claude — 2026-11-18T14:31:36.808Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json; d=json.load(open('qa/match/04/r12/s2_arr/D2/motion.json')); s=d['shots'][0]; print({k:v for k,v in s.items()})\"; grep -rn \"a5b\\b\\|const a5b\" src/world/match04m4.ts | head -3; grep -rnE \"bennyPos|benny\\.position\" src/game/*.ts 2>/dev/null | head -5; ls src", "description": "Inspect shot state and Benny position sources"}`
+
+### 🧑 User — 2026-11-18T14:31:36.908Z
+
+> ↩︎ result: {'name': 'f06_forward6u', 'dist': 6, 'steer': None, 'mode': 'ride', 'stage': '04', 's': 83.48, 'lat': 0, 'coins': 1330, 'hearts': 5, 'paused': False, 'bennyY': -24.735, 'bennyVisible': True, 'cam': [2.404385456521106, -18.020166051834725, -24.793807845276284], 'frames': 26, 'cam_to_view_cams': [3.89, 13.91]}
+> 592:  const a5b = new THREE.Vector4(M04.num('m04a5w', 1.3), M04.num('m04a5s', 2.2), 0, M04.num('m04a5d', 30));
+> 637:        uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
+> 801:    a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+> src/game/Game.ts:187:  const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+> src/game/Game.ts:246:      bennyPose(0, 0, st.clock, pose);
+> src/game/Game.ts:258:      const f = bennyPose(sB, 0, st.clock, pose);
+> src/game/Game.ts:390:    const f = bennyPose(st.s, st.lat, st.clock, pose);
+> src/game/Game.ts:434:    bennyPose(sEnd, 0, st.clock, pose);
+> characters
+> game
+> gameplay
+> main.ts
+> render
+> ui
+> vfx
+> world
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:31:38.760Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 385,420p src/game/Game.ts | grep -nE \"cam|look|back|behind|height\" | head -12", "description": "Read chase camera placement relative to Benny"}`
+
+### 🧑 User — 2026-11-18T14:31:38.828Z
+
+> ↩︎ result: 19:    // camera
+> 20:    rideCam.update(dt, st.s, st.lat, camera);
+> 23:    // girl at the counter behind the door glass in 10 (back turned — never sees Benny)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:31:41.354Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rln \"class RideCam\\|rideCam\\s*=\\|function.*RideCam\" src | head -3; f=$(grep -rln \"class RideCam\\|export function createRideCam\\|RideCam\" src/game src/world 2>/dev/null | head -1); grep -nE \"back|behind|dist|04\" $f | head -15", "description": "Find chase camera distance for Screen 04"}`
+
+### 🧑 User — 2026-11-18T14:31:41.418Z
+
+> ↩︎ result: src/game/cameraRig.ts
+> src/game/Game.ts
+> 2: * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+> 13:  back: number; // distance behind Benny
+> 15:  ahead: number; // look-at distance ahead
+> 32:  /** `?match04=1` only (src/game/match.ts): over the 04 stage the camera sits at Benny's water point + this world offset
+> 33:   *  and looks along the fixed world direction dir04 (the approved picture's view down the gold tunnel); absent = no change */
+> 34:  off04?: [number, number, number];
+> 35:  dir04?: [number, number, number];
+> 39:  '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+> 40:  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+> 42:  // Ref 05 measured at vFOV 62: VP (498, 479) → view pitched atan((up-lookUp)/(ahead+back)) ≈ 12.7°
+> 43:  // below and yawed ≈ 3° left of the axis; Benny's waterline 711 px below the VP → up/back ≈ 0.56.
+> 44:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> 45:  '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+> 46:  '07': { back: 6 …[+212 chars]
+
+### 🤖 Claude — 2026-11-18T14:31:43.875Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"off04\" src/game/match.ts src/game/cameraRig.ts | head -5", "description": "Find Screen 04 match camera offset"}`
+
+### 🧑 User — 2026-11-18T14:31:43.912Z
+
+> ↩︎ result: src/game/match.ts:26:  // approved picture (195,965-590,1400) and the tunnel's vanishing point on (490,690); camera = Benny's water point + off04
+> src/game/match.ts:27:  '04': { fov: 62, roll: 0, off04: [0.4015, 6.2009, 3.5184], dir04: [-0.04342, -0.58119, -0.81261] },
+> src/game/cameraRig.ts:34:  off04?: [number, number, number];
+> src/game/cameraRig.ts:157:    // `?match04=1`: the approved Screen 04 view — camera at Benny + off04 (world), looking along dir04, level; blended in
+> src/game/cameraRig.ts:160:    if (p4 && p4.off04 && p4.dir04) {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:32:10.227Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    const halo = new THREE.ShapeGeometry(sh); halo.translate(0, (drop + th) / 2, 0); halo.scale(1.28, 1.45, 1); halo.translate(0, -(drop + th) / 2, 0);", "new_string": "    // r13: halo size (m04a3g = growth of the cyan glow round each bar; 1 = the r12 D1/D2 size)\n    const hg = M04.num('m04a3g', 1);\n    const halo = new THREE.ShapeGeometry(sh); halo.translate(0, (drop + th) / 2, 0); halo.scale(1 + 0.28 * hg, 1 + 0.45 * hg, 1); halo.translate(0, -(drop + th) / 2, 0);"}`
+
+### 🧑 User — 2026-11-18T14:32:10.258Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:32:14.832Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    for (let a = first; a < len - 6; a += sp) {\n      const core = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.98, 1.0), transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });\n      const glow = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.10, 0.62, 1.0), transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });", "new_string": "    // r13 `&m04a3w2=1`: the painted chevrons are glowin …[+683 chars]`
+
+### 🧑 User — 2026-11-18T14:32:14.857Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:32:20.088Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    if (arrowsOut.length) {\n      const cz = -a5b.z;                                                // camera local z (forward = -z)\n      for (let i = 0; i < arrowsOut.length; i += 2) {\n        const d = cz - arrowsOut[i].za;                                 // distance ahead of the camera\n        const k = arrA * THREE.MathUtils.smoothstep(d, 2.0, 4.5) * (1 - THREE.MathUtils.smoothstep(d, 30, 40));\n        const [core, glow] = arrowsOut[i].mats;\n        core.opacity = 0.95 * k; glow.opacity =  …[+1041 chars]`
+
+### 🧑 User — 2026-11-18T14:32:20.130Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:32:28.735Z
+
+Now I'll render variant E1 in the real game: neon white bars with a cyan glow, fading out as they reach Benny, about five in view, sized from the approved picture. All 12 standard gameplay positions.
+
+### 🤖 Claude — 2026-11-18T14:32:32.396Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && npx tsc --noEmit -p . 2>&1 | tail -3; K=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82\"; E1=\"$K&m04arr3d=1&m04a3k=50&m04a3w2=1&m04a3g=2&m04a3o=0.8&m04a3n0=6.5&m04a3n1=8.5&m04a3f0=22&m04a3f1=28&m04a3p=3.4&m04a3w=0.9&m04a3t=0.32&m04a3d=0.6&m04a3f=4\"; echo \"$E1\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E1.q; time timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s2_arr/E1 \"$E1\" 2>&1 | tail -4", "description": "Typecheck and render chevro …[+41 chars]`
+
+### 🧑 User — 2026-11-18T14:33:19.540Z
+
+> ↩︎ result: 04 s_right_hard s 90.248 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.481 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.846 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> 
+> real	0m44.445s
+> user	0m2.089s
+> sys	0m0.558s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:33:23.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; montage -label '%d %t' /home/user/rainbow-/references/04_through_the_five_arrows.png r12/s1_chan/B/f06_forward6u.png r13/s2_arr/E1/f06_forward6u.png r12/s1_chan/B/f20_forward20u.png r13/s2_arr/E1/f20_forward20u.png r13/s2_arr/E1/s_left_hard.png -tile 6x1 -geometry 260x462+3+3 $S/s04_E1.jpg && echo ok", "description": "Internal comparison of E1 against BEFORE"}`
+
+### 🧑 User — 2026-11-18T14:33:23.614Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:33:25.596Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/s04_E1.jpg"}`
+
+### 🧑 User — 2026-11-18T14:33:25.672Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:33:58.691Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nold=\"        pa.setXYZ(i, u, 0.05 + lift + v * Math.sin(tilt), -v * Math.cos(tilt));\"\nnew=\"        pa.setXYZ(i, u, 0.05 + M04.num('m04a3y', 0) + lift + v * Math.sin(tilt), -v * Math.cos(tilt));   // r13 m04a3y = raise\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s); print('ok')\nEOF\nK=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82\"; E2=\"$K&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=2&m04a3o=0.8&m04a3n0=6.8&m04a3n …[+659 chars]`
+
+### 🧑 User — 2026-11-18T14:35:07.957Z
+
+> ↩︎ result: ok
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:35:10.274Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/s04_E2.jpg"}`
+
+### 🧑 User — 2026-11-18T14:35:10.347Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:35:20.158Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04 && convert r13/s2_arr/E2/f20_forward20u.png -crop 864x900+0+300 -resize 560x /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E2_f20_crop.jpg && echo ok", "description": "Crop E2 view around Benny at full detail"}`
+
+### 🧑 User — 2026-11-18T14:35:20.250Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:35:22.325Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E2_f20_crop.jpg"}`
+
+### 🧑 User — 2026-11-18T14:35:22.345Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:35:37.015Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82\"; E3=\"$K&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=3&m04a3o=1.0&m04a3n0=8.4&m04a3n1=9.8&m04a3f0=25&m04a3f1=31&m04a3p=3.6&m04a3w=1.05&m04a3t=0.36&m04a3d=0.62&m04a3f=4&m04a3y=0.1\"; echo \"$E3\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E3.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s2_arr/E3 \"$E3\" 2>&1 | tail -1; cd qa/match/04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-9 …[+474 chars]`
+

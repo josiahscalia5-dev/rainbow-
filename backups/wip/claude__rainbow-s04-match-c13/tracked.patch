@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 3d84a1b..823c769 100644
+index 3d84a1b..663cef7 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -42,6 +42,7 @@ export const M04 = {
@@ -10,7 +10,7 @@ index 3d84a1b..823c769 100644
    lay: on('m04lay'),
    num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
  };
-@@ -755,12 +756,62 @@ export function addM04(ctx: M04Ctx) {
+@@ -755,12 +756,73 @@ export function addM04(ctx: M04Ctx) {
      sprites(items, BUB_FRAG, 'm04_bubbles', 6, false, [1.5, 3.5]);
    }
  
@@ -27,21 +27,27 @@ index 3d84a1b..823c769 100644
 +    const sh = new THREE.Shape();
 +    sh.moveTo(0, 0); sh.lineTo(hw, -drop); sh.lineTo(hw, -drop - th); sh.lineTo(0, -th); sh.lineTo(-hw, -drop - th); sh.lineTo(-hw, -drop); sh.lineTo(0, 0);
 +    const base = new THREE.ShapeGeometry(sh);
-+    const halo = new THREE.ShapeGeometry(sh); halo.translate(0, (drop + th) / 2, 0); halo.scale(1.28, 1.45, 1); halo.translate(0, -(drop + th) / 2, 0);
++    // r13: halo size (m04a3g = growth of the cyan glow round each bar; 1 = the r12 D1/D2 size)
++    const hg = M04.num('m04a3g', 1);
++    const halo = new THREE.ShapeGeometry(sh); halo.translate(0, (drop + th) / 2, 0); halo.scale(1 + 0.28 * hg, 1 + 0.45 * hg, 1); halo.translate(0, -(drop + th) / 2, 0);
 +    const toLane = (g: THREE.BufferGeometry, lift: number) => {        // shape (u, v) -> lane plane leaning back toward the camera
 +      const pa = g.attributes.position as THREE.BufferAttribute;
 +      for (let i = 0; i < pa.count; i++) {
 +        const u = pa.getX(i), v = pa.getY(i) + drop + th;               // v = 0 at the nearest bar edge
-+        pa.setXYZ(i, u, 0.05 + lift + v * Math.sin(tilt), -v * Math.cos(tilt));
++        pa.setXYZ(i, u, 0.05 + M04.num('m04a3y', 0) + lift + v * Math.sin(tilt), -v * Math.cos(tilt));   // r13 m04a3y = raise
 +      }
 +      g.computeBoundingSphere();
 +    };
 +    toLane(base, 0.004); toLane(halo, 0.0);
 +    const river = group.getObjectByName('m04_river') as THREE.Mesh | undefined;
 +    if (river) ((river.material as THREE.ShaderMaterial).uniforms.uArr.value as THREE.Vector4).y = 1e5;
++    // r13 `&m04a3w2=1`: the painted chevrons are glowing WHITE bars with a bright cyan neon halo (r12 = pale cyan, dim halo)
++    const neon = M04.num('m04a3w2', 0) > 0;
++    const coreC = neon ? new THREE.Color(1.0, 1.0, 1.0) : new THREE.Color(0.86, 0.98, 1.0);
++    const glowC = neon ? new THREE.Color(0.22, 0.86, 1.0) : new THREE.Color(0.10, 0.62, 1.0);
 +    for (let a = first; a < len - 6; a += sp) {
-+      const core = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.98, 1.0), transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
-+      const glow = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.10, 0.62, 1.0), transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
++      const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
++      const glow = new THREE.MeshBasicMaterial({ color: glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
 +      const m = new THREE.Mesh(base, core), g = new THREE.Mesh(halo, glow);
 +      m.position.set(cx, 0, z0 - a); g.position.set(cx, 0, z0 - a - 0.002);
 +      m.renderOrder = 5; g.renderOrder = 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';
@@ -62,11 +68,16 @@ index 3d84a1b..823c769 100644
      for (const u of updaters) u(a2);
 +    if (arrowsOut.length) {
 +      const cz = -a5b.z;                                                // camera local z (forward = -z)
++      // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
++      // chevron vanish as it reaches him, like the painted picture where all five lie ahead); far fade m04a3f0/f1 keeps
++      // about five in view; m04a3o = glow opacity. Defaults = the r12 D1/D2 values.
++      const n0 = M04.num('m04a3n0', 2.0), n1 = M04.num('m04a3n1', 4.5), f0 = M04.num('m04a3f0', 30), f1 = M04.num('m04a3f1', 40);
++      const go = M04.num('m04a3o', 0.55);
 +      for (let i = 0; i < arrowsOut.length; i += 2) {
 +        const d = cz - arrowsOut[i].za;                                 // distance ahead of the camera
-+        const k = arrA * THREE.MathUtils.smoothstep(d, 2.0, 4.5) * (1 - THREE.MathUtils.smoothstep(d, 30, 40));
++        const k = arrA * THREE.MathUtils.smoothstep(d, n0, n1) * (1 - THREE.MathUtils.smoothstep(d, f0, f1));
 +        const [core, glow] = arrowsOut[i].mats;
-+        core.opacity = 0.95 * k; glow.opacity = 0.55 * k;
++        core.opacity = 0.95 * k; glow.opacity = go * k;
 +        arrowsOut[i].mesh.visible = arrowsOut[i + 1].mesh.visible = k > 0.01;
 +      }
 +    }
