@@ -39,3 +39,18 @@ Pictures are rendered with `node tools/match05/r8_shots.mjs <dir> "<query>" <nam
 * `&m05wall=1` — unfinished (paused by the lead's order): crisp slotted purple metal where the projected wall atlas is
   magnified while swimming (`src/vfx/proj05Tunnel.ts` M05WALL_GLSL). First render: walls crisp but slots too thin and the
   metal too pale; slot shape corrected to the atlas measurement (≈ 0.6 × 0.6 u), not yet judged.
+
+## BLUEPRINT (lead order) — `qa/match/05/r9/BLUEPRINT.md`
+Measured river width / centre / magenta-cyan shares / foam per screen row in the approved picture and in the kept-query
+frames (a00, f10, f20, t33, t66), the painted river edges back-projected onto the game river, ring and throat sizes.
+Annotated overlays in `qa/match/05/r9/blueprint/`. Main structural finding: the water surface is the full course width
+everywhere while the painted S-channel's banks swing ±2–3 u across it (right bank only 2.3–3.7 u right of the centre
+at s 137–143, inside Benny's steering reach of ±5.06 u) — see BLUEPRINT §3–4.
+
+## `&m05geo=1` — tried, not kept
+Raised the river surface beyond the painted channel edge (0.3-u foam shelf, then a steep wall-like rise), laid out
+Benny-relative like the design (m05ride). Result: f10 / t66 barely change (the raised part shows the same smeared
+paint, now on a slope); on hard right steering a large smooth stretched slab rises right in front of Benny (the painted
+right bank lies inside the steering reach). Worse → not kept; code stays switch-guarded for reference.
+Pictures: `/home/user/wt/s05/qa/match/05/r9/tried_m05geo/s_right_hard.png` (vs BEFORE
+`/home/user/wt/s05/qa/match/05/r9/blueprint/kept/s_right_hard.png`), `.../tried_m05geo/f10_forward10u.png`, `.../t66_through_screen.png`.

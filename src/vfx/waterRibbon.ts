@@ -333,6 +333,18 @@ const m05nearS0 = (): number => {
  */
 export const M05WALL: boolean = MATCH05 && q05('m05far') && q05('m05wall');
 export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
+/**
+ * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
+ * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
+ * back-projecting the approved picture's river through the locked eye: right bank only 0.37–0.67 of the half width right
+ * of the centre at s 137–143, left bank at −0.66…−0.76 at s 146–152, right bank closing in again at s 168–177). Beyond
+ * the painted edge the approved picture shows foam piles and the wall coming down to them; in the game that paint lay
+ * flat on the water (slabs / pale shelves while swimming). Under the switch the ribbon there rises: a 0.3-u foam shelf
+ * over the first 0.5 u, then steeply like the wall — read at the same Benny-relative position as the design (m05ride),
+ * so the painted foam / wall pixels stand up where they are painted. Visual only (course, steering, Benny's height,
+ * coins unchanged); never within 3 u ahead of Benny's locked position; off at the locked view and at the seam.
+ */
+export const M05GEO: boolean = M05RIDE && q05('m05geo');
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
 export const m05blendTime: { u: THREE.IUniform | null } = { u: null };
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
@@ -400,6 +412,14 @@ varying vec2 vChan;
 #endif
 uniform float uTime;
 uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+#ifdef M05GEO
+uniform vec4 uPjNear;      // m05geo: the ride focus (as the fragment shader's ?projnear05 uniform)
+uniform sampler2D uGeoCh;  // m05geo: painted channel [uL, uR] per s (encoded (u + 1) / 2), tools/match05/channel05_bp.py
+uniform vec2 uGeoS;        // its s range
+#ifdef M05SEAM
+uniform vec2 uPjSeam;
+#endif
+#endif
 varying vec2 vUV;
 varying float vHalfW;
 varying float vSpeed;
@@ -422,6 +442,27 @@ void main() {
   float s = aUV.y;
   float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
   vec3 p = position + normal * h * (1.0 - aSkirt);
+  #ifdef M05GEO
+  {
+    // m05geo (Screen 05 round 9, see M05GEO): beyond the PAINTED river edge the surface becomes a low foam shelf and
+    // then rises steeply like the wall behind it, read at the same Benny-relative position as the design (m05ride),
+    // so the painted foam piles and wall pieces of E stand up where they are painted. Riding only, 05 only.
+    float gk = uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0;
+    gk *= 1.0 - aStyle.w;
+    if (gk > 0.0) {
+      float sg = s - (uPjNear.z - uPjNear.w);
+      float tg = (sg - uGeoS.x) / (uGeoS.y - uGeoS.x);
+      vec2 ch = texture2D(uGeoCh, vec2(clamp(tg, 0.0, 1.0), 0.5)).rg * 2.0 - 1.0;
+      float gin = smoothstep(uPjNear.w + 3.0, uPjNear.w + 5.0, sg) * step(0.0, tg) * step(tg, 1.0);
+      #ifdef M05SEAM
+      gin *= uPjSeam.y > 0.5 ? 1.0 - smoothstep(uPjSeam.x - 5.0, uPjSeam.x - 1.5, s) : 1.0;
+      #endif
+      float dw = max(max(ch.x - u, u - ch.y), 0.0) * aHalfW;     // units beyond the painted river edge
+      float lift = 0.3 * smoothstep(0.0, 0.5, dw) + min(1.3 * max(dw - 0.5, 0.0), 3.0);
+      p += normal * lift * gk * gin;
+    }
+  }
+  #endif
   vec4 wp = modelMatrix * vec4(p, 1.0);
   vPosW = wp.xyz;
   vNormalW = normalize(mat3(modelMatrix) * normal);
@@ -1857,7 +1898,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -1959,6 +2000,25 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
   u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
   if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
+  if (M05GEO) {
+    // m05geo (Screen 05 round 9): painted channel per s (tools/match05/channel05_bp.py) as a 1-row texture for the VERTEX shader
+    const ch = { value: empty as THREE.Texture };
+    u.uGeoCh = ch;
+    u.uGeoS = { value: new THREE.Vector2(0, 1) };
+    proj05Pending.push(fetch(new URL('../../assets/textures/match05/m05geo/channel05.json', import.meta.url).href).then((r) => r.json()).then((j: { s0: number; s1: number; n: number; uL: number[]; uR: number[] }) => {
+      const data = new Uint8Array(j.n * 4);
+      for (let i = 0; i < j.n; i++) {
+        data[i * 4] = Math.round(THREE.MathUtils.clamp((j.uL[i] + 1) / 2, 0, 1) * 255);
+        data[i * 4 + 1] = Math.round(THREE.MathUtils.clamp((j.uR[i] + 1) / 2, 0, 1) * 255);
+        data[i * 4 + 3] = 255;
+      }
+      const t = new THREE.DataTexture(data, j.n, 1, THREE.RGBAFormat);
+      t.minFilter = t.magFilter = THREE.LinearFilter;
+      t.needsUpdate = true;
+      ch.value = t;
+      (u.uGeoS.value as THREE.Vector2).set(j.s0, j.s1);
+    }).catch(() => {}));
+  }
   if (M05NEAR) {
     // m05near (Screen 05 round 9): keep-mask of E's near rows (tools/match05/near_mask.py)
     const nm = { value: empty as THREE.Texture };
