@@ -73635,7 +73635,7 @@ z3;0T24BfPoo%Z*AOS`Vi`3v-%xs^b(7Wu-3_<Qs3MRk4Kb>89&?J5~4a7TOTyEXIB
 Z{|~%&UaX<Yo@M|5002ovPDHLkV1l*z9{vCT
 
 diff --git a/tools/match08/nq08.py b/tools/match08/nq08.py
-index 37831d6..a2e0b21 100644
+index 37831d6..fcb715b 100644
 --- a/tools/match08/nq08.py
 +++ b/tools/match08/nq08.py
 @@ -1,21 +1,27 @@
@@ -73668,7 +73668,7 @@ index 37831d6..a2e0b21 100644
 +   its far end). The streak direction field (structure tensor) is integrated into flow lines and the band resampled along
 +   them, so its streaks run straight down the columns (in the game the tile follows the painted river's own S-curve).
 +2. split: BASE satin (each painted glint filled in along its column = along the flow) + GLINTS (each painted glint one
-+   soft-edged sprite with its own painted colour).
++   soft-edged sprite with its own painted colour, cut from the UNRECTIFIED band: its exact painted shape and angle).
 +3. base across the lane: the middle +-RC keeps the painted layout 1:1 (magenta band left, cyan centre, as at the bottom of
 +   the approved picture); toward the banks the extra width is laid from whole painted columns of the same colour zone
 +   (left: magenta band, right: cyan), in short runs (0.1-0.3 u, mirrored at random: the streaks are straight, so a mirror
@@ -73739,7 +73739,7 @@ index 37831d6..a2e0b21 100644
  Lm = src.mean(-1); hpf = Lm - cv2.GaussianBlur(Lm, (0, 0), 12)
  gx = cv2.Sobel(hpf, cv2.CV_32F, 1, 0, ksize=5); gz = cv2.Sobel(hpf, cv2.CV_32F, 0, 1, ksize=5)
  J11 = cv2.GaussianBlur(gx * gx, (0, 0), 30); J22 = cv2.GaussianBlur(gz * gz, (0, 0), 30); J12 = cv2.GaussianBlur(gx * gz, (0, 0), 30)
-@@ -96,145 +98,144 @@ slope = np.clip(-np.tan(phi), -1.2, 1.2)
+@@ -96,145 +98,152 @@ slope = np.clip(-np.tan(phi), -1.2, 1.2)
  slope = cv2.GaussianBlur(slope * coh, (0, 0), 35) / np.maximum(cv2.GaussianBlur(coh, (0, 0), 35), 1e-4)
  RM = SH // 2
  xs = np.zeros((SH, SW), np.float32); xs[RM] = np.arange(SW)
@@ -73761,22 +73761,30 @@ index 37831d6..a2e0b21 100644
 +# --- 2. base satin + glints ---------------------------------------------------------------------------------------------
 +GL_MIN, GL_DIL = 200, 7                      # only the bright compact glint cores become sprites; the softer painted
 +                                             # highlight streaks stay in the satin base
-+core_m = cv2.morphologyEx((src.min(-1) > GL_MIN).astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
-+sup = cv2.dilate(core_m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * GL_DIL + 1, 2 * GL_DIL + 1))).astype(bool)
-+base = fill_cols(src, sup)
-+base = np.where(sup[..., None], cv2.GaussianBlur(base, (0, 0), 1.0), base)
++def split(img):  # -> glint support mask, base satin (glints filled along the columns), glint coverage
++    cm = cv2.morphologyEx((img.min(-1) > GL_MIN).astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
++    sp = cv2.dilate(cm, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * GL_DIL + 1, 2 * GL_DIL + 1))).astype(bool)
++    bs = fill_cols(img, sp)
++    bs = np.where(sp[..., None], cv2.GaussianBlur(bs, (0, 0), 1.0), bs)
++    cv_ = np.clip((lum(img) - lum(bs)) / np.maximum(255 - lum(bs), 8), 0, 1) ** 0.8 * cv2.GaussianBlur(sp.astype(np.float32), (0, 0), 3.5)
++    return sp, bs, cv_
++
++
 +lum = lambda im: im @ np.array([0.3, 0.55, 0.15], np.float32)
-+# glint coverage: how far the painted pixel rises from the base toward white (soft edge from the support)
-+cov = np.clip((lum(src) - lum(base)) / np.maximum(255 - lum(base), 8), 0, 1) ** 0.8 * cv2.GaussianBlur(sup.astype(np.float32), (0, 0), 3.5)
-+nlab, lab, stats, _ = cv2.connectedComponentsWithStats(sup.astype(np.uint8), 8)
++sup, base, _ = split(src)                    # base satin from the RECTIFIED band (its streaks run down the columns)
++# the glint sprites from the UNRECTIFIED band: each keeps its exact painted shape and its painted diagonal angle
++sup_r, base_r, cov = split(src_raw)
++nlab, lab, stats, cents = cv2.connectedComponentsWithStats(sup_r.astype(np.uint8), 8)
 +sprites = []
 +for k in range(1, nlab):
 +    x, y, w, h, area = stats[k]
 +    if area < 60 or y <= 2 or y + h >= SH - 2: continue          # tiny, or cut by the band's near / far end
 +    pad = 6; x0s, y0s, x1s, y1s = max(0, x - pad), max(0, y - pad), min(SW, x + w + pad), min(SH, y + h + pad)
 +    own = cv2.dilate((lab[y0s:y1s, x0s:x1s] == k).astype(np.uint8), np.ones((9, 9), np.uint8)) > 0
-+    sprites.append({'rgb': src[y0s:y1s, x0s:x1s].astype(np.float32), 'a': (cov[y0s:y1s, x0s:x1s] * own).astype(np.float32),
-+                    'cx': x + w / 2, 'w': x1s - x0s, 'h': y1s - y0s})
++    cy = int(min(SH - 1, round(cents[k][1])))
++    crect = float(np.argmin(np.abs(xs[cy] - cents[k][0])))      # its column in the rectified band (for its colour zone)
++    sprites.append({'rgb': src_raw[y0s:y1s, x0s:x1s].astype(np.float32), 'a': (cov[y0s:y1s, x0s:x1s] * own).astype(np.float32),
++                    'cx': crect, 'w': x1s - x0s, 'h': y1s - y0s})
 +print('glints', len(sprites), 'sprites; base / glint split at min(RGB) >', GL_MIN)
 +
  # --- layout: lane offset x_b (u) -> painted band position a ------------------------------------------------------------

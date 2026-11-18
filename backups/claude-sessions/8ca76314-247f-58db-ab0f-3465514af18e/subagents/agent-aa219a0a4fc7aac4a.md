@@ -1648,3 +1648,35 @@ That base-row index line is needlessly complex (its factor is exactly 1) and wou
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T17:20:26.255Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/tools/match08/nq08.py", "offset": 108, "limit": 22}`
+
+### 🧑 User — 2026-11-18T17:20:26.272Z
+
+> ↩︎ result: 108	print('rectified: max lateral shift', round(float(np.abs(xs - np.arange(SW)[None]).max() / DX), 3), 'u')
+> 109	
+> 110	# --- 2. base satin + glints ---------------------------------------------------------------------------------------------
+> 111	GL_MIN, GL_DIL = 200, 7                      # only the bright compact glint cores become sprites; the softer painted
+> 112	                                             # highlight streaks stay in the satin base
+> 113	core_m = cv2.morphologyEx((src.min(-1) > GL_MIN).astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+> 114	sup = cv2.dilate(core_m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * GL_DIL + 1, 2 * GL_DIL + 1))).astype(bool)
+> 115	base = fill_cols(src, sup)
+> 116	base = np.where(sup[..., None], cv2.GaussianBlur(base, (0, 0), 1.0), base)
+> 117	lum = lambda im: im @ np.array([0.3, 0.55, 0.15], np.float32)
+> 118	# glint coverage: how far the painted pixel rises from the base toward white (soft edge from the support)
+> 119	cov = np.clip((lum(src) - lum(base)) / np.maximum(255 - lum(base), 8), 0, 1) ** 0.8 * cv2.GaussianBlur(sup.astype(np.float32), (0, 0), 3.5)
+> 120	nlab, lab, stats, _ = cv2.connectedComponentsWithStats(sup.astype(np.uint8) …[+706 chars]
+
+### 🤖 Claude — 2026-11-18T17:20:38.873Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\nold=s[s.index(\"core_m = cv2.morphologyEx((src.min(-1) > GL_MIN)\"):s.index(\"print('glints', len(sprites)\")]\nnew='''def split(img):  # -> glint support mask, base satin (glints filled along the columns), glint coverage\n    cm = cv2.morphologyEx((img.min(-1) > GL_MIN).astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))\n    sp = cv2.dilate(cm, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * GL_DIL + 1, 2 * GL_DIL + 1))).astype(bool)\n    bs = fill_cols(img, sp)\n    bs = np.where( …[+2170 chars]`
+
+### 🧑 User — 2026-11-18T17:20:45.098Z
+
+> ↩︎ result: magenta zone a -0.807 .. -0.475 112 cols
+> cyan zone a -0.442 .. 0.714 388 cols
+> zone 1 glints placed 60 / 60
+> zone 2 glints placed 51 / 51
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq11/nq08.png (1236, 1336, 3)
+

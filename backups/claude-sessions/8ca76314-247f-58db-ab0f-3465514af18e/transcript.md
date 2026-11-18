@@ -4012,3 +4012,32 @@ The start view differs in 146 pixels, so it isn't perfectly unchanged. That's ti
 
 > 🔧 **Bash** `{"command": "printf '| 6 (~18:05) | 04 lead step 9 L4 entrance-rim foam clouds (`m04foamr`; s04-c14 `fc28323a`) | GOOD IMPROVEMENT (small): white foam clouds flank the entrance on both sides when entering / just inside, none farther in; still smooth balls (not bubbly clusters), one pale puff at the bottom-left corner at hard left — `qa/review_r14/04_step9_entrance_foam/` |\\n' >> docs/briefs/2026-11-18-r14/COORDINATION.md; until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:04-step9-shown 2>&1 | grep -E '\"commi …[+174 chars]`
 
+### 🧑 User — 2026-11-18T17:20:36.030Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "2321a5f7b1437165602037f954014b48c30885ff",
+> 2321a5f7
+
+### 🤖 Claude — 2026-11-18T17:20:43.481Z
+
+**Screen 04 entrance foam: GOOD IMPROVEMENT (small).** The pictures are above.
+
+- **Closer to yours:** as Benny enters and just inside, white foam clouds now sit on both sides of the entrance, like the foam around your gold rim. Before, there was none.
+- **Unchanged:** farther inside and at the end, as you asked, with no foam walls in the tunnel. The approved start view, the arrows, the blue path, the gold rings and the coins stay the same.
+- **Still different:**
+  - My foam looks like smooth white balls; yours is clusters of tiny bubbles.
+  - At hard left, one pale puff still passes the bottom-left corner.
+
+**Rejected, and not shown or kept:**
+- **Deeper blue water under the arrows:** either too subtle to see, or a flat dark-blue patch when steering left.
+- **Three tries at painted pink bands on the side water:** each made the sides pale lilac, with less pink than your painting.
+
+Your painting's band pattern doesn't come through from the water texture at the sides, so this needs a different method. The Atlas test could help there.
+
+**Also new:**
+- **Screen 05:** your pink "V" in the water behind Benny is a GOOD IMPROVEMENT, with pictures sent earlier.
+- **Specialists:** both are still working.
+- **Saved:** everything is on GitHub. Lead branch `2321a5f7`, Screen 04 branch `fc28323a`.
+
+**Waiting on you:** the atlasGenerate price from your Atlas rate card (Settings → Developer Platform). I'll run the three-view Screen 04 test as soon as I can confirm it fits within your 5,000 credits.
+
