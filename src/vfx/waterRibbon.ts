@@ -401,6 +401,18 @@ export const M05CAUL: boolean = M05CLOUD && q05('m05caul');
  * virtual tunnel, blue-violet creases, shaded waterline) — continuing the near foam bank into the far river.
  */
 export const M05FBANK: boolean = M05BLEND && q05('m05fbank');
+/**
+ * `&m05fmag=1` (Screen 05 round 11, item 1, needs m05blend; src/world/materials.ts farRiverMaterial): the far river right
+ * behind the sliding seam. The far block wears the approved picture's far water (layer F), baked for the locked eye;
+ * swimming close to the seam magnifies it 2–4× into a pale, smeared sheet with an angular pale slab on the left (the
+ * painted far foam bank flattened onto the water). Where F would be magnified (eye nearer than ≈ 1/1.6 of the locked
+ * distance) and the block is live, the far river shows its own continuation of the painted formation instead (the far
+ * layout's cyan core between the two hot-pink bands, flow lines along the winding core, foam rims), and the near ribbon
+ * keeps its own design up to the seam instead of fading into the magnified F. Locked view: block not live → unchanged.
+ */
+export const M05FMAG: boolean = M05BLEND && q05('m05fmag');
+/** m05fmag: depth of the far seam from the locked 05 eye (ForcedTunnel.D0), set by environment.ts */
+export const m05fmagD0 = { value: 53.25 };
 /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
 export const m05foamK = { value: 0 };
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
@@ -672,6 +684,9 @@ uniform sampler2D uPjNM;   // m05near: keep-mask of E's near rows (1 = painted w
 #ifdef M05BLEND
 // m05blend: the far river's baked layer F + the far tunnel frame (origin c0, axis T, right Rt) and (seam depth, band, half chord, live)
 uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
+#ifdef M05FMAG
+uniform float uFmD0;
+#endif
 #endif
 #ifdef M05WD
 uniform vec4 uPjWD;        // m05wd: x = on, y = share of the detail layer kept on the design, z = row smoothing (E rows)
@@ -1722,6 +1737,12 @@ void main() {
         vec2 fbUV = vec2((dot(fbD, uFbRt) + uFbP.z) / (2.0 * uFbP.z), log(1.0 + max(fbZ, 0.0)) / log(1.0 + uPjFZ));
         fbC = texture2D(uPjF, clamp(fbUV, 0.0, 1.0));
         fbK = fbW * fbC.a * step(0.0, fbUV.x) * step(fbUV.x, 1.0);
+        #ifdef M05FMAG
+        // m05fmag: where F is magnified the fade into it is only the last 1.5 u before the seam (the far river then
+        // fades F out over its first 2.5 u into its own continuation of the formation: no hard line, short soft zone)
+        float fmM = smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));
+        fbK *= mix(1.0, smoothstep(uFbP.x - min(uFbP.y, 1.5), uFbP.x, fbZ) / max(fbW, 1e-3), fmM);
+        #endif
       }
     }
     pjK = max(pjK, fbK);
@@ -1988,7 +2009,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -2092,6 +2113,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
   u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
   if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
+  if (M05FMAG) u.uFmD0 = m05fmagD0;   // m05fmag (Screen 05 round 11/12): locked seam depth of the far block
   if (M05GEO) {
     // m05geo (Screen 05 round 9): painted channel per s (tools/match05/channel05_bp.py) as a 1-row texture for the VERTEX shader
     const ch = { value: empty as THREE.Texture };

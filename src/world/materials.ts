@@ -4,7 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, m05blend } from '../vfx/waterRibbon';
+import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, m05blend, m05fmagD0 } from '../vfx/waterRibbon';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -858,6 +858,8 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
  * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
  * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
  */
+/** `&m05fmag=1` (Screen 05 round 11): weight of the baked far picture F — 0 where swimming magnifies it (block live) */
+const FMAG_PRE = 'float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w);\n  ';
 export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
   // wins the depth test against the real ribbon's continuation it covers just behind the seam
@@ -886,6 +888,8 @@ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THR
   if (pj) Object.assign(uniforms, pj.uniforms);
   // `&m05fbank=1` (Screen 05 round 11): live flag / seam depth of the far block (written by src/world/match05far.ts)
   if (pj && M05FBANK) Object.assign(uniforms, { uFbP: m05blend.uFbP });
+  // `&m05fmag=1` (Screen 05 round 11, item 1): live flag (uFbP.w) + locked seam depth of the far block
+  if (pj && M05FMAG) { m05fmagD0.value = d0; Object.assign(uniforms, { uFbP: m05blend.uFbP, uFmD0: m05fmagD0 }); }
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
@@ -1107,7 +1111,8 @@ float rivCells(vec2 p) {
     if (pj) {
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\n' + pj.pars)
-        .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
+        .replace('  diffuseColor.rgb = col;\n}', '  ' + (M05FMAG ? FMAG_PRE + pj.apply.replace(/\)\.a\);$/, ').a * fmK);') : pj.apply) + '\n  diffuseColor.rgb = col;\n}');
+      if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\n' + (M05FBANK ? '' : 'uniform vec4 uFbP; ') + 'uniform float uFmD0;');
       if (M05FBANK) {
         shader.fragmentShader = shader.fragmentShader
           .replace('#include <common>', '#include <common>\nuniform vec4 uFbP;\n#ifndef FARW05\nuniform float uRivD0;\n#endif')
@@ -1151,7 +1156,7 @@ float rivCells(vec2 p) {
   }
   if (pj) {
     const key = mat.customProgramCacheKey;
-    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '');
+    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '');
     mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };
     mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);
   }
