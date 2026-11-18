@@ -1153,3 +1153,131 @@ That feather line is wrong. Outside the overlap the target is still empty (black
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's/cv2.remap(srcm, UU, VV/cv2.remap(srcs[0], UU, VV/' tools/match08/nq08.py && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq5 && mkdir -p $S && time python3 -I tools/match08/nq08.py $S/nq08.png $S/nq08.json $S 2>&1 | grep -v \"^row\"", "description": "Run nq08 v4 with mirrored candidates", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T17:03:38.070Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> target 1336 x 1320 texels ( 6.1 u x 8.0 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.475 93 cols
+> cyan zone a -0.442 .. 0.714 382 cols
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq5/nq08.png (1320, 1336, 3)
+> 
+> real	0m33.245s
+> user	0m32.573s
+> sys	0m1.317s
+> [This command modified 1 file you've previously read: ../wt/s08/tools/match08/nq08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T17:03:41.172Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq5/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:03:41.242Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:04:11.099Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\nrep=[\n(\"BW, BH, OW, OH = 80, 224, 36, 96             # block (across, along), overlaps (texels)\",\n \"BW, BH, OW, OH = 64, 224, 28, 96             # block (across, along), overlaps (texels)\"),\n(\"\"\"        kf = cv2.GaussianBlur(keep_old.astype(np.float32), (7, 7), 1.6)\n        if bx == 0 and by == 0: kf[:] = 0\n        kf = np.where(filled[y0:y0 + BH, x0:x0 + BW], kf, 0.0)[..., None]   # feather only into already-filled texels\n        out[y0:y0 + BH, x0:x0 + BW] = kf * tgt + (1 - kf) * …[+1328 chars]`
+
+### 🧑 User — 2026-11-18T17:04:47.283Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> target 1336 x 1320 texels ( 6.1 u x 8.0 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.475 93 cols
+> cyan zone a -0.442 .. 0.714 382 cols
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq6/nq08.png (1320, 1336, 3)
+> 
+> real	0m36.119s
+> user	0m38.852s
+> sys	0m2.420s
+
+### 🤖 Claude — 2026-11-18T17:04:50.442Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq6/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:04:50.527Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:05:05.090Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq6 && cp $S/nq08.png assets/textures/match08/nq08.png && cp $S/nq08.json assets/textures/match08/nq08.json && ls -la assets/textures/match08/nq08.* && grep -n \"flag05\\b\" src/world/match08.ts | head -3 && grep -n \"m08cupw\\|uCupW\" src/world/match08.ts | sed -n 1,40p", "description": "Copy tile to assets and locate wiring points"}`
+
+### 🧑 User — 2026-11-18T17:05:05.171Z
+
+> ↩︎ result: -rw-r--r-- 1 root root     873 Nov 18 17:05 assets/textures/match08/nq08.json
+> -rw-r--r-- 1 root root 2065558 Nov 18 17:05 assets/textures/match08/nq08.png
+> 13:import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+> 320:  const fill = flag05('m08fill');
+> 328:    const seamK = flag05('m08seam') ? Number(new URLSearchParams(location.search).get('m08seamk') ?? '') || 1.6 : 1;
+> 88:uniform sampler2D uCupMk;   // m08cupw: painted outline of the upper cups (cupw08.py, R = upper-right, eroded 2 px)
+> 89:uniform vec4 uCupW;         // m08cupw: copy direction across the arch edge (plate uv per px), distance (px), w > 0.5 = on
+> 233:    // m08cupw (r13, upper-right cup only): what counts as painted cup is the traced cup outline (eroded 2 px), not the
+> 236:    if (uCupW.w > 0.5 && mc > 0.0 && vProj.w > 0.0 && pm.w > 0.0) {
+> 238:      vec2 s1 = u0 + uCupW.xy * uCupW.z, s2 = u0 + uCupW.xy * (2.0 * uCupW.z), s3 = u0 + uCupW.xy * (3.0 * uCupW.z);
+> 397:  // `&m08cupw=1` (r13): painted outline mask of the upper cups (tools/match08/cupw08.py)
+> 399:  if (flag05('m08cup') && flag05('m08cupw')) {
+> 416:      uCupMk: { value: cupMk ?? plate }, uCupW: { value: new THREE.Vector4(0, 0, 0, 0) } },
+> 650:      // m08cup …[+198 chars]
+
+### 🤖 Claude — 2026-11-18T17:05:07.139Z
+
+Now the shader and loader edits.
+
+### 🤖 Claude — 2026-11-18T17:05:09.293Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)\nuniform vec4 uCup; ", "new_string": "uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)\nuniform vec4 uNq;           // m08nq (r14): x > 0.5 = painted-scale tile (nq08.py), y = middle 1:1 half width, z = lane it was laid for, w = tile half width (u)\nuniform vec4 uCup;"}`
+
+### 🧑 User — 2026-11-18T17:05:09.384Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:05:12.945Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "    float sl = (vW.x - r.x) / h;\n    vec2 tuv = vec2(0.5 + (uNearC.x + uNearC.y * sl) / (2.0 * uNear.z), (uNear.x - vW.z) / uNear.y);", "new_string": "    float sl = (vW.x - r.x) / h;\n    vec2 tuv = vec2(0.5 + (uNearC.x + uNearC.y * sl) / (2.0 * uNear.z), (uNear.x - vW.z) / uNear.y);\n    if (uNq.x > 0.5) {\n      // m08nq (r14): the painted-scale tile is laid out in world units across the lane (middle 1:1, the rest of the lane\n      // scaled only if the lane differs from the one the tile was laid  …[+283 chars]`
+
+### 🧑 User — 2026-11-18T17:05:13.068Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:05:17.049Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "    nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;\n  }", "new_string": "    nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;\n  }\n  // `&m08nq=1` (r14, with m08near): the near water at the PAINTED scale (tools/match08/nq08.py v4): the approved picture's\n  // own near band, rectified along its painted flow and quilted to an 8 u x lane-wide tile (no magnified / stretched glints)\n  let NQ: { z0: number; period: number; halfWidth: number; lane: nu …[+537 chars]`
+
+### 🧑 User — 2026-11-18T17:05:17.163Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:05:18.295Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "      uNearC: { value: new THREE.Vector2(0, 1) },\n      uCup:", "new_string": "      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) },\n      uCup:"}`
+
+### 🧑 User — 2026-11-18T17:05:18.343Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:05:19.814Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "    u.uNearC.value.set(c, hw);\n  }", "new_string": "    u.uNearC.value.set(c, hw);\n    if (NQ) {\n      u.uNear.value.set(NQ.z0, NQ.period * num('m08nearv', 1), NJ.A, 1);\n      u.uNq.value.set(1, NQ.core, NQ.lane, NQ.halfWidth);\n    }\n  }"}`
+
+### 🧑 User — 2026-11-18T17:05:19.873Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:05:23.741Z
+
+Wired. Type-check, then render the NEW set (K13 + `&m08nq=1`) with the same capture script on port 5278.
+
+### 🤖 Claude — 2026-11-18T17:05:25.093Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && (timeout 300 npx tsc --noEmit -p . 2>&1 | grep -i \"match08\" | head -10; echo tsc-done) && ss -ltnp 2>/dev/null | grep -E \":527[0-9]\" | head", "description": "Typecheck match08 and check capture ports", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T17:05:31.343Z
+
+> ↩︎ result: tsc-done
+
+### 🤖 Claude — 2026-11-18T17:05:34.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && mkdir -p qa/match/08/r14/step1_m08nq/NEW_raw && time node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/NEW_raw \"$K13&m08nq=1\" 2>&1 | tail -14", "description": "Render NEW audit shots with m08nq on port 5278", "timeout": 600000}`
+

@@ -3379,3 +3379,159 @@ The I3 and I4 renders are still running. The specialists' live chat records will
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T17:03:42.949Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "  vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);", "new_string": "  vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);\n  vec3 tileC = col;                                        // r14: the painted tile colour before any re-colouring"}`
+
+### 🧑 User — 2026-11-18T17:03:42.992Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:03:45.753Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    col = mix(col, pk, side * uPk.w * (1.0 - 0.75 * keepCyan));", "new_string": "    float pkMix = 1.0 - 0.75 * keepCyan;\n    if (uPkH > 0.0) {\n      // r14 m04pkh=x: the PAINTED band structure — re-colour only where the painted tile itself is pink / magenta (red\n      // above green); its cyan streaks between the satin bands stay cyan (x = how strictly; 0 = old uniform pink)\n      float pinkness = smoothstep(-0.04, 0.22, tileC.r - tileC.g);\n      pkMix = mix(pkMix, 0.12 + 0.88 * pinkness, uPkH) …[+57 chars]`
+
+### 🧑 User — 2026-11-18T17:03:45.788Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:03:47.304Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength", "new_string": "uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength\nuniform float uPkH;          // r14 m04pkh: pink only where the painted tile is pink (0 = off)"}`
+
+### 🧑 User — 2026-11-18T17:03:47.331Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:03:49.114Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "        uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },", "new_string": "        uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },\n        uPkH: { value: M04.num('m04pkh', 0) },"}`
+
+### 🧑 User — 2026-11-18T17:03:49.171Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:03:56.672Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && timeout 200 npx tsc --noEmit -p . 2>&1 | tail -2; echo \"tsc ${PIPESTATUS[0]}\"; S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && Q5=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G5/motion.json'))['query'])\") && QK1=\"$Q5&m04pkh=1\" && QK2=$(echo \"$Q5\" | sed 's/m04pkw=0.9/m04pkw=1.0/')\"&m04pkh=0.8\" && for v in K1 K2; do eval Q=\\$Q$v; rm -rf $S/x$v; ONLY=f03_forward3u,f06_forward6u,s_left_hard,s_right_hard timeout 600 node $S/tools/audit_only.mjs 04 $S/x$v \"$Q\" > $S/x$v.log 2>&1; ech …[+645 chars]`
+
+### 🧑 User — 2026-11-18T17:05:44.183Z
+
+> ↩︎ result: tsc 0
+> K1 5
+> K2 5
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:05:48.795Z
+
+The Screen 05 specialist reports a GOOD IMPROVEMENT: your painted pink "V" now shows in the water behind Benny. I'll check it by eye myself before showing you. First, the Screen 04 pink-band test.
+
+### 🤖 Claude — 2026-11-18T17:05:49.927Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/K_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T17:05:49.978Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:06:08.945Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && for v in I1 I2 I3 I4 I5; do mkdir -p qa/match/04/r14/s9_lane/$v && cp $S/x$v/* qa/match/04/r14/s9_lane/$v/; done; for v in J1 J2 K1 K2; do mkdir -p qa/match/04/r14/s10_pink/$v && cp $S/x$v/* qa/match/04/r14/s10_pink/$v/; done; cat >> qa/match/04/r14/PROGRESS.md <<'EOF'\n\n## Step 7 — deeper blue water under the arrows — NOT AN IMPROVEMENT (all variants), code kept behind its switch\n* H1 (wider arrow glow `m04a3gb=0.28 m04a3tm=0.7`) and H2 (+ `m04lcd=1.5 m04lcw=2.0`): no  …[+2139 chars]`
+
+### 🧑 User — 2026-11-18T17:06:22.527Z
+
+> ↩︎ result: s04 da40a708 remote da40a708
+> /home/user/wt/s05/qa/match/05/r14/step2_m05vee2/:
+> 1_APPROVED.png
+> new
+> new.log
+> 
+> /home/user/wt/s05/qa/match/05/r14/step2_m05vee2/new:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> s_left_hard.png
+> s_right_hard.png
+> shots.json
+> t33_through_screen.png
+> t66_through_screen.png
+> t98_end.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:06:28.568Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/wt/s05/qa/match/05/r14/step1_m05vee/before; N=/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/new; ls $B; S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nB='$B'; N='$N'; S='$S'\nref=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').resize((432,768))\nfor shots in [['f06_forward6u','f10_forward10u'],['s_left_hard','s_right_hard']]:\n    ims=[ref]\n    for sh in shots:\n        ims += [Image.open(f'{B}/{sh}.png').convert('RGB').resize((432,768)), Imag …[+276 chars]`
+
+### 🧑 User — 2026-11-18T17:06:29.825Z
+
+> ↩︎ result: a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> s_left_hard.png
+> s_right_hard.png
+> shots.json
+> t33_through_screen.png
+> t66_through_screen.png
+> t98_end.png
+
+### 🤖 Claude — 2026-11-18T17:06:32.742Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/s05_vee2_f06_forward6u.png"}`
+
+### 🤖 Claude — 2026-11-18T17:06:33.255Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/s05_vee2_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T17:06:33.324Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:06:33.320Z
+
+[Image: original 2190x768, displayed at 2000x701. Multiply coordinates by 1.09 to map to original image.]
+
+### 🧑 User — 2026-11-18T17:06:33.856Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:06:33.853Z
+
+[Image: original 2190x768, displayed at 2000x701. Multiply coordinates by 1.09 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:06:42.541Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/wt/s05/qa/match/05/r14/step1_m05vee/before; N=/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/new; R=/home/user/rainbow-/qa/review_r14/05_step2_painted_V; mkdir -p $R && cp /home/user/rainbow-/references/05_flow_into_the_current.png $R/1_APPROVED.png && n=0; for pair in \"f03_forward3u:entering\" \"f10_forward10u:middle\" \"f20_forward20u:farther_inside\" \"t98_end:end\" \"s_left_hard:hard_left\" \"s_right_hard:hard_right\"; do sh=${pair%%:*}; lb=${pair##*:}; n=$((n+1)); cp $B/$sh.png $R/2_BEFORE_${n}_${lb}.png; cp $N/$sh.png $R/3_NEW_${n}_${lb}.png; done; ls $R | wc  …[+134 chars]`
+
+### 🧑 User — 2026-11-18T17:06:42.723Z
+
+> ↩︎ result: 13
+> 1_APPROVED.png
+> new
+> new.log
+
+### 🤖 Claude — 2026-11-18T17:06:48.993Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r14/05_step2_painted_V/1_APPROVED.png", "qa/review_r14/05_step2_painted_V/2_BEFORE_1_entering.png", "qa/review_r14/05_step2_painted_V/3_NEW_1_entering.png", "qa/review_r14/05_step2_painted_V/2_BEFORE_2_middle.png", "qa/review_r14/05_step2_painted_V/3_NEW_2_middle.png", "qa/review_r14/05_step2_painted_V/2_BEFORE_3_farther_inside.png", "qa/review_r14/05_step2_painted_V/3_NEW_3_farther_inside.png", "qa/review_r14/05_step2_painted_V/2_BEFORE_4_end.png", "qa/review_r14/05_step2_painted_V/3_NEW_4_end.png", "qa/review_r14/05_step2_painted_V/2_BEFORE_5_hard_left.png", "qa/review_ …[+368 chars]`
+
+### 🧑 User — 2026-11-18T17:06:52.308Z
+
+> ↩︎ result: 13 files delivered to user.
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/1_APPROVED.png → file_uuid: 1be84ecd-a10c-41c5-b760-c8ff59a9d44a
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/2_BEFORE_1_entering.png → file_uuid: d15eeb1f-a662-4a64-9c38-58d476c4e5e7
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/3_NEW_1_entering.png → file_uuid: 821811c7-0ebe-45e6-be46-93d5a47a3ceb
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/2_BEFORE_2_middle.png → file_uuid: 13555fbd-4eb8-43ab-966e-a8aecabaa61f
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/3_NEW_2_middle.png → file_uuid: 16d57b80-030d-4808-876e-2e64f123f83e
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/2_BEFORE_3_farther_inside.png → file_uuid: 9ec41172-7360-408e-b784-ecfd4d31292e
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/3_NEW_3_farther_inside.png → file_uuid: 5233c359-4a35-4471-bdc5-2912089b5a14
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/2_BEFORE_4_end.png → file_uuid: da51553c-fba1-450b-a2d9-7007944edcf2
+>   /home/user/rainbow-/qa/review_r14/05_step2_painted_V/3_NEW_4_end.png → file_uuid: 1458ea37-d145-4531-951b-9a171820a4bc
+>   /home/user/rainbow-/qa/review_r1 …[+481 chars]
+
+### 🤖 Claude — 2026-11-18T17:06:58.244Z
+
+> 🔧 **Bash** `{"command": "printf '| 3 (~17:35) | 05 step 2 `m05vee2` (painted pink V behind Benny; s05-c14 `e5c4e7f2`) | GOOD IMPROVEMENT (lead checked by eye): hot-pink satin bands from Benny to the lower corners with cyan + white glints between, follows Benny; hard left / right smears gone — `qa/review_r14/05_step2_painted_V/` |\\n| 4 (~17:35) | 04 lead steps 7 + 8 (deep-blue lane H/I series, pink side bands J/K series; s04-c14 `da40a708`) | NOT AN IMPROVEMENT (too subtle, or flat royal-blue patch at hard left; sides lost their pink) — not shown, switches off |\\n' >> docs/briefs/2026-11-18-r14/COORDINAT …[+357 chars]`
+
