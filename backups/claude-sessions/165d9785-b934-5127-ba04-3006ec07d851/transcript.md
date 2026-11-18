@@ -4531,3 +4531,239 @@ The five-minute autosave keeps running and keeps snapshotting all three workspac
 
 **Screen 04 step 1 is rendered but not yet judged.** It raises the water to the painted height and replaces the tall foam-ball walls with low foam. My first look: the foam walls are gone and water now climbs the tunnel sides, closer to your painting, and the start view is unchanged. But there's still a hard straight silvery edge where the water meets the gold wall. I'm fixing that before I show you anything or give it a verdict.
 
+### 🧑 User — 2026-11-18T13:34:44.704Z
+
+Ok
+
+### 🤖 Claude — 2026-11-18T13:34:48.887Z
+
+Continuing with Screen 04 step 1. To fix the hard edge where the water meets the wall, I'll look at it close up at 20 units forward:
+
+### 🤖 Claude — 2026-11-18T13:34:50.794Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/s1_chan && convert A/f20_forward20u.png -crop 864x560+0+600 -resize 700x454 /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1edge.jpg", "description": "Crop water edge area of step-1 candidate"}`
+
+### 🧑 User — 2026-11-18T13:34:50.897Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:34:53.398Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1edge.jpg"}`
+
+### 🧑 User — 2026-11-18T13:34:53.422Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:35:05.371Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; EXACT=1 nice -n 5 timeout 2400 node tools/match04/ab04.mjs qa/match/04/r12/s1_chan '[[\"f06_forward6u\",6,null],[\"f20_forward20u\",20,null],[\"s_left_hard\",12,-1]]' \"B=$K&m04foam3=1&m04ry=2.2&m04rk=0.82\" 2>&1 | grep -v \"Vite serving\" | tail -3; cd qa/match/04/r12/s1_chan && convert A/f20_forward20u.png B/f20_forward20u.png -crop 864x560+0+600 -resize 450x292 +append /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1edgeB.jpg", "description …[+67 chars]`
+
+### 🧑 User — 2026-11-18T13:35:22.834Z
+
+> ↩︎ result: B f06_forward6u s 83.48 lat 0 cam->V04-1/V04-2 3.89/13.91
+> B f20_forward20u s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> B s_left_hard s 89.55 lat -1.65 cam->V04-1/V04-2 2.65/8.09
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:35:25.065Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1edgeB.jpg"}`
+
+### 🧑 User — 2026-11-18T13:35:25.096Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:35:31.465Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/s1_chan && convert /home/user/wt/s04/references/04_through_the_five_arrows.png BEFORE/f06_forward6u.png B/f06_forward6u.png BEFORE/f20_forward20u.png B/f20_forward20u.png -resize 264x469! +append /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1B.jpg", "description": "Montage approved, BEFORE, candidate B"}`
+
+### 🧑 User — 2026-11-18T13:35:31.791Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:35:34.041Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1B.jpg"}`
+
+### 🧑 User — 2026-11-18T13:35:34.064Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:35:45.085Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; EXACT=1 nice -n 5 timeout 1500 node tools/match04/ab04.mjs qa/match/04/r12/s1_chan '[[\"a00_approved_view\",0,null]]' \"B=$K&m04foam3=1&m04ry=2.2&m04rk=0.82\" 2>&1 | grep -v \"Vite serving\" | tail -1; cd qa/match/04/r12/s1_chan && python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('BEFORE/a00_approved_view.png').convert('RGB')).astype(int); b=np.asarray(Image.open('B/a00_approved_view.png').convert('RGB')).astype(int)\nd=np.abs(a-b).sum(2); print('sta …[+309 chars]`
+
+### 🧑 User — 2026-11-18T13:35:55.882Z
+
+> ↩︎ result: B a00_approved_view s 77.41 lat 0 cam->V04-1/V04-2 8.16/18.17
+> start view px differing >30: 24
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:35:58.811Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1Bhard.jpg"}`
+
+### 🧑 User — 2026-11-18T13:35:58.862Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:36:14.425Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat >> qa/match/04/r12/PROGRESS.md <<'EOF'\n\n## REBUILD step 1 (user approval 2026-11-18 ~13:30 UTC: real geometry/materials) — water channel at the painted height + low foam — KEPT\nKept query: `K&m04foam3=1&m04ry=2.2&m04rk=0.82` (K = `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1`).\n* River sides climb to the measured painted waterline (≈ 2.2 u, `waterline04.json`); the tall foam-ball walls are replaced by\n  low foam clusters along the raised water edge (`m04foam3`); the river texture is scaled across the wider channel\n  (`m04 …[+1920 chars]`
+
+### 🤖 Claude — 2026-11-18T13:36:14.780Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T13:36:20.044Z
+
+> ↩︎ result: remote=4a8f1860 local=4a8f1860
+
+### 🧑 User — 2026-11-18T13:36:20.056Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-18T13:36:25.309Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/04_1_APPROVED.png", "qa/review_c12/04_step1_2_BEFORE_f06_forward6u.png", "qa/review_c12/04_step1_3_NEW_f06_forward6u.png", "qa/review_c12/04_step1_2_BEFORE_f20_forward20u.png", "qa/review_c12/04_step1_3_NEW_f20_forward20u.png", "qa/review_c12/04_step1_2_BEFORE_s_left_hard.png", "qa/review_c12/04_step1_3_NEW_s_left_hard.png"], "caption": "Screen 04 rebuild step 1 — GOOD IMPROVEMENT. APPROVED · BEFORE / NEW at 6 u · BEFORE / NEW at 20 u · BEFORE / NEW hard left steer. Thick cyan-and-magenta water now fills the tunnel floor and curves up the gold sides with low foam at i …[+232 chars]`
+
+### 🧑 User — 2026-11-18T13:36:27.018Z
+
+> ↩︎ result: 7 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/04_1_APPROVED.png → file_uuid: eb81e8c6-1a33-455b-858c-1a1a7f7f24a9
+>   /home/user/rainbow-/qa/review_c12/04_step1_2_BEFORE_f06_forward6u.png → file_uuid: 9c043dfb-27a7-479b-986d-2b562056d1fc
+>   /home/user/rainbow-/qa/review_c12/04_step1_3_NEW_f06_forward6u.png → file_uuid: 769edc98-13ee-4645-9563-db37ce817773
+>   /home/user/rainbow-/qa/review_c12/04_step1_2_BEFORE_f20_forward20u.png → file_uuid: 43b4e4b0-3637-4a45-b20c-33650997e6d0
+>   /home/user/rainbow-/qa/review_c12/04_step1_3_NEW_f20_forward20u.png → file_uuid: 530b06e5-daba-483a-a0bf-167b93190497
+>   /home/user/rainbow-/qa/review_c12/04_step1_2_BEFORE_s_left_hard.png → file_uuid: 57233138-fa90-47e0-aa74-c68cff614880
+>   /home/user/rainbow-/qa/review_c12/04_step1_3_NEW_s_left_hard.png → file_uuid: d4b05be0-9745-4b91-bff3-261d765088b1
+
+### 🤖 Claude — 2026-11-18T13:36:38.203Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T13:36:38.211Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-18T13:36:42.246Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K4='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82'; EXACT=1 nice -n 5 timeout 2400 node tools/match04/ab04.mjs qa/match/04/r12/s2_arr '[[\"f06_forward6u\",6,null],[\"f10_forward10u\",10,null],[\"f20_forward20u\",20,null]]' \"C1=$K4&m04arr5=1&m04a5n0=2&m04a5n1=3.5&m04a5w=1.6\" \"C2=$K4&m04arr5=1&m04a5n0=2&m04a5n1=3.5&m04a5w=2.0&m04a5t=2.4&m04a5p=4.5\" 2>&1 | grep -v \"Vite serving\" | tail -6; cd qa/match/04/r12 && convert s1_chan/B/f10_forward10u.png s2_arr/C1/f10_forward10u.png s2_arr/C2/f10_forward1 …[+221 chars]`
+
+### 🧑 User — 2026-11-18T13:37:13.809Z
+
+> ↩︎ result: Exit code 1
+> C1 f06_forward6u s 83.48 lat 0 cam->V04-1/V04-2 3.89/13.91
+> C1 f10_forward10u s 87.45 lat 0 cam->V04-1/V04-2 0/10.02
+> C1 f20_forward20u s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> C2 f06_forward6u s 83.48 lat 0 cam->V04-1/V04-2 3.89/13.91
+> C2 f10_forward10u s 87.45 lat 0 cam->V04-1/V04-2 0/10.02
+> C2 f20_forward20u s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> convert-im6.q16: unable to open image `s1_chan/B/f10_forward10u.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+
+### 🤖 Claude — 2026-11-18T13:37:16.684Z
+
+The comparison failed only because the kept version had no 10-unit frame. I'll compare at 6 and 20 units instead, which exist for all three:
+
+### 🤖 Claude — 2026-11-18T13:37:19.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12 && for s in f06_forward6u f20_forward20u; do convert s1_chan/B/$s.png s2_arr/C1/$s.png s2_arr/C2/$s.png -crop 864x760+0+450 -resize 400x352 +append /tmp/s2_$s.jpg; done; convert /tmp/s2_f06_forward6u.jpg /tmp/s2_f20_forward20u.jpg -append /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s2.jpg; rm /tmp/s2_*.jpg", "description": "Montage kept vs arrow variants at 6 and 20 units"}`
+
+### 🧑 User — 2026-11-18T13:37:19.706Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:37:22.208Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s2.jpg"}`
+
+### 🧑 User — 2026-11-18T13:37:22.301Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:37:56.629Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 28,60p src/world/match04m4.ts; grep -n \"out.update = \\|const out\\b\\|const out =\\|return out\" src/world/match04m4.ts | head; sed -n 760,790p src/world/match04m4.ts", "description": "Read switch declarations and update hook"}`
+
+### 🧑 User — 2026-11-18T13:37:56.682Z
+
+> ↩︎ result: import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 
+> const QS = new URLSearchParams(location.search);
+> const on = (k: string) => QS.get(k) === '1';
+> export const M04 = {
+>   ring: on('m04ring'),
+>   foam: on('m04foam'),
+>   bub: on('m04bub'),
+>   arrow: on('m04arrow'),
+>   wave: on('m04wave'),
+>   river: on('m04river'),
+>   gold: on('m04gold'),
+>   mouth: on('m04mouth'),
+>   room: on('m04room'),
+>   foam3: on('m04foam3'),
+>   pink: on('m04pink'),
+>   arr5: on('m04arr5'),
+>   lay: on('m04lay'),
+>   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
+> };
+> 
+> export interface M04Ctx {
+>   group: THREE.Group;
+>   shared: Record<string, THREE.IUniform>;
+>   proj: THREE.PerspectiveCamera;
+>   /** tube axis in group-local coordinates (x lateral, y up from the slide, z = -down the slide) */
+>   cx: number; cy: number; z0: number; len: number; r: number; outerR: number;
+>   hideOld: (names: string[]) => void;
+> }
+> 
+> const VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> attribute vec2 aK;
+> 482:  const out: { update(cam: THREE.Vector3): void } = { update() {} };
+> 758:  out.update = (cam: THREE.Vector3) => {
+> 765:  return out;
+>     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+>     away.va …[+262 chars]
+
+### 🤖 Claude — 2026-11-18T13:38:17.701Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ns=s.replace(\"  arr5: on('m04arr5'),\\n\",\"  arr5: on('m04arr5'),\\n  arr3d: on('m04arr3d'),\\n\",1)\nold=\"\"\"  out.update = (cam: THREE.Vector3) => {\"\"\"\nnew=\"\"\"  // r12 REBUILD step 2 `&m04arr3d=1`: the five glowing chevrons as REAL geometry on the lane. Flat arrows on the water are\n  // invisible from the swim camera (the lane is seen almost edge-on and Benny covers its near part), so each painted chevron\n  // (fat white-cyan bars, apex pointing down the tunnel, cyan glow) leans  …[+4000 chars]`
+
+### 🧑 User — 2026-11-18T13:38:20.478Z
+
+> ↩︎ result: 484:  const updaters: ((a: number) => void)[] = [];
+> TSC OK
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:38:23.256Z
+
+Compiles. Rendering it at two lean angles (38° and 55°) at 6 and 20 units forward and hard left steering:
+
+### 🤖 Claude — 2026-11-18T13:38:27.163Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K4='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82'; EXACT=1 nice -n 5 timeout 2400 node tools/match04/ab04.mjs qa/match/04/r12/s2_arr '[[\"f06_forward6u\",6,null],[\"f20_forward20u\",20,null],[\"s_left_hard\",12,-1]]' \"D1=$K4&m04arr3d=1\" \"D2=$K4&m04arr3d=1&m04a3k=55\" 2>&1 | grep -vE \"Vite serving\" | tail -6; cd qa/match/04/r12 && convert /home/user/wt/s04/references/04_through_the_five_arrows.png s1_chan/B/f06_forward6u.png s2_arr/D1/f06_forward6u.png s2_arr/D2/f06_forward6u.png s2_arr/D1/f20_fo …[+207 chars]`
+
+### 🧑 User — 2026-11-18T13:38:57.723Z
+
+> ↩︎ result: D1 f06_forward6u s 83.48 lat 0 cam->V04-1/V04-2 3.89/13.91
+> D1 f20_forward20u s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> D1 s_left_hard s 89.55 lat -1.65 cam->V04-1/V04-2 2.65/8.09
+> D2 f06_forward6u s 83.48 lat 0 cam->V04-1/V04-2 3.89/13.91
+> D2 f20_forward20u s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> D2 s_left_hard s 89.55 lat -1.65 cam->V04-1/V04-2 2.65/8.09
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:39:00.114Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s2d.jpg"}`
+
+### 🧑 User — 2026-11-18T13:39:00.140Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:39:00.882Z
+
+You've hit your 5-hour limit · resets 5:30pm (UTC)
+
