@@ -335,3 +335,7 @@ Let me look at the approved picture and a few BEFORE frames.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T11:39:33.730Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_shots.mjs'\ns=open(p).read()\nold=\"\"\"const want = ONLY === 'all' ? null : new Set(ONLY.split(','));\nconst SHOTS = want ? ALL.filter(([n]) => want.has(n)) : ALL;\"\"\"\nnew=\"\"\"// round 11: extra probe positions, only when named (not part of 'all' = the 12 audit shots)\nconst EXTRA = [\n  ['k81_kink', 't0.81', null], ['k81_kink_left', 't0.81', -1], ['k81_kink_right', 't0.81', 1],\n  ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],\n];\nconst want = ONLY === 'all' ? nu …[+840 chars]`
+

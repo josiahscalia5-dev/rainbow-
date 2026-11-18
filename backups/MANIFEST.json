@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15031,
-   "sha256": "78d7fa33478e065d93dae1539015bf9902485f57eb5ec61360a63f9b35bad52d"
+   "sha256": "d0e53e65cb4c1c4b1ed0872dca881b48ca30d1f4fbd963cf3b786e1755a851d1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -683,13 +683,23 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/INFO.json",
-   "bytes": 867,
-   "sha256": "27d559b605cb40a7d297743845b36d74d04700e6d4ccb4bf2c7fdfc9a0780cb1"
+   "bytes": 1195,
+   "sha256": "ef5af89a7f89a1fc81b2991477988ed35d67371b3872475c6a8f4d1b90c49ccf"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/tracked.patch",
    "bytes": 7704,
    "sha256": "0373b0897ef1278e91f959c84818924eb9991b3f06ed184ede2d55f6188f72c5"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-match-c11/untracked/qa/match/05/r11/BEFORE/shots.json",
+   "bytes": 64166,
+   "sha256": "3bb4d30b96893839f542970e479cf93a5b91124b5464ea379e21d0872c4a5add"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-match-c11/untracked/qa/match/05/r11/BEFORE/t95_through_screen.png",
+   "bytes": 1920700,
+   "sha256": "8bdcb24a27a7000abbd3bf59ae365e413eaa2f775a504728d3c24a91c68d2935"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -708,8 +718,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/INFO.json",
-   "bytes": 675,
-   "sha256": "6f9ddf0dd2b4055ae963b219425da10a16f2a6e659ddf4d620dc084b9605b3db"
+   "bytes": 1096,
+   "sha256": "347b15779031f35c2592caaa226baefb787dec2723fa8e67cd9bb89efb725af1"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c11/untracked/qa/match/08/r11/BEFORE/f20_forward20u.png",
+   "bytes": 1723086,
+   "sha256": "44d665c267e53301b444e30421dfcd97c2806b6ce5a311804169d10e78d527f8"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c11/untracked/qa/match/08/r11/BEFORE/motion.json",
+   "bytes": 4739,
+   "sha256": "2f0921bfe680411e76a867b003d079b22a19c3fb414ec4c8f79b3854b6a657a4"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
