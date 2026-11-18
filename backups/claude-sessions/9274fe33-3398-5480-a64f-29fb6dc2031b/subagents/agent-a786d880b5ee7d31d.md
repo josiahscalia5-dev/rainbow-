@@ -1209,3 +1209,131 @@ The probe says the block IS open (far-open 1) at x99, which contradicts the shot
 >    0.05,-0.05 water_ribbon<water_system<Scene d12.75 | Mesh<zone_tubes<washer_world<Scene d16.88 | Mesh<zone_tubes<washer_world<Scene d17.05
 > == x98 s 188.432 stage 05 cam 3.26,-40.54,-122.19 far-open 0.7135801595957968 extra [["foam_far05_clouds",true],[5,true,"1.8/-39.8/-126.6@8.4 1.9/-38.6/-128.2@8.6 1.9/-38.3/-128.4@8.7 1.9/-38.2/-128.5@8.8 1.9/-38.1/-128.6@8.8"],[10,false,"12.4/-38.5/ …[+719 chars]
 
+### 🤖 Claude — 2026-11-18T19:30:46.424Z
+
+Both probes give the same ring state at t99. Let me compare the probe screenshots directly.
+
+### 🤖 Claude — 2026-11-18T19:30:49.147Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/probe; ls $P/b $P/n; convert $P/b/t99.png -resize 40% $P/bt.png; convert $P/n/t99.png -resize 40% $P/nt.png; convert $P/b/x98.png -resize 40% $P/bx.png; convert $P/n/x98.png -resize 40% $P/nx.png; convert $P/bx.png $P/nx.png $P/bt.png $P/nt.png +append $P/cmp.png; compare -metric AE $P/b/t99.png $P/n/t99.png null: 2>&1; echo", "description": "Compare probe screenshots BEFORE vs NEW"}`
+
+### 🤖 Claude — 2026-11-18T19:30:50.372Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/probe/cmp.png"}`
+
+### 🧑 User — 2026-11-18T19:30:51.286Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/probe/b:
+> t99.png
+> x98.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/probe/n:
+> t99.png
+> x98.png
+> 832846
+
+### 🧑 User — 2026-11-18T19:30:51.326Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:31:42.668Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"rig.update\\|cameraRig\\|camera.update\\|updateMatrixWorld\" src/game/Game.ts | head; grep -n \"const render = \\|function render\" src/game/Game.ts", "description": "Find camera update and render function in Game.ts"}`
+
+### 🧑 User — 2026-11-18T19:31:42.799Z
+
+> ↩︎ result: 24:import { RideCamera } from './cameraRig';
+> 88:    camera.updateProjectionMatrix();
+> 318:    if (Math.abs(camera.fov - f) > 0.01) { camera.fov = f; camera.updateProjectionMatrix(); }
+> 643:      camera.updateMatrixWorld();
+> 661:      camera.updateMatrixWorld();
+> 532:  const render = () => {
+
+### 🤖 Claude — 2026-11-18T19:31:44.783Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 300,330p src/game/Game.ts; sed -n 532,560p src/game/Game.ts; grep -n \"rideCam\\.\\|rcam\\.\\|new RideCamera\" src/game/Game.ts | head", "description": "Read camera placement and render function"}`
+
+### 🧑 User — 2026-11-18T19:31:44.896Z
+
+> ↩︎ result: if (t >= T.rideStart) startRide();
+>   };
+> 
+>   /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
+>   const cam02 = (b: THREE.Vector3) => {
+>     const dA = WORLD.drumA;
+>     const door = new THREE.Vector3(0, 0.3, dA.zDoor);
+>     const away = b.clone().sub(door).normalize();
+>     const pos = b.clone().addScaledVector(away, 3.0).add(new THREE.Vector3(0, 0.35, 0));
+>     const rr = Math.hypot(pos.x, pos.y);
+>     if (rr > 2.7) { pos.x *= 2.7 / rr; pos.y *= 2.7 / rr; }
+>     pos.y = Math.max(pos.y, dA.waterY + 1.0);
+>     pos.z = THREE.MathUtils.clamp(pos.z, dA.zBack + 0.4, dA.zDoor - 1);
+>     const look = b.clone().lerp(door, 0.22).add(new THREE.Vector3(0, 0.45, 0));
+>     return { pos, look };
+>   };
+> 
+>   const setFov = (f: number) => {
+>     if (Math.abs(camera.fov - f) > 0.01) { camera.fov = f; camera.updateProjectionMatrix(); }
+>   };
+> 
+>   const startRide = () => {
+>     st.mode = 'ride';
+>     st.t = 0;
+>     st.s = course.stage('03').s0;
+>     st.lat = 0;
+>     hud.setVisible(true);
+>     setStage('03');
+>     rideCam.pos.copy(camera.position);
+>     rideCam.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(10));
+>     rideCam.fov = camera.fov …[+1954 chars]
+
+### 🤖 Claude — 2026-11-18T19:31:59.820Z
+
+The camera is placed in `rideUpdate` before `water.update`, so I can apply the far-block state from there (under `&m05trans=1` only), before the frame is drawn. I'll add a small hook.
+
+### 🤖 Claude — 2026-11-18T19:32:00.696Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"m05rideS\" src/vfx/clip05.ts src/vfx/index.ts src/world/match05far.ts src/world/environment.ts", "description": "List m05rideS references"}`
+
+### 🧑 User — 2026-11-18T19:32:00.782Z
+
+> ↩︎ result: src/vfx/clip05.ts:16:export const m05rideS = { value: -1 };
+> src/vfx/index.ts:18:import { M05EDGE, withClip05, m05rideS } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only); m05rideS: round 15 (&m05trans=1)
+> src/vfx/index.ts:206:      m05rideS.value = focusS;   // `&m05trans=1` (Screen 05 round 15): the far block is removed as Benny enters 06
+> src/world/match05far.ts:26:import { clip05, m05rideS } from '../vfx/clip05';
+> src/world/match05far.ts:46: * the whole of 05 and is removed in one step as Benny crosses into 06 (Benny's course position, `m05rideS`), the moment
+> src/world/match05far.ts:356:    if (M05TRANS && a.popS !== undefined) open = Math.max(m05rideS.value >= a.popS ? 1 : 0, open);
+
+### 🤖 Claude — 2026-11-18T19:32:08.700Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\nimport re\np='src/vfx/clip05.ts'\ns=open(p).read()\nold=\"export const m05rideS = { value: -1 };\\n\"\nnew=old+\"\"\"/**\n * `&m05trans=1` (round 16): the far block's state for the frame (fold / pop, ring and lid instances, far coins, far foam\n * clouds, the seam clip) applied from the ride update, after the camera is placed and before the frame is drawn. Set\n * there it was applied during the draw itself, so instances / coins / clip followed one frame late: the frame Benny\n * crossed into 06 still showed the folded block's rings, far  …[+1419 chars]`
+
+### 🧑 User — 2026-11-18T19:32:08.948Z
+
+> ↩︎ result: src/vfx/clip05.ts:23:export const m05farPre: { run: ((cam: THREE.Camera) => void) | null } = { run: null };
+> src/vfx/index.ts:18:import { M05EDGE, withClip05, m05rideS, m05farPre } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only); m05rideS: round 15 (&m05trans=1)
+> src/vfx/index.ts:207:      if (m05farPre.run) { camera.updateMatrixWorld(); m05farPre.run(camera); }   // `&m05trans=1` (round 16): before the draw
+> src/world/environment.ts:19:import { withClip05Std, m05farPre } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
+> src/world/environment.ts:663:    if (liveFar && M05TRANS) m05farPre.run = liveFar;   // `&m05trans=1` (round 16): also applied before the draw (vfx/index.ts)
+> 5: * live (n = 0 disables it). Default build: nothing imports the GLSL below into any program.
+> 7:import * as THREE from 'three';
+> 8:import { MATCH05, flag05 } from './waterRibbon';
+
+### 🤖 Claude — 2026-11-18T19:32:12.769Z
+
+Now a type check, then re-render NEW at x98p5 / x99 / x100 (only the frames this touches).
+
+### 🤖 Claude — 2026-11-18T19:32:13.821Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && time nice -n 5 node node_modules/typescript/bin/tsc --noEmit -p . 2>&1 | tail -5", "description": "Type-check the worktree", "timeout": 400000}`
+
+### 🧑 User — 2026-11-18T19:32:26.159Z
+
+> ↩︎ result: real	0m12.267s
+> user	0m5.496s
+> sys	0m0.216s
+
+### 🤖 Claude — 2026-11-18T19:32:28.770Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt) && node tools/match05/r8_shots.mjs qa/match/05/r16/step1_trans/new2 \"$K&m05trans=1\" x98p5,x99,x100,x97 5275 2>&1 | tail -5", "description": "Re-render NEW around the 05-06 boundary", "timeout": 900000}`
+

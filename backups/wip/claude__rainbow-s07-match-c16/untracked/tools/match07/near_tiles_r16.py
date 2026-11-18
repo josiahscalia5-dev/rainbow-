@@ -117,7 +117,7 @@ Image.fromarray(np.clip(bank_t, 0, 255).astype(np.uint8)).save(OUT + 'near_bank.
 print('near_bank.png', bank_t.shape)
 
 # ---- 2. foam clouds (lower right, between the cyan water / bubbles and the gold ring), periodic both ways ----
-fx0, fy0, fx1, fy1 = 712, 1244, 836, 1392
+fx0, fy0, fx1, fy1 = 724, 1204, 862, 1376      # the big puffy clouds right of the bubbles (gold-ring corner inpainted)
 foam = im[fy0:fy1, fx0:fx1].copy()
 f8 = np.clip(foam, 0, 255).astype(np.uint8)
 fh = cv2.cvtColor(f8, cv2.COLOR_RGB2HSV).astype(np.int32)

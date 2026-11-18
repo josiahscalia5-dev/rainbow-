@@ -1,12 +1,12 @@
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index 2e5bc03..2138959 100644
+index 2e5bc03..2c41ee0 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -40,17 +40,26 @@ export interface Match07 {
  
  const VERT = /* glsl */ `
  uniform mat4 uProjVP;
-+uniform float uCtr[48];   // r16 '?m07nearw=1': river centre line (tube-local x) every uCtrA.y units of depth from uCtrA.x
++uniform float uCtr[64];   // r16 '?m07nearw=1': river centre line (tube-local x) every uCtrA.y units of depth from uCtrA.x
 +uniform vec3 uCtrA;       // first depth, step, on (z)
  varying vec4 vProj;
  varying vec3 vW;
@@ -22,7 +22,7 @@ index 2e5bc03..2138959 100644
    vL = (uGroupInv * wp).xyz;
 +  vCtr = 0.0;
 +  if (uCtrA.z > 0.5) {
-+    float ia = clamp((-vL.z - uCtrA.x) / uCtrA.y, 0.0, 46.999);
++    float ia = clamp((-vL.z - uCtrA.x) / uCtrA.y, 0.0, 62.999);
 +    int i0 = int(floor(ia));
 +    vCtr = mix(uCtr[i0], uCtr[i0 + 1], ia - float(i0));
 +  }
@@ -89,15 +89,16 @@ index 2e5bc03..2138959 100644
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
      load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixRing ? 'tile_wall_ring.png' : fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
      load(fixRiver ? 'tile_river_clean.png' : 'tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
-@@ -240,7 +282,50 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -240,7 +282,56 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // unwrap rows: image row 0 = theta1 (left water line) = v 1 (three flips images), last row = theta0 (right water line)
      uTheta: { value: new THREE.Vector2(TL.wall.theta[0], TL.wall.theta[1]) },
      uRiver: { value: new THREE.Vector4(TL.river.lateral[0], TL.river.lateral[1], TL.river.along[0], TL.river.along[1]) },
-+    uCtr: { value: new Array<number>(48).fill(0) },
-+    uCtrA: { value: new THREE.Vector3(-8, 3, 0) },
++    uCtr: { value: new Array<number>(64).fill(0) },
++    uCtrA: { value: new THREE.Vector3(-8, 1.5, 0) },
 +    uNearOn: { value: nearW ? 1 : 0 },
-+    // river half-width incl. magenta 1.75 u, magenta band 0.5 u, bank strip period 1.9 u along, foam tile 0.62 u
-+    uNearW: { value: new THREE.Vector4(1.75, 0.5, 1.9, 0.62) },
++    // river half-width incl. the magenta band 2.4 u (Benny steers up to 2.25 u off the lane: he stays on the water, at most on
++    // the magenta band), magenta band 0.7 u, bank strip period 2.4 u along, foam tile 1.1 u
++    uNearW: { value: new THREE.Vector4(2.4, 0.7, 2.4, 1.1) },
 +    uNearM: { value: 92 / 268 },
 +    uNearTile: { value: tNear },
 +    uFoamTile: { value: tFoam },
@@ -121,8 +122,8 @@ index 2e5bc03..2138959 100644
 +    const aEnd = Rv.along[Rv.along.length - 1];
 +    const q = new THREE.Vector3();
 +    const ctr = shared.uCtr.value;
-+    for (let k = 0; k < 48; k++) {
-+      const along = -8 + 3 * k;
++    for (let k = 0; k < 64; k++) {
++      const along = -8 + 1.5 * k;
 +      let lane = 0;
 +      if (plunge) {
 +        let s = sCk + along;
@@ -133,6 +134,11 @@ index 2e5bc03..2138959 100644
 +      const tail = 0.6 * Math.sin(((along - aEnd) / 18) * Math.PI * 2);
 +      const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
 +      ctr[k] = lane + painted * (1 - kk) + tail * kk;
++    }
++    // smooth (no kinks between samples: the bands must curve, not zigzag)
++    for (let pass = 0; pass < 4; pass++) {
++      const c0 = ctr.slice();
++      for (let k = 1; k < 63; k++) ctr[k] = 0.25 * c0[k - 1] + 0.5 * c0[k] + 0.25 * c0[k + 1];
 +    }
 +    shared.uCtrA.value.z = 1;
 +    console.info('[m07nearw] checkpoint s', sCk.toFixed(2), 'centre line', ctr.map((v) => v.toFixed(2)).join(' '));

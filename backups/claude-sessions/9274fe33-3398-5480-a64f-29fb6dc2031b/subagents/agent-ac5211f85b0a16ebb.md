@@ -1054,3 +1054,165 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T19:30:47.751Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image; import json\nim=Image.open('assets/textures/match08/fill_drum.png'); print(im.size, im.mode)\nprint(json.load(open('assets/textures/match08/fill_drum.json')))\n\"; ls tools/match08/; head -40 tools/match08/unwrap08.py", "description": "Inspect the drum fill tile and the unwrap tool"}`
+
+### 🧑 User — 2026-11-18T19:30:47.968Z
+
+> ↩︎ result: (219, 147) RGB
+> {'w': 2.19, 'h': 1.47, 'src': 'pipe right wall, plate08_hybrid.png, tools/match08/unwrap08.py'}
+> bennytree.mjs
+> bore08.py
+> ceil08.py
+> coinlat.mjs
+> coinprobe08.mjs
+> coins08px.mjs
+> cointake.mjs
+> cupmask08.py
+> cupw08.py
+> fit_proxies.py
+> floor08.py
+> lane08.mjs
+> motion08.mjs
+> near08.py
+> nq08.py
+> occ08.py
+> probe08b.mjs
+> ring08.py
+> river_centre_px_approved08.json
+> river_proj.py
+> rivnear08.py
+> sheet08.py
+> shots08.mjs
+> solve08.mjs
+> towelmask08.py
+> unwrap08.py
+> """Screen 08 scenery fill (2026-11-17, qa/match/08/scenery/NOTES.md): unroll the chamber drum wall as the approved
+> plate shows it (angle x depth along the drum) to measure the slot pattern and pick a world-anchored fill tile.
+> usage: python3 -I tools/match08/unwrap08.py <outDir>"""
+> import json, math, sys, numpy as np
+> from PIL import Image
+> out = sys.argv[1]
+> L = json.load(open('assets/textures/match08/proj08.json'))
+> plate = np.asarray(Image.open('assets/textures/match08/plate08_hybrid.png').convert('RGB')).astype(np.float32)
+> Hp, Wp = plate.shape[:2]
+> M = np.array(L['camera']['matrixWorld']).reshape(4, 4).T  # three.js column-major
+> V = np.linalg.inv(M); W, H = L['camera']['size']; f = 1 / math.tan(math.radians(L['camera']['fov']) / 2); asp = W / H
+> C,  …[+1880 chars]
+
+### 🤖 Claude — 2026-11-18T19:30:52.509Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/unw && cd /home/user/wt/s08 && timeout 300 python3 -I tools/match08/unwrap08.py /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/unw 2>&1 | tail -5; ls /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/unw", "description": "Unroll the painted drum wall for inspection"}`
+
+### 🧑 User — 2026-11-18T19:30:54.220Z
+
+> ↩︎ result: visible cells 195040 of 1296000 angle range (deg) -180.0 179.75000000000003
+> pipe cells (1441, 1833, 3) visible 164805
+> tile (147, 219, 3) chamber wall mean [182.3  79.  184.1] std [48.3 61.3 64.3] gold px excluded 45882
+> drum_unrolled.png
+> drum_visible.png
+> pipe_unrolled.png
+
+### 🤖 Claude — 2026-11-18T19:31:02.717Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/unw && python3 -c \"\nfrom PIL import Image\nim=Image.open('drum_unrolled.png'); print(im.size)\n# angle index: th from -180..180 over 1440 -> 4 per degree. Show left side -180..-100 and right side -80..0, z rows 0..900\nL=im.crop((0,0,320,900)); R=im.crop((400,0,720,900))\nc=Image.new('RGB',(660,900),'white'); c.paste(L,(0,0)); c.paste(R,(340,0)); c.resize((660,900)).save('../unw_lr.png')\n\"", "description": "Crop the unrolled drum lower-left and lower-right sectors"}`
+
+### 🧑 User — 2026-11-18T19:31:03.086Z
+
+> ↩︎ result: (1440, 900)
+
+### 🤖 Claude — 2026-11-18T19:31:03.768Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/unw_lr.png"}`
+
+### 🧑 User — 2026-11-18T19:31:03.789Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:31:14.893Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r16/step1_m08sr && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\na=Image.open('3_NEW_t66_through_screen.png'); b=Image.open('3_NEW_t95_through_screen.png')\nc=Image.new('RGB',(864,900),'white'); c.paste(a.crop((0,480,864,900)),(0,0)); c.paste(b.crop((0,480,864,900)),(0,440)); c.save(S+'t66t95.png')\n\"", "description": "Crop the platform/lower wall band at t66 and t95"}`
+
+### 🧑 User — 2026-11-18T19:31:15.295Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:31:16.047Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/t66t95.png"}`
+
+### 🧑 User — 2026-11-18T19:31:16.125Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:31:35.693Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat tools/match08/occ08.py | head -80; python3 -c \"import cv2; print(cv2.__version__)\"; python3 -c \"import skimage; print(skimage.__version__)\"; python3 -c \"import scipy; print(scipy.__version__)\"", "description": "Read the occlusion plate tool and check imaging libs"}`
+
+### 🧑 User — 2026-11-18T19:31:36.598Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Screen 08 scenery r8 (`&m08occ=1`): occlusion plate for the chamber's door wall.
+> 
+> The door wall behind the towel and the platform is hidden from the approved viewpoint, so a moving camera used to see a
+> fallback tile there with straight rectangular edges (the seam around the towel / window). This makes a plate the size of
+> plate08_hybrid.png where the towel + platform (as seen from the approved viewpoint) are inpainted from the surrounding
+> door / window / wall pixels of the user's picture. Alpha = where the inpainted pixels may be used (the occluder mask,
+> dilated and feathered); everywhere else alpha 0, so the shader keeps its old fallback.
+> 
+> Mask source: frozen `scripts/capture.mjs 08 --q=...&m08dbg=1` (every proxy in a flat colour; order = add() order in
+> src/world/match08.ts: towel #008040, platform top #ffffff, rim #ff8000, legs #8000ff).
+>   python3 -I tools/match08/occ08.py <dbg_capture.png> <plate.png> <out.png>
+> """
+> import sys
+> import cv2
+> import numpy as np
+> 
+> dbg_p, plate_p, out_p = sys.argv[1:4]
+> dbg = cv2.cvtColor(cv2.imread(dbg_p), cv2.COLOR_BGR2RGB).astype(np.int32)
+> plate = cv2.imread(plate_p)  # BGR, 1536 x 2731
+> H, W = plate.shape[:2]
+> 
+> pal = {'towel': ( …[+1958 chars]
+
+### 🤖 Claude — 2026-11-18T19:31:47.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\na=Image.open('references/08_final_spin_chamber.png').convert('RGB')\na.crop((220,530,760,660)).resize((1080,260)).save(S+'appr_plat.png')\n\"", "description": "Zoom on the approved platform underside"}`
+
+### 🧑 User — 2026-11-18T19:31:48.181Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:31:48.766Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/appr_plat.png"}`
+
+### 🧑 User — 2026-11-18T19:31:48.820Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:32:15.573Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\na=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_f10_forward10u.png').convert('RGB')\nb=Image.open(S+'dbg/f10_forward10u.png').convert('RGB')\nc=Image.new('RGB',(1300,560),'white')\nc.paste(a.crop((200,540,360,680)).resize((640,560)),(0,0)); c.paste(b.crop((200,540,360,680)).resize((640,560)),(660,0)); c.save(S+'notchL.png')\nc=Image.new('RGB',(1300,560),'white')\nc.paste(a.crop((720,540,880,680)).resize((640,560)),(0,0)); c.paste(b.c …[+147 chars]`
+
+### 🤖 Claude — 2026-11-18T19:32:16.532Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/notchL.png"}`
+
+### 🧑 User — 2026-11-18T19:32:16.612Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-18T19:32:16.655Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:32:17.092Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/notchR.png"}`
+
+### 🧑 User — 2026-11-18T19:32:17.118Z
+
+> ↩︎ result: [image]
+

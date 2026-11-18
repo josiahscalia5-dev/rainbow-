@@ -2914,3 +2914,153 @@ The painted-ring test made progress but isn't proven yet, and the next attempt i
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:04-step2-logged 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save coordination log to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T19:30:58.169Z
+
+> ↩︎ result: "commit": "caf2f13f4af7a304d62ebe1754c03a820d3cad68",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:30:42+00:00 (0.2 min ago) | local caf2f13 remote caf2f13 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:31:03.850Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s06/qa/match/06/r16/step1_m06gold; ls $D $D/NEW | head -30; grep -n -i \"start view\\|0 px\\|a00\\|locked\" /home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md | head -8", "description": "List 06 step-1 pictures and start-view rule"}`
+
+### 🧑 User — 2026-11-18T19:31:03.963Z
+
+> ↩︎ result: /home/user/wt/s06/qa/match/06/r16/step1_m06gold:
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> 
+> /home/user/wt/s06/qa/match/06/r16/step1_m06gold/NEW:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> m06gold_swim.mp4
+> motion_part2.json
+> s_left_hard.png
+> s_right_hard.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 45:3.6 "<query>"`) when the change shows in motion. Approved start view unchanged in the scenery:
+
+### 🤖 Claude — 2026-11-18T19:31:12.733Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,50p /home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md; D=/home/user/wt/s06/qa/match/06/r16/step1_m06gold; node /home/user/tools-pixelmatch/pixeldiff.mjs $D/BEFORE/a00_approved_view.png $D/NEW/a00_approved_view.png /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/s6diff.png 0.1 180 1536; convert /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/s6diff.png -trim info:- 2>/dev/null", "description": "Read the 06 start-view rule and measure the change"}`
+
+### 🧑 User — 2026-11-18T19:31:13.754Z
+
+> ↩︎ result: drift (650,570) → (700,690)), its risks, and what it needs from the user. Send it to "main"; the lead asks the user.
+> 
+> ## Proof for every finished step (the user only accepts pictures from the REAL playable game)
+> Separate full-size portrait renders (no collages) under `qa/match/06/r15/<step>/`: APPROVED, BEFORE (kept set without this step), NEW —
+> start, forward 3/6/10/20 u, middle, end, hard left + hard right. A short swimming clip (`node tools/lead_r13/swim_clip.mjs 06 <out.mp4>
+> 3.6 "<query>"`) when the change shows in motion. Approved start view unchanged in the scenery:
+> `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536`. 3–5 line verdict in plain visual words:
+> GOOD IMPROVEMENT / NOT AN IMPROVEMENT / NOT YET PROVEN. No colour-percentage claims as proof.
+> 
+> ## Reporting
+> After each finished step: commit + push, then SendMessage to "main" with: step name + URL switch, commit SHA, verdict, the folder of
+> {"a":"/home/user/wt/s06/qa/match/06/r16/step1_m06gold/BEFORE/a00_approved_view.png","b":"/home/user/wt/s06/qa/match/06/r16/step1_m06gold/NEW/a00_approved_view.png","rows":[180,1536],"threshold":0.1,"diff_pixels":59345,"total":1171584,"diff_pct":5.0654}
+> /tm …[+155 chars]
+
+### 🤖 Claude — 2026-11-18T19:31:16.552Z
+
+5% of the start view differs between BEFORE and NEW. Some of that could be animated water rather than the rings, so I'll look at the pictures and the difference map directly.
+
+### 🤖 Claude — 2026-11-18T19:31:20.658Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s06/qa/match/06/r16/step1_m06gold; S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; convert $D/1_APPROVED.png -resize x700 $S/a.png; convert $D/BEFORE/a00_approved_view.png -resize x700 $S/b.png; convert $D/NEW/a00_approved_view.png -resize x700 $S/n.png; convert $S/s6diff.png -resize x620 -background black -gravity south -extent x700 $S/d.png; convert $S/a.png $S/b.png $S/n.png $S/d.png +append $S/s6start.jpg; convert $D/BEFORE/f06_forward6u.png -resize x700 $S/b2.png; convert $D/NEW/f06_forward6u.png -resize x700 $S/n2.png …[+245 chars]`
+
+### 🧑 User — 2026-11-18T19:31:26.200Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:31:28.740Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/s6start.jpg"}`
+
+### 🧑 User — 2026-11-18T19:31:28.858Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:31:29.357Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/s6swim.jpg"}`
+
+### 🧑 User — 2026-11-18T19:31:29.482Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:31:48.544Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s06/qa/match/06/r16/step1_m06gold; S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; for f in 1_APPROVED.png BEFORE/a00_approved_view.png NEW/a00_approved_view.png; do convert $D/$f -crop 560x420+304+180 +repage $S/c_$(basename $(dirname $f))_$(basename $f .png).png; done; convert $S/c_step1_m06gold_1_APPROVED.png $S/c_BEFORE_a00_approved_view.png $S/c_NEW_a00_approved_view.png +append $S/s6ring.jpg; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb …[+639 chars]`
+
+### 🧑 User — 2026-11-18T19:31:51.204Z
+
+> ↩︎ result: convert-im6.q16: unable to open image `/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/c_step1_m06gold_1_APPROVED.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> changed px 152292
+> mean |approved-BEFORE| on changed px 164.0  |approved-NEW| 155.0
+
+### 🤖 Claude — 2026-11-18T19:31:58.162Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; D=/home/user/wt/s06/qa/match/06/r16/step1_m06gold; convert $D/1_APPROVED.png -crop 560x420+304+180 +repage $S/ca.png; convert $S/ca.png $S/c_BEFORE_a00_approved_view.png $S/c_NEW_a00_approved_view.png +append -resize 1500x $S/s6ring.jpg", "description": "Build start-view ring crop comparison"}`
+
+### 🧑 User — 2026-11-18T19:31:59.889Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:32:02.396Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/s6ring.jpg"}`
+
+### 🧑 User — 2026-11-18T19:32:02.421Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:32:19.408Z
+
+> 🔧 **SendMessage** `{"to": "a98276c05864a7dd6", "summary": "06 m06gold kept; lock start view; ghost arcs", "message": "Lead checked m06gold. Swimming (f06, hard left): agreed, GOOD IMPROVEMENT, keep it; it's shown to the user. One rule issue: the approved start view must stay unchanged (0 px). Your NEW a00 differs from BEFORE on the ring bands (pixeldiff ~59k px). The change is slightly closer to the painting, but the rule stands. Before the foam step, make &m06gold leave the start view untouched (fade it in by distance from the approved view / away factor, like the other screens do), re-capture a00 with pixeldif …[+588 chars]`
+
+### 🧑 User — 2026-11-18T19:32:19.430Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a98276c05864a7dd6 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a98276c05864a7dd6","name":"a98276c05864a7dd6","ref":"13998a"}}
+
+### 🤖 Claude — 2026-11-18T19:32:21.858Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s06/qa/match/06/r16/step1_m06gold; R=/home/user/rainbow-/qa/review_r16/06_step1_gold_rings; mkdir -p $R; cp $D/1_APPROVED.png $R/; for s in f06_forward6u s_left_hard; do cp $D/BEFORE/$s.png $R/2_BEFORE_$s.png; cp $D/NEW/$s.png $R/3_NEW_$s.png; done; ls $R", "description": "Copy Screen 06 proof pictures into the repo"}`
+
+### 🧑 User — 2026-11-18T19:32:22.081Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_s_left_hard.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_s_left_hard.png
+
+### 🤖 Claude — 2026-11-18T19:32:26.438Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r16/06_step1_gold_rings/1_APPROVED.png", "/home/user/rainbow-/qa/review_r16/06_step1_gold_rings/2_BEFORE_f06_forward6u.png", "/home/user/rainbow-/qa/review_r16/06_step1_gold_rings/3_NEW_f06_forward6u.png", "/home/user/rainbow-/qa/review_r16/06_step1_gold_rings/2_BEFORE_s_left_hard.png", "/home/user/rainbow-/qa/review_r16/06_step1_gold_rings/3_NEW_s_left_hard.png"], "caption": "Screen 06 gold rings — APPROVED, then BEFORE / NEW while swimming, then BEFORE / NEW steering hard left. Look at the rings: rust-brown before, polished gold now.", "status": "nor …[+26 chars]`
+
+### 🧑 User — 2026-11-18T19:32:28.296Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_r16/06_step1_gold_rings/1_APPROVED.png → file_uuid: 029331a7-0923-4a7c-be21-f51d19200870
+>   /home/user/rainbow-/qa/review_r16/06_step1_gold_rings/2_BEFORE_f06_forward6u.png → file_uuid: b3325635-512f-4f76-b2ae-9fc0769f50e0
+>   /home/user/rainbow-/qa/review_r16/06_step1_gold_rings/3_NEW_f06_forward6u.png → file_uuid: a3c595e8-0487-41c7-a1b1-60bf6991ab54
+>   /home/user/rainbow-/qa/review_r16/06_step1_gold_rings/2_BEFORE_s_left_hard.png → file_uuid: 730c2927-c095-40d7-85a9-ef1a960b9a5b
+>   /home/user/rainbow-/qa/review_r16/06_step1_gold_rings/3_NEW_s_left_hard.png → file_uuid: dac1d1e4-3276-4f9b-9bb1-07b202f19082
+
+### 🤖 Claude — 2026-11-18T19:32:29.648Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md", "old_string": "| note | 08 towel at hard left / right |", "new_string": "| 4 (~19:55) | 06 r16 step 1 `&m06gold=1` painted gold ring band (s06 `bd017740`) | GOOD IMPROVEMENT while swimming (worker + lead): rust-brown hoops with one thin yellow line → polished salmon-gold bands with highlight dashes from the user's painted ring. Rule issue: start view changed (~59k px on the ring bands, slightly closer to the painting) → worker to gate it so a00 stays 0 px (m06gold v2). Lead saw at the start vi …[+372 chars]`
+
+### 🧑 User — 2026-11-18T19:32:29.805Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:32:30.982Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:06-step1-shown 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save the shown pictures and log to GitHub", "timeout": 300000}`
+

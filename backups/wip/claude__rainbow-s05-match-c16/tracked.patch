@@ -1,18 +1,25 @@
 diff --git a/src/vfx/clip05.ts b/src/vfx/clip05.ts
-index ad570d5..ee5d0e4 100644
+index ad570d5..810fda7 100644
 --- a/src/vfx/clip05.ts
 +++ b/src/vfx/clip05.ts
-@@ -12,6 +12,8 @@ export const clip05 = {
+@@ -12,6 +12,15 @@ export const clip05 = {
    uClip05P: { value: new THREE.Vector3() },
    uClip05N: { value: new THREE.Vector3() },
  };
 +/** `&m05trans=1` (Screen 05 round 15, match05far.ts): Benny's course position, written every frame by src/vfx/index.ts */
 +export const m05rideS = { value: -1 };
++/**
++ * `&m05trans=1` (round 16): the far block's state for the frame (fold / pop, ring and lid instances, far coins, far foam
++ * clouds, the seam clip) applied from the ride update, after the camera is placed and before the frame is drawn. Set
++ * there it was applied during the draw itself, so instances / coins / clip followed one frame late: the frame Benny
++ * crossed into 06 still showed the folded block's rings, far coins and clouds over the 06 crest. Set by environment.ts.
++ */
++export const m05farPre: { run: ((cam: THREE.Camera) => void) | null } = { run: null };
  /**
   * inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position). `margin` (default 0 =
   * the plane itself): the hard cut lies that many units past the plane — only for a material that cuts at the seam itself
 diff --git a/src/vfx/index.ts b/src/vfx/index.ts
-index e8e3288..3686e81 100644
+index e8e3288..1b15724 100644
 --- a/src/vfx/index.ts
 +++ b/src/vfx/index.ts
 @@ -15,7 +15,7 @@
@@ -20,31 +27,34 @@ index e8e3288..3686e81 100644
  import { type Course, WORLD, funnelY } from '../world/course';
  import { createRibbon, PROJ05, flag05, proj05Pending, M05FOAM, M05BERM, m05foamK } from './waterRibbon';
 -import { M05EDGE, withClip05 } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only)
-+import { M05EDGE, withClip05, m05rideS } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only); m05rideS: round 15 (&m05trans=1)
++import { M05EDGE, withClip05, m05rideS, m05farPre } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only); m05rideS: round 15 (&m05trans=1)
  import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
  import { createDrumWater } from './drumWater';
  import { createFinalWave } from './finalWave';
-@@ -203,6 +203,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
+@@ -203,6 +203,8 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
        // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
        const pjNear = ribbon.uniforms.uPjNear;
        if (pjNear) (pjNear.value as THREE.Vector4).z = focusS;
 +      m05rideS.value = focusS;   // `&m05trans=1` (Screen 05 round 15): the far block is removed as Benny enters 06
++      if (m05farPre.run) { camera.updateMatrixWorld(); m05farPre.run(camera); }   // `&m05trans=1` (round 16): before the draw
        // `&m05foam=1` (Screen 05 round 10): the 05 rim foam grows in after 0.5–2 u of riding (0 at the locked checkpoint)
        if ((M05FOAM || M05BERM) && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); }
        bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
 diff --git a/src/world/environment.ts b/src/world/environment.ts
-index 0b4973b..850dffb 100644
+index 0b4973b..4c5f1ff 100644
 --- a/src/world/environment.ts
 +++ b/src/world/environment.ts
-@@ -15,7 +15,7 @@ import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05f
+@@ -15,8 +15,8 @@ import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05f
  import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
  import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
  import { flow05Shared, flow05Textures } from '../vfx/flow05';
 -import { M05FAR, M05END, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+-import { withClip05Std } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
 +import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
- import { withClip05Std } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
++import { withClip05Std, m05farPre } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
  import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
  import { buildTowel, TowelMesh } from './towel';
+ 
 @@ -636,9 +636,10 @@ export function buildEnvironment(course: Course): Environment {
      const liveFar = M05FAR ? createLiveFar05({
        ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
@@ -57,6 +67,14 @@ index 0b4973b..850dffb 100644
        clouds: farClouds05 ?? undefined,
      }) : null;
      if (farClouds05 && liveFar) {
+@@ -659,6 +660,7 @@ export function buildEnvironment(course: Course): Environment {
+     farLids.onBeforeRender = (_r, _s, cam) => sync(cam);
+     glow.onBeforeRender = (_r, _s, cam) => { sync(cam); glowMat.uniforms.uOpacity.value = 1 - openNow; };
+     if (liveFar) for (const p of parts) p.onBeforeRender = (_r, _s, cam) => liveFar(cam);
++    if (liveFar && M05TRANS) m05farPre.run = liveFar;   // `&m05trans=1` (round 16): also applied before the draw (vfx/index.ts)
+     zones.tubes.add(...parts);
+   }
+   animated.push(pinkFlow.update);
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
 index d900bf2..13fd4a4 100644
 --- a/src/world/match05far.ts
