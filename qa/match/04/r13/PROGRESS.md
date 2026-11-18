@@ -48,3 +48,17 @@ Query (D4): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=
 * STILL WRONG: rings a shade darker / browner than the painted glowing gold (upper tunnel); painted water is brighter turquoise with
   more intense white glints; few pink swirls inside the water (the painting has more magenta near the mouth).
 * Rejected: D1 (too dark), D3 (copper x1.65: pale yellow-white rims + dark bands = striped).
+
+## Step 5 — user order ~16:30 UTC: approved entrance + SAME tunnel inside, approved arrow shape, saturated water — F4 = GOOD IMPROVEMENT — shown
+Query (F4): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.6&m04pkw=0.55&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=0.85&m04lcw=1.7&m04a3fa=0.97&m04a3gb=0.12&m04a3tm=0.45`
+* Honest rating given to the user: ~6/10 while swimming (start view = the painting). Gaps in order: entrance -> interior handover
+  (painting replaced within ~4 frames by a visibly different model), ring shape / brightness, arrow look, water brightness + magenta.
+* New: `m04a3tex` (each chevron drawn as the PAINTED arrow: glassy pale white-cyan bar, white rim, soft cyan glow, square-cut
+  ends, softened joins; `m04a3fa` fill, `m04a3gb` glow, `m04a3tm` margin), shallower wider shape (hw 1.15, drop 0.55, th 0.32),
+  spacing 4.0; `m04bulge` (bands shaded as rounded tubes), narrower grooves (gw 1.2), brighter band base (tb 0.2); `m04lcd`
+  (deeper blue along the arrow line — weak effect).
+* WHAT LOOKS CLOSER: entering and inside, the tunnel stays bright glowing gold with rounded bands like the painted entrance (D4 was
+  darker copper with wide brown grooves); arrows are glassy white-cyan with a cyan glow and wider gaps (D4: hard solid white plates).
+* STILL WRONG: arrows fainter than the painted luminous ones; water lacks the painted magenta swirls near the entrance; painted foam
+  clouds round the entrance vanish once inside (painting only).
+* Rejected / intermediate: F1 (arrows only), F2, F3 (≈ F4).
