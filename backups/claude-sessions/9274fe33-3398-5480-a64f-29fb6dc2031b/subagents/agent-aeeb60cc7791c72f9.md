@@ -1106,3 +1106,31 @@ The BEFORE clip is nearly done. To keep the user's wait short, I'll render step 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && ONLY=f06_forward6u,f20_forward20u,t66_through_screen,s_left_hard node $SP/audit.mjs 04 $SP/v4_warm \"$(cat $SP/Q3.txt)&m04rwarm=1\" 2>&1 | grep -v \"outside of Vite\\|403\" | tail -5 && cd $SP && for s in f06_forward6u f20_forward20u t66_through_screen s_left_hard; do python3 tri.py tri4_$s.png 180 1000 /home/user/wt/s04b/qa/match/04/r14/s11_rimfoam/L4/$s.png v3_lip/$s.png v4_warm/$s.png; done", "description": "Render step 4 warm-gold subset", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-18T19:40:34.395Z
+
+> ↩︎ result: console info [match04] m04rpaint {k: 1, lipS: 0.79, lipU: 3.95, grooveU: 4.28, jitter: 0.35}
+> 04 f06_forward6u s 84.871 lat 0 stage 04 frames 26
+> 04 f20_forward20u s 98.183 lat 0 stage 04 frames 86
+> 04 s_left_hard s 90.246 lat -1.65 stage 04 frames 52
+> 04 t66_through_screen s 102.849 lat -0.006 stage 04 frames 106
+
+### 🤖 Claude — 2026-11-18T19:40:39.349Z
+
+The log line shows only five properties because the browser truncates object previews, so `warm` is hidden there. Comparing the pictures will show whether the switch took effect.
+
+### 🤖 Claude — 2026-11-18T19:40:40.692Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/tri4_f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T19:40:40.723Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:40:41.382Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b/tri4_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T19:40:41.488Z
+
+> ↩︎ result: [image]
+

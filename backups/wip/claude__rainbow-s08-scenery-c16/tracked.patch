@@ -42,3 +42,16 @@ index 21e6b2a..3c1d346 100644
        uCup: { value: new THREE.Vector4(0, 0, 0, 0) }, uCupM: { value: new THREE.Vector3(1, 0, 0) },
        uCupMk: { value: cupMk ?? plate }, uCupW: { value: new THREE.Vector4(0, 0, 0, 0) } },
    });
+diff --git a/tools/match08/shots08.mjs b/tools/match08/shots08.mjs
+index 1737431..2e9b53e 100644
+--- a/tools/match08/shots08.mjs
++++ b/tools/match08/shots08.mjs
+@@ -42,7 +42,7 @@ try {
+       return { ...r.state(), frames: n, s0, s1, target };
+     }, [SCREEN, dist, steer, DET]);
+     await page.waitForTimeout(150);
+-    await page.screenshot({ path: `${OUT}/${name}.png` });
++    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });
+     log.push({ name, dist, steer, ...st });
+     console.log(SCREEN, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'frames', st.frames);
+   }

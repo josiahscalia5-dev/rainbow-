@@ -1544,3 +1544,11 @@ The coins are still at the far-river mapping at x99 although the block is open. 
 >  tools/match05/r8_shots.mjs | 10 +++++++++-
 >  6 files changed, 47 insertions(+), 7 deletions(-)
 
+### 🤖 Claude — 2026-11-18T19:39:27.250Z
+
+Type check passes. Now the full NEW render (end of 05, boundary, first metres of 06, hard left/right), then the locked-view check.
+
+### 🤖 Claude — 2026-11-18T19:39:29.003Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && rm -rf qa/match/05/r16/step1_trans/new2 && K=$(cat qa/match/05/r16/KEPT_START.txt) && node tools/match05/r8_shots.mjs qa/match/05/r16/step1_trans/new \"$K&m05trans=1\" t95_through_screen,x96,x97,t98_end,x98p5,x99,t95_left,t95_right,x100,x101,t102_06 5275 2>&1 | tail -12", "description": "Render full NEW set with the fixes", "timeout": 1200000}`
+

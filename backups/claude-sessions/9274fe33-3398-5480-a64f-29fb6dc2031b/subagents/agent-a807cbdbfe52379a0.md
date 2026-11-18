@@ -618,3 +618,106 @@ Now the start-view check (BEFORE vs NEW, deterministic capture).
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git checkout -- qa/capture_log.json && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && time node tools/lead_r13/swim_clip.mjs 04 $S/clip_new 3.6 \"$K&m04sband=1\" 2>&1 | grep -v \"allow list\" | tail -2 && ffmpeg -loglevel error -y -framerate 24 -i $S/clip_new/%04d.png -vf \"scale=432:768\" -pix_fmt yuv420p -c:v libx264 -crf 23 qa/match/04/r16/s3_sband/NEW_swim_clip.mp4 && ls -la qa/match/04/r16/s3_sband/", "description": "Render NEW swimming clip and encode it", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:40:00.799Z
+
+> ↩︎ result: frames 86
+> 
+> real	9m57.014s
+> user	0m9.397s
+> sys	0m1.900s
+> Command did not complete within its 600s timeout and was moved to the background (ID: brtzsymwe). Output is being written to: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/brtzsymwe.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T19:40:05.661Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ffprobe -v error -show_entries stream=width,height,nb_frames -of csv=p=0 qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4; ls -la qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4; cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/brtzsymwe.output | tail -3", "description": "Check previous clip format and ffmpeg progress"}`
+
+### 🧑 User — 2026-11-18T19:40:05.811Z
+
+> ↩︎ result: 432,768,86
+> -rw-r--r-- 1 root root 1095945 Nov 18 19:13 qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4
+> real	9m57.014s
+> user	0m9.397s
+> sys	0m1.900s
+
+### 🤖 Claude — 2026-11-18T19:40:07.166Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r16/s3_sband/NEW/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:40:07.220Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:40:07.669Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r16/s3_sband/NEW/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T19:40:07.719Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:40:09.928Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r16/s3_sband/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:40:10.169Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:40:10.458Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r16/s3_sband/NEW/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:40:10.911Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:40:16.695Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && D=qa/match/04/r16/s3_sband && ls -la $D/ && cp references/04_through_the_five_arrows.png $D/1_APPROVED.png && mkdir -p $D/BEFORE && cp qa/match/04/r15/s1_fclu/NEW/*.png qa/match/04/r15/s1_fclu/NEW/motion.json $D/BEFORE/ && ls $D/BEFORE | wc -l && du -sh $D", "description": "Assemble APPROVED and BEFORE pictures for step 3"}`
+
+### 🧑 User — 2026-11-18T19:40:16.952Z
+
+> ↩︎ result: total 1540
+> drwxr-xr-x 3 root root    4096 Nov 18 19:39 .
+> drwxr-xr-x 3 root root    4096 Nov 18 19:24 ..
+> drwxr-xr-x 2 root root    4096 Nov 18 19:28 NEW
+> -rw-r--r-- 1 root root 1561535 Nov 18 19:40 NEW_swim_clip.mp4
+> 13
+> 44M	qa/match/04/r16/s3_sband
+
+### 🤖 Claude — 2026-11-18T19:40:20.365Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat .gitattributes 2>/dev/null | head -20; git check-attr filter -- qa/match/04/r16/s3_sband/NEW/f06_forward6u.png assets/textures/match04/tile_side04.png qa/match/04/r16/s3_sband/NEW_swim_clip.mp4", "description": "Check LFS attributes for new files"}`
+
+### 🧑 User — 2026-11-18T19:40:20.605Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+> qa/match/04/r16/s3_sband/NEW/f06_forward6u.png: filter: unspecified
+> assets/textures/match04/tile_side04.png: filter: unspecified
+> qa/match/04/r16/s3_sband/NEW_swim_clip.mp4: filter: lfs
+
+### 🤖 Claude — 2026-11-18T19:40:40.336Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/qa/match/04/r16/PROGRESS.md", "content": "# Screen 04 — round 16 (account 16, worker `foam-bubbles-particles` for the lead) — branch `claude/rainbow-s04-match-c16`\n\nStart: `160ce059` (r15 step 1 `m04fclu`, KEPT, shown to the user: GOOD IMPROVEMENT) + the r15 worker's unfinished task-3 edits\n(side-band shader path in `src/world/match04m4.ts`, `assets/textures/match04/tile_side04.png`, `tools/match04/sideband04.py`),\nrestored uncommitted. History: `qa/match/04/r15/PROGRESS.md`, `qa/match/04/r14/`, `qa/match/04/r13/`.\nRules: VISUALS ONLY (`docs/briefs/2026-11 …[+3105 chars]`
+
+### 🧑 User — 2026-11-18T19:40:40.458Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/qa/match/04/r16/PROGRESS.md (file state is current in your context — no need to Read it back)
+
