@@ -2701,3 +2701,96 @@ Recording Screen 05's step in the coordination log, then saving everything to Gi
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r11/COORDINATION.md <<'EOF'\n| 1 (~11:58) | 05 step 1 `m05wtile` (far tunnel walls crisp painted slotted metal while swimming; `d5e37379`) | GOOD IMPROVEMENT, modest (slots larger / rounder than the painted dashes; water defects unchanged) |\n| — | 05 account-10 WIP `m05unf` | NOT AN IMPROVEMENT (patch kept: `qa/match/05/r11/wip_m05unf_not_kept.patch`) |\n| — | Depth Anything 3 test (`DA3_TEST.md`) | NOT YET PROVEN as a game improvement; validated on 08; measures the 06 bent tunnel / S-loop and the 04 opening funnel |\nEOF\nfor i in 1 2 3 4 5 6; do ou …[+629 chars]`
 
+### 🧑 User — 2026-11-18T11:52:44.550Z
+
+> ↩︎ result: "duration_s": 11
+> }
+> local d63d80b7899a3abebbb56636b7d272b47d15e8cb
+> remote d63d80b7899a3abebbb56636b7d272b47d15e8cb
+> 0
+> 22
+
+### 🤖 Claude — 2026-11-18T11:52:49.588Z
+
+Everything is saved on GitHub (`d63d80b`; local = remote, nothing unsaved). A short acknowledgement to the Screen 05 specialist, then the pictures for you:
+
+### 🤖 Claude — 2026-11-18T11:52:51.386Z
+
+> 🔧 **SendMessage** `{"to": "a5a640cc9323be21a", "summary": "Ack S05 step 1, continue", "message": "Lead review of S05 step 1 m05wtile: GOOD IMPROVEMENT (modest), shown to the user. Walls now read as the painted slotted drum. Note for later polish, not now: slots are larger/rounder than the painted slim dashes, and the faint double pattern is visible. Continue with the far-river corner / seams as planned.", "type": "message", "recipient": "a5a640cc9323be21a", "recipient_kind": "agent", "content": "Lead review of S05 step 1 m05wtile: GOOD IMPROVEM…"}`
+
+### 🧑 User — 2026-11-18T11:52:51.403Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a5a640cc9323be21a at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a5a640cc9323be21a","name":"a5a640cc9323be21a","ref":"1022eb"}}
+
+### 🤖 Claude — 2026-11-18T11:52:53.490Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_c11/2026-11-18/05_step1_m05wtile/1_APPROVED.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/05_step1_m05wtile/2_BEFORE_t66_through_screen.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/05_step1_m05wtile/3_NEW_t66_through_screen.png"], "caption": "Screen 05, two-thirds through the stage: APPROVED, then BEFORE, then NEW. Look at the purple tunnel walls.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T11:52:54.337Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step1_m05wtile/1_APPROVED.png → file_uuid: d5730efb-8913-45ad-98ad-d7a0618a6dde
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step1_m05wtile/2_BEFORE_t66_through_screen.png → file_uuid: ed079399-8455-40b5-b891-7da534e70189
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step1_m05wtile/3_NEW_t66_through_screen.png → file_uuid: 48a09c9c-b8fc-41f9-8a16-ee1bf66748f3
+
+### 🤖 Claude — 2026-11-18T11:52:55.492Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/06_crest_the_rinse_arch.png", "/home/user/rainbow-/qa/da3/2026-11-18/06_5_DA3MONO_own_scale_depth.png", "/home/user/rainbow-/qa/da3/2026-11-18/06_2_GAME_depth_at_approved_view.png"], "caption": "Depth Anything 3 on Screen 06: your APPROVED picture, then the depth the model reads from your painting (red = near, blue = far), then our game's current depth. The model puts the tunnel's far end at the upper right; our game has it straight and centred.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T11:52:56.229Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/references/06_crest_the_rinse_arch.png → file_uuid: 2684c233-a706-4e50-b5f2-f4263494e047
+>   /home/user/rainbow-/qa/da3/2026-11-18/06_5_DA3MONO_own_scale_depth.png → file_uuid: 04f27869-f1f9-4c52-88e4-82c95b164522
+>   /home/user/rainbow-/qa/da3/2026-11-18/06_2_GAME_depth_at_approved_view.png → file_uuid: 5e0e8649-e834-44e5-af07-6051cf3d9c15
+
+### 🤖 Claude — 2026-11-18T11:52:59.488Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T11:52:59.503Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-18T11:53:12.684Z
+
+## Depth Anything 3: NOT YET PROVEN as a game improvement, but it can measure your painted architecture
+
+**No permission was needed.** You didn't need to approve anything: this account's cloud environment already has open network access. Account 10's had a fixed list of allowed sites, which is why it needed your approval. I tested every host instead of assuming:
+- `huggingface.co` and `download.pytorch.org` answer normally.
+- The two Hugging Face storage hosts are reachable and serve downloads normally.
+- `cdn-lfs.huggingface.co` no longer exists; Hugging Face retired it. Nothing is blocked.
+
+**What I ran:**
+- The free test ran on this machine: 4 cores, 15 GB RAM, no GPU.
+- I installed only what Depth Anything 3 needs, in a separate sandbox outside the game.
+- I used only the commercially usable (Apache-2.0) models, two cores and no paid services.
+- The Hugging Face connector isn't available in this session, and direct downloads work, so I didn't connect it.
+
+**How I judged it:** I compared the depth the model reads from each of your five approved pictures with the game's true 3D depth at the same viewpoint. Screen 08's geometry was hand-fitted to your picture, so it served as the known-correct check.
+- **Screen 08:** the model matches our fitted geometry closely (arch opening, chamber, towel platform, spout cups, river). It reads your painted style correctly at the level of big shapes.
+- **Screens 05 and 07:** it agrees with our current layout.
+- **Screen 06:** it disagrees. The model sees the tunnel's far end off-centre at the upper right, plus the river's S-loop; our game has a straight, centred tunnel. That matches the architecture problem account 10 identified. See the second set of pictures.
+- **Screen 04:** it sees the washer opening as a funnel that deepens toward the middle; our game's surface there is mostly flat.
+
+**Its limits:**
+- It only sees large shapes, not individual rings, slots, foam or arrows.
+- It can't see parts of a level your pictures never show.
+- Its camera-angle estimate is off by up to about 15° compared with our carefully fitted cameras, so it shouldn't be used to set the camera.
+
+**Plan:** when Screens 06 and 04 take a specialist slot, they use these measurements to rebuild the bent tunnel and the opening shape. Existing work stays untouched. It only counts as a GOOD IMPROVEMENT once a real game frame looks closer.
+
+The results, scripts and reinstall steps are saved in `docs/briefs/2026-11-18-r11/DA3_TEST.md` and `qa/da3/2026-11-18/`.
+
+## Screen 05 step 1: GOOD IMPROVEMENT (modest)
+See the first three pictures: APPROVED, BEFORE, NEW, two-thirds through the stage.
+- **What looks closer:** the purple tunnel walls are now crisp perforated metal with rows of dark slots, like your painting. Before, they were a blurred, blocky smear. Your approved view is unchanged.
+- **Still wrong:**
+  - the slots are bigger and rounder than your slim painted dashes;
+  - a faint double pattern shows in places;
+  - the torn water strip on the left and the far river's corner are unchanged. Those are the specialist's next item.
+
+Saved on GitHub as `d5e37379` (Screen 05 branch). Everything from the lead side is saved too: `d63d80b`, matching GitHub exactly.
+
+Both specialists are still working. Screen 08 is on the ceiling seam and lower gold arch, and I'll show its first result as soon as it arrives.
+
