@@ -44,6 +44,31 @@ Each step = one sub-switch on top (default build untouched); judged by eye again
 * Files: `src/vfx/waterRibbon.ts` (M05FOAM, m05foamK), `src/vfx/foam.ts` (rim lump size × m05foamK under the switch),
   `src/vfx/index.ts` (rim foam not hidden under the switch; m05foamK from the ride distance).
 
+## Step 2 — `&m05berm=1` (B/C: the strip beyond the water's edge becomes a white foam bank)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1`
+* WHAT LOOKS CLOSER: the torn left strip at t66 (stretched pink / white paint, the pink zig-zag layer and loose patches
+  beyond the river's left edge) is now one soft white-lavender foam bank with bubble domes running from Benny's side up
+  toward the far river — the left half reads as river → foam bank → purple wall, as in the approved picture. At t33 and
+  f10 both banks are now broad foam banks (wider than step 1's bead line, closer to the painted foam clouds on both
+  banks) instead of bare edges and dithered speckles. On hard left steering Benny swims beside a foam bank. Cause: the
+  game's continuous lather bank between the water's edge and the wall was switched off on Screen 05 under the
+  projection (the approved foam is baked into the water); it now comes back while swimming (ride factor, 0 at the
+  locked checkpoint).
+* Locked approved view: scenery 0 px changed (`scripts/capture.mjs 05`, step-1 set vs + `m05berm=1`, two runs); 257 px
+  differ only on the outline of the HUD stage banner (rows 100–179, ≤ 20 levels) — the documented capture-timing glitch
+  of the HUD, not the scene.
+* Still wrong: the bank is a smooth lather sheet with small domes, not yet the approved big irregular foam clouds; the
+  nearest rim lumps still read as separate balls; the far river at t66 still starts with an angular left corner and the
+  wall above the left bank is smeared; the water around Benny is a broad cyan sheet (no painted magenta banks at the
+  bottom of the frame).
+* APPROVED: `/home/user/wt/s05/qa/match/05/r10/step2_m05berm/1_APPROVED.png`
+* BEFORE (round start): `/home/user/wt/s05/qa/match/05/r10/step2_m05berm/2_BEFORE_t66_through_screen.png`, `…/2_BEFORE_t33_through_screen.png`,
+  `…/2_BEFORE_f10_forward10u.png`, `…/2_BEFORE_s_left_hard.png` (step 1 frames: `…/step1_m05foam/3_NEW_*.png`)
+* NEW: `/home/user/wt/s05/qa/match/05/r10/step2_m05berm/3_NEW_t66_through_screen.png`, `…/3_NEW_t33_through_screen.png`,
+  `…/3_NEW_f10_forward10u.png`, `…/3_NEW_s_left_hard.png`
+* Files: `src/vfx/waterRibbon.ts` (M05BERM), `src/vfx/foam.ts` (berm discard × (1 − ride factor) under the switch),
+  `src/vfx/index.ts` (ride factor also for m05berm).
+
 ## Tried, not kept
 * `&m05fold=1` (B/A: the folded ribbon at the kink; `src/vfx/unfold05.ts`): the ribbon's vertices in the kink are
   smoothed along the river toward the banks (horizontal only, so Benny never sinks) — the rows no longer cross

@@ -361,6 +361,13 @@ export const M05FOLD: boolean = M05RIDE && q05('m05fold');
  * the locked checkpoint: the approved view is unchanged).
  */
 export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+/**
+ * `&m05berm=1` (Screen 05 round 10, needs m05ride; src/vfx/foam.ts berm): the continuous lather bank between the water's
+ * edge and the wall (stepped aside on 05 under proj05) comes back while swimming, so the strip beyond the river's edge
+ * reads as a white foam bank instead of the stretched paint / underlayers that showed there (ride factor m05foamK).
+ */
+export const M05BERM: boolean = M05RIDE && q05('m05berm');
+/** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
 export const m05foamK = { value: 0 };
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
 export const m05blendTime: { u: THREE.IUniform | null } = { u: null };

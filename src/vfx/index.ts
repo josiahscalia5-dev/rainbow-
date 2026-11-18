@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { createRibbon, PROJ05, flag05, proj05Pending, M05FOAM, m05foamK } from './waterRibbon';
+import { createRibbon, PROJ05, flag05, proj05Pending, M05FOAM, M05BERM, m05foamK } from './waterRibbon';
 import { M05EDGE, withClip05 } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only)
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
@@ -204,7 +204,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       const pjNear = ribbon.uniforms.uPjNear;
       if (pjNear) (pjNear.value as THREE.Vector4).z = focusS;
       // `&m05foam=1` (Screen 05 round 10): the 05 rim foam grows in after 0.5–2 u of riding (0 at the locked checkpoint)
-      if (M05FOAM && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); }
+      if ((M05FOAM || M05BERM) && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); }
       bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
       // crest spray off the final wave
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {

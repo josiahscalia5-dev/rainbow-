@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, m05foamK } from './waterRibbon';
+import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, m05foamK } from './waterRibbon';
 import { withClip05 } from './clip05';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
@@ -119,6 +119,9 @@ uniform float uTime;
 uniform vec2 uOutro;     // amount, chamber start s
 uniform vec3 uLightDir;
 uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+#ifdef M05BERM
+uniform float uRide05;   // m05berm: ride factor (0 at the locked 05 checkpoint, 1 after 2 u of riding)
+#endif
 varying vec3 vFoam;
 varying vec3 vPosW;
 varying vec3 vNormalW;
@@ -132,6 +135,9 @@ void main() {
   // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
   // (dithered over 3 u at both joins; 04 / 06 keep their berm)
   float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
+  #ifdef M05BERM
+  pjIn *= 1.0 - uRide05;     // m05berm (Screen 05 round 10): the lather bank comes back while swimming
+  #endif
   if (pjIn > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < pjIn) discard;
   #endif
   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
@@ -619,8 +625,9 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     fragmentShader: BERM_FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(M05BERM ? { M05BERM: 1 } : {}) },
   });
+  if (M05BERM) (uniforms as Record<string, THREE.IUniform>).uRide05 = m05foamK;   // shared object (after withFog's merge)
   withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'foam_berm';
