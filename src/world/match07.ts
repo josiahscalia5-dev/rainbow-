@@ -39,10 +39,6 @@ export interface Match07 {
 }
 
 const VERT = /* glsl */ `
-#ifdef PAINTED_PADDLE_FACE
-varying vec3 vPaddleLocal;
-varying vec3 vPaddleNormal;
-#endif
 uniform mat4 uProjVP;
 uniform float uCtr[64];   // r16 '?m07nearw=1': river centre line (tube-local x) every uCtrA.y units of depth from uCtrA.x
 uniform vec3 uCtrA;       // first depth, step, on (z)
@@ -53,10 +49,6 @@ varying vec3 vL;
 varying vec2 vUv;
 varying float vCtr;
 void main() {
-#ifdef PAINTED_PADDLE_FACE
-  vPaddleLocal = position;
-  vPaddleNormal = normal;
-#endif
   vUv = uv;
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vProj = uProjVP * wp;
@@ -73,11 +65,8 @@ void main() {
 }`;
 
 const FRAG = /* glsl */ `
-#ifdef PAINTED_PADDLE_FACE
-varying vec3 vPaddleLocal;
-varying vec3 vPaddleNormal;
+#ifdef FITTED_PADDLE
 uniform sampler2D uPaddleFace;
-uniform float uPaddleWidth;
 #endif
 uniform sampler2D uPlate;
 uniform sampler2D uDepth;
@@ -205,9 +194,6 @@ void main() {
     return;
   }
   vec3 t = pc;
-#ifdef PAINTED_PADDLE_FACE
-  float wallOnPaddle = 0.0;
-#endif
   vec3 nn = normalize(vN);
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
   // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
@@ -236,38 +222,15 @@ void main() {
       // the approved start view stays exactly as it was; the painted near river takes over as the view magnifies the water
       vec3 pcf = pc;
       if (uNearOn > 0.5 && uMode > 1.5) pcf = mix(pc, riverTile(), keep * vis);
-      vec3 projectedPaint = texture2D(uPlate, uv).rgb;
-      t = mix(pcf, projectedPaint, w);
-#ifdef PAINTED_PADDLE_FACE
-      // Keep the actual approved front and underside, including their purple shadow.
-      // Only purple wall paint from outside the paddle silhouette needs a substitute on this mesh.
-      vec2 sourcePx = vec2(uv.x * 864.0, (1.0 - uv.y) * 1536.0);
-      vec2 maskUV = (sourcePx - vec2(336.0, 382.0)) / vec2(108.0, 76.0);
-      float onPaddle = 0.0;
-      if (all(greaterThanEqual(maskUV, vec2(0.0))) && all(lessThanEqual(maskUV, vec2(1.0)))) {
-        onPaddle = texture2D(uPaddleFace, vec2((192.5 + 95.0 * maskUV.x) / 288.0, 1.0 - maskUV.y)).r;
-      }
-      float violetWall = smoothstep(0.025, 0.16, projectedPaint.b - projectedPaint.g);
-      wallOnPaddle = w * (1.0 - onPaddle) * violetWall;
-#endif
+      t = mix(pcf, texture2D(uPlate, uv).rgb, w);
     }
   }
-#ifdef PAINTED_PADDLE_FACE
-  // Rectified bands are attached to the modeled paddle, independent of the projector.
-  float across = clamp(0.5 - vPaddleLocal.x / uPaddleWidth, 0.005, 0.995);
-  across = (0.5 + 191.0 * across) / 288.0;
-  float radial = clamp(0.5 - vPaddleLocal.y / 1.2, 0.0, 1.0);
-  float axial = clamp(0.5 + vPaddleLocal.z / (uPaddleWidth * 0.42), 0.0, 1.0);
-  vec3 localN = normalize(vPaddleNormal);
-  vec3 front = texture2D(uPaddleFace, vec2(across, mix(0.995, 0.505, radial))).rgb;
-  vec3 underside = texture2D(uPaddleFace, vec2(across, mix(0.015, 0.495, axial))).rgb;
-  float under = smoothstep(0.12, 0.86, -localN.y);
-  vec3 enamel = mix(front, underside, under);
+#ifdef FITTED_PADDLE
+  // The trace, UVs and thickness belong to the fitted mesh. Its colour stays attached during a turn.
+  vec3 paint = texture2D(uPaddleFace, vUv).rgb;
   vec3 viewDir = normalize(cameraPosition - vW);
-  float glint = pow(max(dot(reflect(-uKey, nn), viewDir), 0.0), 32.0);
-  enamel += vec3(0.15, 0.12, 0.08) * glint;
-  float riding = smoothstep(0.45, 2.5, distance(cameraPosition, uProjPos));
-  t = mix(t, mix(pc, enamel, 0.32), riding * wallOnPaddle);
+  float sheen = 0.05 * pow(max(dot(reflect(-uKey, nn), viewDir), 0.0), 30.0);
+  t = mix(t, paint + vec3(sheen, 0.8 * sheen, 0.5 * sheen), smoothstep(0.45, 2.5, distance(cameraPosition, uProjPos)));
 #endif
   gl_FragColor = vec4(pjInverse(t), 1.0);
 }`;
@@ -409,15 +372,26 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
     uniforms: { ...shared, uTile: { value: tile }, uMode: { value: mode }, uPatchK: { value: k } },
   });
   const M = { wall: mat(tWall, 1), water: mat(tRiver, 2), gold: mat(pGold, 0, 1 / 1.2) };
-  let paddleFace: THREE.ShaderMaterial | null = null;
+  let fittedPaddle: { mesh: THREE.BufferGeometry; material: THREE.ShaderMaterial; origin: THREE.Vector3 } | undefined;
   if (fixGold && flag05('cx07PaddleFace')) {
-    const painted = await new THREE.TextureLoader().loadAsync(tex('paddleFace07.png'));
-    painted.colorSpace = THREE.NoColorSpace;
-    painted.anisotropy = 4;
-    paddleFace = mat(pGold, 0, 1 / 1.2);
-    paddleFace.defines = { PAINTED_PADDLE_FACE: 1 };
-    paddleFace.uniforms.uPaddleFace = { value: painted };
-    paddleFace.uniforms.uPaddleWidth = { value: L.paddles[2].w };
+    const [shape, paint] = await Promise.all([
+      fetch(tex('paddleShape07.json')).then(async response => {
+        if (!response.ok) throw new Error('Could not load the fitted Screen 07 paddle');
+        return await response.json() as { positions: number[]; uv: number[]; indices: number[]; origin: [number, number, number] };
+      }),
+      new THREE.TextureLoader().loadAsync(tex('paddleFace07.png')),
+    ]);
+    paint.colorSpace = THREE.NoColorSpace;
+    paint.anisotropy = 4;
+    const mesh = new THREE.BufferGeometry();
+    mesh.setAttribute('position', new THREE.Float32BufferAttribute(shape.positions, 3));
+    mesh.setAttribute('uv', new THREE.Float32BufferAttribute(shape.uv, 2));
+    mesh.setIndex(shape.indices);
+    mesh.computeVertexNormals();
+    const material = mat(pGold, 0, 1 / 1.2);
+    material.defines = { FITTED_PADDLE: 1 };
+    material.uniforms.uPaddleFace = { value: paint };
+    fittedPaddle = { mesh, material, origin: new THREE.Vector3(...shape.origin) };
   }
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => {
     const o = new THREE.Mesh(g, m); o.name = 'm07_' + name; o.frustumCulled = false; group.add(o); return o;
@@ -439,10 +413,15 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
     const q = new THREE.Vector3(...p.pos).sub(base);
     const lx = q.dot(X), ly = q.dot(U), lz = -q.dot(Dv);
     const ang = Math.atan2(ly - T.h, lx - T.ax);
+    if (i === 2 && fittedPaddle) {
+      const o = add(fittedPaddle.mesh, fittedPaddle.material, 'paddle' + i);
+      o.position.copy(fittedPaddle.origin);
+      continue;
+    }
     const depth = 1.2, w = p.w;
     // M2 '?m07gold=1': rounded block (bevelled edges catch the light and read as solid metal while passing close)
     const g = fixGold ? new RoundedBoxGeometry(w, depth, w * 0.42, 4, Math.min(0.3, w * 0.12)) : new THREE.BoxGeometry(w, depth, w * 0.42);
-    const o = add(g, i === 2 && paddleFace ? paddleFace : M.gold, 'paddle' + i);
+    const o = add(g, M.gold, 'paddle' + i);
     o.position.set(T.ax + (T.r - depth / 2 + 0.05) * Math.cos(ang), T.h + (T.r - depth / 2 + 0.05) * Math.sin(ang), lz);
     o.rotation.z = ang - Math.PI / 2; // local +y along the radius (out of the wall toward the axis)
   }
