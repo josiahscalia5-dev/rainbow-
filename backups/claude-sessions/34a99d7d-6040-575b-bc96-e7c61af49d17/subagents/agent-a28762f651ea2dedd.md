@@ -636,3 +636,18 @@ First checkpoint pushed and verified. Now let me look at the approved picture an
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && time node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/probe1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" \"f03_forward3u,f10_forward10u,f20_forward20u,t66_through_screen\" 2>&1 | tail -20", "description": "Probe coin sizes at audit positions with base set", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T01:43:06.182Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> f03_forward3u s 136.197 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@463,789 d118 #21@553,693 d80 #22@476,631 d61
+> f10_forward10u s 143.072 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> t66_through_screen s 170.391 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+> 
+> real	0m37.447s
+> user	0m1.554s
+> sys	0m0.446s
+
