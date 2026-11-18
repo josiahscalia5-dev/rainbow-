@@ -3189,3 +3189,19 @@ The painted-ring test now looks like separate thick rings. Since you asked for t
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:04-step3-shown 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save the shown pictures and log to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T19:36:44.665Z
+
+> ↩︎ result: "commit": "f767eb5a404fbde17da94713e679f0b346e2408d",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:36:17+00:00 (0.4 min ago) | local f767eb5 remote f767eb5 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:36:50.032Z
+
+The painted-ring test on Screen 04 has its first real step forward: **GOOD IMPROVEMENT for the ring shape.** I sent you your approved picture, then BEFORE / NEW just inside the tunnel, farther in, and steering hard left.
+
+- **Closer to your painting:** inside the tunnel there's now a row of fewer, thick, rounded gold rings with a dark groove between each one, like your painted rings. Before, it was a long corridor of thin bright cuts. The plaid stripes, white star glints and long streaks are all gone, and the start view is unchanged.
+- **Still wrong, the colour:** the rings are a darker, duller copper-orange. Yours get brighter and more yellow-gold toward the glowing centre and are covered in little light dots along the ring edges. These rings have lost most of that sparkle, so they look duller than your painting and even than the old version.
+
+The worker's next step is the warmer yellow-gold. If the rings still look dull after that, it will bring back the little light dots, as a separate step so we can see which one helps.
+
+Kept improvements so far this session: 04 foam and 08 near water (both kept in round 15), 08 smoother river, 07 plunge banks, 06 gold rings. The 04 ring shape is next once its colour is right. 05 is still on its first step. Saved as `f767eb5`, verified on GitHub.
+

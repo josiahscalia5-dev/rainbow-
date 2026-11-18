@@ -1474,3 +1474,34 @@ Now a type check, then re-render NEW at x98p5 / x99 / x100 (only the frames this
 >   };
 > }
 
+### 🤖 Claude — 2026-11-18T19:36:33.062Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"    step(\\|    run(\\|freezeAt(\" src/game/Game.ts | head; sed -n \"$(grep -n '    step(' src/game/Game.ts | head -1 | cut -d: -f1),+12p\" src/game/Game.ts", "description": "Read QA step and run helpers"}`
+
+### 🧑 User — 2026-11-18T19:36:33.367Z
+
+> ↩︎ result: 622:    run(v = true) { running = v; last = performance.now(); },
+> 625:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 628:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+>     /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+>     coinScreen() {
+>       const mesh = coins.group.children[0] as THREE.InstancedMesh;
+
+### 🤖 Claude — 2026-11-18T19:36:49.776Z
+
+The coins are still at the far-river mapping at x99 although the block is open. Let me test whether this is a one-update lag (coins are placed earlier in the update than the far-block state).
+
+### 🤖 Claude — 2026-11-18T19:36:52.446Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt) && EX=\"(async()=>{const r=window.__rainbow;const a=r.coinScreen().filter(c=>c.i>=38&&c.i<=41).map(c=>[c.i,c.x,c.y,c.d]);r.step(1);r.run(true);await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));r.run(false);const b=r.coinScreen().filter(c=>c.i>=38&&c.i<=41).map(c=>[c.i,c.x,c.y,c.d]);return {s:r.state().s,a,b};})()\" && GRID=\"0,0\" EXTRA_JS=\"$EX\" timeout 600 node tools/match05/r15_probe.mjs \"$K&m05trans=1\" t99 5275 2>&1 | grep \"==\"", "description": "Check whether coin mapping lags one  …[+27 chars]`
+

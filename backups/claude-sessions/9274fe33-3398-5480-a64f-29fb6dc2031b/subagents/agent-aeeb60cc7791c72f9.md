@@ -885,3 +885,84 @@ While the clips render, I'll write the step 3 notes, then commit and push the st
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -I - <<'EOF'\nimport numpy as np, cv2\nA = cv2.imread('assets/textures/match04/plate04_hybrid.png').astype(np.float32)[..., ::-1]  # RGB\nVP, MC, RM = np.array([490., 690.]), np.array([434., 792.]), 347.0\nps = np.linspace(-1.2, 1.2, 241)\nout = []\nfor R in [331, 300, 262, 235, 207, 185, 160, 140, 126, 112, 100, 88, 79, 70, 62, 54, 48, 40, 32, 24, 16]:\n    c = VP + (R / RM) * (MC - VP)\n    x = c[0] + R * np.sin(ps); y = c[1] - R * np.cos(ps)\n    # band samples: take radii R*0.92..R*0.98 (inside the groove)\n    cols = []\n    for f in np.linspa …[+551 chars]`
 
+### 🧑 User — 2026-11-18T19:36:23.130Z
+
+> ↩︎ result: (331, array([167,  72,  37]), 99, array([220, 105,  91]))
+> (300, array([175,  78,  54]), 108, array([250, 129, 145]))
+> (262, array([180,  73,  38]), 102, array([222, 100,  79]))
+> (235, array([177,  75,  43]), 103, array([237, 114,  76]))
+> (207, array([184,  83,  49]), 110, array([240, 124,  74]))
+> (185, array([184,  81,  50]), 109, array([249, 147,  72]))
+> (160, array([176,  73,  38]), 101, array([217,  99,  77]))
+> (140, array([197,  84,  40]), 113, array([236, 117,  61]))
+> (126, array([191,  81,  40]), 110, array([237, 122,  60]))
+> (112, array([189,  82,  42]), 111, array([244, 121,  64]))
+> (100, array([196,  84,  50]), 113, array([243, 138,  73]))
+> (88, array([179,  79,  62]), 107, array([198,  91,  91]))
+> (79, array([202,  95,  67]), 124, array([238, 129,  86]))
+> (70, array([199,  90,  72]), 120, array([225, 111,  84]))
+> (62, array([213, 102,  80]), 132, array([237, 123,  91]))
+> (54, array([224, 109,  84]), 140, array([242, 126,  94]))
+> (48, array([234, 118,  86]), 149, array([251, 137,  99]))
+> (40, array([247, 138,  93]), 166, array([254, 151, 103]))
+> (32, array([250, 163, 102]), 183, array([254, 192, 114]))
+> (24, array([253, 202, 123]), 208, array([254, 239, 160]))
+> (16, array([252, 241, 168]), 2 …[+27 chars]
+
+### 🤖 Claude — 2026-11-18T19:36:45.108Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"const len\\|len =\\|part: 4\\|uProjPos\\b.*value\\|projPos\\|z0 =\\|const r =\\|outerR\" src/world/match04m4.ts | head -30", "description": "Find tunnel length, end glow, camera parameters"}`
+
+### 🧑 User — 2026-11-18T19:36:45.269Z
+
+> ↩︎ result: 55:  cx: number; cy: number; z0: number; len: number; r: number; outerR: number;
+> 603:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+> 661:    const R0 = r, R1 = ctx.outerR;
+> 693:      const Cp = (shared.uProjPos.value as THREE.Vector3).clone();
+
+### 🤖 Claude — 2026-11-18T19:36:50.953Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"addM04(\\|cx:\\|z0:\\|len:\\|outerR:\" src/world/*.ts | grep -v \"^src/world/match04m4.ts:55\" | head; grep -n \"uProjPos\" src/world/match04m4.ts | head -5; grep -n \"end glow\\|part > 3.5\\|, 4)\" src/world/match04m4.ts | head", "description": "Locate M04 context values and projector position"}`
+
+### 🧑 User — 2026-11-18T19:36:51.023Z
+
+> ↩︎ result: src/world/match04.ts:28:  tube: { r: number; ax: number; h: number; mouthS: number; outerR: number };
+> src/world/match04.ts:293:  const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+> src/world/match04m4.ts:580:export function addM04(ctx: M04Ctx) {
+> src/world/match08.ts:18:  chamber: { cx: number; cy: number; r: number; zBack: number; zDoor: number };
+> src/world/match08.ts:19:  arch: { z: number; outer: { cx: number; cy: number; r: number }; inner: { cx: number; cy: number; r: number }; depth: number };
+> src/world/match08.ts:20:  pipe: { cx: number; cy: number; r: number; z0: number; z1: number };
+> src/world/match08.ts:22:  platform: { cx: number; cz: number; r: number; topY: number; rimBottomY: number; floorY: number; tiltDeg: number };
+> src/world/match08.ts:23:  towel: { cx: number; cz: number; w: number; h: number; y0: number; d: number };
+> src/world/tube.ts:717:  const strip = (id: number, cx: number, cy: number, a0: number, b0: number, w: number, dir: 1 | -1, th0: number, th1: number, z0: number, nu: number, nv = 10) => {
+> 103:uniform vec3 uProjPos;
+> 259:      float dP = dot(vW - uProjPos, uAxD), d0 = do …[+1062 chars]
+
+### 🤖 Claude — 2026-11-18T19:36:53.269Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 270,295p src/world/match04.ts; grep -n \"uProjPos\\|projPos\" src/world/match04.ts | head -5; grep -n \"end glow\\|glow disc\\|part = 4\\|, 4\\b\" src/world/match04m4.ts | sed -n 1,10p", "description": "Read tunnel placement parameters in match04.ts"}`
+
+### 🧑 User — 2026-11-18T19:36:53.472Z
+
+> ↩︎ result: const cL = proj.position.clone().applyMatrix4(group.matrix.clone().invert());   // group.matrix = the slide frame (set above)
+>     const far = new THREE.ShapeGeometry(wall, 96).translate(0, 0, z0 - 0.01);
+>     const pa = far.attributes.position as THREE.BufferAttribute;
+>     for (let i = 0; i < pa.count; i++) {
+>       const v = new THREE.Vector3(pa.getX(i), pa.getY(i), pa.getZ(i)).sub(cL).multiplyScalar(k).add(cL);
+>       pa.setXYZ(i, v.x, v.y, v.z);
+>     }
+>     far.computeBoundingSphere();
+>     const fm = mat(pWall, 1 / (3.0 * k));
+>     fm.uniforms.uCut.value.set(-1, cut[0], cut[1], cut[2]);
+>     fm.uniforms.uUseDepth = { value: 0 };   // the near wall (cut away there) is in front of it in the projector depth bake
+>     add(far, fm, 'room_far');
+>     console.info('[match04] m04room', { k, cut });
+>   }
+>   // water plane at Benny's water level: from behind the camera, through the mouth, down the tunnel
+>   const zBack = 14, zEnd = z0 - len;
+>   const wp = new THREE.PlaneGeometry(28, zBack - zEnd, 56, 96);
+>   wp.rotateX(-Math.PI / 2).translate(0, 0, (zBack + zEnd) / 2);
+>   add(wp, M.water, 'water');
+>   // far end cap of the tunnel (the glowing vanishing point)
+>   add(new THREE.CircleGeometry(T.r, 64).trans …[+1564 chars]
+

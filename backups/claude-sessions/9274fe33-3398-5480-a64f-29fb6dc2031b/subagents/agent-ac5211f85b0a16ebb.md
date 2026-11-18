@@ -1308,3 +1308,7 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 > 240:  if (uDbgVk > 0.5) { gl_FragColor = vec4(max(dv, 0.0), keep, dv < 0.0 ? 1.0 : 0.0, 1.0); return; }
 > 457:      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uDbgVk: { value: flag05('m08dbgvk') ? 1 : 0 }, uSr: { value: 0 },
 
+### 🤖 Claude — 2026-11-18T19:36:26.925Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && M08_DET=1 M08_ONLY=f10,t95 node tools/match08/shots08.mjs 08 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/dbgvk \"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt)&m08dbgvk=1\" 2>&1 | grep -v \"allow list\"", "description": "Render visibility/stretch debug at f10 and t95", "timeout": 600000}`
+
