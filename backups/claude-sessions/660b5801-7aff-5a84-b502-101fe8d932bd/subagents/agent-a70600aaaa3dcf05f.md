@@ -1447,3 +1447,113 @@ The probe frame matches the lead's description exactly. While the locked-view an
 >     // m05trans (r15): whole until Benny enters 06, then gone in one step (no half-folded frames)
 >     if (M05TRANS && a.popS !== undefined) open = Math.max(m05rideS.value >= a.popS ? 1 : 0, …[+2001 chars]
 
+### 🤖 Claude — 2026-11-18T20:59:41.007Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/N1_half.png"}`
+
+### 🧑 User — 2026-11-18T20:59:41.024Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:59:58.425Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2 && convert $S/t81L.png -crop 400x600+0+180 +repage $S/t81L_crop_top.png && convert /home/user/wt/s05/references/05_flow_into_the_current.png -crop 400x600+0+180 +repage $S/appr_crop_top.png && echo ok", "description": "Crop left wall regions for close look"}`
+
+### 🧑 User — 2026-11-18T21:00:00.105Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T21:00:02.518Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/t81L_crop_top.png"}`
+
+### 🧑 User — 2026-11-18T21:00:02.530Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:00:03.147Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/appr_crop_top.png"}`
+
+### 🧑 User — 2026-11-18T21:00:03.285Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:00:13.460Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2 && cd /home/user/wt/s05 && convert assets/textures/env05/wall05e.png -crop 2048x128+0+272 +repage $S/BC.png && convert $S/BC.png -crop 1024x128+0+0 +repage $S/BC_l.png && convert $S/BC.png -crop 1024x128+1024+0 +repage $S/BC_r.png && convert assets/textures/env05/wall05e.png -crop 2048x64+0+408 +repage -resize 50%x100% $S/CD.png && echo ok", "description": "Crop BC and CD atlas rows"}`
+
+### 🧑 User — 2026-11-18T21:00:14.277Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T21:00:16.363Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/BC_l.png"}`
+
+### 🧑 User — 2026-11-18T21:00:16.380Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:00:16.990Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/BC_r.png"}`
+
+### 🧑 User — 2026-11-18T21:00:17.012Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:00:31.904Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bkyf01new.output; ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/*/ 2>/dev/null; uptime", "description": "Check proof job progress"}`
+
+### 🧑 User — 2026-11-18T21:00:32.022Z
+
+> ↩︎ result: ]
+> ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/kept/05.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/trans/05.png","rows":[180,1536],"threshold":0.1,"diff_pixels":1009,"total":1171584,"diff_pct":0.0861}
+> /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/kept/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/trans/:
+> 05.png
+>  21:00:31 up 47 min,  0 user,  load average: 19.90, 19.67, 12.49
+
+### 🤖 Claude — 2026-11-18T21:00:34.234Z
+
+The locked approved view differs by 1,009 px with `m05trans` on, so it is not 0 px. I'll find where.
+
+### 🤖 Claude — 2026-11-18T21:00:38.388Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1 && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('kept/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('trans/05.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2); m=d>25\nys,xs=np.nonzero(m); print('n>25',m.sum(), 'bbox', xs.min() if len(xs) else None, xs.max() if len(xs) else None, ys.min() if len(ys) else None, ys.max() if len(ys) else None)\nm2=d>0; ys,xs=np.nonzero(m2); print('n>0',m2.sum(), xs.min(),xs.max(),ys.min(),ys.ma …[+225 chars]`
+
+### 🧑 User — 2026-11-18T21:00:39.157Z
+
+> ↩︎ result: n>25 1379 bbox 305 651 263 579
+> n>0 55249 100 769 25 582
+> [((np.int64(448), np.int64(448)), 232), ((np.int64(512), np.int64(512)), 213), ((np.int64(448), np.int64(512)), 130), ((np.int64(512), np.int64(640)), 117), ((np.int64(384), np.int64(512)), 86), ((np.int64(448), np.int64(384)), 81), ((np.int64(384), np.int64(448)), 78), ((np.int64(384), np.int64(384)), 67), ((np.int64(256), np.int64(512)), 66), ((np.int64(512), np.int64(384)), 38), ((np.int64(256), np.int64(576)), 31), ((np.int64(512), np.int64(448)), 31), ((np.int64(512), np.int64(576)), 31), ((np.int64(448), np.int64(576)), 29), ((np.int64(512), np.int64(320)), 27)]
+
+### 🤖 Claude — 2026-11-18T21:00:42.035Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1 && convert kept/05.png -crop 400x360+280+240 +repage -scale 200% kept_c.png && convert trans/05.png -crop 400x360+280+240 +repage -scale 200% trans_c.png && echo ok", "description": "Crop diff region of both locked views"}`
+
+### 🧑 User — 2026-11-18T21:00:42.646Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T21:00:44.872Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/kept_c.png"}`
+
+### 🧑 User — 2026-11-18T21:00:44.914Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:00:45.441Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1/trans_c.png"}`
+
+### 🧑 User — 2026-11-18T21:00:45.475Z
+
+> ↩︎ result: [image]
+

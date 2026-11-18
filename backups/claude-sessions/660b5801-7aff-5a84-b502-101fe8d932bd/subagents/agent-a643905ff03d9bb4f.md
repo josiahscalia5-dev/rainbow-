@@ -1253,3 +1253,184 @@ While the renders run, I'll prepare step 4 (foam clouds instead of a flat pale s
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T20:59:42.089Z
+
+> 🔧 **Bash** `{"command": "C=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw; ls -la --time-style=+%T $C | head -5; date +%T; ps -eo pid,etime,args | grep swim_clip_half | grep -v grep | head -2", "description": "Check that the half-size clip render started fresh"}`
+
+### 🧑 User — 2026-11-18T20:59:42.864Z
+
+> ↩︎ result: total 6080
+> drwxr-xr-x  2 root root   4096 20:59:40 .
+> drwx------ 21 root root   4096 20:59:08 ..
+> -rw-r--r--  1 root root 717738 20:59:27 0000.png
+> -rw-r--r--  1 root root 710893 20:59:29 0001.png
+> 20:59:42
+> 15497       00:39 timeout 1800 node tools/match07/swim_clip_half.mjs 07 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw 3.6 match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1
+> 15500       00:39 node tools/match07/swim_clip_half.mjs 07 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw 3.6 match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1
+
+### 🤖 Claude — 2026-11-18T20:59:44.436Z
+
+The clip is rendering (about 2 s per frame at half size), so editing is safe now.
+
+### 🤖 Claude — 2026-11-18T20:59:45.095Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/foam.ts", "offset": 556, "limit": 40}`
+
+### 🧑 User — 2026-11-18T20:59:45.174Z
+
+> ↩︎ result: 556	/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> 557	function hide07(course: Course): [number, number] | null {
+> 558	  if (!flag05('match07') || !flag05('m07foam')) return null;
+> 559	  // r17 '&m07foamb=1': the walls stay away to the end of 07 (they no longer start again partway down the drop with a cut);
+> 560	  // fully back at the 08 start, so 08 keeps its berm
+> 561	  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;
+> 562	  return [course.marks['07_plunge_top'] + 9, end];
+> 563	}
+> 564	
+> 565	/** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
+> 566	function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+> 567	  const hk = bermScale05(course);
+> 568	  const ds = quality === 'high' ? 0.32 : 0.8;
+> 569	  const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
+> 570	  const rows = Math.ceil((s1 - s0) / ds) + 1;
+> 571	  const C = E.length;
+> 572	  const n = rows * C * 2;
+> 573	  const …[+1093 chars]
+
+### 🤖 Claude — 2026-11-18T20:59:53.213Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  // r17 '&m07foamb=1': the walls stay away to the end of 07 (they no longer start again partway down the drop with a cut);\n  // fully back at the 08 start, so 08 keeps its berm\n  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;\n  return [course.marks['07_plunge_top'] + 9, end];\n}", "new_string": "  // r17 '&m07foamb=1': the walls stay away to near the end of 07 (they no longer start again partway down the drop with a\n  …[+927 chars]`
+
+### 🧑 User — 2026-11-18T20:59:53.740Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:59:54.621Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  const hk = bermScale05(course);\n  const ds = quality === 'high' ? 0.32 : 0.8;", "new_string": "  const hk0 = bermScale05(course);\n  const r07 = ramp07(course);\n  const hk = (s: number) => hk0(s) * r07(s);\n  const ds = quality === 'high' ? 0.32 : 0.8;"}`
+
+### 🧑 User — 2026-11-18T20:59:54.852Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:59:57.672Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"hk(\\|k05\\|bermScale05\\|h07\\b\\|h07\\[\" src/vfx/foam.ts", "description": "Find berm scale and puff hide usages"}`
+
+### 🧑 User — 2026-11-18T20:59:57.709Z
+
+> ↩︎ result: 120:uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> 138:  // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+> 189:  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
+> 192:  if (vFoam.x > mix(9.0, 0.3 + 0.45 * (1.0 - c1), k05)) discard;
+> 193:  if (k05 > 0.0) {
+> 202:    col = mix(col, c5, k05);
+> 548:function bermScale05(course: Course): (s: number) => number {
+> 556:/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> 558:  if (!flag05('match07') || !flag05('m07foam')) return null;
+> 567:  if (!flag05('match07') || !flag05('m07foam') || !flag05('m07foamb')) return null;
+> 579:  const hk0 = bermScale05(course);
+> 602:        const k05 = hk(s);
+> 603:        const h = squashBerm(bermSurface(s, e, side, hw), k05);
+> 605:        const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+> 684:  const h07 = hide07(course);
+> 696:      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < h07[1] - 1.5) tmpS.set(0, 0, 0); // r8 m07foam
+> 723:  const bermK = bermScale05(course);
+> 730:    const k05 = bermK(s …[+129 chars]
+
+### 🤖 Claude — 2026-11-18T20:59:59.223Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/foam.ts", "offset": 715, "limit": 30}`
+
+### 🧑 User — 2026-11-18T20:59:59.407Z
+
+> ↩︎ result: 715	  group.add(berm.mesh);
+> 716	
+> 717	  // ---- cloud banks of puffs hugging both stream edges (ref 05: 10–40 px white-lavender clumps) ----
+> 718	  const inSkip = (s: number) => s > skip[0] && s < skip[1];
+> 719	  // wave 5: in 05 the stream-edge rim toward the VP is a LOW rim of piled bubbles (ref ≈40–60 px), not
+> 720	  // tall heaps: crest puffs × 0.85, heaps × 0.6 and never stacked. Only sizes change, so the shared
+> 721	  // rand() sequence (and every other stage's foam) stays identical.
+> 722	  const st05b = course.stage('05');
+> 723	  const bermK = bermScale05(course);
+> 724	  const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
+> 725	  /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
+> 726	  const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
+> 727	  const bermPoint = (ss: number, e: number, side: number, lift: number) => {
+> 728	    const f = course.sample(ss);
+> 729	    const hw = course.widthAt(ss) / 2;
+> 730	    const k05 = bermK(ss);
+> 731	    const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
+> 732	    const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+> 733	    return f.pos.clone().addScaledVe …[+570 chars]
+
+### 🤖 Claude — 2026-11-18T21:00:03.477Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  const h07 = hide07(course);\n  const build = ", "new_string": "  const h07 = hide07(course);\n  const e07 = end07(course); // r17 m07foamb: puffs stay away to the 08 start (the bank grows back without them)\n  const build ="}`
+
+### 🧑 User — 2026-11-18T21:00:04.034Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:00:04.865Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "pf.s > h07[0] + 1.5 && pf.s < h07[1] - 1.5) tmpS.set(0, 0, 0); // r8 m07foam", "new_string": "pf.s > h07[0] + 1.5 && pf.s < (e07 ?? h07[1] - 1.5)) tmpS.set(0, 0, 0); // r8 m07foam"}`
+
+### 🧑 User — 2026-11-18T21:00:05.034Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:00:10.755Z
+
+Now the step 4 shader (`&m07nearf=1`): thick magenta bank continuing beyond the band, and separate puffy dome-shaded foam clouds in clusters with gaps instead of the flat foam sheet.
+
+### 🤖 Claude — 2026-11-18T21:00:12.862Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "uniform vec3 uWF;         // r16 '?m07wfoam=1': foam clouds piled on the lowest wall band — base height, cloud-top height, on (z)\nvarying vec2 vUv;", "new_string": "uniform vec3 uWF;         // r16 '?m07wfoam=1': foam clouds piled on the lowest wall band — base height, cloud-top height, on (z)\nuniform vec4 uNearF;      // r17 '?m07nearf=1': extra magenta bank width beyond the band, cloud cell length along, foam detail size, on (w)\nvarying vec2 vUv;"}`
+
+### 🧑 User — 2026-11-18T21:00:13.492Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:00:26.416Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "vec3 nearWater() {\n  float along = -vL.z;\n  float d = vL.x - vCtr;\n  float a = abs(d);\n  float R = uNearW.x, mw = uNearW.y;\n  float u = a > R - mw ? uNearM * clamp((R - a) / mw, 0.0, 1.0) : uNearM + (1.0 - uNearM) * (1.0 - a / (R - mw));\n  float v = along / uNearW.z;\n  vec3 cL = texture2D(uNearTile, vec2(u, v)).rgb;\n  vec3 cR = texture2D(uNearTile, vec2(u, v + 0.5)).rgb;\n  vec3 river = mix(cL, cR, smoothstep(-0.32, 0.32, d));", "new_string": "float h07(float n) { return fract(sin(n * 12.9898 + …[+2831 chars]`
+
+### 🧑 User — 2026-11-18T21:00:26.586Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:00:34.639Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    u = uNearM * abs(mod(t + 1.0, 2.0) - 1.0);", "new_string": "    u = uNearM * abs(mod(t, 2.0) - 1.0);                                // inner edge → outer edge → back (mirrored)"}`
+
+### 🧑 User — 2026-11-18T21:00:34.973Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:00:36.891Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    uWF: { value: new THREE.Vector3(0.3, 0.5, wallFoamOn ? 1 : 0) },\n  };", "new_string": "    uWF: { value: new THREE.Vector3(0.3, 0.5, wallFoamOn ? 1 : 0) },\n    // r17: magenta bank 0.6 u wider (the painted bands are thick), cloud cells every 0.8 u along, foam detail tile 0.75 u\n    uNearF: { value: new THREE.Vector4(0.6, 0.8, 0.75, nearW && nearF ? 1 : 0) },\n  };"}`
+
+### 🧑 User — 2026-11-18T21:00:37.044Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:00:38.418Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "  const wallFoamOn = flag05('m07wfoam');", "new_string": "  const wallFoamOn = flag05('m07wfoam');\n  // r17: on top of m07nearw, a thick magenta bank + separate puffy foam clouds beyond the band (no flat pale foam sheet at\n  // hard left / right)\n  const nearF = flag05('m07nearf');"}`
+
+### 🧑 User — 2026-11-18T21:00:38.680Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T21:00:41.541Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc rc=${PIPESTATUS[0]}; grep -n '\"three\"' package.json; ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw | wc -l", "description": "Type-check and check clip progress", "timeout": 700000}`
+
+### 🧑 User — 2026-11-18T21:00:48.185Z
+
+> ↩︎ result: tsc rc=0
+> 25:    "three": "^0.170.0"
+> 60
+
