@@ -1107,3 +1107,194 @@ Locked approved view: 0 px difference. I'll render the step-2 pictures from the 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\nsrc=open('tools/match05/r8_shots.mjs').read()\n# derive a probe tool: same startup, one shot, probe list of pixel points\nhead=src.split(\"const [OUT, Q = '', ONLY = 'all', PORT = '5291'] = process.argv.slice(2);\")[0]\nbody='''const [SHOT = 't66_through_screen', Q = '', PTS = '', PORT = '5293'] = process.argv.slice(2);\n// Screen 05 round 8: what does the screen show at pixel (x,y)? Same shot list / stepping as r8_shots.mjs.\n//   node tools/match05/r8_probe.mjs <shot> \"<query>\" \"x,y;x,y;...\" [port]\nconst { chromium } = loadPlaywrig …[+2191 chars]`
 
+### 🧑 User — 2026-11-18T02:13:40.896Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":170.459,"lat":0,"coins":1460,"hearts":5,"paused":false,"bennyY":-43,"bennyVisible":true,"cam":[1.48,-39.46,-104.72]}
+> 180 680 [{"d":23.64,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-4.23,-43.88,-127.23]},{"d":25.57,"obj":"tube05_far_wall<zone_tubes<washer_world<Scene","p":[-4.69,-44.24,-129.06]},{"d":27.25,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-5.1,-44.56,-130.66]},{"d":27.42,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-5.14,-44.59,-130.82]}]
+> 230 700 [{"d":23.82,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-3.39,-44.31,-127.53]},{"d":24.24,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-3.48,-44.39,-127.93]},{"d":26.34,"obj":"tube05_far_wall<zone_tubes<washer_world<Scene","p":[-3.91,-44.82,-129.93]},{"d":26.5,"obj":"tube05_far<zone_tubes<washer_world<Scene","p":[-3.94,-44.85,-130.08]}]
+> 330 600 [{"d":25.46,"obj":"foam_berm<foam_banks<water_system<Scene","p":[-1.8,-42.75,-129.75]},{"d":25.67,"obj":"water_ribbon<water_system<Scene","p":[-1.82,-42.78,-129.96]},{"d":27.43,"obj":"tube05_far_river<zone_tubes<washer_world<Scene","p":[-2.05,-43.01,-131.68]},{"d":28.37,"obj":"tube05_far_wall<zone_tubes<washer_world<Scene","p":[-2.17,-43.1 …[+1757 chars]
+
+### 🤖 Claude — 2026-11-18T02:13:44.271Z
+
+The orange piece is an unnamed mesh in `zone_tubes` about 24 u ahead. Let me find which tube element it is.
+
+### 🤖 Claude — 2026-11-18T02:13:45.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"zone_tubes\" src -r | head -5; grep -n \"paddle\\|baffle\\|lifter\" src/world/environment.ts | head -30", "description": "Find tube zone and paddle code"}`
+
+### 🧑 User — 2026-11-18T02:13:45.262Z
+
+> ↩︎ result: 93:  // lifters (gold baffles)
+> 96:    const lifter = new THREE.Mesh(new RoundedBoxGeometry(1.5, 1.1, drumLen - 1.6, 4, 0.5), goldMat);
+> 97:    lifter.position.set(Math.cos(a) * (dA.radius - 0.45), Math.sin(a) * (dA.radius - 0.45), (dA.zDoor + dA.zBack) / 2 - 0.3);
+> 98:    lifter.rotation.z = a + Math.PI / 2;
+> 99:    zones.drumA.add(lifter);
+> 483:  // `?projlid05=1` (src/vfx/proj05Tunnel.ts): the approved paddles L1 L2 R1 R2, Blender-built trays; default unchanged
+> 605:    // `?projlid05=1`: the approved small far paddles L3 / R3 are Blender trays (lids05.glb); the far slab pucks stay out
+
+### 🤖 Claude — 2026-11-18T02:13:46.947Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 440,620p src/world/environment.ts", "description": "Read 05 tube environment section"}`
+
+### 🧑 User — 2026-11-18T02:13:46.975Z
+
+> ↩︎ result: segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(E05 ? E05.farDv[0] : 59, sF05 - sCam05 - 0.75) });
+>     withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+>   }
+>   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
+>   // gold junction collar 04→05 (slightly heavier)
+>   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+>   if (E05) {
+>     // env05: every real 05 ring its own (warped) mesh, own band height and own row of the camera-projection ring atlas
+>     for (const s of rings05) {
+>       const isA = Math.abs(s - ptA05) < 0.5, isB = Math.abs(s - ptB05) < 0.5;
+>       const band = { ...band05near, height: isA ? E05.hA : isB ? E05.hB : band05near.height };
+>       const mat = withEnv05Ring(gold05('ring05', false, band), isA ? E5_RING_ROW.A : isB ? E5_RING_ROW.B : E5_RING_ROW.N, false, (band.width + band.groove + band.lipWidth) / 2, 'real');
+>       zones.tubes.add(buildWarpedBandRing(perfPath, s, mat, band, 0.02, warp05ring, warp05));
+>     }
+>   } else zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near })); …[+13443 chars]
+
+### 🤖 Claude — 2026-11-18T02:14:05.510Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_probe.mjs'\nt=open(p).read()\nold=\"    return { state: r.state(), hits: pts.map(([x, y]) => ({ x, y, h: r.probe(x / 432 - 1, 1 - y / 768) })) };\"\nnew='''    const { scene, camera } = r.qa3d();\n    const T = camera.constructor; // THREE classes are not global: build a raycaster from the camera's own module via probe()\n    const detail = (x, y) => {\n      const hits = r.probe(x / 432 - 1, 1 - y / 768);\n      const first = hits[0];\n      if (!first) return hits;\n      // locate the first hit mesh again by walking …[+1500 chars]`
+
+### 🧑 User — 2026-11-18T02:14:22.480Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":170.479,"lat":0,"coins":1460,"hearts":5,"paused":false,"bennyY":-43,"bennyVisible":true,"cam":[1.48,-39.46,-104.74]}
+> 180 680 {"hits":[{"d":23.64,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-4.23,-43.88,-127.25]},{"d":25.56,"obj":"tube05_far_wall<zone_tubes<washer_world<Scene","p":[-4.69,-44.24,-129.08]},{"d":27.24,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-5.1,-44.56,-130.67]},{"d":27.4,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-5.14,-44.59,-130.83]}],"cands":[{"type":"BufferGeometry","verts":5037,"mat":"MeshStandardMaterial","key":"perf-v4-r-g|strips-attribute-wall","inst":0,"ud":[],"r":32.1},{"type":"BufferGeometry","verts":1300,"mat":"MeshStandardMaterial","key":"onBeforeCompile() {\n  }","inst":0,"ud":[],"r":23.5}]}
+
+### 🤖 Claude — 2026-11-18T02:14:32.582Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && date -u +%H:%M && grep -n -i \"orange piece\\|orange tray\\|orange slab\\|boat\\|hood\" qa/match/05/NOTES.md /home/user/rainbow-/qa/lead_r6/2026-11-17/README.md 2>/dev/null | head -10; grep -n \"function buildWallLids\" -A 30 src/world/*.ts | grep -n \"Mesh\\|merge\\|name\" | head", "description": "Check time and search notes for the orange object"}`
+
+### 🧑 User — 2026-11-18T02:14:32.640Z
+
+> ↩︎ result: 02:14
+> 21:src/world/tube.ts-450-): THREE.InstancedMesh {
+> 26:src/world/tube.ts-455-  const mesh = new THREE.InstancedMesh(geo, material, n);
+
+### 🤖 Claude — 2026-11-18T02:14:45.619Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_probe.mjs'\nt=open(p).read()\nold=\"  console.log(JSON.stringify(out.state));\"\nnew='''  console.log(JSON.stringify(out.state));\n  if (process.env.HIDE_OUT) {\n    // hide each candidate of the first point in turn, screenshot (QA only)\n    const n = out.hits[0]?.h?.cands?.length ?? 0;\n    for (let k = -1; k < n; k++) {\n      const info = await page.evaluate(async ([k, pt]) => {\n        const r = window.__rainbow; const { scene } = r.qa3d();\n        const first = r.probe(pt[0] / 432 - 1, 1 - pt[1] / 768)[0];\n    …[+1851 chars]`
+
+### 🧑 User — 2026-11-18T02:15:29.436Z
+
+> ↩︎ result: hide {"k":-1}
+> hide {"k":0,"verts":5037,"pos":[0,0,0],"color":"ffa8e8","emissive":"3a0656","metal":0.92,"rough":0.1,"map":false,"uv":true,"groups":0,"idx":true}
+> hide {"k":1,"verts":1300,"pos":[0,0,0],"color":"ffffff","emissive":"ff3fb8","metal":0.2,"rough":0.12,"map":true,"uv":true,"groups":0,"idx":true}
+
+### 🤖 Claude — 2026-11-18T02:15:33.308Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('$S/hide/hide_%d.png'%k).crop((0,450,520,900)) for k in (-1,0,1)]\nW=sum(i.width for i in ims); out=Image.new('RGB',(W+20,450),(0,0,0)); x=0\nfor i in ims: out.paste(i,(x,0)); x+=i.width+10\nout.save('$S/hide/cmp.png')\"", "description": "Make side-by-side crop of hide test"}`
+
+### 🧑 User — 2026-11-18T02:15:33.655Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:15:36.248Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/hide/cmp.png"}`
+
+### 🧑 User — 2026-11-18T02:15:36.283Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:15:44.544Z
+
+Neither candidate is it; the orange piece survives. Its flat tray shape suggests the Blender paddle trays (`lids05Group`, `projlid05`) or an instanced lid. Let me check those placements.
+
+### 🤖 Claude — 2026-11-18T02:15:45.297Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export function lids05Group\" -A 60 src/vfx/proj05Tunnel.ts | head -90", "description": "Read Blender paddle tray placement"}`
+
+### 🧑 User — 2026-11-18T02:15:45.336Z
+
+> ↩︎ result: 102:export function lids05Group(): THREE.Group {
+> 103-  const g = new THREE.Group();
+> 104-  g.name = 'tube05_lids05';
+> 105-  const attach = () => { if (lids05Scene) g.add(lids05Scene); };
+> 106-  if (lids05Scene) attach(); else lids05Ready?.then(attach);
+> 107-  return g;
+> 108-}
+> 109-
+> 110-/** atlas rows of wall05.png (tools/proj05/tunnel_bake.py: ROWS) */
+> 111-export const PT_ROW = { AB: 0, BC: 1, CD: 2, DE: 3, EF: 4, FG: 5, GX: 6, N1: 7, N2: 8 } as const;
+> 112-const N_ROWS = ENV05 ? 9 : 7;
+> 113-/** `?env05=1` ring atlas rows (assets/textures/env05/env05.json: ring.rows) */
+> 114-export const E5_RING_ROW = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, G: 6, N: 7 } as const;
+> 115-const N_SEG = 8;
+> 116-
+> 117-const empty = new THREE.DataTexture(new Uint8Array([128, 40, 150, 255]), 1, 1);
+> 118-empty.needsUpdate = true;
+> 119-
+> 120-const shared = {
+> 121-  uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
+> 122-  uPjRes: { value: new THREE.Vector2(864, 1536) },
+> 123-  uPtWall: { value: empty as THREE.Texture },
+> 124-  uPtWallSize: { value: new THREE.Vector2(1, 1) },
+> 125-  uPtRows: { value: Array.from({ length: N_ROWS }, () => new THREE.Vector2(0, 1)) },
+> 126-  uPtRing: { value: empty as THREE.Texture },
+> 127-  …[+1962 chars]
+
+### 🤖 Claude — 2026-11-18T02:15:55.169Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat src/vfx/clip05.ts | head -80; grep -rn \"clip05\\|withClip05\\|applyClip05\" src --include=*.ts | grep -v \"^src/vfx/clip05.ts\" | head", "description": "Read the 05 seam clip helper and its users"}`
+
+### 🧑 User — 2026-11-18T02:15:55.212Z
+
+> ↩︎ result: /**
+>  * `?match05=1&m05far=1` (Screen 05 round 7, src/world/match05far.ts): a clip plane at the far tunnel's sliding seam.
+>  * Real 06 foam behind the seam (the rising 06 banks) would otherwise stand inside the 05 far tunnel as white columns;
+>  * materials that opt in (foam puffs) discard fragments beyond the plane while the switch is on and the far block is
+>  * live (n = 0 disables it). Default build: nothing imports the GLSL below into any program.
+>  */
+> import * as THREE from 'three';
+> import { MATCH05, flag05 } from './waterRibbon';
+> 
+> export const M05CLIP: boolean = MATCH05 && flag05('m05far');
+> export const clip05 = {
+>   uClip05P: { value: new THREE.Vector3() },
+>   uClip05N: { value: new THREE.Vector3() },
+> };
+> /** inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position) */
+> export function withClip05(mat: THREE.ShaderMaterial, posVar: string): void {
+>   if (!M05CLIP) return;
+>   Object.assign(mat.uniforms, clip05);
+>   mat.fragmentShader = mat.fragmentShader.replace('void main() {', `uniform vec3 uClip05P; uniform vec3 uClip05N;
+> void main() {
+>   {  // ?m05far=1: behind the 05 far tunnel seam, inside its tube (axial 0..40 u, within 9 u of the axis) only
+>      …[+861 chars]
+
+### 🤖 Claude — 2026-11-18T02:16:24.432Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> src/vfx/clip05.ts <<'EOF'\n\n/**\n * `&m05edge=1` (Screen 05 round 8, needs `m05far=1`; qa/match/05/NOTES.md \"Round 8\"): the same seam clip for standard\n * (lit) materials. The first legacy 06 hood (wall lid at s ≈ 188, environment.ts `lids0607`) lies just behind the far\n * tunnel's seam and stood inside the 05 far tunnel as a flat orange tray on the left bank in every swimming frame.\n * Opt-in per material; default build and every other switch: no program changes.\n */\nexport const M05EDGE: boolean = M05CLIP && flag05('m05edge');\nexport funct …[+1304 chars]`
+
+### 🧑 User — 2026-11-18T02:16:24.487Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> 8:import { Course, WORLD, funnelY } from './course';
+> 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
+> 11:import { STAGE_CAM } from '../game/cameraRig';
+> 12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> 13:import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+> 14:import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+> 15:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, with …[+472 chars]
+
+### 🤖 Claude — 2026-11-18T02:16:30.805Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/environment.ts'\nt=open(p).read()\na=\"import { M05FAR, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)\\n\"\nassert t.count(a)==1\nt=t.replace(a,a+\"import { withClip05Std } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)\\n\")\nb=\"\"\"  lidMat.envMap = goldEnv;\n  lidMat.envMapIntensity = 1.25;\n\"\"\"\nassert t.count(b)==1\nt=t.replace(b,b+\"\"\"  // `&m05edge=1` (Screen 05 round 8): the first 06 hood behind the 05 far tunnel's …[+581 chars]`
+
+### 🧑 User — 2026-11-18T02:17:15.433Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-18T02:17:17.412Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/edge1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:17:17.465Z
+
+> ↩︎ result: [image]
+

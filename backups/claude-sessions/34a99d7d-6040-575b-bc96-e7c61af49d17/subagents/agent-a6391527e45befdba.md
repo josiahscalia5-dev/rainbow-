@@ -1009,3 +1009,195 @@ I'll start by inspecting where the previous instance stopped.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:13:48.114Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; python3 -c \"\nfrom PIL import Image\nImage.open('$SP/r_m8m/t66_through_screen.png').convert('RGB').crop((100,200,500,450)).save('$SP/crop10.png')\"", "description": "Zoom on the grainy area at t66"}`
+
+### 🧑 User — 2026-11-18T02:13:48.245Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:13:50.588Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop10.png"}`
+
+### 🧑 User — 2026-11-18T02:13:50.606Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:14:06.612Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"vK.y\" src/world/match04m4.ts", "description": "Find all uses of the interpolated ring index"}`
+
+### 🧑 User — 2026-11-18T02:14:06.651Z
+
+> ↩︎ result: 128:    bool mouth = vK.y < -0.5;
+> 129:    float ring = vK.y;
+> 154:    float ry = mouth ? 99.0 : vK.y, fa = ang * 2.2 + ry * 1.7;
+> 169:      float cell = fract(ang / 6.2831853 * nb + 0.5 * mod(max(vK.y, 0.0), 2.0)) - 0.5;
+> 174:      float on = onFace ? 1.0 : step(0.35, h21(vec2(floor(ang / 6.2831853 * nb + 0.5), vK.y)));
+> 182:    float gh = h21(gi + vK.y * 7.0);
+
+### 🤖 Claude — 2026-11-18T02:14:13.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ns=s.replace(\"    float ring = vK.y;\\n\",\"    float ring = floor(vK.y + 0.5);             // integer ring index (the interpolated varying is not exact)\\n\",1)\ns=s.replace(\"    float ry = mouth ? 99.0 : vK.y, fa\",\"    float ry = mouth ? 99.0 : ring, fa\",1)\ns=s.replace(\"0.5 * mod(max(vK.y, 0.0), 2.0)\",\"0.5 * mod(max(ring, 0.0), 2.0)\",1)\ns=s.replace(\"h21(vec2(floor(ang / 6.2831853 * nb + 0.5), vK.y))\",\"h21(vec2(floor(ang / 6.2831853 * nb + 0.5), ring))\",1)\ns=s.replace(\"float g …[+617 chars]`
+
+### 🧑 User — 2026-11-18T02:14:35.265Z
+
+> ↩︎ result: 128:    bool mouth = vK.y < -0.5;
+> 129:    float ring = floor(vK.y + 0.5);             // integer ring index (the interpolated varying is not exact)
+> 143:      float st = streaks(ang, ring);
+> 161:      float cb = streaks(ang + 1.3, ring + 31.0);
+
+### 🤖 Claude — 2026-11-18T02:14:37.630Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s5.png"}`
+
+### 🧑 User — 2026-11-18T02:14:37.661Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:14:41.625Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/r_m9m/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:14:41.682Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:14:57.587Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\na=s[s.index(\"    float rad = clamp(rr / 3.6, 0.002, 1.0);\"):s.index(\"  } else {\\n    bool mouth\")]\nb=\"\"\"    // soft warm-white core, yellow-orange glow, orange toward the rim (matches the far bands), no hard target rings\n    float rad = clamp(rr / 3.6, 0.0, 1.0);\n    col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));\n    col = mix(col, vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));\n    col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(lo …[+926 chars]`
+
+### 🧑 User — 2026-11-18T02:15:27.560Z
+
+> ↩︎ result: a00 diff px >0: 1231171  >20: 401048 max 255
+> bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+
+### 🤖 Claude — 2026-11-18T02:15:33.970Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_base \"match04=1\" a00_approved_view 2>&1 | grep \"^04\"; python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('qa/match/04/r8/BEFORE/a00_approved_view.png').convert('RGB')).astype(int)\nfor n in ['r_base','r_s1']:\n  b=np.asarray(Image.open('$SP/'+n+'/a00_approved_view.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); print(n,'diff px >0:', (d>0).sum(), ' >20:', (d>20).sum(), 'max', d.max())\n\"; g …[+117 chars]`
+
+### 🧑 User — 2026-11-18T02:15:44.692Z
+
+> ↩︎ result: 04 a00_approved_view s 78.341 lat 0 stage 04 frames 0
+> r_base diff px >0: 1185465  >20: 234211 max 255
+> r_s1 diff px >0: 1231171  >20: 401048 max 255
+> src/game/Game.ts:680:    goto: gotoCheckpoint,
+
+### 🤖 Claude — 2026-11-18T02:15:48.193Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,40p scripts/capture.mjs | grep -n \"argv\\|--q\\|--out\\|out\" | head -20", "description": "Check capture script options"}`
+
+### 🧑 User — 2026-11-18T02:15:48.229Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+
+### 🤖 Claude — 2026-11-18T02:15:50.131Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,30p scripts/capture.mjs", "description": "Read capture script header"}`
+
+### 🧑 User — 2026-11-18T02:15:50.162Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+684 chars]
+
+### 🤖 Claude — 2026-11-18T02:15:56.351Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node scripts/capture.mjs 04 --q=match04=1 --out=$SP/cap_base 2>&1 | grep -v \"403\\|allow list\" | tail -2; node scripts/capture.mjs 04 \"--q=match04=1&m04ring=1\" --out=$SP/cap_ring 2>&1 | grep -v \"403\\|allow list\" | tail -2; git checkout qa/capture_log.json 2>/dev/null; python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/cap_base/04.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('$SP/cap_ring/04.png').convert('RGB')).asty …[+314 chars]`
+
+### 🧑 User — 2026-11-18T02:16:14.315Z
+
+> ↩︎ result: console errors: [
+> ]
+> console errors: [
+> ]
+> diff px >0: 75580  >20: 368 max 238
+> bbox (np.int64(16), np.int64(37), np.int64(849), np.int64(1029))
+>  M src/world/match04m4.ts
+> ?? tools/match04/audit04.mjs
+
+### 🤖 Claude — 2026-11-18T02:16:23.091Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; python3 -I tools/match04/metrics04.py references/04_through_the_five_arrows.png $SP/cap_base/04.png $SP/cap_ring/04.png $SP/m_ring.json 2>&1 | tail -15", "description": "Whole-frame metrics approved view base vs m04ring"}`
+
+### 🧑 User — 2026-11-18T02:16:24.296Z
+
+> ↩︎ result: FULL                                   BEFORE  81.4 %  SSIM 0.814   NEW  81.4 %  SSIM 0.814
+> BELOWHUD                               BEFORE  89.5 %  SSIM 0.882   NEW  89.5 %  SSIM 0.882
+> SCENERY                                BEFORE  98.2 %  SSIM 0.973   NEW  98.2 %  SSIM 0.973
+> upper_room_ringtop_y200_560            BEFORE 100.0 %  SSIM 0.996   NEW 100.0 %  SSIM 0.996
+> middle_tunnel_arrows_coins_y560_960    BEFORE  96.9 %  SSIM 0.955   NEW  96.9 %  SSIM 0.955
+> lower_water_foam_y960_1536_noBenny     BEFORE  97.7 %  SSIM 0.971   NEW  97.7 %  SSIM 0.971
+> BENNY                                  BEFORE  25.3 %  SSIM 0.207   NEW  25.3 %  SSIM 0.207
+
+### 🤖 Claude — 2026-11-18T02:16:27.030Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,30p tools/lead_r6/motion_metrics.py", "description": "Read motion metrics script usage"}`
+
+### 🧑 User — 2026-11-18T02:16:27.074Z
+
+> ↩︎ result: """Lead r6: measured (not subjective) numbers for moving-gameplay frames vs the approved picture, below the HUD strip
+> (rows >= 13.5 %). LAYOUT20 = share of pixels within 20 levels after a sigma-8 blur (composition + colour, like
+> tools/qa/screen_match.py LAYOUT). PALETTE = histogram intersection of hue x saturation (24 x 8 bins, value > 0.15) —
+> how close the colour palette stays, independent of where things are. Moving frames are seen from other viewpoints, so
+> LAYOUT naturally falls as the camera travels; PALETTE shows whether the approved look (colours/materials) survives.
+> usage: python3 -I motion_metrics.py <approved.png> <frame.png> [...]  -> one line per frame"""
+> import sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> ref = Image.open(sys.argv[1]).convert('RGB')
+> W, H = ref.size; top = int(H * 0.135)
+> def prep(im):
+>     im = im.convert('RGB').resize((W, H))
+>     return im
+> def hsv_hist(a):
+>     hsv = np.asarray(Image.fromarray(a).convert('HSV'), dtype=np.float32) / 255.0
+>     m = hsv[..., 2] > 0.15
+>     h, _, _ = np.histogram2d(hsv[..., 0][m], hsv[..., 1][m], bins=[24, 8], range=[[0, 1], [0, 1]])
+>     return h / max(h.sum(), 1)
+> R = np.asarray(ref)[top:]; Rb = np.asarray(ref.filt …[+436 chars]
+
+### 🤖 Claude — 2026-11-18T02:16:33.787Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && node tools/match04/audit04.mjs qa/match/04/r8/step1_m04ring \"match04=1&m04ring=1\" f06_forward6u,f10_forward10u,t33_through_screen,t66_through_screen 2>&1 | grep \"^04\"; python3 -I tools/lead_r6/motion_metrics.py references/04_through_the_five_arrows.png qa/match/04/r8/BEFORE/{f06_forward6u,f10_forward10u,t33_through_screen,t66_through_screen}.png qa/match/04/r8/step1_m04ring/{f06_forward6u,f10_forward10u,t33_through_screen,t66_through_screen}.png; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\ndef sharp(p):\n    a=np.asarray(Image.open(p). …[+474 chars]`
+
+### 🧑 User — 2026-11-18T02:17:05.812Z
+
+> ↩︎ result: 04 f06_forward6u s 84.545 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.151 lat 0 stage 04 frames 43
+> 04 t33_through_screen s 90.481 lat 0 stage 04 frames 53
+> 04 t66_through_screen s 102.849 lat 0 stage 04 frames 106
+> f06_forward6u          LAYOUT20   9.2 %  PALETTE  73.7 %
+> f10_forward10u         LAYOUT20   7.8 %  PALETTE  61.6 %
+> t33_through_screen     LAYOUT20   7.2 %  PALETTE  62.2 %
+> t66_through_screen     LAYOUT20   4.6 %  PALETTE  63.3 %
+> f06_forward6u          LAYOUT20   5.0 %  PALETTE  60.2 %
+> f10_forward10u         LAYOUT20   4.6 %  PALETTE  56.7 %
+> t33_through_screen     LAYOUT20   4.7 %  PALETTE  57.3 %
+> t66_through_screen     LAYOUT20   3.5 %  PALETTE  59.3 %
+> f06_forward6u tunnel sharpness (mean gradient, y 250-900) BEFORE 2.3 NEW 2.0
+> f10_forward10u tunnel sharpness (mean gradient, y 250-900) BEFORE 1.6 NEW 1.6
+> t33_through_screen tunnel sharpness (mean gradient, y 250-900) BEFORE 1.8 NEW 1.6
+> t66_through_screen tunnel sharpness (mean gradient, y 250-900) BEFORE 2.2 NEW 1.5
+
