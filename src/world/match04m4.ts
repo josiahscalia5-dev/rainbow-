@@ -324,6 +324,13 @@ float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); 
 float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
   return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
 // chevron pointing down the slide: distance to the two arms
+#ifdef SWEPT_WATERBANDS
+float sweptArc(float section, float along) {
+  float sweep = 1.10 * sin(along * 0.39 + 0.35) + 0.24 * sin(along * 0.73 - 0.55);
+  float taper = 1.0 - smoothstep(0.73 * uSB0.z, uSB0.z, abs(section));
+  return abs(section) + taper * (0.48 + sign(section) * sweep);
+}
+#endif
 float chev(vec2 p, float hw, float th) {
   p.x = abs(p.x);
   vec2 a = vec2(0.0, 0.0), b = vec2(hw, -hw * 2.3);   // long arms along the flow (painted arrows seen low)
@@ -403,7 +410,11 @@ void main() {
   if (uPk.x > 0.5) {
     // m04pink: the painted broad pink / magenta swirl bands either side of the cyan lane; the swirl structure (the
     // tile's brightness) is kept, re-coloured into the painted magenta -> hot pink -> pale pink, with cyan streaks left
-    float side = smoothstep(uPk.y, uPk.y + 0.7, abs(vS)) * (1.0 - smoothstep(uPk.z, uPk.z + 0.9, abs(vS)));
+    float bandArc = abs(vS);
+#ifdef SWEPT_WATERBANDS
+    bandArc = sweptArc(vS, along);
+#endif
+    float side = smoothstep(uPk.y, uPk.y + 0.7, bandArc) * (1.0 - smoothstep(uPk.z, uPk.z + 0.9, bandArc));
     float l = dot(col, vec3(0.30, 0.55, 0.15));
     vec3 pk = mix(vec3(0.55, 0.08, 0.58), vec3(0.96, 0.30, 0.78), smoothstep(0.22, 0.58, l));
     pk = mix(pk, vec3(1.0, 0.78, 0.96), smoothstep(0.66, 0.95, l));
@@ -423,6 +434,10 @@ void main() {
     // ribbon -> lilac sparkle at the wall), cut from references/04 (tools/match04/sideband04.py), by arc length across the
     // trough and world position along it (flowing with the current), two offset samples blended like the river tile
     float as = abs(vS);
+#ifdef SWEPT_WATERBANDS
+    // Both banks follow a fixed S on the existing 3D trough. The wall contact stays in place.
+    as = sweptArc(vS, along);
+#endif
     float wan = uSB1.w * (vn(vec2(along * 0.11, sign(vS) * 5.0 + 2.0)) - 0.5) * 2.0;
     float tb = clamp((as + wan - uSB0.y) / max(0.1, uSB0.z - uSB0.y), 0.0, 1.0);
     float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
@@ -885,7 +900,7 @@ export function addM04(ctx: M04Ctx) {
       sideBand.minFilter = THREE.LinearMipmapLinearFilter; sideBand.anisotropy = 8;
     }
     // tiles04.json river3: lateral +-4 u, along 1.757 .. 6.409 u from Benny's checkpoint water point
-    const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+    const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, defines: M04.num('cx04WaterSweep', 0) > 0 ? { SWEPT_WATERBANDS: 1 } : {}, side: THREE.DoubleSide, fog: false,
       extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
         uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
