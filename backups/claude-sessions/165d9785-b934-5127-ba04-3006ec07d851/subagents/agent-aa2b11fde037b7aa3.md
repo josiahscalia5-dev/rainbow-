@@ -1604,3 +1604,308 @@ No cycles. Implementing the switch now.
 > /**
 >  * `&m05end=1` (Screen 05 round 11, needs m05far): the last part of the stage (t ≈ 0.88 … 0.96, Benny ≈ 182 … 186.5)
 
+### 🤖 Claude — 2026-11-18T13:08:33.485Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "import { clip05 } from '../vfx/clip05';\n", "new_string": "import { clip05 } from '../vfx/clip05';\nimport type { FarLump05 } from '../vfx/foam';\n"}`
+
+### 🧑 User — 2026-11-18T13:08:33.509Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:08:35.583Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "  /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */\n  course?: Course;\n}", "new_string": "  /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */\n  course?: Course;\n  /** `&m05fcloud=1` (round 12): foam-cloud lumps along both far banks (src/vfx/foam.ts createFarCloud05) */\n  clouds?: { mesh: THREE.InstancedMesh; lumps: FarLump05[] };\n}"}`
+
+### 🧑 User — 2026-11-18T13:08:35.605Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:08:41.238Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "  let lastEye = new THREE.Vector3(Infinity, 0, 0), live = true, open = 0;\n  const eye = new THREE.Vector3();", "new_string": "  let lastEye = new THREE.Vector3(Infinity, 0, 0), live = true, open = 0;\n  const eye = new THREE.Vector3();\n  // `&m05fcloud=1` (Screen 05 round 12): far-bank foam clouds on the far layout's water edge, anchored to the virtual\n  // tunnel, compressed like the block, only where the block is live and its baked picture magnified (as m05fmag)\n  const cm = new THREE.Matrix4( …[+988 chars]`
+
+### 🧑 User — 2026-11-18T13:08:41.256Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:08:42.587Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "      place(a.farRings, a.ringItems, open);\n      place(a.farLids, a.lidItems, open);\n    }", "new_string": "      place(a.farRings, a.ringItems, open);\n      place(a.farLids, a.lidItems, open);\n    }\n    placeClouds(!atLock && open < 0.999);"}`
+
+### 🧑 User — 2026-11-18T13:08:42.611Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:08:51.094Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/environment.ts", "old_string": "    const liveFar = M05FAR ? createLiveFar05({\n      ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,\n      radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,\n      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06\n      riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),\n      course,   // used only under  …[+1056 chars]`
+
+### 🧑 User — 2026-11-18T13:08:51.147Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:08:52.646Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/environment.ts", "old_string": "import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';", "new_string": "import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD } from '../vfx/waterRibbon';\nimport { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05fcloud=1 only"}`
+
+### 🧑 User — 2026-11-18T13:08:52.693Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:09:00.639Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git diff --stat && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcloud \"$K&m05fcloud=1\" t95_left,t75_through,t85_through,k81_kink,t66_through_screen,t90_through 2>&1 | grep -i error | head -3; ls /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-300 …[+109 chars]`
+
+### 🧑 User — 2026-11-18T13:10:25.626Z
+
+> ↩︎ result: src/vfx/foam.ts          | 55 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  src/vfx/waterRibbon.ts   | 17 +++++++++++++++
+>  src/world/environment.ts | 10 ++++++++-
+>  src/world/match05far.ts  | 28 ++++++++++++++++++++++++
+>  4 files changed, 109 insertions(+), 1 deletion(-)
+> TSC_OK
+> k81_kink.png
+> shots.json
+> t66_through_screen.png
+> t75_through.png
+> t85_through.png
+> t90_through.png
+> t95_left.png
+
+### 🤖 Claude — 2026-11-18T13:10:28.015Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcloud/t85_through.png"}`
+
+### 🧑 User — 2026-11-18T13:10:28.061Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:28.632Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcloud/t95_left.png"}`
+
+### 🧑 User — 2026-11-18T13:10:28.674Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:33.840Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcloud/t75_through.png"}`
+
+### 🧑 User — 2026-11-18T13:10:33.882Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:34.494Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcloud/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T13:10:34.538Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:38.034Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcloud/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T13:10:38.076Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:38.644Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcloud/t90_through.png"}`
+
+### 🧑 User — 2026-11-18T13:10:38.687Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:45.802Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "/**\n * `&m05fedge=1` (Screen 05 round 12, needs m05fmag; src/world/materials.ts farRiverMaterial): the far river's floor ran\n * up to 9 u beyond the water edge right behind the seam (a wide flat pale-lilac wedge on the left bank at t66 … t95, huge\n * when steering left at t95). The painting has only a narrow foam band along the water with the slotted wall coming\n * down behind it — which is what the far river already does deeper in (rim ≈ 1.3 u). Where the block is live and its\n * picture magnif …[+185 chars]`
+
+### 🧑 User — 2026-11-18T13:10:45.848Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:10:50.562Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"M05FEDGE\" src/ ; npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1'; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; node scripts/capture.mjs 05 --q=\"$K&m05fcloud=1\" --out=$S/lockD 2>&1 | grep -c 403; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nS='$S'\na=np.asarray(Image.open(S+'/lockC/05.png').convert('RGB')).as …[+380 chars]`
+
+### 🧑 User — 2026-11-18T13:11:10.483Z
+
+> ↩︎ result: TSC_OK
+> 2
+> locked diff px: 0
+
+### 🤖 Claude — 2026-11-18T13:11:30.950Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; D=qa/match/05/r12/step3_m05fcloud; mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && for s in t66_through_screen t75_through t85_through t90_through k81_kink; do cp $S/fpaint/$s.png $D/2_BEFORE_$s.png; cp $S/fcloud/$s.png $D/3_NEW_$s.png; done; cp $S/k2/t95_left.png $D/2_BEFORE_t95_left.png; cp $S/fcloud/t95_left.png $D/3_NEW_t95_left.png; ls $D | wc -l\ncat >> qa/match/05/r12/PROGRESS.md <<'EOF'\n\n## Item — `&m05fbank=1` (round-11 unfinished f …[+3914 chars]`
+
+### 🧑 User — 2026-11-18T13:11:41.465Z
+
+> ↩︎ result: 13
+> TSC_OK
+> 1d5990d48a35bf8370025f3304e9f9d35492d192
+> 1d5990d48a35bf8370025f3304e9f9d35492d192	refs/heads/claude/rainbow-s05-match-c12
+
+### 🤖 Claude — 2026-11-18T13:11:45.896Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 r12 step 3 m05fcloud kept", "message": "S05 r12 step 3 &m05fcloud=1: GOOD IMPROVEMENT. SHA 1d5990d4 (pushed, remote == HEAD). Puffy white foam clouds now line both far banks from t66 to t95, as painted, instead of the flat pale-lilac rim band. Locked view 0 px. Tried and not kept: m05fbank, m05fedge (no visible gain). Still wrong: steering hard left at t95, a pale floor shows behind the foam line. NEW: /home/user/wt/s05/qa/match/05/r12/step3_m05fcloud/3_NEW_t85_through.png, 3_NEW_k81_kink.png, 3_NEW_t95_left.png. BEFORE: the 2_BEFORE_* files in the same folder.", …[+131 chars]`
+
+### 🧑 User — 2026-11-18T13:11:45.974Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T13:11:51.446Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M", "description": "Check time"}`
+
+### 🧑 User — 2026-11-18T13:11:51.510Z
+
+> ↩︎ result: 13:11
+
+### 🤖 Claude — 2026-11-18T13:11:52.685Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/k2/k81_kink_right.png"}`
+
+### 🧑 User — 2026-11-18T13:11:52.740Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:11:53.240Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/k2/t98_end.png"}`
+
+### 🧑 User — 2026-11-18T13:11:53.287Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:12:12.935Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"m05coin\\|M05COIN\" src/ | head -20; grep -rn \"far coins\\|farCoin\" src/ | head -10", "description": "Find coin-related Screen 05 switches"}`
+
+### 🧑 User — 2026-11-18T13:12:12.980Z
+
+> ↩︎ result: src/gameplay/coins.ts:67: * `&m05coin=1` (Screen 05 round 8, needs `?match05=1` / coins05; qa/match/05/NOTES.md "Round 8"): coin LOOK only on the
+> src/gameplay/coins.ts:70: *     cap M05COIN_CAP px, scaled with the render height) — riding brought coins to 190–230 px in front of Benny;
+> src/gameplay/coins.ts:76:const M05COIN = COINS05 && flag05('m05coin');
+> src/gameplay/coins.ts:77:const M05COIN_CAP = 100;
+> src/gameplay/coins.ts:94:    if (M05COIN) {
+> src/gameplay/coins.ts:95:      // m05coin: shrink the coin about its own centre (on-screen size cap + passed-coin hide), 05 coins only
+> src/gameplay/coins.ts:104:  float c05K = min(1.0, ${M05COIN_CAP.toFixed(1)} * uPjRes.y / 1536.0 / max(c05Px, 1e-3));
+> src/gameplay/coins.ts:118:  mat.customProgramCacheKey = () => (M05COIN ? 'coin05m' : 'coin05');
+> src/gameplay/coins.ts:336:  if (M05COIN) {
+> src/gameplay/coins.ts:404:      if (M05COIN) { const f = course.sample(s); post05.uC05Benny.value.copy(f.pos).addScaledVector(f.right, lat); }
+> src/gameplay/coins.ts:422:      if (M05COIN) post05.uC05Benny.value.copy(course.sample(s - 0.5).pos);
+> src/world/far05.ts:72:  /** visible cyan core centre (between the bands) — flow lines and the far coins follow it  …[+544 chars]
+
+### 🤖 Claude — 2026-11-18T13:12:15.935Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "offset": 1, "limit": 130}`
+
+### 🧑 User — 2026-11-18T13:12:15.956Z
+
+> ↩︎ result: 1	/**
+> 2	 * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 3	 * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+> 4	 * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+> 5	 * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+> 6	 */
+> 7	import * as THREE from 'three';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import { canvasTexture } from '../world/materials';
+> 10	import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 11	
+> 12	export const COIN_VALUE = 10;
+> 13	
+> 14	/** `?coins05=1` / `?match05=1`: Screen 05 reference coins (measured 05 layout C05M + approved coin look, all screens) */
+> 15	const COINS05 = on05('coins05');
+> 16	/**
+> 17	 * `?coins05tot=1` (on with `?coins05=1` / `?match05=1`; explicit `=0` = off; Screen 05 agent 2026-11-17, qa/match/05/NOTES.md):
+> 18	 * COIN TOTAL KEPT = the default game's 91 coins / 2,240. The measured arrangement C05M (18 coins) replaces 7 default 05
+> 19	 * coins after the checkpoint, so the run had 102 coins (100 reachable). With this switch:
+> 20	 *  1. the two  …[+7749 chars]
+
+### 🤖 Claude — 2026-11-18T13:12:29.524Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "offset": 300, "limit": 140}`
+
+### 🧑 User — 2026-11-18T13:12:29.550Z
+
+> ↩︎ result: 300	      c.bezierCurveTo(90, 128, 166, 124, 166, 160);
+> 301	      c.bezierCurveTo(166, 196, 104, 198, 88, 168);
+> 302	      c.stroke();
+> 303	      c.lineWidth = lw * 0.62;
+> 304	      c.beginPath(); c.moveTo(128, 50); c.lineTo(128, 206); c.stroke();
+> 305	      c.restore();
+> 306	    };
+> 307	    dollar(3, 4, '#7a3c00', 32); // drop shadow
+> 308	    dollar(0, 0, '#b86400', 30); // dark outline
+> 309	    dollar(0, 0, '#ffe55a', 18); // bright raised glyph
+> 310	    dollar(-3, -3, '#fff8d0', 6); // top-left bevel highlight
+> 311	  });
+> 312	  // the cylinder cap's UVs run sideways once the coin is stood up (rotateX): turn the face art upright
+> 313	  faceTex.center.set(0.5, 0.5);
+> 314	  faceTex.rotation = -Math.PI / 2;
+> 315	  // milled (ridged) gold edge, as on the ref coins
+> 316	  const edgeTex = canvasTexture(256, 8, (c, w, h) => {
+> 317	    for (let x = 0; x < w; x += 4) { c.fillStyle = (x / 4) % 2 ? '#c08000' : '#ffe070'; c.fillRect(x, 0, 4, h); }
+> 318	  });
+> 319	  const geo = new THREE.CylinderGeometry(0.5, 0.5, COINS05 ? C05LOOK.thick : 0.2, 48, 1);
+> 320	  geo.rotateX(Math.PI / 2); // faces along ±Z
+> 321	  // Gold is carried mostly by EMISSIVE art (blue ≈ 0) so the pink-white candy environment and the
+> 322	  / …[+5410 chars]
+
+### 🤖 Claude — 2026-11-18T13:13:03.205Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "export const M05END: boolean = M05FAR && flag05('m05end');", "new_string": "export const M05END: boolean = M05FAR && flag05('m05end');\n/**\n * `&m05fcoin=1` (Screen 05 round 12, needs m05far; src/gameplay/coins.ts): coin LOOK only. Past the far seam the real\n * course climbs away toward 06 while the far block shows the painted 05 river running on into the throat, so the next\n * coins (06) floated over the far block's left wall (t90 / t95). While the block is live, a coin past the seam is drawn\n  …[+912 chars]`
+
+### 🧑 User — 2026-11-18T13:13:03.239Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:13:04.770Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "    placeClouds(!atLock && open < 0.999);", "new_string": "    placeClouds(!atLock && open < 0.999);\n    if (M05FCOIN) {\n      far05Coins.live = !atLock && open < 0.999 ? 1 : 0;\n      far05Coins.seamS = sF + zs;\n      far05Coins.open = open;\n      far05Coins.T.copy(T);\n    }"}`
+
+### 🧑 User — 2026-11-18T13:13:04.795Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:13:07.511Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "  const placeClouds = (show: boolean) => {", "new_string": "  // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)\n  const fco = new THREE.Vector3();\n  if (M05FCOIN) {\n    far05Coins.map = (s: number, h: number, out: THREE.Vector3) => {\n      const Z = s - sF;\n      if (Z > a.zEnd * 0.98) return 0;\n      const r = rowAt(Z);\n      const lift0 = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;\n      fco.copy(Rt).multiplyScalar(r.core).addSc …[+143 chars]`
+
+### 🧑 User — 2026-11-18T13:13:07.542Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:13:17.342Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "old_string": "import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';", "new_string": "import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';\nimport { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)"}`
+
+### 🧑 User — 2026-11-18T13:13:17.397Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:13:21.748Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "old_string": "      } else {\n        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));\n      }\n      if (d.axis) {", "new_string": "      } else {\n        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));\n      }\n      // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the coin is drawn on\n      // the far river's core where the block shows that stretch  …[+694 chars]`
+
+### 🧑 User — 2026-11-18T13:13:21.787Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:13:23.052Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "old_string": "  const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();\n", "new_string": "  const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();\n  const fcP = new THREE.Vector3();   // m05fcoin (Screen 05 round 12)\n"}`
+
+### 🧑 User — 2026-11-18T13:13:23.103Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:13:30.803Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin \"$K&m05fcoin=1\" t90_through,t95_through_screen,t95_left,t85_through,t98_end,t66_through_screen 2>&1 | grep -v \"^\\s*$\" | tail -8", "description": "Type-check and render m05fcoin test shots", " …[+17 chars]`
+

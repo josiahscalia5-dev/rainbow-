@@ -1,64 +1,50 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index 912f4743..7b078652 100644
+index e6f42e0a..ca8efb63 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
-@@ -75,6 +75,7 @@ uniform vec4 uClipIn;       // m08far collar only: discard inside this x/y circl
- uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on
- uniform vec4 uCeil;         // m08ceil (door wall only): painted door centre x, y on the door plane, plane z, w > 0.5 = on
- uniform vec4 uCeilW;        // m08ceil source window: angle start, angle width (rad), radius band start, end (world u)
-+uniform vec2 uCeilD;        // m08drum (chamber drum only): x > 0.5 = on, y = fade length (u) from the door plane toward the arch
- uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from the approved picture's own near band (near08.py)
+@@ -83,6 +83,7 @@ uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from
  uniform vec4 uNear;         // z at tile v = 0, world length of one tile period along the river, tile lateral half range A, w > 0.5 = on
  uniform vec4 uNearM;        // projection magnification ramp start / end, lateral fade start / end (|lane position|, 1 = bank)
-@@ -107,8 +108,8 @@ vec3 fillColor() {
- // radius in a clean window of the painted wall beside the door (left of the door, between the spout cup and its stream),
- // repeated (mirrored, a whole number of times around) by angle; beyond the window's slot band the slot rows repeat outward.
- // The rings therefore continue across the old seam instead of meeting a generic tile.
--vec3 ceilColor() {
--  vec2 d = vW.xy - uCeil.xy;
-+vec3 ceilColorAt(vec2 pxy) {
-+  vec2 d = pxy - uCeil.xy;
-   float r = length(d), a = atan(d.y, d.x);
-   float fu = mod((a - uCeilW.x) / uCeilW.y, 2.0);
-   float as = uCeilW.x + (fu < 1.0 ? fu : 2.0 - fu) * uCeilW.y;
-@@ -145,7 +146,15 @@ void main() {
-   // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
-   vec3 pc = patchColor();
-   if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
--  if (uCeil.w > 0.5) pc = mix(pc, ceilColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
-+  if (uCeil.w > 0.5) pc = mix(pc, ceilColorAt(vW.xy), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
-+  // m08drum: a drum point the approved view could not see (the top corners next to the door, behind the arch ring) continues
-+  // the SAME painted rings as the door wall: the projector ray through it is followed to the door plane and coloured there
-+  // as m08ceil colours the door wall (identical at the drum / door-wall junction, so no seam); fades out toward the arch
-+  if (uCeilD.x > 0.5) {
-+    vec3 dp = uProjPos + (vW - uProjPos) * ((uCeil.z - uProjPos.z) / (vW.z - uProjPos.z));
-+    float wz = 1.0 - smoothstep(uCeil.z + 0.5 * uCeilD.y, uCeil.z + uCeilD.y, vW.z);
-+    pc = mix(pc, ceilColorAt(dp.xy), wz * smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
-+  }
-   vec3 t = pc;
-   // stretch guard: the projection is used where the current view sees the surface no more face-on than the approved
-   // view did (ratio of the two incidence cosines); in the approved view itself the ratio is 1 -> pure projection
-@@ -354,7 +363,7 @@ export async function buildMatch08(): Promise<Match08> {
-       uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ },
-       uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
-       uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) },
--      uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) },
-+      uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) },
-       uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
-       uNearC: { value: new THREE.Vector2(0, 1) },
-       uCup: { value: new THREE.Vector4(0, 0, 0, 0) }, uCupM: { value: new THREE.Vector3(1, 0, 0) } },
-@@ -514,6 +523,14 @@ export async function buildMatch08(): Promise<Match08> {
-     const d2r = THREE.MathUtils.degToRad;
-     (doorM as THREE.ShaderMaterial).uniforms.uCeil.value.set(11.952, -103.725, C.zDoor, 1);
-     (doorM as THREE.ShaderMaterial).uniforms.uCeilW.value.set(d2r(num('m08ceila', 187)), d2r(num('m08ceilw', 30)), num('m08ceilr0', 7.25), num('m08ceilr1', 8.1));
-+    // `&m08drum=1` (r12): the drum's top corners next to the door (hidden behind the arch ring in the approved view, a fill
-+    // tile with a soft curved edge against the door wall while swimming) continue the door wall's painted rings (FRAG)
-+    if (flag05('m08drum')) {
-+      const du = M.drum.uniforms;
-+      du.uCeil.value.set(11.952, -103.725, C.zDoor, 0);
-+      du.uCeilW.value.copy((doorM as THREE.ShaderMaterial).uniforms.uCeilW.value);
-+      du.uCeilD.value.set(1, num('m08druml', 16));
+ uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)
++uniform vec2 uNearG;        // m08glint: x > 0.5 = painted scale in the lane's middle (banks take up the rest), y = painted half width (u)
+ uniform vec4 uCup;          // m08cup (spout cups only): cup centre xyz, w > 0.5 = on
+ uniform vec3 uCupM;         // m08cup mirror plane normal (horizontal, perpendicular to the projector's view of the cup)
+ varying vec4 vProj;
+@@ -242,7 +243,15 @@ void main() {
+     vec3 r = riv(vW.z);
+     float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mn);
+     float sl = (vW.x - r.x) / h;
+-    vec2 tuv = vec2(0.5 + (uNearC.x + uNearC.y * sl) / (2.0 * uNear.z), (uNear.x - vW.z) / uNear.y);
++    float ta = uNearC.x + uNearC.y * sl;
++    if (uNearG.x > 0.5) {
++      // m08glint (r12): the lane's middle at the painted scale (glints / streaks at their painted size), the banks take up
++      // the rest of the lane (piecewise, as the m08swim remap does)
++      float dd = vW.x - r.x, ad = abs(dd), dc = 0.45 * uNearC.y * uNearG.y;
++      float g = ad <= dc ? ad / uNearG.y : 0.45 * uNearC.y + (min(ad, h) - dc) / max(h - dc, 1e-3) * 0.55 * uNearC.y;
++      ta = uNearC.x + sign(dd) * g;
 +    }
++    vec2 tuv = vec2(0.5 + ta / (2.0 * uNear.z), (uNear.x - vW.z) / uNear.y);
+     float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
+     if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
    }
-   add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), doorM, 'doorwall');
-   // floor / river plane at Benny's water level, from behind the camera to the door wall
+@@ -386,7 +395,7 @@ export async function buildMatch08(): Promise<Match08> {
+       uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) },
+       uRingT: { value: ringTex ?? plate }, uRing: { value: new THREE.Vector4(0, 1, 0, 1) }, uRingOn: { value: 0 },
+       uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
+-      uNearC: { value: new THREE.Vector2(0, 1) },
++      uNearC: { value: new THREE.Vector2(0, 1) }, uNearG: { value: new THREE.Vector2(0, 1) },
+       uCup: { value: new THREE.Vector4(0, 0, 0, 0) }, uCupM: { value: new THREE.Vector3(1, 0, 0) } },
+   });
+   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
+@@ -400,7 +409,10 @@ export async function buildMatch08(): Promise<Match08> {
+     const c = (NJ.waterA[0] + NJ.waterA[1]) / 2, hw = (NJ.waterA[1] - NJ.waterA[0]) / 2;
+     const kIso = SWIM_HALF / hw / NJ.halfWidth;
+     const u = M.floor.uniforms;
+-    u.uNear.value.set(NJ.z0, NJ.zLen * kIso * num('m08nearv', 1), NJ.A, 1);
++    // `&m08glint=1` (r12): painted size along the river too (the tile period at the painted length)
++    const glint = flag05('m08glint');
++    u.uNear.value.set(NJ.z0, NJ.zLen * (glint ? 1 : kIso) * num('m08nearv', 1), NJ.A, 1);
++    if (glint) u.uNearG.value.set(1, NJ.halfWidth);
+     u.uNearM.value.set(num('m08nearm0', 1.6), num('m08nearm1', 2.6), num('m08nearl0', 0.85), num('m08nearl1', 1.0));
+     u.uNearC.value.set(c, hw);
+   }

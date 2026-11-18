@@ -1,146 +1,108 @@
-diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
-index 49c9bb49..9cb87a4b 100644
---- a/src/vfx/foam.ts
-+++ b/src/vfx/foam.ts
-@@ -489,6 +489,61 @@ function makeBankBubbleMaterial() {
-   return { mat, uniforms };
- }
+diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
+index c99178d6..d2eceefe 100644
+--- a/src/gameplay/coins.ts
++++ b/src/gameplay/coins.ts
+@@ -8,6 +8,7 @@ import * as THREE from 'three';
+ import type { Course, StageId } from '../world/course';
+ import { canvasTexture } from '../world/materials';
+ import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
++import { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)
  
-+/** `&m05fcloud=1` (Screen 05 round 12): one far-bank foam lump in the far block's virtual frame (src/world/match05far.ts) */
-+export interface FarLump05 {
-+  /** virtual depth beyond the far seam origin sF (anchored: the virtual tunnel stays put) */
-+  Z: number;
-+  /** -1 left bank, +1 right bank */
-+  side: number;
-+  /** offset outward from the far layout's water edge (units; negative = over the water) */
-+  e: number;
-+  /** height above the bank surface (units, before the block's compression) */
-+  lift: number;
-+  /** radius (units, before the block's compression) */
-+  r: number;
-+}
-+/**
-+ * `&m05fcloud=1` (Screen 05 round 12, waterRibbon.ts M05FCLOUD): the near banks' foam clouds (m05cloud: clusters of 6–12
-+ * mixed-size lumps, larger ones low in the middle, + small bubbles at the waterline) laid along both far-river banks from
-+ * Z = 0 to zMax. Same impostor material as the 05 rim lumps (fresh instance: NOT clipped at the seam — these lumps live
-+ * beyond it). Matrices are written every frame by match05far.ts (scale 0 = hidden).
-+ */
-+export function createFarCloud05(zMax: number): { mesh: THREE.InstancedMesh; lumps: FarLump05[] } {
-+  const rc = rng(5353);
-+  const lumps: FarLump05[] = [];
-+  const cols: [number, number, number][] = [];
-+  for (let Z = 0.2; Z < zMax; Z += 0.6 + rc() * 1.0) {
-+    for (const side of [-1, 1]) {
-+      if (rc() < 0.12) continue;
-+      const zc = Z + (rc() - 0.5) * 0.6, ec = -0.15 + rc() * 0.75;
-+      const n = 7 + ((rc() * 7) | 0);
-+      const big = 0.24 + rc() * 0.2;
-+      for (let k = 0; k < n; k++) {
-+        const a = rc() * Math.PI * 2, d = Math.sqrt(rc());
-+        const r = big * (0.45 + 0.6 * (1 - d) * rc() + 0.25 * rc());
-+        lumps.push({ Z: zc + Math.cos(a) * d * 0.75, side, e: ec + Math.sin(a) * d * 0.55, lift: r * (0.05 + 0.25 * (1 - d)), r });
-+        cols.push([0.78 + 0.22 * (1 - d), rc(), rc() * 2 - 1]);
+ export const COIN_VALUE = 10;
+ 
+@@ -350,6 +351,7 @@ export function createCoins(course: Course): CoinSystem {
+   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+   const back = new THREE.Vector3();
+   const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();
++  const fcP = new THREE.Vector3();   // m05fcoin (Screen 05 round 12)
+ 
+   let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
+   const place = (time: number) => {
+@@ -366,7 +368,21 @@ export function createCoins(course: Course): CoinSystem {
+       } else {
+         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));
+       }
+-      if (d.axis) {
++      // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the coin is drawn on
++      // the far river's core where the block shows that stretch of river, back to its real place as the block folds
++      let fcFace = false;
++      if (M05FCOIN && !collected[i] && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
++        const k = far05Coins.map(d.s, d.h + 0.08 * Math.sin(time * 3 + ph), fcP);
++        const o = far05Coins.open;
++        if (k > 0) { p.copy(fcP.lerp(p, o)); scale *= k + (1 - k) * o; } else scale *= o;
++        fcFace = o < 0.5;
 +      }
-+      const nb = 4 + ((rc() * 6) | 0);
-+      for (let k = 0; k < nb; k++) {
-+        const u = rc(), r = 0.025 + 0.05 * u * u;
-+        lumps.push({ Z: zc + (rc() - 0.5) * 1.8, side, e: ec - 0.35 - rc() * 0.4, lift: r * 0.2, r });
-+        cols.push([0.95, rc(), rc() * 2 - 1]);
-+      }
-+    }
-+  }
-+  const { mat } = makeBankBubbleMaterial();
-+  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(2, 2), mat, Math.max(1, lumps.length));
-+  mesh.name = 'foam_far05_clouds';
-+  mesh.frustumCulled = false;
-+  mesh.renderOrder = 1;
-+  mesh.visible = false;
-+  const m = new THREE.Matrix4().makeScale(0, 0, 0), c = new THREE.Color();
-+  cols.forEach((v, i) => { mesh.setMatrixAt(i, m); mesh.setColorAt(i, c.setRGB(v[0], v[1], v[2])); });
-+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-+  return { mesh, lumps };
-+}
-+
- /** unit sphere puff with smooth normals (detail 0 icosahedra get flat normals by default) */
- function puffGeometry(detail: number) {
-   const g = new THREE.IcosahedronGeometry(1, detail);
-diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
-index 956a8efb..7bfb03d2 100644
---- a/src/vfx/waterRibbon.ts
-+++ b/src/vfx/waterRibbon.ts
-@@ -424,6 +424,23 @@ export const m05fmagD0 = { value: 53.25 };
-  * far block is not live there → weight 0 → unchanged.
-  */
- export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
-+/**
-+ * `&m05fedge=1` (Screen 05 round 12, needs m05fmag; src/world/materials.ts farRiverMaterial): the far river's floor ran
-+ * up to 9 u beyond the water edge right behind the seam (a wide flat pale-lilac wedge on the left bank at t66 … t95, huge
-+ * when steering left at t95). The painting has only a narrow foam band along the water with the slotted wall coming
-+ * down behind it — which is what the far river already does deeper in (rim ≈ 1.3 u). Where the block is live and its
-+ * picture magnified, the floor keeps that narrow rim near the seam too. Locked view: block not live → unchanged.
-+ */
-+export const M05FEDGE: boolean = M05FMAG && q05('m05fedge');
-+/**
-+ * `&m05fcloud=1` (Screen 05 round 12, needs m05fmag + m05cloud; src/vfx/foam.ts createFarCloud05, src/world/match05far.ts):
-+ * the far river's banks behind the seam were a flat pale-lilac rim band (the "wedge" on the left bank, t66 … t95; huge
-+ * when steering left at t95) where the painting has puffy white foam clouds along the water's edge. Under the switch the
-+ * same foam-cloud lumps as the near banks (m05cloud: clusters of mixed-size lumps + small bubbles) line both far banks,
-+ * anchored to the far block's virtual tunnel (they approach like real geometry), shown only where the block is live and
-+ * its baked picture magnified (elsewhere F's own painted foam shows). Locked view: hidden → unchanged.
-+ */
-+export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
- /** m05fpaint: shared uniforms (T2 texture + its start / half period, the ribbon's flow vector), filled by attachProj05 */
- export const m05fpaint = {
-   uPjT2: { value: null as THREE.Texture | null },
++      if (fcFace) {
++        back.copy(far05Coins.T).negate();
++        up05.set(0, 1, 0).addScaledVector(back, -back.y).normalize();
++        right05.crossVectors(up05, back).normalize();
++        basis.makeBasis(right05, up05, back);
++      } else if (d.axis) {
+         // coins05 measured coins: face down the 05 tube axis, upright (world up), as in the approved picture
+         back.copy(d.axis).negate();
+         up05.set(0, 1, 0).addScaledVector(back, -back.y).normalize();
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index af7fec92..4d3d6a23 100644
+index 0b1d93f6..8e6715f1 100644
 --- a/src/world/match05far.ts
 +++ b/src/world/match05far.ts
-@@ -24,6 +24,7 @@ import type { FarRiverLayout, FarRiverRow } from './far05';
- import type { Course, CourseSample } from './course';
- import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';
- import { clip05 } from '../vfx/clip05';
-+import type { FarLump05 } from '../vfx/foam';
+@@ -37,6 +37,27 @@ export const M05FAR: boolean = MATCH05 && flag05('m05far');
+  * 06 look unchanged; the locked view never uses this (block at its build-time geometry there).
+  */
+ export const M05END: boolean = M05FAR && flag05('m05end');
++/**
++ * `&m05fcoin=1` (Screen 05 round 12, needs m05far; src/gameplay/coins.ts): coin LOOK only. Past the far seam the real
++ * course climbs away toward 06 while the far block shows the painted 05 river running on into the throat, so the next
++ * coins (06) floated over the far block's left wall (t90 / t95). While the block is live, a coin past the seam is drawn
++ * where the far block shows that stretch of river: on the far river's cyan core at virtual depth Z = s − sF, scaled like
++ * the block (kOf), facing down the tunnel; as the block folds into 06 it moves back to its real place. Positions,
++ * pickups, count and score unchanged. `far05Coins` is written by the live sync below.
++ */
++export const M05FCOIN: boolean = M05FAR && flag05('m05fcoin');
++export const far05Coins = {
++  /** 1 while the far block is live (not at the locked eye, not fully folded) */
++  live: 0,
++  /** course s of the sliding seam */
++  seamS: 0,
++  /** fold factor 0 … 1 */
++  open: 1,
++  /** tunnel axis (coins face down it) */
++  T: new THREE.Vector3(0, 0, 1),
++  /** visual place of a coin at course s, height h above the water: writes `out`, returns the block's scale there (0 = beyond the throat) */
++  map: null as null | ((s: number, h: number, out: THREE.Vector3) => number),
++};
  
- export const M05FAR: boolean = MATCH05 && flag05('m05far');
- /**
-@@ -65,6 +66,8 @@ export interface LiveFar05Args {
-   riverUp: (z: number) => number;
-   /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */
-   course?: Course;
-+  /** `&m05fcloud=1` (round 12): foam-cloud lumps along both far banks (src/vfx/foam.ts createFarCloud05) */
-+  clouds?: { mesh: THREE.InstancedMesh; lumps: FarLump05[] };
- }
+ type Item = { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number };
  
- const ROW_KEYS: (keyof FarRiverRow)[] = ['xB', 'hw', 'cL', 'wL', 'cR', 'wR', 'core'];
-@@ -248,6 +251,30 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
- 
-   let lastEye = new THREE.Vector3(Infinity, 0, 0), live = true, open = 0;
-   const eye = new THREE.Vector3();
-+  // `&m05fcloud=1` (Screen 05 round 12): far-bank foam clouds on the far layout's water edge, anchored to the virtual
-+  // tunnel, compressed like the block, only where the block is live and its baked picture magnified (as m05fmag)
-+  const cm = new THREE.Matrix4(), cp = new THREE.Vector3(), co = new THREE.Vector3();
-+  const placeClouds = (show: boolean) => {
-+    const c = a.clouds;
-+    if (!c) return;
-+    c.mesh.visible = show;
-+    if (!show) return;
-+    const lift0 = zs > 0 ? a.riverUp(zs) - a.riverUp(0) : 0;
-+    const ch = a.lay.chord - 0.1;
-+    c.lumps.forEach((l, i) => {
-+      let sc = 0;
-+      if (l.Z > zs + 0.02) {
-+        const r = rowAt(l.Z);
-+        const x = THREE.MathUtils.clamp(l.side < 0 ? r.xB - r.hw - l.e : r.xB + r.hw + l.e, -ch, ch);
-+        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift);
-+        point(l.Z, co, cp);
-+        const mag = (D0lock + l.Z) / Math.max(cp.distanceTo(eye), 0.5);
-+        sc = l.r * kOf(l.Z) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2) * THREE.MathUtils.smoothstep(l.Z, zs, zs + 0.6) * (1 - open);
-+      }
-+      c.mesh.setMatrixAt(i, cm.makeScale(sc, sc, sc).setPosition(cp));
-+    });
-+    c.mesh.instanceMatrix.needsUpdate = true;
-+  };
-   return (cam: THREE.Camera) => {
-     eye.setFromMatrixPosition(cam.matrixWorld);
-     if (eye.distanceToSquared(lastEye) < 1e-10) return;
+@@ -254,6 +275,19 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+   // `&m05fcloud=1` (Screen 05 round 12): far-bank foam clouds on the far layout's water edge, anchored to the virtual
+   // tunnel, compressed like the block, only where the block is live and its baked picture magnified (as m05fmag)
+   const cm = new THREE.Matrix4(), cp = new THREE.Vector3(), co = new THREE.Vector3();
++  // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)
++  const fco = new THREE.Vector3();
++  if (M05FCOIN) {
++    far05Coins.map = (s: number, h: number, out: THREE.Vector3) => {
++      const Z = s - sF;
++      if (Z > a.zEnd * 0.98) return 0;
++      const r = rowAt(Z);
++      const lift0 = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;
++      fco.copy(Rt).multiplyScalar(r.core).addScaledVector(U, a.level + lift0 + h);
++      point(Z, fco, out);
++      return kOf(Z);
++    };
++  }
+   const placeClouds = (show: boolean) => {
+     const c = a.clouds;
+     if (!c) return;
+@@ -302,6 +336,12 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+       place(a.farLids, a.lidItems, open);
+     }
+     placeClouds(!atLock && open < 0.999);
++    if (M05FCOIN) {
++      far05Coins.live = !atLock && open < 0.999 ? 1 : 0;
++      far05Coins.seamS = sF + zs;
++      far05Coins.open = open;
++      far05Coins.T.copy(T);
++    }
+     // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
+     if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
+     else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }

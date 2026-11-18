@@ -1699,3 +1699,281 @@ Now the PROGRESS.md for r12 with step 1.
 
 > ↩︎ result: 151 114 691 161
 
+### 🤖 Claude — 2026-11-18T13:08:44.384Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && $S/bin/stepdir.sh qa/match/08/r12/step3_m08drum $S/k13 $S/drN f10_forward10u t66_through_screen t95_through_screen >/dev/null && cat >> qa/match/08/r12/PROGRESS.md <<'EOF'\n\n## Step 3 — `&m08drum=1` (defect B: seam at the drum's top corners next to the door) — KEPT\nKept query: `K11&m08cup=1&m08rw=1&m08drum=1`\n* Cause: the chamber drum's upper corners beside the door lie behind the gold arch ring in the approved view, so while\n  swimming they showed the generic wall fi …[+2322 chars]`
+
+### 🧑 User — 2026-11-18T13:08:50.703Z
+
+> ↩︎ result: fd947f9de991f9093235e7fa789012c771c3a311
+> fd947f9de991f9093235e7fa789012c771c3a311	refs/heads/claude/rainbow-s08-scenery-c12
+
+### 🤖 Claude — 2026-11-18T13:08:55.738Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S08 r12 step 3 m08drum kept", "message": "S08 r12 step 3 &m08drum=1: GOOD IMPROVEMENT (small). SHA fd947f9de991f9093235e7fa789012c771c3a311 (pushed, verified). At forward 10 u and at the stage end, the wall beside and above the upper-left spout cup now carries the same curved slot rows as the rings around the door. Before, a patch of finer diagonal slots was cut off from those rows by a curved seam. Approved view scenery is unchanged (only the HUD title font differs). Kept set: K11&m08cup=1&m08rw=1&m08drum=1. NEW /home/user/wt/s08/qa/match/08/r12/step3_m08drum/3_NEW_ …[+263 chars]`
+
+### 🧑 User — 2026-11-18T13:08:55.754Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T13:09:10.660Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat > /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/bin/polar.py <<'EOF'\nimport json, math, sys, numpy as np, cv2\nfrom PIL import Image, ImageDraw\nL = json.load(open('assets/textures/match08/proj08.json'))\nplate = np.asarray(Image.open('assets/textures/match08/plate08_hybrid.png').convert('RGB')).astype(np.float32)\nHp, Wp = plate.shape[:2]\nM = np.array(L['camera']['matrixWorld']).reshape(4, 4).T\nV = np.linalg.inv(M); W, H = L['camera']['size']; f = 1 / math.tan(math.radians(L['camera']['fov']) / 2); asp = W / H\ncx …[+1262 chars]`
+
+### 🧑 User — 2026-11-18T13:09:11.526Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:09:11.863Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/polar1.png"}`
+
+### 🧑 User — 2026-11-18T13:09:11.880Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:09:23.932Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_chev.png 520,170,864,400 1.6 $S/drN/t95_through_screen.png $S/drN/f10_forward10u.png", "description": "Zoom top-right chevrons"}`
+
+### 🧑 User — 2026-11-18T13:09:24.387Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:09:25.188Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_chev.png"}`
+
+### 🧑 User — 2026-11-18T13:09:25.243Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:04.365Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s08/tools/match08/ring08.py", "content": "\"\"\"Screen 08 r12 (`&m08ring=1`): periodic slot-ring tile for the door wall / drum continuation (m08ceil / m08drum).\n\nm08ceil continues the painted end wall around the door by radius, taking the user's pixels from a clean window of the\npainted wall beside the door (angle 187-217 deg, radius 7.25-8.1 u around the painted door centre on the door plane) and\nMIRRORING that window in angle (12x around) and in radius (outward). The painted slot rows are slightly slanted against\nthe door centre, so every mirror line drew a  …[+2562 chars]`
+
+### 🧑 User — 2026-11-18T13:10:04.400Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s08/tools/match08/ring08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T13:10:07.009Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -I tools/match08/ring08.py assets/textures/match08/ring08.png assets/textures/match08/ring08.json && python3 -I -c \"\nfrom PIL import Image\nt=Image.open('assets/textures/match08/ring08.png'); print(t.size)\no=Image.new('RGB',(t.width*3,t.height*3))\nfor i in range(3):\n  for j in range(3): o.paste(t,(i*t.width,j*t.height))\no.resize((o.width//2,o.height//2)).save('/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/ring_tiled.png')\"", "description": "Build periodic ring tile and preview tiling"}`
+
+### 🧑 User — 2026-11-18T13:10:07.663Z
+
+> ↩︎ result: angle period 24.0 deg (repeats 15.0 ) radius period 0.6799999999999997
+> (512, 128)
+
+### 🤖 Claude — 2026-11-18T13:10:09.902Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/ring_tiled.png"}`
+
+### 🧑 User — 2026-11-18T13:10:09.930Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:16.898Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_appTR.png 250,250,760,420 1.4 references/08_final_spin_chamber.png", "description": "Zoom approved wall around the door top"}`
+
+### 🧑 User — 2026-11-18T13:10:17.089Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:10:17.797Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_appTR.png"}`
+
+### 🧑 User — 2026-11-18T13:10:17.817Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:10:31.420Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && node -e \"console.log(require('three/package.json').version)\" && grep -n \"define texture2D texture\" node_modules/three/build/three.module.js | head -3; grep -rn \"textureGrad\\|dFdx\" src --include=*.ts | head -5", "description": "Check three.js version and GLSL3 support"}`
+
+### 🧑 User — 2026-11-18T13:10:31.570Z
+
+> ↩︎ result: node:internal/modules/cjs/loader:671
+>       throw e;
+>       ^
+> 
+> Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './package.json' is not defined by "exports" in /home/user/wt/s08/node_modules/three/package.json
+>     at exportsNotFound (node:internal/modules/esm/resolve:318:10)
+>     at packageExportsResolve (node:internal/modules/esm/resolve:665:9)
+>     at resolveExports (node:internal/modules/cjs/loader:664:36)
+>     at Function._findPath (node:internal/modules/cjs/loader:731:31)
+>     at Function._resolveFilename (node:internal/modules/cjs/loader:1415:27)
+>     at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+>     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+>     at Function._load (node:internal/modules/cjs/loader:1216:25)
+>     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+>     at Module.require (node:internal/modules/cjs/loader:1527:12) {
+>   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+> }
+> 
+> Node.js v22.23.5
+> src/world/match08.ts:228:    float det = abs(dFdx(pu).x * dFdy(pu).y - dFdx(pu).y * dFdy(pu).x);
+> src/world/materials.ts:551:  vec3 dp1 = dFdx(-vViewPosition), dp2 = dFdy(-vViewPosition);
+> src/world/materials.ts:552:  vec2 duv1 = dFdx(vPerfUv),  …[+132 chars]
+
+### 🤖 Claude — 2026-11-18T13:10:34.239Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -m1 '\"version\"' node_modules/three/package.json; grep -c \"#version 300 es\" node_modules/three/build/three.module.js node_modules/three/build/three.cjs 2>/dev/null; grep -rn \"textureGrad\\|textureLod\" src --include=*.ts | head -3", "description": "Check three version and GLSL3 prefix"}`
+
+### 🧑 User — 2026-11-18T13:10:34.293Z
+
+> ↩︎ result: "version": "0.170.0",
+> node_modules/three/build/three.module.js:1
+> node_modules/three/build/three.cjs:1
+
+### 🤖 Claude — 2026-11-18T13:10:48.759Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 105,125p src/world/match08.ts", "description": "Show current ceilColorAt function"}`
+
+### 🧑 User — 2026-11-18T13:10:48.789Z
+
+> ↩︎ result: }
+> // m08ceil: the painted end wall is concentric around the door (chrome rim, gold bulb ring, slot rows), so a door-wall point
+> // the approved view could not see (behind the arch ring: the ceiling above the door) takes the user's pixels from the SAME
+> // radius in a clean window of the painted wall beside the door (left of the door, between the spout cup and its stream),
+> // repeated (mirrored, a whole number of times around) by angle; beyond the window's slot band the slot rows repeat outward.
+> // The rings therefore continue across the old seam instead of meeting a generic tile.
+> vec3 ceilColorAt(vec2 pxy) {
+>   vec2 d = pxy - uCeil.xy;
+>   float r = length(d), a = atan(d.y, d.x);
+>   float fu = mod((a - uCeilW.x) / uCeilW.y, 2.0);
+>   float as = uCeilW.x + (fu < 1.0 ? fu : 2.0 - fu) * uCeilW.y;
+>   float rs = r;
+>   if (r > uCeilW.w) { float w2 = uCeilW.w - uCeilW.z, fr = mod(r - uCeilW.w, 2.0 * w2); rs = fr < w2 ? uCeilW.w - fr : uCeilW.z + (fr - w2); }
+>   vec4 q = uProjVP * vec4(uCeil.xy + rs * vec2(cos(as), sin(as)), uCeil.z, 1.0);
+>   return texture2D(uPlate, q.xy / q.w * 0.5 + 0.5).rgb;
+> }
+> vec3 riv(float z) {
+>   float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;
+>   float i0 = …[+172 chars]
+
+### 🤖 Claude — 2026-11-18T13:11:02.410Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"uniform vec2 uCeilD;        // m08drum\"\"\",\"\"\"uniform sampler2D uRingT;   // m08ring: periodic slot-ring tile (ring08.py): u = angle, v = radius (repeat-wrapped)\nuniform vec4 uRing;         // m08ring: angle start, angle period (rad), radius start, radius period (u)\nuniform float uRingOn;\nuniform vec2 uCeilD;        // m08drum\"\"\")\nrep(\"\"\"  vec4 q = uProjVP * vec4(uCeil.xy + rs * vec2(cos(as), …[+2893 chars]`
+
+### 🧑 User — 2026-11-18T13:11:06.165Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:11:14.369Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K14='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/rgN && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/rgN \"$K14&m08ring=1\" 2>&1 | grep -v 'allow list' | tail -4 && python3 -I $S/bin/sbs.py $S/z_ring.png 300,150,864,420 1.0 $S/drN/t95_through_screen.png $S/rgN/t95_through_screen.png", "description": "Render m08ring NEW a …[+45 chars]`
+
+### 🧑 User — 2026-11-18T13:11:48.632Z
+
+> ↩︎ result: 08 f06_forward6u s 398.129 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+
+### 🤖 Claude — 2026-11-18T13:11:51.240Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ring.png"}`
+
+### 🧑 User — 2026-11-18T13:11:51.265Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:11:54.753Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_ring2.png 560,160,864,400 1.7 $S/drN/t95_through_screen.png $S/rgN/t95_through_screen.png", "description": "Closer zoom of ring change at t95"}`
+
+### 🧑 User — 2026-11-18T13:11:55.003Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:11:55.616Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ring2.png"}`
+
+### 🧑 User — 2026-11-18T13:11:55.637Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:12:00.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_ring3.png 0,130,864,560 0.6 $S/drN/f10_forward10u.png $S/rgN/f10_forward10u.png $S/drN/f06_forward6u.png $S/rgN/f06_forward6u.png", "description": "Compare ring effect at f10 and f06"}`
+
+### 🧑 User — 2026-11-18T13:12:00.802Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:12:01.503Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ring3.png"}`
+
+### 🧑 User — 2026-11-18T13:12:01.594Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T13:12:01.589Z
+
+[Image: original 2090x258, displayed at 2000x247. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T13:12:04.962Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_ring4.png 0,170,864,360 0.75 $S/drN/f10_forward10u.png $S/rgN/f10_forward10u.png", "description": "Zoom f10 top band ring comparison"}`
+
+### 🧑 User — 2026-11-18T13:12:05.136Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:12:05.820Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ring4.png"}`
+
+### 🧑 User — 2026-11-18T13:12:05.841Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:12:12.921Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K14='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && node scripts/capture.mjs 08 --out=$S/capRG --q=\"$K14&m08ring=1\" 2>&1 | grep -c \"→\"; git checkout -- qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/capDR/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capRG/08.png').c …[+487 chars]`
+
+### 🧑 User — 2026-11-18T13:12:27.520Z
+
+> ↩︎ result: 1
+> px differ 0 max 0 
+> vs K12 px differ 594 max 12 (np.int64(151), np.int64(114), np.int64(691), np.int64(161))
+> 13:12
+
+### 🤖 Claude — 2026-11-18T13:12:40.703Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && $S/bin/stepdir.sh qa/match/08/r12/step4_m08ring $S/drN $S/rgN t95_through_screen f10_forward10u t66_through_screen >/dev/null && cat >> qa/match/08/r12/PROGRESS.md <<'EOF'\n\n## Step 4 — `&m08ring=1` (defect B: mirror chevrons / diamonds in the slot rows, top right) — KEPT\nKept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1`\n* Cause: m08ceil (and now m08drum) continue the painted end wall from one clean window of the user's wall beside the door,\n  MIRRORED in angle ( …[+2288 chars]`
+
+### 🧑 User — 2026-11-18T13:12:47.733Z
+
+> ↩︎ result: a6f7e18303013adb2d9711ef5c9fb0823908636e
+> a6f7e18303013adb2d9711ef5c9fb0823908636e	refs/heads/claude/rainbow-s08-scenery-c12
+
+### 🤖 Claude — 2026-11-18T13:12:51.922Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S08 r12 step 4 m08ring kept", "message": "S08 r12 step 4 &m08ring=1: GOOD IMPROVEMENT. SHA a6f7e18303013adb2d9711ef5c9fb0823908636e (pushed, verified). At the stage end, forward 10 u and two-thirds through, the wall above and right of the door now shows regular slot rows curving round the door. Before, kaleidoscope diamonds, X shapes and radial mirror lines cut through those rows. The continued rows use the same window of the user's wall, repeated without mirroring. Approved view 0 px. Kept set: K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1. NEW /home/user/wt/s08/qa/match …[+294 chars]`
+
+### 🧑 User — 2026-11-18T13:12:51.937Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T13:13:14.002Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)\n\"\"\",\"\"\"uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)\nuniform vec2 uNearG;        // m08glint: x > 0.5 = painted scale in the lane's middle (banks take up the rest), y = painted half width (u)\n\"\"\")\nre …[+1468 chars]`
+
+### 🧑 User — 2026-11-18T13:13:16.751Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:13:24.039Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K15='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/glN && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/glN \"$K15&m08glint=1\" 2>&1 | grep -v 'allow list' | tail -4 && python3 -I $S/bin/sbs.py $S/z_gl.png 0,900,864,1536 0.5 references/08_final_spin_chamber.png $S/rgN/f10_forward10u.png $S/glN/f10_forward10u.png", …[+85 chars]`
+
+### 🤖 Claude — 2026-11-18T13:13:24.838Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_gl.png"}`
+
