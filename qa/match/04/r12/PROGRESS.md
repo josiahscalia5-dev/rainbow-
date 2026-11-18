@@ -88,3 +88,15 @@ the five chevrons as real geometry on the lane, low foam clusters (`m04foam3`).
 specialist (next slot) rebuilds the interior as real geometry judged by eye against the approved picture + V04-1/V04-2:
 river sides at the measured ≈ 2.2 u (`m04ry`), low foam clusters (`m04foam3`), glossy yellow-gold ring material, the five
 arrows as real geometry; the round-10 test C query is the starting point (see BRIEF_NEXT_SLOT.md).
+
+## REBUILD step 1 (user approval 2026-11-18 ~13:30 UTC: real geometry/materials) — water channel at the painted height + low foam — KEPT
+Kept query: `K&m04foam3=1&m04ry=2.2&m04rk=0.82` (K = `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1`).
+* River sides climb to the measured painted waterline (≈ 2.2 u, `waterline04.json`); the tall foam-ball walls are replaced by
+  low foam clusters along the raised water edge (`m04foam3`); the river texture is scaled across the wider channel
+  (`m04rk=0.82` = 4 / 4.85 u) — without it the outer strip wrapped into a pale lilac "rail" along the top of the water.
+* WHAT LOOKS CLOSER (APPROVED / BEFORE / NEW at forward 6 u, 20 u, hard left): thick cyan water with pink-magenta swirls now fills
+  the tunnel floor and curves up the gold sides with low foam at its edge, like the painted water; Benny swims in the open
+  channel instead of between walls of white foam balls.
+* Start view unchanged (24 isolated px differ). Still wrong: a straight line where the water meets the gold wall; foam sparser
+  than painted; the five arrows still not readable (step 2); rings duller than painted (step 3).
+* Frames: `qa/match/04/r12/s1_chan/{BEFORE,B}/` (B = kept; A = without m04rk, rejected: pale rail).
