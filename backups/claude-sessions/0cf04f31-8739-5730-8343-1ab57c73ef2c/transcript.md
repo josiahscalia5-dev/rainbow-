@@ -5126,3 +5126,201 @@ Screen 05 has a second step (the end of the stage now stays inside your painted 
 >   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/2_BEFORE_t95_through_screen.png → file_uuid: a80003ea-f1a6-4eef-9b97-d1604998bdf3
 >   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/3_NEW_t95_through_screen.png → file_uuid: 189be7f3-299b-4f1a-b6c2-81debaf2747b
 
+### 🤖 Claude — 2026-11-18T12:19:16.578Z
+
+Back to Screen 04. Adding the painted-Benny mask and painted-coin detection to the prep step, then checking the masks by eye:
+
+### 🤖 Claude — 2026-11-18T12:19:25.846Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='tools/match04/mv04_prep.py'; s=open(p).read()\na=\"        a[:HUD_ROWS] = 0\\n        rgb = Image.open(vp).convert('RGB').resize((W, H), Image.LANCZOS)\\n\"\nb=\"\"\"        a[:HUD_ROWS] = 0\n        rgb = Image.open(vp).convert('RGB').resize((W, H), Image.LANCZOS)\n        # the PAINTED Benny is bigger and lower than the game's Benny at the same camera: generous ellipse (+ his splash)\n        yy, xx = np.mgrid[0:H, 0:W]\n        a[((xx - 405) / 235.0) ** 2 + ((yy - 1190) / 290.0) ** 2 <= 1.0] = 0\n        # painted coins (the game …[+1702 chars]`
+
+### 🧑 User — 2026-11-18T12:19:34.634Z
+
+> ↩︎ result: ok
+> V04-1.png s 87.446 masked 497744
+> V04-2.png s 97.48 masked 514323
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:19:39.073Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/masks.jpg"}`
+
+### 🧑 User — 2026-11-18T12:19:39.085Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:19:53.419Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -i 's/& (c\\[..., 0\\] - c\\[..., 2\\] > 120) & (yy > 520)/\\& (c[..., 0] - c[..., 2] > 120) \\& (yy > 650) \\& (xx > 90) \\& (xx < 560)/' tools/match04/mv04_prep.py && grep -n \"yy > 650\" tools/match04/mv04_prep.py && python3 -I tools/match04/mv04_prep.py qa/match/04/r11/mv/cam10 qa/match/04/r11/mv/cam20 /home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand1.png /home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-2_cand2.png assets/textures/match04", "description": "Restrict coin masking to the river and regenerate"}`
+
+### 🧑 User — 2026-11-18T12:20:00.629Z
+
+> ↩︎ result: 38:        gold = (c[..., 0] > 190) & (c[..., 1] > 130) & (c[..., 2] < 110) & (c[..., 0] - c[..., 2] > 120) & (yy > 650) & (xx > 90) & (xx < 560)
+> V04-1.png s 87.446 masked 475553
+> V04-2.png s 97.48 masked 481586
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04/tools/match04/mv04_prep.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T12:20:22.256Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04.ts", "old_string": "  let splash: THREE.Mesh | null = null;\n  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());", "new_string": "  // r11 `&m04mv=1` (lead DECISIVE TEST, qa/match/04/r11/PROGRESS.md): MULTI-VIEW projection — the Screen 08 method extended\n  // from one picture to a chain of views along the stage. The user's PROVISIONAL reference views V04-1 / V04-2 (made from the\n  // live game frames at forward 10 u / 20 u) are projected from  …[+4421 chars]`
+
+### 🧑 User — 2026-11-18T12:20:22.383Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:20:24.876Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04.ts", "old_string": "      renderer.setRenderTarget(depthRT);\n      renderer.clear();\n      renderer.render(scene, proj);\n      renderer.setRenderTarget(prevRT);\n      shared.uUseDepth.value = 1;", "new_string": "      renderer.setRenderTarget(depthRT);\n      renderer.clear();\n      renderer.render(scene, proj);\n      // r11 m04mv: each extra view's own depth bake (its overlay copies are excluded)\n      if (mvViews.length) {\n        clone.traverse((o) => { if (o.userData.mv) o.visible = false; });\n        for (co …[+189 chars]`
+
+### 🧑 User — 2026-11-18T12:20:25.012Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:20:27.610Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04.ts", "old_string": "      if (m4 && camera) m4.update(camera.getWorldPosition(_cp));", "new_string": "      if (m4 && camera) m4.update(camera.getWorldPosition(_cp));\n      // r11 m04mv: full weight within 3 u of a view's camera, gone at 8 u (the approved camera is ~10 u from V04-1's)\n      if (mvViews.length && camera) {\n        const cp = camera.getWorldPosition(_cp);\n        mvU.uW0.value = 1 - THREE.MathUtils.smoothstep(cp.distanceTo(mvViews[0].pos), 3, 8);\n        mvU.uW1.value = mvViews[1] ? 1 - THREE.MathUtils …[+64 chars]`
+
+### 🧑 User — 2026-11-18T12:20:27.782Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:20:42.583Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo \"tsc $?\"; grep -n \"bakeDepth\" src/game/Game.ts | head -3", "description": "Type-check the Screen 04 change", "timeout": 400000}`
+
+### 🧑 User — 2026-11-18T12:20:44.738Z
+
+> ↩︎ result: tsc 0
+> 109:  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+> 119:  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); if (m04.splash) scene.add(m04.splash); }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:20:51.834Z
+
+Type check passes. Before rendering, checking whether the audit tool can take extra positions; I want the midpoint between the two views (15 units in), where blending artefacts would show:
+
+### 🤖 Claude — 2026-11-18T12:20:52.937Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"process.argv\\|process.env\\|SHOTS =\" tools/lead_r6/motion_audit.mjs | head; sed -n 10,16p tools/lead_r6/motion_audit.mjs", "description": "Check motion audit arguments"}`
+
+### 🧑 User — 2026-11-18T12:20:52.982Z
+
+> ↩︎ result: 9:const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> 16:const SHOTS = [
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:21:00.096Z
+
+I'm adding an optional extra-positions setting to the audit tool (backwards compatible), then rendering NEW at all 12 standard positions plus 15 and 25 units in, and BEFORE at those two extras:
+
+### 🤖 Claude — 2026-11-18T12:21:02.151Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -i 's/^const SHOTS = \\[$/const SHOTS = [...(process.env.EXTRA_SHOTS ? JSON.parse(process.env.EXTRA_SHOTS) : []),   \\/\\/ r11: optional extra [name, dist, steer] shots/' tools/lead_r6/motion_audit.mjs && grep -n \"EXTRA_SHOTS\" tools/lead_r6/motion_audit.mjs | head -2 && timeout 200 npx tsc --noEmit -p . >/dev/null 2>&1; echo tsc $?", "description": "Add optional extra shots to the motion audit", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T12:21:05.324Z
+
+> ↩︎ result: 16:const SHOTS = [...(process.env.EXTRA_SHOTS ? JSON.parse(process.env.EXTRA_SHOTS) : []),   // r11: optional extra [name, dist, steer] shots
+> tsc 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:21:13.797Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; L=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad; export EXTRA_SHOTS='[[\"f15_forward15u\",15,null],[\"f25_forward25u\",25,null]]'; nice -n 15 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r11/NEW_m04mv \"$K&m04mv=1\" > $L/a04_new.log 2>&1; echo \"new exit $?\"; mkdir -p qa/match/04/r11/BEFORE_extra; EXTRA_SHOTS='[[\"f15_forward15u\",15,null],[\"f25_forward25u\",25,null]]' nice -n 15 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r11/BEFOR …[+299 chars]`
+
+### 🧑 User — 2026-11-18T12:21:13.857Z
+
+> ↩︎ result: Command running in background with ID: bugyufn2a. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/bugyufn2a.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T12:21:24.502Z
+
+While that renders (about 10 minutes, sharing the CPU with both specialists), I'm committing the Screen 04 test code and assets to its own branch so they're safe:
+
+### 🤖 Claude — 2026-11-18T12:21:28.952Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git add src/world/match04.ts scripts/match-probe.mjs tools/lead_r6/motion_audit.mjs tools/match04/mv04_prep.py assets/textures/match04/mv04.json assets/textures/match04/mv04_V04-1.png assets/textures/match04/mv04_V04-2.png qa/match/04/r11/BEFORE qa/match/04/r11/mv && git commit -qm \"Screen 04 r11 (lead decisive test, WIP): &m04mv=1 multi-view projection of the user's provisional views V04-1/V04-2 from their own game cameras (overlay copies, per-view depth bakes, painted Benny/coins/HUD masked); probe --fwd, audit EXTRA_SHOTS; BEFORE audit\n\nCo-Authored-By …[+393 chars]`
+
+### 🧑 User — 2026-11-18T12:21:35.209Z
+
+> ↩︎ result: local d3ea4200 remote d3ea4200
+> 13M	qa/match/04/r11/mv
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:21:39.433Z
+
+Saved on the Screen 04 branch (`d3ea4200`, verified). While the renders run, I'm recording today's Hugging Face finding so no one retries a dead route blindly:
+
+### 🤖 Claude — 2026-11-18T12:21:42.840Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md <<'EOF'\n\n## Status check 2026-11-18 ~12:35 UTC (user approved connecting Hugging Face + the test)\n* User approved: connect the Hugging Face connector (the user does this in claude.ai connector settings; the connect card was shown).\n* Both view-synthesis Spaces are DOWN on Hugging Face's side: `stabilityai/stable-virtual-camera` and `Doubiiu/ViewCrafter`\n  report runtime stage RUNTIME_ERROR (`https://huggingface.co/api/spaces/<id>`); `gradio_client` refuses to connect. Neither model\n  is hosted on fal (fal.ai/models/... → 4 …[+273 chars]`
+
+### 🧑 User — 2026-11-18T12:21:42.872Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T12:21:43.298Z
+
+You've hit your 5-hour limit · resets 4:20pm (UTC)
+
+### 🧑 User — 2026-11-18T12:21:43.325Z
+
+CLAUDIA — I ALREADY SAID YES TO HUGGING FACE.
+
+I already explicitly authorized you to connect Hugging Face and run the Screen 04 test.
+
+PLEASE STOP ASKING ME FOR THE SAME PERMISSION.
+
+If I need to authorize the account connection myself, show me the actual Hugging Face connection card or give me the exact steps.
+
+Once I complete the connection:
+
+1. Verify Hugging Face is actually connected and working.
+2. Check whether Stable Virtual Camera or ViewCrafter is genuinely accessible for the approved Screen 04 test.
+3. Run the authorized test if technically available.
+4. Tell me whether the result is a GOOD IMPROVEMENT, NOT AN IMPROVEMENT, or NOT YET PROVEN.
+5. Continue improving my actual approved 3D scenery without restarting completed work.
+
+Keep my Screen 05 and Screen 08 specialists working, and maintain automatic five-minute GitHub saves.
+
+My priority remains recreating my original approved game screens with Benny swimming naturally through the exact scenery.
+
+Do not waste my credits repeating setup or permission questions.
+
+### 🤖 Claude — 2026-11-18T12:21:44.078Z
+
+You've hit your 5-hour limit · resets 4:20pm (UTC)
+
+### 🧑 User — 2026-11-18T12:22:40.475Z
+
+<task-notification>
+<task-id>ac571757381e1b231</task-id>
+<tool-use-id>toolu_01VicHMTZLiFMCRvSpPyPP1L</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/ac571757381e1b231.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 08 specialist r11 resume" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:20pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAPLoRhFtaEBynh76AMF, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:20pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now let me rewrite the tile tool with streak-preserving bubble fill, a periodic along-river cross-fade and the water extent.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-18T12:23:11.327Z
+
+<task-notification>
+<task-id>bugyufn2a</task-id>
+<tool-use-id>toolu_017FAmDQbzwEhiGJinFHRFbM</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/bugyufn2a.output</output-file>
+<status>completed</status>
+<summary>Background command "Render NEW (multi-view) and BEFORE extra shots for Screen 04" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T12:23:12.100Z
+
+You've hit your 5-hour limit · resets 4:20pm (UTC)
+

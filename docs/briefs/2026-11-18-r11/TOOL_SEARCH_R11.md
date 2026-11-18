@@ -18,3 +18,10 @@ generation, image to 3d, hugging face, comfyui, texture material, three.js, gaus
 
 Next step needing the user's OK: connect the Hugging Face connector (free account tier) + accept the Stable Virtual Camera
 licence on HF, then a free test: approved 04 (or 06) clean plate + the game camera path → 8 views → compare by eye.
+
+## Status check 2026-11-18 ~12:35 UTC (user approved connecting Hugging Face + the test)
+* User approved: connect the Hugging Face connector (the user does this in claude.ai connector settings; the connect card was shown).
+* Both view-synthesis Spaces are DOWN on Hugging Face's side: `stabilityai/stable-virtual-camera` and `Doubiiu/ViewCrafter`
+  report runtime stage RUNTIME_ERROR (`https://huggingface.co/api/spaces/<id>`); `gradio_client` refuses to connect. Neither model
+  is hosted on fal (fal.ai/models/... → 404). So this route is blocked today regardless of the connector; recheck the Space status
+  before any future attempt (free read). Running the model ourselves needs an NVIDIA GPU (none here).

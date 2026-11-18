@@ -1,5 +1,5 @@
 diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
-index 24624560..c824d042 100644
+index 24624560..518a6df5 100644
 --- a/src/vfx/waterRibbon.ts
 +++ b/src/vfx/waterRibbon.ts
 @@ -401,6 +401,18 @@ export const M05CAUL: boolean = M05CLOUD && q05('m05caul');
@@ -31,17 +31,20 @@ index 24624560..c824d042 100644
  #endif
  #ifdef M05WD
  uniform vec4 uPjWD;        // m05wd: x = on, y = share of the detail layer kept on the design, z = row smoothing (E rows)
-@@ -1722,6 +1737,9 @@ void main() {
+@@ -1722,6 +1737,12 @@ void main() {
          vec2 fbUV = vec2((dot(fbD, uFbRt) + uFbP.z) / (2.0 * uFbP.z), log(1.0 + max(fbZ, 0.0)) / log(1.0 + uPjFZ));
          fbC = texture2D(uPjF, clamp(fbUV, 0.0, 1.0));
          fbK = fbW * fbC.a * step(0.0, fbUV.x) * step(fbUV.x, 1.0);
 +        #ifdef M05FMAG
-+        fbK *= 1.0 - smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));
++        // m05fmag: where F is magnified the fade into it is only the last 1.5 u before the seam (the far river then
++        // fades F out over its first 2.5 u into its own continuation of the formation: no hard line, short soft zone)
++        float fmM = smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));
++        fbK *= mix(1.0, smoothstep(uFbP.x - min(uFbP.y, 1.5), uFbP.x, fbZ) / max(fbW, 1e-3), fmM);
 +        #endif
        }
      }
      pjK = max(pjK, fbK);
-@@ -1988,7 +2006,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
+@@ -1988,7 +2009,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
      fragmentShader: FRAG,
      fog: true,
      side: THREE.DoubleSide,
@@ -50,7 +53,7 @@ index 24624560..c824d042 100644
    });
    const mesh = new THREE.Mesh(geo, mat);
    if (proj) mesh.onBeforeRender = proj.onBeforeRender;
-@@ -2091,7 +2109,8 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
+@@ -2091,7 +2112,8 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
    // m05wd (Screen 05 round 8): design layer while riding — on, detail share on the design, row smoothing step (E rows)
    u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
    u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
@@ -61,7 +64,7 @@ index 24624560..c824d042 100644
      // m05geo (Screen 05 round 9): painted channel per s (tools/match05/channel05_bp.py) as a 1-row texture for the VERTEX shader
      const ch = { value: empty as THREE.Texture };
 diff --git a/src/world/materials.ts b/src/world/materials.ts
-index d0bbf51c..89caa90d 100644
+index d0bbf51c..7744187e 100644
 --- a/src/world/materials.ts
 +++ b/src/world/materials.ts
 @@ -4,7 +4,7 @@
@@ -78,7 +81,7 @@ index d0bbf51c..89caa90d 100644
   * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
   */
 +/** `&m05fmag=1` (Screen 05 round 11): weight of the baked far picture F — 0 where swimming magnifies it (block live) */
-+const FMAG_PRE = 'float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5));\n  ';
++const FMAG_PRE = 'float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w);\n  ';
  export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
    const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
    // wins the depth test against the real ribbon's continuation it covers just behind the seam
@@ -97,7 +100,7 @@ index d0bbf51c..89caa90d 100644
          .replace('#include <common>', '#include <common>\n' + pj.pars)
 -        .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
 +        .replace('  diffuseColor.rgb = col;\n}', '  ' + (M05FMAG ? FMAG_PRE + pj.apply.replace(/\)\.a\);$/, ').a * fmK);') : pj.apply) + '\n  diffuseColor.rgb = col;\n}');
-+      if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFbP; uniform float uFmD0;');
++      if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\n' + (M05FBANK ? '' : 'uniform vec4 uFbP; ') + 'uniform float uFmD0;');
        if (M05FBANK) {
          shader.fragmentShader = shader.fragmentShader
            .replace('#include <common>', '#include <common>\nuniform vec4 uFbP;\n#ifndef FARW05\nuniform float uRivD0;\n#endif')

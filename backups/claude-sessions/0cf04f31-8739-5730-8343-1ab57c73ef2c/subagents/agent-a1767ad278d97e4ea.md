@@ -1153,3 +1153,75 @@ Locked view 0 px. Now the PROGRESS entry, commit, push, verify.
 > 1159:    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '');
 > TSC_OK
 
+### 🤖 Claude — 2026-11-18T12:19:31.340Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -i \"s|'#include <common>\\\\\\\\nuniform vec4 uFbP; uniform float uFmD0;'|'#include <common>\\\\\\\\n' + (M05FBANK ? '' : 'uniform vec4 uFbP; ') + 'uniform float uFmD0;'|\" src/world/materials.ts && sed -n 1115p src/world/materials.ts && npx tsc --noEmit -p . && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1'; P=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p; timeout 900 node tools/match05/r8_sho …[+202 chars]`
+
+### 🧑 User — 2026-11-18T12:20:06.623Z
+
+> ↩︎ result: if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\n' + (M05FBANK ? '' : 'uniform vec4 uFbP; ') + 'uniform float uFmD0;');
+> k81_kink.png
+> shots.json
+> t66_through_screen.png
+> t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T12:20:10.081Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/fmag/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T12:20:10.130Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:20:19.749Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/fmag/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T12:20:19.787Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:20:20.404Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/fmag/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T12:20:20.446Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:20:47.153Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"\"\"        #ifdef M05FMAG\n        fbK *= 1.0 - smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));\n        #endif\"\"\"\nnew=\"\"\"        #ifdef M05FMAG\n        // m05fmag: where F is magnified the fade into it is only the last 1.5 u before the seam (the far river then\n        // fades F out over its first 2.5 u into its own continuation of the formation: no hard line, short soft zone)\n        float fmM = smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, …[+1453 chars]`
+
+### 🧑 User — 2026-11-18T12:21:23.696Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:21:27.758Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/cmp_fmag2.png"}`
+
+### 🧑 User — 2026-11-18T12:21:27.791Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:21:32.626Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/fmag2/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T12:21:32.674Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:21:39.205Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/fmag2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T12:21:39.245Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:21:39.508Z
+
+You've hit your 5-hour limit · resets 4:20pm (UTC)
+
