@@ -14,7 +14,8 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, m05foamK } from './waterRibbon';
+import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, m05foamK } from './waterRibbon';
+import { flat05Dy } from './unfold05';
 import { withClip05 } from './clip05';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
@@ -584,6 +585,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
         tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+        if (M05FLAT) tmp.y += flat05Dy(course, s, side * (hw + eS));   // m05flat (Screen 05 round 10): levelled kink
         tmp.toArray(pos, k * 3);
         foam[k * 3] = e;
         foam[k * 3 + 1] = s;
@@ -709,7 +711,9 @@ export function createFoam(
     const k05 = bermK(ss);
     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
-    return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+    const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+    if (M05FLAT) p.y += flat05Dy(course, ss, side * (hw + eS));   // m05flat (Screen 05 round 10): levelled kink
+    return p;
   };
   const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
     const ss = Math.min(s1, Math.max(s0, s));

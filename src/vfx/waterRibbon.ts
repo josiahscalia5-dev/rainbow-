@@ -10,7 +10,7 @@
  * drain-away for the 11 outro.
  */
 import * as THREE from 'three';
-import { unfoldDelta05 } from './unfold05'; // Screen 05 round 10 (&m05fold=1 only)
+import { unfoldDelta05, flat05Dy, flat05Up } from './unfold05'; // Screen 05 round 10 (&m05fold=1 only)
 import type { Course, StageId } from '../world/course';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
@@ -352,6 +352,13 @@ export const M05GEO: boolean = M05RIDE && q05('m05geo');
  * width): its vertices there are smoothed along the river toward the banks (horizontal only), engaged while riding.
  */
 export const M05FOLD: boolean = M05RIDE && q05('m05fold');
+/**
+ * `&m05flat=1` (Screen 05 round 10, needs m05ride; look only): the tight banked S just before Screen 06 (s ≈ 172–183,
+ * banked +9° … −15°) is drawn LEVEL while swimming — the water there tilted up into a raised ramp on the left (the torn
+ * strip of t66) and met the level far river with a lip. Vertices keep their place across the river, only their height
+ * loses the bank tilt (the same aUnf displacement as m05fold, engaged by the ride factor).
+ */
+export const M05FLAT: boolean = M05RIDE && q05('m05flat');
 /**
  * `&m05foam=1` (Screen 05 round 10, needs m05ride; src/vfx/foam.ts rim05, src/vfx/index.ts): FOAM BANKS WHILE SWIMMING.
  * The approved picture has soft white foam clusters with bubbles along both river edges; under proj05 the game's own 05
@@ -1880,14 +1887,28 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
   if (chan) geo.setAttribute('aChan', new THREE.BufferAttribute(chan, 2));
   geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
-  if (M05FOLD) {
+  if (M05FOLD || M05FLAT) {
     // m05fold (Screen 05 round 10): per-vertex |lateral| / half width, rows of vertsPerRow (skirts count as the edge)
     const latN = new Float32Array(n), rowS: number[] = [];
     for (let i = 0; i < rows; i++) {
       rowS.push(Math.min(s1, s0 + i * ds));
       for (let c = 0; c < vertsPerRow; c++) latN[i * vertsPerRow + c] = Math.abs(uv[(i * vertsPerRow + c) * 2]);
     }
-    geo.setAttribute('aUnf', new THREE.BufferAttribute(unfoldDelta05(course, pos, rowS, vertsPerRow, latN), 3));
+    const unf = M05FOLD ? unfoldDelta05(course, pos, rowS, vertsPerRow, latN) : new Float32Array(n * 3);
+    if (M05FLAT) {
+      // m05flat: remove the bank tilt (world height of right · lateral) inside the kink window (unfold05.ts flat05Dy)
+      for (let i = 0; i < rows; i++) {
+        const sr = rowS[i];
+        if (flat05Dy(course, sr, 1) === 0) continue;
+        const hw = course.widthAt(sr) / 2;
+        for (let c = 0; c < vertsPerRow; c++) {
+          const v = i * vertsPerRow + c;
+          const lat = uv[v * 2] * hw * (c === 0 || c === vertsPerRow - 1 ? 1.01 : 1);
+          unf[v * 3 + 1] += flat05Dy(course, sr, lat);
+        }
+      }
+    }
+    geo.setAttribute('aUnf', new THREE.BufferAttribute(unf, 3));
   }
   geo.setIndex(idx);
   geo.computeBoundingSphere();
@@ -1940,7 +1961,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD ? { M05FOLD: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -1953,6 +1974,8 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     s1,
     heightAt(s, lateral, t) {
       const hw = course.widthAt(s) / 2;
+      // m05flat (Screen 05 round 10): Benny / wake / foam ride the levelled kink (0 elsewhere)
+      if (M05FLAT) return ribbonWave(lateral / hw, s, t, ampAt(course, s)) + flat05Up(course, s, lateral);
       return ribbonWave(lateral / hw, s, t, ampAt(course, s));
     },
     ready: proj?.ready,

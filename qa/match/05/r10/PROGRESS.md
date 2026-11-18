@@ -69,7 +69,36 @@ Each step = one sub-switch on top (default build untouched); judged by eye again
 * Files: `src/vfx/waterRibbon.ts` (M05BERM), `src/vfx/foam.ts` (berm discard × (1 − ride factor) under the switch),
   `src/vfx/index.ts` (ride factor also for m05berm).
 
+## Step 3 — `&m05flat=1` (A, look only: the banked S just before Screen 06 drawn level)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1`
+* WHAT LOOKS CLOSER: at t66 the raised, tilted ramp of water on the left (the course banks +9° … −15° in the tight S at
+  s 172–183, so the water there tilted up toward the left wall and broke against it) is gone: the river now runs LEVEL
+  like the painted one — magenta bank band, foam bank and cyan lane continue from Benny along the S into the far river
+  as one surface, the foam bank lies along the left edge at water level, and the right bank shows magenta water with foam
+  piles. At t33 the mid-distance pink creases where the river entered the kink are smoother. Only the drawn height of
+  the water, the lather bank and the rim foam changes inside that window (smooth ends; zero at the 05 checkpoint, at the
+  far tunnel's seam and on 06); Benny's drawn height follows the same level water (ribbon.heightAt), so he never sinks;
+  course, steering, coins, pickups unchanged.
+* Locked approved view: 0 px vs step 2 (`scripts/capture.mjs 05`); vs the round-start set only the HUD banner outline
+  (257 px, rows 100–179, see step 2), scenery 0 px.
+* Inside the kink (Benny at s ≈ 178.9, straight / steered to both banks: `k81_kink*`): about as before — Benny rides on
+  the water at both banks (no sinking); the lather bank still folds into white columns on the inner side of the bends
+  and the camera rolls with the course there (both already in step 2).
+* Still wrong: the far river still starts with an angular corner on the left at the seam; the far water is soft; the
+  near water around Benny is a broad cyan sheet; walls above the left bank are smeared.
+* APPROVED: `/home/user/wt/s05/qa/match/05/r10/step3_m05flat/1_APPROVED.png`
+* BEFORE (round start): `/home/user/wt/s05/qa/match/05/r10/step3_m05flat/2_BEFORE_t66_through_screen.png`, `…/2_BEFORE_t33_through_screen.png`;
+  step-2 kink frames `…/2_BEFORE_step2_k81_kink.png`, `…/2_BEFORE_step2_k81_kink_left.png`, `…/2_BEFORE_step2_k81_kink_right.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r10/step3_m05flat/3_NEW_t66_through_screen.png`, `…/3_NEW_t33_through_screen.png`,
+  `…/3_NEW_k81_kink.png`, `…/3_NEW_k81_kink_left.png`, `…/3_NEW_k81_kink_right.png`
+* Files: `src/vfx/unfold05.ts` (flat05Dy / flat05Up), `src/vfx/waterRibbon.ts` (M05FLAT: aUnf height + heightAt),
+  `src/vfx/foam.ts` (berm vertices + rim foam points levelled under the switch). Kink frames: `tools/match05/r10_probe.mjs k81_kink…`.
+
 ## Tried, not kept
+* `&m05wall=1` (round-9 WIP, crisp procedural slotted metal where the wall picture is magnified) on top of step 2 at
+  t66: walls crisp but pale lilac with big regular square slots, and the painted pink light streaks between the rings
+  are lost — less like the approved walls than the soft BEFORE. Not kept (needs a detail-only version that keeps the
+  painted light).
 * `&m05fold=1` (B/A: the folded ribbon at the kink; `src/vfx/unfold05.ts`): the ribbon's vertices in the kink are
   smoothed along the river toward the banks (horizontal only, so Benny never sinks) — the rows no longer cross
   (measured: 17 crossing cells → 0). By eye at t33 / t66 / f20 almost nothing changes: the strip on the left is the

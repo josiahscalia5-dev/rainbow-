@@ -17,6 +17,8 @@ const ALL = {
   a00_approved_view: [0, null], f03_forward3u: [3, null], f06_forward6u: [6, null], f10_forward10u: [10, null], f20_forward20u: [20, null],
   s_left_steer: [6, -1], s_right_steer: [6, 1], s_left_hard: [12, -1], s_right_hard: [12, 1],
   t33_through_screen: ['t0.33', null], t66_through_screen: ['t0.66', null], t95_through_screen: ['t0.95', null],
+  // round 10: inside the 05 -> 06 kink (s ≈ 178), straight and steered to both banks
+  k81_kink: ['t0.81', null], k81_kink_left: ['t0.81', -1], k81_kink_right: ['t0.81', 1],
 };
 // render slot (same protocol as scripts/lib/pw.mjs): one browser render at a time on the shared CPU
 const slots = Math.max(1, Number(process.env.RAINBOW_RENDER_SLOTS ?? 2));

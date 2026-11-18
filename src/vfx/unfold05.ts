@@ -66,3 +66,38 @@ export function unfoldDelta05(course: Course, pos: Float32Array, rowS: ArrayLike
   }
   return out;
 }
+
+/**
+ * `&m05flat=1` (waterRibbon.ts M05FLAT): world-height change that removes the bank tilt of the 05 → 06 kink at (s,
+ * lateral) — 0 outside the window s1 − 20 … s1 − 3.4 (smooth ends; nothing changes at the 05 checkpoint, at the far
+ * tunnel's seam or on 06). Shared by the ribbon (vertices + heightAt, so Benny rides the level water and never sinks),
+ * the lather bank and the rim foam, so everything on the river keeps its place on the level surface.
+ */
+let flatTab: { a: number; ds: number; ry: Float32Array; uy: Float32Array; s0: number; s1: number } | null = null;
+const sm = (a: number, b: number, x: number) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+function flatInit(course: Course) {
+  if (flatTab) return flatTab;
+  const st = course.stage('05');
+  const s0 = st.s1 - 20, s1 = st.s1 - 3.4, ds = 0.1;
+  const n = Math.ceil((s1 - s0) / ds) + 1;
+  const ry = new Float32Array(n), uy = new Float32Array(n);
+  for (let i = 0; i < n; i++) { const f = course.sample(s0 + i * ds); ry[i] = f.right.y; uy[i] = f.up.y; }
+  flatTab = { a: s0, ds, ry, uy, s0, s1 };
+  return flatTab;
+}
+/** world-Y displacement (units) that levels the kink at (s, lateral) */
+export function flat05Dy(course: Course, s: number, lat: number): number {
+  const t = flatInit(course);
+  if (s <= t.s0 || s >= t.s1) return 0;
+  const k = sm(t.s0, t.s0 + 3, s) * (1 - sm(t.s1 - 3, t.s1, s));
+  const x = (s - t.a) / t.ds, i = Math.min(t.ry.length - 2, Math.floor(x)), w = x - i;
+  return -(t.ry[i] * (1 - w) + t.ry[i + 1] * w) * lat * k;
+}
+/** the same along the course's up vector (for heights measured along up, e.g. ribbon.heightAt) */
+export function flat05Up(course: Course, s: number, lat: number): number {
+  const dy = flat05Dy(course, s, lat);
+  if (dy === 0) return 0;
+  const t = flatTab!;
+  const x = (s - t.a) / t.ds, i = Math.min(t.uy.length - 2, Math.floor(x)), w = x - i;
+  return dy / Math.max(0.5, t.uy[i] * (1 - w) + t.uy[i + 1] * w);
+}
