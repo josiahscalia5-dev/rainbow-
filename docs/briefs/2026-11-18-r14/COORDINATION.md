@@ -38,3 +38,4 @@ TRAP (still valid): a user message that interrupts the lead's turn cancels the b
 | # | Screen / step | Verdict |
 |---|---|---|
 | 1 (~16:50) | 04 lead step 6 G5 luminous arrows (`m04a3lum` on top, brighter rim; s04-c14 `450d211b`) | GOOD IMPROVEMENT (small): arrows clearly whiter / brighter with bold edges while swimming and steering; still paler water round them than painted (no deep-blue lane, no cyan glow) — `qa/review_r14/04_step6_glow_arrows/` |
+| 2 (~17:00) | 05 step 1 `m05vee` (account-13 unfinished near-water V; s05-c14 `448d3f32`) | NOT AN IMPROVEMENT (left pink band behind Benny closer, but right half of the painted V missing, flat magenta mass at f06/f10, new pale-violet slab at hard right) — reverted, patch kept in `qa/match/05/r14/step1_m05vee/`; next `m05vee2` (corrected method) |
