@@ -259,6 +259,22 @@ const M05WALL_GLSL = /* glsl */ `
  * own low-frequency colour to N1's, so the painted light distribution of each bay stays. Rows AB / N1 / N2 are sharp
  * already and stay as they are. Off at the locked checkpoint eye.
  */
+const CLEAN_BAYS = flag05('cx05WallBays');
+const CLEAN_BAYS_GLSL = /* glsl */ `
+  {
+    // Use a gold-free, rectified panel from the closest painted bay when the original bay is under-resolved.
+    // The tube's angular and axial coordinates keep the slot pitch fixed under steering.
+    vec2 source = puv * uPtWallSize;
+    vec2 dx = dFdx(source), dy = dFdy(source);
+    float footprint = abs(dx.x * dy.y - dx.y * dy.x) / max(max(length(dx), length(dy)), 0.00001);
+    float away = smoothstep(0.35, 2.5, distance(cameraPosition, uM05Eye.xyz));
+    float weight = away * (1.0 - smoothstep(0.60, 1.35, footprint));
+    weight *= smoothstep(0.012, 0.08, pt) * (1.0 - smoothstep(0.92, 0.988, pt));
+    vec2 panels = vec2(vPerfUv.x * 46.5 / 5.0, vPerfUv.y / 9.5);
+    vec2 swatch = 1.0 - abs(2.0 * fract(0.5 * panels) - 1.0);
+    vec2 localUV = (vec2(1534.0, 623.0) + swatch * vec2(219.0, 181.0)) / uPtWallSize;
+    pc = mix(pc, texture2D(uPtWall, localUV).rgb, weight);
+  }`;
 const M05WTILE_GLSL = /* glsl */ `
   if (prow > 0.5 && prow < 6.5) {
     vec2 tpt = puv * uPtWallSize;
@@ -298,7 +314,7 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: 
 export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
   const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0, 0)));
   const segT = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector3(segs[i].row, segs[i].t0, segs[i].t1) : new THREE.Vector3(0, 0, 0)));
-  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE ? { uM05Eye: m05eye } : {}) };
+  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE || CLEAN_BAYS ? { uM05Eye: m05eye } : {}) };
   // env05 run #4: the bays stay editable until the first render (environment.ts adds the real wall's bay past the seam)
   mat.userData.ptSeg = seg;
   mat.userData.ptSegT = segT;
@@ -323,13 +339,13 @@ void main() {`)
   }
   vec2 rw = uPtRows[int(prow + 0.5)];
   vec2 puv = vec2(fract(vPerfUv.x + 0.25), (rw.x + clamp(pt * rw.y, 0.5, rw.y - 0.5)) / uPtWallSize.y);
-  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}
+  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}${CLEAN_BAYS && ENV05 ? CLEAN_BAYS_GLSL : ''}
   gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);
 }`);
-    if (M05WALL || M05WTILE) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
+    if (M05WALL || M05WTILE || CLEAN_BAYS) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
   };
   const prevKey = mat.customProgramCacheKey.bind(mat);
-  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '');
+  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '') + (CLEAN_BAYS ? '|painted-bays' : '');
   const prevRender = mat.onBeforeRender;
   mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
   return mat;
