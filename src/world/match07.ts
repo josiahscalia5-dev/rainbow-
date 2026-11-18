@@ -245,7 +245,7 @@ void main() {
       vec2 maskUV = (sourcePx - vec2(336.0, 382.0)) / vec2(108.0, 76.0);
       float onPaddle = 0.0;
       if (all(greaterThanEqual(maskUV, vec2(0.0))) && all(lessThanEqual(maskUV, vec2(1.0)))) {
-        onPaddle = texture2D(uPaddleFace, vec2(maskUV.x, 1.0 - maskUV.y)).a;
+        onPaddle = texture2D(uPaddleFace, vec2((192.5 + 95.0 * maskUV.x) / 288.0, 1.0 - maskUV.y)).r;
       }
       float violetWall = smoothstep(0.025, 0.16, projectedPaint.b - projectedPaint.g);
       wallOnPaddle = w * (1.0 - onPaddle) * violetWall;
@@ -255,6 +255,7 @@ void main() {
 #ifdef PAINTED_PADDLE_FACE
   // Rectified bands are attached to the modeled paddle, independent of the projector.
   float across = clamp(0.5 - vPaddleLocal.x / uPaddleWidth, 0.005, 0.995);
+  across = (0.5 + 191.0 * across) / 288.0;
   float radial = clamp(0.5 - vPaddleLocal.y / 1.2, 0.0, 1.0);
   float axial = clamp(0.5 + vPaddleLocal.z / (uPaddleWidth * 0.42), 0.0, 1.0);
   vec3 localN = normalize(vPaddleNormal);
