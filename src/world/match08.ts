@@ -295,11 +295,26 @@ void main() {
     if (uNq.x > 0.5) {
       // m08nq (r14): the painted-scale tile is laid out in world units across the lane (middle 1:1, the rest of the lane
       // scaled only if the lane differs from the one the tile was laid for), so glints / streaks keep their painted size
-      float d = vW.x - r.x, ad = abs(d);
+      float d = vW.x - r.x;
+#ifdef CHAMBER_CURRENT
+      // The quilted near texture is straight when sampled solely along world z.
+      // Continue the measured S-shaped river into its interior while pinning the outer contacts.
+      float heading = (riv(vW.z + 0.85).x - riv(vW.z - 0.85).x) / 1.7;
+      float channel = clamp(d / h, -1.0, 1.0);
+      float interior = 1.0 - channel * channel;
+      float travel = uNear.x - vW.z;
+      float arc = 0.82 * sin(0.61 * travel - 0.45) + 0.22 * sin(1.11 * travel + 0.6);
+      d -= interior * (arc + 0.32 * clamp(heading, -1.0, 1.0));
+#endif
+      float ad = abs(d);
       float xb = ad <= uNq.y ? ad : uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3);
       // m08sr (r15): rounded corner at the edge of the 1:1 middle as well (no crease where the lane is wider than laid)
       if (uSr > 0.5) xb = mix(ad, uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3), smoothstep(0.3 * uNq.y, 1.7 * uNq.y, ad));
-      tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), (uNear.x - vW.z) / uNear.y);
+      float downriver = uNear.x - vW.z;
+#ifdef CHAMBER_CURRENT
+      downriver -= 0.60 * heading * d * interior;
+#endif
+      tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), downriver / uNear.y);
     }
     float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
     if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
@@ -456,6 +471,7 @@ export async function buildMatch08(): Promise<Match08> {
     cupMk.colorSpace = THREE.NoColorSpace; cupMk.generateMipmaps = false; cupMk.minFilter = THREE.LinearFilter;
   }
   const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
+    defines: flag05('cx08ChamberCurrent') ? { CHAMBER_CURRENT: 1 } : {},
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
       uFill: { value: fillTex ?? patch }, uFillMode: { value: fill ? fillMode : 0 }, uFillSize: { value: fillSize },
