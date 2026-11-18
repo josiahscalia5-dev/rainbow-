@@ -1,0 +1,59 @@
+diff --git a/src/world/match08.ts b/src/world/match08.ts
+index e6f42e0a..d4e6679a 100644
+--- a/src/world/match08.ts
++++ b/src/world/match08.ts
+@@ -78,6 +78,7 @@ uniform vec4 uCeilW;        // m08ceil source window: angle start, angle width (
+ uniform sampler2D uRingT;   // m08ring: periodic slot-ring tile (ring08.py): u = angle, v = radius (repeat-wrapped)
+ uniform vec4 uRing;         // m08ring: angle start, angle period (rad), radius start, radius period (u)
+ uniform float uRingOn;
++uniform float uDrumRot;     // m08drot (chamber drum only): > 0.5 = hidden points take the nearest visible point of the same ring
+ uniform vec2 uCeilD;        // m08drum (chamber drum only): x > 0.5 = on, y = fade length (u) from the door plane toward the arch
+ uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from the approved picture's own near band (near08.py)
+ uniform vec4 uNear;         // z at tile v = 0, world length of one tile period along the river, tile lateral half range A, w > 0.5 = on
+@@ -158,6 +159,28 @@ void main() {
+   vec3 pc = patchColor();
+   if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+   if (uCeil.w > 0.5) pc = mix(pc, ceilColorAt(vW.xy), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
++  // m08drot (r12): the painted drum is rings of slots around the chamber axis, so a drum point the approved view could not
++  // see (in a spout cup's shadow) takes the user's pixels from the nearest point of the SAME ring (same depth, angle turned
++  // by 6..42 deg either way) that the approved view did see, instead of the generic fill tile with its own slot pattern
++  if (uDrumRot > 0.5 && uUseDepth > 0.5) {
++    float mr = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
++    vec2 q0 = vW.xy - uDrum.xy;
++    float acc = 0.0; vec3 rc = vec3(0.0);
++    for (int k = 1; k <= 14; k++) {
++      if (acc >= 0.98 || mr <= 0.0) break;
++      float ang = 0.1047 * float((k + 1) / 2) * (mod(float(k), 2.0) < 0.5 ? -1.0 : 1.0);
++      float ca = cos(ang), sa = sin(ang);
++      vec3 wr = vec3(uDrum.xy + vec2(ca * q0.x - sa * q0.y, sa * q0.x + ca * q0.y), vW.z);
++      vec4 pr = uProjVP * vec4(wr, 1.0);
++      if (pr.w <= 0.0) continue;
++      vec3 nd = pr.xyz / pr.w; vec2 ur = nd.xy * 0.5 + 0.5;
++      if (ur.x < 0.0 || ur.x > 1.0 || ur.y < 0.0 || ur.y > 1.0) continue;
++      float zf = linZ(nd.z * 0.5 + 0.5), zs = linZ(texture2D(uDepth, ur).r);
++      float vr = (1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs)) * (1.0 - acc);
++      rc += vr * texture2D(uPlate, ur).rgb; acc += vr;
++    }
++    if (acc > 0.0) pc = mix(pc, rc / acc, min(acc, 1.0) * mr);
++  }
+   // m08drum: a drum point the approved view could not see (the top corners next to the door, behind the arch ring) continues
+   // the SAME painted rings as the door wall: the projector ray through it is followed to the door plane and coloured there
+   // as m08ceil colours the door wall (identical at the drum / door-wall junction, so no seam); fades out toward the arch
+@@ -383,7 +406,7 @@ export async function buildMatch08(): Promise<Match08> {
+       uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ },
+       uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
+       uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) },
+-      uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) },
++      uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) }, uDrumRot: { value: 0 },
+       uRingT: { value: ringTex ?? plate }, uRing: { value: new THREE.Vector4(0, 1, 0, 1) }, uRingOn: { value: 0 },
+       uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
+       uNearC: { value: new THREE.Vector2(0, 1) },
+@@ -523,6 +546,8 @@ export async function buildMatch08(): Promise<Match08> {
+   const chLen = chamberZ0 - C.zDoor;
+   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
+   ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);
++  // `&m08drot=1` (r12): hidden drum points continue the painted ring they lie on (FRAG)
++  if (flag05('m08drot')) M.drum.uniforms.uDrumRot.value = 1;
+   add(ch, M.drum, 'chamber');
+   if (farOn) {
+     // m08far collar: in the arch's back plane, the part of the (pushed) arch opening that lies outside the drum's circular

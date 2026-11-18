@@ -92,3 +92,19 @@ Kept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1`
 * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step4_m08ring/1_APPROVED.png`,
   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `t95_through_screen`, `f10_forward10u`, `t66_through_screen`
   (BEFORE = `...&m08drum=1`, NEW = `+&m08ring=1`, rendered fresh, same positions).
+
+## Tried — `&m08glint=1` (near-water glints at painted size) — NOT KEPT (NOT AN IMPROVEMENT)
+* Tried: the m08near tile at the painted scale in the lane's middle and along the river (banks take up the rest of the lane,
+  piecewise like the swim remap). Result at forward 10 u: glints smaller, but the near water then shows visible repeats of
+  the same small glints and the magenta / cyan banks are stretched sideways ≈ 3.4× into flat smears; the BEFORE (bold
+  glossy strokes ≈ 2× painted size) reads closer to the approved picture's bold near water. Code saved as
+  `/home/user/wt/s08/qa/match/08/r12/wip_m08glint_not_kept.patch`, reverted (one honest try; method stopped).
+
+## Tried — `&m08drot=1` (drum wall in the lower spout cups' shadow) — NOT KEPT (NOT AN IMPROVEMENT)
+* Defect (B): behind the lower-left spout cup (forward 10 u, two-thirds through) the drum wall the approved view could not
+  see shows the generic fill tile (fine diagonal slots) with hard straight edges against the painted wall.
+* Tried: a hidden drum point takes the user's pixels from the nearest visible point of the same ring (same depth, turned
+  6–42° about the chamber axis). Result: the nearest visible ring points near the floor junction carry painted river foam
+  and bubbles (the painted floor / wall boundary does not follow the fitted drum exactly), so foam clusters and bubble
+  pieces appeared on the wall; the hard edges stayed. Saved as
+  `/home/user/wt/s08/qa/match/08/r12/wip_m08drot_not_kept.patch`, reverted (one honest try; method stopped).
