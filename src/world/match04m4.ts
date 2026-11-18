@@ -53,7 +53,10 @@ void main() {
   gl_Position = projectionMatrix * viewMatrix * wp;
 }`;
 
-// polished gold: everything in DISPLAY colours (measured on the approved picture), then pjInverse like the plate
+// polished gold, art-directed in DISPLAY colours measured on the approved picture (then pjInverse like the plate):
+// groove (110,35,5) / shadow band (168,70,18) / mid (205,97,28) / lit (245,143,38) / hot lip (255,204,77) / glint.
+// Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;
+// the far rings warm toward the glowing vanishing point; violet / pink water reflections on the lower walls.
 const GOLD_FRAG = /* glsl */ `
 uniform sampler2D uPlate;
 uniform vec4 uPjPost;
@@ -67,12 +70,38 @@ uniform float uNB;
 uniform float uP;
 uniform float uLipBulb;
 uniform float uBulbR;
+uniform float uLen;
+uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
+uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
-varying vec2 vK;            // x: part (0 band, 1 lip, 2 groove, 3 opening face, 4 end glow), y: ring index
+varying vec2 vK;            // x: part (0 band, 1 lip, 2 groove, 3 opening face, 4 end glow), y: ring index (-1 = opening)
 ${PROJ05_INVERSE}
 float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+vec3 goldRamp(float x) {
+  x = clamp(x, 0.0, 1.0) * 5.0;
+  vec3 c0 = vec3(0.43, 0.14, 0.02), c1 = vec3(0.66, 0.27, 0.07), c2 = vec3(0.80, 0.38, 0.11);
+  vec3 c3 = vec3(0.96, 0.56, 0.15), c4 = vec3(1.0, 0.80, 0.30), c5 = vec3(1.0, 0.96, 0.80);
+  if (x < 1.0) return mix(c0, c1, x);
+  if (x < 2.0) return mix(c1, c2, x - 1.0);
+  if (x < 3.0) return mix(c2, c3, x - 2.0);
+  if (x < 4.0) return mix(c3, c4, x - 3.0);
+  return mix(c4, c5, x - 4.0);
+}
+// a few long highlight streaks around the ring (painted smears), different on every ring
+float streaks(float ang, float ring) {
+  float s = 0.0;
+  for (int i = 0; i < 4; i++) {
+    float fi = float(i);
+    float c = (h21(vec2(ring, fi * 3.1)) * 2.0 - 1.0) * 2.6;
+    float w = 0.12 + 0.30 * h21(vec2(ring, fi * 5.7));
+    float d = ang - c; d = mod(d + 3.14159, 6.28318) - 3.14159;
+    s += (0.45 + 0.55 * h21(vec2(ring, fi * 9.3))) * exp(-d * d / (w * w));
+  }
+  return s;
+}
 void main() {
   vec3 V = normalize(cameraPosition - vW);
   vec3 n = normalize(vN);
@@ -81,67 +110,94 @@ void main() {
   float al = dot(q, uAxD);
   vec3 qr = q - uAxD * al;
   float rr = length(qr);
-  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top
+  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left
   vec3 R = reflect(-V, n);
-  float fw = dot(R, uAxD);                                 // reflection toward the warm glow down the tunnel
-  float dn = -dot(R, uAxU);                                // reflection toward the water below
   float part = vK.x;
+  float dc = distance(cameraPosition, vW);
+  float facing = clamp(dot(n, V), 0.0, 1.0);
   vec3 col;
   if (part > 3.5) {
-    // the far glow of the tunnel (painted vanishing point): warm white core -> orange
+    // the far glow (painted vanishing point): small warm-white core, orange-gold outside with faint far rings
+    // soft warm-white core, yellow-orange glow, orange toward the rim (matches the far bands), no hard target rings
     float rad = clamp(rr / 3.6, 0.0, 1.0);
-    col = mix(vec3(1.0, 0.97, 0.86), vec3(1.0, 0.70, 0.38), smoothstep(0.0, 1.0, rad));
+    col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
+    col = mix(col, vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+    col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(log(max(rad, 0.01)) / log(0.72)) - 0.5)) * smoothstep(0.35, 0.7, rad);
   } else {
-    // art-directed polished gold in the approved picture's display colours: shadow (157,67,65) / mid (210,116,71) /
-    // lit (251,190,106) / hot glint (254,250,220); saturated orange, never the grey-tan of a physical reflection
     bool mouth = vK.y < -0.5;
-    float u = fract(al / uP);                                // position inside one ring period (0 groove .. 1 lip)
-    float band = smoothstep(0.05, 0.95, u);
-    float streak = 0.5 + 0.5 * sin(ang * 3.0 + 1.7 + 0.8 * sin(ang * 7.0));
-    float dc = distance(cameraPosition, vW);
-    float sp = pow(max(dot(R, normalize(uAxD * 0.75 + uAxU * 0.55)), 0.0), 18.0) + 0.7 * pow(max(dot(R, normalize(uAxD * 0.8 - uAxR * 0.5)), 0.0), 22.0);
+    float ring = floor(vK.y + 0.5);             // integer ring index (the interpolated varying is not exact)
+    float v, tb = 0.0;
+    // gloss that moves with the view: the polished metal reflects the bright far end of the tunnel
+    float gl = pow(max(dot(R, uAxD), 0.0), 6.0);
     if (mouth) {
-      // the washer opening: bright polished gold face, glowing lips
-      col = mix(vec3(0.90, 0.52, 0.18), vec3(1.0, 0.74, 0.36), 0.5 + 0.5 * sin(ang * 2.0 + 0.6));
-      col = mix(col, vec3(1.0, 0.80, 0.42), 0.35 * smoothstep(0.3, 0.95, dot(n, V)) * streak);
-      if (part > 0.5 && part < 1.5) col = mix(col, vec3(1.0, 0.88, 0.58), smoothstep(0.55, 0.95, dot(n, V)) * (0.4 + 0.5 * streak));
-      if (part > 1.5 && part < 2.5) col = vec3(0.55, 0.22, 0.10);
+      // the washer opening: thick bright polished gold, a long vertical highlight, glowing rounded lips
+      float st = streaks(ang, 77.0);
+      v = uTone.z + 0.08 * cos(ang) + 0.20 * st + 0.08 * gl;
+      if (part > 0.5 && part < 1.5) v = uTone.z + 0.14 + 0.16 * facing + 0.10 * st;
+      if (part > 1.5 && part < 2.5) v = 0.18;
     } else {
-      float a = clamp(0.30 + 0.50 * band + 0.30 * (streak - 0.5), 0.0, 1.0);
-      col = mix(vec3(0.58, 0.24, 0.13), vec3(0.88, 0.47, 0.19), a);
-      col = mix(col, vec3(1.0, 0.72, 0.34), 0.5 * smoothstep(0.55, 0.98, fw) * smoothstep(0.35, 1.0, band));
-      // the tunnel brightens toward its glowing far end
-      col = mix(col, vec3(1.0, 0.74, 0.40), 0.45 * smoothstep(14.0, 44.0, dc));
-      // lips: a thin hot line where the bead faces the viewer, orange-gold elsewhere; grooves: dark copper
-      if (part > 0.5 && part < 1.5) col = mix(col, vec3(1.0, 0.90, 0.60), smoothstep(0.35, 0.9, dot(n, V)) * (0.5 + 0.4 * streak));
-      if (part > 1.5 && part < 2.5) col = mix(col, vec3(0.33, 0.10, 0.06), 0.8);
+      float u = fract(al / uP) * uP;                       // world units inside this ring period (0 = groove step)
+      float t = clamp((u - 0.06) / (uP - 0.6), 0.0, 1.0);  // band: 0 at its near edge .. 1 at its lip
+      float far = smoothstep(10.0, 38.0, dc);
+      float st = streaks(ang, ring);
+      tb = t;
+      float bump = smoothstep(0.0, 0.45, t) * (1.0 - 0.5 * smoothstep(0.7, 1.0, t));
+      v = uTone.x + 0.20 * pow(t, 1.5) + 0.03 * cos(ang) + 0.04 * far + uTone.w * st * bump + 0.05 * gl;
+      if (part > 0.5 && part < 1.5) v = uTone.y + 0.12 * facing + 0.04 * far + 0.15 * st;
+      if (part > 1.5 && part < 2.5) v = 0.03 + 0.05 * far;
     }
-    // pink / violet / cyan reflections of the swirl water, strongest on the lower walls
-    float hue = 0.5 + 0.5 * sin(ang * 2.3 + al * 0.45 + h21(vec2(floor(al / 2.0), 3.0)) * 6.0);
-    vec3 wc = mix(vec3(0.96, 0.40, 0.72), vec3(0.52, 0.52, 1.0), hue);
-    float wr = smoothstep(-0.1, 0.7, dn) * (0.35 + 0.65 * smoothstep(-0.3, 0.7, -cos(ang)));
-    col = mix(col, wc, 0.38 * wr * (mouth ? 0.5 : 1.0));
-    col += vec3(1.0, 0.82, 0.48) * 0.30 * sp;
-    // amber bulbs on the washer opening's face (and, if asked, on the ring lips)
-    if ((part > 2.5 && part < 3.5) || (uLipBulb > 0.5 && part > 0.5 && part < 1.5 && !mouth)) {
-      float nb = part > 2.5 ? uNB : uNB * 0.75;
-      float cell = fract(ang / 6.2831853 * nb + 0.5 * mod(vK.y, 2.0)) - 0.5;
+    col = goldRamp(v);
+    if (!mouth && part < 1.5) {
+      // the painted ring colour at this angle (pinks, violets, yellow streaks of the approved rings), with the crisp
+      // structure's brightness: painted palette + modeled lip / groove / highlight shapes
+      float row = part > 0.5 ? 0.92 : mix(0.30, 0.90, tb);
+      vec3 pc = texture2D(uRingTile, vec2(0.5 - ang / 6.2831853, row)).rgb;
+      // painted variation only (this angle's colour minus the painted row average): the pink / violet / yellow streaks
+      // ride on the measured gold ramp, so dark gold stays deep orange (scaling a yellow down would turn it olive)
+      vec3 rm = mix(vec3(0.73, 0.33, 0.11), vec3(0.83, 0.42, 0.18), smoothstep(0.30, 0.45, row));
+      rm = mix(rm, vec3(0.87, 0.49, 0.19), smoothstep(0.45, 0.60, row));
+      rm = mix(rm, vec3(0.89, 0.59, 0.26), smoothstep(0.60, 0.75, row));
+      rm = mix(rm, vec3(0.92, 0.76, 0.38), smoothstep(0.75, 0.92, row));
+      col = clamp(col + uPaint * (pc - rm), 0.0, 1.0);
+    }
+    // violet (left) / pink (right) reflections of the swirl water on the lower walls, painterly variation above
+    float low = smoothstep(1.25, 2.15, abs(ang));
+    vec3 wc = ang < 0.0 ? vec3(0.62, 0.42, 0.86) : vec3(0.95, 0.42, 0.70);
+    float ry = mouth ? 99.0 : ring, fa = ang * 2.2 + ry * 1.7;
+    float hv = mix(h21(vec2(floor(fa), ry)), h21(vec2(floor(fa) + 1.0, ry)), smoothstep(0.0, 1.0, fract(fa)));
+    float pk = (0.42 * low + 0.22 * smoothstep(0.78, 0.98, hv) * (1.0 - low)) * (part > 0.5 && part < 1.5 ? 0.35 : 1.0);
+    vec3 wc2 = mix(wc, vec3(0.88, 0.42, 0.78), 1.0 - low);   // dusky violet-pink tint on the upper walls
+    col = mix(col, wc2 * (0.55 + 0.6 * v), pk * (mouth ? 0.6 : 1.0));
+    // a few cool blue-violet glints on the bands (painted reflections of the cyan water)
+    if (!mouth && part < 0.5) {
+      float cb = streaks(ang + 1.3, ring + 31.0);
+      col = mix(col, vec3(0.62, 0.66, 1.0), 0.55 * smoothstep(0.7, 1.0, cb) * step(0.55, h21(vec2(ring, 4.4))) * smoothstep(0.1, 0.5, tb));
+    }
+    // hot spots / amber bulbs: a row on the opening's face, smaller glints on every ring lip
+    bool onFace = part > 2.5 && part < 3.5;
+    bool onLip = uLipBulb > 0.5 && part > 0.5 && part < 1.5 && !mouth;
+    if (onFace || onLip) {
+      float nb = onFace ? uNB : floor(uNB * 0.6);
+      float cell = fract(ang / 6.2831853 * nb + 0.5 * mod(max(ring, 0.0), 2.0)) - 0.5;
       float arc = cell * 6.2831853 * rr / nb;               // world units along the ring
-      float rad = part > 2.5 ? abs(rr - uBulbR) : 0.0;
+      float rad = onFace ? abs(rr - uBulbR) : 0.0;
       float d = length(vec2(arc, rad));
-      float bs = part > 2.5 ? 0.07 : 0.045;
-      col += vec3(1.0, 0.60, 0.20) * 0.45 * smoothstep(bs * 3.0, 0.0, d);
-      col = mix(col, vec3(1.0, 0.96, 0.82), smoothstep(bs, bs * 0.4, d));
+      float bs = onFace ? 0.075 : 0.05;
+      float on = onFace ? 1.0 : step(0.35, h21(vec2(floor(ang / 6.2831853 * nb + 0.5), ring)));
+      on *= 1.0 - smoothstep(0.4, 1.0, fwidth(arc) / bs);
+      col += vec3(1.0, 0.55, 0.12) * 0.55 * smoothstep(bs * 3.5, 0.0, d) * on;
+      col = mix(col, vec3(1.0, 0.95, 0.75), smoothstep(bs, bs * 0.35, d) * on);
     }
-    // star glints scattered on the polished gold (painted white sparkles)
-    vec2 gc = vec2(ang / 6.2831853 * 34.0, al * 1.3);
+    // star glints scattered on the polished gold (painted white sparkles), sparse
+    vec2 gc = vec2(ang / 6.2831853 * 30.0, al * 1.1);
     vec2 gi = floor(gc), gf = fract(gc) - 0.5;
-    float gh = h21(gi + vK.y * 7.0);
-    if (gh > 0.9) {
+    float gh = h21(gi + ring * 7.0);
+    float gfw = max(fwidth(gc.x), fwidth(gc.y));
+    if (gh > 0.93 && gfw < 0.35) {
       vec2 o = (vec2(h21(gi + 1.3), h21(gi + 2.7)) - 0.5) * 0.6;
       vec2 p = (gf - o) * vec2(1.0, 0.7);
-      float g = smoothstep(0.09, 0.0, length(p)) + 0.5 * smoothstep(0.02, 0.0, abs(p.x)) * smoothstep(0.3, 0.0, abs(p.y)) + 0.5 * smoothstep(0.02, 0.0, abs(p.y)) * smoothstep(0.3, 0.0, abs(p.x));
-      col += vec3(1.0, 0.95, 0.82) * g * 0.75;
+      float g = smoothstep(0.08, 0.0, length(p)) + 0.4 * smoothstep(0.02, 0.0, abs(p.x)) * smoothstep(0.28, 0.0, abs(p.y)) + 0.4 * smoothstep(0.02, 0.0, abs(p.y)) * smoothstep(0.28, 0.0, abs(p.x));
+      col += vec3(1.0, 0.92, 0.70) * g * 0.6 * (1.0 - smoothstep(0.15, 0.35, gfw));
     }
   }
   col = clamp(col, 0.0, 1.0);
@@ -234,33 +290,49 @@ export function addM04(ctx: M04Ctx) {
   const updaters: ((a: number) => void)[] = [];
 
   if (M04.ring) {
+    const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+    ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
+    ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
     const gm = new THREE.ShaderMaterial({
-      vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false,
+      vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
-        uP: { value: M04.num('m04ringp', 2.4) }, uLipBulb: { value: M04.num('m04lipbulb', 0) }, uBulbR: { value: (r + ctx.outerR) / 2 } },
+        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', 1.0) }, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
-    const P = M04.num('m04ringp', 2.4); // ring period along the tunnel (painted stacked bands)
-    // corrugated tunnel wall: per period a band that narrows slightly toward the glow (faces the camera like the painted
-    // stacked bands), a rounded lip bead with bulbs, a dark groove; axial a = distance down the tunnel from the mouth
+    const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
+    // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
+    // painted bands), a rounded lip bead (hot spots), a step back out (the thin dark groove); a = distance down the tunnel
     const prof: { r: number; a: number; part: number }[] = [];
     const ringOf: number[] = [];
     const nP = Math.ceil(len / P);
     for (let k = 0; k < nP; k++) {
       const a = k * P;
       const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };
-      pushP(r + 0.14, a + 0.02, 2);
-      pushP(r + 0.08, a + 0.10, 0);
-      pushP(r - 0.02, a + P * 0.45, 0);
-      pushP(r - 0.10, a + P - 0.50, 0);
-      pushP(r - 0.12, a + P - 0.44, 1);
-      pushP(r - 0.22, a + P - 0.36, 1);
-      pushP(r - 0.26, a + P - 0.27, 1);
-      pushP(r - 0.22, a + P - 0.18, 1);
-      pushP(r - 0.10, a + P - 0.10, 2);
-      pushP(r + 0.14, a + P - 0.02, 2);
+      pushP(r + 0.22, a + 0.01, 2);
+      pushP(r + 0.17, a + 0.07, 0);
+      pushP(r + 0.07, a + P * 0.5, 0);
+      pushP(r - 0.05, a + P - 0.56, 0);
+      pushP(r - 0.10, a + P - 0.48, 1);
+      pushP(r - 0.22, a + P - 0.39, 1);
+      pushP(r - 0.28, a + P - 0.27, 1);
+      pushP(r - 0.23, a + P - 0.15, 1);
+      pushP(r - 0.08, a + P - 0.07, 2);
+      pushP(r + 0.22, a + P - 0.01, 2);
     }
     const tun = lathe(prof, 160, (j) => ringOf[j]);
+    // below the water line the corrugation flattens to the plain wall (no saw-tooth where the beads cross the water)
+    {
+      const pa = tun.attributes.position as THREE.BufferAttribute;
+      const angW = Math.acos(-cy / r); // angle from the top where the wall meets the water
+      for (let i = 0; i < pa.count; i++) {
+        const x = pa.getX(i), z = pa.getZ(i), rad = Math.hypot(x, z);
+        const ang = Math.atan2(Math.abs(x), z);
+        const k = THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);
+        const nr = rad + (r + 0.05 - rad) * k;
+        pa.setX(i, (x / rad) * nr); pa.setZ(i, (z / rad) * nr);
+      }
+      tun.computeVertexNormals();
+    }
     // lathe axis = +y; rotate so y -> -z (down the tunnel), then place at the mouth
     tun.rotateX(-Math.PI / 2).translate(cx, cy, z0);
     const tm = new THREE.Mesh(tun, gm); tm.name = 'm04_ring_tunnel'; group.add(tm);
