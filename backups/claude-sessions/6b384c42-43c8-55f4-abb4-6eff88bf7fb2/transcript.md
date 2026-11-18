@@ -3590,3 +3590,89 @@ The 05/08 watch expired with no new commits in 30 minutes. Checking those two ar
 
 All six workers are still running and each has changed files in the last five minutes. There's no new result to show yet. Screens 05 and 08 haven't produced a new finished step in the last hour or so, because six workers share 4 processor cores and every picture renders slowly. I'll send APPROVED / BEFORE / NEW pictures as soon as any screen finishes a step.
 
+### 🧑 User — 2026-11-18T18:49:54.127Z
+
+<task-notification>
+<task-id>a473760960d881afb</task-id>
+<tool-use-id>toolu_011KkHSthjdHzDkQsELmhfGH</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/a473760960d881afb.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 painted-ring texture test" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAtsTc5wPCycjGqRtNZU, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11:10pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T18:49:54.859Z
+
+You've hit your 5-hour limit · resets 11:10pm (UTC)
+
+### 🧑 User — 2026-11-18T18:49:56.468Z
+
+<task-notification>
+<task-id>ace8c8034cc58fdda</task-id>
+<tool-use-id>toolu_01JT5NuFhmya8NWA568sWrhV</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/ace8c8034cc58fdda.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 06 specialist r15" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAtsdLyPMHTWF2nnEmqo, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11:10pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The texture is now straight. Now the shader switch `&amp;m06gold=1`.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-18T18:49:58.595Z
+
+<task-notification>
+<task-id>a16eaaa7abf16d292</task-id>
+<tool-use-id>toolu_01VuwnwHW48h2a9xac3N1Hbk</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/a16eaaa7abf16d292.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 08 scenery specialist r15" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAtsnkG2Vr5vQAcqLeyT, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11:10pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Let me add a QA-only debug output to the floor shader to map frame pixels back to plate pixels.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-18T18:50:00.016Z
+
+<task-notification>
+<task-id>a91fa5d074fcb6e28</task-id>
+<tool-use-id>toolu_01UHFLs1cs7uFusYHpoRck2z</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/a91fa5d074fcb6e28.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 water specialist r15" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAtstfTF7htZi8uw4DqV, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11:10pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now the proper implementation: the block is removed when Benny crosses into 06 (driven by Benny's course position, not the eye distance).</result>
+</task-notification>
+
+### 🧑 User — 2026-11-18T18:50:21.263Z
+
+<task-notification>
+<task-id>a06c699d872e14702</task-id>
+<tool-use-id>toolu_01SULRPA7V1JtrSMCUy2Yc96</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/a06c699d872e14702.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 07 specialist r15" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAtuTPVDmrmnNEBMCmzn, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11:10pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+
+### 🧑 User — 2026-11-18T18:50:53.513Z
+
+<task-notification>
+<task-id>ae0cb1cd9df5a5520</task-id>
+<tool-use-id>toolu_011EGsbttSFBj9oVro6ctXvn</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/ae0cb1cd9df5a5520.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 foam+rings worker r15" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChAtwqDhh4EKjibN3G5za, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11:10pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Meanwhile I'll write a small probe that records the `[match04]` console lines (bubble count, river geometry) for use after the clip finishes.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-18T18:51:17.455Z
+
+<task-notification>
+<task-id>bk54go7rd</task-id>
+<summary>Monitor event: "new commits on s04-c15 worktree"</summary>
+<event>[Monitor expired after 30m with 1 event delivered. Re-arm it if you still need the watch.]</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T18:51:18.125Z
+
+You've hit your 5-hour limit · resets 11:10pm (UTC)
+
