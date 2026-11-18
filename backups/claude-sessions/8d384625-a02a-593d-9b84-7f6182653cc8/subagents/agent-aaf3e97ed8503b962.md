@@ -1779,3 +1779,12 @@ Now pass `course` from environment.ts (switch-guarded value only).
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 600 node tools/match05/r8_probe.mjs t66_through_screen \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" \"40,620;120,690;60,740;200,640;220,700;300,700;360,690;150,760;30,800;250,600\" 5293 2>&1 | tail -11", "description": "Probe the left-bank slab at t66", "timeout": 620000}`
 
+### 🧑 User — 2026-11-18T02:57:24.201Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":170.491,"lat":0,"coins":1460,"hearts":5,"paused":false,"bennyY":-43,"bennyVisible":true,"cam":[1.49,-39.46,-104.75]}
+> 40 620 [{"obj":"tube05_far_wall","s":185.5,"d":8.32,"lat":-8.05,"up":2.11},{"obj":"Mesh","s":187,"d":8.67,"lat":-8.56,"up":1.41},{"obj":"Mesh","s":189.5,"d":9.28,"lat":-9.27,"up":-0.52},{"obj":"Mesh","s":189.75,"d":9.32,"lat":-9.3,"up":-0.68}]
+> 120 690 [{"obj":"tube05_far_wall","s":186.25,"d":7.18,"lat":-7.16,"up":0.46},{"obj":"Mesh","s":186.75,"d":7.29,"lat":-7.29,"up":0.18},{"obj":"Mesh","s":189,"d":7.9,"lat":-7.74,"up":-1.58},{"obj":"Mesh","s":189,"d":7.94,"lat":-7.76,"up":-1.67}]
+> 60 740 [{"obj":"Mesh","s":183.75,"d":7.88,"lat":-7.87,"up":0.31},{"obj":"tube05_far_wall","s":184,"d":7.88,"lat":-7.87,"up":0.37},{"obj":"Mesh","s":186.75,"d":8.45,"lat":-8.43,"up":-0.61}]
+> 200 640 [{"obj":"tube05_far_river","s":188.25,"d":6.03,"lat":-6.03,"up":0.03},{"obj":"tube05_far","s":189.75,"d":6.23,"lat":-6.15,"up":-0.95},{"obj":"tube05_far","s":189.75,"d":6.25,"lat":-6.17,"up":-1.01},{"obj":"tube05_far_wall","s":190,"d":6.29,"lat":-6.18,"up":-1.2}]
+> 220 700 [{"obj":"Mesh","s":186.75,"d":5.54,"lat":-5.54,"up":-0.18},{"obj":"tube05_far_wall","s":188.75 …[+1303 chars]
+
