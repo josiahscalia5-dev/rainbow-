@@ -1,0 +1,48 @@
+[
+  {
+    "file": "Screen_06/SCREEN06_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "sourceOriginalSHA256": "1d36f2a7dfe8ab1d5cd04a91aadae3668f26bcf301394d93a0cf2e0c7ba47da8",
+    "hdSHA256": "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1",
+    "identicalRecordedFields": [
+      "i",
+      "time",
+      "shaderTime",
+      "s",
+      "stage",
+      "lat",
+      "steer",
+      "hearts",
+      "coins",
+      "camera"
+    ],
+    "frames": 63,
+    "compositionComparedToPreviousCapture": {
+      "meanChannelErrorAt108x192": 2.854,
+      "largestFrameMeanError": 6.066,
+      "minimumFrameCorrelation": 0.99092
+    }
+  },
+  {
+    "file": "Screen_06/SCREEN06_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "sourceOriginalSHA256": "c32286cd60f1bfd1089123a9a4f4bc8e0ecebfb9100dcfeaa74c907eeabee2e3",
+    "hdSHA256": "3c5c4157bcf2acd8bfbb5dc8ee19000c26eb82d29a9d6ffa613293e898ef2505",
+    "identicalRecordedFields": [
+      "i",
+      "time",
+      "shaderTime",
+      "s",
+      "stage",
+      "lat",
+      "steer",
+      "hearts",
+      "coins",
+      "camera"
+    ],
+    "frames": 63,
+    "compositionComparedToPreviousCapture": {
+      "meanChannelErrorAt108x192": 2.795,
+      "largestFrameMeanError": 6.068,
+      "minimumFrameCorrelation": 0.99092
+    }
+  }
+]
