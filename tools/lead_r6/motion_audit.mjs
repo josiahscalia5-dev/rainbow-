@@ -13,7 +13,7 @@ const vite = await startVite(5270 + Number(SCREEN));
 const browser = await chromium.launch({ args: CHROMIUM_ARGS });
 const log = [];
 // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
-const SHOTS = [
+const SHOTS = [...(process.env.EXTRA_SHOTS ? JSON.parse(process.env.EXTRA_SHOTS) : []),   // r11: optional extra [name, dist, steer] shots
   ['a00_approved_view', 0, null],
   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f20_forward20u', 20, null],
   ['s_left_steer', 6, -1], ['s_right_steer', 6, 1], ['s_left_hard', 12, -1], ['s_right_hard', 12, 1],

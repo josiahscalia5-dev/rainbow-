@@ -293,6 +293,77 @@ export async function buildMatch04(): Promise<Match04> {
   const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
     hideOld: (names) => group.children.forEach((o) => { if (names.includes(o.name)) o.visible = false; }) });
 
+  // r11 `&m04mv=1` (lead DECISIVE TEST, qa/match/04/r11/PROGRESS.md): MULTI-VIEW projection — the Screen 08 method extended
+  // from one picture to a chain of views along the stage. The user's PROVISIONAL reference views V04-1 / V04-2 (made from the
+  // live game frames at forward 10 u / 20 u) are projected from those exact game cameras onto every Screen 04 surface (overlay
+  // copies of the meshes, depth-tested against each view's own depth bake; the painted Benny / coins / HUD masked out), and
+  // blended by the camera's distance to each view's camera. The approved view (10 u away from V04-1's camera) is unchanged.
+  const MV = new URLSearchParams(location.search).get('m04mv') === '1';
+  const mvViews: { cam: THREE.PerspectiveCamera; rt: THREE.WebGLRenderTarget; pos: THREE.Vector3 }[] = [];
+  const mvU = {
+    uV0: { value: null as THREE.Texture | null }, uV1: { value: null as THREE.Texture | null },
+    uD0: { value: null as THREE.Texture | null }, uD1: { value: null as THREE.Texture | null },
+    uVP0: { value: new THREE.Matrix4() }, uVP1: { value: new THREE.Matrix4() },
+    uW0: { value: 0 }, uW1: { value: 0 }, uMvNF: { value: new THREE.Vector2(0.2, 160) },
+    uPjPost: shared.uPjPost, uPjRes: shared.uPjRes,
+  };
+  if (MV) {
+    const J: { views: { img: string; matrixWorld: number[]; fov: number; aspect: number }[] } = await fetch(tex('mv04.json')).then((r) => r.json());
+    for (const [k, v] of J.views.slice(0, 2).entries()) {
+      const t = await new THREE.TextureLoader().loadAsync(tex(v.img));
+      t.colorSpace = THREE.NoColorSpace; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8;
+      const cam = new THREE.PerspectiveCamera(v.fov, v.aspect, 0.2, 160);
+      cam.matrixWorld.fromArray(v.matrixWorld);
+      cam.matrixWorld.decompose(cam.position, cam.quaternion, cam.scale);
+      cam.matrixWorldInverse.copy(cam.matrixWorld).invert();
+      cam.updateProjectionMatrix();
+      const rt = new THREE.WebGLRenderTarget(512, 910, { depthBuffer: true });
+      rt.depthTexture = new THREE.DepthTexture(512, 910, THREE.UnsignedIntType);
+      mvViews.push({ cam, rt, pos: cam.position.clone() });
+      (k === 0 ? mvU.uV0 : mvU.uV1).value = t;
+      (k === 0 ? mvU.uD0 : mvU.uD1).value = rt.depthTexture;
+      (k === 0 ? mvU.uVP0 : mvU.uVP1).value.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse);
+    }
+    const mvMat = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, side: THREE.DoubleSide, fog: false,
+      polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+      uniforms: mvU,
+      vertexShader: 'varying vec3 vW; void main() { vec4 wp = modelMatrix * vec4(position, 1.0); vW = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }',
+      fragmentShader: /* glsl */ `uniform sampler2D uV0; uniform sampler2D uV1; uniform sampler2D uD0; uniform sampler2D uD1;
+uniform mat4 uVP0; uniform mat4 uVP1; uniform float uW0; uniform float uW1; uniform vec2 uMvNF;
+uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec3 vW;
+${PROJ05_INVERSE}
+float mvLin(float d) { float n = uMvNF.x, f = uMvNF.y; return 2.0 * n * f / (f + n - (2.0 * d - 1.0) * (f - n)); }
+vec4 mvLook(sampler2D V, sampler2D D, mat4 VP) {
+  vec4 p = VP * vec4(vW, 1.0);
+  if (p.w <= 0.0) return vec4(0.0);
+  vec3 ndc = p.xyz / p.w; vec2 uv = ndc.xy * 0.5 + 0.5;
+  if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) return vec4(0.0);
+  float zs = mvLin(texture2D(D, uv).r), zf = mvLin(ndc.z * 0.5 + 0.5);
+  float vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+  vec4 c = texture2D(V, uv);
+  return vec4(c.rgb, c.a * vis);
+}
+void main() {
+  vec4 a = mvLook(uV0, uD0, uVP0), b = mvLook(uV1, uD1, uVP1);
+  float wa = uW0 * a.a, wb = uW1 * b.a;
+  float ca = pow(wa, 3.0), cb = pow(wb, 3.0);
+  float cov = clamp(max(wa, wb), 0.0, 1.0);
+  if (cov < 0.004) discard;
+  vec3 col = (a.rgb * ca + b.rgb * cb) / max(ca + cb, 1e-5);
+  gl_FragColor = vec4(pjInverse(col), cov);
+}`,
+    });
+    const meshes: THREE.Mesh[] = [];
+    group.traverse((o) => { if ((o as THREE.Mesh).isMesh) meshes.push(o as THREE.Mesh); });
+    for (const o of meshes) {
+      const c = new THREE.Mesh(o.geometry, mvMat);
+      c.name = `${o.name}_mv`; c.frustumCulled = false; c.renderOrder = (o.renderOrder || 0) + 1; c.userData.mv = true;
+      o.add(c);
+    }
+    console.info('[match04] m04mv', { views: mvViews.length, overlays: meshes.length, cams: mvViews.map((v) => v.pos.toArray().map((x) => +x.toFixed(2))) });
+  }
+
   let splash: THREE.Mesh | null = null;
   const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());
   if (SPLASH04) {
@@ -325,6 +396,11 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
       renderer.setRenderTarget(depthRT);
       renderer.clear();
       renderer.render(scene, proj);
+      // r11 m04mv: each extra view's own depth bake (its overlay copies are excluded)
+      if (mvViews.length) {
+        clone.traverse((o) => { if (o.userData.mv) o.visible = false; });
+        for (const v of mvViews) { renderer.setRenderTarget(v.rt); renderer.clear(); renderer.render(scene, v.cam); }
+      }
       renderer.setRenderTarget(prevRT);
       shared.uUseDepth.value = 1;
     },
@@ -333,6 +409,12 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
       shared.uPjPost.value.x = renderer.toneMappingExposure;
       shared.uPjRes.value.set(w, h);
       if (m4 && camera) m4.update(camera.getWorldPosition(_cp));
+      // r11 m04mv: full weight within 3 u of a view's camera, gone at 8 u (the approved camera is ~10 u from V04-1's)
+      if (mvViews.length && camera) {
+        const cp = camera.getWorldPosition(_cp);
+        mvU.uW0.value = 1 - THREE.MathUtils.smoothstep(cp.distanceTo(mvViews[0].pos), 3, 8);
+        mvU.uW1.value = mvViews[1] ? 1 - THREE.MathUtils.smoothstep(cp.distanceTo(mvViews[1].pos), 3, 8) : 0;
+      }
     },
   };
 }

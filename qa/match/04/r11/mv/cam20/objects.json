@@ -1,0 +1,2498 @@
+[
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<doorA_pivot<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<doorA_pivot<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshPhysicalMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_drumA<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<blue_sock<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<blue_sock<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<blue_sock<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<pink_star_shirt<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "purple_towel",
+  "type": "Mesh",
+  "chain": "purple_towel<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_drumA<washer_world<Scene",
+  "visible": true,
+  "count": 5,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_basin<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 24,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 1,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 1,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 1,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 1,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 1,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 4,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 22,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 10,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 44,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "tube05_far_wall",
+  "type": "Mesh",
+  "chain": "tube05_far_wall<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "tube05_far_river",
+  "type": "Mesh",
+  "chain": "tube05_far_river<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "tube05_far",
+  "type": "Mesh",
+  "chain": "tube05_far<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 5,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "tube05_far",
+  "type": "Mesh",
+  "chain": "tube05_far<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": 10,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "tube05_end_glow",
+  "type": "Mesh",
+  "chain": "tube05_end_glow<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "tube05_near_frame",
+  "type": "Mesh",
+  "chain": "tube05_near_frame<zone_tubes<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<doorC_pivot<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<doorC_pivot<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshPhysicalMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<doorC_pivot<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "purple_towel",
+  "type": "Mesh",
+  "chain": "purple_towel<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<Group<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<zone_chamber<washer_world<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshBasicMaterial"
+ },
+ {
+  "name": "water_ribbon",
+  "type": "Mesh",
+  "chain": "water_ribbon<water_system<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "water_whirlpool",
+  "type": "Mesh",
+  "chain": "water_whirlpool<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "water_drumA_surface",
+  "type": "Mesh",
+  "chain": "water_drumA_surface<water_drumA<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "water_drumA_swirl",
+  "type": "Mesh",
+  "chain": "water_drumA_swirl<water_drumA<water_system<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "water_final_wave",
+  "type": "Mesh",
+  "chain": "water_final_wave<water_system<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<water_puddles<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<water_puddles<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<water_puddles<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<water_puddles<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<water_puddles<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<water_puddles<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "foam_berm",
+  "type": "Mesh",
+  "chain": "foam_berm<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 395,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 97,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": 342,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": 386,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": 43,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": 368,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": 375,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 420,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 402,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 429,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 396,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 387,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 355,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 334,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 349,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 100,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<foam_whirlpool<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": 717,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "foam_flank",
+  "type": "Mesh",
+  "chain": "foam_flank<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "foam_rafts",
+  "type": "Mesh",
+  "chain": "foam_rafts<foam_banks<water_system<Scene",
+  "visible": false,
+  "count": 2678,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "foam_rim05",
+  "type": "Mesh",
+  "chain": "foam_rim05<foam_banks<water_system<Scene",
+  "visible": true,
+  "count": 3865,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "bubbles_big",
+  "type": "Mesh",
+  "chain": "bubbles_big<bubbles<water_system<Scene",
+  "visible": true,
+  "count": 19,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "bubbles_small",
+  "type": "Points",
+  "chain": "bubbles_small<bubbles<water_system<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "spray",
+  "type": "Points",
+  "chain": "spray<water_system<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "rider_splash",
+  "type": "Mesh",
+  "chain": "rider_splash<water_system<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "rider_splash05",
+  "type": "Mesh",
+  "chain": "rider_splash05<water_system<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "eyeL_happy",
+  "type": "Mesh",
+  "chain": "eyeL_happy<eyeL<eyes<body<benny_root",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "eyeL_dizzy",
+  "type": "Mesh",
+  "chain": "eyeL_dizzy<eyeL<eyes<body<benny_root",
+  "visible": false,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "lash_L_05",
+  "type": "Mesh",
+  "chain": "lash_L_05<eyeL<eyes<body<benny_root",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "lash_L_085",
+  "type": "Mesh",
+  "chain": "lash_L_085<eyeL<eyes<body<benny_root",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "eyeR_happy",
+  "type": "Mesh",
+  "chain": "eyeR_happy<eyeR<eyes<body<benny_root",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "eyeR_dizzy",
+  "type": "Mesh",
+  "chain": "eyeR_dizzy<eyeR<eyes<body<benny_root",
+  "visible": false,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "lash_R_05",
+  "type": "Mesh",
+  "chain": "lash_R_05<eyeR<eyes<body<benny_root",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "lash_R_085",
+  "type": "Mesh",
+  "chain": "lash_R_085<eyeR<eyes<body<benny_root",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "blushL",
+  "type": "Mesh",
+  "chain": "blushL<body<benny_root<AuxScene<Benny",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "blushR",
+  "type": "Mesh",
+  "chain": "blushR<body<benny_root<AuxScene<Benny",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "nose",
+  "type": "Mesh",
+  "chain": "nose<body<benny_root<AuxScene<Benny",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "mouth_happy",
+  "type": "Mesh",
+  "chain": "mouth_happy<mouth<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "mouth_dizzy",
+  "type": "Mesh",
+  "chain": "mouth_dizzy<mouth<body<benny_root<AuxScene",
+  "visible": false,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "mouth_peek",
+  "type": "Mesh",
+  "chain": "mouth_peek<mouth<body<benny_root<AuxScene",
+  "visible": false,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "palmL",
+  "type": "Mesh",
+  "chain": "palmL<armL<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "fur_armL",
+  "type": "Mesh",
+  "chain": "fur_armL<armL<body<benny_root<AuxScene",
+  "visible": true,
+  "count": 12,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "palmR",
+  "type": "Mesh",
+  "chain": "palmR<armR<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "fur_armR",
+  "type": "Mesh",
+  "chain": "fur_armR<armR<body<benny_root<AuxScene",
+  "visible": true,
+  "count": 12,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "soleL",
+  "type": "Mesh",
+  "chain": "soleL<footL<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "fur_footL",
+  "type": "Mesh",
+  "chain": "fur_footL<footL<body<benny_root<AuxScene",
+  "visible": true,
+  "count": 8,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "soleR",
+  "type": "Mesh",
+  "chain": "soleR<footR<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "fur_footR",
+  "type": "Mesh",
+  "chain": "fur_footR<footR<body<benny_root<AuxScene",
+  "visible": true,
+  "count": 8,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "hat_brim",
+  "type": "Mesh",
+  "chain": "hat_brim<hat<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "hat_crown",
+  "type": "Mesh",
+  "chain": "hat_crown<hat<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "hat_star",
+  "type": "Mesh",
+  "chain": "hat_star<hat<body<benny_root<AuxScene",
+  "visible": true,
+  "count": null,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "fur_pom",
+  "type": "Mesh",
+  "chain": "fur_pom<pom<hat<body<benny_root",
+  "visible": true,
+  "count": 16,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "fur_body",
+  "type": "Mesh",
+  "chain": "fur_body<body<benny_root<AuxScene<Benny",
+  "visible": true,
+  "count": 20,
+  "mat": "MeshStandardMaterial"
+ },
+ {
+  "name": "",
+  "type": "Mesh",
+  "chain": "Mesh<coins<Scene",
+  "visible": true,
+  "count": 91,
+  "mat": null
+ },
+ {
+  "name": "m04_tube",
+  "type": "Mesh",
+  "chain": "m04_tube<match04_projection<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_mouth_ring",
+  "type": "Mesh",
+  "chain": "m04_mouth_ring<match04_projection<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_room_wall",
+  "type": "Mesh",
+  "chain": "m04_room_wall<match04_projection<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_room_far",
+  "type": "Mesh",
+  "chain": "m04_room_far<match04_projection<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_water",
+  "type": "Mesh",
+  "chain": "m04_water<match04_projection<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_tube_end",
+  "type": "Mesh",
+  "chain": "m04_tube_end<match04_projection<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_ring_tunnel",
+  "type": "Mesh",
+  "chain": "m04_ring_tunnel<match04_projection<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_ring_mouth",
+  "type": "Mesh",
+  "chain": "m04_ring_mouth<match04_projection<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_ring_glow",
+  "type": "Mesh",
+  "chain": "m04_ring_glow<match04_projection<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_river",
+  "type": "Mesh",
+  "chain": "m04_river<match04_projection<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_foam",
+  "type": "Mesh",
+  "chain": "m04_foam<match04_projection<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_bubbles",
+  "type": "Mesh",
+  "chain": "m04_bubbles<match04_projection<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_bulbs",
+  "type": "Mesh",
+  "chain": "m04_bulbs<match04_projection<Scene",
+  "visible": false,
+  "count": null,
+  "mat": "ShaderMaterial"
+ },
+ {
+  "name": "m04_splash",
+  "type": "Mesh",
+  "chain": "m04_splash<Scene",
+  "visible": true,
+  "count": null,
+  "mat": "ShaderMaterial"
+ }
+]
