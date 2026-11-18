@@ -3684,3 +3684,301 @@ The blue halo came out as solid flat blue shapes, not a glow. The query also hel
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/w5.jpg"}`
 
+### 🧑 User — 2026-11-18T15:08:33.751Z
+
+> ↩︎ result: m04a3g=1.6
+> m04a3o=0.38
+> m04a3hb=1
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:08:33.763Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:08:44.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && W5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W5.q); C=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/clip04w5; rm -rf $C; timeout 900 node tools/lead_r13/swim_clip.mjs 04 $C 2.2 \"$W5\" > $C.log 2>&1; R=/home/user/rainbow-/qa/review_r13/04_step3_rings_water; mkdir -p $R; ffmpeg -loglevel error -y -framerate 24 -i $C/%04d.png -c:v libx264 -pix_fmt yuv420p -crf 20 $R/07_NEW_real_gameplay_swim_2s.mp4; echo done >> $C.log", "description": "Record W5 gameplay clip in background", "t …[+44 chars]`
+
+### 🧑 User — 2026-11-18T15:08:44.332Z
+
+> ↩︎ result: Command running in background with ID: b6fusxts2. Output is being written to: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/b6fusxts2.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🧑 User — 2026-11-18T15:08:46.184Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-18T15:08:46.337Z
+
+SEND NOW
+CLAUDIA — SCREEN 04 VISUAL CORRECTION, CENTER BLUE PATH
+You are now very close to the real issue on Screen 04.
+YES, you understood my visual goal correctly.
+The main remaining problem is this:
+My approved Screen 04 reads as a clean blue center path with five bright arrows inside a gold tunnel.
+Your current Screen 04 still has too much water and foam rising along the left and right sides, so the scene looks crowded and the center lane is not clean enough.
+For Screen 04, I want you to focus on these exact corrections:
+Reduce the left and right side water buildup
+lower the side water walls
+reduce the foamy ridges
+reduce repeated lumpy foam texture
+reduce how much the pink/white side water crowds inward
+Make the center lane read as one clean blue path
+cleaner
+smoother
+more continuous
+visually simpler
+easier to read from front to back
+Keep the five arrows clearly visible on that blue path
+bright white/cyan
+less transparent
+sitting ahead of Benny
+not touching or cutting into Benny
+visible while swimming straight and while steering
+Let the gold tunnel dominate more
+the approved image shows the gold tunnel clearly
+remove enough side clutter so more of the gold tunnel remains visible
+aim for fewer, broader, polished gold rings rather than a cluttered orange corridor
+Do not redesign the scene
+keep the approved composition
+keep Benny the same
+keep the same gameplay view
+only correct the water formation and tunnel readability
+Most important visual rule for Screen 04: It should read as:
+gold tunnel + clean blue center path + five glowing arrows
+and NOT as:
+crowded foamy water corridor with bulky side walls
+Please continue testing only the versions that push the side water outward and keep the center lane clean.
+Then show me:
+BEFORE
+NEW
+APPROVED
+for straight, hard left, and hard right.
+
+### 🧑 User — 2026-11-18T15:08:56.878Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-18T15:09:02.209Z
+
+SEND NOW
+CLAUDIA — SCREEN 04 VISUAL CORRECTION, CENTER BLUE PATH
+You are now very close to the real issue on Screen 04.
+YES, you understood my visual goal correctly.
+The main remaining problem is this:
+My approved Screen 04 reads as a clean blue center path with five bright arrows inside a gold tunnel.
+Your current Screen 04 still has too much water and foam rising along the left and right sides, so the scene looks crowded and the center lane is not clean enough.
+For Screen 04, I want you to focus on these exact corrections:
+Reduce the left and right side water buildup
+lower the side water walls
+reduce the foamy ridges
+reduce repeated lumpy foam texture
+reduce how much the pink/white side water crowds inward
+Make the center lane read as one clean blue path
+cleaner
+smoother
+more continuous
+visually simpler
+easier to read from front to back
+Keep the five arrows clearly visible on that blue path
+bright white/cyan
+less transparent
+sitting ahead of Benny
+not touching or cutting into Benny
+visible while swimming straight and while steering
+Let the gold tunnel dominate more
+the approved image shows the gold tunnel clearly
+remove enough side clutter so more of the gold tunnel remains visible
+aim for fewer, broader, polished gold rings rather than a cluttered orange corridor
+Do not redesign the scene
+keep the approved composition
+keep Benny the same
+keep the same gameplay view
+only correct the water formation and tunnel readability
+Most important visual rule for Screen 04: It should read as:
+gold tunnel + clean blue center path + five glowing arrows
+and NOT as:
+crowded foamy water corridor with bulky side walls
+Please continue testing only the versions that push the side water outward and keep the center lane clean.
+Then show me:
+BEFORE
+NEW
+APPROVED
+for straight, hard left, and hard right.
+
+### 🤖 Claude — 2026-11-18T15:09:12.893Z
+
+I'll stop the background clip, since that version is about to be superseded, and look at how the side water height and foam are built.
+
+### 🤖 Claude — 2026-11-18T15:09:13.234Z
+
+> 🔧 **TaskStop** `{"task_id": "b6fusxts2"}`
+
+### 🧑 User — 2026-11-18T15:09:13.253Z
+
+> ↩︎ result: {"message":"Successfully stopped task: b6fusxts2 (cd /home/user/wt/s04 && W5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W5.q); C=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/clip04w5; rm -rf $C; timeout 900 node tools/lead_r13/swim_clip.mjs 04 $C 2.2 \"$W5\" > $C.log 2>&1; R=/home/user/rainbow-/qa/review_r13/04_step3_rings_water; mkdir -p $R; ffmpeg -loglevel error -y -framerate 24 -i $C/%04d.png -c:v libx264 -pix_fmt yuv420p -crf 20 $R/07_NEW_real_gameplay_swim_2s.mp4; echo done >> $C.log)","task_id":"b6fusxts2","task_type":"local_bash","command":"cd /home/user/wt/s04 && W5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W5.q); C=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/clip04w5; rm -rf $C; timeout 900 node tools/lead_r13/swim_clip.mjs 04 $C 2.2 \"$W5\" > $C.log 2>&1; R=/home/user/rainbow-/qa/review_r13/04_step3_rings_water; mkdir -p $R; ffmpeg -loglevel error -y -framerate 24 -i $C/%04d.png -c:v libx264 -pix_fmt yuv420p -crf 20 $R/07_NEW_real_gameplay_swim_2s.mp4; echo done >> $C.log"}
+
+### 🤖 Claude — 2026-11-18T15:09:14.190Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"RY\\b\\|const RY\\|m04rw\\|M04.foam3\\|foam3\" src/world/match04m4.ts | head -20", "description": "Find side water height and foam code"}`
+
+### 🧑 User — 2026-11-18T15:09:14.255Z
+
+> ↩︎ result: 15: *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+> 42:  foam3: on('m04foam3'),
+> 592:  const RY = M04.num('m04ry', 1.0);                         // how high the river sides climb the wall (u above the water)
+> 594:  const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
+> 607:      if (au <= kf) { x = (au / kf) * XF; y = 0.02; } else { const t = (au - kf) / (1 - kf); x = XF + (xW - XF) * t; y = 0.02 + RY * t * t; }
+> 644:    console.info('[match04] m04river', { xW, RY, XF });
+> 676:        const f3 = M04.foam3;                                     // round 9: low soft banks hugging the river edge
+> 690:          const ys = onWall ? RY + rnd() * (f3 ? 0.25 : 0.7) * env : 0.02 + RY * tt * tt;
+> 705:          const x = side * (XF + (xW - XF) * tt - 0.05), y = 0.02 + RY * tt * tt + rad * (0.3 + 0.5 * rnd()) + 0.25 * env * rnd();
+> 711:    for (let a = -7; a < 0; a += M04.foam3 ? 0.5 : 0.35) for (const side of [-1, 1]) {
+> 714:        const rad = (0.16 + rnd() * 0.34) * (M04.foam3 ? 0.7 : 1);
+> 719:    sprites(items, M04.foam3 ? FOAM_FRAG.replace('uniform float uAlpha;', 'uniform floa …[+187 chars]
+
+### 🤖 Claude — 2026-11-18T15:09:15.924Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 590, "limit": 20}`
+
+### 🧑 User — 2026-11-18T15:09:15.940Z
+
+> ↩︎ result: 590	
+> 591	  // `m04river`: the wide painted river trough inside the tunnel (world-anchored, replaces the flat ramp there)
+> 592	  const RY = M04.num('m04ry', 1.0);                         // how high the river sides climb the wall (u above the water)
+> 593	  const XF = M04.num('m04xf', 1.9);                         // half width of the flat centre lane (Benny's steering room)
+> 594	  const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
+> 595	  const time = { value: 0 };
+> 596	  const a5b = new THREE.Vector4(M04.num('m04a5w', 1.3), M04.num('m04a5s', 2.2), 0, M04.num('m04a5d', 30));
+> 597	  const MwInv = Mw.clone().invert();
+> 598	  if (M04.river) {
+> 599	    const nX = 28, nA = Math.ceil(len / 0.5);
+> 600	    const pos: number[] = [], aR: number[] = [], idx: number[] = [];
+> 601	    // cross-section: flat lane |x| <= XF (a hair above the old water plane), then sides curving up to the wall
+> 602	    const xs: { x: number; y: number }[] = [];
+> 603	    for (let i = 0; i <= nX; i++) {
+> 604	      const u = (i / nX) * 2 - 1, au = Math.abs(u);
+> 605	      const kf = 0.45; // share of the half section that is the flat lane
+> 606	      let x: number, y: number;
+> 607	 …[+198 chars]
+
+### 🤖 Claude — 2026-11-18T15:09:16.584Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 670, "limit": 25}`
+
+### 🧑 User — 2026-11-18T15:09:16.606Z
+
+> ↩︎ result: 670	    const items: { p: THREE.Vector3; r: number; s: number }[] = [];
+> 671	    // `m04foam2` (default with m04foam under m04river): irregular heaped clumps instead of evenly spaced rows
+> 672	    const heaped = M04.num('m04foam2', 1) > 0.5;
+> 673	    for (const side of [-1, 1]) {
+> 674	      let a = 0.2 + rnd() * 0.5;
+> 675	      while (heaped && a < len - 1) {
+> 676	        const f3 = M04.foam3;                                     // round 9: low soft banks hugging the river edge
+> 677	        const cl = 0.5 + Math.pow(rnd(), 1.3) * 2.4;            // clump length along the river
+> 678	        const H = (0.2 + Math.pow(rnd(), 1.8) * 1.1) * (f3 ? 0.35 : 1);   // heap height (a few tall heaps, many low ones)
+> 679	        const reach = (0.3 + rnd() * 0.5 + H * 0.6) * (f3 ? 0.6 : 1);     // how far the clump spills into the river
+> 680	        const n = Math.round((6 + cl * (8 + H * 22)) * (f3 ? 0.75 : 1));
+> 681	        const lean = (rnd() - 0.5) * 0.6;
+> 682	        for (let i = 0; i < n; i++) {
+> 683	          const t = rnd(), env = Math.pow(Math.sin(Math.PI * t), 0.7);
+> 684	          const hf = Math.pow(rnd(), 1.6) * env;                 // height fraction inside the heap
+> 685	          const big = rnd() …[+872 chars]
+
+### 🤖 Claude — 2026-11-18T15:09:31.099Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"const riv\\b\\|const riv =\\|riv\\.\\(minFilter\\|generateMipmaps\\|wrap\\)\" src/world/match04m4.ts | head -5", "description": "Check river texture filtering setup"}`
+
+### 🧑 User — 2026-11-18T15:09:31.144Z
+
+> ↩︎ result: 630:    const riv = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_river3.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+> 631:    riv.colorSpace = THREE.NoColorSpace; riv.flipY = false; riv.wrapS = riv.wrapT = THREE.RepeatWrapping;
+> 632:    riv.minFilter = THREE.LinearMipmapLinearFilter; riv.anisotropy = 8;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:09:39.916Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nrep=[\n(\"\"\"uniform vec2 uSE;            // r13 m04rse\"\"\",\"\"\"uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength\nuniform vec2 uSE;            // r13 m04rse\"\"\"),\n(\"\"\"  if (uPk.x > 0.5) {\n    // m04pink\"\"\",\"\"\"  if (uLane.x > 0.5) {\n    // r13 `m04lane`: the painted centre path is ONE clean glossy blue lane (deep cyan-blue, soft long light streaks, no\n    // foam crests or swirl knots): the tile seen heavily smoothed (mip bias) for i …[+1316 chars]`
+
+### 🧑 User — 2026-11-18T15:09:40.705Z
+
+> ↩︎ result: ok
+> src/world/match04m4.ts(324,13): error TS1005: ',' expected.
+> src/world/match04m4.ts(324,20): error TS1005: ',' expected.
+> 301:float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:09:42.708Z
+
+A backtick in my shader comment broke the template string. Fixing:
+
+### 🤖 Claude — 2026-11-18T15:09:43.854Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -i 's|    // r13 `m04lane`: the painted centre path|    // r13 m04lane: the painted centre path|' src/world/match04m4.ts && npx tsc --noEmit -p . 2>&1 | tail -2; echo tsc-done", "description": "Remove backticks from shader comment and typecheck"}`
+
+### 🧑 User — 2026-11-18T15:09:46.152Z
+
+> ↩︎ result: tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T15:09:57.197Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && W5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/W5.q); C1=$(echo \"$W5\" | sed 's/m04ry=2.2/m04ry=1.2/; s/m04pkl=1.8/m04pkl=2.6/')\"&m04xf=2.6&m04lane=1&m04lanew=1.9&m04lanes=0.85&m04a3co=1.0\"; C2=$(echo \"$C1\" | sed 's/&m04foam3=1//; s/&m04foam=1//'); echo \"$C1\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C1.q; echo \"$C2\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C2.q; for n in C1 C2; do q=$(cat /tmp/claude-0/-home-user-rainbow …[+658 chars]`
+
+### 🤖 Claude — 2026-11-18T15:09:58.295Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/lane1.jpg"}`
+
+### 🧑 User — 2026-11-18T15:11:25.318Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:11:25.333Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:11:39.164Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && C2=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C2.q); C3=$(echo \"$C2\" | sed 's/m04ry=1.2/m04ry=0.8/; s/m04pkw=0.75/m04pkw=0.55/; s/m04lanew=1.9/m04lanew=2.3/; s/m04ringp=3.9/m04ringp=4.6/'); echo \"$C3\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C3.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s5_lane/C3 \"$C3\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; cd qa/match/04/r13 && montage /home/user/rainbow-/references/04_through_the_five_arrows.png  …[+379 chars]`
+
+### 🤖 Claude — 2026-11-18T15:11:40.465Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/lane2.jpg"}`
+
+### 🧑 User — 2026-11-18T15:12:22.418Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:12:22.431Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:12:31.026Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd /home/user/wt/s04/qa/match/04/r13/s5_lane/C3 && for f in f20_forward20u s_left_hard s_right_hard; do convert $f.png -crop 700x560+82+560 +repage -resize 300x $S/c3_$f.png; done; convert $S/c3_f20_forward20u.png $S/c3_s_left_hard.png $S/c3_s_right_hard.png +append $S/c3z.jpg", "description": "Zoom on C3 arrows at straight and steering"}`
+
+### 🧑 User — 2026-11-18T15:12:31.256Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:12:32.229Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/c3z.jpg"}`
+
+### 🧑 User — 2026-11-18T15:12:32.256Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:12:42.603Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && C3=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C3.q); C4=$(echo \"$C3\" | sed 's/m04a3p=3.6/m04a3p=3.0/'); echo \"$C4\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C4.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s5_lane/C4 \"$C4\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd qa/match/04/r13/s5_lane/C4 && for f in f20_forward20u f06_forward6u s_left_hard t95_throug …[+292 chars]`
+
+### 🤖 Claude — 2026-11-18T15:12:43.808Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/c4z.jpg"}`
+
