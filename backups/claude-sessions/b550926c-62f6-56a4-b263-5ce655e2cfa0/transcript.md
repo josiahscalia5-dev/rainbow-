@@ -4276,3 +4276,47 @@ I've scheduled a check-in at about 01:13 UTC. I'll collect the 07 and 08 results
 
 Everything is saved on GitHub: lead `claude/rainbow-lead-c7` @ `7bcf0bee`. No paid jobs were run.
 
+### 🧑 User — 2026-11-18T00:47:56.697Z
+
+CLAUDIA — SCREEN 05 IS IMPROVING, BUT THE VISUALS STILL NEED WORK.
+
+I can see that you've restored the purple-and-gold washer tunnel farther into Screen 05. Please preserve that improvement.
+
+Now focus on matching my ORIGINAL APPROVED SCREEN 05 more precisely.
+
+Fix the oversized coin covering Benny, the stretched and flattened water, abrupt river edges, disconnected scenery, and the missing smooth S-shaped water formation.
+
+Make the water look like the beautiful flowing blue-and-magenta river in my original approved artwork, not simply a colorful surface.
+
+Improve Benny's visual appearance to match my approved character.
+
+Continue the Screen 07 and 08 visual corrections, then begin Screen 04 when a specialist slot is available. Remember, ALL FIVE playable Screens 04–08 are my priority.
+
+Do not work on the Google Flow video scenes.
+
+I want VISUAL ACCURACY ONLY right now.
+
+Show me separate full-size APPROVED, BEFORE, and NEW images at the same positions. Do not mark anything approved until I personally approve it.
+
+Keep saving every improvement to GitHub and do not spend paid credits without my permission.
+
+### 🤖 Claude — 2026-11-18T00:48:13.311Z
+
+Screen 05's tunnel gain is kept. To respect your two-specialist limit without stalling 05, I'll split the work:
+- **Coins are lead-owned, so I fix the oversized coin covering Benny myself, now**, behind a switch on Screen 05's branch.
+- **Water, river edges, S-formation and Benny's look** go to the Screen 05 specialist, who knows that code. It restarts the moment 07 or 08 finishes.
+
+Saving that brief first:
+
+### 🤖 Claude — 2026-11-18T00:48:23.066Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r7/S05_ROUND2.md", "content": "# Screen 05 — round 7 part 2 (queued: start when the 07 or 08 specialist finishes) — the user's 05 list\n\nBranch `claude/rainbow-s05-match-c7` (pull first: the lead adds a coin-look switch there). Session\n`session_01KS3bZvfAKmzbAswSRdAaqD` (has the context). Report via STATUS.md / NOTES.md commits only (never send_message).\n\nUser (2026-11-18 ~00:55 UTC): \"Screen 05 is improving … I can see that you've restored the purple-and-gold washer tunnel\nfarther into Screen 05. Please preserve that improvement. …[+1803 chars]`
+
+### 🧑 User — 2026-11-18T00:48:23.104Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r7/S05_ROUND2.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T00:48:27.123Z
+
+> 🔧 **Bash** `{"command": "git add docs/briefs/2026-11-17-r7/S05_ROUND2.md && git commit -q -m \"r7: Screen 05 part-2 brief (user's 05 list), queued for the next free slot\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZsVTaecBXyvFd9EQGg\" && git push -q origin claude/rainbow-lead-c7 2>&1 | tail -1; git fetch -q origin \"+refs/heads/claude/rainbow-s05-match-c7:refs/remotes/origin/claude/rainbow-s05-match-c7\"; git worktree add -q /home/user/wt-s05 -b wt-s05-lead origin/claude/rainbow-s05-match-c7 2>&1 | tail -1; cd /home/user/wt-s05 && git br …[+277 chars]`
+
