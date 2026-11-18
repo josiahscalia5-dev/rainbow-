@@ -46,6 +46,7 @@ const ALL = [
 const EXTRA = [
   ['k81_kink', 't0.81', null], ['k81_kink_left', 't0.81', -1], ['k81_kink_right', 't0.81', 1],
   ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],
+  ['t92_left', 't0.92', -1], ['t92_right', 't0.92', 1], ['t98_end', 't0.98', null], ['t102_06', 't1.02', null], ['t95_left', 't0.95', -1], ['t95_right', 't0.95', 1],
 ];
 const want = ONLY === 'all' ? null : new Set(ONLY.split(','));
 const SHOTS = want ? [...ALL, ...EXTRA].filter(([n]) => want.has(n)) : ALL;

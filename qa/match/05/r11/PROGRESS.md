@@ -43,3 +43,30 @@ font): `/home/user/wt/s05/qa/match/05/r11/BEFORE/` — the 12 audit shots plus e
 * NEW: `/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/3_NEW_t66_through_screen.png`, `…/3_NEW_k81_kink.png`,
   `…/3_NEW_t33_through_screen.png`, `…/3_NEW_f20_forward20u.png`
 * Files: `src/vfx/waterRibbon.ts` (M05WTILE), `src/vfx/proj05Tunnel.ts` (M05WTILE_GLSL in withProj05Wall).
+
+## Step 2 — `&m05end=1` (item 2, class E: the stage end stays inside the painted 05 tunnel)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1`
+* Cause (measured, `tools/match05/r11_eval.mjs`): the far 05 block (rings, slotted walls, far river, warm throat) folded
+  away while the eye was still 10 … 6.5 u from its capped seam (s ≈ 186.5); the camera rides ≈ 7.8 u behind Benny, so
+  from Benny ≈ 182 (t ≈ 0.88) the far tunnel was morphing out and at t95 the camera looked into the generic 06 hall.
+  Also the fold distance used the eye depth clamped at 0.5 u, so it could never measure less than ≈ 7 u.
+* Fix (no new design: the same world-anchored 05 block simply stays): the fold uses the true eye → seam distance and
+  happens over 6.8 … 5.2 u, i.e. while Benny covers his last ≈ 1.5 u of Screen 05; it is complete as he enters 06.
+* WHAT LOOKS CLOSER: at t95 (straight, hard left, hard right) Benny still swims inside the painted tunnel — purple
+  slotted walls, gold rings stepping down to the warm glowing throat, the river running on into it — instead of the
+  old generic world (white foam walls, flat pink wall, orange band) that filled the last part of the stage.
+* 06 unchanged: t1.02 (Benny at s ≈ 190.7, inside 06) looks the same BEFORE / NEW (block fully folded).
+* Locked approved view: 0 px (`scripts/capture.mjs 05 --q=<kept set>` vs `+m05end=1`).
+* Benny: at t95 straight / left / right he sits in the water with his splash (not sunk, not hidden). At t98 (the
+  fold itself, 0.1 s before 06) the rings float over the 06 hall for a moment — the same morph as before, now later.
+* Still wrong: the far river right behind the seam is a pale, smeared sheet (the baked far picture magnified — item 1);
+  four 06 coins float over the left wall at t95 (they rose along the white 06 ramp before); a small torn wall/frame
+  fragment at the right edge on hard right steering.
+* APPROVED: `/home/user/wt/s05/qa/match/05/r11/step2_m05end/1_APPROVED.png`
+* BEFORE: `/home/user/wt/s05/qa/match/05/r11/step2_m05end/2_BEFORE_t95_through_screen.png`, `…/2_BEFORE_t95_left.png`,
+  `…/2_BEFORE_t95_right.png`, `…/2_BEFORE_t98_end.png`, `…/2_BEFORE_t102_06.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r11/step2_m05end/3_NEW_t95_through_screen.png`, `…/3_NEW_t95_left.png`,
+  `…/3_NEW_t95_right.png`, `…/3_NEW_t98_end.png`, `…/3_NEW_t102_06.png`
+* Files: `src/world/match05far.ts` (M05END, true eye → seam fold distance), `src/world/environment.ts` (fold window
+  under the switch). New probe positions in `tools/match05/r8_shots.mjs` (t92_left/right, t95_left/right, t98_end,
+  t102_06; only when named); `tools/match05/r11_eval.mjs` (diagnostics).

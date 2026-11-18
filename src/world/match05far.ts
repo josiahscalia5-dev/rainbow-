@@ -26,6 +26,16 @@ import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m0
 import { clip05 } from '../vfx/clip05';
 
 export const M05FAR: boolean = MATCH05 && flag05('m05far');
+/**
+ * `&m05end=1` (Screen 05 round 11, needs m05far): the last part of the stage (t ≈ 0.88 … 0.96, Benny ≈ 182 … 186.5)
+ * stays inside the painted 05 tunnel. The far block folded away while the eye was still 10 … 6.5 u from its capped
+ * seam (s ≈ 186.5), so for the last ≈ 5 u of the stage the camera looked into the old generic 06 hall (white foam
+ * walls, flat pink) instead of the 05 rings / slotted walls / S-river. Now it folds only once Benny reaches the seam
+ * (eye → seam 6.8 … 5.2 u: Benny ≈ 187.6 … 189, done as Benny enters 06): until then the same world-anchored 05 block (rings, walls, far river,
+ * warm throat) continues ahead — faithful continuation of the painted tunnel, nothing new. Geometry, course and the
+ * 06 look unchanged; the locked view never uses this (block at its build-time geometry there).
+ */
+export const M05END: boolean = M05FAR && flag05('m05end');
 
 type Item = { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number };
 
@@ -247,7 +257,9 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
     q.copy(eye).sub(c0).addScaledVector(T, c0.clone().sub(eye).dot(T));
     zs = Math.min(a.zCap, Math.max(0, D0lock - D0));
     if (zs < 1e-6) zs = 0;
-    open = 1 - THREE.MathUtils.smoothstep(D0 + zs, a.foldNear, a.foldFar);
+    // m05end (r11): the TRUE eye → seam distance (D0 is clamped at 0.5 u once the eye passes sF, so D0 + zs never fell
+    // under 0.5 + zCap ≈ 7 u and the block could not fold inside a window nearer than that)
+    open = 1 - THREE.MathUtils.smoothstep(M05END ? c0.clone().sub(eye).dot(T) + zs : D0 + zs, a.foldNear, a.foldFar);
     if (atLock) {
       // the locked checkpoint eye: the build-time geometry (bit-identical locked view)
       if (live) { restore(); live = false; }
