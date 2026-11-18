@@ -966,3 +966,116 @@ While the clips render, I'll write the step 3 notes, then commit and push the st
 >   // far end cap of the tunnel (the glowing vanishing point)
 >   add(new THREE.CircleGeometry(T.r, 64).trans …[+1564 chars]
 
+### 🤖 Claude — 2026-11-18T19:37:10.540Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -rn \"fov\" src/world/match04.ts src/camera* src/game* 2>/dev/null | head -10; grep -rln \"PerspectiveCamera\" src | head -5", "description": "Find camera field of view"}`
+
+### 🧑 User — 2026-11-18T19:37:10.743Z
+
+> ↩︎ result: src/world/match04.ts:23:  camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+> src/world/match04.ts:174:  const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.2, 160);
+> src/world/match04.ts:318:    const J: { views: { img: string; matrixWorld: number[]; fov: number; aspect: number }[] } = await fetch(tex('mv04.json')).then((r) => r.json());
+> src/world/match04.ts:322:      const cam = new THREE.PerspectiveCamera(v.fov, v.aspect, 0.2, 160);
+> src/game/match.ts:27:  '04': { fov: 62, roll: 0, off04: [0.4015, 6.2009, 3.5184], dir04: [-0.04342, -0.58119, -0.81261] },
+> src/game/match.ts:28:  '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },
+> src/game/match.ts:31:  '08': { fov: 62, roll: 0, off08: [0.686, 3.697, 7.115], aim08: [9.812, -119.291, -332.288] },
+> src/game/cameraRig.ts:17:  fov: number;
+> src/game/cameraRig.ts:39:  '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+> src/game/cameraRig.ts:40:  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+> src/characters/girl/girl-lab.ts
+> src/characters/benny/benny-lab.ts
+> src/world/match04.ts
+> src/world/match08.ts
+> src/world/environment …[+3 chars]
+
+### 🤖 Claude — 2026-11-18T19:37:33.451Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b; ls $SP/clipB 2>/dev/null | wc -l; ls $SP/clipN3 2>/dev/null | wc -l; uptime", "description": "Check clip render progress"}`
+
+### 🧑 User — 2026-11-18T19:37:33.795Z
+
+> ↩︎ result: 61
+> 0
+>  19:37:33 up 49 min,  0 user,  load average: 21.42, 18.81, 14.85
+
+### 🤖 Claude — 2026-11-18T19:37:36.740Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring\nvarying vec4 vProj;", "new_string": "uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring\nuniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = focal length in px (screen distance from the vanishing point = y * tan)\nvarying vec4 vProj;"}`
+
+### 🧑 User — 2026-11-18T19:37:36.754Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:37:43.028Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading", "new_string": "      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading\n      if (uRWarm.x > 0.0) {\n        // r16 m04rwarm: the painted rings keep their copper out to ~100 px from the vanishing point, then the last rings\n        // turn orange -> yellow -> warm white toward the glowing centre (band medians measured on the approved picture,\n        // as gain …[+999 chars]`
+
+### 🧑 User — 2026-11-18T19:37:43.107Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:37:44.236Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uRJit: { value: M04.num('m04rpj', 0) },", "new_string": "uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rwf', 1278)) },"}`
+
+### 🧑 User — 2026-11-18T19:37:44.249Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:37:45.816Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 104, "limit": 6}`
+
+### 🧑 User — 2026-11-18T19:37:45.852Z
+
+> ↩︎ result: 104	uniform float uRPaint;     // r15 m04rpaint: mix of the user's PAINTED inner ring (tile_ring_paint.png) on every inner ring band
+> 105	uniform sampler2D uRTex;   // cols psi -pi..pi (0 = top, + = right), rows s 0 (painted groove) .. 1 (next groove), deeper
+> 106	uniform vec4 uRLip;        // x: painted lip-line s, y: modeled u that carries the painted lip line, z: modeled shading amount,
+> 107	                           // w: modeled u where the painted groove begins (held dark to the period end)
+> 108	uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring
+> 109	varying vec4 vProj;
+
+### 🤖 Claude — 2026-11-18T19:37:48.322Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring\nvarying vec4 vProj;", "new_string": "uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring\nuniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = focal length in px (screen distance from the vanishing point = y * tan)\nvarying vec4 vProj;"}`
+
+### 🧑 User — 2026-11-18T19:37:48.357Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:37:53.606Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading", "new_string": "      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading\n      if (uRWarm.x > 0.0) {\n        // r16 m04rwarm: the painted rings keep their copper out to ~100 px from the vanishing point, then the last rings\n        // turn orange -> yellow -> warm white toward the glowing centre (band medians measured on the approved picture,\n        // as gain …[+999 chars]`
+
+### 🧑 User — 2026-11-18T19:37:53.656Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:37:54.884Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uRJit: { value: M04.num('m04rpj', 0) },", "new_string": "uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rwf', 1278)) },"}`
+
+### 🧑 User — 2026-11-18T19:37:55.067Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:38:00.534Z
+
+Also adding the warm amount to the existing console line, so renders log it.
+
+### 🤖 Claude — 2026-11-18T19:38:01.605Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "jitter: gm.uniforms.uRJit.value });", "new_string": "jitter: gm.uniforms.uRJit.value, warm: (gm.uniforms.uRWarm.value as THREE.Vector2).toArray() });"}`
+
+### 🧑 User — 2026-11-18T19:38:01.833Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:38:03.757Z
+
+While the clips finish, I'll run the TypeScript typecheck once on the edited code (single core).
+
+### 🤖 Claude — 2026-11-18T19:38:05.003Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && time timeout 600 npx tsc --noEmit 2>&1 | tail -15", "description": "Typecheck the worktree", "timeout": 660000}`
+
