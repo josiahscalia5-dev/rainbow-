@@ -1122,3 +1122,73 @@ Now the cauliflower sub-bubble switch `&m05caul=1`.
 > f20_forward20u.png
 > s_left_hard.png
 
+### 🤖 Claude — 2026-11-18T11:53:15.778Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 990,1090p src/world/materials.ts", "description": "Read the rest of the far river shader"}`
+
+### 🧑 User — 2026-11-18T11:53:15.835Z
+
+> ↩︎ result: vec3 ow = mix(vec3(0.232, 0.099, 0.521), mix(V_OUT, O_BLUE, 0.4), smoothstep(0.3, 0.75, h5));
+>   vec3 pk = mix(P_DEEP, P_BODY, smoothstep(0.1, 0.45, h5));
+>   pk = mix(pk, P_LIGHT, exp(-pow((tb - 0.45) / 0.2, 2.0)) * 0.35);
+>   pk = mix(pk, P_PALE, bco * 0.75);
+>   pk = mix(pk, P_DEEP, smoothstep(-0.2, -0.85, tb) * 0.35);
+>   vec3 col;
+>   if (tb >= 0.0) {
+>     col = mix(pk, V_IN, smoothstep(0.8, 1.0, at));
+>     col = mix(col, V_PERI, smoothstep(0.98, 1.1, at));
+>     col = mix(col, V_BLUE, smoothstep(1.08, 1.2, at));
+>     col = mix(col, cy, smoothstep(1.17, 1.35, at));
+>   } else {
+>     col = mix(pk, V_OUT, smoothstep(0.8, 1.0, at));
+>     col = mix(col, O_BLUE, smoothstep(1.0, 1.15, at));
+>     col = mix(col, ow, smoothstep(1.12, 1.3, at));
+>   }
+>   // (it03) beyond the bank the floor reads as deep violet water, not as a flat pale foam sheet (the lavender wedge
+>   // left of the seam); only a narrow bubbly foam rim (puff cells ≥ ≈6 px, lavender / blue shading) lines each bank
+> #ifdef FARW05
+>   // ---- W11 (?farw05=1): the channel winds between puffy foam banks. The far block is drawn for the locked eye, so
+>   // the puff cells are laid in (lateral, ln depth) — round on screen and shrinking with distance like  …[+4873 chars]
+
+### 🤖 Claude — 2026-11-18T11:53:20.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1090,1140p src/world/materials.ts; ls /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/caul", "description": "Read the far river shader tail and check render progress"}`
+
+### 🧑 User — 2026-11-18T11:53:20.649Z
+
+> ↩︎ result: float foamIn = smoothstep(-0.3, -0.04, e + bankN);
+>   if (foamIn > 0.0) {
+>     float c = rivCells(vec2(lat * 5.5, s * 2.4 + lat * 0.7));
+>     float cf = 1.0 - smoothstep(0.08, 0.22, fl * 5.5);    // bubble cells only where they are ≳ 3 px
+>     float bub = mix(0.5, smoothstep(0.12, 0.8, c), cf);
+>     vec3 fo = mix(uRivFoam, uRivFoamLav, bub);
+>     fo = mix(fo, uRivFoamBlue, 0.55 * (1.0 - smoothstep(0.0, 0.2, abs(e + 0.05))));          // shade at the waterline
+>     fo = mix(fo, uRivFoamBlue, 0.45 * smoothstep(0.45, 1.0, e / max(0.3, bankW)));         // shaded outer edge
+>     col = mix(col, fo, foamIn);
+>   }
+> #endif
+>   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
+>   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
+>   diffuseColor.rgb = col;
+> }`);
+>     if (pj) {
+>       shader.fragmentShader = shader.fragmentShader
+>         .replace('#include <common>', '#include <common>\n' + pj.pars)
+>         .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
+>     }
+>   };
+>   if (WATER05) {
+>     mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) …[+1183 chars]
+
+### 🤖 Claude — 2026-11-18T11:53:25.048Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/caul/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T11:53:25.129Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:53:35.687Z
+
+> 🔧 **Bash** `{"command": "sleep 20; ls /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/caul; tail -2 /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/ba9sokifp.output", "description": "Wait for the foam render to finish"}`
+
