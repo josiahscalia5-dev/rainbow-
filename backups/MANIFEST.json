@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15032,
-   "sha256": "9fee4d5e2a8a80ea8b502a2d891b58ecf202b29ce75c157462a24026ce1dd424"
+   "sha256": "cf6517a8041471417d8e6ebfaaa0a94ab266759a497c7eaa53f3631a373130cb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -672,6 +672,11 @@
    "sha256": "86be2ff9e9ffd04a843d4679cb5a40a82abaa0d7d1a1626584ce11a04949c80d"
   },
   {
+   "path": "backups/wip/claude__rainbow-s04-match-c11/INFO.json",
+   "bytes": 477,
+   "sha256": "d1547b0929b28317aa1bcc2e964d7b4e62e1a4f4b020792c7f7811f1b4022c9f"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
    "bytes": 585,
    "sha256": "a0c57624f946be09d5727e448ddb5fd2563d901acce7554862e4e67c4f87f894"
@@ -684,7 +689,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/INFO.json",
    "bytes": 602,
-   "sha256": "bf31c977323b832d3d30b6bd1c0337284b3c045f0b85176033e822eeae7e4892"
+   "sha256": "9011dc42ac9b615f723051e14ee55f0a1ff5ffe174f0c8fb7ab3f0b4ef81fdbb"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/tracked.patch",
@@ -719,7 +724,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/INFO.json",
    "bytes": 648,
-   "sha256": "e67fd3fb4e7dbdbc02e48c57b3d63451dfcbdcf03606224c2b72bcb27037557b"
+   "sha256": "bbb79f87f5e9ef9525047e0ff51b8c1cfd1a0d98d628b87f0750e9727a8c8354"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/tracked.patch",
@@ -1033,8 +1038,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r11/COORDINATION.md",
-   "bytes": 4047,
-   "sha256": "9b9303741bd13186e421a6b6820ea4c3b8699045e99b22b5a643259205674229"
+   "bytes": 4594,
+   "sha256": "94286e197ed3fd32cec140134cc89905ce2cb114a168fcf648d8d7ac29841e04"
   },
   {
    "path": "docs/briefs/2026-11-18-r11/DA3_TEST.md",
@@ -9477,6 +9482,31 @@
    "sha256": "01aff396b7ca91d318e6c4b427ed721b7f09c0dad32143b2967d6956c1831555"
   },
   {
+   "path": "qa/review_c11/2026-11-18/05_step2_m05end/1_APPROVED.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/05_step2_m05end/2_BEFORE_t95_left.png",
+   "bytes": 1960300,
+   "sha256": "ca8e11b7040e3b23919a9a562fa58272cc1816fd8996402ef824e13364aa8381"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/05_step2_m05end/2_BEFORE_t95_through_screen.png",
+   "bytes": 1912715,
+   "sha256": "d9acac9fb64128e554254f813a0fea8e742f3eb5ede6a3eb5f1f66d20d54e8e9"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/05_step2_m05end/3_NEW_t95_left.png",
+   "bytes": 2259233,
+   "sha256": "c15e444fee92936276e69ab9da0ad3a0bf2970544afa1e73fb611729c70e270a"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/05_step2_m05end/3_NEW_t95_through_screen.png",
+   "bytes": 2306678,
+   "sha256": "eb069cce405fb15639d412ec8c63c8e50362c2c2a3abc0687d62619bb9c6a961"
+  },
+  {
    "path": "qa/review_c11/2026-11-18/06_test1_m06bend/1_APPROVED.png",
    "bytes": 497882,
    "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
@@ -9515,6 +9545,31 @@
    "path": "qa/review_c11/2026-11-18/08_step1_m08ceil/3_NEW_t95_through_screen.png",
    "bytes": 2359592,
    "sha256": "a6b78e87f8b6241b4f5f834e84ca33636c01de4b68af3acb0d3dec6e36509834"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/08_step2_m08near/1_APPROVED.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/08_step2_m08near/2_BEFORE_s_right_hard.png",
+   "bytes": 2437879,
+   "sha256": "4246fcfc2be2496b830c1880ccf26d2a9a82cecf5394e2279619a6657624dfeb"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/08_step2_m08near/2_BEFORE_t95_through_screen.png",
+   "bytes": 2360162,
+   "sha256": "76c117c04ae8310eae255c32f263c66a7859911dc9ff3dd3af34af5ad1adeed7"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/08_step2_m08near/3_NEW_s_right_hard.png",
+   "bytes": 2466284,
+   "sha256": "37ad25eb841fb182ab3f4f7be8eb717a4a3ec24f623e96acafa290c2b6022b4c"
+  },
+  {
+   "path": "qa/review_c11/2026-11-18/08_step2_m08near/3_NEW_t95_through_screen.png",
+   "bytes": 2409463,
+   "sha256": "8100bcb613389769cddce5d641d4fdf8743ffe61eafb90f70d479ad21095b88b"
   },
   {
    "path": "qa/review_r7/04_1_APPROVED.jpg",

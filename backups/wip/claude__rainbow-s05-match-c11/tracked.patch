@@ -1,55 +1,112 @@
-diff --git a/src/world/environment.ts b/src/world/environment.ts
-index 9200b1b2..1249765c 100644
---- a/src/world/environment.ts
-+++ b/src/world/environment.ts
-@@ -14,7 +14,7 @@ import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
- import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
- import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
- import { flow05Shared, flow05Textures } from '../vfx/flow05';
--import { M05FAR, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
-+import { M05FAR, M05END, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
- import { withClip05Std } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
- import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
- import { buildTowel, TowelMesh } from './towel';
-@@ -633,7 +633,7 @@ export function buildEnvironment(course: Course): Environment {
-     const liveFar = M05FAR ? createLiveFar05({
-       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
-       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
--      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
-+      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
-       riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
-       course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
-     }) : null;
-diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index 491da363..a3b53d89 100644
---- a/src/world/match05far.ts
-+++ b/src/world/match05far.ts
-@@ -26,6 +26,16 @@ import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m0
- import { clip05 } from '../vfx/clip05';
- 
- export const M05FAR: boolean = MATCH05 && flag05('m05far');
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 24624560..c824d042 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -401,6 +401,18 @@ export const M05CAUL: boolean = M05CLOUD && q05('m05caul');
+  * virtual tunnel, blue-violet creases, shaded waterline) — continuing the near foam bank into the far river.
+  */
+ export const M05FBANK: boolean = M05BLEND && q05('m05fbank');
 +/**
-+ * `&m05end=1` (Screen 05 round 11, needs m05far): the last part of the stage (t ≈ 0.88 … 0.96, Benny ≈ 182 … 186.5)
-+ * stays inside the painted 05 tunnel. The far block folded away while the eye was still 10 … 6.5 u from its capped
-+ * seam (s ≈ 186.5), so for the last ≈ 5 u of the stage the camera looked into the old generic 06 hall (white foam
-+ * walls, flat pink) instead of the 05 rings / slotted walls / S-river. Now it folds only once Benny reaches the seam
-+ * (eye → seam 6.8 … 5.2 u: Benny ≈ 187.6 … 189, done as Benny enters 06): until then the same world-anchored 05 block (rings, walls, far river,
-+ * warm throat) continues ahead — faithful continuation of the painted tunnel, nothing new. Geometry, course and the
-+ * 06 look unchanged; the locked view never uses this (block at its build-time geometry there).
++ * `&m05fmag=1` (Screen 05 round 11, item 1, needs m05blend; src/world/materials.ts farRiverMaterial): the far river right
++ * behind the sliding seam. The far block wears the approved picture's far water (layer F), baked for the locked eye;
++ * swimming close to the seam magnifies it 2–4× into a pale, smeared sheet with an angular pale slab on the left (the
++ * painted far foam bank flattened onto the water). Where F would be magnified (eye nearer than ≈ 1/1.6 of the locked
++ * distance) and the block is live, the far river shows its own continuation of the painted formation instead (the far
++ * layout's cyan core between the two hot-pink bands, flow lines along the winding core, foam rims), and the near ribbon
++ * keeps its own design up to the seam instead of fading into the magnified F. Locked view: block not live → unchanged.
 + */
-+export const M05END: boolean = M05FAR && flag05('m05end');
++export const M05FMAG: boolean = M05BLEND && q05('m05fmag');
++/** m05fmag: depth of the far seam from the locked 05 eye (ForcedTunnel.D0), set by environment.ts */
++export const m05fmagD0 = { value: 53.25 };
+ /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
+ export const m05foamK = { value: 0 };
+ /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
+@@ -672,6 +684,9 @@ uniform sampler2D uPjNM;   // m05near: keep-mask of E's near rows (1 = painted w
+ #ifdef M05BLEND
+ // m05blend: the far river's baked layer F + the far tunnel frame (origin c0, axis T, right Rt) and (seam depth, band, half chord, live)
+ uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
++#ifdef M05FMAG
++uniform float uFmD0;
++#endif
+ #endif
+ #ifdef M05WD
+ uniform vec4 uPjWD;        // m05wd: x = on, y = share of the detail layer kept on the design, z = row smoothing (E rows)
+@@ -1722,6 +1737,9 @@ void main() {
+         vec2 fbUV = vec2((dot(fbD, uFbRt) + uFbP.z) / (2.0 * uFbP.z), log(1.0 + max(fbZ, 0.0)) / log(1.0 + uPjFZ));
+         fbC = texture2D(uPjF, clamp(fbUV, 0.0, 1.0));
+         fbK = fbW * fbC.a * step(0.0, fbUV.x) * step(fbUV.x, 1.0);
++        #ifdef M05FMAG
++        fbK *= 1.0 - smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));
++        #endif
+       }
+     }
+     pjK = max(pjK, fbK);
+@@ -1988,7 +2006,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
+     fragmentShader: FRAG,
+     fog: true,
+     side: THREE.DoubleSide,
+-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
++    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+   });
+   const mesh = new THREE.Mesh(geo, mat);
+   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
+@@ -2091,7 +2109,8 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
+   // m05wd (Screen 05 round 8): design layer while riding — on, detail share on the design, row smoothing step (E rows)
+   u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
+   u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
+-  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
++  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }
++  if (M05FMAG) u.uFmD0 = m05fmagD0;   // m05fmag (Screen 05 round 11)   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
+   if (M05GEO) {
+     // m05geo (Screen 05 round 9): painted channel per s (tools/match05/channel05_bp.py) as a 1-row texture for the VERTEX shader
+     const ch = { value: empty as THREE.Texture };
+diff --git a/src/world/materials.ts b/src/world/materials.ts
+index d0bbf51c..89caa90d 100644
+--- a/src/world/materials.ts
++++ b/src/world/materials.ts
+@@ -4,7 +4,7 @@
+  * up the candy PMREM environment, with shader patches for the perforations and glow.
+  */
+ import * as THREE from 'three';
+-import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, m05blend } from '../vfx/waterRibbon';
++import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, m05blend, m05fmagD0 } from '../vfx/waterRibbon';
+ import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
  
- type Item = { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number };
- 
-diff --git a/tools/match05/r8_shots.mjs b/tools/match05/r8_shots.mjs
-index ac38b357..ed4c8d62 100644
---- a/tools/match05/r8_shots.mjs
-+++ b/tools/match05/r8_shots.mjs
-@@ -46,6 +46,7 @@ const ALL = [
- const EXTRA = [
-   ['k81_kink', 't0.81', null], ['k81_kink_left', 't0.81', -1], ['k81_kink_right', 't0.81', 1],
-   ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],
-+  ['t92_left', 't0.92', -1], ['t92_right', 't0.92', 1], ['t98_end', 't0.98', null], ['t102_06', 't1.02', null],
- ];
- const want = ONLY === 'all' ? null : new Set(ONLY.split(','));
- const SHOTS = want ? [...ALL, ...EXTRA].filter(([n]) => want.has(n)) : ALL;
+ export interface PerforatedOptions {
+@@ -858,6 +858,8 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
+  * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
+  * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
+  */
++/** `&m05fmag=1` (Screen 05 round 11): weight of the baked far picture F — 0 where swimming magnifies it (block live) */
++const FMAG_PRE = 'float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5));\n  ';
+ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+   // wins the depth test against the real ribbon's continuation it covers just behind the seam
+@@ -886,6 +888,8 @@ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THR
+   if (pj) Object.assign(uniforms, pj.uniforms);
+   // `&m05fbank=1` (Screen 05 round 11): live flag / seam depth of the far block (written by src/world/match05far.ts)
+   if (pj && M05FBANK) Object.assign(uniforms, { uFbP: m05blend.uFbP });
++  // `&m05fmag=1` (Screen 05 round 11, item 1): live flag (uFbP.w) + locked seam depth of the far block
++  if (pj && M05FMAG) { m05fmagD0.value = d0; Object.assign(uniforms, { uFbP: m05blend.uFbP, uFmD0: m05fmagD0 }); }
+   mat.onBeforeCompile = (shader) => {
+     Object.assign(shader.uniforms, uniforms);
+     shader.vertexShader = shader.vertexShader
+@@ -1107,7 +1111,8 @@ float rivCells(vec2 p) {
+     if (pj) {
+       shader.fragmentShader = shader.fragmentShader
+         .replace('#include <common>', '#include <common>\n' + pj.pars)
+-        .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
++        .replace('  diffuseColor.rgb = col;\n}', '  ' + (M05FMAG ? FMAG_PRE + pj.apply.replace(/\)\.a\);$/, ').a * fmK);') : pj.apply) + '\n  diffuseColor.rgb = col;\n}');
++      if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFbP; uniform float uFmD0;');
+       if (M05FBANK) {
+         shader.fragmentShader = shader.fragmentShader
+           .replace('#include <common>', '#include <common>\nuniform vec4 uFbP;\n#ifndef FARW05\nuniform float uRivD0;\n#endif')
+@@ -1151,7 +1156,7 @@ float rivCells(vec2 p) {
+   }
+   if (pj) {
+     const key = mat.customProgramCacheKey;
+-    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '');
++    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '');
+     mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };
+     mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);
+   }

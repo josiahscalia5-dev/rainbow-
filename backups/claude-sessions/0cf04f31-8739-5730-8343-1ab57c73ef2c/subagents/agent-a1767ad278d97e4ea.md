@@ -881,3 +881,275 @@ Let me look at the current NEW state (step 1 frames) at t66 and the last-third B
 > <string>:4: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
 > t102 diff px >20: 1072164
 
+### 🤖 Claude — 2026-11-18T12:14:16.141Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p && python3 -c \"\nfrom PIL import Image\na=Image.open('end_old/t102_06.png').convert('RGB').resize((432,768)); b=Image.open('end_new2/t102_06.png').convert('RGB').resize((432,768))\nc=Image.new('RGB',(864,768)); c.paste(a,(0,0)); c.paste(b,(432,0)); c.save('cmp_t102.png')\"", "description": "Make a side-by-side of 06 start frames for inspection"}`
+
+### 🧑 User — 2026-11-18T12:14:16.392Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:14:19.631Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/cmp_t102.png"}`
+
+### 🧑 User — 2026-11-18T12:14:19.661Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:14:38.592Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/match05far.ts'\ns=open(p).read()\nold=\"\"\"    open = 1 - THREE.MathUtils.smoothstep(D0 + zs, a.foldNear, a.foldFar);\"\"\"\nnew=\"\"\"    // m05end (r11): the TRUE eye → seam distance (D0 is clamped at 0.5 u once the eye passes sF, so D0 + zs never fell\n    // under 0.5 + zCap ≈ 7 u and the block could not fold inside a window nearer than that)\n    open = 1 - THREE.MathUtils.smoothstep(M05END ? c0.clone().sub(eye).dot(T) + zs : D0 + zs, a.foldNear, a.foldFar);\"\"\"\nassert old in s\ns=s.replace(old,new)\nopen(p,'w').writ …[+1008 chars]`
+
+### 🧑 User — 2026-11-18T12:15:17.060Z
+
+> ↩︎ result: t95_through_screen s 186.817 lat 0 coins 1580 benny -0.12 -0.35 big coins: #38@316,234 d69 #39@319,172 d61
+> t98_end s 188.356 lat 0 coins 1580 benny -0.19 -0.51 big coins: #38@305,383 d71 #39@313,327 d62
+> t102_06 s 190.739 lat 0 coins 1580 benny -0.11 -0.77 big coins: #38@288,640 d77 #39@297,595 d66
+
+### 🤖 Claude — 2026-11-18T12:15:20.991Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/cmp_t102.png"}`
+
+### 🧑 User — 2026-11-18T12:15:21.017Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:15:21.665Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/cmp_t95_98.png"}`
+
+### 🧑 User — 2026-11-18T12:15:21.688Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:15:45.545Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -i \"s|\\['t102_06', 't1.02', null\\],|['t102_06', 't1.02', null], ['t95_left', 't0.95', -1], ['t95_right', 't0.95', 1],|\" tools/match05/r8_shots.mjs && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1'; P=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p; timeout 900 node tools/match05/r8_shots.mjs $P/end_new3 \"$K&m05end=1\" t95_left,t95_right 2>&1 | tail -2 && timeout 900 node tools/match05/r8_shots.mjs $P/ …[+455 chars]`
+
+### 🧑 User — 2026-11-18T12:16:46.418Z
+
+> ↩︎ result: t95_left s 186.797 lat -3.817 coins 1420 benny -0.36 -0.38 big coins: #34@876,660 d68 #35@797,649 d67 #36@731,635 d62 #38@533,220 d69 #39@513,154 d61
+> t95_right s 186.707 lat 3.838 coins 1420 benny 0.09 -0.26 big coins: #38@91,239 d68 #39@118,179 d61
+> t95_left s 186.787 lat -3.819 coins 1420 benny -0.36 -0.38 big coins: #34@876,659 d67 #35@797,648 d67 #36@731,634 d62 #38@533,219 d69 #39@513,154 d61
+> t95_right s 186.708 lat 3.838 coins 1420 benny 0.09 -0.26 big coins: #38@91,239 d68 #39@118,179 d61
+
+### 🤖 Claude — 2026-11-18T12:16:50.536Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/cmp_t95_left.png"}`
+
+### 🧑 User — 2026-11-18T12:16:50.568Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:16:51.201Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/cmp_t95_right.png"}`
+
+### 🧑 User — 2026-11-18T12:16:51.224Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:16:58.748Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r11/step2_m05end && P=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p && mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && for n in t95_through_screen t95_left t95_right t98_end t102_06; do cp $P/end_old/$n.png $D/2_BEFORE_$n.png; cp $P/end_new3/$n.png $D/3_NEW_$n.png; done && cp $P/end_new3/shots.json $D/shots_new.json; cp $P/end_old/shots.json $D/shots_before.json; ls $D && npx tsc --noEmit -p . && echo TSC_OK", "description": "Save step 2 proof images and typecheck", "timeout" …[+9 chars]`
+
+### 🧑 User — 2026-11-18T12:17:01.032Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_t102_06.png
+> 2_BEFORE_t95_left.png
+> 2_BEFORE_t95_right.png
+> 2_BEFORE_t95_through_screen.png
+> 2_BEFORE_t98_end.png
+> 3_NEW_t102_06.png
+> 3_NEW_t95_left.png
+> 3_NEW_t95_right.png
+> 3_NEW_t95_through_screen.png
+> 3_NEW_t98_end.png
+> shots_before.json
+> shots_new.json
+> TSC_OK
+
+### 🤖 Claude — 2026-11-18T12:17:07.972Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && rm qa/match/05/r11/step2_m05end/shots_*.json && sed -n 1,30p scripts/capture.mjs | grep -n \"argv\\|query\\|Q\\b\\|--q\" ", "description": "Check capture script query options"}`
+
+### 🧑 User — 2026-11-18T12:17:08.012Z
+
+> ↩︎ result: 11:const args = process.argv.slice(2);
+
+### 🤖 Claude — 2026-11-18T12:17:10.805Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,60p scripts/capture.mjs", "description": "Read capture script header"}`
+
+### 🧑 User — 2026-11-18T12:17:10.838Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3162 chars]
+
+### 🤖 Claude — 2026-11-18T12:17:18.564Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1'; P=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p; timeout 900 node scripts/capture.mjs 05 --q=\"$K\" --out=$P/lockA 2>&1 | tail -1; timeout 900 node scripts/capture.mjs 05 --q=\"$K&m05end=1\" --out=$P/lockB 2>&1 | tail -1; git checkout -- qa/capture_log.json 2>/dev/null; python3 -c \"\nfrom PIL import Image, ImageChops\na=Image.open('$P/lockA/05.png').convert('R …[+318 chars]`
+
+### 🧑 User — 2026-11-18T12:17:50.745Z
+
+> ↩︎ result: ]
+> ]
+> locked diff px 0 None
+
+### 🤖 Claude — 2026-11-18T12:17:53.291Z
+
+Locked view 0 px. Now the PROGRESS entry, commit, push, verify.
+
+### 🤖 Claude — 2026-11-18T12:18:07.984Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r11/PROGRESS.md <<'EOF'\n\n## Step 2 — `&m05end=1` (item 2, class E: the stage end stays inside the painted 05 tunnel)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1`\n* Cause (measured, `tools/match05/r11_eval.mjs`): the far 05 block (rings, slotted walls, far river, warm throat) folded\n  away while the eye was still 10 … 6.5 u from its capped seam (s ≈ 186.5); the camera rides ≈ 7.8 u behind Benny, so\ …[+3049 chars]`
+
+### 🧑 User — 2026-11-18T12:18:13.415Z
+
+> ↩︎ result: M  qa/match/05/r11/PROGRESS.md
+> A  qa/match/05/r11/step2_m05end/1_APPROVED.png
+> A  qa/match/05/r11/step2_m05end/2_BEFORE_t102_06.png
+> A  qa/match/05/r11/step2_m05end/2_BEFORE_t95_left.png
+> A  qa/match/05/r11/step2_m05end/2_BEFORE_t95_right.png
+> A  qa/match/05/r11/step2_m05end/2_BEFORE_t95_through_screen.png
+> A  qa/match/05/r11/step2_m05end/2_BEFORE_t98_end.png
+> A  qa/match/05/r11/step2_m05end/3_NEW_t102_06.png
+> A  qa/match/05/r11/step2_m05end/3_NEW_t95_left.png
+> A  qa/match/05/r11/step2_m05end/3_NEW_t95_right.png
+> 2d9fe9759f28464caafb36727ebf6792a78f33f1
+> 2d9fe9759f28464caafb36727ebf6792a78f33f1	refs/heads/claude/rainbow-s05-match-c11
+
+### 🤖 Claude — 2026-11-18T12:18:15.974Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T12:18:15.984Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T12:18:22.146Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "Screen 05 step 2 m05end result", "message": "Screen 05 step 2 — GOOD IMPROVEMENT: &m05end=1 (item 2). From t95 to the 06 hand-over Benny now stays inside the painted 05 tunnel (slotted purple walls, gold rings, warm throat) instead of the generic white-foam / flat-pink 06 hall, straight and on hard left/right steering. Locked view 0 px, and 06 itself looks the same. SHA 2d9fe9759f28464caafb36727ebf6792a78f33f1 (pushed, verified). APPROVED /home/user/wt/s05/qa/match/05/r11/step2_m05end/1_APPROVED.png | BEFORE /home/user/wt/s05/qa/match/05/r11/step2_m05end/2_BEFORE_t95 …[+339 chars]`
+
+### 🧑 User — 2026-11-18T12:18:22.173Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T12:18:37.578Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"pj.apply\\|PROJ05_INVERSE =\" src/world/materials.ts src/vfx/waterRibbon.ts | head && grep -n \"uFbP\" src/vfx/waterRibbon.ts | head -5 && sed -n 1100,1112p src/world/materials.ts", "description": "Locate the F apply hook in the far river shader"}`
+
+### 🧑 User — 2026-11-18T12:18:37.616Z
+
+> ↩︎ result: src/world/materials.ts:1110:        .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
+> src/vfx/waterRibbon.ts:550:export const PROJ05_INVERSE = /* glsl */ `
+> 310:  uFbP: { value: new THREE.Vector4(0, 0, 6.5, 0) },
+> 674:uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
+> 1717:    if (uFbP.w > 0.5 && uFbP.y > 0.01) {
+> 1720:      float fbW = smoothstep(uFbP.x - uFbP.y, uFbP.x, fbZ);
+> 1722:        vec2 fbUV = vec2((dot(fbD, uFbRt) + uFbP.z) / (2.0 * uFbP.z), log(1.0 + max(fbZ, 0.0)) / log(1.0 + uPjFZ));
+>     col = mix(col, fo, foamIn);
+>   }
+> #endif
+>   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
+>   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
+>   diffuseColor.rgb = col;
+> }`);
+>     if (pj) {
+>       shader.fragmentShader = shader.fragmentShader
+>         .replace('#include <common>', '#include <common>\n' + pj.pars)
+>         .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
+>       if (M05FBANK) {
+>         shader.fragmentShader = shader.fragmentShader
+
+### 🤖 Claude — 2026-11-18T12:18:45.656Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1710,1735p src/vfx/waterRibbon.ts", "description": "Read ribbon m05blend fade code"}`
+
+### 🧑 User — 2026-11-18T12:18:45.701Z
+
+> ↩︎ result: {
+>     float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+>     #ifdef M05BLEND
+>     // m05blend: over the band before the far tunnel's seam the ribbon fades into the far river's own picture F (see
+>     // M05BLEND): same texture, same mapping (real depth = virtual depth before the seam), same post-chain inverse
+>     float fbK = 0.0;
+>     vec4 fbC = vec4(0.0);
+>     if (uFbP.w > 0.5 && uFbP.y > 0.01) {
+>       vec3 fbD = vPosW - uFbC0;
+>       float fbZ = dot(fbD, uFbT);
+>       float fbW = smoothstep(uFbP.x - uFbP.y, uFbP.x, fbZ);
+>       if (fbW > 0.0) {
+>         vec2 fbUV = vec2((dot(fbD, uFbRt) + uFbP.z) / (2.0 * uFbP.z), log(1.0 + max(fbZ, 0.0)) / log(1.0 + uPjFZ));
+>         fbC = texture2D(uPjF, clamp(fbUV, 0.0, 1.0));
+>         fbK = fbW * fbC.a * step(0.0, fbUV.x) * step(fbUV.x, 1.0);
+>       }
+>     }
+>     pjK = max(pjK, fbK);
+>     #endif
+>     float s05r = s;
+>     float rideK05 = 0.0;
+>     #ifdef M05RIDE
+>     // m05ride: the design layout follows Benny (see M05RIDE in this file)
+>     rideK05 = pjNearK();                         // 0 within 0.5 u of the locked checkpoint: locked picture unchanged
+>     s05r = s - (uPjNear.z - uPjNear.w) * rideK05;
+>     # …[+13 chars]
+
+### 🤖 Claude — 2026-11-18T12:18:58.777Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nanchor=\"export const M05FBANK: boolean = M05BLEND && q05('m05fbank');\\n\"\nassert anchor in s\ns=s.replace(anchor, anchor+\"\"\"/**\n * `&m05fmag=1` (Screen 05 round 11, item 1, needs m05blend; src/world/materials.ts farRiverMaterial): the far river right\n * behind the sliding seam. The far block wears the approved picture's far water (layer F), baked for the locked eye;\n * swimming close to the seam magnifies it 2–4× into a pale, smeared sheet with an angular pale slab on the left (the\n  …[+1570 chars]`
+
+### 🧑 User — 2026-11-18T12:18:58.836Z
+
+> ↩︎ result: 683-#endif
+> 684-#ifdef M05BLEND
+> 685-// m05blend: the far river's baked layer F + the far tunnel frame (origin c0, axis T, right Rt) and (seam depth, band, half chord, live)
+> 686:uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
+> 687-#ifdef M05FMAG
+> 688-uniform float uFmD0;
+> 689-#endif
+> 2009:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+
+### 🤖 Claude — 2026-11-18T12:19:03.372Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uFbC0\\b\" src/vfx/waterRibbon.ts | head; grep -n \"m05blend.uFbC0\\|Object.assign(u, m05blend\\|\\.\\.\\.m05blend\" src/vfx/waterRibbon.ts | head", "description": "Find where m05blend uniforms attach to the ribbon"}`
+
+### 🧑 User — 2026-11-18T12:19:03.410Z
+
+> ↩︎ result: 307:  uFbC0: { value: new THREE.Vector3() },
+> 686:uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
+> 1733:      vec3 fbD = vPosW - uFbC0;
+> 2112:  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
+
+### 🤖 Claude — 2026-11-18T12:19:14.926Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }\"\nassert old in s\ns=s.replace(old, old+\"\\n  if (M05FMAG) u.uFmD0 = m05fmagD0;   // m05fmag (Screen 05 round 11)\")\nold=\"...(M05BLEND ? { M05BLEND: 1 } : {}),\"\nassert s.count(old)==1\ns=s.replace(old, old+\" ...(M05FMAG ? { M05FMAG: 1 } : {}),\")\nopen(p,'w').write(s)\n\np='src/world/materials.ts'\ns=open(p).read()\ns=s.replace(\"import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, m05blend …[+1883 chars]`
+
+### 🧑 User — 2026-11-18T12:19:17.313Z
+
+> ↩︎ result: 7:import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, m05blend, m05fmagD0 } from '../vfx/waterRibbon';
+> 862:const FMAG_PRE = 'float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5));\n  ';
+> 892:  if (pj && M05FMAG) { m05fmagD0.value = d0; Object.assign(uniforms, { uFbP: m05blend.uFbP, uFmD0: m05fmagD0 }); }
+> 1114:        .replace('  diffuseColor.rgb = col;\n}', '  ' + (M05FMAG ? FMAG_PRE + pj.apply.replace(/\)\.a\);$/, ').a * fmK);') : pj.apply) + '\n  diffuseColor.rgb = col;\n}');
+> 1115:      if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFbP; uniform float uFmD0;');
+> 1159:    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '');
+> TSC_OK
+

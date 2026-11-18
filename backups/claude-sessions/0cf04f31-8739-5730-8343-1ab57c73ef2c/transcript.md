@@ -4654,3 +4654,475 @@ Freeing disk space first: Screen 06 is fully pushed, so its workspace can go. Th
 >   338 src/world/match04.ts
 >   338 total
 
+### 🤖 Claude — 2026-11-18T12:14:13.188Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,60p src/world/match04.ts; wc -l src/world/match04m4.ts; grep -n \"export\\|uProjVP\\|projector\\|plate\" src/world/match04m4.ts | head -30", "description": "Read the Screen 04 projection module header"}`
+
+### 🧑 User — 2026-11-18T12:14:13.229Z
+
+> ↩︎ result: /**
+>  * `?match04=1` — Screen 04 approved-picture test (2026-11-17, qa/match/04/NOTES.md), the Screen 08 method.
+>  * REAL 3D proxy geometry of "Through the Five Arrows", solved from the user's approved Screen 04 and the locked game
+>  * camera (tools/match04/solve_cam04.py → cam04_locked.json, tools/match04/fit_proxies04.py → proj04.json):
+>  * the gold-ring tunnel (a cylinder along the straight 32° slide), the big gold mouth ring, the room wall around it
+>  * (porthole, towels, control panel, foam) and the water plane at Benny's water level (swirls, chevron arrows, foam).
+>  * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+>  * provisionally filled locally: assets/textures/match04/plate04_hybrid.png) from that locked camera, so the locked view
+>  * shows the approved scenery and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or
+>  * showed edge-on) get mirrored tiles of material patches cut from the artwork (stretch guard + projector depth test).
+>  * The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+>  * Milestone 2 (qa/match/04/NOTES.md): the tunnel wall's fallback is ONE …[+3184 chars]
+
+### 🤖 Claude — 2026-11-18T12:14:56.408Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/da3 && . venv/bin/activate && pip install -q gradio_client 2>&1 | tail -1; timeout 120 python -I -c \"\nfrom gradio_client import Client\nc = Client('stabilityai/stable-virtual-camera', verbose=False)\nprint(c.view_api(return_format='str', print_info=False)[:3500])\n\" 2>&1 | tail -60", "description": "Install gradio_client and inspect the SVC Space API", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T12:15:00.175Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 3, in <module>
+>     c = Client('stabilityai/stable-virtual-camera', verbose=False)
+>   File "/home/user/da3/venv/lib/python3.13/site-packages/gradio_client/client.py", line 162, in __init__
+>     raise ValueError(
+>     ...<2 lines>...
+>     )
+> ValueError: The current space is in the invalid state: RUNTIME_ERROR. Please contact the owner to fix this.
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:15:08.111Z
+
+> 🔧 **Bash** `{"command": "for s in Doubiiu/ViewCrafter stabilityai/stable-virtual-camera; do printf \"%-36s \" $s; curl -sS --max-time 20 \"https://huggingface.co/api/spaces/$s\" | python3 -I -c \"import json,sys;d=json.load(sys.stdin);r=d.get('runtime',{});print(r.get('stage'), r.get('hardware',{}).get('current'), d.get('lastModified','')[:10])\"; done", "description": "Check runtime status of the two view-synthesis Spaces"}`
+
+### 🧑 User — 2026-11-18T12:15:08.921Z
+
+> ↩︎ result: Doubiiu/ViewCrafter                  RUNTIME_ERROR None 2026-05-26
+> stabilityai/stable-virtual-camera    RUNTIME_ERROR None 2025-08-28
+
+### 🤖 Claude — 2026-11-18T12:15:18.688Z
+
+> 🔧 **Bash** `{"command": "for m in fal-ai/stable-virtual-camera fal-ai/seva fal-ai/viewcrafter; do printf \"%-32s \" $m; curl -sS -o /dev/null -w \"%{http_code}\\n\" --max-time 20 \"https://fal.ai/models/$m\"; done", "description": "Check whether fal hosts view-synthesis models"}`
+
+### 🧑 User — 2026-11-18T12:15:21.241Z
+
+> ↩︎ result: fal-ai/stable-virtual-camera     404
+> fal-ai/seva                      404
+> fal-ai/viewcrafter               404
+
+### 🤖 Claude — 2026-11-18T12:15:27.326Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,200p tools/lead_r6/motion_audit.mjs | grep -vE \"^\\s*//\" | grep -nE \"goto|ride|step|forward|steer|evaluate|camera|SHOTS|const shots|\\['f10|s0|advance|tick\" | head -40", "description": "Find how the motion audit advances the camera"}`
+
+### 🧑 User — 2026-11-18T12:15:27.362Z
+
+> ↩︎ result: 10:const SHOTS = [
+> 12:  ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f20_forward20u', 20, null],
+> 13:  ['s_left_steer', 6, -1], ['s_right_steer', 6, 1], ['s_left_hard', 12, -1], ['s_right_hard', 12, 1],
+> 19:  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> 21:  for (const [name, dist, steer] of SHOTS) {
+> 22:    const st = await page.evaluate(async ([id, dist, steer]) => {
+> 23:      const r = window.__rainbow; r.goto(id);
+> 24:      const s0 = r.state().s;
+> 26:      const s1 = stg.s1 ?? (stg.s0 + (stg.length ?? 0));
+> 27:      const target = typeof dist === 'string' ? s0 + Number(dist.slice(1)) * Math.max(0, s1 - s0) : s0 + dist;
+> 28:      r.setSteer(steer);
+> 29:      let n = 0; while (r.state().s < target - 1e-3 && n < 4000) { r.step(1); n++; }
+> 32:      return { ...r.state(), frames: n, s0, s1, target };
+> 33:    }, [SCREEN, dist, steer]);
+> 36:    log.push({ name, dist, steer, ...st });
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:15:33.969Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls scripts/match-probe.mjs 2>&1; sed -n 40,95p scripts/match-probe.mjs", "description": "Read the depth and dynamic-mask part of match-probe"}`
+
+### 🧑 User — 2026-11-18T12:15:34.014Z
+
+> ↩︎ result: scripts/match-probe.mjs
+>     const RT = composer.renderTarget1.constructor;
+>     const rt = new RT(innerWidth, innerHeight, { type: THREE.FloatType, format: THREE.RGBAFormat, depthBuffer: true });
+>     const depthMat = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide });
+>     depthMat.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', 'gl_FragColor = vec4(1.0 / gl_FragCoord.w, 0.0, 0.0, 1.0);'); };
+>     depthMat.customProgramCacheKey = () => 'match-probe-depth';
+>     const white = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+>     white.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', 'gl_FragColor = vec4(1.0);'); };
+>     white.customProgramCacheKey = () => 'match-probe-white';
+>     const bg = scene.background;
+>     scene.background = null;
+>     const pass = (dynWanted) => {
+>       for (const s of saved) {
+>         const dyn = isDyn(s.o);
+>         s.o.visible = s.vis && (dynWanted ? dyn && s.o.isMesh : !dyn && s.o.isMesh);
+>         if (s.o.visible) s.o.material = dynWanted ? white : depthMat;
+>       }
+>       renderer.setRenderTarget(rt);
+>       renderer.se …[+1978 chars]
+
+### 🤖 Claude — 2026-11-18T12:15:42.832Z
+
+I'll add a "ride forward N units first" option to that probe tool, then export the camera and Benny's mask at both view positions:
+
+### 🤖 Claude — 2026-11-18T12:15:46.699Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='scripts/match-probe.mjs'; s=open(p).read()\na=\"  const meta = await page.evaluate(async (id) => {\\n    const R = window.__rainbow;\\n    R.goto(id);\\n\"\nb=\"  const meta = await page.evaluate(async ([id, fwd]) => {\\n    const R = window.__rainbow;\\n    R.goto(id);\\n    // r11 `--fwd=N`: ride the real simulation N world units forward first (same stepping as tools/lead_r6/motion_audit.mjs)\\n    if (fwd > 0) { R.setSteer(null); const s0 = R.state().s; let n = 0; while (R.state().s < s0 + fwd - 1e-3 && n < 4000) { R.step(1); n++ …[+400 chars]`
+
+### 🧑 User — 2026-11-18T12:15:46.796Z
+
+> ↩︎ result: ok
+> 14:const Q = typeof opt.q === 'string' ? opt.q : `match${ID}=1`;
+> 15:const OUT = typeof opt.out === 'string' ? opt.out : `qa/match/${ID}/probe`;
+> 80:  }, [ID, Number(opt.fwd) || 0]);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:15:51.925Z
+
+Screen 08 just reported a new step. I'll start the Screen 04 camera probes in the background and review Screen 08 while they run:
+
+### 🤖 Claude — 2026-11-18T12:15:55.132Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; O=qa/match/04/r11/mv; mkdir -p $O/cam10 $O/cam20; nice -n 15 node scripts/match-probe.mjs --id=04 --q=\"$K\" --fwd=10 --out=$O/cam10 2>&1 | tail -1; nice -n 15 node scripts/match-probe.mjs --id=04 --q=\"$K\" --fwd=20 --out=$O/cam20 2>&1 | tail -1; python3 -I -c \"\nimport json\nfor k in ('cam10','cam20'):\n    d=json.load(open('$O/'+k+'/camera.json')); print(k, 's', d['state']['s'], 'eye', [round(x,2) for x in d['eye']], 'fov', d['fov'])\"", "description": "Probe camera and masks at …[+78 chars]`
+
+### 🧑 User — 2026-11-18T12:15:55.162Z
+
+> ↩︎ result: Command running in background with ID: bwmm4in8w. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/bwmm4in8w.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T12:15:56.286Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git ls-remote origin refs/heads/claude/rainbow-s08-scenery-c11 | cut -c1-10; sed -n '/## Step 2/,$p' qa/match/08/r11/PROGRESS.md | head -30; ls qa/match/08/r11/step2_*/", "description": "Read Screen 08 step 2 entry and its images"}`
+
+### 🧑 User — 2026-11-18T12:15:56.875Z
+
+> ↩︎ result: 35b5fc5a90
+> ## Step 2 — `&m08near=1` (defect B: smeared, stretched near water while swimming and steering) — KEPT
+> Kept query: `K10&m08ceil=1&m08near=1`
+> * Cause: once Benny has swum a few units, the water right in front of the camera shows plate pixels that the approved
+>   view saw far away and small (the projection is magnified 2–12× there, most at the stage end and when steering), so the
+>   painted streaks became long blurred smears filling the bottom of the frame.
+> * What changed (`tools/match08/near08.py` → `assets/textures/match08/near08.png/.json`, floor shader in
+>   `src/world/match08.ts`): the approved picture's OWN crisp near river band (rows ≈ 1250–1500 below Benny: magenta at
+>   the left, cyan centre, white glossy streaks and glints) is unrolled into river coordinates (across the river × along
+>   it), the three bubbles there are filled along the flow (the streaks continue through), the band is made to repeat along
+>   the river without a mirror seam, and it is laid world-anchored along the painted river (follows the S: centre and
+>   width from `river08.json`; its foam banks on the swim lane's banks; painted proportions kept, no stretch). It takes
+>   over only where the moving camera …[+2268 chars]
+
+### 🤖 Claude — 2026-11-18T12:16:00.122Z
+
+Checking Screen 08's step myself at the stage end (BEFORE vs NEW) and hard steering right:
+
+### 🤖 Claude — 2026-11-18T12:16:02.221Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r11/step2_m08near && convert 1_APPROVED.png 2_BEFORE_t95_through_screen.png 3_NEW_t95_through_screen.png 2_BEFORE_s_right_hard.png 3_NEW_s_right_hard.png -resize 288x512 +append /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s08_step2.jpg", "description": "Build inspection sheet for Screen 08 step 2"}`
+
+### 🧑 User — 2026-11-18T12:16:03.412Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:16:07.780Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s08_step2.jpg"}`
+
+### 🧑 User — 2026-11-18T12:16:07.809Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:16:12.667Z
+
+At this size the change is hard to see, so I'm looking at the near-water area (bottom of the frame) at full resolution, BEFORE beside NEW:
+
+### 🤖 Claude — 2026-11-18T12:16:14.965Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r11/step2_m08near && convert \\( 2_BEFORE_t95_through_screen.png -crop 864x620+0+916 \\) \\( 3_NEW_t95_through_screen.png -crop 864x620+0+916 \\) -resize 50% +append /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s08_step2_crop.jpg", "description": "Crop the near water of BEFORE and NEW side by side"}`
+
+### 🧑 User — 2026-11-18T12:16:15.227Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:16:18.882Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s08_step2_crop.jpg"}`
+
+### 🧑 User — 2026-11-18T12:16:18.924Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:16:28.397Z
+
+> 🔧 **Bash** `{"command": "R=/home/user/rainbow-; V=$R/qa/review_c11/2026-11-18/08_step2_m08near; mkdir -p $V && cp /home/user/wt/s08/qa/match/08/r11/step2_m08near/{1_APPROVED.png,2_BEFORE_t95_through_screen.png,3_NEW_t95_through_screen.png,2_BEFORE_s_right_hard.png,3_NEW_s_right_hard.png} $V/ && cat >> $R/docs/briefs/2026-11-18-r11/COORDINATION.md <<'EOF'\n| 5 (~12:30) | 08 step 2 `m08near` (approved picture's own crisp near river laid along the painted river while swimming; `35b5fc5a`) | GOOD IMPROVEMENT (glints ~2x painted size; first ~3 u still softer) |\n| — | Stable Virtual Camera / ViewCrafter via Hu …[+172 chars]`
+
+### 🧑 User — 2026-11-18T12:16:28.437Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T12:16:29.997Z
+
+> 🔧 **SendMessage** `{"to": "ac571757381e1b231", "summary": "Ack S08 step 2, continue", "message": "Lead review of S08 step 2 m08near (35b5fc5a): GOOD IMPROVEMENT, shown to the user. The near water now reads as the painted water. Continue with your item 2 (architecture seams: drum top corners, the upper-left spout cup's cut top, slab edges). Glint size can wait.", "type": "message", "recipient": "ac571757381e1b231", "recipient_kind": "agent", "content": "Lead review of S08 step 2 m08near (35b5fc5a): GOO…"}`
+
+### 🧑 User — 2026-11-18T12:16:30.044Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to ac571757381e1b231 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ac571757381e1b231","name":"ac571757381e1b231","ref":"551fdd"}}
+
+### 🤖 Claude — 2026-11-18T12:16:32.006Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_c11/2026-11-18/08_step2_m08near/1_APPROVED.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/08_step2_m08near/2_BEFORE_t95_through_screen.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/08_step2_m08near/3_NEW_t95_through_screen.png"], "caption": "Screen 08 at the end of the stage: APPROVED, then BEFORE, then NEW. GOOD IMPROVEMENT: look at the water around and below Benny.", "status": "proactive", "display": "render"}`
+
+### 🧑 User — 2026-11-18T12:16:33.051Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/08_step2_m08near/1_APPROVED.png → file_uuid: 4c55a1bb-6486-4529-8a19-472331b397f3
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/08_step2_m08near/2_BEFORE_t95_through_screen.png → file_uuid: 03f79399-dd72-4705-86cb-e3899f195690
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/08_step2_m08near/3_NEW_t95_through_screen.png → file_uuid: 7d99f7f9-fd7f-426d-aa86-29f33f9128b1
+
+### 🤖 Claude — 2026-11-18T12:16:44.193Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/bwmm4in8w.output; python3 -I -c \"\nfrom PIL import Image\nfor f in ['V04-1_cand1','V04-2_cand2']:\n    im=Image.open('/home/user/rainbow-/qa/match/04/r10/refviews/pilot/'+f+'.png'); print(f, im.size)\"; ls /home/user/wt/s04/qa/match/04/r11/mv/cam10", "description": "Show probe results and the reference view sizes"}`
+
+### 🧑 User — 2026-11-18T12:16:44.296Z
+
+> ↩︎ result: probe 04 size [ 864, 1536 ] eye 2.40,-20.04,-28.11 objects 312
+> probe 04 size [ 864, 1536 ] eye 2.40,-25.34,-36.62 objects 312
+> cam10 s 87.446 eye [2.4, -20.04, -28.11] fov 62.00319952254866
+> cam20 s 97.48 eye [2.4, -25.34, -36.62] fov 62.00319952254866
+> 
+> [exited with code 0]
+> V04-1_cand1 (1536, 2752)
+> V04-2_cand2 (1536, 2752)
+> camera.json
+> depth.f32
+> dyn_mask.pgm
+> objects.json
+
+### 🤖 Claude — 2026-11-18T12:16:55.696Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/review_c10/2026-11-18/all_shots/04/ 2>/dev/null | head -20; cd /home/user/rainbow-/qa && convert match/04/r10/refviews/pilot/V04-1_cand1.png review_c10/2026-11-18/all_shots/04/f10_forward10u.png match/04/r10/refviews/pilot/V04-2_cand2.png review_c10/2026-11-18/all_shots/04/f20_forward20u.png -resize 288x512! +append /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/v04_vs_game.jpg 2>&1 | tail -2", "description": "Compare the provisional views with their game frames"}`
+
+### 🧑 User — 2026-11-18T12:16:56.060Z
+
+> ↩︎ result: motion.json
+> convert-im6.q16: unable to open image `review_c10/2026-11-18/all_shots/04/f20_forward20u.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `review_c10/2026-11-18/all_shots/04/f20_forward20u.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+
+### 🤖 Claude — 2026-11-18T12:17:00.762Z
+
+Account 10's game frames weren't saved in the repository, only their positions. I need a BEFORE set anyway, so rendering the full 12-position Screen 04 audit now:
+
+### 🤖 Claude — 2026-11-18T12:17:03.460Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; nice -n 15 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r11/BEFORE \"$K\" > /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/a04_before.log 2>&1; echo \"exit $?\"; ls qa/match/04/r11/BEFORE | wc -l", "description": "Render the Screen 04 BEFORE audit", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T12:17:03.500Z
+
+> ↩︎ result: Command running in background with ID: bm8l9hiqg. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/bm8l9hiqg.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-/qa; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T12:17:07.853Z
+
+While that renders, I'm reading the Screen 04 module's build, depth-bake and per-frame sync code, where the two extra views will plug in:
+
+### 🤖 Claude — 2026-11-18T12:17:09.393Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"export async function\\|const shared\\|uPjPost\\|uPjRes\\|bakeDepth\\|sync(\\|group.add\\|function add\\|const add\\|uDepth\\|projector\\|proj.position\\|new THREE.PerspectiveCamera\\|return {\" src/world/match04.ts | head -40", "description": "Map the structure of match04.ts"}`
+
+### 🧑 User — 2026-11-18T12:17:09.430Z
+
+> ↩︎ result: 10: * showed edge-on) get mirrored tiles of material patches cut from the artwork (stretch guard + projector depth test).
+> 33:  bakeDepth(renderer: THREE.WebGLRenderer): void;
+> 34:  sync(renderer: THREE.WebGLRenderer, w: number, h: number, camera?: THREE.Camera): void;
+> 57:uniform sampler2D uDepth;
+> 63:uniform vec4 uPjPost;
+> 64:uniform vec2 uPjRes;
+> 138:        float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
+> 165:export async function buildMatch04(): Promise<Match04> {
+> 167:  const plate = await new THREE.TextureLoader().loadAsync(tex(FAL04 ? 'plate04_hybrid_fal.png' : 'plate04_hybrid.png'));
+> 172:  // the projector = the locked game camera the picture was matched to
+> 174:  const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.2, 160);
+> 176:  proj.matrixWorld.decompose(proj.position, proj.quaternion, proj.scale);
+> 183:  const fillMask = await new THREE.TextureLoader().loadAsync(tex('plate04_fillmask.png'));
+> 185:  const shared = {
+> 189:    uDepth: { value: depthRT.depthTexture as THREE.Texture },
+> 193:    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
+> 194:    uPjRes: { value: new THREE.Vector2(W, H) },
+> 195:    uProjPos: { value: proj.position.clon …[+1499 chars]
+
+### 🤖 Claude — 2026-11-18T12:17:11.546Z
+
+> 🔧 **TaskCreate** `{"subject": "Screen 04 decisive multi-view projection test (lead)", "description": "Branch claude/rainbow-s04-match-c11, worktree /home/user/wt/s04. Add &m04mv=1: project provisional views V04-1 (cam s 87.4) and V04-2 (cam s 97.5) as extra projectors onto existing 04 geometry (depth-tested, Benny/HUD masked), blended by camera position. Render real game 12 shots + extra interior positions; show APPROVED/REFERENCE/BEFORE/NEW; verdict by eye. Also short Benny swimming clip.", "activeForm": "Running the Screen 04 multi-view test"}`
+
+### 🧑 User — 2026-11-18T12:17:11.559Z
+
+> ↩︎ result: Task #8 created successfully: Screen 04 decisive multi-view projection test (lead)
+
+### 🤖 Claude — 2026-11-18T12:17:15.335Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04.ts", "offset": 165, "limit": 40}`
+
+### 🧑 User — 2026-11-18T12:17:15.350Z
+
+> ↩︎ result: 165	export async function buildMatch04(): Promise<Match04> {
+> 166	  const L: Layout04 = await fetch(tex('proj04.json')).then((r) => r.json());
+> 167	  const plate = await new THREE.TextureLoader().loadAsync(tex(FAL04 ? 'plate04_hybrid_fal.png' : 'plate04_hybrid.png'));
+> 168	  plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+> 169	  plate.minFilter = THREE.LinearMipmapLinearFilter;
+> 170	  plate.anisotropy = 8;
+> 171	
+> 172	  // the projector = the locked game camera the picture was matched to
+> 173	  const [W, H] = L.camera.size;
+> 174	  const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.2, 160);
+> 175	  proj.matrixWorld.fromArray(L.camera.matrixWorld);
+> 176	  proj.matrixWorld.decompose(proj.position, proj.quaternion, proj.scale);
+> 177	  proj.matrixWorldInverse.copy(proj.matrixWorld).invert();
+> 178	  proj.updateProjectionMatrix();
+> 179	  const projVP = new THREE.Matrix4().multiplyMatrices(proj.projectionMatrix, proj.matrixWorldInverse);
+> 180	
+> 181	  const depthRT = new THREE.WebGLRenderTarget(1024, Math.round((1024 * H) / W), { depthBuffer: true });
+> 182	  depthRT.depthTexture = new THREE.DepthTexture(depthRT.width, depthRT.height, THREE.Un …[+1289 chars]
+
+### 🤖 Claude — 2026-11-18T12:17:15.836Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04.ts", "offset": 296, "limit": 43}`
+
+### 🧑 User — 2026-11-18T12:17:15.859Z
+
+> ↩︎ result: 296	  let splash: THREE.Mesh | null = null;
+> 297	  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());
+> 298	  if (SPLASH04) {
+> 299	    const spTex = await new THREE.TextureLoader().loadAsync(tex('splash04.png'));
+> 300	    spTex.colorSpace = THREE.NoColorSpace;
+> 301	    splash = new THREE.Mesh(new THREE.PlaneGeometry(SP.w, SP.h), new THREE.ShaderMaterial({
+> 302	      transparent: true, depthWrite: false, fog: false,
+> 303	      uniforms: { uTex: { value: spTex }, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes },
+> 304	      vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+> 305	      fragmentShader: `uniform sampler2D uTex; uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec2 vUv;\n${PROJ05_INVERSE}
+> 306	void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragColor = vec4(pjInverse(c.rgb), c.a); }`,
+> 307	    }));
+> 308	    splash.name = 'm04_splash';
+> 309	    splash.visible = false;
+> 310	    splash.renderOrder = 5;
+> 311	  }
+> 312	
+> 313	  return {
+> 314	    group,
+> 315	    splash,
+> 316	    splashOffset: new THREE.Vector3(...SP.o …[+1059 chars]
+
+### 🤖 Claude — 2026-11-18T12:18:06.968Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/tools/match04/mv04_prep.py", "content": "\"\"\"Screen 04 r11 (lead decisive test, `&m04mv=1`): prepare the user's PROVISIONAL reference views V04-1 / V04-2 as extra\nprojectors. Each view was generated (fal, round 10, user-approved pilot) from the live game frame at forward 10 u / 20 u\n(tools/lead_r6/motion_audit.mjs f10_forward10u / f20_forward20u), so its projector = the game camera at that position\n(scripts/match-probe.mjs --fwd=10 / --fwd=20 → camera.json + dyn_mask.pgm).\nWrites assets/textures/match04/mv/V04-<k>.png (864x1536 RGBA: alpha 0 on the painte …[+1807 chars]`
+
+### 🧑 User — 2026-11-18T12:18:07.104Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/tools/match04/mv04_prep.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T12:18:09.272Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && mkdir -p assets/textures/match04/mv && python3 -I tools/match04/mv04_prep.py qa/match/04/r11/mv/cam10 qa/match/04/r11/mv/cam20 /home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand1.png /home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-2_cand2.png assets/textures/match04/mv && ls -la assets/textures/match04/mv; grep -n \"^function tex\\|const tex\\|^const FAL04\\|^const SPLASH04\\|location.search\" src/world/match04.ts | head", "description": "Prepare the two view projectors and check helpers"}`
+
+### 🧑 User — 2026-11-18T12:18:15.929Z
+
+> ↩︎ result: V04-1.png s 87.446 masked 354924
+> V04-2.png s 97.48 masked 350952
+> total 4532
+> drwxr-xr-x 2 root root    4096 Nov 18 12:18 .
+> drwxr-xr-x 3 root root    4096 Nov 18 12:18 ..
+> -rw-r--r-- 1 root root 2335431 Nov 18 12:18 V04-1.png
+> -rw-r--r-- 1 root root 2287475 Nov 18 12:18 V04-2.png
+> -rw-r--r-- 1 root root    1275 Nov 18 12:18 mv04.json
+> 149:const TILE04 = new URLSearchParams(location.search).get('tile04') !== '0'; // milestone-2 tiles (A/B: &tile04=0 = milestone 1)
+> 152:const FAL04 = new URLSearchParams(location.search).get('fal04') !== '0'; // milestone 3: on by default under match04; &fal04=0 = milestone 2
+> 155:const RIVER04 = TILE04 && new URLSearchParams(location.search).get('river04') !== '0';
+> 158:const RINGS04 = TILE04 && new URLSearchParams(location.search).get('rings04') !== '0';
+> 159:const KEEP04 = (new URLSearchParams(location.search).get('keep04') ?? '1.5,2.6').split(',').map(Number);
+> 161:const SPLASH04 = new URLSearchParams(location.search).get('splash04') !== '0';
+> 162:const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:18:27.573Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/assets/textures/match04 && mv mv/V04-1.png mv04_V04-1.png && mv mv/V04-2.png mv04_V04-2.png && sed -e 's/\"img\": \"V04-/\"img\": \"mv04_V04-/' mv/mv04.json > mv04.json && rm -r mv && grep '\"img\"' mv04.json; cd /home/user/wt/s04 && sed -i \"s#{out}/{name}#{out}/mv04_{name}#; s#'img': name#'img': 'mv04_' + name#; s#{out}/mv04.json#{out}/mv04.json#\" tools/match04/mv04_prep.py; ls qa/match/04/r11/BEFORE | head -14; convert /home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand1.png qa/match/04/r11/BEFORE/f10_forward10u.png /home/user/rainbow-/qa/match/0 …[+270 chars]`
+
+### 🧑 User — 2026-11-18T12:18:28.108Z
+
+> ↩︎ result: "img": "mv04_V04-1.png",
+>    "img": "mv04_V04-2.png",
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04/tools/match04/mv04_prep.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T12:18:32.244Z
+
+Screen 05 has a second step (the end of the stage now stays inside your painted tunnel). Looking at it and at the Screen 04 view alignment:
+
+### 🤖 Claude — 2026-11-18T12:18:34.198Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r11/step2_m05end && ls; convert 1_APPROVED.png 2_BEFORE_t95_through_screen.png 3_NEW_t95_through_screen.png -resize 288x512 +append /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s05_step2.jpg", "description": "Build Screen 05 step 2 inspection sheet"}`
+
+### 🧑 User — 2026-11-18T12:18:34.421Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_t102_06.png
+> 2_BEFORE_t95_left.png
+> 2_BEFORE_t95_right.png
+> 2_BEFORE_t95_through_screen.png
+> 2_BEFORE_t98_end.png
+> 3_NEW_t102_06.png
+> 3_NEW_t95_left.png
+> 3_NEW_t95_right.png
+> 3_NEW_t95_through_screen.png
+> 3_NEW_t98_end.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:18:35.397Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/v04_vs_game.jpg"}`
+
+### 🧑 User — 2026-11-18T12:18:35.408Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:18:53.668Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s05_step2.jpg"}`
+
+### 🧑 User — 2026-11-18T12:18:53.679Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:19:01.795Z
+
+> 🔧 **Bash** `{"command": "R=/home/user/rainbow-; V=$R/qa/review_c11/2026-11-18/05_step2_m05end; mkdir -p $V && cp /home/user/wt/s05/qa/match/05/r11/step2_m05end/{1_APPROVED.png,2_BEFORE_t95_through_screen.png,3_NEW_t95_through_screen.png,2_BEFORE_t95_left.png,3_NEW_t95_left.png} $V/ && cat >> $R/docs/briefs/2026-11-18-r11/COORDINATION.md <<'EOF'\n| 6 (~12:40) | 05 step 2 `m05end` (stage end stays inside the painted 05 tunnel instead of the generic white-foam / flat-pink hall; `2d9fe975`) | GOOD IMPROVEMENT (water there still a broad cyan sheet) |\nEOF\necho ok", "description": "Copy Screen 05 step 2 pictur …[+24 chars]`
+
+### 🧑 User — 2026-11-18T12:19:01.835Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T12:19:03.694Z
+
+> 🔧 **SendMessage** `{"to": "a1767ad278d97e4ea", "summary": "Ack S05 step 2, continue", "message": "Lead review of S05 step 2 m05end (2d9fe975): GOOD IMPROVEMENT, shown to the user. The end of the stage is now your painted tunnel. Continue with item 1 (pale smeared far river / angular corner at the seam), then item 3 (near water: the painted S-formation with magenta bank bands and foam banks instead of the broad cyan sheet).", "type": "message", "recipient": "a1767ad278d97e4ea", "recipient_kind": "agent", "content": "Lead review of S05 step 2 m05end (2d9fe975): GOOD…"}`
+
+### 🧑 User — 2026-11-18T12:19:03.709Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a1767ad278d97e4ea at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a1767ad278d97e4ea","name":"a1767ad278d97e4ea","ref":"42341e"}}
+
+### 🤖 Claude — 2026-11-18T12:19:05.798Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/1_APPROVED.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/2_BEFORE_t95_through_screen.png", "/home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/3_NEW_t95_through_screen.png"], "caption": "Screen 05 at the end of the stage: APPROVED, then BEFORE (generic white-foam hall), then NEW (your painted tunnel continues). GOOD IMPROVEMENT; the water there is next.", "status": "proactive", "display": "render"}`
+
+### 🧑 User — 2026-11-18T12:19:06.447Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/1_APPROVED.png → file_uuid: 72685214-8ffb-4fa4-b59c-22779546f6c0
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/2_BEFORE_t95_through_screen.png → file_uuid: a80003ea-f1a6-4eef-9b97-d1604998bdf3
+>   /home/user/rainbow-/qa/review_c11/2026-11-18/05_step2_m05end/3_NEW_t95_through_screen.png → file_uuid: 189be7f3-299b-4f1a-b6c2-81debaf2747b
+

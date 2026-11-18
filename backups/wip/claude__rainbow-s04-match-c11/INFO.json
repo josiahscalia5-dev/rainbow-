@@ -2,9 +2,38 @@
  "worktree": "/home/user/wt/s04",
  "branch": "claude/rainbow-s04-match-c11",
  "head": "a24d289c542d8b4dfe5db8d4f71204a120669c8c",
- "time": "2026-11-18T12:14:17+00:00",
- "dirty_tracked": [],
- "untracked_copied": [],
- "untracked_skipped": [],
+ "time": "2026-11-18T12:19:27+00:00",
+ "dirty_tracked": [
+  "scripts/match-probe.mjs"
+ ],
+ "untracked_copied": [
+  "assets/textures/match04/mv04.json",
+  "qa/match/04/r11/BEFORE/f10_forward10u.png",
+  "qa/match/04/r11/BEFORE/f20_forward20u.png",
+  "qa/match/04/r11/BEFORE/motion.json",
+  "qa/match/04/r11/BEFORE/s_left_hard.png",
+  "qa/match/04/r11/BEFORE/s_right_hard.png",
+  "qa/match/04/r11/BEFORE/t33_through_screen.png",
+  "qa/match/04/r11/BEFORE/t66_through_screen.png",
+  "qa/match/04/r11/BEFORE/t95_through_screen.png",
+  "qa/match/04/r11/mv/cam10/camera.json",
+  "qa/match/04/r11/mv/cam10/dyn_mask.pgm",
+  "qa/match/04/r11/mv/cam10/objects.json",
+  "qa/match/04/r11/mv/cam20/camera.json",
+  "qa/match/04/r11/mv/cam20/dyn_mask.pgm",
+  "qa/match/04/r11/mv/cam20/objects.json",
+  "tools/match04/mv04_prep.py"
+ ],
+ "untracked_skipped": [
+  "assets/textures/match04/mv04_V04-1.png",
+  "assets/textures/match04/mv04_V04-2.png",
+  "qa/match/04/r11/BEFORE/a00_approved_view.png",
+  "qa/match/04/r11/BEFORE/f03_forward3u.png",
+  "qa/match/04/r11/BEFORE/f06_forward6u.png",
+  "qa/match/04/r11/BEFORE/s_left_steer.png",
+  "qa/match/04/r11/BEFORE/s_right_steer.png",
+  "qa/match/04/r11/mv/cam10/depth.f32",
+  "qa/match/04/r11/mv/cam20/depth.f32"
+ ],
  "restore": "git switch claude/rainbow-s04-match-c11 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c11/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c11/untracked/* into the worktree"
 }

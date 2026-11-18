@@ -36,3 +36,6 @@ Merging / combining branches into the normal game needs the user's explicit OK.
 | 2 (~11:55) | 08 step 1 `m08ceil` (door's gold bulb ring + chrome rim continue over the top, perforated wall rings around it, no curved ceiling seam; `36d0978a`) | GOOD IMPROVEMENT, small (top corners keep a softer curved edge; faint mirror chevrons top right) |
 | 3 (~12:20) | 06 lead test 1 `m06bend` (tube bends with the river's full turn; `767f46af`) | NOT AN IMPROVEMENT (closer arrangement, but creased slab + edge-on rings) |
 | 4 (~12:25) | 06 lead test 2 `m06bend&m06bendk=0.5&m06bendw=14` | NOT AN IMPROVEMENT (no visible change); bend method stopped |
+| 5 (~12:30) | 08 step 2 `m08near` (approved picture's own crisp near river laid along the painted river while swimming; `35b5fc5a`) | GOOD IMPROVEMENT (glints ~2x painted size; first ~3 u still softer) |
+| — | Stable Virtual Camera / ViewCrafter via Hugging Face | BLOCKED today: both Spaces in RUNTIME_ERROR (HF side); not hosted on fal |
+| 6 (~12:40) | 05 step 2 `m05end` (stage end stays inside the painted 05 tunnel instead of the generic white-foam / flat-pink hall; `2d9fe975`) | GOOD IMPROVEMENT (water there still a broad cyan sheet) |
