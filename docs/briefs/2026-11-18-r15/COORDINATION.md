@@ -56,6 +56,7 @@ log -1` + `ps` and relaunch from the brief + PROGRESS.md.
 |---|---|---|
 | 1 (~18:25) | 08 r14 step 1 `m08nq` (near water at the painted scale; kept by account 14, not shown before) | GOOD IMPROVEMENT (small; lead checked by eye): painted-size white glints and the pink band continuing down the left replace big blurry white flames; still straight, slightly combed streaks at the bottom left (painted: sweeping curves) — `qa/review_r15/08_step1_near_water/` |
 | 2 (~18:25) | 05 r14 step 3 `m05bank` (bubbly near bank; kept by account 14, not shown before) | GOOD IMPROVEMENT (small): the flat pale slab at the kink becomes piled foam bubbles; the same frame shows the much bigger 05 problem (smeared left wall at hard left) → assigned — `qa/review_r15/05_step3_bubbly_bank/` |
+| 3 (~19:00) | 04 r15 step 1 `m04fclu` (entrance foam as clusters of many small shiny bubbles; s04-c15 `160ce059`) | GOOD IMPROVEMENT (small; lead checked by eye): bubbly heaps of glossy lilac-white bubbles instead of smooth white balls when entering / just inside; the pale puff across the bottom-left corner at hard left is gone — `qa/review_r15/04_step1_bubble_foam/` |
 
 ## DISK TRAP (account 15, ~18:50 UTC) — read before creating worktrees
 The session's writable-disk allowance is ~40 GB. Five full worktrees (2.5–3.6 GB each, mostly `qa/pilot05` 1.5 GB, `qa/worldlabs`,

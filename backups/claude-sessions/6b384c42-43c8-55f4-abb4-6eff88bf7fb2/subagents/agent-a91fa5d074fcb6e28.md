@@ -1405,3 +1405,139 @@ Now the proper implementation: the block is removed when Benny crosses into 06 (
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:42:29.346Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,80p src/vfx/proj05Tunnel.ts", "description": "Read proj05Tunnel header"}`
+
+### 🧑 User — 2026-11-18T18:42:29.452Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection tests for the TUNNEL (2026-11-16, qa/pilot05/proj/tunnel/NOTES.md), same method as the water
+>  * (`?proj05=1`): the user's APPROVED Screen 05 picture, unwrapped into the tunnel's own coordinates and baked into
+>  * textures (tools/proj05/tunnel_rings.py + tunnel_bake.py → assets/textures/tunnel05/), so the design is anchored to the
+>  * 3D tunnel, not pasted over the screen.
+>  *   `?projwall05=1`  the purple metal WALLS: one texture row per wall bay between two gold rings (AB, BC, CD … as the
+>  *                    approved picture shows them from the locked 05 camera); u = angle round the tube, v = depth within
+>  *                    the bay. Bays the picture does not show (in front of ring A, behind the camera) repeat the AB row.
+>  *   `?projring05=1`  the gold RINGS: the band of the approved ring B unwrapped (u = angle round the ring, v = how far the
+>  *                    band stands out of the wall), on every 05 ring; the existing far glow still melts the far rings
+>  *                    into the warm throat.
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure) so the screen shows the approved
+>  * colours; bloom is measured and fed b …[+4496 chars]
+
+### 🤖 Claude — 2026-11-18T18:42:34.231Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"M05WTILE\\|M05WALL\\|tgtwall05\\|TGTWALL\" src/vfx/waterRibbon.ts src/vfx/proj05Tunnel.ts src/world/*.ts | cut -c1-220 | head -30", "description": "Find wall tile switches"}`
+
+### 🧑 User — 2026-11-18T18:42:34.480Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:255: * `?tgtwall05=1` (Screen 05 agent, round 3, NOTES "2.3"; needs tgtfill05=3): E + its LUT re-baked with
+> src/vfx/waterRibbon.ts:259:export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
+> src/vfx/waterRibbon.ts:261: * `&m05wd=1` (Screen 05 round 8, branch claude/rainbow-s05-match-c8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05):
+> src/vfx/waterRibbon.ts:270:export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+> src/vfx/waterRibbon.ts:272: * `&m05ride=1` (Screen 05 round 8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05): the APPROVED DESIGN LAID OUT FROM
+> src/vfx/waterRibbon.ts:282:export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
+> src/vfx/waterRibbon.ts:335:export const M05WALL: boolean = MATCH05 && q05('m05far') && q05('m05wall');
+> src/vfx/waterRibbon.ts:345:export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
+> src/vfx/waterRibbon.ts:2268:    E: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_E.png', import.meta.url).href
+> src/vfx/waterRibbon.ts:2276:    lut: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_lut.json', import.meta.url).href : PROJFAR05 ? new URL('../../ass …[+1284 chars]
+
+### 🤖 Claude — 2026-11-18T18:42:37.725Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 200,340p src/vfx/proj05Tunnel.ts; sed -n 330,350p src/vfx/waterRibbon.ts", "description": "Read wall projection shader code"}`
+
+### 🧑 User — 2026-11-18T18:42:37.957Z
+
+> ↩︎ result: // the game waits for these before `ready` (vfx/index.ts), so a capture never shows the 1×1 placeholder
+> if (PROJWALL05 || PROJRING05 || PROJFRAME05 || ENV05) proj05Pending.push(loadTextures());
+> 
+> const size = new THREE.Vector2();
+> function livePost(renderer: THREE.WebGLRenderer) {
+>   const rt = renderer.getRenderTarget();
+>   if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+>   shared.uPjRes.value.copy(size);
+>   shared.uPjPost.value.x = renderer.toneMappingExposure;
+> }
+> 
+> /**
+>  * `&m05wall=1` (Screen 05 round 9, waterRibbon.ts M05WALL): where the projected atlas would be magnified while swimming
+>  * (texels per screen pixel < 0.9) the bay becomes crisp perforated metal in the approved palette (display values,
+>  * measured on the approved near walls: plum slot (50,1,37), violet metal (171,51,185), lit metal (232,67,186), pink lip
+>  * (244,101,240), highlight (253,213,250)); slot grid measured from the atlas rows (44 of 2048 texels round the tube =
+>  * 46.5 slots per turn, 6.7 slot rows per 14-u bay ≈ 1.9 u). The atlas's own low-frequency colour (blurred over one slot
+>  * pitch) keeps the painted light distribution wherever it is wall-coloured (purple: low green); wate …[+10041 chars]
+
+### 🤖 Claude — 2026-11-18T18:42:50.609Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s05/qa/match/05/r15/step1_trans/new/ 2>/dev/null; cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/b72ct446e.output", "description": "Check NEW render progress"}`
+
+### 🧑 User — 2026-11-18T18:42:50.848Z
+
+> ↩︎ result: t95_left.png
+> t95_right.png
+> t95_through_screen.png
+> t98_end.png
+> x100.png
+> x101.png
+> x103.png
+> x105.png
+> x90.png
+> x93.png
+> x96.png
+> x97.png
+> x99.png
+
+### 🤖 Claude — 2026-11-18T18:42:54.158Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r15/step1_trans/new/t98_end.png"}`
+
+### 🧑 User — 2026-11-18T18:42:54.269Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:42:54.661Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r15/step1_trans/new/x97.png"}`
+
+### 🧑 User — 2026-11-18T18:42:54.732Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:42:55.061Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r15/step1_trans/new/x99.png"}`
+
+### 🧑 User — 2026-11-18T18:42:55.302Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:43:08.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 176,184p src/vfx/index.ts; grep -n \"m05rideS\" src/vfx/index.ts src/world/match05far.ts src/vfx/clip05.ts", "description": "Check update code path"}`
+
+### 🧑 User — 2026-11-18T18:43:08.446Z
+
+> ↩︎ result: update(time, dt, focusS, camera) {
+>       if (Math.abs(focusS - lastFocusSeed) > 25) seed = 0x5eed ^ Math.round(focusS * 16);
+>       lastFocusSeed = focusS;
+>       qaCamera = camera;
+>       focus = focusS;
+>       curTime = time;
+>       ribbon.uniforms.uTime.value = time;
+>       whirl.uniforms.uTime.value = time;
+>       drum.uniforms.uTime.value = time;
+> src/vfx/index.ts:18:import { M05EDGE, withClip05, m05rideS } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only); m05rideS: round 15 (&m05trans=1)
+> src/vfx/index.ts:206:      m05rideS.value = focusS;   // `&m05trans=1` (Screen 05 round 15): the far block is removed as Benny enters 06
+> src/world/match05far.ts:26:import { clip05, m05rideS } from '../vfx/clip05';
+> src/world/match05far.ts:46: * the whole of 05 and is removed in one step as Benny crosses into 06 (Benny's course position, `m05rideS`), the moment
+> src/world/match05far.ts:356:    if (M05TRANS && a.popS !== undefined) open = Math.max(m05rideS.value >= a.popS ? 1 : 0, open);
+> src/vfx/clip05.ts:16:export const m05rideS = { value: -1 };
+
+### 🤖 Claude — 2026-11-18T18:43:18.852Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/b72ct446e.output; ls /home/user/wt/s05/qa/match/05/r15/step1_trans/new/ | wc -l", "description": "Check whether NEW render finished"}`
+
+### 🧑 User — 2026-11-18T18:43:18.921Z
+
+> ↩︎ result: 13
+

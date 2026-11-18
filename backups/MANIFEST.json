@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16988,
-   "sha256": "5bd76d60ba2a0a6eb189634db129c551008effaa3a2411d177dc25207236b35a"
+   "sha256": "a36b897825ea9fd8fd33868061096f6cc297911fa033761595e04c805ac5df1b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -993,23 +993,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c15/INFO.json",
-   "bytes": 2043,
-   "sha256": "3d2b3abc79881a697bb97588ac8bdc0bec8d72e229ce879a0f9600c273984e84"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-match-c15/tracked.patch",
-   "bytes": 56326178,
-   "sha256": "8432f810c3db0b1fc4dbb7f9ba107667d41be38ad2b0431aae1cd4c96f54a3ef"
+   "bytes": 477,
+   "sha256": "e4abc691ac1f98bef14e01775a8c28c0c297c556b3133f47ed253d2ecb6634cb"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
    "bytes": 522,
-   "sha256": "ef0a231354ff64394d5b61015a4304c0ce42d44950b22d9c34ff7568b233d77c"
+   "sha256": "bc24759fcf157cc301ac9498a158b4fcbf63bedee304cac9210eee9fc2a4fc2e"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/untracked/tools/match04/ring_paint04.py",
-   "bytes": 12915,
-   "sha256": "d31ffcb782e28834a3b9d6ef622dfc0b6200e805958efb4f16a35b9cdff6b116"
+   "bytes": 12891,
+   "sha256": "94f2683b946250b7191f79c37cc873fec11bad643759206b3b15998490594738"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1103,8 +1098,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/INFO.json",
-   "bytes": 2366,
-   "sha256": "ffdd3d8fed626ca2fcaf0fdf5d5d09daedddfdf9d1fe7dfd85ed49487e676091"
+   "bytes": 2412,
+   "sha256": "7d53f3bb6d10a1192e6c00dbea4d28639296c578f0f69a00e4e33d0844163a9d"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/tracked.patch",
@@ -1197,6 +1192,11 @@
    "sha256": "5ca77b565298e4588f8caed3dbb052f4944b00714254920140bb0475edba08c5"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-match-c15/untracked/qa/match/05/r15/step1_trans/new/x103.png",
+   "bytes": 1914837,
+   "sha256": "a955945e21a90e275adc5f04f1cb1a9e5f87c8be8bb83067483243796f7102ed"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-match-c15/untracked/tools/match05/r15_probe.mjs",
    "bytes": 3240,
    "sha256": "a0e5f7ae0bf080c800ebc7e1052e8e0c5a6179ac9fca5fda297031b62e8b6458"
@@ -1208,18 +1208,28 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c15/INFO.json",
-   "bytes": 528,
-   "sha256": "014b1ca04578551d8d0f4dc9dd1781e5543a2f7e7731e17af06a102b5c090b61"
+   "bytes": 621,
+   "sha256": "a51e03c781d47c4002c2d43145fc885490368559f6f27258b9e5653a14a4b4bc"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c15/untracked/qa/match/06/r15/BEFORE/f06_forward6u.png",
+   "bytes": 1998441,
+   "sha256": "c7f34bfcbfda29bc6455d537ac580772c7a75bc8f51063a99524ad738eafb368"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
-   "bytes": 512,
-   "sha256": "4a725fec2120a79caaa32063cefdd239ff6772bcbacbe5d4bc4e36c83a557a8d"
+   "bytes": 545,
+   "sha256": "fa5733a3d4b01b948189f0918d4ec635b8ff01cd82fce575cecf90f32b0c98b4"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/untracked/tools/lead_r13/swim_clip.mjs",
    "bytes": 2194,
    "sha256": "c12d36d85f10df997cc6154932711fd36adfc318a530a8a59a643b307a566724"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s07-match-c15/untracked/tools/match07/audit_r15.mjs",
+   "bytes": 3181,
+   "sha256": "7684305c4933712a67f9e807c26eb5a3c27122865582cf77020fd637db066b55"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -1288,8 +1298,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/INFO.json",
-   "bytes": 577,
-   "sha256": "57b16129b45513ded49e814c63f0d65bb0ce8245c8dd7758b2872180ec64a337"
+   "bytes": 732,
+   "sha256": "022069f29a49aadeddd39b58608812b3fc362ebffb0a593ccb4dc21d4171039c"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/tracked.patch",
@@ -1643,8 +1653,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r15/COORDINATION.md",
-   "bytes": 8297,
-   "sha256": "2767155939495a7225e6b4280967bc6654a081b745470edc1e671c7461444898"
+   "bytes": 8672,
+   "sha256": "90c3fa4083661142de14b131d624c54631c721177835de806889c55919584dee"
   },
   {
    "path": "docs/briefs/2026-11-18-r15/GITHUB_3D_TOOLS.md",
@@ -11005,6 +11015,56 @@
    "path": "qa/review_r14/05_step2_painted_V/3_NEW_6_hard_right.png",
    "bytes": 2301225,
    "sha256": "c8e33f5fa73a709bb5a5ec05a5ff30e6467bd83db73e2f42c1af692dfc83f0d4"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/2_BEFORE_f03_forward3u.png",
+   "bytes": 2079868,
+   "sha256": "7b193ac536d6930990af8aff0e6afbdd4a70f9ac0097b8a72fcc10f223e4d09b"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/2_BEFORE_f06_forward6u.png",
+   "bytes": 1925231,
+   "sha256": "fb6718a73c9991d4b793faf10225e9adb8383d44db3ee449baa424afeeb62994"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/2_BEFORE_s_left_hard.png",
+   "bytes": 1600683,
+   "sha256": "ac8b4e58802a1aa8834b0b2abfd46627fe4f4b8e851e5d8068199491a864d4b8"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/2_BEFORE_s_right_hard.png",
+   "bytes": 1562855,
+   "sha256": "3ab0643adad425f675d0a93ffe1c00e5771cc6b7d7e75cb8393ff32c6e9ab65a"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/3_NEW_f03_forward3u.png",
+   "bytes": 2063301,
+   "sha256": "bc6996db47cbbdea59b365e941b72ac72c70070e0e3842105bf18f34b3d4733f"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/3_NEW_f06_forward6u.png",
+   "bytes": 1929208,
+   "sha256": "d595213ca552b045df7ace8d95a2496311341652bdb71fc864ec426380b83d05"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/3_NEW_s_left_hard.png",
+   "bytes": 1634091,
+   "sha256": "43d9457b23aba7b5973987ed0d034a64e0411fc55be6ca4bafa297873e5548ea"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/3_NEW_s_right_hard.png",
+   "bytes": 1566179,
+   "sha256": "602d2c81749df43a32fbea9f98e85bc90312bb4572503fc45856d87a53cb1ba7"
+  },
+  {
+   "path": "qa/review_r15/04_step1_bubble_foam/4_NEW_swim_clip.mp4",
+   "bytes": 1095945,
+   "sha256": "64fc47efdb222d8addc74035b956bc4b6c7dbef7f90075e0e798b1829132b262"
   },
   {
    "path": "qa/review_r15/05_step3_bubbly_bank/1_APPROVED.png",

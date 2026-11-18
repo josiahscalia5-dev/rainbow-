@@ -3303,3 +3303,114 @@ Recording your order in the binding rules so every future account follows it too
 
 > 🔧 **Bash** `{"command": "cat > docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md <<'EOF'\n# User order — 2026-11-18 ~18:55 UTC (account 15) — BINDING for every worker and every future account\n\nUser's words: \"To make them exactly or very close to my approved screens — work on the visual part … not all technical problems. Make\nsure it looks like the visual part, like scenery and all the stuff that looks like my approved screens. When a pink character goes\nthrough my screens, it looks like it would have for my approved screens.\"\n\nMeaning (adds to `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` …[+1443 chars]`
 
+### 🧑 User — 2026-11-18T18:42:40.926Z
+
+> ↩︎ result: 1
+>   "commit": "897b88c44692200583e66152be3af955a150d2a6",
+> HEAD 897b88c44692200583e66152be3af955a150d2a6
+> 897b88c44692200583e66152be3af955a150d2a6	refs/heads/ccr-47b10cec-03c7co
+> [This command modified 1 file you've previously read: docs/briefs/2026-11-18-r15/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T18:42:45.168Z
+
+The first Screen 04 result arrived: the foam is now clusters of small bubbles. I'll check it by eye against your picture before showing you.
+
+### 🤖 Claude — 2026-11-18T18:42:45.968Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s04/qa/match/04/r15/s1_fclu/ /home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW | head -30", "description": "List the 04 foam step pictures"}`
+
+### 🧑 User — 2026-11-18T18:42:46.148Z
+
+> ↩︎ result: /home/user/wt/s04/qa/match/04/r15/s1_fclu/:
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> NEW_swim_clip.mp4
+> 
+> /home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T18:42:51.508Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T18:42:51.593Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:42:51.960Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T18:42:52.213Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:42:58.157Z
+
+By eye I agree: the entrance foam now reads as heaps of small round bubbles, like your painted foam, not smooth white balls. It's a small but real step. Preparing the pictures for you.
+
+### 🤖 Claude — 2026-11-18T18:43:02.723Z
+
+> 🔧 **Bash** `{"command": "set -e; S=/home/user/wt/s04/qa/match/04/r15/s1_fclu; R=/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam; mkdir -p $R; cp $S/1_APPROVED.png $R/1_APPROVED.png; for s in f03_forward3u f06_forward6u s_left_hard s_right_hard; do cp $S/BEFORE/$s.png $R/2_BEFORE_$s.png; cp $S/NEW/$s.png $R/3_NEW_$s.png; done; cp $S/NEW_swim_clip.mp4 $R/4_NEW_swim_clip.mp4; ls $R; du -sh $R\ncd /home/user/rainbow- && python3 - <<'EOF'\np='docs/briefs/2026-11-18-r15/COORDINATION.md'; s=open(p).read()\ns=s.rstrip('\\n')\nrow='\\n| 3 (~19:00) | 04 r15 step 1 `m04fclu` (entrance foam as clusters of many …[+527 chars]`
+
+### 🧑 User — 2026-11-18T18:43:02.958Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_right_hard.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_right_hard.png
+> 4_NEW_swim_clip.mp4
+> 16M	/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam
+> ok
+
+### 🤖 Claude — 2026-11-18T18:43:10.092Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/1_APPROVED.png", "/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/2_BEFORE_f03_forward3u.png", "/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/3_NEW_f03_forward3u.png", "/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/2_BEFORE_s_left_hard.png", "/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/3_NEW_s_left_hard.png", "/home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/4_NEW_swim_clip.mp4"], "caption": "Screen 04 foam: APPROVED / BEFORE / NEW entering the tunnel, then BEFORE / NEW steering hard le …[+74 chars]`
+
+### 🧑 User — 2026-11-18T18:43:12.733Z
+
+> ↩︎ result: 6 files delivered to user.
+>   /home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/1_APPROVED.png → file_uuid: bbf4b604-708b-4da8-9665-f8eef3b0ab08
+>   /home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/2_BEFORE_f03_forward3u.png → file_uuid: 6820d861-e736-4494-8659-856cc4ffb7b4
+>   /home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/3_NEW_f03_forward3u.png → file_uuid: bea4b221-7b5d-457d-8319-2680f37777e6
+>   /home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/2_BEFORE_s_left_hard.png → file_uuid: 41c0fbf8-7914-4026-a162-ac6108b999d8
+>   /home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/3_NEW_s_left_hard.png → file_uuid: a42f4cec-45a5-46b1-a1cf-aec5bc2d1420
+>   /home/user/rainbow-/qa/review_r15/04_step1_bubble_foam/4_NEW_swim_clip.mp4 → file_uuid: 102245aa-0168-41a1-9f20-b5cd00e16996
+
+### 🤖 Claude — 2026-11-18T18:43:19.451Z
+
+I've passed your order to all six workers and saved it as a permanent rule for future accounts: visuals only, so the scenery looks like your approved picture all the way through Benny's swim, with technical work only where it's needed to make the pictures. Saved on GitHub at `897b88c`, matching GitHub.
+
+The first visual result under that order is in (pictures above):
+
+**Screen 04 entrance foam: GOOD IMPROVEMENT (small).** I checked it against your picture myself.
+- **Closer:** As Benny enters the tunnel, the foam beside the entrance is now heaps of small, glossy, lilac-white bubbles, like your painted foam. Before, it was smooth plain white balls. The pale puff that crossed the bottom-left corner when steering hard left is gone. The starting view is unchanged.
+- **Still wrong, visible in the same frames:**
+  - The inner gold rings still look like a generic ring corridor. The painted-ring test is working on exactly that.
+  - The side water is a flat pink sheet, where your picture has magenta, pink and cyan swirl bands. The 04 worker started on that next.
+
+The other screens will report as their steps finish, each with the same kind of pictures.
+
+### 🧑 User — 2026-11-18T18:43:21.846Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
