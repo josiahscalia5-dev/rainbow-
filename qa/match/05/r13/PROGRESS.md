@@ -89,3 +89,9 @@ t95 (+left/right), t98; positions in `shots.json`).
   closer → reverted. Patch + the two comparison pairs kept: `/home/user/wt/s05/qa/match/05/r13/item_m05lump/`.
 * What the panel is: the berm's steep outer part where it rises toward the wall, drawn as flat lather; a real fix has to give
   that part the painted foam-cloud look (or keep it out of view), not just move its end.
+
+* 2026-11-18 ~15:15 UTC round 13 resumed (water-fx-specialist, new instance after the ~15:08 interruption). Found one
+  unfinished edit in the worktree: `&m05vee=1` in `src/vfx/waterRibbon.ts` (task 4 start: the near tile T2's lateral lookup
+  bent onto the painted V of hot-pink bands behind Benny while swimming; behind its own switch, not yet verified). Next:
+  verify it by eye (start view 0 px, f03 / f06 / f10 / f20 / hard left / right) — keep only if clearly closer; then task (a)
+  (near lather bank straight cut at the seam, a different method than m05lump) and task 5 (05 → 06 transition).
