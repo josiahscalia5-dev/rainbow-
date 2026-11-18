@@ -1101,3 +1101,27 @@ Now I'll write the mouth tile tool.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:59:06.285Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,60p tools/match04/probe04.mjs; grep -n \"camera\" src/game/Game.ts | grep -n \"__rainbow\\|window\" | head", "description": "Read probe tool for camera pose"}`
+
+### 🧑 User — 2026-11-18T02:59:06.323Z
+
+> ↩︎ result: // read-only probe of the live game at the 04 checkpoint: camera, Benny, course frames over stage 04 (no source change)
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const q = process.argv[2] || '';
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5266);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   const st = await page.evaluate(() => window.__rainbow.goto('04'));
+>   const info = await page.evaluate(() => {
+>     const R = window.__rainbow; const { scene, camera } = R.qa3d(); const c = R.course;
+>     const v = (p) => p.toArray().map((x) => +x.toFixed(3));
+>     const st4 = c.stage('04'), st5 = c.stage('05');
+>     const frames = []; for (let s = st4.s0 - 4; s <= st5.s0 + 4; s += 2) { const f = c.sample(s); frames.push({ s: +s.toFixed(2), pos: v(f.pos), tan: v(f.tan), up: v(f.up), right: v(f.right) }); }
+>     let benny = null; scene.traverse(( …[+814 chars]
+

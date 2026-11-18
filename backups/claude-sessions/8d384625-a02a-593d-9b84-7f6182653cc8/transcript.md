@@ -1880,3 +1880,23 @@ Screen 04 has saved its first round-9 step. Checking the pictures myself before 
 
 > 🔧 **Bash** `{"command": "flock -w 90 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:review-04-step1 2>&1 | grep -E '\"commit\"' | head -1; git status --short | head -3; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-restore-c9-40w64b | cut -f1)\"", "description": "Save the review pictures and verify the push", "timeout": 150000}`
 
+### 🧑 User — 2026-11-18T02:59:06.876Z
+
+> ↩︎ result: "commit": "10c7968cadfc9012c699a2ac925207b02b1e62c8",
+> local 10c7968cadfc9012c699a2ac925207b02b1e62c8
+> remote 10c7968cadfc9012c699a2ac925207b02b1e62c8
+
+### 🤖 Claude — 2026-11-18T02:59:10.902Z
+
+**Screen 04 has a new improvement, saved and pushed.** The gold washer opening is now a polished gold band with bright lips, a warm golden top glow and glowing bulbs. Before, it was a flat, matte orange arch. It stays sharp as Benny swims toward it and when he steers. Your approved starting view is unchanged.
+
+Still clearly different from your picture:
+- **Foam:** the piles are too big, too white and too tall, like cotton walls on both sides. In your picture the foam sits lower, along the river banks.
+- **Water:** it's mostly cyan. Your picture has broad pink and magenta swirls on both sides.
+- **Arrows:** your five glowing arrows aren't visible near Benny yet.
+- **Tunnel:** it's still a long, straight yellow-orange corridor.
+
+I've passed these four points to the Screen 04 specialist. Its next step is the laundry-room entrance above the opening, then these.
+
+Screen 05 is working on the pale foam along the far banks, the broad flat water and the loose lilac slab on the left bank. All pictures so far are saved on GitHub, and the copy there matches this branch.
+
