@@ -473,7 +473,24 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       }
       console.info('[match06] m06bend', { sTop, aTop: +aTop.toFixed(1), yawEndDeg: +THREE.MathUtils.radToDeg(yaw[nA - 1]).toFixed(1) });
     }
+    const elbow = qs?.get('cx06RinseElbow') === '1';
+    // A circular elbow ends the sight line gradually beyond the crest. Its inner radius
+    // stays positive, and the tube, ring centres and end cap share the same frames.
+    const elbowStart = course.sample(sE - 20).pos.sub(O).dot(ax);
+    const elbowRadius = 3.45 * Rt;
+    const elbowAngle = 0.94;
     const axisAt = (a: number) => {
+      if (elbow && a > elbowStart) {
+        const travel = a - elbowStart;
+        const angle = Math.min(travel / elbowRadius, elbowAngle);
+        const c = Math.cos(angle), sn = Math.sin(angle);
+        const tangent = ax.clone().multiplyScalar(c).addScaledVector(Rx, sn);
+        const right = Rx.clone().multiplyScalar(c).addScaledVector(ax, -sn);
+        const centre = O.clone().addScaledVector(ax, elbowStart + elbowRadius * sn)
+          .addScaledVector(Rx, elbowRadius * (1 - c))
+          .addScaledVector(tangent, Math.max(0, travel - elbowRadius * elbowAngle));
+        return { p: centre, t: tangent, r: right, u: Ux };
+      }
       if (!BEND) return { p: O.clone().addScaledVector(ax, a), t: ax, r: Rx, u: Ux };
       const i = THREE.MathUtils.clamp(Math.round((a - a0) / DA), 0, nA - 1);
       return { p: fP[i].clone().addScaledVector(fT[i], a - (a0 + i * DA)), t: fT[i], r: fR[i], u: fU[i] };
@@ -561,7 +578,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
         const lp = prof.map((v) => new THREE.Vector2(Ra + v.x * sc, v.y * sc));
         const lg = new THREE.LatheGeometry(lp, 128);
         const fr = axisAt(a);
-        lg.applyQuaternion(BEND ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), fr.t) : qRot);
+        if (elbow) {
+          // Parallel transport the original lathe basis so the painted gold profile and lights stay on the rim.
+          const sweepRotation = new THREE.Quaternion().setFromUnitVectors(ax, fr.t);
+          lg.applyQuaternion(qRot).applyQuaternion(sweepRotation);
+        } else {
+          lg.applyQuaternion(BEND ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), fr.t) : qRot);
+        }
         lg.translate(fr.p.x, fr.p.y, fr.p.z);
         const n = lg.attributes.position.count, lsA = new Float32Array(n * 2), tA = new Float32Array(n * 2);
         for (let i = 0; i < n; i++) lsA[i * 2] = lp[i % lp.length].y / sc; // local axial offset inside the band
