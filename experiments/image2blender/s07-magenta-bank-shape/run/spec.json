@@ -1,0 +1,313 @@
+{
+  "meta": {
+    "name": "s07_banks",
+    "referenceImage": "inputs/approved-07.png",
+    "class": "scene",
+    "complexity": "complex",
+    "stylization": "faithful",
+    "units": "Screen 07 tube-local game units",
+    "referenceSHA256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9"
+  },
+  "components": [
+    {
+      "id": "left_bank",
+      "parent": null,
+      "role": "primary",
+      "strategy": "curve",
+      "material": "satin_magenta",
+      "criticalFeatures": [
+        "continuous swept ribbon",
+        "varying inner and outer profiles",
+        "low raised crown"
+      ],
+      "buildNotes": "Loft the annotated inner and outer edge splines, sharing ordered cross-sections and UVs. Retain the spline and editable mesh.",
+      "pivotNote": "Saved gameplay water origin."
+    },
+    {
+      "id": "left_spine",
+      "parent": "left_bank",
+      "role": "detail",
+      "strategy": "curve",
+      "criticalFeatures": [
+        "editable spline follows the crest of the bank"
+      ],
+      "buildNotes": "Keep a non-rendering editable guide through independent lateral samples."
+    },
+    {
+      "id": "left_foam",
+      "parent": null,
+      "role": "secondary",
+      "material": "soap_lilac",
+      "strategy": "primitive",
+      "buildNotes": "Group overlapping low ellipsoids where the reference actually shows visible foam. Keep editable mesh islands."
+    },
+    {
+      "id": "right_bank",
+      "parent": null,
+      "role": "primary",
+      "strategy": "curve",
+      "material": "satin_magenta",
+      "criticalFeatures": [
+        "continuous swept ribbon",
+        "varying inner and outer profiles",
+        "low raised crown"
+      ],
+      "buildNotes": "Loft the annotated inner and outer edge splines, sharing ordered cross-sections and UVs. Retain the spline and editable mesh.",
+      "pivotNote": "Saved gameplay water origin."
+    },
+    {
+      "id": "right_spine",
+      "parent": "right_bank",
+      "role": "detail",
+      "strategy": "curve",
+      "criticalFeatures": [
+        "editable spline follows the crest of the bank"
+      ],
+      "buildNotes": "Keep a non-rendering editable guide through independent lateral samples."
+    },
+    {
+      "id": "right_foam",
+      "parent": null,
+      "role": "secondary",
+      "material": "soap_lilac",
+      "strategy": "primitive",
+      "buildNotes": "Group overlapping low ellipsoids where the reference actually shows visible foam. Keep editable mesh islands."
+    }
+  ],
+  "materials": [
+    {
+      "id": "satin_magenta",
+      "bsdf": {
+        "baseColor": [
+          0.78,
+          0.017,
+          0.34
+        ],
+        "roughness": 0.27,
+        "metallic": 0.08
+      },
+      "textureStrategy": "procedural",
+      "notes": "Keep Claudia’s near_bank tile byte-identical, restrict its UV range to the painted magenta surface and its narrow highlight."
+    },
+    {
+      "id": "soap_lilac",
+      "bsdf": {
+        "baseColor": [
+          0.65,
+          0.77,
+          0.98
+        ],
+        "roughness": 0.34,
+        "metallic": 0.0
+      },
+      "textureStrategy": "procedural",
+      "notes": "Use Claudia’s near_foam tile, a soft cool underside and clustered lobes."
+    }
+  ],
+  "detailInventory": [
+    {
+      "id": "far_scale",
+      "gridCell": "R2C3",
+      "description": "Visible distance narrows the pink paths near the lit vanishing point.",
+      "mapsTo": "component:right_spine"
+    },
+    {
+      "id": "left_outer_bend",
+      "gridCell": "R3C1",
+      "description": "The near left bank sweeps in from the lower edge and curls back around Benny.",
+      "mapsTo": "component:left_bank"
+    },
+    {
+      "id": "right_arc",
+      "gridCell": "R2C3",
+      "description": "The right bank turns outward beside the fourth gold coin.",
+      "mapsTo": "component:right_bank"
+    },
+    {
+      "id": "channel_clear",
+      "gridCell": "R3C2",
+      "description": "Cyan water stays between the pink banks below Benny.",
+      "mapsTo": "component:left_spine"
+    },
+    {
+      "id": "asymmetric",
+      "gridCell": "R2C2",
+      "description": "The two banks have independent edges and do not form a mirrored pair.",
+      "mapsTo": "component:right_spine"
+    },
+    {
+      "id": "varying_width",
+      "gridCell": "R3C1",
+      "description": "The near pink face widens markedly toward the lower crop.",
+      "mapsTo": "component:left_bank"
+    },
+    {
+      "id": "curved_shine",
+      "gridCell": "R3C1",
+      "description": "Long painted white reflections follow the pink bend.",
+      "mapsTo": "material:satin_magenta"
+    },
+    {
+      "id": "pink_rim",
+      "gridCell": "R2C3",
+      "description": "The glossy inner edge has a thin pale highlight.",
+      "mapsTo": "material:satin_magenta"
+    },
+    {
+      "id": "foam_hierarchy",
+      "gridCell": "R3C3",
+      "description": "Foam has broad low lobes and smaller peripheral bubbles.",
+      "mapsTo": "component:right_foam"
+    },
+    {
+      "id": "foam_shadows",
+      "gridCell": "R3C3",
+      "description": "Clusters have light pearl tops and cool lilac shade.",
+      "mapsTo": "material:soap_lilac"
+    },
+    {
+      "id": "left_mounds",
+      "gridCell": "R2C1",
+      "description": "Rounded irregular foam sits outside the left bank before Benny.",
+      "mapsTo": "component:left_foam"
+    },
+    {
+      "id": "near_clearance",
+      "gridCell": "R3C2",
+      "description": "The river and the splash remain open around the character.",
+      "mapsTo": "component:right_bank"
+    }
+  ],
+  "passes": [
+    {
+      "id": "blockout",
+      "criteria": [
+        "Two curved bank footprints flank an open channel in the saved camera.",
+        "The oblique view shows two distinct paths with unequal bends."
+      ]
+    },
+    {
+      "id": "form",
+      "criteria": [
+        "A continuous low crown is visible on each bank from the oblique view.",
+        "The neighbouring foam has multiple low overlapping lobes and an open middle."
+      ]
+    },
+    {
+      "id": "materials",
+      "criteria": [
+        "The near banks have hot pink faces with visible lighter streaks.",
+        "The small foam islands read as cool pale soap and remain distinct from the pink surface."
+      ]
+    },
+    {
+      "id": "lighting",
+      "criteria": [
+        "The saved-angle and oblique renders both retain visible pink streaks and foam detail.",
+        "Shading reveals the bank crown without turning the open channel opaque."
+      ]
+    }
+  ],
+  "layout": {
+    "camera": "Use the saved vertical 62 degree Screen 07 perspective and original camera matrix. Additional fixed overhead and oblique views inspect geometry independently of the artwork.",
+    "zones": [
+      {
+        "id": "left_bend",
+        "contents": [
+          "left_bank",
+          "left_foam",
+          "left_spine"
+        ]
+      },
+      {
+        "id": "right_bend",
+        "contents": [
+          "right_bank",
+          "right_foam",
+          "right_spine"
+        ]
+      }
+    ]
+  },
+  "reviewHistory": [
+    {
+      "pass": "blockout",
+      "attempt": 1,
+      "angles": [
+        "reference",
+        "oblique"
+      ],
+      "verdict": "continue",
+      "criteriaMet": [
+        "Two curved bank footprints flank an open channel in the saved camera.",
+        "The oblique view shows two distinct paths with unequal bends."
+      ],
+      "criteriaFailed": [],
+      "notes": "The locked view has an open centre with a hooked lower-left edge and outward right sweep. The oblique view confirms two separately located strips."
+    },
+    {
+      "pass": "form",
+      "attempt": 1,
+      "angles": [
+        "reference",
+        "oblique"
+      ],
+      "verdict": "continue",
+      "criteriaMet": [
+        "A continuous low crown is visible on each bank from the oblique view.",
+        "The neighbouring foam has multiple low overlapping lobes and an open middle."
+      ],
+      "criteriaFailed": [],
+      "notes": "The oblique view shows low raised surfaces with soft crest highlights. Distinct overlapping foam lobes lie outside the left and right edges. An open channel remains between them."
+    },
+    {
+      "pass": "materials",
+      "attempt": 1,
+      "angles": [
+        "reference",
+        "oblique"
+      ],
+      "verdict": "continue",
+      "criteriaMet": [
+        "The near banks have hot pink faces with visible lighter streaks.",
+        "The small foam islands read as cool pale soap and remain distinct from the pink surface."
+      ],
+      "criteriaFailed": [],
+      "notes": "Pink bands have separate light streaks along each curved strip. Foam is cool white to lilac, distinct from the pink, with some top highlights close to white. The final lighting pass should retain underside shading."
+    },
+    {
+      "pass": "lighting",
+      "attempt": 1,
+      "angles": [
+        "reference",
+        "oblique"
+      ],
+      "verdict": "refine-code",
+      "criteriaMet": [],
+      "criteriaFailed": [
+        "On confidently magenta reference pixels the median rendered RGB was 255,126,255 versus 241,59,216 in the artwork. The highlight streaks are visible, but too many coloured pixels clip. Reduce the neutral specular wash before acceptance."
+      ],
+      "notes": "On confidently magenta reference pixels the median rendered RGB was 255,126,255 versus 241,59,216 in the artwork. The highlight streaks are visible, but too many coloured pixels clip. Reduce the neutral specular wash before acceptance."
+    },
+    {
+      "pass": "lighting",
+      "attempt": 2,
+      "angles": [
+        "reference",
+        "oblique"
+      ],
+      "verdict": "continue",
+      "criteriaMet": [
+        "The saved-angle and oblique renders both retain visible pink streaks and foam detail.",
+        "Shading reveals the bank crown without turning the open channel opaque."
+      ],
+      "criteriaFailed": [],
+      "notes": "After the adjustment the separate pink streaks and cooler rounded foam tops remain visible in both angles. The sampled magenta-region channel error fell from 40.00 to 33.17. The Blender render is still somewhat cooler and darker than the approved painting."
+    }
+  ],
+  "limits": [
+    "Character, coins, tunnel, gameplay, and the plunge are excluded from modeling.",
+    "The image cannot establish hidden edge depths, bank height, or the reverse side. Cropped or occluded edges are inferred.",
+    "The playable preview tests the banks only. The foam geometry is assessed in Blender to keep the game experiment to one factor."
+  ]
+}
