@@ -1,10 +1,10 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-18T19:15Z",
- "updated_by_session": "session_01Q46SCGQWf9dNTogNZTniy4 (account 16, lead ccr-e42bb3c0-jpif8d)",
+ "updated_utc": "2026-11-18T20:55Z",
+ "updated_by_session": "session_01VCMXoYUDAtThkAJzb9fwd7 (account 17, lead ccr-bbe2b27e-oxfh1w)",
  "running_now": {
-  "_note": "see round16_account16.running (six background workers in the account-16 lead container, relaunched ~19:15-19:45 UTC as their -c15 tips arrive)"
+  "_note": "see round17_account17.running (six background workers in the account-17 lead container, relaunched ~20:55 UTC from the account-16 20:14 UTC WIP snapshots)"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
@@ -856,5 +856,68 @@
   "open_user_request": "18:44 UTC: show me the painted ring test results (04 &m04rpaint, s04tex) - first in-game APPROVED/BEFORE/NEW set owed",
   "restart_if_lost": "create -c17 from the newest -c16 tip, apply backups/wip/<branch>/tracked.patch + untracked/ (docs/briefs/2026-11-18-r16/setup_worker.sh with c15->c16, c16->c17), relaunch the same agent type with its r15 launch brief (-c15 -> -c17, r15 -> r17), resume from qa/match/<NN>/r16/PROGRESS.md",
   "connections": "World Labs Marble key OK (5,420 credits), fal OK (01a1ea70 COMPLETED), GitHub MCP + git proxy OK, Playwright MCP OK; NO claude.ai connectors on account 16 (Atlas, Hugging Face not connected); worldlabs plugin MCP re-enabled but needs OAuth"
+ },
+ "round17_account17": {
+  "lead_branch": "ccr-bbe2b27e-oxfh1w",
+  "started_from": "account-16 lead ccr-e42bb3c0-jpif8d @ e057fe80 (merged into the fresh session branch at the user's \"do exactly where we left off\"; old base ccr-5495e9c4-g0apvl 77bce73 added backups only)",
+  "coordination": "docs/briefs/2026-11-18-r17/COORDINATION.md",
+  "resume": "docs/briefs/2026-11-18-r17/RESUME_R17.md",
+  "running": [
+   {
+    "screen": "04 test (s04tex)",
+    "agent": "washer-environment-modeler",
+    "branch": "claude/rainbow-s04-ringtex-c17",
+    "from": "3fdcbc0b + WIP",
+    "worktree": "/home/user/wt/s04b",
+    "port": 5274,
+    "task": "step 5 m04rpdots (light dots on ring lips), then pinker sheen separately"
+   },
+   {
+    "screen": "04 (s04)",
+    "agent": "foam-bubbles-particles",
+    "branch": "claude/rainbow-s04-match-c17",
+    "from": "465e4c59 + WIP",
+    "worktree": "/home/user/wt/s04",
+    "port": 5273,
+    "task": "m04end (distant glowing opening), then near-water pink/cyan bands round Benny"
+   },
+   {
+    "screen": "05",
+    "agent": "water-fx-specialist",
+    "branch": "claude/rainbow-s05-match-c17",
+    "from": "34aadd11 + WIP",
+    "worktree": "/home/user/wt/s05",
+    "port": 5275,
+    "task": "m05trans (05->06 transition), then smeared left wall at hard left"
+   },
+   {
+    "screen": "06",
+    "agent": "reference-match-director",
+    "branch": "claude/rainbow-s06-match-c17",
+    "from": "4b6c637c + WIP",
+    "worktree": "/home/user/wt/s06",
+    "port": 5276,
+    "task": "m06fclu foam clusters, then start-view flash, ripple rings, walls, paddle lids"
+   },
+   {
+    "screen": "07",
+    "agent": "water-fx-specialist",
+    "branch": "claude/rainbow-s07-match-c17",
+    "from": "669420af + WIP",
+    "worktree": "/home/user/wt/s07",
+    "port": 5277,
+    "task": "m07nearw (painted-scale near water), then lather-wall cut in the drop"
+   },
+   {
+    "screen": "08 scenery",
+    "agent": "washer-environment-modeler",
+    "branch": "claude/rainbow-s08-scenery-c17",
+    "from": "6da32d57 + WIP",
+    "worktree": "/home/user/wt/s08",
+    "port": 5278,
+    "task": "m08vh (no pale outlines round platform/towel/cups), then wall seams, towel, foam + coin line, spout cups"
+   }
+  ],
+  "if_account_17_runs_out": "-c18 branches from each NEWEST -c17 tip + backups/wip/ snapshot; never write -c17 from another account"
  }
 }
