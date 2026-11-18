@@ -3014,3 +3014,187 @@ Yes. I'll start Screens 07 and 06 now, which means six workers in total. First I
 > 66M	/root/.claude
 > 211M	/tmp
 
+### 🤖 Claude — 2026-11-18T18:38:54.000Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && du -sh qa/* assets builds backups references 2>/dev/null | sort -rh | head -14; cd /home/user/rainbow- && grep -rhoE \"\\.\\./\\.\\./(qa|builds|backups)/[A-Za-z0-9_./-]+\" src | sort -u | head -20", "description": "Break down worktree size and find game code that loads files from qa"}`
+
+### 🧑 User — 2026-11-18T18:38:54.156Z
+
+> ↩︎ result: 1.5G	qa/pilot05
+> 1.4G	qa/match
+> 203M	qa/worldlabs
+> 138M	builds
+> 116M	backups
+> 101M	qa/imageblaster
+> 47M	assets
+> 6.4M	references
+> 5.7M	qa/continuity
+> 3.7M	qa/07_side_by_side.png
+> 3.7M	qa/05_side_by_side.png
+> 3.6M	qa/11_side_by_side.png
+> 3.6M	qa/10_side_by_side.png
+> 3.6M	qa/09_side_by_side.png
+
+### 🤖 Claude — 2026-11-18T18:39:00.517Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"qa/\" src/*.ts src/**/*.ts index.html vite.config.* 2>/dev/null | grep -v '^\\s*//' | grep -v -E '//.*qa/|\\* .*qa/' | head -10; grep -rln \"qa/pilot05\\|qa/worldlabs\\|qa/imageblaster\" tools/lead_r6 tools/lead_r13 scripts/capture.mjs scripts/lib 2>/dev/null | head", "description": "Check whether game code or capture tools read qa/pilot05, worldlabs or imageblaster"}`
+
+### 🧑 User — 2026-11-18T18:39:00.841Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:39:18.080Z
+
+> 🔧 **Bash** `{"command": "git --version; cd /home/user/wt/s04b && git status --short | head -3; printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' > /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/sparse.txt && git sparse-checkout set --no-cone --stdin < /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/sparse.txt 2>&1 | tail -2; du -sh /home/user/wt/s04b; git status --short | head -3; echo \"main sparse: $(git -C /home/user/rainbow- config --get core.sparseCheckout || echo unset)\"; ls /home/user/ …[+206 chars]`
+
+### 🧑 User — 2026-11-18T18:39:23.350Z
+
+> ↩︎ result: git version 2.43.0
+> 1.5G	/home/user/wt/s04b
+> main sparse: unset
+> AGENTS_STATUS.json
+> AGENTS_STATUS.md
+> BACKUP_LOG.md
+> /home/user/wt/s04b/src/world/match04m4.ts
+> /dev/vda        252G   36G  3.5G  92% /
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T18:39:28.428Z
+
+Worked: that copy went from 3.5 GB to 1.5 GB, its status stays clean, and the main checkout and backups are untouched. Applying the same to the other four copies.
+
+### 🤖 Claude — 2026-11-18T18:39:31.025Z
+
+> 🔧 **Bash** `{"command": "for s in s04 s05 s07 s08; do cd /home/user/wt/$s && before=$(git status --short | wc -l) && git sparse-checkout set --no-cone --stdin < /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/sparse.txt 2>&1 | tail -1; echo \"$s $(du -sh . | cut -f1) dirty before=$before after=$(git status --short | wc -l)\"; done; echo \"main sparse: $(git -C /home/user/rainbow- config --get core.sparseCheckout || echo unset)\"; df -h / | tail -1", "description": "Apply sparse checkout to the other worker copies", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T18:39:51.696Z
+
+> ↩︎ result: s04 1.5G dirty before=4 after=4
+> s05 1.1G dirty before=8 after=8
+> s07 465M dirty before=1 after=1
+> s08 1.3G dirty before=1 after=1
+> main sparse: unset
+> /dev/vda        252G   27G   13G  70% /
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T18:39:56.242Z
+
+13 GB free now, and every worker's unfinished edits are intact. Creating the Screen 06 copy, sparse from the start.
+
+### 🤖 Claude — 2026-11-18T18:40:00.041Z
+
+> 🔧 **Bash** `{"command": "git worktree prune && git log -1 --format='%h' claude/rainbow-s06-match-c15 && timeout 600 git worktree add --no-checkout /home/user/wt/s06 claude/rainbow-s06-match-c15 2>&1 | tail -1 && cd /home/user/wt/s06 && git sparse-checkout set --no-cone --stdin < /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/sparse.txt && timeout 600 git checkout claude/rainbow-s06-match-c15 2>&1 | grep -v -E 'Updating files|Filtering' | tail -1; ln -sfn /home/user/rainbow-/node_modules node_modules; for t in lead_r13; do [ -d tools/$t ] || cp -r /home/user/wt/s04/tools/ …[+261 chars]`
+
+### 🧑 User — 2026-11-18T18:40:01.813Z
+
+> ↩︎ result: 8182130
+> Preparing worktree (checking out 'claude/rainbow-s06-match-c15')
+> Your branch is up to date with 'origin/claude/rainbow-s06-match-c15'.
+> 8182130 Screen 06 r11 (lead): &m06bend test 2 (half turn, smoothed) — NOT an improvement
+> 625M	.
+> 8182130cca882100da46d2cecfc10d198f0813b9	refs/heads/claude/rainbow-s06-match-c15
+> /dev/vda        252G   28G   12G  71% /
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T18:40:05.376Z
+
+Both copies are ready. Writing the 07 and 06 briefs from their saved status.
+
+### 🤖 Claude — 2026-11-18T18:40:06.787Z
+
+> 🔧 **Bash** `{"command": "ls -d /home/user/wt/s06/tools/lead_r6 /home/user/wt/s07/tools/lead_r6 /home/user/wt/s06/tools/match06 /home/user/wt/s07/tools/match07 2>&1; ls /home/user/wt/s07/qa/match/07/ | head; ls /home/user/wt/s06/docs/briefs/ | tail -3", "description": "Check capture tools and notes exist in the 06/07 copies"}`
+
+### 🧑 User — 2026-11-18T18:40:06.877Z
+
+> ↩︎ result: /home/user/wt/s06/tools/lead_r6
+> /home/user/wt/s06/tools/match06
+> /home/user/wt/s07/tools/lead_r6
+> /home/user/wt/s07/tools/match07
+> 07_APPROVED.png
+> 07_BEFORE_current_game.png
+> 07_NEW_match07.png
+> FAL_PLATE_REQUEST.md
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> cam
+> geo_match07.json
+> m1
+> ls: cannot access '/home/user/wt/s06/docs/briefs/': No such file or directory
+
+### 🤖 Claude — 2026-11-18T18:40:28.600Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r15/S07_LAUNCH.md", "content": "# Round 15 (account 15) — Screen 07 specialist launch prompt (water-fx-specialist)\n\nYou are the Rainbow project's `water-fx-specialist`, working ONLY on playable Screen 07 \"Dive the Washer Tube\", VISUALS ONLY.\n(07 last ran in round 8, account 8; it waited for a free slot since. The user asked on 2026-11-18 ~18:45 UTC to work on the other screens too.)\n\n## Where you work\n* Git worktree `/home/user/wt/s07` on branch `claude/rainbow-s07-match-c15` (created from `claude/rainbow-s07-match-c11` = `-c9`  …[+4385 chars]`
+
+### 🧑 User — 2026-11-18T18:40:28.839Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r15/S07_LAUNCH.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T18:40:44.556Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md", "content": "# Round 15 (account 15) — Screen 06 specialist launch prompt (reference-match-director)\n\nYou are the Rainbow project's `reference-match-director`, working ONLY on playable Screen 06 \"Crest the Rinse Arch\", VISUALS ONLY —\nyou rank the visible differences AND fix them yourself. (06 last ran in round 11; the user asked on 2026-11-18 ~18:45 UTC to work on\nthe other screens too.)\n\n## Where you work\n* Git worktree `/home/user/wt/s06` on branch `claude/rainbow-s06-match-c15` (created from `claude/rainbo …[+4397 chars]`
+
+### 🧑 User — 2026-11-18T18:40:44.790Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T18:40:49.914Z
+
+> 🔧 **Bash** `{"command": "ls references/06_* references/07_* docs/briefs/2026-11-18-r8/S07.md docs/briefs/2026-11-18-r9/BLUEPRINT_06.md docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md 2>&1; ls /home/user/wt/s07/scripts/gameplay-test.mjs /home/user/wt/s07/scripts/capture.mjs 2>&1", "description": "Verify file paths named in the 06/07 briefs exist"}`
+
+### 🧑 User — 2026-11-18T18:40:50.039Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md
+> docs/briefs/2026-11-18-r8/S07.md
+> docs/briefs/2026-11-18-r9/BLUEPRINT_06.md
+> references/06_crest_the_rinse_arch.png
+> references/07_dive_the_washer_tube.png
+> /home/user/wt/s07/scripts/capture.mjs
+> /home/user/wt/s07/scripts/gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-18T18:40:52.651Z
+
+All paths check out. Launching both specialists.
+
+### 🤖 Claude — 2026-11-18T18:40:55.253Z
+
+> 🔧 **Agent** `{"description": "Screen 07 specialist r15", "subagent_type": "water-fx-specialist", "name": "s07", "run_in_background": true, "prompt": "Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S07_LAUNCH.md exactly — it is your complete launch brief (worktree /home/user/wt/s07, branch claude/rainbow-s07-match-c15, binding rules in the lead checkout, resume point, task list, proof format, reporting). Work only inside /home/user/wt/s07 (every Bash call starts in /home/user/rainbow-, so always use absolute paths or `cd /home/user/wt/s07 && ...`). Start by reading the binding rules and qa/m …[+142 chars]`
+
+### 🧑 User — 2026-11-18T18:40:55.286Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a06c699d872e14702 (internal ID - do not mention to user. Use SendMessage with to: 'a06c699d872e14702', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/a06c699d872e14702.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T18:40:57.812Z
+
+> 🔧 **Agent** `{"description": "Screen 06 specialist r15", "subagent_type": "reference-match-director", "name": "s06", "run_in_background": true, "prompt": "Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md exactly — it is your complete launch brief (worktree /home/user/wt/s06, branch claude/rainbow-s06-match-c15, binding rules in the lead checkout, resume point, task list, proof format, reporting). Work only inside /home/user/wt/s06 (every Bash call starts in /home/user/rainbow-, so always use absolute paths or `cd /home/user/wt/s06 && ...`). Never repeat the tunnel-bend method. S …[+190 chars]`
+
+### 🧑 User — 2026-11-18T18:40:57.859Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ace8c8034cc58fdda (internal ID - do not mention to user. Use SendMessage with to: 'ace8c8034cc58fdda', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/ace8c8034cc58fdda.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T18:41:01.573Z
+
+Both launched. One watch now covers the 06/07 branches and warns if the disk runs low again.
+
+### 🤖 Claude — 2026-11-18T18:41:04.817Z
+
+> 🔧 **Monitor** `{"description": "06/07 commits and low-disk warnings", "timeout_ms": 1800000, "command": "p6=$(git -C /home/user/wt/s06 rev-parse --short HEAD); p7=$(git -C /home/user/wt/s07 rev-parse --short HEAD); warned=0; while true; do for s in s06 s07; do h=$(git -C /home/user/wt/$s rev-parse --short HEAD 2>/dev/null || echo err); v=p${s#s0}; if [ \"$h\" != \"${!v}\" ]; then echo \"$s commit $h: $(git -C /home/user/wt/$s log -1 --format=%s | cut -c1-150)\"; eval \"$v=$h\"; fi; done; a=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); if [ \"$a\" -lt 4 ] && [ $warned -eq 0 ]; then echo \"DISK LOW: ${a}G …[+74 chars]`
+
+### 🧑 User — 2026-11-18T18:41:04.843Z
+
+> ↩︎ result: Monitor started (task bst3c70xw, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T18:41:18.978Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='docs/briefs/2026-11-18-r15/COORDINATION.md'; s=open(p).read()\ns=s.replace('| 07 | (`-c11` = `-c9` `dbc7678c`) | — | READY next free slot |\\n| 06 | (`-c11` `8182130c`; bend method rejected twice — never repeat) | — | READY after 07 |',\n'| 07 | `claude/rainbow-s07-match-c15` | `dbc7678c` (= -c11/-c9/-c8) | RUNNING `water-fx-specialist` (`s07`, user asked ~18:45 to work on the other screens too), worktree `/home/user/wt/s07`, brief `S07_LAUNCH.md`: finish round-8 m07foam + m07coinsz proofs → near water → foam-bank colour / plunge lip; log `qa/mat …[+3364 chars]`
+

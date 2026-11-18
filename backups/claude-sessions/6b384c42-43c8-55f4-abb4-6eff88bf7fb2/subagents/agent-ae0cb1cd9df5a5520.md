@@ -1373,3 +1373,14 @@ Meanwhile I'll write a small probe that records the `[match04]` console lines (b
 
 > 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4 ]; do sleep 3; done; sleep 2; S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && ls -la qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4 && K=$(cat $S/K.txt) && node $S/probe_console.mjs \"$K&m04fclu=1\" 2>&1 | grep -v \"allow list\" | tail -12", "description": "Probe console for bubble count and river geometry", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T18:41:11.952Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1095945 Nov 18 18:40 qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4
+> ["[match04] m04room",{"k":1.8,"cut":[0.22005208333333334,0.5439814814814815,0.11858400000000001]}]
+> ["[match04] m04ring",{"period":4.6,"rings":20}]
+> ["[match04] m04river",{"xW":3.352662290862612,"RY":0.8,"XF":2.6}]
+> ["[match04] m04fclu",{"bubbles":6544}]
+> ["[match04] m04arr3d",{"arrows":20,"sp":4,"tilt":66}]
+> ["[match04] m04mouth bulbs",20]
+> objects {}
+

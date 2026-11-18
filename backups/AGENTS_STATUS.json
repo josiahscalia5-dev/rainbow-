@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-18T18:40Z",
+ "updated_utc": "2026-11-18T18:55Z",
  "updated_by_session": "account 15 lead, branch ccr-47b10cec-03c7co",
  "running_now": {
   "_note": "see round15_account15.running (3 background workers in the account-15 lead container, started ~18:25 UTC)"
@@ -760,13 +760,29 @@
     "brief": "docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md",
     "log": "qa/match/04/r15/ringpaint/NOTES.md",
     "kind": "background agent in the lead container"
+   },
+   "s07": {
+    "agent": "water-fx-specialist",
+    "branch": "claude/rainbow-s07-match-c15",
+    "worktree": "/home/user/wt/s07",
+    "start": "dbc7678c",
+    "brief": "docs/briefs/2026-11-18-r15/S07_LAUNCH.md",
+    "log": "qa/match/07/r15/PROGRESS.md",
+    "kind": "background agent in the lead container"
+   },
+   "s06": {
+    "agent": "reference-match-director",
+    "branch": "claude/rainbow-s06-match-c15",
+    "worktree": "/home/user/wt/s06",
+    "start": "8182130c",
+    "brief": "docs/briefs/2026-11-18-r15/S06_LAUNCH.md",
+    "log": "qa/match/06/r15/PROGRESS.md",
+    "kind": "background agent in the lead container"
    }
   },
-  "queue": [
-   "07 (from -c11 = dbc7678c)",
-   "06 (from -c11 8182130c; bend method rejected twice)"
-  ],
+  "queue": [],
   "restart_if_lost": "create -c16 from the newest -c15 tip, apply backups/wip/<branch>/tracked.patch + untracked/, relaunch the same agent type with docs/briefs/2026-11-18-r15/S0N_LAUNCH.md (-c15 -> -c16, r15 -> r16) and resume from qa/match/<NN>/r15/PROGRESS.md",
-  "connections_verified_1831": "HF MCP connected (josdois); Atlas via claude.ai connector World_Labs_Marble connected (My project, 6 tools); Marble API key connected (5420 credits, 08 world readable)"
+  "connections_verified_1831": "HF MCP connected (josdois); Atlas via claude.ai connector World_Labs_Marble connected (My project, 6 tools); Marble API key connected (5420 credits, 08 world readable)",
+  "disk_trap": "worker worktrees use sparse checkout without qa/pilot05, qa/worldlabs, qa/imageblaster, builds/, backups/ (see COORDINATION.md DISK TRAP); never on the lead checkout"
  }
 }

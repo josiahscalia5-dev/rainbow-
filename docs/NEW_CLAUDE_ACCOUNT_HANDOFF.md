@@ -6,7 +6,7 @@ services, verdicts: **`docs/briefs/2026-11-18-r15/COORDINATION.md`**; complete r
 `S05_LAUNCH.md`, `S08_LAUNCH.md` there; four GitHub 3D tools (Atlas skills, fSpy, TRELLIS.2, glTF Transform): `GITHUB_3D_TOOLS.md`.
 RUNNING (background agents in the lead container): 04 `claude/rainbow-s04-match-c15` (foam-bubbles-particles, `/home/user/wt/s04`),
 05 `claude/rainbow-s05-match-c15` (water-fx-specialist, `/home/user/wt/s05`), 08 `claude/rainbow-s08-scenery-c15`
-(washer-environment-modeler, `/home/user/wt/s08`); 07 then 06 next. Keys: this account's environment injects World Labs (5,420
+(washer-environment-modeler, `/home/user/wt/s08`), 04 ring test `claude/rainbow-s04-ringtex-c15` (`/home/user/wt/s04b`), 07 `claude/rainbow-s07-match-c15` (water-fx-specialist, `/home/user/wt/s07`), 06 `claude/rainbow-s06-match-c15` (reference-match-director, `/home/user/wt/s06`). DISK TRAP: worker worktrees must use sparse checkout (COORDINATION.md). Keys: this account's environment injects World Labs (5,420
 credits, 08 world 200) and fal (01a1ea70 COMPLETED) — no form needed. Atlas connector NOT connected on account 15 (user action).
 If account 15 runs out: `-c16` branches from each NEWEST `-c15` tip; never write `-c15` from another account.
 

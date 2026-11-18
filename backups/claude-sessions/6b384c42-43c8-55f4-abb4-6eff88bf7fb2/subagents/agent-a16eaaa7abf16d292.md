@@ -966,3 +966,185 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && npx tsc --noEmit -p . 2>&1 | head && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && time M08_ONLY=f03,f06,t33 timeout 500 node tools/match08/shots08.mjs 08 $S/sr1 \"$(cat $S/K14.txt)&m08sr=1\" 2>&1 | grep -v \"allow list\" | tail -4", "description": "Typecheck and render the smooth-remap test frames", "timeout": 560000}`
 
+### 🧑 User — 2026-11-18T18:39:41.811Z
+
+> ↩︎ result: 08 f03_forward3u s 395.37 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.019 lat 0 stage 08 frames 38
+> 08 t33_through_screen s 396.277 lat 0 stage 08 frames 27
+> 
+> real	1m17.816s
+> user	0m1.962s
+> sys	0m0.446s
+
+### 🤖 Claude — 2026-11-18T18:39:48.509Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"run(\\|run:\\|freezeAt\\|step(n\\|step:\\|goto(\" src/game/Game.ts | head -20", "description": "Find QA API run/step/freezeAt in Game.ts"}`
+
+### 🧑 User — 2026-11-18T18:39:48.587Z
+
+> ↩︎ result: 695:    run(v = true) { running = v; last = performance.now(); },
+> 698:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 701:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+
+### 🤖 Claude — 2026-11-18T18:39:51.628Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 640,720p src/game/Game.ts", "description": "Read the QA API and main loop"}`
+
+### 🧑 User — 2026-11-18T18:39:51.754Z
+
+> ↩︎ result: '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+>     '11': { mode: 'outro', t: O.cp11 },
+>     '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+>     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
+>     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plunge_bottom'] - 3 },
+>     '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+>   };
+> 
+>   const gotoCheckpoint = (id: string, time = 12.0) => {
+>     const cp = CHECKPOINTS[id];
+>     if (!cp) throw new Error('unknown checkpoint ' + id);
+>     resetToIntro();
+>     st.frozen = time;
+>     st.clock = time;
+>     input.override = 0;
+>     const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+>     if (cp.mode === 'intro') {
+>       // replay the cinematic deterministically up to the checkpoint time
+>       const steps = Math.round((cp.t ?? 0) / (1 / 30));
+>       settle(steps, 1 / 30);
+>     } else {
+>       startRide();
+>       hud.showHint(nul …[+2894 chars]
+
+### 🤖 Claude — 2026-11-18T18:39:58.412Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"drawList\\|render()\" src/game/Game.ts | head; ls tools/lead_r6/ 2>/dev/null | head", "description": "Check for a deterministic draw call in the QA API"}`
+
+### 🧑 User — 2026-11-18T18:39:58.483Z
+
+> ↩︎ result: 618:    composer.render();
+> 627:    if (!qaMode || running || dirty) { render(); dirty = false; }
+> 686:    render();
+> 752:    drawList() {
+> 762:      render();
+> motion_audit.mjs
+
+### 🤖 Claude — 2026-11-18T18:40:01.746Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 620,632p src/game/Game.ts; sed -n 748,770p src/game/Game.ts", "description": "Read the render loop and drawList"}`
+
+### 🧑 User — 2026-11-18T18:40:01.969Z
+
+> ↩︎ result: const frame = () => {
+>     const now = performance.now();
+>     const dt = Math.min(0.05, (now - last) / 1000);
+>     last = now;
+>     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+>     if (running) stepSim(dt);
+>     // QA mode renders on demand only (software WebGL is slow; frames are deterministic)
+>     if (!qaMode || running || dirty) { render(); dirty = false; }
+>     requestAnimationFrame(frame);
+>   };
+>   requestAnimationFrame(frame);
+> 
+>   // ---------------------------------------------------------------- QA API
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+>     },
+>     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+>     drawList() {
+>       const hits = new Map<string, number>();
+>       const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+>       scene.traverse((o) => {
+>         if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !( …[+836 chars]
+
+### 🤖 Claude — 2026-11-18T18:40:10.995Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nim=Image.open('$S/sr1/f03_forward3u.png')\nim.crop((0,1180,864,1536)).resize((1296,534),Image.LANCZOS).save('$S/sr1_f03_zoom.png')\"", "description": "Crop the new forward-3u bottom for comparison"}`
+
+### 🧑 User — 2026-11-18T18:40:11.378Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:40:12.194Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/sr1_f03_zoom.png"}`
+
+### 🧑 User — 2026-11-18T18:40:12.230Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:40:20.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n in ['f06_forward6u','t33_through_screen']:\n  a=Image.open('qa/match/08/r14/step1_m08nq/3_NEW_%s.png'%n).crop((0,700,864,1536)); b=Image.open('$S/sr1/%s.png'%n).crop((0,700,864,1536))\n  c=Image.new('RGB',(1728,836)); c.paste(a,(0,0)); c.paste(b,(864,0)); c.resize((1296,627),Image.LANCZOS).save('$S/cmp_%s.png'%n)\n\"", "description": "Make side-by-side comparison crops (diagnostic only)"}`
+
+### 🧑 User — 2026-11-18T18:40:21.395Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:40:22.022Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/cmp_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T18:40:22.053Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:40:29.748Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nn='f06_forward6u'\na=Image.open('qa/match/08/r14/step1_m08nq/3_NEW_%s.png'%n).crop((0,1050,520,1536)); b=Image.open('$S/sr1/%s.png'%n).crop((0,1050,520,1536))\nc=Image.new('RGB',(1050,486)); c.paste(a,(0,0)); c.paste(b,(530,0)); c.save('$S/cmpz_%s.png'%n)\n\"", "description": "Zoomed side-by-side of the forward-6u lower left"}`
+
+### 🧑 User — 2026-11-18T18:40:30.265Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:40:30.994Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/cmpz_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T18:40:31.017Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:40:41.094Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('references/08_final_spin_chamber.png').convert('RGB'); print(a.size)\na=a.resize((864,1536),Image.LANCZOS)\na.crop((0,1050,864,1536)).save('$S/appr_bottom.png')\nim=Image.open('assets/textures/match08/nq08.png'); print(im.size); im.convert('RGB').resize((668,618)).save('$S/nq08_small.png')\n\"", "description": "Crop the approved bottom and preview the near tile"}`
+
+### 🧑 User — 2026-11-18T18:40:41.697Z
+
+> ↩︎ result: (864, 1536)
+> (1336, 1236)
+
+### 🤖 Claude — 2026-11-18T18:40:42.460Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/appr_bottom.png"}`
+
+### 🧑 User — 2026-11-18T18:40:42.483Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:40:43.047Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/nq08_small.png"}`
+
+### 🧑 User — 2026-11-18T18:40:43.071Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:41:11.432Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/shots08.mjs'\ns=open(p).read()\nold=\"\"\"      r.setSteer(null);\n      r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);\n      return { ...r.state(), frames: n, s0, s1, target };\n    }, [SCREEN, dist, steer]);\"\"\"\nnew=\"\"\"      r.setSteer(null);\n      // M08_DET=1 (r15): render the stepped state once (no real-time frames) -> BEFORE / NEW at exactly the same positions\n      if (det) r.drawList();\n      else { r.run(true); await new Promise((res) => r …[+1270 chars]`
+
+### 🧑 User — 2026-11-18T18:41:11.507Z
+
+> ↩︎ result: 4:// M08_DET=1 (r15): no real-time frames before the screenshot (exactly the stepped positions, repeatable BEFORE / NEW)
+> 22:const DET = process.env.M08_DET === '1';
+> 30:    const st = await page.evaluate(async ([id, dist, steer, det]) => {
+> 39:      // M08_DET=1 (r15): render the stepped state once (no real-time frames) -> BEFORE / NEW at exactly the same positions
+> 40:      if (det) r.drawList();
+> 43:    }, [SCREEN, dist, steer, DET]);
+> 50:  writeFileSync(`${OUT}/motion.json`, JSON.stringify({ screen: SCREEN, query: Q, deterministic: DET, shots: log }, null, 1));
+

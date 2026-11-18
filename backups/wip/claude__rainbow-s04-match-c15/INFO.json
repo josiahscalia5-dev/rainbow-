@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s04",
  "branch": "claude/rainbow-s04-match-c15",
  "head": "fc28323a5573bd56c34593f6fa0b8709c0bd9fce",
- "time": "2026-11-18T18:39:02+00:00",
+ "time": "2026-11-18T18:41:26+00:00",
  "dirty_tracked": [
   "qa/capture_log.json",
   "src/world/match04.ts",
@@ -38,7 +38,8 @@
   "qa/match/04/r15/s1_fclu/NEW/f03_forward3u.png",
   "qa/match/04/r15/s1_fclu/NEW/t33_through_screen.png",
   "qa/match/04/r15/s1_fclu/NEW/t66_through_screen.png",
-  "qa/match/04/r15/s1_fclu/NEW/t95_through_screen.png"
+  "qa/match/04/r15/s1_fclu/NEW/t95_through_screen.png",
+  "qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4"
  ],
  "restore": "git switch claude/rainbow-s04-match-c15 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c15/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c15/untracked/* into the worktree"
 }
