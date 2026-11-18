@@ -1657,3 +1657,77 @@ Clip pushed (`8651edf9`). Waiting for the step 3 / 4 renders.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T21:06:04.755Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -i -e '563s/r - 3 :/r - 5 :/' src/vfx/foam.ts && sed -n 563p src/vfx/foam.ts && npx tsc --noEmit -p . && echo TSC OK && rm -rf qa/match/07/r17/step3_foamb/try_ramp5 && mv qa/match/07/r17/step3_foamb/NEW qa/match/07/r17/step3_foamb/try_ramp5 && K=$(cat qa/match/07/r16/K.txt) && timeout 1200 node tools/match07/audit_r16.mjs 07 qa/match/07/r17/step3_foamb/NEW \"$K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1\" \"t50_through_screen,t66_through_screen,t80_through_screen,t95_through_screen\" 2>&1 | grep -Ev \"allow list|403\" | tail -4", "description": "Fade f …[+70 chars]`
+
+### 🧑 User — 2026-11-18T21:07:03.698Z
+
+> ↩︎ result: return [course.marks['07_plunge_top'] + 9, r !== null ? r - 5 : course.marks['07_plunge_bottom'] - 12];
+> TSC OK
+> 07 t50_through_screen s 332.293 lat 0 stage 07 frames 293
+> 07 t66_through_screen s 351.063 lat 0 stage 07 frames 387
+> 07 t80_through_screen s 367.468 lat 0 stage 07 frames 469
+> 07 t95_through_screen s 385.064 lat 0 stage 07 frames 557
+> [This command modified 1 file you've previously read: ../wt/s07/src/vfx/foam.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T21:07:05.047Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:07:05.095Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:07.917Z
+
+The walls now grow out of the water and end in a soft white fringe, with no cut and no speckles. Checking t66.
+
+### 🤖 Claude — 2026-11-18T21:07:08.472Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:07:08.518Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:08.927Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/BEFORE/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:07:08.977Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:15.448Z
+
+t66 also better: shorter, tapered walls without the bubble dots. Now the step 4 hard-left result.
+
+### 🤖 Claude — 2026-11-18T21:07:15.947Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step4_nearf/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T21:07:16.011Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:35.796Z
+
+The thick magenta bank works, but the clouds read as flat lens shapes with straight cut edges, not puffy clouds. Let me zoom in to see the cause.
+
+### 🤖 Claude — 2026-11-18T21:07:37.639Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I -c \"\nfrom PIL import Image\nb=Image.open('qa/match/07/r17/step4_nearf/NEW/s_left_hard.png').convert('RGB')\nb.crop((0,1000,500,1536)).save('/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nf_lh.png')\"", "description": "Crop the hard-left cloud region"}`
+
+### 🧑 User — 2026-11-18T21:07:37.920Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T21:07:40.171Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nf_lh.png"}`
+
+### 🧑 User — 2026-11-18T21:07:40.201Z
+
+> ↩︎ result: [image]
+

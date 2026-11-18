@@ -1010,3 +1010,94 @@ Start view unchanged (0 px). Rendering the full 12-shot NEW set.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); D=qa/match/04/r17/s2_nband; mkdir -p $D && cp qa/match/04/r17/s1_end/1_APPROVED.png $D/ && timeout 900 node tools/lead_r6/motion_audit.mjs 04 $D/NEW \"$K&m04end=1&m04nband=1\" 2>&1 | grep -E \"^04|pageerror\"", "description": "Render full 12-shot NEW audit with near bands", "timeout": 920000}`
 
+### 🧑 User — 2026-11-18T21:06:51.478Z
+
+> ↩︎ result: 04 a00_approved_view s 78.252 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.165 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.181 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.146 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.183 lat 0 stage 04 frames 86
+> 04 s_left_steer s 84.195 lat -1.65 stage 04 frames 26
+> 04 s_right_steer s 84.183 lat 1.65 stage 04 frames 26
+> 04 s_left_hard s 90.249 lat -1.65 stage 04 frames 52
+> 04 s_right_hard s 90.248 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.481 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.849 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-18T21:06:53.465Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r17/s2_nband/NEW/f03_forward3u.png"}`
+
+### 🤖 Claude — 2026-11-18T21:06:53.483Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r17/s2_nband/NEW/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T21:06:53.545Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T21:06:53.549Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:06:56.730Z
+
+Entering (f03, f06) the water round Benny now has the painted pink and cyan stripes sweeping round him, like the approved picture. Checking hard right and the end.
+
+### 🤖 Claude — 2026-11-18T21:06:57.234Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r17/s2_nband/NEW/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T21:06:57.271Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:06:57.692Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r17/s2_nband/NEW/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:06:57.732Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:03.984Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,40p tools/lead_r13/swim_clip.mjs | grep -n \"argv\\|viewport\\|width\\|scale\\|ffmpeg\\|env\" ", "description": "Check swim clip tool options"}`
+
+### 🧑 User — 2026-11-18T21:07:04.015Z
+
+> ↩︎ result: 1:#!/usr/bin/env node
+> 5:// Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> 10:const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> 17:  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+
+### 🤖 Claude — 2026-11-18T21:07:05.838Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,80p tools/lead_r13/swim_clip.mjs", "description": "Read the swim clip tool"}`
+
+### 🧑 User — 2026-11-18T21:07:05.870Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+979 chars]
+
+### 🤖 Claude — 2026-11-18T21:07:11.325Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); rm -rf $SP/clip2 && timeout 900 node tools/lead_r13/swim_clip.mjs 04 $SP/clip2 3.6 \"$K&m04end=1&m04nband=1\" 2>&1 | grep -E \"frames|pageerror\"; ffmpeg -loglevel error -y -framerate 24 -i $SP/clip2/%04d.png -vf scale=432:768 -pix_fmt yuv420p qa/match/04/r17/s2_nband/NEW_swim_clip.mp4 && ls -la qa/match/04/r17/s2_nband/NEW_swim_clip.mp4", "description": "Render half-size swimming clip with near bands", "timeout": 920000}`
+

@@ -744,3 +744,126 @@ To locate the striped strip precisely, I want a per-surface tint at +1.1 u. Let 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && timeout 900 node $S/dbg_tint.mjs $S/seq.png 0.4,0.8,1.1,1.6,2.2 \"$K\" \"\" 0 2>&1 | grep -v \"allow list\" | tail -6", "description": "Render the start flash sequence untinted at five distances", "timeout": 1000000}`
 
+### 🧑 User — 2026-11-18T21:06:35.200Z
+
+> ↩︎ result: 0.4 199.46 1.69,-35.28,-132.75
+> 0.8 199.827 1.66,-35.16,-132.89
+> 1.1 200.01 1.64,-35.09,-132.97
+> 1.6 200.56 1.57,-34.83,-133.29
+> 2.2 201.11 1.48,-34.54,-133.67
+
+### 🤖 Claude — 2026-11-18T21:06:38.605Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && ffmpeg -loglevel error -y -i $S/seq_0.4.png -i $S/seq_0.8.png -i $S/seq_1.6.png -i $S/seq_2.2.png -filter_complex \"[0]scale=432:768[a];[1]scale=432:768[b];[2]scale=432:768[c];[3]scale=432:768[d];[a][b][c][d]hstack=4\" $S/seq_strip.png && echo ok", "description": "Combine flash sequence into one check image"}`
+
+### 🧑 User — 2026-11-18T21:06:39.915Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T21:06:41.943Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/seq_strip.png"}`
+
+### 🧑 User — 2026-11-18T21:06:42.196Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:12.371Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nm=np.array(Image.open('assets/textures/match06/mask06.png').convert('RGBA')).astype(int)\nprint('mask', m.shape, [ (c, int((m[...,i]>127).sum())) for i,c in enumerate('RGBA')])\nys,xs=np.where(m[...,0]>127); print('R bbox', xs.min(),xs.max(),ys.min(),ys.max())\np=Image.open('assets/textures/match06/plate06_hybrid.png'); print('plate', p.size, p.mode)\n\" ; ls -la assets/textures/match06/ | head -30; ls tools/mat …[+93 chars]`
+
+### 🧑 User — 2026-11-18T21:07:12.678Z
+
+> ↩︎ result: mask (1536, 864, 4) [('R', 214439), ('G', 566698), ('B', 0), ('A', 1327104)]
+> R bbox 168 672 673 1220
+> plate (864, 1536) RGB
+> total 4368
+> drwxr-xr-x 2 root root    4096 Nov 18 20:43 .
+> drwxr-xr-x 7 root root    4096 Nov 18 20:43 ..
+> -rw-r--r-- 1 root root    1172 Nov 18 20:43 cam06_locked.json
+> -rw-r--r-- 1 root root    5103 Nov 18 20:43 coins06.json
+> -rw-r--r-- 1 root root  123234 Nov 18 20:43 mask06.png
+> -rw-r--r-- 1 root root     329 Nov 18 20:43 path06.json
+> -rw-r--r-- 1 root root     685 Nov 18 20:43 plate06.json
+> -rw-r--r-- 1 root root    9169 Nov 18 20:43 plate06_fillmask.png
+> -rw-r--r-- 1 root root 2597147 Nov 18 20:43 plate06_hybrid.png
+> -rw-r--r-- 1 root root    1736 Nov 18 20:43 proj06.json
+> -rw-r--r-- 1 root root  272755 Nov 18 20:43 tile_floor.png
+> -rw-r--r-- 1 root root  101002 Nov 18 20:43 tile_floor2.png
+> -rw-r--r-- 1 root root   29844 Nov 18 20:43 tile_foam6.png
+> -rw-r--r-- 1 root root  324413 Nov 18 20:43 tile_ring6.png
+> -rw-r--r-- 1 root root   79967 Nov 18 20:43 tile_river6.png
+> -rw-r--r-- 1 root root  870107 Nov 18 20:43 tile_tube.png
+> -rw-r--r-- 1 root root    4953 Nov 18 20:43 water06.json
+> coinrun06.mjs
+> coins06.py
+> fit_river06.py
+> fit_water06.py
+> geo06.py
+> make_floor06.py
+> make_masks …[+202 chars]
+
+### 🤖 Claude — 2026-11-18T21:07:18.720Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\np=np.array(Image.open('assets/textures/match06/plate06_hybrid.png').convert('RGB'))\na=np.array(Image.open('references/06_crest_the_rinse_arch.png').convert('RGB'))\nm=np.array(Image.open('assets/textures/match06/mask06.png').convert('RGBA'))\nfm=np.array(Image.open('assets/textures/match06/plate06_fillmask.png').convert('L'))\nprint('fillmask', fm.shape, (fm>127).sum())\ncrop=lambda x: x[640:1260, 120:740]\nov= …[+405 chars]`
+
+### 🧑 User — 2026-11-18T21:07:19.259Z
+
+> ↩︎ result: fillmask (1536, 864) 316769
+> 7 1193
+> """Screen 06 (?match06=1): texture plate = the user's ORIGINAL approved pixels; PROVISIONAL local fill (OpenCV Telea
+> inpainting + high frequencies of mirrored artwork patches) only where the HUD bar, title banner, Benny (above his
+> ripples) and the 15 painted coins are (the game draws those itself). The ripples/splash round Benny stay (scenery).
+> A fal nano-banana-2/edit clean plate is prepared (qa/match/06/FAL_PLATE_REQUEST.md) but NOT run.
+> usage: python3 -I tools/match06/make_plate06.py <approved.png> <out dir>"""
+> import sys, json
+> import numpy as np, cv2
+> 
+> src, out = sys.argv[1], sys.argv[2]
+> A = cv2.imread(src, cv2.IMREAD_COLOR); H, W = A.shape[:2]
+> M = np.zeros((H, W), np.uint8)
+> # HUD bar + title banner (rounded pills)
+> cv2.rectangle(M, (30, 10), (830, 104), 255, -1)
+> cv2.rectangle(M, (128, 110), (736, 188), 255, -1)
+> # Benny: pom-pom, beanie (with star), body + paws, down to where his fur meets the ripples
+> cv2.ellipse(M, (415, 805), (92, 80), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (415, 935), (162, 90), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (420, 1085), (222, 100), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (420, 1150), (140, 40), 0, 0, 360, 255, -1)
+> # beanie corne …[+1730 chars]
+
+### 🤖 Claude — 2026-11-18T21:07:21.248Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/benny_fill.png"}`
+
+### 🧑 User — 2026-11-18T21:07:21.291Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:47.093Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport cv2; print(cv2.__version__); print('xphoto', hasattr(cv2,'xphoto')); \nimport importlib\nfor m in ['skimage','scipy','torch','sklearn']:\n    try: importlib.import_module(m); print(m,'ok')\n    except Exception as e: print(m,'no')\n\"; nproc; uptime", "description": "Check available inpainting libraries and CPU load"}`
+
+### 🧑 User — 2026-11-18T21:07:47.397Z
+
+> ↩︎ result: 5.1.0
+> xphoto False
+> skimage no
+> scipy ok
+> torch no
+> sklearn no
+> 4
+>  21:07:47 up 54 min,  0 user,  load average: 10.08, 13.96, 12.51
+
+### 🤖 Claude — 2026-11-18T21:08:02.473Z
+
+Load is high (10–14 on 4 cores), so I'll keep renders minimal. Let me look at the 1.6 u frame at full size, where the flash looks worst.
+
+### 🤖 Claude — 2026-11-18T21:08:03.369Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/seq_1.6.png"}`
+
+### 🧑 User — 2026-11-18T21:08:03.416Z
+
+> ↩︎ result: [image]
+

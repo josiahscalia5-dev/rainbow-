@@ -1879,3 +1879,92 @@ Writing the step-1 log entry while the re-render finishes.
 
 > 🔧 **Bash** `{"command": "until grep -q \"pass\\|Error\\|error\" /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b60c53tsv.output; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b60c53tsv.output", "description": "Wait for re-render and gameplay test", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-18T21:07:02.301Z
+
+> ↩︎ result: t95_through_screen s 186.835 lat 0 coins 1580 benny -0.12 -0.35 big coins: -
+> t98_end s 188.357 lat 0 coins 1580 benny -0.19 -0.51 big coins: -
+> x97 s 187.807 lat 0 coins 1580 benny -0.18 -0.44 big coins: -
+> x98p5 s 188.724 lat 0 coins 1580 benny -0.18 -0.56 big coins: -
+> x99 s 189.091 lat 0 coins 1580 benny -0.17 -0.61 big coins: #38@301,471 d72 #39@309,419 d63
+> x97L s 187.807 lat -3.607 coins 1420 benny -0.39 -0.42 big coins: #34@876,1069 d76 #35@787,1049 d75 #36@713,1036 d68 #37@653,1026 d65
+> x97R s 187.807 lat 3.607 coins 1420 benny 0.02 -0.42 big coins: -
+>  "pass": true,
+>  "errors": []
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-18T21:07:04.684Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -c \"\nimport json; d=json.load(open('qa/match/05/r17/step1_trans/gameplay_m05trans.json')); print(d['pass'], sum(v['pass'] for v in d['checks'].values()), len(d['checks']), d['checks']['realCoinPickups'])\"", "description": "Confirm gameplay test summary"}`
+
+### 🧑 User — 2026-11-18T21:07:04.732Z
+
+> ↩︎ result: True 8 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+
+### 🤖 Claude — 2026-11-18T21:07:05.160Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/new/x97.png"}`
+
+### 🧑 User — 2026-11-18T21:07:05.196Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:07:09.255Z
+
+Proof is consistent on the fixed code. Committing and pushing step 1.
+
+### 🤖 Claude — 2026-11-18T21:07:14.611Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cp qa/match/05/r16/KEPT_START.txt qa/match/05/r17/KEPT_START.txt && git add src/gameplay/coins.ts src/vfx/clip05.ts src/vfx/index.ts src/world/environment.ts src/world/match05far.ts tools/match05/r8_shots.mjs tools/match05/r15_probe.mjs qa/match/05/r17 qa/match/05/r16 qa/match/05/r15 qa/match/05/r14/step4_trans && git status --short | grep -v \"^??\" | head -40 && du -sh qa/match/05/r17 && git commit -q -m \"Screen 05 r17 step 1: &m05trans=1 - the 05 scenery block stays whole to the end of 05 and leaves as Benny enters 06 (GOOD IMPROVEMENT, kept; locked vie …[+690 chars]`
+
+### 🧑 User — 2026-11-18T21:07:21.554Z
+
+> ↩︎ result: A  qa/match/05/r14/step4_trans/before/shots.json
+> A  qa/match/05/r14/step4_trans/before/t102_06.png
+> A  qa/match/05/r14/step4_trans/before/x100.png
+> A  qa/match/05/r14/step4_trans/before/x101.png
+> A  qa/match/05/r14/step4_trans/before/x103.png
+> A  qa/match/05/r14/step4_trans/before/x105.png
+> A  qa/match/05/r14/step4_trans/before/x99.png
+> A  qa/match/05/r15/KEPT_START.txt
+> A  qa/match/05/r15/step1_trans/before/shots.json
+> A  qa/match/05/r15/step1_trans/before/x100.png
+> A  qa/match/05/r15/step1_trans/before/x101.png
+> A  qa/match/05/r15/step1_trans/before/x103.png
+> A  qa/match/05/r15/step1_trans/before/x105.png
+> A  qa/match/05/r15/step1_trans/before/x97R.png
+> A  qa/match/05/r15/step1_trans/before/x99.png
+> A  qa/match/05/r15/step1_trans/new/shots.json
+> A  qa/match/05/r15/step1_trans/new/x100.png
+> A  qa/match/05/r15/step1_trans/new/x101.png
+> A  qa/match/05/r15/step1_trans/new/x103.png
+> A  qa/match/05/r16/KEPT_START.txt
+> A  qa/match/05/r16/PROGRESS.md
+> A  qa/match/05/r16/step1_trans/before/shots.json
+> A  qa/match/05/r16/step1_trans/new/shots.json
+> A  qa/match/05/r17/KEPT_START.txt
+> A  qa/match/05/r17/PROGRESS.md
+> A  qa/match/05/r17/step1_trans/1_APPROVED.png
+> A  qa/match/05/r17/step1_trans/before/shots.json
+> A  qa …[+773 chars]
+
+### 🤖 Claude — 2026-11-18T21:07:22.829Z
+
+Pushed and verified (remote == HEAD `f033f7cc`). Reporting step 1 to main.
+
+### 🤖 Claude — 2026-11-18T21:07:27.736Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s05 step 1 m05trans kept", "message": "s05 r17 step 1 done: &m05trans=1 (05 -> 06 hand-over) GOOD IMPROVEMENT, kept. Commit f033f7cc on claude/rainbow-s05-match-c17 (remote verified).\nVisual: through the last metres of 05 the painted 05 tunnel (purple slotted walls, gold ring telescope, warm throat, foam banks) now stays whole until Benny crosses into 06; gone: the flat pink disc inside a smeared ring stack and the straight line across the water (x97), loose copper hoops floating over the 06 crest (t98), and the pink 06 hall at hard right (x97R). 06 itself unchanged …[+749 chars]`
+
+### 🧑 User — 2026-11-18T21:07:27.757Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T21:07:29.295Z
+
+Now task 2. I'll read the atlas row under the smeared left wall at t81L.
+
+### 🤖 Claude — 2026-11-18T21:07:32.039Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"$(cat qa/match/05/r16/KEPT_START.txt | tr -d '\\n')&m05trans=1\" && echo \"$K\" > qa/match/05/r17/KEPT_STEP1.txt && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2 && EXTRA_JS=\"$(cat $S/coords_extra.js)\" GRID='0,0' timeout 900 node tools/match05/r15_probe.mjs \"$K\" t81L 5275 2>&1 | tail -5", "description": "Read wall atlas coordinates at hard-left pixels", "timeout": 900000}`
+
