@@ -2175,3 +2175,46 @@ Now pass `course` from environment.ts (switch-guarded value only).
 > (330, 250) 0.85 [238. 100. 198.]
 > (330, 250) 0.97 [254. 217. 240.]
 
+### 🤖 Claude — 2026-11-18T03:03:53.150Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('assets/textures/env05/wall05e.png').convert('L'),dtype=np.float32)\nfor name,(y0,h) in {'N1':(592,256),'N2':(856,128),'AB':(8,256)}.items():\n  r=a[y0:y0+h]\n  d=(r<70).astype(np.float32); d-=d.mean()\n  # autocorr along x (columns) averaged over rows\n  fx=np.fft.rfft(d,axis=1); ax=np.fft.irfft(np.abs(fx)**2,axis=1).mean(0); ax/=ax[0]\n  fy=np.fft.rfft(d,axis=0); ay=np.fft.irfft(np.abs(fy)**2,axis=0).mean(1); ay/=ay[0]\n  px=np.argmax(ax[8:200])+8; py=np.argmax(ay[4:h//2] …[+243 chars]`
+
+### 🧑 User — 2026-11-18T03:03:53.523Z
+
+> ↩︎ result: N1 dark share 0.168 pitch x 8 ( 256.0 per turn) corr 0.51  pitch y 4 corr 0.5
+> N2 dark share 0.159 pitch x 8 ( 256.0 per turn) corr 0.53  pitch y 19 corr 0.27
+> AB dark share 0.142 pitch x 8 ( 256.0 per turn) corr 0.48  pitch y 4 corr 0.44
+
+### 🤖 Claude — 2026-11-18T03:03:58.403Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('assets/textures/env05/wall05e.png').convert('L'),dtype=np.float32)\ndef peaks(c, lo, hi):\n  out=[]\n  for i in range(lo,hi):\n    if c[i]>c[i-1] and c[i]>=c[i+1] and c[i]>0.05: out.append((i,round(float(c[i]),2)))\n  return out[:4]\nfor name,(y0,h) in {'N1':(592,256),'N2':(856,128),'AB':(8,256),'BC':(272,128)}.items():\n  r=a[y0:y0+h]\n  d=(r<70).astype(np.float32); d-=d.mean()\n  fx=np.fft.rfft(d,axis=1); ax=np.fft.irfft(np.abs(fx)**2,axis=1).mean(0); ax/=ax[0]\n  fy=np. …[+216 chars]`
+
+### 🧑 User — 2026-11-18T03:03:58.737Z
+
+> ↩︎ result: N1 x peaks [(44, 0.18), (120, 0.08), (171, 0.33), (224, 0.06)]  y peaks [(38, 0.25), (76, 0.06)]
+> N2 x peaks [(45, 0.21), (124, 0.08), (170, 0.33), (341, 0.19)]  y peaks [(19, 0.27), (38, 0.06)]
+> AB x peaks [(43, 0.12), (130, 0.07), (170, 0.2), (341, 0.06)]  y peaks [(36, 0.12)]
+> BC x peaks [(44, 0.25), (93, 0.12), (142, 0.13), (170, 0.18)]  y peaks [(17, 0.13)]
+
+### 🤖 Claude — 2026-11-18T03:04:02.231Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"bay05\\s*=\\|const bay05\\|perf05Mat\\s*=\\|const perf05Mat\" -A6 src/world/environment.ts | head -40", "description": "Find bay05 and perf05Mat definitions"}`
+
+### 🧑 User — 2026-11-18T03:04:02.263Z
+
+> ↩︎ result: 263:  const bay05 = 14;
+> 264-  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+> 265-  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> 266-  // ring slots every bay, ending at sF05; wave 8 (path-camera request, REQUESTS.md): the real ring AT sF05 is
+> 267-  // dropped (depth 53 → r≈189 px, ref ring #2 is r≈170) — the far block's ring at virtual depth ≈59 replaces it.
+> 268-  // The slot list still places the lid pair camera-side of that slot and the slot-row phase.
+> 269-  const ringSlots05: number[] = [];
+> --
+> 387:  const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+> 388-  const chunk = 40;
+> 389-  const addWall = (a0: number, a1: number, mat: THREE.Material, warp?: TubeWarp) => {
+> 390-    for (let a = a0; a < a1 - 0.01; a += chunk) {
+> 391-      const b = Math.min(a1, a + chunk + 0.6);
+> 392-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, warp }), mat));
+> 393-      // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+
