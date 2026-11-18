@@ -2511,3 +2511,8 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" && timeout 900 node tools/match05/blueprint05_game.mjs qa/match/05/r9/blueprint/kept \"$K\" a00_approved_view,f10_forward10u,f20_forward20u,t33_through_screen,t66_through_screen,s_left_hard,s_right_hard 2>&1 | tail -8", "description": "Measure kept-query frames geometry", "timeout": 920000}`
 
+### 🧑 User — 2026-11-18T03:09:34.014Z
+
+> ↩︎ result: Command was moved to the background (ID: bfmr8oc9w) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/bfmr8oc9w.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+

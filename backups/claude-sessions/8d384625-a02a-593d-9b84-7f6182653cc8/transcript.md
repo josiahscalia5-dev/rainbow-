@@ -2347,3 +2347,39 @@ My priority is still the exact VISUAL APPEARANCE of all five playable screens.
 
 Let's correct the underlying scenery and get these screens closer to my approved artwork.
 
+### 🤖 Claude — 2026-11-18T03:09:21.976Z
+
+Understood. One correction to my own setup first: right now three agents are working, the two builders plus the reviewer I started. That breaks your two-at-a-time limit. I'm telling the reviewer to wrap up its blueprints within about 10 minutes and stop. From now on it will only check a step while a builder is paused waiting for that check, so never more than two run at once. I'm also passing your constraints to both builders.
+
+### 🤖 Claude — 2026-11-18T03:09:25.331Z
+
+> 🔧 **SendMessage** `{"to": "abc51ab65d6bb092d", "summary": "Wrap up blueprints in 10 min, then stop", "message": "LEAD: the user just re-confirmed \"no more than TWO specialist agents actively working at once\" (two builders are running). Please wrap up within ~10 minutes: write what you have — priority BLUEPRINT_07.md, then BLUEPRINT_08.md, then BLUEPRINT_06.md (+ overlays) and REVIEW_SUMMARY.md — mark any unfinished part \"INCOMPLETE: …\", then give your short final reply and stop. I will resume you later for reviews only while a builder is paused. Also note the user's newest rules for your recommendations: the …[+311 chars]`
+
+### 🧑 User — 2026-11-18T03:09:25.372Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to abc51ab65d6bb092d at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"abc51ab65d6bb092d","name":"abc51ab65d6bb092d","ref":"ab12d5"}}
+
+### 🤖 Claude — 2026-11-18T03:09:30.578Z
+
+> 🔧 **SendMessage** `{"to": "aea1b9944be07aee7", "summary": "S04: user constraints for the layout fix", "message": "LEAD — user's newest message (binding for m04lay): \"Do not replace the invented orange corridor with another invented design. The approved image does show a beautiful gold washer tunnel, but I want its exact distinctive appearance: the rounded gold entrance, glowing rings, colorful water, five arrows, foam, bubbles, and laundry-room surroundings. Reconstruct that visual design accurately throughout the existing stage.\" and \"Do not change the existing gameplay length, coin totals, movement rules, o …[+1043 chars]`
+
+### 🧑 User — 2026-11-18T03:09:30.592Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aea1b9944be07aee7 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aea1b9944be07aee7","name":"aea1b9944be07aee7","ref":"30dd3a"}}
+
+### 🤖 Claude — 2026-11-18T03:09:33.031Z
+
+> 🔧 **SendMessage** `{"to": "aaf3e97ed8503b962", "summary": "S05: user constraints for the geometry fix", "message": "LEAD — user's newest message (binding for m05geo): the approved Screen 05 picture is the blueprint; reconstruct its exact distinctive appearance throughout the existing stage; no generic replacements, no invented water design. \"Do not change the existing gameplay length, coin totals, movement rules, or transitions without my permission.\" So the course path, s-ranges, speed, steering, coin positions/count (91 / 2,240), the 04→05 and 05→06 hand-overs stay untouched — geometry/scenery/look only. Whe …[+291 chars]`
+
+### 🧑 User — 2026-11-18T03:09:33.046Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aaf3e97ed8503b962 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aaf3e97ed8503b962","name":"aaf3e97ed8503b962","ref":"ce2ca8"}}
+
+### 🤖 Claude — 2026-11-18T03:09:35.049Z
+
+Recording these constraints with the coordination record, and renewing the watch on the builders' branches.
+
+### 🤖 Claude — 2026-11-18T03:09:39.807Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M && cat >> docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md <<'EOF'\n\n## User follow-up ~03:20 UTC (binding)\n\"YES, FIX THE ACTUAL SCENERY, BUT PRESERVE MY GAME.\" Correct the structural problem across ALL FIVE playable screens; the\napproved artwork stays the visual blueprint. Screen 04: \"do not replace the invented orange corridor with another invented\ndesign … I want its exact distinctive appearance: the rounded gold entrance, glowing rings, colorful water, five arrows,\nfoam, bubbles, and laundry-room surroundings. Reconstruct that visual design accurately  …[+829 chars]`
+

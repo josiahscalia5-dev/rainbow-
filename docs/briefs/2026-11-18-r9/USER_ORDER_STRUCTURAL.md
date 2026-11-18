@@ -33,3 +33,13 @@ construction. Foundation fix being tried: `&m04lay=1` forced-perspective washer 
 the approved view stays identical) that keeps the painted composition ahead of Benny for the whole stage; the rings become
 the short painted funnel inside the opening. Blueprints for 06/07/08 + honest per-screen ceilings: reviewer, files
 `BLUEPRINT_<NN>.md`, `REVIEW_SUMMARY.md` in this folder.
+
+## User follow-up ~03:20 UTC (binding)
+"YES, FIX THE ACTUAL SCENERY, BUT PRESERVE MY GAME." Correct the structural problem across ALL FIVE playable screens; the
+approved artwork stays the visual blueprint. Screen 04: "do not replace the invented orange corridor with another invented
+design … I want its exact distinctive appearance: the rounded gold entrance, glowing rings, colorful water, five arrows,
+foam, bubbles, and laundry-room surroundings. Reconstruct that visual design accurately throughout the existing stage."
+Same for 05, 06, 07, 08 (each keeps its unique approved scenery). **Do not change the existing gameplay length, coin totals,
+movement rules, or transitions without the user's permission.** No more than TWO specialist agents actively working at once
+(the reviewer runs only while a builder is paused). Show separate large APPROVED / BEFORE / NEW pictures proving the scenery
+genuinely looks closer. No generic replacements, no unnecessary redesigns. 01–03 / 09–11 = Google Flow videos.
