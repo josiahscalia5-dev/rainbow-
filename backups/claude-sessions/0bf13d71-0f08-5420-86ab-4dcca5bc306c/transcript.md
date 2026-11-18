@@ -2913,3 +2913,19 @@ Now your decision on the Screen 04 views, plus whether to go on to 06 and 07:
 
 > 🔧 **AskUserQuestion** `{"questions": [{"question": "I sent you 4 proposed views of the inside of Screen 04's washer opening, which your approved picture doesn't show: V04-1 just inside, V04-2 middle, V04-3a near the end, V04-3b near the end (opening rim still visible). Which do you approve as design targets to rebuild the 04 interior? Rejected ones are never used.", "header": "04 views", "multiSelect": true, "options": [{"label": "V04-1 just inside", "description": "Rounded glossy gold rings converging to the glow, cyan lane with five glowing arrows, pink swirls, soft foam clouds, bubbles, coins."}, {"label": "V04-2 …[+1110 chars]`
 
+### 🧑 User — 2026-11-18T11:03:31.383Z
+
+> ↩︎ result: The user answered: "I sent you 4 proposed views of the inside of Screen 04's washer opening, which your approved picture doesn't show: V04-1 just inside, V04-2 middle, V04-3a near the end, V04-3b near the end (opening rim still visible). Which do you approve as design targets to rebuild the 04 interior? Rejected ones are never used."="[No preference]", "The Screen 04 pilot used 8 images (about $0.96): 5 usable, 3 rejected by me. Should I make proposed views of the unseen parts of Screens 06 (4 viewpoints: crest, run, turn into 07) and 07 (4 viewpoints: end of level stretch, plunge top, mid-plunge, plunge bottom) the same way, for your approval?"="CLAUDIA — MY DECISION ON THE REFERENCE VIEWS, VISUAL PROGRESS AND AUTOMATIC BACKUPS
+> 
+> Claudia, I want to move forward and get my approved Rainbow screens completed accurately.
+> 
+> MY VERDICT: GOOD DIRECTION, BUT THE RESULTS ARE NOT YET PROVEN IN THE ACTUAL 3D GAME.
+> 
+> SCREEN 04 — MY DECISION
+> 
+> You may use V04-1 (just inside) and V04-2 (middle) as PROVISIONAL visual references for one controlled 3D reconstruction test.
+> 
+> Do not treat them as final approved designs.
+> 
+> Do not use V04-3a or V04-3b as approved references yet. They look too similar to th …[+3547 chars]
+

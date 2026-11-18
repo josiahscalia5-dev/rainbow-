@@ -1347,3 +1347,278 @@ Now replace the mirror with the edge-colour match.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T10:59:28.062Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's/vec3 edge = texture2D(uPlate, eu.xy, 5.5).rgb;/vec3 edge = texture2D(uPlate, eu.xy, 8.0).rgb;/' src/world/match08.ts && grep -n \"eu.xy, 8.0\" src/world/match08.ts && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/seamc && SHOTS=t33_through_screen,t66_through_screen,f10_forward10u node $S/tools/sel_audit.mjs 08 $S/r/seamc \"$K&m08seamc=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S & …[+480 chars]`
+
+### 🧑 User — 2026-11-18T11:00:07.636Z
+
+> ↩︎ result: 146:      vec3 edge = texture2D(uPlate, eu.xy, 8.0).rgb;
+> 08 t66_through_screen s 400.604 lat 0 stage 08 frames 54
+> [This command modified 1 file you've previously read: ../wt/s08/src/world/match08.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T11:00:10.451Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t66.png"}`
+
+### 🧑 User — 2026-11-18T11:00:10.478Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:00:11.127Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t33.png"}`
+
+### 🧑 User — 2026-11-18T11:00:11.159Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:00:23.359Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's#vec3 tinted = clamp(pc \\* edge / vec3(0.7127, 0.2982, 0.6999), 0.0, 1.0);#vec3 tinted = clamp(pc + edge - vec3(0.7127, 0.2982, 0.6999), 0.0, 1.0);#' src/world/match08.ts && grep -n \"vec3 tinted\" src/world/match08.ts && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/seamc && SHOTS=t33_through_screen,t66_through_screen,f10_forward10u node $S/tools/sel_audit.mjs 08 $S/r/seamc \"$K&m08sea …[+535 chars]`
+
+### 🧑 User — 2026-11-18T11:00:46.586Z
+
+> ↩︎ result: 147:      vec3 tinted = clamp(pc + edge - vec3(0.7127, 0.2982, 0.6999), 0.0, 1.0);
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> [This command modified 1 file you've previously read: ../wt/s08/src/world/match08.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T11:00:49.203Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t66.png"}`
+
+### 🧑 User — 2026-11-18T11:00:49.224Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:00:49.880Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_f10.png"}`
+
+### 🧑 User — 2026-11-18T11:00:49.905Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:00:57.387Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"uMirOn\\|uOpenC\\|uOpenR\\|edgeUv\\|mirOn\\|openR\\|openC\\|m08seamc\\|oc0\\|toQ\\|const asp\" src/world/match08.ts", "description": "Locate seamc code lines to remove"}`
+
+### 🧑 User — 2026-11-18T11:00:57.414Z
+
+> ↩︎ result: 76:uniform float uMirOn;       // m08seamc (drum / door wall / collar): fill tinted like the painted wall at the arch's opening edge
+> 77:uniform vec3 uOpenC;        // opening centre in aspect-corrected approved-view NDC (x * W/H, y), z = W/H
+> 78:uniform float uOpenR[64];   // opening edge radius per angle (same units)
+> 89:// m08seamc: for a point hidden behind the arch, the approved-view uv of the painted pixel just inside the arch's opening
+> 91:vec3 edgeUv(vec4 pj) {
+> 93:  vec2 q = vec2(pj.x / pj.w * uOpenC.z, pj.y / pj.w) - uOpenC.xy;
+> 97:  float rho = mix(uOpenR[i0], uOpenR[i1], fract(f));
+> 100:  vec2 m = uOpenC.xy + q / max(r, 1e-5) * (rho - 0.035);
+> 101:  return vec3(vec2(m.x / uOpenC.z, m.y) * 0.5 + 0.5, 1.0 - smoothstep(0.08, 0.3, e));
+> 141:  if (uMirOn > 0.5) {
+> 142:    // m08seamc: the fill keeps its own slot pattern but takes the painted wall's local colour / brightness at the arch's
+> 144:    vec3 eu = edgeUv(vProj);
+> 286:  // `&m08seamc=1` (r10): the arch's opening as seen from the approved viewpoint (intersection of the projected front and
+> 289:  const mirOn = flag05('m08seamc');
+> 290:  const asp = W / H, openR = new Array<number>(64).fill(9);
+> 291:  const toQ = (p: THREE.Vector3) => …[+544 chars]
+
+### 🤖 Claude — 2026-11-18T11:01:04.473Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\nimport re\np='src/world/match08.ts'; s=open(p).read()\nlines=s.split('\\n')\ndef drop(a,b):  # 1-based inclusive\n    global lines\n    del lines[a-1:b]\n# find block ranges by markers (process from bottom to top)\nL=lambda pat: next(i+1 for i,l in enumerate(lines) if pat in l)\n# uniforms in mat()\ni=L(\"uMirOn: { value: mirOn\"); \nlines[i-2]=lines[i-2].rstrip(',')+' },' if False else lines[i-2]\ns='\\n'.join(lines)\ns=s.replace(\",\\n      uMirOn: { value: mirOn && fillMode > 0 ? 1 : 0 }, uOpenC: { value: openC }, uOpenR: { value: open …[+788 chars]`
+
+### 🧑 User — 2026-11-18T11:01:06.678Z
+
+> ↩︎ result: tsc done
+
+### 🤖 Claude — 2026-11-18T11:01:08.257Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git status --short; git diff | head -20", "description": "Confirm working tree equals step 1 commit"}`
+
+### 🧑 User — 2026-11-18T11:01:08.294Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:01:11.842Z
+
+Working tree is back to the step-1 commit. Next, coins (code already written by the previous account as `m08coinv`): render it at the shots where coins were oversized.
+
+### 🤖 Claude — 2026-11-18T11:01:16.004Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && SHOTS=f06_forward6u,f10_forward10u,t33_through_screen,t66_through_screen,s_left_hard,s_right_steer node $S/tools/sel_audit.mjs 08 $S/r/coinv \"$K&m08coinv=1\" 2>&1 | grep -v \"allow list\" | tail -6; cd $S && python3 py/sbs.py c_coin1.png r/far/f06_forward6u.png r/coinv/f06_forward6u.png r/far/f10_forward10u.png r/coinv/f10_forward10u.png && python3 py/sbs.py c_c …[+216 chars]`
+
+### 🧑 User — 2026-11-18T11:02:01.823Z
+
+> ↩︎ result: 08 f06_forward6u s 398.154 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.975 lat 0 stage 08 frames 63
+> 08 s_right_steer s 398.019 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 404.037 lat -2.217 stage 08 frames 76
+> 08 t33_through_screen s 396.276 lat -0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.552 lat -0 stage 08 frames 54
+
+### 🤖 Claude — 2026-11-18T11:02:04.438Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_coin1.png"}`
+
+### 🧑 User — 2026-11-18T11:02:04.632Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:02:05.111Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_coin2.png"}`
+
+### 🧑 User — 2026-11-18T11:02:05.272Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:02:09.399Z
+
+`m08coinv` has no visible effect (same coin sizes, the coin still sits on Benny at f10/t66). Let me see how the 08 coins are created under `coins08px`.
+
+### 🤖 Claude — 2026-11-18T11:02:10.755Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"coins08px\\|faceTo\\|onBeforeRender\\|scale\\b\\|d.scale\\|const scale\\|createCoins\" src/gameplay/coins.ts | head -40; grep -rn \"coins08px\" src --include=*.ts | grep -v \"^src/gameplay/coins.ts\" | head", "description": "Inspect coin creation for the 08 painted coins"}`
+
+### 🧑 User — 2026-11-18T11:02:10.810Z
+
+> ↩︎ result: 12:import coins08px from '../../assets/textures/match08/coins08px.json';
+> 16:/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> 17:export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 26:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 31:  const extra = { scale: C05.scale, tilt: C05.tilt };
+> 57:  // `&coins08px=1` (with match08; lead r3 2026-11-17): the nine picture coins exactly on their painted pixels, on the water
+> 58:  // (assets/textures/match08/coins08px.json, tools/match08/coins08px.mjs), and stage 10's five coins out of the 08 view
+> 59:  const px08 = m08 && flag05('coins08px');
+> 67:    const cam = coins08.faceTo as [number, number, number];
+> 76:      for (const c of coins08px.coins) {
+> 81:        add(course.stageAtS(sx).id, sx, d.dot(f.right), d.dot(f.up), { scale: c.scale, faceTo: coins08px.faceTo as [number, number, number] });
+> 85:      let r = toRiver(c.x, c.z), h = c.h, scale = c.scale;
+> 96:        if (pick) { r = pick.r; h = pick.h; scale = c.scale …[+1196 chars]
+
+### 🤖 Claude — 2026-11-18T11:02:12.631Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/src/gameplay/coins.ts", "offset": 124, "limit": 150}`
+
+### 🧑 User — 2026-11-18T11:02:12.648Z
+
+> ↩︎ result: 124	export function createCoins(course: Course): CoinSystem {
+> 125	  const defs = coinLayout(course);
+> 126	  const faceTex = canvasTexture(256, 256, (c, w, h) => {
+> 127	    const g = c.createRadialGradient(w * 0.38, h * 0.32, 10, w / 2, h / 2, w * 0.55);
+> 128	    g.addColorStop(0, '#ffe680');
+> 129	    g.addColorStop(0.45, '#ffcf2a');
+> 130	    g.addColorStop(1, '#e89200');
+> 131	    c.fillStyle = g;
+> 132	    c.beginPath(); c.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2); c.fill();
+> 133	    // raised inner rim: dark groove + bright lip
+> 134	    c.lineWidth = 9;
+> 135	    c.strokeStyle = '#c98200'; c.beginPath(); c.arc(w / 2 + 2, h / 2 + 2, w * 0.4, 0, Math.PI * 2); c.stroke();
+> 136	    c.strokeStyle = '#fff0a0'; c.beginPath(); c.arc(w / 2 - 1, h / 2 - 1, w * 0.4, 0, Math.PI * 2); c.stroke();
+> 137	    // embossed "$" drawn as vector strokes (font-independent: identical on every Android device):
+> 138	    // light bevel up-left, dark bevel down-right, deep-gold glyph on top
+> 139	    const dollar = (dx: number, dy: number, col: string, lw: number) => {
+> 140	      c.save(); c.translate(dx, dy);
+> 141	      c.strokeStyle = col; c.lineCap = 'round'; c.lineJoin = 'round';
+> 142	      c.lineWidth = lw;
+> 143	      c.begi …[+7295 chars]
+
+### 🤖 Claude — 2026-11-18T11:02:23.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"export function flag05\" -A 12 src/vfx/waterRibbon.ts", "description": "Inspect flag05 URL flag helper"}`
+
+### 🧑 User — 2026-11-18T11:02:23.142Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:02:25.521Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rn \"flag05 *=\\|function flag05\\|const flag05\" src | head; ", "description": "Find flag05 definition"}`
+
+### 🧑 User — 2026-11-18T11:02:25.554Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:167:export const flag05 = q05;
+
+### 🤖 Claude — 2026-11-18T11:02:27.729Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"q05\" src/vfx/waterRibbon.ts | head -5 && grep -n \"function q05\\|const q05\" -A 14 src/vfx/waterRibbon.ts | head -30", "description": "Inspect q05 implementation"}`
+
+### 🧑 User — 2026-11-18T11:02:27.763Z
+
+> ↩︎ result: 157:const q05 = (key: string): boolean => {
+> 167:export const flag05 = q05;
+> 174:export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 196:export const SILK05: boolean = q05('silk05');
+> 197:export const PUFF05: boolean = q05('puff05');
+> 157:const q05 = (key: string): boolean => {
+> 158-  const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
+> 159-  try {
+> 160-    if (typeof location !== 'undefined' && hit(new URLSearchParams(location.search))) return true;
+> 161-  } catch {
+> 162-    /* no location (vite-node / workers) */
+> 163-  }
+> 164-  return BUILD_Q05 !== '' && hit(new URLSearchParams(BUILD_Q05));
+> 165-};
+> 166-/** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> 167-export const flag05 = q05;
+> 168-/**
+> 169- * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+> 170- * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+> 171- * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+
+### 🤖 Claude — 2026-11-18T11:02:40.808Z
+
+`flag05` is fine, so `coinVisual` must be returning 1 (camera not captured). Let me probe it in the page.
+
+### 🤖 Claude — 2026-11-18T11:02:41.960Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"__rainbow\\s*=\\|__rainbow =\" -A 25 src/*.ts src/**/*.ts 2>/dev/null | grep -n \"scene\\|camera\\|game\\|coins\" | head -20", "description": "Find what the QA hook exposes"}`
+
+### 🧑 User — 2026-11-18T11:02:42.022Z
+
+> ↩︎ result: 1:src/game/Game.ts:776:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> 2:src/game/Game.ts-777-  return api;
+> 3:src/game/Game.ts-778-}
+
+### 🤖 Claude — 2026-11-18T11:02:44.155Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 700,776p src/game/Game.ts; grep -n \"coins.update\\|coinSys.update\\|\\.update(t\" src/game/Game.ts | head", "description": "Read the QA api and coin update call"}`
+
+### 🧑 User — 2026-11-18T11:02:44.193Z
+
+> ↩︎ result: /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+>     /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+>     coinScreen() {
+>       const mesh = coins.group.children[0] as THREE.InstancedMesh;
+>       const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+>       const W = renderer.domElement.clientWidth, H = rend …[+4063 chars]
+
+### 🤖 Claude — 2026-11-18T11:02:49.064Z
+
+Let me probe on-screen coin diameters (`coinScreen()`) at f10 with and without the switch to see whether the scaling runs at all.
+
+### 🤖 Claude — 2026-11-18T11:02:56.973Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/coinprobe.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q, DIST = '10'] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5288);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor:  …[+1182 chars]`
+
+### 🧑 User — 2026-11-18T11:03:11.666Z
+
+> ↩︎ result: {"mode":"ride","stage":"08","s":402.129,"lat":0,"coins":2060,"hearts":5,"paused":false,"bennyY":-113.139,"bennyVisible":true,"cam":[11.9,-109.9,-284.97]} [{"i":84,"x":569,"y":897,"d":111},{"i":85,"x":410,"y":678,"d":63},{"i":86,"x":482,"y":721,"d":65},{"i":87,"x":585,"y":760,"d":75},{"i":88,"x":538,"y":619,"d":32},{"i":89,"x":459,"y":635,"d":40},{"i":90,"x":503,"y":622,"d":34}]
+
+### 🤖 Claude — 2026-11-18T11:03:23.793Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && node /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/coinprobe.mjs \"$K\" 10 2>&1 | grep -v \"allow list\" | tail -1 | cut -c1-600", "description": "Probe coin screen sizes without coin switch", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T11:03:40.769Z
+
+> ↩︎ result: {"mode":"ride","stage":"08","s":402.088,"lat":0,"coins":2060,"hearts":5,"paused":false,"bennyY":-113.142,"bennyVisible":true,"cam":[11.9,-109.9,-284.92]} [{"i":84,"x":568,"y":895,"d":112},{"i":85,"x":410,"y":677,"d":63},{"i":86,"x":483,"y":721,"d":65},{"i":87,"x":585,"y":759,"d":75},{"i":88,"x":539,"y":618,"d":32},{"i":89,"x":459,"y":635,"d":40},{"i":90,"x":503,"y":622,"d":34}]
+

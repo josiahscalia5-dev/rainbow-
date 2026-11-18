@@ -1794,3 +1794,165 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 > 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
 > 426:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
 
+### 🤖 Claude — 2026-11-18T10:59:20.449Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"\"\"export const M05FOLD: boolean = M05RIDE && q05('m05fold');\"\"\"\ns=s.replace(old, old+\"\"\"\n/**\n * `&m05flat=1` (Screen 05 round 10, needs m05ride; look only): the tight banked S just before Screen 06 (s ≈ 172–183,\n * banked +9° … −15°) is drawn LEVEL while swimming — the water there tilted up into a raised ramp on the left (the torn\n * strip of t66) and met the level far river with a lip. Vertices keep their place across the river, only their height\n * loses the bank tilt (th …[+2216 chars]`
+
+### 🧑 User — 2026-11-18T11:00:13.862Z
+
+> ↩︎ result: tsc=0
+> f20_forward20u s 153.239 lat 0 coins 1450 benny -0.05 -0.27 big coins: #23@339,713 d103
+> t33_through_screen s 151.692 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T11:00:17.798Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(864,1130),'white')\no.paste(Image.open('berm1/t66_through_screen.png').crop((0,480,864,1040)),(0,0))\no.paste(Image.open('flat1/t66_through_screen.png').crop((0,480,864,1040)),(0,570))\no.save('cmp_flat_t66.png')\"", "description": "Compare t66 berm vs flat"}`
+
+### 🧑 User — 2026-11-18T11:00:18.203Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:00:19.192Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_flat_t66.png"}`
+
+### 🧑 User — 2026-11-18T11:00:19.232Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:00:49.557Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"heightAt\\|ribbon.heightAt\\|\\.heightAt(\" src --include=*.ts -r | grep -v \"^src/vfx/waterRibbon.ts:17[0-9][0-9]\" | head -20", "description": "Find users of ribbon heightAt"}`
+
+### 🧑 User — 2026-11-18T11:00:49.590Z
+
+> ↩︎ result: src/vfx/index.ts:90:  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });
+> src/vfx/index.ts:143:      return (drum.heightAt(p.x, p.z, t) - p.y) / Math.max(0.3, up.y);
+> src/vfx/index.ts:145:    const hr = ribbon.heightAt(s, lateral, t);
+> src/vfx/drumWater.ts:157:  heightAt(x: number, z: number, t: number): number;
+> src/vfx/drumWater.ts:231:    heightAt(x, z, t) {
+> src/vfx/foam.ts:643:  const heightAt = opts.height ?? (() => 0);
+> src/vfx/foam.ts:975:        hBase = heightAt(s, side * 2.5, time);
+> src/vfx/foam.ts:1012:        const hIn = heightAt(s, side * a, time), hOut = heightAt(s, side * outA, time);
+> src/vfx/waterRibbon.ts:1809:  heightAt(s: number, lateral: number, t: number): number;
+> src/vfx/waterRibbon.ts:1978:    heightAt(s, lateral, t) {
+
+### 🤖 Claude — 2026-11-18T11:00:51.979Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 125,160p src/vfx/index.ts; grep -rn \"surfaceHeight\\|water.height\\|\\.height(\" src/game src/gameplay src/Game.ts 2>/dev/null | head -10; ls src", "description": "Read water height API used for Benny"}`
+
+### 🧑 User — 2026-11-18T11:00:52.017Z
+
+> ↩︎ result: seed = (seed + 0x6d2b79f5) >>> 0;
+>     let t = seed;
+>     t = Math.imul(t ^ (t >>> 15), t | 1);
+>     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+>     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+>   };
+>   const rnd = (a: number, b: number) => a + rand() * (b - a);
+>   let lastFocusSeed = -1e9;
+>   let qaCamera: THREE.Camera | null = null;
+> 
+>   /** 0 = ribbon fully shown, 1 = whirlpool surface takes over (mirrors the ribbon vertex shader) */
+>   const whirlBlend = (s: number) => smooth(st03.s0 + 0.5, st03.s0 + 3.5, s) * (1 - smooth(st04.s0 - 9, st04.s0 - 1.5, s));
+> 
+>   const surfaceHeight = (s: number, lateral: number, t: number): number => {
+>     if (s < ribbonS0) {
+>       // Drum A: absolute swell height relative to the course point
+>       const p = course.pointAt(s, lateral, 0, tmpV);
+>       const up = course.sample(s).up;
+>       return (drum.heightAt(p.x, p.z, t) - p.y) / Math.max(0.3, up.y);
+>     }
+>     const hr = ribbon.heightAt(s, lateral, t);
+>     const k = whirlBlend(s);
+>     if (k <= 0) return hr;
+>     const f = course.sample(s);
+>     const p = tmpV.copy(f.pos).addScaledVector(f.right, lateral);
+>     const b = WORLD.basin;
+>     const r = Math.hypot(p.x - b.center.x, p.z - b.center.z);
+>     const yW = fu …[+818 chars]
+
+### 🤖 Claude — 2026-11-18T11:00:53.811Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 155,185p src/game/Game.ts; grep -n \"surfaceHeight\" src -r | head", "description": "See how Game uses surfaceHeight for Benny"}`
+
+### 🧑 User — 2026-11-18T11:00:53.848Z
+
+> ↩︎ result: fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
+>   };
+> 
+>   // girl placement helpers (she lives in laundry-room local frames)
+>   const placeGirl = (room: 'A' | 'C', local: THREE.Vector3, yaw: number) => {
+>     const anchor = room === 'A' ? env.roomA.anchor : env.roomC.anchor;
+>     if (girl.root.parent !== anchor) anchor.add(girl.root);
+>     girl.root.position.copy(local);
+>     girl.root.rotation.set(0, yaw, 0);
+>   };
+> 
+>   const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+>     const f = course.sample(s);
+>     const h = water.surfaceHeight(s, lat, time);
+>     out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+>     const m = new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(f.up, f.tan).normalize(), f.up, f.tan);
+>     out.quat.setFromRotationMatrix(m);
+>     return f;
+>   };
+> 
+>   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
+>   const tmpV = new THREE.Vector3();
+>   const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+>   const doorAOpen = -1.9, doorCOpen = -1.95;
+> 
+>   // ------------------------------------------ …[+998 chars]
+
+### 🤖 Claude — 2026-11-18T11:01:20.944Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> src/vfx/unfold05.ts <<'EOF'\n\n/**\n * `&m05flat=1` (waterRibbon.ts M05FLAT): world-height change that removes the bank tilt of the 05 → 06 kink at (s,\n * lateral) — 0 outside the window s1 − 20 … s1 − 3.4 (smooth ends; nothing changes at the 05 checkpoint, at the far\n * tunnel's seam or on 06). Shared by the ribbon (vertices + heightAt, so Benny rides the level water and never sinks),\n * the lather bank and the rim foam, so everything on the river keeps its place on the level surface.\n */\nlet flatTab: { a: number; ds: number; ry: Float32Array;  …[+5000 chars]`
+
+### 🧑 User — 2026-11-18T11:01:23.618Z
+
+> ↩︎ result: tsc=0
+
+### 🤖 Claude — 2026-11-18T11:01:37.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/tools/match05/r10_probe.mjs'\ns=open(p).read()\nold=\"\"\"  t33_through_screen: ['t0.33', null], t66_through_screen: ['t0.66', null], t95_through_screen: ['t0.95', null],\n};\"\"\"\nassert old in s\ns=s.replace(old,\"\"\"  t33_through_screen: ['t0.33', null], t66_through_screen: ['t0.66', null], t95_through_screen: ['t0.95', null],\n  // round 10: inside the 05 -> 06 kink (s ≈ 178), straight and steered to both banks\n  k81_kink: ['t0.81', null], k81_kink_left: ['t0.81', -1], k81_kink_right: ['t0.81', 1],\n};\"\"\",1) …[+630 chars]`
+
+### 🧑 User — 2026-11-18T11:03:02.649Z
+
+> ↩︎ result: f20_forward20u s 153.244 lat 0 coins 1450 benny -0.05 -0.27 big coins: #23@339,713 d103
+> t33_through_screen s 151.691 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+> shot k81_kink_left s 178.913 lat -3.822 cam -0.23,-39.26,-114.32
+> shot → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/flat2/k81_kink_left.png
+> shot k81_kink_right s 178.907 lat 3.823 cam 6.31,-40.33,-111.16
+> shot → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/flat2/k81_kink_right.png
+
+### 🤖 Claude — 2026-11-18T11:03:04.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/flat2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:03:04.516Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:03:09.806Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(874,768),'white')\nfor k,n in enumerate(['k81_kink_left','k81_kink_right']): o.paste(Image.open('flat2/'+n+'.png').resize((432,768)),(k*442,0))\no.save('cmp_kink.png')\"", "description": "Combine kink steering frames"}`
+
+### 🧑 User — 2026-11-18T11:03:10.161Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:03:11.144Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_kink.png"}`
+
+### 🧑 User — 2026-11-18T11:03:11.177Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:03:23.157Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/berm1; for k in k81_kink_left k81_kink_right k81_kink; do timeout 600 node tools/match05/r10_probe.mjs $k \"$Q\" --shot=$S/$k.png 2>&1 | grep \"shot k\"; done; Q2=\"$Q&m05flat=1\"; timeout 600 node tools/match05/r10_probe.mjs k81_kink \"$Q2\" --shot=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/flat2/k …[+506 chars]`
+
