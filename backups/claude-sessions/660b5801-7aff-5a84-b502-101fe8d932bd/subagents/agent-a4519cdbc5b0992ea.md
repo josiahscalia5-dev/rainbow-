@@ -676,3 +676,98 @@ Meanwhile I'll look at the approved picture and the current BEFORE (K15) frames.
 
 > ↩︎ result: Monitor started (task bj0dp22l0, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
 
+### 🤖 Claude — 2026-11-18T20:48:27.615Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat assets/textures/match08/nq08.json; python3 -c \"\nfrom PIL import Image\nfor n in ['nq08.png','near08.png','plate08_hybrid.png']:\n    im=Image.open('assets/textures/match08/'+n); print(n, im.size, im.mode)\n\"; sed -n 1,60p tools/match08/nq08.py", "description": "Inspect near-water tile metadata and tool"}`
+
+### 🧑 User — 2026-11-18T20:48:27.858Z
+
+> ↩︎ result: {
+>  "z0": -279.43797316502713,
+>  "period": 7.490909090909091,
+>  "halfWidth": 3.0500000000000003,
+>  "lane": 2.95,
+>  "core": 0.7,
+>  "texelsPerU": [
+>   220.0,
+>   165.0
+>  ],
+>  "layout": {
+>   "x": [
+>    -3.0500000000000003,
+>    -0.7,
+>    0.7,
+>    3.0500000000000003
+>   ],
+>   "a": [
+>    -0.78,
+>    -0.5395025363817353,
+>    0.37950253638173526,
+>    0.69
+>   ],
+>   "c": -0.08000000000000002,
+>   "paintedHalfWidth": 1.5233865856585165
+>  },
+>  "glints": 83,
+>  "note": "u = 0.5 + x_b / (2 halfWidth), x_b = lateral offset from the lane centre (u; |x| <= core 1:1, beyond: core + (|x| - core) (lane - core) / (h - core) for a lane of half width h); v = (z0 - z) / period (repeat). Painted scale; from the approved picture's own near band (nq08.py v6, r14: rectified along the painted flow, base satin from whole painted columns, the painted glints put back whole)"
+> }nq08.png (1336, 1236) RGB
+> near08.png (640, 538) RGB
+> plate08_hybrid.png (1536, 2731) RGB
+> """Screen 08 r14 (`&m08nq=1`): the near water at the PAINTED scale while swimming (v6 of the account-13 helper).
+> 
+> `&m08near=1` (r11) lays the approved picture's own crisp near-river band (rows ~1250-1520 below Benny) along the river,
+> scaled evenly so its painted water spans the whole sw …[+3591 chars]
+
+### 🤖 Claude — 2026-11-18T20:48:29.103Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/assets/textures/match08/nq08.png"}`
+
+### 🧑 User — 2026-11-18T20:48:29.249Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:48:33.478Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look && cd /home/user/rainbow- && python3 -c \"\nfrom PIL import Image\nim=Image.open('references/08_final_spin_chamber.png'); print(im.size)\nim.crop((0,1150,864,1536)).save('/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/appr_bottom.png')\n\"", "description": "Crop bottom near-water band of approved image"}`
+
+### 🧑 User — 2026-11-18T20:48:34.340Z
+
+> ↩︎ result: (864, 1536)
+
+### 🤖 Claude — 2026-11-18T20:48:36.067Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/appr_bottom.png"}`
+
+### 🧑 User — 2026-11-18T20:48:36.096Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:48:45.665Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 60,400p tools/match08/nq08.py", "description": "Read the rest of nq08.py tile builder"}`
+
+### 🧑 User — 2026-11-18T20:48:45.924Z
+
+> ↩︎ result: if not len(good): continue
+>         js = np.where(mask[:, i])[0]
+>         out[js, i] = np.stack([np.interp(js, good, img[good, i, k]) for k in range(3)], -1)
+>     return out
+> 
+> 
+> # --- 0. the painted near band (same bank trace as near08.py), at the painted scale ------------------------------------
+> BANKS = [(1250, 178, 688), (1300, 140, 718), (1350, 108, 748), (1400, 80, 774), (1450, 52, 800), (1500, 28, 826)]
+> rows = []
+> for r, xl, xr in BANKS:
+>     pl, pr = unproject_floor(xl, r), unproject_floor(xr, r)
+>     rows.append(((pl[2] + pr[2]) / 2, (pl[0] + pr[0]) / 2, abs(pr[0] - pl[0]) / 2))
+> rows = np.array(rows)
+> zc = np.polyfit(rows[:, 0], rows[:, 1], 1); zh = np.polyfit(rows[:, 0], rows[:, 2], 1)
+> Z0, Z1 = rows[:, 0].max() - 0.05, rows[:, 0].min() + 0.05
+> HW = float(np.mean(rows[:, 2]))              # painted half width (u): band position a -> world units
+> A = 1.1
+> DX, DZ = 220.0, 165.0                        # texels per u across / along (the plate holds ~320-460 / ~240 px per u here)
+> SW = int(round(2 * A * HW * DX)); SH = int(round((Z0 - Z1) * DZ))
+> AA, ZZ = np.meshgrid(np.linspace(-A, A, SW), np.linspace(Z0, Z1, SH))
+> X = np.polyval(zc, ZZ) + AA * np.polyval(zh, ZZ)
+> px, py = project(np.stack([X, …[+11591 chars]
+
