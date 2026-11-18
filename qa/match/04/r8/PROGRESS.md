@@ -25,3 +25,24 @@ Every NEW set below is rendered with `node tools/match04/audit04.mjs <dir> "<que
   `.../BEFORE/t66_through_screen.png`, `.../BEFORE/t95_through_screen.png`
 * NEW: `/home/user/wt/s04/qa/match/04/r8/step1_m04ring/f06_forward6u.png`, `.../step1_m04ring/t33_through_screen.png`,
   `.../step1_m04ring/t66_through_screen.png`, `.../step1_m04ring/t95_through_screen.png`
+
+## Step 2 — `?match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1` — wide swirling river, foam clouds, bubbles, crisp arrows (kept)
+* **What looks better while swimming:** the tunnel floor is no longer a narrow flat blue ramp with hard straight edges
+  against the walls. It is now a WIDE swirling river (the approved water design: pink/magenta swirl bands, cyan
+  streams, a deeper electric-cyan centre lane) whose sides curve up to meet the gold walls, flowing down the slide,
+  world-anchored, with no visible regular repeat (two offset samples + slow warps). Puffy white foam clouds (lilac
+  shading, bright highlights) are piled along both sides where the river meets the wall, iridescent soap bubbles hover
+  above the foam and in the tunnel air (fading out before they reach the camera, so no giant discs), and the glowing
+  white-cyan chevron arrows are drawn crisp on the centre lane all the way down the tunnel.
+* **Approved view unchanged:** deterministic capture with the full step-2 query → whole frame 81.4 % (SSIM 0.815),
+  scenery 98.2 % (SSIM 0.973), bands 100.0 / 96.9 / 97.7 % — same as `?match04=1`.
+* **Measured** (`motion_metrics.py`, BEFORE → step 1 → step 2): PALETTE f06 73.7 → 67.0 → 67.8 %, t33 62.2 → 64.6 →
+  65.2 %, t66 63.3 → 68.1 → 66.4 %, s_right_hard 55.5 → – → 58.7 %. LAYOUT20 stays low (2.6–3.2 %; moving views).
+* **Still wrong:** the gold rings read too red-orange / copper with strong magenta streaks (approved: yellow-gold with
+  yellow-white highlights and a soft golden far glow); the foam banks are a little too regular (rows of similar
+  balls); the arrows are thinner and more numerous than the painted five; the water right under the camera is soft
+  (the painted water tile magnified).
+* BEFORE: `/home/user/wt/s04/qa/match/04/r8/BEFORE/f06_forward6u.png`, `.../BEFORE/t33_through_screen.png`,
+  `.../BEFORE/t66_through_screen.png`, `.../BEFORE/s_right_hard.png`
+* NEW: `/home/user/wt/s04/qa/match/04/r8/step2_m04river/f06_forward6u.png`, `.../step2_m04river/t33_through_screen.png`,
+  `.../step2_m04river/t66_through_screen.png`, `.../step2_m04river/s_right_hard.png`

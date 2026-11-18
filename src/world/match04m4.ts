@@ -25,6 +25,7 @@ export const M04 = {
   bub: on('m04bub'),
   arrow: on('m04arrow'),
   wave: on('m04wave'),
+  river: on('m04river'),
   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
 };
 
@@ -209,16 +210,93 @@ void main() {
   gl_FragColor = vec4(pjInverse(col), 1.0);
 }`;
 
+/** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+ * the approved water design (tile_river3: pink swirl ribbons, cyan streams, foam edges) by arc length across the trough,
+ * two offset samples blended by slow world-anchored noise (no visible 4.7 u repeat), flowing down the slide, and the
+ * glowing chevron arrows drawn crisp (distance field) on the centre lane. */
+const RIVER_VERT = /* glsl */ `
+uniform mat4 uProjVP;
+attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+varying vec4 vProj;
+varying vec3 vL;
+varying float vS;
+void main() {
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vProj = uProjVP * wp;
+  vL = position;
+  vS = aR.x;
+  gl_Position = projectionMatrix * viewMatrix * wp;
+}`;
+const RIVER_FRAG = /* glsl */ `
+uniform sampler2D uPlate;
+uniform vec4 uPjPost;
+uniform vec2 uPjRes;
+uniform float uAway;
+uniform sampler2D uRiv;
+uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+uniform float uTime;
+uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
+uniform float uZ0;
+varying vec4 vProj;
+varying vec3 vL;
+varying float vS;
+${PROJ05_INVERSE}
+float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
+// chevron pointing down the slide: distance to the two arms
+float chev(vec2 p, float hw, float th) {
+  p.x = abs(p.x);
+  vec2 a = vec2(0.0, 0.0), b = vec2(hw, -hw * 2.3);   // long arms along the flow (painted arrows seen low)
+  vec2 pa = p - a, ba = b - a;
+  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+  return length(pa - ba * h) - th;
+}
+void main() {
+  float along = -vL.z;                                     // down the slide from Benny's checkpoint water point
+  float flow = along - uTime * 0.9;                        // the design drifts down the slide with the current
+  float lat = vS * uRivA.w + 0.9 * (vn(vec2(along * 0.07, 7.0)) - 0.5) * smoothstep(0.4, 1.6, abs(vS));
+  float fl = flow + 2.2 * (vn(vec2(along * 0.05, vS * 0.15 + 1.0)) - 0.5);
+  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / uRivA.z);
+  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / uRivA.z * 0.77 + 0.37);
+  float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
+  vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
+  // the deeper cyan centre lane of the painting
+  col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
+  // crisp glowing arrows on the centre lane (painted: white-cyan core, cyan glow), world-anchored
+  float ai = floor((along - uArr.y) / uArr.x + 0.5);
+  float ac = uArr.y + ai * uArr.x;
+  if (ai >= 0.0) {
+    float d = chev(vec2(vS, along - ac - 1.5), uArr.z, uArr.w);
+    float px = fwidth(d);
+    float fade = smoothstep(-2.0, 0.5, ac) ;
+    // the painted arrows sit in a deeper electric-cyan lane; a dark-cyan halo, then a glowing white-cyan body
+    col = mix(col, vec3(0.05, 0.55, 0.96), 0.45 * exp(-max(d, 0.0) / 0.45) * fade);
+    col = mix(col, vec3(0.55, 0.92, 1.0), exp(-max(d, 0.0) / 0.12) * 0.6 * fade);
+    col = mix(col, vec3(0.86, 0.98, 1.0), (1.0 - smoothstep(-px, px, d)) * 0.95 * fade);
+    col = mix(col, vec3(0.96, 1.0, 1.0), (1.0 - smoothstep(-px, px, abs(d + uArr.w * 0.12) - uArr.w * 0.10)) * fade);
+  }
+  col = clamp(col, 0.0, 1.0);
+  if (uAway < 0.999 && vProj.w > 0.0) {
+    vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
+  }
+  gl_FragColor = vec4(pjInverse(col), 1.0);
+}`;
+
 /** world-space bubble discs + foam puffs share one tiny shader each (camera-facing sprites in an InstancedMesh) */
 const SPRITE_VERT = /* glsl */ `
 attribute vec4 aB;          // xyz world centre, w radius
 attribute float aS;         // seed
+uniform vec2 uNear;         // fade sprites out this close to the camera (no giant discs in the face)
 varying vec2 vUv;
 varying float vS;
+varying float vF;
 void main() {
   vUv = uv * 2.0 - 1.0;
   vS = aS;
   vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);
+  vF = smoothstep(uNear.x, uNear.y, -mv.z);
   mv.xy += position.xy * aB.w * 2.0;
   gl_Position = projectionMatrix * mv;
 }`;
@@ -228,6 +306,7 @@ uniform vec2 uPjRes;
 uniform float uAlpha;
 varying vec2 vUv;
 varying float vS;
+varying float vF;
 ${PROJ05_INVERSE}
 void main() {
   float r = length(vUv);
@@ -241,7 +320,7 @@ void main() {
   float hl = smoothstep(0.24, 0.05, length(vUv - vec2(-0.38, 0.42)));
   float alpha = 0.10 + 0.70 * rim + 0.85 * hl;
   col = mix(col, vec3(1.0), hl);
-  gl_FragColor = vec4(pjInverse(col), clamp(alpha, 0.0, 1.0) * uAlpha);
+  gl_FragColor = vec4(pjInverse(col), clamp(alpha, 0.0, 1.0) * uAlpha * vF);
 }`;
 const FOAM_FRAG = /* glsl */ `
 uniform vec4 uPjPost;
@@ -249,18 +328,19 @@ uniform vec2 uPjRes;
 uniform float uAlpha;
 varying vec2 vUv;
 varying float vS;
+varying float vF;
 ${PROJ05_INVERSE}
 void main() {
   float r = length(vUv);
-  if (r > 1.0) discard;
-  // a foam bubble ball as painted: lilac-white sphere shading, bright upper-left, violet-blue lower rim, soft edge
+  if (r > 1.0 || uAlpha * vF < 0.5) discard;
+  // a painted foam ball: white sphere, lilac-blue shading low right, pink rim tint, bright window highlight
   vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));
   float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);
-  vec3 col = mix(vec3(0.70, 0.68, 0.95), vec3(0.98, 0.96, 1.0), l);
-  col = mix(col, vec3(0.98, 0.78, 0.95), 0.25 * smoothstep(0.6, 1.0, r) * (0.5 + 0.5 * sin(vS * 9.0)));
-  col += vec3(1.0) * 0.5 * smoothstep(0.22, 0.0, length(vUv - vec2(-0.35, 0.4)));
-  float alpha = 1.0 - smoothstep(0.88, 1.0, r);
-  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), alpha * uAlpha);
+  vec3 col = mix(vec3(0.72, 0.70, 0.96), vec3(0.99, 0.98, 1.0), smoothstep(0.05, 0.75, l));
+  col = mix(col, vec3(0.98, 0.80, 0.96), 0.30 * smoothstep(0.65, 1.0, r) * (0.5 + 0.5 * sin(vS * 9.0)));
+  col += vec3(1.0) * 0.55 * smoothstep(0.20, 0.0, length(vUv - vec2(-0.32, 0.38)));
+  col = mix(col, vec3(0.62, 0.58, 0.90), 0.35 * smoothstep(0.86, 1.0, r));
+  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
 }`;
 
 function lathe(prof: { r: number; a: number; part: number }[], segs: number, ringIdx: (i: number) => number) {
@@ -277,7 +357,7 @@ function lathe(prof: { r: number; a: number; part: number }[], segs: number, rin
 
 export function addM04(ctx: M04Ctx) {
   const { group, shared, proj, cx, cy, z0, len, r } = ctx;
-  const any = M04.ring || M04.foam || M04.bub || M04.arrow || M04.wave;
+  const any = M04.ring || M04.foam || M04.bub || M04.arrow || M04.wave || M04.river;
   if (!any) return null;
   group.updateMatrixWorld(true);
   const Mw = group.matrixWorld;
@@ -327,7 +407,7 @@ export function addM04(ctx: M04Ctx) {
       for (let i = 0; i < pa.count; i++) {
         const x = pa.getX(i), z = pa.getZ(i), rad = Math.hypot(x, z);
         const ang = Math.atan2(Math.abs(x), z);
-        const k = THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);
+        const k = M04.river ? THREE.MathUtils.smoothstep(ang, angW - 0.95, angW - 0.55) : THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);
         const nr = rad + (r + 0.05 - rad) * k;
         pa.setX(i, (x / rad) * nr); pa.setZ(i, (z / rad) * nr);
       }
@@ -356,8 +436,58 @@ export function addM04(ctx: M04Ctx) {
     console.info('[match04] m04ring', { period: P, rings: nP });
   }
 
+  // `m04river`: the wide painted river trough inside the tunnel (world-anchored, replaces the flat ramp there)
+  const RY = M04.num('m04ry', 1.0);                         // how high the river sides climb the wall (u above the water)
+  const XF = M04.num('m04xf', 1.9);                         // half width of the flat centre lane (Benny's steering room)
+  const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
+  const time = { value: 0 };
+  if (M04.river) {
+    const nX = 28, nA = Math.ceil(len / 0.5);
+    const pos: number[] = [], aR: number[] = [], idx: number[] = [];
+    // cross-section: flat lane |x| <= XF (a hair above the old water plane), then sides curving up to the wall
+    const xs: { x: number; y: number }[] = [];
+    for (let i = 0; i <= nX; i++) {
+      const u = (i / nX) * 2 - 1, au = Math.abs(u);
+      const kf = 0.45; // share of the half section that is the flat lane
+      let x: number, y: number;
+      if (au <= kf) { x = (au / kf) * XF; y = 0.02; } else { const t = (au - kf) / (1 - kf); x = XF + (xW - XF) * t; y = 0.02 + RY * t * t; }
+      xs.push({ x: Math.sign(u) * x, y });
+    }
+    const arc: number[] = [0]; const mid = nX / 2;
+    for (let i = mid + 1; i <= nX; i++) arc[i] = (arc[i - 1] ?? 0) + Math.hypot(xs[i].x - xs[i - 1].x, xs[i].y - xs[i - 1].y);
+    arc[mid] = 0; for (let i = mid - 1; i >= 0; i--) arc[i] = arc[i + 1] - Math.hypot(xs[i].x - xs[i + 1].x, xs[i].y - xs[i + 1].y);
+    // from BEHIND (aB u before the opening, where the camera starts) to the far end; before the opening the river
+    // lies flat (no wall to climb), the sides rise over the first 2 u inside the tunnel
+    const aB = M04.num('m04rb', 14);
+    const nT = nA + Math.ceil(aB / 0.5);
+    for (let j = 0; j <= nT; j++) {
+      const a = -aB + (j / nT) * (len + aB);
+      const k = THREE.MathUtils.smoothstep(a, -0.6, 1.4);
+      for (let i = 0; i <= nX; i++) { pos.push(cx + xs[i].x, 0.02 + (xs[i].y - 0.02) * k, z0 - a); aR.push(arc[i], 0); }
+    }
+    for (let j = 0; j < nT; j++) for (let i = 0; i < nX; i++) {
+      const p0 = j * (nX + 1) + i, p1 = p0 + 1, p2 = p0 + nX + 1, p3 = p2 + 1;
+      idx.push(p0, p2, p1, p1, p2, p3);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('aR', new THREE.Float32BufferAttribute(aR, 2));
+    g.setIndex(idx);
+    const riv = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_river3.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+    riv.colorSpace = THREE.NoColorSpace; riv.flipY = false; riv.wrapS = riv.wrapT = THREE.RepeatWrapping;
+    riv.minFilter = THREE.LinearMipmapLinearFilter; riv.anisotropy = 8;
+    // tiles04.json river3: lateral +-4 u, along 1.757 .. 6.409 u from Benny's checkpoint water point
+    const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+      extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
+      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
+        uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
+        uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 } } });
+    const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
+    console.info('[match04] m04river', { xW, RY, XF });
+  }
+
   // sprite clouds (foam puffs, bubbles): world positions computed in the slide-local frame
-  const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number) => {
+  const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number, opaque = false, near = [1.2, 2.6]) => {
     const quad = new THREE.PlaneGeometry(1, 1);
     const g = new THREE.InstancedBufferGeometry();
     g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
@@ -367,8 +497,8 @@ export function addM04(ctx: M04Ctx) {
     g.setAttribute('aS', new THREE.InstancedBufferAttribute(aS, 1));
     g.instanceCount = items.length;
     const alpha = { value: 0 };
-    const m = new THREE.ShaderMaterial({ vertexShader: SPRITE_VERT, fragmentShader: frag, transparent: true, depthWrite: false, fog: false,
-      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha } });
+    const m = new THREE.ShaderMaterial({ vertexShader: SPRITE_VERT, fragmentShader: frag, transparent: !opaque, depthWrite: opaque, fog: false,
+      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value: new THREE.Vector2(near[0], near[1]) } } });
     const mesh = new THREE.Mesh(g, m);
     mesh.name = name; mesh.frustumCulled = false; mesh.renderOrder = order; mesh.visible = false; // invisible during the projector depth bake
     group.add(mesh);
@@ -376,7 +506,35 @@ export function addM04(ctx: M04Ctx) {
   };
   let seed = 4321; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
   const waterHalf = Math.sqrt(Math.max(0, r * r - cy * cy)); // where the water meets the tunnel wall
-  if (M04.foam) {
+  if (M04.foam && M04.river) {
+    // the painted foam clouds: big white puffy balls piled along both river edges where the river meets the gold wall,
+    // in clusters of varied size with short gaps, plus bigger banks before the opening
+    const items: { p: THREE.Vector3; r: number; s: number }[] = [];
+    for (const side of [-1, 1]) {
+      let a = 0.2 + rnd() * 0.5;
+      while (a < len - 1) {
+        const cl = 1.2 + rnd() * 2.2, n = Math.round(cl * (9 + rnd() * 6));
+        for (let i = 0; i < n; i++) {
+          const t = rnd(), env = Math.sin(Math.PI * t);
+          const rad = 0.10 + Math.pow(rnd(), 1.4) * 0.34 * (0.5 + 0.5 * env);
+          const inward = rnd() * 0.75 * (0.4 + 0.6 * env);            // spill a little down the river side
+          const tt = Math.max(0, 1 - inward / Math.max(0.1, xW - XF));
+          const x = side * (XF + (xW - XF) * tt - 0.05), y = 0.02 + RY * tt * tt + rad * (0.3 + 0.5 * rnd()) + 0.25 * env * rnd();
+          items.push({ p: new THREE.Vector3(cx + x, y, z0 - a - t * cl), r: rad, s: rnd() });
+        }
+        a += cl + 0.15 + rnd() * 0.7;
+      }
+    }
+    for (let a = -7; a < 0; a += 0.35) for (const side of [-1, 1]) {
+      const n = 3 + Math.floor(rnd() * 3);
+      for (let i = 0; i < n; i++) {
+        const rad = 0.16 + rnd() * 0.34;
+        const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);
+        items.push({ p: new THREE.Vector3(x, rad * 0.55 + rnd() * 0.3, z0 - a + rnd() * 0.3), r: rad, s: rnd() });
+      }
+    }
+    sprites(items, FOAM_FRAG, 'm04_foam', 3, true, [0.6, 1.2]);
+  } else if (M04.foam) {
     const items: { p: THREE.Vector3; r: number; s: number }[] = [];
     // inside the tunnel: irregular foam clusters (0.6–1.6 u long, gaps between) along both water edges, climbing a
     // little up the wall — the painted white-lilac bubbly foam, not a continuous rope
@@ -403,22 +561,25 @@ export function addM04(ctx: M04Ctx) {
         items.push({ p: new THREE.Vector3(x, rad * 0.55 + rnd() * 0.3, z0 - a + rnd() * 0.3), r: rad, s: rnd() });
       }
     }
-    sprites(items, FOAM_FRAG, 'm04_foam', 3);
+    sprites(items, FOAM_FRAG, 'm04_foam', 3, true, [0.6, 1.2]);
   }
   if (M04.bub) {
     const items: { p: THREE.Vector3; r: number; s: number }[] = [];
-    for (let i = 0; i < 110; i++) {
+    for (let i = 0; i < 140; i++) {
       const a = -6 + rnd() * (len - 4);
-      const th = (rnd() * 2 - 1) * 2.0, rad = 0.04 + Math.pow(rnd(), 2.6) * 0.3;
-      const rr = (0.45 + 0.5 * Math.sqrt(rnd())) * (r - 0.5);
-      const y = cy + rr * Math.cos(th);
-      if (y < rad + 0.25) continue;
-      items.push({ p: new THREE.Vector3(cx + rr * Math.sin(th), y, z0 - a), r: rad, s: rnd() });
+      const side = rnd() < 0.5 ? -1 : 1, edge = rnd() < 0.7;
+      const rad = 0.05 + Math.pow(rnd(), 2.2) * 0.42;
+      // most bubbles hover above the foam banks along the walls (as painted), some float higher in the tunnel air
+      const x = edge ? side * (xW - 0.3 - rnd() * 0.9) : side * rnd() * 2.6;
+      const y = edge ? RY + 0.2 + rnd() * 1.4 : 1.4 + rnd() * 2.6;
+      if (Math.hypot(x, y - cy) > r - rad - 0.15) continue;
+      items.push({ p: new THREE.Vector3(cx + x, y, z0 - a), r: rad, s: rnd() });
     }
-    sprites(items, BUB_FRAG, 'm04_bubbles', 6);
+    sprites(items, BUB_FRAG, 'm04_bubbles', 6, false, [1.5, 3.5]);
   }
 
   out.update = (cam: THREE.Vector3) => {
+    time.value = performance.now() / 1000;
     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
     for (const u of updaters) u(a2);
