@@ -53,3 +53,18 @@ of each ring hides the start of the next band (at 20 u ahead about half of it), 
 lip apex and its dark groove rows on the hidden back of the lip and the hidden band start -> the painted edges were never seen.
 Next = step 3: painted lip line on the start of the lip FRONT, painted darker strip + dark groove on the lip front ending at the
 apex silhouette (`&m04rplu=3.95&m04rpgu=4.28`, existing sub-switches, no new code).
+
+## Step 3 — painted lip line + groove on the visible lip front: `&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28`
+(19:42–20:00 UTC). Full set `step3_lip/3_NEW_<shot>.png` (a00, f03, f06, f10, f20, t66, t95, s_left_hard, s_right_hard; BEFORE =
+`2_BEFORE_<shot>.png` one folder up). Approved start view unchanged: frozen capture BEFORE vs this query, rows 180–1536,
+**0 differing pixels** (`step3_lip/start_view_pixeldiff_BEFORE_vs_NEW.png`). Clip (half size 432×768, same framing, CPU):
+`step3_lip/clip_BEFORE_swim.mp4`, `step3_lip/clip_NEW_swim.mp4` (added when rendered).
+Placement: painted row s 0.79 (bright lip line) at 3.95 u inside the 4.6 u period = where the lip bead starts to curve inward;
+painted rows 0.79 -> 1 (lip line, darker copper strip, dark groove) over the lip front, the dark groove at the lip apex = the inner
+edge every ring shows to the camera; beyond the apex (hidden back of the lip) held dark.
+Verdict: **GOOD IMPROVEMENT (rings' shape and surface)** — the interior is again a telescope of separate THICK rounded rings: broad,
+smooth, polished copper-gold bands, each ending in a dark groove line with small glows on the lip, like the painted rings; no plaid
+of thin bright cuts, no white star glints, no long streaks down the tunnel. Lead's V-smear concern: no repeated mark seen.
+Most visible remaining difference: COLOUR — the game rings are a uniform deeper copper-orange everywhere, whereas the painting's
+rings turn brighter, warmer YELLOW-gold toward the glowing centre and carry more pink-violet on the lower-left walls; the painted
+bright lip line is softer than in the painting.
