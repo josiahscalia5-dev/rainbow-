@@ -618,7 +618,5 @@ error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow
 | 2026-11-18T02:24:29+00:00 | manual:04-step1 | committed+pushed | `cb5ba30eb62a` | `ccr-58dd182e-m48xwk` | 10 | True |  |
 | 2026-11-18T02:25:00+00:00 | hook:Stop | committed+pushed | `ed932f9ce157` | `ccr-58dd182e-m48xwk` | 8 | True |  |
 | 2026-11-18T02:27:34+00:00 | daemon | committed+pushed | `c5da7fde163b` | `ccr-58dd182e-m48xwk` | 4 | True |  |
-| 2026-11-18T02:30:04+00:00 | hook:Stop | committed+pushed | `dff53772c200` | `ccr-58dd182e-m48xwk` | 8 | True |  |
-| 2026-11-18T02:30:45+00:00 | hook:Stop | committed+pushed | `9237fb39a3da` | `ccr-58dd182e-m48xwk` | 8 | True |  |
-| 2026-11-18T02:31:01+00:00 | hook:Stop | committed+pushed | `bf4a7b788d23` | `ccr-58dd182e-m48xwk` | 4 | True |  |
 | 2026-11-18T02:37:27+00:00 | daemon | committed+pushed | `25bfdf80e275` | `claude/rainbow-restore-c9-40w64b` | 4 | True |  |
+| 2026-11-18T02:37:39+00:00 | bootstrap:background | committed+pushed | `01e7e9051aef` | `claude/rainbow-restore-c9-40w64b` | 4 | True |  |
