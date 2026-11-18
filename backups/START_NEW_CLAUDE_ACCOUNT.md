@@ -1,6 +1,26 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-18 ~12:45 UTC, account 12 → next account) — use THIS prompt
+## ▶ NEWEST (2026-11-18 ~15:00 UTC, account 13 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`claude/rainbow-restore-autosave-1mgga0`** (account-13 lead; NOT the default
+branch). A new account has its own environment and usually NO keys: Claude checks first with free reads and opens the secure
+forms only if a check fails (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`).
+Hugging Face: optional claude.ai connector (not needed for public models).
+
+> RAINBOW — continue my EXISTING game exactly where account 13 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 13"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (my APPROVED visual goal — binding) and
+>    `docs/briefs/2026-11-18-r13/COORDINATION.md`.
+> 2. The clone is shallow: fetch each branch tip with `git fetch --depth=1 origin <b>:refs/remotes/origin/<b>`. Continue every
+>    `-c13` branch (or `-c12`/`-c11` where no `-c13` exists) on its own NEW `-c14` branch; unfinished edits are in
+>    `backups/wip/<branch>/`. Relaunch specialists with `docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md`.
+> 3. Keep TWO specialists working (05 + 08 were running; the lead rebuilt 04), rotate 07 → 06.
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures (start, middle, end, hard left / right) labelled
+>    GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~12:45 UTC, account 12 → next account) — superseded by the prompt above
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
 Claude Code cloud session on the repo, branch **`ccr-e908f8da-cy4yc1`** (account-12 lead; NOT the default branch). A new
 account may have no keys: Claude checks first with free reads and opens the secure forms only if a check fails

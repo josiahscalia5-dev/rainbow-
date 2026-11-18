@@ -1,4 +1,18 @@
-# ▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 12 (round 12) STATE (2026-11-18 ~12:45 UTC, lead branch `ccr-e908f8da-cy4yc1`)
+# ▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 13 (round 13) STATE (2026-11-18 ~15:00 UTC, lead branch `claude/rainbow-restore-autosave-1mgga0`)
+
+Started from the account-12 lead `ccr-e908f8da-cy4yc1` @ `d256bc4` (nothing merged). **The user APPROVED the visual-first plan
+(~15:00 UTC): `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` is binding for every specialist and every future account.**
+Branch map, services, verdicts: `docs/briefs/2026-11-18-r13/COORDINATION.md`. RUNNING: 05 `claude/rainbow-s05-match-c13`
+(water-fx-specialist, `/home/user/wt/s05`), 08 `claude/rainbow-s08-scenery-c13` (washer-environment-modeler, `/home/user/wt/s08`);
+lead rebuilds 04 on `claude/rainbow-s04-match-c13` (`/home/user/wt/s04`). Keys: this NEW account's environment had none — the user
+re-entered World Labs (5,420 credits, 08 world 200) and fal (01a1ea70 COMPLETED) via the secure forms. Shallow clone: fetch branch
+tips with `--depth=1`. TRAP fixed: `backups/autosave.config.json` → `branch` must name the CURRENT lead branch (it named the
+previous account's branch; protecting that branch then blocked every save). If account 13 runs out: `-c14` branches from each
+NEWEST `-c13` tip; never write `-c13` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶ ACCOUNT 12 (round 12) STATE (2026-11-18 ~12:45 UTC, lead branch `ccr-e908f8da-cy4yc1`)
 
 Started from the account-11 lead `ccr-3b139b48-0qqkkz` @ `f06a53e` (nothing merged). Branch map + verified services:
 **`docs/briefs/2026-11-18-r12/COORDINATION.md`**. RUNNING: 05 `claude/rainbow-s05-match-c12` (water-fx-specialist,

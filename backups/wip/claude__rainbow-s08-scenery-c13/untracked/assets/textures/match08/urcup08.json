@@ -1,17 +1,26 @@
 {
  "note": "upper-right cup refit + unrolled cup texture (tools/match08/urcup08.py): u = azimuth (0.5 toward the projector), v = underside 0-0.15, band 0.15-0.45, dome 0.45-1",
  "c": [
-  20.57667,
-  -104.83722,
+  21.56789,
+  -104.57017,
   -322.0
  ],
- "rx": 1.95362,
- "ry": 1.84173,
- "band": 1.55,
- "phi0": 1.733093,
+ "rx": 2.9948,
+ "ry": 1.8871,
+ "band": 0.89736,
+ "a": [
+  -0.235328,
+  0.914602,
+  0.328823
+ ],
+ "e1": [
+  -0.122884,
+  -0.363608,
+  0.923411
+ ],
  "texels": {
-  "painted": 69300,
-  "mirror": 28076,
-  "continued": 348064
+  "painted": 65786,
+  "mirror": 54854,
+  "continued": 324800
  }
 }

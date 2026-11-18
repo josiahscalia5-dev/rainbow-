@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 17033,
-   "sha256": "ef7bac080c219dc90344f7ec92d96349651023ed8df4130d314b91c4dff77097"
+   "bytes": 17394,
+   "sha256": "9cf97b0d30c3b26ccb64de1ce31dd838ddb7e169202ad2d5a7bd283006c475d8"
   },
   {
    "path": "README_FIRST.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16015,
-   "sha256": "524422fa27bfaf2276ef35145a1f4957e3883d56cb881e06bc027b8ffd2e7c5a"
+   "sha256": "86216243de1c985ede5c7f6b2ac37a8af48e283a625b1d1d1b4e2cc6f216c2d1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -638,8 +638,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 11001,
-   "sha256": "942a3fcf76bcdd17be962fef23c0168efa044c85e0526cc873359b45758856bc"
+   "bytes": 12811,
+   "sha256": "9389ec2fcc508e50e054e8038c201672f4e6ce64537d67838176dce8ba4f0fa0"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -854,7 +854,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c13/INFO.json",
    "bytes": 477,
-   "sha256": "aef46d20b735f09dba53cc3376a7bf2ff48e30e00618f5927934c0b965ee9cfa"
+   "sha256": "9e45d989aa42245d521f76ba4e6e794abf2d7d5707af5c22e278ede97a4a12da"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -889,7 +889,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/INFO.json",
    "bytes": 534,
-   "sha256": "02121d96b8bccc41a072807f8c1057f8f9e5a2ee880bba226ce1a758193a0f5d"
+   "sha256": "ea34b072105f12666d2057eb537efe49ffbbfde39abe8cfb2461f57fe809aba1"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/tracked.patch",
@@ -954,7 +954,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/INFO.json",
    "bytes": 625,
-   "sha256": "0e249659a1a936f786350b24ec5d42a592a90c384bcecb1f00c2a3e9885e8c7e"
+   "sha256": "6e3c7325376f286cec6850b2f1439d2638146500db5ec1580b2b99770217bfc4"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/tracked.patch",
@@ -1033,8 +1033,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 47852,
-   "sha256": "2d1034cb33b6c51ff8f29cd4d418621f1c5d3ca79291c3b7e85b082128b6fa50"
+   "bytes": 49081,
+   "sha256": "d2f7febdd4392d7b2aa9a394e5124516303aae2c050256181c687caa0e04ccd8"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",

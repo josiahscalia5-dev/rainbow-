@@ -3,12 +3,14 @@
 In the approved view the gold arch's inner edge runs diagonally across the upper-right cup: its right part and its top
 were never painted. The kept m08cup fills a hidden point from its mirror point (vertical plane through the cup axis and
 the projector), but the top near the axis is hidden on BOTH sides -> plain gold patch with X-shaped seams (the arch edge
-and its mirror image), and the fitted proxy was narrower than the painted cup (painted right edge x ~780 / axis x 720 /
-cap top y ~362 vs proxy 760 / 713 / 370), so painted cup pixels lay on the door wall and slid off the cup.
+and its mirror image). The fitted proxy was also an UPRIGHT half-dome narrower than the painted cup, while the painted
+cup is a twin of the upper-left one drawn TILTED (leaning ~10 deg toward the chamber centre, its underside dish seen
+strongly from below: dish ellipse centre ~(741, 437), half-width ~72 px, rising to the right): mirroring the tilted band
+about an upright axis drew the X, and painted cup pixels lay on the door wall and slid off the cup.
 
-1. Refit (proxy only; the approved view still shows the same plate pixels): axis through the painted axis (x 720,
-   cupmask08.UR_AXIS), left silhouette at the painted left edge (x 664) at rim height, pole at y 361 (just above the
-   painted cap top at x 702, y 365) -> centre x / rx / ry.
+1. Refit (proxy only; the approved view still shows the same plate pixels): a tilted cup (rim centre, dome height, band
+   height, roll, pitch; radius = the upper-left twin's) least-squares fitted to the painted dish outline, cap / band line
+   and cap outline (rms ~2.6 px).
 2. Unrolled cup texture in cup coordinates (u = azimuth, 0.5 = toward the projector; v = underside disc 0-0.15, band
    0.15-0.45, dome 0.45-1): a texel takes the user's plate pixel where the approved view saw that cup point inside the
    painted cup outline (cupmask08 UR polygon, eroded 2 px, not grazing); else its mirror texel (u -> 1 - u, same as
@@ -38,33 +40,67 @@ def proj(p):
 
 UR = [(664, 435), (665, 417.5), (672, 400), (685, 380), (695, 367), (702, 365), (712, 375), (722, 390), (740, 410),
       (755, 417.5), (770, 430), (780, 447.5), (775, 455), (752, 461), (715, 464), (675, 457.5)]  # = cupmask08.py
-AXIS_X, LEFT_X, POLE_Y = 720.0, 664.0, 361.0
-BAND = 1.55  # m08cupg upper-right band height (src/world/match08.ts)
 s = L['spouts']['UR']; c0 = np.array(s['c'], float)
 
 
-# --- 1. refit: shift the centre along x, solve rx (left silhouette at rim height) and ry (pole) -----------------------
-def left_edge(c, rx):
-    return min(proj(c + np.array([rx * math.cos(a), 0, rx * math.sin(a)]))[0] for a in np.linspace(0, 2 * math.pi, 721))
+# --- 1. refit: a TILTED cup (the painted cup leans ~10 deg toward the chamber centre and shows its underside dish
+# strongly from below). Fitted to the painted dish outline, the cap / band line and the cap outline (traced by eye on a
+# 10 px grid at 5-6x zoom); the cup's right part is hidden behind the arch, so its radius is the upper-left twin's (same
+# depth, mirrored pair): rx = spouts.UL.rx. Unknowns: rim centre x, y (z = the fitted cup depth), dome height ry, band
+# height B, roll (in the picture plane) and pitch (top away from the projector).
+from scipy.optimize import least_squares
+from scipy.spatial import ConvexHull
+DISH = [(668, 440), (690, 430), (710, 421), (730, 415), (747, 411), (672, 455), (700, 459), (720, 461), (740, 462), (760, 458),
+        (777, 450), (666, 448)]
+RIM = [(665, 432), (680, 414), (700, 398), (720, 385)]
+CAP = [(664, 425), (672, 400), (685, 380), (695, 367), (702, 365)]
+RXF = L['spouts']['UL']['rx']; Z0 = c0[2]
 
 
-c = c0.copy()
-for _ in range(30):
-    c[0] += (AXIS_X - proj(c)[0]) * (np.linalg.norm(c - VP) / (f * H / 2))
-rx = s['rx']
-for _ in range(40):
-    e = left_edge(c, rx) - LEFT_X
-    rx += e * (np.linalg.norm(c - VP) / (f * H / 2))
-ry = s['ry']
-for _ in range(40):
-    e = proj(c + np.array([0, ry, 0]))[1] - POLE_Y
-    ry += e * (np.linalg.norm(c - VP) / (f * H / 2))
-print('refit centre', c.round(4), 'rx', round(rx, 4), 'ry', round(ry, 4), '(was', c0.round(4), s['rx'], s['ry'], ')')
-print('check axis', proj(c).round(1), 'left', round(left_edge(c, rx), 1), 'pole', proj(c + np.array([0, ry, 0])).round(1))
+def rot(v, k, t):
+    k = k / np.linalg.norm(k); return v * math.cos(t) + np.cross(k, v) * math.sin(t) + k * np.dot(k, v) * (1 - math.cos(t))
+
+
+def frame(roll, pitch, R):
+    d = VP - R; d[1] = 0; d /= np.linalg.norm(d)
+    side = np.cross(np.array([0, 1.0, 0]), d)
+    a = rot(rot(np.array([0, 1.0, 0]), side, pitch), d, roll)
+    e1 = (VP - R) - np.dot(VP - R, a) * a; e1 /= np.linalg.norm(e1)
+    return a, e1, np.cross(a, e1)
+
+
+def model(q):
+    x, y, ry_, B_, roll, pitch = q
+    R = np.array([x, y, Z0]); a, e1, e2 = frame(roll, pitch, R)
+    ph = np.linspace(-math.pi, math.pi, 181)
+    ring = lambda hh: np.array([proj(R + hh * a + RXF * (math.cos(t) * e1 + math.sin(t) * e2)) for t in ph])
+    dome = np.array([proj(R + ry_ * math.sin(th) * a + RXF * math.cos(th) * (math.cos(t) * e1 + math.sin(t) * e2))
+                     for th in np.linspace(0, math.pi / 2, 16) for t in ph[::4]])
+    return R, a, e1, ring(-B_), ring(0.0), dome
+
+
+def segd(P, poly):
+    A = poly[:-1]; ab = poly[1:] - A
+    t = np.clip(((P - A) * ab).sum(1) / np.maximum((ab * ab).sum(1), 1e-9), 0, 1)
+    return float(np.min(np.linalg.norm(A + t[:, None] * ab - P, axis=1)))
+
+
+def res(q):
+    R, a, e1, bot, top, dome = model(q)
+    pts = np.concatenate([dome, bot, top]); hull = pts[ConvexHull(pts).vertices]; hull = np.concatenate([hull, hull[:1]])
+    return np.array([segd(np.array(p, float), bot) for p in DISH] + [segd(np.array(p, float), top) for p in RIM]
+                    + [segd(np.array(p, float), hull) for p in CAP])
+
+
+sol = least_squares(res, [c0[0] + 0.8, c0[1], 2.2, 0.7, math.radians(10), math.radians(14)], x_scale=[0.5, 0.5, 0.5, 0.3, 0.2, 0.2])
+q = sol.x
+R, a, e1, _, _, _ = model(q); e2 = np.cross(a, e1)
+c = R; rx = RXF; ry = q[2]; BAND = q[3]
+print('tilted refit: rim centre', R.round(4), 'axis', a.round(4), 'rx', round(rx, 4), 'ry', round(ry, 4), 'band', round(BAND, 4),
+      'roll', round(math.degrees(q[4]), 2), 'pitch', round(math.degrees(q[5]), 2), 'rms px', round(float(np.sqrt((res(q) ** 2).mean())), 2))
 
 # --- 2. unrolled texture ------------------------------------------------------------------------------------------
 TW, TH = 1024, 512
-phi0 = math.atan2(VP[2] - c[2], VP[0] - c[0])  # azimuth toward the projector -> u = 0.5
 plate = np.asarray(Image.open('assets/textures/match08/plate08_hybrid.png').convert('RGB')).astype(np.float32)
 PH, PW = plate.shape[:2]
 mask = Image.new('L', (W * 4, H * 4), 0)
@@ -73,19 +109,20 @@ mask = np.asarray(mask.filter(ImageFilter.MinFilter(17))) > 127  # eroded 2 px (
 
 
 def surface(u, v):
-    """cup point + outward normal for texture coordinates (vectorised)"""
-    a = phi0 + (u - 0.5) * 2 * math.pi
-    ca, sa = np.cos(a), np.sin(a)
+    """cup point + outward normal for texture coordinates (vectorised); frame a (axis), e1 (toward the projector), e2"""
+    t = (u - 0.5) * 2 * math.pi
+    ca, sa = np.cos(t)[..., None], np.sin(t)[..., None]
+    rad = ca * e1 + sa * e2
     P = np.zeros(u.shape + (3,)); N = np.zeros(u.shape + (3,))
     d = v < 0.15; b = (v >= 0.15) & (v < 0.45); m = v >= 0.45
-    rho = v / 0.15
-    P[d] = np.stack([rho[d] * rx * ca[d], np.full(d.sum(), -BAND), rho[d] * rx * sa[d]], -1); N[d] = (0, -1, 0)
-    sb = (v - 0.15) / 0.30
-    P[b] = np.stack([rx * ca[b], -BAND * (1 - sb[b]), rx * sa[b]], -1); N[b] = np.stack([ca[b], 0 * ca[b], sa[b]], -1)
-    th = (v - 0.45) / 0.55 * (math.pi / 2)
+    rho = (v / 0.15)[..., None]
+    P[d] = (rho * rx * rad - BAND * a)[d]; N[d] = -a
+    sb = ((v - 0.15) / 0.30)[..., None]
+    P[b] = (rx * rad - BAND * (1 - sb) * a)[b]; N[b] = rad[b]
+    th = ((v - 0.45) / 0.55 * (math.pi / 2))[..., None]
     ct, st = np.cos(th), np.sin(th)
-    P[m] = np.stack([rx * ct[m] * ca[m], ry * st[m], rx * ct[m] * sa[m]], -1)
-    N[m] = np.stack([ct[m] * ca[m] / rx, st[m] / ry, ct[m] * sa[m] / rx], -1)
+    P[m] = (rx * ct * rad + ry * st * a)[m]
+    N[m] = (ct * rad / rx + st * a / ry)[m]
     N /= np.linalg.norm(N, axis=-1, keepdims=True)
     return P + c, N
 
@@ -167,8 +204,8 @@ blur = np.asarray(Image.fromarray(np.clip(tex, 0, 255).astype(np.uint8)).filter(
 tex[cont] = tex[cont] * 0.5 + blur[cont] * 0.5
 Image.fromarray(np.clip(tex, 0, 255).astype(np.uint8)).save(out_png)
 json.dump({'note': 'upper-right cup refit + unrolled cup texture (tools/match08/urcup08.py): u = azimuth (0.5 toward the projector), '
-                   'v = underside 0-0.15, band 0.15-0.45, dome 0.45-1', 'c': [round(float(x), 5) for x in c], 'rx': round(rx, 5),
-           'ry': round(ry, 5), 'band': BAND, 'phi0': round(phi0, 6),
+                   'v = underside 0-0.15, band 0.15-0.45, dome 0.45-1', 'c': [round(float(x), 5) for x in c], 'rx': round(float(rx), 5),
+           'ry': round(float(ry), 5), 'band': round(float(BAND), 5), 'a': [round(float(x), 6) for x in a], 'e1': [round(float(x), 6) for x in e1],
            'texels': {'painted': int((src == 1).sum()), 'mirror': int((src == 2).sum()), 'continued': int((src == 3).sum())}},
           open(out_json, 'w'), indent=1)
 print('texels painted', int((src == 1).sum()), 'mirror', int((src == 2).sum()), 'continued', int((src == 3).sum()))

@@ -3072,3 +3072,99 @@ Keep the Screen 05 and 08 specialists working, preserve successful improvements,
 
 Show me the next full-size APPROVED / BEFORE / NEW visual comparisons. Do not consider any screen finished until I approve it.
 
+### 🤖 Claude — 2026-11-18T14:51:57.052Z
+
+Thank you. I'll save your approved requirements as a binding rule file for every specialist and future account, then continue with Screen 04.
+
+### 🤖 Claude — 2026-11-18T14:52:14.458Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md", "content": "# User-approved visual goal — 2026-11-18 ~15:00 UTC (account 13) — BINDING for every specialist and every future Claude account\n\nThe user approved this understanding in their own words: \"YES, CLAUDIA. I approve your visual-first plan for all five original\napproved Rainbow screens.\" It adds to (never replaces) `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`,\n`docs/briefs/2026-11-18-r10/RULES_R10.md` and `docs/briefs/2026-11-18-r8/COMMON_RULES.md`.\n\n## 1. What the user wants\n* The u …[+4702 chars]`
+
+### 🧑 User — 2026-11-18T14:52:14.503Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T14:52:15.452Z
+
+> 🔧 **Bash** `{"command": "head -3 backups/START_NEW_CLAUDE_ACCOUNT.md | cut -c1-300; grep -n \"^#\" backups/START_NEW_CLAUDE_ACCOUNT.md | head -5", "description": "Read the top of the new-account start file"}`
+
+### 🧑 User — 2026-11-18T14:52:15.541Z
+
+> ↩︎ result: # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶ NEWEST (2026-11-18 ~12:45 UTC, account 12 → next account) — use THIS prompt
+> 1:# Paste this into Claude Code on the next Claude account
+> 3:## ▶ NEWEST (2026-11-18 ~12:45 UTC, account 12 → next account) — use THIS prompt
+> 20:## ▶ (2026-11-18 ~11:38 UTC, account 11 → next account) — superseded by the prompt above
+> 39:## ▶ (2026-11-18 ~11:30 UTC, account 10 → next account) — superseded by the prompt above
+> 60:## ▶ NEWEST (2026-11-18 ~02:25 UTC, account 8 → next account) — use THIS prompt
+
+### 🤖 Claude — 2026-11-18T14:52:17.346Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "limit": 19}`
+
+### 🧑 User — 2026-11-18T14:52:17.372Z
+
+> ↩︎ result: 1	# Paste this into Claude Code on the next Claude account
+> 2	
+> 3	## ▶ NEWEST (2026-11-18 ~12:45 UTC, account 12 → next account) — use THIS prompt
+> 4	Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+> 5	Claude Code cloud session on the repo, branch **`ccr-e908f8da-cy4yc1`** (account-12 lead; NOT the default branch). A new
+> 6	account may have no keys: Claude checks first with free reads and opens the secure forms only if a check fails
+> 7	(World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`).
+> 8	
+> 9	> RAINBOW — continue my EXISTING game exactly where account 12 stopped. Do NOT restart, redesign, merge or delete anything.
+> 10	> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+> 11	>    ("ACCOUNT 12"), then `docs/briefs/2026-11-18-r12/COORDINATION.md` and the rules it names.
+> 12	> 2. Fetch the newest tips of every `-c12` branch (or `-c11` where no `-c12` exists); continue each on its own NEW `-c13`
+> 13	>    branch from that tip. Unfinished specialist edits are in `backups/wip/<branch>/` (restore steps in `INFO.json`).
+> 14	>  …[+359 chars]
+
+### 🤖 Claude — 2026-11-18T14:52:25.985Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "old_string": "# Paste this into Claude Code on the next Claude account\n\n## ▶ NEWEST (2026-11-18 ~12:45 UTC, account 12 → next account) — use THIS prompt", "new_string": "# Paste this into Claude Code on the next Claude account\n\n## ▶ NEWEST (2026-11-18 ~15:00 UTC, account 13 → next account) — use THIS prompt\nBefore pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a\nClaude Code cloud session on the repo, branch **`claude/rainbow-restore-a …[+1630 chars]`
+
+### 🧑 User — 2026-11-18T14:52:26.013Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:52:32.536Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "old_string": "# ▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 12 (round 12) STATE (2026-11-18 ~12:45 UTC, lead branch `ccr-e908f8da-cy4yc1`)", "new_string": "# ▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 13 (round 13) STATE (2026-11-18 ~15:00 UTC, lead branch `claude/rainbow-restore-autosave-1mgga0`)\n\nStarted from the account-12 lead `ccr-e908f8da-cy4yc1` @ `d256bc4` (nothing merged). **The user APPROVED the visual-first plan\n(~15:00 UTC): `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` is binding for every specialist and ever …[+962 chars]`
+
+### 🧑 User — 2026-11-18T14:52:32.584Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:52:34.924Z
+
+I'll also point `CLAUDE.md` at the new binding file so every future session reads it first.
+
+### 🤖 Claude — 2026-11-18T14:52:38.278Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "2. Read the TOP section of **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ACCOUNT 11 (round 11) STATE\" (2026-11-18,", "new_string": "2. **BINDING, user-approved 2026-11-18 ~15:00 UTC: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`** (the exact approved\n   scenery of 04–08 THROUGHOUT Benny's swimming; read it before any screen work). Read the TOP section of\n   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ACCOUNT 13\" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map\n   `docs/brie …[+114 chars]`
+
+### 🧑 User — 2026-11-18T14:52:38.317Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:52:40.528Z
+
+> 🔧 **SendMessage** `{"to": "s05", "summary": "User approved plan; binding goal file", "message": "User approved the visual-first plan: docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md (in /home/user/rainbow-) is now binding — read it once, nothing changes in your task list. Your steps 1 (rejected) and 2 (m05join, GOOD IMPROVEMENT — I checked it by eye too) were shown to the user. Keep going with task 3 (foam cut by straight edges at t75/k81, flat pale-lilac far left bank), then 4 and 5. Same reporting.", "type": "message", "recipient": "s05", "recipient_kind": "name", "content": "User approved the visual-first  …[+21 chars]`
+
+### 🧑 User — 2026-11-18T14:52:40.542Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s05 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aa63a6eba875d2b13","name":"s05","ref":"52dedf"}}
+
+### 🤖 Claude — 2026-11-18T14:52:42.386Z
+
+> 🔧 **SendMessage** `{"to": "s08", "summary": "User approved plan; binding goal file", "message": "User approved the visual-first plan: docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md (in /home/user/rainbow-) is now binding — read it once, nothing changes in your task list. Your step 1 (m08bore+m08flange, GOOD IMPROVEMENT, small — I checked the top-left ring by eye too) was shown to the user. Keep going with the upper-right cup's gold wedge, then the S-river / near-water stretching, wall seams, foam + coins. Same reporting.", "type": "message", "recipient": "s08", "recipient_kind": "name", "content": "User appr …[+43 chars]`
+
+### 🧑 User — 2026-11-18T14:52:42.399Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s08 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a734238476cb500fe","name":"s08","ref":"57b796"}}
+
+### 🤖 Claude — 2026-11-18T14:52:43.986Z
+
+> 🔧 **Bash** `{"command": "timeout 280 python3 scripts/rainbow-autosave.py --reason manual:user-approved-visual-goal 2>&1 | grep -E '\"(result|commit|pushed_verified)\"'; echo \"LOCAL $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 30 git ls-remote origin refs/heads/claude/rainbow-restore-autosave-1mgga0 | cut -f1)\"", "description": "Save the binding goal files to GitHub", "timeout": 330000}`
+

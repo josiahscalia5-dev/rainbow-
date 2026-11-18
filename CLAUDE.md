@@ -11,7 +11,10 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh --skip-resume` yourself; from a branch without it:
    `git fetch origin ccr-9c4a8ad6-xovgsx && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh --skip-resume`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
-2. Read the TOP section of **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ACCOUNT 11 (round 11) STATE" (2026-11-18,
+2. **BINDING, user-approved 2026-11-18 ~15:00 UTC: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`** (the exact approved
+   scenery of 04–08 THROUGHOUT Benny's swimming; read it before any screen work). Read the TOP section of
+   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ACCOUNT 13" (lead `claude/rainbow-restore-autosave-1mgga0`, `-c13` map
+   `docs/briefs/2026-11-18-r13/COORDINATION.md`); before it "ACCOUNT 12", then "ACCOUNT 11 (round 11) STATE" (2026-11-18,
    lead `ccr-3b139b48-0qqkkz`, `-c11` branch map `docs/briefs/2026-11-18-r11/COORDINATION.md`; a new account must re-enter
    the World Labs + fal keys via the secure form); before it "ACCOUNT 10" (lead `ccr-c526614d-tw0yro`); then "ACCOUNT 9 (round 9) STATE" (2026-11-18,
    lead `claude/rainbow-restore-c9-40w64b`, `-c9` branch map `docs/briefs/2026-11-18-r9/COORDINATION.md`); before it: "ACCOUNT 8 (round 8) STATE" (2026-11-18,
