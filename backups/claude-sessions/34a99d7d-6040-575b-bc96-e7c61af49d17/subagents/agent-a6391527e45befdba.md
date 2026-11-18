@@ -1489,3 +1489,70 @@ I'll start by inspecting where the previous instance stopped.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:25:45.922Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 330,420p src/world/match04m4.ts", "description": "View the sprite and foam section to rework"}`
+
+### 🧑 User — 2026-11-18T02:25:45.956Z
+
+> ↩︎ result: const k = THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);
+>         const nr = rad + (r + 0.05 - rad) * k;
+>         pa.setX(i, (x / rad) * nr); pa.setZ(i, (z / rad) * nr);
+>       }
+>       tun.computeVertexNormals();
+>     }
+>     // lathe axis = +y; rotate so y -> -z (down the tunnel), then place at the mouth
+>     tun.rotateX(-Math.PI / 2).translate(cx, cy, z0);
+>     const tm = new THREE.Mesh(tun, gm); tm.name = 'm04_ring_tunnel'; group.add(tm);
+>     // the washer opening: thick polished ring r 3.58 -> 4.11 in front of the wall, rounded lips, bulb row on the face
+>     const R0 = r, R1 = ctx.outerR;
+>     const mp: { r: number; a: number; part: number }[] = [
+>       { r: R0 + 0.02, a: 0.5, part: 1 }, { r: R0 - 0.04, a: 0.2, part: 1 }, { r: R0 - 0.06, a: -0.2, part: 1 },
+>       { r: R0 - 0.02, a: -0.45, part: 1 }, { r: R0 + 0.06, a: -0.58, part: 1 }, { r: R0 + 0.12, a: -0.62, part: 3 },
+>       { r: (R0 + R1) / 2, a: -0.66, part: 3 }, { r: R1 - 0.1, a: -0.62, part: 3 }, { r: R1 - 0.04, a: -0.56, part: 1 },
+>       { r: R1 + 0.01, a: -0.42, part: 1 }, { r: R1 + 0.02, a: -0.1, part: 1 }, { r: R1 + 0.02, a: 0.05, part: 2 },
+>     ];
+>     const mouth = lathe(mp, 192, () => -1);
+>     mouth.rotateX(-Math …[+4333 chars]
+
+### 🤖 Claude — 2026-11-18T02:26:16.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\n# 1) switch\ns=s.replace(\"  wave: on('m04wave'),\\n\",\"  wave: on('m04wave'),\\n  river: on('m04river'),\\n\",1)\ns=s.replace(\"  const any = M04.ring || M04.foam || M04.bub || M04.arrow || M04.wave;\",\"  const any = M04.ring || M04.foam || M04.bub || M04.arrow || M04.wave || M04.river;\",1)\n# 2) river shaders before the sprite shaders\na=\"/** world-space bubble discs + foam puffs share one tiny shader each\"\nriver_glsl='''/** `m04river`: the wide painted river inside the tunnel — a curv …[+5797 chars]`
+
+### 🧑 User — 2026-11-18T02:26:16.133Z
+
+> ↩︎ result: 288:varying float vF;
+> 293:  vF = smoothstep(uNear.x, uNear.y, -mv.z);
+> 297:const BUB_FRAG = /* glsl */ `
+> 303:varying float vF;
+> 317:  gl_FragColor = vec4(pjInverse(col), clamp(alpha, 0.0, 1.0) * uAlpha * vF);
+> 325:varying float vF;
+> 329:  if (r > 1.0 || uAlpha * vF < 0.5) discard;
+
+### 🤖 Claude — 2026-11-18T02:26:25.524Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\nimport json, numpy as np\nL=json.load(open('assets/textures/match04/proj04.json'))\nMw=np.array(L['camera']['matrixWorld']).reshape(4,4).T\nfov=np.radians(L['camera']['fov']); W,H=L['camera']['size']; f=(H/2)/np.tan(fov/2)\nX=np.array(L['X']);U=np.array(L['U']);Dn=-np.array(L['D']);O=np.array(L['water'])\nC=Mw[:3,3]\nfor (x,y) in [(450,960),(460,880),(465,815),(470,765),(475,728),(480,705)]:\n    d_cam=np.array([(x-W/2)/f, -(y-H/2)/f, -1.0]); d=Mw[:3,:3]@d_cam\n    # plane: (P-O).U = 0\n    t=-((C-O)@U)/(d@U); P=C+t*d\n    print((x,y), 'a …[+136 chars]`
+
+### 🧑 User — 2026-11-18T02:26:25.648Z
+
+> ↩︎ result: (450, 960) along 9.58 lat 0.03
+> (460, 880) along 16.35 lat -0.0
+> (465, 815) along 28.18 lat -0.14
+> (470, 765) along 51.19 lat -0.37
+> (475, 728) along 106.94 lat -0.79
+> (480, 705) along 278.73 lat -1.69
+
+### 🤖 Claude — 2026-11-18T02:27:05.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ns=s.replace(\"    float d = chev(vec2(vS, -(along - ac) - 0.25), uArr.z, uArr.w);\",\"    float d = chev(vec2(vS, along - ac - 0.3), uArr.z, uArr.w);\",1)\n# lathe flattening reaches higher up when the river trough is on (the trough sides meet a plain wall)\ns=s.replace(\"        const k = THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);\",\n\"        const k = M04.river ? THREE.MathUtils.smoothstep(ang, angW - 0.95, angW - 0.55) : THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0 …[+7983 chars]`
+
+### 🧑 User — 2026-11-18T02:27:07.448Z
+
+> ↩︎ result: 497:  const waterHalf = Math.sqrt(Math.max(0, r * r - cy * cy)); // where the water meets the tunnel wall
+> 521:        const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);
+> 537:          const th = Math.asin(Math.min(1, waterHalf / r)) + up / r; // walk up the wall from the water line (th 0 = bottom)
+
+### 🤖 Claude — 2026-11-18T02:27:14.125Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; Q=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1\"; node tools/match04/audit04.mjs $SP/r_w1a \"$Q&m04fade0=-2&m04fade1=-1\" a00_approved_view 2>&1 | grep -i \"error: 0\\|m04river\"; node tools/match04/audit04.mjs $SP/r_w1 \"$Q\" f06_forward6u,t33_through_screen,t66_through_screen,s_left_hard 2>&1 | grep -i \"error: 0\"; python3 $SP/sheet.py $SP/s11.png 0.3 a00_approved_view,f06_forward6u,t33_through_screen,t66_through_screen,s_left_hard $SP/r_w1a $SP/r_w1", "descripti …[+53 chars]`
+

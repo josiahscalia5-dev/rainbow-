@@ -1521,3 +1521,162 @@ About 1.5 h left. Let me render the full 12-position set with the kept query to 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:25:11.669Z
+
+The steering frames hold up; the hard-left frame shows Benny on a pale, stretched bank strip. Let me zoom on the near/far river joint (the "far-water seam" in the user's list) at f20 and t33.
+
+### 🤖 Claude — 2026-11-18T02:25:14.624Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('$S/k3/f20_forward20u.png').crop((150,480,864,760)); b=Image.open('$S/k3/t33_through_screen.png').crop((150,480,864,760)); c=Image.open('references/05_flow_into_the_current.png').crop((150,480,864,760))\nout=Image.new('RGB',(714,860)); out.paste(a,(0,0)); out.paste(b,(0,290)); out.paste(c,(0,580)); out.save('$S/k3/seam.png')\"", "description": "Crop far-river seam region for inspection"}`
+
+### 🧑 User — 2026-11-18T02:25:14.899Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:25:17.025Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/k3/seam.png"}`
+
+### 🧑 User — 2026-11-18T02:25:17.055Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:25:53.776Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p src/world/match05far.ts | head -60; grep -n \"zs\\b\\|zs =\\|sSeam\\|seamS\\|const seam\\|atLock\\|open =\" src/world/match05far.ts | head -30", "description": "Read match05far header and seam variables"}`
+
+### 🧑 User — 2026-11-18T02:25:53.812Z
+
+> ↩︎ result: /**
+>  * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+>  * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every
+>  * frame instead of folding away.
+>  *
+>  * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the
+>  * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the
+>  * camera saw the far rings / river morphing out and the 06 arch hall behind them — the "old pink default world" of
+>  * the lead's audit (t66 / t95 frames). The compression is exact for ANY eye position once its two eye-dependent
+>  * constants (D0 = eye depth of the seam, q = eye offset from the axis) follow the eye, so under this switch:
+>  *   * the VIRTUAL tunnel (virtual depth Z beyond sF05, tunnel coordinate v = sF05 + u(Z)) stays put — rings, wall rows,
+>  *     the baked far water F and the far river layout are anchored to it, so everything approaches like real geometry;
+>  *   * the seam slides ahead of the eye so it never comes nearer than the locked view had it (D0lock ≈ …[+2375 chars]
+
+### 🤖 Claude — 2026-11-18T02:25:55.866Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 60,110p src/world/match05far.ts && sed -n 140,175p src/world/match05far.ts && sed -n 205,250p src/world/match05far.ts", "description": "Read far tunnel seam math"}`
+
+### 🧑 User — 2026-11-18T02:25:55.904Z
+
+> ↩︎ result: export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+>   const { ft } = a;
+>   const L = ft.L, c0 = ft.c0, T = ft.T, U = ft.U, Rt = ft.Rt, R = ft.R, sF = ft.sF;
+>   const D0lock = ft.D0;
+>   // the river layout depends on Z only: tabulate it once (dense near the seam) and interpolate
+>   const NT = 2400;
+>   const tz = new Float64Array(NT + 1), tr = new Float64Array((NT + 1) * ROW_KEYS.length);
+>   for (let n = 0; n <= NT; n++) {
+>     const Z = a.zEnd * (n / NT) ** 2;
+>     tz[n] = Z;
+>     const r = a.lay.row(Z);
+>     ROW_KEYS.forEach((k, i) => { tr[n * ROW_KEYS.length + i] = r[k]; });
+>   }
+>   const rowAt = (Z: number): FarRiverRow => {
+>     const f = Math.sqrt(Math.min(1, Math.max(0, Z / a.zEnd))) * NT;
+>     const n = Math.min(NT - 1, Math.floor(f)), w = f - n;
+>     const o = {} as FarRiverRow;
+>     ROW_KEYS.forEach((k, i) => { o[k] = tr[n * ROW_KEYS.length + i] * (1 - w) + tr[(n + 1) * ROW_KEYS.length + i] * w; });
+>     return o;
+>   };
+> 
+>   // live state
+>   let D0 = D0lock, zs = 0;
+>   const q = new THREE.Vector3();
+>   const zOf = (Z: number) => (Z <= zs ? Z : zs + (Z - zs) / (1 + (Z - zs) / L));
+>   const kOf = (Z: number) => (D0 + zOf(Z)) / (D0 + Z);
+>   const cOf = (Z: number) => { if  …[+5679 chars]
+
+### 🤖 Claude — 2026-11-18T02:26:42.841Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/match05/tgtwall05/proj05_E.png')\nbg=Image.new('RGBA',im.size,(40,40,40,255)); bg.alpha_composite(im)\nbg.convert('RGB').crop((150,560,874,1300)).resize((543,555)).save('$S/E_mid.png')\nimport numpy as np\na=np.asarray(im)[...,3]; print('alpha unique sample', np.unique(a)[:10], (a==255).mean())\n\"; ls tools/proj05/ tools/match05/ | head -40", "description": "Crop E texture middle rows and list bake t …[+6 chars]`
+
+### 🧑 User — 2026-11-18T02:26:43.214Z
+
+> ↩︎ result: alpha unique sample [0 1 2 3 4 5 6 7 8 9] 0.9193521576870282
+> tools/match05/:
+> coin_audit.mjs
+> coin_cp_count.mjs
+> frame_cut_fit.py
+> make_target_vis.py
+> metrics.py
+> pixel_probe.mjs
+> r8_probe.mjs
+> r8_shots.mjs
+> regions.py
+> screen_match.py
+> 
+> tools/proj05/:
+> bake.py
+> flow_bake.py
+> frame_bake.py
+> frame_metrics.py
+> lid_blender.py
+> lid_mesh2d.py
+> make_target.py
+> match_metrics.py
+> near_bake.py
+> near_bubbles.json
+> near_fillmask.py
+> near_fillmask_src.png
+> near_metrics.py
+> pad_alpha.py
+> residual.py
+> screen_regions.py
+> tunnel_bake.py
+> tunnel_common.py
+> tunnel_residual.py
+> tunnel_rings.py
+> water_metrics.py
+
+### 🤖 Claude — 2026-11-18T02:26:45.382Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/E_mid.png"}`
+
+### 🧑 User — 2026-11-18T02:26:45.404Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:26:55.445Z
+
+The creases are the filled coin holes of the bake (jagged in-painted patches along the middle lane, rows ~1000–1300). Let me see whether the bake left a coin-hole mask I can reuse.
+
+### 🤖 Claude — 2026-11-18T02:26:56.838Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p tools/match05/make_target_vis.py | head -50; ls assets/textures/match05/tgtwall05/ assets/textures/match05/tgtfill05_3/ qa/match/05/ | head -40; find qa/match/05 tools/match05 -iname \"*mask*\" | head", "description": "Inspect target fill tool and look for masks"}`
+
+### 🧑 User — 2026-11-18T02:26:56.889Z
+
+> ↩︎ result: """[match05 copy with tgtvis05, see the block after `hole =`] Screen 05 proj05 — TARGET water image in the approved frame (864x1536, sRGB), from the user's own pictures only:
+>   * where the approved picture shows its water (not hidden by Benny + splash, coins, HUD): the APPROVED pixels;
+>   * under Benny + splash and the bottom gold ring arcs: the user's ORIGINAL isolated water artwork, registered onto the approved water with dense
+>     optical flow (banks / bands line up), colour-matched and blended in with a multi-band blend inside the hidden area (no invented texture);
+>   * the coins too (an along-the-flow interpolation in river space was tried first: it drew straight stripes);
+>     coin_mask.png is kept for the metrics.
+> usage: python3 -I tools/proj05/make_target.py <out_dir>
+> outputs: target_05.png (RGB), water_mask.png (approved water footprint), fill_mask.png (pixels taken from the artwork),
+>          art_registered.png, report.json"""
+> import json, os, sys
+> import numpy as np, cv2
+> from PIL import Image
+> from scipy.ndimage import gaussian_filter, binary_dilation, binary_closing, label
+> 
+> out = sys.argv[1]; os.makedirs(out, exist_ok=True)
+> appr = np.asarray(Image.open("references/05_flow_in …[+2256 chars]
+
+### 🤖 Claude — 2026-11-18T02:27:17.765Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/k3/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-18T02:27:17.808Z
+
+> ↩︎ result: [image]
+
