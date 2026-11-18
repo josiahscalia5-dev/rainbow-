@@ -1030,3 +1030,118 @@ The 20:14 snapshot saved every worker's unfinished edits. Now the user's own mes
 > ↩︎ result: 44:LOCK = REPO / "backups" / ".autosave.lock"
 > c535dd94 autosave: Rainbow 2026-11-18 20:35 UTC
 
+### 🤖 Claude — 2026-11-18T20:40:21.922Z
+
+> 🔧 **Bash** `{"command": "flock backups/.autosave.lock -c 'git merge --no-edit -X theirs origin/ccr-e42bb3c0-jpif8d -m \"Session ccr-bbe2b27e: continue from account-16 lead ccr-e42bb3c0-jpif8d (newest state, 2026-11-18 20:14 UTC)\n\nThis session started from the older lead ccr-5495e9c4-g0apvl (77bce73, 2026-11-17 22:44 UTC), whose\nonly commits not in the account-16 lead are backup/transcript autosaves. The user asked to continue\nexactly where the work left off; this brings in rounds 6-16 (docs, briefs, tools, backups). No\nspecialist branch is merged.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic …[+274 chars]`
+
+### 🧑 User — 2026-11-18T20:40:31.307Z
+
+> ↩︎ result: create mode 100644 tools/lead_r4/rec_tour.mjs
+>  create mode 100644 tools/lead_r5/assemble_tour.py
+>  create mode 100644 tools/lead_r5/coin_census.mjs
+>  create mode 100644 tools/lead_r5/probe_coins08.mjs
+>  create mode 100644 tools/lead_r5/probe_flowD.mjs
+>  create mode 100644 tools/lead_r5/probe_flowD2.mjs
+>  create mode 100644 tools/lead_r5/probe_flowD3.mjs
+>  create mode 100644 tools/lead_r5/rec_tour.mjs
+>  create mode 100644 tools/lead_r5/record_tour.sh
+>  create mode 100644 tools/lead_r5/verify_preview.sh
+>  create mode 100644 tools/lead_r6/bisect_preview08.mjs
+>  create mode 100644 tools/lead_r6/motion_audit.mjs
+>  create mode 100644 tools/lead_r6/motion_metrics.py
+>  create mode 100644 tools/match08/coinprobe08.mjs
+>  create mode 100644 tools/match08/coins08px.mjs
+> exit 0
+> 9eea720d Session ccr-bbe2b27e: continue from account-16 lead ccr-e42bb3c0-jpif8d (newest state, 2026-11-18 20:14 UTC)
+> 6ffae37e autosave: Rainbow 2026-11-18 20:40 UTC
+> c535dd94 autosave: Rainbow 2026-11-18 20:35 UTC
+
+### 🤖 Claude — 2026-11-18T20:40:33.757Z
+
+Merge done. Checking that the result matches the account-16 lead everywhere except backup logs.
+
+### 🤖 Claude — 2026-11-18T20:40:35.195Z
+
+> 🔧 **Bash** `{"command": "git diff --stat origin/ccr-e42bb3c0-jpif8d HEAD | tail -15; echo; git lfs ls-files | wc -l; git lfs ls-files | grep -c \" - \" ; sha256sum -c scripts/reference.sha256 2>&1 | grep -c OK", "description": "Verify merged tree vs lead, LFS state and reference checksums"}`
+
+### 🧑 User — 2026-11-18T20:40:37.166Z
+
+> ↩︎ result: .../transcript.md                                  |  298 ++++++
+>  .../transcript.sanitized.jsonl                     |  127 +++
+>  .../transcript.md                                  | 1032 ++++++++++++++++++++
+>  .../transcript.sanitized.jsonl                     |  256 +++++
+>  docs/PARALLEL_PROGRESS.md                          |   15 +
+>  5 files changed, 1728 insertions(+)
+> 
+> 67
+> 0
+> 13
+
+### 🤖 Claude — 2026-11-18T20:40:47.136Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/autosave.config.json'\nd=json.load(open(p))\nprint('branch was', d['branch'])\nadd=['ccr-e42bb3c0-jpif8d','claude/rainbow-s04-match-c16','claude/rainbow-s04-ringtex-c16','claude/rainbow-s05-match-c16',\n     'claude/rainbow-s06-match-c16','claude/rainbow-s07-match-c16','claude/rainbow-s08-scenery-c16']\npb=d['protected_branches']\nfor b in add:\n    if b not in pb: pb.append(b)\nd['branch']='ccr-bbe2b27e-oxfh1w'\nnote=d.get('branch_history_note','')\nd['branch_history_note']=(note+' | 2026-11-18 ~20:45 UTC account 17: session branch cc …[+487 chars]`
+
+### 🧑 User — 2026-11-18T20:40:47.219Z
+
+> ↩︎ result: branch was ccr-e42bb3c0-jpif8d
+> now ccr-bbe2b27e-oxfh1w 72 protected
+>  backups/autosave.config.json | 243 ++++++++++++++++++++++---------------------
+>  1 file changed, 125 insertions(+), 118 deletions(-)
+
+### 🤖 Claude — 2026-11-18T20:40:49.943Z
+
+> 🔧 **Bash** `{"command": "git show HEAD:backups/autosave.config.json | head -5 | cat -A | head -5", "description": "Check original JSON indentation"}`
+
+### 🧑 User — 2026-11-18T20:40:49.984Z
+
+> ↩︎ result: {$
+>   "project": "RAINBOW M-bM-^@M-^T 11-screen 3D mobile game",$
+>   "repo_full_name": "josiahscalia5-dev/rainbow-",$
+>   "remote_name": "origin",$
+>   "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",$
+
+### 🤖 Claude — 2026-11-18T20:40:52.475Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json\np='backups/autosave.config.json'\nd=json.load(open(p))\nopen(p,'w').write(json.dumps(d,indent=2,ensure_ascii=False)+'\\n')\n\" && git diff --stat && git diff | head -40", "description": "Rewrite config with original 2-space indentation"}`
+
+### 🧑 User — 2026-11-18T20:40:52.547Z
+
+> ↩︎ result: backups/autosave.config.json | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+> diff --git a/backups/autosave.config.json b/backups/autosave.config.json
+> index 52f331dd..87b54a25 100644
+> --- a/backups/autosave.config.json
+> +++ b/backups/autosave.config.json
+> @@ -3,7 +3,7 @@
+>    "repo_full_name": "josiahscalia5-dev/rainbow-",
+>    "remote_name": "origin",
+>    "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",
+> -  "branch": "ccr-e42bb3c0-jpif8d",
+> +  "branch": "ccr-bbe2b27e-oxfh1w",
+>    "session_branch_patterns": [
+>      "ccr-*",
+>      "claude/*"
+> @@ -113,8 +113,15 @@
+>      "claude/rainbow-s05-match-c15",
+>      "claude/rainbow-s06-match-c15",
+>      "claude/rainbow-s07-match-c15",
+> -    "claude/rainbow-s08-scenery-c15"
+> +    "claude/rainbow-s08-scenery-c15",
+> +    "ccr-e42bb3c0-jpif8d",
+> +    "claude/rainbow-s04-match-c16",
+> +    "claude/rainbow-s04-ringtex-c16",
+> +    "claude/rainbow-s05-match-c16",
+> +    "claude/rainbow-s06-match-c16",
+> +    "claude/rainbow-s07-match-c16",
+> +    "claude/rainbow-s08-scenery-c16"
+>    ],
+>    "original_branch_note": "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); claud …[+8364 chars]
+
+### 🤖 Claude — 2026-11-18T20:40:54.301Z
+
+Config updated. Saving to GitHub now and verifying the remote.
+
+### 🤖 Claude — 2026-11-18T20:40:56.042Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:account17-continue-from-r16-lead 2>&1 | tail -5; python3 -I scripts/autosave-status.py 2>&1 | tail -3; echo \"local $(git rev-parse HEAD)\"; timeout 40 git ls-remote origin refs/heads/ccr-bbe2b27e-oxfh1w", "description": "Run a manual autosave and verify remote equals local", "timeout": 300000}`
+
