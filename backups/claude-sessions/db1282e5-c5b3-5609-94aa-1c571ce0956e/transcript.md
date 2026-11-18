@@ -4043,3 +4043,55 @@ The clip shows real swimming: the clean blue path down the gold tunnel, arrows a
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && C5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C5.q); cat >> qa/match/04/r13/PROGRESS.md <<EOF\n\n## REBUILD step 3 — user order ~15:30 UTC \"gold tunnel + clean blue centre path + five glowing arrows\" — C5 = GOOD IMPROVEMENT — shown to the user\nQuery (C5): \\`$C5\\`\n* Path: rings R4 (\\`m04ringp=3.9 m04ringgw=1.8 m04tb=0 m04ts=0.22 m04paint=0.9\\`: fewer bands, dark grooves) → water W3/W5\n  (\\`m04pink\\`, wider cyan lane, deep-blue arrow halo \\`m04a3hb\\`) → user correction → C1–C5: side water LOWER (\\`m04 …[+2591 chars]`
 
+### 🧑 User — 2026-11-18T15:16:30.940Z
+
+> ↩︎ result: s04 local 4544d5c7 remote 4544d5c7
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "4e52a4f93604c141499a9694fdd6f654e7d04ccc",
+> lead LOCAL 4e52a4f9 REMOTE 4e52a4f9
+
+### 🤖 Claude — 2026-11-18T15:16:36.167Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/00_APPROVED.png", "/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/01a_BEFORE_straight.png", "/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/01b_NEW_straight.png", "/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/02a_BEFORE_hard_left.png", "/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/02b_NEW_hard_left.png", "/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/03a_BEFORE_hard_right.png", "/home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/03b_NEW_hard_right.png" …[+503 chars]`
+
+### 🧑 User — 2026-11-18T15:16:38.394Z
+
+> ↩︎ result: 10 files delivered to user.
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/00_APPROVED.png → file_uuid: e90bb4d3-e3d2-470f-afd5-ae6d0efbbf5b
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/01a_BEFORE_straight.png → file_uuid: 6eb54aca-905b-436d-96db-c56a19116890
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/01b_NEW_straight.png → file_uuid: 20f8e6a8-0b66-4653-8b04-59d51e872027
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/02a_BEFORE_hard_left.png → file_uuid: 80b1597a-f0b3-41c1-9adf-bbf9e75a0029
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/02b_NEW_hard_left.png → file_uuid: 9a7287d0-5716-441f-8620-a9e122161b2b
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/03a_BEFORE_hard_right.png → file_uuid: bbc4c2d0-5493-40e8-9d31-6eeb7937067d
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/03b_NEW_hard_right.png → file_uuid: 10156f7f-7fd6-4bb1-840a-b274907d9c67
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/04a_BEFORE_end.png → file_uuid: 84e6b65f-4993-48bd-b6ec-2368f9530888
+>   /home/user/rainbow-/qa/review_r13/04_step3_clean_blue_path/04b_NEW_end.png → file_uuid: 7914e73f-f230-4c7d …[+162 chars]
+
+### 🤖 Claude — 2026-11-18T15:16:46.427Z
+
+Screen 04 now reads the way you described: gold tunnel, clean blue centre path, and white arrows ahead of Benny. The full-size APPROVED / BEFORE / NEW pictures are above (straight, hard left, hard right, plus the end of the screen), with a 2.2-second real-gameplay swim.
+
+**Verdict: GOOD IMPROVEMENT, but not yet at your 8.5/10.**
+
+**What is closer:**
+- **Side water:** pushed outward and lowered to under half its old height. The foam walls and lumpy foam ridges are gone, and pink stays only at the outer edges.
+- **Centre path:** one smooth, continuous blue lane, easy to read from Benny to the far end.
+- **Arrows:** solid white, not see-through. Four or five show ahead of Benny going straight and while steering left or right.
+- **Gold tunnel:** much more of it shows. The rings are fewer and broader, with dark grooves between them, instead of the cluttered thin orange corridor.
+- **Unchanged:** Benny, the gameplay view, coins and the start view.
+
+**What is still wrong:**
+- The blue path is paler and flatter than your saturated cyan with sparkles.
+- The rings are still more orange than your copper-gold with pink reflections.
+- At hard left, the nearest arrow ends just beside Benny's hat brim. It sits behind him, not over him.
+- A passing bubble can cover one arrow for a moment.
+
+Next on Screen 04 I'll make the blue path more saturated and sparkly, and push the ring colour toward your copper-gold.
+
+The specialists have reported two more kept steps, which I'll check by eye before showing you:
+- **Screen 05:** the flat pale floor and lilac wedge on the far left bank are replaced by purple wall and foam clouds.
+- **Screen 08:** the upper-right spout cup's top is now a pink perforated cap instead of a gold triangle with hard X lines.
+
+Everything is saved to GitHub, which matches the local copy: Screen 04 branch at `4544d5c7`, main session branch at `4e52a4f9`. The five-minute autosave is still running.
+
