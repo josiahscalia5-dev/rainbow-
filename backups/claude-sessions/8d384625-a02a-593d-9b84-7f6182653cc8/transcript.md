@@ -2253,3 +2253,29 @@ Both builders have saved their unfinished experiments and switched to blueprint-
 
 > 🔧 **Bash** `{"command": "cat > docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md <<'EOF'\n# User order 2026-11-18 ~03:10 UTC — RECONSTRUCT THE APPROVED DESIGNS, STOP POLISHING THE WRONG SCENERY (binding, all screens)\n\nUser: \"I HAVE ALREADY DESIGNED MY RAINBOW GAME. MY ORIGINAL APPROVED PICTURES ARE THE DESIGNS I WANT. You keep making small\nimprovements to scenery that is still structurally different from my artwork. Making an incorrect tunnel shinier does not\nmake it my approved tunnel. Adding more foam to the wrong water formation does not make it my approved water. I WANT YOU TO\nRECONSTRUCT THE A …[+3997 chars]`
 
+### 🧑 User — 2026-11-18T03:08:14.354Z
+
+> ↩︎ result: "commit": "82b8518dc739085217ea3062c9a58557594e2bf1",
+> local 82b8518dc739085217ea3062c9a58557594e2bf1
+> remote 82b8518dc739085217ea3062c9a58557594e2bf1
+
+### 🤖 Claude — 2026-11-18T03:08:30.085Z
+
+Agreed. Here is what I found and what I've changed.
+
+**Why Screen 04 looks structurally wrong:** your painting shows the washer from outside: the gold opening ahead, the laundry room above it, and the swirling water across the basin. In the game, Benny reaches that opening after only about a fifth of the screen. For the other four-fifths he is inside a tunnel your painting never shows. That inside had to be invented, and it is the long orange corridor. Polishing it could never turn it into your design.
+
+**Can the current method reach 8.5 while Benny swims?** No, not for Screen 04 or Screen 07. Matching your painting at the starting view and then building substitutes for everything beyond it cannot get there. I'm saying it plainly so we stop repeating it.
+
+**What I changed:** all polishing is stopped. Both specialists saved their unfinished work and are on the new workflow: blueprint first, then fix the structure.
+- **Screen 04:** writing the blueprint of your picture, then rebuilding the washer front larger and farther away. The opening, laundry room, swirling water, five arrows and low foam would then stay in front of Benny for the whole screen, growing slowly as he approaches. He would enter the opening only at the end, where Screen 05 begins. At the start it should look the same as now. The gold rings would only be the short funnel you painted inside the opening.
+- **Screen 05:** this one is fixable as it stands, because your painting does show the river ahead down the tunnel. The specialist is measuring the painted S-river and fitting the actual river, banks and walls to it before any further effects.
+- **Independent reviewer:** now running. It is writing blueprints for Screens 06, 07 and 08, with a frank verdict for each: how far the free method can get, and what blocks it. It will also check every structural change before I show it to you, and reject anything that looks shinier but less like your painting.
+
+**What I can't promise yet:**
+- I expect the new structure to look clearly more like your paintings, but I won't claim 8.5 until the pictures show it.
+- The main remaining risk is that your painted detail gets soft when seen up close.
+- If a screen still can't get there, the next option costs credits: generating additional views of your own design from your picture. I'd ask you first and name the cost.
+
+**Next you'll see:** the blueprints, then the first rebuilt structure for 04 and 05 as separate APPROVED / BEFORE / NEW pictures, seen while swimming. Your order is saved on GitHub, so every later specialist follows it.
+

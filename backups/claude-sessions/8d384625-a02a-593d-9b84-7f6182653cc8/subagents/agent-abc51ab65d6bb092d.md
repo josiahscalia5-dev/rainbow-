@@ -240,3 +240,131 @@ Then write `/home/user/rainbow-/docs/briefs/2026-11-18-r9/REVIEW_SUMMARY.md` (on
 > 
 > Approved view (frozen `scripts/capture.mjs  …[+3576 chars]
 
+### 🤖 Claude — 2026-11-18T03:08:06.497Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06; git log --format='%h %ad %s' --date=iso -12 -- qa/match/06 | cat; git status --short | head; ls -la qa/match/06/r7/ | head -30; ls qa/match/06/r7/RING*", "description": "Find newest 06 audit frame folders"}`
+
+### 🧑 User — 2026-11-18T03:08:06.562Z
+
+> ↩︎ result: b9b63e35 2026-11-18 00:30:30 +0000 06 r7c: kept set + bubbly foam clusters, splash while swimming; paddles opt-in (unfinished); notes
+> 9c9f65a1 2026-11-18 00:26:03 +0000 06 r7b: ring highlights + bulbs; &m06bub=1 bubbles and &m06foam=1 3D foam clouds while swimming (hidden at the approved view)
+> 99a4a3ad 2026-11-18 00:15:10 +0000 06 r7: &m06ring=1 real modeled gold rings (spacing solved from the painted rings), tapered far tunnel (no pale disc)
+> aa248bba 2026-11-17 23:53:33 +0000 06 r7: final NEW moving set (m06cam + m06tun r=14, floor ends 20 u after 06)
+> 72aff4b7 2026-11-17 23:40:06 +0000 06 r7 WIP: &m06cam=1 (chord-frame camera over the crest) + &m06tun=1 (straight painted ring tunnel, r=14)
+> 0aa01829 2026-11-17 22:29:54 +0000 Screen 06 r6: proofs — gameplay 8/8 91/2240 with m06geo+m06flow, approved view unchanged, protected-05 drift predates r6
+> c114c608 2026-11-17 22:25:37 +0000 Screen 06 r6: narrow fitted river + foam banks + walls to banks (m06geo), flowing painted water (m06flow); paused checkpoint
+> 62cb0f16 2026-11-17 22:20:40 +0000 autosave: Rainbow 2026-11-17 22:20 UTC
+> 8d398006 2026-11-17 22:15:12 +0000 autosave: Rainbow 2026-11-17 22:15 UTC
+> b993f6d5 2026-11-17 17:49:56 +0000 S …[+2213 chars]
+
+### 🤖 Claude — 2026-11-18T03:08:08.982Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07/qa/match/07; head -70 STATUS.md; ls r7 r8; ls r8/* | head -50", "description": "Read 07 status and list r7/r8 folders"}`
+
+### 🧑 User — 2026-11-18T03:08:09.023Z
+
+> ↩︎ result: # Screen 07 · DIVE THE WASHER TUBE — status (round 8 / account 8, 2026-11-18 ~01:50 UTC)
+> 
+> Branch `claude/rainbow-s07-match-c8`, started from `3afaa7e9` (= `claude/rainbow-s07-match-c7` tip, M3 done). Nothing is
+> approved until the user says so. **State: WORK IN PROGRESS, paused by the lead (user order: 07 resumes in the next free
+> specialist slot).**
+> 
+> ## Round 8 so far (lead, two look-only switches on top of the M3 kept set K)
+> K = `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`
+> * `&m07foam=1` (NEW, `src/vfx/foam.ts` + `src/vfx/waterRibbon.ts`, `#ifdef HIDE07` / `HIDE07R`): down the plunge
+>   (s plunge_top+9 → plunge_bottom−12, dithered 3 u at both ends) the game's tall white lather walls (berm + puffs) and the
+>   lifted white outer edges of the game's water sheet step aside, so the matched tube's river tile with its painted
+>   pink/cyan banks and soft blue foam shows instead. Visual verdict: **clearly closer at t50 / t66 / t80**
+>   (`r8/plunge_K/` vs `r8/plunge_foam2/`); t33 unchanged (animation timing only); t95 = the 08 inlet (unchanged, 08 owns it).
+> * `&m07coinsz=1` (existed since the 00:52 autosave, untested before): coins sized against the live ca …[+6236 chars]
+
+### 🤖 Claude — 2026-11-18T03:08:12.288Z
+
+> 🔧 **Bash** `{"command": "for s in s06 s07 s08 s04 s05; do echo \"== $s\"; cd /home/user/wt/$s 2>/dev/null && git log -1 --format='%h %ad %s' --date=iso | cat && git status --short | head -5; done; ls /home/user/wt/s07/qa/match/07/r9 /home/user/wt/s08/qa/match/08/scenery/r9 /home/user/wt/s06/qa/match/06/r9 2>&1 | head", "description": "Check worktree HEADs and r9 folders"}`
+
+### 🧑 User — 2026-11-18T03:08:12.525Z
+
+> ↩︎ result: == s06
+> efaf78b7 2026-11-18 00:33:35 +0000 06 r7: capture log from the frozen approved-view checks
+> ?? tools/lead_r6/bisect_preview08.mjs
+> == s07
+> dbc7678c 2026-11-18 01:53:35 +0000 Screen 07 r8: correct STATUS time
+> ?? tools/lead_r6/bisect_preview08.mjs
+> == s08
+> c0d8c97b 2026-11-18 01:23:03 +0000 autosave: Rainbow 2026-11-18 01:22 UTC
+> ?? tools/lead_r6/bisect_preview08.mjs
+> ?? tools/lead_r6/motion_metrics.py
+> == s04
+> b4bd3da4 2026-11-18 03:06:55 +0000 Screen 04 r9 WIP: &m04foam3 / &m04pink / &m04arr5 candidates (switch-guarded, untested, not kept) — stopped by the lead's new order (blueprint + layout foundation)
+> == s05
+> 1eb23e66 2026-11-18 03:07:16 +0000 Screen 05 r9 WIP: &m05near (tried, not kept) + &m05wall (unfinished) — switch-guarded, tsc clean; paused for the blueprint/foundation order
+> ?? tools/lead_r6/bisect_preview08.mjs
+> ls: cannot access '/home/user/wt/s07/qa/match/07/r9': No such file or directory
+> ls: cannot access '/home/user/wt/s08/qa/match/08/scenery/r9': No such file or directory
+> ls: cannot access '/home/user/wt/s06/qa/match/06/r9': No such file or directory
+
+### 🤖 Claude — 2026-11-18T03:08:14.143Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/scenery; head -90 STATUS.md; ls r7 r8; ls r7/* | head -40", "description": "Read 08 scenery status and list folders"}`
+
+### 🧑 User — 2026-11-18T03:08:14.186Z
+
+> ↩︎ result: # Screen 08 scenery-in-motion — STATUS (round 7, account 7) — MILESTONE DONE, stopped
+> 
+> * Branch `claude/rainbow-s08-scenery-c7` (started at `-c6` @ `cf2e092b`). Final SHA: `git log -1`.
+> * Every change is behind its own `?match08=1` sub-switch; nothing runs without `match08`.
+> 
+> ## Kept switch set (round 7)
+> `B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'`
+> (`m08lane` stays OFF.)
+> 
+> ## Done (round 7)
+> 1. **`&m08seam=1` — KEEP at ×1.6 (default `m08seamk`).** f10 / t95 frames `r7/seam/{base,k16,k22}/`. Without it the
+>    generated ceiling fill is a dense fine mesh, visibly smaller than the painted chamber-wall slots it meets. ×1.6 matches
+>    the painted slot size best; ×2.2 is slightly coarse. Approved view: 0 px (frozen capture, `r7/proof/seam`).
+> 2. **`m08swim` proven 0 px at the approved view** (frozen `scripts/capture.mjs`: `r7/proof/noswim` vs `swim` vs `swim2`:
+>    0 changed pixels; the capture is deterministic, swim vs swim2 = 0).
+> 3. **`&m08sill=1` — NEW, KEEP.** Riding 3 u forward, the frame bottom showed torn gold / blue slabs. `m08dbg` showed
+>    they were the gold arch's unpushed water-level band (2.6× nearer than the rest of the ring). …[+4188 chars]
+
+### 🤖 Claude — 2026-11-18T03:08:17.684Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nimport glob\nfor f in sorted(glob.glob('references/0[678]_*.png')):\n    im=Image.open(f); print(f, im.size, im.mode)\nfor f in ['/home/user/wt/s06/qa/match/06/r7/RING6/a00_approved_view.png','/home/user/wt/s07/qa/match/07/r7/NEW/a00_approved_view.png','/home/user/wt/s08/qa/match/08/scenery/r7/NEW/a00_approved_view.png']:\n    im=Image.open(f); print(f, im.size, im.mode)\n\"; mkdir -p /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/rev", "description": "Check image sizes of references a …[+11 chars]`
+
+### 🧑 User — 2026-11-18T03:08:17.790Z
+
+> ↩︎ result: references/06_crest_the_rinse_arch.png (864, 1536) RGB
+> references/07_dive_the_washer_tube.png (864, 1536) RGB
+> references/08_final_spin_chamber.png (864, 1536) RGB
+> /home/user/wt/s06/qa/match/06/r7/RING6/a00_approved_view.png (864, 1536) RGB
+> /home/user/wt/s07/qa/match/07/r7/NEW/a00_approved_view.png (864, 1536) RGB
+> /home/user/wt/s08/qa/match/08/scenery/r7/NEW/a00_approved_view.png (864, 1536) RGB
+
+### 🤖 Claude — 2026-11-18T03:08:18.609Z
+
+Let me look at the three approved pictures myself.
+
+### 🤖 Claude — 2026-11-18T03:08:18.960Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-18T03:08:18.982Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:08:28.225Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/07_dive_the_washer_tube.png"}`
+
+### 🧑 User — 2026-11-18T03:08:28.241Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:08:28.580Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/08_final_spin_chamber.png"}`
+
+### 🧑 User — 2026-11-18T03:08:28.596Z
+
+> ↩︎ result: [image]
+

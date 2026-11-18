@@ -2479,3 +2479,23 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 >   H 75 292.0 S 0.44 V 1.0
 >   H 90 300.0 S 0.52 V 1.0
 
+### 🤖 Claude — 2026-11-18T03:08:12.682Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"far05Debug\\b\" src/world/environment.ts | head -3; grep -n \"export function tubeCenterAt\" -A3 src/world/tube.ts; grep -n \"radius(s\\|radius(\" src/world/tube.ts | head -5; grep -n \"goto(\\|setSteer\\|run(\" src/game/Game.ts | head", "description": "Check debug exports and tube helpers"}`
+
+### 🧑 User — 2026-11-18T03:08:12.728Z
+
+> ↩︎ result: 12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> 565:    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });
+> 147:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 148-  const f = path.frame(s);
+> 149-  return out.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+> 150-}
+> 17:  radius(s: number): number;
+> 149:  return out.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+> 203:    const r = path.radius(s) + (o.inset ?? 0);
+> 205:    c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+> 367:      const r = path.radius(ss) - (opts.inset ?? 0.05) + (opts.extra ?? 0);
+> 622:    run(v = true) { running = v; last = performance.now(); },
+> 626:    setSteer(v: number | null) { input.override = v; },
+
