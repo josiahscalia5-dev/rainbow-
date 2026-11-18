@@ -279,6 +279,17 @@ export const M05WD: boolean = TGTWALL05 && q05('m05wd');
  * flow still slides the streaks toward the camera. At the locked checkpoint the offset is 0 → the picture is unchanged.
  */
 export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
+/**
+ * `&m05seam=1` (Screen 05 round 8, needs m05ride + m05far): the near river meets the far tunnel's river at the sliding
+ * seam. With m05ride the near river shows the approved design Benny-relative, so once the seam stops sliding (capped
+ * just before 06, Benny ≈ 139 on) the near river reached the seam with design rows from the approved MIDDLE distance
+ * while the far river continues the approved picture's LAST near-river rows: the pink / cyan bands broke in a step line
+ * across the river. Over the stretch before the seam (60 % of Benny → seam, 4–20 u) the design is eased (quadratic, no
+ * kink) so it arrives at E's last rows exactly at the seam, as in the locked view. `m05seam.value` = (seam s, live) is
+ * written every frame by src/world/match05far.ts; locked view and the 06 fold: live = 0, nothing changes.
+ */
+export const M05SEAM: boolean = M05RIDE && q05('m05seam');
+export const m05seam = { value: new THREE.Vector2(0, 0) };
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -499,6 +510,9 @@ float pjT2W(float mE) {
 // rescaled by 1 / sqrt(w^2 + (1-w)^2), so the band keeps the approved water's contrast. Engaged by pjNearK() only:
 // at the locked checkpoint (pjNearK = 0) the picture is unchanged, pixel for pixel.
 uniform vec4 uPjVP;
+#ifdef M05SEAM
+uniform vec2 uPjSeam;      // m05seam: (world s of the far tunnel seam, live)
+#endif
 #ifdef M05WD
 uniform vec4 uPjWD;        // m05wd: x = on, y = share of the detail layer kept on the design, z = row smoothing (E rows)
 #endif
@@ -1533,6 +1547,15 @@ void main() {
     // m05ride: the design layout follows Benny (see M05RIDE in this file)
     rideK05 = pjNearK();                         // 0 within 0.5 u of the locked checkpoint: locked picture unchanged
     s05r = s - (uPjNear.z - uPjNear.w) * rideK05;
+    #ifdef M05SEAM
+    if (uPjSeam.y > 0.5 && rideK05 > 0.0) {
+      // m05seam: ease the Benny-relative design into E's last rows at the far tunnel's seam (see M05SEAM)
+      float lrS = clamp(0.6 * (uPjSeam.x - uPjNear.z), 4.0, 20.0);
+      float exS = clamp((uPjLutS.y - 0.6) - (uPjSeam.x - (uPjNear.z - uPjNear.w) * rideK05), 0.0, 2.0 * lrS);
+      float tS = clamp((s - (uPjSeam.x - lrS)) / lrS, 0.0, 1.0);
+      s05r += exS * tS * tS;
+    }
+    #endif
     #endif
     if (pjK > 0.001) {
       float s = s05r;
@@ -1753,7 +1776,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -1851,6 +1874,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   u.uPjVP = { value: new THREE.Vector4(on05('projvp05') ? 1 : 0, 0.440, 0.566, 0.922) };
   // m05wd (Screen 05 round 8): design layer while riding — on, detail share on the design, row smoothing step (E rows)
   u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
+  u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   const loader = new THREE.TextureLoader();

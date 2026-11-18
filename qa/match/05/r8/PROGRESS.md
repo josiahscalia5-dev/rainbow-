@@ -54,3 +54,16 @@ Each step = one sub-switch on top of the base set (default build untouched). Bra
   `/home/user/wt/s05/qa/match/05/r7/NEW/t66_through_screen.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/f10_forward10u.png`
 * NEW: `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/f20_forward20u.png`, `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/t33_through_screen.png`,
   `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/t66_through_screen.png`, `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/f10_forward10u.png`
+
+## Step 4 — `&m05seam=1` (near river → far river joint; small step)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1`
+* WHAT LOOKS BETTER (modest): in the middle distance the cyan coin lane no longer shows the angular folded "creases",
+  and the pink banks run on into the far river toward the throat instead of breaking at a step line — the river reads
+  more like one smooth painted S-stream (f20, t33). t66 about equal. Locked approved view unchanged (0 px).
+* Numbers (LAYOUT20 / PALETTE, step 3 → step 4): f20 17.2/85.6 → 17.2/85.5 · t33 17.5/84.9 → 17.9/84.9 · f10 18.1/84.6 →
+  18.0/84.7 · t66 9.8/79.1 → 9.4/78.9 (flat within noise: a look-only gain, not a number gain).
+* Still wrong: a faint horizontal line where the far river starts (t66 strongest, flatter paler far water there);
+  some soft folds remain in the lane (filled coin holes of the bake); pale bank strip under Benny on hard steering.
+* BEFORE (step 3): `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/f20_forward20u.png`, `/home/user/wt/s05/qa/match/05/r8/step3_m05edge/t33_through_screen.png`
+  (round-7 BEFORE: `/home/user/wt/s05/qa/match/05/r7/NEW/f20_forward20u.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/t33_through_screen.png`)
+* NEW: `/home/user/wt/s05/qa/match/05/r8/step4_m05seam/f20_forward20u.png`, `/home/user/wt/s05/qa/match/05/r8/step4_m05seam/t33_through_screen.png`
