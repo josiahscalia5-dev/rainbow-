@@ -2572,3 +2572,88 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T03:12:18.483Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/tools/match05/channel05.py", "content": "\"\"\"Screen 05 round 9 FOUNDATION (`&m05geo=1`): the painted river channel of the approved design E, per river row.\n\nE (assets/textures/match05/tgtwall05/proj05_E.png + proj05_lut.json) is the approved picture laid onto the river surface:\nrow V ↔ arc length s (LUT), column x ↔ normalised lateral u = c + (x / W − 0.5) · 2w. Per row this finds the PAINTED\nwater channel (cyan lane + magenta bands: saturated cyan, or saturated bright magenta) between the painted foam banks /\nwalls (white foam, dark / mid purple wall),  …[+3360 chars]`
+
+### 🧑 User — 2026-11-18T03:12:18.516Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/channel05.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:12:21.351Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && mkdir -p assets/textures/match05/m05geo && timeout 300 python3 -I tools/match05/channel05.py assets/textures/match05/tgtwall05/proj05_E.png assets/textures/match05/tgtwall05/proj05_lut.json assets/textures/match05/m05geo/channel05.json /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/chan_preview.png", "description": "Extract painted channel from E", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T03:12:22.234Z
+
+> ↩︎ result: 129.71 uL -0.223 uR 0.262
+> 132.93 uL -0.416 uR 0.401
+> 136.14 uL -0.636 uR 0.242
+> 139.36 uL -0.735 uR 0.367
+> 142.58 uL -0.489 uR 0.334
+> 145.79 uL -0.628 uR 0.898
+> 149.01 uL -0.462 uR 1.0
+> 152.23 uL -0.652 uR 1.0
+> 155.44 uL -0.464 uR 0.895
+> 158.66 uL -0.884 uR 0.773
+> 161.87 uL -0.77 uR 0.708
+> 165.09 uL -0.819 uR 0.524
+> 168.31 uL -0.806 uR 0.452
+> 171.52 uL -1.0 uR 0.366
+> 174.74 uL -1.0 uR 0.817
+> 177.96 uL -0.922 uR 0.066
+
+### 🤖 Claude — 2026-11-18T03:12:24.069Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/chan_preview.png"}`
+
+### 🧑 User — 2026-11-18T03:12:24.097Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:12:52.206Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uniform vec4 uHide;      // s03Start\" src/vfx/waterRibbon.ts && grep -n \"  vec3 p = position + normal \\* h \\* (1.0 - aSkirt);\" src/vfx/waterRibbon.ts", "description": "Locate vertex shader insertion points"}`
+
+### 🧑 User — 2026-11-18T03:12:52.258Z
+
+> ↩︎ result: 402:uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+> 424:  vec3 p = position + normal * h * (1.0 - aSkirt);
+
+### 🤖 Claude — 2026-11-18T03:12:53.533Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 398, "limit": 30}`
+
+### 🧑 User — 2026-11-18T03:12:53.554Z
+
+> ↩︎ result: 398	attribute vec2 aChan;    // W11: visible channel centre / half width (units, see channel05)
+> 399	varying vec2 vChan;
+> 400	#endif
+> 401	uniform float uTime;
+> 402	uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+> 403	varying vec2 vUV;
+> 404	varying float vHalfW;
+> 405	varying float vSpeed;
+> 406	varying float vSkirt;
+> 407	varying float vHide;
+> 408	varying vec4 vStyle;
+> 409	varying float vCore;
+> 410	varying vec3 vTanW;
+> 411	varying vec3 vPosW;
+> 412	varying vec3 vNormalW;
+> 413	#include <fog_pars_vertex>
+> 414	void main() {
+> 415	  vStyle = aStyle;
+> 416	  vCore = aCore;
+> 417	  #ifdef FARW05
+> 418	  vChan = aChan;
+> 419	  #endif
+> 420	  vTanW = normalize(mat3(modelMatrix) * aTan);
+> 421	  float u = aUV.x;
+> 422	  float s = aUV.y;
+> 423	  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
+> 424	  vec3 p = position + normal * h * (1.0 - aSkirt);
+> 425	  vec4 wp = modelMatrix * vec4(p, 1.0);
+> 426	  vPosW = wp.xyz;
+> 427	  vNormalW = normalize(mat3(modelMatrix) * normal);
+

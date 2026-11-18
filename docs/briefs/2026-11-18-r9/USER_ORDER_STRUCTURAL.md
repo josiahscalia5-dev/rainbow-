@@ -43,3 +43,16 @@ Same for 05, 06, 07, 08 (each keeps its unique approved scenery). **Do not chang
 movement rules, or transitions without the user's permission.** No more than TWO specialist agents actively working at once
 (the reviewer runs only while a builder is paused). Show separate large APPROVED / BEFORE / NEW pictures proving the scenery
 genuinely looks closer. No generic replacements, no unnecessary redesigns. 01–03 / 09–11 = Google Flow videos.
+
+## User clarification ~03:25 UTC — REAL, CONSISTENT 3D (binding)
+"Do not simply move or stretch my approved picture in front of Benny to make it appear correct. Reconstruct the actual
+visual shapes, gold rings, scenery, water, foam, bubbles, materials, and lighting so they continue looking like my approved
+artwork as Benny swims. I want the same beautiful visual appearance, not an illusion that breaks when the character moves."
+Rules derived (sent to both builders): world-fixed geometry only (nothing recalibrated from the camera / Benny per frame, no
+sliding seams, no Benny-relative texture offsets); the painting supplies SHAPES and MATERIALS (world-anchored textures in each
+object's own UVs, or a fixed projector onto correctly shaped surfaces); every kept step passes a consistency check (forward,
+steering, through-screen views look like one coherent place with correct parallax).
+Disclosed to the user: kept switches that are NOT real fixed 3D — 05 `m05ride` (painted water pattern laid out relative to
+Benny), 05 `m05far` (far tunnel block recalibrated to the live eye every frame, sliding seam), 04 `m04room` (flat painted
+backdrop). They stay in the code (nothing deleted); the world-fixed reconstruction replaces them only when it looks at least
+as close, and the user decides.

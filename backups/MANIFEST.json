@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14054,
-   "sha256": "723730918d7cd70b364d0b36ee188e80ec36fffd45255df4a0b98233684769e9"
+   "sha256": "aed1fdaaea4a13695308ce3aab492071f8b2625eaa52400560f8472512287ac5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -957,6 +957,11 @@
    "sha256": "8d4b0a3d1e515ce5fb07ff5a9078480283e3cc17833e9761a987b1f6e19338ba"
   },
   {
+   "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_06.md",
+   "bytes": 6506,
+   "sha256": "53752d5140b5be41bc0292087080f7c3619b98e2dda80c45022ca8c29b920851"
+  },
+  {
    "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_06_overlay.png",
    "bytes": 2335763,
    "sha256": "f6bfa259869864d2866d479c52fca26da1116bd1bae3ad862a534cd9b7f82409"
@@ -987,9 +992,14 @@
    "sha256": "c3c09326ecd53c08a9062d3204376488ae3f78d7fc85b4e7f45b56469ca2975b"
   },
   {
+   "path": "docs/briefs/2026-11-18-r9/REVIEW_SUMMARY.md",
+   "bytes": 4563,
+   "sha256": "822714973bf7f6191c5edd8e577986a261945f735e08e4c62a17997c3e351aae"
+  },
+  {
    "path": "docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md",
-   "bytes": 4253,
-   "sha256": "956a2184b0a4b789c8edd61dd682dd60b5228d774857576a6c3ed37a08c730e4"
+   "bytes": 5553,
+   "sha256": "d10301d7be7703f57af7bc44da7d5f225299a4588eb4a1b5f84765de7ea74ccf"
   },
   {
    "path": "docs/characters/benny.md",

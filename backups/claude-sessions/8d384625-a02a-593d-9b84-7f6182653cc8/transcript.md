@@ -2577,3 +2577,67 @@ Then continue all five playable screens toward my 8.5/10 minimum goal.
 
 Please keep the emphasis on the visual appearance. Nothing is approved until I see the results.
 
+### 🤖 Claude — 2026-11-18T03:12:16.455Z
+
+Your clarification changes what counts as acceptable, so before relaying it I'm checking which kept steps are real fixed 3D and which only look right because they move with Benny. You should know that before anything is approved.
+
+### 🤖 Claude — 2026-11-18T03:12:17.864Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p src/world/match05far.ts | grep -v \"^import\" | head -40; grep -n -i \"m05ride\\|ride05\\|follow\\|benny\" src/vfx/waterRibbon.ts | head -15", "description": "Check how the far tunnel (m05far) and water-around-Benny (m05ride) are built"}`
+
+### 🧑 User — 2026-11-18T03:12:17.941Z
+
+> ↩︎ result: /**
+>  * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+>  * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every
+>  * frame instead of folding away.
+>  *
+>  * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the
+>  * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the
+>  * camera saw the far rings / river morphing out and the 06 arch hall behind them — the "old pink default world" of
+>  * the lead's audit (t66 / t95 frames). The compression is exact for ANY eye position once its two eye-dependent
+>  * constants (D0 = eye depth of the seam, q = eye offset from the axis) follow the eye, so under this switch:
+>  *   * the VIRTUAL tunnel (virtual depth Z beyond sF05, tunnel coordinate v = sF05 + u(Z)) stays put — rings, wall rows,
+>  *     the baked far water F and the far river layout are anchored to it, so everything approaches like real geometry;
+>  *   * the seam slides ahead of the eye so it never comes nearer than the locked view had it (D0lock ≈ …[+2833 chars]
+
+### 🤖 Claude — 2026-11-18T03:12:19.353Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 264,290p src/vfx/waterRibbon.ts", "description": "Read how the water design around Benny (m05ride) works"}`
+
+### 🧑 User — 2026-11-18T03:12:19.388Z
+
+> ↩︎ result: * in front of Benny and the screen showed a marbled, stretched colour sheet. With the switch the approved design E stays
+>  * the river's layout wherever E has data (E is smoothed along its own rows: far rows hold only 8–18 texels per unit,
+>  * whose row noise read as flat horizontal stripes when magnified), and the fine detail layer is laid over it. Engaged
+>  * only while riding (pjNearK): the locked checkpoint picture is unchanged pixel for pixel.
+>  */
+> export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+> /**
+>  * `&m05ride=1` (Screen 05 round 8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05): the APPROVED DESIGN LAID OUT FROM
+>  * BENNY. The approved picture holds only ~50 u of river and only its first ~10 u (around Benny) at full sharpness; laid
+>  * onto the world, riding forward magnified far rows into a blurred sheet, and the near tile T2 that took over is a
+>  * repeated patch (centre in-painted under Benny) that read as marbled swirls without the painted S-bands. Under the
+>  * switch every projection layer (E, N, T, T2, flow maps, detail) is read at s − (ride s − locked s): a point d units
+>  * ahead of Benny shows the approved water that lies d units ahead of Benny in the approved p …[+1321 chars]
+
+### 🤖 Claude — 2026-11-18T03:12:48.386Z
+
+> 🔧 **SendMessage** `{"to": "aea1b9944be07aee7", "summary": "S04: real fixed 3D only, no illusions", "message": "LEAD — user clarification (binding, overrides any \"make it appear correct\" shortcut): \"I want to make sure you're creating a real, consistent 3D environment. Do not simply move or stretch my approved picture in front of Benny to make it appear correct. Reconstruct the actual visual shapes, gold rings, scenery, water, foam, bubbles, materials, and lighting so they continue looking like my approved artwork as Benny swims … not an illusion that breaks when the character moves.\"\nRules for m04lay and ev …[+1574 chars]`
+
+### 🧑 User — 2026-11-18T03:12:48.401Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aea1b9944be07aee7 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aea1b9944be07aee7","name":"aea1b9944be07aee7","ref":"30dd3a"}}
+
+### 🤖 Claude — 2026-11-18T03:12:54.437Z
+
+> 🔧 **SendMessage** `{"to": "aaf3e97ed8503b962", "summary": "S05: world-anchored real 3D only, no illusions", "message": "LEAD — user clarification (binding): \"I want to make sure you're creating a real, consistent 3D environment. Do not simply move or stretch my approved picture in front of Benny to make it appear correct. Reconstruct the actual visual shapes, gold rings, scenery, water, foam, bubbles, materials, and lighting so they continue looking like my approved artwork as Benny swims … not an illusion that breaks when the character moves.\"\nConsequences for Screen 05:\n1. m05ride (design laid out Benny-re …[+1510 chars]`
+
+### 🧑 User — 2026-11-18T03:12:54.450Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aaf3e97ed8503b962 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aaf3e97ed8503b962","name":"aaf3e97ed8503b962","ref":"ce2ca8"}}
+
+### 🤖 Claude — 2026-11-18T03:13:00.982Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md <<'EOF'\n\n## User clarification ~03:25 UTC — REAL, CONSISTENT 3D (binding)\n\"Do not simply move or stretch my approved picture in front of Benny to make it appear correct. Reconstruct the actual\nvisual shapes, gold rings, scenery, water, foam, bubbles, materials, and lighting so they continue looking like my approved\nartwork as Benny swims. I want the same beautiful visual appearance, not an illusion that breaks when the character moves.\"\nRules derived (sent to both builders): world-fixed geometry only (nothing recali …[+1116 chars]`
+

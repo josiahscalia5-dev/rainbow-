@@ -611,3 +611,83 @@ Let me look at the three approved pictures myself.
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r9/BLUEPRINT_07.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-18T03:11:59.631Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r9/BLUEPRINT_08.md", "content": "# BLUEPRINT 08 · FINAL SPIN CHAMBER — independent review (reference-match-director, round 9, 2026-11-18)\n\nApproved picture: `references/08_final_spin_chamber.png` (864×1536). Overlay: `BLUEPRINT_08_overlay.png`. Coordinates were\nread by eye from a 50 px grid (±20 px); colours are 12×12 px medians. Current version reviewed: branch\n`claude/rainbow-s08-scenery-c9` @ `c0d8c97b`, frames `qa/match/08/scenery/r7/NEW/` (kept set B7, 12 shots). The unfinished\nr8 coin/towel-mask edits were not reviewed in fra …[+4803 chars]`
+
+### 🧑 User — 2026-11-18T03:11:59.661Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r9/BLUEPRINT_08.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:12:25.695Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r9/BLUEPRINT_06.md", "content": "# BLUEPRINT 06 · CREST THE RINSE ARCH — independent review (reference-match-director, round 9, 2026-11-18)\n\nApproved picture: `references/06_crest_the_rinse_arch.png` (864×1536). Overlay: `BLUEPRINT_06_overlay.png`. Coordinates were\nread by eye from a 50 px grid (±20 px); colours are 12×12 px medians. Current version reviewed: branch\n`claude/rainbow-s06-match-c9` @ `efaf78b7`, frames `qa/match/06/r7/RING6/` (full kept set, 7 shots) plus\n`qa/match/06/r7/NEW/` for f03/t33/steer (kept set without rings …[+5931 chars]`
+
+### 🧑 User — 2026-11-18T03:12:25.728Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r9/BLUEPRINT_06.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:12:42.906Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r9/REVIEW_SUMMARY.md", "content": "# Round 9 — independent visual review summary, Screens 06 / 07 / 08 (reference-match-director, 2026-11-18)\n\nMethod: the approved pictures were looked at directly, on a 50 px grid (positions ±20 px by eye; colours are 12×12 px\nmedians). The newest kept audit frames on each `-c9` worktree were viewed side by side. No renders and no paid jobs.\nRatings are my own judgement, not measured scores. Details are in `BLUEPRINT_06.md`, `BLUEPRINT_07.md` and\n`BLUEPRINT_08.md`, each with a `_overlay.png` next t …[+4058 chars]`
+
+### 🧑 User — 2026-11-18T03:12:42.941Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r9/REVIEW_SUMMARY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:12:45.098Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | tail -3; ls -la docs/briefs/2026-11-18-r9/ | grep -i -E \"blueprint|review\"", "description": "Verify references intact and list outputs"}`
+
+### 🧑 User — 2026-11-18T03:12:45.141Z
+
+> ↩︎ result: references/11_safely_home_final_victory.png: OK
+> character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+> -rw-r--r--  1 root root    6506 Nov 18 03:12 BLUEPRINT_06.md
+> -rw-r--r--  1 root root 2335763 Nov 18 03:10 BLUEPRINT_06_overlay.png
+> -rw-r--r--  1 root root    7367 Nov 18 03:11 BLUEPRINT_07.md
+> -rw-r--r--  1 root root 2326595 Nov 18 03:10 BLUEPRINT_07_overlay.png
+> -rw-r--r--  1 root root    5329 Nov 18 03:11 BLUEPRINT_08.md
+> -rw-r--r--  1 root root 2337602 Nov 18 03:10 BLUEPRINT_08_overlay.png
+> -rw-r--r--  1 root root    4563 Nov 18 03:12 REVIEW_SUMMARY.md
+
+### 🤖 Claude — 2026-11-18T03:12:58.045Z
+
+The blueprints and review are written: the current method can realistically reach about 8.5 on 08, but not on 06 or 07 across the whole stage. I worked only from the existing audit frames (no renders, no paid jobs, nothing committed), and the scores below are my own judgement, not measured numbers.
+
+| Screen | Approved view | While swimming | #1 structural fix | Honest ceiling while swimming |
+|---|---|---|---|---|
+| 08 | ≈ 8.5 | ≈ 7 | Keep the big gold arch framing the scene for the whole stage | 8–8.5, free |
+| 07 | ≈ 8 | ≈ 4.5 overall | Plunge: dress it as the painted tube; level part: river fitted to the painted S | ≈ 6.5–7 |
+| 06 | ≈ 8 | ≈ 4.5 | Rebuild the off-centre bent tunnel and S-loop river from the painting | ≈ 6.5–7 |
+
+**08 – Final Spin Chamber.** Healthiest of the three. The stage is only 13 u, so the door, towel, platform, spouts and S-river stay ahead of Benny the whole time. The biggest loss is the foreground gold arch: Benny swims through it after about 5 u, so it is gone for about 60% of the stage. The fix is forced perspective: the arch recedes slowly as the camera moves, so it stays in front of Benny. After that come painted-size coins that fade over Benny (they are now 2–3 times too big and sit on him), real near spout cups and a sharper near-water layer. Nothing paid is needed.
+
+**07 – Dive the Washer Tube.** 79 of the 117 u (68%) is a vertical plunge the approved picture never shows. It renders as a centred tube with a straight ribbon and white foam columns. On the level stretch the near river smears into flat bands, and hard steering shows a wall edge where the picture has foam.
+- **Fix:** fit the river to the painted S on the level stretch and dress the plunge as the painted tube seen head-on. Remove the foam columns.
+- **Ceiling:** about 7.5–8 on the level stretch and 6–6.5 in the plunge. Reaching 8.5 throughout would need the plunge itself changed, and gameplay length and movement are frozen, so that is the user's decision.
+
+**06 – Crest the Rinse Arch.** The real gold rings and foam are good materials on the wrong layout, so I rate it lower than the earlier 7/10.
+- **What happens:** from about 6 u on, the camera points straight down the tunnel. The painted off-centre mouth becomes a centred bullseye of 15+ tightly packed rings. The S-loop river with its crest hole and coin arc becomes a straight ribbon. The purple wall with the two paddles disappears. The painted composition is on screen for only about 10% of the stage.
+- **Fix:** rebuild the tunnel as the painted bent tube and hold it ahead of Benny with forced perspective rather than turning the camera (`m06cam` should be revisited). Rebuild the river as the painted S-loop with its hole.
+- **Ceiling:** the last part of the stage, a turn into 07, is not in the painting either. Reaching 8.5 throughout would need the course to ride the painted loop, which is a movement change and the user's call.
+
+What to tell the user: more polish on the current layouts will not reach 8.5 on 06 or 07. The gap comes from course sections the pictures never show, not from missing paid assets.
+
+Each file ends with an "INCOMPLETE" section:
+- Positions were read by eye from a grid, about ±20 px; the 07 specialist's fitted ring file should be used for exact numbers.
+- 06 has only 7 of the 12 audit shots for the kept set.
+- 08's unfinished coin and towel-mask edits have no frames yet, so they are unreviewed.
+
+The reference images are unchanged (the checksum check passed).
+
+Files are in /home/user/rainbow-/docs/briefs/2026-11-18-r9/:
+- BLUEPRINT_06.md
+- BLUEPRINT_06_overlay.png
+- BLUEPRINT_07.md
+- BLUEPRINT_07_overlay.png
+- BLUEPRINT_08.md
+- BLUEPRINT_08_overlay.png
+- REVIEW_SUMMARY.md
+
