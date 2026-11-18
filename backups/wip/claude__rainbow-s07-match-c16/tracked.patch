@@ -26,7 +26,7 @@ index 320635d..e6b12e8 100644
 +* Tuning (scratch renders, not kept): first try river half-width 1.75 u — at hard left Benny sat on the foam bank → 2.4 u,
 +  then 2.6 u with the painted winding limited to ±0.3 u; the centre line was sampled every 3 u → visible kinks → 1.5 u + smoothing.
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index 2e5bc03..924d442 100644
+index 2e5bc03..362dfec 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -40,17 +40,26 @@ export interface Match07 {
@@ -56,7 +56,7 @@ index 2e5bc03..924d442 100644
    vN = normalize(mat3(modelMatrix) * normal);
    gl_Position = projectionMatrix * viewMatrix * wp;
  }`;
-@@ -77,12 +86,45 @@ uniform vec3 uKey;        // world direction toward the key light (from the view
+@@ -77,12 +86,58 @@ uniform vec3 uKey;        // world direction toward the key light (from the view
  uniform float uClip;      // M3 '?m07tube=1': proxy surfaces end at this depth along the tube axis (the plunge tube continues); 0 = off
  uniform vec2 uGuard;      // stretch guard thresholds (M1/M2 2.2..4.5; M3 '?m07near=1' tighter)
  uniform vec2 uFade;       // M3 plunge river: fades out between these arc depths (the game's own water continues into 08)
@@ -65,6 +65,7 @@ index 2e5bc03..924d442 100644
 +uniform float uNearM;     // share of the bank tile's columns that is the magenta band (column 0 = its outer edge)
 +uniform sampler2D uNearTile;
 +uniform sampler2D uFoamTile;
++uniform vec3 uWF;         // r16 '?m07wfoam=1': foam clouds piled on the lowest wall band — base height, cloud-top height, on (z)
  varying vec2 vUv;
  varying vec4 vProj;
  varying vec3 vW;
@@ -93,6 +94,18 @@ index 2e5bc03..924d442 100644
 +  vec3 foam = mix(f1, f2, fm);
 +  return mix(river, foam, smoothstep(R - 0.04, R + 0.10, a));
 +}
++// r16 m07wfoam: the painted foam clouds piled where the tube wall meets the water (no hard wall / floor edge when steering hard);
++// a scalloped cloud-top line along the wall, world-anchored, the foam tile from the lower-right painted bank
++vec3 wallFoam(vec3 c, float hy, float along, float side) {
++  float k = along * 1.35 + side * 3.1;
++  float b1 = pow(abs(sin(k + 0.8 * sin(along * 0.43 + side))), 0.55);
++  float b2 = pow(abs(sin(k * 2.3 + 1.7)), 0.6);
++  float hE = uWF.x + uWF.y * (0.65 * b1 + 0.35 * b2);
++  float f = 1.0 - smoothstep(hE - 0.05, hE + 0.03, hy);
++  vec3 foam = texture2D(uFoamTile, vec2(along, hy + side * 0.37) / 1.1).rgb;
++  foam *= 0.9 + 0.14 * smoothstep(hE - 0.3, hE, hy);   // brighter cloud tops, softer shade toward the water
++  return mix(c, foam, f);
++}
 +vec3 riverTile() {
 +  float u = (vL.x - uRiver.x) / (uRiver.y - uRiver.x);
 +  u = 1.0 - abs(mod(u, 2.0) - 1.0);                       // mirrored across the banks
@@ -102,7 +115,7 @@ index 2e5bc03..924d442 100644
  vec3 tileColor() {
    // M3 '?m07tube=1' plunge surfaces (real geometry along the course): uv = (arc depth along the tube, angle / lateral)
    if (uMode > 3.5) {
-@@ -97,10 +139,8 @@ vec3 tileColor() {
+@@ -97,17 +152,17 @@ vec3 tileColor() {
      return texture2D(uTile, vec2(u, v)).rgb;
    }
    if (uMode > 1.5) {
@@ -115,7 +128,17 @@ index 2e5bc03..924d442 100644
    }
    if (uMode > 0.5) {
      float a = atan(vL.y - uTube.y, vL.x - uTube.x);
-@@ -160,7 +200,11 @@ void main() {
+     if (a < -1.5707963) a += 6.2831853;
+     float v = clamp((a - uTheta.x) / (uTheta.y - uTheta.x), 0.0, 1.0);
+     float u = fract((-vL.z - uTube.z) / uTube.w);
+-    return texture2D(uTile, vec2(u, v)).rgb;
++    vec3 wc = texture2D(uTile, vec2(u, v)).rgb;
++    if (uWF.z > 0.5) wc = wallFoam(wc, vL.y, -vL.z, sign(vL.x - uTube.x));
++    return wc;
+   }
+   vec3 n = abs(normalize(vN)); n /= max(n.x + n.y + n.z, 1e-4);
+   vec3 p = vL * uPatchK;
+@@ -160,7 +215,11 @@ void main() {
        // m07gold (round 4): the paddle blocks show the picture only near the approved view direction; seen from beside or
        // below while passing they are solid polished gold (no picture of the wall smeared over their faces)
        if (uGoldLit > 0.5 && uMode < 0.5) w *= smoothstep(0.970, 0.995, dot(normalize(cameraPosition - vW), normalize(uProjPos - vW)));
@@ -128,19 +151,20 @@ index 2e5bc03..924d442 100644
      }
    }
    gl_FragColor = vec4(pjInverse(t), 1.0);
-@@ -189,6 +233,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -189,6 +248,12 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // the ring band drifted ~43 % of a bay across the rows, so deep in the tube the rings rendered as twisted diagonal bands
    const fixRing = flag05('m07ring');
    const fixNear = flag05('m07near'); // M3: tighter stretch guard — magnified projected near water gives way to the river tile sooner
 +  // r16: the level-stretch water tile = the painted NEAR river (magenta satin bands, bubbly trim, glossy cyan) winding along the
 +  // lane at about the painted near scale, painted foam clouds on the banks (tools/match07/near_tiles_r16.py)
 +  const nearW = flag05('m07nearw');
-+  const [tNear, tFoam] = nearW ? await Promise.all([load('near_bank.png', THREE.RepeatWrapping), load('near_foam.png', THREE.RepeatWrapping)]) : [null, null];
++  const wallFoamOn = flag05('m07wfoam'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)
++  const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
 +  if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
      load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixRing ? 'tile_wall_ring.png' : fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
      load(fixRiver ? 'tile_river_clean.png' : 'tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
-@@ -240,7 +289,57 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -240,7 +305,58 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // unwrap rows: image row 0 = theta1 (left water line) = v 1 (three flips images), last row = theta0 (right water line)
      uTheta: { value: new THREE.Vector2(TL.wall.theta[0], TL.wall.theta[1]) },
      uRiver: { value: new THREE.Vector4(TL.river.lateral[0], TL.river.lateral[1], TL.river.along[0], TL.river.along[1]) },
@@ -154,6 +178,7 @@ index 2e5bc03..924d442 100644
 +    uNearM: { value: 92 / 268 },
 +    uNearTile: { value: tNear },
 +    uFoamTile: { value: tFoam },
++    uWF: { value: new THREE.Vector3(0.3, 0.5, wallFoamOn ? 1 : 0) },
    };
 +  if (nearW) {
 +    // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted

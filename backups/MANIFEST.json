@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17468,
-   "sha256": "fe252667b9c82647d7e013226ed96855733e9ba440780b6d68a5eecd1c74a234"
+   "sha256": "c7af3314f75751eaa771f8f3c29dfdf1884e113433234a2656ca80526a381ba9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1014,7 +1014,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/INFO.json",
    "bytes": 477,
-   "sha256": "a689352dd178fb245499f99feb12be5ccdefe12547d6a337d367e475ba5fef57"
+   "sha256": "4a7c3455271bfe528a34b80ce572fd6b647c7dfd2bb033d49519d5d0614b3205"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1049,7 +1049,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/INFO.json",
    "bytes": 578,
-   "sha256": "fd89d905a145e23ae56af929f2b61e380740ffacd9d168c280840d5b791cfffa"
+   "sha256": "02f41c37a408fbc6b270fd9846a2239f3b24866bbea410f4252d67b78ad29bed"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/tracked.patch",
@@ -1259,7 +1259,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/INFO.json",
    "bytes": 2565,
-   "sha256": "fd438f4333938bfd2326eed64c2ad601a40497c538e23750ae2be00cdf1edccc"
+   "sha256": "220fec4416c46a61212b0c9973ae7c96a1bbb20b94639f93afbf7c4910c26892"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/tracked.patch",
@@ -1413,8 +1413,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/INFO.json",
-   "bytes": 477,
-   "sha256": "885f526bff066831cb0bedc0e82ac300761868b219ce052f8c02e9cb8482e6c9"
+   "bytes": 511,
+   "sha256": "a3ec56fead18148457c5d0f96b6ea13408644e89f62d6bb37ec76ae27fda5d76"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c16/tracked.patch",
+   "bytes": 2497,
+   "sha256": "494bcd9c3b6a2b501b12b8ec338a7bea88cdefc87d99357ae3aa0f17d0c2030f"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -1454,7 +1459,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/INFO.json",
    "bytes": 1309,
-   "sha256": "1e5039cec4d91964040b10468f86a9efd210f9f63807a9aa01148f56927ab313"
+   "sha256": "4c8c2c5613bf96ef487314be2f614b6ebbfe234be558f51cd3ae3e0f944e8d39"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/tracked.patch",
@@ -1579,7 +1584,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/INFO.json",
    "bytes": 543,
-   "sha256": "aad992efc2a7415b4b0a42bbde620a961aa864c370cb1f0f23520cb7bc110e1e"
+   "sha256": "d912b2ff19d17d61f73503173133853c94329a2f3849a24c2c43010270a72d74"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/tracked.patch",
@@ -1973,8 +1978,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r16/COORDINATION.md",
-   "bytes": 11442,
-   "sha256": "166bb10907fc9e619097aa4d5a475e6f65cf4b6270f995eaa7a930cd58cc4507"
+   "bytes": 11912,
+   "sha256": "5002dbc7b92657726aa78b30c96b1b0b2289fc0208482ce70dba51c1898d6c65"
   },
   {
    "path": "docs/briefs/2026-11-18-r16/RESUME_R16.md",
@@ -11515,6 +11520,31 @@
    "path": "qa/review_r16/04_ringpaint_step3/3_NEW_s_left_hard.png",
    "bytes": 1630149,
    "sha256": "b4621cafbe46be9c27f066fd7c1db99c3ff6cc5db87b1b8342cff61d97648061"
+  },
+  {
+   "path": "qa/review_r16/04_step3_side_swirls/1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "qa/review_r16/04_step3_side_swirls/2_BEFORE_f20_forward20u.png",
+   "bytes": 1647015,
+   "sha256": "5b1aff7c678fe085c9953ad8915593b8b70dbe71c436564b3ee268640341cd0c"
+  },
+  {
+   "path": "qa/review_r16/04_step3_side_swirls/2_BEFORE_t66_through_screen.png",
+   "bytes": 1663075,
+   "sha256": "fbc880ecb15dd47ddf25401a23ce9597427713deaa201be41800309d4027db01"
+  },
+  {
+   "path": "qa/review_r16/04_step3_side_swirls/3_NEW_f20_forward20u.png",
+   "bytes": 1654511,
+   "sha256": "16a5276d8046e846bdd9a30b55666d06b3e72b5289a119bc39c5ded68c51b0a8"
+  },
+  {
+   "path": "qa/review_r16/04_step3_side_swirls/3_NEW_t66_through_screen.png",
+   "bytes": 1643304,
+   "sha256": "a0317d69ae77654b69af2b1a1086ad71babeb7b0221047a70113cb8a0330df49"
   },
   {
    "path": "qa/review_r16/06_step1_gold_rings/1_APPROVED.png",

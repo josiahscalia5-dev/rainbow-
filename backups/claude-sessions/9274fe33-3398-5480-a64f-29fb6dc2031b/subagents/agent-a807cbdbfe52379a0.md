@@ -772,3 +772,75 @@ Pushed and verified. Now reporting to main.
 
 > ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
 
+### 🤖 Claude — 2026-11-18T19:41:24.133Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\nb=Image.open('qa/match/04/r16/s3_sband/NEW/t33_through_screen.png').convert('RGB')\nc=Image.open('qa/match/04/r16/s3_sband/NEW/f10_forward10u.png').convert('RGB')\nW=Image.new('RGB',(864*3//2,int(1536*0.5)))\nfor i,im in enumerate([a,c,b]): W.paste(im.resize((432,768)),(i*432,0))\nW.save('$S/cmp_task4.png')\n\"", "description": "Compare approved with f10 and …[+19 chars]`
+
+### 🧑 User — 2026-11-18T19:41:25.037Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:41:27.315Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_task4.png"}`
+
+### 🧑 User — 2026-11-18T19:41:27.365Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:41:40.578Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"a3b0\\|a3b1\\|a3f0\\|a3f1\\|m04a3p'\\|m04a3hb\\|a3k\\b\\|'m04a3k'\" src/world/match04m4.ts | head -20; grep -n -i \"overlap\\|hidden behind\\|behind benny\\|f03\" qa/match/04/r14/PROGRESS.md qa/match/04/r13/PROGRESS.md | head -20", "description": "Find arrow parameters and past overlap notes"}`
+
+### 🧑 User — 2026-11-18T19:41:41.069Z
+
+> ↩︎ result: 992:    const tilt = THREE.MathUtils.degToRad(M04.num('m04a3k', 38)), sp = M04.num('m04a3p', 5.0), first = M04.num('m04a3f', 3.0);
+> 1046:      // r13 `&m04a3hb=1`: a deep-blue halo with NORMAL blending (the painted arrows pop as white bars in a blue glow; an
+> 1048:      const hb = M04.num('m04a3hb', 0) > 0;
+> 1067:    console.info('[match04] m04arr3d', { arrows: arrowsOut.length / 2, sp, tilt: M04.num('m04a3k', 38) });
+> 1079:      // chevron vanish as it reaches him, like the painted picture where all five lie ahead); far fade m04a3f0/f1 keeps
+> 1081:      const n0 = M04.num('m04a3n0', 2.0), n1 = M04.num('m04a3n1', 4.5), f0 = M04.num('m04a3f0', 30), f1 = M04.num('m04a3f1', 40);
+> 1083:      const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
+> 1087:        // r13 `&m04a3b=1`: the near fade is measured from BENNY (m04a3b0/b1 u ahead of him), so no chevron ever sits round
+> qa/match/04/r14/PROGRESS.md:43:* WHAT LOOKS CLOSER: entering (f03) and just inside (f06) white foam clouds flank the entrance on both sides like the painted foam
+> qa/match/04/r13/PROGRESS.md:8:  hidden behind Benny up to ≈ 7 u ahead of him; flat arrows are edge-on beyond that. The painted picture shows them stacke …[+289 chars]
+
+### 🤖 Claude — 2026-11-18T19:41:43.497Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,60p qa/match/04/r13/PROGRESS.md", "description": "Read r13 progress on arrows"}`
+
+### 🧑 User — 2026-11-18T19:41:44.217Z
+
+> ↩︎ result: # Screen 04 — round 13 (account 13, lead) — branch `claude/rainbow-s04-match-c13` (from `-c12` `4a8f1860` + account-12 WIP `m04arr3d`)
+> 
+> K13 (kept so far) = `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82`
+> 
+> ## REBUILD step 2 — the five glowing chevrons on the lane while swimming — E4 = GOOD IMPROVEMENT (arrows only) — shown to the user
+> Query: `K13&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=3&m04a3o=1.0&m04a3b=1&m04a3b0=1.8&m04a3b1=3.2&m04a3f0=25&m04a3f1=31&m04a3p=3.6&m04a3w=1.05&m04a3t=0.36&m04a3d=0.62&m04a3f=4&m04a3y=0.1`
+> * Why the painted arrows vanished while swimming: from the game camera (≈ 3 u above the water, Benny ≈ 6.4 u ahead) the lane is
+>   hidden behind Benny up to ≈ 7 u ahead of him; flat arrows are edge-on beyond that. The painted picture shows them stacked just
+>   above his hat, so they are real chevron bars leaning back 66° toward the camera (they rise into the visible strip above the hat).
+> * New r13 settings: `m04a3w2` white core + cyan neon halo (`m04a3g` halo size, `m04a3o` glow), `m04a3b` near fade measured from
+>   BENNY (1.8–3.2 u ahead of him: no chevron ever stands round his body, also at the stage end where the  …[+6627 chars]
+
+### 🤖 Claude — 2026-11-18T19:41:48.068Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 640,735p src/world/match04m4.ts", "description": "Read tunnel, mouth and end cap setup"}`
+
+### 🧑 User — 2026-11-18T19:41:48.252Z
+
+> ↩︎ result: const away = { value: 0 };
+>   const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+>   const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+>   const updaters: ((a: number) => void)[] = [];
+> 
+>   if (M04.ring) {
+>     const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+>     ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
+>     ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
+>     const gm = new THREE.ShaderMaterial({
+>       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
+>       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+>         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+>         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulb …[+6570 chars]
+
