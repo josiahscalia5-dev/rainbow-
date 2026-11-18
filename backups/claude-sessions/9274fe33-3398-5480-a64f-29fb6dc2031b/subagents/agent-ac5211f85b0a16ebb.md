@@ -599,3 +599,329 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T19:27:01.948Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && wc -l src/world/match08.ts && grep -n \"towel\\|Towel\" src/world/match08.ts | head -60", "description": "Find towel-related code in match08"}`
+
+### 🧑 User — 2026-11-18T19:27:02.009Z
+
+> ↩︎ result: 776 src/world/match08.ts
+> 5: * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+> 23:  towel: { cx: number; cz: number; w: number; h: number; y0: number; d: number };
+> 57:uniform sampler2D uPatch;   // material patch cut from the approved artwork (wall slots / gold band / towel)
+> 70:uniform sampler2D uOcc;     // m08occ (door wall only): plate with towel + platform painted out (occ08.py), alpha = usable
+> 72:uniform sampler2D uTMask;   // m08towelm (towel only): the painted towel's outline in plate coordinates (towelmask08.py)
+> 175:  // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+> 176:  // behind receives the window pixels that the rectangle used to carry at towel depth)
+> 223:      // m08occ: what the approved view could not see behind the towel / platform comes from the occlusion plate (the
+> 347:  const [pWall, pGold, pTowel] = await Promise.all([loadPatch('wall'), loadPatch('gold'), loadPatch('towel')]);
+> 403:  // `&m08towelm=1` (r8): towel outline mask (tools/match08/towelmask08.py); only the towel material switches it on
+> 405:  if (flag05('m08towelm')) { …[+1589 chars]
+
+### 🤖 Claude — 2026-11-18T19:27:05.357Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/ && grep -rn \"towelm\\|m08occ\" qa/match/08/*/PROGRESS.md qa/match/08/*.md 2>/dev/null | cut -c1-400 | head -30", "description": "Search earlier logs for towel mask and occlusion switches"}`
+
+### 🧑 User — 2026-11-18T19:27:05.773Z
+
+> ↩︎ result: 08_BEFORE_current_game.png
+> 08_NEW_match08.png
+> 08_NEW_match08_android1080x1920.png
+> 08_NEW_screen_match.json
+> NOTES.md
+> benny_APPROVED_closeup.png
+> benny_NEW_ported_closeup.png
+> coins08px
+> gameplay_test_match08.json
+> motion
+> other_screens
+> r10
+> r11
+> r12
+> r13
+> r14
+> r15
+> r16
+> scenery
+> scenery_metrics_BEFORE_FINAL.json
+> scenery_metrics_BEFORE_NEW.json
+
+### 🤖 Claude — 2026-11-18T19:27:07.691Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rln \"towelm\\|m08occ\" qa/ docs/ 2>/dev/null | head; ls qa/match/08/r10 qa/match/08/r11 qa/match/08/scenery | head -40", "description": "Find docs mentioning towel mask / occlusion"}`
+
+### 🧑 User — 2026-11-18T19:27:12.341Z
+
+> ↩︎ result: qa/match/08/scenery/r8/towelm/motion.json
+> qa/match/08/scenery/r8/occ/motion.json
+> qa/match/08/r10:
+> NEW
+> PROGRESS.md
+> step1_m08far
+> step2_m08coinv
+> 
+> qa/match/08/r11:
+> BEFORE
+> PROGRESS.md
+> step1_m08ceil
+> step2_m08near
+> 
+> qa/match/08/scenery:
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> dbg_ids
+> dbg_lane
+> final_r5
+> motion_BEFORE
+> motion_bw
+> motion_bw_r5
+> motion_fill_r5
+> motion_lane
+> motion_lane_r5
+> r6
+> r7
+> r8
+
+### 🤖 Claude — 2026-11-18T19:27:14.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"towelm\\|occ\\|towel\" qa/match/08/scenery/NOTES.md qa/match/08/scenery/STATUS.md | cut -c1-500 | head -40", "description": "Read scenery notes about towel and occlusion experiments"}`
+
+### 🧑 User — 2026-11-18T19:27:14.975Z
+
+> ↩︎ result: qa/match/08/scenery/NOTES.md:5:be reshaped or scaled ABOUT THE APPROVED VIEWPOINT without changing the approved view — only Benny/coin occlusion and the
+> qa/match/08/scenery/NOTES.md:63:  projector rays: no torn gold/blue slabs at the frame bottom at forward 3 u), `m08towel` (towel frustum along projector
+> qa/match/08/scenery/NOTES.md:64:  rays: no door-window slab on the towel when steering hard). `m08swim` and `m08seam` = 0 px at the approved view.
+> qa/match/08/scenery/STATUS.md:7:`B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'`
+> qa/match/08/scenery/STATUS.md:22:4. **`&m08towel=1` — NEW, KEEP.** In both hard-steer shots a rectangular slab of door-window pixels sat on the towel
+> qa/match/08/scenery/STATUS.md:23:   (the box's top and sides carried the door painted above and beside it). Fix: towel = frustum whose back corners
+> qa/match/08/scenery/STATUS.md:24:   lie on the projector rays through the front corners. Hard-steer frames `r7/towel/`: the slab is gone and the window
+> qa/match/08/scenery/STATUS.md:25:   runs cleanly behind the towel. Approved view: 6,328 px change (52 > 20), CLOSER to the approved picture (mean error
+
+### 🤖 Claude — 2026-11-18T19:27:16.419Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,80p qa/match/08/scenery/STATUS.md", "description": "Read the full scenery status file"}`
+
+### 🧑 User — 2026-11-18T19:27:16.515Z
+
+> ↩︎ result: # Screen 08 scenery-in-motion — STATUS (round 7, account 7) — MILESTONE DONE, stopped
+> 
+> * Branch `claude/rainbow-s08-scenery-c7` (started at `-c6` @ `cf2e092b`). Final SHA: `git log -1`.
+> * Every change is behind its own `?match08=1` sub-switch; nothing runs without `match08`.
+> 
+> ## Kept switch set (round 7)
+> `B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'`
+> (`m08lane` stays OFF.)
+> 
+> ## Done (round 7)
+> 1. **`&m08seam=1` — KEEP at ×1.6 (default `m08seamk`).** f10 / t95 frames `r7/seam/{base,k16,k22}/`. Without it the
+>    generated ceiling fill is a dense fine mesh, visibly smaller than the painted chamber-wall slots it meets. ×1.6 matches
+>    the painted slot size best; ×2.2 is slightly coarse. Approved view: 0 px (frozen capture, `r7/proof/seam`).
+> 2. **`m08swim` proven 0 px at the approved view** (frozen `scripts/capture.mjs`: `r7/proof/noswim` vs `swim` vs `swim2`:
+>    0 changed pixels; the capture is deterministic, swim vs swim2 = 0).
+> 3. **`&m08sill=1` — NEW, KEEP.** Riding 3 u forward, the frame bottom showed torn gold / blue slabs. `m08dbg` showed
+>    they were the gold arch's unpushed water-level band (2.6× nearer than the rest of the ring). …[+3506 chars]
+
+### 🤖 Claude — 2026-11-18T19:27:20.120Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/scenery/r8/ && grep -rn \"r8\\|round 8\" qa/match/08/scenery/NOTES.md | cut -c1-300 | head -20; grep -n \"towelm\\|occ\" -i qa/match/08/r1*/PROGRESS.md | cut -c1-300 | head", "description": "Look for round 8 towel mask / occlusion verdicts"}`
+
+### 🧑 User — 2026-11-18T19:27:20.473Z
+
+> ↩︎ result: dbg_av
+> occ
+> proof
+> towelm
+
+### 🤖 Claude — 2026-11-18T19:27:22.780Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/scenery/r8/* | head -40; git log --all --oneline -- qa/match/08/scenery/r8 | head -5; git log --oneline --all --grep=\"towelm\\|m08occ\" | head -5", "description": "List round 8 towel/occ results and commits"}`
+
+### 🧑 User — 2026-11-18T19:27:23.072Z
+
+> ↩︎ result: qa/match/08/scenery/r8/dbg_av:
+> 08.png
+> 
+> qa/match/08/scenery/r8/occ:
+> f10_forward10u.png
+> motion.json
+> s_left_hard.png
+> s_right_hard.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 
+> qa/match/08/scenery/r8/proof:
+> b7
+> occ
+> towelm
+> 
+> qa/match/08/scenery/r8/towelm:
+> f10_forward10u.png
+> motion.json
+> s_left_hard.png
+> s_right_hard.png
+> t95_through_screen.png
+> df4a3bb Screen 08 r14 step 1: &m08nq=1 near water at the painted scale while swimming (nq08.py v6: rectified painted band, base satin from whole painted columns, painted glints put back whole) - GOOD IMPROVEMENT
+
+### 🤖 Claude — 2026-11-18T19:27:25.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git log --oneline -- src/world/match08.ts | grep -i \"r8\\|occ\\|towel\" | head; git log --format=\"%h %s\" -S\"m08towelm\" -- src/world/match08.ts | tail -3", "description": "Find the commit that added the towel mask switch"}`
+
+### 🧑 User — 2026-11-18T19:27:25.675Z
+
+> ↩︎ result: df4a3bb Screen 08 r14 step 1: &m08nq=1 near water at the painted scale while swimming (nq08.py v6: rectified painted band, base satin from whole painted columns, painted glints put back whole) - GOOD IMPROVEMENT
+
+### 🤖 Claude — 2026-11-18T19:27:32.158Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\nims=[Image.open('qa/match/08/r16/step1_m08sr/3_NEW_s_left_hard.png'),Image.open('qa/match/08/scenery/r8/towelm/s_left_hard.png'),Image.open('qa/match/08/scenery/r8/occ/s_left_hard.png')]\nc=Image.new('RGB',(3*432+16,300),'white')\nfor i,im in enumerate(ims): c.paste(im.crop((250,330,850,630)).resize((432,216)),(i*440,0))\nc.save(S+'towel3.png')\n\"; cat qa/match/08/scenery/r8/occ/motion.json | head -5", "description": "Compare towel  …[+39 chars]`
+
+### 🧑 User — 2026-11-18T19:27:32.912Z
+
+> ↩︎ result: {
+>  "screen": "08",
+>  "query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08occ=1",
+>  "shots": [
+>   {
+
+### 🤖 Claude — 2026-11-18T19:27:33.398Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/towel3.png"}`
+
+### 🧑 User — 2026-11-18T19:27:33.585Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:27:38.664Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\na=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_s_left_hard.png').crop((380,380,720,560)).resize((680,360))\nb=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_s_right_hard.png').crop((290,420,630,600)).resize((680,360))\nc=Image.new('RGB',(680,728),'white'); c.paste(a,(0,0)); c.paste(b,(0,368)); c.save(S+'towelz.png')\n\"", "description": "Zoom on the towel region in both hard-steer shots"}`
+
+### 🧑 User — 2026-11-18T19:27:39.468Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:27:40.058Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/towelz.png"}`
+
+### 🧑 User — 2026-11-18T19:27:40.089Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:27:47.177Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 160,240p src/world/match08.ts", "description": "Read the shader section with towel mask and occlusion"}`
+
+### 🧑 User — 2026-11-18T19:27:47.357Z
+
+> ↩︎ result: if (uSr > 0.5) {
+>     // m08sr (r15): the same pieces (core 1:1, compressed bank band, pushed floor easing back) with ROUNDED corners: the
+>     // hard slope changes drew straight creases along the river in the swimming view (streaks bent sharply on them)
+>     float o2 = a + (ad - a) * (hp - a) / (h - a), o3 = ad - e * (1.0 - (ad - h) / 2.5);
+>     float w1 = 0.6 * a, w2 = clamp(0.45 * (h - a - w1), 0.05, 0.6);
+>     o = mix(ad, o2, smoothstep(a - w1, a + w1, ad));
+>     o = mix(o, o3, smoothstep(h - w2, h + w2, ad));
+>     o = mix(o, ad, smoothstep(h + 1.7, h + 3.3, ad));
+>   } else if (ad <= a) o = ad;
+>   else if (ad <= h) o = a + (ad - a) * (hp - a) / (h - a);
+>   else o = ad - e * max(0.0, 1.0 - (ad - h) / 2.5);
+>   return vec3(r.x + sign(d) * o, w.y, w.z);
+> }
+> void main() {
+>   if (uClipIn.w > 0.5 && (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z)) discard;
+>   // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+>   // behind receives the window pixels that the rectangle used to carry at towel depth)
+>   if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) di …[+4017 chars]
+
+### 🤖 Claude — 2026-11-18T19:27:48.078Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 330,450p src/world/match08.ts; ls assets/textures/match08/", "description": "Read buildMatch08 loading and switches"}`
+
+### 🧑 User — 2026-11-18T19:27:48.267Z
+
+> ↩︎ result: const depthRT = new THREE.WebGLRenderTarget(1024, Math.round((1024 * H) / W), { depthBuffer: true });
+>   depthRT.depthTexture = new THREE.DepthTexture(depthRT.width, depthRT.height, THREE.UnsignedIntType);
+>   const shared = {
+>     uPlate: { value: plate },
+>     uDepth: { value: depthRT.depthTexture as THREE.Texture },
+>     uUseDepth: { value: 0 },
+>     uNearFar: { value: new THREE.Vector2(proj.near, proj.far) },
+>     uProjVP: { value: projVP },
+>     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
+>     uPjRes: { value: new THREE.Vector2(W, H) },
+>     uProjPos: { value: proj.position.clone() },
+>   };
+>   // material patches cut from the approved artwork (tools: qa/match/08/NOTES.md), mirrored so the tiling has no seams
+>   const loadPatch = async (name: string) => {
+>     const t = await new THREE.TextureLoader().loadAsync(new URL(`../../assets/textures/match08/patch_${name}.png`, import.meta.url).href);
+>     t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 4; return t;
+>   };
+>   const [pWall, pGold, pTowel] = await Promise.all([loadPatch('wall'), loadPatch('gold'), loadPatch('towel')]);
+>   // `&m08fill=1` (scenery round): chamber surfaces  …[+8979 chars]
+
+### 🤖 Claude — 2026-11-18T19:27:49.166Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 475,776p src/world/match08.ts", "description": "Read the rest of buildMatch08 (geometry and bake)"}`
+
+### 🧑 User — 2026-11-18T19:27:49.491Z
+
+> ↩︎ result: u.uNq.value.set(1, NQ.core, NQ.lane, NQ.halfWidth);
+>     }
+>     if (flag05('m08dbguv')) u.uDbgUv.value = 1;
+>   }
+>   const group = new THREE.Group();
+>   group.name = 'match08_projection';
+>   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm08_' + name; group.add(o); return o; };
+>   const C = L.chamber;
+> 
+>   // Scenery-in-motion round (2026-11-17, qa/match/08/scenery/NOTES.md). Every proxy surface shows exactly the approved
+>   // picture from the approved view (projection), so the near proxies can be reshaped / enlarged ABOUT THE APPROVED
+>   // VIEWPOINT without changing that view; only what a moving camera sees changes.
+>   //  `&m08lane=1`: inlet pipe + gold arch scaled ×LANE_K about the approved viewpoint (same picture, a wider swim lane:
+>   //   the fitted pipe left only ±1.35 u of water at the waterline, Benny steers to ±1.85 u + his body) and the pipe's
+>   //   lower half squared off (walls rise from the water at the lane edge instead of curving into it).
+>   //  `&m08bw=1`: the chamber's entrance wall sits flush behind the gold arch (was 3.6 u further in, where it rose out
+>   //   of the painted river and showed a stretched s …[+20822 chars]
+
+### 🤖 Claude — 2026-11-18T19:27:59.967Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rn \"towel\" qa/match/08/r10/PROGRESS.md qa/match/08/r11/PROGRESS.md qa/match/08/r12/PROGRESS.md qa/match/08/r13/PROGRESS.md 2>/dev/null | cut -c1-400 | head -20; ls qa/match/08/scenery/r8/proof/*", "description": "Search later logs for towel verdicts"}`
+
+### 🧑 User — 2026-11-18T19:28:00.162Z
+
+> ↩︎ result: qa/match/08/r10/PROGRESS.md:4:`B7 = match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1`.
+> qa/match/08/r11/PROGRESS.md:4:Kept set at start `K10 = match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1`.
+> qa/match/08/r12/PROGRESS.md:5:`K10 = match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1`.
+> qa/match/08/r13/PROGRESS.md:6:`K10 = match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1`.
+> qa/match/08/scenery/r8/proof/b7:
+> 08.png
+> 
+> qa/match/08/scenery/r8/proof/occ:
+> 08.png
+> 
+> qa/match/08/scenery/r8/proof/towelm:
+> 08.png
+
+### 🤖 Claude — 2026-11-18T19:28:06.963Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "ack, seams next; towel card noted", "message": "Got it. I'm starting the wall seams now, and the river-edge foam comes right after. FYI, one more visible defect I found: at hard left/right steer and at right steer, the towel sits on a rectangular \"card\" of door-window clouds with hard straight edges, which shows as a double exposure against the window behind it. Examples: 3_NEW_s_left_hard / s_right_hard in qa/match/08/r16/step1_m08sr/. A round-8 switch already targets this (&m08towelm, which cuts the towel to its painted outline, plus &m08occ). It was never tested …[+206 chars]`
+
+### 🧑 User — 2026-11-18T19:28:06.975Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T19:28:08.614Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T19:28:08.872Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:28:09.050Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:28:09.182Z
+
+> ↩︎ result: [image]
+

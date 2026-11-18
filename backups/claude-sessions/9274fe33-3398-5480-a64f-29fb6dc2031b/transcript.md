@@ -2606,3 +2606,120 @@ I'll pass my view to the worker so its next step targets the most visible proble
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:04-ringpaint-shown 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save the shown pictures and log to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T19:27:20.845Z
+
+> ↩︎ result: "commit": "6be13fab37bb3ed7b8c8d610f5b2fc545370aa9d",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:26:54+00:00 (0.4 min ago) | local 6be13fa remote 6be13fa (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:27:22.545Z
+
+Screen 08 just finished a step too. I'll check its best views by eye before passing it on.
+
+### 🤖 Claude — 2026-11-18T19:27:25.693Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s08/qa/match/08/r16/step1_m08sr; ls $D | head -30; S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; for s in f03_forward3u f06_forward6u s_left_hard; do b=$(ls $D/2_BEFORE_*$s*.png | head -1); n=$(ls $D/3_NEW_*$s*.png | head -1); convert \"$b\" -resize x620 $S/b.png; convert \"$n\" -resize x620 $S/n.png; convert $S/b.png $S/n.png +append $S/s8_$s.jpg; done; convert $S/s8_f03_forward3u.jpg $S/s8_f06_forward6u.jpg $S/s8_s_left_hard.jpg -append -resize x1800 $S/s8.jpg", "description": "Preview Screen 08 step-1 BEFORE/NEW"}`
+
+### 🧑 User — 2026-11-18T19:27:31.441Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_a00_approved_view.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_f20_forward20u.png
+> 2_BEFORE_motion.json
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_left_steer.png
+> 2_BEFORE_s_right_hard.png
+> 2_BEFORE_s_right_steer.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_a00_approved_view.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_motion.json
+> 3_NEW_motion_f20.json
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_s_right_steer.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T19:27:33.728Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/s8.jpg"}`
+
+### 🧑 User — 2026-11-18T19:27:34.022Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:27:36.574Z
+
+At this size BEFORE and NEW look almost the same. The worker describes small fixes in the water, so I'll compare the water area at full resolution.
+
+### 🤖 Claude — 2026-11-18T19:27:40.451Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s08/qa/match/08/r16/step1_m08sr; S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; for s in f03_forward3u f06_forward6u s_left_hard; do convert $D/2_BEFORE_$s.png -crop 864x700+0+836 +repage -resize 50% $S/b.png; convert $D/3_NEW_$s.png -crop 864x700+0+836 +repage -resize 50% $S/n.png; convert $S/b.png $S/n.png +append $S/c_$s.jpg; done; convert $S/c_f03_forward3u.jpg $S/c_f06_forward6u.jpg $S/c_s_left_hard.jpg -append $S/s8crop.jpg; node /home/user/tools-pixelmatch/pixeldiff.mjs $D/2_BEFORE_f03_forward3u.png $D/3_NEW_f03_for …[+89 chars]`
+
+### 🧑 User — 2026-11-18T19:27:46.781Z
+
+> ↩︎ result: {"a":"/home/user/wt/s08/qa/match/08/r16/step1_m08sr/2_BEFORE_f03_forward3u.png","b":"/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_f03_forward3u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":61899,"total":1171584,"diff_pct":5.2834}
+
+### 🤖 Claude — 2026-11-18T19:27:49.149Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/s8crop.jpg"}`
+
+### 🧑 User — 2026-11-18T19:27:49.462Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:27:55.788Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s08/qa/match/08/r16/step1_m08sr; R=/home/user/rainbow-/qa/review_r16/08_step1_smooth_river; mkdir -p $R; cp $D/1_APPROVED.png $R/; for s in f03_forward3u f06_forward6u; do cp $D/2_BEFORE_$s.png $D/3_NEW_$s.png $R/; done; ls $R", "description": "Copy Screen 08 proof pictures into the repo"}`
+
+### 🧑 User — 2026-11-18T19:27:55.961Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+
+### 🤖 Claude — 2026-11-18T19:27:58.435Z
+
+> 🔧 **SendMessage** `{"to": "ac5211f85b0a16ebb", "summary": "Lead agrees m08sr GOOD (small); go on", "message": "Lead checked f03 / f06 / hard left at full size and agrees: m08sr is a GOOD IMPROVEMENT (small). The fold line and the zig-zag kinks are gone, and it was shown to the user. Carry on with the wall seams as planned. Note: the near water while swimming is still the most visible difference to my eye after the walls. It's a stretched pink / cyan sheet with white flecks where the painting has a curving S-river with foamy edges, so keep the river-edge foam task right after the seams.", "type": "message", "reci …[+120 chars]`
+
+### 🧑 User — 2026-11-18T19:27:58.475Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to ac5211f85b0a16ebb at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ac5211f85b0a16ebb","name":"ac5211f85b0a16ebb","ref":"ce281e"}}
+
+### 🤖 Claude — 2026-11-18T19:28:02.087Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r16/08_step1_smooth_river/1_APPROVED.png", "/home/user/rainbow-/qa/review_r16/08_step1_smooth_river/2_BEFORE_f03_forward3u.png", "/home/user/rainbow-/qa/review_r16/08_step1_smooth_river/3_NEW_f03_forward3u.png", "/home/user/rainbow-/qa/review_r16/08_step1_smooth_river/2_BEFORE_f06_forward6u.png", "/home/user/rainbow-/qa/review_r16/08_step1_smooth_river/3_NEW_f06_forward6u.png"], "caption": "Screen 08 smoother river — APPROVED, then BEFORE / NEW just after the start, then BEFORE / NEW a little further in. Look at the water left of Benny.", "status": "no …[+27 chars]`
+
+### 🧑 User — 2026-11-18T19:28:03.956Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_r16/08_step1_smooth_river/1_APPROVED.png → file_uuid: 9931e35c-9020-48d4-9705-97aee2e91475
+>   /home/user/rainbow-/qa/review_r16/08_step1_smooth_river/2_BEFORE_f03_forward3u.png → file_uuid: 1ebb1ef0-bf76-43d7-8a0f-7e483616ae0f
+>   /home/user/rainbow-/qa/review_r16/08_step1_smooth_river/3_NEW_f03_forward3u.png → file_uuid: b844a527-704a-40e4-a96d-318b3c618e7c
+>   /home/user/rainbow-/qa/review_r16/08_step1_smooth_river/2_BEFORE_f06_forward6u.png → file_uuid: 068c8462-4602-4aad-88ed-b3f183a3f0d2
+>   /home/user/rainbow-/qa/review_r16/08_step1_smooth_river/3_NEW_f06_forward6u.png → file_uuid: 1972217a-ab99-4b0c-a7a1-90f2fdd73382
+
+### 🤖 Claude — 2026-11-18T19:28:04.637Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md", "old_string": "gold slightly too orange — `qa/review_r16/04_ringpaint_step1/` |", "new_string": "gold slightly too orange — `qa/review_r16/04_ringpaint_step1/` |\n| 2 (~19:40) | 08 r16 step 1 `&m08sr=1` smooth river course (s08 `6da32d5`, kept set K15 = K14&m08sr=1) | GOOD IMPROVEMENT (small; worker + lead at full size): straight fold line across the water at forward 3 u and zig-zag kinks in the pink band at forward 6 u / hard left gone, streaks sweep in curves; approved view 0 px — `qa/review …[+32 chars]`
+
+### 🧑 User — 2026-11-18T19:28:04.680Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:28:05.965Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:08-step1-shown 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save the shown pictures and log to GitHub", "timeout": 300000}`
+

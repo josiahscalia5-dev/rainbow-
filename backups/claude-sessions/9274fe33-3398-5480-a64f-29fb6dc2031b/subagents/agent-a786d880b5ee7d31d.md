@@ -1193,3 +1193,11 @@ The pop condition looks right on paper, so I'll measure it directly with the pro
 > == t99 s 189.091 stage 06 cam 3.15,-40.61,-122.88 far-open 1 extra {"s06":188.92412082521383,"s":189.091,"rings":[5,[1.6,-39.6,-125],9.25]}
 >    0,0.3 water_ribbon<water_system<Scene d17.99 | Mesh<zone_tubes<washer_world<Scene d23.25 | Mesh<zone_tubes<washer_world<Scene d23.57
 
+### 🤖 Claude — 2026-11-18T19:27:18.446Z
+
+The probe says the block IS open (far-open 1) at x99, which contradicts the shot. I'll capture the probe frame itself at t99 for BEFORE and NEW to see whether the hoops are the opened rings.
+
+### 🤖 Claude — 2026-11-18T19:27:24.037Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt) && P=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/probe && mkdir -p $P/b $P/n && EX=\"(()=>{const r=window.__rainbow;const out=[];r.qa3d().scene.traverse(o=>{if(o.isInstancedMesh&&o.name==='tube05_far'){const m=new (o.matrixWorld.constructor)();const a=[];for(let i=0;i<o.count;i++){o.getMatrixAt(i,m);a.push(m.elements.slice(12,15).map(v=>+v.toFixed(1)).join('/')+'@'+Math.hypot(m.elements[0],m.elements[1],m.elements[2]).toFixed(1));}out.push([o.count,o.visible,a.slice(0,5).join(' ') …[+486 chars]`
+
