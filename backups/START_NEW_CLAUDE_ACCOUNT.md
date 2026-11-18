@@ -1,6 +1,23 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-18 ~11:38 UTC, account 11 → next account) — use THIS prompt
+## ▶ NEWEST (2026-11-18 ~12:45 UTC, account 12 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-e908f8da-cy4yc1`** (account-12 lead; NOT the default branch). A new
+account may have no keys: Claude checks first with free reads and opens the secure forms only if a check fails
+(World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`).
+
+> RAINBOW — continue my EXISTING game exactly where account 12 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 12"), then `docs/briefs/2026-11-18-r12/COORDINATION.md` and the rules it names.
+> 2. Fetch the newest tips of every `-c12` branch (or `-c11` where no `-c12` exists); continue each on its own NEW `-c13`
+>    branch from that tip. Unfinished specialist edits are in `backups/wip/<branch>/` (restore steps in `INFO.json`).
+> 3. Keep TWO specialists working (Screen 05 + Screen 08 were running; the lead ran the 04 test), rotate 07 → 06.
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures labelled GOOD IMPROVEMENT, NOT AN
+>    IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~11:38 UTC, account 11 → next account) — superseded by the prompt above
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
 Claude Code cloud session on the repo, branch **`ccr-3b139b48-0qqkkz`** (account-11 lead; NOT the default branch — the
 default branch is the protected 11-15 original and does not restore newer work). A new account has no keys: Claude will

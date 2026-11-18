@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 39747,
-   "sha256": "46ca63a754ff1fe7aef29057c138b354e96d6af7a17a7cc3884d530cb77102de"
+   "bytes": 40992,
+   "sha256": "79b32db0fe52269557900c5a5f85ec36eb97e84fd3752dea2e7e41ed1281cbc1"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15505,
-   "sha256": "ed7db99dff95fa11106c6a2b100a9badbc528bf2072453ab0c991d2864712ebf"
+   "sha256": "9330c02703b3b43e2af454f93b381fce46d793469d0dd2491622c8adf98de1f3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -638,8 +638,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 9528,
-   "sha256": "237b2ee2427f3752850056998dddda39cc3e3e234227815af7a262bdd92853e5"
+   "bytes": 11001,
+   "sha256": "942a3fcf76bcdd17be962fef23c0168efa044c85e0526cc873359b45758856bc"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 7444,
-   "sha256": "8a38bbb722bb3c90886382205e4ac4626410a710cf4f906dcd4983806c29bb2f"
+   "bytes": 7659,
+   "sha256": "1d2ac72ab97ceb762ee4fda321754acdd6c746d8f425872323e3aca082813937"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -873,8 +873,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 47047,
-   "sha256": "c188e5089956860466de3551296eebeb380bd9d951603388b3799b3e6d984b6e"
+   "bytes": 47852,
+   "sha256": "2d1034cb33b6c51ff8f29cd4d418621f1c5d3ca79291c3b7e85b082128b6fa50"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -1130,6 +1130,11 @@
    "path": "docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md",
    "bytes": 3220,
    "sha256": "51e167ed9684a52993a65c90f4cf39e868170e9dab546ef30dbd463800859f24"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r12/COORDINATION.md",
+   "bytes": 3006,
+   "sha256": "648e0d45ca3d3e4f031a78dbfc4e28ed1bb87366aeadecff3997abe41cf6d661"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",

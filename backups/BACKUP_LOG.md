@@ -713,3 +713,6 @@ error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow
 | 2026-11-18T12:32:33+00:00 | daemon | committed+pushed | `4d00f1a11cee` | `ccr-e908f8da-cy4yc1` | 4 | True |  |
 | 2026-11-18T12:32:47+00:00 | bootstrap:background | committed+pushed | `c1cb9514c988` | `ccr-e908f8da-cy4yc1` | 4 | True |  |
 | 2026-11-18T12:37:44+00:00 | daemon | committed+pushed | `92731e13da61` | `ccr-e908f8da-cy4yc1` | 5 | True |  |
+| 2026-11-18T12:39:59+00:00 | manual:start-account12 | committed+pushed | `74500f89db45` | `ccr-e908f8da-cy4yc1` | 4 | True |  |
+| 2026-11-18T12:42:51+00:00 | daemon | error | `—` | `ccr-e908f8da-cy4yc1` | 0 | False | branch 'ccr-e908f8da-cy4yc1' is a protected original branch; autosave never pushes to it |
+| 2026-11-18T12:43:43+00:00 | manual:round12-setup | error | `—` | `ccr-e908f8da-cy4yc1` | 0 | False | branch 'ccr-e908f8da-cy4yc1' is a protected original branch; autosave never pushes to it |

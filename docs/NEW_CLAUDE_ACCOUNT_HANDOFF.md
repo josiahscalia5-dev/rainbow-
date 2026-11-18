@@ -1,3 +1,14 @@
+# ▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 12 (round 12) STATE (2026-11-18 ~12:45 UTC, lead branch `ccr-e908f8da-cy4yc1`)
+
+Started from the account-11 lead `ccr-3b139b48-0qqkkz` @ `f06a53e` (nothing merged). Branch map + verified services:
+**`docs/briefs/2026-11-18-r12/COORDINATION.md`**. RUNNING: 05 `claude/rainbow-s05-match-c12` (water-fx-specialist,
+`/home/user/wt/s05`), 08 `claude/rainbow-s08-scenery-c12` (washer-environment-modeler, `/home/user/wt/s08`); lead finishes the
+04 multi-view test on `claude/rainbow-s04-match-c12`. Keys: this account's environment injects World Labs (5,420 credits,
+08 world 200) and fal (01a1ea70 COMPLETED) — no form was needed. If account 12 runs out: `-c13` branches from each NEWEST
+`-c12` tip (or `-c11`); never write `-c12` from another account.
+
+---
+
 # ▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 11 (round 11) STATE (2026-11-18 ~11:38 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)
 
 Lead branch **`ccr-3b139b48-0qqkkz`** (contains the account-10 lead `ccr-c526614d-tw0yro` @ `e673ef4` + autosaves; nothing
