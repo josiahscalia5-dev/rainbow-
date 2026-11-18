@@ -1,0 +1,142 @@
+diff --git a/src/world/match07.ts b/src/world/match07.ts
+index 2e5bc03..2138959 100644
+--- a/src/world/match07.ts
++++ b/src/world/match07.ts
+@@ -40,17 +40,26 @@ export interface Match07 {
+ 
+ const VERT = /* glsl */ `
+ uniform mat4 uProjVP;
++uniform float uCtr[48];   // r16 '?m07nearw=1': river centre line (tube-local x) every uCtrA.y units of depth from uCtrA.x
++uniform vec3 uCtrA;       // first depth, step, on (z)
+ varying vec4 vProj;
+ varying vec3 vW;
+ varying vec3 vN;
+ varying vec3 vL;
+ varying vec2 vUv;
++varying float vCtr;
+ void main() {
+   vUv = uv;
+   vec4 wp = modelMatrix * vec4(position, 1.0);
+   vProj = uProjVP * wp;
+   vW = wp.xyz;
+   vL = (uGroupInv * wp).xyz;
++  vCtr = 0.0;
++  if (uCtrA.z > 0.5) {
++    float ia = clamp((-vL.z - uCtrA.x) / uCtrA.y, 0.0, 46.999);
++    int i0 = int(floor(ia));
++    vCtr = mix(uCtr[i0], uCtr[i0 + 1], ia - float(i0));
++  }
+   vN = normalize(mat3(modelMatrix) * normal);
+   gl_Position = projectionMatrix * viewMatrix * wp;
+ }`;
+@@ -77,12 +86,39 @@ uniform vec3 uKey;        // world direction toward the key light (from the view
+ uniform float uClip;      // M3 '?m07tube=1': proxy surfaces end at this depth along the tube axis (the plunge tube continues); 0 = off
+ uniform vec2 uGuard;      // stretch guard thresholds (M1/M2 2.2..4.5; M3 '?m07near=1' tighter)
+ uniform vec2 uFade;       // M3 plunge river: fades out between these arc depths (the game's own water continues into 08)
++uniform float uNearOn;    // r16 '?m07nearw=1': the level-stretch water tile = the painted NEAR river (near_bank / near_foam)
++uniform vec4 uNearW;      // river half-width incl. the magenta band, magenta band width, bank-tile period along, foam-tile size
++uniform float uNearM;     // share of the bank tile's columns that is the magenta band (column 0 = its outer edge)
++uniform sampler2D uNearTile;
++uniform sampler2D uFoamTile;
+ varying vec2 vUv;
+ varying vec4 vProj;
+ varying vec3 vW;
+ varying vec3 vN;
+ varying vec3 vL;
++varying float vCtr;
+ ${PROJ05_INVERSE}
++// r16 m07nearw: [foam | magenta | trim | cyan | cyan | trim | magenta | foam] across a winding centre line, world-anchored.
++// Both banks are the painted lower-left band straightened (tools/match07/near_tiles_r16.py) at about the painted near
++// scale; the right bank reads another stretch of the strip (no mirror image across the centre).
++vec3 nearWater() {
++  float along = -vL.z;
++  float d = vL.x - vCtr;
++  float a = abs(d);
++  float R = uNearW.x, mw = uNearW.y;
++  float u = a > R - mw ? uNearM * clamp((R - a) / mw, 0.0, 1.0) : uNearM + (1.0 - uNearM) * (1.0 - a / (R - mw));
++  float v = along / uNearW.z;
++  vec3 cL = texture2D(uNearTile, vec2(u, v)).rgb;
++  vec3 cR = texture2D(uNearTile, vec2(u, v + 0.5)).rgb;
++  vec3 river = mix(cL, cR, smoothstep(-0.22, 0.22, d));
++  // painted foam clouds on the banks: two offset readings of the foam tile blended by a slow world mask (no wallpaper grid)
++  vec2 fp = vec2(vL.x, along) / uNearW.w;
++  vec3 f1 = texture2D(uFoamTile, fp).rgb;
++  vec3 f2 = texture2D(uFoamTile, vec2(fp.y, -fp.x) * 0.77 + vec2(0.31, 0.57)).rgb;
++  float fm = smoothstep(0.25, 0.75, 0.5 + 0.35 * sin(fp.x * 1.9 + 1.4 * sin(fp.y * 1.1)) + 0.25 * sin(fp.y * 1.6 + 0.8));
++  vec3 foam = mix(f1, f2, fm);
++  return mix(river, foam, smoothstep(R - 0.04, R + 0.10, a));
++}
+ vec3 tileColor() {
+   // M3 '?m07tube=1' plunge surfaces (real geometry along the course): uv = (arc depth along the tube, angle / lateral)
+   if (uMode > 3.5) {
+@@ -97,6 +133,7 @@ vec3 tileColor() {
+     return texture2D(uTile, vec2(u, v)).rgb;
+   }
+   if (uMode > 1.5) {
++    if (uNearOn > 0.5) return nearWater();
+     float u = (vL.x - uRiver.x) / (uRiver.y - uRiver.x);
+     u = 1.0 - abs(mod(u, 2.0) - 1.0);                       // mirrored across the banks
+     float v = fract((-vL.z - uRiver.z) / (uRiver.w - uRiver.z));
+@@ -189,6 +226,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+   // the ring band drifted ~43 % of a bay across the rows, so deep in the tube the rings rendered as twisted diagonal bands
+   const fixRing = flag05('m07ring');
+   const fixNear = flag05('m07near'); // M3: tighter stretch guard — magnified projected near water gives way to the river tile sooner
++  // r16: the level-stretch water tile = the painted NEAR river (magenta satin bands, bubbly trim, glossy cyan) winding along the
++  // lane at about the painted near scale, painted foam clouds on the banks (tools/match07/near_tiles_r16.py)
++  const nearW = flag05('m07nearw');
++  const [tNear, tFoam] = nearW ? await Promise.all([load('near_bank.png', THREE.RepeatWrapping), load('near_foam.png', THREE.RepeatWrapping)]) : [null, null];
++  if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
+   const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
+     load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixRing ? 'tile_wall_ring.png' : fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
+     load(fixRiver ? 'tile_river_clean.png' : 'tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
+@@ -240,7 +282,50 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+     // unwrap rows: image row 0 = theta1 (left water line) = v 1 (three flips images), last row = theta0 (right water line)
+     uTheta: { value: new THREE.Vector2(TL.wall.theta[0], TL.wall.theta[1]) },
+     uRiver: { value: new THREE.Vector4(TL.river.lateral[0], TL.river.lateral[1], TL.river.along[0], TL.river.along[1]) },
++    uCtr: { value: new Array<number>(48).fill(0) },
++    uCtrA: { value: new THREE.Vector3(-8, 3, 0) },
++    uNearOn: { value: nearW ? 1 : 0 },
++    // river half-width incl. magenta 1.75 u, magenta band 0.5 u, bank strip period 1.9 u along, foam tile 0.62 u
++    uNearW: { value: new THREE.Vector4(1.75, 0.5, 1.9, 0.62) },
++    uNearM: { value: 92 / 268 },
++    uNearTile: { value: tNear },
++    uFoamTile: { value: tFoam },
+   };
++  if (nearW) {
++    // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
++    // river's winding (tools/match07/river_coins07.py → river07.json, clamped so Benny stays in the cyan), continued by a gentle
++    // S beyond the painted stretch; none behind the checkpoint
++    const Rv: { along: number[]; lat: number[] } = await fetch(tex('river07.json')).then((r) => r.json());
++    const Xa = new THREE.Vector3(...L.X), Da = new THREE.Vector3(...L.D), b0 = new THREE.Vector3(...L.water);
++    let sCk = 0;
++    if (plunge) {
++      let best = 1e9;
++      for (let s = plunge.course.stage('07').s0; s < plunge.sA; s += 0.1) { const dd = plunge.course.sample(s).pos.distanceTo(b0); if (dd < best) { best = dd; sCk = s; } }
++    }
++    const lerpT = (xs: number[], ys: number[], x: number) => {
++      if (x <= xs[0]) return ys[0];
++      for (let i = 1; i < xs.length; i++) if (x <= xs[i]) return ys[i - 1] + ((ys[i] - ys[i - 1]) * (x - xs[i - 1])) / (xs[i] - xs[i - 1]);
++      return ys[ys.length - 1];
++    };
++    const aEnd = Rv.along[Rv.along.length - 1];
++    const q = new THREE.Vector3();
++    const ctr = shared.uCtr.value;
++    for (let k = 0; k < 48; k++) {
++      const along = -8 + 3 * k;
++      let lane = 0;
++      if (plunge) {
++        let s = sCk + along;
++        for (let it = 0; it < 3; it++) s += along - q.copy(plunge.course.sample(s).pos).sub(b0).dot(Da);
++        lane = q.copy(plunge.course.sample(s).pos).sub(b0).dot(Xa);
++      }
++      const painted = along < 0 ? 0 : THREE.MathUtils.clamp(lerpT(Rv.along, Rv.lat, along) - lane, -0.7, 0.7);
++      const tail = 0.6 * Math.sin(((along - aEnd) / 18) * Math.PI * 2);
++      const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
++      ctr[k] = lane + painted * (1 - kk) + tail * kk;
++    }
++    shared.uCtrA.value.z = 1;
++    console.info('[m07nearw] checkpoint s', sCk.toFixed(2), 'centre line', ctr.map((v) => v.toFixed(2)).join(' '));
++  }
+   const mat = (tile: THREE.Texture, mode: number, k = 1) => new THREE.ShaderMaterial({
+     vertexShader: 'uniform mat4 uGroupInv;\n' + VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+     uniforms: { ...shared, uTile: { value: tile }, uMode: { value: mode }, uPatchK: { value: k } },

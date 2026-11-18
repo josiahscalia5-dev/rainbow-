@@ -1013,3 +1013,183 @@ BEFORE clearly shows the fold problem (x97 pink disc + swollen wall, t98 floatin
 > user	0m2.613s
 > sys	0m0.558s
 
+### 🤖 Claude — 2026-11-18T19:24:06.883Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/v/N_row1.png"}`
+
+### 🧑 User — 2026-11-18T19:24:07.064Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:14.553Z
+
+NEW keeps the painted tunnel through x98p5 (good), but at x99 (first frame of 06) copper hoops still float over the 06 crest. Let me look closer at x99 NEW vs BEFORE.
+
+### 🤖 Claude — 2026-11-18T19:24:17.192Z
+
+> 🔧 **Bash** `{"command": "V=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/v; D=/home/user/wt/s05/qa/match/05/r16/step1_trans; convert $D/before/x99.png -resize 50% $V/bx99.png; convert $D/new/x99.png -resize 50% $V/nx99.png; convert $V/bx99.png $V/nx99.png +append $V/bn_x99.png; grep -n \"focusS\" /home/user/wt/s05/src/vfx/index.ts | head", "description": "Compare x99 BEFORE/NEW and find focusS definition"}`
+
+### 🤖 Claude — 2026-11-18T19:24:18.352Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/v/bn_x99.png"}`
+
+### 🧑 User — 2026-11-18T19:24:19.288Z
+
+> ↩︎ result: 44:  /** call every frame; focusS = Benny's arc-length (for pooling/LOD of bubbles & foam) */
+> 45:  update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+> 176:    update(time, dt, focusS, camera) {
+> 177:      if (Math.abs(focusS - lastFocusSeed) > 25) seed = 0x5eed ^ Math.round(focusS * 16);
+> 178:      lastFocusSeed = focusS;
+> 180:      focus = focusS;
+> 193:      // region visibility (perf): only what the camera around focusS can see
+> 194:      drum.group.visible = focusS < st03.s0 + 12;
+> 195:      whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+> 196:      wave.mesh.visible = focusS > st08.s0 - 25;
+
+### 🧑 User — 2026-11-18T19:24:19.330Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:29.206Z
+
+At x99 the compressed far rings, far coins and far foam clouds are still drawn (open = 0), floating over the 06 crest. Let me check what value drives the pop.
+
+### 🤖 Claude — 2026-11-18T19:24:30.348Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"water.update\\|\\.update(time\\|vfx.update\" src/game/Game.ts | head; grep -n \"stage(id\\|stage(\" src/world/course.ts | head -5", "description": "Find where water update is called with focusS"}`
+
+### 🧑 User — 2026-11-18T19:24:30.435Z
+
+> ↩︎ result: 512:    env.update(time, dt);
+> 513:    water.update(time, dt, st.s, camera);
+> 480:    this.st05 = this.stage('05');
+> 481:    this.st10 = this.stage('10');
+> 504:  stage(id: StageId): StageDef {
+> 600:  const rideStart = c.stage('03').s0; // 01–02 tumble helix is a cinematic, checked for gaps only
+> 614:    entryAltitude07: y(c.stage('07').s0),
+
+### 🤖 Claude — 2026-11-18T19:24:32.035Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 490,530p src/game/Game.ts; sed -n 500,512p src/world/course.ts", "description": "Read the frame update order in Game.ts"}`
+
+### 🧑 User — 2026-11-18T19:24:32.112Z
+
+> ↩︎ result: st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+>     coins.resetUntil(-1);
+>     hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
+>     st.stage = '01'; updateZones();
+>     env.towel.setTent(0);
+>     env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
+>     env.doorC.rotation.y = 0;
+>     benny.root.visible = true;
+>     playIntroVideo();
+>   };
+> 
+>   const stepSim = (dt: number) => {
+>     if (st.paused) return;
+>     st.t += dt;
+>     if (st.frozen === null) st.clock += dt;
+>     if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate(dt);
+>     else if (st.mode === 'outro' || st.mode === 'end') {
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     fill.position.copy(camera.position);
+>     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+>   };
+> 
+>   let last = performance.now();
+>   let fps = 60;
+>   let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = fals …[+1162 chars]
+
+### 🤖 Claude — 2026-11-18T19:24:47.630Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"s0:\\|s1:\\|s0 =\\|s1 =\" src/world/course.ts | head -20", "description": "Check how stage s0/s1 are defined"}`
+
+### 🧑 User — 2026-11-18T19:24:47.727Z
+
+> ↩︎ result: 24:  s0: number;
+> 25:  s1: number;
+> 91:  s0: number;
+> 92:  s1: number;
+> 410:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 415:    const def = (id: StageId, s0: number, s1: number, o: Partial<StageDef>): StageDef => ({
+
+### 🤖 Claude — 2026-11-18T19:24:49.485Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 412,470p src/world/course.ts | grep -n \"'05'\\|'06'\" ", "description": "Find 05 and 06 stage boundaries"}`
+
+### 🧑 User — 2026-11-18T19:24:49.539Z
+
+> ↩︎ result: 12:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 15:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 16:      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+
+### 🤖 Claude — 2026-11-18T19:24:56.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 632,700p src/world/environment.ts", "description": "Read far-block wiring after createLiveFar05"}`
+
+### 🧑 User — 2026-11-18T19:24:56.880Z
+
+> ↩︎ result: // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored
+>     // virtual tunnel, sliding seam, folds only at the stage end) instead of folding away from ≈34 u before the seam
+>     // `&m05fcloud=1` (Screen 05 round 12): foam clouds along both far banks (placed every frame by match05far.ts)
+>     const farClouds05 = M05FAR && M05FCLOUD ? createFarCloud05(Math.min(zEnd, 45)) : null;
+>     const liveFar = M05FAR ? createLiveFar05({
+>       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+>       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
+>       zCap: sGlow05 + 3.5 - sF05, foldNear: M05TRANS ? 0.5 : M05END ? 5.2 : 6.5, foldFar: M05TRANS ? 1.0 : M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06; m05trans (r15): only as a safety
+>       riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
+>       course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
+>       popS: M05TRANS ? course.stage('06').s0 : undefined,   // `&m05trans=1` (Screen 05 round 15): removed as Benny enters 06
+>       clouds: farClouds0 …[+3234 chars]
+
+### 🤖 Claude — 2026-11-18T19:25:02.109Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 180,215p src/vfx/index.ts", "description": "Check where m05rideS is written"}`
+
+### 🧑 User — 2026-11-18T19:25:02.199Z
+
+> ↩︎ result: focus = focusS;
+>       curTime = time;
+>       ribbon.uniforms.uTime.value = time;
+>       whirl.uniforms.uTime.value = time;
+>       drum.uniforms.uTime.value = time;
+>       drum.uniforms.uAgitation.value = controls.drumAgitation;
+>       drum.swirlUniforms.uSwirl.value = controls.drumSwirl;
+>       drum.swirl.visible = controls.drumSwirl > 0.001;
+>       wave.uniforms.uTime.value = time;
+>       puddles.uniforms.uTime.value = time;
+>       puddles.uniforms.uAmount.value = controls.outro;
+>       (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+>       puddles.group.visible = controls.outro > 0.001;
+>       // region visibility (perf): only what the camera around focusS can see
+>       drum.group.visible = focusS < st03.s0 + 12;
+>       whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+>       wave.mesh.visible = focusS > st08.s0 - 25;
+>       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
+>       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+>       foam.update(time, dt, focusS, controls.outro, camera);
+>       // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game …[+1219 chars]
+
+### 🤖 Claude — 2026-11-18T19:25:11.950Z
+
+The pop condition looks right on paper, so I'll measure it directly with the probe at x99 (one position, one page load).
+
+### 🤖 Claude — 2026-11-18T19:25:15.226Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt) && GRID=\"0,0.3\" EXTRA_JS=\"(()=>{const r=window.__rainbow;let rings=null;r.qa3d().scene.traverse(o=>{if(o.isInstancedMesh&&o.name==='tube05_far'&&rings===null){const m=new (o.matrixWorld.constructor)();o.getMatrixAt(0,m);rings=[o.count,m.elements.slice(12,15).map(v=>+v.toFixed(1)),+Math.hypot(m.elements[0],m.elements[1],m.elements[2]).toFixed(2)];}});return {s06:r.course.stage('06').s0,s:r.state().s,rings};})()\" timeout 600 node tools/match05/r15_probe.mjs \"$K&m05trans=1\" x99,t99 5275 2>&1 | tail -8", "descriptio …[+68 chars]`
+
+### 🧑 User — 2026-11-18T19:26:51.409Z
+
+> ↩︎ result: == x99 s 189.638 stage 06 cam 3,-40.67,-123.48 far-open 1 extra {"s06":188.92412082521383,"s":189.638,"rings":[5,[1.6,-39.6,-125],9.25]}
+>    0,0.3 water_ribbon<water_system<Scene d20.39 | water_ribbon<water_system<Scene d28.32 | Mesh<zone_tubes<washer_world<Scene d51.37
+> == t99 s 189.091 stage 06 cam 3.15,-40.61,-122.88 far-open 1 extra {"s06":188.92412082521383,"s":189.091,"rings":[5,[1.6,-39.6,-125],9.25]}
+>    0,0.3 water_ribbon<water_system<Scene d17.99 | Mesh<zone_tubes<washer_world<Scene d23.25 | Mesh<zone_tubes<washer_world<Scene d23.57
+

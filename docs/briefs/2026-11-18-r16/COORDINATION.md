@@ -68,3 +68,5 @@ before any commit, the bad snapshot folder + temp pack deleted, the next save (`
 | # | Screen / step | Verdict |
 |---|---|---|
 | (r15 1–3) | see `docs/briefs/2026-11-18-r15/COORDINATION.md` | 08 m08nq, 05 m05bank, 04 m04fclu: GOOD IMPROVEMENT (small) |
+| (~19:25) | "how do they look so far" — APPROVED + current game while swimming for 04–08 (existing renders only, workers untouched) | lead by eye: 08 closest (near water stretched), 05 close (smeared walls, streaky near water), 04 recognisable (thin-ring corridor, plain water), 06 far (straight centred ring target instead of the left-curving crest into an off-centre tunnel), 07 furthest (smeared near water; torn walls + hard cut at a third of the way) |
+| 1 (~19:35) | 04 r16 ringpaint `&m04rpaint=1` (s04tex `620414f9`), user's 18:44 request | NOT YET PROVEN (worker + lead agree): richer copper-gold smooth bands with pink-violet tints, plaid gone; but grooves / lips too faint → reads as one smooth tube with long light streaks instead of separate thick rings; gold slightly too orange — `qa/review_r16/04_ringpaint_step1/` |

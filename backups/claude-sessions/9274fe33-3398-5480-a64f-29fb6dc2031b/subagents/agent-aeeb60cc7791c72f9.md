@@ -325,3 +325,262 @@ Visually identical at the approved view. Running the frozen-time capture for bot
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && L4=$(cat $SP/L4.txt) && node scripts/capture.mjs 04 --q=\"$L4\" --out=$SP/cap_before 2>&1 | grep -v \"outside of Vite\" | tail -3 && node scripts/capture.mjs 04 --q=\"$L4&m04rpaint=1\" --out=$SP/cap_new 2>&1 | grep -v \"outside of Vite\" | tail -3 && node /home/user/tools-pixelmatch/pixeldiff.mjs $SP/cap_before/04.png $SP/cap_new/04.png $SP/cap_diff.png 0.1 180 1536; git -C /home/user/wt/s04b status --short | head", "description": "Frozen-time approved-view check BEFORE …[+28 chars]`
 
+### 🧑 User — 2026-11-18T19:24:29.224Z
+
+> ↩︎ result: '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/cap_before/04.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/cap_new/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+>  M qa/capture_log.json
+>  M src/world/match04m4.ts
+> ?? assets/textures/match04/ring_paint04.json
+> ?? assets/textures/match04/tile_ring_paint.png
+> ?? assets/textures/match04/tile_ring_paint_soft.png
+> ?? node_modules
+> ?? tools/match04/ring_paint04.py
+
+### 🤖 Claude — 2026-11-18T19:24:31.370Z
+
+Approved start view: 0 differing pixels (frozen time). I'll restore the capture log the tool touched, and review the moving shots.
+
+### 🤖 Claude — 2026-11-18T19:24:32.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git checkout -- qa/capture_log.json && git status --short | head -3", "description": "Restore capture log side-effect"}`
+
+### 🧑 User — 2026-11-18T19:24:32.473Z
+
+> ↩︎ result: M src/world/match04m4.ts
+> ?? assets/textures/match04/ring_paint04.json
+> ?? assets/textures/match04/tile_ring_paint.png
+
+### 🤖 Claude — 2026-11-18T19:24:33.084Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/pairs/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:24:33.122Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:33.856Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/pairs/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T19:24:33.885Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:34.492Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/pairs/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:24:34.593Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:48.104Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/pairs/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:24:48.132Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:48.808Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/pairs/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:24:49.046Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:58.161Z
+
+First set judged. Now assembling the full-size proof set in the worktree (approved, BEFORE from the kept L4 set of the same build, NEW from this render), plus the two textures for reference.
+
+### 🤖 Claude — 2026-11-18T19:25:02.084Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && D=qa/match/04/r16/ringpaint && mkdir -p $D/new_rp1 && cp references/04_through_the_five_arrows.png $D/1_APPROVED.png && for s in a00_approved_view f03_forward3u f06_forward6u f10_forward10u f20_forward20u t66_through_screen t95_through_screen s_left_hard s_right_hard; do cp qa/match/04/r14/s11_rimfoam/L4/$s.png $D/2_BEFORE_$s.png; cp $SP/new_rp1/$s.png $D/3_NEW_$s.png; done && cp $SP/new_rp1/motion.json $D/new_rp1/motion.json && cp $SP/cap_diff.png $D/start_view_pixeldi …[+337 chars]`
+
+### 🧑 User — 2026-11-18T19:25:02.541Z
+
+> ↩︎ result: 33M	qa/match/04/r16/ringpaint
+> 1_APPROVED.png
+> 2_BEFORE_a00_approved_view.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_f20_forward20u.png
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_right_hard.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_a00_approved_view.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+> new_rp1
+> start_view_pixeldiff_BEFORE_vs_NEW.png
+> texture_NEW_tile_ring_paint.png
+> texture_OLD_tile_ring.png
+> /usr/bin/ffmpeg
+> character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+
+### 🤖 Claude — 2026-11-18T19:25:05.909Z
+
+Proof set assembled (references verified unchanged). Starting the BEFORE/NEW swimming clips in the background (sequentially, to spare CPU) while I write the notes and commit.
+
+### 🤖 Claude — 2026-11-18T19:25:10.018Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && SP=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && L4=$(cat $SP/L4.txt) && D=/home/user/wt/s04b/qa/match/04/r16/ringpaint && node tools/lead_r13/swim_clip.mjs 04 $SP/clip_before 3.6 \"$L4\" 2>&1 | grep -v \"outside of Vite\" | tail -2 && ffmpeg -loglevel error -y -framerate 24 -i $SP/clip_before/%04d.png -vf scale=432:768 -pix_fmt yuv420p -crf 23 $D/clip_BEFORE_swim.mp4 && node tools/lead_r13/swim_clip.mjs 04 $SP/clip_new 3.6 \"$L4&m04rpaint=1\" 2>&1 | grep -v \"outside of Vite\" | tail -2 && ffmpeg -loglevel error -y - …[+235 chars]`
+
+### 🧑 User — 2026-11-18T19:25:10.357Z
+
+> ↩︎ result: Command running in background with ID: bl9msxtk6. Output is being written to: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bl9msxtk6.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T19:25:11.346Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && cat .gitattributes 2>/dev/null | head; git check-attr filter -- qa/match/04/r16/ringpaint/1_APPROVED.png; head -60 tools/match04/ring_paint04.py; ls qa/match/04/r15 2>/dev/null", "description": "Check LFS attributes and extraction script header"}`
+
+### 🧑 User — 2026-11-18T19:25:11.709Z
+
+> ↩︎ result: Exit code 2
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> qa/match/04/r16/ringpaint/1_APPROVED.png: filter: unspecified
+> """Screen 04 round 15 `&m04rpaint=k`: the user's PAINTED inner gold rings, straightened from the approved picture, as a
+> texture for every modeled inner ring band (src/world/match04m4.ts GOLD_FRAG).
+> 
+> The painted tunnel is a telescope of rounded copper-gold rings whose centres drift toward the vanishing point and whose
+> outlines are slightly elliptic, so neither a straight-cylinder unwrap nor the simple drifting-centre model gives straight
+> rings. Here the painting gets its OWN ring coordinate system:
+>   1. log-polar unwrap around the drifting centres (make_tiles04.py model) -> painted grooves at the tunnel top (dark
+>      minima …[+3155 chars]
+
+### 🤖 Claude — 2026-11-18T19:25:17.372Z
+
+PNGs are plain git (same practice as earlier rounds; the BEFORE copies dedupe against r14 blobs). Let me check how the soft texture was produced so the notes are accurate.
+
+### 🤖 Claude — 2026-11-18T19:25:18.275Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"soft\\|imwrite\\|SOFT\" tools/match04/ring_paint04.py | head -20; wc -l tools/match04/ring_paint04.py", "description": "Find how soft texture variant is written"}`
+
+### 🧑 User — 2026-11-18T19:25:18.394Z
+
+> ↩︎ result: 174:    if DIAG: cv2.imwrite(f"{DIAG}/period_K{K}.png", np.clip(t, 0, 255).astype(np.uint8))
+> 229:cv2.imwrite(f"{d}/tile_ring_paint.png", np.clip(tile, 0, 255).astype(np.uint8))
+> 230:# softened variant (`&m04rpsoft=1`): the long radial highlight streaks of the straightened band would line up as stripes
+> 235:soft = low + (tile - low) * wS[:, None, None]
+> 236:cv2.imwrite(f"{d}/tile_ring_paint_soft.png", np.clip(soft, 0, 255).astype(np.uint8))
+> 244:    cv2.imwrite(f"{DIAG}/qun.png", np.clip(qun, 0, 255).astype(np.uint8))
+> 251:    cv2.imwrite(f"{DIAG}/qun_grooves.png", vis)
+> 252:    cv2.imwrite(f"{DIAG}/bubble_mask.png", (bub * 255).astype(np.uint8))
+> 253 tools/match04/ring_paint04.py
+
+### 🤖 Claude — 2026-11-18T19:25:19.648Z
+
+Now the notes file, then commit and push this first proof set.
+
+### 🤖 Claude — 2026-11-18T19:25:36.115Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04b/qa/match/04/r16/ringpaint/NOTES.md", "content": "# Screen 04 — painted-ring test `&m04rpaint` (round 16, continues the cut-off round-15 worker)\n\nBrief: `docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md` + round-16 changes (`docs/briefs/2026-11-18-r16/RESUME_R16.md` \"s04tex\").\nBranch `claude/rainbow-s04-ringtex-c16` (from `fc28323a`). History of earlier Screen 04 rounds: `qa/match/04/r15/` and older.\n\nBEFORE query = kept L4 (`docs/briefs/2026-11-18-r15/S04_LAUNCH.md` \"Kept set now\"); BEFORE frames = `qa/match/04/r14/s11_rimfoam/L4/`\n(same build: this …[+3652 chars]`
+
+### 🧑 User — 2026-11-18T19:25:36.187Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04b/qa/match/04/r16/ringpaint/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:25:44.323Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && D=qa/match/04/r16/ringpaint && git add src/world/match04m4.ts assets/textures/match04/tile_ring_paint.png assets/textures/match04/tile_ring_paint_soft.png assets/textures/match04/ring_paint04.json tools/match04/ring_paint04.py $D/NOTES.md $D/1_APPROVED.png $D/2_BEFORE_*.png $D/3_NEW_*.png $D/new_rp1/motion.json $D/start_view_pixeldiff_BEFORE_vs_NEW.png $D/texture_OLD_tile_ring.png $D/texture_NEW_tile_ring_paint.png && git status --short | grep -v \"^A \" | head; git diff --cached --stat | tail -3 && git commit -q -F - <<'EOF'\nScreen 04 r16 step 1: painted …[+1057 chars]`
+
+### 🧑 User — 2026-11-18T19:25:53.887Z
+
+> ↩︎ result: M  src/world/match04m4.ts
+> ?? node_modules
+>  src/world/match04m4.ts                             |  42 +++
+>  tools/match04/ring_paint04.py                      | 253 ++++++++++++++++++
+>  29 files changed, 827 insertions(+)
+> 620414f Screen 04 r16 step 1: painted inner rings on every 3D ring band (m04rpaint=1; L4) — NOT YET PROVEN
+> To https://github.com/josiahscalia5-dev/rainbow-
+>    fc28323..620414f  claude/rainbow-s04-ringtex-c16 -> claude/rainbow-s04-ringtex-c16
+> branch 'claude/rainbow-s04-ringtex-c16' set up to track 'origin/claude/rainbow-s04-ringtex-c16'.
+> 620414f91a89f75d47fd01a5c6afa11cc974e679	refs/heads/claude/rainbow-s04-ringtex-c16
+> 620414f91a89f75d47fd01a5c6afa11cc974e679
+
+### 🤖 Claude — 2026-11-18T19:25:55.325Z
+
+Pushed and remote matches HEAD (`620414f`). Reporting to "main" now.
+
+### 🤖 Claude — 2026-11-18T19:25:55.687Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T19:25:55.696Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T19:26:02.490Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s04tex step 1 painted-ring proof set", "message": "s04tex: first in-game painted-ring proof set is pushed (Screen 04, switch &m04rpaint=1 on top of kept L4). Verdict: NOT YET PROVEN.\nBranch claude/rainbow-s04-ringtex-c16, commit 620414f91a89f75d47fd01a5c6afa11cc974e679 (remote == HEAD).\nPictures (full size, separate files): /home/user/wt/s04b/qa/match/04/r16/ringpaint/ — 1_APPROVED.png, 2_BEFORE_<shot>.png and 3_NEW_<shot>.png for a00 start, f03 entering, f06 and f10 middle, f20 farther inside, t66 through, t95 end, s_left_hard, s_right_hard. The old and new textur …[+1354 chars]`
+
+### 🧑 User — 2026-11-18T19:26:02.524Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T19:26:27.197Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"stepped polished washers\" -A40 src/world/match04m4.ts | head -60", "description": "Read the ring profile geometry code"}`
+
+### 🧑 User — 2026-11-18T19:26:27.267Z
+
+> ↩︎ result: 623:    // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
+> 624-    // painted bands), a rounded lip bead (hot spots), a step back out (the thin dark groove); a = distance down the tunnel
+> 625-    const prof: { r: number; a: number; part: number }[] = [];
+> 626-    const ringOf: number[] = [];
+> 627-    const nP = Math.ceil(len / P);
+> 628-    for (let k = 0; k < nP; k++) {
+> 629-      const a = k * P;
+> 630-      const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };
+> 631-      pushP(r + 0.22, a + 0.01, 2);
+> 632-      pushP(r + 0.17, a + 0.07, 0);
+> 633-      pushP(r + 0.07, a + P * 0.5, 0);
+> 634-      // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)
+> 635-      pushP(r - 0.05, a + P - 0.56 * gw, 0);
+> 636-      pushP(r - 0.10, a + P - 0.48 * gw, 1);
+> 637-      pushP(r - 0.22, a + P - 0.39 * gw, 1);
+> 638-      pushP(r - 0.28 * Math.min(gw, 1.4), a + P - 0.27 * gw, 1);
+> 639-      pushP(r - 0.23, a + P - 0.15 * gw, 1);
+> 640-      pushP(r - 0.08, a + P - 0.07 * gw, 2);
+> 641-      pushP(r + 0.22, a + P - 0.01, 2);
+> 642-    }
+> 643-   …[+1465 chars]
+
+### 🤖 Claude — 2026-11-18T19:26:56.893Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/wt/s04b/references/04_through_the_five_arrows.png').convert('RGB')\na.crop((250,400,650,700)).resize((800,600),Image.LANCZOS).save('appr_top.png')\n\"; tail -3 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bl9msxtk6.output", "description": "Zoom crop of approved ring top region"}`
+
+### 🧑 User — 2026-11-18T19:26:57.762Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:26:57.962Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/appr_top.png"}`
+

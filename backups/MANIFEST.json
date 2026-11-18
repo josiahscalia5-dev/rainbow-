@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17467,
-   "sha256": "67cf3006770bec90417b589f2e70f494fef2d8273adcf0e6c1e6aed9b47375f8"
+   "sha256": "192ae501b3e6140edaf9d50abfa3b59b47344558e968e4f7e94a1286796003ef"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1014,7 +1014,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/INFO.json",
    "bytes": 585,
-   "sha256": "ee834255bd1486abbf16ae7b75cea4fbb89b9361d3c1c4cc93ff080c5a721151"
+   "sha256": "c0903a7b174ad3a8fbc90a9bfdcc7c2fa4d61933e905d37393c5d6f4857da44e"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/tracked.patch",
@@ -1063,13 +1063,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/INFO.json",
-   "bytes": 701,
-   "sha256": "aa49ee508e76b91b06d3d8ba345ebc6e3ba61af00e65e0e2751bd2d2d70249bd"
+   "bytes": 726,
+   "sha256": "cd62c0d8f18a5de4a72bea57f80ebed59bd2163036b76f4ec943a5c71173a709"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/tracked.patch",
-   "bytes": 6222,
-   "sha256": "5d0ca9ba330e73a0883998bdf5febb7f4e1eaf42f4d781e38c2e1b4369d1563a"
+   "bytes": 8008,
+   "sha256": "9213698ecc577b783afdccba16bce44a7ac397d584bb71b95fba2d8db3b04da9"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/untracked/assets/textures/match04/ring_paint04.json",
@@ -1293,8 +1293,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/INFO.json",
-   "bytes": 2445,
-   "sha256": "344047645a5ec80ad5ce9eccebcff0c80634c2082e5b6206bc8b60c31409670f"
+   "bytes": 2538,
+   "sha256": "7feec95831fd2d116506c3f862c4e3f0dbe724b786f88d465c2fe3cf75015e0e"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/tracked.patch",
@@ -1412,6 +1412,11 @@
    "sha256": "11c8a47fc8c04fb17cbbb93fa5ec479f3d883c4555cf1f03daf9247a678515d3"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-match-c16/untracked/qa/match/05/r16/step1_trans/new/shots.json",
+   "bytes": 35189,
+   "sha256": "32d7595d602c567196d78598da9a1ec1560dcad4bd5d6136520a20a774c9c7f2"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-match-c16/untracked/tools/match05/r15_probe.mjs",
    "bytes": 3551,
    "sha256": "8b6713b7f7caffa6c98e027db012c90e2080fa4a219547fe9e195c0f5ebfd33b"
@@ -1444,12 +1449,12 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/INFO.json",
    "bytes": 1930,
-   "sha256": "fc4f66884d77ec38faca8095210d448632ed34d2115a25f8e4ab1d5c07cb0310"
+   "sha256": "626e14936bd4c7f30fb5a286b7ed385a4b77d587593f526b4b486ca8b2bd7750"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/tracked.patch",
-   "bytes": 6442,
-   "sha256": "04ebeda6aa427c1cda646e4f0f82657e993038117f2dbc99b2fda9e8e0f18322"
+   "bytes": 13139,
+   "sha256": "c2bae3cf74baad7f50f197996d83705578feb25029fae94efa52b9f24c7854dc"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/untracked/assets/textures/match06/tile_ring6.png",
@@ -1523,18 +1528,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/INFO.json",
-   "bytes": 1926,
-   "sha256": "b84c060372a53bdd0a5d592ab23e18c8962b82caf633c7cdcc60bffa227980b4"
+   "bytes": 2170,
+   "sha256": "9283a93efafc63515dcdf58e936031d2d2a53616658afc98815eb174f48d6357"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/assets/textures/match07/near07.json",
-   "bytes": 449,
-   "sha256": "53fb35a661ac476d435020c5dff1881152cd97a8b2747c93836929585f52cfca"
+   "bytes": 506,
+   "sha256": "b214316eda23b383e44697b6f488b6956b7516316548326b091d00c544526854"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/assets/textures/match07/near_bank.png",
-   "bytes": 146165,
-   "sha256": "1cf27955d5ca62df7a31b7e0d5af803c0d5429dd66f29db09800bde8d9e1ca1d"
+   "bytes": 144853,
+   "sha256": "7ec035c66dc4ff983370dee698b1fa886b8ddb3a07294fe8b25a61e185575767"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/assets/textures/match07/near_foam.png",
@@ -1598,8 +1603,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/tools/match07/near_tiles_r16.py",
-   "bytes": 6412,
-   "sha256": "208b0b56f67ea83b7991437795da9a58203ded1f794b195e7d80333a68bc5eb0"
+   "bytes": 7499,
+   "sha256": "2b0e99ab65c4f3556944b7f5ba46aa116ff1cf244920127677ee31c13f537c1b"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -1693,8 +1698,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/INFO.json",
-   "bytes": 1756,
-   "sha256": "4f76548dc6dec7db00dcdacaf1ac641e5f405b4be0404b76f9ba12b8547a2dd9"
+   "bytes": 1930,
+   "sha256": "001d1ad7d63e02aaa7d1923e081d4e68703c85d69eb603c5fc884dafdfc7a1da"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/tracked.patch",
@@ -2123,8 +2128,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r16/COORDINATION.md",
-   "bytes": 7084,
-   "sha256": "777b383fb616256d092f5ae98692c9295e9fe7560a50b0c67b25bc4b850d6a47"
+   "bytes": 7926,
+   "sha256": "b2b4b08855c0cd72f325951f34040962d2a2fa93b3ccaaacce89e7191517f857"
   },
   {
    "path": "docs/briefs/2026-11-18-r16/RESUME_R16.md",
@@ -11595,6 +11600,41 @@
    "path": "qa/review_r15/08_step1_near_water/3_NEW_s_right_hard.png",
    "bytes": 2509511,
    "sha256": "daeed1f76cf79258ead78e43b2feb671cb1b2c6ee24df24bb6f25336d843dbed"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step1/1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step1/2_BEFORE_f06_forward6u.png",
+   "bytes": 1932758,
+   "sha256": "895acb9a381d0d1e2ef915da82569745a0f1299ab44411735c9bbae4f0c8eb10"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step1/2_BEFORE_f20_forward20u.png",
+   "bytes": 1662155,
+   "sha256": "7e4796fa186628a0f057854ebc24a1ddfbf6fea41554dc80f1e3114a29eeb8ff"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step1/2_BEFORE_s_left_hard.png",
+   "bytes": 1587066,
+   "sha256": "aef26cd63396ab37fd64d8ce579e45ad6260424d6be5e2fd14f139ec4d21c3f8"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step1/3_NEW_f06_forward6u.png",
+   "bytes": 1948564,
+   "sha256": "3ff557ff18cfbfa7c17ab8d4cb8843a08993f853b9451335ec5bf204840313ab"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step1/3_NEW_f20_forward20u.png",
+   "bytes": 1706933,
+   "sha256": "99fb85434016ca60c625e90b591729b6f49a9405c8ab7bd78fd4032ffae0909e"
+  },
+  {
+   "path": "qa/review_r16/04_ringpaint_step1/3_NEW_s_left_hard.png",
+   "bytes": 1617405,
+   "sha256": "a3215282bc75309d41faaff447a2bb7d1a459865a57276f2c190f8356182f66f"
   },
   {
    "path": "qa/review_r7/04_1_APPROVED.jpg",

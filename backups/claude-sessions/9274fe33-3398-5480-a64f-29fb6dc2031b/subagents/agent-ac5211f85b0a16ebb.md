@@ -337,3 +337,265 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K14=$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K14.txt) && M08_DET=1 M08_ONLY=a00,f03,f06,f10,s_,t33,t66,t95 node tools/match08/shots08.mjs 08 qa/match/08/r15/step1_m08sr/new_raw \"$K14&m08sr=1\" 2>&1 | grep \"^08\"", "description": "Render the 11 in-stage NEW shots with m08sr switch", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T19:24:43.664Z
+
+> ↩︎ result: 08 a00_approved_view s 391.427 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 394.532 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 397.542 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.5 lat 0 stage 08 frames 63
+> 08 s_left_steer s 397.542 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 397.542 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 403.559 lat -2.17 stage 08 frames 76
+> 08 s_right_hard s 403.559 lat 2.17 stage 08 frames 76
+> 08 t33_through_screen s 395.8 lat 0.009 stage 08 frames 27
+> 08 t66_through_screen s 400.075 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 403.875 lat 0 stage 08 frames 78
+
+### 🤖 Claude — 2026-11-18T19:24:46.215Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r15 && for f in BEFORE_K14/*.png; do n=$(basename $f); printf \"%-26s \" $n; node /home/user/tools-pixelmatch/pixeldiff.mjs $f step1_m08sr/new_raw/$n /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/d_$n 0.1 180 1536 2>&1 | tail -1; done", "description": "Pixel-diff BEFORE vs NEW for each shot"}`
+
+### 🧑 User — 2026-11-18T19:24:53.242Z
+
+> ↩︎ result: a00_approved_view.png      {"a":"BEFORE_K14/a00_approved_view.png","b":"step1_m08sr/new_raw/a00_approved_view.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> f03_forward3u.png          {"a":"BEFORE_K14/f03_forward3u.png","b":"step1_m08sr/new_raw/f03_forward3u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":61899,"total":1171584,"diff_pct":5.2834}
+> f06_forward6u.png          {"a":"BEFORE_K14/f06_forward6u.png","b":"step1_m08sr/new_raw/f06_forward6u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":63309,"total":1171584,"diff_pct":5.4037}
+> f10_forward10u.png         {"a":"BEFORE_K14/f10_forward10u.png","b":"step1_m08sr/new_raw/f10_forward10u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":53857,"total":1171584,"diff_pct":4.5969}
+> f20_forward20u.png         Node.js v22.23.5
+> s_left_hard.png            {"a":"BEFORE_K14/s_left_hard.png","b":"step1_m08sr/new_raw/s_left_hard.png","rows":[180,1536],"threshold":0.1,"diff_pixels":54349,"total":1171584,"diff_pct":4.6389}
+> s_left_steer.png           {"a":"BEFORE_K14/s_left_steer.png","b":"step1_m08sr/new_raw/s_left_steer.png","rows":[180,1536],"threshold":0.1,"diff_pixels":80639,"total":1171584,"dif …[+1021 chars]
+
+### 🤖 Claude — 2026-11-18T19:24:55.524Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r15/BEFORE_K14/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:24:55.881Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:55.925Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r15/step1_m08sr/new_raw/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:24:56.190Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:25:02.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r15 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\nfor n in ['f03_forward3u','f06_forward6u','s_left_hard']:\n  a=Image.open('BEFORE_K14/'+n+'.png').crop((0,900,864,1536)); b=Image.open('step1_m08sr/new_raw/'+n+'.png').crop((0,900,864,1536))\n  c=Image.new('RGB',(864,1272+8),'white'); c.paste(a,(0,0)); c.paste(b,(0,644)); c.save(S+'cmp_'+n+'.png')\n\"", "description": "Build stacked crop comparisons for my own review"}`
+
+### 🤖 Claude — 2026-11-18T19:25:02.666Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/cmp_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:25:04.043Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-18T19:25:04.168Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:25:11.819Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r15 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\nn='f03_forward3u'\na=Image.open('BEFORE_K14/'+n+'.png').crop((0,1120,864,1536)); b=Image.open('step1_m08sr/new_raw/'+n+'.png').crop((0,1120,864,1536))\nc=Image.new('RGB',(864,840),'white'); c.paste(a,(0,0)); c.paste(b,(0,424)); c.save(S+'cmpz_'+n+'.png')\n\"", "description": "Crop the bottom water band of f03 for closer review"}`
+
+### 🤖 Claude — 2026-11-18T19:25:12.528Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/cmpz_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:25:12.695Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-18T19:25:12.738Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:25:18.828Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/cmp_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T19:25:18.902Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:25:22.152Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/cmp_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:25:22.626Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:25:31.060Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat .gitattributes 2>/dev/null | head; git ls-files qa/match/08/r14/step1_m08nq | head -5; git lfs ls-files 2>/dev/null | grep r14 | head -3; ls tools/lead_r13/ 2>/dev/null", "description": "Check LFS rules and how earlier proof pictures were committed"}`
+
+### 🧑 User — 2026-11-18T19:25:39.278Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> qa/match/08/r14/step1_m08nq/1_APPROVED.png
+> qa/match/08/r14/step1_m08nq/2_BEFORE_a00_approved_view.png
+> qa/match/08/r14/step1_m08nq/2_BEFORE_capture_approved_view.png
+> qa/match/08/r14/step1_m08nq/2_BEFORE_f03_forward3u.png
+> qa/match/08/r14/step1_m08nq/2_BEFORE_f06_forward6u.png
+> swim_clip.mjs
+
+### 🤖 Claude — 2026-11-18T19:25:51.192Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08 && md5sum ../../../references/08_final_spin_chamber.png r15/step1_m08sr/1_APPROVED.png && D=r16/step1_m08sr && mkdir -p $D && mv r15/step1_m08sr/1_APPROVED.png $D/ && for f in r15/BEFORE_K14/*.png; do mv $f $D/2_BEFORE_$(basename $f); done && mv r15/BEFORE_K14/motion.json $D/2_BEFORE_motion.json && for f in r15/step1_m08sr/new_raw/*.png; do mv $f $D/3_NEW_$(basename $f); done && mv r15/step1_m08sr/new_raw/motion.json $D/3_NEW_motion.json && mv r15/step1_m08sr/3_NEW_f20_forward20u.png $D/ && mv r15/step1_m08sr/3_NEW_motion.json $D/3_NEW_motion_f20.j …[+202 chars]`
+
+### 🧑 User — 2026-11-18T19:25:51.681Z
+
+> ↩︎ result: 8b64c4bdbc2413feb24afaf57a453f12  ../../../references/08_final_spin_chamber.png
+> 8b64c4bdbc2413feb24afaf57a453f12  r15/step1_m08sr/1_APPROVED.png
+> 28
+> 1_APPROVED.png
+> 2_BEFORE_a00_approved_view.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_f20_forward20u.png
+> 2_BEFORE_motion.json
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_left_steer.png
+> 2_BEFORE_s_right_hard.png
+> 2_BEFORE_s_right_steer.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_a00_approved_view.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_motion.json
+> 3_NEW_motion_f20.json
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_s_right_steer.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T19:25:56.444Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r16/step1_m08sr && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\nfor n in ['f10_forward10u','s_right_hard']:\n  a=Image.open('2_BEFORE_'+n+'.png').crop((0,700,864,1536)).resize((432,418)); b=Image.open('3_NEW_'+n+'.png').crop((0,700,864,1536)).resize((432,418))\n  c=Image.new('RGB',(872,418),'white'); c.paste(a,(0,0)); c.paste(b,(440,0)); c.save(S+'sbs_'+n+'.png')\n\"", "description": "Build side-by-side reduced crops of f10 and right-hard"}`
+
+### 🧑 User — 2026-11-18T19:25:57.003Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:25:57.164Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/sbs_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T19:25:57.186Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:25:57.854Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/sbs_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:25:57.892Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:26:12.981Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/PROGRESS.md", "content": "# Screen 08 · Final Spin Chamber — round 16 progress (branch `claude/rainbow-s08-scenery-c16`)\n\nAuthority: `references/08_final_spin_chamber.png`. Brief: `docs/briefs/2026-11-18-r15/S08_LAUNCH.md` + round-16 changes\n(`docs/briefs/2026-11-18-r16/RESUME_R16.md` section s08) + binding user order `docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md`\n(VISUALS ONLY). History: `qa/match/08/r15/PROGRESS.md` (account 15, cut off mid step 1), `qa/match/08/r14/PROGRESS.md`.\nStart = `df4a3bb7` + account-15 unfinished edits (`s …[+2519 chars]`
+
+### 🧑 User — 2026-11-18T19:26:13.234Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s08/qa/match/08/r16/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:26:18.440Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git add src/world/match08.ts tools/match08/shots08.mjs qa/match/08/r15/PROGRESS.md qa/match/08/r16/ && git status --short | grep -v \"^??\" | head -40 && git commit -q -m \"Screen 08 r16 step 1: &m08sr=1 smooth river course + rounded swim-remap corners (no fold lines / chevron kinks in the water while swimming) - GOOD IMPROVEMENT (small)\n\nFinishes account-15 r15 step 1 (its only render, f20, was already in Screen 09). Approved\nview scenery pixel-identical; coins unchanged. Also QA-only &m08dbguv=1 and shots08 M08_DET=1.\n\nCo-Authored-By: Claude Opus 5.5 …[+313 chars]`
+
+### 🧑 User — 2026-11-18T19:26:37.326Z
+
+> ↩︎ result: A  qa/match/08/r15/PROGRESS.md
+> A  qa/match/08/r16/PROGRESS.md
+> A  qa/match/08/r16/step1_m08sr/1_APPROVED.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_a00_approved_view.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_f03_forward3u.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_f06_forward6u.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_f10_forward10u.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_f20_forward20u.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_motion.json
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_s_left_hard.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_s_left_steer.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_s_right_hard.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_s_right_steer.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_t33_through_screen.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_t66_through_screen.png
+> A  qa/match/08/r16/step1_m08sr/2_BEFORE_t95_through_screen.png
+> A  qa/match/08/r16/step1_m08sr/3_NEW_a00_approved_view.png
+> A  qa/match/08/r16/step1_m08sr/3_NEW_f03_forward3u.png
+> A  qa/match/08/r16/step1_m08sr/3_NEW_f06_forward6u.png
+> A  qa/match/08/r16/step1_m08sr/3_NEW_f10_forward10u.png
+> A  qa/match/08/r16/step1_m08sr/3_NEW_f20_forward20u.png
+> A  qa/match/08/r16/step1_m08sr/3_NEW_motion.js …[+860 chars]
+
+### 🤖 Claude — 2026-11-18T19:26:38.722Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T19:26:38.911Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T19:26:44.211Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s08 step 1 m08sr kept, report", "message": "s08 r16 step 1 done: &m08sr=1 (smooth river course + rounded swim-remap corners) KEPT, GOOD IMPROVEMENT (small). Commit 6da32d5 on claude/rainbow-s08-scenery-c16 (pushed, remote == HEAD).\n- Why account 15's BEFORE/NEW were identical: its only render was f20, and that shot is already in Screen 09. I re-rendered all 11 in-stage shots for both sets at the same fixed positions (M08_DET=1).\n- What looks closer: at forward 3 u the straight fold line across the water below Benny is gone, and the streaks now sweep in smooth curve …[+720 chars]`
+
+### 🧑 User — 2026-11-18T19:26:44.333Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T19:26:46.972Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T19:26:47.122Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:26:47.158Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:26:47.258Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:26:47.714Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:26:47.798Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:26:48.178Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r16/step1_m08sr/3_NEW_s_right_steer.png"}`
+
+### 🧑 User — 2026-11-18T19:26:48.566Z
+
+> ↩︎ result: [image]
+

@@ -515,3 +515,61 @@ Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S04_LAUNCH.md —
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && time node $S/quick.mjs $S/v3 f06_forward6u,t66_through_screen,s_right_hard \"B::$K&m04sband=1&m04sbu=0.62&m04sbl=10&m04sbn=0.5&m04sbs=0.85|D::$K&m04sband=1&m04sbu=0.7&m04sbl=10&m04sbn=0.5&m04sbs=0.95&m04sbi=2.0&m04sbw=0.45\" 2>&1 | grep -v \"allow list\" | grep shot", "description": "Render variants B and D at more views", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:24:15.178Z
+
+> ↩︎ result: shot B f06_forward6u
+> shot B t66_through_screen
+> shot B s_right_hard
+> shot D f06_forward6u
+> shot D t66_through_screen
+> shot D s_right_hard
+> 
+> real	3m3.599s
+> user	0m2.430s
+> sys	0m0.646s
+
+### 🤖 Claude — 2026-11-18T19:24:18.500Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\nfor sh in ['f06_forward6u','t66_through_screen','s_right_hard']:\n  ims=[Image.open(f'v3/{v}/{sh}.png').crop((0,500,864,1536)) for v in 'BD']\n  W=Image.new('RGB',(864, 518))\n  for i,im in enumerate(ims): W.paste(im.resize((432,518)),(i*432,0))\n  W.save(f'cmp_v3_{sh}.png')\n\"", "description": "Build scratch comparison B vs D"}`
+
+### 🧑 User — 2026-11-18T19:24:20.020Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:24:21.969Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_v3_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T19:24:22.026Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:22.614Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_v3_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:24:22.701Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:23.271Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cmp_v3_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:24:23.299Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:24:42.292Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"\"\"        uSB: { value: sideBand }, uSB1: { value: new THREE.Vector4(M04.num('m04sbw', 0.35), M04.num('m04sbf', 1), M04.num('m04sbu', 1), M04.num('m04sbn', 0)) },\n        uSB2: { value: new THREE.Vector2(M04.num('m04sbd0', 0), M04.num('m04sbd1', 0)) },\n        uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 1.0) : 0, M04.num('m04sbi', 2.5), arc[nX], M04.num('m04sbl', 2.4)) },\"\"\"\nnew=\"\"\"        // r16 defaults (= variant D, chosen by eye at f06 / …[+739 chars]`
+
+### 🧑 User — 2026-11-18T19:24:42.442Z
+
+> ↩︎ result: src/world/match04m4.ts | 42 +++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 41 insertions(+), 1 deletion(-)
+
+### 🤖 Claude — 2026-11-18T19:24:45.579Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && mkdir -p qa/match/04/r16/s3_sband && time node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r16/s3_sband/NEW \"$K&m04sband=1\" 2>&1 | grep -v \"allow list\" | tail -13", "description": "Render NEW motion audit set with side bands", "timeout": 600000}`
+

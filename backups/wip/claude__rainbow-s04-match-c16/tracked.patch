@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 3a8d392..ec309b2 100644
+index 3a8d392..0a504c0 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -308,6 +308,11 @@ uniform vec4 uArr;           // arrow spacing, first arrow (along), half width,
@@ -71,16 +71,18 @@ index 3a8d392..ec309b2 100644
      // tiles04.json river3: lateral +-4 u, along 1.757 .. 6.409 u from Benny's checkpoint water point
      const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
        extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
-@@ -776,6 +808,12 @@ export function addM04(ctx: M04Ctx) {
+@@ -776,6 +808,14 @@ export function addM04(ctx: M04Ctx) {
          uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
          uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
          uPkH: { value: M04.num('m04pkh', 0) },
 +        // r15 `&m04sband=1`: painted swirl bands on the side water (m04sbs strength, m04sbi inner arc, m04sbl tile length u,
 +        // m04sbw inner blend width, m04sbf 1 = keep the lilac-white edge fringe on top, m04sbu tile part, m04sbn wander,
 +        // m04sbd0 / m04sbd1 far smoothing window ahead of the camera)
-+        uSB: { value: sideBand }, uSB1: { value: new THREE.Vector4(M04.num('m04sbw', 0.35), M04.num('m04sbf', 1), M04.num('m04sbu', 1), M04.num('m04sbn', 0)) },
++        // r16 defaults (= variant D, chosen by eye at f06 / t66 / hard right): bands from 2.0 u across, the cyan..pink part of the
++        // tile (0.7), 10 u long satin stripes with a slow 0.5 u lateral wander, 0.95 strength
++        uSB: { value: sideBand }, uSB1: { value: new THREE.Vector4(M04.num('m04sbw', 0.45), M04.num('m04sbf', 1), M04.num('m04sbu', 0.7), M04.num('m04sbn', 0.5)) },
 +        uSB2: { value: new THREE.Vector2(M04.num('m04sbd0', 0), M04.num('m04sbd1', 0)) },
-+        uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 1.0) : 0, M04.num('m04sbi', 2.5), arc[nX], M04.num('m04sbl', 2.4)) },
++        uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
          uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
          uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
      const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
