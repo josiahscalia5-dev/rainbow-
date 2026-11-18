@@ -2271,3 +2271,67 @@ Saving everything to GitHub now and verifying the remote copy:
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:r10-start 2>&1 | tail -3; echo \"HEAD   $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro | cut -f1)\"", "description": "Save round-10 docs to GitHub and verify remote", "timeout": 400000}`
 
+### 🧑 User — 2026-11-18T10:37:20.074Z
+
+> ↩︎ result: "commit": "af3ab08b6605be0b8b9dc775627e26f1819673fd",
+>   "duration_s": 8
+> }
+> HEAD   af3ab08b6605be0b8b9dc775627e26f1819673fd
+> REMOTE af3ab08b6605be0b8b9dc775627e26f1819673fd
+
+### 🤖 Claude — 2026-11-18T10:37:57.136Z
+
+You're right about colours, and I'm correcting that. I offered the colour-palette number only because it's the one measurement that doesn't collapse once the camera moves. It does **not** measure likeness, and I shouldn't have presented it as evidence. The specialists are now told in writing to judge by eye against your picture, never by colour numbers.
+
+## Can I make all five screens ≥95% while you play? **No.**
+
+**Why:** each approved screen is one painting from one camera position.
+- **At that position** the game already matches 79–89% of the whole frame, and 94–99% of the scenery alone.
+- **Once Benny swims,** the camera sees places your painting doesn't contain:
+  - Screen 04: the inside of the washer opening (about 80% of that stage).
+  - Screen 07: the plunge (68%).
+  - Screen 06: the straight run and the turn.
+- No tool can copy what isn't in the picture. There, the best possible is a faithful continuation of your design. That can match the style closely, but it can't be 95% identical to an image that doesn't show it.
+
+**Realistic, judged by eye while swimming:** about 8.5/10 on 08 and 05. About 7–8 on 04, 06 and 07, unless you allow course changes where the course goes somewhere your painting never shows.
+
+**One correction to my earlier frames:** the "bright pink end" of Screen 05 is 2 units before Screen 06 starts. You're seeing 06's *default* world there, because each screen's work sits on its own branch. That's a hand-over issue between branches, not 05's own scenery.
+
+## What's running now (two specialists, each continuing from its newest checkpoint)
+- **Screen 08:** keeps the chamber. Fixing the gold arch disappearing as Benny moves, the seam across the top, the smeared near water, the oversized coins, and the spout cups.
+- **Screen 05:** making the river one continuous S without tears, restoring the foam banks along both edges, sharpening the smeared walls, and continuing your tunnel right up to the hand-over.
+
+I'll show separate full-size APPROVED / BEFORE / NEW pictures only for steps that look closer by eye; anything else is rejected. After these two: 04, then 07, then 06.
+
+## Tool research (verified; none tested on your art yet)
+| Tool | Verdict |
+|---|---|
+| **Depth Anything 3** | Best new tool for **measuring** your painted shapes (04's opening, 06's bend, 07's tube). Free, but needs the network permission below. |
+| **Depth/edge-guided image generation** (ControlNet; hosted on your fal account) | Most promising for the parts your pictures don't show. Every generated view needs your approval before use. Paid per image; I'll quote the price before asking. |
+| **MoGe‑3** on your fal account | Paid backup for Depth Anything 3 (also measures shapes and camera angle). |
+| **TRELLIS.2 / Hunyuan3D** | Only single objects, not tunnels or water. Needs a large GPU; low value here. |
+| **Scenario YVO3D Retexture** | Not recommended: it *generates new* textures "guided by" your image instead of using your exact pixels. Needs a separate paid Scenario account. |
+| **Substance 3D Sampler** | Desktop app only ($24.99/month); can't run here. Small gain over our own tools. |
+| **Differentiable rendering** (Mitsuba 3 runs on CPU) | Free; useful later for exact shape fitting. Doesn't help the parts your pictures don't show. |
+| **Hugging Face connector** on claude.ai | Another route to run GPU-only models; you'd connect it in claude.ai settings. |
+| **Claude plugin/connector directory** | Nothing in it reconstructs a painting into matching 3D. |
+
+## Your seven questions
+1. **Strongest new method:** measure your painting's real shapes (Depth Anything 3), rebuild them as real 3D, keep your exact pixels where your picture shows them, and texture the rest from views you have approved. It extends the method that gave your best screen so far (08).
+2. **Why it could beat Marble and projection:**
+   - Marble invented its own geometry for everything beyond the picture.
+   - Single-picture projection is exact only near the painted viewpoint and stretches elsewhere.
+   - Here the shapes are measured from your picture, and every surface is textured from an approved view.
+3. **Which screens benefit most:** 04, 06 and 07, because most of their stages are outside the painted view.
+4. **Can I integrate and test it:** yes. Depth Anything 3 as soon as you approve the hosts below; guided views once you approve a small fal budget.
+5. **Cost of the test:** Depth Anything 3 is $0. Guided views are paid per image on fal; I'll check and quote the exact price first.
+6. **Most realistic solution:** the hybrid above. It gives roughly 8.5/10 on 05 and 08, and 7–8 elsewhere without course changes.
+7. **Would a human 3D environment artist do better?** For 04's interior, 06 and 07's plunge, I believe a skilled Blender environment artist working from your paintings would produce a more consistent continuation than AI generation. Their files would plug into our existing pipeline. I can't give a reliable price; get quotes.
+
+## Pending permission (free; please approve on your computer)
+Allow `huggingface.co`, `cdn-lfs.huggingface.co`, `cdn-lfs-us-1.hf.co`, `cas-bridge.xethub.hf.co` and `download.pytorch.org` on your `rainbow-` environment. I won't retry the downloads; tell me when you're at your computer and I'll send a new request.
+
+**Backup:** everything is saved to GitHub and verified (`af3ab08`, same commit locally and on GitHub). The start-of-session sync with GitHub failed once; I fetched all branches manually afterwards. Fresh full-size APPROVED and current-game pictures for all five screens are in `qa/review_c10/2026-11-18/`.
+
+Sources: [Scenario YVO3D Retexture](https://www.scenario.com/models/yvo3d-retexture) · [Scenario YVO3D docs](https://docs.scenario.com/get-started/generation/3d-model-generation/3d-model-generation-yvo3d) · [Depth Anything 3 paper](https://arxiv.org/pdf/2511.10647v1) · [DA3 small model card](https://huggingface.co/depth-anything/da3-small) · [DA3 Nested Giant (CC BY-NC)](https://huggingface.co/depth-anything/DA3NESTED-GIANT-LARGE) · [TRELLIS.2-4B model card](https://huggingface.co/microsoft/TRELLIS.2-4B/blob/main/README.md) · [fal 3D API overview](https://fal.ai/docs/model-api-reference/3d-api/overview) · [fal MoGe-3](https://fal.ai/models/microsoft/moge-3/llms.txt) · [fal Hunyuan3D v3](https://fal.ai/models/fal-ai/hunyuan3d-v3/image-to-3d/llms.txt) · [Substance 3D Sampler 6 release](https://www.cgchannel.com/2026/06/adobe-releases-substance-3d-sampler-6/) · [Substance 3D pricing](https://toolradar.com/tools/substance-3d/pricing) · [Mitsuba 3 inverse rendering](https://mitsuba.readthedocs.io/en/v3.9.1/src/inverse_rendering/radiance_field_reconstruction.html) · [Dr.Jit paper](https://arxiv.org/pdf/2202.01284) · [HF ZeroGPU via MCP (forum)](https://discuss.huggingface.co/t/zerogpu-connection-issue-via-mcp/177828) · [mcp-hfspace](https://github.com/evalstate/mcp-hfspace) · [World Labs World API](https://worldlabs.ai/blog/announcing-the-world-api)
+

@@ -533,3 +533,71 @@ Let me write a riding probe tool (raycast at a riding audit position, optional h
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10; mkdir -p $S; timeout 600 node tools/match05/r10_probe.mjs t66_through_screen \"$Q\" --px=100,700 --px=200,650 --px=300,700 --px=150,800 --px=60,900 --px=250,850 --px=350,620 --px=120,600 --px=700,800 --px=820,950 --px=430,1250 --list 2>&1 | tail -150", "description": "Probe surfaces under t66 broken left-side pixels", "timeout": 620000}`
 
+### 🧑 User — 2026-11-18T10:37:16.964Z
+
+> ↩︎ result: - washer_world > zone_chamber > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshBasicMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshBasicMaterial
+> - washer_world > zone_chamber > Group > laundry_room > Mesh MeshStandardMaterial
+> - washer_world …[+9248 chars]
+
+### 🤖 Claude — 2026-11-18T10:37:20.123Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\"; timeout 600 node tools/match05/r10_probe.mjs t66_through_screen \"$Q\" --px=100,700 --px=200,650 --px=300,700 --px=150,800 --px=60,900 --px=250,850 --px=350,620 --px=120,600 --px=700,800 --px=820,950 --px=430,1250 --list 2>&1 | grep -v \"zone_\\|laundry\\|Benny >\\|^- \" | head -150", "description": "Probe again, filtering to hits and visible meshes", "timeout": 620000}`
+
+### 🧑 User — 2026-11-18T10:37:39.572Z
+
+> ↩︎ result: shot t66_through_screen s 170.45 lat 0 cam 1.48,-39.46,-104.71
+> px 100,700
+> px 200,650
+> px 300,700
+>    d 16.688  ro 0  ShaderMaterial  water_system > foam_banks > foam_berm  @-1.04,-42.89,-120.84
+>    d 16.708  ro 0  ShaderMaterial  water_system > water_ribbon  @-1.05,-42.89,-120.86
+>    d 16.868  ro 0  ShaderMaterial  washer_world > proj05_apron  @-1.07,-42.92,-121.02
+>    d 17.041  ro 0  ShaderMaterial  water_system > water_ribbon  @-1.1,-42.96,-121.18
+>    d 17.15  ro 0  ShaderMaterial  water_system > foam_banks > foam_berm  @-1.11,-42.98,-121.29
+>    d 17.347  ro 0  ShaderMaterial  water_system > foam_banks > foam_berm  @-1.14,-43.02,-121.48
+>    d 18.141  ro 0  ShaderMaterial  water_system > foam_banks > foam_berm  @-1.26,-43.19,-122.25
+>    d 21.975  ro 0  ShaderMaterial  water_system > water_ribbon  @-1.84,-43.97,-125.96
+>    d 22.055  ro 0  ShaderMaterial  water_system > foam_banks > foam_berm  @-1.86,-43.99,-126.03
+> px 150,800
+>    d 15.912  ro 0  ShaderMaterial  washer_world > proj05_apron  @-2.69,-43.84,-119.42
+>    d 15.949  ro 0  ShaderMaterial  water_system > foam_banks > foam_berm  @-2.7,-43.85,-119.46
+>    d 16.11  ro 0  ShaderMaterial  water_system > water_ribbon  @-2.74,-43.9,-119.61
+>    d 1 …[+1659 chars]
+
+### 🤖 Claude — 2026-11-18T10:37:47.221Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,60p src/vfx/proj05Apron.ts; grep -n \"foam_berm\" -n src -r | head; grep -n \"EDGE_LIFT =\" src -r", "description": "Read apron module and locate berm/edge-lift"}`
+
+### 🧑 User — 2026-11-18T10:37:47.263Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection test (`?proj05=1`, qa/pilot05/proj/NOTES.md): a thin VISUAL-ONLY strip that hugs the tunnel wall
+>  * from the river's edge up ≈ 2.5 u, on 05 only. At the far bends the approved picture's fluffy foam banks lie beyond the
+>  * game river's edge (on the lower wall); this strip carries them (baked from the approved picture through the locked
+>  * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: steering, coins and the
+>  * camera are untouched. Where it would be magnified (camera close) or where the approved picture shows no foam/water,
+>  * it dithers away and the wall shows as before. `?projbank05=0` leaves it out.
+>  * attribute aPj = (t · side, s): t 0 at the river edge → 1 at the top of the strip, side −1 left / +1 right.
+>  */
+> import * as THREE from 'three';
+> import type { Course } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> import { tubeCenterAt } from '../world/tube';
+> import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending, on05 } from './waterRibbon';
+> 
+> /** `?projedge05=1` (on with `?match05=1`, coordinator 2026-11-17): edge-padded copy of proj05_A.png (tools/proj05/pad_alpha.py:
+>  *  transparent  …[+2031 chars]
+
