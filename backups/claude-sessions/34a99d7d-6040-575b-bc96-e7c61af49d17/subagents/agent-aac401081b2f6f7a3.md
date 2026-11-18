@@ -832,3 +832,194 @@ Meanwhile I'll look at the match04 source.
 > 546:      const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
 > 547:      m06.setAway(m06On ? m06.away(camera.position) : 0);
 
+### 🤖 Claude — 2026-11-18T01:46:57.325Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "content": "/**\n * Screen 04 milestone M4 (round 8, qa/match/04/NOTES.md) — sub-switches of `?match04=1`, each `&m04…=1`, default off:\n *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the\n *             approved picture's mouth ring r 3.58 → 4.11 and the painted stacked ring bands), shaded as polished gold\n *             (warm glow down the tunnel, pink / violet / cyan water reflections on the lower walls, glints, a row of\n *             amber bulbs on the opening a …[+17163 chars]`
+
+### 🧑 User — 2026-11-18T01:46:57.361Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/src/world/match04m4.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T01:47:18.152Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ns=s.replace(\"\"\"        const th = Math.asin(Math.min(1, waterHalf / r)) - up / r; // walk up the wall from the water line\"\"\",\"\"\"        const th = Math.asin(Math.min(1, waterHalf / r)) + up / r; // walk up the wall from the water line (th 0 = bottom)\"\"\")\ns=s.replace(\"\"\"    g.index = quad.index; g.attributes.position = quad.attributes.position; g.attributes.uv = quad.attributes.uv;\"\"\",\"\"\"    g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.se …[+1547 chars]`
+
+### 🧑 User — 2026-11-18T01:47:20.314Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T01:47:24.400Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r8/try_ring1 \"match04=1&m04ring=1\" 2>&1 | grep -v \"outside of Vite\" | tail -3", "description": "Render audit with modeled rings", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T01:48:12.928Z
+
+> ↩︎ result: 04 t33_through_screen s 90.481 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.848 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-18T01:48:14.624Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r8/try_ring1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T01:48:14.691Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:48:15.027Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r8/try_ring1/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T01:48:15.077Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:48:42.458Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"painted band colours\" -A 48 src/world/match04m4.ts | head -60", "description": "View current gold shader body"}`
+
+### 🧑 User — 2026-11-18T01:48:42.500Z
+
+> ↩︎ result: 92:    // painted band colours: shadow (157,67,65) / mid (210,116,71) / lit (251,190,106) / glint (254,250,220)
+> 93-    float lit = smoothstep(-0.55, 0.75, fw);
+> 94-    col = mix(vec3(0.58, 0.25, 0.20), vec3(0.83, 0.46, 0.26), lit);
+> 95-    col = mix(col, vec3(0.98, 0.70, 0.40), smoothstep(0.45, 0.95, fw));
+> 96-    // pink / violet / cyan reflections of the swirl water on the lower walls
+> 97-    float hue = 0.5 + 0.5 * sin(ang * 2.3 + al * 0.45 + h21(vec2(floor(al / 2.0), 3.0)) * 6.0);
+> 98-    vec3 wc = mix(vec3(0.96, 0.42, 0.74), vec3(0.50, 0.58, 1.0), hue);
+> 99-    float wr = smoothstep(0.05, 0.75, dn) * smoothstep(-0.2, 0.6, -cos(ang));
+> 100-    col = mix(col, wc, 0.55 * wr);
+> 101-    // brushed metal: fine concentric lines + slow streaks around the ring
+> 102-    col *= 0.93 + 0.07 * sin(al * 70.0 + 6.0 * h21(vec2(floor(al * 6.0), 1.0)));
+> 103-    col *= 0.92 + 0.08 * sin(ang * 5.0 + 2.0 * h21(vec2(vK.y, 2.0)));
+> 104-    // long soft highlights (the painted bands' white-yellow sheen)
+> 105-    float sp = pow(max(dot(R, normalize(uAxD * 0.75 + uAxU * 0.55)), 0.0), 18.0) + 0.6 * pow(max(dot(R, normalize(uAxD * 0.8 - uAxR * 0.5)), 0.0), 22.0);
+> 106-    col += vec3(1.0, 0.90, 0.66) * 0.55 * sp;
+> 10 …[+2162 chars]
+
+### 🤖 Claude — 2026-11-18T01:49:16.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\na=s.index('    // painted band colours: shadow')\nb=s.index('  col = clamp(col, 0.0, 1.0);')\nnew='''    // art-directed polished gold in the approved picture's display colours: shadow (157,67,65) / mid (210,116,71) /\n    // lit (251,190,106) / hot glint (254,250,220); saturated orange, never the grey-tan of a physical reflection\n    bool mouth = vK.y < -0.5;\n    float u = fract(al / uP);                                // position inside one ring period (0 groove .. 1 lip)\n    float band = …[+3858 chars]`
+
+### 🧑 User — 2026-11-18T01:49:19.433Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T01:49:23.321Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r8/try_ring2 \"match04=1&m04ring=1&m04foam=1&m04bub=1\" 2>&1 | grep -iE \"error|t95\" | head -5", "description": "Render audit with rings, foam, bubbles", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T01:50:09.207Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-18T01:50:10.968Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r8/try_ring2/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T01:50:11.015Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:50:11.325Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r8/try_ring2/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T01:50:11.384Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:50:25.630Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/match/04/r8/try_ring2/f10_forward10u.png').convert('RGB')\nfor p in [(150,500),(100,700),(700,400),(430,300),(200,420),(60,900)]: print(p, im.getpixel(p))\nim=Image.open('qa/match/04/r8/try_ring2/f03_forward3u.png').convert('RGB')\nfor p in [(60,700),(800,700),(430,380)]: print(p, im.getpixel(p))\n\"", "description": "Sample rendered gold colors"}`
+
+### 🧑 User — 2026-11-18T01:50:25.798Z
+
+> ↩︎ result: (150, 500) (197, 96, 60)
+> (100, 700) (197, 103, 57)
+> (700, 400) (182, 96, 65)
+> (430, 300) (243, 192, 152)
+> (200, 420) (214, 108, 68)
+> (60, 900) (184, 91, 44)
+> (60, 700) (180, 85, 50)
+> (800, 700) (198, 101, 59)
+> (430, 380) (255, 238, 128)
+
+### 🤖 Claude — 2026-11-18T01:50:50.729Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"\"\"      col = mix(col, vec3(1.0, 0.86, 0.55), 0.5 * smoothstep(0.2, 0.9, dot(n, V)) * streak);\n      if (part > 0.5 && part < 1.5) col = mix(col, vec3(1.0, 0.90, 0.62), 0.45 + 0.4 * streak);\"\"\",\n\"\"\"      col = mix(col, vec3(1.0, 0.80, 0.42), 0.35 * smoothstep(0.3, 0.95, dot(n, V)) * streak);\n      if (part > 0.5 && part < 1.5) col = mix(col, vec3(1.0, 0.88, 0.58), smoothstep(0.55, 0.95, dot(n, V)) * (0.4 + 0.5 * streak));\"\"\"),\n(\"\"\"      col = mix(col, vec3(1.0, 0.76 …[+2773 chars]`
+
+### 🧑 User — 2026-11-18T01:50:55.106Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T01:51:04.789Z
+
+> 🔧 **Bash** `{"command": "cat >> /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/py/rings.py <<'EOF'\nprint('--- chevrons: column profile around x=470..500')\n# water plane: point O, normal U\nfor y in range(700, 1000, 3):\n    x = 480\n    row = im[y, 440:530].mean(1)\n    br = im[y, 440:530]\n    white = ((br[:, 0] > 200) & (br[:, 1] > 230) & (br[:, 2] > 230)).sum()\n    d = ray(x, y); t = ((O - cam) @ U) / (d @ U); p = cam + d * t\n    print(y, int(white), round(float((p - O) @ D), 2), round(float((p - O) @ X), 2))\nEOF\ncd /home/user/wt/s04 && python3 -I /tmp/claude-0/ …[+180 chars]`
+
+### 🧑 User — 2026-11-18T01:51:05.282Z
+
+> ↩︎ result: --- chevrons: column profile around x=470..500
+> 766 10 50.66 0.09
+> 805 14 31.33 0.24
+> 808 14 30.37 0.24
+> 811 12 29.46 0.25
+> 814 11 28.59 0.26
+> 817 14 27.77 0.26
+> 820 12 26.98 0.27
+> 847 9 21.24 0.32
+> 862 18 18.82 0.33
+> 865 29 18.39 0.34
+> 868 22 17.97 0.34
+> 871 16 17.57 0.34
+> 874 18 17.18 0.35
+> 877 17 16.8 0.35
+> 880 19 16.43 0.35
+> 883 17 16.07 0.36
+> 886 11 15.73 0.36
+> 889 10 15.4 0.36
+> 913 22 13.04 0.38
+> 916 32 12.79 0.38
+> 919 22 12.53 0.38
+> 922 22 12.29 0.39
+> 925 24 12.05 0.39
+> 928 23 11.82 0.39
+> 931 22 11.59 0.39
+> 934 31 11.37 0.39
+> 937 36 11.15 0.39
+> 940 30 10.94 0.4
+> 943 14 10.73 0.4
+> 946 11 10.53 0.4
+> 949 13 10.33 0.4
+> 952 11 10.14 0.4
+> 955 14 9.95 0.4
+> 958 13 9.77 0.41
+> 961 15 9.59 0.41
+> 964 16 9.41 0.41
+> 967 11 9.24 0.41
+
+### 🤖 Claude — 2026-11-18T01:51:18.269Z
+
+> 🔧 **Bash** `{"command": "cat >> /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/py/rings.py <<'EOF'\nprint('--- chevron extents')\nfor (x, y) in [(345, 975), (555, 975), (450, 912), (375, 862), (530, 862), (455, 842), (412, 812),(510,812),(458,797)]:\n    d = ray(x, y); t = ((O - cam) @ U) / (d @ U); p = cam + d * t\n    print(x, y, round(float((p - O) @ D), 2), round(float((p - O) @ X), 2))\nEOF\ncd /home/user/wt/s04 && python3 -I /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/py/rings.py | sed -n '/extents/,$p'; python3 -I -c \"\nfrom  …[+325 chars]`
+
+### 🧑 User — 2026-11-18T01:51:18.854Z
+
+> ↩︎ result: --- chevron extents
+> 345 975 8.53 -1.17
+> 555 975 8.96 1.31
+> 450 912 13.04 -0.08
+> 375 862 18.31 -1.7
+> 530 862 19.08 1.33
+> 455 842 21.99 -0.25
+> 412 812 28.53 -1.6
+> 510 812 29.45 1.09
+> 458 797 33.89 -0.48
+
+### 🤖 Claude — 2026-11-18T01:51:21.248Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop_chev.png"}`
+
+### 🧑 User — 2026-11-18T01:51:21.287Z
+
+> ↩︎ result: [image]
+

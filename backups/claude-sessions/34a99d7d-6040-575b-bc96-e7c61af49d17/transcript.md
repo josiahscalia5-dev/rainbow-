@@ -2058,3 +2058,389 @@ Type check passes. Now rendering the plunge views with and without the new switc
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1'; node tools/match07/plunge_audit_r8.mjs 07 qa/match/07/r8/plunge_foam \"$K&m07foam=1\" 2>&1 | tail -2; python3 -c \"\nfrom PIL import Image, ImageChops\nimport numpy as np\nfor n in ('t33','t50','t66','t80','t95'):\n  a=np.asarray(Image.open(f'qa/match/07/r8/plunge_K/{n}_through_screen.png').convert('RGB')).astype(int)\n  b=np.asarray(Image.open(f'qa/match/07/r8/plunge_foam/{n}_through_screen.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); print(n,'changed px',i …[+103 chars]`
 
+### 🧑 User — 2026-11-18T01:46:50.264Z
+
+> ↩︎ result: 07 t80_through_screen s 367.457 lat 0 stage 07 frames 469
+> 07 t95_through_screen s 385.058 lat 0 stage 07 frames 557
+> t33 changed px 388727
+> t50 changed px 138356
+> t66 changed px 138208
+> t80 changed px 131607
+> t95 changed px 20769
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:46:51.885Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r8/plunge_foam/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:46:51.940Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:47:02.758Z
+
+The big foam puffs are gone, but a white strip with a cell pattern still lines both sides. Some other layer is drawing it. Finding which one.
+
+### 🤖 Claude — 2026-11-18T01:47:03.710Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rln \"plunge\" src/vfx src/world | head; grep -rn \"07_plunge\" src/vfx | head -8", "description": "Find other plunge-specific foam or wall layers"}`
+
+### 🧑 User — 2026-11-18T01:47:03.759Z
+
+> ↩︎ result: src/vfx/foam.ts
+> src/vfx/waterRibbon.ts
+> src/world/environment.ts
+> src/world/tube.ts
+> src/world/match07.ts
+> src/world/materials.ts
+> src/world/course.ts
+> src/vfx/foam.ts:559:  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+> src/vfx/waterRibbon.ts:248:  const pt = course.marks['07_plunge_top'], pb = course.marks['07_plunge_bottom'];
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:47:05.334Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 240,262p src/vfx/waterRibbon.ts; grep -n \"plunge\" src/world/environment.ts src/world/tube.ts | head -12", "description": "Read plunge handling in water ribbon and environment"}`
+
+### 🧑 User — 2026-11-18T01:47:05.369Z
+
+> ↩︎ result: export function ampAt(course: Course, s: number): number {
+>   let v = 0, w = 0;
+>   for (const st of course.stages) {
+>     const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+>     if (a > 0) { v += (AMP[st.id] ?? 0.08) * a; w += a; }
+>   }
+>   let amp = w > 0 ? v / w : 0.08;
+>   // calm the long straight of the deep plunge (fast sheet flow)
+>   const pt = course.marks['07_plunge_top'], pb = course.marks['07_plunge_bottom'];
+>   if (pt !== undefined) amp *= 1 - 0.6 * smooth(pt, pt + 8, s) * (1 - smooth(pb - 8, pb, s));
+>   return amp;
+> }
+> 
+> function smooth(a: number, b: number, x: number) {
+>   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+>   return t * t * (3 - 2 * t);
+> }
+> 
+> /** CPU mirror of the vertex displacement (keep in sync with VERT). */
+> export function ribbonWave(u: number, s: number, t: number, amp: number): number {
+>   const au = Math.min(1, Math.abs(u));
+>   const trough = EDGE_LIFT * au * au * au;
+>   return trough + amp * (0.6 * Math.sin(s * 0.9 - t * 2.4 + u * 1.7) + 0.4 * Math.sin(s * 0.41 + t * 1.5 - u * 2.3));
+> src/world/environment.ts:4: * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> src/world/environment.ts:197:  // …[+417 chars]
+
+### 🤖 Claude — 2026-11-18T01:47:09.220Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"__rainbow\\s*=\" src | head -3; grep -rn \"scene\" src/main.ts 2>/dev/null | grep -n \"__rainbow\\|scene:\" | head -5", "description": "Check what the QA hook exposes"}`
+
+### 🧑 User — 2026-11-18T01:47:09.261Z
+
+> ↩︎ result: src/game/Game.ts:777:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:47:11.217Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 700,777p src/game/Game.ts | grep -nE \"^\\s+[a-zA-Z]+[:(]|scene\" | head -30", "description": "List the QA hook's API members"}`
+
+### 🧑 User — 2026-11-18T01:47:11.253Z
+
+> ↩︎ result: 1:    setSteer(v: number | null) { input.override = v; },
+> 3:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 4:    startRideAt(id: StageId = '03') {
+> 5:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 8:    state() {
+> 11:    log() { return st.log; },
+> 12:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 14:    coinScreen() {
+> 33:    respawns() { return st.respawns; },
+> 35:    camera() {
+> 41:    bennyScreen() {
+> 46:    probe(x = 0, y = 0) {
+> 49:      const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+> 53:    /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+> 54:    drawList() {
+> 57:      scene.traverse((o) => {
+> 64:      render();
+> 69:    /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
+> 71:    qa3d() { return { scene, camera, renderer, composer }; },
+> 72:    stats() {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:47:20.900Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 745,752p src/game/Game.ts; cat > /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/probe07.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst Q = process.argv[2]; const pts = JSON.parse(process.argv[3]);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5291);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await browser.newPage({ vie …[+1134 chars]`
+
+### 🧑 User — 2026-11-18T01:47:32.946Z
+
+> ↩︎ result: probe(x = 0, y = 0) {
+>       const rc = new THREE.Raycaster();
+>       rc.setFromCamera(new THREE.Vector2(x, y), camera);
+>       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+>     },
+>     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> [{"x":-0.7,"y":-0.5,"hits":[{"d":1.63,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12.55,-76.54,-259.42]},{"d":10.6,"obj":"foam_berm<foam_banks<water_system<Scene","p":[10.57,-85.28,-259.12]},{"d":10.74,"obj":"w …[+904 chars]
+
+### 🤖 Claude — 2026-11-18T01:47:44.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && sed -e 's#return pts.map(\\[\\[x, y\\]\\]) => ({ x, y, hits: r.probe(x, y) }));#XX#' $S/probe07.mjs > /dev/null; python3 - <<EOF\nt=open('$S/probe07.mjs').read()\nt=t.replace(\"return pts.map(([x, y]) => ({ x, y, hits: r.probe(x, y) }));\",\"\"\"const sc = r.qa3d().scene; const res = [];\n  sc.traverse((o) => { if (o.name === 'foam_berm' || o.name === 'water_ribbon') res.push({ name: o.name, vis: o.visible, defines: o.material.defines, hide: o.material.uniforms?.uHide07?. …[+471 chars]`
+
+### 🧑 User — 2026-11-18T01:47:59.409Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:48:01.260Z
+
+Still on Screen 07: tracking down why the white side strips stay visible down the plunge (a debugging step, nothing changed in the game yet).
+
+### 🤖 Claude — 2026-11-18T01:48:03.367Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1'; node $S/probe07b.mjs \"$K\" '[]' 2>&1 | grep -v 'allow list' | tail -3", "description": "Rerun the berm material probe and show output", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T01:48:16.041Z
+
+> ↩︎ result: [{"name":"water_ribbon","vis":true,"defines":{},"s":351.189,"marks":[312.41331806416713,390.071167658835],"frag":false},{"name":"foam_berm","vis":true,"defines":{"HIDE07":1},"hide":{"x":321.41331806416713,"y":378.071167658835},"s":351.189,"marks":[312.41331806416713,390.071167658835],"frag":true}]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:48:26.770Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"buildMatch07(\" -A 4 src/world/environment.ts src/game/*.ts 2>/dev/null | head -12; grep -n \"^const FRAG\\|^const VERT\\|varying\\|#ifdef PROJ05\" src/vfx/waterRibbon.ts | head -20", "description": "Find the plunge fade range and water ribbon shader hooks"}`
+
+### 🧑 User — 2026-11-18T01:48:26.813Z
+
+> ↩︎ result: src/game/Game.ts:125:  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3] } : undefined) : null;
+> src/game/Game.ts-126-  if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
+> src/game/Game.ts-127-  const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
+> src/game/Game.ts-128-  const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
+> src/game/Game.ts-129-  const m07CoinLook = !!m07 && flag05('m07coinsz');
+> 212: * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> 265:const VERT = /* glsl */ `
+> 276:varying vec2 vChan;
+> 280:varying vec2 vUV;
+> 281:varying float vHalfW;
+> 282:varying float vSpeed;
+> 283:varying float vSkirt;
+> 284:varying float vHide;
+> 285:varying vec4 vStyle;
+> 286:varying float vCore;
+> 287:varying vec3 vTanW;
+> 288:varying vec3 vPosW;
+> 289:varying vec3 vNormalW;
+> 344:const FRAG = /* glsl */ `
+> 379:varying vec2 vUV;
+> 380:varying float vHalfW;
+> 381:varying float vSpeed;
+> 382:varying float vSkirt;
+> 383:varying float vHide;
+> 384:varyi …[+58 chars]
+
+### 🤖 Claude — 2026-11-18T01:48:30.460Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"M07_HIDE\\|m07Range\\|m07CoinLook\\|m07coinsz\" src/game/Game.ts | head -12", "description": "See how the game hides its own water in the 07 range"}`
+
+### 🧑 User — 2026-11-18T01:48:30.499Z
+
+> ↩︎ result: 127:  const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
+> 128:  const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
+> 129:  const m07CoinLook = !!m07 && flag05('m07coinsz');
+> 553:      const on = st.stage === '07' && st.s >= m07Range[0] && st.s < m07Range[1];
+> 556:        for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !(on && (!m07Tube || st.s < m07sA + 9)); }
+> 615:      // `&m07coinsz=1` (look only): Screen 07 coins sized against the live camera, stepping aside from Benny
+> 616:      if (m07CoinLook) { camera.updateMatrixWorld(); coins.setView?.(camera, benny.root.getWorldPosition(m07BennyP).addScaledVector(camera.up, 0.7), renderer.domElement.clientHeight || 1536); }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:48:32.124Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 548,560p src/game/Game.ts; grep -n \"m07sA\\s*=\" src/game/Game.ts; grep -rn \"m07coinsz\" qa/match/07/*.md | head -3", "description": "Read the 07 hide logic and the coin-size switch notes"}`
+
+### 🧑 User — 2026-11-18T01:48:32.165Z
+
+> ↩︎ result: }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+>     // `?match07=1` on the visible 07 stretch: the projected scenery carries the approved tube, rings, paddles, river,
+>     // foam and bubbles (the game's tube zone and river are hidden there and restored outside it)
+>     if (m07) {
+>       const on = st.stage === '07' && st.s >= m07Range[0] && st.s < m07Range[1];
+>       m07.group.visible = on;
+>       if (on || m07Applied) {
+>         for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !(on && (!m07Tube || st.s < m07sA + 9)); }
+>         env.zones.tubes.visible = on ? false : !zoneHidden('tubes') && STAGE_ORDER.indexOf(st.stage) >= STAGE_ORDER.indexOf('03') && STAGE_ORDER.indexOf(st.stage) <= STAGE_ORDER.indexOf('09');
+>       }
+>       // M3 m07tube: hand-over to the plunge continuation where the old build handed over to the default world (8 u before the top)
+>       if (m07Tube) m07.setPlunge(on && st.s >= course.marks['07_plunge_top'] - 8);
+> 124:  const m07sA = course.marks['07_plunge_top'] - 4;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:48:39.052Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 395,420p src/vfx/waterRibbon.ts; grep -n \"vUV = \\|vUV=\" src/vfx/waterRibbon.ts | head -3; grep -n \"const mat = new THREE.ShaderMaterial\" -A 8 src/vfx/waterRibbon.ts | grep -n \"defines\" ", "description": "Read the start of the water ribbon fragment shader"}`
+
+### 🧑 User — 2026-11-18T01:48:39.089Z
+
+> ↩︎ result: uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> uniform vec2 uPjESize;     // uPjE texels
+> uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+> uniform vec2 uPjNS;        // s0, s1
+> uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> uniform vec2 uPjTS;        // start s, period L
+> uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+> uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
+> uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+> uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
+> uniform vec2 uPjRes;       // render target size (vignette inverse)
+> uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
+> uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h)
+> uniform sampler2D uPjT2;   // ?projnear05=1: the sharp near tile (mirrored repeat along s), used where E is magnified
+> uniform vec2 uPjT2S;       // its start s, period
+> uniform sampler2D uPjWT2;  // it …[+1076 chars]
+
+### 🤖 Claude — 2026-11-18T01:48:41.226Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"^void main\" src/vfx/waterRibbon.ts | head; awk 'NR>=344 && /^void main/ {print NR; exit}' src/vfx/waterRibbon.ts; grep -n \"aUV\\b\" src/vfx/waterRibbon.ts | head -4; grep -n \"float s = \\|float u = \" src/vfx/waterRibbon.ts | head -6", "description": "Find the ribbon fragment main and its u and s variables"}`
+
+### 🧑 User — 2026-11-18T01:48:41.278Z
+
+> ↩︎ result: 291:void main() {
+> 707:void main() {
+> 707
+> 266:attribute vec2 aUV;      // x = u (-1..1 across), y = s (arc length)
+> 298:  float u = aUV.x;
+> 299:  float s = aUV.y;
+> 305:  vUV = aUV;
+> 298:  float u = aUV.x;
+> 299:  float s = aUV.y;
+> 708:  float u = vUV.x;
+> 709:  float s = vUV.y;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:48:46.602Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1600,1612p src/vfx/waterRibbon.ts; grep -n \"uPjDbg: {\" src/vfx/waterRibbon.ts | head -2; grep -n \"export function createWaterRibbon\\|function createRibbon\\|course: Course\" src/vfx/waterRibbon.ts | head -4", "description": "Read the ribbon uniforms block to add the new switch"}`
+
+### 🧑 User — 2026-11-18T01:48:46.700Z
+
+> ↩︎ result: if (FLOWMAP05) {
+>     // W11: textures / shared uniforms are attached AFTER the merge above (UniformsUtils.merge would clone them)
+>     const f5 = flow05Textures(course);
+>     const u5 = uniforms as Record<string, THREE.IUniform>;
+>     u5.uTime = flow05Shared.uTime;                       // the far river (environment.ts) runs on the same clock
+>     u5.uFlowMap = { value: f5.flowMap };
+>     u5.uRipple = { value: f5.ripple };
+>     u5.uFlowS = { value: f5.sRange };
+>     u5.uPano = flow05Shared.uPano;
+>     u5.uPanoRot = flow05Shared.uPanoRot;
+>     const pk = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('panok') : null;   // QA: ?panok=0 isolates the reflection
+>     u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
+>   }
+> 48:function bandStyleAt(course: Course, s: number): Style {
+> 72:export function coreLateral(course: Course, s: number): number {
+> 90:export function coreShiftW10(course: Course, s: number): number {
+> 227:export function channel05(course: Course, s: number): { c: number; hw: number } {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:48:48.077Z
+
+Still on Screen 07: adding a second part to the same switch that hides the curled-up white edges of the game's water down the plunge.
+
+### 🤖 Claude — 2026-11-18T01:48:57.779Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'; t=open(p).read()\n# FRAG: uniform + discard of the lifted outer edge on the plunge range\nold=\"  float u = vUV.x;\\n  float s = vUV.y;\"\nidx=t.index(old, t.index('const FRAG'))\nnew=\"\"\"  float u = vUV.x;\n  float s = vUV.y;\n  #ifdef HIDE07R\n  // r8 '?match07=1&m07foam=1': the lifted white outer edges of the game's sheet step aside down the 07 plunge so the\n  // matched tube's river tile (painted soft foam banks) shows there; dithered over 3 u at both ends\n  float h7r = smoothstep(uHide07r.x, uHide07r.x …[+1909 chars]`
+
+### 🧑 User — 2026-11-18T01:49:01.352Z
+
+> ↩︎ result: ok
+> tsc=0
+> 228:function HIDE07R(course: Course): [number, number] | null {
+> 717:  #ifdef HIDE07R
+> 1614:  { // r8 m07foam (07 plunge edge hide), see HIDE07R
+> 1615:    const h = HIDE07R(course);
+> 1638:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(HIDE07R(course) ? { HIDE07R: 1 } : {}) },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:49:04.609Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1'; node tools/match07/plunge_audit_r8.mjs 07 qa/match/07/r8/plunge_foam2 \"$K&m07foam=1\" 2>&1 | grep -v 'allow list' | tail -1", "description": "Render the plunge with the full m07foam switch", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T01:49:34.306Z
+
+> ↩︎ result: 07 t95_through_screen s 385.058 lat 0 stage 07 frames 557
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:49:35.368Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r8/plunge_foam2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:49:35.420Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:49:42.707Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r8/plunge_foam2/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:49:42.749Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:49:46.545Z
+
+The plunge bottom (t95) is the hand-over into Screen 08's chamber. It is unchanged here and belongs to the 08 work. One more check at the plunge top, where the most pixels changed:
+
+### 🤖 Claude — 2026-11-18T01:49:46.998Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r8/plunge_foam2/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:49:47.057Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:49:50.582Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r8/plunge_K/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:49:50.636Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:49:55.662Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"m07coinsz\" --include=*.md qa docs 2>/dev/null | head -5; git log --oneline -S m07coinsz -- src | tail -3", "description": "Find the history of the 07 coin-size switch"}`
+
+### 🧑 User — 2026-11-18T01:49:55.773Z
+
+> ↩︎ result: 45b2bcb4 autosave: Rainbow 2026-11-18 00:52 UTC
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:49:57.859Z
+
+`m07coinsz` was added in an autosave at 00:52 UTC by the previous account and never tested or documented. Rendering it once on top of the new set:
+
+### 🤖 Claude — 2026-11-18T01:49:59.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"setView\" src/gameplay/coins.ts | head -3; K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1'; node tools/match07/plunge_audit_r8.mjs 07 qa/match/07/r8/plunge_foam_coinsz \"$K&m07coinsz=1\" 2>&1 | grep -v 'allow list' | tail -1", "description": "Render the plunge with the coin-size switch added", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T01:50:30.379Z
+
+> ↩︎ result: 129:  setView?(camera: THREE.PerspectiveCamera | null, benny: THREE.Vector3 | null, viewH: number): void;
+> 270:    setView(camera, benny, viewH) { vCam = camera; vBenny = benny; vH = viewH; place(lastT); },
+> 07 t95_through_screen s 385.061 lat 0 stage 07 frames 557
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:50:31.579Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r8/plunge_foam_coinsz/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:50:31.641Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:50:44.864Z
+
+> 🔧 **Bash** `{"command": "git worktree add -q --detach /home/user/wt/s07base 3afaa7e9cb 2>&1 | tail -1; ln -sfn /home/user/rainbow-/node_modules /home/user/wt/s07base/node_modules; cp /home/user/wt/s07/tools/match07/plunge_audit_r8.mjs /home/user/wt/s07base/tools/match07/; cd /home/user/wt/s07base && node tools/match07/plunge_audit_r8.mjs 07 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/def_base \"\" 2>&1 | grep -v 'allow list' | tail -1; cd /home/user/wt/s07 && node tools/match07/plunge_audit_r8.mjs 07 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d …[+614 chars]`
+

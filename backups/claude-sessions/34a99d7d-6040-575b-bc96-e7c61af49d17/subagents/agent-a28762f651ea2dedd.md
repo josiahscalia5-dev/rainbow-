@@ -780,3 +780,111 @@ Now implementing the coin-look switch `m05coin` in coins.ts.
 > f03_forward3u 1111620 685718 HUD rows diff 31825
 > f10_forward10u 70395 66725 HUD rows diff 0
 
+### 🤖 Claude — 2026-11-18T01:47:22.905Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -c \"\nimport json\nl=json.load(open('assets/textures/match05/tgtwall05/proj05_lut.json'))\nprint(l.keys())\nfor k,v in l.items():\n  if isinstance(v,dict): print(k,{a:(b if not isinstance(b,list) else ('list',len(b),b[:3],b[-3:])) for a,b in v.items()})\nn=json.load(open('assets/textures/water05/proj05_near.json')); print('near',{a:b for a,b in n.items() if not isinstance(b,(list,dict))}, n.get('T2'))\n\"; python3 -c \"\nfrom PIL import Image\nimport glob\nfor f in sorted(glob.glob('assets/textures/water05/proj05_*.png'))+['assets/textures/match05/ …[+251 chars]`
+
+### 🧑 User — 2026-11-18T01:47:23.005Z
+
+> ↩︎ result: dict_keys(['note', 'E', 'N', 'T', 'D', 'F', 'probe_camera_uTime'])
+> E {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1457, 'V': ('list', 1024, [0.0, 0.0103683, 0.0206834], [0.9994496, 0.9997248, 1.0]), 'c': ('list', 1024, [0.02385, 0.02378, 0.02364], [-0.38032, -0.38032, -0.38032]), 'w': ('list', 1024, [0.31096, 0.31155, 0.31289], [0.40777, 0.40777, 0.40777])}
+> N {'s0': 126.0, 's1': 166.0, 'width': 512, 'height': 960}
+> T {'a': 134.0, 'L': 14.0, 'width': 512, 'height': 336}
+> D {'u0': -0.18, 'u1': 0.18, 's0': 131.5, 's1': 134.3, 'size': 512, 'lum_gain': 1.0}
+> F {'zmax': 376.607666015625, 'width': 512, 'height': 512, 'note': 'far block: x = uv.x, y = log(1 + Z) / log(1 + zmax)'}
+> near {'note': 'proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)', 'locked_focus_s': 132.438, 'share_of_texels_from_visible_water': 0.929, 'share_filled_along_flow': 0.0916, 'bubbles_removed': 15, 'holes_cloned': 16} {'a': 131.685, 'L': 6.565, 'width': 1024, 'height': 768, 'wrapT': 'mirrored', 'period': 13.13}
+> assets/textures/water05/proj05_A.png (256, 768) RGBA
+> assets/textures/water05/proj05_A_pad.png (256, 768) RGBA
+> asse …[+626 chars]
+
+### 🤖 Claude — 2026-11-18T01:47:39.145Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/an && cd /home/user/wt/s05 && python3 - <<'EOF'\nimport json, numpy as np\nfrom PIL import Image\nSP='/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/an/'\nl=json.load(open('assets/textures/match05/tgtwall05/proj05_lut.json'))['E']\nE=np.asarray(Image.open('assets/textures/match05/tgtwall05/proj05_E.png').convert('RGBA')).astype(np.float32)\nH,W=E.shape[:2]\ns0,s1,n=l['s0'],l['s1'],l['n']\nV=np.array(l['V']);C=np.array(l['c']);Wd=np.array(l['w'])\nss=np.lins …[+1062 chars]`
+
+### 🧑 User — 2026-11-18T01:47:39.547Z
+
+> ↩︎ result: 1231 rows; texel rows per u: [(130, np.float64(273.4)), (133, np.float64(88.9)), (136, np.float64(60.7)), (140, np.float64(29.3)), (145, np.float64(17.8)), (150, np.float64(13.1)), (155, np.float64(8.0)), (160, np.float64(8.0)), (165, np.float64(8.0)), (170, np.float64(8.0)), (175, np.float64(9.6)), (180, np.float64(8.0))]
+> u range [(130, np.float64(-0.3), np.float64(0.34)), (133, np.float64(-0.51), np.float64(0.49)), (136, np.float64(-0.76), np.float64(0.59)), (140, np.float64(-1.0), np.float64(0.69)), (145, np.float64(-1.0), np.float64(0.97)), (150, np.float64(-1.0), np.float64(1.0)), (155, np.float64(-1.0), np.float64(1.0)), (160, np.float64(-1.0), np.float64(1.0)), (165, np.float64(-1.0), np.float64(1.0)), (170, np.float64(-0.82), np.float64(1.0)), (175, np.float64(-0.98), np.float64(0.95)), (180, np.float64(-0.9), np.float64(0.03))]
+
+### 🤖 Claude — 2026-11-18T01:47:40.878Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/an/E_unwarp.png"}`
+
+### 🧑 User — 2026-11-18T01:47:40.924Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:48:32.765Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/dbg \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&projdbg05=1\" \"f10_forward10u,f20_forward20u,t66_through_screen\" 2>&1 | grep -v \"allow list\\|403\"", "description": "Render layer debug map at riding positions", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T01:49:03.603Z
+
+> ↩︎ result: f10_forward10u s 143.149 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T01:49:06.785Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -c \"\nfrom PIL import Image\nims=[Image.open('dbg/%s.png'%n).resize((432,768)) for n in ['f10_forward10u','f20_forward20u','t66_through_screen']]\nW=Image.new('RGB',(432*3,768))\nfor i,im in enumerate(ims): W.paste(im,(432*i,0))\nW.save('dbg/strip.png')\"", "description": "Make debug strip for viewing"}`
+
+### 🧑 User — 2026-11-18T01:49:07.103Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T01:49:08.729Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/dbg/strip.png"}`
+
+### 🧑 User — 2026-11-18T01:49:08.761Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:50:17.471Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\n# 1. switch\nold=\"\"\"export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');\"\"\"\nnew=old+\"\"\"\n/**\n * `&m05wd=1` (Screen 05 round 8, branch claude/rainbow-s05-match-c8, qa/match/05/NOTES.md \"Round 8\"; needs tgtwall05):\n * WATER DESIGN WHILE SWIMMING. Riding hands the near river over from the approved exact layer E to the periodic near\n * tile T2 (projnear05: E must be as dense as the locked view had it, i.e. ~270 texels/u, or the tile takes over) — the\n * tile is a repeat …[+3482 chars]`
+
+### 🧑 User — 2026-11-18T01:50:20.904Z
+
+> ↩︎ result: 521:  if (uPjVP.x > 0.5 && pjNearK() > 0.0) {
+> TSC OK
+
+### 🤖 Claude — 2026-11-18T01:50:27.203Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wd1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05wd=1\" \"f10_forward10u,f20_forward20u,t66_through_screen,s_left_hard\" 2>&1 | grep -v \"allow list\\|403\"; cd /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -c \"\nfrom PIL import Image\nfor d in ['wd1']:\n  ims=[Image.open('%s/%s.png'%(d,n)).resize((432,768)) for n in ['f10_forward10u','f20_forward20u','t66_through_screen']]\ …[+194 chars]`
+
+### 🧑 User — 2026-11-18T01:51:23.704Z
+
+> ↩︎ result: f10_forward10u s 143.135 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> t66_through_screen s 170.391 lat -0.006 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@519,656 d73
+
+### 🤖 Claude — 2026-11-18T01:51:25.330Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wd1/strip.png"}`
+
+### 🧑 User — 2026-11-18T01:51:25.375Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:51:28.193Z
+
+Clear layout gain: f10/f20 now show winding pink streams on both sides with the cyan core. Let me inspect full size.
+
+### 🤖 Claude — 2026-11-18T01:51:29.417Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wd1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T01:51:29.454Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:51:30.020Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wd1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T01:51:30.090Z
+
+> ↩︎ result: [image]
+
