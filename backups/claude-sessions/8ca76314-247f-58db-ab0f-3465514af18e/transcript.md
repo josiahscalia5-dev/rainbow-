@@ -1734,3 +1734,85 @@ All four Account 13 specialist chats are saved (the first runs and the restarts)
 > 04 f20_forward20u s 98.184 lat 0 stage 04 frames 86
 > 04 s_left_steer s 84.181 lat -1.65 stage 04 frames 26
 
+### 🤖 Claude — 2026-11-18T16:37:29.571Z
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+Everything is restored. Both specialists are confirmed running, and nothing you need to do is blocking the work. One note: GitHub didn't answer for a moment when the session started, so the automatic restore of the newest work failed. GitHub was reachable again a minute later, and I fetched all the newest Account 13 work by hand.
+
+**1. GitHub branch.** Account 14 works on `ccr-6c7564b1-fmlt1w`, last saved at `c6682d8dd6e2caff39896ebe6215f775b7c3def9`. GitHub has the same commit. Account 13 hit its usage limit at 15:48 UTC. Its last autosave (16:20) added only chat-history files. I copied the newest chat file in and merged no game code.
+
+**2. Five-minute autosave.** It is running and pointed at the new branch. I ran two manual saves and both matched GitHub; the latest (16:36) also matches. The four Account 13 branches are now protected so nothing overwrites them. Two gaps to report:
+- Nothing saved to this branch between 15:49 and 16:22. Account 13's own machine kept saving to its own branch until 16:20, so nothing was lost.
+- Account 13 ended without a final end-of-session save, because it hit its limit.
+
+**3. Chat history.** It's all in `backups/claude-sessions/`: 33 conversations, including Account 13's lead chat and all four of its specialist chats. I read the last part, including your messages about the clean blue path, glossy water, copper-gold rings and matching the tunnel entrance to the inside. What can't come back:
+- the pictures inside those chats;
+- Claude's hidden reasoning;
+- chats from other computers or the claude.ai website.
+
+Old conversations can't be continued live. The specialists restart from their saved logs instead.
+
+**4. Specialist definitions.** All 10 are present and unchanged.
+
+**5. Actually running.**
+- The Screen 05 water specialist (`water-fx-specialist`) is running; its first Account 14 commit `0dbe931b` is on GitHub.
+- The Screen 08 scenery specialist (`washer-environment-modeler`) is running; its first commit `b62b9c34` is on GitHub.
+- The other 8 are installed but not running.
+
+On five parallel sessions: Account 13 used up a 5-hour limit in about 1 hour 45 minutes with the lead plus two specialists. Five sessions would roughly double that burn rate, so I recommend staying at two plus me.
+
+**6. Screen 04.** It continues on `claude/rainbow-s04-match-c14` (`c69b7f33`) from your checkpoint `9ef21200`, with the last unfinished arrow-glow edit restored. All of these are preserved:
+- the clean blue centre path and the lower side water;
+- the rounded copper-gold rings and the glossy turquoise water;
+- the white-cyan arrows;
+- Benny and the coins.
+
+Account 13's honest rating was about 6.5/10 while swimming.
+
+**7. Screens 05 and 08.** Both are recovered on their own new Account 14 branches:
+- **05** `claude/rainbow-s05-match-c14`: the two improvements you saw are kept (the far river joins cleanly, and the repair along the far river's edge). The unfinished near-water edit is being judged by eye now.
+- **08** `claude/rainbow-s08-scenery-c14`: both improvements are kept (the smooth top-left ring and the clean upper-right spout cup).
+
+**8. World Labs.** The Marble API works: 5,420 credits, and your Screen 08 world opens. The key is already in this account's environment, so no form was needed. The Atlas connector (the World Labs plugin's sign-in) is not signed in on this account. It isn't needed for the visual work; if you want it, sign in under claude.ai connector settings. No paid job was started.
+
+**9. fal.ai.** Connected to your purchased account; request `01a1ea70-42d8-7943-b035-7bb5f129d872` reads COMPLETED. Nothing new to buy, and nothing was regenerated.
+
+**10. Hugging Face and other tools.**
+- **Hugging Face:** public models download fine without logging in. The Hugging Face claude.ai connector is not connected; it's only needed for private models, and you can add it in claude.ai connector settings.
+- **Depth Anything 3:** the depth maps of all five approved pictures are saved.
+- **Checked by an actual call:** the GitHub connector and the Playwright browser connector.
+- **Checked by the startup checks:** Blender 5.3, the Android build tools, Node/Python, the screenshot browser and the game's build and continuity tests.
+- **Git LFS:** all 63 binaries are present here and confirmed on GitHub.
+
+**11. Approved screens.** All 13 approved reference images are byte-identical to the originals.
+
+**12. Next visual task.** Screen 04's arrows. Yours glow like bright neon glass; mine are still pale. Two brighter-glow versions are rendering from the real game now. After that comes the pink and magenta swirls near the entrance, then foam clouds and bubbles on the entrance rim, then the light dots on the deep rings. Each comes to you as full-size APPROVED / BEFORE / NEW pictures with an honest verdict.
+
+**What I need from you:** nothing right now. One caution from Account 13: a message sent while I'm mid-task can stop the specialists. If that happens, I'll check and restart them.
+
+In my own words: you've already designed all five playable screens, and your approved pictures are the plan, not a starting point. You want those exact environments built as real playable 3D: the gold rings, purple walls, cyan-and-pink water, foam, bubbles, lighting and coins. And it has to look like your pictures the whole time Benny swims, at the start, in the middle, at the end and while steering hard left or right.
+
+### 🧑 User — 2026-11-18T16:37:31.425Z
+
+Stop hook feedback:
+[command hook 2]: There are 1 unpushed commit(s) on branch 'ccr-6c7564b1-fmlt1w'. Please push these changes to the remote repository.
+
+### 🤖 Claude — 2026-11-18T16:37:34.863Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -3; git status --short | head -5; timeout 300 git push -u origin ccr-6c7564b1-fmlt1w 2>&1 | tail -2; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-6c7564b1-fmlt1w", "description": "Push the pending commit and verify remote matches", "timeout": 400000}`
+
+### 🧑 User — 2026-11-18T16:37:37.069Z
+
+> ↩︎ result: 022f37d autosave: Rainbow 2026-11-18 16:37 UTC
+> c6682d8 autosave: Rainbow 2026-11-18 16:36 UTC
+> a6670ea autosave: Rainbow 2026-11-18 16:32 UTC
+> Everything up-to-date
+> branch 'ccr-6c7564b1-fmlt1w' set up to track 'origin/ccr-6c7564b1-fmlt1w'.
+> 022f37d427f34fdd805b7b6d6fee2d69e5511dac
+> 022f37d427f34fdd805b7b6d6fee2d69e5511dac	refs/heads/ccr-6c7564b1-fmlt1w
+
+### 🤖 Claude — 2026-11-18T16:37:40.033Z
+
+That commit (`022f37d`) was a routine 16:37 autosave. It was already on GitHub by the time I checked: local and GitHub both read `022f37d427f34fdd805b7b6d6fee2d69e5511dac`, and nothing is waiting to be pushed. Both specialists and the Screen 04 arrow-glow renders are still running in the background.
+

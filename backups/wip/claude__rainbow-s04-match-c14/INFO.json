@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s04",
  "branch": "claude/rainbow-s04-match-c14",
  "head": "c69b7f331e6484fb655e4f7b4463cc4f5e0906d3",
- "time": "2026-11-18T16:37:26+00:00",
+ "time": "2026-11-18T16:37:47+00:00",
  "dirty_tracked": [],
  "untracked_copied": [
   "qa/match/04/r14/s8_glow/G3/f06_forward6u.png",
@@ -19,6 +19,7 @@
   "qa/match/04/r14/s8_glow/G4/f06_forward6u.png",
   "qa/match/04/r14/s8_glow/G4/f10_forward10u.png",
   "qa/match/04/r14/s8_glow/G4/f20_forward20u.png",
+  "qa/match/04/r14/s8_glow/G4/s_left_hard.png",
   "qa/match/04/r14/s8_glow/G4/s_left_steer.png",
   "qa/match/04/r14/s8_glow/G4/s_right_steer.png"
  ],
