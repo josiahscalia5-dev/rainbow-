@@ -2974,3 +2974,26 @@ Screen 04 just saved its first foundation test, and it marked it **not kept**. R
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md <<'EOF'\n\n## User correction ~03:35 UTC — KEEP SUCCESSFUL IMPROVEMENTS, FIX ONLY WHAT IS VISUALLY WRONG (binding; supersedes the strict \"world-fixed only\" reading above)\n\"I am NOT demanding that every single piece of scenery be physically modeled in 3D. You are allowed to combine real 3D\nenvironments and geometry, original approved artwork and texture projection, properly mapped textures, background scenery\nand image planes, visual effects and materials. USE WHATEVER COMBINATION PRODUCES THE MOST ACCURATE VISUAL RESU …[+2057 chars]`
 
+### 🧑 User — 2026-11-18T03:16:16.457Z
+
+> ↩︎ result: "commit": "839dd70c3de5058774982a9768279aa6c42b42a2",
+> remote 839dd70c3de5058774982a9768279aa6c42b42a2 local 839dd70c3de5058774982a9768279aa6c42b42a2
+
+### 🤖 Claude — 2026-11-18T03:16:30.682Z
+
+Understood. Fixing only what is visibly wrong, with whatever technique gives the most accurate look, is clearer than my earlier strict rule, and both specialists now have your correction.
+
+**Screen 05:** nothing successful is removed. The water around Benny and the distant tunnel and river stay. The specialist is testing them while Benny swims and steers, and will fix only the specific faults the pictures show. Two-thirds of the way through, those are the water spreading into a flat, stretched sheet instead of your S-river, and the loose lilac slab on the left bank.
+
+**Screen 04: an honest finding.** The specialist tested a larger, farther washer front so that your painted outside view would last the whole stage. It does not work on your existing course. The view always sits at the same height above the water, so your painted view of the opening, pink bowl and laundry room only fits near the start of the screen, roughly the first third. Beyond that, the painted pool ends up far below Benny and the coins float in mid-air. So that test was rejected, not kept.
+
+Within your rules, the faithful fix is this:
+- **Kept:** your gold opening and laundry room (the two steps I showed you earlier).
+- **Rebuilt:** the inside that Benny swims through for the rest of the screen, to look like the painted interior: the rings closing in quickly toward a warm glow (no long corridor), broad pink and magenta swirls around a narrow cyan lane, your five fat arrows, and low soft foam.
+
+The specialist has started on this now.
+
+The only way to keep your outside view on screen longer would be to change how the view follows Benny: it would start higher and come down toward the water as he approaches. You said not to change movement, so I won't unless you ask for it.
+
+Next you'll get large APPROVED / BEFORE / NEW pictures for each step that genuinely looks closer. Nothing counts as approved until you approve it.
+

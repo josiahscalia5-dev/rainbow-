@@ -2770,3 +2770,34 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 
 > ↩︎ result: File created successfully at: /home/user/wt/s05/qa/match/05/r9/BLUEPRINT.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-18T03:16:06.739Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/tools/match05/channel05_bp.py", "content": "\"\"\"Screen 05 round 9 FOUNDATION (`&m05geo=1`): the PAINTED river channel per arc length s, from the approved picture's\nregion masks (water + Benny / wake / coins / bubbles on it) back-projected through the locked eye onto the game river\n(the projected 3D edges of the a00 frame: qa/match/05/r9/blueprint/kept/a00_approved_view.geo.json).\nFor every screen row y the painted river's left / right edge → normalised lateral u = lat / course half width at the\nrow's s. Edges at the frame border (painted river runs out of …[+2214 chars]`
+
+### 🧑 User — 2026-11-18T03:16:06.769Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/channel05_bp.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:16:07.745Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 120 python3 -I tools/match05/channel05_bp.py qa/match/05/r9/blueprint/kept/a00_approved_view.geo.json assets/textures/match05/m05geo/channel05.json", "description": "Build painted channel from region masks"}`
+
+### 🧑 User — 2026-11-18T03:16:08.174Z
+
+> ↩︎ result: 134.75 uL -1.0 uR 0.99
+> 137.57 uL -1.0 uR 0.373
+> 140.39 uL -0.976 uR 0.48
+> 143.22 uL -0.991 uR 0.667
+> 146.04 uL -0.75 uR 0.953
+> 148.87 uL -0.662 uR 1.0
+> 151.69 uL -0.761 uR 1.0
+> 154.52 uL -0.982 uR 1.0
+> 157.34 uL -1.0 uR 1.0
+> 160.16 uL -1.0 uR 1.0
+> 162.99 uL -1.0 uR 1.0
+> 165.81 uL -1.0 uR 0.997
+> 168.64 uL -1.0 uR 0.911
+> 171.46 uL -1.0 uR 0.777
+> 174.28 uL -1.0 uR 0.58
+> 177.11 uL -1.0 uR 0.242
+

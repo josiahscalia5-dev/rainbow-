@@ -1650,3 +1650,23 @@ Now I'll write the mouth tile tool.
 > 
 > [exited with code 0]
 
+### 🤖 Claude — 2026-11-18T03:15:48.473Z
+
+Default build proven 0 px. Now restoring the moving-front foundation per the lead's correction, with foam/bubbles world-anchored.
+
+### 🤖 Claude — 2026-11-18T03:16:12.173Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(old, new, cnt=1):\n    global s\n    assert s.count(old)==cnt, (old[:90], s.count(old))\n    s=s.replace(old,new)\nrep(\"\"\"uniform vec2 uNear;         // fade sprites out this close to the camera (no giant discs in the face)\"\"\",\n    \"\"\"uniform vec2 uNear;         // fade sprites out this close to the camera (no giant discs in the face)\nuniform vec3 uOff;          // m04lay: offset of the washer front down the slide (bulbs only; foam / bubbles stay world-fixed)\"\"\")\nrep( …[+7299 chars]`
+
+### 🧑 User — 2026-11-18T03:16:14.937Z
+
+> ↩︎ result: 227:  const base = group.matrix.clone();
+
+### 🤖 Claude — 2026-11-18T03:16:33.702Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/try_c1/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T03:16:33.752Z
+
+> ↩︎ result: [image]
+
