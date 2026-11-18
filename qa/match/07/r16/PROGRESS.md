@@ -30,3 +30,24 @@ the "start view unchanged" check uses the deterministic `scripts/capture.mjs 07`
   with thick magenta banks and foam clouds → step 2 `m07nearw`.
 * Round-15 leftovers kept as history: `qa/match/07/r15/step1/` (t95 BEFORE / NEW of the cut-off run), `tools/match07/near_tiles_r15.py`
   (draft, superseded by `near_tiles_r16.py`).
+
+## Step 2 — `&m07nearw=1`: the painted NEAR river on the level stretch — 19:40–20:10 UTC
+* Problem (step-1 NEW f10 / f20 / steering): the moving camera sees the level-stretch water through `tile_river_clean.png` = the
+  painted 6–16 u river unwrapped over the whole tube floor and magnified 4–10× → long flat pink / cyan / purple smears, and the
+  tube-wall perforations painted beside the far river lie on the water near the walls.
+* `tools/match07/near_tiles_r16.py` (reads only the approved picture) → `assets/textures/match07/near_bank.png` = the lower-left
+  painted magenta satin band + its bubbly white trim + the glossy cyan water beside it, straightened along the band's inner edge
+  (edge measured from the picture's colours, robust 4th-order fit, 3 px rms; the big bubble on the band painted over), periodic
+  along the flow; `near_foam.png` = the big puffy foam clouds of the lower-right bank (gold-ring corner painted over).
+* Shader (`src/world/match07.ts`, `nearWater()`, only with `m07nearw`): across a winding centre line the water reads
+  [foam clouds | magenta band | trim | cyan | cyan | trim | magenta band | foam clouds], world-anchored. Centre line = the lane
+  Benny swims (the course already follows the painted S-river) + the painted river's residual winding (±0.3 u), smoothed;
+  river half-width 2.6 u incl. a 0.75 u magenta band (≈ the painted band at the bottom of the picture) so Benny stays on the
+  water even steering hard (lane ± 2.25 u); the right bank reads another stretch of the strip (no mirror image); the foam tile
+  is read twice with offsets and mixed by a slow world mask (no wallpaper grid). Where the approved view itself looks (no
+  magnification) the provisional fill under the painted Benny keeps the old river tile → approved start view unchanged.
+  The plunge river (m07tube) is NOT changed in this step.
+* Tuning (scratch renders, not kept): first try river half-width 1.75 u — at hard left Benny sat on the foam bank → 2.4 u,
+  then 2.6 u with the painted winding limited to ±0.3 u; the centre line was sampled every 3 u → visible kinks → 1.5 u + smoothing.
+
+* Continued and finished in round 17: `qa/match/07/r17/PROGRESS.md` (step 2 NEW stills re-rendered there).
