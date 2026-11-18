@@ -289,6 +289,7 @@ uniform float uZ0;
 uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength
 uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
 uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
 varying vec4 vProj;
 varying vec3 vL;
 varying float vS;
@@ -335,7 +336,7 @@ void main() {
     float v = (along - ap) + abs(vS) * uA5b.y;
     float dIn = max(max(v, -uA5.w - v), abs(vS) - uA5b.x); // < 0 inside the bar (units ~ along-flow)
     float cd = ap - uA5b.z;                               // arrow distance ahead of the camera
-    float vis = (k5 >= 0.0 ? 1.0 : 0.0) * smoothstep(6.5, 9.0, cd) * (1.0 - smoothstep(uA5b.w - 6.0, uA5b.w, cd));
+    float vis = (k5 >= 0.0 ? 1.0 : 0.0) * smoothstep(uA5n.x, uA5n.y, cd) * (1.0 - smoothstep(uA5b.w - 6.0, uA5b.w, cd));
     float px = fwidth(dIn) + 1e-4;
     float glow = exp(-max(dIn, 0.0) / 0.35);
     col = mix(col, vec3(0.05, 0.60, 0.98), 0.55 * glow * vis);
@@ -632,7 +633,7 @@ export function addM04(ctx: M04Ctx) {
         uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 },
         uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
-        uA5b: { value: a5b } } });
+        uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
     const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
     console.info('[match04] m04river', { xW, RY, XF });
   }
