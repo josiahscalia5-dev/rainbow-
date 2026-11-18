@@ -65,6 +65,9 @@ void main() {
 }`;
 
 const FRAG = /* glsl */ `
+#ifdef FITTED_PADDLE_WALL
+uniform sampler2D uPaddleFootprint;
+#endif
 #ifdef FITTED_PADDLE
 uniform sampler2D uPaddleFace;
 #endif
@@ -210,6 +213,18 @@ void main() {
         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
       }
       float w = vis * keep;
+#ifdef FITTED_PADDLE_WALL
+      // A camera-fitted paddle uncovers part of its old photograph on the tube. Continue that small
+      // hidden patch using the same photographed bay, fixed to the real cylindrical surface.
+      vec4 wallPatch = vec4(0.0);
+      vec2 sourcePx = vec2(uv.x * 864.0, (1.0 - uv.y) * 1536.0);
+      vec2 footprintUV = (sourcePx - vec2(336.0, 382.0)) / vec2(108.0, 76.0);
+      if (vL.z < -15.0 && vL.z > -39.0 && all(greaterThan(footprintUV, vec2(0.0))) && all(lessThan(footprintUV, vec2(1.0)))) {
+        wallPatch = texture2D(uPaddleFootprint, vec2(footprintUV.x, 1.0 - footprintUV.y));
+        wallPatch.a *= smoothstep(0.45, 2.5, distance(cameraPosition, uProjPos));
+        w = mix(w, keep, wallPatch.a);
+      }
+#endif
       // M2 '?m07fill=1': on the water, the provisional fill (Benny / coins in the picture) gives way to the river tile
       if (uFillTile > 0.5 && uMode > 1.5) w *= 1.0 - texture2D(uFill, uv).r;
       // M2 '?m07ang=1': painted relief (ring flanges, paddles) flattened on the proxy doubles when seen from another
@@ -222,7 +237,11 @@ void main() {
       // the approved start view stays exactly as it was; the painted near river takes over as the view magnifies the water
       vec3 pcf = pc;
       if (uNearOn > 0.5 && uMode > 1.5) pcf = mix(pc, riverTile(), keep * vis);
-      t = mix(pcf, texture2D(uPlate, uv).rgb, w);
+      vec3 projectedPaint = texture2D(uPlate, uv).rgb;
+#ifdef FITTED_PADDLE_WALL
+      projectedPaint = mix(projectedPaint, wallPatch.rgb, wallPatch.a);
+#endif
+      t = mix(pcf, projectedPaint, w);
     }
   }
 #ifdef FITTED_PADDLE
@@ -374,13 +393,17 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
   const M = { wall: mat(tWall, 1), water: mat(tRiver, 2), gold: mat(pGold, 0, 1 / 1.2) };
   let fittedPaddle: { mesh: THREE.BufferGeometry; material: THREE.ShaderMaterial; origin: THREE.Vector3 } | undefined;
   if (fixGold && flag05('cx07PaddleFace')) {
-    const [shape, paint] = await Promise.all([
+    const [shape, paint, footprint] = await Promise.all([
       fetch(tex('paddleShape07.json')).then(async response => {
         if (!response.ok) throw new Error('Could not load the fitted Screen 07 paddle');
         return await response.json() as { positions: number[]; uv: number[]; indices: number[]; origin: [number, number, number] };
       }),
       new THREE.TextureLoader().loadAsync(tex('paddleFace07.png')),
+      new THREE.TextureLoader().loadAsync(tex('paddleWall07.png')),
     ]);
+    footprint.colorSpace = THREE.NoColorSpace;
+    M.wall.defines = { FITTED_PADDLE_WALL: 1 };
+    M.wall.uniforms.uPaddleFootprint = { value: footprint };
     paint.colorSpace = THREE.NoColorSpace;
     paint.anisotropy = 4;
     const mesh = new THREE.BufferGeometry();
