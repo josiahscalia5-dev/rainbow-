@@ -2202,3 +2202,67 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/tools/match05/r10_probe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"  t88_end: ['t0.88', null],\"\"\",\"\"\"  t97_end: ['t0.97', null], t99_end: ['t0.99', null], t102_06: ['t1.02', null], t105_06: ['t1.05', null],\n  t88_end: ['t0.88', null],\"\"\",1)\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10; B=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1\"\nfor …[+637 chars]`
 
+### 🧑 User — 2026-11-18T11:16:36.498Z
+
+> ↩︎ result: shot t97_end s 187.902 lat 0 cam 3.29,-40.49,-121.62
+> shot t97_end s 187.879 lat 0 cam 3.29,-40.49,-121.59
+> shot t99_end s 189.196 lat 0 cam 3.13,-40.62,-122.99
+> shot t99_end s 189.202 lat 0 cam 3.13,-40.62,-122.99
+> shot t102_06 s 190.812 lat 0 cam 2.68,-40.78,-124.63
+> shot t102_06 s 190.829 lat 0 cam 2.68,-40.78,-124.65
+> shot t105_06 s 192.567 lat 0 cam 2.24,-40.90,-126.41
+> shot t105_06 s 192.461 lat 0 cam 2.26,-40.89,-126.30
+
+### 🤖 Claude — 2026-11-18T11:16:39.196Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_late2.png"}`
+
+### 🧑 User — 2026-11-18T11:16:39.919Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:16:47.935Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git checkout src/world/environment.ts && python3 - <<'EOF'\np='/home/user/wt/s05/src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"\"\"\n/** `&m05late=1` (Screen 05 round 10, needs m05far; src/world/environment.ts): the 05 far tunnel folds into 06 later and quicker */\nexport const M05LATE: boolean = MATCH05 && q05('m05far') && q05('m05late');\"\"\"\nassert old in s\ns=s.replace(old,\"\",1)\nopen(p,'w').write(s)\nEOF\ntimeout 300 npx tsc --noEmit -p . ; echo tsc=$?; git status --short; date -u +%H:%M", "description": "Revert the rejected late-fold switch", " …[+17 chars]`
+
+### 🧑 User — 2026-11-18T11:16:50.532Z
+
+> ↩︎ result: Updated 1 path from the index
+> tsc=0
+>  M tools/match05/r10_probe.mjs
+> 11:16
+
+### 🤖 Claude — 2026-11-18T11:17:07.420Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\na=Image.open('cloud1/t66_through_screen.png').crop((0,520,600,820)).resize((1200,600))\na.save('t66_cloud_left.png')\"", "description": "Zoom left seam region of current t66"}`
+
+### 🧑 User — 2026-11-18T11:17:07.718Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:17:08.873Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t66_cloud_left.png"}`
+
+### 🧑 User — 2026-11-18T11:17:08.911Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:17:45.271Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> src/vfx/unfold05.ts <<'EOF'\n\n/**\n * `&m05unf=1` (waterRibbon.ts M05UNF): the same unfolding as unfoldDelta05 for ANY point at (s, lateral) of the 05 river\n * frame (lateral fixed, |lateral| ≥ half width → full width): horizontal displacement (x, z) of the point that removes\n * the crossing rows at the kink. Used for the lather bank's vertices and the rim foam (the ribbon uses unfoldDelta05 on\n * its own rows, which gives the same result at its row spacing).\n */\nlet tightTab: { s0: number; ds: number; sig: Float32Array } | null = null;\nfuncti …[+4181 chars]`
+
+### 🧑 User — 2026-11-18T11:17:48.015Z
+
+> ↩︎ result: src/vfx/foam.ts:17:import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, M05UNF, m05foamK } from './waterRibbon';
+> src/vfx/foam.ts:591:        if (M05UNF) { unfoldAt05(course, s, side * (hw + eS), uo); tmp.x += uo.x; tmp.z += uo.z; }   // m05unf: no fold
+> src/vfx/foam.ts:719:    if (M05UNF) { unfoldAt05(course, ss, side * (hw + eS), uo); p.x += uo.x; p.z += uo.z; }   // m05unf: no fold
+> src/vfx/unfold05.ts:106: * `&m05unf=1` (waterRibbon.ts M05UNF): the same unfolding as unfoldDelta05 for ANY point at (s, lateral) of the 05 river
+> src/vfx/waterRibbon.ts:384:export const M05UNF: boolean = M05FLAT && q05('m05unf');
+> src/vfx/waterRibbon.ts:1905:    const unf = M05FOLD || M05UNF ? unfoldDelta05(course, pos, rowS, vertsPerRow, latN) : new Float32Array(n * 3);
+> tsc=0
+
+### 🤖 Claude — 2026-11-18T11:17:59.725Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05unf=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/unf1; mkdir -p $S; timeout 900 node tools/match05/r8_shots.mjs $S \"$Q\" t66_through_screen,t33_through_screen 2>&1 | tail -2; for k in k81_kink k81_kink_left k81_kink_right; do timeout 600 node tools/match05/r10_probe.mjs $k \"$Q\" --shot=$S/$k.png 2>&1 | grep \"shot k\"; done; Q0=\"match05=1&tgtvis05=1&tgtfill …[+796 chars]`
+

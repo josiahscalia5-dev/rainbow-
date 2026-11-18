@@ -2103,3 +2103,174 @@ Now the floor shader: add the mirrored detail tile where the projection is magni
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T11:15:07.224Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/dbgk && SHOTS=s_left_hard,f10_forward10u,s_right_hard node $S/tools/sel_audit.mjs 08 $S/r/dbgk \"$K&m08dbg=1\" 2>&1 | grep -E \"m08dbg|t95|s_right\" | head -3; cd $S && python3 py/sbs.py c_dbg.png r/coinv/s_left_hard.png r/dbgk/s_left_hard.png r/coinv/f10_forward10u.png r/dbgk/f10_forward10u.png", "description": "Debug-colour render of kept …[+43 chars]`
+
+### 🧑 User — 2026-11-18T11:15:32.117Z
+
+> ↩︎ result: 08 s_right_hard s 404.035 lat 2.217 stage 08 frames 76
+
+### 🤖 Claude — 2026-11-18T11:15:34.987Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_dbg.png"}`
+
+### 🧑 User — 2026-11-18T11:15:35.024Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:15:42.447Z
+
+In debug mode the collar loses its clip (plain material), so it covers the view; that only affects the QA colouring. I'll hide the collar in debug mode and re-run.
+
+### 🤖 Claude — 2026-11-18T11:15:47.950Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial\" src/world/match08.ts && sed -i 's#    group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal\\[i % pal.length\\], side: THREE.DoubleSide }); });#    group.children.forEach((o, i) => { if (o.name === '\"'\"'m08_collar'\"'\"') o.visible = false; /* its clip needs the shader */ (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });#' src/world/mat …[+651 chars]`
+
+### 🧑 User — 2026-11-18T11:16:08.650Z
+
+> ↩︎ result: 449:    group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+> 449:    group.children.forEach((o, i) => { if (o.name === 'm08_collar') o.visible = false; /* its clip needs the shader */ (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+> 08 f10_forward10u s 402.095 lat 0 stage 08 frames 63
+> [This command modified 1 file you've previously read: ../wt/s08/src/world/match08.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T11:16:11.199Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_dbg.png"}`
+
+### 🧑 User — 2026-11-18T11:16:11.257Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:16:40.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"four half-dome spouts\" -A 10 src/world/match08.ts", "description": "Show the spout construction code"}`
+
+### 🧑 User — 2026-11-18T11:16:40.098Z
+
+> ↩︎ result: 5: * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+> 6- * Every surface is textured by camera projection of the CLEAN environment-only artwork (Benny, HUD, coins removed;
+> 7- * qa/imageblaster/08/) from that locked camera, so the locked view shows the approved scenery and a moving camera sees
+> 8- * it on geometry (parallax). Surfaces the projector cannot see (behind props) get a plain fallback colour instead of
+> 9- * a smeared copy (projector depth test). The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+> 10- * Without the switch nothing in this file runs and the game is unchanged.
+> 11- */
+> 12-import * as THREE from 'three';
+> 13-import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+> 14-
+> 15-interface Layout {
+> --
+> 435:  // four half-dome spouts (flat perforated underside down)
+> 436-  for (const [k, s] of Object.entries(L.spouts)) {
+> 437-    const dome = new THREE.SphereGeometry(1, 48, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+> 438-    const cap = new THREE.CircleGeometry(1, 48).rotateX(Math.PI / 2);
+> 439-    for (const [g, nm] of [[dome, 'dome'], [cap, 'under']] as const) {
+> 440-      const o = add(g, …[+127 chars]
+
+### 🤖 Claude — 2026-11-18T11:16:51.382Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  // four half-dome spouts (flat perforated underside down)\n  for (const [k, s] of Object.entries(L.spouts)) {\n    const dome = new THREE.SphereGeometry(1, 48, 16, 0, Math.PI * 2, 0, Math.PI / 2);\n    const cap = new THREE.CircleGeometry(1, 48).rotateX(Math.PI / 2);\n    for (const [g, nm] of [[dome, 'dome'], [cap, 'under']] as const) {\n      const o = add(g, M.gold, `spout_${k}_${nm}`);\n      o.scale.set(s.rx, s.ry, s.rx);\n      o.position.set(...s.c);\n    }\n  }", "new_string": "  // four half …[+1257 chars]`
+
+### 🧑 User — 2026-11-18T11:16:51.400Z
+
+> ↩︎ result: <tool_use_error>File has been modified since read, either by the user or by a linter. Read it again before attempting to write it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T11:16:53.175Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/src/world/match08.ts", "offset": 433, "limit": 14}`
+
+### 🧑 User — 2026-11-18T11:16:53.191Z
+
+> ↩︎ result: 433	    ]), M.towel, 'towel');
+> 434	  } else add(new THREE.BoxGeometry(T.w, T.h, T.d, 4, 4, 4).translate(T.cx, T.y0 + T.h / 2, T.cz), M.towel, 'towel');
+> 435	  // four half-dome spouts (flat perforated underside down)
+> 436	  for (const [k, s] of Object.entries(L.spouts)) {
+> 437	    const dome = new THREE.SphereGeometry(1, 48, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+> 438	    const cap = new THREE.CircleGeometry(1, 48).rotateX(Math.PI / 2);
+> 439	    for (const [g, nm] of [[dome, 'dome'], [cap, 'under']] as const) {
+> 440	      const o = add(g, M.gold, `spout_${k}_${nm}`);
+> 441	      o.scale.set(s.rx, s.ry, s.rx);
+> 442	      o.position.set(...s.c);
+> 443	    }
+> 444	  }
+> 445	
+> 446	  // QA only `&m08dbg=1`: every fitted surface in its own flat colour (which proxy carries which part of the frame)
+
+### 🤖 Claude — 2026-11-18T11:17:00.424Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  // four half-dome spouts (flat perforated underside down)\n  for (const [k, s] of Object.entries(L.spouts)) {\n    const dome = new THREE.SphereGeometry(1, 48, 16, 0, Math.PI * 2, 0, Math.PI / 2);\n    const cap = new THREE.CircleGeometry(1, 48).rotateX(Math.PI / 2);\n    for (const [g, nm] of [[dome, 'dome'], [cap, 'under']] as const) {\n      const o = add(g, M.gold, `spout_${k}_${nm}`);\n      o.scale.set(s.rx, s.ry, s.rx);\n      o.position.set(...s.c);\n    }\n  }", "new_string": "  // four half …[+1257 chars]`
+
+### 🧑 User — 2026-11-18T11:17:00.470Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:17:07.375Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/cup && SHOTS=s_left_hard,f10_forward10u,s_right_hard,t66_through_screen,f06_forward6u node $S/tools/sel_audit.mjs 08 $S/r/cup \"$K&m08cup=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S && python3 -c \"\nfrom PIL import Image\nrows=[]\nfor n,box in [('s_left_hard',(0,560,432,900)),('f10_f …[+468 chars]`
+
+### 🧑 User — 2026-11-18T11:17:41.835Z
+
+> ↩︎ result: 08 t66_through_screen s 400.551 lat 0.005 stage 08 frames 54
+
+### 🤖 Claude — 2026-11-18T11:17:44.466Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/cupc.png"}`
+
+### 🧑 User — 2026-11-18T11:17:44.520Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:18:17.850Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\na=s.index(\"  // `&m08cup=1` (r10)\"); b=s.index(\"  for (const [k, s] of Object.entries(L.spouts)) {\")\ns=s[:a]+s[b:]\ns=s.replace(\"      if (cupOn && (k === 'LL' || k === 'LR')) o.rotation.set(-CUP_X, 0, k === 'LL' ? CUP_Z : -CUP_Z);\\n\",\"\")\nopen(p,'w').write(s)\nEOF\ngit diff --stat; git diff | grep \"^[-+]\" | grep -v \"^+++\\|^---\"; timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; date -u +%H:%M", "description": "Remove rejected cup code; show remaining diff", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T11:18:21.595Z
+
+> ↩︎ result: src/world/match08.ts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> -    group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+> +    group.children.forEach((o, i) => { if (o.name === 'm08_collar') o.visible = false; /* its clip needs the shader */ (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+> 11:18
+
+### 🤖 Claude — 2026-11-18T11:18:36.695Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"uv + vec2(float(i), float(j) \\* 0.5625) \\* 0.007\\|uniform vec4 uClipOut;\\|uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut\" src/world/match08.ts", "description": "Locate hand-over tap spacing"}`
+
+### 🧑 User — 2026-11-18T11:18:36.728Z
+
+> ↩︎ result: 75:uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on
+> 150:            float zt = linZ(texture2D(uDepth, uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);
+> 266:      uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) } },
+> 487:        fragmentShader: 'uniform vec4 uClipIn; uniform vec4 uClipOut; varying vec4 vProj; varying vec3 vW; varying vec3 vN;\nvoid main() { if (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z) discard; gl_FragColor = vec4(0.0); }',
+
+### 🤖 Claude — 2026-11-18T11:18:46.021Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on\\n\",\n \"uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on\\nuniform float uSoftStep;    // m08fill hand-over tap spacing (0.007 = ~3 % of the frame; m08soft: wider)\\n\",1)\ns=s.replace(\"uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);\",\"uv + vec2(float(i), float(j) * 0.5625) * uSoftStep).r);\",1)\ns=s.replace(\"      uClipIn: { v …[+1474 chars]`
+
+### 🧑 User — 2026-11-18T11:19:28.183Z
+
+> ↩︎ result: 76:uniform float uSoftStep;    // m08fill hand-over tap spacing (0.007 = ~3 % of the frame; m08soft: wider)
+> 151:            float zt = linZ(texture2D(uDepth, uv + vec2(float(i), float(j) * 0.5625) * uSoftStep).r);
+> 269:      uSoftStep: { value: flag05('m08soft') ? Number(new URLSearchParams(location.search).get('m08softk') ?? '') || 0.02 : 0.007 } },
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+
+### 🤖 Claude — 2026-11-18T11:19:30.506Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t33.png"}`
+
+### 🧑 User — 2026-11-18T11:19:30.535Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:19:31.132Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t66.png"}`
+
+### 🧑 User — 2026-11-18T11:19:31.165Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:19:41.537Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"uniform float uSoftStep;    // m08fill hand-over tap spacing (0.007 = ~3 % of the frame; m08soft: wider)\\n\",\"\",1)\ns=s.replace(\"uv + vec2(float(i), float(j) * 0.5625) * uSoftStep).r);\",\"uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);\",1)\ns=s.replace(\",\\n      // `&m08soft=1` (r10): wider soft hand-over between the painted chamber wall and the fill (the curved ceiling seam)\\n      uSoftStep: { value: flag05('m08soft') ? Number(new URLSearchParams(location.search).get …[+411 chars]`
+
