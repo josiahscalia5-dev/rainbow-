@@ -53,3 +53,23 @@ Kept query: `K11&m08cup=1&m08rw=1`
 * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step2_m08rw/1_APPROVED.png`,
   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f03_forward3u`, `t33_through_screen`, `s_left_steer`
   (BEFORE = `K11&m08cup=1`, NEW = `+&m08rw=1`, rendered fresh, same positions).
+
+## Step 3 — `&m08drum=1` (defect B: seam at the drum's top corners next to the door) — KEPT
+Kept query: `K11&m08cup=1&m08rw=1&m08drum=1`
+* Cause: the chamber drum's upper corners beside the door lie behind the gold arch ring in the approved view, so while
+  swimming they showed the generic wall fill tile (finer, diagonal slot field) that met the painted rings of the door wall
+  (m08ceil) along a soft curved edge above the upper-left cup.
+* What changed (`src/world/match08.ts`, drum material only; needs `m08ceil`): a drum point the approved view could not see
+  follows the projector ray to the door plane and takes the same painted ring pixels the door wall uses there (m08ceil's
+  window of the user's painted wall, by radius around the door) — identical at the drum / door-wall junction, so the rings
+  run on from the door wall into the drum instead of meeting a different tile; fades out 8–16 u from the door. Projection
+  still wins wherever the approved view saw the drum. Approved view: scenery unchanged (594 px differ, max 12 levels, all
+  inside the HUD title text rows 114–161 = font noise; deterministic capture with / without the switch).
+* What looks closer: forward 10 u and at the stage end, the wall left of and above the upper-left spout cup is one set of
+  curved slot rows continuing the rings around the door, as in the approved picture — BEFORE a patch of finer diagonal
+  slots was cut off from the painted rows by a curved line there.
+* Still wrong: faint mirror chevrons remain in the slot rows at the top right (m08ceil's mirrored window repeat on the
+  door wall itself); the floor / drum junction on the left side shows a hard edge (both BEFORE and NEW).
+* Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step3_m08drum/1_APPROVED.png`,
+  `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f10_forward10u`, `t66_through_screen`, `t95_through_screen`
+  (BEFORE = `K11&m08cup=1&m08rw=1`, NEW = `+&m08drum=1`, rendered fresh, same positions).
