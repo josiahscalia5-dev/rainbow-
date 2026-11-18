@@ -1680,3 +1680,109 @@ The creases are the filled coin holes of the bake (jagged in-painted patches alo
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:27:55.433Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^import\\|^export const MATCH05\\|^export const EDGE_LIFT\" src/vfx/waterRibbon.ts | head; grep -n \"createLiveFar05(\" src/world/environment.ts", "description": "Check imports and far tunnel hook location"}`
+
+### 🧑 User — 2026-11-18T02:27:55.466Z
+
+> ↩︎ result: 12:import * as THREE from 'three';
+> 13:import type { Course, StageId } from '../world/course';
+> 14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> 21:export const EDGE_LIFT = 0.28;
+> 212:export const MATCH05: boolean = q05('match05');
+> 633:    const liveFar = M05FAR ? createLiveFar05({
+
+### 🤖 Claude — 2026-11-18T02:27:56.087Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/match05far.ts", "offset": 236, "limit": 6}`
+
+### 🧑 User — 2026-11-18T02:27:56.112Z
+
+> ↩︎ result: 236	      place(a.farLids, a.lidItems, open);
+> 237	    }
+> 238	    // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
+> 239	    if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
+> 240	    else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
+> 241	    a.farWall.morphTargetInfluences![0] = open;
+
+### 🤖 Claude — 2026-11-18T02:28:20.677Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\nt=open(p).read()\na=\"export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');\\n\"\nassert t.count(a)==1\nt=t.replace(a,a+\"\"\"/**\n * `&m05seam=1` (Screen 05 round 8, needs m05ride + m05far): the near river meets the far tunnel's river at the sliding\n * seam. With m05ride the near river shows the approved design Benny-relative, so once the seam stops sliding (capped\n * just before 06, Benny ≈ 139 on) the near river reached the seam with design rows from the approved MIDDLE distance\n * while the far ri …[+3375 chars]`
+
+### 🧑 User — 2026-11-18T02:29:15.131Z
+
+> ↩︎ result: TSC_OK
+> 0
+
+### 🤖 Claude — 2026-11-18T02:29:17.317Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/seam1/cmp.png"}`
+
+### 🧑 User — 2026-11-18T02:29:17.344Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:29:21.737Z
+
+Left = step 3, right = with `m05seam`. At f20 and t33 the mid-distance bands now flow on into the far river without the step. Let me check t66 and f20 at full size.
+
+### 🤖 Claude — 2026-11-18T02:29:23.279Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/seam1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:29:23.330Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:29:23.888Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/seam1/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T02:29:23.935Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:29:29.822Z
+
+f20 and t33: the near river now flows into the far river with only a faint residual line; t66 is about the same as before at the joint. Let me measure, and verify the locked view.
+
+### 🤖 Claude — 2026-11-18T02:29:34.882Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && A=references/05_flow_into_the_current.png && echo \"== step3\" && python3 -I tools/lead_r6/motion_metrics.py $A $S/k3/{f10_forward10u,f20_forward20u,t33_through_screen,t66_through_screen}.png && echo \"== seam\" && python3 -I tools/lead_r6/motion_metrics.py $A $S/seam1/{f10_forward10u,f20_forward20u,t33_through_screen,t66_through_screen}.png && B=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" && timeout 600 node scripts/capture.mjs 05 --out=$S/capS --q=\"$B&m05 …[+440 chars]`
+
+### 🧑 User — 2026-11-18T02:29:52.626Z
+
+> ↩︎ result: == step3
+> f10_forward10u         LAYOUT20  18.1 %  PALETTE  84.6 %
+> f20_forward20u         LAYOUT20  17.2 %  PALETTE  85.6 %
+> t33_through_screen     LAYOUT20  17.5 %  PALETTE  84.9 %
+> t66_through_screen     LAYOUT20   9.8 %  PALETTE  79.1 %
+> == seam
+> f10_forward10u         LAYOUT20  18.0 %  PALETTE  84.7 %
+> f20_forward20u         LAYOUT20  17.2 %  PALETTE  85.5 %
+> t33_through_screen     LAYOUT20  17.9 %  PALETTE  84.9 %
+> t66_through_screen     LAYOUT20   9.4 %  PALETTE  78.9 %
+> locked diff px 0 max 0
+
+### 🤖 Claude — 2026-11-18T02:29:54.996Z
+
+Numbers are flat (±0.4 pt). Let me compare the joint region at full resolution before deciding.
+
+### 🤖 Claude — 2026-11-18T02:29:58.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nims=[]\nfor n in ['f20_forward20u','t33_through_screen','t66_through_screen']:\n  for d in ['$S/k3/','$S/seam1/']:\n    ims.append(Image.open(d+n+'.png').crop((100,540,864,760)))\nout=Image.new('RGB',(764*2+10,3*230),(0,0,0))\nfor i,im in enumerate(ims): out.paste(im,((i%2)*774,(i//2)*230))\nout.save('$S/seam1/cmp_full.png')\"", "description": "Full-resolution crops of the joint region"}`
+
+### 🧑 User — 2026-11-18T02:29:58.486Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:30:00.858Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/seam1/cmp_full.png"}`
+
+### 🧑 User — 2026-11-18T02:30:00.910Z
+
+> ↩︎ result: [image]
+
