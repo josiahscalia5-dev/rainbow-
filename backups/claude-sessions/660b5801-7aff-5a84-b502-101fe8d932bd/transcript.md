@@ -666,3 +666,367 @@ The newest lead branch is `ccr-e42bb3c0-jpif8d` (round 16, saved 20:14 UTC today
 
 > 🔧 **Bash** `{"command": "time (timeout 500 git fetch origin ccr-e42bb3c0-jpif8d ccr-47b10cec-03c7co claude/rainbow-s08-scenery-c16 claude/rainbow-s04-match-c16 claude/rainbow-s05-match-c16 claude/rainbow-s06-match-c16 claude/rainbow-s07-match-c16 claude/rainbow-s04-ringtex-c16 2>&1 | tail -10)", "description": "Fetch the newest lead and round-16 branches", "timeout": 560000}`
 
+### 🧑 User — 2026-11-18T20:38:18.853Z
+
+> ↩︎ result: * branch              claude/rainbow-s07-match-c16 -> FETCH_HEAD
+>  * branch              claude/rainbow-s04-ringtex-c16 -> FETCH_HEAD
+>  * [new branch]        ccr-e42bb3c0-jpif8d -> origin/ccr-e42bb3c0-jpif8d
+>  * [new branch]        ccr-47b10cec-03c7co -> origin/ccr-47b10cec-03c7co
+>  * [new branch]        claude/rainbow-s08-scenery-c16 -> origin/claude/rainbow-s08-scenery-c16
+>  * [new branch]        claude/rainbow-s04-match-c16 -> origin/claude/rainbow-s04-match-c16
+>  * [new branch]        claude/rainbow-s05-match-c16 -> origin/claude/rainbow-s05-match-c16
+>  * [new branch]        claude/rainbow-s06-match-c16 -> origin/claude/rainbow-s06-match-c16
+>  * [new branch]        claude/rainbow-s07-match-c16 -> origin/claude/rainbow-s07-match-c16
+>  * [new branch]        claude/rainbow-s04-ringtex-c16 -> origin/claude/rainbow-s04-ringtex-c16
+> 
+> real	3m36.792s
+> user	0m58.243s
+> sys	0m25.023s
+
+### 🤖 Claude — 2026-11-18T20:38:23.207Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-e42bb3c0-jpif8d; echo \"is HEAD-base ancestor of lead?\"; git merge-base --is-ancestor 77bce73 $L && echo YES || echo NO; git log --oneline -1 $L; echo; for b in ccr-47b10cec-03c7co claude/rainbow-s08-scenery-c16 claude/rainbow-s04-match-c16 claude/rainbow-s05-match-c16 claude/rainbow-s06-match-c16 claude/rainbow-s07-match-c16 claude/rainbow-s04-ringtex-c16; do printf \"%-36s %s  in-lead:\" $b \"$(git log -1 --format='%h %cd' --date=format:'%m-%d %H:%M' origin/$b)\"; git merge-base --is-ancestor origin/$b $L && echo yes || echo NO; done; echo; git diff --stat 77bce73  …[+127 chars]`
+
+### 🧑 User — 2026-11-18T20:38:23.361Z
+
+> ↩︎ result: is HEAD-base ancestor of lead?
+> NO
+> e057fe80 autosave: Rainbow 2026-11-18 20:12 UTC
+> 
+> ccr-47b10cec-03c7co                  2adb09b3 11-18 19:21  in-lead:NO
+> claude/rainbow-s08-scenery-c16       6da32d57 11-18 19:26  in-lead:NO
+> claude/rainbow-s04-match-c16         465e4c59 11-18 19:40  in-lead:NO
+> claude/rainbow-s05-match-c16         34aadd11 11-18 17:28  in-lead:NO
+> claude/rainbow-s06-match-c16         4b6c637c 11-18 19:39  in-lead:NO
+> claude/rainbow-s07-match-c16         669420af 11-18 19:28  in-lead:NO
+> claude/rainbow-s04-ringtex-c16       3fdcbc0b 11-18 19:46  in-lead:NO
+> 
+>  docs/briefs/2026-11-18-r8/COMMON_RULES.md          |  44 +++
+>  docs/briefs/2026-11-18-r8/COORDINATION.md          |  68 ++++
+>  docs/briefs/2026-11-18-r8/S06.md                   |  25 ++
+>  docs/briefs/2026-11-18-r8/S07.md                   |  27 ++
+>  docs/briefs/2026-11-18-r8/S08.md                   |  28 ++
+>  docs/briefs/2026-11-18-r9/BLUEPRINT_06.md          |  72 ++++
+>  docs/briefs/2026-11-18-r9/BLUEPRINT_06_overlay.png | Bin 0 -> 2335763 bytes
+>  docs/briefs/2026-11-18-r9/BLUEPRINT_07.md          |  81 ++++
+>  docs/briefs/2026-11-18-r9/BLUEPRINT_07_overlay.png | Bin 0 -> 2326595 bytes
+>  docs/briefs/2026-11-18-r9/BLUEPRINT_0 …[+343 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:27.159Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-e42bb3c0-jpif8d; git ls-tree --name-only $L docs/briefs/ | tail -12; echo; git diff --stat 77bce73 $L -- CLAUDE.md docs/*.md backups/*.md backups/*.json | head -30; echo; git show $L:CLAUDE.md | head -60", "description": "Show newest briefs, handoff changes and CLAUDE.md on the lead branch"}`
+
+### 🧑 User — 2026-11-18T20:38:27.246Z
+
+> ↩︎ result: docs/briefs/2026-11-17-r5
+> docs/briefs/2026-11-17-r6
+> docs/briefs/2026-11-17-r7
+> docs/briefs/2026-11-18-r10
+> docs/briefs/2026-11-18-r11
+> docs/briefs/2026-11-18-r12
+> docs/briefs/2026-11-18-r13
+> docs/briefs/2026-11-18-r14
+> docs/briefs/2026-11-18-r15
+> docs/briefs/2026-11-18-r16
+> docs/briefs/2026-11-18-r8
+> docs/briefs/2026-11-18-r9
+> 
+>  CLAUDE.md                           |    33 +-
+>  backups/AGENTS_STATUS.json          |  1120 ++-
+>  backups/BACKUP_LOG.md               |   310 +
+>  backups/BACKUP_STATUS.json          |    31 +-
+>  backups/BOOTSTRAP_REPORT.md         |    26 +-
+>  backups/CONVERSATION_INDEX.md       |    16 +-
+>  backups/MANIFEST.json               | 13193 ++++++++++++++++++++++++----------
+>  backups/START_NEW_CLAUDE_ACCOUNT.md |   157 +
+>  backups/TOOL_MANIFEST.json          |   524 +-
+>  backups/autosave.config.json        |    53 +-
+>  docs/FLOW_VIDEO.md                  |    63 +-
+>  docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md  |   414 +-
+>  docs/PARALLEL_PROGRESS.md           |   221 +-
+>  13 files changed, 11777 insertions(+), 4384 deletions(-)
+> 
+> # RAINBOW — permanent rules for Claude Code
+> 
+> This is an EXISTING, playable 11-screen 3D game. **Never restart it, never start from scratch, never delete work.**
+> 
+> ## 1 …[+6815 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:29.930Z
+
+The newest lead's own CLAUDE.md confirms it: account 16 used lead branch `ccr-e42bb3c0-jpif8d`, and the point where every worker stopped is in `docs/briefs/2026-11-18-r16/`. Reading those now.
+
+### 🤖 Claude — 2026-11-18T20:38:32.930Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-e42bb3c0-jpif8d; S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead; mkdir -p $S; git ls-tree --name-only $L docs/briefs/2026-11-18-r16/; for f in docs/briefs/2026-11-18-r16/COORDINATION.md docs/briefs/2026-11-18-r16/RESUME_R16.md docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md docs/PARALLEL_PROGRESS.md; do git show $L:$f > $S/$(basename $f) 2>/dev/null && wc -l $S/$(basename $f); done", "description": "Extract the round-16 coordination and handoff docs"}`
+
+### 🧑 User — 2026-11-18T20:38:33.008Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r16/COORDINATION.md
+> docs/briefs/2026-11-18-r16/RESUME_R16.md
+> docs/briefs/2026-11-18-r16/pixeldiff.mjs
+> docs/briefs/2026-11-18-r16/setup_worker.sh
+> 81 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/COORDINATION.md
+> 63 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/RESUME_R16.md
+> 55 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/USER_VISUAL_GOAL_R13.md
+> 554 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/NEW_CLAUDE_ACCOUNT_HANDOFF.md
+> 283 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/PARALLEL_PROGRESS.md
+
+### 🤖 Claude — 2026-11-18T20:38:34.947Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/RESUME_R16.md"}`
+
+### 🧑 User — 2026-11-18T20:38:34.966Z
+
+> ↩︎ result: 1	# Round 16 resume notes — where each round-15 worker stopped (account 15 hit its 5-hour limit at 18:49 UTC)
+> 2	
+> 3	Every worker below was cut off mid-step. Its committed work is on its `-c15` tip; its UNFINISHED edits (tracked diff + new files)
+> 4	were captured by the account-15 autosave at 19:00:09 UTC in `backups/wip/<branch>/` on `origin/ccr-47b10cec-03c7co` (`90528de`) and
+> 5	are applied on top of the new `-c16` branch in the worker's worktree (left UNCOMMITTED, exactly as the worker left them). Large
+> 6	renders listed under `untracked_skipped` in each `INFO.json` were not saved: re-render what you need. Scratchpad files of the old
+> 7	container (`/tmp/claude-0/.../6b384c42-.../scratchpad/...`, quick render scripts, debug renders) are gone.
+> 8	
+> 9	Common to all: user order 2026-11-18 ~18:55 UTC (`docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md`) — VISUALS ONLY, biggest
+> 10	visible difference first, APPROVED / BEFORE / NEW pictures from the real game, plain visual words, minimal checks (approved start view
+> 11	unchanged, coins unchanged). Your launch brief is the r15 one named below; read every `-c15` as `-c16` and every `r15` log folder as
+> 12	`r16` (`qa/match/<NN>/r16/`), but keep r …[+5228 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:35.631Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/COORDINATION.md"}`
+
+### 🧑 User — 2026-11-18T20:38:35.643Z
+
+> ↩︎ result: 1	# Round 16 (account 16) — coordination of the five playable screens (VISUALS ONLY)
+> 2	
+> 3	Lead session branch **`ccr-e42bb3c0-jpif8d`** (session `session_01Q46SCGQWf9dNTogNZTniy4`, started 2026-11-18 18:51 UTC from the
+> 4	account-15 lead `ccr-47b10cec-03c7co` @ `0aeee2e`; nothing merged). The account-15 lead hit its **5-hour usage limit at 18:49 UTC**
+> 5	(resets 23:10 UTC); all six of its background workers were cut off between 18:49 and 18:51 UTC. Its container kept autosaving
+> 6	backup-only snapshots to `ccr-47b10cec-03c7co` afterwards (`90528de` 19:00 UTC = the final WIP snapshot of every worker, taken after
+> 7	all six had stopped). Those commits are backups only (transcripts, `backups/wip/`), no game code; they are read here with
+> 8	`git show origin/ccr-47b10cec-03c7co:<path>`, never merged.
+> 9	
+> 10	Rules (binding, unchanged): `docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md` (visuals only) +
+> 11	`docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` + `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md` +
+> 12	`docs/briefs/2026-11-18-r10/RULES_R10.md` + `docs/briefs/2026-11-18-r8/COMMON_RULES.md`. Launch briefs: the r15 ones in
+> 13	`docs/briefs/2026-11-18-r15/` (read `-c15` as `-c16`, …[+11334 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:36.284Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/USER_VISUAL_GOAL_R13.md"}`
+
+### 🧑 User — 2026-11-18T20:38:36.302Z
+
+> ↩︎ result: 1	# User-approved visual goal — 2026-11-18 ~15:00 UTC (account 13) — BINDING for every specialist and every future Claude account
+> 2	
+> 3	The user approved this understanding in their own words: "YES, CLAUDIA. I approve your visual-first plan for all five original
+> 4	approved Rainbow screens." It adds to (never replaces) `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`,
+> 5	`docs/briefs/2026-11-18-r10/RULES_R10.md` and `docs/briefs/2026-11-18-r8/COMMON_RULES.md`.
+> 6	
+> 7	## 1. What the user wants
+> 8	* The user ALREADY DESIGNED the game. The approved pictures `references/04_…png` … `references/08_…png` are BLUEPRINTS, not
+> 9	  inspiration: recreate THOSE exact environments as faithfully as technically possible as real playable 3D.
+> 10	* The scenery must look like the approved world THROUGHOUT Benny's natural swimming — start, middle, end, and while he steers hard
+> 11	  left / right. A matching first screenshot that turns into a generic tunnel is a failure.
+> 12	* No redesign, no simplification, no added or different scenery, no generic orange ring corridor, no flat blue/ramp water, no giant
+> 13	  foam walls, no stretched / smeared / torn textures, no double-exposed or duplicate rings, no clipp …[+4101 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:45.141Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead; grep -n \"^## \\|^# \" $S/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -30; echo; timeout 40 git ls-remote origin ccr-e42bb3c0-jpif8d 'claude/rainbow-*-c16' 'claude/rainbow-*-c17' 'ccr-*' | awk '{print substr($1,1,8),$2}' | sed 's#refs/heads/##' | grep -E \"e42bb3c0|c16|c17\"", "description": "Show handoff sections and check for newer pushes after 20:14"}`
+
+### 🧑 User — 2026-11-18T20:38:45.707Z
+
+> ↩︎ result: 1:# ▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 16 (round 16) STATE (2026-11-18 ~19:15 UTC, lead branch `ccr-e42bb3c0-jpif8d`)
+> 15:# ▶▶▶▶▶▶▶▶▶▶▶▶ ACCOUNT 15 (round 15) STATE (2026-11-18 ~18:25 UTC, lead branch `ccr-47b10cec-03c7co`)
+> 29:# ▶▶▶▶▶▶▶▶▶▶▶ ACCOUNT 14 (round 14) STATE (2026-11-18 ~16:40 UTC, lead branch `ccr-6c7564b1-fmlt1w`)
+> 41:# ▶▶▶▶▶▶▶▶▶▶ ACCOUNT 13 (round 13) STATE (2026-11-18 ~15:00 UTC, lead branch `claude/rainbow-restore-autosave-1mgga0`)
+> 55:# ▶▶▶▶▶▶▶▶▶ ACCOUNT 12 (round 12) STATE (2026-11-18 ~12:45 UTC, lead branch `ccr-e908f8da-cy4yc1`)
+> 66:# ▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 11 (round 11) STATE (2026-11-18 ~11:38 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)
+> 86:# ▶▶▶▶▶▶▶ ACCOUNT 10 (round 10) STATE (2026-11-18 ~10:45 UTC, lead session `session_01AvQv6SpZeUhzBcjgGW7HAA`)
+> 100:# ▶▶▶▶▶▶ ACCOUNT 9 (round 9) STATE (2026-11-18 ~02:50 UTC, lead session `session_01Kbt6BXRtCe7mvFtZdouetF`)
+> 112:# ▶▶▶▶▶ NEWEST — ACCOUNT 8 (round 8) STATE (2026-11-18 ~02:25 UTC, lead session `session_013VHsJ9KrSuiLBqJwtdwa8n`)
+> 158:# ▶▶▶▶ NEWEST — ACCOUNT 7 (round 7) STATE (2026-11-18 ~00:40 UTC, lead session `session_01KS3bZsVTaecBXyvFd9EQGg`)
+> 183:# ▶▶▶ NEWEST — ACCOUNT 6 (round 6) STATE (2026-11-17 ~22:40  …[+1852 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:48.402Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "limit": 30}`
+
+### 🧑 User — 2026-11-18T20:38:48.436Z
+
+> ↩︎ result: 1	# ▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 16 (round 16) STATE (2026-11-18 ~19:15 UTC, lead branch `ccr-e42bb3c0-jpif8d`)
+> 2	
+> 3	Started 18:51 UTC from the account-15 lead `ccr-47b10cec-03c7co` @ `0aeee2e` (nothing merged). Account 15 hit its **5-hour usage
+> 4	limit at 18:49 UTC** (resets 23:10 UTC) after ~37 min of six parallel workers; all six were cut off mid-step; their unfinished edits
+> 5	are in the 19:00 UTC `backups/wip/` snapshot on `origin/ccr-47b10cec-03c7co` (`90528de`, backup-only commits, never merged).
+> 6	Branch map, services, verdicts: **`docs/briefs/2026-11-18-r16/COORDINATION.md`**; where each worker stopped + what to do first:
+> 7	**`docs/briefs/2026-11-18-r16/RESUME_R16.md`**; worktree recipe `docs/briefs/2026-11-18-r16/setup_worker.sh`. Six workers relaunched
+> 8	on `-c16` branches (04, 04 ring test, 05, 06, 07, 08) from the r15 launch briefs. Open user request: "show me the painted ring test
+> 9	results" (04 `&m04rpaint`). Connectors: NO claude.ai connectors on this account (Atlas, Hugging Face = user action); keys (World
+> 10	Labs 5,420 credits, fal) injected and verified. If account 16 runs out: `-c17` branches from each NEWEST `-c16` tip; never write
+> 11	`-c16` from another accou …[+1684 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:50.222Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-e42bb3c0-jpif8d; git ls-tree --name-only $L backups/claude-sessions/ | tail -5; git ls-tree -r --name-only $L backups/wip/ | head -40; echo; git show $L:backups/autosave.config.json | python3 -I -c \"import json,sys; d=json.load(sys.stdin); print('branch',d.get('branch')); print(len(d.get('protected_branches',[])),'protected'); print([k for k in d])\"", "description": "List lead's session transcripts, WIP snapshots and autosave config"}`
+
+### 🧑 User — 2026-11-18T20:38:50.284Z
+
+> ↩︎ result: backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e
+> backups/claude-sessions/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f
+> backups/claude-sessions/e4336d13-0e5b-505a-bd02-7d7760d0bf5f
+> backups/claude-sessions/e47fc047-26b4-5efa-bfda-db0784968866
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da
+> backups/wip/claude__rainbow-s04-match-c10/INFO.json
+> backups/wip/claude__rainbow-s04-match-c11/INFO.json
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/f10_forward10u.png
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/f15_forward15u.png
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/f20_forward20u.png
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/f25_forward25u.png
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/motion.json
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/s_left_hard.png
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/s_right_hard.png
+> backups/wip/claude__rainbow-s04-match-c11/untracked/qa/match/04/r11/BEFORE_extra/t33_through_screen.png …[+3044 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:54.538Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-e42bb3c0-jpif8d; git show $L:backups/CONVERSATION_INDEX.md | grep -E \"e42bb3c0|47b10cec\" | cut -c1-260; echo; git ls-tree -r --name-only $L backups/wip/ | grep c16 | grep -v \"/untracked/\" ; echo; for d in $(git ls-tree --name-only $L backups/wip/ | grep c16); do echo \"== $d\"; git show $L:$d/INFO.json | head -c 900; echo; done", "description": "Find account-16 transcript and the -c16 unfinished-work snapshots"}`
+
+### 🧑 User — 2026-11-18T20:38:54.601Z
+
+> ↩︎ result: | `6b384c42-43c8-55f4-abb4-6eff88bf7fb2` | Rainbow game restoration and continuation | `ccr-47b10cec-03c7co` | 2026-11-18T18:12:53.473Z | 2026-11-18T18:49:50.621Z | 12 | 341 | 6 | benny, girl, water, 07, 08, plunge, autosave, backup, android, playwright, blend
+> | `9274fe33-3398-5480-a64f-29fb6dc2031b` | Enabling extensions from GitHub branch | `ccr-e42bb3c0-jpif8d` | 2026-11-18T18:58:05.591Z | 2026-11-18T19:48:55.275Z | 18 | 434 | 6 | benny, girl, water, 07, 08, plunge, autosave, backup, android, playwright, blender,
+> 
+> backups/wip/claude__rainbow-s04-match-c16/INFO.json
+> backups/wip/claude__rainbow-s04-match-c16/tracked.patch
+> backups/wip/claude__rainbow-s04-ringtex-c16/INFO.json
+> backups/wip/claude__rainbow-s04-ringtex-c16/tracked.patch
+> backups/wip/claude__rainbow-s05-match-c16/INFO.json
+> backups/wip/claude__rainbow-s05-match-c16/tracked.patch
+> backups/wip/claude__rainbow-s06-match-c16/INFO.json
+> backups/wip/claude__rainbow-s06-match-c16/tracked.patch
+> backups/wip/claude__rainbow-s07-match-c16/INFO.json
+> backups/wip/claude__rainbow-s07-match-c16/tracked.patch
+> backups/wip/claude__rainbow-s08-scenery-c16/INFO.json
+> backups/wip/claude__rainbow-s08-scenery-c16/tracked.patch
+> 
+> == backups/wip/claud …[+4517 chars]
+
+### 🤖 Claude — 2026-11-18T20:38:57.683Z
+
+The 20:14 snapshot saved every worker's unfinished edits. Now the user's own messages in the account-16 session, to see their last requests.
+
+### 🤖 Claude — 2026-11-18T20:39:01.594Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-e42bb3c0-jpif8d; S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead; git show $L:backups/claude-sessions/9274fe33-3398-5480-a64f-29fb6dc2031b/transcript.sanitized.jsonl > $S/t16.jsonl; python3 -I - \"$S/t16.jsonl\" <<'EOF'\nimport json,sys\nrows=[json.loads(l) for l in open(sys.argv[1])]\nprint('events',len(rows),'last',rows[-1].get('timestamp'))\nfor r in rows:\n    m=r.get('message') or {}\n    if m.get('role')!='user': continue\n    c=m.get('content'); ts=r.get('timestamp','')\n    texts=[c] if isinstance(c,str) else [b.get('te …[+333 chars]`
+
+### 🧑 User — 2026-11-18T20:39:01.698Z
+
+> ↩︎ result: events 1202 last None
+> 
+> === USER 2026-11-18T18:58:06.060Z 
+>  Continue where exactly we left off. Make sure every extension, app, and everything is all enabled from this GitHub branch.
+> 
+> === USER 2026-11-18T19:21:57.168Z 
+>  I don't want to interfere with the specialists or agents that are building it, but I'm just curious of how they look so far on my screens.
+> 
+> === USER 2026-11-18T19:26:02.624Z 
+>  Another Claude session sent a message:
+> <agent-message from="aeeb60cc7791c72f9">
+> s04tex: first in-game painted-ring proof set is pushed (Screen 04, switch &m04rpaint=1 on top of kept L4). Verdict: NOT YET PROVEN.
+> Branch claude/rainbow-s04-ringtex-c16, commit 620414f91a89f75d47fd01a5c6afa11cc974e679 (remote == HEAD).
+> Pictures (full size, separate files): /home/user/wt/s04b/qa/match/04/r16/ringpaint/ — 1_APPROVED.png, 2_BEFORE_<shot>.png and 3_NEW_<shot>.png for a00 start, f03 entering, f06 and f10 middle, f20 farther inside, t66 through, t95 end, s_left_hard, s_right_hard. The old and new textures are in the same folder. The BEFORE/NEW swim clips are still rendering and come in the next push.
+> Checks: the approved start view is unchanged (0 differing pixels in a frozen capture, rows 180-1536). Coi …[+12295 chars]
+
+### 🤖 Claude — 2026-11-18T20:39:39.317Z
+
+> 🔧 **Bash** `{"command": "L=origin/ccr-e42bb3c0-jpif8d; echo \"merge-base: $(git merge-base 77bce73 $L | cut -c1-8)\"; echo \"commits on old branch not in lead:\"; git log --oneline $L..77bce73 | head; git log --oneline $L..77bce73 | wc -l; echo \"files those commits touch:\"; git diff --stat $(git merge-base 77bce73 $L) 77bce73 | tail -8; echo; sed -n 183,215p /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lead/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "description": "Compare old branch with newest lead and read account-6 restore notes"}`
+
+### 🧑 User — 2026-11-18T20:39:39.456Z
+
+> ↩︎ result: merge-base: 7db2982a
+> commits on old branch not in lead:
+> 77bce735 autosave: Rainbow 2026-11-17 22:44 UTC
+> 5c4b24a5 autosave: Rainbow 2026-11-17 22:37 UTC
+> 25c3a187 autosave: Rainbow 2026-11-17 22:37 UTC
+> 8a748d83 autosave: Rainbow 2026-11-17 22:36 UTC
+> ada8edb2 autosave: Rainbow 2026-11-17 22:36 UTC
+> ecfbb321 autosave: Rainbow 2026-11-17 22:35 UTC
+> 8ca94232 autosave: Rainbow 2026-11-17 22:34 UTC
+> b200999f Lead: stop/limit/resume log, newest commits per branch, Screen 07 first result
+> ea437be4 autosave: Rainbow 2026-11-17 22:31 UTC
+> 9
+> files those commits touch:
+>  backups/BACKUP_LOG.md                              |   9 +
+>  backups/BACKUP_STATUS.json                         |  12 +-
+>  backups/CONVERSATION_INDEX.md                      |   2 +-
+>  backups/MANIFEST.json                              |   8 +-
+>  .../transcript.md                                  | 298 +++++++++++++++++++++
+>  .../transcript.sanitized.jsonl                     | 127 +++++++++
+>  docs/PARALLEL_PROGRESS.md                          |  15 ++
+>  7 files changed, 460 insertions(+), 11 deletions(-)
+> 
+> # ▶▶▶ NEWEST — ACCOUNT 6 (round 6) STATE (2026-11-17 ~22:40 UTC, lead session `session_01VCMXoaUqBCxDq8BntT19BU`)
+> 
+> **Lead branch now: `cc …[+2897 chars]
+
+### 🤖 Claude — 2026-11-18T20:40:06.182Z
+
+> 🔧 **Bash** `{"command": "grep -n \"def .*branch\\|config\\[.branch.\\]\\|\\.get(.branch.\\|rev-parse --abbrev-ref\\|protected\" scripts/rainbow-autosave.py | head -30; echo; git show origin/ccr-e42bb3c0-jpif8d:scripts/rainbow-autosave.py | grep -n \"def .*branch\\|\\.get(.branch.\\|abbrev-ref\\|wip\" | head -20; echo; nproc; free -g | head -2; df -h /home/user | tail -1", "description": "Check autosave branch selection and container resources"}`
+
+### 🧑 User — 2026-11-18T20:40:06.250Z
+
+> ↩︎ result: 122:            f"`{row.get('branch', '—')}` | {row.get('files_staged', 0)} | {row.get('pushed_verified', False)} | "
+> 216:def push_and_verify(branch: str) -> tuple[bool, str]:
+> 270:        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+> 271:            raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+> 274:            # explicitly allowed session-branch pattern (protected branches were rejected above).
+> 377:        st["branch"] = row.get("branch", CFG["branch"])
+> 
+> 122:            f"`{row.get('branch', '—')}` | {row.get('files_staged', 0)} | {row.get('pushed_verified', False)} | "
+> 216:def push_and_verify(branch: str) -> tuple[bool, str]:
+> 244:    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 249:    root = REPO / "backups" / "wip"
+> 255:        br = kv.get("branch", "").replace("refs/heads/", "") or f"detached-{kv.get('HEAD', '')[:10]}"
+> 279:                "restore": f"git switch {br} (newest pushed tip) && git apply --binary backups/wip/{dest.name}/tracked.patch"
+> 280:                           f" && copy backups/wip/{dest.name}/ …[+458 chars]
+
+### 🤖 Claude — 2026-11-18T20:40:07.916Z
+
+> 🔧 **Bash** `{"command": "sed -n 255,300p scripts/rainbow-autosave.py", "description": "Read autosave branch guard logic"}`
+
+### 🧑 User — 2026-11-18T20:40:07.952Z
+
+> ↩︎ result: lockfh = open(LOCK, "w")
+>     try:
+>         fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+>     except BlockingIOError:
+>         if not args.quiet:
+>             print("another autosave is running; skipping")
+>         return 0
+> 
+>     try:
+>         # ---- 1. identity checks -------------------------------------------------------
+>         url = git("remote", "get-url", CFG["remote_name"]).stdout.strip()
+>         if CFG["remote_url_must_contain"] not in url:
+>             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
+>         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+>         row["branch"] = branch
+>         if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+>             raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+>         if branch != CFG["branch"]:
+>             # A new cloud session gets a fresh working-branch name. Follow it only when it matches an
+>             # explicitly allowed session-branch pattern (protected branches were rejected above).
+>             pats = CFG.get("session_branch_patterns", [])
+>             if not an …[+1601 chars]
+
+### 🤖 Claude — 2026-11-18T20:40:16.786Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^LOCK\\|LOCK =\" scripts/rainbow-autosave.py | head -3; git status --short | head; git log --oneline -1", "description": "Find autosave lock path and check working tree"}`
+
+### 🧑 User — 2026-11-18T20:40:16.833Z
+
+> ↩︎ result: 44:LOCK = REPO / "backups" / ".autosave.lock"
+> c535dd94 autosave: Rainbow 2026-11-18 20:35 UTC
+
