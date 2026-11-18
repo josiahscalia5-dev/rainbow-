@@ -795,3 +795,112 @@ Now let me add the `&m05wtile=1` switch and the shader branch.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T11:48:30.967Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p scripts/capture.mjs | head -50", "description": "Read capture script usage"}`
+
+### 🧑 User — 2026-11-18T11:48:31.003Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+1688 chars]
+
+### 🤖 Claude — 2026-11-18T11:48:38.701Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1' && node scripts/capture.mjs 05 --out=$S/lock_k --q=\"$K\" 2>&1 | tail -1 && node scripts/capture.mjs 05 --out=$S/lock_w --q=\"$K&m05wtile=1\" 2>&1 | tail -1 && git checkout -- qa/capture_log.json 2>/dev/null; python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/lock_k/05.png').convert('RGB …[+298 chars]`
+
+### 🧑 User — 2026-11-18T11:49:16.376Z
+
+> ↩︎ result: ]
+> ]
+> diff px 257 (np.int64(25), np.int64(174))
+
+### 🤖 Claude — 2026-11-18T11:49:24.821Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1' && node scripts/capture.mjs 05 --out=$S/lock_k2 --q=\"$K\" 2>&1 | tail -1; git checkout -- qa/capture_log.json 2>/dev/null; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\na=L('$S/lock_k/05.png'); b=L('$S/lock_w/05.png'); c=L('$S/lock_k2/05.png')\ …[+299 chars]`
+
+### 🧑 User — 2026-11-18T11:49:39.323Z
+
+> ↩︎ result: ]
+> k vs w 257 (np.int64(25), np.int64(174), np.int64(100), np.int64(769), np.int64(20))
+> k vs k2 257 (np.int64(25), np.int64(174), np.int64(100), np.int64(769), np.int64(20))
+> k2 vs w 0
+
+### 🤖 Claude — 2026-11-18T11:49:44.047Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/wtile2/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T11:49:44.085Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:49:51.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && D=qa/match/05/r11/step1_m05wtile && mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && for n in t66_through_screen k81_kink t33_through_screen f20_forward20u; do cp qa/match/05/r11/BEFORE/$n.png $D/2_BEFORE_$n.png; cp $S/wtile2/$n.png $D/3_NEW_$n.png; done && ls $D", "description": "Assemble step 1 APPROVED/BEFORE/NEW files"}`
+
+### 🧑 User — 2026-11-18T11:49:51.491Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f20_forward20u.png
+> 2_BEFORE_k81_kink.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_k81_kink.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+
+### 🤖 Claude — 2026-11-18T11:50:07.562Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r11/PROGRESS.md <<'EOF'\n\n## Step 1 — `&m05wtile=1` (B: smeared walls while swimming → crisp painted perforated metal, pink light streaks kept)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1`\n* Cause (measured with `tools/match05/r10_probe.mjs`): the walls seen while swimming at t33 / t66 / in the kink are the far\n  tunnel block (`tube05_far_wall`). It wears the approved picture's far bays (atlas rows BC … GX), …[+2862 chars]`
+
+### 🧑 User — 2026-11-18T11:50:15.274Z
+
+> ↩︎ result: M  qa/match/05/r11/PROGRESS.md
+> A  qa/match/05/r11/step1_m05wtile/1_APPROVED.png
+> A  qa/match/05/r11/step1_m05wtile/2_BEFORE_f20_forward20u.png
+> A  qa/match/05/r11/step1_m05wtile/2_BEFORE_k81_kink.png
+> A  qa/match/05/r11/step1_m05wtile/2_BEFORE_t33_through_screen.png
+> A  qa/match/05/r11/step1_m05wtile/2_BEFORE_t66_through_screen.png
+> A  qa/match/05/r11/step1_m05wtile/3_NEW_f20_forward20u.png
+> A  qa/match/05/r11/step1_m05wtile/3_NEW_k81_kink.png
+> A  qa/match/05/r11/step1_m05wtile/3_NEW_t33_through_screen.png
+> A  qa/match/05/r11/step1_m05wtile/3_NEW_t66_through_screen.png
+> d5e3737927c7f0a9e7147b42f917a570026641da	refs/heads/claude/rainbow-s05-match-c11
+> d5e3737927c7f0a9e7147b42f917a570026641da
+
+### 🤖 Claude — 2026-11-18T11:50:20.584Z
+
+Pushed and verified. Now the short note to the lead.
+
+### 🤖 Claude — 2026-11-18T11:50:20.938Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T11:50:20.948Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T11:50:26.392Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 r11 step 1 m05wtile good improvement", "message": "S05 r11 GOOD IMPROVEMENT: &m05wtile=1 — the purple tunnel walls while swimming are now crisp painted perforated metal (rows of dark slots, pink-white light streaks toward the throat) instead of the stretched blurred smear (t66, t33, kink, f20); locked view 0 px. (m05unf tested first: not visibly closer, patch saved, not kept.) SHA d5e3737927c7f0a9e7147b42f917a570026641da (remote verified). APPROVED /home/user/wt/s05/qa/match/05/r11/step1_m05wtile/1_APPROVED.png · BEFORE /home/user/wt/s05/qa/match/05/r11/step1_m05 …[+346 chars]`
+
+### 🧑 User — 2026-11-18T11:50:26.450Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
