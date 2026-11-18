@@ -2,8 +2,9 @@
  "worktree": "/home/user/wt/s05",
  "branch": "claude/rainbow-s05-match-c16",
  "head": "34aadd1131e4825dae12e0c9a9a665ebbb30b720",
- "time": "2026-11-18T19:38:35+00:00",
+ "time": "2026-11-18T19:39:35+00:00",
  "dirty_tracked": [
+  "src/gameplay/coins.ts",
   "src/vfx/clip05.ts",
   "src/vfx/index.ts",
   "src/world/environment.ts",
@@ -34,7 +35,6 @@
   "qa/match/05/r16/PROGRESS.md",
   "qa/match/05/r16/step1_trans/before/shots.json",
   "qa/match/05/r16/step1_trans/new/shots.json",
-  "qa/match/05/r16/step1_trans/new2/shots.json",
   "tools/match05/r15_probe.mjs"
  ],
  "untracked_skipped": [
@@ -53,11 +53,7 @@
   "qa/match/05/r16/step1_trans/new/x96.png",
   "qa/match/05/r16/step1_trans/new/x97.png",
   "qa/match/05/r16/step1_trans/new/x98p5.png",
-  "qa/match/05/r16/step1_trans/new/x99.png",
-  "qa/match/05/r16/step1_trans/new2/x100.png",
-  "qa/match/05/r16/step1_trans/new2/x97.png",
-  "qa/match/05/r16/step1_trans/new2/x98p5.png",
-  "qa/match/05/r16/step1_trans/new2/x99.png"
+  "qa/match/05/r16/step1_trans/new/x99.png"
  ],
  "restore": "git switch claude/rainbow-s05-match-c16 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c16/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c16/untracked/* into the worktree"
 }

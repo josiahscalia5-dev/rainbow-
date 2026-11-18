@@ -3205,3 +3205,15 @@ The worker's next step is the warmer yellow-gold. If the rings still look dull a
 
 Kept improvements so far this session: 04 foam and 08 near water (both kept in round 15), 08 smoother river, 07 plunge banks, 06 gold rings. The 04 ring shape is next once its colour is right. 05 is still on its first step. Saved as `f767eb5`, verified on GitHub.
 
+### 🧑 User — 2026-11-18T19:39:12.664Z
+
+<task-notification>
+<task-id>b0kri20n7</task-id>
+<summary>Monitor event: "worker worktree setup (READY / FAILED per screen)"</summary>
+<event>[Monitor expired after 30m with 12 events delivered. Re-arm it if you still need the watch.]</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T19:39:16.255Z
+
+Nothing to do here. That watcher was only for building the six worker folders, and all six finished long ago. The workers report straight to me when they finish a step, so I'm not re-arming it.
+

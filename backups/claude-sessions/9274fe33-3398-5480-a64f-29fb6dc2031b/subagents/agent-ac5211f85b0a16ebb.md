@@ -1329,3 +1329,64 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/tools && sed -e 's#return pts.map.*#return r.drawList();#' probe.mjs > drawlist.mjs && cd /home/user/wt/s08 && node /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/tools/drawlist.mjs \"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt)\" 10 null 2>&1 | grep -v \"allow list\" | tr -d '\\n ' | sed 's/\\],\\[/]\\n[/g' | head -60", "description": "List which scene objects draw at forward 10 u", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:38:42.869Z
+
+> ↩︎ result: [["zone_tubes/Mesh",11]
+> ["coins/Mesh",3]
+> ["zone_tubes/tube05_far",2]
+> ["zone_tubes/tube05_far_wall",1]
+> ["zone_tubes/tube05_far_river",1]
+> ["eyeR/lash_R_05",1]
+> ["eyeR/lash_R_085",1]
+> ["eyeL/lash_L_05",1]
+> ["eyeL/lash_L_085",1]
+> ["body/nose",1]
+> ["eyeR/eyeR_happy",1]
+> ["eyeL/eyeL_happy",1]
+> ["mouth/mouth_happy",1]
+> ["armL/palmL",1]
+> ["armR/palmR",1]
+> ["footL/soleL",1]
+> ["footR/soleR",1]
+> ["body/fur_body",1]
+> ["armL/fur_armL",1]
+> ["armR/fur_armR",1]
+> ["footL/fur_footL",1]
+> ["footR/fur_footR",1]
+> ["pom/fur_pom",1]
+> ["hat/hat_brim",1]
+> ["hat/hat_crown",1]
+> ["hat/hat_star",1]
+> ["match08_projection/m08_pipe",1]
+> ["match08_projection/m08_chamber",1]
+> ["match08_projection/m08_backwall",1]
+> ["match08_projection/m08_floor",1]
+> ["match08_projection/m08_arch",1]
+> ["match08_projection/m08_platform_rim",1]
+> ["match08_projection/m08_platform_top",1]
+> ["match08_projection/m08_platform_legs",1]
+> ["match08_projection/m08_towel",1]
+> ["match08_projection/m08_collar",1]
+> ["match08_projection/m08_doorwall",1]
+> ["match08_projection/m08_spout_UL_dome",1]
+> ["match08_projection/m08_spout_UL_band",1]
+> ["match08_projection/m08_spout_UL_under",1]
+> ["match08_projection/m08_spout_UR_dome",1]
+> ["match08_projection/m08_spout_UR_band",1]
+> ["match08_proj …[+325 chars]
+
+### 🤖 Claude — 2026-11-18T19:38:49.948Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"  float dv = -1.0;  // QA m08dbgvk\\n\",\"  float dv = -1.0; vec2 duv = vec2(0.0);  // QA m08dbgvk\\n\",1)\ns=s.replace(\"      dv = vis;\\n\",\"      dv = vis; duv = uv;\\n\",1)\ns=s.replace(\"  if (uDbgVk > 0.5) { gl_FragColor = vec4(max(dv, 0.0), keep, dv < 0.0 ? 1.0 : 0.0, 1.0); return; }\\n\",\n\"  if (uDbgVk > 1.5) { gl_FragColor = vec4(duv, max(dv, 0.0), 1.0); return; }  // m08dbgvk=2: plate uv + visibility\\n  if (uDbgVk > 0.5) { gl_FragColor = vec4(max(dv, 0.0), keep, dv < …[+335 chars]`
+
+### 🧑 User — 2026-11-18T19:38:50.236Z
+
+> ↩︎ result: 88:uniform float uDbgVk;       // QA only m08dbgvk (r16): r = projector visibility, g = stretch guard keep, b = outside the plate
+> 199:  float dv = -1.0; vec2 duv = vec2(0.0);  // QA m08dbgvk
+> 240:  if (uDbgVk > 1.5) { gl_FragColor = vec4(duv, max(dv, 0.0), 1.0); return; }  // m08dbgvk=2: plate uv + visibility
+> 458:      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uDbgVk: { value: Number(new URLSearchParams(location.search).get('m08dbgvk') ?? 0) || 0 }, uSr: { value: 0 },
+
+### 🤖 Claude — 2026-11-18T19:38:56.503Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && M08_DET=1 M08_ONLY=f10 node tools/match08/shots08.mjs 08 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/dbguv2 \"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt)&m08dbgvk=2\" 2>&1 | grep -v \"allow list\" && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\na=Image.open(S+'dbguv2/f10_forward10u.png').convert('RGB')\na.crop((150,480,450,720)).resize((900,720),Image.NEAREST).save(S+'uv_notchL.png')\n\"" …[+91 chars]`
+

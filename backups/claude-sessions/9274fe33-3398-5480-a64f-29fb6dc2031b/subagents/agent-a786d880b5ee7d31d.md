@@ -1505,3 +1505,42 @@ The coins are still at the far-river mapping at x99 although the block is open. 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt) && EX=\"(async()=>{const r=window.__rainbow;const a=r.coinScreen().filter(c=>c.i>=38&&c.i<=41).map(c=>[c.i,c.x,c.y,c.d]);r.step(1);r.run(true);await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));r.run(false);const b=r.coinScreen().filter(c=>c.i>=38&&c.i<=41).map(c=>[c.i,c.x,c.y,c.d]);return {s:r.state().s,a,b};})()\" && GRID=\"0,0\" EXTRA_JS=\"$EX\" timeout 600 node tools/match05/r15_probe.mjs \"$K&m05trans=1\" t99 5275 2>&1 | grep \"==\"", "description": "Check whether coin mapping lags one  …[+27 chars]`
 
+### 🧑 User — 2026-11-18T19:38:40.141Z
+
+> ↩︎ result: == t99 s 190.575 stage 06 cam 3.11,-40.63,-123.09 far-open 1 extra {"s":190.575,"a":[[38,602,1088,36],[39,627,1072,32],[40,644,1056,28],[41,655,1039,26]],"b":[[38,289,632,77],[39,298,586,65],[40,303,571,57],[41,310,586,49]]}
+
+### 🤖 Claude — 2026-11-18T19:38:55.302Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"far05Coins\" src/world/match05far.ts | head -5 && sed -n \"$(grep -n 'export const far05Coins' src/world/match05far.ts | cut -d: -f1),+8p\" src/world/match05far.ts", "description": "Read far05Coins definition"}`
+
+### 🧑 User — 2026-11-18T19:38:55.883Z
+
+> ↩︎ result: 58: * pickups, count and score unchanged. `far05Coins` is written by the live sync below.
+> 61:export const far05Coins = {
+> 312:    far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {
+> 373:      far05Coins.live = !atLock && open < 0.999 ? 1 : 0;
+> 374:      far05Coins.seamS = sF + zs;
+> export const far05Coins = {
+>   /** 1 while the far block is live (not at the locked eye, not fully folded) */
+>   live: 0,
+>   /** course s of the sliding seam */
+>   seamS: 0,
+>   /** fold factor 0 … 1 */
+>   open: 1,
+>   /** tunnel axis (coins face down it) */
+>   T: new THREE.Vector3(0, 0, 1),
+
+### 🤖 Claude — 2026-11-18T19:39:02.418Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/match05far.ts'\ns=open(p).read()\nold=\"\"\"  /** fold factor 0 … 1 */\n  open: 1,\n\"\"\"\nnew=\"\"\"  /** fold factor 0 … 1 */\n  open: 1,\n  /** `&m05trans=1` (round 16): Benny's course position at which the block is removed (coins.ts: no far look from there) */\n  popS: Infinity,\n\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"\"\"    far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {\"\"\"\nnew=\"\"\"    if (M05TRANS && a.popS !== undefined) far05Coins.popS = a.popS;\n    far05Coins.map =  …[+691 chars]`
+
+### 🧑 User — 2026-11-18T19:39:15.625Z
+
+> ↩︎ result: src/gameplay/coins.ts      |  2 +-
+>  src/vfx/clip05.ts          |  9 +++++++++
+>  src/vfx/index.ts           |  4 +++-
+>  src/world/environment.ts   |  8 +++++---
+>  src/world/match05far.ts    | 21 ++++++++++++++++++++-
+>  tools/match05/r8_shots.mjs | 10 +++++++++-
+>  6 files changed, 47 insertions(+), 7 deletions(-)
+

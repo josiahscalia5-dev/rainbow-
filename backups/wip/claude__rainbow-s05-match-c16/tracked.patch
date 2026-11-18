@@ -1,3 +1,16 @@
+diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
+index 05e15de..d553aac 100644
+--- a/src/gameplay/coins.ts
++++ b/src/gameplay/coins.ts
+@@ -377,7 +377,7 @@ export function createCoins(course: Course): CoinSystem {
+       // coins are drawn on the far river's core where the block shows that stretch of river, back to their real place as
+       // the block folds
+       let fcFace = false;
+-      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
++      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS && lastS < far05Coins.popS) {
+         // half the 06 lateral swing around the far core (the trail weaves), half size (the painted far coins are small)
+         const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
+         const o = far05Coins.open;
 diff --git a/src/vfx/clip05.ts b/src/vfx/clip05.ts
 index ad570d5..810fda7 100644
 --- a/src/vfx/clip05.ts
@@ -76,7 +89,7 @@ index 0b4973b..4c5f1ff 100644
    }
    animated.push(pinkFlow.update);
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index d900bf2..13fd4a4 100644
+index d900bf2..57eba2d 100644
 --- a/src/world/match05far.ts
 +++ b/src/world/match05far.ts
 @@ -23,7 +23,7 @@ import { tubeCenterAt } from './tube';
@@ -107,7 +120,16 @@ index d900bf2..13fd4a4 100644
  /**
   * `&m05fcoin=1` (Screen 05 round 12, needs m05far; src/gameplay/coins.ts): coin LOOK only. Past the far seam the real
   * course climbs away toward 06 while the far block shows the painted 05 river running on into the throat, so the next
-@@ -84,6 +96,8 @@ export interface LiveFar05Args {
+@@ -53,6 +65,8 @@ export const far05Coins = {
+   seamS: 0,
+   /** fold factor 0 … 1 */
+   open: 1,
++  /** `&m05trans=1` (round 16): Benny's course position at which the block is removed (coins.ts: no far look from there) */
++  popS: Infinity,
+   /** tunnel axis (coins face down it) */
+   T: new THREE.Vector3(0, 0, 1),
+   /** visual place of a coin at course s, lateral offset dl from the core, height h above the water: writes `out`,
+@@ -84,6 +98,8 @@ export interface LiveFar05Args {
    zCap: number;
    /** fold window: eye → seam distance (units) */
    foldNear: number; foldFar: number;
@@ -116,7 +138,15 @@ index d900bf2..13fd4a4 100644
    /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */
    riverUp: (z: number) => number;
    /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */
-@@ -338,6 +352,8 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -295,6 +311,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+   // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)
+   const fco = new THREE.Vector3();
+   if (M05FCOIN) {
++    if (M05TRANS && a.popS !== undefined) far05Coins.popS = a.popS;
+     far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {
+       const Z = s - sF;
+       if (Z > a.zEnd * 0.98) return 0;
+@@ -338,6 +355,8 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
      // m05end (r11): the TRUE eye → seam distance (D0 is clamped at 0.5 u once the eye passes sF, so D0 + zs never fell
      // under 0.5 + zCap ≈ 7 u and the block could not fold inside a window nearer than that)
      open = 1 - THREE.MathUtils.smoothstep(M05END ? c0.clone().sub(eye).dot(T) + zs : D0 + zs, a.foldNear, a.foldFar);

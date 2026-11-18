@@ -1,5 +1,5 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index 21e6b2a..0211d8f 100644
+index 21e6b2a..3c1d346 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
 @@ -85,6 +85,7 @@ uniform vec4 uNearM;        // projection magnification ramp start / end, latera
@@ -14,30 +14,31 @@ index 21e6b2a..0211d8f 100644
    float keep = 1.0 - smoothstep(2.5, 6.0, cc / max(cp, 1e-3));
    vec4 pj = vProj;
    float pw = 0.0;  // weight of the direct projection in t (m08cup fills the rest from the cup's mirrored side)
-+  float dv = -1.0;  // QA m08dbgvk
++  float dv = -1.0; vec2 duv = vec2(0.0);  // QA m08dbgvk
    if (uSwim > 0.5) {
      float ms = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
      if (ms > 0.0) pj = uProjVP * vec4(swimRemap(vW, ms), 1.0);
-@@ -229,11 +231,13 @@ void main() {
+@@ -229,11 +231,14 @@ void main() {
        }
        t = mix(base, texture2D(uPlate, uv).rgb, vis * keep);
        pw = vis * keep;
-+      dv = vis;
++      dv = vis; duv = uv;
      }
    }
    // m08cup: the cups are round (rotationally symmetric), so a cup point the approved view could not see (its top hidden
    // behind the gold arch, or its outer part beyond the picture's edge) takes the painted pixels of its mirror point
    // across the vertical plane through the cup axis and the projector; off the approved viewpoint only
++  if (uDbgVk > 1.5) { gl_FragColor = vec4(duv, max(dv, 0.0), 1.0); return; }  // m08dbgvk=2: plate uv + visibility
 +  if (uDbgVk > 0.5) { gl_FragColor = vec4(max(dv, 0.0), keep, dv < 0.0 ? 1.0 : 0.0, 1.0); return; }
    if (uCup.w > 0.5) {
      float mc = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
      // (r12: turning the hidden point about the cup axis instead (+-45 / +-90 deg) put wall pixels on the cup top: the
-@@ -450,7 +454,7 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -450,7 +455,7 @@ export async function buildMatch08(): Promise<Match08> {
        uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) },
        uRingT: { value: ringTex ?? plate }, uRing: { value: new THREE.Vector4(0, 1, 0, 1) }, uRingOn: { value: 0 },
        uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
 -      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uSr: { value: 0 },
-+      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uDbgVk: { value: flag05('m08dbgvk') ? 1 : 0 }, uSr: { value: 0 },
++      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uDbgVk: { value: Number(new URLSearchParams(location.search).get('m08dbgvk') ?? 0) || 0 }, uSr: { value: 0 },
        uCup: { value: new THREE.Vector4(0, 0, 0, 0) }, uCupM: { value: new THREE.Vector3(1, 0, 0) },
        uCupMk: { value: cupMk ?? plate }, uCupW: { value: new THREE.Vector4(0, 0, 0, 0) } },
    });
