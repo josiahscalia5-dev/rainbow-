@@ -2150,3 +2150,28 @@ Now pass `course` from environment.ts (switch-guarded value only).
 >     const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
 >     const x = THREE.MathUtils.clamp(s, 0, this.lengt …[+1259 chars]
 
+### 🤖 Claude — 2026-11-18T03:03:42.745Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),dtype=np.float32)\nfor (x0,y0,x1,y1) in [(20,420,180,620),(700,250,840,420),(330,250,520,330)]:\n  p=a[y0:y1,x0:x1].reshape(-1,3); L=p.mean(1); o=np.argsort(L)\n  n=len(o)\n  for q in (0.03,0.15,0.4,0.6,0.85,0.97):\n    i=o[int(q*(n-1))]; print((x0,y0),q, p[o[max(0,int(q*n)-n//40):int(q*n)+n//40]].mean(0).round())\n\"\n", "description": "Sample approved wall palette by luminance percentiles"}`
+
+### 🧑 User — 2026-11-18T03:03:42.951Z
+
+> ↩︎ result: (20, 420) 0.03 [50.  1. 37.]
+> (20, 420) 0.15 [145.  25. 129.]
+> (20, 420) 0.4 [171.  51. 185.]
+> (20, 420) 0.6 [194.  62. 208.]
+> (20, 420) 0.85 [244. 101. 240.]
+> (20, 420) 0.97 [253. 213. 250.]
+> (700, 250) 0.03 [50.  1. 28.]
+> (700, 250) 0.15 [166.  31.  87.]
+> (700, 250) 0.4 [219.  55. 161.]
+> (700, 250) 0.6 [232.  67. 186.]
+> (700, 250) 0.85 [249. 102. 242.]
+> (700, 250) 0.97 [254. 221. 250.]
+> (330, 250) 0.03 [81.  2. 71.]
+> (330, 250) 0.15 [143.  36. 121.]
+> (330, 250) 0.4 [155.  49. 167.]
+> (330, 250) 0.6 [178.  60. 176.]
+> (330, 250) 0.85 [238. 100. 198.]
+> (330, 250) 0.97 [254. 217. 240.]
+

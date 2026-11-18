@@ -1900,3 +1900,75 @@ I've passed these four points to the Screen 04 specialist. Its next step is the 
 
 Screen 05 is working on the pale foam along the far banks, the broad flat water and the loose lilac slab on the left bank. All pictures so far are saved on GitHub, and the copy there matches this branch.
 
+### 🧑 User — 2026-11-18T03:03:28.882Z
+
+<task-notification>
+<task-id>bghpqfsnq</task-id>
+<summary>Monitor event: "Screen 04/05 specialist commits"</summary>
+<event>s04 new commit d5d4eee3 Screen 04 r9 step 2: &amp;m04room=1 laundry room on a plane behind the opening (stays in view while approaching; approved view unchanged)</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T03:03:30.127Z
+
+Screen 04 saved another step: the laundry room behind the washer opening. Checking it.
+
+### 🤖 Claude — 2026-11-18T03:03:32.347Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look; cd /home/user/wt/s04 && echo \"local $(git rev-parse HEAD) remote $(git ls-remote origin refs/heads/claude/rainbow-s04-match-c9 | cut -f1)\"; sed -n '/## Step 2/,$p' qa/match/04/r9/PROGRESS.md | head -30; ls qa/match/04/r9/; ls qa/match/04/r9/step2_*/ 2>/dev/null", "description": "Read Screen 04 step 2 progress entry and list pictures"}`
+
+### 🧑 User — 2026-11-18T03:03:32.745Z
+
+> ↩︎ result: local d5d4eee3f6b2fbfc08c99da8c7aa9f7ad229d74b remote d5d4eee3f6b2fbfc08c99da8c7aa9f7ad229d74b
+> ## Step 2 — `&m04room=1` — the laundry room stays in view while approaching (kept, modest)
+> * **What looks better while swimming:** at 3 u the laundry room above the opening now reads like the approved top
+>   area: the round porthole with its window cross, clouds and bubbles is fully visible below the title (before, it was
+>   mostly hidden behind the title), the folded pink / blue towels on the wooden shelf and the console with the glowing
+>   T-shirt display and its two buttons are larger and clearer. The room is now a real space BEHIND the washer opening
+>   (its own plane 1.8× as far from the approved camera, same approved picture in the approved view), so it recedes
+>   slowly instead of rushing up out of the frame; the pink basin around the opening stays where it was and passes in
+>   front of the room as Benny gets closer.
+> * **Approved view:** unchanged (≤ 6 levels on 11,000 px of the room; whole frame 81.4 %, scenery 98.2 %).
+> * **Measured** PALETTE step 1 → step 2: f03 77.9 → 77.2 %, s_left_steer 75.8 → 75.7 %, s_right_steer 75.4 → 75.0 %
+>   (colours unchanged; the gain is the room's layout at …[+829 chars]
+
+### 🤖 Claude — 2026-11-18T03:03:36.926Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look; cd /home/user/wt/s04 && python3 - <<EOF\nfrom PIL import Image\nr='qa/match/04/r9/'\nfor shot in ['f03_forward3u','s_left_steer']:\n    ims=[Image.open(p).convert('RGB') for p in ['references/04_through_the_five_arrows.png',r+'step1_m04mouth/'+shot+'.png',r+'step2_m04room/'+shot+'.png']]\n    ims=[i.crop((0,0,i.width,i.height*45//100)) for i in ims]\n    w=360; ims=[i.resize((w,int(i.height*w/i.width))) for i in ims]\n    c=Image.new('RGB',(w*3+16,ims[0].height),'white')\n    for k,i in enume …[+152 chars]`
+
+### 🧑 User — 2026-11-18T03:03:37.331Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T03:03:37.980Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look/s04_r9s2_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T03:03:38.005Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:03:44.378Z
+
+> 🔧 **Bash** `{"command": "o=qa/review_r9/04_r9_step2_room && mkdir -p $o && python3 - <<'EOF'\nfrom PIL import Image\no='qa/review_r9/04_r9_step2_room/'; r='/home/user/wt/s04/qa/match/04/r9/'\nfor s,d in [('references/04_through_the_five_arrows.png','1_APPROVED_04.jpg'),(r+'step1_m04mouth/f03_forward3u.png','2_BEFORE_f03.jpg'),(r+'step2_m04room/f03_forward3u.png','3_NEW_f03.jpg')]:\n    Image.open(s).convert('RGB').save(o+d,quality=93)\nEOF\nls $o", "description": "Prepare full-size APPROVED/BEFORE/NEW for Screen 04 round-9 step 2"}`
+
+### 🧑 User — 2026-11-18T03:03:44.637Z
+
+> ↩︎ result: 1_APPROVED_04.jpg
+> 2_BEFORE_f03.jpg
+> 3_NEW_f03.jpg
+
+### 🤖 Claude — 2026-11-18T03:03:47.413Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r9/04_r9_step2_room/1_APPROVED_04.jpg", "qa/review_r9/04_r9_step2_room/2_BEFORE_f03.jpg", "qa/review_r9/04_r9_step2_room/3_NEW_f03.jpg"], "caption": "Screen 04, small step (look at the top of the screen): APPROVED / BEFORE / NEW. The laundry room behind the washer opening now stays in view. The whole round porthole with its window cross, the towels on the shelf and the glowing T-shirt console show below the title, no longer half hidden.", "status": "proactive", "display": "render"}`
+
+### 🧑 User — 2026-11-18T03:03:47.952Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_r9/04_r9_step2_room/1_APPROVED_04.jpg → file_uuid: 76eee579-3876-45be-81fb-85deec4b794d
+>   /home/user/rainbow-/qa/review_r9/04_r9_step2_room/2_BEFORE_f03.jpg → file_uuid: af60148c-cbff-41c0-94ef-d3f80fe8d983
+>   /home/user/rainbow-/qa/review_r9/04_r9_step2_room/3_NEW_f03.jpg → file_uuid: 5f28a895-97d8-4019-a234-a557841c3bd4
+
+### 🤖 Claude — 2026-11-18T03:03:49.072Z
+
+> 🔧 **Bash** `{"command": "flock -w 90 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:review-04-step2 2>&1 | grep -E '\"commit\"' | head -1; git status --short | head -3; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-restore-c9-40w64b | cut -f1)\"", "description": "Save the review pictures and verify the push", "timeout": 150000}`
+
