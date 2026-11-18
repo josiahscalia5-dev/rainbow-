@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 15506,
-   "sha256": "1a4a1f36f4fe957b5693ed9afa811d16e4f098df81090d670b8fe162c0995cf3"
+   "bytes": 15507,
+   "sha256": "c71868e32faef38adfa60db9b01f7121e26b044b7fe10d708fc7f8b928e386cf"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -650,6 +650,26 @@
    "path": "backups/autosave.config.json",
    "bytes": 7659,
    "sha256": "1d2ac72ab97ceb762ee4fda321754acdd6c746d8f425872323e3aca082813937"
+  },
+  {
+   "path": "backups/claude-config/2026-11-18-account12/README.md",
+   "bytes": 1931,
+   "sha256": "70fb2c2154ea48b956f1a420f49adfccbb675e7e19211101b715e340684f04c0"
+  },
+  {
+   "path": "backups/claude-config/2026-11-18-account12/installed_plugins.json",
+   "bytes": 391,
+   "sha256": "e5d86bef16ee6092785ac3001b9def7954aeda537be4e9505fd5b13d5b637215"
+  },
+  {
+   "path": "backups/claude-config/2026-11-18-account12/known_marketplaces.json",
+   "bytes": 225,
+   "sha256": "099cee6bbf8e25747272bc9a11955435d3080f889a4597acd20d372366db0992"
+  },
+  {
+   "path": "backups/claude-config/2026-11-18-account12/user-settings.json",
+   "bytes": 213,
+   "sha256": "5a62f5ee84928e3d138d16b02d7303d6268af674e6abdfae9e9ef2456f530897"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -764,7 +784,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c12/INFO.json",
    "bytes": 477,
-   "sha256": "04e9434ea73da05dae32975f50f14159ecf5086a4c88744442649da15cd2eb32"
+   "sha256": "22593dc35b046e1e8b1dd14e26d24962b81ba745a64e2169e95219d7850670d5"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -789,7 +809,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/INFO.json",
    "bytes": 535,
-   "sha256": "84ea949fb5ac31fe146c82fc62f28045b4db028575c1d77db4ed7f8b5b020c47"
+   "sha256": "8f581a6f2532834adf20fa2a9f7f24f286c8aaf4480e205e42e3ffda3493e61d"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/tracked.patch",
@@ -834,7 +854,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/INFO.json",
    "bytes": 485,
-   "sha256": "85b922f4368e0ab6cced9980abe82c8f1d40e8c47489e705c16ca4b13d2d5e30"
+   "sha256": "d2ba80bd74662c2cd2d7baf742640044a5d94156416fbb812b5b9ea321cd2ebe"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",

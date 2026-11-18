@@ -4273,3 +4273,225 @@ Saved: commit `be56ffc`, matches GitHub.
 
 Screen 04 still hasn't started; it waits for your OK on the visual-first summary. The Screen 05 and 08 specialists keep working on those same targets unless you tell me to pause them.
 
+### 🧑 User — 2026-11-18T13:30:50.769Z
+
+CLAUDIA — FINAL APPROVAL. START SCREEN 04 NOW.
+
+YES, I APPROVE YOUR VISUAL-FIRST RECONSTRUCTION PLAN.
+
+Start rebuilding Screen 04 using real 3D geometry and materials matched to my original approved artwork. You do not need to ask for this approval again.
+
+Keep the Screen 05 and Screen 08 specialists working. Do not interrupt them, restart the project, or lose any completed work.
+
+My requirement is that Screens 04–08 look exactly, or as close as technically possible, to my approved scenery throughout gameplay while Benny swims and steers, not just from one camera angle.
+
+For Screen 04, prioritize the correct glossy gold tunnel rings, thick bright cyan-and-magenta water, five glowing arrows, low fluffy foam, bubbles, and coin placement. Keep Benny's approved appearance and natural swimming movement.
+
+Do not add, redesign, or substitute scenery. No generic environments. Keep my original approved images unchanged.
+
+Keep automatic GitHub saves running every five minutes, including all specialist workspaces.
+
+Show me full-size APPROVED / BEFORE / NEW gameplay renders and a real swimming preview. Judge visual accuracy, not technical activity.
+
+Please confirm you understand, then START THE AUTHORIZED SCREEN 04 WORK. Continue making visual improvements without repeatedly asking me for the same permission.
+
+### 🤖 Claude — 2026-11-18T13:31:04.544Z
+
+Understood, and thank you. I'm starting the Screen 04 rebuild now and won't ask for this permission again. In order: glossy gold rings, thick cyan-and-magenta water, the five glowing arrows, low fluffy foam, bubbles, coin placement. Benny's look and swimming stay as approved, your images stay untouched, the 05 and 08 specialists keep running, and the five-minute autosave continues. You'll get full-size APPROVED / BEFORE / NEW renders and a real swimming preview, judged on how it looks.
+
+First I'll set up a task list for the 04 work, then read how the low-foam option places its foam, since the foam needs to sit where the raised water meets the wall.
+
+### 🤖 Claude — 2026-11-18T13:31:05.095Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T13:31:05.112Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T13:31:05.893Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 690,760p src/world/match04m4.ts", "description": "Read foam and bubble placement code"}`
+
+### 🧑 User — 2026-11-18T13:31:05.971Z
+
+> ↩︎ result: a += cl + 0.1 + Math.pow(rnd(), 1.5) * 2.2 * (f3 ? 1.6 : 1);   // irregular gaps (wider: the pink water shows)
+>       }
+>       while (!heaped && a < len - 1) {
+>         const cl = 1.2 + rnd() * 2.2, n = Math.round(cl * (9 + rnd() * 6));
+>         for (let i = 0; i < n; i++) {
+>           const t = rnd(), env = Math.sin(Math.PI * t);
+>           const rad = 0.10 + Math.pow(rnd(), 1.4) * 0.34 * (0.5 + 0.5 * env);
+>           const inward = rnd() * 0.75 * (0.4 + 0.6 * env);
+>           const tt = Math.max(0, 1 - inward / Math.max(0.1, xW - XF));
+>           const x = side * (XF + (xW - XF) * tt - 0.05), y = 0.02 + RY * tt * tt + rad * (0.3 + 0.5 * rnd()) + 0.25 * env * rnd();
+>           items.push({ p: new THREE.Vector3(cx + x, y, z0 - a - t * cl), r: rad, s: rnd() });
+>         }
+>         a += cl + 0.15 + rnd() * 0.7;
+>       }
+>     }
+>     for (let a = -7; a < 0; a += M04.foam3 ? 0.5 : 0.35) for (const side of [-1, 1]) {
+>       const n = 3 + Math.floor(rnd() * 3);
+>       for (let i = 0; i < n; i++) {
+>         const rad = (0.16 + rnd() * 0.34) * (M04.foam3 ? 0.7 : 1);
+>         const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);
+>         items.push({ p: new THREE.Vector3(x, rad * 0.55 + rnd() * 0.3, z0 - a + r …[+2820 chars]
+
+### 🤖 Claude — 2026-11-18T13:31:09.684Z
+
+> 🔧 **TaskCreate** `{"subject": "04 step 1: raised water channel + low foam", "description": "Water sides at the measured painted height (~2.2 u), low soft foam along the edges instead of foam-ball walls, no hard straight edge where water meets the wall. APPROVED/BEFORE/NEW at a00, f06, f10, f20, s_left_hard.", "activeForm": "Rebuilding Screen 04 water channel and foam"}`
+
+### 🧑 User — 2026-11-18T13:31:09.700Z
+
+> ↩︎ result: Task #1 created successfully: 04 step 1: raised water channel + low foam
+
+### 🤖 Claude — 2026-11-18T13:31:10.736Z
+
+> 🔧 **TaskCreate** `{"subject": "04 step 2: five glowing arrows readable while swimming", "description": "The five glowing white-cyan chevrons ahead of Benny, as real geometry on the lane, readable from the swim camera (camera unchanged).", "activeForm": "Building the five glowing arrows"}`
+
+### 🧑 User — 2026-11-18T13:31:10.746Z
+
+> ↩︎ result: Task #2 created successfully: 04 step 2: five glowing arrows readable while swimming
+
+### 🤖 Claude — 2026-11-18T13:31:11.986Z
+
+> 🔧 **TaskCreate** `{"subject": "04 step 3: glossy yellow-gold rings", "description": "Ring material closer to the painted polished yellow-gold with bulb highlights (V04 views + approved picture as targets).", "activeForm": "Polishing the Screen 04 gold rings"}`
+
+### 🧑 User — 2026-11-18T13:31:11.996Z
+
+> ↩︎ result: Task #3 created successfully: 04 step 3: glossy yellow-gold rings
+
+### 🤖 Claude — 2026-11-18T13:31:13.085Z
+
+> 🔧 **TaskCreate** `{"subject": "04: swimming preview video + 12-shot audit", "description": "Short real-game swimming preview of the kept 04 set and the full moving audit once kept steps show genuine improvement.", "activeForm": "Rendering the Screen 04 swimming preview"}`
+
+### 🧑 User — 2026-11-18T13:31:13.125Z
+
+> ↩︎ result: Task #4 created successfully: 04: swimming preview video + 12-shot audit
+
+### 🤖 Claude — 2026-11-18T13:31:14.792Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T13:31:14.824Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-18T13:31:20.169Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; EXACT=1 nice -n 5 timeout 2400 node tools/match04/ab04.mjs qa/match/04/r12/s1_chan '[[\"a00_approved_view\",0,null],[\"f06_forward6u\",6,null],[\"f10_forward10u\",10,null],[\"f20_forward20u\",20,null],[\"s_left_hard\",12,-1]]' \"BEFORE=$K\" \"A=$K&m04foam3=1&m04ry=2.2\" 2>&1 | grep -v \"Vite serving\" | tail -10", "description": "Render step-1 candidate vs BEFORE at five positions", "timeout": 2500000}`
+
+### 🧑 User — 2026-11-18T13:32:52.484Z
+
+> ↩︎ result: BEFORE a00_approved_view s 77.41 lat 0 cam->V04-1/V04-2 8.16/18.17
+> BEFORE f06_forward6u s 83.48 lat 0 cam->V04-1/V04-2 3.89/13.91
+> BEFORE f10_forward10u s 87.45 lat 0 cam->V04-1/V04-2 0/10.02
+> BEFORE f20_forward20u s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> BEFORE s_left_hard s 89.55 lat -1.65 cam->V04-1/V04-2 2.65/8.09
+> A a00_approved_view s 77.41 lat 0 cam->V04-1/V04-2 8.16/18.17
+> A f06_forward6u s 83.48 lat 0 cam->V04-1/V04-2 3.89/13.91
+> A f10_forward10u s 87.45 lat 0 cam->V04-1/V04-2 0/10.02
+> A f20_forward20u s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> A s_left_hard s 89.55 lat -1.65 cam->V04-1/V04-2 2.65/8.09
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:32:59.039Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/s1_chan && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert /home/user/wt/s04/references/04_through_the_five_arrows.png BEFORE/f06_forward6u.png A/f06_forward6u.png BEFORE/f20_forward20u.png A/f20_forward20u.png -resize 264x469! +append $S/s1a.jpg; convert BEFORE/a00_approved_view.png A/a00_approved_view.png BEFORE/s_left_hard.png A/s_left_hard.png -resize 264x469! +append $S/s1b.jpg; python3 -c \"\nfrom PIL import Image, ImageChops; import numpy as np\na=np.asarray(Image.open('BEFORE/a00_approved …[+281 chars]`
+
+### 🧑 User — 2026-11-18T13:33:00.613Z
+
+> ↩︎ result: start view px differing >30: 24 of 1327104
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:33:03.031Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1a.jpg"}`
+
+### 🧑 User — 2026-11-18T13:33:03.059Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:33:03.600Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/s1b.jpg"}`
+
+### 🧑 User — 2026-11-18T13:33:03.628Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T13:33:16.061Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-18T13:33:16.209Z
+
+Make sure Make sure you save everything to my GitHub uh, repository. I mean everything. To everything. Like all the agents, all the servers, all the plugins, everything.
+
+### 🤖 Claude — 2026-11-18T13:33:19.661Z
+
+Saving everything now: game work, all three workspaces, agent definitions, and the plugin, server and tool settings, with secrets excluded. First, what isn't in GitHub yet:
+
+### 🤖 Claude — 2026-11-18T13:33:22.566Z
+
+> 🔧 **Bash** `{"command": "git ls-files .claude/agents | wc -l; git ls-files .claude/settings.json .mcp.json.template backups/TOOL_MANIFEST.json backups/AGENTS_STATUS.json | cat; ls ~/.claude/ 2>/dev/null | head -20; ls ~/.claude/plugins 2>/dev/null | head; cat ~/.claude/plugins/installed_plugins.json 2>/dev/null | python3 -c \"import json,sys;d=json.load(sys.stdin);print(list(d.get('plugins',d).keys()))\" 2>/dev/null; for w in s04 s05 s08; do cd /home/user/wt/$w; echo \"$w dirty=$(git status --short | wc -l) head=$(git rev-parse --short HEAD) remote=$(git ls-remote origin refs/heads/$(git rev-parse --abbre …[+107 chars]`
+
+### 🧑 User — 2026-11-18T13:33:24.858Z
+
+> ↩︎ result: 10
+> .claude/settings.json
+> .mcp.json.template
+> backups/AGENTS_STATUS.json
+> backups/TOOL_MANIFEST.json
+> backups
+> cache
+> environment-manager
+> launcher-settings.json
+> mcp-needs-auth-cache.json
+> plugins
+> policy-limits.json
+> policy-limits.json.signature.json
+> policy-limits.json.stamp.json
+> projects
+> remote-settings.json
+> remote-settings.json.synced-at
+> session-env
+> session-start-setup-script-failure.sh
+> sessions
+> settings.json
+> shell-snapshots
+> skills
+> stop-hook-git-check.sh
+> tasks
+> cache
+> data
+> installed_plugins.json
+> known_marketplaces.json
+> marketplaces
+> store
+> synced
+> ['worldlabs@worldlabs']
+> s04 dirty=1 head=2421dcef remote=2421dce
+> s05 dirty=2 head=24877989 remote=2487798
+> s08 dirty=16 head=05ed1bee remote=05ed1be
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:33:32.760Z
+
+> 🔧 **Bash** `{"command": "cd ~/.claude && for f in settings.json plugins/installed_plugins.json plugins/known_marketplaces.json launcher-settings.json remote-settings.json; do [ -f $f ] && echo \"== $f $(wc -c <$f)B secrets-hits: $(grep -ciE 'token|secret|api[_-]?key|password|bearer|authorization' $f)\"; done; grep -iE 'token|secret|key|password|bearer|auth' settings.json remote-settings.json launcher-settings.json 2>/dev/null | cut -c1-120 | head", "description": "Scan account config files for secrets"}`
+
+### 🧑 User — 2026-11-18T13:33:32.822Z
+
+> ↩︎ result: == settings.json 213B secrets-hits: 0
+> == plugins/installed_plugins.json 391B secrets-hits: 0
+> == plugins/known_marketplaces.json 225B secrets-hits: 0
+> == launcher-settings.json 1935B secrets-hits: 0
+> == remote-settings.json 2B secrets-hits: 0
+> launcher-settings.json:            "The org admin has provisioned proxy-injected credentials for the following hosts via
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:33:49.366Z
+
+> 🔧 **Bash** `{"command": "D=backups/claude-config/2026-11-18-account12 && mkdir -p $D && cp ~/.claude/settings.json $D/user-settings.json && cp ~/.claude/plugins/installed_plugins.json ~/.claude/plugins/known_marketplaces.json $D/ && cat > $D/README.md <<'EOF'\n# Account 12 (2026-11-18) — Claude setup snapshot (NO secrets)\nRestore on a new account: start the cloud session on the lead branch named in `backups/START_NEW_CLAUDE_ACCOUNT.md`;\nthe SessionStart hook (`.claude/settings.json`) runs `scripts/claude-bootstrap.sh`, which reinstalls tools and plugins.\n\n* **Agents (10, in git):** `.claude/agents/` — …[+2580 chars]`
+

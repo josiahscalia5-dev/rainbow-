@@ -1,5 +1,5 @@
 diff --git a/src/vfx/proj05Tunnel.ts b/src/vfx/proj05Tunnel.ts
-index 14d83222..473f5a2d 100644
+index 14d83222..0648cfe9 100644
 --- a/src/vfx/proj05Tunnel.ts
 +++ b/src/vfx/proj05Tunnel.ts
 @@ -14,7 +14,7 @@
@@ -11,7 +11,7 @@ index 14d83222..473f5a2d 100644
  // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
  const flag05 = on05;
  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-@@ -287,6 +287,47 @@ const M05WTILE_GLSL = /* glsl */ `
+@@ -287,6 +287,46 @@ const M05WTILE_GLSL = /* glsl */ `
      }
    }`;
  
@@ -27,30 +27,29 @@ index 14d83222..473f5a2d 100644
 +    float rideS = uM05Eye.w > 0.5 ? smoothstep(0.02, 0.5, distance(cameraPosition, uM05Eye.xyz)) : 0.0;
 +    float wS = rideS * (1.0 - smoothstep(0.3, 0.75, mS));
 +    if (wS > 0.0) {
-+      // painted metal without the slot blobs: local max of the own row over ±16 texels round and ±0.06 of the bay along
++      // painted metal without the slot blobs: local max of the own row ALONG the tunnel only (±0.03 / ±0.06 of the bay:
++      // the slots are short along it), so the pink-white light streaks (detail round the tube) keep their width
 +      float y0 = (rw.x + 0.5) / uPtWallSize.y, y1 = (rw.x + rw.y - 0.5) / uPtWallSize.y;
-+      float dx = 16.0 / uPtWallSize.x, dy = max(rw.y * 0.06, 1.0) / uPtWallSize.y;
++      float dy = max(rw.y * 0.06, 1.0) / uPtWallSize.y;
 +      vec3 mx = pc;
-+      mx = max(mx, texture2D(uPtWall, vec2(puv.x + dx, puv.y)).rgb);
-+      mx = max(mx, texture2D(uPtWall, vec2(puv.x - dx, puv.y)).rgb);
 +      mx = max(mx, texture2D(uPtWall, vec2(puv.x, clamp(puv.y + dy, y0, y1))).rgb);
 +      mx = max(mx, texture2D(uPtWall, vec2(puv.x, clamp(puv.y - dy, y0, y1))).rgb);
-+      mx = max(mx, texture2D(uPtWall, vec2(puv.x + dx * 0.6, clamp(puv.y + dy, y0, y1))).rgb);
-+      mx = max(mx, texture2D(uPtWall, vec2(puv.x - dx * 0.6, clamp(puv.y - dy, y0, y1))).rgb);
-+      vec3 metal = mx * 0.9;
-+      // slot grid (atlas measurement: 46.5 round the tube, rows every 1.9 u); slim capsule: 0.68 of the pitch round,
-+      // 0.22 u along (the painted slots read as slim dashes), rounded ends
++      mx = max(mx, texture2D(uPtWall, vec2(puv.x, clamp(puv.y + 0.5 * dy, y0, y1))).rgb);
++      mx = max(mx, texture2D(uPtWall, vec2(puv.x, clamp(puv.y - 0.5 * dy, y0, y1))).rgb);
++      vec3 metal = mx * 0.95;
++      // slot grid (atlas measurement: 46.5 round the tube, rows every 1.9 u); capsule 0.62 of the pitch round, 0.34 u
++      // along (with the perspective of the swim camera they read as the painted slim capsules), rounded ends
 +      vec2 gs = vec2(vPerfUv.x * 46.5, vPerfUv.y / 1.9);
 +      vec2 cs = (fract(gs) - 0.5) * vec2(1.03, 1.9);          // units from the cell centre (round, along)
-+      float hl = 0.11;                                        // half width along the tunnel (u)
-+      float dS = length(vec2(max(abs(cs.x) - (0.34 - hl), 0.0), cs.y)) - hl;
++      float hl = 0.17;                                        // half width along the tunnel (u)
++      float dS = length(vec2(max(abs(cs.x) - (0.32 - hl), 0.0), cs.y)) - hl;
 +      float aS = fwidth(dS) * 0.8 + 1e-4;
 +      float hole = 1.0 - smoothstep(-aS, aS, dS);
-+      float rim = exp(-max(dS, 0.0) / 0.035) * (1.0 - hole);
-+      float lip = rim * smoothstep(-0.02, 0.05, cs.y);
++      float rim = exp(-max(dS, 0.0) / 0.05) * (1.0 - hole);
++      float lip = rim * smoothstep(-0.04, 0.06, cs.y);
 +      vec3 cw = metal;
-+      cw = mix(cw, cw * 0.55, rim * (1.0 - smoothstep(-0.02, 0.05, cs.y)) * 0.6);      // shaded upper rim
-+      cw = mix(cw, vec3(0.957, 0.396, 0.941), clamp(lip * 0.75, 0.0, 1.0));              // bright pink lower lip
++      cw = mix(cw, cw * 0.5, rim * (1.0 - smoothstep(-0.04, 0.06, cs.y)) * 0.6);       // shaded upper rim
++      cw = mix(cw, vec3(0.957, 0.396, 0.941), clamp(lip * 0.95, 0.0, 1.0));              // bright pink lower lip
 +      cw = mix(cw, mix(vec3(0.196, 0.004, 0.145), vec3(0.34, 0.04, 0.28), smoothstep(-hl, 0.0, dS)), hole);
 +      pc = mix(pc, cw, wS);
 +    }
@@ -59,7 +58,7 @@ index 14d83222..473f5a2d 100644
  /** one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1 */
  export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: number }
  
-@@ -323,13 +364,13 @@ void main() {`)
+@@ -323,13 +363,13 @@ void main() {`)
    }
    vec2 rw = uPtRows[int(prow + 0.5)];
    vec2 puv = vec2(fract(vPerfUv.x + 0.25), (rw.x + clamp(pt * rw.y, 0.5, rw.y - 0.5)) / uPtWallSize.y);
