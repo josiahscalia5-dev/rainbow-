@@ -2009,6 +2009,23 @@ void main() {
         t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * dW0, 0.0, 1.0);
         tgt = mix(t0, tgt, uPjFlow2.w);
       }
+      #ifdef CX05_BEND_UV
+      // The exact projected layer carries the pink/cyan layout. At the final bend
+      // it magnifies painted glints in the foreground. Replace its attenuated
+      // ripple detail with the approved D patch at its physical capture scale.
+      // vUV.y is course arc length. The width conversion holds texel size through turns.
+      float bend = smoothstep(CX05_BEND_START, CX05_BEND_START + 4.0, vUV.y)
+                 * (1.0 - smoothstep(CX05_BEND_END - 2.0, CX05_BEND_END, vUV.y));
+      float density = max(fwidth(vUV.y) / uPjDS.y, fwidth(u * vHalfW / CX05_BEND_HALF) / uPjDS.x);
+      float detailWeight = bend * (1.0 - smoothstep(0.018, 0.055, density))
+                         * smoothstep(0.12, 0.35, max(tgt.b, tgt.r) - min(tgt.g, tgt.r));
+      if (detailWeight > 0.0) {
+        float leftPhase = pjDetail(uA * vHalfW / CX05_BEND_HALF, vUV.y + sA - s);
+        float rightPhase = pjDetail(uB * vHalfW / CX05_BEND_HALF, vUV.y + sB - s);
+        float physicalDetail = mix(rightPhase, leftPhase, wA);
+        tgt = clamp(tgt + detailWeight * uPjDS.z * (0.80 * physicalDetail - det * dW), 0.0, 1.0);
+      }
+      #endif
       #ifdef M05BLEND
       tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)
       wEx = mix(wEx, 1.0, fbK);
@@ -2203,6 +2220,13 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     const pk = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('panok') : null;   // QA: ?panok=0 isolates the reflection
     u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
   }
+  const bend05 = course.stage('05');
+  const bendUV = M05JOIN && q05('cx05BendUV') ? {
+    CX05_BEND_UV: 1,
+    CX05_BEND_START: THREE.MathUtils.lerp(bend05.s0, bend05.s1, 0.72).toFixed(4),
+    CX05_BEND_END: bend05.s1.toFixed(4),
+    CX05_BEND_HALF: (course.widthAt(131.5) * 0.5).toFixed(4), // first physical row of proj05_D
+  } : {};
   const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;
   const mat = new THREE.ShaderMaterial({
     uniforms,
@@ -2210,7 +2234,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05JOIN ? { M05JOIN: 1 } : {}), ...(M05VEE2 ? { M05VEE2: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+    defines: { ...bendUV, ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05JOIN ? { M05JOIN: 1 } : {}), ...(M05VEE2 ? { M05VEE2: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
