@@ -299,6 +299,7 @@ uniform sampler2D uRiv;
 uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
 uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
 uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+uniform vec2 uLane4;         // r14 m04lcn: deep-blue fade-in window ahead of the camera (start, full); off when y <= x
 uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
 uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
 uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
@@ -363,7 +364,10 @@ void main() {
       laneC += vec3(1.0) * uLane2.z * spk * (1.0 - smoothstep(0.3, 0.8, fwidth(sc.x)));
       // r13 m04lcd: the painted lane is DEEPER blue along the arrow line (the glassy arrows pop on it), brighter turquoise
       // toward the pink edges
-      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
+      // r14 m04lcn=a,b: the deep blue only AHEAD of Benny (fades in from a to b u ahead of the camera; Benny ≈ 6.4 u
+      // ahead) — the painted water round / behind him is bright cyan, the deep electric blue lies under the arrows
+      float rk = uLane4.y > uLane4.x ? smoothstep(uLane4.x, uLane4.y, along - uA5b.z) : 1.0;
+      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * rk * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
     }
     col = mix(col, laneC, kl * uLane.z);
   }
@@ -696,6 +700,8 @@ export function addM04(ctx: M04Ctx) {
         uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 },
         uLane: { value: new THREE.Vector3(M04.num('m04lane', 0), M04.num('m04lanew', 1.9), M04.num('m04lanes', 0.85)) },
         uLane3: { value: new THREE.Vector2(M04.num('m04lcd', 0), M04.num('m04lcw', 1.6)) },
+        uLane4: { value: (() => { const s = (new URLSearchParams(location.search).get('m04lcn') ?? '').split(',').map(Number);
+          return s.length === 2 && s.every(Number.isFinite) ? new THREE.Vector2(s[0], s[1]) : new THREE.Vector2(0, 0); })() },
         uLane2: { value: new THREE.Vector4(M04.num('m04lane2', 0), M04.num('m04lgl', 1.0), M04.num('m04lsp', 0.9), M04.num('m04lbr', 0)) },
         uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
         uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
