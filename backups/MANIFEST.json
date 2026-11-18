@@ -988,8 +988,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c14/INFO.json",
-   "bytes": 674,
-   "sha256": "dea94604a823ee36913d47b6348341b3eec8e955c7f569cbfb58467d58bb5449"
+   "bytes": 784,
+   "sha256": "b9a580b84cad7a493610824822000478254b89c56edbf9c78e6fdc69f89a94d8"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c14/tracked.patch",
@@ -1000,6 +1000,16 @@
    "path": "backups/wip/claude__rainbow-s04-match-c14/untracked/qa/match/04/r14/s11_rimfoam/L4/f06_forward6u.png",
    "bytes": 1932758,
    "sha256": "895acb9a381d0d1e2ef915da82569745a0f1299ab44411735c9bbae4f0c8eb10"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c14/untracked/qa/match/04/r14/s11_rimfoam/L4/f10_forward10u.png",
+   "bytes": 1692497,
+   "sha256": "51766f318135f9f0090d0ae969779278ff98999e95287d51fe660d11e851690b"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c14/untracked/qa/match/04/r14/s11_rimfoam/L4/f20_forward20u.png",
+   "bytes": 1662155,
+   "sha256": "7e4796fa186628a0f057854ebc24a1ddfbf6fea41554dc80f1e3114a29eeb8ff"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1053,8 +1063,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c14/INFO.json",
-   "bytes": 1533,
-   "sha256": "c0d19dd76d11230176b56048c50f741848ecc99b9ec8b03a1ada5f0adc160f36"
+   "bytes": 1647,
+   "sha256": "8afbf78122b3cc00b6738be4ba046d496903a600fe0435bd1a899ba56ba6a447"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c14/tracked.patch",
@@ -1143,13 +1153,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c14/INFO.json",
-   "bytes": 769,
-   "sha256": "d82e3b2f483e47d92738758d25ec82842696fc88a9686dc603ca5f8184935c14"
+   "bytes": 888,
+   "sha256": "5518b60676a60643abe8001685d2b376aaaa046d81748932758c8f8d01034394"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c14/tracked.patch",
    "bytes": 4957499,
    "sha256": "fa08d004744196645306fc81c3c6f5954be43db0192acd6d808d3efada35eb65"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c14/untracked/qa/match/08/r14/step1_m08nq/NEW_v6/f20_forward20u.png",
+   "bytes": 1725310,
+   "sha256": "07b6faa05b767972887a678f10f0147772e3ace14590daec49dc367b7b6c298e"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
