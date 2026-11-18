@@ -711,3 +711,83 @@ I'll start by inspecting where the previous instance stopped.
 > 345-uniform float uTime;
 > 346- …[+961 chars]
 
+### 🤖 Claude — 2026-11-18T02:05:51.878Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nstart=s.index('// polished gold: everything in DISPLAY colours')\nend=s.index('/** world-space bubble discs')\nnew='''// polished gold, art-directed in DISPLAY colours measured on the approved picture (then pjInverse like the plate):\n// groove (110,35,5) / shadow band (168,70,18) / mid (205,97,28) / lit (245,143,38) / hot lip (255,204,77) / glint.\n// Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;\n// the far rings war …[+8773 chars]`
+
+### 🧑 User — 2026-11-18T02:05:51.968Z
+
+> ↩︎ result: 73:uniform float uLen;
+> 269:        uP: { value: M04.num('m04ringp', 6.0) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len } },
+> 271:    const P = M04.num('m04ringp', 6.0); // ring period along the tunnel (painted ring spacing seen from the approved camera)
+> 303:      tun.computeVertexNormals();
+
+### 🤖 Claude — 2026-11-18T02:06:00.611Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && npx tsc --noEmit -p . 2>&1 | head -5; SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_m2 \"match04=1&m04ring=1&m04fade0=-2&m04fade1=-1\" a00_approved_view,t33_through_screen 2>&1 | grep -v \"403\\|allow list\" | tail -4; python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB').crop((0,380,864,1000))\nb=Image.open('$SP/r_m2/a00_approved_view.png').convert('RGB').crop((0,380,864,1000))\nim=Image.new('RGB',(864,1240)); im.paste(a,(0, …[+167 chars]`
+
+### 🧑 User — 2026-11-18T02:06:20.991Z
+
+> ↩︎ result: console [match04] m04ring {period: 6, rings: 8}
+> 04 a00_approved_view s 78.299 lat 0 stage 04 frames 0
+> 04 t33_through_screen s 90.481 lat 0 stage 04 frames 53
+
+### 🤖 Claude — 2026-11-18T02:06:23.080Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop2.png"}`
+
+### 🧑 User — 2026-11-18T02:06:23.108Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:06:30.340Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; python3 -c \"\nfrom PIL import Image\nb=Image.open('$SP/r_m2/a00_approved_view.png').convert('RGB')\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\nfor p in [(60,700),(120,600),(200,560),(300,520),(470,470),(450,520),(460,600),(250,700),(700,600),(470,640),(490,690)]:\n  print(p, 'new', b.getpixel(p), 'appr', a.getpixel(p))\n\"; grep -n \"toneMapping\\|outputColorSpace\\|grade\\|vignette\" src/game/Game.ts | head -20", "description": "Sample rend …[+56 chars]`
+
+### 🧑 User — 2026-11-18T02:06:30.524Z
+
+> ↩︎ result: (60, 700) new (247, 157, 48) appr (221, 114, 46)
+> (120, 600) new (255, 213, 104) appr (255, 231, 83)
+> (200, 560) new (203, 110, 62) appr (163, 62, 44)
+> (300, 520) new (250, 175, 59) appr (239, 116, 39)
+> (470, 470) new (232, 128, 35) appr (151, 58, 25)
+> (450, 520) new (254, 200, 74) appr (180, 69, 24)
+> (460, 600) new (255, 245, 204) appr (236, 128, 40)
+> (250, 700) new (249, 175, 60) appr (139, 57, 36)
+> (700, 600) new (225, 120, 33) appr (189, 75, 39)
+> (470, 640) new (239, 207, 172) appr (255, 165, 90)
+> (490, 690) new (255, 185, 71) appr (254, 213, 191)
+> 19:import { createGradePass } from '../render/grade';
+> 77:  if (tone05 === 'none') renderer.toneMapping = THREE.NoToneMapping;
+> 78:  else if (tone05 !== null && tone05 !== '' && isFinite(+tone05) && +tone05 > 0) renderer.toneMappingExposure = +tone05;
+
+### 🤖 Claude — 2026-11-18T02:06:43.203Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; cat > $SP/tunstats.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nref=np.asarray(Image.open('references/04_through_the_five_arrows.png').convert('RGB')).astype(float)\nyy,xx=np.mgrid[0:1536,0:864]\n# inside the painted inner circle of the mouth ring (fit: centre ~ (434, 790) r ~ 345) and above the water (y<v)\ncxp,cyp=434,790\nrad=np.hypot(xx-cxp,(yy-cyp))\ndef zones(img):\n    out=[]\n    m0=(rad<330)&(yy<760)&((img[...,0]-img[...,2])>60)  # gold-ish (no wate …[+645 chars]`
+
+### 🧑 User — 2026-11-18T02:06:43.618Z
+
+> ↩︎ result: ['ref']
+>    r 230 - 330 n 76193 mean [191  87  49] L p10/50/90 [ 80 106 143]
+>    r 150 - 230 n 42255 mean [189  86  43] L p10/50/90 [ 83 102 134]
+>    r 80 - 150 n 12555 mean [196 106  76] L p10/50/90 [ 93 119 168]
+>    r 0 - 80 n 1160 mean [221 160  30] L p10/50/90 [106 140 165]
+> ['r_m2', 'a00_approved_view.png']
+>    r 230 - 330 n 81794 mean [241 160  59] L p10/50/90 [128 151 183]
+>    r 150 - 230 n 39976 mean [251 204 110] L p10/50/90 [154 192 218]
+>    r 80 - 150 n 19430 mean [243 185  95] L p10/50/90 [131 176 214]
+>    r 0 - 80 n 5153 mean [242 173  64] L p10/50/90 [129 157 199]
+
+### 🤖 Claude — 2026-11-18T02:06:57.206Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"      v = 0.62 + 0.10 * cos(ang) + 0.16 * st + 0.10 * gl;\\n      if (part > 0.5 && part < 1.5) v = 0.74 + 0.16 * facing + 0.10 * st;\",\n \"      v = uTone.z + 0.08 * cos(ang) + 0.20 * st + 0.08 * gl;\\n      if (part > 0.5 && part < 1.5) v = uTone.z + 0.14 + 0.16 * facing + 0.10 * st;\"),\n(\"      v = 0.30 + 0.30 * pow(t, 1.6) + 0.06 * cos(ang) + 0.20 * far + 0.22 * st * (0.35 + 0.65 * t) + 0.12 * gl;\\n      if (part > 0.5 && part < 1.5) v = 0.68 + 0.14 * facing + 0.12 * far + 0. …[+1502 chars]`
+
+### 🧑 User — 2026-11-18T02:07:07.894Z
+
+> ↩︎ result: console [match04] m04ring {period: 6, rings: 8}
+> 04 a00_approved_view s 78.273 lat 0 stage 04 frames 0
+>    r 230 - 330 n 81825 mean [198  99  32] L p10/50/90 [ 93 102 150]
+>    r 150 - 230 n 42864 mean [226 136  48] L p10/50/90 [104 137 170]
+>    r 80 - 150 n 20808 mean [232 149  57] L p10/50/90 [114 144 175]
+>    r 0 - 80 n 5282 mean [238 165  58] L p10/50/90 [122 152 190]
+
