@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13551,
-   "sha256": "5108ac740eacba13a0c2ce1f7f37b4b7074330ac5b9dcee5fb2309b6ddae2df5"
+   "sha256": "2c97732450af022c7c45f0ba481dda9e7a324f887778f4a45982b16617e77f75"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,8 +723,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 43153,
-   "sha256": "7df596db9aa81714a0186b34bcd70cac369789ee1cd0b48dd10c8132871ead13"
+   "bytes": 43253,
+   "sha256": "4385c17b45d1dc3cfb03fe7f156fdd8009df7410d7e3ff4d5470c294e4b09633"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -9060,6 +9060,21 @@
    "path": "qa/review_r8/04_BEFORE/2_BEFORE_two_thirds_through.jpg",
    "bytes": 388030,
    "sha256": "20e8eebc5e229f8db95bbb4d6739453088aaa3d0d7ac168e5dc522edfc2aa4ab"
+  },
+  {
+   "path": "qa/review_r8/04_step1_rings/1_APPROVED_04.jpg",
+   "bytes": 390315,
+   "sha256": "d51066d73987794ddb2bbda71994c24fec73c7f580b2c104dfec056084b0e96c"
+  },
+  {
+   "path": "qa/review_r8/04_step1_rings/2_BEFORE_one_third_through.jpg",
+   "bytes": 365043,
+   "sha256": "2972536ffd4424c2fa57da8688355fbaaf148d2e3c3b7c961d5e6e410760afa0"
+  },
+  {
+   "path": "qa/review_r8/04_step1_rings/3_NEW_one_third_through.jpg",
+   "bytes": 422010,
+   "sha256": "7beed52d01958ee2a11fb319fb933093906c89f02401ca30709917e3a78cf24e"
   },
   {
    "path": "qa/review_r8/05_BEFORE/1_APPROVED_05.jpg",
