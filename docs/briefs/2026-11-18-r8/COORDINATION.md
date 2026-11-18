@@ -39,3 +39,15 @@ World Labs key = the 5,190-credit account (Account B: Screen 05 pilot worlds dra
 32b5b2f4 → 404 with this key, its assets are in Git LFS). fal.ai key = same purchased account (request 01a1ea70 →
 COMPLETED). Download hosts cdn.marble.worldlabs.ai, v3b.fal.media, v3.fal.media added to the environment allow-list
 (user-approved 01:39 UTC). Atlas connector: not connected in this session (not needed for visual work).
+
+## Update 2026-11-18 ~02:25 UTC (user order: ALL FIVE screens; 04 + 05 keep running)
+* User: "Continue the two active Screen 04 and 05 specialists. When a slot becomes available, resume Screen 07 to fix the
+  tall white foam walls, oversized coin, and remaining differences from my approved scenery. Keep Screen 06 and Screen 08
+  in the specialist rotation too." Preserve the 07 plunge fix (m07tube + m07ring). Visuals only; no Atlas / Parallax
+  detours; verify the World Labs plugin skills when the next session starts.
+* 07: lead WIP saved `claude/rainbow-s07-match-c8` @ `401984b4` (`&m07foam=1` plunge walls → painted banks, clearly
+  closer; `&m07coinsz=1` near coin at painted size). Proofs owed — list in `qa/match/07/STATUS.md` (top). The next 07
+  specialist starts from there (do not redo m07foam).
+* Rotation: first free slot → 07 (finish proofs, level-stretch near water, hard wall edge) → 08 (finish the unfinished
+  r8 on `claude/rainbow-s08-scenery-c7` @ `c0d8c97b` on a new `-c8` branch: seams around towel/window/walls, coin look)
+  → 06 (`-c7` @ `efaf78b7`: ring highlights/bulbs, thinner far rings, crisp perforated wall, foam + bubbles).

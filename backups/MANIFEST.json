@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13550,
-   "sha256": "c5b700ffca31443f172d7fdf7368dbf1afd2fbb16dbac8cd92e662ff977edb3f"
+   "sha256": "62286af18290ad0bdea1b08f7ab9e913a813594b8353a9c1e1d8cd709f53d3fa"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -933,8 +933,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COORDINATION.md",
-   "bytes": 3455,
-   "sha256": "ef441dde5219b84d310190201ec24499050d6de6e1afe6066c011c14f8a13c8b"
+   "bytes": 4626,
+   "sha256": "974e2f9005d1325805cb981e1a303650d7459eebc778b365051b3d231e0ee878"
   },
   {
    "path": "docs/characters/benny.md",
@@ -9045,6 +9045,21 @@
    "path": "qa/review_r8/07_plunge_fix_r7/3_NEW_plunge_top.jpg",
    "bytes": 488452,
    "sha256": "d6e47e21fdeaaf00be3a288e5b25c0f849acc55d3da9d9164c5cc2108277df9d"
+  },
+  {
+   "path": "qa/review_r8/07_r8_foam_walls_WIP/1_APPROVED_07.jpg",
+   "bytes": 486684,
+   "sha256": "d33d85bb72b90fd89b3d9d2d85665c3735de1726ffd77b40111c661ded691766"
+  },
+  {
+   "path": "qa/review_r8/07_r8_foam_walls_WIP/2_BEFORE_mid_plunge_white_walls.jpg",
+   "bytes": 621773,
+   "sha256": "f60838868666c6b6c98f5cfc23854d15d119d0e10c73dd367af403ce8e66407e"
+  },
+  {
+   "path": "qa/review_r8/07_r8_foam_walls_WIP/3_NEW_mid_plunge_painted_banks.jpg",
+   "bytes": 670728,
+   "sha256": "bde02f74aeb7f8828846ddbf7be580415247089058154c5c16cbb43a85413a5d"
   },
   {
    "path": "qa/scene_comparisons.md",

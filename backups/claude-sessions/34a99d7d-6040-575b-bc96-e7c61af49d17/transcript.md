@@ -2444,3 +2444,126 @@ The plunge bottom (t95) is the hand-over into Screen 08's chamber. It is unchang
 
 > 🔧 **Bash** `{"command": "git worktree add -q --detach /home/user/wt/s07base 3afaa7e9cb 2>&1 | tail -1; ln -sfn /home/user/rainbow-/node_modules /home/user/wt/s07base/node_modules; cp /home/user/wt/s07/tools/match07/plunge_audit_r8.mjs /home/user/wt/s07base/tools/match07/; cd /home/user/wt/s07base && node tools/match07/plunge_audit_r8.mjs 07 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/def_base \"\" 2>&1 | grep -v 'allow list' | tail -1; cd /home/user/wt/s07 && node tools/match07/plunge_audit_r8.mjs 07 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d …[+614 chars]`
 
+### 🧑 User — 2026-11-18T01:52:13.474Z
+
+> ↩︎ result: 07 t95_through_screen s 384.059 lat 0 stage 07 frames 552
+> 07 t95_through_screen s 384.058 lat 0 stage 07 frames 552
+> default t33 px differing: 892144
+> default t50 px differing: 445426
+> default t66 px differing: 224032
+> default t80 px differing: 370350
+> default t95 px differing: 355443
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:52:18.903Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,7p scripts/capture.mjs; grep -n \"argv\\|07a\\|07b\\|stages\\b\" scripts/capture.mjs | head -10; ls qa/match/07/r7/ | grep -i proof; python3 -c \"import json;d=json.load(open('qa/match/07/r7/proof_default_0px.json'));print(json.dumps(d)[:600])\"", "description": "Read the deterministic capture usage and r7 proof method"}`
+
+### 🧑 User — 2026-11-18T01:52:18.974Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 11:const args = process.argv.slice(2);
+> 15:const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> proof_default_0px.json
+> proof_newset_vs_K_match08.json
+> {"06.png": {"differing": 0, "rows": null, "max": 0, "outside_banner": 0}, "07.png": {"differing": 0, "rows": null, "max": 0, "outside_banner": 0}, "07a_plunge_top.png": {"differing": 0, "rows": null, "max": 0, "outside_banner": 0}, "07b_plunge_mid.png": {"differing": 0, "rows": null, "max": 0, "outside_banner": 0}, "07c_plunge_bottom.png": {"differing": 0, "rows": null, "max": 0, "outs …[+218 chars]
+
+### 🤖 Claude — 2026-11-18T01:52:23.034Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; cd /home/user/wt/s07base && node scripts/capture.mjs 06 07 08 --plunge --out=$S/cap_base > $S/cap_base.log 2>&1; cd /home/user/wt/s07 && node scripts/capture.mjs 06 07 08 --plunge --out=$S/cap_new > $S/cap_new.log 2>&1; ls $S/cap_base $S/cap_new 2>&1 | head; ls qa/continuity/ 2>/dev/null | grep 07 | head", "description": "Deterministic captures of 06, 07, plunge and 08, start vs new", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T01:52:28.700Z
+
+> ↩︎ result: The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed. Correction to the text above: this call was stopped while running, not refused before it ran. It may have run in part or in full, and its changes may have been written. No permission prompt was involved. Work it started elsewhere (a remote command, a background process) may still be running, so check before starting the same work again. The instruction to stop and wait still stands.
+
+### 🧑 User — 2026-11-18T01:52:28.702Z
+
+[Request interrupted by user for tool use]
+
+### 🧑 User — 2026-11-18T01:52:28.745Z
+
+CLAUDIA — GOOD, NOW PRIORITIZE ALL FIVE SCREENS.
+
+Thank you for restoring the project and verifying the essential tools.
+
+I can see that Screen 07's giant orange obstruction has been removed. Please preserve that improvement.
+
+Continue the two active Screen 04 and 05 specialists. When a slot becomes available, resume Screen 07 to fix the tall white foam walls, oversized coin, and remaining differences from my approved scenery.
+
+Keep Screen 06 and Screen 08 in the specialist rotation too.
+
+I want ALL FIVE playable screens — 04, 05, 06, 07 and 08 — improving toward at least 8.5/10 visual accuracy.
+
+My priority remains the exact VISUAL APPEARANCE of my approved artwork, not additional features or repeated setup checks.
+
+Verify the World Labs plugin skills when the next session starts, but don't let optional Atlas or Parallax setup delay visual work unless those tools are genuinely needed.
+
+Show me real APPROVED / BEFORE / NEW visual improvements, separately and full-size.
+
+No redesigns, no paid jobs without approval, and save all successful changes to GitHub.
+
+### 🤖 Claude — 2026-11-18T01:52:36.285Z
+
+Understood. Stopping my own Screen 07 work here and leaving it to the rotation. First I'll save what's already done so nothing is lost, and make sure the interrupted capture isn't still using CPU.
+
+### 🤖 Claude — 2026-11-18T01:52:37.480Z
+
+> 🔧 **Bash** `{"command": "pkill -f 'scripts/capture.mjs' 2>/dev/null; sleep 1; ps aux | grep -E 'capture.mjs' | grep -v grep | wc -l; cd /home/user/wt/s07 && git status --short | head", "description": "Stop the interrupted capture and list unsaved 07 changes"}`
+
+### 🧑 User — 2026-11-18T01:52:38.699Z
+
+> ↩︎ result: 0
+>  M src/vfx/foam.ts
+>  M src/vfx/waterRibbon.ts
+> ?? qa/match/07/r8/
+> ?? tools/match07/plunge_audit_r8.mjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:52:53.460Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='qa/match/07/STATUS.md'; t=open(p).read()\nhead=\"\"\"# Screen 07 · DIVE THE WASHER TUBE — status (round 8 / account 8, 2026-11-18 ~02:20 UTC)\n\nBranch `claude/rainbow-s07-match-c8`, started from `3afaa7e9` (= `claude/rainbow-s07-match-c7` tip, M3 done). Nothing is\napproved until the user says so. **State: WORK IN PROGRESS, paused by the lead (user order: 07 resumes in the next free\nspecialist slot).**\n\n## Round 8 so far (lead, two look-only switches on top of the M3 kept set K)\nK = `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coin …[+2769 chars]`
+
+### 🧑 User — 2026-11-18T01:53:00.019Z
+
+> ↩︎ result: local=401984b45d remote=401984b45d
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:53:07.160Z
+
+> 🔧 **Bash** `{"command": "git worktree remove --force /home/user/wt/s07base 2>&1 | tail -1; O=qa/review_r8/07_r8_foam_walls_WIP && mkdir -p $O && cp qa/review_r8/07_plunge_fix_r7/1_APPROVED_07.jpg $O/1_APPROVED_07.jpg && convert /home/user/wt/s07/qa/match/07/r8/plunge_K/t66_through_screen.png -quality 90 $O/2_BEFORE_mid_plunge_white_walls.jpg && convert /home/user/wt/s07/qa/match/07/r8/plunge_foam_coinsz/t66_through_screen.png -quality 90 $O/3_NEW_mid_plunge_painted_banks.jpg && ls $O; for s in s04 s05; do cd /home/user/wt/$s; echo \"$s $(git log -1 --format='%h %cr %s' | cut -c1-110)\"; done", "descriptio …[+63 chars]`
+
+### 🧑 User — 2026-11-18T01:53:09.100Z
+
+> ↩︎ result: 1_APPROVED_07.jpg
+> 2_BEFORE_mid_plunge_white_walls.jpg
+> 3_NEW_mid_plunge_painted_banks.jpg
+> s04 0ab5659a 11 minutes ago Screen 04 M4 (r8): running-session status + BEFORE moving audit (match04=1, 12 positio
+> s05 a1f14e7b 12 minutes ago Screen 05 r8: first checkpoint — session RUNNING on claude/rainbow-s05-match-c8 (BEF
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:53:12.229Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r8/07_r8_foam_walls_WIP/1_APPROVED_07.jpg", "/home/user/rainbow-/qa/review_r8/07_r8_foam_walls_WIP/2_BEFORE_mid_plunge_white_walls.jpg", "/home/user/rainbow-/qa/review_r8/07_r8_foam_walls_WIP/3_NEW_mid_plunge_painted_banks.jpg"], "caption": "Screen 07 mid-plunge, work in progress: 1 APPROVED · 2 BEFORE (tall white foam walls, huge near coin) · 3 NEW (painted pink/cyan banks + soft blue foam, near coin at painted size). Saved on GitHub; proofs pending; not approved.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T01:53:12.824Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_r8/07_r8_foam_walls_WIP/1_APPROVED_07.jpg → file_uuid: d405f227-1f20-4f62-acc2-724b3f023ea9
+>   /home/user/rainbow-/qa/review_r8/07_r8_foam_walls_WIP/2_BEFORE_mid_plunge_white_walls.jpg → file_uuid: d3094da9-a85b-4fc6-abb9-f0018c1d83bc
+>   /home/user/rainbow-/qa/review_r8/07_r8_foam_walls_WIP/3_NEW_mid_plunge_painted_banks.jpg → file_uuid: 8857f27d-020f-4358-a03f-698bec296bba
+
+### 🤖 Claude — 2026-11-18T01:53:14.797Z
+
+Recording your rotation order so it survives any interruption, then saving:
+
+### 🤖 Claude — 2026-11-18T01:53:20.504Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r8/COORDINATION.md <<'EOF'\n\n## Update 2026-11-18 ~02:25 UTC (user order: ALL FIVE screens; 04 + 05 keep running)\n* User: \"Continue the two active Screen 04 and 05 specialists. When a slot becomes available, resume Screen 07 to fix the\n  tall white foam walls, oversized coin, and remaining differences from my approved scenery. Keep Screen 06 and Screen 08\n  in the specialist rotation too.\" Preserve the 07 plunge fix (m07tube + m07ring). Visuals only; no Atlas / Parallax\n  detours; verify the World Labs plugin skills when the next session starts …[+848 chars]`
+
