@@ -13,3 +13,6 @@ Kept set at start (round 13 end, = step-3 set):
   unfinished `&m05vee=1` edit (`src/vfx/waterRibbon.ts`, committed in 9735443d, NOT judged) by eye at start (0 px), f03 / f06 /
   f10 / f20, end, hard left / right against the step-3 set. Then: near water round Benny (task 2), near lather bank straight
   cut at the seam with a method different from m05lump (task 3), 05 -> 06 transition (task 4).
+* 2026-11-18 restarted ~16:45 UTC after interrupt (water-fx-specialist, new instance). The previous instance had begun
+  capturing `qa/match/05/r14/step1_m05vee/` (untracked, possibly incomplete) — checking each file, re-capturing what is
+  missing, then judging `&m05vee=1` (task 1).
