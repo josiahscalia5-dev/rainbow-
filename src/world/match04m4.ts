@@ -93,6 +93,7 @@ uniform float uLen;
 uniform vec4 uTone;        // band base, lip base, opening base, streak strength
 uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
 uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
+uniform float uCopper;     // r13 m04copper: rich polished COPPER-gold ramp (dark maroon grooves -> copper -> warm-gold highlights)
 uniform float uGoldY;      // m04gold: polished YELLOW-gold ramp (bright yellow-white highlights), fewer magenta tints
 uniform float uMouthT;     // m04mouth: the painted mouth ring texture on the opening (tile_mouth.png)
 uniform sampler2D uMouthTex;
@@ -109,6 +110,16 @@ vec3 goldRamp(float x) {
   x = clamp(x, 0.0, 1.0) * 5.0;
   vec3 c0 = vec3(0.43, 0.14, 0.02), c1 = vec3(0.66, 0.27, 0.07), c2 = vec3(0.80, 0.38, 0.11);
   vec3 c3 = vec3(0.96, 0.56, 0.15), c4 = vec3(1.0, 0.80, 0.30), c5 = vec3(1.0, 0.96, 0.80);
+  if (x < 1.0) return mix(c0, c1, x);
+  if (x < 2.0) return mix(c1, c2, x - 1.0);
+  if (x < 3.0) return mix(c2, c3, x - 2.0);
+  if (x < 4.0) return mix(c3, c4, x - 3.0);
+  return mix(c4, c5, x - 4.0);
+}
+vec3 goldRampC(float x) {
+  x = clamp(x, 0.0, 1.0) * 5.0;
+  vec3 c0 = vec3(0.17, 0.04, 0.03), c1 = vec3(0.42, 0.13, 0.06), c2 = vec3(0.66, 0.29, 0.12);
+  vec3 c3 = vec3(0.86, 0.50, 0.22), c4 = vec3(0.98, 0.76, 0.44), c5 = vec3(1.0, 0.95, 0.86);
   if (x < 1.0) return mix(c0, c1, x);
   if (x < 2.0) return mix(c1, c2, x - 1.0);
   if (x < 3.0) return mix(c2, c3, x - 2.0);
@@ -181,7 +192,7 @@ void main() {
       if (part > 0.5 && part < 1.5) v = uTone.y + 0.12 * facing + 0.04 * far + 0.15 * st;
       if (part > 1.5 && part < 2.5) v = 0.03 + 0.05 * far;
     }
-    col = uGoldY > 0.5 ? goldRampY(v) : goldRamp(v);
+    col = uCopper > 0.5 ? goldRampC(v * uCopper) : (uGoldY > 0.5 ? goldRampY(v) : goldRamp(v));
     if (!mouth && part < 1.5) {
       // the painted ring colour at this angle (pinks, violets, yellow streaks of the approved rings), with the crisp
       // structure's brightness: painted palette + modeled lip / groove / highlight shapes
@@ -285,6 +296,8 @@ uniform float uAway;
 uniform sampler2D uRiv;
 uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
 uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
+uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
 uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
 uniform float uTime;
 uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
@@ -330,7 +343,33 @@ void main() {
     vec3 laneC = mix(vec3(0.02, 0.42, 0.88), vec3(0.30, 0.82, 1.0), smoothstep(0.35, 0.80, lb));
     float sk = vn(vec2(vS * 3.1 + 2.0, fl * 0.12));
     laneC += vec3(0.55, 0.85, 1.0) * 0.35 * smoothstep(0.80, 0.97, sk);
+    if (uLane2.x > 0.0) {
+      // r13 m04lane2: the painted lane as RICH glossy magical water — saturated electric blue -> electric cyan, the tile's
+      // own swirls kept at a moderate blur (uLane2.x = detail), flowing glossy highlight ribbons, twinkling white sparkles
+      vec3 dl = mix(texture2D(uRiv, uv1, 1.5).rgb, texture2D(uRiv, uv2, 1.5).rgb, w);
+      float ld = mix(lb, dot(dl, vec3(0.30, 0.55, 0.15)), uLane2.x) + uLane2.w;   // w = brighter / more turquoise
+      laneC = mix(vec3(0.00, 0.22, 0.86), vec3(0.00, 0.62, 1.00), smoothstep(0.20, 0.55, ld));
+      laneC = mix(laneC, vec3(0.16, 0.92, 1.00), smoothstep(0.55, 0.82, ld));
+      laneC = mix(laneC, vec3(0.80, 0.98, 1.00), uLane2.y * smoothstep(0.84, 0.97, ld));            // glossy crests
+      float rib = vn(vec2(vS * 2.3 + 5.0, fl * 0.35));                                              // flowing highlight ribbons
+      laneC += vec3(0.45, 0.85, 1.0) * 0.30 * uLane2.y * smoothstep(0.72, 0.92, rib) * (0.6 + 0.4 * sin(fl * 2.0 + vS));
+      vec2 sc = vec2(vS * 5.0, fl * 3.0); vec2 si = floor(sc), sf = fract(sc) - 0.5;              // sparkles
+      float sh = h21(si + 17.0);
+      float tw = 0.5 + 0.5 * sin(uTime * 6.0 + sh * 40.0);
+      float spk = smoothstep(0.16, 0.0, length(sf - (vec2(h21(si + 3.1), h21(si + 7.7)) - 0.5) * 0.6)) * step(0.86, sh) * tw;
+      laneC += vec3(1.0) * uLane2.z * spk * (1.0 - smoothstep(0.3, 0.8, fwidth(sc.x)));
+    }
     col = mix(col, laneC, kl * uLane.z);
+  }
+  if (uEdge.x > 0.5) {
+    // r13 m04edge: soft irregular water edge against the gold wall — pink / magenta current then a lilac-white lacy fringe
+    // in broken patches (no straight hard line, no tall foam): uEdge.y = half arc to the edge, z = fringe width, w = strength
+    float e = smoothstep(uEdge.y - uEdge.z, uEdge.y - 0.04, abs(vS));
+    float n1 = vn(vec2(fl * 0.9, sign(vS) * 7.0 + abs(vS) * 2.0)), n2 = vn(vec2(fl * 2.7 + 3.0, abs(vS) * 6.0));
+    float patchy = smoothstep(0.35, 0.75, 0.65 * n1 + 0.35 * n2);
+    vec3 pinkC = mix(vec3(0.78, 0.16, 0.66), vec3(1.0, 0.45, 0.82), n2);
+    col = mix(col, pinkC, uEdge.w * smoothstep(uEdge.y - uEdge.z * 2.2, uEdge.y - uEdge.z, abs(vS)) * (0.5 + 0.5 * n1));
+    col = mix(col, vec3(0.97, 0.90, 1.0), uEdge.w * e * patchy);
   }
   if (uPk.x > 0.5) {
     // m04pink: the painted broad pink / magenta swirl bands either side of the cyan lane; the swirl structure (the
@@ -506,7 +545,7 @@ export function addM04(ctx: M04Ctx) {
       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
-        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
     const gw = M04.num('m04ringgw', 1);
     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
@@ -538,7 +577,7 @@ export function addM04(ctx: M04Ctx) {
       for (let i = 0; i < pa.count; i++) {
         const x = pa.getX(i), z = pa.getZ(i), rad = Math.hypot(x, z);
         const ang = Math.atan2(Math.abs(x), z);
-        const k = M04.river ? THREE.MathUtils.smoothstep(ang, angW - 0.95, angW - 0.55) : THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);
+        const k = M04.river ? THREE.MathUtils.smoothstep(ang, angW - M04.num('m04rf0', 0.95), angW - M04.num('m04rf1', 0.55)) : THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);
         const nr = rad + (r + 0.05 - rad) * k;
         pa.setX(i, (x / rad) * nr); pa.setZ(i, (z / rad) * nr);
       }
@@ -650,6 +689,8 @@ export function addM04(ctx: M04Ctx) {
         uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
         uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 },
         uLane: { value: new THREE.Vector3(M04.num('m04lane', 0), M04.num('m04lanew', 1.9), M04.num('m04lanes', 0.85)) },
+        uLane2: { value: new THREE.Vector4(M04.num('m04lane2', 0), M04.num('m04lgl', 1.0), M04.num('m04lsp', 0.9), M04.num('m04lbr', 0)) },
+        uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
         uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
         uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },

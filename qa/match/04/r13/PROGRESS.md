@@ -36,3 +36,15 @@ Query (C5): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=
   the hat brim (behind Benny, not over him); straight ahead a passing bubble can cover an arrow.
 * Rejected: R1/R2/R3 (ring spacing only / brighter streaks), W1 (pale lilac sides, cyan lost), W2 (lengthened side currents =
   smeared), W4 (solid blue arrow plates), C1/C2/C3/C4 (intermediate).
+
+## Step 4 — user order ~16:00 UTC: rich glossy water, copper-gold rings, soft edges (C5 kept) — D4 = GOOD IMPROVEMENT — shown to the user
+Query (D4): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=3.0&m04a3w=1.05&m04a3t=0.36&m04a3d=0.62&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.8&m04tb=0.13&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.6&m04pkw=0.55&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14`
+* New settings: `m04lane2` (lane = saturated electric blue -> electric cyan with the tile's own swirls at moderate blur, glossy
+  crests `m04lgl`, flowing highlight ribbons, twinkling sparkles `m04lsp`, turquoise shift `m04lbr`), `m04copper` (ring ramp
+  dark maroon grooves -> copper -> warm-gold highlights, brightness scale), `m04edge` (soft pink current + broken lilac-white lacy
+  fringe at the water edge), `m04rf0/m04rf1` (ring beads flattened higher above the water: no dark notches cut into the waterline).
+* WHAT LOOKS CLOSER: water rich turquoise / electric blue with white glossy crests and sparkles (BEFORE pale flat blue); rings
+  copper-gold with dark grooves and bright polished rims (BEFORE flat orange); soft pink fringe instead of hard notched edges.
+* STILL WRONG: rings a shade darker / browner than the painted glowing gold (upper tunnel); painted water is brighter turquoise with
+  more intense white glints; few pink swirls inside the water (the painting has more magenta near the mouth).
+* Rejected: D1 (too dark), D3 (copper x1.65: pale yellow-white rims + dark bands = striped).
