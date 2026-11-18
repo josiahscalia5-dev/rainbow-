@@ -984,3 +984,60 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 > * Tried: a hidden drum point takes the user's pixels from the nearest visible point of the same ring (same depth, turned
 >   6–42° about the chamber axis). Result: the nearest visible ring points  …[+4521 chars]
 
+### 🤖 Claude — 2026-11-18T19:29:02.118Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nimport json;d=json.load(open('assets/textures/match08/proj08.json'));\nfor k,v in d.items():\n  s=json.dumps(v); print(k, s[:300])\n\"", "description": "Print the Screen 08 layout/projector JSON"}`
+
+### 🧑 User — 2026-11-18T19:29:02.384Z
+
+> ↩︎ result: camera {"pos": [12.848382064991654, -109.86620136268614, -274.80056164895825], "matrixWorld": [0.9986080315163138, 0, -0.05274466220493558, 0, -0.008521755395209578, 0.9868618740267736, -0.16134131918807607, 0, 0.05205169618847186, 0.16156621426636333, 0.9854881934003769, 0, 12.848382064991654, -109.866201
+> floorY -113.6
+> chamber {"cx": 12.0, "cy": -101.1, "r": 13.5, "zBack": -280.0, "zDoor": -332.0}
+> arch {"z": -281.2164245171123, "outer": {"cx": 12.376735924463707, "cy": -111.01146278742368, "r": 2.8785458098908463}, "inner": {"cx": 12.388294771720878, "cy": -110.98244622251975, "r": 2.5653852087433306}, "depth": 0.9, "feetZ": [-281.1505024527194, -281.2823465815051], "check_row600_px": [-126.321185
+> pipe {"cx": 12.376735924463707, "cy": -111.01146278742368, "r": 2.9185458098908463, "z0": -266.80056164895825, "z1": -281.2164245171123}
+> backwall {"z": -284.80056164895825, "holeR": 4.298503804495194}
+> platform {"cx": 12.01853569828291, "cz": -325.0, "r": 8.545661353037843, "topY": -109.49424440576783, "rimBottomY": -110.56571929613797, "legsBottomY": -112.42005720374493, "floorY": -113.6, "tiltDeg": 4.836197917371241, "eyeElevDeg": -0.4244721316010628}
+> towel {"cx": 12.042312085090048, "c …[+712 chars]
+
+### 🤖 Claude — 2026-11-18T19:29:05.579Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nimport json;d=json.load(open('assets/textures/match08/proj08.json'));\nfor k,v in d['spouts'].items(): print(k, v)\nprint(d['camera'].get('fov'), d['camera'].keys())\nprint(d['checks'])\n\"", "description": "Print spout cup layout and camera details"}`
+
+### 🧑 User — 2026-11-18T19:29:05.864Z
+
+> ↩︎ result: UL {'c': [3.1710933558756533, -103.34538602777661, -322.0], 'rx': 2.994802720331874, 'ry': 1.5609787975448057, 'box': [150, 330, 315, 420], 'dist': 48.620550490974146}
+> UR {'c': [20.31350571523367, -104.8372219034162, -322.0], 'rx': 1.6675780274254421, 'ry': 1.5469960618334397, 'box': [665, 370, 760, 460], 'dist': 48.05003315471231}
+> LL {'c': [5.375109478094917, -112.86268785494082, -300.3881314740565], 'rx': 2.742515526831511, 'ry': 2.1045940033639923, 'box': [0, 605, 265, 810], 'dist': 26.824475092918487}
+> LR {'c': [17.31491754871673, -113.50974018464298, -298.5314700767885], 'rx': 2.2865447507216654, 'ry': 2.208510981338435, 'box': [615, 640, 864, 875], 'dist': 24.42091990864688}
+> 62 dict_keys(['pos', 'matrixWorld', 'fov', 'size'])
+> {'platform_centre_px': [479.01461594128233, 549.0007872033261], 'towel_top_px': [479.71116701845466, 463.0730791010011], 'arch_top_outer_px': [404.06840957311385, 188.73699422933922], 'door_px': [482.05890907822607, 412.249198207453], 'camera_to_arch': 6.415862868154022, 'camera_to_platform': 50.19943835104175}
+
+### 🤖 Claude — 2026-11-18T19:29:18.896Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,132p src/world/match08.ts", "description": "Read header and shader start of match08"}`
+
+### 🧑 User — 2026-11-18T19:29:19.110Z
+
+> ↩︎ result: /**
+>  * `?match08=1` — Screen 08 approved-picture test (2026-11-17, qa/match/08/NOTES.md).
+>  * REAL 3D proxy geometry of the Final Spin Chamber, solved from the user's approved Screen 08 and the locked game
+>  * camera (tools/match08/fit_proxies.py → assets/textures/match08/proj08.json): inlet pipe, gold arch, chamber walls,
+>  * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+>  * Every surface is textured by camera projection of the CLEAN environment-only artwork (Benny, HUD, coins removed;
+>  * qa/imageblaster/08/) from that locked camera, so the locked view shows the approved scenery and a moving camera sees
+>  * it on geometry (parallax). Surfaces the projector cannot see (behind props) get a plain fallback colour instead of
+>  * a smeared copy (projector depth test). The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+>  * Without the switch nothing in this file runs and the game is unchanged.
+>  */
+> import * as THREE from 'three';
+> import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+> 
+> interface Layout {
+>   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+>   floorY: number;
+>  …[+7451 chars]
+
+### 🤖 Claude — 2026-11-18T19:29:24.920Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K15=\"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K14.txt)&m08sr=1\" && echo \"$K15\" > /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt && M08_DET=1 M08_ONLY=f10,t95 node tools/match08/shots08.mjs 08 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/dbg \"$K15&m08dbg=1\" 2>&1 | grep -v \"allow list\"", "description": "Render proxy debug colours at forward 10 u and stage end", "timeout": 600000}`
+
