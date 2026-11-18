@@ -22,7 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
 import { tubeCenterAt } from './tube';
 import type { FarRiverLayout, FarRiverRow } from './far05';
 import type { Course, CourseSample } from './course';
-import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05seam } from '../vfx/waterRibbon';
+import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';
 import { clip05 } from '../vfx/clip05';
 
 export const M05FAR: boolean = MATCH05 && flag05('m05far');
@@ -103,6 +103,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
   const rivOrig = keep(rg, rivNames);
   const rivOpenOrig = (rg.morphAttributes.position[0].array as Float32Array).slice();
   const eyeLock = c0.clone().addScaledVector(T, -D0lock).add(ft.q);
+  m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye
   const glowPos0 = a.glow.position.clone(), glowScale0 = a.glow.scale.x;
 
   const restore = () => {

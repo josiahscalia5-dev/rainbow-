@@ -14,7 +14,7 @@
  * materials are wrapped only when a switch is on, every default shader program is unchanged.
  */
 import * as THREE from 'three';
-import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+import { M05WALL, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
 // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
 const flag05 = on05;
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -208,6 +208,51 @@ function livePost(renderer: THREE.WebGLRenderer) {
   shared.uPjPost.value.x = renderer.toneMappingExposure;
 }
 
+/**
+ * `&m05wall=1` (Screen 05 round 9, waterRibbon.ts M05WALL): where the projected atlas would be magnified while swimming
+ * (texels per screen pixel < 0.9) the bay becomes crisp perforated metal in the approved palette (display values,
+ * measured on the approved near walls: plum slot (50,1,37), violet metal (171,51,185), lit metal (232,67,186), pink lip
+ * (244,101,240), highlight (253,213,250)); slot grid measured from the atlas rows (44 of 2048 texels round the tube =
+ * 46.5 slots per turn, 6.7 slot rows per 14-u bay ≈ 1.9 u). The atlas's own low-frequency colour (blurred over one slot
+ * pitch) keeps the painted light distribution wherever it is wall-coloured (purple: low green); water / foam texels of
+ * a bay (the far wall by the left bank) fall back to the violet metal. Off at the locked checkpoint eye (0 px there).
+ */
+const M05WALL_GLSL = /* glsl */ `
+  {
+    vec2 tpw = puv * uPtWallSize;
+    vec2 jwa = dFdx(tpw), jwb = dFdy(tpw);
+    float mW = abs(jwa.x * jwb.y - jwa.y * jwb.x) / max(max(length(jwa), length(jwb)), 1e-5);
+    float rideW = uM05Eye.w > 0.5 ? smoothstep(0.02, 0.5, distance(cameraPosition, uM05Eye.xyz)) : 0.0;
+    float wC = rideW * (1.0 - smoothstep(0.45, 0.9, mW));
+    if (wC > 0.0) {
+      // low-frequency colour of the bay: the atlas blurred over about one slot pitch (rows clamped to this bay's row)
+      float y0 = (rw.x + 0.5) / uPtWallSize.y, y1 = (rw.x + rw.y - 0.5) / uPtWallSize.y;
+      vec2 bx = vec2(22.0 / uPtWallSize.x, 0.0), by = vec2(0.0, max(rw.y / 13.4, 1.0) / uPtWallSize.y);
+      vec3 lf = pc * 2.0;
+      lf += texture2D(uPtWall, vec2(puv.x + bx.x, puv.y)).rgb + texture2D(uPtWall, vec2(puv.x - bx.x, puv.y)).rgb;
+      lf += texture2D(uPtWall, vec2(puv.x, clamp(puv.y + by.y, y0, y1))).rgb + texture2D(uPtWall, vec2(puv.x, clamp(puv.y - by.y, y0, y1))).rgb;
+      lf += texture2D(uPtWall, vec2(puv.x + bx.x, clamp(puv.y + by.y, y0, y1))).rgb + texture2D(uPtWall, vec2(puv.x - bx.x, clamp(puv.y - by.y, y0, y1))).rgb;
+      lf += texture2D(uPtWall, vec2(puv.x - bx.x, clamp(puv.y + by.y, y0, y1))).rgb + texture2D(uPtWall, vec2(puv.x + bx.x, clamp(puv.y - by.y, y0, y1))).rgb;
+      lf /= 10.0;
+      float wallK = smoothstep(0.08, 0.24, min(lf.r, lf.b) - lf.g);
+      vec3 metal = mix(vec3(0.671, 0.200, 0.725), clamp(lf * 1.12, 0.0, 1.0), wallK);
+      // slot grid (units): 46.5 slots round the tube, rows every 1.9 u along it; rounded-square slots ≈ 0.6 × 0.6 u
+      // (atlas: 26 × 13 texels = 0.61 u round × 0.64 u along — they read as tall capsules only through the perspective)
+      vec2 gw = vec2(vPerfUv.x * 46.5, vPerfUv.y / 1.9);
+      vec2 qw = (fract(gw) - 0.5) * vec2(1.03, 1.9);
+      vec2 kq = max(abs(qw) - vec2(0.16, 0.15), 0.0);
+      float dS = length(kq) + min(max(abs(qw.x) - 0.16, abs(qw.y) - 0.15), 0.0) - 0.14;
+      float aS = fwidth(dS) * 0.9 + 1e-4;
+      float hole = 1.0 - smoothstep(-aS, aS, dS);
+      float glow = exp(-max(dS, 0.0) / 0.06) * (1.0 - hole);
+      float lip = glow * smoothstep(-0.02, 0.06, qw.y);
+      vec3 cw = metal;
+      cw = mix(cw, vec3(0.957, 0.396, 0.941), clamp(glow * 0.35 + lip * 0.45, 0.0, 1.0));
+      cw = mix(cw, mix(vec3(0.196, 0.004, 0.145), vec3(0.35, 0.05, 0.3), smoothstep(-0.1, 0.0, dS)), hole);
+      pc = mix(pc, cw, wC);
+    }
+  }`;
+
 /** one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1 */
 export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: number }
 
@@ -219,7 +264,7 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: 
 export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
   const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0, 0)));
   const segT = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector3(segs[i].row, segs[i].t0, segs[i].t1) : new THREE.Vector3(0, 0, 0)));
-  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) } };
+  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL ? { uM05Eye: m05eye } : {}) };
   // env05 run #4: the bays stay editable until the first render (environment.ts adds the real wall's bay past the seam)
   mat.userData.ptSeg = seg;
   mat.userData.ptSegT = segT;
@@ -244,12 +289,13 @@ void main() {`)
   }
   vec2 rw = uPtRows[int(prow + 0.5)];
   vec2 puv = vec2(fract(vPerfUv.x + 0.25), (rw.x + clamp(pt * rw.y, 0.5, rw.y - 0.5)) / uPtWallSize.y);
-  vec3 pc = texture2D(uPtWall, puv).rgb;
+  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WALL ? M05WALL_GLSL : ''}
   gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);
 }`);
+    if (M05WALL) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
   };
   const prevKey = mat.customProgramCacheKey.bind(mat);
-  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key;
+  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '');
   const prevRender = mat.onBeforeRender;
   mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
   return mat;

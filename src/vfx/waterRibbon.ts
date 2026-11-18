@@ -308,6 +308,31 @@ export const m05blend = {
   uFbRt: { value: new THREE.Vector3(1, 0, 0) },
   uFbP: { value: new THREE.Vector4(0, 0, 6.5, 0) },
 };
+/**
+ * `&m05near=1` (Screen 05 round 9, needs m05ride): while swimming, m05ride faded the approved design E out from 1.55 u
+ * behind Benny's locked position, so the water between the bottom gold-frame pieces (the nearest ~2.5 u, the bottom
+ * third of every swimming frame) was the repeated near tile — a broad marbled cyan sheet with long horizontal streaks
+ * instead of the painted pink banks, foam piles and bubbles of the approved picture's bottom. Under the switch E stays in
+ * use down to `m05nears` (default 2.65 u) behind the locked focus, i.e. everything after its first rows (the gold rim).
+ */
+export const M05NEAR: boolean = M05RIDE && q05('m05near');
+const m05nearS0 = (): number => {
+  const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('m05nears') : null;
+  return v !== null && v !== '' && isFinite(+v) ? Math.min(3, Math.max(0.9, +v)) : 2.65;
+};
+/**
+ * `&m05wall=1` (Screen 05 round 9, needs m05far; src/vfx/proj05Tunnel.ts withProj05Wall): CRISP PURPLE METAL WALLS while
+ * swimming. The walls wear the approved picture camera-projected per bay (wall05e.png atlas); swimming brings them 2–6×
+ * closer than the approved view had them, so the baked pixels were magnified into a blurred purple smear, and on the far
+ * wall's lower part (beyond the seam, by the left bank) the bay's texels that held the painted river and foam stood on
+ * the wall as a flat lilac / cyan slab. Where the atlas would be magnified (texels per screen pixel < 0.9) and the camera
+ * has left the locked checkpoint eye, the wall becomes crisp perforated metal as painted: the approved palette (violet
+ * metal, dark plum slots with a bright pink lower lip, pink-white light streaks along the tunnel) at the approved slot
+ * pitch (measured from the atlas: 46.5 slots round the tube, ≈ 1.9 u between slot rows), lit by the atlas's own
+ * low-frequency colour where that colour is wall (not water / foam). `m05eye` = the locked checkpoint eye (match05far.ts).
+ */
+export const M05WALL: boolean = MATCH05 && q05('m05far') && q05('m05wall');
+export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
 export const m05blendTime: { u: THREE.IUniform | null } = { u: null };
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
@@ -533,6 +558,9 @@ uniform vec4 uPjVP;
 #ifdef M05SEAM
 uniform vec2 uPjSeam;      // m05seam: (world s of the far tunnel seam, live)
 #endif
+#ifdef M05NEAR
+uniform sampler2D uPjNM;   // m05near: keep-mask of E's near rows (1 = painted water)
+#endif
 #ifdef M05BLEND
 // m05blend: the far river's baked layer F + the far tunnel frame (origin c0, axis T, right Rt) and (seam depth, band, half chord, live)
 uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
@@ -568,7 +596,15 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
   // m05ride: E's first rows hold the painted bottom gold-frame rim and wall corners (hidden by the near ring in the
   // locked view, exposed by the ride camera) and its sides end at the locked picture's edge: fade E in over those
   // rows and at its sides, the crisp near tile carries the water there
+  #ifdef M05NEAR
+  // m05near (round 9): E's near rows (the painted pink banks, foam piles and bubbles between the bottom gold-frame pieces)
+  // stay in use down to just after its first rows (the gold rim); the frame / wall-corner pieces in those rows are
+  // masked out (assets/textures/match05/m05near/near_mask.png, tools/match05/near_mask.py), see M05NEAR
+  float nmK = eUV.y < 0.35 ? texture2D(uPjNM, vec2(eUV.x, eUV.y / 0.35)).r : 1.0;
+  wE *= mix(1.0, nmK * smoothstep(uPjNear.w - M05NEAR_S0, uPjNear.w - M05NEAR_S0 + 0.3, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+  #else
   wE *= mix(1.0, smoothstep(uPjNear.w - 1.55, uPjNear.w - 0.85, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+  #endif
   #endif
   vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
   vec4 n = texture2D(uPjN, nUV);
@@ -1821,7 +1857,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -1923,6 +1959,19 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
   u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
   if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
+  if (M05NEAR) {
+    // m05near (Screen 05 round 9): keep-mask of E's near rows (tools/match05/near_mask.py)
+    const nm = { value: empty as THREE.Texture };
+    u.uPjNM = nm;
+    proj05Pending.push(new Promise<void>((res) => {
+      new THREE.TextureLoader().load(new URL('../../assets/textures/match05/m05near/near_mask.png', import.meta.url).href, (t) => {
+        t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false;
+        t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter;
+        t.wrapS = THREE.ClampToEdgeWrapping; t.wrapT = THREE.ClampToEdgeWrapping; t.needsUpdate = true;
+        nm.value = t; res();
+      }, undefined, () => res());
+    }));
+  }
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   const loader = new THREE.TextureLoader();

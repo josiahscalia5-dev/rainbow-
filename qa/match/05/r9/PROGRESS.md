@@ -30,3 +30,12 @@ Pictures are rendered with `node tools/match05/r8_shots.mjs <dir> "<query>" <nam
   `/home/user/wt/s05/qa/match/05/r9/step1_m05blend/f20_forward20u.png`
 * Files: `src/vfx/waterRibbon.ts` (M05BLEND, shader band), `src/world/match05far.ts` (uniforms + first far rows on the
   ribbon surface), `src/world/environment.ts` (passes `course` to the live far block; used only under the switch).
+
+## WIP (not kept, not reported as steps) — saved on the lead's order to stop polish work
+* `&m05near=1` — tried, not kept: E's near rows (painted pink banks / foam between the bottom frame pieces) kept in use
+  while swimming, frame / wall-corner pieces masked (`tools/match05/near_mask.py`). Result: only a small trapezoid patch
+  behind Benny with a hard outline (the approved picture holds the near water only in a narrow strip between the frame
+  pieces); the rest of the near water stays the tile. Code left switch-guarded for reference.
+* `&m05wall=1` — unfinished (paused by the lead's order): crisp slotted purple metal where the projected wall atlas is
+  magnified while swimming (`src/vfx/proj05Tunnel.ts` M05WALL_GLSL). First render: walls crisp but slots too thin and the
+  metal too pale; slot shape corrected to the atlas measurement (≈ 0.6 × 0.6 u), not yet judged.
