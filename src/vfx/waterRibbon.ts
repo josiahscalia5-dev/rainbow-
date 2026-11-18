@@ -434,6 +434,15 @@ export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
  */
 export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
 /**
+ * `&m05frim=1` (Screen 05 round 13, needs m05fcloud; src/world/materials.ts farRiverMaterial): the far river's banks behind
+ * the seam. Beyond its water edge the far river drew a flat pale-lilac foam rim 1.3 … 9 u wide, out to the tube wall — the
+ * flat wedge on the left far bank (t66 … t90) and, steering hard left at t95, a big pale floor behind the foam line. Where
+ * the block is live and its baked picture magnified (the same weight as m05fmag / m05fcloud), the rim shrinks to a narrow
+ * scalloped foam strip under the far foam clouds, and beyond it the far tunnel's own purple slotted wall shows, coming
+ * down to the foam — as painted (foam clouds on the bank, wall behind them). Locked view: block not live → unchanged.
+ */
+export const M05FRIM: boolean = M05FCLOUD && q05('m05frim');
+/**
  * `&m05join=1` (Screen 05 round 13, needs m05fpaint; src/world/match05far.ts, src/world/materials.ts farRiverMaterial):
  * ONE CONTINUOUS RIVER AT THE SEAM while swimming. Where the baked far picture F would be magnified, m05fmag still faded
  * the near ribbon into F over its last 1.5 u and the far river kept F over its first 2.5 u — a narrow band of magnified F

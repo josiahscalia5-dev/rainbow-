@@ -4,7 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, M05JOIN, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
+import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, M05FRIM, M05JOIN, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -972,7 +972,15 @@ float rivCells(vec2 p) {
   float bankN = (rivNoise(vec2(s * 0.9, sign(lat - xB) * 7.0 + lat * 1.3)) - 0.5) * 0.3;
   // beyond the foam rim (inner bank of a far bend) the far wall shows down to the foam (ref 05); right behind
   // the seam the surface covers the whole floor (the real ribbon's continuation lies under it)
-  float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));
+  float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));${M05FRIM ? `
+  {
+    // m05frim (Screen 05 round 13): where the baked F is magnified (block live) only a narrow scalloped foam strip under
+    // the far foam clouds; beyond it the far wall shows down to the foam (no flat pale floor)
+    float frM = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist, 0.5));
+    float frSd = sign(lat - xB);
+    float frE = 0.3 + (rivNoise(vec2(s * 1.6, frSd * 11.0)) - 0.5) * 0.45 + (rivNoise(vec2(s * 4.7, frSd * 3.0 + 5.0)) - 0.5) * 0.2;
+    bankW = mix(bankW, frE - bankN * 2.0, frM);
+  }` : ''}
 #ifndef FARW05
   if (e > bankW + bankN * 2.0) discard;
 #endif
@@ -1200,7 +1208,7 @@ float rivCells(vec2 p) {
   }
   if (pj) {
     const key = mat.customProgramCacheKey;
-    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '') + (M05JOIN ? '-m05join' : '');
+    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '') + (M05JOIN ? '-m05join' : '') + (M05FRIM ? '-m05frim' : '');
     mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };
     mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);
   }

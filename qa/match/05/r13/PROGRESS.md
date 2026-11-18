@@ -57,3 +57,26 @@ t95 (+left/right), t98; positions in `shots.json`).
 * Files: `src/vfx/waterRibbon.ts` (M05JOIN, m05join uniforms, jnRow / jnU, fade in the M05BLEND block),
   `src/world/materials.ts` (FMAG_PRE / FPAINT_APPLY without the 2.5-u F ramp under the switch), `src/world/match05far.ts`
   (far layout table), `tools/match05/r13_dbg_shots.mjs` (r8_shots + PRE_JS for layer diagnosis).
+
+## Step 3 — `&m05frim=1` (class A/E: the far banks are foam clouds with the purple wall behind, not a flat pale floor) — KEPT
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1`
+* Cause (diagnosed by hiding the far river, then the lather berm, at t95 hard left): the big pale floor behind the foam line
+  and the flat pale-lilac wedge of the left far bank are the far river's own foam rim — beyond its water edge it drew a flat
+  foam band 1.3 … 9 u wide, out to the tube wall. With the far river hidden, the far tunnel's purple slotted wall comes down
+  to the foam line there.
+* Fix (no new design): where the far block is live and its baked picture magnified (same weight as m05fmag / m05fcloud), the
+  rim shrinks to a narrow scalloped foam strip under the far foam clouds (m05fcloud), and beyond it the far tunnel's own
+  purple wall shows, coming down to the foam — foam clouds on the bank, wall behind them, as painted.
+* WHAT LOOKS CLOSER: steering hard left at t95 the large pale floor between the foam line and the wall is gone — the purple
+  slotted wall now comes down to the line of foam clouds along the left bank. At k81 (left), t85 and t75 the flat pale-lilac
+  wedge / band along the left far bank is gone; the foam clouds sit against the wall. t66: small change (thinner pale edge).
+* Locked approved view: 0 px (`node scripts/capture.mjs 05 --q=<step-2 set>` vs `+m05frim=1`).
+* Still wrong: just behind the foam on the left the far wall's lowest part is a soft pink-violet smear without slots (k81
+  left, t95 left); the near lather bank (berm) still ends in a straight cut / square corner at the seam (t75, k81 left) and
+  near foam lumps behind the seam are cut by the far block's first row.
+* APPROVED: `/home/user/wt/s05/qa/match/05/r13/step3_m05frim/1_APPROVED.png`
+* BEFORE (= step 2 set): `/home/user/wt/s05/qa/match/05/r13/step3_m05frim/2_BEFORE_t95_left.png`, `…/2_BEFORE_k81_kink_left.png`,
+  `…/2_BEFORE_t85_through.png`, `…/2_BEFORE_t75_through.png`, `…/2_BEFORE_t66_through_screen.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r13/step3_m05frim/3_NEW_t95_left.png`, `…/3_NEW_k81_kink_left.png`,
+  `…/3_NEW_t85_through.png`, `…/3_NEW_t75_through.png`, `…/3_NEW_t66_through_screen.png`
+* Files: `src/vfx/waterRibbon.ts` (M05FRIM), `src/world/materials.ts` (farRiverMaterial: bankW under the switch).
