@@ -1908,3 +1908,245 @@ Now pass `course` from environment.ts (switch-guarded value only).
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:59:15.026Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"import json; print(json.load(open('assets/textures/water05/proj05_near.json')))\" | head -5", "description": "Read locked focus s from near json"}`
+
+### 🧑 User — 2026-11-18T02:59:15.088Z
+
+> ↩︎ result: {'note': 'proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)', 'T2': {'a': 131.685, 'L': 6.565, 'width': 1024, 'height': 768, 'wrapT': 'mirrored', 'period': 13.13}, 'source': {'a': 132.0, 'L': 6.0, 'ease_near': [0.3, 0.9], 'ease_far': [0.5, 1.0], 'seam_heal_zone_texels': 31603}, 'locked_focus_s': 132.438, 'texels_per_world_unit': {'along': 117.0, 'across': 106.7, 'old_N_T_along': 24.0, 'old_T_across': 53.3}, 'source_rows_per_world_unit': {'130.5': 230.0, '132.0': 125.6, '134.0': 74.6, '136.0': 61.2, '137.5': 52.6}, 'visible_u_range': {'130.5': [-0.28, 0.323], '132.0': [-0.384, 0.402], '134.0': [-0.537, 0.488], '136.0': [-0.705, 0.55], '137.5': [-0.836, 0.512]}, 'share_of_texels_from_visible_water': 0.929, 'share_filled_along_flow': 0.0916, 'bubbles_removed': 15, 'holes_cloned': 16, 'column_shift_s': {'-0.9': 6.9, '-0.7': 4.37, '-0.5': 1.95, '-0.3': 0.4, '+0.0': 0.0, '+0.3': 0.4, '+0.5': 2.96, '+0.7': 10.96, '+0.9': 13.49}, 'flow': {'file': 'proj05_WT2.png', 'height': 53, 'mean_abs_slope_world': 0.108, 'flow_area': 0.822}}
+
+### 🤖 Claude — 2026-11-18T02:59:21.962Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"wE \\*= mix(1.0, smoothstep(uPjNear.w - 1.55\" src/vfx/waterRibbon.ts", "description": "Locate m05ride E fade line"}`
+
+### 🧑 User — 2026-11-18T02:59:22.000Z
+
+> ↩︎ result: 571:  wE *= mix(1.0, smoothstep(uPjNear.w - 1.55, uPjNear.w - 0.85, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+
+### 🤖 Claude — 2026-11-18T02:59:23.262Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 564, "limit": 10}`
+
+### 🧑 User — 2026-11-18T02:59:23.288Z
+
+> ↩︎ result: 564	  vec4 e = texture2D(uPjE, eUV);
+> 565	  float inE = L.w * step(0.0, eUV.x) * step(eUV.x, 1.0);
+> 566	  wE = e.a * inE * smoothstep(0.3, 0.55, mE);
+> 567	  #ifdef M05RIDE
+> 568	  // m05ride: E's first rows hold the painted bottom gold-frame rim and wall corners (hidden by the near ring in the
+> 569	  // locked view, exposed by the ride camera) and its sides end at the locked picture's edge: fade E in over those
+> 570	  // rows and at its sides, the crisp near tile carries the water there
+> 571	  wE *= mix(1.0, smoothstep(uPjNear.w - 1.55, uPjNear.w - 0.85, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+> 572	  #endif
+> 573	  vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
+
+### 🤖 Claude — 2026-11-18T02:59:29.766Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  wE *= mix(1.0, smoothstep(uPjNear.w - 1.55, uPjNear.w - 0.85, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());\n  #endif", "new_string": "  #ifdef M05NEAR\n  // m05near (round 9): E's near rows (the painted pink banks, foam piles and bubbles between the bottom gold-frame pieces)\n  // stay in use down to just after its first rows (the gold rim), see M05NEAR\n  wE *= mix(1.0, smoothstep(uPjNear.w - M05NEAR_S0, uPjNear.w - M05NEAR_S0 + 0.3, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eU …[+178 chars]`
+
+### 🧑 User — 2026-11-18T02:59:29.810Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:59:33.515Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "/** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */", "new_string": "/**\n * `&m05near=1` (Screen 05 round 9, needs m05ride): while swimming, m05ride faded the approved design E out from 1.55 u\n * behind Benny's locked position, so the water between the bottom gold-frame pieces (the nearest ~2.5 u, the bottom\n * third of every swimming frame) was the repeated near tile — a broad marbled cyan sheet with long horizontal streaks\n *  …[+430 chars]`
+
+### 🧑 User — 2026-11-18T02:59:33.558Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:59:35.015Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "...(M05BLEND ? { M05BLEND: 1 } : {}) },", "new_string": "...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}) },"}`
+
+### 🧑 User — 2026-11-18T02:59:35.050Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:59:36.723Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05NEAR: boolean = M05RIDE && q05('m05near');", "new_string": "export const M05NEAR: boolean = M05RIDE && q05('m05near');\nconst m05nearS0 = (): number => {\n  const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('m05nears') : null;\n  return v !== null && v !== '' && isFinite(+v) ? Math.min(3, Math.max(0.9, +v)) : 2.65;\n};"}`
+
+### 🧑 User — 2026-11-18T02:59:36.772Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:59:41.708Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && echo TSC_OK && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/near1 \"$K&m05near=1\" t66_through_screen,f10_forward10u,f20_forward20u,s_left_hard 5291 2>&1 | tail -4", "description": "Type-check and render m05near test shots", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T03:00:24.624Z
+
+> ↩︎ result: TSC_OK
+> f10_forward10u s 143.164 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> f20_forward20u s 153.156 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> s_left_hard s 145.092 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> t66_through_screen s 170.389 lat -0.006 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@519,656 d73
+
+### 🤖 Claude — 2026-11-18T03:00:27.006Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/near1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T03:00:27.053Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:00:38.083Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/wt/s05/assets/textures/match05/tgtwall05/proj05_E.png').convert('RGBA')\nc=im.crop((0,0,1024,660))\nbg=Image.new('RGBA', c.size,(0,0,0,255)); bg.alpha_composite(c); bg.convert('RGB').resize((768,495)).save('E_top.png')\na=im.getchannel('A').crop((0,0,1024,660)).resize((768,495)); a.save('E_top_alpha.png')\n\"", "description": "Crop E near rows and alpha"}`
+
+### 🧑 User — 2026-11-18T03:00:38.348Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T03:00:40.298Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/E_top.png"}`
+
+### 🧑 User — 2026-11-18T03:00:40.318Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:00:53.388Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/E_top_alpha.png"}`
+
+### 🧑 User — 2026-11-18T03:00:53.405Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:01:20.608Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/tools/match05/near_mask.py", "content": "\"\"\"Screen 05 round 9 (`&m05near=1`): mask of the approved design E's NEAR rows that are real painted water.\n\nE's first rows (V < 0.35, s ≈ 129.7–132.1) hold the water between the bottom gold-frame pieces of the approved picture\n(pink banks, foam piles, bubbles) but also, at the very top and at the sides, pieces of the near gold frame, its rim\nand the pale wall corners that the locked view hides behind the camera-held frame. Riding exposes them as orange /\nwhite blocks on the water. This tool flags them by colour  …[+1431 chars]`
+
+### 🧑 User — 2026-11-18T03:01:20.651Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/near_mask.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:01:25.290Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && mkdir -p assets/textures/match05/m05near && python3 -I tools/match05/near_mask.py assets/textures/match05/tgtwall05/proj05_E.png assets/textures/match05/m05near/near_mask.png 0.35 0.11 && cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nE=Image.open('/home/user/wt/s05/assets/textures/match05/tgtwall05/proj05_E.png').convert('RGB')\nH=E.size[1]; rows=int(round(H*0.35))\ne=E.crop((0,0,1024,rows))\nm=Image.open('/home/user/wt/s05/assets/textures/match05/m05near/ …[+268 chars]`
+
+### 🧑 User — 2026-11-18T03:01:26.104Z
+
+> ↩︎ result: assets/textures/match05/m05near/near_mask.png (512, 255) kept share 0.643 rows 510 vmax 0.35
+
+### 🤖 Claude — 2026-11-18T03:01:28.152Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/E_masked.png"}`
+
+### 🧑 User — 2026-11-18T03:01:28.174Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:01:36.093Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/tools/match05/near_mask.py", "old_string": "bad = orange | grey\nbad[: int(round(H * rim))] = True", "new_string": "bad = orange | grey\nbad[: int(round(H * rim))] = True\n# the pale wall corners with white highlight blocks outside the frame's inner arc (upper corners of the near rows)\nyy, xx = np.mgrid[0:rows, 0:W]\nbad |= (yy < H * 0.26) & ((xx < W * 0.17) | (xx > W * 0.83))"}`
+
+### 🧑 User — 2026-11-18T03:01:36.121Z
+
+> ↩︎ result: The file /home/user/wt/s05/tools/match05/near_mask.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:01:37.124Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I tools/match05/near_mask.py assets/textures/match05/tgtwall05/proj05_E.png assets/textures/match05/m05near/near_mask.png 0.35 0.11", "description": "Rebuild near mask with corner rule"}`
+
+### 🧑 User — 2026-11-18T03:01:37.610Z
+
+> ↩︎ result: assets/textures/match05/m05near/near_mask.png (512, 255) kept share 0.507 rows 510 vmax 0.35
+
+### 🤖 Claude — 2026-11-18T03:01:46.052Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  #ifdef M05NEAR\n  // m05near (round 9): E's near rows (the painted pink banks, foam piles and bubbles between the bottom gold-frame pieces)\n  // stay in use down to just after its first rows (the gold rim), see M05NEAR\n  wE *= mix(1.0, smoothstep(uPjNear.w - M05NEAR_S0, uPjNear.w - M05NEAR_S0 + 0.3, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());", "new_string": "  #ifdef M05NEAR\n  // m05near (round 9): E's near rows (the painted pink banks, foam piles and bubbles between the bot …[+483 chars]`
+
+### 🧑 User — 2026-11-18T03:01:46.092Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:01:47.702Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "#ifdef M05BLEND\n// m05blend: the far river's baked layer F", "new_string": "#ifdef M05NEAR\nuniform sampler2D uPjNM;   // m05near: keep-mask of E's near rows (1 = painted water)\n#endif\n#ifdef M05BLEND\n// m05blend: the far river's baked layer F"}`
+
+### 🧑 User — 2026-11-18T03:01:47.742Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:01:51.654Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts", "new_string": "  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts\n  if (M05NEAR) {\n    // m05near (Screen 05 round 9): keep-mask of E's near rows (tools/match05/near_mask.py)\n    const nm = { value: empty as THREE.Texture };\n    u.u …[+548 chars]`
+
+### 🧑 User — 2026-11-18T03:01:51.701Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:01:57.186Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && echo TSC_OK && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/near2 \"$K&m05near=1\" t66_through_screen,f10_forward10u,f20_forward20u,s_left_hard 5291 2>&1 | tail -4", "description": "Render m05near with mask", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T03:02:54.373Z
+
+> ↩︎ result: TSC_OK
+> f10_forward10u s 143.165 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> s_left_hard s 145.089 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> t66_through_screen s 170.391 lat -0.006 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@519,656 d73
+
+### 🤖 Claude — 2026-11-18T03:02:58.096Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py near_t66.png 0 900 864 1536 0.6 /home/user/wt/s05/qa/match/05/r9/step1_m05blend/t66_through_screen.png near2/t66_through_screen.png && python3 -I crop.py near_f20.png 0 900 864 1536 0.6 /home/user/wt/s05/qa/match/05/r9/BEFORE/f20_forward20u.png near2/f20_forward20u.png", "description": "Crop bottom water before/after m05near"}`
+
+### 🧑 User — 2026-11-18T03:02:58.649Z
+
+> ↩︎ result: near_t66.png (518, 768)
+> near_f20.png (518, 768)
+
+### 🤖 Claude — 2026-11-18T03:03:00.897Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/near_t66.png"}`
+
+### 🧑 User — 2026-11-18T03:03:00.918Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:03:01.469Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/near_f20.png"}`
+
+### 🧑 User — 2026-11-18T03:03:01.501Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:03:17.038Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 520,545p src/world/course.ts && grep -n \"width:\" src/world/course.ts | head -20", "description": "Read course widthAt"}`
+
+### 🧑 User — 2026-11-18T03:03:17.078Z
+
+> ↩︎ result: if (a > 0) { v += st[key] * a; w += a; }
+>     }
+>     return w > 0 ? v / w : this.stageAtS(s)[key];
+>   }
+> 
+>   widthAt(s: number): number {
+>     let base = this.prop(s, 'width');
+>     // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
+>     // offset05(s), so the half width is S05.extent − |offset| (smooth abs): the outer edge of each bend
+>     // stays on the same tube chord (constant tunnel radius/depth in tube.ts) and the inner side of a
+>     // bend leaves a narrow bank for the foam, like a river.
+>     const st5 = this.st05;
+>     const k = smooth(st5.s0 + 0.5, st5.s0 + 10, s) * (1 - smooth(st5.s1 - 10, st5.s1 - 0.5, s));
+>     if (k > 0) {
+>       const d = this.offset05(s);
+>       base += (2 * (S05.extent - Math.sqrt(d * d + 0.09)) - base) * k;
+>     }
+>     // the stream narrows into the towel opening at the very end of 10
+>     const st10 = this.st10;
+>     return base * (1 - 0.35 * smooth(st10.s1 - 8, st10.s1, s));
+>   }
+> 
+>   sample(s: number, out?: CourseSample): CourseSample {
+>     const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+>     const x = THREE.MathUtils.clamp(s, 0, this.lengt …[+1259 chars]
+
