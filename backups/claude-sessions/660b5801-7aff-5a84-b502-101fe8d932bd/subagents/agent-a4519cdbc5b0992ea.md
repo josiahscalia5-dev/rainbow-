@@ -1187,3 +1187,50 @@ Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && NQ08_GLOW=1 nice -n 10 python3 -I tools/match08/nq08.py $S/nq/nq08g.png $S/nq/nq08g.json 2>&1 | grep -E \"v7|zone|wrote\"; nice -n 10 python3 -I tools/match08/nq08.py $S/nq/nq08_repro2.png $S/nq/nq08_repro2.json >/dev/null 2>&1; python3 -c \"\nfrom PIL import Image, ImageChops\na=Image.open('assets/textures/match08/nq08.png'); b=Image.open('$S/nq/nq08_repro2.png'); print('v6 repro bbox diff:', ImageChops.difference(a,b).getbbox())\"", "description": "Build v7 tile and con …[+20 chars]`
 
+### 🧑 User — 2026-11-18T20:53:52.171Z
+
+> ↩︎ result: v7 glow glints 7 sprites (rectified, core + glow 16 texels)
+> magenta zone a -0.807 .. -0.475 112 cols
+> cyan zone a -0.442 .. 0.714 388 cols
+> zone 1 glints placed 40 / 40
+> zone 2 glints placed 43 / 43
+> wrote /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/nq08g.png (1236, 1336, 3)
+> v6 repro bbox diff: None
+
+### 🤖 Claude — 2026-11-18T20:53:53.553Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/nq08g.png"}`
+
+### 🧑 User — 2026-11-18T20:53:53.696Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:54:02.136Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq && python3 -c \"\nfrom PIL import Image\nr=Image.open('nq08_source_rectified.png').crop((300,0,620,294)).resize((640,588),Image.LANCZOS)\nt=Image.open('nq08g.png').crop((540,0,860,294)).resize((640,588),Image.LANCZOS)\nc=Image.new('RGB',(1290,588)); c.paste(r,(0,0)); c.paste(t,(650,0)); c.save('glcmp.png')\"", "description": "Zoom compare painted vs tile glints"}`
+
+### 🧑 User — 2026-11-18T20:54:03.036Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:54:05.049Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/glcmp.png"}`
+
+### 🧑 User — 2026-11-18T20:54:05.140Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:54:16.289Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"nq08.json\\|nq08.png\\|NQ\\b\\|NQ\\.\" src/world/match08.ts | head -20", "description": "Find where nq08 tile is loaded"}`
+
+### 🧑 User — 2026-11-18T20:54:16.467Z
+
+> ↩︎ result: 431:  let NQ: { z0: number; period: number; halfWidth: number; lane: number; core: number } | null = null;
+> 433:    NQ = await fetch(new URL('../../assets/textures/match08/nq08.json', import.meta.url).href).then((r) => r.json());
+> 434:    nearTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/nq08.png', import.meta.url).href);
+> 484:    if (NQ) {
+> 485:      u.uNear.value.set(NQ.z0, NQ.period * num('m08nearv', 1), NJ.A, 1);
+> 486:      u.uNq.value.set(1, NQ.core, NQ.lane, NQ.halfWidth);
+

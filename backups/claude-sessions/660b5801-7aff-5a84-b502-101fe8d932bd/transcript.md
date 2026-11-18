@@ -2145,3 +2145,34 @@ The changes are small and sit on edges: the upper-left cup rim, the platform rim
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:08-step1-shown 2>&1 | grep -E '\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py 2>&1 | tail -1 | cut -c1-170", "description": "Save the review pictures and progress note to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T20:54:11.674Z
+
+> ↩︎ result: "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-bbe2b27e-oxfh1w | scheduler daemon | last verified backup 2026-11-18T20:53:43+00:00 (0.5 min ago) | local ace4d13 remote ace4d13 (match) | uncomm
+
+### 🤖 Claude — 2026-11-18T20:54:17.079Z
+
+Screen 08 has its first result of this round: a **small improvement**. I've checked the pictures myself, and the five I sent are separate and full size.
+
+1. Your approved picture.
+2. BEFORE, swimming partway into the chamber.
+3. NEW, at the same moment.
+4. BEFORE, steering hard left.
+5. NEW, steering hard left.
+
+**What got closer to your picture:** some pale, washed-out strips and boxes used to flash around objects while Benny swims. They are gone in these places:
+- under the rim of the upper-left gold cup,
+- along the platform's left edge and legs,
+- along the foam bank beneath the platform.
+
+Those gold edges now sit cleanly against the purple wall, as in your painting. This is easiest to see under the upper-left cup.
+
+**Checks:**
+- Your approved start view hasn't changed; it is pixel-identical to before.
+- The coins are unchanged.
+- The change is saved on GitHub and kept as part of Screen 08's current best look.
+
+**Biggest remaining difference:** the white sparkles in the water just below Benny look like torn white "lightning" marks. In your painting they're soft glowing highlights along curved, glossy streaks. The Screen 08 specialist is working on that now, then on the wall seams and the towel.
+
+This doesn't make Screen 08 approved; that's still your decision. The other five specialists are still working, and I'll show each result the same way.
+

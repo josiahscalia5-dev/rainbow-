@@ -752,3 +752,73 @@ The next item is the white lather walls that restart further down the drop (very
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T20:53:50.073Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"hide07\\|HIDE07R\\|h07\\b\\|hid07\" src/vfx/foam.ts src/vfx/waterRibbon.ts | head -30", "description": "Find uses of the m07foam hide range"}`
+
+### 🧑 User — 2026-11-18T20:53:50.338Z
+
+> ↩︎ result: src/vfx/foam.ts:138:  // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+> src/vfx/foam.ts:556:/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> src/vfx/foam.ts:557:function hide07(course: Course): [number, number] | null {
+> src/vfx/foam.ts:558:  if (!flag05('match07') || !flag05('m07foam')) return null;
+> src/vfx/foam.ts:624:    uHide07: { value: new THREE.Vector2(...(hide07(course) ?? [0, 0])) },
+> src/vfx/foam.ts:632:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(hide07(course) ? { HIDE07: 1 } : {}) },
+> src/vfx/foam.ts:667:  const h07 = hide07(course);
+> src/vfx/foam.ts:679:      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < h07[1] - 1.5) tmpS.set(0, 0, 0); // r8 m07foam
+> src/vfx/waterRibbon.ts:227:/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the sheet's lifted white edges step aside (null = off) */
+> src/vfx/waterRibbon.ts:228:function HIDE07R(course: Course): [number, number] | null {
+> src/vfx/waterRibbon.ts:229:  if (!flag05('match07') || !flag05('m07foam' …[+689 chars]
+
+### 🤖 Claude — 2026-11-18T20:53:52.689Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 125,160p src/vfx/foam.ts; grep -n \"HIDE07\" -A12 src/vfx/foam.ts | sed -n 1,60p | grep -v \"^--$\" | head -50; sed -n 710,735p src/vfx/waterRibbon.ts; sed -n 1610,1625p src/vfx/waterRibbon.ts; sed -n 660,690p src/vfx/foam.ts", "description": "Read the berm/sheet hide shader code"}`
+
+### 🧑 User — 2026-11-18T20:53:52.826Z
+
+> ↩︎ result: #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${FRAG_FX_GLSL}
+> ${SOAP05_GLSL}
+> void main() {
+>   float s = vFoam.y;
+>   #ifdef PROJ05
+>   // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
+>   // (dithered over 3 u at both joins; 04 / 06 keep their berm)
+>   float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
+>   if (pjIn > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < pjIn) discard;
+>   #endif
+>   #ifdef HIDE07
+>   // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+>   // tile (with its painted soft foam banks) shows instead; dithered over 3 u at both ends, 07 level stretch and 08 keep
+>   // their berm
+>   float h7 = smoothstep(uHide07.x, uHide07.x + 3.0, s) * (1.0 - smoothstep(uHide07.y - 3.0, uHide07.y, s));
+>   if (h7 > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < h7) discard;
+>   #endif
+>   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+>     float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 + 0.3;
+>     if (n < uOutro.x * 1.15) discard;
+>   }
+>   vec2 p = vec2 …[+5577 chars]
+
+### 🤖 Claude — 2026-11-18T20:54:12.363Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git branch -r 2>/dev/null | grep -i \"s08\" | tail -3; for b in $(git branch -r | grep -E \"s08-match-c1[67]\" ); do echo \"== $b\"; git show $b:src/world/match08.ts 2>/dev/null | grep -n -i \"berm\\|foam_berm\\|lather\" | head -10; done; grep -rn \"foam_berm\\|getObjectByName('foam\" src --include=*.ts | head", "description": "Check how 08 scenery handles the lather berm"}`
+
+### 🧑 User — 2026-11-18T20:54:12.895Z
+
+> ↩︎ result: origin/claude/rainbow-s08-scenery-c16
+>   origin/claude/rainbow-s08-scenery-c17
+> src/vfx/foam.ts:635:  mesh.name = 'foam_berm';
+
+### 🤖 Claude — 2026-11-18T20:54:15.188Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git show origin/claude/rainbow-s08-scenery-c17:src/world/match08.ts 2>/dev/null | grep -n -i \"berm\\|foam\\|lather\" | head -15; git show origin/claude/rainbow-s08-scenery-c17:src/vfx/foam.ts 2>/dev/null | grep -n \"match08\\|m08\" | head", "description": "Look for berm handling on the s08 branch"}`
+
+### 🧑 User — 2026-11-18T20:54:15.600Z
+
+> ↩︎ result: 85:uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)
+> 154:// foam) are spread out to the lane half-width, the floor beyond is pushed out and eased back over 2.5 u. World-anchored
+> 283:  // (lateral = position across the swim lane, banks on the painted foam fringe; along = repeating with z). Off the
+> 475:    // lane banks (+-SWIM_HALF) onto the painted foam fringe; along the river the tile keeps the painted proportions
+

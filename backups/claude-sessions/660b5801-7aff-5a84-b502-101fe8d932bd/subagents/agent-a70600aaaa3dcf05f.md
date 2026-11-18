@@ -1039,3 +1039,121 @@ Other workers are rendering too (load ~20); my NEW job just got its render slot.
 > 266:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
 > 283:  const RING_A05_DEPTH = qaNum05('ringa', 20);
 
+### 🤖 Claude — 2026-11-18T20:53:47.481Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 60,78p tools/match05/r8_shots.mjs", "description": "Read r8_shots stepping code"}`
+
+### 🧑 User — 2026-11-18T20:53:47.547Z
+
+> ↩︎ result: try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   page.on('console', (m) => { if (m.type() === 'error') console.error('console', m.text()); });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   for (const [name, dist, steer] of SHOTS) {
+>     const st = await page.evaluate(async ([id, dist, steer]) => {
+>       const r = window.__rainbow; r.goto(id);
+>       const s0 = r.state().s;
+>       const stg = r.course.stage(id);
+>       const s1 = stg.s1 ?? (stg.s0 + (stg.length ?? 0));
+>       const target = typeof dist === 'string' ? s0 + Number(dist.slice(1)) * Math.max(0, s1 - s0) : s0 + dist;
+>       r.setSteer(steer);
+>       let n = 0; while (r.state().s < target - 1e-3 && n < 4000) { r.step(1); n++; }
+>       r.setSteer(null);
+>       r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
+>       return { ...r.state(), frames: n, s0, s1, target, coinsOnScreen: r.coinScreen(), benny: r.ben …[+42 chars]
+
+### 🤖 Claude — 2026-11-18T20:53:50.462Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/new/t98_end.png"}`
+
+### 🧑 User — 2026-11-18T20:53:50.588Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:53:54.195Z
+
+NEW t98 keeps the whole 05 tunnel (gold rings, warm throat, foam banks) instead of copper hoops floating over the 06 crest. Waiting for the remaining NEW shots.
+
+### 🤖 Claude — 2026-11-18T20:53:55.706Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s05/qa/match/05/r17/step1_trans/new/x97R.png ] || [ -f /home/user/wt/s05/qa/match/05/r17/step1_trans/new/shots.json ]; do sleep 3; done; ls /home/user/wt/s05/qa/match/05/r17/step1_trans/new/", "description": "Wait for remaining NEW shots", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T20:53:55.756Z
+
+> ↩︎ result: Command running in background with ID: b6prdxpo6. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b6prdxpo6.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T20:53:57.701Z
+
+Meanwhile, I'll verify the coins.ts line is display-only.
+
+### 🤖 Claude — 2026-11-18T20:53:58.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"lastS\" src/gameplay/coins.ts | head -20 && sed -n 360,400p src/gameplay/coins.ts", "description": "Inspect coins.ts display code"}`
+
+### 🧑 User — 2026-11-18T20:53:58.834Z
+
+> ↩︎ result: 356:  let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
+> 366:      const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * 0.7 * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;
+> 380:      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS && lastS < far05Coins.popS) {
+> 411:        const k = THREE.MathUtils.clamp((d.far[1] - 1 - (d.s - lastS)) / 15, 0, 1);
+> 426:      lastS = s;
+> 444:      lastS = s - 0.5;
+>       const ph = d.phase ?? i;
+>       let scale = 1;
+>       // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
+>       // forced-perspective relief in the locked view) settle toward the normal coin height over the river as Benny closes
+>       // in (unchanged while ≥ 9 u ahead: the locked view and the mid-stage frames keep the painted arc); their pick-up pop
+>       // starts from there too (it rose from 3.4 u, over the left wall)
+>       const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * 0.7 * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;
+>       if (collected[i]) {
+>         if (popT[i] < 0) { sc.setScalar( …[+2110 chars]
+
+### 🤖 Claude — 2026-11-18T20:54:04.494Z
+
+The coin edit only changes where a not-yet-collected 06 coin is drawn (instance matrix) and is inert without `m05trans` (`popS = Infinity`). I'll confirm with the gameplay test after the renders.
+
+### 🤖 Claude — 2026-11-18T20:54:05.548Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls scripts/gameplay-test.mjs scripts/capture.mjs && grep -n \"argv\\|--q\\|PORT\\|port\" scripts/gameplay-test.mjs | head -15", "description": "Check gameplay test script options"}`
+
+### 🧑 User — 2026-11-18T20:54:05.739Z
+
+> ↩︎ result: scripts/capture.mjs
+> scripts/gameplay-test.mjs
+> 4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 22:const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+> 85:  out.checks.noTeleport = { pass: maxJump < 1.0, maxBennyAltitudeJumpPerStep: +maxJump.toFixed(3), at: out.maxJumpAt };
+> 129:  `* max Benny altitude change per step: **${result.checks.noTeleport.maxBennyAltitudeJumpPerStep}** (no teleport)`,
+
+### 🤖 Claude — 2026-11-18T20:54:07.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export async function startVite\" -A 25 scripts/lib/pw.mjs | grep -n \"port\\|fs\\|allow\" | head", "description": "Check startVite port handling"}`
+
+### 🧑 User — 2026-11-18T20:54:08.177Z
+
+> ↩︎ result: 1:51:export async function startVite(port = 5199) {
+> 3:53-  const { createServer } = await import('vite');
+> 4:54-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 6:56-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 10:60-export async function waitDone(page, timeoutMs = 180000) {
+
+### 🤖 Claude — 2026-11-18T20:54:15.628Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/PROGRESS.md", "content": "# Screen 05 — round 17 (account 17) progress log\n\nWorker: water-fx-specialist on branch `claude/rainbow-s05-match-c17` (worktree `/home/user/wt/s05`, dev-server port 5275).\nStarted from `34aadd11` (= r14 step 3) + the account-16 worker's UNFINISHED edits (task 1, `&m05trans=1`), restored uncommitted.\nBinding: `docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md` (VISUALS ONLY), `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`,\nlaunch brief `docs/briefs/2026-11-18-r15/S05_LAUNCH.md` read with `-c17` / `r17`, res …[+842 chars]`
+
+### 🧑 User — 2026-11-18T20:54:15.849Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/qa/match/05/r17/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T20:54:17.642Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s05/qa/match/05/r17/step1_trans/new/shots.json ]; do sleep 3; done; ls /home/user/wt/s05/qa/match/05/r17/step1_trans/new/", "description": "Wait until NEW render is complete", "timeout": 600000}`
+
