@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14054,
-   "sha256": "8ddb278d4baeab7879169ccac9b236e1fc6ebc90e33f181299e2c8a4cac8d3e4"
+   "sha256": "a762e4c148837ad87467c285e9873a899b22cd30e8c93d85106df62f463302c4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -998,8 +998,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md",
-   "bytes": 5553,
-   "sha256": "d10301d7be7703f57af7bc44da7d5f225299a4588eb4a1b5f84765de7ea74ccf"
+   "bytes": 7782,
+   "sha256": "d111ceba99498e06a5cda4af777a8cd8078fc5722119544977f08e7ca2276ab7"
   },
   {
    "path": "docs/characters/benny.md",

@@ -56,3 +56,23 @@ Disclosed to the user: kept switches that are NOT real fixed 3D — 05 `m05ride`
 Benny), 05 `m05far` (far tunnel block recalibrated to the live eye every frame, sliding seam), 04 `m04room` (flat painted
 backdrop). They stay in the code (nothing deleted); the world-fixed reconstruction replaces them only when it looks at least
 as close, and the user decides.
+
+## User correction ~03:35 UTC — KEEP SUCCESSFUL IMPROVEMENTS, FIX ONLY WHAT IS VISUALLY WRONG (binding; supersedes the strict "world-fixed only" reading above)
+"I am NOT demanding that every single piece of scenery be physically modeled in 3D. You are allowed to combine real 3D
+environments and geometry, original approved artwork and texture projection, properly mapped textures, background scenery
+and image planes, visual effects and materials. USE WHATEVER COMBINATION PRODUCES THE MOST ACCURATE VISUAL RESULT … The
+result must remain convincing while Benny swims and steers. I do not want obvious flat pictures following Benny, stretched
+scenery, duplicated surfaces, incorrect perspectives, or backgrounds that visibly break apart. However, if an existing
+technique works visually, DO NOT remove it simply because it uses projection or a moving texture." Screen 05: keep m05ride
+(water around Benny) and m05far (distant tunnel + river) if they work visually; fix only specific distortions. Screen 04: a
+flat laundry-room backdrop is acceptable for distant scenery if it does not visibly break; the washer opening, nearby gold
+structure, river and foreground scenery must have convincing depth and match the approved design; never another generic
+orange tunnel. "VISUAL FIDELITY IS THE GOAL. THE TECHNIQUE IS A MEANS TO ACHIEVE IT." Nothing approved until the user approves.
+
+## Screen 04 foundation result (~03:33 UTC, `05e383c9`, `qa/match/04/r9/PROGRESS.md`)
+`&m04lay` NOT kept: on the fixed course the camera stays 3.39 u above the water, and the painted composition needs height /
+opening distance = 0.26, so the OUTSIDE view (opening + basin + room) exists only ≈ 13 u before the opening (the stage
+start). A bigger/farther world-fixed front puts the painted pool 6.8 u below Benny (coins float mid-tunnel); a receding front
+helps a little at f20 only. Decision (lead): keep steps 1–2 (painted opening + room) and reconstruct the ≈ 30 u INSIDE as the
+PAINTED interior (fast-converging painted ring bands + warm VP glow, broad pink/magenta swirl water around a narrow cyan lane,
+five fat arrows, low foam, bubbles). Showing the outside view for longer would need a course/checkpoint change → user's call.

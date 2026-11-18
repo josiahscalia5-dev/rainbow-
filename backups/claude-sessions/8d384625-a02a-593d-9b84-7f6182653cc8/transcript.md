@@ -2858,3 +2858,119 @@ Nothing is approved until I personally approve it.
 
 PLEASE KEEP EVERY SUCCESSFUL IMPROVEMENT AND FIX ONLY WHAT IS VISUALLY WRONG.
 
+### 🤖 Claude — 2026-11-18T03:14:53.685Z
+
+Understood: the most accurate look wins, whatever the technique, as long as it stays convincing while Benny swims and steers. Correcting my earlier instruction to both builders right away, since it went further than you want.
+
+### 🤖 Claude — 2026-11-18T03:15:00.292Z
+
+> 🔧 **SendMessage** `{"to": "aaf3e97ed8503b962", "summary": "S05: correction — keep m05ride/m05far, fix only distortions", "message": "LEAD — CORRECTION from the user (overrides my \"world-fixed only / don't depend on m05ride/m05far\" message): \"I am NOT demanding that every single piece of scenery be physically modeled in 3D. You are allowed to combine real 3D geometry, original approved artwork and texture projection, properly mapped textures, background scenery and image planes, visual effects and materials. USE WHATEVER COMBINATION PRODUCES THE MOST ACCURATE VISUAL RESULT. The result must remain convincing wh …[+1483 chars]`
+
+### 🧑 User — 2026-11-18T03:15:00.310Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aaf3e97ed8503b962 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aaf3e97ed8503b962","name":"aaf3e97ed8503b962","ref":"ce2ca8"}}
+
+### 🤖 Claude — 2026-11-18T03:15:06.198Z
+
+> 🔧 **SendMessage** `{"to": "aea1b9944be07aee7", "summary": "S04: correction — hybrid allowed, keep what works", "message": "LEAD — CORRECTION from the user (softens my \"real fixed 3D only\" message): \"You are allowed to combine real 3D geometry, original approved artwork and texture projection, properly mapped textures, background scenery and image planes, visual effects and materials. USE WHATEVER COMBINATION PRODUCES THE MOST ACCURATE VISUAL RESULT … it must remain convincing while Benny swims and steers — no obvious flat pictures following Benny, stretched scenery, duplicated surfaces, incorrect perspectives …[+1270 chars]`
+
+### 🧑 User — 2026-11-18T03:15:06.210Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aea1b9944be07aee7 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aea1b9944be07aee7","name":"aea1b9944be07aee7","ref":"30dd3a"}}
+
+### 🤖 Claude — 2026-11-18T03:15:08.272Z
+
+Screen 04 just saved its first foundation test, and it marked it **not kept**. Reading why.
+
+### 🤖 Claude — 2026-11-18T03:15:09.424Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git log -1 --format='%B' | head -12; echo ----; sed -n '/m04lay/,$p' qa/match/04/r9/PROGRESS.md | head -45; ls qa/match/04/r9/", "description": "Read the Screen 04 foundation test result"}`
+
+### 🧑 User — 2026-11-18T03:15:09.473Z
+
+> ↩︎ result: Screen 04 r9: BLUEPRINT (approved composition measured + overlay) and foundation test &m04lay (static forced perspective, NOT kept; moving front rejected as camera-relative) — evidence frames
+> 
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> 
+> ----
+> ## Foundation `&m04lay=1` — NOT KEPT (cannot work on the fixed course as specified)
+> * **Static forced perspective (world-fixed, k = 3, `&m04lay=1`, test only):** the opening is still ahead at f10 / f20
+>   (room, basin, gold opening visible), but the painted pool is 6.8 u below Benny's water, so Benny's path and the
+>   coins run through the middle of the opening — coins float in mid-tunnel (f10: three coins hanging in the tunnel
+>   centre), the water under Benny slides at a third of his speed, the pink basin becomes a big smear overhead (f20),
+>   and inside it is still the corridor (scaled). Not the approved place. Pictures:
+>   `/home/user/wt/s04/qa/match/04/r9/lay_test/k3scale_f10_forward10u.png`, `.../k3scale_f20_forward20u.png`,
+>   `.../k3scale_t66_through_screen.png`.
+> * **Front moving with the camera (approach at 1/4 speed, tried before the user's newest rule):** keeps the approved
+>   composition ahead until s ≈ 106, but it is exactly  …[+1467 chars]
+
+### 🤖 Claude — 2026-11-18T03:15:19.465Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look; cd /home/user/wt/s04/qa/match/04/r9/lay_test && ls moving_front_REJECTED BEFORE_step2 | head -30; cd /home/user/wt/s04 && git log --oneline -6 --stat -- src/world/match04m4.ts src/world/match04.ts | head -20; python3 - <<EOF\nfrom PIL import Image\nimport os\nd='/home/user/wt/s04/qa/match/04/r9/lay_test/'\nmv=sorted(os.listdir(d+'moving_front_REJECTED')); print(mv)\nEOF", "description": "List the moving-front test frames and check whether its code was saved"}`
+
+### 🧑 User — 2026-11-18T03:15:19.554Z
+
+> ↩︎ result: BEFORE_step2:
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 
+> moving_front_REJECTED:
+> a00_approved_view.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 05e383c9 Screen 04 r9: BLUEPRINT (approved composition measured + overlay) and foundation test &m04lay (static forced perspective, NOT kept; moving front rejected as camera-relative) — evidence frames
+>  src/world/match04.ts   | 8 ++++++++
+>  src/world/match04m4.ts | 3 ++-
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+> b4bd3da4 Screen 04 r9 WIP: &m04foam3 / &m04pink / &m04arr5 candidates (switch-guarded, untested, not kept) — stopped by the lead's new order (blueprint + layout foundation)
+>  src/world/match04m4.ts | 79 ++++++++++++++++++++++++++++++++++++++++++--------
+>  1 file changed, 67 insertions(+), 12 deletions(-)
+> d5d4eee3 Screen 04 r9 step 2: &m04room=1 laundry room on a plane behind the opening (stays in view while approaching; approved view unchanged)
+>  src/world/match04.ts   | 33 +++++++++++++++++++++++++++++++--
+>  src/world/match04m4.ts |  1 +
+>  2 files changed, 32 insertions(+), 2 del …[+1096 chars]
+
+### 🤖 Claude — 2026-11-18T03:15:24.593Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look; cd /home/user/wt/s04 && python3 - <<EOF\nfrom PIL import Image\nd='qa/match/04/r9/lay_test/'\nrows=[]\nfor shot in ['f20_forward20u','t66_through_screen']:\n    ims=[Image.open(p).convert('RGB') for p in ['references/04_through_the_five_arrows.png',d+'BEFORE_step2/'+shot+'.png',d+'moving_front_REJECTED/'+shot+'.png']]\n    w=300; ims=[i.resize((w,int(i.height*w/i.width))) for i in ims]\n    c=Image.new('RGB',(w*3+16,ims[0].height),'white')\n    for k,i in enumerate(ims): c.paste(i,(k*(w+8),0) …[+298 chars]`
+
+### 🧑 User — 2026-11-18T03:15:25.096Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T03:15:25.740Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look/s04_moving_front.png"}`
+
+### 🧑 User — 2026-11-18T03:15:25.797Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:15:54.984Z
+
+> 🔧 **SendMessage** `{"to": "aea1b9944be07aee7", "summary": "S04: go ahead with the painted interior", "message": "LEAD — I read your m04lay result and looked at lay_test/ myself: agreed, the static scaled front cannot work on the fixed course, and the moving front only helps a little at f20 (opening + room at the top) while t66 is still the corridor + cotton foam. GO AHEAD NOW with your proposal, no need to stop for a review first (I review every kept step's pictures myself before the user sees them): keep the painted opening at its painted size/place (steps 1–2 stay) and make the ~30 u inside the tunnel the PAIN …[+1386 chars]`
+
+### 🧑 User — 2026-11-18T03:15:55.002Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aea1b9944be07aee7 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aea1b9944be07aee7","name":"aea1b9944be07aee7","ref":"30dd3a"}}
+
+### 🤖 Claude — 2026-11-18T03:15:57.810Z
+
+> 🔧 **SendMessage** `{"to": "aaf3e97ed8503b962", "summary": "S05: no need to stop for review", "message": "LEAD — process update: you do NOT need to stop and wait for a reviewer after the foundation step; I review every kept step's pictures myself before the user sees them. Small steps: each fix that genuinely looks closer (forward AND hard steering) → pictures, PROGRESS entry, commit, push, SendMessage to main; then continue with the next visible distortion. Keep m05ride/m05far and every kept step as per my correction message.", "type": "message", "recipient": "aaf3e97ed8503b962", "recipient_kind": "agent", "cont …[+59 chars]`
+
+### 🧑 User — 2026-11-18T03:15:57.823Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aaf3e97ed8503b962 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aaf3e97ed8503b962","name":"aaf3e97ed8503b962","ref":"ce2ca8"}}
+
+### 🤖 Claude — 2026-11-18T03:16:06.518Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md <<'EOF'\n\n## User correction ~03:35 UTC — KEEP SUCCESSFUL IMPROVEMENTS, FIX ONLY WHAT IS VISUALLY WRONG (binding; supersedes the strict \"world-fixed only\" reading above)\n\"I am NOT demanding that every single piece of scenery be physically modeled in 3D. You are allowed to combine real 3D\nenvironments and geometry, original approved artwork and texture projection, properly mapped textures, background scenery\nand image planes, visual effects and materials. USE WHATEVER COMBINATION PRODUCES THE MOST ACCURATE VISUAL RESU …[+2057 chars]`
+

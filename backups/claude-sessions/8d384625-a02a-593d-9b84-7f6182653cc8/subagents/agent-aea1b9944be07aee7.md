@@ -1572,3 +1572,81 @@ Now I'll write the mouth tile tool.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='qa/match/04/r9/BLUEPRINT.md'\ns=open(p).read()\nold=s[s.index(\"## 3. Geometric constraint\"):]\ns=s.replace(old, \"\"\"## 3. Geometric constraint for any re-layout (measured, with pictures)\n* Painted composition = camera 3.39 u above Benny's water, 13.1 u from the opening along its axis, 1.12 u above the\n  axis, opening r 3.58 u (ratios to the distance: height 0.26, radius 0.27, above-axis 0.085).\n* Course/camera untouched ⇒ the camera stays 3.39 u above Benny's water for the whole stage and travels 37 u down\n  the straight 32° …[+5045 chars]`
 
+### 🧑 User — 2026-11-18T03:14:51.193Z
+
+> ↩︎ result: 05e383c9b06bd78e790a90e9d2b520c491e7c7f4	refs/heads/claude/rainbow-s04-match-c9
+> 05e383c9b06bd78e790a90e9d2b520c491e7c7f4
+
+### 🤖 Claude — 2026-11-18T03:14:53.333Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,15p scripts/gameplay-test.mjs | head -20; git worktree list | head", "description": "Check gameplay test usage and worktrees"}`
+
+### 🧑 User — 2026-11-18T03:14:53.371Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> /home/user/rainbow-  fbf13918 [claude/rainbow-restore-c9-40w64b]
+> /home/user/wt/s04    05e383c9 [ …[+270 chars]
+
+### 🤖 Claude — 2026-11-18T03:14:56.683Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && mkdir -p qa/match/04/r9/tests && node scripts/gameplay-test.mjs --q=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1\" --out=qa/match/04/r9/tests/gameplay_kept.json 2>&1 | grep -v \"Vite\\|403\\|allow\" | tail -15", "description": "Run gameplay test with kept query", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T03:15:03.374Z
+
+> ↩︎ result: "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-18T03:15:05.349Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nimport json; d=json.load(open('qa/match/04/r9/tests/gameplay_kept.json'))\nprint({k:v for k,v in d.items() if k not in ('plunge','trace','steps','log')} if isinstance(d,dict) else d)\n\" | head -30", "description": "Summarize gameplay test result"}`
+
+### 🧑 User — 2026-11-18T03:15:05.412Z
+
+> ↩︎ result: {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 4, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}, 'samples': [{'t': 0.5, 's': 45.645, 'stage': '03', 'y': -13.457, 'cam': [-2.62, -7.96, -16.34], 'coins': 1330}, {'t': 1, 's': 50.145, 'stage': '03', 'y': -13.829, 'cam': [0.26, -8.46, -19.04], 'coins': 1350 …[+7242 chars]
+
+### 🤖 Claude — 2026-11-18T03:15:12.250Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && (git worktree add --detach /home/user/wt/s04_start d217f546 >/dev/null 2>&1 || true) && ln -sfn /home/user/rainbow-/node_modules /home/user/wt/s04_start/node_modules && (cd /home/user/wt/s04_start && git lfs pull >/dev/null 2>&1; node scripts/capture.mjs 04 --out=$SP/def_start 2>&1 | grep -i \"pageerror\" ); node scripts/capture.mjs 04 --out=$SP/def_new 2>&1 | grep -i \"pageerror\"; git checkout qa/capture_log.json 2>/dev/null; python3 -I -c \"\nimport numpy as np; f …[+338 chars]`
+
+### 🧑 User — 2026-11-18T03:15:16.285Z
+
+> ↩︎ result: Command was moved to the background (ID: bl1evd3z1) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/bl1evd3z1.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T03:15:42.424Z
+
+> 🔧 **Bash** `{"command": "F=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/bl1evd3z1.output; until grep -q \"px differing\\|rror\" $F; do sleep 5; done; cat $F | tail -3", "description": "Wait for default-build proof", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T03:15:47.506Z
+
+> ↩︎ result: default 04 vs d217f546: px differing 0
+> 
+> [exited with code 0]
+
