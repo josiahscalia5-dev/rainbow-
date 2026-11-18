@@ -1587,3 +1587,210 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 > ↩︎ result: Command was moved to the background (ID: b29pvm2h2) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tasks/b29pvm2h2.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
 > Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
 
+### 🤖 Claude — 2026-11-18T10:55:22.069Z
+
+> 🔧 **Bash** `{"command": "sleep 45; cat /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tasks/b29pvm2h2.output", "description": "Wait for berm render output"}`
+
+### 🧑 User — 2026-11-18T10:55:22.074Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 45 followed by: cat /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tasks/b29pvm2h2.output. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T10:55:24.724Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tasks/b29pvm2h2.output | tail -6", "description": "Read berm render output"}`
+
+### 🧑 User — 2026-11-18T10:55:24.745Z
+
+> ↩︎ result: f10_forward10u s 143.153 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> s_left_hard s 145.092 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> t33_through_screen s 151.691 lat -0.006 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.391 lat -0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-18T10:55:26.063Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/berm1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:55:26.108Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:55:30.184Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/berm1/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:55:30.238Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:55:35.135Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(874,768),'white')\nfor k,n in enumerate(['f10_forward10u','s_left_hard']): o.paste(Image.open('berm1/'+n+'.png').resize((432,768)),(k*442,0))\no.save('cmp_berm.png')\"", "description": "Combine berm f10 and steering frames"}`
+
+### 🧑 User — 2026-11-18T10:55:35.487Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:55:36.386Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_berm.png"}`
+
+### 🧑 User — 2026-11-18T10:55:36.419Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:55:45.149Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; mkdir -p $S/berm; timeout 600 node scripts/capture.mjs 05 --q=\"$K&m05berm=1\" --out=$S/berm 2>&1 | tail -1; git checkout -q qa/capture_log.json; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/kept/05.png').convert('RGB'),int); b=np.asarray(Image.open('$S/berm/05.png').convert('RGB'),int)\nprint('locked dif …[+132 chars]`
+
+### 🧑 User — 2026-11-18T10:55:58.068Z
+
+> ↩︎ result: ]
+> locked diff px vs base 257
+
+### 🤖 Claude — 2026-11-18T10:56:04.248Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/kept/05.png').convert('RGB'),int); b=np.asarray(Image.open('$S/berm/05.png').convert('RGB'),int); f=np.asarray(Image.open('$S/foam/05.png').convert('RGB'),int)\nd=np.abs(a-b).max(2); ys,xs=np.nonzero(d); print('bbox',xs.min(),ys.min(),xs.max(),ys.max(),'max',d.max())\nprint('foam vs berm', int((np.abs(f-b).max(2)>0).sum()))\"", "description": "Locate locked-view differences"}`
+
+### 🧑 User — 2026-11-18T10:56:04.710Z
+
+> ↩︎ result: bbox 100 25 769 174 max 20
+> foam vs berm 257
+
+### 🤖 Claude — 2026-11-18T10:56:10.119Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; mkdir -p $S/berm2; timeout 600 node scripts/capture.mjs 05 --q=\"$K&m05berm=1\" --out=$S/berm2 2>&1 | tail -1; git checkout -q qa/capture_log.json; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/kept/05.png').convert('RGB'),int); b=np.asarray(Image.open('$S/berm2/05.png').convert('RGB'),int)\nprint('locked  …[+136 chars]`
+
+### 🧑 User — 2026-11-18T10:56:29.889Z
+
+> ↩︎ result: ]
+> locked diff px vs base (run 2) 257
+
+### 🤖 Claude — 2026-11-18T10:56:44.259Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/kept/05.png').convert('RGB'),int); b=np.asarray(Image.open('$S/berm2/05.png').convert('RGB'),int)\nd=np.abs(a-b).max(2)\nfor y0 in range(20,180,10):\n  r=d[y0:y0+10]; n=(r>0).sum()\n  if n: xs=np.nonzero(r)[1]; print(y0, n, xs.min(), xs.max())\n\"", "description": "Profile locked diff rows"}`
+
+### 🧑 User — 2026-11-18T10:56:44.806Z
+
+> ↩︎ result: 20 1 318 318
+> 100 5 103 107
+> 110 65 100 109
+> 120 51 100 769
+> 130 11 766 769
+> 160 36 100 769
+> 170 88 100 769
+
+### 🤖 Claude — 2026-11-18T10:56:52.990Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r10/step2_m05berm; mkdir -p $D; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad; cp references/05_flow_into_the_current.png $D/1_APPROVED.png; for n in t66_through_screen t33_through_screen f10_forward10u s_left_hard; do cp $S/audit_c10/05/$n.png $D/2_BEFORE_$n.png; cp $S/r10/berm1/$n.png $D/3_NEW_$n.png; done; cp $S/r10/berm1/shots.json $D/NEW_shots.json; ls $D", "description": "Assemble step 2 proof images"}`
+
+### 🧑 User — 2026-11-18T10:56:53.058Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> NEW_shots.json
+
+### 🤖 Claude — 2026-11-18T10:57:06.716Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='qa/match/05/r10/PROGRESS.md'\ns=open(p).read()\nadd = \"\"\"\n## Step 2 — `&m05berm=1` (B/C: the strip beyond the water's edge becomes a white foam bank)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1`\n* WHAT LOOKS CLOSER: the torn left strip at t66 (stretched pink / white paint, the pink zig-zag layer and loose patches\n  beyond the river's left edge) is now one soft white-lavender foam bank with bubble domes running from Benny's side up\n  …[+2759 chars]`
+
+### 🧑 User — 2026-11-18T10:57:13.974Z
+
+> ↩︎ result: tsc ok
+> M  qa/match/05/r10/PROGRESS.md
+> A  qa/match/05/r10/step2_m05berm/1_APPROVED.png
+> A  qa/match/05/r10/step2_m05berm/2_BEFORE_f10_forward10u.png
+> A  qa/match/05/r10/step2_m05berm/2_BEFORE_s_left_hard.png
+> A  qa/match/05/r10/step2_m05berm/2_BEFORE_t33_through_screen.png
+> local e519225083f5c25e7ae91c836e1c512ef1849c80
+> remote e519225083f5c25e7ae91c836e1c512ef1849c80 refs/heads/claude/rainbow-s05-match-c10
+
+### 🤖 Claude — 2026-11-18T10:57:18.312Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "Screen 05 r10 step 2 m05berm report", "message": "Screen 05 r10 step 2 kept: &m05berm=1. The torn strip beyond the river's left edge at t66 and the bare banks at t33/f10 are now broad soft foam banks while swimming. Locked view: scenery 0 px (257 px only on the HUD banner outline, the known capture glitch). SHA e519225083f5c25e7ae91c836e1c512ef1849c80 (remote verified).\nAPPROVED /home/user/wt/s05/qa/match/05/r10/step2_m05berm/1_APPROVED.png\nBEFORE /home/user/wt/s05/qa/match/05/r10/step2_m05berm/2_BEFORE_t66_through_screen.png (also t33/f10/s_left_hard)\nNEW /home/u …[+325 chars]`
+
+### 🧑 User — 2026-11-18T10:57:18.324Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T10:57:26.131Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05wall=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/wall1; timeout 900 node tools/match05/r8_shots.mjs $S \"$Q\" t66_through_screen,s_right_hard 2>&1 | tail -3", "description": "Test unfinished m05wall switch on top", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T10:57:52.917Z
+
+> ↩︎ result: 10:57
+> s_right_hard s 145.154 lat 5.067 coins 1420 benny 0.45 -0.2 big coins: #22@-26,713 d107 #23@122,614 d65
+> t66_through_screen s 170.391 lat 0.006 coins 1460 benny -0 -0.29 big coins: #24@416,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T10:57:55.734Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/wall1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:57:55.780Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:58:02.104Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "offset": 205, "limit": 100}`
+
+### 🧑 User — 2026-11-18T10:58:02.120Z
+
+> ↩︎ result: 205	  const rt = renderer.getRenderTarget();
+> 206	  if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+> 207	  shared.uPjRes.value.copy(size);
+> 208	  shared.uPjPost.value.x = renderer.toneMappingExposure;
+> 209	}
+> 210	
+> 211	/**
+> 212	 * `&m05wall=1` (Screen 05 round 9, waterRibbon.ts M05WALL): where the projected atlas would be magnified while swimming
+> 213	 * (texels per screen pixel < 0.9) the bay becomes crisp perforated metal in the approved palette (display values,
+> 214	 * measured on the approved near walls: plum slot (50,1,37), violet metal (171,51,185), lit metal (232,67,186), pink lip
+> 215	 * (244,101,240), highlight (253,213,250)); slot grid measured from the atlas rows (44 of 2048 texels round the tube =
+> 216	 * 46.5 slots per turn, 6.7 slot rows per 14-u bay ≈ 1.9 u). The atlas's own low-frequency colour (blurred over one slot
+> 217	 * pitch) keeps the painted light distribution wherever it is wall-coloured (purple: low green); water / foam texels of
+> 218	 * a bay (the far wall by the left bank) fall back to the violet metal. Off at the locked checkpoint eye (0 px there).
+> 219	 */
+> 220	const M05WALL_GLSL = /* glsl */ `
+> 221	  {
+> 222	    vec2 tpw = puv * uPtWall …[+5758 chars]
+
+### 🤖 Claude — 2026-11-18T10:58:23.094Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\na=Image.open('berm1/t66_through_screen.png').crop((0,480,864,760)).resize((1296,420))\na.save('t66_seam_zoom.png')\"", "description": "Zoom seam region at t66"}`
+
+### 🧑 User — 2026-11-18T10:58:23.379Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:58:24.348Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t66_seam_zoom.png"}`
+
+### 🧑 User — 2026-11-18T10:58:24.377Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:58:58.867Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"aTan\\b\\|const tang\\|f.tan.toArray(tang\" src/vfx/waterRibbon.ts | head; grep -n \"speed\" src/world/course.ts | grep \"'05'\\|05:\" | head -3", "description": "Locate tangent attribute code"}`
+
+### 🧑 User — 2026-11-18T10:58:58.909Z
+
+> ↩︎ result: 432:attribute vec3 aTan;     // course tangent (downstream)
+> 469:  vTanW = normalize(mat3(modelMatrix) * aTan);
+> 1824:  const tang = new Float32Array(n * 3);
+> 1841:      f.tan.toArray(tang, k * 3);
+> 1882:  geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
+> 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 426:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+

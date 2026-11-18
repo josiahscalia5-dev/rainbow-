@@ -1140,3 +1140,210 @@ Approved view: 240 px beyond 20 levels (edge resampling), mean error vs the appr
 > ↩︎ result: 08477d8ad338180ebc8fb3768a14dc4c26beee45
 > 08477d8ad338180ebc8fb3768a14dc4c26beee45	refs/heads/claude/rainbow-s08-scenery-c10
 
+### 🤖 Claude — 2026-11-18T10:55:10.464Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T10:55:10.472Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T10:55:14.612Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S08 step 1 m08far kept", "message": "S08 r10 step 1 kept: &m08far=1 (gold arch pushed x4.2 along projector rays + collar) keeps the arch framing top + upper sides at f06/t33/t66 (BEFORE: corner fragments only); approved view same (240 px >20, mean error 5.88->5.87). SHA 08477d8ad338180ebc8fb3768a14dc4c26beee45 (pushed, verified). Images: /home/user/wt/s08/qa/match/08/r10/step1_m08far/1_APPROVED.png, /home/user/wt/s08/qa/match/08/r10/step1_m08far/2_BEFORE_f06_forward6u.png, /home/user/wt/s08/qa/match/08/r10/step1_m08far/3_NEW_f06_forward6u.png (also t33/t66). Honest l …[+231 chars]`
+
+### 🧑 User — 2026-11-18T10:55:14.624Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T10:55:43.124Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on\nvarying vec4 vProj;", "new_string": "uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on\nuniform float uMirOn;       // m08mirror (drum / door wall / collar): continue the painted chamber past the arch's opening edge\nuniform vec3 uOpenC;        // opening centre in aspect-corrected approved-view NDC (x * W/H, y), z = W/H\nuniform float uOpenR[64];   // openi …[+60 chars]`
+
+### 🧑 User — 2026-11-18T10:55:43.160Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:55:48.128Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "float linZ(float d) {", "new_string": "// m08mirror: approved-view uv of the painted pixel that continues a point hidden behind the arch: the point's position in\n// the approved image is reflected about the arch's opening edge (2 px inside it), so the painted chamber wall / door\n// wall carries on outward without a hand-over line. w = weight (1 near the edge, 0 from ~0.2 NDC outside it).\nvec3 mirrorUv(vec4 pj) {\n  if (pj.w <= 0.0) return vec3(0.0);\n  vec2 q = vec2(pj.x / pj.w * uOpenC.z, pj.y / pj …[+463 chars]`
+
+### 🧑 User — 2026-11-18T10:55:48.175Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:55:55.465Z
+
+Now wire it into main() and the uniforms.
+
+### 🤖 Claude — 2026-11-18T10:55:57.869Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));\n  vec3 t = pc;", "new_string": "  if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));\n  if (uMirOn > 0.5) {\n    vec3 mu = mirrorUv(vProj);\n    if (mu.z > 0.0) pc = mix(pc, texture2D(uPlate, mu.xy).rgb, mu.z * smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));\n  }\n  vec3 t = pc;"}`
+
+### 🧑 User — 2026-11-18T10:55:57.917Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:55:59.674Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "      uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) } },", "new_string": "      uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) },\n      uMirOn: { value: mirOn && fillMode > 0 ? 1 : 0 }, uOpenC: { value: openC }, uOpenR: { value: openR } },"}`
+
+### 🧑 User — 2026-11-18T10:55:59.725Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:56:02.623Z
+
+Now compute the opening edge table in JS before `mat` is defined.
+
+### 🤖 Claude — 2026-11-18T10:56:09.175Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({", "new_string": "  // `&m08mirror=1` (r10): the arch's opening as seen from the approved viewpoint (intersection of the projected front and\n  // back inner circles; pushing the ring along the projector rays does not change it), as a radius per angle about the\n  // projected opening centre, in aspect-corrected NDC\n  const mirOn = flag05('m08mirror');\n  const asp = W / H, openR  …[+1193 chars]`
+
+### 🧑 User — 2026-11-18T10:56:09.214Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:56:18.218Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && SHOTS=f06_forward6u,t33_through_screen,t66_through_screen,f10_forward10u node $S/tools/sel_audit.mjs 08 $S/r/mir \"$K&m08mirror=1\" 2>&1 | grep -v \"allow list\" | grep -iv \"^\\s*$\" | tail -3; cd $S && python3 py/sbs.py c_mir1.png r/far/t33_through_screen.png r/mir/t33_through_screen.png r/far/t66_through_screen …[+118 chars]`
+
+### 🧑 User — 2026-11-18T10:56:53.914Z
+
+> ↩︎ result: 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t33_through_screen s 396.276 lat 0 stage 08 frames 27
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+
+### 🤖 Claude — 2026-11-18T10:56:56.277Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_mir1.png"}`
+
+### 🧑 User — 2026-11-18T10:56:56.460Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:56:58.550Z
+
+Half-scale is too small to judge the seam. Full-resolution crops of the top band.
+
+### 🤖 Claude — 2026-11-18T10:57:01.798Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && python3 -c \"\nfrom PIL import Image\nfor n,box in [('t33_through_screen',(0,170,864,470)),('t66_through_screen',(0,100,864,400))]:\n  a=Image.open('r/far/'+n+'.png').convert('RGB').crop(box); b=Image.open('r/mir/'+n+'.png').convert('RGB').crop(box)\n  W=Image.new('RGB',(864,610),'white'); W.paste(a,(0,0)); W.paste(b,(0,310)); W.save('crop_'+n[:3]+'.png')\n\"", "description": "Crop top band far vs mirror at t33/t66"}`
+
+### 🧑 User — 2026-11-18T10:57:02.301Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:57:03.094Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t33.png"}`
+
+### 🧑 User — 2026-11-18T10:57:03.119Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:57:03.749Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t66.png"}`
+
+### 🧑 User — 2026-11-18T10:57:03.776Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:57:23.048Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; python3 -c \"import cv2; print(cv2.__version__, hasattr(cv2,'xphoto'))\"; cd /home/user/wt/s08 && git log -1 --format=%cd --date=iso c0d8c97b; ls -la qa/match/08/scenery/r8/occ qa/match/08/scenery/r8/dbg_av 2>/dev/null | head", "description": "Check time, OpenCV contrib availability, r8 debug captures"}`
+
+### 🧑 User — 2026-11-18T10:57:23.210Z
+
+> ↩︎ result: 10:57
+> 5.1.0 False
+> 2026-11-18 01:23:03 +0000
+> qa/match/08/scenery/r8/dbg_av:
+> total 376
+> drwxr-xr-x 2 root root   4096 Nov 18 10:34 .
+> drwxr-xr-x 6 root root   4096 Nov 18 10:34 ..
+> -rw-r--r-- 1 root root 375675 Nov 18 10:34 08.png
+> 
+> qa/match/08/scenery/r8/occ:
+> total 11928
+> drwxr-xr-x 2 root root    4096 Nov 18 10:34 .
+> drwxr-xr-x 6 root root    4096 Nov 18 10:34 ..
+
+### 🤖 Claude — 2026-11-18T10:57:53.681Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('assets/textures/match08/fill_drum.png').convert('RGB')).astype(float)/255\nprint(a.shape, a.reshape(-1,3).mean(0).round(4))\"; cat assets/textures/match08/fill_drum.json", "description": "Compute fill tile mean colour"}`
+
+### 🧑 User — 2026-11-18T10:57:53.831Z
+
+> ↩︎ result: (147, 219, 3) [0.7127 0.2982 0.6999]
+> {"w": 2.19, "h": 1.47, "src": "pipe right wall, plate08_hybrid.png, tools/match08/unwrap08.py"}
+
+### 🤖 Claude — 2026-11-18T10:57:54.968Z
+
+Now replace the mirror with the edge-colour match.
+
+### 🤖 Claude — 2026-11-18T10:58:01.473Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "// m08mirror: approved-view uv of the painted pixel that continues a point hidden behind the arch: the point's position in\n// the approved image is reflected about the arch's opening edge (2 px inside it), so the painted chamber wall / door\n// wall carries on outward without a hand-over line. w = weight (1 near the edge, 0 from ~0.2 NDC outside it).\nvec3 mirrorUv(vec4 pj) {\n  if (pj.w <= 0.0) return vec3(0.0);\n  vec2 q = vec2(pj.x / pj.w * uOpenC.z, pj.y / pj.w) - uOpenC.xy;\n  float r = length(q) …[+1169 chars]`
+
+### 🧑 User — 2026-11-18T10:58:01.507Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:58:05.220Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  if (uMirOn > 0.5) {\n    vec3 mu = mirrorUv(vProj);\n    if (mu.z > 0.0) pc = mix(pc, texture2D(uPlate, mu.xy).rgb, mu.z * smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));\n  }", "new_string": "  if (uMirOn > 0.5) {\n    // m08seamc: the fill keeps its own slot pattern but takes the painted wall's local colour / brightness at the arch's\n    // opening edge (a ~60 px blurred sample from a coarse mip, so no copied shapes), fading back to its own colour outward\n    vec3 eu = edgeUv(vProj);\n …[+263 chars]`
+
+### 🧑 User — 2026-11-18T10:58:05.247Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:58:06.520Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "uniform float uMirOn;       // m08mirror (drum / door wall / collar): continue the painted chamber past the arch's opening edge", "new_string": "uniform float uMirOn;       // m08seamc (drum / door wall / collar): fill tinted like the painted wall at the arch's opening edge"}`
+
+### 🧑 User — 2026-11-18T10:58:06.548Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:58:08.624Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  // `&m08mirror=1` (r10): the arch's opening as seen from the approved viewpoint (intersection of the projected front and\n  // back inner circles; pushing the ring along the projector rays does not change it), as a radius per angle about the\n  // projected opening centre, in aspect-corrected NDC\n  const mirOn = flag05('m08mirror');", "new_string": "  // `&m08seamc=1` (r10): the arch's opening as seen from the approved viewpoint (intersection of the projected front and\n  // back inner circles; push …[+185 chars]`
+
+### 🧑 User — 2026-11-18T10:58:08.663Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:58:16.287Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/seamc && SHOTS=f06_forward6u,t33_through_screen,t66_through_screen,f10_forward10u node $S/tools/sel_audit.mjs 08 $S/r/seamc \"$K&m08seamc=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S && python3 -c \"\nfrom PIL import Image\nfor n,box in [('t33_through_screen',(0,170,864,470)),('t66_through_screen …[+375 chars]`
+
+### 🧑 User — 2026-11-18T10:58:47.483Z
+
+> ↩︎ result: 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+
+### 🤖 Claude — 2026-11-18T10:58:49.937Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t33.png"}`
+
+### 🧑 User — 2026-11-18T10:58:49.966Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:58:50.520Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_t66.png"}`
+
+### 🧑 User — 2026-11-18T10:58:50.543Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:58:51.126Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/crop_f10.png"}`
+
+### 🧑 User — 2026-11-18T10:58:51.153Z
+
+> ↩︎ result: [image]
+

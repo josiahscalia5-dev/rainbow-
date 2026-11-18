@@ -2844,3 +2844,72 @@ Saving to GitHub, then asking you to judge the four proposed views:
 
 > 🔧 **Bash** `{"command": "timeout 400 python3 scripts/rainbow-autosave.py --reason manual:04-refview-pilot 2>&1 | grep -E '\"commit\"|error' | head -3; echo \"HEAD   $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro | cut -f1)\"", "description": "Save pilot results to GitHub and verify", "timeout": 500000}`
 
+### 🧑 User — 2026-11-18T10:55:21.138Z
+
+> ↩︎ result: "commit": "44d63cde504db950d462f10aa874030e59509494",
+> HEAD   44d63cde504db950d462f10aa874030e59509494
+> REMOTE 44d63cde504db950d462f10aa874030e59509494
+
+### 🤖 Claude — 2026-11-18T10:55:22.791Z
+
+Screen 08 step 1 just arrived: the gold arch should now keep framing the chamber as Benny swims. Checking it by eye before it goes to you:
+
+### 🤖 Claude — 2026-11-18T10:55:23.382Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r10/step1_m08far/3_NEW_t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:55:23.429Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:55:24.038Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s08/qa/match/08/r10/step1_m08far/", "description": "List Screen 08 step 1 proof files"}`
+
+### 🧑 User — 2026-11-18T10:55:24.064Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+
+### 🤖 Claude — 2026-11-18T10:55:30.033Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_c10/2026-11-18/08_step1_m08far; mkdir -p $D; S=/home/user/wt/s08/qa/match/08/r10/step1_m08far; convert $S/1_APPROVED.png -quality 92 $D/1_APPROVED_08.jpg; convert $S/2_BEFORE_t33_through_screen.png -quality 92 $D/2_BEFORE_one_third.jpg; convert $S/3_NEW_t33_through_screen.png -quality 92 $D/3_NEW_one_third.jpg; ls $D", "description": "Copy Screen 08 step 1 proof images for sending"}`
+
+### 🧑 User — 2026-11-18T10:55:30.368Z
+
+> ↩︎ result: 1_APPROVED_08.jpg
+> 2_BEFORE_one_third.jpg
+> 3_NEW_one_third.jpg
+
+### 🤖 Claude — 2026-11-18T10:55:32.135Z
+
+> 🔧 **SendMessage** `{"to": "a26de7f4589deba6c", "summary": "Lead feedback on 08 step 1 arch", "message": "Lead review of step 1 (&m08far): accepted — at t33 the gold arch now frames the top and upper sides like the painting; being shown to the user. Still differs by eye: the painted arch continues down BOTH lower sides to the bottom corners (bright gold band beside the near water); ours stops at mid-height. Next as you planned: ceiling seam (the curved line across the top at t33), then near water + coin size. Keep going; no reply needed.", "type": "message", "recipient": "a26de7f4589deba6c", "recipient_kind": "ag …[+70 chars]`
+
+### 🧑 User — 2026-11-18T10:55:32.154Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a26de7f4589deba6c at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a26de7f4589deba6c","name":"a26de7f4589deba6c","ref":"0d0e18"}}
+
+### 🤖 Claude — 2026-11-18T10:55:35.460Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c10/2026-11-18/08_step1_m08far/1_APPROVED_08.jpg", "qa/review_c10/2026-11-18/08_step1_m08far/2_BEFORE_one_third.jpg", "qa/review_c10/2026-11-18/08_step1_m08far/3_NEW_one_third.jpg"], "caption": "Screen 08, step 1 — APPROVED / BEFORE / NEW, one third of the way in. Closer: the big gold arch frames the top and upper sides again while Benny swims (before: only corner fragments). Still wrong: arch doesn't reach the lower sides, top seam, big coins, smeared near water.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T10:55:36.029Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/08_step1_m08far/1_APPROVED_08.jpg → file_uuid: 432acabc-00f8-40de-a6d1-e422339b44ec
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/08_step1_m08far/2_BEFORE_one_third.jpg → file_uuid: 6a2aba46-b574-4c87-81cd-2d4b317236d2
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/08_step1_m08far/3_NEW_one_third.jpg → file_uuid: 02d8668b-8468-4a25-9ace-be4b9f598493
+
+### 🤖 Claude — 2026-11-18T10:55:38.818Z
+
+Now your decision on the Screen 04 views, plus whether to go on to 06 and 07:
+
+### 🤖 Claude — 2026-11-18T10:55:44.783Z
+
+> 🔧 **AskUserQuestion** `{"questions": [{"question": "I sent you 4 proposed views of the inside of Screen 04's washer opening, which your approved picture doesn't show: V04-1 just inside, V04-2 middle, V04-3a near the end, V04-3b near the end (opening rim still visible). Which do you approve as design targets to rebuild the 04 interior? Rejected ones are never used.", "header": "04 views", "multiSelect": true, "options": [{"label": "V04-1 just inside", "description": "Rounded glossy gold rings converging to the glow, cyan lane with five glowing arrows, pink swirls, soft foam clouds, bubbles, coins."}, {"label": "V04-2 …[+1110 chars]`
+
