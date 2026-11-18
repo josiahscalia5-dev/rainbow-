@@ -789,3 +789,288 @@ Now I'll add the `m05ride` switch (rider-relative design layout) behind its own 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:07:11.096Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nimport json\nfrom PIL import Image\nd=json.load(open('assets/textures/match05/tgtwall05/proj05_lut.json'))['E']\nn=d['n']; s0=d['s0']; s1=d['s1']\ndef at(s):\n  x=(s-s0)/(s1-s0)*(n-1); i=int(x); f=x-i; i2=min(i+1,n-1)\n  return [d[k][i]*(1-f)+d[k][i2]*f for k in ('V','c','w')]\nfor s in [129.8,130.5,131,131.5,132,132.5,133,134,136,140,145,150,160,170,180]:\n  V,c,w=at(s); print(s, 'row %.0f'%(V*(d['height']-1)), 'c %.3f w %.3f'%(c,w))\nim=Image.open('ass …[+234 chars]`
+
+### 🧑 User — 2026-11-18T02:07:11.401Z
+
+> ↩︎ result: 129.8 row 26 c 0.024 w 0.313
+> 130.5 row 213 c 0.019 w 0.352
+> 131 row 316 c 0.015 w 0.383
+> 131.5 row 401 c 0.010 w 0.414
+> 132 row 470 c 0.004 w 0.444
+> 132.5 row 527 c -0.002 w 0.475
+> 133 row 576 c -0.011 w 0.505
+> 134 row 658 c -0.033 w 0.565
+> 136 row 792 c -0.089 w 0.678
+> 140 row 984 c -0.157 w 0.843
+> 145 row 1109 c -0.015 w 0.985
+> 150 row 1172 c 0.000 w 1.000
+> 160 row 1267 c 0.000 w 1.000
+> 170 row 1347 c 0.089 w 0.911
+> 180 row 1448 c -0.428 w 0.456
+
+### 🤖 Claude — 2026-11-18T02:07:13.703Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/E_top.png"}`
+
+### 🧑 User — 2026-11-18T02:07:13.728Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:07:34.726Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 510, "limit": 95}`
+
+### 🧑 User — 2026-11-18T02:07:34.743Z
+
+> ↩︎ result: 510	  r.w = step(uPjLutS.x, s) * step(s, uPjLutS.y);
+> 511	  return r;
+> 512	}
+> 513	// display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
+> 514	vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
+> 515	  vec4 L = pjLut(s);
+> 516	  vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);
+> 517	  vec4 e = texture2D(uPjE, eUV);
+> 518	  float inE = L.w * step(0.0, eUV.x) * step(eUV.x, 1.0);
+> 519	  wE = e.a * inE * smoothstep(0.3, 0.55, mE);
+> 520	  vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
+> 521	  vec4 n = texture2D(uPjN, nUV);
+> 522	  wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam
+> 523	  vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
+> 524	  if (uPjNear.x > 0.5) {
+> 525	    // ?projnear05=1: where the exact layer would be magnified, the 24-texel near layer and the old tile hand over to
+> 526	    // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
+> 527	    // old one exactly)
+> 528	    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
+> 529	    t = pjMixVP(t, textu …[+3971 chars]
+
+### 🤖 Claude — 2026-11-18T02:07:47.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\nt=open(p).read()\nold_k=\"float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }\\n\"\nassert t.count(old_k)==1\nt=t.replace(old_k, old_k+\"\"\"// share of the crisp near tile T2 in the near / tile layout (see ?projnear05=1 below). m05ride: every layer is read at\n// the locked-view distance from Benny, so the layout under E is always the near tile (crisp) instead of the 24-texel layers\nfloat pjT2W(float mE) {\n#ifdef M05RIDE\n  return pjNearK();\n#else\n  return p …[+1436 chars]`
+
+### 🧑 User — 2026-11-18T02:07:47.368Z
+
+> ↩︎ result: 488:float pjT2W(float mE) {
+> 543:    float wT2 = pjT2W(mE);
+> 586:    float wT2 = pjT2W(mE);
+> 1587:      float wT2m = pjT2W(mE);   // share of T2 in the tile
+
+### 🤖 Claude — 2026-11-18T02:07:52.132Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && mkdir -p $S/ride2 && timeout 900 node tools/match05/r8_shots.mjs $S/ride2 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1\" f10_forward10u,t33_through_screen,t66_through_screen 2>&1 | tail -5", "description": "Render ride switch with soft E edges", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T02:08:25.120Z
+
+> ↩︎ result: f10_forward10u s 143.134 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> t33_through_screen s 151.689 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T02:08:27.341Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride2/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:08:27.383Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:08:28.015Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:08:28.059Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:08:39.093Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride2/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T02:08:39.198Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:08:44.650Z
+
+f10 also reads much closer (pink S-banks both sides, cyan middle with streaks), but E's left boundary shows as a diagonal edge. I'll widen the side fade and also check the steering shots.
+
+### 🤖 Claude — 2026-11-18T02:08:48.253Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\nt=open(p).read()\na=\"smoothstep(0.0, 0.06, min(eUV.x, 1.0 - eUV.x))\"\nassert t.count(a)==1\nt=t.replace(a,\"smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x))\")\nopen(p,'w').write(t)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && mkdir -p $S/ride3 && timeout 900 node tools/match05/r8_shots.mjs $S/ride3 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1\" f10_forward10u,t66_through_screen,s_left_hard,s_right_hard 2>&1 | tail -5", "description": …[+66 chars]`
+
+### 🧑 User — 2026-11-18T02:09:38.293Z
+
+> ↩︎ result: f10_forward10u s 143.156 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> s_right_hard s 145.171 lat 5.068 coins 1420 benny 0.45 -0.2 big coins: #22@-27,714 d107 #23@122,614 d65
+> t66_through_screen s 170.391 lat 0.006 coins 1460 benny -0 -0.29 big coins: #24@416,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T02:09:40.479Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride3/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T02:09:40.526Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:09:41.144Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride3/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T02:09:41.203Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:09:45.070Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride3/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T02:09:45.107Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:09:45.568Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r7/NEW/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T02:09:45.617Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:09:58.062Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\nt=open(p).read()\na=\"    rideK05 = uPjNear.x > 0.5 ? 1.0 : 0.0;\\n\"\nassert t.count(a)==1\nt=t.replace(a,\"    rideK05 = pjNearK();                         // 0 within 0.5 u of the locked checkpoint: locked picture unchanged\\n\")\nopen(p,'w').write(t)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && mkdir -p $S/ride4 && timeout 900 node tools/match05/r8_shots.mjs $S/ride4 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1\" f03_forward3u,t3 …[+133 chars]`
+
+### 🧑 User — 2026-11-18T02:10:34.295Z
+
+> ↩︎ result: f03_forward3u s 136.22 lat 0 coins 1420 benny 0.05 -0.3 big coins: #20@463,790 d118 #21@553,693 d80 #22@476,632 d62
+> t33_through_screen s 151.693 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.391 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T02:10:36.459Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride4/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:10:36.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:10:37.140Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/ride4/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T02:10:37.182Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:10:43.517Z
+
+f03 now looks very close to the approved composition and t66's water around Benny carries the painted design. Let me compute the whole-frame numbers against BEFORE with the lead's metric tool.
+
+### 🤖 Claude — 2026-11-18T02:10:44.418Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p tools/lead_r6/motion_metrics.py | head -50; cat qa/match/05/r7/motion_metrics.txt | head -30", "description": "Read motion metrics tool usage"}`
+
+### 🧑 User — 2026-11-18T02:10:44.471Z
+
+> ↩︎ result: """Lead r6: measured (not subjective) numbers for moving-gameplay frames vs the approved picture, below the HUD strip
+> (rows >= 13.5 %). LAYOUT20 = share of pixels within 20 levels after a sigma-8 blur (composition + colour, like
+> tools/qa/screen_match.py LAYOUT). PALETTE = histogram intersection of hue x saturation (24 x 8 bins, value > 0.15) —
+> how close the colour palette stays, independent of where things are. Moving frames are seen from other viewpoints, so
+> LAYOUT naturally falls as the camera travels; PALETTE shows whether the approved look (colours/materials) survives.
+> usage: python3 -I motion_metrics.py <approved.png> <frame.png> [...]  -> one line per frame"""
+> import sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> ref = Image.open(sys.argv[1]).convert('RGB')
+> W, H = ref.size; top = int(H * 0.135)
+> def prep(im):
+>     im = im.convert('RGB').resize((W, H))
+>     return im
+> def hsv_hist(a):
+>     hsv = np.asarray(Image.fromarray(a).convert('HSV'), dtype=np.float32) / 255.0
+>     m = hsv[..., 2] > 0.15
+>     h, _, _ = np.histogram2d(hsv[..., 0][m], hsv[..., 1][m], bins=[24, 8], range=[[0, 1], [0, 1]])
+>     return h / max(h.sum(), 1)
+> R = np.asarray(ref)[top:]; Rb = np.asarray(ref.filt …[+1821 chars]
+
+### 🤖 Claude — 2026-11-18T02:10:48.993Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && A=references/05_flow_into_the_current.png && echo \"== BEFORE\" && python3 -I tools/lead_r6/motion_metrics.py $A qa/match/05/r7/NEW/{f03_forward3u,f10_forward10u,t33_through_screen,t66_through_screen,s_left_hard,s_right_hard}.png && echo \"== coin only\" && python3 -I tools/lead_r6/motion_metrics.py $A $S/coin1/{f10_forward10u,t33_through_screen}.png && echo \"== ride\" && python3 -I tools/lead_r6/motion_metrics.py $A $S/ride4/{f03_forward3u,t33_through_screen,t66_through …[+141 chars]`
+
+### 🧑 User — 2026-11-18T02:10:52.591Z
+
+> ↩︎ result: == BEFORE
+> f03_forward3u          LAYOUT20  24.4 %  PALETTE  87.9 %
+> f10_forward10u         LAYOUT20  13.7 %  PALETTE  83.7 %
+> t33_through_screen     LAYOUT20  15.4 %  PALETTE  84.1 %
+> t66_through_screen     LAYOUT20   9.0 %  PALETTE  81.4 %
+> s_left_hard            LAYOUT20  10.8 %  PALETTE  81.0 %
+> s_right_hard           LAYOUT20   9.1 %  PALETTE  75.9 %
+> == coin only
+> f10_forward10u         LAYOUT20  14.7 %  PALETTE  86.1 %
+> t33_through_screen     LAYOUT20  15.5 %  PALETTE  85.2 %
+> == ride
+> f03_forward3u          LAYOUT20  27.4 %  PALETTE  88.4 %
+> t33_through_screen     LAYOUT20  17.5 %  PALETTE  85.1 %
+> t66_through_screen     LAYOUT20   9.6 %  PALETTE  80.2 %
+> f10_forward10u         LAYOUT20  17.8 %  PALETTE  84.7 %
+> s_left_hard            LAYOUT20  10.5 %  PALETTE  81.3 %
+> s_right_hard           LAYOUT20   9.6 %  PALETTE  76.3 %
+
+### 🤖 Claude — 2026-11-18T02:10:57.051Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,30p scripts/capture.mjs | grep -n \"argv\\|usage\\|q=\\|out\\|--\" | head -20", "description": "Check capture script arguments"}`
+
+### 🧑 User — 2026-11-18T02:10:57.095Z
+
+> ↩︎ result: 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 6://   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 12:const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> 13:let ids = args.filter((a) => !a.startsWith('--'));
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+
+### 🤖 Claude — 2026-11-18T02:10:58.874Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,12p scripts/capture.mjs; grep -n \"opt.q\\|opt\\.query\\|search\" scripts/capture.mjs | head", "description": "Check capture query option"}`
+
+### 🧑 User — 2026-11-18T02:10:58.929Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+
+### 🤖 Claude — 2026-11-18T02:11:04.114Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && B=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" && timeout 600 node scripts/capture.mjs 05 --out=$S/capB --q=\"$B\" 2>&1 | tail -2 && timeout 600 node scripts/capture.mjs 05 --out=$S/capN --q=\"$B&m05coin=1&m05ride=1\" 2>&1 | tail -2 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$S/capB/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capN/05.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2 …[+142 chars]`
+
+### 🧑 User — 2026-11-18T02:11:35.782Z
+
+> ↩︎ result: '[05] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[05] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> diff px 0 max 0
+
+### 🤖 Claude — 2026-11-18T02:11:40.243Z
+
+Locked approved view: 0 px difference. I'll render the step-2 pictures from the final code directly into the step folder.
+
+### 🤖 Claude — 2026-11-18T02:11:42.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r8/step2_m05ride && mkdir -p $D && timeout 900 node tools/match05/r8_shots.mjs $D \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1\" f03_forward3u,f10_forward10u,t33_through_screen,t66_through_screen 2>&1 | tail -4 && python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png $D/*.png | tee $D/metrics.txt && timeout 300 npx tsc --noEmit -p . && echo TSC_OK", "description": "Render step 2 pictures, metrics, type-check", "timeout": 1250000}`
+

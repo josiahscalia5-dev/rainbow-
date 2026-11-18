@@ -791,3 +791,164 @@ I'll start by inspecting where the previous instance stopped.
 >    r 80 - 150 n 20808 mean [232 149  57] L p10/50/90 [114 144 175]
 >    r 0 - 80 n 5282 mean [238 165  58] L p10/50/90 [122 152 190]
 
+### 🤖 Claude — 2026-11-18T02:07:10.296Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop3.png"}`
+
+### 🧑 User — 2026-11-18T02:07:10.325Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:07:23.657Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\nb=Image.open('$SP/r_m3/a00_approved_view.png').convert('RGB')\n# line from VP (490,690) toward upper-left (100, 300)\nimport math\nfor i in range(0,560,8):\n  t=i/560; x=int(490+(80-490)*t); y=int(690+(280-690)*t)\n  pa=a.getpixel((x,y)); pb=b.getpixel((x,y))\n  print(f'{i:3d} ({x},{y}) appr {pa}  new {pb}')\n\"", "description": "Sample a diagonal line from the v …[+34 chars]`
+
+### 🧑 User — 2026-11-18T02:07:23.794Z
+
+> ↩︎ result: 0 (490,690) appr (254, 213, 191)  new (255, 186, 71)
+>   8 (484,684) appr (255, 248, 187)  new (255, 180, 60)
+>  16 (478,678) appr (245, 190, 110)  new (231, 162, 51)
+>  24 (472,672) appr (248, 143, 96)  new (251, 172, 54)
+>  32 (466,666) appr (243, 124, 92)  new (239, 156, 48)
+>  40 (460,660) appr (215, 102, 86)  new (235, 143, 43)
+>  48 (454,654) appr (223, 105, 67)  new (233, 133, 38)
+>  56 (449,649) appr (184, 86, 75)  new (255, 191, 56)
+>  64 (443,643) appr (204, 105, 66)  new (253, 192, 69)
+>  72 (437,637) appr (164, 81, 99)  new (255, 221, 115)
+>  80 (431,631) appr (158, 61, 54)  new (250, 171, 56)
+>  88 (425,625) appr (195, 91, 64)  new (219, 114, 32)
+>  96 (419,619) appr (183, 81, 58)  new (251, 173, 57)
+> 104 (413,613) appr (182, 77, 56)  new (212, 106, 30)
+> 112 (408,608) appr (171, 74, 57)  new (252, 188, 67)
+> 120 (402,602) appr (154, 81, 101)  new (247, 156, 47)
+> 128 (396,596) appr (150, 73, 89)  new (234, 130, 35)
+> 136 (390,590) appr (143, 58, 51)  new (240, 138, 37)
+> 144 (384,584) appr (155, 66, 58)  new (248, 164, 52)
+> 152 (378,578) appr (202, 92, 33)  new (210, 103, 29)
+> 160 (372,572) appr (192, 85, 29)  new (201, 94, 27)
+> 168 (367,567) appr (181, 82, 27)  new (195, 90, 25)
+> 176 (361,561) appr (167,  …[+2556 chars]
+
+### 🤖 Claude — 2026-11-18T02:07:51.571Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"      v = uTone.x + 0.16 * t * t + 0.04 * cos(ang) + 0.08 * far + uTone.w * st * (0.3 + 0.7 * t) + 0.06 * gl;\\n      if (part > 0.5 && part < 1.5) v = uTone.y + 0.18 * facing + 0.06 * far + 0.12 * st;\\n      if (part > 1.5 && part < 2.5) v = 0.04 + 0.06 * far;\",\n \"      v = uTone.x + 0.26 * pow(t, 1.5) + 0.03 * cos(ang) + 0.06 * far + uTone.w * st * (0.3 + 0.7 * t) + 0.05 * gl;\\n      if (part > 0.5 && part < 1.5) v = uTone.y + 0.12 * facing + 0.04 * far + 0.15 * st;\\n      if …[+1823 chars]`
+
+### 🧑 User — 2026-11-18T02:08:05.214Z
+
+> ↩︎ result: 04 a00_approved_view s 78.295 lat 0 stage 04 frames 0
+>    r 230 - 330 n 81825 mean [197  95  30] L p10/50/90 [ 91 104 126]
+>    r 150 - 230 n 42864 mean [219 120  39] L p10/50/90 [104 125 149]
+>    r 80 - 150 n 20815 mean [228 140  50] L p10/50/90 [114 135 167]
+>    r 0 - 80 n 5280 mean [237 163  57] L p10/50/90 [122 150 189]
+
+### 🤖 Claude — 2026-11-18T02:08:07.691Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop4.png"}`
+
+### 🧑 User — 2026-11-18T02:08:07.749Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:08:31.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; cat > $SP/logr.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\ndef prof(path, vp=(470,690)):\n    im=np.asarray(Image.open(path).convert('L')).astype(float)\n    lr=np.linspace(np.log(40),np.log(330),400)\n    acc=[]\n    for th in np.radians(np.arange(100,260,4)):   # upper half (0 = right, 90 = up in screen coords flipped)\n        x=vp[0]+np.exp(lr)*np.cos(th); y=vp[1]-np.exp(lr)*np.sin(th)\n        ok=(x>=0)&(x<864)&(y>=0)&(y<1536)\n        if ok.all(): \n  …[+827 chars]`
+
+### 🧑 User — 2026-11-18T02:08:31.336Z
+
+> ↩︎ result: 04_through_the_five_arrows.png log-period 0.296 ring ratio 0.744 ac [ 1.   -0.04 -0.23 -0.1  -0.13  0.03  0.12  0.03 -0.02 -0.01 -0.02  0.01]
+> a00_approved_view.png log-period 0.301 ring ratio 0.74 ac [ 1.   -0.1  -0.29  0.   -0.01  0.    0.04 -0.08  0.02  0.05  0.02 -0.03]
+
+### 🤖 Claude — 2026-11-18T02:08:36.666Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB').crop((80,400,500,720))\nb=Image.open('$SP/r_m4/a00_approved_view.png').convert('RGB').crop((80,400,500,720))\nim=Image.new('RGB',(840,320)); im.paste(a,(0,0)); im.paste(b,(420,0)); im.save('$SP/crop5.png')\"", "description": "Crop upper-left tunnel quadrant at full resolution"}`
+
+### 🧑 User — 2026-11-18T02:08:36.844Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:08:39.104Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop5.png"}`
+
+### 🧑 User — 2026-11-18T02:08:39.120Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:09:06.625Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"M04.num('m04ringp', 6.0) }\", \"M04.num('m04ringp', 2.6) }\"),\n(\"const P = M04.num('m04ringp', 6.0);\", \"const P = M04.num('m04ringp', 2.6);\"),\n# streak lobes: narrower, brighter, with a cool glint channel\n(\"\"\"    s += (0.5 + 0.5 * h21(vec2(ring, fi * 9.3))) * exp(-d * d / (w * w));\"\"\",\n \"\"\"    s += (0.45 + 0.55 * h21(vec2(ring, fi * 9.3))) * exp(-d * d / (w * w));\"\"\"),\n(\"    float w = 0.10 + 0.22 * h21(vec2(ring, fi * 5.7));\", \"    float w = 0.06 + 0.16 * h21( …[+1490 chars]`
+
+### 🧑 User — 2026-11-18T02:09:40.125Z
+
+> ↩︎ result: 04 a00_approved_view s 78.312 lat 0 stage 04 frames 0
+>    r 230 - 330 n 79043 mean [214 113  36] L p10/50/90 [102 121 139]
+>    r 150 - 230 n 42865 mean [227 128  41] L p10/50/90 [116 128 150]
+>    r 80 - 150 n 20815 mean [231 142  51] L p10/50/90 [119 133 170]
+>    r 0 - 80 n 5279 mean [239 164  55] L p10/50/90 [123 150 190]
+> 04 a00_approved_view s 78.218 lat 0 stage 04 frames 0
+>    r 230 - 330 n 79036 mean [215 115  37] L p10/50/90 [102 122 143]
+>    r 150 - 230 n 42848 mean [228 129  41] L p10/50/90 [116 128 151]
+>    r 80 - 150 n 20814 mean [231 142  50] L p10/50/90 [119 133 170]
+>    r 0 - 80 n 5281 mean [239 164  55] L p10/50/90 [123 150 189]
+
+### 🤖 Claude — 2026-11-18T02:09:42.462Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop6.png"}`
+
+### 🧑 User — 2026-11-18T02:09:42.490Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:10:03.543Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_m6 \"match04=1&m04ring=1&m04fade0=-2&m04fade1=-1&m04ts=2\" a00_approved_view 2>&1 | grep -v \"403\\|allow list\" | tail -1; python3 -c \"\nfrom PIL import Image\nb=Image.open('$SP/r_m6/a00_approved_view.png').convert('RGB').crop((40,400,840,840)).resize((400,220)).save('$SP/crop7.png')\"", "description": "Test exaggerated streak strength to verify streak code works"}`
+
+### 🧑 User — 2026-11-18T02:10:18.860Z
+
+> ↩︎ result: 04 a00_approved_view s 78.316 lat 0 stage 04 frames 0
+
+### 🤖 Claude — 2026-11-18T02:10:21.290Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop7.png"}`
+
+### 🧑 User — 2026-11-18T02:10:21.306Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:10:42.862Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"    float w = 0.06 + 0.16 * h21(vec2(ring, fi * 5.7));\", \"    float w = 0.12 + 0.30 * h21(vec2(ring, fi * 5.7));\"),\n(\"      v = uTone.x + 0.26 * pow(t, 1.5) + 0.03 * cos(ang) + 0.06 * far + uTone.w * st * (0.3 + 0.7 * t) + 0.05 * gl;\",\n \"      float bump = smoothstep(0.0, 0.45, t) * (1.0 - 0.5 * smoothstep(0.7, 1.0, t));\\n      v = uTone.x + 0.22 * pow(t, 1.5) + 0.03 * cos(ang) + 0.06 * far + uTone.w * st * bump + 0.05 * gl;\"),\n(\"    float pk = (0.42 * low + 0.30 * smooth …[+2559 chars]`
+
+### 🧑 User — 2026-11-18T02:11:10.393Z
+
+> ↩︎ result: 04 a00_approved_view s 78.246 lat 0 stage 04 frames 0
+> 04 t66_through_screen s 102.877 lat 0 stage 04 frames 106
+
+### 🤖 Claude — 2026-11-18T02:11:12.979Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop8.png"}`
+
+### 🧑 User — 2026-11-18T02:11:12.994Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:11:13.553Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s3.png"}`
+
+### 🧑 User — 2026-11-18T02:11:13.586Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:11:19.281Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_dbg \"match04=1&m04ring=1\" a00_approved_view 2>&1 | grep -i \"error\" | grep -v \"403\" | grep -o \"ERROR: [^\\\\\\\\]*\" | head -5", "description": "Capture shader compile error text"}`
+
+### 🧑 User — 2026-11-18T02:11:32.496Z
+
+> ↩︎ result: ERROR: 0:181: 't' : undeclared identifier
+
+### 🤖 Claude — 2026-11-18T02:11:40.667Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"    float v;\\n\", \"    float v, tb = 0.0;\\n\"),\n(\"      float bump = smoothstep(0.0, 0.45, t)\", \"      tb = t;\\n      float bump = smoothstep(0.0, 0.45, t)\"),\n(\"* smoothstep(0.1, 0.5, t));\", \"* smoothstep(0.1, 0.5, tb));\"),\n]\nfor a,b in rep:\n    assert s.count(a)==1, a[:60]\n    s=s.replace(a,b)\nopen(p,'w').write(s)\nEOF\nSP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_m7 \"match04=1&m04ring= …[+785 chars]`
+
