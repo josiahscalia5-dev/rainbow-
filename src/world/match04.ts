@@ -398,10 +398,12 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
     splash.renderOrder = 5;
   }
 
+  const splashOffset = new THREE.Vector3(...SP.offset);
+  const _bp = new THREE.Vector3();
   return {
     group,
     splash,
-    splashOffset: new THREE.Vector3(...SP.offset),
+    splashOffset,
     bakeDepth(renderer) {
       const prevRT = renderer.getRenderTarget();
       const scene = new THREE.Scene();
@@ -425,7 +427,8 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
       if (camera && !FAL04) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
       shared.uPjPost.value.x = renderer.toneMappingExposure;
       shared.uPjRes.value.set(w, h);
-      if (m4 && camera) m4.update(camera.getWorldPosition(_cp));
+      // r13: Benny's world position (Game puts the splash at Benny + splashOffset just before sync) for the m04arr3d fade
+      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined);
       // r11 m04mv: full weight within 3 u of a view's camera, gone at 8 u (the approved camera is ~10 u from V04-1's)
       if (mvViews.length && camera) {
         const cp = camera.getWorldPosition(_cp);
