@@ -3982,3 +3982,45 @@ Now the two specialist steps waiting for review: Screen 05 step 3 (foam clouds),
 
 > 🔧 **Bash** `{"command": "timeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:round12-progress 2>&1 | grep -E '\"result\"|\"commit\"'; python3 -I scripts/autosave-status.py | head -1; git status --short | wc -l; for w in s04 s05 s08; do cd /home/user/wt/$w; echo \"$w $(git rev-parse --short=8 HEAD) remote=$(git ls-remote origin refs/heads/$(git rev-parse --abbrev-ref HEAD) | cut -c1-8)\"; done", "description": "Save lead and verify all three branches", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-18T13:14:56.693Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "93f3a6bf86e7ee6326303d0da21fe542df7bcf59",
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T13:14:40+00:00 (0.2 min ago) | local 93f3a6b remote 93f3a6b (match) | uncommitted 0
+> 0
+> s04 5232975b remote=5232975b
+> s05 1d5990d4 remote=1d5990d4
+> s08 a6f7e183 remote=a6f7e183
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:15:09.135Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat >> qa/match/04/r12/BRIEF_NEXT_SLOT.md <<'EOF'\n\n## Update ~13:15 UTC (after the user's 2026-11-18 order \"fix Screen 04 properly\")\nRead `qa/match/04/r12/PROGRESS.md` first. Settled, do NOT repeat: the multi-view projection (`m04mv`, corrected `m04mv2`) and the\nunrolled view tile (`vtile04.py`) are STOPPED — the two AI views disagree with each other and are 1.7×-Benny-scale repaints, so\nthey ghost between views / leave 69 % holes. Use them only as BY-EYE targets. Measured fact to use: the painted waterline on the\ngold wall is ≈ 2 u above Benny's wa …[+1182 chars]`
+
+### 🧑 User — 2026-11-18T13:15:16.255Z
+
+> ↩︎ result: remote=2421dcefb8 local=2421dcefb8
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:15:28.401Z
+
+The Screen 04 approach of projecting the two AI views is now ruled out for good. Screens 05 and 08 each gained more real improvements; the pictures for all of them are above.
+
+**Screen 04: NOT AN IMPROVEMENT, projection approach stopped.** I ran two final checks:
+- **Water shape:** I measured exactly where the painted water meets the gold wall in V04-1 and V04-2, using their known cameras and the tunnel's known shape. It's about 2 units above Benny's water; the game's river sides only reach 1 unit. Raising them to match put more painted water on the sides, but the double exposure halfway between the two views stayed.
+- **Calibration:** the camera direction is correct; the only calibration error was the small position offset, already fixed. The real problem is that the AI repainted the scene around a Benny about 1.7× bigger. The two views also place the rings, arrows and swirls differently from each other. Blending them always doubles something, and the river under the painted Benny is missing from both, so unrolling the water into a texture left 69% holes.
+- **What stays useful:** V04-1 and V04-2 show what the tunnel interior should look like, and the ~2-unit water height is a real measurement.
+- **What comes next:** rebuild the interior as real 3D: water sides at the measured height, low foam clusters instead of foam-ball walls, five glowing arrows as real shapes on the river, glossy gold rings. The brief is written so the specialist starts from these findings.
+
+**Screen 05, step 3: GOOD IMPROVEMENT.** Puffy white foam clouds now line both far banks instead of a flat pale-lilac band. Still wrong: steering hard left at the stage end shows a pale floor behind the foam.
+
+**Screen 08, steps 3 and 4: GOOD IMPROVEMENT (small).**
+- The wall around the upper-left spout cup and above-right of the door now shows regular curved slot rows. Before, it had a seamed patch of fine diagonal slots and kaleidoscope diamonds.
+- Still wrong: an odd gold wedge on top of the upper-right cup, and a hard edge in the far top-left corner.
+
+**Still running:**
+- The Screen 05 and Screen 08 specialists continue. 08 next fixes the oversized water glints, then runs its full check; 05 continues on its remaining items.
+- When either finishes, Screen 04's real-geometry rebuild takes that slot. Screens 07 and 06 stay queued.
+
+**Saved:** everything matches GitHub. Lead branch `93f3a6b`, Screen 04 `2421dcef`, Screen 05 `1d5990d4`, Screen 08 `a6f7e183`. The five-minute autosave keeps snapshotting unfinished edits.
+

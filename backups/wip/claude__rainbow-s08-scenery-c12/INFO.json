@@ -2,13 +2,20 @@
  "worktree": "/home/user/wt/s08",
  "branch": "claude/rainbow-s08-scenery-c12",
  "head": "a6f7e18303013adb2d9711ef5c9fb0823908636e",
- "time": "2026-11-18T13:14:45+00:00",
+ "time": "2026-11-18T13:15:36+00:00",
  "dirty_tracked": [
   "qa/match/08/r12/PROGRESS.md"
  ],
  "untracked_copied": [
+  "qa/match/08/r12/NEW/f20_forward20u.png",
   "qa/match/08/r12/wip_m08glint_not_kept.patch"
  ],
- "untracked_skipped": [],
+ "untracked_skipped": [
+  "qa/match/08/r12/NEW/a00_approved_view.png",
+  "qa/match/08/r12/NEW/f03_forward3u.png",
+  "qa/match/08/r12/NEW/f06_forward6u.png",
+  "qa/match/08/r12/NEW/f10_forward10u.png",
+  "qa/match/08/r12/NEW/s_left_steer.png"
+ ],
  "restore": "git switch claude/rainbow-s08-scenery-c12 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s08-scenery-c12/tracked.patch && copy backups/wip/claude__rainbow-s08-scenery-c12/untracked/* into the worktree"
 }

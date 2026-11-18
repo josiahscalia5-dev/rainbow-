@@ -1909,3 +1909,66 @@ No cycles. Implementing the switch now.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin \"$K&m05fcoin=1\" t90_through,t95_through_screen,t95_left,t85_through,t98_end,t66_through_screen 2>&1 | grep -v \"^\\s*$\" | tail -8", "description": "Type-check and render m05fcoin test shots", " …[+17 chars]`
 
+### 🧑 User — 2026-11-18T13:15:10.794Z
+
+> ↩︎ result: TSC_OK
+> t66_through_screen s 170.616 lat 0 coins 1460 benny -0 -0.28 big coins: #24@414,726 d112 #25@518,659 d74
+> t95_through_screen s 186.708 lat 0 coins 1580 benny -0.11 -0.34 big coins: -
+> t85_through s 181.024 lat 0 coins 1460 benny 0.33 -0.28 big coins: #25@188,938 d192 #26@461,720 d94 #27@535,681 d72
+> t90_through s 183.957 lat 0 coins 1520 benny 0.09 -0.3 big coins: #25@25,1329 d355
+> t98_end s 188.356 lat 0 coins 1580 benny -0.19 -0.51 big coins: #38@557,837 d65
+> t95_left s 186.706 lat -3.838 coins 1420 benny -0.36 -0.37 big coins: #34@877,651 d67 #35@798,640 d66 #36@733,626 d61
+
+### 🤖 Claude — 2026-11-18T13:15:15.943Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T13:15:15.987Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:15:16.564Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t90_through.png"}`
+
+### 🧑 User — 2026-11-18T13:15:16.624Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:15:30.476Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport json\nj=json.load(open('/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/shots.json'))\nfor sh in j['shots']:\n  if sh['name'] in ('t95_through_screen','t90_through'):\n    print(sh['name'], 's', sh['s'])\n    for c in sh['coinsOnScreen']: print('  ', c)\n\" | head -60; grep -n \"coinScreen\" src/*.ts src/**/*.ts | head -3", "description": "List on-screen coins in the t90/t95 shots"}`
+
+### 🧑 User — 2026-11-18T13:15:30.601Z
+
+> ↩︎ result: t95_through_screen s 186.708
+>    {'i': 38, 'x': 587, 'y': 739, 'd': 57}
+>    {'i': 39, 'x': 604, 'y': 729, 'd': 51}
+>    {'i': 40, 'x': 618, 'y': 718, 'd': 46}
+>    {'i': 41, 'x': 629, 'y': 706, 'd': 42}
+>    {'i': 42, 'x': 635, 'y': 696, 'd': 39}
+>    {'i': 43, 'x': 637, 'y': 689, 'd': 36}
+>    {'i': 44, 'x': 639, 'y': 685, 'd': 33}
+>    {'i': 45, 'x': 638, 'y': 683, 'd': 31}
+>    {'i': 46, 'x': 637, 'y': 679, 'd': 29}
+>    {'i': 47, 'x': 634, 'y': 674, 'd': 27}
+>    {'i': 48, 'x': 632, 'y': 668, 'd': 26}
+>    {'i': 49, 'x': 613, 'y': 643, 'd': 14}
+>    {'i': 50, 'x': 612, 'y': 643, 'd': 13}
+>    {'i': 51, 'x': 611, 'y': 641, 'd': 12}
+>    {'i': 52, 'x': 610, 'y': 639, 'd': 12}
+>    {'i': 53, 'x': 608, 'y': 637, 'd': 11}
+>    {'i': 54, 'x': 607, 'y': 636, 'd': 11}
+>    {'i': 55, 'x': 606, 'y': 635, 'd': 10}
+>    {'i': 56, 'x': 605, 'y': 635, 'd': 10}
+>    {'i': 57, 'x': 603, 'y': 634, 'd': 10}
+>    {'i': 58, 'x': 602, 'y': 633, 'd': 9}
+>    {'i': 59, 'x': 601, 'y': 632, 'd': 9}
+>    {'i': 60, 'x': 599, 'y': 631, 'd': 9}
+>    {'i': 61, 'x': 598, 'y': 630, 'd': 8}
+>    {'i': 62, 'x': 597, 'y': 630, 'd': 8}
+>    {'i': 63, 'x': 595, 'y': 630, 'd': 8}
+>    {'i': 64, 'x': 593, 'y': 629, 'd': 7}
+>    {'i': 65, 'x': 591, 'y': 628, 'd': 7}
+>     …[+1294 chars]
+

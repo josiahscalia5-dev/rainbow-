@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15506,
-   "sha256": "3a278eeef952ebcdff6487f4956306fe0f77873c9a9d19fddebb078fbd1cdd1d"
+   "sha256": "45cf4e9cb46d4bcff0981f92844f1b9884d3c473cfe9307be02ea0488741ad39"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -763,23 +763,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c12/INFO.json",
-   "bytes": 605,
-   "sha256": "dddc904fd6563a525ca158f8f956f42655847cb31ca992e93ca7c917828daa8b"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-match-c12/untracked/assets/textures/match04/tile_river_v04.json",
-   "bytes": 218,
-   "sha256": "6678f691cfe7f3b6a50ada7d73a10182ed623b41c8ea3e8c67ac35adbbf70cac"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-match-c12/untracked/assets/textures/match04/tile_river_v04.png",
-   "bytes": 569052,
-   "sha256": "706ee52dccc2c72e3d156b07bc19dea36535c00671a83035f67d142d422016d1"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-match-c12/untracked/tools/match04/vtile04.py",
-   "bytes": 4071,
-   "sha256": "d8fb72983317e9470025931a2279f139bdbe69136b10e2e83e008b325fbdece7"
+   "bytes": 477,
+   "sha256": "c52899935da7020c3e8c53d22fc40ab6b6110dddd154302545528770e144d567"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -804,7 +789,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/INFO.json",
    "bytes": 534,
-   "sha256": "823bc0b746711790465bb27c03e31fc6acc8906eb55e98c94b895b8a6e523fc5"
+   "sha256": "e1af3b2692b84113f54dec94e56f77194c23972113ac2d42aa900d8172a1f8c4"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/tracked.patch",
@@ -848,11 +833,16 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/INFO.json",
-   "bytes": 512,
-   "sha256": "0f317b5a6731f40a17e819ada884e4b8edc1013c7087afd07ed0edee408f9412"
+   "bytes": 569,
+   "sha256": "d0c0394d81eccf52a7d7e1257d56c29fc5868ad1a71a288b3101ad2c5b0c31f7"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/tracked.patch",
+   "bytes": 1231,
+   "sha256": "5f0be814f9135762d3729e034971a2ea8afed7efcad96d8588f91ea5c4777b1d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/qa/match/08/r12/wip_m08glint_not_kept.patch",
    "bytes": 3613,
    "sha256": "64f0657b020495b49698dd809fedac957f0b647eecb15d96d511b84f302133d3"
   },
