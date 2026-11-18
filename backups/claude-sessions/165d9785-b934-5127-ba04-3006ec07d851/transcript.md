@@ -4495,3 +4495,39 @@ Saving everything now: game work, all three workspaces, agent definitions, and t
 
 > 🔧 **Bash** `{"command": "D=backups/claude-config/2026-11-18-account12 && mkdir -p $D && cp ~/.claude/settings.json $D/user-settings.json && cp ~/.claude/plugins/installed_plugins.json ~/.claude/plugins/known_marketplaces.json $D/ && cat > $D/README.md <<'EOF'\n# Account 12 (2026-11-18) — Claude setup snapshot (NO secrets)\nRestore on a new account: start the cloud session on the lead branch named in `backups/START_NEW_CLAUDE_ACCOUNT.md`;\nthe SessionStart hook (`.claude/settings.json`) runs `scripts/claude-bootstrap.sh`, which reinstalls tools and plugins.\n\n* **Agents (10, in git):** `.claude/agents/` — …[+2580 chars]`
 
+### 🧑 User — 2026-11-18T13:34:06.702Z
+
+> ↩︎ result: s04 remote=feb246b8 local=feb246b8
+>   "result": "committed+pushed",
+>   "files_staged": 19,
+>   "commit": "2f2d253c0e1a5a5511c37b7d679d5dbd32027157",
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T13:33:54+00:00 (0.2 min ago) | local 2f2d253 remote 2f2d253 (match) | uncommitted 0
+> 4
+> claude__rainbow-s04-match-c12
+> claude__rainbow-s05-match-c12
+> claude__rainbow-s08-scenery-c12
+
+### 🤖 Claude — 2026-11-18T13:34:17.177Z
+
+Everything is saved to your GitHub repository (`josiahscalia5-dev/rainbow-`), with GitHub matching each local commit:
+
+| What | Where on GitHub | State |
+|---|---|---|
+| Lead work, coordination logs, all review pictures | `ccr-e908f8da-cy4yc1` @ `2f2d253` | matches GitHub |
+| Screen 04 work (tests, tools, newest renders) | `claude/rainbow-s04-match-c12` @ `feb246b8` | matches GitHub |
+| Screen 05 kept steps | `claude/rainbow-s05-match-c12` @ `24877989` | matches GitHub |
+| Screen 08 kept steps | `claude/rainbow-s08-scenery-c12` @ `05ed1bee` | matches GitHub |
+| Specialists' unfinished edits (05 and 08 are mid-work) | `backups/wip/…-c12/` on the lead branch | refreshed every 5 minutes |
+| All 10 agent definitions | `.claude/agents/` | in GitHub, unchanged |
+| Agents' running state and restart steps | `backups/AGENTS_STATUS.json` | in GitHub |
+| Plugins, marketplaces, servers, services, tool versions | new `backups/claude-config/2026-11-18-account12/` + `backups/TOOL_MANIFEST.json` | in GitHub |
+| Project hooks and server template | `.claude/settings.json`, `.mcp.json.template` | in GitHub |
+
+Two things can't go into GitHub, by design:
+- **Your World Labs and fal keys.** They stay in this environment's secure settings; a new account re-enters them only through the secure form.
+- **The running agents themselves.** Their definitions, work and restart instructions are saved, so a new session can relaunch them where they stopped.
+
+The five-minute autosave keeps running and keeps snapshotting all three workspaces.
+
+**Screen 04 step 1 is rendered but not yet judged.** It raises the water to the painted height and replaces the tall foam-ball walls with low foam. My first look: the foam walls are gone and water now climbs the tunnel sides, closer to your painting, and the start view is unchanged. But there's still a hard straight silvery edge where the water meets the gold wall. I'm fixing that before I show you anything or give it a verdict.
+

@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15507,
-   "sha256": "c71868e32faef38adfa60db9b01f7121e26b044b7fe10d708fc7f8b928e386cf"
+   "sha256": "637140b143c68edabd2f21ede34ea1c205cacceee3347092fa173873be4b9dac"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -784,7 +784,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c12/INFO.json",
    "bytes": 477,
-   "sha256": "22593dc35b046e1e8b1dd14e26d24962b81ba745a64e2169e95219d7850670d5"
+   "sha256": "4e54f549b8c89da57dd456ceac7544d5248d912f0eee8163bd671587b35fda8a"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -809,12 +809,12 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/INFO.json",
    "bytes": 535,
-   "sha256": "8f581a6f2532834adf20fa2a9f7f24f286c8aaf4480e205e42e3ffda3493e61d"
+   "sha256": "e54298bdb966b880f6baea583f648d1a76a3e0cedff54b9db8f2a4db6667ec42"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/tracked.patch",
-   "bytes": 6290,
-   "sha256": "78889a918b012103083f41dcdf2f88e69f560203f7f76e7e51b56a60bc7545ca"
+   "bytes": 6262,
+   "sha256": "3f0a71f5ee5ff6f742b634a14a1abaae04c91e3a64a4729863d8c51e46d8e657"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -853,8 +853,23 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/INFO.json",
-   "bytes": 485,
-   "sha256": "d2ba80bd74662c2cd2d7baf742640044a5d94156416fbb812b5b9ea321cd2ebe"
+   "bytes": 2550,
+   "sha256": "428163dcee36b6d820b056741787590be2f56ae5f5930685aa88c0203d9f7a51"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c12/tracked.patch",
+   "bytes": 3915,
+   "sha256": "330ead61d8579dacfb78e52a8fb746ee6cdf50727959a2768b7964017874ec43"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/qa/match/08/r12/NEW/f20_forward20u.png",
+   "bytes": 1724782,
+   "sha256": "fd17a29b0063a305b43519fc2d6137dc1f0ff962f5e942c44faad2f06b9ee097"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/qa/match/08/r12/NEW/motion.json",
+   "bytes": 4806,
+   "sha256": "8c80a8a8366d17e9ec92cc727151c178b8317737725c01d960b32b1e5ac3ad50"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
