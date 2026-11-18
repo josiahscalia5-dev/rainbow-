@@ -1562,3 +1562,89 @@ That base-row index line is needlessly complex (its factor is exactly 1) and wou
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq9 && cp $S/nq08.png assets/textures/match08/nq08.png && cp $S/nq08.json assets/textures/match08/nq08.json && ls -la assets/textures/match08/nq08.png && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && rm -rf qa/match/08/r14/step1_m08nq/NEW_v6 && time node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/NEW_v6 \"$K13&m08nq=1\" 2>&1 | grep \"^08\"", "description": "Render audit shots with nq08 v6 tile" …[+20 chars]`
 
+### 🧑 User — 2026-11-18T17:19:17.533Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1760300 Nov 18 17:14 assets/textures/match08/nq08.png
+> 08 a00_approved_view s 392.435 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 395.01 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.018 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 402.003 lat 0 stage 08 frames 63
+> 08 f20_forward20u s 411.952 lat 0 stage 09 frames 126
+> 08 s_left_steer s 398.018 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 398.018 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 404.034 lat -2.217 stage 08 frames 76
+> 08 s_right_hard s 404.035 lat 2.217 stage 08 frames 76
+> 08 t33_through_screen s 396.277 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+> 
+> real	4m32.140s
+> user	0m3.009s
+> sys	0m0.540s
+
+### 🤖 Claude — 2026-11-18T17:19:23.192Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/08_final_spin_chamber.png').convert('RGB')\nfor n in ['f06_forward6u','f10_forward10u','s_left_hard','s_right_hard','f03_forward3u','t95_through_screen']:\n  b=Image.open('qa/match/08/r14/BEFORE_K13/'+n+'.png').convert('RGB'); c=Image.open('qa/match/08/r14/step1_m08nq/NEW_v6/'+n+'.png').convert('RGB')\n  W=Image.new('RGB',(864*3+20,800),'white')\n  W.paste(a.crop((0,736,864,1536)),(0,0)); W.paste(b.crop((0, …[+157 chars]`
+
+### 🧑 User — 2026-11-18T17:19:27.260Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T17:19:30.376Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp6_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T17:19:30.715Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:19:30.706Z
+
+[Image: original 2612x800, displayed at 2000x613. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:19:30.998Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp6_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T17:19:31.290Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:19:31.286Z
+
+[Image: original 2612x800, displayed at 2000x613. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:19:54.277Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && date -u +%H:%M && grep -n \"^GL_MIN\\|^PERIOD\\|^TH = \\|^OVZ\\|cv2.GaussianBlur(sup.astype(np.float32), (0, 0), 2.0)\" tools/match08/nq08.py", "description": "Locate parameters to change"}`
+
+### 🧑 User — 2026-11-18T17:19:54.318Z
+
+> ↩︎ result: 17:19
+> 111:GL_MIN, GL_DIL = 168, 7
+> 118:cov = np.clip((lum(src) - lum(base)) / np.maximum(255 - lum(base), 8), 0, 1) * cv2.GaussianBlur(sup.astype(np.float32), (0, 0), 2.0)
+> 141:PERIOD = 8.0                                 # u along the river
+> 142:TH = int(round(PERIOD * DZ))
+> 156:OVZ = int(SH * 0.3); PZ = SH - OVZ           # each source column made periodic (far end cross-faded into the near end)
+
+### 🤖 Claude — 2026-11-18T17:20:03.442Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\nrep=[\n(\"GL_MIN, GL_DIL = 168, 7\",\"GL_MIN, GL_DIL = 200, 7                      # only the bright compact glint cores become sprites; the softer painted\\n                                             # highlight streaks stay in the satin base\"),\n(\"cov = np.clip((lum(src) - lum(base)) / np.maximum(255 - lum(base), 8), 0, 1) * cv2.GaussianBlur(sup.astype(np.float32), (0, 0), 2.0)\",\n \"cov = np.clip((lum(src) - lum(base)) / np.maximum(255 - lum(base), 8), 0, 1) ** 0.8 * cv2.GaussianBlur(su …[+1013 chars]`
+
+### 🧑 User — 2026-11-18T17:20:09.441Z
+
+> ↩︎ result: target 1336 x 1236 texels ( 6.1 u x 7.490909090909091 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.475 112 cols
+> cyan zone a -0.442 .. 0.714 388 cols
+> zone 1 glints placed 60 / 60
+> zone 2 glints placed 60 / 60
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq10/nq08.png (1236, 1336, 3)
+
+### 🤖 Claude — 2026-11-18T17:20:12.237Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq10/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:20:12.290Z
+
+> ↩︎ result: [image]
+

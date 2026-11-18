@@ -73635,7 +73635,7 @@ z3;0T24BfPoo%Z*AOS`Vi`3v-%xs^b(7Wu-3_<Qs3MRk4Kb>89&?J5~4a7TOTyEXIB
 Z{|~%&UaX<Yo@M|5002ovPDHLkV1l*z9{vCT
 
 diff --git a/tools/match08/nq08.py b/tools/match08/nq08.py
-index 37831d6..77e350e 100644
+index 37831d6..a2e0b21 100644
 --- a/tools/match08/nq08.py
 +++ b/tools/match08/nq08.py
 @@ -1,21 +1,27 @@
@@ -73739,7 +73739,7 @@ index 37831d6..77e350e 100644
  Lm = src.mean(-1); hpf = Lm - cv2.GaussianBlur(Lm, (0, 0), 12)
  gx = cv2.Sobel(hpf, cv2.CV_32F, 1, 0, ksize=5); gz = cv2.Sobel(hpf, cv2.CV_32F, 0, 1, ksize=5)
  J11 = cv2.GaussianBlur(gx * gx, (0, 0), 30); J22 = cv2.GaussianBlur(gz * gz, (0, 0), 30); J12 = cv2.GaussianBlur(gx * gz, (0, 0), 30)
-@@ -96,145 +98,142 @@ slope = np.clip(-np.tan(phi), -1.2, 1.2)
+@@ -96,145 +98,144 @@ slope = np.clip(-np.tan(phi), -1.2, 1.2)
  slope = cv2.GaussianBlur(slope * coh, (0, 0), 35) / np.maximum(cv2.GaussianBlur(coh, (0, 0), 35), 1e-4)
  RM = SH // 2
  xs = np.zeros((SH, SW), np.float32); xs[RM] = np.arange(SW)
@@ -73759,14 +73759,15 @@ index 37831d6..77e350e 100644
  print('rectified: max lateral shift', round(float(np.abs(xs - np.arange(SW)[None]).max() / DX), 3), 'u')
  
 +# --- 2. base satin + glints ---------------------------------------------------------------------------------------------
-+GL_MIN, GL_DIL = 168, 7
++GL_MIN, GL_DIL = 200, 7                      # only the bright compact glint cores become sprites; the softer painted
++                                             # highlight streaks stay in the satin base
 +core_m = cv2.morphologyEx((src.min(-1) > GL_MIN).astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
 +sup = cv2.dilate(core_m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * GL_DIL + 1, 2 * GL_DIL + 1))).astype(bool)
 +base = fill_cols(src, sup)
 +base = np.where(sup[..., None], cv2.GaussianBlur(base, (0, 0), 1.0), base)
 +lum = lambda im: im @ np.array([0.3, 0.55, 0.15], np.float32)
 +# glint coverage: how far the painted pixel rises from the base toward white (soft edge from the support)
-+cov = np.clip((lum(src) - lum(base)) / np.maximum(255 - lum(base), 8), 0, 1) * cv2.GaussianBlur(sup.astype(np.float32), (0, 0), 2.0)
++cov = np.clip((lum(src) - lum(base)) / np.maximum(255 - lum(base), 8), 0, 1) ** 0.8 * cv2.GaussianBlur(sup.astype(np.float32), (0, 0), 3.5)
 +nlab, lab, stats, _ = cv2.connectedComponentsWithStats(sup.astype(np.uint8), 8)
 +sprites = []
 +for k in range(1, nlab):
@@ -73796,10 +73797,13 @@ index 37831d6..77e350e 100644
 +KA = [WL + 0.03, c - RC / HW, c + RC / HW, WR - 0.03]
  lay = lambda xb: np.interp(xb, KX, KA)
  TW = int(round(2 * WT * DX)) // 8 * 8
- PERIOD = 8.0                                 # u along the river
- TH = int(round(PERIOD * DZ))
+-PERIOD = 8.0                                 # u along the river
+-TH = int(round(PERIOD * DZ))
 -xb_of = lambda col: -WT + 2 * WT * col / (TW - 1)
 -a2col = lambda a: (a + A) / (2 * A) * (SW - 1)
++PZ = SH - int(SH * 0.3)                      # period of one painted column along the flow (texels), see 3.
++TH = int(round(8.0 * DZ / PZ)) * PZ          # ~8 u along the river, a whole number of column periods (no wrap seam)
++PERIOD = TH / DZ
 +xb_of = lambda col: -WT + 2 * WT * np.asarray(col, np.float64) / (TW - 1)
 +a2col = lambda a: (np.asarray(a) + A) / (2 * A) * (SW - 1)
  print('target', TW, 'x', TH, 'texels (', round(2 * WT, 2), 'u x', PERIOD, 'u ), middle layout 1:1 +-', RC, 'u')
@@ -73903,7 +73907,7 @@ index 37831d6..77e350e 100644
 -    tile[:ov] = m * extra + (1 - m) * tile[:ov]
 +
 +# --- 3. base across the lane: whole painted columns, periodic along the flow --------------------------------------------
-+OVZ = int(SH * 0.3); PZ = SH - OVZ           # each source column made periodic (far end cross-faded into the near end)
++OVZ = SH - PZ                                # each source column made periodic (far end cross-faded into the near end)
 +wz = (np.arange(OVZ) / OVZ)[:, None, None]
 +per = base[:PZ].copy(); per[:OVZ] = (1 - wz) * base[PZ:PZ + OVZ] + wz * base[:OVZ]
 +lay_col = a2col(lay(xb_of(np.arange(TW))))   # source column the layout puts at each target column

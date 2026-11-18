@@ -3931,3 +3931,84 @@ Two things can't be stored on GitHub: the live conversation itself and your conn
 
 **Still running:** both specialists (Screen 05 on the near foam bank, Screen 08 on the river around Benny). The full set of Screen 04 entrance-foam pictures is also rendering; I'll show it as soon as it's ready.
 
+### 🧑 User — 2026-11-18T17:19:17.668Z
+
+<task-notification>
+<task-id>b5kra58j3</task-id>
+<tool-use-id>toolu_01Qt9MERxewkRym2i21UhgP4</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/b5kra58j3.output</output-file>
+<status>completed</status>
+<summary>Background command "Full-position render of L4 and start-view check" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T17:19:24.004Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/tasks/b5kra58j3.output; cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nS='$S'\nims=[Image.open(p).convert('RGB').resize((432,768)) for p in ['qa/match/04/r14/s8_glow/G5/f20_forward20u.png','qa/match/04/r14/s11_rimfoam/L4/f20_forward20u.png','qa/match/04/r14/s8_glow/G5/t95_through_screen.png','qa/match/04/r14/s11_rimfoam/L4/t95_through_screen.png','qa/match/04/r14/s11_rimfoam/L4/f03_forward3u.png','qa/m …[+241 chars]`
+
+### 🧑 User — 2026-11-18T17:19:25.100Z
+
+> ↩︎ result: audit exit 0
+> L4 start view pixels differing: 146
+> 13
+> 
+> [exited with code 0]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:19:29.150Z
+
+The start view differs in 146 pixels, so it isn't perfectly unchanged. That's tiny, but the rule is no change, so I'm finding where they are.
+
+### 🤖 Claude — 2026-11-18T17:19:33.400Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/capF4/04.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capL4/04.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2); ys,xs=np.nonzero(d)\nprint('bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max(),'max diff',d.max(),'mean diff of changed',d[d>0].mean().round(1))\nimport collections; print(collections.Counter((y//50*50,x//50*50) for y,x in zip(ys,xs)).most_common(5))\n\"; cat /tmp/claude …[+151 chars]`
+
+### 🧑 User — 2026-11-18T17:19:33.778Z
+
+> ↩︎ result: bbox x 100 763 y 37 114 max diff 43 mean diff of changed 5.3
+> [((np.int64(50), np.int64(100)), 42), ((np.int64(0), np.int64(700)), 27), ((np.int64(0), np.int64(100)), 23), ((np.int64(50), np.int64(750)), 22), ((np.int64(50), np.int64(700)), 18)]
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+
+### 🤖 Claude — 2026-11-18T17:19:41.015Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/L4_full_check.png"}`
+
+### 🧑 User — 2026-11-18T17:19:41.276Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:19:41.273Z
+
+[Image: original 2628x768, displayed at 2000x584. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:20:02.462Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git checkout -- qa/capture_log.json 2>/dev/null; QL4=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s11_rimfoam/L4/motion.json'))['query'])\") && cat >> qa/match/04/r14/PROGRESS.md <<EOF\n\n## Step 9 — foam clouds round the ENTRANCE RIM only — L4 = GOOD IMPROVEMENT (small) — shown to the user\nQuery (L4): \\`$QL4\\`\n* New \\`m04foamr=L\\` (edge foam banks stop L u inside the opening; the banks before the opening stay) + \\`m04foamn0/n1\\` (puffs fade\n  out 4.5 → 6.5 u from the camera). With the existing \\`m04foam\\` (full-height heap …[+1962 chars]`
+
+### 🧑 User — 2026-11-18T17:20:07.134Z
+
+> ↩︎ result: s04 fc28323a remote fc28323a
+> 13
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:20:13.098Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r14/04_step9_entrance_foam/1_APPROVED.png", "qa/review_r14/04_step9_entrance_foam/2_BEFORE_1_entering.png", "qa/review_r14/04_step9_entrance_foam/3_NEW_1_entering.png", "qa/review_r14/04_step9_entrance_foam/2_BEFORE_2_just_inside.png", "qa/review_r14/04_step9_entrance_foam/3_NEW_2_just_inside.png", "qa/review_r14/04_step9_entrance_foam/2_BEFORE_3_farther_inside.png", "qa/review_r14/04_step9_entrance_foam/3_NEW_3_farther_inside.png", "qa/review_r14/04_step9_entrance_foam/2_BEFORE_4_end.png", "qa/review_r14/04_step9_entrance_foam/3_NEW_4_end.png", "qa/review_r14/04_step9_en …[+420 chars]`
+
+### 🧑 User — 2026-11-18T17:20:16.020Z
+
+> ↩︎ result: 13 files delivered to user.
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/1_APPROVED.png → file_uuid: 30afd52a-e050-4c2e-ad35-74a43650fc2a
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/2_BEFORE_1_entering.png → file_uuid: 9cf8f897-1f7d-4e6b-b318-dce5bcf4130a
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/3_NEW_1_entering.png → file_uuid: 441fa6b7-45aa-4f74-bb6d-34702bb91fb5
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/2_BEFORE_2_just_inside.png → file_uuid: 583913df-d35b-4559-8e7e-96c08f4c4b1a
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/3_NEW_2_just_inside.png → file_uuid: 018b4db7-6826-4c61-93be-e9b39c00948a
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/2_BEFORE_3_farther_inside.png → file_uuid: ad05fe4f-5bf8-4873-83ec-ce82307ef210
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/3_NEW_3_farther_inside.png → file_uuid: 5611fdb6-f957-4240-be2a-8aebdc5b8f20
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/2_BEFORE_4_end.png → file_uuid: bbc08916-bfe9-4c7a-8c14-bea56b5e7654
+>   /home/user/rainbow-/qa/review_r14/04_step9_entrance_foam/3_NEW_4_end.png → file_uuid: f8e6d94c-488f-4c5f-afb7-a …[+543 chars]
+
+### 🤖 Claude — 2026-11-18T17:20:20.881Z
+
+> 🔧 **Bash** `{"command": "printf '| 6 (~18:05) | 04 lead step 9 L4 entrance-rim foam clouds (`m04foamr`; s04-c14 `fc28323a`) | GOOD IMPROVEMENT (small): white foam clouds flank the entrance on both sides when entering / just inside, none farther in; still smooth balls (not bubbly clusters), one pale puff at the bottom-left corner at hard left — `qa/review_r14/04_step9_entrance_foam/` |\\n' >> docs/briefs/2026-11-18-r14/COORDINATION.md; until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:04-step9-shown 2>&1 | grep -E '\"commi …[+174 chars]`
+
