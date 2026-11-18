@@ -572,3 +572,61 @@ Next I'll look at the rest of the BEFORE set to rank the remaining defects.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T12:53:26.262Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && wc -l src/world/match05far.ts src/world/environment.ts src/world/materials.ts src/vfx/waterRibbon.ts src/vfx/proj05Tunnel.ts && grep -n \"^export\\|^function\\|^const [A-Z_]* =\\|^ \\*\" src/world/match05far.ts | head -80", "description": "Survey far-block source files"}`
+
+### 🧑 User — 2026-11-18T12:53:26.310Z
+
+> ↩︎ result: 294 src/world/match05far.ts
+>   1035 src/world/environment.ts
+>   1239 src/world/materials.ts
+>   2220 src/vfx/waterRibbon.ts
+>    472 src/vfx/proj05Tunnel.ts
+>   5260 total
+> 2: * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+> 3: * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every
+> 4: * frame instead of folding away.
+> 5: *
+> 6: * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the
+> 7: * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the
+> 8: * camera saw the far rings / river morphing out and the 06 arch hall behind them — the "old pink default world" of
+> 9: * the lead's audit (t66 / t95 frames). The compression is exact for ANY eye position once its two eye-dependent
+> 10: * constants (D0 = eye depth of the seam, q = eye offset from the axis) follow the eye, so under this switch:
+> 11: *   * the VIRTUAL tunnel (virtual depth Z beyond sF05, tunnel coordinate v = sF05 + u(Z)) stays put — rings, wall rows,
+> 12: *     the baked far water F and the …[+1889 chars]
+
+### 🤖 Claude — 2026-11-18T12:53:27.918Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/match05far.ts", "offset": 40, "limit": 255}`
+
+### 🧑 User — 2026-11-18T12:53:27.942Z
+
+> ↩︎ result: 40	type Item = { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number };
+> 41	
+> 42	export interface LiveFar05Args {
+> 43	  ft: ForcedTunnel;
+> 44	  farWall: THREE.Mesh;
+> 45	  farRiver: THREE.Mesh;
+> 46	  farRings: THREE.InstancedMesh;
+> 47	  farLids: THREE.InstancedMesh;
+> 48	  ringItems: Item[];
+> 49	  lidItems: Item[];
+> 50	  glow: THREE.Mesh;
+> 51	  glowMat: THREE.ShaderMaterial;
+> 52	  lay: FarRiverLayout;
+> 53	  level: number;
+> 54	  zEnd: number;
+> 55	  warp?: TubeWarp;
+> 56	  /** wall build parameters (as ft.geometry(radial, steps, inset)) */
+> 57	  radial: number; wallSteps: number; inset: number;
+> 58	  /** river build parameters (as farRiverGeometry(cols, steps)) */
+> 59	  cols: number; riverSteps: number;
+> 60	  /** largest real extension beyond sF05 (units) */
+> 61	  zCap: number;
+> 62	  /** fold window: eye → seam distance (units) */
+> 63	  foldNear: number; foldFar: number;
+> 64	  /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */
+> 65	  riverUp: (z: number) => number;
+> 66	  /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */ …[+13718 chars]
+

@@ -775,3 +775,52 @@ Let me render the BEFORE (kept set) and NEW (+m08cup) at the cup positions. Firs
 > ?? tools/match08/cupmask08.py
 > px differ 0 max 0
 
+### 🤖 Claude — 2026-11-18T12:53:10.012Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_t66.png 60,200,864,450 1.0 $S/cupB/t66_through_screen.png $S/cupN/t66_through_screen.png", "description": "Compare cups at t66"}`
+
+### 🧑 User — 2026-11-18T12:53:10.245Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:53:11.259Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_t66.png"}`
+
+### 🧑 User — 2026-11-18T12:53:11.287Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:53:19.431Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/bin/stepdir.sh <<'EOF'\n#!/bin/bash\n# stepdir.sh <stepDir> <beforeDir> <newDir> shot...\nset -e\nD=$1; B=$2; N=$3; shift 3\nmkdir -p \"$D\"\ncp /home/user/wt/s08/references/08_final_spin_chamber.png \"$D/1_APPROVED.png\"\nfor s in \"$@\"; do cp \"$B/$s.png\" \"$D/2_BEFORE_$s.png\"; cp \"$N/$s.png\" \"$D/3_NEW_$s.png\"; done\nls \"$D\"\nEOF\nchmod +x /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/bin/stepdir.sh\ncd /home/user/wt/s08 && S=/tmp/claude-0/-home-us …[+365 chars]`
+
+### 🧑 User — 2026-11-18T12:53:19.500Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_t66_through_screen.png
+
+### 🤖 Claude — 2026-11-18T12:53:25.338Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/cupmask08.py'\ns=open(p).read()\ns=s.replace('\"\"\"Screen 08 r11 (`&m08cup=1`): outline mask of the two upper spout cups as PAINTED in the approved picture.\\n',\n '\"\"\"Screen 08 r11/r12 (`&m08cup=1` analysis): outline mask of the two upper spout cups as PAINTED in the approved picture.\\n\\nr12 status: ANALYSIS ONLY - the kept `&m08cup=1` shader does not read this mask (it mirrors the painted cup across the\\nplane through the cup axis). The coverage check below showed the proxies cover only about half of each painted …[+331 chars]`
+
+### 🧑 User — 2026-11-18T12:53:25.396Z
+
+> ↩︎ result: """Screen 08 r11/r12 (`&m08cup=1` analysis): outline mask of the two upper spout cups as PAINTED in the approved picture.
+> 
+> r12 status: ANALYSIS ONLY - the kept `&m08cup=1` shader does not read this mask (it mirrors the painted cup across the
+> plane through the cup axis). The coverage check below showed the proxies cover only about half of each painted cup (the
+> painted undersides are seen much more from below than the flat proxy discs; those pixels lie on the door wall) - a cup
+> proxy rebuild (tilted underside) is the next step for the cups, not this mask.
+> 
+> The fitted half-dome proxies are rounder than the painted cups (a shallow perforated cap, a gold band, a flat perforated
+> underside), so their shoulders carried wall / arch pixels: while Benny swims the cup tops looked cut off by a straight
+> line with wall slots above it. The mask (plate uv = approved frame) says where each painted cup is:
+>   R = painted cup pixel (UL, UR, outlines traced by eye on a 10 px grid at 4x zoom, +-2 px)
+>   G = upper-right cup hidden behind the gold arch's inner edge: the cup continued as its own mirror image about its
+

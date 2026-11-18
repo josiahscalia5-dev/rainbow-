@@ -2380,3 +2380,154 @@ The specialist's own report matches what I checked and showed you, so nothing mo
 
 > 🔧 **Bash** `{"command": "timeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:05-step1-shown 2>&1 | grep -E '\"result\"|\"commit\"'; python3 -I scripts/autosave-status.py | head -1", "description": "Save lead branch after showing 05 step 1", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-18T12:53:18.647Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "b16111522cfa2546aa46c1bb36b58eff02026c4f",
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T12:53:09+00:00 (0.1 min ago) | local b161115 remote b161115 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T12:53:28.477Z
+
+Two results so far, one improvement kept and one test rejected:
+
+**Screen 05, step 1: GOOD IMPROVEMENT, modest.** These are the five Screen 05 pictures I just sent.
+- **What looks closer:** from two thirds of the way through to the stage end, the river ahead of Benny was a pale lilac smear. It is now a cyan core between hot-pink bands, winding into the glowing tunnel throat as in your painting. Your approved start view is unchanged.
+- **Still different:** that far river is flatter than painted (fewer white streaks, no foam clouds on its banks). A straight join line shows where the near water meets it, and the pale slab on the left at two-thirds through is still there.
+
+**Screen 04, view-projection test: NOT AN IMPROVEMENT, rejected.** These are the six Screen 04 pictures I sent first.
+- Projecting your provisional views V04-1 and V04-2 onto the tunnel left the game looking the same as before, even at the exact spots where the views were taken. It also added torn gold blocks at the top of the tunnel.
+- The views only reached the upper tunnel wall. The water and foam are drawn by other objects, so the painted water and arrows never showed.
+- Making it work would need many more paid AI views, and the picture would still tear between them, so I've stopped this method. V04-1 and V04-2 stay as visual guides for rebuilding the real 3D interior.
+
+**Why the five arrows don't show while Benny swims.** In your painting the river climbs toward the far end of the tunnel, so the chevrons stack up the middle of the picture. In the game the camera rides low over almost level water, so flat chevrons shrink to slivers, and Benny's body covers the lane right ahead. Making them thicker didn't help. The real fix is the shape of the water inside the tunnel. I wrote that up as the brief for the next Screen 04 slot, so that work won't repeat these tests.
+
+**Still running:**
+- **Screen 05:** next is the join line, then the torn S-river and the scenery at the 05→06 transition.
+- **Screen 08:** testing the spout-cup fix left unfinished by account 11, then the water smears and seams. No result yet.
+
+**Queue:** Screen 04 gets the next free slot, then 07, then 06.
+
+Everything is saved: this session's branch is at `b161115` and matches GitHub, and the Screen 04 branch is at `94350998`. I'll show each new result as it arrives.
+
+### 🧑 User — 2026-11-18T12:53:28.551Z
+
+CLAUDIA — FIX SCREEN 04 PROPERLY AND GIVE ME A DEFINITIVE ANSWER ABOUT MY APPROVED SCREENS
+
+Claudia, I have reviewed the APPROVED / BEFORE / NEW images for Screen 04.
+
+MY VERDICT: NOT AN IMPROVEMENT. DO NOT APPROVE OR KEEP THIS VERSION AS A VISUAL SUCCESS.
+
+I am serious about recreating my original approved Rainbow game screens.
+
+I do not want a generic imitation. I want Benny naturally swimming through scenery that faithfully reconstructs my approved artwork.
+
+1. FIX THE TECHNICAL PROBLEM YOU JUST DISCOVERED
+
+You reported that the new projected reference views are not properly affecting the water and foam that are actually visible during gameplay.
+
+Please stop guessing and identify the exact rendering problem.
+
+Determine which meshes, shaders, material passes, shared water objects, and foam instances actually produce the final visible Screen 04 image.
+
+Check whether the V04-1/V04-2 reference projection is reaching those surfaces, whether it is being hidden or overridden, and whether the opacity, masks, camera calibration, depth, and render order are correct.
+
+Do not repeat the same incomplete projection experiment.
+
+2. RECONSTRUCT THE ACTUAL APPROVED SCENERY
+
+My approved Screen 04 has:
+
+- A deep, beautifully polished gold washing-machine tunnel.
+- Thick, flowing cyan-blue water with broad pink-magenta swirls.
+- Five correctly shaped and positioned glowing arrows.
+- Soft white foam integrated along the water edges, not giant white ball walls.
+- Small, iridescent bubbles.
+- Gold coins following the approved path.
+- Benny at the approved scale, position, and appearance, swimming naturally.
+
+The current NEW version has a flat-looking water path, oversized foam, incorrect arrows, and a torn gold column near the top.
+
+FIX THESE ACTUAL DIFFERENCES.
+
+If projection cannot reproduce the water geometry correctly, reconstruct the water as continuous real 3D geometry and use my approved artwork to match its shape, color, and material appearance.
+
+Do not add new scenery or redesign the environment.
+
+3. ONE CONTROLLED TEST — NOT ANOTHER LONG EXPERIMENT
+
+First verify the corrected rendering on the real game at the two existing V04-1 and V04-2 camera positions.
+
+Then test at an intermediate position and while steering.
+
+Only run a larger 12–14-frame audit after the smaller test demonstrates a genuine improvement.
+
+Use the reference images already generated. Do not spend additional fal.ai or Marble credits generating duplicates.
+
+Keep the last good version untouched until the NEW version is demonstrably better.
+
+4. ANSWER MY MAIN QUESTION DIRECTLY
+
+CAN YOU ACTUALLY RECREATE ALL FIVE OF MY ORIGINAL APPROVED SCREENS AS VERY CLOSE, CONSISTENT PLAYABLE 3D ENVIRONMENTS WITH BENNY SWIMMING THROUGH THEM? YES OR NO?
+
+Please distinguish between:
+
+A. Matching the original approved viewpoint.
+
+B. Reconstructing convincing, consistent scenery throughout movement.
+
+C. Achieving my minimum 8.5/10 visual goal on every playable screen.
+
+If you cannot reliably achieve one of these, say NO or NOT YET PROVEN. Explain precisely what technical limitation remains and whether there is a realistic AI-only solution.
+
+Do not promise 95% accuracy unless you can demonstrate it in real gameplay.
+
+5. CHECK FOR A GENUINELY BETTER TOOL ONLY IF NECESSARY
+
+If the existing method cannot achieve this, identify any genuinely new AI capability, plugin, connector, GPU service, or paid tool that is more likely to solve the specific problem.
+
+Do not repeat previous recommendations or reinstall tools we already tested.
+
+For any new tool, explain exactly what it can do, what it costs, what evidence supports its effectiveness, and how it would integrate into my existing Rainbow game.
+
+I am doing this myself with AI. Do not recommend hiring developers or artists.
+
+6. KEEP ALL MY OTHER SCREENS MOVING
+
+While you correct Screen 04:
+
+Keep the Screen 05 and Screen 08 specialists working on their approved environments.
+
+Preserve and schedule the existing Screen 06 and Screen 07 work.
+
+Do not interrupt active agents unnecessarily.
+
+Maintain and verify five-minute GitHub autosaves across the lead and specialist worktrees, including unfinished edits.
+
+Do not rebuild any completed work or restart the project.
+
+The cartoon-girl sequences remain assigned to Google Flow, not playable 3D reconstruction.
+
+7. SHOW ACTUAL PROOF
+
+For each real improvement, show separate, full-size:
+
+APPROVED
+
+BEFORE
+
+NEW
+
+Then give me a clear verdict:
+
+GOOD IMPROVEMENT — KEEP.
+
+NOT AN IMPROVEMENT — REJECT.
+
+NOT YET PROVEN — TEST THE SPECIFIC ISSUE.
+
+Do not call a successful setup, completed render, plugin installation, or GitHub save a visual improvement.
+
+My priority is not getting more reports. My priority is seeing my actual approved scenery accurately reconstructed while Benny swims through it.
+
+Please correct the specific Screen 04 rendering problem, show the real result, answer my feasibility question directly, and continue building all five screens.
+

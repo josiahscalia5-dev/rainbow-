@@ -1,4 +1,9 @@
-"""Screen 08 r11 (`&m08cup=1`): outline mask of the two upper spout cups as PAINTED in the approved picture.
+"""Screen 08 r11/r12 (`&m08cup=1` analysis): outline mask of the two upper spout cups as PAINTED in the approved picture.
+
+r12 status: ANALYSIS ONLY - the kept `&m08cup=1` shader does not read this mask (it mirrors the painted cup across the
+plane through the cup axis). The coverage check below showed the proxies cover only about half of each painted cup (the
+painted undersides are seen much more from below than the flat proxy discs; those pixels lie on the door wall) - a cup
+proxy rebuild (tilted underside) is the next step for the cups, not this mask.
 
 The fitted half-dome proxies are rounder than the painted cups (a shallow perforated cap, a gold band, a flat perforated
 underside), so their shoulders carried wall / arch pixels: while Benny swims the cup tops looked cut off by a straight

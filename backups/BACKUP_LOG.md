@@ -722,3 +722,4 @@ error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow
 | 2026-11-18T12:47:52+00:00 | daemon | committed+pushed | `b420813e9ef0` | `ccr-e908f8da-cy4yc1` | 10 | True |  |
 | 2026-11-18T12:49:15+00:00 | manual:04-verdict | committed+pushed | `36ab788541c5` | `ccr-e908f8da-cy4yc1` | 37 | True |  |
 | 2026-11-18T12:53:01+00:00 | daemon | committed+pushed | `79a23e3d7a6d` | `ccr-e908f8da-cy4yc1` | 20 | True |  |
+| 2026-11-18T12:53:09+00:00 | manual:05-step1-shown | committed+pushed | `b16111522cfa` | `ccr-e908f8da-cy4yc1` | 11 | True |  |
