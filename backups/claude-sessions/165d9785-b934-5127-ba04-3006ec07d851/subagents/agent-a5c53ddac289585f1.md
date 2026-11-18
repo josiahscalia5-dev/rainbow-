@@ -439,3 +439,178 @@ Let me render the BEFORE (kept set) and NEW (+m08cup) at the cup positions. Firs
 > 08 t33_through_screen s 396.336 lat 0.005 stage 08 frames 27
 > 08 t66_through_screen s 400.55 lat 0 stage 08 frames 54
 
+### 🤖 Claude — 2026-11-18T12:47:54.663Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/bin && cat > /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/bin/sbs.py <<'EOF'\n# side-by-side viewer for my own inspection: sbs.py out.png crop(x0,y0,x1,y1|full) scale img1 img2 ...\nimport sys\nfrom PIL import Image\nout, crop, sc = sys.argv[1], sys.argv[2], float(sys.argv[3])\nims = [Image.open(p).convert('RGB') for p in sys.argv[4:]]\nif crop != 'full':\n    b = tuple(int(v) for v in crop.split(','))\n    ims = [im.crop(b) for im in ims]\nims = [im.resi …[+1124 chars]`
+
+### 🧑 User — 2026-11-18T12:47:56.536Z
+
+> ↩︎ result: a00_approved_view 498517 (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> f03_forward3u 56291 (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> f06_forward6u 32233 (np.int64(2), np.int64(53), np.int64(862), np.int64(1200))
+> f10_forward10u 41936 (np.int64(0), np.int64(0), np.int64(863), np.int64(1430))
+> t33_through_screen 286986 (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> t66_through_screen 27980 (np.int64(3), np.int64(1), np.int64(863), np.int64(1180))
+> s_left_hard 1206165 (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> s_right_hard 530651 (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+
+### 🤖 Claude — 2026-11-18T12:48:00.848Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/v_slh.png full 0.5 references/08_final_spin_chamber.png $S/cupB/s_left_hard.png $S/cupN/s_left_hard.png", "description": "Side-by-side of s_left_hard"}`
+
+### 🧑 User — 2026-11-18T12:48:01.292Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:48:02.712Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_slh.png"}`
+
+### 🧑 User — 2026-11-18T12:48:02.758Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:08.127Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/v_slh2.png full 0.5 qa/match/08/r11/step2_m08near/3_NEW_s_left_hard.png qa/match/08/r11/step2_m08near/3_NEW_t66_through_screen.png $S/cupB/t66_through_screen.png", "description": "Compare with r11 step2 NEW renders"}`
+
+### 🧑 User — 2026-11-18T12:48:08.641Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:48:10.252Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_slh2.png"}`
+
+### 🧑 User — 2026-11-18T12:48:10.289Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:15.466Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && for n in f06_forward6u f10_forward10u t66_through_screen f03_forward3u; do python3 -I $S/bin/sbs.py $S/v_cup_$n.png 0,150,864,800 0.75 $S/cupB/$n.png $S/cupN/$n.png; done", "description": "Crop upper area for cup comparison"}`
+
+### 🧑 User — 2026-11-18T12:48:16.344Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:48:17.896Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_cup_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T12:48:17.936Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:21.922Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_ul_f06.png 80,220,480,520 1.0 $S/cupB/f06_forward6u.png $S/cupN/f06_forward6u.png && python3 -I $S/bin/sbs.py $S/z_ur_f06.png 560,220,864,520 1.0 $S/cupB/f06_forward6u.png $S/cupN/f06_forward6u.png", "description": "Zoom on upper cups at f06"}`
+
+### 🧑 User — 2026-11-18T12:48:22.254Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:48:23.930Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ul_f06.png"}`
+
+### 🧑 User — 2026-11-18T12:48:23.959Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:29.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_ul_app.png 100,290,460,500 2.0 references/08_final_spin_chamber.png", "description": "Zoom approved upper-left cup"}`
+
+### 🧑 User — 2026-11-18T12:48:29.351Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:48:31.152Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ul_app.png"}`
+
+### 🧑 User — 2026-11-18T12:48:31.180Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:35.746Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_ul_f06b.png 100,240,360,420 2.0 $S/cupB/f06_forward6u.png $S/cupN/f06_forward6u.png", "description": "Zoom 2x upper-left cup f06"}`
+
+### 🧑 User — 2026-11-18T12:48:36.068Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:48:37.821Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ul_f06b.png"}`
+
+### 🧑 User — 2026-11-18T12:48:37.845Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:44.618Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ur_f06.png"}`
+
+### 🧑 User — 2026-11-18T12:48:44.642Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:48.626Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_ur_app.png 600,330,864,520 2.0 references/08_final_spin_chamber.png && python3 -I $S/bin/sbs.py $S/z_ur_f06b.png 680,260,864,420 2.5 $S/cupB/f06_forward6u.png $S/cupN/f06_forward6u.png", "description": "Zoom approved and rendered upper-right cup"}`
+
+### 🧑 User — 2026-11-18T12:48:49.109Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:48:49.574Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ur_app.png"}`
+
+### 🧑 User — 2026-11-18T12:48:49.586Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:50.135Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_ur_f06b.png"}`
+
+### 🧑 User — 2026-11-18T12:48:50.149Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:49:01.430Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_cup_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T12:49:01.466Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:49:05.298Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_f10.png 100,240,360,380 2.0 $S/cupB/f10_forward10u.png $S/cupN/f10_forward10u.png && python3 -I $S/bin/sbs.py $S/z_f10r.png 740,280,864,420 3.0 $S/cupB/f10_forward10u.png $S/cupN/f10_forward10u.png", "description": "Zoom cups at f10"}`
+
+### 🧑 User — 2026-11-18T12:49:05.781Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:49:06.199Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_f10.png"}`
+
+### 🧑 User — 2026-11-18T12:49:06.242Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:49:06.752Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_f10r.png"}`
+
+### 🧑 User — 2026-11-18T12:49:06.786Z
+
+> ↩︎ result: [image]
+

@@ -32,3 +32,4 @@ If account 12 runs out: `-c13` branches from each NEWEST `-c12` tip (or `-c11` w
 ## Progress shown to the user (separate full-size APPROVED / BEFORE / NEW)
 | # | Screen / step | Verdict |
 |---|---|---|
+| 1 (~12:55) | 04 lead: round-11 decisive test `m04mv` (V04-1/V04-2 projected from their game cameras; `0c941001`, log `qa/match/04/r12/PROGRESS.md`) | NOT AN IMPROVEMENT (views reach only the upper tunnel wall; torn gold blocks at the top). Method stopped; V04-1/V04-2 stay by-eye design references for the real 3D rebuild |

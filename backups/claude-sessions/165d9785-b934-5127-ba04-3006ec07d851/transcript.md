@@ -1988,3 +1988,98 @@ Meanwhile, the two key frames (10 and 20 units forward, where the views were tak
 > 1 zone_tubes<washer_world<Scene | Mesh | tube05_near_frame
 > 1 z …[+999 chars]
 
+### 🤖 Claude — 2026-11-18T12:47:53.148Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json\nd=json.load(open('qa/match/04/r11/mv/cam10/objects.json'))\nfor o in d:\n  n=o['name'] or ''; ch=o['chain']\n  if o['visible'] and (n.startswith('m04') or 'match04' in ch or 'ribbon' in n.lower() or 'river' in n.lower() or 'water_system' in ch and o['type']!='Mesh' or 'arrow' in n.lower() or 'foam' in n.lower()):\n    print(o['type'], n[:30], '|', ch[:90], '|', o['mat'])\n\" | sort | uniq -c | sort -rn | head -30", "description": "List river, foam and m04 objects at V04-1 camera"}`
+
+### 🧑 User — 2026-11-18T12:47:53.288Z
+
+> ↩︎ result: 1 Points bubbles_small | bubbles_small<bubbles<water_system<Scene | ShaderMaterial
+>       1 Mesh tube05_far_river | tube05_far_river<zone_tubes<washer_world<Scene | MeshBasicMaterial
+>       1 Mesh m04_water | m04_water<match04_projection<Scene | ShaderMaterial
+>       1 Mesh m04_splash | m04_splash<Scene | ShaderMaterial
+>       1 Mesh m04_room_wall | m04_room_wall<match04_projection<Scene | ShaderMaterial
+>       1 Mesh m04_room_far | m04_room_far<match04_projection<Scene | ShaderMaterial
+>       1 Mesh m04_river | m04_river<match04_projection<Scene | ShaderMaterial
+>       1 Mesh m04_ring_tunnel | m04_ring_tunnel<match04_projection<Scene | ShaderMaterial
+>       1 Mesh m04_ring_mouth | m04_ring_mouth<match04_projection<Scene | ShaderMaterial
+>       1 Mesh m04_ring_glow | m04_ring_glow<match04_projection<Scene | ShaderMaterial
+>       1 Mesh foam_rim05 | foam_rim05<foam_banks<water_system<Scene | ShaderMaterial
+>       1 Mesh foam_berm | foam_berm<foam_banks<water_system<Scene | ShaderMaterial
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:48:08.485Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor f in ['assets/textures/match04/mv04_V04-1.png','assets/textures/match04/mv04_V04-2.png']:\n  im=np.array(Image.open(f)); print(f, im.shape, im.dtype)\n  if im.shape[2]==4:\n    a=im[...,3]; print(' opaque frac', (a>200).mean().round(3), ' clear frac', (a<20).mean().round(3))\n    # by rows thirds\n    h=a.shape[0]; print(' opaque by band (top/mid/bottom):', [(a[i*h//3:(i+1)*h//3]>200).mean().round(3) for i in range(3)])\n\"; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d …[+201 chars]`
+
+### 🧑 User — 2026-11-18T12:48:09.049Z
+
+> ↩︎ result: assets/textures/match04/mv04_V04-1.png (1536, 864, 4) uint8
+>  opaque frac 0.642  clear frac 0.358
+>  opaque by band (top/mid/bottom): [np.float64(0.527), np.float64(0.825), np.float64(0.572)]
+> assets/textures/match04/mv04_V04-2.png (1536, 864, 4) uint8
+>  opaque frac 0.637  clear frac 0.363
+>  opaque by band (top/mid/bottom): [np.float64(0.524), np.float64(0.828), np.float64(0.559)]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:48:10.402Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/mv1_alpha.jpg"}`
+
+### 🧑 User — 2026-11-18T12:48:10.431Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:48:40.986Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_c12; W=/home/user/wt/s04/qa/match/04; cp $W/r11/BEFORE/f10_forward10u.png $R/04_2_BEFORE_forward10u.png; cp $W/r12/NEW_m04mv/f10_forward10u.png $R/04_3_NEW_m04mv_forward10u.png; cp $W/r11/BEFORE/f20_forward20u.png $R/04_2_BEFORE_forward20u.png; cp $W/r12/NEW_m04mv/f20_forward20u.png $R/04_3_NEW_m04mv_forward20u.png; cp qa/review_c10/2026-11-18/04_proposed_views/V04-1_just_inside_opening.jpg $R/04_0_PROVISIONAL_V04-1_view.jpg; identify $R/* | awk '{print $1,$3}'", "description": "Copy full-size 04 review pictures"}`
+
+### 🧑 User — 2026-11-18T12:48:41.191Z
+
+> ↩︎ result: qa/review_c12/04_0_PROVISIONAL_V04-1_view.jpg 1536x2752
+> qa/review_c12/04_1_APPROVED.png 864x1536
+> qa/review_c12/04_2_BEFORE_forward10u.png 864x1536
+> qa/review_c12/04_2_BEFORE_forward20u.png 864x1536
+> qa/review_c12/04_3_NEW_m04mv_forward10u.png 864x1536
+> qa/review_c12/04_3_NEW_m04mv_forward20u.png 864x1536
+
+### 🤖 Claude — 2026-11-18T12:48:42.123Z
+
+Now the log entry and commit on the Screen 04 branch:
+
+### 🤖 Claude — 2026-11-18T12:48:56.473Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat > qa/match/04/r12/PROGRESS.md <<'EOF'\n# Screen 04 — round 12 (account 12 lead): verdict on the round-11 decisive test `&m04mv=1`\n\nTest (account 11, `d3ea4200`): the user's PROVISIONAL views V04-1 (forward 10 u) / V04-2 (forward 20 u) camera-projected from\ntheir own game cameras onto every mesh of the `match04_projection` group, blended by distance to each view camera\n(full within 3 u, gone at 8 u). Query = K + `&m04mv=1`, K = `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1`.\nBEFORE = `qa/match/04/r11/BEFORE/` (+ `BEFORE_ext …[+2911 chars]`
+
+### 🧑 User — 2026-11-18T12:49:02.723Z
+
+> ↩︎ result: A  qa/match/04/r11/BEFORE_extra/f10_forward10u.png
+> A  qa/match/04/r11/BEFORE_extra/f15_forward15u.png
+> A  qa/match/04/r11/BEFORE_extra/f20_forward20u.png
+> A  qa/match/04/r11/BEFORE_extra/f25_forward25u.png
+> A  qa/match/04/r11/BEFORE_extra/motion.json
+> remote=0c941001fe local=0c941001fe
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:49:08.112Z
+
+The Screen 04 verdict is saved on its branch (`0c941001`, matches GitHub). Here are the full-size pictures:
+
+### 🤖 Claude — 2026-11-18T12:49:10.715Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/04_1_APPROVED.png", "qa/review_c12/04_2_BEFORE_forward10u.png", "qa/review_c12/04_3_NEW_m04mv_forward10u.png", "qa/review_c12/04_2_BEFORE_forward20u.png", "qa/review_c12/04_3_NEW_m04mv_forward20u.png", "qa/review_c12/04_0_PROVISIONAL_V04-1_view.jpg"], "caption": "Screen 04 view-projection test — NOT AN IMPROVEMENT. Order: APPROVED · BEFORE 10 u forward · NEW 10 u · BEFORE 20 u · NEW 20 u · your provisional V04-1 view for reference. NEW looks like BEFORE, plus torn gold blocks at the top of the tunnel.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T12:49:12.135Z
+
+> ↩︎ result: 6 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/04_1_APPROVED.png → file_uuid: e8e24044-ea0a-4ad0-ba74-6658d5df5668
+>   /home/user/rainbow-/qa/review_c12/04_2_BEFORE_forward10u.png → file_uuid: 3a722a45-8f33-4ba4-af82-7c9c92d86816
+>   /home/user/rainbow-/qa/review_c12/04_3_NEW_m04mv_forward10u.png → file_uuid: 1ec8c7e2-b1bc-4d34-8651-7d21cafcba43
+>   /home/user/rainbow-/qa/review_c12/04_2_BEFORE_forward20u.png → file_uuid: f803efe1-b634-429d-b65e-2977b115405a
+>   /home/user/rainbow-/qa/review_c12/04_3_NEW_m04mv_forward20u.png → file_uuid: 0d397a73-2252-40cf-9a45-c2a343f7c686
+>   /home/user/rainbow-/qa/review_c12/04_0_PROVISIONAL_V04-1_view.jpg → file_uuid: cd8e4933-6e11-4a51-9d56-9f67c40da45a
+
+### 🤖 Claude — 2026-11-18T12:49:15.766Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r12/COORDINATION.md <<'EOF'\n| 1 (~12:55) | 04 lead: round-11 decisive test `m04mv` (V04-1/V04-2 projected from their game cameras; `0c941001`, log `qa/match/04/r12/PROGRESS.md`) | NOT AN IMPROVEMENT (views reach only the upper tunnel wall; torn gold blocks at the top). Method stopped; V04-1/V04-2 stay by-eye design references for the real 3D rebuild |\nEOF\ntimeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:04-verdict 2>&1 | grep -E '\"result\"|\"commit\"'; python3 -I scripts/autosave-sta …[+96 chars]`
+
