@@ -1,0 +1,109 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 2d00f44..e5736a6 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -93,6 +93,7 @@ uniform float uLen;
+ uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+ uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
+ uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
++uniform float uBulge;      // r13 m04bulge: each band shaded as a ROUNDED tube (bright middle, darker edges) like the painted rings
+ uniform float uCopper;     // r13 m04copper: rich polished COPPER-gold ramp (dark maroon grooves -> copper -> warm-gold highlights)
+ uniform float uGoldY;      // m04gold: polished YELLOW-gold ramp (bright yellow-white highlights), fewer magenta tints
+ uniform float uMouthT;     // m04mouth: the painted mouth ring texture on the opening (tile_mouth.png)
+@@ -189,6 +190,7 @@ void main() {
+       tb = t;
+       float bump = smoothstep(0.0, 0.45, t) * (1.0 - 0.5 * smoothstep(0.7, 1.0, t));
+       v = uTone.x + 0.20 * pow(t, 1.5) + 0.03 * cos(ang) + 0.04 * far + uTone.w * st * bump + 0.05 * gl;
++      v += uBulge * (sin(3.14159 * t) - 0.35);
+       if (part > 0.5 && part < 1.5) v = uTone.y + 0.12 * facing + 0.04 * far + 0.15 * st;
+       if (part > 1.5 && part < 2.5) v = 0.03 + 0.05 * far;
+     }
+@@ -296,6 +298,7 @@ uniform float uAway;
+ uniform sampler2D uRiv;
+ uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+ uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
++uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+ uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+ uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+ uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
+@@ -358,6 +361,9 @@ void main() {
+       float tw = 0.5 + 0.5 * sin(uTime * 6.0 + sh * 40.0);
+       float spk = smoothstep(0.16, 0.0, length(sf - (vec2(h21(si + 3.1), h21(si + 7.7)) - 0.5) * 0.6)) * step(0.86, sh) * tw;
+       laneC += vec3(1.0) * uLane2.z * spk * (1.0 - smoothstep(0.3, 0.8, fwidth(sc.x)));
++      // r13 m04lcd: the painted lane is DEEPER blue along the arrow line (the glassy arrows pop on it), brighter turquoise
++      // toward the pink edges
++      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
+     }
+     col = mix(col, laneC, kl * uLane.z);
+   }
+@@ -545,7 +551,7 @@ export function addM04(ctx: M04Ctx) {
+       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
+       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+-        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
++        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+     });
+     const gw = M04.num('m04ringgw', 1);
+     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
+@@ -689,6 +695,7 @@ export function addM04(ctx: M04Ctx) {
+         uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
+         uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 },
+         uLane: { value: new THREE.Vector3(M04.num('m04lane', 0), M04.num('m04lanew', 1.9), M04.num('m04lanes', 0.85)) },
++        uLane3: { value: new THREE.Vector2(M04.num('m04lcd', 0), M04.num('m04lcw', 1.6)) },
+         uLane2: { value: new THREE.Vector4(M04.num('m04lane2', 0), M04.num('m04lgl', 1.0), M04.num('m04lsp', 0.9), M04.num('m04lbr', 0)) },
+         uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
+         uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
+@@ -841,6 +848,36 @@ export function addM04(ctx: M04Ctx) {
+       g.computeBoundingSphere();
+     };
+     toLane(base, 0.004); toLane(halo, 0.0);
++    // r13 `&m04a3tex=1`: the PAINTED arrow look — each chevron drawn once as a glowing image (glassy pale white-cyan bar,
++    // bright white rim, soft cyan glow round it, square-cut ends along the flow, softened joins) on one leaning panel
++    const tex = M04.num('m04a3tex', 0) > 0;
++    let texMat: THREE.MeshBasicMaterial | null = null, texGeo: THREE.BufferGeometry | null = null;
++    if (tex) {
++      const mg = M04.num('m04a3tm', 0.35) * hw, U = hw + mg, y0 = mg, y1 = -(drop + th) - mg;
++      const W = 512, H = Math.max(64, Math.round(W * (y0 - y1) / (2 * U)));
++      const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
++      const c2 = cv.getContext('2d')!;
++      const P = (u: number, y: number): [number, number] => [((u + U) / (2 * U)) * W, ((y0 - y) / (y0 - y1)) * H];
++      const path = () => {
++        c2.beginPath();
++        const pts: [number, number][] = [[0, 0], [hw, -drop], [hw, -drop - th], [0, -th], [-hw, -drop - th], [-hw, -drop]];
++        pts.forEach(([u, y], i) => { const [x, yy] = P(u, y); if (i) c2.lineTo(x, yy); else c2.moveTo(x, yy); });
++        c2.closePath();
++      };
++      c2.lineJoin = 'round';
++      c2.shadowColor = 'rgba(30,190,255,1)'; c2.shadowBlur = W * M04.num('m04a3gb', 0.07);
++      c2.fillStyle = 'rgba(40,175,255,0.85)'; path(); c2.fill(); path(); c2.fill();
++      c2.shadowBlur = W * 0.02; c2.shadowColor = 'rgba(120,230,255,1)';
++      const gr = c2.createLinearGradient(0, P(0, 0)[1], 0, P(0, -drop - th)[1]);
++      const fa = M04.num('m04a3fa', 0.88);
++      gr.addColorStop(0, `rgba(240,253,255,${Math.min(1, fa + 0.08)})`); gr.addColorStop(0.5, `rgba(195,242,255,${fa})`); gr.addColorStop(1, `rgba(240,253,255,${Math.min(1, fa + 0.08)})`);
++      c2.fillStyle = gr; path(); c2.fill();
++      c2.shadowBlur = 0; c2.strokeStyle = 'rgba(255,255,255,1)'; c2.lineWidth = W * M04.num('m04a3rw', 0.016); path(); c2.stroke();
++      const ct = new THREE.CanvasTexture(cv); ct.colorSpace = THREE.SRGBColorSpace; ct.anisotropy = 8;
++      texMat = new THREE.MeshBasicMaterial({ map: ct, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
++      texGeo = new THREE.PlaneGeometry(2 * U, y0 - y1).translate(0, (y0 + y1) / 2, 0);
++      toLane(texGeo, 0.006);
++    }
+     const river = group.getObjectByName('m04_river') as THREE.Mesh | undefined;
+     if (river) ((river.material as THREE.ShaderMaterial).uniforms.uArr.value as THREE.Vector4).y = 1e5;
+     // r13 `&m04a3w2=1`: the painted chevrons are glowing WHITE bars with a bright cyan neon halo (r12 = pale cyan, dim halo)
+@@ -853,12 +890,14 @@ export function addM04(ctx: M04Ctx) {
+       // additive halo only whitened the bright cyan water round them)
+       const hb = M04.num('m04a3hb', 0) > 0;
+       const glow = new THREE.MeshBasicMaterial({ color: hb ? new THREE.Color(0.02, 0.50, 1.0) : glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: hb ? THREE.NormalBlending : THREE.AdditiveBlending });
+-      const m = new THREE.Mesh(base, core), g = new THREE.Mesh(halo, glow);
++      const coreT = texMat ? texMat.clone() : null;
++      if (coreT) glow.visible = false;                                   // the painted image carries its own glow
++      const m = new THREE.Mesh(texGeo ?? base, coreT ?? core), g = new THREE.Mesh(halo, glow);
+       m.position.set(cx, 0, z0 - a); g.position.set(cx, 0, z0 - a - 0.002);
+       m.renderOrder = 5; g.renderOrder = 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';
+       m.visible = g.visible = false;                                     // invisible during the projector depth bake
+       group.add(g); group.add(m);
+-      arrowsOut.push({ mesh: m, za: z0 - a, mats: [core, glow] });
++      arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow] });
+       arrowsOut.push({ mesh: g, za: z0 - a, mats: [] });
+     }
+     updaters.push((a) => { arrA = a; });

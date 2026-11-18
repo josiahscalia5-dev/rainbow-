@@ -4687,3 +4687,155 @@ First I'll make sure everything, including the chat transcripts, is on GitHub, a
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T15:34:27.466Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; convert /home/user/rainbow-/references/04_through_the_five_arrows.png -crop 330x420+380+760 +repage -resize 200% $S/arrows_ap.png; convert /home/user/rainbow-/references/04_through_the_five_arrows.png -crop 864x700+0+380 +repage -resize 560x $S/rings_ap.png; convert $S/arrows_ap.png -resize 420x $S/arrows_ap_s.png; identify $S/arrows_ap_s.png", "description": "Crop approved arrows and rings at high detail"}`
+
+### 🧑 User — 2026-11-18T15:34:27.950Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/arrows_ap_s.png PNG 420x535 420x535+0+0 8-bit sRGB 333325B 0.000u 0:00.000
+
+### 🤖 Claude — 2026-11-18T15:34:28.218Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/arrows_ap_s.png"}`
+
+### 🧑 User — 2026-11-18T15:34:28.238Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:34:45.747Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/rings_ap.png"}`
+
+### 🧑 User — 2026-11-18T15:34:45.776Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:34:58.815Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uniform float uCopper;\\|      v = uTone.x + 0.20 \\* pow(t, 1.5)\\|uCopper: { value\\|    const base = new THREE.ShapeGeometry(sh);\\|      const m = new THREE.Mesh(base, core), g = new THREE.Mesh(halo, glow);\\|      const core = new THREE.MeshBasicMaterial({ color: coreC\" src/world/match04m4.ts", "description": "Locate lines for ring bulge and arrow texture"}`
+
+### 🧑 User — 2026-11-18T15:34:58.852Z
+
+> ↩︎ result: 96:uniform float uCopper;     // r13 m04copper: rich polished COPPER-gold ramp (dark maroon grooves -> copper -> warm-gold highlights)
+> 191:      v = uTone.x + 0.20 * pow(t, 1.5) + 0.03 * cos(ang) + 0.04 * far + uTone.w * st * bump + 0.05 * gl;
+> 548:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+> 831:    const base = new THREE.ShapeGeometry(sh);
+> 851:      const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+> 856:      const m = new THREE.Mesh(base, core), g = new THREE.Mesh(halo, glow);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:35:00.703Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 826, "limit": 36}`
+
+### 🧑 User — 2026-11-18T15:35:00.722Z
+
+> ↩︎ result: 826	  if (M04.arr3d) {
+> 827	    const hw = M04.num('m04a3w', 1.15), th = M04.num('m04a3t', 0.42), drop = M04.num('m04a3d', 0.95);
+> 828	    const tilt = THREE.MathUtils.degToRad(M04.num('m04a3k', 38)), sp = M04.num('m04a3p', 5.0), first = M04.num('m04a3f', 3.0);
+> 829	    const sh = new THREE.Shape();
+> 830	    sh.moveTo(0, 0); sh.lineTo(hw, -drop); sh.lineTo(hw, -drop - th); sh.lineTo(0, -th); sh.lineTo(-hw, -drop - th); sh.lineTo(-hw, -drop); sh.lineTo(0, 0);
+> 831	    const base = new THREE.ShapeGeometry(sh);
+> 832	    // r13: halo size (m04a3g = growth of the cyan glow round each bar; 1 = the r12 D1/D2 size)
+> 833	    const hg = M04.num('m04a3g', 1);
+> 834	    const halo = new THREE.ShapeGeometry(sh); halo.translate(0, (drop + th) / 2, 0); halo.scale(1 + 0.28 * hg, 1 + 0.45 * hg, 1); halo.translate(0, -(drop + th) / 2, 0);
+> 835	    const toLane = (g: THREE.BufferGeometry, lift: number) => {        // shape (u, v) -> lane plane leaning back toward the camera
+> 836	      const pa = g.attributes.position as THREE.BufferAttribute;
+> 837	      for (let i = 0; i < pa.count; i++) {
+> 838	        const u = pa.getX(i), v = pa.getY(i) + drop + th;               // v = 0 at the nearest bar edge
+> 839	        pa. …[+1984 chars]
+
+### 🤖 Claude — 2026-11-18T15:35:12.193Z
+
+I'll add the painted-arrow mode (`m04a3tex`) and the ring-bulge setting (`m04bulge`).
+
+### 🤖 Claude — 2026-11-18T15:35:25.957Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nrep=[\n(\"\"\"uniform float uCopper;     // r13 m04copper\"\"\",\"\"\"uniform float uBulge;      // r13 m04bulge: each band shaded as a ROUNDED tube (bright middle, darker edges) like the painted rings\nuniform float uCopper;     // r13 m04copper\"\"\"),\n(\"\"\"      v = uTone.x + 0.20 * pow(t, 1.5) + 0.03 * cos(ang) + 0.04 * far + uTone.w * st * bump + 0.05 * gl;\"\"\",\n\"\"\"      v = uTone.x + 0.20 * pow(t, 1.5) + 0.03 * cos(ang) + 0.04 * far + uTone.w * st * bump + 0.05 * gl;\n      v += …[+3165 chars]`
+
+### 🧑 User — 2026-11-18T15:35:26.017Z
+
+> ↩︎ result: ok
+> 894:      arrowsOut.push({ mesh: m, za: z0 - a, mats: [core, glow] });
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:35:28.101Z
+
+The fade loop must act on the new painted material, so I'll point it there and typecheck.
+
+### 🤖 Claude — 2026-11-18T15:35:29.763Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -i 's|      arrowsOut.push({ mesh: m, za: z0 - a, mats: \\[core, glow\\] });|      arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow] });|' src/world/match04m4.ts && grep -c \"coreT ?? core, glow\" src/world/match04m4.ts && npx tsc --noEmit -p . 2>&1 | tail -3; echo tsc-done", "description": "Fade the painted arrow material and typecheck"}`
+
+### 🧑 User — 2026-11-18T15:35:31.967Z
+
+> ↩︎ result: 1
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T15:35:37.741Z
+
+Two variants for a clean comparison: F1 changes only the arrows (painted style, shallower shape, spacing widened from 3.0 to 4.0), and F2 adds the rounded, brighter rings with narrower grooves.
+
+### 🤖 Claude — 2026-11-18T15:35:43.348Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && D4=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/D4.q); F1=$(echo \"$D4\" | sed 's/m04a3p=3.0/m04a3p=4.0/; s/m04a3w=1.05/m04a3w=1.15/; s/m04a3t=0.36/m04a3t=0.32/; s/m04a3d=0.62/m04a3d=0.55/')\"&m04a3tex=1\"; F2=$(echo \"$F1\" | sed 's/m04ringgw=1.8/m04ringgw=1.2/; s/m04tb=0.13/m04tb=0.2/')\"&m04bulge=0.18\"; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; echo \"$F1\" > $S/F1.q; echo \"$F2\" > $S/F2.q; for n in F1 F2; do timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match …[+541 chars]`
+
+### 🤖 Claude — 2026-11-18T15:35:44.047Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/f12.jpg"}`
+
+### 🧑 User — 2026-11-18T15:37:11.355Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:37:11.372Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:37:19.578Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd /home/user/wt/s04/qa/match/04/r13 && for f in f10_forward10u s_left_hard; do convert s7_enter/F2/$f.png -crop 520x560+172+560 +repage -resize 260x $S/za_$f.png; done; convert s6_rich/D4/f10_forward10u.png -crop 520x560+172+560 +repage -resize 260x $S/za_D4.png; convert $S/arrows_ap.png -resize 260x $S/za_ap.png; convert $S/za_ap.png $S/za_D4.png $S/za_f10_forward10u.png $S/za_s_left_hard.png +append $S/arrz.jpg", "description": "Zoom arrows: approved, D4, F2"}`
+
+### 🧑 User — 2026-11-18T15:37:19.881Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:37:20.329Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/arrz.jpg"}`
+
+### 🧑 User — 2026-11-18T15:37:20.346Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:37:39.085Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nrep=[\n(\"\"\"      laneC += vec3(1.0) * uLane2.z * spk * (1.0 - smoothstep(0.3, 0.8, fwidth(sc.x)));\"\"\",\"\"\"      laneC += vec3(1.0) * uLane2.z * spk * (1.0 - smoothstep(0.3, 0.8, fwidth(sc.x)));\n      // r13 m04lcd: the painted lane is DEEPER blue along the arrow line (the glassy arrows pop on it), brighter turquoise\n      // toward the pink edges\n      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));\"\"\"),\n(\"\"\"uniform ve …[+1592 chars]`
+
+### 🤖 Claude — 2026-11-18T15:37:39.840Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/arrz2.jpg"}`
+
+### 🧑 User — 2026-11-18T15:38:24.643Z
+
+> ↩︎ result: ok
+> 04 t95_through_screen s 113.673 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:38:24.658Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:38:35.628Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; F4=$(cat $S/F3.q | sed 's/m04lcd=0.55/m04lcd=0.85/')\"&m04a3gb=0.12&m04a3tm=0.45\"; echo \"$F4\" > $S/F4.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s7_enter/F4 \"$F4\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; cd qa/match/04/r13 && for f in f10_forward10u s_left_hard; do convert s7_enter/F4/$f.png -crop 520x560+172+560 +repage -resize 260x $S/zc_$f.png; done; convert $S/za_ap.png $S/zb_f10_forward10u.png $S/zc_f10_forward10u.png $S/zc_s_left_ha …[+113 chars]`
+
+### 🤖 Claude — 2026-11-18T15:38:36.336Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/arrz3.jpg"}`
+

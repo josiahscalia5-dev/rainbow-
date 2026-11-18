@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16016,
-   "sha256": "8e67030fce9021331f878249bafd8f734c61193caff2fc5e1bdab7f532d75712"
+   "sha256": "7c7a18ef78d397eafb19630aea67da5fe08628b87aaff3801375402cf7b24d41"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -854,7 +854,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c13/INFO.json",
    "bytes": 477,
-   "sha256": "90a1a2bf5e02105b46214ba346ee718a4f8b0089b4cc337011a8e0f1776d257d"
+   "sha256": "a2fb24b98db2aa0285b184ce5f2ed7813b27b7ad4b153fbc64f614ae7e7d1539"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -889,7 +889,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/INFO.json",
    "bytes": 506,
-   "sha256": "cd1ada1c9fcb8ebed14f70ec15b57d12b7dec99d25647449610bfe5a072c99f7"
+   "sha256": "c7ac55097f1eb78457678e8d27ae285eab27bd2ffd3b4ae4b36de1333673ce2c"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/tracked.patch",
@@ -954,7 +954,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/INFO.json",
    "bytes": 485,
-   "sha256": "b641ad2a102a9dd52c8fd715d2ffcf2f8f5b585e17b38e76a79bcff65e2d02eb"
+   "sha256": "afe9d374a974657fa82424f2dfa3f92c4d1dec5a5540850333f3d7eb3b0b82dd"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
