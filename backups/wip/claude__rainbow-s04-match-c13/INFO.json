@@ -2,9 +2,21 @@
  "worktree": "/home/user/wt/s04",
  "branch": "claude/rainbow-s04-match-c13",
  "head": "9ef2120012df207012e3f8000bea22b84e455bc0",
- "time": "2026-11-18T15:42:50+00:00",
- "dirty_tracked": [],
- "untracked_copied": [],
- "untracked_skipped": [],
+ "time": "2026-11-18T15:44:34+00:00",
+ "dirty_tracked": [
+  "src/world/match04m4.ts"
+ ],
+ "untracked_copied": [
+  "qa/match/04/r13/s8_glow/G1/f06_forward6u.png",
+  "qa/match/04/r13/s8_glow/G1/f10_forward10u.png",
+  "qa/match/04/r13/s8_glow/G1/f20_forward20u.png",
+  "qa/match/04/r13/s8_glow/G1/s_left_hard.png",
+  "qa/match/04/r13/s8_glow/G1/s_left_steer.png",
+  "qa/match/04/r13/s8_glow/G1/s_right_steer.png"
+ ],
+ "untracked_skipped": [
+  "qa/match/04/r13/s8_glow/G1/a00_approved_view.png",
+  "qa/match/04/r13/s8_glow/G1/f03_forward3u.png"
+ ],
  "restore": "git switch claude/rainbow-s04-match-c13 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c13/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c13/untracked/* into the worktree"
 }
