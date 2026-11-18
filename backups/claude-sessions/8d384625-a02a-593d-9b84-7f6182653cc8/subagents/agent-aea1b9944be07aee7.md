@@ -411,3 +411,57 @@ Final reply (short): kept query, final verified SHA, best 3–5 NEW + matching B
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:46:26.854Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/match/04/r9/BEFORE/f03_forward3u.png').convert('RGB')\nim.crop((0,250,864,900)).save('$SP/f03_ring.png')\nim=Image.open('qa/match/04/r9/BEFORE/f06_forward6u.png').convert('RGB')\nim.crop((0,0,864,700)).save('$SP/f06_top.png')\n\"", "description": "Crop BEFORE frames around mouth ring"}`
+
+### 🧑 User — 2026-11-18T02:46:27.323Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:46:29.048Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/f03_ring.png"}`
+
+### 🧑 User — 2026-11-18T02:46:29.072Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:46:29.544Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/f06_top.png"}`
+
+### 🧑 User — 2026-11-18T02:46:29.577Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:46:53.910Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\nfor y in range(330,560,3):\n  print(y, [im.getpixel((x,y)) for x in (300,434,560)])\n\"", "description": "Print pixel column profile at mouth top"}`
+
+### 🧑 User — 2026-11-18T02:46:54.039Z
+
+> ↩︎ result: 330 [(203, 49, 209), (202, 78, 26), (184, 77, 145)]
+> 333 [(203, 49, 207), (248, 149, 110), (179, 72, 144)]
+> 336 [(200, 49, 204), (248, 158, 131), (175, 64, 143)]
+> 339 [(194, 53, 191), (252, 177, 138), (203, 94, 136)]
+> 342 [(255, 155, 234), (253, 181, 133), (255, 165, 138)]
+> 345 [(203, 103, 139), (255, 227, 185), (255, 208, 168)]
+> 348 [(199, 105, 141), (233, 110, 76), (251, 255, 241)]
+> 351 [(203, 99, 158), (229, 86, 80), (255, 250, 224)]
+> 354 [(193, 98, 156), (222, 74, 98), (255, 236, 186)]
+> 357 [(205, 112, 167), (246, 82, 151), (226, 100, 77)]
+> 360 [(255, 197, 255), (247, 103, 172), (223, 60, 61)]
+> 363 [(210, 79, 209), (255, 239, 255), (219, 55, 66)]
+> 366 [(191, 60, 188), (233, 112, 228), (215, 26, 118)]
+> 369 [(184, 54, 176), (222, 88, 221), (235, 39, 149)]
+> 372 [(186, 50, 174), (198, 73, 211), (232, 42, 152)]
+> 375 [(173, 65, 184), (182, 68, 218), (227, 42, 144)]
+> 378 [(161, 61, 187), (172, 81, 238), (249, 78, 192)]
+> 381 [(165, 78, 185), (171, 120, 255), (247, 78, 221)]
+> 384 [(158, 67, 198), (138, 99, 244), (251, 78, 245)]
+> 387 [(161, 75, 202), (136, 100, 232), (255, 95, 245)]
+> 390 [(153, 83, 199), (235, 200, 255), (255, 152, 255)]
+> 393 [(219, 183, 245), (238, 177, 247), (235, 94, 232)]
+> 396 [(244, 224, …[+2852 chars]
+

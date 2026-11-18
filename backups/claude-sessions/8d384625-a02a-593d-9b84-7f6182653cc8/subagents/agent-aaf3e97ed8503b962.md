@@ -893,3 +893,114 @@ Final reply (short): kept query, final verified SHA, best 3–5 NEW + matching B
 > s_right_steer s 139.038 lat 3.001 coins 1420 benny 0.6 -0.3 big coins: #20@172,878 d152 #21@376,733 d95 #22@342,651 d69
 > s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
 
+### 🤖 Claude — 2026-11-18T02:46:11.625Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/crop.py", "content": "#!/usr/bin/env python3\n\"\"\"crop.py out.png x0 y0 x1 y1 scale img1 [img2 ...] -> images stacked vertically (each cropped + scaled)\"\"\"\nimport sys\nfrom PIL import Image, ImageDraw\nout, x0, y0, x1, y1, sc = sys.argv[1], *map(int, sys.argv[2:6]), float(sys.argv[6])\nims = []\nfor p in sys.argv[7:]:\n    im = Image.open(p).convert('RGB').crop((x0, y0, x1, y1))\n    im = im.resize((int((x1 - x0) * sc), int((y1 - y0) * sc)), Image.LANCZOS)\n    ims.append(im)\nW = max(i.width …[+216 chars]`
+
+### 🧑 User — 2026-11-18T02:46:11.653Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/crop.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:46:12.583Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r9/BEFORE/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T02:46:12.633Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:46:15.713Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"t95_through_screen\" /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/before.log; do sleep 3; done; echo t95done", "description": "Wait for BEFORE render to finish", "timeout_ms": 600000}`
+
+### 🧑 User — 2026-11-18T02:46:15.740Z
+
+> ↩︎ result: Monitor started (task bb95nf053, expires in 10m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T02:46:17.698Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && head -30 tools/match05/r8_probe.mjs; head -20 tools/match05/pixel_probe.mjs", "description": "Read probe tools headers"}`
+
+### 🧑 User — 2026-11-18T02:46:17.758Z
+
+> ↩︎ result: // Screen 05 round 8: the lead's motion_audit (tools/lead_r6/motion_audit.mjs) with a shot filter + per-shot probes
+> // (coin screen sizes, Benny's screen box). Same shot list / same simulation stepping as the audit, so a shot taken here
+> // equals the audit frame of the same name. Run from the checkout:
+> //   node tools/match05/r8_shots.mjs <outDir> "<query>" [name,name,...|all] [port]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> import { realpathSync, mkdirSync as mk, rmSync, readFileSync } from 'node:fs';
+> // own dev server: node_modules is a symlink into the lead checkout in this worktree, so Vite's default fs allow list
+> // refused the HUD font (fallback font in the HUD). Same render-slot protocol as scripts/lib/pw.mjs.
+> async function startVite(port) {
+>   const slots = Math.max(1, Number(process.env.RAINBOW_RENDER_SLOTS ?? 2));
+>   const alive = (pid) => { try { process.kill(pid, 0); return true; } catch { return false; } };
+>   let free = () => {};
+>   const t0 = Date.now();
+>   outer: for (;;) {
+>     for (let i = 0; i < slots; i …[+2361 chars]
+
+### 🤖 Claude — 2026-11-18T02:46:33.877Z
+
+> 🔧 **Bash** `{"command": "tail -3 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/before.log", "description": "Check BEFORE render log tail"}`
+
+### 🧑 User — 2026-11-18T02:46:33.901Z
+
+> ↩︎ result: s_right_hard s 145.091 lat 5.063 coins 1420 benny 0.46 -0.2 big coins: #22@-23,712 d106 #23@124,613 d65
+> t33_through_screen s 151.689 lat 0.006 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.391 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T02:46:34.881Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r9/BEFORE/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:46:34.935Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:46:37.430Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py t66seam.png 0 480 864 820 1.0 /home/user/wt/s05/qa/match/05/r9/BEFORE/t66_through_screen.png", "description": "Crop the t66 seam region"}`
+
+### 🧑 User — 2026-11-18T02:46:37.771Z
+
+> ↩︎ result: t66seam.png (864, 340)
+
+### 🤖 Claude — 2026-11-18T02:46:39.549Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/t66seam.png"}`
+
+### 🧑 User — 2026-11-18T02:46:39.573Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:46:56.574Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 30,200p tools/match05/r8_probe.mjs", "description": "Read r8_probe tool body"}`
+
+### 🧑 User — 2026-11-18T02:46:56.605Z
+
+> ↩︎ result: const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: async () => { try { await server.close(); } finally { free(); } } };
+> }
+> const [SHOT = 't66_through_screen', Q = '', PTS = '', PORT = '5293'] = process.argv.slice(2);
+> // Screen 05 round 8: what does the screen show at pixel (x,y)? Same shot list / stepping as r8_shots.mjs.
+> //   node tools/match05/r8_probe.mjs <shot> "<query>" "x,y;x,y;..." [port]
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(Number(PORT));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const ALL = {
+>   a00_approved_view: [0, null], f03_forward3u: [3, null], f06_forward6u: [6, null], f10_forward10u: [10, null], f20_forward20u: [20, null],
+>   s_left_steer: [6, -1], s_right_steer: [6, 1], s_left_hard: [12, -1], s_right_hard: [12, 1],
+>   t33_through_screen: ['t0.33', null], t66_through_screen: ['t0.66', null], t95_through_screen: ['t0.95', null],
+> };
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window. …[+4795 chars]
+
+### 🤖 Claude — 2026-11-18T02:47:01.366Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 600 node tools/match05/r8_probe.mjs t66_through_screen \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1\" \"330,630;330,640;330,648;330,655;330,662;330,670;600,630;600,645;600,655;600,665;100,600;100,650\" 5293 2>&1 | tail -14", "description": "Probe surfaces around the t66 seam line", "timeout": 620000}`
+

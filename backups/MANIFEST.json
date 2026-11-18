@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14053,
-   "sha256": "d030df9a4fe05457ad23b11ed82f1581552f754b6c52f9156fba0d5dab0c56ac"
+   "sha256": "749663deb3a467ff35fa4048c7ce7a8e81f78c2ae356bd4a31744b59c2a21741"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9230,6 +9230,36 @@
    "path": "qa/review_r8/07_r8_foam_walls_WIP/3_NEW_mid_plunge_painted_banks.jpg",
    "bytes": 670728,
    "sha256": "bde02f74aeb7f8828846ddbf7be580415247089058154c5c16cbb43a85413a5d"
+  },
+  {
+   "path": "qa/review_r9/04_step3_foam/1_APPROVED_04.jpg",
+   "bytes": 446002,
+   "sha256": "fa0c7a6020fb40d940a760262e6d9d930a5858e710ff5dfa6b3a661e3568e47c"
+  },
+  {
+   "path": "qa/review_r9/04_step3_foam/2_BEFORE_step2_t66.jpg",
+   "bytes": 387148,
+   "sha256": "5ce4cccd318c05244bcbfd91876a3b096e8ac6991e6e4189a11edf97e9ca37b6"
+  },
+  {
+   "path": "qa/review_r9/04_step3_foam/3_NEW_step3_t66.jpg",
+   "bytes": 380928,
+   "sha256": "57f471fe2ac8766340bcadffbd7b055cd3adf8936d08f99358ee5bc3a9dd0519"
+  },
+  {
+   "path": "qa/review_r9/05_step4_seam/1_APPROVED_05.jpg",
+   "bytes": 546908,
+   "sha256": "e443aa8cfc8b6969c3acbadd0d7cedf4fca8cf9544b2c5d71bfa6a24d6541577"
+  },
+  {
+   "path": "qa/review_r9/05_step4_seam/2_BEFORE_step3_t33.jpg",
+   "bytes": 479959,
+   "sha256": "d8041c52b2f1e0ce563c3ab5d7c68ed44847fc5fdba96ea7ded384843db1301d"
+  },
+  {
+   "path": "qa/review_r9/05_step4_seam/3_NEW_step4_t33.jpg",
+   "bytes": 481461,
+   "sha256": "2e443d3bb2af129182f1cfba23db99b52ca826057a5eb5a80aeb1a4189a1584a"
   },
   {
    "path": "qa/scene_comparisons.md",
