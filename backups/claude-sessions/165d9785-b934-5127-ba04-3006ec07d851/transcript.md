@@ -4240,3 +4240,36 @@ Screen 08 sent a result from its running work. I'll check it by eye: the upper s
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T13:28:29.339Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_c12; P=/home/user/wt/s08/qa/match/08/r12/step5_m08cupg; cp $P/2_BEFORE_f10_forward10u.png $R/08_step5_2_BEFORE_forward10u.png; cp $P/3_NEW_f10_forward10u.png $R/08_step5_3_NEW_forward10u.png; cp $P/2_BEFORE_t66_through_screen.png $R/08_step5_2_BEFORE_two_thirds.png; cp $P/3_NEW_t66_through_screen.png $R/08_step5_3_NEW_two_thirds.png; echo \"| 12 (~$(date -u +%H:%M)) | 08 step 5 \\`m08cupg\\` (both upper spout cups stay one solid cup while swimming: cap, gold band and perforated underside joined, stream from the underside; \\`05ed1bee\\`) | GOOD IMPROVEMENT |\" >> docs/ …[+330 chars]`
+
+### 🤖 Claude — 2026-11-18T13:28:31.692Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/08_1_APPROVED.png", "qa/review_c12/08_step5_2_BEFORE_forward10u.png", "qa/review_c12/08_step5_3_NEW_forward10u.png", "qa/review_c12/08_step5_2_BEFORE_two_thirds.png", "qa/review_c12/08_step5_3_NEW_two_thirds.png"], "caption": "Screen 08 step 5 — GOOD IMPROVEMENT. APPROVED · BEFORE / NEW at 10 u · BEFORE / NEW two-thirds through. Both upper spout cups now stay one solid cup while Benny swims (perforated cap, gold band, perforated underside joined, water pouring from the underside), instead of the underside floating below the dome with wall showing between.", "status":  …[+30 chars]`
+
+### 🧑 User — 2026-11-18T13:28:41.130Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "be56ffcaa9036e21138aaf9e23e50611fa3f6dbd",
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T13:28:29+00:00 (0.2 min ago) | local be56ffc remote be56ffc (match) | uncommitted 0
+
+### 🧑 User — 2026-11-18T13:28:42.663Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/08_1_APPROVED.png → file_uuid: 1321f404-a5e4-4dac-a0d3-763cd448c0a8
+>   /home/user/rainbow-/qa/review_c12/08_step5_2_BEFORE_forward10u.png → file_uuid: 77a60921-b403-428f-910d-0ad6d4e294f3
+>   /home/user/rainbow-/qa/review_c12/08_step5_3_NEW_forward10u.png → file_uuid: a74488db-ab54-4188-afe5-c6a613464726
+>   /home/user/rainbow-/qa/review_c12/08_step5_2_BEFORE_two_thirds.png → file_uuid: 8c865e0c-5a53-44aa-8ab6-a0d187aa68e3
+>   /home/user/rainbow-/qa/review_c12/08_step5_3_NEW_two_thirds.png → file_uuid: 5a97eb9a-9e9b-4100-8ece-8840b2a9f6c3
+
+### 🤖 Claude — 2026-11-18T13:28:45.954Z
+
+Screen 08 step 5 is a **GOOD IMPROVEMENT**, with the pictures above. Both upper spout cups now stay one solid cup while Benny swims: perforated cap, gold band and underside joined, with the water pouring from the underside as painted. Before, the underside floated below the dome with wall showing between them. Your approved start view is unchanged.
+
+The 08 specialist also tried four other changes that didn't look better, so it rejected them and set them aside: the oversized water glints are still oversized.
+
+Saved: commit `be56ffc`, matches GitHub.
+
+Screen 04 still hasn't started; it waits for your OK on the visual-first summary. The Screen 05 and 08 specialists keep working on those same targets unless you tell me to pause them.
+
