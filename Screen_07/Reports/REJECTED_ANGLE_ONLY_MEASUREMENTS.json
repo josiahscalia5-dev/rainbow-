@@ -1,0 +1,230 @@
+{
+  "onePaddle": {
+    "object": "m07_paddle2",
+    "geometry": "BoxGeometry",
+    "original": [
+      0.97,
+      0.995
+    ],
+    "candidate": [
+      0.987,
+      0.998
+    ],
+    "materialCloned": true
+  },
+  "canonicalOpeningVsIndependent": {
+    "differentPixels": 0,
+    "bboxXYXYExclusive": null,
+    "averageChannelDifferenceInside": 0,
+    "maxChannelDelta": 0
+  },
+  "canonicalOpeningVsCandidate": {
+    "differentPixels": 0,
+    "bboxXYXYExclusive": null,
+    "averageChannelDifferenceInside": 0,
+    "maxChannelDelta": 0
+  },
+  "poses": {
+    "opening": {
+      "candidate": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "repeat": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "hide-two": {
+        "differentPixels": 5188,
+        "bboxXYXYExclusive": [
+          340,
+          361,
+          428,
+          469
+        ],
+        "averageChannelDifferenceInside": 59.592,
+        "maxChannelDelta": 243
+      },
+      "hide-far": {
+        "differentPixels": 2399,
+        "bboxXYXYExclusive": [
+          446,
+          457,
+          541,
+          554
+        ],
+        "averageChannelDifferenceInside": 51.483,
+        "maxChannelDelta": 250
+      }
+    },
+    "early": {
+      "candidate": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "repeat": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    "angled-left": {
+      "candidate": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "repeat": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    "forward": {
+      "candidate": {
+        "differentPixels": 11075,
+        "bboxXYXYExclusive": [
+          226,
+          298,
+          348,
+          450
+        ],
+        "averageChannelDifferenceInside": 4.321,
+        "maxChannelDelta": 27
+      },
+      "repeat": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "hide-two": {
+        "differentPixels": 11081,
+        "bboxXYXYExclusive": [
+          226,
+          298,
+          348,
+          450
+        ],
+        "averageChannelDifferenceInside": 53.758,
+        "maxChannelDelta": 252
+      },
+      "hide-far": {
+        "differentPixels": 3556,
+        "bboxXYXYExclusive": [
+          407,
+          448,
+          534,
+          563
+        ],
+        "averageChannelDifferenceInside": 49.543,
+        "maxChannelDelta": 246
+      }
+    },
+    "hard-left": {
+      "candidate": {
+        "differentPixels": 4894,
+        "bboxXYXYExclusive": [
+          416,
+          273,
+          512,
+          384
+        ],
+        "averageChannelDifferenceInside": 1.946,
+        "maxChannelDelta": 10
+      },
+      "repeat": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "hide-two": {
+        "differentPixels": 12799,
+        "bboxXYXYExclusive": [
+          379,
+          273,
+          512,
+          441
+        ],
+        "averageChannelDifferenceInside": 58.835,
+        "maxChannelDelta": 253
+      },
+      "hide-far": {
+        "differentPixels": 3784,
+        "bboxXYXYExclusive": [
+          492,
+          443,
+          579,
+          563
+        ],
+        "averageChannelDifferenceInside": 46.451,
+        "maxChannelDelta": 242
+      }
+    },
+    "hard-right": {
+      "candidate": {
+        "differentPixels": 14474,
+        "bboxXYXYExclusive": [
+          60,
+          268,
+          199,
+          440
+        ],
+        "averageChannelDifferenceInside": 32.677,
+        "maxChannelDelta": 121
+      },
+      "repeat": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "hide-two": {
+        "differentPixels": 14582,
+        "bboxXYXYExclusive": [
+          60,
+          268,
+          199,
+          440
+        ],
+        "averageChannelDifferenceInside": 75.567,
+        "maxChannelDelta": 253
+      },
+      "hide-far": {
+        "differentPixels": 4026,
+        "bboxXYXYExclusive": [
+          339,
+          443,
+          505,
+          564
+        ],
+        "averageChannelDifferenceInside": 50.76,
+        "maxChannelDelta": 232
+      }
+    },
+    "plunge": {
+      "candidate": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      },
+      "repeat": {
+        "differentPixels": 0,
+        "bboxXYXYExclusive": null,
+        "averageChannelDifferenceInside": 0,
+        "maxChannelDelta": 0
+      }
+    }
+  }
+}
