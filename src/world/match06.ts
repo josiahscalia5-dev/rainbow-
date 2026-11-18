@@ -40,6 +40,10 @@ export interface Match06 {
   group: THREE.Group;
   bakeDepth(renderer: THREE.WebGLRenderer): void;
   sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;
+  /** r7 `&m06bub=1`: 0 at the approved viewpoint .. 1 once the camera has left it (the painting only covers that view) */
+  away(cam: THREE.Vector3): number;
+  /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
+  setAway(a: number): void;
 }
 
 const VERT = /* glsl */ `
@@ -88,6 +92,8 @@ uniform vec3 uAxO;
 uniform vec3 uAxD;
 uniform vec3 uAxR;
 uniform vec3 uAxU;
+uniform float uRingH;
+uniform float uPanel;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -121,14 +127,43 @@ void main() {
     vec3 env = mix(vec3(0.46, 0.20, 0.55), vec3(1.0, 0.80, 0.50), smoothstep(-0.35, 0.9, fw));
     env = mix(env, vec3(1.0, 0.96, 0.86), pow(max(fw, 0.0), 10.0));
     float fres = pow(1.0 - max(dot(n2, V), 0.0), 3.0);
-    vec3 g = vec3(1.0, 0.66, 0.26) * (0.28 + 0.92 * env) + fres * vec3(1.0, 0.82, 0.55) * 0.45;
+    vec3 g = vec3(1.0, 0.60, 0.20) * (0.24 + 0.95 * env) + fres * vec3(1.0, 0.82, 0.55) * 0.45;
     g += vec3(1.0, 0.9, 0.7) * 0.5 * pow(max(dot(Rf, normalize(uAxD + uAxU * 0.35)), 0.0), 40.0);
+    // r7b: the painted bands' bright yellow-white lines on the lips and band edges
+    float lipL = smoothstep(0.07, 0.0, abs(abs(vLS.x) - 0.22)) + smoothstep(0.09, 0.0, abs(abs(vLS.x) - (uRingH - 0.12)));
+    g = mix(g, vec3(1.0, 0.90, 0.60), clamp(lipL, 0.0, 1.0) * 0.55);
     vec3 q = vW - uAxO;
     float ang = atan(dot(q, uAxU), dot(q, uAxR));
-    float cell = fract(ang / 6.2831853 * 96.0) - 0.5;
-    float bulb = smoothstep(0.55, 0.0, length(vec2(cell * 2.0, vLS.x / 0.15)));
-    g += vec3(1.0, 0.62, 0.28) * 0.30 * smoothstep(0.3, 0.0, abs(vLS.x));
-    pc = mix(g, vec3(1.0, 0.95, 0.80), bulb);
+    // r7b: fewer, bigger warm bulbs with a soft halo (the painted rings' amber light dots)
+    float cell = fract(ang / 6.2831853 * 56.0) - 0.5;
+    float bd = length(vec2(cell * 2.6, vLS.x / 0.16));
+    g += vec3(1.0, 0.62, 0.28) * 0.35 * smoothstep(0.3, 0.0, abs(vLS.x)) + vec3(1.0, 0.7, 0.35) * 0.5 * smoothstep(1.1, 0.0, bd);
+    pc = mix(g, vec3(1.0, 0.96, 0.84), smoothstep(0.5, 0.15, bd));
+  }
+  if (uPanel > 0.5 && uFloor < 0.5 && uRing < 0.5) {
+    // r7b m06ring: crisp perforated lilac washer metal between the rings (the painted panels: rows of short dark rounded
+    // slots running around the tunnel, pink-white sheen toward the glow), instead of the magnified blurry far-ring crop
+    vec3 q = vW - uAxO;
+    float al = dot(q, uAxD);
+    vec3 qr = q - uAxD * al;
+    float arc = atan(dot(qr, uAxU), dot(qr, uAxR)) * length(qr);
+    vec3 V = normalize(cameraPosition - vW);
+    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+    float fw = dot(reflect(-V, n2), uAxD);
+    // colours measured from the approved picture's walls (display values): shadow / median / lit magenta-purple,
+    // lilac-blue toward the glow, near-black magenta slots (3-8 % of the wall)
+    float lit = smoothstep(-0.7, 0.8, fw);
+    vec3 base = mix(vec3(0.42, 0.19, 0.50), vec3(0.67, 0.34, 0.74), lit);
+    base = mix(base, vec3(0.56, 0.38, 0.88), 0.45 * smoothstep(0.2, 0.95, fw));
+    base += vec3(0.9, 0.6, 0.95) * 0.16 * pow(max(fw, 0.0), 8.0);
+    float row = floor(al / 0.55);
+    vec2 p = vec2((fract(arc / 0.62 + 0.5 * mod(row, 2.0)) - 0.5) * 0.62, (fract(al / 0.55) - 0.5) * 0.55);
+    float d = length(max(abs(p) - vec2(0.13, 0.03), 0.0)) - 0.03;
+    float aa = max(fwidth(d), 1e-4);
+    float slot = (1.0 - smoothstep(-aa, aa, d)) * (1.0 - smoothstep(20.0, 60.0, distance(cameraPosition, vW)));
+    float lip = (1.0 - smoothstep(-aa, aa, abs(d - 0.03) - 0.012)) * step(0.0, -p.y);
+    vec3 pan = mix(base, vec3(0.24, 0.02, 0.22), slot) + vec3(0.85, 0.55, 0.95) * 0.18 * lip * (1.0 - slot);
+    pc = mix(pc, pan, 0.85);
   }
   vec3 t = pc;
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
@@ -237,7 +272,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 },
       uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
       uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
-      uRing: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
+      uRing: { value: 0 }, uRingH: { value: 1 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
       uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
   });
 
@@ -327,9 +362,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     g.setAttribute('aTile', new THREE.Float32BufferAttribute(tl, 2));
     g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
     g.setIndex(idx); g.computeVertexNormals();
-    add(g, mat(tTube), 'tube');
+    const tubeMat = mat(tTube);
+    add(g, tubeMat, 'tube');
     tunCap = { pos: O.clone().addScaledVector(ax, a1), dir: ax.clone(), r: radAt(a1) };
     if (RING) {
+      // r7b: procedural perforated panels between the rings, OPT-IN `&m06panel=1` (looked flat/plastic vs the painted tile: not kept)
+      if (qs?.get('m06panel') === '1') Object.assign(tubeMat.uniforms, { uPanel: { value: 1 }, uAxO: { value: O.clone() },
+        uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
       // r7 `&m06ring=1` (qa/match/06/r7/NOTES.md): REAL modeled gold rings instead of the flat painted ring stripes of the
       // magnified wall tile. Profile = the painted ring: a thick polished band with two raised lips and a groove carrying
       // a row of warm bulbs. Spacing from the approved picture: the two nearest painted ring groups (≈ 485 and 355 px
@@ -356,7 +395,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       const parts: THREE.BufferGeometry[] = [];
       const qRot = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), ax);
       // the lathe's local x/z must line up with Rx/Ux for the bulb angle; build each ring directly in world space
-      for (let k = Math.ceil((a0 + 2 - aN) / dA); aN + k * dA < a1 - 20 && parts.length < 70; k++) {
+      // r7b: only the nearer rings are modeled (up to `&m06ringn=`, default 10 spacings past the nearest painted ring); the
+      // far ones bunched into a busy moiré — beyond them the painted rings + the tapering tunnel carry the depth
+      const nMax = Number(qs?.get('m06ringn')) || 99; // r7b: limiting to 10 left an empty hole at the centre (not kept)
+      for (let k = Math.ceil((a0 + 2 - aN) / dA); k <= nMax && aN + k * dA < a1 - 20 && parts.length < 70; k++) {
         const a = aN + k * dA, Ra = radAt(a), sc = Ra / Rt;
         const lp = prof.map((v) => new THREE.Vector2(Ra + v.x * sc, v.y * sc));
         const lg = new THREE.LatheGeometry(lp, 128);
@@ -372,7 +414,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       const rg = mergeGeometries(parts);
       rg.computeVertexNormals();
       const rm = mat(tTube);
-      Object.assign(rm.uniforms, { uRing: { value: 1 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
+      Object.assign(rm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
         uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
       add(rg, rm, 'rings');
       console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
@@ -405,6 +447,28 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
     return [p, l / TF.lateralPeriod, l];
   }, TF.period), mat(tFloor, true), 'floor');
+  // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
+  // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
+  // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+  let foamClouds: THREE.InstancedMesh | null = null;
+  if (GEO && R6 && qs?.get('m06foam') === '1') {
+    let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    const items: { p: THREE.Vector3; r: number }[] = [];
+    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
+      const n = 2 + Math.floor(rnd() * 3);
+      for (let i = 0; i < n; i++) {
+        const fr = frame(s + rnd() * 0.6), r = 0.2 + rnd() * 0.4;
+        const l = side * (R6.Wc + 0.25 + rnd() * 1.3);
+        items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rnd() * 0.12), r });
+      }
+    }
+    const fm = new THREE.MeshStandardMaterial({ color: 0xf7f0ff, roughness: 0.55, metalness: 0, emissive: new THREE.Color(0x9a7ac0), emissiveIntensity: 0.4 });
+    foamClouds = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 2), fm, items.length);
+    const m4 = new THREE.Matrix4();
+    items.forEach((it, i) => { m4.makeScale(it.r, it.r * 0.8, it.r).setPosition(it.p); foamClouds!.setMatrixAt(i, m4); });
+    foamClouds.name = 'm06_foamclouds'; foamClouds.visible = false; foamClouds.frustumCulled = false;
+    group.add(foamClouds);
+  }
   // far end cap of the tunnel (the glowing vanishing point)
   const fe = frame(L.s1 + L.ext);
   const cap = new THREE.Mesh(new THREE.CircleGeometry(tunCap ? tunCap.r : L.R, 64), mat(tTube));
@@ -438,6 +502,8 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       renderer.setRenderTarget(prevRT);
       shared.uUseDepth.value = 1;
     },
+    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; },
+    away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
     sync(renderer, w, h) {
       shared.uPjPost.value.x = renderer.toneMappingExposure;
       if (FLOW) shared.uTime.value = performance.now() / 1000;

@@ -66,6 +66,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
   // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
   const glow05 = flag05('glow05');
+  const M06_BUB = flag05('m06bub');
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
   // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
@@ -539,7 +540,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
     }
     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
-      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On; }
+      // r7 `&m06bub=1`: the game's iridescent bubbles return once the camera leaves the approved view (the painting
+      // carries its bubbles only there; while swimming the screen had none)
+      const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+      m06.setAway(m06On ? m06.away(camera.position) : 0);
+      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && k === 'bubbles'); }
       m06Applied = m06On;
     }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
