@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15031,
-   "sha256": "9c8952b5130d58c6e9c4086976cbe31c2d59968a4c0fef4bfb94057680da4b17"
+   "sha256": "2610aebe492d5ee692fb9caed29e81b31691669b0834d52c8b962712bc9e1ef0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -683,13 +683,23 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/INFO.json",
-   "bytes": 527,
-   "sha256": "f6fd18d62c389498d6e35b3e5ba7e3294024cab5f722ae8578607c6b30dbb69e"
+   "bytes": 555,
+   "sha256": "0ff7e0b418aa30824c781830b57f492dcabd52ae89f461ac717b72736f6c7a50"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/tracked.patch",
-   "bytes": 5452,
-   "sha256": "63387e8c6abb4e9a736f50f2e493febfe0c44461647b27c077ca5e7240549660"
+   "bytes": 10212,
+   "sha256": "1c417884c5fb4202b00c3925469aac2b1871fd9c15321b43ee78d226ceeef1bc"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
+   "bytes": 503,
+   "sha256": "113218d1ba96031af31d12f52dd38a579cb641428078977dda436332773131c6"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c11/tracked.patch",
+   "bytes": 1322,
+   "sha256": "e18302df279c201e99e8a3472e331198becb62209c2959d8d8f56485f7923192"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -708,8 +718,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/INFO.json",
-   "bytes": 485,
-   "sha256": "7dfcbdc74c04f3750548f771ce8137d2a04fb724e922ac5c7adc5631a191d559"
+   "bytes": 519,
+   "sha256": "8a61d068f204e4ef2b7020fc784dfaccb7f0847677a932532b6303c99bad29fc"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c11/tracked.patch",
+   "bytes": 2030,
+   "sha256": "1f0948975305bf25ae51ec2ee6fc239ec20dc8ae8d2fbddc3a11bf76c55311fc"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -1015,6 +1030,11 @@
    "path": "docs/briefs/2026-11-18-r11/DA3_TEST.md",
    "bytes": 5064,
    "sha256": "105b6f327aab35f8dc414039ada2f91ba61831b2d5656bfd8ea38ac7542f29b9"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md",
+   "bytes": 3220,
+   "sha256": "d3e53d5597ea571229731abb0f7e2bcf0f95d38716cf3a790727b9c44dfc6034"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",

@@ -1,13 +1,9 @@
 {
  "worktree": "/home/user/wt/s05",
  "branch": "claude/rainbow-s05-match-c11",
- "head": "d5e3737927c7f0a9e7147b42f917a570026641da",
- "time": "2026-11-18T11:58:48+00:00",
- "dirty_tracked": [
-  "src/vfx/foam.ts",
-  "src/vfx/waterRibbon.ts",
-  "src/world/materials.ts"
- ],
+ "head": "c25327a223441ff46e4c5f6aa7ec234580a868f3",
+ "time": "2026-11-18T12:03:57+00:00",
+ "dirty_tracked": [],
  "untracked_copied": [],
  "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s05-match-c11 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c11/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c11/untracked/* into the worktree"

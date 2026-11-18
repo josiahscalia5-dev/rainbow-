@@ -3208,3 +3208,540 @@ There's a debug view that colours the tunnel green and the river floor red. Rend
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s06; mkdir -p $S/dbg; K='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1'; nice -n 15 timeout 500 node scripts/capture.mjs 06 --q=\"$K&m06dbg=1\" --out=$S/dbg 2>&1 | tail -2; git status --short | head -3; ls $S/dbg", "description": "Render the 06 approved view with the debug tint", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T11:58:44.268Z
+
+> ↩︎ result: '[06] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>  M qa/capture_log.json
+> 06.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:58:49.964Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git checkout -q qa/capture_log.json; S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s06; convert /home/user/rainbow-/references/06_crest_the_rinse_arch.png $S/dbg/06.png -resize 432x768 +append $S/dbg_sheet.jpg", "description": "Make an approved vs debug-view sheet"}`
+
+### 🧑 User — 2026-11-18T11:58:50.137Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:58:53.901Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s06/dbg_sheet.jpg"}`
+
+### 🧑 User — 2026-11-18T11:58:53.925Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:59:14.687Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"floor\" src/world/match06.ts | head -30", "description": "Find the 06 floor proxy construction"}`
+
+### 🧑 User — 2026-11-18T11:59:14.724Z
+
+> ↩︎ result: 8: *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 14: * painted gold rings + slotted metal; floor: lateral x s, the painted water) — stretch x magnification guard + projector
+> 30:  Lfloor: number;
+> 33:    floor: { lateralPeriod: number; period: number };
+> 34:    floor2?: { lateralPeriod: number; period: number };
+> 159:    float row = floor(al / 0.55);
+> 185:      // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
+> 186:      // tunnel wall seen through the crest loop / beside the river) or Benny's blurry provisional fill (R), the floor
+> 247:  // r3 (2026-11-17, qa/match/06/NOTES.md): masks + rectified repeating floor tile; `&m06v=2` = the round-2 result
+> 249:  const TF2 = !v2 ? L.tiles.floor2 : undefined;
+> 250:  const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile(TF2 ? 'floor2' : 'floor')]);
+> 269:  const mat = (tile: THREE.Texture, floor = false) => new THREE.ShaderMaterial({
+> 272:      uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 },
+> 314:  const TT = L.tiles.tube, TF = TF2 ?? L.tiles.floor;
+> 457:    // the river floor's straight 260  …[+752 chars]
+
+### 🤖 Claude — 2026-11-18T11:59:19.153Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 450, "limit": 40}`
+
+### 🧑 User — 2026-11-18T11:59:19.172Z
+
+> ↩︎ result: 450	        }
+> 451	        const pm = mat(tTube);
+> 452	        Object.assign(pm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uUseMask: { value: 0 }, uAxO: { value: O.clone() },
+> 453	          uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+> 454	        add(mergeGeometries(pads), pm, 'paddles');
+> 455	      }
+> 456	    }
+> 457	    // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the
+> 458	    // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage
+> 459	    while (sList.length && sList[sList.length - 1] > sE + 20) sList.pop();
+> 460	  } else add(grid(RAD, (_s, j, fr) => {
+> 461	    const th = (j / RAD) * Math.PI * 2;
+> 462	    let lx = L.R * Math.cos(th);
+> 463	    const ly = L.hA + L.R * Math.sin(th);
+> 464	    if (GEO && R6) {
+> 465	      const t = Math.min(1, Math.max(0, (yTop - ly) / yTop)), k = t * t * (3 - 2 * t);
+> 466	      lx -= Math.sign(lx) * k * (Lw - R6.Wb);
+> 467	    }
+> 468	    const p = GEO ? fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly)
+> 469	      : fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Ma …[+1728 chars]
+
+### 🤖 Claude — 2026-11-18T11:59:20.734Z
+
+> 🔧 **TaskCreate** `{"subject": "Screen 06 controlled geometry test (lead)", "description": "Branch claude/rainbow-s06-match-c11, worktree /home/user/wt/s06. Finding: m06_floor proxy covers the painted deep tunnel mouth (DA3 10x deeper). One switch &m06mouth=1; render real game approved view + moving audit; keep only if visibly closer. Log qa/match/06/r11/.", "activeForm": "Testing Screen 06 tunnel-mouth geometry"}`
+
+### 🧑 User — 2026-11-18T11:59:20.763Z
+
+> ↩︎ result: Task #7 created successfully: Screen 06 controlled geometry test (lead)
+
+### 🧑 User — 2026-11-18T11:59:27.315Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-18T11:59:27.443Z
+
+CLAUDIA — STRICT FINAL VISUAL RULE: RECREATE MY EXACT APPROVED SCREENS, NOT DIFFERENT SCENERY
+
+Claudia, I need you to take this instruction seriously and apply it to EVERY specialist working on my Rainbow game.
+
+I HAVE ALREADY DESIGNED MY APPROVED SCREENS. I WANT THOSE EXACT DESIGNS RECREATED AS FAITHFULLY AS TECHNICALLY POSSIBLE.
+
+I do not want your interpretation of my scenery.
+
+I do not want different tunnels, different architecture, different water formations, or additional decorations that weren't in my approved artwork.
+
+DO NOT ADD, REMOVE, REPLACE, OR REDESIGN ANY APPROVED VISUAL ELEMENT.
+
+1. MY APPROVED SCENERY IS THE AUTHORITY
+
+For Screens 04, 05, 06, 07, and 08, reproduce the exact visual appearance of each original approved image:
+
+- The same washing-machine environments and scenery.
+- The same tunnel architecture, proportions, and gold rings.
+- The same cyan-blue and pink-magenta water formations.
+- The same water thickness, curves, highlights, and reflections.
+- The same foam clouds, bubbles, machinery, and decorations.
+- The same lighting, surface materials, and color relationships.
+- The same collectibles and their intended appearance.
+- The same pink fluffy Benny, striped beanie, yellow star, and proportions.
+- The same overall visual composition and premium 3D artwork quality.
+
+DO NOT substitute similar-looking assets for the original approved designs.
+
+If existing geometry is wrong, correct it. If texture mapping is wrong, fix it. If something already matches, preserve it.
+
+2. BENNY MUST SWIM NATURALLY THROUGH MY ACTUAL SCENERY
+
+This is extremely important.
+
+I want Benny to feel like he is genuinely swimming through the approved washing-machine environments.
+
+He should:
+
+- Move forward naturally with the water.
+- Use appropriate swimming motions, with subtle body and limb movement.
+- Make believable splashes and water wakes.
+- Follow the curves and formations of the approved water.
+- Remain properly positioned in the water.
+- Never look like a stiff object floating over a flat picture.
+- Never disappear behind incorrect scenery or become unnaturally submerged.
+
+His movement must look natural, not robotic, and should fit the existing gameplay speed.
+
+BUT DO NOT CHANGE MY APPROVED SCENERY TO MAKE THE SWIMMING EASIER.
+
+Build and correct the environment so Benny can swim naturally THROUGH it while the scenery keeps its approved appearance.
+
+3. THE SCENERY MUST REMAIN CONSISTENT WHILE BENNY MOVES
+
+A screen looking correct only at its starting position is NOT enough.
+
+As Benny swims forward, turns, or follows the water:
+
+- The approved architecture must remain recognizable.
+- The river must remain continuous and properly shaped.
+- Textures must not stretch or smear.
+- Tunnel walls must not disappear.
+- Gold rings must not become flat orange bands.
+- There must be no disconnected scenery, large seams, or incorrect geometry.
+- The game must not suddenly reveal an unrelated environment.
+
+For scenery not visible in my original approved picture, use only a faithful continuation of the same approved design.
+
+If a new visual design decision is necessary, show it to me before treating it as approved.
+
+4. STOP MAKING SMALL CHANGES THAT DON'T FIX THE ACTUAL DIFFERENCE
+
+Do not spend an entire development round polishing a small decoration while the main scenery still looks wrong.
+
+Prioritize the biggest differences first:
+
+1. Correct environment architecture.
+2. Correct water formations and shape.
+3. Correct scenery proportions and materials.
+4. Correct visual continuity during swimming.
+5. Correct foam, bubbles, collectibles, and smaller details.
+
+Keep the improvements that genuinely look closer.
+
+Reject anything that makes my approved design look different.
+
+5. REQUIRE STRICT VISUAL COMPARISONS
+
+Before calling any screen an improvement, compare:
+
+ORIGINAL APPROVED IMAGE / BEFORE / NEW
+
+Show separate full-size portrait screenshots from the real playable game.
+
+Also test several points throughout the stage, including forward movement and turns, not just the approved starting view.
+
+Provide a short real-game swimming preview when useful.
+
+Every time, tell me:
+
+GOOD IMPROVEMENT — genuinely closer to my approved screen.
+
+NOT AN IMPROVEMENT — does not look closer.
+
+NOT YET PROVEN — still needs visual testing.
+
+Don't use color percentages as evidence of an accurate overall visual match.
+
+6. ALL FIVE PLAYABLE SCREENS
+
+Apply this to:
+
+- Screen 04 — Through the Five Arrows.
+- Screen 05 — Flow Into the Current.
+- Screen 06 — Crest the Rinse Arch.
+- Screen 07 — Dive the Washer Tube.
+- Screen 08 — Final Spin Chamber.
+
+Do not work on Screens 01–03 or 09–11. Those are my Google Flow videos.
+
+Keep two visual specialists working simultaneously, rotate through all five screens, and preserve all successful work.
+
+Continue the verified five-minute GitHub autosave, including unfinished specialist work.
+
+No unnecessary setup, no unrelated development, and no paid jobs without approval.
+
+7. MY FINAL QUESTION
+
+CLAUDIA, ARE YOU ACTUALLY RECONSTRUCTING MY ORIGINAL APPROVED SCENERY, OR ARE YOU STILL CREATING SOMETHING THAT ONLY LOOKS SIMILAR?
+
+Answer directly based on the real game renders.
+
+If any screen uses incorrect scenery, identify exactly which parts are wrong and correct them.
+
+My minimum goal is 8.5/10 visual resemblance throughout gameplay, ideally 9–9.5/10.
+
+I want you to work toward the closest technically achievable recreation of my exact approved designs.
+
+Do not falsely promise 95% accuracy if the results don't demonstrate it.
+
+MY NUMBER-ONE PRIORITY IS MY EXACT APPROVED VISUAL SCENERY WITH BENNY SWIMMING NATURALLY THROUGH IT.
+
+Nothing else.
+
+No redesigns. No generic replacements. No misleading progress reports.
+
+PLEASE KEEP BUILDING MY ACTUAL APPROVED SCREENS AND SHOW ME THE RESULTS.
+
+### 🤖 Claude — 2026-11-18T11:59:42.794Z
+
+Applying your rule to every specialist first: saving it as a binding order in the repository and sending it to both running specialists.
+
+### 🤖 Claude — 2026-11-18T11:59:52.850Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md", "content": "# User order 2026-11-18 ~12:25 UTC (account 11) — STRICT FINAL VISUAL RULE (binding for EVERY specialist, screens 04–08)\n\nUser (core, verbatim): \"I HAVE ALREADY DESIGNED MY APPROVED SCREENS. I WANT THOSE EXACT DESIGNS RECREATED AS FAITHFULLY AS\nTECHNICALLY POSSIBLE. I do not want your interpretation of my scenery.\" \"DO NOT ADD, REMOVE, REPLACE, OR REDESIGN ANY APPROVED\nVISUAL ELEMENT.\" \"DO NOT substitute similar-looking assets for the original approved designs. If existing geometry is  …[+2728 chars]`
+
+### 🧑 User — 2026-11-18T11:59:53.006Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T11:59:57.199Z
+
+> 🔧 **SendMessage** `{"to": "a5a640cc9323be21a", "summary": "Strict user rule, reprioritize S05", "message": "NEW BINDING USER ORDER for all specialists, read now: /home/user/rainbow-/docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md. In short: recreate the EXACT approved design, with no additions, substitutes or redesigns. Correct wrong geometry, fix wrong mapping, preserve what matches. Biggest difference first: architecture → water formation/shape → proportions/materials → continuity while swimming → small details. For S05 that means: (1) the torn left water edge and the angular slab where the far river start …[+668 chars]`
+
+### 🧑 User — 2026-11-18T11:59:57.207Z
+
+> ↩︎ result: {"success":false,"message":"Agent \"a5a640cc9323be21a\" was stopped and was not resumed. Treat its work as cancelled; only start a new agent for it if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-18T12:00:00.705Z
+
+> 🔧 **SendMessage** `{"to": "a1c0d85aa29788245", "summary": "Strict user rule, reprioritize S08", "message": "NEW BINDING USER ORDER for all specialists, read now: /home/user/rainbow-/docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md. In short: recreate the EXACT approved design, with no additions, substitutes or redesigns. Correct wrong geometry, fix wrong mapping, preserve what matches. Biggest difference first: architecture → water formation/shape → proportions/materials → continuity while swimming → small details. For S08 that means: (1) the gold arch framing the chamber while swimming (architecture: lower l …[+605 chars]`
+
+### 🧑 User — 2026-11-18T12:00:00.719Z
+
+> ↩︎ result: {"success":false,"message":"Agent \"a1c0d85aa29788245\" was stopped and was not resumed. Treat its work as cancelled; only start a new agent for it if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-18T12:00:14.504Z
+
+> 🔧 **Bash** `{"command": "for s in s05 s08; do cd /home/user/wt/$s; b=$(git branch --show-current); echo \"== $s $b HEAD $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/$b | cut -c1-8)\"; git status --short | head -12; git log -3 --format='   %h %s' | cut -c1-120; done; pgrep -af \"chromium|capture.mjs|motion_audit|r8_shots\" | grep -v pgrep | cut -c1-100 | head", "description": "Check the stopped specialists' worktrees and processes"}`
+
+### 🧑 User — 2026-11-18T12:00:15.707Z
+
+> ↩︎ result: == s05 claude/rainbow-s05-match-c11 HEAD d5e37379 remote d5e37379
+>  M src/vfx/foam.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/materials.ts
+>    d5e37379 Screen 05 r11 step 1: &m05wtile=1 — far tunnel walls crisp while swimming (slot rows from the approved nea
+>    824fb494 Screen 05 r11: fresh BEFORE set (12 audit shots + kink probes) at the round-10 kept set; &m05unf=1 tested, n
+>    bed8253d Screen 05 r10 step 4: &m05cloud=1 — big puffy foam clouds (mixed-size lump clusters) on both banks while s
+> == s08 claude/rainbow-s08-scenery-c11 HEAD 36d0978a remote 36d0978a
+>  M qa/match/08/r11/PROGRESS.md
+> ?? tools/match08/near08.py
+>    36d0978a Screen 08 r11 step 1: &m08ceil=1 door rings continue over the top while swimming (no curved ceiling seam abo
+>    eed55540 Screen 08 r11: keep account-10 unfinished edit (m08dbg QA view hides the clipped m08_collar) + unfinished r1
+>    e1c7d0b7 Screen 08 r10 step 2: &m08coinv=1 picture coins at painted size, no pop or passed coin over Benny / camera
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:00:22.679Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git diff --stat | tail -1; git diff | grep -E \"^\\+.*(M05[A-Z]+|m05[a-z]+)\" | grep -oE \"m05[a-z0-9]+|M05[A-Z0-9]+\" | sort | uniq -c | head; cd /home/user/wt/s08 && git diff qa/match/08/r11/PROGRESS.md | grep '^+' | head -12; head -12 tools/match08/near08.py", "description": "Inspect the specialists' unfinished edits"}`
+
+### 🧑 User — 2026-11-18T12:00:22.750Z
+
+> ↩︎ result: 3 files changed, 86 insertions(+), 3 deletions(-)
+>       1 M05BERM
+>       1 M05BLEND
+>       7 M05CAUL
+>       2 M05CLOUD
+>       5 M05FBANK
+>       1 M05FLAT
+>       1 M05FOAM
+>       3 m05blend
+>       4 m05caul
+>       1 m05cloud
+> +++ b/qa/match/08/r11/PROGRESS.md
+> +
+> +## Task 2 — lower arch legs while swimming (defect A/E) — TRIED (geometry check), NOT KEPT, no code
+> +* Where the painted lower legs are: rows 800–1180 of the approved picture reach the water only ≈ 6–8 u ahead of the
+> +  approved camera, ≈ 1.2–2 u from the river centre — i.e. at Benny's own depth and INSIDE his steering lane (±2.22 u +
+> +  body ≈ ±2.95 u). The painting shows the moment Benny passes between the legs. Today those pixels lie on the floor
+> +  plane (the fitted ring is a circle whose lower part is under the water), so they pass under the camera by forward 3 u.
+> +* Static options checked with the fitted camera: at the m08far ring depth (≈ 27 u) the water line is at picture row
+> +  ≈ 737, so a leg there is either hidden behind the big near cups (visible only ≈ 0.7 u between the cup underside and
+> +  the water while swimming) or stands in front of painted river / cup pixels (an upright slab carrying river pixels —
+> +  the ghost-slab …[+1273 chars]
+
+### 🤖 Claude — 2026-11-18T12:00:30.126Z
+
+> 🔧 **Bash** `{"command": "T=$'\\n\\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\\nClaude-Session: https://claude.ai/code/session_018Sg3ASTRokNr5EKngTj33B'; cd /home/user/wt/s05 && git add -A src && git commit -qm \"Screen 05 r11 WIP (unfinished, untested, not kept): &m05caul / &m05fbank foam-bank edits in progress when the specialist was stopped${T}\" && git push -q origin HEAD 2>&1 | tail -1; echo \"s05 $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/claude/rainbow-s05-match-c11 | cut -c1-8)\"; cd /home/user/wt/s08 && git add -A qa/match/08/r11/PROGRESS.md tools/match08/ …[+452 chars]`
+
+### 🧑 User — 2026-11-18T12:00:36.052Z
+
+> ↩︎ result: s05 c25327a2 remote c25327a2
+> s08 46d4b6ee remote 46d4b6ee
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:01:02.146Z
+
+> 🔧 **Agent** `{"description": "Screen 05 specialist r11 resume", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Screen 05 \"Flow Into the Current\" visual specialist for the Rainbow game, round 11 (account 11), RESUMING after an interruption. Never restart, redesign or delete work.\n\nWHERE: git worktree /home/user/wt/s05 (cd there before EVERY command), branch `claude/rainbow-s05-match-c11` (upstream set). HEAD `c25327a2` = your pushed step 1 (`d5e37379`, &m05wtile=1, KEPT, shown to the user) + a WIP commit of your unfinished `&m05caul` / `&m05fbank` foam-bank edi …[+4010 chars]`
+
+### 🧑 User — 2026-11-18T12:01:02.170Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a1767ad278d97e4ea (internal ID - do not mention to user. Use SendMessage with to: 'a1767ad278d97e4ea', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/a1767ad278d97e4ea.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T12:01:18.105Z
+
+> 🔧 **Agent** `{"description": "Screen 08 specialist r11 resume", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Screen 08 \"Final Spin Chamber\" scenery specialist for the Rainbow game, round 11 (account 11), RESUMING after an interruption. Never restart, redesign or delete work.\n\nWHERE: git worktree /home/user/wt/s08 (cd there before EVERY command), branch `claude/rainbow-s08-scenery-c11` (upstream set). HEAD `46d4b6ee` = your pushed step 1 (`36d0978a`, &m08ceil=1, KEPT, shown to the user) + a WIP commit: the lower-arch-legs check logged in PROGRESS.md (t …[+4367 chars]`
+
+### 🧑 User — 2026-11-18T12:01:18.136Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ac571757381e1b231 (internal ID - do not mention to user. Use SendMessage with to: 'ac571757381e1b231', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/ac571757381e1b231.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T12:01:26.658Z
+
+> 🔧 **Bash** `{"command": "grep -rniE \"swim|stroke|paddle|bob|wobble|kick\" src/characters/benny/*.ts src/game/*.ts 2>/dev/null | grep -viE \"^\\S+:\\s*//|import\" | cut -c1-150 | head -15; ls src/characters/benny/", "description": "Check what swim motion Benny has in code"}`
+
+### 🧑 User — 2026-11-18T12:01:26.692Z
+
+> ↩︎ result: src/characters/benny/benny-lab.ts:35:  swim: number;
+> src/characters/benny/benny-lab.ts:49:            { name: '05-rear', yaw: Math.PI, pitch: 0.24, dist: 4.4, expr: 'happy', swim: 0.8, fov: 40, tumble: f
+> src/characters/benny/benny-lab.ts:50:            { name: '03-front', yaw: 0.55, pitch: 0.12, dist: 4.2, expr: 'happy', swim: 0.3, fov: 40, tumble: fal
+> src/characters/benny/benny-lab.ts:51:            { name: '02-dizzy', yaw: 0.0, pitch: 0.05, dist: 4.2, expr: 'dizzy', swim: 0, fov: 40, tumble: true }
+> src/characters/benny/benny-lab.ts:57:            (q.get('elev') ?? '12,18,24,28').split(',').map(Number).map((deg) => ({ name: `rear-${deg}`, yaw: Mat
+> src/characters/benny/benny-lab.ts:69:                return { name: 'g05', yaw: 0, pitch: 0, dist: 0, expr: 'happy', swim: 1, fov: 62, tumble: false, 
+> src/characters/benny/benny-lab.ts:75:              { name: 'game05', yaw: 0, pitch: 0, dist: 0, expr: 'happy', swim: 1, fov: 62, tumble: false, cam: {
+> src/characters/benny/benny-lab.ts:77:              { name: 'ref-rear', yaw: Math.PI, pitch: 0.3, dist: 6.0, expr: 'happy', swim: 1, fov: 45, tumble: f
+> src/characters/benny/benny-lab.ts:78:              { name: 'rear-3q', yaw: Math.PI * 0.78, …[+1043 chars]
+
+### 🤖 Claude — 2026-11-18T12:01:31.073Z
+
+> 🔧 **Bash** `{"command": "grep -nE \"swim\" src/characters/benny/runtime.ts | head -12", "description": "Check Benny runtime swim animation"}`
+
+### 🧑 User — 2026-11-18T12:01:31.103Z
+
+> ↩︎ result: 42: * third of the plush ball in the opaque stream. While riding (swim ≥ 0.5, not tumbling) the model is
+> 60: * Ride lean (rad, about his X axis, + = top forward). While riding he leans into the current like a swimmer, so the
+> 125:  // ---- animation mixer: idle ↔ swim blend, tumble / peek on demand ----
+> 131:  const aIdle = act('idle'), aSwim = act('swim'), aTumble = act('tumble'), aPeek = act('peek');
+> 170:    const swim = tumble ? 0 : THREE.MathUtils.clamp(st.swim, 0, 1);
+> 174:    setW(aSwim, peek ? 0 : swim);
+> 175:    setW(aIdle, tumble || peek ? 0 : 1 - swim);
+> 180:    const liftTarget = tumble || peek ? 0 : liftMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+> 185:    const pitchTarget = tumble || peek ? 0 : pitchMax * pitchScale * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+
+### 🤖 Claude — 2026-11-18T12:01:58.236Z
+
+## Direct answer: partly
+
+Based on the real game renders, **at each screen's approved starting view the game shows your actual design.** That's your own painted pixels laid onto 3D shapes fitted to your picture. **Once Benny swims, three of the five screens still turn into scenery that is not your design, and a fourth (05) does for its last third.** No screen is at 8.5/10 throughout gameplay yet.
+
+My sources:
+- **Renders I checked myself today:** the Screen 05 and 08 steps, and the Screen 06 debug view.
+- **Account 10's real-game audit from this morning:** all five screens at 33/66/95 % through each stage (`qa/review_c10/2026-11-18/`). All five ratings below are taken from that audit, before today's two small steps.
+
+What is wrong, screen by screen:
+
+| Screen | Matches your design | Wrong (not your scenery) | Honest while swimming |
+|---|---|---|---|
+| **08** | Chamber, window door, towel platform, spout cups, S-river, coins | Near water smears and stretches; seams at the drum's top corners. The foreground arch leaves the frame as Benny passes through it, which is physically correct: your picture shows the moment he passes between its legs. | ≈ 7–7.5 |
+| **05** | Tunnel, gold rings, paddles, walls (now crisp) | River torn on the left, with an angular slab where the far river starts (not your one continuous S). Near water is a flat cyan sheet. **The last third shows old generic scenery** (white foam walls, flat pink). | ≈ 6.5 for two-thirds, ≈ 2.5 at the end |
+| **06** | Only the first ≈ 10 % of the stage | A centred bullseye of 15+ packed rings and a straight ribbon river replace your off-centre sweeping mouth, the crest S-loop and the purple wall with paddles. Today I found the cause of part of it: your deep tunnel mouth is painted onto the flat river floor. | ≈ 4.5 |
+| **04** | Washer opening at the very start | Then a long orange ring corridor with rows of white foam balls, which is not your design | ≈ 3.5 |
+| **07** | The level stretch at the start | 68 % of the stage is the plunge your picture never shows; the tube wall fills the frame and the river is cut off | ≈ 3.5 |
+
+**Benny:** he has a real rigged swim animation that blends from idle into swimming, leans into the current like a swimmer, and sits about a third deep in the water. I have **not yet judged in motion** whether it looks natural on each screen, which your rule now requires. Both specialists now log any spot where he is sunk, hidden or floating wrongly. Once the scenery fixes land, I'll make a short real-game swimming preview so you can judge his motion yourself.
+
+## What I've done with your rule
+- **Saved it as a binding order** for every specialist: `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`.
+- **Restarted both specialists.** Your interruption had stopped them, but nothing was lost: their unfinished edits are saved on GitHub. Both now work in your priority order, architecture and water shape first, small details last.
+  - **Screen 05:** the torn river and the far-river slab, then a faithful continuation of your painted tunnel in the last third, then the near water.
+  - **Screen 08:** the smeared near water, using your own painted near river, then the seams.
+- **Screen 06**, which I'm running myself, starts now: a single geometry fix so the river floor stops covering your painted tunnel mouth. I'll keep it only if the real game looks closer at several points along the stage, including turns.
+
+I'm continuing with Screen 06 now.
+
+### 🤖 Claude — 2026-11-18T12:01:58.688Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T12:01:58.697Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-18T12:01:59.691Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"const grid\\|function grid\\|sList\" src/world/match06.ts | head -12; grep -n \"R6\\b\\|R6 =\" src/world/match06.ts | head -5", "description": "Find the grid builder and stage lists for the floor"}`
+
+### 🧑 User — 2026-11-18T12:01:59.729Z
+
+> ↩︎ result: 286:  const sList: number[] = [];
+> 287:  for (let s = L.s0; s < L.s1; s += 0.5) sList.push(s);
+> 288:  for (let s = L.s1; s <= L.s1 + L.ext + 1e-6; s += 2) sList.push(s);
+> 291:  const grid = (cols: number, vert: (s: number, j: number, fr: ReturnType<typeof frame>) => [THREE.Vector3, number, number?], sK: number) => {
+> 293:    for (const s of sList) {
+> 298:    for (let i = 0; i < sList.length - 1; i++) for (let j = 0; j < cols; j++) {
+> 459:    while (sList.length && sList[sList.length - 1] > sE + 20) sList.pop();
+> 81:// r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+> 84:uniform float uR6;
+> 109:  if (uR6 > 0.5 && uFloor > 0.5) {
+> 174:  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);
+> 255:  const R6 = !v2 ? L.tiles.r6 : undefined;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:02:10.547Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn \"__rainbow\\s*=\\|__rainbow =\\|window.__rainbow\" src/*.ts src/game/*.ts 2>/dev/null | head -3; grep -n \"course\\b\\|course:\" src/main.ts 2>/dev/null | grep -i rainbow | head -5", "description": "Find the QA handle exposed by the game"}`
+
+### 🧑 User — 2026-11-18T12:02:10.583Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:764:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:02:13.956Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 700,764p src/game/Game.ts | grep -oE \"^\\s+[a-zA-Z0-9_]+[:(]\" | tr -d ' :(' | tr '\\n' ' '; echo; grep -n \"course\" src/game/Game.ts | sed -n 1,6p", "description": "List the QA API members"}`
+
+### 🧑 User — 2026-11-18T12:02:14.001Z
+
+> ↩︎ result: coinScreen respawns camera bennyScreen probe drawList render qa3d stats 
+> 5: *   ride   (03–10)  interactive: auto-propelled along the course, steer left/right, real coin pickups,
+> 16:import { Course, StageId, WORLD } from '../world/course';
+> 98:  const course = new Course();
+> 99:  const env = buildEnvironment(course);
+> 101:  const water = await loadWater(course);
+> 106:  const coins = createCoins(course);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:02:20.629Z
+
+The course is deterministic, so I can load it straight into the browser page and project the river onto the approved camera. Writing that probe (scratch folder only):
+
+### 🤖 Claude — 2026-11-18T12:02:30.841Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r11_mouth_probe.mjs", "content": "#!/usr/bin/env node\n// Screen 06 r11 (lead): which stretch of the 06 river floor lands inside the PAINTED tunnel mouth at the approved view.\n// The painted mouth (BLUEPRINT_06: outer ring centre (650,570) r 330, glow (700,690)) is deep tunnel in the approved\n// picture (Depth Anything 3: ~10x the depth of the water under Benny), but the m06_floor proxy covers it (m06dbg).\n// Prints, per course position s, the projected river centre + both floor edges (x, y px) at the approved camera.\n//   node tools/match06/r …[+2337 chars]`
+
+### 🧑 User — 2026-11-18T12:02:30.969Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r11_mouth_probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T12:02:31.893Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"export function startVite\\|return {\" scripts/lib/pw.mjs | head -4; grep -n \"stage(\\|widthAt\\|sample(\" src/world/course.ts | head -5", "description": "Check startVite return shape and Course API"}`
+
+### 🧑 User — 2026-11-18T12:02:31.940Z
+
+> ↩︎ result: 18:/** start a Vite dev server for the project and return { url, close } */
+> 24:  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 449:      // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
+> 504:    this.st05 = this.stage('05');
+> 505:    this.st10 = this.stage('10');
+> 520:    return this.sample(s).pos.x - this.line05x;
+> 528:  stage(id: StageId): StageDef {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:02:38.945Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1'; S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s06; nice -n 15 timeout 400 node tools/match06/r11_mouth_probe.mjs --q=\"$K\" --out=$S/mouth.json 2>&1 | awk 'NR%2==1' | head -40", "description": "Project the 06 river course onto the approved camera", "timeout": 500000}`
+
+### 🧑 User — 2026-11-18T12:02:52.022Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> s 188.9	dist 8.4	y -43.34	centre 981,-9304	left 13358,-18817	right -3233,-6064
+> s 190.9	dist 7.3	y -42.59	centre -194,15842	left -6774,11012	right 17611,28909
+> s 192.9	dist 6.3	y -41.59	centre 301,4342	left -2263,4083	right 3265,4640
+> s 194.9	dist 5.7	y -40.43	centre 370,2403	left -1213,2338	right 2070,2473
+> s 196.9	dist 5.7	y -39.22	centre 399,1558	left -750,1524	right 1629,1594
+> s 198.9	dist 6.4	y -38.05	centre 422,1083	left -468,1062	right 1386,1107
+> s 200.9	dist 7.7	y -37.01	centre 443,799	left -272,787	right 1226,812
+> s 202.9	dist 9.3	y -36.17	centre 464,633	left -125,628	right 1113,639
+> s 204.9	dist 11.2	y -35.63	centre 484,552	left -9,551	right 1030,554
+> s 206.9	dist 13.2	y -35.46	centre 505,530	left 86,529	right 972,530
+> s 208.9	dist 15.2	y -35.6	centre 526,541	left 165,540	right 934,543
+> s 210.9	dist 17.1	y -35.99	centre 550,569	left 234,566	right 912,572
+> s 212.9	dist 19	y -36.54	centre 576,602	l …[+1732 chars]
+
+### 🤖 Claude — 2026-11-18T12:03:15.258Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 160, "limit": 60}`
+
+### 🧑 User — 2026-11-18T12:03:15.281Z
+
+> ↩︎ result: 160	    vec2 p = vec2((fract(arc / 0.62 + 0.5 * mod(row, 2.0)) - 0.5) * 0.62, (fract(al / 0.55) - 0.5) * 0.55);
+> 161	    float d = length(max(abs(p) - vec2(0.13, 0.03), 0.0)) - 0.03;
+> 162	    float aa = max(fwidth(d), 1e-4);
+> 163	    float slot = (1.0 - smoothstep(-aa, aa, d)) * (1.0 - smoothstep(20.0, 60.0, distance(cameraPosition, vW)));
+> 164	    float lip = (1.0 - smoothstep(-aa, aa, abs(d - 0.03) - 0.012)) * step(0.0, -p.y);
+> 165	    vec3 pan = mix(base, vec3(0.24, 0.02, 0.22), slot) + vec3(0.85, 0.55, 0.95) * 0.18 * lip * (1.0 - slot);
+> 166	    pc = mix(pc, pan, 0.85);
+> 167	  }
+> 168	  vec3 t = pc;
+> 169	  float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
+> 170	  // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
+> 171	  // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
+> 172	  float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
+> 173	  // r6 m06flow: on the river the flowing painted-water material takes over sooner from the stretched projection
+> 174	  float keep = u …[+2766 chars]
+
