@@ -36,13 +36,14 @@ index 9200b1b2..d2e8c01d 100644
        course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
      }) : null;
 diff --git a/tools/match05/r10_probe.mjs b/tools/match05/r10_probe.mjs
-index 1aa1085e..a7974972 100644
+index 1aa1085e..0d926a84 100644
 --- a/tools/match05/r10_probe.mjs
 +++ b/tools/match05/r10_probe.mjs
-@@ -18,6 +18,7 @@ const ALL = {
+@@ -18,6 +18,8 @@ const ALL = {
    s_left_steer: [6, -1], s_right_steer: [6, 1], s_left_hard: [12, -1], s_right_hard: [12, 1],
    t33_through_screen: ['t0.33', null], t66_through_screen: ['t0.66', null], t95_through_screen: ['t0.95', null],
    // round 10: inside the 05 -> 06 kink (s ≈ 178), straight and steered to both banks
++  t97_end: ['t0.97', null], t99_end: ['t0.99', null], t102_06: ['t1.02', null], t105_06: ['t1.05', null],
 +  t88_end: ['t0.88', null], t90_end: ['t0.90', null], t92_end: ['t0.92', null], t94_end: ['t0.94', null],
    k81_kink: ['t0.81', null], k81_kink_left: ['t0.81', -1], k81_kink_right: ['t0.81', 1],
  };

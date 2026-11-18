@@ -2182,3 +2182,23 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/src/world/environment.ts'\ns=open(p).read()\nold=\"\"\"      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,\"\"\"\nnew=\"\"\"      // `&m05late=1` (Screen 05 round 10): fold later and quicker (eye → seam 7.5 → 5 u instead of 10 → 6.5 u), so the\n      // painted 05 tunnel stays until Benny ≈ 185 (still before he reaches the capped seam)\n      zCap: sGlow05 + 3.5 - sF05, foldNear: M05LATE ? 5 : 6.5, foldFar: M05LATE ? 7.5 : 10,\"\"\"\nassert old in s\ns=s.replace(old,new,1)\ns=s.replace(\"import { FLOW05, FLO …[+1749 chars]`
 
+### 🧑 User — 2026-11-18T11:13:22.652Z
+
+> ↩︎ result: tsc=0
+> shot t90_end s 184.033 lat 0 cam 3.04,-40.00,-117.63
+> shot t92_end s 185.17 lat 0 cam 2.96,-40.13,-118.72
+> shot t94_end s 186.284 lat 0 cam 3.06,-40.30,-119.85
+> t95_through_screen s 186.791 lat 0 coins 1580 benny -0.12 -0.35 big coins: #38@316,232 d68 #39@319,170 d61
+
+### 🤖 Claude — 2026-11-18T11:13:25.422Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/late/cmp_late.png"}`
+
+### 🧑 User — 2026-11-18T11:13:25.475Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:13:41.236Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/tools/match05/r10_probe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"  t88_end: ['t0.88', null],\"\"\",\"\"\"  t97_end: ['t0.97', null], t99_end: ['t0.99', null], t102_06: ['t1.02', null], t105_06: ['t1.05', null],\n  t88_end: ['t0.88', null],\"\"\",1)\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10; B=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1\"\nfor …[+637 chars]`
+
