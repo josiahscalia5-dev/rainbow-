@@ -108,3 +108,37 @@ Kept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1`
   and bubbles (the painted floor / wall boundary does not follow the fitted drum exactly), so foam clusters and bubble
   pieces appeared on the wall; the hard edges stayed. Saved as
   `/home/user/wt/s08/qa/match/08/r12/wip_m08drot_not_kept.patch`, reverted (one honest try; method stopped).
+
+## Tried — `&m08floor=1` (floor parts the approved view missed → the painted floor's own hole grid) — NOT KEPT (NOT AN IMPROVEMENT)
+* Tried: `tools/match08/floor08.py` (a hole-grid cell averaged from the cleanest piece of the painted floor, world-anchored
+  repeat) as the floor's fallback, with the walls' soft 5 × 5-tap hand-over. Result: the multi-tap visibility test fails on
+  the grazing floor (neighbouring taps see nearer floor), so the tile washed over the painted RIVER near Benny (faded grid
+  over the water when steering hard right / at the stage end) — clearly worse. The hard-edged wedge behind the lower-left cup
+  that this was aimed at turned out to be the DRUM's fill tile (still there). Patch:
+  `/home/user/wt/s08/qa/match/08/r12/wip_m08floor_not_kept.patch` (+ tile in `qa/match/08/r12/wip_m08floor/`), reverted.
+
+## Tried — `&m08twin=1` (upper-right cup's doubly hidden top from the upper-left cup) — NOT KEPT
+* Filled part of the gold wedge on the upper-right cup's top with the twin cup's pink cap, but a gold wedge and the X-shaped
+  seams stayed (the real cause is the proxy shape, step 5) — no clear visible gain. Patch:
+  `/home/user/wt/s08/qa/match/08/r12/wip_m08twin_not_kept.patch`, reverted.
+
+## Step 5 — `&m08cupg=1` (defect A: the upper spout cups fell apart into two pieces while swimming) — KEPT
+Kept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1`
+* Cause (geometry): the approved view sees the two upper cups from BELOW; the painted cups hang well below the fitted rim
+  (gold band, then the perforated underside dish, whose far edge is the lowest painted point). The fitted half-domes ended
+  at the rim, so the lower half of each painted cup was projected onto the door wall 10 u behind: while swimming it slid
+  away from the dome — the cup showed as a dome with a separate floating underside and wall slots in between.
+* What changed (`src/world/match08.ts`, upper cups only): each upper cup gets a band (open cylinder, same radius) down to
+  the painted underside, and the underside disc moves to the band's bottom. Band height read on the picture: the projected
+  far bottom edge = the painted lowest point (UL row 427 → 1.5 u, UR row 464 → 1.55 u). Lower cups (seen from above) are
+  unchanged. Approved view: 63 isolated single pixels along the cups' lower outline differ (depth-edge sparkle pixels move;
+  the kept set has the same kind elsewhere along the cup outlines), 4,880 px differ by 1–2 levels; no visible change at 1×
+  (4× zoom checked).
+* What looks closer: forward 10 u, two-thirds through and at the stage end both upper cups are one solid cup — perforated
+  cap, gold band and perforated underside dish joined, the stream coming out of the underside — like the painted cups;
+  BEFORE the underside floated below the dome with a strip of wall between them.
+* Still wrong: the upper-right cup's top still shows the X-shaped gold seams / wedge (hidden behind the arch in the picture);
+  the dome is a little taller than the painted shallow cap.
+* Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step5_m08cupg/1_APPROVED.png`,
+  `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f10_forward10u`, `t95_through_screen`, `t66_through_screen`
+  (BEFORE = kept set before this step (`qa/match/08/r12/NEW` audit frames), NEW = `+&m08cupg=1`, same positions).

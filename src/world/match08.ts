@@ -603,7 +603,16 @@ export async function buildMatch08(): Promise<Match08> {
       cm.uniforms.uCup.value.set(s.c[0], s.c[1], s.c[2], 1);
       cm.uniforms.uCupM.value.set(-dz / dl, 0, dx / dl);
     }
-    for (const [g, nm] of [[dome, 'dome'], [cap, 'under']] as const) {
+    // `&m08cupg=1` (r12, defect A): the approved view sees the two UPPER cups from below, and the painted cups hang well
+    // below the fitted rim: a gold band, then the perforated underside dish (lowest painted point = the underside's far
+    // edge). Those pixels used to land on the door wall 10 u behind (they slid off the cups while swimming and the top
+    // half's band was smeared over the dome as an X). The upper cups get a band (open cylinder, same radius) down to the
+    // painted underside and the underside disc at its bottom: band height read on the picture (projected far bottom edge
+    // = painted lowest point: UL row 427 -> 1.5 u, UR row 464 -> 1.55 u). Lower cups (seen from above) unchanged.
+    const band = flag05('m08cupg') ? ({ UL: 1.5, UR: 1.55 } as Record<string, number>)[k] ?? 0 : 0;
+    const parts: [THREE.BufferGeometry, string][] = [[dome, 'dome'], [band > 0 ? cap.translate(0, -band / s.ry, 0) : cap, 'under']];
+    if (band > 0) parts.push([new THREE.CylinderGeometry(1, 1, band / s.ry, 48, 4, true).translate(0, -band / s.ry / 2, 0), 'band']);
+    for (const [g, nm] of parts) {
       const o = add(g, cm, `spout_${k}_${nm}`);
       o.scale.set(s.rx, s.ry, s.rx);
       o.position.set(...s.c);
