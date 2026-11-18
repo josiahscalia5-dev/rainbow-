@@ -1232,3 +1232,177 @@ Now the PROGRESS.md for r12 with step 1.
 
 > ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-18T12:58:11.843Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && npx tsc --noEmit -p . && export K12='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/rwN && M08_ONLY=f03,t33,f06,f10 node tools/match08/shots08.mjs 08 $S/rwN \"$K12&m08rw=1\" 2>&1 | grep -v 'allow list' | tail -4 && python3 -I $S/bin/sbs.py $S/v_rw_f03.png 0,700,864,1536 0.75 $S/cupN/f03_forward3u.png $S/rwN/f03_forward3u.png", "description": "Render m08rw test and  …[+32 chars]`
+
+### 🤖 Claude — 2026-11-18T12:58:12.967Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw_f03.png"}`
+
+### 🧑 User — 2026-11-18T12:59:04.469Z
+
+> ↩︎ result: 08 f03_forward3u s 395.114 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.018 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.978 lat 0 stage 08 frames 63
+> 08 t33_through_screen s 396.277 lat 0 stage 08 frames 27
+
+### 🧑 User — 2026-11-18T12:59:04.499Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:59:17.453Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/v_rw_full.png full 0.5 references/08_final_spin_chamber.png $S/cupN/t33_through_screen.png $S/rwN/t33_through_screen.png", "description": "Full-frame t33 comparison"}`
+
+### 🧑 User — 2026-11-18T12:59:17.766Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:59:18.709Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw_full.png"}`
+
+### 🧑 User — 2026-11-18T12:59:18.762Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:59:24.745Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/v_rw_f06.png 0,600,864,1536 0.6 $S/cupN/f06_forward6u.png $S/rwN/f06_forward6u.png $S/cupN/f10_forward10u.png $S/rwN/f10_forward10u.png", "description": "Compare f06/f10 lower halves"}`
+
+### 🧑 User — 2026-11-18T12:59:25.337Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:59:25.988Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw_f06.png"}`
+
+### 🧑 User — 2026-11-18T12:59:26.189Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T12:59:26.185Z
+
+[Image: original 2090x561, displayed at 2000x537. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T12:59:30.779Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/v_rw_f03full.png full 0.5 references/08_final_spin_chamber.png $S/cupN/f03_forward3u.png $S/rwN/f03_forward3u.png", "description": "Full f03 comparison"}`
+
+### 🧑 User — 2026-11-18T12:59:31.097Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T12:59:31.922Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw_f03full.png"}`
+
+### 🧑 User — 2026-11-18T12:59:31.964Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:00:15.503Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"riv(\" src/world/match08.ts", "description": "Find riv() uses"}`
+
+### 🧑 User — 2026-11-18T13:00:15.564Z
+
+> ↩︎ result: 120:vec2 riv(float z) {
+> 130:  vec2 r = riv(w.z);
+> 221:    vec2 r = riv(vW.z);
+
+### 🤖 Claude — 2026-11-18T13:00:25.523Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\nold1='''vec2 riv(float z) {\n  float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;\n  float i0 = floor(f);\n  vec2 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rg, b = texture2D(uRiv, vec2((min(i0 + 1.0, 63.0) + 0.5) / 64.0, 0.5)).rg;\n  return mix(a, b, f - i0);\n}'''\nnew1='''vec3 riv(float z) {\n  float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;\n  float i0 = floor(f);\n  vec3 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rgb, b = texture2D(uR …[+1690 chars]`
+
+### 🧑 User — 2026-11-18T13:00:25.613Z
+
+> ↩︎ result: 322:    if (RN) rivData[i * 4 + 2] = SWIM_HALF + (RN.nearHalf - SWIM_HALF) * THREE.MathUtils.smoothstep(z, RN.nearZ[1], RN.nearZ[0]);
+> 326:  const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73
+> 327:  const rivZ = new THREE.Vector4(rz0, rz1, SWIM_HALF, L.floorY);
+> 367:    // lane banks (+-SWIM_HALF) onto the painted foam fringe; along the river the tile keeps the painted proportions
+> 371:    const kIso = SWIM_HALF / hw / NJ.halfWidth;
+
+### 🤖 Claude — 2026-11-18T13:00:29.773Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\nline=\"  const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73\\n\"\nassert s.count(line)==1\ns=s.replace(line,'')\nanchor=\"  const rivData = new Float32Array(64 * 4);\\n\"\ns=s.replace(anchor, line+anchor)\nopen(p,'w').write(s)\nEOF\nsed -n 290,330p src/world/match08.ts", "description": "Move SWIM_HALF before its first use"}`
+
+### 🧑 User — 2026-11-18T13:00:29.821Z
+
+> ↩︎ result: fillSize = new THREE.Vector2(FJ.w * seamK, FJ.h * seamK);
+>   }
+>   // `&m08swim=1` (scenery round r6): Benny can steer ±2.22 u (+ his body) off the course centre, but the painted river is
+>   // only 2–4 u wide over the first 8 u of the chamber, so hard steering put him on the purple floor. The floor material
+>   // spreads the painted river's banks to the whole reachable lane (river08.json centre / width), approved view unchanged.
+>   const swimOn = flag05('m08swim');
+>   const RV: { z: number[]; x: number[]; width: number[] } = await fetch(new URL('../../assets/textures/match08/river08.json', import.meta.url).href).then((r) => r.json());
+>   const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73
+>   const rivData = new Float32Array(64 * 4);
+>   // z descending arrays -> centre x, width at z (clamped at both ends)
+>   const rivAt = (R: { z: number[]; x: number[]; width: number[] }, z: number): [number, number] => {
+>     let k = 0; while (k < R.z.length - 2 && R.z[k + 1] > z) k++;
+>     const f = THREE.MathUtils.clamp((z - R.z[k]) / (R.z[k + 1] - R.z[k]), 0, 1);
+>     return [R.x[k] + (R.x[k + 1] - R.x[k]) * f, R.width[k] + (R.width[k + 1] - …[+1927 chars]
+
+### 🤖 Claude — 2026-11-18T13:00:40.303Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/rivnear08.py'\ns=open(p).read()\ns=s.replace(\"\"\"'tools/match08/rivnear08.py (r12)', 'blend': [-284.5, -285.5],\"\"\",\"\"\"'tools/match08/rivnear08.py (r12)', 'blend': [-284.5, -285.5],\n           # near the camera the gold legs lie just beyond the banks: spread the banks to nearHalf (from z nearZ[1] to nearZ[0])\n           'nearHalf': 3.7, 'nearZ': [-282.0, -283.5],\"\"\")\ns=s.replace(\"locked camera. The shader merges it with river08.json (this near the camera, river08 beyond z -285.5).\",\"locked camera. The shad …[+1110 chars]`
+
+### 🧑 User — 2026-11-18T13:01:09.141Z
+
+> ↩︎ result: 7: "nearHalf": 3.7,
+> 08 f03_forward3u s 395.112 lat 0 stage 08 frames 19
+> 08 t33_through_screen s 396.276 lat 0 stage 08 frames 27
+
+### 🤖 Claude — 2026-11-18T13:01:11.794Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw2.png"}`
+
+### 🧑 User — 2026-11-18T13:01:11.832Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:01:27.956Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i \"s/'nearHalf': 3.7, 'nearZ': \\[-282.0, -283.5\\],/'nearHalf': 4.0, 'nearZ': [-283.5, -285.0],/; s/(z > -283.5) the painted gold arch legs hug the banks, so there the banks are spread to +-3.7 u instead of the lane's/(z > -285) the painted gold arch legs hug the banks, so there the banks are spread to +-4.0 u instead of the lane's/\" tools/match08/rivnear08.py && sed -i \"s/so the banks are spread to 3.7 u (the legs' pixels stay out of frame)/so the banks are spread to 4.0 u (the legs' pixels stay out of frame)/\" src/world/match08.ts && python3 -I  …[+774 chars]`
+
+### 🧑 User — 2026-11-18T13:02:10.671Z
+
+> ↩︎ result: 7: "nearHalf": 4.0,
+> 8: "nearZ": [
+> 08 f03_forward3u s 395.185 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.019 lat 0 stage 08 frames 38
+> 08 t33_through_screen s 396.279 lat 0 stage 08 frames 27
+> [This command modified 2 files you've previously read: ../wt/s08/src/world/match08.ts, ../wt/s08/tools/match08/rivnear08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T13:02:13.109Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw3.png"}`
+
+### 🧑 User — 2026-11-18T13:02:13.155Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:02:22.228Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K12='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && node scripts/capture.mjs 08 --out=$S/capRW --q=\"$K12&m08rw=1\" 2>&1 | grep \"→\" ; git checkout -- qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/capC/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capRW/08.png').convert('RGB')).astype(i …[+308 chars]`
+
+### 🧑 User — 2026-11-18T13:02:43.979Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/capRW/08.png {"stage":"08","s":391.427,"y":-113.112,"calls":81,"tris":424997,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> px differ 0 max 0
+
+### 🤖 Claude — 2026-11-18T13:02:46.194Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw3t.png"}`
+
+### 🧑 User — 2026-11-18T13:02:46.269Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:02:53.947Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K12='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && M08_ONLY=s_left_steer,s_right_steer node tools/match08/shots08.mjs 08 $S/cupN \"$K12\" 2>&1 | grep -v 'allow list' | tail -2 && M08_ONLY=s_left_steer,s_right_steer node tools/match08/shots08.mjs 08 $S/rwN3 \"$K12&m08rw=1\" 2>&1 | grep -v 'allow list' | tail -2 && python3 -I $S/bin/sbs.py $S/v_rw_steer.png 0,600,864,153 …[+183 chars]`
+

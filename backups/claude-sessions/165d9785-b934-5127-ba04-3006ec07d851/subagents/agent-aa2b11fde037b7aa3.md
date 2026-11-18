@@ -1007,3 +1007,206 @@ Next I'll look at the rest of the BEFORE set to rank the remaining defects.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint \"$K&m05fpaint=1\" t66_through_screen,t75_through,t85_through,t90_through,t95_through_screen,k81_kink 2>&1 | grep -v \"^a00\\|big coins\" | tail -8; ls /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d …[+103 chars]`
 
+### 🧑 User — 2026-11-18T12:58:28.249Z
+
+> ↩︎ result: TSC_OK
+> k81_kink.png
+> shots.json
+> t66_through_screen.png
+> t75_through.png
+> t85_through.png
+> t90_through.png
+> t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T12:58:30.919Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T12:58:31.007Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:58:31.528Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T12:58:31.594Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:58:37.451Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint/t85_through.png"}`
+
+### 🧑 User — 2026-11-18T12:58:37.525Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:58:38.059Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint/t75_through.png"}`
+
+### 🧑 User — 2026-11-18T12:58:38.113Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:58:42.876Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T12:58:42.925Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:58:43.486Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint/t90_through.png"}`
+
+### 🧑 User — 2026-11-18T12:58:43.566Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:58:48.671Z
+
+The far river now reads as the same glossy painted water as the near river (white glints, pink satin bands) at t66 / t75 / t85 / t90 / t95 / k81. Checking the locked view next.
+
+### 🤖 Claude — 2026-11-18T12:58:52.576Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1'; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; node scripts/capture.mjs 05 --q=\"$K&m05fpaint=1\" --out=$S/lockC 2>&1 | grep -c 403; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nS='$S'\na=np.asarray(Image.open(S+'/lockB/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open(S+'/lockC/05.png').convert('RGB')).astype(int) …[+163 chars]`
+
+### 🧑 User — 2026-11-18T12:59:12.216Z
+
+> ↩︎ result: 2
+> locked diff px >0 (m05fmag vs +m05fpaint): 257
+
+### 🤖 Claude — 2026-11-18T12:59:16.889Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nS='$S'\na=np.asarray(Image.open(S+'/lockB/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open(S+'/lockC/05.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(2)>0; ys,xs=np.nonzero(m); print('bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max(),'max delta',np.abs(a-b).max())\n\"", "description": "Locate the differing pixels in the locked view"}`
+
+### 🧑 User — 2026-11-18T12:59:17.271Z
+
+> ↩︎ result: bbox x 100 769 y 25 174 max delta 20
+
+### 🤖 Claude — 2026-11-18T12:59:20.842Z
+
+Scene pixels are identical; the 257 px are only in the HUD strip (y 25–174, the known font-outline jitter). Recording step 2.
+
+### 🤖 Claude — 2026-11-18T12:59:23.398Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; D=qa/match/05/r12/step2_m05fpaint; mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && for s in t75_through t85_through t90_through k81_kink t95_through_screen t66_through_screen; do cp $S/fmag/$s.png $D/2_BEFORE_$s.png; cp $S/fpaint/$s.png $D/3_NEW_$s.png; done; ls $D | wc -l", "description": "Create step 2 proof folder"}`
+
+### 🧑 User — 2026-11-18T12:59:23.464Z
+
+> ↩︎ result: 13
+
+### 🤖 Claude — 2026-11-18T12:59:38.912Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r12/PROGRESS.md <<'EOF'\n\n## Step 2 — `&m05fpaint=1` (class E/B: the far river's continuation wears the approved painted water) — KEPT\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1`\n* Cause: after step 1 the far river behind the seam showed its own continuation in flat procedural colours (smooth cyan,\n  flat pink, no glints) — the right formation, but not the painted water, and i …[+3077 chars]`
+
+### 🧑 User — 2026-11-18T12:59:47.412Z
+
+> ↩︎ result: TSC_OK
+> be2087cb564b78abbd12609256e443aef712cc80
+> be2087cb564b78abbd12609256e443aef712cc80	refs/heads/claude/rainbow-s05-match-c12
+
+### 🤖 Claude — 2026-11-18T12:59:51.180Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 r12 step 2 m05fpaint kept", "message": "S05 r12 step 2 &m05fpaint=1: GOOD IMPROVEMENT. SHA be2087cb (pushed, remote == HEAD). From t66 to t95 the far river now shows the approved painted water (glossy cyan with white glints between hot-pink satin bands, flowing), not flat procedural colour, and the near/far line is much softer. Locked scene 0 px (257 px HUD jitter only). Still wrong: the left far bank is a flat pale lilac wedge. NEW: /home/user/wt/s05/qa/match/05/r12/step2_m05fpaint/3_NEW_t95_through_screen.png, 3_NEW_k81_kink.png, 3_NEW_t85_through.png. BEFORE:  …[+173 chars]`
+
+### 🧑 User — 2026-11-18T12:59:51.197Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T12:59:57.563Z
+
+Next item: the flat pale lilac wedge on the far left bank. Round 11 left an unverified foam-bank switch (`&m05fbank=1`) aimed at exactly this; I'll give it one honest try on top of the new kept set.
+
+### 🤖 Claude — 2026-11-18T13:00:01.120Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fbank \"$K&m05fbank=1\" t66_through_screen,t75_through,t85_through,k81_kink 2>&1 | grep -i \"error\" | head -5; ls /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fbank", "description": "Render kept set plus m05fbank tes …[+28 chars]`
+
+### 🧑 User — 2026-11-18T13:00:53.454Z
+
+> ↩︎ result: k81_kink.png
+> shots.json
+> t66_through_screen.png
+> t75_through.png
+> t85_through.png
+
+### 🤖 Claude — 2026-11-18T13:00:55.825Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fbank/t85_through.png"}`
+
+### 🧑 User — 2026-11-18T13:00:55.875Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:00:56.439Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fbank/t75_through.png"}`
+
+### 🧑 User — 2026-11-18T13:00:56.493Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:01:17.731Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/k2 \"$K\" t95_left,t95_right,k81_kink_right,k81_kink_left,t98_end,s_right_hard 2>&1 | grep -i error | head -3; ls /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/k2", "description": "Render steering and end shots at the  …[+37 chars]`
+
+### 🧑 User — 2026-11-18T13:03:06.067Z
+
+> ↩︎ result: k81_kink_left.png
+> k81_kink_right.png
+> s_right_hard.png
+> shots.json
+> t95_left.png
+> t95_right.png
+> t98_end.png
+
+### 🤖 Claude — 2026-11-18T13:03:08.665Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/k2/t95_right.png"}`
+
+### 🧑 User — 2026-11-18T13:03:08.726Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:03:09.286Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/k2/t95_left.png"}`
+
+### 🧑 User — 2026-11-18T13:03:09.337Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:03:21.698Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls assets/textures/match05/ assets/textures/water05/ 2>/dev/null; find assets -iname \"*foam*\" | head -20", "description": "List Screen 05 textures and foam assets"}`
+
+### 🧑 User — 2026-11-18T13:03:21.823Z
+
+> ↩︎ result: assets/textures/match05/:
+> m05geo
+> m05near
+> tgtfill05_3
+> tgtvis05
+> tgtwall05
+> 
+> assets/textures/water05/:
+> far1
+> far2
+> proj05_A.png
+> proj05_A_pad.png
+> proj05_D.png
+> proj05_E.png
+> proj05_F.png
+> proj05_N.png
+> proj05_T.png
+> proj05_T2.png
+> proj05_WN.png
+> proj05_WT.png
+> proj05_WT2.png
+> proj05_flow.json
+> proj05_lut.json
+> proj05_near.json
+

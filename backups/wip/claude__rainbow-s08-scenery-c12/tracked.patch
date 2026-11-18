@@ -1,10 +1,45 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index 333d6073..367c889b 100644
+index 333d6073..912f4743 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
-@@ -294,13 +294,28 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -117,18 +117,19 @@ vec3 ceilColor() {
+   vec4 q = uProjVP * vec4(uCeil.xy + rs * vec2(cos(as), sin(as)), uCeil.z, 1.0);
+   return texture2D(uPlate, q.xy / q.w * 0.5 + 0.5).rgb;
+ }
+-vec2 riv(float z) {
++vec3 riv(float z) {
+   float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;
+   float i0 = floor(f);
+-  vec2 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rg, b = texture2D(uRiv, vec2((min(i0 + 1.0, 63.0) + 0.5) / 64.0, 0.5)).rg;
++  vec3 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rgb, b = texture2D(uRiv, vec2((min(i0 + 1.0, 63.0) + 0.5) / 64.0, 0.5)).rgb;
+   return mix(a, b, f - i0);
+ }
+ // m08swim: lateral remap of a floor point. The middle of the painted river stays as painted, its banks (water edge,
+ // foam) are spread out to the lane half-width, the floor beyond is pushed out and eased back over 2.5 u. World-anchored
+ // (depends on the floor point only) and faded in with the camera's distance from the approved viewpoint.
+ vec3 swimRemap(vec3 w, float mv) {
+-  vec2 r = riv(w.z);
+-  float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mv);
++  vec3 r = riv(w.z);
++  // (b > 0, m08rw only: a wider lane to cover near the camera, where the painted gold arch legs hug the banks)
++  float hp = 0.5 * r.y, h = mix(hp, max(hp, r.z > 0.0 ? r.z : uRivZ.z), mv);
+   if (h <= hp + 1e-3) return w;
+   float d = w.x - r.x, ad = abs(d), a = 0.45 * hp, e = h - hp, o;
+   if (ad <= a) o = ad;
+@@ -218,7 +219,7 @@ void main() {
+     float det = abs(dFdx(pu).x * dFdy(pu).y - dFdx(pu).y * dFdy(pu).x);
+     float mag = vProj.w > 0.0 ? inversesqrt(max(det, 1e-8)) : 99.0;
+     float mn = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
+-    vec2 r = riv(vW.z);
++    vec3 r = riv(vW.z);
+     float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mn);
+     float sl = (vW.x - r.x) / h;
+     vec2 tuv = vec2(0.5 + (uNearC.x + uNearC.y * sl) / (2.0 * uNear.z), (uNear.x - vW.z) / uNear.y);
+@@ -293,18 +294,36 @@ export async function buildMatch08(): Promise<Match08> {
+   // spreads the painted river's banks to the whole reachable lane (river08.json centre / width), approved view unchanged.
    const swimOn = flag05('m08swim');
    const RV: { z: number[]; x: number[]; width: number[] } = await fetch(new URL('../../assets/textures/match08/river08.json', import.meta.url).href).then((r) => r.json());
++  const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73
    const rivData = new Float32Array(64 * 4);
 -  const rz0 = RV.z[0], rz1 = RV.z[RV.z.length - 1];
 +  // z descending arrays -> centre x, width at z (clamped at both ends)
@@ -17,7 +52,7 @@ index 333d6073..367c889b 100644
 +  // (0.8-2.5 u instead of the painted ~3-4.5 u), so the swim remap stretched the near water sideways up to ~13x and
 +  // jumped where the trace starts. Render remap only: the bank-to-bank width read on the picture (rivnear08.py) near the
 +  // camera, river08 beyond (the gameplay path in course.ts is unchanged)
-+  let RN: { z: number[]; x: number[]; width: number[]; blend: [number, number] } | null = null;
++  let RN: { z: number[]; x: number[]; width: number[]; blend: [number, number]; nearHalf: number; nearZ: [number, number] } | null = null;
 +  if (flag05('m08rw')) RN = await fetch(new URL('../../assets/textures/match08/river08_near.json', import.meta.url).href).then((r) => r.json());
 +  const rz0 = RN ? Math.max(RV.z[0], RN.z[0]) : RV.z[0], rz1 = RV.z[RV.z.length - 1];
    for (let i = 0; i < 64; i++) {
@@ -33,6 +68,13 @@ index 333d6073..367c889b 100644
 +    }
 +    rivData[i * 4] = x;
 +    rivData[i * 4 + 1] = w;
++    // m08rw: lane half-width to cover (b): near the camera the frame bottom shows +-3.5 u of floor and the painted gold legs
++    // lie just beyond the banks there, so the banks are spread to 4.0 u (the legs' pixels stay out of frame); 0 = default
++    if (RN) rivData[i * 4 + 2] = SWIM_HALF + (RN.nearHalf - SWIM_HALF) * THREE.MathUtils.smoothstep(z, RN.nearZ[1], RN.nearZ[0]);
    }
    const rivTex = new THREE.DataTexture(rivData, 64, 1, THREE.RGBAFormat, THREE.FloatType);
    rivTex.minFilter = rivTex.magFilter = THREE.NearestFilter; rivTex.needsUpdate = true;
+-  const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73
+   const rivZ = new THREE.Vector4(rz0, rz1, SWIM_HALF, L.floorY);
+   // `&m08occ=1` (r8): occlusion plate for the door wall (tools/match08/occ08.py)
+   let occTex: THREE.Texture | null = null;

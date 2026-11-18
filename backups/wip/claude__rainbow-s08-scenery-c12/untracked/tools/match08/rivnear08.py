@@ -7,7 +7,9 @@ so it stretched the near water up to ~13x sideways (long sideways smears) and ju
 edge in the magenta water at the lower left, forward 3 u). This writes the bank-to-bank width read BY EYE on the approved
 picture (left bank = foam / floor edge; right bank = water edge or the gold leg's inner edge where the leg covers it;
 rows 1150-1200 skipped: the arch's feet stand in the water there and hide the banks) projected on the floor from the
-locked camera. The shader merges it with river08.json (this near the camera, river08 beyond z -285.5).
+locked camera. The shader merges it with river08.json (this near the camera, river08 beyond z -285.5). Near the camera
+(z > -285) the painted gold arch legs hug the banks, so there the banks are spread to +-4.0 u instead of the lane's
++-2.95 u (the frame bottom shows +-3.5 u of floor): no leg pixels on the floor.
 usage: python3 -I tools/match08/rivnear08.py <outJson>
 """
 import json, math, sys
@@ -37,4 +39,6 @@ rows.sort(key=lambda t: -t[0])
 for z, x, w in rows: print('z %.2f  centre x %.2f  width %.2f' % (z, x, w))
 json.dump({'note': 'Screen 08 painted river bank-to-bank width near the camera (render remap only, not the gameplay path); '
                    'tools/match08/rivnear08.py (r12)', 'blend': [-284.5, -285.5],
+           # near the camera the gold legs lie just beyond the banks: spread the banks to nearHalf (from z nearZ[1] to nearZ[0])
+           'nearHalf': 4.0, 'nearZ': [-283.5, -285.0],
            'z': [t[0] for t in rows], 'x': [t[1] for t in rows], 'width': [t[2] for t in rows]}, open(out, 'w'), indent=1)

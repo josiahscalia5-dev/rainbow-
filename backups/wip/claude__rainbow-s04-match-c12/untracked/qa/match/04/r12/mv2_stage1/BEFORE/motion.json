@@ -1,0 +1,54 @@
+{
+ "screen": "04",
+ "query": "match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1",
+ "shots": [
+  {
+   "name": "v1_exact_V04-1_camera",
+   "dist": "s87.446",
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 88.316,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -27.316,
+   "bennyVisible": true,
+   "cam": [
+    2.4017572796276774,
+    -20.52932376019108,
+    -28.902302825829402
+   ],
+   "frames": 43,
+   "cam_to_view_cams": [
+    0.93,
+    9.09
+   ]
+  },
+  {
+   "name": "v2_exact_V04-2_camera",
+   "dist": "s97.48",
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 98.183,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -32.531,
+   "bennyVisible": true,
+   "cam": [
+    2.4015018534129755,
+    -25.74968684122728,
+    -37.267242073798506
+   ],
+   "frames": 86,
+   "cam_to_view_cams": [
+    10.79,
+    0.77
+   ]
+  }
+ ]
+}

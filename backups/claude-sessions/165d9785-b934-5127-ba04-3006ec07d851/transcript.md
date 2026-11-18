@@ -2716,3 +2716,323 @@ The hook compiles. Now the diagnostic tool itself:
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='tools/match04/diag04.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"        all.forEach((o) => { if (!o.userData?.mv) o.layers.mask = 0; });\n        for (const v of [1, 2]) {\"\"\",\"\"\"        all.forEach((o) => { if (!o.userData?.mv) o.layers.mask = 0; });\n        const mm = mv.mvMat, keep = [mm.depthWrite, mm.transparent];\n        mm.depthWrite = true; mm.transparent = false; mm.needsUpdate = true;\n        for (const v of [1, 2]) {\"\"\")\ns=s.replace(\"\"\"        mv.mvU.uMvDbg.value = 0;\n        all.forEach\"\"\",\"\"\"        mv …[+518 chars]`
 
+### 🧑 User — 2026-11-18T12:58:46.929Z
+
+> ↩︎ result: f10_forward10u s 88.34 {"w0":1,"w1":0} [0.951,9.07]
+> f20_forward20u s 98.18 {"w0":0,"w1":1} [10.786,0.765]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:58:52.940Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json\nd=json.load(open('qa/match/04/r12/diag_mv_r11/diag.json'))\nfor sh in d['shots']:\n  print('==',sh['name'],'s',round(sh['s'],2))\n  N=864*1536\n  print(' DOMINANT producer of each visible pixel (share of frame):')\n  for k,v in sorted(sh['dominant'].items(), key=lambda x:-x[1])[:14]: print(f'   {v/N:6.1%}  {k}')\n  print(' projection overlay actually changes:', sh['counts'].get('m04mv_overlay'))\n  print(' coverage:', {k:v for k,v in sh['cover'].items() if k.startswith('view')})\n\"", "description": "Summarize which objects produ …[+23 chars]`
+
+### 🧑 User — 2026-11-18T12:58:53.121Z
+
+> ↩︎ result: == f10_forward10u s 88.34
+>  DOMINANT producer of each visible pixel (share of frame):
+>     37.6%  m04mv_overlay
+>     27.4%  m04:m04_river
+>     11.5%  m04:m04_foam
+>      6.4%  m04:m04_ring_mouth
+>      5.8%  m04:m04_ring_tunnel
+>      5.2%  benny
+>      3.2%  (none: no single group changes it)
+>      1.2%  m04:m04_bubbles
+>      1.1%  coins
+>      0.5%  m04_splash
+>      0.1%  m04:m04_ring_glow
+>      0.0%  m04:m04_bulbs
+>  projection overlay actually changes: {'objects': 10, 'changed_px': 505594, 'share': 0.381}
+>  coverage: {'view1': {'in_frame_px': 1327104, 'depth_visible_px': 1300357, 'image_opaque_px': 859629, 'usable_px': 837466, 'share_of_frame_usable': 0.631}, 'view2': {'in_frame_px': 211236, 'depth_visible_px': 211051, 'image_opaque_px': 151317, 'usable_px': 151170, 'share_of_frame_usable': 0.1139}}
+> == f20_forward20u s 98.18
+>  DOMINANT producer of each visible pixel (share of frame):
+>     37.2%  m04mv_overlay
+>     29.2%  m04:m04_river
+>     14.0%  m04:m04_ring_tunnel
+>     10.4%  m04:m04_foam
+>      5.2%  benny
+>      2.2%  (none: no single group changes it)
+>      1.0%  m04:m04_bubbles
+>      0.4%  m04_splash
+>      0.2%  coins
+>      0.2%  m04:m04_ring_glow
+>  projection overlay actually changes: {'objects': 10, 'cha …[+379 chars]
+
+### 🤖 Claude — 2026-11-18T12:59:02.354Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/diag_mv_r11 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert f10_forward10u_frame.png f10_forward10u_id_map.png f10_forward10u_mv_view1_coverage.png -resize 360x640! +append $S/diag_f10.jpg; python3 -c \"\nimport json;d=json.load(open('diag.json'));print([ (l['c'],l['rgb']) for l in d['shots'][0]['legend'] if l['c'] in ('m04mv_overlay','m04:m04_river','m04:m04_foam','m04:m04_ring_tunnel','m04:m04_ring_mouth','benny')])\"", "description": "Montage frame, ID map and overlay coverage at f10"}`
+
+### 🧑 User — 2026-11-18T12:59:02.797Z
+
+> ↩︎ result: [('benny', [61, 255, 118]), ('m04mv_overlay', [61, 223, 255]), ('m04:m04_ring_tunnel', [69, 61, 255]), ('m04:m04_ring_mouth', [255, 126, 61]), ('m04:m04_river', [239, 61, 255]), ('m04:m04_foam', [214, 255, 61])]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:59:04.790Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/diag_f10.jpg"}`
+
+### 🧑 User — 2026-11-18T12:59:04.817Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:59:13.732Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 600,660p src/world/match04m4.ts | grep -nE \"ShaderMaterial|transparent|depthWrite|depthTest|renderOrder|vertexShader|position|wave|uTime|time\" | head -20; grep -n \"const RIVER_VERT\\|RIVER_VERT =\\|riverVert\" src/world/match04m4.ts | head", "description": "Check river material flags and vertex shader"}`
+
+### 🧑 User — 2026-11-18T12:59:13.789Z
+
+> ↩︎ result: 23:    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+> 30:    const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+> 33:        uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
+> 38:    const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
+> 42:  // sprite clouds (foam puffs, bubbles): world positions computed in the slide-local frame
+> 46:    g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
+> 53:    const m = new THREE.ShaderMaterial({ vertexShader: SPRITE_VERT, fragmentShader: frag, transparent: !opaque, depthWrite: opaque, fog: false,
+> 56:    mesh.name = name; mesh.frustumCulled = false; mesh.renderOrder = order; mesh.visible = false; // invisible during the projector depth bake
+> 266:const RIVER_VERT = /* glsl */ `
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:59:15.671Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 266,288p src/world/match04m4.ts; sed -n 628,640p src/world/match04m4.ts", "description": "Read the river vertex shader and mesh setup"}`
+
+### 🧑 User — 2026-11-18T12:59:15.714Z
+
+> ↩︎ result: const RIVER_VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+> varying vec4 vProj;
+> varying vec3 vL;
+> varying float vS;
+> void main() {
+>   vec4 wp = modelMatrix * vec4(position, 1.0);
+>   vProj = uProjVP * wp;
+>   vL = position;
+>   vS = aR.x;
+>   gl_Position = projectionMatrix * viewMatrix * wp;
+> }`;
+> const RIVER_FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAway;
+> uniform sampler2D uRiv;
+> uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> uniform float uTime;
+> uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
+> uniform float uZ0;
+>     // tiles04.json river3: lateral +-4 u, along 1.757 .. 6.409 u from Benny's checkpoint water point
+>     const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+>       extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
+>       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, …[+883 chars]
+
+### 🤖 Claude — 2026-11-18T13:00:02.150Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 641,668p src/world/match04m4.ts; grep -n \"sprites(\" src/world/match04m4.ts | head; grep -n \"SPRITE_VERT = \\|FOAM_FRAG\\|uniform float uFade\\|uOp\\b\" src/world/match04m4.ts | head; python3 -c \"import json;d=json.load(open('assets/textures/match04/mv04.json'));print([ (v['img'],v['s'],v['eye']) for v in d['views']])\"", "description": "Read sprite foam setup and view positions"}`
+
+### 🧑 User — 2026-11-18T13:00:02.251Z
+
+> ↩︎ result: // sprite clouds (foam puffs, bubbles): world positions computed in the slide-local frame
+>   const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number, opaque = false, near = [1.2, 2.6]) => {
+>     const quad = new THREE.PlaneGeometry(1, 1);
+>     const g = new THREE.InstancedBufferGeometry();
+>     g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
+>     const aB = new Float32Array(items.length * 4), aS = new Float32Array(items.length);
+>     items.forEach((it, i) => { const w = it.p.clone().applyMatrix4(Mw); aB.set([w.x, w.y, w.z, it.r], i * 4); aS[i] = it.s; });
+>     g.setAttribute('aB', new THREE.InstancedBufferAttribute(aB, 4));
+>     g.setAttribute('aS', new THREE.InstancedBufferAttribute(aS, 1));
+>     g.instanceCount = items.length;
+>     const alpha = { value: 0 };
+>     const m = new THREE.ShaderMaterial({ vertexShader: SPRITE_VERT, fragmentShader: frag, transparent: !opaque, depthWrite: opaque, fog: false,
+>       uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value: new THREE.Vector2(near[0], near[1]) } } });
+>     const mesh = new THRE …[+1888 chars]
+
+### 🤖 Claude — 2026-11-18T13:00:22.453Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 371,440p src/world/match04m4.ts | grep -n \"uAlpha\\|discard\\|gl_FragColor\" | head; grep -n \"updaters.forEach\\|update(cp\\|update:\" src/world/match04m4.ts | head -5", "description": "Check how sprite foam uses its alpha uniform"}`
+
+### 🧑 User — 2026-11-18T13:00:22.496Z
+
+> ↩︎ result: 19:uniform float uAlpha;
+> 26:  if (r > 1.0) discard;
+> 36:  gl_FragColor = vec4(pjInverse(col), clamp(alpha, 0.0, 1.0) * uAlpha * vF);
+> 41:uniform float uAlpha;
+> 48:  if (r > 1.0 || uAlpha * vF < 0.5) discard;
+> 63:  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:00:40.180Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04.ts'\ns=open(p).read()\nold=\"\"\"  const MV = new URLSearchParams(location.search).get('m04mv') === '1';\"\"\"\nnew=\"\"\"  const MV2 = new URLSearchParams(location.search).get('m04mv2') === '1';\n  // r12 `&m04mv2=1` (lead, corrected controlled test; implies m04mv): (1) the overlay's depth offset beats the river's own\n  // (-2/-4 there: the r11 overlay at -2/-2 lost the depth test on every river pixel); (2) the game's tall foam-ball and bubble\n  // sprites fade where a view is in charge (the view already carries th …[+1812 chars]`
+
+### 🧑 User — 2026-11-18T13:00:45.685Z
+
+> ↩︎ result: TSC OK
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:00:50.980Z
+
+Compiles. Now the hole-filling for the two view images, with OpenCV inpainting from the surrounding painted scenery (the original view files stay untouched):
+
+### 🤖 Claude — 2026-11-18T13:00:57.533Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat > tools/match04/mv04_fill.py <<'EOF'\n\"\"\"Round 12 (lead): fill the masked holes (painted Benny / coins / bubbles / HUD, alpha < 128) of the multi-view textures\nassets/textures/match04/mv04_V04-*.png from the surrounding painted scenery (OpenCV Telea inpainting, local only, free)\n-> mv04_V04-*_fill.png, fully opaque. The originals are not changed. Used by `&m04mv2=1`.\"\"\"\nimport sys\nfrom pathlib import Path\nimport numpy as np, cv2\nD = Path('assets/textures/match04')\nfor n in ('mv04_V04-1', 'mv04_V04-2'):\n    im = cv2.imread(str(D / f'{n}.png …[+795 chars]`
+
+### 🧑 User — 2026-11-18T13:01:03.691Z
+
+> ↩︎ result: mv04_V04-1 filled px 490433 of 1327104
+> mv04_V04-2 filled px 496831 of 1327104
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:01:05.864Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/fill.jpg"}`
+
+### 🧑 User — 2026-11-18T13:01:05.892Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:01:21.337Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='tools/match04/mv04_fill.py'\ns=open(p).read()\ns=s.replace('''    rgb = cv2.inpaint(np.ascontiguousarray(im[..., :3]), hole, 9, cv2.INPAINT_TELEA)\n    out = np.dstack([rgb, np.full(rgb.shape[:2], 255, np.uint8)])''','''    # only SMALL holes (coins, bubbles, the coin-trail column) are filled; the big painted-Benny area and the HUD band stay\n    # holes (the game's own 3D water / tunnel shows there), with a soft edge\n    n_lab, lab, stats, _ = cv2.connectedComponentsWithStats(hole, 8)\n    big = np.zeros_like(hole)\n    for k in rang …[+1074 chars]`
+
+### 🧑 User — 2026-11-18T13:01:22.513Z
+
+> ↩︎ result: mv04_V04-1 filled small px 31155 kept as hole px 459278 of 1327104
+> mv04_V04-2 filled small px 56767 kept as hole px 440064 of 1327104
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:01:24.859Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/fill2.jpg"}`
+
+### 🧑 User — 2026-11-18T13:01:24.879Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:01:29.237Z
+
+The torn column at the top is still a hole, because it touches the HUD band and was counted as one big region. I'll separate the HUD band rows first, so the column gets filled.
+
+### 🤖 Claude — 2026-11-18T13:01:34.039Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='tools/match04/mv04_fill.py'\ns=open(p).read()\ns=s.replace('''    n_lab, lab, stats, _ = cv2.connectedComponentsWithStats(hole, 8)\n    big = np.zeros_like(hole)''','''    band = 0                                                     # the HUD band: top rows that are (almost) all hole\n    while band < hole.shape[0] and (hole[band] > 0).mean() > 0.95: band += 1\n    body = hole.copy(); body[:band] = 0\n    n_lab, lab, stats, _ = cv2.connectedComponentsWithStats(body, 8)\n    big = np.zeros_like(hole); big[:band] = hole[:band]''')\ns=s.r …[+499 chars]`
+
+### 🧑 User — 2026-11-18T13:01:35.654Z
+
+> ↩︎ result: mv04_V04-1 HUD band rows 217 filled small px 31193 kept as hole px 459240 of 1327104
+> mv04_V04-2 HUD band rows 217 filled small px 56767 kept as hole px 440064 of 1327104
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:01:37.764Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/fill3.jpg"}`
+
+### 🧑 User — 2026-11-18T13:01:37.805Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:01:40.881Z
+
+The column is larger than my size cutoff. Benny's area is about 400,000 pixels and the column far smaller, so I'll raise the cutoff to 150,000.
+
+### 🤖 Claude — 2026-11-18T13:01:43.573Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -i 's/if stats\\[k, cv2.CC_STAT_AREA\\] > 20000/if stats[k, cv2.CC_STAT_AREA] > 150000/' tools/match04/mv04_fill.py && python3 tools/match04/mv04_fill.py && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert assets/textures/match04/mv04_V04-1_fill.png assets/textures/match04/mv04_V04-2_fill.png -background '#00ff00' -alpha remove -resize 260x462 +append $S/fill4.jpg", "description": "Raise size cutoff and refill the views", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T13:01:45.636Z
+
+> ↩︎ result: mv04_V04-1 HUD band rows 217 filled small px 55772 kept as hole px 434661 of 1327104
+> mv04_V04-2 HUD band rows 217 filled small px 79500 kept as hole px 417331 of 1327104
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:01:47.788Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/fill4.jpg"}`
+
+### 🧑 User — 2026-11-18T13:01:47.820Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:02:00.729Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='tools/match04/ab04.mjs'\ns=open(p).read()\nold=\"\"\"        const target = typeof dist === 'string' ? s0 + Number(dist.slice(1)) * Math.max(0, s1 - s0) : s0 + dist;\"\"\"\nnew=\"\"\"        // dist: units forward of the checkpoint | 'tN' = fraction N of the stage | 'sX' = absolute course position X\n        const target = typeof dist === 'string' ? (dist[0] === 's' ? Number(dist.slice(1)) : s0 + Number(dist.slice(1)) * Math.max(0, s1 - s0)) : s0 + dist;\"\"\"\nassert old in s; s=s.replace(old,new,1)\nold=\"\"\"        return { ...r.st …[+1285 chars]`
+
+### 🧑 User — 2026-11-18T13:03:01.252Z
+
+> ↩︎ result: BEFORE v1_exact_V04-1_camera s 88.32 lat 0 cam->V04-1/V04-2 0.93/9.09
+> BEFORE v2_exact_V04-2_camera s 98.18 lat 0 cam->V04-1/V04-2 10.79/0.77
+> NEW v1_exact_V04-1_camera s 88.52 lat 0 cam->V04-1/V04-2 1.14/8.88
+> NEW v2_exact_V04-2_camera s 98.18 lat 0 cam->V04-1/V04-2 10.79/0.76
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:03:12.943Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 640,700p src/game/Game.ts | grep -nE \"^\\s+(step|run|render|goto|setSteer|frame)\\b|step\\(|run\\(\" | head -12; sed -n 612,625p src/game/Game.ts", "description": "Find step/run/render API definitions"}`
+
+### 🧑 User — 2026-11-18T13:03:12.990Z
+
+> ↩︎ result: 33:    render();
+> 41:    goto: gotoCheckpoint,
+> 42:    run(v = true) { running = v; last = performance.now(); },
+> 46:    setSteer(v: number | null) { input.override = v; },
+> 48:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     // QA mode renders on demand only (software WebGL is slow; frames are deterministic)
+>     if (!qaMode || running || dirty) { render(); dirty = false; }
+>     requestAnimationFrame(frame);
+>   };
+>   requestAnimationFrame(frame);
+> 
+>   // ---------------------------------------------------------------- QA API
+>   const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:03:14.098Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -nE \"^\\s+(step|run|renderNow|render|goto)\\s*\\(\" src/game/Game.ts | head; grep -nE \"step\\(n\" src/game/Game.ts | head -3", "description": "Locate step and run method bodies"}`
+
+### 🧑 User — 2026-11-18T13:03:14.147Z
+
+> ↩︎ result: 672:    render();
+> 681:    run(v = true) { running = v; last = performance.now(); },
+> 687:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 748:      render();
+> 687:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:03:16.827Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 664,676p src/game/Game.ts; sed -n 742,750p src/game/Game.ts", "description": "Read the API code that calls render()"}`
+
+### 🧑 User — 2026-11-18T13:03:16.872Z
+
+> ↩︎ result: rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>         if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;
+>         const prev = o.onAfterRender;
+>         const key = (o.parent?.name ? o.parent.name + '/' : '') + (o.name || o.type);
+>         hooked.push([o, prev]);
+>         o.onAfterRender = (...a: Parameters<THREE.Object3D['onAfterRender']>) => { hits.set(key, (hits.get(key) ?? 0) + 1); prev.apply(o, a); };
+>       });
+>       render();
+>       for (const [o, prev] of hooked) o.onAfterRender = prev;
+>       return [...hits.entries()].sort((a, b) => b[1] - a[1]);
+> Shell cwd was reset to /home/user/rainbow-
+
