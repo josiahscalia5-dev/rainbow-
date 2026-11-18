@@ -428,3 +428,14 @@ Let me render the BEFORE (kept set) and NEW (+m08cup) at the cup positions. Firs
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K10='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/cupN && M08_ONLY=a00,f03,f06,f10,t33,t66,s_left_hard,s_right_hard node tools/match08/shots08.mjs 08 $S/cupN \"$K10&m08ceil=1&m08near=1&m08cup=1\" 2>&1 | grep -v 'allow list' | tail -12", "description": "Render NEW shots with m08cup", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T12:47:45.101Z
+
+> ↩︎ result: 08 a00_approved_view s 392.215 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 395.018 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.019 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.978 lat 0 stage 08 frames 63
+> 08 s_left_hard s 404.036 lat -2.217 stage 08 frames 76
+> 08 s_right_hard s 404.036 lat 2.217 stage 08 frames 76
+> 08 t33_through_screen s 396.336 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.55 lat 0 stage 08 frames 54
+

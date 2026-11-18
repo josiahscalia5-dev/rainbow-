@@ -1855,3 +1855,136 @@ The scheduled save holds the lock. I'll wait for it to release, then save and ve
 
 > 🔧 **Bash** `{"command": "timeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified|skipping'; python3 -I scripts/autosave-status.py | head -1; echo \"REMOTE $(git ls-remote origin refs/heads/ccr-e908f8da-cy4yc1 | cut -c1-12) LOCAL $(git rev-parse --short=12 HEAD)\"; git status --short | wc -l", "description": "Wait for autosave lock, save, verify remote", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-18T12:46:56.142Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "857f22cb59adf4b3ce748a22818a005116c37a8f",
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T12:46:43+00:00 (0.2 min ago) | local 857f22c remote 857f22c (match) | uncommitted 0
+> REMOTE 857f22cb59ad LOCAL 857f22cb59ad
+> 0
+
+### 🤖 Claude — 2026-11-18T12:47:00.224Z
+
+Saved and verified: commit `857f22c` is on GitHub, with nothing left unsaved. The Screen 04 render is at 9 of 14; I'll wait for it to finish.
+
+### 🤖 Claude — 2026-11-18T12:47:02.088Z
+
+> 🔧 **Bash** `{"command": "until [ \"$(ls /home/user/wt/s04/qa/match/04/r12/NEW_m04mv/*.png 2>/dev/null | wc -l)\" -ge 14 ] || ! pgrep -f \"motion_audit.mjs 04 qa/match/04/r12\" >/dev/null; do sleep 10; done; ls /home/user/wt/s04/qa/match/04/r12/NEW_m04mv/*.png | wc -l", "description": "Wait until the 04 render set is complete", "timeout": 1500000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T12:47:02.228Z
+
+> ↩︎ result: Command running in background with ID: bfuf6pmvr. Output is being written to: /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/tasks/bfuf6pmvr.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T12:47:04.080Z
+
+Meanwhile, the two key frames (10 and 20 units forward, where the views were taken) are already rendered. I'll compare them now.
+
+### 🤖 Claude — 2026-11-18T12:47:06.622Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; V=/home/user/rainbow-/qa/review_c10/2026-11-18/04_proposed_views; convert $V/V04-1_just_inside_opening.jpg qa/match/04/r11/BEFORE/f10_forward10u.png qa/match/04/r12/NEW_m04mv/f10_forward10u.png -resize 400x711! +append $S/f10.jpg; convert $V/V04-2_middle_of_tunnel.jpg qa/match/04/r11/BEFORE/f20_forward20u.png qa/match/04/r12/NEW_m04mv/f20_forward20u.png -resize 400x711! +append $S/f20.jpg; echo ok", "description": "Montage view, BEFORE, NEW at 10u and 20u"}`
+
+### 🧑 User — 2026-11-18T12:47:07.715Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:47:09.119Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/f10.jpg"}`
+
+### 🧑 User — 2026-11-18T12:47:09.144Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:47:09.622Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/f20.jpg"}`
+
+### 🧑 User — 2026-11-18T12:47:09.650Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:47:29.926Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json\nd=json.load(open('qa/match/04/r11/mv/cam10/objects.json'))\nprint(type(d).__name__, len(d))\nitems=d if isinstance(d,list) else d.get('objects',[])\nfrom collections import Counter\nprint(Counter([ (o.get('parent') or o.get('group') or '?') for o in items]).most_common(12))\nprint([o.get('name') for o in items][:60])\n\" 2>&1 | head -20; grep -n \"export function addM04\\|scene.add\\|group.add\" src/world/match04.ts | head -20", "description": "Check which meshes the 04 projection covers"}`
+
+### 🧑 User — 2026-11-18T12:47:30.325Z
+
+> ↩︎ result: list 312
+> [('?', 312)]
+> ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+> 235:  const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm04_' + name; group.add(o); return o; };
+> 394:      scene.add(clone);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:47:32.196Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 225,295p src/world/match04.ts | cut -c1-200; grep -rln \"m04river\\|M04RIVER\" src | head", "description": "Read how the 04 group and river are built"}`
+
+### 🧑 User — 2026-11-18T12:47:32.315Z
+
+> ↩︎ result: group.matrixAutoUpdate = false;
+>   group.matrix.makeBasis(X, U, Dn).setPosition(new THREE.Vector3(...L.water));
+>   // round 9 `&m04lay=1` — FEASIBILITY TEST ONLY (not kept, qa/match/04/r9/PROGRESS.md "Foundation"): the whole washer
+>   // front as STATIC geometry scaled about the approved camera by 'm04layk' (same approved picture, opening k times as
+>   // far). Shows why a static bigger/farther front cannot hold the composition on the fixed course: the painted pool
+>   // ends up 3.39*(k-1) u below Benny's water and Benny's path / coins run through the middle of the opening.
+>   if (M04.lay) {
+>     const k = M04.num('m04layk', 3.0), P = proj.position;
+>     group.matrix.premultiply(new THREE.Matrix4().makeTranslation(-P.x, -P.y, -P.z)).premultiply(new THREE.Matrix4().makeScale(k, k, k)).premultiply(new THREE.Matrix4().makeTranslation(P.x, P.y, P.z));
+>   }
+>   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm04_' + name; group.add(o); return o; };
+> 
+>   const T = L.tube;
+>   // round 8 `&m04ring=1`: the tunnel (and the water in it) runs on to 90 u so its far end is the painted small glow, not a disc
+>   const cx = T.ax - L.water[0], c …[+3976 chars]
+
+### 🤖 Claude — 2026-11-18T12:47:42.546Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json\nd=json.load(open('qa/match/04/r11/mv/cam10/objects.json'))\nprint(d[0].keys() if isinstance(d[0],dict) else d[0])\nprint(d[0]); print(d[100])\n\"; grep -n \"name\\s*=\\|\\.name =\" src/world/match04m4.ts | head -30", "description": "Inspect probe object records and m4 mesh names"}`
+
+### 🧑 User — 2026-11-18T12:47:42.664Z
+
+> ↩︎ result: dict_keys(['name', 'type', 'chain', 'visible', 'count', 'mat'])
+> {'name': '', 'type': 'Mesh', 'chain': 'Mesh<zone_drumA<washer_world<Scene', 'visible': True, 'count': None, 'mat': 'MeshStandardMaterial'}
+> {'name': '', 'type': 'Mesh', 'chain': 'Mesh<zone_basin<washer_world<Scene', 'visible': True, 'count': None, 'mat': 'MeshStandardMaterial'}
+> 531:    const tm = new THREE.Mesh(tun, gm); tm.name = 'm04_ring_tunnel'; group.add(tm);
+> 551:    const mm = new THREE.Mesh(mouth, gm); mm.name = 'm04_ring_mouth'; group.add(mm);
+> 556:    const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
+> 637:    const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
+> 655:    mesh.name = name; mesh.frustumCulled = false; mesh.renderOrder = order; mesh.visible = false; // invisible during the projector depth bake
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:47:46.670Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s04/qa/match/04/r12/NEW_m04mv/*.png | wc -l; tail -2 /home/user/wt/s04/qa/match/04/r12/new_render.log | cut -c1-200; cd /home/user/wt/s04 && python3 -c \"\nimport json\nfrom collections import Counter\nd=json.load(open('qa/match/04/r11/mv/cam10/objects.json'))\nc=Counter()\nfor o in d:\n  if o['visible']: c[(o['chain'].split('<',1)[1] if '<' in o['chain'] else o['chain'])[:60]+' | '+o['type']+' | '+(o['name'] or '')[:24]]+=1\nfor k,v in c.most_common(40): print(v,k)\n\"", "description": "Count visible objects by parent at the V04-1 camera"}`
+
+### 🧑 User — 2026-11-18T12:47:46.762Z
+
+> ↩︎ result: 14
+> 04 t66_through_screen s 102.912 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> 60 laundry_room<Group<zone_chamber<washer_world | Mesh | 
+> 54 laundry_room<Group<zone_drumA<washer_world | Mesh | 
+> 27 zone_tubes<washer_world<Scene | Mesh | 
+> 22 zone_basin<washer_world<Scene | Mesh | 
+> 22 zone_chamber<washer_world<Scene | Mesh | 
+> 10 zone_drumA<washer_world<Scene | Mesh | 
+> 10 Group<zone_chamber<washer_world<Scene | Mesh | 
+> 6 Mesh<zone_basin<washer_world<Scene | Mesh | 
+> 6 water_puddles<water_system<Scene | Mesh | 
+> 5 Group<zone_basin<washer_world<Scene | Mesh | 
+> 5 foam_banks<water_system<Scene | Mesh | 
+> 3 blue_sock<zone_drumA<washer_world<Scene | Mesh | 
+> 3 Group<doorC_pivot<zone_chamber<washer_world | Mesh | 
+> 2 Group<doorA_pivot<zone_drumA<washer_world | Mesh | 
+> 2 zone_tubes<washer_world<Scene | Mesh | tube05_far
+> 1 pink_star_shirt<zone_drumA<washer_world<Scene | Mesh | 
+> 1 zone_drumA<washer_world<Scene | Mesh | purple_towel
+> 1 zone_tubes<washer_world<Scene | Mesh | tube05_far_wall
+> 1 zone_tubes<washer_world<Scene | Mesh | tube05_far_river
+> 1 zone_tubes<washer_world<Scene | Mesh | tube05_end_glow
+> 1 zone_tubes<washer_world<Scene | Mesh | tube05_near_frame
+> 1 z …[+999 chars]
+
