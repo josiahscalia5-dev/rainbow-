@@ -71,6 +71,8 @@ uniform sampler2D uOcc;     // m08occ (door wall only): plate with towel + platf
 uniform float uOccOn;
 uniform sampler2D uTMask;   // m08towelm (towel only): the painted towel's outline in plate coordinates (towelmask08.py)
 uniform float uTMaskOn;
+uniform vec4 uClipIn;       // m08far collar only: discard inside this x/y circle (the chamber's cross-section) ...
+uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -112,6 +114,7 @@ vec3 swimRemap(vec3 w, float mv) {
   return vec3(r.x + sign(d) * o, w.y, w.z);
 }
 void main() {
+  if (uClipIn.w > 0.5 && (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z)) discard;
   // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
   // behind receives the window pixels that the rectangle used to carry at towel depth)
   if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
@@ -259,7 +262,8 @@ export async function buildMatch08(): Promise<Match08> {
       uFill: { value: fillTex ?? patch }, uFillMode: { value: fill ? fillMode : 0 }, uFillSize: { value: fillSize },
       uDrum: { value: new THREE.Vector3(L.chamber.cx, L.chamber.cy, L.chamber.r) },
       uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ },
-      uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 } },
+      uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
+      uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) } },
   });
   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
   const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
@@ -285,7 +289,12 @@ export async function buildMatch08(): Promise<Match08> {
   // ring (a floor cap bent it toward the camera). The lowest band at the water stays where it was fitted (the arch's
   // bottom sill covers Benny's underside exactly as painted), ramping to ×ARCH_K by 0.9 u above the floor; pushed parts
   // that end below the floor are hidden by it (the floor then shows their painted pixels: gold feet near the arch).
-  const ARCH_K = Number(new URLSearchParams(location.search).get('m08archk') ?? '') || 2.6;
+  // `&m08far=1` (r10): ×4.2 instead of ×2.6. The ring then lies behind the two big near spout cups (as painted: the cups
+  // overlap the arch's legs) and, seen from the moving camera, stays ~1.6× longer in frame as the gold oval framing the
+  // chamber (top band + upper legs) instead of leaving the frame in the first third of the stage. Same approved picture
+  // (uniform push along the projector rays); a collar at the ring's back closes the opening where it is wider than the drum.
+  const farOn = fixArch && flag05('m08far');
+  const ARCH_K = Number(new URLSearchParams(location.search).get('m08archk') ?? '') || (farOn ? 4.2 : 2.6);
   const VP = proj.position.clone();
   // `&m08sill=1` (r7): the unpushed water-level band stayed ~2.6× nearer than the rest of the ring, so riding 3 u forward
   // the camera passed over it and it tore into gold / blue slabs along the frame bottom. Uniform push: the whole ring moves
@@ -380,6 +389,15 @@ export async function buildMatch08(): Promise<Match08> {
   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
   ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);
   add(ch, M.drum, 'chamber');
+  if (farOn) {
+    // m08far collar: in the arch's back plane, the part of the (pushed) arch opening that lies outside the drum's circular
+    // cross-section (lower left / right just above the water) — without it the camera looked through that gap into the void
+    const aP = archC.clone().sub(VP).multiplyScalar(ARCH_K).add(VP), rP = archR * ARCH_K + 0.5;
+    const cm = mat('#c25bd0', pWall, 1 / 2.4, 2);
+    cm.uniforms.uClipIn.value.set(C.cx, C.cy, C.r - 0.02, 1);
+    cm.uniforms.uClipOut.value.set(aP.x, aP.y, rP, 1);
+    add(new THREE.CircleGeometry(rP, 128).translate(aP.x, aP.y, chamberZ0 - 0.01), cm, 'collar');
+  }
   const doorM = occTex ? mat('#c25bd0', pWall, 1 / 2.4, 2) : M.disc;
   if (occTex) (doorM as THREE.ShaderMaterial).uniforms.uOccOn.value = 1;
   add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), doorM, 'doorwall');
@@ -462,7 +480,17 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
         uniforms: { uProjVP: { value: projVP }, uTMask: { value: tMaskTex } },
         fragmentShader: 'uniform sampler2D uTMask; varying vec4 vProj; varying vec3 vW; varying vec3 vN;\nvoid main() { if (vProj.w <= 0.0 || texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard; gl_FragColor = vec4(0.0); }',
       }) : null;
-      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = towelBake && o.name === 'm08_towel' ? towelBake : new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+      // m08far collar: the bake must cut the same circles as the colour pass (a full disc would hide the whole chamber)
+      const clipBake = (u: Record<string, THREE.IUniform>) => new THREE.ShaderMaterial({
+        colorWrite: false, side: THREE.DoubleSide, vertexShader: VERT,
+        uniforms: { uProjVP: { value: projVP }, uClipIn: u.uClipIn, uClipOut: u.uClipOut },
+        fragmentShader: 'uniform vec4 uClipIn; uniform vec4 uClipOut; varying vec4 vProj; varying vec3 vW; varying vec3 vN;\nvoid main() { if (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z) discard; gl_FragColor = vec4(0.0); }',
+      });
+      clone.traverse((o) => {
+        if (!(o as THREE.Mesh).isMesh) return;
+        const u = ((o as THREE.Mesh).material as THREE.ShaderMaterial).uniforms;
+        (o as THREE.Mesh).material = towelBake && o.name === 'm08_towel' ? towelBake : u?.uClipIn?.value.w > 0.5 ? clipBake(u) : new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide });
+      });
       scene.add(clone);
       renderer.setRenderTarget(depthRT);
       renderer.clear();
