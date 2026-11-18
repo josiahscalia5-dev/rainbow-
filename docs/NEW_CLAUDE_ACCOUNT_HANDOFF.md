@@ -1,4 +1,24 @@
-# ▶▶▶▶▶▶▶ NEWEST — ACCOUNT 10 (round 10) STATE (2026-11-18 ~10:45 UTC, lead session `session_01AvQv6SpZeUhzBcjgGW7HAA`)
+# ▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 11 (round 11) STATE (2026-11-18 ~11:45 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)
+
+Lead branch **`ccr-3b139b48-0qqkkz`** (contains the account-10 lead `ccr-c526614d-tw0yro` @ `e673ef4` + autosaves; nothing
+merged). Branch map, start SHAs, services: **`docs/briefs/2026-11-18-r11/COORDINATION.md`**. Rules unchanged
+(`docs/briefs/2026-11-18-r8/COMMON_RULES.md` + `docs/briefs/2026-11-18-r10/RULES_R10.md`). Every screen continues on a NEW
+`-c11` branch from its newest tip: 05 `claude/rainbow-s05-match-c11` (from `-c10` `bed8253d` + the account-10 WIP
+`&m05unf=1`, RUNNING slot B, water-fx-specialist, worktree `/home/user/wt/s05`), 08 `claude/rainbow-s08-scenery-c11`
+(from `-c10` `e1c7d0b7`, RUNNING slot A, washer-environment-modeler, worktree `/home/user/wt/s08`), 04
+`claude/rainbow-s04-match-c11` (from `-c10` `a24d289c`, READY next, brief `docs/briefs/2026-11-18-r10/S04_R10.md`), 07
+`claude/rainbow-s07-match-c11` (from `-c9` `dbc7678c`), 06 `claude/rainbow-s06-match-c11` (from `-c9` `efaf78b7`). Logs:
+`qa/match/<NN>/r11/PROGRESS.md`. All `-c10` / `-c9` branches and `ccr-c526614d-tw0yro` are now in the autosave's
+`protected_branches`.
+**Keys on a new account:** this account's cloud environment is "Default" (unrestricted network). Both keys had to be
+re-entered with the secure form (World Labs `api.worldlabs.ai` header `WLT-Api-Key` → 5,420 credits, Screen 08 world 200;
+fal `queue.fal.run` `Authorization: Key …` → request `01a1ea70` COMPLETED). A new account will need the same two forms.
+If account 11 runs out: `-c12` branches from each NEWEST `-c11` tip (or `-c10`/`-c9` where no `-c11` commit was added);
+never write `-c11` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶ ACCOUNT 10 (round 10) STATE (2026-11-18 ~10:45 UTC, lead session `session_01AvQv6SpZeUhzBcjgGW7HAA`)
 
 Lead branch `ccr-c526614d-tw0yro` (= `claude/rainbow-restore-c9-40w64b` @ `4e0f94e` + autosaves). Branch map + slots:
 **`docs/briefs/2026-11-18-r10/COORDINATION.md`**; new user standards (judge by eye, not colour numbers; faithful

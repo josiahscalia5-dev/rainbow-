@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 16758,
-   "sha256": "ec1dc1c16bf77736ebbebf740cdd773680f55ab47cf4db9b3b0136b6829f3aac"
+   "bytes": 17033,
+   "sha256": "ef7bac080c219dc90344f7ec92d96349651023ed8df4130d314b91c4dff77097"
   },
   {
    "path": "README_FIRST.md",
@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 38650,
-   "sha256": "cf1c1d5cb7bdc6e98ab23d5648b693563484c84e75f6944790d67c893a058f45"
+   "bytes": 38913,
+   "sha256": "f35d3a3ac74d2a9d0f3cab2473fca60182a150e2fe95b33e160b637a06a1b335"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 15030,
-   "sha256": "7b832cb96a7d57b462570673038ff6a96d6b715779bc3ab842e95980efca9533"
+   "bytes": 15031,
+   "sha256": "5e91e97a0164731b82c913f397f5d38224da762b7382bcb11417eca72053abab"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -638,8 +638,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 7856,
-   "sha256": "f80932acc299a877c3e8e9c58987c4ff75af92ae593a30a33febdee216d10f4d"
+   "bytes": 9528,
+   "sha256": "d645e74c6f1205425d433c8eb8cd2a0d65e128a3ce7c86e08c37ab083513015b"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 7109,
-   "sha256": "e61602cabdc7fe7b49ecfa2f9fbbdbf57a05ee7545eb016df480d57b1b72bcf7"
+   "bytes": 7444,
+   "sha256": "8a38bbb722bb3c90886382205e4ac4626410a710cf4f906dcd4983806c29bb2f"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -753,8 +753,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 45322,
-   "sha256": "aa81e924a60b8aea83c90156900df7dd5708b8d12329ada0a7d75f465298a2fd"
+   "bytes": 47047,
+   "sha256": "987b2e834fb0caf8db75d1ba0a0ef1ebc3234f643d004f321202b45af1ae3ce1"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -990,6 +990,11 @@
    "path": "docs/briefs/2026-11-18-r10/TOOL_EVALUATION.md",
    "bytes": 5875,
    "sha256": "9d880a3733ddc957e44c3440f6906be9d23509d94f0439f78ac2cd2343961ea4"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r11/COORDINATION.md",
+   "bytes": 2987,
+   "sha256": "fe1e610027d4f0f4e9c935a4fd2fd86c11013d9cba883de8d83d007e20066a50"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",
