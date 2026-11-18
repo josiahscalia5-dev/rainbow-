@@ -2401,3 +2401,109 @@ Agreed on every point. Here is what the builders are now doing under your rules.
 
 **Next you'll see** the first rebuilt scenery for 04 and 05, checked by the reviewer, as separate large APPROVED / BEFORE / NEW pictures taken while Benny swims. Each comes with a plain note on what looks more like your painting. If a step doesn't look closer, I'll tell you that instead of showing it as progress.
 
+### 🧑 User — 2026-11-18T03:10:51.205Z
+
+Show me the first Screen 04 and 05 pictures
+
+### 🤖 Claude — 2026-11-18T03:10:53.481Z
+
+Checking what the two builders have finished so far.
+
+### 🤖 Claude — 2026-11-18T03:10:55.215Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; for d in s04 s05; do echo \"== $d\"; git -C /home/user/wt/$d log --oneline -4 | cut -c1-140; git -C /home/user/wt/$d status --short | head -8; ls -t /home/user/wt/$d/qa/match/0${d:2:1}/r9/ 2>/dev/null | head -10; done; ls /home/user/rainbow-/docs/briefs/2026-11-18-r9/", "description": "Check the newest commits and files from the Screen 04 and 05 builders"}`
+
+### 🧑 User — 2026-11-18T03:10:55.276Z
+
+> ↩︎ result: 03:10
+> == s04
+> b4bd3da4 Screen 04 r9 WIP: &m04foam3 / &m04pink / &m04arr5 candidates (switch-guarded, untested, not kept) — stopped by the lead's new ord
+> d5d4eee3 Screen 04 r9 step 2: &m04room=1 laundry room on a plane behind the opening (stays in view while approaching; approved view unchange
+> e85a66c2 Screen 04 r9 step 1: &m04mouth=1 the approved gold washer opening (painted mouth band unwrapped + straightened onto a modeled ring,
+> d217f546 Screen 04 r8 step 3: irregular heaped foam clumps with lavender/pink shading (&m04foam2=0 = rows); &m04gold=1 candidate (not kept)
+>  M src/world/match04.ts
+>  M src/world/match04m4.ts
+> ?? qa/match/04/r9/BLUEPRINT.md
+> ?? qa/match/04/r9/blueprint04.json
+> ?? qa/match/04/r9/blueprint_overlay.png
+> ?? tools/match04/blueprint04.py
+> BLUEPRINT.md
+> blueprint_overlay.png
+> blueprint04.json
+> PROGRESS.md
+> step2_m04room
+> BEFORE
+> step1_m04mouth
+> == s05
+> 1eb23e66 Screen 05 r9 WIP: &m05near (tried, not kept) + &m05wall (unfinished) — switch-guarded, tsc clean; paused for the blueprint/founda
+> 965b8b86 Screen 05 r9 step 1: &m05blend=1 — near river fades into the far river's own picture at the seam, far rows laid on the ribbon sur
+> c676a7c5 Screen 05 r8 step 4: &m05seam=1 — near river …[+446 chars]
+
+### 🤖 Claude — 2026-11-18T03:11:00.993Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s05/qa/match/05/r9/blueprint/ /home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png; python3 -c \"\nfrom PIL import Image\nfor p in ['/home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png']: print(p, Image.open(p).size)\"; head -c 2500 /home/user/wt/s04/qa/match/04/r9/BLUEPRINT.md", "description": "List blueprint files and read the start of the Screen 04 blueprint"}`
+
+### 🧑 User — 2026-11-18T03:11:01.089Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 2395031 Nov 18 03:09 /home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png
+> 
+> /home/user/wt/s05/qa/match/05/r9/blueprint/:
+> total 12116
+> drwxr-xr-x 3 root root    4096 Nov 18 03:10 .
+> drwxr-xr-x 5 root root    4096 Nov 18 03:08 ..
+> -rw-r--r-- 1 root root 2398058 Nov 18 03:10 APPROVED_overlay.png
+> -rw-r--r-- 1 root root 2134653 Nov 18 03:10 a00_approved_view_overlay.png
+> -rw-r--r-- 1 root root   28953 Nov 18 03:10 blueprint.json
+> -rw-r--r-- 1 root root 1986707 Nov 18 03:10 f10_forward10u_overlay.png
+> -rw-r--r-- 1 root root 1966485 Nov 18 03:10 f20_forward20u_overlay.png
+> drwxr-xr-x 2 root root    4096 Nov 18 03:10 kept
+> -rw-r--r-- 1 root root 1973026 Nov 18 03:10 t33_through_screen_overlay.png
+> -rw-r--r-- 1 root root 1884866 Nov 18 03:10 t66_through_screen_overlay.png
+> /home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png (864, 1536)
+> # Screen 04 — BLUEPRINT of the approved picture (round 9, lead order "BLUEPRINT → FOUNDATION")
+> 
+> Source: `references/04_through_the_five_arrows.png` (864 × 1536). Measurements: `tools/match04/blueprint04.py`
+> → `qa/match/04/r9/blueprint04.json`; annotated overlay `/home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png`.
+> Camera/proxy solve alrea …[+2086 chars]
+
+### 🤖 Claude — 2026-11-18T03:11:06.529Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look; python3 - <<EOF\nfrom PIL import Image\nps=['/home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png','/home/user/wt/s05/qa/match/05/r9/blueprint/APPROVED_overlay.png','/home/user/wt/s05/qa/match/05/r9/blueprint/t66_through_screen_overlay.png']\nims=[Image.open(p).convert('RGB') for p in ps]; print([i.size for i in ims])\nw=400; ims=[i.resize((w,int(i.height*w/i.width))) for i in ims]\nc=Image.new('RGB',(w*3+16,max(i.height for i in ims)),'white')\nfor k,i in enumerate(ims): c.paste(i,(k*(w+8) …[+116 chars]`
+
+### 🧑 User — 2026-11-18T03:11:06.923Z
+
+> ↩︎ result: [(864, 1536), (864, 1536), (864, 1536)]
+
+### 🤖 Claude — 2026-11-18T03:11:08.536Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look/blueprints.png"}`
+
+### 🧑 User — 2026-11-18T03:11:08.575Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:11:14.324Z
+
+> 🔧 **Bash** `{"command": "o=qa/review_r9/blueprints && mkdir -p $o && python3 - <<'EOF'\nfrom PIL import Image\no='qa/review_r9/blueprints/'\nfor s,d in [('/home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png','04_BLUEPRINT_of_APPROVED.jpg'),\n            ('/home/user/wt/s05/qa/match/05/r9/blueprint/APPROVED_overlay.png','05_BLUEPRINT_of_APPROVED.jpg'),\n            ('/home/user/wt/s05/qa/match/05/r9/blueprint/t66_through_screen_overlay.png','05_CURRENT_GAME_t66_vs_blueprint.jpg')]:\n    Image.open(s).convert('RGB').save(o+d,quality=93)\nEOF\nls $o", "description": "Copy the blueprint overlays into the r …[+14 chars]`
+
+### 🧑 User — 2026-11-18T03:11:14.586Z
+
+> ↩︎ result: 04_BLUEPRINT_of_APPROVED.jpg
+> 05_BLUEPRINT_of_APPROVED.jpg
+> 05_CURRENT_GAME_t66_vs_blueprint.jpg
+
+### 🤖 Claude — 2026-11-18T03:11:17.421Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r9/blueprints/04_BLUEPRINT_of_APPROVED.jpg", "qa/review_r9/blueprints/05_BLUEPRINT_of_APPROVED.jpg", "qa/review_r9/blueprints/05_CURRENT_GAME_t66_vs_blueprint.jpg"], "caption": "Step 1, the blueprints (measurements, not the rebuild yet): your approved Screen 04 and Screen 05 with their key shapes marked, plus today's Screen 05 two-thirds of the way through, measured against the painted river line.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T03:11:17.970Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_r9/blueprints/04_BLUEPRINT_of_APPROVED.jpg → file_uuid: c2819f7f-a9d1-4d0b-b074-42df6fa2dade
+>   /home/user/rainbow-/qa/review_r9/blueprints/05_BLUEPRINT_of_APPROVED.jpg → file_uuid: 845f7629-37fd-4fe7-8ffc-d8b606c08580
+>   /home/user/rainbow-/qa/review_r9/blueprints/05_CURRENT_GAME_t66_vs_blueprint.jpg → file_uuid: cb2cdaf2-3db5-45cf-94ef-105a3894fa1e
+
+### 🤖 Claude — 2026-11-18T03:11:21.794Z
+
+> 🔧 **Bash** `{"command": "flock -w 90 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:blueprints 2>&1 | grep '\"commit\"'; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-restore-c9-40w64b | cut -f1) local $(git rev-parse HEAD)\"", "description": "Save the blueprint pictures and verify the push", "timeout": 150000}`
+

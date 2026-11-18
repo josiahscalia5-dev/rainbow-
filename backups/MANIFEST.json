@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 14053,
-   "sha256": "763e3513fe49aea67c1c3bd321e057cbbdb8115906082c6a99363f0f9779f3c7"
+   "bytes": 14054,
+   "sha256": "c39a595855a53fb9a192dd0c390d6895c71a9cf82c82d276b75dd5911ed16039"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -955,6 +955,21 @@
    "path": "docs/briefs/2026-11-18-r8/S08.md",
    "bytes": 2548,
    "sha256": "8d4b0a3d1e515ce5fb07ff5a9078480283e3cc17833e9761a987b1f6e19338ba"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_06_overlay.png",
+   "bytes": 2335763,
+   "sha256": "f6bfa259869864d2866d479c52fca26da1116bd1bae3ad862a534cd9b7f82409"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_07_overlay.png",
+   "bytes": 2326595,
+   "sha256": "fe53cec8aebe5e070e40adb42647291599de273fa9d71d6680a3c1f0c1531bc1"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_08_overlay.png",
+   "bytes": 2337602,
+   "sha256": "68fed5f1b07b8214262541256ec0437272dc92de64bfb8659a2f92c9e7327f23"
   },
   {
    "path": "docs/briefs/2026-11-18-r9/COORDINATION.md",
@@ -9310,6 +9325,21 @@
    "path": "qa/review_r9/05_step4_seam/3_NEW_step4_t33.jpg",
    "bytes": 481461,
    "sha256": "2e443d3bb2af129182f1cfba23db99b52ca826057a5eb5a80aeb1a4189a1584a"
+  },
+  {
+   "path": "qa/review_r9/blueprints/04_BLUEPRINT_of_APPROVED.jpg",
+   "bytes": 517675,
+   "sha256": "081084d11db7b91dc73285034ce5a7f5c16a0384bd6e3ee28db9c51043fa9f38"
+  },
+  {
+   "path": "qa/review_r9/blueprints/05_BLUEPRINT_of_APPROVED.jpg",
+   "bytes": 576573,
+   "sha256": "2cd6a5b46d25b760a48967c7b60c893242b5f3de534d8eb779011326089a925e"
+  },
+  {
+   "path": "qa/review_r9/blueprints/05_CURRENT_GAME_t66_vs_blueprint.jpg",
+   "bytes": 477073,
+   "sha256": "d9fa6d49bf30df145af0f3be3d14a57a7c31e954375a5f2277b2dd54c9244020"
   },
   {
    "path": "qa/scene_comparisons.md",
