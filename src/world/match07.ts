@@ -39,6 +39,10 @@ export interface Match07 {
 }
 
 const VERT = /* glsl */ `
+#ifdef PAINTED_PADDLE_FACE
+varying vec3 vPaddleLocal;
+varying vec3 vPaddleNormal;
+#endif
 uniform mat4 uProjVP;
 uniform float uCtr[64];   // r16 '?m07nearw=1': river centre line (tube-local x) every uCtrA.y units of depth from uCtrA.x
 uniform vec3 uCtrA;       // first depth, step, on (z)
@@ -49,6 +53,10 @@ varying vec3 vL;
 varying vec2 vUv;
 varying float vCtr;
 void main() {
+#ifdef PAINTED_PADDLE_FACE
+  vPaddleLocal = position;
+  vPaddleNormal = normal;
+#endif
   vUv = uv;
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vProj = uProjVP * wp;
@@ -65,6 +73,12 @@ void main() {
 }`;
 
 const FRAG = /* glsl */ `
+#ifdef PAINTED_PADDLE_FACE
+varying vec3 vPaddleLocal;
+varying vec3 vPaddleNormal;
+uniform sampler2D uPaddleFace;
+uniform float uPaddleWidth;
+#endif
 uniform sampler2D uPlate;
 uniform sampler2D uDepth;
 uniform float uUseDepth;
@@ -222,6 +236,21 @@ void main() {
       t = mix(pcf, texture2D(uPlate, uv).rgb, w);
     }
   }
+#ifdef PAINTED_PADDLE_FACE
+  // Rectified bands are attached to the modeled paddle, independent of the projector.
+  float across = clamp(0.5 - vPaddleLocal.x / uPaddleWidth, 0.005, 0.995);
+  float radial = clamp(0.5 - vPaddleLocal.y / 1.2, 0.0, 1.0);
+  float axial = clamp(0.5 + vPaddleLocal.z / (uPaddleWidth * 0.42), 0.0, 1.0);
+  vec3 localN = normalize(vPaddleNormal);
+  vec3 front = texture2D(uPaddleFace, vec2(across, mix(0.995, 0.505, radial))).rgb;
+  vec3 underside = texture2D(uPaddleFace, vec2(across, mix(0.015, 0.495, axial))).rgb;
+  float under = smoothstep(0.12, 0.86, -localN.y);
+  vec3 enamel = mix(front, underside, under);
+  vec3 viewDir = normalize(cameraPosition - vW);
+  float glint = pow(max(dot(reflect(-uKey, nn), viewDir), 0.0), 32.0);
+  enamel += vec3(0.15, 0.12, 0.08) * glint;
+  t = mix(t, enamel, smoothstep(0.45, 2.5, distance(cameraPosition, uProjPos)));
+#endif
   gl_FragColor = vec4(pjInverse(t), 1.0);
 }`;
 
@@ -362,6 +391,16 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
     uniforms: { ...shared, uTile: { value: tile }, uMode: { value: mode }, uPatchK: { value: k } },
   });
   const M = { wall: mat(tWall, 1), water: mat(tRiver, 2), gold: mat(pGold, 0, 1 / 1.2) };
+  let paddleFace: THREE.ShaderMaterial | null = null;
+  if (fixGold && flag05('cx07PaddleFace')) {
+    const painted = await new THREE.TextureLoader().loadAsync(tex('paddleFace07.png'));
+    painted.colorSpace = THREE.NoColorSpace;
+    painted.anisotropy = 4;
+    paddleFace = mat(pGold, 0, 1 / 1.2);
+    paddleFace.defines = { PAINTED_PADDLE_FACE: 1 };
+    paddleFace.uniforms.uPaddleFace = { value: painted };
+    paddleFace.uniforms.uPaddleWidth = { value: L.paddles[2].w };
+  }
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => {
     const o = new THREE.Mesh(g, m); o.name = 'm07_' + name; o.frustumCulled = false; group.add(o); return o;
   };
@@ -385,7 +424,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
     const depth = 1.2, w = p.w;
     // M2 '?m07gold=1': rounded block (bevelled edges catch the light and read as solid metal while passing close)
     const g = fixGold ? new RoundedBoxGeometry(w, depth, w * 0.42, 4, Math.min(0.3, w * 0.12)) : new THREE.BoxGeometry(w, depth, w * 0.42);
-    const o = add(g, M.gold, 'paddle' + i);
+    const o = add(g, i === 2 && paddleFace ? paddleFace : M.gold, 'paddle' + i);
     o.position.set(T.ax + (T.r - depth / 2 + 0.05) * Math.cos(ang), T.h + (T.r - depth / 2 + 0.05) * Math.sin(ang), lz);
     o.rotation.z = ang - Math.PI / 2; // local +y along the radius (out of the wall toward the axis)
   }
