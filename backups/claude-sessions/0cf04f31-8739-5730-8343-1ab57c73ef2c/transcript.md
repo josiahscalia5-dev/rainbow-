@@ -4507,3 +4507,79 @@ Screen 06 is saved (`8182130c`, verified). Saving the lead documents too:
 
 > 🔧 **Bash** `{"command": "for i in 1 2 3 4 5 6; do out=$(timeout 300 python3 scripts/rainbow-autosave.py --reason manual:answer-final-demand 2>&1 | tail -2); echo \"$out\" | grep -qi \"another autosave\" || break; sleep 15; done; for i in $(seq 1 40); do R=$(git ls-remote origin refs/heads/ccr-3b139b48-0qqkkz | cut -f1); [ \"$R\" = \"$(git rev-parse HEAD)\" ] && [ -z \"$(git status --porcelain)\" ] && break; sleep 5; done; echo \"local $(git rev-parse HEAD)\"; echo \"remote $R\"; echo \"uncommitted $(git status --porcelain | wc -l)\"; for s in s05 s08; do echo \"$s $(git -C /home/user/wt/$s log -1 --format …[+163 chars]`
 
+### 🧑 User — 2026-11-18T12:12:35.295Z
+
+> ↩︎ result: local 06ce9cdc817cfc617d9d9b1e7457361656acacf5
+> remote 06ce9cdc817cfc617d9d9b1e7457361656acacf5
+> uncommitted 0
+> s05 c25327a2 12 minutes ago dirty 4
+> s08 46d4b6ee 12 minutes ago dirty 5
+
+### 🤖 Claude — 2026-11-18T12:13:11.039Z
+
+## Direct answer: NOT YET PROVEN
+
+It isn't a **yes**: today no screen reaches 8.5/10 while Benny swims, and I won't say otherwise to reassure you. It isn't a flat **no** either: Screen 08 already holds your actual design through most of its ride, and one decisive test remains that would settle the rest.
+
+**A. Can I reproduce your exact approved starting views?**
+- **Scenery: YES, shown in the real game.** At each screen's painted viewpoint, the game lays your own painted pixels onto 3D shapes fitted to your picture. The Screen 06 approved view I rendered today looks like your picture.
+- **Benny: NO, not yet.** At that same view the game's Benny is bigger and higher than your painted Benny, with different hat stripes and pom-pom.
+
+**B. Convincing, consistent continuations while Benny swims? NOT YET PROVEN.**
+- Partly achieved on Screen 08 (about 7–7.5/10).
+- Partly on the first two-thirds of Screen 05.
+- Not on 04, 06 or 07.
+
+**C. At least 8.5/10 on all five screens? NOT YET PROVEN.** Current honest ratings while swimming, from account 10's real-game audit this morning:
+
+| Screen | Rating while swimming |
+|---|---|
+| 08 | ≈ 7–7.5 |
+| 05 | ≈ 6.5 (≈ 2.5 at the end) |
+| 06 | ≈ 4.5 |
+| 04 | ≈ 3.5 |
+| 07 | ≈ 3.5 |
+
+**D. Evidence:**
+- Real-game renders at the start, a third, two-thirds and the end of every stage, plus hard steering (`qa/review_c10/2026-11-18/`).
+- Today's three kept steps (05 walls, 08 ceiling seam) and the rejected ones.
+- Today's two Screen 06 tunnel tests, both rejected.
+
+**E. What stands in the way:**
+1. **Each picture shows one viewpoint.** Laying your pixels onto 3D shapes, the method that made 08 the best screen, holds only near that viewpoint. 77–86 % of stages 04, 06 and 07 are places none of your pictures show.
+2. **The paintings' perspective doesn't fit the game's fixed river course.** I measured this today on Screen 06: your tunnel dives deep straight ahead, while the game's river turns right about 24 units in.
+   - Bending the tunnel strongly produced wrong geometry (the pictures I just sent).
+   - Bending it gently changed nothing.
+   - Both were rejected and logged.
+3. **Benny's 3D model doesn't yet match your painted Benny.**
+
+**The strongest AI-only method:** extend the Screen 08 approach from one picture to a **chain of views along each stage**.
+- Each view is laid onto 3D shapes fitted to it, with Depth Anything 3 measuring each view's shapes. The game blends between them as Benny swims.
+- Every view comes from your approved art, and you approve it before it's used.
+
+**The test that settles it, at no new cost:** Screen 04, using the two provisional views you already have (V04-1 and V04-2, paid for and generated). I lay them onto the interior as two extra views and render the real game from the approach through the inside, including steering.
+- If those frames look like your design to you, the method is proven and goes to 06 and 07.
+- If they don't, I'll tell you plainly that the parts your pictures never show can't reach your target this way.
+
+## Tool search (verified, saved in `docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md`)
+Nothing in the Claude plugin directory or connector registry rebuilds a painting into matching 3D.
+
+**Rejected:**
+- **parallax-threejs:** debugging only, which we already cover with Playwright and DevTools.
+- **Three.js 3D Viewer:** a demo viewer only.
+
+**One genuinely new capability:** the **Hugging Face connector**. It gives access to **Stable Virtual Camera** (Stability AI) and **ViewCrafter**, which I verified exist. Both turn one picture into a *consistent* sequence of views along a camera path, so they could produce the chain of views along the game's own path for free. Neither is proven on painted art yet.
+
+**Your decision:** may I use the Hugging Face connector? It needs two actions from you on huggingface.co:
+1. Connect your account in your claude.ai connector settings (free tier).
+2. Accept the Stable Virtual Camera licence on its model page.
+
+No payment is needed.
+
+## Now
+- **Screen 04 decisive test:** I'm starting it myself, since it answers your question.
+- **Screens 05 and 08:** both specialists keep working under your strict rule. Their next results come to you as APPROVED / BEFORE / NEW.
+- **Benny's swimming:** I still owe you a short real-game clip so you can judge his motion. It will come with the Screen 04 test frames.
+
+Everything is saved: lead branch `06ce9cdc`, Screen 06 branch `8182130c`.
+

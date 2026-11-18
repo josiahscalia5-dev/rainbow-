@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15032,
-   "sha256": "5af79ed1768dd93b6bc37f645ee4c8e6b3c05272e9adc9f7da1cb83587a98eb0"
+   "sha256": "efaf6f7cfb4b9cf7252d9e8e9131db6169ae938966e2e0fa388026a3cefd767c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -683,8 +683,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/INFO.json",
-   "bytes": 510,
-   "sha256": "600f6d6ac3da67aad94092d7f22fef8321ffce29a310205ac9c2a49c6275e7e0"
+   "bytes": 602,
+   "sha256": "a8a4e740f9f2880d4d3571fea7aba32c4efc1ae16e84ea63a6e088e3b3db5804"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-match-c11/tracked.patch",
+   "bytes": 3879,
+   "sha256": "86fd8f9c3c2a97e767a427106dc802bc285839cb0125a9d91eb08b9a9ebd5361"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/untracked/tools/match05/r11_eval.mjs",
@@ -693,58 +698,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
-   "bytes": 1828,
-   "sha256": "17d48f78280e53cbcbac2e6d45ff65c4c2764d8e5bd78ee60b220116caae5b39"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/tracked.patch",
-   "bytes": 9474,
-   "sha256": "f4c9a566d850c8b805e819c7ef238b06177b37c157c09c18d2d8477568c28537"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/BEFORE/f06_forward6u.png",
-   "bytes": 1997354,
-   "sha256": "128e26a483f2e9ca480accf5c95a7635c03c6910d6e371e2befeeca435db4529"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/BEFORE/motion.json",
-   "bytes": 4676,
-   "sha256": "39e507dd2f230b3f2089bd17a7befd8da013594471a07bb15e0f4ecabc61fc04"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/BEFORE/s_left_steer.png",
-   "bytes": 1953792,
-   "sha256": "7d67b2b271485356fe2538bfe59a44fbc2d5e16a09758aabe5ce5a4ce4b5710e"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/BEFORE/s_right_steer.png",
-   "bytes": 1940408,
-   "sha256": "8c9523a0e6366d87764c75d3b911d5fe6a6ed4f523e428655616799e819f8b70"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/BEFORE/t95_through_screen.png",
-   "bytes": 1992987,
-   "sha256": "0a221dfd6179fbc36c9703ec29ed87725c090ae709d355589e0e3b46154061c3"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/NEW_m06bend/motion.json",
-   "bytes": 4686,
-   "sha256": "3736ad43241ac6732522868e585d6d2bbf34aeaa1da69e1da5b87f851fec7f31"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/NEW_m06bend/s_left_steer.png",
-   "bytes": 1971650,
-   "sha256": "f33f35193551b615835098bd69aecae2cabd606a38e2941bc484831c7f344325"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/qa/match/06/r11/NEW_m06bend/s_right_steer.png",
-   "bytes": 1953329,
-   "sha256": "e47520b764fd9593dd8b994240bb252b7bb7deec65d6b90cdd0d85d11e2a19db"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s06-match-c11/untracked/tools/match06/r11_mouth_probe.mjs",
-   "bytes": 2810,
-   "sha256": "9792d45f8a9dbe18da566c33ff6a2a04d9dbcc1553d775f7022d771d6385adfa"
+   "bytes": 477,
+   "sha256": "ff6e7eb9db56e7a477aea08c9f943f6a43dddbb8157a58a8d34ce515633e83a8"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -763,13 +718,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/INFO.json",
-   "bytes": 623,
-   "sha256": "4aafa4575b9bb7520a8ed71153091a67101016b3cc49a8de6fb23654a205f6dc"
+   "bytes": 648,
+   "sha256": "d6afdef7a809596e8a7c23e7d4efc4c7714bf438298a8faec08aca1975afcd33"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/tracked.patch",
-   "bytes": 10245,
-   "sha256": "2a807a425a4fbcaeb7c64662803a879f704b3a10e204629edcda9eb7fbf01231"
+   "bytes": 11923,
+   "sha256": "69d583857db634b4e2e6416adc55bc6441f1cebee30a1873b6c76c763e5ac677"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/untracked/assets/textures/match08/near08.json",

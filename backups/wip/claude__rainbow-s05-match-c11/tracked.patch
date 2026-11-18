@@ -1,5 +1,5 @@
 diff --git a/src/world/environment.ts b/src/world/environment.ts
-index 9200b1b2..e4482e9e 100644
+index 9200b1b2..1249765c 100644
 --- a/src/world/environment.ts
 +++ b/src/world/environment.ts
 @@ -14,7 +14,7 @@ import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
@@ -16,12 +16,12 @@ index 9200b1b2..e4482e9e 100644
        ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
        radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
 -      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
-+      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 3 : 6.5, foldFar: M05END ? 5 : 10,   // m05end (r11): fold at the 06 hand-over
++      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
        riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
        course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
      }) : null;
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index 491da363..a1928e49 100644
+index 491da363..a3b53d89 100644
 --- a/src/world/match05far.ts
 +++ b/src/world/match05far.ts
 @@ -26,6 +26,16 @@ import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m0
@@ -33,7 +33,7 @@ index 491da363..a1928e49 100644
 + * stays inside the painted 05 tunnel. The far block folded away while the eye was still 10 … 6.5 u from its capped
 + * seam (s ≈ 186.5), so for the last ≈ 5 u of the stage the camera looked into the old generic 06 hall (white foam
 + * walls, flat pink) instead of the 05 rings / slotted walls / S-river. Now it folds only once Benny reaches the seam
-+ * (eye → seam 5 … 3 u = the 06 hand-over): until then the same world-anchored 05 block (rings, walls, far river,
++ * (eye → seam 6.8 … 5.2 u: Benny ≈ 187.6 … 189, done as Benny enters 06): until then the same world-anchored 05 block (rings, walls, far river,
 + * warm throat) continues ahead — faithful continuation of the painted tunnel, nothing new. Geometry, course and the
 + * 06 look unchanged; the locked view never uses this (block at its build-time geometry there).
 + */
@@ -42,14 +42,14 @@ index 491da363..a1928e49 100644
  type Item = { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number };
  
 diff --git a/tools/match05/r8_shots.mjs b/tools/match05/r8_shots.mjs
-index ac38b357..adc72a83 100644
+index ac38b357..ed4c8d62 100644
 --- a/tools/match05/r8_shots.mjs
 +++ b/tools/match05/r8_shots.mjs
 @@ -46,6 +46,7 @@ const ALL = [
  const EXTRA = [
    ['k81_kink', 't0.81', null], ['k81_kink_left', 't0.81', -1], ['k81_kink_right', 't0.81', 1],
    ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],
-+  ['t92_left', 't0.92', -1], ['t92_right', 't0.92', 1], ['t98_end', 't0.98', null],
++  ['t92_left', 't0.92', -1], ['t92_right', 't0.92', 1], ['t98_end', 't0.98', null], ['t102_06', 't1.02', null],
  ];
  const want = ONLY === 'all' ? null : new Set(ONLY.split(','));
  const SHOTS = want ? [...ALL, ...EXTRA].filter(([n]) => want.has(n)) : ALL;
