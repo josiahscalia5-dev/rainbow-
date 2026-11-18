@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14553,
-   "sha256": "38ab048e463fecdc5fcc8c3d5e5fa25ddddc56525c0fdb36be0524d5da5cb3ba"
+   "sha256": "78e1c93f5079f113a381ccffdc55aafa3349a285809212b62ded0c3d7d4ef64d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8780,6 +8780,161 @@
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_1_APPROVED.jpg",
+   "bytes": 334733,
+   "sha256": "1b47a48bded75f6ebf9c99f49d7ff377b581303db977b67a312bd8af2460be4a"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_2_GAME_start_painted_viewpoint.jpg",
+   "bytes": 479076,
+   "sha256": "4d6e1d0d7b36ba0851a3e860511bf83da6b4f5b7a53dd96b3e27b13a25e909ce"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_3_GAME_one_third_through.jpg",
+   "bytes": 409306,
+   "sha256": "7fef86a5dc79d3c719520dc7fc8ec94d65ee58fb5b9ede320ff686fa8745a4b9"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_4_GAME_two_thirds_through.jpg",
+   "bytes": 404859,
+   "sha256": "9361ff7bb7ed5c36b3e95abe8854199cbb52dcde5f935d5a541502b8bc9abd3d"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_5_GAME_end_of_stage.jpg",
+   "bytes": 405369,
+   "sha256": "e35c2d8d061bd2a768a3999b35aedacb892dc3605e71530e92f9318669afa955"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_1_APPROVED.jpg",
+   "bytes": 398827,
+   "sha256": "9ee62b20bfe6da6da68730839e6fc88d19627bb1635c8cf204f3c4009a9b4fdf"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_2_GAME_start_painted_viewpoint.jpg",
+   "bytes": 566969,
+   "sha256": "dbf61304a9b3822b91b5cccb807c93142a9fa33988ffb8382bd3aabb2c368c77"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_3_GAME_one_third_through.jpg",
+   "bytes": 511963,
+   "sha256": "07e0a812d6f9e330949ecac6ae3ddecb9e1634107a4b5f5bbbfb2f172a56972f"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_4_GAME_two_thirds_through.jpg",
+   "bytes": 467877,
+   "sha256": "6c4d6a808ad1990d333b1923a93e58f1064b5c30434d7730f6da0340f4498c77"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_5_GAME_end_of_stage.jpg",
+   "bytes": 437852,
+   "sha256": "4f5542eab782551728b163e3db8272543a9ae623cd8b32a2acf076214a70f7ef"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/06_1_APPROVED.jpg",
+   "bytes": 411991,
+   "sha256": "c4ccce3a0d36e6389fd72b64c4f27ef7ad2e2bdeeb318614853bc4478a62c52b"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/06_2_GAME_start_painted_viewpoint.jpg",
+   "bytes": 598723,
+   "sha256": "de23d4afc3ed44b77c59c107e120668bb5f9f3ffd8f4c415549fc56a0bf2395f"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/06_3_GAME_one_third_through.jpg",
+   "bytes": 563718,
+   "sha256": "2dbe15a92dc5577f0c322ab9997428cc3144e0edfc4ae1950bde870aefbd2202"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/06_4_GAME_two_thirds_through.jpg",
+   "bytes": 558035,
+   "sha256": "f92e242d2d22c93d6d1900b52804d255fc032e1b6f6056420a2eac7f4f7fc122"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/06_5_GAME_end_of_stage.jpg",
+   "bytes": 499818,
+   "sha256": "d62954acd63cf8787bdba752515af81463f7f0095fe76206b0f20b2044113c9e"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/07_1_APPROVED.jpg",
+   "bytes": 408530,
+   "sha256": "7885772a9f7d3fbfc95d3c198a5b1852f415a95546e01a290cb51ed4d5b01794"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/07_2_GAME_start_painted_viewpoint.jpg",
+   "bytes": 594468,
+   "sha256": "19744524ff51f437701fe96bb39e9e7f8df52a2b381b2ebac785e299a5aa2f8c"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/07_3_GAME_one_third_through.jpg",
+   "bytes": 442060,
+   "sha256": "9471f918ceef849694eb64d1158c19975f240423d5df326b07a49671c773d96f"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/07_4_GAME_two_thirds_through.jpg",
+   "bytes": 557441,
+   "sha256": "e4402e63cffe7ea294e36aa9b32408353faeb74557e0418db001e212a7d20dce"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/07_5_GAME_end_of_stage.jpg",
+   "bytes": 466992,
+   "sha256": "75d8237dcde999c147ef72721a45400bbaae0cf233e4548d1249519eb82cb3f3"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/08_1_APPROVED.jpg",
+   "bytes": 408171,
+   "sha256": "438b836aa97bab5f0fdaece4f2c4a853b683503a9d4ffa0444e51472d8ce7a41"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/08_2_GAME_start_painted_viewpoint.jpg",
+   "bytes": 557595,
+   "sha256": "3534612a756a1ef8facd23fc4488f1525d552a6bbf5bb25528361b6704a99c9f"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/08_3_GAME_one_third_through.jpg",
+   "bytes": 520568,
+   "sha256": "b9422ae09f702a60749b9604e7bc7ab0e547ece87c09d8d24be9426f137ed72e"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/08_4_GAME_two_thirds_through.jpg",
+   "bytes": 525581,
+   "sha256": "e16a98b16b5c39e9c4df6d4f784c70ad2aa057581a1c3a21a4c6b3685133b5c0"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/08_5_GAME_end_of_stage.jpg",
+   "bytes": 531961,
+   "sha256": "866bd152af1ef174c0bea15f15b35a128d7127b2f4e18d5455489bb4f67cfbdf"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/README.md",
+   "bytes": 3092,
+   "sha256": "271b2edd92f982a8b8bf82f5be3bc5be9cb0230dee5d43f2030e60e9060829f6"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/all_shots/04/motion.json",
+   "bytes": 4626,
+   "sha256": "e369dc0d3fb7fdc06eaf1dc4a5b0c8d41791126e19d340550dc80c62391840b5"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/all_shots/05/motion.json",
+   "bytes": 4712,
+   "sha256": "f6360a73baa2c0382f02571d49f12debbbe9e3f587a6d54160f43754eb4db8e2"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/all_shots/06/motion.json",
+   "bytes": 4677,
+   "sha256": "fed33d113c6365ebd25614bde6a59cbe8a392eaeca5171f9da6ddc46803fb39b"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/all_shots/07/motion.json",
+   "bytes": 4693,
+   "sha256": "4c133e46e911ec8edc25cdaf563adde972cc4e5dba7d14fa6449877328eb4c61"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/all_shots/08/motion.json",
+   "bytes": 4717,
+   "sha256": "30b07c66630efc70cb9b212f41783c2f3ac314cc03b9d211ed859ce56d887fe5"
   },
   {
    "path": "qa/review_r7/04_1_APPROVED.jpg",

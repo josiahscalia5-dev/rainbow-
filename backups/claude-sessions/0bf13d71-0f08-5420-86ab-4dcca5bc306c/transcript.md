@@ -1232,3 +1232,618 @@ While those render, here are the approved pictures for 06 and 07, so I can judge
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10; until [ -f $SP/DONE ]; do sleep 15; done; for s in 04 06 07; do echo \"== $s\"; tail -n 2 $SP/$s.log; done; cd /home/user/rainbow- && for s in 04 06 07; do echo \"== $s metrics\"; python3 -I tools/lead_r6/motion_metrics.py references/$(ls references | grep \"^$s\") $SP/$s/*.png 2>&1 | sed \"s#$SP/##\"; done", "description": "Wait for remaining renders and measure 04, 06, 07", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-18T10:23:42.653Z
+
+> ↩︎ result: == 04
+> 04 t95_through_screen s 113.673 lat 0 stage 04 frames 153
+> exit=0
+> == 06
+> 06 t95_through_screen s 241.303 lat 0 stage 06 frames 228
+> exit=0
+> == 07
+> 07 t95_through_screen s 385.059 lat 0 stage 07 frames 557
+> exit=0
+> == 04 metrics
+> a00_approved_view      LAYOUT20  53.4 %  PALETTE  93.3 %
+> f03_forward3u          LAYOUT20   4.1 %  PALETTE  77.9 %
+> f06_forward6u          LAYOUT20   2.8 %  PALETTE  72.9 %
+> f10_forward10u         LAYOUT20   2.3 %  PALETTE  64.6 %
+> f20_forward20u         LAYOUT20   2.8 %  PALETTE  67.1 %
+> s_left_hard            LAYOUT20   2.0 %  PALETTE  64.6 %
+> s_left_steer           LAYOUT20   3.4 %  PALETTE  76.1 %
+> s_right_hard           LAYOUT20   2.5 %  PALETTE  61.5 %
+> s_right_steer          LAYOUT20   3.3 %  PALETTE  75.1 %
+> t33_through_screen     LAYOUT20   2.6 %  PALETTE  66.7 %
+> t66_through_screen     LAYOUT20   3.4 %  PALETTE  69.4 %
+> t95_through_screen     LAYOUT20   2.6 %  PALETTE  62.3 %
+> == 06 metrics
+> a00_approved_view      LAYOUT20  27.0 %  PALETTE  88.6 %
+> f03_forward3u          LAYOUT20   3.9 %  PALETTE  71.2 %
+> f06_forward6u          LAYOUT20   4.9 %  PALETTE  65.5 %
+> f10_forward10u         LAYOUT20   4.5 %  PALETTE  68.1 %
+> f20_forward20u         LAYOUT20   3.4 %  PALETT …[+1106 chars]
+
+### 🤖 Claude — 2026-11-18T10:23:46.129Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/06/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:23:46.171Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:23:46.892Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/07/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:23:46.935Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:23:47.547Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/04/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:23:47.598Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:23:55.675Z
+
+> 🔧 **Bash** `{"command": "grep -n \"opt.q\\|opt\\['q'\\]\\|--q\" scripts/capture.mjs | head -5", "description": "Check capture script query option"}`
+
+### 🧑 User — 2026-11-18T10:23:55.712Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+
+### 🤖 Claude — 2026-11-18T10:24:02.356Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad; W=$SP/wt; O=$SP/audit_c10/exact; mkdir -p $O\ncap() { (cd $W/$1 && timeout 900 node scripts/capture.mjs $2 --out=$O/$2 \"--q=$3\" > $O/$2.log 2>&1; echo \"exit=$?\" >> $O/$2.log); }\ncap s08-scenery-c9 08 'match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1' &\ncap s05-match-c9 05 'match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1' &\nwait\ncap s04-match-c9 04 'match04=1&m04ring=1&m04river=1&m04foam=1&m0 …[+380 chars]`
+
+### 🧑 User — 2026-11-18T10:24:48.893Z
+
+> ↩︎ result: [1]-  Done                    cap s08-scenery-c9 08 'match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'
+> [2]+  Done                    cap s05-match-c9 05 'match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1'
+> [1]-  Done                    cap s04-match-c9 04 'match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'
+> [2]+  Done                    cap s06-match-c9 06 'match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1'
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/04/:
+> 04.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/05/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/06/:
+> 06.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/07/:
+> 07.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/08/:
+> 08.png
+> ==> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpa …[+529 chars]
+
+### 🤖 Claude — 2026-11-18T10:24:54.682Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,12p tools/qa/screen_match.py | head -15; O=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact; python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nimport glob,os\nfor s in ['04','05','06','07','08']:\n    ref=[f for f in os.listdir('references') if f.startswith(s)][0]\n    R=np.asarray(Image.open('references/'+ref).convert('RGB'),dtype=np.int16)\n    A=np.asarray(Image.open(f'$O/{s}/{s}.png').convert('RGB').resize((R.shape[1],R.shape[0])),dtype=np.int16)\n    d=np.abs(A-R).max(axis=2)\n    print(s, ref, 'whole frame w …[+168 chars]`
+
+### 🧑 User — 2026-11-18T10:24:55.311Z
+
+> ↩︎ result: """Any screen — APPROVED reference vs real-game capture, measured three ways (never one invented 'fidelity score'):
+>   FULL      every pixel: mean |dRGB| (0-255), share within 10 / 20 levels, luminance SSIM (7x7 Gaussian)
+>   BELOWHUD  the same below the HUD bar + title (rows >= 13 % of the height)
+>   LAYOUT    both images blurred (sigma 8 px) first: colour + composition independent of fine detail / exact edges
+>             (mean |dRGB| and share within 20 levels) — a big gap between FULL and LAYOUT means the right things are
+>             roughly in the right places but details / edges differ; a bad LAYOUT means the scene itself differs
+> usage: python3 -I tools/qa/screen_match.py <approved.png> <capture.png> [--json=OUT] [--label=NAME]"""
+> import json, sys
+> import numpy as np
+> from PIL import Image
+> from scipy.ndimage import gaussian_filter
+> 
+> 04 04_through_the_five_arrows.png whole frame within 20 levels: 78.2 %  within 40: 82.7 %
+> 05 05_flow_into_the_current.png whole frame within 20 levels: 83.2 %  within 40: 90.0 %
+> 06 06_crest_the_rinse_arch.png whole frame within 20 levels: 76.2 %  within 40: 80.7 %
+> 07 07_dive_the_washer_tube.png whole frame within 20 levels: 77.1 %  within 40: 81.4 %
+> 08 08 …[+79 chars]
+
+### 🤖 Claude — 2026-11-18T10:24:59.672Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact; for s in 04 05 06 07 08; do echo \"== $s\"; python3 -I tools/qa/screen_match.py references/$(ls references | grep \"^$s\") $O/$s/$s.png 2>&1 | tail -4; done", "description": "Run the project's official screen match on exact frames"}`
+
+### 🧑 User — 2026-11-18T10:25:05.998Z
+
+> ↩︎ result: == 04
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/04/04.png FULL |d|  13.5 <=20 0.814 SSIM 0.815 | BELOWHUD |d|   7.9 <=20 0.895 | LAYOUT |d|   5.3 <=20 0.908 | mean RGB approved [179.3, 132.6, 168.6] game [181.0, 132.2, 170.0]
+> == 05
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/05/05.png FULL |d|   9.1 <=20 0.885 SSIM 0.862 | BELOWHUD |d|   6.7 <=20 0.916 | LAYOUT |d|   3.3 <=20 0.959 | mean RGB approved [151.2, 124.1, 192.3] game [149.9, 124.2, 192.6]
+> == 06
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/06/06.png FULL |d|  16.3 <=20 0.790 SSIM 0.781 | BELOWHUD |d|  11.9 <=20 0.856 | LAYOUT |d|   9.0 <=20 0.862 | mean RGB approved [152.8, 131.3, 204.3] game [154.3, 125.1, 204.8]
+> == 07
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/exact/07/07.png FULL |d|  15.3 <=20 0.799 SSIM 0.787 | BELOWHUD |d|  10.5 <=20 0.867 | LAYOUT |d|   7.9 <=20 0.878 | mean RGB approved [165.5, 116.4, 188.7] game [168.8, 114.7, 189.1]
+> == 08
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc …[+209 chars]
+
+### 🤖 Claude — 2026-11-18T10:25:22.838Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10; D=qa/review_c10/2026-11-18; mkdir -p $D; for s in 04 05 06 07 08; do ref=references/$(ls references | grep \"^$s\"); convert $ref -quality 90 $D/${s}_1_APPROVED.jpg; convert $SP/exact/$s/$s.png -quality 90 $D/${s}_2_GAME_start_painted_viewpoint.jpg; convert $SP/$s/t33_through_screen.png -quality 90 $D/${s}_3_GAME_one_third_through.jpg; convert $SP/$s/t66_through_screen.png -quality 90 $D/${s}_4_GAME_two_thirds_through.jpg; convert $SP/$s/t95_through_screen.png -quality 90 $D/${s}_5_GAME …[+285 chars]`
+
+### 🧑 User — 2026-11-18T10:25:28.529Z
+
+> ↩︎ result: 34M	qa/review_c10/2026-11-18
+> 04_1_APPROVED.jpg
+> 04_2_GAME_start_painted_viewpoint.jpg
+> 04_3_GAME_one_third_through.jpg
+> 04_4_GAME_two_thirds_through.jpg
+> 04_5_GAME_end_of_stage.jpg
+> 05_1_APPROVED.jpg
+> 05_2_GAME_start_painted_viewpoint.jpg
+> 05_3_GAME_one_third_through.jpg
+> 05_4_GAME_two_thirds_through.jpg
+> 05_5_GAME_end_of_stage.jpg
+> 06_1_APPROVED.jpg
+> 06_2_GAME_start_painted_viewpoint.jpg
+> 06_3_GAME_one_third_through.jpg
+> 06_4_GAME_two_thirds_through.jpg
+> 06_5_GAME_end_of_stage.jpg
+> 07_1_APPROVED.jpg
+> 07_2_GAME_start_painted_viewpoint.jpg
+> 07_3_GAME_one_third_through.jpg
+> 07_4_GAME_two_thirds_through.jpg
+> 07_5_GAME_end_of_stage.jpg
+> 08_1_APPROVED.jpg
+> 08_2_GAME_start_painted_viewpoint.jpg
+> 08_3_GAME_one_third_through.jpg
+> 08_4_GAME_two_thirds_through.jpg
+> 08_5_GAME_end_of_stage.jpg
+> all_shots
+
+### 🤖 Claude — 2026-11-18T10:25:31.839Z
+
+34 MB is too heavy for the repo. I'll keep only the 25 key frames plus the measurement logs.
+
+### 🤖 Claude — 2026-11-18T10:25:33.092Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_c10/2026-11-18; for s in 04 05 06 07 08; do find $D/all_shots/$s -name '*.jpg' -delete; done; for f in $D/*.jpg; do convert \"$f\" -quality 85 \"$f\"; done; du -sh $D", "description": "Trim evidence folder to key frames"}`
+
+### 🧑 User — 2026-11-18T10:25:34.386Z
+
+> ↩︎ result: 12M	qa/review_c10/2026-11-18
+
+### 🤖 Claude — 2026-11-18T10:25:50.380Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_c10/2026-11-18/README.md", "content": "# Account 10 — fresh evidence audit of the five playable screens (2026-11-18 ~10:20–10:55 UTC)\n\nRead-only. Each screen's NEWEST branch (`-c9` tips) rendered in the real game (same WebGL build the Capacitor APK\nwraps; headless Chromium, SwiftShader) with that screen's KEPT switch set. No code changed, no paid jobs.\n\n| Screen | Branch @ commit | Kept query |\n|---|---|---|\n| 04 | `claude/rainbow-s04-match-c9` @ `05e383c9` | `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1` |\n| 05 | ` …[+2580 chars]`
+
+### 🧑 User — 2026-11-18T10:25:50.410Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_c10/2026-11-18/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:25:51.881Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:evidence-c10 2>&1 | tail -4; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro; git lfs ls-files | wc -l", "description": "Save evidence to GitHub and verify remote matches"}`
+
+### 🧑 User — 2026-11-18T10:25:57.202Z
+
+> ↩︎ result: The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed. Correction to the text above: this call was stopped while running, not refused before it ran. It may have run in part or in full, and its changes may have been written. No permission prompt was involved. Work it started elsewhere (a remote command, a background process) may still be running, so check before starting the same work again. The instruction to stop and wait still stands.
+
+### 🧑 User — 2026-11-18T10:25:57.205Z
+
+[Request interrupted by user for tool use]
+
+### 🧑 User — 2026-11-18T10:25:57.236Z
+
+CLAUDIA — URGENT: FIND A MORE POWERFUL WAY TO RECREATE ALL FIVE OF MY EXACT APPROVED RAINBOW SCREENS
+
+Claudia, I need you to take this request seriously.
+
+I've already spent considerable time, money, and Claude credits trying to recreate my ORIGINAL APPROVED Rainbow game screens.
+
+I ALREADY DESIGNED THE GAME. I DON'T WANT DIFFERENT SCENERY. I WANT MY EXACT APPROVED VISUAL DESIGNS.
+
+I'm tired of getting environments that have similar colors but completely different shapes, water formations, backgrounds, or tunnel structures.
+
+I want you to investigate genuinely better technical solutions instead of continuing to repeat methods that haven't achieved my goal.
+
+1. MY NUMBER-ONE PRIORITY — VISUAL ACCURACY ONLY
+
+I want these FIVE playable screens recreated as faithfully as technically possible:
+
+- Screen 04 — Through the Five Arrows
+- Screen 05 — Flow Into the Current
+- Screen 06 — Crest the Rinse Arch
+- Screen 07 — Dive the Washer Tube
+- Screen 08 — Final Spin Chamber
+
+MY TARGET IS AT LEAST 95% VISUAL RESEMBLANCE TO MY ORIGINAL APPROVED ARTWORK, IF TECHNICALLY ACHIEVABLE.
+
+My minimum acceptable quality goal is 8.5/10, ideally 9–9.5/10, throughout the actual playable 3D environments.
+
+I understand these targets must be demonstrated rather than promised.
+
+I care about the exact:
+
+- Scenery and background environments.
+- Tunnel architecture and shapes.
+- Gold rings and washing-machine machinery.
+- Water shape, formations, colors, and reflections.
+- Foam, bubbles, and splashes.
+- Lighting, materials, textures, and visual depth.
+- Benny's fluffy appearance, hat, star, and proportions.
+- Overall composition, proportions, and visual polish.
+
+DO NOT REDESIGN MY APPROVED SCREENS.
+
+Screens 01–03 and 09–11 are my Google Flow videos, including the cartoon girl. Do not work on those scenes.
+
+I'm not asking for new gameplay mechanics, animations, or unrelated features right now.
+
+2. INVESTIGATE THESE SPECIFIC ALTERNATIVES
+
+I want you to research and evaluate tools that we have not properly tested in my existing project.
+
+A. Scenario YVO3D Retexture
+
+https://www.scenario.com/models/yvo3d-retexture
+
+Can this improve the materials on my EXISTING 3D models using crops of my ORIGINAL APPROVED ARTWORK?
+
+Specifically investigate:
+
+- Purple perforated washer walls.
+- Glossy gold rings.
+- Metallic machinery.
+- Water-adjacent surfaces.
+- Preserving the exact colors and patterns of my approved designs.
+
+Determine whether it supports my GLB files, what it costs, and whether the output works in Blender and Three.js.
+
+B. Depth Anything 3
+
+https://github.com/ByteDance-Seed/Depth-Anything-3
+
+Can this help recover more accurate 3D depth and geometry from my original approved images?
+
+Could it help determine the correct proportions and structure of the gold washer openings, tunnel walls, rings, and water channels?
+
+Evaluate how well it handles stylized, colorful 3D artwork rather than ordinary photographs.
+
+C. Adobe Substance 3D Sampler — Image to Material
+
+Can this turn the actual materials in my approved images into sharper, physically based textures?
+
+Investigate whether it can help create accurate:
+
+- Purple perforated wall materials.
+- Metallic gold surfaces.
+- Glossy highlights.
+- Surface depth and texture details.
+
+Compare it with the Blender tools we already have.
+
+D. ComfyUI With ControlNet
+
+Can depth-guided and edge-guided workflows help us create additional views of my APPROVED environments while preserving their original visual design?
+
+I do not want creative reinterpretations.
+
+Any additional reference views must remain consistent with the approved image and require my review before they are treated as authoritative.
+
+E. Microsoft TRELLIS.2
+
+https://github.com/microsoft/TRELLIS.2
+
+Could this reconstruct individual 3D objects more accurately?
+
+Evaluate it for:
+
+- Washer machinery.
+- Gold fixtures and paddles.
+- Tunnel components.
+- Decorative elements appearing in my original images.
+
+Do not assume it can reproduce an entire game environment from one picture.
+
+F. PyTorch3D / Differentiable Rendering
+
+Could we automatically improve the accuracy of our existing 3D models by comparing their rendered appearance against my approved artwork?
+
+Investigate whether geometry and texture fitting would help us reduce the visible differences more efficiently than manually changing random settings.
+
+Determine whether our cloud environment has the computing resources required.
+
+3. SEARCH THE ENTIRE CLAUDE PLUGIN AND CONNECTOR ECOSYSTEM
+
+This is important.
+
+DO NOT ONLY CHECK THE PLUGINS I ALREADY HAVE.
+
+I want you to search the currently available Claude plugin marketplace, connectors, MCP servers, relevant developer integrations, and reputable external 3D tools.
+
+Look specifically for capabilities involving:
+
+- Image-to-3D environment reconstruction.
+- Multi-view geometry generation.
+- AI-assisted 3D modeling.
+- 3D texture projection and retexturing.
+- Reference-image matching.
+- 3D scene reconstruction.
+- Material generation from images.
+- Blender automation.
+- 3D scene optimization.
+- Precise visual comparison against reference artwork.
+
+Find genuinely NEW solutions that could help reproduce my exact approved game screens.
+
+For each promising solution, tell me:
+
+1. What is its exact name?
+2. Does it actually exist and work?
+3. Is it available to my Claude account?
+4. Is it a Claude plugin, MCP server, external application, API, or open-source tool?
+5. Can you use it directly in my existing Rainbow project?
+6. How specifically would it improve the visual fidelity of my approved screens?
+7. Does it support editable Blender or game-compatible 3D assets?
+8. Does it cost money?
+9. Is it better than our current method for a specific problem?
+10. Is it genuinely worth using?
+
+DO NOT INVENT PLUGIN NAMES OR CLAIM INTEGRATIONS ARE AVAILABLE WITHOUT VERIFYING THEM.
+
+Do not simply give me another generic list of popular 3D software.
+
+4. COMPARE THE TOOLS AGAINST MY ACTUAL PROBLEMS
+
+We already know the major problems with my current reconstructions:
+
+SCREEN 04: The approved gold washer entrance becomes an incorrect orange corridor. The original water formation, glowing arrows, laundry-room surroundings, foam, and bubbles are not consistently reproduced.
+
+SCREEN 05: The approved S-shaped river becomes stretched, flattened, or disconnected. Near and far water sections sometimes have seams, and some tunnel materials become blurry.
+
+SCREEN 06: The real 3D gold rings are improving, but wall details and other approved scenery elements still need more accurate materials and shapes.
+
+SCREEN 07: The plunge needs its correct purple-and-gold tunnel architecture and approved water formation, without oversized geometry obscuring the scene.
+
+SCREEN 08: The approved chamber is closer, but visible wall seams, texture distortion, foreground coins, and some materials still differ from the artwork.
+
+I want you to identify which new technology could genuinely solve EACH of these specific visual problems.
+
+Do not suggest a tool merely because it can generate something that looks beautiful.
+
+IT MUST HELP REPRODUCE MY DESIGN.
+
+5. STOP REPEATING METHODS THAT AREN'T WORKING
+
+World Labs Marble has been useful for some supporting assets, but previous generations changed the geometry and scenery.
+
+I do not want you spending more Marble credits trying the same approach over and over.
+
+Likewise, I do not want endless rounds of polishing incorrect geometry.
+
+Distinguish between:
+
+- Incorrect 3D architecture that must be reconstructed.
+- Incorrect texture mapping that can be repaired.
+- Missing visual details that can be modeled or added.
+- Existing successful artwork projection that should be preserved.
+- Additional viewpoints or surfaces that aren't defined by my original picture.
+
+Use the correct solution for each problem.
+
+DO NOT REMOVE SUCCESSFUL EXISTING WORK JUST BECAUSE IT USES ARTWORK PROJECTION OR AN IMAGE BACKDROP.
+
+A hybrid reconstruction using real 3D geometry, accurately mapped approved artwork, and appropriate backgrounds is acceptable if it produces the best visual result throughout gameplay.
+
+I do not want flat-image tricks that visibly break or distort when Benny moves.
+
+6. TEST THE MOST PROMISING APPROACH BEFORE SPENDING MONEY
+
+After investigating the alternatives, rank them by their realistic usefulness for MY project.
+
+Select the strongest approach that can be tested without paying for a new generation.
+
+Use existing Rainbow models, approved artwork, and saved assets.
+
+Perform a small controlled visual experiment on a component that is currently inaccurate, such as:
+
+- Screen 04's gold washer entrance.
+- Screen 05's water and tunnel-wall materials.
+- Screen 06's purple perforated wall texture.
+
+Show me:
+
+1. ORIGINAL APPROVED ARTWORK
+
+2. CURRENT GAME VERSION
+
+3. NEW EXPERIMENTAL VERSION
+
+Use separate large portrait images, not collages.
+
+Tell me exactly what looks closer and what remains wrong.
+
+If the new approach does not visibly improve accuracy, reject it.
+
+Do not spend any money or credits without my approval.
+
+7. KEEP ALL FIVE SPECIALIST WORKSTREAMS ACTIVE IN THE PLAN
+
+My existing Rainbow project must continue from its newest GitHub checkpoints.
+
+Preserve all ten specialist-agent definitions and all seven existing development workstreams.
+
+Keep the established multi-agent workflow available, with up to two active specialist sessions simultaneously to conserve credits.
+
+Do not restart completed reconstruction work.
+
+Continue making progress on ALL FIVE playable screens, rotating specialist slots as milestones finish.
+
+Use the reference-match specialist to independently check whether changes actually resemble my original approved artwork.
+
+8. DO NOT GET DISTRACTED BY UNRELATED DEVELOPMENT
+
+Right now, do not prioritize:
+
+- New animations.
+- New gameplay features.
+- Rebuilding the Google Flow videos.
+- Unnecessary APK troubleshooting.
+- Repeated server checks that already passed.
+- Reinstalling working tools.
+- Cosmetic changes to incorrect scenery.
+- More paid world generation without a clear reason.
+
+Only perform supporting technical work when it directly helps produce or verify better visual results.
+
+9. GIVE ME A DIRECT, HONEST CONCLUSION
+
+After comparing the tools, answer these questions:
+
+QUESTION 1: What is the single strongest NEW tool or technical method for reproducing my approved scenery more accurately?
+
+QUESTION 2: Why would it succeed where our previous Marble and image-projection methods have struggled?
+
+QUESTION 3: Which of my five screens would benefit most from it?
+
+QUESTION 4: Can you actually integrate and test it in my existing Rainbow project?
+
+QUESTION 5: What would the test cost, including any required credits or subscriptions?
+
+QUESTION 6: If no available tool can reliably achieve 95% resemblance throughout a playable 3D environment, what is the most realistic technical solution?
+
+QUESTION 7: Would hiring a specialist 3D environment artist for an exact Blender reconstruction be more effective than continuing to generate scenery with AI?
+
+Do not give me a reassuring answer unless you can support it.
+
+10. MY FINAL INSTRUCTION
+
+Claudia, I am serious about this.
+
+I WANT MY EXACT ORIGINAL APPROVED RAINBOW SCREENS RECREATED AS ACCURATELY AS TECHNICALLY POSSIBLE.
+
+I have already spent substantial time and credits. I need a technical approach that meaningfully improves the results.
+
+I want you to investigate tools beyond the ones we've already tried, determine which ones are genuinely useful, and demonstrate a better solution.
+
+If a tool cannot accomplish my goal, tell me plainly.
+
+If a different reconstruction method is necessary, explain why and test it.
+
+If expert manual 3D modeling is necessary, tell me that too.
+
+DO NOT BULLSHIT ME WITH INFLATED RATINGS, GENERIC RECOMMENDATIONS, OR CLAIMS THAT SOMETHING WORKS WHEN IT HASN'T BEEN TESTED.
+
+My approved artwork is the visual blueprint.
+
+My game is already built.
+
+My priority is the LOOK of ALL FIVE playable screens.
+
+FIND THE MOST EFFECTIVE METHOD, TEST IT, SHOW ME REAL EVIDENCE, AND CONTINUE IMPROVING THE EXACT APPROVED SCENERY.
+
+No redesigns. No unnecessary rebuilding. No paid jobs without approval.
+
+PLEASE BEGIN THE RESEARCH AND CONTROLLED VISUAL TEST NOW.
+CLAUDIA — PLEASE STOP TREATING MATCHING COLORS AS MATCHING MY APPROVED SCREENS.
+
+I reviewed the screenshots, and I need to correct something.
+
+You said the color palette matters more than the layout.
+
+THAT IS NOT TRUE FOR WHAT I WANT.
+
+The exact visual design matters: the scenery, tunnel structures, water formations, shapes, proportions, backgrounds, lighting, materials, and Benny.
+
+A screen can have 90% similar colors and STILL look completely different from my approved image.
+
+For Screen 05, the bright pink environment, incorrect foam banks, disconnected water surfaces, and distorted river shapes are NOT what I approved.
+
+For Screen 08, preserve the successful chamber reconstruction, but continue correcting the remaining visual differences.
+
+Apply this standard to ALL FIVE playable Screens 04–08.
+
+Do not confuse technical test scores with actual visual fidelity.
+
+Use my original approved image as the visual authority. Where it doesn't show the rest of the level, build a faithful continuation of that design rather than inventing a different environment.
+
+I want to see actual visual improvements, not just measurements.
+
+CAN YOU REALISTICALLY MAKE ALL FIVE SCREENS AT LEAST 95% CLOSE IN VISUAL APPEARANCE, OR NOT?
+
+If not, explain the exact technical limitation and the most effective alternative.
+
+Show me separate, full-size APPROVED / BEFORE / NEW images whenever a genuine improvement is completed.
+
+My priority is VISUALS ONLY. No redesigns. No paid jobs without approval.
+
+### 🤖 Claude — 2026-11-18T10:26:44.780Z
+
+You interrupted the save, so first I'll check whether it partly ran. Nothing else will be pushed without a reason. Then I'll start the research and the controlled test.
+
+### 🤖 Claude — 2026-11-18T10:26:46.670Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -5; git log -2 --format='%h %ci %s'; timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro; nvidia-smi 2>&1 | head -2; for h in huggingface.co github.com cdn-lfs.huggingface.co download.pytorch.org; do echo -n \"$h: \"; curl -sS -m 15 -o /dev/null -w '%{http_code}\\n' https://$h/ 2>&1 | tail -1; done", "description": "Check save state, GPU, and model download hosts"}`
+
+### 🧑 User — 2026-11-18T10:26:48.292Z
+
+> ↩︎ result: M  backups/CONVERSATION_INDEX.md
+> M  backups/MANIFEST.json
+> M  backups/claude-sessions/0bf13d71-0f08-5420-86ab-4dcca5bc306c/transcript.md
+> M  backups/claude-sessions/0bf13d71-0f08-5420-86ab-4dcca5bc306c/transcript.sanitized.jsonl
+> A  qa/review_c10/2026-11-18/04_1_APPROVED.jpg
+> 6dac025e 2026-11-18 10:22:57 +0000 autosave: Rainbow 2026-11-18 10:22 UTC
+> 7f17b090 2026-11-18 10:17:48 +0000 autosave: Rainbow 2026-11-18 10:17 UTC
+> 6dac025e52c84ac40ac3e96a8564830ea6989a68	refs/heads/ccr-c526614d-tw0yro
+> /bin/bash: line 2: nvidia-smi: command not found
+> huggingface.co: 000
+> github.com: 400
+> cdn-lfs.huggingface.co: 000
+> download.pytorch.org: 000
+
+### 🤖 Claude — 2026-11-18T10:27:46.518Z
+
+> 🔧 **SearchMcpRegistry** `{"keywords": ["Hugging Face", "Replicate", "ComfyUI", "Scenario"]}`
+
+### 🧑 User — 2026-11-18T10:27:46.874Z
+
+> ↩︎ result: {"results":[{"name":"Hugging Face","description":"Access the Hugging Face Hub and thousands of Gradio Apps","directoryUuid":"37ed56d5-9d61-4fd4-ad00-b9134c694296","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["hf_whoami","space_search","model_search","model_details","paper_search","dataset_search","dataset_details","hf_doc_search","+2 more"],"connected":false,"enabledInChat":false},{"name":"Make","description":"Run Make scenarios and manage your Make account","directoryUuid":"038318ff-ed0d-45f8-a453-b01de0071561","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["scenarios_list","scenarios_get","scenarios_create","scenarios_update","scenarios_delete","scenarios_activate","scenarios_deactivate","scenarios_run","+59 more"],"connected":false,"enabledInChat":false},{"name":"Cube Software","description":"Bring trusted Cube financial context into Claude. Analyze performance, model scenarios, and move decisions into action, with your Cube permissions enforced on every request.","directoryUuid":"4a3467a7-d960-4f6f-805e-e1c1c7cfb9a4","installedServerId":null,"customO …[+4117 chars]
+
+### 🤖 Claude — 2026-11-18T10:27:46.889Z
+
+> 🔧 **SearchMcpRegistry** `{"keywords": ["Adobe", "Substance", "texture material", "3D scene"]}`
+
+### 🧑 User — 2026-11-18T10:27:47.134Z
+
+> ↩︎ result: {"results":[{"name":"Adobe","description":"Design, combine, and edit with Adobe pro tools","directoryUuid":"22854937-9510-4b57-9230-62c820102d8f","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["acrobat_proxy","acrobat_readonly_proxy","adobe_mandatory_init","animate_design","asset_add_file","asset_add_file_check_status","asset_copy_assets","asset_create_folders","+101 more"],"connected":false,"enabledInChat":false},{"name":"Adobe CX Enterprise Coworker","description":"Drive CX Workflows","directoryUuid":"39d085c5-0b24-4a3f-aca1-5ec9d1726714","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["ask_aep_agent","core_set_sandbox","core_set_dataview","core_set_sub_org","core_switch_org","core_list_sandboxes","core_list_dataviews","core_list_orgs","+1 more"],"connected":false,"enabledInChat":false},{"name":"Adobe Experience Manager","description":"Manage your Adobe Experience Manager content","directoryUuid":"e9f93fb8-37d6-4727-a129-956e5263ac3e","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["list-aem-e …[+3693 chars]
+
+### 🤖 Claude — 2026-11-18T10:27:47.436Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["Hugging Face", "ComfyUI", "Scenario", "Adobe"]}`
+
+### 🤖 Claude — 2026-11-18T10:27:47.791Z
+
+> 🔧 **SearchSkills** `{"keywords": ["3D", "Blender", "texture", "image to 3D"]}`
+
+### 🧑 User — 2026-11-18T10:27:48.021Z
+
+> ↩︎ result: {"results":[]}
+
+### 🧑 User — 2026-11-18T10:27:48.675Z
+
+> ↩︎ result: <persisted-output>
+> Output too large (50KB). Full output saved to: /root/.claude/projects/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tool-results/toolu_01RK73uyNC1oxmaf6HnjpRbw.txt
+> 
+> Preview (first 2KB):
+> {"results":[{"id":"plugin_01293zvwbPSkzLtyCCXMzoR3","name":"99e053e3-cca2-4a53-aacf-77440a3d23c6","display_name":"Adobe","description":"Brings together Adobe Creative Cloud tools for images, vectors, design, and video. Edit multiple assets at once, adapt for different platforms, and complete multi-step creative workflows for polished results.","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-09-24T20:06:01.454386Z","updated_at":"2026-11-07T01:54:58.828180Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"Adobe","email":null,"url":null},"publisher":{"tier":"partner","name":"adobe","basis":"directory_review"},"content_scan":null,"components":[{"type":"skill","name":"99e053e3-cca2-4a53-aacf-77440a3d23c6:adobe","description":null,"origin":null},{"t …[+1040 chars]
+
+### 🤖 Claude — 2026-11-18T10:27:56.546Z
+
+> 🔧 **Bash** `{"command": "F=/root/.claude/projects/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tool-results/toolu_01RK73uyNC1oxmaf6HnjpRbw.txt; python3 -I - \"$F\" <<'EOF'\nimport json,sys\nd=json.load(open(sys.argv[1]))\nfor p in d['results']:\n    comps=[c['name'].split(':')[-1] for c in p.get('components',[])]\n    hit=[c for c in comps if any(k in c.lower() for k in ('3d','substance','texture','material','comfy','scenario','hugging','depth','mesh'))]\n    print(p['display_name'],'|',p['description'][:110].replace('\\n',' '),'| 3D-ish comps:',hit[:8])\nEOF", "description": "Scan plugin resu …[+37 chars]`
+
+### 🧑 User — 2026-11-18T10:27:56.616Z
+
+> ↩︎ result: Adobe | Brings together Adobe Creative Cloud tools for images, vectors, design, and video. Edit multiple assets at onc | 3D-ish comps: []
+> huggingface-skills | Core Hugging Face Hub operations through the hf CLI, including skill installation, repo management, jobs, data | 3D-ish comps: ['huggingface-best', 'huggingface-community-evals', 'huggingface-datasets', 'huggingface-gradio', 'huggingface-llm-trainer', 'huggingface-local-models', 'huggingface-lora-space-builder', 'huggingface-paper-publisher']
+> strategy-frameworks | Strategic Thinking Agent — meta-router for 47 business strategy frameworks (Porter Five Forces/Value Chain/Gen | 3D-ish comps: ['scenario-planning']
+> AgentPricing Connector | AgentPricing helps professional real estate agents prepare property valuations, compare sold properties and ac | 3D-ish comps: ['agentpricing-scenario-investimento']
+> MarineVerse | Find a practical start in sailing: local lessons, beginner crewing and learning pathways, supported by MarineV | 3D-ish comps: ['sailing-scenarios']
+> Sales | Prep calls, summarize and follow up, research accounts, review deals and pipeline, and write the forecast, usi | 3D-ish comps: ['deal-slip-scenario']
+> SearchFit SEO …[+645 chars]
+
