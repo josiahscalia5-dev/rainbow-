@@ -383,6 +383,17 @@ export const M05FOAM: boolean = M05RIDE && q05('m05foam');
  * reads as a white foam bank instead of the stretched paint / underlayers that showed there (ride factor m05foamK).
  */
 export const M05BERM: boolean = M05RIDE && q05('m05berm');
+/**
+ * `&m05bank=1` (Screen 05 round 14, needs m05berm; src/vfx/foam.ts BERM_FRAG, src/vfx/clip05.ts): the near lather bank
+ * while swimming. Its steep inner slope was drawn as smooth pale lather — seen face-on (t75, k81 hard left) a flat pale
+ * lilac panel with straight sides, cut at the far tunnel's seam by the flat clip plane. The painted banks are piles of
+ * foam bubbles. Under the switch that slope is a world-anchored pile of round foam bubbles (two sizes; white lit tops,
+ * periwinkle bodies, blue-violet creases — the same soap ramp as the bank lumps), its crest ends along the bubble tops,
+ * and at the seam whole bubbles are kept or dropped by where their centre lies instead of the plane cutting through them.
+ * Different from the rejected m05lump (which only moved the bank's end 0.5 … 1.9 u before the seam with a noise edge).
+ * Locked view: the berm is not drawn there (ride factor 0) → unchanged.
+ */
+export const M05BANK: boolean = M05BERM && q05('m05bank');
 /** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
 export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
 /**

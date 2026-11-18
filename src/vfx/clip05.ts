@@ -12,15 +12,19 @@ export const clip05 = {
   uClip05P: { value: new THREE.Vector3() },
   uClip05N: { value: new THREE.Vector3() },
 };
-/** inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position) */
-export function withClip05(mat: THREE.ShaderMaterial, posVar: string): void {
+/**
+ * inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position). `margin` (default 0 =
+ * the plane itself): the hard cut lies that many units past the plane — only for a material that cuts at the seam itself
+ * (m05bank: the berm keeps / drops whole bubbles by their centre, so a kept bubble may overhang the plane by its radius)
+ */
+export function withClip05(mat: THREE.ShaderMaterial, posVar: string, margin = 0): void {
   if (!M05CLIP) return;
   Object.assign(mat.uniforms, clip05);
   mat.fragmentShader = mat.fragmentShader.replace('void main() {', `uniform vec3 uClip05P; uniform vec3 uClip05N;
 void main() {
   {  // ?m05far=1: behind the 05 far tunnel seam, inside its tube (axial 0..40 u, within 9 u of the axis) only
     vec3 cd = ${posVar} - uClip05P; float ca = dot(cd, uClip05N);
-    if (ca > 0.0 && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;
+    if (ca > ${margin.toFixed(2)} && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;
   }`);
 }
 

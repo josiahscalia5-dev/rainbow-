@@ -14,9 +14,9 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, M05CAUL, m05foamK } from './waterRibbon';
+import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05BANK, M05FLAT, M05CLOUD, M05CAUL, m05foamK } from './waterRibbon';
 import { flat05Dy } from './unfold05';
-import { withClip05 } from './clip05';
+import { withClip05, M05CLIP } from './clip05';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
@@ -130,6 +130,25 @@ varying vec3 vNormalW;
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
 ${SOAP05_GLSL}
+#ifdef M05BANK
+// m05bank (Screen 05 round 14): one layer of piled foam bubbles in cell units: x = dome height (0 between bubbles),
+// y = crease width f2 - f1 (0 on the crease between two bubbles), zw = offset from this point to the bubble's centre
+vec4 bankCell(vec2 p) {
+  vec2 ip = floor(p), fp = fract(p);
+  float f1 = 8.0, f2 = 8.0, br = 0.6;
+  vec2 best = vec2(0.0);
+  for (int yy = -1; yy <= 1; yy++) for (int xx = -1; xx <= 1; xx++) {
+    vec2 g = vec2(float(xx), float(yy));
+    vec2 h = fract(sin(vec2(dot(ip + g, vec2(127.1, 311.7)), dot(ip + g, vec2(269.5, 183.3)))) * 43758.5453);
+    vec2 dv = g + 0.15 + 0.7 * h - fp;
+    float dd = dot(dv, dv);
+    if (dd < f1) { f2 = f1; f1 = dd; best = dv; br = 0.58 + 0.24 * fract(h.x * 7.13 + h.y * 3.1); } else if (dd < f2) { f2 = dd; }
+  }
+  f1 = sqrt(f1); f2 = sqrt(f2);
+  float q = f1 / br;
+  return vec4(sqrt(max(1.0 - q * q, 0.0)), f2 - f1, best);
+}
+#endif
 void main() {
   float s = vFoam.y;
   #ifdef PROJ05
@@ -165,6 +184,36 @@ void main() {
   #else
   vec3 N = bumpNormal(vPosW, N0, bub * 0.1);
   #endif
+  #ifdef M05BANK
+  // m05bank: the bank as a pile of round foam bubbles, world-anchored and still (the painted banks do not drift); cells
+  // 0.3 u (bubbles ≈ 0.18 … 0.25 u across) with small bubbles on them; fades out where a cell is under ≈ 5 px
+  vec2 bq = vec2(vFoam.x * vFoam.z, s) / 0.30;
+  vec4 bkB = bankCell(bq);
+  #ifdef LOW_Q
+  vec4 bkS = vec4(0.6, 1.0, 0.0, 0.0);
+  #else
+  vec4 bkS = bankCell(bq * 2.4 + 7.3);
+  #endif
+  // (05 only: fades out over the stage's last unit, the 06 bank keeps its own look)
+  float bkK = uRide05 * (1.0 - smoothstep(0.12, 0.25, max(fwidth(bq.x), fwidth(bq.y)))) * (1.0 - smoothstep(uSt05.z, uSt05.z + 1.0, s));
+  float bkH = bkB.x * (0.8 + 0.2 * bkS.x);
+  vec3 Nb = bumpNormal(vPosW, N0, bkH * 0.16);
+  #ifdef M05BANKCUT
+  // seam: keep / drop whole bubbles by where their centre lies (ca at the centre from the local gradient of ca over the
+  // cell coordinates) instead of the flat plane cutting through them (the early clip runs 0.45 u past the plane)
+  {
+    vec3 bcd = vPosW - uClip05P;
+    float bca = dot(bcd, uClip05N);
+    vec2 jx = dFdx(bq), jy = dFdy(bq);
+    float cx = dFdx(bca), cy = dFdy(bca);
+    float jd = jx.x * jy.y - jx.y * jy.x;
+    vec2 gca = abs(jd) > 1e-9 ? vec2(jy.y * cx - jx.y * cy, jx.x * cy - jy.x * cx) / jd : vec2(0.0);
+    float caC = bca + dot(gca, bkB.zw);
+    bool bLive = dot(uClip05N, uClip05N) > 0.5 && bca > -3.0 && bca < 40.0 && length(bcd - bca * uClip05N) < 9.0;
+    if (bLive && (caC > 0.0 || (bca > 0.0 && bkB.x <= 0.0))) discard;
+  }
+  #endif
+  #endif
   vec3 L = normalize(uLightDir);
   vec3 V = normalize(cameraPosition - vPosW);
   float diff = 0.55 + 0.45 * max(dot(N, L), 0.0);
@@ -189,7 +238,15 @@ void main() {
   float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
   // 05: the bank stops just past its bubble crest with a scalloped (cell) edge, so the purple wall shows right above
   // the rim instead of a pale lather slope (ref 05; e is the raw offset outward from the stream edge)
+  #ifdef M05BANK
+  // m05bank: the crest ends along the bubble tops — toward the outer edge only the higher part of each bubble remains
+  // (scalloped by the bubbles themselves), so the purple wall shows above / between them
+  float bkE = mix(0.3 + 0.45 * (1.0 - c1), 0.75, bkK);
+  if (vFoam.x > mix(9.0, bkE, k05)) discard;
+  if (k05 * bkK > 0.0 && bkB.x < 0.9 * bkK * smoothstep(0.2, 0.65, vFoam.x)) discard;
+  #else
   if (vFoam.x > mix(9.0, 0.3 + 0.45 * (1.0 - c1), k05)) discard;
+  #endif
   if (k05 > 0.0) {
     vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);
     float t5 = soapT(Nv) * 0.55 + 0.45 * mix(0.55, bub, max(k1, 0.3)) - 0.1;
@@ -199,6 +256,19 @@ void main() {
     c5 = mix(c5, SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, hash12(floor(pp))) * 0.7 * kp);
     #endif
     c5 += vec3(1.0) * spec * 0.3;
+    #ifdef M05BANK
+    // m05bank: piled-bubble shading as the bank lumps (BANK_BUB_FRAG): key light from the upper left, white caps only on
+    // the lit tops, periwinkle bodies, blue-violet creases and gaps between the bubbles, small bubbles on the big ones
+    vec3 Nvb = normalize((viewMatrix * vec4(Nb, 0.0)).xyz);
+    float tb = 0.52 + 0.62 * dot(Nvb, normalize(vec3(-0.4, 0.85, 0.35))) - (1.0 - bkB.x) * 0.45;
+    tb -= 0.32 * (1.0 - smoothstep(0.0, 0.08, bkB.y)) + 0.1 * (1.0 - smoothstep(0.0, 0.07, bkS.y)) * bkB.x;
+    tb += 0.08 * (bkS.x - 0.5);
+    tb = 0.12 + 0.95 * smoothstep(0.38, 1.12, tb);
+    vec3 cb = soap05(tb);
+    cb = mix(cb, vec3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, tb) * 0.3);
+    cb += vec3(1.0) * pow(max(dot(reflect(-V, Nb), L), 0.0), 24.0) * 0.25;
+    c5 = mix(c5, cb, bkK);
+    #endif
     col = mix(col, c5, k05);
   }
   gl_FragColor = vec4(col, 1.0);
@@ -714,10 +784,12 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     fragmentShader: BERM_FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(M05BERM ? { M05BERM: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(M05BERM ? { M05BERM: 1 } : {}), ...(M05BANK ? { M05BANK: 1 } : {}), ...(M05BANK && M05CLIP ? { M05BANKCUT: 1 } : {}) },
   });
   if (M05BERM) (uniforms as Record<string, THREE.IUniform>).uRide05 = m05foamK;   // shared object (after withFog's merge)
-  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
+  // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change. m05bank (round 14): the berm cuts whole bubbles
+  // at the seam itself, so its hard cut lies 0.45 u past the plane (a kept bubble overhangs by at most its radius)
+  withClip05(mat, 'vPosW', M05BANK ? 0.45 : 0);
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'foam_berm';
   mesh.frustumCulled = false;

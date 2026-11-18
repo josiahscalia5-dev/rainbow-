@@ -68,3 +68,32 @@ Kept set at start (round 13 end, = step-3 set):
   NEW `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/3_NEW_swim_clip.mp4`. In the NEW clip the two pink bands stay put
   behind Benny frame to frame (no flicker, no jumping) while the streaks inside them flow, and the V follows him when he
   steers.
+
+## Step 3 — `&m05bank=1` (task 3: the near lather bank's flat pale panel / straight cut at the seam) — GOOD IMPROVEMENT (partial), kept
+* Kept query: `<step-2 set>&m05bank=1` =
+  `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1&m05bank=1`
+* Diagnosis (raycast `__rainbow.probe` at the panel, t75 / k81 left): the pale panel is the lather bank (foam_berm) — its
+  steep inner slope drawn as smooth pale lather, seen face-on where the bank turns at the kink — with small impostor
+  bubbles (foam_rim05) in front; the straight cut is the far-seam clip plane cutting through it.
+* Method (different from the rejected m05lump, which only moved the bank's end 0.5 … 1.9 u before the seam with a noise
+  edge): the slope itself gets the painted foam look — a world-anchored, still pile of round foam bubbles (0.3-u cells
+  with small bubbles on them, dome normals, the bank lumps' soap ramp: white lit tops, periwinkle bodies, blue-violet
+  creases); toward its outer edge only the bubble tops remain (the crest follows the bubbles); at the seam whole bubbles
+  are kept or dropped by where their centre lies (local gradient of the seam distance), not cut by the plane. 05 only
+  (fades over the stage's last unit; the 06 bank keeps its look). A first render also changed the first 4 u of 06 and
+  left loose flecks low on the slope — both fixed before judging (try-1 frames not kept).
+* WHAT LOOKS CLOSER: at t75, k81 (straight) and k81 hard left the flat pale-lilac panel with straight sides is gone — the
+  same place is now a pile of round foam bubbles with a bubbly outline, like the painted foam clouds. At t66 the pale
+  slab on the left bank and the smooth lather strip under the puffs become piled bubbles. Hard right / hard left: the
+  near banks' smooth lather between the puffs becomes small piled bubbles. t95 left, f03 … f20, t33, t98: no visible change.
+* Locked approved view: 0 px (`node scripts/capture.mjs 05 --q=<step-2 set>&m05bank=1` is pixel-identical to the step-2-set
+  capture; one later step-2-set run differed only in the HUD text at the top, y 25 … 174 — font timing, not the scene).
+* Still wrong: where the bank turns at the kink (k81 left) the bubble pile still stands as a tall narrow column with a
+  fairly level top — taller and more upright than the painted foam clouds; a few small loose bubbles at its foot.
+* APPROVED: `/home/user/wt/s05/qa/match/05/r14/step3_m05bank/1_APPROVED.png`
+* BEFORE (= step-2 set): `/home/user/wt/s05/qa/match/05/r14/step3_m05bank/before/` (t66_through_screen, t75_through,
+  k81_kink, k81_kink_left, t85_through, t95_left) + for the standard views `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/new/`
+* NEW (+`&m05bank=1`): `/home/user/wt/s05/qa/match/05/r14/step3_m05bank/new/` (the six above + a00, f03, f06, f10, f20,
+  s_left_hard, s_right_hard, t33, t98)
+* Files: `src/vfx/foam.ts` (BERM_FRAG: bankCell, M05BANK / M05BANKCUT), `src/vfx/clip05.ts` (withClip05 margin, default 0),
+  `src/vfx/waterRibbon.ts` (M05BANK flag).
