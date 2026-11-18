@@ -477,8 +477,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     // A circular elbow ends the sight line gradually beyond the crest. Its inner radius
     // stays positive, and the tube, ring centres and end cap share the same frames.
     const elbowStart = course.sample(sE - 20).pos.sub(O).dot(ax);
-    const elbowRadius = 3.45 * Rt;
-    const elbowAngle = 0.94;
+    const elbowRadius = 9.5 * Rt;
+    const elbowAngle = 0.24;
+    // The first reach fits the measured rightward sight line. The second turns away
+    // beyond the visible bays, keeping the far repeating rings out of the central lane.
+    const elbowRun = 2.1 * Rt;
+    const distalRadius = 10.5 * Rt;
+    const distalAngle = 0.42;
     const axisAt = (a: number) => {
       if (elbow && a > elbowStart) {
         const travel = a - elbowStart;
@@ -486,9 +491,18 @@ export async function buildMatch06(course: Course): Promise<Match06> {
         const c = Math.cos(angle), sn = Math.sin(angle);
         const tangent = ax.clone().multiplyScalar(c).addScaledVector(Rx, sn);
         const right = Rx.clone().multiplyScalar(c).addScaledVector(ax, -sn);
+        const extra = Math.max(0, travel - elbowRadius * elbowAngle);
         const centre = O.clone().addScaledVector(ax, elbowStart + elbowRadius * sn)
-          .addScaledVector(Rx, elbowRadius * (1 - c))
-          .addScaledVector(tangent, Math.max(0, travel - elbowRadius * elbowAngle));
+          .addScaledVector(Rx, elbowRadius * (1 - c)).addScaledVector(tangent, Math.min(extra, elbowRun));
+        const distalTravel = Math.max(0, extra - elbowRun);
+        if (distalTravel > 0) {
+          const turn = Math.min(distalTravel / distalRadius, distalAngle);
+          centre.addScaledVector(tangent, distalRadius * Math.sin(turn))
+            .addScaledVector(right, distalRadius * (1 - Math.cos(turn)));
+          tangent.copy(ax).multiplyScalar(Math.cos(angle + turn)).addScaledVector(Rx, Math.sin(angle + turn));
+          right.copy(Rx).multiplyScalar(Math.cos(angle + turn)).addScaledVector(ax, -Math.sin(angle + turn));
+          centre.addScaledVector(tangent, Math.max(0, distalTravel - distalRadius * distalAngle));
+        }
         return { p: centre, t: tangent, r: right, u: Ux };
       }
       if (!BEND) return { p: O.clone().addScaledVector(ax, a), t: ax, r: Rx, u: Ux };
