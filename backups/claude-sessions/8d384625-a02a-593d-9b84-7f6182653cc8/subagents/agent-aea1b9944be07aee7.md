@@ -501,3 +501,26 @@ Final reply (short): kept query, final verified SHA, best 3–5 NEW + matching B
 > 1.57 3.58 796.3453979492188 814.9826049804688
 > 1.57 4.11 851.3590698242188 816.7569580078125
 
+### 🤖 Claude — 2026-11-18T02:47:52.387Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I $SP/unwrap_view.py assets/textures/match04 $SP/unwrap0.png 0 && python3 -I -c \"\nimport cv2\na=cv2.imread('$SP/unwrap0.png'); print(a.shape)\n# psi -pi..pi over 2048 cols; keep -1.9..1.9 (cols)\nimport math\nc0=int((math.pi-1.95)/(2*math.pi)*2048); c1=2048-c0\ncv2.imwrite('$SP/unwrap0_c.png', a[:, c0:c1])\nprint(c0,c1)\n\"", "description": "Unwrap at fitted plane and crop visible angles"}`
+
+### 🧑 User — 2026-11-18T02:47:53.026Z
+
+> ↩︎ result: -1.57 3.58 86.91569519042969 786.587646484375
+> -1.57 4.11 37.21705627441406 784.994140625
+> 0 3.58 439.9829406738281 445.2713623046875
+> 0 4.11 441.47509765625 392.5236511230469
+> 1.57 3.58 781.3181762695312 808.8518676757812
+> 1.57 4.11 833.6021118164062 810.5282592773438
+> (460, 2048, 3)
+> 388 1660
+
+### 🤖 Claude — 2026-11-18T02:47:54.578Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/unwrap0_c.png"}`
+
+### 🧑 User — 2026-11-18T02:47:54.609Z
+
+> ↩︎ result: [image]
+
