@@ -2657,3 +2657,31 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 > 426	  vPosW = wp.xyz;
 > 427	  vNormalW = normalize(mat3(modelMatrix) * normal);
 
+### 🤖 Claude — 2026-11-18T03:13:01.531Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));\n  vec3 p = position + normal * h * (1.0 - aSkirt);\n  vec4 wp = modelMatrix * vec4(p, 1.0);", "new_string": "  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));\n  vec3 p = position + normal * h * (1.0 - aSkirt);\n  #ifdef M05GEO\n  {\n    // m05geo (Screen 05 round 9): outside the PAINTED water channel the surface rises into a foam …[+1087 chars]`
+
+### 🧑 User — 2026-11-18T03:13:01.570Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:13:04.335Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "uniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\nvarying vec2 vUV;", "new_string": "uniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\n#ifdef M05GEO\nuniform vec4 uPjNear;      // m05geo: the ride focus (as the fragment shader's ?projnear05 uniform)\nuniform sampler2D uGeoCh;  // m05geo: painted channel [uL, uR] per s of the approved design E (encoded (u + 1) / 2)\nuniform vec2 uGeoS;        // its s range\n#ifdef M05SEAM\n …[+58 chars]`
+
+### 🧑 User — 2026-11-18T03:13:04.391Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:13:39.472Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/tools/match05/channel05.py", "old_string": "water = (cyan | mag) & (E[..., 3] > 127)", "new_string": "water = (cyan | mag) & (E[..., 3] > 127)\n# the white glossy streaks / glints inside the bands are water too: close gaps up to ≈ 6 % of the row (foam piles are wider)\nfrom scipy.ndimage import binary_closing\nwater = binary_closing(water, structure=np.ones((3, 61), bool))"}`
+
+### 🧑 User — 2026-11-18T03:13:39.500Z
+
+> ↩︎ result: The file /home/user/wt/s05/tools/match05/channel05.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:13:41.775Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 python3 -I tools/match05/channel05.py assets/textures/match05/tgtwall05/proj05_E.png assets/textures/match05/tgtwall05/proj05_lut.json assets/textures/match05/m05geo/channel05.json /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/chan_preview.png | tail -16", "description": "Re-extract painted channel with gap closing", "timeout": 320000}`
+

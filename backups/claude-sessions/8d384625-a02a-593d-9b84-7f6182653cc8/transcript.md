@@ -2641,3 +2641,48 @@ Your clarification changes what counts as acceptable, so before relaying it I'm 
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md <<'EOF'\n\n## User clarification ~03:25 UTC — REAL, CONSISTENT 3D (binding)\n\"Do not simply move or stretch my approved picture in front of Benny to make it appear correct. Reconstruct the actual\nvisual shapes, gold rings, scenery, water, foam, bubbles, materials, and lighting so they continue looking like my approved\nartwork as Benny swims. I want the same beautiful visual appearance, not an illusion that breaks when the character moves.\"\nRules derived (sent to both builders): world-fixed geometry only (nothing recali …[+1116 chars]`
 
+### 🧑 User — 2026-11-18T03:13:13.490Z
+
+> ↩︎ result: "commit": "31faa901eb1cce302ce6dcd892e1016dd0761b20",
+> remote 31faa901eb1cce302ce6dcd892e1016dd0761b20 local 31faa901eb1cce302ce6dcd892e1016dd0761b20
+
+### 🤖 Claude — 2026-11-18T03:13:21.652Z
+
+The reviewer has finished and stopped, so only the two builders are running. Its verdict matters for your 8.5 goal, so I'm checking one of its blueprints myself before relaying it.
+
+### 🤖 Claude — 2026-11-18T03:13:25.198Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look; cd /home/user/rainbow-/docs/briefs/2026-11-18-r9 && ls; python3 - <<EOF\nfrom PIL import Image\nims=[Image.open(p).convert('RGB') for p in ['BLUEPRINT_06_overlay.png','BLUEPRINT_07_overlay.png','BLUEPRINT_08_overlay.png']]\nprint([i.size for i in ims])\nw=380; ims=[i.resize((w,int(i.height*w/i.width))) for i in ims]\nc=Image.new('RGB',(w*3+16,max(i.height for i in ims)),'white')\nfor k,i in enumerate(ims): c.paste(i,(k*(w+8),0))\nc.save('$S/bp678.png')\nEOF\nsed -n '/Stage/,+6p' BLUEPRINT_07. …[+96 chars]`
+
+### 🧑 User — 2026-11-18T03:13:25.562Z
+
+> ↩︎ result: BLUEPRINT_06.md
+> BLUEPRINT_06_overlay.png
+> BLUEPRINT_07.md
+> BLUEPRINT_07_overlay.png
+> BLUEPRINT_08.md
+> BLUEPRINT_08_overlay.png
+> COORDINATION.md
+> REVIEW_SUMMARY.md
+> USER_ORDER_STRUCTURAL.md
+> [(864, 1536), (864, 1536), (864, 1536)]
+> Stage range seen by the audit: from the checkpoint at s = 273.06 to the stage end at 390.16, so **117 u**. The level stretch
+> lasts until the plunge top (s ≈ 310.4): **37 u = 32 %**. The vertical PLUNGE (s 310 → 389) is **79 u = 68 %** of the stage.
+> **The approved picture never depicts a plunge.** For about two-thirds of Screen 07 the camera therefore shows scenery the
+> painting does not contain.
+> 
+> * **a00 (approved view):** composition matches (projected approved pixels on the fitted tube). Rating ≈ 8/10.
+> * **f10 / f20 (level stretch):** the tube and VP stay roughly in place (the probe found the far ring within ±25 px of the
+
+### 🤖 Claude — 2026-11-18T03:13:27.431Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look/bp678.png"}`
+
+### 🧑 User — 2026-11-18T03:13:27.467Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:13:41.555Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cat >> docs/briefs/2026-11-18-r9/COORDINATION.md <<'EOF'\n\n## Update ~03:28 UTC — reviewer blueprints 06/07/08 done (`BLUEPRINT_0{6,7,8}.md` + overlays, `REVIEW_SUMMARY.md`)\nReviewer (judgement, not measurements): 08 approved ≈ 8.5 / swimming ≈ 7, ceiling 8–8.5 FREE (#1: keep the foreground gold\narch framing the scene for the whole 13 u stage — as REAL static geometry under the user's real-3D rule, not a per-frame\nrecede). 07 ≈ 8 / ≈ 4.5; 68 % of the stage (s 310 → 389) is a vertical plunge the painting never shows → ceiling ≈ 7.5–8\nlevel stretch, 6– …[+803 chars]`
+

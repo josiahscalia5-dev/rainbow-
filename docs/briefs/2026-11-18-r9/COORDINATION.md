@@ -49,3 +49,12 @@ its worktree as WIP and relaunch it from its PROGRESS.md / STATUS.md.
   `m05blend` (965b8b86).
 * Independent reviewer (reference-match-director) started: blueprints + structural audit for 06/07/08, then reviews every
   04/05 foundation step before it is shown. Worktrees /home/user/wt/s06, s07, s08 created (read-only for the reviewer).
+
+## Update ~03:28 UTC — reviewer blueprints 06/07/08 done (`BLUEPRINT_0{6,7,8}.md` + overlays, `REVIEW_SUMMARY.md`)
+Reviewer (judgement, not measurements): 08 approved ≈ 8.5 / swimming ≈ 7, ceiling 8–8.5 FREE (#1: keep the foreground gold
+arch framing the scene for the whole 13 u stage — as REAL static geometry under the user's real-3D rule, not a per-frame
+recede). 07 ≈ 8 / ≈ 4.5; 68 % of the stage (s 310 → 389) is a vertical plunge the painting never shows → ceiling ≈ 7.5–8
+level stretch, 6–6.5 plunge unless the user permits a plunge/movement change. 06 ≈ 8 / ≈ 4.5; from ~6 u the camera looks
+straight down a centred ring bullseye, painted bent tunnel + S-loop river + paddle wall gone; ceiling ≈ 6.5–7 unless the
+course rides the painted loop (movement change = user's call). Lead proposal to the user: next free slot → 08 (reachable
+for free) while the user decides on 07 / 06 movement; reviewer stopped (two builders running).
