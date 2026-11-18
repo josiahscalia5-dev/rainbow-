@@ -1622,3 +1622,43 @@ Let me probe on-screen coin diameters (`coinScreen()`) at f10 with and without t
 
 > ↩︎ result: {"mode":"ride","stage":"08","s":402.088,"lat":0,"coins":2060,"hearts":5,"paused":false,"bennyY":-113.142,"bennyVisible":true,"cam":[11.9,-109.9,-284.92]} [{"i":84,"x":568,"y":895,"d":112},{"i":85,"x":410,"y":677,"d":63},{"i":86,"x":483,"y":721,"d":65},{"i":87,"x":585,"y":759,"d":75},{"i":88,"x":539,"y":618,"d":32},{"i":89,"x":459,"y":635,"d":40},{"i":90,"x":503,"y":622,"d":34}]
 
+### 🤖 Claude — 2026-11-18T11:04:07.108Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/gameplay/coins.ts", "old_string": "  const coinV = (flag05('match08') || flag05('matchall')) && flag05('m08coinv');\n  const COINV_CAP = 0.068, BENNY_UP = 0.75, BENNY_R = 0.95;", "new_string": "  // r10 additions: (3) a picture coin Benny has passed (it can no longer be picked up: |ds| < 1 rule) fades out instead of\n  // sweeping past the camera as a frame-filling disc; (4) the pickup pop of a picture coin no longer grows ×1.8 over\n  // Benny's body / hat: it shrinks away while rising a little, and fades where it overlaps him. Cap =  …[+206 chars]`
+
+### 🧑 User — 2026-11-18T11:04:07.157Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:04:10.612Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/gameplay/coins.ts", "old_string": "        const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);\n        if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }\n        scale = 1 + k * 0.8;\n        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);", "new_string": "        const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);\n        if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q …[+314 chars]`
+
+### 🧑 User — 2026-11-18T11:04:10.643Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:04:12.266Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/gameplay/coins.ts", "old_string": "      const vis = d.faceTo && !collected[i] ? coinVisual(p, d.scale ?? 1) : 1;", "new_string": "      let vis = d.faceTo && (!collected[i] || coinV) ? coinVisual(p, d.scale ?? 1) : 1;\n      if (coinV && d.faceTo && !collected[i] && bS >= 0) vis *= THREE.MathUtils.smoothstep(d.s - bS, -1.6, -0.6);"}`
+
+### 🧑 User — 2026-11-18T11:04:12.345Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:04:20.026Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && node /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/coinprobe.mjs \"$K&m08coinv=1\" 10 2>&1 | grep -v \"allow list\" | tail -1 | cut -c1-500", "description": "Typecheck and re-probe coin sizes", "timeout": 400000}`
+
+### 🧑 User — 2026-11-18T11:04:41.338Z
+
+> ↩︎ result: {"mode":"ride","stage":"08","s":402.065,"lat":0,"coins":2060,"hearts":5,"paused":false,"bennyY":-113.144,"bennyVisible":true,"cam":[11.91,-109.9,-284.9]} [{"i":84,"x":568,"y":894,"d":91},{"i":85,"x":411,"y":676,"d":63},{"i":86,"x":483,"y":720,"d":65},{"i":87,"x":585,"y":758,"d":75},{"i":88,"x":539,"y":618,"d":32},{"i":89,"x":460,"y":634,"d":40},{"i":90,"x":504,"y":622,"d":34}]
+
+### 🤖 Claude — 2026-11-18T11:04:42.897Z
+
+The cap works now (112 → 91 px). Rendering the coin shots.
+
+### 🤖 Claude — 2026-11-18T11:04:46.956Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/coinv && SHOTS=f06_forward6u,f10_forward10u,t33_through_screen,t66_through_screen,t95_through_screen,s_left_hard,s_right_steer node $S/tools/sel_audit.mjs 08 $S/r/coinv \"$K&m08coinv=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S && python3 py/sbs.py c_coin1.png r/far/f06_forward6u.png r/coinv/f06_forward6u.png r/far/f10_forward10u.png r/coinv/f10 …[+242 chars]`
+

@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14554,
-   "sha256": "57b4d7514cc62cd93076a58e4fc78c7baa647ce5c6abfe4a51d3c200c218ceb6"
+   "sha256": "d91082b17596633cdc93ab0da85515c6826a9d1668a2b2fd6530ac6066e78ab3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9002,6 +9002,21 @@
    "sha256": "88ed9434767699873b32530cc6c0eed9099c31a4488cc8514597af96fc9f010f"
   },
   {
+   "path": "qa/review_c10/2026-11-18/05_step2_m05berm/1_APPROVED_05.jpg",
+   "bytes": 496777,
+   "sha256": "0fa92db5b4734862713bb166457776a2e6e1c6b28bb2a12d6195f0da98adad64"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_step2_m05berm/2_BEFORE_two_thirds.jpg",
+   "bytes": 576460,
+   "sha256": "8900633bf34c2eab938522de813f24d57c62b5d6777883fb5bf168afa3ebe672"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_step2_m05berm/3_NEW_two_thirds.jpg",
+   "bytes": 582759,
+   "sha256": "1255d4b678c029f253ff47b2693642665ba7767a99abff37d13bdc12d36bf245"
+  },
+  {
    "path": "qa/review_c10/2026-11-18/06_1_APPROVED.jpg",
    "bytes": 411991,
    "sha256": "c4ccce3a0d36e6389fd72b64c4f27ef7ad2e2bdeeb318614853bc4478a62c52b"
@@ -10543,8 +10558,8 @@
   },
   {
    "path": "scripts/rainbow-autosave.py",
-   "bytes": 19677,
-   "sha256": "9a5f1a1971604ceefdce75ae4d7db7b2ed731aa9f1070f8b4eae3466ee80e70f"
+   "bytes": 22882,
+   "sha256": "eaeba07b08bf680186f1825b52502a6d9b619b462efd1e3f075f9b08c6af42d6"
   },
   {
    "path": "scripts/reference.sha256",

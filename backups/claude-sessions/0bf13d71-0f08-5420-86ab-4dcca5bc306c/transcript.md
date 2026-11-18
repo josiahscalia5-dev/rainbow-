@@ -2929,3 +2929,190 @@ Now your decision on the Screen 04 views, plus whether to go on to 06 and 07:
 > 
 > Do not use V04-3a or V04-3b as approved references yet. They look too similar to th …[+3547 chars]
 
+### 🤖 Claude — 2026-11-18T11:04:14.086Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r10/step2_m05berm/2_BEFORE_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:04:14.127Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:04:14.446Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r10/step2_m05berm/3_NEW_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:04:14.523Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:04:21.686Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_c10/2026-11-18/05_step2_m05berm; mkdir -p $D; S=/home/user/wt/s05/qa/match/05/r10/step2_m05berm; convert $S/1_APPROVED.png -quality 92 $D/1_APPROVED_05.jpg; convert $S/2_BEFORE_t66_through_screen.png -quality 92 $D/2_BEFORE_two_thirds.jpg; convert $S/3_NEW_t66_through_screen.png -quality 92 $D/3_NEW_two_thirds.jpg; echo ok", "description": "Copy Screen 05 step 2 proof images"}`
+
+### 🧑 User — 2026-11-18T11:04:21.980Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T11:04:23.838Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c10/2026-11-18/05_step2_m05berm/1_APPROVED_05.jpg", "qa/review_c10/2026-11-18/05_step2_m05berm/2_BEFORE_two_thirds.jpg", "qa/review_c10/2026-11-18/05_step2_m05berm/3_NEW_two_thirds.jpg"], "caption": "Screen 05 step 2 — GOOD IMPROVEMENT (modest). APPROVED / BEFORE / NEW at two-thirds: the torn left river edge is now a soft foam bank, foam on the right bank too. Still wrong: broken pieces at the far left, smeared left wall, distorted far river.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T11:04:24.352Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step2_m05berm/1_APPROVED_05.jpg → file_uuid: 9712ab01-34b2-4a66-b238-8726f3b26a0f
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step2_m05berm/2_BEFORE_two_thirds.jpg → file_uuid: c3ed2a57-667d-4c27-8913-bd227c756dbe
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step2_m05berm/3_NEW_two_thirds.jpg → file_uuid: 4cec5791-eed1-4ebd-a5f1-7310d9f1686e
+
+### 🤖 Claude — 2026-11-18T11:04:29.917Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"worktree\\|wip\\|patch\" scripts/rainbow-autosave.py | head -12; echo \"--- default branch:\"; timeout 60 git ls-remote --symref origin HEAD | head -2; DEF=$(timeout 60 git ls-remote --symref origin HEAD | awk '/^ref:/{sub(\"refs/heads/\",\"\",$2); print $2}'); echo \"DEF=$DEF\"; timeout 120 git fetch -q origin $DEF:refs/remotes/origin/$DEF 2>&1 | tail -1; git show origin/$DEF:.claude/settings.json 2>&1 | head -20; git log -1 --format='%h %ci %s' origin/$DEF", "description": "Check autosave worktree coverage and default branch hook"}`
+
+### 🧑 User — 2026-11-18T11:04:31.367Z
+
+> ↩︎ result: --- default branch:
+> ref: refs/heads/ccr-6f431adf-7h0m8y	HEAD
+> 81e639e16994713d5f70d0314e796d1c298eeacf	HEAD
+> DEF=ccr-6f431adf-7h0m8y
+> {
+>   "hooks": {
+>     "SessionStart": [
+>       {
+>         "hooks": [
+>           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" SessionStart", "timeout": 60 }
+>         ]
+>       }
+>     ],
+>     "PreCompact": [
+>       {
+>         "hooks": [
+>           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" PreCompact", "timeout": 120 }
+>         ]
+>       }
+>     ],
+>     "Stop": [
+>       {
+>         "hooks": [
+>           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" Stop", "timeout": 30 }
+> 81e639e1 2026-11-15 18:05:05 +0000 autosave: Rainbow 2026-11-15 18:05 UTC
+
+### 🤖 Claude — 2026-11-18T11:04:42.126Z
+
+> 🔧 **Bash** `{"command": "git show origin/ccr-6f431adf-7h0m8y:scripts/autosave-hook.sh 2>&1 | grep -n -i \"bootstrap\\|resume\\|fetch\\|daemon\" | head -8; echo \"--- current hook:\"; grep -n -i \"bootstrap\\|resume\\|fetch\\|daemon\" scripts/autosave-hook.sh | head -8; ls backups/START_NEW_CLAUDE_ACCOUNT.md && head -20 backups/START_NEW_CLAUDE_ACCOUNT.md", "description": "Compare default-branch hook with current restore hook"}`
+
+### 🧑 User — 2026-11-18T11:04:42.188Z
+
+> ↩︎ result: --- current hook:
+> 3:# SessionStart -> scripts/claude-bootstrap.sh --hook: fetches and LISTS newer branches (merges NOTHING since 2026-11-17;
+> 4:#   merging needs the user's OK and `claude-bootstrap.sh --resume`), restores Git LFS, re-arms the
+> 5:#   five-minute autosave, prints a short recovery summary for Claude and runs the full bootstrap in the background.
+> 12:    if [ -f "$REPO/scripts/claude-bootstrap.sh" ]; then
+> 13:      exec bash "$REPO/scripts/claude-bootstrap.sh" --hook     # reads the hook JSON (source) from stdin
+> 15:    # fallback for an old checkout without the bootstrap
+> backups/START_NEW_CLAUDE_ACCOUNT.md
+> # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶ NEWEST (2026-11-18 ~02:25 UTC, account 8 → next account) — use THIS prompt
+> Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+> Claude Code cloud session on the repo, branch **`claude/rainbow-lead-c8`**.
+> 
+> > RAINBOW — continue my EXISTING game exactly where account 8 stopped. Do NOT restart, redesign, merge or delete anything.
+> > 1. Follow `CLAUDE.md`. Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ACCOUNT 8 (round 8) STATE") —
+> >     …[+1086 chars]
+
+### 🤖 Claude — 2026-11-18T11:04:58.293Z
+
+> 🔧 **Bash** `{"command": "wc -l scripts/rainbow-autosave.py && grep -n \"^def \\|^    def \\|git push\\|ls-remote\\|def main\\|allow\\|ALLOW\" scripts/rainbow-autosave.py | head -50", "description": "Outline the autosave script functions"}`
+
+### 🧑 User — 2026-11-18T11:04:58.337Z
+
+> ↩︎ result: 400 scripts/rainbow-autosave.py
+> 12:  4. stages ONLY allow-listed paths (respecting .gitignore), scans staged text for secrets,
+> 45:def _trailer() -> str:
+> 74:def now_utc() -> dt.datetime:
+> 78:def git(*args: str, check: bool = True, timeout: int = 180) -> subprocess.CompletedProcess:
+> 91:def seed_live() -> None:
+> 99:def sync_tracked_from_live() -> None:
+> 106:def load_status() -> dict:
+> 113:def append_log(row: dict) -> None:
+> 126:def write_status(st: dict) -> None:
+> 132:def verify_private() -> bool | None:
+> 147:def refresh_manifest() -> None:
+> 148:    """Small manifest of tracked/allow-listed files (path, bytes, sha256) for recovery checks."""
+> 150:    for rel in sorted(allowlisted_files()):
+> 169:def lfs_pointer(data: bytes) -> tuple[str, int] | None:
+> 177:def allowlisted_files() -> list[str]:
+> 179:    out = git("ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", *CFG["allowlist"],
+> 184:def lfs_tracked(rel: str) -> bool:
+> 189:def scan_and_guard(staged: list[str]) -> list[str]:
+> 216:def push_and_verify(branch: str) -> tuple[bool, str]:
+> 234:    ls = git("ls-remote", CFG["remote_name"], f"refs/heads/{branch}", check=False, timeout=120)
+> 241:def main() -> int:
+> 274:            # explicitly …[+505 chars]
+
+### 🤖 Claude — 2026-11-18T11:05:00.108Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "offset": 241, "limit": 160}`
+
+### 🧑 User — 2026-11-18T11:05:00.126Z
+
+> ↩︎ result: 241	def main() -> int:
+> 242	    ap = argparse.ArgumentParser()
+> 243	    ap.add_argument("--reason", default="manual")
+> 244	    ap.add_argument("--message", default="")
+> 245	    ap.add_argument("--no-push", action="store_true")
+> 246	    ap.add_argument("--quiet", action="store_true")
+> 247	    args = ap.parse_args()
+> 248	    t0 = now_utc()
+> 249	    seed_live()
+> 250	    st = load_status()
+> 251	    row = {"time": t0.isoformat(), "reason": args.reason, "result": "error", "files_staged": 0,
+> 252	           "pushed_verified": False, "branch": CFG["branch"]}
+> 253	
+> 254	    LOCK.parent.mkdir(parents=True, exist_ok=True)
+> 255	    lockfh = open(LOCK, "w")
+> 256	    try:
+> 257	        fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+> 258	    except BlockingIOError:
+> 259	        if not args.quiet:
+> 260	            print("another autosave is running; skipping")
+> 261	        return 0
+> 262	
+> 263	    try:
+> 264	        # ---- 1. identity checks -------------------------------------------------------
+> 265	        url = git("remote", "get-url", CFG["remote_name"]).stdout.strip()
+> 266	        if CFG["remote_url_must_contain"] not in url:
+> 267	            raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo;  …[+8125 chars]
+
+### 🤖 Claude — 2026-11-18T11:05:01.410Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"import json; c=json.load(open('backups/autosave.config.json')); print({k:(v if k!='allowlist' else v[:40]) for k,v in c.items() if k not in ('protected_branches',)}); print('protected:', c.get('protected_branches')[:6], '...')\"", "description": "Show autosave config allowlist and branch rules"}`
+
+### 🧑 User — 2026-11-18T11:05:01.459Z
+
+> ↩︎ result: {'project': 'RAINBOW — 11-screen 3D mobile game', 'repo_full_name': 'josiahscalia5-dev/rainbow-', 'remote_name': 'origin', 'remote_url_must_contain': 'github.com/josiahscalia5-dev/rainbow-', 'branch': 'claude/rainbow-restore-c9-40w64b', 'session_branch_patterns': ['ccr-*', 'claude/*'], 'commit_trailer': 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BXRtCe7mvFtZdouetF', 'claude_projects_glob': '~/.claude/projects/-home-user-rainbow-*', 'allowlist': ['*.md', '.gitignore', '.gitattributes', '.claude/agents', '.claude/skills', '.claude/commands', '.claude/rules', '.claude/settings.json', '.mcp.json.template', 'package.json', 'package-lock.json', 'tsconfig.json', 'tsconfig.node.json', 'vite.config.ts', 'capacitor.config.ts', 'index.html', 'src', 'public', 'assets', 'references', 'character_references', 'screenshots', 'qa', 'docs', 'scripts', 'tools', 'tests', 'backups', 'android', 'builds'], 'status_only_paths': ['backups/BACKUP_STATUS.json', 'backups/BACKUP_LOG.md'], 'max_plain_git_file_mb': 49, 'push_retries': 4, 'original_branch_note': "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original …[+4830 chars]
+
+### 🤖 Claude — 2026-11-18T11:05:25.110Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "def main() -> int:\n    ap = argparse.ArgumentParser()", "new_string": "def snapshot_worktrees() -> list[str]:\n    \"\"\"User order 2026-11-18: also preserve UNFINISHED specialist work. For every other git worktree of this repo\n    (specialists work in /home/user/wt/<sNN> on their own branches) write, read-only (--no-optional-locks: never takes\n    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch\n    (`git diff HEAD --binary`) and smal …[+2745 chars]`
+
+### 🧑 User — 2026-11-18T11:05:25.144Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:05:26.816Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "        refresh_manifest()\n\n        # ---- 3. stage allow-listed paths", "new_string": "        refresh_manifest()\n        try:\n            wip = snapshot_worktrees()\n            if wip:\n                row[\"wip_snapshots\"] = wip\n        except Exception as e:  # a snapshot problem must never block the backup itself\n            row[\"wip_error\"] = str(e)[:300]\n\n        # ---- 3. stage allow-listed paths"}`
+
+### 🧑 User — 2026-11-18T11:05:26.877Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:05:30.784Z
+
+Testing it with a real save, then checking what it captured from the two specialist workspaces:
+
+### 🤖 Claude — 2026-11-18T11:05:33.544Z
+
+> 🔧 **Bash** `{"command": "python3 -m py_compile scripts/rainbow-autosave.py && timeout 400 python3 scripts/rainbow-autosave.py --reason manual:wip-snapshot-test 2>&1 | grep -E '\"result\"|\"commit\"|wip|error' | head -8; ls backups/wip/ 2>&1; for d in backups/wip/*/; do python3 -I -c \"import json,sys; d=json.load(open('$d/INFO.json')); print(d['branch'], d['head'][:10], 'modified:', d['dirty_tracked'][:5], 'new:', d['untracked_copied'][:5], 'skipped:', len(d['untracked_skipped']))\"; done; echo \"HEAD $(git rev-parse --short HEAD) REMOTE $(timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro | c …[+106 chars]`
+

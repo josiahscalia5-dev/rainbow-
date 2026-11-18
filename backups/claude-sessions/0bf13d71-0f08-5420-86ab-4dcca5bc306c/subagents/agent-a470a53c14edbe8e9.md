@@ -1956,3 +1956,38 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/berm1; for k in k81_kink_left k81_kink_right k81_kink; do timeout 600 node tools/match05/r10_probe.mjs $k \"$Q\" --shot=$S/$k.png 2>&1 | grep \"shot k\"; done; Q2=\"$Q&m05flat=1\"; timeout 600 node tools/match05/r10_probe.mjs k81_kink \"$Q2\" --shot=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/flat2/k …[+506 chars]`
 
+### 🧑 User — 2026-11-18T11:04:56.200Z
+
+> ↩︎ result: shot k81_kink_left s 178.917 lat -3.821 cam -0.23,-39.25,-114.33
+> shot k81_kink_right s 178.89 lat 3.828 cam 6.31,-40.32,-111.13
+> shot k81_kink s 178.902 lat 0 cam 2.89,-39.79,-112.73
+> shot k81_kink s 178.913 lat 0 cam 2.89,-39.79,-112.74
+
+### 🤖 Claude — 2026-11-18T11:04:59.013Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_kink2.png"}`
+
+### 🧑 User — 2026-11-18T11:04:59.291Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:05:11.515Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(864,1060),'white')\no.paste(Image.open('berm1/t33_through_screen.png').crop((0,480,864,1000)),(0,0))\no.paste(Image.open('flat2/t33_through_screen.png').crop((0,480,864,1000)),(0,530))\no.save('cmp_flat_t33.png')\"", "description": "Compare t33 berm vs flat"}`
+
+### 🧑 User — 2026-11-18T11:05:11.887Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:05:12.816Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_flat_t33.png"}`
+
+### 🧑 User — 2026-11-18T11:05:12.863Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:05:19.902Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; mkdir -p $S/flat; timeout 600 node scripts/capture.mjs 05 --q=\"$K&m05flat=1\" --out=$S/flat 2>&1 | tail -1; git checkout -q qa/capture_log.json; python3 -c \"\nfrom PIL import Image; import numpy as np\nb=np.asarray(Image.open('$S/berm2/05.png').convert('RGB'),int); f=np.asarray(Image.open('$S/flat/05.png').convert('RGB'),int); k=np.a …[+307 chars]`
+
