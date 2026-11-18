@@ -2531,3 +2531,173 @@ I'll report the verdict when the run finishes.
 <event>s05 NEW COMMIT d5e37379: Screen 05 r11 step 1: &amp;m05wtile=1 — far tunnel walls crisp while swimming (slot rows from the approved near</event>
 </task-notification>
 
+### 🤖 Claude — 2026-11-18T11:50:29.266Z
+
+Screen 05 reports its first kept improvement. Before passing it on, I'm checking it myself against your approved picture:
+
+### 🤖 Claude — 2026-11-18T11:50:30.677Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git ls-remote origin refs/heads/claude/rainbow-s05-match-c11 | cut -c1-12; git rev-parse --short=12 HEAD; sed -n '/## Item 2\\|## Step 1/,$p' qa/match/05/r11/PROGRESS.md | head -40; ls qa/match/05/r11/step1_*/", "description": "Read Screen 05 step 1 entry and list its images"}`
+
+### 🧑 User — 2026-11-18T11:50:31.170Z
+
+> ↩︎ result: d5e3737927c7
+> d5e3737927c7
+> ## Step 1 — `&m05wtile=1` (B: smeared walls while swimming → crisp painted perforated metal, pink light streaks kept)
+> * Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1`
+> * Cause (measured with `tools/match05/r10_probe.mjs`): the walls seen while swimming at t33 / t66 / in the kink are the far
+>   tunnel block (`tube05_far_wall`). It wears the approved picture's far bays (atlas rows BC … GX), which hold only
+>   128 → 16 texel rows per bay because the painting shows them small; swimming brings them close, so each slot was
+>   stretched along the tunnel into the horizontal smear.
+> * Fix (texture mapping only, geometry untouched, world-anchored): where a far bay's own row would be magnified, the
+>   wall keeps that bay's own painted colour and light (the pink-white streaks along the tunnel are detail round the tube,
+>   which the atlas holds at full resolution) and takes the slot rows from the approved NEAR bay N1 (256 texel rows: the
+>   sharpest painted wall), as N1's slot light/dark pattern at the same angle and the same place within the bay.
+> * WHAT …[+1746 chars]
+
+### 🤖 Claude — 2026-11-18T11:50:35.407Z
+
+Let me look at the pictures myself (approved, then BEFORE and NEW at two-thirds through the stage):
+
+### 🤖 Claude — 2026-11-18T11:50:35.904Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/1_APPROVED.png"}`
+
+### 🧑 User — 2026-11-18T11:50:35.921Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:50:36.456Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/2_BEFORE_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:50:36.499Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:50:36.958Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/3_NEW_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:50:37.007Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:50:45.902Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3; cat /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/byr0902ka.output | tail -18; cd $S && /home/user/da3/venv/bin/python -I compare.py $S DA3-BASE,DA3MONO-LARGE,DA3METRIC-LARGE 2>&1 | tail -8", "description": "Show DA3 run log and run the depth comparison", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T11:50:50.033Z
+
+> ↩︎ result: [97m[INFO ] Processed Images Done taking 0.03332328796386719 seconds. Shape:  torch.Size([1, 3, 504, 280])[0m
+> [97m[INFO ] Model Forward Pass Done. Time: 3.016822099685669 seconds[0m
+> [97m[INFO ] Conversion to Prediction Done. Time: 0.0001842975616455078 seconds[0m
+> DA3METRIC-LARGE 05: depth (504, 280) 3.1s intr=False sky=True
+> [97m[INFO ] Processed Images Done taking 0.009937047958374023 seconds. Shape:  torch.Size([1, 3, 504, 280])[0m
+> [97m[INFO ] Model Forward Pass Done. Time: 3.019514560699463 seconds[0m
+> [97m[INFO ] Conversion to Prediction Done. Time: 0.00014495849609375 seconds[0m
+> DA3METRIC-LARGE 06: depth (504, 280) 3.0s intr=False sky=True
+> [97m[INFO ] Processed Images Done taking 0.012984275817871094 seconds. Shape:  torch.Size([1, 3, 504, 280])[0m
+> [97m[INFO ] Model Forward Pass Done. Time: 2.8947105407714844 seconds[0m
+> [97m[INFO ] Conversion to Prediction Done. Time: 0.0001518726348876953 seconds[0m
+> DA3METRIC-LARGE 07: depth (504, 280) 2.9s intr=False sky=True
+> [97m[INFO ] Processed Images Done taking 0.010618448257446289 seconds. Shape:  torch.Size([1, 3, 504, 280])[0m
+> [97m[INFO ] Model Forward Pass Done. Time: 2.93062424659729 seconds[0m
+> [97m[INFO ] Conv …[+2483 chars]
+
+### 🤖 Claude — 2026-11-18T11:51:02.416Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3/report; cd $S && for n in 04 05 06 07 08; do convert ${n}_1_APPROVED.png ${n}_2_GAME_depth_at_approved_view.png ${n}_3_DA3_DA3MONO-LARGE_depth.png ${n}_3_DA3_DA3-BASE_depth.png -resize 288x512 +append ../sheet_$n.jpg; done; ls ../sheet_*", "description": "Build small inspection sheets per screen"}`
+
+### 🧑 User — 2026-11-18T11:51:03.067Z
+
+> ↩︎ result: ../sheet_04.jpg
+> ../sheet_05.jpg
+> ../sheet_06.jpg
+> ../sheet_07.jpg
+> ../sheet_08.jpg
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:51:06.372Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3/sheet_08.jpg"}`
+
+### 🧑 User — 2026-11-18T11:51:06.385Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:51:07.084Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3/sheet_06.jpg"}`
+
+### 🧑 User — 2026-11-18T11:51:07.097Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:51:07.687Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3/sheet_04.jpg"}`
+
+### 🧑 User — 2026-11-18T11:51:07.698Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:51:25.961Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3; cd $S && /home/user/da3/venv/bin/python -I - <<'EOF'\nimport numpy as np, cv2\nS='/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3'\nfor nn in ['04','05','06','07','08']:\n    z=np.load(f'{S}/out/DA3MONO-LARGE/{nn}.npz'); d=cv2.resize(z['depth'],(864,1536))\n    inv=1/np.maximum(d,1e-6); lo,hi=np.percentile(inv,[2,98]); x=np.clip((inv-lo)/(hi-lo),0,1)\n    img=cv2.applyColorMap((x*255).astype(np.uint8),cv2.COLORMAP_TURBO)   # near = red, far = blue\n    cv2 …[+375 chars]`
+
+### 🧑 User — 2026-11-18T11:51:26.559Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:51:29.912Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3/own_0407.jpg"}`
+
+### 🧑 User — 2026-11-18T11:51:29.931Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:51:58.090Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3; R=/home/user/rainbow-; D=$R/qa/da3/2026-11-18; mkdir -p $D/depth_npz $R/tools/da3 && cd $S/report && for n in 04 05 06 07 08; do cp ${n}_2_GAME_depth_at_approved_view.png ${n}_5_DA3MONO_own_scale_depth.png ${n}_3_DA3_DA3MONO-LARGE_depth.png ${n}_4_DA3_DA3MONO-LARGE_disagreement.png $D/; for m in DA3MONO-LARGE DA3-BASE; do cp $S/out/$m/$n.npz $D/depth_npz/${m}_$n.npz; done; done; cp metrics.json $D/; cp $S/run_da3.py $S/compare.py $R/tools/da3/; du -sh $D; ls $D | wc -l\n# the review copies of  …[+400 chars]`
+
+### 🧑 User — 2026-11-18T11:51:58.204Z
+
+> ↩︎ result: 13M	/home/user/rainbow-/qa/da3/2026-11-18
+> 22
+> 1_APPROVED.png
+> 2_BEFORE_k81_kink.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_k81_kink.png
+> 3_NEW_t66_through_screen.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:52:01.983Z
+
+Now the written record (results, verdict, licences and reinstall steps), plus a note on the old pending-request file that it isn't needed on this account:
+
+### 🤖 Claude — 2026-11-18T11:52:21.333Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r11/DA3_TEST.md", "content": "# Depth Anything 3 — free CPU test on the approved pictures 04–08 (account 11 lead, 2026-11-18 ~11:45–12:05 UTC)\n\nUser order (2026-11-18, on a computer): request the DA3 network permissions, then test whether DA3 genuinely helps reproduce\nthe approved scenery. No paid jobs; never replace existing successful reconstruction work.\n\n## Network / environment\nNo permission request was needed: this account's cloud environment (\"Default\") has UNRESTRICTED network, so\n`huggingface.co`, `cdn-lfs-us-1.hf.co`, …[+4572 chars]`
+
+### 🧑 User — 2026-11-18T11:52:21.464Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r11/DA3_TEST.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T11:52:23.488Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md", "old_string": "# Pending environment permission (free; waiting for the user to approve ON A COMPUTER)", "new_string": "# Pending environment permission (free; waiting for the user to approve ON A COMPUTER)\n\n> **Account 11 (2026-11-18 ~11:45 UTC): NOT NEEDED on this account** — its environment (\"Default\") has unrestricted\n> network; all hosts below are reachable and the DA3 test ran: `docs/briefs/2026-11-18-r11/DA3_TEST.md`. Keep this file\n> for a future account whose envir …[+29 chars]`
+
+### 🧑 User — 2026-11-18T11:52:23.645Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:52:26.111Z
+
+Recording Screen 05's step in the coordination log, then saving everything to GitHub:
+
+### 🤖 Claude — 2026-11-18T11:52:31.993Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r11/COORDINATION.md <<'EOF'\n| 1 (~11:58) | 05 step 1 `m05wtile` (far tunnel walls crisp painted slotted metal while swimming; `d5e37379`) | GOOD IMPROVEMENT, modest (slots larger / rounder than the painted dashes; water defects unchanged) |\n| — | 05 account-10 WIP `m05unf` | NOT AN IMPROVEMENT (patch kept: `qa/match/05/r11/wip_m05unf_not_kept.patch`) |\n| — | Depth Anything 3 test (`DA3_TEST.md`) | NOT YET PROVEN as a game improvement; validated on 08; measures the 06 bent tunnel / S-loop and the 04 opening funnel |\nEOF\nfor i in 1 2 3 4 5 6; do ou …[+629 chars]`
+

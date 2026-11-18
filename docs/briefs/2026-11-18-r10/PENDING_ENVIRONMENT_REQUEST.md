@@ -1,5 +1,9 @@
 # Pending environment permission (free; waiting for the user to approve ON A COMPUTER)
 
+> **Account 11 (2026-11-18 ~11:45 UTC): NOT NEEDED on this account** — its environment ("Default") has unrestricted
+> network; all hosts below are reachable and the DA3 test ran: `docs/briefs/2026-11-18-r11/DA3_TEST.md`. Keep this file
+> for a future account whose environment has LIMITED network.
+
 Requested 2026-11-18 ~10:35 UTC, denied at the prompt because the user was on a phone ("the environment update permission
 says it must be approved on my computer"). User: "When I tell you I'm on my computer, please submit a NEW environment
 update permission request so I can approve it there." Do NOT re-request before the user says so.

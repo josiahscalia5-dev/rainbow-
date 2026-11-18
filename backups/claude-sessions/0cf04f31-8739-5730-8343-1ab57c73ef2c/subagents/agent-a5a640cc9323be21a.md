@@ -904,3 +904,201 @@ Pushed and verified. Now the short note to the lead.
 
 > ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
 
+### 🤖 Claude — 2026-11-18T11:50:40.273Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && python3 -I -c \"\nfrom PIL import Image\nc=Image.open('$S/wtile2/t66_through_screen.png').convert('RGB').crop((0,520,864,780))\nc.resize((1296,390)).save('$S/t66_seam_zoom.png')\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((0,440,864,700))\na.resize((1296,390)).save('$S/appr_seam_zoom.png')\n\"", "description": "Zoom on the far-river seam region at t66"}`
+
+### 🧑 User — 2026-11-18T11:50:40.656Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:50:44.074Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/t66_seam_zoom.png"}`
+
+### 🧑 User — 2026-11-18T11:50:44.102Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:50:44.693Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/appr_seam_zoom.png"}`
+
+### 🧑 User — 2026-11-18T11:50:44.719Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:50:56.135Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export function farRiverMaterial\" -A120 src/world/far05.ts | head -170", "description": "Read the far river material shader"}`
+
+### 🧑 User — 2026-11-18T11:50:56.174Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:50:59.794Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"farRiverMaterial\" src | head; grep -n \"^export\\|^function\" src/world/far05.ts", "description": "Locate farRiverMaterial definition"}`
+
+### 🧑 User — 2026-11-18T11:50:59.838Z
+
+> ↩︎ result: src/world/environment.ts:9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+> src/world/environment.ts:564:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
+> src/world/materials.ts:861:export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> src/world/far05.ts:179: * rim follows both banks (farRiverMaterial), beyond it the tunnel wall shows.
+> src/world/far05.ts:255: * higher (foam rims). Attributes for farRiverMaterial: aRivLat (lateral, units from the axis), aRivA (xB, hw,
+> src/vfx/waterRibbon.ts:1996:/** `?proj05=1`: uniforms + GLSL for the far river block (materials.ts farRiverMaterial) — its baked layer proj05_F. …[+1302 chars]
+
+### 🤖 Claude — 2026-11-18T11:51:03.371Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 861,990p src/world/materials.ts; sed -n 1990,2100p src/vfx/waterRibbon.ts", "description": "Read farRiverMaterial and the proj05 far-river GLSL"}`
+
+### 🧑 User — 2026-11-18T11:51:03.399Z
+
+> ↩︎ result: export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+>   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+>   // wins the depth test against the real ribbon's continuation it covers just behind the seam
+>   mat.polygonOffset = true;
+>   mat.polygonOffsetFactor = -1;
+>   mat.polygonOffsetUnits = -2;
+>   const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+>   const uniforms = {
+>     uRivCyanLo: { value: lin(0.02, 0.22, 0.62) },
+>     uRivCyan: { value: lin(0.03, 0.42, 0.95) },
+>     uRivCyanHi: { value: lin(0.25, 0.95, 1.6) },
+>     uRivPinkLo: { value: lin(0.45, 0.03, 0.42) },
+>     uRivPink: { value: lin(0.85, 0.07, 0.75) },
+>     uRivPinkHi: { value: lin(1.05, 0.42, 1.0) },
+>     uRivFoam: { value: lin(0.95, 0.92, 1.05) },
+>     uRivFoamLav: { value: lin(0.62, 0.52, 0.95) },
+>     uRivFoamBlue: { value: lin(0.32, 0.36, 0.9) },
+>     uRivGlow: { value: new THREE.Color(glow.color) },
+>     uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
+>     /** W11: depth of the seam from the locked 05 eye (ForcedTunn …[+15393 chars]
+
+### 🤖 Claude — 2026-11-18T11:51:10.073Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 261,318p src/vfx/waterRibbon.ts", "description": "Read m05wd and m05ride switch descriptions"}`
+
+### 🧑 User — 2026-11-18T11:51:10.111Z
+
+> ↩︎ result: * `&m05wd=1` (Screen 05 round 8, branch claude/rainbow-s05-match-c8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05):
+>  * WATER DESIGN WHILE SWIMMING. Riding hands the near river over from the approved exact layer E to the periodic near
+>  * tile T2 (projnear05: E must be as dense as the locked view had it, i.e. ~270 texels/u, or the tile takes over) — the
+>  * tile is a repeat of the nearest approved water, so the S-shaped pink / cyan streams of the approved design vanished
+>  * in front of Benny and the screen showed a marbled, stretched colour sheet. With the switch the approved design E stays
+>  * the river's layout wherever E has data (E is smoothed along its own rows: far rows hold only 8–18 texels per unit,
+>  * whose row noise read as flat horizontal stripes when magnified), and the fine detail layer is laid over it. Engaged
+>  * only while riding (pjNearK): the locked checkpoint picture is unchanged pixel for pixel.
+>  */
+> export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+> /**
+>  * `&m05ride=1` (Screen 05 round 8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05): the APPROVED DESIGN LAID OUT FROM
+>  * BENNY. The approved picture holds only ~50 u of river and only its first ~10 u (aroun …[+3693 chars]
+
+### 🤖 Claude — 2026-11-18T11:51:31.972Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"M05CLOUD\\|impostor\\|Impostor\" src/vfx/foam.ts | head -40", "description": "Find foam impostor code paths"}`
+
+### 🧑 User — 2026-11-18T11:51:32.005Z
+
+> ↩︎ result: 17:import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, m05foamK } from './waterRibbon';
+> 384: * wave 8 (05 only: rafts + the 05 berm puffs): one foam lump = a sphere impostor with the true per-pixel sphere depth,
+> 476:  /** wave 8: 05 berm puffs + rim bubbles as fine-foam impostors */
+> 514: * the ref clumps are piled bubbles only, so wave 5 hides it and the impostor bubbles carry the clumps.
+> 665:  /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
+> 706:  /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
+> 788:  // `&m05cloud=1` (Screen 05 round 10, waterRibbon.ts M05CLOUD): big puffy foam CLOUDS on both 05 banks — clusters of
+> 792:  if (M05CLOUD) {
+> 905:  // bubble puffs: camera-facing sphere impostors (2 triangles each), CELL-spaced world cells along s,
+> 926:  // wave 8: the 05 berm puffs + rim bubbles as fine-foam impostors (one draw, static)
+> 940:  // wave 8: fine foam = a few LOW lumps sunk into the water (negative lift: with the impostor's sphere depth only the
+
+### 🤖 Claude — 2026-11-18T11:51:34.945Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 380,476p src/vfx/foam.ts", "description": "Read the fine-foam impostor shader"}`
+
+### 🧑 User — 2026-11-18T11:51:34.977Z
+
+> ↩︎ result: #include <fog_vertex>
+> }
+> `;
+> /**
+>  * wave 8 (05 only: rafts + the 05 berm puffs): one foam lump = a sphere impostor with the true per-pixel sphere depth,
+>  * so lumps sink into the water and into each other with curved creases (a merged low foam mound, not stacked discs);
+>  * the lower outline of larger lumps is scalloped by small piled bubbles; the micro texture packs tiny open bubbles on
+>  * the lower half / flanks; bubbles under ~14 px render as glossy little soap bubbles with a thin blue rim.
+>  */
+> const BANK_BUB_FRAG = /* glsl */ `
+> uniform mat4 projectionMatrix;
+> uniform vec3 uLightDir;
+> uniform float uTime;
+> varying vec2 vP;
+> varying vec3 vInst;
+> varying float vBig;
+> varying vec3 vCv;
+> varying float vR;
+> #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${SOAP05_GLSL}
+> ${MICRO_GLSL}
+> void main() {
+>   float px = 2.0 / max(fwidth(vP.x), 1e-4);
+>   float d = length(vP);
+>   float ang = atan(vP.y, vP.x);
+>   float nS = clamp(floor(px / 8.0), 5.0, 16.0);
+>   float sc = abs(sin(ang * nS * 0.5 + vInst.y * 31.0));
+>   float amp = 0.11 * smoothstep(16.0, 34.0, px) * smoothstep(0.45, -0.35, vP.y / max(d, 1e-3));
+>   float R = 1.0 - amp * (1.0 - sc);
+>   if (d > R) discard;
+>   vec2 q = vP / R;
+>   float z = sqrt(max(1.0 - dot(q, …[+3903 chars]
+
+### 🤖 Claude — 2026-11-18T11:52:02.131Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"MICRO_GLSL = \\|SOAP05_GLSL = \\|function microFoam\\|vec4 microFoam\" src/vfx/*.ts | head; grep -n \"BANK_BUB_VERT = \" -A40 src/vfx/foam.ts | head -50", "description": "Read impostor vertex shader and helpers"}`
+
+### 🧑 User — 2026-11-18T11:52:02.176Z
+
+> ↩︎ result: src/vfx/foam.ts:79:const SOAP05_GLSL = /* glsl */ `
+> src/vfx/foam.ts:333:const MICRO_GLSL = /* glsl */ `
+> src/vfx/foam.ts:334:vec4 microFoam(vec2 p, float dens) {
+> 360:const BANK_BUB_VERT = /* glsl */ `
+> 361-varying vec2 vP;
+> 362-varying vec3 vInst;
+> 363-varying float vBig;
+> 364-varying vec3 vCv;
+> 365-varying float vR;
+> 366-#include <fog_pars_vertex>
+> 367-void main() {
+> 368-  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+> 369-  float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);
+> 370-  vec4 mvPosition = viewMatrix * c;
+> 371-  vCv = mvPosition.xyz;
+> 372-  vR = r;
+> 373-  // wave 7: 0 for bubbles <= ~18 px, 1 for >= ~40 px on screen (the ref's big near bumps show large white caps)
+> 374-  vBig = smoothstep(0.012, 0.026, projectionMatrix[1][1] * r / max(-mvPosition.z, 0.01));
+> 375-  mvPosition.xyz += normalize(-mvPosition.xyz) * r * 0.6;
+> 376-  mvPosition.xy += position.xy * r;
+> 377-  vP = position.xy;
+> 378-  vInst = instanceColor;
+> 379-  gl_Position = projectionMatrix * mvPosition;
+> 380-  #include <fog_vertex>
+> 381-}
+> 382-`;
+> 383-/**
+> 384- * wave 8 (05 only: rafts + the 05 berm puffs): one foam lump = a sphere impostor with the true per-pixel sphere depth,
+> 385- * so lumps sink  …[+653 chars]
+
+### 🤖 Claude — 2026-11-18T11:52:05.702Z
+
+Now the cauliflower sub-bubble switch `&m05caul=1`.
+
+### 🤖 Claude — 2026-11-18T11:52:21.803Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');\\n\"\nnew=old+\"\"\"/**\n * `&m05caul=1` (Screen 05 round 11, needs m05cloud; src/vfx/foam.ts BANK_BUB_FRAG): the 05 bank foam lumps that are big on\n * screen read as smooth round balls; the painted foam is cauliflower — each pile made of many small piled bubbles. Lumps\n * larger than ≈24 px are drawn as a pile of sub-bubbles (cells ≈ 16 px across, each its own small dome with a blue-violet\n * crease between them) with a sca …[+3320 chars]`
+
+### 🧑 User — 2026-11-18T11:52:24.090Z
+
+> ↩︎ result: TSC OK
+
