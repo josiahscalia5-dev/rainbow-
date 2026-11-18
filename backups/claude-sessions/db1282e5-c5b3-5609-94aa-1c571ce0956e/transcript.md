@@ -4486,3 +4486,204 @@ The Screen 04 water and ring corrections are done. The full-size APPROVED / BEFO
 - Two of their kept steps are still waiting for my eye check before I show them to you. Screen 05: the far-left bank's flat pale floor is replaced by purple wall and foam. Screen 08: the upper-right cup's top is now a pink cap.
 - Autosave: AUTOSAVE OK, and GitHub matches the local copy. Main branch at `141c9735`, Screen 04 branch at `b46de267`.
 
+### 🧑 User — 2026-11-18T15:33:34.732Z
+
+. Wait, so how can I get to 8.5? What do I have to get to 8.5 out of 10 to make it exactly like my approved screen? You're not telling me how to do it or how to get there, or what's the problem? Why isn't 8.5 out of 10? And what is it right now out of 10? And make sure you save everything to my GitHub repository, including the recent chat history between me, you, and all the specialists and agents and all that stuff.CLAUDIA — SCREEN 04: MAKE THE INSIDE OF THE TUNNEL MATCH MY ORIGINAL APPROVED SCREEN EXACTLY
+
+Claudia, I need one important visual correction to Screen 04.
+
+I WANT BENNY TO SWIM INTO THE EXACT GOLD TUNNEL SHOWN IN MY ORIGINAL APPROVED SCREEN — AND FOR THAT SAME TUNNEL DESIGN TO CONTINUE AS HE SWIMS THROUGH IT.
+
+Look carefully at my ORIGINAL APPROVED Screen 04, particularly the first image in our comparison.
+
+Your current version is improving, but the inside still looks different from the approved tunnel entrance.
+
+1. MATCH THE TUNNEL FROM ENTRANCE TO EXIT
+
+The original approved image is your visual blueprint.
+
+As Benny swims through the entrance, preserve the same:
+
+- Thick, polished copper-gold tunnel rings.
+- Rounded ring profiles and dark recessed grooves.
+- Pink, purple and golden metallic reflections.
+- Tunnel proportions, curvature and depth.
+- Bright glossy water and gold lighting.
+
+Do not make the entrance look correct and then replace the interior with a generic orange tunnel.
+
+The tunnel must feel like ONE continuous 3D environment. As Benny moves farther inside, the camera should reveal more of the same approved architecture, not a different design.
+
+2. FIX THE FIVE ARROWS TO MATCH THEIR APPROVED SHAPE
+
+The arrows in my original artwork are different from the current game.
+
+My approved arrows have:
+
+- A broad, slightly softened chevron shape.
+- Brilliant white centers with luminous cyan-blue edges.
+- A soft, natural glow integrated with the water.
+- More noticeable spacing between each arrow.
+- A perspective where arrows get smaller farther down the tunnel.
+
+Your current arrows look too sharply cut, too uniformly white and too tightly stacked in some views.
+
+Match the shape, proportions, spacing and colors of my approved five arrows.
+
+Keep all five visible ahead of Benny when appropriate, without cutting through his hat or body.
+
+Do not create a solid-blue platform, transparent sheet or oversized glow behind them.
+
+3. MATCH THE APPROVED WATER AS BENNY ENTERS AND SWIMS THROUGH
+
+The approved picture shows a flowing, vivid electric-blue and cyan water path inside the tunnel, with glossy white highlights.
+
+Preserve:
+
+- Saturated cyan-blue water.
+- Natural current swirls and sparkling highlights.
+- Small pink-magenta water accents along the outer edges.
+- Smooth transitions between water and tunnel walls.
+- Natural water splashes around Benny.
+
+Keep the cleaner center path achieved in C5.
+
+Do not bring back tall foam walls, repetitive water ridges or crowded side scenery.
+
+Also, do not make the water look like a flat road.
+
+4. PRESERVE THE APPROVED ENTRANCE AND CAMERA CONTINUITY
+
+My approved Screen 04 shows Benny approaching the gold washer tunnel.
+
+As he travels inside, it should genuinely feel like he is entering and swimming through the same tunnel shown in that original image.
+
+Preserve the correct visual progression:
+
+Approved gold entrance → same gold tunnel interior → blue water with five arrows → continued tunnel scenery.
+
+The architecture must remain spatially connected in real playable 3D.
+
+Avoid sudden changes in tunnel size, materials, ring design, lighting or water appearance.
+
+Do not fake continuity with a still image or video.
+
+5. USE THE EXISTING PROJECT — DO NOT REBUILD EVERYTHING
+
+Preserve the successful C5 version and any later demonstrated improvements.
+
+Continue the current D2 water-and-ring tests. Do not cancel work already underway.
+
+Keep the Screen 05 and 08 specialists working independently.
+
+Maintain automatic five-minute GitHub backups and preserve unfinished work.
+
+Do not spend credits repeating setup or researching unrelated tools.
+
+6. SHOW ME EXACT VISUAL PROOF
+
+Show separate full-size comparisons:
+
+ORIGINAL APPROVED / BEFORE / NEW
+
+Include:
+
+- Benny approaching the entrance.
+- Benny entering the tunnel.
+- Benny swimming in the middle.
+- Benny farther inside the tunnel.
+- Hard-left and hard-right steering.
+
+For the arrows, compare shape, spacing, thickness, color and glow against the actual approved original.
+
+For the tunnel, compare gold ring thickness, groove depth, material color, reflections, architecture and perspective.
+
+For the water, compare brightness, current shape and continuity.
+
+Only keep changes that genuinely look closer.
+
+7. CONFIRM YOU UNDERSTAND MY EXACT REQUEST
+
+Before starting any NEW major reconstruction approach, briefly confirm:
+
+1. You understand I want the actual approved entrance and its interior to be one continuous 3D tunnel.
+2. You understand the current arrows need to match the approved shape, spacing and white-cyan glow more closely.
+3. You understand the approved saturated blue water must remain consistent as Benny swims.
+4. You will preserve all successful improvements and continue the existing specialists.
+5. You will demonstrate real gameplay at multiple positions rather than only one matching screenshot.
+
+I AM NOT APPROVING SCREEN 04 AS FINISHED. I AM AUTHORIZING THESE VISUAL CORRECTIONS.
+
+My goal is for Benny to swim through the actual beautiful gold tunnel from my original approved Screen 04, with the same scenery continuing naturally as he moves forward.
+
+EXACT APPROVED TUNNEL. EXACT APPROVED ARROWS. EXACT APPROVED WATER. REAL PLAYABLE 3D. NO REDESIGN.
+
+Please confirm your understanding briefly and proceed with the authorized visual work.
+
+### 🤖 Claude — 2026-11-18T15:33:51.514Z
+
+Confirmed, all five:
+1. The approved entrance and its interior become one continuous 3D tunnel, with no generic tunnel behind the painted entrance.
+2. The arrows move toward your shape: broad, softened chevrons with brilliant white centres, luminous cyan-blue edges, a soft glow, wider spacing, and shrinking with distance.
+3. The saturated blue water stays consistent from the entrance all the way through.
+4. C5, D4 and every other kept improvement stay, and the specialists keep working.
+5. Proof comes from real gameplay: approaching, entering, middle, deeper inside, hard left and hard right.
+
+On your other questions:
+
+**My honest rating of Screen 04 right now: about 6/10 while swimming.**
+- The start view is effectively 10/10, because it shows your painted picture itself.
+- About 6 the moment Benny moves: it now reads as "gold tunnel + blue path + white arrows", but not yet as *your* tunnel.
+
+**Why it isn't 8.5 yet, biggest gap first:**
+1. **Entrance → interior jump (the biggest).** When Benny leaves the start view, your painting fades into my 3D model. The model's rings, water and arrows look visibly different from the painting, so the scene changes character instead of continuing.
+2. **Ring shape.** Your rings are thick, rounded, glowing tubes, telescoping into a bright end. Mine are flatter bands, and still darker and browner than yours.
+3. **Arrows.** Yours are broad, soft, white-centred chevrons with cyan glow edges and wider spacing. Mine are sharper and more uniform.
+4. **Water.** Yours is brighter turquoise with more magenta swirls near the entrance. Mine has less of both.
+
+**How to get to 8.5:** fix those four, in that order, and judge each one in the entering frames, where the painting hands over to 3D.
+
+First I'll make sure everything, including the chat transcripts, is on GitHub, as you asked.
+
+### 🤖 Claude — 2026-11-18T15:33:54.272Z
+
+> 🔧 **Bash** `{"command": "ls backups/claude-sessions/ | tail -3; ls -la backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/ 2>/dev/null | head; git ls-files backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e | head; python3 -c \"import json; d=json.load(open('backups/autosave.config.json')); print(d.get('claude_projects_glob'))\"; ls ~/.claude/projects/ 2>/dev/null | head; find ~/.claude/projects -maxdepth 3 -name \"*.jsonl\" -newer CLAUDE.md 2>/dev/null | head; find ~/.claude/projects -maxdepth 4 -type d -name subagents 2>/dev/null | head -3", "description": "Check which chat transcrip …[+24 chars]`
+
+### 🧑 User — 2026-11-18T15:33:54.405Z
+
+> ↩︎ result: e4336d13-0e5b-505a-bd02-7d7760d0bf5f
+> e47fc047-26b4-5efa-bfda-db0784968866
+> eae80a1c-be41-5f1a-858b-469afcc249da
+> total 2888
+> drwxr-xr-x  3 root root    4096 Nov 18 15:31 .
+> drwxr-xr-x 33 root root    4096 Nov 18 14:09 ..
+> drwxr-xr-x  2 root root    4096 Nov 18 15:13 subagents
+> -rw-r--r--  1 root root  275872 Nov 18 15:31 transcript.md
+> -rw-r--r--  1 root root 2665586 Nov 18 15:31 transcript.sanitized.jsonl
+> backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/subagents/agent-a734238476cb500fe.md
+> backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/subagents/agent-a734238476cb500fe.sanitized.jsonl
+> backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/subagents/agent-aa63a6eba875d2b13.md
+> backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/subagents/agent-aa63a6eba875d2b13.sanitized.jsonl
+> backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/transcript.md
+> backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/transcript.sanitized.jsonl
+> ~/.claude/projects/-home-user-rainbow-*
+> -home-user-rainbow-
+> /root/.claude/projects/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e.jsonl
+> /root/.claude/projects/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c5 …[+19 chars]
+
+### 🤖 Claude — 2026-11-18T15:34:00.919Z
+
+> 🔧 **Bash** `{"command": "C=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/clipD4; montage /home/user/rainbow-/references/04_through_the_five_arrows.png $C/0000.png $C/0004.png $C/0008.png $C/0012.png $C/0016.png $C/0022.png -tile 7x1 -geometry 220x391+2+2 /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/enter.jpg", "description": "Montage of frames as Benny enters the tunnel"}`
+
+### 🧑 User — 2026-11-18T15:34:01.332Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T15:34:01.672Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/enter.jpg"}`
+
+### 🧑 User — 2026-11-18T15:34:01.696Z
+
+> ↩︎ result: [image]
+

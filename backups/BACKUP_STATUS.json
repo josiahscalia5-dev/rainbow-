@@ -1,9 +1,9 @@
 {
   "last_run": {
-    "time": "2026-11-18T15:30:43+00:00",
-    "reason": "manual:04-step4-rich-water",
+    "time": "2026-11-18T15:31:15+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
-    "files_staged": 39,
+    "files_staged": 7,
     "pushed_verified": true,
     "branch": "claude/rainbow-restore-autosave-1mgga0",
     "wip_snapshots": [
@@ -11,13 +11,13 @@
       "claude/rainbow-s05-match-c13: 1 modified, 0 new file(s) snapshotted",
       "claude/rainbow-s08-scenery-c13: 0 modified, 0 new file(s) snapshotted"
     ],
-    "commit": "141c9735a2f3100aa988bd0164e8d897fc6c7501",
-    "duration_s": 12
+    "commit": "a11447b7baebf0738a28a6de19edfc7572acf44f",
+    "duration_s": 9
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/rainbow-restore-autosave-1mgga0",
-  "last_verified_remote_sha": "141c9735a2f3100aa988bd0164e8d897fc6c7501",
-  "last_successful_backup_utc": "2026-11-18T15:30:43+00:00",
+  "last_verified_remote_sha": "a11447b7baebf0738a28a6de19edfc7572acf44f",
+  "last_successful_backup_utc": "2026-11-18T15:31:15+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=466); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-18T15:35:00+00:00"
