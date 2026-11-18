@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13067,
-   "sha256": "db85af773dffce4083c791c071f2e56887317aa4c16234b73e9030e0396748c8"
+   "sha256": "7adea9413a850cba62e8b697ad85a898399a3ab40188e8ffb815ff969f1b62f2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -898,8 +898,8 @@
   },
   {
    "path": "docs/briefs/2026-11-17-r7/COORDINATION.md",
-   "bytes": 3741,
-   "sha256": "a7b5f01a79d8e89e9f4f660f9d4a5a0bc666a01185f6fe16cb88a8ae2e57feb5"
+   "bytes": 4608,
+   "sha256": "7ed5564e7d4a4e552bb2911732702d4e8d0f5671eb1bfa39c10ad52fa33abbb4"
   },
   {
    "path": "docs/briefs/2026-11-17-r7/S04.md",
@@ -920,6 +920,11 @@
    "path": "docs/briefs/2026-11-17-r7/S08_SCENERY.md",
    "bytes": 3812,
    "sha256": "33f7851896fafc2aff6798ad4e48079cebab150dc699a37d096de595650c50d5"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r7/USER_FEEDBACK_R7B.md",
+   "bytes": 1801,
+   "sha256": "91e931c4424925268fceadbf90de5907f0c960b2ea645b095d5ca4918c292ebd"
   },
   {
    "path": "docs/characters/benny.md",
@@ -8722,6 +8727,31 @@
    "sha256": "0fa92db5b4734862713bb166457776a2e6e1c6b28bb2a12d6195f0da98adad64"
   },
   {
+   "path": "qa/review_r7/05_2_BEFORE_end_of_stage.jpg",
+   "bytes": 557723,
+   "sha256": "8310dcc0ff048c569fe530c6452e0dc348c36e597837b08987a73106b9b9c760"
+  },
+  {
+   "path": "qa/review_r7/05_2_BEFORE_forward_10u.jpg",
+   "bytes": 629972,
+   "sha256": "733d5a2d53caded477329b6f74ff52e2876fcec2f82b208ee5749a6e792a8f6e"
+  },
+  {
+   "path": "qa/review_r7/05_2_BEFORE_one_third_through.jpg",
+   "bytes": 603226,
+   "sha256": "18644b602ff0189c1b4e679e47c4f37b2810973c9f8bef457ec2e3e68b3dc719"
+  },
+  {
+   "path": "qa/review_r7/05_2_BEFORE_steering_hard_right.jpg",
+   "bytes": 592689,
+   "sha256": "939430ce433b534c850f74ca772ad9fcb44adab764580d46c254fd02415f5bdd"
+  },
+  {
+   "path": "qa/review_r7/05_2_BEFORE_two_thirds_through.jpg",
+   "bytes": 582806,
+   "sha256": "c8f72551eea63ea58f9991296c1c3332719f28aa911df1a72ee63d6eb8f17d88"
+  },
+  {
    "path": "qa/review_r7/05_2_CURRENT_swim_forward_10u.jpg",
    "bytes": 629836,
    "sha256": "0c2764845b408182fd9f4289d72cd2b48cbaed525b63f0f908af5bd31ac6b4c2"
@@ -8730,6 +8760,31 @@
    "path": "qa/review_r7/05_2_CURRENT_swim_two_thirds_through.jpg",
    "bytes": 583104,
    "sha256": "67ea86dbde8290001cc63769379f6d01a0986fbbe157bdf44ae6a2cc115c0143"
+  },
+  {
+   "path": "qa/review_r7/05_3_NEW_end_of_stage.jpg",
+   "bytes": 557674,
+   "sha256": "0f03ee30c65110b9bfb014eacb29e079206c851f54a0092b943c87f36d2d780f"
+  },
+  {
+   "path": "qa/review_r7/05_3_NEW_forward_10u.jpg",
+   "bytes": 631833,
+   "sha256": "4324e9fa97c94552a9f668b87baee5b0744ffbcf7f0de1d5b032c77b24f9f263"
+  },
+  {
+   "path": "qa/review_r7/05_3_NEW_one_third_through.jpg",
+   "bytes": 606679,
+   "sha256": "a752c9132113979b91166718706efb8558789c118dbbeed6ad6248ffddedb292"
+  },
+  {
+   "path": "qa/review_r7/05_3_NEW_steering_hard_right.jpg",
+   "bytes": 595006,
+   "sha256": "019a1637a81c514a0c39ee9b6d0f0dba50eed79a66861dd88fb232f04ab98102"
+  },
+  {
+   "path": "qa/review_r7/05_3_NEW_two_thirds_through.jpg",
+   "bytes": 586631,
+   "sha256": "3659b81ef5bf2ff629a8d63840d99e643cc498758f6cde322631404b40b6c828"
   },
   {
    "path": "qa/review_r7/06_1_APPROVED.jpg",
