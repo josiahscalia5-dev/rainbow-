@@ -1,0 +1,7653 @@
+{
+  "schemaVersion": 1,
+  "reference": "qa/reference-fit/reference-features.json",
+  "referenceSha256": "da13c44f5a5517631f15f2f2e79b26a7b185dc0917c6a3a1e2de1bf03c45c5e6",
+  "rows": [
+    600,
+    850
+  ],
+  "units": "original 864x1536 image pixels; signed error = candidate minus reference",
+  "method": "Gaussian sigma1.5, five-row mean; saturated core R>1.3G, B>1.2G, R>110. Close at most ten-pixel highlight holes. Select nearest magenta run within an expected-band corridor; ambiguous, clipped, low-confidence or occluded rows have no aggregate credit.",
+  "limitations": [
+    "Colour-threshold measurements assess saturated-magenta core shape, not full aesthetic similarity, animation or gameplay.",
+    "Expected corridors bound detectable displacement. Missing bands and clipped/ambiguous candidates remain unsupported, not zero error.",
+    "Conservative actor/coin/bubble exclusions combine approved-image annotations and the preserved time-12 game checkpoint. Changed camera, actor locations or animation time require revised exclusions.",
+    "Provisional measurements on unsupported rows may describe an occluder; inspect reasons before using them.",
+    "Compare repeated images using commonSupportedRows summaries; per-image averages may use different subsets.",
+    "Reference self-calibration exposes differences between the threshold estimator and editorial reference edges; it is not subtracted from measured error."
+  ],
+  "referenceSelfCalibration": {
+    "summary": {
+      "rowsRequested": 52,
+      "rowsSupported": 35,
+      "rowsUnsupported": 17,
+      "leftCoreErrorPixels": {
+        "meanAbsolute": 0.0,
+        "medianAbsolute": 0.0,
+        "maxAbsolute": 0.0,
+        "meanSigned": 0.0
+      },
+      "rightCoreErrorPixels": {
+        "meanAbsolute": 0.0,
+        "medianAbsolute": 0.0,
+        "maxAbsolute": 0.0,
+        "meanSigned": 0.0
+      },
+      "centerErrorPixels": {
+        "meanAbsolute": 0.0,
+        "medianAbsolute": 0.0,
+        "maxAbsolute": 0.0,
+        "meanSigned": 0.0
+      },
+      "widthErrorPixels": {
+        "meanAbsolute": 0.0,
+        "medianAbsolute": 0.0,
+        "maxAbsolute": 0.0,
+        "meanSigned": 0.0
+      }
+    },
+    "byBand": {
+      "main_left": {
+        "rowsRequested": 26,
+        "rowsSupported": 20,
+        "rowsUnsupported": 6,
+        "leftCoreErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        },
+        "rightCoreErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        },
+        "centerErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        },
+        "widthErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        }
+      },
+      "main_right": {
+        "rowsRequested": 26,
+        "rowsSupported": 15,
+        "rowsUnsupported": 11,
+        "leftCoreErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        },
+        "rightCoreErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        },
+        "centerErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        },
+        "widthErrorPixels": {
+          "meanAbsolute": 0.0,
+          "medianAbsolute": 0.0,
+          "maxAbsolute": 0.0,
+          "meanSigned": 0.0
+        }
+      }
+    },
+    "rows": [
+      {
+        "band": "main_left",
+        "y": 600,
+        "expected": {
+          "left": 253.0,
+          "right": 326.0,
+          "center": 289.5,
+          "width": 73.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          183,
+          396
+        ],
+        "candidates": [
+          {
+            "left": 253,
+            "right": 326,
+            "center": 289.5,
+            "width": 73,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 183,
+            "right": 198,
+            "center": 190.5,
+            "width": 15,
+            "score": 111.3,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 253,
+          "right": 326,
+          "center": 289.5,
+          "width": 73
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 610,
+        "expected": {
+          "left": 243.0,
+          "right": 324.0,
+          "center": 283.5,
+          "width": 81.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          173,
+          394
+        ],
+        "candidates": [
+          {
+            "left": 243,
+            "right": 324,
+            "center": 283.5,
+            "width": 81,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 173,
+            "right": 190,
+            "center": 181.5,
+            "width": 17,
+            "score": 113.9,
+            "coreFraction": 0.9444444444444444
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 243,
+          "right": 324,
+          "center": 283.5,
+          "width": 81
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 620,
+        "expected": {
+          "left": 236.0,
+          "right": 328.0,
+          "center": 282.0,
+          "width": 92.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          162,
+          402
+        ],
+        "candidates": [
+          {
+            "left": 236,
+            "right": 328,
+            "center": 282.0,
+            "width": 92,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 162,
+            "right": 181,
+            "center": 171.5,
+            "width": 19,
+            "score": 123.1,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 236,
+          "right": 328,
+          "center": 282.0,
+          "width": 92
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 630,
+        "expected": {
+          "left": 236.0,
+          "right": 346.0,
+          "center": 291.0,
+          "width": 110.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          148,
+          434
+        ],
+        "candidates": [
+          {
+            "left": 236,
+            "right": 346,
+            "center": 291.0,
+            "width": 110,
+            "score": 0.0,
+            "coreFraction": 0.9279279279279279
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 236,
+          "right": 346,
+          "center": 291.0,
+          "width": 110
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 640,
+        "expected": {
+          "left": 243.0,
+          "right": 370.0,
+          "center": 306.5,
+          "width": 127.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          141,
+          472
+        ],
+        "candidates": [
+          {
+            "left": 243,
+            "right": 370,
+            "center": 306.5,
+            "width": 127,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 243,
+          "right": 370,
+          "center": 306.5,
+          "width": 127
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 650,
+        "expected": {
+          "left": 261.0,
+          "right": 390.0,
+          "center": 325.5,
+          "width": 129.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          157,
+          494
+        ],
+        "candidates": [
+          {
+            "left": 261,
+            "right": 390,
+            "center": 325.5,
+            "width": 129,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 261,
+          "right": 390,
+          "center": 325.5,
+          "width": 129
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 660,
+        "expected": {
+          "left": 291.0,
+          "right": 403.0,
+          "center": 347.0,
+          "width": 112.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          201,
+          493
+        ],
+        "candidates": [
+          {
+            "left": 291,
+            "right": 347,
+            "center": 319.0,
+            "width": 56,
+            "score": 5.6000000000000005,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 359,
+            "right": 403,
+            "center": 381.0,
+            "width": 44,
+            "score": 18.8,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "multiple_core_fragments_in_expected_band"
+        ],
+        "measured": {
+          "left": 291,
+          "right": 347,
+          "center": 319.0,
+          "width": 56
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -56.0,
+          "center": -28.0,
+          "width": -56.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 670,
+        "expected": {
+          "left": 308.0,
+          "right": 412.0,
+          "center": 360.0,
+          "width": 104.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          224,
+          496
+        ],
+        "candidates": [
+          {
+            "left": 308,
+            "right": 412,
+            "center": 360.0,
+            "width": 104,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 308,
+          "right": 412,
+          "center": 360.0,
+          "width": 104
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 680,
+        "expected": {
+          "left": 314.0,
+          "right": 412.0,
+          "center": 363.0,
+          "width": 98.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          235,
+          491
+        ],
+        "candidates": [
+          {
+            "left": 314,
+            "right": 412,
+            "center": 363.0,
+            "width": 98,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 314,
+          "right": 412,
+          "center": 363.0,
+          "width": 98
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 690,
+        "expected": {
+          "left": 310.0,
+          "right": 407.0,
+          "center": 358.5,
+          "width": 97.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          232,
+          485
+        ],
+        "candidates": [
+          {
+            "left": 310,
+            "right": 407,
+            "center": 358.5,
+            "width": 97,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 310,
+          "right": 407,
+          "center": 358.5,
+          "width": 97
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 700,
+        "expected": {
+          "left": 300.0,
+          "right": 398.0,
+          "center": 349.0,
+          "width": 98.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          221,
+          477
+        ],
+        "candidates": [
+          {
+            "left": 300,
+            "right": 398,
+            "center": 349.0,
+            "width": 98,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 300,
+          "right": 398,
+          "center": 349.0,
+          "width": 98
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 710,
+        "expected": {
+          "left": 282.0,
+          "right": 384.0,
+          "center": 333.0,
+          "width": 102.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          200,
+          466
+        ],
+        "candidates": [
+          {
+            "left": 282,
+            "right": 384,
+            "center": 333.0,
+            "width": 102,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 282,
+          "right": 384,
+          "center": 333.0,
+          "width": 102
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 720,
+        "expected": {
+          "left": 258.0,
+          "right": 369.0,
+          "center": 313.5,
+          "width": 111.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          169,
+          458
+        ],
+        "candidates": [
+          {
+            "left": 258,
+            "right": 369,
+            "center": 313.5,
+            "width": 111,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 258,
+          "right": 369,
+          "center": 313.5,
+          "width": 111
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 730,
+        "expected": {
+          "left": 232.0,
+          "right": 348.0,
+          "center": 290.0,
+          "width": 116.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          139,
+          441
+        ],
+        "candidates": [
+          {
+            "left": 232,
+            "right": 348,
+            "center": 290.0,
+            "width": 116,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 232,
+          "right": 348,
+          "center": 290.0,
+          "width": 116
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 740,
+        "expected": {
+          "left": 203.0,
+          "right": 323.0,
+          "center": 263.0,
+          "width": 120.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          107,
+          419
+        ],
+        "candidates": [
+          {
+            "left": 203,
+            "right": 323,
+            "center": 263.0,
+            "width": 120,
+            "score": 0.0,
+            "coreFraction": 0.9173553719008265
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 203,
+          "right": 323,
+          "center": 263.0,
+          "width": 120
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 750,
+        "expected": {
+          "left": 179.0,
+          "right": 299.0,
+          "center": 239.0,
+          "width": 120.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          83,
+          395
+        ],
+        "candidates": [
+          {
+            "left": 179,
+            "right": 299,
+            "center": 239.0,
+            "width": 120,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 179,
+          "right": 299,
+          "center": 239.0,
+          "width": 120
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 760,
+        "expected": {
+          "left": 139.0,
+          "right": 274.0,
+          "center": 206.5,
+          "width": 135.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          31,
+          382
+        ],
+        "candidates": [
+          {
+            "left": 139,
+            "right": 274,
+            "center": 206.5,
+            "width": 135,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 139,
+          "right": 274,
+          "center": 206.5,
+          "width": 135
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 770,
+        "expected": {
+          "left": 115.0,
+          "right": 261.0,
+          "center": 188.0,
+          "width": 146.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          0,
+          378
+        ],
+        "candidates": [
+          {
+            "left": 115,
+            "right": 261,
+            "center": 188.0,
+            "width": 146,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 0,
+            "right": 31,
+            "center": 15.5,
+            "width": 31,
+            "score": 191.5,
+            "coreFraction": 0.90625
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 115,
+          "right": 261,
+          "center": 188.0,
+          "width": 146
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 780,
+        "expected": {
+          "left": 87.0,
+          "right": 238.0,
+          "center": 162.5,
+          "width": 151.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          0,
+          359
+        ],
+        "candidates": [
+          {
+            "left": 87,
+            "right": 238,
+            "center": 162.5,
+            "width": 151,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 87,
+          "right": 238,
+          "center": 162.5,
+          "width": 151
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 790,
+        "expected": {
+          "left": 60.0,
+          "right": 221.0,
+          "center": 140.5,
+          "width": 161.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          0,
+          350
+        ],
+        "candidates": [
+          {
+            "left": 60,
+            "right": 221,
+            "center": 140.5,
+            "width": 161,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 60,
+          "right": 221,
+          "center": 140.5,
+          "width": 161
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 800,
+        "expected": {
+          "left": 41.0,
+          "right": 205.0,
+          "center": 123.0,
+          "width": 164.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          0,
+          335
+        ],
+        "candidates": [
+          {
+            "left": 41,
+            "right": 205,
+            "center": 123.0,
+            "width": 164,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 41,
+          "right": 205,
+          "center": 123.0,
+          "width": 164
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 810,
+        "expected": {
+          "left": 25.0,
+          "right": 191.0,
+          "center": 108.0,
+          "width": 166.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          0,
+          321
+        ],
+        "candidates": [
+          {
+            "left": 25,
+            "right": 126,
+            "center": 75.5,
+            "width": 101,
+            "score": 6.5,
+            "coreFraction": 0.9411764705882353
+          },
+          {
+            "left": 139,
+            "right": 191,
+            "center": 165.0,
+            "width": 52,
+            "score": 42.4,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "multiple_core_fragments_in_expected_band"
+        ],
+        "measured": {
+          "left": 25,
+          "right": 126,
+          "center": 75.5,
+          "width": 101
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -65.0,
+          "center": -32.5,
+          "width": -65.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 820,
+        "expected": {
+          "left": 9.0,
+          "right": 178.0,
+          "center": 93.5,
+          "width": 169.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          0,
+          308
+        ],
+        "candidates": [
+          {
+            "left": 9,
+            "right": 76,
+            "center": 42.5,
+            "width": 67,
+            "score": 27.700000000000003,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 114,
+            "right": 178,
+            "center": 146.0,
+            "width": 64,
+            "score": 31.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "ambiguous_multiple_magenta_runs",
+          "multiple_core_fragments_in_expected_band"
+        ],
+        "measured": {
+          "left": 9,
+          "right": 76,
+          "center": 42.5,
+          "width": 67
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -102.0,
+          "center": -51.0,
+          "width": -102.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 830,
+        "expected": {
+          "left": 0.0,
+          "right": 165.0,
+          "center": 82.5,
+          "width": 165.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "image_clipped"
+        ],
+        "searchWindow": [
+          0,
+          295
+        ],
+        "candidates": [
+          {
+            "left": 0,
+            "right": 165,
+            "center": 82.5,
+            "width": 165,
+            "score": 0.0,
+            "coreFraction": 0.9397590361445783
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "candidate_boundary_clipped_by_search_or_image"
+        ],
+        "measured": {
+          "left": 0,
+          "right": 165,
+          "center": 82.5,
+          "width": 165
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 840,
+        "expected": {
+          "left": 0.0,
+          "right": 154.0,
+          "center": 77.0,
+          "width": 154.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "image_clipped"
+        ],
+        "searchWindow": [
+          0,
+          278
+        ],
+        "candidates": [
+          {
+            "left": 0,
+            "right": 154,
+            "center": 77.0,
+            "width": 154,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "candidate_boundary_clipped_by_search_or_image"
+        ],
+        "measured": {
+          "left": 0,
+          "right": 154,
+          "center": 77.0,
+          "width": 154
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_left",
+        "y": 850,
+        "expected": {
+          "left": 0.0,
+          "right": 145.0,
+          "center": 72.5,
+          "width": 145.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "image_clipped"
+        ],
+        "searchWindow": [
+          0,
+          261
+        ],
+        "candidates": [
+          {
+            "left": 0,
+            "right": 145,
+            "center": 72.5,
+            "width": 145,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "candidate_boundary_clipped_by_search_or_image"
+        ],
+        "measured": {
+          "left": 0,
+          "right": 145,
+          "center": 72.5,
+          "width": 145
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 600,
+        "expected": {
+          "left": 564.0,
+          "right": 635.0,
+          "center": 599.5,
+          "width": 71.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          494,
+          705
+        ],
+        "candidates": [
+          {
+            "left": 564,
+            "right": 635,
+            "center": 599.5,
+            "width": 71,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 682,
+            "right": 705,
+            "center": 693.5,
+            "width": 23,
+            "score": 101.3,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 564,
+          "right": 635,
+          "center": 599.5,
+          "width": 71
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 610,
+        "expected": {
+          "left": 599.0,
+          "right": 676.0,
+          "center": 637.5,
+          "width": 77.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          529,
+          746
+        ],
+        "candidates": [
+          {
+            "left": 599,
+            "right": 676,
+            "center": 637.5,
+            "width": 77,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 700,
+            "right": 746,
+            "center": 723.0,
+            "width": 46,
+            "score": 79.6,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 599,
+          "right": 676,
+          "center": 637.5,
+          "width": 77
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 620,
+        "expected": {
+          "left": 631.0,
+          "right": 709.0,
+          "center": 670.0,
+          "width": 78.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          561,
+          779
+        ],
+        "candidates": [
+          {
+            "left": 631,
+            "right": 709,
+            "center": 670.0,
+            "width": 78,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 722,
+            "right": 779,
+            "center": 750.5,
+            "width": 57,
+            "score": 68.1,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 631,
+          "right": 709,
+          "center": 670.0,
+          "width": 78
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 630,
+        "expected": {
+          "left": 659.0,
+          "right": 736.0,
+          "center": 697.5,
+          "width": 77.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          589,
+          806
+        ],
+        "candidates": [
+          {
+            "left": 659,
+            "right": 736,
+            "center": 697.5,
+            "width": 77,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 765,
+            "right": 806,
+            "center": 785.5,
+            "width": 41,
+            "score": 85.1,
+            "coreFraction": 0.9047619047619048
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 659,
+          "right": 736,
+          "center": 697.5,
+          "width": 77
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 640,
+        "expected": {
+          "left": 678.0,
+          "right": 757.0,
+          "center": 717.5,
+          "width": 79.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          608,
+          827
+        ],
+        "candidates": [
+          {
+            "left": 678,
+            "right": 757,
+            "center": 717.5,
+            "width": 79,
+            "score": 0.0,
+            "coreFraction": 0.9625
+          },
+          {
+            "left": 799,
+            "right": 827,
+            "center": 813.0,
+            "width": 28,
+            "score": 100.6,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 678,
+          "right": 757,
+          "center": 717.5,
+          "width": 79
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 650,
+        "expected": {
+          "left": 696.0,
+          "right": 777.0,
+          "center": 736.5,
+          "width": 81.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          626,
+          847
+        ],
+        "candidates": [
+          {
+            "left": 696,
+            "right": 777,
+            "center": 736.5,
+            "width": 81,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 805,
+            "right": 847,
+            "center": 826.0,
+            "width": 42,
+            "score": 86.4,
+            "coreFraction": 0.7674418604651163
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 696,
+          "right": 777,
+          "center": 736.5,
+          "width": 81
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 660,
+        "expected": {
+          "left": 714.0,
+          "right": 794.0,
+          "center": 754.0,
+          "width": 80.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          644,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 714,
+            "right": 794,
+            "center": 754.0,
+            "width": 80,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 820,
+            "right": 843,
+            "center": 831.5,
+            "width": 23,
+            "score": 81.5,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 714,
+          "right": 794,
+          "center": 754.0,
+          "width": 80
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 670,
+        "expected": {
+          "left": 727.0,
+          "right": 809.0,
+          "center": 768.0,
+          "width": 82.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          657,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 727,
+            "right": 809,
+            "center": 768.0,
+            "width": 82,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 727,
+          "right": 809,
+          "center": 768.0,
+          "width": 82
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 680,
+        "expected": {
+          "left": 737.0,
+          "right": 819.0,
+          "center": 778.0,
+          "width": 82.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          667,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 737,
+            "right": 819,
+            "center": 778.0,
+            "width": 82,
+            "score": 0.0,
+            "coreFraction": 0.9518072289156626
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 737,
+          "right": 819,
+          "center": 778.0,
+          "width": 82
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 690,
+        "expected": {
+          "left": 742.0,
+          "right": 821.0,
+          "center": 781.5,
+          "width": 79.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          672,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 742,
+            "right": 812,
+            "center": 777.0,
+            "width": 70,
+            "score": 0.9,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 826,
+            "right": 833,
+            "center": 829.5,
+            "width": 7,
+            "score": 54.1,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 854,
+            "right": 861,
+            "center": 857.5,
+            "width": 7,
+            "score": 87.7,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 742,
+          "right": 812,
+          "center": 777.0,
+          "width": 70
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -9.0,
+          "center": -4.5,
+          "width": -9.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 700,
+        "expected": {
+          "left": 746.0,
+          "right": 822.0,
+          "center": 784.0,
+          "width": 76.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          676,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 746,
+            "right": 818,
+            "center": 782.0,
+            "width": 72,
+            "score": 0.4,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 831,
+            "right": 840,
+            "center": 835.5,
+            "width": 9,
+            "score": 57.3,
+            "coreFraction": 0.9
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 746,
+          "right": 818,
+          "center": 782.0,
+          "width": 72
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -4.0,
+          "center": -2.0,
+          "width": -4.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 710,
+        "expected": {
+          "left": 744.0,
+          "right": 824.0,
+          "center": 784.0,
+          "width": 80.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          674,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 744,
+            "right": 840,
+            "center": 792.0,
+            "width": 96,
+            "score": 1.6,
+            "coreFraction": 0.8556701030927835
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 744,
+          "right": 840,
+          "center": 792.0,
+          "width": 96
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 16.0,
+          "center": 8.0,
+          "width": 16.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 720,
+        "expected": {
+          "left": 739.0,
+          "right": 833.0,
+          "center": 786.0,
+          "width": 94.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          663,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 739,
+            "right": 839,
+            "center": 789.0,
+            "width": 100,
+            "score": 0.6000000000000001,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 739,
+          "right": 839,
+          "center": 789.0,
+          "width": 100
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 6.0,
+          "center": 3.0,
+          "width": 6.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 730,
+        "expected": {
+          "left": 728.0,
+          "right": 840.0,
+          "center": 784.0,
+          "width": 112.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          638,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 728,
+            "right": 838,
+            "center": 783.0,
+            "width": 110,
+            "score": 0.2,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 728,
+          "right": 838,
+          "center": 783.0,
+          "width": 110
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -2.0,
+          "center": -1.0,
+          "width": -2.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 740,
+        "expected": {
+          "left": 714.0,
+          "right": 829.0,
+          "center": 771.5,
+          "width": 115.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          622,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 714,
+            "right": 765,
+            "center": 739.5,
+            "width": 51,
+            "score": 12.9,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 781,
+            "right": 835,
+            "center": 808.0,
+            "width": 54,
+            "score": 16.8,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "ambiguous_multiple_magenta_runs",
+          "multiple_core_fragments_in_expected_band"
+        ],
+        "measured": {
+          "left": 714,
+          "right": 765,
+          "center": 739.5,
+          "width": 51
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -64.0,
+          "center": -32.0,
+          "width": -64.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 750,
+        "expected": {
+          "left": 693.0,
+          "right": 804.0,
+          "center": 748.5,
+          "width": 111.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          604,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 693,
+            "right": 804,
+            "center": 748.5,
+            "width": 111,
+            "score": 0.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 693,
+          "right": 804,
+          "center": 748.5,
+          "width": 111
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 760,
+        "expected": {
+          "left": 670.0,
+          "right": 796.0,
+          "center": 733.0,
+          "width": 126.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          569,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 670,
+            "right": 796,
+            "center": 733.0,
+            "width": 126,
+            "score": 0.0,
+            "coreFraction": 0.952755905511811
+          },
+          {
+            "left": 858,
+            "right": 863,
+            "center": 860.5,
+            "width": 5,
+            "score": 150.5,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 670,
+          "right": 796,
+          "center": 733.0,
+          "width": 126
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 770,
+        "expected": {
+          "left": 644.0,
+          "right": 793.0,
+          "center": 718.5,
+          "width": 149.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          524,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 644,
+            "right": 793,
+            "center": 718.5,
+            "width": 149,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 845,
+            "right": 863,
+            "center": 854.0,
+            "width": 18,
+            "score": 153.6,
+            "coreFraction": 0.8947368421052632
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 644,
+          "right": 793,
+          "center": 718.5,
+          "width": 149
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 780,
+        "expected": {
+          "left": 616.0,
+          "right": 772.0,
+          "center": 694.0,
+          "width": 156.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          491,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 616,
+            "right": 772,
+            "center": 694.0,
+            "width": 156,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 836,
+            "right": 863,
+            "center": 849.5,
+            "width": 27,
+            "score": 173.1,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 616,
+          "right": 772,
+          "center": 694.0,
+          "width": 156
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 790,
+        "expected": {
+          "left": 601.0,
+          "right": 758.0,
+          "center": 679.5,
+          "width": 157.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          475,
+          863
+        ],
+        "candidates": [
+          {
+            "left": 601,
+            "right": 758,
+            "center": 679.5,
+            "width": 157,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 830,
+            "right": 863,
+            "center": 846.5,
+            "width": 33,
+            "score": 183.9,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 601,
+          "right": 758,
+          "center": 679.5,
+          "width": 157
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 800,
+        "expected": {
+          "left": 586.0,
+          "right": 739.0,
+          "center": 662.5,
+          "width": 153.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          463,
+          862
+        ],
+        "candidates": [
+          {
+            "left": 586,
+            "right": 739,
+            "center": 662.5,
+            "width": 153,
+            "score": 0.0,
+            "coreFraction": 0.935064935064935
+          },
+          {
+            "left": 819,
+            "right": 862,
+            "center": 840.5,
+            "width": 43,
+            "score": 192.1,
+            "coreFraction": 0.8863636363636364
+          },
+          {
+            "left": 463,
+            "right": 477,
+            "center": 470.0,
+            "width": 14,
+            "score": 224.0,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 586,
+          "right": 739,
+          "center": 662.5,
+          "width": 153
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 810,
+        "expected": {
+          "left": 574.0,
+          "right": 718.0,
+          "center": 646.0,
+          "width": 144.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          458,
+          834
+        ],
+        "candidates": [
+          {
+            "left": 574,
+            "right": 718,
+            "center": 646.0,
+            "width": 144,
+            "score": 0.0,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 458,
+            "right": 487,
+            "center": 472.5,
+            "width": 29,
+            "score": 193.7,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 814,
+            "right": 834,
+            "center": 824.0,
+            "width": 20,
+            "score": 203.6,
+            "coreFraction": 0.9047619047619048
+          }
+        ],
+        "supported": true,
+        "reasons": [],
+        "measured": {
+          "left": 574,
+          "right": 718,
+          "center": 646.0,
+          "width": 144
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 0.0,
+          "center": 0.0,
+          "width": 0.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 820,
+        "expected": {
+          "left": 567.0,
+          "right": 707.0,
+          "center": 637.0,
+          "width": 140.0
+        },
+        "referenceConfidence": 0.94,
+        "referenceOcclusion": [],
+        "searchWindow": [
+          455,
+          819
+        ],
+        "candidates": [
+          {
+            "left": 567,
+            "right": 639,
+            "center": 603.0,
+            "width": 72,
+            "score": 6.800000000000001,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 651,
+            "right": 707,
+            "center": 679.0,
+            "width": 56,
+            "score": 22.4,
+            "coreFraction": 0.8771929824561403
+          },
+          {
+            "left": 455,
+            "right": 492,
+            "center": 473.5,
+            "width": 37,
+            "score": 177.7,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 814,
+            "right": 819,
+            "center": 816.5,
+            "width": 5,
+            "score": 212.9,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "multiple_core_fragments_in_expected_band",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 567,
+          "right": 639,
+          "center": 603.0,
+          "width": 72
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -68.0,
+          "center": -34.0,
+          "width": -68.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 830,
+        "expected": {
+          "left": 561.0,
+          "right": 689.0,
+          "center": 625.0,
+          "width": 128.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          458,
+          792
+        ],
+        "candidates": [
+          {
+            "left": 561,
+            "right": 688,
+            "center": 624.5,
+            "width": 127,
+            "score": 0.1,
+            "coreFraction": 0.9375
+          },
+          {
+            "left": 458,
+            "right": 497,
+            "center": 477.5,
+            "width": 39,
+            "score": 157.5,
+            "coreFraction": 0.75
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 561,
+          "right": 688,
+          "center": 624.5,
+          "width": 127
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -1.0,
+          "center": -0.5,
+          "width": -1.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 840,
+        "expected": {
+          "left": 558.0,
+          "right": 684.0,
+          "center": 621.0,
+          "width": 126.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          457,
+          785
+        ],
+        "candidates": [
+          {
+            "left": 558,
+            "right": 689,
+            "center": 623.5,
+            "width": 131,
+            "score": 0.5,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 457,
+            "right": 497,
+            "center": 477.0,
+            "width": 40,
+            "score": 152.8,
+            "coreFraction": 0.8536585365853658
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 558,
+          "right": 689,
+          "center": 623.5,
+          "width": 131
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": 5.0,
+          "center": 2.5,
+          "width": 5.0
+        }
+      },
+      {
+        "band": "main_right",
+        "y": 850,
+        "expected": {
+          "left": 558.0,
+          "right": 686.0,
+          "center": 622.0,
+          "width": 128.0
+        },
+        "referenceConfidence": 0.6,
+        "referenceOcclusion": [
+          "occluded_manual_interpolation"
+        ],
+        "searchWindow": [
+          455,
+          789
+        ],
+        "candidates": [
+          {
+            "left": 558,
+            "right": 685,
+            "center": 621.5,
+            "width": 127,
+            "score": 0.1,
+            "coreFraction": 1.0
+          },
+          {
+            "left": 466,
+            "right": 496,
+            "center": 481.0,
+            "width": 30,
+            "score": 154.2,
+            "coreFraction": 0.8387096774193549
+          },
+          {
+            "left": 776,
+            "right": 783,
+            "center": 779.5,
+            "width": 7,
+            "score": 185.5,
+            "coreFraction": 1.0
+          }
+        ],
+        "supported": false,
+        "reasons": [
+          "reference_confidence_below_0.9",
+          "reference_occluded_or_clipped",
+          "reference_edge_not_directly_measured",
+          "actor_or_bubble_exclusion_intersects_band"
+        ],
+        "measured": {
+          "left": 558,
+          "right": 685,
+          "center": 621.5,
+          "width": 127
+        },
+        "errorPixels": {
+          "left": 0.0,
+          "right": -1.0,
+          "center": -0.5,
+          "width": -1.0
+        }
+      }
+    ]
+  },
+  "images": {
+    "baseline": {
+      "path": "qa/reference-fit/coordinates/baseline.png",
+      "sha256": "9557bf16cc84942283b3a643441bbd8a7db318276b8f89c54492b4fe192282cc",
+      "checkpointOcclusionsApplied": true,
+      "summary": {
+        "rowsRequested": 52,
+        "rowsSupported": 18,
+        "rowsUnsupported": 34,
+        "leftCoreErrorPixels": {
+          "meanAbsolute": 36.27777777777778,
+          "medianAbsolute": 35.0,
+          "maxAbsolute": 81.0,
+          "meanSigned": 28.27777777777778
+        },
+        "rightCoreErrorPixels": {
+          "meanAbsolute": 16.055555555555557,
+          "medianAbsolute": 12.0,
+          "maxAbsolute": 52.0,
+          "meanSigned": -6.722222222222222
+        },
+        "centerErrorPixels": {
+          "meanAbsolute": 24.444444444444443,
+          "medianAbsolute": 22.25,
+          "maxAbsolute": 46.5,
+          "meanSigned": 10.777777777777779
+        },
+        "widthErrorPixels": {
+          "meanAbsolute": 36.111111111111114,
+          "medianAbsolute": 34.5,
+          "maxAbsolute": 94.0,
+          "meanSigned": -35.0
+        }
+      },
+      "byBand": {
+        "main_left": {
+          "rowsRequested": 26,
+          "rowsSupported": 14,
+          "rowsUnsupported": 12,
+          "leftCoreErrorPixels": {
+            "meanAbsolute": 35.07142857142857,
+            "medianAbsolute": 25.5,
+            "maxAbsolute": 81.0,
+            "meanSigned": 33.07142857142857
+          },
+          "rightCoreErrorPixels": {
+            "meanAbsolute": 13.928571428571429,
+            "medianAbsolute": 12.0,
+            "maxAbsolute": 40.0,
+            "meanSigned": -2.642857142857143
+          },
+          "centerErrorPixels": {
+            "meanAbsolute": 23.0,
+            "medianAbsolute": 20.0,
+            "maxAbsolute": 40.5,
+            "meanSigned": 15.214285714285714
+          },
+          "widthErrorPixels": {
+            "meanAbsolute": 37.142857142857146,
+            "medianAbsolute": 35.5,
+            "maxAbsolute": 94.0,
+            "meanSigned": -35.714285714285715
+          }
+        },
+        "main_right": {
+          "rowsRequested": 26,
+          "rowsSupported": 4,
+          "rowsUnsupported": 22,
+          "leftCoreErrorPixels": {
+            "meanAbsolute": 40.5,
+            "medianAbsolute": 40.5,
+            "maxAbsolute": 64.0,
+            "meanSigned": 11.5
+          },
+          "rightCoreErrorPixels": {
+            "meanAbsolute": 23.5,
+            "medianAbsolute": 18.5,
+            "maxAbsolute": 52.0,
+            "meanSigned": -21.0
+          },
+          "centerErrorPixels": {
+            "meanAbsolute": 29.5,
+            "medianAbsolute": 24.75,
+            "maxAbsolute": 46.5,
+            "meanSigned": -4.75
+          },
+          "widthErrorPixels": {
+            "meanAbsolute": 32.5,
+            "medianAbsolute": 23.0,
+            "maxAbsolute": 74.0,
+            "meanSigned": -32.5
+          }
+        }
+      },
+      "rows": [
+        {
+          "band": "main_left",
+          "y": 600,
+          "expected": {
+            "left": 253.0,
+            "right": 326.0,
+            "center": 289.5,
+            "width": 73.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            183,
+            396
+          ],
+          "candidates": [
+            {
+              "left": 318,
+              "right": 358,
+              "center": 338.0,
+              "width": 40,
+              "score": 38.2,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 183,
+              "right": 264,
+              "center": 223.5,
+              "width": 81,
+              "score": 38.7,
+              "coreFraction": 0.9634146341463414
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "ambiguous_multiple_magenta_runs",
+            "multiple_core_fragments_in_expected_band"
+          ],
+          "measured": {
+            "left": 318,
+            "right": 358,
+            "center": 338.0,
+            "width": 40
+          },
+          "errorPixels": {
+            "left": 65.0,
+            "right": 32.0,
+            "center": 48.5,
+            "width": -33.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 610,
+          "expected": {
+            "left": 243.0,
+            "right": 324.0,
+            "center": 283.5,
+            "width": 81.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            173,
+            394
+          ],
+          "candidates": [
+            {
+              "left": 302,
+              "right": 337,
+              "center": 319.5,
+              "width": 35,
+              "score": 25.7,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 173,
+              "right": 237,
+              "center": 205.0,
+              "width": 64,
+              "score": 62.2,
+              "coreFraction": 0.9076923076923077
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 302,
+            "right": 337,
+            "center": 319.5,
+            "width": 35
+          },
+          "errorPixels": {
+            "left": 59.0,
+            "right": 13.0,
+            "center": 36.0,
+            "width": -46.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 620,
+          "expected": {
+            "left": 236.0,
+            "right": 328.0,
+            "center": 282.0,
+            "width": 92.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            162,
+            402
+          ],
+          "candidates": [
+            {
+              "left": 306,
+              "right": 339,
+              "center": 322.5,
+              "width": 33,
+              "score": 32.1,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 162,
+              "right": 222,
+              "center": 192.0,
+              "width": 60,
+              "score": 78.0,
+              "coreFraction": 0.9344262295081968
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 306,
+            "right": 339,
+            "center": 322.5,
+            "width": 33
+          },
+          "errorPixels": {
+            "left": 70.0,
+            "right": 11.0,
+            "center": 40.5,
+            "width": -59.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 630,
+          "expected": {
+            "left": 236.0,
+            "right": 346.0,
+            "center": 291.0,
+            "width": 110.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            148,
+            434
+          ],
+          "candidates": [
+            {
+              "left": 314,
+              "right": 346,
+              "center": 330.0,
+              "width": 32,
+              "score": 30.8,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 148,
+              "right": 210,
+              "center": 179.0,
+              "width": 62,
+              "score": 103.4,
+              "coreFraction": 0.873015873015873
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 314,
+            "right": 346,
+            "center": 330.0,
+            "width": 32
+          },
+          "errorPixels": {
+            "left": 78.0,
+            "right": 0.0,
+            "center": 39.0,
+            "width": -78.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 640,
+          "expected": {
+            "left": 243.0,
+            "right": 370.0,
+            "center": 306.5,
+            "width": 127.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            141,
+            472
+          ],
+          "candidates": [
+            {
+              "left": 324,
+              "right": 357,
+              "center": 340.5,
+              "width": 33,
+              "score": 24.3,
+              "coreFraction": 0.9411764705882353
+            },
+            {
+              "left": 141,
+              "right": 186,
+              "center": 163.5,
+              "width": 45,
+              "score": 149.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 324,
+            "right": 357,
+            "center": 340.5,
+            "width": 33
+          },
+          "errorPixels": {
+            "left": 81.0,
+            "right": -13.0,
+            "center": 34.0,
+            "width": -94.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 650,
+          "expected": {
+            "left": 261.0,
+            "right": 390.0,
+            "center": 325.5,
+            "width": 129.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            157,
+            494
+          ],
+          "candidates": [
+            {
+              "left": 327,
+              "right": 391,
+              "center": 359.0,
+              "width": 64,
+              "score": 8.2,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 157,
+              "right": 175,
+              "center": 166.0,
+              "width": 18,
+              "score": 182.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 327,
+            "right": 391,
+            "center": 359.0,
+            "width": 64
+          },
+          "errorPixels": {
+            "left": 66.0,
+            "right": 1.0,
+            "center": 33.5,
+            "width": -65.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 660,
+          "expected": {
+            "left": 291.0,
+            "right": 403.0,
+            "center": 347.0,
+            "width": 112.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            201,
+            493
+          ],
+          "candidates": [
+            {
+              "left": 335,
+              "right": 413,
+              "center": 374.0,
+              "width": 78,
+              "score": 5.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 335,
+            "right": 413,
+            "center": 374.0,
+            "width": 78
+          },
+          "errorPixels": {
+            "left": 44.0,
+            "right": 10.0,
+            "center": 27.0,
+            "width": -34.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 670,
+          "expected": {
+            "left": 308.0,
+            "right": 412.0,
+            "center": 360.0,
+            "width": 104.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            224,
+            496
+          ],
+          "candidates": [
+            {
+              "left": 338,
+              "right": 423,
+              "center": 380.5,
+              "width": 85,
+              "score": 4.1000000000000005,
+              "coreFraction": 0.9767441860465116
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 338,
+            "right": 423,
+            "center": 380.5,
+            "width": 85
+          },
+          "errorPixels": {
+            "left": 30.0,
+            "right": 11.0,
+            "center": 20.5,
+            "width": -19.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 680,
+          "expected": {
+            "left": 314.0,
+            "right": 412.0,
+            "center": 363.0,
+            "width": 98.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            235,
+            491
+          ],
+          "candidates": [
+            {
+              "left": 335,
+              "right": 426,
+              "center": 380.5,
+              "width": 91,
+              "score": 3.5,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 335,
+            "right": 426,
+            "center": 380.5,
+            "width": 91
+          },
+          "errorPixels": {
+            "left": 21.0,
+            "right": 14.0,
+            "center": 17.5,
+            "width": -7.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 690,
+          "expected": {
+            "left": 310.0,
+            "right": 407.0,
+            "center": 358.5,
+            "width": 97.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            232,
+            485
+          ],
+          "candidates": [
+            {
+              "left": 330,
+              "right": 426,
+              "center": 378.0,
+              "width": 96,
+              "score": 3.9000000000000004,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 330,
+            "right": 426,
+            "center": 378.0,
+            "width": 96
+          },
+          "errorPixels": {
+            "left": 20.0,
+            "right": 19.0,
+            "center": 19.5,
+            "width": -1.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 700,
+          "expected": {
+            "left": 300.0,
+            "right": 398.0,
+            "center": 349.0,
+            "width": 98.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            221,
+            477
+          ],
+          "candidates": [
+            {
+              "left": 320,
+              "right": 430,
+              "center": 375.0,
+              "width": 110,
+              "score": 5.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 320,
+            "right": 430,
+            "center": 375.0,
+            "width": 110
+          },
+          "errorPixels": {
+            "left": 20.0,
+            "right": 32.0,
+            "center": 26.0,
+            "width": 12.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 710,
+          "expected": {
+            "left": 282.0,
+            "right": 384.0,
+            "center": 333.0,
+            "width": 102.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            200,
+            466
+          ],
+          "candidates": [
+            {
+              "left": 303,
+              "right": 427,
+              "center": 365.0,
+              "width": 124,
+              "score": 6.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 303,
+            "right": 427,
+            "center": 365.0,
+            "width": 124
+          },
+          "errorPixels": {
+            "left": 21.0,
+            "right": 43.0,
+            "center": 32.0,
+            "width": 22.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 720,
+          "expected": {
+            "left": 258.0,
+            "right": 369.0,
+            "center": 313.5,
+            "width": 111.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            169,
+            458
+          ],
+          "candidates": [
+            {
+              "left": 277,
+              "right": 415,
+              "center": 346.0,
+              "width": 138,
+              "score": 6.5,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 277,
+            "right": 415,
+            "center": 346.0,
+            "width": 138
+          },
+          "errorPixels": {
+            "left": 19.0,
+            "right": 46.0,
+            "center": 32.5,
+            "width": 27.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 730,
+          "expected": {
+            "left": 232.0,
+            "right": 348.0,
+            "center": 290.0,
+            "width": 116.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            139,
+            441
+          ],
+          "candidates": [
+            {
+              "left": 181,
+              "right": 397,
+              "center": 289.0,
+              "width": 216,
+              "score": 0.2,
+              "coreFraction": 0.9861751152073732
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 181,
+            "right": 397,
+            "center": 289.0,
+            "width": 216
+          },
+          "errorPixels": {
+            "left": -51.0,
+            "right": 49.0,
+            "center": -1.0,
+            "width": 100.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 740,
+          "expected": {
+            "left": 203.0,
+            "right": 323.0,
+            "center": 263.0,
+            "width": 120.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            107,
+            419
+          ],
+          "candidates": [
+            {
+              "left": 189,
+              "right": 372,
+              "center": 280.5,
+              "width": 183,
+              "score": 3.5,
+              "coreFraction": 0.9836956521739131
+            },
+            {
+              "left": 143,
+              "right": 177,
+              "center": 160.0,
+              "width": 34,
+              "score": 106.6,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 189,
+            "right": 372,
+            "center": 280.5,
+            "width": 183
+          },
+          "errorPixels": {
+            "left": -14.0,
+            "right": 49.0,
+            "center": 17.5,
+            "width": 63.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 750,
+          "expected": {
+            "left": 179.0,
+            "right": 299.0,
+            "center": 239.0,
+            "width": 120.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            83,
+            395
+          ],
+          "candidates": [
+            {
+              "left": 119,
+              "right": 335,
+              "center": 227.0,
+              "width": 216,
+              "score": 2.4000000000000004,
+              "coreFraction": 0.9907834101382489
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 119,
+            "right": 335,
+            "center": 227.0,
+            "width": 216
+          },
+          "errorPixels": {
+            "left": -60.0,
+            "right": 36.0,
+            "center": -12.0,
+            "width": 96.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 760,
+          "expected": {
+            "left": 139.0,
+            "right": 274.0,
+            "center": 206.5,
+            "width": 135.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            31,
+            382
+          ],
+          "candidates": [
+            {
+              "left": 101,
+              "right": 291,
+              "center": 196.0,
+              "width": 190,
+              "score": 2.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 101,
+            "right": 291,
+            "center": 196.0,
+            "width": 190
+          },
+          "errorPixels": {
+            "left": -38.0,
+            "right": 17.0,
+            "center": -10.5,
+            "width": 55.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 770,
+          "expected": {
+            "left": 115.0,
+            "right": 261.0,
+            "center": 188.0,
+            "width": 146.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            378
+          ],
+          "candidates": [
+            {
+              "left": 86,
+              "right": 258,
+              "center": 172.0,
+              "width": 172,
+              "score": 3.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 86,
+            "right": 258,
+            "center": 172.0,
+            "width": 172
+          },
+          "errorPixels": {
+            "left": -29.0,
+            "right": -3.0,
+            "center": -16.0,
+            "width": 26.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 780,
+          "expected": {
+            "left": 87.0,
+            "right": 238.0,
+            "center": 162.5,
+            "width": 151.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            359
+          ],
+          "candidates": [
+            {
+              "left": 73,
+              "right": 234,
+              "center": 153.5,
+              "width": 161,
+              "score": 1.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 73,
+            "right": 234,
+            "center": 153.5,
+            "width": 161
+          },
+          "errorPixels": {
+            "left": -14.0,
+            "right": -4.0,
+            "center": -9.0,
+            "width": 10.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 790,
+          "expected": {
+            "left": 60.0,
+            "right": 221.0,
+            "center": 140.5,
+            "width": 161.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            350
+          ],
+          "candidates": [
+            {
+              "left": 60,
+              "right": 214,
+              "center": 137.0,
+              "width": 154,
+              "score": 0.7000000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 60,
+            "right": 214,
+            "center": 137.0,
+            "width": 154
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": -7.0,
+            "center": -3.5,
+            "width": -7.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 800,
+          "expected": {
+            "left": 41.0,
+            "right": 205.0,
+            "center": 123.0,
+            "width": 164.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            335
+          ],
+          "candidates": [
+            {
+              "left": 46,
+              "right": 188,
+              "center": 117.0,
+              "width": 142,
+              "score": 1.2000000000000002,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 46,
+            "right": 188,
+            "center": 117.0,
+            "width": 142
+          },
+          "errorPixels": {
+            "left": 5.0,
+            "right": -17.0,
+            "center": -6.0,
+            "width": -22.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 810,
+          "expected": {
+            "left": 25.0,
+            "right": 191.0,
+            "center": 108.0,
+            "width": 166.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            321
+          ],
+          "candidates": [
+            {
+              "left": 27,
+              "right": 156,
+              "center": 91.5,
+              "width": 129,
+              "score": 3.3000000000000003,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 27,
+            "right": 156,
+            "center": 91.5,
+            "width": 129
+          },
+          "errorPixels": {
+            "left": 2.0,
+            "right": -35.0,
+            "center": -16.5,
+            "width": -37.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 820,
+          "expected": {
+            "left": 9.0,
+            "right": 178.0,
+            "center": 93.5,
+            "width": 169.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            308
+          ],
+          "candidates": [
+            {
+              "left": 10,
+              "right": 138,
+              "center": 74.0,
+              "width": 128,
+              "score": 3.9000000000000004,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 10,
+            "right": 138,
+            "center": 74.0,
+            "width": 128
+          },
+          "errorPixels": {
+            "left": 1.0,
+            "right": -40.0,
+            "center": -19.5,
+            "width": -41.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 830,
+          "expected": {
+            "left": 0.0,
+            "right": 165.0,
+            "center": 82.5,
+            "width": 165.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "image_clipped"
+          ],
+          "searchWindow": [
+            0,
+            295
+          ],
+          "candidates": [
+            {
+              "left": 0,
+              "right": 122,
+              "center": 61.0,
+              "width": 122,
+              "score": 4.3,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 0,
+            "right": 122,
+            "center": 61.0,
+            "width": 122
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": -43.0,
+            "center": -21.5,
+            "width": -43.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 840,
+          "expected": {
+            "left": 0.0,
+            "right": 154.0,
+            "center": 77.0,
+            "width": 154.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "image_clipped"
+          ],
+          "searchWindow": [
+            0,
+            278
+          ],
+          "candidates": [
+            {
+              "left": 0,
+              "right": 106,
+              "center": 53.0,
+              "width": 106,
+              "score": 4.800000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 0,
+            "right": 106,
+            "center": 53.0,
+            "width": 106
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": -48.0,
+            "center": -24.0,
+            "width": -48.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 850,
+          "expected": {
+            "left": 0.0,
+            "right": 145.0,
+            "center": 72.5,
+            "width": 145.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "image_clipped"
+          ],
+          "searchWindow": [
+            0,
+            261
+          ],
+          "candidates": [
+            {
+              "left": 0,
+              "right": 92,
+              "center": 46.0,
+              "width": 92,
+              "score": 5.300000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 0,
+            "right": 92,
+            "center": 46.0,
+            "width": 92
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": -53.0,
+            "center": -26.5,
+            "width": -53.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 600,
+          "expected": {
+            "left": 564.0,
+            "right": 635.0,
+            "center": 599.5,
+            "width": 71.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            494,
+            705
+          ],
+          "candidates": [
+            {
+              "left": 523,
+              "right": 583,
+              "center": 553.0,
+              "width": 60,
+              "score": 25.8,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 658,
+              "right": 664,
+              "center": 661.0,
+              "width": 6,
+              "score": 70.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 523,
+            "right": 583,
+            "center": 553.0,
+            "width": 60
+          },
+          "errorPixels": {
+            "left": -41.0,
+            "right": -52.0,
+            "center": -46.5,
+            "width": -11.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 610,
+          "expected": {
+            "left": 599.0,
+            "right": 676.0,
+            "center": 637.5,
+            "width": 77.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            529,
+            746
+          ],
+          "candidates": [
+            {
+              "left": 529,
+              "right": 587,
+              "center": 558.0,
+              "width": 58,
+              "score": 66.4,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 707,
+              "right": 746,
+              "center": 726.5,
+              "width": 39,
+              "score": 87.3,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 529,
+            "right": 587,
+            "center": 558.0,
+            "width": 58
+          },
+          "errorPixels": {
+            "left": -70.0,
+            "right": -89.0,
+            "center": -79.5,
+            "width": -19.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 620,
+          "expected": {
+            "left": 631.0,
+            "right": 709.0,
+            "center": 670.0,
+            "width": 78.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            561,
+            779
+          ],
+          "candidates": [
+            {
+              "left": 720,
+              "right": 779,
+              "center": 749.5,
+              "width": 59,
+              "score": 65.9,
+              "coreFraction": 0.8833333333333333
+            },
+            {
+              "left": 561,
+              "right": 598,
+              "center": 579.5,
+              "width": 37,
+              "score": 90.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 720,
+            "right": 779,
+            "center": 749.5,
+            "width": 59
+          },
+          "errorPixels": {
+            "left": 89.0,
+            "right": 70.0,
+            "center": 79.5,
+            "width": -19.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 630,
+          "expected": {
+            "left": 659.0,
+            "right": 736.0,
+            "center": 697.5,
+            "width": 77.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            589,
+            806
+          ],
+          "candidates": [
+            {
+              "left": 744,
+              "right": 806,
+              "center": 775.0,
+              "width": 62,
+              "score": 62.0,
+              "coreFraction": 0.9682539682539683
+            },
+            {
+              "left": 589,
+              "right": 636,
+              "center": 612.5,
+              "width": 47,
+              "score": 78.5,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 744,
+            "right": 806,
+            "center": 775.0,
+            "width": 62
+          },
+          "errorPixels": {
+            "left": 85.0,
+            "right": 70.0,
+            "center": 77.5,
+            "width": -15.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 640,
+          "expected": {
+            "left": 678.0,
+            "right": 757.0,
+            "center": 717.5,
+            "width": 79.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            608,
+            827
+          ],
+          "candidates": [
+            {
+              "left": 608,
+              "right": 680,
+              "center": 644.0,
+              "width": 72,
+              "score": 52.2,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 788,
+              "right": 827,
+              "center": 807.5,
+              "width": 39,
+              "score": 88.5,
+              "coreFraction": 0.925
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "candidate_boundary_clipped_by_search_or_image",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 608,
+            "right": 680,
+            "center": 644.0,
+            "width": 72
+          },
+          "errorPixels": {
+            "left": -70.0,
+            "right": -77.0,
+            "center": -73.5,
+            "width": -7.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 650,
+          "expected": {
+            "left": 696.0,
+            "right": 777.0,
+            "center": 736.5,
+            "width": 81.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            626,
+            847
+          ],
+          "candidates": [
+            {
+              "left": 665,
+              "right": 723,
+              "center": 694.0,
+              "width": 58,
+              "score": 22.0,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 822,
+              "right": 847,
+              "center": 834.5,
+              "width": 25,
+              "score": 105.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 665,
+            "right": 723,
+            "center": 694.0,
+            "width": 58
+          },
+          "errorPixels": {
+            "left": -31.0,
+            "right": -54.0,
+            "center": -42.5,
+            "width": -23.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 660,
+          "expected": {
+            "left": 714.0,
+            "right": 794.0,
+            "center": 754.0,
+            "width": 80.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            644,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 680,
+              "right": 744,
+              "center": 712.0,
+              "width": 64,
+              "score": 18.4,
+              "coreFraction": 0.8769230769230769
+            },
+            {
+              "left": 838,
+              "right": 863,
+              "center": 850.5,
+              "width": 25,
+              "score": 103.3,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 680,
+            "right": 744,
+            "center": 712.0,
+            "width": 64
+          },
+          "errorPixels": {
+            "left": -34.0,
+            "right": -50.0,
+            "center": -42.0,
+            "width": -16.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 670,
+          "expected": {
+            "left": 727.0,
+            "right": 809.0,
+            "center": 768.0,
+            "width": 82.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            657,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 719,
+              "right": 759,
+              "center": 739.0,
+              "width": 40,
+              "score": 14.8,
+              "coreFraction": 0.8048780487804879
+            },
+            {
+              "left": 683,
+              "right": 703,
+              "center": 693.0,
+              "width": 20,
+              "score": 80.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 719,
+            "right": 759,
+            "center": 739.0,
+            "width": 40
+          },
+          "errorPixels": {
+            "left": -8.0,
+            "right": -50.0,
+            "center": -29.0,
+            "width": -42.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 680,
+          "expected": {
+            "left": 737.0,
+            "right": 819.0,
+            "center": 778.0,
+            "width": 82.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            667,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 671,
+              "right": 771,
+              "center": 721.0,
+              "width": 100,
+              "score": 18.4,
+              "coreFraction": 0.9405940594059405
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 671,
+            "right": 771,
+            "center": 721.0,
+            "width": 100
+          },
+          "errorPixels": {
+            "left": -66.0,
+            "right": -48.0,
+            "center": -57.0,
+            "width": 18.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 690,
+          "expected": {
+            "left": 742.0,
+            "right": 821.0,
+            "center": 781.5,
+            "width": 79.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            672,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 672,
+              "right": 780,
+              "center": 726.0,
+              "width": 108,
+              "score": 12.600000000000001,
+              "coreFraction": 0.9174311926605505
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 672,
+            "right": 780,
+            "center": 726.0,
+            "width": 108
+          },
+          "errorPixels": {
+            "left": -70.0,
+            "right": -41.0,
+            "center": -55.5,
+            "width": 29.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 700,
+          "expected": {
+            "left": 746.0,
+            "right": 822.0,
+            "center": 784.0,
+            "width": 76.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            676,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 676,
+              "right": 792,
+              "center": 734.0,
+              "width": 116,
+              "score": 10.0,
+              "coreFraction": 0.9230769230769231
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 676,
+            "right": 792,
+            "center": 734.0,
+            "width": 116
+          },
+          "errorPixels": {
+            "left": -70.0,
+            "right": -30.0,
+            "center": -50.0,
+            "width": 40.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 710,
+          "expected": {
+            "left": 744.0,
+            "right": 824.0,
+            "center": 784.0,
+            "width": 80.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            674,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 733,
+              "right": 806,
+              "center": 769.5,
+              "width": 73,
+              "score": 2.9000000000000004,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 683,
+              "right": 707,
+              "center": 695.0,
+              "width": 24,
+              "score": 94.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 733,
+            "right": 806,
+            "center": 769.5,
+            "width": 73
+          },
+          "errorPixels": {
+            "left": -11.0,
+            "right": -18.0,
+            "center": -14.5,
+            "width": -7.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 720,
+          "expected": {
+            "left": 739.0,
+            "right": 833.0,
+            "center": 786.0,
+            "width": 94.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            663,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 690,
+              "right": 816,
+              "center": 753.0,
+              "width": 126,
+              "score": 6.6000000000000005,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 690,
+            "right": 816,
+            "center": 753.0,
+            "width": 126
+          },
+          "errorPixels": {
+            "left": -49.0,
+            "right": -17.0,
+            "center": -33.0,
+            "width": 32.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 730,
+          "expected": {
+            "left": 728.0,
+            "right": 840.0,
+            "center": 784.0,
+            "width": 112.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            638,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 695,
+              "right": 810,
+              "center": 752.5,
+              "width": 115,
+              "score": 6.300000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 695,
+            "right": 810,
+            "center": 752.5,
+            "width": 115
+          },
+          "errorPixels": {
+            "left": -33.0,
+            "right": -30.0,
+            "center": -31.5,
+            "width": 3.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 740,
+          "expected": {
+            "left": 714.0,
+            "right": 829.0,
+            "center": 771.5,
+            "width": 115.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            622,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 697,
+              "right": 802,
+              "center": 749.5,
+              "width": 105,
+              "score": 4.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 697,
+            "right": 802,
+            "center": 749.5,
+            "width": 105
+          },
+          "errorPixels": {
+            "left": -17.0,
+            "right": -27.0,
+            "center": -22.0,
+            "width": -10.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 750,
+          "expected": {
+            "left": 693.0,
+            "right": 804.0,
+            "center": 748.5,
+            "width": 111.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            604,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 697,
+              "right": 781,
+              "center": 739.0,
+              "width": 84,
+              "score": 1.9000000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 697,
+            "right": 781,
+            "center": 739.0,
+            "width": 84
+          },
+          "errorPixels": {
+            "left": 4.0,
+            "right": -23.0,
+            "center": -9.5,
+            "width": -27.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 760,
+          "expected": {
+            "left": 670.0,
+            "right": 796.0,
+            "center": 733.0,
+            "width": 126.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            569,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 696,
+              "right": 778,
+              "center": 737.0,
+              "width": 82,
+              "score": 0.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 696,
+            "right": 778,
+            "center": 737.0,
+            "width": 82
+          },
+          "errorPixels": {
+            "left": 26.0,
+            "right": -18.0,
+            "center": 4.0,
+            "width": -44.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 770,
+          "expected": {
+            "left": 644.0,
+            "right": 793.0,
+            "center": 718.5,
+            "width": 149.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            524,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 692,
+              "right": 768,
+              "center": 730.0,
+              "width": 76,
+              "score": 2.3000000000000003,
+              "coreFraction": 0.974025974025974
+            },
+            {
+              "left": 823,
+              "right": 844,
+              "center": 833.5,
+              "width": 21,
+              "score": 127.5,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 692,
+            "right": 768,
+            "center": 730.0,
+            "width": 76
+          },
+          "errorPixels": {
+            "left": 48.0,
+            "right": -25.0,
+            "center": 11.5,
+            "width": -73.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 780,
+          "expected": {
+            "left": 616.0,
+            "right": 772.0,
+            "center": 694.0,
+            "width": 156.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            491,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 685,
+              "right": 742,
+              "center": 713.5,
+              "width": 57,
+              "score": 3.9000000000000004,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 810,
+              "right": 846,
+              "center": 828.0,
+              "width": 36,
+              "score": 142.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 685,
+            "right": 742,
+            "center": 713.5,
+            "width": 57
+          },
+          "errorPixels": {
+            "left": 69.0,
+            "right": -30.0,
+            "center": 19.5,
+            "width": -99.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 790,
+          "expected": {
+            "left": 601.0,
+            "right": 758.0,
+            "center": 679.5,
+            "width": 157.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            475,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 673,
+              "right": 731,
+              "center": 702.0,
+              "width": 58,
+              "score": 4.5,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 797,
+              "right": 845,
+              "center": 821.0,
+              "width": 48,
+              "score": 145.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 673,
+            "right": 731,
+            "center": 702.0,
+            "width": 58
+          },
+          "errorPixels": {
+            "left": 72.0,
+            "right": -27.0,
+            "center": 22.5,
+            "width": -99.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 800,
+          "expected": {
+            "left": 586.0,
+            "right": 739.0,
+            "center": 662.5,
+            "width": 153.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            463,
+            862
+          ],
+          "candidates": [
+            {
+              "left": 650,
+              "right": 729,
+              "center": 689.5,
+              "width": 79,
+              "score": 5.4,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 783,
+              "right": 841,
+              "center": 812.0,
+              "width": 58,
+              "score": 150.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 650,
+            "right": 729,
+            "center": 689.5,
+            "width": 79
+          },
+          "errorPixels": {
+            "left": 64.0,
+            "right": -10.0,
+            "center": 27.0,
+            "width": -74.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 810,
+          "expected": {
+            "left": 574.0,
+            "right": 718.0,
+            "center": 646.0,
+            "width": 144.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            458,
+            834
+          ],
+          "candidates": [
+            {
+              "left": 614,
+              "right": 723,
+              "center": 668.5,
+              "width": 109,
+              "score": 4.5,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 777,
+              "right": 829,
+              "center": 803.0,
+              "width": 52,
+              "score": 162.4,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 458,
+              "right": 466,
+              "center": 462.0,
+              "width": 8,
+              "score": 216.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 614,
+            "right": 723,
+            "center": 668.5,
+            "width": 109
+          },
+          "errorPixels": {
+            "left": 40.0,
+            "right": 5.0,
+            "center": 22.5,
+            "width": -35.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 820,
+          "expected": {
+            "left": 567.0,
+            "right": 707.0,
+            "center": 637.0,
+            "width": 140.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            455,
+            819
+          ],
+          "candidates": [
+            {
+              "left": 584,
+              "right": 713,
+              "center": 648.5,
+              "width": 129,
+              "score": 2.3000000000000003,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 765,
+              "right": 811,
+              "center": 788.0,
+              "width": 46,
+              "score": 158.2,
+              "coreFraction": 0.9574468085106383
+            },
+            {
+              "left": 455,
+              "right": 469,
+              "center": 462.0,
+              "width": 14,
+              "score": 203.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 584,
+            "right": 713,
+            "center": 648.5,
+            "width": 129
+          },
+          "errorPixels": {
+            "left": 17.0,
+            "right": 6.0,
+            "center": 11.5,
+            "width": -11.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 830,
+          "expected": {
+            "left": 561.0,
+            "right": 689.0,
+            "center": 625.0,
+            "width": 128.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            458,
+            792
+          ],
+          "candidates": [
+            {
+              "left": 568,
+              "right": 713,
+              "center": 640.5,
+              "width": 145,
+              "score": 3.1,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 761,
+              "right": 789,
+              "center": 775.0,
+              "width": 28,
+              "score": 166.0,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 458,
+              "right": 470,
+              "center": 464.0,
+              "width": 12,
+              "score": 187.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 568,
+            "right": 713,
+            "center": 640.5,
+            "width": 145
+          },
+          "errorPixels": {
+            "left": 7.0,
+            "right": 24.0,
+            "center": 15.5,
+            "width": 17.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 840,
+          "expected": {
+            "left": 558.0,
+            "right": 684.0,
+            "center": 621.0,
+            "width": 126.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            457,
+            785
+          ],
+          "candidates": [
+            {
+              "left": 558,
+              "right": 717,
+              "center": 637.5,
+              "width": 159,
+              "score": 3.3000000000000003,
+              "coreFraction": 0.9875
+            },
+            {
+              "left": 457,
+              "right": 468,
+              "center": 462.5,
+              "width": 11,
+              "score": 184.7,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 558,
+            "right": 717,
+            "center": 637.5,
+            "width": 159
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": 33.0,
+            "center": 16.5,
+            "width": 33.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 850,
+          "expected": {
+            "left": 558.0,
+            "right": 686.0,
+            "center": 622.0,
+            "width": 128.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            455,
+            789
+          ],
+          "candidates": [
+            {
+              "left": 551,
+              "right": 721,
+              "center": 636.0,
+              "width": 170,
+              "score": 2.8000000000000003,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 455,
+              "right": 471,
+              "center": 463.0,
+              "width": 16,
+              "score": 182.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 551,
+            "right": 721,
+            "center": 636.0,
+            "width": 170
+          },
+          "errorPixels": {
+            "left": -7.0,
+            "right": 35.0,
+            "center": 14.0,
+            "width": 42.0
+          }
+        }
+      ]
+    },
+    "improved": {
+      "path": "qa/reference-fit/NEW.png",
+      "sha256": "ba334093a8ee6ba9a1131770418335e9ce6f0ada7cb5757f4d0f746a163a8f07",
+      "checkpointOcclusionsApplied": true,
+      "summary": {
+        "rowsRequested": 52,
+        "rowsSupported": 23,
+        "rowsUnsupported": 29,
+        "leftCoreErrorPixels": {
+          "meanAbsolute": 12.826086956521738,
+          "medianAbsolute": 4.0,
+          "maxAbsolute": 64.0,
+          "meanSigned": 7.695652173913044
+        },
+        "rightCoreErrorPixels": {
+          "meanAbsolute": 10.565217391304348,
+          "medianAbsolute": 3.0,
+          "maxAbsolute": 70.0,
+          "meanSigned": -6.304347826086956
+        },
+        "centerErrorPixels": {
+          "meanAbsolute": 10.08695652173913,
+          "medianAbsolute": 2.0,
+          "maxAbsolute": 33.5,
+          "meanSigned": 0.6956521739130435
+        },
+        "widthErrorPixels": {
+          "meanAbsolute": 21.73913043478261,
+          "medianAbsolute": 9.0,
+          "maxAbsolute": 73.0,
+          "meanSigned": -14.0
+        }
+      },
+      "byBand": {
+        "main_left": {
+          "rowsRequested": 26,
+          "rowsSupported": 17,
+          "rowsUnsupported": 9,
+          "leftCoreErrorPixels": {
+            "meanAbsolute": 16.58823529411765,
+            "medianAbsolute": 5.0,
+            "maxAbsolute": 64.0,
+            "meanSigned": 10.823529411764707
+          },
+          "rightCoreErrorPixels": {
+            "meanAbsolute": 2.6470588235294117,
+            "medianAbsolute": 2.0,
+            "maxAbsolute": 6.0,
+            "meanSigned": 2.6470588235294117
+          },
+          "centerErrorPixels": {
+            "meanAbsolute": 7.735294117647059,
+            "medianAbsolute": 1.0,
+            "maxAbsolute": 33.5,
+            "meanSigned": 6.735294117647059
+          },
+          "widthErrorPixels": {
+            "meanAbsolute": 17.941176470588236,
+            "medianAbsolute": 7.0,
+            "maxAbsolute": 61.0,
+            "meanSigned": -8.176470588235293
+          }
+        },
+        "main_right": {
+          "rowsRequested": 26,
+          "rowsSupported": 6,
+          "rowsUnsupported": 20,
+          "leftCoreErrorPixels": {
+            "meanAbsolute": 2.1666666666666665,
+            "medianAbsolute": 2.0,
+            "maxAbsolute": 4.0,
+            "meanSigned": -1.1666666666666667
+          },
+          "rightCoreErrorPixels": {
+            "meanAbsolute": 33.0,
+            "medianAbsolute": 26.5,
+            "maxAbsolute": 70.0,
+            "meanSigned": -31.666666666666668
+          },
+          "centerErrorPixels": {
+            "meanAbsolute": 16.75,
+            "medianAbsolute": 14.5,
+            "maxAbsolute": 33.5,
+            "meanSigned": -16.416666666666668
+          },
+          "widthErrorPixels": {
+            "meanAbsolute": 32.5,
+            "medianAbsolute": 24.0,
+            "maxAbsolute": 73.0,
+            "meanSigned": -30.5
+          }
+        }
+      },
+      "rows": [
+        {
+          "band": "main_left",
+          "y": 600,
+          "expected": {
+            "left": 253.0,
+            "right": 326.0,
+            "center": 289.5,
+            "width": 73.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            183,
+            396
+          ],
+          "candidates": [
+            {
+              "left": 319,
+              "right": 327,
+              "center": 323.0,
+              "width": 8,
+              "score": 36.2,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 183,
+              "right": 264,
+              "center": 223.5,
+              "width": 81,
+              "score": 38.7,
+              "coreFraction": 0.9634146341463414
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "ambiguous_multiple_magenta_runs",
+            "multiple_core_fragments_in_expected_band"
+          ],
+          "measured": {
+            "left": 319,
+            "right": 327,
+            "center": 323.0,
+            "width": 8
+          },
+          "errorPixels": {
+            "left": 66.0,
+            "right": 1.0,
+            "center": 33.5,
+            "width": -65.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 610,
+          "expected": {
+            "left": 243.0,
+            "right": 324.0,
+            "center": 283.5,
+            "width": 81.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            173,
+            394
+          ],
+          "candidates": [
+            {
+              "left": 296,
+              "right": 326,
+              "center": 311.0,
+              "width": 30,
+              "score": 18.0,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 173,
+              "right": 237,
+              "center": 205.0,
+              "width": 64,
+              "score": 62.2,
+              "coreFraction": 0.9076923076923077
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 296,
+            "right": 326,
+            "center": 311.0,
+            "width": 30
+          },
+          "errorPixels": {
+            "left": 53.0,
+            "right": 2.0,
+            "center": 27.5,
+            "width": -51.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 620,
+          "expected": {
+            "left": 236.0,
+            "right": 328.0,
+            "center": 282.0,
+            "width": 92.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            162,
+            402
+          ],
+          "candidates": [
+            {
+              "left": 290,
+              "right": 330,
+              "center": 310.0,
+              "width": 40,
+              "score": 13.600000000000001,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 162,
+              "right": 222,
+              "center": 192.0,
+              "width": 60,
+              "score": 78.0,
+              "coreFraction": 0.9344262295081968
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 290,
+            "right": 330,
+            "center": 310.0,
+            "width": 40
+          },
+          "errorPixels": {
+            "left": 54.0,
+            "right": 2.0,
+            "center": 28.0,
+            "width": -52.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 630,
+          "expected": {
+            "left": 236.0,
+            "right": 346.0,
+            "center": 291.0,
+            "width": 110.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            148,
+            434
+          ],
+          "candidates": [
+            {
+              "left": 287,
+              "right": 348,
+              "center": 317.5,
+              "width": 61,
+              "score": 5.300000000000001,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 148,
+              "right": 210,
+              "center": 179.0,
+              "width": 62,
+              "score": 103.4,
+              "coreFraction": 0.873015873015873
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 287,
+            "right": 348,
+            "center": 317.5,
+            "width": 61
+          },
+          "errorPixels": {
+            "left": 51.0,
+            "right": 2.0,
+            "center": 26.5,
+            "width": -49.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 640,
+          "expected": {
+            "left": 243.0,
+            "right": 370.0,
+            "center": 306.5,
+            "width": 127.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            141,
+            472
+          ],
+          "candidates": [
+            {
+              "left": 307,
+              "right": 373,
+              "center": 340.0,
+              "width": 66,
+              "score": 7.2,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 141,
+              "right": 186,
+              "center": 163.5,
+              "width": 45,
+              "score": 149.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 307,
+            "right": 373,
+            "center": 340.0,
+            "width": 66
+          },
+          "errorPixels": {
+            "left": 64.0,
+            "right": 3.0,
+            "center": 33.5,
+            "width": -61.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 650,
+          "expected": {
+            "left": 261.0,
+            "right": 390.0,
+            "center": 325.5,
+            "width": 129.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            157,
+            494
+          ],
+          "candidates": [
+            {
+              "left": 272,
+              "right": 392,
+              "center": 332.0,
+              "width": 120,
+              "score": 1.3,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 157,
+              "right": 175,
+              "center": 166.0,
+              "width": 18,
+              "score": 182.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 272,
+            "right": 392,
+            "center": 332.0,
+            "width": 120
+          },
+          "errorPixels": {
+            "left": 11.0,
+            "right": 2.0,
+            "center": 6.5,
+            "width": -9.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 660,
+          "expected": {
+            "left": 291.0,
+            "right": 403.0,
+            "center": 347.0,
+            "width": 112.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            201,
+            493
+          ],
+          "candidates": [
+            {
+              "left": 284,
+              "right": 406,
+              "center": 345.0,
+              "width": 122,
+              "score": 0.4,
+              "coreFraction": 0.926829268292683
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 284,
+            "right": 406,
+            "center": 345.0,
+            "width": 122
+          },
+          "errorPixels": {
+            "left": -7.0,
+            "right": 3.0,
+            "center": -2.0,
+            "width": 10.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 670,
+          "expected": {
+            "left": 308.0,
+            "right": 412.0,
+            "center": 360.0,
+            "width": 104.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            224,
+            496
+          ],
+          "candidates": [
+            {
+              "left": 303,
+              "right": 413,
+              "center": 358.0,
+              "width": 110,
+              "score": 0.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 303,
+            "right": 413,
+            "center": 358.0,
+            "width": 110
+          },
+          "errorPixels": {
+            "left": -5.0,
+            "right": 1.0,
+            "center": -2.0,
+            "width": 6.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 680,
+          "expected": {
+            "left": 314.0,
+            "right": 412.0,
+            "center": 363.0,
+            "width": 98.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            235,
+            491
+          ],
+          "candidates": [
+            {
+              "left": 311,
+              "right": 413,
+              "center": 362.0,
+              "width": 102,
+              "score": 0.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 311,
+            "right": 413,
+            "center": 362.0,
+            "width": 102
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 1.0,
+            "center": -1.0,
+            "width": 4.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 690,
+          "expected": {
+            "left": 310.0,
+            "right": 407.0,
+            "center": 358.5,
+            "width": 97.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            232,
+            485
+          ],
+          "candidates": [
+            {
+              "left": 307,
+              "right": 408,
+              "center": 357.5,
+              "width": 101,
+              "score": 0.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 307,
+            "right": 408,
+            "center": 357.5,
+            "width": 101
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 1.0,
+            "center": -1.0,
+            "width": 4.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 700,
+          "expected": {
+            "left": 300.0,
+            "right": 398.0,
+            "center": 349.0,
+            "width": 98.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            221,
+            477
+          ],
+          "candidates": [
+            {
+              "left": 296,
+              "right": 399,
+              "center": 347.5,
+              "width": 103,
+              "score": 0.30000000000000004,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 296,
+            "right": 399,
+            "center": 347.5,
+            "width": 103
+          },
+          "errorPixels": {
+            "left": -4.0,
+            "right": 1.0,
+            "center": -1.5,
+            "width": 5.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 710,
+          "expected": {
+            "left": 282.0,
+            "right": 384.0,
+            "center": 333.0,
+            "width": 102.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            200,
+            466
+          ],
+          "candidates": [
+            {
+              "left": 279,
+              "right": 387,
+              "center": 333.0,
+              "width": 108,
+              "score": 0.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 279,
+            "right": 387,
+            "center": 333.0,
+            "width": 108
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 3.0,
+            "center": 0.0,
+            "width": 6.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 720,
+          "expected": {
+            "left": 258.0,
+            "right": 369.0,
+            "center": 313.5,
+            "width": 111.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            169,
+            458
+          ],
+          "candidates": [
+            {
+              "left": 255,
+              "right": 371,
+              "center": 313.0,
+              "width": 116,
+              "score": 0.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 255,
+            "right": 371,
+            "center": 313.0,
+            "width": 116
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 2.0,
+            "center": -0.5,
+            "width": 5.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 730,
+          "expected": {
+            "left": 232.0,
+            "right": 348.0,
+            "center": 290.0,
+            "width": 116.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            139,
+            441
+          ],
+          "candidates": [
+            {
+              "left": 228,
+              "right": 351,
+              "center": 289.5,
+              "width": 123,
+              "score": 0.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 228,
+            "right": 351,
+            "center": 289.5,
+            "width": 123
+          },
+          "errorPixels": {
+            "left": -4.0,
+            "right": 3.0,
+            "center": -0.5,
+            "width": 7.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 740,
+          "expected": {
+            "left": 203.0,
+            "right": 323.0,
+            "center": 263.0,
+            "width": 120.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            107,
+            419
+          ],
+          "candidates": [
+            {
+              "left": 194,
+              "right": 327,
+              "center": 260.5,
+              "width": 133,
+              "score": 0.5,
+              "coreFraction": 0.8731343283582089
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 194,
+            "right": 327,
+            "center": 260.5,
+            "width": 133
+          },
+          "errorPixels": {
+            "left": -9.0,
+            "right": 4.0,
+            "center": -2.5,
+            "width": 13.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 750,
+          "expected": {
+            "left": 179.0,
+            "right": 299.0,
+            "center": 239.0,
+            "width": 120.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            83,
+            395
+          ],
+          "candidates": [
+            {
+              "left": 169,
+              "right": 302,
+              "center": 235.5,
+              "width": 133,
+              "score": 0.7000000000000001,
+              "coreFraction": 0.9626865671641791
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 169,
+            "right": 302,
+            "center": 235.5,
+            "width": 133
+          },
+          "errorPixels": {
+            "left": -10.0,
+            "right": 3.0,
+            "center": -3.5,
+            "width": 13.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 760,
+          "expected": {
+            "left": 139.0,
+            "right": 274.0,
+            "center": 206.5,
+            "width": 135.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            31,
+            382
+          ],
+          "candidates": [
+            {
+              "left": 135,
+              "right": 278,
+              "center": 206.5,
+              "width": 143,
+              "score": 0.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 135,
+            "right": 278,
+            "center": 206.5,
+            "width": 143
+          },
+          "errorPixels": {
+            "left": -4.0,
+            "right": 4.0,
+            "center": 0.0,
+            "width": 8.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 770,
+          "expected": {
+            "left": 115.0,
+            "right": 261.0,
+            "center": 188.0,
+            "width": 146.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            378
+          ],
+          "candidates": [
+            {
+              "left": 106,
+              "right": 264,
+              "center": 185.0,
+              "width": 158,
+              "score": 0.6000000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 106,
+            "right": 264,
+            "center": 185.0,
+            "width": 158
+          },
+          "errorPixels": {
+            "left": -9.0,
+            "right": 3.0,
+            "center": -3.0,
+            "width": 12.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 780,
+          "expected": {
+            "left": 87.0,
+            "right": 238.0,
+            "center": 162.5,
+            "width": 151.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            359
+          ],
+          "candidates": [
+            {
+              "left": 81,
+              "right": 244,
+              "center": 162.5,
+              "width": 163,
+              "score": 0.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 81,
+            "right": 244,
+            "center": 162.5,
+            "width": 163
+          },
+          "errorPixels": {
+            "left": -6.0,
+            "right": 6.0,
+            "center": 0.0,
+            "width": 12.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 790,
+          "expected": {
+            "left": 60.0,
+            "right": 221.0,
+            "center": 140.5,
+            "width": 161.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            350
+          ],
+          "candidates": [
+            {
+              "left": 55,
+              "right": 226,
+              "center": 140.5,
+              "width": 171,
+              "score": 0.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 55,
+            "right": 226,
+            "center": 140.5,
+            "width": 171
+          },
+          "errorPixels": {
+            "left": -5.0,
+            "right": 5.0,
+            "center": 0.0,
+            "width": 10.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 800,
+          "expected": {
+            "left": 41.0,
+            "right": 205.0,
+            "center": 123.0,
+            "width": 164.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            335
+          ],
+          "candidates": [
+            {
+              "left": 38,
+              "right": 209,
+              "center": 123.5,
+              "width": 171,
+              "score": 0.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 38,
+            "right": 209,
+            "center": 123.5,
+            "width": 171
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 4.0,
+            "center": 0.5,
+            "width": 7.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 810,
+          "expected": {
+            "left": 25.0,
+            "right": 191.0,
+            "center": 108.0,
+            "width": 166.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            321
+          ],
+          "candidates": [
+            {
+              "left": 22,
+              "right": 195,
+              "center": 108.5,
+              "width": 173,
+              "score": 0.1,
+              "coreFraction": 0.896551724137931
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 22,
+            "right": 195,
+            "center": 108.5,
+            "width": 173
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 4.0,
+            "center": 0.5,
+            "width": 7.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 820,
+          "expected": {
+            "left": 9.0,
+            "right": 178.0,
+            "center": 93.5,
+            "width": 169.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            0,
+            308
+          ],
+          "candidates": [
+            {
+              "left": 114,
+              "right": 182,
+              "center": 148.0,
+              "width": 68,
+              "score": 31.4,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 8,
+              "right": 71,
+              "center": 39.5,
+              "width": 63,
+              "score": 33.3,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "ambiguous_multiple_magenta_runs",
+            "multiple_core_fragments_in_expected_band"
+          ],
+          "measured": {
+            "left": 114,
+            "right": 182,
+            "center": 148.0,
+            "width": 68
+          },
+          "errorPixels": {
+            "left": 105.0,
+            "right": 4.0,
+            "center": 54.5,
+            "width": -101.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 830,
+          "expected": {
+            "left": 0.0,
+            "right": 165.0,
+            "center": 82.5,
+            "width": 165.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "image_clipped"
+          ],
+          "searchWindow": [
+            0,
+            295
+          ],
+          "candidates": [
+            {
+              "left": 0,
+              "right": 169,
+              "center": 84.5,
+              "width": 169,
+              "score": 0.4,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 0,
+            "right": 169,
+            "center": 84.5,
+            "width": 169
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": 4.0,
+            "center": 2.0,
+            "width": 4.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 840,
+          "expected": {
+            "left": 0.0,
+            "right": 154.0,
+            "center": 77.0,
+            "width": 154.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "image_clipped"
+          ],
+          "searchWindow": [
+            0,
+            278
+          ],
+          "candidates": [
+            {
+              "left": 0,
+              "right": 160,
+              "center": 80.0,
+              "width": 160,
+              "score": 0.6000000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 0,
+            "right": 160,
+            "center": 80.0,
+            "width": 160
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": 6.0,
+            "center": 3.0,
+            "width": 6.0
+          }
+        },
+        {
+          "band": "main_left",
+          "y": 850,
+          "expected": {
+            "left": 0.0,
+            "right": 145.0,
+            "center": 72.5,
+            "width": 145.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "image_clipped"
+          ],
+          "searchWindow": [
+            0,
+            261
+          ],
+          "candidates": [
+            {
+              "left": 0,
+              "right": 148,
+              "center": 74.0,
+              "width": 148,
+              "score": 0.30000000000000004,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 0,
+            "right": 148,
+            "center": 74.0,
+            "width": 148
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": 3.0,
+            "center": 1.5,
+            "width": 3.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 600,
+          "expected": {
+            "left": 564.0,
+            "right": 635.0,
+            "center": 599.5,
+            "width": 71.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            494,
+            705
+          ],
+          "candidates": [
+            {
+              "left": 563,
+              "right": 610,
+              "center": 586.5,
+              "width": 47,
+              "score": 2.6,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 658,
+              "right": 664,
+              "center": 661.0,
+              "width": 6,
+              "score": 70.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 563,
+            "right": 610,
+            "center": 586.5,
+            "width": 47
+          },
+          "errorPixels": {
+            "left": -1.0,
+            "right": -25.0,
+            "center": -13.0,
+            "width": -24.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 610,
+          "expected": {
+            "left": 599.0,
+            "right": 676.0,
+            "center": 637.5,
+            "width": 77.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            529,
+            746
+          ],
+          "candidates": [
+            {
+              "left": 598,
+              "right": 615,
+              "center": 606.5,
+              "width": 17,
+              "score": 28.7,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 707,
+              "right": 746,
+              "center": 726.5,
+              "width": 39,
+              "score": 87.3,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 598,
+            "right": 615,
+            "center": 606.5,
+            "width": 17
+          },
+          "errorPixels": {
+            "left": -1.0,
+            "right": -61.0,
+            "center": -31.0,
+            "width": -60.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 620,
+          "expected": {
+            "left": 631.0,
+            "right": 709.0,
+            "center": 670.0,
+            "width": 78.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            561,
+            779
+          ],
+          "candidates": [
+            {
+              "left": 634,
+              "right": 639,
+              "center": 636.5,
+              "width": 5,
+              "score": 37.7,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 720,
+              "right": 779,
+              "center": 749.5,
+              "width": 59,
+              "score": 65.9,
+              "coreFraction": 0.8833333333333333
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 634,
+            "right": 639,
+            "center": 636.5,
+            "width": 5
+          },
+          "errorPixels": {
+            "left": 3.0,
+            "right": -70.0,
+            "center": -33.5,
+            "width": -73.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 630,
+          "expected": {
+            "left": 659.0,
+            "right": 736.0,
+            "center": 697.5,
+            "width": 77.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            589,
+            806
+          ],
+          "candidates": [
+            {
+              "left": 744,
+              "right": 806,
+              "center": 775.0,
+              "width": 62,
+              "score": 62.0,
+              "coreFraction": 0.9682539682539683
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "candidate_boundary_clipped_by_search_or_image"
+          ],
+          "measured": {
+            "left": 744,
+            "right": 806,
+            "center": 775.0,
+            "width": 62
+          },
+          "errorPixels": {
+            "left": 85.0,
+            "right": 70.0,
+            "center": 77.5,
+            "width": -15.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 640,
+          "expected": {
+            "left": 678.0,
+            "right": 757.0,
+            "center": 717.5,
+            "width": 79.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            608,
+            827
+          ],
+          "candidates": [
+            {
+              "left": 788,
+              "right": 827,
+              "center": 807.5,
+              "width": 39,
+              "score": 88.5,
+              "coreFraction": 0.925
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "candidate_boundary_clipped_by_search_or_image",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 788,
+            "right": 827,
+            "center": 807.5,
+            "width": 39
+          },
+          "errorPixels": {
+            "left": 110.0,
+            "right": 70.0,
+            "center": 90.0,
+            "width": -40.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 650,
+          "expected": {
+            "left": 696.0,
+            "right": 777.0,
+            "center": 736.5,
+            "width": 81.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            626,
+            847
+          ],
+          "candidates": [
+            {
+              "left": 696,
+              "right": 726,
+              "center": 711.0,
+              "width": 30,
+              "score": 15.600000000000001,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 822,
+              "right": 847,
+              "center": 834.5,
+              "width": 25,
+              "score": 105.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 696,
+            "right": 726,
+            "center": 711.0,
+            "width": 30
+          },
+          "errorPixels": {
+            "left": 0.0,
+            "right": -51.0,
+            "center": -25.5,
+            "width": -51.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 660,
+          "expected": {
+            "left": 714.0,
+            "right": 794.0,
+            "center": 754.0,
+            "width": 80.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            644,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 711,
+              "right": 761,
+              "center": 736.0,
+              "width": 50,
+              "score": 3.6,
+              "coreFraction": 0.8431372549019608
+            },
+            {
+              "left": 838,
+              "right": 863,
+              "center": 850.5,
+              "width": 25,
+              "score": 103.3,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 711,
+            "right": 761,
+            "center": 736.0,
+            "width": 50
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": -33.0,
+            "center": -18.0,
+            "width": -30.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 670,
+          "expected": {
+            "left": 727.0,
+            "right": 809.0,
+            "center": 768.0,
+            "width": 82.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            657,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 724,
+              "right": 777,
+              "center": 750.5,
+              "width": 53,
+              "score": 3.5,
+              "coreFraction": 0.8333333333333334
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 724,
+            "right": 777,
+            "center": 750.5,
+            "width": 53
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": -32.0,
+            "center": -17.5,
+            "width": -29.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 680,
+          "expected": {
+            "left": 737.0,
+            "right": 819.0,
+            "center": 778.0,
+            "width": 82.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            667,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 734,
+              "right": 794,
+              "center": 764.0,
+              "width": 60,
+              "score": 2.8000000000000003,
+              "coreFraction": 0.8360655737704918
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 734,
+            "right": 794,
+            "center": 764.0,
+            "width": 60
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": -25.0,
+            "center": -14.0,
+            "width": -22.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 690,
+          "expected": {
+            "left": 742.0,
+            "right": 821.0,
+            "center": 781.5,
+            "width": 79.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            672,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 750,
+              "right": 812,
+              "center": 781.0,
+              "width": 62,
+              "score": 0.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 750,
+            "right": 812,
+            "center": 781.0,
+            "width": 62
+          },
+          "errorPixels": {
+            "left": 8.0,
+            "right": -9.0,
+            "center": -0.5,
+            "width": -17.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 700,
+          "expected": {
+            "left": 746.0,
+            "right": 822.0,
+            "center": 784.0,
+            "width": 76.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            676,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 740,
+              "right": 822,
+              "center": 781.0,
+              "width": 82,
+              "score": 0.6000000000000001,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 740,
+            "right": 822,
+            "center": 781.0,
+            "width": 82
+          },
+          "errorPixels": {
+            "left": -6.0,
+            "right": 0.0,
+            "center": -3.0,
+            "width": 6.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 710,
+          "expected": {
+            "left": 744.0,
+            "right": 824.0,
+            "center": 784.0,
+            "width": 80.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            674,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 741,
+              "right": 825,
+              "center": 783.0,
+              "width": 84,
+              "score": 0.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 741,
+            "right": 825,
+            "center": 783.0,
+            "width": 84
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 1.0,
+            "center": -1.0,
+            "width": 4.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 720,
+          "expected": {
+            "left": 739.0,
+            "right": 833.0,
+            "center": 786.0,
+            "width": 94.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            663,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 736,
+              "right": 834,
+              "center": 785.0,
+              "width": 98,
+              "score": 0.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 736,
+            "right": 834,
+            "center": 785.0,
+            "width": 98
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": 1.0,
+            "center": -1.0,
+            "width": 4.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 730,
+          "expected": {
+            "left": 728.0,
+            "right": 840.0,
+            "center": 784.0,
+            "width": 112.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            638,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 724,
+              "right": 821,
+              "center": 772.5,
+              "width": 97,
+              "score": 2.3000000000000003,
+              "coreFraction": 0.9387755102040817
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 724,
+            "right": 821,
+            "center": 772.5,
+            "width": 97
+          },
+          "errorPixels": {
+            "left": -4.0,
+            "right": -19.0,
+            "center": -11.5,
+            "width": -15.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 740,
+          "expected": {
+            "left": 714.0,
+            "right": 829.0,
+            "center": 771.5,
+            "width": 115.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            622,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 710,
+              "right": 801,
+              "center": 755.5,
+              "width": 91,
+              "score": 3.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 710,
+            "right": 801,
+            "center": 755.5,
+            "width": 91
+          },
+          "errorPixels": {
+            "left": -4.0,
+            "right": -28.0,
+            "center": -16.0,
+            "width": -24.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 750,
+          "expected": {
+            "left": 693.0,
+            "right": 804.0,
+            "center": 748.5,
+            "width": 111.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            604,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 690,
+              "right": 780,
+              "center": 735.0,
+              "width": 90,
+              "score": 2.7,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 690,
+            "right": 780,
+            "center": 735.0,
+            "width": 90
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": -24.0,
+            "center": -13.5,
+            "width": -21.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 760,
+          "expected": {
+            "left": 670.0,
+            "right": 796.0,
+            "center": 733.0,
+            "width": 126.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            569,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 667,
+              "right": 778,
+              "center": 722.5,
+              "width": 111,
+              "score": 2.1,
+              "coreFraction": 0.9642857142857143
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 667,
+            "right": 778,
+            "center": 722.5,
+            "width": 111
+          },
+          "errorPixels": {
+            "left": -3.0,
+            "right": -18.0,
+            "center": -10.5,
+            "width": -15.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 770,
+          "expected": {
+            "left": 644.0,
+            "right": 793.0,
+            "center": 718.5,
+            "width": 149.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            524,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 639,
+              "right": 767,
+              "center": 703.0,
+              "width": 128,
+              "score": 3.1,
+              "coreFraction": 0.9767441860465116
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 639,
+            "right": 767,
+            "center": 703.0,
+            "width": 128
+          },
+          "errorPixels": {
+            "left": -5.0,
+            "right": -26.0,
+            "center": -15.5,
+            "width": -21.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 780,
+          "expected": {
+            "left": 616.0,
+            "right": 772.0,
+            "center": 694.0,
+            "width": 156.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            491,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 614,
+              "right": 742,
+              "center": 678.0,
+              "width": 128,
+              "score": 3.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 614,
+            "right": 742,
+            "center": 678.0,
+            "width": 128
+          },
+          "errorPixels": {
+            "left": -2.0,
+            "right": -30.0,
+            "center": -16.0,
+            "width": -28.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 790,
+          "expected": {
+            "left": 601.0,
+            "right": 758.0,
+            "center": 679.5,
+            "width": 157.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            475,
+            863
+          ],
+          "candidates": [
+            {
+              "left": 597,
+              "right": 731,
+              "center": 664.0,
+              "width": 134,
+              "score": 3.1,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 597,
+            "right": 731,
+            "center": 664.0,
+            "width": 134
+          },
+          "errorPixels": {
+            "left": -4.0,
+            "right": -27.0,
+            "center": -15.5,
+            "width": -23.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 800,
+          "expected": {
+            "left": 586.0,
+            "right": 739.0,
+            "center": 662.5,
+            "width": 153.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            463,
+            862
+          ],
+          "candidates": [
+            {
+              "left": 584,
+              "right": 729,
+              "center": 656.5,
+              "width": 145,
+              "score": 1.2000000000000002,
+              "coreFraction": 0.9794520547945206
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 584,
+            "right": 729,
+            "center": 656.5,
+            "width": 145
+          },
+          "errorPixels": {
+            "left": -2.0,
+            "right": -10.0,
+            "center": -6.0,
+            "width": -8.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 810,
+          "expected": {
+            "left": 574.0,
+            "right": 718.0,
+            "center": 646.0,
+            "width": 144.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            458,
+            834
+          ],
+          "candidates": [
+            {
+              "left": 572,
+              "right": 722,
+              "center": 647.0,
+              "width": 150,
+              "score": 0.2,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 458,
+              "right": 466,
+              "center": 462.0,
+              "width": 8,
+              "score": 216.8,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": true,
+          "reasons": [],
+          "measured": {
+            "left": 572,
+            "right": 722,
+            "center": 647.0,
+            "width": 150
+          },
+          "errorPixels": {
+            "left": -2.0,
+            "right": 4.0,
+            "center": 1.0,
+            "width": 6.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 820,
+          "expected": {
+            "left": 567.0,
+            "right": 707.0,
+            "center": 637.0,
+            "width": 140.0
+          },
+          "referenceConfidence": 0.94,
+          "referenceOcclusion": [],
+          "searchWindow": [
+            455,
+            819
+          ],
+          "candidates": [
+            {
+              "left": 565,
+              "right": 710,
+              "center": 637.5,
+              "width": 145,
+              "score": 0.1,
+              "coreFraction": 0.9383561643835616
+            },
+            {
+              "left": 455,
+              "right": 469,
+              "center": 462.0,
+              "width": 14,
+              "score": 203.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 565,
+            "right": 710,
+            "center": 637.5,
+            "width": 145
+          },
+          "errorPixels": {
+            "left": -2.0,
+            "right": 3.0,
+            "center": 0.5,
+            "width": 5.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 830,
+          "expected": {
+            "left": 561.0,
+            "right": 689.0,
+            "center": 625.0,
+            "width": 128.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            458,
+            792
+          ],
+          "candidates": [
+            {
+              "left": 560,
+              "right": 691,
+              "center": 625.5,
+              "width": 131,
+              "score": 0.1,
+              "coreFraction": 0.9621212121212122
+            },
+            {
+              "left": 458,
+              "right": 470,
+              "center": 464.0,
+              "width": 12,
+              "score": 187.2,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 560,
+            "right": 691,
+            "center": 625.5,
+            "width": 131
+          },
+          "errorPixels": {
+            "left": -1.0,
+            "right": 2.0,
+            "center": 0.5,
+            "width": 3.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 840,
+          "expected": {
+            "left": 558.0,
+            "right": 684.0,
+            "center": 621.0,
+            "width": 126.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            457,
+            785
+          ],
+          "candidates": [
+            {
+              "left": 556,
+              "right": 685,
+              "center": 620.5,
+              "width": 129,
+              "score": 0.1,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 457,
+              "right": 469,
+              "center": 463.0,
+              "width": 12,
+              "score": 183.6,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 556,
+            "right": 685,
+            "center": 620.5,
+            "width": 129
+          },
+          "errorPixels": {
+            "left": -2.0,
+            "right": 1.0,
+            "center": -0.5,
+            "width": 3.0
+          }
+        },
+        {
+          "band": "main_right",
+          "y": 850,
+          "expected": {
+            "left": 558.0,
+            "right": 686.0,
+            "center": 622.0,
+            "width": 128.0
+          },
+          "referenceConfidence": 0.6,
+          "referenceOcclusion": [
+            "occluded_manual_interpolation"
+          ],
+          "searchWindow": [
+            455,
+            789
+          ],
+          "candidates": [
+            {
+              "left": 557,
+              "right": 686,
+              "center": 621.5,
+              "width": 129,
+              "score": 0.1,
+              "coreFraction": 1.0
+            },
+            {
+              "left": 455,
+              "right": 469,
+              "center": 462.0,
+              "width": 14,
+              "score": 185.0,
+              "coreFraction": 1.0
+            }
+          ],
+          "supported": false,
+          "reasons": [
+            "reference_confidence_below_0.9",
+            "reference_occluded_or_clipped",
+            "reference_edge_not_directly_measured",
+            "actor_or_bubble_exclusion_intersects_band"
+          ],
+          "measured": {
+            "left": 557,
+            "right": 686,
+            "center": 621.5,
+            "width": 129
+          },
+          "errorPixels": {
+            "left": -1.0,
+            "right": 0.0,
+            "center": -0.5,
+            "width": 1.0
+          }
+        }
+      ]
+    }
+  },
+  "commonSupportedRows": {
+    "count": 17,
+    "keys": [
+      [
+        "main_left",
+        610
+      ],
+      [
+        "main_left",
+        620
+      ],
+      [
+        "main_left",
+        630
+      ],
+      [
+        "main_left",
+        640
+      ],
+      [
+        "main_left",
+        650
+      ],
+      [
+        "main_left",
+        660
+      ],
+      [
+        "main_left",
+        670
+      ],
+      [
+        "main_left",
+        680
+      ],
+      [
+        "main_left",
+        690
+      ],
+      [
+        "main_left",
+        780
+      ],
+      [
+        "main_left",
+        790
+      ],
+      [
+        "main_left",
+        800
+      ],
+      [
+        "main_left",
+        810
+      ],
+      [
+        "main_right",
+        600
+      ],
+      [
+        "main_right",
+        740
+      ],
+      [
+        "main_right",
+        800
+      ],
+      [
+        "main_right",
+        810
+      ]
+    ],
+    "summaries": {
+      "baseline": {
+        "rowsRequested": 17,
+        "rowsSupported": 17,
+        "rowsUnsupported": 0,
+        "leftCoreErrorPixels": {
+          "meanAbsolute": 38.35294117647059,
+          "medianAbsolute": 40.0,
+          "maxAbsolute": 81.0,
+          "meanSigned": 29.88235294117647
+        },
+        "rightCoreErrorPixels": {
+          "meanAbsolute": 14.647058823529411,
+          "medianAbsolute": 11.0,
+          "maxAbsolute": 52.0,
+          "meanSigned": -4.764705882352941
+        },
+        "centerErrorPixels": {
+          "meanAbsolute": 24.735294117647058,
+          "medianAbsolute": 22.5,
+          "maxAbsolute": 46.5,
+          "meanSigned": 12.558823529411764
+        },
+        "widthErrorPixels": {
+          "meanAbsolute": 35.8235294117647,
+          "medianAbsolute": 34.0,
+          "maxAbsolute": 94.0,
+          "meanSigned": -34.64705882352941
+        }
+      },
+      "improved": {
+        "rowsRequested": 17,
+        "rowsSupported": 17,
+        "rowsUnsupported": 0,
+        "leftCoreErrorPixels": {
+          "meanAbsolute": 16.294117647058822,
+          "medianAbsolute": 5.0,
+          "maxAbsolute": 64.0,
+          "meanSigned": 11.117647058823529
+        },
+        "rightCoreErrorPixels": {
+          "meanAbsolute": 6.0588235294117645,
+          "medianAbsolute": 3.0,
+          "maxAbsolute": 28.0,
+          "meanSigned": -1.3529411764705883
+        },
+        "centerErrorPixels": {
+          "meanAbsolute": 9.705882352941176,
+          "medianAbsolute": 2.0,
+          "maxAbsolute": 33.5,
+          "meanSigned": 4.882352941176471
+        },
+        "widthErrorPixels": {
+          "meanAbsolute": 20.235294117647058,
+          "medianAbsolute": 10.0,
+          "maxAbsolute": 61.0,
+          "meanSigned": -12.470588235294118
+        }
+      }
+    }
+  }
+}
