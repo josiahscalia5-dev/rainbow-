@@ -844,3 +844,32 @@ Let me look closely at the painted near water round Benny versus the game inside
 >       // about five in view; m04a3o = glow opacity. Defaults = the r12 D1/D2 values.
 >       const n0 = M04.num('m04a3n0', 2.0), n1 = M04.num('m04a3n1', 4.5), f0 = M04.num('m04a3f0', 30), f1 = M04.num('m0 …[+1078 chars]
 
+### 🤖 Claude — 2026-11-18T20:57:57.612Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]\n    s=s.replace(old,new)\nrep(\"\"\"uniform vec2 uSB2;           // far ahead of the camera (x -> y u) the bands smooth into long unbroken stripes (no repeat ribs)\n\"\"\",\"\"\"uniform vec2 uSB2;           // far ahead of the camera (x -> y u) the bands smooth into long unbroken stripes (no repeat ribs)\nuniform vec4 uNB;            // r17 m04nband: x on, y Benny along (local), z Benny lateral, w inner arc hugging Benny …[+3030 chars]`
+
+### 🧑 User — 2026-11-18T20:58:12.236Z
+
+> ↩︎ result: done
+
+### 🤖 Claude — 2026-11-18T20:58:14.292Z
+
+Typecheck is clean. Let me confirm Benny's position is actually passed into the update call.
+
+### 🤖 Claude — 2026-11-18T20:58:15.097Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m4\\.\\|m4?\\.\\|\\.update(\" src/world/match04.ts | head", "description": "Check the update call passes Benny"}`
+
+### 🧑 User — 2026-11-18T20:58:15.198Z
+
+> ↩︎ result: 292:  // round 8 (M4): `&m04ring / m04foam / m04bub / m04arrow / m04wave =1` sub-switches (src/world/match04m4.ts); absent = no change
+> 431:      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined);
+
+### 🤖 Claude — 2026-11-18T20:58:17.588Z
+
+Benny's position comes via the splash anchor, which the kept arrow fade already relies on. Rendering a first test (f06, f10, hard left, t66).
+
+### 🤖 Claude — 2026-11-18T20:58:20.184Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); ONLY=f06_forward6u,f10_forward10u,s_left_hard,t66_through_screen timeout 600 node $SP/tools/shots.mjs 04 $SP/nb1 \"$K&m04end=1&m04nband=1\" 2>&1 | grep -E \"^04|pageerror|nband\"", "description": "Render first near-band test shots", "timeout": 620000}`
+

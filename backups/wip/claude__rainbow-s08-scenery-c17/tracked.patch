@@ -19,7 +19,7 @@ index 4bca7708..6caff70e 100644
      nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
    }
 diff --git a/tools/match08/nq08.py b/tools/match08/nq08.py
-index 5df3a7ab..9b7c641b 100644
+index 5df3a7ab..b848d790 100644
 --- a/tools/match08/nq08.py
 +++ b/tools/match08/nq08.py
 @@ -24,7 +24,7 @@ v6 (r14), built only from the user's own near band, at the painted scale everywh
@@ -31,7 +31,7 @@ index 5df3a7ab..9b7c641b 100644
  import cv2
  import numpy as np
  from PIL import Image
-@@ -136,8 +136,35 @@ for k in range(1, nlab):
+@@ -136,8 +136,40 @@ for k in range(1, nlab):
      cy = int(min(SH - 1, round(cents[k][1])))
      crect = float(np.argmin(np.abs(xs[cy] - cents[k][0])))      # its column in the rectified band (for its colour zone)
      sprites.append({'rgb': src_raw[y0s:y1s, x0s:x1s].astype(np.float32), 'a': (cov[y0s:y1s, x0s:x1s] * own).astype(np.float32),
@@ -51,15 +51,20 @@ index 5df3a7ab..9b7c641b 100644
 +    mk = [cv2.remap((lab == s['k']).astype(np.float32), xs, rows_f, cv2.INTER_LINEAR) > 0.3 for s in sprites]
 +    ell = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * GD + 1, 2 * GD + 1))
 +    spg = cv2.dilate(np.any(mk, 0).astype(np.uint8), ell).astype(bool)
-+    bsg = cv2.GaussianBlur(fill_cols(src, spg), (0, 0), 2.0)
-+    exc = np.clip((lum(src) - lum(bsg)) / np.maximum(255 - lum(bsg), 8), 0, 1)
++    bsg = cv2.GaussianBlur(fill_cols(src, spg), (0, 0), 4.0)
++    # the painted glow is a saturated bright CYAN (G 220-250 over the satin's 140-180), not white: alpha = its excess
++    # over the satin under it in green as well as in luminance (a luminance excess alone left the glow out -> bare white
++    # cut-outs)
++    # (green excess: the cyan glow and the white core raise G; a magenta neighbour on cyan satin does not)
++    exc = np.clip(np.maximum((src[..., 1] - bsg[..., 1]) / np.maximum(255 - bsg[..., 1], 8),
++                             (lum(src) - lum(bsg)) / np.maximum(255 - lum(bsg), 8)), 0, 1)
 +    sprites = []
 +    for m in mk:
 +        ys_, xs_ = np.where(m)
 +        if not len(ys_): continue
 +        y, x, h, w = ys_.min(), xs_.min(), ys_.max() - ys_.min() + 1, xs_.max() - xs_.min() + 1
-+        pad = GD + 8; x0s, y0s, x1s, y1s = max(0, x - pad), max(0, y - pad), min(SW, x + w + pad), min(SH, y + h + pad)
-+        own = cv2.GaussianBlur(cv2.dilate(m[y0s:y1s, x0s:x1s].astype(np.uint8), ell).astype(np.float32), (0, 0), 5.0)
++        pad = GD + 16; x0s, y0s, x1s, y1s = max(0, x - pad), max(0, y - pad), min(SW, x + w + pad), min(SH, y + h + pad)
++        own = cv2.GaussianBlur(cv2.dilate(m[y0s:y1s, x0s:x1s].astype(np.uint8), ell).astype(np.float32), (0, 0), 8.0)
 +        ry = np.arange(y0s, y1s, dtype=np.float32)[:, None]               # a glow running off the band's ends fades out
 +        ew = np.clip(np.minimum(ry, SH - 1 - ry) / 10.0, 0, 1)
 +        sprites.append({'rgb': src[y0s:y1s, x0s:x1s].astype(np.float32), 'a': (exc[y0s:y1s, x0s:x1s] * own * ew).astype(np.float32),
@@ -68,7 +73,7 @@ index 5df3a7ab..9b7c641b 100644
  
  # --- layout: lane offset x_b (u) -> painted band position a ------------------------------------------------------------
  c = (NJ['waterA'][0] + NJ['waterA'][1]) / 2  # the lane centre sits on the painted water's centre (as m08near)
-@@ -242,7 +269,8 @@ json.dump({'z0': float(Z0), 'period': PERIOD, 'halfWidth': WT, 'lane': LANE, 'co
+@@ -242,7 +274,8 @@ json.dump({'z0': float(Z0), 'period': PERIOD, 'halfWidth': WT, 'lane': LANE, 'co
             'note': 'u = 0.5 + x_b / (2 halfWidth), x_b = lateral offset from the lane centre (u; |x| <= core 1:1, beyond: '
                     'core + (|x| - core) (lane - core) / (h - core) for a lane of half width h); v = (z0 - z) / period (repeat). '
                     'Painted scale; from the approved picture\'s own near band (nq08.py v6, r14: rectified along the painted flow, '

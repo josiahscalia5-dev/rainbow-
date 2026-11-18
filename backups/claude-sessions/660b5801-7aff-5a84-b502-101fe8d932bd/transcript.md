@@ -2418,3 +2418,79 @@ Screens 07 and 04 each have a new result, and I've sent you both sets of picture
 
 Screens 05 and 06 and the Screen 04 ring test are still working. Screen 08 is still waiting for your approval.
 
+### 🧑 User — 2026-11-18T20:58:48.171Z
+
+Would you call screen 8 being what score would you get that out of 10 as the highest to match my exact approved screen?
+
+### 🤖 Claude — 2026-11-18T20:58:53.690Z
+
+I'll judge it honestly by eye, at the start and while swimming, rather than quote a pixel percentage. First, the scores earlier rounds recorded for Screen 08.
+
+### 🤖 Claude — 2026-11-18T20:58:55.199Z
+
+> 🔧 **Bash** `{"command": "grep -rhn -E \"[0-9](\\.[0-9])? ?/ ?10\" docs/briefs/2026-11-18-r1*/ docs/PARALLEL_PROGRESS.md qa/lead_r6/2026-11-17/README.md 2>/dev/null | grep -i -E \"08|screen 8\" | cut -c1-260 | tail -12", "description": "Find earlier by-eye scores for Screen 08"}`
+
+### 🧑 User — 2026-11-18T20:58:55.374Z
+
+> ↩︎ result: 46:without this step), `3_NEW_<shot>.png` — all 12 audit shots of `tools/match08/shots08.mjs` (start, forward 3/6/10/20 u, middle, end,
+> 5:`docs/briefs/2026-11-17-r6/USER_DECISIONS.md` — ≥ 8.5/10 throughout gameplay, 06 major priority, then 08; usage warning on
+> 94:* Default build vs the commit before flowplan (`c03a0f72`), all 11 screens: 02/03/06/07/08/10 identical; the
+> 50:**No playable screen reaches 8.5/10 during gameplay yet.** Screen 08 and the first part of 05 come closest.
+
+### 🤖 Claude — 2026-11-18T20:58:58.234Z
+
+> 🔧 **Bash** `{"command": "grep -rn -i -E \"08.*(/10|out of 10)|(/10|out of 10).*08\" docs/ qa/lead_r* qa/review_r1* 2>/dev/null | grep -v \"2026-11-17-r6/USER\" | cut -c1-280 | tail -10; ls qa/match/08/r17 2>/dev/null; ls /home/user/wt/s08/qa/match/08/r17/", "description": "Search all notes for Screen 08 scores out of 10"}`
+
+### 🧑 User — 2026-11-18T20:58:59.644Z
+
+> ↩︎ result: docs/briefs/2026-11-17-r2/S05.md:10:* MILESTONE 2 (coin total) had started when the previous account stopped: `src/gameplay/coins.ts` (+27 lines, `coins05tot`), `tools/match05/coin_audit.mjs`, `qa/match/05/gameplay_m2_match05_1_tgtvis05_1.json` were autosaved. Its audit: 91 coins
+> docs/briefs/2026-11-17-r3/S07.md:13:1. Re-verify and document: numbers (whole, scenery without HUD/Benny, bands, SSIM), proofs (default 0 px on 06/07/08, `?match08=1` 0 px, protected 05 BEFORE 0 px, gameplay 8/8 + exactly 91 / 2,240 with and without `match07=1`, continuity: the h
+> docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md:29:  `3_NEW_match08_m08bw_m08fill.png`; moving frames `moving_BEFORE/`, `moving_NEW/` (checkpoint, forward 3/6/10/15/20 u,
+> docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md:34:* Proofs: tsc clean; default 0 px on all 11 screens (01/10/11 capture noise, re-capture 0 px); approved 08 view: m08fill
+> docs/briefs/2026-11-18-r15/S08_LAUNCH.md:46:without this step), `3_NEW_<shot>.png` — all 12 audit shots of `tools/match08/shots08.mjs` (start, forward 3/6/10/20 u, middle, end,
+> docs/briefs/2026-11-18-r9/COORDINATION.md:4:continue all five playable screens 04–08 toward their OWN approved pictures (≥ 8.5 …[+699 chars]
+
+### 🤖 Claude — 2026-11-18T20:59:06.204Z
+
+> 🔧 **Bash** `{"command": "sed -n 36,38p docs/briefs/2026-11-17-r7/COORDINATION.md | cut -c1-400; cd /home/user/wt/s08/qa/match/08/r17/step1_m08vh && python3 -I - <<'EOF'\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/'\nnames=['1_APPROVED','3_NEW_a00_approved_view','3_NEW_f03_forward3u','3_NEW_f06_forward6u']\nnames2=['3_NEW_f20_forward20u','3_NEW_t33_through_screen','3_NEW_t66_through_screen','3_NEW_s_right_hard']\nfor k,ns in enumerate((names,names2)):\n    ims=[Image.open(n+'.png').convert('RGB').resize((432,768)) for n in ns]\n    c=Image.ne …[+213 chars]`
+
+### 🧑 User — 2026-11-18T20:59:08.707Z
+
+> ↩︎ result: * 08 scenery: milestone DONE `claude/rainbow-s08-scenery-c7` @ `dafa3752` (m08seam, m08sill, m08towel kept; ≈ 7.5/10
+>   straight ahead); session idle. Next 08 round: sharper near water while steering.
+> * 07: session `session_01KS3bZthTRh6CTfK1fvM3r6` RUNNING (was blocked on a send_message permission prompt — interrupted,
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T20:59:10.936Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/judge08_0.png"}`
+
+### 🧑 User — 2026-11-18T20:59:11.358Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:59:11.554Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/judge08_1.png"}`
+
+### 🧑 User — 2026-11-18T20:59:11.937Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:59:29.413Z
+
+**About 8 out of 10 overall**, where 10 means identical to your approved picture. That's my honest judgement by eye, not a measurement. I compared your picture with the current best Screen 08 at the start, while swimming and while steering.
+
+| Moment | Score | What I see |
+|---|---|---|
+| Start of the screen | **9 / 10** | Nearly your exact picture: the gold frame, the silver door with the porthole, the folded purple towel, the gold platform, the four cups pouring water, the S-river with its coins. |
+| Swimming in a little | **8.5 / 10** | The chamber stays your design. The water near Benny gets a little flatter. |
+| Deeper in, and steering hard | **7.5–8 / 10** | The chamber is still clearly yours, but the water in the bottom part of the screen looks stretched and has torn white "lightning" sparkles. |
+
+**What keeps it from 9 or more:**
+1. **The water closest to Benny.** Your painting has soft glowing highlights along curved, glossy streaks. The game shows jagged white sparkles and slightly stretched water. This is the biggest difference, and it's exactly what the Screen 08 specialist is working on now.
+2. **Benny himself.** His shape and size match, but his fur, knitted hat and pom-pom are less detailed and crisp than in your painting.
+3. **Small things while steering hard.** The wall texture stretches a little in places, and the coins are slightly off from where they're painted.
+
+The goal you approved is 8.5 or more throughout the whole ride, ideally 9 to 9.5. Screen 08 is the closest of the five playable screens, but it isn't there yet while swimming. Fixing the near water should move it the most.
+

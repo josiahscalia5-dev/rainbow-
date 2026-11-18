@@ -1325,3 +1325,64 @@ Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output
 > 1450 [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]
 > 1500 [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]
 
+### 🤖 Claude — 2026-11-18T20:57:14.916Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/gl1_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:57:14.979Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:24.060Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('nq08_source_rectified.png').convert('RGB')).astype(int)\nfor y in (60,80,100):\n  print(y, ' '.join('%d/%d/%d'%tuple(a[y,x]) for x in range(300,460,8)))\n\"", "description": "Sample colour profile across a painted glint"}`
+
+### 🧑 User — 2026-11-18T20:57:24.815Z
+
+> ↩︎ result: 60 2/145/230 1/147/230 0/162/243 1/193/254 5/207/243 130/253/255 252/253/255 252/252/251 253/253/253 254/251/254 50/247/249 2/248/248 2/249/253 233/254/255 0/226/248 2/192/249 0/170/252 3/181/253 0/151/235 0/137/222
+> 80 2/155/242 0/158/240 1/164/245 2/174/250 0/197/251 3/238/253 245/255/251 248/252/254 210/246/243 254/250/249 252/252/250 215/250/249 238/254/250 249/255/250 125/249/254 0/218/253 5/173/253 2/193/253 0/144/232 0/131/215
+> 100 0/176/250 0/181/252 0/176/250 0/173/250 0/192/250 0/223/248 30/242/248 6/248/252 16/254/254 249/253/255 26/250/252 1/251/254 1/239/251 93/253/252 6/220/253 2/185/252 3/165/250 4/191/254 3/142/232 2/129/220
+
+### 🤖 Claude — 2026-11-18T20:57:36.411Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='/home/user/wt/s08/tools/match08/nq08.py'\ns=open(p).read()\nold=\"\"\"    bsg = cv2.GaussianBlur(fill_cols(src, spg), (0, 0), 2.0)\n    exc = np.clip((lum(src) - lum(bsg)) / np.maximum(255 - lum(bsg), 8), 0, 1)\n\"\"\"\nnew=\"\"\"    bsg = cv2.GaussianBlur(fill_cols(src, spg), (0, 0), 4.0)\n    # the painted glow is a saturated bright CYAN (G 220-250 over the satin's 140-180), not white: alpha = the largest\n    # per-channel excess over the satin under it (a luminance excess left the glow out -> bare white cut-outs)\n    exc = np.clip …[+730 chars]`
+
+### 🧑 User — 2026-11-18T20:57:45.067Z
+
+> ↩︎ result: v7 glow glints 7 sprites (rectified, core + glow 16 texels)
+> zone 1 glints placed 40 / 40
+> zone 2 glints placed 43 / 43
+
+### 🤖 Claude — 2026-11-18T20:57:47.133Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/glcmp2.png"}`
+
+### 🧑 User — 2026-11-18T20:57:47.169Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:58:06.394Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='/home/user/wt/s08/tools/match08/nq08.py'\ns=open(p).read()\nold=\"\"\"    exc = np.clip(((src - bsg) / np.maximum(255 - bsg, 8)).max(-1), 0, 1)\n\"\"\"\nnew=\"\"\"    # (green excess: the cyan glow and the white core raise G; a magenta neighbour on cyan satin does not)\n    exc = np.clip(np.maximum((src[..., 1] - bsg[..., 1]) / np.maximum(255 - bsg[..., 1], 8),\n                             (lum(src) - lum(bsg)) / np.maximum(255 - lum(bsg), 8)), 0, 1)\n\"\"\"\nassert old in s; s=s.replace(old,new)\ns=s.replace(\"\"\"        own = cv2.G …[+1581 chars]`
+
+### 🧑 User — 2026-11-18T20:58:18.387Z
+
+> ↩︎ result: 166:        pad = GD + 16; x0s, y0s, x1s, y1s = max(0, x - pad), max(0, y - pad), min(SW, x + w + pad), min(SH, y + h + pad)
+> 167:        own = cv2.GaussianBlur(cv2.dilate(m[y0s:y1s, x0s:x1s].astype(np.uint8), ell).astype(np.float32), (0, 0), 8.0)
+> 241:g1 = lambda v, s: cv2.GaussianBlur(v[None].astype(np.float32), (0, 0), sigmaX=s, sigmaY=0.1)[0]
+> v7 glow glints 7 sprites (rectified, core + glow 16 texels)
+> zone 1 glints placed 40 / 40
+> zone 2 glints placed 43 / 43
+
+### 🤖 Claude — 2026-11-18T20:58:20.742Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/glcmp3.png"}`
+
+### 🧑 User — 2026-11-18T20:58:20.820Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:58:26.915Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && cp $S/nq/nq08g3.png assets/textures/match08/nq08g.png && cp $S/nq/nq08g3.json assets/textures/match08/nq08g.json && M08_DET=1 M08_ONLY=f03,f06,s_left_hard,s_right_hard node tools/match08/shots08.mjs 08 $S/gl3 \"$(cat $S/K16.txt)&m08gl=1\" 2>&1 | grep -E \"^08|rror\" && python3 -c \"\nfrom PIL import Image\nS='$S'\nfor shot in ['f06_forward6u','s_left_hard','f03_forward3u','s_right_hard']:\n    a=Image.open('qa/match/08/r17/step1_m08vh/3_NEW_%s.png'%shot).crop((0,1000,864, …[+267 chars]`
+

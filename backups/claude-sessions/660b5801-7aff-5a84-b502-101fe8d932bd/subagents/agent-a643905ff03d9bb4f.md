@@ -1126,3 +1126,130 @@ While the renders run, I'll look into the lead's note on the hard-left foam. Fir
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T20:57:20.894Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b639i7va5.output; ls /home/user/wt/s07/qa/match/07/r17/step3_foamb/*/ 2>/dev/null; uptime", "description": "Check step 3 render progress"}`
+
+### 🧑 User — 2026-11-18T20:57:21.017Z
+
+> ↩︎ result: 07 t50_through_screen s 332.686 lat 0 stage 07 frames 293
+> 07 t66_through_screen s 351.063 lat 0 stage 07 frames 387
+> 07 t80_through_screen s 367.465 lat 0 stage 07 frames 469
+> 07 t95_through_screen s 385.138 lat 0 stage 07 frames 557
+> /home/user/wt/s07/qa/match/07/r17/step3_foamb/BEFORE/:
+> motion.json
+> t50_through_screen.png
+> t66_through_screen.png
+> t80_through_screen.png
+> t95_through_screen.png
+> 
+> /home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/:
+>  20:57:20 up 44 min,  0 user,  load average: 21.09, 18.59, 10.57
+
+### 🤖 Claude — 2026-11-18T20:57:25.440Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/BEFORE/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:57:25.502Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:58:09.141Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b639i7va5.output | tail -4; ls /home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/", "description": "Wait briefly and check NEW render"}`
+
+### 🧑 User — 2026-11-18T20:58:09.148Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b639i7va5.output tail -4 ls /home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T20:58:10.448Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T20:58:10.458Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T20:58:13.871Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/motion.json ]; do sleep 3; done; tail -4 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b639i7va5.output", "description": "Wait until step 3 NEW render finishes", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T20:58:13.912Z
+
+> ↩︎ result: Command running in background with ID: b8bzc7nxy. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b8bzc7nxy.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T20:58:17.840Z
+
+While the renders run, I'll prepare step 4 (foam clouds instead of a flat pale sheet at hard left/right). Reading the shader context first.
+
+### 🤖 Claude — 2026-11-18T20:58:18.509Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 60, "limit": 100}`
+
+### 🧑 User — 2026-11-18T20:58:18.529Z
+
+> ↩︎ result: 60	    int i0 = int(floor(ia));
+> 61	    vCtr = mix(uCtr[i0], uCtr[i0 + 1], ia - float(i0));
+> 62	  }
+> 63	  vN = normalize(mat3(modelMatrix) * normal);
+> 64	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 65	}`;
+> 66	
+> 67	const FRAG = /* glsl */ `
+> 68	uniform sampler2D uPlate;
+> 69	uniform sampler2D uDepth;
+> 70	uniform float uUseDepth;
+> 71	uniform vec2 uNearFar;
+> 72	uniform sampler2D uTile;
+> 73	uniform float uMode;      // 0 = triplanar patch, 1 = tube wall unwrap, 2 = river unwrap
+> 74	uniform float uPatchK;
+> 75	uniform vec4 uTube;       // ax, h, ring R2 depth, bay length
+> 76	uniform vec2 uTheta;      // unwrap angle range (rad): right water line .. left water line over the top
+> 77	uniform vec4 uRiver;      // lateral min, lateral max, along min, along max
+> 78	uniform vec3 uProjPos;
+> 79	uniform vec4 uPjPost;
+> 80	uniform vec2 uPjRes;
+> 81	uniform sampler2D uFill;   // M2 '?m07fill=1': provisional-fill mask of the plate (1 = filled, not original pixels)
+> 82	uniform float uFillTile;  // 1 = on the water, filled plate pixels give way to the river tile
+> 83	uniform vec2 uAng;        // M2 '?m07ang=1': view-vs-projector angle cosines (full plate above x, tile below y); x < 0 = off
+> 84	uniform float uGoldLit;   / …[+4623 chars]
+
+### 🤖 Claude — 2026-11-18T20:58:56.219Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/b639i7va5.output | tail -4; ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw 2>/dev/null | wc -l; ls /home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/", "description": "Check renders progress"}`
+
+### 🧑 User — 2026-11-18T20:58:56.523Z
+
+> ↩︎ result: 07 t50_through_screen s 332.686 lat 0 stage 07 frames 293
+> 07 t66_through_screen s 351.063 lat 0 stage 07 frames 387
+> 07 t80_through_screen s 367.465 lat 0 stage 07 frames 469
+> 07 t95_through_screen s 385.138 lat 0 stage 07 frames 557
+> 26
+> t50_through_screen.png
+> t66_through_screen.png
+> t80_through_screen.png
+
+### 🤖 Claude — 2026-11-18T20:59:00.734Z
+
+> 🔧 **Monitor** `{"command": "until [ -f /home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/motion.json ]; do sleep 3; done; echo \"NEW done\"; C=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw; until [ -f $C/0002.png ]; do sleep 3; done; echo \"clip rendering started\"", "description": "step 3 NEW render finish and clip start", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-18T20:59:00.922Z
+
+> ↩︎ result: Monitor started (task biq13nusk, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T20:59:04.306Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:59:04.422Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:59:19.230Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:59:19.276Z
+
+> ↩︎ result: [image]
+

@@ -1197,3 +1197,253 @@ All NEW shots are done. Starting the task-2 probe in the background (one render 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T20:57:16.231Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/new/x99.png"}`
+
+### 🧑 User — 2026-11-18T20:57:16.419Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:16.670Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/before/x99.png"}`
+
+### 🧑 User — 2026-11-18T20:57:16.850Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:22.274Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/before/x97L.png"}`
+
+### 🧑 User — 2026-11-18T20:57:22.431Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:22.668Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/new/x97L.png"}`
+
+### 🧑 User — 2026-11-18T20:57:22.715Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:28.597Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r17/step1_trans && for n in x97R x97L t95_through_screen; do node /home/user/tools-pixelmatch/pixeldiff.mjs before/$n.png new/$n.png /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/d_$n.png 0.1 180 1536 2>&1 | tail -2; done", "description": "Pixel-diff BEFORE vs NEW at side views"}`
+
+### 🧑 User — 2026-11-18T20:57:31.742Z
+
+> ↩︎ result: {"a":"before/x97R.png","b":"new/x97R.png","rows":[180,1536],"threshold":0.1,"diff_pixels":838012,"total":1171584,"diff_pct":71.5281}
+> {"a":"before/x97L.png","b":"new/x97L.png","rows":[180,1536],"threshold":0.1,"diff_pixels":339843,"total":1171584,"diff_pct":29.0071}
+> {"a":"before/t95_through_screen.png","b":"new/t95_through_screen.png","rows":[180,1536],"threshold":0.1,"diff_pixels":367823,"total":1171584,"diff_pct":31.3954}
+
+### 🤖 Claude — 2026-11-18T20:57:34.477Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/before/x97R.png"}`
+
+### 🧑 User — 2026-11-18T20:57:34.537Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:34.936Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/new/x97R.png"}`
+
+### 🧑 User — 2026-11-18T20:57:35.000Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:42.929Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/btooky517.output; uptime", "description": "Check probe output"}`
+
+### 🧑 User — 2026-11-18T20:57:43.194Z
+
+> ↩︎ result: 20:57:43 up 44 min,  0 user,  load average: 19.94, 18.49, 10.71
+
+### 🤖 Claude — 2026-11-18T20:57:44.887Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p scripts/capture.mjs | grep -n \"argv\\|--q\\|port\\|out\\|qa/\" | head -20", "description": "Check capture script options"}`
+
+### 🧑 User — 2026-11-18T20:57:45.131Z
+
+> ↩︎ result: 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 8:import { mkdirSync, writeFileSync } from 'node:fs';
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 11:const args = process.argv.slice(2);
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 30:    const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+> 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+
+### 🤖 Claude — 2026-11-18T20:57:46.475Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 10,60p scripts/capture.mjs", "description": "Read capture script body"}`
+
+### 🧑 User — 2026-11-18T20:57:46.584Z
+
+> ↩︎ result: const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'string' ? opt.size.split('x').map(Number) : null;
+> const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> mkdirSync(outDir, { recursive: true });
+> mkdirSync('qa', { recursive: true });
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5201);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> try {
+>   for (const id of ids) {
+>     const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+>     const page = await browser.newPage({ viewport: { width: w, heigh …[+2510 chars]
+
+### 🤖 Claude — 2026-11-18T20:57:50.779Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git ls-files qa/capture_log.json qa/gameplay* | head; grep -n \"writeFileSync\" scripts/gameplay-test.mjs | head", "description": "Check which logs the test scripts rewrite"}`
+
+### 🧑 User — 2026-11-18T20:57:50.958Z
+
+> ↩︎ result: qa/capture_log.json
+> qa/gameplay_test.json
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 106:  writeFileSync(f, JSON.stringify(result, null, 2));
+> 112:writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> 138:writeFileSync('qa/07_to_08_continuity.md', md.join('\n') + '\n');
+
+### 🤖 Claude — 2026-11-18T20:57:52.922Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 96,115p scripts/gameplay-test.mjs", "description": "Read gameplay-test output handling"}`
+
+### 🧑 User — 2026-11-18T20:57:53.005Z
+
+> ↩︎ result: out.checks.heartsLostOnWallBump = { pass: h.hearts < 5, hearts: h.hearts };
+>   api.setSteer(null);
+>   return out;
+> });
+> 
+> result.errors = errors;
+> result.pass = Object.values(result.checks).every((c) => c.pass) && errors.length === 0;
+> if (optQ) result.query = optQ;
+> if (optQ || optOut) {
+>   const f = optOut || 'qa/gameplay_test_switch.json';
+>   writeFileSync(f, JSON.stringify(result, null, 2));
+>   console.log(JSON.stringify({ query: optQ, out: f, pass: result.pass, checks: Object.fromEntries(Object.entries(result.checks).map(([k, v]) => [k, v.pass])), plunge: result.plunge, errors }, null, 1));
+>   await browser.close();
+>   await vite.close();
+>   process.exit(result.pass ? 0 : 1);
+> }
+> writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> const p = result.plunge;
+> const md = [
+>   '# 07 → 08 continuity proof (automated)',
+
+### 🤖 Claude — 2026-11-18T20:57:58.586Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt | tr -d '\\n') && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/lock1 && mkdir -p $S && while pgrep -f \"r15_probe.mjs\" >/dev/null; do sleep 3; done; node scripts/capture.mjs 05 --q=\"$K\" --out=$S/kept 2>&1 | tail -1 && node scripts/capture.mjs 05 --q=\"$K&m05trans=1\" --out=$S/trans 2>&1 | tail -1 && git checkout -- qa/capture_log.json && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/kept/05.png $S/trans/05.png $S/diff.png 0.1 180 1536 && node scripts/gameplay-test.mjs --q=\ …[+209 chars]`
+
+### 🧑 User — 2026-11-18T20:57:58.701Z
+
+> ↩︎ result: Command running in background with ID: bkyf01new. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bkyf01new.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T20:58:01.667Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"==\\|Error\\|error\" /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/btooky517.output; do sleep 3; done; sleep 1; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/btooky517.output", "description": "Wait for probe results", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T20:58:40.139Z
+
+> ↩︎ result: == t81L s 179.372 stage 05 cam -0.02,-39.16,-114.48 far-open 0 extra null
+>    -0.861,0.609 tube05_far_wall<zone_tubes<washer_world<Scene d16.73 | Mesh<zone_tubes<washer_world<Scene d24.12 | Mesh<zone_tubes<washer_world<Scene d24.33
+>    -0.769,0.089 tube05_far_wall<zone_tubes<washer_world<Scene d16.76 | Mesh<zone_tubes<washer_world<Scene d18.98 | Mesh<zone_tubes<washer_world<Scene d19.14
+>    -0.537,-0.172 Mesh<zone_tubes<washer_world<Scene d14.55 | Mesh<zone_tubes<washer_world<Scene d14.85 | tube05_far_wall<zone_tubes<washer_world<Scene d16.35
+>    -0.479,0.362 lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.34 | lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.67 | tube05_far_wall<zone_tubes<washer_world<Scene d18.16
+>    -0.583,0.388 lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.32 | lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.65 | tube05_far_wall<zone_tubes<washer_world<Scene d17.89
+>    -0.907,-0.432 tube05_far_wall<zone_tubes<washer_world<Scene d11.99 | Mesh<zone_tubes<washer_world<Scene d12.21 | Mesh<zone_tubes<washer_world<Scene d12.92
+>    -0.769,-0.367 tube05_far_wall<zone_tubes<washer_wor …[+750 chars]
+
+### 🤖 Claude — 2026-11-18T20:59:19.798Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/t81L.png"}`
+
+### 🧑 User — 2026-11-18T20:59:19.998Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:59:23.760Z
+
+The probe frame matches the lead's description exactly. While the locked-view and gameplay proofs for step 1 run, I'll log step 1.
+
+### 🤖 Claude — 2026-11-18T20:59:25.214Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bkyf01new.output; uptime", "description": "Check proof job progress"}`
+
+### 🧑 User — 2026-11-18T20:59:25.597Z
+
+> ↩︎ result: 20:59:25 up 46 min,  0 user,  load average: 23.13, 19.76, 11.99
+
+### 🤖 Claude — 2026-11-18T20:59:29.079Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 100,200p src/world/match05far.ts", "description": "Read live far block implementation"}`
+
+### 🧑 User — 2026-11-18T20:59:29.374Z
+
+> ↩︎ result: foldNear: number; foldFar: number;
+>   /** `&m05trans=1` (round 15): the course position (06 start) where the block is removed in one step */
+>   popS?: number;
+>   /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */
+>   riverUp: (z: number) => number;
+>   /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */
+>   course?: Course;
+>   /** `&m05fcloud=1` (round 12): foam-cloud lumps along both far banks (src/vfx/foam.ts createFarCloud05) */
+>   clouds?: { mesh: THREE.InstancedMesh; lumps: FarLump05[] };
+> }
+> 
+> const ROW_KEYS: (keyof FarRiverRow)[] = ['xB', 'hw', 'cL', 'wL', 'cR', 'wR', 'core'];
+> 
+> /** returns sync(cam): call from every far part's onBeforeRender */
+> export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+>   const { ft } = a;
+>   const L = ft.L, c0 = ft.c0, T = ft.T, U = ft.U, Rt = ft.Rt, R = ft.R, sF = ft.sF;
+>   const D0lock = ft.D0;
+>   // the river layout depends on Z only: tabulate it once (dense near the seam) and interpolate
+>   const NT = 2400;
+>   const tz = new Float64Array(NT + 1), tr = new Float64Array((NT + 1) * ROW_KEYS.length);
+>   fo …[+4585 chars]
+
+### 🤖 Claude — 2026-11-18T20:59:30.717Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 340,470p src/world/match05far.ts", "description": "Read far block per-frame sync"}`
+
+### 🧑 User — 2026-11-18T20:59:30.809Z
+
+> ↩︎ result: sc = l.r * kOf(l.Z) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2) * THREE.MathUtils.smoothstep(l.Z, zs, zs + 0.6) * (1 - open);
+>       }
+>       c.mesh.setMatrixAt(i, cm.makeScale(sc, sc, sc).setPosition(cp));
+>     });
+>     c.mesh.instanceMatrix.needsUpdate = true;
+>   };
+>   return (cam: THREE.Camera) => {
+>     eye.setFromMatrixPosition(cam.matrixWorld);
+>     if (eye.distanceToSquared(lastEye) < 1e-10) return;
+>     lastEye.copy(eye);
+>     const atLock = eye.distanceTo(eyeLock) < 2e-3;
+>     D0 = Math.max(0.5, c0.clone().sub(eye).dot(T));
+>     q.copy(eye).sub(c0).addScaledVector(T, c0.clone().sub(eye).dot(T));
+>     zs = Math.min(a.zCap, Math.max(0, D0lock - D0));
+>     if (zs < 1e-6) zs = 0;
+>     // m05end (r11): the TRUE eye → seam distance (D0 is clamped at 0.5 u once the eye passes sF, so D0 + zs never fell
+>     // under 0.5 + zCap ≈ 7 u and the block could not fold inside a window nearer than that)
+>     open = 1 - THREE.MathUtils.smoothstep(M05END ? c0.clone().sub(eye).dot(T) + zs : D0 + zs, a.foldNear, a.foldFar);
+>     // m05trans (r15): whole until Benny enters 06, then gone in one step (no half-folded frames)
+>     if (M05TRANS && a.popS !== undefined) open = Math.max(m05rideS.value >= a.popS ? 1 : 0, …[+2001 chars]
+
