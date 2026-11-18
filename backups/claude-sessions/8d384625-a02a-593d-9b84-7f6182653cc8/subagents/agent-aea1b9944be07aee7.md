@@ -1275,3 +1275,102 @@ Now I'll write the mouth tile tool.
 > 712 along 186.61 lat -2.48
 > cam along -6.2700817861275375 height 3.393636606416124
 
+### 🤖 Claude — 2026-11-18T03:05:03.714Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\nim.crop((280,680,680,1000)).resize((800,640)).save('$SP/appr_arrows.png')\nim2=Image.open('qa/match/04/r9/step2_m04room/f03_forward3u.png').convert('RGB')\nim2.crop((280,680,680,1000)).resize((800,640)).save('$SP/f03_arrows.png')\n\"", "description": "Crop painted and game arrows region"}`
+
+### 🧑 User — 2026-11-18T03:05:04.152Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T03:05:06.393Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/appr_arrows.png"}`
+
+### 🧑 User — 2026-11-18T03:05:06.417Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:05:06.861Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/f03_arrows.png"}`
+
+### 🧑 User — 2026-11-18T03:05:06.889Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:05:48.270Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uArr\\|uZ0\\|uTime: time\" src/world/match04m4.ts | head -20", "description": "Locate river uniforms"}`
+
+### 🧑 User — 2026-11-18T03:05:48.305Z
+
+> ↩︎ result: 278:uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
+> 279:uniform float uZ0;
+> 307:  float ai = floor((along - uArr.y) / uArr.x + 0.5);
+> 308:  float ac = uArr.y + ai * uArr.x;
+> 310:    float d = chev(vec2(vS, along - ac - 1.5), uArr.z, uArr.w);
+> 317:    col = mix(col, vec3(0.96, 1.0, 1.0), (1.0 - smoothstep(-px, px, abs(d + uArr.w * 0.12) - uArr.w * 0.10)) * fade);
+> 580:        uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
+> 581:        uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 } } });
+
+### 🤖 Claude — 2026-11-18T03:05:49.738Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 270, "limit": 60}`
+
+### 🧑 User — 2026-11-18T03:05:49.759Z
+
+> ↩︎ result: 270	const RIVER_FRAG = /* glsl */ `
+> 271	uniform sampler2D uPlate;
+> 272	uniform vec4 uPjPost;
+> 273	uniform vec2 uPjRes;
+> 274	uniform float uAway;
+> 275	uniform sampler2D uRiv;
+> 276	uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> 277	uniform float uTime;
+> 278	uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
+> 279	uniform float uZ0;
+> 280	varying vec4 vProj;
+> 281	varying vec3 vL;
+> 282	varying float vS;
+> 283	${PROJ05_INVERSE}
+> 284	float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 285	float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+> 286	  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
+> 287	// chevron pointing down the slide: distance to the two arms
+> 288	float chev(vec2 p, float hw, float th) {
+> 289	  p.x = abs(p.x);
+> 290	  vec2 a = vec2(0.0, 0.0), b = vec2(hw, -hw * 2.3);   // long arms along the flow (painted arrows seen low)
+> 291	  vec2 pa = p - a, ba = b - a;
+> 292	  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+> 293	  return length(pa - ba * h) - th;
+> 294	}
+> 295	void main() {
+> 296	  flo …[+2335 chars]
+
+### 🤖 Claude — 2026-11-18T03:06:27.670Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(old, new, cnt=1):\n    global s\n    assert s.count(old)==cnt, (old, s.count(old))\n    s=s.replace(old,new)\nrep(\"\"\"  room: on('m04room'),\n\"\"\", \"\"\"  room: on('m04room'),\n  foam3: on('m04foam3'),\n  pink: on('m04pink'),\n  arr5: on('m04arr5'),\n\"\"\")\nrep(\"\"\" *  m04mouth — (round 9, needs m04ring)\"\"\", \"\"\" *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller\n *             puffs, wider gaps where …[+8701 chars]`
+
+### 🧑 User — 2026-11-18T03:06:30.251Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T03:06:42.229Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"\"\"    float v = (along - ap) + abs(vS) * uA5b.y;           // 0 on the front V line, + behind it (toward Benny) ... wait: front = farther down\n    // along grows down the slide (away from the camera): the apex points away; the bar lies between v = -T and v = 0\"\"\"\nnew=\"\"\"    // along grows down the slide (away from the camera), the apex points away; v = 0 on the front V line, < 0 toward\n    // the camera; the bar lies between v = -T and v = 0, its ends cut along the flow at  …[+561 chars]`
+
+### 🧑 User — 2026-11-18T03:06:46.263Z
+
+> ↩︎ result: Command was moved to the background (ID: bmf3bqncv) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/bmf3bqncv.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T03:06:50.751Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && npx tsc --noEmit -p . && git checkout qa/capture_log.json 2>/dev/null; git add src/world/match04m4.ts && git commit -q -m \"Screen 04 r9 WIP: &m04foam3 / &m04pink / &m04arr5 candidates (switch-guarded, untested, not kept) — stopped by the lead's new order (blueprint + layout foundation)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && for i in 1 2 3 4; do git push -q origin claude/rainbow-s04-match-c9 && break; sleep 5; done; git ls-remote origin refs/heads/claude/rainbow-s04-match-c9; git rev-parse HEAD", "description": "Commit and push WIP  …[+31 chars]`
+
+### 🧑 User — 2026-11-18T03:06:58.716Z
+
+> ↩︎ result: b4bd3da47fcb41519cdc24c3eabea47cfbf02fb8	refs/heads/claude/rainbow-s04-match-c9
+> b4bd3da47fcb41519cdc24c3eabea47cfbf02fb8
+

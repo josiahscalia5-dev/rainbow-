@@ -2218,3 +2218,264 @@ Now pass `course` from environment.ts (switch-guarded value only).
 > 392-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, warp }), mat));
 > 393-      // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
 
+### 🤖 Claude — 2026-11-18T03:04:40.324Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 140,165p src/vfx/waterRibbon.ts && sed -n 1,40p src/vfx/proj05Tunnel.ts | grep -n \"import\\|on05\\|flag05\"", "description": "Read q05 helper and proj05Tunnel imports"}`
+
+### 🧑 User — 2026-11-18T03:04:40.365Z
+
+> ↩︎ result: * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+>  * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+>  * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+>  * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+>  * Guarded read: false in vite-node / workers (no `location`).
+>  */
+> /**
+>  * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+>  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+>  */
+> const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> const q05 = (key: string): boolean => {
+>   try {
+>     if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+>   } catch {
+>     /* no location (vite-node / workers) */
+>   }
+>   return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> };
+> /** the same switch reader for other modules (Game.ts: `?g …[+1043 chars]
+
+### 🤖 Claude — 2026-11-18T03:04:41.450Z
+
+Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall atlas would be magnified while swimming.
+
+### 🤖 Claude — 2026-11-18T03:04:47.054Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "/** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */", "new_string": "/**\n * `&m05wall=1` (Screen 05 round 9, needs m05far; src/vfx/proj05Tunnel.ts withProj05Wall): CRISP PURPLE METAL WALLS while\n * swimming. The walls wear the approved picture camera-projected per bay (wall05e.png atlas); swimming brings them 2–6×\n * closer than the approved view had them, so the baked pixels were magnified into a blurred purple smear, and on the …[+1001 chars]`
+
+### 🧑 User — 2026-11-18T03:04:47.107Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:04:48.654Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "  const eyeLock = c0.clone().addScaledVector(T, -D0lock).add(ft.q);", "new_string": "  const eyeLock = c0.clone().addScaledVector(T, -D0lock).add(ft.q);\n  m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye"}`
+
+### 🧑 User — 2026-11-18T03:04:48.679Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:04:50.258Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05seam } from '../vfx/waterRibbon';", "new_string": "import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-18T03:04:50.289Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:05:12.177Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "offset": 14, "limit": 8}`
+
+### 🧑 User — 2026-11-18T03:05:12.197Z
+
+> ↩︎ result: 14	 * materials are wrapped only when a switch is on, every default shader program is unchanged.
+> 15	 */
+> 16	import * as THREE from 'three';
+> 17	import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+> 18	// the tunnel bake follows its own switches OR the master `?match05=1` (on05)
+> 19	const flag05 = on05;
+> 20	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 21
+
+### 🤖 Claude — 2026-11-18T03:05:14.197Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "old_string": "import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';", "new_string": "import { M05WALL, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';"}`
+
+### 🧑 User — 2026-11-18T03:05:14.231Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/proj05Tunnel.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:05:15.912Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "old_string": "  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) } };", "new_string": "  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL ? { uM05Eye: m05eye } : {}) };"}`
+
+### 🧑 User — 2026-11-18T03:05:15.955Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/proj05Tunnel.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:05:19.412Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "old_string": "  vec3 pc = texture2D(uPtWall, puv).rgb;\n  gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);\n}`);\n  };\n  const prevKey = mat.customProgramCacheKey.bind(mat);\n  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key;", "new_string": "  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WALL ? M05WALL_GLSL : ''}\n  gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);\n}`);\n    if (M05WALL) shader.fragmentShader = shader.fragmentShader.replac …[+221 chars]`
+
+### 🧑 User — 2026-11-18T03:05:19.450Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/proj05Tunnel.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:05:36.116Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "old_string": "/** one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1 */", "new_string": "/**\n * `&m05wall=1` (Screen 05 round 9, waterRibbon.ts M05WALL): where the projected atlas would be magnified while swimming\n * (texels per screen pixel < 0.9) the bay becomes crisp perforated metal in the approved palette (display values,\n * measured on the approved near walls: plum slot (50,1,37), violet metal (171,51,185), lit metal (232,67,186), pink lip\n * (244,101,240), h …[+2853 chars]`
+
+### 🧑 User — 2026-11-18T03:05:36.158Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/proj05Tunnel.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:05:39.331Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && echo TSC_OK && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/wall1 \"$K&m05wall=1\" t66_through_screen,f20_forward20u,s_left_hard,t33_through_screen 5291 2>&1 | grep -v \"^\\s*$\" | tail -6", "description": "Type-check and render m05wall test shots", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T03:06:23.536Z
+
+> ↩︎ result: TSC_OK
+> f20_forward20u s 153.235 lat 0 coins 1450 benny -0.05 -0.27 big coins: #23@339,713 d103
+> s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> t33_through_screen s 151.691 lat -0.006 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat -0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T03:06:25.789Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/wall1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T03:06:25.835Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:06:37.601Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/wt/s05/assets/textures/env05/wall05e.png').convert('RGB')\nim.crop((300,592,700,848)).resize((800,512),Image.NEAREST).save('n1crop.png')\n\"", "description": "Crop atlas N1 row at 2x"}`
+
+### 🧑 User — 2026-11-18T03:06:37.823Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T03:06:39.717Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/n1crop.png"}`
+
+### 🧑 User — 2026-11-18T03:06:39.743Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:06:57.899Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "old_string": "      // slot grid (units): 46.5 slots round the tube, rows every 1.9 u along it; capsule along the circumference\n      vec2 gw = vec2(vPerfUv.x * 46.5, vPerfUv.y / 1.9);\n      vec2 qw = (fract(gw) - 0.5) * vec2(1.03, 1.9);\n      float dS = length(vec2(max(abs(qw.x) - 0.2, 0.0), qw.y)) - 0.105;", "new_string": "      // slot grid (units): 46.5 slots round the tube, rows every 1.9 u along it; rounded-square slots ≈ 0.6 × 0.6 u\n      // (atlas: 26 × 13 texels = 0.61 u round × 0.64 u along — they r …[+308 chars]`
+
+### 🧑 User — 2026-11-18T03:06:58.228Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/proj05Tunnel.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:07:01.040Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && echo TSC_OK && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/wall2 \"$K&m05wall=1\" t66_through_screen,f20_forward20u,s_left_hard,t33_through_screen 5291 2>&1 | grep -v \"^\\s*$\" | tail -4", "description": "Render m05wall v2 with square slots", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T03:07:04.572Z
+
+> ↩︎ result: Command was moved to the background (ID: bfgrgjefu) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/bfgrgjefu.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T03:07:09.361Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/tasks/bfgrgjefu.output; cd /home/user/wt/s05 && git status --short", "description": "Check background render output and git status"}`
+
+### 🧑 User — 2026-11-18T03:07:09.429Z
+
+> ↩︎ result: TSC_OK
+>  M src/vfx/proj05Tunnel.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/match05far.ts
+> ?? assets/textures/match05/m05near/
+> ?? tools/lead_r6/bisect_preview08.mjs
+> ?? tools/match05/near_mask.py
+
+### 🤖 Claude — 2026-11-18T03:07:16.688Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r9/PROGRESS.md <<'EOF'\n\n## WIP (not kept, not reported as steps) — saved on the lead's order to stop polish work\n* `&m05near=1` — tried, not kept: E's near rows (painted pink banks / foam between the bottom frame pieces) kept in use\n  while swimming, frame / wall-corner pieces masked (`tools/match05/near_mask.py`). Result: only a small trapezoid patch\n  behind Benny with a hard outline (the approved picture holds the near water only in a narrow strip between the frame\n  pieces); the rest of the near water stays the tile. Code left s …[+1012 chars]`
+
+### 🧑 User — 2026-11-18T03:07:19.621Z
+
+> ↩︎ result: local 1eb23e665289f6603b0c253e7a116c318efad3e2
+> 1eb23e665289f6603b0c253e7a116c318efad3e2	refs/heads/claude/rainbow-s05-match-c9
+
+### 🤖 Claude — 2026-11-18T03:07:27.845Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p tools/match05/regions.py; ls qa/match/05/ | head -40; ls tools/proj05 2>/dev/null | head -30", "description": "Inspect regions tool and masks"}`
+
+### 🧑 User — 2026-11-18T03:07:27.898Z
+
+> ↩︎ result: """Screen 05 full reference match — comparison masks of the APPROVED image (864x1536), one region per pixel.
+> Regions (Part 16 of the user's order): 1 gold rings + front gold frame, 2 purple walls + perforations, 3 side fittings,
+> 4 water, 5 foam banks, 6 Benny + hat, 7 wake / splash, 8 coins, 9 bubbles, 10 HUD + text, 11 distant tunnel + end glow.
+> (12 = the whole frame.) Built from the approved picture only (colour rules + the registered water footprint + hand-checked
+> boxes / circles); nothing is excluded: every pixel belongs to exactly one region.
+> usage: python3 -I tools/match05/regions.py  ->  qa/pilot05/full_reference_match/masks/{region_index.png, region_preview.png, regions.json, <name>.png}"""
+> import json, os
+> import numpy as np, cv2
+> from PIL import Image
+> from scipy.ndimage import binary_dilation, binary_closing, binary_opening, binary_fill_holes, label, gaussian_filter
+> 
+> OUT = "qa/pilot05/full_reference_match/masks"
+> T = "qa/pilot05/proj/target"
+> os.makedirs(OUT, exist_ok=True)
+> ap = np.asarray(Image.open("references/05_flow_into_the_current.png").convert("RGB")).astype(float) / 255
+> H, W = ap.shape[:2]
+> yy, xx = np.mgrid[0:H, 0:W]
+> R_, G_, B_ = ap[..., 0], ap[..., 1], ap[..., 2]
+> hsv …[+2305 chars]
+
+### 🤖 Claude — 2026-11-18T03:07:29.392Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls qa/pilot05/full_reference_match/masks/ 2>/dev/null | head; ls qa/pilot05/proj/target/ 2>/dev/null | head", "description": "Check existing region masks"}`
+
+### 🧑 User — 2026-11-18T03:07:29.432Z
+
+> ↩︎ result: benny_and_hat.png
+> bubbles.png
+> bubbles_approved.json
+> coins.png
+> distant_tunnel_and_glow.png
+> foam_banks.png
+> gold_rings_and_front_frame.png
+> hud_and_text.png
+> purple_walls.png
+> region_index.png
+> art_registered.png
+> coin_mask.png
+> correction.npz
+> fill_mask.png
+> report.json
+> target_05.png
+> water_mask.png
+
+### 🤖 Claude — 2026-11-18T03:07:40.649Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport numpy as np, cv2\nfrom PIL import Image\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'))\nhsv=cv2.cvtColor(ap,cv2.COLOR_RGB2HSV).astype(float); H=hsv[...,0]*2; S=hsv[...,1]/255; V=hsv[...,2]/255\nM='qa/pilot05/full_reference_match/masks/'\ndef m(n): return np.asarray(Image.open(M+n).convert('L'))>127\nwater=m('water.png') if __import__('os').path.exists(M+'water.png') else None\nimport os; print(os.listdir(M))\n\"\n", "description": "List mask files"}`
+
+### 🧑 User — 2026-11-18T03:07:41.098Z
+
+> ↩︎ result: ['benny_and_hat.png', 'region_preview.png', 'purple_walls.png', 'gold_rings_and_front_frame.png', 'hud_and_text.png', 'region_index.png', 'water.png', 'distant_tunnel_and_glow.png', 'bubbles_approved.json', 'side_fittings.png', 'wake_splash.png', 'bubbles.png', 'regions.json', 'coins.png', 'foam_banks.png']
+
+### 🤖 Claude — 2026-11-18T03:07:45.437Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport numpy as np, cv2\nfrom PIL import Image\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'))\nhsv=cv2.cvtColor(ap,cv2.COLOR_RGB2HSV).astype(float); H=hsv[...,0]*2; S=hsv[...,1]/255; V=hsv[...,2]/255\nM='qa/pilot05/full_reference_match/masks/'\ndef m(n): return np.asarray(Image.open(M+n).convert('L'))>127\nfor name in ['water.png','purple_walls.png','foam_banks.png']:\n  k=m(name); mag=k&((H>270)|(H<15))&(S>0.35)\n  print(name, 'px',int(k.sum()),'magenta share',round(float(mag.sum()/k.sum()),2))\n  for …[+237 chars]`
+
+### 🧑 User — 2026-11-18T03:07:46.229Z
+
+> ↩︎ result: water.png px 480736 magenta share 0.24
+>   H 10 280.0 S 0.52 V 0.84
+>   H 25 294.0 S 0.64 V 0.91
+>   H 50 300.0 S 0.73 V 0.96
+>   H 75 308.0 S 0.8 V 0.99
+>   H 90 314.0 S 0.85 V 1.0
+> purple_walls.png px 312706 magenta share 0.92
+>   H 10 276.0 S 0.58 V 0.49
+>   H 25 288.0 S 0.67 V 0.64
+>   H 50 304.0 S 0.76 V 0.77
+>   H 75 318.0 S 0.82 V 0.91
+>   H 90 334.0 S 0.93 V 0.98
+> foam_banks.png px 28862 magenta share 0.01
+>   H 10 272.0 S 0.36 V 0.82
+>   H 25 276.0 S 0.36 V 0.91
+>   H 50 282.0 S 0.38 V 0.96
+>   H 75 292.0 S 0.44 V 1.0
+>   H 90 300.0 S 0.52 V 1.0
+

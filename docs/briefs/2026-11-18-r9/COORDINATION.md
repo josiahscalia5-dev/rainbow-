@@ -40,3 +40,12 @@ its worktree as WIP and relaunch it from its PROGRESS.md / STATUS.md.
 * Playwright MCP: live WebGL2 test OK (SwiftShader). Blender 5.3.0 headless OK; Android SDK 34; Node 22; Python QA libs;
   tsc + continuity OK (bootstrap). Image-Blaster rebuilt at `/home/user/neilsonnn/image-blaster` (4acb43b, no paid call).
   context7 MCP failed to connect (optional); Parallax Three.js not attached to this account (optional).
+
+## Update ~03:10 UTC — user order "reconstruct the actual approved designs" (`USER_ORDER_STRUCTURAL.md`)
+* Both builders stopped polishing, saved WIP (04 `b4bd3da4`: m04foam3/m04pink/m04arr5 candidates NOT kept; 05 `1eb23e66`:
+  m05near tried/not kept, m05wall unfinished) and now do BLUEPRINT → FOUNDATION: 04 `&m04lay=1` (forced-perspective washer
+  front, rings = short painted funnel), 05 `&m05geo=1` (river/bank/wall geometry fitted to the painted S).
+* Kept before the order (shown to the user): 04 r9 step 1 `m04mouth` (e85a66c2), step 2 `m04room` (d5d4eee3); 05 r9 step 1
+  `m05blend` (965b8b86).
+* Independent reviewer (reference-match-director) started: blueprints + structural audit for 06/07/08, then reviews every
+  04/05 foundation step before it is shown. Worktrees /home/user/wt/s06, s07, s08 created (read-only for the reviewer).
