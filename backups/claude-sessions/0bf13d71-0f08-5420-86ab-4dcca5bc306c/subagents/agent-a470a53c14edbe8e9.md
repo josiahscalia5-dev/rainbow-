@@ -601,3 +601,15 @@ Let me write a riding probe tool (raycast at a riding audit position, optional h
 > /** `?projedge05=1` (on with `?match05=1`, coordinator 2026-11-17): edge-padded copy of proj05_A.png (tools/proj05/pad_alpha.py:
 >  *  transparent  …[+2031 chars]
 
+### 🤖 Claude — 2026-11-18T10:38:06.724Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r10_probe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"  if (hide.length) console.log('hidden objects:', out.hidden);\n  if (shot) { await page.waitForTimeout(150); await page.screenshot({ path: shot }); console.log('shot →', shot); }\"\"\",\"\"\"  if (hide.length) console.log('hidden objects:', out.hidden);\n  if (shot) { await page.waitForTimeout(150); await page.screenshot({ path: shot }); console.log('shot →', shot); }\n  // --sets=a+b,c : one extra screenshot per hide set (objects whose name contains any of the '+'-join …[+1134 chars]`
+
+### 🧑 User — 2026-11-18T10:38:06.782Z
+
+> ↩︎ result: 69:    if (list) scene.traverse((o) => { if (o.isMesh || o.isPoints) names.push(`${shown(o) ? 'V' : '-'} ${chain(o)} ${o.material?.type ?? ''}`); });
+
+### 🤖 Claude — 2026-11-18T10:38:11.866Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10; time (timeout 900 node tools/match05/r10_probe.mjs t66_through_screen \"$Q\" --list --shot=$S/t66.png --sets=proj05_apron,foam_berm,proj05_apron+foam_berm,water_ribbon,tube05_far 2>&1 | grep -v \"laundry\\|Benny >\" | grep -i \"05\\|far\\|tube\\|set\\|shot\" | head -80)", "description": "Render t66 with objects hidden one set at a time", "timeout": 920000}`
+
