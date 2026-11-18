@@ -34,3 +34,32 @@ Kept set at start (round 13 end, = step-3 set):
 * BEFORE (kept step-3 set): `/home/user/wt/s05/qa/match/05/r14/step1_m05vee/before/` (a00_approved_view, f03_forward3u,
   f06_forward6u, f10_forward10u, f20_forward20u, s_left_hard, s_right_hard, t33_through_screen, t66_through_screen, t98_end)
 * NEW (+`&m05vee=1`): `/home/user/wt/s05/qa/match/05/r14/step1_m05vee/new/` (same names)
+
+## Step 2 — `&m05vee2=1` (task 2: the near water behind / round Benny while swimming = the painted V) — GOOD IMPROVEMENT, kept
+* Kept query: `<step-3 set>&m05vee2=1` =
+  `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1`
+* Method (different from the rejected m05vee): only the lateral coordinate at which the crisp near tile T2 is read behind
+  Benny changes — no new picture, no colour change. (1) T2's own left / right pink band columns are taken from the tile row
+  actually read (measured on `assets/textures/water05/proj05_T2.png`: the bands drift with the row; quadratic fit, max
+  error 0.03 u). (2) The V is centred on Benny's lateral position, so it stays under him when he steers. (3) Beyond each
+  band T2's cyan core continues at the tile's own scale, folded inside the core — never one stretched column (the slab of
+  m05vee). (4) Over the hand-over 0.3 … 1.2 u behind Benny the straight and bent readings are cross-faded (variance
+  preserving) instead of sweeping the coordinate (a first try swept it: sideways streaks below Benny at hard left / right
+  — fixed before judging; try-1 frames not kept). (5) The flow direction goes through the same mapping, so the streaks keep
+  sliding along themselves.
+* WHAT LOOKS CLOSER: in every forward view (f03, f06, f10, f20, t33, t66) the bottom third behind Benny, which was a plain
+  cyan sheet, now carries the painted V: two hot-pink satin bands run from Benny's sides out to the lower frame corners,
+  cyan with long white glints between them, as in the approved picture. At f10 (Benny right of centre) the V follows him.
+  Steering hard right the big magenta smear with a pale lilac patch below Benny becomes cyan water with one pink band
+  running down along the flow; hard left the pale grey smear next to the foam becomes cyan water. No slab, no straight
+  edges, no sideways streaks. t98 (end): only the strip below Benny changes.
+* Locked approved view: 0 px (`node scripts/capture.mjs 05 --q=<step-3 set>` vs `+m05vee2=1`); the default build does not
+  compile this code (inside `#ifdef PROJ05`). Coins / score unchanged (same coin counts in every shot log).
+* Still wrong: the bands are a little wider and softer at their outer ends than painted, and the cyan core has fewer of
+  the painted crisp four-point white glints (long streaks instead).
+* APPROVED: `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/1_APPROVED.png`
+* BEFORE (= the kept step-3 set, same tool / port): `/home/user/wt/s05/qa/match/05/r14/step1_m05vee/before/`
+  (a00_approved_view, f03_forward3u, f06_forward6u, f10_forward10u, f20_forward20u, s_left_hard, s_right_hard,
+  t33_through_screen, t66_through_screen, t98_end)
+* NEW (+`&m05vee2=1`): `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/new/` (same names)
+* Files: `src/vfx/waterRibbon.ts` (M05VEE2, pjT2U, the T2 lookups in pjTarget / pjFlowDir).
