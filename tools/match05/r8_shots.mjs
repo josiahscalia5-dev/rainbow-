@@ -42,8 +42,13 @@ const ALL = [
   ['s_left_steer', 6, -1], ['s_right_steer', 6, 1], ['s_left_hard', 12, -1], ['s_right_hard', 12, 1],
   ['t33_through_screen', 't0.33', null], ['t66_through_screen', 't0.66', null], ['t95_through_screen', 't0.95', null],
 ];
+// round 11: extra probe positions, only when named (not part of 'all' = the 12 audit shots)
+const EXTRA = [
+  ['k81_kink', 't0.81', null], ['k81_kink_left', 't0.81', -1], ['k81_kink_right', 't0.81', 1],
+  ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],
+];
 const want = ONLY === 'all' ? null : new Set(ONLY.split(','));
-const SHOTS = want ? ALL.filter(([n]) => want.has(n)) : ALL;
+const SHOTS = want ? [...ALL, ...EXTRA].filter(([n]) => want.has(n)) : ALL;
 try {
   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('pageerror', e.message));
