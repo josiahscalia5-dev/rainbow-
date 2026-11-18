@@ -1,5 +1,162 @@
 # Paste this into Claude Code on the next Claude account
 
+## ▶ NEWEST (2026-11-18 ~19:15 UTC, account 16 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-e42bb3c0-jpif8d`** (account-16 lead; NOT the default branch). Claude checks
+the keys first with free reads and opens the secure forms only if a check fails (World Labs `api.worldlabs.ai` header
+`WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`). Optional claude.ai connectors: World Labs Atlas
+(`https://api.atlas.worldlabs.ai/mcp`), Hugging Face (public models work without).
+
+> RAINBOW — continue my EXISTING game exactly where account 16 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 16"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (my APPROVED visual goal — binding) and
+>    `docs/briefs/2026-11-18-r16/COORDINATION.md` + `RESUME_R16.md`.
+> 2. The clone is shallow: fetch each branch tip ONE AT A TIME with `git fetch --depth=1 origin +<b>:refs/remotes/origin/<b>`
+>    (≈1 GB and several minutes per tip). Continue every `-c16` branch on its own NEW `-c17` branch; unfinished edits are in
+>    `backups/wip/<branch>/` on the account-16 lead. Relaunch the six workers with `docs/briefs/2026-11-18-r15/S0N_LAUNCH.md`
+>    (replace -c15 → -c17, r15 → r17, resume from the r16 PROGRESS.md). Recipe: the scratchpad script copy in
+>    `docs/briefs/2026-11-18-r16/setup_worker.sh` (change c15 → c16 and c16 → c17).
+> 3. Show every result as separate full-size APPROVED / BEFORE / NEW pictures (start, middle, end, hard left / right) labelled
+>    GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~18:25 UTC, account 15 → next account) — superseded by the prompt above
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-47b10cec-03c7co`** (account-15 lead; NOT the default branch). Claude checks
+the keys first with free reads and opens the secure forms only if a check fails (World Labs `api.worldlabs.ai` header
+`WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`). Optional claude.ai connectors: World Labs Atlas
+(`https://api.atlas.worldlabs.ai/mcp`, only for the pending priced 04 test), Hugging Face (public models work without).
+
+> RAINBOW — continue my EXISTING game exactly where account 15 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 15"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (my APPROVED visual goal — binding) and
+>    `docs/briefs/2026-11-18-r15/COORDINATION.md`.
+> 2. The clone is shallow: fetch each branch tip ONE AT A TIME with `git fetch --depth=1 origin +<b>:refs/remotes/origin/<b>`.
+>    Continue every `-c15` branch on its own NEW `-c16` branch; unfinished edits are in `backups/wip/<branch>/`. Relaunch the
+>    workers with `docs/briefs/2026-11-18-r15/S0N_LAUNCH.md` (replace -c15 → -c16, r15 → r16, resume from the r15 PROGRESS.md).
+> 3. Keep the workers on 04 (lead-directed), 05 and 08 running; 07 then 06 when a slot frees.
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures (start, middle, end, hard left / right) labelled
+>    GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~16:40 UTC, account 14 → next account) — superseded by the prompt above
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-6c7564b1-fmlt1w`** (account-14 lead; NOT the default branch). Claude checks
+the keys first with free reads and opens the secure forms only if a check fails (World Labs `api.worldlabs.ai` header
+`WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`). Hugging Face: optional claude.ai connector (public models work without).
+
+> RAINBOW — continue my EXISTING game exactly where account 14 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 14"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (my APPROVED visual goal — binding) and
+>    `docs/briefs/2026-11-18-r14/COORDINATION.md`.
+> 2. The clone is shallow: fetch each branch tip ONE AT A TIME with `git fetch --depth=1 origin +<b>:refs/remotes/origin/<b>`.
+>    Continue every `-c14` branch (or `-c13` where no `-c14` exists) on its own NEW `-c15` branch; unfinished edits are in
+>    `backups/wip/<branch>/`. Relaunch specialists with `docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md`.
+> 3. Keep TWO specialists working (05 + 08 were running; the lead rebuilt 04), rotate 07 → 06.
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures (start, middle, end, hard left / right) labelled
+>    GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~15:00 UTC, account 13 → next account) — superseded by the prompt above
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`claude/rainbow-restore-autosave-1mgga0`** (account-13 lead; NOT the default
+branch). A new account has its own environment and usually NO keys: Claude checks first with free reads and opens the secure
+forms only if a check fails (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`).
+Hugging Face: optional claude.ai connector (not needed for public models).
+
+> RAINBOW — continue my EXISTING game exactly where account 13 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 13"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (my APPROVED visual goal — binding) and
+>    `docs/briefs/2026-11-18-r13/COORDINATION.md`.
+> 2. The clone is shallow: fetch each branch tip with `git fetch --depth=1 origin <b>:refs/remotes/origin/<b>`. Continue every
+>    `-c13` branch (or `-c12`/`-c11` where no `-c13` exists) on its own NEW `-c14` branch; unfinished edits are in
+>    `backups/wip/<branch>/`. Relaunch specialists with `docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md`.
+> 3. Keep TWO specialists working (05 + 08 were running; the lead rebuilt 04), rotate 07 → 06.
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures (start, middle, end, hard left / right) labelled
+>    GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~12:45 UTC, account 12 → next account) — superseded by the prompt above
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-e908f8da-cy4yc1`** (account-12 lead; NOT the default branch). A new
+account may have no keys: Claude checks first with free reads and opens the secure forms only if a check fails
+(World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`).
+
+> RAINBOW — continue my EXISTING game exactly where account 12 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 12"), then `docs/briefs/2026-11-18-r12/COORDINATION.md` and the rules it names.
+> 2. Fetch the newest tips of every `-c12` branch (or `-c11` where no `-c12` exists); continue each on its own NEW `-c13`
+>    branch from that tip. Unfinished specialist edits are in `backups/wip/<branch>/` (restore steps in `INFO.json`).
+> 3. Keep TWO specialists working (Screen 05 + Screen 08 were running; the lead ran the 04 test), rotate 07 → 06.
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures labelled GOOD IMPROVEMENT, NOT AN
+>    IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~11:38 UTC, account 11 → next account) — superseded by the prompt above
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-3b139b48-0qqkkz`** (account-11 lead; NOT the default branch — the
+default branch is the protected 11-15 original and does not restore newer work). A new account has no keys: Claude will
+open two secure forms (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`).
+
+> RAINBOW — continue my EXISTING game exactly where account 11 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first: restore + verify it, then keep it running). Read the TOP
+>    section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ACCOUNT 11"), then `docs/briefs/2026-11-18-r11/COORDINATION.md`,
+>    `docs/briefs/2026-11-18-r10/RULES_R10.md`, `REFERENCE_VIEWS_PLAN.md`.
+> 2. Fetch the newest tips of every `-c11` branch; continue each on its own NEW `-c12` branch from that tip. Unfinished
+>    specialist edits not yet committed are in `backups/wip/<branch>/` (restore steps in `INFO.json`).
+> 3. Keep TWO specialists working (Screen 05 + Screen 08 were running), rotate 04 → 07 → 06.
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures labelled GOOD IMPROVEMENT, NOT AN
+>    IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+> 5. Give me only a SHORT startup check (backup verified, keys working or which secure form I must fill in).
+
+---
+
+## ▶ (2026-11-18 ~11:30 UTC, account 10 → next account) — superseded by the prompt above
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-c526614d-tw0yro`** (account-10 lead; NOT the default branch — the
+default branch is the protected 11-15 original and does not restore newer work). Re-enter keys only via the secure form
+if the startup check reports HTTP 401/403 (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run`).
+
+> RAINBOW — continue my EXISTING game exactly where account 10 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first: restore + verify it, then keep it running). Read the TOP
+>    section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ACCOUNT 10"), then `docs/briefs/2026-11-18-r10/COORDINATION.md`,
+>    `RULES_R10.md`, `REFERENCE_VIEWS_PLAN.md`, `PENDING_ENVIRONMENT_REQUEST.md`.
+> 2. Fetch the newest tips of every `-c10` branch (and `-c9` where no `-c10` exists); continue each on its own NEW `-c11`
+>    branch from that tip. Unfinished specialist edits not yet committed are in `backups/wip/<branch>/` (restore steps in
+>    `INFO.json`).
+> 3. Keep TWO specialists working (Screen 05 + Screen 08 were running), rotate 04 → 07 → 06; Screen 04 controlled test
+>    with my PROVISIONAL reference views V04-1 / V04-2 (`qa/match/04/r10/refviews/`).
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures labelled GOOD IMPROVEMENT, NOT AN
+>    IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+> 5. Give me only a SHORT startup check (backup verified, keys working or which secure form I must fill in).
+
+---
+
+## ▶ NEWEST (2026-11-18 ~02:25 UTC, account 8 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`claude/rainbow-lead-c8`**.
+
+> RAINBOW — continue my EXISTING game exactly where account 8 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md`. Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ACCOUNT 8 (round 8) STATE") —
+>    it wins over everything older — then `docs/briefs/2026-11-18-r8/COMMON_RULES.md` and `COORDINATION.md`.
+> 2. Fetch the newest tips of `claude/rainbow-s04-match-c8`, `claude/rainbow-s05-match-c8`, `claude/rainbow-s07-match-c8`,
+>    `claude/rainbow-s08-scenery-c8`, `claude/rainbow-s06-match-c8`; continue each on its own NEW `-c9` branch from that tip.
+> 3. Restart TWO specialists at once, exactly as the handoff describes: Screen 04 (gold washer opening + bulbs, laundry-room
+>    entrance, …) and Screen 05 (patch outline, far slab edge, bank shelves, near walls) from their PROGRESS.md /
+>    STATUS.md; then rotate 07 → 08 → 06 as slots free.
+> 4. Show me every genuine visual improvement as soon as it exists — separate full-size APPROVED / BEFORE / NEW pictures
+>    and what looks better — not technical reports. No paid jobs without my approval. Keep the five-minute GitHub
+>    autosave running and save every successful step. Nothing is approved until I say so.
+> 5. Give me only a SHORT startup check (backup verified, keys working or which secure form I must fill in).
+
+---
+
+## Older prompt (2026-11-17, superseded)
 **NEWEST (2026-11-17 ~14:30 UTC): use the one-message prompt in `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` — it supersedes the prompt below.**
 
 (Updated 2026-11-17 ~11:50 UTC, session 03b94f36. Replaces the 2026-11-16 version, whose hook description — "merges every

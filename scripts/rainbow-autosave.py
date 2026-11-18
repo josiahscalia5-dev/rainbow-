@@ -238,6 +238,51 @@ def push_and_verify(branch: str) -> tuple[bool, str]:
     return True, ""
 
 
+def snapshot_worktrees() -> list[str]:
+    """User order 2026-11-18: also preserve UNFINISHED specialist work. For every other git worktree of this repo
+    (specialists work in /home/user/wt/<sNN> on their own branches) write, read-only (--no-optional-locks: never takes
+    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+    (`git diff HEAD --binary`) and small untracked files. Committed with this autosave to the SESSION branch only —
+    the specialist branches themselves are never touched."""
+    notes: list[str] = []
+    wl = git("worktree", "list", "--porcelain", check=False).stdout
+    root = REPO / "backups" / "wip"
+    for block in wl.strip().split("\n\n"):
+        kv = dict(line.split(" ", 1) if " " in line else (line, "") for line in block.splitlines())
+        wt = Path(kv.get("worktree", ""))
+        if not wt or wt.resolve() == REPO.resolve() or not wt.exists():
+            continue
+        br = kv.get("branch", "").replace("refs/heads/", "") or f"detached-{kv.get('HEAD', '')[:10]}"
+        dest = root / br.replace("/", "__")
+        g = lambda *a: subprocess.run(["git", "--no-optional-locks", "-C", str(wt), *a], capture_output=True,
+                                      text=False, timeout=120)
+        status = g("status", "--porcelain", "-z", "--untracked-files=all").stdout.decode(errors="replace")
+        entries = [e for e in status.split("\0") if e]
+        dirty = [e[3:] for e in entries if not e.startswith("??")]
+        untracked = [e[3:] for e in entries if e.startswith("??") and "node_modules" not in e]
+        dest.mkdir(parents=True, exist_ok=True)
+        for old in dest.glob("**/*"):
+            if old.is_file() and old.name != "INFO.json":
+                old.unlink()
+        copied, total = [], 0
+        if dirty:
+            (dest / "tracked.patch").write_bytes(g("diff", "HEAD", "--binary").stdout)
+        for rel in untracked:
+            src = wt / rel
+            if src.is_file() and src.stat().st_size <= 2_000_000 and total + src.stat().st_size <= 30_000_000:
+                out = dest / "untracked" / rel
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_bytes(src.read_bytes()); copied.append(rel); total += src.stat().st_size
+        info = {"worktree": str(wt), "branch": br, "head": kv.get("HEAD", ""), "time": now_utc().isoformat(),
+                "dirty_tracked": dirty, "untracked_copied": copied,
+                "untracked_skipped": [u for u in untracked if u not in copied],
+                "restore": f"git switch {br} (newest pushed tip) && git apply --binary backups/wip/{dest.name}/tracked.patch"
+                           f" && copy backups/wip/{dest.name}/untracked/* into the worktree"}
+        (dest / "INFO.json").write_text(json.dumps(info, indent=1) + "\n")
+        notes.append(f"{br}: {len(dirty)} modified, {len(copied)} new file(s) snapshotted")
+    return notes
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--reason", default="manual")
@@ -295,6 +340,12 @@ def main() -> int:
             row["transcript_note"] = ("repo privacy could not be verified" if private is None
                                       else "repo is NOT private") + " — transcripts not refreshed"
         refresh_manifest()
+        try:
+            wip = snapshot_worktrees()
+            if wip:
+                row["wip_snapshots"] = wip
+        except Exception as e:  # a snapshot problem must never block the backup itself
+            row["wip_error"] = str(e)[:300]
 
         # ---- 3. stage allow-listed paths ----------------------------------------------
         # tracked status/log files: start from HEAD; they are refreshed from the live log only when a

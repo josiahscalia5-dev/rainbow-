@@ -65,6 +65,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
   // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
   const glow05 = flag05('glow05');
+  const flowPlan = flag05('flowplan'); // user's Google Flow plan: videos 01–03 + 09–11, playable 04–08 (see startFlowEnding)
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
   // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
@@ -405,6 +406,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.doorC.rotation.y = 0;
     st.log.push({ t: st.clock, s: st.s, y: benny.root.position.y, stage: st.stage });
     if (st.log.length > 20000) st.log.shift();
+    // `?flowplan=1` + an ending video: the playable game ends with 08; the Flow video covers 09–11
+    if (flowPlan && cinematic.ending && st.mode === 'ride' && st.s >= course.stage('09').s0) { startFlowEnding(); return; }
     if (st.s >= course.stage('11').s0 - 0.01) startOutro();
   };
 
@@ -419,6 +422,25 @@ export async function startGame(canvas: HTMLCanvasElement) {
       st.paused = true;
       void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
     }
+  };
+  // `?flowplan=1` (the user's production plan, lead r3 2026-11-17): 01–03 and 09–11 are Google Flow videos, 04–08 is the
+  // playable 3D game. It only acts when a video file exists; without videos the real-time scenes play exactly as before.
+  // Coins in the stretches a video covers (03 / 09–10) are credited so a run still ends with 91 coins / 2,240.
+  const creditCoins = (pred: (s: number) => boolean) => {
+    let n = 0;
+    coins.defs.forEach((d, i) => { if (!coins.collected[i] && pred(d.s)) { coins.collected[i] = 1; n++; } });
+    st.coins += n * COIN_VALUE;
+    hud.setCoins(st.coins);
+    return n;
+  };
+  const startFlowEnding = () => {
+    creditCoins((s) => s >= course.stage('09').s0);
+    st.mode = 'outro';
+    st.t = 0;
+    setStage('11');
+    st.paused = true;
+    // reveal: the real-time 11 frame (girl holds the towel, Benny hidden, FINAL SPIN COMPLETE)
+    void playCinematic(cinematic.ending as string, { onEnding: () => { st.t = O.badge - 0.4; outroUpdate(0); st.paused = false; } });
   };
   const outroUpdate = (dt: number) => {
     const t = st.t;
@@ -489,6 +511,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   cinematic.ending = endingVideo;
   const playIntroVideo = () => {
     if (!introVideo) return;
+    if (flowPlan) {
+      // `?flowplan=1`: the Flow video covers 01–03; underneath, the ride is held on the APPROVED 04 view (the 04
+      // checkpoint, 7 u into 04 — the very start of 04 is the drain drop, whose view is still obstructed) and revealed by
+      // the cross-fade (coins before it — 03's — are credited: the video replaces that stretch)
+      startRide();
+      const s04 = course.stage('04').s0 + 7.0;
+      st.s = s04; st.lat = 0;
+      setStage('04');
+      creditCoins((s) => s < s04);
+      for (let i = 0; i < 40; i++) { rideUpdate(1 / 60); st.s = s04; st.lat = 0; }
+      rideCam.update(0, st.s, st.lat, camera, true);
+      st.paused = true;
+      void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+      return;
+    }
     st.t = T.cp01;
     introUpdate(0);
     st.paused = true;
