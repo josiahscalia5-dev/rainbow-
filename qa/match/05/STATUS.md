@@ -1,9 +1,13 @@
-# Screen 05 — STATUS (round 7)
+# Screen 05 — STATUS (round 8)
+
+* **Running-session status: RUNNING (round 8, account 8, branch claude/rainbow-s05-match-c8)** — started 2026-11-18 from `a34fb925` (= `-c7` tip). Task: user list 2026-11-18 (water design while swimming, soft bank edges, disconnected scenery edges, oversized near coin over Benny). BEFORE = `qa/match/05/r7/NEW/` (rendered with exactly the base set `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1`; no source change since).
+
+## Round 7 record (below, unchanged)
 
 * **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1` set)
 * **Assigned specialist:** Screen 05 workstream (washer-environment-modeler role), round 7 / account 7; no subagent used
 * **Working branch:** `claude/rainbow-s05-match-c7`, created by the lead from `claude/rainbow-s05-match-c5` @ `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b`; never merged with line A
-* **Running-session status:** milestone M3 step 2 finished; STOPPED, waiting for the lead
+* **Round-7 session status:** milestone M3 step 2 finished; STOPPED
 * **Latest verified commit:** the last commit on `claude/rainbow-s05-match-c7` (remote == HEAD verified at the final push)
 * **Completed this round:** `?m05far=1` (needs `match05=1`): the far forced-perspective tunnel follows the live camera instead of folding away, so Screen 05's own purple ring tunnel, gold rings, warm throat and winding S-river continue to ~90 % of the stage (fold into 06 only in the last ~3 u). Files: `src/world/match05far.ts` (new), `src/vfx/clip05.ts` (new), hooks in `src/world/environment.ts` and `src/vfx/foam.ts` (switch-only). Details: NOTES.md "Round 7".
 * **Current set for the user:** `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1`
