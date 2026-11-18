@@ -3701,3 +3701,32 @@ I also need to correct my own record: the progress table I wrote earlier guessed
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='docs/briefs/2026-11-18-r10/COORDINATION.md'; s=open(p).read()\nrep={'| Time (UTC) | Screen / step |':'| # (order; all ≈ 10:50–11:10 UTC) | Screen / step |','| ~11:05 | 05 step 1':'| 1 | 05 step 1','| ~11:10 | 08 step 1':'| 2 | 08 step 1','| ~11:20 | 05 step 2':'| 3 | 05 step 2','| ~11:35 | 05 step 3':'| 4 | 05 step 3','| ~11:55 | 04 lead tests':'| 5 | 04 lead tests','| ~12:00 | 05 step 4':'| 6 | 05 step 4'}\nfor a,b in rep.items():\n    assert s.count(a)==1,a; s=s.replace(a,b)\ns=s.replace('Paid: 8 fal images (≈ $0.96)','Paid: 8 fal images (≈ $0.96, all 8  …[+471 chars]`
 
+### 🧑 User — 2026-11-18T11:12:47.396Z
+
+> ↩︎ result: fixed
+>   "result": "committed+pushed",
+>   "commit": "b62169f93a247d15e5c63001bb24011924416899",
+> REMOTE b62169f9 HEAD b62169f9
+
+### 🤖 Claude — 2026-11-18T11:13:02.313Z
+
+You'll have just received the other 4 pilot images. Your new message describes the Screen 04 pilot I already ran under your earlier approval, so I did **not** spend another 8 images repeating it. Here's each of your points:
+
+**fal.ai: verified working, nothing to reconnect**
+- **Key and account:** your existing key works and is the same purchased account. All 4 pilot requests completed, so billing is active. I can't read your remaining balance from here; it's on your fal.ai dashboard.
+- **Download hosts:** not needed. The images came back directly inside the API response, so no network permission request is required for fal, and nothing was replaced.
+
+**Pilot result: 8 images, ≈ $0.96. You've now seen every one.**
+- **5 of 8 preserve your design faithfully.** They have the same rounded glossy gold rings, the cyan lane with glowing chevron arrows, the pink-magenta swirls, the soft foam clouds, the bubbles, and the same Benny and screen layout.
+- **3 of 8 failed.** They copied your outside view (room, porthole, towels) instead of the inside, or shrank Benny into the distance. I rejected them.
+- **Honest limit:** the good views barely differ from each other. The model gives one consistent interior design, not clearly different positions along the tunnel. That's useful as a target for the whole interior, but weak for marking the end of the level. You spotted the same thing with V04‑3.
+
+**Does the method improve the game? NOT YET PROVEN.** My controlled test in the real game (sent earlier) wasn't good enough to keep. The water channel and arrows need rebuilding, which is specialist work.
+
+**Next:**
+- The Screen 04 specialist starts when the first slot frees, around 12:40 UTC, briefed to build toward V04‑1/V04‑2.
+- The 05 and 08 specialists keep going (four and two kept steps so far).
+- Per your earlier decision, no 06/07 generation until 04 shows a real in-game improvement. When it does, the cost to proceed is about **24 images ≈ $2.90** for 06 and 07 (8 viewpoints, 2 candidates each, plus retries), and about **4 images ≈ $0.50** for a clearer 04 end section. I'll ask once for that whole budget, not per image.
+
+Your original approved images are unchanged. Everything is saved and verified on GitHub (`b62169f`).
+
