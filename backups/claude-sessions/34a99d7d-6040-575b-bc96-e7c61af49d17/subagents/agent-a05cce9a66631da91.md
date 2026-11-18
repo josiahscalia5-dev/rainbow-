@@ -469,3 +469,147 @@ Let me look at the texture layers (E, T2) to see what the swimming view is built
 >   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
 >   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && i …[+8640 chars]
 
+### 🤖 Claude — 2026-11-18T02:02:17.199Z
+
+Let me view the texture layers themselves.
+
+### 🤖 Claude — 2026-11-18T02:02:20.839Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/match05/tgtwall05/proj05_E.png'); \nbg=Image.new('RGBA',im.size,(40,40,40,255)); bg.alpha_composite(im); bg.convert('RGB').resize((512,728)).save('$S/E_view.png')\nImage.open('assets/textures/water05/proj05_T2.png').resize((512,384)).save('$S/T2_view.png')\n\" && cat assets/textures/match05/tgtwall05/proj05_lut.json | python3 -c \"\nimport json,sys; d=json.load(sys.stdin); E=d['E']; print({k:(v if not …[+256 chars]`
+
+### 🧑 User — 2026-11-18T02:02:21.229Z
+
+> ↩︎ result: {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1457, 'V': (1024, [0.0, 0.0103683, 0.0206834], [0.9994496, 0.9997248, 1.0]), 'c': (1024, [0.02385, 0.02378, 0.02364], [-0.38032, -0.38032, -0.38032]), 'w': (1024, [0.31096, 0.31155, 0.31289], [0.40777, 0.40777, 0.40777])}
+> dict_keys(['note', 'E', 'N', 'T', 'D', 'F', 'probe_camera_uTime'])
+> {'note': 'Screen 05 proj05 bake (tools/proj05/bake.py). E: s -> V (row), c (centre u), w (half range u); v grows with s.', 'N': {'s0': 126.0, 's1': 166.0, 'width': 512, 'height': 960}, 'T': {'a': 134.0, 'L': 14.0, 'width': 512, 'height': 336}, 'D': {'u0': -0.18, 'u1': 0.18, 's0': 131.5, 's1': 134.3, 'size': 512, 'lum_gain': 1.0}, 'F': {'zmax': 376.607666015625, 'width': 512, 'height': 512, 'note': 'far block: x = uv.x, y = log(1 + Z) / log(1 + zmax)'}, 'probe_camera_uTime': 12}
+> {
+>  "note": "proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)",
+>  "T2": {
+>   "a": 131.685,
+>   "L": 6.565,
+>   "width": 1024,
+>   "height": 768,
+>   "wrapT": "mirrored",
+>   "period": 13.13
+>  },
+>  "source": {
+>   "a": 132.0,
+>   "L": 6.0,
+>   "ease_near": [
+>    0.3,
+>    0.9
+>   ],
+>   "ease_far": [
+>    0.5,
+>    1. …[+188 chars]
+
+### 🤖 Claude — 2026-11-18T02:02:22.824Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/E_view.png"}`
+
+### 🧑 User — 2026-11-18T02:02:22.842Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:02:23.433Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/T2_view.png"}`
+
+### 🧑 User — 2026-11-18T02:02:23.450Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:02:35.228Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && mkdir -p $S/wd1 && time (timeout 900 node tools/match05/r8_shots.mjs $S/wd1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05wd=1\" f10_forward10u,t33_through_screen,t66_through_screen 2>&1 | tail -5)", "description": "Render the m05wd water switch at three positions", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T02:03:06.815Z
+
+> ↩︎ result: f10_forward10u s 143.145 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> t33_through_screen s 151.691 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+> 
+> real	0m31.553s
+> user	0m1.523s
+> sys	0m0.431s
+
+### 🤖 Claude — 2026-11-18T02:03:09.011Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wd1/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:03:09.065Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:03:09.674Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wd1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T02:03:09.720Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:03:14.638Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wd1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:03:14.681Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:04:32.974Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"pjTarget(\\|pjFlowDir(\\|pjDetail(\\|float mE\\|mE =\\|uPjNear.z\\|#ifdef PROJ05\" src/vfx/waterRibbon.ts | head -40; grep -rn \"uPjNear\" src/vfx/index.ts | head", "description": "Locate projection call sites and focus uniform"}`
+
+### 🧑 User — 2026-11-18T02:04:33.020Z
+
+> ↩︎ result: 205: * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> 448:#ifdef PROJ05
+> 473:float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
+> 502:vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
+> 514:    // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
+> 544:float pjDetail(float u, float s) {
+> 552:vec2 pjFlowDir(float u, float s, float mE) {
+> 1500:  #ifdef PROJ05
+> 1509:      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
+> 1518:        float rideD = uPjNear.z - uPjNear.w;
+> 1525:        mE = mix(mE, 1.3 * min(rS, rU), pjNearK());
+> 1536:        vec2 fd = pjFlowDir(u, s, mE);
+> 1544:      vec3 tA = pjTarget(uA, sA, mE, wEA, wNA);
+> 1545:      vec3 tB = pjTarget(uB, sB, mE, wEB, wNB);
+> 1549:      float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
+> 1558:        vec3 t0 = pjTarget(u, s, mE, wE0, wN0);
+> 1561:        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * dW0, 0.0, 1.0);
+> 199:      // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
+> 200:      const pj …[+31 chars]
+
+### 🤖 Claude — 2026-11-18T02:04:34.883Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1490,1600p src/vfx/waterRibbon.ts; sed -n 190,215p src/vfx/index.ts", "description": "Read fragment main projection block and focus update"}`
+
+### 🧑 User — 2026-11-18T02:04:34.914Z
+
+> ↩︎ result: // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+>         float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+>         float arm = smoothstep(1.2, 1.1, abs(x));
+>         float core = smoothstep(0.2, 0.11, dist) * arm;
+>         float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+>         col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+>         col = mix(col, vec3(2.2, 2.4, 2.5), core);
+>       }
+>     }
+>   }
+>   #ifdef PROJ05
+>   {
+>     float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+>     if (pjK > 0.001) {
+>       // exact-layer magnification: texels per screen pixel along the least dense direction
+>       vec4 Lm = pjLut(s);
+>       vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
+>       // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
+>       vec2 ja = dFdx(tp), jb = dFdy(tp);
+>       float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
+>       if (uPjNear.x > 0.5) {
+>         // ?projnear05=1: the hand-over to the crisp tile must not follow the WAVES. The per-pixel Jacobian above swings
+>  …[+6331 chars]
+

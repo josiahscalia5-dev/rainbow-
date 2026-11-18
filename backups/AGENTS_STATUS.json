@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-18T01:45:00Z",
+ "updated_utc": "2026-11-18T02:10:00Z",
  "updated_by_session": "session_013VHsJ9KrSuiLBqJwtdwa8n (account 8, lead branch ccr-58dd182e-m48xwk)",
  "running_now": {
   "slot_A": {
@@ -12,7 +12,10 @@
    "worktree": "/home/user/wt/s04",
    "task": "M4 per docs/briefs/2026-11-17-r7/S04.md",
    "started_utc": "2026-11-18T01:38Z",
-   "kind": "background agent in the lead container"
+   "kind": "background agent in the lead container",
+   "restarted_utc": "2026-11-18T02:00Z",
+   "resume_from": "011c256b",
+   "note": "first instance stopped ~01:57 (turn interrupt); restarted with small-step reporting"
   },
   "slot_B": {
    "screen": "05",
@@ -23,14 +26,43 @@
    "task": "user's 05 list per docs/briefs/2026-11-17-r7/S05_ROUND2.md",
    "started_utc": "2026-11-18T01:39Z",
    "first_checkpoint": "a1f14e7b",
-   "kind": "background agent in the lead container"
+   "kind": "background agent in the lead container",
+   "restarted_utc": "2026-11-18T02:00Z",
+   "resume_from": "6cbe3c1f",
+   "steps_pushed": [
+    "01beeeaf step1 m05coin (oversized coin no longer covers Benny)"
+   ]
   },
   "queue": [
-   "07 (m07foam, near water, near coin)",
-   "08 scenery (finish r8)",
-   "06 (rings, wall, foam)"
+   "07",
+   "08",
+   "06"
   ],
-  "coordination": "docs/briefs/2026-11-18-r8/COORDINATION.md"
+  "coordination": "docs/briefs/2026-11-18-r8/COORDINATION.md",
+  "ready_next": {
+   "07": {
+    "branch": "claude/rainbow-s07-match-c8",
+    "start": "dbc7678c",
+    "worktree": "/home/user/wt/s07",
+    "brief": "docs/briefs/2026-11-18-r8/S07.md",
+    "agent": "washer-environment-modeler or water-fx-specialist"
+   },
+   "08": {
+    "branch": "claude/rainbow-s08-scenery-c8",
+    "start": "c0d8c97b",
+    "worktree": "/home/user/wt/s08",
+    "brief": "docs/briefs/2026-11-18-r8/S08.md",
+    "agent": "washer-environment-modeler"
+   },
+   "06": {
+    "branch": "claude/rainbow-s06-match-c8",
+    "start": "efaf78b7",
+    "worktree": "/home/user/wt/s06",
+    "brief": "docs/briefs/2026-11-18-r8/S06.md",
+    "agent": "washer-environment-modeler"
+   }
+  },
+  "rules": "docs/briefs/2026-11-18-r8/COMMON_RULES.md"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",

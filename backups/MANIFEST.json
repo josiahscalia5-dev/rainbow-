@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 33845,
-   "sha256": "32544a574de8782710abc5e527110955cfc29451732307adb840a2d878025bbe"
+   "bytes": 34856,
+   "sha256": "ab9c9101f6c435e7c0c3063bae19d0f5a074dec865a45ea3d88aff9d580f4c6e"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13550,
-   "sha256": "5083f5f6708730c34c2ee442e9622b638a7a1cf434ab273920fdcb65b95bc900"
+   "bytes": 13551,
+   "sha256": "1823eeb8fda5a800a89b6e83363766e6e04e92de457e9ae2de0794c323338cba"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -932,9 +932,29 @@
    "sha256": "91e931c4424925268fceadbf90de5907f0c960b2ea645b095d5ca4918c292ebd"
   },
   {
+   "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",
+   "bytes": 4237,
+   "sha256": "cea5c26504659e33d558a795d5f3224965af683bd6b0554cc8ac50e3a66e9854"
+  },
+  {
    "path": "docs/briefs/2026-11-18-r8/COORDINATION.md",
-   "bytes": 5474,
-   "sha256": "7b9888a3de325baaf6322668e4f6dd5f876cc4ab23f237db29dfc3b3cce498b8"
+   "bytes": 6005,
+   "sha256": "bebb644f52dff468896069d11ce8fbe1e391a64af547680e23d496a18088df48"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r8/S06.md",
+   "bytes": 2195,
+   "sha256": "1af25aa365edcf27add757b9661c4458c0f2a46f21ed77f4fcedbe1bd4c9b7dd"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r8/S07.md",
+   "bytes": 2349,
+   "sha256": "d8ec4d07ad38ec17813e606cd55bc2dc25bf3a2ee7d7ad2934aeb6c6c2d72c83"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r8/S08.md",
+   "bytes": 2548,
+   "sha256": "8d4b0a3d1e515ce5fb07ff5a9078480283e3cc17833e9761a987b1f6e19338ba"
   },
   {
    "path": "docs/characters/benny.md",

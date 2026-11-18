@@ -609,3 +609,105 @@ I'll start by inspecting where the previous instance stopped.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:02:24.525Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/assets/textures/match04/tile_ring.png"}`
+
+### 🧑 User — 2026-11-18T02:02:24.543Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:03:31.946Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\nimport json, numpy as np\nL=json.load(open('assets/textures/match04/proj04.json'))\nX=np.array(L['X']);U=np.array(L['U']);Dn=-np.array(L['D']);O=np.array(L['water'])\nc=np.array(L['camera']['pos'])-O\nprint('cam local x,y,z', c@X, c@U, c@Dn, ' mouth z0', -L['tube']['mouthS'])\nj=json.load(open('qa/match/04/r8/BEFORE/motion.json'))\nfor s in j['shots']: print(s['name'], round(s['s'],2), 'lat', s['lat'], 'cam', s['cam'])\nEOF", "description": "Compute camera position relative to the tunnel mouth and shot laterals"}`
+
+### 🧑 User — 2026-11-18T02:03:32.142Z
+
+> ↩︎ result: cam local x,y,z 0.42655792850170204 3.393636606416124 6.2700817861275375  mouth z0 -6.837642607015875
+> a00_approved_view 78.4 lat 0 cam [2.42, -16.12, -21.33]
+> f03_forward3u 81.2 lat 0 cam [2.41, -17.02, -23.04]
+> f06_forward6u 84.18 lat 0 cam [2.4, -18.4, -25.43]
+> f10_forward10u 88.15 lat 0 cam [2.4, -20.44, -28.76]
+> f20_forward20u 98.18 lat 0 cam [2.4, -25.75, -37.27]
+> s_left_steer 84.21 lat -1.65 cam [1.14, -18.41, -25.44]
+> s_right_steer 84.2 lat 1.65 cam [3.67, -18.4, -25.45]
+> s_left_hard 90.25 lat -1.65 cam [0.77, -21.55, -30.54]
+> s_right_hard 90.25 lat 1.65 cam [4.03, -21.55, -30.54]
+> t33_through_screen 90.48 lat 0.006 cam [2.41, -21.67, -30.74]
+> t66_through_screen 102.85 lat 0 cam [2.4, -28.22, -41.23]
+> t95_through_screen 113.67 lat 0 cam [2.06, -31.85, -48.83]
+
+### 🤖 Claude — 2026-11-18T02:03:45.953Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04\\|match04\\|Match04\" src/game/Game.ts | head -40", "description": "Find match04 hooks in Game.ts"}`
+
+### 🧑 User — 2026-11-18T02:03:45.984Z
+
+> ↩︎ result: 28:import { buildMatch04 } from '../world/match04';
+> 117:  // `?match04=1`: the approved Screen 04 scenery on fitted 3D geometry (src/world/match04.ts); off: nothing is built
+> 118:  const m04 = MATCH['04'] ? await buildMatch04() : null;
+> 119:  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); if (m04.splash) scene.add(m04.splash); }
+> 120:  let m04On = false;
+> 121:  let m04Applied = false;
+> 174:    if (m04) { m04On = st.stage === '04'; m04.group.visible = m04On; if (m04On) { env.zones.basin.visible = false; env.zones.tubes.visible = false; } }
+> 540:    // `?match04=1` on Screen 04: the projected scenery carries the approved river, arrows, foam and bubbles
+> 541:    if (m04 && (m04On || m04Applied) && !(m08 && m08On)) {
+> 542:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m04On; }
+> 543:      m04Applied = m04On;
+> 562:    if (m04?.splash) {
+> 563:      m04.splash.visible = m04On;
+> 564:      if (m04On) { m04.splash.position.copy(benny.root.position).add(m04.splashOffset); m04.splash.quaternion.copy(camera.quaternion); }
+> 596:    // `?match04=1`: no bloom on Screen 04 under the switch (the artwork carries its own glow)
+> 597:    if (m04) …[+95 chars]
+
+### 🤖 Claude — 2026-11-18T02:04:06.648Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; cd /home/user/wt/s04 && python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\na.crop((0,380,440,1000)).save('$SP/crop_mouth.png')\"", "description": "Crop the painted mouth ring left half"}`
+
+### 🧑 User — 2026-11-18T02:04:06.838Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:04:09.040Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop_mouth.png"}`
+
+### 🧑 User — 2026-11-18T02:04:09.057Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:04:57.189Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"PROJ05_INVERSE\" -A 30 src/vfx/waterRibbon.ts | head -50", "description": "Read the post-chain inverse shader snippet"}`
+
+### 🧑 User — 2026-11-18T02:04:57.221Z
+
+> ↩︎ result: 319:export const PROJ05_INVERSE = /* glsl */ `
+> 320-// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> 321-// post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+> 322-vec3 pjInverse(vec3 t) {
+> 323-  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+> 324-  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+> 325-  vec3 c = t / max(vig, 0.5);
+> 326-  c = (c - 0.5) / uPjPost.z + 0.5;
+> 327-  float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+> 328-  c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+> 329-  c = clamp(c, 0.0, 0.975);
+> 330-  c = mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+> 331-  float np = max(c.r, max(c.g, c.b));
+> 332-  if (np >= 0.76) {
+> 333-    float peak = 0.0576 / (1.0 - np) - 0.24 + 0.76;
+> 334-    float g = 1.0 - 1.0 / (0.15 * (peak - np) + 1.0);
+> 335-    c = (c - g * np) / (1.0 - g);
+> 336-    c *= peak / np;
+> 337-  }
+> 338-  float x = min(c.r, min(c.g, c.b));
+> 339-  float off = x >= 0.04 ? 0.04 : (sqrt(max(x, 0.0)) / 2.5 - x);
+> 340-  return (c + off) / uPjPost.x;
+> 341-}
+> 342-`;
+> 343-
+> 344-const FRAG = /* glsl */ `
+> 345-uniform float uTime;
+> 346- …[+961 chars]
+

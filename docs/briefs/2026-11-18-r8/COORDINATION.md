@@ -60,3 +60,9 @@ COMPLETED). Download hosts cdn.marble.worldlabs.ai, v3b.fal.media, v3.fal.media 
   `qa/match/<NN>/r8/PROGRESS.md` (WHAT LOOKS BETTER), commit + push, note to the lead; then continue. Failed experiments
   are rejected, not reported. Full proofs + 12-shot audit at the end of the round.
 * BEFORE pictures shown to the user: `qa/review_r8/04_BEFORE/`, `qa/review_r8/05_BEFORE/`.
+
+## Update 2026-11-18 ~02:10 UTC — 06 / 07 / 08 ready for the next slots
+Briefs written from each approved picture + its newest moving frames: `COMMON_RULES.md`, `S07.md`, `S08.md`, `S06.md`.
+Branches pushed: `claude/rainbow-s07-match-c8` @ dbc7678c, `claude/rainbow-s08-scenery-c8` @ c0d8c97b (incl. the
+unfinished r8 edits of the previous account), `claude/rainbow-s06-match-c8` @ efaf78b7; worktrees /home/user/wt/s0{6,7,8}.
+05 step 1 pushed: `01beeeaf` `&m05coin=1` (giant coin no longer covers Benny) — shown to the user.

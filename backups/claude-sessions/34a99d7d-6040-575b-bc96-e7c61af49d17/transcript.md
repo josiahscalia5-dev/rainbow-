@@ -3097,3 +3097,320 @@ The 05 specialist is already working on the water design.
 - **Backups:** the 05 branch is verified on GitHub, and the lead autosave is running.
 - **Paid credits:** none used. No blockers.
 
+### 🧑 User — 2026-11-18T02:02:42.214Z
+
+CLAUDIA — I'M SERIOUS. MAKE MY DAMN APPROVED SCREENS.
+
+Claudia, I need you to understand that I am completely serious about this project.
+
+I've spent considerable time, money, credits, and effort trying to get my Rainbow game to look like my ORIGINAL APPROVED SCREENS.
+
+I AM NOT ASKING YOU TO INVENT A GAME. I ALREADY DESIGNED IT.
+
+I have provided the approved artwork. That artwork is your blueprint.
+
+YOUR JOB IS TO RECREATE IT AS ACCURATELY AS TECHNICALLY POSSIBLE IN MY EXISTING PLAYABLE 3D GAME.
+
+I want ALL FIVE screens:
+
+04 — Through the Five Arrows
+
+05 — Flow Into the Current
+
+06 — Crest the Rinse Arch
+
+07 — Dive the Washer Tube
+
+08 — Final Spin Chamber
+
+Not just one. ALL FIVE.
+
+STOP CHANGING MY APPROVED DESIGNS
+
+I want the EXACT scenery, tunnel structures, gold rings, beautiful cyan-and-magenta water, foam, bubbles, lighting, colors, backgrounds, textures, coins, and Benny's appearance.
+
+Do not simplify them.
+
+Do not replace them with generic tunnels.
+
+Do not substitute different water formations.
+
+Do not claim something matches just because it has similar colors.
+
+IF IT DOESN'T LOOK LIKE MY APPROVED SCREEN, IT IS NOT FINISHED.
+
+I WANT REAL VISUAL RESULTS — NOT ENDLESS TECHNICAL UPDATES
+
+Stop spending unnecessary time discussing servers, camera settings, testing scripts, and experimental changes that don't visibly improve my game.
+
+Use the working tools, specialist agents, existing 3D assets, Blender, and original approved artwork to produce the actual appearance I'm asking for.
+
+Fix the biggest visible differences first.
+
+Keep two specialists working on separate screens simultaneously and rotate the remaining screens as work finishes.
+
+Do not wait two hours to show me an improvement if a valid visual checkpoint is already ready.
+
+Show me the approved artwork, BEFORE version, and NEW version separately at full portrait size whenever a meaningful improvement is available.
+
+THESE ARE MY EXPECTATIONS
+
+- Every screen must preserve its own approved design.
+- Every screen must improve throughout playable gameplay, not just at one frozen viewpoint.
+- Preserve all successful work already completed.
+- Do not restart the project.
+- Do not waste money on paid generations without my approval.
+- Save every successful milestone to GitHub.
+- Nothing is finished or approved until I personally say so.
+
+MY MINIMUM GOAL IS 8.5/10 VISUAL ACCURACY FOR EACH OF THE FIVE SCREENS. IDEALLY 9–9.5/10.
+
+If any screen is below that, acknowledge it and continue correcting the specific visual differences.
+
+Do not fabricate percentages, give inflated ratings, or promise results you cannot demonstrate.
+
+GOOGLE FLOW SCENES ARE EXCLUDED
+
+Screens 01–03 and 09–11, including the cartoon girl, are being handled separately with Google Flow.
+
+Do not spend development time reconstructing those videos.
+
+HERE IS WHAT I EXPECT YOU TO DO RIGHT NOW
+
+Keep my Screen 04 and Screen 05 specialists working on their current visual improvements.
+
+Make sure my Screen 06, 07, and 08 specialists are ready for the next available slots.
+
+Give each specialist specific instructions based on that screen's ORIGINAL APPROVED IMAGE.
+
+Focus on producing the biggest visible improvements without rushing or lowering quality.
+
+I WANT YOU TO BUILD MY APPROVED SCREENS, NOT KEEP EXPLAINING WHY THEY'RE WRONG.
+
+Claudia, I need actual results. I need to see my approved artwork coming to life in my real 3D Android game.
+
+LET'S GET THIS DONE. ALL FIVE SCREENS. VISUALS FIRST. NO REDESIGNS. NO MORE GOING IN CIRCLES.
+
+Start delivering measurable, visible improvements now.
+
+### 🤖 Claude — 2026-11-18T02:02:51.511Z
+
+Understood. Screens 04 and 05 keep working. I'm now writing the 06, 07 and 08 instructions directly from each approved picture and its biggest visible differences, so each can start the moment a slot frees. First, a close look at the approved 06 and 08 pictures and their newest in-game frames.
+
+### 🤖 Claude — 2026-11-18T02:02:53.174Z
+
+> 🔧 **Bash** `{"command": "timeout 120 git fetch -q origin claude/rainbow-s06-match-c7:refs/remotes/origin/claude/rainbow-s06-match-c7 2>&1|tail -1; git ls-tree -r --name-only origin/claude/rainbow-s06-match-c7 qa/match/06 | grep -iE 'STATUS|NOTES|r7/.*(NEW|ring).*(f10|t66|s_right_hard)' | head -12", "description": "Find the newest 06 status and moving pictures"}`
+
+### 🧑 User — 2026-11-18T02:02:53.822Z
+
+> ↩︎ result: qa/match/06/NOTES.md
+> qa/match/06/STATUS.md
+> qa/match/06/r7/NEW/f10_forward10u.png
+> qa/match/06/r7/NEW/s_right_hard.png
+> qa/match/06/r7/NEW/t66_through_screen.png
+> qa/match/06/r7/NEW_cam25/f10_forward10u.png
+> qa/match/06/r7/NEW_cam25/s_right_hard.png
+> qa/match/06/r7/NEW_cam25/t66_through_screen.png
+> qa/match/06/r7/NEW_tun/f10_forward10u.png
+> qa/match/06/r7/NEW_tun/s_right_hard.png
+> qa/match/06/r7/NEW_tun/t66_through_screen.png
+> qa/match/06/r7/NEW_tun_r11/f10_forward10u.png
+
+### 🤖 Claude — 2026-11-18T02:02:55.747Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s06-match-c7:qa/match/06/STATUS.md | head -45; git ls-tree --name-only origin/claude/rainbow-s06-match-c7 qa/match/06/r7/ | tr '\\n' ' '", "description": "Read the newest Screen 06 status"}`
+
+### 🧑 User — 2026-11-18T02:02:55.803Z
+
+> ↩︎ result: # Screen 06 — STATUS (round 6, 2026-11-17) — paused by the lead, then the user (phone, ~22:30 UTC) asked to continue with
+> # existing assets: the open proofs below were completed (no Marble/fal use; Screen 06 needs no Marble files)
+> 
+> * **Branch:** `claude/rainbow-s06-match-c6`, started from `c088718bb9e3374583238f4ee93f25bdee600065` (startup check OK:
+>   remote == HEAD, autosave OK, 13 reference checksums OK).
+> * **Approval status:** NOTHING approved — only the user approves. Default build untouched (only `src/world/match06.ts`
+>   changed; it runs only under `?match06=1`).
+> 
+> ## Diagnosis (verified)
+> * `&m06dbg=1` at the approved view (`r6/debug_BEFORE_m06dbg/a00_approved_view.png`): the water floor covered the whole
+>   frame below the crest line, including the crest-loop hole, the right tunnel wall and the foam banks.
+> * Measured through the locked camera, the painted river is only **~4.5 u wide** at Benny (frame edges = lateral ±2.1 u,
+>   Benny ≈ 2 u). The game river is 7 u, and the old floor was 9 u wide. That is the "oversized flat water".
+> * The old floor tile was a 1 u × 2 u crop, mirrored across the river, which made the repeated chevrons.
+> 
+> ## Done (each behind its own switch; off = M1  …[+2873 chars]
+
+### 🤖 Claude — 2026-11-18T02:02:58.154Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s06-match-c7:qa/match/06/r7/NOTES.md | grep -vE '^\\s*$' | head -40 | cut -c1-260", "description": "Read the 06 round 7 notes for the kept set"}`
+
+### 🧑 User — 2026-11-18T02:02:58.196Z
+
+> ↩︎ result: # Screen 06 — round 7 (account 7, lead) — moving-view reconstruction
+> Branch `claude/rainbow-s06-match-c7` (from `-c6` @ `1e7b1112`). Nothing approved; default build untouched (all changes
+> behind sub-switches of `?match06=1`).
+> Kept set (lead's proposal, waiting for the user's verdict):
+> `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`
+> | switch | what it changes while Benny swims | verdict |
+> |---|---|---|
+> | `m06cam` (+`m06la=25`) | camera frame aimed along the river 25 u ahead instead of the local slope: pitch stayed −11…−28° instead of −11 → −73° (it looked straight down at the water and lost the tunnel) | KEEP |
+> | `m06tun` (r = 14) | the proxy tunnel is a STRAIGHT cylinder along the painted vanishing-point ray (the painted tunnel's shape) instead of a tube following the river's crest/drop/turn (twisted diagonal bands) | KEEP |
+> | `m06ring` | REAL modeled gold rings (two lips + bulb groove, polished-gold shading), spacing solved from the two nearest painted ring groups (485 / 355 px above the VP → 12.9 u); far tunnel tapers so the rings converge into a small glow (removed the flat p
+> Approved view (frozen `scripts/capture.mjs 06`): BEFORE vs kept s …[+2354 chars]
+
+### 🤖 Claude — 2026-11-18T02:03:04.325Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && git ls-tree --name-only origin/claude/rainbow-s06-match-c7 qa/match/06/r7/RING6/ | tr '\\n' ' '; git show origin/claude/rainbow-s06-match-c7:qa/match/06/r7/RING6/f10_forward10u.png > $S/06_ring6_f10.png 2>/dev/null; convert references/06_crest_the_rinse_arch.png -resize 432x768 $S/06_approved_small.jpg 2>/dev/null || ls references/ | grep 06; convert $S/06_ring6_f10.png -resize 432x768 $S/06_ring6_f10_small.jpg; convert $S/06_approved_small.jpg $S/06_ring6_f10_small.jpg +append -quality 85 $S/06 …[+96 chars]`
+
+### 🧑 User — 2026-11-18T02:03:04.706Z
+
+> ↩︎ result: qa/match/06/r7/RING6/a00_approved_view.png qa/match/06/r7/RING6/f06_forward6u.png qa/match/06/r7/RING6/f10_forward10u.png qa/match/06/r7/RING6/f20_forward20u.png qa/match/06/r7/RING6/motion.json qa/match/06/r7/RING6/s_right_hard.png qa/match/06/r7/RING6/t66_through_screen.png qa/match/06/r7/RING6/t95_through_screen.png -rw-r--r-- 1 root root 259414 Nov 18 02:03 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/06_pair.jpg
+
+### 🤖 Claude — 2026-11-18T02:03:06.229Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/06_pair.jpg"}`
+
+### 🧑 User — 2026-11-18T02:03:06.252Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:03:14.916Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && convert qa/review_r7/08_1_APPROVED.jpg -resize 432x768! $S/a.jpg && convert qa/review_r7/08_3_NEW_forward_10u.jpg -resize 432x768! $S/b.jpg && convert qa/review_r7/08_3_NEW_steering_hard_right.jpg -resize 432x768! $S/c.jpg && convert $S/a.jpg $S/b.jpg $S/c.jpg +append -quality 85 $S/08_trip.jpg && echo ok", "description": "Build a side-by-side for my own 08 analysis"}`
+
+### 🧑 User — 2026-11-18T02:03:15.114Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T02:03:16.260Z
+
+Comparing approved Screen 08 with its newest in-game frames, so the 08 instructions name the exact visible differences.
+
+### 🤖 Claude — 2026-11-18T02:03:17.299Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/08_trip.jpg"}`
+
+### 🧑 User — 2026-11-18T02:03:17.319Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:03:31.984Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && convert references/07_dive_the_washer_tube.png -resize 432x768! $S/a7.jpg 2>/dev/null || convert qa/review_r8/07_plunge_fix_r7/1_APPROVED_07.jpg -resize 432x768! $S/a7.jpg; git show origin/claude/rainbow-s07-match-c7:qa/match/07/r7/NEW/f10_forward10u.png | convert - -resize 432x768! $S/b7.jpg; git show origin/claude/rainbow-s07-match-c7:qa/match/07/r7/NEW/s_left_hard.png | convert - -resize 432x768! $S/c7.jpg; convert $S/a7.jpg $S/b7.jpg $S/c7.jpg +append -quality 85 $S/07_trip.jpg && echo ok",  …[+61 chars]`
+
+### 🧑 User — 2026-11-18T02:03:32.281Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T02:03:34.123Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/07_trip.jpg"}`
+
+### 🧑 User — 2026-11-18T02:03:34.148Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:03:37.996Z
+
+I now have the exact visual differences for all three waiting screens. Writing their instructions and preparing their branches:
+
+### 🤖 Claude — 2026-11-18T02:03:52.799Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r8/COMMON_RULES.md", "content": "# Round 8 — rules for every screen specialist (04–08), binding\n\nThe user (2026-11-18): \"I AM NOT ASKING YOU TO INVENT A GAME. I ALREADY DESIGNED IT. The approved artwork is your\nblueprint. Recreate it as accurately as technically possible in my existing playable 3D game.\" \"If it doesn't look\nlike my approved screen, it is not finished.\" \"Do not claim something matches just because it has similar colors.\"\nTarget: ≥ 8.5/10 (ideally 9–9.5) likeness to the screen's OWN approved picture `references …[+3756 chars]`
+
+### 🧑 User — 2026-11-18T02:03:52.830Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r8/COMMON_RULES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:04:02.647Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r8/S07.md", "content": "# Round 8 — SCREEN 07 · DIVE THE WASHER TUBE (next free slot; rules: COMMON_RULES.md)\n\nBranch `claude/rainbow-s07-match-c8`, worktree `/home/user/wt/s07`, start `dbc7678c` (= r7 M3 tip `3afaa7e9` + the lead's\nr8 WIP). Read `qa/match/07/STATUS.md` (top = r8 WIP) and `NOTES.md`. Preserve the plunge fix (`m07tube`, `m07ring`: no\norange slab hiding Benny — the user saw it and wants it kept).\nKept set so far: `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1` + lead WIP\n`&m07foam …[+1839 chars]`
+
+### 🧑 User — 2026-11-18T02:04:02.669Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r8/S07.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:04:12.248Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r8/S08.md", "content": "# Round 8 — SCREEN 08 · FINAL SPIN CHAMBER (slot after 07; rules: COMMON_RULES.md)\n\nBranch `claude/rainbow-s08-scenery-c8`, worktree `/home/user/wt/s08`, start = `claude/rainbow-s08-scenery-c7` tip\n`c0d8c97b` (r7 milestone `dafa3752` + UNFINISHED r8 edits from the previous account: `src/gameplay/coins.ts`,\n`src/world/match08.ts`, `tools/match08/occ08.py`, `tools/match08/towelmask08.py`, frames in `qa/match/08/scenery/r8/`).\nFirst read `qa/match/08/scenery/STATUS.md`, `NOTES.md`, `git diff dafa3752 -- src too …[+2047 chars]`
+
+### 🧑 User — 2026-11-18T02:04:12.269Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r8/S08.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:04:20.804Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r8/S06.md", "content": "# Round 8 — SCREEN 06 · CREST THE RINSE ARCH (slot after 08; rules: COMMON_RULES.md)\n\nBranch `claude/rainbow-s06-match-c8`, worktree `/home/user/wt/s06`, start = `claude/rainbow-s06-match-c7` tip `efaf78b7`\n(lead r7: m06cam, m06tun, m06ring real modeled gold rings, m06bub, m06foam). Read `qa/match/06/STATUS.md` and\n`qa/match/06/r7/NOTES.md` (newest). Preserve the real 3D gold rings, foam, bubbles and splash (user: keep them).\nKept set: `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub …[+1691 chars]`
+
+### 🧑 User — 2026-11-18T02:04:20.840Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r8/S06.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:04:23.331Z
+
+Instructions written. Now creating the Screen 06 and 08 worktrees and `-c8` branches so each can start the moment a slot frees:
+
+### 🤖 Claude — 2026-11-18T02:04:27.683Z
+
+> 🔧 **Bash** `{"command": "ls references/ | grep -E '^0[678]'; timeout 200 git fetch -q origin claude/rainbow-s08-scenery-c7:refs/remotes/origin/claude/rainbow-s08-scenery-c7 2>&1 | tail -1; git worktree add -q -b claude/rainbow-s06-match-c8 /home/user/wt/s06 efaf78b7d6549da63276d386884ca09e038a1e86 2>&1 | tail -1; git worktree add -q -b claude/rainbow-s08-scenery-c8 /home/user/wt/s08 c0d8c97b51 2>&1 | tail -1; for s in s06 s08; do cd /home/user/wt/$s && ln -sfn /home/user/rainbow-/node_modules node_modules && b=$(git branch --show-current) && timeout 180 git push -q -u origin \"$b\" 2>&1 | grep -v '^remote …[+331 chars]`
+
+### 🧑 User — 2026-11-18T02:04:42.745Z
+
+> ↩︎ result: 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> s06 claude/rainbow-s06-match-c8 local=efaf78b7 remote=efaf78b7 pointers=0
+> s08 claude/rainbow-s08-scenery-c8 local=c0d8c97b remote=c0d8c97b pointers=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T02:04:44.903Z
+
+All three waiting screens are ready: branches pushed and verified, their files complete. Recording this in the status files:
+
+### 🤖 Claude — 2026-11-18T02:04:52.365Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nd['updated_utc']='2026-11-18T02:10:00Z'\nr=d['running_now']\nr['slot_A'].update({'restarted_utc':'2026-11-18T02:00Z','resume_from':'011c256b','note':'first instance stopped ~01:57 (turn interrupt); restarted with small-step reporting'})\nr['slot_B'].update({'restarted_utc':'2026-11-18T02:00Z','resume_from':'6cbe3c1f','steps_pushed':['01beeeaf step1 m05coin (oversized coin no longer covers Benny)']})\nr['ready_next']={\n '07':{'branch':'claude/rainbow-s07-match-c8','start':'dbc7678c','worktree':'/ …[+1309 chars]`
+
+### 🧑 User — 2026-11-18T02:04:52.456Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T02:05:00.997Z
+
+I've done what you asked for this step: Screens 04 and 05 are still working, and 06, 07 and 08 each have instructions and their own branch, ready to start the moment a slot frees.
+
+I wrote each brief by comparing your approved picture with that screen's newest frames while Benny swims. The work goes in order of the biggest visible difference:
+
+**Screen 07 (next slot)**
+1. Near Benny, the river turns into long flat smeared pink and cyan streaks. Your picture has a thick S-shaped river with magenta edges, an electric-cyan centre and wavy glossy streaks. It will be built from your own near-water pixels.
+2. When steering hard, a hard purple wall edge appears where your picture has foam-cloud banks.
+3. The giant near coin, and a coin partly covering Benny.
+4. Finish the plunge foam-wall fix, keeping the orange-slab fix.
+5. Floating bubbles at your painted size.
+
+**Screen 08**
+1. Oversized coins sit on Benny's body while swimming.
+2. The rectangular seams you saw around the towel, window and walls. This includes unfinished work from the previous account, which will be completed rather than thrown away.
+3. The floating iridescent bubbles and the white foam fringes along the river are mostly missing.
+4. Blurred near water when steering hard.
+
+**Screen 06**
+1. The river is a straight steep ribbon. Your picture has a wide rainbow-edged river sweeping in a big S, with a whirlpool ring around Benny.
+2. Far rings bunch into a busy pattern. Yours are fewer and bigger, with bright highlights and visible bulbs.
+3. The perforated purple walls are softer than the painting.
+4. The tunnel mouth should sit right of centre, with Benny lower and larger.
+5. The two gold paddles.
+
+The 06 gold rings, foam and bubbles are kept.
+
+**Current state, honestly:** no screen is at 8.5 while Benny swims yet. My estimates are 04 about 3.5, 05 about 6 (rising with the step 1 coin fix), 06 about 7, 07 about 4.5, and 08 about 7.
+
+**Status**
+- **Working now:** Screen 04 (gold washer opening with its bulbs, and the laundry-room entrance) and Screen 05 (S-shaped water design, after its coin fix). Every improvement they push, I'll send as separate full-size APPROVED / BEFORE / NEW pictures.
+- **Ready next:** 07, then 08, then 06.
+- **Backups:** all branches are verified on GitHub. No paid credits used, and nothing needs your action.
+
+### 🧑 User — 2026-11-18T02:05:02.900Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
