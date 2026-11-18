@@ -72,6 +72,8 @@ uniform vec2 uKeep;           // stretch-guard hand-over (milestone 2: 2.5..6; m
 uniform float uR3;            // milestone 3 river (&river04=0 = milestone 2): swirl tile from the painted water around Benny
 uniform sampler2D uRiv3;      //   tile_river3.png (pink ribbons, cyan streams, foam banks)
 uniform vec4 uRiv3A;          //   lateral half-width, along start, along length, mouth distance down the slide
+uniform vec4 uCut;            // round 9 m04room: x = +1 keep below / -1 keep above the basin-rim curve (0 = off); y, z, w:
+                              //   curve in approved-image fractions  yTop = y + w * (x - z)^2
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -114,6 +116,11 @@ vec3 tileColor(vec3 pc) {
   return pc;
 }
 void main() {
+  if (uCut.x != 0.0 && vProj.w > 0.0) {
+    vec2 cu = vProj.xy / vProj.w * 0.5 + 0.5;
+    float above = (1.0 - cu.y) - (uCut.y + uCut.w * (cu.x - uCut.z) * (cu.x - uCut.z));   // < 0: above the rim (room)
+    if (above * uCut.x < 0.0) discard;
+  }
   vec3 pc = tileColor(patchColor());
   vec3 t = pc;
   vec3 nn = normalize(vN);
@@ -208,7 +215,7 @@ export async function buildMatch04(): Promise<Match04> {
     uniforms: { ...shared, uPatch: { value: patch }, uPatchK: { value: k }, uMode: { value: TILE04 ? mode : 0 },
       uTile: { value: tile ?? patch }, uTileA: { value: tileA }, uLipS: { value: tiles.ring?.lipS ?? 0 },
       uKeep: { value: mode === 1 && RINGS04 ? new THREE.Vector2(KEEP04[0], KEEP04[1]) : new THREE.Vector2(2.5, 6.0) },
-      uR3: { value: RIVER04 ? 1 : 0 }, uRiv3: { value: tRiv3 }, uRiv3A: { value: riv3A } },
+      uR3: { value: RIVER04 ? 1 : 0 }, uRiv3: { value: tRiv3 }, uRiv3A: { value: riv3A }, uCut: { value: new THREE.Vector4() } },
   });
 
   // slide-local frame: x = world X, y = slide up U, z = -D (forward = -z); origin = Benny's water point on the path line
@@ -243,7 +250,29 @@ export async function buildMatch04(): Promise<Match04> {
   // room wall around the mouth (porthole, towels, control panel, foam banks)
   const wall = new THREE.Shape(); wall.moveTo(-40, -12); wall.lineTo(40, -12); wall.lineTo(40, 45); wall.lineTo(-40, 45); wall.lineTo(-40, -12);
   const wh = new THREE.Path(); wh.absarc(cx, cy, T.r, 0, Math.PI * 2, true); wall.holes.push(wh);
-  add(new THREE.ShapeGeometry(wall, 96).translate(0, 0, z0 - 0.01), M.wall, 'room_wall');
+  const roomWall = add(new THREE.ShapeGeometry(wall, 96).translate(0, 0, z0 - 0.01), M.wall, 'room_wall');
+  // round 9 `&m04room=1`: the laundry room above the basin rim (porthole, towels on the shelf, control panel) moves onto a
+  // parallel plane M04 'm04roomk' times as far from the projector (scaled about it, so the approved view is the same
+  // picture), i.e. the room lies BEHIND the washer opening: it stays in view (and less magnified) while Benny approaches;
+  // the near wall keeps the basin around the opening (cut along the painted gold basin rim)
+  if (M04.room) {
+    const cut = [M04.num('m04cuty', 338 / 1536), M04.num('m04cutx', 470 / 864), M04.num('m04cutc', 0.000244 * 864 * 864 / 1536)];
+    (roomWall.material as THREE.ShaderMaterial).uniforms.uCut.value.set(1, cut[0], cut[1], cut[2]);
+    const k = M04.num('m04roomk', 1.8);
+    const cL = proj.position.clone().applyMatrix4(group.matrix.clone().invert());   // group.matrix = the slide frame (set above)
+    const far = new THREE.ShapeGeometry(wall, 96).translate(0, 0, z0 - 0.01);
+    const pa = far.attributes.position as THREE.BufferAttribute;
+    for (let i = 0; i < pa.count; i++) {
+      const v = new THREE.Vector3(pa.getX(i), pa.getY(i), pa.getZ(i)).sub(cL).multiplyScalar(k).add(cL);
+      pa.setXYZ(i, v.x, v.y, v.z);
+    }
+    far.computeBoundingSphere();
+    const fm = mat(pWall, 1 / (3.0 * k));
+    fm.uniforms.uCut.value.set(-1, cut[0], cut[1], cut[2]);
+    fm.uniforms.uUseDepth = { value: 0 };   // the near wall (cut away there) is in front of it in the projector depth bake
+    add(far, fm, 'room_far');
+    console.info('[match04] m04room', { k, cut });
+  }
   // water plane at Benny's water level: from behind the camera, through the mouth, down the tunnel
   const zBack = 14, zEnd = z0 - len;
   const wp = new THREE.PlaneGeometry(28, zBack - zEnd, 56, 96);

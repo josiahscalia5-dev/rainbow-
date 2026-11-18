@@ -30,3 +30,23 @@ Approved-view check: deterministic `node scripts/capture.mjs 04 --q=<query>` + `
   `.../BEFORE/s_left_steer.png`, `.../BEFORE/s_right_steer.png`
 * NEW: `/home/user/wt/s04/qa/match/04/r9/step1_m04mouth/f03_forward3u.png`, `.../step1_m04mouth/f06_forward6u.png`,
   `.../step1_m04mouth/s_left_steer.png`, `.../step1_m04mouth/s_right_steer.png`
+
+## Step 2 — `&m04room=1` — the laundry room stays in view while approaching (kept, modest)
+* **What looks better while swimming:** at 3 u the laundry room above the opening now reads like the approved top
+  area: the round porthole with its window cross, clouds and bubbles is fully visible below the title (before, it was
+  mostly hidden behind the title), the folded pink / blue towels on the wooden shelf and the console with the glowing
+  T-shirt display and its two buttons are larger and clearer. The room is now a real space BEHIND the washer opening
+  (its own plane 1.8× as far from the approved camera, same approved picture in the approved view), so it recedes
+  slowly instead of rushing up out of the frame; the pink basin around the opening stays where it was and passes in
+  front of the room as Benny gets closer.
+* **Approved view:** unchanged (≤ 6 levels on 11,000 px of the room; whole frame 81.4 %, scenery 98.2 %).
+* **Measured** PALETTE step 1 → step 2: f03 77.9 → 77.2 %, s_left_steer 75.8 → 75.7 %, s_right_steer 75.4 → 75.0 %
+  (colours unchanged; the gain is the room's layout at 3 u). Tried 2.6× (`&m04roomk=2.6`): the basin covers the room
+  sooner — not kept.
+* **Still wrong:** beyond ~5 u the basin edge hides the room (geometry: the camera descends the slide); the basin's top
+  edge is a hard cut line where it passes in front of the room (visible as a thin diagonal edge under the title when
+  steering left).
+* BEFORE (= step 1): `/home/user/wt/s04/qa/match/04/r9/step1_m04mouth/f03_forward3u.png`, `.../step1_m04mouth/s_left_steer.png`,
+  `.../step1_m04mouth/s_right_steer.png`
+* NEW: `/home/user/wt/s04/qa/match/04/r9/step2_m04room/f03_forward3u.png`, `.../step2_m04room/s_left_steer.png`,
+  `.../step2_m04room/s_right_steer.png`

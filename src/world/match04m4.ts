@@ -33,6 +33,7 @@ export const M04 = {
   river: on('m04river'),
   gold: on('m04gold'),
   mouth: on('m04mouth'),
+  room: on('m04room'),
   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
 };
 
