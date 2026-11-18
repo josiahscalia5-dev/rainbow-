@@ -739,3 +739,31 @@ Now I'll add the `m05ride` switch (rider-relative design layout) behind its own 
 > 1526	        // picture as E. Instead: the camera follows Benny, so a point d units past the locked checkpoint needs about
 > 1527	         …[+1266 chars]
 
+### 🤖 Claude — 2026-11-18T02:05:30.938Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    if (pjK > 0.001) {\n      // exact-layer magnification: texels per screen pixel along the least dense direction", "new_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    float s05r = s;\n    float rideK05 = 0.0;\n    #ifdef M05RIDE\n    // m05ride: the design layout follows Benny (see M05RIDE in this file)\n    rid …[+240 chars]`
+
+### 🧑 User — 2026-11-18T02:05:31.032Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:05:32.034Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "        float rideD = uPjNear.z - uPjNear.w;", "new_string": "        float rideD = (uPjNear.z - uPjNear.w) * (1.0 - rideK05);"}`
+
+### 🧑 User — 2026-11-18T02:05:32.073Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:05:33.141Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "...(M05WD ? { M05WD: 1 } : {}) },", "new_string": "...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}) },"}`
+
+### 🧑 User — 2026-11-18T02:05:33.181Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:05:38.533Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && mkdir -p $S/ride1 && timeout 900 node tools/match05/r8_shots.mjs $S/ride1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1\" f10_forward10u,t33_through_screen,t66_through_screen 2>&1 | tail -5", "description": "Render rider-relative water design at three positions", "timeout": 920000}`
+
