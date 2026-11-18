@@ -853,13 +853,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c13/INFO.json",
-   "bytes": 911,
-   "sha256": "bd48585f4462382e8bdfecc67d45283a5e6b08895cee2ca1bcb4c70c0db18518"
+   "bytes": 3152,
+   "sha256": "314c7360c2150eb4a9a2809ab0fb0af5457ad3c1ace84182902a4ce300843bb2"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c13/tracked.patch",
-   "bytes": 1563,
-   "sha256": "420a9e1dcddf6a623a1f1d6c78f6838a118bac9cd3ed4bc66beb4a2792182c68"
+   "bytes": 1823,
+   "sha256": "a996cab1253aba5e8b741d15d6389061eade506cff050a3f8aecb1f3a541c694"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/f06_forward6u.png",
@@ -877,6 +877,11 @@
    "sha256": "fe07b4206515523fa81f3d3a73b5fa75cb698bffa2a87b843e146d25f987b736"
   },
   {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/motion.json",
+   "bytes": 5174,
+   "sha256": "705bd692c87dda697423f454c79ea24ad8db59b269059ab9b8232cb7710750de"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/s_left_hard.png",
    "bytes": 1616064,
    "sha256": "c9b945ed296db5440ad6b9a83f0d48bd5826f8da4d0cce05d9ae6446550cbe1e"
@@ -887,9 +892,79 @@
    "sha256": "209bab0025d30711ae5aa1a8e8aa00d5f173381c3aeef9351ca4114646480d77"
   },
   {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/s_right_hard.png",
+   "bytes": 1611645,
+   "sha256": "a46ac955b5e3c19e28d2e879c77514513efd98942623504b37057877d73002f8"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/s_right_steer.png",
    "bytes": 1995143,
    "sha256": "fda1228224df68176a3e2cdb3bb2b9925b7aa7b4f0f0d89a162c20523571f255"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/t33_through_screen.png",
+   "bytes": 1655039,
+   "sha256": "654fbe3310be719841ffcd2e4c4331b17a55749601b11ac8635acbebc4f09f9d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/t66_through_screen.png",
+   "bytes": 1676518,
+   "sha256": "b90d8109232f8acdbca1e6419edd8867905565b5d9cce7863e949695033c3e8e"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G1/t95_through_screen.png",
+   "bytes": 1642753,
+   "sha256": "2286009c6c3a568bd91c5f87e5fff1e7a9653fdbb0cbaade8f4302faa039588c"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/f06_forward6u.png",
+   "bytes": 1924186,
+   "sha256": "aaa718b15508a03241c6e4125f03fae5f9f9ea55cc327e049a72c68e05fbe4b0"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/f10_forward10u.png",
+   "bytes": 1676237,
+   "sha256": "7891135c35c2a9f348fcb77311e41ab1b04696e961e3bd99943049ec9e14108d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/f20_forward20u.png",
+   "bytes": 1639573,
+   "sha256": "a7c9e0142555f8595a9bdace094d4690df6a3699c71f8f741e81d0699b4fbb29"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/motion.json",
+   "bytes": 5178,
+   "sha256": "ab0f5d6640244e3882b7d376598cc1c0fa85ac90b15771bcefbf251703c57261"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/s_left_hard.png",
+   "bytes": 1614677,
+   "sha256": "33559aeabba05ea4dca3ff72e1d502b01ac9e079001a8173a495534e2670723f"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/s_left_steer.png",
+   "bytes": 1949156,
+   "sha256": "93aed6d3c0b231e135a3c2b429244f97ea321e308e7ee7bf48eefa17e5669f97"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/s_right_hard.png",
+   "bytes": 1573783,
+   "sha256": "7f8c558354a3256414dc138252b329f45770f8fa20099b047006af46f821d9ce"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G2/s_right_steer.png",
+   "bytes": 1958667,
+   "sha256": "3cf1aa517fef923758f127201703c2030f496e510683dcabfd1ea01b31dfda7b"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G3/motion.json",
+   "bytes": 5172,
+   "sha256": "5ea5c146f61f9e6db96cbdf5d7a4e684714141682d4c7d720d8c9923448abef2"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c13/untracked/qa/match/04/r13/s8_glow/G4/motion.json",
+   "bytes": 5173,
+   "sha256": "487b7980986b3b5913484f77e08892df35ace4eb06ac1e94039997c2b4beaad2"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -923,13 +998,23 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/INFO.json",
-   "bytes": 1094,
-   "sha256": "d0bb79d8c4663c7b2dfdd523503e68b82a95972b9f148aa285023dcd2f60d903"
+   "bytes": 1648,
+   "sha256": "d3c6c741e6d6228f467f774b84020af4fb7200de7976aa3fee63d8e7227379f1"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/tracked.patch",
    "bytes": 6429,
    "sha256": "949b26d69383523be27fa26d58d74ca69a8a01f4b7a442b63707624ad47beaf1"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-match-c13/untracked/qa/match/05/r13/step4_m05vee/before/shots.json",
+   "bytes": 49206,
+   "sha256": "56aa1a6cbc7fbd22d389e90a658e9700656d8e70a75fcb237a8b26e4b71f191c"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-match-c13/untracked/qa/match/05/r13/step4_m05vee/new/shots.json",
+   "bytes": 49215,
+   "sha256": "07d6f7438eb1079e91c4033c0f441b88323b07b426ac58446577f3284d2f50be"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -988,8 +1073,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/INFO.json",
-   "bytes": 485,
-   "sha256": "6dd4be0c5f61e00294df32ac2bd4c4835dee41a57799e36cfd7ba332f53d8781"
+   "bytes": 513,
+   "sha256": "31563dbb46c6c5c8177fee6e40e4d17e628a21f3789b5556b65d532fc928a249"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c13/untracked/tools/match08/nq08.py",
+   "bytes": 9863,
+   "sha256": "05b69a51d7f9b6ae18fe1e61cd1b200f97196ac8243d66733be7c2a35ebcec66"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
