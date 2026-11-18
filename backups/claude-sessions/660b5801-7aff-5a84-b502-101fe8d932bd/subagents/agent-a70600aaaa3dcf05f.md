@@ -1968,3 +1968,12 @@ Now task 2. I'll read the atlas row under the smeared left wall at t81L.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"$(cat qa/match/05/r16/KEPT_START.txt | tr -d '\\n')&m05trans=1\" && echo \"$K\" > qa/match/05/r17/KEPT_STEP1.txt && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2 && EXTRA_JS=\"$(cat $S/coords_extra.js)\" GRID='0,0' timeout 900 node tools/match05/r15_probe.mjs \"$K\" t81L 5275 2>&1 | tail -5", "description": "Read wall atlas coordinates at hard-left pixels", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T21:08:27.524Z
+
+> ↩︎ result: == t81L s 178.895 stage 05 cam -0.24,-39.26,-114.32 far-open 0 extra [[60,300,0.454,397.9,7,77],[100,700,0.5619,397.7,7,77],[40,1100,1.291,40.9,0.6967359781265259,1],[100,1050,0.6184,375.3,7,77],[200,900,0.6163,394.9,7,77],[30,500,0.5058,396.5,7,77],[150,250,0.4282,366.5,8,78],[250,350,0.4436,423.1,7,77],[20,800,0.5736,389.8,7,77],[180,1000,0.6248,388.8,7,77],[300,600,0.5626,431.4,7,77]]
+>    0,0 water_ribbon<water_system<Scene d15.56 | tube05_far_river<zone_tubes<washer_world<Scene d16.38 | tube05_far_wall<zone_tubes<washer_world<Scene d18.55
+
+### 🤖 Claude — 2026-11-18T21:08:27.714Z
+
+You've hit your 5-hour limit · resets 1:20am (UTC)
+

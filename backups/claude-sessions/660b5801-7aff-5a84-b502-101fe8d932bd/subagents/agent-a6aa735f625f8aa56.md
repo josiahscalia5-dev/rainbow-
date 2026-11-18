@@ -867,3 +867,33 @@ Load is high (10–14 on 4 cores), so I'll keep renders minimal. Let me look at 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T21:09:15.276Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nm=np.array(Image.open('assets/textures/match06/mask06.png').convert('RGBA')).astype(int)\nprint('R uniques', np.unique(m[...,0])[:20], len(np.unique(m[...,0])))\nprint('G uniques', len(np.unique(m[...,1])))\nfm=np.array(Image.open('assets/textures/match06/plate06_fillmask.png').convert('L'))\nprint('fm uniques', np.unique(fm)[:10])\nr=m[...,0]>127; print('R in fill', (r & (fm>127)).sum(), 'R not in fill', (r & (fm<=127)).sum())\n\"; sed -n 1,30p tools/match06/make_masks06.py", "description": "Chec …[+60 chars]`
+
+### 🧑 User — 2026-11-18T21:09:15.625Z
+
+> ↩︎ result: R uniques [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19] 256
+> G uniques 256
+> fm uniques [  0 255]
+> R in fill 155435 R not in fill 59004
+> """Screen 06 (?match06=1, r3 2026-11-17): masks on the approved picture (864x1536) for the moving camera.
+>   R = Benny's provisional fill (plate06_fillmask.png inside Benny's box): the river floor shows the painted-water tile
+>       there instead of the blurry fill (the game Benny covers it in the approved view; seen from 3 u forward it was a
+>       white smear on the water)
+>   G = where the picture shows NO painted water (tunnel walls, rings, the wall seen through the river's crest loop, the
+>       foam banks): if the river FLOOR carries such pixels, it shows the painted-water tile instead once the camera leaves
+>       the approved view (they were seen as an upside-down tunnel copy under Benny at 6 u forward / when steering)
+> Hand-traced polygons on references/06_crest_the_rinse_arch.png; check picture: qa/match/06/masks06_check.png
+> usage: python3 -I tools/match06/make_masks06.py <plate dir> <qa dir>"""
+> import sys
+> import numpy as np, cv2
+> 
+> d, q = sys.argv[1], sys.argv[2]
+> A = cv2.imread(f"{d}/plate06_hybrid.png"); H, W = A.shape[:2]
+> fill = cv2. …[+1197 chars]
+
+### 🤖 Claude — 2026-11-18T21:09:15.793Z
+
+You've hit your 5-hour limit · resets 1:20am (UTC)
+

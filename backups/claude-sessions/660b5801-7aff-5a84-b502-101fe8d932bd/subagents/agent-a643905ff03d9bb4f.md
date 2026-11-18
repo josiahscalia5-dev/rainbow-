@@ -1731,3 +1731,32 @@ The thick magenta bank works, but the clouds read as flat lens shapes with strai
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T21:08:26.194Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 103, "limit": 65}`
+
+### 🧑 User — 2026-11-18T21:08:26.223Z
+
+> ↩︎ result: 103	// r16 m07nearw: [foam | magenta | trim | cyan | cyan | trim | magenta | foam] across a winding centre line, world-anchored.
+> 104	// Both banks are the painted lower-left band straightened (tools/match07/near_tiles_r16.py) at about the painted near
+> 105	// scale; the right bank reads another stretch of the strip (no mirror image across the centre).
+> 106	float h07(float n) { return fract(sin(n * 12.9898 + 4.1) * 43758.5453); }
+> 107	// r17 m07nearf: separate puffy foam CLOUDS on the bank beyond the magenta band — three rows of round puffs (world-anchored
+> 108	// cells along the river, random size / place, some cells empty so clusters stand apart and the magenta bank shows
+> 109	// between them); the highest puff wins, so overlapping puffs make lumpy clusters with crevices. xyz = puff normal
+> 110	// (tube-local), w = coverage (anti-aliased)
+> 111	vec4 nearClouds(float along, float a, float side, float Rb) {
+> 112	  float L = uNearF.y;
+> 113	  float i0 = floor(along / L);
+> 114	  float best = -1.0, dd = 2.0;
+> 115	  vec3 N = vec3(0.0, 1.0, 0.0);
+> 116	  for (int row = 0; row < 3; row++) {
+> 117	    float fr = float(row);
+> 118	    for (int k = -1; k <= 1; k++) {
+> 119	      float i = i0 + float(k);
+> 120	     …[+2804 chars]
+
+### 🤖 Claude — 2026-11-18T21:08:26.444Z
+
+You've hit your 5-hour limit · resets 1:20am (UTC)
+
