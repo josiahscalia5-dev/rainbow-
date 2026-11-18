@@ -5,7 +5,8 @@ small (the projection is magnified ~5x along the river there): stretched, blurre
 just below Benny (4.5-6.5 u ahead of the approved camera, rows ~1250-1520) is the crisp painted river: magenta left,
 cyan centre, white glossy streaks, foam fringes on both banks. This unrolls that band into river coordinates
 (lateral position across the painted river, -1 = left bank .. +1 = right bank, x 1.1 margin; distance along the river),
-removes the three bubbles (they would repeat) and writes a tile the floor shader repeats (mirrored) along the river
+removes the three bubbles (they would repeat; filled along the flow) and writes a tile the floor shader repeats along the river
+(periodic, the wrap cross-faded)
 where the projection is magnified, fading in only away from the approved viewpoint (src/world/match08.ts).
 usage: python3 -I tools/match08/near08.py <outPng> <outJson> [<debugDir>]
 """
@@ -56,15 +57,35 @@ px, py = project(P)
 sx, sy = (px * Wp / W).astype(np.float32), (py * Hp / H).astype(np.float32)
 tile = cv2.remap(plate, sx, sy, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
 # bubbles (frame px centre, radius) -> masks in tile space
-mask = np.zeros(tile.shape[:2], np.uint8)
+mask = np.zeros(tile.shape[:2], bool)
 for bx, by, br in [(260, 1425, 36), (318, 1452, 15), (600, 1286, 24)]:
-    mask |= (((px - bx) ** 2 + (py - by) ** 2) < br ** 2).astype(np.uint8)
-mask = cv2.dilate(mask, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
-t8 = np.clip(tile, 0, 255).astype(np.uint8)
-t8 = cv2.inpaint(t8, mask * 255, 9, cv2.INPAINT_TELEA)
+    mask |= ((px - bx) ** 2 + (py - by) ** 2) < br ** 2
+mask = cv2.dilate(mask.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))).astype(bool)
+# fill along the flow (tile columns run along the river): each masked texel = blend of the nearest clean texels above and
+# below in its own column, so the painted streaks continue through the hole instead of a flat smudge
+for i in np.where(mask.any(0))[0]:
+    col = mask[:, i]; good = np.where(~col)[0]
+    for j in np.where(col)[0]:
+        lo = good[good < j]; hi = good[good > j]
+        if len(lo) and len(hi):
+            a, b = lo[-1], hi[0]; w = (j - a) / (b - a); tile[j, i] = (1 - w) * tile[a, i] + w * tile[b, i]
+        elif len(lo): tile[j, i] = tile[lo[-1], i]
+        elif len(hi): tile[j, i] = tile[hi[0], i]
+# periodic along the river: the far OV texels are cross-faded into the near start, so the tile repeats without a mirror
+# seam (mirrored repeats drew chevrons where the slanted streaks reflect)
+OV = int(NV * 0.3)
+P = NV - OV
+per = tile[:P].copy()
+w = (np.arange(OV) / OV)[:, None, None]
+per[:OV] = (1 - w) * tile[P:P + OV] + w * tile[:OV]
+t8 = np.clip(per, 0, 255).astype(np.uint8)
 Image.fromarray(t8).save(out_png)
-json.dump({'A': A, 'zLen': float(Z0 - Z1), 'texelsPerU': [NU / (2 * A * float(np.mean(rows[:, 2]))), NV / float(Z0 - Z1)],
-           'note': 'u = 0.5 + a / (2A), a = lateral / painted half width; v = distance along the river / zLen (mirrored repeat)'},
+# the painted water incl. its foam fringe spans a = WL .. WR (read on the tile: left foam outer edge, right foam before
+# the gold arch leg); the shader maps the swim lane's banks onto these so no arch-leg gold is repeated along the river
+WL, WR = -0.92, 0.76
+json.dump({'A': A, 'z0': float(Z0), 'zLen': float(Z0 - Z1) * P / NV, 'bandLen': float(Z0 - Z1), 'halfWidth': float(np.mean(rows[:, 2])),
+           'waterA': [WL, WR], 'texelsPerU': [NU / (2 * A * float(np.mean(rows[:, 2]))), NV / float(Z0 - Z1)],
+           'note': 'u = 0.5 + a / (2A), a = lateral / painted half width; v = (z0 - z) / zLen (periodic repeat, wrap cross-faded)'},
           open(out_json, 'w'), indent=1)
 if dbg:
     Image.fromarray(np.clip(tile, 0, 255).astype(np.uint8)).save(f'{dbg}/near08_raw.png')

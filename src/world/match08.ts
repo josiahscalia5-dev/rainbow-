@@ -75,6 +75,10 @@ uniform vec4 uClipIn;       // m08far collar only: discard inside this x/y circl
 uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on
 uniform vec4 uCeil;         // m08ceil (door wall only): painted door centre x, y on the door plane, plane z, w > 0.5 = on
 uniform vec4 uCeilW;        // m08ceil source window: angle start, angle width (rad), radius band start, end (world u)
+uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from the approved picture's own near band (near08.py)
+uniform vec4 uNear;         // z at tile v = 0, world length of one tile period along the river, tile lateral half range A, w > 0.5 = on
+uniform vec4 uNearM;        // projection magnification ramp start / end, lateral fade start / end (|lane position|, 1 = bank)
+uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -181,6 +185,23 @@ void main() {
       t = mix(base, texture2D(uPlate, uv).rgb, vis * keep);
     }
   }
+  // m08near: where the moving camera sees the floor projection magnified (it shows plate pixels the approved view saw far
+  // away and small: smeared streaks), the crisp painted near river takes over, world-anchored along the painted river
+  // (lateral = position across the swim lane, banks on the painted foam fringe; along = repeating with z). Off the
+  // approved viewpoint only (approved view unchanged).
+  if (uNear.w > 0.5) {
+    // (measured on the plain projection: the swim remap is piecewise, its kinks would make the hand-over jump)
+    vec2 pu = vProj.xy / max(vProj.w, 1e-4) * 0.5 * uPjRes;
+    float det = abs(dFdx(pu).x * dFdy(pu).y - dFdx(pu).y * dFdy(pu).x);
+    float mag = vProj.w > 0.0 ? inversesqrt(max(det, 1e-8)) : 99.0;
+    float mn = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
+    vec2 r = riv(vW.z);
+    float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mn);
+    float sl = (vW.x - r.x) / h;
+    vec2 tuv = vec2(0.5 + (uNearC.x + uNearC.y * sl) / (2.0 * uNear.z), (uNear.x - vW.z) / uNear.y);
+    float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
+    if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
+  }
   gl_FragColor = vec4(pjInverse(t), 1.0);
 }`;
 
@@ -274,6 +295,15 @@ export async function buildMatch08(): Promise<Match08> {
     tMaskTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/towel08_mask.png', import.meta.url).href);
     tMaskTex.colorSpace = THREE.NoColorSpace;
   }
+  // `&m08near=1` (r11): crisp near-river tile cut from the approved picture's own near river band (tools/match08/near08.py)
+  let nearTex: THREE.Texture | null = null;
+  let NJ: { A: number; z0: number; zLen: number; halfWidth: number; waterA: [number, number] } | null = null;
+  if (swimOn && flag05('m08near')) {
+    NJ = await fetch(new URL('../../assets/textures/match08/near08.json', import.meta.url).href).then((r) => r.json());
+    nearTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/near08.png', import.meta.url).href);
+    nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = THREE.ClampToEdgeWrapping; nearTex.wrapT = THREE.RepeatWrapping;
+    nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
+  }
   const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
@@ -282,12 +312,25 @@ export async function buildMatch08(): Promise<Match08> {
       uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ },
       uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
       uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) },
-      uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) } },
+      uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) },
+      uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
+      uNearC: { value: new THREE.Vector2(0, 1) } },
   });
   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
   const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
 
   if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;
+  if (nearTex && NJ) {
+    // lane banks (+-SWIM_HALF) onto the painted foam fringe; along the river the tile keeps the painted proportions
+    // (same scale as across: the lane is ~2x the painted near river, so the painted pattern is shown ~2x larger, unstretched)
+    const q = new URLSearchParams(location.search), num = (k: string, d: number) => Number(q.get(k) ?? '') || d;
+    const c = (NJ.waterA[0] + NJ.waterA[1]) / 2, hw = (NJ.waterA[1] - NJ.waterA[0]) / 2;
+    const kIso = SWIM_HALF / hw / NJ.halfWidth;
+    const u = M.floor.uniforms;
+    u.uNear.value.set(NJ.z0, NJ.zLen * kIso * num('m08nearv', 1), NJ.A, 1);
+    u.uNearM.value.set(num('m08nearm0', 1.6), num('m08nearm1', 2.6), num('m08nearl0', 0.85), num('m08nearl1', 1.0));
+    u.uNearC.value.set(c, hw);
+  }
   const group = new THREE.Group();
   group.name = 'match08_projection';
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm08_' + name; group.add(o); return o; };

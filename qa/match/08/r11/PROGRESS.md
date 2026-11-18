@@ -39,3 +39,33 @@ Kept query: `K10&m08ceil=1`
   (forced perspective, the reviewer's suggestion); because the painted legs stand inside the steering lane, Benny would
   pass through them when steering hard, and it is the "picture following Benny" the user rejected → user's decision,
   not built. m08far (top band + upper legs) stays the best fixed-world framing.
+
+## Step 2 — `&m08near=1` (defect B: smeared, stretched near water while swimming and steering) — KEPT
+Kept query: `K10&m08ceil=1&m08near=1`
+* Cause: once Benny has swum a few units, the water right in front of the camera shows plate pixels that the approved
+  view saw far away and small (the projection is magnified 2–12× there, most at the stage end and when steering), so the
+  painted streaks became long blurred smears filling the bottom of the frame.
+* What changed (`tools/match08/near08.py` → `assets/textures/match08/near08.png/.json`, floor shader in
+  `src/world/match08.ts`): the approved picture's OWN crisp near river band (rows ≈ 1250–1500 below Benny: magenta at
+  the left, cyan centre, white glossy streaks and glints) is unrolled into river coordinates (across the river × along
+  it), the three bubbles there are filled along the flow (the streaks continue through), the band is made to repeat along
+  the river without a mirror seam, and it is laid world-anchored along the painted river (follows the S: centre and
+  width from `river08.json`; its foam banks on the swim lane's banks; painted proportions kept, no stretch). It takes
+  over only where the moving camera sees the projection magnified (measured per pixel on the plain projection), and
+  only away from the approved viewpoint: approved view = 594 px differ, max 12 levels, all in the HUD title font
+  (deterministic `scripts/capture.mjs 08 --q=` with / without the switch), i.e. scenery unchanged.
+* What looks closer: the water in front of and beside Benny is now the painted water — crisp cyan with white glossy
+  glints and a magenta band on the left, like the bottom of the approved picture — instead of vertical blurred smears
+  (forward 6 / 10 u, two-thirds through, stage end) and instead of a stretched magenta smear when steering hard left
+  or right. The S-river further ahead, the banks, foam, cups and walls are unchanged.
+* Still wrong: the painted glints are shown about 2× larger than painted (the swim lane is about twice the painted near
+  river's width, and the design is scaled evenly rather than stretched); in the first ≈ 3 u (forward 3 u, one-third
+  through) the projection is only mildly magnified and keeps its softer streaks plus one straight-edged step in the
+  magenta water at the lower left (the swim-lane widening; it was there before); tried an earlier hand-over
+  (`m08nearm0=1.25&m08nearm1=2.1`) → double-image ghosting at forward 3 u, NOT kept; tried longer streaks along the
+  flow (`m08nearv=1.6`) → glints visibly stretched, NOT kept.
+* Benny: sits in the water with his splash at every checked position (forward 6 / 10 u, two-thirds, stage end, hard
+  left / right); not sunk, not floating, not hidden.
+* Images (separate, full size): `/home/user/wt/s08/qa/match/08/r11/step2_m08near/1_APPROVED.png`,
+  `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f06_forward6u`, `f10_forward10u`, `t66_through_screen`,
+  `t95_through_screen`, `s_left_hard`, `s_right_hard` (BEFORE = `K10&m08ceil=1`, rendered fresh, same positions).
