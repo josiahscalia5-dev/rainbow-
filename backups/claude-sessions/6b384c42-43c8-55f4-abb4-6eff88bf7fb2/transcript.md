@@ -1864,3 +1864,50 @@ Now verifying the three workers are actually doing work (not just launched).
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r15/COORDINATION.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-18T18:23:16.103Z
+
+Now the top of the handoff, the next-account prompt, AGENTS_STATUS and TOOL_MANIFEST.
+
+### 🤖 Claude — 2026-11-18T18:23:22.799Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "old_string": "# ▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 14 (round 14) STATE (2026-11-18 ~16:40 UTC, lead branch `ccr-6c7564b1-fmlt1w`)", "new_string": "# ▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 15 (round 15) STATE (2026-11-18 ~18:35 UTC, lead branch `ccr-47b10cec-03c7co`)\n\nStarted from the account-14 lead `ccr-6c7564b1-fmlt1w` @ `58b94d9` (nothing merged; account 14 hit its usage limit at ~17:46 UTC,\nno unfinished code edits lost). Binding visual goal unchanged: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. Br …[+992 chars]`
+
+### 🧑 User — 2026-11-18T18:23:23.088Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:23:30.297Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "old_string": "## ▶ NEWEST (2026-11-18 ~16:40 UTC, account 14 → next account) — use THIS prompt", "new_string": "## ▶ NEWEST (2026-11-18 ~18:35 UTC, account 15 → next account) — use THIS prompt\nBefore pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a\nClaude Code cloud session on the repo, branch **`ccr-47b10cec-03c7co`** (account-15 lead; NOT the default branch). Claude checks\nthe keys first with free reads and opens the secure forms only  …[+1556 chars]`
+
+### 🧑 User — 2026-11-18T18:23:30.544Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:23:42.410Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nd['updated_utc']='2026-11-18T18:35Z'; d['updated_by_session']='account 15 lead, branch ccr-47b10cec-03c7co'\nd['round15_account15']={\n \"updated\":\"2026-11-18T18:35Z\",\"lead_branch\":\"ccr-47b10cec-03c7co\",\n \"coordination\":\"docs/briefs/2026-11-18-r15/COORDINATION.md\",\n \"running\":{\n  \"s04\":{\"agent\":\"foam-bubbles-particles (lead-directed)\",\"branch\":\"claude/rainbow-s04-match-c15\",\"worktree\":\"/home/user/wt/s04\",\"start\":\"fc28323a (-c14 tip)\",\"brief\":\"docs/briefs/2026- …[+2784 chars]`
+
+### 🧑 User — 2026-11-18T18:23:42.501Z
+
+> ↩︎ result: ok
+>  backups/TOOL_MANIFEST.json          |  10 ++++
+>  docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md  |  16 +++++-
+>  4 files changed, 88 insertions(+), 66 deletions(-)
+
+### 🤖 Claude — 2026-11-18T18:23:47.103Z
+
+Now a one-line pointer in CLAUDE.md so the next account finds round 15 first.
+
+### 🤖 Claude — 2026-11-18T18:23:50.056Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "**`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ACCOUNT 14\" (lead `ccr-6c7564b1-fmlt1w`, `-c14` map\n   `docs/briefs/2026-11-18-r14/COORDINATION.md`); before it \"ACCOUNT 13\"", "new_string": "**`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ACCOUNT 15\" (lead `ccr-47b10cec-03c7co`, `-c15` map + reusable\n   launch briefs + four GitHub 3D tools in `docs/briefs/2026-11-18-r15/`); before it \"ACCOUNT 14\" (lead `ccr-6c7564b1-fmlt1w`, `-c14` map\n   `docs/briefs/2026-11-18-r14/COORDINATION.md`); before i …[+18 chars]`
+
+### 🧑 User — 2026-11-18T18:23:50.302Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:23:51.310Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:account15-handoff 2>&1 | tail -4; git log --oneline -1; timeout 60 git ls-remote origin refs/heads/ccr-47b10cec-03c7co; git rev-parse HEAD", "description": "Save handoff docs to GitHub and verify remote SHA"}`
+

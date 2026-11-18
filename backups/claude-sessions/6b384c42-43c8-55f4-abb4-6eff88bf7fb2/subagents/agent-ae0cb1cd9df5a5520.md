@@ -563,3 +563,22 @@ Let me look at the approved picture and the L4 frames.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:23:47.251Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"xW\\b\\|const XF\\|const RY\\|xW =\" src/world/match04m4.ts | head -20; grep -n \"time\\b\\|const time\\|MwInv\\|a5b\" src/world/match04m4.ts | head -10", "description": "Find river geometry variables"}`
+
+### 🧑 User — 2026-11-18T18:23:47.310Z
+
+> ↩︎ result: 673:  const RY = M04.num('m04ry', 1.0);                         // how high the river sides climb the wall (u above the water)
+> 674:  const XF = M04.num('m04xf', 1.9);                         // half width of the flat centre lane (Benny's steering room)
+> 675:  const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
+> 688:      if (au <= kf) { x = (au / kf) * XF; y = 0.02; } else { const t = (au - kf) / (1 - kf); x = XF + (xW - XF) * t; y = 0.02 + RY * t * t; }
+> 732:    console.info('[match04] m04river', { xW, RY, XF });
+> 778:          const d = Math.min(xW - XF + 0.4, rnd() * reach * env + lean * t * 0.5);   // inward from the wall
+> 780:          const tt = Math.max(0, 1 - Math.max(0, d) / Math.max(0.1, xW - XF));
+> 782:          const x = side * (onWall ? xW - 0.12 - rnd() * 0.15 : XF + (xW - XF) * tt - 0.05);
+> 795:          const tt = Math.max(0, 1 - inward / Math.max(0.1, xW - XF));
+> 796:          const x = side * (XF + (xW - XF) * tt - 0.05), y = 0.02 + RY * tt * tt + rad * (0.3 + 0.5 * rnd()) + 0.25 * env * rnd();
+> 849:      const x = edge ? side * (xW - 0.3 - rnd() * 0.9) : side * rnd() * 2.6;
+> 19: *             the other ahead of Benny  …[+911 chars]
+

@@ -1,4 +1,18 @@
-# ▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 14 (round 14) STATE (2026-11-18 ~16:40 UTC, lead branch `ccr-6c7564b1-fmlt1w`)
+# ▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 15 (round 15) STATE (2026-11-18 ~18:35 UTC, lead branch `ccr-47b10cec-03c7co`)
+
+Started from the account-14 lead `ccr-6c7564b1-fmlt1w` @ `58b94d9` (nothing merged; account 14 hit its usage limit at ~17:46 UTC,
+no unfinished code edits lost). Binding visual goal unchanged: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. Branch map,
+services, verdicts: **`docs/briefs/2026-11-18-r15/COORDINATION.md`**; complete reusable launch briefs `S04_LAUNCH.md`,
+`S05_LAUNCH.md`, `S08_LAUNCH.md` there; four GitHub 3D tools (Atlas skills, fSpy, TRELLIS.2, glTF Transform): `GITHUB_3D_TOOLS.md`.
+RUNNING (background agents in the lead container): 04 `claude/rainbow-s04-match-c15` (foam-bubbles-particles, `/home/user/wt/s04`),
+05 `claude/rainbow-s05-match-c15` (water-fx-specialist, `/home/user/wt/s05`), 08 `claude/rainbow-s08-scenery-c15`
+(washer-environment-modeler, `/home/user/wt/s08`); 07 then 06 next. Keys: this account's environment injects World Labs (5,420
+credits, 08 world 200) and fal (01a1ea70 COMPLETED) — no form needed. Atlas connector NOT connected on account 15 (user action).
+If account 15 runs out: `-c16` branches from each NEWEST `-c15` tip; never write `-c15` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶▶▶ ACCOUNT 14 (round 14) STATE (2026-11-18 ~16:40 UTC, lead branch `ccr-6c7564b1-fmlt1w`)
 
 Started from the account-13 lead `claude/rainbow-restore-autosave-1mgga0` (nothing merged; account 13 hit its usage limit at ~15:48
 UTC). Binding visual goal unchanged: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. Branch map, services, verdicts:

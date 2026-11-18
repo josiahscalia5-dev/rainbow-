@@ -403,5 +403,15 @@
   "marble_api": "api.worldlabs.ai key proxy-injected, 5,420 credits, Screen 08 world 32b5b2f4 -> 200",
   "fal": "queue.fal.run key proxy-injected, request 01a1ea70 COMPLETED",
   "huggingface": "public model reads 200; whoami 401 (no token); claude.ai HF connector not connected"
+ },
+ "account15_2026_11_18": {
+  "lead_branch": "ccr-47b10cec-03c7co",
+  "marble": "key injected by env (api.worldlabs.ai, WLT-Api-Key) -> 5420 credits; 08 world 32b5b2f4 -> 200; no paid job",
+  "fal": "queue.fal.run key injected -> request 01a1ea70 COMPLETED; balance only visible on fal.ai -> Billing",
+  "atlas": "claude.ai connector NOT connected on account 15 (no connectors on this account); plugin worldlabs@worldlabs 0.2.2 with skills atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli installed; 04 Atlas test not submitted (price unverified)",
+  "huggingface": "public DA3-LARGE reachable (200); no token; connector not connected; DA3 not installed (no torch) - depth maps saved in qa/da3/2026-11-18/",
+  "github_3d_tools": "docs/briefs/2026-11-18-r15/GITHUB_3D_TOOLS.md (fSpy not installed - GUI app, low value; TRELLIS.2 needs >=24 GB NVIDIA GPU - none here, fal hosted paid; glTF Transform npm @gltf-transform/cli 4.5.1 available via npx, not needed yet)",
+  "hardware": "4 CPU, 15 GB RAM, no GPU, SwiftShader WebGL2",
+  "mcp": "GitHub MCP + Playwright MCP + chrome-devtools available; context7 needs auth (unused)"
  }
 }

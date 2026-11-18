@@ -1,71 +1,10 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-18T16:40Z",
- "updated_by_session": "account 14 lead, branch ccr-6c7564b1-fmlt1w",
+ "updated_utc": "2026-11-18T18:35Z",
+ "updated_by_session": "account 15 lead, branch ccr-47b10cec-03c7co",
  "running_now": {
-  "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md (ACCOUNT 11) then docs/briefs/2026-11-18-r11/COORDINATION.md",
-  "slot_A": {
-   "screen": "08 scenery",
-   "agent": "washer-environment-modeler",
-   "branch": "claude/rainbow-s08-scenery-c11",
-   "from": "e1c7d0b7 (-c10 tip) + account-10 WIP",
-   "worktree": "/home/user/wt/s08",
-   "kind": "background agent in the lead container",
-   "started_utc": "2026-11-18T11:35Z",
-   "task": "upper seam, lower arch while swimming, smeared near water, foam fringes/bubbles/spout cups/slab seams",
-   "log": "qa/match/08/r11/PROGRESS.md",
-   "first_commit": "eed55540 (WIP kept, pushed + verified)",
-   "restarted_utc": "2026-11-18T12:03Z",
-   "resume_from": "46d4b6ee (step 1 m08ceil kept + WIP near08.py)",
-   "note": "first instance stopped by a user interrupt ~12:00 UTC; WIP committed by the lead; relaunched with docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md"
-  },
-  "slot_B": {
-   "screen": "05",
-   "agent": "water-fx-specialist",
-   "branch": "claude/rainbow-s05-match-c11",
-   "from": "bed8253d (-c10 tip) + account-10 WIP &m05unf=1",
-   "worktree": "/home/user/wt/s05",
-   "kind": "background agent in the lead container",
-   "started_utc": "2026-11-18T11:35Z",
-   "task": "m05unf evaluation, smeared walls, far-water corner/blur, seams, near water sheet, cauliflower foam, continuation to 06",
-   "log": "qa/match/05/r11/PROGRESS.md",
-   "restarted_utc": "2026-11-18T12:03Z",
-   "resume_from": "c25327a2 (step 1 m05wtile kept + WIP m05caul/m05fbank)",
-   "note": "first instance stopped by a user interrupt ~12:00 UTC; WIP committed by the lead; relaunched with docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md"
-  },
-  "queue": [
-   "04",
-   "07",
-   "06"
-  ],
-  "ready_next": {
-   "04": {
-    "branch": "claude/rainbow-s04-match-c11",
-    "start": "a24d289c",
-    "brief": "docs/briefs/2026-11-18-r10/S04_R10.md",
-    "agent": "washer-environment-modeler",
-    "worktree": "/home/user/wt/s04 (create when the slot frees)"
-   },
-   "07": {
-    "branch": "claude/rainbow-s07-match-c11",
-    "start": "dbc7678c",
-    "brief": "docs/briefs/2026-11-18-r8/S07.md + r9 BLUEPRINT_07.md"
-   },
-   "06": {
-    "branch": "claude/rainbow-s06-match-c11",
-    "start": "efaf78b7",
-    "brief": "docs/briefs/2026-11-18-r8/S06.md + r9 BLUEPRINT_06.md"
-   }
-  },
-  "restart_if_lost": "git worktree add /home/user/wt/sNN <-c11 branch>; ln -sfn /home/user/rainbow-/node_modules node_modules; apply backups/wip/<branch>/tracked.patch; relaunch the same agent type with COMMON_RULES + RULES_R10 + the screen's r11 PROGRESS.md",
-  "lead_test_06": {
-   "branch": "claude/rainbow-s06-match-c11",
-   "worktree": "/home/user/wt/s06",
-   "switch": "&m06bend=1 (tube bends with the river after the crest)",
-   "log": "qa/match/06/r11/"
-  },
-  "binding_order": "docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md"
+  "_note": "see round15_account15.running (3 background workers in the account-15 lead container, started ~18:25 UTC)"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
@@ -780,5 +719,44 @@
    "06 (from -c11 8182130c; bend method rejected twice)"
   ],
   "restart_if_lost": "create -c15 from the newest -c14 tip, apply backups/wip/<branch>/tracked.patch, relaunch the same agent type with the r13 SPECIALIST_PROMPT_TEMPLATE + resume from qa/match/<NN>/r14/PROGRESS.md"
+ },
+ "round15_account15": {
+  "updated": "2026-11-18T18:35Z",
+  "lead_branch": "ccr-47b10cec-03c7co",
+  "coordination": "docs/briefs/2026-11-18-r15/COORDINATION.md",
+  "running": {
+   "s04": {
+    "agent": "foam-bubbles-particles (lead-directed)",
+    "branch": "claude/rainbow-s04-match-c15",
+    "worktree": "/home/user/wt/s04",
+    "start": "fc28323a (-c14 tip)",
+    "brief": "docs/briefs/2026-11-18-r15/S04_LAUNCH.md",
+    "log": "qa/match/04/r15/PROGRESS.md",
+    "kind": "background agent in the lead container"
+   },
+   "s05": {
+    "agent": "water-fx-specialist",
+    "branch": "claude/rainbow-s05-match-c15",
+    "worktree": "/home/user/wt/s05",
+    "start": "34aadd11 (-c14 tip) + untracked step-4 BEFORE shots",
+    "brief": "docs/briefs/2026-11-18-r15/S05_LAUNCH.md",
+    "log": "qa/match/05/r15/PROGRESS.md",
+    "kind": "background agent in the lead container"
+   },
+   "s08": {
+    "agent": "washer-environment-modeler",
+    "branch": "claude/rainbow-s08-scenery-c15",
+    "worktree": "/home/user/wt/s08",
+    "start": "df4a3bb7 (-c14 tip)",
+    "brief": "docs/briefs/2026-11-18-r15/S08_LAUNCH.md",
+    "log": "qa/match/08/r15/PROGRESS.md",
+    "kind": "background agent in the lead container"
+   }
+  },
+  "queue": [
+   "07 (from -c11 = dbc7678c)",
+   "06 (from -c11 8182130c; bend method rejected twice)"
+  ],
+  "restart_if_lost": "create -c16 from the newest -c15 tip, apply backups/wip/<branch>/tracked.patch + untracked/, relaunch the same agent type with docs/briefs/2026-11-18-r15/S0N_LAUNCH.md (-c15 -> -c16, r15 -> r16) and resume from qa/match/<NN>/r15/PROGRESS.md"
  }
 }
