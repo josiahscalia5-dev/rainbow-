@@ -1004,3 +1004,11 @@ Final reply (short): kept query, final verified SHA, best 3–5 NEW + matching B
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 600 node tools/match05/r8_probe.mjs t66_through_screen \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1\" \"330,630;330,640;330,648;330,655;330,662;330,670;600,630;600,645;600,655;600,665;100,600;100,650\" 5293 2>&1 | tail -14", "description": "Probe surfaces around the t66 seam line", "timeout": 620000}`
 
+### 🧑 User — 2026-11-18T02:47:18.068Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":170.485,"lat":0,"coins":1460,"hearts":5,"paused":false,"bennyY":-43,"bennyVisible":true,"cam":[1.48,-39.46,-104.74]}
+> 330 630 [{"obj":"water_ribbon","s":188.25,"d":3.55,"lat":-3.55,"up":0.2},{"obj":"foam_berm","s":188.25,"d":3.55,"lat":-3.55,"up":0.2},{"obj":"tube05_far_river","s":189.75,"d":3.6,"lat":-3.54,"up":-0.65},{"obj":"tube05_far_wall","s":191.25,"d":3.86,"lat":-3.4,"up":-1.82}]
+> 330 640 [{"obj":"water_ribbon","s":188,"d":3.54,"lat":-3.53,"up":0.18},{"obj":"foam_berm","s":188,"d":3.54,"lat":-3.53,"up":0.14},{"obj":"tube05_far_river","s":189.25,"d":3.59,"lat":-3.56,"up":-0.5},{"obj":"tube05_far_wall","s":191.25,"d":3.92,"lat":-3.4,"up":-1.95}]
+> 330 648 [{"obj":"foam_berm","s":178.25,"d":4.63,"lat":-4.6,"up":0.45},{"obj":"foam_berm","s":178.25,"d":4.63,"lat":-4.61,"up":0.45},{"obj":"water_ribbon","s":187.75,"d":3.52,"lat":-3.52,"up":0.16},{"obj":"tube05_far_river","s":188.5,"d":3.57,"lat":-3.56,"up":-0.27}]
+> 330 655 [{"obj":"foam_berm","s":178,"d":4.57,"lat":-4.54,"up":0.46},{"obj":"foam_berm","s":178,"d":4.58,"lat":-4.56,"up":0.46},{"obj":"water_ribbon","s":187.5,"d":3.52,"lat":-3.51,"up":0.17},{"obj":"tube05_far_river","s":187.75,"d":3.54,"lat":- …[+2017 chars]
+

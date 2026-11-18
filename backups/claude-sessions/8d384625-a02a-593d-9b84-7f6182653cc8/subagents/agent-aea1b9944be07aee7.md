@@ -465,3 +465,39 @@ Final reply (short): kept query, final verified SHA, best 3–5 NEW + matching B
 > 393 [(219, 183, 245), (238, 177, 247), (235, 94, 232)]
 > 396 [(244, 224, …[+2852 chars]
 
+### 🤖 Claude — 2026-11-18T02:47:28.998Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,60p tools/match04/make_tiles04.py; grep -n \"pjInverse\\|PROJ05_INVERSE\" -A12 src/vfx/waterRibbon.ts | head -40", "description": "Read tile maker and pjInverse definition"}`
+
+### 🧑 User — 2026-11-18T02:47:29.040Z
+
+> ↩︎ result: """Screen 04 (?match04=1): design tiles UNWRAPPED from the approved artwork through the locked camera, for the views the
+> approved picture never resolved (moving camera deep in the tunnel / close to the water):
+>   tile_tunnel.png  the painted gold rings on the tunnel wall, angle 0..pi (upper half, mirrored in the shader) x one ring
+>                    band along the axis (TUN_A from the mouth) - follows the ring geometry, no stretching along the walls
+>   tile_river.png   the painted cyan river with ONE chevron arrow, lateral -4..4 u x RIV_A along the slide (repeats down the
+>                    slide, flows in the shader)
+> Source = plate04_hybrid.png (original pixels; coins/Benny filled). usage: python3 -I tools/match04/make_tiles04.py <dir>"""
+> import json, math, sys
+> import numpy as np, cv2
+> d = sys.argv[1]
+> L = json.load(open(f"{d}/proj04.json"))
+> W, H = L["camera"]["size"]; t = math.tan(math.radians(L["camera"]["fov"]) / 2); asp = W / H
+> MW = np.array(L["camera"]["matrixWorld"]).reshape(4, 4).T; C = MW[:3, 3]; R = MW[:3, :3]
+> D, U, X = (np.array(L[k], float) for k in "DUX"); base = np.array(L["water"], float); T = L["tube"]
+> A = cv2.imread(f"{d}/plate04_hybrid.png").astype(np.float32)
+> TUN_A,  …[+5665 chars]
+
+### 🤖 Claude — 2026-11-18T02:47:41.182Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && cat > /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/unwrap_view.py <<'EOF'\nimport json, math, sys\nimport numpy as np, cv2\nd = sys.argv[1]; out = sys.argv[2]; zf = float(sys.argv[3]) if len(sys.argv) > 3 else 0.64\nL = json.load(open(f\"{d}/proj04.json\"))\nW, H = L[\"camera\"][\"size\"]; t = math.tan(math.radians(L[\"camera\"][\"fov\"]) / 2); asp = W / H\nMW = np.array(L[\"camera\"][\"matrixWorld\"]).reshape(4, 4).T; C = MW[:3, 3]; R = MW[:3, …[+1334 chars]`
+
+### 🧑 User — 2026-11-18T02:47:42.533Z
+
+> ↩︎ result: -1.57 3.58 66.63329315185547 791.44775390625
+> -1.57 4.11 14.47484302520752 789.7655029296875
+> 0 3.58 437.3889465332031 432.5786437988281
+> 0 4.11 438.9517822265625 377.0541076660156
+> 1.57 3.58 796.3453979492188 814.9826049804688
+> 1.57 4.11 851.3590698242188 816.7569580078125
+
