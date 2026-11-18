@@ -1,0 +1,40 @@
+diff --git a/tools/match06/r16_shots.mjs b/tools/match06/r16_shots.mjs
+index 2ee2d78..cf7cd1b 100644
+--- a/tools/match06/r16_shots.mjs
++++ b/tools/match06/r16_shots.mjs
+@@ -1,6 +1,9 @@
+ // Screen 06 round 16: the lead's motion-audit shots (tools/lead_r6/motion_audit.mjs, same positions), but only the named
+ // subset, so a visual step renders just the views it needs (CPU shared by six workers). Port 5276.
+ //   node tools/match06/r16_shots.mjs <outDir> "<query>" a00,f03,f10,...
++// R16_DET=1: deterministic (BEFORE and NEW land on exactly the same spot): no real-time frames after the fixed-step ride,
++// the page clock is frozen and the frame is drawn once (the lead's audit runs two real-time frames, which under CPU load
++// moves the view by a varying 0.3-1.1 u)
+ import { mkdirSync, writeFileSync } from 'node:fs';
+ import { pathToFileURL } from 'node:url';
+ const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+@@ -24,8 +27,9 @@ try {
+   page.on('console', (m) => { const t = m.text(); if (t.includes('[match06]')) console.log(t); });
+   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
++  const DET = process.env.R16_DET === '1';
+   for (const [name, dist, steer] of SHOTS) {
+-    const st = await page.evaluate(async ([id, dist, steer]) => {
++    const st = await page.evaluate(async ([id, dist, steer, DET]) => {
+       const r = window.__rainbow; r.goto(id);
+       const s0 = r.state().s;
+       const stg = r.course.stage(id);
+@@ -34,9 +38,12 @@ try {
+       r.setSteer(steer);
+       let n = 0; while (r.state().s < target - 1e-3 && n < 4000) { r.step(1); n++; }
+       r.setSteer(null);
+-      r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
++      if (DET) {
++        if (!window.__pnow) { window.__pnow = performance.now.bind(performance); performance.now = () => 50000; }
++        r.freezeAt(12); r.drawList();
++      } else { r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false); }
+       return { ...r.state(), frames: n, s0, s1, target };
+-    }, ['06', dist, steer]);
++    }, ['06', dist, steer, DET]);
+     await page.waitForTimeout(150);
+     await page.screenshot({ path: `${OUT}/${name}.png` });
+     log.push({ name, dist, steer, ...st });

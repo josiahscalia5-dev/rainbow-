@@ -1134,3 +1134,29 @@ The log line shows only five properties because the browser truncates object pre
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T19:40:47.503Z
+
+Step 4 looks almost identical to step 3. Let me measure whether the switch changed anything, and where.
+
+### 🤖 Claude — 2026-11-18T19:40:51.277Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && python3 -c \"\nimport numpy as np; from PIL import Image\nfor s in ['f20_forward20u','f06_forward6u']:\n  a=np.asarray(Image.open('v3_lip/'+s+'.png').convert('RGB')).astype(int); b=np.asarray(Image.open('v4_warm/'+s+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).sum(2); m=d>12; ys,xs=np.nonzero(m[180:]); \n  print(s, m[180:].sum(), (xs.min(),xs.max(),ys.min()+180,ys.max()+180) if len(xs) else None)\n\"", "description": "Diff step 3 vs step 4 frames"}`
+
+### 🧑 User — 2026-11-18T19:40:53.406Z
+
+> ↩︎ result: f20_forward20u 491900 (np.int64(0), np.int64(863), np.int64(373), np.int64(1535))
+> f06_forward6u 971874 (np.int64(0), np.int64(863), np.int64(180), np.int64(1535))
+
+### 🤖 Claude — 2026-11-18T19:40:57.989Z
+
+The frames differ everywhere because the water animates (time is not frozen in the audit), so a raw diff tells me nothing. Instead I'll compare the ring colour in rings around the end glow.
+
+### 🤖 Claude — 2026-11-18T19:41:01.780Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04b && python3 -c \"\nimport numpy as np; from PIL import Image\nfor s in ['f20_forward20u']:\n  for v in ['v3_lip','v4_warm']:\n    a=np.asarray(Image.open(v+'/'+s+'.png').convert('RGB')).astype(float)\n    # find the glow ball: brightest blob in the middle region\n    sub=a[500:900,300:600].sum(2); y,x=np.unravel_index(np.argmax(sub),sub.shape); cy,cx=y+500,x+300\n    yy,xx=np.mgrid[0:1536,0:864]; r=np.hypot(yy-cy,xx-cx); up=yy<cy\n    out=[]\n    for r0,r1 in [(40,60),(60,80),(80,100),(100,130 …[+182 chars]`
+
+### 🧑 User — 2026-11-18T19:41:02.808Z
+
+> ↩︎ result: v3_lip (np.int64(404), np.int64(729)) [(40, [200, 109, 55]), (60, [198, 108, 43]), (80, [199, 106, 42]), (100, [190, 96, 39]), (130, [188, 93, 42])]
+> v4_warm (np.int64(404), np.int64(729)) [(40, [204, 112, 57]), (60, [203, 112, 45]), (80, [204, 111, 47]), (100, [198, 103, 47]), (130, [194, 98, 48])]
+

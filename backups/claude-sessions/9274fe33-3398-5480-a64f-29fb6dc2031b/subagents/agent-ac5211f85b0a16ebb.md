@@ -1428,3 +1428,17 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's#await page.screenshot({ path: `${OUT}/${name}.png` });#await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });#' tools/match08/shots08.mjs && grep -n \"screenshot\" tools/match08/shots08.mjs && M08_DET=1 M08_ONLY=f10 node tools/match08/shots08.mjs 08 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/dbguv2 \"$(cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/K15.txt)&m08dbgvk=2\" 2>&1 | grep -v \"allow list\" && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude …[+313 chars]`
 
+### 🧑 User — 2026-11-18T19:40:50.481Z
+
+> ↩︎ result: 4:// M08_DET=1 (r15): no real-time frames before the screenshot (exactly the stepped positions, repeatable BEFORE / NEW)
+> 45:    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });
+> 08 f10_forward10u s 401.5 lat 0 stage 08 frames 63
+
+### 🤖 Claude — 2026-11-18T19:40:53.259Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/uv_notchL.png"}`
+
+### 🧑 User — 2026-11-18T19:40:53.371Z
+
+> ↩︎ result: [image]
+
