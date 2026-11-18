@@ -1,0 +1,30 @@
+{
+  "time": "2026-11-18T21:53:11.386127+00:00",
+  "base": {
+    "branch": "claude/rainbow-s07-match-c17",
+    "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+  },
+  "branch": "codex/s07-painted-paddle-face",
+  "paths": [
+    "src/world/match07.ts",
+    "assets/textures/match07/paddleFace07.png"
+  ],
+  "lead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "remoteHeadCountAtCheck": 138,
+  "experimentSource": "851bf53f1ae7b21175c7d8fe727760b18a3f82ca",
+  "referencePath": "references/07_dive_the_washer_tube.png",
+  "referenceSHA256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9",
+  "matchRule": "All 864 \u00d7 1536 pixels, including HUD and Benny. Mean absolute RGB channel error \u226420 in 8-bit RGB. Pixelmatch 7.1.0 threshold 0.1, includeAA false.",
+  "capture": {
+    "renderer": "Three.js in Chromium 156, SwiftShader",
+    "control": "Playwright 1.57, fixed 1/60 simulation steps",
+    "resolution": "864 \u00d7 1536 stills, 324 \u00d7 576 H.264 clips at 12 frames per second",
+    "baseline": "Retained features at the recorded Claudia specialist tip",
+    "passed": "Production build and the existing eight gameplay assertions in both variants"
+  },
+  "retainedQuery": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1",
+  "experimentFlag": "cx07PaddleFace=1"
+}
