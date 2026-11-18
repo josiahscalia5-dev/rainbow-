@@ -1305,3 +1305,94 @@ I'll add a temporary log line (JSON, so it isn't truncated) with the tunnel leng
 
 > ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
 
+### 🤖 Claude — 2026-11-18T19:46:48.246Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)", "new_string": "uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)\nuniform vec4 uRDots;       // r16 m04rpdots: x = amount, y = dot cells per ring, z = fraction of cells lit, w = core radius (u)"}`
+
+### 🧑 User — 2026-11-18T19:46:48.287Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:46:53.872Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen", "new_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen\n      if (uRDots.x > 0.0) {\n        // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,\n        // ~14-16 per ring, some cells dark), on the painted bright lip line; world-anchored. Far dots keep ~1 px size\n        …[+972 chars]`
+
+### 🧑 User — 2026-11-18T19:46:53.957Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:46:55.222Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "M04.num('m04rww', 0.45)) },", "new_string": "M04.num('m04rww', 0.45)) },\n        uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.05)) },"}`
+
+### 🧑 User — 2026-11-18T19:46:55.247Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:46:57.456Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 108, "limit": 3}`
+
+### 🧑 User — 2026-11-18T19:46:57.471Z
+
+> ↩︎ result: 108	uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring
+> 109	uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)
+> 110	varying vec4 vProj;
+
+### 🤖 Claude — 2026-11-18T19:46:58.243Z
+
+> 🔧 **Grep** `{"pattern": "moving polished sheen|m04rww", "path": "/home/user/wt/s04b/src/world/match04m4.ts", "output_mode": "content"}`
+
+### 🧑 User — 2026-11-18T19:46:58.357Z
+
+> ↩︎ result: 307:      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
+> 622:        uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector4(M04.num('m04rpsl', 0.79), 0, M04.num('m04rpsh', 0.15), 0) }, uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rww', 0.45)) },
+
+### 🤖 Claude — 2026-11-18T19:47:00.294Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 305, "limit": 4}`
+
+### 🧑 User — 2026-11-18T19:47:00.341Z
+
+> ↩︎ result: 305	        pr *= mix(vec3(1.0), wg, uRWarm.x);
+> 306	      }
+> 307	      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
+> 308	      // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint
+
+### 🤖 Claude — 2026-11-18T19:47:00.943Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 621, "limit": 2}`
+
+### 🧑 User — 2026-11-18T19:47:01.046Z
+
+> ↩︎ result: 621	        uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+> 622	        uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector4(M04.num('m04rpsl', 0.79), 0, M04.num('m04rpsh', 0.15), 0) }, uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rww', 0.45)) },
+
+### 🤖 Claude — 2026-11-18T19:47:04.064Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)", "new_string": "uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)\nuniform vec4 uRDots;       // r16 m04rpdots: x = amount, y = dot cells per ring, z = fraction of cells lit, w = core radius (u)"}`
+
+### 🧑 User — 2026-11-18T19:47:04.122Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:47:09.320Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen", "new_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen\n      if (uRDots.x > 0.0) {\n        // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,\n        // ~14-16 per ring, some cells dark), on the painted bright lip line; world-anchored. Far dots keep ~1 px size\n        …[+972 chars]`
+
+### 🧑 User — 2026-11-18T19:47:09.383Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:47:10.714Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "M04.num('m04rww', 0.45)) },", "new_string": "M04.num('m04rww', 0.45)) },\n        uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.05)) },"}`
+
+### 🧑 User — 2026-11-18T19:47:10.775Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:47:11.432Z
+
+You've hit your 5-hour limit · resets 11:50pm (UTC)
+

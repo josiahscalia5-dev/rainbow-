@@ -1,8 +1,8 @@
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 3dc3496..b3d9258 100644
+index 3dc3496..a7a0dfd 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
-@@ -222,6 +222,77 @@ void main() {
+@@ -222,6 +222,82 @@ void main() {
    if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
  }`;
  
@@ -15,12 +15,14 @@ index 3dc3496..b3d9258 100644
 +varying vec2 vUv;
 +varying float vS;
 +varying float vF;
++varying float vPx;
 +void main() {
 +  vUv = uv * 2.0 - 1.0;
 +  vS = aS;
 +  vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);
 +  vF = smoothstep(uNear.x, uNear.y, -mv.z);
 +  mv.xy += position.xy * aB.w * 2.0 * vF;
++  vPx = aB.w * vF * projectionMatrix[1][1] / max(-mv.z, 0.1); // on-screen radius (fraction of the half-height)
 +  gl_Position = projectionMatrix * mv;
 +}`;
 +// colours = the approved picture's foam heaps (display values, lower corners + crest): white tops (253,252,253), pale
@@ -31,6 +33,7 @@ index 3dc3496..b3d9258 100644
 +varying vec2 vUv;
 +varying float vS;
 +varying float vF;
++varying float vPx;
 +${PROJ05_INVERSE}
 +float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 +void main() {
@@ -51,7 +54,9 @@ index 3dc3496..b3d9258 100644
 +  col = mix(col, cW, smoothstep(0.62, 0.92, lt));
 +  if (lobe) {
 +    // bubble pores on the shaded lower part of a foam lobe (the painted froth texture)
-+    vec2 q = vUv * 4.5 + s * 17.0;
++    // pores keep the painted bubble size: more, finer pores on lobes that are big on screen (near the camera)
++    float cells = clamp(vPx * 60.0, 4.5, 16.0);
++    vec2 q = vUv * cells + s * 17.0;
 +    vec2 id = floor(q), f = fract(q) - 0.5;
 +    vec2 jt = vec2(h21(id), h21(id + 7.3)) - 0.5;
 +    float pr = 0.10 + 0.12 * h21(id + 3.1);
@@ -80,7 +85,7 @@ index 3dc3496..b3d9258 100644
  const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
  
  export async function buildMatch06(course: Course): Promise<Match06> {
-@@ -572,23 +643,69 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -572,23 +648,69 @@ export async function buildMatch06(course: Course): Promise<Match06> {
    // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
    // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
    let foamClouds: THREE.InstancedMesh | null = null;
@@ -158,7 +163,7 @@ index 3dc3496..b3d9258 100644
    }
    // far end cap of the tunnel (the glowing vanishing point)
    const fe = frame(L.s1 + L.ext);
-@@ -623,7 +740,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -623,7 +745,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        renderer.setRenderTarget(prevRT);
        shared.uUseDepth.value = 1;
      },

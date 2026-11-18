@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s07",
  "branch": "claude/rainbow-s07-match-c16",
  "head": "669420afe13e6d30b2f1d835a3a15c88967d8b76",
- "time": "2026-11-18T19:47:01+00:00",
+ "time": "2026-11-18T19:49:15+00:00",
  "dirty_tracked": [
   "qa/match/07/r16/PROGRESS.md",
   "src/world/match07.ts"
@@ -12,6 +12,7 @@
   "assets/textures/match07/near_bank.png",
   "assets/textures/match07/near_foam.png",
   "qa/match/07/r16/step2_nearw/NEW/motion.json",
+  "qa/match/07/r16/step2_nearw/swim_NEW_nearw.mp4",
   "tools/match07/near_tiles_r16.py"
  ],
  "untracked_skipped": [

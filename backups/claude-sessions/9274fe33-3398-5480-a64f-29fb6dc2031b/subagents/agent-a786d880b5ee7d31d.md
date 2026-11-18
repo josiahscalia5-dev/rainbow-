@@ -1552,3 +1552,21 @@ Type check passes. Now the full NEW render (end of 05, boundary, first metres of
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && rm -rf qa/match/05/r16/step1_trans/new2 && K=$(cat qa/match/05/r16/KEPT_START.txt) && node tools/match05/r8_shots.mjs qa/match/05/r16/step1_trans/new \"$K&m05trans=1\" t95_through_screen,x96,x97,t98_end,x98p5,x99,t95_left,t95_right,x100,x101,t102_06 5275 2>&1 | tail -12", "description": "Render full NEW set with the fixes", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-18T19:48:11.414Z
+
+> ↩︎ result: t95_through_screen s 187.255 lat 0 coins 1580 benny -0.16 -0.39 big coins: -
+> t98_end s 188.358 lat 0 coins 1580 benny -0.19 -0.51 big coins: -
+> t102_06 s 190.741 lat 0 coins 1580 benny -0.11 -0.77 big coins: #38@288,640 d77 #39@297,595 d66
+> t95_left s 186.707 lat -3.838 coins 1420 benny -0.36 -0.37 big coins: #34@876,898 d64 #35@800,883 d63
+> t95_right s 186.739 lat 3.831 coins 1420 benny 0.08 -0.26 big coins: -
+> x96 s 187.257 lat 0.005 coins 1580 benny -0.16 -0.38 big coins: -
+> x97 s 187.808 lat 0 coins 1580 benny -0.18 -0.44 big coins: -
+> x98p5 s 188.724 lat 0 coins 1580 benny -0.18 -0.56 big coins: -
+> x99 s 189.092 lat 0 coins 1580 benny -0.17 -0.61 big coins: #38@301,471 d72 #39@309,419 d63
+> x100 s 189.639 lat 0 coins 1580 benny -0.16 -0.68 big coins: #38@297,535 d74 #39@306,486 d63
+> x101 s 190.191 lat 0 coins 1580 benny -0.14 -0.73 big coins: #38@293,592 d75 #39@301,544 d64
+
+### 🤖 Claude — 2026-11-18T19:48:11.889Z
+
+You've hit your 5-hour limit · resets 11:50pm (UTC)
+
