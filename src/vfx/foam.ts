@@ -559,9 +559,25 @@ function hide07(course: Course): [number, number] | null {
   return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
 }
 
+/** World-space size of the shoreline heaps on the descent. Both the underlying
+ * lather surface and its rounded puffs use the same contour and waterline. */
+function plungeHeapScale(course: Course): (s: number, side: number) => number {
+  if (!flag05('match07') || !flag05('m07foam') || !flag05('cx07PlungeBanks')) return () => 1;
+  const top = course.marks['07_plunge_top'], exit = course.stage('07').s1;
+  return (s, side) => {
+    if (s <= top || s >= exit) return 1;
+    const weight = THREE.MathUtils.smoothstep(s, top, top + 5) * (1 - THREE.MathUtils.smoothstep(s, exit - 3.5, exit));
+    const mound = THREE.MathUtils.smoothstep(noise1(s * 0.64 + side * 19.7), 0.30, 0.78);
+    return 1 - weight * (0.98 - 0.45 * mound);
+  };
+}
+
+const plungeHeapHeight = (h: number, scale: number) => scale < 1 ? 0.035 + (h - 0.035) * scale : h;
+
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
   const hk = bermScale05(course);
+  const heapScale = plungeHeapScale(course);
   const ds = quality === 'high' ? 0.32 : 0.8;
   const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
   const rows = Math.ceil((s1 - s0) / ds) + 1;
@@ -578,15 +594,16 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     const f = course.sample(s);
     const hw = course.widthAt(s) / 2;
     for (const side of [-1, 1]) {
+      const scale = heapScale(s, side);
       for (let j = 0; j < C; j++) {
         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
         // at the water line (keeps the lace edge flush with the stream)
         const e = E[j];
         const k05 = hk(s);
-        const h = squashBerm(bermSurface(s, e, side, hw), k05);
+        const h = plungeHeapHeight(squashBerm(bermSurface(s, e, side, hw), k05), scale);
         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
-        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS * scale)).addScaledVector(f.up, h);
         tmp.toArray(pos, k * 3);
         foam[k * 3] = e;
         foam[k * 3 + 1] = s;
@@ -704,6 +721,7 @@ export function createFoam(
   // rand() sequence (and every other stage's foam) stays identical.
   const st05b = course.stage('05');
   const bermK = bermScale05(course);
+  const heapScale = plungeHeapScale(course);
   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
   /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
   const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
@@ -711,13 +729,15 @@ export function createFoam(
     const f = course.sample(ss);
     const hw = course.widthAt(ss) / 2;
     const k05 = bermK(ss);
-    const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
+    const scale = heapScale(ss, side);
+    const h = plungeHeapHeight(squashBerm(bermSurface(ss, e, side, hw), k05) + lift, scale);
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
-    return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+    return f.pos.clone().addScaledVector(f.right, side * (hw + eS * scale)).addScaledVector(f.up, h);
   };
   const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
     const ss = Math.min(s1, Math.max(s0, s));
     if (inSkip(ss)) return;
+    r *= heapScale(ss, side);
     const imp = imp05S(ss);
     if (imp) {
       // 05 fine foam: wide size spread (most lumps smaller, a few larger), sunk into the bank so the rim stays low
