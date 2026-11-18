@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-18T02:52:57+00:00",
-    "reason": "daemon",
+    "time": "2026-11-18T02:57:01+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
-    "files_staged": 5,
+    "files_staged": 11,
     "pushed_verified": true,
     "branch": "claude/rainbow-restore-c9-40w64b",
-    "commit": "6ae4e6f3c56f1bfd2465dc943e232e53519a7ba2",
-    "duration_s": 15
+    "commit": "a7749b334f9a5d75dad6045a742dd262ff1f79ec",
+    "duration_s": 10
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/rainbow-restore-c9-40w64b",
-  "last_verified_remote_sha": "6ae4e6f3c56f1bfd2465dc943e232e53519a7ba2",
-  "last_successful_backup_utc": "2026-11-18T02:52:57+00:00",
+  "last_verified_remote_sha": "a7749b334f9a5d75dad6045a742dd262ff1f79ec",
+  "last_successful_backup_utc": "2026-11-18T02:57:01+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1362); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-18T02:55:00+00:00"
+  "next_scheduled_utc": "2026-11-18T03:00:00+00:00"
 }
