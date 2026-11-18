@@ -307,6 +307,7 @@ uniform float uTime;
 uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
 uniform float uZ0;
 uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength
+uniform float uPkH;          // r14 m04pkh: pink only where the painted tile is pink (0 = off)
 uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
 uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
 uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
@@ -335,6 +336,7 @@ void main() {
   vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / (uRivA.z * se) * 0.77 + 0.37);
   float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
   vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
+  vec3 tileC = col;                                        // r14: the painted tile colour before any re-colouring
   // the deeper cyan centre lane of the painting
   col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
   if (uLane.x > 0.5) {
@@ -372,8 +374,8 @@ void main() {
         // r14 m04lcn=-a,b (negative start): the PAINTED deep azure keyed on the water's own brightness, so the swirls,
         // glossy crests and white glints survive (a plain multiply flattened the lane into a dark royal-blue patch)
         float lq = dot(laneC, vec3(0.30, 0.55, 0.15));
-        vec3 deep = mix(vec3(0.00, 0.40, 0.86), vec3(0.02, 0.66, 0.98), smoothstep(0.35, 0.75, lq));
-        deep = mix(deep, laneC, smoothstep(0.78, 0.95, lq));                                     // keep the white glints
+        vec3 deep = mix(vec3(0.00, 0.40, 0.86), vec3(0.02, 0.66, 0.98), smoothstep(0.40, 0.88, lq));
+        deep = mix(deep, laneC, smoothstep(0.90, 0.99, lq));                                     // keep only the white glints
         laneC = mix(laneC, deep, min(uLane3.x, 1.0) * smoothstep(-uLane4.x, uLane4.y, along - uA5b.z) * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
       } else {
         laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * wl);
@@ -400,7 +402,14 @@ void main() {
     pk = mix(pk, vec3(1.0, 0.78, 0.96), smoothstep(0.66, 0.95, l));
     float n = vn(vec2(fl * 0.22, vS * 0.6 + 11.0));
     float keepCyan = smoothstep(0.62, 0.85, n);                       // a few cyan swirls survive inside the pink
-    col = mix(col, pk, side * uPk.w * (1.0 - 0.75 * keepCyan));
+    float pkMix = 1.0 - 0.75 * keepCyan;
+    if (uPkH > 0.0) {
+      // r14 m04pkh=x: the PAINTED band structure — re-colour only where the painted tile itself is pink / magenta (red
+      // above green); its cyan streaks between the satin bands stay cyan (x = how strictly; 0 = old uniform pink)
+      float pinkness = smoothstep(-0.04, 0.22, tileC.r - tileC.g);
+      pkMix = mix(pkMix, 0.12 + 0.88 * pinkness, uPkH);
+    }
+    col = mix(col, pk, side * uPk.w * pkMix);
   }
   if (uA5.x > 0.5) {
     // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
@@ -716,6 +725,7 @@ export function addM04(ctx: M04Ctx) {
         uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
         uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
         uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
+        uPkH: { value: M04.num('m04pkh', 0) },
         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
         uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
     const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);

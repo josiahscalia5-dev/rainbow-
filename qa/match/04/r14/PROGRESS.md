@@ -15,3 +15,20 @@ Query (G5): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=
   ours sit on light turquoise water; no glow on the water. Next: deeper blue lane under the arrows + soft cyan bloom on the water.
 * Pictures: lead branch `qa/review_r14/04_step6_glow_arrows/` (APPROVED, BEFORE = F4, NEW = G5; start, entering, middle,
   farther inside, end, hard left, hard right).
+
+## Step 7 — deeper blue water under the arrows — NOT AN IMPROVEMENT (all variants), code kept behind its switch
+* H1 (wider arrow glow `m04a3gb=0.28 m04a3tm=0.7`) and H2 (+ `m04lcd=1.5 m04lcw=2.0`): no visible change vs G5.
+* I1/I2 (`m04lcd` 2.4 / 3.0 + new `m04lcn=7,10` = only ahead of the camera): water round the arrows really reaches the painted azure
+  (beside arrows 55,164,252 vs painted ≈ 2-15,140-190,220-250; G5 85,217,252) — BUT at hard left a flat dark royal-blue patch
+  without swirls / glints appears beside Benny (plain multiply flattens the detail). Rejected.
+* I3/I4/I5 (`m04lcn=-a,b`: deep azure keyed on the water's own brightness, keeps glints): natural, no patch, but too subtle to
+  look clearly closer by eye. Rejected (switch left in the code, default off).
+* Frames: `qa/match/04/r14/s9_lane/{H1,H2,I1..I5}/`.
+
+## Step 8 — pink / magenta side swirls — NOT AN IMPROVEMENT (all variants)
+* J1 (`m04pkw=0.35`, weaker pink re-colour) and J2 (no `m04pink`): the painted tile's own sides are mostly cyan / white at these
+  lateral positions → sides turn pale lilac / cyan, much LESS pink than the painting. Rejected.
+* K1/K2 (new `m04pkh`: pink only where the painted tile is pink, cyan streaks kept): same washed lilac / cyan look. Rejected.
+* Conclusion: the painted satin-band structure is not in the tile at the lateral positions the side banks sample; a real fix
+  needs the sides to sample the painted band region of the approved picture (or an approved continuation) — not a re-colour.
+* Frames: `qa/match/04/r14/s10_pink/{J1,J2,K1,K2}/`.
