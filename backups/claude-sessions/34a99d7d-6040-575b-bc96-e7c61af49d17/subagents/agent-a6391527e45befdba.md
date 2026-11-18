@@ -1201,3 +1201,131 @@ I'll start by inspecting where the previous instance stopped.
 > t33_through_screen tunnel sharpness (mean gradient, y 250-900) BEFORE 1.8 NEW 1.6
 > t66_through_screen tunnel sharpness (mean gradient, y 250-900) BEFORE 2.2 NEW 1.5
 
+### 🤖 Claude — 2026-11-18T02:17:27.519Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport numpy as np; from PIL import Image\nt=np.asarray(Image.open('assets/textures/match04/tile_ring.png').convert('RGB')).astype(int)\nprint(t.shape)\nfor r in range(0,192,8): print(r, t[r].mean(0).astype(int), 'std', t[r].std(0).astype(int))\n\"", "description": "Inspect painted ring tile row colours"}`
+
+### 🧑 User — 2026-11-18T02:17:27.736Z
+
+> ↩︎ result: (192, 1024, 3)
+> 0 [168  72  53] std [15  9 27]
+> 8 [142  44  10] std [13  5  5]
+> 16 [177  75  37] std [16  9 19]
+> 24 [181  75  33] std [17  9 17]
+> 32 [181  79  29] std [17 10 15]
+> 40 [206 103  43] std [19 13 22]
+> 48 [155  60  14] std [14  7  7]
+> 56 [186  83  29] std [17 10 15]
+> 64 [210 102  40] std [19 12 20]
+> 72 [210 105  47] std [19 13 24]
+> 80 [212 107  45] std [19 13 23]
+> 88 [215 108  47] std [19 13 24]
+> 96 [217 112  49] std [19 14 25]
+> 104 [221 118  50] std [19 15 25]
+> 112 [222 124  49] std [19 15 25]
+> 120 [226 138  59] std [19 17 30]
+> 128 [224 144  61] std [19 18 31]
+> 136 [226 146  63] std [18 18 32]
+> 144 [227 153  68] std [18 19 35]
+> 152 [231 160  77] std [18 20 39]
+> 160 [231 167  77] std [18 21 39]
+> 168 [233 172  80] std [17 21 40]
+> 176 [234 194  98] std [17 23 50]
+> 184 [202 134  81] std [19 17 41]
+
+### 🤖 Claude — 2026-11-18T02:17:52.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"uniform vec4 uTone;        // band base, lip base, opening base, streak strength\\n\",\n \"uniform vec4 uTone;        // band base, lip base, opening base, streak strength\\nuniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)\\nuniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)\\n\"),\n(\"\"\"      if (part > 0.5 && part < 1.5) v = uTone.y + 0.12 * facing + 0.04 * far + …[+2811 chars]`
+
+### 🧑 User — 2026-11-18T02:18:24.926Z
+
+> ↩︎ result: f06_forward6u          LAYOUT20   2.5 %  PALETTE  58.5 %
+> t33_through_screen     LAYOUT20   2.3 %  PALETTE  55.5 %
+> t66_through_screen     LAYOUT20   1.3 %  PALETTE  56.0 %
+>    r 230 - 330 n 76383 mean [180 125  55] L p10/50/90 [ 97 118 142]
+>    r 150 - 230 n 42854 mean [193 141  62] L p10/50/90 [109 129 157]
+>    r 80 - 150 n 20471 mean [215 147  59] L p10/50/90 [120 136 165]
+>    r 0 - 80 n 4899 mean [243 167  51] L p10/50/90 [133 154 175]
+
+### 🤖 Claude — 2026-11-18T02:18:27.152Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s6.png"}`
+
+### 🧑 User — 2026-11-18T02:18:27.177Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:18:38.608Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nfrom PIL import Image; im=Image.open('assets/textures/match04/tile_ring.png'); print(im.mode, im.size, im.info)\"; grep -n \"loadTile('ring')\\|tRing\" src/world/match04.ts | head", "description": "Check tile_ring PNG mode"}`
+
+### 🧑 User — 2026-11-18T02:18:38.742Z
+
+> ↩︎ result: RGB (1024, 192) {}
+> 200:  const [tRing, tRiver] = await Promise.all([loadTile('ring'), loadTile(RIVER04 ? 'chev3' : 'river')]);
+> 228:    tunnel: mat(pGold, 1 / 1.6, 1, tRing, new THREE.Vector4(cx, cy, z0, tiles.ring?.period_u ?? 6.5)),
+
+### 🤖 Claude — 2026-11-18T02:18:42.300Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop11.png"}`
+
+### 🧑 User — 2026-11-18T02:18:42.333Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:18:54.083Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_p2 \"match04=1&m04ring=1&m04fade0=-2&m04fade1=-1&m04paint=1\" a00_approved_view 2>&1 | grep -iv \"403\\|allow list\" | tail -3; python3 -c \"\nfrom PIL import Image\nb=Image.open('$SP/r_p2/a00_approved_view.png').convert('RGB')\nfor p in [(200,560),(300,520),(450,520),(250,700),(700,600)]: print(p, b.getpixel(p))\nb.crop((40,400,840,840)).resize((400,220)).save('$SP/crop12.png')\"", "description": "Debug the painted tile sampling with f …[+18 chars]`
+
+### 🧑 User — 2026-11-18T02:19:05.458Z
+
+> ↩︎ result: console [match04] m04ring {period: 2.6, rings: 19}
+> 04 a00_approved_view s 78.226 lat 0 stage 04 frames 0
+> (200, 560) (153, 94, 24)
+> (300, 520) (198, 161, 40)
+> (450, 520) (172, 137, 54)
+> (250, 700) (166, 137, 64)
+> (700, 600) (157, 87, 62)
+
+### 🤖 Claude — 2026-11-18T02:19:15.802Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 118,175p src/world/match04m4.ts", "description": "View the band shading section of the shader"}`
+
+### 🧑 User — 2026-11-18T02:19:15.843Z
+
+> ↩︎ result: vec3 col;
+>   if (part > 3.5) {
+>     // the far glow (painted vanishing point): small warm-white core, orange-gold outside with faint far rings
+>     // soft warm-white core, yellow-orange glow, orange toward the rim (matches the far bands), no hard target rings
+>     float rad = clamp(rr / 3.6, 0.0, 1.0);
+>     col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
+>     col = mix(col, vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+>     col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(log(max(rad, 0.01)) / log(0.72)) - 0.5)) * smoothstep(0.35, 0.7, rad);
+>   } else {
+>     bool mouth = vK.y < -0.5;
+>     float ring = floor(vK.y + 0.5);             // integer ring index (the interpolated varying is not exact)
+>     float v, tb = 0.0;
+>     // gloss that moves with the view: the polished metal reflects the bright far end of the tunnel
+>     float gl = pow(max(dot(R, uAxD), 0.0), 6.0);
+>     if (mouth) {
+>       // the washer opening: thick bright polished gold, a long vertical highlight, glowing rounded lips
+>       float st = streaks(ang, 77.0);
+>       v = uTone.z + 0.08 * cos(ang) + 0.20 * st + 0.08 * gl;
+>       if (part > 0.5 && part < 1.5) v = uTone.z + 0.14 + 0.16 * fa …[+2609 chars]
+
+### 🤖 Claude — 2026-11-18T02:19:25.076Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\na=\"      col = mix(col, pm, uPaint);\\n\"\nb=\"      col = mix(col, pm, uPaint);\\n      if (uPaint > 1.5) col = pc;\\n\"\ns=s.replace(a,b,1); open(p,'w').write(s)\nEOF\nSP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_p3 \"match04=1&m04ring=1&m04fade0=-2&m04fade1=-1&m04paint=2\" a00_approved_view 2>&1 | grep -i \"error: 0\"; python3 -c \"\nfrom PIL import Image\nb=Image.open('$SP/r_p3/a00_approved_view.png').convert('R …[+225 chars]`
+
+### 🧑 User — 2026-11-18T02:19:42.777Z
+
+> ↩︎ result: (200, 560) (255, 157, 39)
+> (300, 520) (242, 197, 49)
+> (450, 520) (255, 204, 81)
+> (250, 700) (238, 196, 91)
+> (700, 600) (226, 126, 90)
+
+### 🤖 Claude — 2026-11-18T02:19:58.652Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_p3 \"match04=1&m04ring=1&m04fade0=-2&m04fade1=-1&m04paint=2\" a00_approved_view 2>&1 | grep -v \"baloo\\|403\" | head; grep -rn \"ringTile\\|tile_ring\" src/world/match04m4.ts | head -3", "description": "Look for texture load errors in the console"}`
+

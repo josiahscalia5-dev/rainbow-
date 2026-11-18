@@ -1298,3 +1298,85 @@ Neither candidate is it; the orange piece survives. Its flat tray shape suggests
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:17:22.513Z
+
+Still visible, so either the clip is not live there or the piece is not that hood. Let me find the course position of the hit point.
+
+### 🤖 Claude — 2026-11-18T02:17:28.588Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_probe.mjs'\nt=open(p).read()\nold=\"    return { state: r.state(), course: r.course.nearest ? null : null, hits: pts.map(([x, y]) => ({ x, y, h: detail(x, y) })) };\"\nnew='''    const nearS = (q) => { let best = 1e9, bs = 0; for (let s = 100; s < 260; s += 0.25) { const f = r.course.sample(s); const d = Math.hypot(f.pos.x - q[0], f.pos.y - q[1], f.pos.z - q[2]); if (d < best) { best = d; bs = s; } } const f = r.course.sample(bs); const v = [q[0] - f.pos.x, q[1] - f.pos.y, q[2] - f.pos.z]; return { s: bs, d: +best.toFi …[+906 chars]`
+
+### 🧑 User — 2026-11-18T02:17:43.714Z
+
+> ↩︎ result: 180 680 [{"obj":"Mesh","s":187,"d":6.24,"lat":-6.23,"up":0.17},{"obj":"tube05_far_wall","s":188.25,"d":6.55,"lat":-6.49,"up":-0.87},{"obj":"Mesh","s":190,"d":6.93,"lat":-6.6,"up":-2.13},{"obj":"Mesh","s":190,"d":6.97,"lat":-6.61,"up":-2.22}]
+> 200 650 [{"obj":"tube05_far","s":189.5,"d":6.27,"lat":-6.17,"up":-1.09},{"obj":"tube05_far","s":189.75,"d":6.28,"lat":-6.17,"up":-1.2},{"obj":"tube05_far","s":189.75,"d":6.29,"lat":-6.18,"up":-1.21},{"obj":"tube05_far_wall","s":189.75,"d":6.31,"lat":-6.18,"up":-1.25}]
+> 330 600 [{"obj":"foam_berm","s":189.25,"d":3.6,"lat":-3.59,"up":0.34},{"obj":"water_ribbon","s":189.5,"d":3.59,"lat":-3.58,"up":0.21},{"obj":"tube05_far_river","s":191,"d":3.59,"lat":-3.49,"up":-0.84},{"obj":"tube05_far_wall","s":192,"d":3.69,"lat":-3.42,"up":-1.38}]
+> 320 560 [{"obj":"Mesh","s":190,"d":3.89,"lat":-3.82,"up":0.78},{"obj":"foam_berm","s":190.25,"d":3.87,"lat":-3.82,"up":0.66},{"obj":"tube05_far_wall","s":192.5,"d":3.72,"lat":-3.64,"up":-0.77},{"obj":"Mesh","s":194.75,"d":4.26,"lat":-3.38,"up":-2.59}]
+
+### 🤖 Claude — 2026-11-18T02:18:06.450Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"vPosW =\" src/vfx/waterRibbon.ts | head -3; grep -n \"const ringMat\\b\\|const ringMat =\\|ringMat,\" src/world/environment.ts | head; grep -n \"createRibbon(\" src/vfx/index.ts", "description": "Check ribbon world-position varying and ring material"}`
+
+### 🧑 User — 2026-11-18T02:18:06.514Z
+
+> ↩︎ result: 370:  vPosW = wp.xyz;
+> 400:  const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+> 446:  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+> 458:  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+> 73:  const ribbon = createRibbon(course, { s0: ribbonS0, s1: course.length, quality });
+
+### 🤖 Claude — 2026-11-18T02:18:08.731Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 396,404p src/world/environment.ts && grep -n \"^import\" src/vfx/index.ts | head -30 && sed -n 70,80p src/vfx/index.ts", "description": "Read ring material and vfx imports"}`
+
+### 🧑 User — 2026-11-18T02:18:08.786Z
+
+> ↩︎ result: };
+>   addWall(s05, sGlow05, perf05Mat, warp05);
+>   addWall(sGlow05, s08, perfTubeMat);
+>   // 06/07 rings and the 04→05 junction collar (unchanged look)
+>   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+>   ringMat.envMap = goldEnv;
+>   ringMat.envMapIntensity = 1.3;
+>   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+>   // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+> 15:import * as THREE from 'three';
+> 16:import { type Course, WORLD, funnelY } from '../world/course';
+> 17:import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
+> 18:import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
+> 19:import { createDrumWater } from './drumWater';
+> 20:import { createFinalWave } from './finalWave';
+> 21:import { createPuddles } from './puddles';
+> 22:import { createFoam } from './foam';
+> 23:import { createBubbles } from './bubbles';
+> 24:import { createSpray } from './spray';
+> 25:import { createRiderSplash, createRiderSplash05 …[+729 chars]
+
+### 🤖 Claude — 2026-11-18T02:18:19.319Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/environment.ts'\nt=open(p).read()\na=\"\"\"  ringMat.envMap = goldEnv;\n  ringMat.envMapIntensity = 1.3;\n\"\"\"\nassert t.count(a)==1\nt=t.replace(a,a+\"\"\"  // `&m05edge=1` (Screen 05 round 8): the first 06 ring (s ≈ 187) behind the 05 far tunnel's seam showed as an orange\n  // tray on the left bank while swimming; clipped only behind the seam, only while that block is live (no-op otherwise)\n  withClip05Std(ringMat);\n\"\"\")\nopen(p,'w').write(t)\np='src/vfx/index.ts'\nt=open(p).read()\na=\"  const ribbon = createRibbon …[+1187 chars]`
+
+### 🧑 User — 2026-11-18T02:18:55.574Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-18T02:18:57.936Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/edge2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:18:57.981Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:19:13.712Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/clip05.ts'\nt=open(p).read()\nt=t.replace(\"export function withClip05Std(mat: THREE.Material): void {\",\"export function withClip05Std(mat: THREE.Material, margin = 0): void {\")\nt=t.replace(\"    if (ca > 0.0 && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;\\n  }`);\\n  };\\n  mat.customProgramCacheKey = function (this: THREE.Material) { return prevKey.call(this) + '|clip05e'; };\",\n\"    if (ca > ${(-margin).toFixed(2)} && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;\\n  }`);\\n  };\\n  mat.customProg …[+1410 chars]`
+
+### 🧑 User — 2026-11-18T02:20:03.884Z
+
+> ↩︎ result: 31: * Opt-in per material (`margin`: the clip starts that many units camera-side of the seam — only for materials used
+> 35:export function withClip05Std(mat: THREE.Material, margin = 0): void {
+> 56:    if (ca > ${(-margin).toFixed(2)} && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;
+> 59:  mat.customProgramCacheKey = function (this: THREE.Material) { return prevKey.call(this) + '|clip05e' + margin; };
+> TSC_OK
+

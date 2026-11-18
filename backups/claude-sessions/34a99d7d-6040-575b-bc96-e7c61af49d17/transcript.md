@@ -3625,3 +3625,46 @@ That includes the five Screen 05 step 2 pictures (`qa/review_r8/05_step2_water/`
 
 While the specialists run, their activity logs keep changing, so the five-minute autosave will keep saving them.
 
+### 🧑 User — 2026-11-18T02:19:51.508Z
+
+How's it looking now? My screens.
+
+### 🤖 Claude — 2026-11-18T02:19:53.733Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; for s in s04 s05; do cd /home/user/wt/$s; echo \"== $s\"; git log --format='  %h %cr: %s' -3 | cut -c1-150; echo \"  uncommitted=$(git status --short | wc -l)\"; ls qa/match/0${s#s0}/r8/ 2>/dev/null | tr '\\n' ' '; echo; done", "description": "Check the newest 04 and 05 progress"}`
+
+### 🧑 User — 2026-11-18T02:19:53.830Z
+
+> ↩︎ result: 02:19
+> == s04
+>   011c256b 21 minutes ago: Screen 04 M4 (r8) WIP: match04m4.ts (modeled ring tries), plate without chevrons, try_ring renders — saved when the speci
+>   0ab5659a 38 minutes ago: Screen 04 M4 (r8): running-session status + BEFORE moving audit (match04=1, 12 positions)
+>   d1e422fa 8 hours ago: autosave: Rainbow 2026-11-17 17:57 UTC
+>   uncommitted=3
+> BEFORE step1_m04ring try_ring1 try_ring2 
+> == s05
+>   ac54ec24 7 minutes ago: Screen 05 r8 step 2: &m05ride=1 — approved water design (S-banks, cyan lane, glossy streaks) around Benny while swimming; 
+>   01beeeaf 18 minutes ago: Screen 05 r8 step 1: &m05coin=1 — oversized passed coin no longer covers Benny (look only, 91 coins / score unchanged)
+>   6cbe3c1f 21 minutes ago: Screen 05 r8 WIP: coin look + water ribbon edits in progress, r8_shots tool — saved when the specialist stopped
+>   uncommitted=5
+> PROGRESS.md step1_m05coin step2_m05ride
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T02:20:02.894Z
+
+Here's where each screen stands right now (02:19 UTC):
+
+| Screen | While swimming (my honest estimate) | What changed this session | Biggest thing still wrong |
+|---|---|---|---|
+| **04 Five Arrows** | ≈ 3.5/10 | Nothing visible yet. Its first step (the real gold washer opening with its bulb row) is being rendered at this moment. | Once Benny moves, the scene turns into a blurred orange-gold tube on a flat ramp. The laundry-room entrance, bulbs, foam and bubbles disappear. |
+| **05 Flow Into the Current** | ≈ 6.5–7/10 (was ≈ 6) | **2 improvements saved:** the giant coin no longer covers Benny, and your painted water design now stays around him while swimming (magenta S-streams, cyan lane, glossy streaks, splash ring). | A faint outline where the painted water meets the plain water, a far slab edge with an orange piece on the left bank, pale bank shelves, blurry near walls. The specialist is on these now. |
+| **06 Rinse Arch** | ≈ 7/10 | Waiting for a slot. Instructions and branch are ready. | Straight ribbon instead of your wide rainbow S-loop with the whirlpool ring, far rings too busy, soft walls. |
+| **07 Washer Tube** | ≈ 4.5/10 (plunge much better) | Orange slab removed. The tall white plunge walls are replaced by painted banks, saved but not yet fully checked. | Smeared flat water on the level stretch, a hard wall edge when steering, coins over Benny. **Next in line.** |
+| **08 Final Spin Chamber** | ≈ 7/10 | Waiting for a slot. Instructions and branch are ready. | Oversized coins on Benny, seams around the towel and window, missing floating bubbles and foam fringes. |
+
+No screen is at 8.5 yet. Screen 05 is moving fastest; 04 is furthest away.
+
+I'll send Screen 04's first APPROVED / BEFORE / NEW pictures as soon as its step is saved and actually looks better. Whichever of 04 or 05 finishes first frees a slot for Screen 07.
+
+Everything is backed up on GitHub. No paid credits used, and nothing needs your action.
+
