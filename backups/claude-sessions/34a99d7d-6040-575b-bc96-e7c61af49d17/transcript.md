@@ -1637,3 +1637,424 @@ Parallax Three.js install card is shown above (optional, one click). Setting up 
 
 > 🔧 **Bash** `{"command": "git worktree add -q -b claude/rainbow-s07-match-c8 /home/user/wt/s07 3afaa7e9cb 2>&1 | tail -2; cd /home/user/wt/s07 && ln -sfn /home/user/rainbow-/node_modules node_modules && timeout 120 git push -q -u origin claude/rainbow-s07-match-c8 2>&1 | grep -v '^remote:' | tail -1; echo \"s07 local=$(git rev-parse --short=10 HEAD) remote=$(git ls-remote origin refs/heads/claude/rainbow-s07-match-c8 | cut -c1-10)\"; ls tools/lead_r6 >/dev/null 2>&1 && echo has_lead_r6; tail -5 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/bootstrap_skipresume.log", "des …[+76 chars]`
 
+### 🧑 User — 2026-11-18T01:43:30.815Z
+
+> ↩︎ result: s07 local=3afaa7e9cb remote=3afaa7e9cb
+> has_lead_r6
+> 
+> == 4 Tests
+>   OK   Build + game tests             tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19)
+> 
+> == 5 Five-minute autosave
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:43:35.437Z
+
+> 🔧 **Bash** `{"command": "sleep 20; tail -8 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/bootstrap_skipresume.log; cd /home/user/wt/s07 && wc -l src/vfx/foam.ts src/world/match07*.ts 2>/dev/null; grep -n 'm07\\|match07\\|qflag\\|URLSearchParams\\|export function\\|export class' src/vfx/foam.ts | head -30", "description": "Check bootstrap result and inspect 07 foam code"}`
+
+### 🧑 User — 2026-11-18T01:43:55.489Z
+
+> ↩︎ result: == 4 Tests
+>   OK   Build + game tests             tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19)
+> 
+> == 5 Five-minute autosave
+>   OK   Five-minute GitHub autosave    AUTOSAVE OK | branch ccr-58dd182e-m48xwk | scheduler daemon | last verified backup 2026-11-18T01:43:29+00:00 (0.1 min ago) | local 0f12cd0 remote 0f12cd0 (match) | uncommitted 0
+> 
+> == Report
+> BOOTSTRAP OK (with warnings) | branch ccr-58dd182e-m48xwk | HEAD 0f12cd0dc651 | written: backups/BOOTSTRAP_REPORT.md
+>  1120 src/vfx/foam.ts
+>   365 src/world/match07.ts
+>  1485 total
+> 31:export function bermLump(s: number, side: number): number {
+> 35:export function bermDomes(s: number, e: number, side: number): number {
+> 50:export function bermHeight(e: number, hw: number, lump: number): number {
+> 65:export function bermSurface(s: number, e: number, side: number, hw: number): number {
+> 625:export function createFoam(
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:43:56.998Z
+
+> 🔧 **Bash** `{"command": "grep -E '^\\| ' backups/BOOTSTRAP_REPORT.md | grep -vE '\\| OK \\|' | head -8", "description": "Show any non-OK bootstrap steps"}`
+
+### 🧑 User — 2026-11-18T01:43:57.032Z
+
+> ↩︎ result: | Step | Result | Details | s |
+> | Resume newest work | WARN | 20/78 remote ccr-*/claude/* branches contained in HEAD dd8d389f; not merged (automatic merge disabled (use --resume only with the user's OK)): run bash scripts/claude-bootstrap.sh | 12 |
+
+### 🤖 Claude — 2026-11-18T01:44:12.259Z
+
+> 🔧 **Bash** `{"command": "tail -4 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/imageblaster.log; echo ---; cd /home/user/wt/s04 && grep -rl '01a1ea70' qa/match/04 2>/dev/null | head -3; ls qa/match/04 | grep -iE 'fal|plate' | head; git ls-files qa/match/04 | grep -iE 'fal.*\\.(png|jpg|webp)|plate.*\\.(png|jpg|webp)' | head -4", "description": "Check Image-Blaster setup and saved fal Screen 04 plate"}`
+
+### 🧑 User — 2026-11-18T01:44:12.400Z
+
+> ↩︎ result: Image-Blaster ready at /home/user/neilsonnn/image-blaster (4acb43b); world rainbow-08-final-spin-chamber restored.
+> Scripts need: NODE_USE_ENV_PROXY=1 (Node fetch ignores HTTPS_PROXY otherwise). Free key checks:
+>   curl -sS https://api.worldlabs.ai/marble/v1/credits      # JSON with remaining_credits
+>   curl -sS -o /dev/null -w '%{http_code}' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status   # 404 = key accepted
+> ---
+> qa/match/04/FAL_PLATE_REQUEST.md
+> qa/match/04/NOTES.md
+> qa/match/04/fal/fal_edit1_plate_request.json
+> 04_NEW_m2_fal04_864x1536.png
+> FAL_PLATE_REQUEST.md
+> fal
+> gameplay_test_match04_fal04.json
+> scenery_metrics_M2_vs_fal04.json
+> scenery_metrics_M2fal04_vs_M3splash.json
+> qa/match/04/04_NEW_m2_fal04_864x1536.png
+> qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png
+> qa/match/04/motion_m2/NEW_fal04/f00_checkpoint.png
+> qa/match/04/motion_m2/NEW_fal04/f03_forward3u.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:44:32.963Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+## Startup activation report (account 8, 2026-11-18 ~01:50 UTC)
+
+**Backup**
+- **Lead branch:** `ccr-58dd182e-m48xwk`. This cloud session is assigned this branch, so it serves as the new separate lead line. It was started from the newest `claude/rainbow-lead-c7` tip, `1d9aebd`. I did not use the older lead `ccr-5495e9c4-g0apvl`.
+- **Latest saved commit:** `0f12cd0dc651…`. The GitHub copy matches this container exactly (`git ls-remote` = HEAD).
+- **Git LFS:** all 59 large files are real files here (no placeholder pointers), and `git lfs fsck` passes. All 13 approved images match their checksums byte-for-byte.
+- **Nothing merged:** I did not merge or overwrite any branch.
+- **One gap:** the previous account's session ended without an end-of-session save. Its last automatic save was at 01:21 UTC.
+
+| SERVICE | INSTALLED | ENABLED | CONNECTED | TESTED WORKING | ACTION NEEDED |
+|---|---|---|---|---|---|
+| GitHub + push | ✅ | ✅ | ✅ | ✅ pushes checked on GitHub | — |
+| Git LFS | ✅ | ✅ | ✅ | ✅ fsck OK, 59/59 real files | — |
+| World Labs Marble plugin | ✅ (installed this session) | ✅ | — | ⚠️ its skills load from the next session | — |
+| World Labs API key | ✅ | ✅ | ✅ | ✅ **5,190 credits = Account B** (Screen 05 worlds) | Only if you want Account A (5,420, Screen 08 world) here. Not needed now. |
+| Existing Marble worlds / assets | ✅ | — | ✅ | ✅ 05 worlds answer OK. Screen 08 world gives 404 with Account B's key, but its files are in Git LFS. | — |
+| Marble + fal downloads | ✅ | ✅ | ✅ | ✅ were blocked; added to the allow-list with your approval | — |
+| World Labs Atlas | — | — | ❌ not in this session | — | Not needed for visual work. To add it: claude.ai/customize/connectors, then start a new session. |
+| fal.ai | ✅ | ✅ | ✅ same purchased account | ✅ request `01a1ea70` → COMPLETED; the Screen 04 plate is saved in the repo | — |
+| Playwright MCP | ✅ | ✅ | ✅ | ✅ WebGL2 test page OK | — |
+| Parallax Three.js (Chrome DevTools + Three.js DevTools) | ❌ on this account | — | — | — | Optional: one-click install card shown above |
+| Other MCP (context7, design plugins) | ✅ | ✅ | ❌ network-blocked | — | Not used by Rainbow; ignore |
+| Blender 5.3.0 | ✅ | ✅ | — | ✅ headless test | — |
+| Three.js / WebGL2 / Node / TS / Vite | ✅ | ✅ | — | ✅ type check + course-continuity test pass | — |
+| Python image tools, ffmpeg, Image-Blaster | ✅ | ✅ | — | ✅ Image-Blaster restored, no paid calls | — |
+| 10 agent definitions | ✅ | ✅ | — | ✅ all present, checksums unchanged | **READY** |
+| 7 workstreams | ✅ | — | — | ✅ newest commit of each recorded | **READY** (map in `docs/briefs/2026-11-18-r8/COORDINATION.md`) |
+| Specialist sessions | — | — | — | ✅ **2 RUNNING** | — |
+| 5-minute autosave | ✅ | ✅ | ✅ | ✅ GitHub matches local | — |
+
+**Running now (each on its own new branch)**
+- **Slot A, Screen 04 (Five Arrows):** `claude/rainbow-s04-match-c8`. It is rendering its BEFORE pictures. Work list:
+  - the gold washer opening with its bulbs
+  - the laundry-room entrance
+  - crisp tunnel walls
+  - the five arrows
+  - the thick swirl water, foam and bubbles
+- **Slot B, Screen 05 (Flow Into the Current):** `claude/rainbow-s05-match-c8`. Its first checkpoint `a1f14e7b` is pushed and confirmed on GitHub. Your 05 list:
+  - stretched water
+  - the smooth S-shaped river
+  - abrupt edges and disconnected scenery
+  - the oversized coin over Benny
+  - it keeps `m05far`
+
+Both run inside this container with their instructions handed over directly, so the old `send_message` blockage can't happen.
+
+**Already finished, waiting for your review:** the Screen 07 plunge fix shown above. The orange-gold slab that hid Benny is gone.
+
+**Where things stand while swimming (honest):** these ratings are from the round-7 pictures.
+
+| Screen | Rating while swimming | What's still wrong |
+|---|---|---|
+| 04 | ≈ 3.5/10 | — |
+| 05 | ≈ 6/10 | — |
+| 06 | ≈ 6.5/10 | — |
+| 07 | ≈ 4.5/10 | The plunge got much better. The tall white foam walls and the huge near coin remain. |
+| 08 | ≈ 7/10 | — |
+
+No screen has reached 8.5 yet.
+
+**Next:** I'm setting up Screen 07's next fixes now (`claude/rainbow-s07-match-c8`): the tall white plunge foam walls and the oversized near coin. 08 (seams and coins) and 06 rotate in when a slot frees.
+
+### 🤖 Claude — 2026-11-18T01:44:34.966Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n '/^## Exact next step/,/^---/p' qa/match/07/STATUS.md | head -5 >/dev/null; grep -n 'plunge\\|PLUNGE\\|bermMesh\\|puff\\|visible\\|uniform' src/vfx/foam.ts | head -40; grep -n 'export\\|m07tube\\|plungeTop\\|plunge' src/world/match07.ts | head -25", "description": "Locate foam meshes and 07 plunge hooks"}`
+
+### 🧑 User — 2026-11-18T01:44:35.032Z
+
+> ↩︎ result: 6: *  - puffs: instanced bubble puffs sitting ON the berm crest (silhouette lumps), in ~40-unit chunks
+> 7: *    so only chunks near Benny are drawn; quality 'low' halves density and uses 20-tri puffs.
+> 11: *    (berm shader, 1 draw) + world-anchored instanced puffs (1 draw), fitted to the frame edges from
+> 30:/** 0..1 lumpiness of the bank at (s, side) — CPU only, baked into the mesh and the puff placement */
+> 64:/** full bank surface height incl. bubble domes (shared by the mesh and the puff placement) */
+> 97:uniform float uTime;
+> 117:uniform float uTime;
+> 118:uniform vec2 uOutro;     // amount, chamber start s
+> 119:uniform vec3 uLightDir;
+> 120:uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> 179:  // 05 (wave 7): the low rim under the puffs reads as small piled soap bubbles: white only on the cell
+> 201:// ---------------------------------------------------------------------------------- puffs
+> 203: * Soap-foam puff (ref 05 "cloud banks": white-lavender clumps, #FCF6FF lit tops, soft lavender
+> 208:uniform float uTime;
+> 231:uniform vec3 uLightDir;
+> 267:  // pores: small open bubbles on the puff skin (puff-local, two planar projections, no sea …[+3492 chars]
+
+### 🤖 Claude — 2026-11-18T01:44:39.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 90,135p src/vfx/foam.ts", "description": "Read the berm vertex shader"}`
+
+### 🧑 User — 2026-11-18T01:44:39.533Z
+
+> ↩︎ result: float up = clamp(Nv.y * 0.5 + 0.5, 0.0, 1.0);
+>   return smoothstep(0.1, 0.8, wrap * 0.6 + up * 0.4);
+> }
+> `;
+> 
+> const BERM_VERT = /* glsl */ `
+> attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
+> uniform float uTime;
+> varying vec3 vFoam;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_vertex>
+> void main() {
+>   // gentle breathing of the lather (never at the water line)
+>   float k = smoothstep(-0.2, 0.3, aFoam.x);
+>   vec3 p = position + normal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+>   vec4 wp = modelMatrix * vec4(p, 1.0);
+>   vPosW = wp.xyz;
+>   vNormalW = normalize(mat3(modelMatrix) * normal);
+>   vFoam = aFoam;
+>   vec4 mvPosition = viewMatrix * wp;
+>   gl_Position = projectionMatrix * mvPosition;
+>   #include <fog_vertex>
+> }
+> `;
+> 
+> const BERM_FRAG = /* glsl */ `
+> uniform float uTime;
+> uniform vec2 uOutro;     // amount, chamber start s
+> uniform vec3 uLightDir;
+> uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> varying vec3 vFoam;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${FRAG_FX_GLSL}
+> ${SOAP05_GLSL}
+> void main() {
+>   float s = vFoam. …[+469 chars]
+
+### 🤖 Claude — 2026-11-18T01:44:42.902Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n 'proj05\\|PROJ05\\|uSt05\\|hideRange\\|skip' src/vfx/foam.ts | head -30; grep -n 'createFoam(' src/**/*.ts src/*.ts 2>/dev/null | head", "description": "See how proj05 hides foam ranges"}`
+
+### 🧑 User — 2026-11-18T01:44:42.955Z
+
+> ↩︎ result: 17:import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
+> 120:uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> 130:  #ifdef PROJ05
+> 131:  // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
+> 133:  float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
+> 181:  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
+> 548:/** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
+> 549:function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+> 588:    if (sb > skip[0] && sa < skip[1]) continue;
+> 609:    uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+> 617:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
+> 679:  const skip: [number, number] = [st03.s0 + 4, st04.s0 - 6];
+> 680:  const berm = createBerm(course, s0, s1, skip, quality);
+> 684:  const inSkip = (s: number) => s > skip[0] && s < skip[1];
+> 714:   …[+404 chars]
+
+### 🤖 Claude — 2026-11-18T01:44:50.934Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 625,700p src/vfx/foam.ts; grep -n 'plunge\\|sA\\b\\|sA:' src/world/environment.ts src/vfx/index.ts 2>/dev/null | grep -i 'match07\\|plunge' | head -10", "description": "Read createFoam setup and plunge range sources"}`
+
+### 🧑 User — 2026-11-18T01:44:50.973Z
+
+> ↩︎ result: export function createFoam(
+>   course: Course,
+>   opts: { s0: number; s1: number; quality: 'high' | 'low'; height?: (s: number, lat: number, t: number) => number },
+> ): FoamSystem {
+>   const { s0, s1, quality } = opts;
+>   const heightAt = opts.height ?? (() => 0);
+>   const rand = rng(1337);
+>   const density = quality === 'high' ? 1 : 0.5;
+>   // LOD: 80-tri puffs in the chunks around Benny, 20-tri puffs further out (low tier: 20-tri only)
+>   const geoHi = puffGeometry(quality === 'high' ? 1 : 0);
+>   const geoLo = quality === 'high' ? puffGeometry(0) : geoHi;
+>   const puff = makePuffMaterial(quality);
+>   const mat = puff.mat;
+>   const group = new THREE.Group();
+>   group.name = 'foam_banks';
+>   const st03 = course.stage('03'), st04 = course.stage('04');
+>   const chunkLen = 24;
+>   const chunks: { mesh: THREE.InstancedMesh; sa: number; sb: number }[] = [];
+>   let total = 0;
+>   const tmpM = new THREE.Matrix4();
+>   const tmpQ = new THREE.Quaternion();
+>   const tmpS = new THREE.Vector3();
+>   const tmpE = new THREE.Euler();
+>   const tmpC = new THREE.Color();
+> 
+>   /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
+>   const imp05: { p: THREE.Vector3; r: …[+3089 chars]
+
+### 🤖 Claude — 2026-11-18T01:44:54.343Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"m07tube\" src --include=*.ts | head -5; grep -rn \"marks\\[\" src/world/course.ts | head -8; grep -n \"07_plunge\" src/world/course.ts | head", "description": "Find flag helper and plunge course marks"}`
+
+### 🧑 User — 2026-11-18T01:44:54.463Z
+
+> ↩︎ result: src/world/match07.ts:37:  /** M3 '?m07tube=1': true from the hand-over point on — the plunge tube shows and the fitted proxy ends at its depth */
+> src/world/match07.ts:77:uniform float uClip;      // M3 '?m07tube=1': proxy surfaces end at this depth along the tube axis (the plunge tube continues); 0 = off
+> src/world/match07.ts:87:  // M3 '?m07tube=1' plunge surfaces (real geometry along the course): uv = (arc depth along the tube, angle / lateral)
+> src/world/match07.ts:171:/** M3 '?m07tube=1': the plunge continuation needs the course (arc samples) and where it starts / ends */
+> src/world/match07.ts:276:  // M3 '?m07tube=1': the matched tube continues as REAL geometry along the course from sA (just before the plunge top)
+> 203:  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 358:  smoothPolyline(pts, marks['03'], 2.2, 3);
+> 361:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 442:    for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+> 443:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 523:    this.marks['05_crest'] = best;
+> 639:    if (s > c.marks['07_ …[+530 chars]
+
+### 🤖 Claude — 2026-11-18T01:44:56.524Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"'m07\\|\\\"m07\\|m07fill\\b\" src --include=*.ts | grep -v '^\\s*//' | head -8; grep -n \"export function flag05\\|export const PROJ05\\|export function qflag\\|function flag\" src/vfx/waterRibbon.ts src/*.ts src/**/*.ts 2>/dev/null | head", "description": "Find how 07 URL switches are read"}`
+
+### 🧑 User — 2026-11-18T01:44:56.655Z
+
+> ↩︎ result: src/world/match07.ts:72:uniform sampler2D uFill;   // M2 '?m07fill=1': provisional-fill mask of the plate (1 = filled, not original pixels)
+> src/world/match07.ts:155:      // M2 '?m07fill=1': on the water, the provisional fill (Benny / coins in the picture) gives way to the river tile
+> src/world/match07.ts:183:  const fixFill = flag05('m07fill');
+> src/world/match07.ts:184:  const fixAng = flag05('m07ang');
+> src/world/match07.ts:185:  const fixGold = flag05('m07gold');
+> src/world/match07.ts:186:  const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
+> src/world/match07.ts:187:  const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)
+> src/world/match07.ts:190:  const fixRing = flag05('m07ring');
+> src/vfx/waterRibbon.ts:214:export const PROJ05: boolean = q05('proj05');
+> src/vfx/waterRibbon.ts:319:export const PROJ05_INVERSE = /* glsl */ `
+> src/vfx/waterRibbon.ts:214:export const PROJ05: boolean = q05('proj05');
+> src/vfx/waterRibbon.ts:319:export const PROJ05_INVERSE = /* glsl */ `
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:45:05.103Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"interface Puff\" -A 8 src/vfx/foam.ts; grep -n \"build(\" src/vfx/foam.ts | head; sed -n 136,140p src/vfx/foam.ts; sed -n 600,622p src/vfx/foam.ts", "description": "Read the Puff type and berm material creation"}`
+
+### 🧑 User — 2026-11-18T01:45:05.196Z
+
+> ↩︎ result: 22:interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }
+> 23-
+> 24-// ---------------------------------------------------------------------------------- berm profile
+> 25-/** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
+> 26-export const BERM_IN = -0.6;
+> 27-export const BERM_OUT = 1.2;
+> 28-const hash1 = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+> 29-const noise1 = (x: number) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return hash1(i) * (1 - u) + hash1(i + 1) * u; };
+> 30-/** 0..1 lumpiness of the bank at (s, side) — CPU only, baked into the mesh and the puff placement */
+> 750:    build(list, group, sa - 2, sb + 2);
+> 806:  build(wl, whirlGroup, st03.s0 - 30, st04.s0 + 25);
+>   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+>     float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 + 0.3;
+>     if (n < uOutro.x * 1.15) discard;
+>   }
+>   vec2 p = vec2(vFoam.x * vFoam.z * 1.1, s - uTime * 0.25);
+>   geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+>   geo.setIndex(idx);
+>   geo.computeVertexNormals();
+>   const st05 = course.s …[+874 chars]
+
+### 🤖 Claude — 2026-11-18T01:45:08.711Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 718,752p src/vfx/foam.ts; grep -n \"list.push\\|push({ p\" src/vfx/foam.ts | head", "description": "Read the puff chunk loop"}`
+
+### 🧑 User — 2026-11-18T01:45:08.780Z
+
+> ↩︎ result: const sb = Math.min(s1, sa + chunkLen);
+>     const list: Puff[] = [];
+>     // skip most of 03 (the whirlpool has its own foam), keep the chute→rim hand-over
+>     for (let s = sa; s < sb; s += step) {
+>       if (inSkip(s)) continue;
+>       for (const side of [-1, 1]) {
+>         // crest puffs: the body of the bank
+>         const nC = quality === 'high' && rand() < 0.55 ? 2 : 1;
+>         for (let k = 0; k < nC; k++) {
+>           const r = (0.11 + rand() * 0.13) * (low05(s) ? 0.85 : 1);
+>           addPuff(list, s + (rand() - 0.5) * step, -0.32 + rand() * 0.82, side, r, r * (0.05 + rand() * 0.3), 0.8 + 0.2 * rand());
+>         }
+>         // small puffs right at the water line (the lacy edge of the bank)
+>         if (rand() < 0.65) {
+>           const r = 0.06 + rand() * 0.06;
+>           addPuff(list, s + (rand() - 0.5) * step, -0.58 + rand() * 0.28, side, r, r * 0.15, 0.9);
+>         }
+>       }
+>       // heaps: clusters of big puffs stacked on the crest → lumpy cloud-bank silhouette
+>       if (rand() < (quality === 'high' ? 0.16 : 0.1)) {
+>         const side = rand() < 0.5 ? -1 : 1;
+>         const n = 5 + ((rand() * 6) | 0);
+>         const ec = -0.1 + rand() * 0.55;
+>         const lo = low05(s);
+>         for (le …[+1458 chars]
+
+### 🤖 Claude — 2026-11-18T01:45:29.323Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\nimport re\np='src/vfx/foam.ts'; t=open(p).read()\nn0=len(t)\n# 1) Puff gets an optional s (arc position) so the 07 plunge hide can find it\nt=t.replace(\"interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }\",\n \"interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean; s?: number }\",1)\nt=t.replace(\"list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp });\",\n \"list.push({ p: bermPoint(ss, e, side, lift) …[+3777 chars]`
+
+### 🧑 User — 2026-11-18T01:45:31.645Z
+
+> ↩︎ result: patched 56324 -> 57491
+> 16:import { type Course, WORLD, funnelY } from '../world/course';
+> 17:import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
+> 548:function bermScale05(course: Course): (s: number) => number {
+> tsc_exit=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:45:34.358Z
+
+Type check passes. Now rendering the plunge views with and without the new switch.
+
+### 🤖 Claude — 2026-11-18T01:45:35.165Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,22p tools/lead_r6/motion_audit.mjs; sed -n 26,46p tools/lead_r6/motion_audit.mjs", "description": "Read the motion audit script usage"}`
+
+### 🧑 User — 2026-11-18T01:45:35.202Z
+
+> ↩︎ result: // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [
+>   ['a00_approved_view', 0, null],
+>   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, …[+1517 chars]
+
+### 🤖 Claude — 2026-11-18T01:45:41.293Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\nt=open('tools/lead_r6/motion_audit.mjs').read()\nimport re\nstart=t.index('const SHOTS = [')\nend=t.index('];',start)+2\nt=t[:start]+\"\"\"const SHOTS = [\n  ['t33_through_screen', 't0.33', null], ['t50_through_screen', 't0.5', null], ['t66_through_screen', 't0.66', null],\n  ['t80_through_screen', 't0.8', null], ['t95_through_screen', 't0.95', null],\n];\"\"\"+t[end:]\nt=t.replace(\"// Lead r6 (2026-11-17): ONE moving-gameplay audit method\",\"// r8 (account 8): plunge-only copy of tools/lead_r6/motion_audit.mjs (same method, plunge shot …[+406 chars]`
+
+### 🧑 User — 2026-11-18T01:46:20.456Z
+
+> ↩︎ result: 07 t66_through_screen s 351.057 lat 0 stage 07 frames 387
+> 07 t80_through_screen s 367.457 lat 0 stage 07 frames 469
+> 07 t95_through_screen s 385.057 lat 0 stage 07 frames 557
+> 
+> real	0m39.109s
+> user	0m1.579s
+> sys	0m0.371s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:46:23.971Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1'; node tools/match07/plunge_audit_r8.mjs 07 qa/match/07/r8/plunge_foam \"$K&m07foam=1\" 2>&1 | tail -2; python3 -c \"\nfrom PIL import Image, ImageChops\nimport numpy as np\nfor n in ('t33','t50','t66','t80','t95'):\n  a=np.asarray(Image.open(f'qa/match/07/r8/plunge_K/{n}_through_screen.png').convert('RGB')).astype(int)\n  b=np.asarray(Image.open(f'qa/match/07/r8/plunge_foam/{n}_through_screen.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); print(n,'changed px',i …[+103 chars]`
+

@@ -651,3 +651,132 @@ First checkpoint pushed and verified. Now let me look at the approved picture an
 > user	0m1.554s
 > sys	0m0.446s
 
+### 🤖 Claude — 2026-11-18T01:43:47.501Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 76,135p src/gameplay/coins.ts; grep -n \"coins.update\\|createCoins\" src/game/Game.ts", "description": "Read coin05Material and update call site"}`
+
+### 🧑 User — 2026-11-18T01:43:47.531Z
+
+> ↩︎ result: mat.onBeforeCompile = (shader) => {
+>     Object.assign(shader.uniforms, post05);
+>     shader.vertexShader = shader.vertexShader
+>       .replace('void main() {', 'varying float vC05Dist;\nvoid main() {')
+>       .replace('#include <project_vertex>', '#include <project_vertex>\nvC05Dist = length(mvPosition.xyz);');
+>     shader.fragmentShader = shader.fragmentShader
+>       .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes; uniform vec4 uC05Haze; uniform vec2 uC05HazeR; varying float vC05Dist;\n${PROJ05_INVERSE}\nvoid main() {`)
+>       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+> vec3 c05 = mix(diffuseColor.rgb, uC05Haze.rgb, uC05Haze.a * clamp((vC05Dist - uC05HazeR.x) / uC05HazeR.y, 0.0, 1.0));
+> gl_FragColor = vec4(pjInverse(c05), 1.0); // coins05`);
+>   };
+>   mat.customProgramCacheKey = () => 'coin05';
+>   mat.onBeforeRender = (renderer) => {
+>     const rt = renderer.getRenderTarget();
+>     if (rt) rt05.set(rt.width, rt.height); else renderer.getDrawingBufferSize(rt05);
+>     post05.uPjRes.value.copy(rt05);
+>     post05.uPjPost.value.x = renderer.toneMappingExposure;
+>   };
+>   return mat;
+> }
+> /**
+>  * approved coin edge band (display colours). Rows = approved coin …[+2483 chars]
+
+### 🤖 Claude — 2026-11-18T01:44:11.555Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"function q05\\|const q05\\|export.*q05\\|BUILD_Q05\" src/vfx/waterRibbon.ts | head; grep -n \"q05\\|import\" src/world/match05far.ts | head -20", "description": "Locate q05 helper definition"}`
+
+### 🧑 User — 2026-11-18T01:44:11.590Z
+
+> ↩︎ result: 150:const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> 151:const q05 = (key: string): boolean => {
+> 157:  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> 160:export const flag05 = q05;
+> 167:export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 189:export const SILK05: boolean = q05('silk05');
+> 190:export const PUFF05: boolean = q05('puff05');
+> 191:export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
+> 192:export const FARW05: boolean = RIVER05 || q05('farw05');
+> 193:export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> 20:import * as THREE from 'three';
+> 21:import type { ForcedTunnel, TubeWarp } from './tube';
+> 22:import { tubeCenterAt } from './tube';
+> 23:import type { FarRiverLayout, FarRiverRow } from './far05';
+> 24:import { EDGE_LIFT, MATCH05, flag05 } from '../vfx/waterRibbon';
+> 25:import { clip05 } from '../vfx/clip05';
+
+### 🤖 Claude — 2026-11-18T01:44:12.520Z
+
+Now implementing the coin-look switch `m05coin` in coins.ts.
+
+### 🤖 Claude — 2026-11-18T01:44:26.669Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/gameplay/coins.ts'\ns=open(p).read()\ns=s.replace(\"import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';\",\n\"import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';\",1)\ns=s.replace(\"\"\"const post05 = {\n  uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },\"\"\",\n\"\"\"/**\n * `&m05coin=1` (Screen 05 round 8, needs `?match05=1` / coins05; qa/match/05/NOTES.md \"Round 8\"): coin LOOK only on the …[+3421 chars]`
+
+### 🧑 User — 2026-11-18T01:44:26.734Z
+
+> ↩︎ result: 118:  mat.customProgramCacheKey = () => 'coin05';
+
+### 🤖 Claude — 2026-11-18T01:44:33.117Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 355,372p src/game/Game.ts && python3 - <<'EOF'\np='src/gameplay/coins.ts'\ns=open(p).read()\ns=s.replace(\"mat.customProgramCacheKey = () => 'coin05';\",\"mat.customProgramCacheKey = () => (M05COIN ? 'coin05m' : 'coin05');\",1)\nold=\"\"\"    resetUntil(s) {\n      lastS = s - 0.5;\"\"\"\nassert old in s\ns=s.replace(old,\"\"\"    resetUntil(s) {\n      lastS = s - 0.5;\n      if (M05COIN) post05.uC05Benny.value.copy(course.sample(s - 0.5).pos);\"\"\",1)\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && echo TSC OK", "description": "Finish coin sw …[+21 chars]`
+
+### 🧑 User — 2026-11-18T01:44:35.364Z
+
+> ↩︎ result: if (st.hearts === 0) {
+>         // restart this stage with full hearts (checkpoint), coins kept
+>         st.hearts = 5;
+>         hud.setHearts(5);
+>         st.s = stg.s0;
+>         st.lat = 0;
+>         st.respawns++;
+>       }
+>     }
+>     // coins
+>     const got = coins.update(st.clock, dt, st.s, st.lat);
+>     if (got) { st.coins += got * COIN_VALUE; hud.setCoins(st.coins); }
+>     setStage(stageOf(st.s));
+>     // Benny
+>     const f = bennyPose(st.s, st.lat, st.clock, pose);
+>     benny.root.position.copy(pose.pos);
+>     const lean = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -input.steer * 0.25);
+>     // 03 whirlpool twirl: Benny spins around his up axis while riding the vortex
+> TSC OK
+
+### 🤖 Claude — 2026-11-18T01:44:38.409Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/coin1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1\" \"a00_approved_view,f03_forward3u,f10_forward10u,f20_forward20u,t66_through_screen\" 2>&1 | grep -v \"allow list\\|403\"", "description": "Render coin switch test frames", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T01:45:21.911Z
+
+> ↩︎ result: a00_approved_view s 133.063 lat 0 coins 1420 benny -0.02 -0.36 big coins: #20@473,733 d97 #21@549,663 d70
+> f03_forward3u s 136.106 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@464,787 d117 #21@552,692 d80 #22@476,631 d61
+> f10_forward10u s 143.073 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f20_forward20u s 153.156 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> t66_through_screen s 170.393 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d111 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T01:45:23.274Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/coin1/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T01:45:23.316Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:45:23.876Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/coin1/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T01:45:23.922Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:45:44.742Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_shots.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\"\"\",\n\"\"\"const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nimport { realpathSync, mkdirSync as mk, rmSync, readFileSync } from 'node:fs';\n// own dev server: node_modules is a symlink into the lead checkout in this worktree, so Vite's default fs allow list\n// refused the HUD fo …[+2339 chars]`
+
+### 🧑 User — 2026-11-18T01:46:21.241Z
+
+> ↩︎ result: f03_forward3u s 136.255 lat 0 coins 1420 benny 0.05 -0.3 big coins: #20@463,791 d119 #21@553,694 d80 #22@476,632 d62
+> f10_forward10u s 143.074 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f03_forward3u 1111620 685718 HUD rows diff 31825
+> f10_forward10u 70395 66725 HUD rows diff 0
+

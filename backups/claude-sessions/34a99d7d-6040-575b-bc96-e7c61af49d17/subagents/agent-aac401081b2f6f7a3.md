@@ -658,3 +658,177 @@ Meanwhile I'll look at the match04 source.
 > 682 488 384.27 232
 > 686 489 781.52 236
 
+### 🤖 Claude — 2026-11-18T01:43:41.346Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git ls-tree -r --name-only origin/claude/rainbow-s06-match-c7 qa/match/06/r7 | head -50", "description": "List s06 r7 picture files"}`
+
+### 🧑 User — 2026-11-18T01:43:41.382Z
+
+> ↩︎ result: qa/match/06/r7/AFTER/a00_approved_view.png
+> qa/match/06/r7/AFTER/f03_forward3u.png
+> qa/match/06/r7/AFTER/f06_forward6u.png
+> qa/match/06/r7/AFTER/f10_forward10u.png
+> qa/match/06/r7/AFTER/f20_forward20u.png
+> qa/match/06/r7/AFTER/motion.json
+> qa/match/06/r7/AFTER/s_left_hard.png
+> qa/match/06/r7/AFTER/s_left_steer.png
+> qa/match/06/r7/AFTER/s_right_hard.png
+> qa/match/06/r7/AFTER/s_right_steer.png
+> qa/match/06/r7/AFTER/t33_through_screen.png
+> qa/match/06/r7/AFTER/t66_through_screen.png
+> qa/match/06/r7/AFTER/t95_through_screen.png
+> qa/match/06/r7/BEFORE/a00_approved_view.png
+> qa/match/06/r7/BEFORE/f03_forward3u.png
+> qa/match/06/r7/BEFORE/f06_forward6u.png
+> qa/match/06/r7/BEFORE/f10_forward10u.png
+> qa/match/06/r7/BEFORE/f20_forward20u.png
+> qa/match/06/r7/BEFORE/s_left_hard.png
+> qa/match/06/r7/BEFORE/s_left_steer.png
+> qa/match/06/r7/BEFORE/s_right_hard.png
+> qa/match/06/r7/BEFORE/s_right_steer.png
+> qa/match/06/r7/BEFORE/t33_through_screen.png
+> qa/match/06/r7/NEW/a00_approved_view.png
+> qa/match/06/r7/NEW/f03_forward3u.png
+> qa/match/06/r7/NEW/f06_forward6u.png
+> qa/match/06/r7/NEW/f10_forward10u.png
+> qa/match/06/r7/NEW/f20_forward20u.png
+> qa/match/06/r7/NEW/motion.json
+> qa/match/06/r7/NEW/s_left_hard.png
+> qa/match/06/r7/NEW …[+831 chars]
+
+### 🤖 Claude — 2026-11-18T01:43:43.516Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git ls-tree -r --name-only origin/claude/rainbow-s06-match-c7 qa/match/06/r7 | grep -v \"NEW/\\|BEFORE/\\|AFTER/\\|NEW_cam25\\|NEW_tun\" | head -40", "description": "List other s06 r7 dirs"}`
+
+### 🧑 User — 2026-11-18T01:43:43.552Z
+
+> ↩︎ result: qa/match/06/r7/NOTES.md
+> qa/match/06/r7/RING/a00_approved_view.png
+> qa/match/06/r7/RING/f06_forward6u.png
+> qa/match/06/r7/RING/f10_forward10u.png
+> qa/match/06/r7/RING/f20_forward20u.png
+> qa/match/06/r7/RING/motion.json
+> qa/match/06/r7/RING/s_right_hard.png
+> qa/match/06/r7/RING/t66_through_screen.png
+> qa/match/06/r7/RING/t95_through_screen.png
+> qa/match/06/r7/RING2/a00_approved_view.png
+> qa/match/06/r7/RING2/f06_forward6u.png
+> qa/match/06/r7/RING2/f10_forward10u.png
+> qa/match/06/r7/RING2/f20_forward20u.png
+> qa/match/06/r7/RING2/motion.json
+> qa/match/06/r7/RING2/s_right_hard.png
+> qa/match/06/r7/RING2/t66_through_screen.png
+> qa/match/06/r7/RING2/t95_through_screen.png
+> qa/match/06/r7/RING3/a00_approved_view.png
+> qa/match/06/r7/RING3/f06_forward6u.png
+> qa/match/06/r7/RING3/f10_forward10u.png
+> qa/match/06/r7/RING3/f20_forward20u.png
+> qa/match/06/r7/RING3/motion.json
+> qa/match/06/r7/RING3/s_right_hard.png
+> qa/match/06/r7/RING3/t66_through_screen.png
+> qa/match/06/r7/RING3/t95_through_screen.png
+> qa/match/06/r7/RING4/a00_approved_view.png
+> qa/match/06/r7/RING4/f06_forward6u.png
+> qa/match/06/r7/RING4/f10_forward10u.png
+> qa/match/06/r7/RING4/f20_forward20u.png
+> qa/match/06/r7/RING4/motion.json
+> qa/match/06/r7/RING4/s_rig …[+376 chars]
+
+### 🤖 Claude — 2026-11-18T01:43:46.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && git show origin/claude/rainbow-s06-match-c7:qa/match/06/r7/NEW/f10_forward10u.png > $S/s06_new_f10.png && ls -la $S/s06_new_f10.png", "description": "Extract an s06 NEW frame for reference"}`
+
+### 🧑 User — 2026-11-18T01:43:46.540Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 2270750 Nov 18 01:43 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s06_new_f10.png
+
+### 🤖 Claude — 2026-11-18T01:43:48.268Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s06_new_f10.png"}`
+
+### 🧑 User — 2026-11-18T01:43:48.317Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:44:06.430Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\nim.crop((560,380,864,1000)).resize((456,930),Image.LANCZOS).save('/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop_mouthR.png')\n\"", "description": "Crop mouth ring right side"}`
+
+### 🧑 User — 2026-11-18T01:44:06.683Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T01:44:08.990Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/crop_mouthR.png"}`
+
+### 🧑 User — 2026-11-18T01:44:09.015Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T01:45:13.502Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"PROJ05_INVERSE\" -A 30 src/vfx/waterRibbon.ts | head -45; grep -n \"\\\"three\\\"\" package.json; node -e \"console.log(require('/home/user/rainbow-/node_modules/three/package.json').version)\"", "description": "Read PROJ05_INVERSE and three version"}`
+
+### 🧑 User — 2026-11-18T01:45:13.597Z
+
+> ↩︎ result: 319:export const PROJ05_INVERSE = /* glsl */ `
+> 320-// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> 321-// post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+> 322-vec3 pjInverse(vec3 t) {
+> 323-  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+> 324-  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+> 325-  vec3 c = t / max(vig, 0.5);
+> 326-  c = (c - 0.5) / uPjPost.z + 0.5;
+> 327-  float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+> 328-  c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+> 329-  c = clamp(c, 0.0, 0.975);
+> 330-  c = mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+> 331-  float np = max(c.r, max(c.g, c.b));
+> 332-  if (np >= 0.76) {
+> 333-    float peak = 0.0576 / (1.0 - np) - 0.24 + 0.76;
+> 334-    float g = 1.0 - 1.0 / (0.15 * (peak - np) + 1.0);
+> 335-    c = (c - g * np) / (1.0 - g);
+> 336-    c *= peak / np;
+> 337-  }
+> 338-  float x = min(c.r, min(c.g, c.b));
+> 339-  float off = x >= 0.04 ? 0.04 : (sqrt(max(x, 0.0)) / 2.5 - x);
+> 340-  return (c + off) / uPjPost.x;
+> 341-}
+> 342-`;
+> 343-
+> 344-const FRAG = /* glsl */ `
+> 345-uniform float uTime;
+> 346- …[+810 chars]
+
+### 🤖 Claude — 2026-11-18T01:45:18.910Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('references/04_through_the_five_arrows.png').convert('RGB')).astype(int)\nfor name,(x0,y0,x1,y1) in {'band_top':(300,470,420,500),'band_left':(120,600,170,700),'groove?':(440,515,470,522),'deep':(450,640,520,680),'mouth_face_R':(780,700,800,780),'mouth_top':(420,400,500,430),'water_tunnel':(440,820,520,880),'foamL':(20,480,120,560),'pink_swirl':(40,1200,120,1260),'roomwall':(380,330,440,360)}.items():\n  r=a[y0:y1,x0:x1].reshape(-1,3)\n  print(name, r.mean(0).round(), np.pe …[+128 chars]`
+
+### 🧑 User — 2026-11-18T01:45:19.142Z
+
+> ↩︎ result: band_top [157.  67.  65.] [136.  48.  32.] [174.  86. 127.]
+> band_left [210. 116.  71.] [177.  78.  28.] [251. 190. 106.]
+> groove? [170.  65.  34.] [147.  41.   5.] [187.  81.  61.]
+> deep [230. 126.  88.] [199.  89.  67.] [255. 175. 110.]
+> mouth_face_R [244. 179.  86.] [218. 110.  35.] [254. 251. 224.]
+> mouth_top [248. 187. 144.] [236. 107.  53.] [255. 248. 218.]
+> water_tunnel [ 80. 196. 243.] [  0. 134. 222.] [197. 245. 255.]
+> foamL [201. 186. 240.] [159. 157. 228.] [245. 222. 255.]
+> pink_swirl [ 72. 162. 236.] [  0. 100. 204.] [207. 241. 255.]
+> roomwall [234. 123. 120.] [206.  70.  77.] [255. 179. 163.]
+
+### 🤖 Claude — 2026-11-18T01:45:44.655Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uniform\\|cameraPosition\" src/world/match04.ts | head -5; git show origin/claude/rainbow-s06-match-c7:src/game/Game.ts | grep -n \"m06\\.\\(away\\|setAway\\)\" | head", "description": "Check how s06 wires away/setAway"}`
+
+### 🧑 User — 2026-11-18T01:45:44.692Z
+
+> ↩︎ result: 40:uniform mat4 uProjVP;
+> 55:uniform sampler2D uPlate;
+> 56:uniform sampler2D uDepth;
+> 57:uniform float uUseDepth;
+> 58:uniform vec2 uNearFar;
+> 546:      const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+> 547:      m06.setAway(m06On ? m06.away(camera.position) : 0);
+
