@@ -596,3 +596,27 @@ Now fix 1 (ring look). I'll fit the nearest painted ring band so I can unwrap it
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:46:44.294Z
+
+Good, the band unwraps cleanly. I'll check the 04 ring-paint idea briefly, then build the ring texture from the user's pixels.
+
+### 🤖 Claude — 2026-11-18T18:46:45.296Z
+
+> 🔧 **Bash** `{"command": "head -40 /home/user/wt/s04b/tools/match04/ring_paint04.py 2>/dev/null; git -C /home/user/wt/s04 show 160ce059 --stat | head -20", "description": "Read 04 ring unwrap idea and foam commit stat"}`
+
+### 🧑 User — 2026-11-18T18:46:45.542Z
+
+> ↩︎ result: """Screen 04 round 15 `&m04rpaint=k`: the user's PAINTED inner gold rings, straightened from the approved picture, as a
+> texture for every modeled inner ring band (src/world/match04m4.ts GOLD_FRAG).
+> 
+> The painted tunnel is a telescope of rounded copper-gold rings whose centres drift toward the vanishing point and whose
+> outlines are slightly elliptic, so neither a straight-cylinder unwrap nor the simple drifting-centre model gives straight
+> rings. Here the painting gets its OWN ring coordinate system:
+>   1. log-polar unwrap around the drifting centres (make_tiles04.py model) -> painted grooves at the tunnel top (dark
+>      minima) -> groove curves tracked along the angle -> one circle fitted to every groove (q = 0, 1, 2, ... = groove
+>      index, q continuous in between: centre and log radius interpolated);
+>   2. unwrap in (angle, q) -> the residual waviness of every groove tracked again (smooth path search) and fitted with a
+>      low-order Fourier series of the angle -> straightened coordinates: q_k(psi) + s * (q_k+1(psi) - q_k(psi)),
+>      s = position inside the painted period (0 = groove, then the band, the bright lip line, back to the next groove);
+>   3. ONE clean painted period (ring i …[+2823 chars]
+

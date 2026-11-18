@@ -1565,3 +1565,10 @@ Meanwhile I'll write a small probe that records the `[match04]` console lines (b
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; echo \"$(cat $S/K.txt)&m04fclu=1\" > $S/K1.txt; cd /home/user/wt/s04 && K=$(cat $S/K1.txt) && ONLY='[[\"f06_forward6u\",6,null],[\"f10_forward10u\",10,null],[\"s_left_hard\",12,-1],[\"t33_through_screen\",\"t0.33\",null]]' node $S/quick_audit.mjs 04 $S/b1 \"$K&m04sband=1\" 2>&1 | grep -v \"allow list\" | tail -4", "description": "Quick render of side bands", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T18:46:41.872Z
+
+> ↩︎ result: 04 f06_forward6u s 84.88 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.149 lat 0 stage 04 frames 43
+> 04 s_left_hard s 90.248 lat -1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.483 lat -0.006 stage 04 frames 53
+

@@ -1588,3 +1588,10 @@ Now the proper implementation: the block is removed when Benny crosses into 06 (
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r15_probe.mjs'\ns=open(p).read()\ns=s.replace(\"const PRE = process.env.PRE_JS || '';\",\"const PRE = process.env.PRE_JS || '';\\nconst EXTRA = process.env.EXTRA_JS || ''; // async expression evaluated after the render (printed)\")\ns=s.replace(\"    const res = await page.evaluate(async ([frac, steer, PRE, GRID]) => {\",\"    const res = await page.evaluate(async ([frac, steer, PRE, GRID, EXTRA]) => {\")\ns=s.replace(\"      return { s: r.state().s, stage: r.state().stage, cam, open, hits };\\n    }, [frac, steer, PRE, G …[+927 chars]`
 
+### 🧑 User — 2026-11-18T18:46:26.013Z
+
+> ↩︎ result: == x97 s 187.993 stage 05 cam 3.29,-40.5,-121.72 far-open 0 extra {"ride":187.9930686948966,"trans":true,"live":1,"open":0}
+>    0.3,0.15 tube05_far<zone_tubes<washer_world<Scene d11.95 | tube05_far_wall<zone_tubes<washer_world<Scene d11.95 | water_ribbon<water_system<Scene d14.33
+> == x99 s 189.092 stage 06 cam 3.15,-40.61,-122.88 far-open 1 extra {"ride":189.09160202823202,"trans":true,"live":0,"open":1}
+>    0.3,0.15 Mesh<zone_tubes<washer_world<Scene d11.89 | Mesh<zone_tubes<washer_world<Scene d12.8 | water_ribbon<water_system<Scene d15.25
+

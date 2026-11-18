@@ -196,14 +196,22 @@ for rI in range(NS):
         for ch in range(3): filled[rI, g0c:g1c, ch] = np.interp(xs, xs[good], tile[rI, g0c:g1c, ch][good])
 tile = filled
 
-# ---- outside the good arc (under the water / behind the foam): mirror the upper walls, cross-fade at the bottom -----
+# ---- outside the good arc (under the water / behind the foam): CONTINUE the painted wall by repeating its last SPAN
+# of angle (a mirror would draw a symmetric V of the lip line = a mark on every ring); the arc end is cross-faded into
+# the repeated block so the joint has no seam; left and right continuations meet (cross-faded) at the bottom
+SPAN, FADE = int(0.8 / (2 * np.pi) * NC), 48
+t0 = tile.copy()
+jj = np.linspace(0, 1, FADE)[None, :, None]
+tile[:, g1c - FADE:g1c] = t0[:, g1c - FADE:g1c] * (1 - jj) + t0[:, g1c - SPAN - FADE:g1c - SPAN] * jj
+tile[:, g0c:g0c + FADE] = t0[:, g0c:g0c + FADE] * jj + t0[:, g0c + SPAN:g0c + SPAN + FADE] * (1 - jj)
+right = lambda dd: tile[:, g1c - SPAN + (dd % SPAN)]               # continuation to the right of the arc
+left = lambda dd: tile[:, g0c + SPAN - 1 - (dd % SPAN)]            # continuation to the left (going backwards)
 full = tile.copy()
 for c in range(NC):
-    if c < g0c or c > g1c:
-        dl = (g0c - c) % NC; dr = (c - g1c) % NC
-        sl = min(max(g0c + dl, g0c), g1c); sr = min(max(g1c - dr, g0c), g1c)
-        w = np.clip((dl - dr) / 120.0 * 0.5 + 0.5, 0, 1)
-        full[:, c] = tile[:, sl] * (1 - w) + tile[:, sr] * w
+    if c < g0c or c >= g1c:
+        dr = (c - g1c) % NC; dl = (g0c - 1 - c) % NC
+        w = np.clip((dr - dl) / 120.0 * 0.5 + 0.5, 0, 1)            # 0 = right continuation, 1 = left
+        full[:, c] = right(dr) * (1 - w) + left(dl) * w
 tile = full
 # seamless along s (the groove row repeats): blend the last rows into the first
 n = 6; w = np.linspace(0, 1, n)[:, None, None]; tile[-n:] = tile[-n:] * (1 - w) + tile[:1] * w
