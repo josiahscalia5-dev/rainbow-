@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
-import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
+import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
 
 export const COIN_VALUE = 10;
 
@@ -63,8 +63,21 @@ if (COINS05) {
     face05.anisotropy = 4;
   }));
 }
+/**
+ * `&m05coin=1` (Screen 05 round 8, needs `?match05=1` / coins05; qa/match/05/NOTES.md "Round 8"): coin LOOK only on the
+ * Screen 05 coins (per-instance flag aC05) — count, score, pickup rule and positions are unchanged.
+ *  1. on-screen size cap: a 05 coin is never drawn wider than the approved nearest painted coin (≈ 96 px at 864 × 1536;
+ *     cap M05COIN_CAP px, scaled with the render height) — riding brought coins to 190–230 px in front of Benny;
+ *  2. a coin that lies nearer to the camera than Benny (already passed: collected — the QA clock is frozen, so its pop
+ *     never finished — or missed) shrinks to nothing between 1.2 and 2.2 u in front of Benny's depth, i.e. only beyond
+ *     the pickup window, so it never covers Benny from the foreground.
+ * The locked 05 view is unchanged (every coin there is below the cap and beyond Benny).
+ */
+const M05COIN = COINS05 && flag05('m05coin');
+const M05COIN_CAP = 100;
 const post05 = {
   uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
+  uC05Benny: { value: new THREE.Vector3(0, -9999, 0) },
   uC05Haze: { value: new THREE.Vector4(...C05LOOK.haze.rgb.map((v) => v / 255), C05LOOK.haze.a) },
   uC05HazeR: { value: new THREE.Vector2(C05LOOK.haze.from, C05LOOK.haze.len) },
 };
@@ -78,13 +91,31 @@ function coin05Material(map: THREE.Texture): THREE.MeshBasicMaterial {
     shader.vertexShader = shader.vertexShader
       .replace('void main() {', 'varying float vC05Dist;\nvoid main() {')
       .replace('#include <project_vertex>', '#include <project_vertex>\nvC05Dist = length(mvPosition.xyz);');
+    if (M05COIN) {
+      // m05coin: shrink the coin about its own centre (on-screen size cap + passed-coin hide), 05 coins only
+      shader.vertexShader = shader.vertexShader
+        .replace('void main() {', `attribute float aC05; uniform vec3 uC05Benny; uniform vec2 uPjRes;
+void main() {`)
+        .replace('#include <project_vertex>', `#ifdef USE_INSTANCING
+if (aC05 > 0.5) {
+  vec4 c05V = modelViewMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+  float c05D = max(-c05V.z, 1e-3);
+  float c05Px = length(instanceMatrix[0].xyz) * projectionMatrix[1][1] * 0.5 * uPjRes.y / c05D;
+  float c05K = min(1.0, ${M05COIN_CAP.toFixed(1)} * uPjRes.y / 1536.0 / max(c05Px, 1e-3));
+  float bD = -(viewMatrix * vec4(uC05Benny, 1.0)).z;
+  c05K *= smoothstep(bD - 2.2, bD - 1.2, c05D);
+  transformed *= c05K;
+}
+#endif
+#include <project_vertex>`);
+    }
     shader.fragmentShader = shader.fragmentShader
       .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes; uniform vec4 uC05Haze; uniform vec2 uC05HazeR; varying float vC05Dist;\n${PROJ05_INVERSE}\nvoid main() {`)
       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
 vec3 c05 = mix(diffuseColor.rgb, uC05Haze.rgb, uC05Haze.a * clamp((vC05Dist - uC05HazeR.x) / uC05HazeR.y, 0.0, 1.0));
 gl_FragColor = vec4(pjInverse(c05), 1.0); // coins05`);
   };
-  mat.customProgramCacheKey = () => 'coin05';
+  mat.customProgramCacheKey = () => (M05COIN ? 'coin05m' : 'coin05');
   mat.onBeforeRender = (renderer) => {
     const rt = renderer.getRenderTarget();
     if (rt) rt05.set(rt.width, rt.height); else renderer.getDrawingBufferSize(rt05);
@@ -302,6 +333,10 @@ export function createCoins(course: Course): CoinSystem {
     const face5 = coin05Material(f05);
     mats = [coin05Material(edge05Texture()), face5, face5];
   }
+  if (M05COIN) {
+    const st5 = course.stage('05');
+    geo.setAttribute('aC05', new THREE.InstancedBufferAttribute(new Float32Array(defs.map((d) => (d.stage === '05' || d.far ? 1 : 0) * (d.s >= st5.s0 ? 1 : 0))), 1));
+  }
   const mesh = new THREE.InstancedMesh(geo, mats, defs.length);
   mesh.frustumCulled = false;
   const group = new THREE.Group();
@@ -366,6 +401,7 @@ export function createCoins(course: Course): CoinSystem {
     collected,
     update(time, _dt, s, lat) {
       lastS = s;
+      if (M05COIN) { const f = course.sample(s); post05.uC05Benny.value.copy(f.pos).addScaledVector(f.right, lat); }
       let picked = 0;
       for (let i = 0; i < defs.length; i++) {
         if (collected[i]) continue;
@@ -383,6 +419,7 @@ export function createCoins(course: Course): CoinSystem {
     },
     resetUntil(s) {
       lastS = s - 0.5;
+      if (M05COIN) post05.uC05Benny.value.copy(course.sample(s - 0.5).pos);
       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
       place(0);
     },

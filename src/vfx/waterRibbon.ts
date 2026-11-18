@@ -256,6 +256,17 @@ export const TGTFILL05: boolean = TGTVIS05 && qv05('tgtfill05') === '3';
  * x 748-863 y 771-904 + small left pieces) E carries the approved wall pixels instead of stretched water.
  */
 export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
+/**
+ * `&m05wd=1` (Screen 05 round 8, branch claude/rainbow-s05-match-c8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05):
+ * WATER DESIGN WHILE SWIMMING. Riding hands the near river over from the approved exact layer E to the periodic near
+ * tile T2 (projnear05: E must be as dense as the locked view had it, i.e. ~270 texels/u, or the tile takes over) — the
+ * tile is a repeat of the nearest approved water, so the S-shaped pink / cyan streams of the approved design vanished
+ * in front of Benny and the screen showed a marbled, stretched colour sheet. With the switch the approved design E stays
+ * the river's layout wherever E has data (E is smoothed along its own rows: far rows hold only 8–18 texels per unit,
+ * whose row noise read as flat horizontal stripes when magnified), and the fine detail layer is laid over it. Engaged
+ * only while riding (pjNearK): the locked checkpoint picture is unchanged pixel for pixel.
+ */
+export const M05WD: boolean = TGTWALL05 && q05('m05wd');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -467,6 +478,9 @@ float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - 
 // rescaled by 1 / sqrt(w^2 + (1-w)^2), so the band keeps the approved water's contrast. Engaged by pjNearK() only:
 // at the locked checkpoint (pjNearK = 0) the picture is unchanged, pixel for pixel.
 uniform vec4 uPjVP;
+#ifdef M05WD
+uniform vec4 uPjWD;        // m05wd: x = on, y = share of the detail layer kept on the design, z = row smoothing (E rows)
+#endif
 vec3 pjMixVP(vec3 a, vec3 b, float w) {
   vec3 lin = mix(a, b, w);
   float k = uPjVP.x * pjNearK();
@@ -510,7 +524,20 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
     float wEv = wE * smoothstep(0.5, 0.95, e.a) / max(e.a, 1e-3);
     wEv = mix(wE, clamp(wEv, 0.0, 1.0), pjNearK());
     wE = wEv;
-    return pjMixVP(lay, e.rgb, wE);
+    vec3 res = pjMixVP(lay, e.rgb, wE);
+    #ifdef M05WD
+    {
+      // m05wd: the approved design E is the layout wherever it has data, smoothed along its rows
+      float dv = uPjWD.z / uPjESize.y;
+      vec4 es = e * 0.36 + (texture2D(uPjE, eUV + vec2(0.0, dv)) + texture2D(uPjE, eUV - vec2(0.0, dv))) * 0.24
+        + (texture2D(uPjE, eUV + vec2(0.0, 2.0 * dv)) + texture2D(uPjE, eUV - vec2(0.0, 2.0 * dv))) * 0.08;
+      float wD = uPjWD.x * pjNearK() * inE * L.w * smoothstep(0.55, 0.95, es.a) * (1.0 - wE);
+      res = mix(res, clamp(es.rgb / max(es.a, 0.55), 0.0, 1.0), wD);
+      wE += wD * (1.0 - uPjWD.y);
+      wN *= 1.0 - wD;
+    }
+    #endif
+    return res;
   }
   return mix(lay, e.rgb, wE);
 }
@@ -1691,7 +1718,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -1787,6 +1814,8 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // ?projvp05=1 (or ?match05=1): variance-preserving E <-> tile hand-over while riding (shader pjMixVP). Mean colour =
   // midpoint of the means of E (0.379, 0.598, 0.912) and T2 (0.502, 0.533, 0.933), measured over their valid texels
   u.uPjVP = { value: new THREE.Vector4(on05('projvp05') ? 1 : 0, 0.440, 0.566, 0.922) };
+  // m05wd (Screen 05 round 8): design layer while riding — on, detail share on the design, row smoothing step (E rows)
+  u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   const loader = new THREE.TextureLoader();
