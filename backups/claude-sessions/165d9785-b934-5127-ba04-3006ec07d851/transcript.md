@@ -1380,3 +1380,438 @@ Found it: the autosave settings still name the account-11 branch as the main bra
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'\nd=json.load(open(p)); print('old branch', d['branch']); d['branch']='ccr-e908f8da-cy4yc1'\njson.dump(d,open(p,'w'),indent=2); open(p,'a').write('\\n')\nEOF\ntimeout 600 python3 scripts/rainbow-autosave.py --reason manual:round12-setup --quiet 2>&1 | tail -2; python3 -I scripts/autosave-status.py | tail -2; echo \"REMOTE $(git ls-remote origin refs/heads/ccr-e908f8da-cy4yc1 | cut -c1-12) LOCAL $(git rev-parse --short=12 HEAD)\"", "description": "Fix autosave target branch and re-run save", "timeout": 660000}`
 
+### 🧑 User — 2026-11-18T12:44:08.840Z
+
+> ↩︎ result: old branch ccr-3b139b48-0qqkkz
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T12:43:56+00:00 (0.2 min ago) | local fb76995 remote fb76995 (match) | uncommitted 0
+> REMOTE fb76995bcb9a LOCAL fb76995bcb9a
+
+### 🤖 Claude — 2026-11-18T12:44:13.126Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls qa/match/04/r11/ qa/match/04/r11/NEW_m04mv qa/match/04/r10 2>/dev/null | head -40; cat assets/textures/match04/mv04.json | head -40", "description": "Inspect the Screen 04 multi-view test files"}`
+
+### 🧑 User — 2026-11-18T12:44:13.188Z
+
+> ↩︎ result: qa/match/04/r10:
+> PROGRESS.md
+> testA_foam3_pink_arr5
+> testB_foam3_arr5
+> testC
+> 
+> qa/match/04/r11/:
+> BEFORE
+> BEFORE_extra
+> NEW_m04mv
+> mv
+> 
+> qa/match/04/r11/NEW_m04mv:
+> f15_forward15u.png
+> f25_forward25u.png
+> motion.json
+> s_left_hard.png
+> s_right_hard.png
+> t66_through_screen.png
+> t95_through_screen.png
+> {
+>  "source": "user PROVISIONAL views (qa/match/04/r10/refviews/pilot/V04-1_cand1.png, V04-2_cand2.png)",
+>  "views": [
+>   {
+>    "img": "mv04_V04-1.png",
+>    "matrixWorld": [
+>     0.9986950326017735,
+>     3.3948689802128298e-18,
+>     -0.05107085133951152,
+>     0.0,
+>     -0.029558048423954587,
+>     0.8154939971884579,
+>     -0.5780102614339634,
+>     0.0,
+>     0.04164797269867576,
+>     0.5787655315838974,
+>     0.8144298041086777,
+>     0.0,
+>     2.401897357959389,
+>     -20.040780549920438,
+>     -28.11481118722006,
+>     1.0
+>    ],
+>    "fov": 62.00319952254866,
+>    "aspect": 0.5625,
+>    "s": 87.446,
+>    "eye": [
+>     2.401897357959389,
+>     -20.040780549920438,
+>     -28.11481118722006
+>    ],
+>    "masked_px": 475553
+>   },
+>   {
+>    "img": "mv04_V04-2.png",
+>    "matrixWorld": [
+>     0.998698570126411,
+>     -4.387596022081084e-18,
+>     -0.05100162769424407,
+>     0.0,
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:44:13.979Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git diff d3ea420~1 d3ea420 -- src/world/match04.ts | head -120", "description": "Read the m04mv code added by account 11"}`
+
+### 🧑 User — 2026-11-18T12:44:14.094Z
+
+> ↩︎ result: diff --git a/src/world/match04.ts b/src/world/match04.ts
+> index 364362a0..4facf83a 100644
+> --- a/src/world/match04.ts
+> +++ b/src/world/match04.ts
+> @@ -293,6 +293,77 @@ export async function buildMatch04(): Promise<Match04> {
+>    const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+>      hideOld: (names) => group.children.forEach((o) => { if (names.includes(o.name)) o.visible = false; }) });
+>  
+> +  // r11 `&m04mv=1` (lead DECISIVE TEST, qa/match/04/r11/PROGRESS.md): MULTI-VIEW projection — the Screen 08 method extended
+> +  // from one picture to a chain of views along the stage. The user's PROVISIONAL reference views V04-1 / V04-2 (made from the
+> +  // live game frames at forward 10 u / 20 u) are projected from those exact game cameras onto every Screen 04 surface (overlay
+> +  // copies of the meshes, depth-tested against each view's own depth bake; the painted Benny / coins / HUD masked out), and
+> +  // blended by the camera's distance to each view's camera. The approved view (10 u away from V04-1's camera) is unchanged.
+> +  const MV = new URLSearchParams(location.search).get('m04mv') === '1';
+> +  const mvViews:  …[+5393 chars]
+
+### 🤖 Claude — 2026-11-18T12:44:16.385Z
+
+Account 11 finished the code for this test (`&m04mv=1`) but only rendered part of the "NEW" pictures. I'll check the exact game settings and rendering tool it used.
+
+### 🤖 Claude — 2026-11-18T12:44:18.285Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json\nfor f in ['qa/match/04/r11/BEFORE/motion.json','qa/match/04/r11/NEW_m04mv/motion.json']:\n    d=json.load(open(f)); print(f, {k:(v if not isinstance(v,(list,dict)) else type(v).__name__+str(len(v))) for k,v in d.items()})\n\"; sed -n 1,40p tools/lead_r6/motion_audit.mjs | grep -nE \"argv|--|usage|Usage|EXTRA|q=\" | head -20", "description": "Get the 04 test query and audit tool options"}`
+
+### 🧑 User — 2026-11-18T12:44:18.409Z
+
+> ↩︎ result: qa/match/04/r11/BEFORE/motion.json {'screen': '04', 'query': 'match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1', 'shots': 'list12'}
+> qa/match/04/r11/NEW_m04mv/motion.json {'screen': '04', 'query': 'match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04mv=1', 'shots': 'list14'}
+> 9:const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> 16:const SHOTS = [...(process.env.EXTRA_SHOTS ? JSON.parse(process.env.EXTRA_SHOTS) : []),   // r11: optional extra [name, dist, steer] shots
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:44:22.676Z
+
+The NEW set was fully rendered (14 shots), but the autosave only kept files under 2 MB, so 8 of those pictures are missing. I'll re-render the full NEW set with the same settings, in the background.
+
+### 🤖 Claude — 2026-11-18T12:44:24.526Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json\nd=json.load(open('qa/match/04/r11/NEW_m04mv/motion.json'))\nfor k,v in d.items():\n  if isinstance(v,list): print(k, [ (x.get('name'),x.get('dist'),x.get('steer')) if isinstance(x,dict) else x for x in v][:16])\n  elif isinstance(v,dict): print(k, list(v)[:16])\n\"; sed -n 9,30p tools/lead_r6/motion_audit.mjs", "description": "List the audit shot positions"}`
+
+### 🧑 User — 2026-11-18T12:44:24.698Z
+
+> ↩︎ result: shots [('f15_forward15u', 15, None), ('f25_forward25u', 25, None), ('a00_approved_view', 0, None), ('f03_forward3u', 3, None), ('f06_forward6u', 6, None), ('f10_forward10u', 10, None), ('f20_forward20u', 20, None), ('s_left_steer', 6, -1), ('s_right_steer', 6, 1), ('s_left_hard', 12, -1), ('s_right_hard', 12, 1), ('t33_through_screen', 't0.33', None), ('t66_through_screen', 't0.66', None), ('t95_through_screen', 't0.95', None)]
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [...(process.env.EXTRA_SHOTS ? JSON.parse(process.env.EXTRA_SHOTS) : []),   // r11: optional extra [name, dist, steer] shots
+>   ['a00_approved_view', 0, null],
+>   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f20_forward20u', 20, null],
+>   ['s_left_steer', 6, -1], ['s_right_steer', 6, 1], ['s_left_hard', 12, -1], ['s_right_hard', 12, …[+716 chars]
+
+### 🤖 Claude — 2026-11-18T12:44:27.958Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && mkdir -p qa/match/04/r12 && Q='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04mv=1' && EXTRA_SHOTS='[[\"f15_forward15u\",15,null],[\"f25_forward25u\",25,null]]' nice -n 5 timeout 1700 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r12/NEW_m04mv \"$Q\" > qa/match/04/r12/new_render.log 2>&1; echo \"exit=$?\"; tail -3 qa/match/04/r12/new_render.log; ls qa/match/04/r12/NEW_m04mv | wc -l", "description": "Render the full 04 NEW set with m04mv", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T12:44:28.026Z
+
+> ↩︎ result: Command running in background with ID: b79ssj90a. Output is being written to: /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/tasks/b79ssj90a.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T12:44:31.694Z
+
+While that renders, I'll look at the shots already available. For my own judgment I'm putting APPROVED, BEFORE and NEW side by side in a scratch image; you'll get separate full-size pictures.
+
+### 🤖 Claude — 2026-11-18T12:44:34.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls references/ | head -14; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; mkdir -p $S/s04; A=$(ls references/04_*.png | head -1); for sh in t66_through_screen s_left_hard f25_forward25u; do B=qa/match/04/r11/BEFORE/$sh.png; [ -f $B ] || B=qa/match/04/r11/BEFORE_extra/$sh.png; convert $A $B qa/match/04/r11/NEW_m04mv/$sh.png -resize 400x711! +append $S/s04/cmp_$sh.jpg; done; ls $S/s04", "description": "Build scratch comparison strips for Screen 04"}`
+
+### 🧑 User — 2026-11-18T12:44:36.411Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> cmp_f25_forward25u.jpg
+> cmp_s_left_hard.jpg
+> cmp_t66_through_screen.jpg
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:44:37.950Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/cmp_t66_through_screen.jpg"}`
+
+### 🧑 User — 2026-11-18T12:44:37.967Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:44:38.636Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/cmp_f25_forward25u.jpg"}`
+
+### 🧑 User — 2026-11-18T12:44:38.671Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:44:45.282Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; ls qa/match/04/r10/refviews/pilot/ 2>/dev/null | head; convert qa/match/04/r10/refviews/pilot/V04-1_cand1.png qa/match/04/r11/BEFORE/f10_forward10u.png qa/match/04/r10/refviews/pilot/V04-2_cand2.png qa/match/04/r11/BEFORE/f20_forward20u.png -resize 300x533! +append $S/views.jpg && echo ok", "description": "Compare V04 views with game frames they came from"}`
+
+### 🧑 User — 2026-11-18T12:44:45.867Z
+
+> ↩︎ result: Exit code 1
+> convert-im6.q16: unable to open image `qa/match/04/r10/refviews/pilot/V04-1_cand1.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `qa/match/04/r10/refviews/pilot/V04-2_cand2.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `qa/match/04/r10/refviews/pilot/V04-2_cand2.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+
+### 🤖 Claude — 2026-11-18T12:44:47.436Z
+
+> 🔧 **Bash** `{"command": "find . /home/user/wt/s04 -path ./node_modules -prune -o -name \"V04-*\" -print 2>/dev/null | grep -v node_modules | head; ", "description": "Locate the V04 reference view images"}`
+
+### 🧑 User — 2026-11-18T12:44:47.628Z
+
+> ↩︎ result: ./qa/review_c10/2026-11-18/04_proposed_views/V04-3b_near_end_alt.jpg
+> ./qa/review_c10/2026-11-18/04_proposed_views/V04-3a_near_end.jpg
+> ./qa/review_c10/2026-11-18/04_proposed_views/V04-2_middle_of_tunnel.jpg
+> ./qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-1_cand2_near_duplicate_PASS.jpg
+> ./qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-3_cand1_REJECTED_tiny_Benny.jpg
+> ./qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-2_cand1_REJECTED_copies_outside_view.jpg
+> ./qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-3_cand2_REJECTED_outside_view_tiny_Benny.jpg
+> ./qa/review_c10/2026-11-18/04_proposed_views/V04-1_just_inside_opening.jpg
+> ./qa/match/04/r10/refviews/pilot/V04-1_request.json
+> ./qa/match/04/r10/refviews/pilot/V04-1_0_layout_sketch.png
+
+### 🤖 Claude — 2026-11-18T12:44:50.532Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; V=qa/review_c10/2026-11-18/04_proposed_views; convert $V/V04-1_just_inside_opening.jpg /home/user/wt/s04/qa/match/04/r11/BEFORE/f10_forward10u.png $V/V04-2_middle_of_tunnel.jpg /home/user/wt/s04/qa/match/04/r11/BEFORE/f20_forward20u.png -resize 300x533! +append $S/views.jpg && echo ok", "description": "Montage V04 views next to their game frames"}`
+
+### 🧑 User — 2026-11-18T12:44:51.623Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T12:44:53.263Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/views.jpg"}`
+
+### 🧑 User — 2026-11-18T12:44:53.287Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:45:00.856Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"V04-1\\|V04-2\\|provisional\" docs/briefs/2026-11-18-r10/COORDINATION.md docs/briefs/2026-11-18-r11/*.md | cut -c1-260 | head -20", "description": "Find the user's status on the V04 views"}`
+
+### 🧑 User — 2026-11-18T12:45:00.947Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r10/COORDINATION.md:14:| 04 | `claude/rainbow-s04-match-c10` | `05e383c9` (+ lead test `a24d289c`) | Lead controlled test with the user's PROVISIONAL views V04-1/V04-2 = NOT YET PROVEN (tests A/B/C, `qa/match/04/r10/PROGRESS.md`). NEXT f
+> docs/briefs/2026-11-18-r10/COORDINATION.md:25:| 5 | 04 lead tests A/B/C vs provisional V04-1/V04-2 | NOT YET PROVEN (not kept) |
+
+### 🤖 Claude — 2026-11-18T12:45:02.824Z
+
+> 🔧 **Bash** `{"command": "sed -n 14p docs/briefs/2026-11-18-r10/COORDINATION.md | cut -c250-900; tail -25 /home/user/wt/s04/qa/match/04/r10/PROGRESS.md | cut -c1-300", "description": "Read round-10 04 test conclusions"}`
+
+### 🧑 User — 2026-11-18T12:45:02.956Z
+
+> ↩︎ result: md` |
+> # Screen 04 — round 10 (lead), controlled test with the user's PROVISIONAL reference views V04-1 / V04-2
+> 
+> User 2026-11-18 ~11:15 UTC: V04-1 (just inside) and V04-2 (middle) = PROVISIONAL references for ONE controlled 3D test; V04-3a/b
+> NOT used; never replace the screen with AI artwork; show APPROVED / CURRENT / IMPROVED full size. References:
+> `/home/user/rainbow-/qa/match/04/r10/refviews/pilot/V04-1_cand1.png` (s 88.1) and `.../V04-2_cand2.png` (s 98.2).
+> BEFORE = kept query K `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1` (frames
+> `/home/user/rainbow-/qa/review_c10/2026-11-18/04_*`, all 12 in the lead's scratchpad audit_c10/04).
+> 
+> | Test | Query = K + | By eye vs V04-1 / V04-2 | Verdict |
+> |---|---|---|---|
+> | A | `m04foam3 m04pink m04arr5` | foam rows gone (closer); pink becomes a flat pink sheet with hard straight edges; cyan lane + arrows nearly gone | NOT AN IMPROVEMENT |
+> | B | `m04foam3 m04arr5` | low foam (closer); exposes the flat water ramp's straight edges; arrows invisible (near fade 6.5–9 u) | NOT AN IMPROVEMENT |
+> | C | B + `m04a5n0=2 m04a5n1=3.5 m04a5w=1.6 m04ry=2.2` (new param `m04a5n0/1`, default unchanged) | f10: water curves up the walls, …[+833 chars]
+
+### 🤖 Claude — 2026-11-18T12:45:06.328Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s04/qa/match/04/r12/NEW_m04mv/ 2>/dev/null; tail -3 /home/user/wt/s04/qa/match/04/r12/new_render.log; uptime", "description": "Check 04 render progress and CPU load"}`
+
+### 🧑 User — 2026-11-18T12:45:06.557Z
+
+> ↩︎ result: f15_forward15u.png
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 04 f15_forward15u s 93.644 lat 0 stage 04 frames 65
+>  12:45:06 up 22 min,  0 user,  load average: 7.72, 2.73, 1.09
+
+### 🤖 Claude — 2026-11-18T12:45:18.370Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"allow\\|startVite\" tools/lead_r6/*.mjs scripts/lib/*.mjs 2>/dev/null | grep -i \"allow\\|function startVite\" | head; grep -n \"fs\\b\\|allow\" vite.config.* | head", "description": "Check how Vite file-serving allow list is set"}`
+
+### 🧑 User — 2026-11-18T12:45:18.552Z
+
+> ↩︎ result: scripts/lib/pw.mjs:19:export async function startVite(port = 5199) {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:45:20.176Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 15,45p scripts/lib/pw.mjs; ls vite.config.* 2>/dev/null", "description": "Read the shared Vite startup helper"}`
+
+### 🧑 User — 2026-11-18T12:45:20.268Z
+
+> ↩︎ result: export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function waitDone(page, timeoutMs = 180000) {
+>   await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+>   const err = await page.evaluate(() => window.__error);
+>   if (err) throw new Error(err);
+> }
+> vite.config.ts
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:45:24.837Z
+
+That font warning affects only the HUD lettering, and it is the same in BEFORE and NEW, so the comparisons stay fair; I'm leaving it. Quick check that both specialists have actually started work:
+
+### 🤖 Claude — 2026-11-18T12:45:26.063Z
+
+> 🔧 **Bash** `{"command": "for w in s05 s08; do cd /home/user/wt/$w && echo \"== $w $(git log -1 --format='%h %s' | cut -c1-90)\"; git status --short | head -8; done; pgrep -fa \"chrom\" | wc -l", "description": "Check both specialist worktrees for activity"}`
+
+### 🧑 User — 2026-11-18T12:45:26.344Z
+
+> ↩︎ result: == s05 2d9fe975 Screen 05 r11 step 2: &m05end=1 — the stage end stays inside the painted 05 tun
+>  M src/vfx/waterRibbon.ts
+>  M src/world/materials.ts
+> ?? qa/match/05/r12/
+> == s08 35b5fc5a Screen 08 r11 step 2: &m08near=1 crisp painted near water while swimming (approve
+>  M src/world/match08.ts
+> ?? tools/match08/cupmask08.py
+> 18
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:45:29.119Z
+
+Both specialists are working: Screen 05 has opened its round-12 log folder, and Screen 08 is on its unfinished spout-cup edit. I'll wait for the Screen 04 render to finish.
+
+### 🤖 Claude — 2026-11-18T12:45:29.521Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T12:45:29.601Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T12:45:33.251Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/wt/s04/qa/match/04/r12/new_render.log; prev=0; while true; do n=$(ls /home/user/wt/s04/qa/match/04/r12/NEW_m04mv/*.png 2>/dev/null | wc -l); if [ \"$n\" != \"$prev\" ]; then echo \"04 NEW renders: $n/14\"; prev=$n; fi; if grep -qE \"Error|pageerror|Timeout|Killed\" $L 2>/dev/null; then echo \"04 render error: $(grep -E 'Error|pageerror|Timeout|Killed' $L | tail -1 | cut -c1-200)\"; break; fi; [ \"$n\" -ge 14 ] && break; pgrep -f \"motion_audit.mjs 04 qa/match/04/r12\" >/dev/null || { echo \"04 render process ended with $n/14\"; break; }; sleep 15; done", "description" …[+63 chars]`
+
+### 🧑 User — 2026-11-18T12:45:33.344Z
+
+> ↩︎ result: Monitor started (task bxwgysvun, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T12:45:34.724Z
+
+While that runs, I'll set up the folder for your full-size review pictures.
+
+### 🤖 Claude — 2026-11-18T12:45:35.909Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/review_c12 && cp references/04_through_the_five_arrows.png qa/review_c12/04_1_APPROVED.png && ls -la qa/review_c12 | tail -2; grep -n \"qa/review\" backups/autosave.config.json | head -3", "description": "Create the round-12 user review folder"}`
+
+### 🧑 User — 2026-11-18T12:45:36.062Z
+
+> ↩︎ result: drwxr-xr-x 22 root root   4096 Nov 18 12:45 ..
+> -rw-r--r--  1 root root 392932 Nov 18 12:45 04_1_APPROVED.png
+
+### 🤖 Claude — 2026-11-18T12:45:38.896Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print([a for a in d['allowlist'] if a.startswith('qa') or a=='*' or 'review' in a][:10])\"", "description": "Confirm review folder is in autosave allowlist"}`
+
+### 🧑 User — 2026-11-18T12:45:39.027Z
+
+> ↩︎ result: ['qa']
+
+### 🤖 Claude — 2026-11-18T12:45:49.300Z
+
+The render is about one-fifth done. Before reporting to you, I'll confirm the background startup check finished in this session and the backup is current.
+
+### 🤖 Claude — 2026-11-18T12:45:51.260Z
+
+> 🔧 **Bash** `{"command": "pgrep -f \"claude-bootstrap.sh\" >/dev/null && echo \"bootstrap STILL RUNNING\" || echo \"bootstrap finished\"; grep -E \"^\\| \" backups/BOOTSTRAP_REPORT.md | grep -vE \"\\| OK \\|\" | head; head -4 backups/BOOTSTRAP_REPORT.md | tail -2 | cut -c1-160; python3 -I scripts/autosave-status.py | head -1; git lfs ls-files | grep -c ' - ' ", "description": "Check bootstrap result and autosave status"}`
+
+### 🧑 User — 2026-11-18T12:45:52.446Z
+
+> ↩︎ result: bootstrap finished
+> | Step | Result | Details | s |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started | 1 |
+> Generated 2026-11-18 12:32 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `ccr-e908f8da-cy4yc1`.
+> The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T12:43:56+00:00 (1.9 min ago) | local fb76995 remote fb76995 (match) | uncommitted 1
+> 0
+
+### 🤖 Claude — 2026-11-18T12:46:28.181Z
+
+The startup work is done and verified. Here is the startup report; the Screen 04 result and the specialists' first steps will follow as they finish.
+
+# Startup report (account 12)
+
+I'm not giving the "RAINBOW 3D BACKUP VERIFIED" line, because one startup check failed: the automatic download of your branches at session start (GitHub didn't answer in time). I redid it by hand a few minutes later and it worked, and everything below is verified now.
+
+**Recovered work**
+- **Branch:** your branch `ccr-3b139b48-0qqkkz`; its newest commit on GitHub is `5c40dde` (12:29 UTC).
+- **This session's branch:** `ccr-e908f8da-cy4yc1`, started from `f06a53e`. Account 11's backup kept running after the switch and added `5c40dde`, which holds only backup logs and no game changes, so nothing was merged.
+- **Newest work per screen** comes from the round-11 branches: 05 `2d9fe975`, 08 `35b5fc5a`, 04 `d3ea4200`, 06 `8182130c`, 07 `dbc7678c`. The 05 and 08 workstreams also had unfinished edits saved in `backups/wip/`, which I restored.
+
+**Five-minute autosave: working.**
+- The test save `74500f89` reached GitHub with the same commit ID, and the latest save `fb76995` matches too.
+- One problem fixed: the autosave settings still pointed at account 11's branch and briefly refused to save. Two saves failed before the fix.
+- Each save also backs up the specialists' unfinished edits as clearly labelled snapshots.
+- The autosave cannot run while this environment is closed, so I'll do a final save before the session ends.
+
+**Large assets: intact.** All 59 large files are real files here and confirmed on GitHub's large-file storage. All 13 approved reference images are byte-identical, and the three new workspaces have no missing files.
+
+**Specialists: 2 running now**, out of 10 definitions, all present and unchanged.
+- **Screen 05** (water-fx-specialist) and **Screen 08** (washer-environment-modeler), each in its own workspace on a new `-c12` branch.
+- Account 11's branches are now write-protected, so this account can't overwrite them.
+- I'm finishing the Screen 04 test myself.
+- Queue: 07 next, then 06. The rejected tunnel-bending method for 06 stays rejected.
+
+**Services: all checked with free reads; nothing was billed.**
+- **World Labs Marble:** the key works through this environment, with 5,420 credits, the same account used since round 7. The Screen 08 world opens. The Screen 05 pilot worlds don't open with this key because they belong to a different World Labs account, but their files are safe in the repo. I did not run the Image-Blaster scripts.
+- **fal.ai:** your existing account works; saved request `01a1ea70` reads COMPLETED, and all 8 Screen 04 pilot images are in the repo.
+- **Hugging Face:** reachable directly, with no connector needed. Stable Virtual Camera and ViewCrafter are still broken on Hugging Face's own servers, and fal doesn't offer them, so they can't be tested today.
+- **Depth Anything 3:** the saved results cover all five approved screens. I didn't reinstall it; that takes about 5 minutes and is only needed if a new picture must be measured.
+- **Tools:** Blender, Three.js/Vite/TypeScript, Playwright with WebGL2, ffmpeg, the Python image tools and the Android SDK all work, and nothing was reinstalled.
+
+**Needs your action:** nothing.
+
+**Being worked on now**
+- **05:** the pale, smeared water just behind the far tunnel section first. Then the torn S-river, the distorted tunnel walls, and the wrong scenery at the 05→06 transition.
+- **08:** the spout cups whose tops are cut off by a line first. Then the soft water smears near the start and the seams at the top corners of the drum.
+- **04:** the decisive test of projecting your provisional views V04-1 and V04-2 onto the 3D tunnel. V04-1/V04-2 themselves look much closer to your approved painting than the current game: painted gold rings, glowing chevron arrows, thick swirling cyan-and-pink water. In the frames I've seen so far, the projection changes nothing far into the stage and tears patches at the top of the tunnel at 25 units forward. The frames where the views should matter most are still rendering.
+
+The Screen 04 verdict, and the first 05 and 08 results, will come as separate full-size APPROVED / BEFORE / NEW pictures, each labelled GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN.
+
+### 🧑 User — 2026-11-18T12:46:29.872Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

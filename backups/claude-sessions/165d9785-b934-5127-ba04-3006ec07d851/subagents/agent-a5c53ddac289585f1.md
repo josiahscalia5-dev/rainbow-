@@ -405,3 +405,26 @@ Let me render the BEFORE (kept set) and NEW (+m08cup) at the cup positions. Firs
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K10='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/cupB && time M08_ONLY=a00,f03,f06,f10,t33,t66,s_left_hard,s_right_hard node tools/match08/shots08.mjs 08 $S/cupB \"$K10&m08ceil=1&m08near=1\" 2>&1 | tail -12", "description": "Render BEFORE kept-set shots at cup positions", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T12:45:31.081Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 08 a00_approved_view s 392.108 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 395.009 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.018 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 s_left_hard s 404.035 lat -2.217 stage 08 frames 76
+> 08 s_right_hard s 404.075 lat 2.221 stage 08 frames 76
+> 08 t33_through_screen s 396.293 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.552 lat 0 stage 08 frames 54
+> 
+> real	1m46.414s
+> user	0m2.239s
+> sys	0m0.552s
+
+### 🤖 Claude — 2026-11-18T12:45:34.290Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K10='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/cupN && M08_ONLY=a00,f03,f06,f10,t33,t66,s_left_hard,s_right_hard node tools/match08/shots08.mjs 08 $S/cupN \"$K10&m08ceil=1&m08near=1&m08cup=1\" 2>&1 | grep -v 'allow list' | tail -12", "description": "Render NEW shots with m08cup", "timeout": 600000}`
+

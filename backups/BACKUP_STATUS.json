@@ -1,19 +1,24 @@
 {
   "last_run": {
-    "time": "2026-11-18T12:43:43+00:00",
+    "time": "2026-11-18T12:43:56+00:00",
     "reason": "manual:round12-setup",
-    "result": "error",
-    "files_staged": 0,
-    "pushed_verified": false,
+    "result": "committed+pushed",
+    "files_staged": 36,
+    "pushed_verified": true,
     "branch": "ccr-e908f8da-cy4yc1",
-    "error": "branch 'ccr-e908f8da-cy4yc1' is a protected original branch; autosave never pushes to it",
-    "duration_s": 0
+    "wip_snapshots": [
+      "claude/rainbow-s04-match-c12: 0 modified, 17 new file(s) snapshotted",
+      "claude/rainbow-s05-match-c12: 2 modified, 0 new file(s) snapshotted",
+      "claude/rainbow-s08-scenery-c12: 1 modified, 1 new file(s) snapshotted"
+    ],
+    "commit": "fb76995bcb9ad7a77f76338cd1a26a3ae4d2b0cb",
+    "duration_s": 11
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-e908f8da-cy4yc1",
-  "last_verified_remote_sha": "74500f89db4542914748b152176ebd6ccb38bf1d",
-  "last_successful_backup_utc": "2026-11-18T12:39:59+00:00",
-  "consecutive_failures": 2,
+  "last_verified_remote_sha": "fb76995bcb9ad7a77f76338cd1a26a3ae4d2b0cb",
+  "last_successful_backup_utc": "2026-11-18T12:43:56+00:00",
+  "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1345); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-18T12:45:00+00:00"
 }
