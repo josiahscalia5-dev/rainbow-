@@ -1758,3 +1758,271 @@ Clean now: whole painted lightning glints on the cyan, no foam pieces. The magen
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq13 && cp $S/nq08.png assets/textures/match08/nq08.png && cp $S/nq08.json assets/textures/match08/nq08.json && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && rm -rf qa/match/08/r14/step1_m08nq/NEW_v6b && node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/NEW_v6b \"$K13&m08nq=1\" 2>&1 | grep -c \"^08\" && python3 -I -c \"\nfrom PIL import Image\nS='$S/..'\na=Image.open('references/08_final_spin_cha …[+605 chars]`
 
+### 🧑 User — 2026-11-18T17:25:09.154Z
+
+> ↩︎ result: 12
+
+### 🤖 Claude — 2026-11-18T17:25:12.634Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp7_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T17:25:12.976Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:25:12.971Z
+
+[Image: original 2612x800, displayed at 2000x613. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:25:13.354Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp7_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T17:25:13.639Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:25:13.636Z
+
+[Image: original 2612x800, displayed at 2000x613. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:25:13.962Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp7_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T17:25:14.251Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:25:14.248Z
+
+[Image: original 2612x800, displayed at 2000x613. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:25:32.497Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((432,768))\nfor n in ['f06_forward6u','f10_forward10u','s_left_hard','t95_through_screen']:\n  b=Image.open('qa/match/08/r14/BEFORE_K13/'+n+'.png').convert('RGB').resize((432,768)); c=Image.open('qa/match/08/r14/step1_m08nq/NEW_v6b/'+n+'.png').convert('RGB').resize((432,768))\n  W=Image.new('RGB',(432*3+20,768),'white'); W.paste(a,(0,0)); W.paste(b,(442,0)); …[+118 chars]`
+
+### 🧑 User — 2026-11-18T17:25:33.852Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T17:25:37.430Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/full7_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T17:25:37.471Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:25:38.052Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/full7_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T17:25:38.108Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:25:53.442Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,30p scripts/capture.mjs | grep -n \"port\\|startVite\\|argv\\|query\\|out\" | head -12; ls qa/match/08/r13/step2_m08cupw/ | grep capture", "description": "Inspect deterministic capture script usage"}`
+
+### 🧑 User — 2026-11-18T17:25:53.487Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 8:import { mkdirSync, writeFileSync } from 'node:fs';
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 11:const args = process.argv.slice(2);
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 24:const vite = await startVite(5201);
+> 30:    const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+
+### 🤖 Claude — 2026-11-18T17:25:56.570Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,80p scripts/capture.mjs | grep -n \"query\\|opt\\.\\|--\" | head -20; ss -ltnp 2>/dev/null | grep -E \":5201 \" | head -2", "description": "Check capture.mjs options and port 5201 use"}`
+
+### 🧑 User — 2026-11-18T17:25:56.619Z
+
+> ↩︎ result: 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 6://   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 12:const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> 13:let ids = args.filter((a) => !a.startsWith('--'));
+> 16:if (opt.plunge) ids = plunge;
+> 18:const size = typeof opt.size === 'string' ? opt.size.split('x').map(Number) : null;
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+> 58:  writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : `qa/captur …[+78 chars]
+
+### 🤖 Claude — 2026-11-18T17:26:04.267Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"export async function startVite\" -A12 scripts/lib/pw.mjs | head -20; git ls-files qa/capture_log.json", "description": "Check startVite port handling"}`
+
+### 🧑 User — 2026-11-18T17:26:04.319Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+> qa/capture_log.json
+
+### 🤖 Claude — 2026-11-18T17:26:14.090Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -e 's/startVite(5201)/startVite(5278)/' -e \"s#writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : \\`qa/capture_log\\${size ? '_' + size.join('x') : ''}.json\\`#writeFileSync(outDir + '/capture_log.json'#\" scripts/capture.mjs > scripts/.cap08_tmp.mjs && grep -n \"5278\\|capture_log\" scripts/.cap08_tmp.mjs && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && O=qa/match/08/r14/step1_m08nq && node scripts/.cap08_tmp.mjs 08 --out=$O/cap_BEFORE \"--q=$K13\" 2>&1 | grep -v \"allow li …[+306 chars]`
+
+### 🧑 User — 2026-11-18T17:26:56.304Z
+
+> ↩︎ result: 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 24:const vite = await startVite(5278);
+> 58:  writeFileSync(outDir + '/capture_log.json', JSON.stringify(log, null, 2));
+>   '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> qa/match/08/r14/step1_m08nq/cap_BEFORE:
+> 08.png
+> capture_log.json
+> 
+> qa/match/08/r14/step1_m08nq/cap_NEW:
+> 08.png
+> capture_log.json
+>  M assets/textures/match08/nq08.json
+>  M assets/textures/match08/nq08.png
+>  M tools/match08/nq08.py
+> ?? qa/match/08/r14/step1_m08nq/NEW_v6/
+> ?? qa/match/08/r14/step1_m08nq/NEW_v6b/
+> ?? qa/match/08/r14/step1_m08nq/cap_BEFORE/
+> ?? qa/match/08/r14/step1_m08nq/cap_NEW/
+
+### 🤖 Claude — 2026-11-18T17:27:01.411Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('qa/match/08/r14/step1_m08nq/cap_BEFORE/08.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('qa/match/08/r14/step1_m08nq/cap_NEW/08.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1); print(a.shape, 'px differing >0:', int((d>0).sum()), ' >12:', int((d>12).sum()))\n\" && M08_ONLY=s_right_hard node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/NEW_v6b_rh \"$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json')) …[+129 chars]`
+
+### 🧑 User — 2026-11-18T17:27:21.750Z
+
+> ↩︎ result: (1536, 864, 3) px differing >0: 594  >12: 0
+> 08 s_right_hard s 404.168 lat 2.23 stage 08 frames 76
+
+### 🤖 Claude — 2026-11-18T17:27:28.521Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('qa/match/08/r14/step1_m08nq/cap_BEFORE/08.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('qa/match/08/r14/step1_m08nq/cap_NEW/08.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1); ys,xs=np.where(d>0); print('rows',ys.min(),ys.max(),'cols',xs.min(),xs.max(),'max diff',d.max())\nimport collections; print(collections.Counter((ys//100*100).tolist()).most_common(8))\n\"", "description": "Locate approved-view pixel differences"}`
+
+### 🧑 User — 2026-11-18T17:27:28.894Z
+
+> ↩︎ result: rows 114 161 cols 151 691 max diff 12
+> [(100, 594)]
+
+### 🤖 Claude — 2026-11-18T17:27:35.883Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((432,768))\nb=Image.open('qa/match/08/r14/BEFORE_K13/s_right_hard.png').convert('RGB').resize((432,768)); c=Image.open('qa/match/08/r14/step1_m08nq/NEW_v6b_rh/s_right_hard.png').convert('RGB').resize((432,768))\nW=Image.new('RGB',(432*3+20,768),'white'); W.paste(a,(0,0)); W.paste(b,(442,0)); W.paste(c,(884,0)); W.save('$S/full7_rh.png')\n\"", "description":  …[+40 chars]`
+
+### 🧑 User — 2026-11-18T17:27:36.382Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T17:27:39.567Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/full7_rh.png"}`
+
+### 🧑 User — 2026-11-18T17:27:39.612Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:27:40.210Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/full7_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T17:27:40.257Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:27:55.662Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && M08_ONLY=t95 node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/BEFORE_t95_recap \"$K13\" 2>&1 | grep \"^08\"", "description": "Re-capture BEFORE t95 shot", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T17:28:16.887Z
+
+> ↩︎ result: 08 t95_through_screen s 404.488 lat 0 stage 09 frames 78
+
+### 🤖 Claude — 2026-11-18T17:28:24.716Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && O=qa/match/08/r14/step1_m08nq && rm -rf $O/BEFORE_t95_recap $O/NEW_v6 && cp references/08_final_spin_chamber.png $O/1_APPROVED.png && for f in qa/match/08/r14/BEFORE_K13/*.png; do n=$(basename $f .png); cp $f $O/2_BEFORE_$n.png; cp $O/NEW_v6b/$n.png $O/3_NEW_$n.png; done && cp $O/NEW_v6b_rh/s_right_hard.png $O/3_NEW_s_right_hard.png && cp $O/NEW_v6b/motion.json $O/3_NEW_motion.json && cp $O/NEW_v6b_rh/motion.json $O/3_NEW_motion_s_right_hard_recapture.json && cp $O/cap_BEFORE/08.png $O/2_BEFORE_capture_approved_view.png && cp $O/cap_NEW/08.png $O/3_NEW_capt …[+220 chars]`
+
+### 🧑 User — 2026-11-18T17:28:24.906Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_a00_approved_view.png
+> 2_BEFORE_capture_approved_view.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_f20_forward20u.png
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_left_steer.png
+> 2_BEFORE_s_right_hard.png
+> 2_BEFORE_s_right_steer.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_a00_approved_view.png
+> 3_NEW_capture_approved_view.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_motion.json
+> 3_NEW_motion_s_right_hard_recapture.json
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_s_right_steer.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+> tried_v4_quilted_NEW
+> 88M	qa/match/08/r14/step1_m08nq
+
+### 🤖 Claude — 2026-11-18T17:28:27.575Z
+
+Before writing the verdict, a quick check that forward 3 u has no regression at the hand-over.
+
+### 🤖 Claude — 2026-11-18T17:28:28.875Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp7_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T17:28:29.190Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:28:29.185Z
+
+[Image: original 2612x800, displayed at 2000x613. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:28:52.107Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat >> qa/match/08/r14/PROGRESS.md <<'EOF'\n\nBEFORE set for round 14 (fresh, kept set K13, 12 shots, `tools/match08/shots08.mjs`, port 5278): `/home/user/wt/s08/qa/match/08/r14/BEFORE_K13/`\n(the set half-written by the cancelled instance was checked: all 12 PNGs open, 864 x 1536, query = K13; kept as is).\n\n## Step 1 — `&m08nq=1` (near water at the PAINTED scale while swimming; with m08near) — KEPT (GOOD IMPROVEMENT)\nKept query: `K13&m08nq=1` (= `K12&m08bore=1&m08flange=1&m08cupw=1&m08nq=1`)\n* Cause: `m08near` lays the painted near band (rows ~1250-152 …[+3999 chars]`
+
+### 🧑 User — 2026-11-18T17:29:03.826Z
+
+> ↩︎ result: M  assets/textures/match08/nq08.json
+> M  assets/textures/match08/nq08.png
+> M  qa/match/08/r14/PROGRESS.md
+> A  qa/match/08/r14/step1_m08nq/1_APPROVED.png
+> A  qa/match/08/r14/step1_m08nq/2_BEFORE_a00_approved_view.png
+> df4a3bb7ea9babad3a34f6a47c1a68a3834bb233
+> df4a3bb7ea9babad3a34f6a47c1a68a3834bb233	refs/heads/claude/rainbow-s08-scenery-c14
+
+### 🤖 Claude — 2026-11-18T17:29:04.452Z
+
+You've hit your 5-hour limit · resets 9:20pm (UTC)
+
