@@ -413,6 +413,23 @@ export const M05FBANK: boolean = M05BLEND && q05('m05fbank');
 export const M05FMAG: boolean = M05BLEND && q05('m05fmag');
 /** m05fmag: depth of the far seam from the locked 05 eye (ForcedTunnel.D0), set by environment.ts */
 export const m05fmagD0 = { value: 53.25 };
+/**
+ * `&m05fpaint=1` (Screen 05 round 12, needs m05fmag + projnear05 (on with match05); src/world/materials.ts
+ * farRiverMaterial): where m05fmag shows the far river's own continuation (the baked far picture F would be magnified),
+ * that continuation was drawn in flat procedural colours (smooth cyan, flat pink, no glints). Under the switch its water
+ * wears the APPROVED painted near water itself — the crisp near tile T2 (cyan core with white glints and glossy streaks
+ * between the hot-pink satin bands) — laid across the far layout band by band (left band, core, right band of T2 onto the
+ * far river's own cL / core / cR, so the formation keeps winding as painted) and along the virtual arc length
+ * (world-anchored), flowing toward the camera with the ribbon's own two-phase flow. Foam rims stay. Locked view: the
+ * far block is not live there → weight 0 → unchanged.
+ */
+export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
+/** m05fpaint: shared uniforms (T2 texture + its start / half period, the ribbon's flow vector), filled by attachProj05 */
+export const m05fpaint = {
+  uPjT2: { value: null as THREE.Texture | null },
+  uPjT2S: { value: new THREE.Vector2(0, 1) },
+  uPjFlow: { value: new THREE.Vector4(1.6, 0.55, 0, 0) },
+};
 /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
 export const m05foamK = { value: 0 };
 /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
@@ -2148,6 +2165,12 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   }
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
+  if (M05FPAINT) {
+    // m05fpaint (Screen 05 round 12): the far river shares T2 and the flow vector (same uniform objects)
+    m05fpaint.uPjT2.value = empty;
+    u.uPjT2 = m05fpaint.uPjT2; u.uPjT2S = m05fpaint.uPjT2S;
+    m05fpaint.uPjFlow.value.copy(u.uPjFlow.value as THREE.Vector4);
+  }
   const loader = new THREE.TextureLoader();
   const load = (url: string, mip: boolean, repeat: boolean) =>
     new Promise<THREE.Texture>((res, rej) =>
