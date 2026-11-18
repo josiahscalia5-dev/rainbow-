@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13067,
-   "sha256": "462858075cb0808374d4e5a41d86dee0d8159e386bb66d710a2ef26ffdc5beaa"
+   "sha256": "55e8d4a2127cce816cb638c1c31933deb1acde491fd46f0747b25180cfc31b1a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8855,6 +8855,106 @@
    "path": "qa/review_r7/08_3_NEW_two_thirds_through.jpg",
    "bytes": 642750,
    "sha256": "3feaa6a3caf7a8327e413eae5202f996e88df9bd8c65604fec161a6e2985c033"
+  },
+  {
+   "path": "qa/review_r7/now/04_NOW_1_forward_10u.jpg",
+   "bytes": 380095,
+   "sha256": "9daaaec2c2853ff841d1fa0cbc0b547f433e727592bb37232b6cd71013f98851"
+  },
+  {
+   "path": "qa/review_r7/now/04_NOW_2_forward_20u.jpg",
+   "bytes": 418978,
+   "sha256": "2bbfe55661cbd8a98e5b2f5349d0b0c72b40483b8469f4ae529b5b957e24ea41"
+  },
+  {
+   "path": "qa/review_r7/now/04_NOW_3_two_thirds_through.jpg",
+   "bytes": 422688,
+   "sha256": "bc37596070b0f6f9489d6be8897fc2bf8d3a7287f59439527f6d1bfa165e1f40"
+  },
+  {
+   "path": "qa/review_r7/now/04_NOW_4_end_of_stage.jpg",
+   "bytes": 420945,
+   "sha256": "87392b43bdc38a38430c22c8ec211a40673d91493242fb82fd78891fd8d04d13"
+  },
+  {
+   "path": "qa/review_r7/now/04_NOW_5_steering_hard_right.jpg",
+   "bytes": 364416,
+   "sha256": "20af2ef1703355b3c75cb02b049eb3eb4c7df0b25660e29faf24f078a47cbdde"
+  },
+  {
+   "path": "qa/review_r7/now/05_NOW_1_forward_10u.jpg",
+   "bytes": 629836,
+   "sha256": "0c2764845b408182fd9f4289d72cd2b48cbaed525b63f0f908af5bd31ac6b4c2"
+  },
+  {
+   "path": "qa/review_r7/now/05_NOW_2_forward_20u.jpg",
+   "bytes": 627751,
+   "sha256": "48da47a19894a27a4c134ff3380b868b0e8b7950bd3762cf02185b317e13843f"
+  },
+  {
+   "path": "qa/review_r7/now/05_NOW_3_two_thirds_through.jpg",
+   "bytes": 583104,
+   "sha256": "67ea86dbde8290001cc63769379f6d01a0986fbbe157bdf44ae6a2cc115c0143"
+  },
+  {
+   "path": "qa/review_r7/now/05_NOW_4_end_of_stage.jpg",
+   "bytes": 557663,
+   "sha256": "cd6ea0ecb8faf7ce91582bfec733e66ffb340f2379ea42170a6aa812c631dde9"
+  },
+  {
+   "path": "qa/review_r7/now/05_NOW_5_steering_hard_right.jpg",
+   "bytes": 592631,
+   "sha256": "114b24e73cc664df1ea8e029589f915f65e3318e3cc5caeb89ff67f4c8c6feda"
+  },
+  {
+   "path": "qa/review_r7/now/07_NOW_1_forward_10u.jpg",
+   "bytes": 529844,
+   "sha256": "74d5ab2644755695d943d9b3f2ce8d1926afa69b82ac1372d449c890f06b7954"
+  },
+  {
+   "path": "qa/review_r7/now/07_NOW_2_forward_20u.jpg",
+   "bytes": 525475,
+   "sha256": "541e92bcfc9654e917abb932a8872f73dd5dd562943b98b7fe9eb2ff787c8912"
+  },
+  {
+   "path": "qa/review_r7/now/07_NOW_3_two_thirds_through.jpg",
+   "bytes": 433335,
+   "sha256": "a2ba434547346b0ff775b9be440603a11497c5e6123bad7e18b74f43595c468a"
+  },
+  {
+   "path": "qa/review_r7/now/07_NOW_4_end_of_stage.jpg",
+   "bytes": 492649,
+   "sha256": "ec5632cdf2c7ca6f5de8149a40b35e683a516b34997a66010bdde7baf9f9c2b9"
+  },
+  {
+   "path": "qa/review_r7/now/07_NOW_5_steering_hard_right.jpg",
+   "bytes": 541912,
+   "sha256": "9b571e4676331acfc319d73ce2b65811973915d1082f86bbbaf6857c7ccbd379"
+  },
+  {
+   "path": "qa/review_r7/now/08_NOW_1_forward_10u.jpg",
+   "bytes": 641713,
+   "sha256": "58c0c82ed66edeb77f63757c676567be2757c518419a97b41dea608efe5cb8b4"
+  },
+  {
+   "path": "qa/review_r7/now/08_NOW_2_forward_20u.jpg",
+   "bytes": 604326,
+   "sha256": "60e75f4fcb0f0dd99f9cec5b2300d2b252fe919ad0b51bacb2358006ef07ee17"
+  },
+  {
+   "path": "qa/review_r7/now/08_NOW_3_two_thirds_through.jpg",
+   "bytes": 642750,
+   "sha256": "3feaa6a3caf7a8327e413eae5202f996e88df9bd8c65604fec161a6e2985c033"
+  },
+  {
+   "path": "qa/review_r7/now/08_NOW_4_end_of_stage.jpg",
+   "bytes": 650690,
+   "sha256": "dc6b8168d53e9f682e9249a9d28759b2e5f4a51364330037bc9a40016d4d9816"
+  },
+  {
+   "path": "qa/review_r7/now/08_NOW_5_steering_hard_right.jpg",
+   "bytes": 670145,
+   "sha256": "77c34a93b15f1ab10e242e2f952fabdef3b4d6cef6db1b7b9a06bc2b5c0452ef"
   },
   {
    "path": "qa/scene_comparisons.md",
