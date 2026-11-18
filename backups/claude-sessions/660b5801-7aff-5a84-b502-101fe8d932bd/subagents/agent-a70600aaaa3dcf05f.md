@@ -1827,3 +1827,30 @@ While that runs, I'll prepare task 2's diagnosis: which atlas row the smeared le
 >           .replace('#include <common>', '#include <common>\nvarying vec2 vPUv; varying vec3 vPPos; varying float vPInst;')
 >           .replace('#include <begin_verte …[+1424 chars]
 
+### 🤖 Claude — 2026-11-18T21:03:33.964Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/coords_extra.js", "content": "(async () => {\n  const R = window.__rainbow;\n  const { scene, camera, renderer, composer } = R.qa3d();\n  const RT = composer.renderTarget1.constructor;\n  const W = renderer.domElement.width, H = renderer.domElement.height;\n  const rt = new RT(W, H, { type: 1015, format: 1023, depthBuffer: true });\n  const T = await import('/src/vfx/proj05Tunnel.ts');\n  T.proj05TunnelShared.uPtDbg.value = 1;\n  const bg = scene.background; scene.background = null;\n  renderer. …[+700 chars]`
+
+### 🧑 User — 2026-11-18T21:03:34.092Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2/coords_extra.js (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T21:03:39.665Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport json,struct\nb=open('assets/models/lids05e.glb','rb').read()\nL=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+L])\nfor n in j['nodes']: print('node',n.get('name'),n.get('mesh'),n.get('translation'),n.get('rotation'),n.get('scale'))\nfor m in j['meshes']:\n  for p in m['primitives']:\n    a=j['accessors'][p['attributes']['POSITION']]; print('mesh',m.get('name'),a['count'],a.get('min'),a.get('max'))\n\"", "description": "List paddle GLB nodes and bounds"}`
+
+### 🧑 User — 2026-11-18T21:03:39.829Z
+
+> ↩︎ result: node lid05_L1 0 None None None
+> node lid05_L2 1 None None None
+> node lid05_L3 2 None None None
+> node lid05_R1 3 None None None
+> node lid05_R2 4 None None None
+> node lid05_R3 5 None None None
+> mesh lid05_L1 6365 [-6.372986793518066, -37.87179946899414, -106.12418365478516] [-4.787491798400879, -36.062347412109375, -90.10252380371094]
+> mesh lid05_L2 2402 [-6.448241710662842, -39.97667694091797, -125.40260314941406] [-5.326510429382324, -37.807533264160156, -110.56521606445312]
+> mesh lid05_L3 486 [-3.757753372192383, -40.341529846191406, -126.89688873291016] [-2.4351541996002197, -39.33322525024414, -126.18017578125]
+> mesh lid05_R1 7046 [8.017125129699707, -41.13772964477539, -112.08679962158203] [9.287883758544922, -37.5757942199707, -91.48316955566406]
+> mesh lid05_R2 2047 [7.549320220947266, -39.134639739990234, -125.88218688964844] [8.844892501831055, -37.020477294921875, -111.19775390625]
+> mesh lid05_R3 560 [5.488664150238037, -39.354801177978516, -126.93636322021484] [7.247494697570801, -38.48784255981445, -125.78099822998047]
+

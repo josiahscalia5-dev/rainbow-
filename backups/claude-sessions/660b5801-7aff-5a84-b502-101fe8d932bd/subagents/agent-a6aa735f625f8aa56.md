@@ -660,3 +660,46 @@ Now rank 3: the start-view flash at +1.1 u. First let me see it.
 > 727	    group.traverse((o) => {
 > 728	      const u = ((o as THREE.Mesh).material as THREE. …[+1289 chars]
 
+### 🤖 Claude — 2026-11-18T21:03:33.030Z
+
+To locate the striped strip precisely, I want a per-surface tint at +1.1 u. Let me check what the QA API exposes.
+
+### 🤖 Claude — 2026-11-18T21:03:34.032Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 670,760p src/game/Game.ts | grep -n \"^\\s*[a-zA-Z]*(.*{\\|scene\\|camera\" | head -40", "description": "List QA API methods exposed by Game.ts"}`
+
+### 🧑 User — 2026-11-18T21:03:34.132Z
+
+> ↩︎ result: 14:    run(v = true) { running = v; last = performance.now(); },
+> 15:    unfreeze() { st.frozen = null; input.override = null; },
+> 17:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 18:    setSteer(v: number | null) { input.override = v; },
+> 20:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 21:    startRideAt(id: StageId = '03') {
+> 25:    state() {
+> 26:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> 28:    log() { return st.log; },
+> 29:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 30:    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+> 31:    coinScreen() {
+> 35:      camera.updateMatrixWorld();
+> 36:      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+> 41:        const c = p.clone().project(camera);
+> 43:        const e = p.clone().addScaledVector(right, 0.5  …[+1563 chars]
+
+### 🤖 Claude — 2026-11-18T21:03:37.430Z
+
+`qa3d()` exposes the live scene. I'll write a scratch QA script that rides to +1.1 u and tints each Screen 06 surface a different colour (tube green, floor red, rings blue).
+
+### 🤖 Claude — 2026-11-18T21:03:45.161Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/dbg_tint.mjs", "content": "// QA scratch: +D u from the 06 checkpoint (frozen clock, fixed steps), each m06 surface tinted; run from the worktree.\n//   node dbg_tint.mjs <out.png> <D> \"<query>\" [hide=name1,name2] [tint=0|1]\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [OUT, D = '1.1', Q = '', HIDE = '', TINT = '1'] = process.argv.slice(2);\nconst { chromium } = load …[+1558 chars]`
+
+### 🧑 User — 2026-11-18T21:03:45.344Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/dbg_tint.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T21:03:48.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && timeout 600 node $S/dbg_tint.mjs $S/tint_1.1.png 1.1 \"$K\" 2>&1 | grep -v \"allow list\" | tail -2", "description": "Render tinted surfaces at +1.1 u for diagnosis", "timeout": 700000}`
+

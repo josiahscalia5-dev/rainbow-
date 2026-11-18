@@ -2724,3 +2724,32 @@ Confirmed by eye. The foam beside the river used to be smooth pinkish-white ball
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:06-step2-shown 2>&1 | grep -E '\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py 2>&1 | tail -1 | cut -c1-170", "description": "Save Screen 06 review files and the 08 pause note", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T21:03:43.414Z
+
+> ↩︎ result: "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-bbe2b27e-oxfh1w | scheduler daemon | last verified backup 2026-11-18T21:03:27+00:00 (0.2 min ago) | local b6ed8d6 remote b6ed8d6 (match) | uncomm
+
+### 🤖 Claude — 2026-11-18T21:03:49.834Z
+
+Yes, you can leave Screen 08 undecided and come back to it whenever you like. It's paused, and nothing about it is approved or rejected.
+
+**Screen 08 is paused safely:**
+- The kept improvement (the pale outlines removed) is saved.
+- The step it was working on, softer glowing sparkles in the water near Benny, is saved as unfinished. It looked promising in the few pictures it rendered, but it isn't proven, so it's switched off.
+- The specialist has stopped. When you return, it can pick up from exactly that point.
+
+**Screens 04, 05, 06 and 07 keep going.** Screen 06 just made a small improvement. I checked it and sent you the pictures: your approved picture, before and new while swimming, before and new further on, and a short clip.
+
+- **What got closer:** the foam heaps beside the river used to be smooth, pinkish-white balls. They're now white, bubbly soap heaps made of small bubbles with soft lilac shadows, like your painted foam clouds.
+- **Checks:** the start of the screen is unchanged, and the coins are the same.
+- **Still wrong:** when Benny steers hard left or right, the foam heaps cover his lower body. Your painting never does that.
+
+**Being honest about Screen 06 overall:** once Benny is swimming, it's still the furthest from your picture.
+- In your painting, the river rises, curves left, then bends right into a gold-ring tunnel that sits off to one side.
+- In the game, the river runs straight into a tunnel centred like a bullseye.
+- Benny also looks bigger than in your painting.
+
+The Screen 06 specialist is fixing smaller things first; the size of Benny is waiting for your decision, whenever you want.
+
+Screens 05 and 07 and the Screen 04 specialists are still working.
+
