@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14054,
-   "sha256": "c39a595855a53fb9a192dd0c390d6895c71a9cf82c82d276b75dd5911ed16039"
+   "sha256": "c6378a12d6a57fe36efd75fbfed0fe82a364b0d50782d1f0b52547a5b5786a0c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -960,6 +960,11 @@
    "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_06_overlay.png",
    "bytes": 2335763,
    "sha256": "f6bfa259869864d2866d479c52fca26da1116bd1bae3ad862a534cd9b7f82409"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_07.md",
+   "bytes": 7367,
+   "sha256": "00afdab641b83c421e201dbba86ace677b8ff270abee362cc71e98318cb78432"
   },
   {
    "path": "docs/briefs/2026-11-18-r9/BLUEPRINT_07_overlay.png",
