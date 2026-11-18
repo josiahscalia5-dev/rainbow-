@@ -29,3 +29,8 @@ Verdict: **GOOD IMPROVEMENT (small, ring detail)** — every ring lip now sparkl
 with orange glows, at irregular angles and getting smaller deeper in the tunnel, like the painted ring lips; in step 3 the lips
 had only a few broad soft glows. Visible at every swimming position (f03 → t95, hard left / right); nothing else changes.
 Still different: the painted dots are a little larger and softer on the nearest rings.
+Clip (half size 432×768, 3.6 s straight / left / right / straight, real gameplay): `step5_dots/clip_NEW_swim.mp4`; BEFORE clip =
+`../r16/ringpaint/step3_lip/clip_NEW_swim.mp4`. The dots stay on their ring lips while swimming; no popping or sparkle noise seen.
+Most visible remaining ring difference: the painted rings are brighter and more polished, with a soft pink-violet sheen and
+violet (left) / pink (right) reflections of the water on the lower walls; the game rings are a plainer, dimmer copper there
+(the straightened painted ring is a median over depth, which dropped most of that sheen).
