@@ -634,7 +634,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13447,
-   "sha256": "a92b49702b78c49a92eddab5f4004ba9587b824046ea4d29444cbb9e789b2ddd"
+   "sha256": "c16ec30e892ae57178bc83e93b5ec9a07f5ee360ad3ec11fc9d0ed4278f32fbb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -3332,29 +3332,44 @@
    "sha256": "afec4f409bfae6adf4af0972d514fc10ba5b88b8a909241a0e9f193737124c2a"
   },
   {
+   "path": "qa/match/08/scenery/r8/proof/b7/08.png",
+   "bytes": 2600613,
+   "sha256": "6dcd0de30193a9682c471b06ce509f3aaf3b96241d7a90b6a0ad4c1f1f1a1b71"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/proof/occ/08.png",
+   "bytes": 2600613,
+   "sha256": "6dcd0de30193a9682c471b06ce509f3aaf3b96241d7a90b6a0ad4c1f1f1a1b71"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/proof/towelm/08.png",
+   "bytes": 2600674,
+   "sha256": "683227f8f5877f928dab3f2664f6b4745574fa9f27c023af14ee90a15f758eb3"
+  },
+  {
    "path": "qa/match/08/scenery/r8/towelm/f10_forward10u.png",
-   "bytes": 1896379,
-   "sha256": "43b9a902f6db10c08d946a831edd0ab7d8d8c033faa26bee3a6d6b3e1c48ffba"
+   "bytes": 2420582,
+   "sha256": "aec7b178e76425014fa4347110d4721b350ca8b5b5c34536d0083a84a845a36c"
   },
   {
    "path": "qa/match/08/scenery/r8/towelm/motion.json",
    "bytes": 1689,
-   "sha256": "d129c1877761904c7ab7d72de4d7fec19bdea366cd0d9e31338af0fcc9dd5b3a"
+   "sha256": "03e8fa301a289f09423e7b49fe215b66ff7665864dc3818709f744d39d59b144"
   },
   {
    "path": "qa/match/08/scenery/r8/towelm/s_left_hard.png",
-   "bytes": 1688197,
-   "sha256": "2194ef20a163c8c8ee199182138172f77db9945d5c3383d6afa08c7aae64ff28"
+   "bytes": 2172612,
+   "sha256": "d771462560e8c77f8f77d2135315e3ea8f4397f2fae3a780c7eb6ea47dab16b9"
   },
   {
    "path": "qa/match/08/scenery/r8/towelm/s_right_hard.png",
-   "bytes": 1891520,
-   "sha256": "a6b0b17b08c98b7451c963ebb938fd7da54b4f2b990cfab07191654920db88ee"
+   "bytes": 2508769,
+   "sha256": "62edb212977b90748542ad87aceb00b960ed44979bb680a7cacb5982f0666517"
   },
   {
    "path": "qa/match/08/scenery/r8/towelm/t95_through_screen.png",
-   "bytes": 1835633,
-   "sha256": "a0f2dba38c4cf0655bbd4c03865c84d4c5efc5c97c62ce816c4bb48a9a22f952"
+   "bytes": 2434405,
+   "sha256": "7cf4fb2de21a4fba36ccba2e9b251e7e75006e0fafcb956ad8684435ee12d69f"
   },
   {
    "path": "qa/match/08/scenery_metrics_BEFORE_FINAL.json",
@@ -9873,8 +9888,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 13776,
-   "sha256": "59829e1d338a0a64831b279851b7428385284f9e49e37f8773362281845b10ae"
+   "bytes": 15911,
+   "sha256": "041608cbf52d6c233aa280f6d22249493aca840bdcc1785e9675b57e33e80261"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -9998,8 +10013,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 31052,
-   "sha256": "1868288e50ec9ee4d878af6a60d3e1563b87f35fcc4e7bead0656ffedb3b7667"
+   "bytes": 30998,
+   "sha256": "9670db3dff15044f3d374687fb212493107ed00630984fe3cb3c08ef4d1835d4"
   },
   {
    "path": "src/world/materials.ts",

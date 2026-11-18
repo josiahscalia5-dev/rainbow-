@@ -181,6 +181,35 @@ export function createCoins(course: Course): CoinSystem {
   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
+  // `&m08coinv=1` (Screen 08 scenery r8, with match08; visuals only — count, score, pickup rules and positions unchanged):
+  // the approved picture's coins (faceTo) (1) never grow on screen beyond COINV_CAP of the frame height (the painted
+  // nearest coin is ≈ 5.6 %; moving forward they reached 8–9 % and dominated the foreground) and (2) shrink away while
+  // they are nearer the camera than Benny and overlap his screen box (they used to cover his body). The camera comes
+  // from the coins' own onBeforeRender (one frame old), so no camera / Game code is touched.
+  const coinV = (flag05('match08') || flag05('matchall')) && flag05('m08coinv');
+  const COINV_CAP = 0.068, BENNY_UP = 0.75, BENNY_R = 0.95;
+  let cam: THREE.PerspectiveCamera | null = null;
+  let bS = -1, bLat = 0;
+  const cv = new THREE.Vector3(), bv = new THREE.Vector3(), cn = new THREE.Vector3(), bn = new THREE.Vector3();
+  const coinVisual = (pos: THREE.Vector3, size: number) => {
+    if (!coinV || !cam || bS < 0) return 1;
+    const tanH = Math.tan(THREE.MathUtils.degToRad(cam.fov) / 2);
+    const dist = cv.copy(pos).sub(cam.position).length();
+    let k = 1;
+    const frac = size / (2 * dist * tanH); // coin diameter as a fraction of the frame height
+    if (frac > COINV_CAP) k = COINV_CAP / frac;
+    const fb = course.sample(bS);
+    bv.copy(fb.pos).addScaledVector(fb.right, bLat).addScaledVector(fb.up, BENNY_UP);
+    const bd = bv.distanceTo(cam.position);
+    if (dist < bd) {
+      cn.copy(pos).project(cam); bn.copy(bv).project(cam);
+      // overlap in frame-height units (NDC y spans 2): coin radius + Benny's radius
+      const dx = (cn.x - bn.x) * cam.aspect / 2, dy = (cn.y - bn.y) / 2;
+      const gap = Math.hypot(dx, dy) - (size * k) / (4 * dist * tanH) - BENNY_R / (2 * bd * tanH);
+      k *= THREE.MathUtils.smoothstep(gap, -0.04, 0.02);
+    }
+    return k;
+  };
 
   const place = (time: number) => {
     defs.forEach((d, i) => {
@@ -206,12 +235,14 @@ export function createCoins(course: Course): CoinSystem {
       spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
       q.multiply(spin);
       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
-      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+      const vis = d.faceTo && !collected[i] ? coinVisual(p, d.scale ?? 1) : 1;
+      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * vis * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
       mesh.setMatrixAt(i, m);
     });
     mesh.instanceMatrix.needsUpdate = true;
   };
   place(0);
+  if (coinV) mesh.onBeforeRender = (_r, _s, c) => { if ((c as THREE.PerspectiveCamera).isPerspectiveCamera) cam = c as THREE.PerspectiveCamera; };
 
   return {
     group,
@@ -219,6 +250,7 @@ export function createCoins(course: Course): CoinSystem {
     collected,
     update(time, _dt, s, lat) {
       let picked = 0;
+      bS = s; bLat = lat;
       for (let i = 0; i < defs.length; i++) {
         if (collected[i]) continue;
         const d = defs[i];

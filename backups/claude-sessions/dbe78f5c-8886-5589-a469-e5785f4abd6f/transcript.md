@@ -1428,3 +1428,142 @@ The mask keeps the towel well, but it also keeps thin purple strips of the door 
 
 > ↩︎ result: 4
 
+### 🤖 Claude — 2026-11-18T00:46:31.307Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/tm_zoom.png"}`
+
+### 🧑 User — 2026-11-18T00:46:31.354Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:46:40.959Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\na=\"uTMaskOn: { value: tMaskTex ? 1 : 0 } },\"; assert s.count(a)==1; s=s.replace(a,\"uTMaskOn: { value: 0 } },\")\na=\"  for (const [k, m] of Object.entries(M)) if (k !== 'towel') m.uniforms.uTMaskOn.value = 0;\\n\"; assert s.count(a)==1\ns=s.replace(a,\"  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;\\n\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit && echo tsc-ok; S=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad; B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1 …[+622 chars]`
+
+### 🧑 User — 2026-11-18T00:47:07.056Z
+
+> ↩︎ result: tsc-ok
+> 4
+
+### 🤖 Claude — 2026-11-18T00:47:09.112Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/tm_zoom.png"}`
+
+### 🧑 User — 2026-11-18T00:47:09.180Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:47:18.183Z
+
+> 🔧 **Bash** `{"command": "B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'; P=qa/match/08/scenery/r8/proof; for v in \"b7|$B7\" \"occ|$B7&m08occ=1\" \"towelm|$B7&m08occ=1&m08towelm=1\"; do timeout 900 node scripts/capture.mjs 08 \"--q=${v#*|}\" --out=$P/${v%%|*} >/dev/null 2>&1; done; git checkout -q qa/capture_log.json; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nr=L('references/08_final_spin_chamber.png'); a=L('$P/b7/08.png'); old=L('qa/match/08/scenery/r7/proof/towel/08.png')\np …[+448 chars]`
+
+### 🧑 User — 2026-11-18T00:47:55.394Z
+
+> ↩︎ result: b7 vs r7 towel capture 0
+> occ changed 0 >20 0  whole 81.05%
+> towelm changed 2253 >20 20 err 4.40->5.56 whole 81.05%
+
+### 🤖 Claude — 2026-11-18T00:47:58.836Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"coins08px\" src --include=*.ts | head; grep -rln \"coin\" src | head -20", "description": "Find coin rendering code"}`
+
+### 🧑 User — 2026-11-18T00:47:58.897Z
+
+> ↩︎ result: src/gameplay/coins.ts:12:import coins08px from '../../assets/textures/match08/coins08px.json';
+> src/gameplay/coins.ts:57:  // `&coins08px=1` (with match08; lead r3 2026-11-17): the nine picture coins exactly on their painted pixels, on the water
+> src/gameplay/coins.ts:58:  // (assets/textures/match08/coins08px.json, tools/match08/coins08px.mjs), and stage 10's five coins out of the 08 view
+> src/gameplay/coins.ts:59:  const px08 = m08 && flag05('coins08px');
+> src/gameplay/coins.ts:76:      for (const c of coins08px.coins) {
+> src/gameplay/coins.ts:81:        add(course.stageAtS(sx).id, sx, d.dot(f.right), d.dot(f.up), { scale: c.scale, faceTo: coins08px.faceTo as [number, number, number] });
+> src/gameplay/coins.ts:104:    // `&coins08px=1`: stage 10's five coins showed far down the river in the approved 08 view (the picture has none there)
+> src/ui/hud.ts
+> src/characters/benny/runtime.ts
+> src/characters/types.ts
+> src/world/match08.ts
+> src/world/course.ts
+> src/world/far05.ts
+> src/vfx/bubbles.ts
+> src/vfx/foam.ts
+> src/vfx/proj05Apron.ts
+> src/vfx/waterRibbon.ts
+> src/game/Game.ts
+> src/render/env.ts
+> src/gameplay/coins.ts
+
+### 🤖 Claude — 2026-11-18T00:48:00.443Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,200p src/gameplay/coins.ts", "description": "Read coins.ts"}`
+
+### 🧑 User — 2026-11-18T00:48:00.479Z
+
+> ↩︎ result: /**
+>  * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+>  * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+>  * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+>  * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { canvasTexture } from '../world/materials';
+> import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> import coins08 from '../../assets/textures/match08/coins08.json';
+> import coins08px from '../../assets/textures/match08/coins08px.json';
+> 
+> export const COIN_VALUE = 10;
+> 
+> /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 
+> /**
+>  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+>  * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+>  …[+11141 chars]
+
+### 🤖 Claude — 2026-11-18T00:48:02.377Z
+
+> 🔧 **Bash** `{"command": "sed -n 200,280p src/gameplay/coins.ts; git log --oneline -3 -- src/gameplay/coins.ts", "description": "Read rest of coins.ts"}`
+
+### 🧑 User — 2026-11-18T00:48:05.496Z
+
+> ↩︎ result: if (d.faceTo) back.set(d.faceTo[0] - p.x, 0, d.faceTo[2] - p.z).normalize();
+>       const upV = d.faceTo ? new THREE.Vector3(0, 1, 0) : f.up;
+>       const right = new THREE.Vector3().crossVectors(upV, back).normalize();
+>       basis.makeBasis(right, upV, back);
+>       q.setFromRotationMatrix(basis);
+>       // tilted coins (05) only wobble a little so the face stays toward the camera; picture coins (08) barely
+>       spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+>       q.multiply(spin);
+>       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
+>       m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+>       mesh.setMatrixAt(i, m);
+>     });
+>     mesh.instanceMatrix.needsUpdate = true;
+>   };
+>   place(0);
+> 
+>   return {
+>     group,
+>     defs,
+>     collected,
+>     update(time, _dt, s, lat) {
+>       let picked = 0;
+>       for (let i = 0; i < defs.length; i++) {
+>         if (collected[i]) continue;
+>         const d = defs[i];
+>         const ds = d.s - s;
+>         if (ds < -2 || ds > 2) continue;
+>         if (Math.abs(ds) < 1.0 && Math.abs(d.lat - lat) < 1.25) {
+>           collecte …[+414 chars]
+
+### 🤖 Claude — 2026-11-18T00:48:48.893Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"  const back = new THREE.Vector3();\n\"\"\",\"\"\"  const back = new THREE.Vector3();\n  // `&m08coinv=1` (Screen 08 scenery r8, with match08; visuals only — count, score, pickup rules and positions unchanged):\n  // the approved picture's coins (faceTo) (1) never grow on screen beyond COINV_CAP of the frame height (the painted\n  // nearest coin is ≈ 5.6 %; moving forward they reached 8–9 % and dominated the foreground) and (2)  …[+2359 chars]`
+
+### 🧑 User — 2026-11-18T00:48:51.269Z
+
+> ↩︎ result: tsc-ok
+
+### 🤖 Claude — 2026-11-18T00:48:51.813Z
+
+You've hit your 5-hour limit · resets 4:20am (UTC)
+
