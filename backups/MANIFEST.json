@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13550,
-   "sha256": "e1b9cdf063f2e438a41253c73300b82300e68cc461d4075061f2fe20f7558660"
+   "sha256": "5083f5f6708730c34c2ee442e9622b638a7a1cf434ab273920fdcb65b95bc900"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9060,6 +9060,31 @@
    "path": "qa/review_r8/05_BEFORE/2_BEFORE_two_thirds_through.jpg",
    "bytes": 529685,
    "sha256": "aa067e1c4a461894bbbaddabe4c80f71977963fb9a29e9c747adf0a5981adeca"
+  },
+  {
+   "path": "qa/review_r8/05_step1_coin/1_APPROVED_05.jpg",
+   "bytes": 476091,
+   "sha256": "ace03e696d464aea7b4dd98019ce9bc351e5cbfa0dc852477d8a62c901b9ff70"
+  },
+  {
+   "path": "qa/review_r8/05_step1_coin/2_BEFORE_f10_forward10u.jpg",
+   "bytes": 571176,
+   "sha256": "4e865028eec945aa214d261b4182725be7593bdc76fcfd1b7eed945c38d05972"
+  },
+  {
+   "path": "qa/review_r8/05_step1_coin/2_BEFORE_t33_through_screen.jpg",
+   "bytes": 549075,
+   "sha256": "61c88931fe2fe04fba5f5b144fae315935def13eb233465f418d2be8afbbbaec"
+  },
+  {
+   "path": "qa/review_r8/05_step1_coin/3_NEW_f10_forward10u.jpg",
+   "bytes": 554876,
+   "sha256": "b49bf323d3daebde1fba2b81dd65ea5f1bb8360449d11c552e7f3da65cf6c5bc"
+  },
+  {
+   "path": "qa/review_r8/05_step1_coin/3_NEW_t33_through_screen.jpg",
+   "bytes": 557299,
+   "sha256": "d381b14d0f6dccbda365eb725374938d8f1571397688e7317e27370037d50308"
   },
   {
    "path": "qa/review_r8/07_plunge_fix_r7/1_APPROVED_07.jpg",

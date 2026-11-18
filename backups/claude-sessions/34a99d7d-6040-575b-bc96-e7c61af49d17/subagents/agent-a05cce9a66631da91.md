@@ -383,3 +383,89 @@ The near coin no longer covers Benny at f10 and t33. Let me check how picked coi
 
 > ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
 
+### 🤖 Claude — 2026-11-18T02:02:00.156Z
+
+Now the water design (item 1). Let me understand the projection shader path the WIP `m05wd` hooks into.
+
+### 🤖 Claude — 2026-11-18T02:02:00.911Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && wc -l src/vfx/waterRibbon.ts && sed -n 430,560p src/vfx/waterRibbon.ts", "description": "Read projection shader target function"}`
+
+### 🧑 User — 2026-11-18T02:02:00.940Z
+
+> ↩︎ result: 1890 src/vfx/waterRibbon.ts
+> uniform sampler2D uPano;
+> uniform mat3 uPanoRot;     // world direction -> panorama lookup direction
+> uniform float uPanoK;      // strength of the mirrored highlights
+> #endif
+> varying vec2 vUV;
+> varying float vHalfW;
+> varying float vSpeed;
+> varying float vSkirt;
+> varying float vHide;
+> varying vec4 vStyle;
+> varying float vCore;
+> varying vec3 vTanW;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #ifdef FARW05
+> varying vec2 vChan;
+> #endif
+> #include <fog_pars_fragment>
+> #ifdef PROJ05
+> uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+> uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> uniform vec2 uPjESize;     // uPjE texels
+> uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+> uniform vec2 uPjNS;        // s0, s1
+> uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> uniform vec2 uPjTS;        // start s, period L
+> uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+> uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
+> uniform vec4 uPjFlow;      // distance (s units), r …[+6237 chars]
+
+### 🤖 Claude — 2026-11-18T02:02:12.070Z
+
+Let me look at the texture layers (E, T2) to see what the swimming view is built from.
+
+### 🤖 Claude — 2026-11-18T02:02:13.320Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"proj05_E\\|T2\\.png\\|near_T2\\|uPjT2.value\\|\\.png'\" src/vfx/waterRibbon.ts | head -40; ls assets/textures/match05/ public/assets/textures/match05 2>/dev/null | head", "description": "Find texture file names for projection layers"}`
+
+### 🧑 User — 2026-11-18T02:02:13.354Z
+
+> ↩︎ result: 1747:    const tex = new THREE.TextureLoader().load(TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_F.png', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+> 1772:    E: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_E.png', import.meta.url).href
+> 1773:      : TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_E.png', import.meta.url).href
+> 1774:      : TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png', import.meta.url).href
+> 1775:      : PROJGAP05 ? new URL('../../assets/textures/water05/far2/proj05_E.png', import.meta.url).href
+> 1776:      : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+> 1777:    N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
+> 1778:    T: new URL('../../assets/textures/water05/proj05_T.png', import.meta.url).href,
+> 1779:    D: new URL('../../assets/textures/water05/proj05_D.png' …[+619 chars]
+
+### 🤖 Claude — 2026-11-18T02:02:16.390Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nfor p in ['assets/textures/match05/tgtwall05/proj05_E.png','assets/textures/water05/proj05_T2.png','assets/textures/water05/proj05_N.png','assets/textures/water05/proj05_T.png','assets/textures/match05/tgtfill05_3/proj05_F.png','assets/textures/water05/proj05_D.png']:\n  im=Image.open(p); print(p, im.size, im.mode)\n\"; sed -n 1760,1890p src/vfx/waterRibbon.ts", "description": "Show texture sizes and loader code"}`
+
+### 🧑 User — 2026-11-18T02:02:16.481Z
+
+> ↩︎ result: assets/textures/match05/tgtwall05/proj05_E.png (1024, 1457) RGBA
+> assets/textures/water05/proj05_T2.png (1024, 768) RGB
+> assets/textures/water05/proj05_N.png (512, 960) RGBA
+> assets/textures/water05/proj05_T.png (512, 336) RGB
+> assets/textures/match05/tgtfill05_3/proj05_F.png (512, 512) RGBA
+> assets/textures/water05/proj05_D.png (512, 512) L
+>     (u.uPjPost.value as THREE.Vector4).x = renderer.toneMappingExposure;
+>   };
+>   const pars = 'uniform sampler2D uPjF; uniform float uPjFZ; uniform vec4 uPjPost; uniform vec2 uPjRes;\n' + PROJ05_INVERSE;
+>   const apply = 'col = mix(col, pjInverse(texture2D(uPjF, vec2(vRivUv.x, log(1.0 + max(vRivB.w, 0.0)) / log(1.0 + uPjFZ))).rgb), texture2D(uPjF, vec2(vRivUv.x, log(1.0 + max(vRivB.w, 0.0)) / log(1.0 + uPjFZ))).a);';
+>   return { uniforms: u, pars, apply, onBeforeRender };
+> }
+> 
+> /** `?proj05=1`: the baked approved-water layers (assets/textures/water05/, tools/proj05/bake.py) + live post values */
+> function attachProj05(u: Record<string, THREE.IUniform>) {
+>   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
+>   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && i …[+8640 chars]
+
