@@ -531,3 +531,267 @@ Let me look at the approved picture and a few BEFORE frames.
 >  *     the baked far water F and the far river layout are anchored to it, so everything approaches like real geometry;
 >  *   * the seam slides ahead of the eye so it never comes nearer than the locked view had it (D0lock ≈ …[+14753 chars]
 
+### 🤖 Claude — 2026-11-18T11:43:27.953Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export const MATCH05\\|export function on05\\|export function flag05\\|const MATCH05_FLAGS\\|function q05\\|function qv05\" -A12 src/vfx/waterRibbon.ts | head -90", "description": "Find how match05 master switch expands into flags"}`
+
+### 🧑 User — 2026-11-18T11:43:27.994Z
+
+> ↩︎ result: 213:export const MATCH05: boolean = q05('match05');
+> 214-export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> 215-export const PROJ05: boolean = on05('proj05');
+> 216-/**
+> 217- * `?proj05=1&projfar05=1` (2026-11-16 late, tools/proj05/bake.py … far): FAR-RIVER FIX. The exact layer E and the far
+> 218- * block's layer F are baked a second time (assets/textures/water05/far1/) so that the far river also carries the approved
+> 219- * pixels where the approved picture shows bank foam / wall on top of the game's river (there the first bake had no data:
+> 220- * torn filler and the procedural far river showed at the far bend). Nothing else changes; without the switch the
+> 221- * first bake is used as before.
+> 222- */
+> 223-export const PROJFAR05: boolean = PROJ05 && on05('projfar05');
+> 224-/**
+> 225- * `?proj05=1&projfar05=1&projgap05=1` (2026-11-17, session 018Sg3AU; on with `?match05=1`): the exact layer E from
+
+### 🤖 Claude — 2026-11-18T11:43:31.713Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 190,214p src/vfx/waterRibbon.ts; grep -n \"ENV05\\b\" src/world/environment.ts | head -20; ls assets/textures/tunnel05 assets/textures/env05 2>/dev/null; python3 -I -c \"import json;d=json.load(open('assets/textures/tunnel05/tunnel05.json'));print(json.dumps(d)[:1500])\"", "description": "Inspect wall texture atlas metadata"}`
+
+### 🧑 User — 2026-11-18T11:43:31.792Z
+
+> ↩︎ result: export const SILK05: boolean = q05('silk05');
+> export const PUFF05: boolean = q05('puff05');
+> export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
+> export const FARW05: boolean = RIVER05 || q05('farw05');
+> export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+> 
+> /**
+>  * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+>  * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so
+>  * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the
+>  * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+>  *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+>  *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+>  * approved colours. Flow: two-phase advecti …[+1738 chars]
+
+### 🤖 Claude — 2026-11-18T11:43:35.187Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"import json;d=json.load(open('assets/textures/env05/env05.json'));print(json.dumps(d)[:2500])\"; python3 -I -c \"from PIL import Image;im=Image.open('assets/textures/env05/wall05e.png');print(im.size, im.mode)\"", "description": "Inspect env05 wall atlas metadata"}`
+
+### 🧑 User — 2026-11-18T11:43:35.301Z
+
+> ↩︎ result: {"wall": {"w": 2048, "h": 992, "rows": {"AB": {"y0": 8, "h": 256}, "BC": {"y0": 272, "h": 128}, "CD": {"y0": 408, "h": 64}, "DE": {"y0": 480, "h": 32}, "EF": {"y0": 520, "h": 16}, "FG": {"y0": 544, "h": 16}, "GX": {"y0": 568, "h": 16}, "N1": {"y0": 592, "h": 256}, "N2": {"y0": 856, "h": 128}}, "gutter": 8}, "ring": {"w": 2048, "h": 384, "rowH": 48, "rows": ["A", "B", "C", "D", "E", "F", "G", "N"]}, "note": "env05 camera-projection bake (tools/env05/proj_bake.py); wall u = angle round the tube (+0.25), ring u = object angle, v = axial"}
+> (2048, 992) RGB
+
+### 🤖 Claude — 2026-11-18T11:43:39.840Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/env05/wall05e.png')\nim.resize((1024,496)).save('$S/wall05e_half.png')\n\"", "description": "Make a half-size preview of the wall atlas"}`
+
+### 🧑 User — 2026-11-18T11:43:40.090Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:43:43.269Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/wall05e_half.png"}`
+
+### 🧑 User — 2026-11-18T11:43:43.305Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:43:47.401Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"withProj05Wall\\|tube05_far_wall\\|tube05_far'\\|farWall\\b\\|M05FAR\" src/world/environment.ts | head -30", "description": "Locate far wall construction in environment.ts"}`
+
+### 🧑 User — 2026-11-18T11:43:47.438Z
+
+> ↩︎ result: 15:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+> 17:import { M05FAR, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+> 445:    withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+> 545:      withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
+> 558:      withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
+> 560:    const farWall = new THREE.Mesh(ft.geometry(64, 80, 0.004, warpFar), farWallMat);
+> 620:    const parts = [farWall, farRiver, farRings, farLids, glow];
+> 621:    for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
+> 622:    farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+> 633:    const liveFar = M05FAR ? createLiveFar05({
+> 634:      ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+> 648:    farWall.onBeforeRender = (_r, _s, cam) => { sync(cam); farWall.morphTa …[+32 chars]
+
+### 🤖 Claude — 2026-11-18T11:43:50.750Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 395,460p src/world/environment.ts && echo ---- && sed -n 520,660p src/world/environment.ts", "description": "Read the real and far wall setup code"}`
+
+### 🧑 User — 2026-11-18T11:43:50.787Z
+
+> ↩︎ result: }
+>   };
+>   addWall(s05, sGlow05, perf05Mat, warp05);
+>   addWall(sGlow05, s08, perfTubeMat);
+>   // 06/07 rings and the 04→05 junction collar (unchanged look)
+>   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+>   ringMat.envMap = goldEnv;
+>   ringMat.envMapIntensity = 1.3;
+>   // `&m05edge=1` (Screen 05 round 8): the first 06 ring (s ≈ 187) behind the 05 far tunnel's seam showed as an orange
+>   // tray on the left bank while swimming; clipped only behind the seam, only while that block is live (no-op otherwise)
+>   withClip05Std(ringMat, 1.5);
+>   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+>   // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+>   // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
+>   // strip lights as marquee spots
+>   const goldEnv05 = washerTubeEnv('gold05');
+>   const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+>   // wave 7: the band colour is …[+15515 chars]
+
+### 🤖 Claude — 2026-11-18T11:44:07.573Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/env05/wall05e.png')\nn1=im.crop((0,592,2048,848)); n1.crop((0,0,1024,256)).save('$S/n1_a.png'); n1.crop((1024,0,2048,256)).save('$S/n1_b.png')\n\"", "description": "Crop the N1 wall atlas row in two halves"}`
+
+### 🧑 User — 2026-11-18T11:44:07.856Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:44:10.761Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/n1_a.png"}`
+
+### 🧑 User — 2026-11-18T11:44:10.778Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:44:11.373Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/n1_b.png"}`
+
+### 🧑 User — 2026-11-18T11:44:11.396Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:44:45.215Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 318,345p src/vfx/waterRibbon.ts && grep -n \"m05eye\" src/vfx/waterRibbon.ts | head", "description": "Read the m05wall switch definition"}`
+
+### 🧑 User — 2026-11-18T11:44:45.253Z
+
+> ↩︎ result: */
+> export const M05NEAR: boolean = M05RIDE && q05('m05near');
+> const m05nearS0 = (): number => {
+>   const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('m05nears') : null;
+>   return v !== null && v !== '' && isFinite(+v) ? Math.min(3, Math.max(0.9, +v)) : 2.65;
+> };
+> /**
+>  * `&m05wall=1` (Screen 05 round 9, needs m05far; src/vfx/proj05Tunnel.ts withProj05Wall): CRISP PURPLE METAL WALLS while
+>  * swimming. The walls wear the approved picture camera-projected per bay (wall05e.png atlas); swimming brings them 2–6×
+>  * closer than the approved view had them, so the baked pixels were magnified into a blurred purple smear, and on the far
+>  * wall's lower part (beyond the seam, by the left bank) the bay's texels that held the painted river and foam stood on
+>  * the wall as a flat lilac / cyan slab. Where the atlas would be magnified (texels per screen pixel < 0.9) and the camera
+>  * has left the locked checkpoint eye, the wall becomes crisp perforated metal as painted: the approved palette (violet
+>  * metal, dark plum slots with a bright pink lower lip, pink-white light streaks along the tunnel) at the approved slot
+>  * pitch (measured from the atlas: 46.5 slots round t …[+1488 chars]
+
+### 🤖 Claude — 2026-11-18T11:44:49.826Z
+
+Now let me add the `&m05wtile=1` switch and the shader branch.
+
+### 🤖 Claude — 2026-11-18T11:45:09.729Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };\\n\"\nnew=old+\"\"\"/**\n * `&m05wtile=1` (Screen 05 round 11, needs m05far; src/vfx/proj05Tunnel.ts withProj05Wall): the far bays of the wall\n * atlas (rows BC … GX: 128 → 16 texel rows per bay, as small as the approved picture shows them) were magnified into a\n * horizontal smear when swimming brought them close. Where a bay's own row would be magnified, the wall shows the\n * approved NEAR bay N1 (256 texel rows, the sh …[+4630 chars]`
+
+### 🧑 User — 2026-11-18T11:45:12.579Z
+
+> ↩︎ result: 111:export const PT_ROW = { AB: 0, BC: 1, CD: 2, DE: 3, EF: 4, FG: 5, GX: 6, N1: 7, N2: 8 } as const;
+> TSC OK
+
+### 🤖 Claude — 2026-11-18T11:45:19.719Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && Q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1' && node tools/match05/r8_shots.mjs $S/wtile \"$Q\" t66_through_screen,t33_through_screen,f20_forward20u,k81_kink,s_left_hard 5291 2>&1 | grep -v \"^s\\|big\" | tail -5; ls $S/wtile", "description": "Render audit shots with m05wtile on", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T11:46:04.374Z
+
+> ↩︎ result: f20_forward20u.png
+> k81_kink.png
+> s_left_hard.png
+> shots.json
+> t33_through_screen.png
+> t66_through_screen.png
+
+### 🤖 Claude — 2026-11-18T11:46:09.531Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/wtile/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:46:09.570Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:46:21.633Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((0,180,864,620))\nb=Image.open('qa/match/05/r11/BEFORE/t66_through_screen.png').convert('RGB').crop((0,180,864,620))\nc=Image.open('$S/wtile/t66_through_screen.png').convert('RGB').crop((0,180,864,620))\nout=Image.new('RGB',(864,440*3+20),'white')\nout.paste(a,(0,0));out.paste(b,(0,450));out.paste(c,(0,900))\nout.save('$S/cmp_t66_walls.png')\n\"", "descript …[+65 chars]`
+
+### 🧑 User — 2026-11-18T11:46:22.013Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:46:25.348Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/cmp_t66_walls.png"}`
+
+### 🧑 User — 2026-11-18T11:46:25.399Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:46:54.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && python3 -I -c \"\nfrom PIL import Image\nb=Image.open('qa/match/05/r11/BEFORE/t66_through_screen.png').convert('RGB').crop((0,200,330,720))\nc=Image.open('$S/wtile/t66_through_screen.png').convert('RGB').crop((0,200,330,720))\nout=Image.new('RGB',(670,520),'white')\nout.paste(b,(0,0));out.paste(c,(340,0))\nout.save('$S/cmp_t66_left.png')\n\"", "description": "Side-by-side crop of the left wall at t66"}`
+
+### 🧑 User — 2026-11-18T11:46:54.541Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:46:57.513Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/cmp_t66_left.png"}`
+
+### 🧑 User — 2026-11-18T11:46:57.533Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:47:21.005Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\ns=open(p).read()\na=s.index(\"const M05WTILE_GLSL = /* glsl */ `\")\nb=s.index(\"}`;\", a)+3\nnew='''const M05WTILE_GLSL = /* glsl */ `\n  if (prow > 0.5 && prow < 6.5) {\n    vec2 tpt = puv * uPtWallSize;\n    vec2 jta = dFdx(tpt), jtb = dFdy(tpt);\n    float mT = abs(jta.x * jtb.y - jta.y * jtb.x) / max(max(length(jta), length(jtb)), 1e-5);\n    float rideT = uM05Eye.w > 0.5 ? smoothstep(0.02, 0.5, distance(cameraPosition, uM05Eye.xyz)) : 0.0;\n    float wT = rideT * (1.0 - smoothstep(0.35, 0.85, mT));\n     …[+2403 chars]`
+
+### 🧑 User — 2026-11-18T11:48:08.677Z
+
+> ↩︎ result: TSC OK
+
+### 🤖 Claude — 2026-11-18T11:48:12.521Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/cmp_t66_walls2.png"}`
+
+### 🧑 User — 2026-11-18T11:48:12.563Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:48:17.943Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/wtile2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:48:17.980Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:48:18.549Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/wtile2/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T11:48:18.591Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:48:23.456Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/wtile2/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:48:23.497Z
+
+> ↩︎ result: [image]
+
