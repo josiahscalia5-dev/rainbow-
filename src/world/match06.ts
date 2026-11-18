@@ -16,6 +16,7 @@
  * Without the switch nothing in this file runs and the game is unchanged.
  */
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { PROJ05_INVERSE } from '../vfx/waterRibbon';
 import type { Course } from './course';
 
@@ -81,6 +82,12 @@ uniform vec4 uR6p;
 uniform float uTime;
 uniform sampler2D uRiver;
 uniform sampler2D uFoam;
+// r7 m06ring: modeled gold rings (uRing = 1) around the straight tunnel axis (origin, direction, right, up)
+uniform float uRing;
+uniform vec3 uAxO;
+uniform vec3 uAxD;
+uniform vec3 uAxR;
+uniform vec3 uAxU;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -104,6 +111,24 @@ void main() {
     riv += fr * 0.22 * vec3(0.9, 0.85, 1.0);
     vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
     pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+  }
+  if (uRing > 0.5) {
+    // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
+    vec3 V = normalize(cameraPosition - vW);
+    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+    vec3 Rf = reflect(-V, n2);
+    float fw = dot(Rf, uAxD);
+    vec3 env = mix(vec3(0.46, 0.20, 0.55), vec3(1.0, 0.80, 0.50), smoothstep(-0.35, 0.9, fw));
+    env = mix(env, vec3(1.0, 0.96, 0.86), pow(max(fw, 0.0), 10.0));
+    float fres = pow(1.0 - max(dot(n2, V), 0.0), 3.0);
+    vec3 g = vec3(1.0, 0.66, 0.26) * (0.28 + 0.92 * env) + fres * vec3(1.0, 0.82, 0.55) * 0.45;
+    g += vec3(1.0, 0.9, 0.7) * 0.5 * pow(max(dot(Rf, normalize(uAxD + uAxU * 0.35)), 0.0), 40.0);
+    vec3 q = vW - uAxO;
+    float ang = atan(dot(q, uAxU), dot(q, uAxR));
+    float cell = fract(ang / 6.2831853 * 96.0) - 0.5;
+    float bulb = smoothstep(0.55, 0.0, length(vec2(cell * 2.0, vLS.x / 0.15)));
+    g += vec3(1.0, 0.62, 0.28) * 0.30 * smoothstep(0.3, 0.0, abs(vLS.x));
+    pc = mix(g, vec3(1.0, 0.95, 0.80), bulb);
   }
   vec3 t = pc;
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
@@ -138,6 +163,8 @@ void main() {
         float awayT = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
         w *= 1.0 - (1.0 - texture2D(uMask, uv).g) * awayT;
       }
+      // m06ring: the modeled rings show the approved pixels only AT the approved view, their own 3D gold once away
+      if (uRing > 0.5) w *= 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
       t = mix(pc, texture2D(uPlate, uv).rgb, w);
     }
   }
@@ -209,7 +236,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
       uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 },
       uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
-      uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile } },
+      uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
+      uRing: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
+      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
   });
 
   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
@@ -280,9 +309,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     const rows: number[] = [];
     for (let a = a0; a < a0 + 90; a += 0.5) rows.push(a);
     for (let a = a0 + 90; a <= a1; a += 2) rows.push(a);
+    // r7 `&m06ring=1`: the far tunnel narrows so the rings converge into a SMALL glow (the full-radius end cap was a big
+    // flat pale disc of the painted vanishing-point glow once the camera moved)
+    const RING = qs?.get('m06ring') === '1';
+    const radAt = (a: number) => (RING ? Rt * (1 - 0.82 * THREE.MathUtils.smoothstep(a, a1 - 200, a1)) : Rt);
     for (const a of rows) for (let j = 0; j <= RAD; j++) {
-      const th = (j / RAD) * Math.PI * 2;
-      const p = O.clone().addScaledVector(ax, a).addScaledVector(Rx, Rt * Math.cos(th)).addScaledVector(Ux, Rt * Math.sin(th));
+      const th = (j / RAD) * Math.PI * 2, Ra = radAt(a);
+      const p = O.clone().addScaledVector(ax, a).addScaledVector(Rx, Ra * Math.cos(th)).addScaledVector(Ux, Ra * Math.sin(th));
       pos.push(p.x, p.y, p.z);
       let aa = th; if (aa > TT.wallAngle[1]) aa -= Math.PI * 2;
       tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
@@ -295,7 +328,55 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
     g.setIndex(idx); g.computeVertexNormals();
     add(g, mat(tTube), 'tube');
-    tunCap = { pos: O.clone().addScaledVector(ax, a1), dir: ax.clone(), r: Rt };
+    tunCap = { pos: O.clone().addScaledVector(ax, a1), dir: ax.clone(), r: radAt(a1) };
+    if (RING) {
+      // r7 `&m06ring=1` (qa/match/06/r7/NOTES.md): REAL modeled gold rings instead of the flat painted ring stripes of the
+      // magnified wall tile. Profile = the painted ring: a thick polished band with two raised lips and a groove carrying
+      // a row of warm bulbs. Spacing from the approved picture: the two nearest painted ring groups (≈ 485 and 355 px
+      // above the vanishing point) are solved to axial positions through the locked camera; rings repeat at that
+      // spacing along the tunnel. Shading: polished gold reflecting the tunnel's warm glow ahead + purple walls (shader
+      // uRing). At the approved view the rings show the approved pixels (projection), fading to 3D gold as the camera
+      // leaves it, so the approved view is unchanged.
+      const Wr = Number(qs?.get("m06ringw")) || 2.2, Dr = Number(qs?.get('m06ringd')) || 0.55;
+      const yPx = (a: number) => {
+        const p = O.clone().addScaledVector(ax, a).addScaledVector(Ux, radAt(a)).project(proj);
+        return ((1 - p.y) / 2) * H;
+      };
+      const solve = (rPx: number) => { // painted ring top at vp.y - rPx -> axial position (a nearer ring's top is HIGHER: smaller y)
+        let lo = Math.max(a0, C.clone().sub(O).dot(ax) + 1), hi = a1 - 10;
+        for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (yPx(m) > vp[1] - rPx) hi = m; else lo = m; }
+        return (lo + hi) / 2;
+      };
+      const aN = solve(485), aF = solve(355), dA = Math.max(2.5, aF - aN);
+      const prof: THREE.Vector2[] = [];
+      const pr = (r: number, y: number) => prof.push(new THREE.Vector2(r, y));
+      const h = Wr / 2;
+      pr(0.25, -h); pr(-Dr, -h); pr(-Dr - 0.08, -h + 0.12); pr(-Dr - 0.08, -0.22); pr(-Dr + 0.12, -0.16);
+      pr(-Dr + 0.12, 0.16); pr(-Dr - 0.08, 0.22); pr(-Dr - 0.08, h - 0.12); pr(-Dr, h); pr(0.25, h);
+      const parts: THREE.BufferGeometry[] = [];
+      const qRot = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), ax);
+      // the lathe's local x/z must line up with Rx/Ux for the bulb angle; build each ring directly in world space
+      for (let k = Math.ceil((a0 + 2 - aN) / dA); aN + k * dA < a1 - 20 && parts.length < 70; k++) {
+        const a = aN + k * dA, Ra = radAt(a), sc = Ra / Rt;
+        const lp = prof.map((v) => new THREE.Vector2(Ra + v.x * sc, v.y * sc));
+        const lg = new THREE.LatheGeometry(lp, 128);
+        lg.applyQuaternion(qRot);
+        lg.translate(O.x + ax.x * a, O.y + ax.y * a, O.z + ax.z * a);
+        const n = lg.attributes.position.count, lsA = new Float32Array(n * 2);
+        for (let i = 0; i < n; i++) lsA[i * 2] = lp[i % lp.length].y / sc; // local axial offset inside the band
+        lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lsA, 2));
+        lg.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(n * 2), 2));
+        lg.deleteAttribute('uv');
+        parts.push(lg);
+      }
+      const rg = mergeGeometries(parts);
+      rg.computeVertexNormals();
+      const rm = mat(tTube);
+      Object.assign(rm.uniforms, { uRing: { value: 1 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
+        uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+      add(rg, rm, 'rings');
+      console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
+    }
     // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the
     // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage
     while (sList.length && sList[sList.length - 1] > sE + 20) sList.pop();
