@@ -1258,3 +1258,43 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 > t66_through_screen 144307 (np.int64(726), np.int64(1535))
 > t95_through_screen 161399 (np.int64(781), np.int64(1535))
 
+### 🤖 Claude — 2026-11-18T18:49:35.268Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n in ['f03_forward3u','f10_forward10u','s_left_hard','s_right_hard','s_left_steer','t66_through_screen']:\n  a=Image.open('qa/match/08/r15/BEFORE_K14/%s.png'%n).crop((0,700,864,1536)); b=Image.open('$S/NEW_sr/%s.png'%n).crop((0,700,864,1536))\n  c=Image.new('RGB',(1738,836),'white'); c.paste(a,(0,0)); c.paste(b,(874,0)); c.resize((1304,627),Image.LANCZOS).save('$S/c_%s.png'%n)\n\"", "description": "Build BEFORE|NEW lower-half crop …[+15 chars]`
+
+### 🤖 Claude — 2026-11-18T18:49:36.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/c_f03_forward3u.png"}`
+
+### 🤖 Claude — 2026-11-18T18:49:37.112Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/c_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T18:49:38.024Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-18T18:49:38.075Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T18:49:38.082Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:49:45.376Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/c_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T18:49:45.410Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:49:46.047Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/c_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T18:49:46.155Z
+
+> ↩︎ result: [image]
+
