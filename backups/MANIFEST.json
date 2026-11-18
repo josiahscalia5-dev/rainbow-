@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17938,
-   "sha256": "39334b6631bd87c1282d04ab09e1a6deb46da67abf0fe11e157cf7aea5d611a7"
+   "sha256": "9c10b77f38d8e1c154635d156a53c4a0ccef8e30f53afd39fe82f1dc07305d73"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1023,13 +1023,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c17/INFO.json",
-   "bytes": 506,
-   "sha256": "77bc0cae2d4a212d5fb1d010d7d446b32b8917792ff274f81922df055c557163"
+   "bytes": 552,
+   "sha256": "69d754cb23520717c02c88bbc943b7194681623c63e687257e1e8a76e4f11e00"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c17/tracked.patch",
    "bytes": 6794,
    "sha256": "c7349d34665b2e137c7ccd641451518cdfc8cd9d44bdb5ce50849f6faee95bca"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c17/untracked/qa/match/04/r17/s2_nband/1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1073,13 +1078,23 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c17/INFO.json",
-   "bytes": 590,
-   "sha256": "39c56c3dfa3b35cf48051581776a3955ef95719fdc80d72de67a0aea68a76b0d"
+   "bytes": 701,
+   "sha256": "39bc0a1564f8a478d6f94492a5d1fc0fafe40ca5e565ea125e1f83b5c6ecd499"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c17/tracked.patch",
-   "bytes": 2475,
-   "sha256": "254057136bec60c25c69dcfd5819ffd995dde018eaa8a6be1f94861d7ef610ab"
+   "bytes": 6141,
+   "sha256": "1345eed1129617a15b180a65354c4b0741eb9e4717a320835d7620d2c30eacf0"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-ringtex-c17/untracked/assets/textures/match04/tile_ring_paint_var.png",
+   "bytes": 1070069,
+   "sha256": "d54999d51a62916b33f97425fcffc3a19ecf74bceb9d33257e5554b5b35d7e7a"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-ringtex-c17/untracked/assets/textures/match04/tile_ring_paint_var_soft.png",
+   "bytes": 807510,
+   "sha256": "d1cd862b5c06de30688972afb070dd0cd6e37b4075cee7a0a7246c5c5ebd517e"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c17/untracked/tools/match04/ring_paint04_var.py",
@@ -1419,7 +1434,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c17/INFO.json",
    "bytes": 2364,
-   "sha256": "cbb1469f9fb6ed7b1e575737d098167bd54f6f0354c93599d7544875fc923245"
+   "sha256": "a613fd0ab97848d7071c22b06073c524009379d4c931b5e9aae9bee0c83b0fdb"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c17/tracked.patch",
@@ -1604,7 +1619,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c17/INFO.json",
    "bytes": 477,
-   "sha256": "2c3b00d97ad67b6b7b1a6a5c2b70b7e52623cc6e7ee233cd9be508d622a81932"
+   "sha256": "650bb00d5b45d6eee49dd0e3caa1cd8dcb4c6cfba3da73d43ba3ea1019abd11e"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -1683,8 +1698,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c17/INFO.json",
-   "bytes": 1424,
-   "sha256": "a66e6a67561ab4f8af426d7e012069d9271ccd54e842f3ef7a186beb9e1bdb61"
+   "bytes": 1580,
+   "sha256": "3d473f77138672a7cdc76569c8e19f32aa8a2c9d9fcf25219587912684118ba4"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c17/tracked.patch",
@@ -1710,6 +1725,11 @@
    "path": "backups/wip/claude__rainbow-s07-match-c17/untracked/qa/match/07/r17/step3_foamb/NEW/t95_through_screen.png",
    "bytes": 1577311,
    "sha256": "97880834d72380bc69c657d826899cc3390dd86539c9d74ad703924cc146282d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s07-match-c17/untracked/qa/match/07/r17/step4_nearf/NEW/motion.json",
+   "bytes": 3204,
+   "sha256": "7c9623d2174873c5ac5434eb9b00bca476c4faf09c23aa7c50a1c2bda26379a8"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -1824,7 +1844,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c17/INFO.json",
    "bytes": 485,
-   "sha256": "8cb5bbbca1457f5257fa9b6773a8c6f9aa9b07a04610879ca3e1e04123d68e7c"
+   "sha256": "d6ff068f8fca4c548256a92e9f78f5d53166d652e36b14f4e5e7106fa2b0f9ad"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",

@@ -1584,3 +1584,76 @@ Clip pushed (`8651edf9`). Waiting for the step 3 / 4 renders.
 
 > 🔧 **Bash** `{"command": "until grep -q \"s_right_hard\\|rror\" /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bc07zjxb9.output 2>/dev/null; do sleep 5; done; echo ok", "description": "Block until the render job reports the last shot", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-18T21:04:04.793Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T21:04:06.426Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:04:06.534Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:04:13.040Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:04:13.088Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:04:13.497Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/BEFORE/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:04:13.731Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:04:20.441Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"r - 5\\|e - 8\\|last 8 u\\|8 u before\" src/vfx/foam.ts", "description": "Locate ramp constants"}`
+
+### 🧑 User — 2026-11-18T21:04:20.610Z
+
+> ↩︎ result: 560:  // cut); over the last 8 u of 07 the bank grows back out of the water (ramp07), full height at the 08 start, so 08 keeps
+> 563:  return [course.marks['07_plunge_top'] + 9, r !== null ? r - 5 : course.marks['07_plunge_bottom'] - 12];
+> 570:/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 8 u before the 08 start → 1 at it */
+> 574:  return (s) => { const u = Math.min(1, Math.max(0, (s - (e - 8)) / 8)); return s >= e ? 1 : u * u * (3 - 2 * u); };
+
+### 🤖 Claude — 2026-11-18T21:04:24.839Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -i -e '560s/over the last 8 u of 07/over the last 5 u of 07/' -e '563s/r - 5 :/r - 3 :/' -e '570s/8 u before the 08 start/5 u before the 08 start/' -e '574s#(s - (e - 8)) / 8#(s - (e - 5)) / 5#' src/vfx/foam.ts && sed -n 556,575p src/vfx/foam.ts && npx tsc --noEmit -p . && echo TSC OK && mv qa/match/07/r17/step3_foamb/NEW qa/match/07/r17/step3_foamb/try_ramp8 && K=$(cat qa/match/07/r16/K.txt) && timeout 1200 node tools/match07/audit_r16.mjs 07 qa/match/07/r17/step3_foamb/NEW \"$K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1\" \"t50_through_screen,t66_thr …[+187 chars]`
+
+### 🧑 User — 2026-11-18T21:05:48.160Z
+
+> ↩︎ result: /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> function hide07(course: Course): [number, number] | null {
+>   if (!flag05('match07') || !flag05('m07foam')) return null;
+>   // r17 '&m07foamb=1': the walls stay away to near the end of 07 (they no longer start again partway down the drop with a
+>   // cut); over the last 5 u of 07 the bank grows back out of the water (ramp07), full height at the 08 start, so 08 keeps
+>   // its berm
+>   const r = end07(course);
+>   return [course.marks['07_plunge_top'] + 9, r !== null ? r - 3 : course.marks['07_plunge_bottom'] - 12];
+> }
+> /** r17 '&m07foamb=1': arc length of the 08 start (end of 07) or null = off */
+> function end07(course: Course): number | null {
+>   if (!flag05('match07') || !flag05('m07foam') || !flag05('m07foamb')) return null;
+>   return course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4;
+> }
+> /** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it */
+> function ramp07(course: Course): (s: number) => number {
+>   const e = end07(course);
+>   if (e === null) return () => 1;
+>   return (s) => { const u = Math.min(1, Math.max(0,  …[+412 chars]
+
+### 🤖 Claude — 2026-11-18T21:05:49.818Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/NEW/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T21:05:49.902Z
+
+> ↩︎ result: [image]
+

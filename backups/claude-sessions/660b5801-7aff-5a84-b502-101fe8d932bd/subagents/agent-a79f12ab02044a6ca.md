@@ -989,3 +989,24 @@ The bands now come in close round Benny and sweep from the bottom corners toward
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"uNB2: { value: new THREE.Vector4(M04.num('m04nba', 3.0), M04.num('m04nbb', 0.05),\"\nnew=\"uNB2: { value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04),\"\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"ahead of him, m04nbb widening per u behind him, m04nbp pinch\",\"ahead of him, m04nbb widening behind him (b * d^2), m04nbr half-stripe width near him (0 = one stretched band), m04nbs tile\\n        // span walked, m04nbp pinch\")\nopen(p,'w').write(s)\ …[+564 chars]`
 
+### 🧑 User — 2026-11-18T21:03:57.503Z
+
+> ↩︎ result: // tile (0.7), 10 u long satin stripes with a slow 0.5 u lateral wander, 0.95 strength
+>         uSB: { value: sideBand }, uSB1: { value: new THREE.Vector4(M04.num('m04sbw', 0.45), M04.num('m04sbf', 1), M04.num('m04sbu', 0.7), M04.num('m04sbn', 0.5)) },
+>         uSB2: { value: new THREE.Vector2(M04.num('m04sbd0', 0), M04.num('m04sbd1', 0)) },
+>         // r17 `&m04nband=1` (needs m04sband): the bands round Benny — m04nbh inner arc hugging him, m04nba back to normal this far
+>         // ahead of him, m04nbb widening behind him (b * d^2), m04nbr half-stripe width near him (0 = one stretched band), m04nbs tile
+>         // span walked, m04nbp pinch at his sides, m04nbf lateral follow of Benny (0..1)
+>         uNB3: { value: new THREE.Vector2(M04.num('m04nbr', 0.9), M04.num('m04nbs', 0.7)) },
+>         uNB: { value: nbU }, uNB2: { value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
+>         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
+>         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m …[+449 chars]
+
+### 🤖 Claude — 2026-11-18T21:03:58.466Z
+
+Start view unchanged (0 px). Rendering the full 12-shot NEW set.
+
+### 🤖 Claude — 2026-11-18T21:04:01.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); D=qa/match/04/r17/s2_nband; mkdir -p $D && cp qa/match/04/r17/s1_end/1_APPROVED.png $D/ && timeout 900 node tools/lead_r6/motion_audit.mjs 04 $D/NEW \"$K&m04end=1&m04nband=1\" 2>&1 | grep -E \"^04|pageerror\"", "description": "Render full 12-shot NEW audit with near bands", "timeout": 920000}`
+
