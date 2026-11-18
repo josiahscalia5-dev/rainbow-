@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16988,
-   "sha256": "3ee0a719d92524bf6ad95a9d8e2b911700e97e732bd14dc691155898d508debc"
+   "sha256": "4868816c339812f4f6409468e4ff38a032ed0f428e794fbbce7f89e467e17809"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -993,8 +993,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c15/INFO.json",
-   "bytes": 477,
-   "sha256": "44813f066cc3d7519b2ae447613fa41e1f7db75a4868f880006059aaf916c80d"
+   "bytes": 532,
+   "sha256": "9417ef48a95b4dc8e1967e74576479b31b83c611b2f45a8e2f0b4be5a54c40e2"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c15/tracked.patch",
+   "bytes": 9999,
+   "sha256": "f7c2b92c5c2e6e900cd0540b9ff8e5f1cd8b0130bce43c40322c9fe88fd78862"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1088,8 +1093,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/INFO.json",
-   "bytes": 1702,
-   "sha256": "f2ffb13b65ba0247f10b198b71eba393cc352d0f3bb2501062552ef10f9e234a"
+   "bytes": 1735,
+   "sha256": "e08ec037664b53b36e417a342d46c54c97770286ded4b0d9b182e07460b7e1b1"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/tracked.patch",
@@ -1172,6 +1177,11 @@
    "sha256": "093efff41fdff4d7663f5e9565f2f7dff7fa69bf198f04769186c1601193ae58"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-match-c15/untracked/tools/match05/r15_probe.mjs",
+   "bytes": 3240,
+   "sha256": "a0e5f7ae0bf080c800ebc7e1052e8e0c5a6179ac9fca5fda297031b62e8b6458"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
    "bytes": 477,
    "sha256": "b8375c3d03f20378d73d9be099f0db61c1be709ff13ee7ba8082f571f21ddd67"
@@ -1244,7 +1254,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/INFO.json",
    "bytes": 512,
-   "sha256": "ad15036b3743789c7537233b3e38a1987d78e4919acd1d2e8f08e34059ea9369"
+   "sha256": "bfa78ae7e4116d28d426c1f19a8d1eb26325542043f5f91b544e2e70214dfa24"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/tracked.patch",
