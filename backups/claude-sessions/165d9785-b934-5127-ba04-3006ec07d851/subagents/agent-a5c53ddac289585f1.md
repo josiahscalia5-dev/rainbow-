@@ -1977,3 +1977,37 @@ Now the PROGRESS.md for r12 with step 1.
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_gl.png"}`
 
+### 🧑 User — 2026-11-18T13:14:15.022Z
+
+> ↩︎ result: 08 f06_forward6u s 398.205 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.552 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.362 lat 0 stage 08 frames 78
+
+### 🧑 User — 2026-11-18T13:14:15.049Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:14:21.332Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && mkdir -p qa/match/08/r12 && git diff src/world/match08.ts > qa/match/08/r12/wip_m08glint_not_kept.patch && git checkout -- src/world/match08.ts && git status --short && npx tsc --noEmit -p . && echo reverted", "description": "Save glint attempt as patch and revert"}`
+
+### 🧑 User — 2026-11-18T13:14:25.310Z
+
+> ↩︎ result: ?? qa/match/08/r12/wip_m08glint_not_kept.patch
+> reverted
+
+### 🤖 Claude — 2026-11-18T13:14:32.350Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat >> qa/match/08/r12/PROGRESS.md <<'EOF'\n\n## Tried — `&m08glint=1` (near-water glints at painted size) — NOT KEPT (NOT AN IMPROVEMENT)\n* Tried: the m08near tile at the painted scale in the lane's middle and along the river (banks take up the rest of the lane,\n  piecewise like the swim remap). Result at forward 10 u: glints smaller, but the near water then shows visible repeats of\n  the same small glints and the magenta / cyan banks are stretched sideways ≈ 3.4× into flat smears; the BEFORE (bold\n  glossy strokes ≈ 2× painted size) reads closer to th …[+333 chars]`
+
+### 🧑 User — 2026-11-18T13:14:32.395Z
+
+> ↩︎ result: 8:const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> 9:const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> 10:mkdirSync(OUT, { recursive: true });
+
+### 🤖 Claude — 2026-11-18T13:14:36.996Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K15='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1' && time node tools/lead_r6/motion_audit.mjs 08 qa/match/08/r12/NEW \"$K15\" 2>&1 | grep -v 'allow list' | tail -13", "description": "Run 12-shot motion audit of current kept set", "timeout": 900000}`
+

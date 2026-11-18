@@ -3908,3 +3908,77 @@ My shell quoting broke the grid drawing. I'll do it in Python instead, with grid
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T13:14:07.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && rm -f assets/textures/match04/tile_river_v04.png assets/textures/match04/tile_river_v04.json && cat >> qa/match/04/r12/PROGRESS.md <<'EOF'\n\n### Calibration + unrolled-tile check (same session) — stopped\n* Camera direction is right: the tunnel's far end lies at the same place in the projected V04-1 (`mv04_V04-1.png`) and in the\n  game frame from the same camera (grid comparison). The only calibration error was the 0.9 u position offset (fixed, EXACT=1).\n* The real mismatch is SCALE: the AI painted Benny ≈ 1.7× bigger and lower than the game's Benny, and …[+1620 chars]`
+
+### 🧑 User — 2026-11-18T13:14:10.685Z
+
+> ↩︎ result: remote=5232975bf0 local=5232975bf0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:14:12.781Z
+
+Now the two specialist steps waiting for review: Screen 05 step 3 (foam clouds), already checked, and Screen 08 step 4. Checking 08 step 4 above and right of the door at the stage end:
+
+### 🤖 Claude — 2026-11-18T13:14:14.920Z
+
+> 🔧 **Bash** `{"command": "P=/home/user/wt/s08/qa/match/08/r12/step4_m08ring; ls $P; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; convert $P/2_BEFORE_t95_through_screen.png $P/3_NEW_t95_through_screen.png -crop 500x500+364+100 +append $S/s08_step4_crop.jpg; echo ok", "description": "Crop 08 step 4 wall above-right of door"}`
+
+### 🧑 User — 2026-11-18T13:14:15.245Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+> ok
+
+### 🤖 Claude — 2026-11-18T13:14:18.316Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s08_step4_crop.jpg"}`
+
+### 🧑 User — 2026-11-18T13:14:18.343Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:14:29.037Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_c12; P5=/home/user/wt/s05/qa/match/05/r12/step3_m05fcloud; P8=/home/user/wt/s08/qa/match/08/r12/step4_m08ring; cp $P5/2_BEFORE_t85_through.png $R/05_step3_2_BEFORE_85pct_through.png; cp $P5/3_NEW_t85_through.png $R/05_step3_3_NEW_85pct_through.png; cp $P5/2_BEFORE_k81_kink.png $R/05_step3_2_BEFORE_kink.png; cp $P5/3_NEW_k81_kink.png $R/05_step3_3_NEW_kink.png; cp $P8/2_BEFORE_t95_through_screen.png $R/08_step4_2_BEFORE_stage_end.png; cp $P8/3_NEW_t95_through_screen.png $R/08_step4_3_NEW_stage_end.png; cp $P8/2_BEFORE_f10_forward10u.png $R/08_step4_2_BEFORE_forward10u.p …[+960 chars]`
+
+### 🧑 User — 2026-11-18T13:14:29.083Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:14:31.437Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/05_1_APPROVED.png", "qa/review_c12/05_step3_2_BEFORE_85pct_through.png", "qa/review_c12/05_step3_3_NEW_85pct_through.png", "qa/review_c12/05_step3_2_BEFORE_kink.png", "qa/review_c12/05_step3_3_NEW_kink.png"], "caption": "Screen 05 step 3 — GOOD IMPROVEMENT. APPROVED · BEFORE / NEW at 85% through · BEFORE / NEW in the bend. Puffy white foam clouds now line both far banks, as painted, instead of a flat pale-lilac rim band. Still wrong: when steering hard left at the stage end, a pale floor shows behind the foam line.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T13:14:32.792Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/05_1_APPROVED.png → file_uuid: bc378848-99e8-4053-9b0e-148569f50f4f
+>   /home/user/rainbow-/qa/review_c12/05_step3_2_BEFORE_85pct_through.png → file_uuid: cfaac6c1-bd7d-433a-a072-5dfe7a8b92e2
+>   /home/user/rainbow-/qa/review_c12/05_step3_3_NEW_85pct_through.png → file_uuid: ab97c636-c102-47c9-960d-7666ad507cfc
+>   /home/user/rainbow-/qa/review_c12/05_step3_2_BEFORE_kink.png → file_uuid: ca7713df-7036-4a75-a3ea-17fb35f3dfdb
+>   /home/user/rainbow-/qa/review_c12/05_step3_3_NEW_kink.png → file_uuid: f020342c-0965-4b66-8b92-a05cd03fa4e4
+
+### 🤖 Claude — 2026-11-18T13:14:33.893Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/08_1_APPROVED.png", "qa/review_c12/08_step4_2_BEFORE_stage_end.png", "qa/review_c12/08_step4_3_NEW_stage_end.png", "qa/review_c12/08_step4_2_BEFORE_forward10u.png", "qa/review_c12/08_step4_3_NEW_forward10u.png"], "caption": "Screen 08 step 4 — GOOD IMPROVEMENT. APPROVED · BEFORE / NEW at the stage end · BEFORE / NEW at 10 u. Above and right of the door the wall now shows regular slot rows curving round the door instead of kaleidoscope diamonds and X shapes. Still there: an odd gold wedge on top of the upper-right spout cup.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T13:14:36.716Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/08_1_APPROVED.png → file_uuid: e7d0bce1-c4ee-48f8-830d-0dc66f569209
+>   /home/user/rainbow-/qa/review_c12/08_step4_2_BEFORE_stage_end.png → file_uuid: cffecb80-4fc9-46f2-95af-3fff8dba3f97
+>   /home/user/rainbow-/qa/review_c12/08_step4_3_NEW_stage_end.png → file_uuid: 3ecaa442-53c4-44f5-96e2-4c2d505ab4cc
+>   /home/user/rainbow-/qa/review_c12/08_step4_2_BEFORE_forward10u.png → file_uuid: 94e56d48-24c7-467e-860a-588ff0323d7f
+>   /home/user/rainbow-/qa/review_c12/08_step4_3_NEW_forward10u.png → file_uuid: 51dda2bd-d09b-446f-8803-4bbc132dce4b
+
+### 🤖 Claude — 2026-11-18T13:14:39.979Z
+
+> 🔧 **Bash** `{"command": "timeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:round12-progress 2>&1 | grep -E '\"result\"|\"commit\"'; python3 -I scripts/autosave-status.py | head -1; git status --short | wc -l; for w in s04 s05 s08; do cd /home/user/wt/$w; echo \"$w $(git rev-parse --short=8 HEAD) remote=$(git ls-remote origin refs/heads/$(git rev-parse --abbrev-ref HEAD) | cut -c1-8)\"; done", "description": "Save lead and verify all three branches", "timeout": 1200000}`
+
