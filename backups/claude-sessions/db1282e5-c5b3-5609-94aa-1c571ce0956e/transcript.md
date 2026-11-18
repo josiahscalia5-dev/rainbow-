@@ -3424,3 +3424,153 @@ Still washed out. The darker band setting barely changed the result, so somethin
 > varying float vS;
 > void m …[+694 chars]
 
+### 🤖 Claude — 2026-11-18T14:57:36.373Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && E4=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E4.q); R4=\"$E4&m04ringp=3.9&m04ringgw=1.8&m04tb=0.0&m04ts=0.22&m04paint=0.9\"; echo \"$R4\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/R4.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s3_ring/R4 \"$R4\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; for v in R4; do convert qa/match/04/r13/s3_ring/$v/f20_forward20u.png -cr …[+312 chars]`
+
+### 🤖 Claude — 2026-11-18T14:57:37.736Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ringmat3.jpg"}`
+
+### 🧑 User — 2026-11-18T14:58:22.209Z
+
+> ↩︎ result: 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T14:58:22.222Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:58:29.092Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r13 && montage s2_arr/E4/f06_forward6u.png s3_ring/R4/f06_forward6u.png s2_arr/E4/t95_through_screen.png s3_ring/R4/t95_through_screen.png s2_arr/E4/s_left_hard.png s3_ring/R4/s_left_hard.png s2_arr/E4/f03_forward3u.png s3_ring/R4/f03_forward3u.png -tile 8x1 -geometry 200x356+2+2 /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/R4all.jpg", "description": "Compare R4 with E4 across positions"}`
+
+### 🧑 User — 2026-11-18T14:58:29.497Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:58:30.290Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/R4all.jpg"}`
+
+### 🧑 User — 2026-11-18T14:58:30.322Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:58:40.762Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && R4=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/R4.q); NOF=$(echo \"$R4\" | sed 's/&m04foam3=1//; s/&m04foam=1//'); timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s4_water/nofoam \"$NOF\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; cd qa/match/04/r13 && convert s3_ring/R4/f20_forward20u.png -crop 864x760+0+700 +repage -resize 420x $S/w1.png 2>/dev/null; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; convert s3_ring/R4/f20_forward20u.png -crop 864x760+0+700  …[+260 chars]`
+
+### 🤖 Claude — 2026-11-18T14:58:42.060Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/water1.jpg"}`
+
+### 🧑 User — 2026-11-18T14:59:26.907Z
+
+> ↩︎ result: 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T14:59:26.918Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:59:35.380Z
+
+Removing the foam doesn't remove the ridges, so they come from the river water picture itself repeating down the tunnel. I'll look at that river tile.
+
+### 🤖 Claude — 2026-11-18T14:59:36.476Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls assets/textures/match04/ | head -30; identify assets/textures/match04/tile_river3.png 2>/dev/null; grep -n \"tile_river\\|uRivA\\b\" src/world/match04m4.ts | head -5", "description": "List Screen 04 textures and find the river tile"}`
+
+### 🧑 User — 2026-11-18T14:59:36.527Z
+
+> ↩︎ result: cam04_locked.json
+> coins04.json
+> mouth04.json
+> mv04.json
+> mv04_V04-1.png
+> mv04_V04-1_fill.png
+> mv04_V04-2.png
+> mv04_V04-2_fill.png
+> patch_gold.png
+> patch_wall.png
+> patch_water.png
+> plate04.json
+> plate04_fal_alignment.json
+> plate04_fillmask.png
+> plate04_hybrid.png
+> plate04_hybrid_fal.png
+> plate04_nochev.png
+> plate04_nochev_mask.png
+> proj04.json
+> splash04.json
+> splash04.png
+> tile_chev3.png
+> tile_mouth.png
+> tile_ring.png
+> tile_river.png
+> tile_river3.png
+> tile_tunnel.png
+> tiles04.json
+> assets/textures/match04/tile_river3.png PNG 640x516 640x516+0+0 8-bit sRGB 626561B 0.000u 0:00.000
+> 264: * the approved water design (tile_river3: pink swirl ribbons, cyan streams, foam edges) by arc length across the trough,
+> 286:uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> 312:  float lat = vS * uRivA.w + 0.9 * (vn(vec2(along * 0.07, 7.0)) - 0.5) * smoothstep(0.4, 1.6, abs(vS));
+> 314:  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / uRivA.z);
+> 315:  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / uRivA.z * 0.77 + 0.37);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:59:38.116Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/assets/textures/match04/tile_river3.png"}`
+
+### 🧑 User — 2026-11-18T14:59:38.143Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:59:38.763Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 300, "limit": 45}`
+
+### 🧑 User — 2026-11-18T14:59:38.790Z
+
+> ↩︎ result: 300	  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
+> 301	// chevron pointing down the slide: distance to the two arms
+> 302	float chev(vec2 p, float hw, float th) {
+> 303	  p.x = abs(p.x);
+> 304	  vec2 a = vec2(0.0, 0.0), b = vec2(hw, -hw * 2.3);   // long arms along the flow (painted arrows seen low)
+> 305	  vec2 pa = p - a, ba = b - a;
+> 306	  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+> 307	  return length(pa - ba * h) - th;
+> 308	}
+> 309	void main() {
+> 310	  float along = -vL.z;                                     // down the slide from Benny's checkpoint water point
+> 311	  float flow = along - uTime * 0.9;                        // the design drifts down the slide with the current
+> 312	  float lat = vS * uRivA.w + 0.9 * (vn(vec2(along * 0.07, 7.0)) - 0.5) * smoothstep(0.4, 1.6, abs(vS));
+> 313	  float fl = flow + 2.2 * (vn(vec2(along * 0.05, vS * 0.15 + 1.0)) - 0.5);
+> 314	  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / uRivA.z);
+> 315	  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / uRivA.z * 0.77 + 0.37);
+> 316	  float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
+> 317	  …[+2259 chars]
+
+### 🤖 Claude — 2026-11-18T14:59:50.175Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uPk:\\|M04.pink\\|m04pk\" src/world/match04m4.ts | head -5", "description": "Find the pink-sides switch defaults"}`
+
+### 🧑 User — 2026-11-18T14:59:50.212Z
+
+> ↩︎ result: 637:        uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:59:55.020Z
+
+I'll add a setting that lengthens only the side water (`m04rse`, starting at `m04rsl` units from the centre) and leaves the centre lane untouched.
+
+### 🤖 Claude — 2026-11-18T15:00:04.979Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nrep=[(\"\"\"uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale\"\"\",\n\"\"\"uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale\nuniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)\"\"\"),\n(\"\"\"  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / uRivA.z);\n  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRi …[+1482 chars]`
+
+### 🤖 Claude — 2026-11-18T15:00:06.190Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/water2.jpg"}`
+
