@@ -630,3 +630,380 @@ Next I'll look at the rest of the BEFORE set to rank the remaining defects.
 > 65	  riverUp: (z: number) => number;
 > 66	  /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */ …[+13718 chars]
 
+### 🤖 Claude — 2026-11-18T12:53:36.053Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/materials.ts", "offset": 855, "limit": 305}`
+
+### 🧑 User — 2026-11-18T12:53:36.075Z
+
+> ↩︎ result: 855	 * half width, pink band centres/widths, cyan core), so the cyan core and its two hot-pink bands keep WINDING
+> 856	 * into the vanishing point (ref 05) instead of running straight (the old chord read as Screen 06). Flow lines
+> 857	 * follow the winding core; fine lavender/blue-shaded foam rims along both banks; beyond the rim (inner bank of
+> 858	 * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
+> 859	 * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
+> 860	 */
+> 861	/** `&m05fmag=1` (Screen 05 round 11): weight of the baked far picture F — 0 where swimming magnifies it (block live) */
+> 862	const FMAG_PRE = 'float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w);\n  ';
+> 863	export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> 864	  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+> 865	  // wins the depth test against the real ribbon's continuation it covers just …[+19175 chars]
+
+### 🤖 Claude — 2026-11-18T12:53:40.256Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^export const \\(WATER05\\|FARW05\\|FLOWMAP05\\|SILK05\\|PUFF05\\|PROJ05\\|M05RIDE\\|M05WD\\|M05NEAR\\|M05SEAM\\|M05BLEND\\|M05FOAM\\|M05BERM\\|M05FLAT\\|M05CLOUD\\|M05EDGE\\|MATCH05\\)\\b\" -A3 src/vfx/waterRibbon.ts | head -80; grep -n \"function q05\\|function on05\\|function flag05\" -A6 src/vfx/waterRibbon.ts src/world/*.ts | head -40", "description": "Find which water switches match05 enables"}`
+
+### 🧑 User — 2026-11-18T12:53:40.306Z
+
+> ↩︎ result: 190:export const SILK05: boolean = q05('silk05');
+> 191:export const PUFF05: boolean = q05('puff05');
+> 192-export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
+> 193:export const FARW05: boolean = RIVER05 || q05('farw05');
+> 194:export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> 195:export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+> 196-
+> 197-/**
+> 198- * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+> --
+> 213:export const MATCH05: boolean = q05('match05');
+> 214-export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> 215:export const PROJ05: boolean = on05('proj05');
+> 216-/**
+> 217- * `?proj05=1&projfar05=1` (2026-11-16 late, tools/proj05/bake.py … far): FAR-RIVER FIX. The exact layer E and the far
+> 218- * block's layer F are baked a second time (assets/textures/water05/far1/) so that the far river also carries the approved
+> --
+> 270:export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+> 271-/**
+> 272- * `&m05ride=1` (Screen 05 round 8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05): the APPROVED DESIGN LAID OUT FROM
+> 273- * BENNY. The approved picture holds only ~50 u of river  …[+2309 chars]
+
+### 🤖 Claude — 2026-11-18T12:53:43.154Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 196, "limit": 215}`
+
+### 🧑 User — 2026-11-18T12:53:43.174Z
+
+> ↩︎ result: 196	
+> 197	/**
+> 198	 * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+> 199	 * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so
+> 200	 * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the
+> 201	 * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+> 202	 *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+> 203	 *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+> 204	 * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+> 205	 * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+> 206	 * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> 207	 */
+> 208	/**
+> 209	 * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that tu …[+16773 chars]
+
+### 🤖 Claude — 2026-11-18T12:53:49.276Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uPjD\\b\\|uPjD[^a-zA-Z]\\|uPjDS\\|uPjT2\\|uPjT\\b\\|detail\" src/vfx/waterRibbon.ts | head -60", "description": "Find detail/tile layer usage in ribbon shader"}`
+
+### 🧑 User — 2026-11-18T12:53:49.321Z
+
+> ↩︎ result: 202: *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+> 267: * whose row noise read as flat horizontal stripes when magnified), and the fine detail layer is laid over it. Engaged
+> 276: * switch every projection layer (E, N, T, T2, flow maps, detail) is read at s − (ride s − locked s): a point d units
+> 643:uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> 645:uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+> 646:uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
+> 653:// the old tile uPjT keeps its role where E / N have no data at the locked view. uPjNear: x = on, y = share of the
+> 654:// detail layer kept on T2, z = ride focus s (set every frame by vfx/index.ts), w = focus s of the locked checkpoint
+> 656:uniform sampler2D uPjT2;   // near tile T2
+> 658:uniform vec2 uPjT2S;       // start s, half period L (mirrored repeat: period 2 L)
+> 692:uniform vec4 uPjWD;        // m05wd: x = on, y = share of the detail layer kept on the design, z = row smoothing (E rows)
+> 711:// display-space target at (u, s): exact layer where it is sharp enough, else near / ti …[+1902 chars]
+
+### 🤖 Claude — 2026-11-18T12:53:50.902Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 700, "limit": 140}`
+
+### 🧑 User — 2026-11-18T12:53:50.924Z
+
+> ↩︎ result: 700	  return mix(lin, vp, k);
+> 701	}
+> 702	vec4 pjLut(float s) {
+> 703	  float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
+> 704	  float i = floor(x);
+> 705	  vec4 a = texture2D(uPjLut, vec2((i + 0.5) / uPjLutS.z, 0.5));
+> 706	  vec4 b = texture2D(uPjLut, vec2((min(i + 1.0, uPjLutS.z - 1.0) + 0.5) / uPjLutS.z, 0.5));
+> 707	  vec4 r = mix(a, b, x - i);
+> 708	  r.w = step(uPjLutS.x, s) * step(s, uPjLutS.y);
+> 709	  return r;
+> 710	}
+> 711	// display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
+> 712	vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
+> 713	  vec4 L = pjLut(s);
+> 714	  vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);
+> 715	  vec4 e = texture2D(uPjE, eUV);
+> 716	  float inE = L.w * step(0.0, eUV.x) * step(eUV.x, 1.0);
+> 717	  wE = e.a * inE * smoothstep(0.3, 0.55, mE);
+> 718	  #ifdef M05RIDE
+> 719	  // m05ride: E's first rows hold the painted bottom gold-frame rim and wall corners (hidden by the near ring in the
+> 720	  // locked view, exposed by the ride camera) and its sides end at the locked picture's edge: fade E in over those
+> 721	  // rows and at its sides, the crisp near tile carries the w …[+7114 chars]
+
+### 🤖 Claude — 2026-11-18T12:54:00.394Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 2040, "limit": 180}`
+
+### 🧑 User — 2026-11-18T12:54:00.419Z
+
+> ↩︎ result: 2040	  if (M05BLEND) { u.uPjF = m05blend.uPjF; u.uPjFZ = m05blend.uPjFZ; }
+> 2041	  proj05Pending.push(new Promise<void>((res) => {
+> 2042	    const tex = new THREE.TextureLoader().load(TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_F.png', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+> 2043	      t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
+> 2044	      res();
+> 2045	    }, undefined, () => res());
+> 2046	    tex.flipY = false;
+> 2047	    u.uPjF.value = tex;
+> 2048	  }));
+> 2049	  proj05Pending.push(fetch(PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+> 2050	  const size = new THREE.Vector2();
+> 2051	  const onBeforeRender = (renderer: THREE.WebGLRenderer) => {
+> 2052	    const rt = renderer.getRenderTarget();
+> 2053	    if (rt) …[+12559 chars]
+
+### 🤖 Claude — 2026-11-18T12:54:04.807Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nfor f in ['proj05_T2.png','proj05_D.png','proj05_T.png','proj05_N.png','proj05_F.png']:\n    try:\n        im=Image.open('assets/textures/water05/'+f); print(f, im.size, im.mode)\n    except Exception as e: print(f, e)\nim=Image.open('assets/textures/match05/tgtfill05_3/proj05_F.png'); print('F tgtfill', im.size, im.mode)\n\"; cat assets/textures/water05/proj05_near.json | head -c 600; echo; python3 -I -c \"\nimport json; l=json.load(open('/home/user/wt/s05/assets/textures/water05/proj05_lut.json')); print({k:(v if n …[+171 chars]`
+
+### 🧑 User — 2026-11-18T12:54:04.923Z
+
+> ↩︎ result: proj05_T2.png (1024, 768) RGB
+> proj05_D.png (512, 512) L
+> proj05_T.png (512, 336) RGB
+> proj05_N.png (512, 960) RGBA
+> proj05_F.png (512, 512) RGBA
+> F tgtfill (512, 512) RGBA
+> {
+>  "note": "proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)",
+>  "T2": {
+>   "a": 131.685,
+>   "L": 6.565,
+>   "width": 1024,
+>   "height": 768,
+>   "wrapT": "mirrored",
+>   "period": 13.13
+>  },
+>  "source": {
+>   "a": 132.0,
+>   "L": 6.0,
+>   "ease_near": [
+>    0.3,
+>    0.9
+>   ],
+>   "ease_far": [
+>    0.5,
+>    1.0
+>   ],
+>   "seam_heal_zone_texels": 31603
+>  },
+>  "locked_focus_s": 132.438,
+>  "texels_per_world_unit": {
+>   "along": 117.0,
+>   "across": 106.7,
+>   "old_N_T_along": 24.0,
+>   "old_T_across": 53.3
+>  },
+>  "source_rows_per_world_unit": {
+>   "130.5": 230.0,
+>   "132.0": 125.6,
+>   "
+> {'note': 'Screen 05 proj05 bake (tools/proj05/bake.py). E: s -> V (row), c (centre u), w (half range u); v grows with s.', 'E': {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1458}, 'N': {'s0': 126.0, 's1': 166.0, 'width': 512, 'height': 960}, 'T': {'a': 134.0, 'L': 14.0, 'width': 512, 'height': 336}, 'D': {'u0': -0.18, 'u1': 0.18, 's0': 131.5, 's1': 134.3, 'size': 512, 'lum_gain': 1.0} …[+152 chars]
+
+### 🤖 Claude — 2026-11-18T12:54:06.254Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/assets/textures/water05/proj05_T2.png"}`
+
+### 🧑 User — 2026-11-18T12:54:06.285Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:54:16.193Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('assets/textures/water05/proj05_T2.png').convert('RGB')).astype(float)/255\nr,g,b=a[...,0],a[...,1],a[...,2]\npink=((r-g)>0.35).mean(0); cyan=((b-r)>0.35).mean(0)\nfor x in range(0,1024,16):\n    print(x, round(x/512-1,3), 'pink %.2f cyan %.2f'%(pink[x:x+16].mean(),cyan[x:x+16].mean()), 'rgb', np.round(a[:,x:x+16].reshape(-1,3).mean(0),2))\n\"", "description": "Measure pink and cyan column profile in the T2 tile"}`
+
+### 🧑 User — 2026-11-18T12:54:16.492Z
+
+> ↩︎ result: 0 -1.0 pink 0.55 cyan 0.02 rgb [0.84 0.38 0.94]
+> 16 -0.969 pink 0.10 cyan 0.34 rgb [0.68 0.71 0.94]
+> 32 -0.938 pink 0.00 cyan 0.01 rgb [0.92 0.84 0.96]
+> 48 -0.906 pink 0.00 cyan 0.05 rgb [0.83 0.79 0.96]
+> 64 -0.875 pink 0.07 cyan 0.18 rgb [0.78 0.73 0.96]
+> 80 -0.844 pink 0.17 cyan 0.31 rgb [0.74 0.64 0.96]
+> 96 -0.812 pink 0.33 cyan 0.31 rgb [0.72 0.51 0.94]
+> 112 -0.781 pink 0.41 cyan 0.28 rgb [0.74 0.47 0.92]
+> 128 -0.75 pink 0.53 cyan 0.15 rgb [0.81 0.4  0.89]
+> 144 -0.719 pink 0.81 cyan 0.01 rgb [0.87 0.27 0.86]
+> 160 -0.688 pink 0.95 cyan 0.00 rgb [0.94 0.24 0.86]
+> 176 -0.656 pink 0.80 cyan 0.00 rgb [0.93 0.36 0.93]
+> 192 -0.625 pink 0.62 cyan 0.10 rgb [0.79 0.35 0.93]
+> 208 -0.594 pink 0.28 cyan 0.58 rgb [0.56 0.41 0.94]
+> 224 -0.562 pink 0.01 cyan 0.86 rgb [0.3  0.56 0.95]
+> 240 -0.531 pink 0.00 cyan 0.99 rgb [0.07 0.57 0.93]
+> 256 -0.5 pink 0.00 cyan 1.00 rgb [0.01 0.63 0.94]
+> 272 -0.469 pink 0.00 cyan 0.96 rgb [0.06 0.64 0.95]
+> 288 -0.438 pink 0.00 cyan 1.00 rgb [0.03 0.67 0.95]
+> 304 -0.406 pink 0.00 cyan 0.98 rgb [0.03 0.66 0.96]
+> 320 -0.375 pink 0.00 cyan 0.93 rgb [0.1  0.7  0.95]
+> 336 -0.344 pink 0.00 cyan 0.96 rgb [0.08 0.71 0.95]
+> 352 -0.312 pink 0.00 cyan 0.97 rgb [0.07 0.71 0.96]
+> 368 -0.281 pink 0 …[+2076 chars]
+
+### 🤖 Claude — 2026-11-18T12:54:44.450Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"interface FarRiverRow\" -A14 src/ | head -30; grep -rn \"class FarRiverLayout\\|export function farRiverLayout\" -A30 src/world/*.ts | head -70", "description": "Read far river layout row definition"}`
+
+### 🧑 User — 2026-11-18T12:54:44.498Z
+
+> ↩︎ result: src/world/far05.ts:65:export interface FarRiverRow {
+> src/world/far05.ts-66-  /** route (water body) centre */
+> src/world/far05.ts-67-  xB: number;
+> src/world/far05.ts-68-  /** water body half width */
+> src/world/far05.ts-69-  hw: number;
+> src/world/far05.ts-70-  /** left / right pink band centre and half width */
+> src/world/far05.ts-71-  cL: number; wL: number; cR: number; wR: number;
+> src/world/far05.ts-72-  /** visible cyan core centre (between the bands) — flow lines and the far coins follow it */
+> src/world/far05.ts-73-  core: number;
+> src/world/far05.ts-74-}
+> src/world/far05.ts-75-
+> src/world/far05.ts-76-/**
+> src/world/far05.ts-77- * The real 05 ribbon's band layout (waterRibbon.ts FRAG, 05 block with sw = 1, freeK = 0, Benny far away,
+> src/world/far05.ts-78- * time-dependent wobble/noise left out) for a route centre xB, half width hw, core swing M (from the route
+> src/world/far05.ts-79- * centre) and band S offset sb, at arc length s (only feeds the slow sin() modulations).
+> src/world/far05.ts:199:export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number): FarRiverLayout {
+> src/world/far05.ts-200-  const q = new THREE.Vector3();
+> src/world/far05.ts-201-  const at = (s: n …[+2344 chars]
+
+### 🤖 Claude — 2026-11-18T12:55:04.484Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"m05blendTime\" src/vfx/waterRibbon.ts src/world/*.ts | head; grep -n \"uTime\" src/vfx/waterRibbon.ts | head -5; grep -n \"farRiverMaterial(\" src/world/*.ts | head", "description": "Locate shared time uniform and far river creation"}`
+
+### 🧑 User — 2026-11-18T12:55:04.534Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:419:export const m05blendTime: { u: THREE.IUniform | null } = { u: null };
+> src/vfx/waterRibbon.ts:2115:  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
+> src/world/match05far.ts:25:import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';
+> src/world/match05far.ts:144:    const t = (m05blendTime.u?.value as number | undefined) ?? 0, uS = Math.max(-1, Math.min(1, lat / hwR));
+> 483:uniform float uTime;
+> 518:  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
+> 588:uniform float uTime;
+> 805:  float a = s - uTime * 0.7;
+> 1072:  float ph0 = fract(uTime * 0.25);
+> src/world/environment.ts:564:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
+> src/world/materials.ts:863:export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE. …[+74 chars]
+
+### 🤖 Claude — 2026-11-18T12:55:07.365Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uPjFlow\\.\\|uPjFlow\\b\" src/vfx/waterRibbon.ts | head -20", "description": "Find the projection flow code in the ribbon shader"}`
+
+### 🧑 User — 2026-11-18T12:55:07.394Z
+
+> ↩︎ result: 647:uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+> 1792:      float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
+> 1793:      float D = uPjFlow.x * uPjFlow.w;
+> 2094:  u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
+
+### 🤖 Claude — 2026-11-18T12:55:08.954Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 1700, "limit": 140}`
+
+### 🧑 User — 2026-11-18T12:55:08.987Z
+
+> ↩︎ result: 1700	      rings *= 1.0 - sw;
+> 1701	      float bk = max(-dv, 0.0);
+> 1702	      float wakeV = exp(-abs(abs(du) - bk * 0.42 - rb * 0.95) * 6.0) * exp(-bk * 0.18) * step(dv, 0.0) * (1.0 - sw);
+> 1703	      col += uCyanBright * 0.18 * (1.0 - smoothstep(0.0, rb * 0.3, rr)) * k;
+> 1704	      col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
+> 1705	    }
+> 1706	  }
+> 1707	
+> 1708	  // 04: exactly five glowing chevrons pointing downhill (direction of travel)
+> 1709	  if (uChevron.z > 0.5) {
+> 1710	    float x = u * vHalfW;
+> 1711	    for (int k = 0; k < 5; k++) {
+> 1712	      float y = s - (uChevron.x + float(k) * uChevron.y);
+> 1713	      if (abs(y) < 2.4 && abs(x) < 1.6) {
+> 1714	        // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+> 1715	        float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+> 1716	        float arm = smoothstep(1.2, 1.1, abs(x));
+> 1717	        float core = smoothstep(0.2, 0.11, dist) * arm;
+> 1718	        float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+> 1719	        col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+> 1720	        col = mix(col, vec3(2.2, 2.4, 2.5), core);
+> 1721	   …[+7205 chars]
+
+### 🤖 Claude — 2026-11-18T12:55:47.425Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 410, "limit": 12}`
+
+### 🧑 User — 2026-11-18T12:55:47.448Z
+
+> ↩︎ result: 410	 * layout's cyan core between the two hot-pink bands, flow lines along the winding core, foam rims), and the near ribbon
+> 411	 * keeps its own design up to the seam instead of fading into the magnified F. Locked view: block not live → unchanged.
+> 412	 */
+> 413	export const M05FMAG: boolean = M05BLEND && q05('m05fmag');
+> 414	/** m05fmag: depth of the far seam from the locked 05 eye (ForcedTunnel.D0), set by environment.ts */
+> 415	export const m05fmagD0 = { value: 53.25 };
+> 416	/** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
+> 417	export const m05foamK = { value: 0 };
+> 418	/** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
+> 419	export const m05blendTime: { u: THREE.IUniform | null } = { u: null };
+> 420	/** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> 421	export const proj05Pending: Promise<unknown>[] = [];
+
+### 🤖 Claude — 2026-11-18T12:55:54.589Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "/** m05fmag: depth of the far seam from the locked 05 eye (ForcedTunnel.D0), set by environment.ts */\nexport const m05fmagD0 = { value: 53.25 };", "new_string": "/** m05fmag: depth of the far seam from the locked 05 eye (ForcedTunnel.D0), set by environment.ts */\nexport const m05fmagD0 = { value: 53.25 };\n/**\n * `&m05fpaint=1` (Screen 05 round 12, needs m05fmag + projnear05 (on with match05); src/world/materials.ts\n * farRiverMaterial): where m05fmag shows the far river's own continuation (the b …[+1079 chars]`
+
+### 🧑 User — 2026-11-18T12:55:54.629Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:55:57.148Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };\n  u.uPjT2S = { value: new THREE.Vector2(0, 1) };", "new_string": "  u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };\n  u.uPjT2S = { value: new THREE.Vector2(0, 1) };\n  if (M05FPAINT) {\n    // m05fpaint (Screen 05 round 12): the far river shares T2 and the flow vector (same uniform objects)\n    m05fpaint.uPjT2.value = empty;\n    u.uPjT2 = m05fpaint.uPjT2; u.uPjT2S = m05fpaint.uPjT2S;\n    m05fpaint.uPjFlow.value.copy(u.uPjFlow.va …[+29 chars]`
+
+### 🧑 User — 2026-11-18T12:55:57.192Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:56:05.301Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/materials.ts", "old_string": "import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, m05blend, m05fmagD0 } from '../vfx/waterRibbon';", "new_string": "import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-18T12:56:05.335Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:56:15.462Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/materials.ts", "old_string": "/** `&m05fmag=1` (Screen 05 round 11): weight of the baked far picture F — 0 where swimming magnifies it (block live) */\nconst FMAG_PRE = ", "new_string": "/**\n * `&m05fpaint=1` (Screen 05 round 12): where m05fmag drops the magnified F, the far river's water wears the approved\n * near tile T2 laid band by band onto the far layout (T2 columns measured: left pink band u −0.76 … −0.60 centre −0.69,\n * cyan core centre −0.27, right pink band 0.06 … 0.45 centre 0.25), along the virtual arc length, two …[+2007 chars]`
+
+### 🧑 User — 2026-11-18T12:56:15.501Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:56:25.217Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/materials.ts", "old_string": "      if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\\n' + (M05FBANK ? '' : 'uniform vec4 uFbP; ') + 'uniform float uFmD0;');", "new_string": "      if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\\n' + (M05FBANK ? '' : 'uniform vec4 uFbP; ') + 'uniform float uFmD0;');\n      if (M05FPAINT) {\n        // `&m05fpaint=1` (Screen 05 round 12): shared T2 / flow (attachProj05) and the rib …[+466 chars]`
+
+### 🧑 User — 2026-11-18T12:56:25.252Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:56:26.821Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/materials.ts", "old_string": "    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '');", "new_string": "    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '');"}`
+
+### 🧑 User — 2026-11-18T12:56:26.864Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:56:34.627Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fpaint \"$K&m05fpaint=1\" t66_through_screen,t75_through,t85_through,t90_through,t95_through_screen,k81_kink 2>&1 | grep -v \"^a00\\|big coins\" | tail -8; ls /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d …[+103 chars]`
+

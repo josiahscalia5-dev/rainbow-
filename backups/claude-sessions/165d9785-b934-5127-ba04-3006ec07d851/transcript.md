@@ -2531,3 +2531,188 @@ My priority is not getting more reports. My priority is seeing my actual approve
 
 Please correct the specific Screen 04 rendering problem, show the real result, answer my feasibility question directly, and continue building all five screens.
 
+### 🤖 Claude — 2026-11-18T12:54:18.495Z
+
+Understood: the Screen 04 projection test stays rejected, and the default game and last kept version stay untouched. Order of work: (1) find exactly which objects draw each visible pixel at the V04-1 and V04-2 positions and where the projection fails, (2) fix that in one controlled test at those two positions, then one in-between position and steering, (3) your yes/no answer with evidence.
+
+First, what the game exposes for inspection:
+
+### 🤖 Claude — 2026-11-18T12:54:19.450Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"__rainbow\\s*=\" src | head -3; grep -rn \"__rainbow\" src/main.ts src/*.ts 2>/dev/null | head -5", "description": "Find what window.__rainbow exposes"}`
+
+### 🧑 User — 2026-11-18T12:54:19.503Z
+
+> ↩︎ result: src/game/Game.ts:762:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:54:21.320Z
+
+Screen 08 just reported its first kept step. I'll check it by eye before showing you.
+
+### 🤖 Claude — 2026-11-18T12:54:23.467Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r12/step1_m08cup && ls; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; convert 1_APPROVED.png 2_BEFORE_f10_forward10u.png 3_NEW_f10_forward10u.png -crop 864x700+0+150 -resize 400x324! +append $S/s08_step1.jpg; echo ok", "description": "Montage 08 step 1 upper half for checking"}`
+
+### 🧑 User — 2026-11-18T12:54:23.633Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_t66_through_screen.png
+> motion_before.json
+> motion_new.json
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:54:25.799Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s08_step1.jpg"}`
+
+### 🧑 User — 2026-11-18T12:54:25.823Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:54:28.382Z
+
+The difference is too small to judge at this size. I'll crop the upper-left spout cup at full resolution.
+
+### 🤖 Claude — 2026-11-18T12:54:30.469Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r12/step1_m08cup && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; convert 2_BEFORE_f10_forward10u.png 3_NEW_f10_forward10u.png -crop 330x260+0+200 +append $S/s08_cup.jpg; echo ok", "description": "Crop the upper-left spout cup BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-18T12:54:30.600Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:54:32.852Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s08_cup.jpg"}`
+
+### 🧑 User — 2026-11-18T12:54:32.876Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:54:39.211Z
+
+> 🔧 **Bash** `{"command": "P=/home/user/wt/s08/qa/match/08/r12/step1_m08cup; R=qa/review_c12; cp $P/1_APPROVED.png $R/08_1_APPROVED.png; cp $P/2_BEFORE_f10_forward10u.png $R/08_step1_2_BEFORE_forward10u.png; cp $P/3_NEW_f10_forward10u.png $R/08_step1_3_NEW_forward10u.png; cp $P/2_BEFORE_f06_forward6u.png $R/08_step1_2_BEFORE_forward6u.png; cp $P/3_NEW_f06_forward6u.png $R/08_step1_3_NEW_forward6u.png; cat >> docs/briefs/2026-11-18-r12/COORDINATION.md <<'EOF'\n| 3 (~13:20) | 08 step 1 `m08cup` (upper-left spout cup keeps its pink perforated cap and gold band round its top while swimming; `a4be4114`) | GOOD I …[+184 chars]`
+
+### 🧑 User — 2026-11-18T12:54:39.409Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T12:54:41.766Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/08_1_APPROVED.png", "qa/review_c12/08_step1_2_BEFORE_forward10u.png", "qa/review_c12/08_step1_3_NEW_forward10u.png", "qa/review_c12/08_step1_2_BEFORE_forward6u.png", "qa/review_c12/08_step1_3_NEW_forward6u.png"], "caption": "Screen 08 step 1 — GOOD IMPROVEMENT (small). APPROVED · BEFORE / NEW at 10 u · BEFORE / NEW at 6 u. Look at the upper-left spout cup: its rim and pink perforated cap now continue round the top instead of being sliced by a curved gold wedge. Still wrong: a small wedge on the upper-right cup.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T12:54:43.092Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/08_1_APPROVED.png → file_uuid: 4f39333b-2d17-47cc-8caa-f486caad7956
+>   /home/user/rainbow-/qa/review_c12/08_step1_2_BEFORE_forward10u.png → file_uuid: b8f74d5e-e67e-4033-94d9-69ae7eb76f20
+>   /home/user/rainbow-/qa/review_c12/08_step1_3_NEW_forward10u.png → file_uuid: 01d89743-a103-4daf-987e-055d23d267a1
+>   /home/user/rainbow-/qa/review_c12/08_step1_2_BEFORE_forward6u.png → file_uuid: 12dc4340-88d1-4d02-9591-195b1352a246
+>   /home/user/rainbow-/qa/review_c12/08_step1_3_NEW_forward6u.png → file_uuid: b8c86c78-6048-4cf5-bbd2-9a1a8ce01b56
+
+### 🤖 Claude — 2026-11-18T12:54:44.738Z
+
+Now the Screen 04 diagnosis. Next I'll see what the game's debug interface gives access to (renderer, scene, camera):
+
+### 🤖 Claude — 2026-11-18T12:54:45.596Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 700,765p src/game/Game.ts | grep -nE \"api|scene|renderer|camera|world\" | head -30", "description": "Read the debug API fields in Game.ts"}`
+
+### 🧑 User — 2026-11-18T12:54:45.654Z
+
+> ↩︎ result: 2:      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+> 3:      camera.updateMatrixWorld();
+> 4:      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+> 9:        const c = p.clone().project(camera);
+> 11:        const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+> 19:    /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
+> 20:    camera() {
+> 21:      camera.updateMatrixWorld();
+> 22:      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+> 23:      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+> 25:    /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
+> 27:      const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+> 28:      return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.posit …[+802 chars]
+
+### 🤖 Claude — 2026-11-18T12:55:22.089Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"composer.render\\|renderer.render(\\|auxScene\\|AuxScene\\|function renderFrame\\|const render = \" src/game/Game.ts | head -20", "description": "Find how the game renders each frame"}`
+
+### 🧑 User — 2026-11-18T12:55:22.128Z
+
+> ↩︎ result: 114:  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+> 582:  const render = () => {
+> 604:    composer.render();
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:55:23.762Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 582,612p src/game/Game.ts", "description": "Read the frame render function"}`
+
+### 🧑 User — 2026-11-18T12:55:23.794Z
+
+> ↩︎ result: const render = () => {
+>     if (glow05) {
+>       const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+>       bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+>       bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
+>       bloom.threshold = bloomBase.t + (bloom05.t - bloomBase.t) * w;
+>     }
+>     // `?match08=1`: the approved artwork already carries its glow — no bloom on Screen 08 under the switch
+>     if (m08) {
+>       if (!glow05) bloom.strength = bloomS0;
+>       if (m08On) bloom.strength = 0;
+>       renderer.getDrawingBufferSize(dbs);
+>       m08.sync(renderer, dbs.x, dbs.y);
+>     }
+>     // `?match04=1`: no bloom on Screen 04 under the switch (the artwork carries its own glow)
+>     if (m04) {
+>       if (!glow05 && !m08) bloom.strength = bloomS0;
+>       if (m04On) bloom.strength = 0;
+>       renderer.getDrawingBufferSize(dbs);
+>       m04.sync(renderer, dbs.x, dbs.y, camera);
+>     }
+>     renderer.info.reset();
+>     composer.render();
+>   };
+>   const frame = () => {
+>     const now = performance.now();
+>     const dt = Math.min(0.05, (now - last) / 1000);
+>     last = now;
+>     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+>     if (running) stepSim(dt);
+>     // QA mo …[+119 chars]
+
+### 🤖 Claude — 2026-11-18T12:55:57.914Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04.ts'\ns=open(p).read()\nold=\"\"\"    uW0: { value: 0 }, uW1: { value: 0 }, uMvNF: { value: new THREE.Vector2(0.2, 160) },\"\"\"\nnew=\"\"\"    uW0: { value: 0 }, uW1: { value: 0 }, uMvNF: { value: new THREE.Vector2(0.2, 160) },\n    uMvDbg: { value: 0 },   // r12 QA only (tools/match04/diag04.mjs): 1 / 2 = view 1 / 2 coverage colours (R depth-visible, G image alpha, B in frame)\"\"\"\nassert old in s; s=s.replace(old,new,1)\nold2=\"\"\"uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec3 vW;\"\"\"\nnew2=\"\"\"unifo …[+1336 chars]`
+
+### 🧑 User — 2026-11-18T12:56:00.420Z
+
+> ↩︎ result: TSC OK
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:56:03.545Z
+
+The hook compiles. Now the diagnostic tool itself:
+
+### 🤖 Claude — 2026-11-18T12:56:29.910Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/tools/match04/diag04.mjs", "content": "// Round 12 (lead): EXACT render diagnosis of Screen 04 at chosen ride positions (read-only, QA).\n// For the real game frame at each shot it re-renders the frame with one object group hidden at a time (camera layers, nothing\n// else changes: same simulation state, same uniforms, same post chain) and records which pixels change -> which objects\n// produce every visible pixel. With &m04mv=1 it also renders the projection overlay's own coverage (debug colours:\n// R = passes the per-view depth test, G = view image alpha, B …[+7249 chars]`
+
+### 🧑 User — 2026-11-18T12:56:29.944Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/tools/match04/diag04.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T12:56:42.152Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='tools/match04/diag04.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"        all.forEach((o) => { if (!o.userData?.mv) o.layers.mask = 0; });\n        for (const v of [1, 2]) {\"\"\",\"\"\"        all.forEach((o) => { if (!o.userData?.mv) o.layers.mask = 0; });\n        const mm = mv.mvMat, keep = [mm.depthWrite, mm.transparent];\n        mm.depthWrite = true; mm.transparent = false; mm.needsUpdate = true;\n        for (const v of [1, 2]) {\"\"\")\ns=s.replace(\"\"\"        mv.mvU.uMvDbg.value = 0;\n        all.forEach\"\"\",\"\"\"        mv …[+518 chars]`
+
