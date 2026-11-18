@@ -1,5 +1,5 @@
 diff --git a/tools/match08/nq08.py b/tools/match08/nq08.py
-index 05bd04e..a6aecde 100644
+index 05bd04e..0c74792 100644
 --- a/tools/match08/nq08.py
 +++ b/tools/match08/nq08.py
 @@ -1,15 +1,21 @@
@@ -66,7 +66,7 @@ index 05bd04e..a6aecde 100644
  a_s = np.linspace(-A, A, SW); z_s = np.linspace(Z0, Z1, SH)
  AA, ZZ = np.meshgrid(a_s, z_s)
  X = np.polyval(zc, ZZ) + AA * np.polyval(zh, ZZ)
-@@ -61,38 +67,72 @@ px, py = project(np.stack([X, np.full_like(X, FY), ZZ], -1))
+@@ -61,38 +67,89 @@ px, py = project(np.stack([X, np.full_like(X, FY), ZZ], -1))
  src = cv2.remap(plate, (px * Wp / W).astype(np.float32), (py * Hp / H).astype(np.float32), cv2.INTER_CUBIC,
                  borderMode=cv2.BORDER_REFLECT)
  src = np.clip(src, 0, 255)
@@ -122,11 +122,13 @@ index 05bd04e..a6aecde 100644
 +# the lane centre sits on the painted water's centre c (as m08near: waterA mean)
 +c = (NJ['waterA'][0] + NJ['waterA'][1]) / 2
 +LANE = 2.95                                  # swim lane half width (u) (SWIM_HALF)
-+RC = 0.70                                    # middle +-RC: the painted band 1:1
++RC = 0.70                                    # middle +-RC: the painted band's layout 1:1
 +WT = LANE + 0.10                             # tile half width (u)
 +WL, WR = -0.81, 0.72                         # painted water edges (a, no foam); the tile is water only: in the lane's outer
 +                                             # 15 % the game fades to the projected (remapped) painted foam bank
-+BWA = 80 / DX / HW                           # block width in a
++BW, BH, OW, OH = 80, 224, 36, 96             # block (across, along), overlaps (texels)
++SX, SY = BW - OW, BH - OH
++BWA = BW / DX / HW                           # block width in a
 +KX = [-WT, -RC, RC, WT]
 +KA = [WL + 0.5 * BWA, c - RC / HW, c + RC / HW, WR - 0.5 * BWA]
 +lay = lambda xb: np.interp(xb, KX, KA)
@@ -141,31 +143,52 @@ index 05bd04e..a6aecde 100644
 -
 -nbx = int(math.ceil((TW - O) / STEP)); nby = int(math.ceil((TH - O) / STEP)) + 1   # +1 row: wraps onto the top
 -out = np.zeros(((nby) * STEP + O, nbx * STEP + O, 3), np.float32)
--filled = np.zeros(out.shape[:2], bool)
 +TH = int(round(PERIOD * DZ))
-+BW, BH, OW, OH = 80, 224, 28, 72             # block (across, along), overlaps (texels)
-+SX, SY = BW - OW, BH - OH
 +xb_of = lambda col: -WT + 2 * WT * col / (TW - 1)
 +a2col = lambda a: (a + A) / (2 * A) * (SW - 1)
-+print('target', TW, 'x', TH, 'texels (', round(2 * WT, 2), 'u x', PERIOD, 'u ), middle 1:1 +-', RC, 'u')
++print('target', TW, 'x', TH, 'texels (', round(2 * WT, 2), 'u x', PERIOD, 'u ), middle layout 1:1 +-', RC, 'u')
 +
++# colour zones of the rectified band (v4): magenta band / pink-to-cyan transition / cyan; a block whose layout lies wholly
++# in the magenta or the cyan zone may come from ANYWHERE in that zone (variety: the band is small), a block over the
++# transition stays within +-0.10 u of its layout position (keeps the painted band order magenta -> cyan)
++colm = src.mean(0)
++zone = np.where((colm[:, 0] > 135) & (colm[:, 1] < 135), 1, np.where(colm[:, 0] < 95, 2, 0))
++cw0, cw1 = int(math.ceil(a2col(WL))), int(a2col(WR))   # water-only source columns
++zone[:cw0] = -1; zone[cw1:] = -1
++for zn, nm in ((1, 'magenta'), (2, 'cyan')):
++    cs = np.where(zone == zn)[0]
++    print(nm, 'zone a', round(-A + 2 * A * cs.min() / (SW - 1), 3), '..', round(-A + 2 * A * cs.max() / (SW - 1), 3), len(cs), 'cols')
++zI = {zn: np.concatenate([[0], np.cumsum(zone == zn)]) for zn in (1, 2)}
++blk_in = lambda zn, c0: zI[zn][c0 + BW] - zI[zn][c0] == BW   # all BW columns of a source block in zone zn
++NR, NC = SH - BH + 1, SW - BW + 1
 +nbx = int(math.ceil((TW - OW) / SX)); nby = int(math.ceil((TH + OH - BH) / SY)) + 1
 +out = np.zeros(((nby - 1) * SY + BH, nbx * SX + OW, 3), np.float32)
- srcm = src.astype(np.float32)
+ filled = np.zeros(out.shape[:2], bool)
+-srcm = src.astype(np.float32)
 -bubI = cv2.integral(bub.astype(np.uint8))
 -
--
++# (v4) each block may also come MIRRORED left-right: after rectification the painted streaks run straight along the flow,
++# so a mirrored block keeps them straight (no chevrons); it doubles the variety of the narrow magenta band
++srcs = [np.ascontiguousarray(src.astype(np.float32)), np.ascontiguousarray(src[:, ::-1].astype(np.float32))]
++uses = np.zeros((2, NR, NC), np.float32)
+ 
 -def bub_in(r0, c0):
 -    return bubI[r0 + B, c0 + B] - bubI[r0, c0 + B] - bubI[r0 + B, c0] + bubI[r0, c0] > 0
  
- 
+-
 -def min_cut_v(err):  # err: (h, w) -> per row the column where the left (old) part ends
 +def min_cut_v(err):  # err (h, w) -> per row the column where the kept (old) part ends
      h, w = err.shape; E = err.copy(); back = np.zeros((h, w), int)
      for i in range(1, h):
          for j in range(w):
-@@ -104,42 +144,41 @@ def min_cut_v(err):  # err: (h, w) -> per row the column where the left (old) pa
+@@ -102,44 +159,51 @@ def min_cut_v(err):  # err: (h, w) -> per row the column where the left (old) pa
+     return path
  
+ 
++def ssd(tmpl, dr=0):  # SSD of tmpl against every position of both sources, indexed by (mirror, block top-left r0, c0)
++    return np.stack([(cv2.matchTemplate(sm, np.ascontiguousarray(tmpl), cv2.TM_SQDIFF) / tmpl[..., 0].size)[dr:dr + NR, :NC] for sm in srcs])
++
++
  for by in range(nby):
      for bx in range(nbx):
 -        y0, x0 = by * STEP, bx * STEP
@@ -176,18 +199,8 @@ index 05bd04e..a6aecde 100644
 -        # wrap: the last block row must also match the first rows (periodic along the river)
 -        wrap = by == nby - 1
 -        if msk.any() or wrap:
-+        y0, x0 = by * SY, bx * SX
-+        xc = xb_of(min(x0 + BW / 2, TW - 1))
-+        tc = a2col(lay(xc))
-+        jit = (0.10 if abs(xc) <= RC else 0.22) * DX
-+        cw0, cw1 = int(math.ceil(a2col(WL))), int(a2col(WR)) - BW          # blocks lie wholly inside the painted water
-+        lo_c = int(max(cw0, min(cw1, tc - BW / 2 - jit))); hi_c = int(max(cw0, min(cw1, tc - BW / 2 + jit)))
-+        cand = [(r0, c0) for r0 in range(0, SH - BH + 1, 2) for c0 in range(lo_c, hi_c + 1, 2)]
-+        tgt = out[y0:y0 + BH, x0:x0 + BW]
-+        wrap = y0 + BH > TH; rs = max(y0, TH)
-+        if bx > 0 or by > 0 or wrap:
-             errs = np.empty(len(cand), np.float32)
-             for k, (r0, c0) in enumerate(cand):
+-            errs = np.empty(len(cand), np.float32)
+-            for k, (r0, c0) in enumerate(cand):
 -                blk = srcm[r0:r0 + B, c0:c0 + B]
 -                d = ((blk - tgt) ** 2).sum(-1)
 -                e = float(d[msk].mean()) if msk.any() else 0.0
@@ -195,22 +208,40 @@ index 05bd04e..a6aecde 100644
 -                    ov = y0 + B - TH
 -                    if ov > 0:
 -                        e += float(((blk[B - ov:] - out[0:ov, x0:x0 + B]) ** 2).sum(-1).mean())
-+                blk = srcm[r0:r0 + BH, c0:c0 + BW]; e = 0.0
-+                if bx > 0: e += float(((blk[:, :OW] - tgt[:, :OW]) ** 2).sum(-1).mean())
-+                if by > 0: e += float(((blk[:OH] - tgt[:OH]) ** 2).sum(-1).mean())
-+                if wrap:   # rows at / past TH must equal the tile's rows (row - TH): periodic along the river
-+                    n = y0 + BH - rs
-+                    e += float(((blk[rs - y0:] - out[rs - TH:rs - TH + n, x0:x0 + BW]) ** 2).sum(-1).mean())
-                 errs[k] = e
+-                errs[k] = e
 -            best = errs.min(); ok = np.where(errs <= best * 1.08 + 1e-3)[0]
 -            r0, c0 = cand[int(rng.choice(ok))]
-+            order = np.argsort(errs)[:4]
-+            r0, c0 = cand[int(rng.choice(order))]
-         else:
-             r0, c0 = cand[int(rng.integers(len(cand)))]
+-        else:
+-            r0, c0 = cand[int(rng.integers(len(cand)))]
 -        blk = srcm[r0:r0 + B, c0:c0 + B].copy()
 -        keep_old = np.zeros((B, B), bool)
-+        blk = srcm[r0:r0 + BH, c0:c0 + BW].copy()
++        y0, x0 = by * SY, bx * SX
++        xc = xb_of(min(x0 + BW / 2, TW - 1))
++        al, ar = lay(xb_of(x0)), lay(xb_of(min(x0 + BW, TW - 1)))
++        tc = a2col(lay(xc))
++        okm = np.zeros((2, NR, NC), bool)
++        zt = [zn for zn in (1, 2) if zone[int(round(a2col(al)))] == zn and zone[int(round(a2col(ar)))] == zn]
++        if zt:
++            cols = np.array([blk_in(zt[0], c0) for c0 in range(NC)])
++            okm[0][:, cols] = True; okm[1][:, cols[::-1]] = True   # mirrored source: column c0 <-> SW - BW - c0
++        jit = 0.10 * DX
++        lo_c = int(max(cw0, min(cw1 - BW, tc - BW / 2 - jit))); hi_c = int(max(cw0, min(cw1 - BW, tc - BW / 2 + jit)))
++        okm[0][:, lo_c:hi_c + 1] = True
++        tgt = out[y0:y0 + BH, x0:x0 + BW]
++        wrap = y0 + BH > TH; rs = max(y0, TH)
++        E = np.zeros((2, NR, NC), np.float32)
++        if bx > 0: E += ssd(tgt[:, :OW])
++        if by > 0: E += ssd(tgt[:OH])
++        if wrap:   # rows at / past TH must equal the tile's rows (row - TH): periodic along the river
++            n = y0 + BH - rs
++            E += ssd(out[rs - TH:rs - TH + n, x0:x0 + BW], rs - y0)
++        E = E * (1 + 0.15 * uses) + 1.0     # mild penalty for re-using the same source region
++        E[~okm] = np.inf
++        flat = np.argsort(E, axis=None)[:4]
++        mi, r0, c0 = np.unravel_index(int(rng.choice(flat)), E.shape)
++        uses[mi, max(0, r0 - 40):r0 + 40, max(0, c0 - 24):c0 + 24] += 1
++        uses[1 - mi, max(0, r0 - 40):r0 + 40, max(0, SW - BW - c0 - 24):SW - BW - c0 + 24] += 1
++        blk = srcs[mi][r0:r0 + BH, c0:c0 + BW].copy()
 +        keep_old = np.zeros((BH, BW), bool)
          if bx > 0:   # left overlap: vertical min cut
 -            e = ((blk[:, :O] - tgt[:, :O]) ** 2).sum(-1); p = min_cut_v(e)
@@ -222,19 +253,21 @@ index 05bd04e..a6aecde 100644
 -            for j in range(B): keep_old[:p[j], j] = True
 -        keep_old &= msk
 -        # feather the cut by 2 texels so the seam is not a hard pixel step
-+            p = min_cut_v(((blk[:OH, :] - tgt[:OH, :]) ** 2).sum(-1).T)
-+            for j in range(BW): keep_old[:p[j], j] = True
-         kf = cv2.GaussianBlur(keep_old.astype(np.float32), (5, 5), 1.0)
+-        kf = cv2.GaussianBlur(keep_old.astype(np.float32), (5, 5), 1.0)
 -        kf = np.where(msk, kf, 0.0)[..., None]
 -        out[y0:y0 + B, x0:x0 + B] = kf * tgt + (1 - kf) * blk
 -        filled[y0:y0 + B, x0:x0 + B] = True
++            p = min_cut_v(((blk[:OH, :] - tgt[:OH, :]) ** 2).sum(-1).T)
++            for j in range(BW): keep_old[:p[j], j] = True
++        kf = cv2.GaussianBlur(keep_old.astype(np.float32), (7, 7), 1.6)
 +        if bx == 0 and by == 0: kf[:] = 0
-+        kf = kf[..., None]
++        kf = np.where(filled[y0:y0 + BH, x0:x0 + BW], kf, 0.0)[..., None]   # feather only into already-filled texels
 +        out[y0:y0 + BH, x0:x0 + BW] = kf * tgt + (1 - kf) * blk
++        filled[y0:y0 + BH, x0:x0 + BW] = True
      print('row', by + 1, '/', nby, flush=True)
  
  # periodic: the rows past TH are the wrapped continuation of the top rows; join them over the overlap with a min cut
-@@ -147,25 +186,24 @@ ov = out.shape[0] - TH
+@@ -147,25 +211,24 @@ ov = out.shape[0] - TH
  tile = out[:TH, :TW].copy()
  if ov > 0:
      extra = out[TH:TH + ov, :TW]
@@ -254,7 +287,7 @@ index 05bd04e..a6aecde 100644
 +           'layout': {'x': KX, 'a': KA, 'c': c, 'paintedHalfWidth': HW}, 'block': [BW, BH], 'overlap': [OW, OH],
 +           'note': 'u = 0.5 + x_b / (2 halfWidth), x_b = lateral offset from the lane centre (u; |x| <= core 1:1, beyond: '
 +                   'core + (|x| - core) (lane - core) / (h - core) for a lane of half width h); v = (z0 - z) / period (repeat). '
-+                   'Painted scale; assembled by image quilting from the approved picture\'s own near band (nq08.py v3, r14: rectified along the painted flow)'},
++                   'Painted scale; assembled by image quilting from the approved picture\'s own near band (nq08.py v4, r14: rectified along the painted flow, zone quilting, mirrored blocks allowed)'},
            open(out_json, 'w'), indent=1)
  if dbg:
 -    Image.fromarray(src.astype(np.uint8)).save(f'{dbg}/nq08_source_band.png')
@@ -270,5 +303,5 @@ index 05bd04e..a6aecde 100644
 +    # the plain layout (no quilting: the band sampled at the layout position, stretched where the layout is) for comparison
 +    cols = a2col(lay(xb_of(np.arange(TW))))
 +    UU, VV = np.meshgrid(cols.astype(np.float32), np.arange(SH, dtype=np.float32))
-+    Image.fromarray(np.clip(cv2.remap(srcm, UU, VV, cv2.INTER_LINEAR), 0, 255).astype(np.uint8)).save(f'{dbg}/nq08_layout_plain.png')
++    Image.fromarray(np.clip(cv2.remap(srcs[0], UU, VV, cv2.INTER_LINEAR), 0, 255).astype(np.uint8)).save(f'{dbg}/nq08_layout_plain.png')
  print('wrote', out_png, t8.shape)

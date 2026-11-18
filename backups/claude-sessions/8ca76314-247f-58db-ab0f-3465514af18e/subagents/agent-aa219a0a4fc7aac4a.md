@@ -1052,3 +1052,104 @@ Let me view the current near tile and then run the quilting helper into the scra
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i \"s/(nq08.py v2, r14)'/(nq08.py v3, r14: rectified along the painted flow)'/\" tools/match08/nq08.py && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq3 && mkdir -p $S && time python3 -I tools/match08/nq08.py $S/nq08.png $S/nq08.json $S 2>&1 | grep -v \"^row\"", "description": "Run nq08 v3 with rectification", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T16:59:56.680Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> target 1336 x 1320 texels ( 6.1 u x 8.0 u ), middle 1:1 +- 0.7 u
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq3/nq08.png (1320, 1336, 3)
+> 
+> real	1m30.530s
+> user	1m28.122s
+> sys	0m0.167s
+> [This command modified 1 file you've previously read: ../wt/s08/tools/match08/nq08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T16:59:59.444Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq3/nq08_source_rectified.png"}`
+
+### 🧑 User — 2026-11-18T16:59:59.470Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:00:00.062Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq3/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:00:00.163Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:01:01.003Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/tools/match08/nq08.py", "offset": 96, "limit": 90}`
+
+### 🧑 User — 2026-11-18T17:01:01.028Z
+
+> ↩︎ result: 96	slope = cv2.GaussianBlur(slope * coh, (0, 0), 35) / np.maximum(cv2.GaussianBlur(coh, (0, 0), 35), 1e-4)
+> 97	RM = SH // 2
+> 98	xs = np.zeros((SH, SW), np.float32); xs[RM] = np.arange(SW)
+> 99	for r in range(RM + 1, SH):   # down (far)
+> 100	    xp = xs[r - 1]; xs[r] = xp + np.interp(xp, np.arange(SW), slope[r - 1])
+> 101	for r in range(RM - 1, -1, -1):   # up (near)
+> 102	    xp = xs[r + 1]; xs[r] = xp - np.interp(xp, np.arange(SW), slope[r + 1])
+> 103	xs = np.clip(xs, 0, SW - 1)
+> 104	src = cv2.remap(src, xs, np.repeat(np.arange(SH, dtype=np.float32)[:, None], SW, 1), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+> 105	src = np.clip(src, 0, 255)
+> 106	print('rectified: max lateral shift', round(float(np.abs(xs - np.arange(SW)[None]).max() / DX), 3), 'u')
+> 107	
+> 108	# --- layout: lane offset x_b (u) -> painted band position a ------------------------------------------------------------
+> 109	# painted water (no foam) a = -0.81 .. 0.72, foam fringes -0.95 .. -0.81 and 0.72 .. 0.90 (column colour, r14);
+> 110	# the lane centre sits on the painted water's centre c (as m08near: waterA mean)
+> 111	c = (NJ['waterA'][0] + NJ['waterA'][1]) / 2
+> 112	LANE = 2.95                                  # swim lane half wid …[+4293 chars]
+
+### 🤖 Claude — 2026-11-18T17:01:34.118Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\nstart=s.index(\"# --- layout: lane offset x_b (u) -> painted band position a\")\nend=s.index(\"# periodic: the rows past TH are the wrapped continuation\")\nnew='''# --- layout: lane offset x_b (u) -> painted band position a ------------------------------------------------------------\n# painted water (no foam) a = -0.81 .. 0.72, foam fringes -0.95 .. -0.81 and 0.72 .. 0.90 (column colour, r14);\n# the lane centre sits on the painted water's centre c (as m08near: waterA mean)\nc = (NJ['waterA'] …[+5675 chars]`
+
+### 🧑 User — 2026-11-18T17:01:34.256Z
+
+> ↩︎ result: 200:        kf = np.where(keep_old | (kf < 0.999), kf, 1.0)[..., None]
+
+### 🤖 Claude — 2026-11-18T17:01:41.088Z
+
+That feather line is wrong. Outside the overlap the target is still empty (black), so the blurred cut must be limited to already-filled texels, as v1 did with its `filled` mask. Fixing it.
+
+### 🤖 Claude — 2026-11-18T17:01:45.845Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\ns=s.replace(\"\"\"        kf = np.where(keep_old | (kf < 0.999), kf, 1.0)[..., None]\n        out[y0:y0 + BH, x0:x0 + BW] = kf * tgt + (1 - kf) * blk\n\"\"\",\"\"\"        kf = np.where(filled[y0:y0 + BH, x0:x0 + BW], kf, 0.0)[..., None]   # feather only into already-filled texels\n        out[y0:y0 + BH, x0:x0 + BW] = kf * tgt + (1 - kf) * blk\n        filled[y0:y0 + BH, x0:x0 + BW] = True\n\"\"\")\ns=s.replace(\"\"\"out = np.zeros(((nby - 1) * SY + BH, nbx * SX + OW, 3), np.float32)\nsrcm = n …[+471 chars]`
+
+### 🧑 User — 2026-11-18T17:02:14.700Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> target 1336 x 1320 texels ( 6.1 u x 8.0 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.481 88 cols
+> cyan zone a -0.442 .. 0.714 382 cols
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq4/nq08.png (1320, 1336, 3)
+> 
+> real	0m28.773s
+> user	0m21.908s
+> sys	0m0.520s
+
+### 🤖 Claude — 2026-11-18T17:02:18.380Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq4/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:02:18.444Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:03:00.146Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/nq08.py'\ns=open(p).read()\nrep=[\n(\"BW, BH, OW, OH = 96, 224, 40, 96             # block (across, along), overlaps (texels)\",\n \"BW, BH, OW, OH = 80, 224, 36, 96             # block (across, along), overlaps (texels)\"),\n(\"zone = np.where((colm[:, 0] > 150) & (colm[:, 2] > 150) & (colm[:, 1] < 125), 1, np.where(colm[:, 0] < 95, 2, 0))\",\n \"zone = np.where((colm[:, 0] > 135) & (colm[:, 1] < 135), 1, np.where(colm[:, 0] < 95, 2, 0))\"),\n(\"srcm = np.ascontiguousarray(src.astype(np.float32))\\nuses = np.zeros((NR, N …[+2952 chars]`
+
+### 🧑 User — 2026-11-18T17:03:00.263Z
+
+> ↩︎ result: 233:    Image.fromarray(np.clip(cv2.remap(srcm, UU, VV, cv2.INTER_LINEAR), 0, 255).astype(np.uint8)).save(f'{dbg}/nq08_layout_plain.png')
+
+### 🤖 Claude — 2026-11-18T17:03:04.740Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's/cv2.remap(srcm, UU, VV/cv2.remap(srcs[0], UU, VV/' tools/match08/nq08.py && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq5 && mkdir -p $S && time python3 -I tools/match08/nq08.py $S/nq08.png $S/nq08.json $S 2>&1 | grep -v \"^row\"", "description": "Run nq08 v4 with mirrored candidates", "timeout": 600000}`
+
