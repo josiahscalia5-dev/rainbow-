@@ -634,3 +634,161 @@ The far end reads as rings telescoping into a bright light at forward 10 u and w
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && du -sh qa/match/04/r17 && git add src/world/match04m4.ts qa/match/04/r17 && git commit -q -m \"Screen 04 r17 step 1: distant glowing opening at the end of the tunnel (m04end) — GOOD IMPROVEMENT\n\nThe far end disc gets its own material (END_FRAG): telescoping copper-gold rings narrowing into a\nwarm white-gold light, the river converging into it. Ring shader untouched. Start view 0 px.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoYUDAtThkAJzb9fwd7\" && git push -q -u origin claude/rainbow- …[+191 chars]`
 
+### 🧑 User — 2026-11-18T20:55:44.314Z
+
+> ↩︎ result: 42M	qa/match/04/r17
+> ad5fbac592444e90fd1b53d62e7fa0b62391c032
+> ad5fbac592444e90fd1b53d62e7fa0b62391c032	refs/heads/claude/rainbow-s04-match-c17
+
+### 🤖 Claude — 2026-11-18T20:55:46.262Z
+
+Pushed and verified (remote == HEAD `ad5fbac5`). Reporting to the lead.
+
+### 🤖 Claude — 2026-11-18T20:55:46.666Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T20:55:46.680Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T20:55:50.877Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s04 step 1 m04end done", "message": "s04 r17 step 1 `&m04end=1` (distant glowing opening at the end of the tunnel) — GOOD IMPROVEMENT (moderate, far away). Commit ad5fbac592444e90fd1b53d62e7fa0b62391c032 on claude/rainbow-s04-match-c17 (remote verified). The flat orange end plate with a pale blob, where the river stopped in a straight edge, is now a deep run of copper-gold rings narrowing into a bright warm-white light, with the river running on into it (f10, f20, t66, t95, hard left/right). Start view 0 px differ; ring shader untouched. NEW: /home/user/wt/s04/qa/mat …[+371 chars]`
+
+### 🧑 User — 2026-11-18T20:55:50.909Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T20:55:55.148Z
+
+Now the next task: the painted pink / cyan bands sweeping round Benny in the near water inside the tunnel. First let me read how the river shader colours the centre lane.
+
+### 🤖 Claude — 2026-11-18T20:55:56.302Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"RIVER_FRAG\\|const .*_FRAG\\|uniform\\|m04sband\\|M04\\.\\w* =\\|sband\\|lane\" src/world/match04m4.ts | head -120", "description": "Locate river shader and lane-related code"}`
+
+### 🧑 User — 2026-11-18T20:55:56.394Z
+
+> ↩︎ result: 17: *  m04pink  — (round 9, with m04river) the broad pink / magenta swirl bands on both sides of the narrow cyan arrow lane.
+> 22: *             -> tile_mouth.png) on a modeled mouth ring flush with the painted ring plane, mapped through the projector so
+> 60:uniform mat4 uProjVP;
+> 79:const GOLD_FRAG = /* glsl */ `
+> 80:uniform sampler2D uPlate;
+> 81:uniform vec4 uPjPost;
+> 82:uniform vec2 uPjRes;
+> 83:uniform float uAway;
+> 84:uniform vec3 uAxO;
+> 85:uniform vec3 uAxD;
+> 86:uniform vec3 uAxU;
+> 87:uniform vec3 uAxR;
+> 88:uniform float uNB;
+> 89:uniform float uP;
+> 90:uniform float uLipBulb;
+> 91:uniform float uBulbR;
+> 92:uniform float uLen;
+> 93:uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+> 94:uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
+> 95:uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
+> 96:uniform float uBulge;      // r13 m04bulge: each band shaded as a ROUNDED tube (bright middle, darker edges) like the painted rings
+> 97:uniform float uCopper;     // r13 m04copper: rich polished COPPER-gold ramp (dark maroon grooves -> copper -> warm-gold highlights)
+> 9 …[+8017 chars]
+
+### 🤖 Claude — 2026-11-18T20:55:57.760Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 276,476p src/world/match04m4.ts", "description": "Read the full river vertex and fragment shader"}`
+
+### 🧑 User — 2026-11-18T20:55:57.849Z
+
+> ↩︎ result: /** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+>  * the approved water design (tile_river3: pink swirl ribbons, cyan streams, foam edges) by arc length across the trough,
+>  * two offset samples blended by slow world-anchored noise (no visible 4.7 u repeat), flowing down the slide, and the
+>  * glowing chevron arrows drawn crisp (distance field) on the centre lane. */
+> const RIVER_VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+> varying vec4 vProj;
+> varying vec3 vL;
+> varying float vS;
+> void main() {
+>   vec4 wp = modelMatrix * vec4(position, 1.0);
+>   vProj = uProjVP * wp;
+>   vL = position;
+>   vS = aR.x;
+>   gl_Position = projectionMatrix * viewMatrix * wp;
+> }`;
+> const RIVER_FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAway;
+> uniform sampler2D uRiv;
+> uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
+> uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue alon …[+12956 chars]
+
+### 🤖 Claude — 2026-11-18T20:56:15.490Z
+
+Let me look closely at the painted near water round Benny versus the game inside the tunnel.
+
+### 🤖 Claude — 2026-11-18T20:56:19.028Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -I -c \"\nfrom PIL import Image\nS='/home/user/wt/s04/qa/match/04/r17/s1_end/'\ndef crop(src,box,out,k=1):\n    im=Image.open(src).convert('RGB').crop(box); im=im.resize((int(im.width*k),int(im.height*k)),Image.LANCZOS); im.save(out)\ncrop(S+'1_APPROVED.png',(0,900,864,1536),'n_appr.png')\ncrop(S+'NEW/f10_forward10u.png',(0,900,864,1536),'n_f10.png')\ncrop(S+'NEW/f03_forward3u.png',(0,900,864,1536),'n_f03.png')\ncrop(S+'NEW/f06_forward6u.png',(0,900,864,1536),'n_f06.png')\n\"", "descrip …[+71 chars]`
+
+### 🧑 User — 2026-11-18T20:56:20.339Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:56:22.387Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/n_appr.png"}`
+
+### 🧑 User — 2026-11-18T20:56:22.592Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:56:23.059Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/n_f10.png"}`
+
+### 🧑 User — 2026-11-18T20:56:23.082Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:56:23.673Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/n_f03.png"}`
+
+### 🧑 User — 2026-11-18T20:56:23.800Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:56:29.158Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,200p tools/match04/sideband04.py; python3 -I -c \"\nfrom PIL import Image; im=Image.open('assets/textures/match04/tile_side04.png'); print(im.size, im.mode)\"; sed -n 876,960p src/world/match04m4.ts", "description": "Read the side-band tile cutter and river setup code"}`
+
+### 🧑 User — 2026-11-18T20:56:29.314Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """r15 `&m04sband`: the painted pink / magenta / cyan swirl bands of references/04 as a side-bank tile.
+> 
+> The painted bands left of Benny sweep round him as a slowly tightening spiral (centre ~ (345, 1290) px). Unwrapping that
+> spiral (radius corrected by K px per degree) straightens them into stripes running down the columns' length:
+> columns = across the bands (inner = Benny side -> outer), rows = along the bands. A clean window (no Benny, foam, coin)
+> is cut and made seamless along its length by a cross-fade. Output colours = the approved display pixels (unchanged).
+>   python3 -I tools/match04/sideband04.py [out.png] [--preview DIR]
+> """
+> import sys
+> import numpy as np
+> from PIL import Image
+> 
+> REF = 'references/04_through_the_five_arrows.png'
+> CX, CY, K = 345.0, 1290.0, -1.1          # spiral centre (px) and radius drift (px per degree)
+> R0, R1 = 170.0, 315.0                    # across the bands: inner (Benny side) .. outer radius (px)
+> T0, T1 = 175.0, 132.5                    # along the bands: angle (deg, y up) window
+> NX, NY, OV = 256, 300, 70                # tile size (across, along) before the seam cross-fade; overlap rows
+> 
+> 
+> def main():
+>     out = sys.argv[1] if l …[+9261 chars]
+

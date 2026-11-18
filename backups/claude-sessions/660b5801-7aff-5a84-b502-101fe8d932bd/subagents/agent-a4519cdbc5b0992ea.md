@@ -1272,3 +1272,29 @@ Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && K16=\"$(cat $S/K15.txt)&m08vh=1\" && echo \"$K16\" > $S/K16.txt && M08_DET=1 M08_ONLY=f03,f06,s_left_hard node tools/match08/shots08.mjs 08 $S/gl1 \"$K16&m08gl=1\" 2>&1 | grep -E \"^08|rror\"", "description": "Render glint test shots with m08gl", "timeout": 400000}`
 
+### 🧑 User — 2026-11-18T20:55:49.907Z
+
+> ↩︎ result: 08 f03_forward3u s 394.532 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 397.542 lat 0 stage 08 frames 38
+> 08 s_left_hard s 403.559 lat -2.17 stage 08 frames 76
+
+### 🤖 Claude — 2026-11-18T20:55:54.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -c \"\nfrom PIL import Image\nS='$S'\nfor shot in ['f06_forward6u','s_left_hard','f03_forward3u']:\n    a=Image.open('qa/match/08/r17/step1_m08vh/3_NEW_%s.png'%shot).crop((0,1000,864,1536)); b=Image.open(S+'/gl1/%s.png'%shot).crop((0,1000,864,1536))\n    c=Image.new('RGB',(864,1082),'black'); c.paste(a,(0,0)); c.paste(b,(0,546)); c.save(S+'/look/gl1_%s.png'%shot)\"", "description": "Stack bottom-band BEFORE/NEW for glint test"}`
+
+### 🧑 User — 2026-11-18T20:55:55.827Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:55:57.586Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/gl1_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T20:55:57.698Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:56:08.247Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && grep -n \"m08dbguv\" src/world/match08.ts | head -5; M08_DET=1 M08_ONLY=f06 node tools/match08/shots08.mjs 08 $S/dbg \"$(cat $S/K16.txt)&m08gl=1&m08dbguv=1\" 2>&1 | grep -E \"^08|rror\"", "description": "Render near-tile weight debug view at f06", "timeout": 300000}`
+

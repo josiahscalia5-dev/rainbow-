@@ -2292,3 +2292,107 @@ Screen 07 reports a result. I'll check the save and look at the pictures before 
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:07-step2-shown 2>&1 | grep -E '\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py 2>&1 | tail -1 | cut -c1-170", "description": "Save Screen 07 review pictures and progress note", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T20:55:58.350Z
+
+> ↩︎ result: "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-bbe2b27e-oxfh1w | scheduler daemon | last verified backup 2026-11-18T20:55:38+00:00 (0.3 min ago) | local f4907d3 remote f4907d3 (match) | uncomm
+
+### 🤖 Claude — 2026-11-18T20:56:00.808Z
+
+Screen 07's pictures are sent. Screen 04 has also reported, so I'll check it the same way before writing to you about both.
+
+### 🤖 Claude — 2026-11-18T20:56:04.011Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git log -1 --format='%h %s' | cut -c1-100; timeout 40 git ls-remote origin refs/heads/claude/rainbow-s04-match-c17 | cut -c1-8; P=qa/match/04/r17/s1_end; ls $P; ls $P/NEW | tr '\\n' ' '; echo; S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; for s in a00_approved_view f20_forward20u t66_through_screen; do printf \"%-20s \" $s; node /home/user/tools-pixelmatch/pixeldiff.mjs $P/BEFORE/$s.png $P/NEW/$s.png $S/d04_$s.png 0.1 180 1536 2>&1 | grep -o '\"diff_pixels\":[0-9]*'; done; grep -n -i \"0 px\\|start view\\|capture.mjs\" …[+118 chars]`
+
+### 🧑 User — 2026-11-18T20:56:06.796Z
+
+> ↩︎ result: ad5fbac5 Screen 04 r17 step 1: distant glowing opening at the end of the tunnel (m04end) — GOOD IM
+> ad5fbac5
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> a00_approved_view.png f03_forward3u.png f06_forward6u.png f10_forward10u.png f20_forward20u.png motion.json s_left_hard.png s_left_steer.png s_right_hard.png s_right_steer.png t33_through_screen.png t66_through_screen.png t95_through_screen.png 
+> a00_approved_view    "diff_pixels":171552
+> f20_forward20u       "diff_pixels":257392
+> t66_through_screen   "diff_pixels":227738
+> 20:* Start view: `node scripts/capture.mjs 04` K17-0 vs K17-1 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T20:56:10.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r17/s1_end && python3 -I - <<'EOF'\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/'\nap=Image.open('1_APPROVED.png').convert('RGB')\nfor s in ('f20_forward20u','t66_through_screen'):\n    a=Image.open('BEFORE/'+s+'.png').convert('RGB'); b=Image.open('NEW/'+s+'.png').convert('RGB')\n    w,h=a.size; c=Image.new('RGB',(w*3+20,h),'white'); c.paste(ap.resize((w,h)),(0,0)); c.paste(a,(w+10,0)); c.paste(b,(2*w+20,0))\n    c.resize((c.width*2//5,c.height*2//5)).save(S+f'cmp04_{s}.png')\nEOF", "d …[+50 chars]`
+
+### 🧑 User — 2026-11-18T20:56:12.192Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T20:56:14.390Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/cmp04_f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T20:56:14.483Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:56:15.189Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/cmp04_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:56:15.220Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:56:24.698Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r17/s1_end && python3 -I - <<'EOF'\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/'\ns='t95_through_screen'\na=Image.open('BEFORE/'+s+'.png').convert('RGB'); b=Image.open('NEW/'+s+'.png').convert('RGB')\nw,h=a.size; c=Image.new('RGB',(w*2+10,h),'white'); c.paste(a,(0,0)); c.paste(b,(w+10,0))\nc.resize((c.width*2//5,c.height*2//5)).save(S+f'cmp04_{s}.png')\nEOF", "description": "Build Screen 04 end-of-tunnel comparison"}`
+
+### 🧑 User — 2026-11-18T20:56:25.469Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T20:56:27.743Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/cmp04_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:56:27.849Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:56:33.150Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_r17/04_step1_end && mkdir -p $D && P=/home/user/wt/s04/qa/match/04/r17/s1_end && cp $P/1_APPROVED.png $D/1_APPROVED.png && cp $P/BEFORE/t95_through_screen.png $D/2_BEFORE_end_of_tunnel.png && cp $P/NEW/t95_through_screen.png $D/3_NEW_end_of_tunnel.png && cp $P/BEFORE/f20_forward20u.png $D/4_BEFORE_inside_tunnel.png && cp $P/NEW/f20_forward20u.png $D/5_NEW_inside_tunnel.png && ls $D", "description": "Copy Screen 04 proof pictures into the lead checkout"}`
+
+### 🧑 User — 2026-11-18T20:56:33.217Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_end_of_tunnel.png
+> 3_NEW_end_of_tunnel.png
+> 4_BEFORE_inside_tunnel.png
+> 5_NEW_inside_tunnel.png
+
+### 🤖 Claude — 2026-11-18T20:56:37.103Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r17/04_step1_end/1_APPROVED.png", "/home/user/rainbow-/qa/review_r17/04_step1_end/2_BEFORE_end_of_tunnel.png", "/home/user/rainbow-/qa/review_r17/04_step1_end/3_NEW_end_of_tunnel.png", "/home/user/rainbow-/qa/review_r17/04_step1_end/4_BEFORE_inside_tunnel.png", "/home/user/rainbow-/qa/review_r17/04_step1_end/5_NEW_inside_tunnel.png"], "caption": "Screen 04: your approved picture, then BEFORE and NEW near the end of the tunnel, then BEFORE and NEW further back inside it. Look at the glow at the far end, in the centre.", "status": "proactive", "display": …[+10 chars]`
+
+### 🧑 User — 2026-11-18T20:56:38.445Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_r17/04_step1_end/1_APPROVED.png → file_uuid: 3097a3c1-c761-47d5-adc9-8ef94c2cd924
+>   /home/user/rainbow-/qa/review_r17/04_step1_end/2_BEFORE_end_of_tunnel.png → file_uuid: da0b6bf9-5ec6-44bd-a38b-cf84ed59c2b7
+>   /home/user/rainbow-/qa/review_r17/04_step1_end/3_NEW_end_of_tunnel.png → file_uuid: 44aa3f76-5a28-4402-b554-71b8636d7639
+>   /home/user/rainbow-/qa/review_r17/04_step1_end/4_BEFORE_inside_tunnel.png → file_uuid: 6d79cccd-ca43-44eb-a53b-a25f06b7c0c7
+>   /home/user/rainbow-/qa/review_r17/04_step1_end/5_NEW_inside_tunnel.png → file_uuid: 7f4dfd47-f5c8-48bb-89a1-62cfffcd6e6d
+
+### 🤖 Claude — 2026-11-18T20:56:40.235Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r17/COORDINATION.md", "old_string": "Next for s07: lather walls restarting with a cut in the plunge (`&m07foamb`) — `qa/review_r17/07_step2_nearw/` |", "new_string": "Next for s07: lather walls restarting with a cut in the plunge (`&m07foamb`) — `qa/review_r17/07_step2_nearw/` |\n| 3 (~21:05) | 04 r17 step 1 `&m04end=1` distant glowing opening (s04 `ad5fbac5`) | GOOD IMPROVEMENT (moderate, far away; worker + lead): the flat orange end plate with a pale blob where the river stopped is now copper-gold rings narrowing …[+313 chars]`
+
+### 🧑 User — 2026-11-18T20:56:40.495Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r17/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T20:56:42.982Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:04-step1-shown 2>&1 | grep -E '\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py 2>&1 | tail -1 | cut -c1-170", "description": "Save Screen 04 review pictures and progress note", "timeout": 300000}`
+
