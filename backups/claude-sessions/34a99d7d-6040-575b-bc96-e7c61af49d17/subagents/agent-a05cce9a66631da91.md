@@ -1951,3 +1951,74 @@ Next most visible flaw while swimming: the near tunnel walls get blurry/stretche
 > src/vfx/proj05Tunnel.ts(270,25): error TS1127: Invalid character.
 >  …[+302 chars]
 
+### 🤖 Claude — 2026-11-18T02:32:39.259Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\nt=open(p).read()\nn=t.count('\\\\${')\nt=t.replace('\\\\${','${')\nopen(p,'w').write(t)\nprint('fixed',n)\nEOF\nsed -n 258,276p src/vfx/proj05Tunnel.ts; timeout 300 npx tsc --noEmit -p . && echo TSC_OK", "description": "Remove stray escapes and type-check"}`
+
+### 🧑 User — 2026-11-18T02:32:42.140Z
+
+> ↩︎ result: fixed 5
+>     vec4 sg = uPtSeg[i];
+>     if (pv >= sg.x && pv < sg.y) { prow = uPtSegT[i].x; pt = mix(uPtSegT[i].y, uPtSegT[i].z, (pv - sg.x) / (sg.y - sg.x)); }
+>   }
+>   vec2 rw = uPtRows[int(prow + 0.5)];
+>   vec2 puv = vec2(fract(vPerfUv.x + 0.25), (rw.x + clamp(pt * rw.y, 0.5, rw.y - 0.5)) / uPtWallSize.y);
+>   vec3 pc = texture2D(uPtWall, puv).rgb;
+> ${wallN ? `  if (pv >= ${wallN.v0.toFixed(4)} && uPtRide > 0.0) {
+>     // m05wall: near walls of the later bays while riding = mirrored repeat of the crisp near bay N1 (see M05WALL)
+>     float wN05 = uPtRide * (1.0 - smoothstep(16.0, 24.0, length(vViewPosition)));
+>     float mN05 = (pv - ${wallN.v0.toFixed(4)}) / ${wallN.len.toFixed(4)};
+>     float fN05 = fract(mN05 * 0.5) * 2.0;
+>     fN05 = fN05 > 1.0 ? 2.0 - fN05 : fN05;
+>     vec2 rN05 = uPtRows[${PT_ROW.N1}];
+>     vec2 nuv05 = vec2(puv.x, (rN05.x + clamp(mix(0.15, 0.85, fN05) * rN05.y, 0.5, rN05.y - 0.5)) / uPtWallSize.y);
+>     pc = mix(pc, texture2D(uPtWall, nuv05).rgb, wN05);
+>   }` : ''}
+>   gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);
+> }`);
+>   };
+> TSC_OK
+
+### 🤖 Claude — 2026-11-18T02:32:50.735Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && rm -rf $S/wall1 && mkdir -p $S/wall1 && timeout 900 node tools/match05/r8_shots.mjs $S/wall1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05wall=1\" f20_forward20u,t33_through_screen,t66_through_screen,s_left_hard 2>&1 | grep -i \"error\" | head -3; python3 -I -c \"\nfrom PIL import Image\nims=[]\nfor n in ['t66_through_screen','t33_through_screen']:\n  for d in ['$S/seam1/','$S/wall1/']:\n    ims.append(Image.open(d+n+' …[+264 chars]`
+
+### 🧑 User — 2026-11-18T02:33:36.397Z
+
+> ↩︎ result: console THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> ERROR: 0:2003: 'uPtRide' : undeclared identifier
+> ERROR: 0:2005: 'uPtRide' : undeclared identifier
+
+### 🤖 Claude — 2026-11-18T02:33:46.048Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\nt=open(p).read()\na=\"uniform vec4 uPtSeg[${N_SEG}]; uniform vec3 uPtSegT[${N_SEG}]; uniform vec2 uPtTile; uniform float uPtDbg;\\nuniform vec4 uPjPost; uniform vec2 uPjRes;\\n${PROJ05_INVERSE}\\nvoid main() {`)\\n      .replace('#include <dithering_fragment>', `#include <dithering_fragment>\\n{ // ?projwall05=1\"\nc=t.count(a)\nprint('count',c)\nif c==1:\n  t=t.replace(a,\"uniform vec4 uPtSeg[${N_SEG}]; uniform vec3 uPtSegT[${N_SEG}]; uniform vec2 uPtTile; uniform float uPtDbg;${wallN ? ' uniform float uPtRid …[+1114 chars]`
+
+### 🧑 User — 2026-11-18T02:34:36.890Z
+
+> ↩︎ result: count 1
+> TSC_OK
+
+### 🤖 Claude — 2026-11-18T02:34:39.194Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/wall1/cmp.png"}`
+
+### 🧑 User — 2026-11-18T02:34:39.234Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:34:41.840Z
+
+Too small to judge; let me compare the wall regions at full resolution.
+
+### 🤖 Claude — 2026-11-18T02:34:45.428Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nims=[]\nfor n,box in [('t66_through_screen',(0,190,380,700)),('t33_through_screen',(560,190,864,700))]:\n  for d in ['$S/seam1/','$S/wall1/']:\n    ims.append(Image.open(d+n+'.png').crop(box))\nW=sum(i.width for i in ims)+30; out=Image.new('RGB',(W,510),(0,0,0)); x=0\nfor im in ims: out.paste(im,(x,0)); x+=im.width+10\nout.save('$S/wall1/cmp_full.png')\"", "description": "Full-resolution wall crops before and after"}`
+
+### 🧑 User — 2026-11-18T02:34:45.819Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:34:46.480Z
+
+You've hit your 5-hour limit · resets 6:30am (UTC)
+
