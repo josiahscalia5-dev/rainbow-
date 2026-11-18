@@ -42,3 +42,14 @@ Visual verdict: **NOT YET PROVEN** (closer in one way, worse in another).
 
 Next (polish, one factor at a time): per-ring angle offset + soft texture (`&m04rpsoft=1&m04rpj=0.35`, the round-15 worker's
 variant) against the streaks; then stronger painted lip line / groove so each ring reads as a separate thick ring.
+
+## Step 2 — `&m04rpaint=1&m04rpsoft=1&m04rpj=0.35` (soft light columns + per-ring angle offset), 19:30–19:40 UTC
+Pictures `step2_softj/3_NEW_<shot>.png` for f06, f20, t66, s_left_hard (BEFORE = `2_BEFORE_<shot>.png` one folder up; step-1 NEW =
+`3_NEW_<shot>.png`). Rendered on four shots only (CPU shared by six workers): the shots where the streaks were clearest.
+Verdict: **NOT YET PROVEN** — the long streaks down the tunnel are gone (each ring now has its own short glows at different
+angles), but the rings still do not read as separate thick rings: no clear dark groove / bright lip line between them.
+Cause found (geometry check): the modeled ring is a long, nearly cylindrical band + a lip bead; looking down the tunnel the lip
+of each ring hides the start of the next band (at 20 u ahead about half of it), and the painted texture placed its lip line on the
+lip apex and its dark groove rows on the hidden back of the lip and the hidden band start -> the painted edges were never seen.
+Next = step 3: painted lip line on the start of the lip FRONT, painted darker strip + dark groove on the lip front ending at the
+apex silhouette (`&m04rplu=3.95&m04rpgu=4.28`, existing sub-switches, no new code).
