@@ -940,3 +940,145 @@ Pushed and verified. Now reporting to main.
 >     if (mouth) {
 >       …[+3955 chars]
 
+### 🤖 Claude — 2026-11-18T19:42:27.167Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('references/04_through_the_five_arrows.png').convert('RGB')).astype(int)\n# brightest region near vanishing point\nsub=a[600:760,400:600]\nL=sub.sum(2)\ny,x=np.unravel_index(L.argmax(),L.shape); print('max at',x+400,y+600,a[y+600,x+400])\nfor yy in range(640,740,8):\n  print(yy, ' '.join('%02x%02x%02x'%tuple(a[yy,xx]) for xx in range(420,580,12)))\n\"\npython3 -c \"\nfrom PIL import Imag …[+421 chars]`
+
+### 🧑 User — 2026-11-18T19:42:28.903Z
+
+> ↩︎ result: max at 582 657 [255 251 227]
+> 640 a74a43 ac5868 b44e49 ec814b ffa159 ffa854 e86843 c25743 b74938 be4c27 b04427 9e3822 eb7631 cb5925
+> 648 b85538 b75441 aa4a4c bf5853 d06555 e86946 ce5542 e27056 cb5b47 ab4540 c05328 a64429 b9472d ffa64a
+> 656 a5493a b05749 d4614c cf5c49 e16a56 f67d52 e16750 e67056 c9594b c55442 aa4436 c7582b b75635 db4f2b
+> 664 b05e49 cb6443 c66155 e17558 e97659 fd8f5e f68b5d f77e63 eb7b65 d15f47 b84d43 d35d37 df643a d7532d
+> 672 d88455 ae5c50 d66f50 eb7b56 f0845e ffa26c fbcc7e f68d5e f07b5a d6673c f88b52 ca5b40 dd6530 b85033
+> 680 8d5558 d98c62 c05d48 db704e f48951 f6e782 fcf9c2 ffe787 ea7b46 ce603d bf4c39 b84d3b b94931 ad4932
+> 688 905b6b ac5d60 e68359 fc8f64 ffad69 f4c7a6 f5dcbe f5c4a6 f9915a d76e4e c2543b ba4d36 9b3b2f b04c34
+> 696 9a656d ab626d df7c5d f28159 ba98b1 c99fb7 cfa3b4 c097b5 a486bc be685b c55841 b85337 983f31 be5738
+> 704 f6d32f dd9146 d98465 927a9e 8892c5 8191c2 8693c7 8790c7 7b7cbd 9e76aa c3634b a54932 a44531 b8502b
+> 712 ffbd12 ffad0b 8d81b1 657bb4 668ecb 6089cb 5a8aca 638acb 5f78ba 6974c3 b95f6b a54e33 a64b38 b84b2a
+> 720 ca8209 8b7e5b 5c84b8 4383c1 3a96d7 bff3ff 48a9f0 3a83c8 5083bc 5d6cbf 975c78 a44f4c a34845 bb5336
+> 728 85969d 4f89b9 357bb6 1b9ef0 aff7ff 0d9aec b4f …[+154 chars]
+
+### 🤖 Claude — 2026-11-18T19:42:31.274Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/ref_end_zoom.png"}`
+
+### 🧑 User — 2026-11-18T19:42:31.294Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:42:31.927Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/game_end_zoom.png"}`
+
+### 🧑 User — 2026-11-18T19:42:32.353Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:42:56.779Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"addM04(\" src --include=*.ts | head; grep -n \"outerR\\|len:\" src/world/match04.ts 2>/dev/null | head -10", "description": "Find where addM04 context is built"}`
+
+### 🧑 User — 2026-11-18T19:42:57.456Z
+
+> ↩︎ result: src/world/match04.ts:293:  const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+> src/world/match04m4.ts:631:export function addM04(ctx: M04Ctx) {
+> 28:  tube: { r: number; ax: number; h: number; mouthS: number; outerR: number };
+> 253:  const ring = new THREE.Shape(); ring.absarc(0, 0, T.outerR, 0, Math.PI * 2, false);
+> 293:  const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+
+### 🤖 Claude — 2026-11-18T19:43:01.412Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 225,300p src/world/match04.ts; grep -n \"\\\"tube\\\"\\|tube\" assets/textures/match04/*.json 2>/dev/null | head -5; ls assets/textures/match04/", "description": "Read match04 tunnel geometry parameters"}`
+
+### 🧑 User — 2026-11-18T19:43:01.622Z
+
+> ↩︎ result: group.matrixAutoUpdate = false;
+>   group.matrix.makeBasis(X, U, Dn).setPosition(new THREE.Vector3(...L.water));
+>   // round 9 `&m04lay=1` — FEASIBILITY TEST ONLY (not kept, qa/match/04/r9/PROGRESS.md "Foundation"): the whole washer
+>   // front as STATIC geometry scaled about the approved camera by 'm04layk' (same approved picture, opening k times as
+>   // far). Shows why a static bigger/farther front cannot hold the composition on the fixed course: the painted pool
+>   // ends up 3.39*(k-1) u below Benny's water and Benny's path / coins run through the middle of the opening.
+>   if (M04.lay) {
+>     const k = M04.num('m04layk', 3.0), P = proj.position;
+>     group.matrix.premultiply(new THREE.Matrix4().makeTranslation(-P.x, -P.y, -P.z)).premultiply(new THREE.Matrix4().makeScale(k, k, k)).premultiply(new THREE.Matrix4().makeTranslation(P.x, P.y, P.z));
+>   }
+>   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm04_' + name; group.add(o); return o; };
+> 
+>   const T = L.tube;
+>   // round 8 `&m04ring=1`: the tunnel (and the water in it) runs on to 90 u so its far end is the painted small glow, not a disc
+>   const cx = T.ax - L.water[0], c …[+5065 chars]
+
+### 🤖 Claude — 2026-11-18T19:43:04.074Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -c \"\nimport json; d=json.load(open('assets/textures/match04/proj04.json')); print(d['tube']); print(d.get('water'))\"", "description": "Read tube dimensions"}`
+
+### 🧑 User — 2026-11-18T19:43:04.336Z
+
+> ↩︎ result: {'r': 3.581010544286353, 'ax': 1.8439924416132227, 'h': 2.270596399017665, 'mouthS': 6.837642607015875, 'mouth': [1.8439924416132227, -23.871917980527897, -31.566178837071377], 'outerR': 4.106750714764926}
+> [2.0, -22.173436542135942, -24.56445581827459]
+
+### 🤖 Claude — 2026-11-18T19:43:39.503Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"PROJ05_INVERSE\" src/world/*.ts | head -5; grep -n \"export const PROJ05_INVERSE\" -A20 src/world/*.ts src/**/*.ts 2>/dev/null | head -30; grep -n \"class\\|const M04 = \\|num(\" src/world/match04m4.ts | head -5; grep -n \"out.update = \\|updaters.push\\|away.value\" src/world/match04m4.ts | head", "description": "Find pjInverse definition and update hooks"}`
+
+### 🧑 User — 2026-11-18T19:43:40.439Z
+
+> ↩︎ result: src/world/match04.ts:11: * The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+> src/world/match04.ts:19:import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> src/world/match04.ts:81:${PROJ05_INVERSE}
+> src/world/match04.ts:342:${PROJ05_INVERSE}
+> src/world/match04.ts:393:      fragmentShader: `uniform sampler2D uTex; uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec2 vUv;\n${PROJ05_INVERSE}
+> src/vfx/waterRibbon.ts:319:export const PROJ05_INVERSE = /* glsl */ `
+> src/vfx/waterRibbon.ts-320-// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> src/vfx/waterRibbon.ts-321-// post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+> src/vfx/waterRibbon.ts-322-vec3 pjInverse(vec3 t) {
+> src/vfx/waterRibbon.ts-323-  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+> src/vfx/waterRibbon.ts-324-  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+> src/vfx/waterRibbon.ts-325-  vec3 c = t / max(vig, 0.5);
+> src/vfx/waterRibbon.ts-326-  c = (c - 0.5) / uPjPost.z + 0.5;
+> src/vfx/waterRibbon.ts-327-  float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+> src/vfx/w …[+2044 chars]
+
+### 🤖 Claude — 2026-11-18T19:43:44.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 32,54p src/world/match04m4.ts && sed -n 1068,1100p src/world/match04m4.ts", "description": "Read M04 switch object and update loop"}`
+
+### 🧑 User — 2026-11-18T19:43:44.388Z
+
+> ↩︎ result: export const M04 = {
+>   ring: on('m04ring'),
+>   foam: on('m04foam'),
+>   bub: on('m04bub'),
+>   arrow: on('m04arrow'),
+>   wave: on('m04wave'),
+>   river: on('m04river'),
+>   gold: on('m04gold'),
+>   mouth: on('m04mouth'),
+>   room: on('m04room'),
+>   foam3: on('m04foam3'),
+>   pink: on('m04pink'),
+>   arr5: on('m04arr5'),
+>   arr3d: on('m04arr3d'),
+>   lay: on('m04lay'),
+>   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
+> };
+> 
+> export interface M04Ctx {
+>   group: THREE.Group;
+>   shared: Record<string, THREE.IUniform>;
+>   proj: THREE.PerspectiveCamera;
+>   /** tube axis in group-local coordinates (x lateral, y up from the slide, z = -down the slide) */
+>   }
+> 
+>   out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
+>     time.value = performance.now() / 1000;
+>     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+>     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+>     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+>     for (const u of updaters) u(a2);
+>     if (arrowsOut.length) {
+>       const cz = -a5b.z;                                                // camera local z (forward = -z)
+>   …[+1519 chars]
+
