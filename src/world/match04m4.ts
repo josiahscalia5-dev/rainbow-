@@ -12,6 +12,11 @@
  *             spacing) instead of the magnified painted arrow tile.
  *  m04wave  — the painted swirl water without the obvious repeat (two offset samples of the swirl tile blended by a
  *             slow world-anchored noise) and flowing down the slide.
+ *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+ *             puffs, wider gaps where the pink water shows), lavender / pink shaded like the painted foam.
+ *  m04pink  — (round 9, with m04river) the broad pink / magenta swirl bands on both sides of the narrow cyan arrow lane.
+ *  m04arr5  — (round 9, with m04river) the five glowing chevrons as painted: fat flat white-cyan bars nested one after
+ *             the other ahead of Benny (about five in view at a time, the farther ones fading into the glow).
  *  m04mouth — (round 9, needs m04ring) the approved GOLD WASHER OPENING: the painted mouth ring (thick polished band,
  *             thin bright lips, dark groove) unwrapped from the approved pixels and straightened (tools/match04/mouth04.py
  *             -> tile_mouth.png) on a modeled mouth ring flush with the painted ring plane, mapped through the projector so
@@ -34,6 +39,9 @@ export const M04 = {
   gold: on('m04gold'),
   mouth: on('m04mouth'),
   room: on('m04room'),
+  foam3: on('m04foam3'),
+  pink: on('m04pink'),
+  arr5: on('m04arr5'),
   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
 };
 
@@ -277,6 +285,9 @@ uniform vec4 uRivA;          // lateral half-width, along start, along length, l
 uniform float uTime;
 uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
 uniform float uZ0;
+uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength
+uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
 varying vec4 vProj;
 varying vec3 vL;
 varying float vS;
@@ -303,10 +314,40 @@ void main() {
   vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
   // the deeper cyan centre lane of the painting
   col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
+  if (uPk.x > 0.5) {
+    // m04pink: the painted broad pink / magenta swirl bands either side of the cyan lane; the swirl structure (the
+    // tile's brightness) is kept, re-coloured into the painted magenta -> hot pink -> pale pink, with cyan streaks left
+    float side = smoothstep(uPk.y, uPk.y + 0.7, abs(vS)) * (1.0 - smoothstep(uPk.z, uPk.z + 0.9, abs(vS)));
+    float l = dot(col, vec3(0.30, 0.55, 0.15));
+    vec3 pk = mix(vec3(0.55, 0.08, 0.58), vec3(0.96, 0.30, 0.78), smoothstep(0.22, 0.58, l));
+    pk = mix(pk, vec3(1.0, 0.78, 0.96), smoothstep(0.66, 0.95, l));
+    float n = vn(vec2(fl * 0.22, vS * 0.6 + 11.0));
+    float keepCyan = smoothstep(0.62, 0.85, n);                       // a few cyan swirls survive inside the pink
+    col = mix(col, pk, side * uPk.w * (1.0 - 0.75 * keepCyan));
+  }
+  if (uA5.x > 0.5) {
+    // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
+    float k5 = floor((along - uA5.z) / uA5.y + 0.5);
+    float ap = uA5.z + k5 * uA5.y;                       // this arrow's apex (front edge at the centre)
+    // along grows down the slide (away from the camera), the apex points away; v = 0 on the front V line, < 0 toward
+    // the camera; the bar lies between v = -T and v = 0, its ends cut along the flow at |lat| = half width
+    float v = (along - ap) + abs(vS) * uA5b.y;
+    float dIn = max(max(v, -uA5.w - v), abs(vS) - uA5b.x); // < 0 inside the bar (units ~ along-flow)
+    float cd = ap - uA5b.z;                               // arrow distance ahead of the camera
+    float vis = (k5 >= 0.0 ? 1.0 : 0.0) * smoothstep(6.5, 9.0, cd) * (1.0 - smoothstep(uA5b.w - 6.0, uA5b.w, cd));
+    float px = fwidth(dIn) + 1e-4;
+    float glow = exp(-max(dIn, 0.0) / 0.35);
+    col = mix(col, vec3(0.05, 0.60, 0.98), 0.55 * glow * vis);
+    col = mix(col, vec3(0.62, 0.94, 1.0), 0.70 * exp(-max(dIn, 0.0) / 0.12) * vis);
+    float body = 1.0 - smoothstep(-px, px, dIn);
+    float edge = 1.0 - smoothstep(-px, px, abs(dIn + 0.07) - 0.05);
+    col = mix(col, mix(vec3(0.80, 0.97, 1.0), vec3(0.92, 1.0, 1.0), smoothstep(-0.6, -0.1, dIn)), body * 0.96 * vis);
+    col = mix(col, vec3(1.0), edge * 0.6 * vis);
+  }
   // crisp glowing arrows on the centre lane (painted: white-cyan core, cyan glow), world-anchored
   float ai = floor((along - uArr.y) / uArr.x + 0.5);
   float ac = uArr.y + ai * uArr.x;
-  if (ai >= 0.0) {
+  if (ai >= 0.0 && uA5.x < 0.5) {
     float d = chev(vec2(vS, along - ac - 1.5), uArr.z, uArr.w);
     float px = fwidth(d);
     float fade = smoothstep(-2.0, 0.5, ac) ;
@@ -377,7 +418,14 @@ void main() {
   vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));
   float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);
   vec3 shade = mix(vec3(0.70, 0.64, 0.95), vec3(0.93, 0.70, 0.92), 0.5 + 0.5 * sin(vS * 11.0));
+#ifdef FOAM3
+  // painted glossy foam balls: lavender body, pink bounce light from the water below, white only at the top highlight
+  shade = mix(vec3(0.66, 0.58, 0.93), vec3(0.95, 0.62, 0.90), 0.5 + 0.5 * sin(vS * 11.0));
+  vec3 col = mix(shade, vec3(0.93, 0.90, 1.0), smoothstep(0.25, 0.95, l));
+  col = mix(col, vec3(0.98, 0.55, 0.85), 0.35 * smoothstep(0.2, -0.8, vUv.y));
+#else
   vec3 col = mix(shade, vec3(1.0, 0.99, 1.0), smoothstep(0.10, 0.80, l));
+#endif
   col += vec3(1.0) * 0.45 * smoothstep(0.22, 0.0, length(vUv - vec2(-0.30, 0.36)));
   col = mix(col, shade * 0.92, 0.30 * smoothstep(0.88, 1.0, r));
   gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
@@ -538,6 +586,8 @@ export function addM04(ctx: M04Ctx) {
   const XF = M04.num('m04xf', 1.9);                         // half width of the flat centre lane (Benny's steering room)
   const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
   const time = { value: 0 };
+  const a5b = new THREE.Vector4(M04.num('m04a5w', 1.3), M04.num('m04a5s', 2.2), 0, M04.num('m04a5d', 30));
+  const MwInv = Mw.clone().invert();
   if (M04.river) {
     const nX = 28, nA = Math.ceil(len / 0.5);
     const pos: number[] = [], aR: number[] = [], idx: number[] = [];
@@ -578,7 +628,10 @@ export function addM04(ctx: M04Ctx) {
       extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
         uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
-        uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 } } });
+        uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 },
+        uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
+        uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
+        uA5b: { value: a5b } } });
     const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
     console.info('[match04] m04river', { xW, RY, XF });
   }
@@ -612,26 +665,27 @@ export function addM04(ctx: M04Ctx) {
     for (const side of [-1, 1]) {
       let a = 0.2 + rnd() * 0.5;
       while (heaped && a < len - 1) {
+        const f3 = M04.foam3;                                     // round 9: low soft banks hugging the river edge
         const cl = 0.5 + Math.pow(rnd(), 1.3) * 2.4;            // clump length along the river
-        const H = 0.2 + Math.pow(rnd(), 1.8) * 1.1;              // heap height (a few tall heaps, many low ones)
-        const reach = 0.3 + rnd() * 0.5 + H * 0.6;               // how far the clump spills into the river
-        const n = Math.round(6 + cl * (8 + H * 22));
+        const H = (0.2 + Math.pow(rnd(), 1.8) * 1.1) * (f3 ? 0.35 : 1);   // heap height (a few tall heaps, many low ones)
+        const reach = (0.3 + rnd() * 0.5 + H * 0.6) * (f3 ? 0.6 : 1);     // how far the clump spills into the river
+        const n = Math.round((6 + cl * (8 + H * 22)) * (f3 ? 0.75 : 1));
         const lean = (rnd() - 0.5) * 0.6;
         for (let i = 0; i < n; i++) {
           const t = rnd(), env = Math.pow(Math.sin(Math.PI * t), 0.7);
           const hf = Math.pow(rnd(), 1.6) * env;                 // height fraction inside the heap
           const big = rnd() < 0.18;
-          const rad = (big ? 0.28 + rnd() * 0.30 : 0.06 + Math.pow(rnd(), 1.7) * 0.24) * (1 - 0.45 * hf);
+          const rad = (big ? 0.28 + rnd() * 0.30 : 0.06 + Math.pow(rnd(), 1.7) * 0.24) * (1 - 0.45 * hf) * (f3 ? (big ? 0.5 : 0.75) : 1);
           const d = Math.min(xW - XF + 0.4, rnd() * reach * env + lean * t * 0.5);   // inward from the wall
-          const onWall = rnd() < 0.25;                            // some puffs heaped up the lower wall
+          const onWall = rnd() < (f3 ? 0.08 : 0.25);              // some puffs heaped up the lower wall
           const tt = Math.max(0, 1 - Math.max(0, d) / Math.max(0.1, xW - XF));
-          const ys = onWall ? RY + rnd() * 0.7 * env : 0.02 + RY * tt * tt;
+          const ys = onWall ? RY + rnd() * (f3 ? 0.25 : 0.7) * env : 0.02 + RY * tt * tt;
           const x = side * (onWall ? xW - 0.12 - rnd() * 0.15 : XF + (xW - XF) * tt - 0.05);
           const y = ys + rad * (0.25 + 0.4 * rnd()) + hf * H;
           if (Math.hypot(x, y - cy) > r - 0.08) continue;
           items.push({ p: new THREE.Vector3(cx + x, y, z0 - a - t * cl), r: rad, s: rnd() });
         }
-        a += cl + 0.1 + Math.pow(rnd(), 1.5) * 2.2;              // irregular gaps
+        a += cl + 0.1 + Math.pow(rnd(), 1.5) * 2.2 * (f3 ? 1.6 : 1);   // irregular gaps (wider: the pink water shows)
       }
       while (!heaped && a < len - 1) {
         const cl = 1.2 + rnd() * 2.2, n = Math.round(cl * (9 + rnd() * 6));
@@ -646,15 +700,15 @@ export function addM04(ctx: M04Ctx) {
         a += cl + 0.15 + rnd() * 0.7;
       }
     }
-    for (let a = -7; a < 0; a += 0.35) for (const side of [-1, 1]) {
+    for (let a = -7; a < 0; a += M04.foam3 ? 0.5 : 0.35) for (const side of [-1, 1]) {
       const n = 3 + Math.floor(rnd() * 3);
       for (let i = 0; i < n; i++) {
-        const rad = 0.16 + rnd() * 0.34;
+        const rad = (0.16 + rnd() * 0.34) * (M04.foam3 ? 0.7 : 1);
         const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);
         items.push({ p: new THREE.Vector3(x, rad * 0.55 + rnd() * 0.3, z0 - a + rnd() * 0.3), r: rad, s: rnd() });
       }
     }
-    sprites(items, FOAM_FRAG, 'm04_foam', 3, true, [0.6, 1.2]);
+    sprites(items, M04.foam3 ? FOAM_FRAG.replace('uniform float uAlpha;', 'uniform float uAlpha;\n#define FOAM3') : FOAM_FRAG, 'm04_foam', 3, true, [0.6, 1.2]);
   } else if (M04.foam) {
     const items: { p: THREE.Vector3; r: number; s: number }[] = [];
     // inside the tunnel: irregular foam clusters (0.6–1.6 u long, gaps between) along both water edges, climbing a
@@ -701,6 +755,7 @@ export function addM04(ctx: M04Ctx) {
 
   out.update = (cam: THREE.Vector3) => {
     time.value = performance.now() / 1000;
+    a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
     for (const u of updaters) u(a2);
