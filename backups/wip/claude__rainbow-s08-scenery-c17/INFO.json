@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s08",
  "branch": "claude/rainbow-s08-scenery-c17",
  "head": "ddecbc078fb2eff2154f905a3bc9f3525f515172",
- "time": "2026-11-18T20:56:57+00:00",
+ "time": "2026-11-18T20:57:27+00:00",
  "dirty_tracked": [
   "src/world/match08.ts",
   "tools/match08/nq08.py"

@@ -1298,3 +1298,30 @@ Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && grep -n \"m08dbguv\" src/world/match08.ts | head -5; M08_DET=1 M08_ONLY=f06 node tools/match08/shots08.mjs 08 $S/dbg \"$(cat $S/K16.txt)&m08gl=1&m08dbguv=1\" 2>&1 | grep -E \"^08|rror\"", "description": "Render near-tile weight debug view at f06", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T20:57:02.616Z
+
+> ↩︎ result: 87:uniform float uDbgUv;       // QA only m08dbguv (r15)
+> 306:    // QA only m08dbguv (r15, floor): r = plate u, g = plate v (after the swim remap), b = near-tile weight
+> 493:    if (flag05('m08dbguv')) u.uDbgUv.value = 1;
+> 08 f06_forward6u s 397.542 lat 0 stage 08 frames 38
+
+### 🤖 Claude — 2026-11-18T20:57:06.471Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/dbg/f06_forward6u.png').convert('RGB')).astype(float)\nb=a[...,2]\n# show blue channel (near weight; note pjInverse distorts) as grayscale\nImage.fromarray(b.astype(np.uint8)).save('$S/look/dbg_wn.png')\nfor y in range(900,1536,50): print(y, [int(b[y,x]) for x in range(0,864,72)])\n\"", "description": "Inspect near-tile weight channel per row"}`
+
+### 🧑 User — 2026-11-18T20:57:07.029Z
+
+> ↩︎ result: 900 [0, 0, 0, 0, 0, 0, 223, 0, 0, 0, 0, 0]
+> 950 [0, 4, 4, 4, 5, 246, 230, 57, 5, 0, 0, 0]
+> 1000 [8, 19, 19, 19, 31, 134, 200, 230, 20, 16, 0, 0]
+> 1050 [29, 43, 43, 43, 44, 197, 219, 201, 44, 44, 19, 0]
+> 1100 [61, 73, 74, 74, 139, 186, 148, 191, 75, 116, 75, 18]
+> 1150 [103, 109, 109, 109, 109, 109, 110, 110, 110, 110, 110, 110]
+> 1200 [146, 146, 146, 146, 146, 146, 147, 147, 147, 147, 147, 147]
+> 1250 [182, 182, 182, 183, 183, 183, 183, 183, 183, 183, 183, 184]
+> 1300 [214, 215, 215, 215, 215, 215, 215, 215, 215, 215, 215, 215]
+> 1350 [239, 239, 240, 240, 240, 240, 240, 240, 240, 240, 240, 240]
+> 1400 [253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254]
+> 1450 [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]
+> 1500 [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]
+

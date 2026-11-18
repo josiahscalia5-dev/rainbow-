@@ -792,3 +792,55 @@ Let me look closely at the painted near water round Benny versus the game inside
 > def main():
 >     out = sys.argv[1] if l …[+9261 chars]
 
+### 🤖 Claude — 2026-11-18T20:57:11.952Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 860,876p src/world/match04m4.ts; grep -n \"out.update\\|updaters\\b\\|update(cam\\|benny\" src/world/match04m4.ts | head -30; grep -rn \"addM04\\|m04.*update(\" src/world/*.ts | grep -v \"^src/world/match04m4.ts\" | head", "description": "Inspect river mesh extent and update hooks"}`
+
+### 🧑 User — 2026-11-18T20:57:12.071Z
+
+> ↩︎ result: arc[mid] = 0; for (let i = mid - 1; i >= 0; i--) arc[i] = arc[i + 1] - Math.hypot(xs[i].x - xs[i + 1].x, xs[i].y - xs[i + 1].y);
+>     // from BEHIND (aB u before the opening, where the camera starts) to the far end; before the opening the river
+>     // lies flat (no wall to climb), the sides rise over the first 2 u inside the tunnel
+>     const aB = M04.num('m04rb', 14);
+>     const nT = nA + Math.ceil(aB / 0.5);
+>     for (let j = 0; j <= nT; j++) {
+>       const a = -aB + (j / nT) * (len + aB);
+>       const k = THREE.MathUtils.smoothstep(a, -0.6, 1.4);
+>       for (let i = 0; i <= nX; i++) { pos.push(cx + xs[i].x, 0.02 + (xs[i].y - 0.02) * k, z0 - a); aR.push(arc[i], 0); }
+>     }
+>     for (let j = 0; j < nT; j++) for (let i = 0; i < nX; i++) {
+>       const p0 = j * (nX + 1) + i, p1 = p0 + 1, p2 = p0 + nX + 1, p3 = p2 + 1;
+>       idx.push(p0, p2, p1, p1, p2, p3);
+>     }
+>     const g = new THREE.BufferGeometry();
+>     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+>     g.setAttribute('aR', new THREE.Float32BufferAttribute(aR, 2));
+> 720:  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+> 721:  const updaters: ((a: number) => void)[] = [];
+> 932 …[+603 chars]
+
+### 🤖 Claude — 2026-11-18T20:57:13.372Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1155,1215p src/world/match04m4.ts", "description": "Read the per-frame update function"}`
+
+### 🧑 User — 2026-11-18T20:57:13.505Z
+
+> ↩︎ result: arrowsOut.push({ mesh: g, za: z0 - a, mats: [] });
+>     }
+>     updaters.push((a) => { arrA = a; });
+>     console.info('[match04] m04arr3d', { arrows: arrowsOut.length / 2, sp, tilt: M04.num('m04a3k', 38) });
+>   }
+> 
+>   out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
+>     time.value = performance.now() / 1000;
+>     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+>     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+>     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+>     for (const u of updaters) u(a2);
+>     if (arrowsOut.length) {
+>       const cz = -a5b.z;                                                // camera local z (forward = -z)
+>       // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
+>       // chevron vanish as it reaches him, like the painted picture where all five lie ahead); far fade m04a3f0/f1 keeps
+>       // about five in view; m04a3o = glow opacity. Defaults = the r12 D1/D2 values.
+>       const n0 = M04.num('m04a3n0', 2.0), n1 = M04.num('m04a3n1', 4.5), f0 = M04.num('m04a3f0', 30), f1 = M04.num('m0 …[+1078 chars]
+

@@ -2396,3 +2396,25 @@ Screen 07's pictures are sent. Screen 04 has also reported, so I'll check it the
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:04-step1-shown 2>&1 | grep -E '\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py 2>&1 | tail -1 | cut -c1-170", "description": "Save Screen 04 review pictures and progress note", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T20:57:05.006Z
+
+> ↩︎ result: "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-bbe2b27e-oxfh1w | scheduler daemon | last verified backup 2026-11-18T20:56:43+00:00 (0.3 min ago) | local 7e1497c remote 7e1497c (match) | uncomm
+
+### 🤖 Claude — 2026-11-18T20:57:11.926Z
+
+Screens 07 and 04 each have a new result, and I've sent you both sets of pictures (approved, before and new, each full size). I checked both myself first, and each is saved on GitHub.
+
+**Screen 07: good improvement.**
+- **Closer to your picture:** further down the tube, the water near Benny used to be a blurry pink-and-purple smear with wall holes lying on it. It's now crisp, glossy cyan water with a magenta band and white bubbly edges, like your painted river. It's easiest to see in the second pair (further down the tube).
+- **Not right yet:** when steering hard left (last pair), a wide, flat, pale lilac-white patch fills the lower left. In your painting the foam is separate puffy clouds. I've passed that to the Screen 07 specialist.
+- **Next:** the tall grey-white foam walls that start again further down the drop, where you can see a hard cut.
+- **Checks:** the start view is unchanged, and 91 coins still collect.
+
+**Screen 04: good improvement, but small on screen.**
+- **Closer to your picture:** the far end of the tunnel used to be a flat orange disc with a pale blob, where the river stopped at a straight edge. It's now gold rings narrowing into a bright, warm white light, with the river flowing on into it. It's clearest in the end-of-tunnel pair.
+- **Still far off while riding:** Screen 04 still reads as a long, straight gold corridor. The water around Benny is plain cyan, where your painting has pink and cyan swirls sweeping around him. That's what the Screen 04 specialist is doing now.
+- **Checks:** the start view is unchanged.
+
+Screens 05 and 06 and the Screen 04 ring test are still working. Screen 08 is still waiting for your approval.
+

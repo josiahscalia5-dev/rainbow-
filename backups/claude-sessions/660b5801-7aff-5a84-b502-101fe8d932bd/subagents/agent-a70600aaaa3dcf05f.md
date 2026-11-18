@@ -1157,3 +1157,43 @@ The coin edit only changes where a not-yet-collected 06 coin is drawn (instance 
 
 > 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s05/qa/match/05/r17/step1_trans/new/shots.json ]; do sleep 3; done; ls /home/user/wt/s05/qa/match/05/r17/step1_trans/new/", "description": "Wait until NEW render is complete", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T20:57:08.060Z
+
+> ↩︎ result: shots.json
+> t95_through_screen.png
+> t98_end.png
+> x97.png
+> x97L.png
+> x97R.png
+> x98p5.png
+> x99.png
+
+### 🤖 Claude — 2026-11-18T20:57:09.460Z
+
+All NEW shots are done. Starting the task-2 probe in the background (one render at a time) while I judge the step-1 frames.
+
+### 🤖 Claude — 2026-11-18T20:57:12.611Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt | tr -d '\\n') && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/t2 && GRID='-0.861,0.609;-0.769,0.089;-0.537,-0.172;-0.479,0.362;-0.583,0.388;-0.907,-0.432;-0.769,-0.367;-0.421,0.674;-0.722,0.349;-0.95,0.0;-0.95,0.8' SHOT_DIR=$S timeout 900 node tools/match05/r15_probe.mjs \"$K\" t81L 5275 2>&1 | tail -20", "description": "Probe objects at hard-left k81 screen points", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T20:57:12.828Z
+
+> ↩︎ result: Command running in background with ID: btooky517. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/btooky517.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T20:57:13.112Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/new/x97.png"}`
+
+### 🧑 User — 2026-11-18T20:57:13.186Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:57:13.526Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r17/step1_trans/new/x98p5.png"}`
+
+### 🧑 User — 2026-11-18T20:57:13.656Z
+
+> ↩︎ result: [image]
+
