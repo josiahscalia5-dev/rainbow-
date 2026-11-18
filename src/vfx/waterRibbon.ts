@@ -433,6 +433,25 @@ export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
  * its baked picture magnified (elsewhere F's own painted foam shows). Locked view: hidden → unchanged.
  */
 export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
+/**
+ * `&m05join=1` (Screen 05 round 13, needs m05fpaint; src/world/match05far.ts, src/world/materials.ts farRiverMaterial):
+ * ONE CONTINUOUS RIVER AT THE SEAM while swimming. Where the baked far picture F would be magnified, m05fmag still faded
+ * the near ribbon into F over its last 1.5 u and the far river kept F over its first 2.5 u — a narrow band of magnified F
+ * (a pale smeared strip with an angular pale slab on the left) between two different pictures of the water, cut by the
+ * far river's first row as a straight line across the screen (t66 / t75 / k81). Under the switch that band shows no F at
+ * all where F would be magnified: the far river wears its painted continuation (T2 on the far layout, m05fpaint) from
+ * its very first row, and over m05blend's band before the seam the ribbon fades (variance-preserving) into exactly that
+ * same water — the same tile, the same far layout (uJnLay: rows by virtual depth, filled once by match05far.ts), the same
+ * virtual arc length and flow phase — so both surfaces show the same painted S-river where they meet. Locked view and the
+ * 06 fold: the far block is not live → nothing changes.
+ */
+export const M05JOIN: boolean = M05FPAINT && q05('m05join');
+export const m05join = {
+  /** far layout by virtual depth Z: width 2, one row per sample: (xB, hw, cL, wL), (cR, wR, core, v = uOfZ(Z)) */
+  uJnLay: { value: null as THREE.Texture | null },
+  /** sF (tunnel coordinate of the seam ring), Z range of the table, rows, unused */
+  uJnP: { value: new THREE.Vector4(0, 1, 2, 0) },
+};
 /** m05fpaint: shared uniforms (T2 texture + its start / half period, the ribbon's flow vector), filled by attachProj05 */
 export const m05fpaint = {
   uPjT2: { value: null as THREE.Texture | null },
@@ -712,6 +731,31 @@ uniform sampler2D uPjNM;   // m05near: keep-mask of E's near rows (1 = painted w
 uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
 #ifdef M05FMAG
 uniform float uFmD0;
+#endif
+#ifdef M05JOIN
+// m05join (Screen 05 round 13): the far layout table (match05far.ts) + the far river's band mapping onto T2 (as
+// materials.ts FPAINT_PARS: T2 columns left band -0.76 … -0.60, core -0.27, right band 0.06 … 0.45)
+uniform sampler2D uJnLay; uniform vec4 uJnP;
+void jnRow(float Z, out vec4 a, out vec4 b) {
+  float x = clamp(Z / uJnP.y, 0.0, 1.0) * (uJnP.z - 1.0);
+  float i = floor(x), f = x - i, i1 = min(i + 1.0, uJnP.z - 1.0);
+  float y0 = (i + 0.5) / uJnP.z, y1 = (i1 + 0.5) / uJnP.z;
+  a = mix(texture2D(uJnLay, vec2(0.25, y0)), texture2D(uJnLay, vec2(0.25, y1)), f);
+  b = mix(texture2D(uJnLay, vec2(0.75, y0)), texture2D(uJnLay, vec2(0.75, y1)), f);
+}
+float jnSeg(float x, float x0, float x1, float u0, float u1) { return mix(u0, u1, clamp((x - x0) / max(x1 - x0, 1e-3), 0.0, 1.0)); }
+float jnU(float lat, vec4 a, vec4 b) {
+  float xB = a.x, hw = a.y, cL = a.z, wL = a.w, cR = b.x, wR = b.y, core = b.z;
+  float a0 = xB - hw, a1 = cL - wL, a2 = cL, a3 = cL + wL, a4 = core, a5 = cR - wR, a6 = cR, a7 = cR + wR, a8 = xB + hw;
+  if (lat < a1) return jnSeg(lat, a0, a1, -0.84, -0.76);
+  if (lat < a2) return jnSeg(lat, a1, a2, -0.76, -0.69);
+  if (lat < a3) return jnSeg(lat, a2, a3, -0.69, -0.60);
+  if (lat < a4) return jnSeg(lat, a3, a4, -0.60, -0.27);
+  if (lat < a5) return jnSeg(lat, a4, a5, -0.27, 0.06);
+  if (lat < a6) return jnSeg(lat, a5, a6, 0.06, 0.25);
+  if (lat < a7) return jnSeg(lat, a6, a7, 0.25, 0.45);
+  return jnSeg(lat, a7, a8, 0.45, 0.52);
+}
 #endif
 #endif
 #ifdef M05WD
@@ -1755,6 +1799,9 @@ void main() {
     // M05BLEND): same texture, same mapping (real depth = virtual depth before the seam), same post-chain inverse
     float fbK = 0.0;
     vec4 fbC = vec4(0.0);
+    #ifdef M05JOIN
+    float jnK = 0.0;                               // m05join: share of the far river's painted continuation
+    #endif
     if (uFbP.w > 0.5 && uFbP.y > 0.01) {
       vec3 fbD = vPosW - uFbC0;
       float fbZ = dot(fbD, uFbT);
@@ -1767,11 +1814,20 @@ void main() {
         // m05fmag: where F is magnified the fade into it is only the last 1.5 u before the seam (the far river then
         // fades F out over its first 2.5 u into its own continuation of the formation: no hard line, short soft zone)
         float fmM = smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));
+        #ifdef M05JOIN
+        // m05join: no magnified F at all; over the whole blend band the ribbon fades into the far river's continuation
+        jnK = fbW * fmM * step(0.0, fbUV.x) * step(fbUV.x, 1.0);
+        fbK *= 1.0 - fmM;
+        #else
         fbK *= mix(1.0, smoothstep(uFbP.x - min(uFbP.y, 1.5), uFbP.x, fbZ) / max(fbW, 1e-3), fmM);
+        #endif
         #endif
       }
     }
     pjK = max(pjK, fbK);
+    #ifdef M05JOIN
+    pjK = max(pjK, jnK);
+    #endif
     #endif
     float s05r = s;
     float rideK05 = 0.0;
@@ -1854,6 +1910,23 @@ void main() {
       #ifdef M05BLEND
       tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)
       wEx = mix(wEx, 1.0, fbK);
+      #ifdef M05JOIN
+      if (jnK > 0.0) {
+        // m05join: the far river's painted continuation at this point (materials.ts FPAINT_APPLY, same inputs): T2 laid
+        // band by band onto the far layout at virtual depth Z, virtual arc length sF + u(Z), the same two-phase flow
+        vec3 jd = vPosW - uFbC0;
+        vec4 ja, jb;
+        jnRow(max(dot(jd, uFbT), 0.0), ja, jb);
+        float jfu = jnU(dot(jd, uFbRt), ja, jb);
+        float jsv = uJnP.x + jb.w;
+        float jph = fract(uTime * uPjFlow.y + uPjFlow.z);
+        float jD = uPjFlow.x * uPjFlow.w;
+        vec3 jA = texture2D(uPjT2, vec2(jfu * 0.5 + 0.5, (jsv + jD * (jph - 0.5) - uPjT2S.x) / uPjT2S.y)).rgb;
+        vec3 jB = texture2D(uPjT2, vec2(jfu * 0.5 + 0.5, (jsv + jD * (fract(jph + 0.5) - 0.5) - uPjT2S.x) / uPjT2S.y)).rgb;
+        tgt = pjMixVP(tgt, mix(jB, jA, 1.0 - abs(2.0 * jph - 1.0)), jnK);
+        wEx = mix(wEx, 1.0, jnK);                   // the far river has no fog either
+      }
+      #endif
       #endif
       if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
       vec3 lin = pjInverse(tgt);
@@ -2035,7 +2108,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05JOIN ? { M05JOIN: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
@@ -2140,6 +2213,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts
   if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts
   if (M05FMAG) u.uFmD0 = m05fmagD0;   // m05fmag (Screen 05 round 11/12): locked seam depth of the far block
+  if (M05JOIN) Object.assign(u, m05join);   // m05join (Screen 05 round 13): far layout table, filled by match05far.ts
   if (M05GEO) {
     // m05geo (Screen 05 round 9): painted channel per s (tools/match05/channel05_bp.py) as a 1-row texture for the VERTEX shader
     const ch = { value: empty as THREE.Texture };

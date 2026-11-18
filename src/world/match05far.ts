@@ -22,7 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
 import { tubeCenterAt } from './tube';
 import type { FarRiverLayout, FarRiverRow } from './far05';
 import type { Course, CourseSample } from './course';
-import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';
+import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';
 import { clip05 } from '../vfx/clip05';
 import type { FarLump05 } from '../vfx/foam';
 
@@ -115,6 +115,22 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
     ROW_KEYS.forEach((k, i) => { o[k] = tr[n * ROW_KEYS.length + i] * (1 - w) + tr[(n + 1) * ROW_KEYS.length + i] * w; });
     return o;
   };
+  if (M05JOIN) {
+    // `&m05join=1` (Screen 05 round 13, waterRibbon.ts M05JOIN): the far layout by virtual depth for the near ribbon's
+    // blend band before the seam (the seam never passes zCap) — float, read with manual interpolation (nearest)
+    const NJ = 512, zMax = a.zCap + 1;
+    const dj = new Float32Array(NJ * 2 * 4);
+    for (let n = 0; n < NJ; n++) {
+      const Z = (n / (NJ - 1)) * zMax, r = rowAt(Z);
+      dj.set([r.xB, r.hw, r.cL, r.wL, r.cR, r.wR, r.core, ft.uOfZ(Z)], n * 8);
+    }
+    const tj = new THREE.DataTexture(dj, 2, NJ, THREE.RGBAFormat, THREE.FloatType);
+    tj.minFilter = tj.magFilter = THREE.NearestFilter;
+    tj.generateMipmaps = false;
+    tj.needsUpdate = true;
+    m05join.uJnLay.value = tj;
+    m05join.uJnP.value.set(sF, zMax, NJ, 0);
+  }
 
   // live state
   let D0 = D0lock, zs = 0;

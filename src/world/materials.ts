@@ -4,7 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
+import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, M05JOIN, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -878,9 +878,10 @@ float fpU(float lat, float xB, float hw, float cL, float wL, float cR, float wR,
   return fpSeg(lat, a7, a8, 0.45, 0.52);
 }
 `;
+/** `&m05join=1` (round 13): from the far river's first row on (the ribbon fades into this same water before the seam) */
 const FPAINT_APPLY = `  {
     // m05fpaint (Screen 05 round 12): the approved near water T2 where F would be magnified (same weight as m05fmag)
-    float fpW = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, Zv);
+    float fpW = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist, 0.5))${M05JOIN ? '' : ' * smoothstep(uFbP.x, uFbP.x + 2.5, Zv)'};
     fpW *= 1.0 - foamIn;
     if (fpW > 0.0) {
       float fu = fpU(lat, xB, hw, cL, wL, cR, wR, core);
@@ -894,7 +895,7 @@ const FPAINT_APPLY = `  {
   }
 `;
 /** `&m05fmag=1` (Screen 05 round 11): weight of the baked far picture F — 0 where swimming magnifies it (block live) */
-const FMAG_PRE ='float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w);\n  ';
+const FMAG_PRE = `float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5))${M05JOIN ? '' : ' * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w)'};\n  `;   // m05join (round 13): no F ramp behind the seam
 export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
   // wins the depth test against the real ribbon's continuation it covers just behind the seam
@@ -1199,7 +1200,7 @@ float rivCells(vec2 p) {
   }
   if (pj) {
     const key = mat.customProgramCacheKey;
-    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '');
+    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '') + (M05JOIN ? '-m05join' : '');
     mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };
     mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);
   }
