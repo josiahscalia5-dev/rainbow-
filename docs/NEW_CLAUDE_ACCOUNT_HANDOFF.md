@@ -1,4 +1,18 @@
-# ▶▶▶▶▶▶ NEWEST — ACCOUNT 9 (round 9) STATE (2026-11-18 ~02:50 UTC, lead session `session_01Kbt6BXRtCe7mvFtZdouetF`)
+# ▶▶▶▶▶▶▶ NEWEST — ACCOUNT 10 (round 10) STATE (2026-11-18 ~10:45 UTC, lead session `session_01AvQv6SpZeUhzBcjgGW7HAA`)
+
+Lead branch `ccr-c526614d-tw0yro` (= `claude/rainbow-restore-c9-40w64b` @ `4e0f94e` + autosaves). Branch map + slots:
+**`docs/briefs/2026-11-18-r10/COORDINATION.md`**; new user standards (judge by eye, not colour numbers; faithful
+continuation; preserve working projection): `RULES_R10.md`; tool research (DA3, MoGe-3, TRELLIS.2, Scenario YVO3D,
+Substance Sampler, ControlNet, differentiable rendering, HF connector): `TOOL_EVALUATION.md`; fresh audit of all -c9 tips
+with full-size APPROVED / game frames: `qa/review_c10/2026-11-18/`. RUNNING: 08 `claude/rainbow-s08-scenery-c10`, 05
+`claude/rainbow-s05-match-c10`. **Pending free network permission** (Hugging Face + PyTorch CPU hosts for Depth Anything 3):
+`PENDING_ENVIRONMENT_REQUEST.md` — re-submit only when the user says they are on a computer. Keys: World Labs 5,420 credits
+(08 world readable), fal = same purchased account; both proxy-injected on env `rainbow-`. If account 10 runs out: `-c11`
+branches from each newest `-c10` (or `-c9`) tip.
+
+---
+
+# ▶▶▶▶▶▶ ACCOUNT 9 (round 9) STATE (2026-11-18 ~02:50 UTC, lead session `session_01Kbt6BXRtCe7mvFtZdouetF`)
 
 **Lead branch: `claude/rainbow-restore-c9-40w64b`** (contains the newest account-8 lead `claude/rainbow-lead-c8` @ `dd32bbfd`).
 Branch map, running specialists, verified services: **`docs/briefs/2026-11-18-r9/COORDINATION.md`**. Each screen continues

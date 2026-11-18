@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14553,
-   "sha256": "811ca50cda3314176bbb3df749f6b16cac50cac92649440852706100035c411f"
+   "sha256": "93ef335d43a2248a6adde83414da9fd88a3301c5d59407537c8f74ca43d1f683"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,8 +723,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 44184,
-   "sha256": "c9c49379e959873bdf2b35c3aa37946dedab2f72126c3af389dcd471258868e4"
+   "bytes": 45322,
+   "sha256": "aa81e924a60b8aea83c90156900df7dd5708b8d12329ada0a7d75f465298a2fd"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -930,6 +930,26 @@
    "path": "docs/briefs/2026-11-17-r7/USER_FEEDBACK_R7B.md",
    "bytes": 1801,
    "sha256": "91e931c4424925268fceadbf90de5907f0c960b2ea645b095d5ca4918c292ebd"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r10/COORDINATION.md",
+   "bytes": 1892,
+   "sha256": "1e3a4e0b3b1bc2b4c23f688791aef1b306f4e3cf8a1665ee5f2aa53b5b24f304"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md",
+   "bytes": 2466,
+   "sha256": "b0264e2ea1edbf357cd63aa831f7d5fa13575120fa1e3ca76e559b544196196f"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r10/RULES_R10.md",
+   "bytes": 3166,
+   "sha256": "302d12f2ddf3c8f790d7b5a19ab4141ebaee572e34ab738c8d013cd5b0ee89ce"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r10/TOOL_EVALUATION.md",
+   "bytes": 5875,
+   "sha256": "9d880a3733ddc957e44c3440f6906be9d23509d94f0439f78ac2cd2343961ea4"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",
