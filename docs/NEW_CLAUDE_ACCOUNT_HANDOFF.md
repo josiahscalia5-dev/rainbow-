@@ -1,4 +1,17 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 16 (round 16) STATE (2026-11-18 ~19:15 UTC, lead branch `ccr-e42bb3c0-jpif8d`)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 17 (round 17) STATE (2026-11-18 ~20:50 UTC, lead branch `ccr-bbe2b27e-oxfh1w`)
+
+The cloud session opened on the OLD lead `ccr-5495e9c4-g0apvl` (2026-11-17 22:44 UTC); at the user's "do exactly where we left off"
+the account-16 lead `ccr-e42bb3c0-jpif8d` @ `e057fe80` (its last save, 20:14 UTC) was merged into this fresh session branch
+(`9eea720d`; the old branch added only backup / transcript autosaves). Account 16 stopped at ~20:14 UTC with all six workers mid-step;
+their unfinished edits (20:14 `backups/wip/*-c16/`) are restored UNCOMMITTED on new `-c17` branches. Branch map, services, verdicts:
+**`docs/briefs/2026-11-18-r17/COORDINATION.md`**; where each worker stopped: **`docs/briefs/2026-11-18-r17/RESUME_R17.md`**; worktree
+recipe `docs/briefs/2026-11-18-r17/setup_worker.sh`. Connectors: World Labs Atlas connected; keys (World Labs 5,420 credits, fal)
+injected and verified; network now also allows `cdn.marble.worldlabs.ai` + `mcp.context7.com` (user-approved). If account 17 runs
+out: `-c18` branches from each NEWEST `-c17` tip; never write `-c17` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶ ACCOUNT 16 (round 16) STATE (2026-11-18 ~19:15 UTC, lead branch `ccr-e42bb3c0-jpif8d`)
 
 Started 18:51 UTC from the account-15 lead `ccr-47b10cec-03c7co` @ `0aeee2e` (nothing merged). Account 15 hit its **5-hour usage
 limit at 18:49 UTC** (resets 23:10 UTC) after ~37 min of six parallel workers; all six were cut off mid-step; their unfinished edits

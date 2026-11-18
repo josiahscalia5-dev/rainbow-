@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 17811,
-   "sha256": "2a667f090020715733c5c04c5ce1d48d839b932322c076cb5903473d26c5272c"
+   "bytes": 17971,
+   "sha256": "756ad133e586699d0fc5e45c8368f5a28b479028169926e25bbd1d61df8d7b56"
   },
   {
    "path": "README_FIRST.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17937,
-   "sha256": "68bde582f8afd00d11f98cb4e9643bf380757170c63d1e55a7c646f61c4a6d4c"
+   "sha256": "cef04bad3a6bcdca884565d3a9c307a9ca89b5b49c05ce3ea2b3f1f1948feced"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1668,8 +1668,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 52817,
-   "sha256": "2d060490787e221981d0d72d3252833e4852b2200cb11f5c8bdb96fe0e92527f"
+   "bytes": 53965,
+   "sha256": "034422b499c8d6fac4355c23e5ea13ec55541d2e41414bb74fc5ae9aaf06eafc"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -2015,6 +2015,21 @@
    "path": "docs/briefs/2026-11-18-r16/setup_worker.sh",
    "bytes": 2324,
    "sha256": "7f1a4f7d5febe732b653eb70ece3034416585dce422e67aed364be7857ea911f"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r17/COORDINATION.md",
+   "bytes": 5380,
+   "sha256": "ddaac4e0cb0c65b124d01cfdca2f53fa460cef0f95c2790204fe4e65821d150e"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r17/RESUME_R17.md",
+   "bytes": 6037,
+   "sha256": "3ed9f43ca4a651a2708250d40e8341d83b92b0fbb523f960f287d7e29f9acd03"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r17/setup_worker.sh",
+   "bytes": 2337,
+   "sha256": "48cb5c29e4f1eecb1303c4abaa52eed349b9fa28f8368b027ef5bc8945ab4169"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",
