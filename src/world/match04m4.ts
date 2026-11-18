@@ -26,6 +26,7 @@ export const M04 = {
   arrow: on('m04arrow'),
   wave: on('m04wave'),
   river: on('m04river'),
+  gold: on('m04gold'),
   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
 };
 
@@ -75,6 +76,7 @@ uniform float uLen;
 uniform vec4 uTone;        // band base, lip base, opening base, streak strength
 uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
 uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
+uniform float uGoldY;      // m04gold: polished YELLOW-gold ramp (bright yellow-white highlights), fewer magenta tints
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -85,6 +87,16 @@ vec3 goldRamp(float x) {
   x = clamp(x, 0.0, 1.0) * 5.0;
   vec3 c0 = vec3(0.43, 0.14, 0.02), c1 = vec3(0.66, 0.27, 0.07), c2 = vec3(0.80, 0.38, 0.11);
   vec3 c3 = vec3(0.96, 0.56, 0.15), c4 = vec3(1.0, 0.80, 0.30), c5 = vec3(1.0, 0.96, 0.80);
+  if (x < 1.0) return mix(c0, c1, x);
+  if (x < 2.0) return mix(c1, c2, x - 1.0);
+  if (x < 3.0) return mix(c2, c3, x - 2.0);
+  if (x < 4.0) return mix(c3, c4, x - 3.0);
+  return mix(c4, c5, x - 4.0);
+}
+vec3 goldRampY(float x) {
+  x = clamp(x, 0.0, 1.0) * 5.0;
+  vec3 c0 = vec3(0.52, 0.22, 0.03), c1 = vec3(0.76, 0.40, 0.07), c2 = vec3(0.89, 0.55, 0.12);
+  vec3 c3 = vec3(0.98, 0.72, 0.20), c4 = vec3(1.0, 0.87, 0.42), c5 = vec3(1.0, 0.98, 0.86);
   if (x < 1.0) return mix(c0, c1, x);
   if (x < 2.0) return mix(c1, c2, x - 1.0);
   if (x < 3.0) return mix(c2, c3, x - 2.0);
@@ -122,7 +134,7 @@ void main() {
     // soft warm-white core, yellow-orange glow, orange toward the rim (matches the far bands), no hard target rings
     float rad = clamp(rr / 3.6, 0.0, 1.0);
     col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
-    col = mix(col, vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+    col = mix(col, uGoldY > 0.5 ? vec3(0.98, 0.70, 0.22) : vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
     col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(log(max(rad, 0.01)) / log(0.72)) - 0.5)) * smoothstep(0.35, 0.7, rad);
   } else {
     bool mouth = vK.y < -0.5;
@@ -147,7 +159,7 @@ void main() {
       if (part > 0.5 && part < 1.5) v = uTone.y + 0.12 * facing + 0.04 * far + 0.15 * st;
       if (part > 1.5 && part < 2.5) v = 0.03 + 0.05 * far;
     }
-    col = goldRamp(v);
+    col = uGoldY > 0.5 ? goldRampY(v) : goldRamp(v);
     if (!mouth && part < 1.5) {
       // the painted ring colour at this angle (pinks, violets, yellow streaks of the approved rings), with the crisp
       // structure's brightness: painted palette + modeled lip / groove / highlight shapes
@@ -168,7 +180,7 @@ void main() {
     float hv = mix(h21(vec2(floor(fa), ry)), h21(vec2(floor(fa) + 1.0, ry)), smoothstep(0.0, 1.0, fract(fa)));
     float pk = (0.42 * low + 0.22 * smoothstep(0.78, 0.98, hv) * (1.0 - low)) * (part > 0.5 && part < 1.5 ? 0.35 : 1.0);
     vec3 wc2 = mix(wc, vec3(0.88, 0.42, 0.78), 1.0 - low);   // dusky violet-pink tint on the upper walls
-    col = mix(col, wc2 * (0.55 + 0.6 * v), pk * (mouth ? 0.6 : 1.0));
+    col = mix(col, wc2 * (0.55 + 0.6 * v), pk * (mouth ? 0.6 : 1.0) * (1.0 - 0.55 * uGoldY));
     // a few cool blue-violet glints on the bands (painted reflections of the cyan water)
     if (!mouth && part < 0.5) {
       float cb = streaks(ang + 1.3, ring + 31.0);
@@ -333,13 +345,13 @@ ${PROJ05_INVERSE}
 void main() {
   float r = length(vUv);
   if (r > 1.0 || uAlpha * vF < 0.5) discard;
-  // a painted foam ball: white sphere, lilac-blue shading low right, pink rim tint, bright window highlight
+  // a painted foam puff: white top-left, lavender-blue / pink shadow low right, soft bright window highlight
   vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));
   float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);
-  vec3 col = mix(vec3(0.72, 0.70, 0.96), vec3(0.99, 0.98, 1.0), smoothstep(0.05, 0.75, l));
-  col = mix(col, vec3(0.98, 0.80, 0.96), 0.30 * smoothstep(0.65, 1.0, r) * (0.5 + 0.5 * sin(vS * 9.0)));
-  col += vec3(1.0) * 0.55 * smoothstep(0.20, 0.0, length(vUv - vec2(-0.32, 0.38)));
-  col = mix(col, vec3(0.62, 0.58, 0.90), 0.35 * smoothstep(0.86, 1.0, r));
+  vec3 shade = mix(vec3(0.70, 0.64, 0.95), vec3(0.93, 0.70, 0.92), 0.5 + 0.5 * sin(vS * 11.0));
+  vec3 col = mix(shade, vec3(1.0, 0.99, 1.0), smoothstep(0.10, 0.80, l));
+  col += vec3(1.0) * 0.45 * smoothstep(0.22, 0.0, length(vUv - vec2(-0.30, 0.36)));
+  col = mix(col, shade * 0.92, 0.30 * smoothstep(0.88, 1.0, r));
   gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
 }`;
 
@@ -377,7 +389,7 @@ export function addM04(ctx: M04Ctx) {
       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
-        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', 1.4) }, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
     // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
@@ -510,14 +522,38 @@ export function addM04(ctx: M04Ctx) {
     // the painted foam clouds: big white puffy balls piled along both river edges where the river meets the gold wall,
     // in clusters of varied size with short gaps, plus bigger banks before the opening
     const items: { p: THREE.Vector3; r: number; s: number }[] = [];
+    // `m04foam2` (default with m04foam under m04river): irregular heaped clumps instead of evenly spaced rows
+    const heaped = M04.num('m04foam2', 1) > 0.5;
     for (const side of [-1, 1]) {
       let a = 0.2 + rnd() * 0.5;
-      while (a < len - 1) {
+      while (heaped && a < len - 1) {
+        const cl = 0.5 + Math.pow(rnd(), 1.3) * 2.4;            // clump length along the river
+        const H = 0.2 + Math.pow(rnd(), 1.8) * 1.1;              // heap height (a few tall heaps, many low ones)
+        const reach = 0.3 + rnd() * 0.5 + H * 0.6;               // how far the clump spills into the river
+        const n = Math.round(6 + cl * (8 + H * 22));
+        const lean = (rnd() - 0.5) * 0.6;
+        for (let i = 0; i < n; i++) {
+          const t = rnd(), env = Math.pow(Math.sin(Math.PI * t), 0.7);
+          const hf = Math.pow(rnd(), 1.6) * env;                 // height fraction inside the heap
+          const big = rnd() < 0.18;
+          const rad = (big ? 0.28 + rnd() * 0.30 : 0.06 + Math.pow(rnd(), 1.7) * 0.24) * (1 - 0.45 * hf);
+          const d = Math.min(xW - XF + 0.4, rnd() * reach * env + lean * t * 0.5);   // inward from the wall
+          const onWall = rnd() < 0.25;                            // some puffs heaped up the lower wall
+          const tt = Math.max(0, 1 - Math.max(0, d) / Math.max(0.1, xW - XF));
+          const ys = onWall ? RY + rnd() * 0.7 * env : 0.02 + RY * tt * tt;
+          const x = side * (onWall ? xW - 0.12 - rnd() * 0.15 : XF + (xW - XF) * tt - 0.05);
+          const y = ys + rad * (0.25 + 0.4 * rnd()) + hf * H;
+          if (Math.hypot(x, y - cy) > r - 0.08) continue;
+          items.push({ p: new THREE.Vector3(cx + x, y, z0 - a - t * cl), r: rad, s: rnd() });
+        }
+        a += cl + 0.1 + Math.pow(rnd(), 1.5) * 2.2;              // irregular gaps
+      }
+      while (!heaped && a < len - 1) {
         const cl = 1.2 + rnd() * 2.2, n = Math.round(cl * (9 + rnd() * 6));
         for (let i = 0; i < n; i++) {
           const t = rnd(), env = Math.sin(Math.PI * t);
           const rad = 0.10 + Math.pow(rnd(), 1.4) * 0.34 * (0.5 + 0.5 * env);
-          const inward = rnd() * 0.75 * (0.4 + 0.6 * env);            // spill a little down the river side
+          const inward = rnd() * 0.75 * (0.4 + 0.6 * env);
           const tt = Math.max(0, 1 - inward / Math.max(0.1, xW - XF));
           const x = side * (XF + (xW - XF) * tt - 0.05), y = 0.02 + RY * tt * tt + rad * (0.3 + 0.5 * rnd()) + 0.25 * env * rnd();
           items.push({ p: new THREE.Vector3(cx + x, y, z0 - a - t * cl), r: rad, s: rnd() });

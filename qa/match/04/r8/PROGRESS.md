@@ -46,3 +46,22 @@ Every NEW set below is rendered with `node tools/match04/audit04.mjs <dir> "<que
   `.../BEFORE/t66_through_screen.png`, `.../BEFORE/s_right_hard.png`
 * NEW: `/home/user/wt/s04/qa/match/04/r8/step2_m04river/f06_forward6u.png`, `.../step2_m04river/t33_through_screen.png`,
   `.../step2_m04river/t66_through_screen.png`, `.../step2_m04river/s_right_hard.png`
+
+## Step 3 — same query as step 2; the foam is now irregular heaped clumps (`&m04foam2=0` = step-2 rows) (kept)
+* **What looks better while swimming:** the foam along the river no longer reads as stiff, evenly spaced rows of
+  identical white balls (a "cotton-ball fence"). It is now soft, irregular piled clusters: big and small puffs mixed,
+  heaped higher in places and low in others, with gaps between clumps, some heaped up the lower wall and some spilling
+  into the river, shaded white on top with lavender-blue and pink in the shadows — like the painted foam banks.
+* **Approved view:** unchanged (the foam only appears once the camera has left the approved view).
+* **Measured** PALETTE step 2 → step 3: f06 67.8 → 68.9 %, t33 65.2 → 66.4 %, t66 66.4 → 67.2 %; s_left_hard 58.3
+  (BEFORE) → 65.4 %.
+* **Tried and NOT kept (candidate only): `&m04gold=1`** — yellow-gold ring ramp with yellow-white highlights and fewer
+  magenta tints. It reads more "polished gold", but it moves the tunnel away from the approved picture's measured ring
+  colours (the painted bands average about (190, 87, 46), deep orange-gold) and PALETTE fell 7–11 points (f06 60.9,
+  t33 56.3, t66 54.7 %); a middle setting (yellow-white lips/highlights + yellow mouth ring, orange bands kept) is next.
+* **Still wrong:** rings still carry strong magenta streaks; arrows thinner/more numerous than the painted five; water
+  right under the camera soft; heaps sometimes a little too lilac.
+* BEFORE: `/home/user/wt/s04/qa/match/04/r8/BEFORE/f06_forward6u.png`, `.../BEFORE/t33_through_screen.png`,
+  `.../BEFORE/t66_through_screen.png`, `.../BEFORE/s_left_hard.png`
+* NEW: `/home/user/wt/s04/qa/match/04/r8/step3_m04foam2/f06_forward6u.png`, `.../step3_m04foam2/t33_through_screen.png`,
+  `.../step3_m04foam2/t66_through_screen.png`, `.../step3_m04foam2/s_left_hard.png`
