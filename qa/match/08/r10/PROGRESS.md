@@ -22,3 +22,23 @@ Kept query: `B7&m08far=1`
   depth), 240 px by more than 20 levels; mean error to the approved picture on the changed pixels 5.88 → 5.87 (same).
 * Images (separate, full size): `step1_m08far/1_APPROVED.png`, `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for
   `f06_forward6u`, `t33_through_screen`, `t66_through_screen`.
+
+## Rejected (not kept): ceiling-seam continuation (defect B) — `m08mirror`, `m08seamc` (code removed)
+* Mirror of the painted chamber about the arch's opening edge: ghost copies of the door rim, window and handle above the
+  door, sharp diagonal tears. Worse.
+* Fill tinted with the painted wall's colour at the opening edge (multiplicative, then additive): rainbow speckles, then
+  gold / grey-green cast; the curved line stays visible. Not closer. The seam stays as in BEFORE.
+
+## Step 2 — `&m08coinv=1` (defect C: coin look; positions, count 91, pickup rule and score unchanged) — KEPT
+Kept query: `B7&m08far=1&m08coinv=1`
+* What changed (only how the nine picture coins are drawn): (1) never larger on screen than the painted nearest coin
+  (≈ 5.6 % of the frame height); (2) the pickup "pop" no longer grows ×1.8 and rises over Benny — it shrinks away and
+  fades where it overlaps him; (3) a coin Benny has already passed (no longer collectable) fades out instead of sweeping
+  past the camera as a frame-filling disc; (4) coins nearer than Benny fade where they overlap him (finished r8 code).
+* What looks closer: at forward 10 u there is no longer a big coin over Benny's body; at two-thirds through there is no
+  coin on his hat and no huge coin at the frame bottom; at the stage end the coin beside his hat is painted size and the
+  huge cut-off coin at the bottom is gone. The river ahead keeps its tidy line of small coins, as painted.
+* Still wrong: the coins ahead are 3D gold coins (slightly brighter, flatter than the painted ones); the first coin
+  beside Benny is still a little larger than its painted neighbour at some positions.
+* Images: `step2_m08coinv/1_APPROVED.png`, `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f10_forward10u`,
+  `t66_through_screen`, `t95_through_screen`.
