@@ -1,5 +1,5 @@
 diff --git a/src/world/environment.ts b/src/world/environment.ts
-index 0b4973b..c244481 100644
+index 0b4973b..03bbd7c 100644
 --- a/src/world/environment.ts
 +++ b/src/world/environment.ts
 @@ -15,7 +15,7 @@ import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05f
@@ -16,7 +16,7 @@ index 0b4973b..c244481 100644
        ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
        radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
 -      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
-+      zCap: sGlow05 + 3.5 - sF05, foldNear: M05TRANS ? qaNum05('m05tfn', 5.1) : M05END ? 5.2 : 6.5, foldFar: M05TRANS ? qaNum05('m05tff', 5.2) : M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
++      zCap: sGlow05 + 3.5 - sF05, foldNear: M05TRANS ? qaNum05('m05tfn', 5.06) : M05END ? 5.2 : 6.5, foldFar: M05TRANS ? qaNum05('m05tff', 5.18) : M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
        riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
        course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
        clouds: farClouds05 ?? undefined,
@@ -37,7 +37,7 @@ index d900bf2..659da36 100644
   * `&m05fcoin=1` (Screen 05 round 12, needs m05far; src/gameplay/coins.ts): coin LOOK only. Past the far seam the real
   * course climbs away toward 06 while the far block shows the painted 05 river running on into the throat, so the next
 diff --git a/tools/match05/r8_shots.mjs b/tools/match05/r8_shots.mjs
-index f9e674f..51bbcf0 100644
+index f9e674f..a4e6be6 100644
 --- a/tools/match05/r8_shots.mjs
 +++ b/tools/match05/r8_shots.mjs
 @@ -31,6 +31,7 @@ async function startVite(port) {
@@ -48,21 +48,22 @@ index f9e674f..51bbcf0 100644
  mkdirSync(OUT, { recursive: true });
  const { chromium } = loadPlaywright();
  const vite = await startVite(Number(PORT));
-@@ -49,7 +50,12 @@ const EXTRA = [
+@@ -49,7 +50,13 @@ const EXTRA = [
    ['t92_left', 't0.92', -1], ['t92_right', 't0.92', 1], ['t98_end', 't0.98', null], ['t102_06', 't1.02', null], ['t95_left', 't0.95', -1], ['t95_right', 't0.95', 1],
  ];
  const want = ONLY === 'all' ? null : new Set(ONLY.split(','));
 -const SHOTS = want ? [...ALL, ...EXTRA].filter(([n]) => want.has(n)) : ALL;
 +// round 15: free positions through the 05 -> 06 hand-over, named x<percent of stage 05>[L|R] (e.g. x99, x103L)
-+const XS = want ? [...want].filter((n) => /^x\d+[LR]?$/.test(n)).map((n) => {
-+  const m = n.match(/^x(\d+)([LR]?)$/);
-+  return [n, `t${(Number(m[1]) / 100).toFixed(2)}`, m[2] === 'L' ? -1 : m[2] === 'R' ? 1 : null];
++// (x98p7 = 98.7 % of the stage)
++const XS = want ? [...want].filter((n) => /^x\d+(p\d+)?[LR]?$/.test(n)).map((n) => {
++  const m = n.match(/^x(\d+)(?:p(\d+))?([LR]?)$/);
++  return [n, `t${(Number(`${m[1]}.${m[2] ?? 0}`) / 100).toFixed(4)}`, m[3] === 'L' ? -1 : m[3] === 'R' ? 1 : null];
 +}) : [];
 +const SHOTS = want ? [...[...ALL, ...EXTRA].filter(([n]) => want.has(n)), ...XS] : ALL;
  try {
    const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
    page.on('pageerror', (e) => console.error('pageerror', e.message));
-@@ -69,6 +75,7 @@ try {
+@@ -69,6 +76,7 @@ try {
        r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
        return { ...r.state(), frames: n, s0, s1, target, coinsOnScreen: r.coinScreen(), benny: r.bennyScreen() };
      }, ['05', dist, steer]);

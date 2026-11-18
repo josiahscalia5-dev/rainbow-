@@ -751,3 +751,26 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:34:20.018Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 100,135p src/game/Game.ts; grep -n \"m08\" src/game/Game.ts | head -40", "description": "Inspect how Game.ts wires the match08 scenery"}`
+
+### 🧑 User — 2026-11-18T18:34:20.059Z
+
+> ↩︎ result: const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+>   const m08 = MATCH['08'] ? await buildMatch08() : null;
+>   if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+>   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+>   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+>   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+>   const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+>   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+>    …[+2573 chars]
+
