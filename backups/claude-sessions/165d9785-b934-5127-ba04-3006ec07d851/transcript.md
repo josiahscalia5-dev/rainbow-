@@ -841,3 +841,60 @@ Only the 04 branch arrived before the time limit. I'll fetch the other four `-c1
 
 > 🔧 **Bash** `{"command": "timeout 500 git fetch origin claude/rainbow-s05-match-c11:refs/remotes/origin/claude/rainbow-s05-match-c11 claude/rainbow-s06-match-c11:refs/remotes/origin/claude/rainbow-s06-match-c11 claude/rainbow-s07-match-c11:refs/remotes/origin/claude/rainbow-s07-match-c11 claude/rainbow-s08-scenery-c11:refs/remotes/origin/claude/rainbow-s08-scenery-c11 2>&1 | tail -5; for b in claude/rainbow-s05-match-c11 claude/rainbow-s06-match-c11 claude/rainbow-s07-match-c11 claude/rainbow-s08-scenery-c11; do echo \"$b  $(git log -1 --format='%h %ci %s' origin/$b 2>/dev/null | cut -c1-220)\"; done", "de …[+77 chars]`
 
+### 🧑 User — 2026-11-18T12:39:40.335Z
+
+> ↩︎ result: From https://github.com/josiahscalia5-dev/rainbow-
+>  * [new branch]        claude/rainbow-s05-match-c11 -> origin/claude/rainbow-s05-match-c11
+>  * [new branch]        claude/rainbow-s06-match-c11 -> origin/claude/rainbow-s06-match-c11
+>  * [new branch]        claude/rainbow-s07-match-c11 -> origin/claude/rainbow-s07-match-c11
+>  * [new branch]        claude/rainbow-s08-scenery-c11 -> origin/claude/rainbow-s08-scenery-c11
+> claude/rainbow-s05-match-c11  2d9fe975 2026-11-18 12:18:08 +0000 Screen 05 r11 step 2: &m05end=1 — the stage end stays inside the painted 05 tunnel (far block folds as Benny enters 06, true eye-to-seam distance) instead of the generic 06 hall at t9
+> claude/rainbow-s06-match-c11  8182130c 2026-11-18 12:12:11 +0000 Screen 06 r11 (lead): &m06bend test 2 (half turn, smoothed) — NOT an improvement; bend method stopped after two tries, conclusion logged
+> claude/rainbow-s07-match-c11  dbc7678c 2026-11-18 01:53:35 +0000 Screen 07 r8: correct STATUS time
+> claude/rainbow-s08-scenery-c11  35b5fc5a 2026-11-18 12:15:35 +0000 Screen 08 r11 step 2: &m08near=1 crisp painted near water while swimming (approved near river band, world-anchored along the river)
+
+### 🤖 Claude — 2026-11-18T12:39:47.048Z
+
+I now have the newest tip of every screen. Next I'll bring my session branch up to the lead's newest commit (`5c40dde`) while holding the autosave lock, so the daemon can't commit in the middle.
+
+### 🤖 Claude — 2026-11-18T12:39:48.343Z
+
+> 🔧 **Bash** `{"command": "grep -n \"lock\" scripts/rainbow-autosave.py | head -20; ls backups/.live/*.lock .git/*.lock 2>/dev/null; git status --short | head; git log -1 --format=%h origin/ccr-e908f8da-cy4yc1", "description": "Find the autosave lock mechanism"}`
+
+### 🧑 User — 2026-11-18T12:39:48.412Z
+
+> ↩︎ result: 9:  2. takes an exclusive lock and skips if another git operation is in progress
+> 44:LOCK = REPO / "backups" / ".autosave.lock"
+> 80:    if p.returncode != 0 and "index.lock" in p.stderr:
+> 243:    (specialists work in /home/user/wt/<sNN> on their own branches) write, read-only (--no-optional-locks: never takes
+> 244:    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 250:    for block in wl.strip().split("\n\n"):
+> 251:        kv = dict(line.split(" ", 1) if " " in line else (line, "") for line in block.splitlines())
+> 257:        g = lambda *a: subprocess.run(["git", "--no-optional-locks", "-C", str(wt), *a], capture_output=True,
+> 300:    lockfh = open(LOCK, "w")
+> 302:        fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+> 303:    except BlockingIOError:
+> 326:        for busy in ("index.lock", "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD"):
+> 347:        except Exception as e:  # a snapshot problem must never block the backup itself
+> 445:        fcntl.flock(lockfh, fcntl.LOCK_UN)
+> 446:        lockfh.close()
+> backups/.live/bootstrap.lock
+> 92731e13
+
+### 🤖 Claude — 2026-11-18T12:39:50.800Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -3 HEAD; git log --oneline -3 origin/ccr-e908f8da-cy4yc1; git status --short | head", "description": "Compare local and remote session branch"}`
+
+### 🧑 User — 2026-11-18T12:39:50.851Z
+
+> ↩︎ result: 92731e13 autosave: Rainbow 2026-11-18 12:37 UTC
+> c1cb9514 autosave: Rainbow 2026-11-18 12:32 UTC
+> 4d00f1a1 autosave: Rainbow 2026-11-18 12:32 UTC
+> 92731e13 autosave: Rainbow 2026-11-18 12:37 UTC
+> c1cb9514 autosave: Rainbow 2026-11-18 12:32 UTC
+> 4d00f1a1 autosave: Rainbow 2026-11-18 12:32 UTC
+
+### 🤖 Claude — 2026-11-18T12:39:59.521Z
+
+> 🔧 **Bash** `{"command": "timeout 600 python3 scripts/rainbow-autosave.py --reason manual:start-account12 2>&1 | tail -8; python3 -I scripts/autosave-status.py 2>&1 | tail -3; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 60 git ls-remote origin refs/heads/ccr-e908f8da-cy4yc1 | cut -f1)\"", "description": "Run a test save and verify remote SHA matches", "timeout": 660000}`
+
