@@ -533,3 +533,63 @@ I'll start by inspecting where the previous instance stopped.
 >   a=10.40 px=(462,554) lum=144.3 rgb=[254 137  42]
 >   a= …[+4791 chars]
 
+### 🤖 Claude — 2026-11-18T02:01:23.322Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,200p tools/lead_r6/motion_audit.mjs", "description": "Read the motion audit script"}`
+
+### 🧑 User — 2026-11-18T02:01:23.353Z
+
+> ↩︎ result: // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [
+>   ['a00_approved_view', 0, null],
+>   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, …[+1762 chars]
+
+### 🤖 Claude — 2026-11-18T02:01:38.380Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat > tools/match04/audit04.mjs <<'EOF'\n// Screen 04 r8: the lead's moving audit (tools/lead_r6/motion_audit.mjs) with a selectable SHOTS subset, so a step can be\n// rendered only at the 2–4 audit positions where it shows best (same shot names as qa/match/04/r8/BEFORE/).\n//   node tools/match04/audit04.mjs <outDir> \"<query>\" [shot1,shot2,...]   (no list = all 12)\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd( …[+2804 chars]`
+
+### 🧑 User — 2026-11-18T02:01:51.384Z
+
+> ↩︎ result: console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> 04 a00_approved_view s 78.257 lat 0 stage 04 frames 0
+> 04 t33_through_screen s 90.484 lat 0 stage 04 frames 53
+> 
+> real	0m12.966s
+> user	0m1.172s
+> sys	0m0.348s
+
+### 🤖 Claude — 2026-11-18T02:01:55.824Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; cd /home/user/wt/s04 && python3 $SP/sheet.py $SP/s2.png 0.45 references/04_through_the_five_arrows.png,$SP/r_model/a00_approved_view.png $SP", "description": "Compare approved picture with modeled tunnel from approved camera"}`
+
+### 🧑 User — 2026-11-18T02:01:56.100Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:01:58.148Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s2.png"}`
+
+### 🧑 User — 2026-11-18T02:01:58.253Z
+
+> ↩︎ result: [image]
+

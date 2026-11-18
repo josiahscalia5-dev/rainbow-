@@ -263,3 +263,123 @@ The WIP compiles first; then I'll render the coin switch at the worst frames.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && mkdir -p $S/coin1 && timeout 900 node tools/match05/r8_shots.mjs $S/coin1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1\" a00_approved_view,f10_forward10u,t33_through_screen,f20_forward20u 2>&1 | tail -20", "description": "Render coin switch at four audit positions", "timeout": 920000}`
 
+### 🧑 User — 2026-11-18T02:01:12.198Z
+
+> ↩︎ result: a00_approved_view s 133.072 lat 0 coins 1420 benny -0.02 -0.36 big coins: #20@473,733 d97 #21@549,663 d70
+> f10_forward10u s 143.074 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> t33_through_screen s 151.692 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+
+### 🤖 Claude — 2026-11-18T02:01:14.435Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/coin1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T02:01:14.479Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:01:15.042Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/coin1/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:01:15.091Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:01:22.802Z
+
+The near coin no longer covers Benny at f10 and t33. Let me check how picked coins animate, so the shrink rule does not clash with the pickup pop in real play.
+
+### 🤖 Claude — 2026-11-18T02:01:23.956Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"popT\\|function place\" src/gameplay/coins.ts | head -30 && sed -n \"$(grep -n 'function place' src/gameplay/coins.ts | cut -d: -f1),+30p\" src/gameplay/coins.ts", "description": "Inspect coin placement and pop animation"}`
+
+### 🧑 User — 2026-11-18T02:01:24.000Z
+
+> ↩︎ result: Exit code 1
+> 346:  const popT = new Float32Array(defs.length).fill(-1);
+> 361:        if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+> 362:        const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+> 363:        if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+> 391:      m.compose(p, q, sc.setScalar(base * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+> 413:          popT[i] = time;
+> 423:      for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+> sed: -e expression #1, char 1: unknown command: `,'
+
+### 🤖 Claude — 2026-11-18T02:01:25.333Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 340,430p src/gameplay/coins.ts", "description": "Read coin update code"}`
+
+### 🧑 User — 2026-11-18T02:01:25.365Z
+
+> ↩︎ result: const mesh = new THREE.InstancedMesh(geo, mats, defs.length);
+>   mesh.frustumCulled = false;
+>   const group = new THREE.Group();
+>   group.name = 'coins';
+>   group.add(mesh);
+>   const collected = new Uint8Array(defs.length);
+>   const popT = new Float32Array(defs.length).fill(-1);
+>   const m = new THREE.Matrix4(), q = new THREE.Quaternion(), basis = new THREE.Matrix4();
+>   const p = new THREE.Vector3(), sc = new THREE.Vector3();
+>   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+>   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+>   const back = new THREE.Vector3();
+>   const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();
+> 
+>   let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
+>   const place = (time: number) => {
+>     defs.forEach((d, i) => {
+>       const f = course.sample(d.s);
+>       const ph = d.phase ?? i;
+>       let scale = 1;
+>       if (collected[i]) {
+>         if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+>         const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+>         if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0 …[+2574 chars]
+
+### 🤖 Claude — 2026-11-18T02:01:39.529Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && D=qa/match/05/r8/step1_m05coin && mkdir -p $D && cp $S/coin1/f10_forward10u.png $S/coin1/t33_through_screen.png $S/coin1/shots.json $D/ && ls -la $D", "description": "Store step 1 NEW pictures"}`
+
+### 🧑 User — 2026-11-18T02:01:39.567Z
+
+> ↩︎ result: total 4580
+> drwxr-xr-x 2 root root    4096 Nov 18 02:01 .
+> drwxr-xr-x 3 root root    4096 Nov 18 02:01 ..
+> -rw-r--r-- 1 root root 2326777 Nov 18 02:01 f10_forward10u.png
+> -rw-r--r-- 1 root root   21676 Nov 18 02:01 shots.json
+> -rw-r--r-- 1 root root 2325483 Nov 18 02:01 t33_through_screen.png
+
+### 🤖 Claude — 2026-11-18T02:01:46.822Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/qa/match/05/r8/PROGRESS.md", "content": "# Screen 05 — round 8 progress (small steps, newest last)\n\nBase set (BEFORE): `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1` — BEFORE pictures = `qa/match/05/r7/NEW/`\n(12 audit positions, same names). Approved picture: `/home/user/wt/s05/references/05_flow_into_the_current.png`.\nEach step = one sub-switch on top of the base set (default build untouched). Branch `claude/rainbow-s05-match-c8`.\n\n## Step 1 — `&m05coin=1` (coin look only)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m …[+1068 chars]`
+
+### 🧑 User — 2026-11-18T02:01:46.863Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/qa/match/05/r8/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:01:50.017Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git add qa/match/05/r8 && git commit -q -m \"Screen 05 r8 step 1: &m05coin=1 — oversized passed coin no longer covers Benny (look only, 91 coins / score unchanged)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && git push -q origin claude/rainbow-s05-match-c8 2>&1 | tail -2; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s05-match-c8", "description": "Commit step 1 and push, verify remote SHA"}`
+
+### 🧑 User — 2026-11-18T02:01:53.356Z
+
+> ↩︎ result: 01beeeafe140e0651140bc922d74bdeae3a836ef
+> 01beeeafe140e0651140bc922d74bdeae3a836ef	refs/heads/claude/rainbow-s05-match-c8
+
+### 🤖 Claude — 2026-11-18T02:01:54.400Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T02:01:54.408Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T02:01:58.033Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 step 1 coin look progress", "message": "Screen 05 step 1 (SHA 01beeeafe140e0651140bc922d74bdeae3a836ef, pushed + verified): &m05coin=1 on the base set. WHAT LOOKS BETTER: the giant passed coin (~320 px at f10, ~230 px at t33) that hid Benny's body and the river below him is gone; coins ahead keep their painted size (90-102 px vs ~96 painted). Count/score/pickups unchanged (look only). Still wrong: marbled stretched water while swimming, far-river slab edge, pale bank shelves. BEFORE /home/user/wt/s05/qa/match/05/r7/NEW/{f10_forward10u,t33_through_screen}.png  NEW …[+264 chars]`
+
+### 🧑 User — 2026-11-18T02:01:58.045Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
