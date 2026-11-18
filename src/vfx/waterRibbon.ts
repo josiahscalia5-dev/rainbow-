@@ -335,6 +335,15 @@ const m05nearS0 = (): number => {
 export const M05WALL: boolean = MATCH05 && q05('m05far') && q05('m05wall');
 export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
 /**
+ * `&m05wtile=1` (Screen 05 round 11, needs m05far; src/vfx/proj05Tunnel.ts withProj05Wall): the far bays of the wall
+ * atlas (rows BC … GX: 128 → 16 texel rows per bay, as small as the approved picture shows them) were magnified into a
+ * horizontal smear when swimming brought them close. Where a bay's own row would be magnified, the wall shows the
+ * approved NEAR bay N1 (256 texel rows, the sharpest painted wall: slots, pink light streaks) at the same angle round the
+ * tube and the same place within the bay, tinted to the bay's own painted colour — world-anchored like the rest of the
+ * wall. Off at the locked checkpoint eye (0 px there) and wherever the own row is sharp enough.
+ */
+export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
+/**
  * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
  * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
  * back-projecting the approved picture's river through the locked eye: right bank only 0.37–0.67 of the half width right

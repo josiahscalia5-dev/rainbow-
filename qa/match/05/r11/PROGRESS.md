@@ -17,3 +17,29 @@ font): `/home/user/wt/s05/qa/match/05/r11/BEFORE/` — the 12 audit shots plus e
 * Saved: `/home/user/wt/s05/qa/match/05/r11/wip_m05unf_not_kept.patch` (apply with `git apply` on this branch to retry);
   source edits reverted. Kink probe positions kept in `tools/match05/r10_probe.mjs` and `tools/match05/r8_shots.mjs` (EXTRA list,
   only when named; `all` = the same 12 audit shots).
+
+## Step 1 — `&m05wtile=1` (B: smeared walls while swimming → crisp painted perforated metal, pink light streaks kept)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1`
+* Cause (measured with `tools/match05/r10_probe.mjs`): the walls seen while swimming at t33 / t66 / in the kink are the far
+  tunnel block (`tube05_far_wall`). It wears the approved picture's far bays (atlas rows BC … GX), which hold only
+  128 → 16 texel rows per bay because the painting shows them small; swimming brings them close, so each slot was
+  stretched along the tunnel into the horizontal smear.
+* Fix (texture mapping only, geometry untouched, world-anchored): where a far bay's own row would be magnified, the
+  wall keeps that bay's own painted colour and light (the pink-white streaks along the tunnel are detail round the tube,
+  which the atlas holds at full resolution) and takes the slot rows from the approved NEAR bay N1 (256 texel rows: the
+  sharpest painted wall), as N1's slot light/dark pattern at the same angle and the same place within the bay.
+* WHAT LOOKS CLOSER: the purple tunnel walls are now crisp perforated metal like the painting: rows of dark slots
+  between the gold rings, with the pink-white light streaks running toward the warm throat between them (t66, t33,
+  inside the kink k81, f20), instead of a blurred streaky purple smear. Inside the kink the whole tunnel now reads as the
+  painted slotted drum.
+* Locked approved view: 0 px (`scripts/capture.mjs 05`, kept set vs + `m05wtile=1`; the kept set's own two runs differ by
+  the known 257 px of the HUD banner outline, the switch adds nothing).
+* Still wrong: the slots are a bit larger / darker and less regular than the painted slim dashes, and some bays show a
+  faint double pattern (the old smeared slot columns under the new slots); the far-left strip outside the first ring at
+  t66 is still soft; the angular pale slab / corner where the far river starts on the left is unchanged (next item).
+* APPROVED: `/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/1_APPROVED.png`
+* BEFORE: `/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/2_BEFORE_t66_through_screen.png`, `…/2_BEFORE_k81_kink.png`,
+  `…/2_BEFORE_t33_through_screen.png`, `…/2_BEFORE_f20_forward20u.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/3_NEW_t66_through_screen.png`, `…/3_NEW_k81_kink.png`,
+  `…/3_NEW_t33_through_screen.png`, `…/3_NEW_f20_forward20u.png`
+* Files: `src/vfx/waterRibbon.ts` (M05WTILE), `src/vfx/proj05Tunnel.ts` (M05WTILE_GLSL in withProj05Wall).
