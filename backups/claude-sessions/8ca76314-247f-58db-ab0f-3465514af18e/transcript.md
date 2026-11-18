@@ -2297,3 +2297,55 @@ Start view unchanged (0 pixels differ). Recording the result on the Screen 04 br
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && Q5=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G5/motion.json'))['query'])\") && cat > qa/match/04/r14/PROGRESS.md <<EOF\n# Screen 04 — round 14 (account 14, lead) — resumed from 9ef21200 + account-13 WIP &m04a3lum (c69b7f33)\n\n## Step 6 — luminous arrows (user order: arrows not bright enough) — G5 = GOOD IMPROVEMENT (small) — shown to the user\nQuery (G5): \\`$Q5\\`\n* Code (account-13 WIP, finished here): \\`&m04a3lum=x\\` adds a second, additive copy of the painted arrow image drawn ON TOP of the\n  arrow (r13 G1/G2 drew  …[+2489 chars]`
 
+### 🧑 User — 2026-11-18T16:44:23.016Z
+
+> ↩︎ result: s04 450d211b remote 450d211b
+>   "pushed_verified": true,
+>   "commit": "2821bd69008b1843f60e2647d794abadfe357a5d",
+
+### 🤖 Claude — 2026-11-18T16:44:25.072Z
+
+Saved: Screen 04 branch `450d211b` and lead branch `2821bd69`, both matching GitHub. Here are the pictures.
+
+### 🤖 Claude — 2026-11-18T16:44:29.122Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r14/04_step6_glow_arrows/1_APPROVED.png", "qa/review_r14/04_step6_glow_arrows/2_BEFORE_3_middle.png", "qa/review_r14/04_step6_glow_arrows/3_NEW_3_middle.png", "qa/review_r14/04_step6_glow_arrows/2_BEFORE_4_farther_inside.png", "qa/review_r14/04_step6_glow_arrows/3_NEW_4_farther_inside.png", "qa/review_r14/04_step6_glow_arrows/2_BEFORE_6_hard_left.png", "qa/review_r14/04_step6_glow_arrows/3_NEW_6_hard_left.png", "qa/review_r14/04_step6_glow_arrows/2_BEFORE_7_hard_right.png", "qa/review_r14/04_step6_glow_arrows/3_NEW_7_hard_right.png", "qa/review_r14/04_step6_glow_arrows/2_ …[+404 chars]`
+
+### 🧑 User — 2026-11-18T16:44:31.968Z
+
+> ↩︎ result: 13 files delivered to user.
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/1_APPROVED.png → file_uuid: c947324f-1d2e-4338-a430-fe33dbb17907
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/2_BEFORE_3_middle.png → file_uuid: c0559edc-ac42-43af-b261-6e356ff4609f
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/3_NEW_3_middle.png → file_uuid: 89e738d3-f12c-4d9e-adf6-4934b1e29081
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/2_BEFORE_4_farther_inside.png → file_uuid: 22617935-741f-4ca8-bc29-cd97baa17056
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/3_NEW_4_farther_inside.png → file_uuid: d0a4de45-5b19-462c-87a5-0a2879d36675
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/2_BEFORE_6_hard_left.png → file_uuid: d85e6b05-7610-4738-9c7f-de000be11153
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/3_NEW_6_hard_left.png → file_uuid: e8265d5a-5fd9-4e83-a154-07a94eb27c41
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/2_BEFORE_7_hard_right.png → file_uuid: 8870bf07-c7f5-4bcb-bd1a-6bf19aac0e9e
+>   /home/user/rainbow-/qa/review_r14/04_step6_glow_arrows/3_NEW_7_hard_right.png → file_uuid: b4099e68-9002-4825-a7db-42c919167a2c
+>  …[+506 chars]
+
+### 🤖 Claude — 2026-11-18T16:44:50.106Z
+
+**Screen 04 arrows: GOOD IMPROVEMENT (small).** The pictures are above.
+
+- **Closer to yours:** while swimming and steering hard left and right, the arrows are now clearly whiter and brighter, with bold bright edges. Before, they were pale and glassy blue.
+- **Unchanged:** the start view is pixel-identical. The end view and everything else you liked (the blue path, gold rings, Benny, coins) are kept.
+- **Still different:** your arrows sit on deeper electric-blue water, with a soft cyan glow spilling out around them, and that's why they pop. Mine sit on lighter turquoise water with no glow. That's my next step.
+- **Overall:** Screen 04 is still about 6.5/10 while swimming. The arrows were the biggest gap and are better now, but they don't yet glow like neon.
+
+**Your message cut off** after "Do not reinstall what already". Please resend the rest. Here is part 1, the World Labs check:
+
+- **Skills:** all four (atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli) are installed and are the newest version on GitHub. I reinstalled nothing.
+- **Command-line tool:** the `worldlabs` program isn't installed. It's free and takes seconds; I'll add it only when we have a job for it.
+- **Atlas access isn't working on this account.** A free check was refused (401), and the Atlas sign-in isn't connected. Your Marble service still works (5,420 credits), but Atlas is separate. To turn it on, do either:
+  - sign in to the World Labs connector in your claude.ai connector settings (no key needed); or
+  - tell me, and I'll open the secure key form for an Atlas key.
+- **Would it help?** Possibly, in one specific way:
+  - **The gap it could fill:** your pictures show one view, but as Benny swims, the game shows parts of each tunnel your pictures never painted. That's the biggest thing keeping every screen below 8.5. Atlas can generate new views of a scene from an image, which could fill those parts in.
+  - **The risk:** it's a generative tool. It may drift from your design, it spends Atlas credits, and every generated view would need your approval before going into the game.
+  - **What I suggest:** one small test on the inside of Screen 04's tunnel. I'll tell you the cost before running anything.
+  - **What it doesn't add:** its depth-and-camera reading of a picture duplicates what we already have from Depth Anything 3.
+
+**Specialists:** your message stopped both of them, as Account 13 warned. I restarted them from their saved work and both are running again on Screen 05 and Screen 08, each pushing to GitHub.
+
