@@ -1370,3 +1370,412 @@ Now the uniform sharing in proj05Far / attachProj05, and the per-frame writes in
 > src/vfx/index.ts:188:      wave.uniforms.uTime.value = time;
 > src/vfx/index …[+292 chars]
 
+### 🤖 Claude — 2026-11-18T02:53:16.029Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"sample(s: number)\\|sample(\\|widthAt(\" src/world/course.ts | head -5; grep -n \"interface Frame\\|export interface CourseFrame\\|tan:\" src/world/course.ts | head", "description": "Check Course.sample frame fields"}`
+
+### 🧑 User — 2026-11-18T02:53:16.067Z
+
+> ↩︎ result: 425:      // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
+> 496:    return this.sample(s).pos.x - this.line05x;
+> 525:  widthAt(s: number): number {
+> 542:  sample(s: number, out?: CourseSample): CourseSample {
+> 564:    const f = this.sample(s);
+> 43:  tan: THREE.Vector3;
+> 442:    const tan: THREE.Vector3[] = [];
+> 543:    const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+> 606:    prev = { ...cur, pos: cur.pos.clone(), tan: cur.tan.clone(), up: cur.up.clone(), right: cur.right.clone() };
+
+### 🤖 Claude — 2026-11-18T02:53:16.968Z
+
+Now the height match in fillRiver (same seam fix, under the same switch).
+
+### 🤖 Claude — 2026-11-18T02:53:18.875Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "  /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */\n  riverUp: (z: number) => number;\n}", "new_string": "  /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */\n  riverUp: (z: number) => number;\n  /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */\n  course?: Course;\n}"}`
+
+### 🧑 User — 2026-11-18T02:53:18.901Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:53:20.727Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "import type { FarRiverLayout, FarRiverRow } from './far05';\nimport { EDGE_LIFT, M05BLEND, MATCH05, flag05, m05blend, m05seam } from '../vfx/waterRibbon';", "new_string": "import type { FarRiverLayout, FarRiverRow } from './far05';\nimport type { Course, CourseSample } from './course';\nimport { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05seam } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-18T02:53:20.752Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:53:28.326Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "  const d = new THREE.Vector3(), o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();\n  const wv = new THREE.Vector2();", "new_string": "  const d = new THREE.Vector3(), o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();\n  const wv = new THREE.Vector2();\n  // `&m05blend=1` (round 9): the far river's first rows are laid onto the near ribbon's surface (course frame + trough +\n  // the ribbon's own vertex wave) so the two surfaces meet without a step  …[+1360 chars]`
+
+### 🧑 User — 2026-11-18T02:53:28.357Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:53:30.182Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "        o.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + h + lift);\n        point(Z, o, p);\n        const k = i * per + j;", "new_string": "        o.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + h + lift);\n        point(Z, o, p);\n        if (M05BLEND && a.course && zs > 0 && Z < zs + HB) onRibbon(p, sReal, 1 - THREE.MathUtils.smoothstep(Z, zs, zs + HB));\n        const k = i * per + j;"}`
+
+### 🧑 User — 2026-11-18T02:53:30.214Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:53:37.197Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "    const t = m05blend.uTimeRef?.value ?? 0, uS = Math.max(-1, Math.min(1, lat / hwR));", "new_string": "    const t = (m05blendTime.u?.value as number | undefined) ?? 0, uS = Math.max(-1, Math.min(1, lat / hwR));"}`
+
+### 🧑 User — 2026-11-18T02:53:37.225Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:53:38.648Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05seam } from '../vfx/waterRibbon';", "new_string": "import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05seam } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-18T02:53:38.682Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:53:40.350Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  uFbP: { value: new THREE.Vector4(0, 0, 6.5, 0) },\n};", "new_string": "  uFbP: { value: new THREE.Vector4(0, 0, 6.5, 0) },\n};\n/** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */\nexport const m05blendTime: { u: THREE.IUniform | null } = { u: null };"}`
+
+### 🧑 User — 2026-11-18T02:53:40.386Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:53:41.851Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  if (M05BLEND) Object.assign(u, m05blend);   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts", "new_string": "  if (M05BLEND) { Object.assign(u, m05blend); m05blendTime.u = u.uTime; }   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts"}`
+
+### 🧑 User — 2026-11-18T02:53:41.891Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:53:42.830Z
+
+Now pass `course` from environment.ts (switch-guarded value only).
+
+### 🤖 Claude — 2026-11-18T02:53:43.437Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/environment.ts", "offset": 630, "limit": 10}`
+
+### 🧑 User — 2026-11-18T02:53:43.457Z
+
+> ↩︎ result: 630	    const camPos = new THREE.Vector3();
+> 631	    // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored
+> 632	    // virtual tunnel, sliding seam, folds only at the stage end) instead of folding away from ≈34 u before the seam
+> 633	    const liveFar = M05FAR ? createLiveFar05({
+> 634	      ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+> 635	      radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
+> 636	      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
+> 637	      riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
+> 638	    }) : null;
+> 639	    const sync = (cam: THREE.Camera) => {
+
+### 🤖 Claude — 2026-11-18T02:53:45.747Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/environment.ts", "old_string": "      riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),\n    }) : null;", "new_string": "      riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),\n      course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)\n    }) : null;"}`
+
+### 🧑 User — 2026-11-18T02:53:45.782Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:53:48.397Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && echo TSC_OK && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1\" && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/blend2 \"$K&m05blend=1\" t66_through_screen,t33_through_screen,f20_forward20u 5291 2>&1 | tail -4", "description": "Type-check and render blend v2 shots", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T02:54:37.535Z
+
+> ↩︎ result: TSC_OK
+> f20_forward20u s 153.231 lat 0 coins 1450 benny -0.05 -0.27 big coins: #23@339,713 d103
+> t33_through_screen s 151.691 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.391 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T02:54:40.084Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py t66cmp2.png 0 520 864 760 1.0 /home/user/wt/s05/qa/match/05/r9/BEFORE/t66_through_screen.png blend1/t66_through_screen.png blend2/t66_through_screen.png", "description": "Compare t66 seam crops BEFORE, v1, v2"}`
+
+### 🧑 User — 2026-11-18T02:54:40.506Z
+
+> ↩︎ result: t66cmp2.png (864, 732)
+
+### 🤖 Claude — 2026-11-18T02:54:42.141Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/t66cmp2.png"}`
+
+### 🧑 User — 2026-11-18T02:54:42.183Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:54:46.764Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/blend2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:54:46.818Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:54:51.140Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py t33cmp.png 0 440 864 760 1.0 /home/user/wt/s05/qa/match/05/r9/BEFORE/t33_through_screen.png blend2/t33_through_screen.png && python3 -I crop.py f20cmp.png 0 440 864 760 1.0 /home/user/wt/s05/qa/match/05/r9/BEFORE/f20_forward20u.png blend2/f20_forward20u.png", "description": "Crop t33 and f20 mid regions BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-18T02:54:51.732Z
+
+> ↩︎ result: t33cmp.png (864, 646)
+> f20cmp.png (864, 646)
+
+### 🤖 Claude — 2026-11-18T02:54:53.649Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/t33cmp.png"}`
+
+### 🧑 User — 2026-11-18T02:54:53.678Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:54:54.263Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/f20cmp.png"}`
+
+### 🧑 User — 2026-11-18T02:54:54.292Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:54:58.604Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,30p tools/lead_r6/motion_metrics.py", "description": "Read motion_metrics usage"}`
+
+### 🧑 User — 2026-11-18T02:54:58.664Z
+
+> ↩︎ result: """Lead r6: measured (not subjective) numbers for moving-gameplay frames vs the approved picture, below the HUD strip
+> (rows >= 13.5 %). LAYOUT20 = share of pixels within 20 levels after a sigma-8 blur (composition + colour, like
+> tools/qa/screen_match.py LAYOUT). PALETTE = histogram intersection of hue x saturation (24 x 8 bins, value > 0.15) —
+> how close the colour palette stays, independent of where things are. Moving frames are seen from other viewpoints, so
+> LAYOUT naturally falls as the camera travels; PALETTE shows whether the approved look (colours/materials) survives.
+> usage: python3 -I motion_metrics.py <approved.png> <frame.png> [...]  -> one line per frame"""
+> import sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> ref = Image.open(sys.argv[1]).convert('RGB')
+> W, H = ref.size; top = int(H * 0.135)
+> def prep(im):
+>     im = im.convert('RGB').resize((W, H))
+>     return im
+> def hsv_hist(a):
+>     hsv = np.asarray(Image.fromarray(a).convert('HSV'), dtype=np.float32) / 255.0
+>     m = hsv[..., 2] > 0.15
+>     h, _, _ = np.histogram2d(hsv[..., 0][m], hsv[..., 1][m], bins=[24, 8], range=[[0, 1], [0, 1]])
+>     return h / max(h.sum(), 1)
+> R = np.asarray(ref)[top:]; Rb = np.asarray(ref.filt …[+436 chars]
+
+### 🤖 Claude — 2026-11-18T02:55:01.973Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && echo BEFORE && python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png qa/match/05/r9/BEFORE/{f20_forward20u,t33_through_screen,t66_through_screen}.png && echo NEW && python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png $S/blend2/{f20_forward20u,t33_through_screen,t66_through_screen}.png", "description": "Compute motion metrics BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-18T02:55:03.914Z
+
+> ↩︎ result: BEFORE
+> f20_forward20u         LAYOUT20  17.3 %  PALETTE  85.6 %
+> t33_through_screen     LAYOUT20  17.7 %  PALETTE  85.0 %
+> t66_through_screen     LAYOUT20   9.4 %  PALETTE  78.9 %
+> NEW
+> f20_forward20u         LAYOUT20  17.1 %  PALETTE  85.7 %
+> t33_through_screen     LAYOUT20  17.7 %  PALETTE  84.9 %
+> t66_through_screen     LAYOUT20   9.3 %  PALETTE  79.4 %
+
+### 🤖 Claude — 2026-11-18T02:55:07.991Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,40p scripts/capture.mjs | grep -n \"argv\\|--q\\|query\\|out\" | head -20", "description": "Check capture.mjs arguments"}`
+
+### 🧑 User — 2026-11-18T02:55:08.031Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+
+### 🤖 Claude — 2026-11-18T02:55:09.220Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,60p scripts/capture.mjs", "description": "Read capture.mjs"}`
+
+### 🧑 User — 2026-11-18T02:55:09.249Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3162 chars]
+
+### 🤖 Claude — 2026-11-18T02:55:15.647Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1\" && timeout 900 node scripts/capture.mjs 05 --out=$S/lock_kept --q=\"$K\" 2>&1 | tail -1 && timeout 900 node scripts/capture.mjs 05 --out=$S/lock_blend --q=\"$K&m05blend=1\" 2>&1 | tail -1 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$S/lock_kept/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/lock_blend/05.png'). …[+219 chars]`
+
+### 🧑 User — 2026-11-18T02:55:49.119Z
+
+> ↩︎ result: ]
+> ]
+> locked view diff px: 0
+>  M qa/capture_log.json
+>  M src/vfx/waterRibbon.ts
+>  M src/world/environment.ts
+>  M src/world/match05far.ts
+> ?? qa/match/05/r9/
+> ?? tools/lead_r6/bisect_preview08.mjs
+> ?? tools/match05/r9_seam_probe.mjs
+
+### 🤖 Claude — 2026-11-18T02:55:54.772Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git checkout -- qa/capture_log.json && S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && mkdir -p qa/match/05/r9/step1_m05blend && cp $S/blend2/{t66_through_screen,t33_through_screen,f20_forward20u}.png $S/blend2/shots.json qa/match/05/r9/step1_m05blend/ && cp $S/t66cmp2.png /dev/null; python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png qa/match/05/r9/step1_m05blend/*.png > qa/match/05/r9/step1_m05blend/metrics.txt; python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_curr …[+164 chars]`
+
+### 🧑 User — 2026-11-18T02:55:58.320Z
+
+> ↩︎ result: a00_approved_view      LAYOUT20  65.7 %  PALETTE  94.8 %
+> f03_forward3u          LAYOUT20  27.8 %  PALETTE  88.4 %
+> f06_forward6u          LAYOUT20  21.6 %  PALETTE  87.0 %
+> f10_forward10u         LAYOUT20  18.1 %  PALETTE  84.6 %
+> f20_forward20u         LAYOUT20  17.3 %  PALETTE  85.6 %
+> s_left_hard            LAYOUT20  10.6 %  PALETTE  81.0 %
+> s_left_steer           LAYOUT20  13.5 %  PALETTE  87.6 %
+> s_right_hard           LAYOUT20   9.8 %  PALETTE  76.3 %
+> s_right_steer          LAYOUT20  11.5 %  PALETTE  89.8 %
+> t33_through_screen     LAYOUT20  17.7 %  PALETTE  85.0 %
+> t66_through_screen     LAYOUT20   9.4 %  PALETTE  78.9 %
+> t95_through_screen     LAYOUT20   6.9 %  PALETTE  56.2 %
+
+### 🤖 Claude — 2026-11-18T02:56:11.843Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/qa/match/05/r9/PROGRESS.md", "content": "# Screen 05 — round 9 progress (small steps, newest last)\n\nContinues `qa/match/05/r8/PROGRESS.md` (steps 1–4 of round 8). Branch `claude/rainbow-s05-match-c9`, started at\n`c676a7c5`. Approved picture: `/home/user/wt/s05/references/05_flow_into_the_current.png`.\nBase set (BEFORE, round-8 kept query): `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1`\n— BEFORE pictures (all 12 audit positions, rendered at the start of round 9 with exactly that query, no source change):\n`/ …[+2744 chars]`
+
+### 🧑 User — 2026-11-18T02:56:11.879Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/qa/match/05/r9/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:56:15.149Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git add src/vfx/waterRibbon.ts src/world/environment.ts src/world/match05far.ts tools/match05/r9_seam_probe.mjs qa/match/05/r9 && git commit -q -m \"Screen 05 r9 step 1: &m05blend=1 — near river fades into the far river's own picture at the seam, far rows laid on the ribbon surface (seam line gone at t66); locked view 0 px\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && for i in 1 2 3 4; do git push -q origin claude/rainbow-s05-match-c9 && break; sleep 3; done; echo \"local $(git rev-parse HEAD)\"; git ls-remote origin refs/heads/claude/rain …[+74 chars]`
+
+### 🧑 User — 2026-11-18T02:56:32.507Z
+
+> ↩︎ result: local 965b8b86ac7face98d56366f0eca0d0ae658ca16
+> 965b8b86ac7face98d56366f0eca0d0ae658ca16	refs/heads/claude/rainbow-s05-match-c9
+
+### 🤖 Claude — 2026-11-18T02:56:36.600Z
+
+> 🔧 **SendMessage** `{"to": "main", "message": "S05 r9 step 1 kept: &m05blend=1 @ 965b8b86 (pushed, remote==HEAD). Kept query: ?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1. Better: the bright pink horizontal seam line across the river at t66 is gone — near water flows into the far water as one stream (near water fades into the far water's own picture; far rows laid on the near surface, the step was up to 0.36 u). Locked view 0 px. NEW: /home/user/wt/s05/qa/match/05/r9/step1_m05blend/t66_through_screen.png (+ t33, f20). BEFORE: /home/user/wt/s05/qa/match/ …[+288 chars]`
+
+### 🧑 User — 2026-11-18T02:56:36.616Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T02:56:42.455Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"withProj05Wall\\|withEnv05Wall\\|E05 =\\|const E05\\|PT_ROW\\b\" src/world/*.ts | head -20; ls src/world/ | head -50", "description": "Find wall projection functions"}`
+
+### 🧑 User — 2026-11-18T02:56:42.496Z
+
+> ↩︎ result: src/world/environment.ts:15:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+> src/world/environment.ts:304:  const E05 = ENV05 ? {
+> src/world/environment.ts:439:    for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: E05 ? (i + 2 === list.length ? PT_ROW.N1 : PT_ROW.N2) : PT_ROW.AB, t0: 0, t1: 1 });
+> src/world/environment.ts:440:    segs.push({ v0: ptA05 + ptHw05, v1: ptB05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+> src/world/environment.ts:444:    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(E05 ? E05.farDv[0] : 59, sF05 - sCam05 - 0.75) });
+> src/world/environment.ts:445:    withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+> src/world/environment.ts:535:      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: vC, row: PT_ROW.BC, t0: tSeam - (1 - tSeam) / (vC - sF05), t1: 1 }];
+> src/world/environment.ts:540:      if (rSeg && rSegT && free >= 0) { rSeg[free].set(sF05, vC, 0, 0); rSegT[free]. …[+1291 chars]
+
+### 🤖 Claude — 2026-11-18T02:56:44.459Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 295,330p src/world/environment.ts && sed -n 405,450p src/world/environment.ts && wc -l src/vfx/proj05Tunnel.ts && grep -n \"^export\\|^const\\|^function\" src/vfx/proj05Tunnel.ts | head -40", "description": "Read env05 setup and wall segment code"}`
+
+### 🧑 User — 2026-11-18T02:56:44.523Z
+
+> ↩︎ result: // `?env05=1` (washer-environment-modeler 2026-11-17, qa/pilot05/full_reference_match/env/NOTES.md): Screen-05-only,
+>   // VISUAL-ONLY ring layout measured against the approved picture from the locked 05 camera (tools/env05/ring_fit.py:
+>   // band edges along rays about the vanishing point). The approved rings sit 0.6–1.0 u further LEFT of the camera than
+>   // the game's (and ring A 0.42 u higher); depth changes alone barely help (edge error A 46→24 px, B 26→24 px), the
+>   // sideways placement does (A 52→1.7, B 26→4.1, C 12.5→1.5 px). So under the switch the UPPER tunnel (walls and rings
+>   // above the river banks) is displaced sideways by `side` (and ring A's top by `up`) — a smooth bend, circular above
+>   // the banks, nothing moves at or below the banks (river, foam, apron, floor, course and collisions untouched), the
+>   // displacement is zero at the camera and before 06. Ring B 1.5 u nearer, far rings at the approved radii, band heights
+>   // as measured. Camera, course, steering, coins: untouched. Off = exactly the previous layout.
+>   const E05 = ENV05 ? {
+>     dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)
+>     hA: 0.09, hB: 0.12, hFar:  …[+7758 chars]
+
+### 🤖 Claude — 2026-11-18T02:56:45.867Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 111,262p src/vfx/proj05Tunnel.ts", "description": "Read wall projection material code"}`
+
+### 🧑 User — 2026-11-18T02:56:45.901Z
+
+> ↩︎ result: export const PT_ROW = { AB: 0, BC: 1, CD: 2, DE: 3, EF: 4, FG: 5, GX: 6, N1: 7, N2: 8 } as const;
+> const N_ROWS = ENV05 ? 9 : 7;
+> /** `?env05=1` ring atlas rows (assets/textures/env05/env05.json: ring.rows) */
+> export const E5_RING_ROW = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, G: 6, N: 7 } as const;
+> const N_SEG = 8;
+> 
+> const empty = new THREE.DataTexture(new Uint8Array([128, 40, 150, 255]), 1, 1);
+> empty.needsUpdate = true;
+> 
+> const shared = {
+>   uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
+>   uPjRes: { value: new THREE.Vector2(864, 1536) },
+>   uPtWall: { value: empty as THREE.Texture },
+>   uPtWallSize: { value: new THREE.Vector2(1, 1) },
+>   uPtRows: { value: Array.from({ length: N_ROWS }, () => new THREE.Vector2(0, 1)) },
+>   uPtRing: { value: empty as THREE.Texture },
+>   uPtRingSize: { value: new THREE.Vector2(1, 1) },
+>   uPtFrame: { value: empty as THREE.Texture },
+>   /** frame05.png: (texture height, band rows NV, left y0, right y0); lip y0 in uPtFrameLip */
+>   uPtFrameRows: { value: new THREE.Vector4(1, 1, 0, 0) },
+>   uPtFrameLip: { value: 0 },
+>   /** `?env05=1`: ring atlas, (texture height, rows height) */
+>   uE5Ring: { value: empty as THREE.Texture },
+>   uE5RingSize: { value: new T …[+6992 chars]
+
+### 🤖 Claude — 2026-11-18T02:56:52.509Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport json; m=json.load(open('assets/textures/env05/env05.json')); print(m['wall']); print({k:v for k,v in m.items() if k not in ('wall',)}.keys())\nfrom PIL import Image; im=Image.open('assets/textures/env05/wall05e.png'); print(im.size, im.mode)\n\"", "description": "Inspect env05 wall atlas metadata"}`
+
+### 🧑 User — 2026-11-18T02:56:52.594Z
+
+> ↩︎ result: {'w': 2048, 'h': 992, 'rows': {'AB': {'y0': 8, 'h': 256}, 'BC': {'y0': 272, 'h': 128}, 'CD': {'y0': 408, 'h': 64}, 'DE': {'y0': 480, 'h': 32}, 'EF': {'y0': 520, 'h': 16}, 'FG': {'y0': 544, 'h': 16}, 'GX': {'y0': 568, 'h': 16}, 'N1': {'y0': 592, 'h': 256}, 'N2': {'y0': 856, 'h': 128}}, 'gutter': 8}
+> dict_keys(['ring', 'note'])
+> (2048, 992) RGB
+
+### 🤖 Claude — 2026-11-18T02:56:55.414Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/wt/s05/assets/textures/env05/wall05e.png')\nim.crop((0,0,2048,992)).resize((1024,496)).save('wallatlas.png')\n\"", "description": "Downscale wall atlas for viewing"}`
+
+### 🧑 User — 2026-11-18T02:56:55.658Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:56:57.556Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/wallatlas.png"}`
+
+### 🧑 User — 2026-11-18T02:56:57.590Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:57:02.210Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 600 node tools/match05/r8_probe.mjs t66_through_screen \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" \"40,620;120,690;60,740;200,640;220,700;300,700;360,690;150,760;30,800;250,600\" 5293 2>&1 | tail -11", "description": "Probe the left-bank slab at t66", "timeout": 620000}`
+

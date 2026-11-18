@@ -1684,3 +1684,98 @@ Everything is now committed and pushed. A background autosave was mid-push when 
 
 The Screen 04 and Screen 05 specialists are still working. I'll send you each new improvement as separate APPROVED / BEFORE / NEW pictures as soon as one is kept.
 
+### 🧑 User — 2026-11-18T02:56:28.558Z
+
+<task-notification>
+<task-id>bghpqfsnq</task-id>
+<summary>Monitor event: "Screen 04/05 specialist commits"</summary>
+<event>s05 new commit 965b8b86 Screen 05 r9 step 1: &amp;m05blend=1 — near river fades into the far river's own picture at the seam, far rows laid on the ribbon surface (seam line gone</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T02:56:29.950Z
+
+Screen 05 just saved its first round-9 step. Checking its notes and pictures before showing you.
+
+### 🤖 Claude — 2026-11-18T02:56:31.495Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git log -1 --format='%H %s' && sed -n '/## Step 1/,$p' qa/match/05/r9/PROGRESS.md | head -40; ls qa/match/05/r9/*/ 2>/dev/null; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-s05-match-c9 | cut -f1)\"", "description": "Read the Screen 05 round-9 step 1 progress entry"}`
+
+### 🧑 User — 2026-11-18T02:56:32.024Z
+
+> ↩︎ result: 965b8b86ac7face98d56366f0eca0d0ae658ca16 Screen 05 r9 step 1: &m05blend=1 — near river fades into the far river's own picture at the seam, far rows laid on the ribbon surface (seam line gone at t66); locked view 0 px
+> ## Step 1 — `&m05blend=1` (the seam line where the near river meets the far river)
+> * Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1`
+> * WHAT LOOKS BETTER: the bright pink horizontal line that cut straight across the river two-thirds of the way through
+>   the stage (t66, ≈ 140 px in front of the second coin) is gone. The near river now flows on into the far river as one
+>   stream — Benny → coin trail → gold throat — with no step or ledge where the two pieces of water meet. Cause (measured
+>   with `tools/match05/r9_seam_probe.mjs`): two different pictures of the water met at a hard straight edge, and the far
+>   piece stood up to 0.36 u higher on the left and lay 0.31 u lower on the right (the real river banks there, the far
+>   river is level). Now the near water fades into exactly the far water's own picture over a short band before the
+>   joint, and the far water's first rows lie on the near water's surfac …[+1977 chars]
+
+### 🤖 Claude — 2026-11-18T02:56:37.463Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look; cd /home/user/wt/s05 && python3 - <<EOF\nfrom PIL import Image\nr='qa/match/05/r9/'\nims=[Image.open(p).convert('RGB') for p in ['references/05_flow_into_the_current.png',r+'BEFORE/t66_through_screen.png',r+'step1_m05blend/t66_through_screen.png']]\nw=360; ims=[i.resize((w,int(i.height*w/i.width))) for i in ims]\nc=Image.new('RGB',(w*3+16,ims[0].height),'white')\nfor k,i in enumerate(ims): c.paste(i,(k*(w+8),0))\nc.save('$S/s05_r9s1_t66.png')\n# crop of seam zone at full res\nb=Image.open(r+' …[+381 chars]`
+
+### 🧑 User — 2026-11-18T02:56:37.920Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T02:56:39.635Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look/s05_r9s1_t66.png"}`
+
+### 🧑 User — 2026-11-18T02:56:39.663Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:56:40.249Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/look/s05_r9s1_crop.png"}`
+
+### 🧑 User — 2026-11-18T02:56:40.300Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:56:51.399Z
+
+> 🔧 **Bash** `{"command": "o=qa/review_r9/05_r9_step1_blend && mkdir -p $o && python3 - <<'EOF'\nfrom PIL import Image\no='qa/review_r9/05_r9_step1_blend/'; r='/home/user/wt/s05/qa/match/05/r9/'\nfor s,d in [('references/05_flow_into_the_current.png','1_APPROVED_05.jpg'),(r+'BEFORE/t66_through_screen.png','2_BEFORE_t66.jpg'),(r+'step1_m05blend/t66_through_screen.png','3_NEW_t66.jpg')]:\n    Image.open(s).convert('RGB').save(o+d,quality=93)\nEOF\nls $o", "description": "Prepare full-size APPROVED/BEFORE/NEW for Screen 05 round-9 step 1"}`
+
+### 🧑 User — 2026-11-18T02:56:51.664Z
+
+> ↩︎ result: 1_APPROVED_05.jpg
+> 2_BEFORE_t66.jpg
+> 3_NEW_t66.jpg
+
+### 🤖 Claude — 2026-11-18T02:56:54.343Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r9/05_r9_step1_blend/1_APPROVED_05.jpg", "qa/review_r9/05_r9_step1_blend/2_BEFORE_t66.jpg", "qa/review_r9/05_r9_step1_blend/3_NEW_t66.jpg"], "caption": "Screen 05, new step (two-thirds of the way through): APPROVED / BEFORE / NEW. The bright pink ledge that cut across the river just past the second coin is gone. The river now flows from Benny along the coin trail into the gold throat as one stream.", "status": "proactive", "display": "render"}`
+
+### 🧑 User — 2026-11-18T02:56:54.842Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_r9/05_r9_step1_blend/1_APPROVED_05.jpg → file_uuid: 685fc20c-3561-4ed3-a27a-19cb361d9f83
+>   /home/user/rainbow-/qa/review_r9/05_r9_step1_blend/2_BEFORE_t66.jpg → file_uuid: 2c91ec0a-0165-4703-9390-372c27e5bd57
+>   /home/user/rainbow-/qa/review_r9/05_r9_step1_blend/3_NEW_t66.jpg → file_uuid: 52938f25-f933-4976-b00e-86fa1c0c18a0
+
+### 🤖 Claude — 2026-11-18T02:56:57.130Z
+
+> 🔧 **SendMessage** `{"to": "aaf3e97ed8503b962", "summary": "Ack S05 step 1, suggest t66 priorities", "message": "Lead: S05 r9 step 1 (m05blend) checked and shown to the user — the pink ledge is genuinely gone, good. Looking at your t66 NEW next to the approved picture, the two most visible remaining differences there are (1) the near water is a broad flat sheet with long horizontal stretch streaks instead of the narrow painted S-river with pink banks + foam, and (2) the disconnected lilac slab / flat rectangle on the left bank (x≈0–380, y≈560–760). Keep the user's order (far foam shelves next is fine), but take t …[+216 chars]`
+
+### 🧑 User — 2026-11-18T02:56:57.153Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aaf3e97ed8503b962 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aaf3e97ed8503b962","name":"aaf3e97ed8503b962","ref":"ce2ca8"}}
+
+### 🤖 Claude — 2026-11-18T02:57:00.181Z
+
+Here is a new improvement on Screen 05, saved and pushed to GitHub: the bright pink ledge that cut across the river two-thirds of the way through is gone. The water near Benny now runs into the far river as one stream, along the coin trail and into the gold throat. Your approved starting view is unchanged.
+
+Comparing the pictures, at that point the water is still a broad, flat, streaky sheet rather than your narrow painted S-river with pink banks and foam. There is also still a loose lilac slab sitting on the left bank. I've asked the Screen 05 specialist to fix those two soon, alongside the pale foam on the far banks.
+
+The Screen 04 specialist is still working on the gold washer opening and its glowing bulbs; nothing new has been kept there yet. I'll send each new step as soon as it's kept.
+
+### 🧑 User — 2026-11-18T02:57:01.478Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14053,
-   "sha256": "97823286fd9acb7189737f53fb3729ce6c3edb49097c6b0c19eebc1665258b8f"
+   "sha256": "fb610ada38bead8cea101217feb93163772e71a121f67cefbaf62c1b59809509"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9245,6 +9245,21 @@
    "path": "qa/review_r9/04_step3_foam/3_NEW_step3_t66.jpg",
    "bytes": 380928,
    "sha256": "57f471fe2ac8766340bcadffbd7b055cd3adf8936d08f99358ee5bc3a9dd0519"
+  },
+  {
+   "path": "qa/review_r9/05_r9_step1_blend/1_APPROVED_05.jpg",
+   "bytes": 546908,
+   "sha256": "e443aa8cfc8b6969c3acbadd0d7cedf4fca8cf9544b2c5d71bfa6a24d6541577"
+  },
+  {
+   "path": "qa/review_r9/05_r9_step1_blend/2_BEFORE_t66.jpg",
+   "bytes": 444932,
+   "sha256": "395798d87c8767acd124cf181886ab25b4f8c7dca77dca15e91524d0ef30bd6a"
+  },
+  {
+   "path": "qa/review_r9/05_r9_step1_blend/3_NEW_t66.jpg",
+   "bytes": 442173,
+   "sha256": "a5cf26579b8b7e7c28d70265ab9a8402de4f38ebee327c9b38aa5715d06f72b1"
   },
   {
    "path": "qa/review_r9/05_step4_seam/1_APPROVED_05.jpg",

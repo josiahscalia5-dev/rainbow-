@@ -697,3 +697,269 @@ Now I'll write the mouth tile tool.
 > -rw-r--r-- 1 root root 2452555 Nov 18 02:52 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/mt/tile_mouth.png
 > [This command modified 1 file you've previously read: ../wt/s04/tools/match04/mouth04.py. Call Read before editing.]
 
+### 🤖 Claude — 2026-11-18T02:53:03.653Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat tsconfig.json | head -30; grep -rn \"\\.json'\" src --include=*.ts | grep import | head -5; grep -n \"match04\\|m04\" src/*.ts src/**/*.ts | grep -v \"src/world/match04\" | head -20", "description": "Check tsconfig and match04 hooks"}`
+
+### 🧑 User — 2026-11-18T02:53:03.703Z
+
+> ↩︎ result: {
+>   "compilerOptions": {
+>     "target": "ES2022",
+>     "useDefineForClassFields": true,
+>     "module": "ESNext",
+>     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+>     "skipLibCheck": true,
+>     "moduleResolution": "bundler",
+>     "allowImportingTsExtensions": false,
+>     "resolveJsonModule": true,
+>     "isolatedModules": true,
+>     "noEmit": true,
+>     "strict": true,
+>     "noUnusedLocals": false,
+>     "noUnusedParameters": false,
+>     "noFallthroughCasesInSwitch": true,
+>     "types": ["vite/client"]
+>   },
+>   "include": ["src", "tools"]
+> }
+> src/world/match08.ts:97:  const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
+> src/world/match08.ts:194:  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => r.json());
+> src/world/course.ts:16:import river08 from '../../assets/textures/match08/river08.json';
+> src/vfx/waterRibbon.ts:1653:  proj05Pending.push(fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+> s …[+2013 chars]
+
+### 🤖 Claude — 2026-11-18T02:53:40.596Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(old, new, cnt=1):\n    global s\n    assert s.count(old)==cnt, (old, s.count(old))\n    s=s.replace(old,new)\n# header doc\nrep(\"\"\" * Without `?match04=1` nothing here runs; without the sub-switches nothing here is built.\n */\"\"\", \"\"\" *  m04mouth — (round 9, needs m04ring) the approved GOLD WASHER OPENING: the painted mouth ring (thick polished band,\n *             thin bright lips, dark groove) unwrapped from the approved pixels and straightened (tools/match04/mouth04.py\ …[+7391 chars]`
+
+### 🧑 User — 2026-11-18T02:53:40.670Z
+
+> ↩︎ result: 584:  const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number, opaque = false, near = [1.2, 2.6]) => {
+> 433:  if (M04.ring) {
+
+### 🤖 Claude — 2026-11-18T02:53:49.314Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cp /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/mt/tile_mouth.png /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/mt/mouth04.json assets/textures/match04/ && time npx tsc --noEmit -p . 2>&1 | tail -5", "description": "Install mouth tile and typecheck", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T02:53:52.622Z
+
+> ↩︎ result: real	0m3.217s
+> user	0m4.756s
+> sys	0m0.290s
+
+### 🤖 Claude — 2026-11-18T02:53:56.748Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && node tools/match04/audit04.mjs $SP/try_mouth1 \"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1\" a00_approved_view,f03_forward3u,f06_forward6u 2>&1 | grep -v \"outside of Vite\\|403\\|refer to\\|allow list\\|fs.allow\\|^$\" | tail -12", "description": "Render try with m04mouth at three positions", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T02:54:27.840Z
+
+> ↩︎ result: console [match04] m04ring {period: 2.6, rings: 35}
+> console [match04] m04river {xW: 3.4334505961465647, RY: 1, XF: 1.9}
+> console [match04] m04mouth bulbs 20
+> 04 a00_approved_view s 78.294 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.148 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.181 lat 0 stage 04 frames 26
+
+### 🤖 Claude — 2026-11-18T02:54:29.587Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/try_mouth1/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T02:54:29.640Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:54:35.376Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('$SP/try_mouth1/f03_forward3u.png').convert('RGB').crop((0,300,864,800))\nb=Image.open('qa/match/04/r9/BEFORE/f03_forward3u.png').convert('RGB').crop((0,300,864,800))\nc=Image.new('RGB',(864,1000)); c.paste(b,(0,0)); c.paste(a,(0,500)); c.save('$SP/cmp_f03.png')\n\"", "description": "Stack BEFORE and NEW f03 crops for comparison"}`
+
+### 🧑 User — 2026-11-18T02:54:35.832Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:54:37.626Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/cmp_f03.png"}`
+
+### 🧑 User — 2026-11-18T02:54:37.664Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:54:52.611Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nimport cv2, numpy as np\nt=cv2.imread('assets/textures/match04/tile_mouth.png')\nfor psi in (-0.3,-0.1,0.0,0.1,0.3):\n  c=int((psi+np.pi)/(2*np.pi)*4096)\n  rows=[(round(4.45-r*1.2/479,3), tuple(int(v) for v in t[r,c][::-1])) for r in range(60,330,20)]\n  print(psi, rows)\np=cv2.imread('assets/textures/match04/plate04_hybrid_fal.png')\nprint('plate', [tuple(int(v) for v in p[y,434][::-1]) for y in range(395,470,8)])\n\"", "description": "Compare tile colours at top with plate"}`
+
+### 🧑 User — 2026-11-18T02:54:52.850Z
+
+> ↩︎ result: -0.3 [(4.3, (154, 75, 197)), (4.25, (210, 155, 252)), (4.199, (207, 156, 248)), (4.149, (204, 90, 191)), (4.099, (195, 68, 178)), (4.049, (238, 89, 214)), (3.999, (228, 125, 235)), (3.949, (220, 142, 247)), (3.899, (159, 62, 24)), (3.849, (194, 95, 50)), (3.799, (192, 97, 62)), (3.749, (194, 100, 61)), (3.698, (195, 99, 59)), (3.648, (195, 102, 61))]
+> -0.1 [(4.3, (181, 100, 232)), (4.25, (174, 112, 248)), (4.199, (171, 107, 249)), (4.149, (210, 115, 246)), (4.099, (228, 121, 229)), (4.049, (220, 73, 196)), (3.999, (229, 110, 211)), (3.949, (230, 138, 224)), (3.899, (237, 134, 54)), (3.849, (243, 193, 89)), (3.799, (252, 178, 70)), (3.749, (254, 189, 75)), (3.698, (254, 195, 82)), (3.648, (253, 194, 84))]
+> 0.0 [(4.3, (187, 63, 203)), (4.25, (182, 78, 240)), (4.199, (157, 106, 252)), (4.149, (136, 104, 230)), (4.099, (243, 132, 232)), (4.049, (247, 131, 226)), (3.999, (246, 179, 174)), (3.949, (253, 212, 168)), (3.899, (249, 226, 112)), (3.849, (243, 226, 125)), (3.799, (252, 248, 162)), (3.749, (251, 247, 161)), (3.698, (248, 250, 146)), (3.648, (253, 245, 147))]
+> 0.1 [(4.3, (226, 96, 215)), (4.25, (223, 121, 246)), (4.199, (185, 116, 248)), (4.149, (212, 128, 241)), (4.099, (205, 79,  …[+764 chars]
+
+### 🤖 Claude — 2026-11-18T02:55:02.962Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nimport cv2, numpy as np\nt=cv2.imread('assets/textures/match04/tile_mouth.png').astype(float)\nc0=int((-1.5+np.pi)/(2*np.pi)*4096); c1=int((1.3+np.pi)/(2*np.pi)*4096)\nsub=t[:,c0:c1]\nl=(sub@[0.11,0.59,0.3]); g=(sub[...,2]+sub[...,1])/2-sub[...,0]\nL=np.median(l,1); G=np.median(g,1)\nfor r in range(0,480,8): print(round(4.45-r*1.2/479,3), int(L[r]), int(G[r]))\n\"", "description": "Median radial profile of the straightened tile"}`
+
+### 🧑 User — 2026-11-18T02:55:03.244Z
+
+> ↩︎ result: 4.45 137 -64
+> 4.43 137 -66
+> 4.41 137 -69
+> 4.39 142 -74
+> 4.37 144 -77
+> 4.35 139 -81
+> 4.33 134 -81
+> 4.31 134 -80
+> 4.29 136 -79
+> 4.27 140 -74
+> 4.25 141 -66
+> 4.23 141 -58
+> 4.209 140 -41
+> 4.189 142 -36
+> 4.169 145 -35
+> 4.149 148 -23
+> 4.129 148 -11
+> 4.109 153 -2
+> 4.089 156 6
+> 4.069 154 14
+> 4.049 165 31
+> 4.029 168 43
+> 4.009 170 66
+> 3.989 174 77
+> 3.969 178 83
+> 3.949 176 98
+> 3.929 162 118
+> 3.909 155 120
+> 3.889 153 126
+> 3.869 170 123
+> 3.849 161 124
+> 3.829 160 126
+> 3.809 160 126
+> 3.789 159 126
+> 3.769 161 127
+> 3.749 161 126
+> 3.728 162 126
+> 3.708 162 125
+> 3.688 163 125
+> 3.668 163 125
+> 3.648 163 124
+> 3.628 164 124
+> 3.608 165 126
+> 3.588 168 129
+> 3.568 189 131
+> 3.548 192 135
+> 3.528 144 142
+> 3.508 122 131
+> 3.488 119 123
+> 3.468 116 119
+> 3.448 114 119
+> 3.428 122 119
+> 3.408 69 90
+> 3.388 78 93
+> 3.368 102 101
+> 3.348 94 82
+> 3.328 101 75
+> 3.308 100 79
+> 3.288 101 79
+> 3.268 104 79
+
+### 🤖 Claude — 2026-11-18T02:55:31.863Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(old, new, cnt=1):\n    global s\n    assert s.count(old)==cnt, (old, s.count(old))\n    s=s.replace(old,new)\nrep(\"uniform vec2 uMouthRho;    // tile rows: rho at the top row, rho at the bottom row (fitted mouth plane z0)\",\n    \"uniform vec3 uMouthRho;    // tile rows: rho at the top row, rho at the bottom row (fitted mouth plane z0); z: rho offset\\n                           // (the painted band lies 0.1 u inside the fitted outer radius: lips onto the modeled lips)\")\nrep(\"v …[+1817 chars]`
+
+### 🧑 User — 2026-11-18T02:55:54.318Z
+
+> ↩︎ result: console [match04] m04mouth bulbs 20
+> 04 f03_forward3u s 81.305 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.181 lat 0 stage 04 frames 26
+
+### 🤖 Claude — 2026-11-18T02:55:58.825Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('$SP/try_mouth2/f03_forward3u.png').convert('RGB').crop((0,250,864,800))\nb=Image.open('references/04_through_the_five_arrows.png').convert('RGB').crop((0,300,864,850))\nc=Image.new('RGB',(864,1100)); c.paste(b,(0,0)); c.paste(a,(0,550)); c.save('$SP/cmp2_f03.png')\n\"", "description": "Stack approved and new f03 crops"}`
+
+### 🧑 User — 2026-11-18T02:55:59.330Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:56:01.600Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/cmp2_f03.png"}`
+
+### 🧑 User — 2026-11-18T02:56:01.652Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:56:08.802Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/try_mouth2/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T02:56:08.862Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:56:19.196Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/try_mouth1/a00_approved_view.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('qa/match/04/r9/BEFORE/a00_approved_view.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); print('px>0', (d>0).sum(), 'px>8', (d>8).sum(), 'max', d.max())\nys,xs=np.nonzero(d>8); print(ys.min() if len(ys) else None, ys.max() if len(ys) else None, xs.min() if len(xs) else None, xs.max() …[+91 chars]`
+
+### 🧑 User — 2026-11-18T02:56:19.529Z
+
+> ↩︎ result: px>0 1238916 px>8 705406 max 255
+> 0 1535 0 863
+
+### 🤖 Claude — 2026-11-18T02:56:23.298Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,40p scripts/capture.mjs | head -50; sed -n 1,30p tools/match04/metrics04.py", "description": "Read capture script and metrics usage"}`
+
+### 🧑 User — 2026-11-18T02:56:23.359Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3921 chars]
+
+### 🤖 Claude — 2026-11-18T02:56:28.643Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && K=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1\" && node scripts/capture.mjs 04 --q=\"$K\" --out=$SP/capK 2>&1 | grep -v \"Vite\\|403\\|allow\" | tail -2; node scripts/capture.mjs 04 --q=\"$K&m04mouth=1\" --out=$SP/capM 2>&1 | grep -v \"Vite\\|403\\|allow\" | tail -2; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/capK/04.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('$SP/capM/04.png').convert('RGB')).ast …[+163 chars]`
+
+### 🧑 User — 2026-11-18T02:56:49.165Z
+
+> ↩︎ result: console errors: [
+> ]
+> console errors: [
+> ]
+> px>0 35635 max 237
+
+### 🤖 Claude — 2026-11-18T02:56:53.685Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/capK/04.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('$SP/capM/04.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); ys,xs=np.nonzero(d>0); print(ys.min(),ys.max(),xs.min(),xs.max())\nm=(d>0).astype(np.uint8)*255; Image.fromarray(m).save('$SP/diffmask.png')\nprint(np.histogram(d[d>0],[1,4,8,16,32,64,256]))\n\"; python3 -I tools/match04/metrics04.py references …[+142 chars]`
+
+### 🧑 User — 2026-11-18T02:56:55.205Z
+
+> ↩︎ result: 382 1039 21 845
+> (array([35408,    44,     3,    14,    64,   102]), array([  1,   4,   8,  16,  32,  64, 256]))
+> FULL                                   BEFORE  81.4 %  SSIM 0.815   NEW  81.4 %  SSIM 0.815
+> BELOWHUD                               BEFORE  89.5 %  SSIM 0.882   NEW  89.5 %  SSIM 0.883
+> SCENERY                                BEFORE  98.2 %  SSIM 0.973   NEW  98.2 %  SSIM 0.974
+
+### 🤖 Claude — 2026-11-18T02:56:57.298Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/diffmask.png"}`
+
+### 🧑 User — 2026-11-18T02:56:57.317Z
+
+> ↩︎ result: [image]
+
