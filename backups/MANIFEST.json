@@ -684,7 +684,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11946,
-   "sha256": "9f5bc6f3c4241fa246cda60148b05b64c4f76a5c058f7f2cf3194886c695a469"
+   "sha256": "68cfaae5ea5f9e70f4df51231ad5e0d5043ecfba01df684e1d1d8971094fcd10"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2082,6 +2082,11 @@
    "sha256": "51069ab753484816dd70f61ddd7a7d50d81e7ffa9eee2c04efa6010ab5bf68c4"
   },
   {
+   "path": "qa/match/07/r7/APPROVED_07.png",
+   "bytes": 494067,
+   "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9"
+  },
+  {
    "path": "qa/match/07/r7/BEFORE/a00_approved_view.png",
    "bytes": 2567047,
    "sha256": "ec9b89422afba4d20d50fb7456f769dea8c9ed9cf1fe37d91965bdd2c7758f3c"
@@ -2147,9 +2152,104 @@
    "sha256": "a93c02aa37ea973e169cd22c08a87bac2340b9b81dc06357f721f3a5bb59add6"
   },
   {
+   "path": "qa/match/07/r7/NEW/a00_approved_view.png",
+   "bytes": 2568683,
+   "sha256": "dfc3d9bbf449e95cdfbccca8baf2d66e0be0291d508e647ac792558e02577b7b"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/f03_forward3u.png",
+   "bytes": 2367007,
+   "sha256": "e38e8e9d6fb8d6b69a224e4cd40de790572242f98ed3e7afbe00db0d173ffa03"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/f06_forward6u.png",
+   "bytes": 2262003,
+   "sha256": "6986b3653f5ca7ba1a63c6a63f94bedbbc28c2b31c4a19775f7251a18027c5a7"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/f10_forward10u.png",
+   "bytes": 2178001,
+   "sha256": "5336279bda8143ba6f9f9b1f9fe5563e2324959647ec2c4443ac9b8af3ef9187"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/f20_forward20u.png",
+   "bytes": 2169818,
+   "sha256": "42f1fffcc0335b4ab1f6f4d4eb96dca17d6bf26430600a33661872071e2c78cd"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/motion.json",
+   "bytes": 4693,
+   "sha256": "66981dc73c054e9d69508501e6ac1f2710f41073198ab132c1ad9abdd25e9411"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/s_left_hard.png",
+   "bytes": 2153623,
+   "sha256": "8cefc34140410716e0b3897944ba5ba07cea17064e44f6c5a0c18ab1fb1db57a"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/s_left_steer.png",
+   "bytes": 2222549,
+   "sha256": "a80d6e3299b146848cf85ee04885630a2a589f558648fa7829e8c2597a9ce1f9"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/s_right_hard.png",
+   "bytes": 2232052,
+   "sha256": "97abad7a6bfdc094e84b865b8c3ff93bb5cd4fddb81d7aa21f08b97156151c9c"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/s_right_steer.png",
+   "bytes": 2325363,
+   "sha256": "67776ced9c537c6c680ccbffe440721ee06d6c4c4df8678970236bb72ce6404b"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/t33_through_screen.png",
+   "bytes": 2237146,
+   "sha256": "36c9ff52cc8cc0650a1919029642f129efd6a76ce7e33db2437b996f0ac90ae5"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/t66_through_screen.png",
+   "bytes": 2288181,
+   "sha256": "f117eae044d43b36b0e2ebf3dd6003abd79fd39264deb2942649e87cdd8f95c7"
+  },
+  {
+   "path": "qa/match/07/r7/NEW/t95_through_screen.png",
+   "bytes": 1538012,
+   "sha256": "4a130feaf0b6fc9d3e56b14c5b97d9ea5369098005e9c7a1652aa348a7722c61"
+  },
+  {
+   "path": "qa/match/07/r7/continuity_default.json",
+   "bytes": 2696,
+   "sha256": "49576a5bbfdcd8a1ef2dbec617f0267b266790152519a7ee0b7a7c15a7bb62e7"
+  },
+  {
+   "path": "qa/match/07/r7/gameplay_new.json",
+   "bytes": 14713,
+   "sha256": "c1001528be938a082af492b5f522424fe2f3ae25b77f8f9e9fcf60d773f577f9"
+  },
+  {
+   "path": "qa/match/07/r7/metrics_BEFORE.txt",
+   "bytes": 684,
+   "sha256": "18be062a6db4ff7ad756115671756dfacb1739af777eb8bdba8d35d37b91973a"
+  },
+  {
+   "path": "qa/match/07/r7/metrics_NEW.txt",
+   "bytes": 684,
+   "sha256": "eb1c7a49a497fd9ef572754a9de6a7120c80e8a94f611f16dbb849f27c6c22ac"
+  },
+  {
    "path": "qa/match/07/r7/probe_before.json",
    "bytes": 6666,
    "sha256": "401b1a5cc7febc54284f86db7d526d454e98cd0e00a22a60d5a7e422ea009e98"
+  },
+  {
+   "path": "qa/match/07/r7/proof_default_0px.json",
+   "bytes": 649,
+   "sha256": "56e2e5c9d808ab039c5ecae7873e63d59551864f986c430f1baf76bf0f2883ba"
+  },
+  {
+   "path": "qa/match/07/r7/proof_newset_vs_K_match08.json",
+   "bytes": 757,
+   "sha256": "5d4e60525be5816fbc11b7d218cfe25fbc8c4ac2869f4003ec7ed57c2fd3e114"
   },
   {
    "path": "qa/match/07/r7/straighten_wall07.json",
@@ -9062,6 +9162,11 @@
    "sha256": "0df67779090489996752f755b21b86f99494b9522e32e4c383fbff3a2a7968e4"
   },
   {
+   "path": "tools/match07/diff0px_r7.py",
+   "bytes": 1026,
+   "sha256": "c7fc428267296989483d3a9153e6c93dc5886dd0de0d2dc6998f598bdcb3fc3c"
+  },
+  {
    "path": "tools/match07/fit_proxies07.py",
    "bytes": 4464,
    "sha256": "9f3e921762f7993159c46a5417e3c44f227c52951272f921fc679e5f38562446"
@@ -9098,8 +9203,8 @@
   },
   {
    "path": "tools/match07/proof0px_r7.mjs",
-   "bytes": 1411,
-   "sha256": "9aadcd522063f49569935cf0aa0d4ff875e90fa6cd2b7e31971c061d58ff711a"
+   "bytes": 1321,
+   "sha256": "ff81015a1dadc7c87d28abf88c46e81f6ac4ce4764f04240da844aa0c471047b"
   },
   {
    "path": "tools/match07/river_coins07.py",

@@ -13,7 +13,7 @@ try {
   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
   for (const id of IDS) {
-    await page.evaluate(async (id) => { const r = window.__rainbow; r.goto(id); r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false); }, id);
+    await page.evaluate((id) => window.__rainbow.goto(id), id); // deterministic: frozen clock, rendered once
     await page.waitForTimeout(150);
     await page.screenshot({ path: `${OUT}/${id}.png` });
   }
