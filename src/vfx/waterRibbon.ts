@@ -267,6 +267,18 @@ export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
  * only while riding (pjNearK): the locked checkpoint picture is unchanged pixel for pixel.
  */
 export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+/**
+ * `&m05ride=1` (Screen 05 round 8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05): the APPROVED DESIGN LAID OUT FROM
+ * BENNY. The approved picture holds only ~50 u of river and only its first ~10 u (around Benny) at full sharpness; laid
+ * onto the world, riding forward magnified far rows into a blurred sheet, and the near tile T2 that took over is a
+ * repeated patch (centre in-painted under Benny) that read as marbled swirls without the painted S-bands. Under the
+ * switch every projection layer (E, N, T, T2, flow maps, detail) is read at s − (ride s − locked s): a point d units
+ * ahead of Benny shows the approved water that lies d units ahead of Benny in the approved picture, so the S-shaped
+ * pink banks, cyan middle and glossy streaks keep their painted size and sharpness while swimming, on the real river
+ * geometry (lateral position u stays the world's: steering shows the other parts of the painted river). The two-phase
+ * flow still slides the streaks toward the camera. At the locked checkpoint the offset is 0 → the picture is unchanged.
+ */
+export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -471,6 +483,15 @@ uniform vec2 uPjT2S;       // start s, half period L (mirrored repeat: period 2 
 // how far ?projnear05=1 is engaged: 0 within 0.5 u of the locked checkpoint (the locked picture is the original
 // proj05 one EXACTLY, including its own hand-overs), 1 from 2 u of riding on
 float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
+// share of the crisp near tile T2 in the near / tile layout (see ?projnear05=1 below). m05ride: every layer is read at
+// the locked-view distance from Benny, so the layout under E is always the near tile (crisp) instead of the 24-texel layers
+float pjT2W(float mE) {
+#ifdef M05RIDE
+  return pjNearK();
+#else
+  return pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
+#endif
+}
 // ?projvp05=1 (2026-11-17, session 018Sg3AU; on with ?match05=1): VARIANCE-PRESERVING hand-over while riding. A plain
 // mix of two unrelated pictures of the water (exact layer E <-> crisp tile T2) halves their contrast in the hand-over
 // band: the rider saw a milky, smeared band mid-river (debug map ?projdbg05=1 = the green/red cross-fade). Here each
@@ -505,6 +526,12 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
   vec4 e = texture2D(uPjE, eUV);
   float inE = L.w * step(0.0, eUV.x) * step(eUV.x, 1.0);
   wE = e.a * inE * smoothstep(0.3, 0.55, mE);
+  #ifdef M05RIDE
+  // m05ride: E's first rows hold the painted bottom gold-frame rim and wall corners (hidden by the near ring in the
+  // locked view, exposed by the ride camera) and its sides end at the locked picture's edge: fade E in over those
+  // rows and at its sides, the crisp near tile carries the water there
+  wE *= mix(1.0, smoothstep(uPjNear.w - 1.55, uPjNear.w - 0.85, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+  #endif
   vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
   vec4 n = texture2D(uPjN, nUV);
   wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam
@@ -513,7 +540,7 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
     // ?projnear05=1: where the exact layer would be magnified, the 24-texel near layer and the old tile hand over to
     // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
     // old one exactly)
-    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
+    float wT2 = pjT2W(mE);
     t = pjMixVP(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
     wN *= 1.0 - wT2;
   }
@@ -556,7 +583,7 @@ vec2 pjFlowDir(float u, float s, float mE) {
   float wn = fn.b * smoothstep(0.0, 0.08, ny) * (1.0 - smoothstep(0.92, 1.0, ny));
   if (uPjNear.x > 0.5) {
     // T2's own streak direction where T2 is what is shown; a mirrored period runs its streaks mirrored
-    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
+    float wT2 = pjT2W(mE);
     vec3 f2 = texture2D(uPjWT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
     if (mod(floor((s - uPjT2S.x) / uPjT2S.y), 2.0) > 0.5) f2.r = 1.0 - f2.r;
     ft = mix(ft, f2, wT2);
@@ -1500,7 +1527,15 @@ void main() {
   #ifdef PROJ05
   {
     float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+    float s05r = s;
+    float rideK05 = 0.0;
+    #ifdef M05RIDE
+    // m05ride: the design layout follows Benny (see M05RIDE in this file)
+    rideK05 = pjNearK();                         // 0 within 0.5 u of the locked checkpoint: locked picture unchanged
+    s05r = s - (uPjNear.z - uPjNear.w) * rideK05;
+    #endif
     if (pjK > 0.001) {
+      float s = s05r;
       // exact-layer magnification: texels per screen pixel along the least dense direction
       vec4 Lm = pjLut(s);
       vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
@@ -1515,7 +1550,7 @@ void main() {
         // the density the locked view had at the same distance from Benny (scripts/proj05-ride-probe.mjs). Ratio of
         // what E stores here to what the locked view stored there (both straight from the LUT), × E's 1.3 margin:
         // exactly 1.3 at the locked checkpoint, so the locked picture is unchanged.
-        float rideD = uPjNear.z - uPjNear.w;
+        float rideD = (uPjNear.z - uPjNear.w) * (1.0 - rideK05);
         float sr = max(s - rideD, uPjLutS.x + 0.31);
         vec4 a0 = pjLut(s - 0.3), a1 = pjLut(s + 0.3), b0 = pjLut(sr - 0.3), b1 = pjLut(sr + 0.3);
         float rS = (a1.x - a0.x) / max(b1.x - b0.x, 1e-6);
@@ -1549,7 +1584,7 @@ void main() {
       float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
       // ?projnear05=1: the crisp tile carries its own approved streaks — the detail layer stays on the near layer only
       float dW = 1.0 - wEx;
-      float wT2m = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));   // share of T2 in the tile
+      float wT2m = pjT2W(mE);   // share of T2 in the tile
       dW *= 1.0 - (1.0 - wNx) * wT2m * (1.0 - uPjNear.y);
       tgt = clamp(tgt + det * uPjDS.z * dW, 0.0, 1.0);
       if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {
@@ -1718,7 +1753,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;

@@ -15,3 +15,25 @@ Each step = one sub-switch on top of the base set (default build untouched). Bra
   streams; the far-river slab edge and pale bank shelves; blurry near walls.
 * BEFORE: `/home/user/wt/s05/qa/match/05/r7/NEW/f10_forward10u.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/t33_through_screen.png`
 * NEW: `/home/user/wt/s05/qa/match/05/r8/step1_m05coin/f10_forward10u.png`, `/home/user/wt/s05/qa/match/05/r8/step1_m05coin/t33_through_screen.png`
+
+## Step 2 — `&m05ride=1` (the approved water design laid out from Benny while swimming)
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1`
+* WHAT LOOKS BETTER: while Benny swims, the river around and ahead of him now shows the painted design of the
+  approved picture instead of the marbled swirl sheet: thick magenta streams hugging both banks and curving in an S,
+  the bright cyan middle lane where the coins run, the long white glossy streaks and star glints, the painted splash
+  ring and soap bubbles around Benny, foam piles along the banks — at the painted size and sharpness (each point ahead
+  of Benny shows the approved water from the same distance ahead of Benny in the approved picture; the streaks still
+  flow toward the camera). Most visible at f10 and t33 (marbled sheet → S-banks + cyan lane) and t66 (the flat
+  marbled pool around Benny → the painted pink bend and cyan lane). The locked approved view is unchanged (0 px).
+* Numbers (LAYOUT20 / PALETTE vs approved, BEFORE → NEW): f03 24.4/87.9 → 27.5/88.4 · f10 13.7/83.7 → 17.9/84.8 ·
+  t33 15.4/84.1 → 17.5/85.1 · t66 9.0/81.4 → 9.6/80.2.
+* Still wrong: a faint outline where the painted patch meets the plain near-water tile at its sides (soft, strongest at
+  f03 / f10 left of Benny); some painted foam bubbles float mid-water on the left when the camera is wider than the
+  approved one; the far river at t66 still shows the raised slab edge and the orange piece on the left bank; pale bank
+  shelves; blurry near walls.
+* BEFORE: `/home/user/wt/s05/qa/match/05/r7/NEW/f03_forward3u.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/f10_forward10u.png`,
+  `/home/user/wt/s05/qa/match/05/r7/NEW/t33_through_screen.png`, `/home/user/wt/s05/qa/match/05/r7/NEW/t66_through_screen.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/f03_forward3u.png`, `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/f10_forward10u.png`,
+  `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/t33_through_screen.png`, `/home/user/wt/s05/qa/match/05/r8/step2_m05ride/t66_through_screen.png`
+* Rejected on the way: the previous instance's `&m05wd=1` (approved design kept as the world-fixed layout, row-smoothed):
+  t33 more ordered but soft, t66 a flat blurry sheet with horizontal stretch lines in front of Benny — worse; not kept.
