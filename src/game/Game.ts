@@ -126,6 +126,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
   if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
   const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
   const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
+  const m07CoinLook = !!m07 && flag05('m07coinsz');
+  const m07BennyP = new THREE.Vector3();
   let m07On = false;
   let m07Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
@@ -610,6 +612,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
       if (m07On) bloom.strength = 0;
       renderer.getDrawingBufferSize(dbs);
       m07.sync(renderer, dbs.x, dbs.y);
+      // `&m07coinsz=1` (look only): Screen 07 coins sized against the live camera, stepping aside from Benny
+      if (m07CoinLook) { camera.updateMatrixWorld(); coins.setView?.(camera, benny.root.getWorldPosition(m07BennyP).addScaledVector(camera.up, 0.7), renderer.domElement.clientHeight || 1536); }
     }
     renderer.info.reset();
     composer.render();

@@ -124,6 +124,9 @@ export interface CoinSystem {
   update(time: number, dt: number, bennyS: number, bennyLat: number): number;
   /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
   resetUntil(s: number): void;
+  /** `?match07=1&m07coinsz=1` (look only): the live camera + Benny's centre, so Screen 07 coins can keep a painted on-screen
+   *  size and step aside from Benny's screen box. Absent / null = unchanged. */
+  setView?(camera: THREE.PerspectiveCamera | null, benny: THREE.Vector3 | null, viewH: number): void;
 }
 
 export function createCoins(course: Course): CoinSystem {
@@ -186,8 +189,33 @@ export function createCoins(course: Course): CoinSystem {
   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
+  // `?match07=1&m07coinsz=1` (round 7, user feedback "oversized coins"): LOOK only — Screen 07 coins never draw larger
+  // on screen than the painted near coin (≈105 px of a 1536-px-high frame), and a coin between the camera and Benny that
+  // overlaps his screen box shrinks away. Count, positions along the path, pickups and score are unchanged.
+  const look07 = flag05('m07coinsz') && (flag05('match07') || flag05('matchall'));
+  let vCam: THREE.PerspectiveCamera | null = null; let vBenny: THREE.Vector3 | null = null; let vH = 1536;
+  const cp = new THREE.Vector3(), bp = new THREE.Vector3();
+  const lookScale = (d: CoinDef, pos: THREE.Vector3, size: number): number => {
+    if (!look07 || !vCam || d.stage !== '07') return 1;
+    const dist = pos.distanceTo(vCam.position);
+    const focal = (vH / 2) / Math.tan(THREE.MathUtils.degToRad(vCam.fov / 2));
+    const px = (size * focal) / Math.max(dist, 1e-3); // on-screen diameter at this size
+    const cap = (105 / 1536) * vH;
+    let k = Math.min(1, cap / Math.max(px, 1e-3));
+    if (vBenny) {
+      const dc = dist, db = vBenny.distanceTo(vCam.position);
+      if (dc < db) {
+        cp.copy(pos).project(vCam); bp.copy(vBenny).project(vCam);
+        const r = Math.hypot((cp.x - bp.x) * vCam.aspect, cp.y - bp.y); // NDC distance, aspect-corrected
+        k *= 0.25 + 0.75 * THREE.MathUtils.smoothstep(r, 0.18, 0.38);
+      }
+    }
+    return k;
+  };
 
+  let lastT = 0;
   const place = (time: number) => {
+    lastT = time;
     defs.forEach((d, i) => {
       const f = course.sample(d.s);
       let scale = 1;
@@ -211,7 +239,8 @@ export function createCoins(course: Course): CoinSystem {
       spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
       q.multiply(spin);
       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
-      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+      const size = (d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1);
+      m.compose(p, q, sc.setScalar(size * lookScale(d, p, size)));
       mesh.setMatrixAt(i, m);
     });
     mesh.instanceMatrix.needsUpdate = true;
@@ -238,6 +267,7 @@ export function createCoins(course: Course): CoinSystem {
       place(time);
       return picked;
     },
+    setView(camera, benny, viewH) { vCam = camera; vBenny = benny; vH = viewH; place(lastT); },
     resetUntil(s) {
       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
       place(0);

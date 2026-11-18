@@ -684,7 +684,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11946,
-   "sha256": "0e4a75ce4b6080c3248fd0d7a61af8da5c914e9e417be9afd77d9bbcc5f5404a"
+   "sha256": "3ca4122b7305659599ecbda997d3f8c5010b4e41c1b3d28e4134e0352d425a43"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8843,8 +8843,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 41398,
-   "sha256": "9a5f45f95f0bfc1dcbcb1971c4ea714df9db4861395c525d58f6424f4533d1dc"
+   "bytes": 41795,
+   "sha256": "29485c6682272ad356879335a33ca597945e08b4d89f680575504a9839d2fd94"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -8863,8 +8863,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 14271,
-   "sha256": "44e2c3fd4a97728228364f9a101f6066170aa22e195c72909ff7b6e3c4a90d7c"
+   "bytes": 16180,
+   "sha256": "db20992735a6440a7a49ba1c1d198a22ff8677b0ebb45c95d056ab8301f2cc71"
   },
   {
    "path": "src/gameplay/input.ts",
