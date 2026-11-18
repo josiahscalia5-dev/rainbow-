@@ -752,3 +752,93 @@ Let me look at the current NEW state (step 1 frames) at t66 and the last-third B
 > + * screen read as smooth round balls; the painted foam is cauliflower — each pile made of many small piled bubbles. Lumps
 > + * larger than ≈24 px are drawn as a pile of sub-bubbles  …[+5548 chars]
 
+### 🤖 Claude — 2026-11-18T12:09:11.754Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 280,300p src/vfx/waterRibbon.ts && grep -n \"m05seam\\b\\|uM05Seam\\|M05SEAM\" src/vfx/waterRibbon.ts | head -20", "description": "Check how the ribbon handles the seam"}`
+
+### 🧑 User — 2026-11-18T12:09:11.786Z
+
+> ↩︎ result: * flow still slides the streaks toward the camera. At the locked checkpoint the offset is 0 → the picture is unchanged.
+>  */
+> export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
+> /**
+>  * `&m05seam=1` (Screen 05 round 8, needs m05ride + m05far): the near river meets the far tunnel's river at the sliding
+>  * seam. With m05ride the near river shows the approved design Benny-relative, so once the seam stops sliding (capped
+>  * just before 06, Benny ≈ 139 on) the near river reached the seam with design rows from the approved MIDDLE distance
+>  * while the far river continues the approved picture's LAST near-river rows: the pink / cyan bands broke in a step line
+>  * across the river. Over the stretch before the seam (60 % of Benny → seam, 4–20 u) the design is eased (quadratic, no
+>  * kink) so it arrives at E's last rows exactly at the seam, as in the locked view. `m05seam.value` = (seam s, live) is
+>  * written every frame by src/world/match05far.ts; locked view and the 06 fold: live = 0, nothing changes.
+>  */
+> export const M05SEAM: boolean = M05RIDE && q05('m05seam');
+> export const m05seam = { value: new THREE.Vector2(0, 0) };
+> /**
+>  * `&m05blend=1` (Screen 05 round 9, branch claude/rainbow-s0 …[+2182 chars]
+
+### 🤖 Claude — 2026-11-18T12:09:16.591Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"foldNear: 6.5\" src/world/environment.ts && grep -n \"^export const M05FAR\" src/world/match05far.ts", "description": "Locate fold parameters"}`
+
+### 🧑 User — 2026-11-18T12:09:16.624Z
+
+> ↩︎ result: 636:      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
+> 28:export const M05FAR: boolean = MATCH05 && flag05('m05far');
+
+### 🤖 Claude — 2026-11-18T12:09:25.266Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\nimport re\np='src/world/match05far.ts'\ns=open(p).read()\ns=s.replace(\"\"\"export const M05FAR: boolean = MATCH05 && flag05('m05far');\n\"\"\",\"\"\"export const M05FAR: boolean = MATCH05 && flag05('m05far');\n/**\n * `&m05end=1` (Screen 05 round 11, needs m05far): the last part of the stage (t ≈ 0.88 … 0.96, Benny ≈ 182 … 186.5)\n * stays inside the painted 05 tunnel. The far block folded away while the eye was still 10 … 6.5 u from its capped\n * seam (s ≈ 186.5), so for the last ≈ 5 u of the stage the camera looked into the old generi …[+1129 chars]`
+
+### 🧑 User — 2026-11-18T12:09:25.349Z
+
+> ↩︎ result: src/world/environment.ts:17:import { M05FAR, M05END, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+> src/world/environment.ts:636:      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 3 : 6.5, foldFar: M05END ? 5 : 10,   // m05end (r11): fold at the 06 hand-over
+> src/world/match05far.ts:38:export const M05END: boolean = M05FAR && flag05('m05end');
+
+### 🤖 Claude — 2026-11-18T12:09:35.650Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_shots.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"  ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],\n];\"\"\",\"\"\"  ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],\n  ['t92_left', 't0.92', -1], ['t92_right', 't0.92', 1], ['t98_end', 't0.98', null],\n];\"\"\")\nopen(p,'w').write(s)\nEOF\nK='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m0 …[+329 chars]`
+
+### 🧑 User — 2026-11-18T12:10:54.846Z
+
+> ↩︎ result: t95_through_screen s 186.783 lat 0 coins 1580 benny -0.12 -0.35 big coins: #38@316,231 d68 #39@319,169 d61
+> t90_through s 183.958 lat 0 coins 1520 benny 0.09 -0.3 big coins: #25@24,1329 d355 #38@322,146 d63
+> t92_left s 185.057 lat -4.091 coins 1420 benny -0.29 -0.34 big coins: #38@533,147 d64
+> t92_right s 185.057 lat 4.066 coins 1420 benny 0.22 -0.18 big coins: #28@-6,771 d87 #29@-16,710 d72 #38@92,165 d66
+> t98_end s 188.357 lat 0.004 coins 1580 benny -0.19 -0.51 big coins: #38@305,383 d71 #39@312,328 d62
+
+### 🤖 Claude — 2026-11-18T12:11:00.227Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/end_new/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T12:11:00.268Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:11:00.837Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/end_new/t98_end.png"}`
+
+### 🧑 User — 2026-11-18T12:11:00.889Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:11:19.593Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/end_new/t92_left.png"}`
+
+### 🧑 User — 2026-11-18T12:11:19.636Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:11:20.291Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/end_new/t92_right.png"}`
+
+### 🧑 User — 2026-11-18T12:11:20.334Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:11:30.127Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1'; P=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p; timeout 900 node tools/match05/r8_shots.mjs $P/end_old \"$K\" t90_through,t95_through_screen,t98_end,t92_left,t92_right 2>&1 | tail -6", "description": "Render BEFORE end-of-stage shots at the kept set", "timeout": 900000}`
+
