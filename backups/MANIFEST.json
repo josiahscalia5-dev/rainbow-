@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16507,
-   "sha256": "99e9b09dc36e59ea754b81b4ca019cbb9b68bc65c3720db60c2606fb73089703"
+   "sha256": "cfe7a8ad7e63280b9362aa0c6643c96a011719d83d2c4c90e4c3cd54f3b17241"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -969,7 +969,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c14/INFO.json",
    "bytes": 503,
-   "sha256": "1978f0bef71f0bc018094cf7705c05e881bce1c360213e108b1d0be06edcb6c7"
+   "sha256": "e547757acbd2e9663383c2955df492061a0b18105d17d7c2e1608db31d63e5d0"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c14/tracked.patch",
@@ -1028,23 +1028,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c14/INFO.json",
-   "bytes": 1799,
-   "sha256": "84d6e760f5e950fcbcec32b2bf5b9d843f46ad7ae6d0add0b4be763f2bfce92a"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c14/untracked/qa/match/05/r14/step1_m05vee/before/shots.json",
-   "bytes": 53126,
-   "sha256": "a5070fbfab46ea55ee009cac58287f9bb82cb9f8b652a11bf7c7b2e46fa6fcf8"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c14/untracked/qa/match/05/r14/step1_m05vee/new/shots.json",
-   "bytes": 31299,
-   "sha256": "56837fb8fc8815a98450a43d66956c0c37f14a882afe378ddea453fa5a6943b2"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c14/untracked/qa/match/05/r14/step1_m05vee/new/shots_part1.json",
-   "bytes": 22108,
-   "sha256": "901221623c000eb7901b6b5237d86531f8ce65fe635e9858e97de4f1ddb3ce4a"
+   "bytes": 477,
+   "sha256": "d57673207b8860b3144df1cc7583286a626f3d8e63a2a35d24e658db046eb1d1"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -1113,8 +1098,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c14/INFO.json",
-   "bytes": 485,
-   "sha256": "82c4fba9cbb146591b478d58cde4d83bad30bdd3d79f9311fcc064e8e330bac6"
+   "bytes": 513,
+   "sha256": "1cbb0397bf6f51d279da933290a766f8d2eed7c289b231cbbd3c16dd7f1db7ff"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c14/tracked.patch",
+   "bytes": 1857,
+   "sha256": "bc0c04bf25eda628d1dd1056f3db2adc1ce06efb00f592042523c904b11e4c76"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
