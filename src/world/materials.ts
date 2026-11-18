@@ -4,7 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, PUFF05, SILK05, WATER05 } from '../vfx/waterRibbon';
+import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far } from '../vfx/waterRibbon';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -881,6 +881,9 @@ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THR
     uRivD0: { value: d0 },
     ...(flow ? { uRivRipple: { value: flow.ripple }, uRivTime: flow.time, uRivFlow: { value: flow.speed } } : {}),
   };
+  // `?proj05=1`: the approved water baked onto the far block (proj05_F.png); off: nothing below is used
+  const pj = PROJ05 ? proj05Far() : null;
+  if (pj) Object.assign(uniforms, pj.uniforms);
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
@@ -1099,12 +1102,23 @@ float rivCells(vec2 p) {
   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
   diffuseColor.rgb = col;
 }`);
+    if (pj) {
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\n' + pj.pars)
+        .replace('  diffuseColor.rgb = col;\n}', '  ' + pj.apply + '\n  diffuseColor.rgb = col;\n}');
+    }
   };
   if (WATER05) {
     mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) };
     mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (SILK05 ? '-w12s' : '') + (PUFF05 ? '-w12p' : '');
   } else {
     mat.customProgramCacheKey = () => 'far-river-w8';
+  }
+  if (pj) {
+    const key = mat.customProgramCacheKey;
+    mat.customProgramCacheKey = () => key() + '-proj05';
+    mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };
+    mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);
   }
   return mat;
 }

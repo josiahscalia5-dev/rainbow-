@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { createRibbon } from './waterRibbon';
+import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
 import { createFinalWave } from './finalWave';
@@ -53,6 +53,8 @@ export interface WaterSystem {
   parts: Record<string, THREE.Object3D>;
   /** live stats for perf reporting */
   stats(): { instances: number; bubbles: number; smallBubbles: number; sprayCapacity: number };
+  /** `?proj05=1`: resolves when the projection textures are loaded (undefined otherwise) */
+  ready?: Promise<void>;
 }
 
 const smooth = (a: number, b: number, x: number) => {
@@ -95,6 +97,9 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+  // `?proj05=1`: the approved picture's own fluffy foam is baked into the river texture, so the three Screen-05-only foam
+  // parts (rim puffs, flank sheet, flank puffs) step aside; `?projfoam05=1` keeps them. No other screen's foam changes.
+  if (PROJ05 && !flag05('projfoam05')) qaHide.push('foamRim05', 'foamFlank', 'foamRafts');
   /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
   const qaNoRibbonWake = qaHide.includes('ribbonWake');
   let focus = 0;
@@ -160,6 +165,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
     group,
     controls,
     parts,
+    ...(ribbon.ready ? { ready: Promise.all([ribbon.ready, ...proj05Pending]).then(() => undefined) } : {}),
     surfaceHeight,
     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
     update(time, dt, focusS, camera) {
@@ -186,7 +192,10 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
       foam.update(time, dt, focusS, controls.outro, camera);
-      bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);
+      // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+      // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+      const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;
+      bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
       // crest spray off the final wave
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
         const n = quality === 'high' ? 3 : 1;

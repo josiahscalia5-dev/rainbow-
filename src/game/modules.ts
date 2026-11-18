@@ -31,6 +31,9 @@ export async function loadWater(course: Course): Promise<WaterLike> {
       const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
       const q = qp === 'low' || (qp !== 'high' && mobile) ? 'low' : 'high';
       const w = m.createWater(course, { quality: q });
+      // `?proj05=1` only: wait for the baked approved-water textures (undefined → nothing to wait for)
+      const ready = (w as { ready?: Promise<void> }).ready;
+      if (ready) await ready;
       moduleStatus.water = 'vfx/index.ts';
       return w;
     } catch (e) {

@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT, coreLateral } from './waterRibbon';
+import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
@@ -127,6 +127,12 @@ ${FRAG_FX_GLSL}
 ${SOAP05_GLSL}
 void main() {
   float s = vFoam.y;
+  #ifdef PROJ05
+  // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
+  // (dithered over 3 u at both joins; 04 / 06 keep their berm)
+  float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
+  if (pjIn > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < pjIn) discard;
+  #endif
   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
     float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 + 0.3;
     if (n < uOutro.x * 1.15) discard;
@@ -608,7 +614,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     fragmentShader: BERM_FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: quality === 'low' ? { LOW_Q: 1 } : {},
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'foam_berm';
