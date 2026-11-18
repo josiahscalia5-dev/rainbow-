@@ -4435,3 +4435,54 @@ Typecheck passes. D1 combines all four changes on top of C5. If anything looks w
 
 > 🔧 **Bash** `{"command": "printf '%s\\n' '| 6 (~16:20) | 04 lead step 4 D4 (rich glossy water m04lane2, copper rings m04copper, soft edges m04edge; `b46de267`) | GOOD IMPROVEMENT: turquoise water with glossy crests + sparkles, copper-gold rings with dark grooves, soft pink edge fringe; rings still a shade darker than painted — `qa/review_r13/04_step4_rich_water_copper/` + clip |' >> docs/briefs/2026-11-18-r13/COORDINATION.md; timeout 280 python3 scripts/rainbow-autosave.py --reason manual:04-step4-rich-water 2>&1 | grep -E '\"(result|commit|pushed_verified)\"'; echo \"lead LOCAL $(git rev-parse --short=8 H …[+396 chars]`
 
+### 🧑 User — 2026-11-18T15:30:57.532Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "141c9735a2f3100aa988bd0164e8d897fc6c7501",
+> lead LOCAL 141c9735 REMOTE 141c9735
+> AUTOSAVE OK | branch claude/rainbow-restore-autosave-1mgga0 | scheduler daemon | last verified backup 2026-11-18T15:30:43+00:00 (0.2 min ago) | local 141c973 remote 141c973 (match) | uncommitted 0
+> s05-match-c13 remote 2a730c0f
+> s08-scenery-c13 remote bed281f4
+
+### 🤖 Claude — 2026-11-18T15:31:02.919Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/00_APPROVED.png", "/home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/01a_BEFORE_straight.png", "/home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/01b_NEW_straight.png", "/home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/02a_BEFORE_hard_left.png", "/home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/02b_NEW_hard_left.png", "/home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/03a_BEFORE_hard_right.png", "/home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/03b_NEW_h …[+536 chars]`
+
+### 🧑 User — 2026-11-18T15:31:05.113Z
+
+> ↩︎ result: 10 files delivered to user.
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/00_APPROVED.png → file_uuid: b828fe0e-c03a-471a-ad14-c5c56e8b57df
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/01a_BEFORE_straight.png → file_uuid: 75c4d9d2-71df-40b4-bd30-3303c851d0c0
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/01b_NEW_straight.png → file_uuid: 735641ea-9fe1-4e4a-9001-6ac333f5b295
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/02a_BEFORE_hard_left.png → file_uuid: 8ddb8510-d927-4e1a-9b2b-b2fe5a28768b
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/02b_NEW_hard_left.png → file_uuid: b785fa69-7c07-49ef-96e5-0ebe11430822
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/03a_BEFORE_hard_right.png → file_uuid: 3d3ed560-b53e-4b67-8ce4-c22bb8b8aee1
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/03b_NEW_hard_right.png → file_uuid: 277adcf4-a77c-4593-896e-3bf313c093af
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/04a_BEFORE_end.png → file_uuid: c87bf480-9153-4afd-bc47-ddb7dcd104e1
+>   /home/user/rainbow-/qa/review_r13/04_step4_rich_water_copper/04b_NEW_end.png → file_uuid:  …[+182 chars]
+
+### 🤖 Claude — 2026-11-18T15:31:12.903Z
+
+The Screen 04 water and ring corrections are done. The full-size APPROVED / BEFORE / NEW pictures are above, straight, hard left, hard right and the end of the screen, with a 2.2-second real-gameplay swim. The BEFORE is C5, the version you last saw.
+
+**Verdict: GOOD IMPROVEMENT. Screen 04 is still not at your 8.5/10 and not finished.**
+
+**What is closer:**
+- **Water:** now rich turquoise and electric blue with glossy white crests, flowing highlights and twinkling sparkles, instead of pale flat blue. The centre path stays wide, clean and continuous.
+- **Gold rings:** copper-gold now, with dark recessed grooves and bright polished rims, instead of flat orange. The broader ring spacing is kept.
+- **Water edges:** a soft, irregular pink fringe meets the tunnel. The hard dark triangular notches are gone, and the foam walls haven't come back.
+- **Unchanged:** the five white arrows, Benny, his splashes, coins and the start view.
+
+**What is still wrong:**
+- The upper rings are a shade darker and browner than your glowing gold.
+- Your water is a brighter turquoise with more intense white glints.
+- Your picture has more magenta swirls in the water near the washer opening.
+
+**Rejected tests:** one was too dark overall. Another made the ring rims pale yellow-white over dark bands, so the tunnel looked striped.
+
+**Everything else:**
+- Both specialists are still working and have pushed newer steps: Screen 05 is at `2a730c0f`, Screen 08 at `bed281f4`.
+- Two of their kept steps are still waiting for my eye check before I show them to you. Screen 05: the far-left bank's flat pale floor is replaced by purple wall and foam. Screen 08: the upper-right cup's top is now a pink cap.
+- Autosave: AUTOSAVE OK, and GitHub matches the local copy. Main branch at `141c9735`, Screen 04 branch at `b46de267`.
+
