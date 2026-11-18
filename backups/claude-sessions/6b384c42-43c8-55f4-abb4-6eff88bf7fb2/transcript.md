@@ -892,3 +892,463 @@ GitHub is reachable now (the earlier fetch failure was temporary). Let me see th
 > 
 > ## Binding rules — read FIRST (read "-c8/-c10/-c11/-c12" as "-c13", …[+2428 chars]
 
+### 🤖 Claude — 2026-11-18T18:13:54.386Z
+
+The autosave config still names account 14's branch and doesn't protect the `-c14` branches. I'll point it at this session's branch and protect account 14's work, as the handoff's TRAP note says.
+
+### 🤖 Claude — 2026-11-18T18:13:57.444Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'\nc=json.load(open(p))\nc['branch']='ccr-47b10cec-03c7co'\nadd=['ccr-6c7564b1-fmlt1w','claude/rainbow-s04-match-c14','claude/rainbow-s05-match-c14','claude/rainbow-s08-scenery-c14']\nfor b in add:\n    if b not in c['protected_branches']: c['protected_branches'].append(b)\nc['original_branch_note']+=\" Since account 15 (2026-11-18 ~18:20 UTC) the account-14 lead ccr-6c7564b1-fmlt1w (last 58b94d9) and its -c14 specialist branches are protected too; account 15 continues on ccr-47b10cec-03c7co and new -c15 branches.\"\nj …[+239 chars]`
+
+### 🧑 User — 2026-11-18T18:13:57.524Z
+
+> ↩︎ result: ccr-47b10cec-03c7co 58
+>  backups/CONVERSATION_INDEX.md                      |   2 +-
+>  backups/autosave.config.json                       |  10 +-
+>  .../transcript.md                                  | 894 ++++++++++++++++++++-
+>  .../transcript.sanitized.jsonl                     |  87 +-
+>  4 files changed, 987 insertions(+), 6 deletions(-)
+
+### 🤖 Claude — 2026-11-18T18:14:00.590Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:account15-start 2>&1 | tail -8; echo; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-47b10cec-03c7co", "description": "Run manual backup and verify remote SHA"}`
+
+### 🧑 User — 2026-11-18T18:14:01.304Z
+
+> ↩︎ result: another autosave is running; skipping
+> 
+> f4cd769b0bdc1433748c7a42c30796b49835568f
+> 8224dd2f049d4b48bbad91dcb24029c860bdd923	refs/heads/ccr-47b10cec-03c7co
+
+### 🤖 Claude — 2026-11-18T18:14:04.803Z
+
+Another autosave run was already committing (f4cd769); I'll recheck it after the service checks. Running the free, non-billable service checks now.
+
+### 🤖 Claude — 2026-11-18T18:14:05.756Z
+
+> 🔧 **Bash** `{"command": "timeout 90 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -15", "description": "Free World Labs key and credit balance check"}`
+
+### 🧑 User — 2026-11-18T18:14:06.921Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+
+### 🤖 Claude — 2026-11-18T18:14:07.466Z
+
+> 🔧 **Bash** `{"command": "grep -n -i 'fal' scripts/verify-assets.py | head -10; timeout 30 curl -sS -o /dev/null -w 'fal status http=%{http_code}\\n' \"https://queue.fal.run/fal-ai/flux/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status\" ; grep -rn \"01a1ea70\" backups/TOOL_MANIFEST.json | head -3", "description": "Free fal.ai request status check"}`
+
+### 🧑 User — 2026-11-18T18:14:07.694Z
+
+> ↩︎ result: fal status http=200
+> 404:  "fal": "queue.fal.run key proxy-injected, request 01a1ea70 COMPLETED",
+
+### 🤖 Claude — 2026-11-18T18:14:09.269Z
+
+> 🔧 **Bash** `{"command": "nvidia-smi 2>&1 | head -5; echo \"---\"; nproc; free -g | head -2; echo \"---\"; cd /home/user/rainbow- && (npx --no-install gltf-transform --version 2>&1 | head -2); ls node_modules/@gltf-transform 2>/dev/null; echo \"---\"; grep -n -i -E 'fspy|trellis|gltf-transform|gltf_transform' backups/TOOL_MANIFEST.json | head -20", "description": "Check GPU, CPU, glTF Transform and tool manifest entries"}`
+
+### 🧑 User — 2026-11-18T18:14:09.706Z
+
+> ↩︎ result: /bin/bash: line 2: nvidia-smi: command not found
+> ---
+> 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           1           5           0           9          14
+> ---
+> npm error code ENOVERSIONS
+> npm error No versions available for gltf-transform
+> ---
+
+### 🤖 Claude — 2026-11-18T18:14:18.872Z
+
+> 🔧 **Bash** `{"command": "timeout 30 curl -sS \"https://queue.fal.run/fal-ai/flux/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status\" | python3 -c \"import json,sys;d=json.load(sys.stdin);print('fal request status:',d.get('status'))\"; timeout 30 curl -sS -o /dev/null -w 'marble 08 world http=%{http_code}\\n' \"https://api.worldlabs.ai/marble/v1/worlds/32b5b2f4-32bc-4fa5-80a5-861129a528c8\"; timeout 30 curl -sS -o /dev/null -w 'HF DA3 model http=%{http_code}\\n' https://huggingface.co/api/models/depth-anything/DA3-LARGE; timeout 30 npm view @gltf-transform/cli version 2>&1 | tail -1", "description": "Ch …[+75 chars]`
+
+### 🤖 Claude — 2026-11-18T18:14:19.778Z
+
+> 🔧 **Grep** `{"pattern": "(?i)fspy|trellis|gltf-transform|glTF Transform", "path": "/home/user/rainbow-/docs", "output_mode": "files_with_matches"}`
+
+### 🧑 User — 2026-11-18T18:14:20.174Z
+
+> ↩︎ result: fal request status: COMPLETED
+> marble 08 world http=200
+> HF DA3 model http=200
+> 4.5.1
+
+### 🧑 User — 2026-11-18T18:14:20.217Z
+
+> ↩︎ result: Found 4 files
+> docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md
+> docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md
+> docs/briefs/2026-11-18-r10/TOOL_EVALUATION.md
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md
+
+### 🤖 Claude — 2026-11-18T18:14:20.229Z
+
+> 🔧 **ToolSearch** `{"query": "World_Labs_Atlas", "max_results": 10}`
+
+### 🧑 User — 2026-11-18T18:14:20.242Z
+
+> ↩︎ result: No matching deferred tools found
+
+### 🤖 Claude — 2026-11-18T18:14:24.334Z
+
+> 🔧 **ToolSearch** `{"query": "select:ListConnectors,TaskCreate,TaskUpdate,Monitor,SendMessage", "max_results": 5}`
+
+### 🧑 User — 2026-11-18T18:14:24.344Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T18:14:25.640Z
+
+> 🔧 **Bash** `{"command": "grep -n -i -B1 -A3 -E 'fspy|trellis|gltf-transform|glTF Transform' docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md docs/briefs/2026-11-18-r10/TOOL_EVALUATION.md | head -70", "description": "Read earlier fSpy/TRELLIS/glTF Transform evaluations"}`
+
+### 🧑 User — 2026-11-18T18:14:25.681Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md-16-| World Labs Marble, fal nano-banana-2/edit | working (keys re-entered) | keep; paid jobs only with the user's approval; user: no new Marble worlds |
+> docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md:17:| TRELLIS.2, Hunyuan3D, Scenario YVO3D, Substance Sampler, Mitsuba 3 | see TOOL_EVALUATION.md | unchanged verdicts |
+> docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md-18-
+> docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md-19-Next step needing the user's OK: connect the Hugging Face connector (free account tier) + accept the Stable Virtual Camera
+> docs/briefs/2026-11-18-r11/TOOL_SEARCH_R11.md-20-licence on HF, then a free test: approved 04 (or 06) clean plate + the game camera path → 8 views → compare by eye.
+> --
+> docs/briefs/2026-11-18-r10/TOOL_EVALUATION.md-17-| 3 | **Depth/edge-guided image generation** (ControlNet in ComfyUI; hosted equivalents on fal) | yes; ComfyUI needs an NVIDIA GPU (none here) → fal hosted endpoints | via fal | paid per image (quote before use) | the CONTINUATION problem: images of the approved design from viewpoints the picture does not show, locked to OUR geometry's depth/edges, each reviewed by the user before use, then pr …[+3038 chars]
+
+### 🤖 Claude — 2026-11-18T18:14:27.944Z
+
+> 🔧 **ListConnectors** `{"keywords": ["World Labs", "Atlas", "Hugging Face", "fal", "GitHub"]}`
+
+### 🧑 User — 2026-11-18T18:14:28.321Z
+
+> ↩︎ result: []
+
+### 🤖 Claude — 2026-11-18T18:14:29.141Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py 2>&1 | tail -3; git log --oneline -3; timeout 60 git ls-remote origin refs/heads/ccr-47b10cec-03c7co; git status --short | head", "description": "Recheck autosave and remote SHA"}`
+
+### 🧑 User — 2026-11-18T18:14:30.098Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-47b10cec-03c7co | scheduler daemon | last verified backup 2026-11-18T18:13:54+00:00 (0.6 min ago) | local f4cd769 remote f4cd769 (match) | uncommitted 1
+> f4cd769 autosave: Rainbow 2026-11-18 18:13 UTC
+> 8224dd2 autosave: Rainbow 2026-11-18 18:12 UTC
+> 58b94d9 autosave: Rainbow 2026-11-18 17:43 UTC
+> f4cd769b0bdc1433748c7a42c30796b49835568f	refs/heads/ccr-47b10cec-03c7co
+>  M backups/BOOTSTRAP_REPORT.md
+
+### 🤖 Claude — 2026-11-18T18:14:36.449Z
+
+> 🔧 **TaskCreate** `{"subject": "Create -c15 branches + worktrees for 04, 05, 08 (and 07/06 ready)", "description": "Fetch newest -c14 tips one at a time (shallow), create -c15 branches, git worktrees /home/user/wt/s0N, apply backups/wip unfinished edits, push.", "activeForm": "Creating -c15 branches and worktrees"}`
+
+### 🧑 User — 2026-11-18T18:14:36.461Z
+
+> ↩︎ result: Task #1 created successfully: Create -c15 branches + worktrees for 04, 05, 08 (and 07/06 ready)
+
+### 🤖 Claude — 2026-11-18T18:14:37.815Z
+
+> 🔧 **TaskCreate** `{"subject": "Relaunch specialists 05 (water-fx) and 08 (washer-environment-modeler)", "description": "Background agents with the r13 SPECIALIST_PROMPT_TEMPLATE adapted to -c15/r15, resume from r14 PROGRESS.md; monitor branch pushes.", "activeForm": "Relaunching specialists"}`
+
+### 🧑 User — 2026-11-18T18:14:37.828Z
+
+> ↩︎ result: Task #2 created successfully: Relaunch specialists 05 (water-fx) and 08 (washer-environment-modeler)
+
+### 🤖 Claude — 2026-11-18T18:14:39.305Z
+
+> 🔧 **TaskCreate** `{"subject": "Lead: continue Screen 04 from fc28323a on s04-c15", "description": "Next 04 step: foam as tiny bubble clusters instead of smooth balls; then pink-magenta side swirls, gold colour. Proof APPROVED/BEFORE/NEW.", "activeForm": "Working on Screen 04"}`
+
+### 🧑 User — 2026-11-18T18:14:39.316Z
+
+> ↩︎ result: Task #3 created successfully: Lead: continue Screen 04 from fc28323a on s04-c15
+
+### 🤖 Claude — 2026-11-18T18:14:40.908Z
+
+> 🔧 **TaskCreate** `{"subject": "Write account-15 handoff + coordination + tool status (fSpy, TRELLIS.2, glTF Transform)", "description": "docs/briefs/2026-11-18-r15/COORDINATION.md, top of NEW_CLAUDE_ACCOUNT_HANDOFF.md, START_NEW_CLAUDE_ACCOUNT.md prompt, TOOL_MANIFEST entries, AGENTS_STATUS.json.", "activeForm": "Writing handoff docs"}`
+
+### 🧑 User — 2026-11-18T18:14:40.917Z
+
+> ↩︎ result: Task #4 created successfully: Write account-15 handoff + coordination + tool status (fSpy, TRELLIS.2, glTF Transform)
+
+### 🤖 Claude — 2026-11-18T18:14:46.217Z
+
+> 🔧 **Bash** `{"command": "for b in claude/rainbow-s04-match-c14 claude/rainbow-s05-match-c14 claude/rainbow-s08-scenery-c14; do timeout 180 git fetch --depth=1 origin +$b:refs/remotes/origin/$b 2>&1 | tail -1; git log -1 --format=\"%h %cI %s\" refs/remotes/origin/$b; done; for d in s04-c14 s05-c14 s08-scenery-c14; do echo \"== $d\"; f=backups/wip/claude__rainbow-${d/s0/s0}; done; for w in claude__rainbow-s04-match-c14 claude__rainbow-s05-match-c14 claude__rainbow-s08-scenery-c14; do echo \"== $w\"; cat backups/wip/$w/INFO.json 2>/dev/null | python3 -c \"import json,sys;d=json.load(sys.stdin);print({k:d[k]  …[+262 chars]`
+
+### 🧑 User — 2026-11-18T18:16:46.321Z
+
+> ↩︎ result: * [new branch]      claude/rainbow-s04-match-c14 -> origin/claude/rainbow-s04-match-c14
+> fc28323 2026-11-18T17:20:02+00:00 Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GOOD IMPROVEMENT (small)
+> Command did not complete within its 120s timeout and was moved to the background (ID: bpabeeviv). Output is being written to: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bpabeeviv.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T18:16:48.834Z
+
+Fetches are slow (large tips). Meanwhile I'll read the specialists' last progress notes.
+
+### 🤖 Claude — 2026-11-18T18:16:49.935Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/04/r14 qa/match/05/r14 qa/match/08/r14 2>&1 | head -30; ls qa/review_r14/", "description": "List round-14 logs available on lead branch"}`
+
+### 🧑 User — 2026-11-18T18:16:49.995Z
+
+> ↩︎ result: ls: cannot access 'qa/match/04/r14': No such file or directory
+> ls: cannot access 'qa/match/05/r14': No such file or directory
+> ls: cannot access 'qa/match/08/r14': No such file or directory
+> 04_step6_glow_arrows
+> 04_step9_entrance_foam
+> 05_step2_painted_V
+
+### 🤖 Claude — 2026-11-18T18:16:51.191Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/AGENTS_STATUS.json'));print(list(d.keys()))\nfor k in ('assignments_now','slots','round14','account14'):\n  if k in d: print(k, json.dumps(d[k],indent=1)[:3000])\"", "description": "Read current assignments in AGENTS_STATUS.json"}`
+
+### 🧑 User — 2026-11-18T18:16:51.262Z
+
+> ↩︎ result: ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped', 'round3_stopped', 'round4_done', 'backup_2026_11_17_1945', 'round4_stopped_account4', 'round5_account5', 'round6_account6', 'round9_account9', 'running_now_account8_archived', 'round12_account12', 'round13_account13', 'round14_account14']
+> assignments_now {
+>  "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
+>  "_user_priority_2026-11-17": "VISUAL ONLY: scenery and look of the playable screens 04-08 must match their approved pictures (>= 90 %); do not report camera/movement details; show APPROVED | BEFORE | NEW full size + whole-frame numbers",
+>  "_two_lines": "line A = ccr-9c4a8ad6-xovgsx (= ccr-61131b9d-uj0oqb), line B = ccr-b0757dec-dj6l1o (a8c03f0 at 03:36; its session 01VCMXob was STILL autosaving at 11:48 UTC -> 65f3a89, full-game match05 video). NOT merged; user must approve.",
+>  "line_B_washer-environment-modeler": {
+>   "switch": "env05",
+>   "state": "INTERRUPTED ~03:10 UTC 2026-11-17 mid wall/ring feedback re-bake (unmeasured)",
+>   "ne …[+2255 chars]
+
+### 🤖 Claude — 2026-11-18T18:16:54.918Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/AGENTS_STATUS.json'));print(json.dumps(d['round14_account14'],indent=1)[:5000])\"", "description": "Read round-14 agent status"}`
+
+### 🧑 User — 2026-11-18T18:16:54.977Z
+
+> ↩︎ result: {
+>  "updated": "2026-11-18T16:40Z",
+>  "lead_branch": "ccr-6c7564b1-fmlt1w",
+>  "coordination": "docs/briefs/2026-11-18-r14/COORDINATION.md",
+>  "launch_brief": "docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md (read -c13 as -c14)",
+>  "running": {
+>   "s05": {
+>    "agent": "water-fx-specialist",
+>    "branch": "claude/rainbow-s05-match-c14",
+>    "worktree": "/home/user/wt/s05",
+>    "start": "ebc9676c (-c13 tip) + WIP &m05vee=1 committed 9735443d",
+>    "log": "qa/match/05/r14/PROGRESS.md",
+>    "first_commit": "0dbe931b",
+>    "kind": "background agent in the lead container"
+>   },
+>   "s08": {
+>    "agent": "washer-environment-modeler",
+>    "branch": "claude/rainbow-s08-scenery-c14",
+>    "worktree": "/home/user/wt/s08",
+>    "start": "71e7cf54 (-c13 tip) + tools/match08/nq08.py committed e36430c4",
+>    "log": "qa/match/08/r14/PROGRESS.md",
+>    "first_commit": "b62b9c34",
+>    "kind": "background agent in the lead container"
+>   },
+>   "s04": {
+>    "agent": "lead (no subagent)",
+>    "branch": "claude/rainbow-s04-match-c14",
+>    "worktree": "/home/user/wt/s04",
+>    "start": "9ef21200 (-c13 tip) + WIP &m04a3lum committed c69b7f33",
+>    "log": "qa/match/04/r14/"
+>   }
+>  },
+>  "queue": [
+>   "07 (from -c11 = dbc7678c)",
+>   "06 ( …[+269 chars]
+
+### 🤖 Claude — 2026-11-18T18:16:59.665Z
+
+> 🔧 **Bash** `{"command": "for w in claude__rainbow-s04-match-c14 claude__rainbow-s05-match-c14 claude__rainbow-s08-scenery-c14; do echo \"== $w\"; head -c 1200 backups/wip/$w/INFO.json; echo; find backups/wip/$w -type f | head -12; done", "description": "Show unfinished-work snapshot info for -c14 branches"}`
+
+### 🧑 User — 2026-11-18T18:16:59.726Z
+
+> ↩︎ result: == claude__rainbow-s04-match-c14
+> {
+>  "worktree": "/home/user/wt/s04",
+>  "branch": "claude/rainbow-s04-match-c14",
+>  "head": "fc28323a5573bd56c34593f6fa0b8709c0bd9fce",
+>  "time": "2026-11-18T17:45:52+00:00",
+>  "dirty_tracked": [],
+>  "untracked_copied": [],
+>  "untracked_skipped": [],
+>  "restore": "git switch claude/rainbow-s04-match-c14 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c14/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c14/untracked/* into the worktree"
+> }
+> 
+> backups/wip/claude__rainbow-s04-match-c14/INFO.json
+> == claude__rainbow-s05-match-c14
+> {
+>  "worktree": "/home/user/wt/s05",
+>  "branch": "claude/rainbow-s05-match-c14",
+>  "head": "34aadd1131e4825dae12e0c9a9a665ebbb30b720",
+>  "time": "2026-11-18T17:46:01+00:00",
+>  "dirty_tracked": [],
+>  "untracked_copied": [
+>   "qa/match/05/r14/step4_trans/before/shots.json",
+>   "qa/match/05/r14/step4_trans/before/t102_06.png",
+>   "qa/match/05/r14/step4_trans/before/x100.png",
+>   "qa/match/05/r14/step4_trans/before/x101.png",
+>   "qa/match/05/r14/step4_trans/before/x103.png",
+>   "qa/match/05/r14/step4_trans/before/x105.png",
+>   "qa/match/05/r14/step4_trans/before/x99.png"
+>  ],
+>  "untracked_skipped": [
+>   "qa/match/05/ …[+1784 chars]
+
+### 🤖 Claude — 2026-11-18T18:17:03.570Z
+
+All three `-c14` snapshots match their pushed tips (no unfinished code edits lost; only a few 05 "before" screenshots). Checking the fetch.
+
+### 🤖 Claude — 2026-11-18T18:17:05.120Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bpabeeviv.output; cd /home/user/rainbow- && git for-each-ref --format='%(refname:short) %(objectname:short)' refs/remotes/origin/claude/", "description": "Check background fetch progress"}`
+
+### 🧑 User — 2026-11-18T18:17:05.170Z
+
+> ↩︎ result: * [new branch]      claude/rainbow-s04-match-c14 -> origin/claude/rainbow-s04-match-c14
+> fc28323 2026-11-18T17:20:02+00:00 Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GOOD IMPROVEMENT (small)
+> origin/claude/rainbow-s04-match-c14 fc28323
+
+### 🤖 Claude — 2026-11-18T18:17:10.950Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt && timeout 600 git worktree add -b claude/rainbow-s04-match-c15 /home/user/wt/s04 refs/remotes/origin/claude/rainbow-s04-match-c14 2>&1 | tail -3 && cd /home/user/wt/s04 && ln -sfn /home/user/rainbow-/node_modules node_modules && (grep -q '^node_modules$' \"$(git rev-parse --git-common-dir)/info/exclude\" || echo node_modules >> \"$(git rev-parse --git-common-dir)/info/exclude\") && git log --oneline -3 && ls tools/ | head -20 && ls qa/match/04/r14/", "description": "Create Screen 04 -c15 worktree from the newest -c14 tip", "timeout": 620000}`
+
+### 🧑 User — 2026-11-18T18:17:20.013Z
+
+> ↩︎ result: Updating files:  17% (469/2737)Updating files:  18% (493/2737)Updating files:  19% (521/2737)Updating files:  20% (548/2737)Updating files:  21% (575/2737)Updating files:  22% (603/2737)Updating files:  23% (630/2737)Updating files:  24% (657/2737)Updating files:  25% (685/2737)Updating files:  26% (712/2737)Updating files:  27% (739/2737)Updating files:  28% (767/2737)Updating files:  29% (794/2737)Updating files:  30% (822/2737)Updating files:  31% (849/2737)Updating files:  32% (876/2737)Updating files:  33% (904/2737)Updating files:  33% (909/2737)Updating files:  34% (931/2737)Updating files:  35% (958/2737)Updating files:  36% (986/2737)Updating files:  37% (1013/2737)Updating files:  38% (1041/2737)Updating files:  39% (1068/2737)Updating files:  40% (1095/2737)Updating files:  41% (1123/2737)Updating files:  42% (1150/2737)Updating files:  43% (1177/2737)Updating files:  44% (1205/2737)Updating files:  45% (1232/2737)Updating files:  46% (1260/2737)Updating files:  47% (1287/2737)Updating files:  48% (1314/2737)Updating files:  49% (1342/2737)Updating files:  49% (1364/2737)Updating files:  50% (1369/2737)Updating files:  51% (1396/2737) …[+2416 chars]
+
+### 🤖 Claude — 2026-11-18T18:17:22.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && tail -60 qa/match/04/r14/PROGRESS.md; ls qa/match/04/r14/s11_rimfoam qa/match/04/r14/s10_pink | head -30", "description": "Read Screen 04 round-14 progress log"}`
+
+### 🧑 User — 2026-11-18T18:17:22.697Z
+
+> ↩︎ result: # Screen 04 — round 14 (account 14, lead) — resumed from 9ef21200 + account-13 WIP &m04a3lum (c69b7f33)
+> 
+> ## Step 6 — luminous arrows (user order: arrows not bright enough) — G5 = GOOD IMPROVEMENT (small) — shown to the user
+> Query (G5): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03`
+> * Code (account-13 WIP, finished here): `&m04a3lum=x` adds a second, additive copy of the painted arrow image drawn ON TOP of the
+>   arrow (r13 G1/G2 drew it underneath, so the opaque arrow hid it → no visible change).
+> * G3 = lum 0.6 (barely visible) · G4 = lum 1.1 + wider glow `m04a3gb=0.16` + full deep-blue arrow line `m04lcd=1.0` · …[+4560 chars]
+
+### 🤖 Claude — 2026-11-18T18:17:23.795Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bpabeeviv.output", "description": "Check fetch progress"}`
+
+### 🧑 User — 2026-11-18T18:17:23.836Z
+
+> ↩︎ result: * [new branch]      claude/rainbow-s04-match-c14 -> origin/claude/rainbow-s04-match-c14
+> fc28323 2026-11-18T17:20:02+00:00 Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GOOD IMPROVEMENT (small)
+
+### 🤖 Claude — 2026-11-18T18:17:26.596Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-18T18:17:26.609Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-18T18:17:27.705Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && timeout 300 git push -u origin claude/rainbow-s04-match-c15 2>&1 | tail -3; timeout 60 git ls-remote origin refs/heads/claude/rainbow-s04-match-c15", "description": "Push the new Screen 04 -c15 branch", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T18:17:30.649Z
+
+> ↩︎ result: To https://github.com/josiahscalia5-dev/rainbow-
+>  * [new branch]      claude/rainbow-s04-match-c15 -> claude/rainbow-s04-match-c15
+> branch 'claude/rainbow-s04-match-c15' set up to track 'origin/claude/rainbow-s04-match-c15'.
+> fc28323a5573bd56c34593f6fa0b8709c0bd9fce	refs/heads/claude/rainbow-s04-match-c15
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T18:17:35.913Z
+
+`s04-c15` is pushed. While the 05/08 tips download, I'll look at the 04 capture tools the previous lead used.
+
+### 🤖 Claude — 2026-11-18T18:17:37.094Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls qa/match/04/r14/s11_rimfoam/L4 | head -30; ls tools/lead_r13 tools/lead_r6 | head -30; grep -n \"m04foam\" src/*.ts src/**/*.ts 2>/dev/null | head -30", "description": "Inspect 04 capture outputs, tools and foam code"}`
+
+### 🧑 User — 2026-11-18T18:17:37.146Z
+
+> ↩︎ result: a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> tools/lead_r13:
+> swim_clip.mjs
+> 
+> tools/lead_r6:
+> bisect_preview08.mjs
+> motion_audit.mjs
+> motion_metrics.py
+> src/world/match04.ts:292:  // round 8 (M4): `&m04ring / m04foam / m04bub / m04arrow / m04wave =1` sub-switches (src/world/match04m4.ts); absent = no change
+> src/world/match04m4.ts:8: *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+> src/world/match04m4.ts:15: *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+> src/world/match04m4.ts:34:  foam: on('m04foam'),
+> src/world/match04m4.ts:42:  foam3: on('m04foam3'),
+> src/world/match04m4.ts:759:    // `m04foam2` (default with m04foam under m04river): irregular heaped clumps instead of evenly spaced rows
+> src/world/match04m4.ts:760:    const heaped = M04.num('m04foam2', 1) > 0.5;
+> src/world/match04m4.ts:761:    // r14 `&m04foamr=L`: the painted foam clouds sit round the …[+404 chars]
+
+### 🤖 Claude — 2026-11-18T18:17:40.122Z
+
+> 🔧 **Bash** `{"command": "git show refs/remotes/origin/claude/rainbow-s05-match-c14:qa/match/05/r14/PROGRESS.md | tail -50", "description": "Read Screen 05 round-14 progress log"}`
+
+### 🧑 User — 2026-11-18T18:17:40.160Z
+
+> ↩︎ result: * WHAT LOOKS CLOSER: in every forward view (f03, f06, f10, f20, t33, t66) the bottom third behind Benny, which was a plain
+>   cyan sheet, now carries the painted V: two hot-pink satin bands run from Benny's sides out to the lower frame corners,
+>   cyan with long white glints between them, as in the approved picture. At f10 (Benny right of centre) the V follows him.
+>   Steering hard right the big magenta smear with a pale lilac patch below Benny becomes cyan water with one pink band
+>   running down along the flow; hard left the pale grey smear next to the foam becomes cyan water. No slab, no straight
+>   edges, no sideways streaks. t98 (end): only the strip below Benny changes.
+> * Locked approved view: 0 px (`node scripts/capture.mjs 05 --q=<step-3 set>` vs `+m05vee2=1`); the default build does not
+>   compile this code (inside `#ifdef PROJ05`). Coins / score unchanged (same coin counts in every shot log).
+> * Still wrong: the bands are a little wider and softer at their outer ends than painted, and the cyan core has fewer of
+>   the painted crisp four-point white glints (long streaks instead).
+> * APPROVED: `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/1_APPROVED.png`
+> * BEFORE (= the kept step …[+4105 chars]
+
+### 🤖 Claude — 2026-11-18T18:17:44.408Z
+
+> 🔧 **Bash** `{"command": "git show refs/remotes/origin/claude/rainbow-s05-match-c14:qa/match/05/r14/PROGRESS.md | head -40; git show refs/remotes/origin/claude/rainbow-s05-match-c14 --stat | head -5; git ls-tree -r --name-only refs/remotes/origin/claude/rainbow-s05-match-c14 qa/match/05/r14 | grep -v png | head -30", "description": "Read 05 task list and files"}`
+
+### 🤖 Claude — 2026-11-18T18:17:45.708Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bpabeeviv.output | tail -2", "description": "Check s08 fetch progress"}`
+
+### 🧑 User — 2026-11-18T18:17:47.671Z
+
+> ↩︎ result: round 14 (account 14) resumed from 9735443d
+> 
+> # Screen 05 — round 14 progress (small steps, newest last)
+> 
+> Branch `claude/rainbow-s05-match-c14` (created from `claude/rainbow-s05-match-c13` @ `ebc9676c`; `-c13` and older are
+> protected). Approved picture (the authority): `/home/user/wt/s05/references/05_flow_into_the_current.png`.
+> History of round 13 (kept m05join + m05frim; rejected m05slot + m05lump — never repeat): `qa/match/05/r13/PROGRESS.md`.
+> 
+> Kept set at start (round 13 end, = step-3 set):
+> `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1`
+> 
+> * 2026-11-18 round 14 started (water-fx-specialist, account 14, worktree `/home/user/wt/s05`). Task 1: judge the restored
+>   unfinished `&m05vee=1` edit (`src/vfx/waterRibbon.ts`, committed in 9735443d, NOT judged) by eye at start (0 px), f03 / f06 /
+>   f10 / f20, end, hard left / right against the step-3 set. Then: near water round Benny (task 2), near lather bank straight
+>   cut at the seam with a method different from m05lump (task 3), 05 -> 06 transition (task  …[+3384 chars]
+
+### 🧑 User — 2026-11-18T18:17:47.693Z
+
+> ↩︎ result: * [new branch]      claude/rainbow-s05-match-c14 -> origin/claude/rainbow-s05-match-c14
+> 34aadd1 2026-11-18T17:28:08+00:00 Screen 05 r14 step 3: &m05bank=1 - the near lather bank as piled foam bubbles, seam cut by whole bubbles (GOOD IMPROVEMENT partial, kept; locked view 0 px)
+
+### 🤖 Claude — 2026-11-18T18:17:51.670Z
+
+05's next task is step 4 (the 05 → 06 transition; "before" shots were being captured). Creating the 05 worktree now.
+
+### 🤖 Claude — 2026-11-18T18:17:53.970Z
+
+> 🔧 **Bash** `{"command": "timeout 600 git worktree add -b claude/rainbow-s05-match-c15 /home/user/wt/s05 refs/remotes/origin/claude/rainbow-s05-match-c14 2>&1 | grep -v 'Updating files' | tail -2 && cp -r backups/wip/claude__rainbow-s05-match-c14/untracked/. /home/user/wt/s05/ && cd /home/user/wt/s05 && ln -sfn /home/user/rainbow-/node_modules node_modules && git status --short | head -5 && timeout 300 git push -u origin claude/rainbow-s05-match-c15 2>&1 | tail -1", "description": "Create Screen 05 -c15 worktree, restore WIP shots, push branch", "timeout": 620000}`
+

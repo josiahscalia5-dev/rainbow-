@@ -1,0 +1,10 @@
+{
+ "worktree": "/home/user/wt/s04",
+ "branch": "claude/rainbow-s04-match-c15",
+ "head": "fc28323a5573bd56c34593f6fa0b8709c0bd9fce",
+ "time": "2026-11-18T18:18:09+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s04-match-c15 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c15/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c15/untracked/* into the worktree"
+}
