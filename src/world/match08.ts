@@ -430,8 +430,13 @@ export async function buildMatch08(): Promise<Match08> {
   // own near band, rectified along its painted flow and quilted to an 8 u x lane-wide tile (no magnified / stretched glints)
   let NQ: { z0: number; period: number; halfWidth: number; lane: number; core: number } | null = null;
   if (nearTex && flag05('m08nq')) {
-    NQ = await fetch(new URL('../../assets/textures/match08/nq08.json', import.meta.url).href).then((r) => r.json());
-    nearTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/nq08.png', import.meta.url).href);
+    // `&m08gl=1` (r17): the same tile with the painted glints cut from the rectified band WITH their glow (nq08.py v7,
+    // NQ08_GLOW=1): no hard white "lightning" cut-outs lying across the streaks
+    const gl = flag05('m08gl');
+    NQ = await fetch((gl ? new URL('../../assets/textures/match08/nq08g.json', import.meta.url)
+      : new URL('../../assets/textures/match08/nq08.json', import.meta.url)).href).then((r) => r.json());
+    nearTex = await new THREE.TextureLoader().loadAsync((gl ? new URL('../../assets/textures/match08/nq08g.png', import.meta.url)
+      : new URL('../../assets/textures/match08/nq08.png', import.meta.url)).href);
     nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = THREE.ClampToEdgeWrapping; nearTex.wrapT = THREE.RepeatWrapping;
     nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
   }
