@@ -678,8 +678,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11945,
-   "sha256": "d9c7c3cddbed808248a66d2c45f3e946265281100d477e405bfc443621c337ee"
+   "bytes": 11946,
+   "sha256": "b787eb50ccb6df46f0ab20eb6a82e7de21e800b5ddec0d0f4792eec9fce2ba7d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2078,58 +2078,58 @@
   },
   {
    "path": "qa/match/07/r7/BEFORE/a00_approved_view.png",
-   "bytes": 2537487,
-   "sha256": "0434b6860fbab62cf6ec4d4a2a644e277e242635a99246a5a6d279176ed80ccb"
+   "bytes": 2567047,
+   "sha256": "ec9b89422afba4d20d50fb7456f769dea8c9ed9cf1fe37d91965bdd2c7758f3c"
   },
   {
    "path": "qa/match/07/r7/BEFORE/f03_forward3u.png",
-   "bytes": 2365138,
-   "sha256": "29eef27386223a0e5176eeae34d06460791e04c8fee55886c82dfba32b8adccc"
+   "bytes": 2366268,
+   "sha256": "e9ed24220e6ab0665850de55e48b5fcd1d04bc7bb9e27a3322ebee1d2ff9f32f"
   },
   {
    "path": "qa/match/07/r7/BEFORE/f06_forward6u.png",
-   "bytes": 2262022,
-   "sha256": "178145b51e2d60b6e26b9413002d50584799e1a8169eea4a53bf838c2d3036f6"
+   "bytes": 2262540,
+   "sha256": "1bf8fd723c848f1d03b9f2e7fab2dae2fdeed785546f3cafe6ba4281c0495137"
   },
   {
    "path": "qa/match/07/r7/BEFORE/f10_forward10u.png",
-   "bytes": 2177123,
-   "sha256": "a1b9cd9d146fce761f8a2e57a1fe7c696edd699cfd1b97205f88c97b8246f956"
+   "bytes": 2178319,
+   "sha256": "8718871f61e19d40ce7072a2a6e1031effbffbcf44974a2e67b5e6e8ae64614e"
   },
   {
    "path": "qa/match/07/r7/BEFORE/f20_forward20u.png",
-   "bytes": 2171951,
-   "sha256": "59083472fa21722d09eb4a19c472cb80fb73fce94a04f6bf9222d4ec93600c1a"
+   "bytes": 2171560,
+   "sha256": "2a3771f05722736c6f4f635a37f1d9b872f5e35b232416066e9802cde11693fc"
   },
   {
    "path": "qa/match/07/r7/BEFORE/motion.json",
-   "bytes": 4673,
-   "sha256": "192f0ba95a2a5cbcd5a3e58035abbef9a826af96c9c5ddf406a9c5038adddd9f"
+   "bytes": 4667,
+   "sha256": "7884134d33167d87a13eb7b529946e55ee923b2f869382d8f2d03093fb1bf264"
   },
   {
    "path": "qa/match/07/r7/BEFORE/s_left_hard.png",
-   "bytes": 2158200,
-   "sha256": "f3e95ec024002c780a2112a0215043419f3a898d39eb4088851eaa8fa032f857"
+   "bytes": 2157300,
+   "sha256": "4e98fe1f8aeb65db2f2605e67157f4e2c59131d08b06708fb1584b665451939d"
   },
   {
    "path": "qa/match/07/r7/BEFORE/s_left_steer.png",
-   "bytes": 2222308,
-   "sha256": "3be24894e17421b48c162d4451c5cbcfd544f3ed74788090eb23bd2f6a373c7c"
+   "bytes": 2221835,
+   "sha256": "5c78157dd960aba974ee5b4d634f6835044c18e418beea280d75cf2504064857"
   },
   {
    "path": "qa/match/07/r7/BEFORE/s_right_hard.png",
-   "bytes": 2232481,
-   "sha256": "88d147c5b3d0c3977f922fbb532f11e19bba338bb89a29bb58bc96281107d0de"
+   "bytes": 2232726,
+   "sha256": "363ac7956ccc82ed7cd3729d4fd8a2454d1975f63caa45ce65893a041ad19f14"
   },
   {
    "path": "qa/match/07/r7/BEFORE/s_right_steer.png",
-   "bytes": 2321716,
-   "sha256": "98bef0fc6d9f02d681e60de7b99cdcf62ca24ccffc7d5d8f14e1f0fec7ac1a3b"
+   "bytes": 2321668,
+   "sha256": "82d3741eb1c6751b3ec9122ff11d3616f34cd3be2869a9fce533bbfb31aee3c8"
   },
   {
    "path": "qa/match/07/r7/BEFORE/t33_through_screen.png",
-   "bytes": 1849158,
-   "sha256": "8d42e050bbfc34ec2a7ffbc7d6d10c6b3dc6381e1ab67e3cb32c1870128febdb"
+   "bytes": 1845087,
+   "sha256": "58ca73cbcef0c092313526b4f011da4930094f41620a257578b34145e1e96cdb"
   },
   {
    "path": "qa/match/07/r7/BEFORE/t66_through_screen.png",
@@ -2138,8 +2138,8 @@
   },
   {
    "path": "qa/match/07/r7/BEFORE/t95_through_screen.png",
-   "bytes": 1384638,
-   "sha256": "bb2d341a93a15824ecc29d3a59d5dd653d10454237017dfd0370dc516e787f83"
+   "bytes": 1384378,
+   "sha256": "a93c02aa37ea973e169cd22c08a87bac2340b9b81dc06357f721f3a5bb59add6"
   },
   {
    "path": "qa/match/07/r7/probe_before.json",
@@ -8733,8 +8733,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 41183,
-   "sha256": "13c0e3c35d50f3eae1c80697ca1292dcde95345d24d3418b966be126a6b0f4e6"
+   "bytes": 41398,
+   "sha256": "9a5f45f95f0bfc1dcbcb1971c4ea714df9db4861395c525d58f6424f4533d1dc"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -8878,8 +8878,8 @@
   },
   {
    "path": "src/world/match07.ts",
-   "bytes": 20140,
-   "sha256": "25ddb2ecbc18994323948c653b2004ac941e1de7d9e52022b4a0e5dae3a77bf8"
+   "bytes": 20599,
+   "sha256": "6eed6df0548cedf9b190a73abc1c822fb219a218507c0e9ad0a65583e745b84a"
   },
   {
    "path": "src/world/match08.ts",

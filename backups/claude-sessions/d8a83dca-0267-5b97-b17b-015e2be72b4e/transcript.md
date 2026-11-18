@@ -731,3 +731,246 @@ The game's water materials are custom shaders without clipping support, so I'll 
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\na=\"rivP.push(p.x, p.y, p.z); rivUV.push(xA + T.ax + l, along);\"\nassert s.count(a)==1\ns=s.replace(a,\"rivP.push(p.x, p.y, p.z); rivUV.push(T.ax + l, along); // centred on the tube axis like the fitted water\")\ns=s.replace(\"\"\"    const xA = f0.pos.clone().sub(base).dot(X); // the river tile's lateral coordinate at sA (continuous with the fitted water)\n\"\"\",\"\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1' && timeout 900 node tools/lead_ …[+590 chars]`
 
+### 🧑 User — 2026-11-18T00:26:57.330Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:26:59.072Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t2_sheet.png"}`
+
+### 🧑 User — 2026-11-18T00:26:59.233Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:27:10.148Z
+
+> 🔧 **Bash** `{"command": "ls src/vfx; grep -n \"foam.group\\|const foam\" src/vfx/index.ts | head -5; grep -n \"group.add\\|new THREE.InstancedMesh\\|name =\" src/vfx/foam*.ts | head -30", "description": "Inspect foam construction"}`
+
+### 🧑 User — 2026-11-18T00:27:10.186Z
+
+> ↩︎ result: bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> flow05.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> proj05Apron.ts
+> proj05Tunnel.ts
+> puddles.ts
+> riderSplash.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 86:  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });
+> 94:  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
+> 96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
+> 620:  mesh.name = 'foam_berm';
+> 639:  group.name = 'foam_banks';
+> 655:    const mesh = nMesh ? new THREE.InstancedMesh(geoHi, mat, nMesh) : null;
+> 681:  group.add(berm.mesh);
+> 773:  whirlGroup.name = 'foam_whirlpool';
+> 807:  group.add(whirlGroup);
+> 834:  flank.name = 'foam_flank';
+> 837:  group.add(flank);
+> 868:  const …[+291 chars]
+
+### 🤖 Claude — 2026-11-18T00:27:11.794Z
+
+> 🔧 **Bash** `{"command": "sed -n 600,700p src/vfx/foam.ts", "description": "Read foam bank builder"}`
+
+### 🧑 User — 2026-11-18T00:27:11.823Z
+
+> ↩︎ result: geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+>   geo.setIndex(idx);
+>   geo.computeVertexNormals();
+>   const st05 = course.stage('05');
+>   const uniforms = withFog({
+>     uTime: { value: 0 },
+>     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
+>     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+>     // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
+>     uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+>   });
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: BERM_VERT,
+>     fragmentShader: BERM_FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
+>   });
+>   const mesh = new THREE.Mesh(geo, mat);
+>   mesh.name = 'foam_berm';
+>   mesh.frustumCulled = false;
+>   return { mesh, uniforms };
+> }
+> 
+> export function createFoam(
+>   course: Course,
+>   opts: { s0: number; s1: number; quality: 'high' | 'low'; height?: (s: number, lat: number, t: number) => number },
+> ): FoamSystem {
+>   const { s0, s1, quality } = opts;
+>   const heigh …[+3578 chars]
+
+### 🤖 Claude — 2026-11-18T00:27:19.239Z
+
+> 🔧 **Bash** `{"command": "grep -n \"interface FoamSystem\" -A14 src/vfx/foam.ts; grep -n \"uOutro\" src/vfx/foam.ts | head", "description": "Check FoamSystem exports and outro uniform"}`
+
+### 🧑 User — 2026-11-18T00:27:19.269Z
+
+> ↩︎ result: 458:export interface FoamSystem {
+> 459-  group: THREE.Group;
+> 460-  whirlGroup: THREE.Group;
+> 461-  berm: THREE.Mesh;
+> 462-  /** 05 flank-bank puffs (instanced, on top of `flank`) */
+> 463-  rafts: THREE.InstancedMesh;
+> 464-  /** wave 8: 05 berm puffs + rim bubbles as fine-foam impostors */
+> 465-  rim05: THREE.InstancedMesh;
+> 466-  /** 05 flank-bank lather sheet (shares the berm material) */
+> 467-  flank: THREE.Mesh;
+> 468-  /** Benny's waterline position on the course (call from water.wake() each riding frame) */
+> 469-  rider(s: number, lat: number, strength: number): void;
+> 470-  /** camera: needed in 05, where the flank banks are fitted to the frame edges */
+> 471-  update(time: number, dt: number, focusS: number, outro?: number, camera?: THREE.Camera): void;
+> 472-  /** QA: current flank-bank placement (kind L/R, row ds, inner-edge lateral, bank width) */
+> 118:uniform vec2 uOutro;     // amount, chamber start s
+> 136:  if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+> 138:    if (n < uOutro.x * 1.15) discard;
+> 606:    uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
+> 1099:      (berm.uniforms.uOutro.value as THREE.Vector2).x = outro;
+
+### 🤖 Claude — 2026-11-18T00:27:27.021Z
+
+> 🔧 **Bash** `{"command": "K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1' && timeout 900 node tools/lead_r6/motion_audit.mjs 07 /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t3 \"$K&m07tube=1&m07near=1\" 2>&1 | grep -i error; S=/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad; python3 -c \"\nfrom PIL import Image\nS='$S'\nnames=['a00_approved_view','f06_forward6u','s_right_hard','s_left_hard']\nc=Image.new('RGB',(432*4,768*2))\nfor i,n in enumerate(names):\n  c.paste(Image.open(S+'/t2/'+n+'.png').resize((432,768)),(i*432 …[+288 chars]`
+
+### 🧑 User — 2026-11-18T00:28:17.909Z
+
+> ↩︎ result: a00_approved_view      LAYOUT20  34.8 %  PALETTE  90.3 %
+> f03_forward3u          LAYOUT20   6.4 %  PALETTE  78.7 %
+> f06_forward6u          LAYOUT20   5.0 %  PALETTE  73.2 %
+> f10_forward10u         LAYOUT20   7.4 %  PALETTE  73.8 %
+> f20_forward20u         LAYOUT20   3.3 %  PALETTE  73.6 %
+> s_left_hard            LAYOUT20   3.1 %  PALETTE  73.6 %
+> s_left_steer           LAYOUT20   7.2 %  PALETTE  73.3 %
+> s_right_hard           LAYOUT20   3.4 %  PALETTE  72.6 %
+> s_right_steer          LAYOUT20   2.9 %  PALETTE  71.8 %
+> t33_through_screen     LAYOUT20   3.1 %  PALETTE  76.4 %
+> t66_through_screen     LAYOUT20   2.1 %  PALETTE  69.3 %
+> t95_through_screen     LAYOUT20   1.1 %  PALETTE  50.2 %
+
+### 🤖 Claude — 2026-11-18T00:28:19.981Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t3_sheet.png"}`
+
+### 🧑 User — 2026-11-18T00:28:20.699Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:28:26.750Z
+
+The approved-view frame (a00) differs between the BEFORE run and the new runs even at the checkpoint. I'm checking whether that's capture timing rather than my change.
+
+### 🤖 Claude — 2026-11-18T00:28:29.282Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad; for f in qa/match/07/r7/BEFORE $S/t2 $S/t3; do python3 -c \"\nimport json,sys;d=json.load(open('$f/motion.json'));a=d['shots'][0];print('$f'[-12:],{k:a.get(k) for k in ['s','lat','frames','stage']})\"; done", "description": "Compare a00 state across audit runs"}`
+
+### 🧑 User — 2026-11-18T00:28:29.371Z
+
+> ↩︎ result: 07/r7/BEFORE {'s': 274.256, 'lat': 0, 'frames': 0, 'stage': '07'}
+> cratchpad/t2 {'s': 273.773, 'lat': 0, 'frames': 0, 'stage': '07'}
+> cratchpad/t3 {'s': 273.778, 'lat': 0, 'frames': 0, 'stage': '07'}
+
+### 🤖 Claude — 2026-11-18T00:28:38.945Z
+
+> 🔧 **Bash** `{"command": "K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1' && rm -rf qa/match/07/r7/BEFORE && timeout 900 node tools/lead_r6/motion_audit.mjs 07 qa/match/07/r7/BEFORE \"$K\" 2>&1 | grep -i \"error\\|a00\"; python3 -I tools/lead_r6/motion_metrics.py references/07_dive_the_washer_tube.png qa/match/07/r7/BEFORE/*.png", "description": "Re-capture the BEFORE audit for consistent timing", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T00:29:28.893Z
+
+> ↩︎ result: 07 a00_approved_view s 273.804 lat 0 stage 07 frames 0
+> a00_approved_view      LAYOUT20  41.1 %  PALETTE  90.2 %
+> f03_forward3u          LAYOUT20   8.2 %  PALETTE  84.3 %
+> f06_forward6u          LAYOUT20   6.2 %  PALETTE  76.8 %
+> f10_forward10u         LAYOUT20   7.7 %  PALETTE  76.8 %
+> f20_forward20u         LAYOUT20   4.2 %  PALETTE  71.2 %
+> s_left_hard            LAYOUT20   4.0 %  PALETTE  76.0 %
+> s_left_steer           LAYOUT20   8.3 %  PALETTE  74.4 %
+> s_right_hard           LAYOUT20   4.2 %  PALETTE  70.4 %
+> s_right_steer          LAYOUT20   3.6 %  PALETTE  77.7 %
+> t33_through_screen     LAYOUT20   2.4 %  PALETTE  46.6 %
+> t66_through_screen     LAYOUT20   0.7 %  PALETTE  24.6 %
+> t95_through_screen     LAYOUT20   0.8 %  PALETTE  42.2 %
+
+### 🤖 Claude — 2026-11-18T00:29:34.983Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad; python3 -I tools/lead_r6/motion_metrics.py references/07_dive_the_washer_tube.png $S/t2/*.png; python3 -c \"\nfrom PIL import Image, ImageChops\nimport numpy as np\na=np.asarray(Image.open('qa/match/07/r7/BEFORE/a00_approved_view.png').convert('RGB')).astype(int)\nfor t in ['t2','t3']:\n  b=np.asarray(Image.open('$S/'+t+'/a00_approved_view.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); print(t,(d>20).mean())\"", "description": "Metrics for tube-only run and a00 diffs"}`
+
+### 🧑 User — 2026-11-18T00:29:37.736Z
+
+> ↩︎ result: a00_approved_view      LAYOUT20  35.0 %  PALETTE  90.3 %
+> f03_forward3u          LAYOUT20   6.8 %  PALETTE  83.9 %
+> f06_forward6u          LAYOUT20   5.0 %  PALETTE  76.8 %
+> f10_forward10u         LAYOUT20   5.5 %  PALETTE  77.3 %
+> f20_forward20u         LAYOUT20   3.2 %  PALETTE  73.4 %
+> s_left_hard            LAYOUT20   3.7 %  PALETTE  75.7 %
+> s_left_steer           LAYOUT20   7.7 %  PALETTE  74.6 %
+> s_right_hard           LAYOUT20   3.0 %  PALETTE  71.6 %
+> s_right_steer          LAYOUT20   3.0 %  PALETTE  78.0 %
+> t33_through_screen     LAYOUT20   3.1 %  PALETTE  76.4 %
+> t66_through_screen     LAYOUT20   2.1 %  PALETTE  69.3 %
+> t95_through_screen     LAYOUT20   1.1 %  PALETTE  50.2 %
+> t2 0.2152732566550926
+> t3 0.19296226972415123
+
+### 🤖 Claude — 2026-11-18T00:30:01.011Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1,a; s=s.replace(a,b)\nrep(\"\"\"  sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;\n}\"\"\",\"\"\"  sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;\n  /** M3 '?m07tube=1': true from the hand-over point on — the plunge tube shows and the fitted proxy ends at its depth */\n  setPlunge(on: boolean): void;\n}\"\"\")\nrep(\"\"\"    shared.uClip.value = alongA;\n\"\"\",\"\"\"    plungeAlong = alongA;\n\"\"\")\nrep(\"\"\"  if (plunge) {\n    …[+1741 chars]`
+
+### 🧑 User — 2026-11-18T00:30:51.257Z
+
+> ↩︎ result: a00_approved_view      LAYOUT20  42.6 %  PALETTE  90.3 %
+> f03_forward3u          LAYOUT20   8.1 %  PALETTE  84.3 %
+> f06_forward6u          LAYOUT20   6.2 %  PALETTE  76.9 %
+> f10_forward10u         LAYOUT20   7.7 %  PALETTE  76.8 %
+> f20_forward20u         LAYOUT20   4.2 %  PALETTE  71.2 %
+> s_left_hard            LAYOUT20   4.0 %  PALETTE  76.0 %
+> s_left_steer           LAYOUT20   8.4 %  PALETTE  74.5 %
+> s_right_hard           LAYOUT20   4.2 %  PALETTE  70.4 %
+> s_right_steer          LAYOUT20   3.6 %  PALETTE  77.7 %
+> t33_through_screen     LAYOUT20   3.1 %  PALETTE  76.4 %
+> t66_through_screen     LAYOUT20   2.1 %  PALETTE  69.3 %
+> t95_through_screen     LAYOUT20   1.1 %  PALETTE  50.2 %
+
+### 🤖 Claude — 2026-11-18T00:31:03.074Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad && python3 -c \"\nfrom PIL import Image\nS='$S'\nc=Image.new('RGB',(864*2,768*2))\nfor j,n in enumerate(['f06_forward6u','s_left_hard']):\n  for i,t in enumerate(['t4','t3']):\n    c.paste(Image.open(S+'/'+t+'/'+n+'.png').crop((0,768,864,1536)),(i*864,j*768))\nc.resize((1296,1152)).save(S+'/near_cmp.png')\"", "description": "Crop near water with and without m07near"}`
+
+### 🧑 User — 2026-11-18T00:31:03.746Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T00:31:04.370Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/near_cmp.png"}`
+
+### 🧑 User — 2026-11-18T00:31:04.425Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:31:16.769Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t4/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T00:31:16.816Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:31:17.422Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t4/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T00:31:17.477Z
+
+> ↩︎ result: [image]
+

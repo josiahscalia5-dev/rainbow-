@@ -554,6 +554,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
         for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !(on && (!m07Tube || st.s < m07sA + 9)); }
         env.zones.tubes.visible = on ? false : !zoneHidden('tubes') && STAGE_ORDER.indexOf(st.stage) >= STAGE_ORDER.indexOf('03') && STAGE_ORDER.indexOf(st.stage) <= STAGE_ORDER.indexOf('09');
       }
+      // M3 m07tube: hand-over to the plunge continuation where the old build handed over to the default world (8 u before the top)
+      if (m07Tube) m07.setPlunge(on && st.s >= course.marks['07_plunge_top'] - 8);
       m07On = on; m07Applied = on;
     }
     if (m08 && b08 && b08Rest) {

@@ -34,6 +34,8 @@ export interface Match07 {
   group: THREE.Group;
   bakeDepth(renderer: THREE.WebGLRenderer): void;
   sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;
+  /** M3 '?m07tube=1': true from the hand-over point on — the plunge tube shows and the fitted proxy ends at its depth */
+  setPlunge(on: boolean): void;
 }
 
 const VERT = /* glsl */ `
@@ -272,11 +274,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
   // down the whole plunge to the 08 inlet — same radius and axis height as the fitted tube, the same ring-bay wall tile
   // (rings every bay, phase continuous with the fitted tube) and the same river tile, anchored to arc length. The fitted
   // proxy ends at sA's depth along its straight axis (uClip), so it no longer runs on straight through the plunge.
+  let plungeAlong = 0;
+  const plungeMeshes: THREE.Object3D[] = [];
   if (plunge) {
     const { course, sA, sB } = plunge;
     const f0 = course.sample(sA);
     const alongA = f0.pos.clone().sub(base).dot(Dv);
-    shared.uClip.value = alongA;
+    plungeAlong = alongA;
     shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
     const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
     const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
@@ -318,9 +322,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
     const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
     const wallM = mat(tWall, 3), rivM = mat(tRiver, 4);
     rivM.transparent = true;
-    add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
+    const t = add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
     const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
     r.renderOrder = 1;
+    t.visible = r.visible = false;
+    plungeMeshes.push(t, r);
   }
   group.traverse((o) => o.updateMatrixWorld?.(true));
 
@@ -342,6 +348,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
       renderer.render(scene, proj);
       renderer.setRenderTarget(prevRT);
       shared.uUseDepth.value = 1;
+    },
+    setPlunge(on) {
+      if (!plungeMeshes.length) return;
+      for (const o of plungeMeshes) o.visible = on;
+      shared.uClip.value = on ? plungeAlong : 0;
     },
     sync(renderer, w, h) {
       shared.uPjPost.value.x = renderer.toneMappingExposure;
