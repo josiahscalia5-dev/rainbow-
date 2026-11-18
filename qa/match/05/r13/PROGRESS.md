@@ -80,3 +80,12 @@ t95 (+left/right), t98; positions in `shots.json`).
 * NEW: `/home/user/wt/s05/qa/match/05/r13/step3_m05frim/3_NEW_t95_left.png`, `…/3_NEW_k81_kink_left.png`,
   `…/3_NEW_t85_through.png`, `…/3_NEW_t75_through.png`, `…/3_NEW_t66_through_screen.png`
 * Files: `src/vfx/waterRibbon.ts` (M05FRIM), `src/world/materials.ts` (farRiverMaterial: bankW under the switch).
+
+## Item — `&m05lump=1` (scalloped end of the near lather bank at the seam + near lumps shrinking away) — NOT AN IMPROVEMENT
+* Tried once on the step-3 set at t66 / t75 / k81 / k81 left / t85 / t95 left: the lather bank (berm) ended 0.5 … 1.9 u
+  before the seam in a noise-scalloped edge instead of the flat seam plane, and near bank lumps shrank away whole by the same
+  edge. By eye: the pale panel at the seam (t75, k81 left) only gets a little lower with a slightly wavy top — it is still a
+  flat pale lilac panel with mostly straight sides — and the shrinking lumps leave a small gap in the foam line. Not clearly
+  closer → reverted. Patch + the two comparison pairs kept: `/home/user/wt/s05/qa/match/05/r13/item_m05lump/`.
+* What the panel is: the berm's steep outer part where it rises toward the wall, drawn as flat lather; a real fix has to give
+  that part the painted foam-cloud look (or keep it out of view), not just move its end.
