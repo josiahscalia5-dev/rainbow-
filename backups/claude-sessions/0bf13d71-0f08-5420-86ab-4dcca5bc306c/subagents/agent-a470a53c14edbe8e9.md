@@ -613,3 +613,296 @@ Let me write a riding probe tool (raycast at a riding audit position, optional h
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10; time (timeout 900 node tools/match05/r10_probe.mjs t66_through_screen \"$Q\" --list --shot=$S/t66.png --sets=proj05_apron,foam_berm,proj05_apron+foam_berm,water_ribbon,tube05_far 2>&1 | grep -v \"laundry\\|Benny >\" | grep -i \"05\\|far\\|tube\\|set\\|shot\" | head -80)", "description": "Render t66 with objects hidden one set at a time", "timeout": 920000}`
 
+### 🧑 User — 2026-11-18T10:38:58.048Z
+
+> ↩︎ result: shot t66_through_screen s 170.469 lat 0 cam 1.48,-39.46,-104.73
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > zone_tubes > Mesh MeshStandardMaterial
+> V washer_world > …[+2506 chars]
+
+### 🤖 Claude — 2026-11-18T10:39:00.295Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t66_hide_proj05_apron_foam_berm.png"}`
+
+### 🧑 User — 2026-11-18T10:39:00.336Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:39:01.639Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t66_hide_water_ribbon.png"}`
+
+### 🧑 User — 2026-11-18T10:39:01.680Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:39:09.145Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t66_hide_tube05_far.png"}`
+
+### 🧑 User — 2026-11-18T10:39:09.189Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:39:18.237Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\nnames=['t66','t66_hide_proj05_apron','t66_hide_foam_berm','t66_hide_proj05_apron_foam_berm']\nims=[Image.open(n+'.png').crop((0,480,480,1020)) for n in names]\nW=sum(i.width for i in ims)+30\nout=Image.new('RGB',(W,540),'white')\nx=0\nfor i in ims: out.paste(i,(x,0)); x+=i.width+10\nout.save('cmp_left.png')\n\"", "description": "Crop left region of t66 variants for comparison"}`
+
+### 🧑 User — 2026-11-18T10:39:18.703Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:39:19.686Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_left.png"}`
+
+### 🧑 User — 2026-11-18T10:39:19.729Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:39:32.581Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/match05far.ts"}`
+
+### 🧑 User — 2026-11-18T10:39:32.599Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+> 3	 * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every
+> 4	 * frame instead of folding away.
+> 5	 *
+> 6	 * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the
+> 7	 * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the
+> 8	 * camera saw the far rings / river morphing out and the 06 arch hall behind them — the "old pink default world" of
+> 9	 * the lead's audit (t66 / t95 frames). The compression is exact for ANY eye position once its two eye-dependent
+> 10	 * constants (D0 = eye depth of the seam, q = eye offset from the axis) follow the eye, so under this switch:
+> 11	 *   * the VIRTUAL tunnel (virtual depth Z beyond sF05, tunnel coordinate v = sF05 + u(Z)) stays put — rings, wall rows,
+> 12	 *     the baked far water F and the far river layout are anchored to it, so everything approaches like real geometry;
+> 13	 *   * the seam slides ahead of the eye so it never comes nearer than th …[+15777 chars]
+
+### 🤖 Claude — 2026-11-18T10:39:49.211Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad && python3 -c \"\nimport json;d=json.load(open('audit_c10/05/motion.json'))\nfor s in d['shots']: print(s['name'], round(s['s'],2), s['lat'], s['cam'])\n\"; python3 -c \"\nfrom PIL import Image\na=Image.open('audit_c10/05/t33_through_screen.png').crop((0,450,520,1000)).resize((780,825))\na.save('r10/t33_left.png')\"", "description": "List audit positions and crop t33 left"}`
+
+### 🧑 User — 2026-11-18T10:39:49.545Z
+
+> ↩︎ result: a00_approved_view 133.14 0 [1.92, -37.95, -68.5]
+> f03_forward3u 136.11 0 [1.95, -38.04, -70.66]
+> f06_forward6u 139.04 0 [1.99, -38.16, -73.45]
+> f10_forward10u 143.07 0 [2.03, -38.33, -77.44]
+> f20_forward20u 153.16 0 [1.9, -38.74, -87.46]
+> s_left_steer 139.04 -3.007 [0.09, -38.18, -73.72]
+> s_right_steer 139.04 3.002 [3.67, -38.14, -73.19]
+> s_left_hard 145.09 -5.063 [-1.89, -38.13, -79.24]
+> s_right_hard 145.09 5.063 [6.38, -38.68, -79.65]
+> t33_through_screen 151.69 0.006 [1.96, -38.68, -86.01]
+> t66_through_screen 170.39 0 [1.48, -39.46, -104.65]
+> t95_through_screen 186.71 0 [3.14, -40.37, -120.31]
+
+### 🤖 Claude — 2026-11-18T10:39:50.509Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t33_left.png"}`
+
+### 🧑 User — 2026-11-18T10:39:50.537Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:40:19.912Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r10_probe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"  // --sets=a+b,c\"\"\",\"\"\"  // --idmap=out.png : every mesh drawn flat in a colour per object (water_ribbon cyan, foam_berm white, proj05_apron yellow,\n  // tube05_far_river blue, tube05_far_wall violet, tube05_far dark violet, other tubes grey, foam meshes green, near frame orange)\n  const idmap = (args.find((a) => a.startsWith('--idmap=')) ?? '').slice(8);\n  if (idmap) {\n    await page.evaluate(async () => {\n      const THREE = await import('/node_modules/thre …[+1845 chars]`
+
+### 🧑 User — 2026-11-18T10:40:58.001Z
+
+> ↩︎ result: shot t66_through_screen s 170.459 lat 0 cam 1.48,-39.46,-104.72
+> idmap → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/id_t66_through_screen.png
+> shot t33_through_screen s 151.759 lat 0 cam 1.95,-38.68,-86.07
+> idmap → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/id_t33_through_screen.png
+
+### 🤖 Claude — 2026-11-18T10:41:01.231Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\na=Image.open('id_t33_through_screen.png').resize((432,768)); b=Image.open('id_t66_through_screen.png').resize((432,768))\no=Image.new('RGB',(874,768),'black'); o.paste(a,(0,0)); o.paste(b,(442,0)); o.save('id_both.png')\"", "description": "Combine ID maps for viewing"}`
+
+### 🧑 User — 2026-11-18T10:41:01.367Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:41:02.622Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/id_both.png"}`
+
+### 🧑 User — 2026-11-18T10:41:02.642Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:41:19.851Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"sample(\\|widthAt\\|export class\\|export interface Course\\b\\|right:\" src/world/course.ts | head -30", "description": "Check course API for sampling"}`
+
+### 🧑 User — 2026-11-18T10:41:19.890Z
+
+> ↩︎ result: 45:  right: THREE.Vector3;
+> 361:export class Course {
+> 425:      // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
+> 496:    return this.sample(s).pos.x - this.line05x;
+> 525:  widthAt(s: number): number {
+> 542:  sample(s: number, out?: CourseSample): CourseSample {
+> 543:    const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+> 564:    const f = this.sample(s);
+> 584:    const a = c.sample(sa);
+> 585:    const b = c.sample(sb);
+> 598:  let prev = c.sample(0);
+> 602:    const cur = c.sample(s);
+> 606:    prev = { ...cur, pos: cur.pos.clone(), tan: cur.tan.clone(), up: cur.up.clone(), right: cur.right.clone() };
+> 608:  const y = (s: number) => +c.sample(s).pos.y.toFixed(2);
+
+### 🤖 Claude — 2026-11-18T10:41:27.697Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat > /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/fold.test.ts <<'EOF'\nimport { Course } from '/home/user/wt/s05/src/world/course';\nimport * as THREE from 'three';\nconst c: any = new (Course as any)();\nconst st = c.stage('05');\nconsole.log('stage', st.s0, st.s1);\nconst ds = 0.4;\nlet prevL: THREE.Vector3 | null = null, prevR: THREE.Vector3 | null = null, prevP: any = null;\nfor (let s = st.s0 - 2; s < st.s1 + 4; s += ds) {\n  const f = c.sample(s);\n  const hw = c.widthAt(s) / 2;\n  const L = f.pos.clone().addScal …[+928 chars]`
+
+### 🧑 User — 2026-11-18T10:41:27.729Z
+
+> ↩︎ result: vite-node
+
+### 🤖 Claude — 2026-11-18T10:41:29.320Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"constructor\" src/world/course.ts | head -3; sed -n 361,380p src/world/course.ts", "description": "Check Course constructor signature"}`
+
+### 🧑 User — 2026-11-18T10:41:29.355Z
+
+> ↩︎ result: 378:  constructor() {
+> export class Course {
+>   readonly curve: THREE.CatmullRomCurve3;
+>   readonly length: number;
+>   readonly stages: StageDef[];
+>   readonly marks: Record<string, number>; // arc-length of named marks
+>   /** straight tunnel stretches (05 current) — see StraightAxis */
+>   readonly straightAxes: StraightAxis[];
+>   /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
+>   private readonly line05x: number;
+>   private st05!: StageDef;
+>   private st10!: StageDef;
+>   private readonly N: number;
+>   private readonly ds: number;
+>   private readonly P: Float32Array;
+>   private readonly T: Float32Array;
+>   private readonly U: Float32Array;
+> 
+>   constructor() {
+>     const route = buildRoute();
+>     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+
+### 🤖 Claude — 2026-11-18T10:41:32.018Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 120 node_modules/.bin/vite-node /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/fold.test.ts 2>&1 | head -80", "description": "Run course fold analysis"}`
+
+### 🧑 User — 2026-11-18T10:41:32.482Z
+
+> ↩︎ result: stage 114.68830202823246 188.92412082521415
+> 173.9 hw 5.36 R 4.7 stepL 0.846 stepR -0.047 stepC 0.399 roll 9.0 x 1.44
+> 174.3 hw 5.47 R 3.7 stepL 0.966 stepR -0.168 stepC 0.399 roll 8.8 x 1.56
+> 174.7 hw 5.60 R 5.1 stepL 0.826 stepR -0.027 stepC 0.400 roll 8.0 x 1.73
+> 177.5 hw 4.86 R 5.7 stepL 0.052 stepR 0.748 stepC 0.400 roll -8.6 x 3.10
+> 178.7 hw 4.43 R 5.0 stepL 0.047 stepR 0.752 stepC 0.399 roll -13.6 x 3.54
+> 179.1 hw 4.34 R 3.6 stepL -0.077 stepR 0.875 stepC 0.399 roll -14.6 x 3.63
+> 179.5 hw 4.29 R 3.9 stepL -0.033 stepR 0.832 stepC 0.399 roll -14.9 x 3.68
+> 179.9 hw 4.29 R 4.6 stepL 0.042 stepR 0.757 stepC 0.400 roll -14.7 x 3.69
+> 180.3 hw 4.31 R 5.4 stepL 0.089 stepR 0.710 stepC 0.400 roll -13.8 x 3.67
+> 180.7 hw 4.36 R 4.9 stepL 0.057 stepR 0.741 stepC 0.399 roll -12.5 x 3.62
+> 181.1 hw 4.44 R 4.4 stepL 0.009 stepR 0.790 stepC 0.399 roll -10.9 x 3.53
+
+### 🤖 Claude — 2026-11-18T10:41:42.166Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -i 's/Math.round(s \\* 10) % 20 === 0/Math.round((s - st.s0) * 10) % 20 === 0/' /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/fold.test.ts && timeout 120 node_modules/.bin/vite-node /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/fold.test.ts 2>&1 | awk '$1>128' | head -80", "description": "Print course curvature, roll every 2 u"}`
+
+### 🧑 User — 2026-11-18T10:41:43.549Z
+
+> ↩︎ result: stage 114.68830202823246 188.92412082521415
+> 128.7 hw 5.49 R 62.9 stepL 0.435 stepR 0.365 stepC 0.400 roll 1.1 x 1.59
+> 130.7 hw 5.46 R 430.7 stepL 0.395 stepR 0.405 stepC 0.400 roll 1.0 x 1.55
+> 132.7 hw 5.44 R 63.5 stepL 0.434 stepR 0.366 stepC 0.400 roll 1.5 x 1.53
+> 134.7 hw 5.49 R 43.0 stepL 0.451 stepR 0.349 stepC 0.400 roll 1.9 x 1.59
+> 136.7 hw 5.60 R 44.3 stepL 0.450 stepR 0.350 stepC 0.400 roll 1.6 x 1.74
+> 138.7 hw 5.70 R 84.4 stepL 0.427 stepR 0.373 stepC 0.400 roll 0.3 x 1.97
+> 140.7 hw 5.62 R 27.2 stepL 0.317 stepR 0.483 stepC 0.400 roll -2.4 x 2.23
+> 142.7 hw 5.52 R 13.8 stepL 0.240 stepR 0.560 stepC 0.400 roll -4.1 x 2.37
+> 144.7 hw 5.59 R 22.2 stepL 0.300 stepR 0.500 stepC 0.400 roll -3.0 x 2.28
+> 146.7 hw 5.69 R 485.4 stepL 0.405 stepR 0.395 stepC 0.400 roll -0.5 x 2.06
+> 148.7 hw 5.65 R 33.6 stepL 0.468 stepR 0.332 stepC 0.400 roll 0.5 x 1.82
+> 150.7 hw 5.52 R 450.3 stepL 0.395 stepR 0.405 stepC 0.400 roll 0.1 x 1.62
+> 152.7 hw 5.35 R 597.6 stepL 0.404 stepR 0.396 stepC 0.400 roll 0.1 x 1.42
+> 154.7 hw 5.16 R 172.5 stepL 0.412 stepR 0.388 stepC 0.400 roll 0.5 x 1.22
+> 156.7 hw 4.99 R 102.7 stepL 0.420 stepR 0.380 stepC 0.400 roll 1.0 x 1.04
+> 158.7 hw 4.87 R 57.2 stepL 0.434 stepR 0.366 stepC  …[+1865 chars]
+
+### 🤖 Claude — 2026-11-18T10:42:47.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat > /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/fold2.test.ts <<'EOF'\nimport { Course } from '/home/user/wt/s05/src/world/course';\nimport * as THREE from 'three';\nconst c: any = new (Course as any)();\nconst st = c.stage('05');\nconst ds = 0.4, cols = 18;\nconst S0 = st.s0 - 10, S1 = st.s1 + 10;\nconst rows: { s: number; P: THREE.Vector3[]; tan: THREE.Vector3; up: THREE.Vector3 }[] = [];\nfor (let s = S0; s <= S1; s += ds) {\n  const f = c.sample(s); const hw = c.widthAt(s) / 2;\n  const P: THREE.Vector3[] = [];\n  …[+2339 chars]`
+
+### 🧑 User — 2026-11-18T10:42:49.207Z
+
+> ↩︎ result: orig cells with step<0.05: 17 worst -0.177 173.5/16:0.048 173.5/17:-0.002 173.5/18:-0.051 173.9/15:0.014 173.9/16:-0.050 173.9/17:-0.113
+> sig 1.5 p 2 horiz 0: move|u|<=.67 0.16 (up 0.04) edge up 0.30 cells with step<0.05: 0 worst 0.071 
+> sig 2.5 p 2 horiz 0: move|u|<=.67 0.34 (up 0.12) edge up 0.67 cells with step<0.05: 0 worst 0.141 
+> sig 3.5 p 2 horiz 0: move|u|<=.67 0.52 (up 0.23) edge up 0.95 cells with step<0.05: 0 worst 0.178 
+> sig 2.5 p 3 horiz 0: move|u|<=.67 0.19 (up 0.05) edge up 0.67 cells with step<0.05: 0 worst 0.122 
+> sig 3.5 p 3 horiz 0: move|u|<=.67 0.30 (up 0.11) edge up 0.95 cells with step<0.05: 0 worst 0.150 
+> sig 2.5 p 2 horiz 1: move|u|<=.67 0.31 (up 0.04) edge up 0.19 cells with step<0.05: 0 worst 0.142 
+> sig 3.5 p 2 horiz 1: move|u|<=.67 0.48 (up 0.08) edge up 0.28 cells with step<0.05: 0 worst 0.178
+
+### 🤖 Claude — 2026-11-18T10:43:03.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 560,640p src/vfx/foam.ts; sed -n 60,110p src/vfx/proj05Apron.ts", "description": "Read berm and apron geometry builders"}`
+
+### 🧑 User — 2026-11-18T10:43:03.769Z
+
+> ↩︎ result: const tmp = new THREE.Vector3();
+>   let k = 0;
+>   const rowS: number[] = [];
+>   for (let i = 0; i < rows; i++) {
+>     const s = Math.min(s1, s0 + i * ds);
+>     rowS.push(s);
+>     const f = course.sample(s);
+>     const hw = course.widthAt(s) / 2;
+>     for (const side of [-1, 1]) {
+>       for (let j = 0; j < C; j++) {
+>         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
+>         // at the water line (keeps the lace edge flush with the stream)
+>         const e = E[j];
+>         const k05 = hk(s);
+>         const h = squashBerm(bermSurface(s, e, side, hw), k05);
+>         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
+>         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+>         tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+>         tmp.toArray(pos, k * 3);
+>         foam[k * 3] = e;
+>         foam[k * 3 + 1] = s;
+>         foam[k * 3 + 2] = side;
+>         k++;
+>       }
+>     }
+>   }
+>   const idx: number[] = [];
+>   const rowStride = C * 2;
+>   for (let i = 0; i < rows - 1; i++) {
+>     const sa = rowS[i], sb = rowS[i + 1];
+>     if (sb > skip[0] && sa < skip[1]) continue;
+>     for (let sideI =  …[+4814 chars]
+

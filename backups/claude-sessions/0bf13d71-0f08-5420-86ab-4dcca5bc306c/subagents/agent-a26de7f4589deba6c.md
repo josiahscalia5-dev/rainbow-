@@ -504,3 +504,161 @@ Let me read match08.ts fully.
 >   "z": -284.80056164895825,
 >   "holeR": 4.2985 …[+2705 chars]
 
+### 🤖 Claude — 2026-11-18T10:38:53.382Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r9/BLUEPRINT_08_overlay.png"}`
+
+### 🧑 User — 2026-11-18T10:38:53.540Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:38:54.838Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls tools/lead_r6/ tools/match08/ && head -60 tools/lead_r6/motion_audit.mjs && ls qa/match/08/scenery/ && ls /home/user/rainbow-/qa/review_c10/2026-11-18/ 2>/dev/null | head", "description": "Inspect audit tool and qa folders"}`
+
+### 🧑 User — 2026-11-18T10:38:54.891Z
+
+> ↩︎ result: tools/lead_r6/:
+> motion_audit.mjs
+> 
+> tools/match08/:
+> bennytree.mjs
+> coinlat.mjs
+> coinprobe08.mjs
+> coins08px.mjs
+> cointake.mjs
+> fit_proxies.py
+> lane08.mjs
+> motion08.mjs
+> occ08.py
+> probe08b.mjs
+> river_centre_px_approved08.json
+> river_proj.py
+> sheet08.py
+> solve08.mjs
+> towelmask08.py
+> unwrap08.py
+> // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMI …[+2485 chars]
+
+### 🤖 Claude — 2026-11-18T10:41:03.798Z
+
+Let me look closely at the painted chamber walls inside the arch (for gold rib bands that could be continued) and at the BEFORE seam.
+
+### 🤖 Claude — 2026-11-18T10:41:07.647Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/wt/s08/references/08_final_spin_chamber.png').convert('RGB')\na.crop((0,180,864,700)).save('appr_top.png')\nb=Image.open('/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08/t66_through_screen.png').convert('RGB')\nb.crop((0,100,864,620)).save('t66_top.png')\n\"", "description": "Crop upper …[+33 chars]`
+
+### 🧑 User — 2026-11-18T10:41:08.006Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:41:10.001Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/appr_top.png"}`
+
+### 🧑 User — 2026-11-18T10:41:10.028Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:41:10.620Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/t66_top.png"}`
+
+### 🧑 User — 2026-11-18T10:41:10.653Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:41:47.395Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/py && cat > /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/py/cam.py <<'EOF'\nimport json, numpy as np\nL = json.load(open('/home/user/wt/s08/assets/textures/match08/proj08.json'))\nM = np.array(L['camera']['matrixWorld']).reshape(4,4).T  # column-major -> row-major\nW, H = L['camera']['size']; fov = np.radians(L['camera']['fov'])\nP = M[:3,3]; R = M[:3,:3]\nth = np.tan(fov/2); asp = W/H\ndef ray(x, y):\n    nx = (x+0.5)/W*2-1; ny = 1-(y+0.5)/H*2\n  …[+1473 chars]`
+
+### 🧑 User — 2026-11-18T10:41:47.767Z
+
+> ↩︎ result: plate (2731, 1536, 3)
+> 360 ['72-116: z=-320.4 ang=-82', '144-164: z=-328.9 ang=-87', '196-208: z=-337.7 ang=-93', '232-260: z=-347.9 ang=-99', '696-716: z=-355.6 ang=103']
+> 380 ['136-144: z=-326.3 ang=-82', '208-220: z=-340.3 ang=-90', '276-288: z=-359.4 ang=-101', '692-724: z=-355.9 ang=98', '764-784: z=-337.0 ang=87']
+> 400 ['60-96: z=-317.4 ang=-74', '712-724: z=-352.7 ang=92', '768-780: z=-336.5 ang=83', '800-816: z=-329.1 ang=80']
+> 420 ['88-104: z=-318.7 ang=-72', '684-696: z=-363.9 ang=92', '708-716: z=-354.6 ang=88', '784-812: z=-330.1 ang=77']
+> 440 ['328-340: z=-386.9 ang=-95', '644-656: z=-386.9 ang=95', '772-784: z=-333.2 ang=74']
+> 460 ['116-124: z=-319.8 ang=-66', '332-344: z=-389.9 ang=-89']
+> 480 ['112-124: z=-318.2 ang=-63', '240-248: z=-343.1 ang=-70', '336-348: z=-391.7 ang=-82', '628-648: z=-395.2 ang=83']
+> 500 ['340-360: z=-395.0 ang=-75', '620-640: z=-398.9 ang=76', '740-748: z=-335.4 ang=63', '808-816: z=-320.9 ang=60']
+> 520 ['356-376: z=-404.3 ang=-68']
+> 540 ['116-132: z=-314.2 ang=-53']
+> 560 ['632-640: z=-364.2 ang=49']
+> 580 ['600-620: z=-367.7 ang=40', '716-728: z=-325.6 ang=45']
+> 600 []
+> 620 ['124-148: z=-308.0 ang=-40', '692-700: z=-321.3 ang=36']
+
+### 🤖 Claude — 2026-11-18T10:42:56.479Z
+
+The seam needs geometry analysis. Let me map which VP-plate pixels the moving cameras see at the frame top (where the ceiling fill shows).
+
+### 🤖 Claude — 2026-11-18T10:43:00.626Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/py && python3 -I -c \"\nimport sys; sys.path.insert(0,'.')\nfrom cam import *\ndef hit(o,d):\n    p,t = hit_cyl(d,o)\n    if p[2] < C['zDoor']:\n        t = (C['zDoor']-o[2])/d[2]; p = o+t*d; return p,'door'\n    return p,'drum'\nfor name,cp in [('t33',[12.66,-109.89,-278.51]),('t66',[12.16,-109.9,-283.2]),('t95',[11.43,-109.9,-287.33])]:\n  o=np.array(cp); print(name)\n  for y in [190,260,330]:\n    out=[]\n    for x in [0,150,300,432,600,750,863]:\n      d=ray(x,y); p,k=hit(o,d); uv,_=proj(p …[+174 chars]`
+
+### 🧑 User — 2026-11-18T10:43:00.759Z
+
+> ↩︎ result: t33
+>   190 0:d(41,225) 150:d(171,217) 300:d(310,216) 432:d(433,216) 600:d(589,216) 750:d(729,216) 863:d(830,220)
+>   260 0:d(41,289) 150:d(170,281) 300:d(309,281) 432:d(433,281) 600:d(589,281) 750:d(729,281) 863:d(831,284)
+>   330 0:d(41,353) 150:d(169,346) 300:d(309,346) 432:d(433,346) 600:d(589,346) 750:d(729,346) 863:d(831,348)
+> t66
+>   190 0:d(77,263) 150:d(187,247) 300:d(315,247) 432:d(427,248) 600:d(569,248) 750:d(696,248) 863:d(791,249)
+>   260 0:d(77,319) 150:d(187,306) 300:d(315,306) 432:d(427,307) 600:d(569,307) 750:d(696,307) 863:d(791,307)
+>   330 0:d(78,376) 150:d(187,365) 300:d(315,366) 432:d(427,366) 600:d(569,366) 750:d(696,366) 863:d(792,366)
+> t95
+>   190 0:d(98,292) 150:d(196,274) 300:d(313,275) 432:d(415,275) 600:d(544,275) 750:d(660,276) 863:d(746,276)
+>   260 0:d(98,343) 150:d(196,328) 300:d(313,328) 432:d(415,329) 600:d(545,329) 750:d(660,329) 863:d(747,330)
+>   330 0:d(99,395) 150:d(196,382) 300:d(313,382) 432:d(415,383) 600:d(545,383) 750:d(661,383) 863:d(748,383)
+
+### 🤖 Claude — 2026-11-18T10:43:22.388Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && python3 -c \"\nfrom PIL import Image\nA='/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08/'\nb=Image.open(A+'t33_through_screen.png').convert('RGB').crop((0,150,864,450)); b.save('t33_top.png')\nb=Image.open(A+'f10_forward10u.png').convert('RGB').crop((0,100,864,400)); b.save('f10_top.png')\n\"; ls /home/user/wt/s08/qa/match/08/scenery/r8/ /home/user/wt/s08/qa/match/08/scenery/r7/ | head -40", "description": "Crop top regions of t33 and f10; lis …[+14 chars]`
+
+### 🧑 User — 2026-11-18T10:43:22.658Z
+
+> ↩︎ result: /home/user/wt/s08/qa/match/08/scenery/r7/:
+> A1
+> NEW
+> dbg
+> proof
+> seam
+> sill
+> towel
+> 
+> /home/user/wt/s08/qa/match/08/scenery/r8/:
+> dbg_av
+> occ
+> proof
+> towelm
+
+### 🤖 Claude — 2026-11-18T10:43:23.787Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/t33_top.png"}`
+
+### 🧑 User — 2026-11-18T10:43:23.800Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:43:24.393Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/f10_top.png"}`
+
+### 🧑 User — 2026-11-18T10:43:24.415Z
+
+> ↩︎ result: [image]
+
