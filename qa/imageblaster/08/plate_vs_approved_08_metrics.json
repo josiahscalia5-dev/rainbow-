@@ -1,0 +1,206 @@
+{
+ "geometry_fit": {
+  "matches": 1147,
+  "inliers": 1093,
+  "median_residual_px": 0.39,
+  "scale_x": 0.9924,
+  "scale_y_vs_aspect_resize": 0.9921,
+  "shift_x_px": 3.3,
+  "shift_y_px": 0.1,
+  "rotation_deg": -0.006
+ },
+ "naive_squeeze": {
+  "whole_frame": {
+   "mean_abs": 27.22,
+   "within_10": 0.4526,
+   "within_20": 0.6379,
+   "ssim_lum": 0.539,
+   "layout_mean_abs": 14.26,
+   "layout_within_20": 0.8391
+  },
+  "kept_scenery": {
+   "mean_abs": 17.11,
+   "within_10": 0.5365,
+   "within_20": 0.7468,
+   "ssim_lum": 0.5974,
+   "layout_mean_abs": 4.78,
+   "layout_within_20": 0.9996
+  },
+  "removed_areas(expected to differ)": {
+   "mean_abs": 53.99,
+   "within_10": 0.2304,
+   "within_20": 0.3497,
+   "ssim_lum": 0.3844,
+   "layout_mean_abs": 39.35,
+   "layout_within_20": 0.414
+  },
+  "bands_kept": {
+   "upper chamber y190-600 (walls, rings, door, towel, upper spouts)": {
+    "mean_abs": 18.66,
+    "within_10": 0.4899,
+    "within_20": 0.7151,
+    "ssim_lum": 0.5608,
+    "layout_mean_abs": 4.58,
+    "layout_within_20": 0.9998
+   },
+   "middle y600-840 (river start, lower spouts, foam)": {
+    "mean_abs": 19.01,
+    "within_10": 0.4554,
+    "within_20": 0.7121,
+    "ssim_lum": 0.553,
+    "layout_mean_abs": 5.0,
+    "layout_within_20": 1.0
+   },
+   "Benny rows y840-1245 outside his box (side walls, rings, foam, bubbles)": {
+    "mean_abs": 21.15,
+    "within_10": 0.4448,
+    "within_20": 0.6753,
+    "ssim_lum": 0.438,
+    "layout_mean_abs": 5.58,
+    "layout_within_20": 0.9987
+   },
+   "bottom y1245-1536 (near river, foam, ring feet)": {
+    "mean_abs": 10.73,
+    "within_10": 0.7253,
+    "within_20": 0.8664,
+    "ssim_lum": 0.7924,
+    "layout_mean_abs": 4.35,
+    "layout_within_20": 0.9998
+   }
+  }
+ },
+ "aligned": {
+  "whole_frame": {
+   "mean_abs": 20.56,
+   "within_10": 0.6064,
+   "within_20": 0.7788,
+   "ssim_lum": 0.7737,
+   "layout_mean_abs": 13.18,
+   "layout_within_20": 0.8394
+  },
+  "kept_scenery": {
+   "mean_abs": 8.57,
+   "within_10": 0.7309,
+   "within_20": 0.9269,
+   "ssim_lum": 0.9006,
+   "layout_mean_abs": 3.44,
+   "layout_within_20": 1.0
+  },
+  "removed_areas(expected to differ)": {
+   "mean_abs": 52.32,
+   "within_10": 0.2764,
+   "within_20": 0.3867,
+   "ssim_lum": 0.4377,
+   "layout_mean_abs": 38.98,
+   "layout_within_20": 0.4141
+  },
+  "bands_kept": {
+   "upper chamber y190-600 (walls, rings, door, towel, upper spouts)": {
+    "mean_abs": 9.59,
+    "within_10": 0.6766,
+    "within_20": 0.9044,
+    "ssim_lum": 0.8822,
+    "layout_mean_abs": 3.53,
+    "layout_within_20": 1.0
+   },
+   "middle y600-840 (river start, lower spouts, foam)": {
+    "mean_abs": 10.93,
+    "within_10": 0.5986,
+    "within_20": 0.8775,
+    "ssim_lum": 0.8424,
+    "layout_mean_abs": 3.6,
+    "layout_within_20": 1.0
+   },
+   "Benny rows y840-1245 outside his box (side walls, rings, foam, bubbles)": {
+    "mean_abs": 8.64,
+    "within_10": 0.7151,
+    "within_20": 0.9366,
+    "ssim_lum": 0.9055,
+    "layout_mean_abs": 3.27,
+    "layout_within_20": 1.0
+   },
+   "bottom y1245-1536 (near river, foam, ring feet)": {
+    "mean_abs": 5.37,
+    "within_10": 0.9147,
+    "within_20": 0.9877,
+    "ssim_lum": 0.9655,
+    "layout_mean_abs": 3.32,
+    "layout_within_20": 1.0
+   }
+  }
+ },
+ "worst_kept_cells_mean_abs_x_y_64px": [
+  [
+   17.2,
+   360,
+   704
+  ],
+  [
+   16.8,
+   648,
+   576
+  ],
+  [
+   16.2,
+   288,
+   512
+  ],
+  [
+   16.0,
+   360,
+   512
+  ],
+  [
+   15.8,
+   144,
+   768
+  ],
+  [
+   15.5,
+   432,
+   448
+  ],
+  [
+   15.3,
+   576,
+   640
+  ],
+  [
+   15.2,
+   216,
+   576
+  ],
+  [
+   15.2,
+   504,
+   512
+  ],
+  [
+   15.2,
+   288,
+   320
+  ]
+ ],
+ "mean_rgb_kept": {
+  "approved": [
+   172.3,
+   103.7,
+   163.0
+  ],
+  "plate": [
+   176.9,
+   101.7,
+   165.6
+  ]
+ },
+ "mean_saturation_value_kept": {
+  "approved": [
+   177.9,
+   212.6
+  ],
+  "plate": [
+   180.8,
+   215.9
+  ]
+ }
+}

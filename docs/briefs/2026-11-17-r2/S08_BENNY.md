@@ -1,0 +1,19 @@
+You are the SCREEN 08 BENNY SPECIALIST (benny-character-artist role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).
+
+Your branch: **`claude/rainbow-s08-benny08-bake-c2`**, continued from `claude/rainbow-s08-benny08-bake` @ `6392658` (newest remote commit of the previous account's Benny specialist). Push ONLY `claude/rainbow-s08-benny08-bake-c2`. Never merge, cherry-pick, force-push, reset or rebase.
+
+FIRST read the binding common rules: `git fetch origin ccr-5495e9c4-g0apvl && git show FETCH_HEAD:docs/briefs/2026-11-17-r2/COMMON_RULES.md` (startup, branch check, protected behaviour, reporting, saving, pace). Then read `CLAUDE.md`, `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`, `qa/match/08/NOTES.md` (FINISH ROUND, BENNY ROUND, BENNY PORT, BENNY CHECK ROUND).
+
+## What already exists
+* Screen 08 scenery reconstruction `?match08=1` — scenery 97.4 % within 20 levels. PRESERVE IT: never edit `src/world/match08.ts`, `assets/textures/match08/*` (plate, proj08.json, river08.json, coins08.json, splash08 position), camera files.
+* The ported benny05 look (knitted beanie with stitches, stripes, ribbed cuff, yarn pom-pom, gold star, shell fur, damped swim roll) under `benny05/benny08/match08/matchall`.
+* The previous session's bake (commits `8cb3e72` + `6392658`, NO NOTES yet): Benny's maps RE-BAKED FROM THE APPROVED 08 PICTURE with the locked 08 camera → `assets/textures/benny08/*.png` + `bake_report.json`, behind `?bake08=1`; the last WIP made match08 use the 08 maps (`bake08=0` = previous maps). Tools: `qa/match/08/benny08/work/` (bake08.py, parts08.py, reg08.py, refine08.py, classgain08.py, compare08.py, probe08.mjs, labviews08.mjs …). Pictures: `qa/match/08/benny08/APPROVED_08.png`, `CURRENT_08.png`, `NEW_08.png` (+ `_1080x1920`), closeups, `views/turntable_*`. Measured: whole frame 83.3 % → 84.3 % within 20 (SSIM 0.818 → 0.830), below HUD 90.1 % → 91.2 %; per-part numbers in `compare_CURRENT_NEW.json`.
+
+## Your milestone
+1. Verify the WIP: tsc clean, default build 0 px, gameplay 8/8 + 91 / 2,240 with and without match08, `bake08=0` reproduces the previous match08 Benny pixel-for-pixel, scenery band unchanged. Measure the Benny + splash region CURRENT vs NEW (same region as the 08 notes' "Benny + splash" 65.8 %). Write `qa/match/08/benny08/NOTES.md` (what the bake does, numbers, reproduce commands).
+2. Continue Benny's LOOK against the approved 08 picture, one factor at a time, keep only what is measurably or visibly closer: soft shaded magenta fur, the knitted beanie (visible stitches, ribbed cuff, thicker white stripes), pom-pom yarn, star shape + approved gold, approved colours, and the water SPLASH around him (splash08 card: look/strength only — its approved position stays). Benny stays canonical everywhere: pink fluff, violet eyes, knitted star hat, paw pads.
+3. Check him in MOTION on 08 (real sim: swimming, steering left/right, 360° views) and on screens 04–07 with the switch (only Benny changes; scenery unchanged).
+4. Deliver APPROVED | CURRENT | NEW full-size pictures + closeups + numbers, `qa/match/08/benny08/STATUS.md`, `SHARED_CHANGES.md` (Game.ts M08_BENNY placement tweaks are allowed if switch-guarded), and an APK with `match08=1` if NEW is closer.
+
+## Coordination
+You OWN `src/characters/benny/*` and `assets/textures/benny0*/` (screen agents only view Benny through switches). The Screen 08 CAMERA specialist works at the same time on `claude/rainbow-s08-camclear-c2` (view obstructions under `?camclear=1`): never touch `cameraRig.ts`, `match.ts`, `camClear.ts`. Screens 04–07 agents run in parallel on their own branches. No paid jobs in this milestone. When done: push, verify, send the lead ONE short status with `send_message` (session_id `session_01VCMXob2ipUeLE1o7yXNSsZ`) and stop and wait.

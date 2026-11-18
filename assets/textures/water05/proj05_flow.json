@@ -1,0 +1,13 @@
+{
+ "scale": 2.0,
+ "half_width_u": 4.8,
+ "note": "R = 0.5 + m * scale (m = du/ds along the approved streaks), G = flow mask, B = layer coverage",
+ "N": {
+  "mean_abs_slope_world": 0.215,
+  "flow_area_of_covered": 0.843
+ },
+ "T": {
+  "mean_abs_slope_world": 0.164,
+  "flow_area": 0.737
+ }
+}

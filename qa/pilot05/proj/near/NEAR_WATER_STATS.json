@@ -1,0 +1,159 @@
+{
+ "tool": "tools/proj05/near_water_stats.py",
+ "region": "water beside and below Benny, rows 900-1460, minus Benny + splash, near gold frame, coins",
+ "note": "riding frames show a different stretch of river than the approved picture: these compare how the water LOOKS (crispness, colour), not pixels; move_NN = NN units ahead of the 05 start; clip frames 24/48/71 = 1/2/3 s into the ride",
+ "results": {
+  "approved": {
+   "px": 222394,
+   "detail": 6.13,
+   "sat": 0.743,
+   "pink": 0.129,
+   "cyan": 0.581,
+   "glint": 0.0912
+  },
+  "BEFORE still move_00.png": {
+   "px": 224031,
+   "detail": 5.18,
+   "sat": 0.71,
+   "pink": 0.129,
+   "cyan": 0.581,
+   "glint": 0.078
+  },
+  "BEFORE still move_04.png": {
+   "px": 224031,
+   "detail": 2.32,
+   "sat": 0.774,
+   "pink": 0.127,
+   "cyan": 0.698,
+   "glint": 0.0646
+  },
+  "BEFORE still move_08.png": {
+   "px": 224031,
+   "detail": 2.07,
+   "sat": 0.74,
+   "pink": 0.35,
+   "cyan": 0.435,
+   "glint": 0.0499
+  },
+  "BEFORE still move_12.png": {
+   "px": 222594,
+   "detail": 1.93,
+   "sat": 0.78,
+   "pink": 0.114,
+   "cyan": 0.76,
+   "glint": 0.0588
+  },
+  "BEFORE still move_17.png": {
+   "px": 224031,
+   "detail": 1.38,
+   "sat": 0.72,
+   "pink": 0.123,
+   "cyan": 0.695,
+   "glint": 0.0014
+  },
+  "BEFORE still move_25.png": {
+   "px": 224031,
+   "detail": 1.26,
+   "sat": 0.756,
+   "pink": 0.347,
+   "cyan": 0.489,
+   "glint": 0.0047
+  },
+  "NEW still move_00.png": {
+   "px": 224031,
+   "detail": 5.18,
+   "sat": 0.71,
+   "pink": 0.129,
+   "cyan": 0.581,
+   "glint": 0.078
+  },
+  "NEW still move_04.png": {
+   "px": 224031,
+   "detail": 2.32,
+   "sat": 0.774,
+   "pink": 0.127,
+   "cyan": 0.697,
+   "glint": 0.0638
+  },
+  "NEW still move_08.png": {
+   "px": 224031,
+   "detail": 2.66,
+   "sat": 0.75,
+   "pink": 0.161,
+   "cyan": 0.612,
+   "glint": 0.026
+  },
+  "NEW still move_12.png": {
+   "px": 222595,
+   "detail": 3.55,
+   "sat": 0.762,
+   "pink": 0.132,
+   "cyan": 0.677,
+   "glint": 0.0289
+  },
+  "NEW still move_17.png": {
+   "px": 224031,
+   "detail": 3.23,
+   "sat": 0.84,
+   "pink": 0.043,
+   "cyan": 0.845,
+   "glint": 0.0124
+  },
+  "NEW still move_25.png": {
+   "px": 224031,
+   "detail": 3.44,
+   "sat": 0.784,
+   "pink": 0.106,
+   "cyan": 0.661,
+   "glint": 0.0107
+  },
+  "BEFORE ride (flow running) 0024.png": {
+   "px": 224031,
+   "detail": 1.55,
+   "sat": 0.783,
+   "pink": 0.159,
+   "cyan": 0.718,
+   "glint": 0.0351
+  },
+  "BEFORE ride (flow running) 0048.png": {
+   "px": 224031,
+   "detail": 0.83,
+   "sat": 0.724,
+   "pink": 0.139,
+   "cyan": 0.661,
+   "glint": 0.0347
+  },
+  "BEFORE ride (flow running) 0071.png": {
+   "px": 224031,
+   "detail": 1.0,
+   "sat": 0.768,
+   "pink": 0.333,
+   "cyan": 0.523,
+   "glint": 0.0106
+  },
+  "NEW ride (flow running) 0024.png": {
+   "px": 224031,
+   "detail": 3.07,
+   "sat": 0.794,
+   "pink": 0.143,
+   "cyan": 0.688,
+   "glint": 0.0186
+  },
+  "NEW ride (flow running) 0048.png": {
+   "px": 224031,
+   "detail": 2.78,
+   "sat": 0.79,
+   "pink": 0.081,
+   "cyan": 0.779,
+   "glint": 0.0105
+  },
+  "NEW ride (flow running) 0071.png": {
+   "px": 224031,
+   "detail": 2.38,
+   "sat": 0.793,
+   "pink": 0.255,
+   "cyan": 0.544,
+   "glint": 0.0062
+  }
+ }
+}
