@@ -1,3 +1,28 @@
+# ▶▶▶▶ NEWEST — ACCOUNT 7 (round 7) STATE (2026-11-18 ~00:40 UTC, lead session `session_01KS3bZsVTaecBXyvFd9EQGg`)
+
+**Lead branch now: `claude/rainbow-lead-c7`** (from the account-6 lead `ccr-4bd35b15-7z45t0` @ `dde3e9af`; the session
+started on the OLD line `ccr-5495e9c4-g0apvl` — only transcripts there — and moved to a fresh branch, nothing merged).
+User order (round 7): VISUALS ONLY on the five playable screens 04–08, ≥ 8.5/10 while Benny swims, each screen keeps ITS
+OWN approved design, max two specialists at a time, no paid jobs, nothing approved until the user says so.
+Coordination + rotation: `docs/briefs/2026-11-17-r7/COORDINATION.md`; briefs `S04.md S05.md S07.md S08_SCENERY.md`.
+
+| Screen | Branch (from) | State |
+|---|---|---|
+| 06 (lead) | `claude/rainbow-s06-match-c7` (`-c6` @ 1e7b1112) | kept set `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`: straight ring tunnel, REAL modeled gold rings, bubbles, foam clusters, splash; ≈ 7/10 swimming (was 3.5–4); approved view unchanged. Notes `qa/match/06/r7/NOTES.md` |
+| 08 scenery | `claude/rainbow-s08-scenery-c7` (`-c6` @ cf2e092b) | round 7 DONE (m08seam, m08sill, m08towel kept), ≈ 7.5/10; session idle |
+| 07 | `claude/rainbow-s07-match-c7` (`-c5` @ 835a72db) | specialist session `session_01KS3bZthTRh6CTfK1fvM3r6` working on M3 (plunge) |
+| 05 (line B) | `claude/rainbow-s05-match-c7` (`-c5` @ ebaf6cac) | specialist session `session_01KS3bZvfAKmzbAswSRdAaqD` working on M3 (whole-stage tunnel) |
+| 04 | `claude/rainbow-s04-match-c7` (= `-c5` @ d1e422fa) | brief ready, NOT started (next free slot) |
+
+Keys (free reads, ~23:45 UTC): World Labs = the 5,420-credit Screen 08 account (world 32b5b2f4 → 200; Screen 05 pilot
+worlds now 404, outputs in Git LFS); fal.ai reconnected (request 01a1ea70 → COMPLETED); Marble CDN reachable; Atlas
+connector responds. Git LFS 75 objects / 9 tips, fsck OK. APK build: intermittent Maven failures (user: not now).
+Specialist launch traps: the first prompt is sometimes dropped (re-send with send_message); specialists must NOT use
+send_message themselves (permission prompt blocks the session) — they report via STATUS.md commits.
+User-facing pictures: `qa/review_r7/` (APPROVED / BEFORE / NEW) and `qa/review_r7/now/` (current versions).
+
+---
+
 # ▶▶▶ NEWEST — ACCOUNT 6 (round 6) STATE (2026-11-17 ~22:40 UTC, lead session `session_01VCMXoaUqBCxDq8BntT19BU`)
 
 **Lead branch now: `ccr-4bd35b15-7z45t0`** (started from the r5 lead `ccr-f983b317-2vt0zh` @ `cbc571356d261144c2ac3b4092de4fc4a9d5ffe6`,
