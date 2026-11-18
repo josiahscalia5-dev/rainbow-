@@ -960,3 +960,276 @@ NO REDESIGNS. NO UNNECESSARY SETUP. NO WASTED CREDITS. NO FALSE STATUS REPORTS.
 
 PLEASE BEGIN THE RESTORATION AND GIVE ME YOUR VERIFIED ACTIVATION REPORT.
 
+### 🤖 Claude — 2026-11-18T14:10:51.167Z
+
+Your latest message replaces the previous two. I'll run the manual save now, then do the checks.
+
+### 🤖 Claude — 2026-11-18T14:10:53.017Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:session-start-c13 2>&1 | tail -20; echo \"exit=$?\"; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 40 git ls-remote origin refs/heads/claude/rainbow-restore-autosave-1mgga0)\"", "description": "Run a manual autosave and compare remote with local", "timeout": 330000}`
+
+### 🤖 Claude — 2026-11-18T14:10:53.739Z
+
+> 🔧 **Bash** `{"command": "bash scripts/claude-bootstrap.sh --status 2>&1 | tail -60", "description": "Show the background bootstrap report"}`
+
+### 🧑 User — 2026-11-18T14:10:54.224Z
+
+> ↩︎ result: another autosave is running; skipping
+> exit=0
+> LOCAL  9838ddb3904dbe5a229317d32cbb4df5293d8af0
+> REMOTE 9838ddb3904dbe5a229317d32cbb4df5293d8af0	refs/heads/claude/rainbow-restore-autosave-1mgga0
+
+### 🧑 User — 2026-11-18T14:10:55.284Z
+
+> ↩︎ result: # Rainbow bootstrap report — BOOTSTRAP PROBLEMS
+> 
+> Generated 2026-11-18 12:32 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `ccr-e908f8da-cy4yc1`.
+> The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
+> 
+> | Step | Result | Details | s |
+> |---|---|---|---|
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-e908f8da-cy4yc1 @ f06a53e (session started from ccr-3b139b48-0qqkkz) | 0 |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | OK | previous save on GitHub: f06a53e 2026-11-18 12:24 UTC (daemon) on ccr-3b139b48-0qqkkz, ccr-e908f8da-cy4yc1; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 25 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-18 03:44-10:07 UTC (6.4 h) | 0 |
+> | Git LFS binaries (local) | OK | 59/59 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 2 |
+> | Git LFS on GitHub | OK | 59/59 LFS objects (507 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
+> | Approved refer …[+2930 chars]
+
+### 🤖 Claude — 2026-11-18T14:10:58.354Z
+
+The autosave daemon pushed by itself: GitHub and local both show `9838ddb`. Now I'll check that the daemon process is alive and read the newest handoff and coordination notes.
+
+### 🤖 Claude — 2026-11-18T14:11:00.158Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep -E \"autosave-daemon|claude-bootstrap\" | grep -v grep | awk '{print $2, $11, $12, $13, $14}'; echo ---; tail -5 backups/BACKUP_LOG.md; echo ---; cat backups/autosave.config.json | python3 -c \"import json,sys; d=json.load(sys.stdin); print('interval', d.get('interval_seconds', d.get('interval'))); print('protected', len(d.get('protected_branches',[])))\"", "description": "Check daemon process, backup log, and config"}`
+
+### 🧑 User — 2026-11-18T14:11:00.213Z
+
+> ↩︎ result: 466 bash /home/user/rainbow-/scripts/autosave-daemon.sh  
+> 468 bash /home/user/rainbow-/scripts/claude-bootstrap.sh --background 
+> ---
+> | 2026-11-18T13:28:29+00:00 | manual:08-step5-shown | committed+pushed | `be56ffcaa903` | `ccr-e908f8da-cy4yc1` | 23 | True |  |
+> | 2026-11-18T13:28:48+00:00 | hook:Stop | committed+pushed | `44cfbf8a6361` | `ccr-e908f8da-cy4yc1` | 10 | True |  |
+> | 2026-11-18T13:29:22+00:00 | daemon | committed+pushed | `9d872bca2bea` | `ccr-e908f8da-cy4yc1` | 8 | True |  |
+> | 2026-11-18T13:33:54+00:00 | manual:save-everything | committed+pushed | `2f2d253c0e1a` | `ccr-e908f8da-cy4yc1` | 19 | True |  |
+> | 2026-11-18T13:34:18+00:00 | hook:Stop | committed+pushed | `eb41fd6b22a6` | `ccr-e908f8da-cy4yc1` | 7 | True |  |
+> ---
+> interval None
+> protected 46
+
+### 🤖 Claude — 2026-11-18T14:11:01.473Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^## \" docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -8; echo; awk '/^## /{c++} c==1' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -120", "description": "Read the newest Account 12 handoff section"}`
+
+### 🧑 User — 2026-11-18T14:11:01.508Z
+
+> ↩︎ result: 136:## PAUSED BY THE USER ~22:30 UTC (save credits)
+> 141:## Branch map (round 6; nothing merged into production, no -c5 or older branch written)
+> 152:## Restore audit (account 6, 21:50–22:10 UTC)
+> 161:## Round-6 audit result (`qa/lead_r6/2026-11-17/README.md`) — NO screen is 8.5/10 while riding yet
+> 167:## Next tasks after the two running milestones (user's order: 06 + 08 first, then 07, 05, 04)
+> 183:## Branch map (round 5; nothing merged, no -c4 or older branch written)
+> 198:## Restore audit (account 5, 20:05–20:35 UTC)
+> 214:## Round 5 progress (~21:20 UTC) — the user's goal: every playable screen >= 95 % like its approved picture
+> 
+> ## PAUSED BY THE USER ~22:30 UTC (save credits)
+> Both specialists were told to checkpoint, push and stop (take the NEWEST commit of each `-c6` branch). Marble CDN host
+> still blocked (the allowlist request was denied at the prompt); APK builds still fail on intermittent Maven Central 404s
+> through this network (details: `backups/AGENTS_STATUS.json` → `round6_account6.paused_by_user_2026_11_17_2230`).
+
+### 🤖 Claude — 2026-11-18T14:11:04.565Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ACCOUNT 12\\|ACCOUNT 13\" docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head; echo; head -135 docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -c 14000", "description": "Read the top of the handoff document"}`
+
+### 🧑 User — 2026-11-18T14:11:04.594Z
+
+> ↩︎ result: 1:# ▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 12 (round 12) STATE (2026-11-18 ~12:45 UTC, lead branch `ccr-e908f8da-cy4yc1`)
+> 
+> # ▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 12 (round 12) STATE (2026-11-18 ~12:45 UTC, lead branch `ccr-e908f8da-cy4yc1`)
+> 
+> Started from the account-11 lead `ccr-3b139b48-0qqkkz` @ `f06a53e` (nothing merged). Branch map + verified services:
+> **`docs/briefs/2026-11-18-r12/COORDINATION.md`**. RUNNING: 05 `claude/rainbow-s05-match-c12` (water-fx-specialist,
+> `/home/user/wt/s05`), 08 `claude/rainbow-s08-scenery-c12` (washer-environment-modeler, `/home/user/wt/s08`); lead finishes the
+> 04 multi-view test on `claude/rainbow-s04-match-c12`. Keys: this account's environment injects World Labs (5,420 credits,
+> 08 world 200) and fal (01a1ea70 COMPLETED) — no form was needed. If account 12 runs out: `-c13` branches from each NEWEST
+> `-c12` tip (or `-c11`); never write `-c12` from another account.
+> 
+> ---
+> 
+> # ▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 11 (round 11) STATE (2026-11-18 ~11:38 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)
+> 
+> Lead branch **`ccr-3b139b48-0qqkkz`** (contains the account-10 lead `ccr-c526614d-tw0yro` @ `e673ef4` + autosaves; nothing
+> merged). Branch map, start SHAs, services: **`docs/briefs/202 …[+11381 chars]
+
+### 🤖 Claude — 2026-11-18T14:11:05.452Z
+
+> 🔧 **Bash** `{"command": "wc -l docs/briefs/2026-11-18-r12/COORDINATION.md && cat docs/briefs/2026-11-18-r12/COORDINATION.md | head -c 12000", "description": "Read the round 12 coordination file"}`
+
+### 🧑 User — 2026-11-18T14:11:05.482Z
+
+> ↩︎ result: 47 docs/briefs/2026-11-18-r12/COORDINATION.md
+> # Round 12 (account 12) — coordination of the five playable screens (VISUALS ONLY)
+> 
+> Lead session branch `ccr-e908f8da-cy4yc1` (started from the account-11 lead `ccr-3b139b48-0qqkkz` @ `f06a53e`; the
+> account-11 daemon later added `5c40dde` = backup bookkeeping only, no game content — not merged). Started 2026-11-18 ~12:33 UTC.
+> Rules unchanged (binding): `docs/briefs/2026-11-18-r8/COMMON_RULES.md` + `docs/briefs/2026-11-18-r10/RULES_R10.md` +
+> `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md` (read "-c8/-c10/-c11" as "-c12", "r8/r10/r11" as "r12").
+> 
+> ## Services verified at start (free reads only, ~12:40 UTC)
+> * Five-minute autosave: daemon running; manual test save `74500f89` pushed, `git ls-remote` == HEAD.
+> * World Labs: this environment injects the key for `api.worldlabs.ai` (no form needed) → authenticated, 5,420 credits;
+>   Screen 08 world `32b5b2f4…` → 200; Screen 05 pilot worlds → 404 (other WL account; their files are in Git LFS).
+> * fal.ai: this environment injects the key for `queue.fal.run` → request `01a1ea70…` (nano-banana-2) COMPLETED. No new paid jobs.
+> * Hugging Face: reachable directly (no connector in this session). Stable …[+5158 chars]
+
+### 🤖 Claude — 2026-11-18T14:11:13.422Z
+
+> 🔧 **Bash** `{"command": "timeout 200 git fetch origin claude/rainbow-s04-match-c12 claude/rainbow-s05-match-c12 claude/rainbow-s08-scenery-c12 claude/rainbow-s07-match-c11 claude/rainbow-s06-match-c11 ccr-e908f8da-cy4yc1 2>&1 | tail -8; for b in s04-match-c12 s05-match-c12 s08-scenery-c12 s07-match-c11 s06-match-c11; do echo \"== $b\"; git log -3 --format='%h %ci %s' origin/claude/rainbow-$b 2>/dev/null | cut -c1-150; done; echo; ls backups/wip/ 2>/dev/null", "description": "Fetch screen branches and show their latest commits", "timeout": 230000}`
+
+### 🤖 Claude — 2026-11-18T14:11:14.751Z
+
+> 🔧 **Bash** `{"command": "timeout 90 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -8; echo \"---fal\"; grep -n \"fal\" scripts/verify-assets.py | head -5; timeout 60 python3 -I scripts/verify-assets.py fal 2>&1 | tail -5", "description": "Free reads: World Labs credits and fal.ai request"}`
+
+### 🧑 User — 2026-11-18T14:14:33.457Z
+
+> ↩︎ result: Terminated
+> == s04-match-c12
+> == s05-match-c12
+> == s08-scenery-c12
+> == s07-match-c11
+> == s06-match-c11
+> 
+> claude__rainbow-s04-match-c10
+> claude__rainbow-s04-match-c11
+> claude__rainbow-s04-match-c12
+> claude__rainbow-s05-match-c10
+> claude__rainbow-s05-match-c11
+> claude__rainbow-s05-match-c12
+> claude__rainbow-s06-match-c11
+> claude__rainbow-s08-scenery-c10
+> claude__rainbow-s08-scenery-c11
+> claude__rainbow-s08-scenery-c12
+
+### 🧑 User — 2026-11-18T14:14:34.100Z
+
+> ↩︎ result: @@ fail Marble API authentication FAILED (HTTP 401): reconnect with the secure credential form (request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git
+> ---fal
+>     python3 -I scripts/verify-assets.py report <results.jsonl> <mode>   write backups/BOOTSTRAP_REPORT.md + .live json
+> 
+> Each check prints details and ends with one line:  @@ <ok|warn|fail> <summary>
+> No credentials are read, printed or stored: GitHub auth comes from the session's git proxy.
+
+### 🤖 Claude — 2026-11-18T14:14:43.793Z
+
+> 🔧 **Bash** `{"command": "git fetch --progress origin claude/rainbow-s04-match-c12 claude/rainbow-s05-match-c12 claude/rainbow-s08-scenery-c12 claude/rainbow-s07-match-c11 claude/rainbow-s06-match-c11 > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch.log 2>&1; echo \"fetch exit=$?\" >> /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch.log", "description": "Fetch the five screen branches in background", "timeout": 1500000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T14:14:43.836Z
+
+> ↩︎ result: Command running in background with ID: b3imeg83x. Output is being written to: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/b3imeg83x.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T14:14:44.697Z
+
+> 🔧 **Grep** `{"pattern": "queue\\.fal\\.run|01a1ea70", "path": "/home/user/rainbow-/scripts", "output_mode": "content", "head_limit": 10}`
+
+### 🧑 User — 2026-11-18T14:14:44.726Z
+
+> ↩︎ result: scripts/setup-image-blaster.sh:6:# WLT-Api-Key, queue.fal.run header "Authorization: Key …"); the proxy injects them. .env holds placeholders only.
+> scripts/setup-image-blaster.sh:42:echo "  curl -sS -o /dev/null -w '%{http_code}' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status   # 404 = key accepted"
+
+### 🤖 Claude — 2026-11-18T14:14:47.928Z
+
+> 🔧 **Bash** `{"command": "for u in \"https://huggingface.co/api/whoami-v2\" \"https://huggingface.co/api/models/depth-anything/DA3-LARGE\" \"https://huggingface.co/api/spaces/stabilityai/stable-virtual-camera/runtime\" \"https://huggingface.co/api/spaces/Doubiiu/ViewCrafter/runtime\"; do echo \"$u -> $(curl -sS --max-time 15 -o /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/hf.json -w '%{http_code}' \"$u\" 2>&1) $(head -c 160 /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/hf.json)\"; done; ls qa/da3/2026-11-18/ | head; ls qa/da3/2026-11- …[+101 chars]`
+
+### 🧑 User — 2026-11-18T14:14:48.886Z
+
+> ↩︎ result: https://huggingface.co/api/whoami-v2 -> 401 {"error":"Invalid username or password."}
+> https://huggingface.co/api/models/depth-anything/DA3-LARGE -> 200 {"_id":"691626522646f937f60c80f9","id":"depth-anything/DA3-LARGE","private":false,"pipeline_tag":"depth-estimation","library_name":"depth-anything-3","tags":["d
+> https://huggingface.co/api/spaces/stabilityai/stable-virtual-camera/runtime -> 200 {"stage":"RUNTIME_ERROR","hardware":{"current":null,"requested":"l4x1"},"gcTimeout":172800,"errorMessage":"Exit code: 1. Reason: 3.10/site-packages/huggingface_
+> https://huggingface.co/api/spaces/Doubiiu/ViewCrafter/runtime -> 200 {"stage":"RUNTIME_ERROR","hardware":{"current":null,"requested":"zero-a10g"},"gcTimeout":172800,"errorMessage":"Exit code: 1. Reason: \n[notice] A new release o
+> 04_2_GAME_depth_at_approved_view.png
+> 04_3_DA3_DA3MONO-LARGE_depth.png
+> 04_4_DA3_DA3MONO-LARGE_disagreement.png
+> 04_5_DA3MONO_own_scale_depth.png
+> 05_2_GAME_depth_at_approved_view.png
+> 05_3_DA3_DA3MONO-LARGE_depth.png
+> 05_4_DA3_DA3MONO-LARGE_disagreement.png
+> 05_5_DA3MONO_own_scale_depth.png
+> 06_2_GAME_depth_at_approved_view.png
+> 06_3_DA3_DA3MONO-LARGE_depth.png
+> DA3-BASE_04.npz
+> DA3-BASE_05.npz
+> DA3-BASE_06.npz
+> DA3-BASE_ …[+127 chars]
+
+### 🤖 Claude — 2026-11-18T14:14:52.348Z
+
+> 🔧 **Bash** `{"command": "echo \"fal probe -> $(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status)\"; grep -rho \"01a1ea70[0-9a-f-]*\" qa docs backups 2>/dev/null | sort -u | head -2", "description": "Free fal.ai authentication probe"}`
+
+### 🤖 Claude — 2026-11-18T14:14:52.731Z
+
+> 🔧 **ToolSearch** `{"query": "hugging face", "max_results": 5}`
+
+### 🧑 User — 2026-11-18T14:14:54.484Z
+
+> ↩︎ result: fal probe -> 404
+> 01a1ea70
+> 01a1ea70-
+
+### 🧑 User — 2026-11-18T14:14:54.497Z
+
+> ↩︎ result: No matching deferred tools found
+
+### 🤖 Claude — 2026-11-18T14:15:00.558Z
+
+> 🔧 **Bash** `{"command": "id=$(grep -rhoE \"01a1ea70-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\" qa docs backups 2>/dev/null | head -1); echo \"id=$id\"; ep=$(grep -rhoE \"fal-ai/[a-z0-9-]+(/[a-z0-9-]+)?\" docs/briefs/2026-11-18-r12/ qa/match/04 2>/dev/null | sort | uniq -c | sort -rn | head -3); echo \"$ep\"; for e in fal-ai/nano-banana-2 fal-ai/nano-banana-2/edit; do echo \"$e -> $(curl -sS --max-time 15 -w ' %{http_code}' \"https://queue.fal.run/$e/requests/$id/status\" | head -c 200)\"; done; echo \"no-auth control -> $(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' -H 'Authorization: Key …[+140 chars]`
+
+### 🤖 Claude — 2026-11-18T14:15:01.011Z
+
+> 🔧 **ToolSearch** `{"query": "select:ListConnectors,SuggestConnectors", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T14:15:01.902Z
+
+> ↩︎ result: id=01a1ea70-42d8-7943-b035-7bb5f129d872
+>       5 fal-ai/nano-banana-2/edit
+> fal-ai/nano-banana-2 -> {"status":"NOT_FOUND"} 404
+> fal-ai/nano-banana-2/edit ->  405
+> no-auth control -> 401
+
+### 🧑 User — 2026-11-18T14:15:01.908Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T14:15:09.354Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🤖 Claude — 2026-11-18T14:15:09.983Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"01a1ea70\" docs/briefs/2026-11-18-r1*/ backups/TOOL_MANIFEST.json 2>/dev/null | cut -c1-260 | head -6", "description": "Find how earlier accounts checked the fal request"}`
+
+### 🧑 User — 2026-11-18T14:15:10.011Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r11/COORDINATION.md:13:* fal.ai: key re-entered via the secure form (host `queue.fal.run`, `Authorization: Key …`) → request `01a1ea70` COMPLETED.
+> docs/briefs/2026-11-18-r12/COORDINATION.md:12:* fal.ai: this environment injects the key for `queue.fal.run` → request `01a1ea70…` (nano-banana-2) COMPLETED. No new paid jobs.
+
+### 🤖 Claude — 2026-11-18T14:15:10.360Z
+
+> 🔧 **ListConnectors** `{"keywords": ["hugging face", "huggingface", "world labs", "github", "fal"]}`
+
+### 🧑 User — 2026-11-18T14:15:10.665Z
+
+> ↩︎ result: [{"name":"World Labs Atlas","description":"","directoryUuid":"cee9947d-e2d6-42dd-a7a6-6777257381bf","installedServerId":"cee9947d-e2d6-42dd-a7a6-6777257381bf","customOAuthClientId":null,"installState":"connected","isAuthless":false,"connected":true,"enabledInChat":true}]
+
+### 🧑 User — 2026-11-18T14:15:27.644Z
+
+> ↩︎ result: {"environment_id":"env_01Qhnigux4LnTx4YGgVZ8BqG","name":"rainbow-","description":"Created by Claude (session cse_012NR93QW6kw1gqxbSo348sF): Rainbow game: allow Blender 5.3, Android SDK 34 and World Labs Atlas hosts.","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":true,"setup_script":"#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-): real Git LFS assets, Blender 5.3.0, Android SDK 34, World Labs plugin.\n# Every step is non-fatal so a session always starts. Copy: scripts/cloud-env-setup.sh\nif [ -d rainbow- ]; then\n  (cd rainbow- \u0026\u0026 git lfs pull) || echo \"rainbow: git lfs pull failed\"\n  (cd rainbow- \u0026\u0026 bash scripts/setup-blender.sh) || echo \"rainbow: blender setup failed\"\n  (cd rainbow- \u0026\u0026 bash scripts/setup-android-sdk.sh) || echo \"rainbow: android sdk setup failed\"\n  (cd rainbow- \u0026\u0026 bash scripts/setup-worldlabs-plugin.sh) || echo \"rainbow: worldlabs plugin setup failed\"\nfi\nexit 0\n","repositories":["josiahscalia5-dev/rainbow-"],"network_secrets":[],"is_current":tr …[+1155 chars]
+
+### 🤖 Claude — 2026-11-18T14:15:35.420Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble API key", "reason": "The free credit-balance read of the Marble World API returned HTTP 401 on this new account. The key re-enables reading the saved Screen 08 world and your credit balance; no paid job will be started.", "suggested_type": "bearer"}`
+
+### 🤖 Claude — 2026-11-18T14:15:35.827Z
+
+> 🔧 **ToolSearch** `{"query": "select:SearchMcpRegistry", "max_results": 1}`
+
