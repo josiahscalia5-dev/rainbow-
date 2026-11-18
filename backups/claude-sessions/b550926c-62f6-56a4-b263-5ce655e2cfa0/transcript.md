@@ -4320,3 +4320,23 @@ Saving that brief first:
 
 > 🔧 **Bash** `{"command": "git add docs/briefs/2026-11-17-r7/S05_ROUND2.md && git commit -q -m \"r7: Screen 05 part-2 brief (user's 05 list), queued for the next free slot\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZsVTaecBXyvFd9EQGg\" && git push -q origin claude/rainbow-lead-c7 2>&1 | tail -1; git fetch -q origin \"+refs/heads/claude/rainbow-s05-match-c7:refs/remotes/origin/claude/rainbow-s05-match-c7\"; git worktree add -q /home/user/wt-s05 -b wt-s05-lead origin/claude/rainbow-s05-match-c7 2>&1 | tail -1; cd /home/user/wt-s05 && git br …[+277 chars]`
 
+### 🧑 User — 2026-11-18T00:49:41.056Z
+
+> ↩︎ result: 0e631db7 autosave: Rainbow 2026-11-18 00:35 UTC
+> 100: * ends than at the front (luminance ~145 vs ~91), so each column is scaled by (1 + 0.55 |sin θ|^1.3) / 1.15 (1.15 = the
+> 120:/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> 122:  s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number;
+> 125:  /** coins05 only: [scale at the 05 checkpoint, distance ahead of Benny at the checkpoint] — the coin shows `scale` from
+> 142:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 149: * approved centre; scale = approved width / projected width of a 1-u coin). Rows: [ds = s − 05_crest, lat, scale].
+> 158: * just in front of the relief (same screen centre, scale re-solved; 4th column = coin height, default C05.h): a short
+> 162: * is kept: CoinDef.phase). Rows: [ds, lat, scale, h?].
+> 170:/** near size of the measured coins (C05.scale = the default 05 coin size), capped by the 3-D gap to the next coin */
+> 174:  return Math.max(C05M[k][2], Math.min(C05.scale, 0.85 * Math.min(...nb)));
+> 180:  const extra = { scale: C05.scale, tilt: C05.tilt };
+> 19 …[+713 chars]
+
+### 🤖 Claude — 2026-11-18T00:49:41.644Z
+
+You've hit your 5-hour limit · resets 4:20am (UTC)
+
