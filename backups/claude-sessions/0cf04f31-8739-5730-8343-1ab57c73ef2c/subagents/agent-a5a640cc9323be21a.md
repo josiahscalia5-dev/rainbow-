@@ -1243,3 +1243,90 @@ Now the cauliflower sub-bubble switch `&m05caul=1`.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T11:55:34.052Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^import\" src/world/materials.ts; grep -n \"uPjF\\b\\|textureSize\" src/vfx/waterRibbon.ts | head -5; grep -rn \"glslVersion\\|GLSL3\" src/vfx/*.ts | head -3", "description": "Check materials.ts imports and GLSL version usage"}`
+
+### 🧑 User — 2026-11-18T11:55:34.100Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far } from '../vfx/waterRibbon';
+> 8:import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
+> 305:  uPjF: { value: null as THREE.Texture | null },
+> 665:uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
+> 1714:        fbC = texture2D(uPjF, clamp(fbUV, 0.0, 1.0));
+> 2006:    uPjF: { value: null }, uPjFZ: { value: 400 },
+> 2010:  if (M05BLEND) { u.uPjF = m05blend.uPjF; u.uPjFZ = m05blend.uPjFZ; }
+
+### 🤖 Claude — 2026-11-18T11:55:57.223Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"export const M05CAUL: boolean = M05CLOUD && q05('m05caul');\\n\"\nnew=old+\"\"\"/**\n * `&m05fbank=1` (Screen 05 round 11, needs m05blend; src/world/materials.ts farRiverMaterial): the far river's BANKS while\n * swimming. Beyond the painted river edge the far block carries the approved picture's far foam banks (layer F), baked\n * for the locked eye: swimming magnifies them into pale lilac / cyan washes, and the far river's first row at the seam\n * cut that wash off in a straight angul …[+4031 chars]`
+
+### 🧑 User — 2026-11-18T11:55:59.772Z
+
+> ↩︎ result: TSC OK
+> 1116:    vec2 fsz = vec2(textureSize(uPjF, 0));
+
+### 🤖 Claude — 2026-11-18T11:56:07.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1' && node tools/match05/r8_shots.mjs $S/fbank \"$K&m05fbank=1\" t66_through_screen,t33_through_screen,f20_forward20u,k81_kink 5291 2>&1 | grep -i \"error\" | head", "description": "Render shots with m05fbank on", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T11:56:46.798Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:56:49.949Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/fbank/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:56:49.992Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:57:02.064Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cp src/world/materials.ts /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/materials.ts.bak && python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\nold=\"\"\"      col = mix(col, fo, inB);\n    }\n  }\"\"\"\nnew=\"\"\"      col = mix(col, fo, inB);\n    }\n    col = vec3(magB, clamp(eB * 0.5 + 0.5, 0.0, 1.0), uFbP.w * 0.5 + 0.25 * step(1.0, min(dV, dU)));\n  }\"\"\"\nassert old in s; s=s.replace(old,new,1); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratch …[+685 chars]`
+
+### 🧑 User — 2026-11-18T11:57:22.362Z
+
+> ↩︎ result: (250, 615) (0, 255, 230)
+> (300, 630) (0, 127, 255)
+> (200, 620) (217, 220, 251)
+> (500, 600) (0, 0, 255)
+> (700, 620) (0, 0, 255)
+> (780, 640) (207, 212, 254)
+> (450, 560) (0, 255, 234)
+> (600, 560) (0, 0, 255)
+
+### 🤖 Claude — 2026-11-18T11:57:26.995Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/fbdbg_crop.png"}`
+
+### 🧑 User — 2026-11-18T11:57:27.017Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:57:46.683Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\nold=\"\"\"    vec2 fsz = vec2(textureSize(uPjF, 0));\n    float vF = log(1.0 + max(vRivB.w, 0.0)) / log(1.0 + uPjFZ);\n    float dV = fwidth(vF) * fsz.y, dU = fwidth(vRivUv.x) * fsz.x;\n    float magB = uFbP.w * (1.0 - smoothstep(0.55, 1.1, min(dV, dU)));\"\"\"\nnew=\"\"\"    // magnification of the baked picture: distance from the locked eye (D0 + Z) over the distance from this eye\n    // (F's texels are finer than its painted source, so texel density does not tell how soft it looks)\n    fl …[+1000 chars]`
+
+### 🧑 User — 2026-11-18T11:58:26.814Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:58:30.877Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/fbank2/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:58:30.921Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:58:41.787Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad && python3 -I -c \"\nfrom PIL import Image\nS='$S'\nb=Image.open(S+'/wtile2/t66_through_screen.png').convert('RGB').crop((0,520,864,780))\nc=Image.open(S+'/fbank2/t66_through_screen.png').convert('RGB').crop((0,520,864,780))\nout=Image.new('RGB',(864,530),'white'); out.paste(b,(0,0)); out.paste(c,(0,270)); out.save(S+'/cmp_fbank_t66.png')\nb=Image.open(S+'/wtile2/k81_kink.png').convert('RGB').crop((0,520,864,1000))\nc=Image.open(S+'/fbank2/k81_kink.png').convert('RGB').crop( …[+199 chars]`
+
+### 🧑 User — 2026-11-18T11:58:42.332Z
+
+> ↩︎ result: (Bash completed with no output)
+

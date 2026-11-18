@@ -2917,3 +2917,294 @@ It's saved on the Screen 08 branch as `36d0978a`, confirmed on GitHub. The speci
 
 Both specialists are still working, and the lead branch is saved at `94c8a04`, matching GitHub.
 
+### 🧑 User — 2026-11-18T11:55:42.480Z
+
+CLAUDIA — GOOD FINDING. NOW APPLY IT TO MY ACTUAL APPROVED SCENERY.
+
+I reviewed the Depth Anything 3 results and Screen 05's new images.
+
+MY VERDICT: GOOD TECHNICAL PROGRESS. SCREEN 05 HAS A SMALL VISUAL IMPROVEMENT. DEPTH ANYTHING 3 IS NOT YET PROVEN AS AN ACTUAL GAME IMPROVEMENT.
+
+I'm glad Depth Anything 3 is installed, tested, and its findings are saved.
+
+Please do not spend additional time reinstalling or repeatedly testing it.
+
+Here is what I want next:
+
+SCREEN 06: Use the depth comparison to investigate the difference between my approved sweeping tunnel and the game's straight, centered tunnel. Make one controlled geometry correction on a separate branch, then render the REAL game. Keep the change only if the scenery visibly looks closer to my approved artwork.
+
+SCREEN 04: Use the depth result to help correct the rounded washer opening and water-channel geometry. Preserve the original approved look, the five glowing arrows, and the successful gold-ring work.
+
+SCREEN 05: Keep the improved wall texture. Continue fixing the torn water edge, distant river transition, and incorrect S-shaped water formation.
+
+SCREEN 08: Continue the gold arch, chamber seam, and water corrections already underway.
+
+SCREEN 07: Keep the existing improvements and continue its own approved-scenery reconstruction when a specialist slot becomes available.
+
+Do not make large architectural changes based solely on AI depth estimates. Verify them against the original approved artwork and actual game renders.
+
+MOST IMPORTANT: STOP SETUP WORK THAT HAS ALREADY SUCCEEDED.
+
+Keep my two visual-development specialists working. Rotate all five playable screens through the available slots.
+
+Maintain automatic GitHub saving every five minutes, including unfinished agent work.
+
+I want visible results, not more installation reports.
+
+Show me separate full-size APPROVED / BEFORE / NEW pictures and tell me honestly whether the scenery is GOOD, NOT AN IMPROVEMENT, or NOT YET PROVEN.
+
+MY PRIORITY IS STILL THE EXACT VISUAL APPEARANCE OF MY FIVE ORIGINAL APPROVED SCREENS.
+
+Let's use what we've learned and get back to building them.
+
+### 🤖 Claude — 2026-11-18T11:56:22.911Z
+
+Understood: no more setup. Here's how I'll fit this into the two slots:
+- Screens **05 and 08** keep their specialists; you've seen both working.
+- **Screen 06**: I'll do the one controlled geometry test myself, on its own `-c11` branch, the same way account 10 ran the Screen 04 test.
+- **Screen 04** takes the first specialist slot that frees up, with the depth data in its brief. Then **07**.
+
+Starting Screen 06: creating its workspace and reading its notes.
+
+### 🤖 Claude — 2026-11-18T11:56:25.018Z
+
+> 🔧 **Bash** `{"command": "df -h /home/user | tail -1; cd /home/user/rainbow- && git worktree add -q /home/user/wt/s06 claude/rainbow-s06-match-c11 2>/dev/null || git worktree add -q -b claude/rainbow-s06-match-c11-local /home/user/wt/s06 origin/claude/rainbow-s06-match-c9; cd /home/user/wt/s06 && git branch --show-current; git rev-parse --short HEAD; ln -sfn /home/user/rainbow-/node_modules node_modules; ls qa/match/06/ qa/match/06/r7 2>/dev/null | head -30", "description": "Create Screen 06 worktree and list its notes", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T11:56:30.512Z
+
+> ↩︎ result: /dev/vda        252G   31G  8.8G  78% /
+> claude/rainbow-s06-match-c11
+> efaf78b7
+> qa/match/06/:
+> 06_BEFORE_current_game.png
+> 06_BEFORE_screen_match.json
+> 06_NEW_match06.png
+> 06_NEW_match06_android1080x1920.png
+> 06_NEW_screen_match.json
+> FAL_PLATE_REQUEST.md
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> gameplay_test_match06.json
+> masks06_check.png
+> motion
+> motion_r2
+> proofs_r3.json
+> r6
+> r7
+> relaunch
+> scenery_metrics_BEFORE_NEW.json
+> 
+> qa/match/06/r7:
+> AFTER
+> BEFORE
+> NEW
+> NEW_cam25
+> NEW_tun
+> NEW_tun_r11
+> NEW_tun_r14
+> NOTES.md
+> RING
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:56:36.671Z
+
+Disk is getting tight (8.8 GB free). The depth results are already saved in the repository, so I'm removing the two model weight files we won't use again; the best model is kept:
+
+### 🤖 Claude — 2026-11-18T11:56:37.974Z
+
+> 🔧 **Bash** `{"command": "du -sh /home/user/da3/hf/hub/models--depth-anything--* 2>/dev/null; rm -rf /home/user/da3/hf/hub/models--depth-anything--DA3METRIC-LARGE /home/user/da3/hf/hub/models--depth-anything--DA3-BASE; df -h /home/user | tail -1", "description": "Remove unused DA3 weights to free disk"}`
+
+### 🧑 User — 2026-11-18T11:56:38.101Z
+
+> ↩︎ result: 36K	/home/user/da3/hf/hub/models--depth-anything--DA3-BASE
+> 36K	/home/user/da3/hf/hub/models--depth-anything--DA3METRIC-LARGE
+> 36K	/home/user/da3/hf/hub/models--depth-anything--DA3MONO-LARGE
+> /dev/vda        252G   33G  6.2G  85% /
+
+### 🤖 Claude — 2026-11-18T11:56:38.633Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,60p qa/match/06/r7/NOTES.md", "description": "Read Screen 06 round-7 notes"}`
+
+### 🧑 User — 2026-11-18T11:56:38.666Z
+
+> ↩︎ result: # Screen 06 — round 7 (account 7, lead) — moving-view reconstruction
+> 
+> Branch `claude/rainbow-s06-match-c7` (from `-c6` @ `1e7b1112`). Nothing approved; default build untouched (all changes
+> behind sub-switches of `?match06=1`).
+> 
+> Kept set (lead's proposal, waiting for the user's verdict):
+> `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`
+> 
+> | switch | what it changes while Benny swims | verdict |
+> |---|---|---|
+> | `m06cam` (+`m06la=25`) | camera frame aimed along the river 25 u ahead instead of the local slope: pitch stayed −11…−28° instead of −11 → −73° (it looked straight down at the water and lost the tunnel) | KEEP |
+> | `m06tun` (r = 14) | the proxy tunnel is a STRAIGHT cylinder along the painted vanishing-point ray (the painted tunnel's shape) instead of a tube following the river's crest/drop/turn (twisted diagonal bands) | KEEP |
+> | `m06ring` | REAL modeled gold rings (two lips + bulb groove, polished-gold shading), spacing solved from the two nearest painted ring groups (485 / 355 px above the VP → 12.9 u); far tunnel tapers so the rings converge into a small glow (removed the flat pale disc) | KEEP |
+> 
+> Approved view (frozen `scripts/capture.mjs  …[+2423 chars]
+
+### 🤖 Claude — 2026-11-18T11:56:44.247Z
+
+> 🔧 **Bash** `{"command": "du -sh /home/user/da3/hf/* /home/user/wt/* /tmp/claude-0 2>/dev/null | sort -h | tail -8; df -h /home/user | tail -1", "description": "Find where disk space is going"}`
+
+### 🧑 User — 2026-11-18T11:56:44.323Z
+
+> ↩︎ result: 184K	/home/user/da3/hf/xet
+> 163M	/tmp/claude-0
+> 2.6G	/home/user/wt/s06
+> 2.9G	/home/user/wt/s08
+> 3.0G	/home/user/da3/hf/hub
+> 3.1G	/home/user/wt/s05
+> /dev/vda        252G   33G  6.2G  85% /
+
+### 🤖 Claude — 2026-11-18T11:56:49.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/da3/hf/hub && du -sh */ .??* 2>/dev/null | sort -h | tail -5; ls -la", "description": "Inspect the Hugging Face cache layout"}`
+
+### 🧑 User — 2026-11-18T11:56:49.552Z
+
+> ↩︎ result: 16K	.locks
+> 36K	models--depth-anything--DA3MONO-LARGE/
+> 3.0G	blobs/
+> total 24
+> drwxr-xr-x 5 root root 4096 Nov 18 11:56 .
+> drwxr-xr-x 4 root root 4096 Nov 18 11:48 ..
+> drwxr-xr-x 5 root root 4096 Nov 18 11:49 .locks
+> -rw-r--r-- 1 root root  191 Nov 18 11:48 CACHEDIR.TAG
+> drwxr-xr-x 5 root root 4096 Nov 18 11:50 blobs
+> drwxr-xr-x 5 root root 4096 Nov 18 11:48 models--depth-anything--DA3MONO-LARGE
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:56:54.299Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/da3/hf/hub && keep=$(find models--depth-anything--DA3MONO-LARGE -type l -exec readlink -f {} \\; | sort -u); echo \"$keep\" | head; for b in $(find blobs -type f); do f=$(readlink -f $b); echo \"$keep\" | grep -qx \"$f\" || { du -h $b | cut -f1; rm -f $b; }; done; du -sh blobs; df -h /home/user | tail -1", "description": "Delete weight blobs not used by DA3MONO-LARGE"}`
+
+### 🧑 User — 2026-11-18T11:56:55.353Z
+
+> ↩︎ result: /home/user/da3/hf/hub/blobs/1b/1b88ca6547fe6bf0ccccae74cc1befc1323f9db9f977c3ae3dad7a0273189c82
+> /home/user/da3/hf/hub/models--depth-anything--DA3MONO-LARGE/blobs/2b72bd53c7f3c084fc67f7e2e20a269500f2ef50
+> 0
+> 4.0K
+> 517M
+> 4.0K
+> 0
+> 4.0K
+> 1.3G
+> 0
+> 4.0K
+> 1.3G	blobs
+> /dev/vda        252G   31G  8.0G  80% /
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:57:06.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3; mkdir -p $S/game06k && K='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1'; ls scripts/match-probe.mjs >/dev/null && nice -n 15 timeout 500 node scripts/match-probe.mjs --id=06 --q=\"$K\" --out=$S/game06k 2>&1 | tail -1; head -50 /home/user/rainbow-/docs/briefs/2026-11-18-r9/BLUEPRINT_06.md", "description": "Probe the newest 06 kept set and read the 06 blueprint", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T11:57:20.376Z
+
+> ↩︎ result: probe 06 size [ 864, 1536 ] eye 1.72,-35.37,-132.64 objects 303
+> # BLUEPRINT 06 · CREST THE RINSE ARCH — independent review (reference-match-director, round 9, 2026-11-18)
+> 
+> Approved picture: `references/06_crest_the_rinse_arch.png` (864×1536). Overlay: `BLUEPRINT_06_overlay.png`. Coordinates were
+> read by eye from a 50 px grid (±20 px); colours are 12×12 px medians. Current version reviewed: branch
+> `claude/rainbow-s06-match-c9` @ `efaf78b7`, frames `qa/match/06/r7/RING6/` (full kept set, 7 shots) plus
+> `qa/match/06/r7/NEW/` for f03/t33/steer (kept set without rings/bubbles/foam).
+> 
+> ## 1. Blueprint (ranked by visual importance)
+> 1. **Off-centre tunnel mouth (upper right).** The outer gold ring has centre ≈ (650, 570), r ≈ 330: its left arc is at
+>    x ≈ 320, its top at y ≈ 235, and it leaves the frame on the right. The inner rings are r ≈ 215, 130 and 75, and their
+>    centres drift DOWN-RIGHT toward the glow at ≈ (700, 690) (81 % across, 45 % down). The tunnel bends down-right, where
+>    the river dives in. About 6–7 ring groups are visible; they are well spaced, with bright yellow lips (≈ (251,222,22)) and
+>    bulb rows, over lilac-violet perforated panels (≈ (94,39,143) inside).
+> 2. **Larg …[+3338 chars]
+
+### 🤖 Claude — 2026-11-18T11:57:28.919Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn \"m06tun\\|m06ring\\|M06TUN\\|M06RING\" src --include=*.ts | head -20", "description": "Locate the 06 tunnel and ring code"}`
+
+### 🧑 User — 2026-11-18T11:57:28.957Z
+
+> ↩︎ result: src/world/match06.ts:89:// r7 m06ring: modeled gold rings (uRing = 1) around the straight tunnel axis (origin, direction, right, up)
+> src/world/match06.ts:144:    // r7b m06ring: crisp perforated lilac washer metal between the rings (the painted panels: rows of short dark rounded
+> src/world/match06.ts:201:      // m06ring: the modeled rings show the approved pixels only AT the approved view, their own 3D gold once away
+> src/world/match06.ts:320:  // r7 `&m06tun=1` (qa/match/06/r7/NOTES.md): the painted tunnel is a STRAIGHT cylinder of concentric rings with the river
+> src/world/match06.ts:322:  // rings turned into twisted diagonal bands. Here: a straight cylinder (radius `&m06tunr=`, default 14) whose axis is
+> src/world/match06.ts:323:  // parallel to the projector's ray through the painted vanishing point (`&m06tunax=chord`: along the 06 stage chord
+> src/world/match06.ts:325:  const TUN = qs?.get('m06tun') === '1';
+> src/world/match06.ts:328:    const Rt = Number(qs?.get("m06tunr")) || 14;
+> src/world/match06.ts:332:    if (qs?.get('m06tunax') === 'chord') ax = course.sample(sE).pos.sub(course.sample(sA).pos).normalize();
+> src/world/match06.ts:334:    // axis through the centroid of the 06 r …[+1394 chars]
+
+### 🤖 Claude — 2026-11-18T11:57:32.041Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 315, "limit": 130}`
+
+### 🧑 User — 2026-11-18T11:57:32.055Z
+
+> ↩︎ result: 315	  const RAD = 128;
+> 316	  // tunnel tube around the river: angle 0 = right, pi/2 = up; tile angle coordinate starts at the right bank
+> 317	  // r6 `m06geo`: the tube's lower walls are drawn in so they rise straight from the foam banks (|l| = Wb at the water
+> 318	  // line) instead of meeting the water 3.3 u further out under a 2x too wide water slab; above yTop the tube is unchanged
+> 319	  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);
+> 320	  // r7 `&m06tun=1` (qa/match/06/r7/NOTES.md): the painted tunnel is a STRAIGHT cylinder of concentric rings with the river
+> 321	  // winding inside it; the proxy tube below follows the river's crest (+36° / -33°) and 40° turn, so while moving the
+> 322	  // rings turned into twisted diagonal bands. Here: a straight cylinder (radius `&m06tunr=`, default 14) whose axis is
+> 323	  // parallel to the projector's ray through the painted vanishing point (`&m06tunax=chord`: along the 06 stage chord
+> 324	  // instead), placed through the river's centroid so the whole 06 river stays inside. Same projection, same tile.
+> 325	  const TUN = qs?.get('m06tun') === '1';
+> 326	  let tunCap: { pos: THREE.Vector3; dir: TH …[+9805 chars]
+
+### 🤖 Claude — 2026-11-18T11:58:00.291Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3; /home/user/da3/venv/bin/python -I - <<EOF\nimport numpy as np, cv2\nS='$S'; W,H=864,1536\nd=cv2.resize(np.load(f'{S}/out/DA3MONO-LARGE/06.npz')['depth'],(W,H)); ds=cv2.GaussianBlur(d,(0,0),15)\ng=np.fromfile(f'{S}/game06k/depth.f32',np.float32).reshape(H,W); gm=np.where((g>0)&(g<1000),g,0); gs=cv2.GaussianBlur(gm,(0,0),15)\nfor name,a in (('DA3 painting',ds),('game kept set',gs)):\n    a2=a.copy(); a2[:200]=0\n    y,x=np.unravel_index(np.argmax(a2),a2.shape); print(f'{name}: farthest point at  …[+711 chars]`
+
+### 🧑 User — 2026-11-18T11:58:00.714Z
+
+> ↩︎ result: DA3 painting: farthest point at x=689 (80%) y=648 (42%)
+>    far 3% region centroid (677,597) x 557-779 y 497-719
+> game kept set: farthest point at x=672 (78%) y=492 (32%)
+>    far 3% region centroid (673,458) x 487-863 y 388-520
+> painted ring centres / glow (blueprint): (650,570) -> (700,690)
+>   (650,570) DA3 depth 10.42x near-river   game 1.87x
+>   (675,630) DA3 depth 11.33x near-river   game 1.66x
+>   (700,690) DA3 depth 10.73x near-river   game 1.53x
+>   (720,750) DA3 depth 7.03x near-river   game 1.43x
+
+### 🤖 Claude — 2026-11-18T11:58:24.543Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"m06dbg\\|dbg06\\|objid\\|--ids\" src/world/match06.ts scripts/match-probe.mjs | head; python3 -I -c \"\nimport json;o=json.load(open('/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/da3/game06k/objects.json'))\nnames=[x['name'] for x in o if x['visible'] and 'match06' in x['chain'] or x['name'].startswith('m06') or 'tube' in x['name']]\nprint(len(o)); print(sorted(set(n for n in names if n))[:40])\"", "description": "Check for an object-ID debug view and list 06 meshes"}`
+
+### 🧑 User — 2026-11-18T11:58:24.628Z
+
+> ↩︎ result: src/world/match06.ts:517:  // QA only: `&m06dbg=1` tints the tube green and the river floor red (which proxy surface a pixel comes from)
+> src/world/match06.ts:518:  if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06dbg') === '1') {
+> 303
+> ['m06_end', 'm06_floor', 'm06_foamclouds', 'm06_rings', 'm06_tube', 'tube05_end_glow', 'tube05_far', 'tube05_far_river', 'tube05_far_wall', 'tube05_near_frame']
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:58:29.705Z
+
+There's a debug view that colours the tunnel green and the river floor red. Rendering the approved viewpoint with it:
+
+### 🤖 Claude — 2026-11-18T11:58:31.055Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,15p scripts/capture.mjs | grep -iE \"usage|--out|out =|writeFile|screenshot\" | head -6; grep -n \"path:\\|--out\\|const OUT\\|outDir\" scripts/capture.mjs | head -5", "description": "Check capture script output options"}`
+
+### 🧑 User — 2026-11-18T11:58:31.093Z
+
+> ↩︎ result: //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 44:    await page.screenshot({ path: `${outDir}/${name}`, timeout: 180000 });
+> 53:    log.shots.push({ id, file: `${outDir}/${name}`, size: [w, h], checkpoint: st, state, stats });
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:58:35.893Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/s06; mkdir -p $S/dbg; K='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1'; nice -n 15 timeout 500 node scripts/capture.mjs 06 --q=\"$K&m06dbg=1\" --out=$S/dbg 2>&1 | tail -2; git status --short | head -3; ls $S/dbg", "description": "Render the 06 approved view with the debug tint", "timeout": 600000}`
+
