@@ -1201,3 +1201,11 @@ The probe says the block IS open (far-open 1) at x99, which contradicts the shot
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=$(cat qa/match/05/r16/KEPT_START.txt) && P=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/probe && mkdir -p $P/b $P/n && EX=\"(()=>{const r=window.__rainbow;const out=[];r.qa3d().scene.traverse(o=>{if(o.isInstancedMesh&&o.name==='tube05_far'){const m=new (o.matrixWorld.constructor)();const a=[];for(let i=0;i<o.count;i++){o.getMatrixAt(i,m);a.push(m.elements.slice(12,15).map(v=>+v.toFixed(1)).join('/')+'@'+Math.hypot(m.elements[0],m.elements[1],m.elements[2]).toFixed(1));}out.push([o.count,o.visible,a.slice(0,5).join(' ') …[+486 chars]`
 
+### 🧑 User — 2026-11-18T19:30:41.247Z
+
+> ↩︎ result: == x98 s 188.905 stage 05 cam 3.18,-40.59,-122.72 far-open 0 extra [["foam_far05_clouds",true],[5,true,"2.1/-40.4/-130.5@6.4 2.9/-40.9/-133.2@1.8 3/-41/-133.6@0.9 3.1/-41/-133.7@0.5 3.1/-41/-133.8@0.3"],[10,false,"9.2/-39/-124.6@2.2 -5.5/-39/-124.6@2.2 4.9/-40.5/-133.1@0.6 0.7/-40.5/-133.1@0.6 3.9/-40.8/-133.6@0.3"]]
+>    0.05,-0.05 tube05_far_wall<zone_tubes<washer_world<Scene d10.89 | water_ribbon<water_system<Scene d12.66 | Mesh<zone_tubes<washer_world<Scene d16.77
+> == t99 s 189.089 stage 06 cam 3.15,-40.61,-122.88 far-open 1 extra [["foam_far05_clouds",false],[5,true,"1.6/-39.6/-125@9.2 1.4/-37.7/-126.2@11.3 1.4/-37.3/-126.4@11.9 1.4/-37.1/-126.4@12.1 1.4/-37/-126.4@12.2"],[10,false,"13.7/-38.3/-124.1@2.2 -10.2/-38.3/-122.8@2.2 15.6/-35.7/-127.3@2.2 -12.8/-36.2/-124.9@2.2 16.3/-34.8/-127.6@2.2"]]
+>    0.05,-0.05 water_ribbon<water_system<Scene d12.75 | Mesh<zone_tubes<washer_world<Scene d16.88 | Mesh<zone_tubes<washer_world<Scene d17.05
+> == x98 s 188.432 stage 05 cam 3.26,-40.54,-122.19 far-open 0.7135801595957968 extra [["foam_far05_clouds",true],[5,true,"1.8/-39.8/-126.6@8.4 1.9/-38.6/-128.2@8.6 1.9/-38.3/-128.4@8.7 1.9/-38.2/-128.5@8.8 1.9/-38.1/-128.6@8.8"],[10,false,"12.4/-38.5/ …[+719 chars]
+
