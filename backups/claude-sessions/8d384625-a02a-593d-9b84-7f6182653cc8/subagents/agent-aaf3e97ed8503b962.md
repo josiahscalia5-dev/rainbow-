@@ -3110,3 +3110,95 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 > ↩︎ result: local de233792051825127a1572f6e5fbee7e3ee3800f
 > de233792051825127a1572f6e5fbee7e3ee3800f	refs/heads/claude/rainbow-s05-match-c9
 
+### 🤖 Claude — 2026-11-18T03:19:35.236Z
+
+> 🔧 **SendMessage** `{"to": "main", "message": "S05 r9 BLUEPRINT done @ de233792 (pushed): /home/user/wt/s05/qa/match/05/r9/BLUEPRINT.md + overlays /home/user/wt/s05/qa/match/05/r9/blueprint/APPROVED_overlay.png and /home/user/wt/s05/qa/match/05/r9/blueprint/t66_through_screen_overlay.png (also f10/f20/t33/a00). Key measured mismatch: the water surface is the full course width everywhere, but the painted S-channel's banks swing ±2–3 u across it — right bank only 2.3–3.7 u right of centre at s 137–143, i.e. INSIDE Benny's steering reach (±5.06 u); painted left water 1–2.5 u beyond the course edge at s 152–174. Lowe …[+801 chars]`
+
+### 🧑 User — 2026-11-18T03:19:35.251Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T03:19:37.221Z
+
+> 🔧 **Bash** `{"command": "tail -3 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log", "description": "Check NEW audit progress"}`
+
+### 🧑 User — 2026-11-18T03:19:37.272Z
+
+> ↩︎ result: f03_forward3u s 136.107 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@464,787 d117 #21@552,692 d80 #22@476,631 d61
+> f06_forward6u s 139.041 lat 0 coins 1430 benny 0.15 -0.27 big coins: #21@560,740 d98 #22@470,654 d71
+> f10_forward10u s 143.073 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+
+### 🤖 Claude — 2026-11-18T03:19:40.241Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"^done\" /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log; do sleep 5; done; echo finished", "description": "Wait for NEW audit to complete", "timeout_ms": 900000}`
+
+### 🧑 User — 2026-11-18T03:19:40.309Z
+
+> ↩︎ result: Monitor started (task b3ym76jpo, expires in 15m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T03:19:42.270Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/wt/s05/package.json | grep -n \"continuity\\|gameplay\" ; sed -n 1,25p /home/user/wt/s05/scripts/gameplay-test.mjs | grep -n \"argv\\|--q\\|q=\" ", "description": "Check test scripts and gameplay-test args"}`
+
+### 🧑 User — 2026-11-18T03:19:42.329Z
+
+> ↩︎ result: 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+
+### 🤖 Claude — 2026-11-18T03:19:45.261Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"^done\" /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log; do sleep 5; done; tail -3 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log", "description": "Wait for NEW audit to finish", "timeout_ms": 900000}`
+
+### 🧑 User — 2026-11-18T03:19:45.321Z
+
+> ↩︎ result: Monitor started (task bup67z19k, expires in 15m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T03:19:47.551Z
+
+> 🔧 **Bash** `{"command": "tail -2 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log; uptime", "description": "Check NEW audit progress and load"}`
+
+### 🧑 User — 2026-11-18T03:19:47.605Z
+
+> ↩︎ result: f10_forward10u s 143.073 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f20_forward20u s 153.159 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+>  03:19:47 up 52 min,  0 user,  load average: 6.11, 3.28, 2.39
+
+### 🤖 Claude — 2026-11-18T03:19:50.570Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"^done\" /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log; do sleep 5; done; echo NEWDONE", "description": "Wait for the 12-shot NEW audit", "timeout_ms": 1200000}`
+
+### 🧑 User — 2026-11-18T03:19:50.605Z
+
+> ↩︎ result: Monitor started (task bzk6rpuuo, expires in 20m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T03:19:53.264Z
+
+> 🔧 **Bash** `{"command": "tail -2 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log", "description": "Check NEW audit progress"}`
+
+### 🧑 User — 2026-11-18T03:19:53.299Z
+
+> ↩︎ result: f10_forward10u s 143.073 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f20_forward20u s 153.159 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+
+### 🤖 Claude — 2026-11-18T03:19:54.918Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/STATUS.md", "limit": 4}`
+
+### 🧑 User — 2026-11-18T03:19:54.937Z
+
+> ↩︎ result: 1	# Screen 05 — STATUS (round 8)
+> 2	
+> 3	* **Running-session status: RUNNING (round 8, account 8, branch claude/rainbow-s05-match-c8)** — started 2026-11-18 from `a34fb925` (= `-c7` tip). Task: user list 2026-11-18 (water design while swimming, soft bank edges, disconnected scenery edges, oversized near coin over Benny). BEFORE = `qa/match/05/r7/NEW/` (rendered with exactly the base set `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1`; no source change since).
+> 4
+
+### 🤖 Claude — 2026-11-18T03:20:02.112Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/qa/match/05/STATUS.md", "old_string": "# Screen 05 — STATUS (round 8)\n\n* **Running-session status: RUNNING (round 8, account 8, branch claude/rainbow-s05-match-c8)**", "new_string": "# Screen 05 — STATUS (round 9)\n\n* **Round 9 (account 9, branch `claude/rainbow-s05-match-c9`, started at `c676a7c5`): STOPPED at end of round** —\n  progress `qa/match/05/r9/PROGRESS.md`, blueprint `qa/match/05/r9/BLUEPRINT.md`.\n  * Kept set: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1`\n    ( …[+980 chars]`
+
+### 🧑 User — 2026-11-18T03:20:02.325Z
+
+> ↩︎ result: The file /home/user/wt/s05/qa/match/05/STATUS.md has been updated successfully.
+

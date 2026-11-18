@@ -1762,3 +1762,20 @@ Default build proven 0 px. Now restoring the moving-front foundation per the lea
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T03:20:00.237Z
+
+> 🔧 **Bash** `{"command": "cat >> /home/user/wt/s04/tools/match04/rings04.py <<'EOF'\n\n# ---- one painted ring PERIOD as a straight tile: track the two dark grooves bounding the broad 2nd ring across the\n# visible arc (minimum-luminance path with a smoothness penalty), resample every column between them ----------------\ndef track(lum, rlo, rhi, cols, lam=0.6, maxstep=6):\n    sub = lum[rlo:rhi][:, cols]; n, m = sub.shape\n    acc = sub[:, 0].copy(); back = np.zeros((n, m), int)\n    idx = np.arange(n)\n    for j in range(1, m):\n        best = np.full(n, 1e18); arg = np.zeros(n, int)\n        for dlt in  …[+2359 chars]`
+
+### 🧑 User — 2026-11-18T03:20:02.772Z
+
+> ↩︎ result: grooves (rows): [84, 115, 410, 476, 924] r px: [324.0, 316.2, 242.4, 225.9, 113.8]
+> tile_rings (256, 2048, 3) grooves at centre 95.66634505827138 475.58586994935274
+
+### 🤖 Claude — 2026-11-18T03:20:05.138Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/rt/tile_rings_s.png"}`
+
+### 🧑 User — 2026-11-18T03:20:05.166Z
+
+> ↩︎ result: [image]
+
