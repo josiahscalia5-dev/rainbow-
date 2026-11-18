@@ -1443,3 +1443,76 @@ Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output
 > ↩︎ result: Command running in background with ID: bkzffbhcj. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bkzffbhcj.output. You will be notified when it completes. To check interim output, use Read on that file path.
 > Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
 
+### 🤖 Claude — 2026-11-18T21:00:55.531Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls -la assets/textures/match08/ | grep -i \"towel\\|occ\"; grep -n \"towelm\\|TMask\\|tMask\" src/world/match08.ts | head -20; ls tools/match08/ | head -50", "description": "Check towel mask assets and code"}`
+
+### 🧑 User — 2026-11-18T21:00:55.721Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 8072518 Nov 18 20:43 occ08_door.png
+> -rw-r--r-- 1 root root   68185 Nov 18 20:43 patch_towel.png
+> -rw-r--r-- 1 root root   13719 Nov 18 20:43 towel08_mask.png
+> 72:uniform sampler2D uTMask;   // m08towelm (towel only): the painted towel's outline in plate coordinates (towelmask08.py)
+> 73:uniform float uTMaskOn;
+> 177:  // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+> 179:  if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
+> 414:  // `&m08towelm=1` (r8): towel outline mask (tools/match08/towelmask08.py); only the towel material switches it on
+> 415:  let tMaskTex: THREE.Texture | null = null;
+> 416:  if (flag05('m08towelm')) {
+> 417:    tMaskTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/towel08_mask.png', import.meta.url).href);
+> 418:    tMaskTex.colorSpace = THREE.NoColorSpace;
+> 464:      uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
+> 476:  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;
+> 764:      const towelBake = tMaskTex ? new THREE.Shade …[+671 chars]
+
+### 🤖 Claude — 2026-11-18T21:01:01.169Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image\nm=Image.open('assets/textures/match08/towel08_mask.png'); print(m.size, m.mode)\np=Image.open('assets/textures/match08/plate08_hybrid.png').convert('RGB').resize(m.size)\nimport numpy as np\na=np.asarray(p).astype(float); k=np.asarray(m.convert('L'))>127\n# mask is in GL plate coords (v up?) check orientation: overlay both flips\nfor fl,name in ((False,'asis'),(True,'flip')):\n    kk=k[::-1] if fl else k\n    b=a.copy(); b[kk]=b[kk]*0.4+np.array([0,255,0])*0.6\n    Image.fromarray(b.astype(np.uint8)).crop((300*m.size[0] …[+287 chars]`
+
+### 🧑 User — 2026-11-18T21:01:02.201Z
+
+> ↩︎ result: (1536, 2731) L
+> #!/usr/bin/env python3
+> """Screen 08 scenery r8 (`&m08towelm=1`): the painted towel's outline as a mask in plate coordinates.
+> 
+> The towel proxy is a rectangle (front face of the m08towel frustum) but the painted towel is rounded, so the rectangle's
+> top band / corners carried window pixels at towel depth -> a rectangular patch sliding over the window when moving.
+> Inside the towel proxy's footprint (from the frozen m08dbg capture, towel = #008040) the towel is told from window /
+> clouds / door by colour (towel violet & lavender: R clearly above G; clouds / door: G >= R - small).
+>   python3 -I tools/match08/towelmask08.py <dbg_capture.png> <plate.png> <out_mask.png>
+> """
+> import sys
+> import cv2
+> import numpy as np
+> 
+> dbg_p, plate_p, out_p = sys.argv[1:4]
+> dbg = cv2.cvtColor(cv2.imread(dbg_p), cv2.COLOR_BGR2RGB).astype(np.int32)
+> plate = cv2.cvtColor(cv2.imread(plate_p), cv2.COLOR_BGR2RGB).astype(np.int32)
+> H, W = plate.shape[:2]
+> foot = (np.abs(dbg - np.array((0, 128, 64))).max(2) < 40).astype(np.uint8) * 255
+> foot = cv2.resize(foot, (W, H), interpolation=cv2.INTER_NEAREST)
+> foot = cv2.dilate(foot, np.ones((9, 9), np.uint8))
+> r, g, b = plate[..., 0], plate[..., 1], plate[..., 2]
+> towel = …[+580 chars]
+
+### 🤖 Claude — 2026-11-18T21:01:04.557Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/tmask_asis.png"}`
+
+### 🧑 User — 2026-11-18T21:01:04.577Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:01:12.321Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nfrom PIL import Image\na=Image.open('qa/match/08/scenery/r8/towelm/s_left_hard.png'); print(a.size)\na.crop((250,350,800,650)).save('/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/r8_towelm_lh.png')\nb=Image.open('qa/match/08/scenery/r8/occ/s_left_hard.png'); b.crop((250,350,800,650)).save('/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/r8_occ_lh.png')\n\"; cat qa/match/08/scenery/r8/towelm/motion.json | head -5", "description": "Look at the r8 towel-mask trial fr …[+6 chars]`
+
+### 🧑 User — 2026-11-18T21:01:13.262Z
+
+> ↩︎ result: (864, 1536)
+> {
+>  "screen": "08",
+>  "query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08occ=1&m08towelm=1",
+>  "shots": [
+>   {
+

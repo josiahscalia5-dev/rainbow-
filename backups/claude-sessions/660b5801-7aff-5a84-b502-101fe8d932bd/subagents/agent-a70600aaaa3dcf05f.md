@@ -1557,3 +1557,68 @@ The locked approved view differs by 1,009 px with `m05trans` on, so it is not 0 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T21:00:56.931Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 185,215p src/vfx/index.ts && grep -n \"water.update\\|coins.update\\|rideCam.update\\|camera.position\\|env.update\\|function render\\|world.update\" src/game/Game.ts | head -30", "description": "Inspect update order of water, coins, camera"}`
+
+### 🧑 User — 2026-11-18T21:00:57.304Z
+
+> ↩︎ result: drum.uniforms.uAgitation.value = controls.drumAgitation;
+>       drum.swirlUniforms.uSwirl.value = controls.drumSwirl;
+>       drum.swirl.visible = controls.drumSwirl > 0.001;
+>       wave.uniforms.uTime.value = time;
+>       puddles.uniforms.uTime.value = time;
+>       puddles.uniforms.uAmount.value = controls.outro;
+>       (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+>       puddles.group.visible = controls.outro > 0.001;
+>       // region visibility (perf): only what the camera around focusS can see
+>       drum.group.visible = focusS < st03.s0 + 12;
+>       whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+>       wave.mesh.visible = focusS > st08.s0 - 25;
+>       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
+>       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+>       foam.update(time, dt, focusS, controls.outro, camera);
+>       // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+>       // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+>       const bub05 = PROJ …[+2662 chars]
+
+### 🤖 Claude — 2026-11-18T21:00:59.368Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 596,615p src/game/Game.ts && sed -n 500,520p src/game/Game.ts && sed -n 355,390p src/game/Game.ts", "description": "Read goto and frame update order in Game.ts"}`
+
+### 🧑 User — 2026-11-18T21:00:59.434Z
+
+> ↩︎ result: coins.resetUntil(sTarget + 0.5);
+>       setStage(stageOf(sTarget));
+>       if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+> 
+>   const stepSim = (dt: number) => {
+>     if (st.paused) return;
+>     st.t += dt;
+>     if (st.frozen === null) st.clock += dt;
+>     if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate(dt);
+>     else if (st.mode === 'outro' || st.mode === 'end') {
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(ti …[+2201 chars]
+

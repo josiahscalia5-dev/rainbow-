@@ -2575,3 +2575,25 @@ The Screen 04 ring test has a result. Checking the save and the pictures before 
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:04-ringtex-step5-shown 2>&1 | grep -E '\"pushed_verified\"|\"error\"'; python3 -I scripts/autosave-status.py 2>&1 | tail -1 | cut -c1-170", "description": "Save ring-test review files and progress note", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T21:01:06.131Z
+
+> ↩︎ result: "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-bbe2b27e-oxfh1w | scheduler daemon | last verified backup 2026-11-18T21:00:49+00:00 (0.3 min ago) | local e90d596 remote e90d596 (match) | uncomm
+
+### 🤖 Claude — 2026-11-18T21:01:11.006Z
+
+The Screen 04 painted-ring test made a **small improvement**. I've sent you your approved picture, the before and new pictures inside the tunnel (full size), and a short half-size swimming clip of the new version.
+
+**What got closer to your picture:** in your painting, each gold ring's edge is lined with small bright light dots. Before, the game rings had only a few broad glows there. Now every ring edge has its own row of small yellow-white dots with orange glows, getting smaller deeper in, as painted. It's easiest to see on the rings in the upper half of the tunnel.
+
+**Checks:**
+- The start of the screen is unchanged.
+- Only the rings changed.
+- The change is saved on GitHub.
+
+**Biggest remaining difference:** your rings are brighter and more polished, with a soft pink-violet sheen and violet and pink reflections of the water on the lower walls. The game's rings are still a plainer, darker copper. That's what the ring specialist is working on next.
+
+This test and the glowing tunnel end I showed you earlier are on separate test branches, so neither picture shows both changes together. They'll only be combined into one version with your OK.
+
+Screens 05 and 06 are still working.
+

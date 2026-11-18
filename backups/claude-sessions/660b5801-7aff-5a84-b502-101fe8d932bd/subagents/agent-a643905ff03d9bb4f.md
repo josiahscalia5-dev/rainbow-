@@ -1434,3 +1434,54 @@ Now the step 4 shader (`&m07nearf=1`): thick magenta bank continuing beyond the 
 > 25:    "three": "^0.170.0"
 > 60
 
+### 🤖 Claude — 2026-11-18T21:00:54.086Z
+
+Type check clean. When the clip finishes, one job renders step 3 (ramp version) and step 4, then the deterministic start-view captures.
+
+### 🤖 Claude — 2026-11-18T21:00:58.308Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && until [ -f qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4 ] && ! pgrep -f swim_clip_half >/dev/null; do sleep 3; done; ls -la qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4; rm -rf qa/match/07/r17/step3_foamb/NEW && K=$(cat qa/match/07/r16/K.txt) && Q=\"$K&m07foam=1&m07coinsz=1&m07nearw=1\" && F=\"allow list|403\" && \\\ntimeout 1200 node tools/match07/audit_r16.mjs 07 qa/match/07/r17/step3_foamb/NEW \"$Q&m07foamb=1\" \"t50_through_screen,t66_through_screen,t80_through_screen,t95_through_screen\" 2>&1 | grep -Ev \"$F\" | tail -4 && \\\ntimeout 1200 node too …[+344 chars]`
+
+### 🧑 User — 2026-11-18T21:00:58.443Z
+
+> ↩︎ result: Command running in background with ID: bc07zjxb9. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bc07zjxb9.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T21:01:02.595Z
+
+While that runs, a quick look at one frame of the half-size step 2 clip (steering left phase).
+
+### 🤖 Claude — 2026-11-18T21:01:03.739Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw/0045.png"}`
+
+### 🧑 User — 2026-11-18T21:01:03.772Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T21:01:06.362Z
+
+This frame shows exactly the lead's point (wide flat pale foam beside a narrow band). Waiting for the step 3 / step 4 renders.
+
+### 🤖 Claude — 2026-11-18T21:01:08.764Z
+
+> 🔧 **Monitor** `{"command": "cd /home/user/wt/s07; until [ -f qa/match/07/r17/step3_foamb/NEW/motion.json ]; do sleep 3; done; echo \"step3 NEW done\"; until [ -f qa/match/07/r17/step4_nearf/NEW/motion.json ]; do sleep 3; done; echo \"step4 NEW done\"; grep -i \"error\" /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bc07zjxb9.output | head -3", "description": "step 3 / step 4 NEW renders", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-18T21:01:08.803Z
+
+> ↩︎ result: Monitor started (task b7ey9nafz, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T21:01:10.604Z
+
+Meanwhile, commit the step 2 clip and the half-size clip tool (source edits for steps 3 / 4 stay uncommitted until proven).
+
+### 🤖 Claude — 2026-11-18T21:01:13.587Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && ls -la qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4 && git add qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4 tools/match07/swim_clip_half.mjs && git commit -q -m \"Screen 07 r17 step 2: real-gameplay swim clip for &m07nearw=1 (half size, straight / left / right)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoYUDAtThkAJzb9fwd7\" && git push -q origin claude/rainbow-s07-match-c17 2>&1 | tail -2; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s07-match-c17", "description" …[+36 chars]`
+
+### 🧑 User — 2026-11-18T21:01:14.514Z
+
+> ↩︎ result: ls: cannot access 'qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4': No such file or directory
+> 4aeed609ea7022a287aa816c4d26944a0a71e14f
+> 4aeed609ea7022a287aa816c4d26944a0a71e14f	refs/heads/claude/rainbow-s07-match-c17
+

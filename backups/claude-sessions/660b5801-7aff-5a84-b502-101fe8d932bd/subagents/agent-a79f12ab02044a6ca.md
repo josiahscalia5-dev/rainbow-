@@ -932,3 +932,7 @@ The bands now come in close round Benny and sweep from the bottom corners toward
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T21:01:12.378Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]\n    s=s.replace(old,new)\nrep(\"\"\"                             // behind Benny, z extra pinch at Benny's sides (u), w lateral follow of Benny (0..1)\n\"\"\",\"\"\"                             // behind Benny, z extra pinch at Benny's sides (u), w lateral follow of Benny (0..1)\nuniform vec2 uNB3;           // r17 m04nband: x width of one cyan -> pink half stripe near Benny (u; 0 = one stretched band), y tile span\n\"\" …[+1942 chars]`
+
