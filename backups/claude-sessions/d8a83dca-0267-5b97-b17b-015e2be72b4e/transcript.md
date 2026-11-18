@@ -1683,3 +1683,104 @@ While the one-time APK attempt runs, I'm writing STATUS.md and NOTES.md.
 
 > 🔧 **Bash** `{"command": "cat >> qa/match/07/NOTES.md <<'EOF'\n* APK (one attempt, 2026-11-18): `VITE_RAINBOW_Q05=\"<new set>\" npm run android:debug` → web build + sync OK, Gradle\n  FAILED configuring the root project: `Could not resolve all files for configuration ':classpath'` — `Could not find\n  org.apache.httpcomponents:httpmime:4.5.6` and `io.grpc:grpc-api:1.45.1` (searched dl.google.com and\n  repo.maven.apache.org; Maven fetches through this network are intermittent). Not retried. No new APK this round.\nEOF\nsed -i 's|\\* APK: see NOTES.md (one attempt).|* APK: one attempt FAILED in Gradle depen …[+312 chars]`
 
+### 🧑 User — 2026-11-18T00:47:29.650Z
+
+> ↩︎ result: "commit": "3398ad40e128746b75ae3fbe87ed0d8a219dc30d",
+>   "duration_s": 7
+> }
+> 3398ad40 autosave: Rainbow 2026-11-18 00:47 UTC
+> 27b1c77f autosave: Rainbow 2026-11-18 00:47 UTC
+> 16b48d77 autosave: Rainbow 2026-11-18 00:41 UTC
+
+### 🤖 Claude — 2026-11-18T00:47:34.803Z
+
+> 🔧 **Bash** `{"command": "git status --short | head; for f in src/world/match07.ts src/game/Game.ts assets/textures/match07/tile_wall_ring.png tools/match07/straighten_wall07.py tools/match07/probe_r7.mjs tools/match07/proof0px_r7.mjs tools/match07/diff0px_r7.py tools/lead_r6/motion_audit.mjs qa/match/07/r7/NEW/t66_through_screen.png qa/match/07/r7/BEFORE/t66_through_screen.png qa/match/07/r7/APPROVED_07.png qa/match/07/STATUS.md; do git ls-files --error-unmatch $f >/dev/null 2>&1 && echo \"tracked $f\" || echo \"MISSING $f\"; done; git diff 835a72d --stat -- src | tail -3; timeout 60 git ls-remote origin  …[+152 chars]`
+
+### 🧑 User — 2026-11-18T00:47:35.282Z
+
+> ↩︎ result: tracked src/world/match07.ts
+> tracked src/game/Game.ts
+> tracked assets/textures/match07/tile_wall_ring.png
+> tracked tools/match07/straighten_wall07.py
+> tracked tools/match07/probe_r7.mjs
+> tracked tools/match07/proof0px_r7.mjs
+> tracked tools/match07/diff0px_r7.py
+> tracked tools/lead_r6/motion_audit.mjs
+> tracked qa/match/07/r7/NEW/t66_through_screen.png
+> tracked qa/match/07/r7/BEFORE/t66_through_screen.png
+> tracked qa/match/07/r7/APPROVED_07.png
+> tracked qa/match/07/STATUS.md
+>  src/game/Game.ts     |  13 ++++--
+>  src/world/match07.ts | 111 +++++++++++++++++++++++++++++++++++++++++++++++++--
+>  2 files changed, 118 insertions(+), 6 deletions(-)
+> 3398ad40e128746b75ae3fbe87ed0d8a219dc30d	refs/heads/claude/rainbow-s07-match-c7
+> 3398ad40e128746b75ae3fbe87ed0d8a219dc30d
+
+### 🤖 Claude — 2026-11-18T00:47:39.254Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py | tail -1; bash scripts/claude-bootstrap.sh --status 2>/dev/null | grep -E \"FAIL|WARN\" | head -8", "description": "Final autosave status and bootstrap failures", "timeout": 120000}`
+
+### 🧑 User — 2026-11-18T00:47:40.593Z
+
+> ↩︎ result: AUTOSAVE OK | branch claude/rainbow-s07-match-c7 | scheduler daemon | last verified backup 2026-11-18T00:47:22+00:00 (0.3 min ago) | local 3398ad4 remote 3398ad4 (match) | uncommitted 0
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | WARN | GAP: no backup ran from 2026-11-17 19:49 to 2026-11-17 23:57 UTC (4.1 h) - no Claude cloud environment with the autosave was active. Nothing can be saved while an environment is closed; the newest saved state is 835a72d.; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 22 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-16 03:22-09:28 UTC (6.1 h) | 0 |
+> | World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started | 1 |
+> | Claude hooks / plugins / MCP | WARN | hooks: SessionStart PreCompact Stop SessionEnd; Playwright MCP NOT connected (enable the 'playwright' plugin in claud …[+87 chars]
+
+### 🤖 Claude — 2026-11-18T00:47:55.746Z
+
+Milestone M3 is done for Screen 07: the gold-ringed purple washer tube now runs all the way down the plunge into 08. The whole stage still rates only about **4.5/10** while riding, up from the lead's 3.5 but well short of the 8.5 goal. Everything is pushed to `claude/rainbow-s07-match-c7`, and the remote matches HEAD (`3398ad40e128746b75ae3fbe87ed0d8a219dc30d`).
+
+**What I checked first.** Neither of the two problems found on Screen 06 exists on 07. The camera stays level (about −13°) as Benny swims. The fitted tube is one straight cylinder, and its far rings stay within about 25 px of the painted centre for the first 20 u. The real gap was that the matched look covered only the first 40 u of the stage. The plunge, two thirds of the stage, still showed the old default world. Mid-plunge, a flat orange gold band filled the lower half of the screen and hid Benny.
+
+**Changes kept (two new switches, added to the round-4 set):** `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`
+- **`m07tube`:** the same purple perforated tube, gold rings and river continue as real 3D down the whole plunge to the 08 inlet. Near the bottom it hands over to the game's own water so 08's river carries on. The gold band blocking the camera is gone.
+- **`m07ring`:** the gold rings deep in the tube and down the plunge now draw as clean round rings. Before, they came out as twisted diagonal orange bands.
+- **`m07near`:** tried for the stretched near water when steering; it made no visible difference, so it is not kept.
+
+**Numbers (colour palette match to the approved picture, BEFORE → NEW):**
+
+| Position | BEFORE | NEW |
+|---|---|---|
+| Plunge top | 46.6 % | 76.4 % |
+| Mid-plunge | 24.6 % | 69.6 % |
+| Plunge bottom | 42.2 % | 50.2 % |
+
+The approved view and the level stretch are unchanged.
+
+**Honest moving rating, separate from the numbers:**
+- **Level stretch: about 4/10, unchanged.** The near water still smears into long streaks when moving or steering. Steering hard left shows a hard wall edge where the approved picture has foam.
+- **Plunge: about 2/10 → 5/10.** The game's tall white foam walls still line the plunge river, the plunge river doesn't move, and the plunge top ends in a straight lip.
+- **Two visible switch-overs:** the far tunnel changes 8 u before the plunge top (the old build already switched there), and the game's tube returns when 08 starts.
+
+**Proofs:**
+- **Default build:** 0 px different from the start commit at 06, 07, plunge top / middle / bottom, entering 08 and 08.
+- **Screen 08's start:** unchanged (0 px).
+- **Gameplay with the new set:** 8/8, 91 coins, 1,330 → 2,240.
+- **Continuity:** all joins gap 0, drop 61.19 u.
+- **Type check:** clean.
+- **APK:** the one try failed. Gradle couldn't download two Maven packages (`httpmime 4.5.6`, `grpc-api 1.45.1`). Not retried; no new APK this round.
+
+**The preview branch's `x07` change** turned out not to be a visual fade. It is a one-line path change in `course.ts`: the river returns to the default path over the last 4 u before the plunge top. That removes a 0.49 u sideways offset that was shifting the plunge and all of Screen 08. I described it in NOTES.md and did not port it; it needs the user's OK.
+
+**Next step:** remove the game's white foam walls in the plunge (this needs a small switch in the shared foam code), then sharper near water while moving.
+
+**Backup:** I'm not printing the `RAINBOW 3D BACKUP VERIFIED` line. At session start the bootstrap's GitHub fetch failed, and it reported a 4.1 h backup gap (2026-11-17 19:49 → 23:57 UTC) when no environment was running. The previous session also ended without an end-of-session backup. Since then autosave has run normally and the end-of-session save is verified. Other warnings: the Playwright MCP isn't connected, and the World Labs world-ID reads return 404. The Marble key itself works: 5,420 credits, no paid jobs run.
+
+Pictures (separate full-size portrait files, 12 positions each), in `qa/match/07/r7/`:
+- `APPROVED_07.png`
+- `BEFORE/`
+- `NEW/` (best to look at: `t66_through_screen.png`, `t33_through_screen.png`, `f20_forward20u.png`)
+
+Full write-up is in `qa/match/07/STATUS.md` and `NOTES.md`. I'm stopping here as the brief says.
+
+### 🧑 User — 2026-11-18T00:47:58.828Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
