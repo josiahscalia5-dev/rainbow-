@@ -1567,3 +1567,82 @@ Now the PROGRESS.md for r12 with step 1.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K13='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/k13 $S/drN && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/k13 \"$K13\" 2>&1 | grep -v 'allow list' | tail -4 && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/drN \"$K13&m08drum=1\" 2>&1 | grep -v 'allow list' | tail -4 && python3 -I $S/bin/sbs.py $S/v_dr.png 0,100,8 …[+132 chars]`
 
+### 🧑 User — 2026-11-18T13:07:27.486Z
+
+> ↩︎ result: 08 f06_forward6u s 398.105 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+> 08 f06_forward6u s 398.105 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+
+### 🤖 Claude — 2026-11-18T13:07:29.886Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_dr.png"}`
+
+### 🧑 User — 2026-11-18T13:07:29.907Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:07:33.092Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_drL.png 0,150,432,420 1.2 $S/k13/f10_forward10u.png $S/drN/f10_forward10u.png", "description": "Zoom top-left seam BEFORE/NEW"}`
+
+### 🧑 User — 2026-11-18T13:07:33.313Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:07:34.132Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_drL.png"}`
+
+### 🧑 User — 2026-11-18T13:07:34.152Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:07:42.052Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_drR.png 432,150,864,420 1.2 $S/k13/f10_forward10u.png $S/drN/f10_forward10u.png && python3 -I $S/bin/sbs.py $S/z_dr95.png 0,0,864,700 0.6 $S/k13/t95_through_screen.png $S/drN/t95_through_screen.png $S/k13/t66_through_screen.png $S/drN/t66_through_screen.png", "description": "Zoom top-right and t66/t95 comparisons"}`
+
+### 🧑 User — 2026-11-18T13:07:42.645Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:07:43.154Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_drR.png"}`
+
+### 🧑 User — 2026-11-18T13:07:43.169Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:07:43.693Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_dr95.png"}`
+
+### 🧑 User — 2026-11-18T13:07:43.837Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T13:07:43.833Z
+
+[Image: original 2090x420, displayed at 2000x402. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T13:07:48.159Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_dr95b.png 0,150,864,480 0.75 $S/k13/t95_through_screen.png $S/drN/t95_through_screen.png", "description": "Zoom t95 top band"}`
+
+### 🧑 User — 2026-11-18T13:07:48.356Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:07:49.363Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_dr95b.png"}`
+
+### 🧑 User — 2026-11-18T13:07:49.384Z
+
+> ↩︎ result: [image]
+

@@ -1380,3 +1380,156 @@ No visible change, so the pale wedge is not the floor beyond the rim. I need to 
 > 821	  // 6–12 lumps (radius 0.14–0.42 u, mixed sizes, piled: larger ones low and in the middle) about every 1.6 u per side,
 > 822	  // sitting  …[+8643 chars]
 
+### 🤖 Claude — 2026-11-18T13:07:07.059Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/foam.ts", "offset": 380, "limit": 130}`
+
+### 🧑 User — 2026-11-18T13:07:07.090Z
+
+> ↩︎ result: 380	  #include <fog_vertex>
+> 381	}
+> 382	`;
+> 383	/**
+> 384	 * wave 8 (05 only: rafts + the 05 berm puffs): one foam lump = a sphere impostor with the true per-pixel sphere depth,
+> 385	 * so lumps sink into the water and into each other with curved creases (a merged low foam mound, not stacked discs);
+> 386	 * the lower outline of larger lumps is scalloped by small piled bubbles; the micro texture packs tiny open bubbles on
+> 387	 * the lower half / flanks; bubbles under ~14 px render as glossy little soap bubbles with a thin blue rim.
+> 388	 */
+> 389	const BANK_BUB_FRAG = /* glsl */ `
+> 390	uniform mat4 projectionMatrix;
+> 391	uniform vec3 uLightDir;
+> 392	uniform float uTime;
+> 393	varying vec2 vP;
+> 394	varying vec3 vInst;
+> 395	varying float vBig;
+> 396	varying vec3 vCv;
+> 397	varying float vR;
+> 398	#include <fog_pars_fragment>
+> 399	${NOISE_GLSL}
+> 400	${SOAP05_GLSL}
+> 401	${MICRO_GLSL}
+> 402	void main() {
+> 403	  float px = 2.0 / max(fwidth(vP.x), 1e-4);
+> 404	  float d = length(vP);
+> 405	  float ang = atan(vP.y, vP.x);
+> 406	  float nS = clamp(floor(px / 8.0), 5.0, 16.0);
+> 407	  float sc = abs(sin(ang * nS * 0.5 + vInst.y * 31.0));
+> 408	  float amp = 0.11 * smoothstep(16.0, 34.0, px) * smoothstep(0.45, -0.35, vP.y / max(d,  …[+6264 chars]
+
+### 🤖 Claude — 2026-11-18T13:07:17.881Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,32p src/vfx/foam.ts; grep -n \"^import\" src/world/environment.ts; grep -n \"createLiveFar05\\|farRings\\b\" src/world/environment.ts | head -20", "description": "Check imports for foam.ts and environment.ts"}`
+
+### 🧑 User — 2026-11-18T13:07:17.961Z
+
+> ↩︎ result: /**
+>  * Foam banks along the stream (refs 03–10) + whirlpool rim foam.
+>  *  - berm: ONE continuous lumpy lather bank per side, swept along the course (custom shader:
+>  *    two-scale cellular soap bubbles with derivative bump lighting, lavender crevices, pores,
+>  *    faint iridescent rim). This is what makes the banks read as continuous foam, not cotton balls.
+>  *  - puffs: instanced bubble puffs sitting ON the berm crest (silhouette lumps), in ~40-unit chunks
+>  *    so only chunks near Benny are drawn; quality 'low' halves density and uses 20-tri puffs.
+>  *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)
+>  *  - flank banks (05, wave 4): one CONTINUOUS cloud bank per side that continues the berm down both
+>  *    sides of the frame to Benny's level (ref 05: banks hugging BOTH edges y≈540–1300): a lather sheet
+>  *    (berm shader, 1 draw) + world-anchored instanced puffs (1 draw), fitted to the frame edges from
+>  *    the camera each frame. Replaces wave 3's floating "flank"/"wake" raft clumps, which read as round
+>  *    islands on open water. Fixed pools, no per-frame allocation.
+>  */
+> import * as THREE from 'three';
+> import { type Course, WORLD, funnelY }  …[+3916 chars]
+
+### 🤖 Claude — 2026-11-18T13:07:19.635Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/environment.ts", "offset": 540, "limit": 130}`
+
+### 🧑 User — 2026-11-18T13:07:19.657Z
+
+> ↩︎ result: 540	      if (rSeg && rSegT && free >= 0) { rSeg[free].set(sF05, vC, 0, 0); rSegT[free].set(PT_ROW.BC, tSeam, 1); }
+> 541	      [PT_ROW.CD, PT_ROW.DE, PT_ROW.EF, PT_ROW.FG].forEach((row, n) => segs.push({ v0: sF05 + uRing(n) + hwF / dZdu(uRing(n)), v1: sF05 + uRing(n + 1) - hwF / dZdu(uRing(n + 1)), row, t0: 0, t1: 1 }));
+> 542	      const uEnd = ft.uOfZ(zEnd);
+> 543	      segs.push({ v0: sF05 + uRing(4) + hwF / dZdu(uRing(4)), v1: sF05 + uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
+> 544	      segs.push({ v0: sF05 + uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
+> 545	      withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
+> 546	    } else if (PROJWALL05) {
+> 547	      // far bays in the wall's own coordinate v = sF05 + u (knots: u → virtual depth Z, piecewise linear)
+> 548	      const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
+> 549	      const slope = (i: number) => (knots[Math.min(i + 1, knots.length - 1)][1] - knots[Math.min(i + 1, knots.length - 1) - 1][1]) / (knots[Math.min(i + 1, knots.length - 1)][0] - knots[Math.min(i + 1, knots.length - 1) - 1][0]);
+> 550	      const nearEdge = (n: number) => sF05 + knots[n + 1][0] - hwF / slope(n);          // c …[+9320 chars]
+
+### 🤖 Claude — 2026-11-18T13:07:41.433Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/foam.ts", "offset": 340, "limit": 44}`
+
+### 🧑 User — 2026-11-18T13:07:41.450Z
+
+> ↩︎ result: 340	    vec2 g = vec2(float(x), float(y));
+> 341	    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 342	    vec2 r = g + o - f;
+> 343	    float dd = dot(r, r);
+> 344	    if (dd < d1) { d2 = d1; d1 = dd; r1 = r; h1 = vec2(hash12(i + g + 7.3), hash12(i + g + 3.1)); }
+> 345	    else if (dd < d2) d2 = dd;
+> 346	  }
+> 347	  d1 = sqrt(d1); d2 = sqrt(d2);
+> 348	  float rad = 0.17 + 0.2 * h1.x;
+> 349	  float on = step(h1.y, dens);
+> 350	  vec2 dir = -r1 / max(d1, 1e-4);
+> 351	  float hole = (1.0 - smoothstep(rad * 0.68, rad, d1)) * on;
+> 352	  float ring = smoothstep(rad * 0.7, rad, d1) * (1.0 - smoothstep(rad, rad * 1.55, d1));
+> 353	  float lip = ring * on * clamp(dot(dir, vec2(0.6, -0.8)) * 0.7 + 0.45, 0.0, 1.0);
+> 354	  float dome = smoothstep(0.0, 0.32, d2 - d1);
+> 355	  float speck = (1.0 - smoothstep(0.03, 0.08, length(-r1 - vec2(-0.13, 0.15)))) * (1.0 - on) * step(0.55, h1.x);
+> 356	  return vec4(hole, lip, dome, speck);
+> 357	}
+> 358	`;
+> 359	
+> 360	const BANK_BUB_VERT = /* glsl */ `
+> 361	varying vec2 vP;
+> 362	varying vec3 vInst;
+> 363	varying float vBig;
+> 364	varying vec3 vCv;
+> 365	varying float vR;
+> 366	#include <fog_pars_vertex>
+> 367	void main() {
+> 368	  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0); …[+621 chars]
+
+### 🤖 Claude — 2026-11-18T13:07:42.085Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/foam.ts", "offset": 1150, "limit": 47}`
+
+### 🧑 User — 2026-11-18T13:07:42.103Z
+
+> ↩︎ result: 1150	          tmpM.makeScale(r, r, r).setPosition(pP);
+> 1151	          rafts.setMatrixAt(base + p, tmpM);
+> 1152	          shown++;
+> 1153	        }
+> 1154	      }
+> 1155	    }
+> 1156	    rafts.instanceMatrix.needsUpdate = true;
+> 1157	  };
+> 1158	
+> 1159	  return {
+> 1160	    group,
+> 1161	    whirlGroup,
+> 1162	    berm: berm.mesh,
+> 1163	    rafts,
+> 1164	    rim05,
+> 1165	    flank,
+> 1166	    instanceCount: total,
+> 1167	    rider(s, lat, strength) {
+> 1168	      rider.s = s;
+> 1169	      rider.lat = lat;
+> 1170	      rider.target = strength;
+> 1171	      rider.fed = true;
+> 1172	    },
+> 1173	    qaRafts: () => ({ visible: rafts.visible, puffs: nRaft, shown, clumps: qa.slice() }),
+> 1174	    update(time, dt, focusS, outro = 0, camera) {
+> 1175	      berm.uniforms.uTime.value = time;
+> 1176	      (berm.uniforms.uOutro.value as THREE.Vector2).x = outro;
+> 1177	      const s08 = course.stage('08').s0;
+> 1178	      puff.uniforms.uTime.value = time;
+> 1179	      for (let i = 0; i < chunks.length; i++) {
+> 1180	        const c = chunks[i];
+> 1181	        c.mesh.visible = c.sb > focusS - 12 && c.sa < focusS + 130 && !(outro > 0.3 && c.sb > s08 + 8);
+> 1182	        if (c.mesh.visible) c.mesh.geometry = c.sb > focusS - 12 && c.sa < focusS + 30 ? …[+724 chars]
+

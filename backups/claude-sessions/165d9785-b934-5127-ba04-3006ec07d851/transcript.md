@@ -3409,3 +3409,112 @@ Committed and pushed (`40a72c43`, matches GitHub). Now your full-size pictures f
 
 > 🔧 **Bash** `{"command": "timeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:04-mv2-test 2>&1 | grep -E '\"result\"|\"commit\"'; python3 -I scripts/autosave-status.py | head -1; for w in s05 s08; do cd /home/user/wt/$w; echo \"$w $(git log -1 --format='%h %ci' ) remote=$(git ls-remote origin refs/heads/$(git rev-parse --abbrev-ref HEAD) | cut -c1-8) dirty=$(git status --short | wc -l)\"; done; ls /home/user/rainbow-/backups/wip/", "description": "Save lead and verify specialist branches backed up", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-18T13:07:15.040Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "0ef79a93cbcc252f9e7f7c07e179c8692731ed6d",
+> AUTOSAVE OK | branch ccr-e908f8da-cy4yc1 | scheduler daemon | last verified backup 2026-11-18T13:07:04+00:00 (0.1 min ago) | local 0ef79a9 remote 0ef79a9 (match) | uncommitted 0
+> s05 be2087cb 2026-11-18 12:59:42 +0000 remote=be2087cb dirty=1
+> s08 fc67bedd 2026-11-18 13:04:09 +0000 remote=fc67bedd dirty=1
+> claude__rainbow-s04-match-c10
+> claude__rainbow-s04-match-c11
+> claude__rainbow-s04-match-c12
+> claude__rainbow-s05-match-c10
+> claude__rainbow-s05-match-c11
+> claude__rainbow-s05-match-c12
+> claude__rainbow-s06-match-c11
+> claude__rainbow-s08-scenery-c10
+> claude__rainbow-s08-scenery-c11
+> claude__rainbow-s08-scenery-c12
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:07:20.581Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; sed -i 's/^| 4 (~13:45)/| 4 (~13:00)/; s/^| 5 (~13:45)/| 5 (~13:00)/; s/^| 6 (~14:05)/| 6 (~13:07)/; s/^| 3 (~13:20)/| 3 (~12:58)/; s/^| 2 (~13:08)/| 2 (~12:55)/; s/^| 1 (~12:55)/| 1 (~12:50)/' docs/briefs/2026-11-18-r12/COORDINATION.md && tail -6 docs/briefs/2026-11-18-r12/COORDINATION.md | cut -c1-60", "description": "Correct the time labels in the coordination log"}`
+
+### 🧑 User — 2026-11-18T13:07:20.634Z
+
+> ↩︎ result: 13:07
+> | 1 (~12:50) | 04 lead: round-11 decisive test `m04mv` (V04-
+> | 2 (~12:55) | 05 step 1 `m05fmag` (far river behind the sli
+> | 3 (~12:58) | 08 step 1 `m08cup` (upper-left spout cup keep
+> | 4 (~13:00) | 05 step 2 `m05fpaint` (far river t66–t95 we
+> | 5 (~13:00) | 08 step 2 `m08rw` (water below Benny at forwa
+> | 6 (~13:07) | 04 lead: exact diagnosis of `m04mv` + correct
+> [This command modified 1 file you've previously read: docs/briefs/2026-11-18-r12/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T13:07:28.559Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/da3 && cd /home/user/da3 && ( [ -d src ] || git clone -q --depth 1 https://github.com/ByteDance-Seed/Depth-Anything-3 src ) && ( [ -d venv ] || python3 -m venv venv ) && . venv/bin/activate && nice -n 15 pip install -q torch torchvision --index-url https://download.pytorch.org/whl/cpu && nice -n 15 pip install -q einops addict omegaconf huggingface_hub safetensors pillow opencv-python-headless imageio plyfile scipy matplotlib tqdm trimesh \"moviepy==1.0.3\" pycolmap evo && nice -n 15 pip install -q --no-deps --ignore-requires-python -e src && python -c \"import …[+257 chars]`
+
+### 🧑 User — 2026-11-18T13:07:28.596Z
+
+> ↩︎ result: Command running in background with ID: ba120lhai. Output is being written to: /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/tasks/ba120lhai.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T13:07:52.403Z
+
+I found and fixed the exact Screen 04 rendering problem. The corrected test works at the two view positions but not between them, so its verdict is **NOT YET PROVEN**. And the honest answer to your main question is: not yet, as explained below.
+
+## 1. The exact rendering problem
+
+I re-drew the real game frame with one object group hidden at a time, which shows which object produces every visible pixel. At the V04-1 position:
+
+- **River (27% of the frame):** a depth-offset mismatch in the code. The river surface was nudged toward the camera more strongly than the overlay drawn on top of it (−4 vs −2), so the game's river won every pixel and the painted water and arrows were discarded. Opacity and masks on the river were fine.
+- **Foam (11.5%):** the tall foam-ball sprites are separate objects drawn in front of the painted low foam and water.
+- **Torn gold column:** holes in the views where painted coins and bubbles had been cut out; the bare game tunnel showed through.
+- **Calibration:** the test frames were taken 0.8–1.1 units past where the views were made. My new test tool now hits the exact spot (0.00 units).
+
+The projection could have supplied 63% of the frame; it actually controlled only 38%, just the upper tunnel walls.
+
+## 2. One controlled test of the corrected version (`&m04mv2=1`)
+
+This fixes all four problems. Your default game and last kept version are untouched; I compared the new pictures against the kept version only by eye, without re-running the default-build check.
+
+| Position | Result |
+|---|---|
+| Exactly at the V04-1 / V04-2 cameras | **Much closer to your painting:** glossy gold rings, glowing arrows stacked ahead of Benny, thick swirling cyan water with pink-magenta bands, low foam, no torn column. Still wrong: the game's darker water shows as a blob around Benny. |
+| Hard steering, near a view | Closer: arrows, glossy rings, painted water; slight ghosting at the top arcs. |
+| Halfway between the two views | **Worse: double exposure** (doubled rings, blurry mushed water). |
+
+Because of the halfway result I did not run the 12–14-frame audit, per your rule.
+
+**Why it fails between views:** the AI views were painted over game frames, but the painting moved the geometry. The water is higher and wider, the arrows sit on a rising lane, and the rings are closer. The pixels only land correctly from the exact camera that made them.
+
+**Next specific test (free, local):** rebuild the tunnel interior's water and ring geometry to match the painted views. Depth Anything 3 will measure the shape from V04-1, V04-2 and your approved picture, using their known cameras. Once the geometry matches, both views should agree and the ghosting should go. Depth Anything 3 is reinstalling now (about 5 minutes); no fal or Marble credits will be spent.
+
+## 3. Your question: can I recreate all five screens? Yes or no?
+
+**Not proven yet, so I can't honestly say yes today.**
+
+**A. Matching the approved start view: YES, done on all five.** It uses your own pixels on fitted 3D geometry. I checked each screen's start frame against its painting by eye.
+
+**B. Consistent scenery while Benny swims: NOT YET PROVEN.** Each painting is one camera view; everything Benny swims into afterwards is unseen. Projected pixels smear or tear once the camera moves. Only real 3D geometry plus world-anchored textures cut from your art holds up, and that is being built piece by piece.
+
+**C. 8.5/10 on every screen: NOT YET PROVEN. No screen is there yet while swimming.** Current honest estimates, which are judgments not measurements:
+- **08:** about 7–7.5
+- **05:** about 6.5–7
+- **06:** about 6.5–7
+- **07:** about 4–4.5
+- **04:** about 3.5
+
+05 and 08 each gained two kept steps this session.
+
+**Realistic AI-only path: yes, plausibly**, with no new paid service needed for the next steps.
+- **05 and 08:** most likely to reach 8.5, by continuing the small steps.
+- **06:** needs its bending tunnel rebuilt to the measured shape. The rejected bend method stays rejected.
+- **04 and 07:** hardest, because the paintings show the least of what Benny swims through. They depend on continuation views you approve, plus geometry fitted to them.
+
+## 4. A better tool?
+Not needed for the next step: Depth Anything 3 is already tested and free. I'll only look for a new tool if the geometry fit fails. Stable Virtual Camera and ViewCrafter are still down on Hugging Face's side.
+
+## 5. Everything else
+- **Screens 05 and 08:** both specialists are still running. Each has delivered two GOOD IMPROVEMENT steps, all sent to you as separate full-size pictures.
+- **Screens 07 and 06:** queued for the next slots.
+- **Autosave:** verified. This session's branch is at `0ef79a9`, the Screen 04 branch at `40a72c43`, and both specialist branches match GitHub. Their unfinished edits are snapshotted every five minutes.
+
+### 🧑 User — 2026-11-18T13:07:54.122Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
