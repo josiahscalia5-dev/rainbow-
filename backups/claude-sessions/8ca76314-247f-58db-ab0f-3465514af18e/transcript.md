@@ -3611,3 +3611,86 @@ The Screen 05 specialist reports a GOOD IMPROVEMENT: your painted pink "V" now s
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && timeout 200 npx tsc --noEmit -p . 2>&1 | tail -2; echo \"tsc ${PIPESTATUS[0]}\"; S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && Q5=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G5/motion.json'))['query'])\") && QL1=\"$Q5&m04foam=1&m04foam3=1&m04foamr=1.2\" && QL2=\"$Q5&m04foam=1&m04foamr=2.5\" && for v in L1 L2; do eval Q=\\$Q$v; rm -rf $S/x$v; ONLY=f03_forward3u,f06_forward6u,f10_forward10u,s_left_hard timeout 600 node $S/tools/audit_only.mjs 04 $S/x$v \"$Q\" > $S/x$v.log 2>&1; echo \"$v …[+642 chars]`
 
+### 🧑 User — 2026-11-18T17:11:08.319Z
+
+> ↩︎ result: tsc 0
+> L1 5
+> L2 5
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:11:11.542Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/L_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T17:11:11.876Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:11:12.177Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/L_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T17:11:12.364Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:11:23.330Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/L_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T17:11:23.402Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:11:31.765Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open(p).convert('RGB').resize((432,768)) for p in ['qa/match/04/r14/s8_glow/G5/s_left_hard.png','$S/xL2/s_left_hard.png']]\nc=Image.new('RGB',(876,768)); c.paste(ims[0],(0,0)); c.paste(ims[1],(444,0)); c.save('$S/L2_left.png')\"", "description": "Compare G5 vs L2 at hard left"}`
+
+### 🧑 User — 2026-11-18T17:11:32.194Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:11:35.620Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/L2_left.png"}`
+
+### 🧑 User — 2026-11-18T17:11:35.670Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:11:45.935Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    sprites(items, M04.foam3 ? FOAM_FRAG.replace('uniform float uAlpha;', 'uniform float uAlpha;\\n#define FOAM3') : FOAM_FRAG, 'm04_foam', 3, true, [0.6, 1.2]);", "new_string": "    // r14 m04foamn0 / m04foamn1: fade puffs out this close to the camera (big plain balls in the face while steering)\n    sprites(items, M04.foam3 ? FOAM_FRAG.replace('uniform float uAlpha;', 'uniform float uAlpha;\\n#define FOAM3') : FOAM_FRAG, 'm04_foam', 3, true,\n      [M04.num('m04foamn0', 0.6), M04.num('m04foamn1', 1 …[+8 chars]`
+
+### 🧑 User — 2026-11-18T17:11:45.967Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:11:51.495Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uNear\" src/world/match04m4.ts | head -5; timeout 200 npx tsc --noEmit -p . 2>&1 | tail -2; echo \"tsc ${PIPESTATUS[0]}\"; S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && Q5=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G5/motion.json'))['query'])\") && QL3=\"$Q5&m04foam=1&m04foamr=2.5&m04foamn0=2.2&m04foamn1=4.0\" && rm -rf $S/xL3 && ONLY=f03_forward3u,f06_forward6u,s_left_hard,s_right_hard timeout 600 node $S/tools/audit_only.mjs 04 $S/xL3 \"$QL3\" > $S/xL3.log 2>&1; python3 -I …[+562 chars]`
+
+### 🧑 User — 2026-11-18T17:13:18.532Z
+
+> ↩︎ result: 458:uniform vec2 uNear;         // fade sprites out this close to the camera (no giant discs in the face)
+> 466:  vF = smoothstep(uNear.x, uNear.y, -mv.z);
+> 747:      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value: new THREE.Vector2(near[0], near[1]) } } });
+> tsc 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:13:21.737Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/L3_cmp.png"}`
+
+### 🧑 User — 2026-11-18T17:13:22.018Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:13:22.015Z
+
+[Image: original 2628x768, displayed at 2000x584. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:13:34.511Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && Q5=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G5/motion.json'))['query'])\") && QL4=\"$Q5&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5\" && rm -rf $S/xL4 && ONLY=f03_forward3u,f06_forward6u,s_left_hard,s_right_hard timeout 600 node $S/tools/audit_only.mjs 04 $S/xL4 \"$QL4\" > $S/xL4.log 2>&1; python3 -I - <<EOF\nfrom PIL import Image\nS='$S'\nref=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB …[+445 chars]`
+

@@ -1281,3 +1281,227 @@ Wired. Type-check, then render the NEW set (K13 + `&m08nq=1`) with the same capt
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K13=$(python3 -I -c \"import json;print(json.load(open('qa/match/08/r14/BEFORE_K13/motion.json'))['query'])\") && mkdir -p qa/match/08/r14/step1_m08nq/NEW_raw && time node tools/match08/shots08.mjs 08 qa/match/08/r14/step1_m08nq/NEW_raw \"$K13&m08nq=1\" 2>&1 | tail -14", "description": "Render NEW audit shots with m08nq on port 5278", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T17:09:22.237Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 08 a00_approved_view s 392.135 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 395.01 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.018 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 f20_forward20u s 411.954 lat 0 stage 09 frames 126
+> 08 s_left_steer s 398.018 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 398.018 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 404.036 lat -2.217 stage 08 frames 76
+> 08 s_right_hard s 404.035 lat 2.217 stage 08 frames 76
+> 08 t33_through_screen s 396.292 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+> 
+> real	3m47.203s
+> user	0m3.061s
+> sys	0m0.682s
+
+### 🤖 Claude — 2026-11-18T17:09:25.358Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r14/step1_m08nq/NEW_raw/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T17:09:25.482Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:09:25.866Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/qa/match/08/r14/step1_m08nq/NEW_raw/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T17:09:25.944Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:09:35.809Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/08_final_spin_chamber.png').convert('RGB')\nfor n in ['f06_forward6u','f10_forward10u','s_left_hard','s_right_hard']:\n  b=Image.open('qa/match/08/r14/BEFORE_K13/'+n+'.png').convert('RGB'); c=Image.open('qa/match/08/r14/step1_m08nq/NEW_raw/'+n+'.png').convert('RGB')\n  W=Image.new('RGB',(864*3+20,700),'white')\n  W.paste(a.crop((0,836,864,1536)),(0,0)); W.paste(b.crop((0,836,864,1536)),(874,0)); W.paste(c.c …[+125 chars]`
+
+### 🧑 User — 2026-11-18T17:09:38.827Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T17:09:41.982Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp3_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T17:09:42.251Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:09:42.247Z
+
+[Image: original 2612x700, displayed at 2000x536. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:09:42.603Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/cmp3_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T17:09:43.079Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T17:09:43.030Z
+
+[Image: original 2612x700, displayed at 2000x536. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T17:10:36.298Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git check-attr filter -- qa/match/08/r14/step1_m08nq/NEW_raw/f06_forward6u.png assets/textures/match08/nq08.png && git add tools/match08/nq08.py src/world/match08.ts assets/textures/match08/nq08.png assets/textures/match08/nq08.json qa/match/08/r14/step1_m08nq/NEW_raw && git commit -q -m \"Screen 08 r14 WIP: &m08nq=1 painted-scale near water (nq08.py v4: rectified band + zone quilting) wired; first NEW renders (not yet an improvement: glints cut into fragments)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/cod …[+257 chars]`
+
+### 🧑 User — 2026-11-18T17:10:46.486Z
+
+> ↩︎ result: qa/match/08/r14/step1_m08nq/NEW_raw/f06_forward6u.png: filter: unspecified
+> assets/textures/match08/nq08.png: filter: unspecified
+> 30dbbe4
+> 30dbbe4
+
+### 🤖 Claude — 2026-11-18T17:10:49.169Z
+
+Saved (30dbbe4, remote matches). Now the two-layer version (v5). Let me read the current tool to restructure it.
+
+### 🤖 Claude — 2026-11-18T17:10:49.815Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/tools/match08/nq08.py", "offset": 106, "limit": 135}`
+
+### 🧑 User — 2026-11-18T17:10:49.832Z
+
+> ↩︎ result: 106	print('rectified: max lateral shift', round(float(np.abs(xs - np.arange(SW)[None]).max() / DX), 3), 'u')
+> 107	
+> 108	# --- layout: lane offset x_b (u) -> painted band position a ------------------------------------------------------------
+> 109	# painted water (no foam) a = -0.81 .. 0.72, foam fringes -0.95 .. -0.81 and 0.72 .. 0.90 (column colour, r14);
+> 110	# the lane centre sits on the painted water's centre c (as m08near: waterA mean)
+> 111	c = (NJ['waterA'][0] + NJ['waterA'][1]) / 2
+> 112	LANE = 2.95                                  # swim lane half width (u) (SWIM_HALF)
+> 113	RC = 0.70                                    # middle +-RC: the painted band's layout 1:1
+> 114	WT = LANE + 0.10                             # tile half width (u)
+> 115	WL, WR = -0.81, 0.72                         # painted water edges (a, no foam); the tile is water only: in the lane's outer
+> 116	                                             # 15 % the game fades to the projected (remapped) painted foam bank
+> 117	BW, BH, OW, OH = 64, 224, 28, 96             # block (across, along), overlaps (texels)
+> 118	SX, SY = BW - OW, BH - OH
+> 119	BWA = BW / DX / HW                           # block width in a
+> 120	KX = [-WT, -RC, RC …[+8195 chars]
+
+### 🤖 Claude — 2026-11-18T17:11:07.010Z
+
+I'll insert the glint/base split after the rectification, quilt only the base, then place whole glint sprites.
+
+### 🤖 Claude — 2026-11-18T17:11:17.268Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "print('rectified: max lateral shift', round(float(np.abs(xs - np.arange(SW)[None]).max() / DX), 3), 'u')\n", "new_string": "print('rectified: max lateral shift', round(float(np.abs(xs - np.arange(SW)[None]).max() / DX), 3), 'u')\n\n# --- two layers (v5): quilting cut the painted glints (0.4-0.6 u, larger than any block that fits the narrow magenta band)\n# into small bright fragments (a glittery speed-line look). The band is split into the BASE satin (glints filled in along\n# the flow: in the rectifi …[+1873 chars]`
+
+### 🧑 User — 2026-11-18T17:11:17.320Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:11:18.527Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "BW, BH, OW, OH = 64, 224, 28, 96             # block (across, along), overlaps (texels)", "new_string": "BW, BH, OW, OH = 80, 224, 32, 96             # block (across, along), overlaps (texels)"}`
+
+### 🧑 User — 2026-11-18T17:11:18.594Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:11:26.873Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "    tile[:ov] = m * extra + (1 - m) * tile[:ov]\nt8 = np.clip(tile, 0, 255).astype(np.uint8)", "new_string": "    tile[:ov] = m * extra + (1 - m) * tile[:ov]\nbase_tile = tile.copy()\n\n# --- the glints back on, whole (v5): each sprite keeps its painted size; positions Poisson-disk scattered over the tile\n# (periodic along the river), at the painted density of its colour zone; a glint is placed only where the layout puts the\n# zone it was painted in (magenta-band glints in the magenta band, cyan gli …[+1525 chars]`
+
+### 🧑 User — 2026-11-18T17:11:26.902Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:11:28.825Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "    Image.fromarray(src.astype(np.uint8)).save(f'{dbg}/nq08_source_rectified.png')", "new_string": "    Image.fromarray(src_full.astype(np.uint8)).save(f'{dbg}/nq08_source_rectified.png')\n    Image.fromarray(np.clip(base, 0, 255).astype(np.uint8)).save(f'{dbg}/nq08_source_base.png')\n    Image.fromarray(np.clip(base_tile, 0, 255).astype(np.uint8)).save(f'{dbg}/nq08_base_tile.png')"}`
+
+### 🧑 User — 2026-11-18T17:11:28.847Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:11:31.628Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i \"s/(nq08.py v4, r14: rectified along the painted flow, zone quilting, mirrored blocks allowed)'/(nq08.py v5, r14: rectified along the painted flow; base satin zone-quilted, the painted glints put back whole)'/\" tools/match08/nq08.py && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq7 && mkdir -p $S && time python3 -I tools/match08/nq08.py $S/nq08.png $S/nq08.json $S 2>&1 | grep -v \"^row\"", "description": "Run nq08 v5 two-layer tile", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T17:12:10.753Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> glints 15 sprites; base / glint split at min(RGB) > 168
+> target 1336 x 1320 texels ( 6.1 u x 8.0 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.475 112 cols
+> cyan zone a -0.442 .. 0.714 388 cols
+> zone 1 glints placed 43 / 43
+> zone 0 glints placed 4 / 4
+> zone 2 glints placed 64 / 64
+> wrote /tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq7/nq08.png (1320, 1336, 3)
+> 
+> real	0m39.072s
+> user	0m31.670s
+> sys	0m1.071s
+> [This command modified 1 file you've previously read: ../wt/s08/tools/match08/nq08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T17:12:14.173Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq7/nq08_source_base.png"}`
+
+### 🧑 User — 2026-11-18T17:12:14.190Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:12:14.745Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq7/nq08.png"}`
+
+### 🧑 User — 2026-11-18T17:12:14.825Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:12:47.849Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/tools/match08/nq08.py", "offset": 1, "limit": 30}`
+
+### 🧑 User — 2026-11-18T17:12:47.876Z
+
+> ↩︎ result: 1	"""Screen 08 r14 (`&m08nq=1`): the near water at the PAINTED scale while swimming (v2 of the account-13 helper).
+> 2	
+> 3	`&m08near=1` (r11) lays the approved picture's own crisp near-river band (rows ~1250-1520 below Benny) along the river,
+> 4	scaled evenly so its painted water spans the whole swim lane (+-2.95 u; the painted near water is +-1.28 u): every glint /
+> 5	streak is shown ~2.3x larger than painted (big blurry white "flames", the band's texels magnified ~3x).
+> 6	r12 `m08glint` (rejected) kept the painted scale only in a +-0.57 u middle and STRETCHED the rest of the lane ~3.4x (flat
+> 7	smears) with a 1.25 u period (visible repeats). The account-13 v1 of this tool quilted the whole lane from small square
+> 8	blocks laid out with the even 2.3x layout: the long painted streaks broke into a fish-scale patchwork.
+> 9	
+> 10	v2 (r14): a tile at the painted scale (no magnification, no stretch anywhere), built only from the user's own near band:
+> 11	* layout across the lane (x_b = lateral offset from the lane centre, u): the middle +-RC is the painted band 1:1 (painted
+> 12	  position and scale: magenta band left, cyan centre, as at the bottom of the approved picture); from RC out to the lane
+> 13 …[+1119 chars]
+
+### 🤖 Claude — 2026-11-18T17:13:42.102Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s08/tools/match08/nq08.py", "content": "\"\"\"Screen 08 r14 (`&m08nq=1`): the near water at the PAINTED scale while swimming (v6 of the account-13 helper).\n\n`&m08near=1` (r11) lays the approved picture's own crisp near-river band (rows ~1250-1520 below Benny) along the river,\nscaled evenly so its painted water spans the whole swim lane (+-2.95 u; the painted near water is +-1.28 u): every glint /\nstreak is shown ~2.3x larger than painted (big blurry white \"flames\", the band's texels magnified ~3x).\nTried before and dropped: r12 `m08glint` (painted scale only …[+14690 chars]`
+
+### 🧑 User — 2026-11-18T17:13:42.218Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T17:13:47.139Z
+
+That base-row index line is needlessly complex (its factor is exactly 1) and would copy the whole band for every column. I'll fix it to index only the two needed columns.
+
+### 🤖 Claude — 2026-11-18T17:13:49.341Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "        colv = per[(rowsT * (PZ / TH * (TH / DZ) / (PZ / DZ)) + ph_).astype(int) % PZ]   # rows at painted scale, wrapped\n        acc[:, jt] += w * ((1 - fr) * colv[:, i0] + fr * colv[:, i1]); wsum[jt] += w", "new_string": "        rr = (rowsT + ph_) % PZ                 # rows at the painted scale, wrapped (period PZ texels along the flow)\n        acc[:, jt] += w * ((1 - fr) * per[rr, i0] + fr * per[rr, i1]); wsum[jt] += w"}`
+
+### 🧑 User — 2026-11-18T17:13:49.416Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T17:13:51.489Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/nq8 && mkdir -p $S && time python3 -I tools/match08/nq08.py $S/nq08.png $S/nq08.json $S 2>&1 | tail -12", "description": "Run nq08 v6", "timeout": 600000}`
+
