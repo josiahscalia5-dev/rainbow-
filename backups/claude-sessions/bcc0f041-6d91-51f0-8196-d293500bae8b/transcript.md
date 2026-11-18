@@ -1440,3 +1440,74 @@ Pushed and verified (remote = local `92c8c5e`). Last step: restore the capture l
 
 > 🔧 **Bash** `{"command": "git checkout -- qa/capture_log.json && python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | tail -2; python3 -I scripts/autosave-status.py 2>&1 | tail -1; echo \"local $(git rev-parse HEAD)\"; git ls-remote origin refs/heads/claude/rainbow-s05-match-c7", "description": "End-of-session autosave and final remote verification"}`
 
+### 🧑 User — 2026-11-18T00:35:20.802Z
+
+> ↩︎ result: "duration_s": 10
+> }
+> AUTOSAVE OK | branch claude/rainbow-s05-match-c7 | scheduler daemon | last verified backup 2026-11-18T00:35:08+00:00 (0.2 min ago) | local b5b83eb remote b5b83eb (match) | uncommitted 0
+> local b5b83eb63856c2c6e02672bd703222fb50ae7f84
+> b5b83eb63856c2c6e02672bd703222fb50ae7f84	refs/heads/claude/rainbow-s05-match-c7
+
+### 🤖 Claude — 2026-11-18T00:35:38.127Z
+
+Screen 05 now keeps its own tunnel and S-river up to about 90 % of the stage instead of about 35 %. The change sits behind a new switch, `&m05far=1`, and the default build is unchanged. Nothing is approved; that's the user's call.
+
+**What was wrong:** the distant part of the tunnel (far rings, far river, warm light at the end) only looks right from the fixed starting camera. From about Benny s ≈ 152 it folded away, which made the far rings swell and the river drop. It also opened the view into the Screen 06 hall: the pink walls, white foam towers and orange rings in your 66 % frame. Neither of the two causes you found on 06 (camera pitch, tube built around the river) applies here.
+
+**The fix:** the far section is now recomputed for the live camera every frame. Rings, wall rows and the S-river stay fixed in the world and approach like real geometry. Its seam slides ahead with the camera until just before the first 06 ring. Rising 06 foam behind the seam is hidden, the far water is lifted to meet the real river, and the section folds into 06 only in the last ~3 u. The starting view is pixel-identical. The code is in `src/world/match05far.ts` and `src/vfx/clip05.ts`, with small switch-only hooks in `environment.ts` and `foam.ts`.
+
+**Numbers vs the approved picture (LAYOUT20 / PALETTE, moving frames):**
+
+| Frame | Before | After |
+|---|---|---|
+| 66 % through the stage | 5.8 / 71.0 % | **9.0 / 81.4 %** |
+| Other frames up to 33 % | — | within about ±1 point |
+| 95 % (Benny 2 u before 06) | 5.5 / 57.6 % | 5.5 / 57.7 % (folded into 06 by then) |
+
+**My moving rating (my opinion, separate from the numbers):**
+
+| Point in the stage | Rating |
+|---|---|
+| Starting view | ~8.5, unchanged |
+| Early swim and steering | ~6.5, unchanged |
+| Two-thirds through | about 4 → about 6 |
+| Last 5 % (hand-over to 06) | still about 4 |
+
+This is still well short of your 8.5 target while swimming.
+
+**Still wrong:**
+- Near walls and far rings are blurry up close.
+- Where the far river begins there's a faint edge and paler, flatter water.
+- Pale shelves run along the far riverbanks.
+- The nearest coin while riding is about 190–230 px wide, against at most about 96 px in the approved picture. I measured it but didn't change it, since coin positions are yours.
+
+**Checks:**
+- **tsc:** no errors.
+- **Default build:** 0 px against the starting commit `ebaf6ca`, captured in a separate checkout. One run had 28 px of difference, all in the HUD rows (the capture-timing glitch already recorded in NOTES).
+- **Protected BEFORE view (`?ringa=26&nearfloor05=0`):** 0 px against the starting commit.
+- **Starting view with the full set:** 0 px against BEFORE.
+- **Gameplay:** 8/8 for both default and NEW, each with 91 coins (1,330 → 2,240).
+- **Continuity:** passes.
+- **Stored baselines:** the 2026-11-16 pictures already differ by about 128,000 px at the starting commit in this container, so they can't serve as the 0 px reference any more. The drift predates this round, as you noted on 06.
+
+**Not done:** step 3 (materials). That means a sharp purple wall tile, real-scale modelled far gold rings, and blending the far water into the real river at the seam. The exact next step is in `qa/match/05/NOTES.md` under "Round 7".
+
+**Backup:** I can't give the full "RAINBOW 3D BACKUP VERIFIED" report. At session start the GitHub fetch failed (network), and there was a 6.1-hour gap with no saves before this session started (2026-11-17 17:59 → 2026-11-18 00:05 UTC). I also didn't run the full bootstrap checks. What is verified: branch `claude/rainbow-s05-match-c7`, my commit `92c8c5e`, then the end-of-session autosave `b5b83eb63856c2c6e02672bd703222fb50ae7f84`. GitHub matches local HEAD, and the autosave reports OK. No pull request was opened, as the brief says. I've stopped here.
+
+Files are in `qa/match/05/`:
+- STATUS.md
+- NOTES.md
+- r7/APPROVED_05_flow_into_the_current.png
+- r7/BEFORE/ (12 full-size frames)
+- r7/NEW/ (12 full-size frames)
+- r7/motion_metrics.txt
+
+### 🧑 User — 2026-11-18T00:35:39.983Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (message from another Claude session: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
