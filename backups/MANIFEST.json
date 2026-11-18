@@ -603,8 +603,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3872,
-   "sha256": "453472497ea56879756446867c065095599cfb7efe0a474bc80719f8a939445c"
+   "bytes": 3770,
+   "sha256": "55bf7f75f318e25ee87eb72657392f89eefe9b304693c3d5c639bb1aaeb5f544"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14552,
-   "sha256": "3f3f75f0e7e3037a8bff562012dbdfad4186410aaa43470f11e8f62fd9aae64b"
+   "sha256": "5ced8228b8bc4a782e6b8ff641c70e803906daafd16067feee3d09f428cd096e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
