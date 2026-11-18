@@ -17,6 +17,7 @@ import * as THREE from 'three';
 import { M05WALL, M05WTILE, PROJ05_INVERSE, flag05 as explicitFlag05, m05eye, on05, proj05Pending } from './waterRibbon';
 // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
 const flag05 = on05;
+const CLEAN_BAYS = explicitFlag05('cx05WallBays');
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export const PROJWALL05: boolean = flag05('projwall05');
@@ -121,6 +122,7 @@ const shared = {
   uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
   uPjRes: { value: new THREE.Vector2(864, 1536) },
   uPtWall: { value: empty as THREE.Texture },
+  uPtSlotDetail: { value: empty as THREE.Texture },
   uPtWallSize: { value: new THREE.Vector2(1, 1) },
   uPtRows: { value: Array.from({ length: N_ROWS }, () => new THREE.Vector2(0, 1)) },
   uPtRing: { value: empty as THREE.Texture },
@@ -154,6 +156,10 @@ function loadTextures() {
         res(t);
       }, undefined, rej));
   const jobs: Promise<unknown>[] = [];
+  if (CLEAN_BAYS && ENV05) {
+    jobs.push(load(new URL('../../assets/textures/env05/wall05SlotDetail.png', import.meta.url).href)
+      .then(t => { shared.uPtSlotDetail.value = t; }));
+  }
   if (PROJWALL05 || ENV05) {
     jobs.push(Promise.all([
       load(ENV05 ? new URL('../../assets/textures/env05/wall05e.png', import.meta.url).href : new URL('../../assets/textures/tunnel05/wall05.png', import.meta.url).href),
@@ -259,21 +265,23 @@ const M05WALL_GLSL = /* glsl */ `
  * own low-frequency colour to N1's, so the painted light distribution of each bay stays. Rows AB / N1 / N2 are sharp
  * already and stay as they are. Off at the locked checkpoint eye.
  */
-const CLEAN_BAYS = explicitFlag05('cx05WallBays');
 const CLEAN_BAYS_GLSL = /* glsl */ `
   {
-    // Use a gold-free, rectified panel from the closest painted bay when the original bay is under-resolved.
-    // The tube's angular and axial coordinates keep the slot pitch fixed under steering.
     vec2 source = puv * uPtWallSize;
     vec2 dx = dFdx(source), dy = dFdy(source);
     float footprint = abs(dx.x * dy.y - dx.y * dy.x) / max(max(length(dx), length(dy)), 0.00001);
     float away = smoothstep(0.35, 2.5, distance(cameraPosition, uM05Eye.xyz));
-    float weight = away * (1.0 - smoothstep(0.60, 1.35, footprint));
-    weight *= smoothstep(0.012, 0.08, pt) * (1.0 - smoothstep(0.92, 0.988, pt));
-    vec2 panels = vec2(vPerfUv.x * 46.5 / 5.0, vPerfUv.y / 9.5);
-    vec2 swatch = 1.0 - abs(2.0 * fract(0.5 * panels) - 1.0);
-    vec2 localUV = (vec2(1534.0, 623.0) + swatch * vec2(219.0, 181.0)) / uPtWallSize;
-    pc = mix(pc, texture2D(uPtWall, localUV).rgb, weight);
+    float strength = away * (1.0 - smoothstep(0.6, 1.35, footprint));
+    if (strength > 0.0) {
+      vec2 sourceUV = puv;
+      // For distant bays Claudia samples slot detail from N1 at the same angle and row fraction.
+      if (prow > 0.5 && prow < 6.5) {
+        vec2 nearRow = uPtRows[7];
+        sourceUV.y = (nearRow.x + clamp(pt * nearRow.y, 0.5, nearRow.y - 0.5)) / uPtWallSize.y;
+      }
+      float edge = texture2D(uPtSlotDetail, sourceUV).r - 128.0 / 255.0;
+      pc = clamp(pc + edge * strength, 0.0, 1.0);
+    }
   }`;
 const M05WTILE_GLSL = /* glsl */ `
   if (prow > 0.5 && prow < 6.5) {
@@ -342,7 +350,7 @@ void main() {`)
   vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}${CLEAN_BAYS && ENV05 ? CLEAN_BAYS_GLSL : ''}
   gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);
 }`);
-    if (M05WALL || M05WTILE || CLEAN_BAYS) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
+    if (M05WALL || M05WTILE || CLEAN_BAYS) shader.fragmentShader = shader.fragmentShader.replace('void main() {', (CLEAN_BAYS ? 'uniform sampler2D uPtSlotDetail;\n' : '') + 'uniform vec4 uM05Eye;\nvoid main() {');
   };
   const prevKey = mat.customProgramCacheKey.bind(mat);
   mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '') + (CLEAN_BAYS ? '|painted-bays' : '');
