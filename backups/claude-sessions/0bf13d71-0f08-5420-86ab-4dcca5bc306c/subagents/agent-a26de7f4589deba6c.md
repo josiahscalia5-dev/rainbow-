@@ -662,3 +662,196 @@ The seam needs geometry analysis. Let me map which VP-plate pixels the moving ca
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T10:44:50.402Z
+
+Before deciding item 1, I need a fast selective renderer (only the shots I need). Let me check the shared Playwright helper.
+
+### 🤖 Claude — 2026-11-18T10:44:51.447Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,80p scripts/lib/pw.mjs | head -80; nproc; uptime; ps aux | grep -E \"chrom|vite|node\" | grep -v grep | wc -l", "description": "Inspect Playwright helper and CPU load"}`
+
+### 🧑 User — 2026-11-18T10:44:51.505Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+285 chars]
+
+### 🤖 Claude — 2026-11-18T10:44:57.119Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools && cd /home/user/wt/s08 && sed -e \"s#const SHOTS = \\[#const ALL = [#\" -e \"s#^\\];#];\\nconst SHOTS = process.env.SHOTS ? ALL.filter((s) => process.env.SHOTS.split(',').includes(s[0])) : ALL;#\" tools/lead_r6/motion_audit.mjs > /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/sel_audit.mjs && grep -n \"SHOTS\\|ALL\" /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/sel_audit.mjs | head", "descri …[+55 chars]`
+
+### 🧑 User — 2026-11-18T10:44:57.186Z
+
+> ↩︎ result: 16:const ALL = [
+> 22:const SHOTS = process.env.SHOTS ? ALL.filter((s) => process.env.SHOTS.split(',').includes(s[0])) : ALL;
+> 28:  for (const [name, dist, steer] of SHOTS) {
+
+### 🤖 Claude — 2026-11-18T10:44:59.808Z
+
+Quick zero-code test of a farther arch push (`m08archk=3.4`) at the shots where the arch fades.
+
+### 🤖 Claude — 2026-11-18T10:45:02.713Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && time SHOTS=f03_forward3u,t33_through_screen,f06_forward6u node $S/tools/sel_audit.mjs 08 $S/r/archk34 \"$B7&m08archk=3.4\" 2>&1 | tail -5", "description": "Render 3 shots with arch pushed to K 3.4", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T10:45:39.020Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 08 f03_forward3u s 395.092 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.018 lat 0 stage 08 frames 38
+> 08 t33_through_screen s 396.277 lat 0 stage 08 frames 27
+> 
+> real	0m36.270s
+> user	0m1.531s
+> sys	0m0.393s
+
+### 🤖 Claude — 2026-11-18T10:45:41.262Z
+
+Fast (36 s). Let me compare t33 BEFORE vs K=3.4.
+
+### 🤖 Claude — 2026-11-18T10:45:42.657Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/r/archk34/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:45:42.698Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:45:43.808Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/r/archk34/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T10:45:43.852Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:45:51.829Z
+
+K=3.4 keeps visibly more of the gold arch (top band + upper legs) at f06/t33. Let me check for regressions at later and steering shots, and try a larger K in the same pass.
+
+### 🤖 Claude — 2026-11-18T10:45:55.337Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && SHOTS=a00_approved_view,f10_forward10u,t66_through_screen,s_left_hard,s_right_steer node $S/tools/sel_audit.mjs 08 $S/r/archk34 \"$B7&m08archk=3.4\" 2>&1 | grep -v \"allow list\" | tail -5 && SHOTS=t33_through_screen,f06_forward6u,t66_through_screen,s_left_steer node $S/tools/sel_audit.mjs 08 $S/r/archk42 \"$B7&m08archk=4.2\" 2>&1 | grep -v \"allow list\" | tail -4", "de …[+78 chars]`
+
+### 🧑 User — 2026-11-18T10:46:55.684Z
+
+> ↩︎ result: 08 a00_approved_view s 392.048 lat 0 stage 08 frames 0
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 s_right_steer s 398.039 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 404.035 lat -2.217 stage 08 frames 76
+> 08 t66_through_screen s 400.552 lat -0.005 stage 08 frames 54
+> 08 f06_forward6u s 398.11 lat 0 stage 08 frames 38
+> 08 s_left_steer s 398.019 lat -1.85 stage 08 frames 38
+> 08 t33_through_screen s 396.275 lat -0.006 stage 08 frames 27
+> 08 t66_through_screen s 400.551 lat -0 stage 08 frames 54
+
+### 🤖 Claude — 2026-11-18T10:47:02.446Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && python3 -c \"\nfrom PIL import Image\nA='/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08/'\ndef sbs(names, out):\n    ims=[Image.open(n).convert('RGB').resize((432,768)) for n in names]\n    W=Image.new('RGB',(432*len(ims)+8*(len(ims)-1),768),'white')\n    for i,im in enumerate(ims): W.paste(im,(i*440,0))\n    W.save(out)\nsbs([A+'f06_forward6u.png','r/archk34/f06_forward6u.png','r/archk42/f06_forward6u.png'],'cmp_f06.png')\nsbs([A+'t66_through …[+629 chars]`
+
+### 🧑 User — 2026-11-18T10:47:03.867Z
+
+> ↩︎ result: a00 diff px>20: 149994 rows [   0 1535]
+
+### 🤖 Claude — 2026-11-18T10:47:06.695Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/cmp_f06.png"}`
+
+### 🧑 User — 2026-11-18T10:47:06.729Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:47:07.302Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/cmp_t66.png"}`
+
+### 🧑 User — 2026-11-18T10:47:07.343Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:47:14.024Z
+
+K=4.2 keeps even more of the arch framing the top at f06 and t66. Let me inspect K=4.2 at full size for side effects (the chamber now starts further in, near spouts).
+
+### 🤖 Claude — 2026-11-18T10:47:15.413Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/r/archk42/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T10:47:15.452Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:47:16.320Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/r/archk42/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-18T10:47:16.376Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:47:21.793Z
+
+K=4.2 frames the top and upper sides with the gold arch at f06, but I see a solid magenta wedge at the left edge (rows ~530–640). Let me check whether BEFORE has it.
+
+### 🤖 Claude — 2026-11-18T10:47:26.041Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && python3 -c \"\nfrom PIL import Image\nA='/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08/'\nims=[Image.open(A+'s_left_steer.png').convert('RGB').crop((0,400,300,800)), Image.open('r/archk42/s_left_steer.png').convert('RGB').crop((0,400,300,800)), Image.open('r/archk42/f06_forward6u.png').convert('RGB').crop((0,400,300,800)), Image.open('r/archk34/s_right_steer.png').convert('RGB').crop((564,400,864,800))]\nW=Image.new('RGB',(1230,400),'white')\ …[+277 chars]`
+
+### 🧑 User — 2026-11-18T10:47:26.447Z
+
+> ↩︎ result: [198   0 201] [199   0 202]
+
+### 🤖 Claude — 2026-11-18T10:47:27.245Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/cmp_wedge.png"}`
+
+### 🧑 User — 2026-11-18T10:47:27.280Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:48:01.865Z
+
+The wedge is a new hole at K=4.2. Let me identify it with the debug colouring (`m08dbg`) at that shot.
+
+### 🤖 Claude — 2026-11-18T10:48:05.516Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && SHOTS=s_left_steer node $S/tools/sel_audit.mjs 08 $S/r/dbg42 \"$B7&m08archk=4.2&m08dbg=1\" 2>&1 | grep -v \"allow list\" | tail -2 && python3 -c \"\nfrom PIL import Image\nim=Image.open('$S/r/dbg42/s_left_steer.png').convert('RGB'); print(im.getpixel((10,590)), im.getpixel((30,600)), im.getpixel((100,500)))\nim.crop((0,300,432,900)).save('$S/dbg42_crop.png')\"", "descrip …[+77 chars]`
+
+### 🧑 User — 2026-11-18T10:48:16.663Z
+
+> ↩︎ result: 08 s_left_steer s 398.131 lat -1.85 stage 08 frames 38
+> (198, 0, 201) (199, 0, 202) (254, 253, 0)
+
+### 🤖 Claude — 2026-11-18T10:48:18.742Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/dbg42_crop.png"}`
+
+### 🧑 User — 2026-11-18T10:48:18.762Z
+
+> ↩︎ result: [image]
+

@@ -2335,3 +2335,207 @@ Allow `huggingface.co`, `cdn-lfs.huggingface.co`, `cdn-lfs-us-1.hf.co`, `cas-bri
 
 Sources: [Scenario YVO3D Retexture](https://www.scenario.com/models/yvo3d-retexture) · [Scenario YVO3D docs](https://docs.scenario.com/get-started/generation/3d-model-generation/3d-model-generation-yvo3d) · [Depth Anything 3 paper](https://arxiv.org/pdf/2511.10647v1) · [DA3 small model card](https://huggingface.co/depth-anything/da3-small) · [DA3 Nested Giant (CC BY-NC)](https://huggingface.co/depth-anything/DA3NESTED-GIANT-LARGE) · [TRELLIS.2-4B model card](https://huggingface.co/microsoft/TRELLIS.2-4B/blob/main/README.md) · [fal 3D API overview](https://fal.ai/docs/model-api-reference/3d-api/overview) · [fal MoGe-3](https://fal.ai/models/microsoft/moge-3/llms.txt) · [fal Hunyuan3D v3](https://fal.ai/models/fal-ai/hunyuan3d-v3/image-to-3d/llms.txt) · [Substance 3D Sampler 6 release](https://www.cgchannel.com/2026/06/adobe-releases-substance-3d-sampler-6/) · [Substance 3D pricing](https://toolradar.com/tools/substance-3d/pricing) · [Mitsuba 3 inverse rendering](https://mitsuba.readthedocs.io/en/v3.9.1/src/inverse_rendering/radiance_field_reconstruction.html) · [Dr.Jit paper](https://arxiv.org/pdf/2202.01284) · [HF ZeroGPU via MCP (forum)](https://discuss.huggingface.co/t/zerogpu-connection-issue-via-mcp/177828) · [mcp-hfspace](https://github.com/evalstate/mcp-hfspace) · [World Labs World API](https://worldlabs.ai/blog/announcing-the-world-api)
 
+### 🧑 User — 2026-11-18T10:45:08.793Z
+
+CLAUDIA — I ACCEPT YOUR TECHNICAL EXPLANATION, BUT I AM NOT LOWERING MY VISUAL STANDARD
+
+Thank you for finally answering my question directly.
+
+I understand that one approved picture cannot show every part of a playable 3D environment.
+
+However, I AM NOT ACCEPTING DIFFERENT-LOOKING SCENERY AS THE FINAL RESULT.
+
+My original approved artwork remains the visual authority for ALL FIVE playable Screens 04–08.
+
+Here's what I want you to do differently.
+
+1. STOP GUESSING WHAT THE UNSEEN ENVIRONMENTS SHOULD LOOK LIKE.
+
+For Screens 04, 06, and 07, identify the exact portions of the existing course that are not visible in my approved pictures.
+
+Create additional visual reference views for those portions using the original artwork's exact architecture, colors, water design, materials, and style.
+
+Show me these proposed views for my approval BEFORE treating them as the designs to reconstruct.
+
+Do not alter or replace my original approved images.
+
+2. MATCH EACH PART OF THE ENVIRONMENT TO AN APPROVED VISUAL REFERENCE.
+
+I want recognizable, consistent scenery from the beginning to the end of every playable screen.
+
+Use accurate 3D geometry, textures, and materials. Preserve successful existing work.
+
+Do not generate generic tunnels, orange corridors, or different water formations.
+
+3. CONTINUE SCREENS 05 AND 08.
+
+Keep both active specialists working on their existing improvements.
+
+Fix Screen 05's water, foam banks, scenery seams, and the transition into Screen 06.
+
+Fix Screen 08's chamber details, gold arch, seams, coins, and water appearance.
+
+The incorrect pink scenery near the Screen 05–06 handover must not appear in the final integrated game.
+
+4. MAINTAIN ALL FIVE SCREEN WORKSTREAMS.
+
+Screens 04, 05, 06, 07, and 08 all need visual improvements.
+
+Use no more than two active specialists at a time, rotating the others in as slots become available.
+
+5. SHOW ME PROOF.
+
+For every meaningful improvement, send separate full-size:
+
+- ORIGINAL APPROVED
+- BEFORE
+- NEW
+
+For portions that don't appear in the original picture, compare the finished 3D render against the additional reference view that I personally approved.
+
+Do not use color-palette percentages as proof of visual resemblance.
+
+6. MY QUALITY TARGET REMAINS HIGH.
+
+I want at least 8.5/10 visual quality throughout every playable screen, ideally 9/10 or better.
+
+Do not promise 95% pixel identity where no corresponding reference exists. Instead, use additional approved reference views to establish a clear visual target.
+
+Nothing is finished until I personally approve it.
+
+Screens 01–03 and 09–11 remain Google Flow videos. Do not work on them.
+
+VISUALS ONLY. ALL FIVE SCREENS. NO REDESIGNS. NO MORE GUESSING.
+
+Please use this approach to produce the closest possible faithful reconstruction of my original Rainbow artwork.
+
+### 🤖 Claude — 2026-11-18T10:45:39.198Z
+
+Understood. The plan is: map exactly which parts of 04, 06 and 07 your pictures don't show, make proposed reference views for those parts, get your approval, then build to match. Here's what I'll do now:
+1. Map each stage against its picture.
+2. Prepare everything free: viewpoints, layout guides and strict prompts.
+3. Price the generation step, since it's paid, and ask your approval with the exact cost.
+
+First, how the previous account generated the paid Screen 04 plate, so I reuse a proven, known-cost setup:
+
+### 🤖 Claude — 2026-11-18T10:45:40.300Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/04/fal/ 2>/dev/null | head; grep -rl \"nano-banana\" --include=*.md --include=*.py --include=*.mjs --include=*.sh qa tools scripts docs 2>/dev/null | head -8", "description": "Find previous fal generation scripts and notes"}`
+
+### 🧑 User — 2026-11-18T10:45:40.342Z
+
+> ↩︎ result: qa/imageblaster/08/NOTES.md
+> scripts/setup-image-blaster.sh
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md
+> docs/briefs/2026-11-17-r2/S06.md
+> docs/briefs/2026-11-17-r2/S04.md
+> docs/briefs/2026-11-17-r2/S07.md
+
+### 🤖 Claude — 2026-11-18T10:45:43.200Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"nano-banana\\|\\$0\\.\\|cost\\|price\\|sync_mode\\|fal.media\\|data:image\" qa/imageblaster/08/NOTES.md docs/briefs/2026-11-17-r2/S04.md | head -20; git log --all --oneline -S \"qa/match/04/fal\" -- 2>/dev/null | head -3; git ls-tree -r --name-only origin/claude/rainbow-s04-match-c9 -- qa/match/04/fal 2>/dev/null | head", "description": "Read recorded fal costs and call details"}`
+
+### 🧑 User — 2026-11-18T10:45:47.390Z
+
+> ↩︎ result: qa/imageblaster/08/NOTES.md:22:  `v3.fal.media` / `v3b.fal.media`): `fal-ai/nano-banana-2/edit` (clean plate, object reference images),
+> qa/imageblaster/08/NOTES.md:31:| Network BEFORE | proxy refused api.worldlabs.ai, cdn.marble.worldlabs.ai, queue.fal.run, fal.run, v3.fal.media (`CONNECT tunnel failed, 403`) |
+> qa/imageblaster/08/NOTES.md:32:| Network change (user-approved) | `rainbow-` environment allowed hosts + `cdn.marble.worldlabs.ai`, `v3.fal.media`, `v3b.fal.media` |
+> qa/imageblaster/08/NOTES.md:42:**Step 1 — environment-only clean plate (PAID, fal `nano-banana-2/edit`, 1 image).** Removes overlay + non-environment
+> qa/imageblaster/08/NOTES.md:55:**Step 2 — Marble world (PAID, World Labs `marble-1.1`).** Measured cost on this API (ledger
+> qa/imageblaster/08/NOTES.md:82:**Step 4 — optional 3D props (PAID, fal; ask first).** Per object: 1 `nano-banana-2/edit` reference image + 1
+> qa/imageblaster/08/NOTES.md:114:* fal `fal-ai/nano-banana-2/edit`, request `01a1e977-fbf1-71c1-85c1-99f705c06551`, 26 s, 1 image, 2K, aspect 9:16 asked.
+> qa/imageblaster/08/NOTES.md:115:  Same prompt as above (bubbles kept). Output `1-08-final-spin-chamber-plate_fal_nano-banana-2_2K.png` 1536×2752
+> qa/image …[+1405 chars]
+
+### 🤖 Claude — 2026-11-18T10:45:50.173Z
+
+> 🔧 **WebSearch** `{"query": "fal.ai nano-banana-2 edit pricing per image 2K sync_mode data URI", "mode": "standard"}`
+
+### 🤖 Claude — 2026-11-18T10:45:51.925Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/04/fal/fal_edit1_plate_request.json 2>/dev/null | python3 -c \"import json,sys; d=json.load(sys.stdin); print(json.dumps({k:(v if k!='prompt' else v[:300]) for k,v in d.items()}, indent=1)[:2500])\" 2>/dev/null || git show origin/claude/rainbow-s04-match-c9:qa/match/04/fal/fal_edit1_plate_request.json | head -c 2500", "description": "Read the previous fal plate request record"}`
+
+### 🧑 User — 2026-11-18T10:45:55.764Z
+
+> ↩︎ result: Web search results for query: "fal.ai nano-banana-2 edit pricing per image 2K sync_mode data URI"
+> 
+> Links: [{"title":"Nano Banana 2.1 vs. Nano Banana 2: What's The Difference?","url":"https://fal.ai/learn/devs/nano-banana-2-1-vs-nano-banana-2"},{"title":"# Nano Banana 2","url":"https://fal.ai/models/fal-ai/nano-banana-2/llms.txt"},{"title":"Run models all in one Sandbox 🏖️","url":"https://fal.ai/models/fal-ai/nano-banana-2/edit"},{"title":"Ideogram v4 vs. Nano Banana 2: What's The Difference?","url":"https://fal.ai/learn/devs/ideogram-v4-vs-nano-banana-2"},{"title":"fal.ai","url":"https://fal.ai/models/fal-ai/gemini-3.1-flash-image-preview/edit"},{"title":"gpt image 2 vs nano banana 2","url":"https://fal.ai/learn/tools/gpt-image-2-vs-nano-banana-2"},{"title":"how much does nano banana cost","url":"https://www.thepricer.org/how-much-does-nano-banana-cost/"},{"title":"Seedream 5.0 Pro vs. Nano Banana 2: What's The Difference?","url":"https://fal.ai/learn/devs/seedream-5-0-pro-vs-nano-banana-2"},{"title":"how to use nano banana 2","url":"https://fal.ai/learn/tools/how-to-use-nano-banana-2"},{"title":"Seedance 2.0 by ByteDance is now live on fal! 🚀","url":"https://fal.ai/models/fal-ai/g …[+2413 chars]
+
+### 🧑 User — 2026-11-18T10:45:55.834Z
+
+> ↩︎ result: {
+>   "schema_version": 1,
+>   "kind": "2d",
+>   "index": 1,
+>   "role": "plate",
+>   "output_slug": "04-five-arrows-plate",
+>   "input_images": [
+>     "worlds/rainbow-04-five-arrows/source/0-04-through-the-five-arrows.png"
+>   ],
+>   "provider": "fal-ai/nano-banana-2/edit",
+>   "endpoint": "fal-ai/nano-banana-2/edit",
+>   "status": "completed",
+>   "request_id": "01a1ea70-42d8-7943-b035-7bb5f129d872",
+>   "submitted_at": "2026-11-17T16:56:27.628Z",
+>   "completed_at": "2026-11-17T16:56:49.452Z",
+>   "prompt": "remove the following from the image: the game HUD bar at the top (heart counter, coin counter and pause button), the purple title banner reading 04 · THROUGH THE FIVE ARROWS, the pink fluffy character in the knitted purple-and-white hat and its white splash, all five gold dollar coins. Continue the swirling cyan and pink water, the glowing chevron arrows on the water and the room behind (porthole, towels, control panel) naturally where they were hidden. Keep everything else exactly as it is: the gold ring tunnel, its rings, colours, lighting, foam and bubbles.",
+>   "input_files": [
+>     "worlds/rainbow-04-five-arrows/source/0-04-through-the-five-arrows.png"
+>   ],
+>   "output_files": [
+>     "worlds/rainbow-04- …[+980 chars]
+
+### 🤖 Claude — 2026-11-18T10:45:59.917Z
+
+> 🔧 **ToolSearch** `{"query": "select:WebFetch", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T10:45:59.923Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T10:46:02.057Z
+
+> 🔧 **WebFetch** `{"url": "https://fal.ai/models/fal-ai/nano-banana-2/edit/llms.txt", "prompt": "List every input parameter of the edit endpoint (name, type, default, allowed values), especially sync_mode, resolution, aspect_ratio, num_images, image_urls (do data URIs work?), and the exact price per image at each resolution."}`
+
+### 🧑 User — 2026-11-18T10:46:02.133Z
+
+> ↩︎ result: getaddrinfo ENOTFOUND fal.ai. In this cloud session a host fails to resolve like this when it is outside the session's allowed network domains, or does not exist. If another host has failed the same way, stop trying more sites: carry on without them, and say in your answer that fal.ai has to be allowed in the session's network settings. Fetch it again only once the user says it is allowed.
+
+### 🤖 Claude — 2026-11-18T10:46:22.671Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10; for s in 04 06 07; do python3 -I -c \"\nimport json;d=json.load(open('$SP/$s/motion.json'));sh={x['name']:x for x in d['shots']}\na=sh['a00_approved_view'];print('$s','stage s0',round(a['s0'],2),'s1',round(a['s1'],2),'len',round(a['s1']-a['s0'],2),'| painted camera s',round(a['s'],2), '| shots:', ', '.join(f\\\"{k.split('_')[0]}={round(v['s'],1)}\\\" for k,v in sh.items()))\"; done; grep -n -i \"plunge\\|s 3[0-9][0-9]\\|% of the\\|u stage\\|from .* u\\|opening\\|not shown\\|never shows\ …[+187 chars]`
+
+### 🧑 User — 2026-11-18T10:46:22.782Z
+
+> ↩︎ result: 04 stage s0 77.41 s1 114.69 len 37.28 | painted camera s 78.31 | shots: a00=78.3, f03=81.1, f06=84.2, f10=88.1, f20=98.2, s=84.2, s=84.2, s=90.2, s=90.2, t33=90.5, t66=102.8, t95=113.7
+> 06 stage s0 198.91 s1 242.87 len 43.96 | painted camera s 199.59 | shots: a00=199.6, f03=202.6, f06=205.5, f10=209.6, f20=219.6, s=205.5, s=205.5, s=211.6, s=211.6, t33=214.1, t66=228.6, t95=241.3
+> 07 stage s0 273.06 s1 390.16 len 117.11 | painted camera s 273.8 | shots: a00=273.8, f03=276.7, f06=279.7, f10=283.7, f20=293.7, s=279.7, s=279.7, s=285.7, s=285.7, t33=312.5, t66=351.1, t95=385.1
+> docs/briefs/2026-11-18-r9/BLUEPRINT_06.md:14:2. **Large purple drum wall upper-left** (≈ 40 % of the upper half), pink-magenta with slot rows (≈ (235,97,194)), and **two
+> docs/briefs/2026-11-18-r9/BLUEPRINT_06.md:33:* **From f06 (6 u = 14 % of the stage) to t66 the composition is REPLACED.** `m06cam` aims the camera down the tunnel
+> docs/briefs/2026-11-18-r9/BLUEPRINT_06.md:64:* With fixes 1–3 and the free method: **≈ 7–7.5/10 over the first ~70 % of the stage**. The 06→07 turn (last ~25 %) is not
+> docs/briefs/2026-11-18-r9/BLUEPRINT_06.md:67:  that the course's straight-ish 06 path does not actually ride, and the st …[+2369 chars]
+
+### 🤖 Claude — 2026-11-18T10:47:34.837Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r10/REFERENCE_VIEWS_PLAN.md", "content": "# Round 10 — additional reference views for the parts of 04 / 06 / 07 the approved pictures do not show\n\nUser order 2026-11-18 ~10:55 UTC: \"STOP GUESSING WHAT THE UNSEEN ENVIRONMENTS SHOULD LOOK LIKE. … identify the exact portions of\nthe existing course that are not visible in my approved pictures. Create additional visual reference views for those portions\nusing the original artwork's exact architecture, colors, water design, materials, and style. Show me these proposed views for my\nappro …[+3366 chars]`
+
+### 🧑 User — 2026-11-18T10:47:34.863Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r10/REFERENCE_VIEWS_PLAN.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:47:37.242Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md", "old_string": "  - `download.pytorch.org`      — the small CPU-only PyTorch build (~200 MB; the PyPI build is the ~4 GB GPU build)", "new_string": "  - `download.pytorch.org`      — the small CPU-only PyTorch build (~200 MB; the PyPI build is the ~4 GB GPU build)\n  - `v3.fal.media`, `v3b.fal.media` — download links of fal results (the reference views of `REFERENCE_VIEWS_PLAN.md`);\n    the previous account had both allowed. Not needed if fal returns the image inline (`sync_mode …[+5 chars]`
+
+### 🧑 User — 2026-11-18T10:47:37.286Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:47:38.923Z
+
+Making the proposed views is a paid step, so I need your approval before spending anything:
+
+### 🤖 Claude — 2026-11-18T10:47:42.573Z
+
+> 🔧 **AskUserQuestion** `{"questions": [{"question": "To make proposed reference views of the parts of Screens 04, 06 and 07 your approved pictures don't show, I'd use fal's nano-banana-2 image-edit model on your existing fal account (the same model that made your 04 and 08 plates). It's about $0.12 per image. Your approved picture is the only design source, and you approve or reject every view before anything is built from it. How much may I spend?", "header": "fal budget", "multiSelect": false, "options": [{"label": "Pilot 04 first (Recommended)", "description": "Screen 04 only: 3 viewpoints inside the washer openin …[+390 chars]`
+

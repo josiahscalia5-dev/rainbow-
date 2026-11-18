@@ -906,3 +906,388 @@ Let me write a riding probe tool (raycast at a riding audit position, optional h
 >     if (sb > skip[0] && sa < skip[1]) continue;
 >     for (let sideI =  …[+4814 chars]
 
+### 🤖 Claude — 2026-11-18T10:43:44.481Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uPjNear\" src/vfx/index.ts src/vfx/waterRibbon.ts | head -20; grep -n \"BERM_VERT = \" -A40 src/vfx/foam.ts | head -60", "description": "Find ride-focus updates and berm vertex shader"}`
+
+### 🧑 User — 2026-11-18T10:43:44.516Z
+
+> ↩︎ result: src/vfx/index.ts:203:      // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
+> src/vfx/index.ts:204:      const pjNear = ribbon.uniforms.uPjNear;
+> src/vfx/waterRibbon.ts:416:uniform vec4 uPjNear;      // m05geo: the ride focus (as the fragment shader's ?projnear05 uniform)
+> src/vfx/waterRibbon.ts:450:    float gk = uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0;
+> src/vfx/waterRibbon.ts:453:      float sg = s - (uPjNear.z - uPjNear.w);
+> src/vfx/waterRibbon.ts:456:      float gin = smoothstep(uPjNear.w + 3.0, uPjNear.w + 5.0, sg) * step(0.0, tg) * step(tg, 1.0);
+> src/vfx/waterRibbon.ts:574:// the old tile uPjT keeps its role where E / N have no data at the locked view. uPjNear: x = on, y = share of the
+> src/vfx/waterRibbon.ts:576:uniform vec4 uPjNear;
+> src/vfx/waterRibbon.ts:582:float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
+> src/vfx/waterRibbon.ts:645:  wE *= mix(1.0, nmK * smoothstep(uPjNear.w - M05NEAR_S0, uPjNear.w - M05NEAR_S0 + 0.3, s) * smoothstep(0.0, 0.2, min(eUV.x, 1.0 - eUV.x)), pjNearK());
+> src/vfx/waterRibbon.ts:647:  wE *= mix(1.0, smoothstep(uPjNear. …[+2512 chars]
+
+### 🤖 Claude — 2026-11-18T10:43:47.445Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 190,225p src/vfx/index.ts; sed -n 60,90p src/vfx/index.ts", "description": "Read vfx index ride focus update"}`
+
+### 🧑 User — 2026-11-18T10:43:47.483Z
+
+> ↩︎ result: puddles.uniforms.uAmount.value = controls.outro;
+>       (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+>       puddles.group.visible = controls.outro > 0.001;
+>       // region visibility (perf): only what the camera around focusS can see
+>       drum.group.visible = focusS < st03.s0 + 12;
+>       whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+>       wave.mesh.visible = focusS > st08.s0 - 25;
+>       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
+>       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+>       foam.update(time, dt, focusS, controls.outro, camera);
+>       // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+>       // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+>       const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;
+>       // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
+>       const pjNear = ribbon.uniforms.uPjNear;
+>       if (pjNear) (pjNear.value as THREE.Vector4).z = f …[+2824 chars]
+
+### 🤖 Claude — 2026-11-18T10:44:07.214Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 1838, "limit": 80}`
+
+### 🧑 User — 2026-11-18T10:44:07.231Z
+
+> ↩︎ result: 1838	  const geo = new THREE.BufferGeometry();
+> 1839	  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+> 1840	  geo.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+> 1841	  geo.setAttribute('aUV', new THREE.BufferAttribute(uv, 2));
+> 1842	  geo.setAttribute('aHalfW', new THREE.BufferAttribute(halfW, 1));
+> 1843	  geo.setAttribute('aSpeed', new THREE.BufferAttribute(speed, 1));
+> 1844	  geo.setAttribute('aAmp', new THREE.BufferAttribute(amp, 1));
+> 1845	  geo.setAttribute('aSkirt', new THREE.BufferAttribute(skirt, 1));
+> 1846	  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 4));
+> 1847	  geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
+> 1848	  if (chan) geo.setAttribute('aChan', new THREE.BufferAttribute(chan, 2));
+> 1849	  geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
+> 1850	  geo.setIndex(idx);
+> 1851	  geo.computeBoundingSphere();
+> 1852	
+> 1853	  const st03 = course.stage('03'), st04 = course.stage('04'), st08 = course.stage('08');
+> 1854	  const uniforms = withFog({
+> 1855	    uTime: { value: 0 },
+> 1856	    uCyanDeep: { value: RIBBON_PAL.cyanDeep.clone() },
+> 1857	    uCyan: { value: RIBBON_PAL.cyan.clone() },
+> 1858	    uCyanBright: { value: R …[+3405 chars]
+
+### 🤖 Claude — 2026-11-18T10:44:08.423Z
+
+Now I'll create the unfold helper module and hook it into the ribbon under a new switch `&m05fold=1`.
+
+### 🤖 Claude — 2026-11-18T10:44:22.511Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/src/vfx/unfold05.ts", "content": "/**\n * `&m05fold=1` (Screen 05 round 10, branch claude/rainbow-s05-match-c10, qa/match/05/r10/PROGRESS.md; needs m05ride):\n * NO FOLDED RIVER AT THE 05 → 06 KINK. The course makes a tight S just before Screen 06 (s ≈ 172–183: bend radius\n * 3.6–5.7 u while the river is 4.3–5.6 u wide each side, measured with course.sample). The water ribbon builds every row\n * straight across the course (pos ± right · half width), so on the inner side of each bend the rows cross: the right\n * edge folds back at s 173.5–174.7, the left edge …[+3173 chars]`
+
+### 🧑 User — 2026-11-18T10:44:22.544Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/src/vfx/unfold05.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:44:37.129Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\n# 1. switch\nanchor=\"\"\"export const M05GEO: boolean = M05RIDE && q05('m05geo');\"\"\"\nassert anchor in s\ns=s.replace(anchor, anchor+\"\"\"\n/**\n * `&m05fold=1` (Screen 05 round 10, needs m05ride; src/vfx/unfold05.ts, qa/match/05/r10/PROGRESS.md): the ribbon no\n * longer folds over itself in the tight S just before Screen 06 (s ≈ 172–183, bend radius smaller than the river's half\n * width): its vertices there are smoothed along the river toward the banks (horizontal only), engaged while …[+2455 chars]`
+
+### 🧑 User — 2026-11-18T10:44:37.200Z
+
+> ↩︎ result: 12:import * as THREE from 'three';
+> 13:import { unfoldDelta05 } from './unfold05'; // Screen 05 round 10 (&m05fold=1 only)
+> 14:import type { Course, StageId } from '../world/course';
+> 15:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 16:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> 426:uniform vec4 uPjNear;      // m05geo / m05fold: the ride focus (as the fragment shader's ?projnear05 uniform)
+> 459:  p += aUnf * (uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0);
+> 466:    float gk = uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0;
+> 590:// the old tile uPjT keeps its role where E / N have no data at the locked view. uPjNear: x = on, y = share of the
+
+### 🤖 Claude — 2026-11-18T10:44:41.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc=$?", "description": "Type-check the project", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T10:44:44.847Z
+
+> ↩︎ result: tsc=0
+
+### 🤖 Claude — 2026-11-18T10:44:48.844Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05fold=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/fold1; time (timeout 900 node tools/match05/r8_shots.mjs $S \"$Q\" t33_through_screen,t66_through_screen,f20_forward20u 2>&1 | tail -5)", "description": "Render NEW frames with m05fold at t33, t66, f20", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T10:45:39.182Z
+
+> ↩︎ result: f20_forward20u s 153.235 lat 0 coins 1450 benny -0.05 -0.27 big coins: #23@339,713 d103
+> t33_through_screen s 151.691 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+> 
+> real	0m50.305s
+> user	0m1.473s
+> sys	0m0.359s
+
+### 🤖 Claude — 2026-11-18T10:45:41.451Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/fold1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:45:41.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:45:52.353Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad && python3 -c \"\nfrom PIL import Image, ImageChops\nimport numpy as np\nfor n in ['t66_through_screen','t33_through_screen','f20_forward20u']:\n  a=Image.open('audit_c10/05/'+n+'.png').convert('RGB'); b=Image.open('r10/fold1/'+n+'.png').convert('RGB')\n  d=np.abs(np.asarray(a,int)-np.asarray(b,int)).max(2)\n  m=d>40\n  ys,xs=np.nonzero(m[200:]); \n  print(n, 'changed>40:', m[200:].sum(), 'bbox', (xs.min(),ys.min()+200,xs.max(),ys.max()+200) if len(xs) else None)\na=Image.open('audit_c10/05/t66_th …[+294 chars]`
+
+### 🧑 User — 2026-11-18T10:45:53.103Z
+
+> ↩︎ result: t66_through_screen changed>40: 43316 bbox (np.int64(0), np.int64(205), np.int64(863), np.int64(1102))
+> t33_through_screen changed>40: 30265 bbox (np.int64(0), np.int64(200), np.int64(862), np.int64(1153))
+> f20_forward20u changed>40: 53320 bbox (np.int64(0), np.int64(200), np.int64(863), np.int64(1375))
+
+### 🤖 Claude — 2026-11-18T10:45:53.803Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_fold_t66.png"}`
+
+### 🧑 User — 2026-11-18T10:45:53.834Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:46:13.091Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n,box in [('t33_through_screen',(0,480,864,800)),('f20_forward20u',(0,480,864,800))]:\n  a=Image.open('audit_c10/05/'+n+'.png').crop(box); b=Image.open('r10/fold1/'+n+'.png').crop(box)\n  o=Image.new('RGB',(864,650),'white'); o.paste(a,(0,0)); o.paste(b,(0,330)); o.save('r10/cmp_fold_'+n+'.png')\n\"", "description": "Crop mid-distance region t33/f20 BEFORE vs fold"}`
+
+### 🧑 User — 2026-11-18T10:46:13.612Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:46:14.545Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_fold_t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T10:46:14.588Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:46:37.204Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10; timeout 900 node tools/match05/r10_probe.mjs t33_through_screen \"$Q\" --shot=$S/t33.png --sets=proj05_apron,water_ribbon,tube05_far 2>&1 | tail -4", "description": "Hide tests at t33", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T10:47:17.586Z
+
+> ↩︎ result: shot → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t33.png
+> set proj05_apron hidden 1 → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t33_hide_proj05_apron.png
+> set water_ribbon hidden 1 → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t33_hide_water_ribbon.png
+> set tube05_far hidden 3 → /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t33_hide_tube05_far.png
+
+### 🤖 Claude — 2026-11-18T10:47:21.050Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\nnames=['t33','t33_hide_proj05_apron','t33_hide_water_ribbon','t33_hide_tube05_far']\nims=[Image.open(n+'.png').crop((0,420,864,1100)).resize((432,340)) for n in names]\no=Image.new('RGB',(874,690),'white')\nfor k,i in enumerate(ims): o.paste(i,((k%2)*442,(k//2)*350))\no.save('cmp_t33_hide.png')\"", "description": "Combine t33 hide tests"}`
+
+### 🧑 User — 2026-11-18T10:47:21.392Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T10:47:22.502Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_t33_hide.png"}`
+
+### 🧑 User — 2026-11-18T10:47:22.536Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:47:29.307Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('audit_c10/05/t33_through_screen.png'); b=Image.open('r10/t33.png'); c=Image.open('r10/fold1/t33_through_screen.png')\nprint(a.size,b.size,c.size)\no=Image.new('RGB',(1310,768),'white')\nfor k,i in enumerate([a,b,c]): o.paste(i.resize((432,768)),(k*439,0))\no.save('r10/cmp3_t33.png')\"; ls /home/user/wt/s05/tools/lead_r6/; sed -n 1,60p /home/user/wt/s05/tools/lead_r6/motion_audit.mjs | grep -n \"viewport\\|goto\\|step\\|run(\\|Steer\\|wait\" ", …[+52 chars]`
+
+### 🧑 User — 2026-11-18T10:47:29.704Z
+
+> ↩︎ result: (864, 1536) (864, 1536) (864, 1536)
+> motion_audit.mjs
+> motion_metrics.py
+> 8:const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> 12:const vite = await startVite(5270 + Number(SCREEN));
+> 13:const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> 23:  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+> 25:  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> 26:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+> 28:    const st = await page.evaluate(async ([id, dist, steer]) => {
+> 29:      const r = window.__rainbow; r.goto(id);
+> 34:      r.setSteer(steer);
+> 35:      let n = 0; while (r.state().s < target - 1e-3 && n < 4000) { r.step(1); n++; }
+> 36:      r.setSteer(null);
+> 37:      r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
+> 40:    await page.waitForTimeout(150);
+> 41:    await page.screenshot({ path: `${OUT}/${name}.png` });
+> 47:  await browser.close(); await vite.close?.();
+
+### 🤖 Claude — 2026-11-18T10:47:30.806Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp3_t33.png"}`
+
+### 🧑 User — 2026-11-18T10:47:30.853Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T10:47:53.383Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 640,800p src/vfx/foam.ts", "description": "Read foam puff placement code"}`
+
+### 🧑 User — 2026-11-18T10:47:53.416Z
+
+> ↩︎ result: const mat = puff.mat;
+>   const group = new THREE.Group();
+>   group.name = 'foam_banks';
+>   const st03 = course.stage('03'), st04 = course.stage('04');
+>   const chunkLen = 24;
+>   const chunks: { mesh: THREE.InstancedMesh; sa: number; sb: number }[] = [];
+>   let total = 0;
+>   const tmpM = new THREE.Matrix4();
+>   const tmpQ = new THREE.Quaternion();
+>   const tmpS = new THREE.Vector3();
+>   const tmpE = new THREE.Euler();
+>   const tmpC = new THREE.Color();
+> 
+>   /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
+>   const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
+>   const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
+>     if (!list.length) return;
+>     const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
+>     const mesh = nMesh ? new THREE.InstancedMesh(geoHi, mat, nMesh) : null;
+>     let i = 0;
+>     // the same rand() calls per puff whichever list it lands in, so every other stage's foam stays identical
+>     for (const pf of list) {
+>       tmpQ.setFromEuler(tmpE.set(rand() * 6, rand() * 6, rand() * 6));
+>       tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
+>       cons …[+6856 chars]
+
+### 🤖 Claude — 2026-11-18T10:47:56.795Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"imp05\\|PROJ05\\|projfoam05\\|foam_rim05\\|M05\\|clip05\" src/vfx/foam.ts | head -40", "description": "Find how 05 foam is hidden under projection"}`
+
+### 🧑 User — 2026-11-18T10:47:56.823Z
+
+> ↩︎ result: 17:import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
+> 18:import { withClip05 } from './clip05';
+> 131:  #ifdef PROJ05
+> 311:  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
+> 619:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
+> 621:  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
+> 653:  /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
+> 654:  const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
+> 665:      if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
+> 695:  const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
+> 707:    const imp = imp05S(ss);
+> 768:          imp05.push({ p: bermPoint(ss, e, side, r * (lace ? 0.2 : -0.1)), r, c: [lace ? 0.95 : 0.75 + 0.25 * r5(), r5(), r5() * 2 - 1] });
+> 885:  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+> 886:  rim05.name = 'foam_rim05';
+> 888:  rim05.count = imp05.length;
+> 889:  imp05.f …[+166 chars]
+
+### 🤖 Claude — 2026-11-18T10:47:58.720Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 870,905p src/vfx/foam.ts; sed -n 1090,1123p src/vfx/foam.ts; grep -n \"foam_rim05\\|rim05\\|qaHide\\|PROJ05\" src/vfx/index.ts | head -20", "description": "Read rim05 creation and visibility logic"}`
+
+### 🧑 User — 2026-11-18T10:47:58.757Z
+
+> ↩︎ result: const bub = makeBankBubbleMaterial();
+>   const rafts = new THREE.InstancedMesh(new THREE.PlaneGeometry(2, 2), bub.mat, nRaft);
+>   rafts.name = 'foam_rafts';
+>   rafts.frustumCulled = false;
+>   rafts.renderOrder = 1;
+>   for (let i = 0; i < nRaft; i++) {
+>     const kind = i % P; // see KIND
+>     rafts.setColorAt(i, tmpC.setRGB(kind < 2 || kind >= 8 ? 0.86 + 0.1 * rr() : 0.8 + 0.2 * rr(), rr(), rr() * 2 - 1));
+>     rafts.setMatrixAt(i, tmpM.makeScale(0, 0, 0));
+>   }
+>   if (rafts.instanceColor) rafts.instanceColor.needsUpdate = true;
+>   rafts.visible = false;
+>   group.add(rafts);
+>   total += nRaft;
+>   // wave 8: the 05 berm puffs + rim bubbles as fine-foam impostors (one draw, static)
+>   const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+>   rim05.name = 'foam_rim05';
+>   rim05.frustumCulled = false;
+>   rim05.count = imp05.length;
+>   imp05.forEach((b, i) => {
+>     rim05.setMatrixAt(i, tmpM.makeScale(b.r, b.r, b.r).setPosition(b.p));
+>     rim05.setColorAt(i, tmpC.setRGB(b.c[0], b.c[1], b.c[2]));
+>   });
+>   rim05.instanceMatrix.needsUpdate = true;
+>   if (rim05.instanceColor) rim05.instanceColor.needsUpdate = true;
+>   group.add(rim05);
+>   total += imp05.length;
+>   /** per puff ki …[+3825 chars]
+
+### 🤖 Claude — 2026-11-18T10:48:15.548Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"function makeBankBubbleMaterial\" -A60 src/vfx/foam.ts | grep -n \"uniform\\|uFade\\|opacity\\|discard\\|uTime\\|value\" | head -30", "description": "Inspect bank bubble material uniforms"}`
+
+### 🧑 User — 2026-11-18T10:48:15.588Z
+
+> ↩︎ result: 2:442-  const uniforms = withFog({
+> 3:443-    uTime: { value: 0 },
+> 4:444-    uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+> 6:446-  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true });
+> 7:447-  return { mat, uniforms };
+
+### 🤖 Claude — 2026-11-18T10:48:18.448Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"const BANK_BUB_VERT\" -A70 src/vfx/foam.ts | head -110", "description": "Read bank bubble impostor shaders"}`
+
+### 🧑 User — 2026-11-18T10:48:18.480Z
+
+> ↩︎ result: 353:const BANK_BUB_VERT = /* glsl */ `
+> 354-varying vec2 vP;
+> 355-varying vec3 vInst;
+> 356-varying float vBig;
+> 357-varying vec3 vCv;
+> 358-varying float vR;
+> 359-#include <fog_pars_vertex>
+> 360-void main() {
+> 361-  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+> 362-  float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);
+> 363-  vec4 mvPosition = viewMatrix * c;
+> 364-  vCv = mvPosition.xyz;
+> 365-  vR = r;
+> 366-  // wave 7: 0 for bubbles <= ~18 px, 1 for >= ~40 px on screen (the ref's big near bumps show large white caps)
+> 367-  vBig = smoothstep(0.012, 0.026, projectionMatrix[1][1] * r / max(-mvPosition.z, 0.01));
+> 368-  mvPosition.xyz += normalize(-mvPosition.xyz) * r * 0.6;
+> 369-  mvPosition.xy += position.xy * r;
+> 370-  vP = position.xy;
+> 371-  vInst = instanceColor;
+> 372-  gl_Position = projectionMatrix * mvPosition;
+> 373-  #include <fog_vertex>
+> 374-}
+> 375-`;
+> 376-/**
+> 377- * wave 8 (05 only: rafts + the 05 berm puffs): one foam lump = a sphere impostor with the true per-pixel sphere depth,
+> 378- * so lumps sink into the water and into each other with curved creases (a merged low foam mound, not stacked discs);
+> 379- * the lower outline of larger lumps is scalloped by sma …[+2615 chars]
+
+### 🤖 Claude — 2026-11-18T10:48:31.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 436,450p src/vfx/foam.ts && sed -n 95,110p src/vfx/index.ts", "description": "Read bubble material factory and qaHide setup"}`
+
+### 🧑 User — 2026-11-18T10:48:31.139Z
+
+> ↩︎ result: gl_FragColor = vec4(col, 1.0);
+>   ${FRAG_TAIL}
+> }
+> `;
+> 
+> function makeBankBubbleMaterial() {
+>   const uniforms = withFog({
+>     uTime: { value: 0 },
+>     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+>   });
+>   const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true });
+>   return { mat, uniforms };
+> }
+> 
+> /** unit sphere puff with smooth normals (detail 0 icosahedra get flat normals by default) */
+>   const crown05 = createRiderSplash05(quality);
+>   const st05 = course.stage('05');
+>   const w05At = (s: number) => smooth(st05.s0 + 2, st05.s0 + 5, s) * (1 - smooth(st05.s1 - 5, st05.s1 - 2, s));
+>   group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
+> 
+>   const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, sp …[+896 chars]
+

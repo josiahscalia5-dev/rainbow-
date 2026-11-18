@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14553,
-   "sha256": "ea8de942da33f099bf9fb730fa864e57e6989d284fd4ec60207bb567f04db9e0"
+   "sha256": "b9d611b0cdb7cbd9ec1e7e5770d84f4723b065e0b18affa6523305f4d021eac0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -938,8 +938,13 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md",
-   "bytes": 2466,
-   "sha256": "b0264e2ea1edbf357cd63aa831f7d5fa13575120fa1e3ca76e559b544196196f"
+   "bytes": 2689,
+   "sha256": "0aa99fa33205c93837a3cab91cb2ebe693f2fef1a06f51efac5d2948f1c0d951"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r10/REFERENCE_VIEWS_PLAN.md",
+   "bytes": 3859,
+   "sha256": "c36be36b4c33f6d331be13d458b0099c3c464407e59ae9135dfecaebe849e6ab"
   },
   {
    "path": "docs/briefs/2026-11-18-r10/RULES_R10.md",

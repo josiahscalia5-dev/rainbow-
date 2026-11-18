@@ -12,6 +12,8 @@ update permission request so I can approve it there." Do NOT re-request before t
   - `cdn-lfs-us-1.hf.co`        — weight file downloads (US LFS mirror)
   - `cas-bridge.xethub.hf.co`   — weight file downloads (Xet storage, used by newer repos such as DA3)
   - `download.pytorch.org`      — the small CPU-only PyTorch build (~200 MB; the PyPI build is the ~4 GB GPU build)
+  - `v3.fal.media`, `v3b.fal.media` — download links of fal results (the reference views of `REFERENCE_VIEWS_PLAN.md`);
+    the previous account had both allowed. Not needed if fal returns the image inline (`sync_mode`).
 * reason: "Allow Hugging Face + PyTorch CPU downloads to test Depth Anything 3 for free on your approved pictures."
 * No credits, no paid service. Nothing else changes.
 
