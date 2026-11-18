@@ -822,3 +822,203 @@ The next item is the white lather walls that restart further down the drop (very
 > 283:  // (lateral = position across the swim lane, banks on the painted foam fringe; along = repeating with z). Off the
 > 475:    // lane banks (+-SWIM_HALF) onto the painted foam fringe; along the river the tile keeps the painted proportions
 
+### 🤖 Claude — 2026-11-18T20:54:22.783Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw | wc -l; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/beabzijkj.output | tail -3; uptime", "description": "Check clip progress and load"}`
+
+### 🧑 User — 2026-11-18T20:54:22.913Z
+
+> ↩︎ result: 14
+> /usr/bin/ffmpeg
+>  20:54:22 up 41 min,  0 user,  load average: 21.73, 16.41, 8.26
+
+### 🤖 Claude — 2026-11-18T20:54:24.812Z
+
+Load is high (other workers). I'll commit step 2 now and add the clip when it finishes.
+
+### 🤖 Claude — 2026-11-18T20:54:29.663Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git add src/world/match07.ts assets/textures/match07/near07.json assets/textures/match07/near_bank.png assets/textures/match07/near_foam.png tools/match07/near_tiles_r16.py qa/match/07/r16/PROGRESS.md qa/match/07/r16/step2_nearw/NEW/motion.json qa/match/07/r17/PROGRESS.md qa/match/07/r17/step2_nearw/NEW qa/match/07/r17/step2_nearw/gameplay_new.json && git status --short | grep -v \"^??\" ; git commit -q -m \"Screen 07 r17 step 2: &m07nearw=1 painted near river on the level stretch (finished from r16), NEW stills, start view 0 px, 8/8 91 coins\n\nThe r16 unf …[+738 chars]`
+
+### 🧑 User — 2026-11-18T20:54:41.280Z
+
+> ↩︎ result: A  assets/textures/match07/near07.json
+> A  assets/textures/match07/near_bank.png
+> A  assets/textures/match07/near_foam.png
+> M  qa/match/07/r16/PROGRESS.md
+> A  qa/match/07/r16/step2_nearw/NEW/motion.json
+> A  qa/match/07/r17/PROGRESS.md
+> A  qa/match/07/r17/step2_nearw/NEW/a00_approved_view.png
+> A  qa/match/07/r17/step2_nearw/NEW/f03_forward3u.png
+> A  qa/match/07/r17/step2_nearw/NEW/f06_forward6u.png
+> A  qa/match/07/r17/step2_nearw/NEW/f10_forward10u.png
+> A  qa/match/07/r17/step2_nearw/NEW/f20_forward20u.png
+> A  qa/match/07/r17/step2_nearw/NEW/motion.json
+> A  qa/match/07/r17/step2_nearw/NEW/s_left_hard.png
+> A  qa/match/07/r17/step2_nearw/NEW/s_left_steer.png
+> A  qa/match/07/r17/step2_nearw/NEW/s_right_hard.png
+> A  qa/match/07/r17/step2_nearw/NEW/s_right_steer.png
+> A  qa/match/07/r17/step2_nearw/NEW/t33_through_screen.png
+> A  qa/match/07/r17/step2_nearw/gameplay_new.json
+> M  src/world/match07.ts
+> A  tools/match07/near_tiles_r16.py
+> 4aeed609ea7022a287aa816c4d26944a0a71e14f
+> 4aeed609ea7022a287aa816c4d26944a0a71e14f	refs/heads/claude/rainbow-s07-match-c17
+
+### 🤖 Claude — 2026-11-18T20:54:42.320Z
+
+Pushed and verified (`4aeed609`). Now the report to "main".
+
+### 🤖 Claude — 2026-11-18T20:54:42.687Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T20:54:42.697Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T20:54:47.687Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s07 step 2 m07nearw finished and pushed", "message": "s07 step 2 &m07nearw=1 (painted near river on the level stretch) finished: GOOD IMPROVEMENT, commit 4aeed609 on claude/rainbow-s07-match-c17 (pushed, remote == HEAD).\n- Kept set now: K&m07foam=1&m07coinsz=1&m07nearw=1. Start view 0 px (deterministic capture), gameplay 8/8, 91 coins, 1,330 -> 2,240.\n- Looks closer: at forward 10/20 u and hard left/right the blurry pink/purple smear with wall holes lying on the water is gone. It is now crisp glossy cyan water with a magenta satin band and bubbly white trim on each …[+630 chars]`
+
+### 🧑 User — 2026-11-18T20:54:47.716Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T20:54:52.215Z
+
+Now step 3: keep the lather walls hidden all the way down the drop to the end of 07 (they come back fully at the 08 start, so 08 stays unchanged), behind its own switch.
+
+### 🤖 Claude — 2026-11-18T20:54:54.774Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];\n}", "new_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  // r17 '&m07foamb=1': the walls stay away to the end of 07 (they no longer start again partway down the drop with a cut);\n  // fully back at the 08 start, so 08 keeps its berm\n  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course. …[+88 chars]`
+
+### 🧑 User — 2026-11-18T20:54:54.807Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T20:54:56.996Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/waterRibbon.ts", "old_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];\n}", "new_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  // r17 '&m07foamb=1': see hide07 in foam.ts (to the end of 07)\n  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;\n  return [course.marks['07_plunge_top'] + 9, end];\n}"}`
+
+### 🧑 User — 2026-11-18T20:54:57.031Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T20:54:58.694Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/foam.ts", "offset": 554, "limit": 8}`
+
+### 🧑 User — 2026-11-18T20:54:58.717Z
+
+> ↩︎ result: 554	const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
+> 555	
+> 556	/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> 557	function hide07(course: Course): [number, number] | null {
+> 558	  if (!flag05('match07') || !flag05('m07foam')) return null;
+> 559	  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+> 560	}
+> 561
+
+### 🤖 Claude — 2026-11-18T20:54:59.334Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/waterRibbon.ts", "offset": 226, "limit": 6}`
+
+### 🧑 User — 2026-11-18T20:54:59.379Z
+
+> ↩︎ result: 226	 */
+> 227	/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the sheet's lifted white edges step aside (null = off) */
+> 228	function HIDE07R(course: Course): [number, number] | null {
+> 229	  if (!flag05('match07') || !flag05('m07foam')) return null;
+> 230	  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+> 231	}
+
+### 🤖 Claude — 2026-11-18T20:55:02.395Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];\n}", "new_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  // r17 '&m07foamb=1': the walls stay away to the end of 07 (they no longer start again partway down the drop with a cut);\n  // fully back at the 08 start, so 08 keeps its berm\n  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course. …[+88 chars]`
+
+### 🧑 User — 2026-11-18T20:55:03.010Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:55:04.531Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/waterRibbon.ts", "old_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];\n}", "new_string": "  if (!flag05('match07') || !flag05('m07foam')) return null;\n  // r17 '&m07foamb=1': see hide07 in foam.ts (to the end of 07)\n  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;\n  return [course.marks['07_plunge_top'] + 9, end];\n}"}`
+
+### 🧑 User — 2026-11-18T20:55:05.028Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:55:09.243Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc rc=$?; ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw | wc -l", "description": "Type-check and check clip progress", "timeout": 700000}`
+
+### 🧑 User — 2026-11-18T20:55:20.854Z
+
+> ↩︎ result: tsc rc=0
+> 25
+
+### 🤖 Claude — 2026-11-18T20:55:25.531Z
+
+The clip renders at full size and is slow under the shared load (25/86 frames). I'll stop it and render it at half size instead, as the brief asks.
+
+### 🤖 Claude — 2026-11-18T20:55:25.941Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskStop", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T20:55:25.949Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T20:55:26.998Z
+
+> 🔧 **TaskStop** `{"task_id": "beabzijkj"}`
+
+### 🧑 User — 2026-11-18T20:55:27.100Z
+
+> ↩︎ result: {"message":"Successfully stopped task: beabzijkj (cd /home/user/wt/s07 && which ffmpeg && K=$(cat qa/match/07/r16/K.txt) && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw && time timeout 1200 node tools/lead_r13/swim_clip.mjs 07 $S 3.6 \"$K&m07foam=1&m07coinsz=1&m07nearw=1\" 2>&1 | grep -v \"allow list\\|403\" | tail -3 && ffmpeg -loglevel error -y -framerate 24 -i $S/%04d.png -vf scale=432:768 -pix_fmt yuv420p -crf 23 qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4 && ls -la qa/match/07/r17/step2_nearw/)","task_id":"beabzijkj","task_type":"local_bash","command":"cd /home/user/wt/s07 && which ffmpeg && K=$(cat qa/match/07/r16/K.txt) && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw && time timeout 1200 node tools/lead_r13/swim_clip.mjs 07 $S 3.6 \"$K&m07foam=1&m07coinsz=1&m07nearw=1\" 2>&1 | grep -v \"allow list\\|403\" | tail -3 && ffmpeg -loglevel error -y -framerate 24 -i $S/%04d.png -vf scale=432:768 -pix_fmt yuv420p -crf 23 qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4 && ls -la qa/match/07/r17/step2_nearw/"}
+
+### 🤖 Claude — 2026-11-18T20:55:29.262Z
+
+> 🔧 **Bash** `{"command": "ps -eo pid,ppid,etime,args | grep -E \"swim_clip|audit_r16\" | grep -v grep | head", "description": "Check for leftover clip render processes"}`
+
+### 🧑 User — 2026-11-18T20:55:29.351Z
+
+> ↩︎ result: 11274 11272       02:39 timeout 1500 node tools/lead_r13/swim_clip.mjs 06 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_fclu 3.6 match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1
+> 11277 11274       02:39 node tools/lead_r13/swim_clip.mjs 06 /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_fclu 3.6 match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1
+
+### 🤖 Claude — 2026-11-18T20:55:33.034Z
+
+My clip render is gone; the remaining processes belong to the s06 worker (not touched). I'll make a half-size copy of the clip tool for 07.
+
+### 🤖 Claude — 2026-11-18T20:55:33.687Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 30,60p tools/lead_r13/swim_clip.mjs", "description": "Read the rest of the swim clip tool"}`
+
+### 🧑 User — 2026-11-18T20:55:33.784Z
+
+> ↩︎ result: console.log('frames', n);
+> } finally {
+>   await browser.close();
+>   await vite.close();
+> }
+
+### 🤖 Claude — 2026-11-18T20:55:37.249Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -e 's#^// Lead r13 (2026-11-18): #// s07 r17: tools/lead_r13/swim_clip.mjs rendered at HALF size (432x768, same 9:16 framing; CPU is shared). Lead r13 (2026-11-18): #' -e \"s#{ width: 864, height: 1536 }#{ width: 432, height: 768 }#\" -e \"s#startVite(5280 + Number(SCREEN))#startVite(5277)#\" tools/lead_r13/swim_clip.mjs > tools/match07/swim_clip_half.mjs && diff tools/lead_r13/swim_clip.mjs tools/match07/swim_clip_half.mjs", "description": "Create half-size clip tool copy for 07"}`
+
+### 🧑 User — 2026-11-18T20:55:37.386Z
+
+> ↩︎ result: 2c2
+> < // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> ---
+> > // s07 r17: tools/lead_r13/swim_clip.mjs rendered at HALF size (432x768, same 9:16 framing; CPU is shared). Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> 14c14
+> < const vite = await startVite(5280 + Number(SCREEN));
+> ---
+> > const vite = await startVite(5277);
+> 17c17
+> <   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+> ---
+> >   const page = await browser.newPage({ viewport: { width: 432, height: 768 }, deviceScaleFactor: 1 });
+

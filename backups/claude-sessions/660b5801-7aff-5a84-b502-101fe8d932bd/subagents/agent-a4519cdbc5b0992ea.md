@@ -1234,3 +1234,41 @@ Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output
 > 485:      u.uNear.value.set(NQ.z0, NQ.period * num('m08nearv', 1), NJ.A, 1);
 > 486:      u.uNq.value.set(1, NQ.core, NQ.lane, NQ.halfWidth);
 
+### 🤖 Claude — 2026-11-18T20:54:19.289Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/src/world/match08.ts", "offset": 428, "limit": 10}`
+
+### 🧑 User — 2026-11-18T20:54:19.302Z
+
+> ↩︎ result: 428	  }
+> 429	  // `&m08nq=1` (r14, with m08near): the near water at the PAINTED scale (tools/match08/nq08.py v4): the approved picture's
+> 430	  // own near band, rectified along its painted flow and quilted to an 8 u x lane-wide tile (no magnified / stretched glints)
+> 431	  let NQ: { z0: number; period: number; halfWidth: number; lane: number; core: number } | null = null;
+> 432	  if (nearTex && flag05('m08nq')) {
+> 433	    NQ = await fetch(new URL('../../assets/textures/match08/nq08.json', import.meta.url).href).then((r) => r.json());
+> 434	    nearTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/nq08.png', import.meta.url).href);
+> 435	    nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = THREE.ClampToEdgeWrapping; nearTex.wrapT = THREE.RepeatWrapping;
+> 436	    nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
+> 437	  }
+
+### 🤖 Claude — 2026-11-18T20:54:21.391Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && cp $S/nq/nq08g.png assets/textures/match08/nq08g.png && cp $S/nq/nq08g.json assets/textures/match08/nq08g.json && ls -la assets/textures/match08/nq08*.png", "description": "Copy v7 glow tile into assets"}`
+
+### 🧑 User — 2026-11-18T20:54:21.834Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1638691 Nov 18 20:43 assets/textures/match08/nq08.png
+> -rw-r--r-- 1 root root 1652329 Nov 18 20:54 assets/textures/match08/nq08g.png
+
+### 🤖 Claude — 2026-11-18T20:54:25.979Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  if (nearTex && flag05('m08nq')) {\n    NQ = await fetch(new URL('../../assets/textures/match08/nq08.json', import.meta.url).href).then((r) => r.json());\n    nearTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/nq08.png', import.meta.url).href);", "new_string": "  if (nearTex && flag05('m08nq')) {\n    // `&m08gl=1` (r17): the same tile with the painted glints cut from the rectified band WITH their glow (nq08.py v7,\n    // NQ08_GLOW=1): no hard white \"lightning …[+490 chars]`
+
+### 🧑 User — 2026-11-18T20:54:26.706Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:54:28.671Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && K16=\"$(cat $S/K15.txt)&m08vh=1\" && echo \"$K16\" > $S/K16.txt && M08_DET=1 M08_ONLY=f03,f06,s_left_hard node tools/match08/shots08.mjs 08 $S/gl1 \"$K16&m08gl=1\" 2>&1 | grep -E \"^08|rror\"", "description": "Render glint test shots with m08gl", "timeout": 400000}`
+

@@ -587,3 +587,50 @@ Start view unchanged (0 px differ). Now the full 12-shot NEW set from the real g
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); D=qa/match/04/r17/s1_end; mkdir -p $D/BEFORE && cp qa/match/04/r16/s3_sband/1_APPROVED.png $D/1_APPROVED.png && cp qa/match/04/r16/s3_sband/NEW/* $D/BEFORE/ && timeout 900 node tools/lead_r6/motion_audit.mjs 04 $D/NEW \"$K&m04end=1\" 2>&1 | grep \"^04\"", "description": "Render full 12-shot NEW audit with m04end", "timeout": 920000}`
 
+### 🧑 User — 2026-11-18T20:55:11.759Z
+
+> ↩︎ result: 04 a00_approved_view s 78.245 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.183 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.187 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.149 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.181 lat 0 stage 04 frames 86
+> 04 s_left_steer s 84.223 lat -1.65 stage 04 frames 26
+> 04 s_right_steer s 84.181 lat 1.65 stage 04 frames 26
+> 04 s_left_hard s 90.246 lat -1.65 stage 04 frames 52
+> 04 s_right_hard s 90.249 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.483 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.846 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-18T20:55:13.054Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r17/s1_end/NEW/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T20:55:13.134Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:55:13.530Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r17/s1_end/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T20:55:13.639Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:55:18.217Z
+
+The far end reads as rings telescoping into a bright light at forward 10 u and while steering hard left, with no tearing. Writing the r17 log, then commit and push.
+
+### 🤖 Claude — 2026-11-18T20:55:32.850Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/qa/match/04/r17/PROGRESS.md", "content": "# Screen 04 — round 17 (account 17, worker `foam-bubbles-particles` for the lead) — branch `claude/rainbow-s04-match-c17`\n\nStart: `465e4c59` (r16 step 3 `m04sband`, KEPT) + the account-16 unfinished edit (+91 lines in `src/world/match04m4.ts` = r16\n`&m04end=1`, the distant glowing opening), restored uncommitted. History: `qa/match/04/r16/PROGRESS.md`, `qa/match/04/r15/`.\nRules: VISUALS ONLY (`docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md`); this branch never edits the ring shader GOLD_FRAG\n(s04tex worker owns …[+3027 chars]`
+
+### 🧑 User — 2026-11-18T20:55:33.298Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/qa/match/04/r17/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T20:55:37.327Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && du -sh qa/match/04/r17 && git add src/world/match04m4.ts qa/match/04/r17 && git commit -q -m \"Screen 04 r17 step 1: distant glowing opening at the end of the tunnel (m04end) — GOOD IMPROVEMENT\n\nThe far end disc gets its own material (END_FRAG): telescoping copper-gold rings narrowing into a\nwarm white-gold light, the river converging into it. Ring shader untouched. Start view 0 px.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoYUDAtThkAJzb9fwd7\" && git push -q -u origin claude/rainbow- …[+191 chars]`
+
