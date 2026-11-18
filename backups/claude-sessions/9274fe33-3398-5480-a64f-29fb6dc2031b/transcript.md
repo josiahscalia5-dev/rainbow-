@@ -3064,3 +3064,26 @@ The painted-ring test made progress but isn't proven yet, and the next attempt i
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:06-step1-shown 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save the shown pictures and log to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T19:32:52.667Z
+
+> ↩︎ result: "commit": "3fb1ab3fdd99246911ba292d10026bdd97833341",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:32:31+00:00 (0.3 min ago) | local 3fb1ab3 remote 3fb1ab3 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:32:59.185Z
+
+Two new results came in.
+
+**Screen 06 rings: GOOD IMPROVEMENT, kept.** I sent you your approved picture, then BEFORE / NEW while swimming and while steering hard left. While Benny swims, the rings were dull rust-brown hoops with one thin yellow line. They're now polished gold bands with bright highlights, taken from your own painted ring.
+
+At the very start of 06, this change also slightly recoloured a thin strip of rings. It's a little closer to your painting, but your rule is that the approved start view must not change, so the worker is limiting the gold to while Benny is swimming.
+
+At that start view I also noticed two problems that were already there before this change:
+- Faint see-through ring outlines lie over your painted rings (a double exposure), with a striped strip of rings just above the crest. I've added both to the worker's list.
+- Benny looks much bigger at the 06 start than in your painting. I haven't changed anything for that; tell me if you want it looked at.
+
+**Screen 04 painted rings, second try: still not proven.** The long light streaks down the tunnel are gone; each ring now has its own short glows, like your painting. But the rings still don't look like separate thick rings. The worker found why: each ring's front edge was hiding the painted groove of the next ring. It's now moving the painted edge line and dark groove onto the visible part. I'll send pictures when that's done.
+
+Results so far: 06, 07 and 08 have each kept an improvement. 04 is still being adjusted. 05 hasn't finished its first step; it's on the hardest one, where 05 runs into 06.
+
+All six workers are busy. The machine is heavily loaded (4 cores, six workers), so renders are slow. Everything is saved: `3fb1ab3` is verified on GitHub.
+

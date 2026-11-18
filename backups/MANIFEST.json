@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17467,
-   "sha256": "ce8ed3de29f1de10c23e97c3f90798a1338780ca04c222c1e15a8f9078cb72d3"
+   "sha256": "2bbe470bf69de9c326acd758fd5985085d4afafa999e01161b91deccac392402"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1014,7 +1014,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/INFO.json",
    "bytes": 1273,
-   "sha256": "bf65f8922ea631620d3e17a3b54c09c89eae63442c3df7d34360f74ce29c6606"
+   "sha256": "d8f580a1692013bdd8d4f9ad2a48280b91d3dac5506c279cac353529037b0aae"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c16/tracked.patch",
@@ -1119,7 +1119,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c16/INFO.json",
    "bytes": 486,
-   "sha256": "9df5698385ae1352595765de33055a911d35e41002122100d5b643debb55a5ce"
+   "sha256": "04a15d401f2d55264962975594aee82c1be964fbd61bcef6a575f3cf2e5714eb"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1324,12 +1324,12 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/INFO.json",
    "bytes": 2538,
-   "sha256": "b3c6cc6ceb43fb0026994babc3a8da5a2dc0f240793048d4f80de51d0666a5b5"
+   "sha256": "03d5845f599ab3b1678cfd1785e94e0fa2f15ea4fe797ed6b77d72f121e0391e"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/tracked.patch",
-   "bytes": 10435,
-   "sha256": "0e92f5adca2c68e4a3c30673fdf95d7561d6ed7e188b9de4b25a6a881b60bf82"
+   "bytes": 11827,
+   "sha256": "165e4f877c288e8df81577283c169dbdc563192601eea145c7e11803bb20e280"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c16/untracked/qa/match/05/r14/step4_trans/before/shots.json",
@@ -1478,8 +1478,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c16/INFO.json",
-   "bytes": 477,
-   "sha256": "f5c145f6eca5c30a679c1020c1e082b0dddab851bb537e2bece7ce1a996989c9"
+   "bytes": 504,
+   "sha256": "02f81bfac0ca3c244f39de28c2a8539ff8a9dc2c0f108fecd4b964d36449d632"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c16/tracked.patch",
+   "bytes": 10339,
+   "sha256": "4551fb3ab8f1e19dacf79ec078bc43e6753671b699303136168d0d991d482031"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -1518,18 +1523,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/INFO.json",
-   "bytes": 669,
-   "sha256": "fbfced9c35e0bff84ecd241e6aa83ee4af4a0e505356e25e7372bfc7690174a7"
+   "bytes": 839,
+   "sha256": "28e134673a022616b1a30f7203e5bab2aa5ce107ea580e2198526d7c30265ba4"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/tracked.patch",
-   "bytes": 8273,
-   "sha256": "0ad5237f792784dccfc9ab9a85d17bef3a7c6578620c5b96dd8b06007a60d3c5"
+   "bytes": 8637,
+   "sha256": "b089ff1cfaf1da59063d463d37af1538f9eb2b473e43127d7e4a7a04769f5bd0"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/assets/textures/match07/near07.json",
    "bytes": 506,
-   "sha256": "b214316eda23b383e44697b6f488b6956b7516316548326b091d00c544526854"
+   "sha256": "8d171a6d0033bc63070c57173623a2b2a8a388ce59344a238cbc6a1c509c334d"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/assets/textures/match07/near_bank.png",
@@ -1538,13 +1543,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/assets/textures/match07/near_foam.png",
-   "bytes": 15987,
-   "sha256": "eb5b0121e1708558b8480023c219a6244ef002dc5b1e7406cba2503f64185495"
+   "bytes": 22222,
+   "sha256": "6193f97944db67d77f854da065679a2c1b68e9d1a4125dc6608e3b3b731d6260"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c16/untracked/tools/match07/near_tiles_r16.py",
-   "bytes": 7499,
-   "sha256": "2b0e99ab65c4f3556944b7f5ba46aa116ff1cf244920127677ee31c13f537c1b"
+   "bytes": 7577,
+   "sha256": "a87060350a2c1f9b8cdb639de5f713a9cfa224bfbceeb7ba0d48ffd3179b1f45"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -1639,7 +1644,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c16/INFO.json",
    "bytes": 485,
-   "sha256": "cb0a3373f33def95619a459a66a912455af5ddff0da5b5635575b8b25f66c564"
+   "sha256": "adb73c190a17ecb4fc3e6caa155f189fc20b2ca431f4fac146f09c63ed7d2749"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
