@@ -3813,3 +3813,38 @@ Everything is saved and verified on GitHub. Screen 05 also just pushed step 3. C
 
 > 🔧 **Bash** `{"command": "sed -i 's/| specialist RUNNING; kept so far: step 1 `&m05coin=1` (giant coin no longer over Benny), step 2 `&m05ride=1` (painted water design around Benny while swimming) — both shown to the user;/| specialist RUNNING; kept so far (tip `8d8f00f5`): step 1 `\\&m05coin=1` (giant coin no longer over Benny), step 2 `\\&m05ride=1` (painted water design around Benny while swimming), step 3 `\\&m05edge=1` (far river one continuous S into the throat, slab + orange tray gone) — all shown to the user;/' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md; grep -c 'm05edge' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md …[+718 chars]`
 
+### 🧑 User — 2026-11-18T02:23:34.338Z
+
+> ↩︎ result: 1
+> session=1e9a4cf3e5 remote=1e9a4cf3e5 lead-c8=1e9a4cf3e5 uncommitted=0
+
+### 🤖 Claude — 2026-11-18T02:23:41.291Z
+
+Yes, everything is saved on GitHub and checked against this session, so your other account can continue from exactly this step.
+
+**What's saved:**
+- **Both specialists' current work, including what they were in the middle of:**
+  - Screen 04: its first gold-washer-opening step, `26984eae`.
+  - Screen 05: everything up to step 3, `8d8f00f5`.
+- **Screens 07, 08 and 06:** their branches and written instructions, ready to start.
+- **All pictures shown to you**, in `qa/review_r8/`.
+- **A handoff note** at the top of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`. It lists each screen's branch, newest saved version, what's done, what's next, and how to restart the two specialists.
+- **The startup instructions in `CLAUDE.md`** now point a new session straight to that note.
+
+**When you switch accounts:**
+1. On the new account, connect GitHub and start a Claude Code session on your repo, choosing branch **`claude/rainbow-lead-c8`**.
+2. Paste the short prompt at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`. It tells the new session to pick up Screen 04 and Screen 05 where they are, then do 07, 08 and 06.
+3. The World Labs and fal.ai keys don't transfer between Claude accounts. If the new account doesn't have them, it will open the secure form for you to enter them.
+
+As long as this account has credits, the specialists keep working and saving here. If one stops mid-step, the new account continues from its last saved checkpoint.
+
+**Screen 05 step 3 (pictures above):** two-thirds of the way through, the raised water slab with its hard pale edge and the flat orange tray on the left bank are gone. The river now winds as one S-stream with its coin trail into the gold tunnel. Still visible: a step line where the near and far river meet, and pale far foam banks. Screen 05 has now improved three times this round.
+
+### 🧑 User — 2026-11-18T02:23:43.876Z
+
+<task-notification>
+<task-id>bq47u4bl2</task-id>
+<summary>Monitor event: "new commits by Screen 04 / 05 specialists"</summary>
+<event>s04 new commit fbfa0522 Screen 04 r8 step 1: &amp;m04ring=1 modeled polished gold-ring tunnel (crisp nested rings, painted ring colours, amber lip spots, small far glow; approved</event>
+</task-notification>
+

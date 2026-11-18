@@ -1399,3 +1399,26 @@ I'll start by inspecting where the previous instance stopped.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && rm -rf qa/match/04/r8/step1_m04ring && node tools/match04/audit04.mjs qa/match/04/r8/step1_m04ring \"match04=1&m04ring=1\" f06_forward6u,t33_through_screen,t66_through_screen,t95_through_screen 2>&1 | grep \"^04\"; python3 -I tools/lead_r6/motion_metrics.py references/04_through_the_five_arrows.png qa/match/04/r8/step1_m04ring/*.png | tee qa/match/04/r8/step1_m04ring/metrics.txt; python3 $SP/sheet.py /dev/null 1 x 2>/dev/null; python3 /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/sheet.py /tmp/claude-0/-home-user-rainbow- …[+241 chars]`
 
+### 🧑 User — 2026-11-18T02:23:12.317Z
+
+> ↩︎ result: 04 f06_forward6u s 84.351 lat 0 stage 04 frames 26
+> 04 t33_through_screen s 90.48 lat 0 stage 04 frames 53
+> 04 t66_through_screen s 102.848 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> f06_forward6u          LAYOUT20   3.5 %  PALETTE  67.0 %
+> t33_through_screen     LAYOUT20   3.3 %  PALETTE  64.6 %
+> t66_through_screen     LAYOUT20   2.4 %  PALETTE  68.1 %
+> t95_through_screen     LAYOUT20   2.3 %  PALETTE  63.8 %
+
+### 🤖 Claude — 2026-11-18T02:23:14.881Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s9.png"}`
+
+### 🧑 User — 2026-11-18T02:23:14.918Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:23:32.567Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat > qa/match/04/r8/PROGRESS.md <<'EOF'\n# Screen 04 — round 8 progress (small steps, `?match04=1` + sub-switches; default build untouched)\n\nBEFORE pictures (12 audit positions, `?match04=1`): `/home/user/wt/s04/qa/match/04/r8/BEFORE/` (`metrics.txt`).\nEvery NEW set below is rendered with `node tools/match04/audit04.mjs <dir> \"<query>\" <shots>` (= the lead's\n`tools/lead_r6/motion_audit.mjs`, same positions and names, subset of shots).\n\n## Step 1 — `?match04=1&m04ring=1` — the gold-ring tunnel as real modeled polished rings (kept)\n* **What looks be …[+2797 chars]`
+
