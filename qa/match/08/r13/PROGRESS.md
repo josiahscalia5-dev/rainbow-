@@ -76,3 +76,9 @@ Kept query: `K12&m08bore=1&m08flange=1&m08cupw=1`
 * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r13/step2_m08cupw/1_APPROVED.png`, `2_BEFORE_<shot>.png`
   (= step-1 kept set), `3_NEW_<shot>.png` for all 12 audit shots (best: `f06_forward6u`, `f10_forward10u`,
   `t66_through_screen`, `t95_through_screen`).
+
+## Round 13 resumed — 2026-11-18 (after the ~15:08 UTC interruption)
+* Resumed at `bed281f` (kept set `K12&m08bore=1&m08flange=1&m08cupw=1`). Worktree clean, nothing lost.
+* Now on task (a): the S-river and the near water ahead of / around Benny (no sideways stretching / smearing at forward
+  6 / 10 / 20 u and hard left / right; one continuous glossy S-river with the painted pink bands, diagonal streaks and white
+  glints). Then (b) wall seams, (c) river-edge foam + coin-line shape, (d) soft V in the upper-right cup's gold band.
