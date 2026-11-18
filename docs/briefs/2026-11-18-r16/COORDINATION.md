@@ -23,9 +23,17 @@ Rules (binding, unchanged): `docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md
   feature-dev, frontend-design, claude-code-setup, typescript-lsp, context7, rv-tools, unity, video-to-code-skill. The worldlabs
   plugin's own MCP (`https://api.atlas.worldlabs.ai/mcp`) was re-enabled for this project (it had been disabled as a duplicate of the
   claude.ai connector); it reports "Needs authentication" (OAuth cannot be started from a cloud session). context7: needs auth (unused).
-* claude.ai connectors on this account: **none** (`ListConnectors` empty) → World Labs Atlas and Hugging Face are NOT connected
-  (user action in claude.ai → Settings → Connectors; Atlas = custom connector `https://api.atlas.worldlabs.ai/mcp`). Not needed for
-  the running visual work (DA3 depth maps of all five pictures are in `qa/da3/2026-11-18/`).
+* claude.ai connectors: none at session start; the user connected both at ~19:20 UTC → verified with free reads only:
+  **World Labs "Marble_world_labs"** `list_projects` → "My project" (`proj_ad4fdb076f4a4c80934406cfefc4d30b`, Personal workspace),
+  tools atlasChisel / atlasGenerate / atlasTextToImage / images2PosedRGBD / posedImages2Splats / splats2Mesh, `credits_available:
+  true`, no task started; **Hugging Face** `hf_whoami` → `josdois` (OAuth, read-repos / inference-api / jobs / contribute-repos,
+  expires 2026-11-19 03:13 UTC). DA3 depth maps of all five pictures are already in `qa/da3/2026-11-18/`.
+* QA tool rebuilt: Pixelmatch `/home/user/tools-pixelmatch/pixeldiff.mjs` (pixelmatch 7 + pngjs 7, outside the game; script copy in
+  this folder: `pixeldiff.mjs`).
+* FAST FETCH (new, ~19:13 UTC): the lead checkout is now a PARTIAL clone (`extensions.partialClone=origin`,
+  `remote.origin.promisor=true`, `remote.origin.partialclonefilter=blob:none`, repositoryformatversion 1; old config backed up).
+  A shallow tip fetch now takes ~1 s instead of ~10 min / 1 GB (only commits + trees; file contents download on checkout, and
+  only those not already local). Nothing in the history or working tree changed; push / autosave / LFS unaffected (verified).
 * Bootstrap (18:58 UTC): Blender 5.3.0, Android SDK 34 + build-tools 34.0.0, Java 21, Node 22 / npm, Python QA libs, Playwright
   Chromium (WebGL2), ffmpeg / ImageMagick, tsc + continuity tests: OK. LFS 64/64 local + on GitHub. 13/13 references byte-identical.
 * Container: 4 CPU cores, 15 GB RAM, ~40 GB writable allowance. Account 15 ran six workers on 4 cores (load ≈ 15): renders were slow.

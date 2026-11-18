@@ -19,9 +19,11 @@ git worktree add --no-checkout -b "$B16" "$WT" "$TIP" >/dev/null 2>&1
 printf '/*\n!/qa/pilot05/\n!/qa/worldlabs/\n!/qa/imageblaster/\n!/builds/\n!/backups/\n' | git -C "$WT" sparse-checkout set --no-cone --stdin
 git -C "$WT" read-tree -mu HEAD
 ln -sfn "$R/node_modules" "$WT/node_modules"
-git show "$L:backups/wip/$SLUG/tracked.patch" > "$WT/.wip_tracked.patch"
-if [ -s "$WT/.wip_tracked.patch" ]; then git -C "$WT" apply --binary .wip_tracked.patch; fi
-rm -f "$WT/.wip_tracked.patch"
+if git cat-file -e "$L:backups/wip/$SLUG/tracked.patch" 2>/dev/null; then
+  git show "$L:backups/wip/$SLUG/tracked.patch" > "$WT/.wip_tracked.patch"
+  if [ -s "$WT/.wip_tracked.patch" ]; then git -C "$WT" apply --binary .wip_tracked.patch; fi
+  rm -f "$WT/.wip_tracked.patch"
+fi
 n=0
 while IFS= read -r f; do
   rel="${f#backups/wip/$SLUG/untracked/}"
