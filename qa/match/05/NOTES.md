@@ -173,3 +173,72 @@ Proofs: default 05 == `qa/pilot05/current_default_05.png` 0 px; `?match05=1` == 
 (`r3_final/gameplay_*.json`); continuity ok; tsc clean; references 13/13. (No `match08` exists on line B.)
 `tools/match05/screen_match.py` = unchanged copy of line A's `tools/qa/screen_match.py` (read with `git show`).
 APK: `builds/rainbow-debug-05-2026-11-17-r3.apk` (+ `.md`), packaged bundle == NEW 0 px, NOT phone-tested.
+
+---
+# Round 7 (account 7, line B, branch `claude/rainbow-s05-match-c7` from `-c5` @ `ebaf6cac`) — milestone M3, step 2
+Brief: `claude/rainbow-lead-c7:docs/briefs/2026-11-17-r7/S05.md`. VISUALS ONLY: Screen 05's own matched tunnel + S-river
+over the whole stage. Audit tool `tools/lead_r6/` copied unchanged from the lead branch.
+
+## Cause (measured, not the two 06 causes)
+* Camera pitch: NOT a cause on 05 — the 05 camera is already aimed along the straight tunnel axis with a constant pitch
+  (`cameraRig.ts`, '05' block) for the whole stage up to `s1 − 9`.
+* Proxy tube: NOT a cause — the 05 tube is already the straight ring cylinder (`straightTubePath`), the river winds inside.
+* **Real cause:** the far block (rings C … G, far S-river, warm throat; `environment.ts` `// ---- 05 far tunnel`,
+  `tube.ts` ForcedTunnel) is a depth compression along the rays of the LOCKED checkpoint eye and **folded away**
+  (`openFor(cam, 18, 34)`) as soon as the camera came within 34 u of its seam (sF05 ≈ 180.0), i.e. from Benny s ≈ 152
+  (~35 % of the stage). The fold morph drops the far river and blows the far rings up (the "orange rings seen from
+  above" / waterfall in the lead's t66) and opens the view into the 06 arch hall (pink walls, white foam towers).
+
+## Change — `?m05far=1` (needs `match05=1`; explicit, NOT inside match05) — `src/world/match05far.ts`, `src/vfx/clip05.ts`
+* The compression is exact for ANY eye once its two eye constants follow the eye (D0 = eye depth of the seam, q = eye
+  offset from the axis). Under the switch the far block is re-laid every frame for the live camera: the VIRTUAL tunnel
+  (virtual depth Z beyond sF05; wall rows / ring atlas / baked far water F / far-river layout all keyed to it) stays
+  world-anchored, so rings, wall rows and the S-river approach like real geometry.
+* The seam slides ahead so it is never nearer than in the locked view (53 u): the part between sF05 and the seam is
+  drawn at real scale on the same straight axis (covers the 05 → 06 flare), capped at `sGlow05 + 3.5` (≈186.5, just
+  before the first 06 ring at ≥187, which otherwise crossed the tube as an orange band).
+* The far river starts AT the seam (the real ribbon carries course, coins and Benny before it) and is lifted by the real
+  river's rise at the seam (+0.26 u at the cap, measured: the 06 climb begins), so the two water surfaces meet.
+* Foam puffs + berm behind the seam (the rising 06 banks, white columns inside the tunnel) are discarded by a clip plane
+  (`clip05.ts`, only inside the tube, only while the block is live; programs untouched without the switch).
+* At the locked checkpoint eye the build-time geometry is restored → locked view bit-identical.
+* Fold only at the very end: eye → seam 10 → 6.5 u (Benny ≈ 183 → 186.5), into 06's own design.
+
+## Numbers (`tools/lead_r6/motion_metrics.py`, below the HUD; `qa/match/05/r7/motion_metrics.txt`)
+| frame | BEFORE LAYOUT20 / PALETTE | NEW LAYOUT20 / PALETTE |
+|---|---|---|
+| a00 approved view* | 63.4 / 94.7 | 66.3 / 94.8 |
+| f03 / f06 / f10 / f20 | 24.2/87.9 · 16.9/83.4 · 12.9/83.5 · 13.1/81.2 | 24.4/87.9 · 17.7/83.4 · 13.7/83.7 · 12.9/81.4 |
+| steer L / R, hard L / R | 13.1/83.3 · 12.5/84.6 · 10.2/80.6 · 8.7/75.5 | 13.2/83.4 · 12.5/84.6 · 10.8/81.0 · 9.1/75.9 |
+| t33 | 15.2 / 83.9 | 15.4 / 84.1 |
+| **t66** | **5.8 / 71.0** | **9.0 / 81.4** |
+| t95 (Benny 186.7, 2 u before 06) | 5.5 / 57.6 | 5.5 / 57.7 (folded: 06) |
+*the audit's a00 is not deterministic between runs (goto lands at s 133.146 vs 133.104, animated water); the
+deterministic proof is `scripts/capture.mjs 05`: BEFORE set vs NEW set **0 px**.
+
+## Honest moving rating (subjective, separate from the pixel numbers)
+Approved view ~8.5 (unchanged, 0 px). Early swim f3–f20 / steering ~6.5 (unchanged look; the far rings now approach
+instead of hanging still). **t66: ~4 → ~6** — purple slotted tunnel, gold rings to the warm throat and the winding
+cyan/pink river with the coin trail continue instead of the pink 06 hall. t95: ~4 (unchanged, the 06 hand-over).
+Still wrong: near walls / far rings seen up close are blurry (baked from small distant pixels); a faint texture edge
+and paler flat water where the far river begins at the seam; pale bank shelves along the far river; the river beyond
+the seam is less bubbly than approved; the near coin while riding is ≈190–230 px wide vs ≤ ≈96 px in the approved
+picture (lead-owned coin positions: reported, not changed).
+
+## Proofs
+* `npx tsc --noEmit -p .` clean.
+* Default `capture.mjs 05`: start commit `ebaf6ca` (separate worktree) vs + my files: **0 px** (a second run had 28 px
+  in HUD rows 51–114 only = the documented capture-timing glitch). Protected `?ringa=26&nearfloor05=0`: start vs + my
+  files **0 px**. (Both differ from the stored 2026-11-16 baselines by ~128 k px already at the start commit in this
+  container — renderer drift that predates this round; the lead noted the same on 06.)
+* Locked view BEFORE set `match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1` vs + `m05far=1`: **0 px**.
+* Gameplay `scripts/gameplay-test.mjs`: default 8/8, NEW 8/8, each **91 coins, 1,330 → 2,240**
+  (`r7/gameplay_default.json`, `r7/gameplay_NEW_m05far.json`). `npm run test:continuity` ok (exit 0).
+* Pictures (separate full-size 864×1536 portrait files): `r7/APPROVED_05_flow_into_the_current.png`,
+  `r7/BEFORE/*.png` (current set), `r7/NEW/*.png` (+ `m05far=1`), 12 audit positions each.
+
+## Not done this round (exact next step)
+Step 3 materials: (a) crisp purple slotted wall — a rectified high-resolution tile from the approved near-wall pixels
+for the far wall's real-scale part and the near bays (behind `?m05wall=1`); (b) modeled gold rings for the far block
+at real scale (behind `?m05ring=1`); (c) remove the seam edge (blend the far-river F texture into the real ribbon's E
+over the first 2 u after the seam). Keep the fold at the stage end unless the 06 owner wants the hand-over later.

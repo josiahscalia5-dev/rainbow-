@@ -1,13 +1,16 @@
-# Screen 05 — STATUS (round 3)
+# Screen 05 — STATUS (round 7)
 
-* **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1`)
-* **Assigned specialist:** Screen 05 workstream agent (round 3, account 3); no subagent used
-* **Working branch:** `claude/rainbow-s05-match-c3`, started from `claude/rainbow-s05-match-c2` @ `fd94023f005b61a111139b0f4000d797f1abe97a` (recorded before any change); never merged with line A
-* **Running-session status:** milestone 2 finished; stopped and waiting for the lead (session_01Q46SCLi5xPVn25aRuxkVwK)
-* **Latest verified commit:** see the last commit on `claude/rainbow-s05-match-c3` (remote == HEAD verified at every push; milestone commits `f966bec`, `0359dc9`, `b5edc52` + the final STATUS commit)
-* **Completed improvements:** M1 `tgtvis05` (approved water around Benny) kept. M2.1 coin total 91 / 2,240 re-checked (3 gameplay runs). M2.2 `?tgtfill05=3`: the soft green-teal patches beside Benny while riding (coin-hole fill carrying coin colours) are gone. M2.3 `?tgtwall05=1`: the right wall chunk shows the approved purple wall with dark slots instead of stretched pink water. M2.4 bottom-left ring arc: investigated, nothing kept (no measurable gain). M2.5 coin look: proposal in SHARED_CHANGES.md (face colour already matches). Pictures: APPROVED `qa/match/05/01_APPROVED.png` | BEFORE (M1) `qa/match/05/03_NEW_match05_tgtvis05.png` | NEW `qa/match/05/r3_final/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png`; riding `qa/match/05/r3_final/riding_BEFORE_M1/` vs `riding_NEW/`.
-* **Latest visual measurements (locked frame, pixel statistics, not a perceptual score):** whole frame within 20 levels 89.15 % → **89.44 %**, mean 8.09 → 7.93, SSIM 0.877 → 0.879; scenery 93.3 % → **93.7 %**; purple walls 92.2 % → 94.2 %; water 96.5 % (kept); coins 52.0 % → 48.6 % and bubbles 97.4 % → 93.4 % (worse, see problems). screen_match.py FULL 89.1 → 89.4 %, BELOWHUD 91.3 → 91.6 %, LAYOUT 95.6 → 95.9 %.
-* **Unfinished problems:** soft cyan rings around the coins in the locked view (hole fill; game coin rims); the big bubble at the right wall looks dimmer (dark wall through it); bottom-left frame bevel detail; wake water between the filaments (not started); coin edge look (needs the lead's decision, shared coins.ts).
-* **Test results:** default 05 0 px; `?match05=1` 0 px vs BEFORE; M1 0 px; protected `?ringa=26&nearfloor05=0` 0 px; gameplay 8/8 default / match05 / NEW, 91 coins 1,330 → 2,240 each; continuity ok; `npx tsc --noEmit -p .` clean; references 13/13. APK `builds/rainbow-debug-05-2026-11-17-r3.apk` built, packaged bundle == NEW 0 px — **NOT phone-tested**.
-* **Next task:** wait for the lead / user. Candidates: coin-hole rings (smaller coin holes behind a switch, moving test decides), bubble brightness at the right wall, wake water.
+* **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1` set)
+* **Assigned specialist:** Screen 05 workstream (washer-environment-modeler role), round 7 / account 7; no subagent used
+* **Working branch:** `claude/rainbow-s05-match-c7`, created by the lead from `claude/rainbow-s05-match-c5` @ `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b`; never merged with line A
+* **Running-session status:** milestone M3 step 2 finished; STOPPED, waiting for the lead
+* **Latest verified commit:** the last commit on `claude/rainbow-s05-match-c7` (remote == HEAD verified at the final push)
+* **Completed this round:** `?m05far=1` (needs `match05=1`): the far forced-perspective tunnel follows the live camera instead of folding away, so Screen 05's own purple ring tunnel, gold rings, warm throat and winding S-river continue to ~90 % of the stage (fold into 06 only in the last ~3 u). Files: `src/world/match05far.ts` (new), `src/vfx/clip05.ts` (new), hooks in `src/world/environment.ts` and `src/vfx/foam.ts` (switch-only). Details: NOTES.md "Round 7".
+* **Current set for the user:** `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1`
+* **Numbers (moving, LAYOUT20 / PALETTE vs approved):** t66 5.8 / 71.0 % → **9.0 / 81.4 %**; t33 15.2 / 83.9 → 15.4 / 84.1; early frames ±1 pt; t95 unchanged (06 hand-over). Locked view 0 px vs BEFORE.
+* **Honest moving rating (subjective):** approved view ~8.5; early swim ~6.5; two-thirds through **~4 → ~6**; last 5 % ~4 (06).
+* **Unfinished problems:** blurry near walls / far rings up close; faint texture edge + paler water where the far river begins at the seam; pale far bank shelves; near coin while riding ≈190–230 px vs ≤ ≈96 px approved (lead-owned).
+* **Test results:** tsc clean; default 0 px and protected `?ringa=26&nearfloor05=0` 0 px vs the start commit; locked NEW set 0 px vs BEFORE set; gameplay 8/8 default + NEW, 91 coins 1,330 → 2,240 each; continuity ok. Stored 2026-11-16 baselines differ ~128 k px already at the start commit (renderer drift, predates this round).
+* **Pictures:** `qa/match/05/r7/APPROVED_05_flow_into_the_current.png`, `r7/BEFORE/` and `r7/NEW/` (12 audit positions each, separate full-size files).
+* **Next task:** M3 step 3 materials — crisp rectified purple wall tile (`?m05wall=1`), modeled far gold rings at real scale (`?m05ring=1`), seam blend of the far water (see NOTES).
 * **Approval status:** under review (NOT approved — only the user approves)
