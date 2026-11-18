@@ -1,5 +1,26 @@
 # Paste this into Claude Code on the next Claude account
 
+## ▶ NEWEST (2026-11-18 ~11:30 UTC, account 10 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-c526614d-tw0yro`** (account-10 lead; NOT the default branch — the
+default branch is the protected 11-15 original and does not restore newer work). Re-enter keys only via the secure form
+if the startup check reports HTTP 401/403 (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run`).
+
+> RAINBOW — continue my EXISTING game exactly where account 10 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first: restore + verify it, then keep it running). Read the TOP
+>    section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ACCOUNT 10"), then `docs/briefs/2026-11-18-r10/COORDINATION.md`,
+>    `RULES_R10.md`, `REFERENCE_VIEWS_PLAN.md`, `PENDING_ENVIRONMENT_REQUEST.md`.
+> 2. Fetch the newest tips of every `-c10` branch (and `-c9` where no `-c10` exists); continue each on its own NEW `-c11`
+>    branch from that tip. Unfinished specialist edits not yet committed are in `backups/wip/<branch>/` (restore steps in
+>    `INFO.json`).
+> 3. Keep TWO specialists working (Screen 05 + Screen 08 were running), rotate 04 → 07 → 06; Screen 04 controlled test
+>    with my PROVISIONAL reference views V04-1 / V04-2 (`qa/match/04/r10/refviews/`).
+> 4. Show every result as separate full-size APPROVED / BEFORE / NEW pictures labelled GOOD IMPROVEMENT, NOT AN
+>    IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+> 5. Give me only a SHORT startup check (backup verified, keys working or which secure form I must fill in).
+
+---
+
 ## ▶ NEWEST (2026-11-18 ~02:25 UTC, account 8 → next account) — use THIS prompt
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
 Claude Code cloud session on the repo, branch **`claude/rainbow-lead-c8`**.

@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 15782,
-   "sha256": "866654d6b59e0c4a1612ece18970cabc0151d73ed85981372b6991a7d3783141"
+   "bytes": 16758,
+   "sha256": "ec1dc1c16bf77736ebbebf740cdd773680f55ab47cf4db9b3b0136b6829f3aac"
   },
   {
    "path": "README_FIRST.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14554,
-   "sha256": "d91082b17596633cdc93ab0da85515c6826a9d1668a2b2fd6530ac6066e78ab3"
+   "sha256": "61c2849a6d0bb48397cfd44c7c3fd866a9d9584a490ab24809ebbdb5141eceb0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -638,8 +638,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 6034,
-   "sha256": "5280a11ec25f7050a4e5de78ec96d59289b6e0d18ee2461d59cf1d31a170dfc3"
+   "bytes": 7856,
+   "sha256": "f80932acc299a877c3e8e9c58987c4ff75af92ae593a30a33febdee216d10f4d"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -665,6 +665,26 @@
    "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
    "bytes": 11339,
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
+   "bytes": 585,
+   "sha256": "b8502ce5d3dcf501e9df1096a3dc4c948abc5b26326ee0b8a35fee3e5d860e73"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-match-c10/tracked.patch",
+   "bytes": 10350,
+   "sha256": "1d4e8947e4cb8c1cf876d76c82e366ef7dc7dcb123732a7256fe62c8ba5f26b4"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
+   "bytes": 513,
+   "sha256": "be4c31c52f77c7ffb517daa33a79ae160b85c11db286e1e5b2a738a9ab863cb0"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c10/tracked.patch",
+   "bytes": 3053,
+   "sha256": "c53caf6bd2cc19c522e0a56af2847fb62d7ee97c1fa17f338f023b9d2cd3ec60"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -9015,6 +9035,21 @@
    "path": "qa/review_c10/2026-11-18/05_step2_m05berm/3_NEW_two_thirds.jpg",
    "bytes": 582759,
    "sha256": "1255d4b678c029f253ff47b2693642665ba7767a99abff37d13bdc12d36bf245"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_step3_m05flat/1_APPROVED_05.jpg",
+   "bytes": 496777,
+   "sha256": "0fa92db5b4734862713bb166457776a2e6e1c6b28bb2a12d6195f0da98adad64"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_step3_m05flat/2_BEFORE_two_thirds.jpg",
+   "bytes": 576460,
+   "sha256": "8900633bf34c2eab938522de813f24d57c62b5d6777883fb5bf168afa3ebe672"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/05_step3_m05flat/3_NEW_two_thirds.jpg",
+   "bytes": 580289,
+   "sha256": "f3161694b679cdf9f52e7a66038645855f54aeea53549baf6b4d16a092753217"
   },
   {
    "path": "qa/review_c10/2026-11-18/06_1_APPROVED.jpg",

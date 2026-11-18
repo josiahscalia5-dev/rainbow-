@@ -1662,3 +1662,204 @@ The cap works now (112 → 91 px). Rendering the coin shots.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/coinv && SHOTS=f06_forward6u,f10_forward10u,t33_through_screen,t66_through_screen,t95_through_screen,s_left_hard,s_right_steer node $S/tools/sel_audit.mjs 08 $S/r/coinv \"$K&m08coinv=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S && python3 py/sbs.py c_coin1.png r/far/f06_forward6u.png r/coinv/f06_forward6u.png r/far/f10_forward10u.png r/coinv/f10 …[+242 chars]`
 
+### 🧑 User — 2026-11-18T11:05:39.122Z
+
+> ↩︎ result: 08 t95_through_screen s 404.351 lat -0 stage 08 frames 78
+
+### 🤖 Claude — 2026-11-18T11:05:41.645Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_coin1.png"}`
+
+### 🧑 User — 2026-11-18T11:05:41.789Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:05:42.314Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_coin2.png"}`
+
+### 🧑 User — 2026-11-18T11:05:42.482Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:05:50.604Z
+
+Clear gains: the pop coin is gone from Benny's body (f10) and hat (t66), and the coins beside him are now painted size. A cut-off coin still shows at the frame bottom at t66. Let me identify it.
+
+### 🤖 Claude — 2026-11-18T11:05:54.517Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && sed -i 's#return { st: r.state(), coins: r.coinScreen() };#const defs = r.coinDefs(); return { st: r.state(), coins: r.coinScreen().map((c) => ({ ...c, s: +defs[c.i].s.toFixed(2), lat: +defs[c.i].lat.toFixed(2) })) };#' /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/coinprobe.mjs && node /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/coinprobe.mjs \"$K&m08coinv=1\ …[+146 chars]`
+
+### 🧑 User — 2026-11-18T11:06:08.137Z
+
+> ↩︎ result: {"mode":"ride","stage":"08","s":401.113,"lat":0,"coins":2060,"hearts":5,"paused":false,"bennyY":-113.206,"bennyVisible":true,"cam":[12.07,-109.9,-283.84]} [{"i":84,"x":555,"y":856,"d":91,"s":405.16,"lat":1.05},{"i":85,"x":412,"y":660,"d":59,"s":407.73,"lat":-1.03},{"i":86,"x":481,"y":702,"d":61,"s":410.56,"lat":-1.04},{"i":87,"x":579,"y":739,"d":71,"s":412.66,"lat":0.14},{"i":88,"x":539,"y":607,"d":31,"s":425.63,"lat":1.08},{"i":89,"x":462,"y":624,"d":38,"s":427.12,"lat":-0.66},{"i":90,"x":505,"y":611,"d":33,"s":427.42,"lat":0.52}]
+
+### 🤖 Claude — 2026-11-18T11:06:15.011Z
+
+No untaken coin is there, so the bottom coin is a pickup pop left behind as Benny moves on. Apply the passed-coin fade to popping picture coins too.
+
+### 🤖 Claude — 2026-11-18T11:06:16.471Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/gameplay/coins.ts", "old_string": "      if (coinV && d.faceTo && !collected[i] && bS >= 0) vis *= THREE.MathUtils.smoothstep(d.s - bS, -1.6, -0.6);", "new_string": "      if (coinV && d.faceTo && bS >= 0) vis *= THREE.MathUtils.smoothstep(d.s - bS, -1.6, -0.6);"}`
+
+### 🧑 User — 2026-11-18T11:06:16.547Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:06:22.953Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/coinv && SHOTS=f06_forward6u,f10_forward10u,t33_through_screen,t66_through_screen,t95_through_screen,s_left_hard,s_right_steer,s_right_hard node $S/tools/sel_audit.mjs 08 $S/r/coinv \"$K&m08coinv=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S && A=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-542 …[+398 chars]`
+
+### 🧑 User — 2026-11-18T11:07:14.450Z
+
+> ↩︎ result: 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+
+### 🤖 Claude — 2026-11-18T11:07:17.281Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_coin2.png"}`
+
+### 🧑 User — 2026-11-18T11:07:17.466Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:07:17.938Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/c_coin3.png"}`
+
+### 🧑 User — 2026-11-18T11:07:18.095Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:07:36.401Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && $S/tools/mkstep.sh step2_m08coinv $S/r/coinv f10_forward10u t66_through_screen t95_through_screen && cd /home/user/wt/s08 && cat >> qa/match/08/r10/PROGRESS.md <<'EOF'\n\n## Rejected (not kept): ceiling-seam continuation (defect B) — `m08mirror`, `m08seamc` (code removed)\n* Mirror of the painted chamber about the arch's opening edge: ghost copies of the door rim, window and handle above the\n  door, sharp diagonal tears. Worse.\n* Fill tinted with the painted wall's colour at the opening ed …[+2416 chars]`
+
+### 🧑 User — 2026-11-18T11:07:41.587Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+> e1c7d0b78c955c61e656982cbda1a61d4fbf7213
+> e1c7d0b78c955c61e656982cbda1a61d4fbf7213	refs/heads/claude/rainbow-s08-scenery-c10
+
+### 🤖 Claude — 2026-11-18T11:07:46.142Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S08 step 2 m08coinv kept", "message": "S08 r10 step 2 kept: &m08coinv=1 (coin look only) - no coin over Benny's body/hat (the pickup pop no longer grows x1.8), no huge passed coin at the frame bottom, coins beside him at painted size; 91/pickup/score logic untouched. Seam: 2 honest tries (mirror, edge tint) looked worse - rejected, not kept. SHA e1c7d0b78c955c61e656982cbda1a61d4fbf7213 (verified). Images: /home/user/wt/s08/qa/match/08/r10/step2_m08coinv/1_APPROVED.png, /home/user/wt/s08/qa/match/08/r10/step2_m08coinv/2_BEFORE_t66_through_screen.png, /home/user/wt/s08 …[+227 chars]`
+
+### 🧑 User — 2026-11-18T11:07:46.154Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T11:07:49.071Z
+
+Next: near water (defect B). Let me see how Screen 05's `projnear05` solved the same problem, to reuse its method.
+
+### 🤖 Claude — 2026-11-18T11:07:50.484Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && date -u +%H:%M && grep -rn \"projnear05\" src --include=*.ts | head -10 && ls qa/pilot05/proj/near/ 2>/dev/null | head; sed -n 1,60p qa/pilot05/proj/near/NOTES.md 2>/dev/null", "description": "Find the Screen 05 near-water implementation and notes"}`
+
+### 🧑 User — 2026-11-18T11:07:50.546Z
+
+> ↩︎ result: 11:07
+> src/vfx/waterRibbon.ts:156:const MATCH05_KEYS = ['proj05', 'projwall05', 'projring05', 'projframe05', 'projlid05', 'projnear05'];
+> src/vfx/waterRibbon.ts:408:uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h)
+> src/vfx/waterRibbon.ts:409:uniform sampler2D uPjT2;   // ?projnear05=1: the sharp near tile (mirrored repeat along s), used where E is magnified
+> src/vfx/waterRibbon.ts:412:// ?projnear05=1: 1 on river the camera has APPROACHED — within ≈14–20 units of the eye (1 / gl_FragCoord.w = view
+> src/vfx/waterRibbon.ts:440:  // ?projnear05=1: where the near layer (24 texels / unit) would be magnified, the sharp near tile takes over —
+> src/vfx/waterRibbon.ts:445:    // ?projnear05=1: on the approached river the sharp near tile replaces the soft tile; elsewhere (the whole locked view,
+> src/vfx/waterRibbon.ts:1417:      // ?projnear05=1: the same measure for the near layer (its texels per screen pixel)
+> src/vfx/waterRibbon.ts:1464:        // ?projnear05=1: the approved near water is strewn with white 4-point flares, twinkling stars and lens flares
+> src/vfx/waterRibbon.ts:1696:  // `&projnear05=1` (2026-11-17, tools/proj05/near_bake.py, qa/pilot05/pro …[+5119 chars]
+
+### 🤖 Claude — 2026-11-18T11:08:22.875Z
+
+Let me look at the painted-river centreline data (river08.json) the floor shader already uses, to anchor a near-water tile to the river's own banks.
+
+### 🤖 Claude — 2026-11-18T11:08:24.323Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nimport json; d=json.load(open('assets/textures/match08/river08.json')); print(d.keys()); \nz=d['z']; print(len(z)); \nfor i in range(0,len(z),max(1,len(z)//25)): print(round(z[i],2), round(d['x'][i],2), round(d['width'][i],2))\n\" ; head -c 600 tools/match08/river_proj.py", "description": "Inspect the painted river centre and width table"}`
+
+### 🧑 User — 2026-11-18T11:08:24.381Z
+
+> ↩︎ result: dict_keys(['note', 'floorY', 'z', 'x', 'width'])
+> 84
+> -281.05 12.56 0.76
+> -281.29 12.54 1.6
+> -281.54 12.48 2.12
+> -281.82 12.47 2.15
+> -282.12 12.5 2.07
+> -282.45 12.61 2.19
+> -282.8 12.76 2.13
+> -283.19 12.87 2.3
+> -283.61 12.93 2.41
+> -284.06 12.97 2.54
+> -284.56 12.93 2.68
+> -285.1 12.63 2.94
+> -285.7 12.3 4.01
+> -286.38 12.14 4.03
+> -287.15 12.05 4.2
+> -288.02 11.71 4.85
+> -289.01 11.32 3.91
+> -290.17 11.01 4.21
+> -291.53 10.8 4.38
+> -293.15 10.75 4.41
+> -295.13 11.05 4.5
+> -297.58 11.68 5.13
+> -300.65 12.39 5.04
+> -304.62 12.92 4.83
+> -309.92 12.55 5.75
+> -317.41 10.78 6.94
+> -328.94 8.49 9.14
+> -349.13 7.95 11.64
+> import json, math, sys, numpy as np
+> cam=json.load(open(sys.argv[1])); MW=np.array(cam['mw'],float).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]
+> W,H=864,1536; t=math.tan(math.radians(cam['fov'])/2); asp=W/H
+> def ray(u,v):
+>     x,y=u/W*2-1,1-v/H*2; d=[REDACTED-EMAIL]([x*t*asp,y*t,-1.0]); return d/np.linalg.norm(d)
+> FY=-113.6; out=[]
+> for y,c,a,b in json.load(open(sys.argv[2])):
+>     hit=lambda u: C+((FY-C[1])/ray(u,y)[1])*ray(u,y)
+>     p,pa,pb=hit(c),hit(a),hit(b); out.append((float(p[2]),float(p[0]),float(abs(pb[0]-pa[0]))))
+> out.sort(key=lambda r:-r[0])
+> json.dump({'note':'Screen 08 painted river centre line (ap
+
+### 🤖 Claude — 2026-11-18T11:08:46.714Z
+
+Let me look closely at the near water at full resolution (approved bottom vs BEFORE t33 / t66 bottoms).
+
+### 🤖 Claude — 2026-11-18T11:08:50.412Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && python3 -c \"\nfrom PIL import Image\nA='/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08/'\nims=[Image.open('/home/user/wt/s08/references/08_final_spin_chamber.png').convert('RGB').crop((0,1136,864,1536)), Image.open(A+'t33_through_screen.png').convert('RGB').crop((0,1136,864,1536)), Image.open(A+'s_right_hard.png').convert('RGB').crop((0,1136,864,1536))]\nW=Image.new('RGB',(864,1220),'white')\nfor i,im in enumerate(ims): W.paste(im,(0,i*410))\ …[+95 chars]`
+
+### 🧑 User — 2026-11-18T11:08:50.950Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:08:51.978Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/near_cmp.png"}`
+
+### 🧑 User — 2026-11-18T11:08:52.023Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:09:06.973Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && python3 -c \"\nfrom PIL import Image\np=Image.open('/home/user/wt/s08/assets/textures/match08/plate08_hybrid.png').convert('RGB'); print(p.size)\np.resize((864,1536)).crop((0,1136,864,1536)).save('plate_near.png')\"", "description": "Crop near band of the projection plate"}`
+
+### 🧑 User — 2026-11-18T11:09:07.387Z
+
+> ↩︎ result: (1536, 2731)
+
+### 🤖 Claude — 2026-11-18T11:09:08.369Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/plate_near.png"}`
+
+### 🧑 User — 2026-11-18T11:09:08.398Z
+
+> ↩︎ result: [image]
+

@@ -46,6 +46,14 @@ match `?match05=1` with env05 / benny05 / hud05 / coins05 / splash05m / bub05 �
 * At session start and after every major task: `python3 -I scripts/autosave-status.py` (expect `AUTOSAVE OK … (match)`).
   Before ending a session: `python3 scripts/rainbow-autosave.py --reason manual:end`, then confirm
   `git ls-remote origin refs/heads/<branch>` == `git rev-parse HEAD`.
+* **User order restated 2026-11-18 (permanent, every account):** at the START of every session restore and verify the
+  five-minute GitHub autosave (`python3 -I scripts/autosave-status.py` → `AUTOSAVE OK … (match)`), save immediately after
+  every kept visual improvement and before ending, verify remote SHA == local HEAD. Since 2026-11-18 every autosave also
+  snapshots each specialist worktree's UNFINISHED edits (read-only) into `backups/wip/<branch>/` (`tracked.patch`, small new
+  files, `INFO.json` with restore steps). Never commit secrets; never claim running agents or logins transfer (save their
+  definitions, work and restart instructions); never merge or overwrite specialist branches without the user's OK.
+  TRAP: the GitHub DEFAULT branch (`ccr-6f431adf-7h0m8y`, protected original 11-15) has an OLD hook that does NOT restore
+  newer work — a new account must start its session on the branch named at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
 * Backups cannot run while an environment is closed: never claim they did. Report gaps from the bootstrap's
   "Backup gap" line (previous save, missing end-of-session backup, long gaps in the log).
 

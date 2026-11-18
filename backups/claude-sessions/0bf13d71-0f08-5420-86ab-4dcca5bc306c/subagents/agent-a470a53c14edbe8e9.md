@@ -1991,3 +1991,140 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; mkdir -p $S/flat; timeout 600 node scripts/capture.mjs 05 --q=\"$K&m05flat=1\" --out=$S/flat 2>&1 | tail -1; git checkout -q qa/capture_log.json; python3 -c \"\nfrom PIL import Image; import numpy as np\nb=np.asarray(Image.open('$S/berm2/05.png').convert('RGB'),int); f=np.asarray(Image.open('$S/flat/05.png').convert('RGB'),int); k=np.a …[+307 chars]`
 
+### 🧑 User — 2026-11-18T11:05:43.128Z
+
+> ↩︎ result: ]
+> flat vs step2 set 0
+> flat vs round-start set 257 below row 180: 0
+
+### 🤖 Claude — 2026-11-18T11:06:04.932Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r10/step3_m05flat; mkdir -p $D; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad; cp references/05_flow_into_the_current.png $D/1_APPROVED.png; for n in t66_through_screen t33_through_screen; do cp $S/audit_c10/05/$n.png $D/2_BEFORE_$n.png; cp $S/r10/flat2/$n.png $D/3_NEW_$n.png; done; for k in k81_kink k81_kink_left k81_kink_right; do cp $S/r10/berm1/$k.png $D/2_BEFORE_step2_$k.png; cp $S/r10/flat2/$k.png $D/3_NEW_$k.png; done; cp $S/r10/flat2/shots.json $D/NEW_shots.json; ls $D | wc -l\npython3 - <<'EOF'\np …[+4092 chars]`
+
+### 🧑 User — 2026-11-18T11:06:13.869Z
+
+> ↩︎ result: 12
+> tsc ok
+> local 8c28a563a5cecaaddaa3f220707e83e342875eff
+> remote 8c28a563a5cecaaddaa3f220707e83e342875eff refs/heads/claude/rainbow-s05-match-c10
+> 11:06
+
+### 🤖 Claude — 2026-11-18T11:06:19.520Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "Screen 05 r10 step 3 m05flat report", "message": "Screen 05 r10 step 3 kept: &m05flat=1. The banked S before Screen 06 is now drawn level (water, lather bank and rim foam), and Benny's drawn height follows the same level water so he never sinks; gameplay is untouched. At t66 the tilted torn ramp on the left is gone and the river runs as one level S into the far river. Locked view 0 px vs step 2. SHA 8c28a563a5cecaaddaa3f220707e83e342875eff (remote verified).\nAPPROVED /home/user/wt/s05/qa/match/05/r10/step3_m05flat/1_APPROVED.png\nBEFORE /home/user/wt/s05/qa/match/05 …[+394 chars]`
+
+### 🧑 User — 2026-11-18T11:06:19.530Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T11:06:24.354Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10 && python3 -c \"\nfrom PIL import Image\na=Image.open('flat2/t66_through_screen.png').crop((0,500,864,820)).resize((1296,480))\na.save('t66_flat_seam_zoom.png')\"", "description": "Zoom seam region at t66 after flatten"}`
+
+### 🧑 User — 2026-11-18T11:06:24.708Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:06:25.797Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/t66_flat_seam_zoom.png"}`
+
+### 🧑 User — 2026-11-18T11:06:25.835Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:06:50.428Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"function rng\\|import.*rng\\|hash1\" src/vfx/foam.ts | head -5", "description": "Find rng helper in foam module"}`
+
+### 🧑 User — 2026-11-18T11:06:50.473Z
+
+> ↩︎ result: 30:const hash1 = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+> 31:const noise1 = (x: number) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return hash1(i) * (1 - u) + hash1(i + 1) * u; };
+> 43:    const ox = hash1(i * 17.13 + j * 3.71), oy = hash1(i * 5.31 + j * 19.7 + 4.2);
+> 44:    const r = 0.45 + 0.4 * hash1(i * 7.7 + j * 13.1 + 9.9);
+> 181:  col = mix(col, vec3(0.58, 0.56, 0.88), (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, hash12(floor(pp))) * 0.75 * kp);
+
+### 🤖 Claude — 2026-11-18T11:06:52.622Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"rng(\" src/vfx/foam.ts | head -3; grep -rn \"export function rng\\|export const rng\" src | head", "description": "Locate rng import"}`
+
+### 🧑 User — 2026-11-18T11:06:52.660Z
+
+> ↩︎ result: 295:function rng(seed: number) {
+> 646:  const rand = rng(1337);
+> 772:    const r5 = rng(9091);
+> src/characters/girl/textures.ts:7:export function rng(seed: number) {
+
+### 🤖 Claude — 2026-11-18T11:07:07.396Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/src/vfx/foam.ts'\ns=open(p).read()\nold=\"\"\"  // ---- whirlpool: rim ring + spiral band foam (rotates with the swirl) ----\"\"\"\nassert old in s\ns=s.replace(old,\"\"\"  // `&m05cloud=1` (Screen 05 round 10, waterRibbon.ts M05CLOUD): big puffy foam CLOUDS on both 05 banks — clusters of\n  // 6–12 lumps (radius 0.14–0.42 u, mixed sizes, piled: larger ones low and in the middle) about every 1.6 u per side,\n  // sitting on the bank and spilling a little onto the water's edge, + small bubbles around them. Own RNG: eve …[+2492 chars]`
+
+### 🧑 User — 2026-11-18T11:08:13.052Z
+
+> ↩︎ result: tsc=0
+> f03_forward3u s 136.172 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@463,788 d118 #21@552,693 d80 #22@476,631 d61
+> f10_forward10u s 143.074 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> t33_through_screen s 151.689 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T11:08:16.111Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cloud1/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:08:16.206Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:08:23.292Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(1310,560),'white')\no.paste(Image.open('../../../../../../home/user/wt/s05/references/05_flow_into_the_current.png' if False else '/home/user/wt/s05/references/05_flow_into_the_current.png').crop((0,500,864,1060)).resize((432,280)),(0,0))\no.paste(Image.open('r10/flat2/t33_through_screen.png').crop((0,500,864,1060)).resize((432,280)),(439,0))\no.paste(Image.open('r10/cloud1/t33_through_screen.png').crop((0,500,864,1060)).resize((432,280)) …[+323 chars]`
+
+### 🧑 User — 2026-11-18T11:08:23.649Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T11:08:24.568Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/cmp_cloud.png"}`
+
+### 🧑 User — 2026-11-18T11:08:24.631Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:08:34.797Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1\"; S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/r10/lock; mkdir -p $S/cloud; timeout 600 node scripts/capture.mjs 05 --q=\"$K&m05cloud=1\" --out=$S/cloud 2>&1 | tail -1; git checkout -q qa/capture_log.json; python3 -c \"\nfrom PIL import Image; import numpy as np\nb=np.asarray(Image.open('$S/flat/05.png').convert('RGB'),int); f=np.asarray(Image.open('$S/cloud/05.png').convert('RGB') …[+570 chars]`
+
+### 🧑 User — 2026-11-18T11:08:57.194Z
+
+> ↩︎ result: ]
+> cloud vs step3 set 0
+> 1_APPROVED.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> NEW_shots.json
+
+### 🤖 Claude — 2026-11-18T11:09:09.584Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/qa/match/05/r10/PROGRESS.md'\ns=open(p).read()\nadd = \"\"\"\n## Step 4 — `&m05cloud=1` (C: big puffy foam clouds on both banks; lead's review of step 1)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1`\n* WHAT LOOKS CLOSER: step 1's foam read as a thin string of small beads; the painting has big, irregular foam clouds\n  on both banks. Now clusters of 6–12 lumps of mixed size (larger, brighter ones piled …[+2026 chars]`
+
+### 🧑 User — 2026-11-18T11:09:17.041Z
+
+> ↩︎ result: tsc ok
+> local bed8253d96dad94f6cb937f4a8bc26adc6975754
+> remote bed8253d96dad94f6cb937f4a8bc26adc6975754 refs/heads/claude/rainbow-s05-match-c10
+> 11:09
+
+### 🤖 Claude — 2026-11-18T11:09:20.912Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "Screen 05 r10 step 4 m05cloud report", "message": "Screen 05 r10 step 4 kept: &m05cloud=1. Big puffy foam clouds now sit on both banks while swimming (clusters of 6–12 mixed-size lumps plus small bubbles at the water's edge), replacing the bead line. Locked view 0 px vs step 3. SHA bed8253d96dad94f6cb937f4a8bc26adc6975754 (remote verified).\nAPPROVED /home/user/wt/s05/qa/match/05/r10/step4_m05cloud/1_APPROVED.png\nBEFORE /home/user/wt/s05/qa/match/05/r10/step4_m05cloud/2_BEFORE_t33_through_screen.png (also t66/f10)\nNEW /home/user/wt/s05/qa/match/05/r10/step4_m05clou …[+290 chars]`
+
+### 🧑 User — 2026-11-18T11:09:20.927Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+

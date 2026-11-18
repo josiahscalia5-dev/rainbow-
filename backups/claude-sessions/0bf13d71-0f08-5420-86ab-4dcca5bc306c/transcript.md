@@ -3116,3 +3116,313 @@ Testing it with a real save, then checking what it captured from the two special
 
 > 🔧 **Bash** `{"command": "python3 -m py_compile scripts/rainbow-autosave.py && timeout 400 python3 scripts/rainbow-autosave.py --reason manual:wip-snapshot-test 2>&1 | grep -E '\"result\"|\"commit\"|wip|error' | head -8; ls backups/wip/ 2>&1; for d in backups/wip/*/; do python3 -I -c \"import json,sys; d=json.load(open('$d/INFO.json')); print(d['branch'], d['head'][:10], 'modified:', d['dirty_tracked'][:5], 'new:', d['untracked_copied'][:5], 'skipped:', len(d['untracked_skipped']))\"; done; echo \"HEAD $(git rev-parse --short HEAD) REMOTE $(timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro | c …[+106 chars]`
 
+### 🧑 User — 2026-11-18T11:05:44.959Z
+
+> ↩︎ result: "reason": "manual:wip-snapshot-test",
+>   "result": "committed+pushed",
+>   "wip_snapshots": [
+>   "commit": "bf8f429a1c7497db68373caf2ba809a6ee12e3db",
+> claude__rainbow-s05-match-c10
+> claude__rainbow-s08-scenery-c10
+> claude/rainbow-s05-match-c10 e519225083 modified: ['src/vfx/foam.ts', 'src/vfx/unfold05.ts', 'src/vfx/waterRibbon.ts', 'tools/match05/r10_probe.mjs'] new: [] skipped: 0
+> claude/rainbow-s08-scenery-c10 08477d8ad3 modified: ['src/gameplay/coins.ts'] new: [] skipped: 0
+> HEAD bf8f429a REMOTE bf8f429
+
+### 🤖 Claude — 2026-11-18T11:05:54.065Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "* Backups cannot run while an environment is closed: never claim they did.", "new_string": "* **User order restated 2026-11-18 (permanent, every account):** at the START of every session restore and verify the\n  five-minute GitHub autosave (`python3 -I scripts/autosave-status.py` → `AUTOSAVE OK … (match)`), save immediately after\n  every kept visual improvement and before ending, verify remote SHA == local HEAD. Since 2026-11-18 every autosave also\n  snapshots each specialist worktree's UNFINISHED edits (rea …[+630 chars]`
+
+### 🧑 User — 2026-11-18T11:05:54.104Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:06:01.919Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "old_string": "# Paste this into Claude Code on the next Claude account\n", "new_string": "# Paste this into Claude Code on the next Claude account\n\n## ▶ NEWEST (2026-11-18 ~11:30 UTC, account 10 → next account) — use THIS prompt\nBefore pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a\nClaude Code cloud session on the repo, branch **`ccr-c526614d-tw0yro`** (account-10 lead; NOT the default branch — the\ndefault branch is the protected 11- …[+1477 chars]`
+
+### 🧑 User — 2026-11-18T11:06:01.955Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T11:06:08.118Z
+
+> 🔧 **Bash** `{"command": "git branch -f claude/rainbow-s04-match-c10 origin/claude/rainbow-s04-match-c9 && timeout 120 git push -q -u origin claude/rainbow-s04-match-c10 2>&1 | grep -v '^remote:' | tail -1; [ -d /home/user/wt/s04 ] || git worktree add -q /home/user/wt/s04 claude/rainbow-s04-match-c10; ln -sfn /home/user/rainbow-/node_modules /home/user/wt/s04/node_modules; cd /home/user/wt/s04 && git log -1 --format='%h %s' | cut -c1-100; ls src/world/; grep -rln \"m04ring\\|m04river\\|m04mouth\" src | head; ls tools/match04/ | head -40", "description": "Create Screen 04 round-10 branch and inspect its cod …[+22 chars]`
+
+### 🧑 User — 2026-11-18T11:06:14.849Z
+
+> ↩︎ result: branch 'claude/rainbow-s04-match-c10' set up to track 'origin/claude/rainbow-s04-match-c9'.
+> 05e383c9 Screen 04 r9: BLUEPRINT (approved composition measured + overlay) and foundation test &m04l
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match04.ts
+> match04m4.ts
+> match08.ts
+> materials.ts
+> towel.ts
+> tube.ts
+> src/world/match04.ts
+> src/world/match04m4.ts
+> audit04.mjs
+> bennypts04.mjs
+> blueprint04.py
+> coins04.py
+> fal_plate04.py
+> fit_proxies04.py
+> make_plate04.py
+> make_river04_m3.py
+> make_tiles04.py
+> metrics04.py
+> motion04.mjs
+> mouth04.py
+> nochev04.py
+> probe04.mjs
+> solve_cam04.py
+> splash04.py
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:06:18.898Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git branch --set-upstream-to=origin/claude/rainbow-s04-match-c10 2>&1 | tail -1; git ls-remote origin refs/heads/claude/rainbow-s04-match-c10 | cut -c1-10; wc -l src/world/match04.ts src/world/match04m4.ts; sed -n 1,60p src/world/match04m4.ts", "description": "Fix upstream and read Screen 04 interior module header"}`
+
+### 🧑 User — 2026-11-18T11:06:19.412Z
+
+> ↩︎ result: branch 'claude/rainbow-s04-match-c10' set up to track 'origin/claude/rainbow-s04-match-c10'.
+> 05e383c9b0
+>   338 src/world/match04.ts
+>   765 src/world/match04m4.ts
+>  1103 total
+> /**
+>  * Screen 04 milestone M4 (round 8, qa/match/04/NOTES.md) — sub-switches of `?match04=1`, each `&m04…=1`, default off:
+>  *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+>  *             approved picture's mouth ring r 3.58 → 4.11 and the painted stacked ring bands), shaded as polished gold
+>  *             (warm glow down the tunnel, pink / violet / cyan water reflections on the lower walls, glints, a row of
+>  *             amber bulbs on the opening and on every ring lip). In the approved view these surfaces show the approved
+>  *             pixels (camera projection, unchanged); they fade to their own crisp 3D gold as the camera leaves that view.
+>  *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+>  *             view (the painting carries them there), shown once the camera has left it.
+>  *  m04bub   — iridescent soap bubbles floating in the tunnel air (camera-facing bubble dis …[+2664 chars]
+
+### 🤖 Claude — 2026-11-18T11:06:46.430Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uniform\\|gl_FragColor\\|function \\|export function\\|lathe\\|Lathe\\|ringMat\\|tile_\\|loadAsync\\|uAway\\|away\" src/world/match04m4.ts | head -60", "description": "Locate ring shader and texture loading in 04 module"}`
+
+### 🧑 User — 2026-11-18T11:06:46.487Z
+
+> ↩︎ result: 3: *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+> 22: *             -> tile_mouth.png) on a modeled mouth ring flush with the painted ring plane, mapped through the projector so
+> 59:uniform mat4 uProjVP;
+> 79:uniform sampler2D uPlate;
+> 80:uniform vec4 uPjPost;
+> 81:uniform vec2 uPjRes;
+> 82:uniform float uAway;
+> 83:uniform vec3 uAxO;
+> 84:uniform vec3 uAxD;
+> 85:uniform vec3 uAxU;
+> 86:uniform vec3 uAxR;
+> 87:uniform float uNB;
+> 88:uniform float uP;
+> 89:uniform float uLipBulb;
+> 90:uniform float uBulbR;
+> 91:uniform float uLen;
+> 92:uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+> 93:uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
+> 94:uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
+> 95:uniform float uGoldY;      // m04gold: polished YELLOW-gold ramp (bright yellow-white highlights), fewer magenta tints
+> 96:uniform float uMouthT;     // m04mouth: the painted mouth ring texture on the opening (tile_mouth.png)
+> 97:uniform sampler2D uMouthTex;
+> 98:uniform vec3 uMouthRho;    // tile rows: rho  …[+2288 chars]
+
+### 🤖 Claude — 2026-11-18T11:06:48.433Z
+
+Screen 05 step 3 arrived (the tilted, torn river ramp before Screen 06 is reported level now). Checking it:
+
+### 🤖 Claude — 2026-11-18T11:06:48.937Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r10/step3_m05flat/3_NEW_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:06:48.992Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:06:55.552Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_c10/2026-11-18/05_step3_m05flat; mkdir -p $D; S=/home/user/wt/s05/qa/match/05/r10/step3_m05flat; convert $S/1_APPROVED.png -quality 92 $D/1_APPROVED_05.jpg; convert $S/2_BEFORE_t66_through_screen.png -quality 92 $D/2_BEFORE_two_thirds.jpg; convert $S/3_NEW_t66_through_screen.png -quality 92 $D/3_NEW_two_thirds.jpg; echo ok", "description": "Copy Screen 05 step 3 proof images"}`
+
+### 🧑 User — 2026-11-18T11:06:55.767Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T11:06:57.708Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c10/2026-11-18/05_step3_m05flat/1_APPROVED_05.jpg", "qa/review_c10/2026-11-18/05_step3_m05flat/2_BEFORE_two_thirds.jpg", "qa/review_c10/2026-11-18/05_step3_m05flat/3_NEW_two_thirds.jpg"], "caption": "Screen 05 step 3 — GOOD IMPROVEMENT. APPROVED / BEFORE / NEW at two-thirds: the tilted torn ramp on the left is gone; the river runs as one level S with a pink bank and foam. Still wrong: smeared left wall, pale patch in the far river, beaded (not puffy) foam.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T11:06:58.285Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step3_m05flat/1_APPROVED_05.jpg → file_uuid: 1d7165ad-955e-444c-a429-40002dfa64e5
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step3_m05flat/2_BEFORE_two_thirds.jpg → file_uuid: 4dfed1a6-a818-4c74-9002-87e3ace2d242
+>   /home/user/rainbow-/qa/review_c10/2026-11-18/05_step3_m05flat/3_NEW_two_thirds.jpg → file_uuid: 26c78e66-6cf6-4dbc-bd2f-5ad919a80788
+
+### 🤖 Claude — 2026-11-18T11:07:04.204Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 100, "limit": 160}`
+
+### 🧑 User — 2026-11-18T11:07:04.222Z
+
+> ↩︎ result: 100	uniform vec3 uProjPos;
+> 101	varying vec4 vProj;
+> 102	varying vec3 vW;
+> 103	varying vec3 vN;
+> 104	varying vec2 vK;            // x: part (0 band, 1 lip, 2 groove, 3 opening face, 4 end glow), y: ring index (-1 = opening)
+> 105	${PROJ05_INVERSE}
+> 106	float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 107	vec3 goldRamp(float x) {
+> 108	  x = clamp(x, 0.0, 1.0) * 5.0;
+> 109	  vec3 c0 = vec3(0.43, 0.14, 0.02), c1 = vec3(0.66, 0.27, 0.07), c2 = vec3(0.80, 0.38, 0.11);
+> 110	  vec3 c3 = vec3(0.96, 0.56, 0.15), c4 = vec3(1.0, 0.80, 0.30), c5 = vec3(1.0, 0.96, 0.80);
+> 111	  if (x < 1.0) return mix(c0, c1, x);
+> 112	  if (x < 2.0) return mix(c1, c2, x - 1.0);
+> 113	  if (x < 3.0) return mix(c2, c3, x - 2.0);
+> 114	  if (x < 4.0) return mix(c3, c4, x - 3.0);
+> 115	  return mix(c4, c5, x - 4.0);
+> 116	}
+> 117	vec3 goldRampY(float x) {
+> 118	  x = clamp(x, 0.0, 1.0) * 5.0;
+> 119	  vec3 c0 = vec3(0.52, 0.22, 0.03), c1 = vec3(0.76, 0.40, 0.07), c2 = vec3(0.89, 0.55, 0.12);
+> 120	  vec3 c3 = vec3(0.98, 0.72, 0.20), c4 = vec3(1.0, 0.87, 0.42), c5 = vec3(1.0, 0.98, 0.86);
+> 121	  if (x < 1.0) return mix(c0, c1, x);
+> 122	  if (x < 2.0) return mix(c1, c2, x - 1.0);
+> 123	  if (x < 3.0) return mix(c2, c3 …[+8820 chars]
+
+### 🤖 Claude — 2026-11-18T11:07:05.462Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"tile_ring\\|ring\" tools/match04/make_tiles04.py | head -30; ls public/ assets 2>/dev/null | head; find . -name \"tile_ring.png\" -not -path \"./node_modules/*\" | head", "description": "Find how the ring tile is generated and stored"}`
+
+### 🧑 User — 2026-11-18T11:07:05.541Z
+
+> ↩︎ result: 3:  tile_tunnel.png  the painted gold rings on the tunnel wall, angle 0..pi (upper half, mirrored in the shader) x one ring
+> 4:                   band along the axis (TUN_A from the mouth) - follows the ring geometry, no stretching along the walls
+> 42:# ---- milestone 2: tile_ring.png = ONE painted gold ring, straight and seamless along the tunnel ----------------------
+> 43:# The painted rings are not concentric with a straight cylinder (their centres drift toward the vanishing point), so an
+> 44:# unwrap through the cylinder gives wavy, smeared rings. Instead: the ring's cross-section (groove, lip, groove, polished
+> 47:# around its drifting ring centres (axial mean over the near rings). tile = profile(s) x colour ratio(angle).
+> 48:# columns = psi -pi..pi (psi 0 = tunnel top, +pi/2 = left wall, seam at the bottom under the water), rows = one ring.
+> 50:prof = A[RING_Y[0]:RING_Y[1], 445:485].mean(1)                       # (rows, 3) BGR along the ring
+> 51:prof = cv2.resize(prof[None], (192, 1), interpolation=cv2.INTER_CUBIC)[0]  # 192 samples along one ring period
+> 53:VP, MC, RM = np.array([490., 690.]), np.array([434., 792.]), 347.0     # vanishing point, mouth-ring centre/radius (px)
+> 69:ring …[+543 chars]
+
+### 🤖 Claude — 2026-11-18T11:07:20.636Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n -i -B1 -A4 \"m04foam3\\|m04pink\\|m04arr5\" qa/match/04/r9/PROGRESS.md | cut -c1-220 | head -50", "description": "Read why round-9 04 candidates were not kept"}`
+
+### 🧑 User — 2026-11-18T11:07:20.685Z
+
+> ↩︎ result: 54-## Lead order (2026-11-18): STOP polishing → BLUEPRINT → FOUNDATION
+> 55:* WIP candidates `&m04foam3` / `&m04pink` / `&m04arr5` (lower foam, pink swirl bands, fat five chevrons) committed
+> 56-  switch-guarded and UNTESTED/not kept (`b4bd3da4`).
+> 57-* BLUEPRINT: `/home/user/wt/s04/qa/match/04/r9/BLUEPRINT.md`, overlay `/home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png`,
+> 58-  numbers `qa/match/04/r9/blueprint04.json` (`tools/match04/blueprint04.py`).
+> 59-
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:07:28.049Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,25p tools/match04/audit04.mjs | grep -v \"^import\" | head -22", "description": "Read Screen 04 audit render tool usage"}`
+
+### 🧑 User — 2026-11-18T11:07:28.096Z
+
+> ↩︎ result: // Screen 04 r8: the lead's moving audit (tools/lead_r6/motion_audit.mjs) with a selectable SHOTS subset, so a step can be
+> // rendered only at the 2–4 audit positions where it shows best (same shot names as qa/match/04/r8/BEFORE/).
+> //   node tools/match04/audit04.mjs <outDir> "<query>" [shot1,shot2,...]   (no list = all 12)
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, Q = '', PICK = ''] = process.argv.slice(2);
+> const SCREEN = '04';
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5274);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> const ALL = [
+>   ['a00_approved_view', 0, null],
+>   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f20_forward20u', 20, null],
+>   ['s_left_steer', 6, -1], ['s_right_steer', 6, 1], ['s_left_hard', 12, -1], ['s_right_hard', 12, 1],
+>   ['t33_through_screen', 't0.33', null], ['t66_through_screen', 't0.66', null], ['t95_through_screen', 't0.95', null],
+> ];
+> const want = PICK ? PICK.split(',') : null;
+> const SHOTS = want ? ALL.filter(([n]) => want …[+243 chars]
+
+### 🤖 Claude — 2026-11-18T11:07:30.939Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; timeout 900 node tools/match04/audit04.mjs qa/match/04/r10/testA_foam3_pink_arr5 \"$K&m04foam3=1&m04pink=1&m04arr5=1\" f10_forward10u,f20_forward20u,t66_through_screen 2>&1 | grep -v \"^\\[vite\\]\" | tail -5", "description": "Render Screen 04 with the three untested switches", "timeout": 1000000}`
+
+### 🧑 User — 2026-11-18T11:08:07.123Z
+
+> ↩︎ result: console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> 04 f10_forward10u s 88.492 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.19 lat 0 stage 04 frames 86
+> 04 t66_through_screen s 102.848 lat 0 stage 04 frames 106
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:08:08.829Z
+
+Screen 08 step 2 also arrived; I'll review it right after this. First, the Screen 04 test frame at the V04‑1 position:
+
+### 🤖 Claude — 2026-11-18T11:08:09.330Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r10/testA_foam3_pink_arr5/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T11:08:09.392Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:08:16.056Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/04/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T11:08:16.098Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:08:29.391Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; timeout 900 node tools/match04/audit04.mjs qa/match/04/r10/testB_foam3_arr5 \"$K&m04foam3=1&m04arr5=1\" f10_forward10u,f20_forward20u 2>&1 | grep \"^04 \" | tail -3", "description": "Render Screen 04 with low foam and five arrows only", "timeout": 1000000}`
+
+### 🧑 User — 2026-11-18T11:08:51.359Z
+
+> ↩︎ result: 04 f10_forward10u s 88.277 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.183 lat 0 stage 04 frames 86
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T11:08:53.643Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r10/testB_foam3_arr5/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T11:08:53.700Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:09:18.764Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"M04.num(\\|QS.get(\\|uRivA\\|uA5\\b\\|uA5b\\|halfW\\|half-width\\|trough\" src/world/match04m4.ts | head -40", "description": "Find water channel width and arrow parameters in 04 code"}`
+
+### 🧑 User — 2026-11-18T11:09:18.802Z
+
+> ↩︎ result: 31:const on = (k: string) => QS.get(k) === '1';
+> 46:  num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
+> 262:/** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+> 263: * the approved water design (tile_river3: pink swirl ribbons, cyan streams, foam edges) by arc length across the trough,
+> 268:attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+> 285:uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> 290:uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+> 291:uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+> 310:  float lat = vS * uRivA.w + 0.9 * (vn(vec2(along * 0.07, 7.0)) - 0.5) * smoothstep(0.4, 1.6, abs(vS));
+> 312:  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / uRivA.z);
+> 313:  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / uRivA.z * 0.77 + 0.37);
+> 329:  if (uA5.x > 0.5) {
+> 331:    float k5 = floor((along - uA5.z) / uA5.y + 0.5);
+> 332:    float ap = uA5.z + k5 * uA5.y; …[+2743 chars]
+
