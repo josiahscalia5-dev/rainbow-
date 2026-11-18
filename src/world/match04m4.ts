@@ -76,6 +76,8 @@ void main() {
 // groove (110,35,5) / shadow band (168,70,18) / mid (205,97,28) / lit (245,143,38) / hot lip (255,204,77) / glint.
 // Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;
 // the far rings warm toward the glowing vanishing point; violet / pink water reflections on the lower walls.
+// The fourth complete washer lip lies 18.4 units inside the measured mouth.
+const deepRimIndex = 3;
 const GOLD_FRAG = /* glsl */ `
 uniform sampler2D uPlate;
 uniform vec4 uPjPost;
@@ -216,6 +218,15 @@ void main() {
     float pk = (0.42 * low + 0.22 * smoothstep(0.78, 0.98, hv) * (1.0 - low)) * (part > 0.5 && part < 1.5 ? 0.35 : 1.0);
     vec3 wc2 = mix(wc, vec3(0.88, 0.42, 0.78), 1.0 - low);   // dusky violet-pink tint on the upper walls
     col = mix(col, wc2 * (0.55 + 0.6 * v), pk * (mouth ? 0.6 : 1.0) * (1.0 - 0.55 * uGoldY));
+    #ifdef CX04_DEEP_RIM
+    if (ring == float(CX04_DEEP_RIM) && part < 1.5) {
+      // The lower flanks reflect the approved violet and pink river on either side.
+      // Preserve the yellow crown, dark groove and the existing painted highlights.
+      float flank = smoothstep(0.85, 1.55, abs(ang)) * (1.0 - smoothstep(2.30, 2.65, abs(ang)));
+      float shoulder = part > 0.5 ? 0.55 : smoothstep(0.26, 0.70, tb);
+      col = mix(col, wc * (0.52 + 0.63 * v), 0.34 * flank * shoulder);
+    }
+    #endif
     // a few cool blue-violet glints on the bands (painted reflections of the cyan water)
     if (!mouth && part < 0.5) {
       float cb = streaks(ang + 1.3, ring + 31.0);
@@ -740,13 +751,15 @@ export function addM04(ctx: M04Ctx) {
     const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
     ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
     ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
+    const deepRim = on('cx04DeepRim');
     const gm = new THREE.ShaderMaterial({
+      defines: deepRim ? { CX04_DEEP_RIM: deepRimIndex } : {},
       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
-    const gw = M04.num('m04ringgw', 1);
+    const baseWidth = M04.num('m04ringgw', 1);
     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
     // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
     // painted bands), a rounded lip bead (hot spots), a step back out (the thin dark groove); a = distance down the tunnel
@@ -755,16 +768,20 @@ export function addM04(ctx: M04Ctx) {
     const nP = Math.ceil(len / P);
     for (let k = 0; k < nP; k++) {
       const a = k * P;
+      // Widen and round just this existing bead without moving its groove or neighbours.
+      const isDeepRim = deepRim && k === deepRimIndex;
+      const gw = baseWidth * (isDeepRim ? 1.45 : 1);
+      const relief = isDeepRim ? 1.24 : 1;
       const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };
       pushP(r + 0.22, a + 0.01, 2);
       pushP(r + 0.17, a + 0.07, 0);
       pushP(r + 0.07, a + P * 0.5, 0);
       // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)
       pushP(r - 0.05, a + P - 0.56 * gw, 0);
-      pushP(r - 0.10, a + P - 0.48 * gw, 1);
-      pushP(r - 0.22, a + P - 0.39 * gw, 1);
+      pushP(r - 0.10 * relief, a + P - 0.48 * gw, 1);
+      pushP(r - 0.22 * relief, a + P - 0.39 * gw, 1);
       pushP(r - 0.28 * Math.min(gw, 1.4), a + P - 0.27 * gw, 1);
-      pushP(r - 0.23, a + P - 0.15 * gw, 1);
+      pushP(r - 0.23 * relief, a + P - 0.15 * gw, 1);
       pushP(r - 0.08, a + P - 0.07 * gw, 2);
       pushP(r + 0.22, a + P - 0.01, 2);
     }
