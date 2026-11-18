@@ -2567,3 +2567,47 @@ Recording your rotation order so it survives any interruption, then saving:
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-18-r8/COORDINATION.md <<'EOF'\n\n## Update 2026-11-18 ~02:25 UTC (user order: ALL FIVE screens; 04 + 05 keep running)\n* User: \"Continue the two active Screen 04 and 05 specialists. When a slot becomes available, resume Screen 07 to fix the\n  tall white foam walls, oversized coin, and remaining differences from my approved scenery. Keep Screen 06 and Screen 08\n  in the specialist rotation too.\" Preserve the 07 plunge fix (m07tube + m07ring). Visuals only; no Atlas / Parallax\n  detours; verify the World Labs plugin skills when the next session starts …[+848 chars]`
 
+### 🧑 User — 2026-11-18T01:53:29.573Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-58dd182e-m48xwk | scheduler daemon | last verified backup 2026-11-18T01:53:20+00:00 (0.1 min ago) | local 40a3d53 remote 40a3d53 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T01:53:35.158Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; cd /home/user/rainbow- && sed -i 's/## Update 2026-11-18 ~02:25 UTC/## Update 2026-11-18 ~01:53 UTC/' docs/briefs/2026-11-18-r8/COORDINATION.md; cd /home/user/wt/s07 && sed -i '1s/~02:20 UTC/~01:50 UTC/' qa/match/07/STATUS.md && git commit -qam \"Screen 07 r8: correct STATUS time\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJ9KrSuiLBqJwtdwa8n\" && timeout 120 git push -q origin claude/rainbow-s07-match-c8 2>&1 | grep -v '^remote:'; echo \"s07 remote=$(git ls-remote origin refs/heads/claude/rainbow- …[+133 chars]`
+
+### 🧑 User — 2026-11-18T01:53:37.356Z
+
+> ↩︎ result: 01:53
+> s07 remote=dbc7678cd0 local=dbc7678cd0
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: docs/briefs/2026-11-18-r8/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T01:53:47.407Z
+
+Got it: Screens 04 and 05 keep running, Screen 07 gets the next free slot, and 06 and 08 follow. I've stopped working on 07 myself.
+
+**Screen 07:** the three pictures above are APPROVED, BEFORE and NEW at mid-plunge.
+- In NEW, the tall white foam walls are replaced by the painted pink-and-cyan banks with soft blue foam, and the huge near coin is back to about the painted size. The earlier plunge fix (no orange slab hiding Benny) is kept.
+- This is saved on GitHub (`claude/rainbow-s07-match-c8` @ `dbc7678c`) but **not finished**. I haven't yet proved that the normal game is unchanged, or that it still collects 91 coins for 2,240.
+- The plunge bottom, where Screen 07 hands over to Screen 08, still has white walls; that stretch is left to the 08 work.
+- Still wrong on 07: the water near Benny smears when steering, a hard wall edge shows when steering hard, and a coin partly covers Benny.
+
+**Status**
+- **Working now:** Screen 04 on `claude/rainbow-s04-match-c8` and Screen 05 on `claude/rainbow-s05-match-c8`. Both have pushed checkpoints to GitHub and both are actively rendering.
+  - **04:** the gold washer opening with its bulbs, the laundry-room entrance, crisp walls, the five arrows, and the thick swirl water with foam and bubbles.
+  - **05:** your 05 list — stretched water, the S-shaped river, abrupt edges, the coin over Benny — and it keeps `m05far`.
+- **Next in the rotation:**
+  1. 07: finish the checks above, then the steering smears and the hard wall edge.
+  2. 08: seams around the towel, window and walls, and the oversized coins. This picks up unfinished edits from the previous account.
+  3. 06: gold ring highlights and bulbs, a crisp purple wall, foam and bubbles.
+- **Latest verified backup:** lead branch `ccr-58dd182e-m48xwk` @ `40a3d53`, GitHub matches local, five-minute autosave running. The rotation order is written in `docs/briefs/2026-11-18-r8/COORDINATION.md`.
+- **Services:** World Labs and fal.ai still verified; I made no paid requests. I'll check the World Labs plugin skills at the start of the next session.
+- **Blockers needing you:** none.
+
+When each specialist finishes, I'll show you its APPROVED / BEFORE / NEW pictures separately and full-size, with an honest rating, then start the next screen in its slot.
+
+### 🧑 User — 2026-11-18T01:53:48.648Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

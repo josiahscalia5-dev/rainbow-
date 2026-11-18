@@ -40,7 +40,7 @@ World Labs key = the 5,190-credit account (Account B: Screen 05 pilot worlds dra
 COMPLETED). Download hosts cdn.marble.worldlabs.ai, v3b.fal.media, v3.fal.media added to the environment allow-list
 (user-approved 01:39 UTC). Atlas connector: not connected in this session (not needed for visual work).
 
-## Update 2026-11-18 ~02:25 UTC (user order: ALL FIVE screens; 04 + 05 keep running)
+## Update 2026-11-18 ~01:53 UTC (user order: ALL FIVE screens; 04 + 05 keep running)
 * User: "Continue the two active Screen 04 and 05 specialists. When a slot becomes available, resume Screen 07 to fix the
   tall white foam walls, oversized coin, and remaining differences from my approved scenery. Keep Screen 06 and Screen 08
   in the specialist rotation too." Preserve the 07 plunge fix (m07tube + m07ring). Visuals only; no Atlas / Parallax
