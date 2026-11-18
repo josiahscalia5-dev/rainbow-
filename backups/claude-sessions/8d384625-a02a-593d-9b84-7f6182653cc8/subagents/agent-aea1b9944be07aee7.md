@@ -1384,3 +1384,12 @@ Now I'll write the mouth tile tool.
 > 04 f06_forward6u s 84.183 lat 0 stage 04 frames 26
 > 04 t33_through_screen s 90.481 lat 0 stage 04 frames 53
 
+### 🤖 Claude — 2026-11-18T03:08:55.819Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s04/qa/match/04/r9 && cat > /home/user/wt/s04/tools/match04/blueprint04.py <<'EOF'\n\"\"\"Screen 04 round 9 BLUEPRINT: structural measurements of the approved picture (frame px, 864 x 1536) + an annotated\noverlay. usage: python3 -I tools/match04/blueprint04.py references/04_through_the_five_arrows.png <out_overlay.png> <out.json>\"\"\"\nimport json, sys\nimport numpy as np, cv2\nfrom scipy import ndimage as ndi\nA = cv2.imread(sys.argv[1]); H, W = A.shape[:2]\nB, G, R = [A[..., i].astype(int) for i in range(3)]\nhsv = cv2.cvtColor(A, cv2.COLOR_BGR2HSV).asty …[+6552 chars]`
+
+### 🧑 User — 2026-11-18T03:08:56.847Z
+
+> ↩︎ result: {"arrows": [{"x0": 352, "x1": 549, "y0": 910, "y1": 981, "area": 4131}, {"x0": 378, "x1": 534, "y0": 842, "y1": 892, "area": 2222}, {"x0": 408, "x1": 522, "y0": 790, "y1": 825, "area": 1025}, {"x0": 488, "x1": 510, "y0": 758, "y1": 774, "area": 170}, {"x0": 464, "x1": 485, "y0": 752, "y1": 763, "area": 151}, {"x0": 460, "x1": 502, "y0": 720, "y1": 732, "area": 204}], "coins": [{"cx": 440, "cy": 1528, "w": 40, "h": 15}, {"cx": 362, "cy": 1525, "w": 28, "h": 22}, {"cx": 222, "cy": 1499, "w": 25, "h": 31}, {"cx": 149, "cy": 1471, "w": 41, "h": 23}, {"cx": 73, "cy": 1430, "w": 21, "h": 29}, {"cx": 20, "cy": 1389, "w": 41, "h": 28}, {"cx": 176, "cy": 974, "w": 107, "h": 81}, {"cx": 262, "cy": 872, "w": 85, "h": 63}, {"cx": 78, "cy": 850, "w": 83, "h": 124}, {"cx": 329, "cy": 790, "w": 57, "h": 43}, {"cx": 57, "cy": 764, "w": 47, "h": 46}, {"cx": 378, "cy": 740, "w": 39, "h": 29}, {"cx": 206, "cy": 719, "w": 42, "h": 34}, {"cx": 424, "cy": 711, "w": 24, "h": 20}, {"cx": 81, "cy": 665, "w": 41, "h": 30}], "ring_grooves_px_above_vp": [44, 59, 81, 101, 159, 171, 225, 291]}
+> {"720": {"cyan_px": 32, "cyan_x": [446, 495], "pink_px": 29, "pink_left_px": 26, "pink_right_px": 3}, "760": {"cyan_px" …[+1495 chars]
+

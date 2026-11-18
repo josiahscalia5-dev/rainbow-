@@ -419,3 +419,53 @@ Let me look at the three approved pictures myself.
 > 33:      const target = typeof dist === 'string' ? s0 + Number(dist.slice(1)) * Math.max(0, s1 - s0) : s0 + dist;
 > 38:      return { ...r.state(), frames: n, s0, s1, target };
 
+### 🤖 Claude — 2026-11-18T03:08:43.131Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07; sed -n 15,45p tools/lead_r6/motion_audit.mjs; ls qa/match/07/cam qa/match/07/rings | head; grep -rn \"checkpoint\" src/world/course.ts | head", "description": "Read audit tool shot logic"}`
+
+### 🧑 User — 2026-11-18T03:08:43.169Z
+
+> ↩︎ result: // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [
+>   ['a00_approved_view', 0, null],
+>   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f20_forward20u', 20, null],
+>   ['s_left_steer', 6, -1], ['s_right_steer', 6, 1], ['s_left_hard', 12, -1], ['s_right_hard', 12, 1],
+>   ['t33_through_screen', 't0.33', null], ['t66_through_screen', 't0.66', null], ['t95_through_screen', 't0.95', null],
+> ];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   for (const [name, dist, steer] of SHOTS) {
+>     const st = await page.evaluate(async ([id, dist, steer]) => {
+>       const r = window.__rainbow; r.goto(id);
+>       const s0 = r.state().s;
+>       const stg = r.course.stage(id);
+>       const s1 = stg.s1 ?? (stg.s0 + (stg.length ?? 0));
+>       const target = typeof dist === 'string' ?  …[+1430 chars]
+
+### 🤖 Claude — 2026-11-18T03:08:46.576Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07; python3 -c \"\nimport json;d=json.load(open('qa/match/07/r7/continuity_default.json'));print(json.dumps(d)[:1500])\"", "description": "Look for stage boundaries in continuity output"}`
+
+### 🧑 User — 2026-11-18T03:08:46.641Z
+
+> ↩︎ result: {"length": 435.1923632433161, "marks": {"10": 420.01758627669733, "11": 435.1923632433161, "01": 0, "02_drain": 22.765736347312888, "03": 40.99515264641385, "04": 70.4130846582597, "05": 114.68830202823246, "06": 188.92412082521415, "07": 247.0571025358884, "07_plunge_top": 310.4102628712429, "07_plunge_mid_end": 373.1974418477255, "07_plunge_bottom": 389.1294112762795, "08": 389.2199538803079, "09": 404.7896481881432, "05_crest": 132.43830202823293}, "ok": true, "boundaries": [{"from": "01", "to": "02", "s": 0.01, "posGap": 0, "tangentAngleDeg": 0.249, "upAngleDeg": 0.249, "altitude": -2.4}, {"from": "02", "to": "03", "s": 41, "posGap": -0.0001, "tangentAngleDeg": 0.673, "upAngleDeg": 0.544, "altitude": -11.87}, {"from": "03", "to": "04", "s": 70.41, "posGap": 0, "tangentAngleDeg": 0.932, "upAngleDeg": 0.576, "altitude": -19.41}, {"from": "04", "to": "05", "s": 114.69, "posGap": 0, "tangentAngleDeg": 0.246, "upAngleDeg": 0.246, "altitude": -40.63}, {"from": "05", "to": "06", "s": 188.92, "posGap": 0, "tangentAngleDeg": 0.281, "upAngleDeg": 0.256, "altitude": -43.35}, {"from": "06", "to": "07", "s": 247.06, "posGap": 0, "tangentAngleDeg": 0.114, "upAngleDeg": 0.031, "altitude": -48 …[+300 chars]
+
+### 🤖 Claude — 2026-11-18T03:08:57.559Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/rev && cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/rev && cat > sheet.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw\nout=sys.argv[1]; cols=int(sys.argv[2]); w=int(sys.argv[3]); items=sys.argv[4:]\nh=int(w*1536/864)\nims=[]\nfor it in items:\n    lab,p=it.split('=',1); im=Image.open(p).convert('RGB').resize((w,h),Image.LANCZOS)\n    d=ImageDraw.Draw(im); d.rectangle([0,h-22,w,h],fill=(0,0,0)); d.text((4,h-18),lab,fill=(255,255,0)); ims.appen …[+805 chars]`
+
+### 🧑 User — 2026-11-18T03:08:58.553Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T03:09:00.146Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/rev/06a.png"}`
+
+### 🧑 User — 2026-11-18T03:09:00.408Z
+
+> ↩︎ result: [image]
+

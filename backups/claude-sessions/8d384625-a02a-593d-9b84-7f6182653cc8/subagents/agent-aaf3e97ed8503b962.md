@@ -2507,3 +2507,7 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 
 > ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/blueprint05_game.mjs (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-18T03:08:46.617Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" && timeout 900 node tools/match05/blueprint05_game.mjs qa/match/05/r9/blueprint/kept \"$K\" a00_approved_view,f10_forward10u,f20_forward20u,t33_through_screen,t66_through_screen,s_left_hard,s_right_hard 2>&1 | tail -8", "description": "Measure kept-query frames geometry", "timeout": 920000}`
+

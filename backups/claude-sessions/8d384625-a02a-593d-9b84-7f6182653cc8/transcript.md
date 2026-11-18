@@ -2288,3 +2288,62 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "git status --short | head -8; flock -w 90 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep '\"commit\"'; git status --short | head -3; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-restore-c9-40w64b | cut -f1)\"", "description": "Commit and push remaining changes, verify remote matches", "timeout": 150000}`
 
+### 🧑 User — 2026-11-18T03:08:55.433Z
+
+> ↩︎ result: M backups/CONVERSATION_INDEX.md
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aaf3e97ed8503b962.md
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aaf3e97ed8503b962.sanitized.jsonl
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-abc51ab65d6bb092d.md
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-abc51ab65d6bb092d.sanitized.jsonl
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aea1b9944be07aee7.md
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/subagents/agent-aea1b9944be07aee7.sanitized.jsonl
+>  M backups/claude-sessions/8d384625-a02a-593d-9b84-7f6182653cc8/transcript.md
+>   "commit": "629d88b00343dda52042b7dfc8937df857a69ed6",
+> local 629d88b00343dda52042b7dfc8937df857a69ed6
+> remote 629d88b00343dda52042b7dfc8937df857a69ed6
+
+### 🤖 Claude — 2026-11-18T03:08:58.292Z
+
+Everything is now saved and pushed to GitHub. Only the session's own record files had changed since the last save. The copy on GitHub matches this branch exactly, at commit 629d88b.
+
+Still running in the background:
+- **Screen 04 specialist:** writing the blueprint of your approved picture, then rebuilding the structure so your washer front stays in front of Benny for the whole screen.
+- **Screen 05 specialist:** writing its blueprint, then fitting the river, banks and walls to your painted S-river.
+- **Independent reviewer:** writing blueprints and honest verdicts for Screens 06, 07 and 08.
+
+You'll see APPROVED / BEFORE / NEW pictures as soon as one of these structural fixes is ready and the reviewer has checked it.
+
+### 🧑 User — 2026-11-18T03:08:59.876Z
+
+CLAUDIA — YES, FIX THE ACTUAL SCENERY, BUT PRESERVE MY GAME.
+
+I'm glad you've identified why Screen 04 keeps turning into a different-looking environment.
+
+I want you to correct that problem across ALL FIVE playable screens.
+
+MY APPROVED ARTWORK MUST REMAIN THE VISUAL BLUEPRINT.
+
+For Screen 04, do not replace the invented orange corridor with another invented design.
+
+The approved image does show a beautiful gold washer tunnel, but I want its exact distinctive appearance: the rounded gold entrance, glowing rings, colorful water, five arrows, foam, bubbles, and laundry-room surroundings.
+
+Reconstruct that visual design accurately throughout the existing stage.
+
+Apply the same approach to Screens 05, 06, 07, and 08, preserving each screen's unique approved scenery.
+
+Do not change the existing gameplay length, coin totals, movement rules, or transitions without my permission.
+
+Keep no more than two specialist agents actively working simultaneously to conserve credits.
+
+MOST IMPORTANT: SHOW ME THE VISUAL RESULTS.
+
+I want separate, large APPROVED / BEFORE / NEW pictures demonstrating that the scenery genuinely looks closer.
+
+No generic replacements. No unnecessary redesigns.
+
+Screens 01–03 and 09–11 are my Google Flow videos.
+
+My priority is still the exact VISUAL APPEARANCE of all five playable screens.
+
+Let's correct the underlying scenery and get these screens closer to my approved artwork.
+
