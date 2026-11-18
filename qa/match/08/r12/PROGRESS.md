@@ -28,3 +28,28 @@ Kept query: `K11&m08cup=1`
 * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step1_m08cup/1_APPROVED.png`,
   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f06_forward6u`, `f10_forward10u`, `t66_through_screen`
   (BEFORE = `K11`, NEW = `K11&m08cup=1`, rendered fresh, same positions).
+
+## Step 2 — `&m08rw=1` (defect B: sideways-smeared near water + straight-edged magenta step, first ≈ 3 u) — KEPT
+Kept query: `K11&m08cup=1&m08rw=1`
+* Cause: the swim-lane remap (`m08swim`) spreads the painted river's banks to Benny's lane (±2.95 u) using the painted
+  river width from `river08.json`. Near the camera that trace followed Benny's splash crest and the arch's gold feet, not
+  the banks: it said 0.8–2.5 u while the painted water is ≈ 3–4.5 u bank to bank. So the near water was stretched sideways
+  up to ≈ 13× (the long sideways smears) and the stretch jumped where the trace starts (the straight edge in the magenta
+  water at the lower left).
+* What changed (render remap only — the gameplay path `river08.json` / `src/world/course.ts` is untouched):
+  `tools/match08/rivnear08.py` → `assets/textures/match08/river08_near.json` = the bank-to-bank width read by eye on the
+  approved picture (rows 1000–1536; rows 1150–1200 skipped, the arch feet hide the banks there), projected on the floor;
+  merged with river08 beyond z −285.5. Near the camera the painted gold legs hug the banks, so there the banks are spread to
+  ±4.0 u (the frame bottom shows ±3.5 u) — otherwise leg pixels appeared as a gold blob in the bottom-right corner and the
+  floor beside the bank as a purple notch at the left edge (both seen in a first try, fixed before keeping).
+  Approved view 0 px differ (deterministic capture with / without the switch).
+* What looks closer: forward 3 u and one-third through, the water below and beside Benny is now one continuous glossy
+  S-river with diagonal streaks and white glints (magenta band on the left, cyan in the middle), like the bottom of the
+  approved picture — BEFORE it was a broad magenta smear with sideways streaks and a straight-edged step at the lower left.
+  Steering left at 6 u: the stretched bubble at the lower left is gone. Forward 6 / 10 u and steering right: unchanged.
+* Still wrong: the streaks are still somewhat wider than painted (the lane is wider than the painted river; centre kept
+  1:1, banks spread ≈ 2.5×); the glints of the m08near tile further on are still ≈ 2× painted size; the gold arch legs /
+  near walls of the approved picture are not in this view (arch pushed far by m08far — user decision pending from r11).
+* Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step2_m08rw/1_APPROVED.png`,
+  `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f03_forward3u`, `t33_through_screen`, `s_left_steer`
+  (BEFORE = `K11&m08cup=1`, NEW = `+&m08rw=1`, rendered fresh, same positions).
