@@ -15,6 +15,9 @@ TIP=$(git rev-parse "refs/remotes/origin/$B15")
 WIPHEAD=$(git show "$L:backups/wip/$SLUG/INFO.json" | python3 -c "import json,sys;print(json.load(sys.stdin)['head'])")
 [ "$TIP" = "$WIPHEAD" ] || { echo "$X: tip $TIP != WIP head $WIPHEAD - STOP"; exit 3; }
 echo "$X: fetched tip ${TIP:0:8} in $(( $(date +%s)-t0 ))s"
+# Hold the autosave lock while the worktree is half-built: on 2026-11-18 19:15 the daemon snapshotted an empty new worktree
+# and wrote a 4.25 GB "all files deleted" tracked.patch into backups/wip/ (removed by hand). The daemon skips while we hold it.
+exec 9>"$R/backups/.autosave.lock"; flock 9
 git worktree add --no-checkout -b "$B16" "$WT" "$TIP" >/dev/null 2>&1
 printf '/*\n!/qa/pilot05/\n!/qa/worldlabs/\n!/qa/imageblaster/\n!/builds/\n!/backups/\n' | git -C "$WT" sparse-checkout set --no-cone --stdin
 git -C "$WT" read-tree -mu HEAD
@@ -30,6 +33,7 @@ while IFS= read -r f; do
   mkdir -p "$WT/$(dirname "$rel")"
   git show "$L:$f" > "$WT/$rel"; n=$((n+1))
 done < <(git ls-tree -r --name-only "$L" "backups/wip/$SLUG/untracked/")
+flock -u 9; exec 9>&-
 echo "$X: worktree $WT on $B16 (sparse), WIP restored: $(git -C "$WT" status --short | grep -c '^ M') modified, $n untracked files"
 git -C "$WT" push -u origin "$B16" >/dev/null 2>&1 && echo "$X: pushed $B16 = ${TIP:0:8} ($(git ls-remote origin refs/heads/$B16 | cut -c1-8))"
 du -sh "$WT" | cut -f1 | sed "s/^/$X: size /"

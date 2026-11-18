@@ -53,6 +53,13 @@ excluded); `node_modules` is a symlink to the lead checkout; the lead checkout i
 Logs: `qa/match/<NN>/r16/PROGRESS.md` (resume from `r15/PROGRESS.md`). Merging needs the user's OK. If account 16 runs out: `-c17`
 branches from each NEWEST `-c16` tip + `backups/wip/` snapshot; never write `-c16` from another account.
 
+## Incident 19:15 UTC (fixed, nothing lost) — read before creating worktrees
+The five-minute autosave daemon snapshotted `/home/user/wt/s04` while `setup_worker.sh` was still building it (after
+`worktree add --no-checkout`, before `read-tree`): every file looked deleted → a 4.25 GB `tracked.patch` in
+`backups/wip/claude__rainbow-s04-match-c16/`; its `git add` streamed it into a 1.5 GB temp pack. The autosave run was stopped
+before any commit, the bad snapshot folder + temp pack deleted, the next save (`c7ce92e`) snapshotted all six worktrees normally
+(120 KB – 28 MB). `setup_worker.sh` now holds `backups/.autosave.lock` (flock) while a worktree is half-built.
+
 ## Open user request carried over
 * 18:44 UTC "show me the painted ring test results" (Screen 04 `&m04rpaint`, s04tex). Interim texture shown 18:45 (NOT YET PROVEN);
   first in-game APPROVED / BEFORE / NEW set still owed → highest priority on resume.

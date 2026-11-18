@@ -1962,3 +1962,79 @@ That file is still growing, so some process is still writing to it. I'll find ou
 
 > 🔧 **Bash** `{"command": "git diff --cached --stat | tail -3; git status --short backups/wip | head -5; rm -rf backups/wip/claude__rainbow-s04-match-c16; git reset -q -- backups/wip 2>/dev/null; df -h / | tail -1; python3 scripts/rainbow-autosave.py --reason manual:account16-workers 2>&1 | grep -E '\"commit\"|error|another|skipp' | head -5; python3 -I scripts/autosave-status.py; du -sh backups/wip/claude__rainbow-*-c16", "description": "Remove bad snapshot and rerun autosave", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:19:02.827Z
+
+> ↩︎ result: ?? backups/wip/claude__rainbow-s04-match-c16/
+> ?? backups/wip/claude__rainbow-s05-match-c16/
+> /dev/vda        252G   27G   13G  68% /
+>   "commit": "c7ce92e98a8a6400115318630b9a69f1ef208392",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:18:31+00:00 (0.5 min ago) | local c7ce92e remote c7ce92e (match) | uncommitted 0
+> 120K	backups/wip/claude__rainbow-s04-match-c16
+> 692K	backups/wip/claude__rainbow-s04-ringtex-c16
+> 28M	backups/wip/claude__rainbow-s05-match-c16
+> 372K	backups/wip/claude__rainbow-s06-match-c16
+> 3.1M	backups/wip/claude__rainbow-s07-match-c16
+> 5.6M	backups/wip/claude__rainbow-s08-scenery-c16
+
+### 🤖 Claude — 2026-11-18T19:19:07.619Z
+
+> 🔧 **Bash** `{"command": "grep -n \"lock\" scripts/rainbow-autosave.py | head -12", "description": "Find the autosave lock mechanism"}`
+
+### 🧑 User — 2026-11-18T19:19:07.783Z
+
+> ↩︎ result: 9:  2. takes an exclusive lock and skips if another git operation is in progress
+> 44:LOCK = REPO / "backups" / ".autosave.lock"
+> 80:    if p.returncode != 0 and "index.lock" in p.stderr:
+> 243:    (specialists work in /home/user/wt/<sNN> on their own branches) write, read-only (--no-optional-locks: never takes
+> 244:    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 250:    for block in wl.strip().split("\n\n"):
+> 251:        kv = dict(line.split(" ", 1) if " " in line else (line, "") for line in block.splitlines())
+> 257:        g = lambda *a: subprocess.run(["git", "--no-optional-locks", "-C", str(wt), *a], capture_output=True,
+> 300:    lockfh = open(LOCK, "w")
+> 302:        fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+> 303:    except BlockingIOError:
+> 326:        for busy in ("index.lock", "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD"):
+
+### 🤖 Claude — 2026-11-18T19:19:09.067Z
+
+The autosave uses an `flock` on `backups/.autosave.lock`, so the recipe can take the same lock while it builds a worktree:
+
+### 🤖 Claude — 2026-11-18T19:19:12.055Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/setup_worker.sh", "old_string": "git worktree add --no-checkout -b \"$B16\" \"$WT\" \"$TIP\" >/dev/null 2>&1", "new_string": "# Hold the autosave lock while the worktree is half-built: on 2026-11-18 19:15 the daemon snapshotted an empty new worktree\n# and wrote a 4.25 GB \"all files deleted\" tracked.patch into backups/wip/ (removed by hand). The daemon skips while we hold it.\nexec 9>\"$R/backups/.autosave.lock\"; flock 9\ngit worktree add --no-checkout -b \"$B16\" \"$WT\" \ …[+25 chars]`
+
+### 🧑 User — 2026-11-18T19:19:12.153Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/setup_worker.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:19:13.772Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/setup_worker.sh", "old_string": "echo \"$X: worktree $WT on $B16 (sparse)", "new_string": "flock -u 9; exec 9>&-\necho \"$X: worktree $WT on $B16 (sparse)"}`
+
+### 🧑 User — 2026-11-18T19:19:13.859Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/setup_worker.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:19:18.970Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad; bash -n $S/setup_worker.sh && cp $S/setup_worker.sh /home/user/rainbow-/docs/briefs/2026-11-18-r16/setup_worker.sh && echo syntax-ok; cd /home/user/rainbow- && git lfs ls-files | wc -l; git lfs ls-files | grep -c \" - \" ; timeout 120 git lfs fsck 2>&1 | tail -1", "description": "Check recipe syntax and LFS state", "timeout": 180000}`
+
+### 🧑 User — 2026-11-18T19:19:22.550Z
+
+> ↩︎ result: syntax-ok
+> 64
+> 0
+> Git LFS fsck OK
+
+### 🤖 Claude — 2026-11-18T19:19:26.549Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md", "old_string": "## Open user request carried over", "new_string": "## Incident 19:15 UTC (fixed, nothing lost) — read before creating worktrees\nThe five-minute autosave daemon snapshotted `/home/user/wt/s04` while `setup_worker.sh` was still building it (after\n`worktree add --no-checkout`, before `read-tree`): every file looked deleted → a 4.25 GB `tracked.patch` in\n`backups/wip/claude__rainbow-s04-match-c16/`; its `git add` streamed it into a 1.5 GB temp pack. The autosave run was stopped\n …[+279 chars]`
+
+### 🧑 User — 2026-11-18T19:19:27.111Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-18-r16/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:19:29.603Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:account16-relaunch 2>&1 | grep -E '\"commit\"|error|another' | head -3; python3 -I scripts/autosave-status.py; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-e42bb3c0-jpif8d; for b in s04-match s04-ringtex s05-match s06-match s07-match s08-scenery; do echo \"$b $(git -C /home/user/wt/${b%%-*}$( [ $b = s04-ringtex ] && echo b) rev-parse --short HEAD 2>/dev/null) remote=$(timeout 30 git ls-remote origin refs/heads/claude/rainbow-$b-c16 | cut -c1-8)\"; done; df -h / | tail -1", "description": "Save and verify lea …[+44 chars]`
+
