@@ -3882,3 +3882,52 @@ You've approved one Atlas test, on condition that I can confirm the real price f
 
 > 🔧 **Bash** `{"command": "printf '| 5 (~17:55) | Atlas test for 04 (user approved up to 5,000 credits IF the price is verified first) | NOT SUBMITTED: atlasGenerate price is not in the docs or the connector; user to read it on the Atlas rate card. 0 credits spent. Account-14 setup snapshot `backups/claude-config/2026-11-18-account14/` + `TOOL_MANIFEST.json` → `account14_2026_11_18` |\\n' >> docs/briefs/2026-11-18-r14/COORDINATION.md; until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:save-everything 2>&1 | grep -E '\"result …[+517 chars]`
 
+### 🧑 User — 2026-11-18T17:16:52.547Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "files_staged": 16,
+>   "pushed_verified": true,
+>   "commit": "671396129c92b042e1cabfb8ff0967c5645a49d6",
+> 671396129c92b042e1cabfb8ff0967c5645a49d6
+> 671396129c92b042e1cabfb8ff0967c5645a49d6	refs/heads/ccr-6c7564b1-fmlt1w
+> s04-match local da40a708 remote da40a708 dirty 2
+> s05-match local e5c4e7f2 remote e5c4e7f2 dirty 6
+> s08-scenery local 30dbbe44 remote 30dbbe44 dirty 4
+> claude__rainbow-s04-match-c14
+> claude__rainbow-s05-match-c14
+> claude__rainbow-s08-scenery-c14
+
+### 🤖 Claude — 2026-11-18T17:16:57.390Z
+
+> 🔧 **ListAgents** `{}`
+
+### 🧑 User — 2026-11-18T17:16:57.416Z
+
+> ↩︎ result: This session is rainbow-1b [8c293e] — the name other sessions use to message it (it is not listed below; a message to it would be a message to yourself).
+> 
+> Subagents (2):
+>   s05b [66f00b]  ·  water-fx-specialist  ·  running  ·  started 35m ago
+>   s08b [a42604]  ·  washer-environment-modeler  ·  running  ·  started 35m ago
+
+### 🤖 Claude — 2026-11-18T17:17:07.901Z
+
+**The Atlas test is not submitted yet, so no credits have been spent.** You approved it on condition that I could check the real price first, and I can't: World Labs doesn't publish the price for this task (atlasGenerate) in its documentation, and the Atlas connector doesn't show it either.
+
+**What to check in your Atlas rate card:**
+1. Go to **atlas.worldlabs.ai → Settings → Developer Platform** (the credits page).
+2. In the **rate card**, find **atlasGenerate** and note its price, either per request or per generated view.
+3. For our test it would be **3 views**, at the **720 × 1280 portrait** size, from **1 context image**.
+4. Note your **credit balance** on the same page.
+
+Tell me that price. If three views come to 5,000 credits or less, I'll run it right away. No second paid task is needed: I'll build the picture's depth and camera data for free from the game's real 3D tunnel.
+
+**Everything is saved to GitHub.** Lead branch `67139612`, matching GitHub:
+- **Chat history:** this conversation and every specialist's conversation, saved automatically with every five-minute autosave.
+- **Agents:** all 10 definitions, the running specialists' status, and their unfinished work (snapshotted every five minutes).
+- **Setup snapshot:** plugins (the World Labs plugin and its four skills), connectors and servers (GitHub, Playwright, World Labs Atlas), service status and tools. It's in `backups/claude-config/2026-11-18-account14/` and the tool list. No keys or passwords are in it.
+- **Specialist branches:** Screen 04 `da40a708`, Screen 05 `e5c4e7f2` and Screen 08 `30dbbe44`, all matching GitHub.
+
+Two things can't be stored on GitHub: the live conversation itself and your connector sign-ins. A new account would reconnect those; the restore steps are saved.
+
+**Still running:** both specialists (Screen 05 on the near foam bank, Screen 08 on the river around Benny). The full set of Screen 04 entrance-foam pictures is also rendering; I'll show it as soon as it's ready.
+
