@@ -492,3 +492,42 @@ Let me look at the approved picture and a few BEFORE frames.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1' && sed -n 80,140p tools/match05/r10_probe.mjs; node tools/match05/r10_probe.mjs t66_through_screen \"$Q\" --px=60,450 --px=150,520 --px=60,660 --px=250,610 --px=330,640 --px=700,450 --px=800,600 --px=620,560 --px=120,300 2>&1 | grep -v '^$' | head -80", "description": "Identify which objects lie under smeared wall pixels at t66", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T11:43:08.794Z
+
+> ↩︎ result: console.log('shot', SHOT, 's', out.s, 'lat', out.lat, 'cam', out.cam.map((v) => v.toFixed(2)).join(','));
+>   for (const r of out.res) {
+>     console.log(`px ${r.px.join(',')}`);
+>     for (const h of r.hits) console.log(`   d ${h.d}  ro ${h.ro}  ${h.mat}  ${h.obj}  @${h.p.join(',')}`);
+>   }
+>   if (list) for (const n of out.names) console.log(n);
+>   if (hide.length) console.log('hidden objects:', out.hidden);
+>   if (shot) { await page.waitForTimeout(150); await page.screenshot({ path: shot }); console.log('shot →', shot); }
+>   // --idmap=out.png : every mesh drawn flat in a colour per object (water_ribbon cyan, foam_berm white, proj05_apron yellow,
+>   // tube05_far_river blue, tube05_far_wall violet, tube05_far dark violet, other tubes grey, foam meshes green, near frame orange)
+>   const idmap = (args.find((a) => a.startsWith('--idmap=')) ?? '').slice(8);
+>   if (idmap) {
+>     await page.evaluate(async () => {
+>       const THREE = await import('/node_modules/three/build/three.module.js');
+>       const r = window.__rainbow; const { scene } = r.qa3d();
+>       const col = (n, chain) => n === 'water_ribbon' ? 0x00ffff : n === 'foam_berm' ? 0xffffff : n === 'proj05_apron' ? 0xffff00 : n === 'tube05_far_r …[+8075 chars]
+
+### 🤖 Claude — 2026-11-18T11:43:14.071Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat src/world/match05far.ts", "description": "Read the m05far forced-perspective tunnel module"}`
+
+### 🧑 User — 2026-11-18T11:43:14.104Z
+
+> ↩︎ result: /**
+>  * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+>  * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every
+>  * frame instead of folding away.
+>  *
+>  * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the
+>  * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the
+>  * camera saw the far rings / river morphing out and the 06 arch hall behind them — the "old pink default world" of
+>  * the lead's audit (t66 / t95 frames). The compression is exact for ANY eye position once its two eye-dependent
+>  * constants (D0 = eye depth of the seam, q = eye offset from the axis) follow the eye, so under this switch:
+>  *   * the VIRTUAL tunnel (virtual depth Z beyond sF05, tunnel coordinate v = sF05 + u(Z)) stays put — rings, wall rows,
+>  *     the baked far water F and the far river layout are anchored to it, so everything approaches like real geometry;
+>  *   * the seam slides ahead of the eye so it never comes nearer than the locked view had it (D0lock ≈ …[+14753 chars]
+
