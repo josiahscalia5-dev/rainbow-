@@ -2890,3 +2890,30 @@ Saving the review pictures and log entry to GitHub:
 
 > 🔧 **Bash** `{"command": "for i in 1 2 3 4 5 6; do out=$(timeout 300 python3 scripts/rainbow-autosave.py --reason manual:s08-step1-review 2>&1 | tail -2); echo \"$out\" | grep -qi \"another autosave\" || break; sleep 15; done; for i in $(seq 1 40); do R=$(git ls-remote origin refs/heads/ccr-3b139b48-0qqkkz | cut -f1); [ \"$R\" = \"$(git rev-parse HEAD)\" ] && [ -z \"$(git status --porcelain)\" ] && break; sleep 5; done; echo \"local $(git rev-parse HEAD)\"; echo \"remote $R\"; echo \"uncommitted: $(git status --porcelain | wc -l)\"", "description": "Save and verify the lead branch on GitHub", "timeout": 60 …[+5 chars]`
 
+### 🧑 User — 2026-11-18T11:55:04.320Z
+
+> ↩︎ result: local 94c8a04aaa35eba55117761a797ebff616d99a55
+> remote 94c8a04aaa35eba55117761a797ebff616d99a55
+> uncommitted: 0
+
+### 🤖 Claude — 2026-11-18T11:55:10.821Z
+
+## Screen 08 step 1: GOOD IMPROVEMENT (small)
+
+I compared the pictures myself before sending them. They are APPROVED, BEFORE and NEW, two-thirds through the stage; look at the wall above the round window door.
+
+**What looks closer:** while Benny swims, the door keeps its full gold bulb ring and chrome rim over the top, with rows of perforated wall circling it as in your painting. Before, a curved seam cut the ring off, with a flat patch of round holes above it. The fix reuses your own painted wall pixels from beside the door. Your approved view is unchanged.
+
+**Still wrong:**
+- The drum's top-left and top-right corners still have a softer curved edge.
+- There are faint mirror-pattern chevrons in the slot rows at the top right.
+- The top of the upper-left spout cup is still cut by a line.
+
+It's saved on the Screen 08 branch as `36d0978a`, confirmed on GitHub. The specialist has moved on to keeping the gold arch's lower legs in view while Benny swims, then the smeared near water.
+
+**Score so far this session:**
+- **Screen 05:** one improvement (crisp tunnel walls), one rejected leftover.
+- **Screen 08:** one improvement (ceiling seam above the door).
+
+Both specialists are still working, and the lead branch is saved at `94c8a04`, matching GitHub.
+

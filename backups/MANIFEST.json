@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15031,
-   "sha256": "ca075eb2a432e71bb18d011c518298fe74b1a75e827b47396c6d2776f1d51077"
+   "sha256": "7d8e61ff313feb02261fcab868ef03ce136be21669285b3b142f34fbf8ee1240"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -684,12 +684,12 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/INFO.json",
    "bytes": 527,
-   "sha256": "51c44cc8a545b5282636f6f47f3e80b0e06e9860804299a0545e159906520fe2"
+   "sha256": "0518f853f75096c89c24f34ed3956d86f1fea2ac243bd6b5a915aba0dbcc0ab0"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c11/tracked.patch",
-   "bytes": 5405,
-   "sha256": "68a8ffebecefbe97a8796955ba5637e604df23e4a4dcb5fe44addaf26223ba33"
+   "bytes": 5452,
+   "sha256": "63387e8c6abb4e9a736f50f2e493febfe0c44461647b27c077ca5e7240549660"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -708,33 +708,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c11/INFO.json",
-   "bytes": 1208,
-   "sha256": "615f871f0fcaf0cde740490a8cbc313481f8e74f8b0b392cd935d670f73e6a85"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s08-scenery-c11/tracked.patch",
-   "bytes": 7123,
-   "sha256": "c3b4cea3c9b2d6682ee752d447ca4c22669b06ac4246a4c1f195abf72f8af4da"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s08-scenery-c11/untracked/qa/match/08/r11/BEFORE/f20_forward20u.png",
-   "bytes": 1723086,
-   "sha256": "44d665c267e53301b444e30421dfcd97c2806b6ce5a311804169d10e78d527f8"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s08-scenery-c11/untracked/qa/match/08/r11/BEFORE/motion.json",
-   "bytes": 4739,
-   "sha256": "2f0921bfe680411e76a867b003d079b22a19c3fb414ec4c8f79b3854b6a657a4"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s08-scenery-c11/untracked/tools/match08/ceil08.py",
-   "bytes": 5434,
-   "sha256": "39fbef78cfd73521ce7b216c7e95e881d3939deec276db556c8baa6a0226bd43"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s08-scenery-c11/untracked/tools/match08/shots08.mjs",
-   "bytes": 2982,
-   "sha256": "b830738ecd0a62cf62ed43de1c8823213314c91bd5b651e4932ff348de5b8649"
+   "bytes": 485,
+   "sha256": "37c03ef53603cd45accbea7558e76dd8224ece06587830f15dff32476efc1257"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
