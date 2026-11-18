@@ -68,3 +68,18 @@ of thin bright cuts, no white star glints, no long streaks down the tunnel. Lead
 Most visible remaining difference: COLOUR — the game rings are a uniform deeper copper-orange everywhere, whereas the painting's
 rings turn brighter, warmer YELLOW-gold toward the glowing centre and carry more pink-violet on the lower-left walls; the painted
 bright lip line is softer than in the painting.
+
+Step-3 clips added (19:43): `step3_lip/clip_BEFORE_swim.mp4`, `step3_lip/clip_NEW_swim.mp4` (432×768, 3.6 s straight / left / right /
+straight, real gameplay; rendered at half size because a full-size clip took ~45 min at the current machine load).
+
+## Step 4 — warmer yellow-gold toward the glowing centre: step 3 + `&m04rwarm=1` (new code, off by default), 19:45–20:05 UTC
+Measured on the approved picture (band median per painted ring, upper walls): the painted rings keep the SAME copper
+(≈ RGB 175–195 / 75–85 / 40–50) from the opening down to ~100 px from the vanishing point; only the last rings inside ~80 px turn
+orange -> yellow -> warm white (R 48 px: 234/118/86, R 24 px: 253/202/123). `m04rwarm` multiplies the painted ring colour by these
+measured gains over the last part of the camera -> end-glow distance (`m04rww`, default 0.45). (A first version graded by screen
+distance from the vanishing point; same result.) Pictures `step4_warm/3_NEW_<shot>.png` for f06, f20, t66, t95.
+Verdict: **NOT AN IMPROVEMENT** (no visible change) — the game tunnel is 90 u long, so the rings that fall in the painting's warm
+zone are tiny around the end glow; at the distances seen while swimming, the painted rings are the same copper as step 3 already.
+A zoom on the centre (approved vs step 3) shows that the real difference there is the many small bright orange-yellow LIGHT DOTS on
+every painted ring lip (and a pinker sheen), which the painted-ring switch removed with the procedural lip bulbs. Not kept.
+Next = step 5: painted-style light dots on the lips (separate factor).
