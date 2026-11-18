@@ -421,3 +421,334 @@ Step 2 is clearly visible at forward 10/20 u and hard left/right. Now the determ
 > const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
 > const [OUT, PORT = '5301', Q = ''] = process.argv.sl …[+881 chars]
 
+### 🤖 Claude — 2026-11-18T20:50:38.289Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"buildMatch07\\|flag05('match07')\" src --include=*.ts | head; git ls-files qa/capture_log.json screenshots | head -3", "description": "Check where match07 is gated"}`
+
+### 🧑 User — 2026-11-18T20:50:38.444Z
+
+> ↩︎ result: src/world/match07.ts:233:export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+> src/world/course.ts:289:  const m07 = flag05('match07') || flag05('matchall');
+> src/world/course.ts:462:      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940, ...(flag05('match07') || flag05('matchall') ? { bank: 0 } : {}) }),
+> src/vfx/foam.ts:558:  if (!flag05('match07') || !flag05('m07foam')) return null;
+> src/vfx/waterRibbon.ts:229:  if (!flag05('match07') || !flag05('m07foam')) return null;
+> src/game/Game.ts:28:import { buildMatch07 } from '../world/match07';
+> src/game/Game.ts:125:  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3] } : undefined) : null;
+> src/gameplay/coins.ts:60:  const m07 = flag05('match07') || flag05('matchall');
+> src/gameplay/coins.ts:195:  const look07 = flag05('m07coinsz') && (flag05('match07') || flag05('matchall'));
+> qa/capture_log.json
+> screenshots/01.png
+> screenshots/02.png
+
+### 🤖 Claude — 2026-11-18T20:50:44.723Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/det && mkdir -p $S && K=$(cat qa/match/07/r16/K.txt) && node scripts/capture.mjs 07 --out=$S/before \"--q=$K&m07foam=1&m07coinsz=1\" 2>&1 | grep -v \"allow list\\|403\" | tail -3 && node scripts/capture.mjs 07 --out=$S/new \"--q=$K&m07foam=1&m07coinsz=1&m07nearw=1\" 2>&1 | grep -v \"allow list\\|403\" | tail -3 && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/before/07.png $S/new/07.png $S/diff07.png 0.1 180 1536; git checkout -- qa/capture_log.json 2>/dev/null; git stat …[+130 chars]`
+
+### 🧑 User — 2026-11-18T20:51:48.966Z
+
+> ↩︎ result: 07 → /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/det/before/07.png {"stage":"07","s":273.056,"y":-49.642,"calls":153,"tris":287709,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> console errors: [
+> ]
+> 07 → /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/det/new/07.png {"stage":"07","s":273.056,"y":-49.642,"calls":153,"tris":287709,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> console errors: [
+> ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/det/before/07.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/det/new/07.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+>  M qa/match/07/r16/PROGRESS.md
+>  M src/world/match07.ts
+
+### 🤖 Claude — 2026-11-18T20:51:52.171Z
+
+Start view: 0 px differ, same draw calls / triangles. Now the coins check and type check.
+
+### 🤖 Claude — 2026-11-18T20:51:53.040Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && head -15 scripts/gameplay-test.mjs; cat qa/match/07/r16/step1/gameplay_new.json | head -30", "description": "Inspect gameplay test usage and previous result"}`
+
+### 🧑 User — 2026-11-18T20:51:53.162Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> {
+>   "checks": {
+>     "pauseFreezes": {
+>       "pass": true,
+>       "sBefore": 45.495,
+>       "sPause …[+493 chars]
+
+### 🤖 Claude — 2026-11-18T20:51:55.829Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K=$(cat qa/match/07/r16/K.txt) && time timeout 1200 node scripts/gameplay-test.mjs \"--q=$K&m07foam=1&m07coinsz=1&m07nearw=1\" --out=qa/match/07/r17/step2_nearw/gameplay_new.json 2>&1 | grep -v \"allow list\\|403\" | tail -15", "description": "Run gameplay test with the step-2 switch set", "timeout": 1300000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T20:51:55.951Z
+
+> ↩︎ result: Command running in background with ID: bwj0s5skf. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bwj0s5skf.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T20:52:02.159Z
+
+While that runs, the type check.
+
+### 🤖 Claude — 2026-11-18T20:52:03.355Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && time timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; cat tools/lead_r13/swim_clip.mjs | head -30", "description": "Type-check the worktree and read swim clip tool header", "timeout": 700000}`
+
+### 🧑 User — 2026-11-18T20:52:15.404Z
+
+> ↩︎ result: real	0m11.798s
+> user	0m5.017s
+> sys	0m0.252s
+> #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   p …[+960 chars]
+
+### 🤖 Claude — 2026-11-18T20:52:19.030Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/bwj0s5skf.output | tail -15; cd /home/user/wt/s07 && python3 -c \"\nimport json; d=json.load(open('qa/match/07/r17/step2_nearw/gameplay_new.json'))\nc=d['checks']; print(sum(1 for v in c.values() if v.get('pass')), '/', len(c)); print({k:v for k,v in d.items() if k!='checks'} if len(str({k:v for k,v in d.items() if k!='checks'}))<800 else list(d.keys()))\nfor k,v in c.items():\n  if 'coin' in k.lower() or 'score' in k.lower(): print(k, v)\n\"", "description": "Read gameplay test results"}`
+
+### 🧑 User — 2026-11-18T20:52:19.590Z
+
+> ↩︎ result: "t08": 30.366666666666223,
+>   "yTop": -51.95,
+>   "yBottom": -113.095,
+>   "y08": -113.095,
+>   "travelTimeTopToInlet": 6.5,
+>   "verticalDrop": 61.14
+>  },
+>  "errors": []
+> }
+> 
+> real	0m17.960s
+> user	0m1.303s
+> sys	0m0.275s
+> 
+> [exited with code 0]
+> 8 / 8
+> ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> realCoinPickups {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+
+### 🤖 Claude — 2026-11-18T20:52:24.122Z
+
+Gameplay: 8/8, 91 coins, 1,330 → 2,240. Now a short swimming clip (rendered, encoded at half size).
+
+### 🤖 Claude — 2026-11-18T20:52:27.342Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && which ffmpeg && K=$(cat qa/match/07/r16/K.txt) && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw && time timeout 1200 node tools/lead_r13/swim_clip.mjs 07 $S 3.6 \"$K&m07foam=1&m07coinsz=1&m07nearw=1\" 2>&1 | grep -v \"allow list\\|403\" | tail -3 && ffmpeg -loglevel error -y -framerate 24 -i $S/%04d.png -vf scale=432:768 -pix_fmt yuv420p -crf 23 qa/match/07/r17/step2_nearw/swim_NEW_nearw.mp4 && ls -la qa/match/07/r17/step2_nearw/", "description": "Render swim clip frames and encode half-size mp4", "timeout":  …[+35 chars]`
+
+### 🧑 User — 2026-11-18T20:52:27.376Z
+
+> ↩︎ result: Command running in background with ID: beabzijkj. Output is being written to: /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/beabzijkj.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T20:52:29.162Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-18T20:52:29.407Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:52:29.662Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T20:52:29.873Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:52:33.159Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T20:52:33.199Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:52:39.774Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cat .gitattributes | head; du -sh qa/match/07/r17; df -h /home/user | tail -1", "description": "Check LFS attributes and disk space"}`
+
+### 🧑 User — 2026-11-18T20:52:39.946Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> 23M	qa/match/07/r17
+> /dev/vda        252G   29G   11G  74% /
+
+### 🤖 Claude — 2026-11-18T20:52:40.682Z
+
+Now the r17 progress log.
+
+### 🤖 Claude — 2026-11-18T20:52:55.180Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/PROGRESS.md", "content": "# Screen 07 · round 17 (account 17) — progress log\n\nBranch `claude/rainbow-s07-match-c17` (worktree `/home/user/wt/s07`), start = `-c16` tip `669420af` + the round-16 worker's unfinished\nstep-2 edit (`src/world/match07.ts` +128, `near07.json`, `near_bank.png`, `near_foam.png`, `tools/match07/near_tiles_r16.py`), restored\nuncommitted. Briefs: `docs/briefs/2026-11-18-r17/RESUME_R17.md` (s07) + `docs/briefs/2026-11-18-r15/S07_LAUNCH.md`. VISUALS ONLY.\nWhat was done before: `qa/match/07/r16/PROGRESS.md` (step 1 kept, s …[+3215 chars]`
+
+### 🧑 User — 2026-11-18T20:52:55.437Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s07/qa/match/07/r17/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T20:52:58.124Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && printf '\\n* Continued and finished in round 17: `qa/match/07/r17/PROGRESS.md` (step 2 NEW stills re-rendered there).\\n' >> qa/match/07/r16/PROGRESS.md; rm -f qa/match/07/r16/step2_nearw/swim_NEW_nearw.mp4; ls qa/match/07/r16/step2_nearw/; git check-ignore -v node_modules || echo \"node_modules not ignored\"", "description": "Note r17 continuation; remove stale LFS pointer clip"}`
+
+### 🧑 User — 2026-11-18T20:52:58.255Z
+
+> ↩︎ result: NEW
+> node_modules not ignored
+
+### 🤖 Claude — 2026-11-18T20:53:02.690Z
+
+> 🔧 **Bash** `{"command": "sleep 5; cat /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/tasks/beabzijkj.output | tail -5; ls /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_nearw | wc -l", "description": "Check clip rendering progress"}`
+
+### 🧑 User — 2026-11-18T20:53:08.004Z
+
+> ↩︎ result: /usr/bin/ffmpeg
+> 1
+
+### 🤖 Claude — 2026-11-18T20:53:10.866Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:53:11.099Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:53:11.481Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:53:11.705Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:53:15.018Z
+
+The next item is the white lather walls that restart further down the drop (very visible at t66 / t80). Let me read how `m07foam` hides them.
+
+### 🤖 Claude — 2026-11-18T20:53:15.768Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 540,620p src/vfx/foam.ts; echo ======; sed -n 215,280p src/vfx/waterRibbon.ts", "description": "Read m07foam code in foam.ts and waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-18T20:53:15.889Z
+
+> ↩︎ result: }
+> const BANK_CLEAR_RIDER = 1.3;
+> const BANK_CLEAR_CORE = 1.45;
+> 
+> /**
+>  * wave 5: 0.4 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP
+>  * is a LOW band of piled bubbles (ref ≈40–60 px); the full-height berm read as tall white heaps.
+>  */
+> function bermScale05(course: Course): (s: number) => number {
+>   const st = course.stage('05');
+>   const sm = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+>   return (s) => 1 - 0.6 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
+> }
+> /** squash the part of the bank above the stream's edge water level by k (k = 1: unchanged) */
+> const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
+> 
+> /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> function hide07(course: Course): [number, number] | null {
+>   if (!flag05('match07') || !flag05('m07foam')) return null;
+>   return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+> }
+> 
+> /** continuous lather bank along both stream edges (skips the 03 whirlpo …[+6000 chars]
+
+### 🤖 Claude — 2026-11-18T20:53:21.264Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json; d=json.load(open('qa/match/07/r16/step1/NEW/motion.json'))\nfor s in d['shots']: print(s['name'], round(s['s'],2), 's0',round(s['s0'],2),'s1',round(s['s1'],2), 'y', s.get('bennyY'))\n\"; grep -n \"07_plunge_top\\|07_plunge_bottom\" src/world/course.ts | head", "description": "Get shot arc positions and plunge marks"}`
+
+### 🧑 User — 2026-11-18T20:53:21.570Z
+
+> ↩︎ result: a00_approved_view 273.67 s0 273.06 s1 390.16 y -49.685
+> f03_forward3u 276.66 s0 273.06 s1 390.16 y -49.771
+> f06_forward6u 279.71 s0 273.06 s1 390.16 y -49.903
+> f10_forward10u 283.67 s0 273.06 s1 390.16 y -50.104
+> f20_forward20u 293.67 s0 273.06 s1 390.16 y -50.686
+> s_left_steer 279.66 s0 273.06 s1 390.16 y -49.704
+> s_right_steer 279.66 s0 273.06 s1 390.16 y -49.883
+> s_left_hard 285.66 s0 273.06 s1 390.16 y -50.111
+> s_right_hard 285.66 s0 273.06 s1 390.16 y -50.094
+> t33_through_screen 312.47 s0 273.06 s1 390.16 y -51.967
+> t50_through_screen 332.26 s0 273.06 s1 390.16 y -66.076
+> t66_through_screen 351.06 s0 273.06 s1 390.16 y -83.754
+> t80_through_screen 367.46 s0 273.06 s1 390.16 y -99.146
+> t95_through_screen 385.07 s0 273.06 s1 390.16 y -111.887
+> 302:  mark('07_plunge_top');
+> 323:  mark('07_plunge_bottom');
+> 639:    if (s > c.marks['07_plunge_top'] && s < c.marks['08']) minPitch = Math.min(minPitch, THREE.MathUtils.radToDeg(Math.asin(cur.tan.y)));
+> 643:  const top = c.marks['07_plunge_top'];
+> 644:  const bottom = c.marks['07_plunge_bottom'];
+
+### 🤖 Claude — 2026-11-18T20:53:25.514Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json; d=json.load(open('qa/match/07/r17/step2_nearw/gameplay_new.json')); print(d['plunge'])\"; sed -n 295,330p src/world/course.ts", "description": "Print plunge marks from gameplay log and course code"}`
+
+### 🧑 User — 2026-11-18T20:53:25.611Z
+
+> ↩︎ result: {'tTop': 23.866666666666593, 'tBottom': 30.366666666666223, 't08': 30.366666666666223, 'yTop': -51.95, 'yBottom': -113.095, 'y08': -113.095, 'travelTimeTopToInlet': 6.5, 'verticalDrop': 61.14}
+>     else for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); xt = rx[i - 1] + (rx[i] - rx[i - 1]) * a; break; }
+>     const w = smooth(0, 10, z0 + 12 - z) * (1 - smooth(0, 4, zEnd - z));
+>     return xDefault + (xt - xDefault) * w;
+>   };
+>   seg(32, (t) =>
+>     V(x07(s7.z - 60 * t, s7.x + 3.2 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI * t)), s7.y + (WORLD.plunge.topY - s7.y) * t, s7.z - 60 * t),
+>   );
+>   mark('07_plunge_top');
+>   // ---- 07: THE DEEP PLUNGE — pull-down arc, long -70° straight, pull-up arc into the 08 inlet ----
+>   const p0 = pts[pts.length - 1].clone();
+>   const R = 14;
+>   const amax = THREE.MathUtils.degToRad(70);
+>   seg(12, (t) => {
+>     const a = amax * t;
+>     return p0.clone().add(V(0, -R * (1 - Math.cos(a)), -R * Math.sin(a)));
+>   });
+>   const p1 = pts[pts.length - 1].clone();
+>   const dPl = V(0, -Math.sin(amax), -Math.cos(amax));
+>   // straight length chosen so the bottom lands exactly on the chamber floor altitude
+>   const drop = p0.y  …[+757 chars]
+
+### 🤖 Claude — 2026-11-18T20:53:33.209Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T20:53:33.283Z
+
+> ↩︎ result: [image]
+

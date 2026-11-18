@@ -567,3 +567,23 @@ The far disc now shows telescoping rings into a small light. Let me zoom on the 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); timeout 600 node scripts/capture.mjs 04 --out=$SP/sv_before \"--q=$K\" 2>&1 | grep -v \"allow list\" | tail -3; timeout 600 node scripts/capture.mjs 04 --out=$SP/sv_new \"--q=$K&m04end=1\" 2>&1 | grep -v \"allow list\" | tail -3; git checkout qa/capture_log.json 2>/dev/null; node /home/user/tools-pixelmatch/pixeldiff.mjs $SP/sv_before/04.png $SP/sv_new/04.png $SP/sv_diff.png 0.1 180 1536; git status --short", "description": "Verify approved start vi …[+46 chars]`
 
+### 🧑 User — 2026-11-18T20:50:57.674Z
+
+> ↩︎ result: '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/sv_before/04.png","b":"/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/sv_new/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+>  M src/world/match04m4.ts
+> ?? node_modules
+
+### 🤖 Claude — 2026-11-18T20:51:01.888Z
+
+Start view unchanged (0 px differ). Now the full 12-shot NEW set from the real game for the proof folder.
+
+### 🤖 Claude — 2026-11-18T20:51:04.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad; K=$(cat $SP/K17_0.txt); D=qa/match/04/r17/s1_end; mkdir -p $D/BEFORE && cp qa/match/04/r16/s3_sband/1_APPROVED.png $D/1_APPROVED.png && cp qa/match/04/r16/s3_sband/NEW/* $D/BEFORE/ && timeout 900 node tools/lead_r6/motion_audit.mjs 04 $D/NEW \"$K&m04end=1\" 2>&1 | grep \"^04\"", "description": "Render full 12-shot NEW audit with m04end", "timeout": 920000}`
+

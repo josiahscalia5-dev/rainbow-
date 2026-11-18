@@ -887,3 +887,303 @@ Meanwhile I'll look at the approved picture and the current BEFORE (K15) frames.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T20:50:37.676Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"sprites.append\\|^sup_r\\|^nlab\\|^print('glints'\" tools/match08/nq08.py", "description": "Locate sprite extraction lines"}`
+
+### 🧑 User — 2026-11-18T20:50:37.762Z
+
+> ↩︎ result: 125:sup_r, base_r, cov = split(src_raw)
+> 127:nlab, lab, stats, cents = cv2.connectedComponentsWithStats(sup_r.astype(np.uint8), 8)
+> 138:    sprites.append({'rgb': src_raw[y0s:y1s, x0s:x1s].astype(np.float32), 'a': (cov[y0s:y1s, x0s:x1s] * own).astype(np.float32),
+> 140:print('glints', len(sprites), 'sprites; base / glint split at min(RGB) >', GL_MIN)
+
+### 🤖 Claude — 2026-11-18T20:50:39.090Z
+
+Now I'll add an opt-in glow variant (v7) to the tile tool, leaving the v6 output reproducible.
+
+### 🤖 Claude — 2026-11-18T20:50:50.438Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "print('glints', len(sprites), 'sprites; base / glint split at min(RGB) >', GL_MIN)", "new_string": "print('glints', len(sprites), 'sprites; base / glint split at min(RGB) >', GL_MIN)\n# v7 (r17, `NQ08_GLOW=1` -> nq08g.png for `&m08gl=1`): the v6 sprites were only the glint CORES (min RGB > 200, +7 px)\n# cut from the UNRECTIFIED band: in the game they read as hard-edged white \"lightning\" cut-outs lying ~30 deg across the\n# straight tile streaks. The painted glints are white cores inside a soft cyan …[+2327 chars]`
+
+### 🧑 User — 2026-11-18T20:50:50.455Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T20:50:51.593Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"^import\" tools/match08/nq08.py && sed -i 's/^import json, math, sys$/import json, math, os, sys/' tools/match08/nq08.py && grep -n \"^import\" tools/match08/nq08.py && grep -n \"'note':\" tools/match08/nq08.py", "description": "Add os import to nq08.py"}`
+
+### 🧑 User — 2026-11-18T20:50:51.755Z
+
+> ↩︎ result: 27:import json, math, sys
+> 28:import cv2
+> 29:import numpy as np
+> 27:import json, math, os, sys
+> 28:import cv2
+> 29:import numpy as np
+> 242:           'note': 'u = 0.5 + x_b / (2 halfWidth), x_b = lateral offset from the lane centre (u; |x| <= core 1:1, beyond: '
+
+### 🤖 Claude — 2026-11-18T20:50:53.069Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/tools/match08/nq08.py", "offset": 120, "limit": 25}`
+
+### 🧑 User — 2026-11-18T20:50:53.096Z
+
+> ↩︎ result: 120	
+> 121	
+> 122	lum = lambda im: im @ np.array([0.3, 0.55, 0.15], np.float32)
+> 123	sup, base, _ = split(src)                    # base satin from the RECTIFIED band (its streaks run down the columns)
+> 124	# the glint sprites from the UNRECTIFIED band: each keeps its exact painted shape and its painted diagonal angle
+> 125	sup_r, base_r, cov = split(src_raw)
+> 126	bub_near = cv2.dilate(bub.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (41, 41))).astype(bool)
+> 127	nlab, lab, stats, cents = cv2.connectedComponentsWithStats(sup_r.astype(np.uint8), 8)
+> 128	sprites = []
+> 129	for k in range(1, nlab):
+> 130	    x, y, w, h, area = stats[k]
+> 131	    if area < 60 or y <= 2 or y + h >= SH - 2: continue          # tiny, or cut by the band's near / far end
+> 132	    if (bub_near & (lab == k)).any(): continue                    # next to a painted bubble (its rim would be copied)
+> 133	    if -A + 2 * A * x / (SW - 1) < -0.80 or -A + 2 * A * (x + w) / (SW - 1) > 0.70: continue   # foam blobs of the banks
+> 134	    pad = 6; x0s, y0s, x1s, y1s = max(0, x - pad), max(0, y - pad), min(SW, x + w + pad), min(SH, y + h + pad)
+> 135	    own = cv2.dilate((lab[y0s:y1s, x0s:x1s] == k).astype(np.uint8), np.ones(( …[+819 chars]
+
+### 🤖 Claude — 2026-11-18T20:51:04.836Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "print('glints', len(sprites), 'sprites; base / glint split at min(RGB) >', GL_MIN)\n", "new_string": "print('glints', len(sprites), 'sprites; base / glint split at min(RGB) >', GL_MIN)\n# v7 (r17, `NQ08_GLOW=1` -> nq08g.png for `&m08gl=1`): the v6 sprites were only the glint CORES (min RGB > 200, +7 px)\n# cut from the UNRECTIFIED band: in the game they read as hard-edged white \"lightning\" cut-outs lying ~30 deg across the\n# straight tile streaks. The painted glints are white cores inside a soft cy …[+2384 chars]`
+
+### 🧑 User — 2026-11-18T20:51:05.194Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:51:05.495Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 270,290p tools/match08/nq08.py", "description": "Check the json note area at end of tool"}`
+
+### 🧑 User — 2026-11-18T20:51:05.571Z
+
+> ↩︎ result: print('zone', zn, 'glints placed', got, '/', n_t)
+> t8 = np.clip(tile, 0, 255).astype(np.uint8)
+> Image.fromarray(t8).save(out_png, optimize=True)
+> json.dump({'z0': float(Z0), 'period': PERIOD, 'halfWidth': WT, 'lane': LANE, 'core': RC, 'texelsPerU': [DX, DZ],
+>            'layout': {'x': KX, 'a': KA, 'c': c, 'paintedHalfWidth': HW}, 'glints': len(placed),
+>            'note': 'u = 0.5 + x_b / (2 halfWidth), x_b = lateral offset from the lane centre (u; |x| <= core 1:1, beyond: '
+>                    'core + (|x| - core) (lane - core) / (h - core) for a lane of half width h); v = (z0 - z) / period (repeat). '
+>                    'Painted scale; from the approved picture\'s own near band (nq08.py v6, r14: rectified along the painted flow, '
+>                    'base satin from whole painted columns, the painted glints put back whole)'},
+>           open(out_json, 'w'), indent=1)
+> if dbg:
+>     Image.fromarray(src_raw.astype(np.uint8)).save(f'{dbg}/nq08_source_band.png')
+>     Image.fromarray(src.astype(np.uint8)).save(f'{dbg}/nq08_source_rectified.png')
+>     Image.fromarray(np.clip(base, 0, 255).astype(np.uint8)).save(f'{dbg}/nq08_source_base.png')
+>     Image.fromarray(np.clip(base_tile, 0, 255).astype(n …[+77 chars]
+
+### 🤖 Claude — 2026-11-18T20:51:07.670Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/nq08.py", "old_string": "                   'base satin from whole painted columns, the painted glints put back whole)'},", "new_string": "                   'base satin from whole painted columns, the painted glints put back whole)'\n                   + (' + v7 (r17, NQ08_GLOW=1): glints cut from the rectified band with their painted glow' if GLOW else '')},"}`
+
+### 🧑 User — 2026-11-18T20:51:07.813Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/nq08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:51:10.678Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && NQ08_GLOW=1 nice -n 10 python3 -I tools/match08/nq08.py $S/nq/nq08g.png $S/nq/nq08g.json 2>&1 | tail -8; for s in s_left_steer s_right_steer s_left_hard s_right_hard t33_through_screen t66_through_screen t95_through_screen; do node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/08/r16/step1_m08sr/3_NEW_$s.png $S/s2new/$s.png $S/look/diff_$s.png 0.1 180 1536 | grep -o '\"diff_pixels\":[0-9]*'; done", "description": "Build v7 glow tile and diff remaining step-2 shots"}`
+
+### 🧑 User — 2026-11-18T20:51:25.076Z
+
+> ↩︎ result: rectified: max lateral shift 0.503 u
+> glints 7 sprites; base / glint split at min(RGB) > 200
+> v7 glow glints 2 sprites (rectified, core + glow 16 texels)
+> target 1336 x 1236 texels ( 6.1 u x 7.490909090909091 u ), middle layout 1:1 +- 0.7 u
+> magenta zone a -0.807 .. -0.475 112 cols
+> cyan zone a -0.442 .. 0.714 388 cols
+> zone 2 glints placed 17 / 17
+> wrote /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/nq/nq08g.png (1236, 1336, 3)
+> "diff_pixels":6483
+> "diff_pixels":7054
+> "diff_pixels":7614
+> "diff_pixels":8795
+> "diff_pixels":7025
+> "diff_pixels":7350
+> "diff_pixels":8383
+
+### 🤖 Claude — 2026-11-18T20:51:30.523Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -c \"\nfrom PIL import Image\nS='$S'\ndef pair(shot, box, name, k=2):\n    a=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_%s.png'%shot).crop(box); b=Image.open(S+'/s2new/%s.png'%shot).crop(box)\n    w,h=a.size; a=a.resize((int(w*k),int(h*k)),Image.LANCZOS); b=b.resize((int(w*k),int(h*k)),Image.LANCZOS)\n    c=Image.new('RGB',(a.size[0]*2+10,a.size[1]),'black'); c.paste(a,(0,0)); c.paste(b,(a.size[0]+10,0)); c.save(S+'/look/'+name)\npair('s_left_hard',(150,380,864 …[+133 chars]`
+
+### 🧑 User — 2026-11-18T20:51:30.871Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:51:32.817Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_lh.png"}`
+
+### 🧑 User — 2026-11-18T20:51:33.242Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:51:33.427Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_rh.png"}`
+
+### 🧑 User — 2026-11-18T20:51:33.437Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:51:39.206Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -c \"\nfrom PIL import Image\nS='$S'\ndef pair(shot, box, k=2):\n    a=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_%s.png'%shot).crop(box); b=Image.open(S+'/s2new/%s.png'%shot).crop(box)\n    w,h=a.size; a=a.resize((int(w*k),int(h*k)),Image.LANCZOS); b=b.resize((int(w*k),int(h*k)),Image.LANCZOS)\n    c=Image.new('RGB',(a.size[0],a.size[1]*2+10),'black'); c.paste(a,(0,0)); c.paste(b,(0,a.size[1]+10)); return c\ncs=[pair('s_left_hard',(240,400,740,700),1.2), pair( …[+164 chars]`
+
+### 🧑 User — 2026-11-18T20:51:39.926Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:51:41.851Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_hard0.png"}`
+
+### 🧑 User — 2026-11-18T20:51:41.888Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:51:42.467Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_hard1.png"}`
+
+### 🧑 User — 2026-11-18T20:51:42.497Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:51:50.329Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && python3 -c \"\nfrom PIL import Image\nS='$S'\na=Image.open('qa/match/08/r16/step1_m08sr/3_NEW_f10_forward10u.png').crop((500,500,864,1000)); b=Image.open(S+'/s2new/f10_forward10u.png').crop((500,500,864,1000))\nc=Image.new('RGB',(738,500),'black'); c.paste(a,(0,0)); c.paste(b,(374,0)); c.save(S+'/look/vh_f10_r2.png')\"", "description": "Crop f10 right side wider pair"}`
+
+### 🧑 User — 2026-11-18T20:51:50.602Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:51:52.881Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/look/vh_f10_r2.png"}`
+
+### 🧑 User — 2026-11-18T20:51:52.982Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:52:00.485Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat .gitattributes | head -20; git check-attr filter -- qa/match/08/r16/step1_m08sr/3_NEW_f06_forward6u.png", "description": "Check LFS attributes for qa PNGs"}`
+
+### 🧑 User — 2026-11-18T20:52:00.617Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+> qa/match/08/r16/step1_m08sr/3_NEW_f06_forward6u.png: filter: unspecified
+
+### 🤖 Claude — 2026-11-18T20:52:07.700Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && D=qa/match/08/r17/step1_m08vh && mkdir -p $D && cp references/08_final_spin_chamber.png $D/1_APPROVED.png && for f in qa/match/08/r16/step1_m08sr/3_NEW_*; do b=$(basename $f); cp $f $D/2_BEFORE_${b#3_NEW_}; done && for f in $S/s2new/*.png; do cp $f $D/3_NEW_$(basename $f); done && cp $S/s2new/motion.json $D/3_NEW_motion.json && git mv -f qa/match/08/r16/step2_m08vh/new_raw/f20_forward20u.png $D/3_NEW_f20_forward20u.png 2>/dev/null || mv qa/match/08/r16/step2_m08vh/new_raw …[+447 chars]`
+
+### 🧑 User — 2026-11-18T20:52:09.650Z
+
+> ↩︎ result: 29
+> PROGRESS.md
+> step1_m08sr
+> "diff_pixels":0
+
+### 🤖 Claude — 2026-11-18T20:52:11.431Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc=$?", "description": "Type check the project"}`
+
+### 🧑 User — 2026-11-18T20:52:23.319Z
+
+> ↩︎ result: tsc=0
+
+### 🤖 Claude — 2026-11-18T20:52:35.078Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat >> qa/match/08/r17/PROGRESS.md <<'EOF'\n\n## Step 1 — `&m08vh=1` (r16 step 2 finished: soft visibility hand-over only on the HIDDEN side of a depth edge) — KEPT (GOOD IMPROVEMENT, small)\nKept query: `K16 = K15&m08vh=1`\n* What changed (`src/world/match08.ts`, all projected scenery, only with `&m08vh=1`): off the approved viewpoint the projector\n  visibility test averages 5 x 5 depth taps for a soft hand-over to the fill. That average also faded points the approved view\n  DID see when they lay next to a nearer silhouette (the cups, the platform rim /  …[+2284 chars]`
+
+### 🧑 User — 2026-11-18T20:52:47.550Z
+
+> ↩︎ result: M  qa/match/08/r17/PROGRESS.md
+> A  qa/match/08/r17/step1_m08vh/1_APPROVED.png
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_a00_approved_view.png
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_f03_forward3u.png
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_f06_forward6u.png
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_f10_forward10u.png
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_f20_forward20u.png
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_motion.json
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_motion_f20.json
+> A  qa/match/08/r17/step1_m08vh/2_BEFORE_s_left_hard.png
+> ddecbc078fb2eff2154f905a3bc9f3525f515172
+> ddecbc078fb2eff2154f905a3bc9f3525f515172	refs/heads/claude/rainbow-s08-scenery-c17
+
+### 🤖 Claude — 2026-11-18T20:52:53.332Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s08 r17 step 1 m08vh kept", "message": "s08 r17 step 1 `&m08vh=1` (finished r16 step 2: soft visibility hand-over only on the hidden side) — KEPT, GOOD IMPROVEMENT (small). Commit ddecbc07 on claude/rainbow-s08-scenery-c17 (pushed, remote == HEAD). Kept set K16 = K15&m08vh=1. Pale glowing fringes / washed-out boxes beside the upper-left cup rim, the foam bank under the platform's left end, the platform rim and legs are gone while swimming; approved start view 0 px, coins unchanged. Pictures: /home/user/wt/s08/qa/match/08/r17/step1_m08vh/ (1_APPROVED, 2_BEFORE_*, 3_NE …[+413 chars]`
+
+### 🧑 User — 2026-11-18T20:52:53.360Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T20:53:01.214Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && cat > $S/nqdbg.py <<'EOF'\nimport runpy, sys, os\nos.environ['NQ08_GLOW']='1'\nEOF\npython3 - <<'EOF'\nimport re\nsrc=open('/home/user/wt/s08/tools/match08/nq08.py').read()\n# stop after the v7 block, print component diagnostics\ncut=src.index(\"# --- layout: lane offset\")\ndiag='''\nfor k in range(1, nlab):\n    x, y, w, h, area = stats[k]\n    core = (lab == k) & (cm > 0)\n    cys = np.where(core.any(1))[0]\n    print(k, 'bbox', x, y, w, h, 'core', int(core.sum()), 'cy …[+469 chars]`
+
+### 🧑 User — 2026-11-18T20:53:03.306Z
+
+> ↩︎ result: source band 737 x 294 texels ( 3.35 u x 1.78 u ), half width 1.523
+> rectified: max lateral shift 0.503 u
+> glints 7 sprites; base / glint split at min(RGB) > 200
+> v7 glow glints 2 sprites (rectified, core + glow 16 texels)
+> 1 bbox 0 0 105 294 core 2522 cy (np.int64(8), np.int64(293)) bub False a -1.1 -0.79
+> 2 bbox 99 0 258 294 core 5927 cy (np.int64(1), np.int64(293)) bub True a -0.8 -0.03
+> 3 bbox 437 0 38 28 core 55 cy (np.int64(0), np.int64(11)) bub False a 0.21 0.32
+> 4 bbox 520 0 192 273 core 4861 cy (np.int64(6), np.int64(256)) bub True a 0.45 1.03
+> 5 bbox 325 16 102 113 core 1854 cy (np.int64(32), np.int64(112)) bub False a -0.13 0.18
+> 6 bbox 485 52 37 39 core 28 cy (np.int64(68), np.int64(74)) bub False a 0.35 0.46
+> 7 bbox 473 179 82 99 core 1335 cy (np.int64(195), np.int64(261)) bub True a 0.31 0.56
+> 8 bbox 422 187 49 50 core 78 cy (np.int64(203), np.int64(220)) bub False a 0.16 0.31
+
+### 🤖 Claude — 2026-11-18T20:53:23.036Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='/home/user/wt/s08/tools/match08/nq08.py'\ns=open(p).read()\ns=s.replace(\"\"\"                    'cx': crect, 'w': x1s - x0s, 'h': y1s - y0s})\nprint('glints', len(sprites)\"\"\",\"\"\"                    'cx': crect, 'w': x1s - x0s, 'h': y1s - y0s, 'k': k})\nprint('glints', len(sprites)\"\"\")\na=s.index(\"if GLOW:\\n\"); b=s.index(\"    print('v7 glow glints'\")\nnew='''if GLOW:\n    # the same painted glints as v6 (their cores picked in the unrectified band), carried into the rectified band\n    GD = 16\n    rows_f = np.repeat(np.a …[+1455 chars]`
+
+### 🧑 User — 2026-11-18T20:53:23.538Z
+
+> ↩︎ result: print('glints', len(sprites), 'sprites; base / glint split at min(RGB) >', GL_MIN)
+> # v7 (r17, `NQ08_GLOW=1` -> nq08g.png for `&m08gl=1`): the v6 sprites were only the glint CORES (min RGB > 200, +7 px)
+> # cut from the UNRECTIFIED band: in the game they read as hard-edged white "lightning" cut-outs lying ~30 deg across the
+> # straight tile streaks. The painted glints are white cores inside a soft cyan-white GLOW, stretched ALONG the streaks.
+> # v7 cuts each glint from the RECTIFIED band (so it lies along the tile's straight streaks, as painted along its curve)
+> # with its whole painted glow (core + 16 texels), alpha = the painted brightness above the satin under it, feathered.
+> GLOW = os.environ.get('NQ08_GLOW') == '1'
+> if GLOW:
+>     # the same painted glints as v6 (their cores picked in the unrectified band), carried into the rectified band
+>     GD = 16
+>     rows_f = np.repeat(np.arange(SH, dtype=np.float32)[:, None], SW, 1)
+>     mk = [cv2.remap((lab == s['k']).astype(np.float32), xs, rows_f, cv2.INTER_LINEAR) > 0.3 for s in sprites]
+>     ell = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * GD + 1, 2 * GD + 1))
+>     spg = cv2.dilate(np.any(mk, 0).astype(np.uint8), ell).astype(bool)
+>     bsg  …[+1768 chars]
+
+### 🤖 Claude — 2026-11-18T20:53:29.573Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad && NQ08_GLOW=1 nice -n 10 python3 -I tools/match08/nq08.py $S/nq/nq08g.png $S/nq/nq08g.json 2>&1 | grep -E \"v7|zone|wrote\"; nice -n 10 python3 -I tools/match08/nq08.py $S/nq/nq08_repro2.png $S/nq/nq08_repro2.json >/dev/null 2>&1; python3 -c \"\nfrom PIL import Image, ImageChops\na=Image.open('assets/textures/match08/nq08.png'); b=Image.open('$S/nq/nq08_repro2.png'); print('v6 repro bbox diff:', ImageChops.difference(a,b).getbbox())\"", "description": "Build v7 tile and con …[+20 chars]`
+

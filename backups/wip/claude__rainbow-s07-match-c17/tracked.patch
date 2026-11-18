@@ -1,8 +1,8 @@
 diff --git a/qa/match/07/r16/PROGRESS.md b/qa/match/07/r16/PROGRESS.md
-index 320635dd..e6b12e87 100644
+index 320635dd..f6df222a 100644
 --- a/qa/match/07/r16/PROGRESS.md
 +++ b/qa/match/07/r16/PROGRESS.md
-@@ -30,3 +30,22 @@ the "start view unchanged" check uses the deterministic `scripts/capture.mjs 07`
+@@ -30,3 +30,24 @@ the "start view unchanged" check uses the deterministic `scripts/capture.mjs 07`
    with thick magenta banks and foam clouds → step 2 `m07nearw`.
  * Round-15 leftovers kept as history: `qa/match/07/r15/step1/` (t95 BEFORE / NEW of the cut-off run), `tools/match07/near_tiles_r15.py`
    (draft, superseded by `near_tiles_r16.py`).
@@ -25,6 +25,8 @@ index 320635dd..e6b12e87 100644
 +  The plunge river (m07tube) is NOT changed in this step.
 +* Tuning (scratch renders, not kept): first try river half-width 1.75 u — at hard left Benny sat on the foam bank → 2.4 u,
 +  then 2.6 u with the painted winding limited to ±0.3 u; the centre line was sampled every 3 u → visible kinks → 1.5 u + smoothing.
++
++* Continued and finished in round 17: `qa/match/07/r17/PROGRESS.md` (step 2 NEW stills re-rendered there).
 diff --git a/src/world/match07.ts b/src/world/match07.ts
 index 2e5bc03a..362dfeca 100644
 --- a/src/world/match07.ts

@@ -52,3 +52,4 @@ write `-c17` from another account.
 | # | Screen / step | Verdict |
 |---|---|---|
 | (r16 1–6) | see `docs/briefs/2026-11-18-r16/COORDINATION.md` | 08 m08sr, 07 m07foam+coinsz, 06 m06gold, 04 m04rpaint step 3, 04 m04sband: GOOD IMPROVEMENT |
+| 1 (~20:55) | 08 r17 step 1 `&m08vh=1` (s08 `ddecbc07`, kept set K16 = K15&m08vh=1) | GOOD IMPROVEMENT (small; worker + lead at full size): pale washed-out strips / boxes under the upper-left cup rim, along the platform's left rim and legs and at the foam bank under it are gone while swimming; start view 0 px (Pixelmatch), coins unchanged — `qa/review_r17/08_step1_m08vh/`. Next for s08: torn white "lightning" glints in the near water below Benny |

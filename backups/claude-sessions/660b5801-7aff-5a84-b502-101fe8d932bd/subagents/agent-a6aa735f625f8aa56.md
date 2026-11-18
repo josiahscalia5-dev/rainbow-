@@ -385,3 +385,46 @@ Foam heaps on both banks now read as white bubbly soap clouds. Now the start-vie
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1\" && D=qa/match/06/r17/step2_m06fclu && cp references/06_crest_the_rinse_arch.png $D/1_APPROVED.png && timeout 900 node tools/match06/r16_start.mjs $D/START BEFORE_checkpoint \"$K\" NEW_checkpoint \"$K&m06fclu=1\" \"BEFORE_forward@1.1\" \"$K\" \"NEW_forward@1.1\" \"$K&m06fclu=1\" 2>&1 | grep -v \"allow list\" | tail -6; for p in checkpoint \"forward@1.1\"; do node /home/user/tools-pixelmatch/pixeldiff.mjs \"$D/START/BEFORE_$p.png\" \"$D/START/NEW_$p.png\" /tmp …[+223 chars]`
 
+### 🧑 User — 2026-11-18T20:52:40.115Z
+
+> ↩︎ result: BEFORE_checkpoint s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> NEW_checkpoint s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> BEFORE_forward@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+> NEW_forward@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+> {"a":"qa/match/06/r17/step2_m06fclu/START/BEFORE_checkpoint.png","b":"qa/match/06/r17/step2_m06fclu/START/NEW_checkpoint.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"qa/match/06/r17/step2_m06fclu/START/[REDACTED-EMAIL]","b":"qa/match/06/r17/step2_m06fclu/START/[REDACTED-EMAIL]","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-18T20:52:43.321Z
+
+Start view: 0 px differ at the checkpoint and at +1.1 u. A short half-size swimming clip will show whether the near foam heaps pass the camera cleanly; checking the clip tool.
+
+### 🤖 Claude — 2026-11-18T20:52:44.473Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls tools/lead_r13/ && sed -n 1,25p tools/lead_r13/swim_clip.mjs; grep -n \"5276\\|startVite\\|scale\\|width\" tools/lead_r13/swim_clip.mjs | head", "description": "Inspect the swim clip tool usage"}`
+
+### 🧑 User — 2026-11-18T20:52:44.551Z
+
+> ↩︎ result: swim_clip.mjs
+> #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => c …[+838 chars]
+
+### 🤖 Claude — 2026-11-18T20:52:49.735Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && F=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/clip_fclu && rm -rf $F && timeout 1500 node tools/lead_r13/swim_clip.mjs 06 $F 3.6 \"$K\" 2>&1 | grep -v \"allow list\" | tail -3 && ffmpeg -loglevel error -y -framerate 24 -i $F/%04d.png -vf scale=432:768 -pix_fmt yuv420p qa/match/06/r17/step2_m06fclu/NEW/m06fclu_swim.mp4 && ls -la qa/match/06/r17/step2_m06fclu/NEW/m06fclu_swim.mp4 && ls $F | wc -l", "descriptio …[+75 chars]`
+
