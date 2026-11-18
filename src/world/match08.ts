@@ -83,7 +83,8 @@ uniform sampler2D uNearT;   // m08near (floor only): crisp near-river tile from 
 uniform vec4 uNear;         // z at tile v = 0, world length of one tile period along the river, tile lateral half range A, w > 0.5 = on
 uniform vec4 uNearM;        // projection magnification ramp start / end, lateral fade start / end (|lane position|, 1 = bank)
 uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)
-uniform vec4 uCup;          // m08cup (spout cups only): cup centre xyz, w > 0.5 = on
+uniform vec4 uNq;           // m08nq (r14): x > 0.5 = painted-scale tile (nq08.py), y = middle 1:1 half width, z = lane it was laid for, w = tile half width (u)
+uniform vec4 uCup;         // m08cup (spout cups only): cup centre xyz, w > 0.5 = on
 uniform vec3 uCupM;         // m08cup mirror plane normal (horizontal, perpendicular to the projector's view of the cup)
 uniform sampler2D uCupMk;   // m08cupw: painted outline of the upper cups (cupw08.py, R = upper-right, eroded 2 px)
 uniform vec4 uCupW;         // m08cupw: copy direction across the arch edge (plate uv per px), distance (px), w > 0.5 = on
@@ -262,6 +263,13 @@ void main() {
     float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mn);
     float sl = (vW.x - r.x) / h;
     vec2 tuv = vec2(0.5 + (uNearC.x + uNearC.y * sl) / (2.0 * uNear.z), (uNear.x - vW.z) / uNear.y);
+    if (uNq.x > 0.5) {
+      // m08nq (r14): the painted-scale tile is laid out in world units across the lane (middle 1:1, the rest of the lane
+      // scaled only if the lane differs from the one the tile was laid for), so glints / streaks keep their painted size
+      float d = vW.x - r.x, ad = abs(d);
+      float xb = ad <= uNq.y ? ad : uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3);
+      tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), (uNear.x - vW.z) / uNear.y);
+    }
     float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
     if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
   }
@@ -385,6 +393,15 @@ export async function buildMatch08(): Promise<Match08> {
     nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = THREE.ClampToEdgeWrapping; nearTex.wrapT = THREE.RepeatWrapping;
     nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
   }
+  // `&m08nq=1` (r14, with m08near): the near water at the PAINTED scale (tools/match08/nq08.py v4): the approved picture's
+  // own near band, rectified along its painted flow and quilted to an 8 u x lane-wide tile (no magnified / stretched glints)
+  let NQ: { z0: number; period: number; halfWidth: number; lane: number; core: number } | null = null;
+  if (nearTex && flag05('m08nq')) {
+    NQ = await fetch(new URL('../../assets/textures/match08/nq08.json', import.meta.url).href).then((r) => r.json());
+    nearTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/nq08.png', import.meta.url).href);
+    nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = THREE.ClampToEdgeWrapping; nearTex.wrapT = THREE.RepeatWrapping;
+    nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
+  }
   // `&m08ring=1` (r12): periodic slot-ring tile for m08ceil / m08drum (tools/match08/ring08.py)
   let ringTex: THREE.Texture | null = null;
   let RG: { a0Deg: number; aPeriodDeg: number; r0: number; rPeriod: number } | null = null;
@@ -411,7 +428,7 @@ export async function buildMatch08(): Promise<Match08> {
       uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) },
       uRingT: { value: ringTex ?? plate }, uRing: { value: new THREE.Vector4(0, 1, 0, 1) }, uRingOn: { value: 0 },
       uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
-      uNearC: { value: new THREE.Vector2(0, 1) },
+      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) },
       uCup: { value: new THREE.Vector4(0, 0, 0, 0) }, uCupM: { value: new THREE.Vector3(1, 0, 0) },
       uCupMk: { value: cupMk ?? plate }, uCupW: { value: new THREE.Vector4(0, 0, 0, 0) } },
   });
@@ -429,6 +446,10 @@ export async function buildMatch08(): Promise<Match08> {
     u.uNear.value.set(NJ.z0, NJ.zLen * kIso * num('m08nearv', 1), NJ.A, 1);
     u.uNearM.value.set(num('m08nearm0', 1.6), num('m08nearm1', 2.6), num('m08nearl0', 0.85), num('m08nearl1', 1.0));
     u.uNearC.value.set(c, hw);
+    if (NQ) {
+      u.uNear.value.set(NQ.z0, NQ.period * num('m08nearv', 1), NJ.A, 1);
+      u.uNq.value.set(1, NQ.core, NQ.lane, NQ.halfWidth);
+    }
   }
   const group = new THREE.Group();
   group.name = 'match08_projection';
