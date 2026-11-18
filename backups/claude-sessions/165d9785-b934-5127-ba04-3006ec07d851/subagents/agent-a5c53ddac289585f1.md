@@ -1685,3 +1685,17 @@ Now the PROGRESS.md for r12 with step 1.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K13='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && node scripts/capture.mjs 08 --out=$S/capDR --q=\"$K13&m08drum=1\" 2>&1 | grep -c \"→\"; git checkout -- qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/capRW/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capDR/08.png').convert('RG …[+173 chars]`
 
+### 🧑 User — 2026-11-18T13:08:26.803Z
+
+> ↩︎ result: 1
+> px differ 594 max 12
+> 13:08
+
+### 🤖 Claude — 2026-11-18T13:08:31.523Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/capRW/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capDR/08.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); ys,xs=np.nonzero(d); print(xs.min(),ys.min(),xs.max(),ys.max())\"", "description": "Locate approved-view differing pixels"}`
+
+### 🧑 User — 2026-11-18T13:08:31.868Z
+
+> ↩︎ result: 151 114 691 161
+

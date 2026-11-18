@@ -1577,3 +1577,30 @@ No cycles. Implementing the switch now.
 > 300	    t = Math.imul(t ^ (t >>> 15), t | 1);
 > 301	    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
 
+### 🤖 Claude — 2026-11-18T13:08:28.385Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/foam.ts", "old_string": "/** unit sphere puff with smooth normals (detail 0 icosahedra get flat normals by default) */", "new_string": "/** `&m05fcloud=1` (Screen 05 round 12): one far-bank foam lump in the far block's virtual frame (src/world/match05far.ts) */\nexport interface FarLump05 {\n  /** virtual depth beyond the far seam origin sF (anchored: the virtual tunnel stays put) */\n  Z: number;\n  /** -1 left bank, +1 right bank */\n  side: number;\n  /** offset outward from the far layout's water edge (units; negative = over th …[+2456 chars]`
+
+### 🧑 User — 2026-11-18T13:08:28.436Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:08:31.224Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 19,30p src/world/match05far.ts", "description": "Show match05far imports"}`
+
+### 🧑 User — 2026-11-18T13:08:31.262Z
+
+> ↩︎ result: */
+> import * as THREE from 'three';
+> import type { ForcedTunnel, TubeWarp } from './tube';
+> import { tubeCenterAt } from './tube';
+> import type { FarRiverLayout, FarRiverRow } from './far05';
+> import type { Course, CourseSample } from './course';
+> import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';
+> import { clip05 } from '../vfx/clip05';
+> 
+> export const M05FAR: boolean = MATCH05 && flag05('m05far');
+> /**
+>  * `&m05end=1` (Screen 05 round 11, needs m05far): the last part of the stage (t ≈ 0.88 … 0.96, Benny ≈ 182 … 186.5)
+

@@ -3542,3 +3542,67 @@ Saved. The last changes were the coordination log time fix and the session trans
 
 Still running: the Screen 05 and Screen 08 specialists, and the Depth Anything 3 reinstall for the Screen 04 geometry test. The five-minute autosave keeps backing up all of it, including the specialists' unfinished edits. I'll send each new result as full-size APPROVED / BEFORE / NEW pictures with a verdict.
 
+### 🧑 User — 2026-11-18T13:08:18.947Z
+
+<task-notification>
+<task-id>ba120lhai</task-id>
+<tool-use-id>toolu_01FsdJWyx31HyHWbj1PpnCmQ</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/tasks/ba120lhai.output</output-file>
+<status>completed</status>
+<summary>Background command "Reinstall Depth Anything 3 outside the repo" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T13:08:27.062Z
+
+Depth Anything 3 finished reinstalling. I'll confirm it imports, then read the round-11 scripts so I reuse them rather than starting fresh.
+
+### 🤖 Claude — 2026-11-18T13:08:28.073Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/da3/install.log; cd /home/user/rainbow- && ls tools/da3/ 2>/dev/null; wc -l tools/da3/*.py 2>/dev/null; du -sh /home/user/da3 2>/dev/null", "description": "Check DA3 install and existing DA3 tools"}`
+
+### 🧑 User — 2026-11-18T13:08:28.160Z
+
+> ↩︎ result: DA3 import OK, torch 2.15.0+cpu
+> compare.py
+> run_da3.py
+>   81 tools/da3/compare.py
+>   36 tools/da3/run_da3.py
+>  117 total
+> 1.7G	/home/user/da3
+
+### 🤖 Claude — 2026-11-18T13:08:30.441Z
+
+> 🔧 **Bash** `{"command": "cat tools/da3/run_da3.py; sed -n 1,40p tools/da3/compare.py; grep -n \"def inference\" -A 30 /home/user/da3/src/src/depth_anything_3/api.py | grep -nE \"def inference|extrinsics|intrinsics|process_res|export\" | head -15", "description": "Read DA3 run/compare scripts and API signature"}`
+
+### 🧑 User — 2026-11-18T13:08:30.489Z
+
+> ↩︎ result: """Run Depth Anything 3 (Apache-2.0 checkpoints only) on the approved Rainbow pictures 04-08.
+> Usage: run_da3.py MODEL[,MODEL...] OUTDIR
+> Writes OUTDIR/<model>/<NN>.npz with depth (H,W), conf, sky (if any), intrinsics (3,3), proc_size, seconds."""
+> import sys, time, os, json
+> import numpy as np, torch
+> from PIL import Image
+> from depth_anything_3.api import DepthAnything3
+> 
+> torch.set_num_threads(2)
+> REPO = '/home/user/rainbow-'
+> REFS = {
+>     '04': 'references/04_through_the_five_arrows.png',
+>     '05': 'references/05_flow_into_the_current.png',
+>     '06': 'references/06_crest_the_rinse_arch.png',
+>     '07': 'references/07_dive_the_washer_tube.png',
+>     '08': 'references/08_final_spin_chamber.png',
+> }
+> models, out = sys.argv[1].split(','), sys.argv[2]
+> for m in models:
+>     t0 = time.time()
+>     model = DepthAnything3.from_pretrained(f'depth-anything/{m}').eval()
+>     print(f'{m}: loaded in {time.time() - t0:.0f}s', flush=True)
+>     os.makedirs(f'{out}/{m}', exist_ok=True)
+>     for nn, rel in REFS.items():
+>         img = Image.open(f'{REPO}/{rel}').convert('RGB')
+>         t = time.time()
+>         with torch.inference_mode():
+>             p = model.inference([img], process_res=504)
+>         d = dict(depth=np …[+2917 chars]
+
