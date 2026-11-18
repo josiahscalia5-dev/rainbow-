@@ -4889,3 +4889,131 @@ F3 and F4 look almost identical, which is suspicious: the deeper-blue setting sh
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; F4=$(cat $S/F4.q); cat >> qa/match/04/r13/PROGRESS.md <<EOF\n\n## Step 5 — user order ~16:30 UTC: approved entrance + SAME tunnel inside, approved arrow shape, saturated water — F4 = GOOD IMPROVEMENT — shown\nQuery (F4): \\`$F4\\`\n* Honest rating given to the user: ~6/10 while swimming (start view = the painting). Gaps in order: entrance -> interior handover\n  (painting replaced within ~4 frames by a visibly different model), ring shape / brightness, arrow look, water bri …[+2474 chars]`
 
+### 🧑 User — 2026-11-18T15:41:29.863Z
+
+> ↩︎ result: s04 local 9ef21200 remote 9ef21200
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "0914296fc7883808091a985ab56c4dd51cba412b",
+> lead LOCAL 0914296f REMOTE 0914296f
+> 0
+
+### 🤖 Claude — 2026-11-18T15:41:34.034Z
+
+The save went through and GitHub matches (`0914296f`), but that commit didn't include the chat transcripts. I'll check when they were last saved.
+
+### 🤖 Claude — 2026-11-18T15:41:35.935Z
+
+> 🔧 **Bash** `{"command": "D=backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e; git log -1 --format='%h %ci' -- $D/transcript.md; ls -la --time-style=+%H:%M $D/transcript.md $D/subagents/ | awk '{print $6, $7}'; date -u +%H:%M; grep -n \"def .*transcript\\|claude_projects_glob\\|def export_sessions\\|def copy_sessions\" scripts/rainbow-autosave.py | head", "description": "Check when transcripts were last saved"}`
+
+### 🧑 User — 2026-11-18T15:41:36.004Z
+
+> ↩︎ result: 0914296 2026-11-18 15:41:21 +0000
+> 15:41 backups/claude-sessions/db1282e5-c5b3-5609-94aa-1c571ce0956e/transcript.md
+>  
+>  
+>  
+> 15:13 .
+> 15:41 ..
+> 15:13 agent-a734238476cb500fe.md
+> 15:13 agent-a734238476cb500fe.sanitized.jsonl
+> 15:13 agent-aa63a6eba875d2b13.md
+> 15:13 agent-aa63a6eba875d2b13.sanitized.jsonl
+> 15:41
+> 336:                                str(REPO), CFG["claude_projects_glob"]], capture_output=True, text=True, timeout=300)
+
+### 🤖 Claude — 2026-11-18T15:41:40.304Z
+
+This conversation's transcript is in that save (15:41). The two specialists' transcripts were last copied at 15:13, though, and they've kept working since. I'll check why.
+
+### 🤖 Claude — 2026-11-18T15:41:41.563Z
+
+> 🔧 **Bash** `{"command": "ls -la --time-style=+%H:%M /root/.claude/projects/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/subagents/ | awk '{print $5, $6, $7}'; cd /home/user/rainbow- && sed -n 325,345p scripts/rainbow-autosave.py", "description": "Compare live specialist transcripts with saved copies"}`
+
+### 🧑 User — 2026-11-18T15:41:41.616Z
+
+> ↩︎ result: 4096 15:08 .
+> 4096 15:41 ..
+> 16236541 15:08 agent-a734238476cb500fe.jsonl
+> 357 15:08 agent-a734238476cb500fe.meta.json
+> 31244 15:08 agent-a734238476cb500fe.prefix.json
+> 18259142 15:08 agent-aa63a6eba875d2b13.jsonl
+> 348 15:08 agent-aa63a6eba875d2b13.meta.json
+> 29665 15:08 agent-aa63a6eba875d2b13.prefix.json
+>         gitdir = REPO / ".git"
+>         for busy in ("index.lock", "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD"):
+>             if (gitdir / busy).exists():
+>                 row["result"] = "skipped"
+>                 row["error"] = f"git operation in progress ({busy}); will retry next run"
+>                 raise SystemExit(0)
+> 
+>         # ---- 2. refresh backups content ------------------------------------------------
+>         private = verify_private()
+>         if private is True:
+>             p = subprocess.run([sys.executable, "-I", str(REPO / "scripts" / "export_claude_sessions.py"),
+>                                 str(REPO), CFG["claude_projects_glob"]], capture_output=True, text=True, timeout=300)
+>             if p.returncode != 0:
+>                 row["transcript_error"] = p.stderr.strip()[-300:]
+>         else:
+>             row["transcript_note"] = ("repo privacy could not b …[+228 chars]
+
+### 🤖 Claude — 2026-11-18T15:41:45.207Z
+
+The specialists' live transcripts haven't changed since 15:08, more than 30 minutes ago. That suggests they may have stopped. I'll check whether they're still working.
+
+### 🤖 Claude — 2026-11-18T15:41:45.671Z
+
+> 🔧 **ToolSearch** `{"query": "select:ListAgents", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T15:41:45.679Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T15:41:47.713Z
+
+> 🔧 **Bash** `{"command": "for w in s05 s08; do cd /home/user/wt/$w && echo \"$w: last commit $(git log -1 --format='%h %ci %s' | cut -c1-110); dirty $(git status --short | wc -l); newest file $(find . -path ./node_modules -prune -o -newer .git/HEAD -type f -print 2>/dev/null | grep -v node_modules | head -3 | tr '\\n' ' ')\"; done; date -u +%H:%M; ps aux | grep -E \"motion_audit|vite|chromium\" | grep -v grep | wc -l", "description": "Check specialist worktree activity"}`
+
+### 🧑 User — 2026-11-18T15:41:47.787Z
+
+> ↩︎ result: s05: last commit 2a730c0 2026-11-18 14:57:15 +0000 Screen 05 r13: &m05lump=1 (scalloped near bank end at the seam) NOT AN IMPRO; dirty 1; newest file 
+> s08: last commit bed281f 2026-11-18 15:07:53 +0000 Screen 08 r13 step 2: &m08cupw=1 upper-right cup top = one pink perforated c; dirty 0; newest file 
+> 15:41
+> 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:41:49.256Z
+
+> 🔧 **ListAgents** `{}`
+
+### 🧑 User — 2026-11-18T15:41:49.272Z
+
+> ↩︎ result: This session is rainbow-09 [83bba5] — the name other sessions use to message it (it is not listed below; a message to it would be a message to yourself).
+> 
+> No reachable agents — no other Claude session is running on this machine right now (peer messaging itself is available; a session appears here once it is started).
+
+### 🤖 Claude — 2026-11-18T15:42:02.080Z
+
+> 🔧 **Agent** `{"description": "Resume Screen 05 specialist round 13", "subagent_type": "water-fx-specialist", "run_in_background": true, "name": "s05", "prompt": "You are the Rainbow project's `water-fx-specialist`, RESUMING Screen 05 \"Flow Into the Current\" (VISUALS ONLY) after your previous instance was cancelled at ~15:08 UTC by an interruption. Nothing is lost: your kept steps are pushed.\n\nRead first: `/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md` (NN=05, AGENT=water-fx-specialist, WORKTREE=/home/user/wt/s05, BRANCH=claude/rainbow-s05-match-c13) and the BINDING user g …[+1338 chars]`
+
+### 🧑 User — 2026-11-18T15:42:02.105Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a6004e7e9deaeb7f2 (internal ID - do not mention to user. Use SendMessage with to: 'a6004e7e9deaeb7f2', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/a6004e7e9deaeb7f2.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T15:42:08.188Z
+
+> 🔧 **Agent** `{"description": "Resume Screen 08 specialist round 13", "subagent_type": "washer-environment-modeler", "run_in_background": true, "name": "s08", "prompt": "You are the Rainbow project's `washer-environment-modeler`, RESUMING Screen 08 \"Final Spin Chamber\" scenery (VISUALS ONLY) after your previous instance was cancelled at ~15:08 UTC by an interruption. Nothing is lost: your kept steps are pushed.\n\nRead first: `/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md` (NN=08, AGENT=washer-environment-modeler, WORKTREE=/home/user/wt/s08, BRANCH=claude/rainbow-s08-scenery …[+1431 chars]`
+
+### 🧑 User — 2026-11-18T15:42:08.210Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a48adf5621388f991 (internal ID - do not mention to user. Use SendMessage with to: 'a48adf5621388f991', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/a48adf5621388f991.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
