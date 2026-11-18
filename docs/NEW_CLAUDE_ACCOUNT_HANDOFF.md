@@ -1,3 +1,15 @@
+# ▶▶▶▶▶▶ NEWEST — ACCOUNT 9 (round 9) STATE (2026-11-18 ~02:50 UTC, lead session `session_01Kbt6BXRtCe7mvFtZdouetF`)
+
+**Lead branch: `claude/rainbow-restore-c9-40w64b`** (contains the newest account-8 lead `claude/rainbow-lead-c8` @ `dd32bbfd`).
+Branch map, running specialists, verified services: **`docs/briefs/2026-11-18-r9/COORDINATION.md`**. Each screen continues
+on its own `-c9` branch from the newest `-c8` tip: 04 `claude/rainbow-s04-match-c9` (from `d217f546`, RUNNING), 05
+`claude/rainbow-s05-match-c9` (from `c676a7c5`, RUNNING), 07 / 08 scenery / 06 `-c9` READY (rotation 07 → 08 → 06).
+Logs: `qa/match/<NN>/r9/PROGRESS.md`. Keys: World Labs = 5,420-credit account (Screen 08 world 200); fal = same paid
+account (01a1ea70 COMPLETED). If account 9 runs out: `-c10` branches from each NEWEST `-c9` tip; never write `-c9` from
+another account. The account-8 section below stays valid background.
+
+---
+
 # ▶▶▶▶▶ NEWEST — ACCOUNT 8 (round 8) STATE (2026-11-18 ~02:25 UTC, lead session `session_013VHsJ9KrSuiLBqJwtdwa8n`)
 
 **START THE NEXT ACCOUNT'S SESSION ON BRANCH `claude/rainbow-lead-c8`** (= this lead's state; the lead also autosaved

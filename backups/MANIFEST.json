@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 15623,
-   "sha256": "78833fd0e55b130ad2d51d7c5157b4df98b93063985f096a106a591979b86ff4"
+   "bytes": 15782,
+   "sha256": "866654d6b59e0c4a1612ece18970cabc0151d73ed85981372b6991a7d3783141"
   },
   {
    "path": "README_FIRST.md",
@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 35199,
-   "sha256": "585726cc944e655efcaaccba614034780300c1ca3fef5d24fec0644809ca2e54"
+   "bytes": 38650,
+   "sha256": "cf1c1d5cb7bdc6e98ab23d5648b693563484c84e75f6944790d67c893a058f45"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 14052,
-   "sha256": "d4f0d57d7d9838fb14e558f971f7a272299c8b8d4a67a51fbe5c716339c97461"
+   "bytes": 14053,
+   "sha256": "d030df9a4fe05457ad23b11ed82f1581552f754b6c52f9156fba0d5dab0c56ac"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 6832,
-   "sha256": "11e20d8665dea77188af054c387459eee58ad60c012aa3f44d457a9526c4c369"
+   "bytes": 7109,
+   "sha256": "e61602cabdc7fe7b49ecfa2f9fbbdbf57a05ee7545eb016df480d57b1b72bcf7"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -723,8 +723,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 43254,
-   "sha256": "56a1e2043addd251052a9e43c31d1f242d57083612cf5e19d865ffef8c667024"
+   "bytes": 44184,
+   "sha256": "c9c49379e959873bdf2b35c3aa37946dedab2f72126c3af389dcd471258868e4"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -955,6 +955,11 @@
    "path": "docs/briefs/2026-11-18-r8/S08.md",
    "bytes": 2548,
    "sha256": "8d4b0a3d1e515ce5fb07ff5a9078480283e3cc17833e9761a987b1f6e19338ba"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r9/COORDINATION.md",
+   "bytes": 4177,
+   "sha256": "1e575a6750e46209bbcf2f7fe872800c507b1d33faece1fb1fc0f18f792889ae"
   },
   {
    "path": "docs/characters/benny.md",
