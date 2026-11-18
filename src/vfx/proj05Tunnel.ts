@@ -14,7 +14,7 @@
  * materials are wrapped only when a switch is on, every default shader program is unchanged.
  */
 import * as THREE from 'three';
-import { M05WALL, M05WTILE, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
+import { M05WALL, M05WTILE, PROJ05_INVERSE, flag05 as explicitFlag05, m05eye, on05, proj05Pending } from './waterRibbon';
 // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
 const flag05 = on05;
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -259,7 +259,7 @@ const M05WALL_GLSL = /* glsl */ `
  * own low-frequency colour to N1's, so the painted light distribution of each bay stays. Rows AB / N1 / N2 are sharp
  * already and stay as they are. Off at the locked checkpoint eye.
  */
-const CLEAN_BAYS = flag05('cx05WallBays');
+const CLEAN_BAYS = explicitFlag05('cx05WallBays');
 const CLEAN_BAYS_GLSL = /* glsl */ `
   {
     // Use a gold-free, rectified panel from the closest painted bay when the original bay is under-resolved.
