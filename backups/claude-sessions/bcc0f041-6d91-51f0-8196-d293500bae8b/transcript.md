@@ -1203,3 +1203,240 @@ The real river rises 0.26 u above the far water's level at the capped seam (the 
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && timeout 900 node scripts/capture.mjs 05 --out=$SP/cap_def > /dev/null 2>&1; timeout 900 node scripts/capture.mjs 05 --out=$SP/cap_new --q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" >/dev/null 2>&1; ls $SP/cap_def $SP/cap_new; python3 - <<EOF\nfrom PIL import Image; import numpy as np, glob\ndef d(a,b):\n    A=np.asarray(Image.open(a).convert('RGB'),dtype=int);B=np.asarray(Image.open(b).convert('RGB'),dtype=int)\n    return int((np.abs(A-B).max(2)>0).sum()) if A.shape==B.shape els …[+419 chars]`
 
+### 🧑 User — 2026-11-18T00:30:37.042Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/cap_def:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/cap_new:
+> 05.png
+> default vs current_default_05: 128792
+> NEW locked vs r3_final NEW (BEFORE set): 61156
+
+### 🤖 Claude — 2026-11-18T00:30:45.588Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -3 && git status --short | head; git worktree add -f /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/wt_before ebaf6ca 2>&1 | tail -1", "description": "Create worktree at the starting commit for BEFORE captures"}`
+
+### 🧑 User — 2026-11-18T00:30:51.950Z
+
+> ↩︎ result: 7941c1b autosave: Rainbow 2026-11-18 00:30 UTC
+> 5207a5e autosave: Rainbow 2026-11-18 00:25 UTC
+> eb5188f autosave: Rainbow 2026-11-18 00:20 UTC
+>  M qa/capture_log.json
+> HEAD is now at ebaf6ca autosave: Rainbow 2026-11-17 17:59 UTC
+
+### 🤖 Claude — 2026-11-18T00:30:55.964Z
+
+> 🔧 **Bash** `{"command": "WT=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/wt_before; cd $WT && ln -sf /home/user/rainbow-/node_modules node_modules && head -c 60 assets/textures/match05/tgtwall05/proj05_E.png | od -c | head -2; git lfs ls-files 2>/dev/null | head -2", "description": "Prep worktree; check LFS assets are real"}`
+
+### 🧑 User — 2026-11-18T00:30:56.710Z
+
+> ↩︎ result: 0000000 211   P   N   G  \r  \n 032  \n  \0  \0  \0  \r   I   H   D   R
+> 0000020  \0  \0 004  \0  \0  \0 005 261  \b 006  \0  \0  \0  \b 374 340
+> 40633fdd02 * assets/models/benny.glb
+> f2cd3abeaa * assets/models/lids05.glb
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:31:03.854Z
+
+> 🔧 **Bash** `{"command": "WT=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/wt_before; SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad; cd $WT && for f in assets/models/*.glb; do head -c 4 $f | grep -q glTF || echo \"POINTER $f\"; done; timeout 900 node scripts/capture.mjs 05 --out=$SP/capB_def >/dev/null 2>&1; timeout 900 node scripts/capture.mjs 05 --out=$SP/capB_set --q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\" >/dev/null 2>&1; cd /home/user/rainbow- && timeout 900 node scripts/capture.mjs 05 --out=$SP/cap_def2 >/dev/null 2>& …[+728 chars]`
+
+### 🧑 User — 2026-11-18T00:31:40.931Z
+
+> ↩︎ result: default: start-commit vs my code (run1): 56935
+> default: start-commit vs my code (run2): 56935
+> default: my code run1 vs run2: 0
+> locked: BEFORE set (start commit) vs NEW set: 34530
+
+### 🤖 Claude — 2026-11-18T00:31:44.598Z
+
+> 🔧 **Bash** `{"command": "git diff --stat ebaf6ca ce7e823 | tail -5; git diff --stat ce7e823 HEAD -- src | tail -5", "description": "Check what changed between start and my edits"}`
+
+### 🧑 User — 2026-11-18T00:31:44.644Z
+
+> ↩︎ result: backups/CONVERSATION_INDEX.md                                         | 1 +
+>  backups/MANIFEST.json                                                 | 4 ++--
+>  .../bcc0f041-6d91-51f0-8196-d293500bae8b/transcript.md                | 2 ++
+>  .../bcc0f041-6d91-51f0-8196-d293500bae8b/transcript.sanitized.jsonl   | 1 +
+>  4 files changed, 6 insertions(+), 2 deletions(-)
+>  src/vfx/clip05.ts        |  25 +++++
+>  src/vfx/foam.ts          |   3 +
+>  src/world/environment.ts |  10 ++
+>  src/world/match05far.ts  | 245 +++++++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 283 insertions(+)
+
+### 🤖 Claude — 2026-11-18T00:31:53.164Z
+
+> 🔧 **Bash** `{"command": "WT=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/wt_before; SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad; for f in src/vfx/clip05.ts src/vfx/foam.ts src/world/environment.ts src/world/match05far.ts; do cp /home/user/rainbow-/$f $WT/$f; done; cd $WT && timeout 900 node scripts/capture.mjs 05 --out=$SP/capW_def >/dev/null 2>&1; timeout 900 node scripts/capture.mjs 05 --out=$SP/capW_set --q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\" >/dev/null 2>&1; git checkout -- src && rm -f src/vfx/clip05.ts src/wor …[+586 chars]`
+
+### 🧑 User — 2026-11-18T00:32:18.176Z
+
+> ↩︎ result: M qa/capture_log.json
+> ?? node_modules
+> worktree default: start vs +my files: 28
+> worktree BEFORE set (no m05far): start vs +my files: 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:32:23.889Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad; python3 - <<EOF\nfrom PIL import Image; import numpy as np\nS='$SP'\nA=np.asarray(Image.open(S+'/capB_def/05.png').convert('RGB'),dtype=int);B=np.asarray(Image.open(S+'/capW_def/05.png').convert('RGB'),dtype=int)\nm=np.abs(A-B).max(2); ys,xs=np.nonzero(m); print(ys.min(),ys.max(),xs.min(),xs.max(), m.max())\nEOF", "description": "Locate the 28 differing default pixels"}`
+
+### 🧑 User — 2026-11-18T00:32:24.211Z
+
+> ↩︎ result: 51 114 133 732 32
+
+### 🤖 Claude — 2026-11-18T00:32:34.653Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && cat > $SP/tests.sh <<EOF\ncd /home/user/rainbow-\ntimeout 900 node scripts/capture.mjs 05 --out=$SP/cap_set --q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\" >/dev/null 2>&1\ntimeout 900 node scripts/capture.mjs 05 --out=$SP/cap_prot --q=\"ringa=26&nearfloor05=0\" >/dev/null 2>&1\nmkdir -p qa/match/05/r7\ntimeout 1500 node scripts/gameplay-test.mjs --q=match05=1\\&tgtvis05=1\\&tgtfill05=3\\&tgtwall05=1\\&m05far=1 --out=qa/match/05/r7/gameplay_NEW_m05far.json > $SP/gp_new.log 2>&1; echo \"gp_ …[+481 chars]`
+
+### 🧑 User — 2026-11-18T00:32:34.702Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-18T00:32:36.940Z
+
+While those run, I'm computing the moving-frame numbers (LAYOUT20 / PALETTE vs the approved picture) for BEFORE and NEW.
+
+### 🤖 Claude — 2026-11-18T00:32:39.082Z
+
+> 🔧 **Bash** `{"command": "cp references/05_flow_into_the_current.png qa/match/05/r7/APPROVED_05_flow_into_the_current.png && for d in BEFORE NEW; do echo \"== $d\"; python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png qa/match/05/r7/$d/{a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,f20_forward20u,s_left_steer,s_right_steer,s_left_hard,s_right_hard,t33_through_screen,t66_through_screen,t95_through_screen}.png; done | tee qa/match/05/r7/motion_metrics.txt", "description": "Compute motion metrics BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-18T00:32:43.741Z
+
+> ↩︎ result: == BEFORE
+> a00_approved_view      LAYOUT20  63.4 %  PALETTE  94.7 %
+> f03_forward3u          LAYOUT20  24.2 %  PALETTE  87.9 %
+> f06_forward6u          LAYOUT20  16.9 %  PALETTE  83.4 %
+> f10_forward10u         LAYOUT20  12.9 %  PALETTE  83.5 %
+> f20_forward20u         LAYOUT20  13.1 %  PALETTE  81.2 %
+> s_left_steer           LAYOUT20  13.1 %  PALETTE  83.3 %
+> s_right_steer          LAYOUT20  12.5 %  PALETTE  84.6 %
+> s_left_hard            LAYOUT20  10.2 %  PALETTE  80.6 %
+> s_right_hard           LAYOUT20   8.7 %  PALETTE  75.5 %
+> t33_through_screen     LAYOUT20  15.2 %  PALETTE  83.9 %
+> t66_through_screen     LAYOUT20   5.8 %  PALETTE  71.0 %
+> t95_through_screen     LAYOUT20   5.5 %  PALETTE  57.6 %
+> == NEW
+> a00_approved_view      LAYOUT20  66.3 %  PALETTE  94.8 %
+> f03_forward3u          LAYOUT20  24.4 %  PALETTE  87.9 %
+> f06_forward6u          LAYOUT20  17.7 %  PALETTE  83.4 %
+> f10_forward10u         LAYOUT20  13.7 %  PALETTE  83.7 %
+> f20_forward20u         LAYOUT20  12.9 %  PALETTE  81.4 %
+> s_left_steer           LAYOUT20  13.2 %  PALETTE  83.4 %
+> s_right_steer          LAYOUT20  12.5 %  PALETTE  84.6 %
+> s_left_hard            LAYOUT20  10.8 %  PALETTE  81.0 %
+> s_right_hard           LAYOUT20   9.1 %  PA …[+184 chars]
+
+### 🤖 Claude — 2026-11-18T00:32:52.891Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nn=['a00_approved_view','f20_forward20u','s_left_hard','s_right_hard','t33_through_screen','t66_through_screen']\nW=Image.new('RGB',(288*6,512))\nfor i,x in enumerate(n): W.paste(Image.open('qa/match/05/r7/NEW/'+x+'.png').resize((288,512)),(288*i,0))\nW.save('/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/new_strip.png')\"", "description": "Contact strip of NEW frames (scratch only)"}`
+
+### 🧑 User — 2026-11-18T00:32:53.301Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T00:32:53.546Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/new_strip.png"}`
+
+### 🧑 User — 2026-11-18T00:32:53.587Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:33:02.851Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\nfor f in ['f06_forward6u','f10_forward10u','t33_through_screen']:\n    a=np.asarray(Image.open(f'qa/match/05/r7/NEW/{f}.png').convert('RGB'),dtype=int)\n    r,g,b=a[...,0],a[...,1],a[...,2]\n    m=(r>200)&(g>140)&(g<235)&(b<90)\n    m[:250]=False; m[1300:]=False\n    lab,n=ndimage.label(ndimage.binary_closing(m,iterations=3))\n    if n==0: print(f,'none'); continue\n    sizes=ndimage.sum(m,lab,range(1,n+1)); i=int(np.argmax(sizes))+1\n    ys,xs=np.nonzero(lab==i); print(f, 'largest coin bbo …[+159 chars]`
+
+### 🧑 User — 2026-11-18T00:33:03.953Z
+
+> ↩︎ result: f06_forward6u largest coin bbox w x h px: 124 134 centre 410 896
+> f10_forward10u largest coin bbox w x h px: 323 167 centre 378 1241
+> t33_through_screen largest coin bbox w x h px: 230 211 centre 411 1065
+
+### 🤖 Claude — 2026-11-18T00:33:10.466Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB').resize((864,1536)),dtype=int)\nr,g,b=a[...,0],a[...,1],a[...,2]\nm=(r>200)&(g>140)&(g<235)&(b<90); m[:250]=False; m[1300:]=False\nlab,n=ndimage.label(ndimage.binary_closing(m,iterations=2))\nsz=sorted([(int(s),i+1) for i,s in enumerate(ndimage.sum(m,lab,range(1,n+1)))],reverse=True)[:3]\nfor s,i in sz:\n    ys,xs=np.nonzero(lab==i); print('approved coin-coloured blob', xs.max()-xs.min()+1, ys.max()-ys.min()+1, …[+216 chars]`
+
+### 🧑 User — 2026-11-18T00:33:10.949Z
+
+> ↩︎ result: approved coin-coloured blob 96 73 474 729
+> approved coin-coloured blob 70 104 833 1259
+> approved coin-coloured blob 70 50 548 660
+> gp_new exit 0
+
+### 🤖 Claude — 2026-11-18T00:33:17.321Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad; tail -5 $SP/gp_new.log; python3 -c \"\nimport json;d=json.load(open('qa/match/05/r7/gameplay_NEW_m05far.json'));print({k:d[k] for k in d if k in ('passed','total','ok','summary','coins','score','checks')} if isinstance(d,dict) else d)\" 2>&1 | head -5; python3 - <<EOF\nfrom PIL import Image; import numpy as np\ndef d(a,b):\n    A=np.asarray(Image.open(a).convert('RGB'),dtype=int);B=np.asarray(Image.open(b).convert('RGB'),dtype=int)\n    m=np.abs(A-B).max(2)>0; ys,_=np.nonzero(m); return int(m.sum …[+357 chars]`
+
+### 🧑 User — 2026-11-18T00:33:17.769Z
+
+> ↩︎ result: "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}}
+> locked: BEFORE set vs NEW set (same checkout): (0, None)
+> protected ringa=26&nearfloor05=0 vs wave9 baseline: (128689, (0, 1121))
+
+### 🤖 Claude — 2026-11-18T00:33:24.695Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad; timeout 2400 bash -c \"until grep -q ALLDONE $SP/tests.done; do sleep 5; done\"; cat $SP/tests.done; tail -4 $SP/cont.log; cd /home/user/rainbow- && python3 -c \"\nimport json;d=json.load(open('qa/match/05/r7/gameplay_default.json'));c=d['checks'];print(sum(v['pass'] for v in c.values()),'/',len(c),c['realCoinPickups'])\"", "description": "Wait for default gameplay and continuity results", "timeout": 2500000}`
+
+### 🧑 User — 2026-11-18T00:33:24.765Z
+
+> ↩︎ result: gp_new exit 0
+> gp_def exit 0
+> cont exit 0
+> ALLDONE
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> 8 / 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+
+### 🤖 Claude — 2026-11-18T00:33:30.681Z
+
+> 🔧 **Bash** `{"command": "WT=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/wt_before; SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad; cd $WT && timeout 900 node scripts/capture.mjs 05 --out=$SP/capB_prot --q=\"ringa=26&nearfloor05=0\" >/dev/null 2>&1; for f in src/vfx/clip05.ts src/vfx/foam.ts src/world/environment.ts src/world/match05far.ts; do cp /home/user/rainbow-/$f $WT/$f; done; timeout 900 node scripts/capture.mjs 05 --out=$SP/capW_prot --q=\"ringa=26&nearfloor05=0\" >/dev/null 2>&1; timeout 900 node scripts/capture.mjs 05 --o …[+696 chars]`
+
+### 🧑 User — 2026-11-18T00:34:09.548Z
+
+> ↩︎ result: protected: start vs +my files: (0, None)
+> default: start vs +my files (run 2): (0, None)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T00:34:39.153Z
+
+> 🔧 **Bash** `{"command": "git worktree remove --force /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/wt_before && cat >> qa/match/05/NOTES.md <<'EOF'\n\n---\n# Round 7 (account 7, line B, branch `claude/rainbow-s05-match-c7` from `-c5` @ `ebaf6cac`) — milestone M3, step 2\nBrief: `claude/rainbow-lead-c7:docs/briefs/2026-11-17-r7/S05.md`. VISUALS ONLY: Screen 05's own matched tunnel + S-river\nover the whole stage. Audit tool `tools/lead_r6/` copied unchanged from the lead branch.\n\n## Cause (measured, not the two 06 causes)\n* Camera pitch: NOT a cause on 05 — the 05 cam …[+5637 chars]`
+
+### 🧑 User — 2026-11-18T00:34:41.586Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T00:34:53.197Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/05/STATUS.md", "content": "# Screen 05 — STATUS (round 7)\n\n* **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1` set)\n* **Assigned specialist:** Screen 05 workstream (washer-environment-modeler role), round 7 / account 7; no subagent used\n* **Working branch:** `claude/rainbow-s05-match-c7`, created by the lead from `claude/rainbow-s05-match-c5` @ `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b`; never merged with line A\n* **Running-session status:** milestone M3 step 2 finished; STOPPED, waiting for the lead\n* **Latest verified comm …[+1969 chars]`
+
+### 🧑 User — 2026-11-18T00:34:53.252Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/05/STATUS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T00:34:56.948Z
+
+> 🔧 **Bash** `{"command": "git add src/world/match05far.ts src/vfx/clip05.ts src/vfx/foam.ts src/world/environment.ts tools/lead_r6 qa/match/05/STATUS.md qa/match/05/NOTES.md qa/match/05/r7 && git status --short | grep -v \"^A \\|^M \" | head; git commit -q -m \"Screen 05 r7 M3: ?m05far=1 far tunnel follows the live camera (no fold-away; own tunnel + S-river to ~90 % of the stage), proofs + BEFORE/NEW audit pictures\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZvfAKmzbAswSRdAaqD\" && for i in 1 2 3 4; do git push -u origin claude/rainbow-s0 …[+210 chars]`
+
+### 🧑 User — 2026-11-18T00:35:02.064Z
+
+> ↩︎ result: M qa/capture_log.json
+> branch 'claude/rainbow-s05-match-c7' set up to track 'origin/claude/rainbow-s05-match-c7'.
+> local 92c8c5e9f5de2378054a4575f36528817c10869b
+> 92c8c5e9f5de2378054a4575f36528817c10869b	refs/heads/claude/rainbow-s05-match-c7
+
+### 🤖 Claude — 2026-11-18T00:35:06.688Z
+
+Pushed and verified (remote = local `92c8c5e`). Last step: restore the capture log the runs rewrote, then the end-of-session autosave and its status check.
+
+### 🤖 Claude — 2026-11-18T00:35:08.044Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log.json && python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | tail -2; python3 -I scripts/autosave-status.py 2>&1 | tail -1; echo \"local $(git rev-parse HEAD)\"; git ls-remote origin refs/heads/claude/rainbow-s05-match-c7", "description": "End-of-session autosave and final remote verification"}`
+

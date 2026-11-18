@@ -719,7 +719,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13997,
-   "sha256": "8d8b1af4b686ba0438b63939ad73a2428ef3d21cb358aa7f1cb858e6e1556c07"
+   "sha256": "0da12b8e89710bab76ea13e1f6c2c7bae1f6d7512911b2e87161227ed984f220"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1278,8 +1278,8 @@
   },
   {
    "path": "qa/match/05/NOTES.md",
-   "bytes": 14679,
-   "sha256": "8cc6b1ed2a1127b842c5047ef17a57d1bd6bffb6982a18a5106d142d73dca9a2"
+   "bytes": 20668,
+   "sha256": "5a31912eb4dfa1fd679a78981b12a3040539cab2a42cbb9820178d03e2cb2cb4"
   },
   {
    "path": "qa/match/05/SHARED_CHANGES.md",
@@ -1288,8 +1288,8 @@
   },
   {
    "path": "qa/match/05/STATUS.md",
-   "bytes": 2873,
-   "sha256": "c27fb7a4b0d0080ea0fafb53e38019c8ccd3c82674f15795b149cbf5e8c94a8c"
+   "bytes": 2502,
+   "sha256": "8a870f4965cff7f746b0defc060bf528d4a5a3f76c8cfc9faac94dcfeda13260"
   },
   {
    "path": "qa/match/05/before_FULL_FRAME_METRICS.json",
@@ -1757,6 +1757,11 @@
    "sha256": "bac52ba6cb47479cd1383f7faf2274be81cfd32c907b7187eabf3250797210ae"
   },
   {
+   "path": "qa/match/05/r7/APPROVED_05_flow_into_the_current.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
    "path": "qa/match/05/r7/BEFORE/a00_approved_view.png",
    "bytes": 2487034,
    "sha256": "68aee55443b2db82806765b42bb498c89c898adfa0193bcba867b4f24a8c58d1"
@@ -1885,6 +1890,21 @@
    "path": "qa/match/05/r7/NEW/t95_through_screen.png",
    "bytes": 1933965,
    "sha256": "3c451ba2cd6d81e1f2d1430c1137e1522608ea3d05882c026443ff737ac11b94"
+  },
+  {
+   "path": "qa/match/05/r7/gameplay_NEW_m05far.json",
+   "bytes": 14699,
+   "sha256": "1dcb04ac82807389f825c93cf0e4b6cbb4471f212224315e3e7cb91d959691ea"
+  },
+  {
+   "path": "qa/match/05/r7/gameplay_default.json",
+   "bytes": 14660,
+   "sha256": "f6551e4c4d650e31bbcb9c2212b1176999d0535908aa82de162754171a3be3c1"
+  },
+  {
+   "path": "qa/match/05/r7/motion_metrics.txt",
+   "bytes": 1385,
+   "sha256": "226a645a4ad1c4f3a3fbd2949f5f454375bf73c0f5a037eaa964c36850483e83"
   },
   {
    "path": "qa/match/05/scenery_bands.txt",
