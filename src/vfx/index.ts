@@ -15,7 +15,7 @@
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
 import { createRibbon, PROJ05, flag05, proj05Pending, M05FOAM, M05BERM, m05foamK } from './waterRibbon';
-import { M05EDGE, withClip05 } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only)
+import { M05EDGE, withClip05, m05rideS, m05farPre } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only); m05rideS: round 15 (&m05trans=1)
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
 import { createFinalWave } from './finalWave';
@@ -203,6 +203,12 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)
       const pjNear = ribbon.uniforms.uPjNear;
       if (pjNear) (pjNear.value as THREE.Vector4).z = focusS;
+      m05rideS.value = focusS;   // `&m05trans=1` (Screen 05 round 15): the far block is removed as Benny enters 06
+      // `&m05trans=1` (round 16): before the draw. Round 17: only once Benny has left the 05 checkpoint (uPjNear.w = its s):
+      // goto('05') settles the camera springs with stepSim while Benny stays on the checkpoint, so a pre-run there saw the
+      // half-settled camera, marked the block live and the coins drew the 06 coins on the far river (1,009 px in the
+      // locked view); at the checkpoint the draw's own sync (onBeforeRender) keeps the locked picture exact
+      if (m05farPre.run && pjNear && Math.abs(focusS - (pjNear.value as THREE.Vector4).w) > 0.25) { camera.updateMatrixWorld(); m05farPre.run(camera); }
       // `&m05foam=1` (Screen 05 round 10): the 05 rim foam grows in after 0.5–2 u of riding (0 at the locked checkpoint)
       if ((M05FOAM || M05BERM) && pjNear) { const v = pjNear.value as THREE.Vector4; m05foamK.value = smooth(0.5, 2.0, Math.abs(v.z - v.w)); }
       bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);

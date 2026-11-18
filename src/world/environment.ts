@@ -15,8 +15,8 @@ import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05f
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
-import { M05FAR, M05END, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
-import { withClip05Std } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
+import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+import { withClip05Std, m05farPre } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -636,9 +636,10 @@ export function buildEnvironment(course: Course): Environment {
     const liveFar = M05FAR ? createLiveFar05({
       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
-      zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
+      zCap: sGlow05 + 3.5 - sF05, foldNear: M05TRANS ? 0.5 : M05END ? 5.2 : 6.5, foldFar: M05TRANS ? 1.0 : M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06; m05trans (r15): only as a safety
       riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
       course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
+      popS: M05TRANS ? course.stage('06').s0 : undefined,   // `&m05trans=1` (Screen 05 round 15): removed as Benny enters 06
       clouds: farClouds05 ?? undefined,
     }) : null;
     if (farClouds05 && liveFar) {
@@ -659,6 +660,7 @@ export function buildEnvironment(course: Course): Environment {
     farLids.onBeforeRender = (_r, _s, cam) => sync(cam);
     glow.onBeforeRender = (_r, _s, cam) => { sync(cam); glowMat.uniforms.uOpacity.value = 1 - openNow; };
     if (liveFar) for (const p of parts) p.onBeforeRender = (_r, _s, cam) => liveFar(cam);
+    if (liveFar && M05TRANS) m05farPre.run = liveFar;   // `&m05trans=1` (round 16): also applied before the draw (vfx/index.ts)
     zones.tubes.add(...parts);
   }
   animated.push(pinkFlow.update);

@@ -23,7 +23,7 @@ import { tubeCenterAt } from './tube';
 import type { FarRiverLayout, FarRiverRow } from './far05';
 import type { Course, CourseSample } from './course';
 import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';
-import { clip05 } from '../vfx/clip05';
+import { clip05, m05rideS } from '../vfx/clip05';
 import type { FarLump05 } from '../vfx/foam';
 
 export const M05FAR: boolean = MATCH05 && flag05('m05far');
@@ -37,6 +37,18 @@ export const M05FAR: boolean = MATCH05 && flag05('m05far');
  * 06 look unchanged; the locked view never uses this (block at its build-time geometry there).
  */
 export const M05END: boolean = M05FAR && flag05('m05end');
+/**
+ * `&m05trans=1` (Screen 05 round 15, needs m05end; qa/match/05/r15/PROGRESS.md step 1): the 05 -> 06 hand-over. With m05end
+ * the far block folded while Benny rode the last ≈ 1.3 u of 05 (eye → seam 6.8 … 5.2 u): its rings flew from the
+ * compressed tunnel to their real places as small copper hoops floating over the rising 06 crest, its wall swelled into a
+ * smeared stack round a flat pink disc (the 06 floor sheet seen through it) and a straight line crossed the water under
+ * Benny (t97 / t98). Now the block stays whole — the painted 05 tunnel, gold rings, far river and warm throat — through
+ * the whole of 05 and is removed in one step as Benny crosses into 06 (Benny's course position, `m05rideS`), the moment
+ * the HUD title turns to 06. From there on everything is exactly as before (the block was already fully folded at the
+ * first metres of 06 under m05end), so 06 itself is unchanged. Safety: it still folds if the eye ever comes within
+ * 1 u of the seam. Locked view: untouched (atLock path).
+ */
+export const M05TRANS: boolean = M05END && flag05('m05trans');
 /**
  * `&m05fcoin=1` (Screen 05 round 12, needs m05far; src/gameplay/coins.ts): coin LOOK only. Past the far seam the real
  * course climbs away toward 06 while the far block shows the painted 05 river running on into the throat, so the next
@@ -53,6 +65,8 @@ export const far05Coins = {
   seamS: 0,
   /** fold factor 0 … 1 */
   open: 1,
+  /** `&m05trans=1` (round 16): Benny's course position at which the block is removed (coins.ts: no far look from there) */
+  popS: Infinity,
   /** tunnel axis (coins face down it) */
   T: new THREE.Vector3(0, 0, 1),
   /** visual place of a coin at course s, lateral offset dl from the core, height h above the water: writes `out`,
@@ -84,6 +98,8 @@ export interface LiveFar05Args {
   zCap: number;
   /** fold window: eye → seam distance (units) */
   foldNear: number; foldFar: number;
+  /** `&m05trans=1` (round 15): the course position (06 start) where the block is removed in one step */
+  popS?: number;
   /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */
   riverUp: (z: number) => number;
   /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */
@@ -295,6 +311,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
   // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)
   const fco = new THREE.Vector3();
   if (M05FCOIN) {
+    if (M05TRANS && a.popS !== undefined) far05Coins.popS = a.popS;
     far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {
       const Z = s - sF;
       if (Z > a.zEnd * 0.98) return 0;
@@ -338,6 +355,8 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
     // m05end (r11): the TRUE eye → seam distance (D0 is clamped at 0.5 u once the eye passes sF, so D0 + zs never fell
     // under 0.5 + zCap ≈ 7 u and the block could not fold inside a window nearer than that)
     open = 1 - THREE.MathUtils.smoothstep(M05END ? c0.clone().sub(eye).dot(T) + zs : D0 + zs, a.foldNear, a.foldFar);
+    // m05trans (r15): whole until Benny enters 06, then gone in one step (no half-folded frames)
+    if (M05TRANS && a.popS !== undefined) open = Math.max(m05rideS.value >= a.popS ? 1 : 0, open);
     if (atLock) {
       // the locked checkpoint eye: the build-time geometry (bit-identical locked view)
       if (live) { restore(); live = false; }

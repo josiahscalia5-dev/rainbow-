@@ -377,7 +377,7 @@ export function createCoins(course: Course): CoinSystem {
       // coins are drawn on the far river's core where the block shows that stretch of river, back to their real place as
       // the block folds
       let fcFace = false;
-      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
+      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS && lastS < far05Coins.popS) {
         // half the 06 lateral swing around the far core (the trail weaves), half size (the painted far coins are small)
         const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
         const o = far05Coins.open;

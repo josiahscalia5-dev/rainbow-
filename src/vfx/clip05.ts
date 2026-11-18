@@ -12,6 +12,15 @@ export const clip05 = {
   uClip05P: { value: new THREE.Vector3() },
   uClip05N: { value: new THREE.Vector3() },
 };
+/** `&m05trans=1` (Screen 05 round 15, match05far.ts): Benny's course position, written every frame by src/vfx/index.ts */
+export const m05rideS = { value: -1 };
+/**
+ * `&m05trans=1` (round 16): the far block's state for the frame (fold / pop, ring and lid instances, far coins, far foam
+ * clouds, the seam clip) applied from the ride update, after the camera is placed and before the frame is drawn. Set
+ * there it was applied during the draw itself, so instances / coins / clip followed one frame late: the frame Benny
+ * crossed into 06 still showed the folded block's rings, far coins and clouds over the 06 crest. Set by environment.ts.
+ */
+export const m05farPre: { run: ((cam: THREE.Camera) => void) | null } = { run: null };
 /**
  * inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position). `margin` (default 0 =
  * the plane itself): the hard cut lies that many units past the plane — only for a material that cuts at the seam itself
