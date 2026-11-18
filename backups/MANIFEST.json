@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 17651,
-   "sha256": "083bbb9d0a3ee8f0bd2b48a0e573699a8c13a087507dc50cb0249eb5da90b757"
+   "bytes": 17811,
+   "sha256": "2a667f090020715733c5c04c5ce1d48d839b932322c076cb5903473d26c5272c"
   },
   {
    "path": "README_FIRST.md",
@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 44106,
-   "sha256": "f581292e40849a18e711ecb47a71910e0df68bdef48b9b05041389a24c604046"
+   "bytes": 48338,
+   "sha256": "ff1ac5aab31c24ecacab269b0aa44a464a72ef935e21ac84bcbc3a2f19ea97f0"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 17467,
-   "sha256": "519dd396dd0342fe592afce96476fa6b5eab0cef0564fc9ec6d58a2bebba6e2b"
+   "sha256": "6eff45df8f8311b8a9152f2314e5f699c440803a23e9587b5c06332859e7ab94"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -638,8 +638,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 16416,
-   "sha256": "87c74bc0e59fe5b41f3ae90475071426c856aa1bcf50fbb2f2ad5e5d3173036a"
+   "bytes": 18357,
+   "sha256": "a7bdf479332290662a093231176d152d347ecdfcee89600c9b1e3689fafdc2bd"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -1448,8 +1448,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 51614,
-   "sha256": "fe150332a9b0e974cd03f5c90cd37dfe0c095b40174e242df993fd7d071bd6fa"
+   "bytes": 52817,
+   "sha256": "2d060490787e221981d0d72d3252833e4852b2200cb11f5c8bdb96fe0e92527f"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -1785,6 +1785,11 @@
    "path": "docs/briefs/2026-11-18-r16/RESUME_R16.md",
    "bytes": 6299,
    "sha256": "7ab7b20431ce449b129f9c24246f61b46241298d25bdda0dc91feb6f957ed015"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r16/setup_worker.sh",
+   "bytes": 1923,
+   "sha256": "44147fae7e23d9dbb1a227ef15497bcf658b0d71a654b62035d274287b93fec5"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",

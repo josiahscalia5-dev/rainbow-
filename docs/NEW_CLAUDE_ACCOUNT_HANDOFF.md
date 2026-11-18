@@ -1,4 +1,18 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 15 (round 15) STATE (2026-11-18 ~18:25 UTC, lead branch `ccr-47b10cec-03c7co`)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 16 (round 16) STATE (2026-11-18 ~19:15 UTC, lead branch `ccr-e42bb3c0-jpif8d`)
+
+Started 18:51 UTC from the account-15 lead `ccr-47b10cec-03c7co` @ `0aeee2e` (nothing merged). Account 15 hit its **5-hour usage
+limit at 18:49 UTC** (resets 23:10 UTC) after ~37 min of six parallel workers; all six were cut off mid-step; their unfinished edits
+are in the 19:00 UTC `backups/wip/` snapshot on `origin/ccr-47b10cec-03c7co` (`90528de`, backup-only commits, never merged).
+Branch map, services, verdicts: **`docs/briefs/2026-11-18-r16/COORDINATION.md`**; where each worker stopped + what to do first:
+**`docs/briefs/2026-11-18-r16/RESUME_R16.md`**; worktree recipe `docs/briefs/2026-11-18-r16/setup_worker.sh`. Six workers relaunched
+on `-c16` branches (04, 04 ring test, 05, 06, 07, 08) from the r15 launch briefs. Open user request: "show me the painted ring test
+results" (04 `&m04rpaint`). Connectors: NO claude.ai connectors on this account (Atlas, Hugging Face = user action); keys (World
+Labs 5,420 credits, fal) injected and verified. If account 16 runs out: `-c17` branches from each NEWEST `-c16` tip; never write
+`-c16` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶ ACCOUNT 15 (round 15) STATE (2026-11-18 ~18:25 UTC, lead branch `ccr-47b10cec-03c7co`)
 
 Started from the account-14 lead `ccr-6c7564b1-fmlt1w` @ `58b94d9` (nothing merged; account 14 hit its usage limit at ~17:46 UTC,
 no unfinished code edits lost). Binding visual goal unchanged: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. Branch map,

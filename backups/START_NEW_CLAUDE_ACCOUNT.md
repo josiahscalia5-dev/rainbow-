@@ -1,6 +1,27 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-18 ~18:25 UTC, account 15 → next account) — use THIS prompt
+## ▶ NEWEST (2026-11-18 ~19:15 UTC, account 16 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`ccr-e42bb3c0-jpif8d`** (account-16 lead; NOT the default branch). Claude checks
+the keys first with free reads and opens the secure forms only if a check fails (World Labs `api.worldlabs.ai` header
+`WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`). Optional claude.ai connectors: World Labs Atlas
+(`https://api.atlas.worldlabs.ai/mcp`), Hugging Face (public models work without).
+
+> RAINBOW — continue my EXISTING game exactly where account 16 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ACCOUNT 16"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (my APPROVED visual goal — binding) and
+>    `docs/briefs/2026-11-18-r16/COORDINATION.md` + `RESUME_R16.md`.
+> 2. The clone is shallow: fetch each branch tip ONE AT A TIME with `git fetch --depth=1 origin +<b>:refs/remotes/origin/<b>`
+>    (≈1 GB and several minutes per tip). Continue every `-c16` branch on its own NEW `-c17` branch; unfinished edits are in
+>    `backups/wip/<branch>/` on the account-16 lead. Relaunch the six workers with `docs/briefs/2026-11-18-r15/S0N_LAUNCH.md`
+>    (replace -c15 → -c17, r15 → r17, resume from the r16 PROGRESS.md). Recipe: the scratchpad script copy in
+>    `docs/briefs/2026-11-18-r16/setup_worker.sh` (change c15 → c16 and c16 → c17).
+> 3. Show every result as separate full-size APPROVED / BEFORE / NEW pictures (start, middle, end, hard left / right) labelled
+>    GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN. Never use colour-percentage numbers as proof. No paid jobs without my approval.
+
+---
+
+## ▶ (2026-11-18 ~18:25 UTC, account 15 → next account) — superseded by the prompt above
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
 Claude Code cloud session on the repo, branch **`ccr-47b10cec-03c7co`** (account-15 lead; NOT the default branch). Claude checks
 the keys first with free reads and opens the secure forms only if a check fails (World Labs `api.worldlabs.ai` header
