@@ -92,7 +92,8 @@ def res(q):
                     + [segd(np.array(p, float), hull) for p in CAP])
 
 
-sol = least_squares(res, [c0[0] + 0.8, c0[1], 2.2, 0.7, math.radians(10), math.radians(14)], x_scale=[0.5, 0.5, 0.5, 0.3, 0.2, 0.2])
+# (start with the top away from the projector: the painted underside dish is seen from below -> pitch < 0)
+sol = least_squares(res, [c0[0] + 0.8, c0[1], 2.2, 0.7, math.radians(10), math.radians(-14)], x_scale=[0.5, 0.5, 0.5, 0.3, 0.2, 0.2])
 q = sol.x
 R, a, e1, _, _, _ = model(q); e2 = np.cross(a, e1)
 c = R; rx = RXF; ry = q[2]; BAND = q[3]
@@ -147,8 +148,13 @@ col = (plate[y0, x0] * (1 - ax) * (1 - ay) + plate[y0, x0 + 1] * ax * (1 - ay) +
 tex = np.zeros((TH, TW, 3), np.float32); tex[valid] = col[valid]
 ok = valid.copy()
 src = np.full((TH, TW), 0, np.uint8); src[valid] = 1  # 1 painted, 2 mirror, 3 continued
-# mirror (u -> 1 - u), as m08cup does in the shader
-mv = ok[:, ::-1] & ~ok
+# mirror (u -> 1 - u), as m08cup does in the shader; the painted water stream leaving the underside stays where it is
+# painted but is never a mirror source (no second stream on the hidden half)
+stream = valid & (vv < 0.15) & (col[..., 2] > 140) & (col[..., 1] > 85)  # light blue / white on the mauve dish
+from scipy.ndimage import binary_dilation, distance_transform_edt
+stream = binary_dilation(stream, iterations=6) & valid
+srcok = ok & ~stream
+mv = srcok[:, ::-1] & ~ok
 tex[mv] = tex[:, ::-1][mv]; ok |= mv; src[mv] = 2
 
 
@@ -187,6 +193,49 @@ def fill_row(row, okr):
     return out, good
 
 
+# the dome (cap) above the painted rows was never painted (behind the arch): a periodic tile of the painted cap itself
+# (pink perforated, largest fully painted block of dome texels, last 25 % of each direction cross-faded into the start)
+# continues it, cross-faded into the painted / mirrored texels over 10 texels; band and underside use the row continuation
+dome_rows = np.nonzero((np.arange(TH) + 0.5) / TH >= 0.47)[0]
+best = None
+for h_ in (64, 48, 40, 32):
+    for r0 in range(dome_rows[0], TH - h_):
+        span = (src[r0:r0 + h_] == 1).all(0)
+        if not span.any(): continue
+        # longest run of columns painted in every row of the block
+        runs, j = [], 0
+        while j < TW:
+            if span[j]:
+                k = j
+                while k < TW and span[k]: k += 1
+                runs.append((k - j, j)); j = k
+            else: j += 1
+        ln, c0_ = max(runs)
+        if ln >= 48 and (best is None or ln * h_ > best[0]): best = (ln * h_, r0, h_, c0_, ln)
+    if best: break
+if best:
+    _, r0, th_, cu0, tw_ = best
+    tile = tex[r0:r0 + th_, cu0:cu0 + tw_].copy()
+    ov_y, ov_x = th_ // 4, tw_ // 4
+    wy = np.linspace(0, 1, ov_y)[:, None, None]; tile[:ov_y] = tile[:ov_y] * wy + tile[th_ - ov_y:] * (1 - wy)
+    tile = tile[:th_ - ov_y]
+    wx = np.linspace(0, 1, ov_x)[None, :, None]; tile[:, :ov_x] = tile[:, :ov_x] * wx + tile[:, tw_ - ov_x:] * (1 - wx)
+    tile = tile[:, :tw_ - ov_x]
+    ty, tx = tile.shape[:2]
+    dome = np.zeros((TH, TW), bool); dome[dome_rows] = True
+    need = dome & ~ok
+    rr, cc = np.nonzero(dome)
+    tiled = np.zeros_like(tex); tiled[rr, cc] = tile[(rr - r0) % ty, (cc - cu0) % tx]
+    dist = distance_transform_edt(~ok)
+    w = np.clip(dist / 10.0, 0, 1)[..., None]
+    sel = dome & ~ok
+    # painted neighbour colour for the cross-fade: the row continuation result (computed below) is not ready yet, so fade
+    # from the nearest painted / mirrored texel (edt indices)
+    _, (iy_, ix_) = distance_transform_edt(~ok, return_indices=True)
+    near = tex[iy_, ix_]
+    tex[sel] = (near * (1 - w) + tiled * w)[sel]
+    src[sel] = 3; ok |= sel
+    print('cap tile rows', r0, r0 + th_, 'cols', cu0, cu0 + tw_)
 hole = ~ok
 for r in range(TH):
     tex[r], ok_r = fill_row(tex[r], ok[r])

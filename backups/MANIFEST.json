@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16015,
-   "sha256": "86216243de1c985ede5c7f6b2ac37a8af48e283a625b1d1d1b4e2cc6f216c2d1"
+   "sha256": "a5efd53dafdab8c18d39d9be5ac64dcca5ab86c1a633fdf5ba51d9896b7cf044"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -854,7 +854,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c13/INFO.json",
    "bytes": 477,
-   "sha256": "9e45d989aa42245d521f76ba4e6e794abf2d7d5707af5c22e278ede97a4a12da"
+   "sha256": "0ed248ff8049edc3f35eac40d52faff2328cfaf65515203fa5820b62bbc938b6"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -889,7 +889,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/INFO.json",
    "bytes": 534,
-   "sha256": "ea34b072105f12666d2057eb537efe49ffbbfde39abe8cfb2461f57fe809aba1"
+   "sha256": "a68b635c86a1eaba1d896f2804337008a3e355e3d76e8a20d5af30bb82a925ca"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c13/tracked.patch",
@@ -954,7 +954,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/INFO.json",
    "bytes": 625,
-   "sha256": "6e3c7325376f286cec6850b2f1439d2638146500db5ec1580b2b99770217bfc4"
+   "sha256": "e9b4ddbb5bebdec853a9d681da0804c10b842526ea040cc83f32cb262ff48349"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/tracked.patch",
@@ -963,18 +963,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/untracked/assets/textures/match08/urcup08.json",
-   "bytes": 368,
-   "sha256": "be89a4fcc7c86abced15ee7edfce718e3476c960d5260f696550a3d884a29ce6"
+   "bytes": 448,
+   "sha256": "a6d0e5ccc2d84998ed8a8fb96c8f0076a9cda84a70177c78186b1e783f98b16f"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/untracked/assets/textures/match08/urcup08.png",
-   "bytes": 143093,
-   "sha256": "8ce9d75f2071adf1d01b3a335ad66ba536ee68fe1493ab3e26295d4bf588b48f"
+   "bytes": 189471,
+   "sha256": "b701c21d1556c72db140d27d08fb4d8a183dfabf0b9abf4de0744aa6e216c8dd"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c13/untracked/tools/match08/urcup08.py",
-   "bytes": 9557,
-   "sha256": "d2a7bed8b0293981c84ae221b9d3d872b70d587dc0bda830f3773f7db73d11cc"
+   "bytes": 11709,
+   "sha256": "d21e18e1a9b4684dafa7cbfa19daa3ee8fa8036edbc7f262ac6d9e89c25f364d"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",

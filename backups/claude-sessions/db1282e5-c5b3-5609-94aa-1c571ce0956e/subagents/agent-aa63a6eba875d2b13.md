@@ -1585,3 +1585,170 @@ At hard left t95 the big pale floor behind the foam line becomes the purple slot
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T14:52:49.140Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/cr_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T14:52:49.168Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:52:49.745Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/cr_t85_through.png"}`
+
+### 🧑 User — 2026-11-18T14:52:49.784Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:52:51.928Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md", "description": "Read the new binding user visual goal brief"}`
+
+### 🧑 User — 2026-11-18T14:52:51.953Z
+
+> ↩︎ result: # User-approved visual goal — 2026-11-18 ~15:00 UTC (account 13) — BINDING for every specialist and every future Claude account
+> 
+> The user approved this understanding in their own words: "YES, CLAUDIA. I approve your visual-first plan for all five original
+> approved Rainbow screens." It adds to (never replaces) `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`,
+> `docs/briefs/2026-11-18-r10/RULES_R10.md` and `docs/briefs/2026-11-18-r8/COMMON_RULES.md`.
+> 
+> ## 1. What the user wants
+> * The user ALREADY DESIGNED the game. The approved pictures `references/04_…png` … `references/08_…png` are BLUEPRINTS, not
+>   inspiration: recreate THOSE exact environments as faithfully as technically possible as real playable 3D.
+> * The scenery must look like the approved world THROUGHOUT Benny's natural swimming — start, middle, end, and while he steers hard
+>   left / right. A matching first screenshot that turns into a generic tunnel is a failure.
+> * No redesign, no simplification, no added or different scenery, no generic orange ring corridor, no flat blue/ramp water, no giant
+>   foam walls, no stretched / smeared / torn textures, no double-exposed or duplicate rings, no clipping, no style drift.
+> * Where a …[+3942 chars]
+
+### 🤖 Claude — 2026-11-18T14:53:08.798Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && node scripts/capture.mjs 05 \"--q=$K&m05frim=1\" --out=$S/lockC 2>&1 | tail -1 && python3 -c \"\nfrom PIL import Image; import numpy as np\nA=np.asarray(Image.open('$S/lockA/05.png').convert('RGB')).astype(int); B=np.asarray(Image.open('$S/lockC/05 …[+210 chars]`
+
+### 🧑 User — 2026-11-18T14:53:20.927Z
+
+> ↩︎ result: ]
+> diff px 0
+
+### 🤖 Claude — 2026-11-18T14:53:36.309Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && D=qa/match/05/r13/step3_m05frim && mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && for n in t95_left k81_kink_left t85_through t75_through t66_through_screen; do cp $S/j1/$n.png $D/2_BEFORE_$n.png; cp $S/r1/$n.png $D/3_NEW_$n.png; done && cat >> qa/match/05/r13/PROGRESS.md <<'EOF'\n\n## Step 3 — `&m05frim=1` (class A/E: the far banks are foam clouds with the purple wall behind, not a flat pale floor) — KEPT\n* Kept query: `?match05=1&tgtvis0 …[+3018 chars]`
+
+### 🧑 User — 2026-11-18T14:53:46.661Z
+
+> ↩︎ result: 65b2ca08874054b236db9a666dc49e95696970e9
+> 65b2ca08874054b236db9a666dc49e95696970e9	refs/heads/claude/rainbow-s05-match-c13
+
+### 🤖 Claude — 2026-11-18T14:53:50.964Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "Step 3 m05frim kept, far bank fixed", "message": "Screen 05 r13 step 3 &m05frim=1: GOOD IMPROVEMENT, kept (SHA 65b2ca08, pushed, ls-remote == HEAD). Read USER_VISUAL_GOAL_R13.md. Steering hard left at t95 the big pale floor behind the foam line is gone: the purple slotted wall now comes down to the line of foam clouds on the left bank. At k81-left / t85 / t75 the flat pale-lilac wedge along the left far bank is gone too (foam clouds against the wall). Locked view 0 px. Pictures: /home/user/wt/s05/qa/match/05/r13/step3_m05frim/. Biggest remaining difference: the near  …[+321 chars]`
+
+### 🧑 User — 2026-11-18T14:53:50.978Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T14:54:05.741Z
+
+Step 4: the near bank's straight cut at the seam. Let me see the full k81 hard-left frame first.
+
+### 🤖 Claude — 2026-11-18T14:54:07.187Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/r1/k81_kink_left.png"}`
+
+### 🧑 User — 2026-11-18T14:54:07.238Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:54:25.050Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 700,726p src/vfx/foam.ts", "description": "Read berm material creation"}`
+
+### 🧑 User — 2026-11-18T14:54:25.097Z
+
+> ↩︎ result: geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+>   geo.setIndex(idx);
+>   geo.computeVertexNormals();
+>   const st05 = course.stage('05');
+>   const uniforms = withFog({
+>     uTime: { value: 0 },
+>     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
+>     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+>     // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
+>     uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+>   });
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: BERM_VERT,
+>     fragmentShader: BERM_FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(M05BERM ? { M05BERM: 1 } : {}) },
+>   });
+>   if (M05BERM) (uniforms as Record<string, THREE.IUniform>).uRide05 = m05foamK;   // shared object (after withFog's merge)
+>   withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
+>   const mesh = new THREE.Mesh(geo, mat);
+>   mesh.name = 'foam_berm';
+>   mesh.frustumCulled = false;
+>   r …[+27 chars]
+
+### 🤖 Claude — 2026-11-18T14:54:26.897Z
+
+Now I'll add the scalloped seam edge in clip05.ts and wire it into the berm and the bank-lump material.
+
+### 🤖 Claude — 2026-11-18T14:54:46.635Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/clip05.ts'\ns=open(p).read()\na=\"\"\"/**\n * `&m05edge=1`\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\"/**\n * `&m05lump=1` (Screen 05 round 13, needs `m05far=1`; src/vfx/foam.ts): the near foam bank at the far tunnel's seam. The\n * lather bank (berm) was cut by the flat seam plane — a straight edge / square corner, a tall pale panel with straight sides\n * where the bank rises toward the wall (t75, k81 hard left) — and foam lumps whose real place lies behind the seam were cut\n * by the far block's first row. Under the s …[+4862 chars]`
+
+### 🧑 User — 2026-11-18T14:54:51.113Z
+
+> ↩︎ result: 479:function makeBankBubbleMaterial(seamShrink = false) {
+> 546:  const { mat } = makeBankBubbleMaterial();
+> 1010:  const bub = makeBankBubbleMaterial(true);   // m05lump (round 13): the near 05 lumps shrink at the far seam
+
+### 🤖 Claude — 2026-11-18T14:54:55.609Z
+
+Typecheck passes. Rendering step-3 BEFORE vs `+&m05lump=1` at t75, k81, k81-left, t66, t85, t95-left.
+
+### 🤖 Claude — 2026-11-18T14:55:01.165Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && node tools/match05/r8_shots.mjs $S/l1 \"$K&m05lump=1\" t66_through_screen,t75_through,k81_kink,k81_kink_left,t85_through,t95_left 5291 2>&1 | grep -c \"big coins\"; node tools/match05/r8_shots.mjs $S/r1 \"$K\" k81_kink 5291 2>&1 | grep -c …[+523 chars]`
+
+### 🧑 User — 2026-11-18T14:56:51.503Z
+
+> ↩︎ result: 6
+> 1
+
+### 🤖 Claude — 2026-11-18T14:56:54.049Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/cl_k81_kink_left.png"}`
+
+### 🧑 User — 2026-11-18T14:56:54.100Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:56:54.767Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/cl_t75_through.png"}`
+
+### 🧑 User — 2026-11-18T14:56:54.795Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:56:55.376Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/cl_k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T14:56:55.421Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:57:15.376Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && D=qa/match/05/r13/item_m05lump && mkdir -p $D && git diff src/vfx/foam.ts src/vfx/clip05.ts > $D/m05lump_rejected.patch && for n in k81_kink_left t75_through; do cp $S/r1/$n.png $D/2_BEFORE_$n.png; cp $S/l1/$n.png $D/3_NEW_$n.png; done && git checkout -- src/vfx/foam.ts src/vfx/clip05.ts && cat >> qa/match/05/r13/PROGRESS.md <<'EOF'\n\n## Item — `&m05lump=1` (scalloped end of the near lather bank at the seam + near lumps shrinking away) — NOT AN IMPROVEMENT\n* Tried once  …[+1383 chars]`
+
+### 🧑 User — 2026-11-18T14:57:20.256Z
+
+> ↩︎ result: 2a730c0f3d8d3c0ca4bd5cc99ec16b76c24adbb4
+> 2a730c0f3d8d3c0ca4bd5cc99ec16b76c24adbb4	refs/heads/claude/rainbow-s05-match-c13
+

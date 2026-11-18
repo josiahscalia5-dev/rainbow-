@@ -3168,3 +3168,259 @@ I'll also point `CLAUDE.md` at the new binding file so every future session read
 
 > 🔧 **Bash** `{"command": "timeout 280 python3 scripts/rainbow-autosave.py --reason manual:user-approved-visual-goal 2>&1 | grep -E '\"(result|commit|pushed_verified)\"'; echo \"LOCAL $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 30 git ls-remote origin refs/heads/claude/rainbow-restore-autosave-1mgga0 | cut -f1)\"", "description": "Save the binding goal files to GitHub", "timeout": 330000}`
 
+### 🧑 User — 2026-11-18T14:52:54.791Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "92641b8a0bf1e474d32c8cbdad6d8aee61f21bd0",
+> LOCAL 92641b8a0bf1e474d32c8cbdad6d8aee61f21bd0
+> REMOTE 92641b8a0bf1e474d32c8cbdad6d8aee61f21bd0
+
+### 🤖 Claude — 2026-11-18T14:52:59.071Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"M04.ring\\|m04ring\\|ringGap\\|ringN\\|'m04r[a-z]'\" src/world/match04m4.ts | head -20", "description": "Locate the Screen 04 ring construction code"}`
+
+### 🧑 User — 2026-11-18T14:52:59.105Z
+
+> ↩︎ result: 3: *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+> 20: *  m04mouth — (round 9, needs m04ring) the approved GOLD WASHER OPENING: the painted mouth ring (thick polished band,
+> 33:  ring: on('m04ring'),
+> 474:  const any = M04.ring || M04.foam || M04.bub || M04.arrow || M04.wave || M04.river;
+> 486:  if (M04.ring) {
+> 494:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+> 496:    const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
+> 559:    console.info('[match04] m04ring', { period: P, rings: nP });
+> 588:  const RY = M04.num('m04ry', 1. …[+306 chars]
+
+### 🤖 Claude — 2026-11-18T14:53:00.955Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 1, "limit": 32}`
+
+### 🧑 User — 2026-11-18T14:53:00.969Z
+
+> ↩︎ result: 1	/**
+> 2	 * Screen 04 milestone M4 (round 8, qa/match/04/NOTES.md) — sub-switches of `?match04=1`, each `&m04…=1`, default off:
+> 3	 *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+> 4	 *             approved picture's mouth ring r 3.58 → 4.11 and the painted stacked ring bands), shaded as polished gold
+> 5	 *             (warm glow down the tunnel, pink / violet / cyan water reflections on the lower walls, glints, a row of
+> 6	 *             amber bulbs on the opening and on every ring lip). In the approved view these surfaces show the approved
+> 7	 *             pixels (camera projection, unchanged); they fade to their own crisp 3D gold as the camera leaves that view.
+> 8	 *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+> 9	 *             view (the painting carries them there), shown once the camera has left it.
+> 10	 *  m04bub   — iridescent soap bubbles floating in the tunnel air (camera-facing bubble discs), same visibility rule.
+> 11	 *  m04arrow — the five glowing blue chevron arrows drawn crisp on the water (distance-field shape at the painted
+> 12	 *   …[+1750 chars]
+
+### 🤖 Claude — 2026-11-18T14:53:01.576Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 486, "limit": 75}`
+
+### 🧑 User — 2026-11-18T14:53:01.596Z
+
+> ↩︎ result: 486	  if (M04.ring) {
+> 487	    const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+> 488	    ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
+> 489	    ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
+> 490	    const gm = new THREE.ShaderMaterial({
+> 491	      vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
+> 492	      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+> 493	        uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+> 494	        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uMouthT: { value: 0  …[+4961 chars]
+
+### 🤖 Claude — 2026-11-18T14:53:12.273Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"  gold:\\|uGoldY\\|M04.gold\" src/world/match04m4.ts | head -8; grep -n \"m04gold\" qa/match/04/r*/PROGRESS.md qa/match/04/*.md 2>/dev/null | cut -c1-250 | head -6", "description": "Find the gold shading option and its history"}`
+
+### 🧑 User — 2026-11-18T14:53:12.329Z
+
+> ↩︎ result: 39:  gold: on('m04gold'),
+> 96:uniform float uGoldY;      // m04gold: polished YELLOW-gold ramp (bright yellow-white highlights), fewer magenta tints
+> 159:    col = mix(col, uGoldY > 0.5 ? vec3(0.98, 0.70, 0.22) : vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+> 184:    col = uGoldY > 0.5 ? goldRampY(v) : goldRamp(v);
+> 205:    col = mix(col, wc2 * (0.55 + 0.6 * v), pk * (mouth ? 0.6 : 1.0) * (1.0 - 0.55 * uGoldY));
+> 494:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+> qa/match/04/r8/PROGRESS.md:58:* **Tried and NOT kept (candidate only): `&m04gold=1`** — yellow-gold ring ramp with yellow-white highlights and fewer
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:53:14.466Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 55,62p qa/match/04/r8/PROGRESS.md | cut -c1-400; grep -n \"ringp\" qa/match/04/r*/PROGRESS.md | cut -c1-250 | head -5", "description": "Read why the yellow-gold option was not kept"}`
+
+### 🧑 User — 2026-11-18T14:53:14.527Z
+
+> ↩︎ result: * **Approved view:** unchanged (the foam only appears once the camera has left the approved view).
+> * **Measured** PALETTE step 2 → step 3: f06 67.8 → 68.9 %, t33 65.2 → 66.4 %, t66 66.4 → 67.2 %; s_left_hard 58.3
+>   (BEFORE) → 65.4 %.
+> * **Tried and NOT kept (candidate only): `&m04gold=1`** — yellow-gold ring ramp with yellow-white highlights and fewer
+>   magenta tints. It reads more "polished gold", but it moves the tunnel away from the approved picture's measured ring
+>   colours (the painted bands average about (190, 87, 46), deep orange-gold) and PALETTE fell 7–11 points (f06 60.9,
+>   t33 56.3, t66 54.7 %); a middle setting (yellow-white lips/highlights + yellow mouth ring, orange bands kept) is next.
+> * **Still wrong:** rings still carry strong magenta streaks; arrows thinner/more numerous than the painted five; water
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:53:24.786Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && E4=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E4.q); for v in \"R1:3.9\" \"R2:5.2\"; do n=${v%%:*}; p=${v##*:}; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s3_ring/$n \"$E4&m04ringp=$p\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; done; cd qa/match/04/r13 && montage /home/user/rainbow-/references/04_through_the_five_arrows.png s2_arr/E4/f03_forward3u.png s3_ring/R1/f03_forward3u.png s3_ring/R2/f03_forward3u.png s2_arr/E4/f20_forward20u.png s3_ring/R1/f20_forward20u.png s3_ring/R2/f20_forwa …[+218 chars]`
+
+### 🤖 Claude — 2026-11-18T14:53:26.040Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ring1.jpg"}`
+
+### 🧑 User — 2026-11-18T14:55:03.351Z
+
+> ↩︎ result: 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> 04 t95_through_screen s 113.673 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T14:55:03.368Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:55:12.344Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd /home/user/wt/s04/qa/match/04/r13 && convert /home/user/rainbow-/references/04_through_the_five_arrows.png -crop 600x420+130+420 +repage -resize 400x $S/rA.png; convert s3_ring/R1/f20_forward20u.png -crop 864x600+0+150 +repage -resize 400x $S/rB.png; convert $S/rA.png $S/rB.png -append $S/ringmat.jpg", "description": "Crop ring material from approved and R1"}`
+
+### 🧑 User — 2026-11-18T14:55:12.687Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:55:13.594Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ringmat.jpg"}`
+
+### 🧑 User — 2026-11-18T14:55:13.622Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:55:20.875Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 92,215p src/world/match04m4.ts | grep -nE \"uTone|uPaint|goldRamp|groove|part|vec3 goldRamp|col =|col \\*=|bulb|return\" | head -40", "description": "Read the gold ring shader controls"}`
+
+### 🧑 User — 2026-11-18T14:55:20.928Z
+
+> ↩︎ result: 2:uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+> 4:uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
+> 14:varying vec2 vK;            // x: part (0 band, 1 lip, 2 groove, 3 opening face, 4 end glow), y: ring index (-1 = opening)
+> 16:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 17:vec3 goldRamp(float x) {
+> 21:  if (x < 1.0) return mix(c0, c1, x);
+> 22:  if (x < 2.0) return mix(c1, c2, x - 1.0);
+> 23:  if (x < 3.0) return mix(c2, c3, x - 2.0);
+> 24:  if (x < 4.0) return mix(c3, c4, x - 3.0);
+> 25:  return mix(c4, c5, x - 4.0);
+> 27:vec3 goldRampY(float x) {
+> 31:  if (x < 1.0) return mix(c0, c1, x);
+> 32:  if (x < 2.0) return mix(c1, c2, x - 1.0);
+> 33:  if (x < 3.0) return mix(c2, c3, x - 2.0);
+> 34:  if (x < 4.0) return mix(c3, c4, x - 3.0);
+> 35:  return mix(c4, c5, x - 4.0);
+> 47:  return s;
+> 59:  float part = vK.x;
+> 63:  if (part > 3.5) {
+> 67:    col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
+> 68:    col = mix(col, uGoldY > 0.5 ? vec3(0.98, 0.70, 0.22) : vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+> 69:    col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, a …[+1559 chars]
+
+### 🤖 Claude — 2026-11-18T14:55:26.095Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 108,112p src/world/match04m4.ts; sed -n 168,200p src/world/match04m4.ts", "description": "Read gold colour ramp and band brightness code"}`
+
+### 🧑 User — 2026-11-18T14:55:26.132Z
+
+> ↩︎ result: vec3 goldRamp(float x) {
+>   x = clamp(x, 0.0, 1.0) * 5.0;
+>   vec3 c0 = vec3(0.43, 0.14, 0.02), c1 = vec3(0.66, 0.27, 0.07), c2 = vec3(0.80, 0.38, 0.11);
+>   vec3 c3 = vec3(0.96, 0.56, 0.15), c4 = vec3(1.0, 0.80, 0.30), c5 = vec3(1.0, 0.96, 0.80);
+>   if (x < 1.0) return mix(c0, c1, x);
+>       // the washer opening: thick bright polished gold, a long vertical highlight, glowing rounded lips
+>       float st = streaks(ang, 77.0);
+>       v = uTone.z + 0.08 * cos(ang) + 0.20 * st + 0.08 * gl;
+>       if (part > 0.5 && part < 1.5) v = uTone.z + 0.14 + 0.16 * facing + 0.10 * st;
+>       if (part > 1.5 && part < 2.5) v = 0.18;
+>     } else {
+>       float u = fract(al / uP) * uP;                       // world units inside this ring period (0 = groove step)
+>       float t = clamp((u - 0.06) / (uP - 0.6), 0.0, 1.0);  // band: 0 at its near edge .. 1 at its lip
+>       float far = smoothstep(10.0, 38.0, dc);
+>       float st = streaks(ang, ring);
+>       tb = t;
+>       float bump = smoothstep(0.0, 0.45, t) * (1.0 - 0.5 * smoothstep(0.7, 1.0, t));
+>       v = uTone.x + 0.20 * pow(t, 1.5) + 0.03 * cos(ang) + 0.04 * far + uTone.w * st * bump + 0.05 * gl;
+>       if (part > 0.5 && part < 1.5) v = uTone.y + 0.12 * facing + 0 …[+1411 chars]
+
+### 🤖 Claude — 2026-11-18T14:55:44.080Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nold=\"\"\"      pushP(r - 0.05, a + P - 0.56, 0);\n      pushP(r - 0.10, a + P - 0.48, 1);\n      pushP(r - 0.22, a + P - 0.39, 1);\n      pushP(r - 0.28, a + P - 0.27, 1);\n      pushP(r - 0.23, a + P - 0.15, 1);\n      pushP(r - 0.08, a + P - 0.07, 2);\"\"\"\nnew=\"\"\"      // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)\n      pushP(r - 0.05, a + P - 0.56 * gw, 0);\n      pushP(r - 0.10, a + P - 0.48 * gw, 1);\n      pushP(r -  …[+1264 chars]`
+
+### 🤖 Claude — 2026-11-18T14:55:45.336Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ringmat2.jpg"}`
+
+### 🧑 User — 2026-11-18T14:57:15.939Z
+
+> ↩︎ result: ok
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T14:57:15.952Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:57:20.106Z
+
+Still washed out. The darker band setting barely changed the result, so something later in the shader is brightening everything. I'll read the rest of the gold shader.
+
+### 🤖 Claude — 2026-11-18T14:57:20.711Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 200,250p src/world/match04m4.ts", "description": "Read the rest of the gold shader"}`
+
+### 🧑 User — 2026-11-18T14:57:20.746Z
+
+> ↩︎ result: vec3 wc = ang < 0.0 ? vec3(0.62, 0.42, 0.86) : vec3(0.95, 0.42, 0.70);
+>     float ry = mouth ? 99.0 : ring, fa = ang * 2.2 + ry * 1.7;
+>     float hv = mix(h21(vec2(floor(fa), ry)), h21(vec2(floor(fa) + 1.0, ry)), smoothstep(0.0, 1.0, fract(fa)));
+>     float pk = (0.42 * low + 0.22 * smoothstep(0.78, 0.98, hv) * (1.0 - low)) * (part > 0.5 && part < 1.5 ? 0.35 : 1.0);
+>     vec3 wc2 = mix(wc, vec3(0.88, 0.42, 0.78), 1.0 - low);   // dusky violet-pink tint on the upper walls
+>     col = mix(col, wc2 * (0.55 + 0.6 * v), pk * (mouth ? 0.6 : 1.0) * (1.0 - 0.55 * uGoldY));
+>     // a few cool blue-violet glints on the bands (painted reflections of the cyan water)
+>     if (!mouth && part < 0.5) {
+>       float cb = streaks(ang + 1.3, ring + 31.0);
+>       col = mix(col, vec3(0.62, 0.66, 1.0), 0.55 * smoothstep(0.7, 1.0, cb) * step(0.55, h21(vec2(ring, 4.4))) * smoothstep(0.1, 0.5, tb));
+>     }
+>     // hot spots / amber bulbs: a row on the opening's face, smaller glints on every ring lip
+>     bool onFace = part > 2.5 && part < 3.5;
+>     bool onLip = uLipBulb > 0.5 && part > 0.5 && part < 1.5 && !mouth;
+>     if (onFace || onLip) {
+>       float nb = onFace ? uNB : floor(uNB * 0.6);
+>       float cell = fract(ang / …[+2469 chars]
+
+### 🤖 Claude — 2026-11-18T14:57:22.539Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 250,290p src/world/match04m4.ts", "description": "Read the end of the gold shader"}`
+
+### 🧑 User — 2026-11-18T14:57:22.569Z
+
+> ↩︎ result: // a soft polished sheen that moves with the view (the painted highlights stay where they were painted)
+>       col += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);
+>     }
+>   }
+>   col = clamp(col, 0.0, 1.0);
+>   // the approved view shows the approved pixels (the projector IS this camera there)
+>   if (uAway < 0.999 && vProj.w > 0.0) {
+>     vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+>     if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
+>   }
+>   gl_FragColor = vec4(pjInverse(col), 1.0);
+> }`;
+> 
+> /** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+>  * the approved water design (tile_river3: pink swirl ribbons, cyan streams, foam edges) by arc length across the trough,
+>  * two offset samples blended by slow world-anchored noise (no visible 4.7 u repeat), flowing down the slide, and the
+>  * glowing chevron arrows drawn crisp (distance field) on the centre lane. */
+> const RIVER_VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+> varying vec4 vProj;
+> varying vec3 vL;
+> varying float vS;
+> void m …[+694 chars]
+
