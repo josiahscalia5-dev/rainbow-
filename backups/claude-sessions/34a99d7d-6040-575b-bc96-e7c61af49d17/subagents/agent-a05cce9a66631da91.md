@@ -651,3 +651,91 @@ Let me view the texture layers themselves.
 > /** the same switch reader for other modules (Game.ts: `?glow05=1`) */
 > export const flag05 = q05;
 
+### 🤖 Claude — 2026-11-18T02:05:09.335Z
+
+Now I'll add the `m05ride` switch (rider-relative design layout) behind its own define.
+
+### 🤖 Claude — 2026-11-18T02:05:15.232Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05WD: boolean = TGTWALL05 && q05('m05wd');", "new_string": "export const M05WD: boolean = TGTWALL05 && q05('m05wd');\n/**\n * `&m05ride=1` (Screen 05 round 8, qa/match/05/NOTES.md \"Round 8\"; needs tgtwall05): the APPROVED DESIGN LAID OUT FROM\n * BENNY. The approved picture holds only ~50 u of river and only its first ~10 u (around Benny) at full sharpness; laid\n * onto the world, riding forward magnified far rows into a blurred sheet, and the near tile T2 that took over is a\n * rep …[+777 chars]`
+
+### 🧑 User — 2026-11-18T02:05:15.243Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:05:17.735Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    if (pjK > 0.001) {", "new_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    float s05r = s;\n    float rideK05 = 0.0;\n    #ifdef M05RIDE\n    // m05ride: the design layout follows Benny (see M05RIDE)\n    rideK05 = uPjNear.x > 0.5 ? 1.0 : 0.0;\n    s05r = s - (uPjNear.z - uPjNear.w) * rideK05;\n    #endif\n    if …[+41 chars]`
+
+### 🧑 User — 2026-11-18T02:05:17.747Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:05:18.835Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "        float rideD = uPjNear.z - uPjNear.w;", "new_string": "        float rideD = (uPjNear.z - uPjNear.w) * (1.0 - rideK05);"}`
+
+### 🧑 User — 2026-11-18T02:05:18.844Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:05:19.987Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "...(M05WD ? { M05WD: 1 } : {}) },", "new_string": "...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}) },"}`
+
+### 🧑 User — 2026-11-18T02:05:20.009Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:05:21.355Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 260, "limit": 12}`
+
+### 🧑 User — 2026-11-18T02:05:21.377Z
+
+> ↩︎ result: 260	 * `&m05wd=1` (Screen 05 round 8, branch claude/rainbow-s05-match-c8, qa/match/05/NOTES.md "Round 8"; needs tgtwall05):
+> 261	 * WATER DESIGN WHILE SWIMMING. Riding hands the near river over from the approved exact layer E to the periodic near
+> 262	 * tile T2 (projnear05: E must be as dense as the locked view had it, i.e. ~270 texels/u, or the tile takes over) — the
+> 263	 * tile is a repeat of the nearest approved water, so the S-shaped pink / cyan streams of the approved design vanished
+> 264	 * in front of Benny and the screen showed a marbled, stretched colour sheet. With the switch the approved design E stays
+> 265	 * the river's layout wherever E has data (E is smoothed along its own rows: far rows hold only 8–18 texels per unit,
+> 266	 * whose row noise read as flat horizontal stripes when magnified), and the fine detail layer is laid over it. Engaged
+> 267	 * only while riding (pjNearK): the locked checkpoint picture is unchanged pixel for pixel.
+> 268	 */
+> 269	export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+> 270	/** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> 271	export const proj05Pending: Promise<unknown> …[+8 chars]
+
+### 🤖 Claude — 2026-11-18T02:05:26.003Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05WD: boolean = TGTWALL05 && q05('m05wd');", "new_string": "export const M05WD: boolean = TGTWALL05 && q05('m05wd');\n/**\n * `&m05ride=1` (Screen 05 round 8, qa/match/05/NOTES.md \"Round 8\"; needs tgtwall05): the APPROVED DESIGN LAID OUT FROM\n * BENNY. The approved picture holds only ~50 u of river and only its first ~10 u (around Benny) at full sharpness; laid\n * onto the world, riding forward magnified far rows into a blurred sheet, and the near tile T2 that took over is a\n * rep …[+777 chars]`
+
+### 🧑 User — 2026-11-18T02:05:26.052Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:05:26.702Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 1510, "limit": 35}`
+
+### 🧑 User — 2026-11-18T02:05:26.720Z
+
+> ↩︎ result: 1510	    }
+> 1511	  }
+> 1512	  #ifdef PROJ05
+> 1513	  {
+> 1514	    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+> 1515	    if (pjK > 0.001) {
+> 1516	      // exact-layer magnification: texels per screen pixel along the least dense direction
+> 1517	      vec4 Lm = pjLut(s);
+> 1518	      vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
+> 1519	      // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
+> 1520	      vec2 ja = dFdx(tp), jb = dFdy(tp);
+> 1521	      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
+> 1522	      if (uPjNear.x > 0.5) {
+> 1523	        // ?projnear05=1: the hand-over to the crisp tile must not follow the WAVES. The per-pixel Jacobian above swings
+> 1524	        // with every wave crest (slopes facing the camera stretch the texture, back slopes compress it), which made the
+> 1525	        // E -> tile hand-over flicker into horizontal stripes across the river once the tile no longer shows the same
+> 1526	        // picture as E. Instead: the camera follows Benny, so a point d units past the locked checkpoint needs about
+> 1527	         …[+1266 chars]
+
