@@ -627,7 +627,7 @@ export function buildEnvironment(course: Course): Environment {
     const liveFar = M05FAR ? createLiveFar05({
       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
-      zCap: course.stage('06').s0 + 1 - sF05, foldNear: 7, foldFar: 11,
+      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
     }) : null;
     const sync = (cam: THREE.Camera) => {
       const o = ft.openFor(camPos.setFromMatrixPosition(cam.matrixWorld));

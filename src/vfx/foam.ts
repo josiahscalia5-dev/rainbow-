@@ -15,6 +15,7 @@
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
 import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
+import { withClip05 } from './clip05';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
@@ -307,6 +308,7 @@ function makePuffMaterial(quality: 'high' | 'low') {
     fog: true,
     defines: quality === 'low' ? { LOW_Q: 1 } : {},
   });
+  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
   return { mat, uniforms };
 }
 

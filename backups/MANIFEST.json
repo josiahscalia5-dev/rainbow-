@@ -719,7 +719,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13996,
-   "sha256": "01de44b81fe9f47ccf373e20e4b29005cba69d78eae1c25e7f2fdc08759ff2ba"
+   "sha256": "846440345d630148b5eefd080f02e42227789138fc0b6e5955a237fae14809fe"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -11662,6 +11662,11 @@
    "sha256": "e9315ad625b0b150b716ba77e68b77a90b09c11fc284f8a30528e5105e7429e7"
   },
   {
+   "path": "src/vfx/clip05.ts",
+   "bytes": 1347,
+   "sha256": "b3b9d6dbaed3e5467ebe25e6b07243ffee90323d4278012ac317eb4e3d4cf6f7"
+  },
+  {
    "path": "src/vfx/drumWater.ts",
    "bytes": 9344,
    "sha256": "41622a2706ea078c4c5a318e816ba29c432dcef3b6e50f45be6beecba8ddfddf"
@@ -11678,8 +11683,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 56421,
-   "sha256": "38f4c5da52611e35dc7f7b771df44d8647f83dffb6367e9cda2d0b2292ccfbca"
+   "bytes": 56558,
+   "sha256": "a12a833f18bf19f3f60dfcb7caac38828800585b9dc98ea35504082f572188cc"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -11733,8 +11738,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 69306,
-   "sha256": "339d56443c7f190e40831f5b326155d7ff469a365f7643d18e2fd61b8b88e2a7"
+   "bytes": 69296,
+   "sha256": "624379eda223233885287d7049df7b56fa1646b39b17e1e29eebe239e9094f00"
   },
   {
    "path": "src/world/far05.ts",
@@ -11748,8 +11753,8 @@
   },
   {
    "path": "src/world/match05far.ts",
-   "bytes": 12474,
-   "sha256": "7421a6cfa2e13e9970bbab2131257a0c6a083f4ceef17b47cdf85bfa3be54eb0"
+   "bytes": 12784,
+   "sha256": "e169b170e13239f1eb63e8ff6fa88bdd52668d3aca545ce215517a73973accd0"
   },
   {
    "path": "src/world/materials.ts",

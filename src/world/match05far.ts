@@ -22,6 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
 import { tubeCenterAt } from './tube';
 import type { FarRiverLayout, FarRiverRow } from './far05';
 import { EDGE_LIFT, MATCH05, flag05 } from '../vfx/waterRibbon';
+import { clip05 } from '../vfx/clip05';
 
 export const M05FAR: boolean = MATCH05 && flag05('m05far');
 
@@ -230,6 +231,9 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
       place(a.farRings, a.ringItems, open);
       place(a.farLids, a.lidItems, open);
     }
+    // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
+    if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
+    else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
     a.farWall.morphTargetInfluences![0] = open;
     a.farRiver.morphTargetInfluences![0] = open;
     a.glowMat.uniforms.uOpacity.value = 1 - open;

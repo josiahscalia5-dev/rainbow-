@@ -708,3 +708,330 @@ Typecheck is clean. Running the 12-position audit with the new switch.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T00:20:28.926Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/tools/shot.mjs <<'EOF'\n// one or more shots at Benny s offsets: node shot.mjs <out> <query> <dist,...>   dist 'tN' = fraction\nimport { mkdirSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [OUT, Q, DISTS, EVAL = ''] = process.argv.slice(2);\nmkdi …[+1582 chars]`
+
+### 🧑 User — 2026-11-18T00:20:28.973Z
+
+> ↩︎ result: 37:const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };
+> 104:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 105:  const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+> 106:  if (hidden.has('water')) water.group.visible = false;
+> 107:  if (hidden.has('coins')) coins.group.visible = false;
+> 108:  const zoneHidden = (k: string) => hidden.has(k);
+> 414:    benny.root.position.copy(pose.pos).addScaledVector(course.sample(sEnd).tan, 0.6 * sm(0, O.hide, t));
+> 416:    benny.root.visible = t < O.hide;
+
+### 🤖 Claude — 2026-11-18T00:20:34.082Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" && timeout 600 node $SP/tools/shot.mjs $SP/hw \"$Q&hide=water\" t0.66 && timeout 600 node $SP/tools/shot.mjs $SP/hc \"$Q&hide=chamber,drumA,basin\" t0.66 && python3 -c \"\nfrom PIL import Image\na=Image.open('$SP/hw/d_t0.66.png').resize((432,768));b=Image.open('$SP/hc/d_t0.66.png').resize((432,768))\nW=Image.new('RGB',(864,768));W.paste(a,(0,0));W.paste(b,(432,0));W.save('$SP/hide.png')\"", "description": "Capture t66 with water hidden …[+46 chars]`
+
+### 🧑 User — 2026-11-18T00:21:01.522Z
+
+> ↩︎ result: t0.66 170.469 null
+> t0.66 170.501 null
+
+### 🤖 Claude — 2026-11-18T00:21:03.242Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/hide.png"}`
+
+### 🧑 User — 2026-11-18T00:21:03.275Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:21:31.307Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s|      zCap: course.stage('06').s0 + 1 - sF05, foldNear: 7, foldFar: 11,|      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,|\" src/world/environment.ts && grep -n \"zCap:\" src/world/environment.ts && SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" && timeout 900 node $SP/tools/shot.mjs $SP/c2 \"$Q\" 10,t0.33,t0.5,t0.66,t0.8,t0.9,t0.95 && python3 -c \"\nfrom PIL import Image\nn=['10','t0.33','t0.5','t0.66','t0.8','t0.9','t0.95']\nW=Image.new('RGB',(252*7,448))\n …[+203 chars]`
+
+### 🧑 User — 2026-11-18T00:22:29.794Z
+
+> ↩︎ result: 630:      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
+> 10 143.145 null
+> t0.33 151.693 null
+> t0.5 161.406 null
+> t0.66 170.389 null
+> t0.8 178.274 null
+> t0.9 183.956 null
+> t0.95 186.707 null
+> [This command modified 1 file you've previously read: src/world/environment.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T00:22:31.609Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/c2.png"}`
+
+### 🧑 User — 2026-11-18T00:22:31.649Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:22:39.593Z
+
+The 06 rings are gone up to 90 % of the stage. White foam columns still poke up near the far end, and the fold at 95 % (stage end into 06) is expected. Next I'm finding the foam part.
+
+### 🤖 Claude — 2026-11-18T00:22:40.491Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"parts\\b.*=\\|parts:\" src/vfx/index.ts | head; grep -n \"foam\" src/vfx/index.ts | head -20", "description": "Locate water parts and foam construction"}`
+
+### 🧑 User — 2026-11-18T00:22:40.521Z
+
+> ↩︎ result: 53:  parts: Record<string, THREE.Object3D>;
+> 96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
+> 101:  // parts (rim puffs, flank sheet, flank puffs) step aside; `?projfoam05=1` keeps them. No other screen's foam changes.
+> 217:      for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
+> 2: * Rainbow water system (water-fx-specialist + foam-bubbles-particles).
+> 22:import { createFoam } from './foam';
+> 43:  /** call every frame; focusS = Benny's arc-length (for pooling/LOD of bubbles & foam) */
+> 86:  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });
+> 94:  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
+> 96:  const parts …[+1612 chars]
+
+### 🤖 Claude — 2026-11-18T00:22:44.694Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" && for h in foamBerm bubbles foam; do timeout 600 node $SP/tools/shot.mjs $SP/w_$h \"$Q&waterhide=$h\" t0.8 >/dev/null; done; python3 -c \"\nfrom PIL import Image\nW=Image.new('RGB',(432*3,768))\nfor i,h in enumerate(['foamBerm','bubbles','foam']): W.paste(Image.open('$SP/w_'+h+'/d_t0.8.png').resize((432,768)),(432*i,0))\nW.save('$SP/wh.png')\"", "description": "Isolate which water part draws white columns", "timeout": 1900000}`
+
+### 🧑 User — 2026-11-18T00:23:33.606Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T00:23:35.446Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/wh.png"}`
+
+### 🧑 User — 2026-11-18T00:23:35.486Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:23:43.058Z
+
+Hiding the whole `foam` part removes the columns (right image). I'll make it more targeted: only foam beyond the seam should go. Checking how foam is laid out along the course.
+
+### 🤖 Claude — 2026-11-18T00:23:44.213Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function createFoam\\|InstancedMesh(\\|focusS\\|const berm\\|group.add\\|update(\" src/vfx/foam.ts | head -40; wc -l src/vfx/foam.ts", "description": "Inspect foam.ts structure"}`
+
+### 🧑 User — 2026-11-18T00:23:44.242Z
+
+> ↩︎ result: 471:  update(time: number, dt: number, focusS: number, outro?: number, camera?: THREE.Camera): void;
+> 625:export function createFoam(
+> 655:    const mesh = nMesh ? new THREE.InstancedMesh(geoHi, mat, nMesh) : null;
+> 680:  const berm = createBerm(course, s0, s1, skip, quality);
+> 681:  group.add(berm.mesh);
+> 689:  const bermK = bermScale05(course);
+> 693:  const bermPoint = (ss: number, e: number, side: number, lift: number) => {
+> 807:  group.add(whirlGroup);
+> 837:  group.add(flank);
+> 868:  const rafts = new THREE.InstancedMesh(new THREE.PlaneGeometry(2, 2), bub.mat, nRaft);
+> 879:  group.add(rafts);
+> 882:  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+> 892:  group.add(rim05);
+> 933:  const updateRafts = (time: number, dt: number, focusS: number, outro: number, camera?: THREE.Camera) => {
+> 937:    const w = sm(st05.s0 + 2, st05.s0 + 7, focusS) * (1 - sm(st05.s1 - 7, st05.s1 - 2, focusS)) * rider.str * (1 - outro);
+> 1097:    update(time, dt, focusS, outro = 0, camera) {
+> 1104:        c.mesh.visible = c.sb > focusS - 12 && c.sa < focusS + 130 && !(outro > 0.3 && c.sb > s08 + 8);
+> 1105:        if (c.mesh.visible) c.mesh.geometry = c.sb > focusS - 12 && c.sa < fo …[+223 chars]
+
+### 🤖 Claude — 2026-11-18T00:23:45.954Z
+
+> 🔧 **Bash** `{"command": "sed -n 1095,1120p src/vfx/foam.ts; sed -n 640,690p src/vfx/foam.ts", "description": "Read foam chunk visibility logic"}`
+
+### 🧑 User — 2026-11-18T00:23:45.991Z
+
+> ↩︎ result: },
+>     qaRafts: () => ({ visible: rafts.visible, puffs: nRaft, shown, clumps: qa.slice() }),
+>     update(time, dt, focusS, outro = 0, camera) {
+>       berm.uniforms.uTime.value = time;
+>       (berm.uniforms.uOutro.value as THREE.Vector2).x = outro;
+>       const s08 = course.stage('08').s0;
+>       puff.uniforms.uTime.value = time;
+>       for (let i = 0; i < chunks.length; i++) {
+>         const c = chunks[i];
+>         c.mesh.visible = c.sb > focusS - 12 && c.sa < focusS + 130 && !(outro > 0.3 && c.sb > s08 + 8);
+>         if (c.mesh.visible) c.mesh.geometry = c.sb > focusS - 12 && c.sa < focusS + 30 ? geoHi : geoLo;
+>       }
+>       rim05.visible = imp05.length > 0 && st05.s1 - 2 > focusS - 12 && st05.s0 + 2 < focusS + 130 && outro < 0.3;
+>       // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)
+>       whirlGroup.rotation.y = -time * 0.45 * ((Math.PI * 2) / 3);
+>       void whirlStart;
+>       updateRafts(time, dt, focusS, outro, camera);
+>     },
+>   };
+> }
+> 
+> /** two triangles of a bank quad, wound CCW seen from above on both sides */
+> function quadIdx(out: number[], sideIndex: number, a: number, b: number, c: number, d: number) {
+>   if (sideIndex === 1) out.push(a,  …[+2592 chars]
+
+### 🤖 Claude — 2026-11-18T00:23:52.674Z
+
+> 🔧 **Bash** `{"command": "grep -n \"build(\" src/vfx/foam.ts | head; grep -n \"chunkLen\" src/vfx/foam.ts", "description": "Find chunk build calls"}`
+
+### 🧑 User — 2026-11-18T00:23:52.707Z
+
+> ↩︎ result: 750:    build(list, group, sa - 2, sb + 2);
+> 806:  build(wl, whirlGroup, st03.s0 - 30, st04.s0 + 25);
+> 641:  const chunkLen = 24;
+> 717:  for (let sa = s0; sa < s1; sa += chunkLen) {
+> 718:    const sb = Math.min(s1, sa + chunkLen);
+
+### 🤖 Claude — 2026-11-18T00:23:54.381Z
+
+> 🔧 **Bash** `{"command": "sed -n 714,752p src/vfx/foam.ts", "description": "Read chunk loop"}`
+
+### 🧑 User — 2026-11-18T00:23:54.408Z
+
+> ↩︎ result: /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */
+>   const soap05W = (s: number) => smw(st05b.s0 - 1, st05b.s0 + 2, s) * (1 - smw(st05b.s1 - 1, st05b.s1 + 4, s));
+>   const step = quality === 'high' ? 0.36 : 0.62;
+>   for (let sa = s0; sa < s1; sa += chunkLen) {
+>     const sb = Math.min(s1, sa + chunkLen);
+>     const list: Puff[] = [];
+>     // skip most of 03 (the whirlpool has its own foam), keep the chute→rim hand-over
+>     for (let s = sa; s < sb; s += step) {
+>       if (inSkip(s)) continue;
+>       for (const side of [-1, 1]) {
+>         // crest puffs: the body of the bank
+>         const nC = quality === 'high' && rand() < 0.55 ? 2 : 1;
+>         for (let k = 0; k < nC; k++) {
+>           const r = (0.11 + rand() * 0.13) * (low05(s) ? 0.85 : 1);
+>           addPuff(list, s + (rand() - 0.5) * step, -0.32 + rand() * 0.82, side, r, r * (0.05 + rand() * 0.3), 0.8 + 0.2 * rand());
+>         }
+>         // small puffs right at the water line (the lacy edge of the bank)
+>         if (rand() < 0.65) {
+>           const r = 0.06 + rand() * 0.06;
+>           addPuff(list, s + (rand() - 0.5) * step, -0.58 + rand() * 0.28, side, r, r * 0.15, 0.9);
+>         }
+>       }
+>       // heaps: clusters of big  …[+819 chars]
+
+### 🤖 Claude — 2026-11-18T00:24:03.314Z
+
+I'll add a seam clip plane, active only under `m05far`, to the foam puff shader. That hides only foam beyond the sliding seam; the default build's shader programs stay unchanged.
+
+### 🤖 Claude — 2026-11-18T00:24:04.518Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const mat\\b\\|const mat =\\|puff = \\|const puff\\|customProgramCacheKey\\|onBeforeCompile\\|new THREE.ShaderMaterial\\|bub.mat\\|const bub\" src/vfx/foam.ts | head -20", "description": "Locate foam materials"}`
+
+### 🧑 User — 2026-11-18T00:24:04.545Z
+
+> ↩︎ result: 303:  const mat = new THREE.ShaderMaterial({
+> 444:  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true });
+> 611:  const mat = new THREE.ShaderMaterial({
+> 636:  const puff = makePuffMaterial(quality);
+> 637:  const mat = puff.mat;
+> 867:  const bub = makeBankBubbleMaterial();
+> 868:  const rafts = new THREE.InstancedMesh(new THREE.PlaneGeometry(2, 2), bub.mat, nRaft);
+> 882:  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+
+### 🤖 Claude — 2026-11-18T00:24:06.455Z
+
+> 🔧 **Bash** `{"command": "sed -n 595,635p src/vfx/foam.ts; grep -n \"const PUFF_VERT\\|const PUFF_FRAG\" src/vfx/foam.ts; grep -n \"worldPosition\\|vWorld\\|gl_FragColor\\s*=\" src/vfx/foam.ts | head", "description": "Read puff material definition"}`
+
+### 🧑 User — 2026-11-18T00:24:06.487Z
+
+> ↩︎ result: }
+>     }
+>   }
+>   const geo = new THREE.BufferGeometry();
+>   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+>   geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+>   geo.setIndex(idx);
+>   geo.computeVertexNormals();
+>   const st05 = course.stage('05');
+>   const uniforms = withFog({
+>     uTime: { value: 0 },
+>     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
+>     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+>     // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
+>     uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+>   });
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: BERM_VERT,
+>     fragmentShader: BERM_FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
+>   });
+>   const mesh = new THREE.Mesh(geo, mat);
+>   mesh.name = 'foam_berm';
+>   mesh.frustumCulled = false;
+>   return { mesh, uniforms };
+> }
+> 
+> export function createFoam(
+>   course: Course,
+>   opts: { s0: number; s1: number; quality: 'high' | 'low';  …[+629 chars]
+
+### 🤖 Claude — 2026-11-18T00:24:08.442Z
+
+> 🔧 **Bash** `{"command": "sed -n 207,240p src/vfx/foam.ts; sed -n 296,320p src/vfx/foam.ts", "description": "Read puff shaders and material"}`
+
+### 🧑 User — 2026-11-18T00:24:08.472Z
+
+> ↩︎ result: const PUFF_VERT = /* glsl */ `
+> uniform float uTime;
+> varying vec3 vNormalW;
+> varying vec3 vPosW;
+> varying vec3 vLocal;
+> varying vec3 vInst;
+> varying float vW5;
+> #include <fog_pars_vertex>
+> void main() {
+>   // instanceColor.x = ao + 2 q, q = 0..8 = the 05 soap-shading weight x 8 (wave 7; ao <= 1 so floor(x / 2) = q)
+>   float q5 = floor(instanceColor.x * 0.5);
+>   vInst = vec3(instanceColor.x - 2.0 * q5, instanceColor.yz);
+>   vW5 = q5 / 8.0;
+>   float br = 1.0 + 0.035 * sin(uTime * 1.7 + instanceColor.y * 40.0);
+>   vec4 wp = modelMatrix * instanceMatrix * vec4(position * br, 1.0);
+>   vPosW = wp.xyz;
+>   vNormalW = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal);
+>   vLocal = normal;
+>   vec4 mvPosition = viewMatrix * wp;
+>   gl_Position = projectionMatrix * mvPosition;
+>   #include <fog_vertex>
+> }
+> `;
+> const PUFF_FRAG = /* glsl */ `
+> uniform vec3 uLightDir;
+> varying vec3 vNormalW;
+> varying vec3 vPosW;
+> varying vec3 vLocal;
+> varying vec3 vInst;
+> varying float vW5;
+> #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${SOAP05_GLSL}
+> void main() {
+> }
+> 
+> function makePuffMaterial(quality: 'high' | 'low') {
+>   const uniforms = withFog({
+>     uTime: { value: 0 },
+>     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normal …[+765 chars]
+
+### 🤖 Claude — 2026-11-18T00:24:22.139Z
+
+> 🔧 **Bash** `{"command": "cat > src/vfx/clip05.ts <<'EOF'\n/**\n * `?match05=1&m05far=1` (Screen 05 round 7, src/world/match05far.ts): a clip plane at the far tunnel's sliding seam.\n * Real 06 foam behind the seam (the rising 06 banks) would otherwise stand inside the 05 far tunnel as white columns;\n * materials that opt in (foam puffs) discard fragments beyond the plane while the switch is on and the far block is\n * live (n = 0 disables it). Default build: nothing imports the GLSL below into any program.\n */\nimport * as THREE from 'three';\nimport { MATCH05, flag05 } from './waterRibbon';\n\nexport c …[+1516 chars]`
+
+### 🧑 User — 2026-11-18T00:24:22.212Z
+
+> ↩︎ result: 18:import { withClip05 } from './clip05';
+> 311:  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
+
+### 🤖 Claude — 2026-11-18T00:24:29.147Z
+
+> 🔧 **Bash** `{"command": "sed -n 15,19p src/vfx/foam.ts && python3 - <<'EOF'\np='src/world/match05far.ts'\ns=open(p).read()\ns=s.replace(\"import { EDGE_LIFT, MATCH05, flag05 } from '../vfx/waterRibbon';\",\"import { EDGE_LIFT, MATCH05, flag05 } from '../vfx/waterRibbon';\\nimport { clip05 } from '../vfx/clip05';\")\nold=\"\"\"    a.farWall.morphTargetInfluences![0] = open;\"\"\"\nnew=\"\"\"    // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)\n    if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);\n    else { clip05.uClip05P.value.copy(c0).addS …[+279 chars]`
+
+### 🧑 User — 2026-11-18T00:24:31.282Z
+
+> ↩︎ result: import * as THREE from 'three';
+> import { type Course, WORLD, funnelY } from '../world/course';
+> import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
+> import { withClip05 } from './clip05';
+> import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
+> TSC OK
+
+### 🤖 Claude — 2026-11-18T00:24:44.302Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/clip05.ts'\ns=open(p).read()\nold=\"\"\"  if (dot(${posVar} - uClip05P, uClip05N) > 0.0) discard;   // ?m05far=1: behind the 05 far tunnel seam`);\"\"\"\nnew=\"\"\"  {  // ?m05far=1: behind the 05 far tunnel seam, inside its tube (axial 0..40 u, within 9 u of the axis) only\n    vec3 cd = ${posVar} - uClip05P; float ca = dot(cd, uClip05N);\n    if (ca > 0.0 && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;\n  }`);\"\"\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && echo TSC OK && SP=/tmp/claude-0/ …[+535 chars]`
+
