@@ -566,3 +566,105 @@ Let me look at the current NEW state (step 1 frames) at t66 and the last-third B
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T12:04:01.870Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1' && P=/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p && timeout 600 node tools/match05/r10_probe.mjs t95_through_screen \"$K\" --px=60,300 --px=800,300 --px=100,600 --px=780,600 --px=430,400 --px=430,700 --idmap=$P/t95_id.png 2>&1 | tail -70", "description": "Probe objects at the t95 position", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T12:04:18.187Z
+
+> ↩︎ result: d 13.945  ro 0  ShaderMaterial  water_system > foam_banks > foam_berm  @-1.93,-40.7,-133.37
+>    d 14.133  ro 0  ShaderMaterial  water_system > water_ribbon  @-2,-40.7,-133.54
+>    d 18.101  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @-3.45,-40.79,-137.24
+>    d 18.275  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @-3.51,-40.8,-137.4
+> px 780,600
+>    d 14.353  ro 0  ShaderMaterial  water_system > foam_banks > Mesh  @5.26,-40.69,-134.58
+>    d 14.845  ro 0  ShaderMaterial  water_system > foam_banks > Mesh  @5.33,-40.7,-135.07
+>    d 18.315  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @5.84,-40.78,-138.5
+>    d 18.466  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @5.86,-40.78,-138.65
+>    d 40.076  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @9.04,-41.26,-160.02
+>    d 85.092  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @15.65,-42.25,-204.54
+>    d 86.766  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @15.9,-42.28,-206.19
+>    d 93.406  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh  @16.87,-42.43,-212.76
+>    d 93.942  ro 0  MeshStandardMaterial  washer_world > zone_tubes  …[+3793 chars]
+
+### 🤖 Claude — 2026-11-18T12:04:20.720Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/p/t95_id.png"}`
+
+### 🧑 User — 2026-11-18T12:04:20.739Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T12:04:45.515Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 140,330p src/world/match05far.ts", "description": "Read live far sync logic (seam, cap, fold)"}`
+
+### 🧑 User — 2026-11-18T12:04:45.545Z
+
+> ↩︎ result: };
+>   const rowZ = (i: number, steps: number, zFrom: number) => {
+>     // uniform in projected radius (1/D), as ForcedTunnel.geometry
+>     const t = i / steps, Da = D0 + zFrom;
+>     const Dv = 1 / (1 / Da - t * (1 / Da - 1 / (D0 + a.zEnd)));
+>     return Math.max(zFrom, Dv - D0);
+>   };
+>   const fillWall = () => {
+>     const pos = wg.getAttribute('position').array as Float32Array, uv = wg.getAttribute('uv').array as Float32Array;
+>     const ext = wg.getAttribute('fgExtra').array as Float32Array, opn = wg.morphAttributes.position[0].array as Float32Array;
+>     const r0 = R * (1 - a.inset);
+>     for (let i = 0; i <= a.wallSteps; i++) {
+>       const Z = rowZ(i, a.wallSteps, 0), z = zOf(Z), sReal = sF + z;
+>       const fr = ft.path.frame(sReal);
+>       tubeCenterAt(ft.path, sReal, cr);
+>       const rOpen = ft.path.radius(sReal) * 1.1 + 0.4;
+>       const vv = sF + ft.uOfZ(Z);
+>       for (let j = 0; j <= a.radial; j++) {
+>         const th = -1.5 * Math.PI + (j / a.radial) * Math.PI * 2;
+>         d.copy(Rt).multiplyScalar(Math.cos(th)).addScaledVector(U, Math.sin(th));
+>         o.copy(d).multiplyScalar(r0);
+>         if (a.warp) { a.warp(Z, th, wv); o.addScaledVector(Rt, wv.x).addScaledVector(U, wv.y); }
+>         …[+6420 chars]
+
+### 🤖 Claude — 2026-11-18T12:05:02.110Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"sGlow05\\s*=\\|sF05\\s*=\\|sCam05\\s*=\\|const s05\\b\\|s05 =\" src/world/environment.ts | head; grep -n \"qa3d\\|step(\\|goto(\" src/main.ts src/*.ts 2>/dev/null | head -10", "description": "Find far section stage constants and QA hooks"}`
+
+### 🧑 User — 2026-11-18T12:05:02.150Z
+
+> ↩︎ result: 182:  const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
+> 262:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 264:  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+> 265:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> 316:  const rings05 = E05 ? rings05base.map((s) => (Math.abs(s - sCam05 - 40) < 1 ? sCam05 + E05.dB : s)) : rings05base;
+> 488:  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+
+### 🤖 Claude — 2026-11-18T12:05:45.107Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/tools/evalq.mjs <<'EOF'\n// run from the worktree: node <this> \"<query>\" \"<js body returning JSON, gets r, far>\"\nimport { pathToFileURL } from 'node:url';\nimport { realpathSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q = '', BODY = 'return {}' …[+3502 chars]`
+
+### 🧑 User — 2026-11-18T12:05:45.233Z
+
+> ↩︎ result: node:internal/modules/package_json_reader:314
+>   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+>         ^
+> 
+> Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/tools/evalq.mjs
+>     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+>     at packageResolve (node:internal/modules/esm/resolve:772:81)
+>     at moduleResolve (node:internal/modules/esm/resolve:859:18)
+>     at defaultResolve (node:internal/modules/esm/resolve:989:11)
+>     at #cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+>     at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+>     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+>     at onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:680:36)
+>     at TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+>     at ModuleLoader.import (node:internal/modules/esm/loader:679:21) {
+>   code: 'ERR_MODULE_NOT_FOUND'
+> }
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-18T12:05:55.285Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cp /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/tools/evalq.mjs tools/match05/r11_eval.mjs && sed -i '1s|.*|// Screen 05 round 11 (diagnostics only): evaluate JS in the running game. Run from the checkout:\\n//   node tools/match05/r11_eval.mjs \"<query>\" \"<async body using r (window.__rainbow), far (far05Debug), THREE>\" [shot.png]|' tools/match05/r11_eval.mjs && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile …[+1138 chars]`
+

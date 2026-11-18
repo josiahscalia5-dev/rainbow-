@@ -1,4 +1,4 @@
-# User order 2026-11-18 ~12:25 UTC (account 11) — STRICT FINAL VISUAL RULE (binding for EVERY specialist, screens 04–08)
+# User order 2026-11-18 ~12:00 UTC (account 11) — STRICT FINAL VISUAL RULE (binding for EVERY specialist, screens 04–08)
 
 User (core, verbatim): "I HAVE ALREADY DESIGNED MY APPROVED SCREENS. I WANT THOSE EXACT DESIGNS RECREATED AS FAITHFULLY AS
 TECHNICALLY POSSIBLE. I do not want your interpretation of my scenery." "DO NOT ADD, REMOVE, REPLACE, OR REDESIGN ANY APPROVED

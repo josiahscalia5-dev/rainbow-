@@ -30,7 +30,7 @@ Merging / combining branches into the normal game needs the user's explicit OK.
 ## Progress shown to the user (separate full-size APPROVED / BEFORE / NEW in `qa/review_c11/`)
 | # | Screen / step | Verdict told to the user |
 |---|---|---|
-| 1 (~11:58) | 05 step 1 `m05wtile` (far tunnel walls crisp painted slotted metal while swimming; `d5e37379`) | GOOD IMPROVEMENT, modest (slots larger / rounder than the painted dashes; water defects unchanged) |
+| 1 (~11:50) | 05 step 1 `m05wtile` (far tunnel walls crisp painted slotted metal while swimming; `d5e37379`) | GOOD IMPROVEMENT, modest (slots larger / rounder than the painted dashes; water defects unchanged) |
 | — | 05 account-10 WIP `m05unf` | NOT AN IMPROVEMENT (patch kept: `qa/match/05/r11/wip_m05unf_not_kept.patch`) |
 | — | Depth Anything 3 test (`DA3_TEST.md`) | NOT YET PROVEN as a game improvement; validated on 08; measures the 06 bent tunnel / S-loop and the 04 opening funnel |
-| 2 (~12:10) | 08 step 1 `m08ceil` (door's gold bulb ring + chrome rim continue over the top, perforated wall rings around it, no curved ceiling seam; `36d0978a`) | GOOD IMPROVEMENT, small (top corners keep a softer curved edge; faint mirror chevrons top right) |
+| 2 (~11:55) | 08 step 1 `m08ceil` (door's gold bulb ring + chrome rim continue over the top, perforated wall rings around it, no curved ceiling seam; `36d0978a`) | GOOD IMPROVEMENT, small (top corners keep a softer curved edge; faint mirror chevrons top right) |

@@ -3745,3 +3745,235 @@ The course is deterministic, so I can load it straight into the browser page and
 > 173	  // r6 m06flow: on the river the flowing painted-water material takes over sooner from the stretched projection
 > 174	  float keep = u …[+2766 chars]
 
+### 🤖 Claude — 2026-11-18T12:04:05.913Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"uAxO\\|uAxD\\|uAxR\\|uAxU\\|aLS\" src/world/match06.ts | head -20", "description": "Find how the ring shader uses the axis uniforms"}`
+
+### 🧑 User — 2026-11-18T12:04:05.966Z
+
+> ↩︎ result: 52:attribute vec2 aLS;
+> 63:  vLS = aLS;
+> 91:uniform vec3 uAxO;
+> 92:uniform vec3 uAxD;
+> 93:uniform vec3 uAxR;
+> 94:uniform vec3 uAxU;
+> 126:    float fw = dot(Rf, uAxD);
+> 131:    g += vec3(1.0, 0.9, 0.7) * 0.5 * pow(max(dot(Rf, normalize(uAxD + uAxU * 0.35)), 0.0), 40.0);
+> 135:    vec3 q = vW - uAxO;
+> 136:    float ang = atan(dot(q, uAxU), dot(q, uAxR));
+> 146:    vec3 q = vW - uAxO;
+> 147:    float al = dot(q, uAxD);
+> 148:    vec3 qr = q - uAxD * al;
+> 149:    float arc = atan(dot(qr, uAxU), dot(qr, uAxR)) * length(qr);
+> 152:    float fw = dot(reflect(-V, n2), uAxD);
+> 275:      uRing: { value: 0 }, uRingH: { value: 1 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
+> 276:      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
+> 305:    g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
+> 363:    g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
+> 370:      if (qs?.get('m06panel') === '1') Object.assign(tubeMat.uniforms, { uPanel: { value: 1 }, uAxO: { value: O.clone() },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:04:08.973Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 118, "limit": 22}`
+
+### 🧑 User — 2026-11-18T12:04:08.994Z
+
+> ↩︎ result: 118	    vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+> 119	    pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+> 120	  }
+> 121	  if (uRing > 0.5) {
+> 122	    // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
+> 123	    vec3 V = normalize(cameraPosition - vW);
+> 124	    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+> 125	    vec3 Rf = reflect(-V, n2);
+> 126	    float fw = dot(Rf, uAxD);
+> 127	    vec3 env = mix(vec3(0.46, 0.20, 0.55), vec3(1.0, 0.80, 0.50), smoothstep(-0.35, 0.9, fw));
+> 128	    env = mix(env, vec3(1.0, 0.96, 0.86), pow(max(fw, 0.0), 10.0));
+> 129	    float fres = pow(1.0 - max(dot(n2, V), 0.0), 3.0);
+> 130	    vec3 g = vec3(1.0, 0.60, 0.20) * (0.24 + 0.95 * env) + fres * vec3(1.0, 0.82, 0.55) * 0.45;
+> 131	    g += vec3(1.0, 0.9, 0.7) * 0.5 * pow(max(dot(Rf, normalize(uAxD + uAxU * 0.35)), 0.0), 40.0);
+> 132	    // r7b: the painted bands' bright yellow-white lines on the lips and band edges
+> 133	    float lipL = smoothstep(0.07, 0.0, abs(abs(vLS.x) - 0.22)) + smoothstep(0.09, 0.0, abs(abs(vLS.x) - (uRingH - 0.12)));
+> 134	    g = mix(g, vec3(1.0, 0.90, 0.60), clamp(lipL, 0.0, 1 …[+307 chars]
+
+### 🤖 Claude — 2026-11-18T12:04:19.412Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 48, "limit": 22}`
+
+### 🧑 User — 2026-11-18T12:04:19.434Z
+
+> ↩︎ result: 48	
+> 49	const VERT = /* glsl */ `
+> 50	uniform mat4 uProjVP;
+> 51	attribute vec2 aTile;
+> 52	attribute vec2 aLS;
+> 53	varying vec4 vProj;
+> 54	varying vec3 vW;
+> 55	varying vec3 vN;
+> 56	varying vec2 vTile;
+> 57	varying vec2 vLS;
+> 58	void main() {
+> 59	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 60	  vProj = uProjVP * wp;
+> 61	  vW = wp.xyz;
+> 62	  vTile = aTile;
+> 63	  vLS = aLS;
+> 64	  vN = normalize(mat3(modelMatrix) * normal);
+> 65	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 66	}`;
+> 67	
+> 68	const FRAG = /* glsl */ `
+> 69	uniform sampler2D uPlate;
+
+### 🤖 Claude — 2026-11-18T12:04:45.111Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"uniform float uRing;\\|uniform float uRingH;\\|uRing: { value: 0 }\" src/world/match06.ts", "description": "Find uniform declarations to extend"}`
+
+### 🧑 User — 2026-11-18T12:04:45.142Z
+
+> ↩︎ result: 90:uniform float uRing;
+> 95:uniform float uRingH;
+> 275:      uRing: { value: 0 }, uRingH: { value: 1 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:04:49.285Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "uniform float uRingH;", "new_string": "uniform float uRingH;\nuniform float uBendAng; // r11 m06bend: ring bulb angle per vertex (vTile.x) instead of around the straight axis"}`
+
+### 🧑 User — 2026-11-18T12:04:49.419Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:04:50.886Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    vec3 q = vW - uAxO;\n    float ang = atan(dot(q, uAxU), dot(q, uAxR));\n    // r7b: fewer, bigger warm bulbs", "new_string": "    vec3 q = vW - uAxO;\n    float ang = uBendAng > 0.5 ? vTile.x : atan(dot(q, uAxU), dot(q, uAxR));\n    // r7b: fewer, bigger warm bulbs"}`
+
+### 🧑 User — 2026-11-18T12:04:50.990Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:04:52.091Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      uRing: { value: 0 }, uRingH: { value: 1 }, uPanel: { value: 0 },", "new_string": "      uRing: { value: 0 }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 },"}`
+
+### 🧑 User — 2026-11-18T12:04:52.204Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:05:44.986Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    const kS = L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part\n    const pos: number[] = [], tl: number[] = [], ls: number[] = [], idx: number[] = [];", "new_string": "    const kS = L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part\n    // r11 `&m06bend=1` (lead, qa/match/06/r11/NOTES.md): the painted tunnel BENDS down-right with the river (BLUEPRINT_06:\n    // the inner ring centres drift toward  …[+3249 chars]`
+
+### 🧑 User — 2026-11-18T12:05:45.162Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:05:47.285Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    for (const a of rows) for (let j = 0; j <= RAD; j++) {\n      const th = (j / RAD) * Math.PI * 2, Ra = radAt(a);\n      const p = O.clone().addScaledVector(ax, a).addScaledVector(Rx, Ra * Math.cos(th)).addScaledVector(Ux, Ra * Math.sin(th));", "new_string": "    for (const a of rows) for (let j = 0, f = axisAt(a); j <= RAD; j++) {\n      const th = (j / RAD) * Math.PI * 2, Ra = radAt(a);\n      const p = f.p.clone().addScaledVector(f.r, Ra * Math.cos(th)).addScaledVector(f.u, Ra * Math.sin(th));"}`
+
+### 🧑 User — 2026-11-18T12:05:47.432Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:05:48.652Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    tunCap = { pos: O.clone().addScaledVector(ax, a1), dir: ax.clone(), r: radAt(a1) };", "new_string": "    { const fe = axisAt(a1); tunCap = { pos: fe.p.clone(), dir: fe.t.clone(), r: radAt(a1) }; }"}`
+
+### 🧑 User — 2026-11-18T12:05:48.802Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:05:53.585Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "        const lg = new THREE.LatheGeometry(lp, 128);\n        lg.applyQuaternion(qRot);\n        lg.translate(O.x + ax.x * a, O.y + ax.y * a, O.z + ax.z * a);\n        const n = lg.attributes.position.count, lsA = new Float32Array(n * 2);\n        for (let i = 0; i < n; i++) lsA[i * 2] = lp[i % lp.length].y / sc; // local axial offset inside the band\n        lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lsA, 2));\n        lg.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32A …[+903 chars]`
+
+### 🧑 User — 2026-11-18T12:05:53.714Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:05:55.389Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      Object.assign(rm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },", "new_string": "      Object.assign(rm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uBendAng: { value: BEND ? 1 : 0 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },"}`
+
+### 🧑 User — 2026-11-18T12:05:55.527Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T12:06:00.854Z
+
+Type-checking, then the motion-audit tool's options:
+
+### 🤖 Claude — 2026-11-18T12:06:02.055Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo \"tsc exit $?\"; sed -n 1,25p tools/lead_r6/motion_audit.mjs | grep -E \"^//\" | head -20", "description": "Type-check and read the motion audit usage", "timeout": 400000}`
+
+### 🧑 User — 2026-11-18T12:06:05.019Z
+
+> ↩︎ result: tsc exit 0
+> // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T12:06:13.278Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1'; O=qa/match/06/r11; mkdir -p $O; nice -n 15 node tools/lead_r6/motion_audit.mjs 06 $O/BEFORE \"$K\" > $O/audit_before.log 2>&1; echo \"before exit $?\"; nice -n 15 node tools/lead_r6/motion_audit.mjs 06 $O/NEW_m06bend \"$K&m06bend=1\" > $O/audit_new.log 2>&1; echo \"new exit $?\"; grep -h \"m06bend\" $O/audit_new.log | head -2; ls $O/BEFORE $O/NEW_m06bend | head -30; git status --short | grep -v \"^?? qa/match/06/r11\" | head", "description": "Render BEFORE and NEW 12-s …[+72 chars]`
+
+### 🧑 User — 2026-11-18T12:06:13.339Z
+
+> ↩︎ result: Command running in background with ID: b34vjy1q7. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/b34vjy1q7.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T12:06:18.132Z
+
+While that renders, re-arming the watcher on the two specialists and recording the restart in the agents status file:
+
+### 🤖 Claude — 2026-11-18T12:06:20.104Z
+
+> 🔧 **Monitor** `{"description": "specialist commits in s05/s08 (after restart)", "timeout_ms": 1800000, "command": "declare -A H; for s in s05 s08; do H[$s]=$(git -C /home/user/wt/$s rev-parse --short HEAD); done\nwhile true; do for s in s05 s08; do h=$(git -C /home/user/wt/$s rev-parse --short HEAD 2>/dev/null); if [ \"$h\" != \"${H[$s]}\" ]; then echo \"$s NEW COMMIT $h: $(git -C /home/user/wt/$s log -1 --format=%s | cut -c1-120)\"; H[$s]=$h; fi; done; sleep 20; done"}`
+
+### 🧑 User — 2026-11-18T12:06:20.149Z
+
+> ↩︎ result: Monitor started (task bi4frs5am, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T12:06:24.711Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport json\nf='backups/AGENTS_STATUS.json'; d=json.load(open(f)); r=d['running_now']\nr['slot_A']['restarted_utc']='2026-11-18T12:35Z'; r['slot_A']['resume_from']='46d4b6ee (step 1 m08ceil kept + WIP near08.py)'\nr['slot_B']['restarted_utc']='2026-11-18T12:35Z'; r['slot_B']['resume_from']='c25327a2 (step 1 m05wtile kept + WIP m05caul/m05fbank)'\nfor k in ('slot_A','slot_B'): r[k]['note']='first instance stopped by a user interrupt ~12:25 UTC; WIP committed by the lead; relaunched with docs/briefs/2026-11-18-r11/USER_ …[+477 chars]`
+
+### 🧑 User — 2026-11-18T12:06:24.850Z
+
+> ↩︎ result: 12:06
+> ok
+
+### 🤖 Claude — 2026-11-18T12:06:29.916Z
+
+The real clock says 12:06 UTC, so the times I just wrote (12:25–12:40) were guesses and wrong. Correcting them in the three files:
+
+### 🤖 Claude — 2026-11-18T12:06:33.640Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/2026-11-18T12:35Z/2026-11-18T12:03Z/g; s/\"2026-11-18T12:40:00Z\"/\"2026-11-18T12:06:00Z\"/; s/user interrupt ~12:25 UTC/user interrupt ~12:00 UTC/g' backups/AGENTS_STATUS.json && sed -i 's/(2026-11-18 ~12:25 UTC (account 11)/(2026-11-18 ~12:00 UTC (account 11)/; s/User order 2026-11-18 ~12:25 UTC/User order 2026-11-18 ~12:00 UTC/' docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md && sed -i 's/| 2 (~12:10) | 08 step 1/| 2 (~11:55) | 08 step 1/; s/| 1 (~11:58) | 05 step 1/| 1 (~11:50) | 05 step 1/' docs/briefs/2026-11-18-r11/COORDINATION.md && grep -c \"12:03Z\" backups …[+225 chars]`
+
+### 🧑 User — 2026-11-18T12:06:33.755Z
+
+> ↩︎ result: 2
+> # User order 2026-11-18 ~12:00 UTC (account 11) — STRICT F
+> 33:| 1 (~11:50) | 05 step 1 `m05wtile` (
+> 36:| 2 (~11:55) | 08 step 1 `m08ceil` (d
+> [This command modified 2 files you've previously read: docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md, docs/briefs/2026-11-18-r11/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T12:06:39.329Z
+
+Screen 06's bent-tunnel test is rendering now: the same 12 real-game positions, with and without the bend. When it finishes I'll compare it with your approved picture myself and show you APPROVED / BEFORE / NEW with an honest verdict. It's kept only if the tunnel looks closer while Benny swims.
+
+Screens 05 and 08 are being worked on again under your strict rule, and their next results come to you the same way.
+
+### 🧑 User — 2026-11-18T12:06:40.952Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-18T11:38:00Z",
+ "updated_utc": "2026-11-18T12:06:00Z",
  "updated_by_session": "session_018Sg3ASTRokNr5EKngTj33B (account 11, lead branch ccr-3b139b48-0qqkkz)",
  "running_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md (ACCOUNT 11) then docs/briefs/2026-11-18-r11/COORDINATION.md",
@@ -15,7 +15,10 @@
    "started_utc": "2026-11-18T11:35Z",
    "task": "upper seam, lower arch while swimming, smeared near water, foam fringes/bubbles/spout cups/slab seams",
    "log": "qa/match/08/r11/PROGRESS.md",
-   "first_commit": "eed55540 (WIP kept, pushed + verified)"
+   "first_commit": "eed55540 (WIP kept, pushed + verified)",
+   "restarted_utc": "2026-11-18T12:03Z",
+   "resume_from": "46d4b6ee (step 1 m08ceil kept + WIP near08.py)",
+   "note": "first instance stopped by a user interrupt ~12:00 UTC; WIP committed by the lead; relaunched with docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md"
   },
   "slot_B": {
    "screen": "05",
@@ -26,7 +29,10 @@
    "kind": "background agent in the lead container",
    "started_utc": "2026-11-18T11:35Z",
    "task": "m05unf evaluation, smeared walls, far-water corner/blur, seams, near water sheet, cauliflower foam, continuation to 06",
-   "log": "qa/match/05/r11/PROGRESS.md"
+   "log": "qa/match/05/r11/PROGRESS.md",
+   "restarted_utc": "2026-11-18T12:03Z",
+   "resume_from": "c25327a2 (step 1 m05wtile kept + WIP m05caul/m05fbank)",
+   "note": "first instance stopped by a user interrupt ~12:00 UTC; WIP committed by the lead; relaunched with docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md"
   },
   "queue": [
    "04",
@@ -52,7 +58,14 @@
     "brief": "docs/briefs/2026-11-18-r8/S06.md + r9 BLUEPRINT_06.md"
    }
   },
-  "restart_if_lost": "git worktree add /home/user/wt/sNN <-c11 branch>; ln -sfn /home/user/rainbow-/node_modules node_modules; apply backups/wip/<branch>/tracked.patch; relaunch the same agent type with COMMON_RULES + RULES_R10 + the screen's r11 PROGRESS.md"
+  "restart_if_lost": "git worktree add /home/user/wt/sNN <-c11 branch>; ln -sfn /home/user/rainbow-/node_modules node_modules; apply backups/wip/<branch>/tracked.patch; relaunch the same agent type with COMMON_RULES + RULES_R10 + the screen's r11 PROGRESS.md",
+  "lead_test_06": {
+   "branch": "claude/rainbow-s06-match-c11",
+   "worktree": "/home/user/wt/s06",
+   "switch": "&m06bend=1 (tube bends with the river after the crest)",
+   "log": "qa/match/06/r11/"
+  },
+  "binding_order": "docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
