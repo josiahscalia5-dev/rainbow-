@@ -60,3 +60,19 @@ them; elsewhere they land on the wrong surfaces, and two views blended disagree 
 installed/validated round 11, Apache-2.0 models) on V04-1 + V04-2 + the approved picture with their KNOWN game cameras →
 fused depth → fit the water surface (height, width, rising centre lane) and ring radius → then the same projection
 (08 method) lands consistently from both views, so the in-between ghosting should disappear.
+
+### Geometry check (same session): can fitting the water shape remove the in-between ghosting? — NO
+* Exact measurement (`tools/match04/waterline04.py` → `qa/match/04/r12/waterline04.json`): the painted waterline on the gold wall,
+  from the views' known cameras intersected with the known tunnel cylinder, lies ≈ 1.4–2.9 u (≈ 2 u) above Benny's water on
+  both sides in both views (outliers ≈ 5.3 u = bubbles / ring highlights). The game's river sides climb 1.0 u by default;
+  round-10 test C's `m04ry=2.2` matches the painting.
+* A/B half-way between the views (`qa/match/04/r12/mv2_geo1/`: `m04mv2` with river sides 1.0 / 2.2 / 3.0 u): more painted water
+  on the sides with 2.2–3.0, but the DOUBLE EXPOSURE stays (doubled rings, mushed water) in all three.
+* Cause: the two AI views disagree WITH EACH OTHER (each places the rings, arrows and swirls at its own positions), so any
+  blend of the two doubles something; no single geometry can make two inconsistent paintings agree.
+**Verdict for the multi-view projection method on 04: NOT AN IMPROVEMENT as a whole-ride method (stopped).** It stays useful
+only as proof of what the interior should look like at those two spots.
+**Next (the user's fallback, 2026-11-18): real 3D geometry wearing world-anchored materials cut from the art** (no blending of
+two pictures → cannot ghost): river sides at the measured ≈ 2.2 u (`m04ry`), painted water tile from V04-1/V04-2 laid along the
+river (the 05 `m05wtile` / 08 `m08near` method), glossy gold ring tile from V04-1 on the game's ring tunnel (uRingTile path),
+the five chevrons as real geometry on the lane, low foam clusters (`m04foam3`).
