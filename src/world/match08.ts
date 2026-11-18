@@ -287,6 +287,14 @@ void main() {
     vec2 pu = vProj.xy / max(vProj.w, 1e-4) * 0.5 * uPjRes;
     float det = abs(dFdx(pu).x * dFdy(pu).y - dFdx(pu).y * dFdy(pu).x);
     float mag = vProj.w > 0.0 ? inversesqrt(max(det, 1e-8)) : 99.0;
+#ifdef FITTED_CHAMBER_BANK
+    // A single elongated axis can disappear in the area average. Measure the
+    // least-resolved direction before choosing the existing approved near tile.
+    vec2 dx = dFdx(pu), dy = dFdy(pu);
+    float trace = dot(dx, dx) + dot(dy, dy);
+    float largest = sqrt(0.5 * (trace + sqrt(max(0.0, trace * trace - 4.0 * det * det))));
+    mag = vProj.w > 0.0 ? largest / max(det, 1e-5) : 99.0;
+#endif
     float mn = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
     vec3 r = riv(vW.z);
     float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mn);
@@ -314,7 +322,13 @@ void main() {
 #ifdef CHAMBER_CURRENT
       downriver -= 0.60 * heading * d * interior;
 #endif
-      tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), downriver / uNear.y);
+      float tileX = sign(d) * xb;
+#ifdef FITTED_CHAMBER_BANK
+      // The approved quilt turns magenta left of -0.60 u. Translate that edge
+      // by 0.46 u at its native scale and ease back onto both fixed contacts.
+      tileX += 0.46 * smoothstep(-uNq.z, -1.60, tileX) * (1.0 - smoothstep(-0.15, 1.70, tileX));
+#endif
+      tuv = vec2(0.5 + tileX / (2.0 * uNq.w), downriver / uNear.y);
     }
     float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
     if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
@@ -390,6 +404,7 @@ export async function buildMatch08(): Promise<Match08> {
   const swimOn = flag05('m08swim');
   const RV: { z: number[]; x: number[]; width: number[] } = await fetch(new URL('../../assets/textures/match08/river08.json', import.meta.url).href).then((r) => r.json());
   const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73
+  const bankShoulder = swimOn && flag05('cx08ChamberCurrent') && flag05('cx08BankShoulder');
   const rivData = new Float32Array(64 * 4);
   // z descending arrays -> centre x, width at z (clamped at both ends)
   const rivAt = (R: { z: number[]; x: number[]; width: number[] }, z: number): [number, number] => {
@@ -471,7 +486,10 @@ export async function buildMatch08(): Promise<Match08> {
     cupMk.colorSpace = THREE.NoColorSpace; cupMk.generateMipmaps = false; cupMk.minFilter = THREE.LinearFilter;
   }
   const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
-    defines: flag05('cx08ChamberCurrent') ? { CHAMBER_CURRENT: 1 } : {},
+    defines: {
+      ...(flag05('cx08ChamberCurrent') ? { CHAMBER_CURRENT: 1 } : {}),
+      ...(bankShoulder && swimMode ? { FITTED_CHAMBER_BANK: 1 } : {}),
+    },
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
       uFill: { value: fillTex ?? patch }, uFillMode: { value: fill ? fillMode : 0 }, uFillSize: { value: fillSize },
@@ -685,6 +703,25 @@ export async function buildMatch08(): Promise<Match08> {
   // floor / river plane at Benny's water level, from behind the camera to the door wall
   const fl = new THREE.PlaneGeometry(2 * C.r, L.pipe.z0 - C.zDoor, 32, 64);
   fl.rotateX(-Math.PI / 2).translate(C.cx, L.floorY, (L.pipe.z0 + C.zDoor) / 2);
+  if (bankShoulder) {
+    // Low, fixed relief follows the same measured channel as the water material.
+    // Keep the chamber edges, waterline at Benny, platform and spouts in place.
+    const vertices = fl.getAttribute('position');
+    for (let i = 0; i < vertices.count; i++) {
+      const z = vertices.getZ(i);
+      if (z >= rz0 || z <= rz1) continue;
+      const row = 63 * (z - rz0) / (rz1 - rz0);
+      const k = Math.min(62, Math.floor(row));
+      const center = THREE.MathUtils.lerp(rivData[k * 4], rivData[(k + 1) * 4], row - k);
+      const half = Math.max(SWIM_HALF, 0.5 * THREE.MathUtils.lerp(rivData[k * 4 + 1], rivData[(k + 1) * 4 + 1], row - k));
+      const distance = (vertices.getX(i) - center) / half;
+      const shoulder = Math.exp(-Math.pow((distance + 0.66) / 0.24, 2));
+      const edgeFade = THREE.MathUtils.smoothstep(rz0 - z, 0, 2) * THREE.MathUtils.smoothstep(z - rz1, 0, 2);
+      const lift = (0.090 + 0.018 * Math.cos(z * 0.78)) * shoulder * edgeFade;
+      vertices.setY(i, vertices.getY(i) + lift);
+    }
+    fl.computeVertexNormals();
+  }
   add(fl, M.floor, 'floor');
   // platform: top disc tilted toward the camera as painted, rim, leg skirt to the floor
   const P = L.platform;
