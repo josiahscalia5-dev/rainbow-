@@ -1,5 +1,11 @@
 # Screen 04 — STATUS
 
+* **Running-session status: RUNNING (round 8, account 8, branch claude/rainbow-s04-match-c8)** — milestone M4 started
+  2026-11-18 ~01:40 UTC from `d1e422fa` (= `-c7`/`-c5` tip, M3 done). BEFORE moving audit (`?match04=1`, lead r6 method,
+  12 positions) done: `qa/match/04/r8/BEFORE/` (+ `metrics.txt`: LAYOUT20 45.8 % approved view → 2.8–12.1 % moving;
+  PALETTE 93.2 % → 55.5–86.6 %).
+
+## Previous status (milestone 3, account 3)
 * **Assigned screen:** 04 · Through the Five Arrows (`?match04=1`)
 * **Assigned specialist:** Screen 04 workstream session (Claude Code, account 3, session_01Q46SCGVVo94Weug9VM7yDG); lead = session_01Q46SCLi5xPVn25aRuxkVwK
 * **Working branch:** `claude/rainbow-s04-match-c3` — started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave; line A, nothing merged)
