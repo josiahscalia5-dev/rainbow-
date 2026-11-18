@@ -312,3 +312,222 @@ Rendering the BEFORE set (kept r12 set) at the start view and swim positions for
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && node tools/match05/r8_shots.mjs $S/t1_new \"$K&m05slot=1\" a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,f20_forward20u,s_left_hard,s_right_hard,t33_through_screen 5291 2>&1 | tail -12 && python3 -c \"\nfrom PIL import Image, ImageChops\nimpor …[+553 chars]`
 
+### 🧑 User — 2026-11-18T14:28:39.134Z
+
+> ↩︎ result: a00_approved_view s 133.083 lat 0 coins 1420 benny -0.02 -0.35 big coins: #20@473,733 d97 #21@549,663 d70
+> f03_forward3u s 136.106 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@464,787 d117 #21@552,692 d80 #22@476,631 d61
+> f06_forward6u s 139.039 lat 0 coins 1430 benny 0.15 -0.27 big coins: #21@560,740 d98 #22@470,654 d71
+> f10_forward10u s 143.073 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f20_forward20u s 153.156 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> s_right_hard s 145.091 lat 5.063 coins 1420 benny 0.46 -0.2 big coins: #22@-23,712 d106 #23@124,613 d65
+> t33_through_screen s 151.689 lat 0.006 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> a00_approved_view 305189 (np.int64(0), np.int64(1535), np.int64(0), np.int64(863))
+> f03_forward3u 93843 (np.int64(0), np.int64(1521), np.int64(0), np.int64(863))
+> f06_forward6u 93868 (np.int64(0), np.int64(1091), np.int64(0), np.int64(863))
+> f10_forward10u 124981 (np.int64(0), np.int64(1148), np.int64(0), np.int64(863))
+> f20_forward20u 212959 (np.int64(0), np.int64(1100), np.int64(0), np.int64(863) …[+240 chars]
+
+### 🤖 Claude — 2026-11-18T14:28:43.920Z
+
+Large pixel deltas everywhere, including the a00 shot (but its `s` differs between runs, so not deterministic). Let me look by eye.
+
+### 🤖 Claude — 2026-11-18T14:28:44.318Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-18T14:28:44.350Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:28:45.171Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/t1_before/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T14:28:45.226Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:28:45.801Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/t1_new/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T14:28:45.898Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:28:50.130Z
+
+At this scale the two look nearly identical. The diff likely includes water animation clock noise. Let me crop the wall regions at full resolution.
+
+### 🤖 Claude — 2026-11-18T14:28:54.644Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfor n in ['f06_forward6u','s_left_hard','f20_forward20u']:\n  a=Image.open(f't1_before/{n}.png').convert('RGB'); b=Image.open(f't1_new/{n}.png').convert('RGB')\n  A=np.asarray(a).astype(int); B=np.asarray(b).astype(int)\n  d=(np.abs(A-B).max(2)>8)\n  # diff by region rows\n  for (y0,y1) in [(180,500),(500,800),(800,1200),(1200,1536)]:\n    for (x0,x1) in [(0,250),(250,610),(610,864)]:\n      print(n,(y0,y1),(x0,x1),round(d[y0:y1,x0:x1].m …[+379 chars]`
+
+### 🧑 User — 2026-11-18T14:28:56.366Z
+
+> ↩︎ result: f06_forward6u (180, 500) (0, 250) 0.143
+> f06_forward6u (180, 500) (250, 610) 0.07
+> f06_forward6u (180, 500) (610, 864) 0.09
+> f06_forward6u (500, 800) (0, 250) 0.052
+> f06_forward6u (500, 800) (250, 610) 0.051
+> f06_forward6u (500, 800) (610, 864) 0.05
+> f06_forward6u (800, 1200) (0, 250) 0.0
+> f06_forward6u (800, 1200) (250, 610) 0.187
+> f06_forward6u (800, 1200) (610, 864) 0.029
+> f06_forward6u (1200, 1536) (0, 250) 0.0
+> f06_forward6u (1200, 1536) (250, 610) 0.0
+> f06_forward6u (1200, 1536) (610, 864) 0.0
+> s_left_hard (180, 500) (0, 250) 0.486
+> s_left_hard (180, 500) (250, 610) 0.137
+> s_left_hard (180, 500) (610, 864) 0.289
+> s_left_hard (500, 800) (0, 250) 0.743
+> s_left_hard (500, 800) (250, 610) 0.074
+> s_left_hard (500, 800) (610, 864) 0.091
+> s_left_hard (800, 1200) (0, 250) 0.425
+> s_left_hard (800, 1200) (250, 610) 0.314
+> s_left_hard (800, 1200) (610, 864) 0.0
+> s_left_hard (1200, 1536) (0, 250) 0.041
+> s_left_hard (1200, 1536) (250, 610) 0.0
+> s_left_hard (1200, 1536) (610, 864) 0.0
+> f20_forward20u (180, 500) (0, 250) 0.673
+> f20_forward20u (180, 500) (250, 610) 0.34
+> f20_forward20u (180, 500) (610, 864) 0.363
+> f20_forward20u (500, 800) (0, 250) 0.32
+> f20_forward20u (500, 800) (250, 610) 0.084
+> f20_forward20u (500, 8 …[+274 chars]
+
+### 🤖 Claude — 2026-11-18T14:28:58.203Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/cmp_left_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T14:28:58.222Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:28:58.859Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/cmp_left_f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T14:28:58.908Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:29:05.195Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/wt/s05/references/05_flow_into_the_current.png').convert('RGB')\nprint(a.size)\nw=Image.new('RGB',(2*300+10,520)); w.paste(a.crop((0,180,300,700)),(0,0)); w.paste(a.crop((564,180,864,700)),(310,0)); w.save('appr_walls.png')\n\"", "description": "Crop approved walls for comparison"}`
+
+### 🧑 User — 2026-11-18T14:29:05.400Z
+
+> ↩︎ result: (864, 1536)
+
+### 🤖 Claude — 2026-11-18T14:29:06.101Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/appr_walls.png"}`
+
+### 🧑 User — 2026-11-18T14:29:06.154Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:29:17.535Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n,box in [('s_left_hard',(0,330,220,640)),('a00_approved_view',(0,250,220,560)),('f10_forward10u',(0,200,220,510))]:\n  a=Image.open(f't1_before/{n}.png').convert('RGB').crop(box); b=Image.open(f't1_new/{n}.png').convert('RGB').crop(box)\n  W,H=a.size\n  w=Image.new('RGB',(2*W*2+10,H*2)); w.paste(a.resize((W*2,H*2)),(0,0)); w.paste(b.resize((W*2,H*2)),(W*2+10,0)); w.save(f'zoom_{n}.png')\n\"", "description": "Zoomed wall crops before vs new"}`
+
+### 🧑 User — 2026-11-18T14:29:18.220Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T14:29:18.427Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/zoom_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T14:29:18.450Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:29:19.130Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/zoom_a00_approved_view.png"}`
+
+### 🧑 User — 2026-11-18T14:29:19.157Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:29:19.783Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/zoom_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T14:29:19.807Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:29:36.912Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n,box in [('s_right_hard',(600,250,864,620)),('t33_through_screen',(0,200,260,560)),('f03_forward3u',(640,250,864,600))]:\n  a=Image.open(f't1_before/{n}.png').convert('RGB').crop(box); b=Image.open(f't1_new/{n}.png').convert('RGB').crop(box)\n  W,H=a.size\n  w=Image.new('RGB',(2*W*2+10,H*2)); w.paste(a.resize((W*2,H*2)),(0,0)); w.paste(b.resize((W*2,H*2)),(W*2+10,0)); w.save(f'zoom_{n}.png')\n\"", "description": "More zoomed wall crops"}`
+
+### 🧑 User — 2026-11-18T14:29:37.578Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T14:29:37.762Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/zoom_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T14:29:37.774Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:29:38.365Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/zoom_t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T14:29:38.394Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:29:52.281Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && D=qa/match/05/r13/step1_m05slot && mkdir -p $D && git diff > $D/m05slot_rejected.patch && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && for n in a00_approved_view f10_forward10u f20_forward20u s_left_hard s_right_hard t33_through_screen; do cp $S/t1_before/$n.png $D/2_BEFORE_$n.png; cp $S/t1_new/$n.png $D/3_NEW_$n.png; done && git checkout -- src/vfx/proj05Tunnel.ts src/vfx/waterRibbon.ts && git status --short && du -sh $D", "description": "Save proof re …[+35 chars]`
+
+### 🧑 User — 2026-11-18T14:29:52.435Z
+
+> ↩︎ result: ?? qa/match/05/r13/step1_m05slot/
+> 28M	qa/match/05/r13/step1_m05slot
+
+### 🤖 Claude — 2026-11-18T14:29:55.176Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"png\" .gitattributes | head; ls -la qa/match/05/r12/step4_m05fcoin/ | head -4; git check-attr filter qa/match/05/r13/step1_m05slot/1_APPROVED.png", "description": "Check whether PNGs go through Git LFS"}`
+
+### 🧑 User — 2026-11-18T14:29:55.236Z
+
+> ↩︎ result: total 18832
+> drwxr-xr-x 2 root root    4096 Nov 18 14:23 .
+> drwxr-xr-x 7 root root    4096 Nov 18 14:23 ..
+> -rw-r--r-- 1 root root  484196 Nov 18 14:23 1_APPROVED.png
+> qa/match/05/r13/step1_m05slot/1_APPROVED.png: filter: unspecified
+
+### 🤖 Claude — 2026-11-18T14:30:06.787Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r13/PROGRESS.md <<'EOF'\n\n## Step 1 — `&m05slot=1` (account-12 unfinished wall-slot edit, class B) — NOT AN IMPROVEMENT, reverted\n* Tested on the round-12 kept set with `tools/match05/r8_shots.mjs` at a00, f03, f06, f10, f20, s_left_hard, s_right_hard, t33.\n* What the edit does: where the wall picture is magnified while swimming, it lifts the blurred painted slot blobs out of the\n  metal (local max) and draws crisp slim capsule slots on a measured grid (46.5 round the tube, rows every 1.9 u).\n* By eye: start view unchanged (as design …[+2148 chars]`
+
+### 🧑 User — 2026-11-18T14:30:12.629Z
+
+> ↩︎ result: c3fe9423aec99bd1155b682a6ad5a6ff8790a2c9
+> c3fe9423aec99bd1155b682a6ad5a6ff8790a2c9	refs/heads/claude/rainbow-s05-match-c13
+
+### 🤖 Claude — 2026-11-18T14:30:15.970Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "Step 1 slot edit rejected, reverted", "message": "Screen 05 r13 step 1 (&m05slot=1, account-12 wall-slot edit): NOT AN IMPROVEMENT, reverted (SHA c3fe9423, pushed, ls-remote == HEAD). Start view unchanged; far bays at t33/f20 got crisp slim slots, but near the wall (s_left_hard, f10, s_right_hard) the painted blobs stay as a ghost grid offset from the new slots = doubled slots, flat sticker look. Pictures: /home/user/wt/s05/qa/match/05/r13/step1_m05slot/ (patch kept there for reference). Biggest remaining difference: the pale slab and straight near/far join lines at  …[+168 chars]`
+
+### 🧑 User — 2026-11-18T14:30:15.982Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T14:30:19.067Z
+
+Task 2. First a fresh BEFORE of the kept set at the river-join positions.
+
+### 🤖 Claude — 2026-11-18T14:30:22.024Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && node tools/match05/r8_shots.mjs $S/b13 \"$K\" t66_through_screen,t75_through,k81_kink,k81_kink_left,k81_kink_right,t85_through,t90_through,t95_left,t95_right,t95_through_screen,t98_end 5291 2>&1 | tail -12", "description": "Render BEFORE at join positions",  …[+18 chars]`
+

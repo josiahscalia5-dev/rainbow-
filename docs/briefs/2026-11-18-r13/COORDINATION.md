@@ -37,3 +37,4 @@ If account 13 runs out: `-c14` branches from each NEWEST `-c13` tip (or `-c12` w
 ## Progress shown to the user (separate full-size APPROVED / BEFORE / NEW)
 | # | Screen / step | Verdict |
 |---|---|---|
+| 1 (~14:40) | 05 step 1 `m05slot` (account-12 wall-slot capsule edit; `c3fe9423`) | NOT AN IMPROVEMENT (far bays crisper, but near the wall the painted slot blobs stay as a ghost grid = doubled slots while steering) — reverted, patch kept in `qa/match/05/r13/step1_m05slot/` |
