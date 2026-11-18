@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13551,
-   "sha256": "b89520d6e5fa93a34e055405279f102d28007062b24ff12e99e20beb0934f415"
+   "sha256": "bfc67d9c933709203466e41439565b10ba532691b4bb5bcc49530fb45b11fdd7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,8 +723,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 43046,
-   "sha256": "8b6bb2f77427699b6c541ac8acb71a02e27114fc9c44acbe39d0396ccdae21d3"
+   "bytes": 43153,
+   "sha256": "7df596db9aa81714a0186b34bcd70cac369789ee1cd0b48dd10c8132871ead13"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -9130,6 +9130,21 @@
    "path": "qa/review_r8/05_step2_water/3_NEW_t33_through_screen.jpg",
    "bytes": 567400,
    "sha256": "2b404ce4528916f9885acacb14a9aff8833990da317115150a2b1e68ad50f337"
+  },
+  {
+   "path": "qa/review_r8/05_step3_far_river/1_APPROVED_05.jpg",
+   "bytes": 476091,
+   "sha256": "ace03e696d464aea7b4dd98019ce9bc351e5cbfa0dc852477d8a62c901b9ff70"
+  },
+  {
+   "path": "qa/review_r8/05_step3_far_river/2_BEFORE_two_thirds_through.jpg",
+   "bytes": 529685,
+   "sha256": "aa067e1c4a461894bbbaddabe4c80f71977963fb9a29e9c747adf0a5981adeca"
+  },
+  {
+   "path": "qa/review_r8/05_step3_far_river/3_NEW_two_thirds_through.jpg",
+   "bytes": 522248,
+   "sha256": "f0e09c3390b520f8cb9ac362cb1dc6d1ebb9aad86b6abf5bd840d186eea683d4"
   },
   {
    "path": "qa/review_r8/07_plunge_fix_r7/1_APPROVED_07.jpg",

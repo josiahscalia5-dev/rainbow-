@@ -1460,3 +1460,40 @@ Locked view still 0 px. Rendering the step-3 pictures from the final code, plus 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:22:24.263Z
+
+t95 (06 hand-over) is intact, no holes. Recording step 3.
+
+### 🤖 Claude — 2026-11-18T02:22:34.504Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r8/PROGRESS.md <<'EOF'\n\n## Step 3 — `&m05edge=1` (disconnected far-river edges)\n* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1`\n* WHAT LOOKS BETTER: the river ahead now winds as ONE continuous S-shaped stream from Benny into the bright gold\n  throat, with the coin trail along it, as in the approved picture. Gone: (1) the raised \"slab\" of water with a hard\n  pale edge that stood across the far river (it was the start of Screen 06's climbing river showing through Screen 05's\n  fa …[+1990 chars]`
+
+### 🧑 User — 2026-11-18T02:22:45.963Z
+
+> ↩︎ result: 8d8f00f5ab5277b1a8bffa27b0ee4c27596f1a09
+> 8d8f00f5ab5277b1a8bffa27b0ee4c27596f1a09	refs/heads/claude/rainbow-s05-match-c8
+
+### 🤖 Claude — 2026-11-18T02:22:51.589Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S05 step 3 continuous far river", "message": "Screen 05 step 3 (SHA 8d8f00f5ab5277b1a8bffa27b0ee4c27596f1a09, pushed + verified): &m05edge=1 added (kept set: match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1). WHAT LOOKS BETTER: the river ahead now winds as one continuous S-stream from Benny into the bright gold throat with the coin trail, as painted. Gone: the raised water \"slab\" with a hard pale edge across the far river (Screen 06's climbing river showing through 05's far tunnel) and the flat orange tray on the left bank (first  …[+667 chars]`
+
+### 🧑 User — 2026-11-18T02:22:51.601Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T02:22:53.876Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M", "description": "Check current time"}`
+
+### 🧑 User — 2026-11-18T02:22:53.902Z
+
+> ↩︎ result: 02:22
+
+### 🤖 Claude — 2026-11-18T02:22:56.737Z
+
+About 1.5 h left. Let me render the full 12-position set with the kept query to rank what still looks most wrong.
+
+### 🤖 Claude — 2026-11-18T02:23:00.798Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && mkdir -p $S/k3 && timeout 900 node tools/match05/r8_shots.mjs $S/k3 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1\" all 2>&1 | grep -ci error; python3 -I tools/lead_r6/motion_metrics.py references/05_flow_into_the_current.png $S/k3/*.png; python3 -I -c \"\nfrom PIL import Image\nnames=['f06_forward6u','s_left_steer','s_right_steer','s_left_hard']\nims=[Image.open('$S/k3/'+n+'.png').resize((432,768)) for n in names]\nout=Image.new('R …[+189 chars]`
+
