@@ -4095,3 +4095,302 @@ The specialists have reported two more kept steps, which I'll check by eye befor
 
 Everything is saved to GitHub, which matches the local copy: Screen 04 branch at `4544d5c7`, main session branch at `4e52a4f9`. The five-minute autosave is still running.
 
+### 🧑 User — 2026-11-18T15:23:54.239Z
+
+CLAUDIA — SCREEN 04 FINAL WATER AND GOLD TUNNEL VISUAL CORRECTIONS
+
+Claudia, I want you to continue improving Screen 04 so the actual playable 3D scenery looks much closer to my ORIGINAL APPROVED artwork.
+
+IMPORTANT: Preserve the successful C5 improvements. Do not restart or redesign Screen 04.
+
+The cleaner blue center path, lower side water, broader gold rings and improved five white arrows are all steps in the right direction.
+
+Now focus on the following visual corrections.
+
+1. MAKE THE BLUE WATER LOOK LIKE MY APPROVED ARTWORK
+
+My approved Screen 04 has beautiful, saturated, glossy electric-cyan and bright blue water with white sparkling highlights.
+
+Your current water is too pale, smooth and somewhat flat.
+
+Please:
+
+- Increase the richness and saturation of the blue and cyan water.
+- Restore glossy, flowing highlights, sparkles and natural-looking swirls.
+- Give the water more depth and dimensional appearance.
+- Keep the center path wide, continuous and clearly visible.
+- Preserve the natural swimming water around Benny, including his splashes.
+- Make sure the water remains attractive while Benny swims forward and steers.
+
+DO NOT turn the water into a flat blue road or solid-colored platform.
+
+The blue should look like flowing magical water, not painted plastic.
+
+2. CORRECT THE GOLD TUNNEL MATERIALS
+
+My approved tunnel has polished copper-gold metallic rings with deeper golden shadows, dark recessed grooves and bright reflected highlights.
+
+The current tunnel still looks too orange.
+
+Please:
+
+- Shift the ring materials toward rich copper-gold rather than flat orange.
+- Add darker recessed grooves and dimensional shading.
+- Strengthen the polished metallic highlights.
+- Include subtle pink, purple and warm-gold reflections consistent with my approved picture.
+- Preserve the broader ring spacing and shapes already achieved.
+- Keep the gold architecture recognizable throughout swimming and steering.
+
+The tunnel must look like expensive, polished metallic gold, not a flat orange corridor.
+
+3. SOFTEN THE WATER EDGES WITHOUT RECREATING THE OLD FOAM WALLS
+
+The new low-sided water is an improvement, but some edges form hard triangular boundaries against the gold tunnel.
+
+Please:
+
+- Make the water-to-tunnel transitions softer and more natural.
+- Keep pink and magenta currents primarily along the outside edges.
+- Add small, irregular foam accents only where the approved artwork shows them.
+- Avoid repeated lumpy ridges, tall water walls and bulky foam piles.
+- Keep the central blue path visually dominant.
+
+Do not undo the cleaner composition we just achieved.
+
+4. PRESERVE THE FIVE GLOWING ARROWS AND BENNY
+
+Keep:
+
+- Five bold white chevrons with subtle cyan glow.
+- Correct spacing and clear visibility ahead of Benny.
+- No overlapping arrows or solid-blue panels.
+- Benny's exact pink fluffy appearance, striped beanie and yellow star.
+- Natural swimming and splashes.
+- Existing coins, gameplay controls and collectibles.
+
+Do not alter successful gameplay systems to fix the scenery.
+
+5. COMPARE ACTUAL GAMEPLAY, NOT JUST A STILL PICTURE
+
+For each meaningful visual improvement, show separate full-size:
+
+APPROVED / BEFORE / NEW
+
+Include straight swimming, hard-left steering, hard-right steering and the end of Screen 04.
+
+Compare the entire scene against my original approved artwork, especially the color, materials, water appearance and tunnel proportions.
+
+If a new experiment looks worse, reject it and preserve the previous version.
+
+Do not claim a visual improvement based only on technical measurements.
+
+6. KEEP ALL OTHER WORK GOING
+
+Continue the existing Screen 05 and Screen 08 specialists without interruption.
+
+Preserve their unfinished work and successful improvements.
+
+Maintain five-minute automatic GitHub autosave and verify successful pushes.
+
+My priority remains the visual reconstruction of ALL FIVE playable approved screens, 04–08.
+
+7. CONFIRM THE NEXT VISUAL TASK
+
+Please reply briefly confirming:
+
+1. You understand that the blue water needs richer saturation, natural glossy movement and more sparkle — without becoming flat or crowded again.
+2. You understand that the gold rings need deeper copper-gold materials and realistic metallic reflections.
+3. You will soften the hard water edges while preserving the clean blue center path.
+4. You will preserve the successful C5 arrows and Benny.
+5. You will show real-game APPROVED / BEFORE / NEW comparisons before declaring success.
+
+I APPROVE THESE SCREEN 04 VISUAL CORRECTIONS. PROCEED WITHOUT REPEATING SETUP OR ASKING ME FOR THE SAME PERMISSION AGAIN.
+
+My final goal is to make Screen 04, and eventually all five playable screens, look as close as technically possible to my original approved artwork while Benny swims naturally through the real 3D game.
+
+VISUALS FIRST. PRESERVE SUCCESSFUL WORK. NO REDESIGNS.
+
+### 🤖 Claude — 2026-11-18T15:24:07.942Z
+
+Confirmed, all five points:
+1. The blue water gets richer, more saturated electric cyan with glossy flowing highlights, sparkles and swirls, without going flat or crowded again.
+2. The rings move to deep copper-gold, with darker grooves, stronger polished highlights and subtle pink, purple and warm-gold reflections.
+3. I'll soften the hard water edges against the tunnel and keep the clean blue centre path dominant.
+4. The C5 arrows, Benny, splashes, coins and gameplay stay exactly as they are.
+5. Nothing counts as success until you've seen separate real-game APPROVED / BEFORE / NEW pictures: straight, hard left, hard right and the end.
+
+Starting now. First, a close look at the C5 water edge, to see what forms the hard triangular boundaries you mentioned.
+
+### 🤖 Claude — 2026-11-18T15:24:10.595Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd /home/user/wt/s04/qa/match/04/r13/s5_lane/C5 && convert s_left_hard.png -crop 864x700+0+500 +repage -resize 420x $S/e1.png; convert f20_forward20u.png -crop 864x700+0+500 +repage -resize 420x $S/e2.png; convert $S/e1.png $S/e2.png +append $S/edge.jpg", "description": "Crop C5 water edges at full detail"}`
+
+### 🧑 User — 2026-11-18T15:24:10.863Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:24:11.743Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/edge.jpg"}`
+
+### 🧑 User — 2026-11-18T15:24:11.765Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:24:23.504Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 621, "limit": 30}`
+
+### 🧑 User — 2026-11-18T15:24:23.526Z
+
+> ↩︎ result: 621	      xs.push({ x: Math.sign(u) * x, y });
+> 622	    }
+> 623	    const arc: number[] = [0]; const mid = nX / 2;
+> 624	    for (let i = mid + 1; i <= nX; i++) arc[i] = (arc[i - 1] ?? 0) + Math.hypot(xs[i].x - xs[i - 1].x, xs[i].y - xs[i - 1].y);
+> 625	    arc[mid] = 0; for (let i = mid - 1; i >= 0; i--) arc[i] = arc[i + 1] - Math.hypot(xs[i].x - xs[i + 1].x, xs[i].y - xs[i + 1].y);
+> 626	    // from BEHIND (aB u before the opening, where the camera starts) to the far end; before the opening the river
+> 627	    // lies flat (no wall to climb), the sides rise over the first 2 u inside the tunnel
+> 628	    const aB = M04.num('m04rb', 14);
+> 629	    const nT = nA + Math.ceil(aB / 0.5);
+> 630	    for (let j = 0; j <= nT; j++) {
+> 631	      const a = -aB + (j / nT) * (len + aB);
+> 632	      const k = THREE.MathUtils.smoothstep(a, -0.6, 1.4);
+> 633	      for (let i = 0; i <= nX; i++) { pos.push(cx + xs[i].x, 0.02 + (xs[i].y - 0.02) * k, z0 - a); aR.push(arc[i], 0); }
+> 634	    }
+> 635	    for (let j = 0; j < nT; j++) for (let i = 0; i < nX; i++) {
+> 636	      const p0 = j * (nX + 1) + i, p1 = p0 + 1, p2 = p0 + nX + 1, p3 = p2 + 1;
+> 637	      idx.push(p0, p2, p1, p1, p2, p3);
+> 638	    }
+> 639	    const g = new THREE.Buf …[+1169 chars]
+
+### 🤖 Claude — 2026-11-18T15:24:36.842Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uniform float uGoldY;\\|^vec3 goldRampY\\|col = uGoldY > 0.5 ? goldRampY(v) : goldRamp(v);\\|uGoldY: { value\\|smoothstep(ang, angW - 0.95, angW - 0.55)\\|uLane: { value\\|float sk = vn\\|laneC += vec3(0.55\\|const hal\\|uSE: { value\" src/world/match04m4.ts", "description": "Locate exact lines for the new settings"}`
+
+### 🧑 User — 2026-11-18T15:24:36.879Z
+
+> ↩︎ result: 96:uniform float uGoldY;      // m04gold: polished YELLOW-gold ramp (bright yellow-white highlights), fewer magenta tints
+> 118:vec3 goldRampY(float x) {
+> 184:    col = uGoldY > 0.5 ? goldRampY(v) : goldRamp(v);
+> 331:    float sk = vn(vec2(vS * 3.1 + 2.0, fl * 0.12));
+> 332:    laneC += vec3(0.55, 0.85, 1.0) * 0.35 * smoothstep(0.80, 0.97, sk);
+> 509:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+> 541:        const k = M04.river ? THREE.MathUtils.smoothstep(ang, angW - 0.95, angW - 0.55) : THREE.MathUtils.smoothstep(ang, angW - 0.45, angW - 0.1);
+> 652:        uLane: { value: new THREE.Vector3(M04.num('m04lane', 0), M04.num('m04lanew', 1.9), M04.num('m04lanes', 0.85))  …[+312 chars]
+
+### 🤖 Claude — 2026-11-18T15:24:38.681Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 320, "limit": 16}`
+
+### 🧑 User — 2026-11-18T15:24:38.701Z
+
+> ↩︎ result: 320	  vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
+> 321	  // the deeper cyan centre lane of the painting
+> 322	  col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
+> 323	  if (uLane.x > 0.5) {
+> 324	    // r13 m04lane: the painted centre path is ONE clean glossy blue lane (deep cyan-blue, soft long light streaks, no
+> 325	    // foam crests or swirl knots): the tile seen heavily smoothed (mip bias) for its gentle light / dark flow, re-coloured
+> 326	    // into the painted lane blues, plus a few long thin highlights running down the path
+> 327	    float kl = 1.0 - smoothstep(uLane.y, uLane.y + 0.9, abs(vS));
+> 328	    vec3 bl = mix(texture2D(uRiv, uv1, 4.5).rgb, texture2D(uRiv, uv2, 4.5).rgb, w);
+> 329	    float lb = dot(bl, vec3(0.30, 0.55, 0.15));
+> 330	    vec3 laneC = mix(vec3(0.02, 0.42, 0.88), vec3(0.30, 0.82, 1.0), smoothstep(0.35, 0.80, lb));
+> 331	    float sk = vn(vec2(vS * 3.1 + 2.0, fl * 0.12));
+> 332	    laneC += vec3(0.55, 0.85, 1.0) * 0.35 * smoothstep(0.80, 0.97, sk);
+> 333	    col = mix(col, laneC, kl * uLane.z);
+> 334	  }
+> 335	  if (uPk.x > 0.5) {
+
+### 🤖 Claude — 2026-11-18T15:25:02.075Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nrep=[\n# --- lane v2 (rich glossy water) ---\n(\"\"\"    vec3 laneC = mix(vec3(0.02, 0.42, 0.88), vec3(0.30, 0.82, 1.0), smoothstep(0.35, 0.80, lb));\n    float sk = vn(vec2(vS * 3.1 + 2.0, fl * 0.12));\n    laneC += vec3(0.55, 0.85, 1.0) * 0.35 * smoothstep(0.80, 0.97, sk);\n    col = mix(col, laneC, kl * uLane.z);\n  }\"\"\",\"\"\"    vec3 laneC = mix(vec3(0.02, 0.42, 0.88), vec3(0.30, 0.82, 1.0), smoothstep(0.35, 0.80, lb));\n    float sk = vn(vec2(vS * 3.1 + 2.0, fl * 0.12));\n    laneC += …[+4642 chars]`
+
+### 🧑 User — 2026-11-18T15:25:04.356Z
+
+> ↩︎ result: ok
+> tsc-done
+> 108:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 313:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:25:09.134Z
+
+Typecheck passes. D1 combines all four changes on top of C5. If anything looks worse I'll split them apart.
+
+### 🤖 Claude — 2026-11-18T15:25:15.029Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && C5=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/C5.q); D1=\"$C5&m04lane2=0.55&m04lgl=1.0&m04lsp=0.9&m04copper=1&m04edge=1&m04rf0=1.25&m04rf1=0.8\"; echo \"$D1\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/D1.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s6_rich/D1 \"$D1\" 2>&1 | grep -iE \"pageerror|error|t95\" | tail -2; cd qa/match/04/r13 && montage /home/user/rainbow-/references/04_through_the_five_arrows.png s5_lane/C5/f20_forward20u.png s6_rich/D1 …[+331 chars]`
+
+### 🤖 Claude — 2026-11-18T15:25:16.093Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/d1.jpg"}`
+
+### 🧑 User — 2026-11-18T15:25:59.406Z
+
+> ↩︎ result: 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:25:59.422Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:26:06.674Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd /home/user/wt/s04/qa/match/04/r13 && convert s6_rich/D1/f20_forward20u.png -crop 864x1100+0+200 +repage -resize 360x $S/d1z.png; convert s5_lane/C5/f20_forward20u.png -crop 864x1100+0+200 +repage -resize 360x $S/c5z2.png; convert /home/user/rainbow-/references/04_through_the_five_arrows.png -crop 700x900+80+400 +repage -resize 360x $S/apz.png; convert $S/apz.png $S/c5z2.png $S/d1z.png +append $S/d1zz.jpg", "description": "Zoom compare approved, C5, D1"}`
+
+### 🧑 User — 2026-11-18T15:26:07.023Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:26:07.822Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/d1zz.jpg"}`
+
+### 🧑 User — 2026-11-18T15:26:07.851Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:26:22.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nrep=[(\"\"\"      float ld = mix(lb, dot(dl, vec3(0.30, 0.55, 0.15)), uLane2.x);\"\"\",\"\"\"      float ld = mix(lb, dot(dl, vec3(0.30, 0.55, 0.15)), uLane2.x) + uLane2.w;   // w = brighter / more turquoise\"\"\"),\n(\"\"\"M04.num('m04lsp', 0.9), 0) },\"\"\",\"\"\"M04.num('m04lsp', 0.9), M04.num('m04lbr', 0)) },\"\"\")]\nfor a,b in rep:\n    assert s.count(a)==1, a[:50]; s=s.replace(a,b)\nopen(p,'w').write(s); print('ok')\nEOF\nnpx tsc --noEmit -p . 2>&1 | tail -2; D1=$(cat /tmp/claude-0/-hom …[+733 chars]`
+
+### 🤖 Claude — 2026-11-18T15:26:23.982Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/d2zz.jpg"}`
+
+### 🧑 User — 2026-11-18T15:27:08.334Z
+
+> ↩︎ result: ok
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04/src/world/match04m4.ts. Call Read before editing.]
+
+### 🧑 User — 2026-11-18T15:27:08.349Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:27:19.463Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && D2=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/D2.q); D3=$(echo \"$D2\" | sed 's/m04copper=1.3/m04copper=1.65/'); echo \"$D3\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/D3.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s6_rich/D3 \"$D3\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd qa/match/04/r13 && convert s6_rich/D3/f20_forward20u.png -crop 864x1100+0+200 +repa …[+254 chars]`
+
+### 🤖 Claude — 2026-11-18T15:27:20.513Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/d3zz.jpg"}`
+
+### 🧑 User — 2026-11-18T15:28:03.734Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:28:03.749Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:28:15.481Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && D2=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/D2.q); D4=$(echo \"$D2\" | sed 's/m04tb=0.0/m04tb=0.13/'); echo \"$D4\" | grep -o \"m04tb=[0-9.]*\"; echo \"$D4\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/D4.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s6_rich/D4 \"$D4\" 2>&1 | grep -iE \"pageerror|t95\" | tail -1; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; cd qa/match/04/r13 && convert s6_rich/D4/f20_forward …[+196 chars]`
+
+### 🤖 Claude — 2026-11-18T15:28:16.685Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/d4zz.jpg"}`
+
