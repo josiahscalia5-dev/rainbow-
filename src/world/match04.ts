@@ -17,6 +17,7 @@
  */
 import * as THREE from 'three';
 import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+import { addM04 } from './match04m4';
 
 interface Layout04 {
   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
@@ -250,6 +251,10 @@ export async function buildMatch04(): Promise<Match04> {
   // far end cap of the tunnel (the glowing vanishing point)
   add(new THREE.CircleGeometry(T.r, 64).translate(cx, cy, zEnd), M.gold, 'tube_end');
 
+  // round 8 (M4): `&m04ring / m04foam / m04bub / m04arrow / m04wave =1` sub-switches (src/world/match04m4.ts); absent = no change
+  const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+    hideOld: (names) => group.children.forEach((o) => { if (names.includes(o.name)) o.visible = false; }) });
+
   let splash: THREE.Mesh | null = null;
   const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());
   if (SPLASH04) {
@@ -289,6 +294,7 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
       if (camera && !FAL04) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
       shared.uPjPost.value.x = renderer.toneMappingExposure;
       shared.uPjRes.value.set(w, h);
+      if (m4 && camera) m4.update(camera.getWorldPosition(_cp));
     },
   };
 }
