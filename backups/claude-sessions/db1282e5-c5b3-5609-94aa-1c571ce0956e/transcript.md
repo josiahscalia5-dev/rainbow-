@@ -2029,3 +2029,76 @@ Clean: only the timestamp changed and round 13 was added. Now the Screen 04 bran
 
 > 🔧 **Bash** `{"command": "timeout 280 python3 scripts/rainbow-autosave.py --reason manual:c13-specialists-launched 2>&1 | grep -E '\"(result|status|error|commit|pushed|verified)' | head -6; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 40 git ls-remote origin refs/heads/claude/rainbow-restore-autosave-1mgga0 | cut -f1)\"; ls backups/wip/ | grep c13; python3 -I scripts/autosave-status.py", "description": "Rerun manual save and verify remote matches", "timeout": 330000}`
 
+### 🧑 User — 2026-11-18T14:27:45.994Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "489ed234a906d99b9a1940f5021f01789dd5513e",
+> LOCAL  489ed234a906d99b9a1940f5021f01789dd5513e
+> REMOTE 489ed234a906d99b9a1940f5021f01789dd5513e
+> claude__rainbow-s04-match-c13
+> claude__rainbow-s05-match-c13
+> claude__rainbow-s08-scenery-c13
+> AUTOSAVE OK | branch claude/rainbow-restore-autosave-1mgga0 | scheduler daemon | last verified backup 2026-11-18T14:27:34+00:00 (0.2 min ago) | local 489ed23 remote 489ed23 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T14:28:07.639Z
+
+> 🔧 **Bash** `{"command": "for b in s07-match-c11 s06-match-c11; do echo \"$b $(git rev-parse --short=8 origin/claude/rainbow-$b)\"; done", "description": "Show tips of queued Screen 06 and 07 branches"}`
+
+### 🧑 User — 2026-11-18T14:28:07.711Z
+
+> ↩︎ result: s07-match-c11 dbc7678c
+> s06-match-c11 8182130c
+
+### 🤖 Claude — 2026-11-18T14:28:33.359Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+I'm on your existing game (no restart), and two specialists are actually working right now. Two keys were missing on this new account; you entered both through the secure forms and both now pass.
+
+## RAINBOW NEW ACCOUNT ACTIVATION REPORT
+
+| Component | Status |
+|---|---|
+| Correct GitHub branch | **Verified.** Started from `ccr-e908f8da-cy4yc1` at `d256bc4`, which is also its newest commit on GitHub. Saving to this session's branch `claude/rainbow-restore-autosave-1mgga0`, latest save `489ed234a906d99b9a1940f5021f01789dd5513e`. Nothing merged. |
+| Five-minute GitHub autosave | **Active and tested.** It has pushed three times this session (14:09, 14:20, 14:27); each time GitHub's copy matched the local commit exactly. One problem I caused and fixed: when I protected the previous account's branches, one five-minute save around 14:25 was refused. The unfinished edits on the Screen 04, 05 and 08 branches are now captured in each save. |
+| Git LFS and assets | **Verified.** All 59 large files are present locally and on GitHub. All 13 approved reference images are byte-identical to the originals. |
+| All ten specialist definitions | **Available.** All 10 files are present and unchanged. |
+| Two parallel specialist sessions | **Actually running.** Screen 05: water specialist on `claude/rainbow-s05-match-c13`, first commit `7b790cbd`. Screen 08: washer-environment modeler on `claude/rainbow-s08-scenery-c13`, first commit `c8135c42`. Both pushed and reported back to me. |
+| World Labs Marble | **Connected and tested.** It first failed authentication (HTTP 401); after you entered the key: 5,420 credits, and the saved Screen 08 world is readable. Atlas connector connected. No paid job run. |
+| fal.ai | **Connected and tested.** The key was missing; after you entered it, your paid request `01a1ea70` reads COMPLETED, so it is your purchased account. No new paid jobs. |
+| Hugging Face connector | **Needs your authorization.** It isn't installed on this account. Connect "Hugging Face" from the card above, in claude.ai connector settings. |
+| Hugging Face model access | **Tested without the connector.** Depth Anything 3 is public and readable without logging in. Stable Virtual Camera and ViewCrafter both crash on Hugging Face's servers right now, so they can't be used. The connector would only add model and app search; it isn't needed for current work. |
+| Depth Anything 3 | **Available.** Depth maps for all five approved pictures are saved; nothing to reinstall. |
+| Playwright MCP | **Working.** Live browser check confirms 3D graphics support (WebGL2). |
+| Required plugins and MCP servers | **Working:** Playwright, World Labs, code-review, frontend-design. The previous account's extra plugins (superpowers, unity, etc.) aren't needed for visual work. Context7 needs a sign-in but isn't needed. |
+| Blender and Three.js | **Working.** Blender 5.3.0 headless test passes; the game build and stage-join tests pass. Android SDK 34, Java and Gradle are ready. |
+| Five-screen visual workstreams | **Restored.** 04, 05 and 08 continue on new `-c13` branches from the previous account's newest work, including its unfinished edits. 07 (`dbc7678c`) and 06 (`8182130c`) are downloaded and queued. |
+
+**What could not transfer automatically:** the previous account's running agents (relaunched as new instances from the saved work), its keys (you re-entered them), the Hugging Face connector, and any backups while an environment was closed. There was a gap from 13:39 to 13:50, and the previous session ended without a final save.
+
+## My understanding and plan
+
+**What I understand you want:** your five approved pictures rebuilt as real playable 3D, looking the same the whole time Benny swims: forward, middle, end, and hard left and right. A matching first screenshot is not success.
+
+**What I will build, from your actual pictures:**
+- **04:** the pink laundry-room opening (porthole, control panel, striped towels, gold washer rim), then a deep tunnel of glossy gold rings. A thick cyan river with magenta swirls climbs the sides, with five glowing white-cyan chevrons down the lane, coins to the left, soft low foam and big bubbles.
+- **05:** a purple slotted tunnel with gold ring bands and gold paddle lids. A wide cyan river with hot-pink bands winds in S-curves into a bright far end, with foam banks, a centre coin line and a white splash around Benny.
+- **06:** the river rises in a crest, sweeps left, then bends right into an off-centre gold-ring tunnel, not a straight bullseye. Paddle lids at the upper left, coins along the crest, ripple rings around Benny.
+- **07:** a deep purple slotted tube with many gold rings and paddles on the left. A winding cyan river with thick magenta edges plunges away, with foam clouds and coins.
+- **08:** a wide chamber framed by a huge gold ring, with the washer door and porthole at the far end over a platform with a folded purple towel. Four spout cups pour from their undersides, and an S-river with coins winds through purple perforated walls.
+
+**Which agents are working:**
+- Screen 05 specialist: first checking the unfinished wall-slot fix, then the pale slab, join lines, flat near water and the 05→06 join.
+- Screen 08 specialist: wrong wedges, the S-river and near-water stretching, then wall seams.
+- Me, on Screen 04: resuming step 2, the five chevrons as real glowing shapes on the lane. Four versions were already rendered but not judged.
+- 07, then 06, take the next free slot.
+
+**What I will show next:** the Screen 04 chevrons as separate full-size APPROVED / BEFORE / NEW pictures from the real game: start view, 10 units in, 20 units in, and hard left and right. Each with a plain verdict: GOOD IMPROVEMENT, NOT AN IMPROVEMENT, or NOT YET PROVEN. The same format for the first 05 and 08 results as they arrive.
+
+**What I will not do:** no redesigns or generic substitutes, no repeated setup, no paid World Labs or fal jobs without your approval and a cost, no restarting completed work, no merges.
+
+**Honest status:** no screen is proven at 8.5/10 while swimming yet.
+
+Did I correctly understand that your priority is recreating all five original approved Rainbow environments as faithfully as possible, including how they look throughout Benny's natural swimming gameplay? Do you approve my visual-first plan? The authorized work on 04, 05 and 08 keeps running and saving while you decide.
+
