@@ -651,13 +651,22 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   const foamSprites: THREE.Mesh[] = [];
   if (GEO && R6 && qs?.get('m06foam') === '1') {
     let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-    const items: { p: THREE.Vector3; r: number; up: THREE.Vector3 }[] = [];
+    const crestFoam = qs.get('cx06CrestFoam') === '1' && qs.get('m06fclu') === '1';
+    const items: { p: THREE.Vector3; r: number; up: THREE.Vector3; shoulderScale: number }[] = [];
     for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
       const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
       for (let i = 0; i < n; i++) {
         const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;
-        const l = side * (R6.Wc + 0.25 + rnd() * 1.3);
-        items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rnd() * 0.12), r, up: fr.up });
+        const across = rnd(), lift = rnd();
+        // The hard-turn swim lane reaches |l| = 2.95. Keep the heap roots on
+        // the outer shoulder of the fitted bank, with smaller lobes toward the lane.
+        const innerShoulder = R6.Wb - 0.46 + 0.10 * Math.sin(s * 0.81) + 0.04 * Math.sin(s * 1.71);
+        const l = side * (crestFoam
+          ? THREE.MathUtils.lerp(innerShoulder, R6.Wb - 0.04, across)
+          : R6.Wc + 0.25 + across * 1.3);
+        const shoulderScale = crestFoam ? 0.50 + 0.46 * across : 1;
+        const height = R6.hb + (r * 0.35 + lift * 0.12) * shoulderScale;
+        items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, height), r, up: fr.up, shoulderScale });
       }
     }
     // r16 `&m06fclu=1` (qa/match/06/r16/PROGRESS.md): the painted 06 foam is soft lilac-white cumulus heaps made of many
@@ -673,11 +682,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
       const aB: number[] = [], aS: number[] = [];
       for (const it of items) {
-        const R = it.r * fcs, n = Math.min(24, Math.max(3, Math.round((2 + 30 * R) * fck)));
+        const originalRadius = it.r * fcs;
+        const R = originalRadius * it.shoulderScale;
+        const n = Math.min(24, Math.max(3, Math.round((2 + 30 * originalRadius) * fck)));
         const t1 = new THREE.Vector3().crossVectors(it.up, new THREE.Vector3(1, 0, 0));
         if (t1.lengthSq() < 1e-4) t1.set(0, 0, 1);
         t1.normalize(); const t2 = new THREE.Vector3().crossVectors(it.up, t1).normalize();
-        const base = it.p.clone().addScaledVector(it.up, -it.r * 0.35);
+        const base = it.p.clone().addScaledVector(it.up, -it.r * 0.35 * it.shoulderScale);
         for (let i = 0; i < n; i++) {
           // a flattened dome of lobes round the blob centre: bigger lobes on top, small bubbles round the foot
           const th = rnd2() * Math.PI * 2, d = R * Math.sqrt(rnd2()) * 1.1;
