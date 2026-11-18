@@ -3535,3 +3535,79 @@ The Screen 05 specialist reports a GOOD IMPROVEMENT: your painted pink "V" now s
 
 > 🔧 **Bash** `{"command": "printf '| 3 (~17:35) | 05 step 2 `m05vee2` (painted pink V behind Benny; s05-c14 `e5c4e7f2`) | GOOD IMPROVEMENT (lead checked by eye): hot-pink satin bands from Benny to the lower corners with cyan + white glints between, follows Benny; hard left / right smears gone — `qa/review_r14/05_step2_painted_V/` |\\n| 4 (~17:35) | 04 lead steps 7 + 8 (deep-blue lane H/I series, pink side bands J/K series; s04-c14 `da40a708`) | NOT AN IMPROVEMENT (too subtle, or flat royal-blue patch at hard left; sides lost their pink) — not shown, switches off |\\n' >> docs/briefs/2026-11-18-r14/COORDINAT …[+357 chars]`
 
+### 🧑 User — 2026-11-18T17:07:13.272Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "b86bb76762495d1d9cfb1f0b26e8be163423e273",
+> b86bb767
+
+### 🤖 Claude — 2026-11-18T17:07:21.221Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nims=[Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB').resize((432,768))]+[Image.open('qa/match/04/r14/s8_glow/G5/%s.png'%s).convert('RGB').resize((432,768)) for s in ['a00_approved_view','f03_forward3u','f06_forward6u']]\nc=Image.new('RGB',(4*438,768))\nfor k,i in enumerate(ims): c.paste(i,(k*438,0))\nc.save('$S/entry_cmp.png')\nEOF", "description": "Painted vs game start, entering and mi …[+12 chars]`
+
+### 🧑 User — 2026-11-18T17:07:21.918Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T17:07:25.363Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad/entry_cmp.png"}`
+
+### 🧑 User — 2026-11-18T17:07:25.448Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T17:07:37.405Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,60p src/world/match04m4.ts | grep -nE \"m04foam|m04bub|m04mouth|foam|puff|bubble|rim\" | head -20; grep -n \"m04foam\\|foamPuff\\|puffs\\|addFoam\" src/world/match04m4.ts | head -15", "description": "Find existing foam and bubble features in Screen 04"}`
+
+### 🧑 User — 2026-11-18T17:07:37.477Z
+
+> ↩︎ result: 8: *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+> 10: *  m04bub   — iridescent soap bubbles floating in the tunnel air (camera-facing bubble discs), same visibility rule.
+> 15: *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+> 16: *             puffs, wider gaps where the pink water shows), lavender / pink shaded like the painted foam.
+> 20: *  m04mouth — (round 9, needs m04ring) the approved GOLD WASHER OPENING: the painted mouth ring (thick polished band,
+> 34:  foam: on('m04foam'),
+> 35:  bub: on('m04bub'),
+> 40:  mouth: on('m04mouth'),
+> 42:  foam3: on('m04foam3'),
+> 8: *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+> 15: *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+> 16: *             puffs, wider gaps where the pink water shows), lavender / pink shaded like the painted foam.
+> 34:  foam: on('m04foam'),
+> 42:  foam3: on('m04foam3'),
+> 454:/** world-space bubble discs + foam puffs share one tiny shader each (camera- …[+454 chars]
+
+### 🤖 Claude — 2026-11-18T17:07:41.200Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 735, "limit": 75}`
+
+### 🧑 User — 2026-11-18T17:07:41.255Z
+
+> ↩︎ result: 735	  // sprite clouds (foam puffs, bubbles): world positions computed in the slide-local frame
+> 736	  const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number, opaque = false, near = [1.2, 2.6]) => {
+> 737	    const quad = new THREE.PlaneGeometry(1, 1);
+> 738	    const g = new THREE.InstancedBufferGeometry();
+> 739	    g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
+> 740	    const aB = new Float32Array(items.length * 4), aS = new Float32Array(items.length);
+> 741	    items.forEach((it, i) => { const w = it.p.clone().applyMatrix4(Mw); aB.set([w.x, w.y, w.z, it.r], i * 4); aS[i] = it.s; });
+> 742	    g.setAttribute('aB', new THREE.InstancedBufferAttribute(aB, 4));
+> 743	    g.setAttribute('aS', new THREE.InstancedBufferAttribute(aS, 1));
+> 744	    g.instanceCount = items.length;
+> 745	    const alpha = { value: 0 };
+> 746	    const m = new THREE.ShaderMaterial({ vertexShader: SPRITE_VERT, fragmentShader: frag, transparent: !opaque, depthWrite: opaque, fog: false,
+> 747	      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value: new THREE.Vecto …[+4481 chars]
+
+### 🤖 Claude — 2026-11-18T17:07:51.723Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "    const heaped = M04.num('m04foam2', 1) > 0.5;\n    for (const side of [-1, 1]) {\n      let a = 0.2 + rnd() * 0.5;\n      while (heaped && a < len - 1) {", "new_string": "    const heaped = M04.num('m04foam2', 1) > 0.5;\n    // r14 `&m04foamr=L`: the painted foam clouds sit round the ENTRANCE RIM only — the edge banks stop L u inside the\n    // opening (user: no foam walls inside the tunnel); the banks before the opening stay\n    const rimL = M04.num('m04foamr', 1e9);\n    for (const side of [-1 …[+98 chars]`
+
+### 🧑 User — 2026-11-18T17:07:51.800Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T17:07:57.223Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && timeout 200 npx tsc --noEmit -p . 2>&1 | tail -2; echo \"tsc ${PIPESTATUS[0]}\"; S=/tmp/claude-0/-home-user-rainbow-/8ca76314-247f-58db-ab0f-3465514af18e/scratchpad && Q5=$(python3 -I -c \"import json;print(json.load(open('qa/match/04/r14/s8_glow/G5/motion.json'))['query'])\") && QL1=\"$Q5&m04foam=1&m04foam3=1&m04foamr=1.2\" && QL2=\"$Q5&m04foam=1&m04foamr=2.5\" && for v in L1 L2; do eval Q=\\$Q$v; rm -rf $S/x$v; ONLY=f03_forward3u,f06_forward6u,f10_forward10u,s_left_hard timeout 600 node $S/tools/audit_only.mjs 04 $S/x$v \"$Q\" > $S/x$v.log 2>&1; echo \"$v …[+642 chars]`
+

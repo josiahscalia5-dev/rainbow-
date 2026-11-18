@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16507,
-   "sha256": "272ffa1d8219ce798b6e6a5b4e8401e1e3ab1a64d60450b72b36a5eca35e42b9"
+   "sha256": "beaeb98502c8bcd2b7033aabf4301d15fad3abecf7c2cf905ef83beaec317b2a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -968,13 +968,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c14/INFO.json",
-   "bytes": 506,
-   "sha256": "fe6f407ae0968184f4c77c5e45b08f5193cb8950b077ccdf0c225522fd2d4fbb"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-match-c14/tracked.patch",
-   "bytes": 1174,
-   "sha256": "a4e859c6603316bac70d616b63e68d1a60c1b1fbead7cda3b84ecae7d16036d0"
+   "bytes": 477,
+   "sha256": "2b8cbc744bc530c6d48d148f1a29f3b7554c592e4088cff5dc77394950105150"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1028,18 +1023,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c14/INFO.json",
-   "bytes": 1135,
-   "sha256": "b5748564f69b067dcf63a0a7ba96b5ce4e047063ab691edd653604257a9162d6"
+   "bytes": 550,
+   "sha256": "4660541e0bdd11aa55cd9b245bc190b8e6eefc0ed7892ea41259b62fdcd2884c"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c14/tracked.patch",
-   "bytes": 8874,
-   "sha256": "e5ecb8c8fd1572cc605e5c371e3e6e81c493df9ea5e27f9674baea36b40230a0"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c14/untracked/qa/match/05/r14/step2_m05vee2/new/shots.json",
-   "bytes": 53133,
-   "sha256": "de07a8fe95cbe11b3f57cb8351ce49a6d5b0c71bdf1e24ddc8413d5147acccd4"
+   "bytes": 4297,
+   "sha256": "8cc13c1a2cdfefa53caaaca9abe4f6e5dbd52921ad58b0f6612d447be8854f20"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -1108,13 +1098,23 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c14/INFO.json",
-   "bytes": 513,
-   "sha256": "ffb3554e4aeb6866891e542826971722120b2645e16dd42ece9af686d9086210"
+   "bytes": 919,
+   "sha256": "ff1e539c3c9591090b0a6cab00a855c008dadd7a62310da41ac42be446d5af77"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c14/tracked.patch",
-   "bytes": 20910,
-   "sha256": "8d7fd4db8729c35e5d6dd5850783a1988caff4a92dc6e33ce6c3c8632d6ac804"
+   "bytes": 26532,
+   "sha256": "51c6e9ee593faf5f6605fcf6c00874d45358d6d70a33ffd86731d2293ca26853"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c14/untracked/assets/textures/match08/nq08.json",
+   "bytes": 873,
+   "sha256": "2511a8a83dbb76269bc2e7b2c7b83637d71be882b3853e15bb117892bb46a123"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c14/untracked/qa/match/08/r14/step1_m08nq/NEW_raw/f20_forward20u.png",
+   "bytes": 1723398,
+   "sha256": "a8b8a0fbfe31d457030560734b67c45049a563de01b8520b88ddb77d27c0ee49"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
