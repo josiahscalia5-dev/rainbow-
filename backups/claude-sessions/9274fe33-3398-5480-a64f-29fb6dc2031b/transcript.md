@@ -2723,3 +2723,50 @@ At this size BEFORE and NEW look almost the same. The worker describes small fix
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:08-step1-shown 2>&1 | grep -E '\"commit\"|error|another' | head -2; python3 -I scripts/autosave-status.py", "description": "Save the shown pictures and log to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T19:28:28.193Z
+
+> ↩︎ result: "commit": "179395782f95f75c2ad93858b7ed1fe48cd4309c",
+> AUTOSAVE OK | branch ccr-e42bb3c0-jpif8d | scheduler daemon | last verified backup 2026-11-18T19:28:06+00:00 (0.3 min ago) | local 1793957 remote 1793957 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-18T19:28:31.465Z
+
+Double exposure is on your explicit "never" list. Before deciding the order, I'll look at how visible the towel problem is.
+
+### 🤖 Claude — 2026-11-18T19:28:34.050Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/wt/s08/qa/match/08/r16/step1_m08sr; S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek; convert $D/3_NEW_s_left_hard.png -crop 864x620+0+180 +repage -resize 60% $S/t1.png; convert $D/3_NEW_s_right_hard.png -crop 864x620+0+180 +repage -resize 60% $S/t2.png; convert $S/t1.png $S/t2.png +append $S/towel.jpg", "description": "Crop the towel area at hard left/right"}`
+
+### 🧑 User — 2026-11-18T19:28:35.601Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:28:37.505Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/peek/towel.jpg"}`
+
+### 🧑 User — 2026-11-18T19:28:37.799Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:28:44.892Z
+
+> 🔧 **SendMessage** `{"to": "ac5211f85b0a16ebb", "summary": "Towel double exposure: test right after seams", "message": "Lead looked at the towel at hard left / right: the straight-edged patch of window clouds sticking out past the round porthole behind the towel is clearly visible. It's a double exposure, which the user's binding goal explicitly lists as unacceptable, and a switch already exists. So the order is: finish the wall seams you've started, then test &m08towelm (+ &m08occ only as a separate second comparison if needed) on K15, before the river-edge foam. Same proof format; hard left / right / right stee …[+213 chars]`
+
+### 🧑 User — 2026-11-18T19:28:44.931Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to ac5211f85b0a16ebb at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ac5211f85b0a16ebb","name":"ac5211f85b0a16ebb","ref":"ce281e"}}
+
+### 🤖 Claude — 2026-11-18T19:28:50.455Z
+
+Two screens have reported back so far:
+
+**Screen 04, painted-ring test (your request): NOT YET PROVEN.** I sent you APPROVED, BEFORE and NEW from the real game.
+- **Better:** the rings now have your painting's colour, a smooth copper-gold with soft pink-violet tints, and the thin plaid stripes are gone.
+- **Worse:** the dark grooves and bright edges between rings faded. Inside, it reads as one smooth tube with long light streaks instead of your stack of separate thick rings. The old version actually looks more like a row of rings.
+
+The worker is fixing the streaks first. If the rings still don't look separate after that, it will strengthen the painted grooves and edges, then warm the gold, which is a bit too orange.
+
+**Screen 08: GOOD IMPROVEMENT (small), kept.** The water near Benny no longer has a straight fold line or zig-zag kinks; the streaks now curve smoothly. I sent you those pictures as well. While checking them I spotted something else: when Benny steers hard left or right, a straight-edged patch of window clouds sticks out past the round porthole behind the towel. That's a double exposure, so the 08 worker will fix it right after the wall seams it's working on now.
+
+Screens 05, 06 and 07 haven't finished a step yet. I'll send their pictures as each one does. All results are saved; the latest save, `1793957`, is verified on GitHub.
+

@@ -573,3 +573,30 @@ Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S04_LAUNCH.md —
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && mkdir -p qa/match/04/r16/s3_sband && time node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r16/s3_sband/NEW \"$K&m04sband=1\" 2>&1 | grep -v \"allow list\" | tail -13", "description": "Render NEW motion audit set with side bands", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T19:28:28.562Z
+
+> ↩︎ result: 04 a00_approved_view s 78.354 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.148 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.185 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.149 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.278 lat 0 stage 04 frames 86
+> 04 s_left_steer s 84.185 lat -1.65 stage 04 frames 26
+> 04 s_right_steer s 84.181 lat 1.65 stage 04 frames 26
+> 04 s_left_hard s 90.308 lat -1.65 stage 04 frames 52
+> 04 s_right_hard s 90.249 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.483 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.848 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 114.235 lat 0 stage 04 frames 153
+> 
+> real	3m42.855s
+> user	0m2.399s
+> sys	0m0.575s
+
+### 🤖 Claude — 2026-11-18T19:28:29.776Z
+
+Now the start-view check (BEFORE vs NEW, deterministic capture).
+
+### 🤖 Claude — 2026-11-18T19:28:32.492Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04 && K=$(cat $S/K1.txt) && node scripts/capture.mjs 04 --q=\"$K\" --out=$S/cap_before 2>&1 | grep -v \"allow list\" | tail -2 && node scripts/capture.mjs 04 --q=\"$K&m04sband=1\" --out=$S/cap_new 2>&1 | grep -v \"allow list\" | tail -2 && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/cap_before/04.png $S/cap_new/04.png $S/cap_diff.png 0.1 180 1536; git status --short | head", "description": "Capture approved start view before and after, pixel diff", "timeout": 600000}`
+

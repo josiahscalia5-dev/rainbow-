@@ -925,3 +925,62 @@ I'll start by reading the launch brief, the resume notes, and the previous worke
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T19:28:19.840Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08/qa/match/08/r16/step1_m08sr && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/'\na=Image.open('3_NEW_f10_forward10u.png')\na.crop((0,480,432,820)).resize((864,680)).save(S+'f10_left.png')\na.crop((560,480,864,880)).resize((608,800)).save(S+'f10_right.png')\n\"", "description": "Crop left and right wall regions of f10"}`
+
+### 🧑 User — 2026-11-18T19:28:20.885Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:28:21.242Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/f10_left.png"}`
+
+### 🧑 User — 2026-11-18T19:28:21.314Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:28:21.794Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/f10_right.png"}`
+
+### 🧑 User — 2026-11-18T19:28:21.876Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:28:40.977Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n -i \"seam\\|task (b)\\|(b)\" qa/match/08/r13/PROGRESS.md qa/match/08/r12/PROGRESS.md | cut -c1-500 | head -30", "description": "Find the definition of the wall seams task in earlier logs"}`
+
+### 🧑 User — 2026-11-18T19:28:41.067Z
+
+> ↩︎ result: qa/match/08/r13/PROGRESS.md:6:`K10 = match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1`.
+> qa/match/08/r13/PROGRESS.md:37:* Still wrong: the upper-right cup's top still shows the gold wedge with X seams; the lower cups show hard straight cuts
+> qa/match/08/r13/PROGRESS.md:58:## Step 2 — `&m08cupw=1` (gold wedge + X seams on the upper-right cup's top) — KEPT
+> qa/match/08/r13/PROGRESS.md:73:* Still wrong: a soft V remains in the cup's gold band and a faint seam at the cap's centre (mirror of the tilted painted
+> qa/match/08/r13/PROGRESS.md:84:  glints). Then (b) wall seams, (c) river-edge foam + coin-line shape, (d) soft V in the upper-right cup's gold band.
+> qa/match/08/r12/PROGRESS.md:5:`K10 = match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1`.
+> qa/match/08/r12/PROGRESS.md:15:  approved view, so while swimming they showed a fallback gold patch / the arch's own gold with a curved seam on the cup.
+> qa/match/08/r12/PROGRESS.md:20:  (forward 6 u, forward 10 u, two-thirds through) like the painted cup, instead of a gold wedge with a hard curved seam
+> qa/match/08/r12/PROGRESS.md …[+686 chars]
+
+### 🤖 Claude — 2026-11-18T19:28:43.393Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 95,150p qa/match/08/r12/PROGRESS.md; sed -n 76,90p qa/match/08/r13/PROGRESS.md", "description": "Read r12 notes on the drum wall behind the lower cup"}`
+
+### 🧑 User — 2026-11-18T19:28:43.559Z
+
+> ↩︎ result: ## Tried — `&m08glint=1` (near-water glints at painted size) — NOT KEPT (NOT AN IMPROVEMENT)
+> * Tried: the m08near tile at the painted scale in the lane's middle and along the river (banks take up the rest of the lane,
+>   piecewise like the swim remap). Result at forward 10 u: glints smaller, but the near water then shows visible repeats of
+>   the same small glints and the magenta / cyan banks are stretched sideways ≈ 3.4× into flat smears; the BEFORE (bold
+>   glossy strokes ≈ 2× painted size) reads closer to the approved picture's bold near water. Code saved as
+>   `/home/user/wt/s08/qa/match/08/r12/wip_m08glint_not_kept.patch`, reverted (one honest try; method stopped).
+> 
+> ## Tried — `&m08drot=1` (drum wall in the lower spout cups' shadow) — NOT KEPT (NOT AN IMPROVEMENT)
+> * Defect (B): behind the lower-left spout cup (forward 10 u, two-thirds through) the drum wall the approved view could not
+>   see shows the generic fill tile (fine diagonal slots) with hard straight edges against the painted wall.
+> * Tried: a hidden drum point takes the user's pixels from the nearest visible point of the same ring (same depth, turned
+>   6–42° about the chamber axis). Result: the nearest visible ring points  …[+4521 chars]
+
