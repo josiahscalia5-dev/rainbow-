@@ -10,7 +10,8 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
-import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD } from '../vfx/waterRibbon';
+import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05fcloud=1 only
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
@@ -630,13 +631,20 @@ export function buildEnvironment(course: Course): Environment {
     const camPos = new THREE.Vector3();
     // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored
     // virtual tunnel, sliding seam, folds only at the stage end) instead of folding away from ≈34 u before the seam
+    // `&m05fcloud=1` (Screen 05 round 12): foam clouds along both far banks (placed every frame by match05far.ts)
+    const farClouds05 = M05FAR && M05FCLOUD ? createFarCloud05(Math.min(zEnd, 45)) : null;
     const liveFar = M05FAR ? createLiveFar05({
       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
       zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
       riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
       course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
+      clouds: farClouds05 ?? undefined,
     }) : null;
+    if (farClouds05 && liveFar) {
+      farClouds05.mesh.onBeforeRender = (_r, _s, cam) => liveFar(cam);
+      zones.tubes.add(farClouds05.mesh);
+    }
     const sync = (cam: THREE.Camera) => {
       const o = ft.openFor(camPos.setFromMatrixPosition(cam.matrixWorld));
       if (Math.abs(o - openNow) < 1e-4) return;

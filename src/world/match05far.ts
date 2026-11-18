@@ -24,6 +24,7 @@ import type { FarRiverLayout, FarRiverRow } from './far05';
 import type { Course, CourseSample } from './course';
 import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';
 import { clip05 } from '../vfx/clip05';
+import type { FarLump05 } from '../vfx/foam';
 
 export const M05FAR: boolean = MATCH05 && flag05('m05far');
 /**
@@ -65,6 +66,8 @@ export interface LiveFar05Args {
   riverUp: (z: number) => number;
   /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */
   course?: Course;
+  /** `&m05fcloud=1` (round 12): foam-cloud lumps along both far banks (src/vfx/foam.ts createFarCloud05) */
+  clouds?: { mesh: THREE.InstancedMesh; lumps: FarLump05[] };
 }
 
 const ROW_KEYS: (keyof FarRiverRow)[] = ['xB', 'hw', 'cL', 'wL', 'cR', 'wR', 'core'];
@@ -248,6 +251,30 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
 
   let lastEye = new THREE.Vector3(Infinity, 0, 0), live = true, open = 0;
   const eye = new THREE.Vector3();
+  // `&m05fcloud=1` (Screen 05 round 12): far-bank foam clouds on the far layout's water edge, anchored to the virtual
+  // tunnel, compressed like the block, only where the block is live and its baked picture magnified (as m05fmag)
+  const cm = new THREE.Matrix4(), cp = new THREE.Vector3(), co = new THREE.Vector3();
+  const placeClouds = (show: boolean) => {
+    const c = a.clouds;
+    if (!c) return;
+    c.mesh.visible = show;
+    if (!show) return;
+    const lift0 = zs > 0 ? a.riverUp(zs) - a.riverUp(0) : 0;
+    const ch = a.lay.chord - 0.1;
+    c.lumps.forEach((l, i) => {
+      let sc = 0;
+      if (l.Z > zs + 0.02) {
+        const r = rowAt(l.Z);
+        const x = THREE.MathUtils.clamp(l.side < 0 ? r.xB - r.hw - l.e : r.xB + r.hw + l.e, -ch, ch);
+        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift);
+        point(l.Z, co, cp);
+        const mag = (D0lock + l.Z) / Math.max(cp.distanceTo(eye), 0.5);
+        sc = l.r * kOf(l.Z) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2) * THREE.MathUtils.smoothstep(l.Z, zs, zs + 0.6) * (1 - open);
+      }
+      c.mesh.setMatrixAt(i, cm.makeScale(sc, sc, sc).setPosition(cp));
+    });
+    c.mesh.instanceMatrix.needsUpdate = true;
+  };
   return (cam: THREE.Camera) => {
     eye.setFromMatrixPosition(cam.matrixWorld);
     if (eye.distanceToSquared(lastEye) < 1e-10) return;
@@ -274,6 +301,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
       place(a.farRings, a.ringItems, open);
       place(a.farLids, a.lidItems, open);
     }
+    placeClouds(!atLock && open < 0.999);
     // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
     if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
     else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }

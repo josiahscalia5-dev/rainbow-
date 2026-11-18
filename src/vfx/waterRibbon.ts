@@ -424,6 +424,15 @@ export const m05fmagD0 = { value: 53.25 };
  * far block is not live there → weight 0 → unchanged.
  */
 export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
+/**
+ * `&m05fcloud=1` (Screen 05 round 12, needs m05fmag + m05cloud; src/vfx/foam.ts createFarCloud05, src/world/match05far.ts):
+ * the far river's banks behind the seam were a flat pale-lilac rim band (the "wedge" on the left bank, t66 … t95; huge
+ * when steering left at t95) where the painting has puffy white foam clouds along the water's edge. Under the switch the
+ * same foam-cloud lumps as the near banks (m05cloud: clusters of mixed-size lumps + small bubbles) line both far banks,
+ * anchored to the far block's virtual tunnel (they approach like real geometry), shown only where the block is live and
+ * its baked picture magnified (elsewhere F's own painted foam shows). Locked view: hidden → unchanged.
+ */
+export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
 /** m05fpaint: shared uniforms (T2 texture + its start / half period, the ribbon's flow vector), filled by attachProj05 */
 export const m05fpaint = {
   uPjT2: { value: null as THREE.Texture | null },

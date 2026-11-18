@@ -489,6 +489,61 @@ function makeBankBubbleMaterial() {
   return { mat, uniforms };
 }
 
+/** `&m05fcloud=1` (Screen 05 round 12): one far-bank foam lump in the far block's virtual frame (src/world/match05far.ts) */
+export interface FarLump05 {
+  /** virtual depth beyond the far seam origin sF (anchored: the virtual tunnel stays put) */
+  Z: number;
+  /** -1 left bank, +1 right bank */
+  side: number;
+  /** offset outward from the far layout's water edge (units; negative = over the water) */
+  e: number;
+  /** height above the bank surface (units, before the block's compression) */
+  lift: number;
+  /** radius (units, before the block's compression) */
+  r: number;
+}
+/**
+ * `&m05fcloud=1` (Screen 05 round 12, waterRibbon.ts M05FCLOUD): the near banks' foam clouds (m05cloud: clusters of 6–12
+ * mixed-size lumps, larger ones low in the middle, + small bubbles at the waterline) laid along both far-river banks from
+ * Z = 0 to zMax. Same impostor material as the 05 rim lumps (fresh instance: NOT clipped at the seam — these lumps live
+ * beyond it). Matrices are written every frame by match05far.ts (scale 0 = hidden).
+ */
+export function createFarCloud05(zMax: number): { mesh: THREE.InstancedMesh; lumps: FarLump05[] } {
+  const rc = rng(5353);
+  const lumps: FarLump05[] = [];
+  const cols: [number, number, number][] = [];
+  for (let Z = 0.2; Z < zMax; Z += 0.6 + rc() * 1.0) {
+    for (const side of [-1, 1]) {
+      if (rc() < 0.12) continue;
+      const zc = Z + (rc() - 0.5) * 0.6, ec = -0.15 + rc() * 0.75;
+      const n = 7 + ((rc() * 7) | 0);
+      const big = 0.24 + rc() * 0.2;
+      for (let k = 0; k < n; k++) {
+        const a = rc() * Math.PI * 2, d = Math.sqrt(rc());
+        const r = big * (0.45 + 0.6 * (1 - d) * rc() + 0.25 * rc());
+        lumps.push({ Z: zc + Math.cos(a) * d * 0.75, side, e: ec + Math.sin(a) * d * 0.55, lift: r * (0.05 + 0.25 * (1 - d)), r });
+        cols.push([0.78 + 0.22 * (1 - d), rc(), rc() * 2 - 1]);
+      }
+      const nb = 4 + ((rc() * 6) | 0);
+      for (let k = 0; k < nb; k++) {
+        const u = rc(), r = 0.025 + 0.05 * u * u;
+        lumps.push({ Z: zc + (rc() - 0.5) * 1.8, side, e: ec - 0.35 - rc() * 0.4, lift: r * 0.2, r });
+        cols.push([0.95, rc(), rc() * 2 - 1]);
+      }
+    }
+  }
+  const { mat } = makeBankBubbleMaterial();
+  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(2, 2), mat, Math.max(1, lumps.length));
+  mesh.name = 'foam_far05_clouds';
+  mesh.frustumCulled = false;
+  mesh.renderOrder = 1;
+  mesh.visible = false;
+  const m = new THREE.Matrix4().makeScale(0, 0, 0), c = new THREE.Color();
+  cols.forEach((v, i) => { mesh.setMatrixAt(i, m); mesh.setColorAt(i, c.setRGB(v[0], v[1], v[2])); });
+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  return { mesh, lumps };
+}
+
 /** unit sphere puff with smooth normals (detail 0 icosahedra get flat normals by default) */
 function puffGeometry(detail: number) {
   const g = new THREE.IcosahedronGeometry(1, detail);

@@ -58,3 +58,36 @@ t75_through, t85_through, t90_through, t95_left, t95_right, t98_end (positions i
   `…/3_NEW_k81_kink.png`, `…/3_NEW_t90_through.png`, `…/3_NEW_t75_through.png`, `…/3_NEW_t66_through_screen.png`
 * Files: `src/vfx/waterRibbon.ts` (M05FPAINT, shared `m05fpaint` uniforms filled in attachProj05), `src/world/materials.ts`
   (farRiverMaterial: FPAINT_PARS / FPAINT_APPLY before the throat glow).
+
+## Item — `&m05fbank=1` (round-11 unfinished foam-bank shader) — NOT KEPT
+* Tested once on the step-2 set at t66 / t75 / t85 / k81: the pale left far bank only gains a faint bubble-cell texture;
+  it is still a flat pale slab, not the painted foam clouds. No visible gain → not kept (switch stays unused in the code).
+
+## Item — `&m05fedge=1` (narrow the far floor beyond the water edge to the 1.3 u rim near the seam) — NOT KEPT
+* Tested once at t95_left / t75 / t85 / k81 / t66: no visible change. A temporary debug tint showed why: the pale wedge is
+  the far river's own foam-rim band (the rim is drawn flat lilac), not floor beyond it. Code removed (one-line bankW
+  override in farRiverMaterial; nothing kept).
+
+## Step 3 — `&m05fcloud=1` (class C: foam clouds along both far banks) — KEPT
+* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1`
+* Cause: behind the seam the far river's banks were a flat pale-lilac rim band (the left "wedge" at t66 … t95, very large
+  when steering left at t95). The near banks' foam clouds (m05cloud) stop at the seam (foam is clipped there), so the far
+  stretch of the S-river had no foam clouds at all, where the painting has white foam clusters along both banks.
+* Fix (missing detail added, nothing redesigned): the same foam-cloud lumps as the near banks (clusters of mixed-size
+  puffy lumps + small bubbles at the waterline, same lump material) line both far banks on the far layout's water edge,
+  anchored to the far block's virtual tunnel (they approach like real geometry and shrink into the throat), shown only
+  where the block is live and its baked picture magnified (elsewhere the baked far picture's own painted foam shows).
+* WHAT LOOKS CLOSER: from t66 to t95 both banks of the river ahead are now lined with puffy white foam clouds running
+  into the tunnel, as in the approved picture, instead of a flat pale-lilac band; the left pale wedge at t75 / k81 / t85
+  is now a foam bank. Steering left at t95, foam clouds line the left bank in front of Benny.
+* Locked approved view: 0 px (`node scripts/capture.mjs 05 --q=<step-2 set>` vs `+m05fcloud=1`).
+* Still wrong: steering hard left at t95 a pale lilac floor still shows behind the foam line (between the foam and the
+  wall); the far foam lumps are a little smaller / sparser than the painted clusters; the left slab at t66 still has a
+  thin pale edge.
+* APPROVED: `/home/user/wt/s05/qa/match/05/r12/step3_m05fcloud/1_APPROVED.png`
+* BEFORE (= step 2): `/home/user/wt/s05/qa/match/05/r12/step3_m05fcloud/2_BEFORE_t85_through.png`, `…/2_BEFORE_t75_through.png`,
+  `…/2_BEFORE_k81_kink.png`, `…/2_BEFORE_t90_through.png`, `…/2_BEFORE_t66_through_screen.png`, `…/2_BEFORE_t95_left.png`
+* NEW: `/home/user/wt/s05/qa/match/05/r12/step3_m05fcloud/3_NEW_t85_through.png`, `…/3_NEW_t75_through.png`,
+  `…/3_NEW_k81_kink.png`, `…/3_NEW_t90_through.png`, `…/3_NEW_t66_through_screen.png`, `…/3_NEW_t95_left.png`
+* Files: `src/vfx/waterRibbon.ts` (M05FCLOUD), `src/vfx/foam.ts` (createFarCloud05), `src/world/match05far.ts`
+  (placeClouds in the live sync), `src/world/environment.ts` (creates the lumps under the switch).
