@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s07",
  "branch": "claude/rainbow-s07-match-c15",
  "head": "dbc7678cd067f7d16e0f30ef6a5d26310043991c",
- "time": "2026-11-18T18:46:52+00:00",
+ "time": "2026-11-18T18:47:21+00:00",
  "dirty_tracked": [],
  "untracked_copied": [
   "qa/match/07/r15/step1/BEFORE/motion.json",
@@ -23,7 +23,8 @@
   "qa/match/07/r15/step1/BEFORE/t33_through_screen.png",
   "qa/match/07/r15/step1/BEFORE/t50_through_screen.png",
   "qa/match/07/r15/step1/BEFORE/t66_through_screen.png",
-  "qa/match/07/r15/step1/BEFORE/t80_through_screen.png"
+  "qa/match/07/r15/step1/BEFORE/t80_through_screen.png",
+  "qa/match/07/r15/step1/NEW/a00_approved_view.png"
  ],
  "restore": "git switch claude/rainbow-s07-match-c15 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s07-match-c15/tracked.patch && copy backups/wip/claude__rainbow-s07-match-c15/untracked/* into the worktree"
 }

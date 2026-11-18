@@ -138,6 +138,7 @@ def gq_at(k, ang):
 
 # ---- 3. the painted period(s): (s, psi) -> screen, straight from the approved pixels ---------------------------------
 NS, NC = 160, 2048
+GL0, GL1 = -1.66, 1.86                                             # painted wall arc used to straighten the lip line
 psi = np.linspace(-np.pi, np.pi, NC, endpoint=False)
 s = (np.arange(NS) + 0.5) / NS
 periods = []
@@ -152,13 +153,16 @@ for K in KS:
     a0, a1 = int(NS * 0.55), int(NS * 0.95)
     sub = lt[a0:a1, ::2]
     pth = viterbi(-sub, 2.0) + a0
-    pc = psi[::2]; wc = np.abs(pc) < 1.7
+    pc = psi[::2]; wc = (pc > GL0) & (pc < GL1)
     Bl = basis(pc[wc]); lp = pth[wc].astype(float)
     w = np.ones(len(lp), bool)
     for _ in range(3):
         coef = np.linalg.lstsq(Bl[w], lp[w], rcond=None)[0]
         res = lp - Bl @ coef; w = np.abs(res) < max(2.0, 2.5 * np.std(res[w]))
-    lipc = (basis(psi) @ coef + 0.5) / NS                           # lip s per column
+    # Fourier curve + a small, smoothed local correction (straightens the lip right up to the ends of the painted arc)
+    fl = basis(pc) @ coef
+    loc = np.where(wc, np.clip(gaussian_filter1d(np.where(wc, pth - fl, 0.0), 8), -6, 6), 0.0)
+    lipc = (np.interp(psi, pc, fl + loc) + 0.5) / NS                # lip s per column
     lipref = float(np.median(lipc[np.abs(psi) < 0.6]))
     print(f"  ring {K}: lip line s {lipref:.3f} (wave {np.ptp(lipc[np.abs(psi) < 1.7]):.3f})")
     s_src = np.where(s[:, None] <= lipref, s[:, None] / lipref * lipc[None, :],
