@@ -1012,3 +1012,131 @@ Void closed. Now the by-eye comparison, BEFORE vs NEW, for the key shots.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T10:53:49.159Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,25p scripts/capture.mjs", "description": "Read capture tool header"}`
+
+### 🧑 User — 2026-11-18T10:53:49.187Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+410 chars]
+
+### 🤖 Claude — 2026-11-18T10:53:55.522Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && node scripts/capture.mjs 08 \"--q=$B7\" --out=$S/cap/b7 2>&1 | grep -v \"allow list\" | tail -2 && node scripts/capture.mjs 08 \"--q=$B7&m08far=1\" --out=$S/cap/far 2>&1 | grep -v \"allow list\" | tail -2; git status --short | head", "description": "Frozen approved-view captures: kept set vs m08far", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T10:54:24.614Z
+
+> ↩︎ result: '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>  M qa/capture_log.json
+>  M src/world/match08.ts
+
+### 🤖 Claude — 2026-11-18T10:54:30.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git checkout qa/capture_log.json && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && ls $S/cap/b7 $S/cap/far && cat > $S/py/diff.py <<'EOF'\nimport sys\nimport numpy as np\nfrom PIL import Image\na = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)\nb = np.asarray(Image.open(sys.argv[2]).convert('RGB')).astype(int)\nref = np.asarray(Image.open('/home/user/wt/s08/references/08_final_spin_chamber.png').convert('RGB').resize((a.shape[1], a.shape[0]))).astype(int)\nd = np.abs(a - b).max(2)\nch = d > 0; big …[+478 chars]`
+
+### 🧑 User — 2026-11-18T10:54:31.529Z
+
+> ↩︎ result: Updated 1 path from the index
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/cap/b7:
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/cap/far:
+> 08.png
+> changed px 54799 >20 levels 240
+> bbox x 0 863 y 0 811
+> mean error vs approved on changed px: before 5.88 after 5.87
+
+### 🤖 Claude — 2026-11-18T10:54:36.881Z
+
+Approved view: 240 px beyond 20 levels (edge resampling), mean error vs the approved picture unchanged (5.88 → 5.87). Step 1 is a keep. Let me write the step folder, PROGRESS entry, and commit.
+
+### 🤖 Claude — 2026-11-18T10:54:38.874Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat .gitattributes | head -20; du -sh /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/r/far/f06_forward6u.png; ls qa/match/08/", "description": "Check LFS rules and image sizes"}`
+
+### 🧑 User — 2026-11-18T10:54:38.915Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+> 2.4M	/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/r/far/f06_forward6u.png
+> 08_BEFORE_current_game.png
+> 08_NEW_match08.png
+> 08_NEW_match08_android1080x1920.png
+> 08_NEW_screen_match.json
+> NOTES.md
+> benny_APPROVED_closeup.png
+> benny_NEW_ported_closeup.png
+> coins08px
+> gameplay_test_match08.json
+> motion
+> other_screens
+> scenery
+> scenery_metrics_BEFORE_FINAL.json
+> scenery_me …[+21 chars]
+
+### 🤖 Claude — 2026-11-18T10:54:47.145Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08/tools/mkstep.sh <<'EOF'\n#!/bin/bash\n# usage: mkstep.sh <stepdir-name> <newdir> <shot> [shot...]\nset -e\nWT=/home/user/wt/s08; A=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/08\nD=$WT/qa/match/08/r10/$1; NEW=$2; shift 2\nmkdir -p $D\ncp $WT/references/08_final_spin_chamber.png $D/1_APPROVED.png\nfor s in \"$@\"; do cp $A/$s.png $D/2_BEFORE_$s.png; cp $NEW/$s.png $D/3_NEW_$s.png; done\nls $D\nEOF\nchmod +x /tmp/claude-0/-home-user-rainbow-/0bf …[+389 chars]`
+
+### 🧑 User — 2026-11-18T10:54:47.217Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+
+### 🤖 Claude — 2026-11-18T10:54:57.493Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s08/qa/match/08/r10/PROGRESS.md", "content": "# Screen 08 · Final Spin Chamber — round 10 progress (branch `claude/rainbow-s08-scenery-c10`)\n\nAuthority: `references/08_final_spin_chamber.png`. Start = `c0d8c97b`, kept set\n`B7 = match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1`.\nBEFORE frames = the lead's fresh 12-shot audit of B7 (`scratchpad/audit_c10/08/`), copied next to each NEW frame.\nEvery step is one URL switch on top of the previous kept set; the default build is untouched.\n\n## Step 1 — `&m08far=1` (defect A/ …[+1722 chars]`
+
+### 🧑 User — 2026-11-18T10:54:57.544Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s08/qa/match/08/r10/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T10:55:02.764Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git add src/world/match08.ts qa/match/08/r10 && git commit -q -m \"Screen 08 r10 step 1: &m08far=1 keeps the gold arch framing the chamber longer while swimming\n\nThe real 3D gold ring (+ inlet pipe, entrance wall) is pushed x4.2 instead of x2.6 along the\napproved camera's rays: same approved picture, behind the near spout cups as painted, and it\nstays in frame at f06/t33/t66 instead of leaving it. Collar wall closes the gap where the larger\nopening was wider than the drum (depth bake honours the same clip). Approved view: 240 px > 20\nlevels, mean erro …[+433 chars]`
+
+### 🧑 User — 2026-11-18T10:55:08.976Z
+
+> ↩︎ result: 08477d8ad338180ebc8fb3768a14dc4c26beee45
+> 08477d8ad338180ebc8fb3768a14dc4c26beee45	refs/heads/claude/rainbow-s08-scenery-c10
+
