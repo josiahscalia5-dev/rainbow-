@@ -102,3 +102,105 @@ Other agents active in this session, addressable via SendMessage({to: name, mess
 > + * tile T2 laid across the full river width, whose pink bands lie at u −0.69 / +0.25 — outside the narrow strip visible
 > + * near the camera …[+5322 chars]
 
+### 🤖 Claude — 2026-11-18T15:42:19.991Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r13/PROGRESS.md <<'EOF'\n\n* 2026-11-18 ~15:15 UTC round 13 resumed (water-fx-specialist, new instance after the ~15:08 interruption). Found one\n  unfinished edit in the worktree: `&m05vee=1` in `src/vfx/waterRibbon.ts` (task 4 start: the near tile T2's lateral lookup\n  bent onto the painted V of hot-pink bands behind Benny while swimming; behind its own switch, not yet verified). Next:\n  verify it by eye (start view 0 px, f03 / f06 / f10 / f20 / hard left / right) — keep only if clearly closer; then task (a)\n  (near lather bank strai …[+569 chars]`
+
+### 🤖 Claude — 2026-11-18T15:42:20.396Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T15:42:24.049Z
+
+> ↩︎ result: ebc9676c9f65ab02e816fecb51a71d0e469b2c3c
+> ebc9676c9f65ab02e816fecb51a71d0e469b2c3c	refs/heads/claude/rainbow-s05-match-c13
+
+### 🧑 User — 2026-11-18T15:42:24.055Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T15:42:29.921Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s05 resumed, on task 4 m05vee", "message": "s05 (water-fx-specialist) round 13 resumed on claude/rainbow-s05-match-c13, log commit ebc9676 pushed (remote == HEAD). Found the unfinished edit &m05vee=1 (task 4: near water behind Benny, the T2 tile's pink bands bent onto the painted V) — verifying it by eye now (keep only if closer), then task (a) near lather bank cut at the seam (different method than m05lump), then task 5 (05 -> 06 transition).", "type": "message", "recipient": "main", "recipient_kind": "main", "content": "s05 (water-fx-specialist) round 13 resumed on …[+7 chars]`
+
+### 🧑 User — 2026-11-18T15:42:29.934Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T15:42:33.004Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls qa/match/05/r13/ qa/match/05/r13/BEFORE | head -50 && ls tools/match05/ && sed -n 1,80p tools/match05/r8_shots.mjs", "description": "List r13 folders and capture script"}`
+
+### 🧑 User — 2026-11-18T15:42:33.067Z
+
+> ↩︎ result: qa/match/05/r13/:
+> BEFORE
+> PROGRESS.md
+> item_m05lump
+> step1_m05slot
+> step2_m05join
+> step3_m05frim
+> 
+> qa/match/05/r13/BEFORE:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> k81_kink.png
+> k81_kink_left.png
+> k81_kink_right.png
+> s_left_hard.png
+> s_right_hard.png
+> shots.json
+> t33_through_screen.png
+> t66_through_screen.png
+> t75_through.png
+> t85_through.png
+> t90_through.png
+> t95_left.png
+> t95_right.png
+> t95_through_screen.png
+> t98_end.png
+> blueprint05.py
+> blueprint05_game.mjs
+> channel05.py
+> channel05_bp.py
+> coin_audit.mjs
+> coin_cp_count.mjs
+> frame_cut_fit.py
+> make_target_vis.py
+> metrics.py
+> near_mask.py
+> pixel_probe.mjs
+> r10_probe.mjs
+> r11_eval.mjs
+> r13_dbg_shots.mjs
+> r8_probe.mjs
+> r8_shots.mjs
+> r9_seam_probe.mjs
+> regions.py
+> screen_match.py
+> // Screen 05 round 8: the lead's motion_audit (tools/lead_r6/motion_audit.mjs) with a shot filter + per-shot probes
+> // (coin screen sizes, Benny's screen box). Same shot list / same simulation stepping as the audit, so a shot taken here
+> // equals the audit frame of the same name. Run from the checkout:
+> //   node tools/match05/r8_shots.mjs <outDir> "<query>" [name,name,...|all] [port]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { …[+4913 chars]
+
+### 🤖 Claude — 2026-11-18T15:42:38.841Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-18T15:42:38.891Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:42:41.171Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r13/BEFORE/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T15:42:41.216Z
+
+> ↩︎ result: [image]
+
