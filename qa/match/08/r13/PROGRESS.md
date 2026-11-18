@@ -41,3 +41,38 @@ Kept query: `K12&m08bore=1&m08flange=1`
 * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r13/step1_m08bore/1_APPROVED.png`, `2_BEFORE_<shot>.png`,
   `3_NEW_<shot>.png` for all 12 audit shots (best: `f06_forward6u`, `f10_forward10u`, `t95_through_screen`,
   `f03_forward3u`) + `2_BEFORE/3_NEW_capture_approved_view.png` (deterministic approved view).
+
+## Tried — `&m08urcup=1` (upper-right cup rebuilt as the fitted TILTED twin of the upper-left cup + unrolled painted texture) — NOT KEPT (NOT AN IMPROVEMENT)
+* Finding (kept for later): the painted upper-right cup is a twin of the upper-left one drawn TILTED (leaning ~10 deg toward
+  the chamber centre, its underside dish seen strongly from below: dish ellipse centre ~(741, 437), half-width ~72 px) and
+  mostly hidden behind the arch; the fitted proxy is an upright, narrower half-dome (axis x 713 vs painted ~745). Mirroring
+  the tilted painted band about the upright axis is what draws the X; the doubly hidden top is the gold wedge.
+* Tried: least-squares fit of a tilted cup (rx = the upper-left twin's 3.0 u, dome 2.0 u, band 0.85 u, roll 9.8 deg,
+  pitch -10.9 deg, rms 2.35 px against the traced dish outline / cap-band line / cap outline) with an unrolled texture of
+  its painted pixels (mirror + continuation + a cap tile cut from the painted cap). Result: the cup's FRONT CENTRE (what the
+  swimming camera mostly sees) was never painted (behind the arch) -> forward 6 u / two-thirds through the cup front became
+  a repeated cap tile, the underside a radial starburst, the gold band vanished. Clearly less like the painted cup than the
+  upright mirror version. Patch: `/home/user/wt/s08/qa/match/08/r13/wip_m08urcup_not_kept.patch` (+ tool, texture and two
+  NEW frames in `/home/user/wt/s08/qa/match/08/r13/wip_m08urcup/`), reverted.
+
+## Step 2 — `&m08cupw=1` (gold wedge + X seams on the upper-right cup's top) — KEPT
+Kept query: `K12&m08bore=1&m08flange=1&m08cupw=1`
+* Cause (defect B): on the upper-right cup the shader decided "painted" by the projector depth test; along the arch's
+  inner edge (which crosses the cup diagonally in the approved view) that test passes a few px of the arch's anti-aliased
+  gold edge -> hard bright lines, mirrored into an X; where a cup point AND its mirror point are behind the arch (the top
+  next to the axis) only the gold patch was left -> the gold wedge.
+* What changed (`src/world/match08.ts`, upper-right cup material only, off the approved viewpoint only): `tools/match08/
+  cupw08.py` -> `assets/textures/match08/cupw08_mask.png` = the traced painted cup outline (cupmask08 polygons) eroded 2 px.
+  A cup point takes its own plate pixel only inside that outline, else its mirror point's (as m08cup), else the painted cap
+  copied across the arch edge from just inside it (12 / 24 / 36 px perpendicular to the edge), else the previous colour.
+  Tried and dropped inside the step: gold patch as last resort (drew a gold outline round the cup); the copy before the
+  mirror on the cap (stepped band copies — the painted band is tilted).
+* Approved view: 0 px differ (deterministic `scripts/capture.mjs 08` with / without the switch).
+* What looks closer: forward 6 u, forward 10 u, two-thirds through and at the stage end the upper-right cup's top is one
+  pink perforated cap like the painted cup — BEFORE a plain gold triangle sat on top, cut by hard bright X lines.
+* Still wrong: a soft V remains in the cup's gold band and a faint seam at the cap's centre (mirror of the tilted painted
+  band about the upright proxy axis; the real fix would be the tilted proxy, but its front was never painted — see above).
+* Verdict: GOOD IMPROVEMENT (small, local).
+* Images (separate, full size): `/home/user/wt/s08/qa/match/08/r13/step2_m08cupw/1_APPROVED.png`, `2_BEFORE_<shot>.png`
+  (= step-1 kept set), `3_NEW_<shot>.png` for all 12 audit shots (best: `f06_forward6u`, `f10_forward10u`,
+  `t66_through_screen`, `t95_through_screen`).
