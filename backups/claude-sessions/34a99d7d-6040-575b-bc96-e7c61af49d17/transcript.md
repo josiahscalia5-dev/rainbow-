@@ -929,3 +929,465 @@ While those branches fetch, I'll read the agents status and the Round 7 briefs.
 
 > 🔧 **mcp__claude-code-remote__update_environment** `{"environment_name": "rainbow-", "applies_to": "my personal environment: all of my future sessions that use it, not only this one", "reason": "Allow the Marble asset CDN and fal.ai file hosts so saved and approved outputs can download.", "add_allowed_hosts": ["cdn.marble.worldlabs.ai", "v3b.fal.media", "v3.fal.media"]}`
 
+### 🧑 User — 2026-11-18T01:37:44.740Z
+
+> ↩︎ result: {"environment_id":"env_017aWqXEhZNgFoAtF4abmsSL","name":"rainbow-","scope":"personal","updated":true,"added_allowed_hosts":["cdn.marble.worldlabs.ai","v3b.fal.media","v3.fal.media"],"network_before":{"type":"limited","allow_mcp_servers":true,"allow_package_managers":true,"allowed_hosts":["download.blender.org","dl.google.com","api.atlas.worldlabs.ai","docs.atlas.worldlabs.ai","docs.worldlabs.ai","marble.worldlabs.ai","api.worldlabs.ai","www.worldlabs.ai","lfs.github.com"]},"network_after":{"type":"limited","allow_mcp_servers":true,"allow_package_managers":true,"allowed_hosts":["download.blender.org","dl.google.com","api.atlas.worldlabs.ai","docs.atlas.worldlabs.ai","docs.worldlabs.ai","marble.worldlabs.ai","api.worldlabs.ai","www.worldlabs.ai","lfs.github.com","cdn.marble.worldlabs.ai","v3b.fal.media","v3.fal.media"]},"allowed_hosts_after":["download.blender.org","dl.google.com","api.atlas.worldlabs.ai","docs.atlas.worldlabs.ai","docs.worldlabs.ai","marble.worldlabs.ai","api.worldlabs.ai","www.worldlabs.ai","lfs.github.com","cdn.marble.worldlabs.ai","v3b.fal.media","v3.fal.media"],"note":"Saved to the environment. This session usually picks up host and network changes within a few  …[+76 chars]
+
+### 🤖 Claude — 2026-11-18T01:37:47.734Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/tasks/b3nc8lb8e.output; sleep 1; curl -sS -m 20 -o /dev/null -w 'v3b.fal.media HTTP %{http_code}\\n' \"https://v3b.fal.media/files/b/0ab2da52/Neka43ZqEibUAlxWlfn6U\" 2>&1 | tail -1; curl -sS -m 20 -o /dev/null -w 'cdn.marble HTTP %{http_code}\\n' https://cdn.marble.worldlabs.ai/ 2>&1 | tail -1", "description": "Show fetched branch SHAs and retest download hosts"}`
+
+### 🧑 User — 2026-11-18T01:37:49.596Z
+
+> ↩︎ result: == claude/rainbow-s04-match-c7 d1e422faff 2026-11-17 17:57:37 +0000 autosave: Rainbow 2026-11-17 17:57 UTC
+> Terminated
+> fatal: Needed a single revision
+> fatal: ambiguous argument 'origin/claude/rainbow-s05-match-c7': unknown revision or path not in the working tree.
+> Use '--' to separate paths from revisions, like this:
+> 'git <command> [<revision>...] -- [<file>...]'
+> == claude/rainbow-s05-match-c7  
+> == claude/rainbow-s06-match-c7 efaf78b7d6 2026-11-18 00:33:35 +0000 06 r7: capture log from the frozen approved-view checks
+> == claude/rainbow-s07-match-c7 3afaa7e9cb 2026-11-18 01:21:15 +0000 autosave: Rainbow 2026-11-18 01:21 UTC
+> == claude/rainbow-s08-scenery-c7 c0d8c97b51 2026-11-18 01:23:03 +0000 autosave: Rainbow 2026-11-18 01:22 UTC
+> == claude/rainbow-s08-benny08-bake-c5 3133a3ad20 2026-11-18 01:16:29 +0000 autosave: Rainbow 2026-11-18 01:15 UTC
+> == claude/rainbow-s08-camclear-c5 18687513e3 2026-11-17 19:48:23 +0000 autosave: Rainbow 2026-11-17 19:48 UTC
+> == claude/rainbow-preview-all-c6 41ea661823 2026-11-17 22:09:09 +0000 Preview c6: fix Screen 08 with all switches (29.5 -> 87.7 %): match07 river override
+> 
+> [exited with code 0]
+> v3b.fal.media HTTP 404
+> cdn.marble HTTP 403
+
+### 🤖 Claude — 2026-11-18T01:37:57.522Z
+
+> 🔧 **Bash** `{"command": "(timeout 300 git fetch -q origin claude/rainbow-s05-match-c7:refs/remotes/origin/claude/rainbow-s05-match-c7 > /dev/null 2>&1 &) ; for p in \"claude/rainbow-s07-match-c7:qa/match/07/STATUS.md\" \"claude/rainbow-s08-scenery-c7:qa/match/08/STATUS.md\"; do b=${p%%:*}; f=${p#*:}; echo \"######## $b $f\"; git show \"origin/$b:$f\" 2>&1 | head -60; done", "description": "Read newest STATUS files of the 07 and 08 workstreams"}`
+
+### 🧑 User — 2026-11-18T01:37:57.556Z
+
+> ↩︎ result: ######## claude/rainbow-s07-match-c7 qa/match/07/STATUS.md
+> # Screen 07 · DIVE THE WASHER TUBE — status (round 7 / account 7, 2026-11-18 ~01:30 UTC)
+> 
+> Branch `claude/rainbow-s07-match-c7`, started from `835a72db` (= `claude/rainbow-s07-match-c5` tip). Nothing is approved
+> until the user says so. Brief: `docs/briefs/2026-11-17-r7/S07.md` (lead branch).
+> 
+> ## MILESTONE 3 — done (round 7): the matched tube look over the whole stage incl. the plunge
+> **New kept set (proposal):** `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`
+> (= round-4 set K + `m07tube` + `m07ring`). Default build untouched (0 px).
+> 
+> ### Structural check first (the two Screen 06 causes) — `r7/probe_before.json`, `tools/match07/probe_r7.mjs`
+> | along from the checkpoint | 0 u | 3 u | 6 u | 10 u | 20 u | 30 u |
+> |---|---|---|---|---|---|---|
+> | camera pitch | −13.2° | −13.0° | −12.9° | −12.9° | −12.9° | −10.0° (blending out) |
+> | far ring R5 on screen (painted VP 612,548) | 603,546 | 586,552 | 591,553 | 612,554 | 633,555 | 363,628 |
+> 1. Camera pitch does NOT follow the river slope on the level 07 stretch (river slope −3°, camera level at −13° look-down
+>    as solved) → cause 1 of 06 is not presen …[+4835 chars]
+
+### 🤖 Claude — 2026-11-18T01:38:00.043Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s07-match-c7:qa/match/07/STATUS.md | sed -n '60,140p'; echo \"#### 08 files\"; git diff --stat 1d9aebd origin/claude/rainbow-s08-scenery-c7 -- qa/match/08 2>/dev/null | tail -5; git ls-tree -r --name-only origin/claude/rainbow-s08-scenery-c7 qa/match/08 | grep -iE 'status|notes' | head", "description": "Read rest of 07 status and locate 08 scenery notes"}`
+
+### 🧑 User — 2026-11-18T01:38:00.525Z
+
+> ↩︎ result: * Continuity: all joins gap 0, plunge drop 61.19 u, min pitch −70° (`r7/continuity_default.json`; `course.ts` untouched).
+> * APK: one attempt FAILED in Gradle dependency resolution (Maven: httpmime 4.5.6 / grpc-api 1.45.1 not found) — not retried; details in NOTES.md.
+> 
+> ### Pictures (separate full-size portrait files, same 12 audit positions, `node tools/lead_r6/motion_audit.mjs 07 …`)
+> APPROVED `r7/APPROVED_07.png` · BEFORE (K) `r7/BEFORE/*.png` · NEW (new set) `r7/NEW/*.png`.
+> Best ones to look at: `t66_through_screen.png` (mid-plunge), `t33_through_screen.png` (plunge top), `f20_forward20u.png`.
+> 
+> ### Exact next step
+> 1. Plunge foam: the game's berm/puff foam is one mesh for the whole course; a `&m07foam=1` hook in `src/vfx/foam.ts`
+>    (hide the berm + puff chunks on s plunge-top+9 → plunge-bottom−12, uniform/visibility only) so the matched river
+>    tile's painted banks show instead of the tall white walls.
+> 2. Near water while moving: a higher-detail river tile unwrapped from the NEAR painted water (2–6 u, least magnified)
+>    instead of the 6–16 u band, plus foam-bank colour on the lowest wall band (no hard wall edge when steering hard).
+> 3. The `x07` path fix from the preview branch ( …[+4682 chars]
+
+### 🤖 Claude — 2026-11-18T01:38:01.866Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s08-scenery-c7:qa/match/08/scenery/STATUS.md | head -70", "description": "Read newest 08 scenery status"}`
+
+### 🧑 User — 2026-11-18T01:38:01.895Z
+
+> ↩︎ result: # Screen 08 scenery-in-motion — STATUS (round 7, account 7) — MILESTONE DONE, stopped
+> 
+> * Branch `claude/rainbow-s08-scenery-c7` (started at `-c6` @ `cf2e092b`). Final SHA: `git log -1`.
+> * Every change is behind its own `?match08=1` sub-switch; nothing runs without `match08`.
+> 
+> ## Kept switch set (round 7)
+> `B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'`
+> (`m08lane` stays OFF.)
+> 
+> ## Done (round 7)
+> 1. **`&m08seam=1` — KEEP at ×1.6 (default `m08seamk`).** f10 / t95 frames `r7/seam/{base,k16,k22}/`. Without it the
+>    generated ceiling fill is a dense fine mesh, visibly smaller than the painted chamber-wall slots it meets. ×1.6 matches
+>    the painted slot size best; ×2.2 is slightly coarse. Approved view: 0 px (frozen capture, `r7/proof/seam`).
+> 2. **`m08swim` proven 0 px at the approved view** (frozen `scripts/capture.mjs`: `r7/proof/noswim` vs `swim` vs `swim2`:
+>    0 changed pixels; the capture is deterministic, swim vs swim2 = 0).
+> 3. **`&m08sill=1` — NEW, KEEP.** Riding 3 u forward, the frame bottom showed torn gold / blue slabs. `m08dbg` showed
+>    they were the gold arch's unpushed water-level band (2.6× nearer than the rest of the ring). …[+3506 chars]
+
+### 🤖 Claude — 2026-11-18T01:38:05.602Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ci %s' origin/claude/rainbow-s08-scenery-c7 | grep -v autosave | head -8; echo; git show origin/claude/rainbow-s08-scenery-c7:qa/match/08/scenery/NOTES.md | grep -n -iE 'round 8|r8' | head -20", "description": "Find round 8 work on the 08 scenery branch"}`
+
+### 🧑 User — 2026-11-18T01:38:05.648Z
+
+> ↩︎ result: dafa3752 2026-11-17 23:54:16 +0000 Screen 08 scenery r7: default build 0 px (02-10) vs start code, 04-07 leak 0 px, STATUS final
+> 26b7acac 2026-11-17 23:43:55 +0000 Screen 08 scenery r7: keep m08seam (x1.6), new m08sill + m08towel, proofs and 12-shot audit (in progress: default/leak proofs)
+> 2ff83565 2026-11-17 22:25:57 +0000 S08 scenery r6: PAUSE checkpoint — m08seam (untested) switch, STATUS/SHARED_CHANGES
+> 1788973b 2026-11-17 22:24:21 +0000 S08 scenery r6: m08swim — floor spreads the painted river's banks over Benny's whole swim lane (world-anchored, fades in off the approved viewpoint)
+> ca781c36 2026-11-17 22:21:14 +0000 S08 scenery r6: m08arch uniform x2.6 push along projector rays + fine-tessellated arch/entrance wall; water-level sill kept (Benny underside as painted)
+> fb6e35ac 2026-11-17 22:12:40 +0000 S08 scenery r6: m08arch — pipe/arch/entrance wall pushed along the projector rays (x2.6, floor-capped): gold ring sweeps past whole instead of edge slivers
+> 60e7ffe8 2026-11-17 20:59:48 +0000 S08 scenery r5: 08-only course spacing fix, final pictures, notes/status
+> 471d2e57 2026-11-17 20:40:12 +0000 S08 scenery r5: m08fill world-anchored drum wall fill from the picture's pipe wall ( …[+22 chars]
+
+### 🤖 Claude — 2026-11-18T01:38:08.750Z
+
+> 🔧 **Bash** `{"command": "git diff --stat dafa3752 origin/claude/rainbow-s08-scenery-c7 -- src tools scripts | tail -8; git ls-tree --name-only origin/claude/rainbow-s08-scenery-c7 qa/match/08/scenery/r8/; git show origin/claude/rainbow-s08-scenery-c7:qa/match/08/scenery/r8/NOTES.md 2>/dev/null | head -40", "description": "Inspect unfinished round 8 changes on 08 scenery branch"}`
+
+### 🧑 User — 2026-11-18T01:38:08.808Z
+
+> ↩︎ result: src/gameplay/coins.ts        | 34 +++++++++++++++++++++++++-
+>  src/world/match08.ts         | 43 +++++++++++++++++++++++++++++----
+>  tools/match08/occ08.py       | 57 ++++++++++++++++++++++++++++++++++++++++++++
+>  tools/match08/towelmask08.py | 36 ++++++++++++++++++++++++++++
+>  4 files changed, 165 insertions(+), 5 deletions(-)
+> qa/match/08/scenery/r8/dbg_av
+> qa/match/08/scenery/r8/occ
+> qa/match/08/scenery/r8/proof
+> qa/match/08/scenery/r8/towelm
+
+### 🤖 Claude — 2026-11-18T01:38:29.374Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/rainbow-autosave.py --help 2>&1 | head -40; python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print({k:(v if not isinstance(v,list) else v[:6]) for k,v in d.items() if k not in ('allow','allowlist','include')})\" 2>&1 | head -20", "description": "Check autosave script options and config"}`
+
+### 🧑 User — 2026-11-18T01:38:29.477Z
+
+> ↩︎ result: usage: rainbow-autosave.py [-h] [--reason REASON] [--message MESSAGE]
+>                            [--no-push] [--quiet]
+> 
+> options:
+>   -h, --help         show this help message and exit
+>   --reason REASON
+>   --message MESSAGE
+>   --no-push
+>   --quiet
+> {'project': 'RAINBOW — 11-screen 3D mobile game', 'repo_full_name': 'josiahscalia5-dev/rainbow-', 'remote_name': 'origin', 'remote_url_must_contain': 'github.com/josiahscalia5-dev/rainbow-', 'branch': 'ccr-9c4a8ad6-xovgsx', 'session_branch_patterns': ['ccr-*', 'claude/*'], 'commit_trailer': 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCGaMjvCA3zgd9h2Q3r', 'claude_projects_glob': '~/.claude/projects/-home-user-rainbow-*', 'status_only_paths': ['backups/BACKUP_STATUS.json', 'backups/BACKUP_LOG.md'], 'max_plain_git_file_mb': 49, 'push_retries': 4, 'protected_branches': ['ccr-6f431adf-7h0m8y', 'claude/rainbow-3d-recovery-m4v347', 'ccr-d4bb0ad3-8ycajb', 'ccr-8b6fc834-7kd55l', 'ccr-e033f912-8b40f5', 'claude/rainbow-3d-account-transfer-syorak'], 'original_branch_note': "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81 …[+4606 chars]
+
+### 🤖 Claude — 2026-11-18T01:38:35.166Z
+
+> 🔧 **Bash** `{"command": "cat scripts/autosave-daemon.sh | head -50; grep -nE 'show-toplevel|REPO_ROOT|__file__|lock' scripts/rainbow-autosave.py | head -12", "description": "Read autosave daemon and how it finds the repo"}`
+
+### 🧑 User — 2026-11-18T01:38:35.197Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # Fallback scheduler used only when cron is unavailable: one autosave every 300 s.
+> REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+> while true; do
+>   "$REPO/scripts/autosave-cron.sh" daemon
+>   sleep 300
+> done
+> 9:  2. takes an exclusive lock and skips if another git operation is in progress
+> 37:REPO = Path(__file__).resolve().parents[1]
+> 44:LOCK = REPO / "backups" / ".autosave.lock"
+> 80:    if p.returncode != 0 and "index.lock" in p.stderr:
+> 255:    lockfh = open(LOCK, "w")
+> 257:        fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+> 258:    except BlockingIOError:
+> 281:        for busy in ("index.lock", "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD"):
+> 394:        fcntl.flock(lockfh, fcntl.LOCK_UN)
+> 395:        lockfh.close()
+
+### 🤖 Claude — 2026-11-18T01:38:53.666Z
+
+> 🔧 **Bash** `{"command": "git rev-parse --short=10 origin/claude/rainbow-s05-match-c7 2>&1; git log -1 --format='%ci %s' origin/claude/rainbow-s05-match-c7 2>&1 | head -1; git ls-tree -r --name-only origin/claude/rainbow-s05-match-c7 qa/match/05 2>/dev/null | grep -iE 'STATUS|NOTES' | head -5", "description": "Check the fetched Screen 05 c7 branch"}`
+
+### 🧑 User — 2026-11-18T01:38:53.707Z
+
+> ↩︎ result: a34fb925c7
+> 2026-11-18 01:17:16 +0000 autosave: Rainbow 2026-11-18 01:15 UTC
+> qa/match/05/NOTES.md
+> qa/match/05/STATUS.md
+
+### 🤖 Claude — 2026-11-18T01:38:55.851Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s05-match-c7:qa/match/05/STATUS.md | head -75; echo; git log --format='%h %ci %s' origin/claude/rainbow-s05-match-c7 | grep -v autosave | head -5; git diff --stat 92c8c5e9 origin/claude/rainbow-s05-match-c7 -- src tools 2>/dev/null | tail -4", "description": "Read Screen 05 status and unfinished changes"}`
+
+### 🧑 User — 2026-11-18T01:38:55.906Z
+
+> ↩︎ result: # Screen 05 — STATUS (round 7)
+> 
+> * **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1` set)
+> * **Assigned specialist:** Screen 05 workstream (washer-environment-modeler role), round 7 / account 7; no subagent used
+> * **Working branch:** `claude/rainbow-s05-match-c7`, created by the lead from `claude/rainbow-s05-match-c5` @ `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b`; never merged with line A
+> * **Running-session status:** milestone M3 step 2 finished; STOPPED, waiting for the lead
+> * **Latest verified commit:** the last commit on `claude/rainbow-s05-match-c7` (remote == HEAD verified at the final push)
+> * **Completed this round:** `?m05far=1` (needs `match05=1`): the far forced-perspective tunnel follows the live camera instead of folding away, so Screen 05's own purple ring tunnel, gold rings, warm throat and winding S-river continue to ~90 % of the stage (fold into 06 only in the last ~3 u). Files: `src/world/match05far.ts` (new), `src/vfx/clip05.ts` (new), hooks in `src/world/environment.ts` and `src/vfx/foam.ts` (switch-only). Details: NOTES.md "Round 7".
+> * **Current set for the user:** `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1`
+> * **Numbers (moving, LAY …[+2181 chars]
+
+### 🤖 Claude — 2026-11-18T01:39:13.153Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt && git worktree add -q -b claude/rainbow-s04-match-c8 /home/user/wt/s04 d1e422faff67a37f837566301fb8abff0bac98db 2>&1 | tail -3; git worktree add -q -b claude/rainbow-s05-match-c8 /home/user/wt/s05 a34fb925c7d33d6fff28597c534a6d3c5a97ff94 2>&1 | tail -3; for s in s04 s05; do cd /home/user/wt/$s && ln -sfn /home/user/rainbow-/node_modules node_modules && echo \"$s $(git branch --show-current) $(git rev-parse --short=10 HEAD) lfs-pointers: $(git lfs ls-files 2>/dev/null | grep -c ' - ')\"; done", "description": "Create worktrees on new c8 branches for screens  …[+30 chars]`
+
+### 🧑 User — 2026-11-18T01:39:31.040Z
+
+> ↩︎ result: s04 claude/rainbow-s04-match-c8 d1e422faff lfs-pointers: 0
+> s05 claude/rainbow-s05-match-c8 a34fb925c7 lfs-pointers: 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:39:33.969Z
+
+> 🔧 **Bash** `{"command": "for s in s04 s05; do cd /home/user/wt/$s && b=$(git branch --show-current) && timeout 120 git push -q -u origin \"$b\" 2>&1 | grep -v '^remote:' | tail -2; echo \"$b remote=$(git ls-remote origin refs/heads/$b | cut -c1-10) local=$(git rev-parse --short=10 HEAD)\"; ls qa/match/0${s#s0}/STATUS.md qa/match/0${s#s0}/NOTES.md 2>&1 | tr '\\n' ' '; echo; done; ls /home/user/wt/s04/tools/lead_r6 2>&1 | head -3", "description": "Push the new c8 branches and verify remote SHAs"}`
+
+### 🧑 User — 2026-11-18T01:39:38.357Z
+
+> ↩︎ result: claude/rainbow-s04-match-c8 remote=d1e422faff local=d1e422faff
+> qa/match/04/NOTES.md qa/match/04/STATUS.md 
+> claude/rainbow-s05-match-c8 remote=a34fb925c7 local=a34fb925c7
+> qa/match/05/NOTES.md qa/match/05/STATUS.md 
+> ls: cannot access '/home/user/wt/s04/tools/lead_r6': No such file or directory
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T01:39:43.072Z
+
+> 🔧 **Bash** `{"command": "cp -r tools/lead_r6 /home/user/wt/s04/tools/ && ls /home/user/wt/s05/tools/lead_r6 >/dev/null 2>&1 || cp -r tools/lead_r6 /home/user/wt/s05/tools/; ls tools/lead_r6; sed -n '25,80p' docs/briefs/2026-11-17-r7/S04.md; echo ======; cat docs/briefs/2026-11-17-r7/S05_ROUND2.md | head -60", "description": "Copy audit tools and read the rest of the 04 and 05 briefs"}`
+
+### 🧑 User — 2026-11-18T01:39:43.165Z
+
+> ↩︎ result: bisect_preview08.mjs
+> motion_audit.mjs
+> motion_metrics.py
+>    (copy `tools/lead_r6/` from the lead branch if missing).
+> 2. **Greatest visible gap first:** keep Screen 04's own architecture visible while moving: the gold washer opening (a
+>    real modeled ring with its bulb row, sized/placed from the approved picture), the laundry-room entrance beyond it,
+>    the tunnel walls as world-anchored geometry (no blurred projection smear). Check the two structural causes from 06
+>    (`COORDINATION.md`) first: camera pitch following the slope; proxy tube built around the river path.
+> 3. Then: the five blue arrows staying crisp while travelling; the thick cyan-and-pink swirl water without the repeated
+>    4.7 u swirl tile and without the flat floating ramp; foam banks and bubbles as in the approved picture.
+> 4. Reuse the already-paid fal clean plate (do NOT run fal again). Preserve 91 coins / 2,240; Benny files untouched.
+> 5. Proofs: `npx tsc --noEmit`; default build 0 px; gameplay 8/8, 91 / 2,240; `npm run test:continuity`.
+> 6. Pictures: APPROVED + BEFORE (`match04=1`) + NEW at the 12 audit positions → `qa/match/04/r7/BEFORE/`, `NEW/`
+>    (separate full-size portrait files, no collage).
+> 7. Update STATUS …[+2666 chars]
+
+### 🤖 Claude — 2026-11-18T01:39:47.404Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rln 'm05coin' src | head; cd /home/user/wt/s04 && sed -n '1,40p' qa/match/04/STATUS.md", "description": "Check 05 coin switch and read Screen 04 status"}`
+
+### 🧑 User — 2026-11-18T01:39:47.442Z
+
+> ↩︎ result: # Screen 04 — STATUS
+> 
+> * **Assigned screen:** 04 · Through the Five Arrows (`?match04=1`)
+> * **Assigned specialist:** Screen 04 workstream session (Claude Code, account 3, session_01Q46SCGVVo94Weug9VM7yDG); lead = session_01Q46SCLi5xPVn25aRuxkVwK
+> * **Working branch:** `claude/rainbow-s04-match-c3` — started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave; line A, nothing merged)
+> * **Running-session status:** milestone 3 finished, pushed; stopped and waiting for the lead
+> * **Latest verified commit:** branch head (`git ls-remote origin refs/heads/claude/rainbow-s04-match-c3`); step commits 7f660f4 (1), 7eb571e (2), 9d67852 (3), d93d65e (4), 6cbbaf6 (5)
+> * **Completed improvements:** M1 camera solve + 3D proxies + original pixels; M2 ring tunnel + painted river tiles + ONE fal
+>   clean plate. **M3 (all on by default under `?match04=1`, each with an off switch):** (1) fal plate default verified;
+>   (2) river while riding = painted water around Benny — pink swirl ribbons, foam banks, cyan streams + the glowing arrows
+>   (`&river04=0`); no brown marks where coins were removed; (3) sharp painted rings all the way down the tunnel at 15–20 u,
+>   no glowy haze (`&rings04=0`); (4) …[+1704 chars]
+
+### 🤖 Claude — 2026-11-18T01:39:53.032Z
+
+> 🔧 **Bash** `{"command": "ls .claude/agents/; head -30 .claude/agents/water-fx-specialist.md; sha256sum -c scripts/agents.sha256 2>/dev/null | tail -3 || true", "description": "Read a specialist definition and list all ten"}`
+
+### 🧑 User — 2026-11-18T01:39:53.066Z
+
+> ↩︎ result: android-build-performance.md
+> animation-and-gameplay-engineer.md
+> benny-character-artist.md
+> cartoon-girl-character-artist.md
+> foam-bubbles-particles.md
+> path-camera-transition-engineer.md
+> playwright-visual-qa.md
+> reference-match-director.md
+> washer-environment-modeler.md
+> water-fx-specialist.md
+> ---
+> name: water-fx-specialist
+> description: Real-time 3D animated cyan/pink fluid look and flow. Use for Rainbow 11-screen game execution only.
+> ---
+> 
+> # water-fx-specialist
+> 
+> **Scope:** Implement custom efficient Three.js shaders and geometry for bright electric cyan water plus hot-pink magenta ribbons, shiny streaks, white foam fringes, tumble whirlpool, five-arrow slide, arch crest, 07 deep drop, giant final wave, towel entry. Flow direction follows route spline.
+> 
+> **Canonical sources:** `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`, `REFERENCE_ORDER.md`, all `references/*.png`, and `character_references/official_cartoon_girl_original.jpg`.
+> 
+> **Deliverables:** src/vfx/water*, shader material docs, before/after video or screenshots and performance stats.
+> 
+> **Hard test:** Genuine moving shader+geometry not a movie or image; avoids muddy purple water and hero sinking; Android-safe.
+> 
+> Work only on the fr …[+324 chars]
+
+### 🤖 Claude — 2026-11-18T01:40:02.959Z
+
+> 🔧 **Bash** `{"command": "grep -nE 'port|PORT|vite|preview|localhost|5173|4173' tools/lead_r6/motion_audit.mjs | head -15; grep -nE 'PORT|port' scripts/gameplay-test.mjs scripts/capture.mjs 2>/dev/null | head -10", "description": "Check which ports the audit and capture tools use"}`
+
+### 🧑 User — 2026-11-18T01:40:02.988Z
+
+> ↩︎ result: 4:// Run from the checkout to test (vite serves the current directory):
+> 6:import { mkdirSync, writeFileSync } from 'node:fs';
+> 7:import { pathToFileURL } from 'node:url';
+> 8:const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> 12:const vite = await startVite(5270 + Number(SCREEN));
+> 23:  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+> 25:  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> 47:  await browser.close(); await vite.close?.();
+> scripts/gameplay-test.mjs:4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> scripts/gameplay-test.mjs:13:import { writeFileSync, mkdirSync } from 'node:fs';
+> scripts/gameplay-test.mjs:14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> scripts/gameplay-test.mjs:22:const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+> scripts/gameplay-test.mjs:85:  out.checks.noTeleport = { pass: maxJump < 1.0, maxBennyAltitudeJumpPerStep: +maxJump.toFixed(3), at: out.maxJumpAt };
+> scripts/gameplay-test.mjs:129:  `* max Benny altitude change …[+507 chars]
+
+### 🤖 Claude — 2026-11-18T01:40:04.546Z
+
+> 🔧 **Bash** `{"command": "grep -nA12 'export async function startVite' scripts/lib/pw.mjs | head -20", "description": "Check how startVite picks its port"}`
+
+### 🧑 User — 2026-11-18T01:40:04.574Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-18T01:40:06.304Z
+
+Quick status: checks are mostly done (GitHub, LFS, tools, World Labs, fal.ai verified). The `-c8` branches for 04 and 05 are created and pushed. I'm launching the two specialists now.
+
+### 🤖 Claude — 2026-11-18T01:40:29.304Z
+
+> 🔧 **Agent** `{"description": "Screen 04 M4 visual match", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the SCREEN 04 specialist (washer-environment-modeler role) of the user's EXISTING Rainbow game (Three.js/Vite, real 3D). Round 8 / account 8. Do NOT restart, redesign, rebuild or discard anything. The lead is the main session (branch ccr-58dd182e-m48xwk in /home/user/rainbow-).\n\n## Where you work (strict)\n* Your git worktree: `/home/user/wt/s04` — `cd /home/user/wt/s04` before EVERY command; all edits there only.\n* Your branch: `claude/rainbow-s04-match- …[+5708 chars]`
+
+### 🧑 User — 2026-11-18T01:40:29.332Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aac401081b2f6f7a3 (internal ID - do not mention to user. Use SendMessage with to: 'aac401081b2f6f7a3', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/tasks/aac401081b2f6f7a3.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T01:40:51.108Z
+
+> 🔧 **Agent** `{"description": "Screen 05 water and edges match", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the SCREEN 05 specialist (water-fx-specialist role, also covering the 05 scenery edges) of the user's EXISTING Rainbow game (Three.js/Vite, real 3D). Round 8 / account 8. Do NOT restart, redesign, rebuild or discard anything. The lead is the main session (branch ccr-58dd182e-m48xwk in /home/user/rainbow-).\n\n## Where you work (strict)\n* Your git worktree: `/home/user/wt/s05` — `cd /home/user/wt/s05` before EVERY command; all edits there only.\n* Your branch …[+6322 chars]`
+
+### 🧑 User — 2026-11-18T01:40:51.127Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a28762f651ea2dedd (internal ID - do not mention to user. Use SendMessage with to: 'a28762f651ea2dedd', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/tasks/a28762f651ea2dedd.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T01:40:55.955Z
+
+Both specialists are launched in the background. While they start, I'm finishing the remaining checks: MCP servers, plugins, approved images, LFS.
+
+### 🤖 Claude — 2026-11-18T01:40:58.553Z
+
+> 🔧 **Bash** `{"command": "timeout 90 claude mcp list 2>&1 | head -20; echo \"---PLUGINS\"; timeout 60 claude plugin list 2>&1 | grep -iE 'parallax|worldlabs|playwright|hubcap|chrome|three' | head -10; echo \"---MANIFEST\"; python3 -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'))\ns=json.dumps(d)\nimport re\nfor k in ('parallax','worldlabs@','chrome-devtools','three-devtools','image-blaster','Image-Blaster'):\n  i=s.lower().find(k.lower()); print(k, '->', s[max(0,i-80):i+220].replace('\\\\\\\\n',' ') if i>=0 else 'not in manifest')\n\"", "description": "List MCP servers, plugins and manife …[+26 chars]`
+
+### 🤖 Claude — 2026-11-18T01:40:59.799Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | tail -14 | awk '{print $NF}' | sort | uniq -c; timeout 120 git lfs fsck 2>&1 | tail -2; git lfs ls-files | wc -l; git lfs ls-files | grep -c ' - '", "description": "Verify approved images and Git LFS integrity"}`
+
+### 🧑 User — 2026-11-18T01:41:01.770Z
+
+> ↩︎ result: Checking MCP server health…
+> 
+> plugin:design:slack: https://mcp.slack.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:figma: https://mcp.figma.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:linear: https://mcp.linear.app/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:asana: https://mcp.asana.com/v2/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:atlassian: https://mcp.atlassian.com/v1/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:notion: https://mcp.notion.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:intercom: https://mcp.intercom.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:google calendar:  (HTTP) - - Not configured
+> plugin:design:gmail:  (HTTP) - - Not configured
+> plugin:context7:context7: https://mcp.context7. …[+921 chars]
+
+### 🧑 User — 2026-11-18T01:41:02.608Z
+
+> ↩︎ result: 13 OK
+> Git LFS fsck OK
+> 59
+> 0
+
+### 🤖 Claude — 2026-11-18T01:41:09.282Z
+
+> 🔧 **Bash** `{"command": "grep -rlis 'parallax' scripts/ docs/*.md backups/*.md backups/*.json .claude 2>/dev/null | head -5; grep -rhoi 'parallax[-a-z@/ ]*' scripts/ docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md 2>/dev/null | sort | uniq -c | head -5; ls scripts | grep -iE 'blaster|image|plugin|setup' ; python3 -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'));s=json.dumps(d);i=s.find('its duplicate MCP');print(s[i:i+400])\"", "description": "Find Parallax Three.js and Image-Blaster setup details"}`
+
+### 🧑 User — 2026-11-18T01:41:09.375Z
+
+> ↩︎ result: docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md
+> backups/CLAUDE_ACCOUNT_TRANSFER.md
+>       1 parallax-threejs 
+> cloud-env-setup.sh
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-image-blaster.sh
+> setup-worldlabs-plugin.sh
+> its duplicate MCP copy plugin:worldlabs:worldlabs is disabled for this project"}}, "not_needed": ["context7 (needs OAuth sign-in; not used by Rainbow)", "design plugin MCP servers: asana / atlassian / figma / intercom / linear / notion / slack (blocked by the environment network, not used by Rainbow)"], "state_2026_11_16_current_account": "connected and working: playwright MCP, GitHub MCP + git pr
+
+### 🤖 Claude — 2026-11-18T01:41:11.401Z
+
+> 🔧 **Bash** `{"command": "grep -n -i -B2 -A4 'parallax' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -20; echo ----; sed -n '1,30p' scripts/setup-image-blaster.sh | grep -vE '^\\s*$' | head -20", "description": "Read Parallax and Image-Blaster setup notes"}`
+
+### 🧑 User — 2026-11-18T01:41:11.444Z
+
+> ↩︎ result: 52-* Keys (free reads only): World Labs key = the user's **ORIGINAL Screen 08 account** (5,420 credits; world `32b5b2f4…` 200;
+> 53-  05 pilot worlds 404). fal.ai = the SAME paid account (request `01a1ea70` → COMPLETED). No paid job started.
+> 54:* MCP: GitHub + Playwright MCP + parallax-threejs (playwright / chrome-devtools / threejs-devtools) connected; context7 and
+> 55-  spector failed to connect (optional). World Labs Atlas connector tools are listed (optional, not used).
+> 56-* **Usage: this account shows `seven_day` / `allowed_warning` (resets ≈ 2026-11-23)** → only the two specialists above.
+> 57-
+> 58-## Round-6 audit result (`qa/lead_r6/2026-11-17/README.md`) — NO screen is 8.5/10 while riding yet
+> ----
+> #!/usr/bin/env bash
+> # Rebuild the Image-Blaster test workspace used for the Screen 08 reconstruction test (qa/imageblaster/08/NOTES.md).
+> # Idempotent; never touches the Rainbow game; NO paid calls (it only installs and restores files).
+> #   bash scripts/setup-image-blaster.sh [target_dir]      (default /home/user/neilsonnn/image-blaster)
+> # Keys: NEVER in files. Real keys live only as Claude-environment network secrets (hosts api.worldlabs.ai header
+> # WLT-Api-Key, queue.fal.run header "A …[+971 chars]
+
+### 🤖 Claude — 2026-11-18T01:41:18.287Z
+
+> 🔧 **Bash** `{"command": "(bash scripts/setup-image-blaster.sh > /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/imageblaster.log 2>&1 &); echo started", "description": "Run the Image-Blaster setup script in the background"}`
+
+### 🧑 User — 2026-11-18T01:41:18.323Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-18T01:41:18.994Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__plugin_playwright_playwright__browser_navigate,mcp__plugin_playwright_playwright__browser_evaluate,SearchPlugins", "max_results": 3}`
+
+### 🧑 User — 2026-11-18T01:41:19.001Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T01:41:20.696Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_navigate** `{"url": "data:text/html,<canvas id=c></canvas><script>document.title=(document.getElementById('c').getContext('webgl2')?'WEBGL2_OK':'NO_WEBGL2')</script>"}`
+
+### 🤖 Claude — 2026-11-18T01:41:21.090Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["parallax threejs", "three.js devtools", "chrome devtools"]}`
+
