@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 14554,
-   "sha256": "c27a099c3c960051fc2150a98f08c9477a4ee3ac297f0e4db4789401347af900"
+   "sha256": "3f55b3a24db89c50abb2ae2002d33a51830bda7834463d70510ef891c017f1a0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -669,42 +669,42 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c10/INFO.json",
    "bytes": 477,
-   "sha256": "cfbd55ea476e82f3203ff3822e552395527d47d70d5613253e21bf5ef09d2f56"
+   "sha256": "93ed9b85bafc4a7dedc58b62ab716c13aa8b0b1968394f17ef5077802ed09663"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
-   "bytes": 511,
-   "sha256": "332916f8af1b727da26ca543b2ff30f91bfe167fe0aa144f243cb365a2e8142e"
+   "bytes": 569,
+   "sha256": "c335087840938236c24abcd0e3095228389bfb0ceea68972e5826cd03b759af4"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/tracked.patch",
-   "bytes": 752,
-   "sha256": "80a2909301263612d9f54f44a6f1797fcfba348765f9e59273f4f1bd33433dca"
+   "bytes": 3910,
+   "sha256": "6f75fbd60ee8f232c9d9cf8393c6014b958b51991f01ea91370dbbed3a5dbf06"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
    "bytes": 637,
-   "sha256": "5bd817868be251719bffcd46f286929739b392d656c161d5fcb2444ca315a66c"
+   "sha256": "d9f819f9347fe066791dd239ae91291f1898b07d1fd2efed585d4c2564a7b6bd"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/tracked.patch",
-   "bytes": 4334,
-   "sha256": "76b809a386709af6d8c58e62638be9bd45fb201c2207dffaec132cf4ea66ac42"
+   "bytes": 4329,
+   "sha256": "216f64d538641c3deea37ede7d36620ebeafd1a5e83c509b98c1bc26dd57b57a"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/untracked/assets/textures/match08/near08_detail.json",
    "bytes": 258,
-   "sha256": "dcfedb330cc6a44f57c869d42d87049580ad5ab3517e5a4ca9e54977bcc294cf"
+   "sha256": "7575c7cea9034e7a9391d3aae0adc06fb95772bd4a6f0084b7518840274eb3b8"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/untracked/assets/textures/match08/near08_detail.png",
-   "bytes": 74388,
-   "sha256": "90d1f9f7d34f0c69a85db3f18af0134d939e0de4ae444765a7f6d1fba6153bdd"
+   "bytes": 73431,
+   "sha256": "f518d7b26d5776d4e90182131dfc99ab35779dc3d43a9d05bc9794b63fdc0ffc"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/untracked/tools/match08/near08.py",
-   "bytes": 3936,
-   "sha256": "d4feedf31bb9c1aecfba7d8016445fc1f4567e97911b4b7de2f4a87cb7eb1d35"
+   "bytes": 4371,
+   "sha256": "1c2299b56dd7b13aa549bda8f423dadcfc221410d017df8842eb2c3416b80d74"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -973,8 +973,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r10/COORDINATION.md",
-   "bytes": 3165,
-   "sha256": "efa10e57c6d4649f51cfa5c29d523df0f4efddbfb720e5f5f3db34f244f037aa"
+   "bytes": 3246,
+   "sha256": "669b3a828ade34fecf78483f4fdd9c04c4dbda04230768da5b5a18eac5de03f1"
   },
   {
    "path": "docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md",
@@ -9005,6 +9005,26 @@
    "path": "qa/review_c10/2026-11-18/04_proposed_views/V04-3b_near_end_alt.jpg",
    "bytes": 1136110,
    "sha256": "b69821195ea336e5ca3aa5da17561322dba25071fb7ba364227ad36202116632"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-1_cand2_near_duplicate_PASS.jpg",
+   "bytes": 1119257,
+   "sha256": "35b2583121429ac007412dd6001cf7a5d2fbdf24cb39d1f155e91912e9a19421"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-2_cand1_REJECTED_copies_outside_view.jpg",
+   "bytes": 1251121,
+   "sha256": "324807693a744224f188856e213d2176d07ff6d9bba587e395f261281275b336"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-3_cand1_REJECTED_tiny_Benny.jpg",
+   "bytes": 1044458,
+   "sha256": "101cacb1fdb2d3eee7197f3599440a4a89d3f12e4b2e5c0b9d5db5a6e0e52b26"
+  },
+  {
+   "path": "qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-3_cand2_REJECTED_outside_view_tiny_Benny.jpg",
+   "bytes": 1159118,
+   "sha256": "baee3b1958dd765dee141ca60676cc5df63d2cb1f030e3959ab2cd350784798e"
   },
   {
    "path": "qa/review_c10/2026-11-18/05_1_APPROVED.jpg",

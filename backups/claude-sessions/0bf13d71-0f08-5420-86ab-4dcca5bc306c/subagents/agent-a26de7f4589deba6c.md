@@ -2026,3 +2026,18 @@ Now the floor shader: add the mirrored detail tile where the projection is magni
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T11:11:58.194Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='tools/match08/near08.py'; s=open(p).read()\nold=\"\"\"sig = 0.12 * TPU\nhp = lum - cv2.GaussianBlur(lum, (0, 0), sig)\n# soften the tile's edges toward 0 detail is not needed: it repeats MIRRORED (seamless); clamp to +-0.5\nout = np.clip(0.5 + hp, 0, 1)\"\"\"\nnew=\"\"\"sig = 0.12 * TPU\nhp = lum - cv2.GaussianBlur(lum, (0, 0), sig)\n# seamless for PLAIN repeat (a mirrored repeat showed kaleidoscope diamonds): cross-fade with a copy shifted by half a\n# tile in both directions; the edges then carry the tile's own interior, continuous a …[+1511 chars]`
+
+### 🧑 User — 2026-11-18T11:11:59.103Z
+
+> ↩︎ result: tile 358 x 420 world x 11.64 13.43 z -281.27 -279.17 hp std 0.0787
+> 77:uniform vec4 uNearR;        // its world rectangle: x0, z0, width, length (seamless, repeated)
+> 280:    nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = nearTex.wrapT = THREE.RepeatWrapping;
+> [This command modified 2 files you've previously read: ../wt/s08/tools/match08/near08.py, ../wt/s08/src/world/match08.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T11:12:05.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1' && S=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/s08 && rm -rf $S/r/near && SHOTS=f06_forward6u,t33_through_screen,t66_through_screen,s_right_hard,s_left_steer node $S/tools/sel_audit.mjs 08 $S/r/near \"$K&m08near=1\" 2>&1 | grep -v \"allow list\" | tail -1; cd $S && python3 -c \"\nfrom PIL import Image\nfor n in ['t33_through_screen','t66_through_screen','s_right_hard','s_left_steer']:\n  ims=[Image.open(( …[+408 chars]`
+
