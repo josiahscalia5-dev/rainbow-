@@ -63,3 +63,8 @@ Kept set at start (round 13 end, = step-3 set):
   t33_through_screen, t66_through_screen, t98_end)
 * NEW (+`&m05vee2=1`): `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/new/` (same names)
 * Files: `src/vfx/waterRibbon.ts` (M05VEE2, pjT2U, the T2 lookups in pjTarget / pjFlowDir).
+* Swimming clips (real gameplay, shader clock running, 3.6 s at 10 fps: straight → left → right → straight;
+  `tools/lead_r13/swim_clip.mjs` run on port 5275): BEFORE `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/2_BEFORE_swim_clip.mp4`,
+  NEW `/home/user/wt/s05/qa/match/05/r14/step2_m05vee2/3_NEW_swim_clip.mp4`. In the NEW clip the two pink bands stay put
+  behind Benny frame to frame (no flicker, no jumping) while the streaks inside them flow, and the V follows him when he
+  steers.
