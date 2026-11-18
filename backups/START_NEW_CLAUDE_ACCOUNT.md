@@ -1,6 +1,6 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-18 ~11:45 UTC, account 11 → next account) — use THIS prompt
+## ▶ NEWEST (2026-11-18 ~11:38 UTC, account 11 → next account) — use THIS prompt
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
 Claude Code cloud session on the repo, branch **`ccr-3b139b48-0qqkkz`** (account-11 lead; NOT the default branch — the
 default branch is the protected 11-15 original and does not restore newer work). A new account has no keys: Claude will

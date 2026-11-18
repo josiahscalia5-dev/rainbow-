@@ -1,4 +1,4 @@
-# ▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 11 (round 11) STATE (2026-11-18 ~11:45 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)
+# ▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 11 (round 11) STATE (2026-11-18 ~11:38 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)
 
 Lead branch **`ccr-3b139b48-0qqkkz`** (contains the account-10 lead `ccr-c526614d-tw0yro` @ `e673ef4` + autosaves; nothing
 merged). Branch map, start SHAs, services: **`docs/briefs/2026-11-18-r11/COORDINATION.md`**. Rules unchanged

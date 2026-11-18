@@ -268,3 +268,70 @@ END OF ROUND (≈ 2 h of work, or when the list is done): full 12-shot NEW audit
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && mkdir -p qa/match/05/r11 && Q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1' && time node tools/match05/r8_shots.mjs qa/match/05/r11/BEFORE \"$Q\" all 5291 2>&1 | tail -20", "description": "Render the 12-shot BEFORE set at the kept query", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T11:39:12.619Z
+
+> ↩︎ result: a00_approved_view s 133.146 lat 0 coins 1420 benny -0.02 -0.35 big coins: #20@473,733 d98 #21@549,663 d70
+> f03_forward3u s 136.107 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@464,787 d117 #21@552,692 d80 #22@476,631 d61
+> f06_forward6u s 139.039 lat 0 coins 1430 benny 0.15 -0.27 big coins: #21@560,740 d98 #22@470,654 d71
+> f10_forward10u s 143.074 lat 0 coins 1440 benny 0.28 -0.28 big coins: #22@459,703 d90
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> s_left_steer s 139.041 lat -3.008 coins 1420 benny -0.21 -0.24 big coins: #20@778,913 d166 #21@777,748 d101 #22@618,658 d72
+> s_right_steer s 139.042 lat 3.003 coins 1420 benny 0.6 -0.3 big coins: #20@171,878 d152 #21@376,733 d95 #22@341,651 d69
+> s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> s_right_hard s 145.089 lat 5.063 coins 1420 benny 0.46 -0.2 big coins: #22@-23,712 d106 #23@124,613 d65
+> t33_through_screen s 151.689 lat 0.006 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+> t95_through_screen s 186.706 lat 0 coins 1580 be …[+101 chars]
+
+### 🤖 Claude — 2026-11-18T11:39:14.765Z
+
+Let me look at the approved picture and a few BEFORE frames.
+
+### 🤖 Claude — 2026-11-18T11:39:15.165Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-18T11:39:15.182Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:39:15.666Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:39:15.703Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:39:16.120Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:39:16.182Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:39:20.729Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T11:39:20.769Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:39:21.279Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T11:39:21.322Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:39:21.682Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T11:39:21.743Z
+
+> ↩︎ result: [image]
+

@@ -1736,3 +1736,157 @@ Only the intended changes. Now the top of the handoff and the new-account start 
 
 > ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
 
+### 🤖 Claude — 2026-11-18T11:38:12.203Z
+
+Handoff docs are updated. Now the explicit autosave test you asked for: a manual save run, then checks that it reached GitHub and that it captured the two new specialist workspaces' unfinished work.
+
+### 🤖 Claude — 2026-11-18T11:38:14.857Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:account11-startup-test 2>&1 | tail -8; echo ---; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-3b139b48-0qqkkz | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"MATCH\" || echo \"MISMATCH\"; git show --stat --format='%h %s' HEAD | grep -E \"wip/|HANDOFF|START_NEW|COORDINATION|AGENTS_STATUS|autosave.config|CLAUDE.md|^[0-9a-f]{7}\" | head -20", "description": "Run a manual autosave and verify it reached GitHub", "timeout": 360000}`
+
+### 🧑 User — 2026-11-18T11:38:15.711Z
+
+> ↩︎ result: another autosave is running; skipping
+> ---
+> local  fdd8059bd3496ff2ac859c9fc19a5d6380578cb6
+> remote cc81abc775d5d2d6666806650741e539dd4023f6
+> MISMATCH
+> fdd8059b autosave: Rainbow 2026-11-18 11:38 UTC
+>  CLAUDE.md                                          |    4 +-
+>  backups/AGENTS_STATUS.json                         | 1269 ++++++++++----------
+>  backups/START_NEW_CLAUDE_ACCOUNT.md                |   21 +-
+>  backups/autosave.config.json                       |   18 +-
+>  .../wip/claude__rainbow-s05-match-c11/INFO.json    |   22 +
+>  .../wip/claude__rainbow-s08-scenery-c11/INFO.json  |   15 +
+>  docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md                 |   22 +-
+>  docs/briefs/2026-11-18-r11/COORDINATION.md         |   32 +
+
+### 🤖 Claude — 2026-11-18T11:38:25.866Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 60); do R=$(git ls-remote origin refs/heads/ccr-3b139b48-0qqkkz | cut -f1); [ \"$R\" = \"$(git rev-parse HEAD)\" ] && break; sleep 5; done; date -u +%H:%M:%S; echo \"local $(git rev-parse HEAD)\"; echo \"remote $R\"; python3 -I scripts/autosave-status.py", "description": "Wait until the autosave push matches local HEAD", "timeout": 400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T11:38:25.931Z
+
+> ↩︎ result: Command running in background with ID: bd1fxgw3q. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/bd1fxgw3q.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T11:38:28.141Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T11:38:28.232Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-18T11:38:31.059Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/tasks/bd1fxgw3q.output"}`
+
+### 🧑 User — 2026-11-18T11:38:31.100Z
+
+> ↩︎ result: 1	11:38:26
+> 2	local fdd8059bd3496ff2ac859c9fc19a5d6380578cb6
+> 3	remote fdd8059bd3496ff2ac859c9fc19a5d6380578cb6
+> 4	AUTOSAVE OK | branch ccr-3b139b48-0qqkkz | scheduler daemon | last verified backup 2026-11-18T11:38:08+00:00 (0.3 min ago) | local fdd8059 remote fdd8059 (match) | uncommitted 0
+> 5	
+> 6	[exited with code 0]
+> 7
+
+### 🤖 Claude — 2026-11-18T11:38:46.725Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/2026-11-18T11:42Z/2026-11-18T11:35Z/g; s/\"2026-11-18T11:50:00Z\"/\"2026-11-18T11:38:00Z\"/' backups/AGENTS_STATUS.json && sed -i 's/(2026-11-18 ~11:45 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)/(2026-11-18 ~11:38 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)/' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md && sed -i 's/## ▶ NEWEST (2026-11-18 ~11:45 UTC, account 11/## ▶ NEWEST (2026-11-18 ~11:38 UTC, account 11/' backups/START_NEW_CLAUDE_ACCOUNT.md && git diff --stat", "description": "Correct timestamps in the handoff files"}`
+
+### 🧑 User — 2026-11-18T11:38:46.979Z
+
+> ↩︎ result: backups/AGENTS_STATUS.json          | 6 +++---
+>  backups/START_NEW_CLAUDE_ACCOUNT.md | 2 +-
+>  docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md  | 2 +-
+>  3 files changed, 5 insertions(+), 5 deletions(-)
+> [This command modified 2 files you've previously read: backups/START_NEW_CLAUDE_ACCOUNT.md, docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T11:38:47.089Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T11:38:47.118Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-18T11:38:50.122Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-18T11:38:50.155Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-18T11:39:26.332Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+I've restored everything and two specialists are working. There are no new pictures yet: the first results from Screens 05 and 08 will come as they finish, each shown as separate full-size APPROVED / BEFORE / NEW images.
+
+## GitHub backup
+- **Branch:** `ccr-3b139b48-0qqkkz`, this account's own continuation branch. It contains everything from `ccr-c526614d-tw0yro`, whose newest save `e673ef4` is newer than the `7bc43b6` checkpoint you named. Nothing was merged.
+- **Latest verified commit:** `fdd8059bd3496ff2ac859c9fc19a5d6380578cb6`. The GitHub copy matches the local copy exactly.
+- **Five-minute autosave:** running and tested. A save at 11:38 UTC reached GitHub and was checked. When two saves started at the same moment, the lock correctly let only one through.
+- **Unfinished specialist work:** that save already includes snapshots of both active specialist workspaces in `backups/wip/…-c11/`. This happens again every five minutes.
+- **Git LFS:** all 59 big files are real files here (not empty placeholders) and confirmed on GitHub (507 MB, including 17 Marble files).
+- **Approved artwork:** all 13 protected images are byte-identical to their saved checksums.
+- **Gaps:**
+  - Account 10's session closed without a final save. Its last automatic save was at 11:21 UTC, including its unfinished edits, and I restored those.
+  - The longest stretch with no saves in the last three days was 6.4 h (03:44–10:07 UTC), while no environment was open.
+
+## Agents
+- **Definitions:** all 10 are present, unchanged, and load.
+- **Five workstreams** now each have their own new branch on GitHub, without touching account 10's branches:
+
+| Screen | New branch | Continues from |
+|---|---|---|
+| 05 | `claude/rainbow-s05-match-c11` | `-c10` `bed8253d` + its unfinished edits |
+| 08 | `claude/rainbow-s08-scenery-c11` | `-c10` `e1c7d0b7` + its unfinished edits |
+| 04 | `claude/rainbow-s04-match-c11` | `-c10` `a24d289c` |
+| 07 | `claude/rainbow-s07-match-c11` | `-c9` `dbc7678c` (no `-c10` existed) |
+| 06 | `claude/rainbow-s06-match-c11` | `-c9` `efaf78b7` (no `-c10` existed) |
+
+- **Two specialists are really working:**
+  - **Screen 05** (water-fx-specialist) is writing its round-11 files.
+  - **Screen 08** (washer-environment-modeler) has already pushed a commit (`eed55540`), confirmed on GitHub, so its saving works.
+- **Ready for rotation:** the other specialists.
+- **Protected:** all branches from accounts 9 and 10, plus the separate Screen 08 Benny, camera and combined-preview branches, are untouched. The autosave now refuses to write to the account 9 and 10 branches.
+
+## Services
+- **World Labs Marble:** working, after you filled in the secure form. This new account had no key (it failed with error 401). It now has 5,420 credits and your Screen 08 world is readable. The Screen 05 pilot worlds belong to your other World Labs account, so they can't be opened from here, but their files are safe in Git LFS.
+- **fal.ai:** working. Your Screen 04 request `01a1ea70` shows as completed, and all 8 paid Screen 04 pilot images are saved in the repository. No new jobs were run.
+- **Where the keys are saved:** both keys are in this account's "Default" cloud environment. A future account will need the same two forms; the handoff notes say so.
+- **Playwright MCP:** tested in a real browser, and the 3D graphics the game needs (WebGL2) work.
+- **Blender 5.3.0:** works.
+- **Three.js game build:** the code check and the screen-to-screen continuity test both pass.
+- **Android:** the SDK 34 build tools are ready.
+- **Network:** this account's environment has open network access, so account 10's pending Hugging Face request is no longer needed. That free Depth Anything 3 test is now possible if a specialist shows a specific need for it.
+
+## Development
+**NOT YET PROVEN:** no new visual result exists yet this session.
+- **Screen 05** first judges account 10's unfinished foam fix, which stops the foam bank folding into white columns at the tight S-bend. Then it works on:
+  - the smeared walls;
+  - the far river's angular corner and blur;
+  - seams;
+  - the flat cyan sheet around Benny;
+  - lumpier, cauliflower-like foam;
+  - the last third of the stage, which still falls back to the old generic look.
+- **Screen 08** works on:
+  - the upper seam at the ceiling;
+  - keeping the gold arch's lower legs in view while Benny swims;
+  - the smeared near water;
+  - foam fringes, bubbles and spout cups.
+- **Rotation:** Screen 04 takes the first slot that frees up (each round runs up to about 2 hours, sooner if a list is finished), then 07, then 06. Screen 04 starts with the rounded water formation, five glowing arrows, low foam and gold ring material, compared with your provisional views V04-1 / V04-2.
+- **What you'll see next:** each specialist sends me every change that looks closer. I'll compare it with your approved picture myself, then show you APPROVED / BEFORE / NEW full-size images labelled GOOD IMPROVEMENT or NOT AN IMPROVEMENT.
+
+For the next account, the start prompt and the top of the handoff now name `ccr-3b139b48-0qqkkz` as the branch to start from.
+
+Please don't press Stop while the specialists are running. In an earlier round that cancelled them, though their work up to that point stays saved.
+
+### 🧑 User — 2026-11-18T11:39:28.111Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
