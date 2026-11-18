@@ -51,3 +51,12 @@ COMPLETED). Download hosts cdn.marble.worldlabs.ai, v3b.fal.media, v3.fal.media 
 * Rotation: first free slot → 07 (finish proofs, level-stretch near water, hard wall edge) → 08 (finish the unfinished
   r8 on `claude/rainbow-s08-scenery-c7` @ `c0d8c97b` on a new `-c8` branch: seams around towel/window/walls, coin look)
   → 06 (`-c7` @ `efaf78b7`: ring highlights/bulbs, thinner far rings, crisp perforated wall, foam + bubbles).
+
+## Update 2026-11-18 ~02:05 UTC — small-step reporting (user order) + specialist restart
+* The first 04 / 05 specialist instances were found STOPPED at ~01:57 UTC (most likely cancelled when the lead's turn
+  was interrupted). Their unsaved work was committed by the lead: 04 `011c256b` (match04m4.ts ring tries, plate without
+  chevrons), 05 `6cbe3c1f` (coin look + water ribbon edits). Both restarted from those commits (~02:00 UTC).
+* New rule: every genuine visual step → 2–4 NEW pictures in `qa/match/<NN>/r8/step<N>_<switch>/`, an entry in
+  `qa/match/<NN>/r8/PROGRESS.md` (WHAT LOOKS BETTER), commit + push, note to the lead; then continue. Failed experiments
+  are rejected, not reported. Full proofs + 12-shot audit at the end of the round.
+* BEFORE pictures shown to the user: `qa/review_r8/04_BEFORE/`, `qa/review_r8/05_BEFORE/`.

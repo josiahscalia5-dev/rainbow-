@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13550,
-   "sha256": "103ac1758c9fbea2757157dc371905389f8457a5439724b264b56fd83a2082bd"
+   "sha256": "56e557e2bd3744abdbca34c9307623c88e8f313c2cfcb9ce141aaf4e6379034f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -933,8 +933,8 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COORDINATION.md",
-   "bytes": 4626,
-   "sha256": "865f3c4270c8c30d937c7cf64d7eb27952f5fa202199507db20eeef00419514b"
+   "bytes": 5474,
+   "sha256": "7b9888a3de325baaf6322668e4f6dd5f876cc4ab23f237db29dfc3b3cce498b8"
   },
   {
    "path": "docs/characters/benny.md",
@@ -9020,6 +9020,46 @@
    "path": "qa/review_r7/now/08_NOW_5_steering_hard_right.jpg",
    "bytes": 670145,
    "sha256": "77c34a93b15f1ab10e242e2f952fabdef3b4d6cef6db1b7b9a06bc2b5c0452ef"
+  },
+  {
+   "path": "qa/review_r8/04_BEFORE/1_APPROVED_04.jpg",
+   "bytes": 390315,
+   "sha256": "d51066d73987794ddb2bbda71994c24fec73c7f580b2c104dfec056084b0e96c"
+  },
+  {
+   "path": "qa/review_r8/04_BEFORE/2_BEFORE_start_view.jpg",
+   "bytes": 528184,
+   "sha256": "c82a9c45c63eef7a2a107bc4c6da801aff0021577892ece0334c50bbc2bbb7e5"
+  },
+  {
+   "path": "qa/review_r8/04_BEFORE/2_BEFORE_swim_forward_10u.jpg",
+   "bytes": 349098,
+   "sha256": "63904fc64dc7897eebdfea04bf03ccff8c869e08bd002dda1ecf357e6febcfc0"
+  },
+  {
+   "path": "qa/review_r8/04_BEFORE/2_BEFORE_two_thirds_through.jpg",
+   "bytes": 388030,
+   "sha256": "20e8eebc5e229f8db95bbb4d6739453088aaa3d0d7ac168e5dc522edfc2aa4ab"
+  },
+  {
+   "path": "qa/review_r8/05_BEFORE/1_APPROVED_05.jpg",
+   "bytes": 476091,
+   "sha256": "ace03e696d464aea7b4dd98019ce9bc351e5cbfa0dc852477d8a62c901b9ff70"
+  },
+  {
+   "path": "qa/review_r8/05_BEFORE/2_BEFORE_steering_hard_right.jpg",
+   "bytes": 537892,
+   "sha256": "4edb29bf19668468e03710d106f07da54df30b705e3231b57493e81465c19dac"
+  },
+  {
+   "path": "qa/review_r8/05_BEFORE/2_BEFORE_swim_forward_10u.jpg",
+   "bytes": 571176,
+   "sha256": "4e865028eec945aa214d261b4182725be7593bdc76fcfd1b7eed945c38d05972"
+  },
+  {
+   "path": "qa/review_r8/05_BEFORE/2_BEFORE_two_thirds_through.jpg",
+   "bytes": 529685,
+   "sha256": "aa067e1c4a461894bbbaddabe4c80f71977963fb9a29e9c747adf0a5981adeca"
   },
   {
    "path": "qa/review_r8/07_plunge_fix_r7/1_APPROVED_07.jpg",
