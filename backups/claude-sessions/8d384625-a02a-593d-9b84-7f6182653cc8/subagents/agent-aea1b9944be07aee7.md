@@ -524,3 +524,176 @@ Final reply (short): kept query, final verified SHA, best 3–5 NEW + matching B
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T02:48:52.406Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/edges.py <<'EOF'\nimport json, math, sys\nimport numpy as np, cv2\na = cv2.imread(sys.argv[1]).astype(np.float32)   # unwrap0.png: rows rho 4.9..2.6 (460), cols psi -pi..pi (2048)\nB, G, R = a[..., 0], a[..., 1], a[..., 2]\ngold = (R + G) / 2 - B          # gold > 0 (low blue), pink/violet < 0\nluma = 0.3 * R + 0.59 * G + 0.11 * B\ncols = np.arange(2048); psi = -np.pi + cols * 2 * np.pi / 2048\nrho = np.linspace(4.9, 2.6, 460)\ngs = cv2.GaussianBlur(gold, (0, 0), sigmaX=6, sigmaY=1.5)\nls = …[+725 chars]`
+
+### 🧑 User — 2026-11-18T02:48:52.638Z
+
+> ↩︎ result: psi -1.95 outer row 239 rho 3.702  groove row 269 rho 3.552  luma@band 154
+> psi -1.75 outer row 156 rho 4.118  groove row 290 rho 3.447  luma@band 152
+> psi -1.56 outer row 125 rho 4.274  groove row 275 rho 3.522  luma@band 229
+> psi -1.36 outer row 148 rho 4.158  groove row 272 rho 3.537  luma@band 140
+> psi -1.17 outer row 140 rho 4.198  groove row 275 rho 3.522  luma@band 224
+> psi -0.97 outer row 147 rho 4.163  groove row 284 rho 3.477  luma@band 169
+> psi -0.77 outer row 182 rho 3.988  groove row 292 rho 3.437  luma@band 167
+> psi -0.58 outer row 169 rho 4.053  groove row 300 rho 3.397  luma@band 247
+> psi -0.38 outer row 199 rho 3.903  groove row 304 rho 3.377  luma@band 124
+> psi -0.18 outer row 200 rho 3.898  groove row 303 rho 3.382  luma@band 163
+> psi +0.01 outer row 60 rho 4.599  groove row 299 rho 3.402  luma@band 196
+> psi +0.21 outer row 60 rho 4.599  groove row 293 rho 3.432  luma@band 205
+> psi +0.40 outer row 161 rho 4.093  groove row 287 rho 3.462  luma@band 125
+> psi +0.60 outer row 170 rho 4.048  groove row 283 rho 3.482  luma@band 161
+> psi +0.80 outer row 160 rho 4.098  groove row 281 rho 3.492  luma@band 228
+> psi +0.99 outer row 150 rho 4.148  groove row 282 rho 3.487  luma@band 115
+> ps …[+297 chars]
+
+### 🤖 Claude — 2026-11-18T02:49:15.943Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/straight.py <<'EOF'\nimport math, sys\nimport numpy as np, cv2\na = cv2.imread(sys.argv[1]).astype(np.float32)   # rows rho 4.9..2.6 (460), cols psi -pi..pi (2048)\nout = sys.argv[2]\nNR, NC = a.shape[:2]\nluma = a @ np.array([0.11, 0.59, 0.3], np.float32)\nc0, c1 = 330, 1718                                   # psi about -2.13 .. +2.13 (painted, above the water)\nfeat = cv2.GaussianBlur(luma, (0, 0), sigmaX=4, sigmaY=1.2)\nfeat = np.diff(feat, axis=0)                          # radial edges …[+2081 chars]`
+
+### 🧑 User — 2026-11-18T02:49:26.755Z
+
+> ↩︎ result: iter 0 shift range -36.74424567820553 40.286121240439435 mean q 0.39128502330579057
+> iter 1 shift range -27.263997520452907 39.23967845563339 mean q 0.48905263566318097
+> iter 2 shift range -27.420876048169596 39.33826147940858 mean q 0.5052690515214153
+> psi -2.13 shift -18.4
+> psi -1.82 shift -2.8
+> psi -1.52 shift -25.4
+> psi -1.21 shift -24.8
+> psi -0.90 shift -12.9
+> psi -0.60 shift -0.2
+> psi -0.29 shift +4.4
+> psi +0.02 shift -1.3
+> psi +0.33 shift -9.8
+> psi +0.63 shift -16.2
+> psi +0.94 shift -15.8
+> psi +1.25 shift -10.4
+> psi +1.55 shift +14.9
+> psi +1.86 shift +25.0
+
+### 🤖 Claude — 2026-11-18T02:49:28.628Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/straight0_c.png"}`
+
+### 🧑 User — 2026-11-18T02:49:28.664Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:50:21.867Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nimport json, numpy as np\nL=json.load(open('assets/textures/match04/proj04.json'))\nMW=np.array(L['camera']['matrixWorld']).reshape(4,4).T; C=MW[:3,3]\nD=np.array(L['D']); T=L['tube']; m=np.array(T['mouth'])\nd=np.dot(m-C, D); print('axial dist cam->mouth', d, 't', (d-0.64)/d)\n\"; grep -n \"mouth\\|outer\" tools/match04/fit_proxies04.py | head -30", "description": "Compute projector distance to mouth plane"}`
+
+### 🧑 User — 2026-11-18T02:50:22.106Z
+
+> ↩︎ result: axial dist cam->mouth 13.107724393143412 t 0.9511738284385365
+> 2:Tunnel = straight cylinder parallel to the slide direction D (course.ts 04: 32 deg drop, x = 2) whose mouth is the
+> 4:h above the path line (along the slide's up U), mouth distance sA along D from Benny's water point, outer radius Ro.
+> 6:outer ring top (440,415), widest left (22,780) / right (842,780). Water = flat plane at the path level.
+> 50:       "tube": {"r": float(R), "ax": float(ax), "h": float(h), "mouthS": float(sA), "mouth": cen.tolist(), "outerR": float(ro)},
+> 51:       "fit": {"inner_px": extremes(proj(circle(cen, R))).tolist(), "outer_px": extremes(proj(circle(cen, ro))).tolist(), "err_in": float(best.fun)},
+
+### 🤖 Claude — 2026-11-18T02:51:03.359Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"import scipy, cv2, numpy; print(scipy.__version__, cv2.__version__, numpy.__version__)\"; sed -n 60,140p tools/match04/make_tiles04.py", "description": "Check python libs and rest of tile maker"}`
+
+### 🧑 User — 2026-11-18T02:51:03.522Z
+
+> ↩︎ result: 1.18.1 5.1.0 2.5.3
+> u = (c[..., 0] + r * np.cos(th)).astype(np.float32); v = (c[..., 1] - r * np.sin(th)).astype(np.float32)
+> pol = cv2.remap(A, u, v, cv2.INTER_LINEAR)
+> g = np.median(pol, axis=1)                                             # (1024, 3) colour per angle
+> low = np.cos(psi) < -0.35                      # under the water plane (never seen): reflect the wall above the waterline
+> refl = np.where(psi > 0, np.pi - psi, -np.pi - psi)
+> g[low] = g[np.round((refl[low] + np.pi) / (2 * np.pi) * 1024).astype(int) % 1024]
+> top = np.argmin(np.abs(psi)); gt = g[max(0, top - 8):top + 8].mean(0)
+> g = cv2.GaussianBlur(g[:, None], (1, 0), sigmaX=1, sigmaY=2)[:, 0]
+> ratio = np.clip(g / np.maximum(gt, 1), 0.35, 3.0)
+> ring = np.clip(prof[None, :, :] * ratio[:, None, :], 0, 255)           # (1024 psi, 192 s)
+> ring = sharpen(ring.astype(np.float32), 1.2, 0.35)
+> cv2.imwrite(f"{d}/tile_ring.png", np.ascontiguousarray(ring.transpose(1, 0, 2)).astype(np.uint8))  # rows = s, cols = psi
+> meta = json.load(open(f"{d}/tiles04.json"))
+> meta["ring"] = {"psi": [-math.pi, math.pi], "rowsAlongTunnel": "one ring period", "sourceY": RING_Y, "size": [1024, 192],
+>                 "period_u": 6.5, "lipAxial_u": 7.1, "lipS":  …[+139 chars]
+
+### 🤖 Claude — 2026-11-18T02:51:04.209Z
+
+Now I'll write the mouth tile tool.
+
+### 🤖 Claude — 2026-11-18T02:51:37.608Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/tools/match04/mouth04.py", "content": "\"\"\"Screen 04 round 9 `&m04mouth=1`: the approved GOLD WASHER OPENING as a texture for the modeled mouth ring.\n\nThe painted mouth ring (thick polished gold band, thin bright lips, a row of glowing bulbs along both lips, dark groove\nbelow) is unwrapped from the approved pixels through the locked projector on the fitted mouth plane (z0, proj04.json),\nSTRAIGHTENED (the painted ring is not a perfect circle: every angle column is aligned to the centre's profile by\ncross-correlation of its radial edges, the shift curve sm …[+7719 chars]`
+
+### 🧑 User — 2026-11-18T02:51:37.648Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/tools/match04/mouth04.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:51:41.238Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && mkdir -p $SP/mt && cp assets/textures/match04/proj04.json assets/textures/match04/plate04_hybrid_fal.png $SP/mt/ && time python3 -I tools/match04/mouth04.py $SP/mt && python3 -I -c \"\nimport cv2; a=cv2.imread('$SP/mt/tile_mouth.png'); print(a.shape); cv2.imwrite('$SP/mt/tile_mouth_s.png', cv2.resize(a,(2048, a.shape[0]//2*1)))\"", "description": "Run mouth tile tool in scratch dir", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T02:51:49.178Z
+
+> ↩︎ result: tile_mouth (480, 4096, 3) bulbs 26 [('outer', -1.58, 3.97), ('outer', -1.04, 4.0), ('outer', -0.65, 3.96), ('outer', -0.02, 3.92), ('outer', 0.31, 3.99), ('outer', 0.49, 4.02), ('outer', 0.79, 3.92), ('outer', 1.27, 3.92), ('inner', -1.6, 3.57), ('inner', -1.1, 3.61), ('inner', -0.59, 3.56), ('inner', -0.0, 3.55), ('inner', 0.74, 3.58), ('inner', 1.28, 3.57)]
+> 
+> real	0m7.715s
+> user	0m8.188s
+> sys	0m0.575s
+> (480, 4096, 3)
+
+### 🤖 Claude — 2026-11-18T02:51:51.048Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/mt/tile_mouth_s.png"}`
+
+### 🧑 User — 2026-11-18T02:51:51.187Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T02:51:51.182Z
+
+[Image: original 2048x240, displayed at 2000x234. Multiply coordinates by 1.02 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T02:51:58.970Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I - <<EOF\nimport json, math\nimport numpy as np, cv2\nm = json.load(open('$SP/mt/mouth04.json'))\nsh = m['shift_rows_0p0025u']\nfor i, s in enumerate(sh):\n    p = -math.pi + i*64*2*math.pi/4096\n    if -2.2 < p < 2.2: print(f\"{p:+.2f} {s:+.1f}\", end=' | ')\nprint()\nEOF", "description": "Print straightening shift curve"}`
+
+### 🧑 User — 2026-11-18T02:51:59.117Z
+
+> ↩︎ result: -2.16 -40.9 | -2.06 -26.4 | -1.96 +3.7 | -1.87 +1.7 | -1.77 -15.7 | -1.67 -32.7 | -1.57 -45.9 | -1.47 -53.3 | -1.37 -54.8 | -1.28 -52.4 | -1.18 -48.2 | -1.08 -41.9 | -0.98 -33.5 | -0.88 -24.1 | -0.79 -15.1 | -0.69 -6.9 | -0.59 +0.1 | -0.49 +5.1 | -0.39 +8.3 | -0.29 +9.0 | -0.20 +7.1 | -0.10 +3.2 | +0.00 -1.6 | +0.10 -6.5 | +0.20 -11.9 | +0.29 -17.7 | +0.39 -23.1 | +0.49 -27.8 | +0.59 -31.3 | +0.69 -33.4 | +0.79 -33.9 | +0.88 -32.9 | +0.98 -29.9 | +1.08 -26.1 | +1.18 -23.6 | +1.28 -18.7 | +1.37 +1.2 | +1.47 +29.8 | +1.57 +26.8 | +1.67 +24.8 | +1.77 +36.4 | +1.87 +51.1 | +1.96 +65.6 | +2.06 +76.5 | +2.16 +79.2 |
+
+### 🤖 Claude — 2026-11-18T02:52:10.584Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\nimport re\np='tools/match04/mouth04.py'\ns=open(p).read()\nold=s[s.index('step = 4                                    # correlate every 4th column'):s.index('rows = np.arange(NRF')]\nnew='''step = 4                                    # correlate every 4th column (smooth curve anyway)\nshifts = np.arange(-S, S + 1, 2)\nfor it in range(3):\n    cs = np.arange(c0, c1, step)\n    tz = (tmpl - tmpl.mean()) / (np.linalg.norm(tmpl - tmpl.mean()) + 1e-6)\n    cc = np.zeros((len(cs), len(shifts)))\n    for k, c in enumerate(cs):\n        for j, …[+1746 chars]`
+
+### 🧑 User — 2026-11-18T02:52:18.707Z
+
+> ↩︎ result: tile_mouth (480, 4096, 3) bulbs 26 [('outer', -1.58, 3.97), ('outer', -1.04, 4.0), ('outer', -0.65, 3.96), ('outer', -0.02, 3.92), ('outer', 0.31, 3.99), ('outer', 0.49, 4.02), ('outer', 0.79, 3.92), ('outer', 1.27, 3.92), ('inner', -1.6, 3.57), ('inner', -1.1, 3.61), ('inner', -0.59, 3.57), ('inner', -0.0, 3.55), ('inner', 0.74, 3.58), ('inner', 1.28, 3.56)]
+> 
+> real	0m7.794s
+> user	0m8.312s
+> sys	0m0.557s
+> -2.16 -59.4 | -2.06 -36.2 | -1.96 +9.2 | -1.87 +3.7 | -1.77 -15.8 | -1.67 -33.2 | -1.57 -46.5 | -1.47 -54.2 | -1.37 -55.7 | -1.28 -52.6 | -1.18 -48.4 | -1.08 -42.1 | -0.98 -33.5 | -0.88 -24.1 | -0.79 -15.1 | -0.69 -6.9 | -0.59 +0.3 | -0.49 +5.3 | -0.39 +8.6 | -0.29 +9.3 | -0.20 +7.3 | -0.10 +3.3 | +0.00 -1.6 | +0.10 -6.4 | +0.20 -11.8 | +0.29 -17.7 | +0.39 -23.2 | +0.49 -28.0 | +0.59 -31.5 | +0.69 -33.6 | +0.79 -34.0 | +0.88 -33.2 | +0.98 -30.1 | +1.08 -25.9 | +1.18 -23.7 | +1.28 -20.3 | +1.37 -13.1 | +1.47 -3.8 | +1.57 +7.3 | +1.67 +21.1 | +1.77 +36.0 | +1.87 +51.0 | +1.96 +66.0 | +2.06 +78.9 | +2.16 +82.9 |
+
+### 🤖 Claude — 2026-11-18T02:52:20.770Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/mt/tile_mouth_s.png"}`
+
+### 🧑 User — 2026-11-18T02:52:20.965Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T02:52:20.961Z
+
+[Image: original 2048x240, displayed at 2000x234. Multiply coordinates by 1.02 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T02:52:29.255Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -i 's/^GOOD = (-1.95, 1.45) /GOOD = (-1.80, 1.45) /' tools/match04/mouth04.py && grep -n \"^GOOD\" tools/match04/mouth04.py && SP=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04 && python3 -I tools/match04/mouth04.py $SP/mt && python3 -I -c \"\nimport cv2; a=cv2.imread('$SP/mt/tile_mouth.png'); cv2.imwrite('$SP/mt/tile_mouth_s.png', cv2.resize(a,(2048, a.shape[0]//2)))\" && ls -la $SP/mt/tile_mouth.png", "description": "Narrow left good arc end and rerun", "timeout": 300000}`
+
+### 🧑 User — 2026-11-18T02:52:37.373Z
+
+> ↩︎ result: 27:GOOD = (-1.80, 1.45)                        # painted arc with a reliable band (beyond: water / foam / bent band)
+> tile_mouth (480, 4096, 3) bulbs 28 [('outer', -1.58, 3.97), ('outer', -1.04, 4.0), ('outer', -0.65, 3.96), ('outer', -0.02, 3.92), ('outer', 0.31, 3.99), ('outer', 0.49, 4.02), ('outer', 0.79, 3.92), ('outer', 1.27, 3.92), ('inner', -1.6, 3.57), ('inner', -1.1, 3.61), ('inner', -0.59, 3.57), ('inner', -0.0, 3.55), ('inner', 0.74, 3.58), ('inner', 1.28, 3.56)]
+> -rw-r--r-- 1 root root 2452555 Nov 18 02:52 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/s04/mt/tile_mouth.png
+> [This command modified 1 file you've previously read: ../wt/s04/tools/match04/mouth04.py. Call Read before editing.]
+

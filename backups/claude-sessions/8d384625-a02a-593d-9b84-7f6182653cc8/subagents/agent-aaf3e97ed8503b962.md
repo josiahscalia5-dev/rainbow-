@@ -1012,3 +1012,361 @@ Final reply (short): kept query, final verified SHA, best 3–5 NEW + matching B
 > 330 648 [{"obj":"foam_berm","s":178.25,"d":4.63,"lat":-4.6,"up":0.45},{"obj":"foam_berm","s":178.25,"d":4.63,"lat":-4.61,"up":0.45},{"obj":"water_ribbon","s":187.75,"d":3.52,"lat":-3.52,"up":0.16},{"obj":"tube05_far_river","s":188.5,"d":3.57,"lat":-3.56,"up":-0.27}]
 > 330 655 [{"obj":"foam_berm","s":178,"d":4.57,"lat":-4.54,"up":0.46},{"obj":"foam_berm","s":178,"d":4.58,"lat":-4.56,"up":0.46},{"obj":"water_ribbon","s":187.5,"d":3.52,"lat":-3.51,"up":0.17},{"obj":"tube05_far_river","s":187.75,"d":3.54,"lat":- …[+2017 chars]
 
+### 🤖 Claude — 2026-11-18T02:48:54.234Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1760,1790p src/vfx/waterRibbon.ts && sed -n 1830,1949p src/vfx/waterRibbon.ts && grep -n \"FRAG_TAIL =\" -A12 src/vfx/*.ts | head -20", "description": "Read ribbon material creation and proj05 uniforms"}`
+
+### 🧑 User — 2026-11-18T02:48:54.294Z
+
+> ↩︎ result: // W11: textures / shared uniforms are attached AFTER the merge above (UniformsUtils.merge would clone them)
+>     const f5 = flow05Textures(course);
+>     const u5 = uniforms as Record<string, THREE.IUniform>;
+>     u5.uTime = flow05Shared.uTime;                       // the far river (environment.ts) runs on the same clock
+>     u5.uFlowMap = { value: f5.flowMap };
+>     u5.uRipple = { value: f5.ripple };
+>     u5.uFlowS = { value: f5.sRange };
+>     u5.uPano = flow05Shared.uPano;
+>     u5.uPanoRot = flow05Shared.uPanoRot;
+>     const pk = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('panok') : null;   // QA: ?panok=0 isolates the reflection
+>     u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
+>   }
+>   const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: VERT,
+>     fragmentShader: FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUF …[+9366 chars]
+
+### 🤖 Claude — 2026-11-18T02:49:22.336Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 369,380p src/vfx/waterRibbon.ts; grep -n \"varying vec3 vPosW\" src/vfx/waterRibbon.ts; grep -n \"q05 = \\|function q05\\|export function flag05\\|const q05\" src/vfx/waterRibbon.ts", "description": "Check FRAG varyings and q05 helper"}`
+
+### 🧑 User — 2026-11-18T02:49:22.377Z
+
+> ↩︎ result: void main() {
+>   vStyle = aStyle;
+>   vCore = aCore;
+>   #ifdef FARW05
+>   vChan = aChan;
+>   #endif
+>   vTanW = normalize(mat3(modelMatrix) * aTan);
+>   float u = aUV.x;
+>   float s = aUV.y;
+>   float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
+>   vec3 p = position + normal * h * (1.0 - aSkirt);
+>   vec4 wp = modelMatrix * vec4(p, 1.0);
+> 366:varying vec3 vPosW;
+> 465:varying vec3 vPosW;
+> 151:const q05 = (key: string): boolean => {
+
+### 🤖 Claude — 2026-11-18T02:49:23.543Z
+
+Now let me implement the `&m05blend=1` switch (ribbon cross-fades into the far river's own baked texture over a band before the seam).
+
+### 🤖 Claude — 2026-11-18T02:49:29.345Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05SEAM: boolean = M05RIDE && q05('m05seam');\nexport const m05seam = { value: new THREE.Vector2(0, 0) };", "new_string": "export const M05SEAM: boolean = M05RIDE && q05('m05seam');\nexport const m05seam = { value: new THREE.Vector2(0, 0) };\n/**\n * `&m05blend=1` (Screen 05 round 9, branch claude/rainbow-s05-match-c9, qa/match/05/r9/PROGRESS.md; needs m05seam): the\n * near river (real ribbon) and the far tunnel's river met at the sliding seam with a hard straight line — the near design …[+981 chars]`
+
+### 🧑 User — 2026-11-18T02:49:29.357Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:49:31.846Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "#ifdef M05SEAM\nuniform vec2 uPjSeam;      // m05seam: (world s of the far tunnel seam, live)\n#endif", "new_string": "#ifdef M05SEAM\nuniform vec2 uPjSeam;      // m05seam: (world s of the far tunnel seam, live)\n#endif\n#ifdef M05BLEND\n// m05blend: the far river's baked layer F + the far tunnel frame (origin c0, axis T, right Rt) and (seam depth, band, half chord, live)\nuniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;\n#end …[+4 chars]`
+
+### 🧑 User — 2026-11-18T02:49:31.857Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:49:36.298Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    float s05r = s;", "new_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    #ifdef M05BLEND\n    // m05blend: over the band before the far tunnel's seam the ribbon fades into the far river's own picture F (see\n    // M05BLEND): same texture, same mapping (real depth = virtual depth before the seam), same post-chain  …[+568 chars]`
+
+### 🧑 User — 2026-11-18T02:49:36.309Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:49:39.199Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "      if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));", "new_string": "      #ifdef M05BLEND\n      tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)\n      wEx = mix(wEx, 1.0, fbK);\n      #endif\n      if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * d …[+23 chars]`
+
+### 🧑 User — 2026-11-18T02:49:39.209Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:49:40.400Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "...(M05SEAM ? { M05SEAM: 1 } : {}) },", "new_string": "...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}) },"}`
+
+### 🧑 User — 2026-11-18T02:49:40.409Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T02:49:41.746Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 280, "limit": 15}`
+
+### 🧑 User — 2026-11-18T02:49:41.770Z
+
+> ↩︎ result: 280	 */
+> 281	export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
+> 282	/**
+> 283	 * `&m05seam=1` (Screen 05 round 8, needs m05ride + m05far): the near river meets the far tunnel's river at the sliding
+> 284	 * seam. With m05ride the near river shows the approved design Benny-relative, so once the seam stops sliding (capped
+> 285	 * just before 06, Benny ≈ 139 on) the near river reached the seam with design rows from the approved MIDDLE distance
+> 286	 * while the far river continues the approved picture's LAST near-river rows: the pink / cyan bands broke in a step line
+> 287	 * across the river. Over the stretch before the seam (60 % of Benny → seam, 4–20 u) the design is eased (quadratic, no
+> 288	 * kink) so it arrives at E's last rows exactly at the seam, as in the locked view. `m05seam.value` = (seam s, live) is
+> 289	 * written every frame by src/world/match05far.ts; locked view and the 06 fold: live = 0, nothing changes.
+> 290	 */
+> 291	export const M05SEAM: boolean = M05RIDE && q05('m05seam');
+> 292	export const m05seam = { value: new THREE.Vector2(0, 0) };
+> 293	/** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> 294	export …[+46 chars]
+
+### 🤖 Claude — 2026-11-18T02:49:46.991Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05SEAM: boolean = M05RIDE && q05('m05seam');\nexport const m05seam = { value: new THREE.Vector2(0, 0) };", "new_string": "export const M05SEAM: boolean = M05RIDE && q05('m05seam');\nexport const m05seam = { value: new THREE.Vector2(0, 0) };\n/**\n * `&m05blend=1` (Screen 05 round 9, branch claude/rainbow-s05-match-c9, qa/match/05/r9/PROGRESS.md; needs m05seam): the\n * near river (real ribbon) and the far tunnel's river met at the sliding seam with a hard straight line — the near design …[+981 chars]`
+
+### 🧑 User — 2026-11-18T02:49:47.046Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:49:49.292Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "#ifdef M05SEAM\nuniform vec2 uPjSeam;      // m05seam: (world s of the far tunnel seam, live)\n#endif", "new_string": "#ifdef M05SEAM\nuniform vec2 uPjSeam;      // m05seam: (world s of the far tunnel seam, live)\n#endif\n#ifdef M05BLEND\n// m05blend: the far river's baked layer F + the far tunnel frame (origin c0, axis T, right Rt) and (seam depth, band, half chord, live)\nuniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;\n#end …[+4 chars]`
+
+### 🧑 User — 2026-11-18T02:49:49.340Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:49:53.443Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    float s05r = s;", "new_string": "    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)\n    #ifdef M05BLEND\n    // m05blend: over the band before the far tunnel's seam the ribbon fades into the far river's own picture F (see\n    // M05BLEND): same texture, same mapping (real depth = virtual depth before the seam), same post-chain  …[+568 chars]`
+
+### 🧑 User — 2026-11-18T02:49:53.483Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:49:56.242Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "      if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));", "new_string": "      #ifdef M05BLEND\n      tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)\n      wEx = mix(wEx, 1.0, fbK);\n      #endif\n      if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * d …[+23 chars]`
+
+### 🧑 User — 2026-11-18T02:49:56.287Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:49:57.404Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "...(M05SEAM ? { M05SEAM: 1 } : {}) },", "new_string": "...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}) },"}`
+
+### 🧑 User — 2026-11-18T02:49:57.454Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:49:58.595Z
+
+Now the uniform sharing in proj05Far / attachProj05, and the per-frame writes in match05far.ts.
+
+### 🤖 Claude — 2026-11-18T02:50:01.148Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },\n  };\n  proj05Pending.push(new Promise<void>((res) => {", "new_string": "    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },\n  };\n  // m05blend (Screen 05 round 9): the near ribbon reads the SAME F texture / depth range (shared uniform objects)\n  if (M05BLEND) { u.uPjF = m05blend.uPjF; u.uPjFZ = m05blend.uPjFZ; }\n  pro …[+46 chars]`
+
+### 🧑 User — 2026-11-18T02:50:01.190Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:50:02.898Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts", "new_string": "  u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/world/match05far.ts\n  if (M05BLEND) Object.assign(u, m05blend);   // m05blend (Screen 05 round 9): F shared with proj05Far(), frame by match05far.ts"}`
+
+### 🧑 User — 2026-11-18T02:50:02.932Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T02:50:04.247Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "import { EDGE_LIFT, MATCH05, flag05, m05seam } from '../vfx/waterRibbon';", "new_string": "import { EDGE_LIFT, M05BLEND, MATCH05, flag05, m05blend, m05seam } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-18T02:50:04.278Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:50:07.510Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "    m05seam.value.set(sF + zs, atLock || open > 0.5 ? 0 : 1);", "new_string": "    m05seam.value.set(sF + zs, atLock || open > 0.5 ? 0 : 1);\n    if (M05BLEND) {\n      // `&m05blend=1` (Screen 05 round 9): the near ribbon fades into the far river's picture over a band before the\n      // seam (waterRibbon.ts M05BLEND). Band ≈ a quarter of the eye → seam distance (2.5–8 u), never before sF (F has no\n      // rows there); off at the locked eye and while folding\n      m05blend.uFbC0.value.copy(c0); …[+237 chars]`
+
+### 🧑 User — 2026-11-18T02:50:07.541Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:50:10.186Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && echo TSC_OK", "description": "Type-check the project", "timeout": 320000}`
+
+### 🧑 User — 2026-11-18T02:50:12.719Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-18T02:50:16.114Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1\" && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/blend1 \"$K&m05blend=1\" t66_through_screen,t33_through_screen,f20_forward20u,f10_forward10u 5291 2>&1 | tail -6", "description": "Render m05blend test shots", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T02:50:58.277Z
+
+> ↩︎ result: f10_forward10u s 143.166 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@459,704 d91
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> t33_through_screen s 151.691 lat 0 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.391 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T02:51:01.013Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py t66cmp.png 0 480 864 820 1.0 /home/user/wt/s05/qa/match/05/r9/BEFORE/t66_through_screen.png blend1/t66_through_screen.png", "description": "Crop BEFORE vs blend t66 seam region"}`
+
+### 🧑 User — 2026-11-18T02:51:01.340Z
+
+> ↩︎ result: t66cmp.png (864, 686)
+
+### 🤖 Claude — 2026-11-18T02:51:02.971Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/t66cmp.png"}`
+
+### 🧑 User — 2026-11-18T02:51:03.024Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:51:12.558Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/blend1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:51:12.607Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:51:17.557Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && python3 -I crop.py t66right.png 520 580 864 760 2.0 /home/user/wt/s05/qa/match/05/r9/BEFORE/t66_through_screen.png blend1/t66_through_screen.png", "description": "Zoom right side of t66 seam"}`
+
+### 🧑 User — 2026-11-18T02:51:17.885Z
+
+> ↩︎ result: t66right.png (688, 726)
+
+### 🤖 Claude — 2026-11-18T02:51:19.522Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/t66right.png"}`
+
+### 🧑 User — 2026-11-18T02:51:19.559Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:51:42.304Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"AMP\\b\\|const AMP\\|EDGE_LIFT \\*\\|EDGE_LIFT\\*\" src/vfx/waterRibbon.ts | head -20", "description": "Find ribbon amplitude and edge lift usage"}`
+
+### 🧑 User — 2026-11-18T02:51:42.342Z
+
+> ↩︎ result: 18:const AMP: Partial<Record<StageId, number>> = {
+> 340:    if (a > 0) { v += (AMP[st.id] ?? 0.08) * a; w += a; }
+> 357:  const trough = EDGE_LIFT * au * au * au;
+> 1745:      const lift = EDGE_LIFT * Math.abs(u) ** 3;
+> 1746:      const slope = (EDGE_LIFT * 3 * u * Math.abs(u)) / hw; // d lift / d lateral
+
+### 🤖 Claude — 2026-11-18T02:51:43.811Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 16,22p src/vfx/waterRibbon.ts && sed -n 1725,1760p src/vfx/waterRibbon.ts", "description": "Read AMP table and ribbon geometry build"}`
+
+### 🧑 User — 2026-11-18T02:51:43.851Z
+
+> ↩︎ result: /** wave amplitude per stage (units); blended across boundaries */
+> const AMP: Partial<Record<StageId, number>> = {
+>   '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10': 0.08, '11': 0.05,
+> };
+> export const EDGE_LIFT = 0.28;
+> 
+>     const put =(u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {
+>       tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);
+>       tmp.toArray(pos, k * 3);
+>       nn.toArray(nor, k * 3);
+>       f.tan.toArray(tang, k * 3);
+>       uv[k * 2] = u;
+>       uv[k * 2 + 1] = s;
+>       halfW[k] = hw;
+>       speed[k] = sp;
+>       amp[k] = a;
+>       skirt[k] = isSkirt;
+>       for (let q = 0; q < 4; q++) style[k * 4 + q] = bs[q];
+>       core[k] = cl;
+>       if (chan && ch) { chan[k * 2] = ch.c; chan[k * 2 + 1] = ch.hw; }
+>       k++;
+>     };
+>     // left skirt (below left edge)
+>     put(-1, -hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right).negate());
+>     for (let j = 0; j <= cols; j++) {
+>       const u = -1 + (2 * j) / cols;
+>       const lift = EDGE_LIFT * Math.abs(u) ** 3;
+>       const slope = (EDGE_LIFT * 3 * u * Math.abs(u)) / hw; // d lift / d lateral
+>       nrm.copy(f.up).addScaledVector(f.rig …[+480 chars]
+
+### 🤖 Claude — 2026-11-18T02:52:00.209Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"qa3d\\|probe(\\|coinScreen\\|bennyScreen\" src/*.ts src/**/*.ts | head -10; grep -n \"course:\" src/main.ts | head", "description": "Find QA hooks exposed on window.__rainbow"}`
+
+### 🧑 User — 2026-11-18T02:52:00.251Z
+
+> ↩︎ result: src/game/Game.ts:639:    coinScreen() {
+> src/game/Game.ts:666:    bennyScreen() {
+> src/game/Game.ts:671:    probe(x = 0, y = 0) {
+> src/game/Game.ts:696:    qa3d() { return { scene, camera, renderer, composer }; },
+
+### 🤖 Claude — 2026-11-18T02:52:15.457Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/tools/match05/r9_seam_probe.mjs", "content": "// Screen 05 round 9: heights where the near river (water_ribbon) meets the far tunnel's river (tube05_far_river) at\n// the sliding seam, for one audit shot (same stepping as r8_shots.mjs). Prints, for the far river's first rows, each\n// vertex's offset along the tunnel up axis from the ribbon's static surface (course pos + trough) at the same lateral.\n//   node tools/match05/r9_seam_probe.mjs <shot> \"<query>\" [port]\nimport { pathToFileURL } from 'node:url';\nimport { realpathSync } from 'node:fs';\nconst { lo …[+3836 chars]`
+
+### 🧑 User — 2026-11-18T02:52:15.490Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/r9_seam_probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T02:52:17.488Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 600 node tools/match05/r9_seam_probe.mjs t66_through_screen \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" 2>&1 | tail -8", "description": "Measure far river vs ribbon heights at seam", "timeout": 620000}`
+
+### 🧑 User — 2026-11-18T02:52:37.434Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":170.488,"lat":0,"coins":1460,"hearts":5,"paused":false,"bennyY":-43,"bennyVisible":true,"cam":[1.49,-39.46,-104.75]}
+> row 0 j0 Z6.49 s186.7 lat-6.57 d0.328 | j2 Z6.49 s186.7 lat-5.45 d0.36 | j4 Z6.49 s186.7 lat-4.27 d0.148 | j6 Z6.49 s186.7 lat-2.99 d0.137 | j8 Z6.49 s186.7 lat-1.7 d0.093 | j10 Z6.49 s186.7 lat-0.41 d0.033 | j12 Z6.49 s186.7 lat0.88 d-0.032 | j14 Z6.49 s186.7 lat2.17 d-0.112 | j16 Z6.49 s186.7 lat3.46 d-0.225 | j18 Z6.49 s186.7 lat4.76 d-0.312 | j20 Z6.49 s186.7 lat5.73 d-0.182 | j22 Z6.49 s186.7 lat6.34 d-0.298
+> row 1 j0 Z6.67 s186.9 lat-6.56 d0.244 | j2 Z6.67 s186.9 lat-5.47 d0.286 | j4 Z6.67 s186.9 lat-4.29 d0.073 | j6 Z6.67 s186.9 lat-3 d0.081 | j8 Z6.67 s186.9 lat-1.7 d0.052 | j10 Z6.67 s186.9 lat-0.41 d0.003 | j12 Z6.67 s186.9 lat0.89 d-0.05 | j14 Z6.67 s186.9 lat2.19 d-0.121 | j16 Z6.67 s186.9 lat3.49 d-0.229 | j18 Z6.67 s186.9 lat4.79 d-0.297 | j20 Z6.67 s186.9 lat5.76 d-0.159 | j22 Z6.67 s186.9 lat6.37 d-0.269
+> row 2 j0 Z6.86 s187.05 lat-6.54 d0.169 | j2 Z6.86 s187.05 lat-5.48 d0.22 | j4 Z6.86 s187.05 lat-4.3 d0.007 | j6 Z6.86 s187.05 lat-3 d0.032 | j8 Z6.86 s187.05 lat-1.7 d0.015 | j10 Z6.86 s187.05 lat-0.4 d-0.024 | j12 Z6.86 …[+1054 chars]
+
+### 🤖 Claude — 2026-11-18T02:52:56.915Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1755,1772p src/vfx/waterRibbon.ts; grep -n \"uTime.value\\s*=\" src/vfx/index.ts src/vfx/waterRibbon.ts | head; grep -n \"export const FLOWMAP05\\|export const WATER05\\|export const MATCH05\\|export const PROJ05\\b\\|export const PROJ05:\" src/vfx/waterRibbon.ts", "description": "Check ribbon time uniform wiring"}`
+
+### 🧑 User — 2026-11-18T02:52:56.966Z
+
+> ↩︎ result: const a = i * vertsPerRow + j, b = a + 1, c = a + vertsPerRow, d = c + 1;
+>       idx.push(a, c, b, b, c, d);
+>     }
+>   }
+>   const geo = new THREE.BufferGeometry();
+>   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+>   geo.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+>   geo.setAttribute('aUV', new THREE.BufferAttribute(uv, 2));
+>   geo.setAttribute('aHalfW', new THREE.BufferAttribute(halfW, 1));
+>   geo.setAttribute('aSpeed', new THREE.BufferAttribute(speed, 1));
+>   geo.setAttribute('aAmp', new THREE.BufferAttribute(amp, 1));
+>   geo.setAttribute('aSkirt', new THREE.BufferAttribute(skirt, 1));
+>   geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 4));
+>   geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
+>   if (chan) geo.setAttribute('aChan', new THREE.BufferAttribute(chan, 2));
+>   geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
+>   geo.setIndex(idx);
+>   geo.computeBoundingSphere();
+> src/vfx/index.ts:182:      ribbon.uniforms.uTime.value = time;
+> src/vfx/index.ts:183:      whirl.uniforms.uTime.value = time;
+> src/vfx/index.ts:184:      drum.uniforms.uTime.value = time;
+> src/vfx/index.ts:188:      wave.uniforms.uTime.value = time;
+> src/vfx/index …[+292 chars]
+
