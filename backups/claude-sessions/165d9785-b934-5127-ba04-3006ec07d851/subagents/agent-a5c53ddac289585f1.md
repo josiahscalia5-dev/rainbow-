@@ -2530,3 +2530,15 @@ Now the PROGRESS.md for r12 with step 1.
 > 19-  arch: { z: number; outer: { cx: number; cy: number; r: number }; inner: { cx: number; cy: number; r: number }; depth: number };
 > 20-  pipe: { cx: number; cy: number; r: number; z0: number; z1: number }; …[+2255 chars]
 
+### 🤖 Claude — 2026-11-18T13:26:08.949Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\nold=\"\"\"    for (const [g, nm] of [[dome, 'dome'], [cap, 'under']] as const) {\n      const o = add(g, cm, `spout_${k}_${nm}`);\n      o.scale.set(s.rx, s.ry, s.rx);\n      o.position.set(...s.c);\n    }\n  }\n\"\"\"\nnew=\"\"\"    // `&m08cupg=1` (r12, defect A): the approved view sees the two UPPER cups from below, and the painted cups hang well\n    // below the fitted rim: a gold band, then the perforated underside dish (lowest painted point = the underside's far\n    // edge). Those pixel …[+1943 chars]`
+
+### 🤖 Claude — 2026-11-18T13:26:10.147Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_cg1.png"}`
+
+### 🤖 Claude — 2026-11-18T13:26:10.704Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_cg2.png"}`
+

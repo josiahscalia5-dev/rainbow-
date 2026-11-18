@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 15506,
-   "sha256": "da684b11d0354408b8682cf998915a33cfdaa8641a10685b6b6a2bb41b469036"
+   "sha256": "ec1b07df02dc22c9719c55efae3d96482294d9fbeb69fb44b751c2eff25fef99"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -764,7 +764,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c12/INFO.json",
    "bytes": 477,
-   "sha256": "7f2a5cf73ee5529c6be3a85f857c47f91d069e8bccb3a08b02a9e6aaf54e0901"
+   "sha256": "6e480e953725654a274910bdd299400aeb56b5c17941a75e3f0a66a002928c98"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -788,18 +788,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c12/INFO.json",
-   "bytes": 1003,
-   "sha256": "ebc96908dcb9a5f5f4cc551b92e9b06f5856142d9422d0a663506b30899b6287"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c12/tracked.patch",
-   "bytes": 7552,
-   "sha256": "01fadafc83b91d1944bdd7efa084ad64f9a80977e9b6f4fc854685be7bccc0fb"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c12/untracked/qa/match/05/r12/step4_m05fcoin/1_APPROVED.png",
-   "bytes": 484196,
-   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+   "bytes": 477,
+   "sha256": "6a10702900b8eba950ab22f8a85ded155d17d470eed186880696802a8bdf274f"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -838,13 +828,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/INFO.json",
-   "bytes": 718,
-   "sha256": "8ea0f173a340ce1e5aa5626d3e0d569e8052db6231943873f2ee93bcaf3a3c4f"
+   "bytes": 740,
+   "sha256": "cceb74b6f45e3f71a7424b6b7220c58363bb346cf39ac7af0fba49efe3dde561"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/tracked.patch",
-   "bytes": 5295,
-   "sha256": "818a99ac3587bc8526d022e8818bdefc596d2908bebf1a4359946afbab63855f"
+   "bytes": 1394,
+   "sha256": "e7c5acf77af1462a7a8f5c12446175bfe504acb3fd9d3da3930f00b788b3c7a0"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/qa/match/08/r12/wip_m08floor/floor08.json",
@@ -860,6 +850,11 @@
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/qa/match/08/r12/wip_m08floor_not_kept.patch",
    "bytes": 5731,
    "sha256": "e0091770933fbc5418312b9fd9332064c8c6d4d578c0c56d4719556d383e9dfc"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/qa/match/08/r12/wip_m08twin_not_kept.patch",
+   "bytes": 3901,
+   "sha256": "7ca28dcb797e9a18b0793ac3add8ff1ded4a3589b7ff5c7e82c0e45150e56841"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c12/untracked/tools/match08/floor08.py",
