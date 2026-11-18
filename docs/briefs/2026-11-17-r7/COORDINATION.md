@@ -28,3 +28,15 @@ a crisp tileable perforated purple wall, sized/spaced from the approved pictures
 World Labs key = the 5,420-credit Screen 08 account (world 32b5b2f4 → 200; Screen 05 pilot worlds now 404 — their
 outputs are in Git LFS). Marble CDN reachable (environment network unrestricted). Atlas connector responds (separate).
 fal.ai key reconnected: request 01a1ea70 → COMPLETED (same purchased account). Git LFS: 75 objects / 9 tips, fsck OK.
+
+## Update 2026-11-18 ~00:20 UTC
+* 06 (lead): `&m06ring=1` real modeled gold rings kept on `claude/rainbow-s06-match-c7` @ `99a4a3ad` (approved view
+  unchanged, 76.4 % → 76.4 %); lead moving rating ≈ 6.5/10 (BEFORE ≈ 3.5–4). Next: ring highlights/bulbs, thinner far
+  rings, crisp perforated wall, foam clouds + bubbles.
+* 08 scenery: milestone DONE `claude/rainbow-s08-scenery-c7` @ `dafa3752` (m08seam, m08sill, m08towel kept; ≈ 7.5/10
+  straight ahead); session idle. Next 08 round: sharper near water while steering.
+* 07: session `session_01KS3bZthTRh6CTfK1fvM3r6` RUNNING (was blocked on a send_message permission prompt — interrupted,
+  told to report via commits only).
+* 05: session `session_01KS3bZvfAKmzbAswSRdAaqD` RUNNING (BEFORE audit done).
+* 04: brief `S04.md` + branch `claude/rainbow-s04-match-c7` (= d1e422fa) ready; launch when 05 or 07 stops.
+* Specialists must NOT use send_message (permission prompt blocks them); they report via STATUS.md commits.
