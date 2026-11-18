@@ -224,6 +224,12 @@ export const proj05Pending: Promise<unknown>[] = [];
  * x 546–592) and continues into the far block; it hands back to the full width behind the seam (s 183–191, hidden
  * by the far block at the checkpoint, the ride into 06 is the normal river).
  */
+/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the sheet's lifted white edges step aside (null = off) */
+function HIDE07R(course: Course): [number, number] | null {
+  if (!flag05('match07') || !flag05('m07foam')) return null;
+  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+}
+
 export function channel05(course: Course, s: number): { c: number; hw: number } {
   const hw = course.widthAt(s) / 2;
   if (!FARW05) return { c: 0, hw };
@@ -704,9 +710,17 @@ vec2 silk05Streak(float X, float v, float k, float seed, float dens) {
 #endif
 #endif
 
+uniform vec4 uHide07r;   // r8 m07foam: (s0, s1, |u| fade start, |u| fade end)
 void main() {
   float u = vUV.x;
   float s = vUV.y;
+  #ifdef HIDE07R
+  // r8 '?match07=1&m07foam=1': the lifted white outer edges of the game's sheet step aside down the 07 plunge so the
+  // matched tube's river tile (painted soft foam banks) shows there; dithered over 3 u at both ends
+  float h7r = smoothstep(uHide07r.x, uHide07r.x + 3.0, s) * (1.0 - smoothstep(uHide07r.y - 3.0, uHide07r.y, s))
+            * smoothstep(uHide07r.z, uHide07r.w, abs(u));
+  if (h7r > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < h7r) discard;
+  #endif
   // dithered hide (03 hand-over)
   if (vHide < 0.5) discard;
   float cutFoam = 1.0 - smoothstep(0.5, 0.85, vHide);
@@ -1597,6 +1611,10 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     uP5Streak: { value: RIVER05_PAL.pinkStreak.clone() },
     uFlow05: { value: course.stage('05').speed * FLOW05 },
   });
+  { // r8 m07foam (07 plunge edge hide), see HIDE07R
+    const h = HIDE07R(course);
+    (uniforms as Record<string, THREE.IUniform>).uHide07r = { value: new THREE.Vector4(...(h ?? [0, 0]), 0.70, 0.84) };
+  }
   if (FLOWMAP05) {
     // W11: textures / shared uniforms are attached AFTER the merge above (UniformsUtils.merge would clone them)
     const f5 = flow05Textures(course);
@@ -1617,7 +1635,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(HIDE07R(course) ? { HIDE07R: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;

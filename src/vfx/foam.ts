@@ -19,7 +19,7 @@ import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
 /** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
-interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }
+interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean; s?: number }
 
 // ---------------------------------------------------------------------------------- berm profile
 /** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
@@ -118,6 +118,7 @@ uniform float uTime;
 uniform vec2 uOutro;     // amount, chamber start s
 uniform vec3 uLightDir;
 uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+uniform vec2 uHide07;    // r8 m07foam: berm hidden on s in (x, y)
 varying vec3 vFoam;
 varying vec3 vPosW;
 varying vec3 vNormalW;
@@ -132,6 +133,13 @@ void main() {
   // (dithered over 3 u at both joins; 04 / 06 keep their berm)
   float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
   if (pjIn > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < pjIn) discard;
+  #endif
+  #ifdef HIDE07
+  // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+  // tile (with its painted soft foam banks) shows instead; dithered over 3 u at both ends, 07 level stretch and 08 keep
+  // their berm
+  float h7 = smoothstep(uHide07.x, uHide07.x + 3.0, s) * (1.0 - smoothstep(uHide07.y - 3.0, uHide07.y, s));
+  if (h7 > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < h7) discard;
   #endif
   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
     float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 + 0.3;
@@ -545,6 +553,12 @@ function bermScale05(course: Course): (s: number) => number {
 /** squash the part of the bank above the stream's edge water level by k (k = 1: unchanged) */
 const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
 
+/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+function hide07(course: Course): [number, number] | null {
+  if (!flag05('match07') || !flag05('m07foam')) return null;
+  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+}
+
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
   const hk = bermScale05(course);
@@ -607,6 +621,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
     // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
     uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+    uHide07: { value: new THREE.Vector2(...(hide07(course) ?? [0, 0])) },
   });
   const mat = new THREE.ShaderMaterial({
     uniforms,
@@ -614,7 +629,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     fragmentShader: BERM_FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(hide07(course) ? { HIDE07: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'foam_berm';
@@ -649,6 +664,7 @@ export function createFoam(
 
   /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
   const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
+  const h07 = hide07(course);
   const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
     if (!list.length) return;
     const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
@@ -660,6 +676,7 @@ export function createFoam(
       tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
       const seed = rand();
       if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
+      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < h07[1] - 1.5) tmpS.set(0, 0, 0); // r8 m07foam
       tmpM.compose(pf.p, tmpQ, tmpS);
       mesh!.setMatrixAt(i, tmpM);
       // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)
@@ -708,7 +725,7 @@ export function createFoam(
       r *= 0.5 + 0.95 * hz * hz;
       lift -= 0.4 * r;
     }
-    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp });
+    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });
   };
   const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
   /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */

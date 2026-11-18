@@ -1,3 +1,33 @@
+# Screen 07 · DIVE THE WASHER TUBE — status (round 8 / account 8, 2026-11-18 ~02:20 UTC)
+
+Branch `claude/rainbow-s07-match-c8`, started from `3afaa7e9` (= `claude/rainbow-s07-match-c7` tip, M3 done). Nothing is
+approved until the user says so. **State: WORK IN PROGRESS, paused by the lead (user order: 07 resumes in the next free
+specialist slot).**
+
+## Round 8 so far (lead, two look-only switches on top of the M3 kept set K)
+K = `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`
+* `&m07foam=1` (NEW, `src/vfx/foam.ts` + `src/vfx/waterRibbon.ts`, `#ifdef HIDE07` / `HIDE07R`): down the plunge
+  (s plunge_top+9 → plunge_bottom−12, dithered 3 u at both ends) the game's tall white lather walls (berm + puffs) and the
+  lifted white outer edges of the game's water sheet step aside, so the matched tube's river tile with its painted
+  pink/cyan banks and soft blue foam shows instead. Visual verdict: **clearly closer at t50 / t66 / t80**
+  (`r8/plunge_K/` vs `r8/plunge_foam2/`); t33 unchanged (animation timing only); t95 = the 08 inlet (unchanged, 08 owns it).
+* `&m07coinsz=1` (existed since the 00:52 autosave, untested before): coins sized against the live camera — the huge
+  near coin at the bottom of the plunge view shrinks to about the painted coin size (`r8/plunge_foam_coinsz/t66`).
+  Verdict: closer. Gameplay proof still owed (look only; must stay 91 coins / 2,240).
+* Proposed set: K + `&m07foam=1&m07coinsz=1`.
+
+## Still owed before this round can be called done (next 07 specialist slot)
+1. Default build 0 px vs `3afaa7e9` with the DETERMINISTIC capture (`node scripts/capture.mjs 06 07 08 --plunge`, start
+   commit in a detached worktree) — the real-time motion audit is not deterministic (it differed by animation timing).
+   By construction the default build compiles the same shaders (both changes are behind defines that only the switches set).
+2. `node scripts/gameplay-test.mjs --q=<K>&m07foam=1&m07coinsz=1` → 8/8, 91 coins, 1,330 → 2,240; `npm run test:continuity`.
+3. Full 12-shot audit (`node tools/lead_r6/motion_audit.mjs 07 qa/match/07/r8/NEW "<set>"`), APPROVED / BEFORE (r7/NEW) /
+   NEW pictures, LAYOUT20 / PALETTE numbers.
+4. Then the M3 next steps still open: near water while moving on the level stretch (smears when steering), foam-bank
+   colour on the lowest wall band (hard wall edge when steering hard), the plunge-top lip; the coin partly covering Benny.
+
+---
+
 # Screen 07 · DIVE THE WASHER TUBE — status (round 7 / account 7, 2026-11-18 ~01:30 UTC)
 
 Branch `claude/rainbow-s07-match-c7`, started from `835a72db` (= `claude/rainbow-s07-match-c5` tip). Nothing is approved
