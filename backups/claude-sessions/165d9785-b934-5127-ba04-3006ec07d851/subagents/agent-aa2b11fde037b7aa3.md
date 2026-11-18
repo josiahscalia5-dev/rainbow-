@@ -2485,3 +2485,73 @@ Next item: the distorted tunnel walls. I'll compare a wall crop from the approve
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T13:26:34.063Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls qa/match/05/; grep -n -i \"m05wall\" -A6 qa/match/05/r9/PROGRESS.md | head -60", "description": "Check round-9 verdict on m05wall"}`
+
+### 🧑 User — 2026-11-18T13:26:34.122Z
+
+> ↩︎ result: 01_APPROVED.png
+> 02_BEFORE_match05.png
+> 03_NEW_match05_tgtvis05.png
+> INVENTORY.md
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> before_FULL_FRAME_METRICS.json
+> before_REGION_METRICS.json
+> gameplay_m2_default.json
+> gameplay_m2_match05_1.json
+> gameplay_m2_match05_1_tgtvis05_1.json
+> gameplay_match05_1.json
+> gameplay_match05_1_tgtvis05_1.json
+> move
+> new_FULL_FRAME_METRICS.json
+> new_REGION_METRICS.json
+> r10
+> r11
+> r12
+> r3_final
+> r3_teal
+> r3_wall
+> r7
+> r8
+> r9
+> scenery_bands.txt
+> 39:* `&m05wall=1` — unfinished (paused by the lead's order): crisp slotted purple metal where the projected wall atlas is
+> 40:  magnified while swimming (`src/vfx/proj05Tunnel.ts` M05WALL_GLSL). First render: walls crisp but slots too thin and the
+> 41-  metal too pale; slot shape corrected to the atlas measurement (≈ 0.6 × 0.6 u), not yet judged.
+> 42-
+> 43-## BLUEPRINT (lead order) — `qa/match/05/r9/BLUEPRINT.md`
+> 44-Measured river width / centre / magenta-cyan shares / foam per screen row in the approved picture and in the kept-query
+> 45-frames (a00, f10, f20, t33, t66), the painted river edges back-projected onto the game river, ring and throat sizes.
+> 46-Annotated overlays in `qa/match/05/r9/blueprint/`. Main structural finding: the water surface is t …[+20 chars]
+
+### 🤖 Claude — 2026-11-18T13:26:37.580Z
+
+Round 9 left `&m05wall=1` (crisp slotted metal where the wall atlas is magnified) unjudged. I'll give it one try on the current kept set.
+
+### 🤖 Claude — 2026-11-18T13:26:41.775Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/wall \"$K&m05wall=1\" t85_through,t95_through_screen,f20_forward20u,t66_through_screen 2>&1 | grep -i error | head; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; python3 -I -c \"\nfrom PIL imp …[+243 chars]`
+
+### 🧑 User — 2026-11-18T13:27:39.172Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:27:42.356Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/wall/t85_through.png"}`
+
+### 🧑 User — 2026-11-18T13:27:42.403Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:27:42.984Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_wall_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T13:27:43.004Z
+
+> ↩︎ result: [image]
+

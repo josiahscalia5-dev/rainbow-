@@ -2542,3 +2542,97 @@ Now the PROGRESS.md for r12 with step 1.
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_cg2.png"}`
 
+### 🧑 User — 2026-11-18T13:26:49.357Z
+
+> ↩︎ result: 08 f06_forward6u s 398.169 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 t66_through_screen s 400.551 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+
+### 🧑 User — 2026-11-18T13:26:49.398Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T13:26:49.404Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:26:59.962Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K16='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && node scripts/capture.mjs 08 --out=$S/capCG --q=\"$K16&m08cupg=1\" 2>&1 | grep -c \"→\"; git checkout -- qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/capRG/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capCG/ …[+483 chars]`
+
+### 🧑 User — 2026-11-18T13:27:21.730Z
+
+> ↩︎ result: 1
+> px differ 5228 max 180 (np.int64(148), np.int64(114), np.int64(759), np.int64(462)) >12: 63
+
+### 🤖 Claude — 2026-11-18T13:27:27.203Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/capRG/08.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/capCG/08.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2)\nys,xs=np.nonzero(d>12); print(list(zip(xs[:70],ys[:70])))\nys,xs=np.nonzero((d>0)&(d<=12)); \nimport collections; print('small-diff rows', np.percentile(ys,[0,50,100]), 'cols', np.percentile(xs,[0,50,100]))\nprint('hist', np.histogram(d[d>0],bins=[1 …[+79 chars]`
+
+### 🧑 User — 2026-11-18T13:27:27.901Z
+
+> ↩︎ result: [(np.int64(175), np.int64(366)), (np.int64(164), np.int64(374)), (np.int64(315), np.int64(377)), (np.int64(157), np.int64(379)), (np.int64(162), np.int64(379)), (np.int64(166), np.int64(380)), (np.int64(167), np.int64(380)), (np.int64(309), np.int64(380)), (np.int64(310), np.int64(380)), (np.int64(174), np.int64(382)), (np.int64(200), np.int64(384)), (np.int64(284), np.int64(384)), (np.int64(285), np.int64(384)), (np.int64(213), np.int64(385)), (np.int64(214), np.int64(385)), (np.int64(215), np.int64(385)), (np.int64(216), np.int64(385)), (np.int64(217), np.int64(385)), (np.int64(269), np.int64(385)), (np.int64(270), np.int64(385)), (np.int64(271), np.int64(385)), (np.int64(272), np.int64(385)), (np.int64(148), np.int64(386)), (np.int64(175), np.int64(390)), (np.int64(178), np.int64(408)), (np.int64(148), np.int64(409)), (np.int64(148), np.int64(410)), (np.int64(148), np.int64(411)), (np.int64(148), np.int64(412)), (np.int64(148), np.int64(413)), (np.int64(179), np.int64(413)), (np.int64(148), np.int64(414)), (np.int64(148), np.int64(415)), (np.int64(149), np.int64(417)), (np.int64(151), np.int64(418)), (np.int64(670), np.int64(418)), (np.int64(671), np.int64(418)), (np.int64(672), …[+977 chars]
+
+### 🤖 Claude — 2026-11-18T13:27:36.430Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_capdiff.png 140,355,330,430 4.0 $S/capRG/08.png $S/capCG/08.png", "description": "Zoom approved view at the UL cup bottom"}`
+
+### 🧑 User — 2026-11-18T13:27:36.741Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:27:37.733Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_capdiff.png"}`
+
+### 🧑 User — 2026-11-18T13:27:37.785Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:27:44.772Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_cg3.png"}`
+
+### 🧑 User — 2026-11-18T13:27:44.871Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-18T13:27:44.868Z
+
+[Image: original 2090x246, displayed at 2000x235. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-18T13:28:01.292Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && $S/bin/stepdir.sh qa/match/08/r12/step5_m08cupg qa/match/08/r12/NEW $S/cgN f10_forward10u t95_through_screen t66_through_screen >/dev/null && cat >> qa/match/08/r12/PROGRESS.md <<'EOF'\n\n## Tried — `&m08twin=1` (upper-right cup's doubly hidden top from the upper-left cup) — NOT KEPT\n* Filled part of the gold wedge on the upper-right cup's top with the twin cup's pink cap, but a gold wedge and the X-shaped\n  seams stayed (the real cause is the proxy shape, step 5) — no  …[+2896 chars]`
+
+### 🧑 User — 2026-11-18T13:28:09.693Z
+
+> ↩︎ result: 05ed1beeb03c5938fd72c5031680edb0babc8982
+> 05ed1beeb03c5938fd72c5031680edb0babc8982	refs/heads/claude/rainbow-s08-scenery-c12
+> 13:28
+
+### 🤖 Claude — 2026-11-18T13:28:14.147Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S08 r12 step 5 m08cupg kept", "message": "S08 r12 step 5 &m08cupg=1: GOOD IMPROVEMENT. SHA 05ed1beeb03c5938fd72c5031680edb0babc8982 (pushed, verified). Both upper spout cups now stay one solid cup while Benny swims: perforated cap, gold band and perforated underside are joined, with the stream coming out of the underside as painted. Before, the underside floated below the dome with a strip of wall between them. This is a geometry fix: band + underside added to the upper cup proxies. Approved view: no visible change (63 isolated edge pixels differ). Kept set: K11&m08c …[+373 chars]`
+
+### 🧑 User — 2026-11-18T13:28:14.169Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T13:28:29.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/a_f03.png full 0.55 references/08_final_spin_chamber.png $N/f03_forward3u.png", "description": "View f03 against approved at larger scale"}`
+
+### 🧑 User — 2026-11-18T13:28:29.807Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:28:30.585Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/a_f03.png"}`
+
+### 🧑 User — 2026-11-18T13:28:30.618Z
+
+> ↩︎ result: [image]
+
