@@ -1,0 +1,98 @@
+{
+ "screen": "08",
+ "query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08occ=1&m08towelm=1",
+ "shots": [
+  {
+   "name": "f10_forward10u",
+   "dist": 10,
+   "steer": null,
+   "mode": "ride",
+   "stage": "08",
+   "s": 402.087,
+   "lat": 0,
+   "coins": 2060,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -113.142,
+   "bennyVisible": true,
+   "cam": [
+    11.9,
+    -109.9,
+    -284.92
+   ],
+   "frames": 63,
+   "s0": 391.427,
+   "s1": 404.3684155787043,
+   "target": 401.427
+  },
+  {
+   "name": "s_left_hard",
+   "dist": 12,
+   "steer": -1,
+   "mode": "ride",
+   "stage": "08",
+   "s": 404.035,
+   "lat": -2.217,
+   "coins": 2050,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -113.511,
+   "bennyVisible": true,
+   "cam": [
+    9.91,
+    -110.13,
+    -286.97
+   ],
+   "frames": 76,
+   "s0": 391.427,
+   "s1": 404.3684155787043,
+   "target": 403.427
+  },
+  {
+   "name": "s_right_hard",
+   "dist": 12,
+   "steer": 1,
+   "mode": "ride",
+   "stage": "08",
+   "s": 404.035,
+   "lat": 2.217,
+   "coins": 2040,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -112.533,
+   "bennyVisible": true,
+   "cam": [
+    13.09,
+    -109.68,
+    -287.03
+   ],
+   "frames": 76,
+   "s0": 391.427,
+   "s1": 404.3684155787043,
+   "target": 403.427
+  },
+  {
+   "name": "t95_through_screen",
+   "dist": "t0.95",
+   "steer": null,
+   "mode": "ride",
+   "stage": "08",
+   "s": 404.351,
+   "lat": 0.005,
+   "coins": 2070,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -113.044,
+   "bennyVisible": true,
+   "cam": [
+    11.44,
+    -109.9,
+    -287.33
+   ],
+   "frames": 78,
+   "s0": 391.427,
+   "s1": 404.3684155787043,
+   "target": 403.7213447997691
+  }
+ ]
+}

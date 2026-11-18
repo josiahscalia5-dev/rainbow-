@@ -462,6 +462,11 @@
    "sha256": "26f47e700081680598b543df501ed85c66f93f8489a6ce6822fcb530576417af"
   },
   {
+   "path": "assets/textures/match08/occ08_door.png",
+   "bytes": 8072518,
+   "sha256": "cc0d5a6b487865dddc3a20abdccb59b72fa1b56ff0aa6180056941d568227143"
+  },
+  {
    "path": "assets/textures/match08/patch_gold.png",
    "bytes": 59480,
    "sha256": "5a0c22726592a5162a6f6147a896bab9a10b9bb8f5c3739360181d0527698bfe"
@@ -505,6 +510,11 @@
    "path": "assets/textures/match08/splash08.png",
    "bytes": 430636,
    "sha256": "98908db1793187b3369137833f6e1566b3f2bb81e2bff226acfbe000d59f821b"
+  },
+  {
+   "path": "assets/textures/match08/towel08_mask.png",
+   "bytes": 13719,
+   "sha256": "e0ee8c6d3d8e7fd2a715cfacb637a3bb0cc25ef9a7a2ace68735bc25e9795e94"
   },
   {
    "path": "assets/textures/tunnel05/frame05.json",
@@ -624,7 +634,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13447,
-   "sha256": "e21dd103046878fe5b5418061df0543a1e26209ef2ab2b3ab08c0b3af42ef0e7"
+   "sha256": "a92b49702b78c49a92eddab5f4004ba9587b824046ea4d29444cbb9e789b2ddd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -3285,6 +3295,66 @@
    "path": "qa/match/08/scenery/r7/towel/s_right_hard.png",
    "bytes": 2509490,
    "sha256": "7809de1093258a7be893fc1c8c3131959e7fc3d4f6cdca037cdbd803f68eaf26"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/dbg_av/08.png",
+   "bytes": 375675,
+   "sha256": "0fadce3c22f10ab1c0dcf0ed3d5409af7ca1160ee9051dfe94fe3ae51dbcbd3f"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/occ/f10_forward10u.png",
+   "bytes": 2421616,
+   "sha256": "0bffbc59cfcfb7eb31eb9ea23cde9a8807a1324f6dee2a4d92e846acdae9c71f"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/occ/motion.json",
+   "bytes": 2071,
+   "sha256": "f8100c52300efee4f8a3f01f47aae291a72c1dc9a335ed31b41ed87c4c35e25a"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/occ/s_left_hard.png",
+   "bytes": 2387802,
+   "sha256": "aac5675d53782e9c92c2948d61ccd917cfcbaaae49ce752690f4a26544ebaea7"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/occ/s_right_hard.png",
+   "bytes": 2509364,
+   "sha256": "937a87e0f31a916a47c1cb127197495145f7efc7bd82b62b5b5c9b7f4e370a4b"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/occ/t66_through_screen.png",
+   "bytes": 2437819,
+   "sha256": "db22f6a93cd7f757dc811db29bbc8f78ac363af02be598fb03051dc0b795bfb7"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/occ/t95_through_screen.png",
+   "bytes": 2434266,
+   "sha256": "afec4f409bfae6adf4af0972d514fc10ba5b88b8a909241a0e9f193737124c2a"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/towelm/f10_forward10u.png",
+   "bytes": 1896379,
+   "sha256": "43b9a902f6db10c08d946a831edd0ab7d8d8c033faa26bee3a6d6b3e1c48ffba"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/towelm/motion.json",
+   "bytes": 1689,
+   "sha256": "d129c1877761904c7ab7d72de4d7fec19bdea366cd0d9e31338af0fcc9dd5b3a"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/towelm/s_left_hard.png",
+   "bytes": 1688197,
+   "sha256": "2194ef20a163c8c8ee199182138172f77db9945d5c3383d6afa08c7aae64ff28"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/towelm/s_right_hard.png",
+   "bytes": 1891520,
+   "sha256": "a6b0b17b08c98b7451c963ebb938fd7da54b4f2b990cfab07191654920db88ee"
+  },
+  {
+   "path": "qa/match/08/scenery/r8/towelm/t95_through_screen.png",
+   "bytes": 1835633,
+   "sha256": "a0f2dba38c4cf0655bbd4c03865c84d4c5efc5c97c62ce816c4bb48a9a22f952"
   },
   {
    "path": "qa/match/08/scenery_metrics_BEFORE_FINAL.json",
@@ -9928,8 +9998,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 28339,
-   "sha256": "c64717006388de1d361dfb4b40f02c0ab7e40e3cf07b146041e78618903f84f3"
+   "bytes": 31052,
+   "sha256": "1868288e50ec9ee4d878af6a60d3e1563b87f35fcc4e7bead0656ffedb3b7667"
   },
   {
    "path": "src/world/materials.ts",
@@ -10122,6 +10192,11 @@
    "sha256": "d4e61545e250ad9a35884e433f29ed0053f3a8efc89aa6b837470d14ca0c25f5"
   },
   {
+   "path": "tools/match08/occ08.py",
+   "bytes": 2959,
+   "sha256": "cdd36900f195b04844600f4f1c5c5f30855954a9ac6c6829df0c5fe96e984836"
+  },
+  {
    "path": "tools/match08/probe08b.mjs",
    "bytes": 2010,
    "sha256": "4a8c939c559f0caff7278b068d29b1c8d67bba1841b151d236b6d93897b1e247"
@@ -10145,6 +10220,11 @@
    "path": "tools/match08/solve08.mjs",
    "bytes": 5572,
    "sha256": "8f9bee468e9096a9a5f8744c256384587b6d6712bb7ba070e0da2602fa369cec"
+  },
+  {
+   "path": "tools/match08/towelmask08.py",
+   "bytes": 2135,
+   "sha256": "b2581684c5a96e73c1a5dc6adcbbe85d5fded2a9ffdbc32358d73c1ba1fd78c2"
   },
   {
    "path": "tools/match08/unwrap08.py",

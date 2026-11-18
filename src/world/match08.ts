@@ -67,6 +67,10 @@ uniform mat4 uProjVP;
 uniform float uSwim;        // m08swim (floor only): the painted river's banks spread to cover Benny's whole swim lane
 uniform sampler2D uRiv;     // 64 x 1: painted river centre x (r) and full width (g) along z
 uniform vec4 uRivZ;         // z at texel 0, z at texel 63, lane half-width to cover, floor y
+uniform sampler2D uOcc;     // m08occ (door wall only): plate with towel + platform painted out (occ08.py), alpha = usable
+uniform float uOccOn;
+uniform sampler2D uTMask;   // m08towelm (towel only): the painted towel's outline in plate coordinates (towelmask08.py)
+uniform float uTMaskOn;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -108,6 +112,9 @@ vec3 swimRemap(vec3 w, float mv) {
   return vec3(r.x + sign(d) * o, w.y, w.z);
 }
 void main() {
+  // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+  // behind receives the window pixels that the rectangle used to carry at towel depth)
+  if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
   // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
   vec3 pc = patchColor();
   if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
@@ -143,7 +150,14 @@ void main() {
           vis = mix(vis, smoothstep(0.0, 1.0, sv / 25.0), mv);
         }
       }
-      t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep);
+      // m08occ: what the approved view could not see behind the towel / platform comes from the occlusion plate (the
+      // painted door / window continued), not from the fallback tile with its straight edges; off the viewpoint only
+      vec3 base = pc;
+      if (uOccOn > 0.5) {
+        vec4 oc = texture2D(uOcc, uv);
+        base = mix(pc, oc.rgb, oc.a * smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+      }
+      t = mix(base, texture2D(uPlate, uv).rgb, vis * keep);
     }
   }
   gl_FragColor = vec4(pjInverse(t), 1.0);
@@ -227,16 +241,30 @@ export async function buildMatch08(): Promise<Match08> {
   rivTex.minFilter = rivTex.magFilter = THREE.NearestFilter; rivTex.needsUpdate = true;
   const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73
   const rivZ = new THREE.Vector4(rz0, rz1, SWIM_HALF, L.floorY);
+  // `&m08occ=1` (r8): occlusion plate for the door wall (tools/match08/occ08.py)
+  let occTex: THREE.Texture | null = null;
+  if (flag05('m08occ')) {
+    occTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/occ08_door.png', import.meta.url).href);
+    occTex.colorSpace = THREE.NoColorSpace; occTex.minFilter = THREE.LinearMipmapLinearFilter; occTex.anisotropy = 8;
+  }
+  // `&m08towelm=1` (r8): towel outline mask (tools/match08/towelmask08.py); only the towel material switches it on
+  let tMaskTex: THREE.Texture | null = null;
+  if (flag05('m08towelm')) {
+    tMaskTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/towel08_mask.png', import.meta.url).href);
+    tMaskTex.colorSpace = THREE.NoColorSpace;
+  }
   const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
       uFill: { value: fillTex ?? patch }, uFillMode: { value: fill ? fillMode : 0 }, uFillSize: { value: fillSize },
       uDrum: { value: new THREE.Vector3(L.chamber.cx, L.chamber.cy, L.chamber.r) },
-      uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ } },
+      uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ },
+      uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: tMaskTex ? 1 : 0 } },
   });
   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
   const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
 
+  for (const [k, m] of Object.entries(M)) if (k !== 'towel') m.uniforms.uTMaskOn.value = 0;
   const group = new THREE.Group();
   group.name = 'match08_projection';
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm08_' + name; group.add(o); return o; };
@@ -352,7 +380,9 @@ export async function buildMatch08(): Promise<Match08> {
   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
   ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);
   add(ch, M.drum, 'chamber');
-  add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), M.disc, 'doorwall');
+  const doorM = occTex ? mat('#c25bd0', pWall, 1 / 2.4, 2) : M.disc;
+  if (occTex) (doorM as THREE.ShaderMaterial).uniforms.uOccOn.value = 1;
+  add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), doorM, 'doorwall');
   // floor / river plane at Benny's water level, from behind the camera to the door wall
   const fl = new THREE.PlaneGeometry(2 * C.r, L.pipe.z0 - C.zDoor, 32, 64);
   fl.rotateX(-Math.PI / 2).translate(C.cx, L.floorY, (L.pipe.z0 + C.zDoor) / 2);
@@ -427,7 +457,12 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
       const scene = new THREE.Scene();
       const clone = group.clone(true);
       clone.visible = true;
-      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+      const towelBake = tMaskTex ? new THREE.ShaderMaterial({
+        colorWrite: false, side: THREE.DoubleSide, vertexShader: VERT,
+        uniforms: { uProjVP: { value: projVP }, uTMask: { value: tMaskTex } },
+        fragmentShader: 'uniform sampler2D uTMask; varying vec4 vProj; varying vec3 vW; varying vec3 vN;\nvoid main() { if (vProj.w <= 0.0 || texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard; gl_FragColor = vec4(0.0); }',
+      }) : null;
+      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = towelBake && o.name === 'm08_towel' ? towelBake : new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
       scene.add(clone);
       renderer.setRenderTarget(depthRT);
       renderer.clear();
