@@ -368,3 +368,54 @@ Let me look at the three approved pictures myself.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T03:08:33.579Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt; python3 - <<'EOF'\nimport json\nfor f in ['s06/qa/match/06/r7/RING6/motion.json','s06/qa/match/06/r7/NEW/motion.json','s07/qa/match/07/r7/NEW/motion.json','s07/qa/match/07/r8/plunge_foam_coinsz/motion.json','s08/qa/match/08/scenery/r7/NEW/motion.json']:\n    d=json.load(open(f)); print('==',f, d.get('query'))\n    for s in d['shots']:\n        print('  %-22s s=%7.2f lat=%5.2f s0=%.2f s1=%.2f cam=%s by=%s steer=%s'%(s['name'],s['s'],s.get('lat',0) or 0,s['s0'],s['s1'],s.get('cam'),s.get('bennyY'),s.get('steer')))\nEOF", "description": "Print audit shot stage posit …[+6 chars]`
+
+### 🧑 User — 2026-11-18T03:08:33.662Z
+
+> ↩︎ result: == s06/qa/match/06/r7/RING6/motion.json match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1
+>   a00_approved_view      s= 199.57 lat= 0.00 s0=198.91 s1=242.87 cam=[1.67, -35.21, -132.83] by=-37.339 steer=None
+>   f06_forward6u          s= 205.51 lat= 0.00 s0=198.91 s1=242.87 cam=[0.69, -32.15, -137.86] by=-35.117 steer=None
+>   f10_forward10u         s= 209.54 lat= 0.00 s0=198.91 s1=242.87 cam=[0.16, -31.41, -142.13] by=-35.254 steer=None
+>   f20_forward20u         s= 219.63 lat= 0.00 s0=198.91 s1=242.87 cam=[1.11, -34.32, -151.47] by=-38.638 steer=None
+>   t66_through_screen     s= 228.61 lat= 0.00 s0=198.91 s1=242.87 cam=[4.86, -38.36, -157.96] by=-43.164 steer=None
+>   t95_through_screen     s= 241.30 lat= 0.00 s0=198.91 s1=242.87 cam=[8.73, -43.65, -168.62] by=-47.918 steer=None
+>   s_right_hard           s= 211.56 lat= 2.95 s0=198.91 s1=242.87 cam=[1.48, -31.44, -144.15] by=-35.212 steer=1
+> == s06/qa/match/06/r7/NEW/motion.json match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1
+>   a00_approved_view      s= 199.58 lat= 0.00 s0=198.91 s1=242.87 cam=[1.67, -35.21, -132.83] by=-37.335 steer=None
+>   f03_forward3u          s= 202.58 lat= 0.00 s0=198.91 s1=242.87 …[+4959 chars]
+
+### 🤖 Claude — 2026-11-18T03:08:37.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07; grep -n \"06\\|07\\|08\" src/world/course.ts | head -60; wc -l src/world/course.ts", "description": "Inspect course stage boundaries"}`
+
+### 🧑 User — 2026-11-18T03:08:37.767Z
+
+> ↩︎ result: 7: * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before
+> 8: * the bottom of that same tube flares into the Final Spin Chamber inlet (08). 08–10 stay in that same
+> 16:import river08 from '../../assets/textures/match08/river08.json';
+> 17:import river07 from '../../assets/textures/match07/river07.json';
+> 19:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 57:  '06': 'CREST THE RINSE ARCH',
+> 58:  '07': 'DIVE THE WASHER TUBE',
+> 59:  '08': 'FINAL SPIN CHAMBER',
+> 69:  /** Final Spin Chamber (08–11): drum with axis along Z, door at the far (-Z) end */
+> 166:/** from U05_TAIL to the 06 join the ORIGINAL curve is used verbatim, so the 05→06 junction (and the 06 up-vector
+> 167: *  smoothing, which looks ±12 samples back into 05) is bit-identical to the approved 06 */
+> 176: * here before the 06 arch too (old sine +1.71 u at u 62). Its amplitude is solved (secant on Course.length)
+> 179: * (−0.78 u) shifted every later screen (06: Benny 0.034 lower, a ring grazing the frame bottom, different
+> 180: * bubbles/foam). The 06/07 rings, lids and slot rows are additionally anchored to the 06 stage start
+> 264:  // buildR …[+4027 chars]
+
+### 🤖 Claude — 2026-11-18T03:08:41.533Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07; grep -n \"s0\\|s1\" tools/lead_r6/motion_audit.mjs | head -30", "description": "Check how audit s0/s1 are defined"}`
+
+### 🧑 User — 2026-11-18T03:08:41.564Z
+
+> ↩︎ result: 30:      const s0 = r.state().s;
+> 32:      const s1 = stg.s1 ?? (stg.s0 + (stg.length ?? 0));
+> 33:      const target = typeof dist === 'string' ? s0 + Number(dist.slice(1)) * Math.max(0, s1 - s0) : s0 + dist;
+> 38:      return { ...r.state(), frames: n, s0, s1, target };
+

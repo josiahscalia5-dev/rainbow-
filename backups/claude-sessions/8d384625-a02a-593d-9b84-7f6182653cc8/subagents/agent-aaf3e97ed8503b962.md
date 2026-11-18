@@ -2499,3 +2499,11 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 > 622:    run(v = true) { running = v; last = performance.now(); },
 > 626:    setSteer(v: number | null) { input.override = v; },
 
+### 🤖 Claude — 2026-11-18T03:08:41.008Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/tools/match05/blueprint05_game.mjs", "content": "// Screen 05 round 9 BLUEPRINT: structural measurements of live game frames (same shot list / stepping as r8_shots.mjs).\n// For each shot: screenshot + the screen position of the river's 3D edges (real ribbon from Benny to the far tunnel seam,\n// then the far river's water body), the course centre line, the real and far gold rings (projected circles), the end\n// glow (throat) and Benny — written to <outDir>/<shot>.geo.json for tools/match05/blueprint05.py.\n//   node tools/match05/blueprint05_game.mjs <outDir> …[+7074 chars]`
+
+### 🧑 User — 2026-11-18T03:08:41.046Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/blueprint05_game.mjs (file state is current in your context — no need to Read it back)
+
