@@ -718,8 +718,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13996,
-   "sha256": "846440345d630148b5eefd080f02e42227789138fc0b6e5955a237fae14809fe"
+   "bytes": 13997,
+   "sha256": "8d8b1af4b686ba0438b63939ad73a2428ef3d21cb358aa7f1cb858e6e1556c07"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1193,8 +1193,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1237,
-   "sha256": "ed3e5c7dcf0657ba3cb5fe554548347197631e79fa4fbd5c5b3596a9624901e8"
+   "bytes": 1239,
+   "sha256": "5d544ebf3289df2b27668a7aacc67c66dfa4926fc0e528730b31baae5f531b7d"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1820,6 +1820,71 @@
    "path": "qa/match/05/r7/BEFORE/t95_through_screen.png",
    "bytes": 1933073,
    "sha256": "17756caf4d593ce6c477756f9fb43aa8286ee3c65fc571e9068637b79dd05125"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/a00_approved_view.png",
+   "bytes": 2490238,
+   "sha256": "92f2b17fbd8447520507b0b82ac4af375d3ea565159300be855ce179ded8b4c2"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/f03_forward3u.png",
+   "bytes": 2311511,
+   "sha256": "c83e576d5e21326e0f28b877c69929d22a23091c1a49064739a931d6804d169e"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/f06_forward6u.png",
+   "bytes": 2301707,
+   "sha256": "ea37b47b3a7ac08938631cae542db067c2d2afe20a815d69fbed1abd0f4d6443"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/f10_forward10u.png",
+   "bytes": 2350048,
+   "sha256": "72589899985991fd51dde91048aa1e150a253138e664416fb1ebe00871883b65"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/f20_forward20u.png",
+   "bytes": 2343801,
+   "sha256": "f083d60d4ce5b6b34fb5caa5cbb3769e455f63e2f259b06ce53d3724f4b53958"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/motion.json",
+   "bytes": 4662,
+   "sha256": "8fcb7a7418a11ae4fbec25aec1047895b2ab6486d1f6ecb0824d2f20f04e8a35"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/s_left_hard.png",
+   "bytes": 2332978,
+   "sha256": "cfca92464a05aa5ce757bbb2b3aa59b504c6e81abe8bcc4f812f4970483e4e27"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/s_left_steer.png",
+   "bytes": 2258229,
+   "sha256": "e953b48a03c59a3c00931496a82fece05982e3239ec24792520cf3fab60036ea"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/s_right_hard.png",
+   "bytes": 2256827,
+   "sha256": "40b89335bdacca2879473bcf87bb0d3b48649905334c8c81fc27c22d44937a06"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/s_right_steer.png",
+   "bytes": 2331086,
+   "sha256": "dec9c910e32e521511613b5996adf7fdaea9096650832568a36e41ec1ebd892f"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/t33_through_screen.png",
+   "bytes": 2303979,
+   "sha256": "36a9bf3542249d0ad40a309f2632117f65837c7d9662a6efc95783a4bb976ef3"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/t66_through_screen.png",
+   "bytes": 2260488,
+   "sha256": "779e05cfe6ee054cd13a166875f901e1126e0fb70a02df488528b80dca6a86ca"
+  },
+  {
+   "path": "qa/match/05/r7/NEW/t95_through_screen.png",
+   "bytes": 1933965,
+   "sha256": "3c451ba2cd6d81e1f2d1430c1137e1522608ea3d05882c026443ff737ac11b94"
   },
   {
    "path": "qa/match/05/scenery_bands.txt",
@@ -11683,8 +11748,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 56558,
-   "sha256": "a12a833f18bf19f3f60dfcb7caac38828800585b9dc98ea35504082f572188cc"
+   "bytes": 56656,
+   "sha256": "9e3caed1c1f180bad957be746f42ce43c2695ea1dacf6191a0ddf52ee761d433"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -11738,8 +11803,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 69296,
-   "sha256": "624379eda223233885287d7049df7b56fa1646b39b17e1e29eebe239e9094f00"
+   "bytes": 69376,
+   "sha256": "9361c49f784a3c464c1c4f6a8a34ae403121ba2eafa7b85e3a9eb40e4f931795"
   },
   {
    "path": "src/world/far05.ts",
@@ -11753,8 +11818,8 @@
   },
   {
    "path": "src/world/match05far.ts",
-   "bytes": 12784,
-   "sha256": "e169b170e13239f1eb63e8ff6fa88bdd52668d3aca545ce215517a73973accd0"
+   "bytes": 13136,
+   "sha256": "0c746e92fd8f696e7ee1b78d8bc6091275a26b894f05a595b7f5ba2b510179da"
   },
   {
    "path": "src/world/materials.ts",

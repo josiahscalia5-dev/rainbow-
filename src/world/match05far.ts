@@ -50,6 +50,8 @@ export interface LiveFar05Args {
   zCap: number;
   /** fold window: eye → seam distance (units) */
   foldNear: number; foldFar: number;
+  /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */
+  riverUp: (z: number) => number;
 }
 
 const ROW_KEYS: (keyof FarRiverRow)[] = ['xB', 'hw', 'cL', 'wL', 'cR', 'wR', 'core'];
@@ -156,6 +158,8 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
       tubeCenterAt(ft.path, sReal, cr);
       const rr = ft.path.radius(sReal);
       const r = rowAt(Z);
+      // lift to the real river where the seam has slid (the real ribbon starts climbing toward 06 there): 0 at zs = 0
+      const lift = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;
       const e0 = Math.max(-ch + 0.05, r.xB - r.hw), e1 = Math.min(ch - 0.05, r.xB + r.hw);
       const vv = sF + ft.uOfZ(Z);
       for (let j = 0; j < per; j++) {
@@ -167,7 +171,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
           const u = Math.min(1, Math.abs(x - r.xB) / Math.max(0.5, r.hw));
           h = EDGE_LIFT * u * u * u;
         }
-        o.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + h);
+        o.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + h + lift);
         point(Z, o, p);
         const k = i * per + j;
         p.toArray(pos, k * 3);

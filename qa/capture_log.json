@@ -1,10 +1,10 @@
 {
-  "when": "2026-11-17T17:45:47.242Z",
+  "when": "2026-11-18T00:30:10.403Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
       "id": "05",
-      "file": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/capWB/05.png",
+      "file": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/cap_def/05.png",
       "size": [
         864,
         1536
@@ -31,19 +31,19 @@
         ]
       },
       "stats": {
-        "fps": 60.3,
-        "calls": 80,
-        "triangles": 568274,
-        "geometries": 111,
-        "textures": 65,
+        "fps": 87.4,
+        "calls": 86,
+        "triangles": 567415,
+        "geometries": 102,
+        "textures": 43,
         "modules": {
           "water": "vfx/index.ts",
           "benny": "assets/models/benny.glb",
           "girl": "assets/models/rainbow_girl.glb"
         },
         "courseLength": 435.1923632433159,
-        "firstFrameCalls": 158,
-        "firstFrameTriangles": 569210
+        "firstFrameCalls": 164,
+        "firstFrameTriangles": 568351
       }
     }
   ],

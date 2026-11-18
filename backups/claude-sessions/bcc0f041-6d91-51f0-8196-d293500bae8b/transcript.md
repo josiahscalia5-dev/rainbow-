@@ -1035,3 +1035,171 @@ I'll add a seam clip plane, active only under `m05far`, to the foam puff shader.
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/clip05.ts'\ns=open(p).read()\nold=\"\"\"  if (dot(${posVar} - uClip05P, uClip05N) > 0.0) discard;   // ?m05far=1: behind the 05 far tunnel seam`);\"\"\"\nnew=\"\"\"  {  // ?m05far=1: behind the 05 far tunnel seam, inside its tube (axial 0..40 u, within 9 u of the axis) only\n    vec3 cd = ${posVar} - uClip05P; float ca = dot(cd, uClip05N);\n    if (ca > 0.0 && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;\n  }`);\"\"\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && echo TSC OK && SP=/tmp/claude-0/ …[+535 chars]`
 
+### 🧑 User — 2026-11-18T00:25:45.535Z
+
+> ↩︎ result: TSC OK
+> 0 133.061 null
+> 10 143.073 null
+> t0.5 161.406 null
+> t0.66 170.392 null
+> t0.8 178.274 null
+> t0.9 183.958 null
+> t0.95 186.706 null
+
+### 🤖 Claude — 2026-11-18T00:25:47.987Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/c3.png"}`
+
+### 🧑 User — 2026-11-18T00:25:48.023Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:25:51.106Z
+
+Foam puffs behind the seam are gone. Pale wedges remain: the foam berm (bank sheet) of the rising 06 river. I'll clip that too.
+
+### 🤖 Claude — 2026-11-18T00:25:51.809Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const BERM_FRAG\" -A8 src/vfx/foam.ts | grep -n varying", "description": "Check berm frag world-position varying"}`
+
+### 🧑 User — 2026-11-18T00:25:51.840Z
+
+> ↩︎ result: 6:122-varying vec3 vFoam;
+> 7:123-varying vec3 vPosW;
+> 8:124-varying vec3 vNormalW;
+
+### 🤖 Claude — 2026-11-18T00:25:56.920Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\ns=open(p).read()\nold=\"\"\"  const mesh = new THREE.Mesh(geo, mat);\n  mesh.name = 'foam_berm';\"\"\"\nassert s.count(old)==1\ns=s.replace(old,\"\"\"  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change\n  const mesh = new THREE.Mesh(geo, mat);\n  mesh.name = 'foam_berm';\"\"\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" && timeout 900 node $ …[+333 chars]`
+
+### 🧑 User — 2026-11-18T00:26:30.444Z
+
+> ↩︎ result: t0.5 161.494 null
+> t0.8 178.274 null
+> t0.9 183.956 null
+
+### 🤖 Claude — 2026-11-18T00:26:32.215Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/c4.png"}`
+
+### 🧑 User — 2026-11-18T00:26:32.255Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:26:47.099Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && timeout 600 node $SP/tools/shot.mjs $SP/m \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" 0 \"(async()=>{const m=await import('/src/world/far05.ts');const d=m.far05Debug;const ft=d.ft;const out=[];for(const s of [176,178,180.5,182,183,184,185,186,186.5,187,188,189,190]){const p=r.course.sample(s).pos.clone().sub(ft.c0);out.push([s,+p.dot(ft.T).toFixed(2),+p.dot(ft.U).toFixed(3),+p.dot(ft.Rt).toFixed(2)]);}return {level:d.level,sF:d.sF05,sGlow:d.sGlow05,out};})()\" 2>&1 | tail -2", "de …[+88 chars]`
+
+### 🧑 User — 2026-11-18T00:27:03.038Z
+
+> ↩︎ result: 0 133.088 {}
+
+### 🤖 Claude — 2026-11-18T00:27:08.095Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && sed -i 's/let extra = null; if (ev) extra = eval(ev);/let extra = null; if (ev) extra = await eval(ev);/' $SP/tools/shot.mjs && timeout 600 node $SP/tools/shot.mjs $SP/m \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" 0 \"(async()=>{const m=await import('/src/world/far05.ts');const d=m.far05Debug;const ft=d.ft;const out=[];for(const s of [176,178,180.5,182,183,184,185,186,186.5,187,188,189,190]){const p=r.course.sample(s).pos.clone().sub(ft.c0);out.push([s,+p.dot(ft.T).toFixed(2),+p.d …[+198 chars]`
+
+### 🧑 User — 2026-11-18T00:27:24.187Z
+
+> ↩︎ result: 0 133.076 {"level":-3.831685660915462,"sF":180.0383020282329,"sGlow":183.02412082521383,"out":[[176,-3.65,-3.868,0.51],[178,-1.89,-3.869,1.46],[180.5,0.55,-3.865,1.8],[182,1.99,-3.851,1.41],[183,2.93,-3.833,1.07],[184,3.87,-3.801,0.73],[185,4.83,-3.751,0.46],[186,5.81,-3.669,0.24],[186.5,6.3,-3.613,0.16],[187,6.78,-3.542,0.09],[188,7.76,-3.348,-0.01],[189,8.71,-3.065,-0.1],[190,9.63,-2.689,-0.21]]}
+
+### 🤖 Claude — 2026-11-18T00:27:30.921Z
+
+The real river rises 0.26 u above the far water's level at the capped seam (the 06 climb begins). I'll lift the far river at the seam by the real river's rise, so the two water surfaces meet.
+
+### 🤖 Claude — 2026-11-18T00:27:38.886Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match05far.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  /** fold window: eye → seam distance (units) */\n  foldNear: number; foldFar: number;\n}\"\"\",\"\"\"  /** fold window: eye → seam distance (units) */\n  foldNear: number; foldFar: number;\n  /** the real course's height above the axis at real distance z beyond sF05 (the far water meets it at the seam) */\n  riverUp: (z: number) => number;\n}\"\"\")\nold=\"\"\"      const r = rowAt(Z);\n      const e0\"\"\"\nnew=\"\"\"      const r = rowAt(Z);\n      // lift to the real river where the seam has s …[+1448 chars]`
+
+### 🧑 User — 2026-11-18T00:28:12.550Z
+
+> ↩︎ result: t0.66 170.488 null
+> t0.8 178.273 null
+> t0.9 183.956 null
+
+### 🤖 Claude — 2026-11-18T00:28:14.807Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/c5.png"}`
+
+### 🧑 User — 2026-11-18T00:28:14.846Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:28:24.924Z
+
+> 🔧 **Bash** `{"command": "(timeout 1200 node tools/lead_r6/motion_audit.mjs 05 qa/match/05/r7/NEW \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" > /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/new.log 2>&1 &); grep -n '\"test\\|\"gameplay\\|continuity\\|\"qa' package.json | head -20; ls scripts | grep -i \"gameplay\\|pixel\\|diff\\|default\" | head", "description": "Start NEW audit; list test scripts"}`
+
+### 🧑 User — 2026-11-18T00:28:24.964Z
+
+> ↩︎ result: 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 14:    "qa:capture": "node scripts/capture.mjs",
+> 15:    "qa:compare": "python3 scripts/compare.py",
+> 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+> gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-18T00:28:27.401Z
+
+> 🔧 **Bash** `{"command": "head -30 scripts/gameplay-test.mjs; grep -rn \"gameplay-test\" qa/match/05/NOTES.md tools/match05 2>/dev/null | head -5; ls tools/match05", "description": "Check gameplay test usage and match05 tools"}`
+
+### 🧑 User — 2026-11-18T00:28:27.438Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> const optOut = (pr …[+1193 chars]
+
+### 🤖 Claude — 2026-11-18T00:28:32.600Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 1100 bash -c 'until [ -f qa/match/05/r7/NEW/motion.json ]; do sleep 3; done'; tail -3 /tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/new.log; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('qa/match/05/r7/BEFORE/a00_approved_view.png').convert('RGB'),dtype=int);b=np.asarray(Image.open('qa/match/05/r7/NEW/a00_approved_view.png').convert('RGB'),dtype=int)\nprint('locked view BEFORE vs NEW differing px:',int((np.abs(a-b).max(2)>0).sum()))\n\"", "description": "Wait for NEW audit; com …[+39 chars]`
+
+### 🧑 User — 2026-11-18T00:29:57.961Z
+
+> ↩︎ result: 05 t33_through_screen s 151.689 lat 0.006 stage 05 frames 102
+> 05 t66_through_screen s 170.392 lat 0 stage 05 frames 204
+> 05 t95_through_screen s 186.706 lat 0 stage 05 frames 293
+> locked view BEFORE vs NEW differing px: 1064500
+
+### 🤖 Claude — 2026-11-18T00:30:02.955Z
+
+> 🔧 **Bash** `{"command": "grep -n \"capture\\|0 px\" qa/match/05/NOTES.md | head -12; sed -n 1,25p scripts/capture.mjs | grep -n \"argv\\|--\" | head", "description": "Find the locked-view capture method"}`
+
+### 🧑 User — 2026-11-18T00:30:02.992Z
+
+> ↩︎ result: 17:  (fill elsewhere identical); 28,620 px returned to approved.
+> 49:* Default `node scripts/capture.mjs 05` == `qa/pilot05/current_default_05.png`: **0 px**.
+> 50:* Protected BEFORE `?ringa=26&nearfloor05=0` == `qa/pilot05/wave9/baseline/05.png`: **0 px** (2 of 3 runs; one run had
+> 51:  155 px in the HUD rows 21–104 only, also with the unmodified code → a capture-timing glitch, not this change).
+> 52:* `?match05=1` without the switch == my BEFORE capture: 0 px. 06 with switch: 0 px. 04 with switch: 1,923 px in its far
+> 88:* `match05=1` vs `match05=1&coins05tot=0`, screens 02–09: **0 px** each. 01, 10, 11 flip between two capture states run to
+> 90:  capture timing, not this change (10's coins are untouched).
+> 94:* Default `capture.mjs 05` == `qa/pilot05/current_default_05.png` 0 px; protected `?ringa=26&nearfloor05=0` ==
+> 95:  `qa/pilot05/wave9/baseline/05.png` 0 px; `match05=1` == `02_BEFORE_match05.png` 0 px; `match05=1&tgtvis05=1` ==
+> 96:  `03_NEW_match05_tgtvis05.png` 0 px (milestone-1 water around Benny preserved).
+> 122:Proofs: default 05 == `current_default_05.png` 0 px; `match05=1` == `02_BEFORE_match05.png` 0 px;
+> 123:`match05=1&tgtvis05=1` == `03_NEW_match05_tgtvis05.png` 0 px; tsc cle …[+538 chars]
+
+### 🤖 Claude — 2026-11-18T00:30:04.494Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/capture.mjs | grep -n \"q=\\|opt.q\\|query\" | head", "description": "Check capture query option"}`
+
+### 🧑 User — 2026-11-18T00:30:04.529Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+
+### 🤖 Claude — 2026-11-18T00:30:10.062Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && timeout 900 node scripts/capture.mjs 05 --out=$SP/cap_def > /dev/null 2>&1; timeout 900 node scripts/capture.mjs 05 --out=$SP/cap_new --q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" >/dev/null 2>&1; ls $SP/cap_def $SP/cap_new; python3 - <<EOF\nfrom PIL import Image; import numpy as np, glob\ndef d(a,b):\n    A=np.asarray(Image.open(a).convert('RGB'),dtype=int);B=np.asarray(Image.open(b).convert('RGB'),dtype=int)\n    return int((np.abs(A-B).max(2)>0).sum()) if A.shape==B.shape els …[+419 chars]`
+

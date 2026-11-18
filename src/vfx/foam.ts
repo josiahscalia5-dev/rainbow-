@@ -618,6 +618,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     side: THREE.DoubleSide,
     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}) },
   });
+  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'foam_berm';
   mesh.frustumCulled = false;
