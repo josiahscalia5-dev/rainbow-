@@ -1444,3 +1444,588 @@ The Screen 08 Marble world is readable (HTTP 200). But the branch download is hu
 
 > 🔧 **Bash** `{"command": "rm -f .git/objects/pack/tmp_pack_* && git count-objects -vH | grep garbage; time (timeout 280 git fetch --depth=1 origin claude/rainbow-s04-match-c12 claude/rainbow-s05-match-c12 claude/rainbow-s08-scenery-c12 claude/rainbow-s07-match-c11 claude/rainbow-s06-match-c11 2>&1 | tail -6); for b in s04-match-c12 s05-match-c12 s08-scenery-c12 s07-match-c11 s06-match-c11; do echo \"$b $(git rev-parse --short=8 origin/claude/rainbow-$b 2>/dev/null)\"; done", "description": "Delete aborted downloads and fetch only branch tips", "timeout": 300000}`
 
+### 🧑 User — 2026-11-18T14:22:02.800Z
+
+> ↩︎ result: garbage: 0
+> size-garbage: 0 bytes
+> 
+> real	4m40.003s
+> user	0m0.265s
+> sys	0m2.676s
+> s04-match-c12 
+> s05-match-c12 
+> s08-scenery-c12 
+> s07-match-c11 
+> s06-match-c11
+
+### 🤖 Claude — 2026-11-18T14:22:14.947Z
+
+> 🔧 **Bash** `{"command": "L=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log; : > $L; for b in claude/rainbow-s05-match-c12 claude/rainbow-s08-scenery-c12 claude/rainbow-s04-match-c12 claude/rainbow-s07-match-c11 claude/rainbow-s06-match-c11; do echo \"START $b $(date -u +%T)\" >> $L; git fetch --progress --depth=1 origin \"$b:refs/remotes/origin/$b\" >> $L 2>&1; echo \"DONE $b exit=$? $(date -u +%T)\" >> $L; done", "description": "Fetch branch tips one by one in background", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T14:22:14.972Z
+
+> ↩︎ result: Command running in background with ID: b2uoo9uia. Output is being written to: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/b2uoo9uia.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T14:22:17.350Z
+
+> 🔧 **Bash** `{"command": "for a in water-fx-specialist cartoon-girl-character-artist washer-environment-modeler path-camera-transition-engineer foam-bubbles-particles reference-match-director playwright-visual-qa benny-character-artist animation-and-gameplay-engineer android-build-performance; do f=.claude/agents/$a.md; [ -f $f ] && echo \"OK $a $(head -5 $f | grep -c '^name:')\" || echo \"MISSING $a\"; done; python3 -I scripts/autosave-status.py; cat .mcp.json.template 2>/dev/null | head -20; ls backups/claude-config/ 2>/dev/null | tail -3", "description": "Verify agent files, autosave, and MCP template"}`
+
+### 🧑 User — 2026-11-18T14:22:18.618Z
+
+> ↩︎ result: OK water-fx-specialist 1
+> OK cartoon-girl-character-artist 1
+> OK washer-environment-modeler 1
+> OK path-camera-transition-engineer 1
+> OK foam-bubbles-particles 1
+> OK reference-match-director 1
+> OK playwright-visual-qa 1
+> OK benny-character-artist 1
+> OK animation-and-gameplay-engineer 1
+> OK android-build-performance 1
+> AUTOSAVE OK | branch claude/rainbow-restore-autosave-1mgga0 | scheduler daemon | last verified backup 2026-11-18T14:20:57+00:00 (1.3 min ago) | local 47878b9 remote 47878b9 (match) | uncommitted 0
+> {
+>   "_comment": "Template only — contains NO secrets. Copy to .mcp.json (git-ignored) or use the `claude mcp add` commands in backups/MCP_SETUP.md. Put API keys in your shell env / OS keychain, never in this repo.",
+>   "mcpServers": {
+>     "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] },
+>     "blender": { "command": "uvx", "args": ["mcp-for-blender"] },
+>     "_meshy": "NOT VERIFIED HERE — install per https://github.com/meshy-dev/meshy-mcp-server README; key goes in env MESHY_API_KEY only",
+>     "hyper3d-rodin": { "type": "http", "url": "https://api.hyper3d.com/api/mcp" },
+>     "_worldlabs": "DO NOT ADD HERE (would duplicate). Atlas = claude.ai connector 'World Labs Atl …[+194 chars]
+
+### 🤖 Claude — 2026-11-18T14:22:27.941Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ref; mkdir -p $S; for n in 04_through_the_five_arrows 05_flow_into_the_current 06_crest_the_rinse_arch 07_dive_the_washer_tube 08_final_spin_chamber; do identify -format \"%f %wx%h\\n\" references/$n.png; convert references/$n.png -resize 540x $S/$n.jpg; done; sha256sum -c scripts/reference.sha256 2>&1 | grep -c OK", "description": "Make small previews of the approved screens"}`
+
+### 🤖 Claude — 2026-11-18T14:22:28.028Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🧑 User — 2026-11-18T14:22:28.302Z
+
+> ↩︎ result: 04_through_the_five_arrows.png 864x1536
+> 05_flow_into_the_current.png 864x1536
+> 06_crest_the_rinse_arch.png 864x1536
+> 07_dive_the_washer_tube.png 864x1536
+> 08_final_spin_chamber.png 864x1536
+> 13
+
+### 🧑 User — 2026-11-18T14:22:28.891Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🤖 Claude — 2026-11-18T14:22:31.681Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ref/04_through_the_five_arrows.jpg"}`
+
+### 🧑 User — 2026-11-18T14:22:31.703Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:22:32.488Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ref/05_flow_into_the_current.jpg"}`
+
+### 🧑 User — 2026-11-18T14:22:32.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:22:33.197Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ref/06_crest_the_rinse_arch.jpg"}`
+
+### 🧑 User — 2026-11-18T14:22:33.211Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:22:34.290Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ref/07_dive_the_washer_tube.jpg"}`
+
+### 🧑 User — 2026-11-18T14:22:34.312Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:22:35.331Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/ref/08_final_spin_chamber.jpg"}`
+
+### 🧑 User — 2026-11-18T14:22:35.354Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:22:37.744Z
+
+I've studied all five approved pictures. Next I'll check the branch download.
+
+### 🤖 Claude — 2026-11-18T14:22:39.289Z
+
+> 🔧 **Bash** `{"command": "tr '\\r' '\\n' < /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log | grep -E \"START|DONE|Receiving|Compressing|fatal|error\" | tail -4", "description": "Check fetch progress"}`
+
+### 🧑 User — 2026-11-18T14:22:39.325Z
+
+> ↩︎ result: Receiving objects:  20% (262/1278), 148.65 MiB | 27.88 MiB/s
+> Receiving objects:  21% (269/1278), 162.89 MiB | 27.21 MiB/s
+> Receiving objects:  21% (280/1278), 191.44 MiB | 26.43 MiB/s
+> Receiving objects:  22% (282/1278), 191.44 MiB | 26.43 MiB/s
+
+### 🤖 Claude — 2026-11-18T14:22:43.534Z
+
+The Screen 05 download is moving (about 190 MB so far). Meanwhile I'll read the unfinished Screen 04 work and the binding rules the specialists must follow.
+
+### 🤖 Claude — 2026-11-18T14:22:45.485Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('backups/wip/claude__rainbow-s04-match-c12/INFO.json')); print(d.get('untracked_copied')); print(d.get('restore'))\" | cut -c1-1500; find backups/wip/claude__rainbow-s04-match-c12/untracked -name \"*.md\" | head; wc -l backups/wip/*/tracked.patch; head -c 2500 backups/wip/claude__rainbow-s04-match-c12/tracked.patch", "description": "Inspect the Screen 04 unfinished work snapshot"}`
+
+### 🧑 User — 2026-11-18T14:22:45.552Z
+
+> ↩︎ result: ['qa/match/04/r12/s2_arr/C1/f10_forward10u.png', 'qa/match/04/r12/s2_arr/C1/f20_forward20u.png', 'qa/match/04/r12/s2_arr/C1/motion.json', 'qa/match/04/r12/s2_arr/C2/f10_forward10u.png', 'qa/match/04/r12/s2_arr/C2/f20_forward20u.png', 'qa/match/04/r12/s2_arr/C2/motion.json', 'qa/match/04/r12/s2_arr/D1/f20_forward20u.png', 'qa/match/04/r12/s2_arr/D1/motion.json', 'qa/match/04/r12/s2_arr/D1/s_left_hard.png', 'qa/match/04/r12/s2_arr/D2/f20_forward20u.png', 'qa/match/04/r12/s2_arr/D2/motion.json', 'qa/match/04/r12/s2_arr/D2/s_left_hard.png']
+> git switch claude/rainbow-s04-match-c12 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c12/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c12/untracked/* into the worktree
+>    75 backups/wip/claude__rainbow-s04-match-c12/tracked.patch
+>   135 backups/wip/claude__rainbow-s05-match-c10/tracked.patch
+>   115 backups/wip/claude__rainbow-s05-match-c11/tracked.patch
+>    96 backups/wip/claude__rainbow-s05-match-c12/tracked.patch
+>    13 backups/wip/claude__rainbow-s08-scenery-c10/tracked.patch
+>    78 backups/wip/claude__rainbow-s08-scenery-c11/tracked.patch
+>    62 backups/wip/claude__rainbow-s08-scenery-c12/tracked.patch …[+2513 chars]
+
+### 🤖 Claude — 2026-11-18T14:22:46.803Z
+
+> 🔧 **Bash** `{"command": "wc -l docs/briefs/2026-11-18-r8/COMMON_RULES.md docs/briefs/2026-11-18-r10/RULES_R10.md docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md; head -c 3500 docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md", "description": "Read the binding rule files"}`
+
+### 🧑 User — 2026-11-18T14:22:46.837Z
+
+> ↩︎ result: 44 docs/briefs/2026-11-18-r8/COMMON_RULES.md
+>    32 docs/briefs/2026-11-18-r10/RULES_R10.md
+>    29 docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md
+>   105 total
+> # User order 2026-11-18 ~12:00 UTC (account 11) — STRICT FINAL VISUAL RULE (binding for EVERY specialist, screens 04–08)
+> 
+> User (core, verbatim): "I HAVE ALREADY DESIGNED MY APPROVED SCREENS. I WANT THOSE EXACT DESIGNS RECREATED AS FAITHFULLY AS
+> TECHNICALLY POSSIBLE. I do not want your interpretation of my scenery." "DO NOT ADD, REMOVE, REPLACE, OR REDESIGN ANY APPROVED
+> VISUAL ELEMENT." "DO NOT substitute similar-looking assets for the original approved designs. If existing geometry is wrong,
+> correct it. If texture mapping is wrong, fix it. If something already matches, preserve it."
+> 
+> ## Rules
+> 1. The approved picture `references/<NN>_*.png` is the authority: same environment, tunnel architecture and proportions, gold
+>    rings, cyan-blue / pink-magenta water formations (thickness, curves, highlights, reflections), foam clouds, bubbles,
+>    machinery, decorations, lighting, materials, colour relationships, collectibles, Benny (pink fluff, striped beanie, yellow
+>    star, proportions), composition. No additions, removals, replace …[+2150 chars]
+
+### 🤖 Claude — 2026-11-18T14:23:00.590Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('backups/autosave.config.json')); print([k for k in d]); pb=d['protected_branches']; print([b for b in pb if 'c11' in b or 'c12' in b or 'e908' in b or '3b139' in b])\"; grep -n \"worktree\" scripts/rainbow-autosave.py | head -8", "description": "Check protected branches and worktree snapshot logic"}`
+
+### 🧑 User — 2026-11-18T14:23:00.661Z
+
+> ↩︎ result: ['project', 'repo_full_name', 'remote_name', 'remote_url_must_contain', 'branch', 'session_branch_patterns', 'commit_trailer', 'claude_projects_glob', 'allowlist', 'status_only_paths', 'max_plain_git_file_mb', 'push_retries', 'protected_branches', 'original_branch_note', 'branch_history_note']
+> ['ccr-3b139b48-0qqkkz', 'claude/rainbow-s04-match-c11', 'claude/rainbow-s05-match-c11', 'claude/rainbow-s06-match-c11', 'claude/rainbow-s07-match-c11', 'claude/rainbow-s08-scenery-c11']
+> 241:def snapshot_worktrees() -> list[str]:
+> 242:    """User order 2026-11-18: also preserve UNFINISHED specialist work. For every other git worktree of this repo
+> 244:    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 248:    wl = git("worktree", "list", "--porcelain", check=False).stdout
+> 252:        wt = Path(kv.get("worktree", ""))
+> 276:        info = {"worktree": str(wt), "branch": br, "head": kv.get("HEAD", ""), "time": now_utc().isoformat(),
+> 280:                           f" && copy backups/wip/{dest.name}/untracked/* into the worktree"}
+> 344:            wip = snapshot_worktrees()
+
+### 🤖 Claude — 2026-11-18T14:23:03.271Z
+
+> 🔧 **Grep** `{"pattern": "rainbow-s08-scenery-c11|ccr-3b139b48-0qqkkz", "path": "/home/user/rainbow-/backups/autosave.config.json", "output_mode": "content"}`
+
+### 🧑 User — 2026-11-18T14:23:03.298Z
+
+> ↩︎ result: 92:    "ccr-3b139b48-0qqkkz",
+> 97:    "claude/rainbow-s08-scenery-c11"
+
+### 🤖 Claude — 2026-11-18T14:23:04.785Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/autosave.config.json", "offset": 90, "limit": 10}`
+
+### 🧑 User — 2026-11-18T14:23:04.809Z
+
+> ↩︎ result: 90	    "claude/rainbow-s05-match-c10",
+> 91	    "claude/rainbow-s08-scenery-c10",
+> 92	    "ccr-3b139b48-0qqkkz",
+> 93	    "claude/rainbow-s04-match-c11",
+> 94	    "claude/rainbow-s05-match-c11",
+> 95	    "claude/rainbow-s06-match-c11",
+> 96	    "claude/rainbow-s07-match-c11",
+> 97	    "claude/rainbow-s08-scenery-c11"
+> 98	  ],
+> 99	  "original_branch_note": "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); claude/rainbow-3d-recovery-m4v347 = recovery backup from accounts 2\u20133 (last 8f869da + autosaves to b83b7e0). Since account 5 (2026-11-15 ~20:53 UTC) the earlier session branches ccr-d4bb0ad3-8ycajb (account 4, last 648f531) and ccr-8b6fc834-7kd55l (account 3, last 8a36270) are protected too: both are fully contained in ccr-e033f912-8b40f5. Since account 6 (2026-11-15 ~21:41 UTC) ccr-e033f912-8b40f5 (account 5, last 3c0fe33) is protected too: it is fully contained in claude/rainbow-3d-account-transfer-syorak. Since account 7 (2026-11-15 ~22:52 UTC) claude/rainbow-3d-account-transfer-syorak (account 6, last 7ae64c3) is protected too: it is fully contained in ccr-93add0fa-q17ey6. Since account 8 (2026-11-16 ~00:50 UTC) …[+1183 chars]
+
+### 🤖 Claude — 2026-11-18T14:23:07.144Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/autosave.config.json", "old_string": "    \"claude/rainbow-s08-scenery-c11\"\n  ],", "new_string": "    \"claude/rainbow-s08-scenery-c11\",\n    \"ccr-e908f8da-cy4yc1\",\n    \"claude/rainbow-s04-match-c12\",\n    \"claude/rainbow-s05-match-c12\",\n    \"claude/rainbow-s08-scenery-c12\"\n  ],"}`
+
+### 🧑 User — 2026-11-18T14:23:07.208Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/autosave.config.json has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:23:08.985Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json; json.load(open('/home/user/rainbow-/backups/autosave.config.json')); print('json ok')\"; tr '\\r' '\\n' < /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log | grep -E \"START|DONE|Receiving|fatal|error\" | tail -3", "description": "Validate config and check fetch progress"}`
+
+### 🧑 User — 2026-11-18T14:23:09.097Z
+
+> ↩︎ result: json ok
+> Receiving objects:  53% (678/1278), 529.22 MiB | 5.03 MiB/s
+> Receiving objects:  53% (688/1278), 535.54 MiB | 5.66 MiB/s
+> Receiving objects:  54% (691/1278), 535.54 MiB | 5.66 MiB/s
+
+### 🤖 Claude — 2026-11-18T14:23:20.810Z
+
+> 🔧 **Bash** `{"command": "grep -E \"^\\+\\+\\+|^\\+.*(//|on\\(')\" backups/wip/claude__rainbow-s05-match-c12/tracked.patch | cut -c1-220 | head -20; echo ======; grep -E \"^\\+\\+\\+|^diff|^rename\" backups/wip/claude__rainbow-s08-scenery-c12/tracked.patch | head -20", "description": "Summarize the 05 and 08 unfinished edits"}`
+
+### 🧑 User — 2026-11-18T14:23:20.851Z
+
+> ↩︎ result: +++ b/src/vfx/proj05Tunnel.ts
+> +      // painted metal without the slot blobs: local max of the own row ALONG the tunnel only (±0.03 / ±0.06 of the bay:
+> +      // the slots are short along it), so the pink-white light streaks (detail round the tube) keep their width
+> +      // slot grid (atlas measurement: 46.5 round the tube, rows every 1.9 u); capsule 0.62 of the pitch round, 0.34 u
+> +      // along (with the perspective of the swim camera they read as the painted slim capsules), rounded ends
+> +      vec2 cs = (fract(gs) - 0.5) * vec2(1.03, 1.9);          // units from the cell centre (round, along)
+> +      float hl = 0.17;                                        // half width along the tunnel (u)
+> +      cw = mix(cw, cw * 0.5, rim * (1.0 - smoothstep(-0.04, 0.06, cs.y)) * 0.6);       // shaded upper rim
+> +      cw = mix(cw, vec3(0.957, 0.396, 0.941), clamp(lip * 0.95, 0.0, 1.0));              // bright pink lower lip
+> +++ b/src/vfx/waterRibbon.ts
+> ======
+> diff --git a/qa/match/08/r12/NEW/a00_approved_view.png b/qa/match/08/r12/NEW_before_step5/a00_approved_view.png
+> rename from qa/match/08/r12/NEW/a00_approved_view.png
+> rename to qa/match/08/r12/NEW_before_step5/a00_approved_view.png
+> diff -- …[+1199 chars]
+
+### 🤖 Claude — 2026-11-18T14:23:39.213Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md", "content": "# Round 13 (account 13) — launch prompt for a screen specialist (fill in NN / AGENT / BRANCH / WORKTREE / TASKS)\n\nYou are the Rainbow project's `AGENT` specialist, working ONLY on playable Screen NN, VISUALS ONLY.\n\n## Where you work\n* Git worktree `WORKTREE` on branch `BRANCH` (a new account-13 continuation of the account-12 branch `PREV`, newest tip\n  `PREV_SHA`; the account-12 unfinished edits from `backups/wip/<prev branch>/` are already applied in the worktree, NOT\n  committed a …[+3190 chars]`
+
+### 🧑 User — 2026-11-18T14:23:39.351Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T14:23:40.962Z
+
+> 🔧 **Bash** `{"command": "tr '\\r' '\\n' < /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log | grep -E \"START|DONE|Receiving|fatal|error\" | tail -3; ls /home/user/wt 2>/dev/null; cd /home/user/rainbow- && git worktree list", "description": "Check fetch progress and existing worktrees"}`
+
+### 🧑 User — 2026-11-18T14:23:41.010Z
+
+> ↩︎ result: Receiving objects: 100% (1278/1278), 845.47 MiB | 13.13 MiB/s, done.
+> DONE claude/rainbow-s05-match-c12 exit=0 14:23:40
+> START claude/rainbow-s08-scenery-c12 14:23:40
+> /home/user/rainbow-  47878b9 [claude/rainbow-restore-autosave-1mgga0]
+
+### 🤖 Claude — 2026-11-18T14:23:45.087Z
+
+Screen 05 has arrived (tip `24877989`, matching the snapshot). I'll create its `-c13` branch and worktree, re-apply the unfinished edit, and push the new branch.
+
+### 🤖 Claude — 2026-11-18T14:23:48.996Z
+
+> 🔧 **Bash** `{"command": "set -e; git rev-parse --short=8 origin/claude/rainbow-s05-match-c12; git branch claude/rainbow-s05-match-c13 origin/claude/rainbow-s05-match-c12; mkdir -p /home/user/wt; git worktree add /home/user/wt/s05 claude/rainbow-s05-match-c13 2>&1 | tail -2; cd /home/user/wt/s05; ln -sfn /home/user/rainbow-/node_modules node_modules; grep -qx node_modules /home/user/rainbow-/.git/info/exclude || echo node_modules >> /home/user/rainbow-/.git/info/exclude; [ -d tools/lead_r6 ] && echo \"lead_r6 present\" || (cp -r /home/user/rainbow-/tools/lead_r6 tools/ && echo \"lead_r6 copied\"); git appl …[+446 chars]`
+
+### 🧑 User — 2026-11-18T14:24:29.408Z
+
+> ↩︎ result: 24877989
+> branch 'claude/rainbow-s05-match-c13' set up to track 'origin/claude/rainbow-s05-match-c12'.
+> Filtering content:  40% (2/5)Filtering content:  60% (3/5)Filtering content:  80% (4/5), 25.10 MiB | 16.19 MiB/sFiltering content: 100% (5/5), 55.54 MiB | 24.38 MiB/sFiltering content: 100% (5/5), 128.57 MiB | 22.69 MiB/s, done.
+> HEAD is now at 2487798 Screen 05 r12 step 4: &m05fcoin=1 — coins near the 05->06 transition sit on the painted river (far-arc coins settle over the water, 06 coins drawn on the far river's core into the throat while the far block is live); pick-ups/count/score unchanged; locked view 0 px
+> lead_r6 present
+> WIP applied
+>  M src/vfx/proj05Tunnel.ts
+>  M src/vfx/waterRibbon.ts
+> 39
+>  * [new branch]      claude/rainbow-s05-match-c13 -> claude/rainbow-s05-match-c13
+> branch 'claude/rainbow-s05-match-c13' set up to track 'origin/claude/rainbow-s05-match-c13'.
+> remote: 24877989
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:24:35.014Z
+
+The Screen 05 branch `claude/rainbow-s05-match-c13` is on GitHub at `24877989`, with the unfinished edit re-applied. I'll start the Screen 05 specialist now.
+
+### 🤖 Claude — 2026-11-18T14:24:46.856Z
+
+> 🔧 **Agent** `{"description": "Screen 05 water specialist round 13", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Rainbow project's `water-fx-specialist`, working ONLY on playable Screen 05 \"Flow Into the Current\", VISUALS ONLY. First read the full launch brief `/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md` and follow it, with these values:\n\n* NN = 05; AGENT = water-fx-specialist\n* WORKTREE = /home/user/wt/s05 (cd there; all edits, renders and commits happen in this worktree; node_modules is symlinked)\n* BRANCH = claude/rainb …[+2597 chars]`
+
+### 🧑 User — 2026-11-18T14:24:46.885Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aa63a6eba875d2b13 (internal ID - do not mention to user. Use SendMessage with to: 'aa63a6eba875d2b13', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/aa63a6eba875d2b13.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T14:24:48.360Z
+
+> 🔧 **Bash** `{"command": "tr '\\r' '\\n' < /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log | grep -E \"START|DONE|Receiving|fatal|error\" | tail -2", "description": "Check Screen 08 fetch progress"}`
+
+### 🧑 User — 2026-11-18T14:24:48.393Z
+
+> ↩︎ result: Receiving objects:  54% (253/468), 280.35 MiB | 4.46 MiB/s
+> Receiving objects:  54% (253/468), 283.12 MiB | 4.63 MiB/s
+
+### 🤖 Claude — 2026-11-18T14:24:50.560Z
+
+The Screen 05 specialist is launched; I'll confirm it really started once its first commit appears. Screen 08 is about half downloaded. Meanwhile I'll write the round-13 coordination file.
+
+### 🤖 Claude — 2026-11-18T14:25:04.518Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r13/COORDINATION.md", "content": "# Round 13 (account 13) — coordination of the five playable screens (VISUALS ONLY)\n\nLead session branch `claude/rainbow-restore-autosave-1mgga0` (session started from the account-12 lead `ccr-e908f8da-cy4yc1` @\n`d256bc4`, which equals that branch's remote tip — nothing merged). Started 2026-11-18 ~14:00 UTC.\nRules unchanged (binding): `docs/briefs/2026-11-18-r8/COMMON_RULES.md` + `docs/briefs/2026-11-18-r10/RULES_R10.md` +\n`docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md` (read \"-c8/-c10/-c11/ …[+3171 chars]`
+
+### 🧑 User — 2026-11-18T14:25:04.567Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-18-r13/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T14:25:08.266Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"DONE claude/rainbow-s08-scenery-c12\" /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log; do sleep 5; done; grep DONE /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log", "description": "Wait until the Screen 08 branch has downloaded", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T14:25:08.290Z
+
+> ↩︎ result: Command running in background with ID: b24d74are. Output is being written to: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/b24d74are.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T14:25:09.884Z
+
+While that downloads, I'll read this session's own bootstrap results for Blender, Playwright, Android and the build.
+
+### 🤖 Claude — 2026-11-18T14:25:11.691Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep \"claude-bootstrap\" | grep -v grep | wc -l; head -4 backups/BOOTSTRAP_REPORT.md | tail -2; grep -E \"^\\| (Playwright|Blender|Android|Build|Claude hooks|Node|Python|Git LFS)\" backups/BOOTSTRAP_REPORT.md | cut -c1-230; tail -5 backups/.live/bootstrap.log 2>/dev/null | cut -c1-200", "description": "Read this session's bootstrap results"}`
+
+### 🧑 User — 2026-11-18T14:25:11.756Z
+
+> ↩︎ result: 0
+> Generated 2026-11-18 14:11 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `claude/rainbow-restore-autosave-1mgga0`.
+> The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
+> | Git LFS binaries (local) | OK | 59/59 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 1 |
+> | Git LFS on GitHub | OK | 59/59 LFS objects (507 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
+> | Node.js | OK | v22.23.5, npm 10.9.9 | 1 |
+> | Python QA libraries | OK | installed: opencv-python-headless scipy; Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK | 19 |
+> | Playwright + Chromium | OK | headless Chromium 157.0.8103.78 with WebGL2 (SwiftShader); preinstalled, never reinstall | 11 |
+> | Blender | OK | Blender 5.3.0 (present) at /usr/local/bin/blender; headless bpy test OK | 19 |
+> | Android build tools | OK | Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug | 2 |
+> | Claude hooks / plugins / MCP | OK | hooks: SessionStart PreCompact Stop SessionEnd;  …[+607 chars]
+
+### 🤖 Claude — 2026-11-18T14:25:17.288Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__plugin_playwright_playwright__browser_navigate", "max_results": 1}`
+
+### 🧑 User — 2026-11-18T14:25:17.296Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-18T14:25:18.996Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_navigate** `{"url": "data:text/html,<canvas id=c></canvas><script>document.title=document.getElementById('c').getContext('webgl2')?'WEBGL2_OK':'NO_WEBGL2'</script>"}`
+
+### 🧑 User — 2026-11-18T14:26:03.254Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('data:text/html,<canvas id=c></canvas><script>document.title=document.getElementById(\'c\').getContext(\'webgl2\')?\'WEBGL2_OK\':\'NO_WEBGL2\'</script>');
+> ```
+> ### Page
+> - Page URL: data:text/html,<canvas id=c></canvas><script>document.title=document.getElementById('c').getContext('webgl2')?%27WEBGL2_OK%27:%27NO_WEBGL2%27%3C/script%3E
+> - Page Title: WEBGL2_OK
+> - Console: 0 errors, 1 warnings
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-18T14-26-03-238Z.yml)
+> ### Events
+> - New console entries: .playwright-mcp/console-2026-11-18T14-26-02-749Z.log#L1
+
+### 🤖 Claude — 2026-11-18T14:26:08.963Z
+
+> 🔧 **Bash** `{"command": "echo \"s05 remote: $(timeout 30 git ls-remote origin refs/heads/claude/rainbow-s05-match-c13 | cut -c1-8)\"; set -e; git rev-parse --short=8 origin/claude/rainbow-s08-scenery-c12; git branch claude/rainbow-s08-scenery-c13 origin/claude/rainbow-s08-scenery-c12; git worktree add /home/user/wt/s08 claude/rainbow-s08-scenery-c13 2>&1 | tail -1 | cut -c1-200; cd /home/user/wt/s08; ln -sfn /home/user/rainbow-/node_modules node_modules; [ -d tools/lead_r6 ] && echo \"lead_r6 present\" || (cp -r /home/user/rainbow-/tools/lead_r6 tools/ && echo \"lead_r6 copied\"); git apply --binary /home …[+501 chars]`
+
+### 🧑 User — 2026-11-18T14:26:23.159Z
+
+> ↩︎ result: s05 remote: 7b790cbd
+> 05ed1bee
+> branch 'claude/rainbow-s08-scenery-c13' set up to track 'origin/claude/rainbow-s08-scenery-c12'.
+> HEAD is now at 05ed1be Screen 08 r12 step 5: &m08cupg=1 upper spout cups get their painted band + underside (one solid cup while swimming, no floating underside)
+> lead_r6 present
+> WIP applied
+> 15
+> branch 'claude/rainbow-s08-scenery-c13' set up to track 'origin/claude/rainbow-s08-scenery-c13'.
+> s08 remote: 05ed1bee
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:26:35.006Z
+
+> 🔧 **Agent** `{"description": "Screen 08 scenery specialist round 13", "subagent_type": "washer-environment-modeler", "run_in_background": true, "name": "s08", "prompt": "You are the Rainbow project's `washer-environment-modeler`, working ONLY on playable Screen 08 \"Final Spin Chamber\" scenery, VISUALS ONLY. First read the full launch brief `/home/user/rainbow-/docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md` and follow it, with these values:\n\n* NN = 08; AGENT = washer-environment-modeler\n* WORKTREE = /home/user/wt/s08 (cd there; all edits, renders and commits happen in this worktree; node_mod …[+2842 chars]`
+
+### 🧑 User — 2026-11-18T14:26:35.029Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a734238476cb500fe (internal ID - do not mention to user. Use SendMessage with to: 'a734238476cb500fe', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/tasks/a734238476cb500fe.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-18T14:26:48.042Z
+
+> 🔧 **Bash** `{"command": "head -c 300 backups/AGENTS_STATUS.json | head -5; python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\nraw=open(p).read()\nd=json.loads(raw)\nind = 2 if '\\n  \"' in raw[:200] else 1\nd['updated_utc']='2026-11-18T14:30Z'\nd['round13_account13']={\n \"updated\":\"2026-11-18T14:30Z\",\n \"lead_branch\":\"claude/rainbow-restore-autosave-1mgga0\",\n \"coordination\":\"docs/briefs/2026-11-18-r13/COORDINATION.md\",\n \"launch_brief\":\"docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md\",\n \"running\":{\n  \"s05\":{\"agent\":\"water-fx-specialist\",\"branch\":\"claude/ …[+1480 chars]`
+
+### 🧑 User — 2026-11-18T14:26:48.148Z
+
+> ↩︎ result: {
+>  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate ook indent 1
+>  backups/AGENTS_STATUS.json | 47 ++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 41 insertions(+), 6 deletions(-)
+> Receiving objects: 100% (322/322), 408.06 MiB | 14.69 MiB/s, done.
+> DONE claude/rainbow-s06-match-c11 exit=0 14:26:44
+
+### 🤖 Claude — 2026-11-18T14:26:49.969Z
+
+All five branches are downloaded. My edit to the agent status file removed 6 lines, so I'll check that nothing was lost.
+
+### 🤖 Claude — 2026-11-18T14:26:51.662Z
+
+> 🔧 **Bash** `{"command": "git diff backups/AGENTS_STATUS.json | grep \"^-\" | cut -c1-200; grep DONE /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/fetch2.log", "description": "Check removed lines and fetch results"}`
+
+### 🧑 User — 2026-11-18T14:26:51.716Z
+
+> ↩︎ result: --- a/backups/AGENTS_STATUS.json
+> - "updated_utc": "2026-11-18T12:06:00Z",
+> - "current_focus": "Screen 05 water \u2014 NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwor
+> -  "why": "user order: account 4 near its usage limit \u2014 save everything, no more development",
+> -   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) \u2014 report REPORTS_ROUND5.md",
+> -   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central
+> -   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; 
+> DONE claude/rainbow-s05-match-c12 exit=0 14:23:40
+> DONE claude/rainbow-s08-scenery-c12 exit=0 14:25:20
+> DONE claude/rainbow-s04-match-c12 exit=0 14:25:48
+> DONE claude/rainbow-s07-match-c11 exit=0 14:26:03
+> DONE claude/rainbow-s06-match-c …[+18 chars]
+
+### 🤖 Claude — 2026-11-18T14:26:54.184Z
+
+The removed lines are only re-encoded dashes (`\u2014` written as `—`), not lost content. I'll rewrite the file in the original encoding to keep the change minimal, then set up Screen 04.
+
+### 🤖 Claude — 2026-11-18T14:26:55.684Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; p='backups/AGENTS_STATUS.json'; d=json.load(open(p)); json.dump(d, open(p,'w'), indent=1, ensure_ascii=True); open(p,'a').write('\\n')\"; git diff --stat backups/AGENTS_STATUS.json; git diff backups/AGENTS_STATUS.json | grep \"^-\" | cut -c1-120", "description": "Rewrite status file in original ASCII encoding"}`
+
+### 🧑 User — 2026-11-18T14:26:55.764Z
+
+> ↩︎ result: backups/AGENTS_STATUS.json | 37 ++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 36 insertions(+), 1 deletion(-)
+> --- a/backups/AGENTS_STATUS.json
+> - "updated_utc": "2026-11-18T12:06:00Z",
+
+### 🤖 Claude — 2026-11-18T14:26:57.109Z
+
+Clean: only the timestamp changed and round 13 was added. Now the Screen 04 branch, worktree and unfinished chevron work:
+
+### 🤖 Claude — 2026-11-18T14:27:00.665Z
+
+> 🔧 **Bash** `{"command": "set -e; git rev-parse --short=8 origin/claude/rainbow-s04-match-c12; git branch claude/rainbow-s04-match-c13 origin/claude/rainbow-s04-match-c12; git worktree add /home/user/wt/s04 claude/rainbow-s04-match-c13 2>&1 | tail -1 | cut -c1-220; cd /home/user/wt/s04; ln -sfn /home/user/rainbow-/node_modules node_modules; [ -d tools/lead_r6 ] && echo \"lead_r6 present\" || (cp -r /home/user/rainbow-/tools/lead_r6 tools/ && echo \"lead_r6 copied\"); git apply --binary /home/user/rainbow-/backups/wip/claude__rainbow-s04-match-c12/tracked.patch && echo \"WIP applied\"; cp -rn /home/user/rai …[+384 chars]`
+
+### 🧑 User — 2026-11-18T14:27:10.436Z
+
+> ↩︎ result: 4a8f1860
+> branch 'claude/rainbow-s04-match-c13' set up to track 'origin/claude/rainbow-s04-match-c12'.
+> HEAD is now at 4a8f186 Screen 04 rebuild step 1 KEPT: water channel at the painted height (m04ry=2.2, m04rk=0.82) + low foam (m04foam3) instead of foam-ball walls
+> lead_r6 present
+> WIP applied
+> cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+>  M src/world/match04m4.ts
+> ?? qa/match/04/r12/s2_arr/
+> branch 'claude/rainbow-s04-match-c13' set up to track 'origin/claude/rainbow-s04-match-c13'.
+> s04 remote: 4a8f1860
+> BRIEF_NEXT_SLOT.md
+> NEW_m04mv
+> PROGRESS.md
+> ab1
+> diag_mv_r11
+> mv2_geo1
+> mv2_stage1
+> mv2_stage2
+> s1_chan
+> s2_arr
+> waterline04.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:27:20.156Z
+
+> 🔧 **Bash** `{"command": "timeout 280 python3 scripts/rainbow-autosave.py --reason manual:c13-specialists-launched 2>&1 | tail -3; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 40 git ls-remote origin refs/heads/claude/rainbow-restore-autosave-1mgga0 | cut -f1)\"; echo \"s08 remote: $(timeout 30 git ls-remote origin refs/heads/claude/rainbow-s08-scenery-c13 | cut -c1-8)\"; ls backups/wip/ | grep c13; tail -12 /home/user/wt/s04/qa/match/04/r12/PROGRESS.md | cut -c1-400", "description": "Manual save, verify remote, check 08 start and 04 log", "timeout": 330000}`
+
+### 🧑 User — 2026-11-18T14:27:21.076Z
+
+> ↩︎ result: "error": "branch 'claude/rainbow-restore-autosave-1mgga0' is a protected original branch; autosave never pushes to it",
+>   "duration_s": 0
+> }
+> LOCAL  47878b9e6658cbf2bad463cb69656de04b967710
+> REMOTE 47878b9e6658cbf2bad463cb69656de04b967710
+> s08 remote: c8135c42
+> 
+> ## REBUILD step 1 (user approval 2026-11-18 ~13:30 UTC: real geometry/materials) — water channel at the painted height + low foam — KEPT
+> Kept query: `K&m04foam3=1&m04ry=2.2&m04rk=0.82` (K = `match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1`).
+> * River sides climb to the measured painted waterline (≈ 2.2 u, `waterline04.json`); the tall foam-ball walls are replaced by
+>   low foam clusters along the raised water edge (`m04foam3`); the river texture is scaled across the wider channel
+>   (`m04rk=0.82` = 4 / 4.85 u) — without it the outer strip wrapped into a pale lilac "rail" along the top of the water.
+> * WHAT LOOKS CLOSER (APPROVED / BEFORE / NEW at forward 6 u, 20 u, hard left): thick cyan water with pink-magenta swirls now fills
+>   the tunnel floor and curves up the gold sides with low foam at its edge, like the painted water; Benny swims in the open
+>   channel instead of between walls of white foam balls.
+> * Star …[+317 chars]
+
+### 🤖 Claude — 2026-11-18T14:27:25.421Z
+
+> 🔧 **Bash** `{"command": "grep -n \"protected\" scripts/rainbow-autosave.py | head -20", "description": "Find the protected-branch check in autosave"}`
+
+### 🧑 User — 2026-11-18T14:27:25.458Z
+
+> ↩︎ result: 315:        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+> 316:            raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+> 319:            # explicitly allowed session-branch pattern (protected branches were rejected above).
+
+### 🤖 Claude — 2026-11-18T14:27:27.256Z
+
+> 🔧 **Bash** `{"command": "sed -n 300,325p scripts/rainbow-autosave.py; python3 -c \"import json; d=json.load(open('backups/autosave.config.json')); print('CFG branch =', d['branch'])\"", "description": "Read the branch check and configured branch"}`
+
+### 🧑 User — 2026-11-18T14:27:27.321Z
+
+> ↩︎ result: lockfh = open(LOCK, "w")
+>     try:
+>         fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+>     except BlockingIOError:
+>         if not args.quiet:
+>             print("another autosave is running; skipping")
+>         return 0
+> 
+>     try:
+>         # ---- 1. identity checks -------------------------------------------------------
+>         url = git("remote", "get-url", CFG["remote_name"]).stdout.strip()
+>         if CFG["remote_url_must_contain"] not in url:
+>             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
+>         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+>         row["branch"] = branch
+>         if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+>             raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+>         if branch != CFG["branch"]:
+>             # A new cloud session gets a fresh working-branch name. Follow it only when it matches an
+>             # explicitly allowed session-branch pattern (protected branches were rejected above).
+>             pats = CFG.get("session_branch_patterns", [])
+>             if not an …[+416 chars]
+
+### 🤖 Claude — 2026-11-18T14:27:30.549Z
+
+> 🔧 **Bash** `{"command": "grep -n '\"branch\": \"ccr-e908f8da-cy4yc1\"' backups/autosave.config.json", "description": "Locate the configured branch line"}`
+
+### 🧑 User — 2026-11-18T14:27:30.572Z
+
+> ↩︎ result: 6:  "branch": "ccr-e908f8da-cy4yc1",
+
+### 🤖 Claude — 2026-11-18T14:27:32.429Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/autosave.config.json", "old_string": "  \"branch\": \"ccr-e908f8da-cy4yc1\",", "new_string": "  \"branch\": \"claude/rainbow-restore-autosave-1mgga0\","}`
+
+### 🧑 User — 2026-11-18T14:27:32.496Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/autosave.config.json has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:27:34.371Z
+
+> 🔧 **Bash** `{"command": "timeout 280 python3 scripts/rainbow-autosave.py --reason manual:c13-specialists-launched 2>&1 | grep -E '\"(result|status|error|commit|pushed|verified)' | head -6; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 40 git ls-remote origin refs/heads/claude/rainbow-restore-autosave-1mgga0 | cut -f1)\"; ls backups/wip/ | grep c13; python3 -I scripts/autosave-status.py", "description": "Rerun manual save and verify remote matches", "timeout": 330000}`
+

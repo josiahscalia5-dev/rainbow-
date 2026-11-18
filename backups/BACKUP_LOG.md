@@ -746,3 +746,6 @@ error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow
 | 2026-11-18T14:09:15+00:00 | daemon | committed+pushed | `9838ddb3904d` | `claude/rainbow-restore-autosave-1mgga0` | 4 | True |  |
 | 2026-11-18T14:10:49+00:00 | bootstrap:background | committed+pushed | `c275d5a82da0` | `claude/rainbow-restore-autosave-1mgga0` | 4 | True |  |
 | 2026-11-18T14:15:49+00:00 | daemon | committed+pushed | `0df7fd7348c3` | `claude/rainbow-restore-autosave-1mgga0` | 5 | True |  |
+| 2026-11-18T14:20:57+00:00 | daemon | committed+pushed | `47878b9e6658` | `claude/rainbow-restore-autosave-1mgga0` | 4 | True |  |
+| 2026-11-18T14:26:15+00:00 | daemon | error | `—` | `claude/rainbow-restore-autosave-1mgga0` | 0 | False | branch 'claude/rainbow-restore-autosave-1mgga0' is a protected original branch; autosave never pushes to it |
+| 2026-11-18T14:27:20+00:00 | manual:c13-specialists-launched | error | `—` | `claude/rainbow-restore-autosave-1mgga0` | 0 | False | branch 'claude/rainbow-restore-autosave-1mgga0' is a protected original branch; autosave never pushes to it |

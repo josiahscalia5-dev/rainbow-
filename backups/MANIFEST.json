@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 40992,
-   "sha256": "79b32db0fe52269557900c5a5f85ec36eb97e84fd3752dea2e7e41ed1281cbc1"
+   "bytes": 42471,
+   "sha256": "dae4585cfaef0b85245f766f1e8ccec8e7c67db845731b47c7b23e209735a266"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 16014,
-   "sha256": "9c08be6a236628cefb52f477ec815bbaa8731d4bee26a8e9ea2226acafc96073"
+   "bytes": 16015,
+   "sha256": "8871f951d0130f8532d4c8f20580d212f217af364ea285a985fa16b483a9bc25"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 7659,
-   "sha256": "1d2ac72ab97ceb762ee4fda321754acdd6c746d8f425872323e3aca082813937"
+   "bytes": 7815,
+   "sha256": "acf41c8e8ba87e278ce57371dcad836df3231beda1d8cfc5c23fab87ab1e84eb"
   },
   {
    "path": "backups/claude-config/2026-11-18-account12/README.md",
@@ -1255,6 +1255,16 @@
    "path": "docs/briefs/2026-11-18-r12/COORDINATION.md",
    "bytes": 6358,
    "sha256": "36279c23decdea8b0fc06f3bed93a375f4262d686d97f654029e33f28a6eb57b"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r13/COORDINATION.md",
+   "bytes": 3676,
+   "sha256": "e59563fce0e76649719038370002c4a304761d6dc4c8e65de80a9a9af31fd274"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r13/SPECIALIST_PROMPT_TEMPLATE.md",
+   "bytes": 3655,
+   "sha256": "940fa41213f913160034c47ec3ea491a97868bf210514542bbbe99c08774a5bf"
   },
   {
    "path": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",
