@@ -14,3 +14,8 @@ Rejected, never repeat: `m08urcup` (invented upper-right cup front).
   forward 6 / 10 / 20 u and hard left / right; one continuous glossy S-river with the painted pink bands, diagonal
   streaks and white glints, Benny seated in it). Then (b) wall seams, (c) river-edge foam + coin-line shape,
   (d) soft V in the upper-right cup's gold band (only if a clean fix exists).
+
+## Round 14 restarted ~16:45 UTC after interrupt
+* restarted ~16:45 UTC after interrupt (previous round-14 instance cancelled ~16:43 UTC by a user message to the lead;
+  nothing committed lost). Resumed at `b62b9c34`, kept set K13. Checking the half-captured `BEFORE_K13/` set first,
+  then task (a): S-river / near water ahead of and around Benny.
