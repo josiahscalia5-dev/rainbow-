@@ -2555,3 +2555,23 @@ Round 9 left `&m05wall=1` (crisp slotted metal where the wall atlas is magnified
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T13:28:31.066Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');", "new_string": "export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');\n/**\n * `&m05slot=1` (Screen 05 round 12, needs m05wtile; src/vfx/proj05Tunnel.ts M05SLOT_GLSL): where the wall picture is still\n * magnified while swimming (the painting has ≈ 18 texel rows per unit along the tunnel, the swim camera is 3–6 u from the\n * wall), the slots read as big blurred blobs (and the far bays as a faint do …[+476 chars]`
+
+### 🧑 User — 2026-11-18T13:28:31.118Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:28:42.948Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/proj05Tunnel.ts", "old_string": "/** one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1 */", "new_string": "/**\n * `&m05slot=1` (Screen 05 round 12, waterRibbon.ts M05SLOT): magnified wall → painted metal (own colour + light streaks,\n * slot blobs lifted out by a local max over ±half a slot) + crisp slim capsule slots (dark plum, pink lower lip).\n */\nconst M05SLOT_GLSL = /* glsl */ `\n  {\n    vec2 tps = puv * uPtWallSize;\n    vec2 jsa = dFdx(tps), jsb = dFdy(tps);\n    float mS = a …[+2368 chars]`
+
+### 🧑 User — 2026-11-18T13:28:42.989Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/proj05Tunnel.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:28:50.083Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I - <<'EOF'\np='/home/user/wt/s05/src/vfx/proj05Tunnel.ts'\ns=open(p).read()\nrep=[\n(\"import { M05WALL, M05WTILE, PROJ05_INVERSE,\", \"import { M05SLOT, M05WALL, M05WTILE, PROJ05_INVERSE,\"),\n(\"vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}\",\n \"vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05SLOT && ENV05 ? M05SLOT_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}\"),\n(\"(M05WTILE ? '|m05wtile' : '');\", \"(M05WTILE ? '|m05wtile' : '') + (M05SLOT ? '|m …[+959 chars]`
+

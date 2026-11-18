@@ -2652,3 +2652,142 @@ Now the PROGRESS.md for r12 with step 1.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T13:28:50.243Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/a_f06br.png 560,1100,864,1536 1.1 $N/f06_forward6u.png $N/f10_forward10u.png $N/t66_through_screen.png", "description": "Zoom bottom-right water seam at f06/f10/t66"}`
+
+### 🧑 User — 2026-11-18T13:28:50.592Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:28:51.593Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/a_f06br.png"}`
+
+### 🧑 User — 2026-11-18T13:28:51.633Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:29:02.996Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/r10/ && sed -n 1,80p qa/match/08/r10/STATUS.md 2>/dev/null | head -80", "description": "Look at round 10 status format"}`
+
+### 🧑 User — 2026-11-18T13:29:03.051Z
+
+> ↩︎ result: NEW
+> PROGRESS.md
+> step1_m08far
+> step2_m08coinv
+
+### 🤖 Claude — 2026-11-18T13:29:06.463Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/ qa/match/08/scenery | head -40; ls qa/match/*/r*/STATUS.md 2>/dev/null; git log --oneline --all -- 'qa/match/08/*STATUS*' | head -5; ls tools/lead_r6/", "description": "Find previous STATUS files and lead tools"}`
+
+### 🧑 User — 2026-11-18T13:29:06.743Z
+
+> ↩︎ result: qa/match/08/:
+> 08_BEFORE_current_game.png
+> 08_NEW_match08.png
+> 08_NEW_match08_android1080x1920.png
+> 08_NEW_screen_match.json
+> NOTES.md
+> benny_APPROVED_closeup.png
+> benny_NEW_ported_closeup.png
+> coins08px
+> gameplay_test_match08.json
+> motion
+> other_screens
+> r10
+> r11
+> r12
+> scenery
+> scenery_metrics_BEFORE_FINAL.json
+> scenery_metrics_BEFORE_NEW.json
+> 
+> qa/match/08/scenery:
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> dbg_ids
+> dbg_lane
+> final_r5
+> motion_BEFORE
+> motion_bw
+> motion_bw_r5
+> motion_fill_r5
+> motion_lane
+> motion_lane_r5
+> r6
+> r7
+> r8
+> dafa3752 Screen 08 scenery r7: default build 0 px (02-10) vs start code, 04-07 leak 0 px, STATUS final
+> 26b7acac Screen 08 scenery r7: keep m08seam (x1.6), new m08sill + m08towel, proofs and 12-shot audit (in progress: default/leak proofs)
+> 2ff83565 S08 scenery r6: PAUSE checkpoint — m08seam (untested) switch, STATUS/SHARED_CHANGES
+> 60e7ffe8 S08 scenery r5: 08-only course spacing fix, final pictures, notes/status
+> f288820e autosave: Rainbow 2026-11-17 19:41 UTC
+> motion_audit.mjs
+
+### 🤖 Claude — 2026-11-18T13:29:10.347Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && head -60 qa/match/08/scenery/STATUS.md; ls tools/lead_r6/ tools/ | head; ls scripts | grep -i \"gameplay\\|contin\\|motion\"; grep -n \"test:continuity\" package.json", "description": "Read scenery STATUS and find test scripts"}`
+
+### 🧑 User — 2026-11-18T13:29:10.405Z
+
+> ↩︎ result: # Screen 08 scenery-in-motion — STATUS (round 7, account 7) — MILESTONE DONE, stopped
+> 
+> * Branch `claude/rainbow-s08-scenery-c7` (started at `-c6` @ `cf2e092b`). Final SHA: `git log -1`.
+> * Every change is behind its own `?match08=1` sub-switch; nothing runs without `match08`.
+> 
+> ## Kept switch set (round 7)
+> `B7='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'`
+> (`m08lane` stays OFF.)
+> 
+> ## Done (round 7)
+> 1. **`&m08seam=1` — KEEP at ×1.6 (default `m08seamk`).** f10 / t95 frames `r7/seam/{base,k16,k22}/`. Without it the
+>    generated ceiling fill is a dense fine mesh, visibly smaller than the painted chamber-wall slots it meets. ×1.6 matches
+>    the painted slot size best; ×2.2 is slightly coarse. Approved view: 0 px (frozen capture, `r7/proof/seam`).
+> 2. **`m08swim` proven 0 px at the approved view** (frozen `scripts/capture.mjs`: `r7/proof/noswim` vs `swim` vs `swim2`:
+>    0 changed pixels; the capture is deterministic, swim vs swim2 = 0).
+> 3. **`&m08sill=1` — NEW, KEEP.** Riding 3 u forward, the frame bottom showed torn gold / blue slabs. `m08dbg` showed
+>    they were the gold arch's unpushed water-level band (2.6× nearer than the rest of the ring). …[+3746 chars]
+
+### 🤖 Claude — 2026-11-18T13:29:15.997Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/tools/lead_r6/ 2>/dev/null; cd /home/user/wt/s08 && git log --all --oneline -- tools/lead_r6/motion_metrics.py | head -3", "description": "Look for motion_metrics tool"}`
+
+### 🧑 User — 2026-11-18T13:29:16.058Z
+
+> ↩︎ result: bisect_preview08.mjs
+> motion_audit.mjs
+> motion_metrics.py
+> 2c09d1c6 autosave: Rainbow 2026-11-18 10:09 UTC
+> 0ab5659a Screen 04 M4 (r8): running-session status + BEFORE moving audit (match04=1, 12 positions)
+> 8b1e8f9d autosave: Rainbow 2026-11-18 00:13 UTC
+
+### 🤖 Claude — 2026-11-18T13:29:18.023Z
+
+> 🔧 **Bash** `{"command": "head -30 /home/user/rainbow-/tools/lead_r6/motion_metrics.py", "description": "Read motion_metrics usage"}`
+
+### 🧑 User — 2026-11-18T13:29:18.072Z
+
+> ↩︎ result: """Lead r6: measured (not subjective) numbers for moving-gameplay frames vs the approved picture, below the HUD strip
+> (rows >= 13.5 %). LAYOUT20 = share of pixels within 20 levels after a sigma-8 blur (composition + colour, like
+> tools/qa/screen_match.py LAYOUT). PALETTE = histogram intersection of hue x saturation (24 x 8 bins, value > 0.15) —
+> how close the colour palette stays, independent of where things are. Moving frames are seen from other viewpoints, so
+> LAYOUT naturally falls as the camera travels; PALETTE shows whether the approved look (colours/materials) survives.
+> usage: python3 -I motion_metrics.py <approved.png> <frame.png> [...]  -> one line per frame"""
+> import sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> ref = Image.open(sys.argv[1]).convert('RGB')
+> W, H = ref.size; top = int(H * 0.135)
+> def prep(im):
+>     im = im.convert('RGB').resize((W, H))
+>     return im
+> def hsv_hist(a):
+>     hsv = np.asarray(Image.fromarray(a).convert('HSV'), dtype=np.float32) / 255.0
+>     m = hsv[..., 2] > 0.15
+>     h, _, _ = np.histogram2d(hsv[..., 0][m], hsv[..., 1][m], bins=[24, 8], range=[[0, 1], [0, 1]])
+>     return h / max(h.sum(), 1)
+> R = np.asarray(ref)[top:]; Rb = np.asarray(ref.filt …[+436 chars]
+
