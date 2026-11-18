@@ -2383,3 +2383,21 @@ Recording these constraints with the coordination record, and renewing the watch
 
 > 🔧 **Bash** `{"command": "date -u +%H:%M && cat >> docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md <<'EOF'\n\n## User follow-up ~03:20 UTC (binding)\n\"YES, FIX THE ACTUAL SCENERY, BUT PRESERVE MY GAME.\" Correct the structural problem across ALL FIVE playable screens; the\napproved artwork stays the visual blueprint. Screen 04: \"do not replace the invented orange corridor with another invented\ndesign … I want its exact distinctive appearance: the rounded gold entrance, glowing rings, colorful water, five arrows,\nfoam, bubbles, and laundry-room surroundings. Reconstruct that visual design accurately  …[+829 chars]`
 
+### 🧑 User — 2026-11-18T03:09:52.991Z
+
+> ↩︎ result: 03:09
+>   "commit": "e95872e443a439c226252bd9da8eea249efa9424",
+> remote e95872e443a439c226252bd9da8eea249efa9424 local e95872e443a439c226252bd9da8eea249efa9424
+
+### 🤖 Claude — 2026-11-18T03:09:59.900Z
+
+Agreed on every point. Here is what the builders are now doing under your rules.
+
+**Your painting is the only source.** On Screen 04 nothing new is invented. The specialist is building the painted washer front — the rounded gold entrance, glowing rings, colourful water, five arrows, low foam, bubbles and laundry room — from your painting and the matching clean picture already in the project. The aim is that your painted scene stays ahead of Benny for the whole existing stage, instead of turning into a corridor after the first fifth. The same rule applies to 05, 06, 07 and 08, each from its own painting.
+
+**Your game stays the same.** Screen length, coin totals, movement rules and the moments where one screen hands over to the next are all left as they are; only the scenery changes. On Screen 04, the very end may show Benny passing through the gold opening into Screen 05, which doesn't happen now. If that changes how the hand-over looks, I'll show you a picture and ask before keeping it.
+
+**Two agents at a time.** The reviewer is finishing its blueprints for Screens 06, 07 and 08 within about 10 minutes and then stops. After that it only checks a builder's work while that builder is paused waiting for the check. I've saved your rules with the project so later specialists and accounts follow them too.
+
+**Next you'll see** the first rebuilt scenery for 04 and 05, checked by the reviewer, as separate large APPROVED / BEFORE / NEW pictures taken while Benny swims. Each comes with a plain note on what looks more like your painting. If a step doesn't look closer, I'll tell you that instead of showing it as progress.
+
