@@ -42,7 +42,7 @@ try {
       return { ...r.state(), frames: n, s0, s1, target };
     }, [SCREEN, dist, steer, DET]);
     await page.waitForTimeout(150);
-    await page.screenshot({ path: `${OUT}/${name}.png` });
+    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });
     log.push({ name, dist, steer, ...st });
     console.log(SCREEN, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'frames', st.frames);
   }
