@@ -40,6 +40,7 @@ try {
       const extra = EXTRA ? await eval(EXTRA) : null;
       return { s: r.state().s, stage: r.state().stage, cam, open, hits, extra };
     }, [frac, steer, PRE, GRID, EXTRA]);
+    if (process.env.SHOT_DIR) await page.screenshot({ path: `${process.env.SHOT_DIR}/${name}.png` });
     console.log(`== ${name} s ${res.s} stage ${res.stage} cam ${res.cam} far-open ${res.open} extra ${JSON.stringify(res.extra)}`);
     for (const h of res.hits) console.log('  ', h.at.join(','), h.h.map((x) => `${x.obj} d${x.d}`).join(' | '));
   }

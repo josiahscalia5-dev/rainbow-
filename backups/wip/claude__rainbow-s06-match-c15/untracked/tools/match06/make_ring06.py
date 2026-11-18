@@ -25,7 +25,7 @@ def orange(p):  # BGR
 
 # 1. circle through the band median (iterated)
 cx, cy = 650.0, 570.0
-for _ in range(4):
+for _ in range(8):
     pts = []
     for a in np.radians(np.arange(62, 176, 1.0)):
         rs = np.arange(225, 365)
@@ -47,23 +47,36 @@ X = (cx + rr[:, None] * np.cos(ang)[None, :]).astype(np.float32)
 Y = (cy - rr[:, None] * np.sin(ang)[None, :]).astype(np.float32)
 U = cv2.remap(A, X, Y, cv2.INTER_LINEAR)                               # rows = radius (inner -> outer)
 
-# 3. band edges per column, smoothed across columns
+# 3. residual waviness: the band's dark middle line (darkest row inside the band, per column) fitted with a cubic in
+#    the angle, and the band edges (orange extent) taken as medians relative to that line -> straight rows
+L = U @ np.array([0.11, 0.59, 0.3], np.float32)
 m = orange(U)
+mid = np.full(NA, np.nan)
+for j in range(NA):
+    k = np.where(m[:, j])[0]
+    if len(k) > 40:
+        lo, hi = int(np.percentile(k, 15)), int(np.percentile(k, 85))
+        if hi - lo > 10: mid[j] = lo + int(np.argmin(gaussian_filter1d(L[lo:hi, j], 2)))
+ok = ~np.isnan(mid); xs = np.arange(NA)
+cf = np.polyfit(xs[ok], mid[ok], 3)
+for _ in range(3):  # robust refit
+    res = mid - np.polyval(cf, xs); ok = ok & (np.abs(np.nan_to_num(res, nan=1e9)) < 2.5 * np.nanstd(res[ok]))
+    cf = np.polyfit(xs[ok], mid[ok], 3)
+midf = np.polyval(cf, xs)
 inner = np.full(NA, np.nan); outer = np.full(NA, np.nan)
 for j in range(NA):
     k = np.where(m[:, j])[0]
-    if len(k) > 20: inner[j], outer[j] = np.percentile(k, 3), np.percentile(k, 97)
-for v in (inner, outer):
-    bad = np.isnan(v); v[bad] = np.interp(np.where(bad)[0], np.where(~bad)[0], v[~bad])
-inner = gaussian_filter1d(median_filter(inner, 41), 12); outer = gaussian_filter1d(median_filter(outer, 41), 12)
-print('band px: inner', round(float(R0 + inner.mean() * DR), 1), 'outer', round(float(R0 + outer.mean() * DR), 1))
+    if len(k) > 20: inner[j], outer[j] = np.percentile(k, 3) - midf[j], np.percentile(k, 97) - midf[j]
+di, do = np.nanmedian(inner), np.nanmedian(outer)
+print('band px: inner', round(float(R0 + (midf.mean() + di) * DR), 1), 'mid', round(float(R0 + midf.mean() * DR), 1),
+      'outer', round(float(R0 + (midf.mean() + do) * DR), 1), 'wave px', round(float(np.ptp(midf) * DR), 1))
 
 # 4. straighten: NR rows from OUTER edge (row 0) to INNER edge, with a small margin of the neighbouring dark lines
 NR, MARG = 256, 0.04
 out = np.zeros((NR, NA, 3), np.float32)
 t = np.linspace(-MARG, 1 + MARG, NR)
 for j in range(NA):
-    rows = outer[j] + (inner[j] - outer[j]) * t
+    rows = midf[j] + do + (di - do) * t
     for ch in range(3): out[:, j, ch] = np.interp(rows, np.arange(U.shape[0]), U[:, j, ch])
 cv2.imwrite(f"{d}/tile_ring6.png", np.clip(out, 0, 255).astype(np.uint8))
 print('wrote', f"{d}/tile_ring6.png", out.shape)

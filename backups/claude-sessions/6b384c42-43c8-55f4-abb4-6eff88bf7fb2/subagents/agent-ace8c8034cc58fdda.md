@@ -660,3 +660,60 @@ Good, the band unwraps cleanly. I'll check the 04 ring-paint idea briefly, then 
 > band px: inner 249.1 outer 297.1
 > wrote assets/textures/match06/tile_ring6.png (256, 1024, 3)
 
+### 🤖 Claude — 2026-11-18T18:47:18.319Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s06/ring6_view.png"}`
+
+### 🧑 User — 2026-11-18T18:47:18.373Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:47:25.482Z
+
+The per-column straightening is too noisy. I'll use the fitted circle unwrap plus a smooth low-order correction instead.
+
+### 🤖 Claude — 2026-11-18T18:47:35.726Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\nimport re\np='tools/match06/make_ring06.py'\ns=open(p).read()\nstart=s.index('# 3. band edges per column')\ns=s[:start]+'''# 3. residual waviness: the band's dark middle line (darkest row inside the band, per column) fitted with a cubic in\n#    the angle, and the band edges (orange extent) taken as medians relative to that line -> straight rows\nL = U @ np.array([0.11, 0.59, 0.3], np.float32)\nm = orange(U)\nmid = np.full(NA, np.nan)\nfor j in range(NA):\n    k = np.where(m[:, j])[0]\n    if len(k) > 40:\n        lo, hi = int(np.percenti …[+1901 chars]`
+
+### 🧑 User — 2026-11-18T18:47:37.934Z
+
+> ↩︎ result: circle 614.9 548.8 273.9
+> band px: inner 251.9 mid 283.7 outer 299.1 wave px 3.7
+> wrote assets/textures/match06/tile_ring6.png (256, 1024, 3)
+
+### 🤖 Claude — 2026-11-18T18:47:42.193Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s06/ring6_view.png"}`
+
+### 🧑 User — 2026-11-18T18:47:42.228Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:48:10.760Z
+
+The texture is now straight. Now the shader switch `&m06gold=1`.
+
+### 🤖 Claude — 2026-11-18T18:48:25.266Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"uniform float uPanel;\nvarying vec4 vProj;\"\"\",\"\"\"uniform float uPanel;\n// r15 m06gold: the user's painted ring band (tools/match06/make_ring06.py) along each modeled ring's profile\nuniform float uGold;\nuniform sampler2D uRingTex;\nvarying vec4 vProj;\"\"\")\nrep(\"\"\"  if (uRing > 0.5) {\n    // polished gold band\"\"\",\"\"\"  if (uRing > 0.5 && uGold > 0.5) {\n    // r15 m0 …[+3496 chars]`
+
+### 🧑 User — 2026-11-18T18:48:37.994Z
+
+> ↩︎ result: tsc=0
+
+### 🤖 Claude — 2026-11-18T18:48:45.481Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s06 && sed -e \"s#^const SHOTS = \\[#const ALL = [#\" -e \"s#^\\];#];\\nconst SHOTS = process.env.SHOTS ? ALL.filter((s) => process.env.SHOTS.split(',').includes(s[0])) : ALL;#\" /home/user/wt/s06/tools/lead_r6/motion_audit.mjs > audit_sel.mjs && grep -n \"SHOTS\\|ALL\" audit_sel.mjs | head; grep -n \"^\\];\" audit_sel.mjs", "description": "Make a shot-selectable copy of the audit tool"}`
+
+### 🧑 User — 2026-11-18T18:48:45.650Z
+
+> ↩︎ result: 16:const ALL = [
+> 22:const SHOTS = process.env.SHOTS ? ALL.filter((s) => process.env.SHOTS.split(',').includes(s[0])) : ALL;
+> 28:  for (const [name, dist, steer] of SHOTS) {
+> 21:];
+
+### 🤖 Claude — 2026-11-18T18:48:51.032Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && SHOTS=f03_forward3u,f10_forward10u,t33_through_screen node /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s06/audit_sel.mjs 06 /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s06/gold1 \"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1\" 2>&1 | grep -v \"^\\s*$\" | tail -8", "description": "Render 3 test shots with m06gold", "timeout": 600000}`
+

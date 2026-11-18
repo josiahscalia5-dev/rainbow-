@@ -227,6 +227,13 @@ s_lip = float(s[int(np.argmax(tp[int(NS * 0.45):])) + int(NS * 0.45)])
 s_dark = float(s[int(np.argmin(tp))])
 print(f"painted period profile: lip line at s={s_lip:.3f}, darkest at s={s_dark:.3f}")
 cv2.imwrite(f"{d}/tile_ring_paint.png", np.clip(tile, 0, 255).astype(np.uint8))
+# softened variant (`&m04rpsoft=1`): the long radial highlight streaks of the straightened band would line up as stripes
+# down the 3D tunnel; keep the fine detail (light dots, glows) full strength only near the bright lip line and at 35 %
+# elsewhere on the band (the broad pink-violet / copper colour = the angular low-pass is kept everywhere)
+low = cv2.GaussianBlur(tile, (0, 0), sigmaX=36, sigmaY=0.01)
+wS = 0.35 + 0.65 * np.exp(-(((s - (s_lip - 0.05)) / 0.10) ** 2))
+soft = low + (tile - low) * wS[:, None, None]
+cv2.imwrite(f"{d}/tile_ring_paint_soft.png", np.clip(soft, 0, 255).astype(np.uint8))
 json.dump({"note": "tools/match04/ring_paint04.py: painted inner gold ring, straightened; cols psi -pi..pi (0 = top, + = screen right), "
                    "rows s 0 (groove) .. 1 (next groove), going deeper",
            "periods": KS, "size": [NC, NS], "good": GOOD, "s_lip": s_lip, "s_dark": s_dark,

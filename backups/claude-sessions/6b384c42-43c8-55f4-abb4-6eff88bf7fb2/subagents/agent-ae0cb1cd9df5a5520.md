@@ -1596,3 +1596,53 @@ Meanwhile I'll write a small probe that records the `[match04]` console lines (b
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:47:26.082Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nrep=[\n(\"uniform vec2 uSB1;           // x blend width at the inner side, y re-apply the lilac-white edge fringe (0/1)\",\n \"uniform vec4 uSB1;           // x blend width at the inner side, y re-apply the lilac-white edge fringe (0/1), z tile part used\\n                             // (1 = cyan..lilac, less = start nearer the pink ribbon), w slow lateral wander of the bands (u)\"),\n(\"\"\"    float tb = clamp((as - uSB0.y) / max(0.1, uSB0.z - uSB0.y), 0.0, 1.0);\n    float vb = fl / uSB0.w …[+955 chars]`
+
+### 🧑 User — 2026-11-18T18:47:37.885Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T18:47:44.221Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && K=$(cat $S/K1.txt) && ONLY='[[\"f06_forward6u\",6,null],[\"f10_forward10u\",10,null],[\"s_left_hard\",12,-1]]' node $S/quick_audit.mjs 04 $S/b2 \"$K&m04sband=1&m04sbu=0.62&m04sbl=6&m04sbn=0.15&m04sbi=2.3\" 2>&1 | grep -v \"allow list\" | tail -3", "description": "Quick render with pinker longer bands", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T18:49:00.898Z
+
+> ↩︎ result: 04 f06_forward6u s 84.33 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.151 lat 0 stage 04 frames 43
+> 04 s_left_hard s 90.249 lat -1.65 stage 04 frames 52
+
+### 🤖 Claude — 2026-11-18T18:49:05.312Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/b2/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T18:49:05.447Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:49:06.037Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/b2/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-18T18:49:06.294Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:49:17.057Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; python3 -c \"\nfrom PIL import Image\nb=Image.open('/home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW/f10_forward10u.png').crop((0,850,430,1300))\nn=Image.open('$S/b2/f10_forward10u.png').crop((0,850,430,1300))\na=Image.open('/home/user/wt/s04/references/04_through_the_five_arrows.png').crop((0,850,430,1300))\nc=Image.new('RGB',(1310,450)); c.paste(a,(0,0)); c.paste(b,(440,0)); c.paste(n,(880,0)); c.save('$S/cmp_band_b2.png')\n\"", "description": "Compare painted, BEFORE and NEW left side water"}`
+
+### 🧑 User — 2026-11-18T18:49:17.404Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:49:21.110Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/cmp_band_b2.png"}`
+
+### 🧑 User — 2026-11-18T18:49:21.151Z
+
+> ↩︎ result: [image]
+
