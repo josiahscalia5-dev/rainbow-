@@ -2801,3 +2801,243 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 > 174.28 uL -1.0 uR 0.58
 > 177.11 uL -1.0 uR 0.242
 
+### 🤖 Claude — 2026-11-18T03:16:18.723Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "uniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\nvarying vec2 vUV;", "new_string": "uniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\n#ifdef M05GEO\nuniform vec4 uPjNear;      // m05geo: the ride focus (as the fragment shader's ?projnear05 uniform)\nuniform sampler2D uGeoCh;  // m05geo: painted channel [uL, uR] per s (encoded (u + 1) / 2), tools/match05/channel05_bp.py\nuniform vec2 uGeoS;        // its s range\n#ifdef M05 …[+64 chars]`
+
+### 🧑 User — 2026-11-18T03:16:18.738Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T03:16:25.779Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));\n  vec3 p = position + normal * h * (1.0 - aSkirt);\n  vec4 wp = modelMatrix * vec4(p, 1.0);", "new_string": "  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));\n  vec3 p = position + normal * h * (1.0 - aSkirt);\n  #ifdef M05GEO\n  {\n    // m05geo (Screen 05 round 9, see M05GEO): beyond the PAINTED river edge the surface becomes a …[+1098 chars]`
+
+### 🧑 User — 2026-11-18T03:16:25.798Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T03:16:31.328Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "/** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */", "new_string": "/**\n * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is\n * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by\n * back-projecting the approved picture's river through the locked eye: right bank only 0.37–0.67 of the half width r …[+905 chars]`
+
+### 🧑 User — 2026-11-18T03:16:31.338Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T03:16:32.829Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}) },", "new_string": "...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}) },"}`
+
+### 🧑 User — 2026-11-18T03:16:32.838Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T03:16:37.884Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  if (M05NEAR) {\n    // m05near (Screen 05 round 9): keep-mask of E's near rows (tools/match05/near_mask.py)", "new_string": "  if (M05GEO) {\n    // m05geo (Screen 05 round 9): painted channel per s (tools/match05/channel05_bp.py) as a 1-row RG texture for the VERTEX shader\n    const ch = { value: empty as THREE.Texture };\n    u.uGeoCh = ch;\n    u.uGeoS = { value: new THREE.Vector2(0, 1) };\n    proj05Pending.push(fetch(new URL('../../assets/textures/match05/m05geo/channel05.json', import.meta.u …[+797 chars]`
+
+### 🧑 User — 2026-11-18T03:16:37.893Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T03:16:39.324Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 398, "limit": 6}`
+
+### 🧑 User — 2026-11-18T03:16:39.345Z
+
+> ↩︎ result: 398	attribute vec2 aChan;    // W11: visible channel centre / half width (units, see channel05)
+> 399	varying vec2 vChan;
+> 400	#endif
+> 401	uniform float uTime;
+> 402	uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+> 403	varying vec2 vUV;
+
+### 🤖 Claude — 2026-11-18T03:16:42.524Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "uniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\nvarying vec2 vUV;", "new_string": "uniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\n#ifdef M05GEO\nuniform vec4 uPjNear;      // m05geo: the ride focus (as the fragment shader's ?projnear05 uniform)\nuniform sampler2D uGeoCh;  // m05geo: painted channel [uL, uR] per s (encoded (u + 1) / 2), tools/match05/channel05_bp.py\nuniform vec2 uGeoS;        // its s range\n#ifdef M05 …[+64 chars]`
+
+### 🧑 User — 2026-11-18T03:16:42.571Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:16:48.929Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));\n  vec3 p = position + normal * h * (1.0 - aSkirt);\n  vec4 wp = modelMatrix * vec4(p, 1.0);", "new_string": "  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));\n  vec3 p = position + normal * h * (1.0 - aSkirt);\n  #ifdef M05GEO\n  {\n    // m05geo (Screen 05 round 9, see M05GEO): beyond the PAINTED river edge the surface becomes a …[+1098 chars]`
+
+### 🧑 User — 2026-11-18T03:16:48.982Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:16:52.975Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "/** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */", "new_string": "/**\n * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is\n * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by\n * back-projecting the approved picture's river through the locked eye: right bank only 0.37–0.67 of the half width r …[+905 chars]`
+
+### 🧑 User — 2026-11-18T03:16:53.012Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:16:54.475Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}) },", "new_string": "...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}) },"}`
+
+### 🧑 User — 2026-11-18T03:16:54.507Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:16:59.176Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "  if (M05NEAR) {\n    // m05near (Screen 05 round 9): keep-mask of E's near rows (tools/match05/near_mask.py)", "new_string": "  if (M05GEO) {\n    // m05geo (Screen 05 round 9): painted channel per s (tools/match05/channel05_bp.py) as a 1-row texture for the VERTEX shader\n    const ch = { value: empty as THREE.Texture };\n    u.uGeoCh = ch;\n    u.uGeoS = { value: new THREE.Vector2(0, 1) };\n    proj05Pending.push(fetch(new URL('../../assets/textures/match05/m05geo/channel05.json', import.meta.url) …[+794 chars]`
+
+### 🧑 User — 2026-11-18T03:16:59.226Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T03:17:04.413Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && timeout 300 npx tsc --noEmit -p . && echo TSC_OK && K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\" && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/geo1 \"$K&m05geo=1\" f10_forward10u,f20_forward20u,t33_through_screen,t66_through_screen,s_left_hard,s_right_hard 5291 2>&1 | grep -v \"^\\s*$\" | tail -7", "description": "Render m05geo test shots", "timeout": 920000}`
+
+### 🧑 User — 2026-11-18T03:18:03.451Z
+
+> ↩︎ result: TSC_OK
+> f10_forward10u s 143.167 lat 0 coins 1440 benny 0.27 -0.28 big coins: #22@458,704 d91
+> f20_forward20u s 153.157 lat 0 coins 1450 benny -0.04 -0.27 big coins: #23@339,712 d102
+> s_left_hard s 145.091 lat -5.063 coins 1420 benny -0.17 -0.28 big coins: #22@875,766 d105 #23@627,643 d65
+> s_right_hard s 145.089 lat 5.063 coins 1420 benny 0.46 -0.2 big coins: #22@-23,712 d106 #23@124,613 d65
+> t33_through_screen s 151.691 lat 0.006 coins 1450 benny -0.01 -0.27 big coins: #23@349,690 d93
+> t66_through_screen s 170.389 lat 0 coins 1460 benny -0 -0.29 big coins: #24@417,722 d110 #25@518,656 d73
+
+### 🤖 Claude — 2026-11-18T03:18:07.135Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && B=/home/user/wt/s05/qa/match/05/r9/blueprint/kept && python3 -I -c \"\nfrom PIL import Image\nfor n in ['t66_through_screen','f20_forward20u','s_right_hard','f10_forward10u']:\n  a=Image.open('$B/'+n+'.png'); b=Image.open('geo1/'+n+'.png')\n  o=Image.new('RGB',(864*2+10,1536),'white'); o.paste(a,(0,0)); o.paste(b,(874,0)); o.resize((869,768)).save('geo_'+n+'.png')\n\"", "description": "Make BEFORE|NEW pairs for m05geo"}`
+
+### 🧑 User — 2026-11-18T03:18:08.014Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T03:18:09.931Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/geo_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T03:18:09.960Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:18:10.702Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/geo_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T03:18:10.732Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:18:11.315Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/geo_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T03:18:11.345Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T03:18:19.634Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git worktree list | head; ls -la /home/user/wt/ | head", "description": "List worktrees"}`
+
+### 🧑 User — 2026-11-18T03:18:19.679Z
+
+> ↩︎ result: /home/user/rainbow-      10409da9 [claude/rainbow-restore-c9-40w64b]
+> /home/user/wt/s04        05e383c9 [claude/rainbow-s04-match-c9]
+> /home/user/wt/s04_start  d217f546 (detached HEAD)
+> /home/user/wt/s05        1eb23e66 [claude/rainbow-s05-match-c9]
+> /home/user/wt/s06        efaf78b7 [claude/rainbow-s06-match-c9]
+> /home/user/wt/s07        dbc7678c [claude/rainbow-s07-match-c9]
+> /home/user/wt/s08        c0d8c97b [claude/rainbow-s08-scenery-c9]
+> total 32
+> drwxr-xr-x  8 root root 4096 Nov 18 03:15 .
+> drwxr-xr-x  5 root root 4096 Nov 18 02:44 ..
+> drwxr-xr-x 16 root root 4096 Nov 18 03:18 s04
+> drwxr-xr-x 16 root root 4096 Nov 18 03:15 s04_start
+> drwxr-xr-x 16 root root 4096 Nov 18 03:17 s05
+> drwxr-xr-x 16 root root 4096 Nov 18 03:06 s06
+> drwxr-xr-x 16 root root 4096 Nov 18 03:07 s07
+> drwxr-xr-x 16 root root 4096 Nov 18 03:07 s08
+
+### 🤖 Claude — 2026-11-18T03:18:26.551Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git worktree add --detach /home/user/wt/s05_start c676a7c5 -q 2>&1 | tail -1; ln -s /home/user/rainbow-/node_modules /home/user/wt/s05_start/node_modules 2>/dev/null; ls -la /home/user/wt/s05_start | head -3; K=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1\"; (timeout 900 node tools/match05/r8_shots.mjs qa/match/05/r9/NEW \"$K\" all 5291 > /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log 2>&1; echo done >> /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593 …[+140 chars]`
+
+### 🧑 User — 2026-11-18T03:18:29.756Z
+
+> ↩︎ result: fatal: cannot create directory at 'qa/match/05/r7/NEW': No space left on device
+> ls: cannot access '/home/user/wt/s05_start': No such file or directory
+> started
+
+### 🤖 Claude — 2026-11-18T03:18:32.280Z
+
+> 🔧 **Bash** `{"command": "df -h /home/user /tmp 2>&1 | head; du -sh /home/user/wt/* 2>/dev/null; cat /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log | tail -3; cd /home/user/wt/s05 && git worktree list", "description": "Check disk space and worktree state"}`
+
+### 🧑 User — 2026-11-18T03:18:32.408Z
+
+> ↩︎ result: Filesystem      Size  Used Avail Use% Mounted on
+> /dev/vda        252G   39G  460M  99% /
+> /dev/vda        252G   39G  460M  99% /
+> 2.5G	/home/user/wt/s04
+> 2.5G	/home/user/wt/s04_start
+> 3.0G	/home/user/wt/s05
+> 2.6G	/home/user/wt/s06
+> 2.5G	/home/user/wt/s07
+> 2.8G	/home/user/wt/s08
+> /home/user/rainbow-      10409da9 [claude/rainbow-restore-c9-40w64b]
+> /home/user/wt/s04        05e383c9 [claude/rainbow-s04-match-c9]
+> /home/user/wt/s04_start  d217f546 (detached HEAD)
+> /home/user/wt/s05        1eb23e66 [claude/rainbow-s05-match-c9]
+> /home/user/wt/s06        efaf78b7 [claude/rainbow-s06-match-c9]
+> /home/user/wt/s07        dbc7678c [claude/rainbow-s07-match-c9]
+> /home/user/wt/s08        c0d8c97b [claude/rainbow-s08-scenery-c9]
+
+### 🤖 Claude — 2026-11-18T03:18:41.309Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git worktree prune && du -sh src scripts index.html 2>/dev/null; ls; git diff --stat c676a7c5 HEAD -- . ':(exclude)qa' | tail -12", "description": "Prune worktree, check repo layout and changed files"}`
+
+### 🧑 User — 2026-11-18T03:18:41.397Z
+
+> ↩︎ result: 996K	src
+> 348K	scripts
+> 4.0K	index.html
+> CLAUDE.md
+> README_FIRST.md
+> REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md
+> android
+> assets
+> backups
+> builds
+> capacitor.config.ts
+> character_references
+> docs
+> index.html
+> node_modules
+> package-lock.json
+> package.json
+> public
+> qa
+> references
+> screenshots
+> scripts
+> src
+> tools
+> tsconfig.json
+> vite.config.ts
+>  assets/textures/match05/m05near/near_mask.png | Bin 0 -> 3405 bytes
+>  src/vfx/proj05Tunnel.ts                       |  54 ++++++++++++--
+>  src/vfx/waterRibbon.ts                        |  99 +++++++++++++++++++++++++-
+>  src/world/environment.ts                      |   1 +
+>  src/world/match05far.ts                       |  37 +++++++++-
+>  tools/match05/near_mask.py                    |  37 ++++++++++
+>  tools/match05/r9_seam_probe.mjs               |  69 ++++++++++++++++++
+>  7 files changed, 291 insertions(+), 6 deletions(-)
+
