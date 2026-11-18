@@ -731,3 +731,23 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && time M08_ONLY=f03,f06,t33 timeout 500 node tools/match08/shots08.mjs 08 $S/dbg_uv \"$(cat $S/K14.txt)&m08dbguv=1\" 2>&1 | tail -5", "description": "Render debug UV frames", "timeout": 520000}`
 
+### 🧑 User — 2026-11-18T18:33:52.906Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 08 f03_forward3u s 395.227 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.018 lat 0 stage 08 frames 38
+> 08 t33_through_screen s 396.276 lat 0 stage 08 frames 27
+> 
+> real	1m17.933s
+> user	0m1.777s
+> sys	0m0.388s
+
+### 🤖 Claude — 2026-11-18T18:34:00.076Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg_uv/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T18:34:00.142Z
+
+> ↩︎ result: [image]
+
