@@ -15,6 +15,7 @@ import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?
 import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { M05FAR, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+import { withClip05Std } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -399,6 +400,9 @@ export function buildEnvironment(course: Course): Environment {
   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
   ringMat.envMap = goldEnv;
   ringMat.envMapIntensity = 1.3;
+  // `&m05edge=1` (Screen 05 round 8): the first 06 ring (s ≈ 187) behind the 05 far tunnel's seam showed as an orange
+  // tray on the left bank while swimming; clipped only behind the seam, only while that block is live (no-op otherwise)
+  withClip05Std(ringMat, 1.5);
   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
   // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
   // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
@@ -460,6 +464,8 @@ export function buildEnvironment(course: Course): Environment {
   const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
   lidMat.envMap = goldEnv;
   lidMat.envMapIntensity = 1.25;
+  // `&m05edge=1` (Screen 05 round 8): the first 06 hood behind the 05 far tunnel's seam is clipped while that block is live
+  withClip05Std(lidMat, 1.5);
   const lidClear = (s: number, centre: THREE.Vector3, size: number) => {
     for (let ds = -6; ds <= 6; ds += 1.5) {
       const ss = THREE.MathUtils.clamp(s + ds, 0, course.length);

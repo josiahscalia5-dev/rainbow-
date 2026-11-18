@@ -15,6 +15,7 @@
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
 import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
+import { M05EDGE, withClip05 } from './clip05'; // Screen 05 round 8 (?…&m05edge=1 only)
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
 import { createFinalWave } from './finalWave';
@@ -71,6 +72,9 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const st03 = course.stage('03'), st04 = course.stage('04'), st08 = course.stage('08'), st09 = course.stage('09');
   const ribbonS0 = drainMark - 1;
   const ribbon = createRibbon(course, { s0: ribbonS0, s1: course.length, quality });
+  // `?match05=1&m05far=1&m05edge=1` (Screen 05 round 8): the real river behind the 05 far tunnel's seam (the start of the
+  // 06 climb) stood in front of the 05 far river as a raised slab with a hard edge; clipped there while the block is live
+  if (M05EDGE) withClip05(ribbon.mesh.material as THREE.ShaderMaterial, 'vPosW');
   // open the funnel where the 04 slide tube leaves the basin (the course exits the spiral at
   // r≈2.8, just outside the drain hole, and the slide then runs beneath the funnel surface)
   const cutPts: THREE.Vector3[] = [];
