@@ -774,3 +774,195 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 >   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
 >    …[+2573 chars]
 
+### 🤖 Claude — 2026-11-18T18:34:34.962Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && M08_ONLY=f03 timeout 500 node tools/match08/shots08.mjs 08 $S/dbg_px \"$(cat $S/K14.txt)&m08dbg=1\" 2>&1 | grep -v \"allow list\" | tail -3", "description": "Render per-proxy flat-colour debug at forward 3u", "timeout": 520000}`
+
+### 🧑 User — 2026-11-18T18:34:50.468Z
+
+> ↩︎ result: 08 f03_forward3u s 395.147 lat 0 stage 08 frames 19
+
+### 🤖 Claude — 2026-11-18T18:34:53.717Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg_px/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T18:34:53.738Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:35:07.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/dbg_uv/f03_forward3u.png').convert('RGB')).astype(float)/255\nfor x in [60,150,250,350,450,550,650,750,830]:\n  s=[]\n  for y in range(1180,1536,25):\n    u,v,w=a[y,x]; s.append('%d:(%4d,%4d,%.2f)'%(y,u*864,(1-v)*1536,w))\n  print(x,' '.join(s))\n\"\n", "description": "Decode plate coordinates from the debug UV frame"}`
+
+### 🧑 User — 2026-11-18T18:35:08.143Z
+
+> ↩︎ result: 60 1180:( 284,1036,0.00) 1205:( 288,1048,0.00) 1230:( 288,1060,0.00) 1255:( 291,1078,0.00) 1280:( 291,1090,0.00) 1305:( 291,1102,0.01) 1330:( 291,1114,0.02) 1355:( 294,1126,0.04) 1380:( 294,1138,0.05) 1405:( 294,1150,0.07) 1430:( 294,1162,0.09) 1455:( 294,1174,0.11) 1480:( 291,1186,0.14) 1505:( 291,1198,0.16) 1530:( 288,1204,0.20)
+> 150 1180:( 308,1036,0.00) 1205:( 311,1048,0.00) 1230:( 311,1060,0.00) 1255:( 311,1072,0.00) 1280:( 311,1090,0.00) 1305:( 311,1102,0.01) 1330:( 311,1114,0.02) 1355:( 311,1126,0.04) 1380:( 311,1138,0.05) 1405:( 311,1150,0.07) 1430:( 311,1162,0.09) 1455:( 308,1174,0.11) 1480:( 308,1180,0.14) 1505:( 304,1192,0.16) 1530:( 304,1204,0.20)
+> 250 1180:( 338,1030,0.00) 1205:( 338,1048,0.00) 1230:( 338,1060,0.00) 1255:( 335,1072,0.00) 1280:( 335,1084,0.00) 1305:( 335,1102,0.01) 1330:( 332,1114,0.02) 1355:( 332,1126,0.04) 1380:( 332,1138,0.05) 1405:( 328,1150,0.07) 1430:( 328,1162,0.09) 1455:( 325,1168,0.11) 1480:( 325,1180,0.14) 1505:( 321,1192,0.16) 1530:( 321,1204,0.20)
+> 350 1180:( 376,1030,0.00) 1205:( 376,1048,0.00) 1230:( 376,1060,0.00) 1255:( 376,1072,0.00) 1280:( 376,1084,0.00) 1305:( 379,1096,0.01) 1330:( 379,1114,0.02) 1355:( 379,1126,0.04) 1380:( 379,1138,0.0 …[+1804 chars]
+
+### 🤖 Claude — 2026-11-18T18:35:19.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nim=Image.open('$S/plate_864.png')\nim.crop((250,1000,660,1240)).resize((820,480),Image.LANCZOS).save('$S/plate_zoom.png')\n\"", "description": "Zoom into the plate region seen at forward 3u"}`
+
+### 🧑 User — 2026-11-18T18:35:20.173Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:35:23.483Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/plate_zoom.png"}`
+
+### 🧑 User — 2026-11-18T18:35:23.504Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:35:34.733Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/f03_bottom_before.png"}`
+
+### 🧑 User — 2026-11-18T18:35:34.771Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:35:47.569Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('qa/match/08/r14/step1_m08nq/3_NEW_f03_forward3u.png').convert('RGB')).astype(float)\nd=np.abs(a[1:]-a[:-1]).mean(axis=(2))\n# per row, fraction of columns with big jump\nfor y in range(1150,1535):\n  r=d[y]; \n  m=r.mean(); \n  if m>18: print(y, round(m,1), [int(r[i*108:(i+1)*108].mean()) for i in range(8)])\n\"\n", "description": "Find horizontal discontinuities in the forward-3u frame"}`
+
+### 🧑 User — 2026-11-18T18:35:47.949Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:35:53.960Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('qa/match/08/r14/step1_m08nq/3_NEW_f03_forward3u.png').convert('RGB')).astype(float)\nd=np.abs(a[2:]-a[:-2]).mean(axis=(2))\nrows=[(round(d[y].mean(),1),y) for y in range(1150,1530)]\nrows.sort(reverse=True); print(rows[:15])\nprint([round(d[y].mean(),1) for y in range(1150,1530,10)])\n\"; python3 -c \"\nfrom PIL import Image\nim=Image.open('/home/user/wt/s08/qa/match/08/r14/step1_m08nq/3_NE …[+168 chars]`
+
+### 🧑 User — 2026-11-18T18:35:54.778Z
+
+> ↩︎ result: [(np.float64(7.3), 1342), (np.float64(7.3), 1157), (np.float64(7.2), 1341), (np.float64(7.2), 1156), (np.float64(7.1), 1343), (np.float64(7.1), 1340), (np.float64(7.1), 1338), (np.float64(7.0), 1406), (np.float64(7.0), 1405), (np.float64(7.0), 1339), (np.float64(7.0), 1158), (np.float64(6.9), 1344), (np.float64(6.9), 1337), (np.float64(6.9), 1160), (np.float64(6.8), 1408)]
+> [np.float64(6.5), np.float64(6.9), np.float64(4.6), np.float64(5.0), np.float64(4.3), np.float64(3.8), np.float64(3.7), np.float64(3.4), np.float64(4.1), np.float64(4.3), np.float64(3.7), np.float64(4.2), np.float64(4.1), np.float64(3.6), np.float64(3.7), np.float64(3.3), np.float64(3.5), np.float64(5.2), np.float64(5.6), np.float64(7.1), np.float64(6.5), np.float64(6.4), np.float64(5.6), np.float64(4.6), np.float64(4.8), np.float64(5.6), np.float64(6.4), np.float64(5.6), np.float64(5.2), np.float64(4.0), np.float64(3.8), np.float64(3.6), np.float64(3.1), np.float64(3.3), np.float64(3.2), np.float64(2.8), np.float64(3.3), np.float64(3.4)]
+
+### 🤖 Claude — 2026-11-18T18:35:58.315Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/f03_zoom.png"}`
+
+### 🧑 User — 2026-11-18T18:35:58.346Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:37:06.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 -c \"\nimport json\nRV=json.load(open('assets/textures/match08/river08.json')); RN=json.load(open('assets/textures/match08/river08_near.json'))\ndef rivAt(R,z):\n  k=0\n  while k<len(R['z'])-2 and R['z'][k+1]>z: k+=1\n  f=min(1,max(0,(z-R['z'][k])/(R['z'][k+1]-R['z'][k])))\n  return R['x'][k]+(R['x'][k+1]-R['x'][k])*f, R['width'][k]+(R['width'][k+1]-R['width'][k])*f\ndef ss(x,e0,e1):\n  t=min(1,max(0,(x-e0)/(e1-e0))); return t*t*(3-2*t)\nrz0=max(RV['z'][0],RN['z'][0]); rz1=RV['z'][-1]\nprint('rz0',rz0,'rz1',rz1,'step',(rz1-rz0)/63)\nfor i in range(0 …[+390 chars]`
+
+### 🧑 User — 2026-11-18T18:37:06.648Z
+
+> ↩︎ result: rz0 -279.197312859622 rz1 -373.559986974506 step -1.4978202240457776
+> 0 -279.2 12.612 3.333 4.0
+> 1 -280.7 12.521 2.971 4.0
+> 2 -282.19 12.536 3.117 4.0
+> 3 -283.69 12.641 3.774 3.95
+> 4 -285.19 12.597 3.625 2.95
+> 5 -286.69 12.103 4.035 2.95
+> 6 -288.18 11.644 4.416 2.95
+> 7 -289.68 11.1 4.08 2.95
+> 8 -291.18 10.85 4.292 2.95
+> 9 -292.68 10.731 4.472 2.95
+> 10 -294.18 10.872 4.533 2.95
+> 11 -295.67 11.186 4.521 2.95
+> 12 -297.17 11.577 5.016 2.95
+> 13 -298.67 11.941 5.059 2.95
+> 14 -300.17 12.279 5.117 2.95
+> 15 -301.66 12.566 5.228 2.95
+> 16 -303.16 12.766 4.694 2.95
+> 17 -304.66 12.923 4.833 2.95
+> 18 -306.16 12.945 5.07 2.95
+> 19 -307.66 12.869 5.372 2.95
+> 20 -309.15 12.67 5.628 2.95
+> 21 -310.65 12.406 5.91 2.95
+> 22 -312.15 12.103 6.232 2.95
+> 23 -313.65 11.727 6.481 2.95
+> 24 -315.14 11.349 6.697 2.95
+> 25 -316.64 10.969 6.857 2.95
+> 26 -318.14 10.595 6.855 2.95
+> 27 -319.64 10.227 6.685 2.95
+> 28 -321.14 9.878 6.799 2.95
+> 29 -322.63 9.57 7.518 2.95
+> 30 -324.13 9.262 8.238 2.95
+> 36 -333.12 8.157 9.481 2.95
+> 42 -342.11 7.917 10.507 2.95
+> 48 -351.09 7.961 11.522 2.95
+> 54 -360.08 8.003 10.946 2.95
+> 60 -369.07 8.011 9.427 2.95
+> [-279.197312859622, -279.3879731650271, -279.6793510523893, -280.00583935213774, -280.3735895894428, -280.790951478 …[+281 chars]
+
+### 🤖 Claude — 2026-11-18T18:37:38.610Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/src/world/match08.ts", "offset": 134, "limit": 25}`
+
+### 🧑 User — 2026-11-18T18:37:38.643Z
+
+> ↩︎ result: 134	  return mix(c, rc, uRingOn * smoothstep(uCeilW.z, uCeilW.z + 0.15, r));
+> 135	}
+> 136	vec3 riv(float z) {
+> 137	  float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;
+> 138	  float i0 = floor(f);
+> 139	  vec3 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rgb, b = texture2D(uRiv, vec2((min(i0 + 1.0, 63.0) + 0.5) / 64.0, 0.5)).rgb;
+> 140	  return mix(a, b, f - i0);
+> 141	}
+> 142	// m08swim: lateral remap of a floor point. The middle of the painted river stays as painted, its banks (water edge,
+> 143	// foam) are spread out to the lane half-width, the floor beyond is pushed out and eased back over 2.5 u. World-anchored
+> 144	// (depends on the floor point only) and faded in with the camera's distance from the approved viewpoint.
+> 145	vec3 swimRemap(vec3 w, float mv) {
+> 146	  vec3 r = riv(w.z);
+> 147	  // (b > 0, m08rw only: a wider lane to cover near the camera, where the painted gold arch legs hug the banks)
+> 148	  float hp = 0.5 * r.y, h = mix(hp, max(hp, r.z > 0.0 ? r.z : uRivZ.z), mv);
+> 149	  if (h <= hp + 1e-3) return w;
+> 150	  float d = w.x - r.x, ad = abs(d), a = 0.45 * hp, e = h - hp, o;
+> 151	  if (ad <= a) o = ad;
+> 152	  else if (ad <= h) o = a + (ad - a) * (hp - a) / (h - a);
+>  …[+375 chars]
+
+### 🤖 Claude — 2026-11-18T18:37:56.221Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "vec3 riv(float z) {\n  float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;\n  float i0 = floor(f);\n  vec3 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rgb, b = texture2D(uRiv, vec2((min(i0 + 1.0, 63.0) + 0.5) / 64.0, 0.5)).rgb;\n  return mix(a, b, f - i0);\n}\n// m08swim: lateral remap of a floor point. The middle of the painted river stays as painted, its banks (water edge,\n// foam) are spread out to the lane half-width, the floor beyond is pushed out and eased back over 2.5  …[+3065 chars]`
+
+### 🧑 User — 2026-11-18T18:37:56.633Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:38:04.440Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "      float xb = ad <= uNq.y ? ad : uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3);", "new_string": "      float xb = ad <= uNq.y ? ad : uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3);\n      // m08sr (r15): rounded corner at the edge of the 1:1 middle as well (no crease where the lane is wider than laid)\n      if (uSr > 0.5) xb = mix(ad, uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3), smoothstep(0.3 * uNq.y, 1.7 * uNq.y, ad));"}`
+
+### 🧑 User — 2026-11-18T18:38:04.659Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:38:05.815Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "uniform float uDbgUv;       // QA only m08dbguv (r15)", "new_string": "uniform float uDbgUv;       // QA only m08dbguv (r15)\nuniform float uSr;          // m08sr (r15, floor): smooth river table (B-spline) + rounded swim-remap corners"}`
+
+### 🧑 User — 2026-11-18T18:38:06.064Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:38:07.098Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 },", "new_string": "uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uSr: { value: 0 },"}`
+
+### 🧑 User — 2026-11-18T18:38:07.982Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:38:13.190Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/world/match08.ts", "old_string": "  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;", "new_string": "  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;\n  // `&m08sr=1` (r15, floor, with m08swim): smooth river table + rounded remap corners (FRAG riv / swimRemap / m08nq)\n  if (swimOn && flag05('m08sr')) M.floor.uniforms.uSr.value = 1;"}`
+
+### 🧑 User — 2026-11-18T18:38:13.499Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T18:38:16.008Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && npx tsc --noEmit -p . 2>&1 | head && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && time M08_ONLY=f03,f06,t33 timeout 500 node tools/match08/shots08.mjs 08 $S/sr1 \"$(cat $S/K14.txt)&m08sr=1\" 2>&1 | grep -v \"allow list\" | tail -4", "description": "Typecheck and render the smooth-remap test frames", "timeout": 560000}`
+

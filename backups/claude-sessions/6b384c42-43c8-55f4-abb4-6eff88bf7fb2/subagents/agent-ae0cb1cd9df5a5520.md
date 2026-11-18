@@ -1164,3 +1164,212 @@ Noted the lead's change: task 2 is skipped and I will not touch GOLD_FRAG. While
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:34:40.914Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T18:34:40.967Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:34:41.365Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW/a00_approved_view.png"}`
+
+### 🧑 User — 2026-11-18T18:34:41.420Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:34:53.314Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && K=$(cat $S/K.txt) && node scripts/capture.mjs 04 \"--q=$K\" --out=$S/cap_before 2>&1 | grep -v \"allow list\" | tail -2 && node scripts/capture.mjs 04 \"--q=$K&m04fclu=1\" --out=$S/cap_new 2>&1 | grep -v \"allow list\" | tail -2 && ls $S/cap_before $S/cap_new", "description": "Capture deterministic start views BEFORE and NEW", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T18:35:31.213Z
+
+> ↩︎ result: '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/cap_before:
+> 04.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/cap_new:
+> 04.png
+
+### 🤖 Claude — 2026-11-18T18:35:36.830Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; ls /home/user/tools-pixelmatch/ && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/cap_before/04.png $S/cap_new/04.png $S/cap_diff.png 0.1 180 1536; python3 -c \"\nfrom PIL import Image, ImageChops\na=Image.open('$S/cap_before/04.png').convert('RGB'); b=Image.open('$S/cap_new/04.png').convert('RGB')\nd=ImageChops.difference(a,b).convert('L').point(lambda v:255 if v>0 else 0)\nprint('size',a.size,'bbox',d.getbbox(),'count',sum(1 for v in d.getdata() if v))\n\"", "description": "Compare start- …[+30 chars]`
+
+### 🧑 User — 2026-11-18T18:35:37.725Z
+
+> ↩︎ result: node_modules
+> package-lock.json
+> package.json
+> pixeldiff.mjs
+> {"differing":0,"total":1327104,"pct":0,"inBand":0}
+> <string>:5: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+> size (864, 1536) bbox None count 0
+
+### 🤖 Claude — 2026-11-18T18:35:48.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"startVite\\|ffmpeg\\|argv\" tools/lead_r13/swim_clip.mjs | head", "description": "Check swim clip tool port and args"}`
+
+### 🧑 User — 2026-11-18T18:35:48.756Z
+
+> ↩︎ result: 5:// Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> 9:const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> 10:const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> 14:const vite = await startVite(5280 + Number(SCREEN));
+
+### 🤖 Claude — 2026-11-18T18:35:52.824Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,60p tools/lead_r13/swim_clip.mjs", "description": "Read swim clip tool"}`
+
+### 🧑 User — 2026-11-18T18:35:52.868Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+979 chars]
+
+### 🤖 Claude — 2026-11-18T18:35:59.719Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && which ffmpeg && K=$(cat $S/K.txt) && rm -rf $S/clip_new && node tools/lead_r13/swim_clip.mjs 04 $S/clip_new 3.6 \"$K&m04fclu=1\" 2>&1 | grep -v \"allow list\" | tail -1 && ffmpeg -loglevel error -y -framerate 24 -i $S/clip_new/%04d.png -vf scale=432:768 -pix_fmt yuv420p -c:v libx264 -crf 26 qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4 && ls -la qa/match/04/r15/s1_fclu/", "description": "Record NEW swimming clip and encode", "timeout": 1200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T18:35:59.782Z
+
+> ↩︎ result: Command running in background with ID: bab02e1y4. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bab02e1y4.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T18:36:04.444Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T18:36:04.501Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:36:23.250Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/qa/match/04/r15/PROGRESS.md", "content": "# Screen 04 — round 15 (account 15, worker `foam-bubbles-particles` for the lead) — branch `claude/rainbow-s04-match-c15`\n\nStart: `claude/rainbow-s04-match-c14` @ `fc28323a` (r14 L4). Kept set at start (K15-0 = r14 L4):\n`match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts= …[+2894 chars]`
+
+### 🧑 User — 2026-11-18T18:36:23.408Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/qa/match/04/r15/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T18:36:38.436Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; python3 -c \"\nfrom PIL import Image, ImageDraw\nim=Image.open('/home/user/wt/s04/references/04_through_the_five_arrows.png')\nc=im.copy(); d=ImageDraw.Draw(c)\nfor x in range(0,864,50): d.line([(x,0),(x,1536)],fill=(255,255,0),width=1)\nfor y in range(0,1536,50): d.line([(0,y),(864,y)],fill=(255,255,0),width=1)\nc.crop((450,650,864,1100)).resize((828,900)).save('$S/gridR.png')\nc.crop((0,650,450,1100)).resize((900,900)).save('$S/gridML.png')\n\"", "description": "Grid crops of painted tunnel  …[+12 chars]`
+
+### 🧑 User — 2026-11-18T18:36:39.110Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:36:50.643Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/gridR.png"}`
+
+### 🧑 User — 2026-11-18T18:36:50.689Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:37:14.439Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; python3 -c \"\nfrom PIL import Image, ImageDraw\nim=Image.open('/home/user/wt/s04/references/04_through_the_five_arrows.png')\nc=im.crop((0,1000,320,1360)).resize((960,1080),Image.LANCZOS); d=ImageDraw.Draw(c)\nfor x in range(0,320,20): d.line([(x*3,0),(x*3,1080)],fill=(255,255,0) if x%100==0 else (120,120,0),width=1)\nfor y in range(0,360,20): d.line([(0,y*3),(960,y*3)],fill=(255,255,0) if (y+1000)%100==0 else (120,120,0),width=1)\nc.save('$S/gridLL.png')\n\"", "description": "Fine grid crop  …[+29 chars]`
+
+### 🧑 User — 2026-11-18T18:37:14.927Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:37:18.335Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/gridLL.png"}`
+
+### 🧑 User — 2026-11-18T18:37:18.380Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:37:41.333Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 700, "limit": 40}`
+
+### 🧑 User — 2026-11-18T18:37:41.361Z
+
+> ↩︎ result: 700	      // the painted bulbs: from the fitted plane (psi, rho) along the projector ray onto the modeled front face
+> 701	      const Cp = (shared.uProjPos.value as THREE.Vector3).clone();
+> 702	      const faceA = -0.165 - 0.03;
+> 703	      void fetch(new URL('../../assets/textures/match04/mouth04.json', import.meta.url).href).then((r) => r.json()).then((mj: { bulbs: { psi: number; rho: number; lum: number; lip: string }[] }) => {
+> 704	        const items: { p: THREE.Vector3; r: number; s: number }[] = [];
+> 705	        const d0 = axO.clone().sub(Cp).dot(axD), dF = d0 + faceA;  // faceA < 0: toward the camera
+> 706	        const inv = Mw.clone().invert();
+> 707	        for (const b of mj.bulbs) {
+> 708	          const rq = b.rho - (gm.uniforms.uMouthRho.value as THREE.Vector3).z;  // tile rho -> fitted-plane rho
+> 709	          const Qw = axO.clone().addScaledVector(axU, rq * Math.cos(b.psi)).addScaledVector(axR, rq * Math.sin(b.psi));
+> 710	          const Pw = Cp.clone().add(Qw.sub(Cp).multiplyScalar(dF / d0));
+> 711	          const pl = Pw.applyMatrix4(inv);
+> 712	          if (pl.y < 0.15) continue;                                       // under the water line
+> 713	          const k = THREE.MathUtil …[+1730 chars]
+
+### 🤖 Claude — 2026-11-18T18:37:48.272Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bab02e1y4.output | grep -v \"allow list\" | tail; ls /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/clip_new 2>/dev/null | wc -l", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-18T18:37:48.335Z
+
+> ↩︎ result: /usr/bin/ffmpeg
+> 53
+
+### 🤖 Claude — 2026-11-18T18:37:56.276Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('/home/user/wt/s04/references/04_through_the_five_arrows.png').convert('RGB')).astype(np.float32)\nH,W,_=im.shape\ndef bil(x,y):\n    x=np.clip(x,0,W-1.001); y=np.clip(y,0,H-1.001)\n    x0=np.floor(x).astype(int); y0=np.floor(y).astype(int); fx=(x-x0)[...,None]; fy=(y-y0)[...,None]\n    return (im[y0,x0]*(1-fx)*(1-fy)+im[y0,x0+1]*fx*(1-fy)+im[y0+1,x0]*(1-fx)*fy+im[y0+1,x0+1]*fx*fy)\ncx,cy=345,1290\nr=np.linspa …[+350 chars]`
+
+### 🧑 User — 2026-11-18T18:37:57.142Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:38:00.891Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/polar.png"}`
+
+### 🧑 User — 2026-11-18T18:38:00.941Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:38:16.025Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"frames\\|Error\\|error\" /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bab02e1y4.output && [ -f /home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4 ]; do sleep 3; done; grep -v \"allow list\" /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bab02e1y4.output | tail -8", "description": "Wait for clip encoding to finish", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T18:38:16.057Z
+
+> ↩︎ result: Command running in background with ID: bhtc2sjnz. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bhtc2sjnz.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T18:38:18.722Z
+
+Meanwhile I'll write a small probe that records the `[match04]` console lines (bubble count, river geometry) for use after the clip finishes.
+
+### 🤖 Claude — 2026-11-18T18:38:24.455Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/probe_console.mjs", "content": "// prints the game's [match04] console lines for a query (run from the worktree: vite serves cwd)\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q = ''] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5273);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const  …[+948 chars]`
+
+### 🧑 User — 2026-11-18T18:38:24.669Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/probe_console.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T18:38:32.327Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s04/qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4 ]; do sleep 3; done; sleep 2; S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && ls -la qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4 && K=$(cat $S/K.txt) && node $S/probe_console.mjs \"$K&m04fclu=1\" 2>&1 | grep -v \"allow list\" | tail -12", "description": "Probe console for bubble count and river geometry", "timeout": 600000}`
+

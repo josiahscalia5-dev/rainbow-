@@ -1,16 +1,58 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index c5960f5..c739a0f 100644
+index c5960f5..21e6b2a 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
-@@ -84,6 +84,7 @@ uniform vec4 uNear;         // z at tile v = 0, world length of one tile period
+@@ -84,6 +84,8 @@ uniform vec4 uNear;         // z at tile v = 0, world length of one tile period
  uniform vec4 uNearM;        // projection magnification ramp start / end, lateral fade start / end (|lane position|, 1 = bank)
  uniform vec2 uNearC;        // tile a of the lane centre and of the half lane (the painted water incl. foam spans c +- h)
  uniform vec4 uNq;           // m08nq (r14): x > 0.5 = painted-scale tile (nq08.py), y = middle 1:1 half width, z = lane it was laid for, w = tile half width (u)
 +uniform float uDbgUv;       // QA only m08dbguv (r15)
++uniform float uSr;          // m08sr (r15, floor): smooth river table (B-spline) + rounded swim-remap corners
  uniform vec4 uCup;         // m08cup (spout cups only): cup centre xyz, w > 0.5 = on
  uniform vec3 uCupM;         // m08cup mirror plane normal (horizontal, perpendicular to the projector's view of the cup)
  uniform sampler2D uCupMk;   // m08cupw: painted outline of the upper cups (cupw08.py, R = upper-right, eroded 2 px)
-@@ -272,6 +273,8 @@ void main() {
+@@ -132,9 +134,17 @@ vec3 ceilColorAt(vec2 pxy) {
+   vec3 rc = textureGrad(uRingT, vec2((a - uRing.x) / uRing.y, (r - uRing.z) / uRing.w), gx, gy).rgb;
+   return mix(c, rc, uRingOn * smoothstep(uCeilW.z, uCeilW.z + 0.15, r));
+ }
++vec3 rivT(float i) { return texture2D(uRiv, vec2((clamp(i, 0.0, 63.0) + 0.5) / 64.0, 0.5)).rgb; }
+ vec3 riv(float z) {
+   float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;
+   float i0 = floor(f);
++  if (uSr > 0.5) {
++    // m08sr (r15): uniform cubic B-spline through the 1.5 u spaced table (C2): the linear interpolation bent the remap at
++    // every texel (straight creases across the water while swimming); the B-spline also evens out the traced wiggle
++    float t = f - i0, t2 = t * t, t3 = t2 * t;
++    vec4 b = vec4(1.0 - 3.0 * t + 3.0 * t2 - t3, 4.0 - 6.0 * t2 + 3.0 * t3, 1.0 + 3.0 * t + 3.0 * t2 - 3.0 * t3, t3) / 6.0;
++    return rivT(i0 - 1.0) * b.x + rivT(i0) * b.y + rivT(i0 + 1.0) * b.z + rivT(i0 + 2.0) * b.w;
++  }
+   vec3 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rgb, b = texture2D(uRiv, vec2((min(i0 + 1.0, 63.0) + 0.5) / 64.0, 0.5)).rgb;
+   return mix(a, b, f - i0);
+ }
+@@ -147,7 +157,15 @@ vec3 swimRemap(vec3 w, float mv) {
+   float hp = 0.5 * r.y, h = mix(hp, max(hp, r.z > 0.0 ? r.z : uRivZ.z), mv);
+   if (h <= hp + 1e-3) return w;
+   float d = w.x - r.x, ad = abs(d), a = 0.45 * hp, e = h - hp, o;
+-  if (ad <= a) o = ad;
++  if (uSr > 0.5) {
++    // m08sr (r15): the same pieces (core 1:1, compressed bank band, pushed floor easing back) with ROUNDED corners: the
++    // hard slope changes drew straight creases along the river in the swimming view (streaks bent sharply on them)
++    float o2 = a + (ad - a) * (hp - a) / (h - a), o3 = ad - e * (1.0 - (ad - h) / 2.5);
++    float w1 = 0.6 * a, w2 = clamp(0.45 * (h - a - w1), 0.05, 0.6);
++    o = mix(ad, o2, smoothstep(a - w1, a + w1, ad));
++    o = mix(o, o3, smoothstep(h - w2, h + w2, ad));
++    o = mix(o, ad, smoothstep(h + 1.7, h + 3.3, ad));
++  } else if (ad <= a) o = ad;
+   else if (ad <= h) o = a + (ad - a) * (hp - a) / (h - a);
+   else o = ad - e * max(0.0, 1.0 - (ad - h) / 2.5);
+   return vec3(r.x + sign(d) * o, w.y, w.z);
+@@ -268,10 +286,14 @@ void main() {
+       // scaled only if the lane differs from the one the tile was laid for), so glints / streaks keep their painted size
+       float d = vW.x - r.x, ad = abs(d);
+       float xb = ad <= uNq.y ? ad : uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3);
++      // m08sr (r15): rounded corner at the edge of the 1:1 middle as well (no crease where the lane is wider than laid)
++      if (uSr > 0.5) xb = mix(ad, uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3), smoothstep(0.3 * uNq.y, 1.7 * uNq.y, ad));
+       tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), (uNear.x - vW.z) / uNear.y);
      }
      float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
      if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
@@ -19,16 +61,25 @@ index c5960f5..c739a0f 100644
    }
    gl_FragColor = vec4(pjInverse(t), 1.0);
  }`;
-@@ -428,7 +431,7 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -428,7 +450,7 @@ export async function buildMatch08(): Promise<Match08> {
        uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) }, uCeilD: { value: new THREE.Vector2(0, 1) },
        uRingT: { value: ringTex ?? plate }, uRing: { value: new THREE.Vector4(0, 1, 0, 1) }, uRingOn: { value: 0 },
        uNearT: { value: nearTex ?? plate }, uNear: { value: new THREE.Vector4(0, 1, 1, 0) }, uNearM: { value: new THREE.Vector4(1, 2, 0.9, 1) },
 -      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) },
-+      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 },
++      uNearC: { value: new THREE.Vector2(0, 1) }, uNq: { value: new THREE.Vector4(0, 1, 1, 1) }, uDbgUv: { value: 0 }, uSr: { value: 0 },
        uCup: { value: new THREE.Vector4(0, 0, 0, 0) }, uCupM: { value: new THREE.Vector3(1, 0, 0) },
        uCupMk: { value: cupMk ?? plate }, uCupW: { value: new THREE.Vector4(0, 0, 0, 0) } },
    });
-@@ -450,6 +453,7 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -436,6 +458,8 @@ export async function buildMatch08(): Promise<Match08> {
+   const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+ 
+   if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;
++  // `&m08sr=1` (r15, floor, with m08swim): smooth river table + rounded remap corners (FRAG riv / swimRemap / m08nq)
++  if (swimOn && flag05('m08sr')) M.floor.uniforms.uSr.value = 1;
+   if (nearTex && NJ) {
+     // lane banks (+-SWIM_HALF) onto the painted foam fringe; along the river the tile keeps the painted proportions
+     // (same scale as across: the lane is ~2x the painted near river, so the painted pattern is shown ~2x larger, unstretched)
+@@ -450,6 +474,7 @@ export async function buildMatch08(): Promise<Match08> {
        u.uNear.value.set(NQ.z0, NQ.period * num('m08nearv', 1), NJ.A, 1);
        u.uNq.value.set(1, NQ.core, NQ.lane, NQ.halfWidth);
      }

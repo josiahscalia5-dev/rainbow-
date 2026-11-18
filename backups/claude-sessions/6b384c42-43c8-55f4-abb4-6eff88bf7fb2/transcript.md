@@ -2864,3 +2864,153 @@ Those two events only confirm the PR #21 subscription. Checking the PR's CI and 
 
 PR #21 has no CI checks configured and no review comments, so there's nothing to fix. It stays a draft marked do-not-merge. The four workers are still running, and I'll send you the Screen 04 ring-test pictures when it finishes.
 
+### 🧑 User — 2026-11-18T18:36:30.008Z
+
+Can u work on the other screens to
+
+### 🤖 Claude — 2026-11-18T18:36:43.634Z
+
+Yes. I'll start Screens 07 and 06 now, which means six workers in total. First I'll check the four running workers and fetch the newest 07 and 06 work (one at a time; the copy here is shallow).
+
+### 🤖 Claude — 2026-11-18T18:36:45.789Z
+
+> 🔧 **Bash** `{"command": "for s in s04 s04b s05 s08; do echo \"$s $(git -C /home/user/wt/$s log -1 --format='%h %cr %s' | cut -c1-120) dirty=$(git -C /home/user/wt/$s status --short | wc -l)\"; done; cd /home/user/rainbow- && for b in claude/rainbow-s07-match-c11 claude/rainbow-s06-match-c11; do timeout 400 git fetch --depth=1 origin +$b:refs/remotes/origin/$b 2>&1 | tail -1; git log -1 --format=\"%h %cI %s\" refs/remotes/origin/$b | cut -c1-200; done", "description": "Check workers and fetch the newest 07 and 06 tips", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T18:37:29.922Z
+
+> ↩︎ result: s04 fc28323 77 minutes ago Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GOOD IMPROVE dirty=4
+> s04b fc28323 77 minutes ago Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GOOD IMPROVE dirty=0
+> s05 34aadd1 69 minutes ago Screen 05 r14 step 3: &m05bank=1 - the near lather bank as piled foam bubbles, seam cut by whole  dirty=6
+> s08 df4a3bb 68 minutes ago Screen 08 r14 step 1: &m08nq=1 near water at the painted scale while swimming (nq08.py v6: rectif dirty=1
+>  * [new branch]      claude/rainbow-s07-match-c11 -> origin/claude/rainbow-s07-match-c11
+> dbc7678 2026-11-18T01:53:35+00:00 Screen 07 r8: correct STATUS time
+>  * [new branch]      claude/rainbow-s06-match-c11 -> origin/claude/rainbow-s06-match-c11
+> 8182130 2026-11-18T12:12:11+00:00 Screen 06 r11 (lead): &m06bend test 2 (half turn, smoothed) — NOT an improvement; bend method stopped after two tries, conclusion logged
+
+### 🤖 Claude — 2026-11-18T18:37:35.705Z
+
+> 🔧 **Bash** `{"command": "git ls-tree -r --name-only refs/remotes/origin/claude/rainbow-s07-match-c11 qa/match/07 | grep -E '\\.md$' | tail -12; echo ----; git show refs/remotes/origin/claude/rainbow-s07-match-c11:qa/match/07/r8/STATUS.md 2>/dev/null | head -60", "description": "List Screen 07 notes and read its latest status"}`
+
+### 🧑 User — 2026-11-18T18:37:35.752Z
+
+> ↩︎ result: qa/match/07/FAL_PLATE_REQUEST.md
+> qa/match/07/NOTES.md
+> qa/match/07/SHARED_CHANGES.md
+> qa/match/07/STATUS.md
+> ----
+
+### 🤖 Claude — 2026-11-18T18:37:36.916Z
+
+> 🔧 **Bash** `{"command": "git ls-tree -r --name-only refs/remotes/origin/claude/rainbow-s06-match-c11 qa/match/06 | grep -E '\\.md$' | tail -10; echo ----; cat backups/wip/claude__rainbow-s06-match-c11/INFO.json | head -20", "description": "List Screen 06 notes and its unfinished-work snapshot"}`
+
+### 🧑 User — 2026-11-18T18:37:37.007Z
+
+> ↩︎ result: qa/match/06/FAL_PLATE_REQUEST.md
+> qa/match/06/NOTES.md
+> qa/match/06/SHARED_CHANGES.md
+> qa/match/06/STATUS.md
+> qa/match/06/r11/PROGRESS.md
+> qa/match/06/r7/NOTES.md
+> ----
+> {
+>  "worktree": "/home/user/wt/s06",
+>  "branch": "claude/rainbow-s06-match-c11",
+>  "head": "8182130cca882100da46d2cecfc10d198f0813b9",
+>  "time": "2026-11-18T12:13:18+00:00",
+>  "dirty_tracked": [],
+>  "untracked_copied": [],
+>  "untracked_skipped": [],
+>  "restore": "git switch claude/rainbow-s06-match-c11 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s06-match-c11/tracked.patch && copy backups/wip/claude__rainbow-s06-match-c11/untracked/* into the worktree"
+> }
+
+### 🤖 Claude — 2026-11-18T18:37:41.144Z
+
+> 🔧 **Bash** `{"command": "git show refs/remotes/origin/claude/rainbow-s07-match-c11:qa/match/07/STATUS.md | head -45 | cut -c1-260", "description": "Read Screen 07 status"}`
+
+### 🧑 User — 2026-11-18T18:37:41.247Z
+
+> ↩︎ result: # Screen 07 · DIVE THE WASHER TUBE — status (round 8 / account 8, 2026-11-18 ~01:50 UTC)
+> 
+> Branch `claude/rainbow-s07-match-c8`, started from `3afaa7e9` (= `claude/rainbow-s07-match-c7` tip, M3 done). Nothing is
+> approved until the user says so. **State: WORK IN PROGRESS, paused by the lead (user order: 07 resumes in the next free
+> specialist slot).**
+> 
+> ## Round 8 so far (lead, two look-only switches on top of the M3 kept set K)
+> K = `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`
+> * `&m07foam=1` (NEW, `src/vfx/foam.ts` + `src/vfx/waterRibbon.ts`, `#ifdef HIDE07` / `HIDE07R`): down the plunge
+>   (s plunge_top+9 → plunge_bottom−12, dithered 3 u at both ends) the game's tall white lather walls (berm + puffs) and the
+>   lifted white outer edges of the game's water sheet step aside, so the matched tube's river tile with its painted
+>   pink/cyan banks and soft blue foam shows instead. Visual verdict: **clearly closer at t50 / t66 / t80**
+>   (`r8/plunge_K/` vs `r8/plunge_foam2/`); t33 unchanged (animation timing only); t95 = the 08 inlet (unchanged, 08 owns it).
+> * `&m07coinsz=1` (existed since the 00:52 autosave, untested before): coins sized against the live ca …[+2340 chars]
+
+### 🤖 Claude — 2026-11-18T18:37:42.001Z
+
+> 🔧 **Bash** `{"command": "git show refs/remotes/origin/claude/rainbow-s06-match-c11:qa/match/06/r11/PROGRESS.md | head -60 | cut -c1-260", "description": "Read Screen 06 round-11 progress"}`
+
+### 🧑 User — 2026-11-18T18:37:42.132Z
+
+> ↩︎ result: # Screen 06 — round 11 (account 11, lead controlled test)
+> 
+> Branch `claude/rainbow-s06-match-c11` (from `-c9` tip `efaf78b7`). Approved picture (authority):
+> `references/06_crest_the_rinse_arch.png`. Rules: `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`.
+> Kept set (unchanged): `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`.
+> BEFORE = that set, 12 audit shots `qa/match/06/r11/BEFORE/` (`tools/lead_r6/motion_audit.mjs`).
+> 
+> ## Diagnosis (measured)
+> * `docs/briefs/2026-11-18-r9/BLUEPRINT_06.md`: from forward 6 u on, the painted composition (off-centre tunnel mouth upper
+>   right, inner ring centres drifting down-right toward the glow, purple drum wall upper left, crest S-loop) is replaced by a
+>   CENTRED BULLSEYE of 15+ packed rings over a straight ribbon river.
+> * Depth Anything 3 (`docs/briefs/2026-11-18-r11/DA3_TEST.md`) on the approved picture: the far tunnel end is at (689, 648),
+>   i.e. the painted glow (700, 690), about 10x deeper than the water under Benny.
+> * `tools/match06/r11_mouth_probe.mjs`: at the approved camera the game river crests 8 u ahead (s 206.9), passes the painted
+>   glow pixel only 23–25 u away (s 217–219) and then turns right …[+2662 chars]
+
+### 🤖 Claude — 2026-11-18T18:38:03.491Z
+
+> 🔧 **Bash** `{"command": "for p in \"s07 claude/rainbow-s07-match-c11 claude/rainbow-s07-match-c15\" \"s06 claude/rainbow-s06-match-c11 claude/rainbow-s06-match-c15\"; do set -- $p; timeout 600 git worktree add -b $3 /home/user/wt/$1 refs/remotes/origin/$2 2>&1 | grep -v -E 'Updating files|Filtering' | tail -1; ( cd /home/user/wt/$1 && ln -sfn /home/user/rainbow-/node_modules node_modules && for t in lead_r6 lead_r13; do [ -d tools/$t ] || cp -r /home/user/wt/s04/tools/$t tools/; done; ls tools | grep lead; timeout 300 git push -u origin $3 2>&1 | tail -1 ); done", "description": "Create and push -c15 work …[+48 chars]`
+
+### 🧑 User — 2026-11-18T18:38:25.631Z
+
+> ↩︎ result: HEAD is now at dbc7678 Screen 07 r8: correct STATUS time
+> lead_r13
+> lead_r6
+> branch 'claude/rainbow-s07-match-c15' set up to track 'origin/claude/rainbow-s07-match-c15'.
+> fatal: cannot create directory at 'qa/pilot05/wave7/environment/it05': No space left on device
+> /bin/bash: line 2: cd: /home/user/wt/s06: No such file or directory
+> lead_r10
+> lead_r4
+> lead_r5
+> lead_r6
+> branch 'claude/rainbow-s06-match-c15' set up to track 'origin/claude/rainbow-s06-match-c15'.
+
+### 🤖 Claude — 2026-11-18T18:38:41.954Z
+
+> 🔧 **Bash** `{"command": "df -h /home/user /tmp 2>&1 | head -4; cd /home/user/rainbow- && git worktree list; du -sh /home/user/wt/* 2>/dev/null; du -sh /home/user/rainbow-/.git /home/user/rainbow-/.git/lfs /home/user/rainbow-/qa /home/user/rainbow-/builds /home/user/rainbow-/backups /home/user/rainbow-/node_modules ~/.npm ~/.cache /root/.claude /tmp 2>/dev/null", "description": "Measure disk usage of worktrees, caches and repo", "timeout": 180000}`
+
+### 🧑 User — 2026-11-18T18:38:42.153Z
+
+> ↩︎ result: Filesystem      Size  Used Avail Use% Mounted on
+> /dev/vda        252G   38G  1.5G  97% /
+> /dev/vda        252G   38G  1.5G  97% /
+> /home/user/rainbow-  bd520cf [ccr-47b10cec-03c7co]
+> /home/user/wt/s04    fc28323 [claude/rainbow-s04-match-c15]
+> /home/user/wt/s04b   fc28323 [claude/rainbow-s04-ringtex-c15]
+> /home/user/wt/s05    34aadd1 [claude/rainbow-s05-match-c15]
+> /home/user/wt/s07    dbc7678 [claude/rainbow-s07-match-c15]
+> /home/user/wt/s08    df4a3bb [claude/rainbow-s08-scenery-c15]
+> 3.5G	/home/user/wt/s04
+> 3.5G	/home/user/wt/s04b
+> 3.6G	/home/user/wt/s05
+> 2.5G	/home/user/wt/s07
+> 3.3G	/home/user/wt/s08
+> 6.5G	/home/user/rainbow-/.git
+> 2.8G	/home/user/rainbow-/qa
+> 110M	/home/user/rainbow-/builds
+> 326M	/home/user/rainbow-/backups
+> 103M	/home/user/rainbow-/node_modules
+> 136M	/root/.npm
+> 211M	/root/.cache
+> 66M	/root/.claude
+> 211M	/tmp
+

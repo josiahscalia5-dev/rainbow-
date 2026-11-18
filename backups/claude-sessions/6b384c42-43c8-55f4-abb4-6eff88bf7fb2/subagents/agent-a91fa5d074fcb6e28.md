@@ -1184,3 +1184,195 @@ Let me add an exploratory switch with tunable fold window to see what the stage 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:34:36.807Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_shots.mjs'\ns=open(p).read()\nold=\"\"\"const XS = want ? [...want].filter((n) => /^x\\\\d+[LR]?$/.test(n)).map((n) => {\n  const m = n.match(/^x(\\\\d+)([LR]?)$/);\n  return [n, `t${(Number(m[1]) / 100).toFixed(2)}`, m[2] === 'L' ? -1 : m[2] === 'R' ? 1 : null];\n}) : [];\"\"\"\nnew=\"\"\"// (x98p7 = 98.7 % of the stage)\nconst XS = want ? [...want].filter((n) => /^x\\\\d+(p\\\\d+)?[LR]?$/.test(n)).map((n) => {\n  const m = n.match(/^x(\\\\d+)(?:p(\\\\d+))?([LR]?)$/);\n  return [n, `t${(Number(`${m[1]}.${m[2] ?? 0}`)  …[+766 chars]`
+
+### 🧑 User — 2026-11-18T18:35:56.498Z
+
+> ↩︎ result: 639:      zCap: sGlow05 + 3.5 - sF05, foldNear: M05TRANS ? qaNum05('m05tfn', 5.06) : M05END ? 5.2 : 6.5, foldFar: M05TRANS ? qaNum05('m05tff', 5.18) : M05END ? 6.8 : 10,   // m05end (r11): folds as Be
+> t98_end s 188.905 lat 0 coins 1580 benny -0.18 -0.59 big coins: -
+> x98p5 s 188.724 lat 0 coins 1580 benny -0.18 -0.56 big coins: -
+> x98p8 s 188.907 lat 0 coins 1580 benny -0.18 -0.58 big coins: -
+> x99 s 189.091 lat 0 coins 1580 benny -0.17 -0.61 big coins: -
+> x99p2 s 189.092 lat 0 coins 1580 benny -0.17 -0.61 big coins: -
+> [This command modified 1 file you've previously read: ../wt/s05/tools/match05/r8_shots.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T18:36:06.339Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/pop/x98p8.png"}`
+
+### 🧑 User — 2026-11-18T18:36:06.383Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:36:06.944Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/pop/x99.png"}`
+
+### 🧑 User — 2026-11-18T18:36:06.997Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:36:15.780Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uBennyS\\|uBennyPos\\|bennyS\\b\\|uRideS\\|uBennyR\\b\" src/vfx/waterRibbon.ts | head -10; grep -n \"uBenny\" src/vfx/index.ts | head", "description": "Find Benny position uniforms"}`
+
+### 🧑 User — 2026-11-18T18:36:15.824Z
+
+> ↩︎ result: 679:uniform float uBennyR;    // Benny's waterline radius (units)
+> 1863:    float rb = uBennyR;
+> 2179:    uBennyR: { value: 0.7 },
+> 164:      return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+> 198:      if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+> 241:        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
+> 242:        ribbon.uniforms.uBennyR.value = waterlineR;
+
+### 🤖 Claude — 2026-11-18T18:36:19.553Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 185,250p src/vfx/index.ts", "description": "Read VFX update with Benny position"}`
+
+### 🧑 User — 2026-11-18T18:36:19.594Z
+
+> ↩︎ result: drum.uniforms.uAgitation.value = controls.drumAgitation;
+>       drum.swirlUniforms.uSwirl.value = controls.drumSwirl;
+>       drum.swirl.visible = controls.drumSwirl > 0.001;
+>       wave.uniforms.uTime.value = time;
+>       puddles.uniforms.uTime.value = time;
+>       puddles.uniforms.uAmount.value = controls.outro;
+>       (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+>       puddles.group.visible = controls.outro > 0.001;
+>       // region visibility (perf): only what the camera around focusS can see
+>       drum.group.visible = focusS < st03.s0 + 12;
+>       whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+>       wave.mesh.visible = focusS > st08.s0 - 25;
+>       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
+>       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+>       foam.update(time, dt, focusS, controls.outro, camera);
+>       // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+>       // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+>       const bub05 = PROJ …[+3232 chars]
+
+### 🤖 Claude — 2026-11-18T18:36:25.405Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uPjNear\" src/vfx/waterRibbon.ts | head -5; grep -n \"^export const m05\\w* =\" src/vfx/waterRibbon.ts | head -20", "description": "Find exported shared uniforms in waterRibbon"}`
+
+### 🧑 User — 2026-11-18T18:36:25.448Z
+
+> ↩︎ result: 568:uniform vec4 uPjNear;      // m05geo / m05fold: the ride focus (as the fragment shader's ?projnear05 uniform)
+> 601:  p += aUnf * (uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0);
+> 608:    float gk = uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0;
+> 611:      float sg = s - (uPjNear.z - uPjNear.w);
+> 614:      float gin = smoothstep(uPjNear.w + 3.0, uPjNear.w + 5.0, sg) * step(0.0, tg) * step(tg, 1.0);
+> 293:export const m05seam = { value: new THREE.Vector2(0, 0) };
+> 304:export const m05blend = {
+> 336:export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
+> 426:export const m05fmagD0 = { value: 53.25 };
+> 483:export const m05join = {
+> 490:export const m05fpaint = {
+> 496:export const m05foamK = { value: 0 };
+
+### 🤖 Claude — 2026-11-18T18:36:42.500Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 286,300p src/vfx/waterRibbon.ts && sed -n 228,245p src/vfx/index.ts | head -3 && grep -n \"^import\" src/vfx/index.ts | head -20", "description": "Look at shared uniform declarations and vfx imports"}`
+
+### 🧑 User — 2026-11-18T18:36:42.580Z
+
+> ↩︎ result: * just before 06, Benny ≈ 139 on) the near river reached the seam with design rows from the approved MIDDLE distance
+>  * while the far river continues the approved picture's LAST near-river rows: the pink / cyan bands broke in a step line
+>  * across the river. Over the stretch before the seam (60 % of Benny → seam, 4–20 u) the design is eased (quadratic, no
+>  * kink) so it arrives at E's last rows exactly at the seam, as in the locked view. `m05seam.value` = (seam s, live) is
+>  * written every frame by src/world/match05far.ts; locked view and the 06 fold: live = 0, nothing changes.
+>  */
+> export const M05SEAM: boolean = M05RIDE && q05('m05seam');
+> export const m05seam = { value: new THREE.Vector2(0, 0) };
+> /**
+>  * `&m05blend=1` (Screen 05 round 9, branch claude/rainbow-s05-match-c9, qa/match/05/r9/PROGRESS.md; needs m05seam): the
+>  * near river (real ribbon) and the far tunnel's river met at the sliding seam with a hard straight line — the near design
+>  * ended there and the far river's own baked approved water (proj05_F.png) began, a different picture of the water. Over
+>  * a band before the seam the ribbon now cross-fades into exactly what the far river shows (the same F texture, the same
+>  *  …[+1130 chars]
+
+### 🤖 Claude — 2026-11-18T18:36:47.410Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,64p src/vfx/clip05.ts; grep -n \"update(time\" src/vfx/index.ts | head -3; grep -n \"vfx.update\\|water.update\" src/game/Game.ts | head", "description": "Read clip05 and vfx update call"}`
+
+### 🧑 User — 2026-11-18T18:36:47.472Z
+
+> ↩︎ result: /**
+>  * `?match05=1&m05far=1` (Screen 05 round 7, src/world/match05far.ts): a clip plane at the far tunnel's sliding seam.
+>  * Real 06 foam behind the seam (the rising 06 banks) would otherwise stand inside the 05 far tunnel as white columns;
+>  * materials that opt in (foam puffs) discard fragments beyond the plane while the switch is on and the far block is
+>  * live (n = 0 disables it). Default build: nothing imports the GLSL below into any program.
+>  */
+> import * as THREE from 'three';
+> import { MATCH05, flag05 } from './waterRibbon';
+> 
+> export const M05CLIP: boolean = MATCH05 && flag05('m05far');
+> export const clip05 = {
+>   uClip05P: { value: new THREE.Vector3() },
+>   uClip05N: { value: new THREE.Vector3() },
+> };
+> /**
+>  * inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position). `margin` (default 0 =
+>  * the plane itself): the hard cut lies that many units past the plane — only for a material that cuts at the seam itself
+>  * (m05bank: the berm keeps / drops whole bubbles by their centre, so a kept bubble may overhang the plane by its radius)
+>  */
+> export function withClip05(mat: THREE.ShaderMaterial, posVar: string, margin = 0): void {
+>   if (!M05CLIP) return; …[+2586 chars]
+
+### 🤖 Claude — 2026-11-18T18:36:50.161Z
+
+Now the proper implementation: the block is removed when Benny crosses into 06 (driven by Benny's course position, not the eye distance).
+
+### 🤖 Claude — 2026-11-18T18:37:05.405Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\nimport re\n# clip05.ts: shared ride position\np='src/vfx/clip05.ts'\ns=open(p).read()\nold=\"\"\"export const clip05 = {\n  uClip05P: { value: new THREE.Vector3() },\n  uClip05N: { value: new THREE.Vector3() },\n};\"\"\"\nnew=old+\"\"\"\n/** `&m05trans=1` (Screen 05 round 15, match05far.ts): Benny's course position, written every frame by src/vfx/index.ts */\nexport const m05rideS = { value: -1 };\"\"\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\n\np='src/vfx/index.ts'\ns=open(p).read()\ns=s.replace(\"import { M05EDGE, w …[+3729 chars]`
+
+### 🧑 User — 2026-11-18T18:37:09.750Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T18:37:14.236Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 495,530p src/game/Game.ts", "description": "Check where water.update runs"}`
+
+### 🧑 User — 2026-11-18T18:37:14.294Z
+
+> ↩︎ result: env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
+>     env.doorC.rotation.y = 0;
+>     benny.root.visible = true;
+>     playIntroVideo();
+>   };
+> 
+>   const stepSim = (dt: number) => {
+>     if (st.paused) return;
+>     st.t += dt;
+>     if (st.frozen === null) st.clock += dt;
+>     if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate(dt);
+>     else if (st.mode === 'outro' || st.mode === 'end') {
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     fill.position.copy(camera.position);
+>     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+>   };
+> 
+>   let last = performance.now();
+>   let fps = 60;
+>   let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+>   // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+>   const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+>   const bloom05 = { s: bloom.strength, r: bloom.radius, t …[+412 chars]
+
+### 🤖 Claude — 2026-11-18T18:37:22.405Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r15/KEPT_START.txt) && timeout 1200 node tools/match05/r8_shots.mjs qa/match/05/r15/step1_trans/new \"$Q&m05trans=1\" t95_through_screen,t98_end,t95_left,t95_right,x90,x93,x96,x97,x99,x100,x101,x103,x105,x97L,x97R 5275 2>&1 | tail -16", "description": "Render NEW hand-over shots with m05trans", "timeout": 1200000}`
+
