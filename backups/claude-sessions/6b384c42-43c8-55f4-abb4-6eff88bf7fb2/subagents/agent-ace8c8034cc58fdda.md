@@ -237,3 +237,126 @@ Now the fresh audit capture of the kept set (task 1).
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && time node tools/lead_r6/motion_audit.mjs 06 qa/match/06/r15/BEFORE \"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1\" 2>&1 | tail -15", "description": "Capture BEFORE audit of kept set", "timeout": 900000}`
 
+### 🧑 User — 2026-11-18T18:42:07.636Z
+
+> ↩︎ result: Command was moved to the background (ID: bjg2z02uv) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bjg2z02uv.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T18:42:10.219Z
+
+While the audit renders, I'll look at the approved picture.
+
+### 🤖 Claude — 2026-11-18T18:42:10.575Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-18T18:42:10.602Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:42:14.072Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && wc -l src/world/match06.ts && grep -n \"m06[a-z]*\" -o src/world/match06.ts | sort | uniq -c | sort -rn | head -50", "description": "Survey match06 switches"}`
+
+### 🧑 User — 2026-11-18T18:42:14.343Z
+
+> ↩︎ result: 599 src/world/match06.ts
+>       2 572:m06
+>       2 373:m06bendk
+>       1 96:m06bend
+>       1 89:m06ring
+>       1 5:m06
+>       1 569:m06dbg
+>       1 568:m06dbg
+>       1 565:m06
+>       1 562:m06tun
+>       1 555:m06
+>       1 540:m06foam
+>       1 536:m06geo
+>       1 536:m06foam
+>       1 527:m06geo
+>       1 485:m06padr
+>       1 473:m06pad
+>       1 472:m06pad
+>       1 471:m06ring
+>       1 45:m06foam
+>       1 458:m06bend
+>       1 448:m06ringn
+>       1 446:m06ringn
+>       1 43:m06bub
+>       1 427:m06ringw
+>       1 427:m06ringd
+>       1 420:m06ring
+>       1 418:m06panel
+>       1 417:m06panel
+>       1 397:m06ring
+>       1 395:m06ring
+>       1 384:m06bend
+>       1 373:m06bendw
+>       1 372:m06bendw
+>       1 372:m06bendk
+>       1 351:m06bend
+>       1 344:m06bend
+>       1 341:m06tunh
+>       1 340:m06tunh
+>       1 335:m06tunh
+>       1 333:m06tunax
+>       1 329:m06tunr
+>       1 326:m06tun
+>       1 324:m06tunax
+>       1 323:m06tunr
+>       1 321:m06tun
+>       1 318:m06geo
+>       1 314:m06
+>       1 258:m06flow
+>       1 257:m06geo
+>       1 254:m06geo
+
+### 🤖 Claude — 2026-11-18T18:42:16.517Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts"}`
+
+### 🧑 User — 2026-11-18T18:42:16.684Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.
+> 3	 * REAL 3D proxy geometry of "Crest the Rinse Arch", built around the game's own 06 river (which under the switch follows
+> 4	 * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera
+> 5	 * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
+> 6	 *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
+> 7	 *     into 07, continued straight along the river's heading so the painted far rings stay concentric
+> 8	 *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 9	 *   * a dark end cap far down the tunnel
+> 10	 * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+> 11	 * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+> 12	 * and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or showed edge …[+39602 chars]
+
+### 🤖 Claude — 2026-11-18T18:42:20.693Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bjg2z02uv.output; ls /home/user/wt/s06/qa/match/06/r15/BEFORE 2>/dev/null", "description": "Check audit progress"}`
+
+### 🧑 User — 2026-11-18T18:42:20.870Z
+
+> ↩︎ result: a00_approved_view.png
+> f03_forward3u.png
+
+### 🤖 Claude — 2026-11-18T18:42:23.377Z
+
+While it renders, I'll look at the round-11 BEFORE frames (same kept set) to start the ranking.
+
+### 🤖 Claude — 2026-11-18T18:42:23.932Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r11/BEFORE/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T18:42:23.984Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:42:24.334Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r11/BEFORE/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T18:42:24.477Z
+
+> ↩︎ result: [image]
+

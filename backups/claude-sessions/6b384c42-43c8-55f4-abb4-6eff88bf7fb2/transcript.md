@@ -3243,3 +3243,63 @@ Everything is saved on GitHub (`df84494`, matching GitHub). I'll send APPROVED /
 
 To make them exactly or very close to my approved  screens Work on the visual part, like make sure that all the other screens you're working on the visual, not all technical problems. Make sure it looks like the visual part, like scenery and all the stuff that looks like my approved screens. When a pink character goes through my screens, it looks like it would have for my approved screens.
 
+### 🤖 Claude — 2026-11-18T18:41:57.344Z
+
+I'll pass your instruction to all six workers word for word in spirit: visuals only, scenery that looks like your approved picture all the way through Benny's swim, and technical work only where it's needed to show the pictures.
+
+### 🤖 Claude — 2026-11-18T18:41:59.961Z
+
+> 🔧 **SendMessage** `{"to": "s04", "summary": "User order: visuals only, scenery like approved", "message": "USER ORDER (2026-11-18 ~18:55 UTC, binding, overrides any technical task in your brief): work ONLY on the VISUAL part — make the scenery look exactly or very close to the approved picture while Benny swims through it (start, middle, end, hard left / right): rings, walls, water, foam, bubbles, colours, lighting. No technical clean-up, refactors, metrics or tool work unless a visual step needs it; keep checks to the minimum (approved start view unchanged, coins unchanged). Report results in plain visual words …[+205 chars]`
+
+### 🧑 User — 2026-11-18T18:41:59.988Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s04 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ae0cb1cd9df5a5520","name":"s04","ref":"b000e8"}}
+
+### 🤖 Claude — 2026-11-18T18:42:02.067Z
+
+> 🔧 **SendMessage** `{"to": "s04tex", "summary": "User order: visuals only, scenery like approved", "message": "USER ORDER (2026-11-18 ~18:55 UTC, binding, overrides any technical task in your brief): work ONLY on the VISUAL part — make the scenery look exactly or very close to the approved picture while Benny swims through it (start, middle, end, hard left / right): rings, walls, water, foam, bubbles, colours, lighting. No technical clean-up, refactors, metrics or tool work unless a visual step needs it; keep checks to the minimum (approved start view unchanged, coins unchanged). Report results in plain visual wo …[+244 chars]`
+
+### 🧑 User — 2026-11-18T18:42:02.134Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s04tex at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a473760960d881afb","name":"s04tex","ref":"e99267"}}
+
+### 🤖 Claude — 2026-11-18T18:42:04.274Z
+
+> 🔧 **SendMessage** `{"to": "s05", "summary": "User order: visuals only, scenery like approved", "message": "USER ORDER (2026-11-18 ~18:55 UTC, binding, overrides any technical task in your brief): work ONLY on the VISUAL part — make the scenery look exactly or very close to the approved picture while Benny swims through it (start, middle, end, hard left / right): walls, gold bands, paddle lids, water, foam, bubbles, colours, lighting. No technical clean-up, refactors, metrics or tool work unless a visual step needs it; keep checks to the minimum (approved start view unchanged, coins unchanged). Report results in  …[+273 chars]`
+
+### 🧑 User — 2026-11-18T18:42:04.303Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s05 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a91fa5d074fcb6e28","name":"s05","ref":"2e6533"}}
+
+### 🤖 Claude — 2026-11-18T18:42:06.770Z
+
+> 🔧 **SendMessage** `{"to": "s06", "summary": "User order: visuals only, scenery like approved", "message": "USER ORDER (2026-11-18 ~18:55 UTC, binding, overrides any technical task in your brief): work ONLY on the VISUAL part — make the scenery look exactly or very close to the approved picture while Benny swims through it (start, middle, end, hard left / right): rings, purple walls, paddle lids, crest water, foam, ripples, coins' look, colours, lighting. No technical clean-up, refactors, metrics or tool work unless a visual step needs it; keep checks to the minimum (approved start view unchanged, coins unchanged …[+306 chars]`
+
+### 🧑 User — 2026-11-18T18:42:06.787Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s06 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ace8c8034cc58fdda","name":"s06","ref":"8e7570"}}
+
+### 🤖 Claude — 2026-11-18T18:42:09.124Z
+
+> 🔧 **SendMessage** `{"to": "s07", "summary": "User order: visuals only, scenery like approved", "message": "USER ORDER (2026-11-18 ~18:55 UTC, binding, overrides any technical task in your brief): work ONLY on the VISUAL part — make the scenery look exactly or very close to the approved picture while Benny swims through it (start, middle, plunge, end, hard left / right): purple slotted tube, gold rings, gold paddles, winding river with magenta banks, foam, coins' look, colours, lighting. No technical clean-up, refactors, metrics or tool work unless a visual step needs it. For task 1 keep the owed checks to the mi …[+314 chars]`
+
+### 🧑 User — 2026-11-18T18:42:09.137Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s07 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a06c699d872e14702","name":"s07","ref":"41c10b"}}
+
+### 🤖 Claude — 2026-11-18T18:42:11.226Z
+
+> 🔧 **SendMessage** `{"to": "s08", "summary": "User order: visuals only, scenery like approved", "message": "USER ORDER (2026-11-18 ~18:55 UTC, binding, overrides any technical task in your brief): work ONLY on the VISUAL part — make the scenery look exactly or very close to the approved picture while Benny swims through it (start, middle, end, hard left / right): gold ring, purple perforated walls and floor, spout cups and their pouring water, washer door, towel platform, S-river, foam, colours, lighting. No technical clean-up, refactors, metrics or tool work unless a visual step needs it; keep checks to the mini …[+287 chars]`
+
+### 🧑 User — 2026-11-18T18:42:11.249Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to s08 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a16eaaa7abf16d292","name":"s08","ref":"965306"}}
+
+### 🤖 Claude — 2026-11-18T18:42:15.558Z
+
+Recording your order in the binding rules so every future account follows it too.
+
+### 🤖 Claude — 2026-11-18T18:42:22.673Z
+
+> 🔧 **Bash** `{"command": "cat > docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md <<'EOF'\n# User order — 2026-11-18 ~18:55 UTC (account 15) — BINDING for every worker and every future account\n\nUser's words: \"To make them exactly or very close to my approved screens — work on the visual part … not all technical problems. Make\nsure it looks like the visual part, like scenery and all the stuff that looks like my approved screens. When a pink character goes\nthrough my screens, it looks like it would have for my approved screens.\"\n\nMeaning (adds to `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` …[+1443 chars]`
+

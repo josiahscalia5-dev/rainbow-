@@ -3,7 +3,7 @@
 Lead session branch **`ccr-47b10cec-03c7co`** (session started from the account-14 lead `ccr-6c7564b1-fmlt1w` @ `58b94d9`, its newest
 commit, 17:43 UTC; nothing merged). Started 2026-11-18 ~18:12 UTC. Account 14 stopped at ~17:46 UTC (usage limit; its three
 workers were cut off; `backups/wip/` snapshots at 17:45–17:46 show NO unfinished code edits, only a few 05 "before" screenshots).
-Rules unchanged (binding): `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` + `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`
+Rules (binding): **`docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md` (newest user order, visuals only)** + `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` + `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`
 + `docs/briefs/2026-11-18-r10/RULES_R10.md` + `docs/briefs/2026-11-18-r8/COMMON_RULES.md`. Launch briefs (complete, reusable):
 `S04_LAUNCH.md`, `S05_LAUNCH.md`, `S08_LAUNCH.md` in this folder. Four GitHub 3D tools: `GITHUB_3D_TOOLS.md`.
 

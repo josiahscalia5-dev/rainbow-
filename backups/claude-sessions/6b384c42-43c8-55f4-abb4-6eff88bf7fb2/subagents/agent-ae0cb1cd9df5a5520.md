@@ -1432,3 +1432,51 @@ Meanwhile I'll write a small probe that records the `[match04]` console lines (b
 > A  qa/match/04/r15/s1_fclu/NEW/s_left_steer.png
 > A  qa/match/04/r15/s1_fclu/NE …[+344 chars]
 
+### 🤖 Claude — 2026-11-18T18:41:56.010Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git checkout qa/capture_log.json && cat .gitattributes 2>/dev/null | head; git check-attr filter -- qa/match/04/r15/s1_fclu/NEW/f03_forward3u.png qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4", "description": "Restore capture log and check LFS attributes"}`
+
+### 🧑 User — 2026-11-18T18:41:56.409Z
+
+> ↩︎ result: Updated 1 path from the index
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> qa/match/04/r15/s1_fclu/NEW/f03_forward3u.png: filter: unspecified
+> qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4: filter: lfs
+
+### 🤖 Claude — 2026-11-18T18:42:03.316Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && du -sh qa/match/04/r14 qa/match/04/r13 && git lfs version | head -1", "description": "Compare previous round folder sizes and LFS"}`
+
+### 🧑 User — 2026-11-18T18:42:03.577Z
+
+> ↩︎ result: 182M	qa/match/04/r14
+> 624M	qa/match/04/r13
+> git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+
+### 🤖 Claude — 2026-11-18T18:42:09.797Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git add qa/match/04/r15/PROGRESS.md && git commit -q -m \"Screen 04 r15 step 1: foam as clusters of many small shiny bubbles (m04fclu) — GOOD IMPROVEMENT\n\nEvery kept L4 foam puff becomes a low heap of small pearly lilac-white bubbles\n(white highlight, soft light rim, see-through edges), world-anchored, shrinking away\nnear the camera. Start view 0 px changed; default build untouched.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3ATzNgZxrzcDBPkeEAQ\" && git push -q -u origin claude/rainbow …[+188 chars]`
+
+### 🧑 User — 2026-11-18T18:42:17.287Z
+
+> ↩︎ result: Uploading LFS objects: 100% (1/1), 1.1 MB | 0 B/s, done.
+> 160ce059e5f4d1dbf680243720d1d17608dc5bd4
+> 160ce059e5f4d1dbf680243720d1d17608dc5bd4	refs/heads/claude/rainbow-s04-match-c15
+
+### 🤖 Claude — 2026-11-18T18:42:24.856Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "Report S04 step 1 foam clusters", "message": "S04 step 1 done: foam as clusters of many small shiny bubbles, switch &m04fclu=1 (on top of the r14 L4 kept set). Commit 160ce059 on claude/rainbow-s04-match-c15 (pushed, remote = HEAD).\nVerdict: GOOD IMPROVEMENT. Entering (f03) and just inside (f06), the foam round the entrance now looks like the painted foam: bubbly heaps of many glossy lilac-white bubbles with white highlights and soft light rims. BEFORE it was smooth plain white balls. At hard left the big pale puff across the bottom-left corner is gone; a bubbly hea …[+641 chars]`
+
+### 🧑 User — 2026-11-18T18:42:24.889Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+

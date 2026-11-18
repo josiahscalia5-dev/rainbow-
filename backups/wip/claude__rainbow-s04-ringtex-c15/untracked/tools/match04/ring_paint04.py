@@ -173,13 +173,12 @@ tile = periods[0] if len(periods) == 1 else np.median(np.stack(periods), 0)
 # ---- painted good arc: the wall between the water / foam on both sides (per column: gold = warm, saturated) --------
 hsv = cv2.cvtColor(np.clip(tile, 0, 255).astype(np.uint8), cv2.COLOR_BGR2HSV).astype(np.float32)
 B, G, R = tile[..., 0], tile[..., 1], tile[..., 2]
-warm = ((R > 1.25 * B) & (R > G)).mean(0)                          # share of gold-ish texels per column
-warm = gaussian_filter1d(warm, 8)
+warm = gaussian_filter1d(np.median(R / np.maximum(B, 1), 0), 6)   # copper-gold: red >> blue; water / pink foam: not
 mid = NC // 2
 gl = mid; gr = mid
-while gl > 0 and warm[gl - 1] > 0.55: gl -= 1
-while gr < NC - 1 and warm[gr + 1] > 0.55: gr += 1
-GOOD = (float(psi[gl]) + 0.06, float(psi[gr]) - 0.06)              # keep a margin from the water boundary
+while gl > 0 and warm[gl - 1] > 1.8: gl -= 1
+while gr < NC - 1 and warm[gr + 1] > 1.8: gr += 1
+GOOD = (float(psi[gl]) + 0.03, float(psi[gr]) - 0.03)              # keep a margin from the water boundary
 print("painted good arc (rad, + = right):", np.round(GOOD, 3))
 
 # ---- bubbles over the rings: bright, low-saturation, cool (blue >= 0.85 red) texels -> fill from neighbouring angles
