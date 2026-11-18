@@ -673,3 +673,82 @@ Let me look at the current NEW state (step 1 frames) at t66 and the last-third B
 > ↩︎ result: {"sF05":180.0383020282329,"s05":{"id":"05","title":"FLOWINTOTHECURRENT","s0":114.68830202823243,"s1":188.92412082521383,"width":9,"tube":7.6,"tubeKind":"perf","speed":11,"refCoins":1420,"interactive":true,"bank":0.25},"s06":188.92412082521383,"h":[[176,-3.87,0.51,-3.65,5.53],[178,-3.87,1.46,-1.89,4.66],[180,-3.87,1.84,0.05,4.29],[182,-3.85,1.41,1.99,4.66],[184,-3.8,0.73,3.87,4.87],[186,-3.67,0.24,5.81,4.56],[188,-3.35,-0.01,7.76,4.12],[190,-2.69,-0.21,9.63,3.87],[192,-1.71,-0.49,11.35,3.65],[194,-0.53,-0.82,12.93,3.52],[196,0.77,-1.17,14.42,3.5],[198,2.11,-1.52,15.86,3.5],[200,3.44,-1.87,17.3,3.5],[202,4.72,-2.2,18.8,3.5],[204,5.91,-2.52,20.38,3.5]],"level":-3.831685660915462,"cams":[[0.75,175.53,-11.8,-0.27,"05"],[0.85,181.57,-6.16,-0.25,"05"],[0.9,184.51,-3.36,-0.3,"05"],[0.95,187.26,-0.49,-0.56,"05"],[1,190.19,2.6,-0.73,"06"],[1.03,191.84,4.29,-0.8,"06"],[1.06,193.49,5.95,-0.76,"06"],[1.1,195.69,7.98,-0.41,"06"]]}
 > [This command modified 1 file you've previously read: docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md. Call Read before editing.]
 
+### 🤖 Claude — 2026-11-18T12:08:06.420Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 889,1010p src/world/materials.ts", "description": "Read far river shader body"}`
+
+### 🧑 User — 2026-11-18T12:08:06.450Z
+
+> ↩︎ result: mat.onBeforeCompile = (shader) => {
+>     Object.assign(shader.uniforms, uniforms);
+>     shader.vertexShader = shader.vertexShader
+>       .replace('#include <common>', `#include <common>
+> attribute float fgExtra; attribute float aRivLat; attribute vec4 aRivA; attribute vec4 aRivB;
+> varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;`)
+>       .replace('#include <uv_vertex>', '#include <uv_vertex>\nvRivUv = uv; vRivLat = aRivLat; vRivA = aRivA; vRivB = aRivB;')
+>       .replace('#include <project_vertex>', '#include <project_vertex>\nvRivDist = length(mvPosition.xyz) + fgExtra;');
+>     shader.fragmentShader = shader.fragmentShader
+>       .replace('#include <common>', `#include <common>
+> varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;
+> uniform vec3 uRivCyanLo; uniform vec3 uRivCyan; uniform vec3 uRivCyanHi; uniform vec3 uRivPinkLo; uniform vec3 uRivPink; uniform vec3 uRivPinkHi;
+> uniform vec3 uRivFoam; uniform vec3 uRivFoamLav; uniform vec3 uRivFoamBlue; uniform vec3 uRivGlow; uniform vec3 uRivGlowR;
+> #ifdef FARW05
+> uniform float uRivD0;
+> #endif
+> #ifdef FLOWMAP05
+> uniform sampler2D uRivRip …[+5891 chars]
+
+### 🤖 Claude — 2026-11-18T12:08:09.993Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1010,1100p src/world/materials.ts && sed -n 2005,2080p src/vfx/waterRibbon.ts", "description": "Read far river shader tail and proj05Far GLSL"}`
+
+### 🧑 User — 2026-11-18T12:08:10.026Z
+
+> ↩︎ result: #ifdef FARW05
+>   // ---- W11 (?farw05=1): the channel winds between puffy foam banks. The far block is drawn for the locked eye, so
+>   // the puff cells are laid in (lateral, ln depth) — round on screen and shrinking with distance like 3D mounds —
+>   // lit from above with lavender / blue creases. Right behind the seam the foam covers the whole floor (the real
+>   // ribbon's continuation lies under it; the approved image has its big foam bank there), further in it is a rim
+>   // ≈1.3 u wide with a scalloped outer edge and the tunnel wall shows beyond it ----
+>   {
+>     float rimW = mix(9.0, 1.3, smoothstep(5.0, 24.0, Zv));
+>     float sgn = lat > xB ? 1.0 : -1.0;
+>     float ld = log(uRivD0 + Zv) * 3.69;                    // ln depth × eye height: isotropic cells on screen
+>     float wl = (rivNoise(vec2(ld * 1.1, sgn * 7.0)) - 0.5) * 0.7;
+>     float e2 = e + wl * 0.6;
+>     vec2 pc = vec2(lat * 1.3 + 1.7, ld * 1.3);
+>     float c1 = rivCells(pc);
+>     float c1u = rivCells(pc + vec2(0.0, 0.16));
+>     float c2 = rivCells(vec2(lat * 3.6 + 5.3, ld * 3.6));
+>     float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.3), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.6);
+> #ifdef PUFF05
+>     // W12 (?puff05=1): where the puffs  …[+10609 chars]
+
+### 🤖 Claude — 2026-11-18T12:08:45.184Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git show HEAD -- src/vfx/waterRibbon.ts src/world/materials.ts | head -120", "description": "Show the WIP diff for m05caul/m05fbank"}`
+
+### 🧑 User — 2026-11-18T12:08:45.255Z
+
+> ↩︎ result: commit c25327a223441ff46e4c5f6aa7ec234580a868f3
+> Author: Claude <noreply@anthropic.com>
+> Date:   Wed Nov 18 12:00:30 2026 +0000
+> 
+>     Screen 05 r11 WIP (unfinished, untested, not kept): &m05caul / &m05fbank foam-bank edits in progress when the specialist was stopped
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_018Sg3ASTRokNr5EKngTj33B
+> 
+> diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+> index cef4551f..24624560 100644
+> --- a/src/vfx/waterRibbon.ts
+> +++ b/src/vfx/waterRibbon.ts
+> @@ -385,6 +385,22 @@ export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+>  export const M05BERM: boolean = M05RIDE && q05('m05berm');
+>  /** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
+>  export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
+> +/**
+> + * `&m05caul=1` (Screen 05 round 11, needs m05cloud; src/vfx/foam.ts BANK_BUB_FRAG): the 05 bank foam lumps that are big on
+> + * screen read as smooth round balls; the painted foam is cauliflower — each pile made of many small piled bubbles. Lumps
+> + * larger than ≈24 px are drawn as a pile of sub-bubbles  …[+5548 chars]
+

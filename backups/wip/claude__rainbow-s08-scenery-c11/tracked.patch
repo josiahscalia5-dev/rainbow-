@@ -1,5 +1,5 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index c2ecc418..06e4127f 100644
+index c2ecc418..ae53e6a4 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
 @@ -75,6 +75,10 @@ uniform vec4 uClipIn;       // m08far collar only: discard inside this x/y circl
@@ -13,7 +13,7 @@ index c2ecc418..06e4127f 100644
  varying vec4 vProj;
  varying vec3 vW;
  varying vec3 vN;
-@@ -181,6 +185,22 @@ void main() {
+@@ -181,6 +185,23 @@ void main() {
        t = mix(base, texture2D(uPlate, uv).rgb, vis * keep);
      }
    }
@@ -22,9 +22,10 @@ index c2ecc418..06e4127f 100644
 +  // (lateral = position across the swim lane, banks on the painted foam fringe; along = repeating with z). Off the
 +  // approved viewpoint only (approved view unchanged).
 +  if (uNear.w > 0.5) {
-+    vec2 pu = pj.xy / max(pj.w, 1e-4) * 0.5 * uPjRes;
++    // (measured on the plain projection: the swim remap is piecewise, its kinks would make the hand-over jump)
++    vec2 pu = vProj.xy / max(vProj.w, 1e-4) * 0.5 * uPjRes;
 +    float det = abs(dFdx(pu).x * dFdy(pu).y - dFdx(pu).y * dFdy(pu).x);
-+    float mag = pj.w > 0.0 ? inversesqrt(max(det, 1e-8)) : 99.0;
++    float mag = vProj.w > 0.0 ? inversesqrt(max(det, 1e-8)) : 99.0;
 +    float mn = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
 +    vec2 r = riv(vW.z);
 +    float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mn);
@@ -36,7 +37,7 @@ index c2ecc418..06e4127f 100644
    gl_FragColor = vec4(pjInverse(t), 1.0);
  }`;
  
-@@ -274,6 +294,15 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -274,6 +295,15 @@ export async function buildMatch08(): Promise<Match08> {
      tMaskTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/towel08_mask.png', import.meta.url).href);
      tMaskTex.colorSpace = THREE.NoColorSpace;
    }
@@ -52,7 +53,7 @@ index c2ecc418..06e4127f 100644
    const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
      vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
      uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
-@@ -282,12 +311,25 @@ export async function buildMatch08(): Promise<Match08> {
+@@ -282,12 +312,25 @@ export async function buildMatch08(): Promise<Match08> {
        uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ },
        uOcc: { value: occTex ?? plate }, uOccOn: { value: 0 }, uTMask: { value: tMaskTex ?? plate }, uTMaskOn: { value: 0 },
        uClipIn: { value: new THREE.Vector4(0, 0, 0, 0) }, uClipOut: { value: new THREE.Vector4(0, 0, 0, 0) },
@@ -73,14 +74,14 @@ index c2ecc418..06e4127f 100644
 +    const kIso = SWIM_HALF / hw / NJ.halfWidth;
 +    const u = M.floor.uniforms;
 +    u.uNear.value.set(NJ.z0, NJ.zLen * kIso * num('m08nearv', 1), NJ.A, 1);
-+    u.uNearM.value.set(num('m08nearm0', 1.6), num('m08nearm1', 2.6), num('m08nearl0', 0.9), num('m08nearl1', 1.0));
++    u.uNearM.value.set(num('m08nearm0', 1.6), num('m08nearm1', 2.6), num('m08nearl0', 0.85), num('m08nearl1', 1.0));
 +    u.uNearC.value.set(c, hw);
 +  }
    const group = new THREE.Group();
    group.name = 'match08_projection';
    const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm08_' + name; group.add(o); return o; };
 diff --git a/tools/match08/near08.py b/tools/match08/near08.py
-index 9ce8255e..799aed0a 100644
+index 9ce8255e..38960822 100644
 --- a/tools/match08/near08.py
 +++ b/tools/match08/near08.py
 @@ -5,7 +5,8 @@ small (the projection is magnified ~5x along the river there): stretched, blurre
@@ -129,7 +130,7 @@ index 9ce8255e..799aed0a 100644
 -           'note': 'u = 0.5 + a / (2A), a = lateral / painted half width; v = distance along the river / zLen (mirrored repeat)'},
 +# the painted water incl. its foam fringe spans a = WL .. WR (read on the tile: left foam outer edge, right foam before
 +# the gold arch leg); the shader maps the swim lane's banks onto these so no arch-leg gold is repeated along the river
-+WL, WR = -0.98, 0.80
++WL, WR = -0.92, 0.76
 +json.dump({'A': A, 'z0': float(Z0), 'zLen': float(Z0 - Z1) * P / NV, 'bandLen': float(Z0 - Z1), 'halfWidth': float(np.mean(rows[:, 2])),
 +           'waterA': [WL, WR], 'texelsPerU': [NU / (2 * A * float(np.mean(rows[:, 2]))), NV / float(Z0 - Z1)],
 +           'note': 'u = 0.5 + a / (2A), a = lateral / painted half width; v = (z0 - z) / zLen (periodic repeat, wrap cross-faded)'},
