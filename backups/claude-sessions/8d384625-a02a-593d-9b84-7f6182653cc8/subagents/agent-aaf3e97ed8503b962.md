@@ -3041,3 +3041,72 @@ Now the `&m05wall=1` switch: crisp slotted purple metal where the projected wall
 >  tools/match05/r9_seam_probe.mjs               |  69 ++++++++++++++++++
 >  7 files changed, 291 insertions(+), 6 deletions(-)
 
+### 🤖 Claude — 2026-11-18T03:18:58.073Z
+
+> 🔧 **Bash** `{"command": "set -e; S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad; D=$S/s05_start; rm -rf $D; mkdir -p $D/qa; cd /home/user/wt/s05; for f in *; do case \"$f\" in src|qa|scripts|tools) ;; *) ln -s /home/user/wt/s05/$f $D/$f;; esac; done; for f in .env* ; do [ -e \"$f\" ] && ln -s /home/user/wt/s05/$f $D/$f; done 2>/dev/null || true; git archive c676a7c5 src scripts tools | tar -x -C $D; ls -la $D | head -40 | awk '{print $9, $10, $11}' | head -40; tail -3 $S/new.log", "description": "Build a start-commit copy with c676a7c5 source and symlinked assets"}`
+
+### 🧑 User — 2026-11-18T03:18:58.400Z
+
+> ↩︎ result: .  
+> ..  
+> CLAUDE.md -> /home/user/wt/s05/CLAUDE.md
+> README_FIRST.md -> /home/user/wt/s05/README_FIRST.md
+> REFERENCE_ORDER.md -> /home/user/wt/s05/REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md -> /home/user/wt/s05/Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md -> /home/user/wt/s05/START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md -> /home/user/wt/s05/TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md -> /home/user/wt/s05/VISUAL_QA_CHECKLIST.md
+> android -> /home/user/wt/s05/android
+> assets -> /home/user/wt/s05/assets
+> backups -> /home/user/wt/s05/backups
+> builds -> /home/user/wt/s05/builds
+> capacitor.config.ts -> /home/user/wt/s05/capacitor.config.ts
+> character_references -> /home/user/wt/s05/character_references
+> docs -> /home/user/wt/s05/docs
+> index.html -> /home/user/wt/s05/index.html
+> node_modules -> /home/user/wt/s05/node_modules
+> package-lock.json -> /home/user/wt/s05/package-lock.json
+> package.json -> /home/user/wt/s05/package.json
+> public -> /home/user/wt/s05/public
+> qa  
+> references -> /home/user/wt/s05/references
+> screenshots -> /home/user/wt/s05/screenshots
+> scripts  
+> src  
+> tools  
+> tsconfig.json -> /home/user/wt/s05/tsconfig.j …[+159 chars]
+
+### 🤖 Claude — 2026-11-18T03:19:07.466Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad && mkdir -p qa/match/05/r9/tried_m05geo && cp $S/geo1/{t66_through_screen,f10_forward10u,s_right_hard,f20_forward20u}.png qa/match/05/r9/tried_m05geo/ && cat >> qa/match/05/r9/PROGRESS.md <<'EOF'\n\n## BLUEPRINT (lead order) — `qa/match/05/r9/BLUEPRINT.md`\nMeasured river width / centre / magenta-cyan shares / foam per screen row in the approved picture and in the kept-query\nframes (a00, f10, f20, t33, t66), the painted river edges back-projected onto the game river, ring a …[+1218 chars]`
+
+### 🧑 User — 2026-11-18T03:19:07.573Z
+
+> ↩︎ result: a00_approved_view s 133.09 lat 0 coins 1420 benny -0.02 -0.35 big coins: #20@473,733 d97 #21@549,663 d70
+> f03_forward3u s 136.107 lat 0 coins 1420 benny 0.04 -0.3 big coins: #20@464,787 d117 #21@552,692 d80 #22@476,631 d61
+
+### 🤖 Claude — 2026-11-18T03:19:11.883Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/qa/match/05/r9/BLUEPRINT.md", "old_string": "## Limits / what was NOT done\n* No foundation geometry kept: a first `m05geo` draft laid the banks Benny-relative (like m05ride) and was removed after\n  the user's ruling against relative layouts; nothing of it is in the code.", "new_string": "## Limits / what was NOT done\n* Per the user's correction (keep what works: m05ride / m05far stay), `&m05geo=1` was built ON the kept set: banks\n  raised beyond the painted edge, laid out Benny-relative like the design. Tried, NOT kept: forward frames  …[+255 chars]`
+
+### 🧑 User — 2026-11-18T03:19:11.925Z
+
+> ↩︎ result: The file /home/user/wt/s05/qa/match/05/r9/BLUEPRINT.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T03:19:13.778Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"^done\" /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log; do sleep 3; done; tail -4 /tmp/claude-0/-home-user-rainbow-/8d384625-a02a-593d-9b84-7f6182653cc8/scratchpad/new.log", "description": "Wait for NEW audit render", "timeout_ms": 600000}`
+
+### 🧑 User — 2026-11-18T03:19:13.809Z
+
+> ↩︎ result: Monitor started (task bzaan0y7w, expires in 10m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T03:19:17.572Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git add tools/match05/blueprint05.py tools/match05/blueprint05_game.mjs tools/match05/channel05.py tools/match05/channel05_bp.py assets/textures/match05/m05geo src/vfx/waterRibbon.ts qa/match/05/r9/BLUEPRINT.md qa/match/05/r9/PROGRESS.md qa/match/05/r9/blueprint qa/match/05/r9/tried_m05geo && git commit -q -m \"Screen 05 r9: BLUEPRINT (measured river / banks / tunnel proportions, approved vs kept frames) + &m05geo tried (not kept) — switch-guarded, tsc clean\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && for i in 1 2 3 4; do git push -q ori …[+222 chars]`
+
+### 🧑 User — 2026-11-18T03:19:29.442Z
+
+> ↩︎ result: local de233792051825127a1572f6e5fbee7e3ee3800f
+> de233792051825127a1572f6e5fbee7e3ee3800f	refs/heads/claude/rainbow-s05-match-c9
+

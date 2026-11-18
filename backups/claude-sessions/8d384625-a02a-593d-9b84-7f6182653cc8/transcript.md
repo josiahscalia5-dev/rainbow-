@@ -2997,3 +2997,40 @@ The only way to keep your outside view on screen longer would be to change how t
 
 Next you'll get large APPROVED / BEFORE / NEW pictures for each step that genuinely looks closer. Nothing counts as approved until you approve it.
 
+### 🧑 User — 2026-11-18T03:19:24.346Z
+
+<task-notification>
+<task-id>bsreluzg0</task-id>
+<summary>Monitor event: "Screen 04/05 builder commits"</summary>
+<event>s05 new commit de233792 Screen 05 r9: BLUEPRINT (measured river / banks / tunnel proportions, approved vs kept frames) + &amp;m05geo tried (not kept) — switch-guarded, tsc clean</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T03:19:26.319Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git log -1 --format='%B' | head -8; sed -n '/BLUEPRINT\\|m05geo/,$p' qa/match/05/r9/PROGRESS.md | head -50", "description": "Read the Screen 05 blueprint and geometry-test result"}`
+
+### 🧑 User — 2026-11-18T03:19:26.982Z
+
+> ↩︎ result: Screen 05 r9: BLUEPRINT (measured river / banks / tunnel proportions, approved vs kept frames) + &m05geo tried (not kept) — switch-guarded, tsc clean
+> 
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> 
+> ## BLUEPRINT (lead order) — `qa/match/05/r9/BLUEPRINT.md`
+> Measured river width / centre / magenta-cyan shares / foam per screen row in the approved picture and in the kept-query
+> frames (a00, f10, f20, t33, t66), the painted river edges back-projected onto the game river, ring and throat sizes.
+> Annotated overlays in `qa/match/05/r9/blueprint/`. Main structural finding: the water surface is the full course width
+> everywhere while the painted S-channel's banks swing ±2–3 u across it (right bank only 2.3–3.7 u right of the centre
+> at s 137–143, inside Benny's steering reach of ±5.06 u) — see BLUEPRINT §3–4.
+> 
+> ## `&m05geo=1` — tried, not kept
+> Raised the river surface beyond the painted channel edge (0.3-u foam shelf, then a steep wall-like rise), laid out
+> Benny-relative like the design (m05ride). Result: f10 / t66 barely change (the raised part shows the same smeared
+> paint, now on a slope); on hard right steering a large smooth stretched slab rises right in front of Benny (the painted
+>  …[+369 chars]
+
+### 🤖 Claude — 2026-11-18T03:19:32.137Z
+
+Screen 05's first geometry attempt was tested and **not kept**. Raising the river banks to the painted S-shape made a large, smooth, stretched slab rise in front of Benny when he steers hard right, which is worse than before.
+
+The test did find the real cause: the water fills the whole width of the course, while your painted river's banks swing inside the area Benny can steer across. The specialist is continuing with the next fix. Nothing new to show you yet.
+
