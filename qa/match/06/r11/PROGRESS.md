@@ -30,3 +30,13 @@ BEFORE = that set, 12 audit shots `qa/match/06/r11/BEFORE/` (`tools/lead_r6/moti
 * Approved view: identical by eye (the audit tool's animated water/bubbles differ per run; deterministic proof pending).
 
 ## Test 2 — `&m06bend=1&m06bendk=0.5&m06bendw=14` (half the river's turn, smoothed ±14 u) — rendering
+* Result by eye (f10, t33, t66 vs BEFORE): almost unchanged — still a centred bullseye of packed rings, only shifted slightly.
+  NOT AN IMPROVEMENT (not kept). Frames: `qa/match/06/r11/NEW_m06bend_k05_w14/`.
+
+## Conclusion after two honest tries (method stopped)
+A strong bend gives the painted arrangement (off-centre sweep, purple wall left) but wrong geometry (creased slab, edge-on
+rings); a gentle bend keeps the bullseye. The bullseye comes mainly from the moving camera looking straight down the river
+(`m06cam`, aimed 25 u ahead) while the painted composition is one fixed viewpoint — as BLUEPRINT_06 §3 says, holding the
+painted composition needs the tunnel rebuilt AS PAINTED around the approved camera (forced perspective / rings fitted to the
+painted drift (650,570)→(700,690), 6–7 rings), i.e. a composition / camera decision for the user, or approved supplemental
+views of the stage beyond the first 6 u projected onto fitted geometry (multi-view method, see TOOL_SEARCH_R11.md).
