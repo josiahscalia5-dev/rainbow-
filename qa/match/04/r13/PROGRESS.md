@@ -20,3 +20,19 @@ Query: `K13&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=3&m04a3o=1.0&m04a3b=1&m04a3b0=
   (too small), E2/E3 (glassy sheet round Benny). Frames `qa/match/04/r13/s2_arr/{BEFORE,E1..E4}/`; user pictures
   `qa/review_r13/04_step2_arrows/` on the lead branch; real-gameplay clip 2.2 s (whole 04 stage from the checkpoint).
 * New tool: `tools/lead_r13/swim_clip.mjs <screen> <out> <seconds> [query]` (straight → left → right real-game clip).
+
+## REBUILD step 3 — user order ~15:30 UTC "gold tunnel + clean blue centre path + five glowing arrows" — C5 = GOOD IMPROVEMENT — shown to the user
+Query (C5): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=3.0&m04a3w=1.05&m04a3t=0.36&m04a3d=0.62&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.8&m04tb=0.0&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.6&m04pkw=0.55&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0`
+* Path: rings R4 (`m04ringp=3.9 m04ringgw=1.8 m04tb=0 m04ts=0.22 m04paint=0.9`: fewer bands, dark grooves) → water W3/W5
+  (`m04pink`, wider cyan lane, deep-blue arrow halo `m04a3hb`) → user correction → C1–C5: side water LOWER (`m04ry` 2.2 → 0.8),
+  wider flat lane (`m04xf=2.6`), new `m04lane=1` (centre path = one smooth glossy cyan-blue lane: smoothed tile re-coloured into
+  the painted lane blues + long thin highlights, no foam crests / swirl knots), side foam OFF, pink only on the outer edges
+  (`m04pkl=2.6 m04pkw=0.55`), broader rings (`m04ringp=4.6`), opaque arrows (`m04a3co=1`), arrow spacing 3.0, near fade
+  3.0–4.4 u ahead of Benny.
+* WHAT LOOKS CLOSER: reads as gold tunnel + clean blue path + white arrows; far more gold tunnel visible; fewer, broader rings with
+  dark grooves; no foamy side walls; 4–5 arrows ahead of Benny straight and steering; start view unchanged by eye.
+* STILL WRONG: lane blue paler / flatter than the painted saturated cyan with sparkles; pink side swirls now thin (user asked to
+  reduce them); rings more orange than the painted copper with pink reflections; at hard left the nearest arrow ends just beside
+  the hat brim (behind Benny, not over him); straight ahead a passing bubble can cover an arrow.
+* Rejected: R1/R2/R3 (ring spacing only / brighter streaks), W1 (pale lilac sides, cyan lost), W2 (lengthened side currents =
+  smeared), W4 (solid blue arrow plates), C1/C2/C3/C4 (intermediate).

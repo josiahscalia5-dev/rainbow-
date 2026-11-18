@@ -284,6 +284,8 @@ uniform vec2 uPjRes;
 uniform float uAway;
 uniform sampler2D uRiv;
 uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
+uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
 uniform float uTime;
 uniform vec4 uArr;           // arrow spacing, first arrow (along), half width, arm thickness
 uniform float uZ0;
@@ -311,12 +313,25 @@ void main() {
   float flow = along - uTime * 0.9;                        // the design drifts down the slide with the current
   float lat = vS * uRivA.w + 0.9 * (vn(vec2(along * 0.07, 7.0)) - 0.5) * smoothstep(0.4, 1.6, abs(vS));
   float fl = flow + 2.2 * (vn(vec2(along * 0.05, vS * 0.15 + 1.0)) - 0.5);
-  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / uRivA.z);
-  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / uRivA.z * 0.77 + 0.37);
+  float se = 1.0 + (uSE.x - 1.0) * smoothstep(uSE.y, uSE.y + 0.9, abs(vS));
+  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / (uRivA.z * se));
+  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / (uRivA.z * se) * 0.77 + 0.37);
   float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
   vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
   // the deeper cyan centre lane of the painting
   col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
+  if (uLane.x > 0.5) {
+    // r13 m04lane: the painted centre path is ONE clean glossy blue lane (deep cyan-blue, soft long light streaks, no
+    // foam crests or swirl knots): the tile seen heavily smoothed (mip bias) for its gentle light / dark flow, re-coloured
+    // into the painted lane blues, plus a few long thin highlights running down the path
+    float kl = 1.0 - smoothstep(uLane.y, uLane.y + 0.9, abs(vS));
+    vec3 bl = mix(texture2D(uRiv, uv1, 4.5).rgb, texture2D(uRiv, uv2, 4.5).rgb, w);
+    float lb = dot(bl, vec3(0.30, 0.55, 0.15));
+    vec3 laneC = mix(vec3(0.02, 0.42, 0.88), vec3(0.30, 0.82, 1.0), smoothstep(0.35, 0.80, lb));
+    float sk = vn(vec2(vS * 3.1 + 2.0, fl * 0.12));
+    laneC += vec3(0.55, 0.85, 1.0) * 0.35 * smoothstep(0.80, 0.97, sk);
+    col = mix(col, laneC, kl * uLane.z);
+  }
   if (uPk.x > 0.5) {
     // m04pink: the painted broad pink / magenta swirl bands either side of the cyan lane; the swirl structure (the
     // tile's brightness) is kept, re-coloured into the painted magenta -> hot pink -> pale pink, with cyan streaks left
@@ -493,6 +508,7 @@ export function addM04(ctx: M04Ctx) {
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
+    const gw = M04.num('m04ringgw', 1);
     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
     // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
     // painted bands), a rounded lip bead (hot spots), a step back out (the thin dark groove); a = distance down the tunnel
@@ -505,12 +521,13 @@ export function addM04(ctx: M04Ctx) {
       pushP(r + 0.22, a + 0.01, 2);
       pushP(r + 0.17, a + 0.07, 0);
       pushP(r + 0.07, a + P * 0.5, 0);
-      pushP(r - 0.05, a + P - 0.56, 0);
-      pushP(r - 0.10, a + P - 0.48, 1);
-      pushP(r - 0.22, a + P - 0.39, 1);
-      pushP(r - 0.28, a + P - 0.27, 1);
-      pushP(r - 0.23, a + P - 0.15, 1);
-      pushP(r - 0.08, a + P - 0.07, 2);
+      // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)
+      pushP(r - 0.05, a + P - 0.56 * gw, 0);
+      pushP(r - 0.10, a + P - 0.48 * gw, 1);
+      pushP(r - 0.22, a + P - 0.39 * gw, 1);
+      pushP(r - 0.28 * Math.min(gw, 1.4), a + P - 0.27 * gw, 1);
+      pushP(r - 0.23, a + P - 0.15 * gw, 1);
+      pushP(r - 0.08, a + P - 0.07 * gw, 2);
       pushP(r + 0.22, a + P - 0.01, 2);
     }
     const tun = lathe(prof, 160, (j) => ringOf[j]);
@@ -632,6 +649,8 @@ export function addM04(ctx: M04Ctx) {
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
         uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
         uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 },
+        uLane: { value: new THREE.Vector3(M04.num('m04lane', 0), M04.num('m04lanew', 1.9), M04.num('m04lanes', 0.85)) },
+        uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
         uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
         uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
@@ -789,7 +808,10 @@ export function addM04(ctx: M04Ctx) {
     const glowC = neon ? new THREE.Color(0.22, 0.86, 1.0) : new THREE.Color(0.10, 0.62, 1.0);
     for (let a = first; a < len - 6; a += sp) {
       const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
-      const glow = new THREE.MeshBasicMaterial({ color: glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
+      // r13 `&m04a3hb=1`: a deep-blue halo with NORMAL blending (the painted arrows pop as white bars in a blue glow; an
+      // additive halo only whitened the bright cyan water round them)
+      const hb = M04.num('m04a3hb', 0) > 0;
+      const glow = new THREE.MeshBasicMaterial({ color: hb ? new THREE.Color(0.02, 0.50, 1.0) : glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: hb ? THREE.NormalBlending : THREE.AdditiveBlending });
       const m = new THREE.Mesh(base, core), g = new THREE.Mesh(halo, glow);
       m.position.set(cx, 0, z0 - a); g.position.set(cx, 0, z0 - a - 0.002);
       m.renderOrder = 5; g.renderOrder = 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';
@@ -824,7 +846,7 @@ export function addM04(ctx: M04Ctx) {
         const nearK = bz !== null ? THREE.MathUtils.smoothstep(bz - arrowsOut[i].za, b0, b1) : THREE.MathUtils.smoothstep(d, n0, n1);
         const k = arrA * nearK * (1 - THREE.MathUtils.smoothstep(d, f0, f1));
         const [core, glow] = arrowsOut[i].mats;
-        core.opacity = 0.95 * k; glow.opacity = go * k;
+        core.opacity = M04.num('m04a3co', 0.95) * k; glow.opacity = go * k;
         arrowsOut[i].mesh.visible = arrowsOut[i + 1].mesh.visible = k > 0.01;
       }
     }
