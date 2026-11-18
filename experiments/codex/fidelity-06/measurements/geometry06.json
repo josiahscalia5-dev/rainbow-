@@ -1,0 +1,33 @@
+{
+  "ring-only": {
+    "rings": 25,
+    "spacingRange": [
+      12.866096366031135,
+      12.871177780607336
+    ],
+    "largestHeadingFromFirstDegrees": 37.81564428421072,
+    "sampledCourseCenterVertices": 108,
+    "maximumFloorCenterOffset": 0
+  },
+  "ring-and-foam": {
+    "rings": 25,
+    "spacingRange": [
+      12.866096366031135,
+      12.871177780607336
+    ],
+    "largestHeadingFromFirstDegrees": 37.81564428421072,
+    "sampledCourseCenterVertices": 108,
+    "maximumFloorCenterOffset": 0
+  },
+  "retained": {
+    "rings": 25,
+    "spacingRange": [
+      12.871020016300182,
+      12.871127991749626
+    ],
+    "largestHeadingFromFirstDegrees": 0.0004450626288769964,
+    "sampledCourseCenterVertices": 108,
+    "maximumFloorCenterOffset": 0
+  },
+  "compatibleRingTubeFloorIdentical": true
+}
