@@ -708,8 +708,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 6782,
-   "sha256": "d4cdb65e4ac38d252d0afef2f178bb984dedf93fc0fa32eff2c7d2af6c9d9704"
+   "bytes": 4979,
+   "sha256": "c276a1ea4724a7b60350775dd3a6b54d061f732173aad51775c6f22625ad219c"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -718,8 +718,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13995,
-   "sha256": "198ee20ae2f858160fa0680dbef9453d8a4601e66bbf7ce54bb41ef33aba8045"
+   "bytes": 13996,
+   "sha256": "4a23c7877cd99157a2d8d058d4794208da70756852c84d7f2b01377c1b9b37fa"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1755,6 +1755,71 @@
    "path": "qa/match/05/r3_wall/riding_NEW/steer_R_050.png",
    "bytes": 2064265,
    "sha256": "bac52ba6cb47479cd1383f7faf2274be81cfd32c907b7187eabf3250797210ae"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/a00_approved_view.png",
+   "bytes": 2487034,
+   "sha256": "68aee55443b2db82806765b42bb498c89c898adfa0193bcba867b4f24a8c58d1"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/f03_forward3u.png",
+   "bytes": 2311362,
+   "sha256": "37bc26679d7a3f19583aa729857a86732878e3b65c3a271ffd08c21bc9022f73"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/f06_forward6u.png",
+   "bytes": 2302972,
+   "sha256": "cee7190042dd82d8b6b8d68fae3b9acd8d64f4d2357e652d8fbcfc006c93439d"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/f10_forward10u.png",
+   "bytes": 2353946,
+   "sha256": "050b5a6f31070e7ea7dfbd1c29cc97cdc34ccbbda91982d278a72fd91ddf84ca"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/f20_forward20u.png",
+   "bytes": 2350303,
+   "sha256": "2bc593aee27486827863d1fa33bdf24d21ff8f3d6d8281cd9c7b54329d2dda29"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/motion.json",
+   "bytes": 4652,
+   "sha256": "a594cb0975757911237827dd4d901a059e6339c7288ba6841dd1dd73c81fa2c3"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/s_left_hard.png",
+   "bytes": 2336422,
+   "sha256": "ff0b3d09fa5409c456f65a225f11b9f7945f1e49d6d12f232f9af766f22d0e08"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/s_left_steer.png",
+   "bytes": 2258699,
+   "sha256": "673e0ba312290e796455c806ec58fd832abf8b2e16cbfb079871bebf1b2bfb13"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/s_right_hard.png",
+   "bytes": 2257016,
+   "sha256": "fe17ecbe683c241102d6cf0e22de8c80966b70fff2cbaac7106ff165263f0c73"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/s_right_steer.png",
+   "bytes": 2330818,
+   "sha256": "14436fe39cbf74926c87032dda0f1385c73270b34a075c6d848ed0f97b2577e7"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/t33_through_screen.png",
+   "bytes": 2310033,
+   "sha256": "941e60b5bffce930b197080697751338b7418387e313ab0205b3d5a8cf1c68c3"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/t66_through_screen.png",
+   "bytes": 2035782,
+   "sha256": "1457127ddf902cc9a735315a1a409838e10b5e89b85a49488c3eb8da4dc30030"
+  },
+  {
+   "path": "qa/match/05/r7/BEFORE/t95_through_screen.png",
+   "bytes": 1933073,
+   "sha256": "17756caf4d593ce6c477756f9fb43aa8286ee3c65fc571e9068637b79dd05125"
   },
   {
    "path": "qa/match/05/scenery_bands.txt",
@@ -11785,6 +11850,16 @@
    "path": "tools/env05/weight_study.py",
    "bytes": 7806,
    "sha256": "e373fbb93d7e21c313a7787e57453e12205785ef92e3402cea4ccb412830aae7"
+  },
+  {
+   "path": "tools/lead_r6/motion_audit.mjs",
+   "bytes": 2965,
+   "sha256": "45fcca22b4c0688fd8b3689032709f6dd309a8e801a502baec9b6c1cbd7f4f71"
+  },
+  {
+   "path": "tools/lead_r6/motion_metrics.py",
+   "bytes": 1639,
+   "sha256": "8b7fe03e6dfa5ac495b43e795ffc70dacd6c263ae88deb748dbae1f97ec80045"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
