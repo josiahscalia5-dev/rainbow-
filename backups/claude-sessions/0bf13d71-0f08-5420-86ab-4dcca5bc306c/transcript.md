@@ -784,3 +784,237 @@ Let me look at these with my own eyes rather than trusting earlier ratings. Scre
 
 > 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/tasks/b4kcfbt7e.output | tail -5; timeout 200 git fetch origin claude/rainbow-s05-match-c9:refs/remotes/origin/claude/rainbow-s05-match-c9 2>&1 | tail -3; git log -1 --format='%h %ci %s' origin/claude/rainbow-s05-match-c9", "description": "Inspect fetch failure and retry one branch"}`
 
+### 🧑 User — 2026-11-18T10:12:37.013Z
+
+> ↩︎ result: fatal: ambiguous argument 'origin/claude/rainbow-s05-match-c9': unknown revision or path not in the working tree.
+> Use '--' to separate paths from revisions, like this:
+> 'git <command> [<revision>...] -- [<file>...]'
+> 
+> [exited with code 128]
+> From https://github.com/josiahscalia5-dev/rainbow-
+>  * [new branch]      claude/rainbow-s05-match-c9 -> origin/claude/rainbow-s05-match-c9
+> de23379 2026-11-18 03:19:18 +0000 Screen 05 r9: BLUEPRINT (measured river / banks / tunnel proportions, approved vs kept frames) + &m05geo tried (not kept) — switch-guarded, tsc clean
+
+### 🤖 Claude — 2026-11-18T10:12:39.695Z
+
+The earlier fetch had actually worked; only the follow-up `git log` failed, because a plain fetch doesn't create named refs. Fetching the other four with explicit names:
+
+### 🤖 Claude — 2026-11-18T10:12:41.409Z
+
+> 🔧 **Bash** `{"command": "for b in s04-match-c9 s06-match-c9 s07-match-c9 s08-scenery-c9; do timeout 200 git fetch -q origin claude/rainbow-$b:refs/remotes/origin/claude/rainbow-$b 2>&1 | tail -2; echo \"$b: $(git log -1 --format='%h %ci %s' origin/claude/rainbow-$b | cut -c1-170)\"; done", "description": "Fetch the other four screen branches with named refs", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T10:15:45.194Z
+
+> ↩︎ result: s04-match-c9: 05e383c9 2026-11-18 03:14:45 +0000 Screen 04 r9: BLUEPRINT (approved composition measured + overlay) and foundation test &m04lay (static forced perspective, NOT kept; mov
+> s06-match-c9: efaf78b7 2026-11-18 00:33:35 +0000 06 r7: capture log from the frozen approved-view checks
+> s07-match-c9: dbc7678c 2026-11-18 01:53:35 +0000 Screen 07 r8: correct STATUS time
+> s08-scenery-c9: c0d8c97b 2026-11-18 01:23:03 +0000 autosave: Rainbow 2026-11-18 01:22 UTC
+
+### 🤖 Claude — 2026-11-18T10:16:12.309Z
+
+> 🔧 **Grep** `{"pattern": "treadmill|scrolling world|world scrolls|camera stays|fixed camera|stays near the approved", "path": "/home/user/rainbow-/docs", "output_mode": "content", "-i": true, "head_limit": 20}`
+
+### 🧑 User — 2026-11-18T10:16:12.340Z
+
+> ↩︎ result: docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md:73:`&m04lay` NOT kept: on the fixed course the camera stays 3.39 u above the water, and the painted composition needs height /
+
+### 🤖 Claude — 2026-11-18T10:16:14.013Z
+
+> 🔧 **Bash** `{"command": "grep -rn -i \"treadmill\\|fixed camera\\|camera.*locked.*approved\\|stay.*approved view\" qa/match/*/NOTES.md qa/match/*/*/PROGRESS.md qa/lead_r6/2026-11-17/README.md 2>/dev/null | head -10; sed -n 1,60p qa/lead_r6/2026-11-17/README.md 2>/dev/null | head -70", "description": "Search QA notes for fixed-view approach and read audit"}`
+
+### 🧑 User — 2026-11-18T10:16:14.055Z
+
+> ↩︎ result: # Lead round 6 (account 6) — visual-accuracy audit of playable screens 04–08 while MOVING (2026-11-17 ~22:00–22:40 UTC)
+> 
+> Lead session `session_01VCMXoaUqBCxDq8BntT19BU`, branch `ccr-4bd35b15-7z45t0`. Read-only audit of each screen's NEWEST
+> version (04 / 05 / 06 / 07 on `claude/rainbow-preview-all-c5` @ `965e4ef9` with their OWN switches = pixel-identical to
+> their branches; 08 on `claude/rainbow-s08-scenery-c5` @ `700f09e1` with the kept round-1 set).
+> 
+> | Screen | Switches audited |
+> |---|---|
+> | 04 | `match04=1` (M3) |
+> | 05 | `match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1` (M2, line B) |
+> | 06 | `match06=1` (M1) |
+> | 07 | `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1` (M2) |
+> | 08 | `match08=1&coins08px=1&m08bw=1&m08fill=1` (scenery r1; Benny r5b) |
+> 
+> **CAVEAT 08:** at `700f09e1` (and at the r5 "final" `60e7ffe8`) the `m08fill` code and the 08-only course guard were
+> missing — a 20:52 autosave on `-c5` had committed older copies of `match08.ts` / `course.ts`; the 08 specialist restored
+> them on `claude/rainbow-s08-scenery-c6` (`c43783a7`, `8e555fdb`). So the lead's 08 frames show the round-1 set WITHOUT
+> `m08fill` (switch was a no-op).
+> 
+> ## Files
+> * `approved_view_exact/<nn>_NO …[+4757 chars]
+
+### 🤖 Claude — 2026-11-18T10:16:30.047Z
+
+> 🔧 **Bash** `{"command": "ls qa/lead_r6/2026-11-17/approved_view_exact/ qa/lead_r6/2026-11-17/audit/06/ qa/lead_r6/2026-11-17/audit/07/ 2>&1 | head -40; ls android/ | head; grep -l -i capacitor package.json android/app/build.gradle 2>/dev/null", "description": "List audit frames and check Android packaging"}`
+
+### 🧑 User — 2026-11-18T10:16:30.087Z
+
+> ↩︎ result: qa/lead_r6/2026-11-17/approved_view_exact/:
+> 04_NOW_newest_version.png
+> 04_normal_game_no_switches.jpg
+> 05_NOW_newest_version.png
+> 05_normal_game_no_switches.jpg
+> 06_NOW_newest_version.png
+> 06_normal_game_no_switches.jpg
+> 07_NOW_newest_version.png
+> 07_normal_game_no_switches.jpg
+> 08_NOW_newest_version.png
+> 08_normal_game_no_switches.jpg
+> 
+> qa/lead_r6/2026-11-17/audit/06/:
+> a00_approved_view.jpg
+> f03_forward3u.jpg
+> f06_forward6u.jpg
+> f10_forward10u.jpg
+> f20_forward20u.jpg
+> motion.json
+> s_left_hard.jpg
+> s_left_steer.jpg
+> s_right_hard.jpg
+> s_right_steer.jpg
+> t33_through_screen.jpg
+> t66_through_screen.jpg
+> t95_through_screen.jpg
+> 
+> qa/lead_r6/2026-11-17/audit/07/:
+> a00_approved_view.jpg
+> f03_forward3u.jpg
+> f06_forward6u.jpg
+> f10_forward10u.jpg
+> f20_forward20u.jpg
+> motion.json
+> s_left_hard.jpg
+> s_left_steer.jpg
+> s_right_hard.jpg
+> s_right_steer.jpg
+> t33_through_screen.jpg
+> t66_through_screen.jpg
+> app
+> build.gradle
+> capacitor.settings.gradle
+> gradle
+> gradle.properties
+> gradlew
+> gradlew.bat
+> local.properties
+> settings.gradle
+> variables.gradle
+> package.json
+> android/app/build.gradle
+
+### 🤖 Claude — 2026-11-18T10:16:35.178Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,50p tools/lead_r6/motion_audit.mjs; ls scripts/capture.mjs && sed -n 1,30p scripts/capture.mjs", "description": "Read motion audit and capture tool usage"}`
+
+### 🧑 User — 2026-11-18T10:16:35.218Z
+
+> ↩︎ result: // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [
+>   ['a00_approved_view', 0, null],
+>   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, …[+3667 chars]
+
+### 🤖 Claude — 2026-11-18T10:16:39.430Z
+
+I need the exact "kept" switch set for each screen from its own branch notes, so I render the newest version and not a guess.
+
+### 🤖 Claude — 2026-11-18T10:16:41.280Z
+
+> 🔧 **Bash** `{"command": "for b in s04-match-c9:04 s05-match-c9:05 s06-match-c9:06 s07-match-c9:07 s08-scenery-c9:08; do br=${b%%:*}; n=${b##*:}; echo \"=== $n ($br)\"; git ls-tree -r --name-only origin/claude/rainbow-$br -- qa/match/$n | grep -E \"STATUS|PROGRESS|NOTES\" | grep -v \"/r[0-9]*/.*/\" | head -8; done", "description": "Find status/progress files on each screen branch"}`
+
+### 🧑 User — 2026-11-18T10:16:41.329Z
+
+> ↩︎ result: === 04 (s04-match-c9)
+> qa/match/04/NOTES.md
+> qa/match/04/STATUS.md
+> qa/match/04/r8/PROGRESS.md
+> qa/match/04/r9/PROGRESS.md
+> === 05 (s05-match-c9)
+> qa/match/05/NOTES.md
+> qa/match/05/STATUS.md
+> qa/match/05/r8/PROGRESS.md
+> qa/match/05/r9/PROGRESS.md
+> === 06 (s06-match-c9)
+> qa/match/06/NOTES.md
+> qa/match/06/STATUS.md
+> qa/match/06/r7/NOTES.md
+> === 07 (s07-match-c9)
+> qa/match/07/NOTES.md
+> qa/match/07/STATUS.md
+> === 08 (s08-scenery-c9)
+> qa/match/08/NOTES.md
+> qa/match/08/coins08px/NOTES.md
+> qa/match/08/scenery/NOTES.md
+> qa/match/08/scenery/STATUS.md
+
+### 🤖 Claude — 2026-11-18T10:16:45.223Z
+
+> 🔧 **Bash** `{"command": "for f in \"s04-match-c9:qa/match/04/r9/PROGRESS.md\" \"s05-match-c9:qa/match/05/r9/PROGRESS.md\" \"s06-match-c9:qa/match/06/STATUS.md\" \"s07-match-c9:qa/match/07/STATUS.md\" \"s08-scenery-c9:qa/match/08/scenery/STATUS.md\"; do br=${f%%:*}; p=${f#*:}; echo \"=================== $p\"; git show origin/claude/rainbow-$br:$p | grep -n -i -E \"kept set|full kept|current kept|KEPT|query|\\?match0\" | head -8 | cut -c1-260; done", "description": "Extract kept switch sets from each screen's notes"}`
+
+### 🧑 User — 2026-11-18T10:16:45.278Z
+
+> ↩︎ result: =================== qa/match/04/r9/PROGRESS.md
+> 3:Kept query at the start of round 9 (r8 steps 1–3): `?match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1`.
+> 4:BEFORE pictures of that query at the 12 audit positions: `/home/user/wt/s04/qa/match/04/r9/BEFORE/` (`metrics.txt`).
+> 5:Every NEW set: `node tools/match04/audit04.mjs <dir> "<query>" <shots>` (same positions and names as BEFORE).
+> 6:Approved-view check: deterministic `node scripts/capture.mjs 04 --q=<query>` + `tools/match04/metrics04.py`.
+> 8:## Step 1 — `&m04mouth=1` — the approved gold washer opening with its glowing bulbs (kept)
+> 23:  98.2 % (SSIM 0.974) — same as the kept query (≤ 3 levels on the ring itself; 180 px differ at the ring's water ends).
+> 34:## Step 2 — `&m04room=1` — the laundry room stays in view while approaching (kept, modest)
+> 45:  sooner — not kept.
+> =================== qa/match/05/r9/PROGRESS.md
+> 5:Base set (BEFORE, round-8 kept query): `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1`
+> 6:— BEFORE pictures (all 12 audit positions, rendered at the start of round 9 with exactly that query, no source change):
+> 8:Pictures are rendered with `node tools/match05/r8_shots.mjs < …[+2570 chars]
+
+### 🤖 Claude — 2026-11-18T10:16:48.332Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s04-match-c9:qa/match/04/r9/PROGRESS.md | sed -n 8,12p | cut -c1-250; git show origin/claude/rainbow-s04-match-c9:qa/match/04/r9/PROGRESS.md | sed -n 34,37p | cut -c1-250; echo ===06; git show origin/claude/rainbow-s06-match-c9:qa/match/06/r7/NOTES.md | grep -n -E \"\\?match06|kept\" | head -5 | cut -c1-250; echo ===08; git show origin/claude/rainbow-s08-scenery-c9:qa/match/08/scenery/STATUS.md | sed -n 6,14p | cut -c1-250", "description": "Get exact kept sets for 04, 06 and 08"}`
+
+### 🧑 User — 2026-11-18T10:16:48.403Z
+
+> ↩︎ result: ## Step 1 — `&m04mouth=1` — the approved gold washer opening with its glowing bulbs (kept)
+> * **What looks better while swimming:** the washer opening Benny swims toward is no longer a flat, matte orange
+>   "marquee" arch with a row of evenly spaced orange dots. It is now the painted opening itself: a thick POLISHED gold
+>   band with a thin bright outer lip and a bright inner lip, bright yellow-white glow at the top, warm vertical light
+>   glows across the band, the dark groove inside it, and its glowing bulbs sitting on the lips exactly where the
+> ## Step 2 — `&m04room=1` — the laundry room stays in view while approaching (kept, modest)
+> * **What looks better while swimming:** at 3 u the laundry room above the opening now reads like the approved top
+>   area: the round porthole with its window cross, clouds and bubbles is fully visible below the title (before, it was
+>   mostly hidden behind the title), the folded pink / blue towels on the wooden shelf and the console with the glowing
+> ===06
+> 4:behind sub-switches of `?match06=1`).
+> 15:Approved view (frozen `scripts/capture.mjs 06`): BEFORE vs kept set = 416 px > 20 levels (title banner + rim pixels);
+> 31:| `m06panel=1` | procedural perforated  …[+1016 chars]
+
+### 🤖 Claude — 2026-11-18T10:17:02.451Z
+
+> 🔧 **Bash** `{"command": "nproc; free -g | head -2; cd /home/user/rainbow- && W=/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/wt && mkdir -p $W && for b in s04-match-c9 s05-match-c9 s06-match-c9 s07-match-c9 s08-scenery-c9; do [ -d $W/$b ] || git worktree add -q --detach $W/$b origin/claude/rainbow-$b 2>&1 | tail -2; ln -sfn /home/user/rainbow-/node_modules $W/$b/node_modules; [ -f $W/$b/tools/lead_r6/motion_audit.mjs ] || { mkdir -p $W/$b/tools/lead_r6; cp tools/lead_r6/* $W/$b/tools/lead_r6/; }; echo \"$b $(git -C $W/$b rev-parse --short HEAD) lfs-stubs=$(cd $W/$b && g …[+147 chars]`
+
+### 🧑 User — 2026-11-18T10:17:37.067Z
+
+> ↩︎ result: 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           1           0          13          14
+> s04-match-c9 05e383c9 lfs-stubs=0
+> s05-match-c9 de233792 lfs-stubs=0
+> s06-match-c9 efaf78b7 lfs-stubs=0
+> s07-match-c9 dbc7678c lfs-stubs=0
+> s08-scenery-c9 c0d8c97b lfs-stubs=0
+
