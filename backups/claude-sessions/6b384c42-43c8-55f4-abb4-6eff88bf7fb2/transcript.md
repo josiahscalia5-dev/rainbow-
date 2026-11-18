@@ -3198,3 +3198,48 @@ Both launched. One watch now covers the 06/07 branches and warns if the disk run
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='docs/briefs/2026-11-18-r15/COORDINATION.md'; s=open(p).read()\ns=s.replace('| 07 | (`-c11` = `-c9` `dbc7678c`) | — | READY next free slot |\\n| 06 | (`-c11` `8182130c`; bend method rejected twice — never repeat) | — | READY after 07 |',\n'| 07 | `claude/rainbow-s07-match-c15` | `dbc7678c` (= -c11/-c9/-c8) | RUNNING `water-fx-specialist` (`s07`, user asked ~18:45 to work on the other screens too), worktree `/home/user/wt/s07`, brief `S07_LAUNCH.md`: finish round-8 m07foam + m07coinsz proofs → near water → foam-bank colour / plunge lip; log `qa/mat …[+3364 chars]`
 
+### 🧑 User — 2026-11-18T18:41:34.935Z
+
+> ↩︎ result: ok
+>   "commit": "df8449461887b96a56243c843d1392c0449e6b9d",
+> HEAD df8449461887b96a56243c843d1392c0449e6b9d
+> df8449461887b96a56243c843d1392c0449e6b9d	refs/heads/ccr-47b10cec-03c7co
+
+### 🤖 Claude — 2026-11-18T18:41:38.100Z
+
+Saved (`df84494`, matching GitHub). Quick check that 06 and 07 actually started.
+
+### 🤖 Claude — 2026-11-18T18:41:40.052Z
+
+> 🔧 **Bash** `{"command": "for s in s06 s07; do echo \"$s files touched in last 3 min: $(find /home/user/wt/$s -path '*/node_modules' -prune -o -newermt '-3 minutes' -type f -print 2>/dev/null | wc -l), dirty=$(git -C /home/user/wt/$s status --short | wc -l)\"; done; ps aux | grep -c '[c]hrome-headless-shell.real --type=renderer'; uptime | sed 's/.*load/load/'; df -h / | tail -1", "description": "Check 06/07 workers activity, CPU load and disk"}`
+
+### 🧑 User — 2026-11-18T18:41:40.265Z
+
+> ↩︎ result: s06 files touched in last 3 min: 741, dirty=0
+> s07 files touched in last 3 min: 0, dirty=1
+> 3
+> load average: 9.77, 8.02, 4.97
+> /dev/vda        252G   28G   12G  71% /
+
+### 🤖 Claude — 2026-11-18T18:41:50.514Z
+
+Yes. Screens 07 and 06 now each have their own specialist, so all five playable screens are being worked on at the same time:
+
+| Screen | Worker | First job |
+|---|---|---|
+| **04** | foam worker + painted-ring test | foam as small bubble clusters; your painted rings on every 3D ring |
+| **05** | water specialist | the 05→06 transition, then the smeared left wall when steering hard left |
+| **06 (new)** | art-director specialist | compare the game with your picture at every view, then fix the biggest differences one at a time: gold rings, purple slotted walls, gold paddle lids, crest water, foam |
+| **07 (new)** | water specialist | finish the round-8 improvement that was never fully proven: the plunge's white foam walls replaced by your painted pink/cyan banks. Then the near water and the foam banks. |
+| **08** | environment specialist | wall seams, river-edge foam, spout cups |
+
+- **The tunnel problem on 06:** inside the tunnel the rings line up as a centred bullseye instead of your off-centre tunnel. Bending the tunnel to follow the river was tried twice before and looked wrong, so it won't be tried again. Instead the 06 specialist will prepare one picture-based proposal for a different fix, and I'll bring it to you to decide.
+- **The disk filled up while I was setting up 06.** I freed space without losing anything. The worker copies now leave out old screenshot archives and app builds they never use; those files stay in git and in the main project copy. It went from 1.5 GB to 12 GB free, and every worker's unfinished edits are intact. The next account's handoff explains how to avoid this.
+- **The trade-off:** six workers on a 4-core machine are heavily overloaded, so each step takes longer. Your usage will also run out faster than with two or three workers.
+
+Everything is saved on GitHub (`df84494`, matching GitHub). I'll send APPROVED / BEFORE / NEW pictures as each screen's steps finish.
+
+### 🧑 User — 2026-11-18T18:41:50.805Z
+
+To make them exactly or very close to my approved  screens Work on the visual part, like make sure that all the other screens you're working on the visual, not all technical problems. Make sure it looks like the visual part, like scenery and all the stuff that looks like my approved screens. When a pink character goes through my screens, it looks like it would have for my approved screens.
+

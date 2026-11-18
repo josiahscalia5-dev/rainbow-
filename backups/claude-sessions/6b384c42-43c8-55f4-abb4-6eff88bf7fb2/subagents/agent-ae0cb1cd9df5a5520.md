@@ -1384,3 +1384,51 @@ Meanwhile I'll write a small probe that records the `[match04]` console lines (b
 > ["[match04] m04mouth bulbs",20]
 > objects {}
 
+### 🤖 Claude — 2026-11-18T18:41:31.151Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; ls $S/clip_new | wc -l; python3 -c \"\nfrom PIL import Image\nfr=[0,12,24,36,48,60,72,84]\nims=[Image.open('$S/clip_new/%04d.png'%i).resize((216,384)) for i in fr]\nc=Image.new('RGB',(216*4,384*2))\nfor k,im in enumerate(ims): c.paste(im,((k%4)*216,(k//4)*384))\nc.save('$S/clip_sheet.png')\n\"", "description": "Contact sheet of clip frames for my own check"}`
+
+### 🧑 User — 2026-11-18T18:41:31.919Z
+
+> ↩︎ result: 86
+
+### 🤖 Claude — 2026-11-18T18:41:35.407Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/clip_sheet.png"}`
+
+### 🧑 User — 2026-11-18T18:41:35.436Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:41:40.842Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='qa/match/04/r15/PROGRESS.md'\ns=open(p).read()\na=\"About 4,000 instanced sprites (one draw call per pass).\"\nb=\"6,544 bubbles (console `[match04] m04fclu`), instanced, one draw call per pass; only near the entrance.\"\nassert a in s; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && git add src/world/match04m4.ts src/world/match04.ts qa/match/04/r15 && git status --short | head -40 && du -sh qa/match/04/r15", "description": "Type-check and stage step 1 files"}`
+
+### 🧑 User — 2026-11-18T18:41:50.219Z
+
+> ↩︎ result: M qa/capture_log.json
+> A  qa/match/04/r15/PROGRESS.md
+> A  qa/match/04/r15/s1_fclu/1_APPROVED.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/a00_approved_view.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/f03_forward3u.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/f06_forward6u.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/f10_forward10u.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/f20_forward20u.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/motion.json
+> A  qa/match/04/r15/s1_fclu/BEFORE/s_left_hard.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/s_left_steer.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/s_right_hard.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/s_right_steer.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/t33_through_screen.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/t66_through_screen.png
+> A  qa/match/04/r15/s1_fclu/BEFORE/t95_through_screen.png
+> A  qa/match/04/r15/s1_fclu/NEW/a00_approved_view.png
+> A  qa/match/04/r15/s1_fclu/NEW/f03_forward3u.png
+> A  qa/match/04/r15/s1_fclu/NEW/f06_forward6u.png
+> A  qa/match/04/r15/s1_fclu/NEW/f10_forward10u.png
+> A  qa/match/04/r15/s1_fclu/NEW/f20_forward20u.png
+> A  qa/match/04/r15/s1_fclu/NEW/motion.json
+> A  qa/match/04/r15/s1_fclu/NEW/s_left_hard.png
+> A  qa/match/04/r15/s1_fclu/NEW/s_left_steer.png
+> A  qa/match/04/r15/s1_fclu/NE …[+344 chars]
+

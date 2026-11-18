@@ -1148,3 +1148,31 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 > 43:    }, [SCREEN, dist, steer, DET]);
 > 50:  writeFileSync(`${OUT}/motion.json`, JSON.stringify({ screen: SCREEN, query: Q, deterministic: DET, shots: log }, null, 1));
 
+### 🤖 Claude — 2026-11-18T18:41:24.211Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && (M08_DET=1 timeout 1500 node tools/match08/shots08.mjs 08 qa/match/08/r15/BEFORE_K14 \"$(cat $S/K14.txt)\" 2>&1 | grep -v \"allow list\" > $S/before_k14.log; echo done >> $S/before_k14.log) &\nsleep 2; echo started", "description": "Render the deterministic 12-shot BEFORE set in the background"}`
+
+### 🧑 User — 2026-11-18T18:41:26.370Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-18T18:41:35.327Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s08/qa/match/08/r15/PROGRESS.md", "content": "# Screen 08 · Final Spin Chamber — round 15 progress (branch `claude/rainbow-s08-scenery-c15`)\n\nAuthority: `references/08_final_spin_chamber.png`. Start = `claude/rainbow-s08-scenery-c14` @ `df4a3bb7` (account 14 tip, worktree\nclean). Brief: `docs/briefs/2026-11-18-r15/S08_LAUNCH.md` (lead checkout).\nKept set at start: `K14 = K13&m08nq=1`, `K13 = K12&m08bore=1&m08flange=1&m08cupw=1`,\n`K12 = K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1`, `K11 = K10&m08ceil=1&m08near=1`,\n`K10 = match08=1&coins08px=1&m08bw=1&m0 …[+1214 chars]`
+
+### 🧑 User — 2026-11-18T18:41:35.559Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s08/qa/match/08/r15/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T18:41:39.733Z
+
+> 🔧 **Bash** `{"command": "sleep 45; cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/before_k14.log", "description": "Wait for the BEFORE render to load the page"}`
+
+### 🧑 User — 2026-11-18T18:41:39.747Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 45 followed by: cat /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/before_k14.log. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T18:41:44.252Z
+
+> 🔧 **Bash** `{"command": "L=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/before_k14.log; timeout 200 bash -c \"until grep -q a00 $L; do sleep 3; done\"; cat $L", "description": "Wait until the first BEFORE shot is written", "timeout": 220000}`
+
