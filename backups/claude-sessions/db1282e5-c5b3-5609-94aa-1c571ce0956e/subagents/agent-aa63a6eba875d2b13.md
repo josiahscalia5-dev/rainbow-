@@ -954,3 +954,189 @@ Diagnosis: hide one layer at a time (apron strip, far river, bank foam, far clou
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && for v in proj05_apron tube05_far_river foam_rim05,foam_berm foam_far05_clouds; do PRE_JS=\"(() => { const { scene } = window.__rainbow.qa3d(); const H = '$v'.split(','); scene.traverse((o) => { if (H.includes(o.name)) o.visible = false; }); })()\" node tools …[+175 chars]`
 
+### 🧑 User — 2026-11-18T14:39:01.090Z
+
+> ↩︎ result: t75_through s 175.525 lat 0 coins 1460 benny 0.23 -0.28 big coins: #24@321,853 d171 #25@489,734 d106 #26@582,647 d64
+> t75_through s 175.524 lat 0 coins 1460 benny 0.23 -0.28 big coins: #24@322,853 d171 #25@489,734 d106 #26@582,647 d64
+> t75_through s 175.524 lat 0 coins 1460 benny 0.23 -0.28 big coins: #24@322,853 d171 #25@489,734 d106 #26@582,647 d64
+> t75_through s 175.523 lat 0 coins 1460 benny 0.23 -0.28 big coins: #24@322,853 d171 #25@489,734 d106 #26@582,647 d64
+
+### 🤖 Claude — 2026-11-18T14:39:05.142Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && python3 -c \"\nfrom PIL import Image\nbox=(0,560,864,860)\nims=[Image.open('b13/t75_through.png').convert('RGB').crop(box)]+[Image.open(f'dbg_{v}/t75_through.png').convert('RGB').crop(box) for v in ['proj05_apron','tube05_far_river','foam_rim05,foam_berm','foam_far05_clouds']]\nW,H=ims[0].size\nw=Image.new('RGB',(W,H*5+40),'white')\nfor i,im in enumerate(ims): w.paste(im,(0,i*(H+10)))\nw.save('diag_t75.png')\n\"", "description": "Stack diagnosis crops for t75"}`
+
+### 🧑 User — 2026-11-18T14:39:05.627Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T14:39:06.243Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/diag_t75.png"}`
+
+### 🧑 User — 2026-11-18T14:39:06.403Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:39:19.342Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uFmD0\\|M05FMAG\" src/vfx/waterRibbon.ts | head; grep -n \"uPjT2\\b\\|uPjT2S\\|function attachProj05\\|m05fpaint\\.\" src/vfx/waterRibbon.ts | head -20", "description": "Find fmag and T2 uniform wiring in ribbon"}`
+
+### 🧑 User — 2026-11-18T14:39:19.383Z
+
+> ↩︎ result: 413:export const M05FMAG: boolean = M05BLEND && q05('m05fmag');
+> 426:export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
+> 435:export const M05FCLOUD: boolean = M05FMAG && M05CLOUD && q05('m05fcloud');
+> 713:#ifdef M05FMAG
+> 714:uniform float uFmD0;
+> 1766:        #ifdef M05FMAG
+> 1769:        float fmM = smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));
+> 2038:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+> 2142:  if (M05FMAG) u.uFmD0 = m05fmagD0;   // m05fmag (Screen 05 round 11/12): locked seam depth of the far block
+> 438:  uPjT2: { value: null as THREE.Texture | null },
+> 439:  uPjT2S: { value: new …[+1013 chars]
+
+### 🤖 Claude — 2026-11-18T14:39:39.185Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "offset": 2130, "limit": 70}`
+
+### 🧑 User — 2026-11-18T14:39:39.206Z
+
+> ↩︎ result: 2130	  // (pixel-identical locked picture). `projneardetail05` = share of the fine-streak detail layer kept on T2: default 1
+> 2131	  // (measured on ride frames at 8 / 17 / 35 u: 0 left the stretch where the tile's source is soft — 8 u — softer than
+> 2132	  // before; 1 is sharper than before in every band and showed no grain; 0 and 0.5 stay available for comparison).
+> 2133	  const NEAR = on05('projnear05');
+> 2134	  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };
+> 2135	  // ?projvp05=1 (or ?match05=1): variance-preserving E <-> tile hand-over while riding (shader pjMixVP). Mean colour =
+> 2136	  // midpoint of the means of E (0.379, 0.598, 0.912) and T2 (0.502, 0.533, 0.933), measured over their valid texels
+> 2137	  u.uPjVP = { value: new THREE.Vector4(on05('projvp05') ? 1 : 0, 0.440, 0.566, 0.922) };
+> 2138	  // m05wd (Screen 05 round 8): design layer while riding — on, detail share on the design, row smoothing step (E rows)
+> 2139	  u.uPjWD = { value: new THREE.Vector4(M05WD ? 1 : 0, THREE.MathUtils.clamp(qn('m05wdd', 0.6), 0, 1), qn('m05wds', 1.0), 0) };
+> 2140	  u.uPjSeam = m05seam;   // m05seam (Screen 05 round 8): written by src/wo …[+3618 chars]
+
+### 🤖 Claude — 2026-11-18T14:39:59.816Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export const FARW05\\|export const WATER05\\|export const FLOWMAP05\\|export const SILK05\\|export const PUFF05\\|export const FARS05\" src/vfx/waterRibbon.ts src/world/*.ts", "description": "Check which water defines match05 enables"}`
+
+### 🧑 User — 2026-11-18T14:39:59.849Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:190:export const SILK05: boolean = q05('silk05');
+> src/vfx/waterRibbon.ts:191:export const PUFF05: boolean = q05('puff05');
+> src/vfx/waterRibbon.ts:193:export const FARW05: boolean = RIVER05 || q05('farw05');
+> src/vfx/waterRibbon.ts:194:export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> src/vfx/waterRibbon.ts:195:export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+> src/world/far05.ts:140:export const FARS05: boolean = (() => {
+
+### 🤖 Claude — 2026-11-18T14:40:01.442Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 180,196p src/vfx/waterRibbon.ts", "description": "Read RIVER05 definition"}`
+
+### 🧑 User — 2026-11-18T14:40:01.473Z
+
+> ↩︎ result: /**
+>  * Screen 05 test W12 (2026-11-16, qa/pilot05/wave12/NOTES.md), two more single factors on top of `?river05=1` (each
+>  * switch turns river05 on; default build untouched):
+>  *  `?silk05=1`  WATER MATERIAL: the user found river05 "too grainy" — one broad ripple octave on a longer tile, the fine
+>  *               brushed cores / ripple crests / second flare set mostly removed, highlights and panorama reflections
+>  *               keep the water's own cyan / magenta hue (only the strongest burn white): long, smooth, flow-aligned
+>  *               satin lanes and a deep electric cyan instead of a pastel sheet of hair lines.
+>  *  `?puff05=1`  FOAM BANKS: where the puff cells of the W11 foam shelves get too small they fall back to a coarser
+>  *               cell layer (round mounds at every distance) instead of the flat lavender fill that drew hard wedges.
+>  */
+> export const SILK05: boolean = q05('silk05');
+> export const PUFF05: boolean = q05('puff05');
+> export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
+> export const FARW05: boolean = RIVER05 || q05('farw05');
+> export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> export const WATER05: boolean = q05('water05') || FARW05 | …[+12 chars]
+
+### 🤖 Claude — 2026-11-18T14:40:17.940Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "/** m05fpaint: shared uniforms (T2 texture + its start / half period, the ribbon's flow vector), filled by attachProj05 */", "new_string": "/**\n * `&m05join=1` (Screen 05 round 13, needs m05fpaint; src/world/match05far.ts, src/world/materials.ts farRiverMaterial):\n * ONE CONTINUOUS RIVER AT THE SEAM while swimming. Where the baked far picture F would be magnified, m05fmag still faded\n * the near ribbon into F over its last 1.5 u and the far river kept F over its first 2.5 u — a narrow band of magn …[+1327 chars]`
+
+### 🧑 User — 2026-11-18T14:40:17.991Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:40:25.242Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "#ifdef M05FMAG\nuniform float uFmD0;\n#endif\n#endif", "new_string": "#ifdef M05FMAG\nuniform float uFmD0;\n#endif\n#ifdef M05JOIN\n// m05join (Screen 05 round 13): the far layout table (match05far.ts) + the far river's band mapping onto T2 (as\n// materials.ts FPAINT_PARS: T2 columns left band -0.76 … -0.60, core -0.27, right band 0.06 … 0.45)\nuniform sampler2D uJnLay; uniform vec4 uJnP;\nvoid jnRow(float Z, out vec4 a, out vec4 b) {\n  float x = clamp(Z / uJnP.y, 0.0, 1.0) * (uJnP.z - 1.0);\n  flo …[+1134 chars]`
+
+### 🧑 User — 2026-11-18T14:40:25.293Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:40:27.092Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "    float fbK = 0.0;\n    vec4 fbC = vec4(0.0);\n    if (uFbP.w > 0.5 && uFbP.y > 0.01) {", "new_string": "    float fbK = 0.0;\n    vec4 fbC = vec4(0.0);\n    #ifdef M05JOIN\n    float jnK = 0.0;                               // m05join: share of the far river's painted continuation\n    #endif\n    if (uFbP.w > 0.5 && uFbP.y > 0.01) {"}`
+
+### 🧑 User — 2026-11-18T14:40:27.139Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:40:30.395Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "        float fmM = smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));\n        fbK *= mix(1.0, smoothstep(uFbP.x - min(uFbP.y, 1.5), uFbP.x, fbZ) / max(fbW, 1e-3), fmM);", "new_string": "        float fmM = smoothstep(1.4, 2.2, (uFmD0 + max(fbZ, 0.0)) / max(length(vPosW - cameraPosition), 0.5));\n        #ifdef M05JOIN\n        // m05join: no magnified F at all; over the whole blend band the ribbon fades into the far river's continuation\n        jnK = fbW * fm …[+202 chars]`
+
+### 🧑 User — 2026-11-18T14:40:30.444Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:40:34.203Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "    pjK = max(pjK, fbK);\n    #endif", "new_string": "    pjK = max(pjK, fbK);\n    #ifdef M05JOIN\n    pjK = max(pjK, jnK);\n    #endif\n    #endif"}`
+
+### 🧑 User — 2026-11-18T14:40:34.244Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:40:39.655Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "      #ifdef M05BLEND\n      tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)\n      wEx = mix(wEx, 1.0, fbK);\n      #endif", "new_string": "      #ifdef M05BLEND\n      tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)\n      wEx = mix(wEx, 1.0, fbK);\n      #ifdef M05JOIN\n      if (jnK > 0.0) {\n        // m05join: the far river's painted continuation at this poin …[+902 chars]`
+
+### 🧑 User — 2026-11-18T14:40:39.716Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T14:40:44.859Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\na=\"...(M05FMAG ? { M05FMAG: 1 } : {}), \"\nassert s.count(a)==1\ns=s.replace(a, a+\"...(M05JOIN ? { M05JOIN: 1 } : {}), \")\nb=\"  if (M05FMAG) u.uFmD0 = m05fmagD0;   // m05fmag (Screen 05 round 11/12): locked seam depth of the far block\\n\"\nassert s.count(b)==1\ns=s.replace(b, b+\"  if (M05JOIN) Object.assign(u, m05join);   // m05join (Screen 05 round 13): far layout table, filled by match05far.ts\\n\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"customProgramCacheKey\" src/vfx/waterRibbon.ts |  …[+56 chars]`
+
+### 🧑 User — 2026-11-18T14:40:44.922Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T14:40:49.075Z
+
+Now the far-river side (materials.ts): under M05JOIN, F off and the painted continuation on from the far river's very first row where magnified.
+
+### 🤖 Claude — 2026-11-18T14:40:57.488Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\nold_imp=\"import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';\"\nassert s.count(old_imp)==1\ns=s.replace(old_imp,\"import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, M05JOIN, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';\")\nold_fp=\"    float fpW = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist …[+1402 chars]`
+
+### 🧑 User — 2026-11-18T14:40:57.550Z
+
+> ↩︎ result: 7:import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, M05JOIN, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
+> 884:    float fpW = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist, 0.5))${M05JOIN ? '' : ' * smoothstep(uFbP.x, uFbP.x + 2.5, Zv)'};
+> 898:const FMAG_PRE = `float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5))${M05JOIN ? '' : ' * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w)'};\n  `;   // m05join (round 13): no F ramp behind the seam
+> 1203:    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '') + (M05JOIN ? '-m05join' : '');
+
+### 🤖 Claude — 2026-11-18T14:41:03.009Z
+
+Now fill the layout table in match05far.ts.
+
+### 🤖 Claude — 2026-11-18T14:41:08.728Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/match05far.ts'\ns=open(p).read()\nold=\"import { EDGE_LIFT, M05BLEND, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05seam } from '../vfx/waterRibbon';\"\nassert s.count(old)==1\ns=s.replace(old,\"import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';\")\nanchor=\"\"\"    return o;\n  };\n\n  // live state\n\"\"\"\nassert s.count(anchor)==1\ns=s.replace(anchor,\"\"\"    return o;\n  };\n  if (M05JOIN) {\n    // `&m05join=1` (Scree …[+920 chars]`
+
+### 🧑 User — 2026-11-18T14:41:12.393Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T14:41:15.232Z
+
+Typecheck passes. Render NEW (+`&m05join=1`) at the join positions.
+
+### 🤖 Claude — 2026-11-18T14:41:18.532Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1' && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad && node tools/match05/r8_shots.mjs $S/j1 \"$K&m05join=1\" t66_through_screen,t75_through,k81_kink,t85_through,t90_through,t95_through_screen 5291 2>&1 | grep -v \"^t\\|^k\" | head; ls $S/j1", "description": "Render m05join NEW shots", "timeout": 600000}`
+

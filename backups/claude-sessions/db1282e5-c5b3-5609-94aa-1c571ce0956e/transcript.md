@@ -2449,3 +2449,335 @@ Now I'll render variant E1 in the real game: neon white bars with a cyan glow, f
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82\"; E3=\"$K&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=3&m04a3o=1.0&m04a3n0=8.4&m04a3n1=9.8&m04a3f0=25&m04a3f1=31&m04a3p=3.6&m04a3w=1.05&m04a3t=0.36&m04a3d=0.62&m04a3f=4&m04a3y=0.1\"; echo \"$E3\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E3.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s2_arr/E3 \"$E3\" 2>&1 | tail -1; cd qa/match/04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-9 …[+474 chars]`
 
+### 🧑 User — 2026-11-18T14:36:57.947Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> 1.2613e+06 px differ at start view vs kept
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:37:01.094Z
+
+Almost every pixel of the start view differs from the kept version, which can't be right for a change that should be invisible there. I'll check whether that's real or just animation noise.
+
+### 🤖 Claude — 2026-11-18T14:37:04.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04 && for f in 2 5 10; do echo \"fuzz $f%: $(compare -fuzz $f% -metric AE r13/s2_arr/E3/a00_approved_view.png r12/s1_chan/B/a00_approved_view.png null: 2>&1)\"; done; echo \"E1 vs E3 a00: $(compare -fuzz 2% -metric AE r13/s2_arr/E3/a00_approved_view.png r13/s2_arr/E1/a00_approved_view.png null: 2>&1)\"; S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; montage r12/s1_chan/B/a00_approved_view.png r13/s2_arr/E3/a00_approved_view.png -tile 2x1 -geometry 300x533+3+3 $S/a00cmp.jpg", "description": "Compare start views wit …[+13 chars]`
+
+### 🧑 User — 2026-11-18T14:37:05.528Z
+
+> ↩︎ result: fuzz 2%: 1.10382e+06
+> fuzz 5%: 920097
+> fuzz 10%: 701134
+> E1 vs E3 a00: 487953
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:37:07.579Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/a00cmp.jpg"}`
+
+### 🧑 User — 2026-11-18T14:37:07.601Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:37:12.353Z
+
+Both start views look identical by eye; the pixel differences come from the animated water and bubbles, which differ between any two renders. Now the E3 close-ups:
+
+### 🤖 Claude — 2026-11-18T14:37:13.404Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E3.jpg"}`
+
+### 🧑 User — 2026-11-18T14:37:13.426Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:37:28.237Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82\"; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s2_arr/BEFORE \"$K\" 2>&1 | tail -1; ls qa/match/04/r13/s2_arr/BEFORE | wc -l", "description": "Render BEFORE at all gameplay positions", "timeout": 960000}`
+
+### 🧑 User — 2026-11-18T14:39:04.340Z
+
+> ↩︎ result: 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+> 13
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:39:07.679Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r13/s2_arr && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; montage BEFORE/t95_through_screen.png E3/t95_through_screen.png BEFORE/s_right_hard.png E3/s_right_hard.png BEFORE/t66_through_screen.png E3/t66_through_screen.png -tile 6x1 -geometry 260x462+3+3 $S/E3_end.jpg && echo ok", "description": "Internal check of end and right-steer views"}`
+
+### 🧑 User — 2026-11-18T14:39:08.317Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:39:10.334Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E3_end.jpg"}`
+
+### 🧑 User — 2026-11-18T14:39:10.359Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:39:17.598Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"m04.*update\\|\\.update(camera\\|match04.*update\\|m04Out\\|addM04(\" src --include=*.ts | grep -v \"^src/world/match04m4.ts\" | head -8; grep -n \"out.update\\|export interface M04Out\\|update:\" src/world/match04m4.ts | head -5", "description": "Find where Screen 04 scenery update is called"}`
+
+### 🧑 User — 2026-11-18T14:39:17.644Z
+
+> ↩︎ result: src/world/match04.ts:293:  const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+> src/world/match04.ts:428:      if (m4 && camera) m4.update(camera.getWorldPosition(_cp));
+> 805:  out.update = (cam: THREE.Vector3) => {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:39:19.512Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 415,432p src/world/match04.ts; grep -n \"benny\\|Benny\" src/world/match04.ts | head -10", "description": "Read the Screen 04 update call context"}`
+
+### 🧑 User — 2026-11-18T14:39:19.550Z
+
+> ↩︎ result: renderer.render(scene, proj);
+>       // r11 m04mv: each extra view's own depth bake (its overlay copies are excluded)
+>       if (mvViews.length) {
+>         clone.traverse((o) => { if (o.userData.mv) o.visible = false; });
+>         for (const v of mvViews) { renderer.setRenderTarget(v.rt); renderer.clear(); renderer.render(scene, v.cam); }
+>       }
+>       renderer.setRenderTarget(prevRT);
+>       shared.uUseDepth.value = 1;
+>     },
+>     sync(renderer, w, h, camera?: THREE.Camera) {
+>       if (camera && !FAL04) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
+>       shared.uPjPost.value.x = renderer.toneMappingExposure;
+>       shared.uPjRes.value.set(w, h);
+>       if (m4 && camera) m4.update(camera.getWorldPosition(_cp));
+>       // r11 m04mv: full weight within 3 u of a view's camera, gone at 8 u (the approved camera is ~10 u from V04-1's)
+>       if (mvViews.length && camera) {
+>         const cp = camera.getWorldPosition(_cp);
+>         mvU.uW0.value = 1 - THREE.MathUtils.smoothstep(cp.distanceTo(mvViews[0].pos), 3, 8);
+> 6: * (porthole, towels, control panel, foam) and the water plane at Benny's water level (swirls, chevron arrows, foam) …[+1110 chars]
+
+### 🤖 Claude — 2026-11-18T14:39:24.941Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"splash04\\|splashOffset\\|\\.sync(\" src/game/Game.ts | head -8", "description": "Find where Game passes Benny data to Screen 04"}`
+
+### 🧑 User — 2026-11-18T14:39:24.970Z
+
+> ↩︎ result: 560:      if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+> 564:      if (m04On) { m04.splash.position.copy(benny.root.position).add(m04.splashOffset); m04.splash.quaternion.copy(camera.quaternion); }
+> 594:      m08.sync(renderer, dbs.x, dbs.y);
+> 601:      m04.sync(renderer, dbs.x, dbs.y, camera);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:39:30.233Z
+
+The game already places Benny's splash at his exact position every frame, just before the scenery update, so I can measure the chevron fade from Benny himself. I'll look at how that splash is stored.
+
+### 🤖 Claude — 2026-11-18T14:39:31.439Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"splashOffset\\|splash:\" src/world/match04.ts | head -6; grep -n \"^  return\\|^  const out\\|^  const api\" src/world/match04.ts | head -5", "description": "Locate splash fields in the Screen 04 module"}`
+
+### 🧑 User — 2026-11-18T14:39:31.479Z
+
+> ↩︎ result: 35:  /** milestone 3: the approved splash around Benny (camera-facing card; Game places it at Benny + splashOffset); null = `&splash04=0` */
+> 36:  splash: THREE.Mesh | null;
+> 37:  splashOffset: THREE.Vector3;
+> 384:  let splash: THREE.Mesh | null = null;
+> 404:    splashOffset: new THREE.Vector3(...SP.offset),
+> 86:  return texture2D(uPatch, p.zy).rgb * n.x + texture2D(uPatch, p.xz).rgb * n.y + texture2D(uPatch, p.xy).rgb * n.z;
+> 116:  return pc;
+> 352:  return vec4(c.rgb, c.a * vis);
+> 360:  return vec3(1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs), texture2D(V, uv).a, 1.0);
+> 401:  return {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:39:33.099Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04.ts", "offset": 384, "limit": 22}`
+
+### 🧑 User — 2026-11-18T14:39:33.116Z
+
+> ↩︎ result: 384	  let splash: THREE.Mesh | null = null;
+> 385	  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());
+> 386	  if (SPLASH04) {
+> 387	    const spTex = await new THREE.TextureLoader().loadAsync(tex('splash04.png'));
+> 388	    spTex.colorSpace = THREE.NoColorSpace;
+> 389	    splash = new THREE.Mesh(new THREE.PlaneGeometry(SP.w, SP.h), new THREE.ShaderMaterial({
+> 390	      transparent: true, depthWrite: false, fog: false,
+> 391	      uniforms: { uTex: { value: spTex }, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes },
+> 392	      vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+> 393	      fragmentShader: `uniform sampler2D uTex; uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec2 vUv;\n${PROJ05_INVERSE}
+> 394	void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragColor = vec4(pjInverse(c.rgb), c.a); }`,
+> 395	    }));
+> 396	    splash.name = 'm04_splash';
+> 397	    splash.visible = false;
+> 398	    splash.renderOrder = 5;
+> 399	  }
+> 400	
+> 401	  return {
+> 402	    group,
+> 403	    splash,
+> 404	    splashOffset: new THREE.Vector3(...SP.o …[+37 chars]
+
+### 🤖 Claude — 2026-11-18T14:39:45.565Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04.ts'; s=open(p).read()\nrep=[(\"\"\"    splashOffset: new THREE.Vector3(...SP.offset),\n    bakeDepth(renderer) {\"\"\",\"\"\"    splashOffset,\n    bakeDepth(renderer) {\"\"\"),\n(\"\"\"  return {\n    group,\n    splash,\n\"\"\",\"\"\"  const splashOffset = new THREE.Vector3(...SP.offset);\n  const _bp = new THREE.Vector3();\n  return {\n    group,\n    splash,\n\"\"\"),\n(\"\"\"      if (m4 && camera) m4.update(camera.getWorldPosition(_cp));\"\"\",\"\"\"      // r13: Benny's world position (Game puts the splash at B …[+1819 chars]`
+
+### 🧑 User — 2026-11-18T14:39:45.627Z
+
+> ↩︎ result: ok
+> 483:  const out: { update(cam: THREE.Vector3): void } = { update() {} };
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:39:49.774Z
+
+I wrote the wrong sign for Benny's position along the tunnel; it must match the camera's convention. Fixing it, plus the type declaration:
+
+### 🤖 Claude — 2026-11-18T14:39:52.213Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nrep=[(\"? -benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z\",\"? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)\"),\n(\"const out: { update(cam: THREE.Vector3): void } = { update() {} };\",\"const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };\")]\nfor a,b in rep:\n    assert s.count(a)==1, a[:60]; s=s.replace(a,b)\nopen(p,'w').write(s); print('ok')\nEOF\nnpx tsc --noEmit -p . 2>&1 | tail -3; grep -n \"m …[+102 chars]`
+
+### 🧑 User — 2026-11-18T14:39:54.764Z
+
+> ↩︎ result: ok
+> src/world/match04.ts:431:      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined);
+> src/world/match04m4.ts:483:  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:40:01.998Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"add(m04.splash\\|m04.splash)\" src/game/Game.ts | head -3; K=\"match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82\"; E4=\"$K&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=3&m04a3o=1.0&m04a3b=1&m04a3b0=1.8&m04a3b1=3.2&m04a3f0=25&m04a3f1=31&m04a3p=3.6&m04a3w=1.05&m04a3t=0.36&m04a3d=0.62&m04a3f=4&m04a3y=0.1\"; echo \"$E4\" > /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E4.q; timeout 900 node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r13/s2_arr/E4 \"$E4\" 2>&1 | grep  …[+410 chars]`
+
+### 🧑 User — 2026-11-18T14:40:49.673Z
+
+> ↩︎ result: 119:  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); if (m04.splash) scene.add(m04.splash); }
+> 564:      if (m04On) { m04.splash.position.copy(benny.root.position).add(m04.splashOffset); m04.splash.quaternion.copy(camera.quaternion); }
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:40:51.788Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E4.jpg"}`
+
+### 🧑 User — 2026-11-18T14:40:51.860Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T14:41:01.195Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls tools/lead_r6/ tools/ | grep -iE \"clip|video|swim|preview|mp4|webm\" | head; grep -rlE \"recordVideo|ffmpeg\" tools --include=*.mjs 2>/dev/null | head -5", "description": "Look for an existing swimming preview tool"}`
+
+### 🧑 User — 2026-11-18T14:41:01.239Z
+
+> ↩︎ result: bisect_preview08.mjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:41:03.245Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rlE \"recordVideo|ffmpeg|\\.webm|\\.mp4\" tools scripts 2>/dev/null | head -6", "description": "Search tools for video capture scripts"}`
+
+### 🧑 User — 2026-11-18T14:41:03.295Z
+
+> ↩︎ result: scripts/cinematic-test.mjs
+> scripts/claude-bootstrap.sh
+> scripts/proj05-move.mjs
+> scripts/apk-web-check.mjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:41:05.142Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,25p scripts/proj05-move.mjs | cut -c1-220", "description": "Read the existing gameplay clip script header"}`
+
+### 🧑 User — 2026-11-18T14:41:05.190Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const Q = typeof opt.q === 'string' ? opt.q : '';
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+> const D = typeof opt.d === 'string' ? opt.d.split(',').map(Number) : [];
+>  …[+687 chars]
+
+### 🤖 Claude — 2026-11-18T14:41:06.993Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"goto(\\|'05'\\|clip\" scripts/proj05-move.mjs | head -12", "description": "Check whether the clip script is fixed to Screen 05"}`
+
+### 🧑 User — 2026-11-18T14:41:07.040Z
+
+> ↩︎ result: 4://   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> 6:// --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> 23:  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> 32:    await page.evaluate(() => window.__rainbow.goto('05'));
+> 44:    await page.evaluate(() => window.__rainbow.goto('05'));
+> 54:      await page.evaluate(() => window.__rainbow.goto('05'));
+> 65:    // a steering clip with the clock running: left, right, left (flow + Benny moving across the water)
+> 68:    await page.evaluate(() => window.__rainbow.goto('05'));
+> 77:  if (opt.clip) {
+> 78:    mkdirSync(`${OUT}/clip`, { recursive: true });
+> 79:    const n = Math.round(Number(opt.clip) * fps);
+> 80:    await page.evaluate(() => window.__rainbow.goto('05'));
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T14:41:08.768Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/scripts/proj05-move.mjs", "offset": 60, "limit": 40}`
+
+### 🧑 User — 2026-11-18T14:41:08.798Z
+
+> ↩︎ result: 60	        console.log('steer', dir, t, JSON.stringify(log.frames.at(-1).lat));
+> 61	      }
+> 62	    }
+> 63	  }
+> 64	  if (opt.zigzag) {
+> 65	    // a steering clip with the clock running: left, right, left (flow + Benny moving across the water)
+> 66	    mkdirSync(`${OUT}/zigzag`, { recursive: true });
+> 67	    const n = Math.round(Number(opt.zigzag) * fps);
+> 68	    await page.evaluate(() => window.__rainbow.goto('05'));
+> 69	    for (let i = 0; i < n; i++) {
+> 70	      const ph = (i / n) * 3;
+> 71	      const dir = ph < 0.5 ? -1 : ph < 1.5 ? 1 : ph < 2.5 ? -1 : 1;
+> 72	      await page.evaluate(([t, dt, dir]) => { const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); }, [12 + i / fps, 1 / fps, dir]);
+> 73	      await shot(`${OUT}/zigzag/${String(i).padStart(4, '0')}.png`, { t: 12 + (i + 1) / fps, steer: dir });
+> 74	    }
+> 75	    console.log('zigzag frames', n);
+> 76	  }
+> 77	  if (opt.clip) {
+> 78	    mkdirSync(`${OUT}/clip`, { recursive: true });
+> 79	    const n = Math.round(Number(opt.clip) * fps);
+> 80	    await page.evaluate(() => window.__rainbow.goto('05'));
+> 81	    for (let i = 0; i < n; i++) {
+> 82	      await page.evaluate(([t, dt …[+437 chars]
+
+### 🤖 Claude — 2026-11-18T14:41:11.504Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/scripts/proj05-move.mjs", "offset": 25, "limit": 8}`
+
+### 🧑 User — 2026-11-18T14:41:11.523Z
+
+> ↩︎ result: 25	  const shot = async (file, extra) => {
+> 26	    await page.evaluate(() => window.__rainbow.drawList());
+> 27	    await page.screenshot({ path: file });
+> 28	    const st = await page.evaluate(() => window.__rainbow.state());
+> 29	    log.frames.push({ file, ...extra, s: st.s, cam: st.cam, lat: st.lat });
+> 30	  };
+> 31	  if (D.length) {
+> 32	    await page.evaluate(() => window.__rainbow.goto('05'));
+
+### 🤖 Claude — 2026-11-18T14:41:21.687Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04/tools/lead_r13/swim_clip.mjs", "content": "#!/usr/bin/env node\n// Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).\n// Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with\n// the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …\n// Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4\n//   node tools/lead_r13/swim_clip. …[+1692 chars]`
+
+### 🧑 User — 2026-11-18T14:41:21.723Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04/tools/lead_r13/swim_clip.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T14:41:24.245Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && E4=$(cat /tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/E4.q); C=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/clip04; rm -rf $C; time (timeout 1200 node tools/lead_r13/swim_clip.mjs 04 $C 6 \"$E4\" 2>&1 | tail -2); ls $C | wc -l", "description": "Capture a 6-second real gameplay clip of E4", "timeout": 1260000}`
+
