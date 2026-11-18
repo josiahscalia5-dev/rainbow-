@@ -205,6 +205,9 @@ void main() {
     return;
   }
   vec3 t = pc;
+#ifdef PAINTED_PADDLE_FACE
+  float wallOnPaddle = 0.0;
+#endif
   vec3 nn = normalize(vN);
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
   // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
@@ -233,7 +236,20 @@ void main() {
       // the approved start view stays exactly as it was; the painted near river takes over as the view magnifies the water
       vec3 pcf = pc;
       if (uNearOn > 0.5 && uMode > 1.5) pcf = mix(pc, riverTile(), keep * vis);
-      t = mix(pcf, texture2D(uPlate, uv).rgb, w);
+      vec3 projectedPaint = texture2D(uPlate, uv).rgb;
+      t = mix(pcf, projectedPaint, w);
+#ifdef PAINTED_PADDLE_FACE
+      // Keep the actual approved front and underside, including their purple shadow.
+      // Only purple wall paint from outside the paddle silhouette needs a substitute on this mesh.
+      vec2 sourcePx = vec2(uv.x * 864.0, (1.0 - uv.y) * 1536.0);
+      vec2 maskUV = (sourcePx - vec2(336.0, 382.0)) / vec2(108.0, 76.0);
+      float onPaddle = 0.0;
+      if (all(greaterThanEqual(maskUV, vec2(0.0))) && all(lessThanEqual(maskUV, vec2(1.0)))) {
+        onPaddle = texture2D(uPaddleFace, vec2(maskUV.x, 1.0 - maskUV.y)).a;
+      }
+      float violetWall = smoothstep(0.025, 0.16, projectedPaint.b - projectedPaint.g);
+      wallOnPaddle = w * (1.0 - onPaddle) * violetWall;
+#endif
     }
   }
 #ifdef PAINTED_PADDLE_FACE
@@ -249,7 +265,8 @@ void main() {
   vec3 viewDir = normalize(cameraPosition - vW);
   float glint = pow(max(dot(reflect(-uKey, nn), viewDir), 0.0), 32.0);
   enamel += vec3(0.15, 0.12, 0.08) * glint;
-  t = mix(t, enamel, smoothstep(0.45, 2.5, distance(cameraPosition, uProjPos)));
+  float riding = smoothstep(0.45, 2.5, distance(cameraPosition, uProjPos));
+  t = mix(t, mix(pc, enamel, 0.32), riding * wallOnPaddle);
 #endif
   gl_FragColor = vec4(pjInverse(t), 1.0);
 }`;
