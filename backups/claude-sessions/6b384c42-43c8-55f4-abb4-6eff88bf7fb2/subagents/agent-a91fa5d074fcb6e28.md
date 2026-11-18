@@ -1047,3 +1047,108 @@ Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S05_LAUNCH.md exa
 >   };
 >   const war …[+4444 chars]
 
+### 🤖 Claude — 2026-11-18T18:28:37.475Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export function flag05\\|export const flag05\" -A6 src/vfx/waterRibbon.ts | head -12; grep -n \"setStage\\|stageOf\" src/game/Game.ts | head -5; grep -n \"blend\\|lerp\" src/game/cameraRig.ts | head -20", "description": "Check flag05 and camera blending"}`
+
+### 🧑 User — 2026-11-18T18:28:37.531Z
+
+> ↩︎ result: 161:export const flag05 = q05;
+> 162-/**
+> 163- * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+> 164- * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+> 165- * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+> 166- * at half the ride speed while still moving downstream in the world.
+> 167- */
+> 134:  const stageOf = (s: number): StageId => course.stageAtS(s).id;
+> 136:  const setStage = (id: StageId) => {
+> 139:    hud.setStage(id);
+> 215:    if (t >= T.spin && st.stage === '01') { st.stage = '02'; hud.setStage('02'); }
+> 327:    setStage('03');
+> 39:/** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */
+> 43:export function camParamsAt(course: Course, s: number, blend = 8): CamParams {
+> 49:    const a = THREE.MathUtils.smoothstep(s, st.s0 - blend, st.s0 + blend) * (1 - THREE.MathUtils.smoothstep(s, st.s1 - blend, st.s1 + blend));
+> 75:    const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+> 82:        dir.lerp(af.tan, w).normalize();
+> 83:        up.ler …[+861 chars]
+
+### 🤖 Claude — 2026-11-18T18:28:46.403Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"qaNum05 =\\|function qaNum05\\|const q05\\|function q05\" -A4 src/world/*.ts src/vfx/*.ts | head -20", "description": "Find qaNum05 helper"}`
+
+### 🧑 User — 2026-11-18T18:28:46.441Z
+
+> ↩︎ result: src/world/environment.ts:279:  const qaNum05 = (key: string, d: number) => {
+> src/world/environment.ts-280-    const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
+> src/world/environment.ts-281-    return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
+> src/world/environment.ts-282-  };
+> src/world/environment.ts-283-  const RING_A05_DEPTH = qaNum05('ringa', 20);
+> --
+> src/vfx/waterRibbon.ts:152:const q05 = (key: string): boolean => {
+> src/vfx/waterRibbon.ts-153-  try {
+> src/vfx/waterRibbon.ts-154-    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+> src/vfx/waterRibbon.ts-155-  } catch {
+> src/vfx/waterRibbon.ts-156-    /* no location (vite-node / workers) */
+
+### 🤖 Claude — 2026-11-18T18:28:48.891Z
+
+Let me add an exploratory switch with tunable fold window to see what the stage end looks like with the 05 block kept intact.
+
+### 🤖 Claude — 2026-11-18T18:28:53.455Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\nold=\"zCap: sGlow05 + 3.5 - sF05, foldNear: M05END ? 5.2 : 6.5, foldFar: M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06\"\nnew=\"zCap: sGlow05 + 3.5 - sF05, foldNear: M05TRANS ? qaNum05('m05tfn', 5.1) : M05END ? 5.2 : 6.5, foldFar: M05TRANS ? qaNum05('m05tff', 5.2) : M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06\"\nassert old in s\ns=s.replace(old,new)\ns=s.replace(\"import { M05FAR, M05END, createLiveFar05 } from './match05far';\",\"import { M05FAR, M05END …[+663 chars]`
+
+### 🧑 User — 2026-11-18T18:28:53.517Z
+
+> ↩︎ result: src/world/environment.ts:18:import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+> src/world/environment.ts:639:      zCap: sGlow05 + 3.5 - sF05, foldNear: M05TRANS ? qaNum05('m05tfn', 5.1) : M05END ? 5.2 : 6.5, foldFar: M05TRANS ? qaNum05('m05tff', 5.2) : M05END ? 6.8 : 10,   // m05end (r11): folds as Benny reaches 06
+> src/world/match05far.ts:44:export const M05TRANS: boolean = M05END && flag05('m05trans');
+
+### 🤖 Claude — 2026-11-18T18:28:59.549Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r15/KEPT_START.txt) && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/late \"$Q&m05trans=1&m05tfn=3.0&m05tff=3.1\" x97,t98_end,x99,x101,x103 5275 2>&1 | tail -6", "description": "Render hand-over with the far block kept live longer", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T18:30:18.820Z
+
+> ↩︎ result: t98_end s 188.474 lat 0 coins 1580 benny -0.19 -0.52 big coins: -
+> x97 s 187.807 lat 0 coins 1580 benny -0.18 -0.44 big coins: -
+> x99 s 189.089 lat 0 coins 1580 benny -0.17 -0.61 big coins: -
+> x101 s 190.191 lat 0 coins 1580 benny -0.14 -0.73 big coins: -
+> x103 s 191.291 lat 0 coins 1580 benny -0.1 -0.78 big coins: -
+
+### 🤖 Claude — 2026-11-18T18:30:22.116Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/late/t98_end.png"}`
+
+### 🧑 User — 2026-11-18T18:30:22.173Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:30:22.827Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/late/x99.png"}`
+
+### 🧑 User — 2026-11-18T18:30:22.869Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:30:23.482Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/late/x101.png"}`
+
+### 🧑 User — 2026-11-18T18:30:23.523Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:30:30.984Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/late/x103.png"}`
+
+### 🧑 User — 2026-11-18T18:30:31.035Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:31:28.704Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r15/KEPT_START.txt) && timeout 900 node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/dbg/late2 \"$Q&m05trans=1&m05tfn=0.3&m05tff=0.35\" x102,x103,x104,x105,x106 5275 2>&1 | tail -6", "description": "Render later hand-over positions with the block kept live", "timeout": 900000}`
+

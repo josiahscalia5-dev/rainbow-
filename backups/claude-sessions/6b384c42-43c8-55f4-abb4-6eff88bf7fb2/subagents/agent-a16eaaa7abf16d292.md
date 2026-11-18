@@ -689,3 +689,45 @@ Let me add a QA-only debug output to the floor shader to map frame pixels back t
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && M08_ONLY=f03 timeout 400 node tools/match08/shots08.mjs 08 $S/dbg_uv \"$(cat $S/K14.txt)&m08dbguv=1\" 2>&1 | head -30; uptime", "description": "Retry the debug render and show the error", "timeout": 420000}`
 
+### 🧑 User — 2026-11-18T18:32:12.476Z
+
+> ↩︎ result: Error:   Failed to scan for dependencies from entries:
+>   /home/user/wt/s08/index.html
+> 
+>   [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mInvalid assignment target[0m
+> 
+>     src/world/match08.ts:51:24:
+> [37m      51 │ const FRAG = /* glsl */ [32m[37m`
+>          ╵                         [32m^[0m
+> 
+> 
+>     at failureErrorWithLog (/home/user/rainbow-/node_modules/esbuild/lib/main.js:1472:15)
+>     at /home/user/rainbow-/node_modules/esbuild/lib/main.js:945:25
+>     at runOnEndCallbacks (/home/user/rainbow-/node_modules/esbuild/lib/main.js:1315:45)
+>     at buildResponseToResult (/home/user/rainbow-/node_modules/esbuild/lib/main.js:943:7)
+>     at /home/user/rainbow-/node_modules/esbuild/lib/main.js:955:9
+>     at new Promise (<anonymous>)
+>     at requestCallbacks.on-end (/home/user/rainbow-/node_modules/esbuild/lib/main.js:954:54)
+>     at handleRequest (/home/user/rainbow-/node_modules/esbuild/lib/main.js:647:17)
+>     at handleIncomingPacket (/home/user/rainbow-/node_modules/esbuild/lib/main.js:672:7)
+>     at Socket.readFromStdout (/home/user/rainbow-/node_modules/esbuild/lib/main.js:600:7)
+> 6:27:12 PM [vite] Pre-transform error: Transform failed with 1 error:
+> /home/user/wt/s08/src/world/match08.ts:51: …[+377 chars]
+
+### 🤖 Claude — 2026-11-18T18:32:24.810Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's|// QA only `&m08dbguv=1` (r15, floor)|// QA only m08dbguv (r15, floor)|' src/world/match08.ts && sed -n 274,278p src/world/match08.ts && npx tsc --noEmit -p . 2>&1 | head", "description": "Remove backticks from the shader comment and typecheck", "timeout": 180000}`
+
+### 🧑 User — 2026-11-18T18:32:30.278Z
+
+> ↩︎ result: float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
+>     if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
+>     // QA only m08dbguv (r15, floor): r = plate u, g = plate v (after the swim remap), b = near-tile weight
+>     if (uDbgUv > 0.5) { vec2 du = pj.xy / max(pj.w, 1e-4) * 0.5 + 0.5; gl_FragColor = vec4(pjInverse(vec3(du, wn)), 1.0); return; }
+>   }
+> [This command modified 1 file you've previously read: ../wt/s08/src/world/match08.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T18:32:34.933Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad && time M08_ONLY=f03,f06,t33 timeout 500 node tools/match08/shots08.mjs 08 $S/dbg_uv \"$(cat $S/K14.txt)&m08dbguv=1\" 2>&1 | tail -5", "description": "Render debug UV frames", "timeout": 520000}`
+

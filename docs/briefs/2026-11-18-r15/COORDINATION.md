@@ -25,10 +25,23 @@ Rules unchanged (binding): `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` 
   GitHub MCP, ffmpeg / ImageMagick, tsc + continuity tests: OK (bootstrap 18:12 UTC run; see `backups/BOOTSTRAP_REPORT.md`).
   13/13 approved references byte-identical. context7 MCP needs auth (not used).
 
+## Connections re-verified at the user's request (~18:31 UTC, free reads only, no paid task)
+* Hugging Face MCP (claude.ai connector, now connected): CONNECTED — `hf_whoami` = user `josdois` (OAuth, scopes read-repos /
+  inference-api / jobs / contribute-repos, token expires 2026-11-19 02:28 UTC); model search works (DA3-LARGE, DA3-SMALL, DA3-BASE,
+  DA3-LARGE-1.1); enabled Spaces listed by `dynamic_space discover` (19, incl. `prithivMLmods/SAM3-Demo` = SAM 3 masks on HF GPUs,
+  `not-lain/background-removal`, FLUX / Qwen image editors).
+* World Labs Atlas (claude.ai connector "World_Labs_Marble", now connected): CONNECTED — `list_projects` → "My project"
+  (`proj_ad4fdb076f4a4c80934406cfefc4d30b`, Personal workspace), tools atlasChisel, atlasGenerate, atlasTextToImage,
+  images2PosedRGBD, posedImages2Splats, splats2Mesh, `credits_available: true`. No task started.
+* World Labs Marble Developer API (environment-injected key, unchanged): CONNECTED — 5,420 credits; existing world
+  `32b5b2f4-…` "rainbow-08-final-spin-chamber" readable (mesh, imagery, splats). The two Screen 05 pilot worlds were made under
+  another key (Account B) → 404 with this key; their files are in Git LFS (`qa/worldlabs/`).
+
 ## Workstream map (three workers inside the lead container; rotation 07 → 06 next)
 | Screen | Round-15 branch | Started at (= newest round-14 tip) | State |
 |---|---|---|---|
 | 04 | `claude/rainbow-s04-match-c15` | `fc28323a` (r14 step 9 L4 entrance foam) | RUNNING `foam-bubbles-particles` (`s04`, lead-directed), worktree `/home/user/wt/s04`, brief `S04_LAUNCH.md`: foam clusters → interior thick rings (measure first) → pink side swirls; log `qa/match/04/r15/PROGRESS.md` |
+| 04 test | `claude/rainbow-s04-ringtex-c15` | `fc28323a` | RUNNING `washer-environment-modeler` (`s04tex`), worktree `/home/user/wt/s04b`, brief `S04B_RINGTEX_LAUNCH.md`: user-requested controlled test `&m04rpaint` = the painted rings unwrapped from the approved picture onto every 3D ring band (s04 worker skips its ring task) |
 | 05 | `claude/rainbow-s05-match-c15` | `34aadd11` (r14 step 3 m05bank) + untracked step-4 BEFORE shots | RUNNING `water-fx-specialist` (`s05`), worktree `/home/user/wt/s05`, brief `S05_LAUNCH.md`: 05 → 06 transition, then (lead note) smeared left wall + cut gold-ring chunk at hard left, m05bank column, V glints; log `qa/match/05/r15/PROGRESS.md` |
 | 08 scenery | `claude/rainbow-s08-scenery-c15` | `df4a3bb7` (r14 step 1 m08nq) | RUNNING `washer-environment-modeler` (`s08`), worktree `/home/user/wt/s08`, brief `S08_LAUNCH.md`: step-1 leftovers → wall seams → river-edge foam + coin line → spout cups → cup band V; log `qa/match/08/r15/PROGRESS.md` |
 | 07 | (`-c11` = `-c9` `dbc7678c`) | — | READY next free slot |

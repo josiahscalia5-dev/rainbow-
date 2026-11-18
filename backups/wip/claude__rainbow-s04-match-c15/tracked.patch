@@ -12,7 +12,7 @@ index f7dee52..65c878c 100644
              u.value *= fade; o.visible = u.value > 0.01;
            }
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 49d3e44..64db419 100644
+index 49d3e44..3a8d392 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -464,7 +464,12 @@ void main() {
@@ -54,22 +54,22 @@ index 49d3e44..64db419 100644
 +  if (r > 0.86) discard;
 +#endif
 +  vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));
-+  float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);
 +  float h = fract(vS * 7.31);
-+  // lilac body (a few whiter, a few pinker bubbles), lit top-left, lavender-blue toward the lower right
-+  vec3 body = mix(vec3(0.72, 0.68, 0.97), vec3(0.90, 0.80, 0.98), h);
-+  body = mix(body, vec3(0.94, 0.74, 0.95), 0.35 * step(0.82, fract(vS * 3.17)));
-+  vec3 col = mix(body * (1.0 - 0.16 * uFB.z), vec3(0.97, 0.95, 1.0), smoothstep(0.15, 0.95, l) * 0.72);
-+  col = mix(col, vec3(0.97, 0.64, 0.92), 0.32 * smoothstep(0.1, -0.95, vUv.y));      // pink bounce from the water
-+  // brighter, faintly iridescent rim (the bubble film seen edge-on)
-+  float fr = smoothstep(0.60, 0.95, r);
++  // a lit pearly sphere: white-lilac top-left, lilac middle, lavender-pink lower right (a few whiter / pinker bubbles)
++  vec3 litC = mix(vec3(0.93, 0.91, 1.0), vec3(0.99, 0.97, 1.0), h);
++  vec3 shC = mix(vec3(0.70, 0.64, 0.95), vec3(0.84, 0.66, 0.94), 0.5 + 0.5 * sin(vS * 11.0)) * (1.0 - 0.10 * uFB.z);
++  float lt = clamp(dot(nrm, normalize(vec3(-0.5, 0.62, 0.6))), 0.0, 1.0);
++  vec3 col = mix(shC, litC, smoothstep(0.05, 0.95, lt));
++  col = mix(col, vec3(0.97, 0.64, 0.92), 0.30 * smoothstep(0.1, -0.95, vUv.y));      // pink bounce from the water
++  // rim light on the shadow side (the bubble film seen edge-on), faintly pink <-> cyan
 +  float ang = atan(vUv.y, vUv.x) + vS * 6.2832;
-+  vec3 iri = mix(vec3(1.0, 0.72, 0.95), vec3(0.72, 0.95, 1.0), 0.5 + 0.5 * sin(ang * 2.0 + r * 5.0));   // pink <-> cyan film
-+  col = mix(col, mix(vec3(0.99, 0.97, 1.0), iri, 0.30), fr * 0.62);
++  vec3 iri = mix(vec3(1.0, 0.74, 0.96), vec3(0.74, 0.95, 1.0), 0.5 + 0.5 * sin(ang * 2.0 + r * 5.0));
++  float fr = smoothstep(0.64, 0.96, r) * (0.45 + 0.55 * (1.0 - lt));
++  col = mix(col, mix(vec3(0.99, 0.97, 1.0), iri, 0.35), fr * 0.75);
 +  // crisp window highlight + tiny second glint
-+  float hl = smoothstep(0.21, 0.07, length((vUv - vec2(-0.36, 0.40)) * vec2(1.0, 1.35)));
-+  float hl2 = smoothstep(0.11, 0.03, length(vUv - vec2(0.38, -0.40)));
-+  col = mix(col, vec3(1.0), clamp((hl + 0.65 * hl2) * uFB.y, 0.0, 1.0));
++  float hl = smoothstep(0.20, 0.07, length((vUv - vec2(-0.36, 0.40)) * vec2(1.0, 1.35)));
++  float hl2 = smoothstep(0.10, 0.03, length(vUv - vec2(0.36, -0.42)));
++  col = mix(col, vec3(1.0), clamp((hl + 0.6 * hl2) * uFB.y, 0.0, 1.0));
 +  float a = 1.0;
 +#ifdef RIM
 +  a = 1.0 - uFB.x * smoothstep(0.86, 1.0, r);
@@ -145,7 +145,7 @@ index 49d3e44..64db419 100644
 +    const nearF = [M04.num('m04foamn0', 0.6), M04.num('m04foamn1', 1.2)];
 +    if (clu) {
 +      // r15: two passes of the same bubble instances — opaque cores, then the see-through rims blended on top
-+      const fb = new THREE.Vector3(M04.num('m04fce', 0.6), M04.num('m04fcg', 1.0), M04.num('m04fcd', 1.0));
++      const fb = new THREE.Vector3(M04.num('m04fce', 0.5), M04.num('m04fcg', 1.0), M04.num('m04fcd', 1.0));
 +      const vertShrink = SPRITE_VERT.replace('uniform vec2 uNear;', 'uniform vec2 uNear;\n#define SHRINK');
 +      const before = group.children.length;
 +      sprites(items, FOAMB_FRAG, 'm04_foam', 3, true, nearF);

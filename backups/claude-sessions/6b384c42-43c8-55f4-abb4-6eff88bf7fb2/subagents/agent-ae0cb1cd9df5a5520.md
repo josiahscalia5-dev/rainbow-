@@ -838,3 +838,197 @@ Let me look at the approved picture and the L4 frames.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T18:28:41.798Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\na=\"\"\"  vec3 col = mix(body * (1.0 - 0.16 * uFB.z), vec3(0.97, 0.95, 1.0), smoothstep(0.15, 0.95, l) * 0.72);\n  col = mix(col, vec3(0.97, 0.64, 0.92), 0.32 * smoothstep(0.1, -0.95, vUv.y));      // pink bounce from the water\n  // brighter, faintly iridescent rim (the bubble film seen edge-on)\n  float fr = smoothstep(0.60, 0.95, r);\"\"\"\nb=\"\"\"  vec3 col = mix(body * (1.0 - 0.16 * uFB.z), vec3(0.97, 0.95, 1.0), smoothstep(0.25, 0.95, l) * 0.50);\n  col = mix(col, vec3(0.97, 0.64, 0.92) …[+751 chars]`
+
+### 🧑 User — 2026-11-18T18:28:44.774Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T18:28:48.608Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/q3/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T18:28:48.656Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:29:01.288Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && K=$(cat $S/K.txt) && ONLY='[[\"f03_forward3u\",3,null],[\"f06_forward6u\",6,null],[\"s_left_hard\",12,-1]]' node $S/quick_audit.mjs 04 $S/q4 \"$K&m04fclu=1\" 2>&1 | grep -v \"allow list\" | tail -4 && python3 -c \"\nfrom PIL import Image\na=Image.open('$S/q4/f03_forward3u.png').crop((0,830,300,1180))\nb=Image.open('/home/user/wt/s04/references/04_through_the_five_arrows.png').crop((600,1050,864,1400)).resize((300,398))\nc=Image.new('RGB',(620,400),'black'); c.paste(a.re …[+183 chars]`
+
+### 🧑 User — 2026-11-18T18:29:37.416Z
+
+> ↩︎ result: 04 f03_forward3u s 81.355 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.183 lat 0 stage 04 frames 26
+> 04 s_left_hard s 90.248 lat -1.65 stage 04 frames 52
+
+### 🤖 Claude — 2026-11-18T18:29:41.055Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/cmp_q4.png"}`
+
+### 🧑 User — 2026-11-18T18:29:41.103Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:30:00.833Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ni0=s.index(\"  float h = fract(vS * 7.31);\\n  // lilac body\")\ni1=s.index(\"  float a = 1.0;\\n#ifdef RIM\")\nnew=\"\"\"  float h = fract(vS * 7.31);\n  // a lit pearly sphere: white-lilac top-left, lilac middle, lavender-pink lower right (a few whiter / pinker bubbles)\n  vec3 litC = mix(vec3(0.93, 0.91, 1.0), vec3(0.99, 0.97, 1.0), h);\n  vec3 shC = mix(vec3(0.70, 0.64, 0.95), vec3(0.84, 0.66, 0.94), 0.5 + 0.5 * sin(vS * 11.0)) * (1.0 - 0.10 * uFB.z);\n  float lt = clamp(dot(nrm, normalize …[+1209 chars]`
+
+### 🧑 User — 2026-11-18T18:30:05.072Z
+
+> ↩︎ result: 510:  float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);
+> 547:  float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);
+> ok
+
+### 🤖 Claude — 2026-11-18T18:30:09.341Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 530,575p src/world/match04m4.ts", "description": "Review the bubble shader text"}`
+
+### 🧑 User — 2026-11-18T18:30:09.385Z
+
+> ↩︎ result: uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAlpha;
+> uniform vec3 uFB;           // x rim see-through (0 = opaque edge), y highlight strength, z lilac depth
+> varying vec2 vUv;
+> varying float vS;
+> varying float vF;
+> ${PROJ05_INVERSE}
+> void main() {
+>   float r = length(vUv);
+>   if (r > 1.0 || uAlpha < 0.5 || vF < 0.02) discard;
+> #ifdef RIM
+>   if (r < 0.80) discard;
+> #else
+>   if (r > 0.86) discard;
+> #endif
+>   vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));
+>   float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);
+>   float h = fract(vS * 7.31);
+>   // a lit pearly sphere: white-lilac top-left, lilac middle, lavender-pink lower right (a few whiter / pinker bubbles)
+>   vec3 litC = mix(vec3(0.93, 0.91, 1.0), vec3(0.99, 0.97, 1.0), h);
+>   vec3 shC = mix(vec3(0.70, 0.64, 0.95), vec3(0.84, 0.66, 0.94), 0.5 + 0.5 * sin(vS * 11.0)) * (1.0 - 0.10 * uFB.z);
+>   float lt = clamp(dot(nrm, normalize(vec3(-0.5, 0.62, 0.6))), 0.0, 1.0);
+>   vec3 col = mix(shC, litC, smoothstep(0.05, 0.95, lt));
+>   col = mix(col, vec3(0.97, 0.64, 0.92), 0.30 * smoothstep(0.1, -0.95, vUv.y));      // pink bounce from the water
+>   // rim light on the shadow side (the bubble film seen edge-on), faintly pink <-> cy …[+966 chars]
+
+### 🤖 Claude — 2026-11-18T18:30:16.857Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\na=\"\"\"  vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));\n  float l = clamp(dot(nrm, normalize(vec3(-0.45, 0.6, 0.65))), 0.0, 1.0);\n  float h = fract(vS * 7.31);\n  // a lit pearly sphere\"\"\"\nb=\"\"\"  vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));\n  float h = fract(vS * 7.31);\n  // a lit pearly sphere\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; npx tsc --noEmit  …[+635 chars]`
+
+### 🧑 User — 2026-11-18T18:30:39.693Z
+
+> ↩︎ result: 04 f03_forward3u s 81.38 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.181 lat 0 stage 04 frames 26
+> [This command modified 1 file you've previously read: ../wt/s04/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T18:30:42.524Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04/cmp_q5.png"}`
+
+### 🧑 User — 2026-11-18T18:30:42.562Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T18:30:51.342Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,40p scripts/capture.mjs | grep -n \"port\\|startVite\\|argv\\|out\\|--q\" | head -20", "description": "Check capture script arguments and output"}`
+
+### 🧑 User — 2026-11-18T18:30:51.386Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 8:import { mkdirSync, writeFileSync } from 'node:fs';
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 11:const args = process.argv.slice(2);
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 24:const vite = await startVite(5201);
+> 30:    const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+> 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+
+### 🤖 Claude — 2026-11-18T18:30:57.663Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/scratchpad/s04; cd /home/user/wt/s04 && K=$(cat $S/K.txt) && D=qa/match/04/r15/s1_fclu && mkdir -p $D && node tools/lead_r6/motion_audit.mjs 04 $D/BEFORE \"$K\" 2>&1 | grep -v \"allow list\" | tail -2 && node tools/lead_r6/motion_audit.mjs 04 $D/NEW \"$K&m04fclu=1\" 2>&1 | grep -v \"allow list\" | tail -2 && cp references/04_through_the_five_arrows.png $D/1_APPROVED.png && ls $D/NEW", "description": "Render full BEFORE and NEW motion audits", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T18:32:50.043Z
+
+> ↩︎ result: Command was moved to the background (ID: bdopzik1i) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/tasks/bdopzik1i.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T18:33:01.736Z
+
+Noted the lead's change: task 2 is skipped and I will not touch GOLD_FRAG. While the audit renders, I'll read the river shader to prepare task 3.
+
+### 🤖 Claude — 2026-11-18T18:33:02.387Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 270, "limit": 190}`
+
+### 🧑 User — 2026-11-18T18:33:02.437Z
+
+> ↩︎ result: 270	    vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+> 271	    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
+> 272	  }
+> 273	  gl_FragColor = vec4(pjInverse(col), 1.0);
+> 274	}`;
+> 275	
+> 276	/** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+> 277	 * the approved water design (tile_river3: pink swirl ribbons, cyan streams, foam edges) by arc length across the trough,
+> 278	 * two offset samples blended by slow world-anchored noise (no visible 4.7 u repeat), flowing down the slide, and the
+> 279	 * glowing chevron arrows drawn crisp (distance field) on the centre lane. */
+> 280	const RIVER_VERT = /* glsl */ `
+> 281	uniform mat4 uProjVP;
+> 282	attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+> 283	varying vec4 vProj;
+> 284	varying vec3 vL;
+> 285	varying float vS;
+> 286	void main() {
+> 287	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 288	  vProj = uProjVP * wp;
+> 289	  vL = position;
+> 290	  vS = aR.x;
+> 291	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 292	}`;
+> 293	const RIVER_FRAG = /* glsl */ `
+> 294	uniform sampler2D uPlate;
+> 295	uniform vec4 uPjPost;
+>  …[+12458 chars]
+
+### 🤖 Claude — 2026-11-18T18:33:09.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && ls -la assets/textures/match04/ && cat assets/textures/match04/tiles04.json 2>/dev/null | head -60; ls tools/match04/", "description": "List match04 textures and tile metadata"}`
+
+### 🧑 User — 2026-11-18T18:33:09.251Z
+
+> ↩︎ result: total 20956
+> drwxr-xr-x 2 root root    4096 Nov 18 18:17 .
+> drwxr-xr-x 7 root root    4096 Nov 18 18:17 ..
+> -rw-r--r-- 1 root root     939 Nov 18 18:17 cam04_locked.json
+> -rw-r--r-- 1 root root    1652 Nov 18 18:17 coins04.json
+> -rw-r--r-- 1 root root    4387 Nov 18 18:17 mouth04.json
+> -rw-r--r-- 1 root root    1285 Nov 18 18:17 mv04.json
+> -rw-r--r-- 1 root root 2338945 Nov 18 18:17 mv04_V04-1.png
+> -rw-r--r-- 1 root root 2560789 Nov 18 18:17 mv04_V04-1_fill.png
+> -rw-r--r-- 1 root root 2288820 Nov 18 18:17 mv04_V04-2.png
+> -rw-r--r-- 1 root root 2507117 Nov 18 18:17 mv04_V04-2_fill.png
+> -rw-r--r-- 1 root root   27696 Nov 18 18:17 patch_gold.png
+> -rw-r--r-- 1 root root   29276 Nov 18 18:17 patch_wall.png
+> -rw-r--r-- 1 root root   42344 Nov 18 18:17 patch_water.png
+> -rw-r--r-- 1 root root     214 Nov 18 18:17 plate04.json
+> -rw-r--r-- 1 root root     429 Nov 18 18:17 plate04_fal_alignment.json
+> -rw-r--r-- 1 root root    8535 Nov 18 18:17 plate04_fillmask.png
+> -rw-r--r-- 1 root root 2323612 Nov 18 18:17 plate04_hybrid.png
+> -rw-r--r-- 1 root root 2248333 Nov 18 18:17 plate04_hybrid_fal.png
+> -rw-r--r-- 1 root root 2236294 Nov 18 18:17 plate04_nochev.png
+> -rw-r--r-- 1 root root    7123 Nov 18 18:17 plate04_noc …[+1572 chars]
+
+### 🤖 Claude — 2026-11-18T18:33:17.364Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/assets/textures/match04/tile_river3.png"}`
+
+### 🧑 User — 2026-11-18T18:33:17.421Z
+
+> ↩︎ result: [image]
+

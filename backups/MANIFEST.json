@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 42810,
-   "sha256": "bff2b901ff6bd76bd677f2ef7221febcc895cad386be7dfadac62914750ae2da"
+   "bytes": 43381,
+   "sha256": "6b812fada9c0a17f8107a257f1a21e9990f4d90207564a6af379403b5922170f"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16988,
-   "sha256": "60c95129ac101695bb0724aa61a76c4b85a0263ef703a393199e1b09fe2ac9db"
+   "sha256": "d788c3bc79ae22ab72015176b437a1b0738130db70fe81c4be791a8605057c09"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -994,12 +994,12 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c15/INFO.json",
    "bytes": 532,
-   "sha256": "07c46a78c01168a395bfc7494da7053664053009df4e1dcc091468d6bd7b3431"
+   "sha256": "14a9c5b431290204302c7b7ed46c91a7306c5ae278c029385fd53747345302a1"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c15/tracked.patch",
-   "bytes": 9999,
-   "sha256": "f7c2b92c5c2e6e900cd0540b9ff8e5f1cd8b0130bce43c40322c9fe88fd78862"
+   "bytes": 10150,
+   "sha256": "0691db365af86bd2e1a3ad8ed6f49ff50368ebcd4c20fb3e8b509643f1ce201c"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1094,7 +1094,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/INFO.json",
    "bytes": 1735,
-   "sha256": "661d31c74d7d18302c757fc4f86b5631b7a04611c8f7c6c59b07d7f27c14aa0b"
+   "sha256": "75dfedb3d51df78195cbf91af8c10a55d31d6532d9487a6550462f110dba12c8"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c15/tracked.patch",
@@ -1254,7 +1254,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/INFO.json",
    "bytes": 512,
-   "sha256": "2efb782216a30968938e56910d0cd938adeedfdd58bf2155e1b9f0d042b99cba"
+   "sha256": "50a114b498ff2910b7f37110b8ba8c9b56f56b42a11dcc88737db4b7f394132b"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c15/tracked.patch",
@@ -1603,13 +1603,18 @@
   },
   {
    "path": "docs/briefs/2026-11-18-r15/COORDINATION.md",
-   "bytes": 5191,
-   "sha256": "65927a5c69d6ef6a3d6614f27214067b747540575bad57a7df7b7f218b78673a"
+   "bytes": 6748,
+   "sha256": "7884f1a88b053fd7fe96bb7f9e5447df051c07bac38d342f7ec387a143f5632a"
   },
   {
    "path": "docs/briefs/2026-11-18-r15/GITHUB_3D_TOOLS.md",
-   "bytes": 4440,
-   "sha256": "1add6ad0401db1e4c24085790514614bc5b95c62e65522fd1a5e7f88d7979ae8"
+   "bytes": 8117,
+   "sha256": "4a5db0161d1a57abea135f1a30955ff9ab068f660e24b44dbc4e1c6fd33990c4"
+  },
+  {
+   "path": "docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md",
+   "bytes": 7333,
+   "sha256": "442104247eb36abad7c592553db51f634425c764ace07987d7fb655ce8af3156"
   },
   {
    "path": "docs/briefs/2026-11-18-r15/S04_LAUNCH.md",

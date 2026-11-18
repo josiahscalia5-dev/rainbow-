@@ -1,5 +1,5 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index c5960f5..6a74b89 100644
+index c5960f5..c739a0f 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
 @@ -84,6 +84,7 @@ uniform vec4 uNear;         // z at tile v = 0, world length of one tile period
@@ -14,7 +14,7 @@ index c5960f5..6a74b89 100644
      }
      float wn = mn * smoothstep(uNearM.x, uNearM.y, mag) * (1.0 - smoothstep(uNearM.z, uNearM.w, abs(sl)));
      if (wn > 0.0) t = mix(t, texture2D(uNearT, tuv).rgb, wn);
-+    // QA only `&m08dbguv=1` (r15, floor): r = plate u, g = plate v (after the swim remap), b = near-tile weight
++    // QA only m08dbguv (r15, floor): r = plate u, g = plate v (after the swim remap), b = near-tile weight
 +    if (uDbgUv > 0.5) { vec2 du = pj.xy / max(pj.w, 1e-4) * 0.5 + 0.5; gl_FragColor = vec4(pjInverse(vec3(du, wn)), 1.0); return; }
    }
    gl_FragColor = vec4(pjInverse(t), 1.0);
