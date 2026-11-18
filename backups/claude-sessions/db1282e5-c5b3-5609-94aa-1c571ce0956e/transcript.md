@@ -4839,3 +4839,53 @@ Two variants for a clean comparison: F1 changes only the arrows (painted style, 
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/arrz3.jpg"}`
 
+### 🧑 User — 2026-11-18T15:39:20.963Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:39:20.978Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:39:31.373Z
+
+F3 and F4 look almost identical, which is suspicious: the deeper-blue setting should be clearly visible. I'll measure whether it's taking effect at all.
+
+### 🤖 Claude — 2026-11-18T15:39:33.428Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r13 && for v in s7_enter/F2 s7_enter/F3 s7_enter/F4; do echo \"$v $(convert $v/f10_forward10u.png -crop 200x200+330+1150 +repage -scale 1x1 -format '%[fx:int(255*r)],%[fx:int(255*g)],%[fx:int(255*b)]' info:)\"; done; grep -n \"m04lcd\\|uLane3\" /home/user/wt/s04/src/world/match04m4.ts | head", "description": "Measure lane colour difference between F2–F4"}`
+
+### 🧑 User — 2026-11-18T15:39:33.581Z
+
+> ↩︎ result: s7_enter/F2 156,148,217
+> s7_enter/F3 155,136,217
+> s7_enter/F4 147,127,217
+> 301:uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+> 364:      // r13 m04lcd: the painted lane is DEEPER blue along the arrow line (the glassy arrows pop on it), brighter turquoise
+> 366:      laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
+> 698:        uLane3: { value: new THREE.Vector2(M04.num('m04lcd', 0), M04.num('m04lcw', 1.6)) },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T15:39:44.792Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; F4=$(cat $S/F4.q); C=$S/clipF4; rm -rf $C; timeout 900 node tools/lead_r13/swim_clip.mjs 04 $C 2.2 \"$F4\" 2>&1 | grep frames; R=/home/user/rainbow-/qa/review_r13/04_step5_tunnel_arrows_entry; mkdir -p $R; ffmpeg -loglevel error -y -framerate 24 -i $C/%04d.png -c:v libx264 -pix_fmt yuv420p -crf 20 $R/07_NEW_real_gameplay_swim_2s.mp4; B=qa/match/04/r13/s6_rich/D4; N=qa/match/04/r13/s7_enter/F4; cp /home/user/rainbow-/references/04_through_the_five_arrows.png $R/00_APPROVED.p …[+546 chars]`
+
+### 🤖 Claude — 2026-11-18T15:39:45.493Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad/f4chk.jpg"}`
+
+### 🧑 User — 2026-11-18T15:40:46.461Z
+
+> ↩︎ result: frames 53
+> 14
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-18T15:40:46.478Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T15:41:02.542Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && S=/tmp/claude-0/-home-user-rainbow-/db1282e5-c5b3-5609-94aa-1c571ce0956e/scratchpad; F4=$(cat $S/F4.q); cat >> qa/match/04/r13/PROGRESS.md <<EOF\n\n## Step 5 — user order ~16:30 UTC: approved entrance + SAME tunnel inside, approved arrow shape, saturated water — F4 = GOOD IMPROVEMENT — shown\nQuery (F4): \\`$F4\\`\n* Honest rating given to the user: ~6/10 while swimming (start view = the painting). Gaps in order: entrance -> interior handover\n  (painting replaced within ~4 frames by a visibly different model), ring shape / brightness, arrow look, water bri …[+2474 chars]`
+
