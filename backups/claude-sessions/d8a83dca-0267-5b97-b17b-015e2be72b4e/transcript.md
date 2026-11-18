@@ -1624,3 +1624,62 @@ Continuity passes: all joins gap 0, plunge drop 61.19 u, min pitch −70°. Capt
 
 > ↩︎ result: Command running in background with ID: bmy18des3. Output is being written to: /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/tasks/bmy18des3.output. You will be notified when it completes. To check interim output, use Read on that file path.
 
+### 🤖 Claude — 2026-11-18T00:46:31.738Z
+
+While the one-time APK attempt runs, I'm writing STATUS.md and NOTES.md.
+
+### 🤖 Claude — 2026-11-18T00:47:10.932Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/07/STATUS.md'; old=open(p).read()\nnew = \"\"\"# Screen 07 · DIVE THE WASHER TUBE — status (round 7 / account 7, 2026-11-18 ~01:30 UTC)\n\nBranch `claude/rainbow-s07-match-c7`, started from `835a72db` (= `claude/rainbow-s07-match-c5` tip). Nothing is approved\nuntil the user says so. Brief: `docs/briefs/2026-11-17-r7/S07.md` (lead branch).\n\n## MILESTONE 3 — done (round 7): the matched tube look over the whole stage incl. the plunge\n**New kept set (proposal):** `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`\n(= …[+9418 chars]`
+
+### 🧑 User — 2026-11-18T00:47:11.005Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T00:47:13.874Z
+
+> 🔧 **Bash** `{"command": "tail -15 /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/apk.log; grep -n \"android:debug\" package.json; ls -la builds/ 2>/dev/null | tail -3; find . -name \"*.apk\" -newer qa/match/07/r7/gameplay_new.json -not -path \"./node_modules/*\" 2>/dev/null | head", "description": "Check APK build result"}`
+
+### 🧑 User — 2026-11-18T00:47:13.955Z
+
+> ↩︎ result: Searched in the following locations:
+>        - https://dl.google.com/dl/android/maven2/io/grpc/grpc-api/1.45.1/grpc-api-1.45.1.pom
+>        - https://repo.maven.apache.org/maven2/io/grpc/grpc-api/1.45.1/grpc-api-1.45.1.pom
+>      Required by:
+>          project : > com.android.tools.build:gradle:8.2.1 > io.grpc:grpc-core:1.45.1
+>          project : > com.android.tools.build:gradle:8.2.1 > io.grpc:grpc-stub:1.45.1
+> 
+> * Try:
+> > Run with --stacktrace option to get the stack trace.
+> > Run with --info or --debug option to get more log output.
+> > Run with --scan to get full insights.
+> > Get more help at https://help.gradle.org.
+> 
+> BUILD FAILED in 25s
+> exit 1
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> -rw-r--r--  1 root root 23012001 Nov 18 00:01 rainbow-debug-match08-2026-11-17c-benny.apk
+> -rw-r--r--  1 root root  7391867 Nov 18 00:01 rainbow-debug-w12-water.apk
+> -rw-r--r--  1 root root  7339491 Nov 18 00:01 rainbow-debug.apk
+
+### 🤖 Claude — 2026-11-18T00:47:16.428Z
+
+> 🔧 **Bash** `{"command": "grep -m3 -n \"Could not\\|FAILURE\\|What went wrong\" -A3 /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/apk.log | head -14; git status --short | grep -v \"^??\" | head", "description": "Get exact APK failure reason and dirty files"}`
+
+### 🧑 User — 2026-11-18T00:47:16.484Z
+
+> ↩︎ result: 116:FAILURE: Build failed with an exception.
+> 117-
+> 118:* What went wrong:
+> 119-A problem occurred configuring root project 'android'.
+> 120:> Could not resolve all files for configuration ':classpath'.
+> 121-   > Could not find org.apache.httpcomponents:httpmime:4.5.6.
+> 122-     Searched in the following locations:
+> 123-       - https://dl.google.com/dl/android/maven2/org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6.pom
+>  M qa/match/07/NOTES.md
+>  M qa/match/07/STATUS.md
+
+### 🤖 Claude — 2026-11-18T00:47:22.814Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/match/07/NOTES.md <<'EOF'\n* APK (one attempt, 2026-11-18): `VITE_RAINBOW_Q05=\"<new set>\" npm run android:debug` → web build + sync OK, Gradle\n  FAILED configuring the root project: `Could not resolve all files for configuration ':classpath'` — `Could not find\n  org.apache.httpcomponents:httpmime:4.5.6` and `io.grpc:grpc-api:1.45.1` (searched dl.google.com and\n  repo.maven.apache.org; Maven fetches through this network are intermittent). Not retried. No new APK this round.\nEOF\nsed -i 's|\\* APK: see NOTES.md (one attempt).|* APK: one attempt FAILED in Gradle depen …[+312 chars]`
+

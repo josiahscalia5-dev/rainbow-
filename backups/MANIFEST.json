@@ -684,7 +684,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11946,
-   "sha256": "68cfaae5ea5f9e70f4df51231ad5e0d5043ecfba01df684e1d1d8971094fcd10"
+   "sha256": "c07ec6267ec06d917111b83af5e897d9211105d4665f25c37f36602b9248fd0d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1428,8 +1428,8 @@
   },
   {
    "path": "qa/match/07/NOTES.md",
-   "bytes": 6459,
-   "sha256": "cc0053b234bd8235385c23bb4df3fc2081b7b5ddb7090f8a32d53f4bcca7b8b0"
+   "bytes": 9717,
+   "sha256": "2efe82128a75372633c2face672c24bb3cc795916843094613bcd2135fe47491"
   },
   {
    "path": "qa/match/07/SHARED_CHANGES.md",
@@ -1438,8 +1438,8 @@
   },
   {
    "path": "qa/match/07/STATUS.md",
-   "bytes": 4224,
-   "sha256": "105704363e729d7540c15986a42a8b056014271694dc557d08c01a68b8e18305"
+   "bytes": 11303,
+   "sha256": "40176567ecf0d59eb2d8f8189cb522fcb8925b66ca4ea4dc7e5f8b68350926e1"
   },
   {
    "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",

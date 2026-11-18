@@ -1,3 +1,79 @@
+# Screen 07 · DIVE THE WASHER TUBE — status (round 7 / account 7, 2026-11-18 ~01:30 UTC)
+
+Branch `claude/rainbow-s07-match-c7`, started from `835a72db` (= `claude/rainbow-s07-match-c5` tip). Nothing is approved
+until the user says so. Brief: `docs/briefs/2026-11-17-r7/S07.md` (lead branch).
+
+## MILESTONE 3 — done (round 7): the matched tube look over the whole stage incl. the plunge
+**New kept set (proposal):** `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`
+(= round-4 set K + `m07tube` + `m07ring`). Default build untouched (0 px).
+
+### Structural check first (the two Screen 06 causes) — `r7/probe_before.json`, `tools/match07/probe_r7.mjs`
+| along from the checkpoint | 0 u | 3 u | 6 u | 10 u | 20 u | 30 u |
+|---|---|---|---|---|---|---|
+| camera pitch | −13.2° | −13.0° | −12.9° | −12.9° | −12.9° | −10.0° (blending out) |
+| far ring R5 on screen (painted VP 612,548) | 603,546 | 586,552 | 591,553 | 612,554 | 633,555 | 363,628 |
+1. Camera pitch does NOT follow the river slope on the level 07 stretch (river slope −3°, camera level at −13° look-down
+   as solved) → cause 1 of 06 is not present.
+2. The fitted proxy tube is ALREADY one straight cylinder along the painted vanishing-point axis (not built around the
+   river path); the far rings stay within ±25 px of the painted VP from 0 to 20 u → cause 2 of 06 is not present.
+3. The real structural gap on 07: stage 07 runs s 247 → 390, the matched look only covered s 261 → 304, while the
+   PLUNGE (s 312 → 390) is two thirds of the stage and showed the old default world; mid-plunge the camera (8 u behind,
+   4.1 u above Benny) passed within 0.6–1.0 u of the default tube's gold rings → a flat orange band filled the lower
+   half of the screen and hid Benny (`r7/BEFORE/t66_through_screen.png`).
+
+### Switches tested this round (each alone on top of K)
+| switch | what it does | verdict |
+|---|---|---|
+| `m07tube` | the matched tube continues as REAL geometry along the course from 4 u before the plunge top down the whole plunge to the 08 inlet: same radius (5.84 u) and axis height (3.10 u) as the fitted tube, the same ring-bay wall tile anchored to arc length (rings every 8.55 u, phase continuous), a river ribbon with the same river tile (fades into the game's own water over the last 14→3 u so 08's river continues). The fitted proxy now ends at that depth (it ran on straight through the plunge). Hand-over at 8 u before the plunge top = where the old build switched to the default world, so the still view and the first 30 u are unchanged. The game's 07 tube (rings that blocked the camera) is hidden until 08 starts. | **KEPT** |
+| `m07ring` | wall tile with the painted gold rings straightened (`tools/match07/straighten_wall07.py` → `tile_wall_ring.png`): in the unwrap the band drifted ≈43 % of a bay across the rows, so deep in the tube and in the plunge the rings rendered as twisted diagonal orange bands; now each row is shifted so the band sits on the ring depth → round rings | **KEPT** |
+| `m07near` | tighter stretch guard (projected picture → river tile at 1.35–2.3× magnification instead of 2.2–4.5×) for the stretched near water when steering | NOT kept — no visible change (the smear is the river tile itself magnified ~10× right in front of the camera) |
+
+### Numbers (lead's `tools/lead_r6/motion_metrics.py`, below the HUD; LAYOUT20 = pixels within 20 levels after blur, PALETTE = hue×sat histogram overlap)
+| shot | BEFORE (K) LAYOUT20 / PALETTE | NEW LAYOUT20 / PALETTE |
+|---|---|---|
+| a00 approved view | 41.1 / 90.2 % | 41.7 / 90.2 % |
+| forward 3 / 6 / 10 / 20 u | 8.2 / 84.3 · 6.2 / 76.8 · 7.7 / 76.8 · 4.2 / 71.2 | 8.0 / 84.2 · 6.2 / 76.8 · 7.6 / 76.8 · 4.2 / 71.7 |
+| steer L / R (6 u), hard L / R (12 u) | 8.3/74.4 · 3.6/77.7 · 4.0/76.0 · 4.2/70.4 | 8.5/74.5 · 3.4/77.2 · 4.1/76.4 · 4.2/70.5 |
+| t33 (plunge top, s 312) | 2.4 / **46.6 %** | 2.9 / **76.4 %** |
+| t66 (mid-plunge, s 351) | 0.7 / **24.6 %** | 2.0 / **69.6 %** |
+| t95 (plunge bottom, s 385) | 0.8 / 42.2 % | 1.1 / 50.2 % |
+Moving frames are seen from other viewpoints, so LAYOUT naturally falls; PALETTE shows whether the approved colours and
+materials survive. These are pixel statistics, not a fidelity score.
+
+### Honest moving rating (subjective, separate from the numbers)
+* Level stretch (checkpoint → 30 u, steering): **≈ 4/10**, unchanged this round — the tube, rings and paddles hold, but
+  the near water smears into long pink/cyan streaks when moving or steering, and steering hard left shows the tube wall
+  as a hard diagonal edge where the approved picture has foam bank.
+* Plunge (s 304 → 390): **≈ 2/10 → ≈ 5/10** — the same purple perforated tube with round gold rings now runs down the
+  whole drop, Benny is visible, no gold band blocks the camera; still the game's tall white foam walls line the plunge
+  river (not the approved soft foam), the plunge river is a static tile, and the plunge-top lip is a straight edge.
+* Whole stage while riding: **≈ 4.5/10** (lead r6: ≈ 3.5/10). Not the 8.5 target.
+
+### Proofs (round 7)
+* `npx tsc --noEmit -p .` clean.
+* Default build 0 px vs start commit `835a72db` at 06, 07, 07a plunge top, 07b plunge mid, 07c plunge bottom, 07d
+  entering 08 and 08 (deterministic checkpoint captures, worktree of the start commit) — `r7/proof_default_0px.json`.
+* New set + `match08=1` vs start-commit K + `match08=1`: 06, 07d entering 08 and 08 **0 px** (08's start exactly
+  kept); approved 07 still view 100 px (straightened tile, a few spots); the plunge checkpoints differ as intended —
+  `r7/proof_newset_vs_K_match08.json`.
+* Gameplay with the new set: **8/8 pass, 91 coins, 1,330 → 2,240**, plunge drop 61.14 u (`r7/gameplay_new.json`).
+* Continuity: all joins gap 0, plunge drop 61.19 u, min pitch −70° (`r7/continuity_default.json`; `course.ts` untouched).
+* APK: one attempt FAILED in Gradle dependency resolution (Maven: httpmime 4.5.6 / grpc-api 1.45.1 not found) — not retried; details in NOTES.md.
+
+### Pictures (separate full-size portrait files, same 12 audit positions, `node tools/lead_r6/motion_audit.mjs 07 …`)
+APPROVED `r7/APPROVED_07.png` · BEFORE (K) `r7/BEFORE/*.png` · NEW (new set) `r7/NEW/*.png`.
+Best ones to look at: `t66_through_screen.png` (mid-plunge), `t33_through_screen.png` (plunge top), `f20_forward20u.png`.
+
+### Exact next step
+1. Plunge foam: the game's berm/puff foam is one mesh for the whole course; a `&m07foam=1` hook in `src/vfx/foam.ts`
+   (hide the berm + puff chunks on s plunge-top+9 → plunge-bottom−12, uniform/visibility only) so the matched river
+   tile's painted banks show instead of the tall white walls.
+2. Near water while moving: a higher-detail river tile unwrapped from the NEAR painted water (2–6 u, least magnified)
+   instead of the 6–16 u band, plus foam-bank colour on the lowest wall band (no hard wall edge when steering hard).
+3. The `x07` path fix from the preview branch (below) needs the user's OK before anyone ports it.
+
+---
+
 # Screen 07 · DIVE THE WASHER TUBE — status (round 4, 2026-11-17 ~20:30 UTC)
 
 Branch `claude/rainbow-s07-match-c4`, **started from `72fb6129`** (= `claude/rainbow-s07-match-c3` head, line A; the

@@ -77,3 +77,35 @@ Kept set: `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1` (deta
 * `m07coins` (`src/gameplay/coins.ts`): two far trail coins at lateral 0.42 / 1.82, scale 0.45 (`m2/coins/probe_m07coins.json`).
 * `m07ang`: tested in round 3, no visible effect → not kept (code stays, off).
 Pictures: `m2r4/pictures/1_APPROVED_07.png`, `2_BEFORE_M1_07.png`, `3_NEW_M2_07.png`; moving: `m2r4/motion_k5/`.
+
+## MILESTONE 3 (round 7, 2026-11-18) — whole stage incl. the plunge
+New kept set: `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1` (verdicts, numbers,
+honest rating: `STATUS.md`; pictures `r7/APPROVED_07.png`, `r7/BEFORE/`, `r7/NEW/`).
+* `m07tube` (`src/world/match07.ts` `Plunge07` + `setPlunge`, `src/game/Game.ts`): plunge tube + river ribbon built from
+  `course.sample` every 0.4 u from `07_plunge_top − 4` to `07_plunge_bottom`; centre = path + up·3.10 (+ an offset that
+  matches the fitted axis at the start and decays over 14 u); uv = (arc depth, angle) / (lateral, arc depth) → shader
+  modes 3/4 (tile only, no projection, post-chain inverse). The fitted proxy is clipped beyond that depth (`uClip`) only
+  after the hand-over (8 u before the plunge top). The game's own water is visible again once the camera has passed the
+  start (Benny ≥ start + 9 u) and lies under the plunge ribbon; the ribbon fades out between bottom−14 and bottom−3 u.
+  The game's tube zone stays hidden until stage 08 starts. Plunge meshes are excluded from the projector depth bake.
+* `m07ring`: `tools/match07/straighten_wall07.py` → `assets/textures/match07/tile_wall_ring.png` (+ `r7/straighten_wall07.json`:
+  row shifts −123…+98 px of 512; band centre after ±20 px).
+* `m07near`: code kept, off (no visible change).
+* Hand-overs (disclosed): at 8 u before the plunge top the straight painted far tunnel is replaced by the plunge tube
+  (the old build switched to the default world at the same point); at the 07→08 boundary the game's tube zone returns.
+* Tools: `tools/match07/probe_r7.mjs` (pitch / far-ring projection), `tools/match07/proof0px_r7.mjs` +
+  `diff0px_r7.py` (deterministic checkpoint captures + pixel diff), `tools/lead_r6/motion_audit.mjs` + `motion_metrics.py`
+  (copied from the lead branch).
+
+### The preview branch's `x07` change (`claude/rainbow-preview-all-c6` @ `41ea6618`) — inspected read-only, NOT ported
+It is not a visual fade: it is a one-line change in `src/world/course.ts` `x07()`. The ease-out of the painted S-river
+override never finished before the plunge top, leaving a ≈0.49 u sideways offset that moved the whole plunge and Screen
+08's path against 08's world-fixed projected chamber (08 with all switches fell to 29.5 %). The change multiplies the
+weight by `smooth(0, 4, z − (s7.z − 60))`, so the 07 river returns exactly to the default path over the last 4 u before the
+plunge top (match07-guarded). Preview evidence: 08 with all switches 87.7 %, 07's own view unchanged (80.1 %), 8 stages,
+2,240, drop 61.19. Effect on 07 if ported: the last 4 u of the level stretch steer slightly sideways; the plunge tube of
+`m07tube` follows the path, so it would move with it. Waiting for the user's approval.
+* APK (one attempt, 2026-11-18): `VITE_RAINBOW_Q05="<new set>" npm run android:debug` → web build + sync OK, Gradle
+  FAILED configuring the root project: `Could not resolve all files for configuration ':classpath'` — `Could not find
+  org.apache.httpcomponents:httpmime:4.5.6` and `io.grpc:grpc-api:1.45.1` (searched dl.google.com and
+  repo.maven.apache.org; Maven fetches through this network are intermittent). Not retried. No new APK this round.
