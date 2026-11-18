@@ -480,3 +480,231 @@ The "before" audit is done (12 frames). Next I'm looking at them to see where th
 >     farRiver.onBeforeRender = (_r, _s, cam) => { sync(cam); farRiver.morphTargetInfluences![0] = openNow; };
 >     farRings.o …[+11315 chars]
 
+### 🤖 Claude — 2026-11-18T00:15:30.401Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p src/world/far05.ts; grep -n \"export function farRiverGeometry\" -A60 src/world/far05.ts | head -90", "description": "Read far05 river layout/geometry"}`
+
+### 🧑 User — 2026-11-18T00:15:30.438Z
+
+> ↩︎ result: /**
+>  * Screen 05 far section (path-camera-transition-engineer, wave 8): helpers for the forced-perspective far tunnel
+>  * built in environment.ts (`// ---- 05 far tunnel`). Everything here is laid in the ForcedTunnel's VIRTUAL
+>  * straight tunnel (depth Z beyond the section start sF, offset o in the cross-section) and mapped to real
+>  * geometry with ft.point(), so it continues the real near/mid tunnel without a seam at the locked 05 eye.
+>  *
+>  * FAR RIVER (ref 05, approved image): beyond the seam the river keeps winding: the cyan core with its two
+>  * hot-pink bands swings RIGHT (core ≈ x 530–547 at y 538–526, ≈ 535 at y 508) and then back LEFT into the
+>  * vanishing point (≈ 505 at y 496, ≈ 490 at y 490). The live far chord ran straight into the VP (06-style
+>  * candy stripes). The layout model here is the real ribbon's own (waterRibbon.ts, 05 block): route centre
+>  * xB, half width hw = extent − |xB|, core swing M = CORE_SWING·xB, band offsets 0.62·hw / widths 0.19·hw with
+>  * the same smooth clamps against the banks. For the first few virtual units it follows the REAL course
+>  * (s = sF + axial), so the far surface lands exactly on the real ribbon at the seam and covers the real
+>  * ribbon …[+6610 chars]
+
+### 🤖 Claude — 2026-11-18T00:15:40.827Z
+
+> 🔧 **Bash** `{"command": "sed -n 180,258p src/world/far05.ts; grep -n \"farRiverMaterial\" -A40 src/world/materials.ts | grep -n \"D0\\|uD0\\|fgExtra\\|uniform\" | head", "description": "Read farRiverLayout and material D0 use"}`
+
+### 🧑 User — 2026-11-18T00:15:40.861Z
+
+> ↩︎ result: */
+> export const FAR05_BODY_W11: [number, number, number][] = [
+>   [0, -0.1, 2.3], [7, -1.0, 2.7], [16, -2.3, 3.2], [27, -1.6, 3.4], [40, 0.6, 3.4], [56, 2.3, 3.4], [76, 2.9, 3.3],
+>   [100, 2.5, 3.3], [130, 0.9, 3.3], [165, -1.3, 3.3], [205, -2.7, 3.3], [250, -2.5, 3.3], [300, -1.0, 3.3],
+>   [350, 0.7, 3.2], [400, 1.2, 3.2],
+> ];
+> function designW11(Z: number, chord: number): FarRiverRow {
+>   const c = hermite(FAR05_BODY_W11.map(([z, v]) => [z, v] as [number, number]), Z);
+>   const hw = Math.min(hermite(FAR05_BODY_W11.map(([z, , h]) => [z, h] as [number, number]), Z), chord - 0.7 - Math.abs(c));
+>   const off = 0.62 * hw, w = 0.19 * hw;
+>   return { xB: c, hw, cL: c - off, wL: w, cR: c + off, wR: w, core: c };
+> }
+> 
+> /**
+>  * Layout of the far river at virtual depth Z. For small Z it is the REAL ribbon exactly as the eye would see it
+>  * there without the far section: at the seam the route is in its exit bend (heading ≈26° off the axis), so a
+>  * screen row cuts the ribbon diagonally — each band centre / bank edge curve l(s) of the real ribbon is intersected
+>  * with the row (axial = Z), widths divided by cos(heading). It blends (Z 2 → 10) into the designed FAR05_CORE path.
+>  */
+> export function farRiverL …[+4023 chars]
+
+### 🤖 Claude — 2026-11-18T00:15:44.830Z
+
+> 🔧 **Bash** `{"command": "sed -n 850,890p src/world/materials.ts; grep -n \"farRiverMaterial\\|proj05Far\\|pjFar\" src/world/materials.ts src/vfx/waterRibbon.ts | head", "description": "Check far river material projection inputs"}`
+
+### 🧑 User — 2026-11-18T00:15:44.863Z
+
+> ↩︎ result: }
+> 
+> /**
+>  * Far stream of the 05 forced-perspective tunnel (far05.ts farRiverGeometry, wave 8): the water surface beyond
+>  * the real ribbon, laid out by the real ribbon's own band rules (per-row attributes aRivA/aRivB: route centre,
+>  * half width, pink band centres/widths, cyan core), so the cyan core and its two hot-pink bands keep WINDING
+>  * into the vanishing point (ref 05) instead of running straight (the old chord read as Screen 06). Flow lines
+>  * follow the winding core; fine lavender/blue-shaded foam rims along both banks; beyond the rim (inner bank of
+>  * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
+>  * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
+>  */
+> export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+>   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+>   // wins the depth test against the real ribbon's continuation it covers just behind the seam
+>   mat.polygonOffset = true;
+>   mat.polygonOffsetFactor = -1;
+>   mat.polygonOffsetUnits …[+1929 chars]
+
+### 🤖 Claude — 2026-11-18T00:15:46.749Z
+
+> 🔧 **Bash** `{"command": "sed -n 1700,1745p src/vfx/waterRibbon.ts; sed -n 890,960p src/world/materials.ts | grep -n \"pj\\|Proj\\|aRivB\\|vRivZ\" ", "description": "Check how the far baked layer F is sampled"}`
+
+### 🧑 User — 2026-11-18T00:15:46.780Z
+
+> ↩︎ result: return {
+>     mesh,
+>     uniforms,
+>     s0,
+>     s1,
+>     heightAt(s, lateral, t) {
+>       const hw = course.widthAt(s) / 2;
+>       return ribbonWave(lateral / hw, s, t, ampAt(course, s));
+>     },
+>     ready: proj?.ready,
+>   };
+> }
+> 
+> /** `?proj05=1`: uniforms + GLSL for the far river block (materials.ts farRiverMaterial) — its baked layer proj05_F.png */
+> export function proj05Far() {
+>   const u: Record<string, THREE.IUniform> = {
+>     uPjF: { value: null }, uPjFZ: { value: 400 },
+>     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
+>   };
+>   proj05Pending.push(new Promise<void>((res) => {
+>     const tex = new THREE.TextureLoader().load(TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_F.png', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+>       t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
+>       res();
+>     }, undefined, () => res());
+>     tex.flipY = false;
+>     u.uPjF.value = t …[+1806 chars]
+
+### 🤖 Claude — 2026-11-18T00:17:01.518Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function q05\\|export function on05\\|export function flag05\\|const q05\\|export const TGTWALL05\" -A8 src/vfx/waterRibbon.ts | head -50", "description": "Read switch helper functions"}`
+
+### 🧑 User — 2026-11-18T00:17:01.550Z
+
+> ↩︎ result: 151:const q05 = (key: string): boolean => {
+> 152-  try {
+> 153-    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+> 154-  } catch {
+> 155-    /* no location (vite-node / workers) */
+> 156-  }
+> 157-  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> 158-};
+> 159-/** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> --
+> 258:export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
+> 259-/** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> 260-export const proj05Pending: Promise<unknown>[] = [];
+> 261-
+> 262-/**
+> 263- * W11 geometry (`?farw05=1`, else the full width): the VISIBLE water channel of the 05 river at arc length s, in the
+> 264- * ribbon frame — centre `c` (units along `right`) and half width `hw`. Between the channel and the bank lies a foam
+> 265- * shelf (drawn by the ribbon shader on the same surface; Benny can still ride over it — widthAt() and the steering
+> 266- * range are unchanged). Approved image, banks traced through the locked 05 eye: a left shelf ≈1.3 u wide at
+
+### 🤖 Claude — 2026-11-18T00:17:03.586Z
+
+> 🔧 **Bash** `{"command": "sed -n 159,166p src/vfx/waterRibbon.ts; grep -n \"TGTWALL05\\|TGTFILL05 =\" src/vfx/waterRibbon.ts | head -3; grep -n \"^export function farRiverLayout\\|^export interface FarRiverLayout\" -A4 src/world/far05.ts | head; grep -n \"^import\" src/world/environment.ts", "description": "Check flag helper export and imports"}`
+
+### 🧑 User — 2026-11-18T00:17:03.630Z
+
+> ↩︎ result: /** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> export const flag05 = q05;
+> /**
+>  * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+>  * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+>  * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+>  * at half the ride speed while still moving downstream in the world.
+>  */
+> 258:export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
+> 1745:    E: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_E.png', import.meta.url).href
+> 1753:    lut: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_lut.json', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
+> 99:export interface FarRiverLayout {
+> 100-  row(Z: number): FarRiverRow;
+> 101-  /** half chord of the tube floor at the water level */
+> 102-  chord: number;
+> 103-}
+> --
+> 199:export function farRiverLayou …[+1736 chars]
+
+### 🤖 Claude — 2026-11-18T00:18:12.356Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/match05far.ts", "content": "/**\n * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md \"Round 7\"): the far forced-perspective tunnel\n * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every\n * frame instead of folding away.\n *\n * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the\n * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the\ …[+12060 chars]`
+
+### 🧑 User — 2026-11-18T00:18:12.417Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/match05far.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T00:18:23.783Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/match05far.ts", "old_string": "      if (live) { restore(); live = false; }\n      D0 = D0lock; q.copy(ft.q); zs = 0; open = 0;\n    } else {\n      fillWall(); fillRiver();\n      a.glow.position.copy(point(a.zEnd, o.set(0, 0, 0), p));\n      a.glow.scale.setScalar(R * kOf(a.zEnd) * 1.35);\n      live = true;\n    }\n    place(a.farRings, a.ringItems, open);\n    place(a.farLids, a.lidItems, open);", "new_string": "      if (live) { restore(); live = false; }\n      D0 = D0lock; q.copy(ft.q); zs = 0; open = 0;\n      ft.placeI …[+370 chars]`
+
+### 🧑 User — 2026-11-18T00:18:23.810Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/match05far.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T00:18:25.038Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export const MATCH05\\|export const EDGE_LIFT\\|export function tunnelEndGlowMaterial\" src/vfx/waterRibbon.ts src/world/materials.ts; grep -n \"uOpacity\" src/world/materials.ts | head -3", "description": "Verify exports used by new module"}`
+
+### 🧑 User — 2026-11-18T00:18:25.074Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:21:export const EDGE_LIFT = 0.28;
+> src/vfx/waterRibbon.ts:212:export const MATCH05: boolean = q05('match05');
+> src/world/materials.ts:809:export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120)): THREE.ShaderMaterial {
+> 813:      uOpacity: { value: 1 },
+> 833:    fragmentShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec3 uCore; uniform vec3 uPale; uniform vec3 uGold; uniform vec3 uWarm; uniform vec3 uRim; uniform float uOpacity;
+> 840:        float a = (1.0 - smoothstep(0.86, 1.0, r)) * vFade * uOpacity;
+
+### 🤖 Claude — 2026-11-18T00:18:26.346Z
+
+Now I'm hooking the switch into the far block in `environment.ts` (default path unchanged).
+
+### 🤖 Claude — 2026-11-18T00:18:33.594Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\nold=\"\"\"    let openNow = -1;\n    const camPos = new THREE.Vector3();\n    const sync = (cam: THREE.Camera) => {\"\"\"\nnew=\"\"\"    let openNow = -1;\n    const camPos = new THREE.Vector3();\n    // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored\n    // virtual tunnel, sliding seam, folds only at the stage end) instead of folding away from ≈34 u before the seam\n    const liveFar = M05FAR ? createLiveFar05({\n      ft, farWall, farRiver, farRings, f …[+1494 chars]`
+
+### 🧑 User — 2026-11-18T00:18:36.205Z
+
+> ↩︎ result: 639:    sync(new THREE.PerspectiveCamera().translateOnAxis(T, -1e4)); // initial: closed
+
+### 🤖 Claude — 2026-11-18T00:18:38.689Z
+
+Typecheck is clean. Running the 12-position audit with the new switch.
+
+### 🤖 Claude — 2026-11-18T00:18:41.944Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad && timeout 900 node tools/lead_r6/motion_audit.mjs 05 $SP/n1 \"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1\" 2>&1 | tail -13 && python3 -c \"\nfrom PIL import Image\nnames=['a00_approved_view','f10_forward10u','f20_forward20u','t33_through_screen','t66_through_screen','t95_through_screen']\nims=[Image.open('$SP/n1/'+n+'.png').resize((288,512)) for n in names]\nW=Image.new('RGB',(288*6,512))\nfor i,im in enumerate(ims): W.paste(im,(288*i,0))\nW.save('$SP/n1_strip.png')\"", "description":  …[+65 chars]`
+
+### 🧑 User — 2026-11-18T00:20:12.625Z
+
+> ↩︎ result: 05 a00_approved_view s 133.104 lat 0 stage 05 frames 0
+> 05 f03_forward3u s 136.106 lat 0 stage 05 frames 17
+> 05 f06_forward6u s 139.041 lat 0 stage 05 frames 33
+> 05 f10_forward10u s 143.074 lat 0 stage 05 frames 55
+> 05 f20_forward20u s 153.157 lat 0 stage 05 frames 110
+> 05 s_left_steer s 139.039 lat -3.007 stage 05 frames 33
+> 05 s_right_steer s 139.039 lat 3.002 stage 05 frames 33
+> 05 s_left_hard s 145.089 lat -5.063 stage 05 frames 66
+> 05 s_right_hard s 145.089 lat 5.063 stage 05 frames 66
+> 05 t33_through_screen s 151.691 lat 0.006 stage 05 frames 102
+> 05 t66_through_screen s 170.391 lat 0 stage 05 frames 204
+> 05 t95_through_screen s 186.706 lat 0 stage 05 frames 293
+
+### 🤖 Claude — 2026-11-18T00:20:14.176Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/bcc0f041-6d91-51f0-8196-d293500bae8b/scratchpad/n1_strip.png"}`
+
+### 🧑 User — 2026-11-18T00:20:14.214Z
+
+> ↩︎ result: [image]
+

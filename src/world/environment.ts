@@ -14,6 +14,7 @@ import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
+import { M05FAR, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -621,6 +622,13 @@ export function buildEnvironment(course: Course): Environment {
     // open/close with the rider camera (closed at the 05 checkpoint, folded away from ≈18 units before sF)
     let openNow = -1;
     const camPos = new THREE.Vector3();
+    // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored
+    // virtual tunnel, sliding seam, folds only at the stage end) instead of folding away from ≈34 u before the seam
+    const liveFar = M05FAR ? createLiveFar05({
+      ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+      radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
+      zCap: course.stage('06').s0 + 1 - sF05, foldNear: 7, foldFar: 11,
+    }) : null;
     const sync = (cam: THREE.Camera) => {
       const o = ft.openFor(camPos.setFromMatrixPosition(cam.matrixWorld));
       if (Math.abs(o - openNow) < 1e-4) return;
@@ -634,6 +642,7 @@ export function buildEnvironment(course: Course): Environment {
     farRings.onBeforeRender = (_r, _s, cam) => sync(cam);
     farLids.onBeforeRender = (_r, _s, cam) => sync(cam);
     glow.onBeforeRender = (_r, _s, cam) => { sync(cam); glowMat.uniforms.uOpacity.value = 1 - openNow; };
+    if (liveFar) for (const p of parts) p.onBeforeRender = (_r, _s, cam) => liveFar(cam);
     zones.tubes.add(...parts);
   }
   animated.push(pinkFlow.update);
