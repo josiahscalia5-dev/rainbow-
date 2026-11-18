@@ -1329,3 +1329,56 @@ I'll start by inspecting where the previous instance stopped.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node tools/match04/audit04.mjs $SP/r_p3 \"match04=1&m04ring=1&m04fade0=-2&m04fade1=-1&m04paint=2\" a00_approved_view 2>&1 | grep -v \"baloo\\|403\" | head; grep -rn \"ringTile\\|tile_ring\" src/world/match04m4.ts | head -3", "description": "Look for texture load errors in the console"}`
 
+### 🧑 User — 2026-11-18T02:20:11.944Z
+
+> ↩︎ result: console [match04] m04ring {period: 2.6, rings: 19}
+> 04 a00_approved_view s 78.274 lat 0 stage 04 frames 0
+> 75:uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
+> 290:    const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+> 291:    ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
+
+### 🤖 Claude — 2026-11-18T02:20:32.210Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\na=s[s.index(\"      float ls = dot(col, vec3(0.299, 0.587, 0.114)), lp\"):s.index(\"      if (uPaint > 1.5) col = pc;\\n\")+len(\"      if (uPaint > 1.5) col = pc;\\n\")]\nb=\"\"\"      // painted variation only (this angle's colour minus the painted row average): the pink / violet / yellow streaks\n      // ride on the measured gold ramp, so dark gold stays deep orange (scaling a yellow down would turn it olive)\n      vec3 rm = mix(vec3(0.73, 0.33, 0.11), vec3(0.83, 0.42, 0.18), smoothstep(0 …[+1038 chars]`
+
+### 🧑 User — 2026-11-18T02:21:19.448Z
+
+> ↩︎ result: f06_forward6u          LAYOUT20   3.8 %  PALETTE  66.2 %
+> t33_through_screen     LAYOUT20   3.8 %  PALETTE  63.6 %
+> t66_through_screen     LAYOUT20   2.4 %  PALETTE  65.9 %
+> f06_forward6u          LAYOUT20   3.3 %  PALETTE  66.0 %
+> t33_through_screen     LAYOUT20   3.0 %  PALETTE  64.7 %
+> t66_through_screen     LAYOUT20   2.0 %  PALETTE  68.6 %
+
+### 🤖 Claude — 2026-11-18T02:21:22.425Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s7.png"}`
+
+### 🧑 User — 2026-11-18T02:21:22.458Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:21:42.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04.ts'\ns=open(p).read()\ns=s.replace(\"import { addM04 } from './match04m4';\",\"import { addM04, M04 } from './match04m4';\",1)\na=\"  const cx = T.ax - L.water[0], cy = T.h, z0 = -T.mouthS, len = 48;\"\nb=\"  // round 8 `&m04ring=1`: the tunnel (and the water in it) runs on to 90 u so its far end is the painted small glow, not a disc\\n  const cx = T.ax - L.water[0], cy = T.h, z0 = -T.mouthS, len = M04.ring ? M04.num('m04len', 90) : 48;\"\nassert a in s; s=s.replace(a,b,1)\nopen(p,'w').write(s)\np='src/world/match04m4 …[+783 chars]`
+
+### 🧑 User — 2026-11-18T02:22:20.370Z
+
+> ↩︎ result: f06_forward6u          LAYOUT20   3.5 %  PALETTE  66.9 %
+> f10_forward10u         LAYOUT20   3.4 %  PALETTE  63.8 %
+> t33_through_screen     LAYOUT20   3.3 %  PALETTE  64.7 %
+> t66_through_screen     LAYOUT20   2.5 %  PALETTE  68.1 %
+> t95_through_screen     LAYOUT20   2.3 %  PALETTE  63.8 %
+
+### 🤖 Claude — 2026-11-18T02:22:23.043Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/s8.png"}`
+
+### 🧑 User — 2026-11-18T02:22:23.076Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:22:28.461Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad; node scripts/capture.mjs 04 \"--q=match04=1&m04ring=1\" --out=$SP/cap_ring2 2>&1 | grep -A2 \"console errors\" | head -3; git checkout qa/capture_log.json 2>/dev/null; python3 -I tools/match04/metrics04.py references/04_through_the_five_arrows.png $SP/cap_base/04.png $SP/cap_ring2/04.png $SP/m_ring2.json 2>&1 | tail -7", "description": "Verify the approved view stays unchanged with the extended tunnel"}`
+

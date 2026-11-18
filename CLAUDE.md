@@ -11,7 +11,8 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh --skip-resume` yourself; from a branch without it:
    `git fetch origin ccr-9c4a8ad6-xovgsx && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh --skip-resume`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
-2. Read the TOP section of **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** ("ACCOUNT 6 (round 6) STATE", 2026-11-17 ~22:40 UTC:
+2. Read the TOP section of **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ACCOUNT 8 (round 8) STATE" (2026-11-18,
+   lead branch `claude/rainbow-lead-c8`, `-c8` branch map, rules `docs/briefs/2026-11-18-r8/COMMON_RULES.md`); older: ("ACCOUNT 6 (round 6) STATE", 2026-11-17 ~22:40 UTC:
    lead branch **`ccr-4bd35b15-7z45t0`**, the `-c6` branch map, moving-gameplay audit `qa/lead_r6/2026-11-17/README.md`,
    user order `docs/briefs/2026-11-17-r6/USER_DECISIONS.md`), then "ACCOUNT 5 (round 5) STATE" (r5 lead
    `ccr-f983b317-2vt0zh`, the `-c5` branch map with SHAs, restore audit, keys), then its "ACCOUNT 4 → NEXT

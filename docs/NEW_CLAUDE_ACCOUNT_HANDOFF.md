@@ -1,3 +1,49 @@
+# ▶▶▶▶▶ NEWEST — ACCOUNT 8 (round 8) STATE (2026-11-18 ~02:25 UTC, lead session `session_013VHsJ9KrSuiLBqJwtdwa8n`)
+
+**START THE NEXT ACCOUNT'S SESSION ON BRANCH `claude/rainbow-lead-c8`** (= this lead's state; the lead also autosaved
+to its own session branch `ccr-58dd182e-m48xwk` — if that one is newer, it only adds transcripts/backup files).
+Then paste the prompt at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+
+User order (round 8, binding, newest): "I ALREADY DESIGNED IT — the approved artwork is your blueprint." ALL FIVE
+playable screens 04–08 must look like their OWN approved pictures (≥ 8.5/10, ideally 9–9.5) WHILE BENNY SWIMS. Visuals
+only, no redesign, no generic tunnels or substitute water, no paid jobs without approval, two specialists at a time,
+rotate the rest. **Show every genuine improvement at once** (separate full-size APPROVED / BEFORE / NEW pictures, in
+words of WHAT LOOKS BETTER), not after a 2-hour milestone; reject experiments that do not look better. Do not bother the
+user with servers, cameras or scripts. Nothing is approved until the user says so. 01–03 / 09–11 = Google Flow videos.
+Rules for every specialist: `docs/briefs/2026-11-18-r8/COMMON_RULES.md`. Coordination log:
+`docs/briefs/2026-11-18-r8/COORDINATION.md`.
+
+| Screen | Round-8 branch (newest tip at hand-over) | State at hand-over | Next (in order) |
+|---|---|---|---|
+| 04 | `claude/rainbow-s04-match-c8` (from `d1e422fa`; WIP `26984eae`) | specialist RUNNING: step 1 `m04ring` = real modeled gold washer opening + bulb row (match04m4.ts), renders in `qa/match/04/r8/step1_m04ring/`, not yet judged | brief `docs/briefs/2026-11-17-r7/S04.md` M4: ring + laundry-room entrance → crisp walls → five arrows → thick swirl water, foam, bubbles |
+| 05 | `claude/rainbow-s05-match-c8` (from `a34fb925`; WIP `2b178d94`) | specialist RUNNING; kept so far: step 1 `&m05coin=1` (giant coin no longer over Benny), step 2 `&m05ride=1` (painted water design around Benny while swimming) — both shown to the user; log `qa/match/05/r8/PROGRESS.md` | `docs/briefs/2026-11-17-r7/S05_ROUND2.md`: patch outline at the sides, far slab edge + orange piece (t66), pale bank shelves, blurry near walls |
+| 07 | `claude/rainbow-s07-match-c8` @ `dbc7678c` | READY (next slot). Lead WIP: `&m07foam=1` (plunge white walls → painted banks, visibly closer, shown to the user) + `&m07coinsz=1`; proofs owed (STATUS top) | `docs/briefs/2026-11-18-r8/S07.md` |
+| 08 | `claude/rainbow-s08-scenery-c8` @ `c0d8c97b` (incl. the unfinished r8 edits of account 7) | READY (after 07) | `docs/briefs/2026-11-18-r8/S08.md` |
+| 06 | `claude/rainbow-s06-match-c8` @ `efaf78b7` | READY (after 08) | `docs/briefs/2026-11-18-r8/S06.md` |
+Preserved, never written: all `-c7` / `-c5` branches (08 Benny `-c5` @ 3133a3ad, 08 camera `-c5` @ 18687513, preview `-c6`).
+Honest moving ratings at hand-over: 04 ≈ 3.5 · 05 ≈ 6.5–7 · 06 ≈ 7 · 07 ≈ 4.5 (plunge fixed) · 08 ≈ 7. None at 8.5 yet.
+Pictures shown to the user: `qa/review_r8/` (04_BEFORE, 05_BEFORE, 05_step1_coin, 05_step2_water, 07_plunge_fix_r7,
+07_r8_foam_walls_WIP).
+
+**How round 8 ran the specialists (worked well):** background specialist agents INSIDE the lead's container (Agent tool,
+`subagent_type` = the project agent, e.g. washer-environment-modeler / water-fx-specialist), each in its own git worktree
+(`git worktree add /home/user/wt/s0N <branch>`; `ln -sfn <checkout>/node_modules node_modules`; copy `tools/lead_r6/`
+if missing; add `node_modules` to `.git/info/exclude`), prompt = COMMON_RULES + the screen brief + "resume from
+PROGRESS.md / STATUS.md / git log". They push their own branch and send short SendMessage notes to "main"; the lead
+watches the branches (Monitor on `git rev-parse HEAD` of each worktree) and shows each step to the user. TRAP: pressing
+Stop on the lead's turn cancelled the background specialists once (01:57 UTC) — save their worktrees, restart them.
+**On a new account:** if this account's specialists may still be pushing to the `-c8` branches, continue on NEW `-c9`
+branches from each newest `-c8` tip (never two accounts on one branch). Merge nothing without the user's OK.
+
+Services (free reads, this account): World Labs key = **Account B, 5,190 credits** (Screen 05 pilot worlds 200; Screen 08
+world 32b5b2f4 → 404 with this key; its files are in Git LFS). fal.ai = the same purchased account (request 01a1ea70 →
+COMPLETED; the paid 04 plate is in the repo). This account's environment `rainbow-` allows cdn.marble.worldlabs.ai,
+v3b.fal.media, v3.fal.media (added with the user's approval). A NEW account has its own environment: keys and hosts
+must be re-entered there (secure credential form only, host `api.worldlabs.ai` header `WLT-Api-Key`; `queue.fal.run`
+header `Authorization: Key …`). Atlas connector not needed for visual work. Parallax Three.js: optional plugin.
+
+---
+
 # ▶▶▶▶ NEWEST — ACCOUNT 7 (round 7) STATE (2026-11-18 ~00:40 UTC, lead session `session_01KS3bZsVTaecBXyvFd9EQGg`)
 
 **Lead branch now: `claude/rainbow-lead-c7`** (from the account-6 lead `ccr-4bd35b15-7z45t0` @ `dde3e9af`; the session

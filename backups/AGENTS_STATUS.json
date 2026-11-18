@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-18T02:10:00Z",
+ "updated_utc": "2026-11-18T02:25:00Z",
  "updated_by_session": "session_013VHsJ9KrSuiLBqJwtdwa8n (account 8, lead branch ccr-58dd182e-m48xwk)",
  "running_now": {
   "slot_A": {
@@ -15,7 +15,8 @@
    "kind": "background agent in the lead container",
    "restarted_utc": "2026-11-18T02:00Z",
    "resume_from": "011c256b",
-   "note": "first instance stopped ~01:57 (turn interrupt); restarted with small-step reporting"
+   "note": "first instance stopped ~01:57 (turn interrupt); restarted with small-step reporting",
+   "latest_sha": "26984eae (WIP checkpoint, step1 m04ring being judged)"
   },
   "slot_B": {
    "screen": "05",
@@ -30,8 +31,10 @@
    "restarted_utc": "2026-11-18T02:00Z",
    "resume_from": "6cbe3c1f",
    "steps_pushed": [
-    "01beeeaf step1 m05coin (oversized coin no longer covers Benny)"
-   ]
+    "01beeeaf step1 m05coin",
+    "ac54ec24 step2 m05ride (painted water design while swimming)"
+   ],
+   "latest_sha": "2b178d94 (WIP checkpoint after step 2)"
   },
   "queue": [
    "07",
@@ -62,7 +65,8 @@
     "agent": "washer-environment-modeler"
    }
   },
-  "rules": "docs/briefs/2026-11-18-r8/COMMON_RULES.md"
+  "rules": "docs/briefs/2026-11-18-r8/COMMON_RULES.md",
+  "handover": "Next account: start on claude/rainbow-lead-c8, read docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md top section (ACCOUNT 8), continue each screen on -c9 from the newest -c8 tip."
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",

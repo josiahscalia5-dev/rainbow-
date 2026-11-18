@@ -1380,3 +1380,83 @@ Still visible, so either the clip is not live there or the piece is not that hoo
 > 59:  mat.customProgramCacheKey = function (this: THREE.Material) { return prevKey.call(this) + '|clip05e' + margin; };
 > TSC_OK
 
+### 🤖 Claude — 2026-11-18T02:20:09.643Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && python3 -I -c \"\nfrom PIL import Image\nfor n in ['t66_through_screen','t33_through_screen','f10_forward10u','f20_forward20u']:\n  a=Image.open('$S/ride4/'+n+'.png' if n!='f10_forward10u' and n!='f20_forward20u' else '$S/edge2/'+n+'.png').crop((0,420,864,900)) if False else None\nims=[]\nfor d,n in [('step','t66_through_screen'),('edge3','t66_through_screen'),('step','t33_through_screen'),('edge3','t33_through_screen'),('step','f10_forward10u'),('edge3','f10_forward10u') …[+359 chars]`
+
+### 🧑 User — 2026-11-18T02:20:10.026Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T02:20:12.010Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/edge3/cmp.png"}`
+
+### 🧑 User — 2026-11-18T02:20:12.052Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:20:17.406Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/edge3/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:20:17.448Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:20:18.074Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/edge3/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-18T02:20:18.109Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T02:20:30.738Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/clip05.ts'\nt=open(p).read()\na=\"    if (ca > ${(-margin).toFixed(2)} && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;\"\nassert t.count(a)==1\nt=t.replace(a,\"    if (dot(uClip05N, uClip05N) > 0.5 && ca > ${(-margin).toFixed(2)} && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;   // n = 0: off\")\nopen(p,'w').write(t)\nEOF\ntimeout 300 npx tsc --noEmit -p . && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && B=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05= …[+526 chars]`
+
+### 🧑 User — 2026-11-18T02:20:54.676Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/capE/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":80,"tris":568274,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> console errors: [
+> locked diff px 0 max 0
+
+### 🤖 Claude — 2026-11-18T02:20:57.437Z
+
+Locked view still 0 px. Rendering the step-3 pictures from the final code, plus t95 (the 06 hand-over) in scratch to make sure nothing breaks there.
+
+### 🤖 Claude — 2026-11-18T02:21:02.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad && D=qa/match/05/r8/step3_m05edge && mkdir -p $D $S/t95 && Q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1\" && timeout 900 node tools/match05/r8_shots.mjs $D \"$Q\" f10_forward10u,f20_forward20u,t33_through_screen,t66_through_screen 2>&1 | grep -ci error; timeout 600 node tools/match05/r8_shots.mjs $S/t95 \"$Q\" t95_through_screen 2>&1 | grep -ci error; A=references/05_flow_into_the_current.png; echo \"== BEFORE\"; python3 -I tools/le …[+501 chars]`
+
+### 🧑 User — 2026-11-18T02:22:15.625Z
+
+> ↩︎ result: 0
+> 0
+> == BEFORE
+> f10_forward10u         LAYOUT20  13.7 %  PALETTE  83.7 %
+> f20_forward20u         LAYOUT20  12.9 %  PALETTE  81.4 %
+> t33_through_screen     LAYOUT20  15.4 %  PALETTE  84.1 %
+> t66_through_screen     LAYOUT20   9.0 %  PALETTE  81.4 %
+> t95_through_screen     LAYOUT20   5.5 %  PALETTE  57.7 %
+> == step2
+> f10_forward10u         LAYOUT20  17.9 %  PALETTE  84.8 %
+> t33_through_screen     LAYOUT20  17.5 %  PALETTE  85.1 %
+> t66_through_screen     LAYOUT20   9.6 %  PALETTE  80.2 %
+> == step3
+> f10_forward10u         LAYOUT20  18.0 %  PALETTE  84.7 %
+> f20_forward20u         LAYOUT20  17.1 %  PALETTE  85.5 %
+> t33_through_screen     LAYOUT20  17.7 %  PALETTE  84.9 %
+> t66_through_screen     LAYOUT20   9.8 %  PALETTE  79.2 %
+> t95_through_screen     LAYOUT20   6.9 %  PALETTE  58.4 %
+
+### 🤖 Claude — 2026-11-18T02:22:17.975Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/t95/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T02:22:18.022Z
+
+> ↩︎ result: [image]
+

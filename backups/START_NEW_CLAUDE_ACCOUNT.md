@@ -1,5 +1,25 @@
 # Paste this into Claude Code on the next Claude account
 
+## ▶ NEWEST (2026-11-18 ~02:25 UTC, account 8 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
+Claude Code cloud session on the repo, branch **`claude/rainbow-lead-c8`**.
+
+> RAINBOW — continue my EXISTING game exactly where account 8 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md`. Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ACCOUNT 8 (round 8) STATE") —
+>    it wins over everything older — then `docs/briefs/2026-11-18-r8/COMMON_RULES.md` and `COORDINATION.md`.
+> 2. Fetch the newest tips of `claude/rainbow-s04-match-c8`, `claude/rainbow-s05-match-c8`, `claude/rainbow-s07-match-c8`,
+>    `claude/rainbow-s08-scenery-c8`, `claude/rainbow-s06-match-c8`; continue each on its own NEW `-c9` branch from that tip.
+> 3. Restart TWO specialists at once, exactly as the handoff describes: Screen 04 (gold washer opening + bulbs, laundry-room
+>    entrance, …) and Screen 05 (patch outline, far slab edge, bank shelves, near walls) from their PROGRESS.md /
+>    STATUS.md; then rotate 07 → 08 → 06 as slots free.
+> 4. Show me every genuine visual improvement as soon as it exists — separate full-size APPROVED / BEFORE / NEW pictures
+>    and what looks better — not technical reports. No paid jobs without my approval. Keep the five-minute GitHub
+>    autosave running and save every successful step. Nothing is approved until I say so.
+> 5. Give me only a SHORT startup check (backup verified, keys working or which secure form I must fill in).
+
+---
+
+## Older prompt (2026-11-17, superseded)
 **NEWEST (2026-11-17 ~14:30 UTC): use the one-message prompt in `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` — it supersedes the prompt below.**
 
 (Updated 2026-11-17 ~11:50 UTC, session 03b94f36. Replaces the 2026-11-16 version, whose hook description — "merges every
