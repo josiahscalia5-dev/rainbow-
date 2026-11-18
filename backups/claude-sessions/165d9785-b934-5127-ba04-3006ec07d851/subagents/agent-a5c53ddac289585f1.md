@@ -1406,3 +1406,164 @@ Now the PROGRESS.md for r12 with step 1.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K12='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && M08_ONLY=s_left_steer,s_right_steer node tools/match08/shots08.mjs 08 $S/cupN \"$K12\" 2>&1 | grep -v 'allow list' | tail -2 && M08_ONLY=s_left_steer,s_right_steer node tools/match08/shots08.mjs 08 $S/rwN3 \"$K12&m08rw=1\" 2>&1 | grep -v 'allow list' | tail -2 && python3 -I $S/bin/sbs.py $S/v_rw_steer.png 0,600,864,153 …[+183 chars]`
 
+### 🧑 User — 2026-11-18T13:03:40.411Z
+
+> ↩︎ result: 08 s_left_steer s 398.116 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 398.018 lat 1.85 stage 08 frames 38
+> 08 s_left_steer s 398.122 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 398.018 lat 1.85 stage 08 frames 38
+
+### 🤖 Claude — 2026-11-18T13:03:44.551Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_rw_steer.png"}`
+
+### 🧑 User — 2026-11-18T13:03:44.627Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:03:52.344Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && $S/bin/stepdir.sh qa/match/08/r12/step2_m08rw $S/cupN $S/rwN3 f03_forward3u t33_through_screen s_left_steer && cp $S/rwN3/motion.json qa/match/08/r12/step2_m08rw/motion_new_steer.json && date -u +%H:%M", "description": "Create step 2 proof folder"}`
+
+### 🧑 User — 2026-11-18T13:03:52.407Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_s_left_steer.png
+> 2_BEFORE_t33_through_screen.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_t33_through_screen.png
+> 13:03
+
+### 🤖 Claude — 2026-11-18T13:04:06.324Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && cat >> qa/match/08/r12/PROGRESS.md <<'EOF'\n\n## Step 2 — `&m08rw=1` (defect B: sideways-smeared near water + straight-edged magenta step, first ≈ 3 u) — KEPT\nKept query: `K11&m08cup=1&m08rw=1`\n* Cause: the swim-lane remap (`m08swim`) spreads the painted river's banks to Benny's lane (±2.95 u) using the painted\n  river width from `river08.json`. Near the camera that trace followed Benny's splash crest and the arch's gold feet, not\n  the banks: it said 0.8–2.5 u while the painted water is ≈ 3–4.5 u bank to bank. So the near water was stretched sideways\n …[+2836 chars]`
+
+### 🧑 User — 2026-11-18T13:04:13.202Z
+
+> ↩︎ result: fc67bedda7c7f155377dd4cae855e7b5fea4abee
+> fc67bedda7c7f155377dd4cae855e7b5fea4abee	refs/heads/claude/rainbow-s08-scenery-c12
+
+### 🤖 Claude — 2026-11-18T13:04:17.561Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "S08 r12 step 2 m08rw kept", "message": "S08 r12 step 2 &m08rw=1: GOOD IMPROVEMENT. SHA fc67bedda7c7f155377dd4cae855e7b5fea4abee (pushed, verified). At forward 3 u and one-third through, the water below Benny is now one continuous glossy S-river with diagonal streaks (magenta on the left, cyan in the middle). Before, it was a broad sideways-smeared magenta patch with a straight-edged step at the lower left. Cause: the painted river width used for the swim lane was traced on Benny's splash, not the banks. This is a render-only fix; the gameplay path is untouched. Appro …[+382 chars]`
+
+### 🧑 User — 2026-11-18T13:04:17.584Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T13:04:28.580Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/v_seam.png 0,100,864,560 0.75 $S/cupN/f10_forward10u.png $S/cupN/t66_through_screen.png", "description": "View upper chamber seams at f10 and t66"}`
+
+### 🧑 User — 2026-11-18T13:04:28.820Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:04:29.730Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/v_seam.png"}`
+
+### 🧑 User — 2026-11-18T13:04:29.771Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:34.856Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_seamL.png 0,150,432,420 1.4 $S/cupN/f10_forward10u.png && python3 -I $S/bin/sbs.py $S/z_seamR.png 432,150,864,420 1.4 $S/cupN/f10_forward10u.png", "description": "Zoom top-left and top-right of f10"}`
+
+### 🧑 User — 2026-11-18T13:04:35.211Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:04:36.052Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_seamL.png"}`
+
+### 🧑 User — 2026-11-18T13:04:36.071Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:36.612Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_seamR.png"}`
+
+### 🧑 User — 2026-11-18T13:04:36.640Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:46.880Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/sbs.py $S/z_dbg6.png 0,100,864,560 0.7 $S/dbg/f06_forward6u.png $S/cupN/f06_forward6u.png", "description": "Debug proxy view vs render at f06"}`
+
+### 🧑 User — 2026-11-18T13:04:47.088Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:04:48.180Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_dbg6.png"}`
+
+### 🧑 User — 2026-11-18T13:04:48.213Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:05:23.089Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,30p tools/match08/ceil08.py; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/dbg/a00_approved_view.png').convert('RGB'))\nprint(a[600,40], a[300,430], a[700,430])\n\"", "description": "Read ceil08 tool header, sample debug colours"}`
+
+### 🧑 User — 2026-11-18T13:05:23.382Z
+
+> ↩︎ result: """Screen 08 r11 (`&m08ceil=1`) analysis: the painted chamber drum as a real inner drum surface.
+> 
+> The approved picture paints the chamber as a drum running from the gold arch's opening to a gold rib around the door.
+> The fitted proxies carried most of that painted wall on the flat door wall 57 u away, and everything behind the arch ring
+> (its projector shadow: the ceiling) fell back to a generic tile, which showed as a curved seam above the door while
+> swimming. This tool builds the inner drum (a frustum from the pushed arch's back inner edge to a circle around the
+> painted door rib on the door plane), unrolls the user's plate over it (angle x depth) and writes:
+>   <out>/ceil_unrolled.png   plate pixels on the drum, angle (x, deg from +x, counter-clockwise) x t (y, arch -> door)
+>   <out>/ceil_visible.png    where the approved viewpoint sees the drum (inside the arch opening and inside the frame)
+>   <out>/ceil08.json         frustum parameters for src/world/match08.ts
+> usage: python3 -I tools/match08/ceil08.py <outDir> [archK=4.2] [doorCx doorCy doorR (plate px of the 864x1536 frame)]
+> """
+> import json, math, sys, numpy as np
+> from PIL import Image, ImageDraw
+> 
+> out = sys.argv[1]
+> K = float(sys.a …[+771 chars]
+
+### 🤖 Claude — 2026-11-18T13:05:55.658Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"ceilColor\\|uCeil\" src/world/match08.ts", "description": "Locate ceil code references"}`
+
+### 🧑 User — 2026-11-18T13:05:55.694Z
+
+> ↩︎ result: 76:uniform vec4 uCeil;         // m08ceil (door wall only): painted door centre x, y on the door plane, plane z, w > 0.5 = on
+> 77:uniform vec4 uCeilW;        // m08ceil source window: angle start, angle width (rad), radius band start, end (world u)
+> 110:vec3 ceilColor() {
+> 111:  vec2 d = vW.xy - uCeil.xy;
+> 113:  float fu = mod((a - uCeilW.x) / uCeilW.y, 2.0);
+> 114:  float as = uCeilW.x + (fu < 1.0 ? fu : 2.0 - fu) * uCeilW.y;
+> 116:  if (r > uCeilW.w) { float w2 = uCeilW.w - uCeilW.z, fr = mod(r - uCeilW.w, 2.0 * w2); rs = fr < w2 ? uCeilW.w - fr : uCeilW.z + (fr - w2); }
+> 117:  vec4 q = uProjVP * vec4(uCeil.xy + rs * vec2(cos(as), sin(as)), uCeil.z, 1.0);
+> 148:  if (uCeil.w > 0.5) pc = mix(pc, ceilColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+> 357:      uCeil: { value: new THREE.Vector4(0, 0, 0, 0) }, uCeilW: { value: new THREE.Vector4(0, 1, 0, 1) },
+> 507:  // the painted end wall by radius around the door (ceilColor in FRAG; window measured with tools/match08/ceil08.py polar
+> 515:    (doorM as THREE.ShaderMaterial).uniforms.uCeil.value.set(11.952, -103.725, C.zDoor, 1);
+> 516:    (doorM as THREE.ShaderMaterial).uniforms.uCeilW.value.set(d2r(num('m08ceila', 187)), d2r(num( …[+65 chars]
+
+### 🤖 Claude — 2026-11-18T13:06:09.571Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"uniform vec4 uCeilW;        // m08ceil source window: angle start, angle width (rad), radius band start, end (world u)\n\"\"\",\"\"\"uniform vec4 uCeilW;        // m08ceil source window: angle start, angle width (rad), radius band start, end (world u)\nuniform vec2 uCeilD;        // m08drum (chamber drum only): x > 0.5 = on, y = fade length (u) from the door plane toward the arch\n\"\"\")\nrep(\"\"\"vec3 ce …[+2392 chars]`
+
+### 🧑 User — 2026-11-18T13:06:13.289Z
+
+> ↩︎ result: 372:  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+> 505:  add(ch, M.drum, 'chamber');
+> 529:      const du = M.drum.uniforms;
+
+### 🤖 Claude — 2026-11-18T13:06:22.046Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K13='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/k13 $S/drN && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/k13 \"$K13\" 2>&1 | grep -v 'allow list' | tail -4 && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/drN \"$K13&m08drum=1\" 2>&1 | grep -v 'allow list' | tail -4 && python3 -I $S/bin/sbs.py $S/v_dr.png 0,100,8 …[+132 chars]`
+

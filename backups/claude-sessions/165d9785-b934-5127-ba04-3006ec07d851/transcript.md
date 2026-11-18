@@ -3036,3 +3036,376 @@ The column is larger than my size cutoff. Benny's area is about 400,000 pixels a
 >       return [...hits.entries()].sort((a, b) => b[1] - a[1]);
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-18T13:03:21.752Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 734,740p src/game/Game.ts", "description": "Get the draw-call API method name"}`
+
+### 🧑 User — 2026-11-18T13:03:21.814Z
+
+> ↩︎ result: const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+>     },
+>     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+>     drawList() {
+>       const hits = new Map<string, number>();
+>       const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:03:30.832Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='tools/match04/ab04.mjs'\ns=open(p).read()\nold=\"\"\"        r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);\n        return { ...r.state(), frames: n, cam: r.camera().position };\n      }, [SCREEN, dist, steer]);\"\"\"\nnew=\"\"\"        if (exact) r.drawList();   // EXACT=1: draw the stepped state as is (no extra real-time frames that move Benny on)\n        else { r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(fal …[+815 chars]`
+
+### 🧑 User — 2026-11-18T13:04:00.286Z
+
+> ↩︎ result: BEFORE v1_exact_V04-1_camera s 87.45 lat 0 cam->V04-1/V04-2 0/10.02
+> BEFORE v2_exact_V04-2_camera s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> NEW v1_exact_V04-1_camera s 87.45 lat 0 cam->V04-1/V04-2 0/10.02
+> NEW v2_exact_V04-2_camera s 97.48 lat 0 cam->V04-1/V04-2 10.02/0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:04:02.256Z
+
+Now the camera is exactly at each view's camera (distance 0.00). Here are V04-1 / BEFORE / NEW, then V04-2 / BEFORE / NEW:
+
+### 🤖 Claude — 2026-11-18T13:04:05.373Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/mv2_stage1 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; V=/home/user/rainbow-/qa/review_c10/2026-11-18/04_proposed_views; convert $V/V04-1_just_inside_opening.jpg BEFORE/v1_exact_V04-1_camera.png NEW/v1_exact_V04-1_camera.png -resize 400x711! +append $S/st1_v1.jpg; convert $V/V04-2_middle_of_tunnel.jpg BEFORE/v2_exact_V04-2_camera.png NEW/v2_exact_V04-2_camera.png -resize 400x711! +append $S/st1_v2.jpg; echo ok", "description": "Montage view, BEFORE, NEW at exact cameras"}`
+
+### 🧑 User — 2026-11-18T13:04:05.875Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:04:08.320Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/st1_v1.jpg"}`
+
+### 🧑 User — 2026-11-18T13:04:08.337Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:08.712Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/st1_v2.jpg"}`
+
+### 🧑 User — 2026-11-18T13:04:08.733Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:21.314Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && K='match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1'; EXACT=1 nice -n 5 timeout 2400 node tools/match04/ab04.mjs qa/match/04/r12/mv2_stage2 '[[\"mid_between_views\",\"s92.46\",null],[\"s_left_steer\",6,-1],[\"s_right_steer\",6,1],[\"s_left_hard\",12,-1],[\"s_right_hard\",12,1]]' \"BEFORE=$K\" \"NEW=$K&m04mv2=1\" > qa/match/04/r12/mv2_stage2.log 2>&1; grep -v \"Vite serving\" qa/match/04/r12/mv2_stage2.log | tail -10", "description": "Stage 2 render: between views and steering", "timeout": 2500000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T13:04:21.365Z
+
+> ↩︎ result: Command running in background with ID: b2lwyewkp. Output is being written to: /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/tasks/b2lwyewkp.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T13:04:23.002Z
+
+While the Screen 04 stage 2 renders, I'll check the two specialist steps waiting for review: 05 step 2 and 08 step 2.
+
+### 🤖 Claude — 2026-11-18T13:04:26.653Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; P5=/home/user/wt/s05/qa/match/05/r12/step2_m05fpaint; P8=/home/user/wt/s08/qa/match/08/r12/step2_m08rw; ls $P5 $P8; convert $P5/1_APPROVED.png $P5/2_BEFORE_t85_through.png $P5/3_NEW_t85_through.png $P5/2_BEFORE_t95_through_screen.png $P5/3_NEW_t95_through_screen.png -resize 264x469! +append $S/s05_step2.jpg; convert $P8/1_APPROVED.png $P8/2_BEFORE_f03_forward3u.png $P8/3_NEW_f03_forward3u.png $P8/2_BEFORE_t33_through_screen.png $P8/3_NEW_t33_through_screen.png -resize 264x469! +append $S/s08_step2 …[+76 chars]`
+
+### 🧑 User — 2026-11-18T13:04:28.312Z
+
+> ↩︎ result: /home/user/wt/s05/qa/match/05/r12/step2_m05fpaint:
+> 1_APPROVED.png
+> 2_BEFORE_k81_kink.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t75_through.png
+> 2_BEFORE_t85_through.png
+> 2_BEFORE_t90_through.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_k81_kink.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t75_through.png
+> 3_NEW_t85_through.png
+> 3_NEW_t90_through.png
+> 3_NEW_t95_through_screen.png
+> 
+> /home/user/wt/s08/qa/match/08/r12/step2_m08rw:
+> 1_APPROVED.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_s_left_steer.png
+> 2_BEFORE_t33_through_screen.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_t33_through_screen.png
+> motion_new_steer.json
+> ok
+
+### 🤖 Claude — 2026-11-18T13:04:30.178Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s05_step2.jpg"}`
+
+### 🧑 User — 2026-11-18T13:04:30.206Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:30.788Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s08_step2.jpg"}`
+
+### 🧑 User — 2026-11-18T13:04:30.805Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:38.129Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; P5=/home/user/wt/s05/qa/match/05/r12/step2_m05fpaint; convert $P5/2_BEFORE_t85_through.png $P5/3_NEW_t85_through.png -crop 600x420+132+300 +append $S/s05_step2_crop.jpg; echo ok", "description": "Crop 05 far river BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-18T13:04:38.403Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:04:41.176Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s05_step2_crop.jpg"}`
+
+### 🧑 User — 2026-11-18T13:04:41.200Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:49.463Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_c12; P5=/home/user/wt/s05/qa/match/05/r12/step2_m05fpaint; P8=/home/user/wt/s08/qa/match/08/r12/step2_m08rw; cp $P5/2_BEFORE_t85_through.png $R/05_step2_2_BEFORE_85pct_through.png; cp $P5/3_NEW_t85_through.png $R/05_step2_3_NEW_85pct_through.png; cp $P5/2_BEFORE_t95_through_screen.png $R/05_step2_2_BEFORE_stage_end.png; cp $P5/3_NEW_t95_through_screen.png $R/05_step2_3_NEW_stage_end.png; cp $P8/2_BEFORE_f03_forward3u.png $R/08_step2_2_BEFORE_forward3u.png; cp $P8/3_NEW_f03_forward3u.png $R/08_step2_3_NEW_forward3u.png; cp $P8/2_BEFORE_t33_through_screen.png $R/08_step2 …[+709 chars]`
+
+### 🧑 User — 2026-11-18T13:04:49.738Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:04:51.916Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/05_1_APPROVED.png", "qa/review_c12/05_step2_2_BEFORE_85pct_through.png", "qa/review_c12/05_step2_3_NEW_85pct_through.png", "qa/review_c12/05_step2_2_BEFORE_stage_end.png", "qa/review_c12/05_step2_3_NEW_stage_end.png"], "caption": "Screen 05 step 2 — GOOD IMPROVEMENT. APPROVED · BEFORE / NEW at 85% through · BEFORE / NEW at the stage end. The far river now wears your painted water (glossy cyan with white glints, satin hot-pink bands) instead of flat smooth colour. Still wrong: the left far bank is a flat pale lilac wedge.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T13:04:53.322Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/05_1_APPROVED.png → file_uuid: 339e6d9b-4eb4-444b-8430-6f19e5c3aae0
+>   /home/user/rainbow-/qa/review_c12/05_step2_2_BEFORE_85pct_through.png → file_uuid: 7b65d521-0e75-45f3-94bb-180a9a377156
+>   /home/user/rainbow-/qa/review_c12/05_step2_3_NEW_85pct_through.png → file_uuid: 4cb2b691-3d8d-4f01-8453-d85f23f34dcd
+>   /home/user/rainbow-/qa/review_c12/05_step2_2_BEFORE_stage_end.png → file_uuid: 8cc8673a-187d-4a89-9d84-b73ad13b7d87
+>   /home/user/rainbow-/qa/review_c12/05_step2_3_NEW_stage_end.png → file_uuid: ce63e33e-c684-4ebf-b9d0-b86dbc5e4a25
+
+### 🤖 Claude — 2026-11-18T13:04:54.217Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/08_1_APPROVED.png", "qa/review_c12/08_step2_2_BEFORE_forward3u.png", "qa/review_c12/08_step2_3_NEW_forward3u.png", "qa/review_c12/08_step2_2_BEFORE_third_through.png", "qa/review_c12/08_step2_3_NEW_third_through.png"], "caption": "Screen 08 step 2 — GOOD IMPROVEMENT. APPROVED · BEFORE / NEW at 3 u forward · BEFORE / NEW one-third through. The water below Benny is now one continuous glossy S-river (magenta left, cyan centre, diagonal streaks) instead of a sideways-smeared magenta patch.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-18T13:04:55.591Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/08_1_APPROVED.png → file_uuid: e57fc193-3cd6-464c-b019-3af223cc077c
+>   /home/user/rainbow-/qa/review_c12/08_step2_2_BEFORE_forward3u.png → file_uuid: d02921a7-11d9-4767-802f-83dfd7a8b25b
+>   /home/user/rainbow-/qa/review_c12/08_step2_3_NEW_forward3u.png → file_uuid: d02fc1f1-19cd-4a35-b980-5534428fa47a
+>   /home/user/rainbow-/qa/review_c12/08_step2_2_BEFORE_third_through.png → file_uuid: 8680e390-91fe-4275-99b5-482a997aed92
+>   /home/user/rainbow-/qa/review_c12/08_step2_3_NEW_third_through.png → file_uuid: 00951471-1307-44c3-b9d8-635f52387097
+
+### 🤖 Claude — 2026-11-18T13:05:00.983Z
+
+> 🔧 **Bash** `{"command": "for b in claude/rainbow-s04-match-c11 claude/rainbow-s05-match-c11 claude/rainbow-s06-match-c11 claude/rainbow-s07-match-c11 claude/rainbow-s08-scenery-c11; do n=$(echo $b | grep -oE 's0[4-8]' | tr -d s); f=$(git ls-tree -r --name-only origin/$b -- qa/match/$n/ | grep -E 'STATUS.md$' | tail -3 | tr '\\n' ' '); echo \"== $b : $f\"; for x in $f; do git show origin/$b:$x | grep -iE \"rating|/10|moving|swimming\" | head -4 | cut -c1-230; done; done 2>/dev/null | head -60", "description": "Collect latest honest ratings per screen"}`
+
+### 🧑 User — 2026-11-18T13:05:01.137Z
+
+> ↩︎ result: == claude/rainbow-s04-match-c11 : qa/match/04/STATUS.md 
+>   2026-11-18 ~01:40 UTC from `d1e422fa` (= `-c7`/`-c5` tip, M3 done). BEFORE moving audit (`?match04=1`, lead r6 method,
+>   12 positions) done: `qa/match/04/r8/BEFORE/` (+ `metrics.txt`: LAYOUT20 45.8 % approved view → 2.8–12.1 % moving;
+>   frames BEFORE `motion_m2/NEW_fal04/`, NEW `motion_m3/NEW/` (3/6/10/15/20 u, steering left/right) + per-step sets.
+> == claude/rainbow-s05-match-c11 : qa/match/05/STATUS.md 
+> * **Running-session status: RUNNING (round 8, account 8, branch claude/rainbow-s05-match-c8)** — started 2026-11-18 from `a34fb925` (= `-c7` tip). Task: user list 2026-11-18 (water design while swimming, soft bank edges, disconn
+> * **Numbers (moving, LAYOUT20 / PALETTE vs approved):** t66 5.8 / 71.0 % → **9.0 / 81.4 %**; t33 15.2 / 83.9 → 15.4 / 84.1; early frames ±1 pt; t95 unchanged (06 hand-over). Locked view 0 px vs BEFORE.
+> * **Honest moving rating (subjective):** approved view ~8.5; early swim ~6.5; two-thirds through **~4 → ~6**; last 5 % ~4 (06).
+> == claude/rainbow-s06-match-c11 : qa/match/06/STATUS.md 
+> * Pictures: BEFORE moving = `r6/BEFORE_lead/` (12 lead shots); NEW moving = `r6/NEW_moving/` (12 shots,
+>   (SSIM 0.987 …[+921 chars]
+
+### 🤖 Claude — 2026-11-18T13:05:06.520Z
+
+> 🔧 **Bash** `{"command": "ls qa/review_c10/2026-11-18/ | head -40", "description": "List the round-10 audit review frames"}`
+
+### 🧑 User — 2026-11-18T13:05:06.567Z
+
+> ↩︎ result: 04_1_APPROVED.jpg
+> 04_2_GAME_start_painted_viewpoint.jpg
+> 04_3_GAME_one_third_through.jpg
+> 04_4_GAME_two_thirds_through.jpg
+> 04_5_GAME_end_of_stage.jpg
+> 04_proposed_views
+> 05_1_APPROVED.jpg
+> 05_2_GAME_start_painted_viewpoint.jpg
+> 05_3_GAME_one_third_through.jpg
+> 05_4_GAME_two_thirds_through.jpg
+> 05_5_GAME_end_of_stage.jpg
+> 05_step1_m05foam
+> 05_step2_m05berm
+> 05_step3_m05flat
+> 05_step4_m05cloud
+> 06_1_APPROVED.jpg
+> 06_2_GAME_start_painted_viewpoint.jpg
+> 06_3_GAME_one_third_through.jpg
+> 06_4_GAME_two_thirds_through.jpg
+> 06_5_GAME_end_of_stage.jpg
+> 07_1_APPROVED.jpg
+> 07_2_GAME_start_painted_viewpoint.jpg
+> 07_3_GAME_one_third_through.jpg
+> 07_4_GAME_two_thirds_through.jpg
+> 07_5_GAME_end_of_stage.jpg
+> 08_1_APPROVED.jpg
+> 08_2_GAME_start_painted_viewpoint.jpg
+> 08_3_GAME_one_third_through.jpg
+> 08_4_GAME_two_thirds_through.jpg
+> 08_5_GAME_end_of_stage.jpg
+> 08_step1_m08far
+> 08_step2_m08coinv
+> README.md
+> all_shots
+
+### 🤖 Claude — 2026-11-18T13:05:10.142Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/review_c10/2026-11-18 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; for n in 06 07; do convert ${n}_1_APPROVED.jpg ${n}_2_GAME_start_painted_viewpoint.jpg ${n}_3_GAME_one_third_through.jpg ${n}_4_GAME_two_thirds_through.jpg -resize 250x444! +append $S/feas_$n.jpg; done; convert $S/feas_06.jpg $S/feas_07.jpg -append $S/feas_0607.jpg; echo ok", "description": "Montage 06 and 07 approved vs game frames"}`
+
+### 🧑 User — 2026-11-18T13:05:11.484Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:05:13.392Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/feas_0607.jpg"}`
+
+### 🧑 User — 2026-11-18T13:05:13.445Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:05:23.158Z
+
+> 🔧 **Bash** `{"command": "grep -v \"Vite serving\" /home/user/wt/s04/qa/match/04/r12/mv2_stage2.log | tail -10; ls /home/user/wt/s04/qa/match/04/r12/mv2_stage2/*/ 2>/dev/null | head -20", "description": "Check stage 2 render progress"}`
+
+### 🧑 User — 2026-11-18T13:05:23.228Z
+
+> ↩︎ result: BEFORE mid_between_views s 92.58 lat 0 cam->V04-1/V04-2 5.12/4.9
+> BEFORE s_left_steer s 83.48 lat -1.65 cam->V04-1/V04-2 4.04/13.95
+> BEFORE s_right_steer s 83.48 lat 1.65 cam->V04-1/V04-2 4.04/13.95
+> BEFORE s_left_hard s 89.55 lat -1.65 cam->V04-1/V04-2 2.65/8.09
+> BEFORE s_right_hard s 89.55 lat 1.65 cam->V04-1/V04-2 2.65/8.09
+> NEW mid_between_views s 92.58 lat 0 cam->V04-1/V04-2 5.12/4.9
+> NEW s_left_steer s 83.48 lat -1.65 cam->V04-1/V04-2 4.04/13.95
+> NEW s_right_steer s 83.48 lat 1.65 cam->V04-1/V04-2 4.04/13.95
+> /home/user/wt/s04/qa/match/04/r12/mv2_stage2/BEFORE/:
+> mid_between_views.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> 
+> /home/user/wt/s04/qa/match/04/r12/mv2_stage2/NEW/:
+> mid_between_views.png
+> s_left_steer.png
+> s_right_steer.png
+
+### 🤖 Claude — 2026-11-18T13:05:24.715Z
+
+I'll look at the first three stage-2 results now (halfway, and moderate steering left/right), with your approved picture first for reference:
+
+### 🤖 Claude — 2026-11-18T13:05:27.218Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/mv2_stage2 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert /home/user/wt/s04/references/04_through_the_five_arrows.png BEFORE/mid_between_views.png NEW/mid_between_views.png -resize 400x711! +append $S/st2_mid.jpg; convert BEFORE/s_left_steer.png NEW/s_left_steer.png BEFORE/s_right_steer.png NEW/s_right_steer.png -resize 300x533! +append $S/st2_steer.jpg; echo ok", "description": "Montage stage 2 midpoint and steering frames"}`
+
+### 🧑 User — 2026-11-18T13:05:28.635Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:05:31.103Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/st2_mid.jpg"}`
+
+### 🧑 User — 2026-11-18T13:05:31.134Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:05:31.668Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/st2_steer.jpg"}`
+
+### 🧑 User — 2026-11-18T13:05:31.701Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:05:53.021Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s04/qa/match/04/r12/mv2_stage2/NEW/motion.json ] || ! pgrep -f \"ab04.mjs qa/match/04/r12/mv2_stage2\" >/dev/null; do sleep 10; done; ls /home/user/wt/s04/qa/match/04/r12/mv2_stage2/NEW/", "description": "Wait for stage 2 hard-steering renders", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T13:05:53.066Z
+
+> ↩︎ result: mid_between_views.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+
+### 🤖 Claude — 2026-11-18T13:05:56.445Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04/qa/match/04/r12/mv2_stage2 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04; convert BEFORE/s_left_hard.png NEW/s_left_hard.png BEFORE/s_right_hard.png NEW/s_right_hard.png -resize 300x533! +append $S/st2_hard.jpg; echo ok", "description": "Montage hard-steering BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-18T13:05:56.720Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:05:59.552Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/s04/st2_hard.jpg"}`
+
+### 🧑 User — 2026-11-18T13:05:59.582Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:06:37.574Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat >> qa/match/04/r12/PROGRESS.md <<'EOF'\n\n## User order 2026-11-18 ~13:30 UTC: \"identify the exact rendering problem, fix it, ONE controlled test\"\n### Exact diagnosis (`tools/match04/diag04.mjs`, `qa/match/04/r12/diag_mv_r11/`): who draws every visible pixel with `K&m04mv=1`\nMethod: the real game frame re-rendered with one object group hidden at a time (camera layers; same state, uniforms, post\nchain) → which pixels change; plus the overlay's own coverage in debug colours (depth test / image alpha / in frame).\n| at the V04-1 camera (f10) | share o …[+4296 chars]`
+
+### 🧑 User — 2026-11-18T13:06:46.746Z
+
+> ↩︎ result: remote=40a72c4387 local=40a72c4387
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-18T13:06:51.361Z
+
+Committed and pushed (`40a72c43`, matches GitHub). Now your full-size pictures for this test:
+
+### 🤖 Claude — 2026-11-18T13:06:55.869Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_c12; W=/home/user/wt/s04/qa/match/04/r12; cp $W/mv2_stage1/BEFORE/v1_exact_V04-1_camera.png $R/04mv2_2_BEFORE_at_V04-1_camera.png; cp $W/mv2_stage1/NEW/v1_exact_V04-1_camera.png $R/04mv2_3_NEW_at_V04-1_camera.png; cp $W/mv2_stage2/BEFORE/s_left_hard.png $R/04mv2_2_BEFORE_hard_left_steer.png; cp $W/mv2_stage2/NEW/s_left_hard.png $R/04mv2_3_NEW_hard_left_steer.png; cp $W/mv2_stage2/BEFORE/mid_between_views.png $R/04mv2_2_BEFORE_halfway_between_views.png; cp $W/mv2_stage2/NEW/mid_between_views.png $R/04mv2_3_NEW_halfway_between_views.png; cat >> docs/briefs/2026-11-18-r12 …[+453 chars]`
+
+### 🧑 User — 2026-11-18T13:06:56.089Z
+
+> ↩︎ result: 04mv2_2_BEFORE_at_V04-1_camera.png
+> 04mv2_2_BEFORE_halfway_between_views.png
+> 04mv2_2_BEFORE_hard_left_steer.png
+> 04mv2_3_NEW_at_V04-1_camera.png
+> 04mv2_3_NEW_halfway_between_views.png
+> 04mv2_3_NEW_hard_left_steer.png
+
+### 🤖 Claude — 2026-11-18T13:06:58.724Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_c12/04_1_APPROVED.png", "qa/review_c12/04mv2_2_BEFORE_at_V04-1_camera.png", "qa/review_c12/04mv2_3_NEW_at_V04-1_camera.png", "qa/review_c12/04mv2_2_BEFORE_hard_left_steer.png", "qa/review_c12/04mv2_3_NEW_hard_left_steer.png", "qa/review_c12/04mv2_2_BEFORE_halfway_between_views.png", "qa/review_c12/04mv2_3_NEW_halfway_between_views.png"], "caption": "Screen 04 corrected test — NOT YET PROVEN. APPROVED · BEFORE / NEW exactly at the V04-1 camera (big gain: arrows, glossy rings, painted water, low foam) · BEFORE / NEW hard left steer (closer) · BEFORE / NEW half-way between t …[+82 chars]`
+
+### 🧑 User — 2026-11-18T13:07:00.501Z
+
+> ↩︎ result: 7 files delivered to user.
+>   /home/user/rainbow-/qa/review_c12/04_1_APPROVED.png → file_uuid: 5d050391-1764-424f-8579-e7c9ee4971ce
+>   /home/user/rainbow-/qa/review_c12/04mv2_2_BEFORE_at_V04-1_camera.png → file_uuid: 678f20db-4cc2-43b6-8c19-e69a2432ebc5
+>   /home/user/rainbow-/qa/review_c12/04mv2_3_NEW_at_V04-1_camera.png → file_uuid: 8018a2c4-3a20-4e26-b5b2-f3024e7c7f5b
+>   /home/user/rainbow-/qa/review_c12/04mv2_2_BEFORE_hard_left_steer.png → file_uuid: 785a2541-45d7-42ac-a921-6da8ee0cb774
+>   /home/user/rainbow-/qa/review_c12/04mv2_3_NEW_hard_left_steer.png → file_uuid: 33585c60-29aa-4908-899e-5af23f4d4b69
+>   /home/user/rainbow-/qa/review_c12/04mv2_2_BEFORE_halfway_between_views.png → file_uuid: 7657c1dc-aa53-4f1c-9631-630622099f24
+>   /home/user/rainbow-/qa/review_c12/04mv2_3_NEW_halfway_between_views.png → file_uuid: a514134d-74a0-4f44-b853-641b4c778af3
+
+### 🤖 Claude — 2026-11-18T13:07:04.080Z
+
+> 🔧 **Bash** `{"command": "timeout 500 flock backups/.autosave.lock -c true; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:04-mv2-test 2>&1 | grep -E '\"result\"|\"commit\"'; python3 -I scripts/autosave-status.py | head -1; for w in s05 s08; do cd /home/user/wt/$w; echo \"$w $(git log -1 --format='%h %ci' ) remote=$(git ls-remote origin refs/heads/$(git rev-parse --abbrev-ref HEAD) | cut -c1-8) dirty=$(git status --short | wc -l)\"; done; ls /home/user/rainbow-/backups/wip/", "description": "Save lead and verify specialist branches backed up", "timeout": 1200000}`
+

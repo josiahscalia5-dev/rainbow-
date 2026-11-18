@@ -1210,3 +1210,173 @@ Next item: the flat pale lilac wedge on the far left bank. Round 11 left an unve
 > proj05_lut.json
 > proj05_near.json
 
+### 🤖 Claude — 2026-11-18T13:03:34.565Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nprint(im.size)\nim.crop((600,600,864,1000)).save('/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_rfoam.png')\nim.crop((0,480,340,800)).save('/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_lfoam.png')\n\"", "description": "Check time and crop approved foam bank regions"}`
+
+### 🧑 User — 2026-11-18T13:03:34.761Z
+
+> ↩︎ result: 13:03
+> (864, 1536)
+
+### 🤖 Claude — 2026-11-18T13:03:37.805Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_rfoam.png"}`
+
+### 🧑 User — 2026-11-18T13:03:37.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:03:38.395Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/crop_lfoam.png"}`
+
+### 🧑 User — 2026-11-18T13:03:38.419Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:04:06.865Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');", "new_string": "export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');\n/**\n * `&m05fedge=1` (Screen 05 round 12, needs m05fmag; src/world/materials.ts farRiverMaterial): the far river's floor ran\n * up to 9 u beyond the water edge right behind the seam (a wide flat pale-lilac wedge on the left bank at t66 … t95, huge\n * when steering left at t95). The painting has only a narrow foam band along the water with the slotted wall  …[+309 chars]`
+
+### 🧑 User — 2026-11-18T13:04:06.913Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:04:08.457Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/materials.ts", "old_string": "import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, m05blend", "new_string": "import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FEDGE, M05FMAG, M05FPAINT, m05blend"}`
+
+### 🧑 User — 2026-11-18T13:04:08.496Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:04:11.058Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/materials.ts", "old_string": "          .replace(glowLine, FPAINT_APPLY + glowLine);\n      }", "new_string": "          .replace(glowLine, FPAINT_APPLY + glowLine);\n      }\n      if (M05FEDGE) {\n        // `&m05fedge=1` (Screen 05 round 12): narrow foam rim (1.3 u) beyond the water edge where the block is live + magnified\n        const bankLine = '  float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));';\n        shader.fragmentShader = shader.fragmentShader.replace(bankLine, bankLine + '\\n  bankW = mix(bankW, 1.3, uFbP. …[+85 chars]`
+
+### 🧑 User — 2026-11-18T13:04:11.092Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:04:12.067Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/materials.ts", "old_string": "(M05FPAINT ? '-m05fpaint' : '');", "new_string": "(M05FPAINT ? '-m05fpaint' : '') + (M05FEDGE ? '-m05fedge' : '');"}`
+
+### 🧑 User — 2026-11-18T13:04:12.104Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:04:18.028Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1' && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fedge \"$K&m05fedge=1\" t95_left,t75_through,t85_through,k81_kink,t66_through_screen 2>&1 | grep -i error | head -3; ls /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fedge", "des …[+59 chars]`
+
+### 🧑 User — 2026-11-18T13:05:44.136Z
+
+> ↩︎ result: TSC_OK
+> k81_kink.png
+> shots.json
+> t66_through_screen.png
+> t75_through.png
+> t85_through.png
+> t95_left.png
+
+### 🤖 Claude — 2026-11-18T13:05:46.264Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fedge/t95_left.png"}`
+
+### 🧑 User — 2026-11-18T13:05:46.318Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:05:46.883Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fedge/t85_through.png"}`
+
+### 🧑 User — 2026-11-18T13:05:46.938Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:05:55.867Z
+
+No visible change, so the pale wedge is not the floor beyond the rim. I need to identify which surface it actually is; a temporary debug tint of the far river (not committed) will show it.
+
+### 🤖 Claude — 2026-11-18T13:06:02.019Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cp src/world/materials.ts /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/materials.ts.bak && python3 -I - <<'EOF'\np='/home/user/wt/s05/src/world/materials.ts'\ns=open(p).read()\nold=\"          .replace(glowLine, FPAINT_APPLY + glowLine);\\n\"\nnew=\"          .replace(glowLine, FPAINT_APPLY + glowLine);\\n        if (typeof location !== 'undefined' && location.search.includes('dbgfar=1')) shader.fragmentShader = shader.fragmentShader.replace(glowLine, glowLine + '\\\\n  col = vec3(0.0, 1.0, 0.0) * (0.3 + 0.7 * step(0.0,  …[+743 chars]`
+
+### 🧑 User — 2026-11-18T13:06:35.384Z
+
+> ↩︎ result: qa/capture_log.json    | 14 +++++++-------
+>  src/vfx/waterRibbon.ts |  8 ++++++++
+>  src/world/materials.ts |  9 +++++++--
+>  3 files changed, 22 insertions(+), 9 deletions(-)
+
+### 🤖 Claude — 2026-11-18T13:06:38.014Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/dbg/t95_left.png"}`
+
+### 🧑 User — 2026-11-18T13:06:38.054Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:06:38.631Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/dbg/t85_through.png"}`
+
+### 🧑 User — 2026-11-18T13:06:38.672Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:06:56.212Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git checkout src/world/materials.ts qa/capture_log.json 2>&1; git diff --stat; grep -n \"M05CLOUD\\|M05FOAM\\|rim05\\|clip05\\|export function\" src/vfx/foam.ts | head -60; wc -l src/vfx/foam.ts src/vfx/clip05.ts", "description": "Revert fedge material edit and survey foam.ts"}`
+
+### 🧑 User — 2026-11-18T13:06:56.388Z
+
+> ↩︎ result: Updated 2 paths from the index
+>  src/vfx/waterRibbon.ts | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 17:import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, M05CAUL, m05foamK } from './waterRibbon';
+> 19:import { withClip05 } from './clip05';
+> 33:export function bermLump(s: number, side: number): number {
+> 37:export function bermDomes(s: number, e: number, side: number): number {
+> 52:export function bermHeight(e: number, hw: number, lump: number): number {
+> 67:export function bermSurface(s: number, e: number, side: number, hw: number): number {
+> 318:  withClip05(mat, 'vPosW'); // `?match05=1&m05far=1` only (src/vfx/clip05.ts); default: no change
+> 484:  // `&m05foam=1` (Screen 05 round 10, waterRibbon.ts M05FOAM): the lumps grow in with the ride (0 = no lump drawn)
+> 485:  const vs = M05FOAM ? BANK_BUB_VERT.replace('void main() {', 'uniform float uGrow05;\nvoid main() {').replace('float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);', 'float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz) * uGrow05;') : BANK_BUB_VERT;
+> 486:  if (M05FOAM) (uniforms as Record<string, THREE.IUniform>).uGrow05 = m05foamK;
+> 509:  rim05: THREE.InstancedMesh;
+>  …[+956 chars]
+
+### 🤖 Claude — 2026-11-18T13:06:58.270Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/vfx/foam.ts", "offset": 800, "limit": 175}`
+
+### 🧑 User — 2026-11-18T13:06:58.298Z
+
+> ↩︎ result: 800	  }
+> 801	  // wave 8: extra small bubbles along both 05 rims (own RNG: the shared sequence above is untouched): a lace of tiny
+> 802	  // bubbles at the waterline and small bubbles piled on the crest, so the rim reads as fine foam toward the VP
+> 803	  {
+> 804	    const r5 = rng(9091);
+> 805	    const n5 = quality === 'high' ? 7 : 3;
+> 806	    for (let s = st05b.s0 + 2; s < st05b.s1 - 2; s += step) {
+> 807	      for (const side of [-1, 1]) {
+> 808	        for (let k = 0; k < n5; k++) {
+> 809	          const ss = s + (r5() - 0.5) * step;
+> 810	          const lace = k < 3;
+> 811	          const e = lace ? -0.6 + r5() * 0.35 : -0.35 + r5() * 0.75;
+> 812	          const u = r5();
+> 813	          const r = lace ? 0.025 + 0.03 * u * u : 0.035 + 0.06 * u * u;
+> 814	          imp05.push({ p: bermPoint(ss, e, side, r * (lace ? 0.2 : -0.1)), r, c: [lace ? 0.95 : 0.75 + 0.25 * r5(), r5(), r5() * 2 - 1] });
+> 815	        }
+> 816	      }
+> 817	    }
+> 818	  }
+> 819	
+> 820	  // `&m05cloud=1` (Screen 05 round 10, waterRibbon.ts M05CLOUD): big puffy foam CLOUDS on both 05 banks — clusters of
+> 821	  // 6–12 lumps (radius 0.14–0.42 u, mixed sizes, piled: larger ones low and in the middle) about every 1.6 u per side,
+> 822	  // sitting  …[+8643 chars]
+
