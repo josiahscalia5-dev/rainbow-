@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 16506,
-   "sha256": "6cc1413be8def69f2247dd82f1ba048ae18c1ca8c1ad5ccac7a783499a771244"
+   "sha256": "bdf1f3c43a8e33bce2c9829cb42fb56506c4457506ddd92f7d749ab3a7f4fec2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -968,8 +968,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c14/INFO.json",
-   "bytes": 1495,
-   "sha256": "c716534eeb5c856c866ea9347174b066197a6e65e67304f0a61607094586ad12"
+   "bytes": 1543,
+   "sha256": "5ed9f9c0df21f323e55f33c867255a08a3ab9066f0931a4db7035eb7201d45fb"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c14/untracked/qa/match/04/r14/s8_glow/G3/f06_forward6u.png",
@@ -1042,6 +1042,11 @@
    "sha256": "95d13c8efb0d63b97957343ef096014b1b2369e0d9c6b1cc48b67208580fd488"
   },
   {
+   "path": "backups/wip/claude__rainbow-s04-match-c14/untracked/qa/match/04/r14/s8_glow/G4/s_left_hard.png",
+   "bytes": 1594959,
+   "sha256": "817d3799873e7e8f9e30d9f98b71cd2ffa31f46037b018d75ce4225268a3dc23"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s04-match-c14/untracked/qa/match/04/r14/s8_glow/G4/s_left_steer.png",
    "bytes": 1945572,
    "sha256": "c76de9aed797783e4485dba792612e022a4d014009609f9ea361ec8512307a24"
@@ -1103,8 +1108,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c14/INFO.json",
-   "bytes": 894,
-   "sha256": "a721cf417e5dad37fca39f9e8bffb106c095f843db09708c9528adc35a1cefa6"
+   "bytes": 958,
+   "sha256": "471fb3c27620a77bd6fea674ec9bfc2a73199b705f547af1b8dd2fb3c609e8e7"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -1173,8 +1178,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c14/INFO.json",
-   "bytes": 590,
-   "sha256": "16aad356a6256466a91924df4e2660263a419c9c2ac72ab13ab358d9c7bd6996"
+   "bytes": 640,
+   "sha256": "df2f6bb6a06ff3f92f5ce87e41213284901650efdd7d49711a9d6898604a638f"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
