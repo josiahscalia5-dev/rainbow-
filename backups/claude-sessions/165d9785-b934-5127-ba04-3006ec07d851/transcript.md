@@ -678,3 +678,166 @@ The bootstrap report on disk is from the previous session, and the autosave can'
 >         washer-environment-modeler         definition available (no in-process subagent running); role used by the running cloud sessions S08 scenery r6 (session_01VCMXobk8x9PXbYb8rpUaPP) and S06 r6 (session_01VCMXobyXNaU99Bgt9q6WBM) next: NOW if interrupted: SPECIALIST 1 texture projection, qa/pilot05/proj/B
 >         path-camera-transition-engineer    definition available (no in-process subagent running) next: far coin trail test on …[+3670 chars]
 
+### 🤖 Claude — 2026-11-18T12:32:49.613Z
+
+> 🔧 **Bash** `{"command": "timeout 180 git fetch origin ccr-3b139b48-0qqkkz 2>&1 | tail -3; git log --oneline f06a53e..FETCH_HEAD | head -30; echo ---; git log -1 --format='%H %ci %s' FETCH_HEAD; git merge-base --is-ancestor f06a53e FETCH_HEAD && echo \"f06a53e IS ancestor of remote lead\"", "description": "Fetch lead branch and list newer commits"}`
+
+### 🧑 User — 2026-11-18T12:32:50.209Z
+
+> ↩︎ result: From https://github.com/josiahscalia5-dev/rainbow-
+>  * branch            ccr-3b139b48-0qqkkz -> FETCH_HEAD
+>    f06a53e..5c40dde  ccr-3b139b48-0qqkkz -> origin/ccr-3b139b48-0qqkkz
+> 5c40dde autosave: Rainbow 2026-11-18 12:29 UTC
+> ---
+> 5c40dde2b4ca41d0c2dd7d8e4b2b2cfa12b909ef 2026-11-18 12:30:02 +0000 autosave: Rainbow 2026-11-18 12:29 UTC
+> f06a53e IS ancestor of remote lead
+
+### 🤖 Claude — 2026-11-18T12:32:51.019Z
+
+> 🔧 **Bash** `{"command": "timeout 120 git ls-remote origin 2>/dev/null | grep -E 'refs/heads/' | awk '{print $2}' | sed 's#refs/heads/##' | grep -E 'c11|c10|r11|3b139b48|e908f8da' ", "description": "List round-11 branches on GitHub"}`
+
+### 🧑 User — 2026-11-18T12:32:51.411Z
+
+> ↩︎ result: ccr-3b139b48-0qqkkz
+> ccr-e908f8da-cy4yc1
+> claude/rainbow-s04-match-c10
+> claude/rainbow-s04-match-c11
+> claude/rainbow-s05-match-c10
+> claude/rainbow-s05-match-c11
+> claude/rainbow-s06-match-c11
+> claude/rainbow-s07-match-c11
+> claude/rainbow-s08-scenery-c10
+> claude/rainbow-s08-scenery-c11
+
+### 🤖 Claude — 2026-11-18T12:33:00.196Z
+
+> 🔧 **Bash** `{"command": "git show --stat 5c40dde | head -30; echo; for b in claude/rainbow-s04-match-c11 claude/rainbow-s05-match-c11 claude/rainbow-s06-match-c11 claude/rainbow-s07-match-c11 claude/rainbow-s08-scenery-c11; do timeout 120 git fetch -q origin $b:refs/remotes/origin/$b 2>&1|tail -1; echo \"$b $(git log -1 --format='%h %ci %s' origin/$b)\"; done", "description": "Inspect newest lead commit and fetch c11 specialist branches"}`
+
+### 🤖 Claude — 2026-11-18T12:33:01.004Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,140p docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "description": "Read top of the new-account handoff"}`
+
+### 🧑 User — 2026-11-18T12:35:00.264Z
+
+> ↩︎ result: commit 5c40dde2b4ca41d0c2dd7d8e4b2b2cfa12b909ef
+> Author: Claude <noreply@anthropic.com>
+> Date:   Wed Nov 18 12:30:02 2026 +0000
+> 
+>     autosave: Rainbow 2026-11-18 12:29 UTC
+>     
+>     Automated Rainbow backup (daemon). 4 file(s) changed.
+>     Transcripts: refreshed (repo verified private)
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_018Sg3ASTRokNr5EKngTj33B
+> 
+>  backups/BACKUP_LOG.md                              |   1 +
+>  backups/BACKUP_STATUS.json                         |  18 +--
+>  backups/MANIFEST.json                              | 121 +++++++++++----------
+>  .../wip/claude__rainbow-s04-match-c11/INFO.json    |   2 +-
+>  .../wip/claude__rainbow-s05-match-c11/INFO.json    |   2 +-
+>  .../wip/claude__rainbow-s08-scenery-c11/INFO.json  |   2 +-
+>  6 files changed, 76 insertions(+), 70 deletions(-)
+> 
+> claude/rainbow-s04-match-c11 d3ea420 2026-11-18 12:21:29 +0000 Screen 04 r11 (lead decisive test, WIP): &m04mv=1 multi-view projection of the user's provisional views V04-1/V04-2 from their own game cameras (overlay copies, per-view depth bakes, painted Benny/coins/HUD masked); probe --fwd, audit EXTRA_SHOTS; BEFORE audit
+> Command did  …[+509 chars]
+
+### 🧑 User — 2026-11-18T12:35:00.292Z
+
+> ↩︎ result: # ▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 11 (round 11) STATE (2026-11-18 ~11:38 UTC, lead session `session_018Sg3ASTRokNr5EKngTj33B`)
+> 
+> Lead branch **`ccr-3b139b48-0qqkkz`** (contains the account-10 lead `ccr-c526614d-tw0yro` @ `e673ef4` + autosaves; nothing
+> merged). Branch map, start SHAs, services: **`docs/briefs/2026-11-18-r11/COORDINATION.md`**. Rules unchanged
+> (`docs/briefs/2026-11-18-r8/COMMON_RULES.md` + `docs/briefs/2026-11-18-r10/RULES_R10.md`). Every screen continues on a NEW
+> `-c11` branch from its newest tip: 05 `claude/rainbow-s05-match-c11` (from `-c10` `bed8253d` + the account-10 WIP
+> `&m05unf=1`, RUNNING slot B, water-fx-specialist, worktree `/home/user/wt/s05`), 08 `claude/rainbow-s08-scenery-c11`
+> (from `-c10` `e1c7d0b7`, RUNNING slot A, washer-environment-modeler, worktree `/home/user/wt/s08`), 04
+> `claude/rainbow-s04-match-c11` (from `-c10` `a24d289c`, READY next, brief `docs/briefs/2026-11-18-r10/S04_R10.md`), 07
+> `claude/rainbow-s07-match-c11` (from `-c9` `dbc7678c`), 06 `claude/rainbow-s06-match-c11` (from `-c9` `efaf78b7`). Logs:
+> `qa/match/<NN>/r11/PROGRESS.md`. All `-c10` / `-c9` branches and `ccr-c526614d-tw0yro` are now in the autosave's
+> `protected_branches`.
+> **Keys on a ne …[+11958 chars]
+
+### 🤖 Claude — 2026-11-18T12:35:04.446Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-18-r11/COORDINATION.md | head -150", "description": "Read round-11 coordination document"}`
+
+### 🧑 User — 2026-11-18T12:35:04.477Z
+
+> ↩︎ result: # Round 11 (account 11) — coordination of the five playable screens (VISUALS ONLY)
+> 
+> Lead session `session_018Sg3ASTRokNr5EKngTj33B`, lead branch `ccr-3b139b48-0qqkkz` (autosave; contains the account-10 lead
+> `ccr-c526614d-tw0yro` @ `e673ef4`). Started 2026-11-18 ~11:25 UTC.
+> Rules (unchanged, binding): `docs/briefs/2026-11-18-r8/COMMON_RULES.md` + `docs/briefs/2026-11-18-r10/RULES_R10.md`
+> (read "-c8"/"-c10" as "-c11", "r8"/"r10" as "r11"). Reference-view plan: `docs/briefs/2026-11-18-r10/REFERENCE_VIEWS_PLAN.md`.
+> Pending free network request (Hugging Face / PyTorch): `docs/briefs/2026-11-18-r10/PENDING_ENVIRONMENT_REQUEST.md` — note:
+> this account's environment ("Default") has UNRESTRICTED network, so those hosts are reachable without any request.
+> 
+> ## Services verified at start (free reads, 11:30 UTC)
+> * World Labs: key re-entered by the user via the secure form (Default env, host `api.worldlabs.ai`, header `WLT-Api-Key`)
+>   → authenticated, 5,420 credits; Screen 08 world `32b5b2f4` → 200; Screen 05 pilot worlds → 404 (other WL account; files in Git LFS).
+> * fal.ai: key re-entered via the secure form (host `queue.fal.run`, `Authorization: Key …`) → request `01a1ea70` COMPLETED.
+>   All 8 p …[+3365 chars]
+
+### 🤖 Claude — 2026-11-18T12:35:06.109Z
+
+> 🔧 **Bash** `{"command": "git checkout -q 2>/dev/null; ls backups/wip/; for d in backups/wip/*/; do echo \"== $d\"; ls -la $d | tail -n +2 | awk '{print $5, $9}'; python3 -c \"import json,sys;d=json.load(open('$d/INFO.json'));print({k:d[k] for k in list(d)[:12]})\" 2>/dev/null; done", "description": "Inspect unfinished-work snapshots in backups/wip"}`
+
+### 🧑 User — 2026-11-18T12:35:06.424Z
+
+> ↩︎ result: claude__rainbow-s04-match-c10
+> claude__rainbow-s04-match-c11
+> claude__rainbow-s05-match-c10
+> claude__rainbow-s05-match-c11
+> claude__rainbow-s06-match-c11
+> claude__rainbow-s08-scenery-c10
+> claude__rainbow-s08-scenery-c11
+> == backups/wip/claude__rainbow-s04-match-c10/
+> 4096 .
+> 4096 ..
+> 477 INFO.json
+> {'worktree': '/home/user/wt/s04', 'branch': 'claude/rainbow-s04-match-c10', 'head': 'a24d289c542d8b4dfe5db8d4f71204a120669c8c', 'time': '2026-11-18T11:21:22+00:00', 'dirty_tracked': [], 'untracked_copied': [], 'untracked_skipped': [], 'restore': 'git switch claude/rainbow-s04-match-c10 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c10/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c10/untracked/* into the worktree'}
+> == backups/wip/claude__rainbow-s04-match-c11/
+> 4096 .
+> 4096 ..
+> 2020 INFO.json
+> 4096 untracked
+> {'worktree': '/home/user/wt/s04', 'branch': 'claude/rainbow-s04-match-c11', 'head': 'd3ea4200f1d67853e61b4888f3d914bfb0517e94', 'time': '2026-11-18T12:24:38+00:00', 'dirty_tracked': [], 'untracked_copied': ['qa/match/04/r11/BEFORE_extra/f10_forward10u.png', 'qa/match/04/r11/BEFORE_extra/f15_forward15u.png', 'qa/match/04/r11/BEFORE_extra/f20_forward20u …[+5012 chars]
+
+### 🤖 Claude — 2026-11-18T12:35:24.031Z
+
+> 🔧 **Bash** `{"command": "date -u; cat /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/tasks/bfgkxitdx.output; for b in claude/rainbow-s04-match-c11 claude/rainbow-s05-match-c11 claude/rainbow-s06-match-c11 claude/rainbow-s07-match-c11 claude/rainbow-s08-scenery-c11; do echo \"$b  $(git log -1 --format='%h %ci %s' origin/$b 2>/dev/null | cut -c1-200)\"; done; nproc; free -g | head -2; df -h /home/user | tail -1", "description": "Show time, c11 branch tips, CPU and memory"}`
+
+### 🧑 User — 2026-11-18T12:35:24.094Z
+
+> ↩︎ result: Wed Nov 18 12:35:24 UTC 2026
+> commit 5c40dde2b4ca41d0c2dd7d8e4b2b2cfa12b909ef
+> Author: Claude <noreply@anthropic.com>
+> Date:   Wed Nov 18 12:30:02 2026 +0000
+> 
+>     autosave: Rainbow 2026-11-18 12:29 UTC
+>     
+>     Automated Rainbow backup (daemon). 4 file(s) changed.
+>     Transcripts: refreshed (repo verified private)
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_018Sg3ASTRokNr5EKngTj33B
+> 
+>  backups/BACKUP_LOG.md                              |   1 +
+>  backups/BACKUP_STATUS.json                         |  18 +--
+>  backups/MANIFEST.json                              | 121 +++++++++++----------
+>  .../wip/claude__rainbow-s04-match-c11/INFO.json    |   2 +-
+>  .../wip/claude__rainbow-s05-match-c11/INFO.json    |   2 +-
+>  .../wip/claude__rainbow-s08-scenery-c11/INFO.json  |   2 +-
+>  6 files changed, 76 insertions(+), 70 deletions(-)
+> 
+> claude/rainbow-s04-match-c11 d3ea420 2026-11-18 12:21:29 +0000 Screen 04 r11 (lead decisive test, WIP): &m04mv=1 multi-view projection of the user's provisional views V04-1/V04-2 from their own game cameras (overlay copies, per-view depth bakes, painted Benny/coins/HUD masked); probe --fwd, audit EXTRA_SHO …[+577 chars]
+
+### 🤖 Claude — 2026-11-18T12:35:27.397Z
+
+Only the 04 branch arrived before the time limit. I'll fetch the other four `-c11` branches together in one call, with a longer timeout.
+
+### 🤖 Claude — 2026-11-18T12:35:30.126Z
+
+> 🔧 **Bash** `{"command": "timeout 500 git fetch origin claude/rainbow-s05-match-c11:refs/remotes/origin/claude/rainbow-s05-match-c11 claude/rainbow-s06-match-c11:refs/remotes/origin/claude/rainbow-s06-match-c11 claude/rainbow-s07-match-c11:refs/remotes/origin/claude/rainbow-s07-match-c11 claude/rainbow-s08-scenery-c11:refs/remotes/origin/claude/rainbow-s08-scenery-c11 2>&1 | tail -5; for b in claude/rainbow-s05-match-c11 claude/rainbow-s06-match-c11 claude/rainbow-s07-match-c11 claude/rainbow-s08-scenery-c11; do echo \"$b  $(git log -1 --format='%h %ci %s' origin/$b 2>/dev/null | cut -c1-220)\"; done", "de …[+77 chars]`
+
