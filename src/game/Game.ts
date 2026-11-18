@@ -117,10 +117,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let m08Applied = false;
   // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
   // 07 checkpoint until 8 u before the plunge top (the 07→08 drop keeps the game's own tube); off: nothing is built
-  const m07 = MATCH['07'] ? await buildMatch07() : null;
+  // M3 `&m07tube=1` (qa/match/07/r7/NOTES): the matched tube continues as real geometry from 4 u before the plunge top down the
+  // whole plunge to the 08 inlet; the game's own water stays visible in the plunge (the plunge river fades into it near
+  // the bottom) and the game's 07 tube (whose gold rings filled the screen mid-plunge) is hidden until 08 starts
+  const m07Tube = MATCH['07'] && flag05('m07tube');
+  const m07sA = course.marks['07_plunge_top'] - 4;
+  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3] } : undefined) : null;
   if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
   const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
-  const m07Range = [course.stage('07').s0 + 14, course.marks['07_plunge_top'] - 8];
+  const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
   let m07On = false;
   let m07Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
@@ -546,7 +551,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const on = st.stage === '07' && st.s >= m07Range[0] && st.s < m07Range[1];
       m07.group.visible = on;
       if (on || m07Applied) {
-        for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !on; }
+        for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !(on && (!m07Tube || st.s < m07sA + 9)); }
         env.zones.tubes.visible = on ? false : !zoneHidden('tubes') && STAGE_ORDER.indexOf(st.stage) >= STAGE_ORDER.indexOf('03') && STAGE_ORDER.indexOf(st.stage) <= STAGE_ORDER.indexOf('09');
       }
       m07On = on; m07Applied = on;

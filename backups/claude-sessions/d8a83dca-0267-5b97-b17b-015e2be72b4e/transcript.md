@@ -597,3 +597,137 @@ The plunge frame shows a flat orange gold band covering the lower half of the sc
 
 > 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/probe_cam.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst Q = process.argv[2] || '';\nconst { chromium } = loadPlaywright(); const vite = await startVite(5293);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\n  await page.goto(` …[+1498 chars]`
 
+### 🧑 User — 2026-11-18T00:21:31.602Z
+
+> ↩︎ result: {"s":296.8,"stage":"07","near_s":289.4,"behind":7.4,"up":2.95,"side":0.22,"tanY":-0.06}
+> {"s":301.2,"stage":"07","near_s":293.3,"behind":7.9,"up":3.04,"side":2.05,"tanY":-0.06}
+> {"s":305.2,"stage":"07","near_s":298,"behind":7.2,"up":3.57,"side":2.37,"tanY":-0.05}
+> {"s":309.2,"stage":"07","near_s":301.5,"behind":7.7,"up":4.11,"side":1.16,"tanY":-0.05}
+> {"s":313.2,"stage":"07","near_s":305.2,"behind":8,"up":4.15,"side":0.11,"tanY":-0.06}
+> {"s":317.2,"stage":"07","near_s":308.9,"behind":8.3,"up":4.07,"side":-0.06,"tanY":-0.11}
+> {"s":321.2,"stage":"07","near_s":312.8,"behind":8.4,"up":3.95,"side":0.01,"tanY":-0.21}
+> {"s":325.2,"stage":"07","near_s":316.5,"behind":8.7,"up":3.89,"side":0.03,"tanY":-0.46}
+> {"s":329.2,"stage":"07","near_s":320.7,"behind":8.5,"up":3.9,"side":0,"tanY":-0.68}
+> {"s":333.2,"stage":"07","near_s":325.2,"behind":8,"up":4.04,"side":0,"tanY":-0.87}
+> {"s":337.2,"stage":"07","near_s":329.1,"behind":8.1,"up":4.09,"side":0,"tanY":-0.92}
+> {"s":341.2,"stage":"07","near_s":333.1,"behind":8.1,"up":4.09,"side":0,"tanY":-0.94}
+> {"s":345.2,"stage":"07","near_s":337.1,"behind":8.1,"up":4.09,"side":0,"tanY":-0.94}
+> {"s":349.2,"stage":"07","near_s":341.1,"behind":8.1,"up":4.09,"side":0,"tanY" …[+941 chars]
+
+### 🤖 Claude — 2026-11-18T00:22:34.461Z
+
+> 🔧 **Bash** `{"command": "sed -n 112,130p src/game/Game.ts && sed -n 596,606p src/game/Game.ts && grep -n \"^import\\|flag05\" src/game/Game.ts | head -40", "description": "Read Game.ts match07 setup and imports"}`
+
+### 🧑 User — 2026-11-18T00:22:34.495Z
+
+> ↩︎ result: // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+>   const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+>   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+>   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+>   let m08On = false;
+>   let m08Applied = false;
+>   // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
+>   // 07 checkpoint until 8 u before the plunge top (the 07→08 drop keeps the game's own tube); off: nothing is built
+>   const m07 = MATCH['07'] ? await buildMatch07() : null;
+>   if (m07) { m07.group.visible = false; scene.add(m07.g …[+2161 chars]
+
+### 🤖 Claude — 2026-11-18T00:23:25.304Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt,(a,s.count(a)); s=s.replace(a,b)\nrep(\"\"\"import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';\"\"\",\"\"\"import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';\nimport type { Course } from './course';\"\"\")\nrep(\"\"\"varying vec3 vL;\nvoid main() {\n  vec4 wp\"\"\",\"\"\"varying vec3 vL;\nvarying vec2 vUv;\nvoid main() {\n  vUv = uv;\n  vec4 wp\"\"\")\nrep(\"\"\"uniform vec3 uKey;        // world direction toward the key light (from the v …[+7077 chars]`
+
+### 🧑 User — 2026-11-18T00:23:25.388Z
+
+> ↩︎ result: 239:  const mat = (tile: THREE.Texture, mode: number, k = 1) => new THREE.ShaderMaterial({
+> 244:  const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => {
+
+### 🤖 Claude — 2026-11-18T00:23:30.162Z
+
+Now wiring the plunge into Game.ts under `m07tube`.
+
+### 🤖 Claude — 2026-11-18T00:23:35.621Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1,a; s=s.replace(a,b)\nrep(\"\"\"  const m07 = MATCH['07'] ? await buildMatch07() : null;\"\"\",\"\"\"  // M3 `&m07tube=1` (qa/match/07/r7/NOTES): the matched tube continues as real geometry from 4 u before the plunge top down the\n  // whole plunge to the 08 inlet; the game's own water stays visible in the plunge (the plunge river fades into it near\n  // the bottom) and the game's 07 tube (whose gold rings filled the screen mid-plunge) is hidden until 08 starts\n  const …[+943 chars]`
+
+### 🧑 User — 2026-11-18T00:23:39.677Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T00:23:49.336Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/o.visible = !(on \\&\\& (!m07Tube || st.s < m07sA)); }/o.visible = !(on \\&\\& (!m07Tube || st.s < m07sA + 9)); }/' src/game/Game.ts && grep -n \"m07sA + 9\" src/game/Game.ts && K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1' && timeout 900 node tools/lead_r6/motion_audit.mjs 07 /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t1 \"$K&m07tube=1\" 2>&1 | grep -i \"error\\|t95\" ; cd /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t1 && python3 -c \"\nfrom PIL import Image\nnames=['f20_for …[+305 chars]`
+
+### 🧑 User — 2026-11-18T00:24:36.986Z
+
+> ↩︎ result: 554:        for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !(on && (!m07Tube || st.s < m07sA + 9)); }
+> 07 t95_through_screen s 385.058 lat 0 stage 07 frames 557
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: src/game/Game.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T00:24:38.964Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t1_sheet.png"}`
+
+### 🧑 User — 2026-11-18T00:24:39.109Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:24:54.010Z
+
+> 🔧 **Bash** `{"command": "grep -n \"height\\|lift\\|0\\.0[0-9]\\b\" src/vfx/waterRibbon.ts | grep -i \"ribbon\\|surface\\|y +\\|up\" | head -20; grep -n \"parts\" src/vfx/waterRibbon.ts | head", "description": "Find game water ribbon height offsets"}`
+
+### 🧑 User — 2026-11-18T00:24:54.051Z
+
+> ↩︎ result: 1249:    c5 = mix(c5, mix(uC5Bright * 1.2, mix(uP5, uP5Light, 0.65) * 1.2, pinkM), clamp(smoothstep(0.08, 0.5, dk) * mix(0.65, 0.6, pinkM), 0.0, 1.0));
+> 1737:    (u.uPjESize.value as THREE.Vector2).set(lut.E.width, lut.E.height);
+> 1742:    (u.uPjNear.value as THREE.Vector4).set(0, (u.uPjNear.value as THREE.Vector4).y, N.image.width, N.image.height);
+> 215:/** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> 763:  // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
+
+### 🤖 Claude — 2026-11-18T00:25:01.300Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/probe_h.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5294);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 432, height: 768 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match07=1&m07tube=1`);\n  await pag …[+575 chars]`
+
+### 🧑 User — 2026-11-18T00:25:01.345Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T00:25:09.038Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/probe_h.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5294);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 432, height: 768 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match07=1&m07tube=1`);\n  await pag …[+733 chars]`
+
+### 🧑 User — 2026-11-18T00:25:16.834Z
+
+> ↩︎ result: [[{"d":1.01,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12.91,-76.47,-259.86]},{"d":25.88,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12.91,-100.86,-264.74]},{"d":26.25,"obj":"m07_pl_river<match07_projection<Scene","p":[12.91,-101.22,-264.81]},{"d":26.42,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12.91,-101.38,-264.84]}],[{"d":1.01,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12.96,-76.47,-259.86]},{"d":25.39,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[14.19,-100.34,-264.63]},{"d":25.94,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[14.22,-100.88,-264.74]},{"d":26.29,"obj":"m07_pl_river<match07_projection<Scene","p":[14.24,-101.22,-264.81]}],[{"d":28.3,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12.91,-101.79,-270.08]},{"d":36.99,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[12.91,-109.86,-273.27]},{"d":39.29,"obj":"m07_pl_river<match07_projection<Scene","p":[12.91,-112,-274.12]},{"d":39.37,"obj":"water_ribbon<water_system<Scene","p":[12.91,-112.08,-274.15]}]]
+
+### 🤖 Claude — 2026-11-18T00:25:22.009Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8a83dca-0267-5b97-b17b-015e2be72b4e/scratchpad/t1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T00:25:22.058Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T00:25:51.400Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"clipping\\|clippingPlanes\\|localClipping\" src | head; grep -n \"parts\\b\\|parts =\" src/vfx/*.ts src/game/modules.ts | head", "description": "Check clipping support in water materials"}`
+
+### 🧑 User — 2026-11-18T00:25:51.434Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:121: * flat colours land on the ref 05 samples instead of clipping: cyan deep ≈#0466CF (troughs),
+> src/vfx/index.ts:53:  parts: Record<string, THREE.Object3D>;
+> src/vfx/index.ts:96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
+> src/vfx/index.ts:98:  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+> src/vfx/index.ts:101:  // parts (rim puffs, flank sheet, flank puffs) step aside; `?projfoam05=1` keeps them. No other screen's foam changes.
+> src/vfx/index.ts:167:    parts,
+> src/vfx/index.ts:214:      for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
+> src/vfx/proj05Tunnel.ts:268: * coordinates, hidden parts filled, smoothed along the arc), shown through the post-chain inverse like the walls/rings.
+> src/vfx/rider …[+399 chars]
+
+### 🤖 Claude — 2026-11-18T00:26:00.374Z
+
+The game's water materials are custom shaders without clipping support, so I'll keep the game's foam (no pop-in) and fix my ribbon's lateral mapping first.
+
+### 🤖 Claude — 2026-11-18T00:26:05.683Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\na=\"rivP.push(p.x, p.y, p.z); rivUV.push(xA + T.ax + l, along);\"\nassert s.count(a)==1\ns=s.replace(a,\"rivP.push(p.x, p.y, p.z); rivUV.push(T.ax + l, along); // centred on the tube axis like the fitted water\")\ns=s.replace(\"\"\"    const xA = f0.pos.clone().sub(base).dot(X); // the river tile's lateral coordinate at sA (continuous with the fitted water)\n\"\"\",\"\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && K='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1' && timeout 900 node tools/lead_ …[+590 chars]`
+

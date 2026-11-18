@@ -16,6 +16,7 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+import type { Course } from './course';
 
 interface Layout07 {
   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
@@ -41,7 +42,9 @@ varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
 varying vec3 vL;
+varying vec2 vUv;
 void main() {
+  vUv = uv;
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vProj = uProjVP * wp;
   vW = wp.xyz;
@@ -69,12 +72,28 @@ uniform float uFillTile;  // 1 = on the water, filled plate pixels give way to t
 uniform vec2 uAng;        // M2 '?m07ang=1': view-vs-projector angle cosines (full plate above x, tile below y); x < 0 = off
 uniform float uGoldLit;   // M2 '?m07gold=1': paddle blocks shaded as solid polished gold where the picture does not cover them
 uniform vec3 uKey;        // world direction toward the key light (from the viewer's side and above, so the faces the camera sees are lit)
+uniform float uClip;      // M3 '?m07tube=1': proxy surfaces end at this depth along the tube axis (the plunge tube continues); 0 = off
+uniform vec2 uGuard;      // stretch guard thresholds (M1/M2 2.2..4.5; M3 '?m07near=1' tighter)
+uniform vec2 uFade;       // M3 plunge river: fades out between these arc depths (the game's own water continues into 08)
+varying vec2 vUv;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
 varying vec3 vL;
 ${PROJ05_INVERSE}
 vec3 tileColor() {
+  // M3 '?m07tube=1' plunge surfaces (real geometry along the course): uv = (arc depth along the tube, angle / lateral)
+  if (uMode > 3.5) {
+    float u = (vUv.x - uRiver.x) / (uRiver.y - uRiver.x);
+    u = 1.0 - abs(mod(u, 2.0) - 1.0);
+    float v = fract((vUv.y - uRiver.z) / (uRiver.w - uRiver.z));
+    return texture2D(uTile, vec2(u, v)).rgb;
+  }
+  if (uMode > 2.5) {
+    float u = fract((vUv.x - uTube.z) / uTube.w);
+    float v = clamp((vUv.y - uTheta.x) / (uTheta.y - uTheta.x), 0.0, 1.0);
+    return texture2D(uTile, vec2(u, v)).rgb;
+  }
   if (uMode > 1.5) {
     float u = (vL.x - uRiver.x) / (uRiver.y - uRiver.x);
     u = 1.0 - abs(mod(u, 2.0) - 1.0);                       // mirrored across the banks
@@ -105,14 +124,22 @@ vec3 tileColor() {
 }
 float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
 void main() {
+  if (uClip > 0.0 && uMode < 2.5 && -vL.z > uClip) discard;
   vec3 pc = tileColor();
+  if (uMode > 2.5) {
+    // plunge surfaces: never in the approved picture → the ring-bay / river tiles only, world-anchored
+    float a = uMode > 3.5 ? 1.0 - smoothstep(uFade.x, uFade.y, vUv.y) : 1.0;
+    if (a < 0.003) discard;
+    gl_FragColor = vec4(pjInverse(pc), a);
+    return;
+  }
   vec3 t = pc;
   vec3 nn = normalize(vN);
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
   // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
   // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
   float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
-  float keep = 1.0 - smoothstep(2.2, 4.5, mag);
+  float keep = 1.0 - smoothstep(uGuard.x, uGuard.y, mag);
   if (vProj.w > 0.0) {
     vec3 ndc = vProj.xyz / vProj.w;
     vec2 uv = ndc.xy * 0.5 + 0.5;
@@ -139,7 +166,10 @@ void main() {
 
 const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
 
-export async function buildMatch07(): Promise<Match07> {
+/** M3 '?m07tube=1': the plunge continuation needs the course (arc samples) and where it starts / ends */
+export interface Plunge07 { course: Course; sA: number; sB: number; fade: [number, number] }
+
+export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
   const [L, TL]: [Layout07, Tiles07] = await Promise.all([fetch(tex('proj07.json')).then((r) => r.json()), fetch(tex('tiles07.json')).then((r) => r.json())]);
   const load = async (f: string, wrap: THREE.Wrapping) => {
     const t = await new THREE.TextureLoader().loadAsync(tex(f));
@@ -153,6 +183,7 @@ export async function buildMatch07(): Promise<Match07> {
   const fixGold = flag05('m07gold');
   const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
   const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)
+  const fixNear = flag05('m07near'); // M3: tighter stretch guard — magnified projected near water gives way to the river tile sooner
   const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
     load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
     load(fixRiver ? 'tile_river_clean.png' : 'tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
@@ -195,6 +226,9 @@ export async function buildMatch07(): Promise<Match07> {
     uGoldLit: { value: fixGold ? 1 : 0 },
     uKey: { value: new THREE.Vector3(...L.D).multiplyScalar(-1).addScaledVector(new THREE.Vector3(...L.U), 0.8).normalize() },
     uFillTile: { value: fixFill ? 1 : 0 },
+    uClip: { value: 0 },
+    uGuard: { value: fixNear ? new THREE.Vector2(1.35, 2.3) : new THREE.Vector2(2.2, 4.5) },
+    uFade: { value: new THREE.Vector2(1e6, 1e6 + 1) },
     uAng: { value: fixAng ? new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(6)), Math.cos(THREE.MathUtils.degToRad(14))) : new THREE.Vector2(-1, -1) },
     uProjPos: { value: proj.position.clone() },
     uTube: { value: new THREE.Vector4(T.ax, T.h, TL.wall.along[0], TL.wall.bay) },
@@ -234,6 +268,60 @@ export async function buildMatch07(): Promise<Match07> {
     o.position.set(T.ax + (T.r - depth / 2 + 0.05) * Math.cos(ang), T.h + (T.r - depth / 2 + 0.05) * Math.sin(ang), lz);
     o.rotation.z = ang - Math.PI / 2; // local +y along the radius (out of the wall toward the axis)
   }
+  // M3 '?m07tube=1': the matched tube continues as REAL geometry along the course from sA (just before the plunge top)
+  // down the whole plunge to the 08 inlet — same radius and axis height as the fitted tube, the same ring-bay wall tile
+  // (rings every bay, phase continuous with the fitted tube) and the same river tile, anchored to arc length. The fitted
+  // proxy ends at sA's depth along its straight axis (uClip), so it no longer runs on straight through the plunge.
+  if (plunge) {
+    const { course, sA, sB } = plunge;
+    const f0 = course.sample(sA);
+    const alongA = f0.pos.clone().sub(base).dot(Dv);
+    shared.uClip.value = alongA;
+    shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
+    const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
+    const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
+    const ds = 0.4, nS = Math.ceil((sB - sA) / ds) + 1, nT = 160;
+    const tubeP: number[] = [], tubeUV: number[] = [], rivP: number[] = [], rivUV: number[] = [], idxT: number[] = [], idxR: number[] = [];
+    const halfW = Math.sqrt(Math.max(T.r * T.r - T.h * T.h, 1)) + 0.15;
+    const nR = 24;
+    const c = new THREE.Vector3(), p = new THREE.Vector3();
+    for (let i = 0; i < nS; i++) {
+      const s = Math.min(sB, sA + i * ds);
+      const f = course.sample(s);
+      const k = 1 - THREE.MathUtils.smootherstep(s, sA, sA + 14);
+      const along = alongA + (s - sA);
+      c.copy(f.pos).addScaledVector(f.up, T.h).addScaledVector(d0, k);
+      for (let j = 0; j <= nT; j++) {
+        const th = -Math.PI / 2 + (2 * Math.PI * j) / nT; // same angle convention as the fitted tube (x = right, y = up)
+        p.copy(c).addScaledVector(f.right, T.r * Math.cos(th)).addScaledVector(f.up, T.r * Math.sin(th));
+        tubeP.push(p.x, p.y, p.z); tubeUV.push(along, th);
+      }
+      const lat0 = d0.dot(f.right) * k;
+      for (let j = 0; j <= nR; j++) {
+        const l = -halfW + (2 * halfW * j) / nR;
+        p.copy(f.pos).addScaledVector(f.right, lat0 + T.ax + l).addScaledVector(f.up, 0.06);
+        rivP.push(p.x, p.y, p.z); rivUV.push(T.ax + l, along); // centred on the tube axis like the fitted water
+      }
+      if (i > 0) {
+        for (let j = 0; j < nT; j++) { const a = (i - 1) * (nT + 1) + j, b = a + nT + 1; idxT.push(a, b, a + 1, b, b + 1, a + 1); }
+        for (let j = 0; j < nR; j++) { const a = (i - 1) * (nR + 1) + j, b = a + nR + 1; idxR.push(a, b, a + 1, b, b + 1, a + 1); }
+      }
+    }
+    const geo = (P: number[], UV: number[], I: number[]) => {
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
+      g.setAttribute('uv', new THREE.Float32BufferAttribute(UV, 2));
+      g.setIndex(I); g.computeVertexNormals();
+      return g;
+    };
+    // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
+    const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
+    const wallM = mat(tWall, 3), rivM = mat(tRiver, 4);
+    rivM.transparent = true;
+    add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
+    const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
+    r.renderOrder = 1;
+  }
   group.traverse((o) => o.updateMatrixWorld?.(true));
 
   return {
@@ -243,6 +331,9 @@ export async function buildMatch07(): Promise<Match07> {
       const scene = new THREE.Scene();
       const clone = group.clone(true);
       clone.visible = true;
+      // the plunge continuation is not in the approved picture: it never occludes the projector
+      const drop: THREE.Object3D[] = []; clone.traverse((o) => { if (o.name.startsWith('m07_pl_')) drop.push(o); });
+      for (const o of drop) o.removeFromParent();
       clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
       scene.add(clone);
       clone.updateMatrixWorld(true);

@@ -679,7 +679,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11945,
-   "sha256": "26f60f6811f6180ca4cbbc9da9e2e0f0f888b109d04241ce589be694b616c247"
+   "sha256": "d9c7c3cddbed808248a66d2c45f3e946265281100d477e405bfc443621c337ee"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8733,8 +8733,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 40480,
-   "sha256": "737efcc8775aaf821ca554ad6d9713a19ea68951a012c2b1fee5bdda0c2f03a6"
+   "bytes": 41183,
+   "sha256": "13c0e3c35d50f3eae1c80697ca1292dcde95345d24d3418b966be126a6b0f4e6"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -8878,8 +8878,8 @@
   },
   {
    "path": "src/world/match07.ts",
-   "bytes": 14711,
-   "sha256": "13f0d8c45876f0efcbda5572c9b522af320da39d1204654380b92327040c14b7"
+   "bytes": 20140,
+   "sha256": "25ddb2ecbc18994323948c653b2004ac941e1de7d9e52022b4a0e5dae3a77bf8"
   },
   {
    "path": "src/world/match08.ts",
