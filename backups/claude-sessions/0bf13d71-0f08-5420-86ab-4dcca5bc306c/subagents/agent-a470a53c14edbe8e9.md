@@ -2178,3 +2178,7 @@ Now I'll create the unfold helper module and hook it into the ribbon under a new
 >     const sync = (cam: THREE.Camera) => {
 > 13:import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
 
+### 🤖 Claude — 2026-11-18T11:11:34.544Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='/home/user/wt/s05/src/world/environment.ts'\ns=open(p).read()\nold=\"\"\"      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,\"\"\"\nnew=\"\"\"      // `&m05late=1` (Screen 05 round 10): fold later and quicker (eye → seam 7.5 → 5 u instead of 10 → 6.5 u), so the\n      // painted 05 tunnel stays until Benny ≈ 185 (still before he reaches the capped seam)\n      zCap: sGlow05 + 3.5 - sF05, foldNear: M05LATE ? 5 : 6.5, foldFar: M05LATE ? 7.5 : 10,\"\"\"\nassert old in s\ns=s.replace(old,new,1)\ns=s.replace(\"import { FLOW05, FLO …[+1749 chars]`
+

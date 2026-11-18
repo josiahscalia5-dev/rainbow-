@@ -3560,3 +3560,97 @@ All proofs sent. Now the brief for the Screen 04 specialist, ready to launch the
 
 > 🔧 **Bash** `{"command": "timeout 400 python3 scripts/rainbow-autosave.py --reason manual:r10-progress 2>&1 | grep -E '\"result\"|\"commit\"' | head -2; echo \"HEAD   $(git rev-parse HEAD)\"; echo \"REMOTE $(timeout 60 git ls-remote origin refs/heads/ccr-c526614d-tw0yro | cut -f1)\"; for b in s04-match-c10 s05-match-c10 s08-scenery-c10; do echo \"$b local $(git -C /home/user/wt/${b%%-*} rev-parse --short HEAD) remote $(timeout 60 git ls-remote origin refs/heads/claude/rainbow-$b | cut -c1-8)\"; done", "description": "Save progress and verify all round-10 branches on GitHub", "timeout": 600000}`
 
+### 🧑 User — 2026-11-18T11:11:35.684Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "97bed8b4afc8db3c282d605d22849fe9b5c8845c",
+> HEAD   97bed8b4afc8db3c282d605d22849fe9b5c8845c
+> REMOTE 97bed8b4afc8db3c282d605d22849fe9b5c8845c
+> s04-match-c10 local a24d289c remote a24d289c
+> s05-match-c10 local bed8253d remote bed8253d
+> s08-scenery-c10 local e1c7d0b7 remote e1c7d0b7
+
+### 🤖 Claude — 2026-11-18T11:11:51.615Z
+
+Here's where things stand. Nothing beyond the 8 images you approved has been spent.
+
+## Screen 04 controlled test: NOT YET PROVEN
+I tested your provisional views V04‑1 and V04‑2 against the real game, at exactly those two points in the tunnel.
+- **Closer:** the tall rows of white foam balls can become low, soft foam like V04‑1.
+- **Still wrong:**
+  - the water is a flat ramp with hard straight edges, where your views show water filling the round tunnel floor;
+  - the five big glowing arrows just past Benny don't appear;
+  - the rings are duller and more orange than V04‑1's glossy gold.
+- **What I learned:** your views confirm the inside of the opening should be a converging gold-ring tunnel, so the ring layout is right. The water channel, arrows, foam and ring shine are what need rebuilding.
+
+The existing pieces can't do that rebuild, so none of these tests were kept. A Screen 04 specialist starts in the next free slot with a written brief that judges everything against V04‑1/V04‑2. As you asked, no 06/07 views will be made until 04 is proven in the game.
+
+## Screens 05 and 08: both specialists still working
+Every step was sent to you as separate full-size APPROVED / BEFORE / NEW pictures:
+
+| Screen | Step | Verdict |
+|---|---|---|
+| 05 | foam along both banks | GOOD IMPROVEMENT (modest) |
+| 05 | torn left river edge becomes a foam bank | GOOD IMPROVEMENT (modest) |
+| 05 | tilted, torn river ramp becomes one level S | GOOD IMPROVEMENT |
+| 05 | puffy foam clouds | GOOD IMPROVEMENT |
+| 08 | gold arch frames the chamber while Benny swims | GOOD IMPROVEMENT |
+| 08 | coins at painted size, none covering Benny | GOOD IMPROVEMENT |
+
+Still wrong:
+- **Screen 05:** smeared left wall, a pale patch in the far river.
+- **Screen 08:** the seam across the top (two fixes were tried and both looked worse, so they were rejected), the arch is missing on the lower sides, and the near water is smeared.
+
+**Screen 05 → 06 pink hand-over:** this goes away only when the screens' finished looks are combined in one build. Combining branches needs your OK, so I'll ask before doing it.
+
+## Automatic GitHub saving: set up permanently
+- **Every five minutes**, plus after every kept step, everything saves to `josiahscalia5-dev/rainbow-` and is checked against GitHub. Latest checkpoint: `97bed8b`, the same commit locally and on GitHub. All three round‑10 screen branches also match GitHub.
+- **New:** each save now also captures the specialists' *unfinished* edits, in `backups/wip/`, with restore steps.
+- **One trap I found and wrote into the rules:** GitHub's *default* branch is your original 11‑15 version, and its startup step does **not** restore newer work. On a new account, start the session on the branch named at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md` (currently `ccr-c526614d-tw0yro`) and paste the prompt there.
+
+**Still waiting on you (free):** approve the network permission on your computer so I can test Depth Anything 3. Just tell me when you're at your computer.
+
+### 🧑 User — 2026-11-18T11:11:54.619Z
+
+CLAUDIA — I AUTHORIZE THE FAL.AI VISUAL RECONSTRUCTION TEST
+
+I want to move forward with creating accurate additional reference views for my approved Rainbow game screens.
+
+YES, YOU HAVE MY PERMISSION TO USE MY EXISTING FAL.AI CREDITS FOR THE SCREEN 04 PILOT.
+
+Use the proposed nano-banana-2 image-edit workflow, with the initial limit of eight images.
+
+I am willing to spend more money if this method demonstrates that it can genuinely improve my approved screens.
+
+But I have one non-negotiable requirement:
+
+THE GENERATED IMAGES MUST LOOK LIKE FAITHFUL CONTINUATIONS OF MY EXACT ORIGINAL APPROVED ARTWORK.
+
+Do not generate different scenery, different tunnel designs, or different water formations.
+
+First, verify that my existing fal.ai API connection, billing access, and required download hosts are working.
+
+If any hosts are blocked, request the necessary cloud-environment permissions. Do not replace a working API key unnecessarily.
+
+Then:
+
+1. Generate the Screen 04 pilot reference views.
+2. Compare them directly with my original approved artwork.
+3. Show me each image separately, full-size.
+4. Tell me honestly whether the results preserve my original visual design.
+5. If the pilot succeeds and I approve the proposed views, proceed with the other missing sections of Screens 04, 06, and 07.
+6. Continue improving Screens 05 and 08 using my existing specialists.
+7. Keep all original approved images unchanged and save everything to GitHub.
+
+If additional credits are needed, tell me the actual cost so I can fund the work.
+
+I don't want unnecessary repeated permission requests for individual images within an approved budget.
+
+I WANT REAL VISUAL IMPROVEMENT, NOT JUST MORE AI-GENERATED PICTURES.
+
+My goal remains making all five playable Screens 04–08 look as close as technically possible to my approved artwork.
+
+No redesigns. No unrelated development. No hiring outside developers or artists.
+
+Please begin the authorized Screen 04 pilot and show me whether this method genuinely works.
+

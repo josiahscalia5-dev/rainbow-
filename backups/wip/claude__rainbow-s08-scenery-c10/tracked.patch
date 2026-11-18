@@ -1,5 +1,5 @@
 diff --git a/src/world/match08.ts b/src/world/match08.ts
-index c3ffc9b8..71ddd7a6 100644
+index c3ffc9b8..415b5377 100644
 --- a/src/world/match08.ts
 +++ b/src/world/match08.ts
 @@ -73,6 +73,9 @@ uniform sampler2D uTMask;   // m08towelm (towel only): the painted towel's outli
@@ -7,7 +7,7 @@ index c3ffc9b8..71ddd7a6 100644
  uniform vec4 uClipIn;       // m08far collar only: discard inside this x/y circle (the chamber's cross-section) ...
  uniform vec4 uClipOut;      // ... and outside this one (the pushed arch's outline); w > 0.5 = on
 +uniform sampler2D uNear;    // m08near (floor only): luminance high-pass of the approved crisp near water (near08.py)
-+uniform vec4 uNearR;        // its world rectangle: x0, z0, width, length (mirrored repeat)
++uniform vec4 uNearR;        // its world rectangle: x0, z0, width, length (seamless, repeated)
 +uniform vec2 uNearOn;       // on, gain
  varying vec4 vProj;
  varying vec3 vW;
@@ -41,7 +41,7 @@ index c3ffc9b8..71ddd7a6 100644
 +  if (flag05('m08near') && swimOn) {
 +    const NJ: { x0: number; z0: number; w: number; l: number } = await fetch(new URL('../../assets/textures/match08/near08_detail.json', import.meta.url).href).then((r) => r.json());
 +    nearTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/near08_detail.png', import.meta.url).href);
-+    nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = nearTex.wrapT = THREE.MirroredRepeatWrapping;
++    nearTex.colorSpace = THREE.NoColorSpace; nearTex.wrapS = nearTex.wrapT = THREE.RepeatWrapping;
 +    nearTex.minFilter = THREE.LinearMipmapLinearFilter; nearTex.anisotropy = 8;
 +    nearR.set(NJ.x0, NJ.z0, NJ.w, NJ.l);
 +  }

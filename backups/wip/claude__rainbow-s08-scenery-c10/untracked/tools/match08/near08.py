@@ -5,8 +5,8 @@ While Benny swims, the floor right in front of the camera shows the projected pl
 the river behind Benny at a distance), so the near water became a smooth smeared sheet. The approved picture's own
 crispest water is the near band at the frame bottom (rows ~1200-1536). This bakes that band top-down onto the floor
 plane (world x / z, 200 texels per unit), paints out the three floating bubbles in it, and keeps only the luminance
-high-pass (the white glossy streaks and ripples, sigma 0.12 u). The floor shader adds it, mirrored-repeated in world
-coordinates, only where the moving camera magnifies the projection; at the approved viewpoint its weight is 0.
+high-pass (the white glossy streaks and ripples, sigma 0.12 u). The floor shader adds it, repeated in world
+coordinates (plain repeat, seamless), only where the moving camera magnifies the projection; at the approved viewpoint its weight is 0.
 
   python3 -I tools/match08/near08.py <proj08.json> <plate08_hybrid.png> <out.png> <out.json>
 """
@@ -69,7 +69,14 @@ lum = cv2.inpaint(lum8, mask * 255, 9, cv2.INPAINT_TELEA).astype(np.float32) / 2
 
 sig = 0.12 * TPU
 hp = lum - cv2.GaussianBlur(lum, (0, 0), sig)
-# soften the tile's edges toward 0 detail is not needed: it repeats MIRRORED (seamless); clamp to +-0.5
+# seamless for PLAIN repeat (a mirrored repeat showed kaleidoscope diamonds): cross-fade with a copy shifted by half a
+# tile in both directions; the edges then carry the tile's own interior, continuous across the wrap
+sh = np.roll(np.roll(hp, nz // 2, 0), nx // 2, 1)
+ry = np.minimum(np.arange(nz), np.arange(nz)[::-1]) / (nz / 2)
+rx = np.minimum(np.arange(nx), np.arange(nx)[::-1]) / (nx / 2)
+wgt = np.clip(np.minimum(ry[:, None], rx[None, :]) / 0.35, 0, 1)
+wgt = wgt * wgt * (3 - 2 * wgt)
+hp = wgt * hp + (1 - wgt) * sh
 out = np.clip(0.5 + hp, 0, 1)
 # store with z running along image rows (row 0 = z0, far), x along columns
 cv2.imwrite(out_p, (out * 255 + 0.5).astype(np.uint8))
