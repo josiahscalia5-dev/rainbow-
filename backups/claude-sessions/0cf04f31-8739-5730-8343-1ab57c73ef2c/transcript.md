@@ -1928,3 +1928,47 @@ The scheduled five-minute autosave picked up the three timestamp corrections by 
 
 The Screen 05 and Screen 08 specialists are still working in the background. I'll show you their first APPROVED / BEFORE / NEW pictures as soon as they send them.
 
+### 🧑 User — 2026-11-18T11:42:39.797Z
+
+<task-notification>
+<task-id>bb0rq4kpq</task-id>
+<summary>Monitor event: "specialist activity: new r11 files or pushed commits in s05/s08"</summary>
+<event>s05 NEW COMMIT 824fb494: Screen 05 r11: fresh BEFORE set (12 audit shots + kink probes) at the round-10 kept set; &amp;m05unf=1 tested, not</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-18T11:42:46.046Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git log -1 --format='%H%n%B' | head -12; git ls-remote origin refs/heads/claude/rainbow-s05-match-c11; tail -25 qa/match/05/r11/PROGRESS.md 2>/dev/null", "description": "Read the Screen 05 commit and progress log"}`
+
+### 🧑 User — 2026-11-18T11:42:46.483Z
+
+> ↩︎ result: 824fb494c2655d4527bd9d9f809e75c5c1114af3
+> Screen 05 r11: fresh BEFORE set (12 audit shots + kink probes) at the round-10 kept set; &m05unf=1 tested, not kept (patch saved in qa/match/05/r11/wip_m05unf_not_kept.patch, sources reverted)
+> 
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> Claude-Session: https://claude.ai/code/session_018Sg3ASTRokNr5EKngTj33B
+> 
+> 824fb494c2655d4527bd9d9f809e75c5c1114af3	refs/heads/claude/rainbow-s05-match-c11
+> # Screen 05 — round 11 progress (small steps, newest last)
+> 
+> Branch `claude/rainbow-s05-match-c11`, started at `bed8253d` (= round-10 tip of `claude/rainbow-s05-match-c10`).
+> Approved picture (the authority): `/home/user/wt/s05/references/05_flow_into_the_current.png`.
+> Kept set at start (round 10 end):
+> `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1`
+> 
+> BEFORE set (fresh, exactly that query, `tools/match05/r8_shots.mjs` = the lead's motion_audit positions / stepping, real HUD
+> font): `/home/user/wt/s05/qa/match/05/r11/BEFORE/` — the 12 audit shots plus extra probe positions inside the 05 → 06 kink
+> (`k81_kink`, `k81_kink_left`, `k81_kink_right`, `t75_th …[+997 chars]
+
+### 🤖 Claude — 2026-11-18T11:42:52.449Z
+
+NOT AN IMPROVEMENT: Screen 05's leftover unfinished fix from account 10 has been tested and rejected.
+
+That fix was meant to stop the foam bank folding into white columns at the tight S-bend before Screen 06. The Screen 05 specialist compared it with the BEFORE pictures at six spots along that bend:
+- Beside Benny, the white folded sheet got slightly narrower, and on the left the foam bank lies a little flatter.
+- The white foam column, the pale angular slabs in the middle of the bend and the smeared walls all stayed.
+
+It isn't visibly closer to your approved picture, so it's not kept. Nothing is lost: the edit is saved as a patch on the branch (`qa/match/05/r11/wip_m05unf_not_kept.patch`) in case it's useful later.
+
+The specialist also made a fresh set of 12 BEFORE pictures, plus extra views of that S-bend. Everything is on GitHub at `824fb494`, confirmed. It has now moved on to the smeared walls and the far-water defects. Screen 08 is still working on the ceiling seam and the lower gold arch.
+

@@ -339,3 +339,156 @@ Let me look at the approved picture and a few BEFORE frames.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='tools/match05/r8_shots.mjs'\ns=open(p).read()\nold=\"\"\"const want = ONLY === 'all' ? null : new Set(ONLY.split(','));\nconst SHOTS = want ? ALL.filter(([n]) => want.has(n)) : ALL;\"\"\"\nnew=\"\"\"// round 11: extra probe positions, only when named (not part of 'all' = the 12 audit shots)\nconst EXTRA = [\n  ['k81_kink', 't0.81', null], ['k81_kink_left', 't0.81', -1], ['k81_kink_right', 't0.81', 1],\n  ['t75_through', 't0.75', null], ['t85_through', 't0.85', null], ['t90_through', 't0.90', null],\n];\nconst want = ONLY === 'all' ? nu …[+840 chars]`
 
+### 🧑 User — 2026-11-18T11:40:37.758Z
+
+> ↩︎ result: k81_kink s 178.901 lat 0 coins 1460 benny 0.5 -0.29 big coins: #24@39,1028 d252 #25@336,826 d145 #26@509,682 d79 #27@570,650 d61
+> k81_kink_left s 178.824 lat -3.843 coins 1420 benny 0.24 -0.44 big coins: #24@767,1399 d342 #26@880,788 d91
+> k81_kink_right s 178.824 lat 3.843 coins 1420 benny 0.66 -0.1 big coins: #26@202,598 d69
+> t75_through s 175.524 lat 0.006 coins 1460 benny 0.23 -0.28 big coins: #24@321,853 d171 #25@489,734 d106 #26@581,644 d64
+> t85_through s 181.023 lat 0 coins 1460 benny 0.33 -0.28 big coins: #25@188,938 d192 #26@461,720 d94 #27@535,681 d72
+> t90_through s 183.959 lat 0 coins 1520 benny 0.09 -0.3 big coins: #25@24,1330 d355 #38@322,146 d63
+
+### 🤖 Claude — 2026-11-18T11:40:43.883Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05unf=1'\nnode tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/unf \"$Q\" k81_kink,k81_kink_left,k81_kink_right,t75_through,t85_through,t66_through_screen 5291 2>&1 | tail -8", "description": "Render kink shots with m05unf switched on", "timeout": 900000}`
+
+### 🧑 User — 2026-11-18T11:41:35.795Z
+
+> ↩︎ result: t66_through_screen s 170.447 lat 0 coins 1460 benny -0 -0.29 big coins: #24@416,723 d111 #25@518,657 d73
+> k81_kink s 178.825 lat 0 coins 1460 benny 0.5 -0.29 big coins: #24@50,1022 d250 #25@342,823 d144 #26@511,681 d79
+> k81_kink_left s 178.823 lat -3.843 coins 1420 benny 0.24 -0.44 big coins: #24@767,1398 d342 #26@880,788 d91
+> k81_kink_right s 178.824 lat 3.843 coins 1420 benny 0.66 -0.1 big coins: #26@202,598 d69
+> t75_through s 175.523 lat 0.006 coins 1460 benny 0.23 -0.28 big coins: #24@321,853 d171 #25@489,734 d106 #26@581,644 d64
+> t85_through s 181.023 lat 0 coins 1460 benny 0.33 -0.28 big coins: #25@188,938 d192 #26@461,720 d94 #27@535,681 d72
+
+### 🤖 Claude — 2026-11-18T11:41:39.894Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T11:41:39.935Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:41:40.645Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/unf/k81_kink.png"}`
+
+### 🧑 User — 2026-11-18T11:41:40.680Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:41:48.953Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image, ImageChops\nimport numpy as np\nS='/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/unf/'\nfor n in ['k81_kink','k81_kink_left','k81_kink_right','t75_through','t85_through','t66_through_screen']:\n    a=np.asarray(Image.open('qa/match/05/r11/BEFORE/'+n+'.png').convert('RGB')).astype(int)\n    b=np.asarray(Image.open(S+n+'.png').convert('RGB')).astype(int)\n    d=np.abs(a-b).max(2)\n    ys,xs=np.nonzero(d>40)\n    print(n,(d>20).sum(),(d>40).sum(), (ys.min(),ys.max(),xs.min(),xs.max()) …[+92 chars]`
+
+### 🧑 User — 2026-11-18T11:41:49.975Z
+
+> ↩︎ result: k81_kink 191496 102698 (np.int64(0), np.int64(1535), np.int64(0), np.int64(863))
+> k81_kink_left 199618 108582 (np.int64(199), np.int64(1535), np.int64(0), np.int64(861))
+> k81_kink_right 302555 201466 (np.int64(445), np.int64(1535), np.int64(0), np.int64(863))
+> t75_through 92301 57016 (np.int64(3), np.int64(1262), np.int64(0), np.int64(863))
+> t85_through 68505 34785 (np.int64(743), np.int64(1226), np.int64(0), np.int64(863))
+> t66_through_screen 120936 63687 (np.int64(2), np.int64(1165), np.int64(0), np.int64(863))
+
+### 🤖 Claude — 2026-11-18T11:41:53.077Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/k81_kink_right.png"}`
+
+### 🧑 User — 2026-11-18T11:41:53.128Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:41:53.777Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/unf/k81_kink_right.png"}`
+
+### 🧑 User — 2026-11-18T11:41:53.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:42:01.039Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/BEFORE/k81_kink_left.png"}`
+
+### 🧑 User — 2026-11-18T11:42:01.078Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:42:01.743Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0cf04f31-8739-5730-8343-1ab57c73ef2c/scratchpad/unf/k81_kink_left.png"}`
+
+### 🧑 User — 2026-11-18T11:42:01.781Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T11:42:11.282Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && mkdir -p qa/match/05/r11 && git diff -- src/vfx/foam.ts src/vfx/unfold05.ts src/vfx/waterRibbon.ts tools/match05/r10_probe.mjs > qa/match/05/r11/wip_m05unf_not_kept.patch && wc -l qa/match/05/r11/wip_m05unf_not_kept.patch && git checkout -- src/vfx/foam.ts src/vfx/unfold05.ts src/vfx/waterRibbon.ts && git status --short", "description": "Save m05unf patch and revert its source edits"}`
+
+### 🧑 User — 2026-11-18T11:42:11.382Z
+
+> ↩︎ result: 135 qa/match/05/r11/wip_m05unf_not_kept.patch
+>  M tools/match05/r10_probe.mjs
+>  M tools/match05/r8_shots.mjs
+> ?? qa/match/05/r11/
+
+### 🤖 Claude — 2026-11-18T11:42:21.755Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/PROGRESS.md", "content": "# Screen 05 — round 11 progress (small steps, newest last)\n\nBranch `claude/rainbow-s05-match-c11`, started at `bed8253d` (= round-10 tip of `claude/rainbow-s05-match-c10`).\nApproved picture (the authority): `/home/user/wt/s05/references/05_flow_into_the_current.png`.\nKept set at start (round 10 end):\n`?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1`\n\nBEFORE set (fresh, exactly that query, `tools/match05/r8_shots.mjs …[+1206 chars]`
+
+### 🧑 User — 2026-11-18T11:42:21.918Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/qa/match/05/r11/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T11:42:30.220Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && du -sh qa/match/05/r11 && git add qa/match/05/r11 tools/match05/r10_probe.mjs tools/match05/r8_shots.mjs && git commit -q -m \"Screen 05 r11: fresh BEFORE set (12 audit shots + kink probes) at the round-10 kept set; &m05unf=1 tested, not kept (patch saved in qa/match/05/r11/wip_m05unf_not_kept.patch, sources reverted)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3ASTRokNr5EKngTj33B\" && git push -q origin HEAD 2>&1 | tail -2; git ls-remote origin refs/heads/claude/rainbow-s05-match-c11; git  …[+86 chars]`
+
+### 🧑 User — 2026-11-18T11:42:38.729Z
+
+> ↩︎ result: 39M	qa/match/05/r11
+> 824fb494c2655d4527bd9d9f809e75c5c1114af3	refs/heads/claude/rainbow-s05-match-c11
+> 824fb494c2655d4527bd9d9f809e75c5c1114af3
+
+### 🤖 Claude — 2026-11-18T11:42:43.281Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"tgtwall05\\|m05wall\\|tgtfill05\\|tgtvis05\" src --include=*.ts | head -40; wc -l src/world/match05far.ts src/world/*.ts | tail -20", "description": "Find wall-related switches in the source"}`
+
+### 🧑 User — 2026-11-18T11:42:43.321Z
+
+> ↩︎ result: src/world/match05far.ts:106:  m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye
+> src/vfx/waterRibbon.ts:232: * `?tgtvis05=1` (Screen 05 agent, 2026-11-17, branch claude/rainbow-s05-match, qa/match/05/NOTES.md; explicit switch, NOT
+> src/vfx/waterRibbon.ts:233: * in match05 yet): exact layer E from assets/textures/match05/tgtvis05/ — far2's E re-baked from a target in which the
+> src/vfx/waterRibbon.ts:237:export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');
+> src/vfx/waterRibbon.ts:239: * `?tgtfill05=3` (Screen 05 agent, round 3, qa/match/05/NOTES.md "Milestone 2 — 2.2"; explicit switch, needs tgtvis05):
+> src/vfx/waterRibbon.ts:242: * Off (default, or tgtvis05 off): nothing changes.
+> src/vfx/waterRibbon.ts:253:export const TGTFILL05: boolean = TGTVIS05 && qv05('tgtfill05') === '3';
+> src/vfx/waterRibbon.ts:255: * `?tgtwall05=1` (Screen 05 agent, round 3, NOTES "2.3"; needs tgtfill05=3): E + its LUT re-baked with
+> src/vfx/waterRibbon.ts:259:export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
+> src/vfx/waterRibbon.ts:261: * `&m05wd=1` (Screen 05 round 8, branch claude/rainbow-s05-match-c8, qa/match/05/NOTES …[+2054 chars]
+
+### 🤖 Claude — 2026-11-18T11:42:46.007Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,340p src/vfx/proj05Tunnel.ts", "description": "Read the projected tunnel wall shader module"}`
+
+### 🧑 User — 2026-11-18T11:42:46.033Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection tests for the TUNNEL (2026-11-16, qa/pilot05/proj/tunnel/NOTES.md), same method as the water
+>  * (`?proj05=1`): the user's APPROVED Screen 05 picture, unwrapped into the tunnel's own coordinates and baked into
+>  * textures (tools/proj05/tunnel_rings.py + tunnel_bake.py → assets/textures/tunnel05/), so the design is anchored to the
+>  * 3D tunnel, not pasted over the screen.
+>  *   `?projwall05=1`  the purple metal WALLS: one texture row per wall bay between two gold rings (AB, BC, CD … as the
+>  *                    approved picture shows them from the locked 05 camera); u = angle round the tube, v = depth within
+>  *                    the bay. Bays the picture does not show (in front of ring A, behind the camera) repeat the AB row.
+>  *   `?projring05=1`  the gold RINGS: the band of the approved ring B unwrapped (u = angle round the ring, v = how far the
+>  *                    band stands out of the wall), on every 05 ring; the existing far glow still melts the far rings
+>  *                    into the warm throat.
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure) so the screen shows the approved
+>  * colours; bloom is measured and fed b …[+19288 chars]
+
+### 🤖 Claude — 2026-11-18T11:42:52.430Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1' && sed -n 80,140p tools/match05/r10_probe.mjs; node tools/match05/r10_probe.mjs t66_through_screen \"$Q\" --px=60,450 --px=150,520 --px=60,660 --px=250,610 --px=330,640 --px=700,450 --px=800,600 --px=620,560 --px=120,300 2>&1 | grep -v '^$' | head -80", "description": "Identify which objects lie under smeared wall pixels at t66", "timeout": 600000}`
+
