@@ -224,6 +224,14 @@ export async function buildMatch04(): Promise<Match04> {
   const X = new THREE.Vector3(...L.X), U = new THREE.Vector3(...L.U), Dn = new THREE.Vector3(...L.D).negate();
   group.matrixAutoUpdate = false;
   group.matrix.makeBasis(X, U, Dn).setPosition(new THREE.Vector3(...L.water));
+  // round 9 `&m04lay=1` — FEASIBILITY TEST ONLY (not kept, qa/match/04/r9/PROGRESS.md "Foundation"): the whole washer
+  // front as STATIC geometry scaled about the approved camera by 'm04layk' (same approved picture, opening k times as
+  // far). Shows why a static bigger/farther front cannot hold the composition on the fixed course: the painted pool
+  // ends up 3.39*(k-1) u below Benny's water and Benny's path / coins run through the middle of the opening.
+  if (M04.lay) {
+    const k = M04.num('m04layk', 3.0), P = proj.position;
+    group.matrix.premultiply(new THREE.Matrix4().makeTranslation(-P.x, -P.y, -P.z)).premultiply(new THREE.Matrix4().makeScale(k, k, k)).premultiply(new THREE.Matrix4().makeTranslation(P.x, P.y, P.z));
+  }
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm04_' + name; group.add(o); return o; };
 
   const T = L.tube;

@@ -50,3 +50,31 @@ Approved-view check: deterministic `node scripts/capture.mjs 04 --q=<query>` + `
   `.../step1_m04mouth/s_right_steer.png`
 * NEW: `/home/user/wt/s04/qa/match/04/r9/step2_m04room/f03_forward3u.png`, `.../step2_m04room/s_left_steer.png`,
   `.../step2_m04room/s_right_steer.png`
+
+## Lead order (2026-11-18): STOP polishing → BLUEPRINT → FOUNDATION
+* WIP candidates `&m04foam3` / `&m04pink` / `&m04arr5` (lower foam, pink swirl bands, fat five chevrons) committed
+  switch-guarded and UNTESTED/not kept (`b4bd3da4`).
+* BLUEPRINT: `/home/user/wt/s04/qa/match/04/r9/BLUEPRINT.md`, overlay `/home/user/wt/s04/qa/match/04/r9/blueprint_overlay.png`,
+  numbers `qa/match/04/r9/blueprint04.json` (`tools/match04/blueprint04.py`).
+
+## Foundation `&m04lay=1` — NOT KEPT (cannot work on the fixed course as specified)
+* **Static forced perspective (world-fixed, k = 3, `&m04lay=1`, test only):** the opening is still ahead at f10 / f20
+  (room, basin, gold opening visible), but the painted pool is 6.8 u below Benny's water, so Benny's path and the
+  coins run through the middle of the opening — coins float in mid-tunnel (f10: three coins hanging in the tunnel
+  centre), the water under Benny slides at a third of his speed, the pink basin becomes a big smear overhead (f20),
+  and inside it is still the corridor (scaled). Not the approved place. Pictures:
+  `/home/user/wt/s04/qa/match/04/r9/lay_test/k3scale_f10_forward10u.png`, `.../k3scale_f20_forward20u.png`,
+  `.../k3scale_t66_through_screen.png`.
+* **Front moving with the camera (approach at 1/4 speed, tried before the user's newest rule):** keeps the approved
+  composition ahead until s ≈ 106, but it is exactly the camera-relative illusion the user forbade → rejected, code
+  removed; evidence only: `/home/user/wt/s04/qa/match/04/r9/lay_test/moving_front_REJECTED/` (BEFORE of the step-2
+  query at the same positions: `/home/user/wt/s04/qa/match/04/r9/lay_test/BEFORE_step2/`).
+* **Why (measured):** the composition needs camera height / opening distance = 0.26; the course fixes the height at
+  3.39 u, so the composition exists only 13.1 u before the opening (the stage start). Any world-fixed front that is
+  bigger/farther breaks the water level (Benny above the painted pool), any front that recedes is camera-relative.
+* **Proposal (needs the lead / user):** keep the painted opening at its painted size and place (steps 1–2), and make
+  the ≈ 30 u inside the tunnel the PAINTED interior: the painted nested ring bands (broad polished copper-gold bands,
+  pink/violet/blue reflections, thin bright lips, dark grooves — unwrapped like the mouth band) as modeled rings with
+  the painted spacing look, the painted swirl water (pink bands both sides of a narrow cyan lane), five fat arrows
+  ahead of Benny, low foam, bubbles — all world-fixed. The only way to see the OUTSIDE composition for longer is a
+  course / checkpoint change (moving the 04 start view later on the slide), which needs the user's permission.

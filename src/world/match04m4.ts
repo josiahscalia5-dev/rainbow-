@@ -42,6 +42,7 @@ export const M04 = {
   foam3: on('m04foam3'),
   pink: on('m04pink'),
   arr5: on('m04arr5'),
+  lay: on('m04lay'),
   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
 };
 
@@ -560,7 +561,7 @@ export function addM04(ctx: M04Ctx) {
       mt.minFilter = THREE.LinearMipmapLinearFilter; mt.anisotropy = 8;
       gm.uniforms.uMouthTex.value = mt; gm.uniforms.uMouthT.value = 1;
       // the painted bulbs: from the fitted plane (psi, rho) along the projector ray onto the modeled front face
-      const Cp = shared.uProjPos.value as THREE.Vector3;
+      const Cp = (shared.uProjPos.value as THREE.Vector3).clone();
       const faceA = -0.165 - 0.03;
       void fetch(new URL('../../assets/textures/match04/mouth04.json', import.meta.url).href).then((r) => r.json()).then((mj: { bulbs: { psi: number; rho: number; lum: number; lip: string }[] }) => {
         const items: { p: THREE.Vector3; r: number; s: number }[] = [];
