@@ -4024,3 +4024,105 @@ The Screen 04 approach of projecting the two AI views is now ruled out for good.
 
 **Saved:** everything matches GitHub. Lead branch `93f3a6b`, Screen 04 `2421dcef`, Screen 05 `1d5990d4`, Screen 08 `a6f7e183`. The five-minute autosave keeps snapshotting unfinished edits.
 
+### 🧑 User — 2026-11-18T13:23:23.021Z
+
+CLAUDIA — VISUAL-FIRST CONFIRMATION REQUIRED BEFORE CONTINUING
+My top priority is visual match, not technical progress by itself.
+I need you to confirm that the goal for every screen is:
+Recreate my approved screens as closely as possible in the playable 3D game
+Match the scenery, environment, colors, composition, style, camera feel, and overall look of my approved screens
+Keep the pink character consistent and make sure when the pink character swims and moves through the screen, the world still matches the approved screen as closely as possible
+Do not drift into a different look, different scenery, or a generic replacement
+If a method only matches one camera view but breaks when the character moves, reject that method and use a better one that preserves the visual match during motion
+For Screen 04 specifically:
+I understand the projection approach is now ruled out
+I want you to rebuild it using real 3D geometry/materials
+The goal is still to make it look exactly or very close to my approved Screen 04 visually, not just technically functional
+For Screens 05, 06, 07, and 08:
+I want each one pushed toward exact or very close visual matching to its approved screen
+The pink character moving through each environment must still feel like the same approved world
+Before doing more work, respond back in this exact structure:
+1. WHAT I UNDERSTAND
+Explain in plain English what you believe I want visually.
+2. WHAT I WILL DO
+List the exact visual target for each active screen:
+Screen 04
+Screen 05
+Screen 08
+queued: 06 and 07
+3. WHAT I WILL NOT DO
+List what you will avoid, such as:
+technical progress without visual improvement
+one-angle fake matches
+scenery drift
+style drift
+replacing approved look with generic assets
+4. VISUAL SUCCESS STANDARD
+Tell me what counts as success for me:
+approved-screen scenery match
+approved-screen style match
+moving playable result still matching
+pink character integrated correctly
+5. NEXT VISUAL DELIVERABLE
+Tell me exactly what visual result you will show me next, and for which screen.
+Do not continue with a generic technical-only response. I want a visual-first summary so I can approve it before more work continues.
+
+### 🤖 Claude — 2026-11-18T13:24:05.509Z
+
+## 1. WHAT I UNDERSTAND
+You already designed these five screens. Each approved picture is the blueprint, not inspiration. You want the playable game to look like that exact picture: the same scenery, structures, colours, lighting, composition, style and camera feel.
+
+And not only in the first frame. As Benny swims forward and steers, every moment should still look like the same painted world, just seen from a little further in. The pink character stays the same Benny throughout: same look and proportions, believable size, sitting in the water. Nothing may turn into a different, generic or simplified look. A method that only looks right from one camera angle and breaks when Benny moves counts as a failure, and gets replaced by one that holds up in motion.
+
+## 2. WHAT I WILL DO
+**Screen 04, Through the Five Arrows** (rebuild with real 3D geometry and materials). The opening keeps your picture: the pink laundry room with porthole, towels and panel, the big gold washer opening with bulb lights, and foam and bubbles around the rim. Inside, as Benny swims:
+- polished glossy yellow-gold rings converging to a warm glow
+- thick water filling the tunnel floor and climbing about 2 units up the sides (measured from the views), cyan in the middle with broad pink-magenta swirls
+- five glowing white-cyan chevron arrows readable ahead of Benny
+- soft low foam along the water edges instead of the tall foam-ball walls
+- small iridescent bubbles, and the gold coin trail as approved
+
+**Screen 05, Flow Into the Current.** Purple slotted metal walls, gold rings stepping down to the glowing throat, a thick glossy S-river (cyan core, hot-pink satin bands, white glints) and puffy foam clouds on the banks, all holding the whole way through. Still to fix:
+- the flat pale wedge on the left far bank
+- the visible join line between near and far water
+- wall slots too big, with a faint double pattern
+- wrong bits at the 05→06 transition: floating coins, a torn wall fragment, rings floating at the hand-over
+
+**Screen 08, Final Spin Chamber.** The chamber stays as approved: gold arch, round washer door with chrome rim and gold bulb ring, perforated purple drum walls, spout cups pouring water, the folded towel on its platform, and the S-river with coins. Still to fix:
+- the gold wedge on the upper-right cup
+- the hard edge in the top-left corner
+- water glints about twice too large
+- cup undersides painted flat on the wall behind them
+
+**Queued: Screen 06, Crest the Rinse Arch.** Today the tunnel turns into a straight stack of concentric rings while Benny swims. The target is your sweeping water crest and bending purple-and-gold tunnel continuing as painted. The two rejected bending attempts will not be repeated; any new approach will be genuinely different and justified first.
+
+**Queued: Screen 07, Dive the Washer Tube.** Today it turns into plain wall slabs and grey foam walls. The target is the same purple slotted tube with gold rings and the winding cyan-pink river all the way through the plunge.
+
+## 3. WHAT I WILL NOT DO
+- Report technical progress (tools, diagnostics, saves, renders) as if it were visual improvement.
+- Keep any method that matches one camera angle but smears, tears, ghosts or pops while Benny moves.
+- Let scenery drift: no new elements, no removed elements, no different tunnel shape or layout.
+- Let style drift: no different colours, materials, lighting or art style from your picture.
+- Replace your approved look with generic assets, procedural patterns or "similar-looking" substitutes.
+- Change Benny's look, or hide, shrink or float him to make the scenery easier.
+- Redesign the camera. Framing changes only if the scenery truly can't line up otherwise, and I'll ask you first.
+- Spend paid credits (fal, Marble) without your approval.
+- Approve anything on your behalf.
+
+## 4. VISUAL SUCCESS STANDARD
+- **Scenery match:** at the start view the game frame is indistinguishable at a glance from your picture: same structures in the same places and proportions.
+- **Style match:** same colours, glossy gold, purple metal, water formations, foam, glow and lighting, with no flat, blurry or plastic-looking areas.
+- **Still matching while playing:** at the beginning, middle and end of the stage and when steering hard left and right, every frame looks like the same painted world seen from inside it. No smears, seams, tears, double images or sudden changes.
+- **Benny integrated:** same Benny, believable size, seated in the water with splash and wake, never hidden behind wrong scenery or floating.
+- **How it's judged:** by eye, on separate full-size APPROVED / BEFORE / NEW pictures; colour numbers never count as proof. The goal is at least 8.5/10 throughout gameplay, ideally 9–9.5, and only you decide when a screen is approved.
+
+## 5. NEXT VISUAL DELIVERABLE
+**Screen 04, rebuild step 1:** the water channel raised to the painted height, with soft low foam along its edges replacing the tall foam-ball walls. I'll show separate full-size APPROVED / BEFORE / NEW pictures at:
+- 6, 10 and 20 units forward
+- hard left steering
+- the start view, to prove it's unchanged
+
+It gets one verdict: GOOD IMPROVEMENT, NOT AN IMPROVEMENT or NOT YET PROVEN. It is kept only if it looks closer to your picture while moving, not just at one angle.
+
+I'll start Screen 04 only after your OK. The Screen 05 and 08 specialists are still running on exactly the targets above; I haven't stopped them because you asked me not to interrupt active agents. Their next results will come to you in the same picture format. Tell me if you want them paused until you've approved this.
+

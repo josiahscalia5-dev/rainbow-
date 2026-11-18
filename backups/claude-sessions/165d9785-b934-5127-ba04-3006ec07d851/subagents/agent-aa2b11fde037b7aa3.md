@@ -2089,3 +2089,238 @@ No cycles. Implementing the switch now.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1' && rm -rf /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin \"$K&m05fcoin=1\" t85_through,t90_through,t95_through_screen,k81_kink,t75_through,t66_through_scre …[+98 chars]`
 
+### 🧑 User — 2026-11-18T13:18:58.582Z
+
+> ↩︎ result: TSC_OK
+> t66_through_screen s 170.474 lat 0 coins 1460 benny -0 -0.29 big coins: #24@416,724 d111 #25@518,657 d74
+> t95_through_screen s 186.708 lat 0 coins 1580 benny -0.11 -0.34 big coins: -
+> k81_kink s 178.824 lat 0 coins 1460 benny 0.5 -0.29 big coins: #24@50,1022 d249 #25@342,823 d144 #26@512,732 d78
+> t75_through s 175.524 lat 0 coins 1460 benny 0.23 -0.28 big coins: #24@322,853 d171 #25@489,734 d106 #26@582,649 d64
+> t85_through s 181.023 lat 0 coins 1460 benny 0.33 -0.28 big coins: #25@188,938 d192 #26@463,783 d93 #27@536,768 d71
+> t90_through s 183.958 lat 0 coins 1520 benny 0.09 -0.3 big coins: #25@24,1329 d355
+
+### 🤖 Claude — 2026-11-18T13:19:02.602Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t85_through.png"}`
+
+### 🧑 User — 2026-11-18T13:19:02.651Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:19:03.160Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t90_through.png"}`
+
+### 🧑 User — 2026-11-18T13:19:03.216Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:19:19.142Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "  /** visual place of a coin at course s, height h above the water: writes `out`, returns the block's scale there (0 = beyond the throat) */\n  map: null as null | ((s: number, h: number, out: THREE.Vector3) => number),", "new_string": "  /** visual place of a coin at course s, lateral offset dl from the core, height h above the water: writes `out`,\n   *  returns the block's scale there (0 = beyond the throat) */\n  map: null as null | ((s: number, dl: number, h: number, out: THREE.Vector3) => numb …[+6 chars]`
+
+### 🧑 User — 2026-11-18T13:19:19.170Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:19:22.249Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/world/match05far.ts", "old_string": "    far05Coins.map = (s: number, h: number, out: THREE.Vector3) => {\n      const Z = s - sF;\n      if (Z > a.zEnd * 0.98) return 0;\n      const r = rowAt(Z);\n      const lift0 = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;\n      fco.copy(Rt).multiplyScalar(r.core).addScaledVector(U, a.level + lift0 + h);", "new_string": "    far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {\n      const Z = s - sF;\n      if (Z > a.zEnd * 0.98) return 0;\n      const r = ro …[+210 chars]`
+
+### 🧑 User — 2026-11-18T13:19:22.274Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/world/match05far.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:19:24.963Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "old_string": "        const k = far05Coins.map(d.s, d.h + 0.08 * Math.sin(time * 3 + ph), fcP);\n        const o = far05Coins.open;\n        if (k > 0) { p.copy(fcP.lerp(p, o)); scale *= k + (1 - k) * o; } else scale *= o;", "new_string": "        // half the 06 lateral swing around the far core (the trail weaves), half size (the painted far coins are small)\n        const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;\n        const o = far05Coin …[+100 chars]`
+
+### 🧑 User — 2026-11-18T13:19:25.005Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:19:34.843Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "old_string": "        const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;", "new_string": "        const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * 0.7 * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;"}`
+
+### 🧑 User — 2026-11-18T13:19:34.880Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:19:38.250Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1' && rm -rf /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin \"$K&m05fcoin=1\" t85_through,t90_through,t95_through_screen,k81_kink,t66_through_screen 2>&1 | ta …[+77 chars]`
+
+### 🧑 User — 2026-11-18T13:20:35.917Z
+
+> ↩︎ result: TSC_OK
+> t66_through_screen s 170.475 lat 0 coins 1460 benny -0 -0.29 big coins: #24@416,724 d111 #25@518,657 d74
+> t95_through_screen s 186.707 lat 0 coins 1580 benny -0.11 -0.34 big coins: -
+> k81_kink s 178.825 lat 0 coins 1460 benny 0.5 -0.29 big coins: #24@50,1022 d250 #25@342,823 d144 #26@512,717 d78
+> t85_through s 181.024 lat 0 coins 1460 benny 0.33 -0.28 big coins: #25@188,938 d192 #26@463,765 d93 #27@535,742 d71
+> t90_through s 183.956 lat 0 coins 1520 benny 0.09 -0.3 big coins: #25@25,1329 d355
+
+### 🤖 Claude — 2026-11-18T13:20:38.562Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t90_through.png"}`
+
+### 🧑 User — 2026-11-18T13:20:38.615Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:20:39.149Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T13:20:39.204Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:20:47.484Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport json\nj=json.load(open('/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/shots.json'))\nfor sh in j['shots']:\n  if sh['name']=='t95_through_screen':\n    print([c for c in sh['coinsOnScreen'] if c['x']<400])\n\"; grep -n \"far05Coins\\|\\.live\" src/world/match05far.ts | head", "description": "Identify the four left coins at t95"}`
+
+### 🧑 User — 2026-11-18T13:20:47.547Z
+
+> ↩︎ result: []
+> 46: * pickups, count and score unchanged. `far05Coins` is written by the live sync below.
+> 49:export const far05Coins = {
+> 282:    far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {
+> 341:      far05Coins.live = !atLock && open < 0.999 ? 1 : 0;
+> 342:      far05Coins.seamS = sF + zs;
+> 343:      far05Coins.open = open;
+> 344:      far05Coins.T.copy(T);
+
+### 🤖 Claude — 2026-11-18T13:21:12.965Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "offset": 356, "limit": 30}`
+
+### 🧑 User — 2026-11-18T13:21:12.983Z
+
+> ↩︎ result: 356	  let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
+> 357	  const place = (time: number) => {
+> 358	    defs.forEach((d, i) => {
+> 359	      const f = course.sample(d.s);
+> 360	      const ph = d.phase ?? i;
+> 361	      let scale = 1;
+> 362	      if (collected[i]) {
+> 363	        if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+> 364	        const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+> 365	        if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+> 366	        scale = 1 + k * 0.8;
+> 367	        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+> 368	      } else {
+> 369	        // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
+> 370	        // forced-perspective relief in the locked view) settle to the normal coin height on the river as Benny closes in
+> 371	        // (unchanged while ≥ 9 u ahead: the locked view and the mid-stage frames keep the painted arc)
+> 372	        const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h …[+1075 chars]
+
+### 🤖 Claude — 2026-11-18T13:21:22.559Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/gameplay/coins.ts", "old_string": "      let scale = 1;\n      if (collected[i]) {\n        if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }\n        const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);\n        if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }\n        scale = 1 + k * 0.8;\n        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6 …[+1877 chars]`
+
+### 🧑 User — 2026-11-18T13:21:22.597Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T13:21:26.159Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && npx tsc --noEmit -p . && echo TSC_OK && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1' && rm -rf /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin && node tools/match05/r8_shots.mjs /tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin \"$K&m05fcoin=1\" t85_through,t90_through,t95_through_screen,t95_left,t95_right,t98_end,t102_06,t6 …[+116 chars]`
+
+### 🧑 User — 2026-11-18T13:23:16.486Z
+
+> ↩︎ result: TSC_OK
+> t66_through_screen s 170.451 lat 0 coins 1460 benny -0 -0.29 big coins: #24@416,723 d111 #25@518,657 d73
+> t95_through_screen s 186.707 lat 0 coins 1580 benny -0.11 -0.34 big coins: -
+> t85_through s 181.023 lat 0 coins 1460 benny 0.33 -0.28 big coins: #25@188,938 d192 #26@463,765 d93 #27@535,742 d71
+> t90_through s 183.957 lat 0 coins 1520 benny 0.09 -0.3 big coins: #25@25,1329 d355
+> t98_end s 188.357 lat 0 coins 1580 benny -0.19 -0.51 big coins: -
+> t102_06 s 190.739 lat 0 coins 1580 benny -0.11 -0.77 big coins: #38@288,640 d77 #39@297,595 d66
+> t95_left s 186.709 lat -3.838 coins 1420 benny -0.36 -0.37 big coins: #34@876,899 d64 #35@800,884 d63
+> t95_right s 186.707 lat 3.838 coins 1420 benny 0.09 -0.26 big coins: -
+
+### 🤖 Claude — 2026-11-18T13:23:19.003Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T13:23:19.051Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:23:19.616Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t98_end.png"}`
+
+### 🧑 User — 2026-11-18T13:23:19.673Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:23:27.540Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('/home/user/wt/s05/qa/match/05/r11/step2_m05end/3_NEW_t102_06.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t102_06.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(2)>8; print('t102 diff px (>8):', int(m.sum()))\nif m.sum():\n  ys,xs=np.nonzero(m); print('bbox', xs.min(), xs.max(), ys.min(), ys.max())\n\"", "description": "Compare t102 (inside 06) against round-11 fram …[+3 chars]`
+
+### 🧑 User — 2026-11-18T13:23:28.011Z
+
+> ↩︎ result: t102 diff px (>8): 104599
+> bbox 176 587 1072 1535
+
+### 🤖 Claude — 2026-11-18T13:23:30.408Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t102_06.png"}`
+
+### 🧑 User — 2026-11-18T13:23:30.457Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:23:30.912Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r11/step2_m05end/3_NEW_t102_06.png"}`
+
+### 🧑 User — 2026-11-18T13:23:30.966Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:23:34.997Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/fcoin/t95_left.png"}`
+
+### 🧑 User — 2026-11-18T13:23:35.038Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:23:39.029Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1'; S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; node scripts/capture.mjs 05 --q=\"$K&m05fcoin=1\" --out=$S/lockE 2>&1 | grep -c 403; git checkout qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nS='$S'\na=np.asarray(Image.open(S+'/lockD/05.png').convert('RGB')).astype(int); b=np.asarray( …[+288 chars]`
+
+### 🧑 User — 2026-11-18T13:23:53.855Z
+
+> ↩︎ result: 2
+> Updated 1 path from the index
+> locked diff px: 0
+
+### 🤖 Claude — 2026-11-18T13:24:00.096Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; D=qa/match/05/r12/step4_m05fcoin; mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && for s in t90_through t95_through_screen t85_through; do cp $S/fcloud/$s.png $D/2_BEFORE_$s.png 2>/dev/null || true; cp $S/fcoin/$s.png $D/3_NEW_$s.png; done; cp $S/k2/t95_left.png $D/2_BEFORE_t95_left.png; cp $S/fcoin/t95_left.png $D/3_NEW_t95_left.png; ls $S/fcloud; ls $D", "description": "Assemble step 4 proof folder"}`
+
+### 🧑 User — 2026-11-18T13:24:00.185Z
+
+> ↩︎ result: k81_kink.png
+> shots.json
+> t66_through_screen.png
+> t75_through.png
+> t85_through.png
+> t90_through.png
+> t95_left.png
+> 1_APPROVED.png
+> 2_BEFORE_t85_through.png
+> 2_BEFORE_t90_through.png
+> 2_BEFORE_t95_left.png
+> 3_NEW_t85_through.png
+> 3_NEW_t90_through.png
+> 3_NEW_t95_left.png
+> 3_NEW_t95_through_screen.png
+
+### 🤖 Claude — 2026-11-18T13:24:06.306Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad; D=qa/match/05/r12/step4_m05fcoin; cp $S/fcloud/t95_left.png $D/2_BEFORE_t95_left.png; K='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1'; node tools/match05/r8_shots.mjs $S/fcloud2 \"$K\" t95_through_screen,t98_end 2>&1 | tail -2; cp $S/fcloud2/t95_through_screen.png $D/2_BEFORE_t95_through_screen.png; ls $D", "description" …[+68 chars]`
+

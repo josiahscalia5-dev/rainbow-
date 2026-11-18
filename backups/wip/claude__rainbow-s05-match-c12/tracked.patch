@@ -1,5 +1,5 @@
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index c99178d6..bbc26090 100644
+index c99178d6..05e15de2 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
 @@ -8,6 +8,7 @@ import * as THREE from 'three';
@@ -18,15 +18,24 @@ index c99178d6..bbc26090 100644
  
    let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
    const place = (time: number) => {
-@@ -364,9 +366,28 @@ export function createCoins(course: Course): CoinSystem {
+@@ -357,16 +359,37 @@ export function createCoins(course: Course): CoinSystem {
+       const f = course.sample(d.s);
+       const ph = d.phase ?? i;
+       let scale = 1;
++      // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
++      // forced-perspective relief in the locked view) settle toward the normal coin height over the river as Benny closes
++      // in (unchanged while ≥ 9 u ahead: the locked view and the mid-stage frames keep the painted arc); their pick-up pop
++      // starts from there too (it rose from 3.4 u, over the left wall)
++      const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * 0.7 * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;
+       if (collected[i]) {
+         if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+         const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+         if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
          scale = 1 + k * 0.8;
-         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
++        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, hS + k * 1.6);
        } else {
 -        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));
-+        // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
-+        // forced-perspective relief in the locked view) settle to the normal coin height on the river as Benny closes in
-+        // (unchanged while ≥ 9 u ahead: the locked view and the mid-stage frames keep the painted arc)
-+        const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;
 +        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, hS + 0.08 * Math.sin(time * 3 + ph));
        }
 -      if (d.axis) {
@@ -35,7 +44,8 @@ index c99178d6..bbc26090 100644
 +      // the block folds
 +      let fcFace = false;
 +      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS) {
-+        const k = far05Coins.map(d.s, d.h + 0.08 * Math.sin(time * 3 + ph), fcP);
++        // half the 06 lateral swing around the far core (the trail weaves), half size (the painted far coins are small)
++        const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
 +        const o = far05Coins.open;
 +        if (k > 0) { p.copy(fcP.lerp(p, o)); scale *= k + (1 - k) * o; } else scale *= o;
 +        fcFace = o < 0.5;
@@ -50,10 +60,10 @@ index c99178d6..bbc26090 100644
          back.copy(d.axis).negate();
          up05.set(0, 1, 0).addScaledVector(back, -back.y).normalize();
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index 0b1d93f6..8e6715f1 100644
+index 0b1d93f6..bcebd813 100644
 --- a/src/world/match05far.ts
 +++ b/src/world/match05far.ts
-@@ -37,6 +37,27 @@ export const M05FAR: boolean = MATCH05 && flag05('m05far');
+@@ -37,6 +37,28 @@ export const M05FAR: boolean = MATCH05 && flag05('m05far');
   * 06 look unchanged; the locked view never uses this (block at its build-time geometry there).
   */
  export const M05END: boolean = M05FAR && flag05('m05end');
@@ -75,25 +85,26 @@ index 0b1d93f6..8e6715f1 100644
 +  open: 1,
 +  /** tunnel axis (coins face down it) */
 +  T: new THREE.Vector3(0, 0, 1),
-+  /** visual place of a coin at course s, height h above the water: writes `out`, returns the block's scale there (0 = beyond the throat) */
-+  map: null as null | ((s: number, h: number, out: THREE.Vector3) => number),
++  /** visual place of a coin at course s, lateral offset dl from the core, height h above the water: writes `out`,
++   *  returns the block's scale there (0 = beyond the throat) */
++  map: null as null | ((s: number, dl: number, h: number, out: THREE.Vector3) => number),
 +};
  
  type Item = { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number };
  
-@@ -254,6 +275,19 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -254,6 +276,19 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
    // `&m05fcloud=1` (Screen 05 round 12): far-bank foam clouds on the far layout's water edge, anchored to the virtual
    // tunnel, compressed like the block, only where the block is live and its baked picture magnified (as m05fmag)
    const cm = new THREE.Matrix4(), cp = new THREE.Vector3(), co = new THREE.Vector3();
 +  // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)
 +  const fco = new THREE.Vector3();
 +  if (M05FCOIN) {
-+    far05Coins.map = (s: number, h: number, out: THREE.Vector3) => {
++    far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {
 +      const Z = s - sF;
 +      if (Z > a.zEnd * 0.98) return 0;
 +      const r = rowAt(Z);
 +      const lift0 = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;
-+      fco.copy(Rt).multiplyScalar(r.core).addScaledVector(U, a.level + lift0 + h);
++      fco.copy(Rt).multiplyScalar(THREE.MathUtils.clamp(r.core + dl, r.cL, r.cR)).addScaledVector(U, a.level + lift0 + h);
 +      point(Z, fco, out);
 +      return kOf(Z);
 +    };
@@ -101,7 +112,7 @@ index 0b1d93f6..8e6715f1 100644
    const placeClouds = (show: boolean) => {
      const c = a.clouds;
      if (!c) return;
-@@ -302,6 +336,12 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -302,6 +337,12 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
        place(a.farLids, a.lidItems, open);
      }
      placeClouds(!atLock && open < 0.999);

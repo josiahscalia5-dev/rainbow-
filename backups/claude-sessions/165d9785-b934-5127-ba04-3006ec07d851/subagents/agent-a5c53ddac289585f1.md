@@ -2207,3 +2207,249 @@ Now the PROGRESS.md for r12 with step 1.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-18T13:19:02.612Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_LL.png 0,520,400,1000 0.8 references/08_final_spin_chamber.png $N/f03_forward3u.png $N/f06_forward6u.png $N/f10_forward10u.png", "description": "Zoom lower-left cup across shots"}`
+
+### 🧑 User — 2026-11-18T13:19:02.856Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:19:03.657Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_LL.png"}`
+
+### 🧑 User — 2026-11-18T13:19:03.689Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:19:23.902Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_R.png 480,380,864,1000 0.9 references/08_final_spin_chamber.png $N/f10_forward10u.png $N/t95_through_screen.png $N/s_right_hard.png", "description": "Zoom right side across shots"}`
+
+### 🧑 User — 2026-11-18T13:19:24.319Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:19:25.193Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_R.png"}`
+
+### 🧑 User — 2026-11-18T13:19:25.262Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:19:51.997Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && cat > $S/bin/floortop.py <<'EOF'\n# top-down rectified view of the painted floor plane (x across, z along), for choosing a clean floor window\nimport json, math, sys, numpy as np, cv2\nfrom PIL import Image, ImageDraw\nL = json.load(open('assets/textures/match08/proj08.json'))\nplate = np.asarray(Image.open('assets/textures/match08/plate08_hybrid.png').convert('RGB')).astype(np.float32)\nHp, Wp = plate.shape[:2]\nM = np.array(L['camera']['matrixWorld']).reshape(4, 4).T\nV …[+1185 chars]`
+
+### 🧑 User — 2026-11-18T13:19:52.727Z
+
+> ↩︎ result: (680, 1200)
+
+### 🤖 Claude — 2026-11-18T13:19:53.245Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/floortop.png"}`
+
+### 🧑 User — 2026-11-18T13:19:53.282Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:20:01.683Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I $S/bin/floortop.py $S/floortopR.png 12.5 16.5 -288 -296 120 && python3 -I $S/bin/floortop.py $S/floortopL.png 5 11 -297 -312 60 && python3 -I $S/bin/sbs.py $S/floorwin.png full 0.6 $S/floortopR.png $S/floortopL.png", "description": "Zoom candidate floor windows"}`
+
+### 🤖 Claude — 2026-11-18T13:20:02.989Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/floorwin.png"}`
+
+### 🧑 User — 2026-11-18T13:20:03.041Z
+
+> ↩︎ result: (480, 960)
+> (360, 900)
+
+### 🧑 User — 2026-11-18T13:20:03.060Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:20:20.500Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && cat > $S/bin/floorac.py <<'EOF'\nimport json, math, sys, numpy as np, cv2\nfrom PIL import Image\nL = json.load(open('assets/textures/match08/proj08.json'))\nplate = np.asarray(Image.open('assets/textures/match08/plate08_hybrid.png').convert('RGB')).astype(np.float32)\nHp, Wp = plate.shape[:2]\nM = np.array(L['camera']['matrixWorld']).reshape(4, 4).T\nV = np.linalg.inv(M); W, H = L['camera']['size']; f = 1 / math.tan(math.radians(L['camera']['fov']) / 2); asp = W / H\nFY  …[+1212 chars]`
+
+### 🧑 User — 2026-11-18T13:20:21.372Z
+
+> ↩︎ result: plate px span x 945.95465 1173.196 y 1501.0653 1582.4135
+> x peaks (px, u) [(75, 0.375, 0.278), (116, 0.58, 0.062), (131, 0.655, 0.081)]
+> z peaks (px, u) [(63, 0.315, 0.365), (188, 0.94, 0.437)]
+
+### 🤖 Claude — 2026-11-18T13:20:21.950Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/floorwin_raw.png"}`
+
+### 🧑 User — 2026-11-18T13:20:21.972Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:20:57.527Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s08/tools/match08/floor08.py", "content": "\"\"\"Screen 08 r12 (`&m08floor=1`): world-anchored floor tile = the painted chamber floor's own hole grid.\n\nThe floor proxy's parts the approved view could not see (in the shadow of the lower spout cups and their streams, beside the\nriver further in) fell back to the triplanar wall patch (long diagonal slots) with hard straight edges against the painted\nfloor (rows of round dark holes) — a visible patch behind the lower-left cup at forward 10 u / two-thirds through and right\nof the river when steering hard right. Thi …[+3021 chars]`
+
+### 🧑 User — 2026-11-18T13:20:57.558Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s08/tools/match08/floor08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T13:21:00.234Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && python3 -I tools/match08/floor08.py assets/textures/match08/floor08.png assets/textures/match08/floor08.json && python3 -I -c \"\nfrom PIL import Image\nt=Image.open('assets/textures/match08/floor08.png'); o=Image.new('RGB',(t.width*4,t.height*3))\nfor i in range(4):\n  for j in range(3): o.paste(t,(i*t.width,j*t.height))\no.resize((o.width//2,o.height//2)).save('$S/floor_tiled.png'); print(o.size)\"", "description": "Build floor hole-grid tile and preview"}`
+
+### 🧑 User — 2026-11-18T13:21:00.789Z
+
+> ↩︎ result: Exit code 1
+> hole grid period across x 0.3755 u, along z 0.9370 u
+> Traceback (most recent call last):
+>   File "/home/user/wt/s08/tools/match08/floor08.py", line 64, in <module>
+>     json.dump({'note': 'm08floor hole-grid cell (u along +x, v along -z), repeat; tools/match08/floor08.py (r12)',
+>     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>                'x0': X0, 'z0': Z0, 'periodX': px_, 'periodZ': pz_, 'size': [CW, CH]}, open(out_json, 'w'), indent=1)
+>                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 181, in dump
+>     for chunk in iterable:
+>                  ^^^^^^^^
+>   File "/usr/local/lib/python3.13/json/encoder.py", line 435, in _iterencode
+>     yield from _iterencode_dict(o, _current_indent_level)
+>   File "/usr/local/lib/python3.13/json/encoder.py", line 409, in _iterencode_dict
+>     yield from chunks
+>   File "/usr/local/lib/python3.13/json/encoder.py", line 442, in _iterencode
+>     o = _default(o)
+>   File "/usr/local/lib/python3.13/json/encoder.py", line 182, in default
+>     raise TypeError(f'Object  …[+140 chars]
+
+### 🤖 Claude — 2026-11-18T13:21:06.323Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && sed -i \"s/'periodX': px_, 'periodZ': pz_,/'periodX': float(px_), 'periodZ': float(pz_),/\" tools/match08/floor08.py && python3 -I tools/match08/floor08.py assets/textures/match08/floor08.png assets/textures/match08/floor08.json && python3 -I -c \"\nfrom PIL import Image\nt=Image.open('assets/textures/match08/floor08.png'); o=Image.new('RGB',(t.width*4,t.height*3))\nfor i in range(4):\n  for j in range(3): o.paste(t,(i*t.width,j*t.height))\no.resize((o.width//2,o.height// …[+96 chars]`
+
+### 🧑 User — 2026-11-18T13:21:07.048Z
+
+> ↩︎ result: hole grid period across x 0.3755 u, along z 0.9370 u
+> cell 150 x 375 px
+> (600, 1125)
+> [This command modified 1 file you've previously read: ../wt/s08/tools/match08/floor08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-18T13:21:07.557Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/floor_tiled.png"}`
+
+### 🧑 User — 2026-11-18T13:21:07.578Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:21:25.195Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"uniform vec2 uCeilD;        // m08drum\"\"\",\"\"\"uniform sampler2D uFloorT;  // m08floor (floor only): the painted floor's hole-grid cell (floor08.py), repeat-wrapped\nuniform vec4 uFloorP;       // m08floor: x0, z0, period across x, period along z (world u)\nuniform float uFloorOn;\nuniform vec2 uCeilD;        // m08drum\"\"\")\nrep(\"\"\"  vec3 t = pc;\n  // stretch guard\"\"\",\"\"\"  // m08floor (r12) …[+2392 chars]`
+
+### 🧑 User — 2026-11-18T13:21:27.939Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:21:33.295Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K16='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/flN && M08_ONLY=f10,t66,t95,s_right_hard node tools/match08/shots08.mjs 08 $S/flN \"$K16&m08floor=1\" 2>&1 | grep -v 'allow list' | tail -4 && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_fl.png 0,500,500,1000 0.8 $N/f10_forward10u.png $S/flN/f10_forward10u.png $N/t66_t …[+124 chars]`
+
+### 🤖 Claude — 2026-11-18T13:21:34.538Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_fl.png"}`
+
+### 🧑 User — 2026-11-18T13:22:29.062Z
+
+> ↩︎ result: 08 f10_forward10u s 402.121 lat 0 stage 08 frames 63
+> 08 s_right_hard s 404.071 lat 2.22 stage 08 frames 76
+> 08 t66_through_screen s 400.551 lat 0.005 stage 08 frames 54
+> 08 t95_through_screen s 404.351 lat 0 stage 08 frames 78
+
+### 🧑 User — 2026-11-18T13:22:29.090Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:22:33.086Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_fl2.png 120,560,420,820 1.3 $N/f10_forward10u.png $S/flN/f10_forward10u.png", "description": "Closer zoom of floor patch behind cup at f10"}`
+
+### 🧑 User — 2026-11-18T13:22:33.399Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:22:34.357Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_fl2.png"}`
+
+### 🧑 User — 2026-11-18T13:22:34.388Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:22:52.451Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_fl3.png 430,500,864,1100 0.8 $N/s_right_hard.png $S/flN/s_right_hard.png $N/t95_through_screen.png $S/flN/t95_through_screen.png", "description": "Compare right side for m08floor"}`
+
+### 🧑 User — 2026-11-18T13:22:52.924Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T13:22:53.747Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_fl3.png"}`
+
+### 🧑 User — 2026-11-18T13:22:53.784Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T13:23:05.974Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git diff src/world/match08.ts > qa/match/08/r12/wip_m08floor_not_kept.patch && git checkout -- src/world/match08.ts && git rm -q --cached assets/textures/match08/floor08.png 2>/dev/null; mkdir -p qa/match/08/r12/wip_m08floor && mv assets/textures/match08/floor08.png assets/textures/match08/floor08.json qa/match/08/r12/wip_m08floor/ && npx tsc --noEmit -p . && cat >> qa/match/08/r12/PROGRESS.md <<'EOF'\n\n## Tried — `&m08floor=1` (floor parts the approved view missed → the painted floor's own hole grid) — NOT KEPT (NOT AN IMPROVEMENT)\n* Tried: `tools/match0 …[+760 chars]`
+
+### 🧑 User — 2026-11-18T13:23:10.486Z
+
+> ↩︎ result: M qa/match/08/r12/PROGRESS.md
+> ?? qa/match/08/r12/wip_m08floor/
+> ?? qa/match/08/r12/wip_m08floor_not_kept.patch
+> ?? tools/match08/floor08.py
+
+### 🤖 Claude — 2026-11-18T13:23:33.819Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i '1s/^\"\"\"Screen 08 r12 (`&m08floor=1`): world-anchored floor tile = the painted chamber floor.s own hole grid./\"\"\"Screen 08 r12 (`\\&m08floor=1`, TRIED, NOT KEPT - see qa\\/match\\/08\\/r12\\/PROGRESS.md): floor tile from the painted hole grid./' tools/match08/floor08.py && head -2 tools/match08/floor08.py && grep -n \"m08cup: the cups are round\" -A 20 src/world/match08.ts | head -30", "description": "Mark floor tool not kept; show cup shader block"}`
+
+### 🧑 User — 2026-11-18T13:23:33.888Z
+
+> ↩︎ result: """Screen 08 r12 (`&m08floor=1`, TRIED, NOT KEPT - see qa/match/08/r12/PROGRESS.md): floor tile from the painted hole grid.
+> 
+> 213:  // m08cup: the cups are round (rotationally symmetric), so a cup point the approved view could not see (its top hidden
+> 214-  // behind the gold arch, or its outer part beyond the picture's edge) takes the painted pixels of its mirror point
+> 215-  // across the vertical plane through the cup axis and the projector; off the approved viewpoint only
+> 216-  if (uCup.w > 0.5) {
+> 217-    float mc = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
+> 218-    // (r12: turning the hidden point about the cup axis instead (+-45 / +-90 deg) put wall pixels on the cup top: the
+> 219-    // proxy dome is taller than the painted cup -> mirror only)
+> 220-    vec3 wm = vW - 2.0 * dot(vW - uCup.xyz, uCupM) * uCupM;
+> 221-    vec4 pm = uProjVP * vec4(wm, 1.0);
+> 222-    if (mc > 0.0 && pw < 0.999 && pm.w > 0.0) {
+> 223-      vec3 nd = pm.xyz / pm.w;
+> 224-      vec2 um = nd.xy * 0.5 + 0.5;
+> 225-      if (um.x >= 0.0 && um.x <= 1.0 && um.y >= 0.0 && um.y <= 1.0) {
+> 226-        float zf = linZ(nd.z * 0.5 + 0.5), zs = linZ(texture2D(uDepth, um).r);
+> 227-        float vm = 1.0 - smoothst …[+512 chars]
+
+### 🤖 Claude — 2026-11-18T13:23:45.679Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"uniform vec3 uCupM;         // m08cup mirror plane normal (horizontal, perpendicular to the projector's view of the cup)\n\"\"\",\"\"\"uniform vec3 uCupM;         // m08cup mirror plane normal (horizontal, perpendicular to the projector's view of the cup)\nuniform vec4 uCupT;         // m08twin: the twin cup's centre xyz (same painted design, fully seen), w > 0.5 = on\nuniform vec2 uCupS;         // m08twin …[+2301 chars]`
+
+### 🧑 User — 2026-11-18T13:23:48.443Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-18T13:23:55.205Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && export K16='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1' && S=/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad && mkdir -p $S/twN && M08_ONLY=f06,f10,t66,t95 node tools/match08/shots08.mjs 08 $S/twN \"$K16&m08twin=1\" 2>&1 | grep -v 'allow list' | tail -4 && N=qa/match/08/r12/NEW && python3 -I $S/bin/sbs.py $S/z_tw.png 700,250,864,420 2.2 $N/f10_forward10u.png $S/twN/f10_forward10u.png $N/t95_through_sc …[+108 chars]`
+
+### 🤖 Claude — 2026-11-18T13:23:56.353Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/z_tw.png"}`
+
