@@ -4122,3 +4122,28 @@ Screen 04 pushed step 2: the wide swirling river with foam clouds, bubbles and c
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; t=open(p).read()\nimport re\nold_start=t.index('| 04 | `claude/rainbow-s04-match-c8`')\nold_end=t.index('\\n',old_start)\nt=t[:old_start]+\"| 04 | `claude/rainbow-s04-match-c8` (from `d1e422fa`) | specialist RUNNING; kept (tip `d433f6f5`): step 1 `&m04ring=1` crisp modeled ring tunnel, step 2 `&m04river=1&m04foam=1&m04bub=1` wide swirling painted river + foam piles + bubbles + crisp arrows — shown to the user. Lead feedback sent: foam = soft irregular clusters (not even rows), then polished yellow-gold rings, then the pain …[+840 chars]`
 
+### 🧑 User — 2026-11-18T02:32:28.258Z
+
+> ↩︎ result: session=dd32bbfd60 remote=dd32bbfd60 lead-c8=dd32bbfd60 uncommitted=0
+
+### 🤖 Claude — 2026-11-18T02:32:32.377Z
+
+Screen 04 step 2 is saved on GitHub (`d433f6f5`, checked). It's a big visible change; the pictures are above.
+
+**What looks better:** while Benny swims, the narrow flat blue ramp with hard edges is gone. The tunnel floor is now a wide swirling river in your water design: pink and magenta swirl bands, cyan streams and a bright cyan centre lane. Its sides curve up into the gold walls. White foam piles line both sides, iridescent bubbles float above them, and the glowing arrows stay crisp down the middle.
+
+**Still wrong on 04:**
+- The foam sits in stiff, evenly spaced rows of identical white balls; yours is soft, uneven piled clusters.
+- The rings are too red-orange instead of polished yellow-gold.
+- There are more arrows than your five, and they're thinner.
+
+I've sent the specialist those three fixes, in that order.
+
+**Honest ratings while swimming:**
+- 04: about 5/10, up from 3.5 at the start of this round.
+- 05: about 7/10.
+
+Neither is at 8.5 yet.
+
+The handover branch `claude/rainbow-lead-c8` includes this step. No paid credits used, and nothing needs your action.
+

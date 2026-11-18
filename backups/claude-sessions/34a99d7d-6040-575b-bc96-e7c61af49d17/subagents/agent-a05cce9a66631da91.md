@@ -1906,3 +1906,48 @@ Next most visible flaw while swimming: the near tunnel walls get blurry/stretche
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 16,40p src/vfx/proj05Tunnel.ts", "description": "Read proj05Tunnel flag definitions"}`
 
+### 🧑 User — 2026-11-18T02:32:15.449Z
+
+> ↩︎ result: import * as THREE from 'three';
+> import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+> // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
+> const flag05 = on05;
+> import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 
+> export const PROJWALL05: boolean = flag05('projwall05');
+> export const PROJRING05: boolean = flag05('projring05');
+> /** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */
+> export const PROJFRAME05: boolean = flag05('projframe05');
+> /** `?projlid05=1` (2026-11-16): the approved paddles L1 L2 R1 R2 as Blender-built 3D trays on the real 05 wall */
+> export const PROJLID05: boolean = flag05('projlid05');
+> /**
+>  * `?env05=1` (2026-11-17, washer-environment-modeler, qa/pilot05/full_reference_match/env/NOTES.md): the 05 rings placed
+>  * where the approved picture shows them from the locked camera (src/world/environment.ts) and the walls / rings baked by
+>  * CAMERA PROJECTION in their own coordinates (tools/env05/proj_bake.py → assets/textures/env05/): wall atlas with own
+>  * rows for the near bays (N1, N2), and one ring atlas row per ring (A, B, C … G, N) sampled by (angl …[+515 chars]
+
+### 🤖 Claude — 2026-11-18T02:32:34.491Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\nt=open(p).read()\na=\"import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';\\n\"\nassert t.count(a)==1\nt=t.replace(a,\"import { PROJ05_INVERSE, on05, proj05Pending, MATCH05, flag05 as q05strict } from './waterRibbon';\\n\")\na=\"export const ENV05: boolean = flag05('env05');\\n\"\nassert t.count(a)==1\nt=t.replace(a,a+\"\"\"/**\n * `&m05wall=1` (Screen 05 round 8, explicit — NOT implied by match05; needs match05 + env05 + m05far; qa/match/05/NOTES.md\n * \"Round 8\"): CRISP NEAR WALLS WHILE SWI …[+3651 chars]`
+
+### 🧑 User — 2026-11-18T02:32:35.307Z
+
+> ↩︎ result: Exit code 2
+> <stdin>:32: SyntaxWarning: invalid escape sequence '\$'
+> 445:    withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+> src/vfx/proj05Tunnel.ts(264,15): error TS1005: ',' expected.
+> src/vfx/proj05Tunnel.ts(264,25): error TS1127: Invalid character.
+> src/vfx/proj05Tunnel.ts(264,26): error TS1434: Unexpected keyword or identifier.
+> src/vfx/proj05Tunnel.ts(264,49): error TS1109: Expression expected.
+> src/vfx/proj05Tunnel.ts(264,65): error TS1005: ';' expected.
+> src/vfx/proj05Tunnel.ts(266,5): error TS1434: Unexpected keyword or identifier.
+> src/vfx/proj05Tunnel.ts(267,5): error TS1434: Unexpected keyword or identifier.
+> src/vfx/proj05Tunnel.ts(267,24): error TS1127: Invalid character.
+> src/vfx/proj05Tunnel.ts(267,25): error TS1434: Unexpected keyword or identifier.
+> src/vfx/proj05Tunnel.ts(267,47): error TS1128: Declaration or statement expected.
+> src/vfx/proj05Tunnel.ts(267,49): error TS1161: Unterminated regular expression literal.
+> src/vfx/proj05Tunnel.ts(268,5): error TS1434: Unexpected keyword or identifier.
+> src/vfx/proj05Tunnel.ts(270,5): error TS1434: Unexpected keyword or identifier.
+> src/vfx/proj05Tunnel.ts(270,25): error TS1127: Invalid character.
+>  …[+302 chars]
+
