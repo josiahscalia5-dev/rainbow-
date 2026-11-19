@@ -1,0 +1,1041 @@
+[
+  {
+    "name": "opening",
+    "kind": "forward",
+    "value": 0,
+    "steer": 0,
+    "simFrames": 0,
+    "target": 198.91,
+    "stageBounds": [
+      188.90987977543386,
+      242.87279039922453
+    ],
+    "clock": 12,
+    "shaderTime": 12,
+    "state": {
+      "mode": "ride",
+      "stage": "06",
+      "s": 198.91,
+      "lat": 0,
+      "coins": 1680,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -37.636,
+      "bennyVisible": true,
+      "cam": [
+        1.72,
+        -35.37,
+        -132.64
+      ]
+    },
+    "camera": {
+      "matrixWorld": [
+        0.9808375853832519,
+        0,
+        -0.1948271826505532,
+        0,
+        -0.0369567508869884,
+        0.9818440496142485,
+        -0.1860549940231922,
+        0,
+        0.19128990998855405,
+        0.1896899107414335,
+        0.9630295468465533,
+        0,
+        1.7204699354744721,
+        -35.369510376631865,
+        -132.64386472930602,
+        1
+      ],
+      "fov": 62,
+      "aspect": 0.5625,
+      "near": 0.05,
+      "far": 1200,
+      "width": 864,
+      "height": 1536,
+      "position": [
+        1.7204699354744721,
+        -35.369510376631865,
+        -132.64386472930602
+      ],
+      "target": [
+        -0.19242916441106855,
+        -37.2664094840462,
+        -142.27416019777155
+      ]
+    },
+    "gl": {
+      "calls": 45,
+      "triangles": 283635,
+      "textures": 40,
+      "contextLost": false
+    },
+    "draws": [
+      [
+        "coins/Mesh",
+        3
+      ],
+      [
+        "eyeR/lash_R_085",
+        1
+      ],
+      [
+        "eyeR/lash_R_05",
+        1
+      ],
+      [
+        "eyeL/lash_L_085",
+        1
+      ],
+      [
+        "eyeL/lash_L_05",
+        1
+      ],
+      [
+        "body/nose",
+        1
+      ],
+      [
+        "hat/hat_star",
+        1
+      ],
+      [
+        "eyeR/eyeR_happy",
+        1
+      ],
+      [
+        "eyeL/eyeL_happy",
+        1
+      ],
+      [
+        "mouth/mouth_happy",
+        1
+      ],
+      [
+        "armL/palmL",
+        1
+      ],
+      [
+        "armR/palmR",
+        1
+      ],
+      [
+        "footL/soleL",
+        1
+      ],
+      [
+        "footR/soleR",
+        1
+      ],
+      [
+        "hat/hat_brim",
+        1
+      ],
+      [
+        "hat/hat_crown",
+        1
+      ],
+      [
+        "body/fur_body",
+        1
+      ],
+      [
+        "armL/fur_armL",
+        1
+      ],
+      [
+        "armR/fur_armR",
+        1
+      ],
+      [
+        "footL/fur_footL",
+        1
+      ],
+      [
+        "footR/fur_footR",
+        1
+      ],
+      [
+        "pom/fur_pom",
+        1
+      ],
+      [
+        "match06_projection/m06_tube",
+        1
+      ],
+      [
+        "match06_projection/m06_rings",
+        1
+      ],
+      [
+        "match06_projection/m06_floor",
+        1
+      ],
+      [
+        "match06_projection/m06_end",
+        1
+      ],
+      [
+        "body/blushL",
+        1
+      ],
+      [
+        "body/blushR",
+        1
+      ]
+    ],
+    "landmarks": {},
+    "benny": {
+      "x": -0.03,
+      "y": -0.31,
+      "z": 0.984,
+      "visible": true,
+      "cam": [
+        1.72,
+        -35.37,
+        -132.64
+      ],
+      "benny": [
+        0.54,
+        -37.64,
+        -138.27
+      ]
+    }
+  },
+  {
+    "name": "before-release",
+    "kind": "forward",
+    "value": 0.6,
+    "steer": 0,
+    "simFrames": 4,
+    "target": 199.51,
+    "stageBounds": [
+      188.90987977543386,
+      242.87279039922453
+    ],
+    "clock": 12.066666666666666,
+    "shaderTime": 12.066666666666666,
+    "state": {
+      "mode": "ride",
+      "stage": "06",
+      "s": 199.643,
+      "lat": 0,
+      "coins": 1680,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -37.297,
+      "bennyVisible": true,
+      "cam": [
+        1.68,
+        -35.23,
+        -132.81
+      ]
+    },
+    "camera": {
+      "matrixWorld": [
+        0.9816625220897247,
+        -3.469446951953614e-18,
+        -0.19062710385577572,
+        0,
+        -0.03719841125871909,
+        0.980775983885298,
+        -0.19155873155158676,
+        0,
+        0.1869624853393533,
+        0.19513705294952488,
+        0.9627910259458728,
+        0,
+        1.6792540219639942,
+        -35.225816635830064,
+        -132.8112533313624,
+        1
+      ],
+      "fov": 62,
+      "aspect": 0.5625,
+      "near": 0.05,
+      "far": 1200,
+      "width": 864,
+      "height": 1536,
+      "position": [
+        1.6792540219639942,
+        -35.225816635830064,
+        -132.8112533313624
+      ],
+      "target": [
+        -0.19621667329864634,
+        -37.18328860515307,
+        -142.46926761987518
+      ]
+    },
+    "gl": {
+      "calls": 45,
+      "triangles": 283635,
+      "textures": 40,
+      "contextLost": false
+    },
+    "draws": [
+      [
+        "coins/Mesh",
+        3
+      ],
+      [
+        "eyeR/lash_R_085",
+        1
+      ],
+      [
+        "eyeR/lash_R_05",
+        1
+      ],
+      [
+        "eyeL/lash_L_085",
+        1
+      ],
+      [
+        "eyeL/lash_L_05",
+        1
+      ],
+      [
+        "body/nose",
+        1
+      ],
+      [
+        "hat/hat_star",
+        1
+      ],
+      [
+        "eyeR/eyeR_happy",
+        1
+      ],
+      [
+        "eyeL/eyeL_happy",
+        1
+      ],
+      [
+        "mouth/mouth_happy",
+        1
+      ],
+      [
+        "armL/palmL",
+        1
+      ],
+      [
+        "armR/palmR",
+        1
+      ],
+      [
+        "footL/soleL",
+        1
+      ],
+      [
+        "footR/soleR",
+        1
+      ],
+      [
+        "hat/hat_brim",
+        1
+      ],
+      [
+        "hat/hat_crown",
+        1
+      ],
+      [
+        "body/fur_body",
+        1
+      ],
+      [
+        "armL/fur_armL",
+        1
+      ],
+      [
+        "armR/fur_armR",
+        1
+      ],
+      [
+        "footL/fur_footL",
+        1
+      ],
+      [
+        "footR/fur_footR",
+        1
+      ],
+      [
+        "pom/fur_pom",
+        1
+      ],
+      [
+        "match06_projection/m06_tube",
+        1
+      ],
+      [
+        "match06_projection/m06_rings",
+        1
+      ],
+      [
+        "match06_projection/m06_floor",
+        1
+      ],
+      [
+        "match06_projection/m06_end",
+        1
+      ],
+      [
+        "body/blushL",
+        1
+      ],
+      [
+        "body/blushR",
+        1
+      ]
+    ],
+    "landmarks": {},
+    "benny": {
+      "x": -0.03,
+      "y": -0.23,
+      "z": 0.984,
+      "visible": true,
+      "cam": [
+        1.68,
+        -35.23,
+        -132.81
+      ],
+      "benny": [
+        0.47,
+        -37.3,
+        -138.71
+      ]
+    }
+  },
+  {
+    "name": "crest-release",
+    "kind": "forward",
+    "value": 1.1,
+    "steer": 0,
+    "simFrames": 6,
+    "target": 200.01,
+    "stageBounds": [
+      188.90987977543386,
+      242.87279039922453
+    ],
+    "clock": 12.1,
+    "shaderTime": 12.1,
+    "state": {
+      "mode": "ride",
+      "stage": "06",
+      "s": 200.01,
+      "lat": 0,
+      "coins": 1680,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -37.076,
+      "bennyVisible": true,
+      "cam": [
+        1.64,
+        -35.09,
+        -132.97
+      ]
+    },
+    "camera": {
+      "matrixWorld": [
+        0.982406860451703,
+        -3.469446951953614e-18,
+        -0.1867532075693164,
+        0,
+        -0.03747925361533959,
+        0.979655069949967,
+        -0.19715793027358108,
+        0,
+        0.1829537266246994,
+        0.20068867412319313,
+        0.9624198615951406,
+        0,
+        1.6403492035860399,
+        -35.090133575320536,
+        -132.97314886040914,
+        1
+      ],
+      "fov": 62,
+      "aspect": 0.5625,
+      "near": 0.05,
+      "far": 1200,
+      "width": 864,
+      "height": 1536,
+      "position": [
+        1.6403492035860399,
+        -35.090133575320536,
+        -132.97314886040914
+      ],
+      "target": [
+        -0.1992619042074704,
+        -37.10807068399016,
+        -142.6503404673523
+      ]
+    },
+    "gl": {
+      "calls": 45,
+      "triangles": 283635,
+      "textures": 40,
+      "contextLost": false
+    },
+    "draws": [
+      [
+        "coins/Mesh",
+        3
+      ],
+      [
+        "eyeR/lash_R_085",
+        1
+      ],
+      [
+        "eyeR/lash_R_05",
+        1
+      ],
+      [
+        "eyeL/lash_L_085",
+        1
+      ],
+      [
+        "eyeL/lash_L_05",
+        1
+      ],
+      [
+        "body/nose",
+        1
+      ],
+      [
+        "hat/hat_star",
+        1
+      ],
+      [
+        "eyeR/eyeR_happy",
+        1
+      ],
+      [
+        "eyeL/eyeL_happy",
+        1
+      ],
+      [
+        "mouth/mouth_happy",
+        1
+      ],
+      [
+        "armL/palmL",
+        1
+      ],
+      [
+        "armR/palmR",
+        1
+      ],
+      [
+        "footL/soleL",
+        1
+      ],
+      [
+        "footR/soleR",
+        1
+      ],
+      [
+        "hat/hat_brim",
+        1
+      ],
+      [
+        "hat/hat_crown",
+        1
+      ],
+      [
+        "body/fur_body",
+        1
+      ],
+      [
+        "armL/fur_armL",
+        1
+      ],
+      [
+        "armR/fur_armR",
+        1
+      ],
+      [
+        "footL/fur_footL",
+        1
+      ],
+      [
+        "footR/fur_footR",
+        1
+      ],
+      [
+        "pom/fur_pom",
+        1
+      ],
+      [
+        "match06_projection/m06_tube",
+        1
+      ],
+      [
+        "match06_projection/m06_rings",
+        1
+      ],
+      [
+        "match06_projection/m06_floor",
+        1
+      ],
+      [
+        "match06_projection/m06_end",
+        1
+      ],
+      [
+        "body/blushL",
+        1
+      ],
+      [
+        "body/blushR",
+        1
+      ]
+    ],
+    "landmarks": {},
+    "benny": {
+      "x": -0.03,
+      "y": -0.18,
+      "z": 0.985,
+      "visible": true,
+      "cam": [
+        1.64,
+        -35.09,
+        -132.97
+      ],
+      "benny": [
+        0.43,
+        -37.08,
+        -139.01
+      ]
+    }
+  },
+  {
+    "name": "after-release",
+    "kind": "forward",
+    "value": 1.5,
+    "steer": 0,
+    "simFrames": 9,
+    "target": 200.41,
+    "stageBounds": [
+      188.90987977543386,
+      242.87279039922453
+    ],
+    "clock": 12.15,
+    "shaderTime": 12.15,
+    "state": {
+      "mode": "ride",
+      "stage": "06",
+      "s": 200.56,
+      "lat": 0,
+      "coins": 1690,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -36.757,
+      "bennyVisible": true,
+      "cam": [
+        1.57,
+        -34.83,
+        -133.29
+      ]
+    },
+    "camera": {
+      "matrixWorld": [
+        0.983748392692208,
+        -6.938893903907228e-18,
+        -0.1795524989397176,
+        0,
+        -0.03802856975220511,
+        0.9773138146681377,
+        -0.2083543509058897,
+        0,
+        0.17547913767197215,
+        0.21179638254420904,
+        0.961430894335671,
+        0,
+        1.5667952950739268,
+        -34.83443992785796,
+        -133.2871228023823,
+        1
+      ],
+      "fov": 62,
+      "aspect": 0.5625,
+      "near": 0.05,
+      "far": 1200,
+      "width": 864,
+      "height": 1536,
+      "position": [
+        1.5667952950739268,
+        -34.83443992785796,
+        -133.2871228023823
+      ],
+      "target": [
+        -0.20405534922058519,
+        -36.97178665444587,
+        -142.98941870642074
+      ]
+    },
+    "gl": {
+      "calls": 45,
+      "triangles": 283635,
+      "textures": 40,
+      "contextLost": false
+    },
+    "draws": [
+      [
+        "coins/Mesh",
+        3
+      ],
+      [
+        "eyeR/lash_R_085",
+        1
+      ],
+      [
+        "eyeR/lash_R_05",
+        1
+      ],
+      [
+        "eyeL/lash_L_085",
+        1
+      ],
+      [
+        "eyeL/lash_L_05",
+        1
+      ],
+      [
+        "body/nose",
+        1
+      ],
+      [
+        "hat/hat_star",
+        1
+      ],
+      [
+        "eyeR/eyeR_happy",
+        1
+      ],
+      [
+        "eyeL/eyeL_happy",
+        1
+      ],
+      [
+        "mouth/mouth_happy",
+        1
+      ],
+      [
+        "armL/palmL",
+        1
+      ],
+      [
+        "armR/palmR",
+        1
+      ],
+      [
+        "footL/soleL",
+        1
+      ],
+      [
+        "footR/soleR",
+        1
+      ],
+      [
+        "hat/hat_brim",
+        1
+      ],
+      [
+        "hat/hat_crown",
+        1
+      ],
+      [
+        "body/fur_body",
+        1
+      ],
+      [
+        "armL/fur_armL",
+        1
+      ],
+      [
+        "armR/fur_armR",
+        1
+      ],
+      [
+        "footL/fur_footL",
+        1
+      ],
+      [
+        "footR/fur_footR",
+        1
+      ],
+      [
+        "pom/fur_pom",
+        1
+      ],
+      [
+        "match06_projection/m06_tube",
+        1
+      ],
+      [
+        "match06_projection/m06_rings",
+        1
+      ],
+      [
+        "match06_projection/m06_floor",
+        1
+      ],
+      [
+        "match06_projection/m06_end",
+        1
+      ],
+      [
+        "body/blushL",
+        1
+      ],
+      [
+        "body/blushR",
+        1
+      ]
+    ],
+    "landmarks": {},
+    "benny": {
+      "x": -0.03,
+      "y": -0.14,
+      "z": 0.985,
+      "visible": true,
+      "cam": [
+        1.57,
+        -34.83,
+        -133.29
+      ],
+      "benny": [
+        0.37,
+        -36.76,
+        -139.47
+      ]
+    }
+  },
+  {
+    "name": "water-exposed",
+    "kind": "forward",
+    "value": 2.2,
+    "steer": 0,
+    "simFrames": 12,
+    "target": 201.10999999999999,
+    "stageBounds": [
+      188.90987977543386,
+      242.87279039922453
+    ],
+    "clock": 12.2,
+    "shaderTime": 12.2,
+    "state": {
+      "mode": "ride",
+      "stage": "06",
+      "s": 201.11,
+      "lat": 0,
+      "coins": 1690,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -36.463,
+      "bennyVisible": true,
+      "cam": [
+        1.48,
+        -34.54,
+        -133.67
+      ]
+    },
+    "camera": {
+      "matrixWorld": [
+        0.9852310455888629,
+        6.938893903907228e-18,
+        -0.17123021581448755,
+        0,
+        -0.03860877255340028,
+        0.9742480894542738,
+        -0.22214865040467213,
+        0,
+        0.16682071061410747,
+        0.22547873557100107,
+        0.9598594638359862,
+        0,
+        1.4807236094432763,
+        -34.53805408120427,
+        -133.6667447581844,
+        1
+      ],
+      "fov": 62,
+      "aspect": 0.5625,
+      "near": 0.05,
+      "far": 1200,
+      "width": 864,
+      "height": 1536,
+      "position": [
+        1.4807236094432763,
+        -34.53805408120427,
+        -133.6667447581844
+      ],
+      "target": [
+        -0.20828123858800673,
+        -36.82095214647111,
+        -143.3850062490966
+      ]
+    },
+    "gl": {
+      "calls": 51,
+      "triangles": 335485,
+      "textures": 40,
+      "contextLost": false
+    },
+    "draws": [
+      [
+        "coins/Mesh",
+        3
+      ],
+      [
+        "eyeR/lash_R_085",
+        1
+      ],
+      [
+        "eyeR/lash_R_05",
+        1
+      ],
+      [
+        "eyeL/lash_L_085",
+        1
+      ],
+      [
+        "eyeL/lash_L_05",
+        1
+      ],
+      [
+        "body/nose",
+        1
+      ],
+      [
+        "hat/hat_star",
+        1
+      ],
+      [
+        "eyeR/eyeR_happy",
+        1
+      ],
+      [
+        "eyeL/eyeL_happy",
+        1
+      ],
+      [
+        "mouth/mouth_happy",
+        1
+      ],
+      [
+        "armL/palmL",
+        1
+      ],
+      [
+        "armR/palmR",
+        1
+      ],
+      [
+        "footL/soleL",
+        1
+      ],
+      [
+        "footR/soleR",
+        1
+      ],
+      [
+        "hat/hat_brim",
+        1
+      ],
+      [
+        "hat/hat_crown",
+        1
+      ],
+      [
+        "body/fur_body",
+        1
+      ],
+      [
+        "armL/fur_armL",
+        1
+      ],
+      [
+        "armR/fur_armR",
+        1
+      ],
+      [
+        "footL/fur_footL",
+        1
+      ],
+      [
+        "footR/fur_footR",
+        1
+      ],
+      [
+        "pom/fur_pom",
+        1
+      ],
+      [
+        "match06_projection/m06_tube",
+        1
+      ],
+      [
+        "match06_projection/m06_rings",
+        1
+      ],
+      [
+        "match06_projection/m06_floor",
+        1
+      ],
+      [
+        "match06_projection/m06_end",
+        1
+      ],
+      [
+        "match06_projection/m06_foamclu",
+        1
+      ],
+      [
+        "body/blushL",
+        1
+      ],
+      [
+        "body/blushR",
+        1
+      ],
+      [
+        "water_system/rider_splash",
+        1
+      ],
+      [
+        "bubbles/bubbles_small",
+        1
+      ],
+      [
+        "match06_projection/m06_foamclu_rim",
+        1
+      ],
+      [
+        "bubbles/bubbles_big",
+        1
+      ],
+      [
+        "water_system/spray",
+        1
+      ]
+    ],
+    "landmarks": {},
+    "benny": {
+      "x": -0.03,
+      "y": -0.11,
+      "z": 0.985,
+      "visible": true,
+      "cam": [
+        1.48,
+        -34.54,
+        -133.67
+      ],
+      "benny": [
+        0.31,
+        -36.46,
+        -139.95
+      ]
+    }
+  }
+]

@@ -1,0 +1,10 @@
+from pathlib import Path
+import bpy,json
+base=Path('/tmp/rainbow-visual-audit.X0POSzUq/asset-check');old=Path('/tmp/rainbow-image2blender.hENWhcMS/image2blender-runs/s07_banks');records=[]
+for name,fn in [('Screen 05 paddle lids',base/'qa/pilot05/full_reference_match/env/lid/lids05.blend'),('Screen 05 Marble projection',base/'qa/pilot05/marble_feas/blender/marble05_projection.blend'),('Screen 07 editable reconstructed banks',old/'s07-banks.blend'),('Screen 07 glTF exchange',old/'s07-banks.glb')]:
+ if fn.suffix=='.blend':bpy.ops.wm.open_mainfile(filepath=str(fn),use_scripts=False)
+ else:
+  bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(fn))
+ meshes={o.name:len(o.data.vertices) for o in bpy.context.scene.objects if o.type=='MESH'};assert meshes and sum(meshes.values())>0
+ records.append({'name':name,'asset':fn.name,'meshes':meshes,'cameras':[o.name for o in bpy.context.scene.objects if o.type=='CAMERA'],'Blender':bpy.app.version_string})
+Path('reopened-assets-current.json').write_text(json.dumps(records,indent=2))

@@ -1,0 +1,37 @@
+from pathlib import Path
+import shutil
+p=Path.cwd();f=p/'games/05/src/vfx/waterRibbon.ts';s=f.read_text()
+def change(a,b):
+ global s
+ assert s.count(a)==1,a
+ s=s.replace(a,b)
+change('      #ifdef M05BLEND\n      tgt = mix(tgt, fbC.rgb, fbK);',"""      #ifdef CX05_PHYSICAL_BEND
+      // Keep the S-shaped color bands. Replace the stretched foreground illumination
+      // with the broad satin highlights at their original scale on the actual ribbon.
+      float bendWeight = smoothstep(CX05_BEND_IN, CX05_BEND_IN + 5.0, vUV.y)
+                       * (1.0 - smoothstep(CX05_BEND_OUT - 2.2, CX05_BEND_OUT, vUV.y));
+      float core = smoothstep(0.03, 0.29, min(tgt.g, tgt.b) - tgt.r);
+      if (bendWeight > 0.0 && core > 0.0) {
+        // T2 was rectified over 6.565 course units. Measure travel from the mesh's
+        // arc coordinate instead of reusing the chase-camera projection coordinate.
+        vec2 tileA = vec2(uA * 0.5 + 0.5, (vUV.y + sA - s - uPjT2S.x) / uPjT2S.y);
+        vec2 tileB = vec2(uB * 0.5 + 0.5, (vUV.y + sB - s - uPjT2S.x) / uPjT2S.y);
+        vec3 source = mix(texture2D(uPjT2, tileB).rgb, texture2D(uPjT2, tileA).rgb, wA);
+        vec3 luma = vec3(0.2126, 0.7152, 0.0722);
+        float lightChange = clamp(dot(source - tgt, luma), -0.26, 0.26);
+        tgt = clamp(tgt + vec3(lightChange * bendWeight * core * 0.84), 0.0, 1.0);
+      }
+      #endif
+      #ifdef M05BLEND
+      tgt = mix(tgt, fbC.rgb, fbK);""")
+anchor="  const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;"
+change(anchor,anchor+"""
+  const stage05 = course.stage('05');
+  const bendStyle = M05JOIN && q05('cx05PhysicalBend') ? {
+    CX05_PHYSICAL_BEND: 1,
+    CX05_BEND_IN: THREE.MathUtils.lerp(stage05.s0, stage05.s1, 0.66).toFixed(3),
+    CX05_BEND_OUT: stage05.s1.toFixed(3),
+  } : {};
+""")
+change("    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}),", "    defines: { ...bendStyle, ...(quality === 'low' ? { LOW_Q: 1 } : {}),")
+f.write_text(s);shutil.copyfile(f,p/'repos/05/src/vfx/waterRibbon.ts')

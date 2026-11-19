@@ -1,0 +1,279 @@
+/**
+ * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+ * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+ * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+ * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+ */
+import * as THREE from 'three';
+import type { Course, StageId } from '../world/course';
+import { canvasTexture } from '../world/materials';
+import { coreLateral, flag05 } from '../vfx/waterRibbon';
+import coins08 from '../../assets/textures/match08/coins08.json';
+import coins08px from '../../assets/textures/match08/coins08px.json';
+
+export const COIN_VALUE = 10;
+
+/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+
+/**
+ * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+ * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+ * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+ * so their face reads as a slightly flattened disc with the rim visible underneath, as in the ref.
+ * Before the 05 checkpoint the trail keeps a plain C05.gap0 spacing (gameplay only, never in frame).
+ */
+export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+
+function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
+  const a = course.stage('05');
+  const sCp = course.marks['05_crest'];
+  const extra = { scale: C05.scale, tilt: C05.tilt };
+  const ss: number[] = [];
+  // gameplay trail before the checkpoint ends 1 u behind Benny's checkpoint spot (never between him and the camera view)
+  for (let s = sCp - 1; s > a.s0 + 6; s -= C05.preGap) ss.unshift(s);
+  for (let k = 0, s = sCp + C05.first; s < a.s1 - 3; k++) { ss.push(s); s += Math.min(C05.gapMax, C05.gap0 + k * C05.gapGrow); }
+  // latK < 1: the trail winds with the cyan core but stays inside its middle (the core half width is
+  // ≥ 2 u), so the far coins converge on the VP like the ref instead of swinging out to the pink bands
+  for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
+}
+
+export function coinLayout(course: Course): CoinDef[] {
+  const out: CoinDef[] = [];
+  const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
+  const st = (id: StageId) => course.stage(id);
+  // 03 — spiral trail ahead of Benny toward the drain
+  { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+  // 04 — along the left edge of the slide
+  { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+  // 05 — on the winding cyan core (see C05)
+  coins05(course, add);
+  // 06 — up and over the crest (left of centre like the ref)
+  { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
+  // 07 — winding trail, continuing down the plunge
+  { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+  // 08 — S toward the platform
+  const m08 = flag05('match08') || flag05('matchall');
+  // `&coins08px=1` (with match08; lead r3 2026-11-17): the nine picture coins exactly on their painted pixels, on the water
+  // (assets/textures/match08/coins08px.json, tools/match08/coins08px.mjs), and stage 10's five coins out of the 08 view
+  const px08 = m08 && flag05('coins08px');
+  if (!m08) { const a = st('08'); for (let i = 0; i < 8; i++) add('08', a.s0 + 3 + i * 1.9, -0.6 + 0.9 * Math.sin(i * 0.8)); }
+  // 09 — arc along the left (inside of the bend, under the wave)
+  if (!m08) { const a = st('09'); for (let i = 0; i < 9; i++) add('09', a.s0 + 1.5 + i * 1.7, -1.7 + i * 0.12); }
+  // `?match08=1` (qa/match/08/NOTES.md): the approved picture's nine coins where the picture shows them
+  // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
+  if (m08) {
+    const s0 = st('08').s0, s1 = st('11').s0;
+    const cam = coins08.faceTo as [number, number, number];
+    const toRiver = (x: number, z: number) => {
+      let best = s0, bd = Infinity;
+      for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; best = s; } }
+      const f = course.sample(best);
+      return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
+    };
+    if (px08) {
+      // exact world points on the approved camera's rays: refine s so the point lies in the river frame's cross-section
+      for (const c of coins08px.coins) {
+        const T = new THREE.Vector3(c.world[0], c.world[1], c.world[2]);
+        let sx = c.s;
+        for (let k = 0; k < 4; k++) { const f = course.sample(sx); sx += T.clone().sub(f.pos).dot(f.tan); }
+        const f = course.sample(sx), d = T.clone().sub(f.pos);
+        add(course.stageAtS(sx).id, sx, d.dot(f.right), d.dot(f.up), { scale: c.scale, faceTo: coins08px.faceTo as [number, number, number] });
+      }
+    }
+    for (const c of px08 ? [] : coins08.coins) {
+      let r = toRiver(c.x, c.z), h = c.h, scale = c.scale;
+      // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
+      // ray from the approved camera (same pixel in the approved view) to the nearest depth within reach, above the water;
+      // its size scales with the depth so it still covers the painted coin
+      if (Math.abs(r.lat) > 1.1) {
+        const P = [c.x, r.y + c.h, c.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
+        let pick: { k: number; r: typeof r; h: number } | null = null;
+        for (let k = 0.2; k <= 1.8; k += 0.01) {
+          const q = [cam[0] + D[0] * k, cam[1] + D[1] * k, cam[2] + D[2] * k], rq = toRiver(q[0], q[2]), hq = q[1] - rq.y;
+          if (Math.abs(rq.lat) <= 1.0 && hq >= 0.3 && (!pick || Math.abs(k - 1) < Math.abs(pick.k - 1))) pick = { k, r: rq, h: hq };
+        }
+        if (pick) { r = pick.r; h = pick.h; scale = c.scale * pick.k; }
+      }
+      add(course.stageAtS(r.s).id, r.s, r.lat, h, { scale, faceTo: cam });
+    }
+    // keep the run's coin total (the picture's 9 replace the 17 of 08 + 09): the other 8 go into the inlet just before the
+    // 08 view — collected on the way in, never in the approved view
+    const sIn = st('08').s0;
+    for (let i = 0; i < 8; i++) { const s = sIn - 4 + i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin(i * 1.3)); }
+    // `&coins08px=1`: stage 10's five coins showed far down the river in the approved 08 view (the picture has none there)
+    if (px08) for (let i = 0; i < 5; i++) { const s = sIn - 4.8 - i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin((i + 8) * 1.3)); }
+  }
+  // `?match08=1`: river order (the coins above were appended out of order)
+  if (m08) out.sort((a, b) => a.s - b.s);
+  // 10 — straight line into the towel tunnel
+  if (!px08) { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
+  return out;
+}
+
+export interface CoinSystem {
+  group: THREE.Group;
+  defs: CoinDef[];
+  collected: Uint8Array;
+  /** returns number of coins picked up this frame */
+  update(time: number, dt: number, bennyS: number, bennyLat: number): number;
+  /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
+  resetUntil(s: number): void;
+}
+
+export function createCoins(course: Course): CoinSystem {
+  const defs = coinLayout(course);
+  const faceTex = canvasTexture(256, 256, (c, w, h) => {
+    const g = c.createRadialGradient(w * 0.38, h * 0.32, 10, w / 2, h / 2, w * 0.55);
+    g.addColorStop(0, '#ffe680');
+    g.addColorStop(0.45, '#ffcf2a');
+    g.addColorStop(1, '#e89200');
+    c.fillStyle = g;
+    c.beginPath(); c.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2); c.fill();
+    // raised inner rim: dark groove + bright lip
+    c.lineWidth = 9;
+    c.strokeStyle = '#c98200'; c.beginPath(); c.arc(w / 2 + 2, h / 2 + 2, w * 0.4, 0, Math.PI * 2); c.stroke();
+    c.strokeStyle = '#fff0a0'; c.beginPath(); c.arc(w / 2 - 1, h / 2 - 1, w * 0.4, 0, Math.PI * 2); c.stroke();
+    // embossed "$" drawn as vector strokes (font-independent: identical on every Android device):
+    // light bevel up-left, dark bevel down-right, deep-gold glyph on top
+    const dollar = (dx: number, dy: number, col: string, lw: number) => {
+      c.save(); c.translate(dx, dy);
+      c.strokeStyle = col; c.lineCap = 'round'; c.lineJoin = 'round';
+      c.lineWidth = lw;
+      c.beginPath();
+      c.moveTo(166, 90);
+      c.bezierCurveTo(150, 66, 90, 64, 90, 98);
+      c.bezierCurveTo(90, 128, 166, 124, 166, 160);
+      c.bezierCurveTo(166, 196, 104, 198, 88, 168);
+      c.stroke();
+      c.lineWidth = lw * 0.62;
+      c.beginPath(); c.moveTo(128, 50); c.lineTo(128, 206); c.stroke();
+      c.restore();
+    };
+    dollar(3, 4, '#7a3c00', 32); // drop shadow
+    dollar(0, 0, '#b86400', 30); // dark outline
+    dollar(0, 0, '#ffe55a', 18); // bright raised glyph
+    dollar(-3, -3, '#fff8d0', 6); // top-left bevel highlight
+  });
+  // the cylinder cap's UVs run sideways once the coin is stood up (rotateX): turn the face art upright
+  faceTex.center.set(0.5, 0.5);
+  faceTex.rotation = -Math.PI / 2;
+  // milled (ridged) gold edge, as on the ref coins
+  const edgeTex = canvasTexture(256, 8, (c, w, h) => {
+    for (let x = 0; x < w; x += 4) { c.fillStyle = (x / 4) % 2 ? '#c08000' : '#ffe070'; c.fillRect(x, 0, 4, h); }
+  });
+  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 48, 1);
+  geo.rotateX(Math.PI / 2); // faces along ±Z
+  // Gold is carried mostly by EMISSIVE art (blue ≈ 0) so the pink-white candy environment and the
+  // Neutral tone mapping cannot wash it to pale peach (ref face ≈ #F4C400); a dark-gold metal base
+  // keeps a reflective sheen on top.
+  const side = new THREE.MeshStandardMaterial({ color: '#6a4a00', metalness: 0.75, roughness: 0.3, emissive: '#ffffff', emissiveMap: edgeTex, emissiveIntensity: 1.0 });
+  const face = new THREE.MeshStandardMaterial({ map: faceTex, color: '#7a5200', metalness: 0.7, roughness: 0.3, emissive: '#ffffff', emissiveMap: faceTex, emissiveIntensity: 1.15 });
+  const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
+  mesh.frustumCulled = false;
+  const group = new THREE.Group();
+  group.name = 'coins';
+  group.add(mesh);
+  const collected = new Uint8Array(defs.length);
+  const popT = new Float32Array(defs.length).fill(-1);
+  const m = new THREE.Matrix4(), q = new THREE.Quaternion(), basis = new THREE.Matrix4();
+  const p = new THREE.Vector3(), sc = new THREE.Vector3();
+  const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+  const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+  const back = new THREE.Vector3();
+  // `&m08coinv=1` (Screen 08 scenery r8, with match08; visuals only — count, score, pickup rules and positions unchanged):
+  // the approved picture's coins (faceTo) (1) never grow on screen beyond COINV_CAP of the frame height (the painted
+  // nearest coin is ≈ 5.6 %; moving forward they reached 8–9 % and dominated the foreground) and (2) shrink away while
+  // they are nearer the camera than Benny and overlap his screen box (they used to cover his body). The camera comes
+  // from the coins' own onBeforeRender (one frame old), so no camera / Game code is touched.
+  // r10 additions: (3) a picture coin Benny has passed (it can no longer be picked up: |ds| < 1 rule) fades out instead of
+  // sweeping past the camera as a frame-filling disc; (4) the pickup pop of a picture coin no longer grows ×1.8 over
+  // Benny's body / hat: it shrinks away while rising a little, and fades where it overlaps him. Cap = the painted nearest
+  // coin (≈ 5.6 % of the frame height).
+  const coinV = (flag05('match08') || flag05('matchall')) && flag05('m08coinv');
+  const COINV_CAP = 0.056, BENNY_UP = 0.75, BENNY_R = 0.95;
+  let cam: THREE.PerspectiveCamera | null = null;
+  let bS = -1, bLat = 0;
+  const cv = new THREE.Vector3(), bv = new THREE.Vector3(), cn = new THREE.Vector3(), bn = new THREE.Vector3();
+  const coinVisual = (pos: THREE.Vector3, size: number) => {
+    if (!coinV || !cam || bS < 0) return 1;
+    const tanH = Math.tan(THREE.MathUtils.degToRad(cam.fov) / 2);
+    const dist = cv.copy(pos).sub(cam.position).length();
+    let k = 1;
+    const frac = size / (2 * dist * tanH); // coin diameter as a fraction of the frame height
+    if (frac > COINV_CAP) k = COINV_CAP / frac;
+    const fb = course.sample(bS);
+    bv.copy(fb.pos).addScaledVector(fb.right, bLat).addScaledVector(fb.up, BENNY_UP);
+    const bd = bv.distanceTo(cam.position);
+    if (dist < bd) {
+      cn.copy(pos).project(cam); bn.copy(bv).project(cam);
+      // overlap in frame-height units (NDC y spans 2): coin radius + Benny's radius
+      const dx = (cn.x - bn.x) * cam.aspect / 2, dy = (cn.y - bn.y) / 2;
+      const gap = Math.hypot(dx, dy) - (size * k) / (4 * dist * tanH) - BENNY_R / (2 * bd * tanH);
+      k *= THREE.MathUtils.smoothstep(gap, -0.04, 0.02);
+    }
+    return k;
+  };
+
+  const place = (time: number) => {
+    defs.forEach((d, i) => {
+      const f = course.sample(d.s);
+      let scale = 1;
+      if (collected[i]) {
+        if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+        const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+        if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+        const quiet = coinV && d.faceTo; // m08coinv: picture-coin pop shrinks instead of growing over Benny
+        scale = quiet ? 1 : 1 + k * 0.8;
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * (quiet ? 0.6 : 1.6));
+      } else {
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+      }
+      back.copy(f.tan).negate();
+      // `?match08=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
+      if (d.faceTo) back.set(d.faceTo[0] - p.x, 0, d.faceTo[2] - p.z).normalize();
+      const upV = d.faceTo ? new THREE.Vector3(0, 1, 0) : f.up;
+      const right = new THREE.Vector3().crossVectors(upV, back).normalize();
+      basis.makeBasis(right, upV, back);
+      q.setFromRotationMatrix(basis);
+      // tilted coins (05) only wobble a little so the face stays toward the camera; picture coins (08) barely
+      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+      q.multiply(spin);
+      if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
+      let vis = d.faceTo && (!collected[i] || coinV) ? coinVisual(p, d.scale ?? 1) : 1;
+      if (coinV && d.faceTo && bS >= 0) vis *= THREE.MathUtils.smoothstep(d.s - bS, -1.6, -0.6);
+      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * vis * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+      mesh.setMatrixAt(i, m);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+  };
+  place(0);
+  if (coinV) mesh.onBeforeRender = (_r, _s, c) => { if ((c as THREE.PerspectiveCamera).isPerspectiveCamera) cam = c as THREE.PerspectiveCamera; };
+
+  return {
+    group,
+    defs,
+    collected,
+    update(time, _dt, s, lat) {
+      let picked = 0;
+      bS = s; bLat = lat;
+      for (let i = 0; i < defs.length; i++) {
+        if (collected[i]) continue;
+        const d = defs[i];
+        const ds = d.s - s;
+        if (ds < -2 || ds > 2) continue;
+        if (Math.abs(ds) < 1.0 && Math.abs(d.lat - lat) < 1.25) {
+          collected[i] = 1;
+          popT[i] = time;
+          picked++;
+        }
+      }
+      place(time);
+      return picked;
+    },
+    resetUntil(s) {
+      for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+      place(0);
+    },
+  };
+}
