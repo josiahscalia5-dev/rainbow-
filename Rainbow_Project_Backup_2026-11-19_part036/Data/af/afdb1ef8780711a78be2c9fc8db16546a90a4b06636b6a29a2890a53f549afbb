@@ -1,0 +1,322 @@
+# Subagent agent-a1183ccf73271fcf7 — session 8bb9eeab-1f60-5900-884e-9151051fb861
+
+### 🧑 User — 2026-11-19T02:28:14.034Z
+
+You are the Rainbow project's `reference-match-director`, acting as the Screen 06 "Crest the Rinse Arch" visual worker ("s06"), round 18, VISUALS ONLY. The previous session's environment closed at ~21:11 UTC 2026-11-18 right after your r17 step 2; you continue from there.
+
+WHERE YOU WORK
+* Git worktree `/home/user/wt/s06`, branch `claude/rainbow-s06-match-c18` (already pushed; = the newest `-c17` tip `c649fcbc`; no unfinished edits). Dev-server / tool port 5276.
+* Commit and `git push -u origin claude/rainbow-s06-match-c18` after every step and at each safe milestone. Push ONLY that branch; never force-push / rebase / merge; never write any `-c17` or older branch. Never touch other worktrees under `/home/user/wt/` (you may READ other branches with `git show`). `/home/user/rainbow-` is the lead checkout: read-only for you.
+
+READ FIRST, in this order (absolute paths, the lead checkout):
+1. `/home/user/rainbow-/docs/briefs/2026-11-19-r18/RESUME_R18.md` — common part + section "s06": kept = `&m06gold=1` v2 + `&m06fclu=1`. Next = rank 3: the start-view flash at +1.1 u ((a) see-through ring arcs, (b) striped ring strip above the crest, (c) pale ghost of the painted Benny on the water) → 4 ripple rings round Benny → 5 purple slotted walls → 6 gold paddle lids. Lead note: while swimming 06 is still far — straight centred ring target instead of the painted left-curving crest into an off-centre tunnel (scenery only). A USER DECISION is pending about Benny / nearest coins looking bigger than painted at the 06 start view: do NOT change framing or Benny size.
+2. Your launch brief `/home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md` — read every `-c15` as `-c18` and the log folder as `qa/match/06/r18/`, but keep reading `qa/match/06/r17/PROGRESS.md`, `r16/PROGRESS.md` (ranked list) and r15 for what was already done. Deterministic shots: `R16_DET=1 node tools/match06/r16_shots.mjs`; start check: `tools/match06/r16_start.mjs`.
+3. The binding rules it names (`/home/user/rainbow-/docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`, `.../2026-11-18-r15/USER_ORDER_R15_VISUAL.md`, `.../r10/RULES_R10.md`, `.../r8/COMMON_RULES.md`).
+
+RULES: every change is a URL switch, default build unchanged; approved start view unchanged (0 px; Pixelmatch on game screenshots: `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536`); never change Benny, coins (91 / 2,240), physics, input, HUD, camera framing or other screens; `references/*.png` unchanged; no paid jobs; do not reinstall tools (never `playwright install`); never commit or print secrets. Five workers share 4 CPU cores: render only the shots you need, clips at half size.
+
+PROOF + REPORTING: separate full-size APPROVED / BEFORE / NEW pictures from the real game (no collages), plain visual words, verdict GOOD IMPROVEMENT / NOT AN IMPROVEMENT / NOT YET PROVEN. Log in `qa/match/06/r18/PROGRESS.md`. After each finished step: commit + push, then SendMessage to "main" with: step + URL switch, commit SHA, verdict, absolute folder of the NEW pictures, and the single most visible remaining difference. Keep it short, then continue with the next ranked task without waiting. If blocked, tell "main" and continue with something else.
+
+### 🤖 Claude — 2026-11-19T02:28:15.023Z
+
+I'll start by reading the resume brief and launch brief.
+
+### 🤖 Claude — 2026-11-19T02:28:16.005Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/docs/briefs/2026-11-19-r18/ 2>&1; echo ---; cd /home/user/wt/s06 && git status --short | head -20 && git log --oneline -5 && git branch --show-current", "description": "List r18 briefs and check worktree state"}`
+
+### 🧑 User — 2026-11-19T02:28:16.083Z
+
+> ↩︎ result: COORDINATION.md
+> RESUME_R18.md
+> setup_worker.sh
+> ---
+> ?? node_modules
+> c649fcb Screen 06 r17 step 2: foam as bubbly soap clusters (m06fclu) — GOOD IMPROVEMENT
+> claude/rainbow-s06-match-c18
+
+### 🤖 Claude — 2026-11-19T02:28:17.041Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-19-r18/RESUME_R18.md"}`
+
+### 🧑 User — 2026-11-19T02:28:17.059Z
+
+> ↩︎ result: 1	# Round 18 resume notes — where each round-17 worker stopped (the account-17 environment closed after its 21:11 UTC save)
+> 2	
+> 3	Every worker below was cut off mid-step at ~21:11 UTC 2026-11-18. Its committed work is on its `-c17` tip; its UNFINISHED edits
+> 4	(tracked diff + new files) were captured by the 21:11 autosave in `backups/wip/<branch>-c17/` on the r17 lead
+> 5	`ccr-bbe2b27e-oxfh1w` @ `d22ec46` and are applied, UNCOMMITTED, in the worker's `-c18` worktree exactly as the worker left them
+> 6	(`setup_worker.sh` in this folder). Large renders listed under `untracked_skipped` in each `INFO.json` were not saved: re-render.
+> 7	
+> 8	Common to all: user order 2026-11-18 ~18:55 UTC (`docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md`) — VISUALS ONLY, biggest
+> 9	visible difference first, APPROVED / BEFORE / NEW pictures from the real game, plain visual words, minimal checks (approved start
+> 10	view unchanged, coins unchanged: 91 coins / 2,240). User order ~21:02 UTC: **Screen 08 PAUSED** (no approval decision; work on the
+> 11	other screens). Your launch brief is the r15 one named below; read every `-c15` as `-c18` and every `r15` log folder as `r18`
+> 12	(`qa/match/<NN>/r18/`), but keep readi …[+4657 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:18.368Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md"}`
+
+### 🧑 User — 2026-11-19T02:28:18.385Z
+
+> ↩︎ result: 1	# Round 15 (account 15) — Screen 06 specialist launch prompt (reference-match-director)
+> 2	
+> 3	You are the Rainbow project's `reference-match-director`, working ONLY on playable Screen 06 "Crest the Rinse Arch", VISUALS ONLY —
+> 4	you rank the visible differences AND fix them yourself. (06 last ran in round 11; the user asked on 2026-11-18 ~18:45 UTC to work on
+> 5	the other screens too.)
+> 6	
+> 7	## Where you work
+> 8	* Git worktree `/home/user/wt/s06` on branch `claude/rainbow-s06-match-c15` (created from `claude/rainbow-s06-match-c11` @ `8182130c`,
+> 9	  the newest 06 tip; no unfinished edits were left). Sparse checkout: `qa/pilot05`, `qa/worldlabs`, `qa/imageblaster`, `builds/`,
+> 10	  `backups/` are left out to save disk (never `git sparse-checkout disable`). `node_modules` is a symlink to the lead checkout.
+> 11	  `tools/lead_r13/` (swim clip tool) may have been copied in untracked — commit it with your first step.
+> 12	* Commit and `git push -u origin claude/rainbow-s06-match-c15` after every step (kept or rejected). Push ONLY that branch. Never
+> 13	  force-push, rebase, reset, merge, or write any other branch. Disk is limited: delete your own temporary captures you do not keep.
+> 14	* Five othe …[+3790 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:19.120Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls qa/match/06/ && ls qa/match/06/r17 qa/match/06/r16 2>&1 | head -50", "description": "List Screen 06 match log folders"}`
+
+### 🧑 User — 2026-11-19T02:28:19.163Z
+
+> ↩︎ result: 06_BEFORE_current_game.png
+> 06_BEFORE_screen_match.json
+> 06_NEW_match06.png
+> 06_NEW_match06_android1080x1920.png
+> 06_NEW_screen_match.json
+> FAL_PLATE_REQUEST.md
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> gameplay_test_match06.json
+> masks06_check.png
+> motion
+> motion_r2
+> proofs_r3.json
+> r11
+> r15
+> r16
+> r17
+> r6
+> r7
+> relaunch
+> scenery_metrics_BEFORE_NEW.json
+> qa/match/06/r16:
+> PROGRESS.md
+> step1_m06gold
+> 
+> qa/match/06/r17:
+> PROGRESS.md
+> step2_m06fclu
+
+### 🤖 Claude — 2026-11-19T02:28:20.699Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat qa/match/06/r17/PROGRESS.md; echo ======; cat qa/match/06/r16/PROGRESS.md", "description": "Read r17 and r16 progress logs"}`
+
+### 🧑 User — 2026-11-19T02:28:20.752Z
+
+> ↩︎ result: # Screen 06 — round 17 (account 17) — visuals only
+> 
+> Branch `claude/rainbow-s06-match-c17` (from `-c16` tip `4b6c637c` + the r16 worker's unfinished `m06fclu` edit, restored).
+> History: `qa/match/06/r15/PROGRESS.md` (ranked audit), `qa/match/06/r16/PROGRESS.md` (step 1 `m06gold`, ranking update).
+> Authority: `references/06_crest_the_rinse_arch.png`.
+> Kept set: `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1`.
+> Not touched: camera, framing, Benny (size decision pending with the user), coins, physics, input, HUD, other screens.
+> Default build unchanged (everything under `match06=1`).
+> Shots: `R16_DET=1 node tools/match06/r16_shots.mjs <out> "<query>" <list>` — new deterministic mode (frozen page clock, fixed
+> simulation steps, one draw), so BEFORE and NEW land on exactly the same spot. Start check: `tools/match06/r16_start.mjs`.
+> 
+> ## Step 2 — `&m06fclu=1`: foam as bubbly soap clusters (r16 rank 2; the r16 edit finished, not discarded)
+> * What: the same foam layout as `m06foam` (same places on both banks and beside the crest), but every smooth pink-white ball
+>   becomes a low heap of round foam lobes and small soap bubbles (camera-facing sprites, w …[+6292 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:22.942Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md; echo =====; cat /home/user/rainbow-/docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md", "description": "Read binding user visual goal and r15 order"}`
+
+### 🧑 User — 2026-11-19T02:28:22.971Z
+
+> ↩︎ result: # User-approved visual goal — 2026-11-18 ~15:00 UTC (account 13) — BINDING for every specialist and every future Claude account
+> 
+> The user approved this understanding in their own words: "YES, CLAUDIA. I approve your visual-first plan for all five original
+> approved Rainbow screens." It adds to (never replaces) `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`,
+> `docs/briefs/2026-11-18-r10/RULES_R10.md` and `docs/briefs/2026-11-18-r8/COMMON_RULES.md`.
+> 
+> ## 1. What the user wants
+> * The user ALREADY DESIGNED the game. The approved pictures `references/04_…png` … `references/08_…png` are BLUEPRINTS, not
+>   inspiration: recreate THOSE exact environments as faithfully as technically possible as real playable 3D.
+> * The scenery must look like the approved world THROUGHOUT Benny's natural swimming — start, middle, end, and while he steers hard
+>   left / right. A matching first screenshot that turns into a generic tunnel is a failure.
+> * No redesign, no simplification, no added or different scenery, no generic orange ring corridor, no flat blue/ramp water, no giant
+>   foam walls, no stretched / smeared / torn textures, no double-exposed or duplicate rings, no clipping, no style drift.
+> * Where a …[+5101 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:24.728Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/docs/briefs/2026-11-18-r10/RULES_R10.md | head -80; echo =====; cat /home/user/rainbow-/docs/briefs/2026-11-18-r8/COMMON_RULES.md | head -80", "description": "Read r10 and r8 rules"}`
+
+### 🧑 User — 2026-11-19T02:28:24.761Z
+
+> ↩︎ result: # Round 10 (account 10) — rules added to `docs/briefs/2026-11-18-r8/COMMON_RULES.md` (binding; read "-c8"/"r8" as "-c10"/"r10")
+> 
+> User, 2026-11-18 ~10:30 UTC (verbatim core):
+> "PLEASE STOP TREATING MATCHING COLORS AS MATCHING MY APPROVED SCREENS. A screen can have 90% similar colors and STILL look
+> completely different from my approved image. The exact visual design matters: the scenery, tunnel structures, water
+> formations, shapes, proportions, backgrounds, lighting, materials, and Benny." "Use my original approved image as the
+> visual authority. Where it doesn't show the rest of the level, build a FAITHFUL CONTINUATION of that design rather than
+> inventing a different environment." "I want to see actual visual improvements, not just measurements."
+> "DO NOT REMOVE SUCCESSFUL EXISTING WORK JUST BECAUSE IT USES ARTWORK PROJECTION OR AN IMAGE BACKDROP." "I do not want
+> flat-image tricks that visibly break or distort when Benny moves." "No redesigns. No paid jobs without approval."
+> 
+> ## What this changes for every specialist
+> 1. **Judge by eye against the approved picture, not by numbers.** PALETTE / LAYOUT / within-20-levels numbers may be logged,
+>    but never as evidence that a frame "looks l …[+6164 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:26.302Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls src/world/ | grep -i 06; ls tools/match06/; wc -l src/world/match06*.ts; git log --oneline -12", "description": "List match06 source and tools"}`
+
+### 🧑 User — 2026-11-19T02:28:26.353Z
+
+> ↩︎ result: match06.ts
+> coinrun06.mjs
+> coins06.py
+> fit_river06.py
+> fit_water06.py
+> geo06.py
+> make_floor06.py
+> make_masks06.py
+> make_plate06.py
+> make_ring06.py
+> make_river06.py
+> make_tiles06.py
+> measure06.py
+> motion06.mjs
+> overlay06.py
+> probe06.mjs
+> probe06_locked.json
+> r11_mouth_probe.mjs
+> r16_shots.mjs
+> r16_start.mjs
+> solve_cam06.py
+> 756 src/world/match06.ts
+> c649fcb Screen 06 r17 step 2: foam as bubbly soap clusters (m06fclu) — GOOD IMPROVEMENT
+
+### 🤖 Claude — 2026-11-19T02:28:27.719Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts"}`
+
+### 🧑 User — 2026-11-19T02:28:27.832Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.
+> 3	 * REAL 3D proxy geometry of "Crest the Rinse Arch", built around the game's own 06 river (which under the switch follows
+> 4	 * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera
+> 5	 * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
+> 6	 *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
+> 7	 *     into 07, continued straight along the river's heading so the painted far rings stay concentric
+> 8	 *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 9	 *   * a dark end cap far down the tunnel
+> 10	 * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+> 11	 * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+> 12	 * and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or showed edge …[+50072 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:30.074Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls -R qa/match/06/r16/step1_m06gold | head -60; ls qa/match/06/r17/step2_m06fclu/ qa/match/06/r17/step2_m06fclu/*", "description": "List r16/r17 step folders"}`
+
+### 🧑 User — 2026-11-19T02:28:30.131Z
+
+> ↩︎ result: qa/match/06/r16/step1_m06gold:
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> START_v2
+> 
+> qa/match/06/r16/step1_m06gold/BEFORE:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> s_left_hard.png
+> s_right_hard.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 
+> qa/match/06/r16/step1_m06gold/NEW:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> m06gold_swim.mp4
+> motion_part2.json
+> s_left_hard.png
+> s_right_hard.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 
+> qa/match/06/r16/step1_m06gold/START_v2:
+> BEFORE_checkpoint.png
+> BEFORE_forward1.1u.png
+> NEW_checkpoint.png
+> NEW_forward1.1u.png
+> qa/match/06/r17/step2_m06fclu/1_APPROVED.png
+> 
+> qa/match/06/r17/step2_m06fclu/:
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> START
+> 
+> qa/match/06/r17/step2_m06fclu/BEFORE:
+> f03_forward3u.png
+> f10_forward10u.png
+> motion.json
+> s_left_hard.png
+> s_right_hard.png
+> t33_through_screen.png
+> t66_through_screen.png
+> 
+> qa/match/06/r17/step2_m06fclu/NEW:
+> f03_forward3u.png
+> f10_forward10u.png
+> m06fclu_swim.mp4
+> motion.json
+> s_left_hard.png
+> s_right_hard.png
+> t33_through_screen.png
+> t66_through_screen.png
+> 
+> qa/match/06/r17/step2_m06fclu/START:
+> BEFORE_ …[+67 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:31.262Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-19T02:28:31.285Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:28:31.715Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/START/[REDACTED-EMAIL]"}`
+
+### 🧑 User — 2026-11-19T02:28:31.769Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:28:35.485Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r17/step2_m06fclu/START/NEW_checkpoint.png"}`
+
+### 🧑 User — 2026-11-19T02:28:35.535Z
+
+> ↩︎ result: [image]
+
