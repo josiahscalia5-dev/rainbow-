@@ -1,8 +1,8 @@
 diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
-index fe11b33..7821e44 100644
+index fe11b33..ce40183 100644
 --- a/src/vfx/foam.ts
 +++ b/src/vfx/foam.ts
-@@ -556,12 +556,29 @@ const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT
+@@ -556,12 +556,37 @@ const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT
  /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
  function hide07(course: Course): [number, number] | null {
    if (!flag05('match07') || !flag05('m07foam')) return null;
@@ -18,11 +18,19 @@ index fe11b33..7821e44 100644
 +  if (!flag05('match07') || !flag05('m07foam') || !flag05('m07foamb')) return null;
 +  return course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4;
 +}
-+/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it */
++/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it.
++ *  r18 fix: ONLY inside the hidden plunge range (from 3 u past its start, where the shader already discards the whole
++ *  bank); 1 everywhere else, so 04–06, the 07 level stretch and 08 keep their bank (the r17 draft flattened the bank over
++ *  the whole course before the last 5 u of 07) */
 +function ramp07(course: Course): (s: number) => number {
 +  const e = end07(course);
 +  if (e === null) return () => 1;
-+  return (s) => { const u = Math.min(1, Math.max(0, (s - (e - 5)) / 5)); return s >= e ? 1 : u * u * (3 - 2 * u); };
++  const a = course.marks['07_plunge_top'] + 9 + 3;
++  return (s) => {
++    if (s < a || s >= e) return 1;
++    const u = Math.min(1, Math.max(0, (s - (e - 5)) / 5));
++    return u * u * (3 - 2 * u);
++  };
  }
  
  /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
@@ -34,17 +42,15 @@ index fe11b33..7821e44 100644
    const ds = quality === 'high' ? 0.32 : 0.8;
    const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
    const rows = Math.ceil((s1 - s0) / ds) + 1;
-@@ -665,7 +682,8 @@ export function createFoam(
+@@ -665,6 +690,7 @@ export function createFoam(
    /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
    const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
    const h07 = hide07(course);
--  const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
 +  const e07 = end07(course); // r17 m07foamb: puffs stay away to the 08 start (the bank grows back without them)
-+  const build =(list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
+   const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
      if (!list.length) return;
      const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
-     const mesh = nMesh ? new THREE.InstancedMesh(geoHi, mat, nMesh) : null;
-@@ -676,7 +694,7 @@ export function createFoam(
+@@ -676,7 +702,7 @@ export function createFoam(
        tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
        const seed = rand();
        if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
@@ -69,7 +75,7 @@ index c569398..36b63a3 100644
  
  export function channel05(course: Course, s: number): { c: number; hw: number } {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index 362dfec..5073b88 100644
+index 362dfec..ac16c01 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -92,6 +92,7 @@ uniform float uNearM;     // share of the bank tile's columns that is the magent
@@ -142,15 +148,13 @@ index 362dfec..5073b88 100644
    // painted foam clouds on the banks: two offset readings of the foam tile blended by a slow world mask (no wallpaper grid)
    vec2 fp = vec2(vL.x, along) / uNearW.w;
    vec3 f1 = texture2D(uFoamTile, fp).rgb;
-@@ -251,7 +297,10 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
-   // r16: the level-stretch water tile = the painted NEAR river (magenta satin bands, bubbly trim, glossy cyan) winding along the
+@@ -252,6 +298,9 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // lane at about the painted near scale, painted foam clouds on the banks (tools/match07/near_tiles_r16.py)
    const nearW = flag05('m07nearw');
--  const wallFoamOn = flag05('m07wfoam'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)
-+  const wallFoamOn = flag05('m07wfoam');
+   const wallFoamOn = flag05('m07wfoam'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)
 +  // r17: on top of m07nearw, a thick magenta bank + separate puffy foam clouds beyond the band (no flat pale foam sheet at
 +  // hard left / right)
-+  const nearF = flag05('m07nearf'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)
++  const nearF = flag05('m07nearf');
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([

@@ -320,3 +320,86 @@ I'll start by reading the resume brief and launch brief.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:29:43.172Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat tools/match06/r16_start.mjs; echo ====; sed -n 1,200p tools/match06/r16_shots.mjs", "description": "Read the deterministic shot tools"}`
+
+### 🧑 User — 2026-11-19T02:29:43.224Z
+
+> ↩︎ result: // Screen 06 round 16: deterministic START-VIEW capture for the "approved start view unchanged" check.
+> // The lead's motion-audit shot runs the live game for two animation frames after goto (real time: under CPU load the
+> // start view lands at a slightly different s each run), and the 06 water clock is performance.now(). Here the page clock
+> // is frozen, the game is NOT run: goto('06') renders the checkpoint itself, then one more render with the frozen clock.
+> //   node tools/match06/r16_start.mjs <outDir> name1 "<query1>" [name2 "<query2>" ...]
+> // name@D (e.g. BEFORE@1.1): first ride D u forward from the checkpoint with fixed 1/60 s simulation steps (no steering)
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, ...rest] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5276);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   for (let i = 0; i + 1 < rest.length; i += 2) {
+>     const [name, Q] = [rest[i], rest[i + 1]];
+>  …[+4421 chars]
+
+### 🤖 Claude — 2026-11-19T02:29:45.375Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,80p scripts/lib/pw.mjs; ls -la node_modules | head -2; nproc; uptime; df -h /home/user | tail -1", "description": "Check playwright helper, load and disk"}`
+
+### 🧑 User — 2026-11-19T02:29:45.470Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+410 chars]
+
+### 🤖 Claude — 2026-11-19T02:29:53.407Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06 && cd /home/user/wt/s06/qa/match/06/r17/step2_m06fclu/START && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/'\na=Image.open('NEW_checkpoint.png'); b=Image.open('[REDACTED-EMAIL]')\nfor n,box in [('top',(300,180,864,560)),('crest',(0,430,864,700))]:\n  ca=a.crop(box); cb=b.crop(box)\n  w,h=ca.size\n  im=Image.new('RGB',(w,h*2+10),'black'); im.paste(ca,(0,0)); im.paste(cb,(0,h+10)); im.save(S+'zoom_'+n+'.png' …[+88 chars]`
+
+### 🧑 User — 2026-11-19T02:29:53.988Z
+
+> ↩︎ result: (864, 1536)
+
+### 🤖 Claude — 2026-11-19T02:29:55.156Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/zoom_top.png"}`
+
+### 🧑 User — 2026-11-19T02:29:55.185Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:29:59.851Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/zoom_crest.png"}`
+
+### 🧑 User — 2026-11-19T02:29:59.892Z
+
+> ↩︎ result: [image]
+

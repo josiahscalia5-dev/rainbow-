@@ -482,3 +482,50 @@ Let me commit the restored kept-set file and start the r18 log first.
 > ↩︎ result: 31a61b9
 > 31a61b906090f614b0606299902714d4b8d7cb6c	refs/heads/claude/rainbow-s05-match-c18
 
+### 🤖 Claude — 2026-11-19T02:29:15.794Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"probe\" src/main.ts src/*.ts 2>/dev/null | head -10; grep -rn \"probe:\" src --include=*.ts | head -5", "description": "Find the probe QA API"}`
+
+### 🧑 User — 2026-11-19T02:29:15.889Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:29:17.558Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"probe\" src --include=*.ts -l | head; grep -rn \"probe(\" src --include=*.ts | grep -v \"^\\s*//\" | head -5", "description": "Locate probe function definition"}`
+
+### 🧑 User — 2026-11-19T02:29:17.716Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts
+> src/vfx/proj05Tunnel.ts
+> src/game/Game.ts
+> src/gameplay/coins.ts
+> src/game/Game.ts:671:    probe(x = 0, y = 0) {
+
+### 🤖 Claude — 2026-11-19T02:29:18.877Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 660,700p src/game/Game.ts", "description": "Read probe implementation"}`
+
+### 🧑 User — 2026-11-19T02:29:18.931Z
+
+> ↩︎ result: camera() {
+>       camera.updateMatrixWorld();
+>       const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+>       return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+>     },
+>     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
+>     bennyScreen() {
+>       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+>       return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };
+>     },
+>     /** debug: what does a ray from the camera through NDC (x,y) hit first? */
+>     probe(x = 0, y = 0) {
+>       const rc = new THREE.Raycaster();
+>       rc.setFromCamera(new THREE.Vector2(x, y), camera);
+>       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c:  …[+1704 chars]
+
+### 🤖 Claude — 2026-11-19T02:29:23.906Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r18/KEPT_START.txt) && GRID='-0.9,0.6;-0.9,0.3;-0.9,0;-0.9,-0.3;-0.6,0.6;-0.55,0.37;-0.45,0.35;-0.6,0;-0.6,-0.3;-0.97,-0.37;-0.4,0.5;-0.3,0.1' timeout 600 node tools/match05/r15_probe.mjs \"$Q\" t81L,x97L,t12L 5275 2>&1 | tail -45", "description": "Probe left-wall layers at hard-left positions", "timeout": 600000}`
+

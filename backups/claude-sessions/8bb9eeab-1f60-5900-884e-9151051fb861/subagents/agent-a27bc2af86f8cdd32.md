@@ -494,3 +494,199 @@ Now let me look at the approved picture and the step-3 stills.
 >   }
 >   vec2 p = vec2 …[+5739 chars]
 
+### 🤖 Claude — 2026-11-19T02:29:21.385Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 520,556p src/vfx/foam.ts", "description": "Read bermScale05 and squashBerm"}`
+
+### 🧑 User — 2026-11-19T02:29:21.429Z
+
+> ↩︎ result: const BANK_ENV: [number, number, number][] = [[58.457, 0.835, 0.581], [607.242, 0.459, 0.357], [267.601, 1.094, 0.563]];
+> /**
+>  * wave 7 (ref 05 rows, qa/pilot05/wave7/foam): the bank row's inner edge (px in from the frame edge) and lateral size
+>  * (px) by row ds. The right bank ahead of Benny is a NARROW rim hugging the river edge (ref y 700-940: inner edge
+>  * 30 -> 158 -> 70 px, 20-66 px per row), not the wave-5 heap (124-179 px per row). The ref's near clumps: left x 0-130
+>  * y 1020-1110 (ds 0.5-1.5), lower left x 60-230 y 1220-1300 and lower right x 650-800 y 1260-1330 (behind Benny,
+>  * ds -1.1..-1.7). The envelope seeds
+>  * (BANK_ENV, searched; [2] = right side beside / behind Benny) open/close the clumps at those rows of the QA frame.
+>  */
+> const RIM_R: [number, number][] = [[2.6, 60], [3.4, 70], [4.4, 105], [5.5, 140], [6.6, 158], [7.8, 153], [9.0, 135], [10.3, 104], [11.6, 70], [12.9, 30]];
+> const RIM_R_PX = 80;
+> function rimR(ds: number): number {
+>   if (ds <= RIM_R[0][0]) return RIM_R[0][1];
+>   for (let i = 1; i < RIM_R.length; i++) {
+>     if (ds <= RIM_R[i][0]) {
+>       const [a, pa] = RIM_R[i - 1], [b, pb] = RIM_R[i];
+>       return pa + ((pb - pa) * (ds - a)) / (b - a);
+>     }
+>   }
+>   …[+955 chars]
+
+### 🤖 Claude — 2026-11-19T02:29:35.273Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json\nd=json.load(open('qa/match/07/r17/step3_foamb/NEW/motion.json'))\nprint(d.get('console'))\nfor s in d['shots']: print(s['name'], s['s'], s['cam'], s.get('bennyY'))\n\"; grep -n \"console.info\" src/world/match07.ts src/game/Game.ts | head", "description": "Inspect step-3 motion console lines and shot positions"}`
+
+### 🧑 User — 2026-11-19T02:29:35.424Z
+
+> ↩︎ result: ['[m07nearw] checkpoint s 273.26 centre line 1.10 0.53 0.09 -0.16 -0.19 -0.07 0.11 0.29 0.41 0.40 0.24 -0.05 -0.38 -0.68 -0.94 -1.17 -1.37 -1.55 -1.68 -1.71 -1.60 -1.30 -0.80 -0.14 0.56 1.19 1.69 2.04 2.26 2.35 2.31 2.15 1.90 1.59 1.28 1.03 0.88 0.86 0.96 1.14 1.34 1.50 1.57 1.52 1.35 1.11 0.84 0.61 0.48 0.47 0.57 0.75 0.95 1.10 1.15 1.09 0.92 0.70 0.49 0.37 0.40 0.58 0.85 1.16']
+> t50_through_screen 332.293 [12.91, -56.66, -251.87] -66.106
+> t66_through_screen 351.063 [12.91, -74.78, -259.41] -83.754
+> t80_through_screen 367.468 [12.91, -90.19, -265.01] -99.149
+> t95_through_screen 385.064 [12.91, -104.71, -270.93] -111.885
+> src/world/match07.ts:409:    console.info('[m07nearw] checkpoint s', sCk.toFixed(2), 'centre line', ctr.map((v) => v.toFixed(2)).join(' '));
+
+### 🤖 Claude — 2026-11-19T02:29:38.439Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && ls -la node_modules | head -2; ps aux | grep -c \"[c]hrom\"; ps aux | grep \"[v]ite\" | head; nproc; uptime; df -h /home/user | tail -1", "description": "Check node_modules link, running processes, load and disk"}`
+
+### 🧑 User — 2026-11-19T02:29:38.746Z
+
+> ↩︎ result: lrwxrwxrwx 1 root root 32 Nov 19 02:25 node_modules -> /home/user/rainbow-/node_modules
+> 18
+> 4
+>  02:29:38 up 22 min,  0 user,  load average: 5.16, 1.72, 0.72
+> /dev/vda        252G   26G   44G  38% /
+
+### 🤖 Claude — 2026-11-19T02:29:40.447Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,80p scripts/lib/pw.mjs", "description": "Read Playwright helper library"}`
+
+### 🧑 User — 2026-11-19T02:29:40.495Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+218 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:05.072Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it */\nfunction ramp07(course: Course): (s: number) => number {\n  const e = end07(course);\n  if (e === null) return () => 1;\n  return (s) => { const u = Math.min(1, Math.max(0, (s - (e - 5)) / 5)); return s >= e ? 1 : u * u * (3 - 2 * u); };\n}", "new_string": "/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it.\n *  r18: ONL …[+532 chars]`
+
+### 🧑 User — 2026-11-19T02:30:05.087Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T02:30:06.318Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/foam.ts", "offset": 555, "limit": 25}`
+
+### 🧑 User — 2026-11-19T02:30:06.340Z
+
+> ↩︎ result: 555	
+> 556	/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> 557	function hide07(course: Course): [number, number] | null {
+> 558	  if (!flag05('match07') || !flag05('m07foam')) return null;
+> 559	  // r17 '&m07foamb=1': the walls stay away to near the end of 07 (they no longer start again partway down the drop with a
+> 560	  // cut); over the last 5 u of 07 the bank grows back out of the water (ramp07), full height at the 08 start, so 08 keeps
+> 561	  // its berm
+> 562	  const r = end07(course);
+> 563	  return [course.marks['07_plunge_top'] + 9, r !== null ? r - 5 : course.marks['07_plunge_bottom'] - 12];
+> 564	}
+> 565	/** r17 '&m07foamb=1': arc length of the 08 start (end of 07) or null = off */
+> 566	function end07(course: Course): number | null {
+> 567	  if (!flag05('match07') || !flag05('m07foam') || !flag05('m07foamb')) return null;
+> 568	  return course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4;
+> 569	}
+> 570	/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it */
+> 571	function ramp07(course: Course): (s: number) => number {
+> 572	  const e = end07(course);
+> 573	  if (e = …[+402 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:10.973Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it */\nfunction ramp07(course: Course): (s: number) => number {\n  const e = end07(course);\n  if (e === null) return () => 1;\n  return (s) => { const u = Math.min(1, Math.max(0, (s - (e - 5)) / 5)); return s >= e ? 1 : u * u * (3 - 2 * u); };\n}", "new_string": "/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it.\n *  r18 fix: …[+614 chars]`
+
+### 🧑 User — 2026-11-19T02:30:11.068Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:30:11.672Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/foam.ts", "offset": 688, "limit": 20}`
+
+### 🧑 User — 2026-11-19T02:30:11.717Z
+
+> ↩︎ result: 688	  const tmpC = new THREE.Color();
+> 689	
+> 690	  /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
+> 691	  const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
+> 692	  const h07 = hide07(course);
+> 693	  const e07 = end07(course); // r17 m07foamb: puffs stay away to the 08 start (the bank grows back without them)
+> 694	  const build =(list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
+> 695	    if (!list.length) return;
+> 696	    const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
+> 697	    const mesh = nMesh ? new THREE.InstancedMesh(geoHi, mat, nMesh) : null;
+> 698	    let i = 0;
+> 699	    // the same rand() calls per puff whichever list it lands in, so every other stage's foam stays identical
+> 700	    for (const pf of list) {
+> 701	      tmpQ.setFromEuler(tmpE.set(rand() * 6, rand() * 6, rand() * 6));
+> 702	      tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
+> 703	      const seed = rand();
+> 704	      if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
+> 705	      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < (e07 ?? h07[1] - 1 …[+117 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:12.715Z
+
+Restoring the stray formatting change (`build =(`) so the shared file only differs where it must.
+
+### 🤖 Claude — 2026-11-19T02:30:13.771Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  const build =(list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {", "new_string": "  const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {"}`
+
+### 🧑 User — 2026-11-19T02:30:14.020Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:30:18.059Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 290, "limit": 130}`
+
+### 🧑 User — 2026-11-19T02:30:18.101Z
+
+> ↩︎ result: 290	  const fixGold = flag05('m07gold');
+> 291	  const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
+> 292	  const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)
+> 293	  // M3: the clean wall tile with its painted gold rings straightened (tools/match07/straighten_wall07.py) — in the unwrap
+> 294	  // the ring band drifted ~43 % of a bay across the rows, so deep in the tube the rings rendered as twisted diagonal bands
+> 295	  const fixRing = flag05('m07ring');
+> 296	  const fixNear = flag05('m07near'); // M3: tighter stretch guard — magnified projected near water gives way to the river tile sooner
+> 297	  // r16: the level-stretch water tile = the painted NEAR river (magenta satin bands, bubbly trim, glossy cyan) winding along the
+> 298	  // lane at about the painted near scale, painted foam clouds on the banks (tools/match07/near_tiles_r16.py)
+> 299	  const nearW = flag05('m07nearw');
+> 300	  const wallFoamOn = flag05('m07wfoam');
+> 301	  // r17: on top of m07nearw, a thick magenta bank + separate puffy foam clouds beyond the band (no flat pale foam s …[+7830 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:21.091Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "  const wallFoamOn = flag05('m07wfoam');\n  // r17: on top of m07nearw, a thick magenta bank + separate puffy foam clouds beyond the band (no flat pale foam sheet at\n  // hard left / right)\n  const nearF = flag05('m07nearf'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)", "new_string": "  const wallFoamOn = flag05('m07wfoam'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)\n  // r17: on top of m0 …[+165 chars]`
+
+### 🧑 User — 2026-11-19T02:30:21.145Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:30:21.831Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc_exit=$?", "description": "Type-check the project"}`
+
