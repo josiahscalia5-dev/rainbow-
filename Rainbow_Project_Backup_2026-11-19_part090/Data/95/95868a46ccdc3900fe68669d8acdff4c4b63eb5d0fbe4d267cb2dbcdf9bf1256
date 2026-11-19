@@ -1,0 +1,12 @@
+from pathlib import Path
+import subprocess,time
+stages=['04','05','06','07']
+while stages:
+ for sid in list(stages):
+  if all((Path('proof')/sid/k/'route.json').is_file() for k in ('BEFORE','NEW')):
+   result=subprocess.run(['python3','inspect_videos.py',sid],capture_output=True,text=True)
+   print(sid,result.returncode,result.stdout.strip(),result.stderr[-600:],flush=True)
+   if result.returncode:raise SystemExit(result.returncode)
+   stages.remove(sid)
+ if stages:time.sleep(4)
+print('All HD replays state-matched',flush=True)

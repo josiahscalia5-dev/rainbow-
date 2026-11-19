@@ -1,0 +1,37 @@
+from pathlib import Path
+from zipfile import ZipFile
+from guides import *
+from package_media import archive
+from verify_archives import audit
+import json,os,shutil
+rows=load('original-videos.json')
+assert len(load('original-h264-decoded.json'))==len(rows)==25
+files={};items=[]
+for r in rows:
+    name=r['name']
+    if r['section']=='Recorded_Originals':
+        label='CLAUDIA_RETAINED' if r['status']=='CLAUDIA RETAINED' else 'CODEX_CANDIDATE'
+        name='Screen_'+r['screen']+'/SCREEN'+r['screen']+'_'+label+'_ENTRANCE_TO_EXIT.mp4'
+    files[name]=Path(r['file'])
+    items.append(dict(file_inside_this_zip=name,screen=r['screen'],status=r['status'],description=r['description'],
+                      codec=r['codec_name'],dimensions=f"{r['width']}x{r['height']}",fps=r['r_frame_rate'],seconds=r['duration'],frames=r['nb_frames'],
+                      packaged_sha256=r['sha256'],source_branch=r['branch'],source_commit=r['commit'],evidence_commit=r.get('evidence_commit',''),source_path=r['source']))
+assert len(files)==25 and len([n for n in files if n.endswith('ENTRANCE_TO_EXIT.mp4')])==10
+readme=guide('videos','This original-recording edition is ready to upload with Rainbow_Visual_Images.zip. It contains all 25 saved H.264 recordings, including one retained and one candidate entrance-to-exit ride for each playable stage. The primary rides are the same source MP4s used in the verified motion audit.')
+paragraph=next(x for x in readme.split('\n\n') if x.startswith('The primary clips replay the retained real Three.js renderer'))
+readme=readme.replace(paragraph,'The ten primary videos in this edition are complete original recordings of the real Three.js renderer at 324 × 576 and 12 fps. Each encoded frame spans five 1/60-second game steps. Camera, along-course position, steering, shader clock, score and hearts match between the two rides. The three original specialist clips use 432 × 768 at 24 fps. For tiny edges or wall-slot texture, inspect the companion native-dimension screenshots. This edition preserves all 25 previously saved MP4s byte for byte.')
+docs={'README_FIRST.md':readme,'FIVE_SCREEN_REPAIR_PLAN.md':(ROOT/'repair-plan.md').read_bytes(),'FILE_INDEX.csv':csvbytes(list(items[0]),items)}
+marks=[dict(screen=s,**x) for s,rs in load('bookmarks.json').items() for x in rs];docs['VIDEO_TIMESTAMPS.csv']=csvbytes(list(marks[0]),marks)
+for s in IDS:docs.update(stage_reports(s))
+dest=OUT/'Saved_Recordings'/'Rainbow_Gameplay_Videos.zip'
+receipt=archive(dest,files,docs)
+checked=audit(dest,'saved-videos')
+assert checked['sha256']==receipt['sha256']
+# The same public filename initially serves the complete saved recordings. The higher-detail edition replaces it atomically when verified.
+canonical=OUT/'Rainbow_Gameplay_Videos.zip'
+if not (ROOT/'video-package.json').exists():
+    staging=OUT/'original-video-delivery.copying'
+    shutil.copyfile(dest,staging);os.replace(staging,canonical)
+assert dest.stat().st_size==receipt['bytes']
+(ROOT/'saved-video-delivery.json').write_text(json.dumps(checked,indent=2)+'\n')
+print('Verified original-recording package',receipt['bytes'],'bytes;',len(files),'H.264 files, ten paired full-stage journeys',flush=True)

@@ -1,0 +1,232 @@
+{
+  "04": {
+    "path": "Small_Image_Batches/Screen_04_Image_Batch.zip",
+    "bytes": 12375398,
+    "files": 19,
+    "media": 9,
+    "sha256": "eb42712f74d76cf3144ee18ecbd187072fde94f90d9f47cff3898a61945d42fc",
+    "screen": "04",
+    "pictures": [
+      {
+        "name": "SCREEN04_APPROVED",
+        "path": "Selected_Stills/Screen_04/SCREEN04_APPROVED.jpg"
+      },
+      {
+        "name": "SCREEN04_CLAUDIA_OPENING",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CLAUDIA_OPENING.png"
+      },
+      {
+        "name": "SCREEN04_CODEX_CANDIDATE_OPENING",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CODEX_CANDIDATE_OPENING.png"
+      },
+      {
+        "name": "SCREEN04_CLAUDIA_FORWARD10",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CLAUDIA_FORWARD10.png"
+      },
+      {
+        "name": "SCREEN04_CODEX_CANDIDATE_FORWARD10",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CODEX_CANDIDATE_FORWARD10.png"
+      },
+      {
+        "name": "SCREEN04_CLAUDIA_HARD_LEFT",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CLAUDIA_HARD_LEFT.png"
+      },
+      {
+        "name": "SCREEN04_CODEX_CANDIDATE_HARD_LEFT",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CODEX_CANDIDATE_HARD_LEFT.png"
+      },
+      {
+        "name": "SCREEN04_CLAUDIA_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CLAUDIA_FINAL_APPROACH.png"
+      },
+      {
+        "name": "SCREEN04_CODEX_CANDIDATE_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_04/SCREEN04_CODEX_CANDIDATE_FINAL_APPROACH.png"
+      }
+    ]
+  },
+  "05": {
+    "path": "Small_Image_Batches/Screen_05_Image_Batch.zip",
+    "bytes": 17521140,
+    "files": 20,
+    "media": 9,
+    "sha256": "75e13cd2996fcdfce1df38d9d7acb874fd63250c43bb73605e6a31c87f03de6b",
+    "screen": "05",
+    "pictures": [
+      {
+        "name": "SCREEN05_APPROVED",
+        "path": "Selected_Stills/Screen_05/SCREEN05_APPROVED.jpg"
+      },
+      {
+        "name": "SCREEN05_CLAUDIA_OPENING",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CLAUDIA_OPENING.png"
+      },
+      {
+        "name": "SCREEN05_CODEX_CANDIDATE_OPENING",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CODEX_CANDIDATE_OPENING.png"
+      },
+      {
+        "name": "SCREEN05_CLAUDIA_HARD_LEFT",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CLAUDIA_HARD_LEFT.png"
+      },
+      {
+        "name": "SCREEN05_CODEX_CANDIDATE_HARD_LEFT",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CODEX_CANDIDATE_HARD_LEFT.png"
+      },
+      {
+        "name": "SCREEN05_CLAUDIA_LAST_RIGHT_BEND",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CLAUDIA_LAST_RIGHT_BEND.png"
+      },
+      {
+        "name": "SCREEN05_CODEX_CANDIDATE_LAST_RIGHT_BEND",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CODEX_CANDIDATE_LAST_RIGHT_BEND.png"
+      },
+      {
+        "name": "SCREEN05_CLAUDIA_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CLAUDIA_FINAL_APPROACH.png"
+      },
+      {
+        "name": "SCREEN05_CODEX_CANDIDATE_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_05/SCREEN05_CODEX_CANDIDATE_FINAL_APPROACH.png"
+      }
+    ]
+  },
+  "06": {
+    "path": "Small_Image_Batches/Screen_06_Image_Batch.zip",
+    "bytes": 17903407,
+    "files": 20,
+    "media": 9,
+    "sha256": "9bf79ac2941b82256e2ef204f385f2b6718c4d30df3e360b302879782f25d9af",
+    "screen": "06",
+    "pictures": [
+      {
+        "name": "SCREEN06_APPROVED",
+        "path": "Selected_Stills/Screen_06/SCREEN06_APPROVED.jpg"
+      },
+      {
+        "name": "SCREEN06_CLAUDIA_OPENING",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CLAUDIA_OPENING.png"
+      },
+      {
+        "name": "SCREEN06_CODEX_CANDIDATE_OPENING",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CODEX_CANDIDATE_OPENING.png"
+      },
+      {
+        "name": "SCREEN06_CLAUDIA_CREST_RELEASE",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CLAUDIA_CREST_RELEASE.png"
+      },
+      {
+        "name": "SCREEN06_CODEX_CANDIDATE_CREST_RELEASE",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CODEX_CANDIDATE_CREST_RELEASE.png"
+      },
+      {
+        "name": "SCREEN06_CLAUDIA_FORWARD10",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CLAUDIA_FORWARD10.png"
+      },
+      {
+        "name": "SCREEN06_CODEX_CANDIDATE_FORWARD10",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CODEX_CANDIDATE_FORWARD10.png"
+      },
+      {
+        "name": "SCREEN06_CLAUDIA_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CLAUDIA_FINAL_APPROACH.png"
+      },
+      {
+        "name": "SCREEN06_CODEX_CANDIDATE_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_06/SCREEN06_CODEX_CANDIDATE_FINAL_APPROACH.png"
+      }
+    ]
+  },
+  "07": {
+    "path": "Small_Image_Batches/Screen_07_Image_Batch.zip",
+    "bytes": 16097444,
+    "files": 25,
+    "media": 9,
+    "sha256": "40b7c42ca6f7035beb0cb15f66d846e4bdfc8a99090209fddef261086763d006",
+    "screen": "07",
+    "pictures": [
+      {
+        "name": "SCREEN07_APPROVED",
+        "path": "Selected_Stills/Screen_07/SCREEN07_APPROVED.jpg"
+      },
+      {
+        "name": "SCREEN07_CLAUDIA_OPENING",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CLAUDIA_OPENING.png"
+      },
+      {
+        "name": "SCREEN07_CODEX_CANDIDATE_OPENING",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CODEX_CANDIDATE_OPENING.png"
+      },
+      {
+        "name": "SCREEN07_CLAUDIA_HARD_RIGHT",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CLAUDIA_HARD_RIGHT.png"
+      },
+      {
+        "name": "SCREEN07_CODEX_CANDIDATE_HARD_RIGHT",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CODEX_CANDIDATE_HARD_RIGHT.png"
+      },
+      {
+        "name": "SCREEN07_CLAUDIA_TWO_THIRDS_DOWN",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CLAUDIA_TWO_THIRDS_DOWN.png"
+      },
+      {
+        "name": "SCREEN07_CODEX_CANDIDATE_TWO_THIRDS_DOWN",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CODEX_CANDIDATE_TWO_THIRDS_DOWN.png"
+      },
+      {
+        "name": "SCREEN07_CLAUDIA_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CLAUDIA_FINAL_APPROACH.png"
+      },
+      {
+        "name": "SCREEN07_CODEX_CANDIDATE_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_07/SCREEN07_CODEX_CANDIDATE_FINAL_APPROACH.png"
+      }
+    ]
+  },
+  "08": {
+    "path": "Small_Image_Batches/Screen_08_Image_Batch.zip",
+    "bytes": 18331647,
+    "files": 19,
+    "media": 9,
+    "sha256": "ed9888c518f23cbd5a0480823b0c65786372653055f2209226ece3b025d1a417",
+    "screen": "08",
+    "pictures": [
+      {
+        "name": "SCREEN08_APPROVED",
+        "path": "Selected_Stills/Screen_08/SCREEN08_APPROVED.jpg"
+      },
+      {
+        "name": "SCREEN08_CLAUDIA_OPENING",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CLAUDIA_OPENING.png"
+      },
+      {
+        "name": "SCREEN08_CODEX_CANDIDATE_OPENING",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CODEX_CANDIDATE_OPENING.png"
+      },
+      {
+        "name": "SCREEN08_CLAUDIA_FORWARD03",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CLAUDIA_FORWARD03.png"
+      },
+      {
+        "name": "SCREEN08_CODEX_CANDIDATE_FORWARD03",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CODEX_CANDIDATE_FORWARD03.png"
+      },
+      {
+        "name": "SCREEN08_CLAUDIA_HARD_LEFT",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CLAUDIA_HARD_LEFT.png"
+      },
+      {
+        "name": "SCREEN08_CODEX_CANDIDATE_HARD_LEFT",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CODEX_CANDIDATE_HARD_LEFT.png"
+      },
+      {
+        "name": "SCREEN08_CLAUDIA_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CLAUDIA_FINAL_APPROACH.png"
+      },
+      {
+        "name": "SCREEN08_CODEX_CANDIDATE_FINAL_APPROACH",
+        "path": "Selected_Stills/Screen_08/SCREEN08_CODEX_CANDIDATE_FINAL_APPROACH.png"
+      }
+    ]
+  }
+}
