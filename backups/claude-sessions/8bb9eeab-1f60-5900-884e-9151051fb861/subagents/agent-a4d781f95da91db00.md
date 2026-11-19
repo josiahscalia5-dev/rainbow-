@@ -1394,3 +1394,234 @@ Redirect received: ring structure first. Let me look at the zoom I just made (it
 > upper-right dark minima r px: [333.8, 303.4, 242.3, 166.1, 151.6, 126.2, 111.3, 89.9, 66.8, 53.9, 45.2]
 > upper-right bright maxima r px: [352.1, 328.7, 265.5, 181.3, 160.5, 135.2, 119.7, 98.9, 73.4, 57.3, 47.7, 20.5]
 
+### 🤖 Claude — 2026-11-19T02:49:23.606Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 30,60p src/world/match04m4.ts; grep -n \"uLen\" src/world/match04m4.ts | head", "description": "Read flag declarations and VERT header; uLen uses"}`
+
+### 🧑 User — 2026-11-19T02:49:23.780Z
+
+> ↩︎ result: const QS = new URLSearchParams(location.search);
+> const on = (k: string) => QS.get(k) === '1';
+> export const M04 = {
+>   ring: on('m04ring'),
+>   foam: on('m04foam'),
+>   bub: on('m04bub'),
+>   arrow: on('m04arrow'),
+>   wave: on('m04wave'),
+>   river: on('m04river'),
+>   gold: on('m04gold'),
+>   mouth: on('m04mouth'),
+>   room: on('m04room'),
+>   foam3: on('m04foam3'),
+>   pink: on('m04pink'),
+>   arr5: on('m04arr5'),
+>   arr3d: on('m04arr3d'),
+>   lay: on('m04lay'),
+>   num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
+> };
+> 
+> export interface M04Ctx {
+>   group: THREE.Group;
+>   shared: Record<string, THREE.IUniform>;
+>   proj: THREE.PerspectiveCamera;
+>   /** tube axis in group-local coordinates (x lateral, y up from the slide, z = -down the slide) */
+>   cx: number; cy: number; z0: number; len: number; r: number; outerR: number;
+>   hideOld: (names: string[]) => void;
+> }
+> 
+> const VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> 92:uniform float uLen;
+> 307:        float dEc = dot(uAxO + uAxD * uLen - cameraPosition, uAxD);
+> 654:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPa …[+474 chars]
+
+### 🤖 Claude — 2026-11-19T02:49:25.652Z
+
+Now the edits. First the vertex shader (attribute only compiled in when the `RFEW` define is set, so the default build's shaders are byte-identical after preprocessing).
+
+### 🤖 Claude — 2026-11-19T02:49:28.831Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "const VERT = /* glsl */ `\nuniform mat4 uProjVP;\nattribute vec2 aK;\nvarying vec4 vProj;\nvarying vec3 vW;\nvarying vec3 vN;\nvarying vec2 vK;\nvoid main() {\n  vec4 wp = modelMatrix * vec4(position, 1.0);\n  vProj = uProjVP * wp;\n  vW = wp.xyz;\n  vK = aK;", "new_string": "const VERT = /* glsl */ `\nuniform mat4 uProjVP;\nattribute vec2 aK;\n#ifdef RFEW\nattribute vec2 aF;          // r18 m04rfew: x = ring coordinate along the tunnel in painted-period units, y = ring scale\nvarying vec2 vF;\n#end …[+228 chars]`
+
+### 🧑 User — 2026-11-19T02:49:28.844Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T02:49:30.939Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)\nvarying vec4 vProj;", "new_string": "uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)\n#ifdef RFEW\nuniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)\nvarying vec2 vF;\n#endif\nvarying vec4 vProj;"}`
+
+### 🧑 User — 2026-11-19T02:49:30.954Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T02:49:34.388Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left\n  vec3 R = reflect(-V, n);", "new_string": "  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left\n#ifdef RFEW\n  if (vK.y > -0.5) {\n    // r18 m04rfew: telescoping rings — every ring is a copy of the template ring scaled by vF.y about a centre on the\n    // water line; angle and radius are taken around the ring's OWN centre, in template units, and the position along\n    // t …[+315 chars]`
+
+### 🧑 User — 2026-11-19T02:49:34.396Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T02:49:35.855Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 56, "limit": 20}`
+
+### 🧑 User — 2026-11-19T02:49:35.888Z
+
+> ↩︎ result: 56	  hideOld: (names: string[]) => void;
+> 57	}
+> 58	
+> 59	const VERT = /* glsl */ `
+> 60	uniform mat4 uProjVP;
+> 61	attribute vec2 aK;
+> 62	varying vec4 vProj;
+> 63	varying vec3 vW;
+> 64	varying vec3 vN;
+> 65	varying vec2 vK;
+> 66	void main() {
+> 67	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 68	  vProj = uProjVP * wp;
+> 69	  vW = wp.xyz;
+> 70	  vK = aK;
+> 71	  vN = normalize(mat3(modelMatrix) * normal);
+> 72	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 73	}`;
+> 74	
+> 75	// polished gold, art-directed in DISPLAY colours measured on the approved picture (then pjInverse like the plate):
+
+### 🤖 Claude — 2026-11-19T02:49:39.766Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "const VERT = /* glsl */ `\nuniform mat4 uProjVP;\nattribute vec2 aK;\nvarying vec4 vProj;\nvarying vec3 vW;\nvarying vec3 vN;\nvarying vec2 vK;\nvoid main() {\n  vec4 wp = modelMatrix * vec4(position, 1.0);\n  vProj = uProjVP * wp;\n  vW = wp.xyz;\n  vK = aK;", "new_string": "const VERT = /* glsl */ `\nuniform mat4 uProjVP;\nattribute vec2 aK;\n#ifdef RFEW\nattribute vec2 aF;          // r18 m04rfew: x = ring coordinate along the tunnel in painted-period units, y = ring scale\nvarying vec2 vF;\n#end …[+228 chars]`
+
+### 🧑 User — 2026-11-19T02:49:39.814Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:49:41.665Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)\nvarying vec4 vProj;", "new_string": "uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)\n#ifdef RFEW\nuniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)\nvarying vec2 vF;\n#endif\nvarying vec4 vProj;"}`
+
+### 🧑 User — 2026-11-19T02:49:41.707Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:49:44.673Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left\n  vec3 R = reflect(-V, n);", "new_string": "  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left\n#ifdef RFEW\n  if (vK.y > -0.5) {\n    // r18 m04rfew: telescoping rings — every ring is a copy of the template ring scaled by vF.y about a centre on the\n    // water line; angle and radius are taken around the ring's OWN centre, in template units, and the position along\n    // t …[+315 chars]`
+
+### 🧑 User — 2026-11-19T02:49:44.740Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:49:48.525Z
+
+Now the geometry: variable ring periods in the corridor (sub-switch) and the shrinking telescope beyond Benny's reach.
+
+### 🤖 Claude — 2026-11-19T02:49:49.189Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 655, "limit": 100}`
+
+### 🧑 User — 2026-11-19T02:49:49.240Z
+
+> ↩︎ result: 655	  const any = M04.ring || M04.foam || M04.bub || M04.arrow || M04.wave || M04.river;
+> 656	  if (!any) return null;
+> 657	  group.updateMatrixWorld(true);
+> 658	  const Mw = group.matrixWorld;
+> 659	  const toW = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z).applyMatrix4(Mw);
+> 660	  const axO = toW(cx, cy, z0), axD = toW(cx, cy, z0 - 1).sub(axO).normalize();
+> 661	  const axU = toW(cx, cy + 1, z0).sub(axO).normalize(), axR = toW(cx + 1, cy, z0).sub(axO).normalize();
+> 662	  const away = { value: 0 };
+> 663	  const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+> 664	  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+> 665	  const updaters: ((a: number) => void)[] = [];
+> 666	
+> 667	  if (M04.ring) {
+> 668	    const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+> 669	    ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
+> 670	    ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
+> 671	    const gm  …[+7590 chars]
+
+### 🤖 Claude — 2026-11-19T02:50:37.567Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "    const prof: { r: number; a: number; part: number }[] = [];\n    const ringOf: number[] = [];\n    const nP = Math.ceil(len / P);\n    for (let k = 0; k < nP; k++) {\n      const a = k * P;\n      const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };\n      pushP(r + 0.22, a + 0.01, 2);\n      pushP(r + 0.17, a + 0.07, 0);\n      pushP(r + 0.07, a + P * 0.5, 0);\n      // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings …[+4627 chars]`
+
+### 🧑 User — 2026-11-19T02:50:37.622Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:50:43.812Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "        const nr = rad + (r + 0.05 - rad) * k;\n        pa.setX(i, (x / rad) * nr); pa.setZ(i, (z / rad) * nr);\n      }\n      tun.computeVertexNormals();\n    }", "new_string": "        const nr = rad + (r + 0.05 - rad) * k;\n        pa.setX(i, (x / rad) * nr); pa.setZ(i, (z / rad) * nr);\n      }\n      tun.computeVertexNormals();\n    }\n    // r18 `m04rfew`: scale every telescoping ring about its centre on the water line (lathe-local z = up)\n    const rfGz = -cy + M04.num('m04rfh', 0);\n    if …[+561 chars]`
+
+### 🧑 User — 2026-11-19T02:50:43.851Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:50:44.471Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 806, "limit": 20}`
+
+### 🧑 User — 2026-11-19T02:50:44.502Z
+
+> ↩︎ result: 806	      { r: (R0 + R1) / 2, a: -0.66, part: 3 }, { r: R1 - 0.1, a: -0.62, part: 3 }, { r: R1 - 0.04, a: -0.56, part: 1 },
+> 807	      { r: R1 + 0.01, a: -0.42, part: 1 }, { r: R1 + 0.02, a: -0.1, part: 1 }, { r: R1 + 0.02, a: 0.05, part: 2 },
+> 808	    ];
+> 809	    // round 9 `m04mouth`: the painted ring plane (z0) carries the painted band, so the modeled opening sits nearly flush
+> 810	    // with it: a thick polished band (front face 0.15 u proud of the wall) with rounded lips, the inner lip curving
+> 811	    // into the tunnel; the painted texture is mapped through the projector (shader), the bulbs drawn on top
+> 812	    const mp2: { r: number; a: number; part: number }[] = [
+> 813	      { r: R0 - 0.03, a: 0.75, part: 1 }, { r: R0 - 0.07, a: 0.35, part: 1 }, { r: R0 - 0.07, a: 0.02, part: 1 },
+> 814	      { r: R0 - 0.04, a: -0.09, part: 1 }, { r: R0 + 0.02, a: -0.14, part: 1 }, { r: R0 + 0.08, a: -0.155, part: 3 },
+> 815	      { r: (R0 + R1) / 2, a: -0.165, part: 3 }, { r: R1 - 0.07, a: -0.155, part: 3 }, { r: R1 - 0.02, a: -0.13, part: 1 },
+> 816	      { r: R1 + 0.02, a: -0.07, part: 1 }, { r: R1 + 0.03, a: 0.0, part: 1 }, { r: R1 + 0.03, a: 0.03, part: 2 },
+> 817	    ];
+> 818	    const mouth = lath …[+608 chars]
+
+### 🤖 Claude — 2026-11-19T02:50:50.353Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "    const cap = new THREE.CircleGeometry(r + 0.2, 64).translate(cx, cy, z0 - len);\n    const nC = cap.attributes.position.count;\n    cap.setAttribute('aK', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 4 : 0)), 2));", "new_string": "    // (r18 m04rfew: at the telescope's end, the size of its last ring, centred on that ring)\n    const cap = rfew ? new THREE.CircleGeometry((r + 0.22) * capS, 64).translate(cx, cy + rfGz * (1 - capS), z0 - capA)\n      : new  …[+382 chars]`
+
+### 🧑 User — 2026-11-19T02:50:50.453Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:50:57.878Z
+
+Now a small render helper (copy of the audit tool that renders only the shots I name), then a first look.
+
+### 🤖 Claude — 2026-11-19T02:51:00.727Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && sed 's/^\\];$/].filter((s) => !process.env.ONLY || process.env.ONLY.split(\",\").includes(s[0]));/' /home/user/wt/s04b/tools/lead_r6/motion_audit.mjs > $S/audit_only.mjs && grep -n \"process.env.ONLY\" $S/audit_only.mjs && cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -5", "description": "Create subset audit script and typecheck", "timeout": 300000}`
+
+### 🧑 User — 2026-11-19T02:51:08.986Z
+
+> ↩︎ result: 21:].filter((s) => !process.env.ONLY || process.env.ONLY.split(",").includes(s[0]));
+> src/world/match04m4.ts(830,59): error TS2304: Cannot find name 'nP'.
+
+### 🤖 Claude — 2026-11-19T02:51:10.385Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 826,832p src/world/match04m4.ts", "description": "Show the nP reference"}`
+
+### 🧑 User — 2026-11-19T02:51:10.438Z
+
+> ↩︎ result: cap.setAttribute('aK', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 4 : 0)), 2));
+>     if (rfew) cap.setAttribute('aF', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 0 : capS)), 2));
+>     const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
+>     ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
+>     console.info('[match04] m04ring', { period: P, rings: nP });
+>     if (M04.mouth) {
+>       const mt = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_mouth.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+
+### 🤖 Claude — 2026-11-19T02:51:12.528Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "    console.info('[match04] m04ring', { period: P, rings: nP });", "new_string": "    console.info('[match04] m04ring', { period: P, rings: ringOf[ringOf.length - 1] + 1 });"}`
+
+### 🧑 User — 2026-11-19T02:51:12.575Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:51:15.378Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -5; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=\"$(cat $S/K5.txt)&m04rpvar=1\" && echo \"$K6\" > $S/K6.txt && ONLY=f06_forward6u,f20_forward20u,t95_through_screen node $S/audit_only.mjs 04 $S/rf1 \"$K6&m04rfew=1\" 2>&1 | grep -v \"allow list\" | tail -5", "description": "Typecheck and render first telescope test shots", "timeout": 600000}`
+

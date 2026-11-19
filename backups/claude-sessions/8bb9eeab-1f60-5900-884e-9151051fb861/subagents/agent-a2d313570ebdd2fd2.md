@@ -1299,3 +1299,73 @@ The Python `\n` became a real newline inside a quoted string. Fixing it.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:48:09.455Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1\" && GRID='-0.5,0.3' EXTRA_JS='(async()=>{const m=await import(\"/src/world/far05.ts\");const d=m.far05Debug;const {scene}=window.__rainbow.qa3d();const fw=scene.getObjectByName(\"tube05_far_wall\");const ud=fw.material.userData;return {cr:d.m05wcrisp,sF:d.sF05,seg:ud.ptSeg.map(v=>[+v.x.toFixed(2),+v.y.toFixed(2)]),segT:ud.ptSegT.map(v=>v.toArray().map(x=>+x.toFixed(3))),segN:ud.ptSegN.map(v=>v.toArray().map(x=>+x.toFixed(3)))};})()' timeout 600 node tools/match05/r15_probe.mjs \"$Q\" x97L 5275 2>&1 | ta …[+90 chars]`
+
+### 🧑 User — 2026-11-19T02:49:07.196Z
+
+> ↩︎ result: == x97L s 188.226 stage 05 cam 0.41,-40.22,-121.31 far-open 0 extra {"cr":{"lReal":15.039999999999992,"lFar":10.196032430368687,"nBC":12,"pBC":2.1030027025307234,"tSeam":0.5959732395137141,"bays":[[0,19,2.0836842105263167],[0,28,2.131785714285722],[0,33,2.0784848484848397],[0,46,2.0823913043478326]]},"sF":180.0383020282329,"seg":[[179.04,188.68],[189.08,202.6],[202.84,215.94],[216.2,230.81],[230.96,244.37],[244.53,258.16],[258.16,1000000000],[1000000000,1000000000]],"segT":[[1,0.549,1],[2,0,1],[3,0,1],[4,0,1],[5,0,1],[6,0,0.07],[6,0.07,0.07],[0,0,0]],"segN":[[0,12,2.103],[0,19,2.084],[0,28,2.132],[0,33,2.078],[0,46,2.082],[0,0,0],[0,0,0],[0,0,0]]}
+>    -0.5,0.3 tube05_far_wall<zone_tubes<washer_world<Scene d11.47 | Mesh<zone_tubes<washer_world<Scene d13.92 | Mesh<zone_tubes<washer_world<Scene d19.19
+
+### 🤖 Claude — 2026-11-19T02:49:23.237Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05wc0=100&m05wc1=101\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try1all && timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" x97L 5275 2>&1 | tail -2 && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nim=Image.open(S+'try1all/x97L.png').convert('RGB')\nim.crop((0,180,480,700)).resize((960,1040),Image.NEAREST).save(S+'try1all_zoom.png')\"", "description": "Render  …[+73 chars]`
+
+### 🧑 User — 2026-11-19T02:50:23.913Z
+
+> ↩︎ result: x97L s 187.878 lat -3.594 coins 1420 benny -0.39 -0.43 big coins: #34@878,1082 d77 #35@787,1060 d76 #36@712,1048 d69 #37@651,1037 d66
+
+### 🤖 Claude — 2026-11-19T02:50:25.909Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try1all_zoom.png"}`
+
+### 🧑 User — 2026-11-19T02:50:25.966Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:51:25.435Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"m05eye.value.set\\|clip05.uClip05N.value\" src/world/match05far.ts && grep -n '\"three\"' package.json && grep -n \"REVISION = \" node_modules/three/build/three.module.js 2>/dev/null | head -2; grep -rn \"REVISION\" node_modules/three/src/constants.js | head -2", "description": "Find sync hooks and three.js version"}`
+
+### 🧑 User — 2026-11-19T02:51:25.738Z
+
+> ↩︎ result: 173:  m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye
+> 382:    if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
+> 383:    else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
+> 25:    "three": "^0.170.0"
+> 6:const REVISION = '170';
+> 1:export const REVISION = '170';
+
+### 🤖 Claude — 2026-11-19T02:51:27.094Z
+
+Now add the shared uniform (waterRibbon.ts), write it in the live sync (match05far.ts), and use it in the far wall shader.
+
+### 🤖 Claude — 2026-11-19T02:51:32.228Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s05/src/vfx/waterRibbon.ts", "old_string": "export const m05wcrispNum = (key: string, d: number): number => { const v = qv05(key); return v !== '' && isFinite(+v) ? +v : d; };", "new_string": "export const m05wcrispNum = (key: string, d: number): number => { const v = qv05(key); return v !== '' && isFinite(+v) ? +v : d; };\n/**\n * `&m05wcrisp=1`: the live far block's mapping for an EXACT tunnel coordinate per pixel on the far wall. With the eye near\n * the seam the far wall's vertex rows (uniform in 1/D from the eye) bunch next to the eye an …[+650 chars]`
+
+### 🧑 User — 2026-11-19T02:51:32.296Z
+
+> ↩︎ result: The file /home/user/wt/s05/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:51:33.041Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/src/world/match05far.ts", "offset": 25, "limit": 4}`
+
+### 🧑 User — 2026-11-19T02:51:33.103Z
+
+> ↩︎ result: 25	import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';
+> 26	import { clip05, m05rideS } from '../vfx/clip05';
+> 27	import type { FarLump05 } from '../vfx/foam';
+> 28
+
+### 🤖 Claude — 2026-11-19T02:51:51.542Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/match05far.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a))\n    s=s.replace(a,b)\nrep(\"import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';\",\n    \"import { EDGE_LIFT, M05BLEND, M05JOIN, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';\")\nrep(\"\"\"  m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // …[+4215 chars]`
+
+### 🧑 User — 2026-11-19T02:51:59.505Z
+
+> ↩︎ result: ok
+> 116:  const L = ft.L, c0 = ft.c0, T = ft.T, U = ft.U, Rt = ft.Rt, R = ft.R, sF = ft.sF;
+

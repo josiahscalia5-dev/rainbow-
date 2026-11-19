@@ -1748,3 +1748,138 @@ Now the centre line: with the band switch, the centre is Benny's lane only (the 
 
 > ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
 
+### 🤖 Claude — 2026-11-19T02:48:00.009Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    // the band tile's magenta columns spread across the whole (varying) band width: its inner edge (by the trim) stays at the\n    // painted scale, the rest widens smoothly toward the outer edge (wide soft satin highlights; no mirrored repeats)\n    float t = clamp((a - Rc) / max(Ro - Rc, 1e-3), 0.0, 1.0);\n    float k = bw / max(Ro - Rc, bw);                  // 1 where the band has the painted width\n    u = uNearM * (1.0 - mix(t, t * t * (3.0 - 2.0 * t), 1.0 - k));", "new_string": "    // the band …[+259 chars]`
+
+### 🧑 User — 2026-11-19T02:48:00.063Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:48:07.388Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='/home/user/wt/s07/src/world/match07.ts'\ns=open(p).read()\ns=s.replace(\"  float bw = mw;                           // world width of one band reading of the tile\\n\",\"\")\ns=s.replace(\"    bw = uBand2.w;\\n\",\"\")\ns=s.replace(\"uniform vec4 uBand2;      // r18 m07band: reach of Benny's lane (lane ± steer + body), cyan core half-width, min band width, band tile width\",\"uniform vec4 uBand2;      // r18 m07band: reach of Benny's lane (lane ± steer + body), cyan core half-width, min band width, foam-edge wobble\")\ns=s.replace(\"\" …[+707 chars]`
+
+### 🧑 User — 2026-11-19T02:48:07.453Z
+
+> ↩︎ result: 96:uniform vec4 uBand2;      // r18 m07band: reach of Benny's lane (lane ± steer + body), cyan core half-width, min band width, foam-edge wobble
+> 119:    float reach = (d > 0.0 ? -S : S) + uBand2.x;
+> 120:    Rc = uBand2.y;
+> 121:    Ro = max(Rc + uBand2.z, reach);
+> 351:    uBand2: { value: new THREE.Vector4(2.85, num07('m07bC', 1.1), 0.95, 0.12) },
+
+### 🤖 Claude — 2026-11-19T02:48:10.466Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 103, "limit": 42}`
+
+### 🧑 User — 2026-11-19T02:48:10.486Z
+
+> ↩︎ result: 103	${PROJ05_INVERSE}
+> 104	// r16 m07nearw: [foam | magenta | trim | cyan | cyan | trim | magenta | foam] across a winding centre line, world-anchored.
+> 105	// Both banks are the painted lower-left band straightened (tools/match07/near_tiles_r16.py) at about the painted near
+> 106	// scale; the right bank reads another stretch of the strip (no mirror image across the centre).
+> 107	vec3 nearWater() {
+> 108	  float along = -vL.z;
+> 109	  float d = vL.x - vCtr;
+> 110	  float R = uNearW.x, mw = uNearW.y;
+> 111	  float Rc = R - mw;                       // cyan core half-width
+> 112	  float Ro = R;                            // outer edge of the magenta band (foam beyond)
+> 113	  if (uBand.w > 0.5) {
+> 114	    // r18 m07band: the painted near river — a narrow glossy cyan core with THICK magenta satin bands close beside Benny, the
+> 115	    // core sweeping in a world-anchored S off his lane (so the bands curve across the view as he swims, like the painted
+> 116	    // S-sweeps); on the outside of each bend the band widens to cover everywhere Benny can steer (never foam under him)
+> 117	    float S = uBand.x * sin(6.2831853 * (along - uBand.z) / uBand.y);
+> 118	    d -= S;
+> 119	    float reach = (d > 0.0 ? -S : S)  …[+1455 chars]
+
+### 🤖 Claude — 2026-11-19T02:48:13.751Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "  vec3 river = mix(cL, cR, smoothstep(-0.32, 0.32, d));\n  R = Ro;", "new_string": "  vec3 river = mix(cL, cR, smoothstep(-0.32, 0.32, d));\n  R = Ro;\n  // r18 m07band: a scalloped (puffy) foam line along the band's outer edge instead of a straight cut\n  if (uBand.w > 0.5) R += uBand2.w * (0.6 * sin(along * 2.3 + sign(d) * 1.7) + 0.4 * sin(along * 5.1 + 0.4 + sign(d)));"}`
+
+### 🧑 User — 2026-11-19T02:48:13.805Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:48:16.402Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/b2 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1\" && node tools/match07/audit_r18.mjs 07 $S \"$K\" f06_forward6u,f10_forward10u,f20_forward20u,s_right_hard 2>&1 | grep -E \"^07|rror\" | head", "description": "Type-check and render the stretched-band version", "timeout": 900000}`
+
+### 🧑 User — 2026-11-19T02:49:25.060Z
+
+> ↩︎ result: 07 f06_forward6u s 279.702 lat 0 stage 07 frames 30
+> 07 f10_forward10u s 283.686 lat 0 stage 07 frames 50
+> 07 f20_forward20u s 293.706 lat 0 stage 07 frames 100
+> 07 s_right_hard s 285.659 lat 2.25 stage 07 frames 60
+
+### 🤖 Claude — 2026-11-19T02:49:27.071Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/b2/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-19T02:49:27.130Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:49:27.647Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/b2/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-19T02:49:27.730Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:49:32.115Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/b2/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-19T02:49:32.179Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:49:32.620Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-19T02:49:32.739Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:49:36.058Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/b2/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T02:49:36.132Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:49:43.787Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && mkdir -p qa/match/07/r18/step4_band && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1\" && node tools/match07/audit_r18.mjs 07 qa/match/07/r18/step4_band/NEW \"$K\" a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,f20_forward20u,s_left_steer,s_right_steer,s_left_hard,s_right_hard 2>&1 | grep -E \"^07|rror\" | head -12", "description": "Render the full NEW set for step 4", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-19T02:51:59.134Z
+
+> ↩︎ result: 07 a00_approved_view s 273.668 lat 0 stage 07 frames 0
+> 07 f03_forward3u s 276.659 lat 0 stage 07 frames 15
+> 07 f06_forward6u s 279.698 lat 0 stage 07 frames 30
+> 07 f10_forward10u s 283.662 lat 0 stage 07 frames 50
+> 07 f20_forward20u s 293.662 lat 0 stage 07 frames 100
+> 07 s_left_steer s 279.66 lat -2.25 stage 07 frames 30
+> 07 s_right_steer s 279.66 lat 2.25 stage 07 frames 30
+> 07 s_left_hard s 285.659 lat -2.25 stage 07 frames 60
+> 07 s_right_hard s 285.66 lat 2.25 stage 07 frames 60
+
+### 🤖 Claude — 2026-11-19T02:52:00.651Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step4_band/NEW/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-19T02:52:00.708Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:52:01.147Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-19T02:52:01.237Z
+
+> ↩︎ result: [image]
+

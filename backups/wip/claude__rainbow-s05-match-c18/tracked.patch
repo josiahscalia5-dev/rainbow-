@@ -21,7 +21,7 @@ index 44af1e56..667b0a9c 100644
 +* The hot-pink triangle in the bottom-left corner at t81L is also the far wall (its baked row holds river / bank colours
 +  at those angles, magnified).
 diff --git a/src/vfx/proj05Tunnel.ts b/src/vfx/proj05Tunnel.ts
-index 14d83222..a19cbf4b 100644
+index 14d83222..9ce59026 100644
 --- a/src/vfx/proj05Tunnel.ts
 +++ b/src/vfx/proj05Tunnel.ts
 @@ -14,7 +14,7 @@
@@ -29,7 +29,7 @@ index 14d83222..a19cbf4b 100644
   */
  import * as THREE from 'three';
 -import { M05WALL, M05WTILE, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
-+import { M05WALL, M05WTILE, M05WCRISP, m05wcrispNum, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
++import { M05WALL, M05WTILE, M05WCRISP, m05wcrispNum, m05fw, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
  // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
  const flag05 = on05;
  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -56,7 +56,7 @@ index 14d83222..a19cbf4b 100644
    if (PROJRING05) {
      jobs.push(load(new URL('../../assets/textures/tunnel05/ring05.png', import.meta.url).href).then((t) => {
        shared.uPtRing.value = t;
-@@ -287,8 +296,54 @@ const M05WTILE_GLSL = /* glsl */ `
+@@ -287,8 +296,70 @@ const M05WTILE_GLSL = /* glsl */ `
      }
    }`;
  
@@ -72,6 +72,22 @@ index 14d83222..a19cbf4b 100644
 + * pixel footprint (crisp at any distance; faded to the mean where a slot gets smaller than a few pixels). It replaces the
 + * bay's own colour (`pc0`, before m05wtile), so there is never a second slot pattern under it. Off at the locked eye.
 + */
++const M05FW_GLSL = /* glsl */ `
++  if (uM05FwP.w > 0.5) {
++    // m05wcrisp: invert the live forced perspective from the world position (real depth z past the seam → virtual Z),
++    // then the knots (u, Z) → tunnel coordinate; exact at every pixel, whatever the triangle size
++    vec3 wpF = cameraPosition + transpose(mat3(viewMatrix)) * (-vViewPosition);
++    float zF = dot(wpF - uM05FwC, uM05FwT);
++    float ZF = zF;
++    if (zF > uM05FwP.x) { float e = zF - uM05FwP.x; ZF = uM05FwP.x + e / max(1.0 - e / uM05FwP.y, 1e-3); }
++    float uF = ZF;
++    for (int i = 1; i < 8; i++) {
++      vec2 ka = uM05FwK[i - 1], kb = uM05FwK[i];
++      if (ZF <= kb.y || i == 7) { uF = mix(ka.x, kb.x, (ZF - ka.y) / max(kb.y - ka.y, 1e-4)); break; }
++    }
++    pv = uM05FwP.z + uF;
++  }`;
++
 +const M05WCRISP_GLSL = /* glsl */ `
 +  if (psn.z > 0.0 && prow < 6.5${M05WCRISP === 2 ? '' : ' && prow > 0.5'}) {
 +    vec2 tpc = vec2(vPerfUv.x, puv.y) * uPtWallSize;
@@ -113,14 +129,15 @@ index 14d83222..a19cbf4b 100644
  
  /**
   * `?projwall05=1`: wrap a perforatedMetal wall material (real 05 wall or the forced-perspective far wall; both carry
-@@ -298,10 +353,13 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1:
+@@ -298,10 +369,14 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1:
  export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
    const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0, 0)));
    const segT = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector3(segs[i].row, segs[i].t0, segs[i].t1) : new THREE.Vector3(0, 0, 0)));
 -  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE ? { uM05Eye: m05eye } : {}) };
 +  // `&m05wcrisp=1` (round 18): per bay (slot-row phase at t = 0, phase per unit t, pitch); pitch 0 = not drawn crisp
 +  const segN = Array.from({ length: N_SEG }, (_, i) => (segs[i]?.ph ? new THREE.Vector3(...segs[i].ph!) : new THREE.Vector3(0, 0, 0)));
-+  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE || M05WCRISP ? { uM05Eye: m05eye } : {}), ...(M05WCRISP ? { uPtSegN: { value: segN } } : {}) };
++  const fwExact = M05WCRISP > 0 && key === 'far';   // `&m05wcrisp=1`: the far wall's exact tunnel coordinate per pixel
++  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE || M05WCRISP ? { uM05Eye: m05eye } : {}), ...(M05WCRISP ? { uPtSegN: { value: segN } } : {}), ...(fwExact ? m05fw : {}) };
    // env05 run #4: the bays stay editable until the first render (environment.ts adds the real wall's bay past the seam)
    mat.userData.ptSeg = seg;
    mat.userData.ptSegT = segT;
@@ -128,8 +145,12 @@ index 14d83222..a19cbf4b 100644
    const prev = mat.onBeforeCompile;
    mat.onBeforeCompile = (shader, r) => {
      prev.call(mat, shader, r);
-@@ -317,19 +375,21 @@ void main() {`)
-   float pv = vPerfUv.y;
+@@ -314,22 +389,25 @@ ${PROJ05_INVERSE}
+ void main() {`)
+       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+ { // ?projwall05=1: the approved wall of this bay (texture anchored to the tunnel)
+-  float pv = vPerfUv.y;
++  float pv = vPerfUv.y;${fwExact ? M05FW_GLSL : ''}
    float prow = 0.0;
    float pt = fract((pv - uPtTile.x) / uPtTile.y);
 +${M05WCRISP ? '  vec3 psn = vec3(0.0);' : ''}
@@ -147,6 +168,7 @@ index 14d83222..a19cbf4b 100644
 -    if (M05WALL || M05WTILE) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
 +    if (M05WALL || M05WTILE || M05WCRISP) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
 +    if (M05WCRISP) shader.fragmentShader = shader.fragmentShader.replace('void main() {', `uniform vec3 uPtSegN[${N_SEG}]; uniform sampler2D uM05WField; uniform vec2 uM05WC;\nvoid main() {`);
++    if (fwExact) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec3 uM05FwC; uniform vec3 uM05FwT; uniform vec4 uM05FwP; uniform vec2 uM05FwK[8];\nvoid main() {');
    };
    const prevKey = mat.customProgramCacheKey.bind(mat);
 -  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '');
@@ -155,10 +177,10 @@ index 14d83222..a19cbf4b 100644
    mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
    return mat;
 diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
-index 5da96aa8..9e3a27a2 100644
+index 5da96aa8..e662af08 100644
 --- a/src/vfx/waterRibbon.ts
 +++ b/src/vfx/waterRibbon.ts
-@@ -343,6 +343,21 @@ export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
+@@ -343,6 +343,34 @@ export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
   * wall. Off at the locked checkpoint eye (0 px there) and wherever the own row is sharp enough.
   */
  export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
@@ -177,6 +199,19 @@ index 5da96aa8..9e3a27a2 100644
 + */
 +export const M05WCRISP: number = MATCH05 && q05('m05far') ? (qv05('m05wcrisp') === '2' ? 2 : q05('m05wcrisp') ? 1 : 0) : 0;
 +export const m05wcrispNum = (key: string, d: number): number => { const v = qv05(key); return v !== '' && isFinite(+v) ? +v : d; };
++/**
++ * `&m05wcrisp=1`: the live far block's mapping for an EXACT tunnel coordinate per pixel on the far wall. With the eye near
++ * the seam the far wall's vertex rows (uniform in 1/D from the eye) bunch next to the eye and its last triangles span
++ * virtual depths 40 → 430, so the interpolated coordinate jumped at triangle edges (slot rows suddenly 6× denser). The
++ * shader inverts the forced perspective from the world position instead. Written every frame by src/world/match05far.ts:
++ * c0, T = far block origin / axis; p = (zs = real-scale extent, L, sF, live 0/1); knots = (u, Z) of ForcedTunnel.
++ */
++export const m05fw = {
++  uM05FwC: { value: new THREE.Vector3() },
++  uM05FwT: { value: new THREE.Vector3(0, 0, 1) },
++  uM05FwP: { value: new THREE.Vector4(0, 6, 0, 0) },
++  uM05FwK: { value: Array.from({ length: 8 }, () => new THREE.Vector2(0, 0)) },
++};
  /**
   * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
   * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
@@ -235,3 +270,42 @@ index 4c5f1ffe..ad5da2a7 100644
        const uEnd = ft.uOfZ(zEnd);
        segs.push({ v0: sF05 + uRing(4) + hwF / dZdu(uRing(4)), v1: sF05 + uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
        segs.push({ v0: sF05 + uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
+diff --git a/src/world/match05far.ts b/src/world/match05far.ts
+index 57eba2db..c9e4e09d 100644
+--- a/src/world/match05far.ts
++++ b/src/world/match05far.ts
+@@ -22,7 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
+ import { tubeCenterAt } from './tube';
+ import type { FarRiverLayout, FarRiverRow } from './far05';
+ import type { Course, CourseSample } from './course';
+-import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';
++import { EDGE_LIFT, M05BLEND, M05JOIN, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
+ import { clip05, m05rideS } from '../vfx/clip05';
+ import type { FarLump05 } from '../vfx/foam';
+ 
+@@ -171,6 +171,17 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+   const rivOpenOrig = (rg.morphAttributes.position[0].array as Float32Array).slice();
+   const eyeLock = c0.clone().addScaledVector(T, -D0lock).add(ft.q);
+   m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye
++  if (M05WCRISP) {
++    // `&m05wcrisp=1` (round 18): the far wall's exact tunnel coordinate per pixel (src/vfx/proj05Tunnel.ts)
++    m05fw.uM05FwC.value.copy(c0); m05fw.uM05FwT.value.copy(T);
++    const kn = ft.knots.length >= 2 ? ft.knots : [[0, 0], [1, 1]] as [number, number][];
++    m05fw.uM05FwK.value.forEach((v, i) => {
++      if (i < kn.length) { v.set(kn[i][0], kn[i][1]); return; }
++      // past the last knot: continue its slope (ForcedTunnel.interp extrapolates the last segment)
++      const a = kn[kn.length - 2], b = kn[kn.length - 1], du = (i - kn.length + 1) * 1e4;
++      v.set(b[0] + du, b[1] + du * (b[1] - a[1]) / (b[0] - a[0]));
++    });
++  }
+   const glowPos0 = a.glow.position.clone(), glowScale0 = a.glow.scale.x;
+ 
+   const restore = () => {
+@@ -379,6 +390,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+       far05Coins.T.copy(T);
+     }
+     // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
++    if (M05WCRISP) m05fw.uM05FwP.value.set(zs, L, sF, atLock || open > 0.5 ? 0 : 1);
+     if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
+     else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
+     // `&m05seam=1` (Screen 05 round 8): the seam's course position for the near river's design hand-over (waterRibbon.ts)

@@ -1100,3 +1100,132 @@ Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:48:07.697Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\na=s.index(\"        // r18 m06st: the crest-top layer.\")\nb=s.index(\"      float w = (stOn > 0.5 ? (filled > 0.5 ? hold : vis) * edge : vis) * keep;\")\nseg=s[a:b]; close=seg[seg.rindex(\"      }\\n\"):]\nnew='''        // r18 m06st: the crest-top layer. In the approved view the painted crest top (its water, the foam heaps on its bank)\n        // lands partly on the far tunnel wall just above the river's real edge, and the tunnel right behind the crest is\n        // hidden. Once the camera r …[+2771 chars]`
+
+### 🧑 User — 2026-11-19T02:48:44.977Z
+
+> ↩︎ result: 104:// uStK = march step down the projector's depth map (uv, 4 px of the approved picture); uStB = crest warp band (px)
+> 108:uniform float uStK;
+> 109:uniform vec2 uStB;
+> 231:        // whose approved-view pixel lies up to uStB.x px above the river's edge fully, fading to their own depth by uStB.y
+> 239:              vec2 u2 = uv - vec2(0.0, float(k) * uStK);
+> 242:              if (z2 < 0.8 * zf) { zc = z2; bw = 1.0 - smoothstep(uStB.x, uStB.y, float(k) * uStK * 1536.0); break; }
+> 407:    uStK: { value: 4 / 1536 },
+> 408:    uStB: { value: new THREE.Vector2(80, 160) },
+> 448:  if (stb.length === 2 && stb.every(Number.isFinite)) shared.uStB.value.set(stb[0], stb[1]);
+> NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:48:49.563Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06; python3 -c \"\nfrom PIL import Image\nS='$S/'\nims=[Image.open(S+f).crop((0,400,864,660)) for f in ['try1/BEFORE.png','try3/[REDACTED-EMAIL]','try4/[REDACTED-EMAIL]']]\nw,h=ims[0].size\no=Image.new('RGB',(w,h*3+20),'black')\nfor i,im in enumerate(ims): o.paste(im,(0,i*(h+10)))\no.save(S+'cmp_crest4.png')\n\"", "description": "Compare crest crops checkpoint/try3/try4"}`
+
+### 🧑 User — 2026-11-19T02:48:49.961Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:48:51.842Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/cmp_crest4.png"}`
+
+### 🧑 User — 2026-11-19T02:48:51.902Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:49:23.046Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\nold='''        if (stOn > 0.5 && uStM > 0.5 && hold > 0.0) {\n          float zc = -1.0, bw = 1.0;\n          if (zs < 0.8 * zf) zc = zs;\n          else {'''\nnew='''        // On the river itself: parts the crest hid are read the same way (i); its grazing edges (depth within 20 %) keep the\n        // approved pixels instead of a bright line of the river material.\n        if (stOn > 0.5 && hold > 0.0) {\n          float zc = -1.0, bw = 1.0;\n          if (zs < 0.8 * zf) zc = zs;\n          el …[+947 chars]`
+
+### 🧑 User — 2026-11-19T02:49:58.916Z
+
+> ↩︎ result: NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+> [This command modified 1 file you've previously read: ../wt/s06/src/world/match06.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-19T02:50:00.981Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/cmp_crest5.png"}`
+
+### 🧑 User — 2026-11-19T02:50:01.042Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:50:07.056Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06 && node tools/match06/r18_dbg.mjs $S/dbg \"$K&m06st=1\" st11@1.1:tint 2>&1 | grep -v \"allow list\" | tail -1; python3 -c \"\nfrom PIL import Image\nS='$S/'\na=Image.open(S+'try5/[REDACTED-EMAIL]').crop((380,480,864,600)); b=Image.open(S+'dbg/st11.png').crop((380,480,864,600))\nw,h=a.size; o=Image.new('RGB',(w,h*2+6)); o.paste(a,(0,0)); o.paste(b,(0,h+6)); o. …[+157 chars]`
+
+### 🧑 User — 2026-11-19T02:50:35.835Z
+
+> ↩︎ result: st11 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:50:37.750Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/line_zoom.png"}`
+
+### 🧑 User — 2026-11-19T02:50:37.771Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:50:47.049Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"float keep = \" src/world/match06.ts", "description": "Locate the magnification guard line"}`
+
+### 🧑 User — 2026-11-19T02:50:47.113Z
+
+> ↩︎ result: 207:  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);
+
+### 🤖 Claude — 2026-11-19T02:50:48.556Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 200, "limit": 12}`
+
+### 🧑 User — 2026-11-19T02:50:48.581Z
+
+> ↩︎ result: 200	  }
+> 201	  vec3 t = pc;
+> 202	  float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
+> 203	  // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
+> 204	  // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
+> 205	  float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
+> 206	  // r6 m06flow: on the river the flowing painted-water material takes over sooner from the stretched projection
+> 207	  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);
+> 208	  if (vProj.w > 0.0) {
+> 209	    vec3 ndc = vProj.xyz / vProj.w;
+> 210	    vec2 uv = ndc.xy * 0.5 + 0.5;
+> 211	    // r18 m06st: just outside the projector's frame (a few px at the screen edge once the camera has moved) the frame's
+
+### 🤖 Claude — 2026-11-19T02:50:51.923Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);\n  if (vProj.w > 0.0) {", "new_string": "  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);\n  // r18 m06st: this close to the approved viewpoint the only surfaces this guard catches are slivers the approved view\n  // saw edge-on (a bright 1-2 px line of the river material along the river's far edge): keep the approved pixels\n  if (st …[+59 chars]`
+
+### 🧑 User — 2026-11-19T02:50:51.997Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:50:57.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && O=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try6 && node tools/match06/r16_start.mjs $O NEW@1.1 \"$K&m06st=1\" 2>&1 | grep -v \"allow list\"; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/'\na=Image.open(S+'try6/[REDACTED-EMAIL]').crop((380,480,864,600)); b=Image.open(S+'tr …[+284 chars]`
+
+### 🧑 User — 2026-11-19T02:51:37.936Z
+
+> ↩︎ result: NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:51:39.905Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/line_zoom6.png"}`
+
+### 🧑 User — 2026-11-19T02:51:39.928Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:51:54.749Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "              if (z2 < 0.8 * zf) { zc = z2; bw = 1.0 - smoothstep(uStB.x, uStB.y, float(k) * uStK * 1536.0); break; }", "new_string": "              if (z2 < 0.8 * zf) {\n                // back up in 1 px steps to the river's exact edge (seen edge-on its depth changes fast per pixel)\n                zc = z2;\n                for (int j = 1; j <= 4; j++) {\n                  float z3 = linZ(textureLod(uDepth, u2 + vec2(0.0, float(j) * uStK * 0.25), 0.0).r);\n                  if (z3 >= 0.8 * zf) break …[+173 chars]`
+
+### 🧑 User — 2026-11-19T02:51:54.779Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:51:59.852Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && O=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try7 && node tools/match06/r16_start.mjs $O NEW@1.1 \"$K&m06st=1\" 2>&1 | grep -v \"allow list\"; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/'\na=Image.open(S+'try7/[REDACTED-EMAIL]').crop((380,480,864,600)); b=Image.open(S+'tr …[+273 chars]`
+
