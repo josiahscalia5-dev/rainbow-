@@ -1,0 +1,31 @@
+{
+  "originalSHA256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "sourceSize": [
+    864,
+    1536
+  ],
+  "sourcePatchXYWH": [
+    380,
+    1043,
+    96,
+    96
+  ],
+  "calibrationSWATCHXYXY": [
+    391,
+    1084,
+    456,
+    1118
+  ],
+  "calibrationLinearGray": [
+    0.1,
+    0.38
+  ],
+  "localMedianLinearAlbedo": [
+    0.43688896840255326,
+    0.1164204023636452,
+    0.212456123179685
+  ],
+  "bilinearCalibrationModel": "Per-channel linear approximation between the two retained-light photographs. Includes postprocessing.",
+  "relief": "5th to 95th percentile of local luminance contrast after subtracting a 6-pixel Gaussian. Existing 20 real fur shells determine depth.",
+  "textureCoordinates": "12 material tiles per body circumference, 5.2 per pi radians of latitude. Hidden flanks continue the same photographed lock pattern."
+}

@@ -1,0 +1,32 @@
+{
+  "last-left-bend": {
+    "nativeLowerWaterMaskPixels": 378559,
+    "nearRiverDiagnosticLowerPixels": 107206,
+    "farRiverDiagnosticLowerPixels": 0,
+    "meanAbsoluteLuminanceChangeOver4VerticalPixels": {
+      "priorPreparedWall": 3.7180340233979807,
+      "new": 4.440731077125084
+    },
+    "meanAbsoluteColourChangeWithinMask": 4.194115932611121
+  },
+  "last-right-bend": {
+    "nativeLowerWaterMaskPixels": 356835,
+    "nearRiverDiagnosticLowerPixels": 94086,
+    "farRiverDiagnosticLowerPixels": 17112,
+    "meanAbsoluteLuminanceChangeOver4VerticalPixels": {
+      "priorPreparedWall": 7.4284186708778535,
+      "new": 8.321311577203005
+    },
+    "meanAbsoluteColourChangeWithinMask": 3.5066954381343383
+  },
+  "last-in-stage": {
+    "nativeLowerWaterMaskPixels": 56212,
+    "nearRiverDiagnosticLowerPixels": 14054,
+    "farRiverDiagnosticLowerPixels": 88729,
+    "meanAbsoluteLuminanceChangeOver4VerticalPixels": {
+      "priorPreparedWall": 3.0265188300856773,
+      "new": 3.032269383577223
+    },
+    "meanAbsoluteColourChangeWithinMask": 0.09866220735785954
+  }
+}

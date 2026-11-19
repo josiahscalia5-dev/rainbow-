@@ -1,0 +1,196 @@
+{
+  "screen": "06",
+  "verifiedSource": {
+    "commit": "975538219204c7c0e34af2e498d03bb75db1ffde",
+    "branch": "codex/s06-benny-original-fibers",
+    "parent": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "sourceFiles": [
+      "src/characters/benny/runtime.ts",
+      "src/characters/benny/original06.ts",
+      "assets/textures/match06/benny06_fibers.png"
+    ],
+    "utc": "2026-11-19T00:55:10.382881+00:00",
+    "purpose": "Isolated experimental source, pending visual review."
+  },
+  "retainedOpeningRepeatedExactly": true,
+  "opening": {
+    "width": 864,
+    "height": 1536,
+    "threshold": 0.1,
+    "includeAA": false,
+    "approvedVsBefore": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049550,
+      "within20Percent": 79.08573857060185,
+      "pixelmatchMismatches": 262246
+    },
+    "approvedVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049507,
+      "within20Percent": 79.08249843267747,
+      "pixelmatchMismatches": 262337
+    },
+    "beforeVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 121866,
+      "within20Pixels": 1323797,
+      "within20Percent": 99.75081078800154,
+      "pixelmatchMismatches": 2247
+    },
+    "beforeVsRepeat": {
+      "pixels": 1327104,
+      "exactDifferences": 0,
+      "within20Pixels": 1327104,
+      "within20Percent": 100,
+      "pixelmatchMismatches": 0
+    }
+  },
+  "simulationHz": 60,
+  "clip": {
+    "codec_name": "h264",
+    "width": 648,
+    "height": 1152,
+    "avg_frame_rate": "12/1",
+    "duration": "5.250000",
+    "nb_frames": "63",
+    "side_data_list": [
+      {}
+    ]
+  },
+  "routeMatchedFrames": 63,
+  "matchedCameraAndGameState": true,
+  "poseCount": 14,
+  "skips": [],
+  "safeRun": {
+    "start": 1330,
+    "coins": 91,
+    "score": 2240,
+    "stage": "11",
+    "hearts": 5,
+    "collisions": []
+  },
+  "gameplayAssertions": {
+    "pauseFreezes": true,
+    "continuousTravel": true,
+    "noCameraCut": true,
+    "noTeleport": true,
+    "plunge": true,
+    "realCoinPickups": true,
+    "victory": true,
+    "heartsLostOnWallBump": true
+  },
+  "stageTransitions": [
+    [
+      0,
+      "06"
+    ],
+    [
+      4.916666666666667,
+      "07"
+    ]
+  ],
+  "poseSummaries": {
+    "opening": {
+      "versusClaudiaPixelsOver30SumChannelError": 24912,
+      "versusParentPixelsOver30SumChannelError": 24912,
+      "versusParentAnyPixelChange": 121866,
+      "parentMaximumChannelChange": 182
+    },
+    "forward-03": {
+      "versusClaudiaPixelsOver30SumChannelError": 18485,
+      "versusParentPixelsOver30SumChannelError": 18485,
+      "versusParentAnyPixelChange": 102142,
+      "parentMaximumChannelChange": 180
+    },
+    "forward-06": {
+      "versusClaudiaPixelsOver30SumChannelError": 14751,
+      "versusParentPixelsOver30SumChannelError": 14751,
+      "versusParentAnyPixelChange": 93901,
+      "parentMaximumChannelChange": 211
+    },
+    "forward-10": {
+      "versusClaudiaPixelsOver30SumChannelError": 11713,
+      "versusParentPixelsOver30SumChannelError": 11713,
+      "versusParentAnyPixelChange": 86844,
+      "parentMaximumChannelChange": 65
+    },
+    "forward-20": {
+      "versusClaudiaPixelsOver30SumChannelError": 9262,
+      "versusParentPixelsOver30SumChannelError": 9262,
+      "versusParentAnyPixelChange": 75096,
+      "parentMaximumChannelChange": 65
+    },
+    "hard-left": {
+      "versusClaudiaPixelsOver30SumChannelError": 9852,
+      "versusParentPixelsOver30SumChannelError": 9852,
+      "versusParentAnyPixelChange": 75157,
+      "parentMaximumChannelChange": 65
+    },
+    "hard-right": {
+      "versusClaudiaPixelsOver30SumChannelError": 9980,
+      "versusParentPixelsOver30SumChannelError": 9980,
+      "versusParentAnyPixelChange": 75506,
+      "parentMaximumChannelChange": 65
+    },
+    "inlet": {
+      "versusClaudiaPixelsOver30SumChannelError": 14651,
+      "versusParentPixelsOver30SumChannelError": 14651,
+      "versusParentAnyPixelChange": 88240,
+      "parentMaximumChannelChange": 194
+    },
+    "middle": {
+      "versusClaudiaPixelsOver30SumChannelError": 9685,
+      "versusParentPixelsOver30SumChannelError": 9685,
+      "versusParentAnyPixelChange": 78487,
+      "parentMaximumChannelChange": 65
+    },
+    "deep": {
+      "versusClaudiaPixelsOver30SumChannelError": 7032,
+      "versusParentPixelsOver30SumChannelError": 7032,
+      "versusParentAnyPixelChange": 62971,
+      "parentMaximumChannelChange": 64
+    },
+    "crest-release": {
+      "versusClaudiaPixelsOver30SumChannelError": 21674,
+      "versusParentPixelsOver30SumChannelError": 21674,
+      "versusParentAnyPixelChange": 113198,
+      "parentMaximumChannelChange": 188,
+      "palePixels": {
+        "regionXYXY": [
+          282,
+          1088,
+          574,
+          1248
+        ],
+        "threshold": "minimum RGB channel above 140 and channel range below 85",
+        "parent": 18028,
+        "new": 18028
+      }
+    },
+    "arch-exit": {
+      "versusClaudiaPixelsOver30SumChannelError": 7193,
+      "versusParentPixelsOver30SumChannelError": 7193,
+      "versusParentAnyPixelChange": 62589,
+      "parentMaximumChannelChange": 63
+    },
+    "last-in-stage": {
+      "versusClaudiaPixelsOver30SumChannelError": 12452,
+      "versusParentPixelsOver30SumChannelError": 12452,
+      "versusParentAnyPixelChange": 88498,
+      "parentMaximumChannelChange": 71
+    },
+    "across-transition": {
+      "versusClaudiaPixelsOver30SumChannelError": 9471,
+      "versusParentPixelsOver30SumChannelError": 9471,
+      "versusParentAnyPixelChange": 111733,
+      "parentMaximumChannelChange": 153
+    }
+  },
+  "geometryDiagnostics": {}
+}

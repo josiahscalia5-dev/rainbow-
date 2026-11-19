@@ -1,0 +1,41 @@
+{
+  "verifiedUTC": "2026-11-19T02:48:28.281562+00:00",
+  "branch": "codex/s06-approved-crest-route",
+  "tip": "a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26",
+  "gameSource": "5082930a7e7d7a0dbf914a7b2c4f65376d3984d7",
+  "protectedBase": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+  "verifiedFiles": 83,
+  "lfsBytesRecovered": 154899311,
+  "lfs": {
+    "0c5f664b9e6f9dcfbebeb210006a624a1cb0248636b8526e72c3c60f1d10fedf": {
+      "size": 7691281,
+      "path": "experiments/codex/s06-approved-crest-route/AT_CLAUDIA_CAMERA/ride.mp4"
+    },
+    "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1": {
+      "size": 7491213,
+      "path": "experiments/codex/s06-approved-crest-route/CLAUDIA_BEFORE/ride.mp4"
+    },
+    "5e4aa3fd9ca2694b9dadc37477fb2559bb02bc76ad61c43fa9ae16247de5c837": {
+      "size": 7648858,
+      "path": "experiments/codex/s06-approved-crest-route/CODEX_NEW/ride.mp4"
+    },
+    "03bb60b9fbd441791905a0f6b4d2a27914b382065ba4060ef02189c91f59f79e": {
+      "size": 131201713,
+      "path": "experiments/codex/s06-approved-crest-route/Screen06_Review.zip"
+    },
+    "3365b1a724821e157ee8a213e4f12d271b690d4a9f6d0c5db84b0f43788a3931": {
+      "size": 866246,
+      "path": "experiments/codex/s06-approved-crest-route/editable/Screen06_Crest_Routes.blend"
+    }
+  },
+  "githubRenderedInlineImages": 6,
+  "byteVerifiedPrivateDownloads": [
+    "APPROVED.jpg",
+    "CLAUDIA_BEFORE/opening.png",
+    "CODEX_NEW/opening.png",
+    "Review_on_Android.pdf"
+  ],
+  "protectedTipDifferencesObserved": [
+    "refs/heads/ccr-ae71d3a5-80naq2"
+  ]
+}

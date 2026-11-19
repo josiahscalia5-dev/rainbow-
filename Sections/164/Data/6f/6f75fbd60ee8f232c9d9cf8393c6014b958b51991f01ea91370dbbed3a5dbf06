@@ -1,0 +1,49 @@
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 99f615e9..c633d3aa 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -376,6 +376,8 @@ export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+ export const M05BERM: boolean = M05RIDE && q05('m05berm');
+ /** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
+ export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
++/** `&m05late=1` (Screen 05 round 10, needs m05far; src/world/environment.ts): the 05 far tunnel folds into 06 later and quicker */
++export const M05LATE: boolean = MATCH05 && q05('m05far') && q05('m05late');
+ /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
+ export const m05foamK = { value: 0 };
+ /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
+diff --git a/src/world/environment.ts b/src/world/environment.ts
+index 9200b1b2..d2e8c01d 100644
+--- a/src/world/environment.ts
++++ b/src/world/environment.ts
+@@ -10,7 +10,7 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
+ import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
+ import { STAGE_CAM } from '../game/cameraRig';
+ import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+-import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
++import { FLOW05, FLOWMAP05, PROJ05, M05LATE } from '../vfx/waterRibbon';
+ import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+ import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+ import { flow05Shared, flow05Textures } from '../vfx/flow05';
+@@ -633,7 +633,9 @@ export function buildEnvironment(course: Course): Environment {
+     const liveFar = M05FAR ? createLiveFar05({
+       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
+-      zCap: sGlow05 + 3.5 - sF05, foldNear: 6.5, foldFar: 10,
++      // `&m05late=1` (Screen 05 round 10): fold later and quicker (eye → seam 7.5 → 5 u instead of 10 → 6.5 u), so the
++      // painted 05 tunnel stays until Benny ≈ 185 (still before he reaches the capped seam)
++      zCap: sGlow05 + 3.5 - sF05, foldNear: M05LATE ? 5 : 6.5, foldFar: M05LATE ? 7.5 : 10,
+       riverUp: (z) => course.sample(sF05 + z).pos.clone().sub(ft.c0).dot(ft.U),
+       course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
+     }) : null;
+diff --git a/tools/match05/r10_probe.mjs b/tools/match05/r10_probe.mjs
+index 1aa1085e..a7974972 100644
+--- a/tools/match05/r10_probe.mjs
++++ b/tools/match05/r10_probe.mjs
+@@ -18,6 +18,7 @@ const ALL = {
+   s_left_steer: [6, -1], s_right_steer: [6, 1], s_left_hard: [12, -1], s_right_hard: [12, 1],
+   t33_through_screen: ['t0.33', null], t66_through_screen: ['t0.66', null], t95_through_screen: ['t0.95', null],
+   // round 10: inside the 05 -> 06 kink (s ≈ 178), straight and steered to both banks
++  t88_end: ['t0.88', null], t90_end: ['t0.90', null], t92_end: ['t0.92', null], t94_end: ['t0.94', null],
+   k81_kink: ['t0.81', null], k81_kink_left: ['t0.81', -1], k81_kink_right: ['t0.81', 1],
+ };
+ // render slot (same protocol as scripts/lib/pw.mjs): one browser render at a time on the shared CPU

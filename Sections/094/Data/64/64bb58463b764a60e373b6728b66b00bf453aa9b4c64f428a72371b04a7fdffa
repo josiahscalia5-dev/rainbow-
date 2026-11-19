@@ -1,0 +1,33 @@
+from pathlib import Path
+import subprocess,json,shutil,sys,hashlib
+root=Path.cwd();v=root/'second';repo=root/'repo';source=root/'games/06'
+# Keep the exact first material implementation so the two controlled trials can be recovered.
+record=repo/'experiments/codex/s06-benny-layered-coat/first-pass'
+record.mkdir(parents=True,exist_ok=True)
+for n,to in [('src/characters/benny/fur.ts','fur.ts'),('assets/textures/match06/coat-locks.png','coat-locks.png')]:shutil.copyfile(source/n,record/to)
+for n,to in [('authoring/character-comparison.json','appearance.json'),('proof/06/NEW/opening.png','opening.png'),('proof/06/NEW/hard-left.png','hard-left.png'),('proof/06/NEW/hard-right.png','hard-right.png')]:
+ if (root/n).is_file():shutil.copyfile(root/n,record/to)
+# Bake the exact tested tile from either lighting calibrations alone or with the saved feedback.
+p=repo/'tools/benny-coat06/bake-locks.py';s=p.read_text()
+s=s.replace('    args=parser.parse_args()',"""    parser.add_argument('--refinement', type=Path, help='Optional measured appearance feedback from the first live coat')
+    args=parser.parse_args()""")
+s=s.replace("    Image.fromarray(np.uint8(np.rint(image*255)),'RGBA').save(args.tile)", """    quantized=np.uint8(np.rint(image*255))
+    if args.refinement:
+        feedback=json.loads(args.refinement.read_text())
+        quantized[:,:,:3]=np.rint(np.clip(quantized[:,:,:3].astype(float)*feedback['linearFeedback'],0,255)).astype('uint8')
+        quantized[:,:,3]=np.rint(gaussian_filter(quantized[:,:,3].astype(float),feedback['heightBlurInTileTexels'],mode='wrap')).astype('uint8')
+    Image.fromarray(quantized,'RGBA').save(args.tile)""")
+p.write_text(s)
+for n in ['src/game/Game.ts','src/characters/benny/fur.ts','src/characters/benny/coat06.ts','assets/textures/match06/coat-locks.png']:
+ shutil.copyfile(v/'games/06'/n,repo/n)
+cmd=[sys.executable,str(p),str(source/'references/06_crest_the_rinse_arch.png'),str(root/'authoring'),str(root/'authoring/rebaked.png'),str(root/'authoring/rebaked.json'),'--refinement',str(v/'authoring/refinement.json')]
+subprocess.run(cmd,check=True)
+assert (root/'authoring/rebaked.png').read_bytes()==(repo/'assets/textures/match06/coat-locks.png').read_bytes()
+def git(*args):return subprocess.check_output(['git','-C',str(repo),*args]).decode().strip()
+base=json.loads((root/'baseline.json').read_text());assert git('rev-parse','HEAD')==base['retained']['commit'] and git('branch','--show-current')==base['branch']
+files=['src/game/Game.ts','src/characters/benny/fur.ts','src/characters/benny/coat06.ts','assets/textures/match06/coat-locks.png','tools/benny-coat06/bake-locks.py']
+git('add','--',*files);git('diff','--cached','--check')
+assert sorted(git('diff','--cached','--name-only').splitlines())==sorted(files)
+git('commit','-q','-m','Fit layered pink fur from the approved Screen 06 artwork to Benny’s existing body')
+base['commit']=git('rev-parse','HEAD');(root/'source.json').write_text(json.dumps(base,indent=2)+'\n');shutil.copyfile(root/'source.json',v/'source.json')
+print('Coat source',base['commit'],'verified baked texture',hashlib.sha256((root/'authoring/rebaked.png').read_bytes()).hexdigest())

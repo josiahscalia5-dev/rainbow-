@@ -1,0 +1,68 @@
+from pathlib import Path
+import shutil
+p=Path.cwd();f=p/'games/08/src/world/match08.ts';s=f.read_text()
+def change(a,b):
+ global s
+ assert s.count(a)==1,a
+ s=s.replace(a,b)
+change('const VERT = /* glsl */ `\nuniform mat4 uProjVP;',"""const VERT = /* glsl */ `
+#ifdef CHAMBER_FLOW_DISTANCE
+attribute float aFlowDistance;
+varying float vFlowDistance;
+#endif
+uniform mat4 uProjVP;""")
+change('  vec4 wp = modelMatrix * vec4(position, 1.0);\n  vProj',"""#ifdef CHAMBER_FLOW_DISTANCE
+  vFlowDistance = aFlowDistance;
+#endif
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vProj""")
+change('const FRAG = /* glsl */ `\nuniform sampler2D uPlate;',"""const FRAG = /* glsl */ `
+#ifdef CHAMBER_FLOW_DISTANCE
+varying float vFlowDistance;
+#endif
+uniform sampler2D uPlate;""")
+change('      downriver -= 0.60 * heading * d * interior;',"""#ifdef CHAMBER_FLOW_DISTANCE
+      // Project the lateral offset onto the centerline tangent in the chamber's x/z plane.
+      downriver = vFlowDistance - heading * d * inversesqrt(1.0 + heading * heading) * interior;
+#else
+      downriver -= 0.60 * heading * d * interior;
+#endif""")
+change('  const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0)',"""  const flowDistance = bankShoulder && NQ !== null && flag05('cx08FlowDistance');
+  const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0)""")
+change('      ...(bankShoulder && swimMode ? { FITTED_CHAMBER_BANK: 1 } : {}),',"""      ...(bankShoulder && swimMode ? { FITTED_CHAMBER_BANK: 1 } : {}),
+      ...(flowDistance && swimMode ? { CHAMBER_FLOW_DISTANCE: 1 } : {}),""")
+change("  add(fl, M.floor, 'floor');","""  if (flowDistance && NQ) {
+    // Reproduce the shader's fitted river center and integrate its physical length.
+    // Store the result on the existing floor so the glints travel with the bend.
+    const subdivisions = 8;
+    const segments = 63 * subdivisions;
+    const dz = (rz0 - rz1) / segments;
+    const distance = new Float64Array(segments + 1);
+    const centerX = (row: number) => rivData[4 * THREE.MathUtils.clamp(row, 0, 63)];
+    const smoothed = flag05('m08sr');
+    const centerAt = (sample: number) => {
+      const row = Math.floor(sample), t = sample - row;
+      if (!smoothed) return THREE.MathUtils.lerp(centerX(row), centerX(row + 1), t);
+      const t2 = t * t, t3 = t2 * t;
+      return (centerX(row - 1) * (1 - 3 * t + 3 * t2 - t3) + centerX(row) * (4 - 6 * t2 + 3 * t3)
+        + centerX(row + 1) * (1 + 3 * t + 3 * t2 - 3 * t3) + centerX(row + 2) * t3) / 6;
+    };
+    let lastX = centerAt(0);
+    for (let i = 1; i <= segments; i++) {
+      const x = centerAt(i / subdivisions);
+      distance[i] = distance[i - 1] + Math.hypot(dz, x - lastX);
+      lastX = x;
+    }
+    const distanceAtZ = (z: number) => {
+      const sample = (rz0 - z) / dz;
+      const i = THREE.MathUtils.clamp(Math.floor(sample), 0, segments - 1);
+      return THREE.MathUtils.lerp(distance[i], distance[i + 1], sample - i);
+    };
+    const anchor = distanceAtZ(NQ.z0);
+    const vertices = fl.getAttribute('position');
+    const along = new Float32Array(vertices.count);
+    for (let i = 0; i < vertices.count; i++) along[i] = distanceAtZ(vertices.getZ(i)) - anchor;
+    fl.setAttribute('aFlowDistance', new THREE.BufferAttribute(along, 1));
+  }
+  add(fl, M.floor, 'floor');""")
+f.write_text(s);shutil.copyfile(f,p/'repos/08/src/world/match08.ts')

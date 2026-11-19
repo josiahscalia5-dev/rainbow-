@@ -1,0 +1,1355 @@
+{
+ "project": "RAINBOW \u2014 11-screen 3D mobile game",
+ "files": [
+  {
+   "path": ".claude/agents/android-build-performance.md",
+   "bytes": 1151,
+   "sha256": "b0c45161860a960cf37e613abf146345034950c3d671225b81d538a031eb579e"
+  },
+  {
+   "path": ".claude/agents/animation-and-gameplay-engineer.md",
+   "bytes": 1151,
+   "sha256": "c48094c3ed3d22e78e1518598eccf1cf4ccaccaa2a58599da791e1d8fe77862f"
+  },
+  {
+   "path": ".claude/agents/benny-character-artist.md",
+   "bytes": 1099,
+   "sha256": "cde203afa8b927cb5d69ab4966c778eb3cda64c3090ba714114c5657ed8054cd"
+  },
+  {
+   "path": ".claude/agents/cartoon-girl-character-artist.md",
+   "bytes": 1241,
+   "sha256": "52058503a35585802f7a9a99af9554e4d82dbc3112e5c96fedd5a736049c0fb6"
+  },
+  {
+   "path": ".claude/agents/foam-bubbles-particles.md",
+   "bytes": 1074,
+   "sha256": "f6341dcde1ea07e5e6b102d38c9f6fac25d879ebde2d2efc86413a85922f57df"
+  },
+  {
+   "path": ".claude/agents/path-camera-transition-engineer.md",
+   "bytes": 1191,
+   "sha256": "4244cc8249008d7f2978c40dbf9d2f268b23478cca31931c567fb49d1b0e01be"
+  },
+  {
+   "path": ".claude/agents/playwright-visual-qa.md",
+   "bytes": 1221,
+   "sha256": "0f14c32fb4af423f93d12762ac724558913d83f77c974b1381ccda2075638e0f"
+  },
+  {
+   "path": ".claude/agents/reference-match-director.md",
+   "bytes": 1174,
+   "sha256": "b977e3f7592f4276a8e1fae3a88dccda07bc5d3070ac77f8ae5a4040c4495735"
+  },
+  {
+   "path": ".claude/agents/washer-environment-modeler.md",
+   "bytes": 1150,
+   "sha256": "7abdea786d530d7933f75a3926e1e0e5ae3cf5594453558a15da345b6761cc68"
+  },
+  {
+   "path": ".claude/agents/water-fx-specialist.md",
+   "bytes": 1236,
+   "sha256": "b160f12ff93db70ef94b62d5951c62335320cc1268ca7998de39ea26df1a84a2"
+  },
+  {
+   "path": ".claude/settings.json",
+   "bytes": 806,
+   "sha256": "60ca7d82e6e50140eb5648f5e1f8c8cb880da9a983a78329d908397660e94675"
+  },
+  {
+   "path": ".gitattributes",
+   "bytes": 715,
+   "sha256": "b091c1baa4d7e44f2672acfcce890ff8ee3bf7294c56bb49d4529f374230f070"
+  },
+  {
+   "path": ".gitignore",
+   "bytes": 638,
+   "sha256": "443016b9d2d5412020f501719d00a61c1f6a4bb70735b32d0bb0499188c93402"
+  },
+  {
+   "path": ".mcp.json.template",
+   "bytes": 688,
+   "sha256": "378ac9b47f3f3691ccc9a846e2858c680593b65a3ff1f6d39ba50a82dbbab5b4"
+  },
+  {
+   "path": "CLAUDE.md",
+   "bytes": 1619,
+   "sha256": "b55a7c6bd644b91fa4e5946ee4e5cee83cebf60050b85df0407f8cec23441737"
+  },
+  {
+   "path": "README_FIRST.md",
+   "bytes": 2742,
+   "sha256": "28789789281c30c64204116673e9da5d32017a74dce1194803b757a47d75e8a3"
+  },
+  {
+   "path": "REFERENCE_ORDER.md",
+   "bytes": 5134,
+   "sha256": "766ef57369377a8d53a12f685101670f951fda4c66c3a24c29cfbd110401fd41"
+  },
+  {
+   "path": "Rainbow_Claude_Code_Master_Prompt_11_Screens.md",
+   "bytes": 23780,
+   "sha256": "7353ec039a731a7b44fa42ce9fa7401b29e4eafbb2d9703f572487157dbff9d0"
+  },
+  {
+   "path": "START_HERE_PASTE_TO_CLAUDE.md",
+   "bytes": 1970,
+   "sha256": "a630c4dd49f05bf7b45ac4575b0e1514cbbfa38c38ce8093820f59b0032d4ee6"
+  },
+  {
+   "path": "TOOL_SETUP_AND_VERIFICATION.md",
+   "bytes": 3539,
+   "sha256": "38f144d5fd1b69cd3153722ed74587ad7de1be0155403abebccbce6617dcbabb"
+  },
+  {
+   "path": "VISUAL_QA_CHECKLIST.md",
+   "bytes": 3258,
+   "sha256": "d4679f3ab028f124f33dc7ac1d581cbbd32918bab4353246f1d94127fb32b7f1"
+  },
+  {
+   "path": "android/.gitignore",
+   "bytes": 1824,
+   "sha256": "065e4a92a240fe11a0ea230491ad9dabef143f5fd5a3e6884ad6f0395666a971"
+  },
+  {
+   "path": "android/app/.gitignore",
+   "bytes": 26,
+   "sha256": "99c54e51ee601a60fbde8016b2cbf717483bc2e92773be86c9247d02a7fa6ea4"
+  },
+  {
+   "path": "android/app/build.gradle",
+   "bytes": 2136,
+   "sha256": "4d035b083fcdb4f9b10ab03653c5f5a71924bb9cec29857805b9595ca65c8a64"
+  },
+  {
+   "path": "android/app/capacitor.build.gradle",
+   "bytes": 370,
+   "sha256": "99daeda0f3366bba0fe6bae2b51295645aebcb09c0c72c17d580515b47df1a9c"
+  },
+  {
+   "path": "android/app/proguard-rules.pro",
+   "bytes": 751,
+   "sha256": "1cf8c57e8f79c250b0af9c1a5a4edad71a5c348a79ab70243b6bae086c150ad2"
+  },
+  {
+   "path": "android/app/src/androidTest/java/com/getcapacitor/myapp/ExampleInstrumentedTest.java",
+   "bytes": 774,
+   "sha256": "ff50b4c110a7434312f9af54171f9e8523b015836f707c9b387b76d4c38a97f8"
+  },
+  {
+   "path": "android/app/src/main/AndroidManifest.xml",
+   "bytes": 1518,
+   "sha256": "1012280e069bd8ad20829391d8acafff9a1ac1f7f1fefb6c2c0c493a34990b1e"
+  },
+  {
+   "path": "android/app/src/main/java/com/rainbow/washergame/MainActivity.java",
+   "bytes": 126,
+   "sha256": "6042652b7d96f4351553832b2031bcacdae9a83c2445d6b259758afa8f3383a3"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-land-hdpi/splash.png",
+   "bytes": 7705,
+   "sha256": "08cc34ad7713fe7ed58bceaa37b2387b670c53cd60264b4bd6442db3098e75dc"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-land-mdpi/splash.png",
+   "bytes": 4040,
+   "sha256": "5cf98b4451bd99b20df26f9e608a46946118be6b0ae90762f9ca1786a30c76ff"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-land-xhdpi/splash.png",
+   "bytes": 9251,
+   "sha256": "22f87e1e3bc89aa01a7dbc39c9a4db058cd0bf4ad3fe9f55712bf69eb997f4bf"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-land-xxhdpi/splash.png",
+   "bytes": 13984,
+   "sha256": "42aa26392546fcdee1b8d3ac6d4b41bfcceb41dc6a4f3a3c30c24a8a8f4db862"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-land-xxxhdpi/splash.png",
+   "bytes": 17683,
+   "sha256": "60393ce8636fd263e4e1fea3fd4ab2de948c6295e898fda9b50ac4e5283be809"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-port-hdpi/splash.png",
+   "bytes": 7934,
+   "sha256": "c5015f4ba3628392b538386c5e210f0b94f352a3160adab934fd0311972137ca"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-port-mdpi/splash.png",
+   "bytes": 4096,
+   "sha256": "07fa579e1c83e04ba7f9cbcbfcf41b68e15fe3638f2c44a04e58b809103e6b69"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-port-xhdpi/splash.png",
+   "bytes": 9875,
+   "sha256": "b73049cb37fe76d6c11b87a796766bf6af0c85483b31eb6a921657b0d764a4b9"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-port-xxhdpi/splash.png",
+   "bytes": 13346,
+   "sha256": "0c7f1212f25b7b90e9a6e1d320013e4ff3d3e03e634cbb07b7b7981cac51627f"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-port-xxxhdpi/splash.png",
+   "bytes": 17489,
+   "sha256": "3db071a03b2f8ffe0dfd4170fc59842d53cd15bba5e88af59401d58efabf7827"
+  },
+  {
+   "path": "android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml",
+   "bytes": 1880,
+   "sha256": "a8514094f754b099d3e55ce1d6e0b2de79db418b2eeacb0fc2a6bb0bfadef221"
+  },
+  {
+   "path": "android/app/src/main/res/drawable/ic_launcher_background.xml",
+   "bytes": 5606,
+   "sha256": "718ba51adf166bb55c3e9936bb8199a0148457f7f0191aaa2f37a94f3159d6ec"
+  },
+  {
+   "path": "android/app/src/main/res/drawable/splash.png",
+   "bytes": 4040,
+   "sha256": "5cf98b4451bd99b20df26f9e608a46946118be6b0ae90762f9ca1786a30c76ff"
+  },
+  {
+   "path": "android/app/src/main/res/layout/activity_main.xml",
+   "bytes": 535,
+   "sha256": "5d770feb791313b947020cbfc57e5c733c556dac5e9e49261a1190e527073253"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+   "bytes": 265,
+   "sha256": "9c3a7e0a6515c6e1a7ae834a9ae430311ebc3241f7b2e5e7f0460aa690709a7c"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+   "bytes": 265,
+   "sha256": "9c3a7e0a6515c6e1a7ae834a9ae430311ebc3241f7b2e5e7f0460aa690709a7c"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+   "bytes": 2786,
+   "sha256": "72b71c3581ca3b5a23b1c168d69b9d855b3f184fa079902a01f088eb4f0607d5"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+   "bytes": 3450,
+   "sha256": "32baa10d2632a4417454a579f992bd640e0a3cec79321423559b2c9940de58a9"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+   "bytes": 4341,
+   "sha256": "bfcc1b0fa931b14bb241372c76ab4f04374b67d02363c98d9cb12edfdacdf5f3"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+   "bytes": 1869,
+   "sha256": "27ed3603010ebc278f64f8645741ab132ff517abb5308eb9df6c8e42a48956b2"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+   "bytes": 2110,
+   "sha256": "58e78a618778926b1f6d9472a6468de878de8530970934e94aab5ba4ba08cc00"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+   "bytes": 2725,
+   "sha256": "0166fc333074c373fbd0ce6b5defd71552166165ac778121ca9c9dff6b83f0fc"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+   "bytes": 3981,
+   "sha256": "d35dbfff175b83c13ef59cf924abfc810f7b6a158595d7417c5498ea8c7c7ed1"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+   "bytes": 5036,
+   "sha256": "6f88083b8166cc559102f7044688de7525287632ebe09ac45d001ac8bf4b3eae"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+   "bytes": 6593,
+   "sha256": "40911a00922868686854a4804b93fd6e56b503664696de03f450bff690affb6d"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+   "bytes": 6644,
+   "sha256": "ed346eb1e3f0280f15709393705899b3ff55c20b88f4e0308006b3c33cf5fe14"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+   "bytes": 9793,
+   "sha256": "4a82bc1e9923576275869998925ce0ae021a79aa18b24a0dd87ad6b61ca85053"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+   "bytes": 10455,
+   "sha256": "1ee4cd9ff371dcb2e3938097e434f6fb8731688ed7165e61fc63693ad5b2f455"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+   "bytes": 9441,
+   "sha256": "87cb2f2ffe992652bb4fa768c73719a37b5852ab17fbf8e170e888f7a42b0761"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+   "bytes": 15529,
+   "sha256": "bd24fd383253bf8d43f0a81f11c071d76d1d555114376dd647cd9fb38fa0a9da"
+  },
+  {
+   "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+   "bytes": 15916,
+   "sha256": "ab93096331e7cd8ec379f73f1e9adcaaa9ee1115c9f4ff10411a811fb9700174"
+  },
+  {
+   "path": "android/app/src/main/res/values/ic_launcher_background.xml",
+   "bytes": 120,
+   "sha256": "cd40bafe618ff506f4088778b135cb4faa15f25e0c9b475e22d730c74b7be115"
+  },
+  {
+   "path": "android/app/src/main/res/values/strings.xml",
+   "bytes": 298,
+   "sha256": "93720dcfe934524b45eea51aa21991b05e4087ff2d87d36a7d45bc37ee533a68"
+  },
+  {
+   "path": "android/app/src/main/res/values/styles.xml",
+   "bytes": 823,
+   "sha256": "18ebba36575e9461347ee67361b23caf095f158ee85dbefe1b83a4669ba5bd6c"
+  },
+  {
+   "path": "android/app/src/main/res/xml/file_paths.xml",
+   "bytes": 213,
+   "sha256": "a46ed43ef65c90cb6778f4581decf3556e3f0055aad8f36d69dae16f9a0e99aa"
+  },
+  {
+   "path": "android/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java",
+   "bytes": 402,
+   "sha256": "d4045ae8fac1f0807e6b24eb34e68409a9a235df9d1a3f896fb8c9a49424363d"
+  },
+  {
+   "path": "android/build.gradle",
+   "bytes": 636,
+   "sha256": "c05c6e67af5651a56aecb0908027be42c84c03dad529af4839dbdc4393405158"
+  },
+  {
+   "path": "android/capacitor.settings.gradle",
+   "bytes": 207,
+   "sha256": "b488e162f552d6efb8286793c7871bbc1061c9bf5ca3a6a495fdeb8988a541c7"
+  },
+  {
+   "path": "android/gradle.properties",
+   "bytes": 987,
+   "sha256": "3bab15c5b8bc4c2f4b6cf525497d15ad4abca53a460e6dd2eb0f0135817d31e6"
+  },
+  {
+   "path": "android/gradle/wrapper/gradle-wrapper.jar",
+   "bytes": 63375,
+   "sha256": "a8451eeda314d0568b5340498b36edf147a8f0d692c5ff58082d477abe9146e4"
+  },
+  {
+   "path": "android/gradle/wrapper/gradle-wrapper.properties",
+   "bytes": 252,
+   "sha256": "252070f2b15e40fd80dc5f8f3a6ae8a2f6928bec943889e189a78b294e8f36a5"
+  },
+  {
+   "path": "android/gradlew",
+   "bytes": 8527,
+   "sha256": "e0108761fee312b7b373ee96c0870cab5c167e664ac507776814b1d59e9b3bad"
+  },
+  {
+   "path": "android/gradlew.bat",
+   "bytes": 2868,
+   "sha256": "8e327fcb99d29ce0fe3ee2fec6e6a25de815a2df83a6a44a553dea89ffc92955"
+  },
+  {
+   "path": "android/settings.gradle",
+   "bytes": 208,
+   "sha256": "6ce098d15ebd69b44c4ecd786bca1bdc366340d2459b2af4d7bb0ab317aa9669"
+  },
+  {
+   "path": "android/variables.gradle",
+   "bytes": 496,
+   "sha256": "47391f3ef8551f8cdeabcc383a99bbee6927d8b4191cfaf3027353fe25741852"
+  },
+  {
+   "path": "assets/models/benny.glb",
+   "bytes": 1176420,
+   "sha256": "8a7a3268c5f9745832a7e3cf453d4ea12f6b95b2ec84317698ce62968a3048ea"
+  },
+  {
+   "path": "assets/models/rainbow_girl.glb",
+   "bytes": 3546480,
+   "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+  },
+  {
+   "path": "backups/AGENTS_STATUS.md",
+   "bytes": 2334,
+   "sha256": "e9ab86ae2159f0880f3a9599425a3a83f45a09c9fa0cbedfc08dad3dac91847e"
+  },
+  {
+   "path": "backups/CONVERSATION_INDEX.md",
+   "bytes": 1967,
+   "sha256": "0cb51585206181fb2360f00c0b8e6acd980ac5305e8da92da7426e856b8a4cb3"
+  },
+  {
+   "path": "backups/CURRENT_STATE.md",
+   "bytes": 5736,
+   "sha256": "451f746ecf5b37c92897874806aed26b5811f343ddaec3be4c8c92ea3105ad2e"
+  },
+  {
+   "path": "backups/MCP_SETUP.md",
+   "bytes": 2234,
+   "sha256": "8942f814be1d80d0d89730ee62b9c99b976b36fd927175fc5a11af25bd390baa"
+  },
+  {
+   "path": "backups/RECOVERY.md",
+   "bytes": 5431,
+   "sha256": "0cfc33b4153da3fe65420f1b59d50b1f882ee5f8d5807541971076c2e1ea90cb"
+  },
+  {
+   "path": "backups/autosave.config.json",
+   "bytes": 1250,
+   "sha256": "1f17c8cc4ee5d0b91ebc98a9dc7138583c4844c3ffa0ff1e128f0c9fbd743345"
+  },
+  {
+   "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
+   "bytes": 5455698,
+   "sha256": "982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3"
+  },
+  {
+   "path": "backups/source-package/Rainbow_Claude_Code_Master_Prompt_11_Screens.uploaded.md",
+   "bytes": 23780,
+   "sha256": "7353ec039a731a7b44fa42ce9fa7401b29e4eafbb2d9703f572487157dbff9d0"
+  },
+  {
+   "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
+   "bytes": 11339,
+   "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "builds/rainbow-debug.apk",
+   "bytes": 7339491,
+   "sha256": "dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25"
+  },
+  {
+   "path": "capacitor.config.ts",
+   "bytes": 242,
+   "sha256": "7f432dc1ede121105cce2fa8280d5e64c50ea38d77cdecd87aebb9f63010aeb6"
+  },
+  {
+   "path": "character_references/official_cartoon_girl_original.jpg",
+   "bytes": 231475,
+   "sha256": "92bbaa61a66c7a4dc16d70730be76a34b9575d3f4484e72d95129ad574460daf"
+  },
+  {
+   "path": "docs/FLOW_VIDEO.md",
+   "bytes": 2296,
+   "sha256": "0db4077d604f276c9a270a813e846a7af73c0a61ceb0acf3f28f6ae2b03fe8d2"
+  },
+  {
+   "path": "docs/characters/benny.md",
+   "bytes": 5173,
+   "sha256": "c5e9627e7e3680ce671c2ecc0edc0ae7a2ba3274286d562d71b3f17b0a9e8d73"
+  },
+  {
+   "path": "docs/characters/benny_reference_views_glb.png",
+   "bytes": 928788,
+   "sha256": "53d7e7573ee84992c74f5e15b1581001730737b6d2ddd2c883bd66f38cb1529c"
+  },
+  {
+   "path": "docs/characters/benny_turntable.png",
+   "bytes": 996355,
+   "sha256": "2c900d42b4ab25e115e3fbb3945cb2ee1423965762e18478c759331598415a31"
+  },
+  {
+   "path": "docs/characters/benny_turntable_expr_dizzy.png",
+   "bytes": 998969,
+   "sha256": "826a5fe853b42861c5494e130c5ab5dcaef4755abc0e5aad83cfa1014ca99bed"
+  },
+  {
+   "path": "docs/characters/benny_turntable_full_glb.png",
+   "bytes": 639961,
+   "sha256": "c3ae2223d3861b1f5e39bc332b526a3c3f33f9040e8902047890f1060c94c3c4"
+  },
+  {
+   "path": "docs/characters/girl.md",
+   "bytes": 6780,
+   "sha256": "01536384192b8fa1caca70f36cdc10709b96dc04d91ea6e0783d3d316629a8f2"
+  },
+  {
+   "path": "docs/characters/girl_face_closeup_lean_glb.png",
+   "bytes": 1004089,
+   "sha256": "4b6f916f40e4bae50bc1dd76b32539bf77b1f46e3b23138fbdfef512f88d8192"
+  },
+  {
+   "path": "docs/characters/girl_turntable.png",
+   "bytes": 428088,
+   "sha256": "267966ae0c9b5ac2bc834254df6913365d109d300c573c75426cc57573a8d7aa"
+  },
+  {
+   "path": "docs/characters/girl_turntable_anim_leanReachTowel_t_1_6.png",
+   "bytes": 433254,
+   "sha256": "c366c42f29aae262ab43ff191eee915b16ebf1eab4e3933ee42c390df2a80ead"
+  },
+  {
+   "path": "docs/characters/girl_turntable_anim_walk_t_0_3.png",
+   "bytes": 432809,
+   "sha256": "7d1f690854d7fe962f12a4b6d36a74e7544507eae6c31b3ea5db83e5f81bc97a"
+  },
+  {
+   "path": "docs/path_graph.md",
+   "bytes": 4611,
+   "sha256": "43d8d117a274e2aed136a9f82d81605e096cc8e56e42406996cd129c4410513c"
+  },
+  {
+   "path": "docs/vfx/water.md",
+   "bytes": 6425,
+   "sha256": "1dee3d0a581f1a919d4db08572eba9a43bd5bd57f400286e18d7cd6f461146a7"
+  },
+  {
+   "path": "docs/vfx/water_01.png",
+   "bytes": 207166,
+   "sha256": "04a11c901bdbb00a869a9f4d0db8086f66867e70979dd98f4d9e9c17b094c431"
+  },
+  {
+   "path": "docs/vfx/water_01_low.png",
+   "bytes": 176863,
+   "sha256": "8711ad7aecb64f3b509d8be3525d88636785be5a71184bdf6666fb8989d5d0d5"
+  },
+  {
+   "path": "docs/vfx/water_02.png",
+   "bytes": 226248,
+   "sha256": "234432b0e04a064d45b23e186c89a3b1b22a04b6c8b0d7f01c8964467df12537"
+  },
+  {
+   "path": "docs/vfx/water_03.png",
+   "bytes": 322493,
+   "sha256": "6394aa81db8926a0bd47c34526d6a29db40ce7ea14cf2e03736269cb1ccb9572"
+  },
+  {
+   "path": "docs/vfx/water_03_low.png",
+   "bytes": 303604,
+   "sha256": "a7bac08a9e961d6349abdb1f05f2242329ba9c8ad44ca26dcee5bfcd10eccf53"
+  },
+  {
+   "path": "docs/vfx/water_04.png",
+   "bytes": 251582,
+   "sha256": "3b75da8115904bea2c36cd7438047f9ef6034e1771d02323ca7e89497fb30870"
+  },
+  {
+   "path": "docs/vfx/water_04_chevrons_topdown.png",
+   "bytes": 200279,
+   "sha256": "67f0ca8389a8ef0590e7c62e5ff43a79309e088a5530bd12bb688c08957c1290"
+  },
+  {
+   "path": "docs/vfx/water_05.png",
+   "bytes": 210992,
+   "sha256": "cfbd9d22f257d73407ab2033627a91281c32c9a66cf49297a22a06a60bc04a20"
+  },
+  {
+   "path": "docs/vfx/water_05_low.png",
+   "bytes": 193337,
+   "sha256": "7f1eadd15747e2e3c47ef0c5e829ebb6140ca96be088ebd91924c35613f63c74"
+  },
+  {
+   "path": "docs/vfx/water_06.png",
+   "bytes": 126544,
+   "sha256": "487a79f57fdf29fa63df0e2eccf52ada058dfaa8fc945ba44f075061decc4634"
+  },
+  {
+   "path": "docs/vfx/water_07.png",
+   "bytes": 176201,
+   "sha256": "664bf5a7c2532e235ea3b2592ee9c52494d6ead44dec03bcf73b532850648f9f"
+  },
+  {
+   "path": "docs/vfx/water_07mid.png",
+   "bytes": 255232,
+   "sha256": "94d1a3efacce472369115d23a9e525066315242218698af5dfa6dd9a7026e61f"
+  },
+  {
+   "path": "docs/vfx/water_08.png",
+   "bytes": 181676,
+   "sha256": "b243dbfa66ee55a9e991e8234ee9d2927f65ecb7e1155a1af96093bad8b6121e"
+  },
+  {
+   "path": "docs/vfx/water_09.png",
+   "bytes": 228258,
+   "sha256": "9fe80112f5a702e82844e34da245dd83fd5ee7b7d6a37501807600a78cd073e3"
+  },
+  {
+   "path": "docs/vfx/water_09_low.png",
+   "bytes": 215245,
+   "sha256": "2335053e18b990c7ce199af8e91d77401b178cd2a7158cc9b56a21078f81860a"
+  },
+  {
+   "path": "docs/vfx/water_10.png",
+   "bytes": 188253,
+   "sha256": "48b50bd49f8fdb3aa41d7cc81b7d46ea26497e98cec8c2a708fec2d5014800a7"
+  },
+  {
+   "path": "docs/vfx/water_11.png",
+   "bytes": 46877,
+   "sha256": "4acf04458476aa8722e9a37f1a4ddb7a7cba432196c3f838ffbe46e999539562"
+  },
+  {
+   "path": "docs/vfx/water_stats.json",
+   "bytes": 3096,
+   "sha256": "e6899c84a42693e93b413353bccd2c3b24660c5786c6b4cb983107a1b91c4d1f"
+  },
+  {
+   "path": "docs/vfx/water_stats_low.json",
+   "bytes": 1023,
+   "sha256": "e8de867533b24ae8397af1df9a954d33b3182823eeb616e26f617085febe87e8"
+  },
+  {
+   "path": "index.html",
+   "bytes": 644,
+   "sha256": "c5b2a3ec3a58deaa594b4cefc592caf1e919feeb5c566a3e0fffde409a6f394f"
+  },
+  {
+   "path": "package-lock.json",
+   "bytes": 80348,
+   "sha256": "a05bea3166cbc9ba7fbe07eb97323c949ddaf71e58b68472f7eb4d92fb0e19ac"
+  },
+  {
+   "path": "package.json",
+   "bytes": 1203,
+   "sha256": "e8eea97e94cec829c6fe8f74dec0a2fd51e492ee1ff1ad891c21264039ede0df"
+  },
+  {
+   "path": "qa/01_diff.png",
+   "bytes": 198550,
+   "sha256": "460fc1276cf0cb34ada628ed7c37ca588f2247a62fe2f654846817d39969c275"
+  },
+  {
+   "path": "qa/01_overlay.png",
+   "bytes": 2046037,
+   "sha256": "438d80c25be3736b7e625b6eab590c9b86d0cfcf7455769c0759765818b59330"
+  },
+  {
+   "path": "qa/01_side_by_side.png",
+   "bytes": 3380821,
+   "sha256": "139199b10d5c622f2f835a17ad1f05d1a43dc9a6f019bb720d9b4643d6be4906"
+  },
+  {
+   "path": "qa/02_diff.png",
+   "bytes": 200237,
+   "sha256": "f4ef973f97658abf3232d517d383f88c1c711d42b489fda52a6bd9c70eaae2c2"
+  },
+  {
+   "path": "qa/02_overlay.png",
+   "bytes": 2177709,
+   "sha256": "e7cca782af8117234bcee44f063152e4a5af7efb7357bb327f47b9a2de191e49"
+  },
+  {
+   "path": "qa/02_side_by_side.png",
+   "bytes": 3752533,
+   "sha256": "b052b03b4c6b52b190f15fc4ccfcd4197dc45ce4b1b641a622c48b018c9b08ab"
+  },
+  {
+   "path": "qa/03_diff.png",
+   "bytes": 144320,
+   "sha256": "a6cbe09e1440774690a2722bd29a3bde0ddf7c785be792c70cbbc9f33bcce1de"
+  },
+  {
+   "path": "qa/03_overlay.png",
+   "bytes": 1650270,
+   "sha256": "217077d26cdd03bb53476e8cb2c9961a7beba49c8f8cf6ad250223e704688b54"
+  },
+  {
+   "path": "qa/03_side_by_side.png",
+   "bytes": 2556716,
+   "sha256": "57a6579afb83df20cd83634c7e423763d35fa0313f30f8cb9d8b073acaf5725c"
+  },
+  {
+   "path": "qa/04_diff.png",
+   "bytes": 188543,
+   "sha256": "252686a230c44b93c030895f5b58f962a60060ff4450f88c0afe22f1dedf0e8a"
+  },
+  {
+   "path": "qa/04_overlay.png",
+   "bytes": 1889506,
+   "sha256": "7ab2226ba673ced3698b16a5982307e97e7524d647af03184599b5a40964ccdc"
+  },
+  {
+   "path": "qa/04_side_by_side.png",
+   "bytes": 3110971,
+   "sha256": "6d3bde7cde6c6c1d75e8257f3ef0e8e989ceaeee741327289a52754d65618afb"
+  },
+  {
+   "path": "qa/05_diff.png",
+   "bytes": 197563,
+   "sha256": "74cf3f947c809b7f9c795a05ad762d7f5de8514971b801a7ca8cc93c5bc23e92"
+  },
+  {
+   "path": "qa/05_overlay.png",
+   "bytes": 2211508,
+   "sha256": "3be4e596a3f5fdc1c5422411205779ea4ebf1ff01c2130ca0537b1e40df2fbb4"
+  },
+  {
+   "path": "qa/05_side_by_side.png",
+   "bytes": 3861736,
+   "sha256": "13cba14045ebdade194f9b544e5ce175ca921b83a4e692421414b14897fb48cf"
+  },
+  {
+   "path": "qa/06_diff.png",
+   "bytes": 198405,
+   "sha256": "51b97f725bbe8656236e96a240fc73511f7fdb86e73ce530d080bb3124b9ab18"
+  },
+  {
+   "path": "qa/06_overlay.png",
+   "bytes": 2171973,
+   "sha256": "bf1b91567b5b149aac7e1d59a9149eb68166ca97cba509bb2b8f83ad4bde3486"
+  },
+  {
+   "path": "qa/06_side_by_side.png",
+   "bytes": 3531828,
+   "sha256": "5b62daae726171edf72c3039f952922d8839905fd4ed95917c4590a20f1d633d"
+  },
+  {
+   "path": "qa/07_diff.png",
+   "bytes": 204865,
+   "sha256": "bd5842c9bd3ced5c96080d194767640b6207a377de04326cf95eb494e8bf70f5"
+  },
+  {
+   "path": "qa/07_overlay.png",
+   "bytes": 2219240,
+   "sha256": "3a97180d2d3b07f2bd7c82a7a62afb76b5f051b0b5099eb6571e473ba92c18db"
+  },
+  {
+   "path": "qa/07_side_by_side.png",
+   "bytes": 3839570,
+   "sha256": "3b55dbc5c9629510f3059b45e15e3bd031cf75481d15952205ba638d01096c1e"
+  },
+  {
+   "path": "qa/07_to_08_continuity.md",
+   "bytes": 1525,
+   "sha256": "d370a63d21420cbfad1206a225bd81c0c5679d71e65c2f5aabce2de6afa78a93"
+  },
+  {
+   "path": "qa/08_diff.png",
+   "bytes": 201332,
+   "sha256": "ad145b88ba1d1d0c875d945cb9c1273a9aeac8e6d470baf19bc5d393623568eb"
+  },
+  {
+   "path": "qa/08_overlay.png",
+   "bytes": 2221405,
+   "sha256": "a826e107db617a17a15119a6c9f4e718fd2965277721a4e14ebd8e1d0ba72f27"
+  },
+  {
+   "path": "qa/08_side_by_side.png",
+   "bytes": 3679550,
+   "sha256": "eba24464c406006042ea92d2ca96384d3e7f8404b9345a532cbc3b483b71ff55"
+  },
+  {
+   "path": "qa/09_diff.png",
+   "bytes": 196810,
+   "sha256": "c17cdb1e7df16886fcfaffd53b23baaf179aa6ef1d2bbb2bddbc2094535bad4b"
+  },
+  {
+   "path": "qa/09_overlay.png",
+   "bytes": 2209334,
+   "sha256": "c5d4eb4137edd75e2530836ef625e1ba9d083d65fdb5cce95db9662231d74b32"
+  },
+  {
+   "path": "qa/09_side_by_side.png",
+   "bytes": 3768587,
+   "sha256": "0b78369f6a49370c0b97173351b7123f3dc67971119f10d9cb73605a42ab76bb"
+  },
+  {
+   "path": "qa/10_diff.png",
+   "bytes": 189112,
+   "sha256": "6106d9a953cc51b75de029ff5fcb888408092e41d9a9ed3ae49f65f4be087a1c"
+  },
+  {
+   "path": "qa/10_overlay.png",
+   "bytes": 2220724,
+   "sha256": "384853e3024989e8c665c246a3b3ad4c08c9ab460a21b603fcf62749759a9592"
+  },
+  {
+   "path": "qa/10_side_by_side.png",
+   "bytes": 3727969,
+   "sha256": "d7cbc3bcf23695e346dcb690239bf335f3278bd57a1cdc519abd7126191d987a"
+  },
+  {
+   "path": "qa/11_diff.png",
+   "bytes": 160470,
+   "sha256": "551e342c20e7c50d363ea255679c0797089b55e3d44916bfe3b27346d7e07732"
+  },
+  {
+   "path": "qa/11_overlay.png",
+   "bytes": 2228893,
+   "sha256": "ccaf99dafaf65e53a5148d93c9879d0f60833c1986892d45da8d7f0577105bb5"
+  },
+  {
+   "path": "qa/11_side_by_side.png",
+   "bytes": 3715990,
+   "sha256": "78490062b46e681eda47637dfa6e1c771b2a8db90f449f77da61c0434c8a3ef9"
+  },
+  {
+   "path": "qa/capture_log.json",
+   "bytes": 5127,
+   "sha256": "6a72725779fad841e271c703686fdc6f6f24f1c668da47f8a3a61526e7a9a031"
+  },
+  {
+   "path": "qa/capture_log_1080x1920.json",
+   "bytes": 10266,
+   "sha256": "81275bfd043598692121efe28a3f8763f584e7f01e0d062077f2f81b064dac47"
+  },
+  {
+   "path": "qa/cinematic_test.json",
+   "bytes": 1386,
+   "sha256": "77ee8f06daf0c98baa16dbef048e134b2777d2814186648d22784e5c55cbc9dd"
+  },
+  {
+   "path": "qa/compare_summary.md",
+   "bytes": 990,
+   "sha256": "a01551c904c943af152e02ad4ac34e31ccfbb43199b7848831db1d65d1cae95b"
+  },
+  {
+   "path": "qa/continuity/07_to_08_strip.png",
+   "bytes": 880288,
+   "sha256": "3c1bb9615ea5332f41a5e6c3f4e4abe95bd6073968c59f47916d86436f9745ae"
+  },
+  {
+   "path": "qa/continuity/07a_plunge_top.png",
+   "bytes": 1174669,
+   "sha256": "0aa711c494d0f718a38c5240ec2bb79de4ff9002a9f1891c40a1e0497cfd5627"
+  },
+  {
+   "path": "qa/continuity/07b_plunge_mid.png",
+   "bytes": 1179890,
+   "sha256": "1ffc0abc142b6d16811e55634cbd031d4f549b76601e3e935c638fcac3e2a6c8"
+  },
+  {
+   "path": "qa/continuity/07c_plunge_bottom.png",
+   "bytes": 1329936,
+   "sha256": "50184450456180a319b9f50e4c02164e015272a362f309ea39d8e00e2bbabe89"
+  },
+  {
+   "path": "qa/continuity/07d_entering_08.png",
+   "bytes": 1385922,
+   "sha256": "a357c2c993416693c4e8548ad9992a8486e7950331870499e07b4420bd3e444e"
+  },
+  {
+   "path": "qa/continuity/capture_log.json",
+   "bytes": 3908,
+   "sha256": "38a205b0d568d7431625601ddb5d978436e72cc779bff67c15335996d668419c"
+  },
+  {
+   "path": "qa/continuity_report.json",
+   "bytes": 2673,
+   "sha256": "92a2eca67b6f1ea7b3cebc4d6006fae86c7fc39024124bea7f9d4e509bd70a5a"
+  },
+  {
+   "path": "qa/gameplay_test.json",
+   "bytes": 14628,
+   "sha256": "1b8e155935f277b71bb620b5e98d99e130de8e5a9e9837011dcf45add2320331"
+  },
+  {
+   "path": "qa/glb_validation.txt",
+   "bytes": 293,
+   "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
+  },
+  {
+   "path": "qa/report_metrics.json",
+   "bytes": 1112,
+   "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
+  },
+  {
+   "path": "qa/worldlabs/05/05_env_mask.png",
+   "bytes": 6175,
+   "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
+  },
+  {
+   "path": "qa/worldlabs/05/05_env_only_preview.png",
+   "bytes": 1586473,
+   "sha256": "5418c7667d802bae65efa42055663b86f36cb6e40ab7e0f73fb900905e1968dc"
+  },
+  {
+   "path": "qa/worldlabs/05/PILOT_PLAN.md",
+   "bytes": 4002,
+   "sha256": "ff845ba029b564f7ac5f8a97e30ea85c07f9ae80355b5df05cb02670dec0bdc4"
+  },
+  {
+   "path": "references/01_inside_washer_girl_and_towel.png",
+   "bytes": 443868,
+   "sha256": "99509fb6f6528a7e48043d71ef949751439e1cde071f87e7c5136bff6b752c24"
+  },
+  {
+   "path": "references/02_mascot_tumbles_in_whirlpool.png",
+   "bytes": 501744,
+   "sha256": "50eec332c50b136a5dcb4350fca8fa0f9c737bc3c778c06845e578f5f5e243d3"
+  },
+  {
+   "path": "references/03_whirlpool_twirl.png",
+   "bytes": 385938,
+   "sha256": "6f298ac5183ededf04b2a786c500999690864641a503867b721ea49970474a49"
+  },
+  {
+   "path": "references/04_through_the_five_arrows.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "references/05_flow_into_the_current.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "references/06_crest_the_rinse_arch.png",
+   "bytes": 497882,
+   "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  {
+   "path": "references/07_dive_the_washer_tube.png",
+   "bytes": 494067,
+   "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9"
+  },
+  {
+   "path": "references/08_final_spin_chamber.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "references/09_ride_the_final_wave.png",
+   "bytes": 512948,
+   "sha256": "260e9504b7b10d6185c05ccc9d991dcd7907d17d4c4eb72db5df371e6fd56ed8"
+  },
+  {
+   "path": "references/10_slide_into_hiding.png",
+   "bytes": 504650,
+   "sha256": "c0db71df8dc88c0741bbcf840ac99fbb7078c58964313713de9803b6ac7268e0"
+  },
+  {
+   "path": "references/11_safely_home_final_victory.png",
+   "bytes": 481475,
+   "sha256": "4f30ca59a926d6eed449a2865d35776368864bfd92c5c7f0845a96bf500397ae"
+  },
+  {
+   "path": "screenshots/01.png",
+   "bytes": 1096049,
+   "sha256": "0e8af1a454f2eb2a866fbffe8e4ea5dadd3e7ce19f4cf7838ef9c357ffb784c8"
+  },
+  {
+   "path": "screenshots/02.png",
+   "bytes": 1290509,
+   "sha256": "2a01f98dd0fead6907a9b07be445325f0253451a85be9724a2c2003e274e5849"
+  },
+  {
+   "path": "screenshots/03.png",
+   "bytes": 645650,
+   "sha256": "19eea5c577a31808498eac40432c9d36d79e75ac6dd1aa921cd53409bad826cc"
+  },
+  {
+   "path": "screenshots/04.png",
+   "bytes": 960211,
+   "sha256": "5123eced18136ca1958e09261b2ab1bff31a87f752b545c552a6739f5b574327"
+  },
+  {
+   "path": "screenshots/05.png",
+   "bytes": 1537580,
+   "sha256": "d42db9aa32dd2a5b2e546351626be51c47cb705710acd116ff0e17004d96635b"
+  },
+  {
+   "path": "screenshots/06.png",
+   "bytes": 1129448,
+   "sha256": "c817af2d916a983d8ce713f21a1f9f95ccdf46c9a6196a50941b5e31107ff31a"
+  },
+  {
+   "path": "screenshots/07.png",
+   "bytes": 1492779,
+   "sha256": "783841f6d297330fbfdde79aba1baacde179ccdb9ee4f7b4514ac54fa298c356"
+  },
+  {
+   "path": "screenshots/08.png",
+   "bytes": 1343255,
+   "sha256": "cf9dbc13c6a170421eb36d3106b9ea02586f6b45660599edef920075b55a9827"
+  },
+  {
+   "path": "screenshots/09.png",
+   "bytes": 1394904,
+   "sha256": "15d2399dd4b351770464becfaa3405c0810d2a23c807226c1a5f39958021e20d"
+  },
+  {
+   "path": "screenshots/10.png",
+   "bytes": 1344162,
+   "sha256": "3fd71103a8f39238871d7abd28173fc11c53825956a9951a998dcc1310bb13b6"
+  },
+  {
+   "path": "screenshots/1080x1920/01.png",
+   "bytes": 1554050,
+   "sha256": "2cf8d4f181197da50da7b339f808ea3b7fcef2bad8d6a3d91faed445014d85ee"
+  },
+  {
+   "path": "screenshots/1080x1920/02.png",
+   "bytes": 1846701,
+   "sha256": "439bc4767ad857ff594fa19260485de99e335b6426271b387d14e7c1f4782f11"
+  },
+  {
+   "path": "screenshots/1080x1920/03.png",
+   "bytes": 1099787,
+   "sha256": "26e00c5b82fe73bcfe44c113e9527ca97ae777c6581ad197e6188b4e368724ec"
+  },
+  {
+   "path": "screenshots/1080x1920/04.png",
+   "bytes": 1369626,
+   "sha256": "353cb33deed00d197234b72814c2c3807b241e0c7eb17fb981afa77e29780af1"
+  },
+  {
+   "path": "screenshots/1080x1920/05.png",
+   "bytes": 2211888,
+   "sha256": "4ff9f4218c50fbfac23e05bc905433069b12e62187a398911542b8eaf13d3b36"
+  },
+  {
+   "path": "screenshots/1080x1920/06.png",
+   "bytes": 1605338,
+   "sha256": "728fba90be7d590400fc4a91265f08db1da14f859a2f9317a0f76bfc4c5984e3"
+  },
+  {
+   "path": "screenshots/1080x1920/07.png",
+   "bytes": 2141580,
+   "sha256": "8f5e2ea0d005837b1bc411524ddd1648a17213e584a962480237656bc8661e62"
+  },
+  {
+   "path": "screenshots/1080x1920/08.png",
+   "bytes": 1938470,
+   "sha256": "0380e077f19a396d1a179d00dd954adf9ab88c98e82d5d5b0a65e2c9c7ba5547"
+  },
+  {
+   "path": "screenshots/1080x1920/09.png",
+   "bytes": 2029035,
+   "sha256": "b8e5f48db668b71af9f1463d0e25235ebd47005b66f0c7a18c84db73cbbf57c6"
+  },
+  {
+   "path": "screenshots/1080x1920/10.png",
+   "bytes": 1942077,
+   "sha256": "477fb0f6d2a5afa07071573c941ee25c0eb7fc242b8af5372bd1d39b259d30a7"
+  },
+  {
+   "path": "screenshots/1080x1920/11.png",
+   "bytes": 1998620,
+   "sha256": "946427810a7fe93414452e90be7abdc5f76e9ef2424adaad8dda3b9e40f0d1a8"
+  },
+  {
+   "path": "screenshots/11.png",
+   "bytes": 1394922,
+   "sha256": "9d4f922313c565e0e64bdd84ac2ef5da0dee6007641d61bdcad1c767c710c2a8"
+  },
+  {
+   "path": "scripts/autosave-cron.sh",
+   "bytes": 357,
+   "sha256": "53e536c74512088ebdb06cd10d3c35ba7dfedbd79486d3c264d6bb9587cbb23d"
+  },
+  {
+   "path": "scripts/autosave-daemon.sh",
+   "bytes": 233,
+   "sha256": "a330a31fca121b07cbc574a4d25a3e835d5d6d9643e5aab6908d4c75245ff050"
+  },
+  {
+   "path": "scripts/autosave-hook.sh",
+   "bytes": 902,
+   "sha256": "5efb1cc0e60c18fd5e7eb8d6574334e5e87847d55d702eb3957a575a7394d638"
+  },
+  {
+   "path": "scripts/capture.mjs",
+   "bytes": 3860,
+   "sha256": "76fd115add143307d57e4ed8e7094dd073fd2f230042e90e847d74d743d60350"
+  },
+  {
+   "path": "scripts/cinematic-test.mjs",
+   "bytes": 3615,
+   "sha256": "614346d3653429a2770fb6ede541667ec77efb795af1b859a604991fc5ba6d7b"
+  },
+  {
+   "path": "scripts/cloud-env-setup.sh",
+   "bytes": 1986,
+   "sha256": "5d8d863d7c2b1f97c810f0b39ce6c00889cbdf6ba130ae3840bf87998d3e4ef9"
+  },
+  {
+   "path": "scripts/compare.py",
+   "bytes": 7860,
+   "sha256": "e94bad29cbd65da78eebb1277779b7a5d17a15f1488140ce443c0db79c9cb221"
+  },
+  {
+   "path": "scripts/continuity-test.ts",
+   "bytes": 4002,
+   "sha256": "d5cbd1fac1da2cd1a691b5d691728b51a9cc2deeb920cfecf3eae5a29f1a8a89"
+  },
+  {
+   "path": "scripts/export-models.mjs",
+   "bytes": 2120,
+   "sha256": "8cfbf6a5e47b6c42937b42e8424f6e79d002c5e9f2580ea155e0a97bd718df0f"
+  },
+  {
+   "path": "scripts/export_claude_sessions.py",
+   "bytes": 13381,
+   "sha256": "9659002b4802b64c679d5f45f3d02d9f851d1dfce2a7f048f7390ca3ea739679"
+  },
+  {
+   "path": "scripts/gameplay-test.mjs",
+   "bytes": 7152,
+   "sha256": "af7903c9e51f9a1080bc0e7b11776ebecdc8fb8761df9504b9c8179086dc2647"
+  },
+  {
+   "path": "scripts/install-autosave-scheduler.sh",
+   "bytes": 2420,
+   "sha256": "498295609d28f2b3c8bc9c085a302b6665bcb41bea7bf6838f0c0b1b1b6737b3"
+  },
+  {
+   "path": "scripts/lib/pw.mjs",
+   "bytes": 1419,
+   "sha256": "67b5cb7270b3c5860146edc38b2ef454d05ba3c76100addd77f34316e56f7e61"
+  },
+  {
+   "path": "scripts/rainbow-autosave.py",
+   "bytes": 16013,
+   "sha256": "f9222c96960d00ad2810afafbe443e1526e97570d662daa348c5ea81685f7523"
+  },
+  {
+   "path": "scripts/reference.sha256",
+   "bytes": 1290,
+   "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
+  },
+  {
+   "path": "scripts/setup-android-sdk.sh",
+   "bytes": 943,
+   "sha256": "61a42d0754503b8d59ad87c4a0d9e9d5f293b68d3f0aa221092897fbbed8b188"
+  },
+  {
+   "path": "scripts/setup-blender.sh",
+   "bytes": 969,
+   "sha256": "e3a4e07ec3e8acb7441b407c6119496da18768dd0455c4691e3abad9e29a4038"
+  },
+  {
+   "path": "scripts/water-lab.mjs",
+   "bytes": 1688,
+   "sha256": "159849c55c497d467ef8b3b0f2f308dced9b5465f3635e0e0e5edd282b085209"
+  },
+  {
+   "path": "src/characters/benny/benny-lab.html",
+   "bytes": 278,
+   "sha256": "cd43ae8fbb22e2b07e6f88518c08ad92d525fe9d1533438a7a4573964736a054"
+  },
+  {
+   "path": "src/characters/benny/benny-lab.ts",
+   "bytes": 6292,
+   "sha256": "e31ef47d7b71a00f7e975ec34e5232a014b4791e4916fb414922521042ad6dcb"
+  },
+  {
+   "path": "src/characters/benny/build.ts",
+   "bytes": 19090,
+   "sha256": "1e13c5fac8d9764bca393df0886039041168e443cbd13e064ca936d6f8ed5d7d"
+  },
+  {
+   "path": "src/characters/benny/fur.ts",
+   "bytes": 5623,
+   "sha256": "ed805f95cb7ef74fdd5e4b57a76a42141cb75072f2adc0c355a7b2897c38124b"
+  },
+  {
+   "path": "src/characters/benny/runtime.ts",
+   "bytes": 6868,
+   "sha256": "9d8782d397e9af0f44e1c861fd4f25bb6d229341c89904e12d3b36ab6e2286cf"
+  },
+  {
+   "path": "src/characters/benny/textures.ts",
+   "bytes": 11807,
+   "sha256": "801058a231d5e23177727fa1205e4f759319337d182b4040eab6e2d851c0d3c3"
+  },
+  {
+   "path": "src/characters/girl/build.ts",
+   "bytes": 48574,
+   "sha256": "c749e2b3bbd9cba11ab60a85f8b9681678e951685c25f8fb3f261edb810e1e59"
+  },
+  {
+   "path": "src/characters/girl/girl-lab.html",
+   "bytes": 348,
+   "sha256": "3f027137ab722a5f0f3859140283432c1e516091f1c6ae444e99f73d83041b62"
+  },
+  {
+   "path": "src/characters/girl/girl-lab.ts",
+   "bytes": 5207,
+   "sha256": "4be581946af9c9625a6c501748c78bef2742a43d90321e724554a1a9afce6bf1"
+  },
+  {
+   "path": "src/characters/girl/runtime.ts",
+   "bytes": 3790,
+   "sha256": "3e06fa933489bca7bc608dcde2485e8aa0f5c81318cbe25758a1361fb56dda7e"
+  },
+  {
+   "path": "src/characters/girl/textures.ts",
+   "bytes": 10206,
+   "sha256": "9398e5103e5b9ffce7f393c6411acf9e06fee7ecc114475a3e76444fd949a531"
+  },
+  {
+   "path": "src/characters/types.ts",
+   "bytes": 1766,
+   "sha256": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a"
+  },
+  {
+   "path": "src/game/Game.ts",
+   "bytes": 29807,
+   "sha256": "38f0048cbd6e7a039685fc3e58191589d1bf42b849e1a1d9d6f9f62741631121"
+  },
+  {
+   "path": "src/game/cameraRig.ts",
+   "bytes": 6456,
+   "sha256": "d06cd0293612a34d9ab30ef8302992a6fce9ab018936c270c1d3da861a4f99f7"
+  },
+  {
+   "path": "src/game/modules.ts",
+   "bytes": 5374,
+   "sha256": "d9f4bc92b8ddaa143f6f99b80663a5e37ae06453f2603106cff9bcfc52fb68e4"
+  },
+  {
+   "path": "src/gameplay/coins.ts",
+   "bytes": 6299,
+   "sha256": "0caba2c2dbfa62439656cfb700083cf67655d97fec5392f7cf7e5c9787b28f67"
+  },
+  {
+   "path": "src/gameplay/input.ts",
+   "bytes": 1805,
+   "sha256": "a932c2ec6ce2979efc6b539cdfe56cca1045d2d012c5a489f85ff2cb19e46eee"
+  },
+  {
+   "path": "src/main.ts",
+   "bytes": 834,
+   "sha256": "77a2f053b1004e90d468bcce71691313ca9befd45c38f5c8097447515fbe904e"
+  },
+  {
+   "path": "src/render/env.ts",
+   "bytes": 2743,
+   "sha256": "e6b4c0e86eb9dd05154e436cea3c3dee5189daed160b6be514bd07524cc372c1"
+  },
+  {
+   "path": "src/render/grade.ts",
+   "bytes": 1266,
+   "sha256": "f4573a37b5493b836d60cf23604c156f08ab28db60b5a64a34faf60ce321eec8"
+  },
+  {
+   "path": "src/ui/cinematicVideo.ts",
+   "bytes": 4863,
+   "sha256": "4841b63a087c3953c98527cb58dd5f91bc4657293bd7417bf7b077913ec9966e"
+  },
+  {
+   "path": "src/ui/hud.ts",
+   "bytes": 11796,
+   "sha256": "8f276df29ad1047573d7bf00e2e1308cdd0a74a93b25890700a672f915229bbe"
+  },
+  {
+   "path": "src/vfx/bubbles.ts",
+   "bytes": 10400,
+   "sha256": "526946e5e072a148fcc0ee1fc0d1ffca22544ff944c46da2d7a538da04b402d7"
+  },
+  {
+   "path": "src/vfx/drumWater.ts",
+   "bytes": 9344,
+   "sha256": "41622a2706ea078c4c5a318e816ba29c432dcef3b6e50f45be6beecba8ddfddf"
+  },
+  {
+   "path": "src/vfx/finalWave.ts",
+   "bytes": 7484,
+   "sha256": "12a07f4e9e342b2e876af760f97e1c4f50df03bbe07646fd589e6d32fa03a39a"
+  },
+  {
+   "path": "src/vfx/foam.ts",
+   "bytes": 7268,
+   "sha256": "2db6e29fecc1c9584fe7df85566167508c57bb61a5c717c0c81e09f7e1e87897"
+  },
+  {
+   "path": "src/vfx/glsl.ts",
+   "bytes": 4069,
+   "sha256": "4242dc0a89b4627ca27046c5242172db533a47a9d1a6fcf052f78771c11a7e77"
+  },
+  {
+   "path": "src/vfx/index.ts",
+   "bytes": 8987,
+   "sha256": "08eaace20441831138f6c592b3a497120c3dca7f1d845cd815557f87c3591d19"
+  },
+  {
+   "path": "src/vfx/puddles.ts",
+   "bytes": 4324,
+   "sha256": "f364cdf4a4d7be7ddbaa3b3c2c6c5b8f4f7d4fa853c58fc92f49c90c66adf75d"
+  },
+  {
+   "path": "src/vfx/riderSplash.ts",
+   "bytes": 5700,
+   "sha256": "6beb46f491c01bae6b384c04ca8006ee10fceb15777b2832ff49353d830ee0d1"
+  },
+  {
+   "path": "src/vfx/spray.ts",
+   "bytes": 3454,
+   "sha256": "8f5c1f69b35837260e3bb3867284d9dbd350b3c9f5202c630673e8c15ef0cbaa"
+  },
+  {
+   "path": "src/vfx/waterRibbon.ts",
+   "bytes": 16387,
+   "sha256": "24f4217ca2b4a87cec06f8bfdcc154aba36cf5719c863ae255150b53208f427a"
+  },
+  {
+   "path": "src/vfx/whirlpool.ts",
+   "bytes": 8370,
+   "sha256": "d574e2cea4b81cdd608ed58b3a98b0793906a092e70a0b4ff90f207cba144ff4"
+  },
+  {
+   "path": "src/world/course.ts",
+   "bytes": 20653,
+   "sha256": "e583ded7ab10a0cb132c7ef7de5ebea477d480a2651020a05c1c8bc6be76511a"
+  },
+  {
+   "path": "src/world/environment.ts",
+   "bytes": 29671,
+   "sha256": "97f5c88c537041d45678192a35c32c86fa49f0c0f1ccab153ddc6c782cf96d3c"
+  },
+  {
+   "path": "src/world/laundryRoom.ts",
+   "bytes": 8308,
+   "sha256": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679"
+  },
+  {
+   "path": "src/world/materials.ts",
+   "bytes": 6893,
+   "sha256": "95face6844b3c8a9d34dd082c32fe23164f1ae2798916d4f3692b62a2f215069"
+  },
+  {
+   "path": "src/world/towel.ts",
+   "bytes": 6281,
+   "sha256": "c6f65ee435296d6a1c53ff4f56dc7d0ed76917b91dd8c962e20134f91215cee0"
+  },
+  {
+   "path": "src/world/tube.ts",
+   "bytes": 9993,
+   "sha256": "049680678c960865b2e6cb779596bfa03952d330115ef4f31cab12437a64f054"
+  },
+  {
+   "path": "tools/model-lab.html",
+   "bytes": 344,
+   "sha256": "3a796e0839ba74c5563ff2e3c567b646e9972c787475b344566961977ce1aa32"
+  },
+  {
+   "path": "tools/model-lab.ts",
+   "bytes": 4451,
+   "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/water-lab.html",
+   "bytes": 344,
+   "sha256": "e2758962c2fb8508af5a41526d1ea395c9f20a75682903a3d4b809a2ddf97cae"
+  },
+  {
+   "path": "tools/water-lab.ts",
+   "bytes": 6802,
+   "sha256": "9eadc09abd1f3685bf74f6f5b3ae20c411acade82355b44ffddc8d6ad135c676"
+  },
+  {
+   "path": "tsconfig.json",
+   "bytes": 526,
+   "sha256": "2c88313eda7ae7a287349235f34020081092427b5ee030ad58d747bd46124d4b"
+  },
+  {
+   "path": "vite.config.ts",
+   "bytes": 416,
+   "sha256": "284b01887422f77073d247a82cf401f20cf3bb6a9f8cc271b183cf32c7c8a37a"
+  }
+ ]
+}

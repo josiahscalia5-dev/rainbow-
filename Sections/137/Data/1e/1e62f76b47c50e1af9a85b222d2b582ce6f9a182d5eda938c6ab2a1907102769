@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-17T22:26:33+00:00",
+    "reason": "hook:Stop",
+    "result": "committed+pushed",
+    "files_staged": 4,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-s08-scenery-c6",
+    "note": "following session branch 'claude/rainbow-s08-scenery-c6' (config branch 'ccr-9c4a8ad6-xovgsx')",
+    "commit": "4b532665e99166c9a6288b63b13272e6774d53c4",
+    "duration_s": 7
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-s08-scenery-c6",
+  "last_verified_remote_sha": "4b532665e99166c9a6288b63b13272e6774d53c4",
+  "last_successful_backup_utc": "2026-11-17T22:26:33+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1378); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-17T22:30:00+00:00"
+}

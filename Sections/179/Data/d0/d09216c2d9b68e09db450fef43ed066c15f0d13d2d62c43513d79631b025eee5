@@ -1,0 +1,108 @@
+{
+  "_comment": "Machine-readable Rainbow tool manifest. Read by scripts/claude-bootstrap.sh (versions, packages, Marble worlds). Contains NO secrets: credentials are listed by name/host only. Update 'tested' when a session re-verifies a tool.",
+  "schema": 1,
+  "project": "RAINBOW - 11-screen 3D mobile game (Three.js + Vite + Capacitor Android)",
+  "repo": "josiahscalia5-dev/rainbow-",
+  "updated_utc": "2026-11-16T11:00:00+00:00",
+  "entry_points": {
+    "bootstrap": "bash scripts/claude-bootstrap.sh            # full: resume newest work, LFS, refs, agents, Marble, tools, tests, autosave, report",
+    "bootstrap_check_only": "bash scripts/claude-bootstrap.sh --check    # no installs, no merges",
+    "bootstrap_status": "bash scripts/claude-bootstrap.sh --status   # last report + autosave verdict",
+    "bootstrap_full_tests": "bash scripts/claude-bootstrap.sh --full     # adds browser gameplay test, 05 BEFORE pixel check, LFS download test",
+    "new_account_one_liner": "git fetch origin <newest-branch> && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh",
+    "legacy_resume": "bash scripts/resume-newest-work.sh [--tools]   # kept for old prompts; runs the bootstrap",
+    "autosave_now": "python3 scripts/rainbow-autosave.py --reason manual",
+    "autosave_end": "python3 scripts/rainbow-autosave.py --reason manual:end",
+    "autosave_check": "python3 -I scripts/autosave-status.py",
+    "report": "backups/BOOTSTRAP_REPORT.md (tracked) + backups/.live/BOOTSTRAP_REPORT.json (this container)"
+  },
+  "startup_integration": {
+    "session_start_hook": ".claude/settings.json SessionStart -> scripts/autosave-hook.sh SessionStart -> scripts/claude-bootstrap.sh --hook (sync: fetch + merge newer branches + LFS + autosave re-arm; then the full bootstrap runs in the background)",
+    "other_hooks": {
+      "PreCompact": "scripts/autosave-hook.sh PreCompact -> one verified autosave",
+      "Stop": "scripts/autosave-hook.sh Stop -> one autosave in the background",
+      "SessionEnd": "scripts/autosave-hook.sh SessionEnd -> one verified autosave"
+    },
+    "cloud_environment_setup_script": "scripts/cloud-env-setup.sh (paste into the claude.ai environment's setup script; it runs claude-bootstrap.sh --env-setup: installs tools before Claude starts, so the hook finds them ready)",
+    "hook_runs_on": "every SessionStart; the heavy part only when source=startup (resume/clear/compact only re-arm the autosave)",
+    "cloud_environments_current_account": {
+      "rainbow-": "personal, created 2026-11-16 ~11:14 UTC by session 01Kbt6BT with the user's approval: setup script = scripts/cloud-env-setup.sh, limited network (package managers + MCP servers + the 11 network_hosts below), repository josiahscalia5-dev/rainbow-. No secrets saved on it yet (the Marble key would be entered via request_credential only if new API calls are needed)",
+      "Default": "personal, unrestricted network, no setup script; holds the Marble World API key as a network secret (host api.worldlabs.ai, header WLT-Api-Key)"
+    }
+  },
+  "tools": {
+    "node": {"required": true, "need": ">=20", "tested": "22.23.4", "check": "node -v", "install": "preinstalled in Claude cloud images (/opt/node22)"},
+    "npm_deps": {"required": true, "check": "node_modules/.rainbow-bootstrap.sha256 == sha256(package.json, package-lock.json)", "install": "npm ci --no-audit --no-fund --prefer-offline", "cache": "~/.npm (reused)", "packages": "three ^0.170, vite ^5.4, vite-node ^2.1, typescript ^5.6, @capacitor/* ^6.2"},
+    "git": {"required": true, "tested": "2.43.0"},
+    "git_lfs": {"required": true, "tested": "3.4.1", "check": "git lfs ls-files | awk '$2==\"-\"' | wc -l  -> 0", "install": "git lfs install --local && git lfs pull", "note": "Claude containers clone with the LFS filter skipped: binaries are 130-byte pointer stubs until git lfs pull. A failed early pull stores lfs.<url>.access=basic; the bootstrap unsets it."},
+    "playwright": {"required": true, "tested": "1.63.0 (global module) + Chromium in /opt/pw-browsers", "check": "node scripts/lib/pw-smoke.mjs (headless WebGL2 launch)", "install": "preinstalled in Claude cloud images - NEVER run 'playwright install'", "launch_args": "--use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist (scripts/lib/pw.mjs)"},
+    "python": {"required": true, "tested": "3.13.18"},
+    "python_libs": {"required": true, "packages": {"numpy": "numpy", "PIL": "Pillow"}, "optional_packages": {"cv2": "opencv-python-headless", "scipy": "scipy"}, "install": "python3 -m pip install --quiet <missing>", "used_by": "scripts/compare.py, screen_report.py, triptych.py, tools/qa/ring_fit05.py (numpy+PIL); scripts/landmarks05.py, tools/make_env_*.py (cv2, scipy)"},
+    "blender": {"required": true, "version": "5.3.0", "path": "/usr/local/bin/blender -> /opt/blender/blender", "check": "blender --version", "install": "bash scripts/setup-blender.sh", "hosts": ["download.blender.org"], "used_by": "tools/blender/*.py, qa/worldlabs/05/pilot/*/import/*.blend, qa/pilot05/wave6/camera_lock/*.blend"},
+    "java": {"required": "android", "need": ">=17", "tested": "OpenJDK 21.0.12", "install": "preinstalled in Claude cloud images"},
+    "gradle": {"required": "android", "wrapper": "android/gradlew -> gradle-8.2.1-all (services.gradle.org)", "system": "/opt/gradle (preinstalled)"},
+    "android_sdk": {"required": "android", "root": "/opt/android-sdk", "cmdline_tools": "11076708", "packages": ["platform-tools", "platforms;android-34", "build-tools;34.0.0"], "check": "dirs platforms/android-34 and build-tools/34.0.0 exist", "install": "bash scripts/setup-android-sdk.sh", "hosts": ["dl.google.com"], "env": {"ANDROID_HOME": "/opt/android-sdk", "ANDROID_SDK_ROOT": "/opt/android-sdk"}, "local_properties": "android/local.properties sdk.dir (git-ignored, written by the bootstrap)"},
+    "ffmpeg": {"required": false, "tested": "6.1.1", "used_by": "Flow video checks"},
+    "imagemagick": {"required": false, "tested": "6.9.12"},
+    "claude_cli": {"required": true, "tested": "2.1.325", "used_by": "plugin install / mcp list checks"}
+  },
+  "claude_plugins": {
+    "synced_from_claude_ai_account": ["superpowers", "playwright", "code-review", "feature-dev", "claude-code-setup", "hubcap", "typescript-lsp", "pyright-lsp"],
+    "note_synced": "Account-level plugins follow the Claude account (claude.ai settings), not the repo. On a new account enable at least 'playwright' (Playwright MCP).",
+    "repo_installed": {"worldlabs@worldlabs": {"marketplace": "worldlabsai/skills", "install": "bash scripts/setup-worldlabs-plugin.sh", "purpose": "skills atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli; its duplicate MCP copy plugin:worldlabs:worldlabs is disabled for this project"}},
+    "not_needed": ["context7 (needs OAuth sign-in; not used by Rainbow)"]
+  },
+  "mcp_servers": {
+    "plugin:playwright:playwright": {"source": "playwright plugin (npx @playwright/mcp@latest)", "needed": true, "check": "claude mcp list"},
+    "World Labs Atlas": {"source": "claude.ai connector (https://api.atlas.worldlabs.ai/mcp), per Claude account", "needed": "only for new World Labs tasks", "reconnect": "claude.ai -> Settings -> Connectors -> World Labs Atlas -> sign in", "credits": "task tools spend World Labs credits: ask the user first"},
+    "github": {"source": "Claude GitHub integration (git proxy + GitHub MCP)", "needed": true, "reconnect": "connect GitHub to the Claude account + install the Claude GitHub App on josiahscalia5-dev/rainbow-"},
+    "blender_mcp": {"source": "uvx mcp-for-blender", "needed": false, "note": "needs a desktop Blender UI; headless Blender scripts are used instead"},
+    "template": ".mcp.json.template (no secrets; .mcp.json is git-ignored)"
+  },
+  "credentials": {
+    "_policy": "NEVER in git, chat, logs or scripts. Stored only by the Claude platform. Transfers between Claude accounts: NO.",
+    "marble_world_api_key": {"host": "api.worldlabs.ai", "header": "WLT-Api-Key", "stored_as": "network secret on the Claude cloud environment (injected by the session proxy)", "reconnect": "Claude calls request_credential(host api.worldlabs.ai, header WLT-Api-Key); the user pastes the key only into that secure form", "needed": "only for NEW World Labs API calls - every generated asset is already in Git LFS", "check": "python3 -I tools/worldlabs/marble_pilot.py credits  (free read)"},
+    "github": "session git proxy (no token in the repo)"
+  },
+  "network_hosts": {
+    "_note": "Needed only for a LIMITED-network cloud environment. The Default environment of the current account is unrestricted.",
+    "download.blender.org": "Blender 5.3.0 tarball",
+    "dl.google.com": "Android SDK command-line tools + packages",
+    "services.gradle.org": "Gradle wrapper distribution (Android build)",
+    "maven.google.com": "Android Gradle plugin + AndroidX (Android build)",
+    "api.worldlabs.ai": "Marble World REST API (free reads; paid jobs need the user's OK)",
+    "api.atlas.worldlabs.ai": "World Labs Atlas MCP",
+    "cdn.marble.worldlabs.ai": "Marble asset downloads",
+    "github-cloud.githubusercontent.com": "Git LFS object downloads (observed host of LFS download links)",
+    "lfs.github.com": "Git LFS (older link host)"
+  },
+  "marble_worldlabs": {
+    "ledger": "qa/worldlabs/05/pilot/LEDGER.md",
+    "budget": {"user_cap_credits": 6250, "user_cap_usd": 5, "spent_credits": 1810, "balance_last_read": 5190, "balance_read_utc": "2026-11-16T10:55:00+00:00", "auto_recharge": false},
+    "prompt": "qa/worldlabs/05/pilot/prompt_05.txt",
+    "input_reference": "qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png (crop of references/05_flow_into_the_current.png)",
+    "worlds": [
+      {"label": "draft", "world_id": "5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f", "display_name": "Rainbow 05 draft (approved tunnel)", "operation_id": "4a549a9d-3de2-424b-8324-db24a8d1b9bd", "model": "marble-1.0-draft", "credits": 230, "dir": "qa/worldlabs/05/pilot/draft",
+       "lfs_files": ["collider.glb", "splats_100k.spz", "splats_500k.spz", "splats_full_res.spz", "splats_500k.ply", "import/draft05.blend", "import/draft05_underlay.glb"],
+       "git_files": ["pano.png", "thumbnail.png", "thumbnail.webp", "world.json", "world_refresh_2026-11-16.json", "operation_response.sanitized.json", "import/draft05_measure.json", "import/draft05_preview.png", "analysis/splat_measure.json", "analysis/bay_measure.json", "analysis/bay_unrolled.png", "analysis/wall_unrolled.png", "analysis/bay_coverage.png"]},
+      {"label": "full", "world_id": "c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9", "display_name": "Rainbow 05 full (approved tunnel)", "operation_id": "12a08430-f687-4a09-bdc7-3a469c76363d", "model": "marble-1.1", "credits": 1580, "dir": "qa/worldlabs/05/pilot/full", "metric_scale_factor": 1.5619, "ground_plane_offset": 0.9745,
+       "lfs_files": ["collider.glb", "splats_100k.spz", "splats_150k.spz", "splats_500k.spz", "splats_full_res.spz", "splats_500k.ply", "import/full05.blend", "import/full05_underlay.glb"],
+       "git_files": ["pano.png", "pano_preview_2048.jpg", "thumbnail.png", "thumbnail.webp", "world_refresh_2026-11-16.json", "operation_response.sanitized.json", "import/full05_measure.json", "import/full05_preview.png", "analysis/splat_measure.json", "analysis/bay_measure.json", "analysis/bay_unrolled.png", "analysis/wall_unrolled.png", "analysis/bay_coverage.png"]}
+    ],
+    "user_website_world": {"world_id": "f0be2178-4291-4f90-848f-6506b53cc87d", "name": "Vibrant Tunnel of Fortune", "api_access": "404 (not on the API account); screenshot only: qa/worldlabs/05/marble_user_world/"},
+    "not_bought": "HQ mesh export (3,500 credits) - needs the user's OK",
+    "scripts": ["tools/worldlabs/marble_pilot.py (credits | upload | generate | poll | world | export_ply)", "tools/worldlabs/analyze_splats.py", "tools/worldlabs/bay_texture.py", "tools/blender/import_world_asset.py", "scripts/setup-worldlabs-plugin.sh"],
+    "measurements": ["qa/worldlabs/05/pilot/*/analysis/*.json", "qa/worldlabs/05/pilot/*/import/*_measure.json", "qa/worldlabs/05/blender/river05_layout.json"],
+    "other": ["qa/worldlabs/05/blender/screen05_layout.{blend,glb}", "qa/worldlabs/05/geometry_ref/", "qa/worldlabs/05/rejected/", "qa/worldlabs/05/*.md"]
+  },
+  "protected": {
+    "branches": "backups/autosave.config.json -> protected_branches (never pushed, force-pushed or rewritten)",
+    "files": "scripts/reference.sha256 (12 approved references incl. character_references/official_cartoon_girl_original.jpg) - never modified"
+  },
+  "cannot_transfer_through_github": [
+    "Claude account logins and connector sign-ins (GitHub, World Labs Atlas)",
+    "cloud environment settings and secrets (Marble World API key)",
+    "running processes (autosave daemon, specialists, dev servers) - the SessionStart hook restarts the autosave; specialists are relaunched from their notes",
+    "installed tools outside the repo (node_modules, Blender, Android SDK) - reinstalled by the bootstrap"
+  ]
+}

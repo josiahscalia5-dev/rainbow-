@@ -1,0 +1,1030 @@
+# Subagent agent-a9ee02bd616f45378 — session e0f002d9-e93b-5e8f-89ac-1e3fceebb58f
+
+### 🧑 User — 2026-11-15T18:36:58.907Z
+
+You are the reference-match-director for RAINBOW, the user's real-time 3D portrait mobile game in /home/user/rainbow- (branch `claude/rainbow-3d-recovery-m4v347`). Read CLAUDE.md, REFERENCE_ORDER.md, VISUAL_QA_CHECKLIST.md and Rainbow_Claude_Code_Master_Prompt_11_Screens.md first. Other specialists are editing code in the same working tree in parallel — you write DOCUMENTS ONLY; do not edit any code, assets or references.
+
+DELIVERABLES (two missing documents your agent definition requires):
+1. docs/reference_inventory.md — for each of the 11 locked references (references/01…11) plus character_references/official_cartoon_girl_original.jpg: file, size, SHA-256 (from REFERENCE_ORDER.md / scripts/reference.sha256 — verify with sha256sum), role (cinematic / interactive / victory), estimated camera (rear/front, height, pitch, approx FOV, where the vanishing point sits in the frame as % of width/height), key landmarks (rings, perforations, nozzles, door, shelf, towel, coins with count and placement, HUD values from REFERENCE_ORDER.md, stage label), colour palette (dominant hues described in words and a few sampled hex values you measure from the image with Python/Pillow), character placement and size in frame (% of frame height), and the official-girl identity override for 01/10/11 (the pictured girls in 10/11 are composition-only). Look at each image with the Read tool.
+2. qa/scene_comparisons.md — for each screen 01–11, compare the reference with the CURRENT live capture qa/NN_side_by_side.png (and screenshots/NN.png), list concrete discrepancies ranked by visual impact (camera/framing, geometry, materials/colour, water, foam/bubbles, characters, HUD), and a prioritized fix list with the owning specialist for each item (path-camera-transition-engineer, washer-environment-modeler, water-fx-specialist, foam-bubbles-particles, benny-character-artist, cartoon-girl-character-artist, animation-and-gameplay-engineer, playwright-visual-qa, android-build-performance). Include the existing crude metrics from qa/compare_summary.md with their method, and state plainly that they are not fidelity percentages. Make Screen 05 the most detailed section (it is the current pilot): describe precisely tube straightness, ring count/spacing/thickness/colour, wall colour and perforation pattern, lid positions, water width/curves/colour bands/foam/bubbles/splash, Benny's proportions and screen position, camera height and vanishing point.
+Mark at the top of qa/scene_comparisons.md that these comparisons describe the build as of commit 81e639e (before the current Screen 05 work) and will be refreshed by playwright-visual-qa after the pilot.
+
+GIT: do NOT run git commit, push, checkout, reset, stash or rebase — an autosave daemon commits and pushes automatically.
+
+REPORT: the two file paths, and the top 3 fixes per screen in one short line each. No invented similarity percentages.
+
+### 🤖 Claude — 2026-11-15T18:37:00.160Z
+
+I'll start by reading the canonical documents.
+
+### 🤖 Claude — 2026-11-15T18:37:00.805Z
+
+> 🔧 **Bash** `{"command": "ls -la && ls docs qa references character_references screenshots scripts 2>/dev/null | head -100 && git log --oneline | head -15", "description": "List project structure and recent commits"}`
+
+### 🧑 User — 2026-11-15T18:37:00.862Z
+
+> ↩︎ result: total 236
+> drwxr-xr-x  18 root root  4096 Nov 15 18:36 .
+> drwxr-xr-x   3 root root  4096 Nov 15 18:05 ..
+> drwxr-xr-x   3 root root  4096 Nov 15 18:05 .claude
+> drwxr-xr-x   9 root root  4096 Nov 15 18:36 .git
+> -rw-r--r--   1 root root   715 Nov 15 18:05 .gitattributes
+> -rw-r--r--   1 root root   638 Nov 15 18:05 .gitignore
+> -rw-r--r--   1 root root   688 Nov 15 18:05 .mcp.json.template
+> -rw-r--r--   1 root root  1619 Nov 15 18:05 CLAUDE.md
+> -rw-r--r--   1 root root  2742 Nov 15 18:05 README_FIRST.md
+> -rw-r--r--   1 root root  5134 Nov 15 18:05 REFERENCE_ORDER.md
+> -rw-r--r--   1 root root 23780 Nov 15 18:05 Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> -rw-r--r--   1 root root  1970 Nov 15 18:05 START_HERE_PASTE_TO_CLAUDE.md
+> -rw-r--r--   1 root root  3539 Nov 15 18:05 TOOL_SETUP_AND_VERIFICATION.md
+> -rw-r--r--   1 root root  3258 Nov 15 18:05 VISUAL_QA_CHECKLIST.md
+> drwxr-xr-x   6 root root  4096 Nov 15 18:24 android
+> drwxr-xr-x   3 root root  4096 Nov 15 18:05 assets
+> drwxr-xr-x   4 root root  4096 Nov 15 18:35 backups
+> drwxr-xr-x   2 root root  4096 Nov 15 18:05 builds
+> -rw-r--r--   1 root root   242 Nov 15 18:05 capacitor.config.ts
+> drwxr-xr-x   2 root root  4096 Nov 15 18:05 character_references …[+3108 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:02.030Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/Rainbow_Claude_Code_Master_Prompt_11_Screens.md"}`
+
+### 🧑 User — 2026-11-15T18:37:02.042Z
+
+> ↩︎ result: 1	# RAINBOW — NEW 11-SCREEN CLAUDE CODE MASTER BUILD PROMPT
+> 2	
+> 3	**MANDATE: BUILD A BRAND-NEW RAINBOW GAME FROM THESE EXACT APPROVED REFERENCES.** This is a new isolated project. Do not modify, copy, fork, overwrite, or reuse repositories, assets, models, scenes, characters, code, or branches from Bubble Wash Kingdom, Ripple, bubblegames, or any other earlier project. The only approved source files are the 11 image references and official new cartoon-girl reference shipped in THIS package.
+> 4	
+> 5	**Project title:** RAINBOW. **Proposed private GitHub repo:** `rainbow-washer-game` (use this name if available; if it exists, DO NOT overwrite or clone old content; report the collision and use an explicitly confirmed new name). Verify any new remote, default branch, first commit SHA and push, and tell me what was actually created. If no GitHub access exists, keep working locally and clearly report the authentication blocker rather than claiming a push.
+> 6	
+> 7	## 0. FIRST ACTION: READ THE SOURCES AND KEEP THEM IMMUTABLE
+> 8	
+> 9	Read `README_FIRST.md`, `REFERENCE_ORDER.md`, `character_references/official_cartoon_girl_original.jpg`, and *all eleven* files in `references/` at full resolution BEFORE …[+22893 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:02.422Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/REFERENCE_ORDER.md"}`
+
+### 🧑 User — 2026-11-15T18:37:02.433Z
+
+> ↩︎ result: 1	# Rainbow — approved reference order (11 scenes + official girl)
+> 2	
+> 3	**All image files are copied from the user uploads without any edits.** Only the on-screen 3D rebuild may replace the legacy girl. The photo of the official cartoon girl is a **separate character reference, not a numbered gameplay stage**.
+> 4	
+> 5	**Visual override rule:** In scene 01, scene 10 (where the girl is visible) and scene 11, use `character_references/official_cartoon_girl_original.jpg` as the *girl identity reference*. The older girl(s) inside the original screenshots establish framing, not character identity. Benny, scenery, story, and screen order remain locked.
+> 6	
+> 7	| Order | Source file | Original resolution | SHA-256 | Key note |
+> 8	|---|---|---|---|---|
+> 9	| 01 — Inside the Washing Machine | `references/01_inside_washer_girl_and_towel.png` | 864×1536 | `99509fb6f6528a7e48043d71ef949751439e1cde071f87e7c5136bff6b752c24` | Cinematic: from inside the perforated pink-gold drum, looking through the washer door at the girl walking away, while Benny remains concealed in a plush purple towel; blue striped sock, pink star shirt, glossy blue/pink water, bubbles. No HUD. |
+> 10	| 02 — Whirlpool Tumble | `referenc …[+3949 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:02.939Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/VISUAL_QA_CHECKLIST.md"}`
+
+### 🧑 User — 2026-11-15T18:37:02.954Z
+
+> ↩︎ result: 1	# Rainbow Visual + Gameplay QA — mandatory checklist
+> 2	
+> 3	## Scene coverage
+> 4	
+> 5	- [ ] Exact original files loaded and checksums match, 11 scene images + 1 cartoon-girl reference.
+> 6	- [ ] Screen 01 cinematic inside washer, cartoon girl walking away, Benny hidden.
+> 7	- [ ] Screen 02 tumbling Benny, sock and star shirt, no HUD.
+> 8	- [ ] Screen 03 whirlpool camera, 5/5, $ 1,330, visible drain and arrow slide.
+> 9	- [ ] Screen 04 five and ONLY five glowing chevrons, descending ramp, rear camera.
+> 10	- [ ] Screen 05 broad S-curve and nozzles, 5/5, $ 1,420.
+> 11	- [ ] Screen 06 high rinse arch and coins following crest, 5/5, $ 1,680.
+> 12	- [ ] Screen 07 ringed curve, then extended deep vertical plunge, 5/5, $ 1,940.
+> 13	- [ ] Screen 08 inlet located at the END/BOTTOM of actual Scene 07 descent, no cut, no teleport, 5/5, $ 2,040.
+> 14	- [ ] Screen 09 same chamber, wave at left, coin trail, 5/5, $ 2,280.
+> 15	- [ ] Screen 10 same cartoon girl behind door, Benny disappears beneath towel, 5/5, $ 2,500.
+> 16	- [ ] Screen 11 final title `11 · SAFELY HOME`, SAME cartoon girl retrieving folded towel with unseen Benny, open silver door right, `FINAL SPIN COMPLETE`, 5/5, $ 2,500.
+> 17	- [ ] No replacement of can …[+2166 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:03.269Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/compare_summary.md"}`
+
+### 🧑 User — 2026-11-15T18:37:03.315Z
+
+> ↩︎ result: 1	# Reference vs live — reproducible metrics
+> 2	
+> 3	Method: `scripts/compare.py` (Pillow/numpy). mad = mean |ΔRGB| at 1/4 scale (lower is closer);
+> 4	hue_corr = 36-bin hue-histogram correlation of saturated pixels (−1…1, higher is closer);
+> 5	edge_corr = Sobel edge-map correlation at 1/8 scale (−1…1, structure/composition indicator).
+> 6	These are crude indicators, not a fidelity percentage. Girl-identity regions (01/10/11) and the
+> 7	03 phone outline are masked.
+> 8	
+> 9	| Screen | mad | hue_corr | edge_corr | masked |
+> 10	|---|---|---|---|---|
+> 11	| 01 | 63.0 | 0.548 | 0.054 | girl identity region |
+> 12	| 02 | 70.3 | 0.731 | -0.0 | — |
+> 13	| 03 | 67.0 | 0.585 | 0.011 | phone outline |
+> 14	| 04 | 72.1 | 0.64 | 0.069 | — |
+> 15	| 05 | 78.5 | 0.513 | 0.001 | — |
+> 16	| 06 | 74.5 | 0.746 | -0.012 | — |
+> 17	| 07 | 75.1 | 0.487 | -0.005 | — |
+> 18	| 08 | 76.5 | 0.553 | -0.013 | — |
+> 19	| 09 | 73.1 | 0.789 | -0.051 | — |
+> 20	| 10 | 79.1 | 0.704 | -0.018 | girl identity region |
+> 21	| 11 | 70.3 | 0.765 | 0.098 | girl identity region |
+> 22
+
+### 🤖 Claude — 2026-11-15T18:37:05.418Z
+
+> 🔧 **Bash** `{"command": "cat scripts/reference.sha256 && echo --- && sha256sum references/*.png character_references/*.jpg && echo --- && ls -la references character_references && python3 -c \"\nfrom PIL import Image\nimport glob\nfor f in sorted(glob.glob('references/*.png'))+glob.glob('character_references/*.jpg'):\n    im=Image.open(f); print(f, im.size, im.mode)\n\"", "description": "Verify reference checksums, sizes and dimensions"}`
+
+### 🧑 User — 2026-11-15T18:37:05.642Z
+
+> ↩︎ result: 99509fb6f6528a7e48043d71ef949751439e1cde071f87e7c5136bff6b752c24  references/01_inside_washer_girl_and_towel.png
+> 50eec332c50b136a5dcb4350fca8fa0f9c737bc3c778c06845e578f5f5e243d3  references/02_mascot_tumbles_in_whirlpool.png
+> 6f298ac5183ededf04b2a786c500999690864641a503867b721ea49970474a49  references/03_whirlpool_twirl.png
+> 1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193  references/04_through_the_five_arrows.png
+> d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd  references/05_flow_into_the_current.png
+> 3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe  references/06_crest_the_rinse_arch.png
+> 75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9  references/07_dive_the_washer_tube.png
+> ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14  references/08_final_spin_chamber.png
+> 260e9504b7b10d6185c05ccc9d991dcd7907d17d4c4eb72db5df371e6fd56ed8  references/09_ride_the_final_wave.png
+> c0db71df8dc88c0741bbcf840ac99fbb7078c58964313713de9803b6ac7268e0  references/10_slide_into_hiding.png
+> 4f30ca59a926d6eed449a2865d35776368864bfd92c5c7f0845a96bf500397ae  references/11_safely_home_final_victory.png
+> 92bbaa61a66c7a4dc16d70730be76a34 …[+3203 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:06.767Z
+
+> 🔧 **Bash** `{"command": "ls .claude/agents && cat .claude/agents/reference-match-director.md && ls docs/* && cat scripts/compare.py && ls -la qa/continuity screenshots/1080x1920 && git log --oneline -3 -- qa/05_side_by_side.png screenshots/05.png", "description": "Inspect agent definition, docs, compare script, and capture history"}`
+
+### 🧑 User — 2026-11-15T18:37:06.844Z
+
+> ↩︎ result: android-build-performance.md
+> animation-and-gameplay-engineer.md
+> benny-character-artist.md
+> cartoon-girl-character-artist.md
+> foam-bubbles-particles.md
+> path-camera-transition-engineer.md
+> playwright-visual-qa.md
+> reference-match-director.md
+> washer-environment-modeler.md
+> water-fx-specialist.md
+> ---
+> name: reference-match-director
+> description: Visual fidelity art director and test triage. Use for Rainbow 11-screen game execution only.
+> ---
+> 
+> # reference-match-director
+> 
+> **Scope:** Audit all 11 screenshots as locked targets; distinguish the official girl identity override from everything else. Establish each camera FOV, color/swirl/ring/coin/character landmarks, and prioritize fixes for each side-by-side test.
+> 
+> **Canonical sources:** `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`, `REFERENCE_ORDER.md`, all `references/*.png`, and `character_references/official_cartoon_girl_original.jpg`.
+> 
+> **Deliverables:** docs/reference_inventory.md, qa/scene_comparisons.md, actionable discrepancy tasks.
+> 
+> **Hard test:** No redesign; do not claim similarity percentages without reproducible method; check stage 11 girl override.
+> 
+> Work only on the fresh Rainbow project. Coordinate with the visual director and p …[+10034 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:09.018Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -40 && echo --- && git diff --stat 81e639e HEAD -- qa screenshots references character_references | tail -5 && echo --- && cat qa/capture_log.json | head -80", "description": "Check working tree changes and capture log"}`
+
+### 🧑 User — 2026-11-15T18:37:09.101Z
+
+> ↩︎ result: M backups/BACKUP_LOG.md
+>  M backups/BACKUP_STATUS.json
+>  M qa/capture_log.json
+> ---
+> ---
+> {
+>   "when": "2026-11-15T18:36:46.240Z",
+>   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+>   "shots": [
+>     {
+>       "id": "05",
+>       "file": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/iter0/05.png",
+>       "size": [
+>         864,
+>         1536
+>       ],
+>       "checkpoint": {
+>         "stage": "05",
+>         "s": 144.17875622128764,
+>         "y": -41.78952485051285
+>       },
+>       "state": {
+>         "mode": "ride",
+>         "stage": "05",
+>         "s": 144.179,
+>         "lat": 0,
+>         "coins": 1420,
+>         "hearts": 5,
+>         "paused": false,
+>         "bennyY": -41.79,
+>         "bennyVisible": true,
+>         "cam": [
+>           4.75,
+>           -37.93,
+>           -79.82
+>         ]
+>       },
+>       "stats": {
+>         "fps": 60.8,
+>         "calls": 73,
+>         "triangles": 625575,
+>         "geometries": 79,
+>         "textures": 31,
+>         "modules": {
+>           "water": "vfx/index.ts",
+>           "benny": "assets/models/benny.glb",
+>           "girl": "assets/models/rainbow_girl.glb"
+>         },
+>         "courseLength …[+57 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:10.633Z
+
+Captures and qa images are unchanged since 81e639e. Now I'll view each reference image.
+
+### 🤖 Claude — 2026-11-15T18:37:11.122Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/01_inside_washer_girl_and_towel.png"}`
+
+### 🧑 User — 2026-11-15T18:37:11.137Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:11.575Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/02_mascot_tumbles_in_whirlpool.png"}`
+
+### 🧑 User — 2026-11-15T18:37:11.587Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:11.978Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/03_whirlpool_twirl.png"}`
+
+### 🧑 User — 2026-11-15T18:37:12.001Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:13.292Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/04_through_the_five_arrows.png"}`
+
+### 🧑 User — 2026-11-15T18:37:13.309Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:13.743Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-15T18:37:13.757Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:14.096Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-15T18:37:14.128Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:15.561Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/07_dive_the_washer_tube.png"}`
+
+### 🧑 User — 2026-11-15T18:37:15.579Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:16.036Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/08_final_spin_chamber.png"}`
+
+### 🧑 User — 2026-11-15T18:37:16.048Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:16.368Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/09_ride_the_final_wave.png"}`
+
+### 🧑 User — 2026-11-15T18:37:16.488Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:17.960Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/10_slide_into_hiding.png"}`
+
+### 🧑 User — 2026-11-15T18:37:17.978Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:18.388Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/11_safely_home_final_victory.png"}`
+
+### 🧑 User — 2026-11-15T18:37:18.403Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:18.789Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/character_references/official_cartoon_girl_original.jpg"}`
+
+### 🧑 User — 2026-11-15T18:37:18.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:20.703Z
+
+Now the current live side-by-sides.
+
+### 🤖 Claude — 2026-11-15T18:37:21.080Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/05_side_by_side.png"}`
+
+### 🤖 Claude — 2026-11-15T18:37:21.436Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/screenshots/05.png"}`
+
+### 🧑 User — 2026-11-15T18:37:21.510Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T18:37:21.549Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:24.248Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/01_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:24.659Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:24.664Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/02_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:25.005Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:25.011Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/03_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:25.286Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:28.602Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/04_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:28.910Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:29.019Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/06_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:29.320Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:29.363Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/07_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:29.677Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:31.515Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/08_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:31.818Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:31.926Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/09_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:32.201Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:32.365Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/10_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:32.661Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:32.717Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/11_side_by_side.png"}`
+
+### 🧑 User — 2026-11-15T18:37:33.061Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:37:36.737Z
+
+Now let me check the live camera/FOV settings as of 81e639e and other context docs.
+
+### 🤖 Claude — 2026-11-15T18:37:37.906Z
+
+> 🔧 **Bash** `{"command": "git ls-tree -r --name-only 81e639e src | head -60 && echo --- && git grep -n -i -E \"fov|PerspectiveCamera\" 81e639e -- src | head -40", "description": "List source files and camera FOV usage at commit 81e639e"}`
+
+### 🧑 User — 2026-11-15T18:37:37.953Z
+
+> ↩︎ result: src/characters/benny/benny-lab.html
+> src/characters/benny/benny-lab.ts
+> src/characters/benny/build.ts
+> src/characters/benny/fur.ts
+> src/characters/benny/runtime.ts
+> src/characters/benny/textures.ts
+> src/characters/girl/build.ts
+> src/characters/girl/girl-lab.html
+> src/characters/girl/girl-lab.ts
+> src/characters/girl/runtime.ts
+> src/characters/girl/textures.ts
+> src/characters/types.ts
+> src/game/Game.ts
+> src/game/cameraRig.ts
+> src/game/modules.ts
+> src/gameplay/coins.ts
+> src/gameplay/input.ts
+> src/main.ts
+> src/render/env.ts
+> src/render/grade.ts
+> src/ui/hud.ts
+> src/vfx/bubbles.ts
+> src/vfx/drumWater.ts
+> src/vfx/finalWave.ts
+> src/vfx/foam.ts
+> src/vfx/glsl.ts
+> src/vfx/index.ts
+> src/vfx/puddles.ts
+> src/vfx/spray.ts
+> src/vfx/waterRibbon.ts
+> src/vfx/whirlpool.ts
+> src/world/course.ts
+> src/world/environment.ts
+> src/world/laundryRoom.ts
+> src/world/materials.ts
+> src/world/towel.ts
+> src/world/tube.ts
+> ---
+> 81e639e:src/characters/benny/benny-lab.ts:29:            { name: '05-rear', yaw: Math.PI, pitch: 0.24, dist: 4.4, expr: 'happy', swim: 0.8, fov: 40, tumble: false },
+> 81e639e:src/characters/benny/benny-lab.ts:30:            { name: '03-front', yaw: 0.55, pitch: 0.12, dist: 4.2, expr: 'happy', swim: 0.3, fov: 40, tumble: false },
+> 81e6 …[+4866 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:41.884Z
+
+> 🔧 **Bash** `{"command": "git show 81e639e:src/game/cameraRig.ts | head -80 && echo ---- && git show 81e639e:src/game/Game.ts | sed -n 240,330p && git show 81e639e:src/game/Game.ts | sed -n 400,440p", "description": "Show camera rig and cinematic camera code at 81e639e"}`
+
+### 🧑 User — 2026-11-15T18:37:41.925Z
+
+> ↩︎ result: /**
+>  * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+>  * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+>  * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
+>  */
+> import * as THREE from 'three';
+> import { WORLD } from '../world/course';
+> import type { Course, StageId } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> 
+> export interface CamParams {
+>   back: number; // distance behind Benny
+>   up: number; // height above Benny's water point
+>   ahead: number; // look-at distance ahead
+>   lookUp: number; // look-at height
+>   fov: number;
+>   latFollow: number; // 1 = camera fully follows Benny's lateral offset
+>   roll: number; // 0..1 how much of the path bank the camera adopts
+> }
+> 
+> export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+>   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+>   '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+>   '05': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.5 },
+>   '06': { back …[+8964 chars]
+
+### 🤖 Claude — 2026-11-15T18:38:22.985Z
+
+I have all images in view. Now I'll do measured sampling with Pillow/numpy (palettes, landmark hex values, Benny/coin/gold masks) in the scratchpad.
+
+### 🤖 Claude — 2026-11-15T18:38:28.940Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && cat > /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/palette.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nfrom pathlib import Path\nR = Path('/home/user/rainbow-')\nrefs = sorted((R/'references').glob('*.png')) + [R/'character_references/official_cartoon_girl_original.jpg']\ndef hexs(c): return '#%02X%02X%02X' % tuple(int(v) for v in c)\nfor f in refs:\n    im = Image.open(f).convert('RGB')\n    W,H = im.size\n    top = 0 if  …[+670 chars]`
+
+### 🧑 User — 2026-11-15T18:38:30.920Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png (864, 1536) top_skip 0 | #DB44AD 16%, #E569BD 14%, #F09EC4 11%, #822399 10%, #35CBF6 9%, #A053B6 9%, #C0C6ED 9%, #F0CEDE 9%
+> 02_mascot_tumbles_in_whirlpool.png (864, 1536) top_skip 0 | #E03FB1 16%, #EC6DE9 13%, #EFCFE8 12%, #6898E1 12%, #F0A1D7 10%, #7A1BAD 9%, #9156C7 8%, #E867AF 7%
+> 03_whirlpool_twirl.png (727, 1536) top_skip 199 | #C2BEE6 18%, #DA52A6 14%, #E085A0 12%, #97469C 11%, #4DBBE9 11%, #5288C3 10%, #F9F2E3 8%, #EEABA0 7%
+> 04_through_the_five_arrows.png (864, 1536) top_skip 199 | #DE6F31 20%, #5B96DF 15%, #E96FBE 13%, #E342A0 9%, #F8ECD4 9%, #F0CAC1 9%, #6DC7F6 8%, #963173 7%
+> 05_flow_into_the_current.png (864, 1536) top_skip 199 | #E0653F 14%, #1292EE 13%, #DFE1D5 13%, #EB63E3 13%, #841F97 11%, #E238BB 10%, #17ADF9 9%, #8054B3 7%
+> 06_crest_the_rinse_arch.png (864, 1536) top_skip 199 | #E9E5DB 13%, #279AF1 12%, #7B2597 12%, #E469ED 12%, #D23CC4 11%, #DA6877 10%, #08CBFA 8%, #63D4F2 7%
+> 07_dive_the_washer_tube.png (864, 1536) top_skip 199 | #2092E2 14%, #EC5AE0 13%, #9D40B2 13%, #DD5C58 12%, #DF32BF 11%, #871E9C 10%, #F2EEDC 9%, #49C5F7 9%
+> 08_final_spin_chamber.png (864, 1536) top_skip 199 | #D72CB3 21%, #EE7B74 15%, #821786 11%, #08BBF8 11%, …[+675 chars]
+
+### 🤖 Claude — 2026-11-15T18:38:45.643Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/grid.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw, ImageFont\nsrc, out = sys.argv[1], sys.argv[2]\nstep = int(sys.argv[3]) if len(sys.argv) > 3 else 50\nim = Image.open(src).convert('RGB')\nd = ImageDraw.Draw(im)\ntry: f = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 14)\nexcept OSError: f = ImageFont.load_default()\nW,H = im.size\nfor x in range(0, W, step):\n    d.line([(x,0),(x,H)], fill=(0,255,0) if x % (step*2)==0 else (0,120,0), width=1)\n  …[+788 chars]`
+
+### 🧑 User — 2026-11-15T18:38:46.948Z
+
+> ↩︎ result: (864, 1536) (727, 1536)
+
+### 🤖 Claude — 2026-11-15T18:38:49.718Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/g05.png"}`
+
+### 🧑 User — 2026-11-15T18:38:50.183Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:38:50.331Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/g05live.png"}`
+
+### 🧑 User — 2026-11-15T18:38:50.396Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:39:43.566Z
+
+Now landmark color sampling at specific coordinates (9x9 median patches) for all references and the girl.
+
+### 🤖 Claude — 2026-11-15T18:40:11.212Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/sample.py <<'EOF'\nimport json, sys, numpy as np\nfrom PIL import Image\nfrom pathlib import Path\nR = Path('/home/user/rainbow-')\nP = {\n '01_inside_washer_girl_and_towel.png': {'drum wall perforated pink (top)':(430,70),'gold door rim (left)':(215,420),'door opening / laundry room wall':(470,300),'gold lifter paddle (top-right)':(760,150),'cyan water (mid)':(380,850),'hot-pink water (lower right)':(640,1030),'white foam crest':(120,560),'purple towel':(250,1250),'Benny fur (face)':(20 …[+5483 chars]`
+
+### 🧑 User — 2026-11-15T18:40:11.760Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+>     drum wall perforated pink (top) #A471D3
+>     gold door rim (left) #EF9236
+>     door opening / laundry room wall #CDBFD0
+>     gold lifter paddle (top-right) #FFF1A9
+>     cyan water (mid) #019AE5
+>     hot-pink water (lower right) #E248C6
+>     white foam crest #FDE7C9
+>     purple towel #8A25D8
+>     Benny fur (face) #F76EB7
+>     Benny hat purple band #352339
+>     pink T-shirt #F548C1
+>     blue sock #D5CDF9
+>     legacy girl shirt (masked identity) #E174B7
+> 02_mascot_tumbles_in_whirlpool.png
+>     gold door ring #BE6939
+>     drum wall perforated pink #BE3B9F
+>     cyan swirl #F94FCB
+>     hot-pink swirl #57A1F7
+>     white foam #0767F4
+>     Benny fur (cheek) #FA81CF
+>     hat purple band #7B33F0
+>     pom-pom #7311F1
+>     spiral eye white #F9EFFC
+>     paw pad pink #F655B2
+>     purple towel #9523E8
+>     blue sock #67ACF8
+>     pink T-shirt #CA3295
+> 03_whirlpool_twirl.png
+>     drum rim pink-gold (lower) #FC95CC
+>     cyan spiral water #6684ED
+>     hot-pink spiral band #0389D1
+>     foam cloud #C4AFE3
+>     gold coin (big foreground) #C26B02
+>     Benny fur #EE5EA1
+>     hat purple brim #F97BBA
+>     drain glow (centre) #FBE1EF
+>     porthole sky #DE915D
+>     background wall pink #8C81D5
+> 04_through_th …[+3831 chars]
+
+### 🤖 Claude — 2026-11-15T18:40:21.512Z
+
+Single-point sampling is too noisy on this detailed art. I'll switch to reproducible region+hue-class medians and per-class frame coverage, for both references and live captures.
+
+### 🤖 Claude — 2026-11-15T18:40:33.722Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/classes.py <<'EOF'\n\"\"\"Hue-class coverage + class medians. Reproducible: python3 -I classes.py\nClasses on HSV (H deg, S,V 0..1), pixels below the HUD band (y >= 13% H) for 03-11, full frame for 01/02.\n\"\"\"\nimport numpy as np\nfrom PIL import Image\nfrom pathlib import Path\nR = Path('/home/user/rainbow-')\nREFS = {\"01\":\"01_inside_washer_girl_and_towel.png\",\"02\":\"02_mascot_tumbles_in_whirlpool.png\",\"03\":\"03_whirlpool_twirl.png\",\"04\":\"04_through_the_five_arrows.png\" …[+2154 chars]`
+
+### 🧑 User — 2026-11-15T18:40:39.112Z
+
+> ↩︎ result: | NN | src | gold/copper | cyan/blue water | violet/purple | magenta/hot-pink | white/foam (low sat, bright) |
+> | 01 | ref | 4% #E9923F | 11% #1AAEF2 | 16% #9F42DF | 30% #DB4AB0 | 11% #F9E8FB |
+> | 01 | live | 14% #E97903 | 7% #349EEB | 12% #A661FF | 20% #F335CB | 26% #EAECFF |
+> | 02 | ref | 3% #EA9246 | 14% #09A4EB | 16% #9737E5 | 31% #E548B9 | 12% #FBEBFD |
+> | 02 | live | 8% #EF7910 | 12% #20B0E5 | 20% #A968FF | 26% #FF5BCB | 14% #FFE8FF |
+> | 03 | ref | 9% #EA9E48 | 18% #249DDC | 7% #9A53D1 | 22% #D752A8 | 15% #F9EAFC |
+> | 03 | live | 12% #FF9625 | 7% #57B2F9 | 3% #AC75FF | 11% #FF7CD3 | 30% #EFF7FF |
+> | 04 | ref | 16% #EC7D28 | 16% #129FEE | 7% #9546DE | 20% #E84BB0 | 8% #FAE7FC |
+> | 04 | live | 18% #FF9B2B | 14% #0294ED | 2% #B064EA | 25% #FC31C0 | 14% #FEEDFF |
+> | 05 | ref | 8% #F78B2F | 28% #039FF6 | 13% #9E36DF | 22% #EB38C3 | 7% #FCF6FF |
+> | 05 | live | 21% #FFA933 | 13% #529FEC | 10% #AA4BFF | 23% #FF43B2 | 11% #FFF0FF |
+> | 06 | ref | 4% #F89D45 | 24% #05A6F7 | 18% #973CDA | 21% #E346C1 | 9% #FBF4FE |
+> | 06 | live | 15% #FF9A2B | 8% #3695E1 | 34% #E357FF | 21% #FD68FF | 3% #F9E0EA |
+> | 07 | ref | 7% #F99540 | 21% #04A2EE | 16% #9632CC | 29% #DE37BB | 7% #FCF7FF |
+> | 07 | live | 18% #FFA3 …[+713 chars]
+
+### 🤖 Claude — 2026-11-15T18:40:47.851Z
+
+Now the detailed Screen 05 geometry measurements (vanishing point, ring runs, water extents and colour band sequence, Benny bbox) for reference and live.
+
+### 🤖 Claude — 2026-11-15T18:41:01.866Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/s05.py <<'EOF'\nimport numpy as np, sys\nfrom PIL import Image, ImageFilter\nsys.path.insert(0, '/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir')\nfrom classes import hsv\ndef load(p): return np.asarray(Image.open(p).convert('RGB'))\ndef runs(mask1d, minlen=3):\n    out=[]; start=None\n    for i,v in enumerate(mask1d):\n        if v and start is None: start=i\n        if (not v) and start is not None:\n            if i-start>=minlen: out.append(( …[+2436 chars]`
+
+### 🧑 User — 2026-11-15T18:41:07.752Z
+
+> ↩︎ result: | NN | src | gold/copper | cyan/blue water | violet/purple | magenta/hot-pink | white/foam (low sat, bright) |
+> | 01 | ref | 4% #E9923F | 11% #1AAEF2 | 16% #9F42DF | 30% #DB4AB0 | 11% #F9E8FB |
+> | 01 | live | 14% #E97903 | 7% #349EEB | 12% #A661FF | 20% #F335CB | 26% #EAECFF |
+> | 02 | ref | 3% #EA9246 | 14% #09A4EB | 16% #9737E5 | 31% #E548B9 | 12% #FBEBFD |
+> | 02 | live | 8% #EF7910 | 12% #20B0E5 | 20% #A968FF | 26% #FF5BCB | 14% #FFE8FF |
+> | 03 | ref | 9% #EA9E48 | 18% #249DDC | 7% #9A53D1 | 22% #D752A8 | 15% #F9EAFC |
+> | 03 | live | 12% #FF9625 | 7% #57B2F9 | 3% #AC75FF | 11% #FF7CD3 | 30% #EFF7FF |
+> | 04 | ref | 16% #EC7D28 | 16% #129FEE | 7% #9546DE | 20% #E84BB0 | 8% #FAE7FC |
+> | 04 | live | 18% #FF9B2B | 14% #0294ED | 2% #B064EA | 25% #FC31C0 | 14% #FEEDFF |
+> | 05 | ref | 8% #F78B2F | 28% #039FF6 | 13% #9E36DF | 22% #EB38C3 | 7% #FCF6FF |
+> | 05 | live | 21% #FFA933 | 13% #529FEC | 10% #AA4BFF | 23% #FF43B2 | 11% #FFF0FF |
+> | 06 | ref | 4% #F89D45 | 24% #05A6F7 | 18% #973CDA | 21% #E346C1 | 9% #FBF4FE |
+> | 06 | live | 15% #FF9A2B | 8% #3695E1 | 34% #E357FF | 21% #FD68FF | 3% #F9E0EA |
+> | 07 | ref | 7% #F99540 | 21% #04A2EE | 16% #9632CC | 29% #DE37BB | 7% #FCF7FF |
+> | 07 | live | 18% #FFA3 …[+7086 chars]
+
+### 🤖 Claude — 2026-11-15T18:41:23.213Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 - <<'EOF'\nimport re\nsrc = open('classes.py').read()\nsrc = src.replace(\"import sys\\nmode =\", \"if __name__ == '__main__':\\n  import sys\\n  mode =\")\n# indent the trailing main loop\nhead, tail = src.split(\"if __name__ == '__main__':\\n\")\nlines = tail.split('\\n')\nout = [lines[0]] + ['  '+l if l.strip() else l for l in lines[1:]]\nopen('classes.py','w').write(head + \"if __name__ == '__main__':\\n\" + '\\n'.join(out))\nEOF\npython3 -I -c \"import ast;ast.parse(open('/t …[+2187 chars]`
+
+### 🧑 User — 2026-11-15T18:41:23.625Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import ast;ast.parse(open('/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/classes.py').read());print('ok')
+>                ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/ast.py", line 50, in parse
+>     return compile(source, filename, mode, flags,
+>                    _feature_version=feature_version, optimize=optimize)
+>   File "<unknown>", line 44
+>     mode = sys.argv[1] if len(sys.argv)>1 else 'both'
+> IndentationError: unexpected indent
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/vp.py", line 4, in <module>
+>     from classes import hsv
+>   File "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/classes.py", line 44
+>     mode = sys.argv[1] if len(sys.argv)>1 else 'both'
+> IndentationError: unexpected indent
+
+### 🤖 Claude — 2026-11-15T18:41:25.347Z
+
+My quick in-place patch broke the indentation; I'll just move `hsv` into its own helper module.
+
+### 🤖 Claude — 2026-11-15T18:41:28.837Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && cat > hsvlib.py <<'EOF'\nimport numpy as np\ndef hsv(a):\n    a = a.astype(np.float32)/255.\n    r,g,b = a[...,0],a[...,1],a[...,2]\n    mx = a.max(-1); mn = a.min(-1); d = mx-mn\n    h = np.zeros_like(mx); m = d>1e-6\n    rr = m&(mx==r); gg = m&(mx==g)&~rr; bb = m&~rr&~gg\n    h[rr] = (60*((g-b)[rr]/d[rr]))%360\n    h[gg] = 60*((b-r)[gg]/d[gg])+120\n    h[bb] = 60*((r-g)[bb]/d[bb])+240\n    s = np.where(mx>0, d/np.maximum(mx,1e-6), 0)\n    return h,s,mx\nEOF\nsed -i 's/^from classes imp …[+133 chars]`
+
+### 🧑 User — 2026-11-15T18:41:29.831Z
+
+> ↩︎ result: REF05: VP proxy (bright-glow centroid, window (250, 330, 750, 650)) = (508,525) -> 58.8% x, 34.2% y
+>   gold runs up column x=508 from y=150..525: n=4 [(220, 221, 2), (447, 451, 5), (455, 476, 22), (490, 492, 3)]
+>   gold runs along row y=525 x=0..508: n=2 [(2, 9, 8), (496, 499, 4)]
+>   gold runs along row y=525 x=508..864: n=4 [(513, 523, 11), (525, 526, 2), (690, 703, 14), (705, 711, 7)]
+> LIVE05: VP proxy (bright-glow centroid, window (250, 330, 750, 650)) = (547,575) -> 63.3% x, 37.4% y
+>   gold runs up column x=547 from y=150..575: n=14 [(182, 216, 35), (279, 281, 3), (283, 287, 5), (289, 300, 12), (326, 329, 4), (339, 344, 6), (371, 372, 2), (437, 438, 2), (440, 441, 2), (443, 447, 5), (456, 463, 8), (465, 478, 14), (484, 487, 4), (489, 498, 10)]
+>   gold runs along row y=575 x=0..547: n=7 [(17, 63, 47), (82, 138, 57), (183, 237, 55), (239, 250, 12), (255, 264, 10), (273, 274, 2), (392, 409, 18)]
+>   gold runs along row y=575 x=547..864: n=5 [(573, 579, 7), (587, 619, 33), (629, 634, 6), (639, 666, 28), (691, 748, 58)]
+
+### 🤖 Claude — 2026-11-15T18:41:47.280Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageFilter\nimport sys; sys.path.insert(0,'.')\nfrom hsvlib import hsv\ndef runs(m, minlen=3):\n    out=[]; st=None\n    for i,v in enumerate(m):\n        if v and st is None: st=i\n        if not v and st is not None:\n            if i-st>=minlen: out.append((st,i-1))\n            st=None\n    if st is not None: out.append((st,len(m)-1))\n    return out\nfor tag,p in [('REF05','/home/user/rainbow-/references/05_flow_into_ …[+1122 chars]`
+
+### 🧑 User — 2026-11-15T18:41:48.799Z
+
+> ↩︎ result: REF05: brightest (blur8) in window (380, 380, 640, 520): (498,479) = 57.6% x 31.2% y lum 229
+>   wide-gold runs column x=498 y150..479: n=8 [(150, 9), (179, 3), (196, 26), (309, 6), (414, 4), (431, 7), (444, 31), (478, 1)]
+>   wide-gold runs column x=430 y150..479: n=4 [(156, 4), (179, 3), (206, 22), (315, 3)]
+>   wide-gold runs column x=250 y150..479: n=3 [(179, 3), (319, 9), (329, 58)]
+>   wide-gold runs row y=479 x0..498: n=7 [(0, 8), (200, 35), (333, 13), (398, 9), (438, 7), (450, 42), (493, 5)]
+> LIVE05: brightest (blur8) in window (380, 380, 640, 520): (471,478) = 54.5% x 31.1% y lum 223
+>   wide-gold runs column x=471 y150..478: n=5 [(182, 3), (224, 17), (273, 22), (297, 22), (370, 83)]
+>   wide-gold runs column x=430 y150..478: n=7 [(155, 4), (182, 3), (204, 17), (306, 27), (335, 12), (352, 11), (421, 57)]
+>   wide-gold runs column x=250 y150..478: n=3 [(150, 9), (182, 17), (456, 22)]
+>   wide-gold runs row y=478 x0..471: n=8 [(0, 28), (43, 49), (104, 50), (204, 34), (240, 32), (302, 31), (364, 29), (407, 34)]
+
+### 🤖 Claude — 2026-11-15T18:41:51.598Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/crop_REF05.png"}`
+
+### 🧑 User — 2026-11-15T18:41:51.673Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:42:19.969Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/crop_LIVE05.png"}`
+
+### 🧑 User — 2026-11-15T18:42:20.008Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:42:47.939Z
+
+Let me measure Benny's bounding box (hat-purple + fur-pink masks) in each ride reference vs live, plus 05 wall-region medians.
+
+### 🤖 Claude — 2026-11-15T18:43:03.797Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 -I - <<'EOF'\nimport numpy as np, sys\nfrom PIL import Image\nsys.path.insert(0,'.')\nfrom hsvlib import hsv\nR='/home/user/rainbow-/'\nREFS={\"03\":\"03_whirlpool_twirl.png\",\"04\":\"04_through_the_five_arrows.png\",\"05\":\"05_flow_into_the_current.png\",\"06\":\"06_crest_the_rinse_arch.png\",\"07\":\"07_dive_the_washer_tube.png\",\"08\":\"08_final_spin_chamber.png\",\"09\":\"09_ride_the_final_wave.png\",\"10\":\"10_slide_into_hiding.png\"}\n# search windows (x0,y0,x1,y1) wher …[+2516 chars]`
+
+### 🧑 User — 2026-11-15T18:43:05.047Z
+
+> ↩︎ result: | NN | src | Benny bbox (x0-x1, y0-y1) | height % frame | centre x % | top y % | bottom y % | hat width % frame |
+> | 03 | ref | 30-399, 470-956 | 32% | 30% | 31% | 62% | 43% |
+> | 03 | live | 0-419, 603-999 | 26% | 29% | 39% | 65% | 35% |
+> | 04 | ref | 170-619, 991-1407 | 27% | 46% | 65% | 92% | 52% |
+> | 04 | live | 421-611, 620-849 | 15% | 60% | 40% | 55% | 17% |
+> | 05 | ref | 200-649, 740-1184 | 29% | 49% | 48% | 77% | 52% |
+> | 05 | live | 255-639, 1040-1440 | 26% | 52% | 68% | 94% | 39% |
+> | 06 | ref | 223-659, 700-1172 | 31% | 51% | 46% | 76% | 45% |
+> | 06 | live | 150-582, 940-1519 | 38% | 42% | 61% | 99% | 44% |
+> | 07 | ref | 180-659, 760-1216 | 30% | 49% | 49% | 79% | 47% |
+> | 07 | live | 100-499, 1060-1472 | 27% | 35% | 69% | 96% | 37% |
+> | 08 | ref | 240-619, 830-1239 | 27% | 50% | 54% | 81% | 44% |
+> | 08 | live | 335-699, 1050-1419 | 24% | 60% | 68% | 92% | 39% |
+> | 09 | ref | 235-639, 830-1273 | 29% | 51% | 54% | 83% | 42% |
+> | 09 | live | 303-689, 940-1333 | 26% | 57% | 61% | 87% | 39% |
+> | 10 | ref | 140-679, 840-1387 | 36% | 47% | 55% | 90% | 62% |
+> | 10 | live | 300-699, 960-1419 | 30% | 58% | 62% | 92% | 39% |
+> ref 05 left wall (20-180,230-560) non-gold median #B830AE | right wall (6 …[+199 chars]
+
+### 🤖 Claude — 2026-11-15T18:43:28.017Z
+
+Let me build gridded contact sheets of the other references to verify landmark coordinates and vanishing points.
+
+### 🤖 Claude — 2026-11-15T18:43:35.172Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nR='/home/user/rainbow-/'\nF={\"01\":\"references/01_inside_washer_girl_and_towel.png\",\"02\":\"references/02_mascot_tumbles_in_whirlpool.png\",\"03\":\"references/03_whirlpool_twirl.png\",\"04\":\"references/04_through_the_five_arrows.png\",\"06\":\"references/06_crest_the_rinse_arch.png\",\"07\":\"references/07_dive_the_washer_tube.png\",\"08\":\"references/08_final_spin_chamber.png\",\"09\":\"references/09_ride_the_fin …[+1303 chars]`
+
+### 🧑 User — 2026-11-15T18:43:36.560Z
+
+> ↩︎ result: sheetA (1691, 768)
+> sheetB (1760, 768)
+> sheetC (1379, 768)
+
+### 🤖 Claude — 2026-11-15T18:43:42.341Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/sheetA.png"}`
+
+### 🧑 User — 2026-11-15T18:43:42.569Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:43:43.062Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/sheetB.png"}`
+
+### 🧑 User — 2026-11-15T18:43:43.284Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:43:43.670Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/sheetC.png"}`
+
+### 🧑 User — 2026-11-15T18:43:43.761Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:45:02.817Z
+
+I have coordinates for all landmarks. Let me quickly check existing character/continuity docs so the comparisons reference them accurately.
+
+### 🤖 Claude — 2026-11-15T18:45:04.060Z
+
+> 🔧 **Bash** `{"command": "head -40 docs/characters/girl.md && echo ---- && head -30 docs/characters/benny.md && echo ---- && head -40 qa/07_to_08_continuity.md && echo ---- && cat qa/gameplay_test.json | head -40", "description": "Read character docs, continuity notes and gameplay test summary"}`
+
+### 🧑 User — 2026-11-15T18:45:04.101Z
+
+> ↩︎ result: # Official cartoon girl — model, rig & animation notes
+> 
+> Specialist: `cartoon-girl-character-artist`. Identity source: `character_references/official_cartoon_girl_original.jpg`
+> (the realistic girls inside references 01 / 10 / 11 are composition references only and were NOT modelled).
+> ONE model / ONE rig is used for scene 01 (walks away), scene 10 (seen through the door) and scene 11 (leans in,
+> hands on the folded purple towel).
+> 
+> | Item | Value |
+> |---|---|
+> | Builder | `src/characters/girl/build.ts` → `buildGirl(): BuiltModel` (procedural Three.js geometry + canvas textures, no external images) |
+> | Textures | `src/characters/girl/textures.ts` (eye, face decal, hoodie stripes, rib knit, denim twill, hair strands) |
+> | Runtime | `src/characters/girl/runtime.ts` → `loadGirl(): Promise<GirlRuntime>` |
+> | GLB | `assets/models/rainbow_girl.glb` — 3,546,480 bytes, 165 meshes, 194 nodes, **84,820 triangles**, 9 clips |
+> | Contract | origin between the feet on the floor, faces **+Z**, up +Y, height ≈ **25.6 units** (≈ 26 incl. ponytail spring) ; her LEFT = +X |
+> | Review renders | `docs/characters/girl_turntable.png` (front · ¾ · side · back), `girl_turntable_anim_leanReachTowel_t_1_6.png`, `girl_ …[+5769 chars]
+
+### 🤖 Claude — 2026-11-15T18:45:09.591Z
+
+Let me zoom into the live girl appearances (01, 09, 10, 11) to judge the identity override precisely.
+
+### 🤖 Claude — 2026-11-15T18:45:13.500Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 -I - <<'EOF'\nfrom PIL import Image\nR='/home/user/rainbow-/screenshots/'\ncrops=[('01',(330,520,700,1120)),('09',(480,220,864,620)),('10',(150,250,560,750)),('11',(150,100,700,900))]\nims=[]\nfor nn,b in crops:\n    im=Image.open(R+nn+'.png').convert('RGB').crop(b)\n    s=700/im.height; ims.append(im.resize((int(im.width*s),700),Image.LANCZOS))\nS=Image.new('RGB',(sum(i.width for i in ims)+30,700),(0,0,0)); x=0\nfor i in ims: S.paste(i,(x,0)); x+=i.width+10\nS.save('girls_live.p …[+86 chars]`
+
+### 🧑 User — 2026-11-15T18:45:14.147Z
+
+> ↩︎ result: (2188, 700)
+
+### 🤖 Claude — 2026-11-15T18:45:16.699Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir/girls_live.png"}`
+
+### 🧑 User — 2026-11-15T18:45:16.911Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T18:45:16.908Z
+
+[Image: original 2188x700, displayed at 2000x640. Multiply coordinates by 1.09 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T18:45:41.048Z
+
+I have what I need on the girl. I'll measure the remaining vanishing points the same way (bright-glow centroid in a window) and work out the implied camera pitch/yaw at the live FOV.
+
+### 🤖 Claude — 2026-11-15T18:45:51.087Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 -I - <<'EOF'\nimport numpy as np, math\nfrom PIL import Image, ImageFilter\nR='/home/user/rainbow-/'\njobs=[('04','references/04_through_the_five_arrows.png',(400,600,600,760)),('05','references/05_flow_into_the_current.png',(380,380,640,520)),\n      ('06','references/06_crest_the_rinse_arch.png',(560,560,760,760)),('07','references/07_dive_the_washer_tube.png',(520,480,720,640)),\n      ('03','references/03_whirlpool_twirl.png',(420,1020,580,1160))]\nfor nn,p,(x0,y0,x1,y1) in j …[+1422 chars]`
+
+### 🧑 User — 2026-11-15T18:45:51.835Z
+
+> ↩︎ result: 04 ref: brightest(blur8) in (400, 600, 600, 760) = (491,681) 56.8% x 44.3% y, lum 216
+> 04 live: brightest(blur8) in (400, 600, 600, 760) = (479,662) 55.4% x 43.1% y, lum 247
+> 05 ref: brightest(blur8) in (380, 380, 640, 520) = (498,479) 57.6% x 31.2% y, lum 229
+> 05 live: brightest(blur8) in (380, 380, 640, 520) = (471,478) 54.5% x 31.1% y, lum 223
+> 06 ref: brightest(blur8) in (560, 560, 760, 760) = (728,749) 84.3% x 48.8% y, lum 238
+> 06 live: brightest(blur8) in (560, 560, 760, 760) = (666,720) 77.1% x 46.9% y, lum 208
+> 07 ref: brightest(blur8) in (520, 480, 720, 640) = (634,565) 73.4% x 36.8% y, lum 239
+> 07 live: brightest(blur8) in (520, 480, 720, 640) = (542,576) 62.7% x 37.5% y, lum 192
+> 03 ref: brightest(blur8) in (420, 1020, 580, 1160) = (559,1101) 76.9% x 71.7% y, lum 237
+> 03 live: brightest(blur8) in (420, 1020, 580, 1160) = (546,1061) 75.1% x 69.1% y, lum 251
+> 
+> 01: VP 51%,27% | at vfov 64 (hfov 38.7): look axis is +15.8 deg above(+)/below(-) the VP direction; VP lies +0.5 deg right(+) of view centre
+> 03: VP 68%,71% | at vfov 64 (hfov 33.0): look axis is -14.7 deg above(+)/below(-) the VP direction; VP lies +6.1 deg right(+) of view centre
+> 04: VP 57%,44% | at vfov 66 (hfov 40.1): look  …[+1078 chars]
+
+### 🤖 Claude — 2026-11-15T18:46:43.487Z
+
+Point samples were noisy, so I'll replace them with region-restricted, class-filtered medians for each named material. These are reproducible and I'll quote them in the inventory.
+
+### 🤖 Claude — 2026-11-15T18:47:09.271Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && cat > materials.py <<'EOF'\nimport numpy as np, sys\nfrom PIL import Image\nsys.path.insert(0,'/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir')\nfrom hsvlib import hsv\nC={'gold':lambda h,s,v:(h>=18)&(h<52)&(s>0.45)&(v>0.55),'cyan':lambda h,s,v:(h>=180)&(h<225)&(s>0.45)&(v>0.55),\n   'violet':lambda h,s,v:(h>=255)&(h<295)&(s>0.40)&(v>0.30),'pink':lambda h,s,v:(h>=295)&(h<345)&(s>0.40)&(v>0.45),\n   'white':lambda h,s,v:(s<0.18)&(v>0.85),'fur':lam …[+6372 chars]`
+
+### 🧑 User — 2026-11-15T18:47:12.980Z
+
+> ↩︎ result: 01: drum wall (top band) `#CA4B9F`; gold door rim `#E28A3C`; laundry room through door `#BBA6CC`; cyan water `#10AEF2`; hot-pink water `#E949C5`; foam crests `#F8E6FB`; purple towel `#9533DB`; Benny fur `#F877BF`; hat purple `#832BDE`; pink T-shirt `#EE50C6`; blue sock `#2374F4`
+> 02: gold door ring `#E78D43`; drum wall `#C33FA4`; swirl cyan `#09A6EC`; swirl hot-pink `#E240BB`; Benny fur `#F363BF`; hat purple `#751EE3`; purple towel `#952CE7`; blue sock `#0756E7`; pink T-shirt `#DD43B1`
+> 03: basin rim gold `#E18F49`; spiral cyan `#1E9BD9`; spiral hot-pink `#DD52AE`; foam clouds `#F4E5FC`; Benny fur `#F46FB1`; hat purple `#8132D7`; big coin `#F1AF10`
+> 04: gold ring tunnel `#E77824`; ramp cyan `#049BED`; chevrons (white) `#E4FCFF`; magenta water edges `#ED49B5`; foam clouds `#FAE2FB`; coins `#F19211`; Benny fur `#E754A3`; hat purple `#761AD9`
+> 05: gold rings `#F99649`; wall violet `#992FC2`; wall magenta `#CD32AA`; water cyan `#029AF3`; hot-pink bands `#F739E5`; coins `#F4B70F`; Benny fur `#F64EB1`; hat purple `#7513ED`; pom-pom `#7F14EC`; hat star `#F7BB19`
+> 06: gold rings `#F79D52`; wall violet `#873DB6`; arch cyan `#05AAF7`; arch hot-pink `#F04ECF`; foam `#F7F5FF`; coins `#F5AB0B`; Benn …[+1465 chars]
+
+### 🤖 Claude — 2026-11-15T18:47:17.706Z
+
+Now matching material medians for the live 05 capture (regions adjusted to where each element is in the live frame).
+
+### 🤖 Claude — 2026-11-15T18:47:25.268Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 -I - <<'EOF'\nimport numpy as np, sys\nfrom PIL import Image\nsys.path.insert(0,'.')\nexec(open('materials.py').read().split(\"M={\")[0])  # load C + hsv only\nitems=[('gold rings',(0,150,864,700),'gold'),('wall violet',(0,200,864,600),'violet'),('wall magenta',(0,200,864,600),'pink'),('wall pale-blue (H200-225,S0.2-0.6,V>0.8)',(600,200,864,700),'paleblue'),('water cyan',(0,900,864,1536),'cyan'),('hot-pink water',(0,900,864,1536),'pink'),('foam',(0,700,864,1200),'white'),('coins' …[+992 chars]`
+
+### 🧑 User — 2026-11-15T18:47:25.976Z
+
+> ↩︎ result: LIVE 05: gold rings #FF9F2F (34% of box); wall violet #C660E5 (14% of box); wall magenta #FF4ED9 (12% of box); wall pale-blue (H200-225,S0.2-0.6,V>0.8) #87C9FF (41% of box); water cyan #3993E7 (19% of box); hot-pink water #FF3CAE (35% of box); foam #FFF0FF (17% of box); coins #FFBF33 (32% of box); Benny fur #FF55CB (26% of box); hat purple #903CFF (63% of box); pom-pom #AA4BFF (84% of box); hat star #FF9B1C (51% of box)
+> REF 05 pale-blue wall share in same box: 0.4%
+
+### 🤖 Claude — 2026-11-15T18:48:10.583Z
+
+Quick check on whether chevrons and nozzles exist in the 81e639e build (so I can say "missing" versus "present but off-frame").
+
+### 🤖 Claude — 2026-11-15T18:48:11.774Z
+
+> 🔧 **Bash** `{"command": "git grep -n -i -E \"chevron|nozzle|lid|spout|porthole|console|shelf\" 81e639e -- src | grep -v -i \"slider\\|valid\\|solid\\|collid\" | head -30", "description": "Grep 81e639e source for chevrons, nozzles, spouts and props"}`
+
+### 🧑 User — 2026-11-15T18:48:11.844Z
+
+> ↩︎ result: 81e639e:src/characters/girl/build.ts:7: * (not skin-weighted). Clips target joints by name; blinking is done by the runtime (eyelidL/R).
+> 81e639e:src/characters/girl/build.ts:251:    lid: std('#eeaa86', 0.62),
+> 81e639e:src/characters/girl/build.ts:354:  // blink lid = skin patch behind the opening with a 'blink' morph target, lash line along the top edge
+> 81e639e:src/characters/girl/build.ts:383:    // blink lid (behind the skin, only visible through the opening); base = collapsed at the top edge
+> 81e639e:src/characters/girl/build.ts:410:      const lid = new THREE.Mesh(g, M.lid);
+> 81e639e:src/characters/girl/build.ts:411:      lid.name = `eyelid${side}`;
+> 81e639e:src/characters/girl/build.ts:412:      lid.morphTargetInfluences = [0];
+> 81e639e:src/characters/girl/build.ts:413:      lid.morphTargetDictionary = { blink: 0 };
+> 81e639e:src/characters/girl/build.ts:414:      eyeJ.add(lid);
+> 81e639e:src/characters/girl/build.ts:415:      J[lid.name] = lid;
+> 81e639e:src/characters/girl/build.ts:944:  // blink (eyelid morph targets) — the runtime also blinks procedurally
+> 81e639e:src/characters/girl/build.ts:946:    new THREE.NumberKeyframeTrack('eyelidL.morphTargetInfluences[blink]', [0, 0.07, 0.12, …[+1965 chars]
+
+### 🤖 Claude — 2026-11-15T18:48:15.028Z
+
+> 🔧 **Bash** `{"command": "git grep -n -i -E \"arrow|chevr|cap|dome|bowl|washerNozz|halfDisc|knob\" 81e639e -- src/world src/vfx | head -20; git grep -n -i \"five\" 81e639e -- src | head", "description": "Search for arrow/chevron and nozzle cap geometry in world/vfx"}`
+
+### 🧑 User — 2026-11-15T18:48:15.187Z
+
+> ↩︎ result: 81e639e:src/vfx/drumWater.ts:191:  // slightly conical (narrower toward the back drain) so the spin reads as a vortex
+> 81e639e:src/vfx/index.ts:52:  stats(): { instances: number; bubbles: number; smallBubbles: number; sprayCapacity: number };
+> 81e639e:src/vfx/index.ts:120:    stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
+> 81e639e:src/vfx/spray.ts:41:  capacity: number;
+> 81e639e:src/vfx/spray.ts:64:    capacity: N,
+> 81e639e:src/vfx/waterRibbon.ts:9: * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+> 81e639e:src/vfx/waterRibbon.ts:96:uniform vec3 uChevron;    // start s, spacing, enabled
+> 81e639e:src/vfx/waterRibbon.ts:200:  // 04: exactly five glowing chevrons pointing downhill (direction of travel)
+> 81e639e:src/vfx/waterRibbon.ts:201:  if (uChevron.z > 0.5) {
+> 81e639e:src/vfx/waterRibbon.ts:204:      float y = s - (uChevron.x + float(k) * uChevron.y);
+> 81e639e:src/vfx/waterRibbon.ts:306:    uChevron: { value: new THREE.Vector3(st04.s0 + 8.5, 3.6, 1) },
+> 81e639e:src/world/course.ts:6: * drops down the five-arrow slide (04), winds through the perforated …[+1581 chars]
+
+### 🤖 Claude — 2026-11-15T18:50:27.919Z
+
+Let me quantify the lime-green band I see on the live gold rims (01–03), since it's a palette error absent from the references.
+
+### 🤖 Claude — 2026-11-15T18:50:35.539Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/refdir && python3 -I - <<'EOF'\nimport numpy as np, sys\nfrom PIL import Image\nsys.path.insert(0,'.')\nfrom hsvlib import hsv\nF={\"01\":\"01_inside_washer_girl_and_towel.png\",\"02\":\"02_mascot_tumbles_in_whirlpool.png\",\"03\":\"03_whirlpool_twirl.png\",\"04\":\"04_through_the_five_arrows.png\",\"05\":\"05_flow_into_the_current.png\",\"06\":\"06_crest_the_rinse_arch.png\",\"07\":\"07_dive_the_washer_tube.png\",\"08\":\"08_final_spin_chamber.png\",\"09\":\"09_ride_the_final_wave.png\",\"10\":\" …[+1146 chars]`
+
+### 🧑 User — 2026-11-15T18:50:43.178Z
+
+> ↩︎ result: lime/yellow-green = H 60-110, S>0.5, V>0.6 (share of frame, median)
+> 01 ref 0.05% #B4C14D | live 2.04% #CEFF2F
+> 02 ref 0.00% - | live 2.29% #C5FF39
+> 03 ref 0.04% #FAFC74 | live 0.30% #D8FB41
+> 04 ref 0.01% #DFEB63 | live 0.19% #F5FF6D
+> 05 ref 0.04% #F7FB5C | live 0.07% #D0EC60
+> 06 ref 0.05% #F8FB4D | live 0.28% #DBFF3A
+> 07 ref 0.01% #F6F865 | live 0.05% #DCF96E
+> 08 ref 0.03% #F4F856 | live 0.02% #ECFF6E
+> 09 ref 0.09% #F7FB47 | live 0.03% #E4FF58
+> 10 ref 0.07% #F4F92C | live 0.02% #E4FB69
+> 11 ref 0.03% #CCD01B | live 0.12% #DEFF64
+> near-white blowout (V>0.97 & S<0.08), below 13% HUD band:
+> 01 ref 4.6% | live 10.7%
+> 02 ref 5.3% | live 4.3%
+> 03 ref 6.3% | live 13.4%
+> 04 ref 2.8% | live 6.0%
+> 05 ref 3.9% | live 5.9%
+> 06 ref 4.8% | live 0.4%
+> 07 ref 4.1% | live 4.7%
+> 08 ref 3.3% | live 4.8%
+> 09 ref 4.4% | live 5.7%
+> 10 ref 4.0% | live 9.0%
+> 11 ref 1.4% | live 4.4%
+
+### 🤖 Claude — 2026-11-15T18:50:56.705Z
+
+I have all measurements. Writing `docs/reference_inventory.md` now.
+
+### 🤖 Claude — 2026-11-15T18:53:28.676Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/reference_inventory.md", "content": "# RAINBOW: reference inventory (11 locked screens + official cartoon girl)\n\nOwner: `reference-match-director`. Sources: `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`, `REFERENCE_ORDER.md`,\n`VISUAL_QA_CHECKLIST.md`, `references/*.png`, `character_references/official_cartoon_girl_original.jpg`.\nThis file describes the **locked targets only**. For live-build comparisons see `qa/scene_comparisons.md`.\n\nRead this first:\n\n* All 12 images are immutable. Nothing in this document asks for them to be edited, re-enco …[+36964 chars]`
+
+### 🧑 User — 2026-11-15T18:53:28.791Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/reference_inventory.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:54:06.312Z
+
+Let me pull the 81e639e capture stats (renderer, triangles and fps per shot) so the comparison doc cites the right build.
+
+### 🤖 Claude — 2026-11-15T18:54:08.471Z
+
+> 🔧 **Bash** `{"command": "git show 81e639e:qa/capture_log.json | python3 -I -c \"\nimport json,sys\nd=json.load(sys.stdin)\nprint(d.get('when'), d.get('renderer'))\nfor s in d['shots']:\n    st=s.get('state',{}); x=s.get('stats',{})\n    print(s['id'], s.get('size'), 'mode',st.get('mode'),'stage',st.get('stage'),'coins',st.get('coins'),'hearts',st.get('hearts'),'cam',st.get('cam'),'fps',x.get('fps'),'tris',x.get('triangles'),'calls',x.get('calls'))\nprint('errors', d.get('errors'))\n\"", "description": "Show capture log stats from commit 81e639e"}`
+
+### 🧑 User — 2026-11-15T18:54:08.518Z
+
+> ↩︎ result: 2026-11-15T17:56:22.496Z ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)
+> 01 [864, 1536] mode intro stage 01 coins 1330 hearts 5 cam [0.85, -1.05, -6.05] fps 60 tris 412761 calls 279
+> 02 [864, 1536] mode intro stage 01 coins 1330 hearts 5 cam [-1.57, 1.89, -6.1] fps 60.4 tris 353701 calls 265
+> 03 [727, 1536] mode ride stage 03 coins 1330 hearts 5 cam [-0.37, -8.77, -19.14] fps 60.5 tris 724522 calls 84
+> 04 [864, 1536] mode ride stage 04 coins 1330 hearts 5 cam [0.72, -14.48, -15.81] fps 61 tris 740386 calls 86
+> 05 [864, 1536] mode ride stage 05 coins 1420 hearts 5 cam [4.75, -37.93, -79.82] fps 60.2 tris 625575 calls 73
+> 06 [864, 1536] mode ride stage 06 coins 1680 hearts 5 cam [0.64, -38.23, -133.45] fps 60.5 tris 560679 calls 64
+> 07 [864, 1536] mode ride stage 07 coins 1940 hearts 5 cam [10.92, -45.6, -195.37] fps 60.2 tris 658645 calls 168
+> 08 [864, 1536] mode ride stage 08 coins 2040 hearts 5 cam [12.03, -108.74, -276] fps 60.5 tris 594593 calls 148
+> 09 [864, 1536] mode ride stage 09 coins 2280 hearts 5 cam [10.82, -109.92, -291.1] fps 60.7 tris 625733 calls 299
+> 10 [864, 1536] mode ride stage 10 coins 2500 hearts 5 cam [10.55, -110.15, -306.8 …[+151 chars]
+

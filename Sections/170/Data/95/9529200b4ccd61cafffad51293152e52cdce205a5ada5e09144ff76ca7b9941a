@@ -1,0 +1,209 @@
+{
+ "what": "Benny maps re-baked from the APPROVED Screen 08 picture (references/08_final_spin_chamber.png) at the locked 08 frame (?match08=1, scripts/capture.mjs 08 view), used under ?match08=1&bake08=1 (qa/match/08/benny08/NOTES.md)",
+ "probe": "qa/match/08/benny08/work/probe08.mjs --q=match08=1 shot0 info uv calD calE calA calC calB restore (frame == capture.mjs 08 in every Benny pixel)",
+ "composition": {
+  "body.png, armL.png, armR.png": "bake08.py --toned (texels the 08 picture shows: approved-08 albedo solved through the live light + post chain; every other texel: benny05 map x the measured 08/05 fur tone ratio, feathered seam 24 texels body / 8 arms) + 2 refine08.py back-projection steps (lambda 0.8) from real captures",
+  "crown.png, brim.png": "benny05 maps x per-class colour gains from the approved 08 picture (classgain08.py, 2 steps: albedo solve, then a display-median secant step): stripe layout, knit, ribs unchanged. A per-pixel bake of the beanie was tested (b1) and rejected: the game beanie sits ~18 px lower / ~13 px further right and is narrower than the painted one, so the approved stripes landed on the wrong rows (visibly broken stripes).",
+  "pom.png, star.png, crown_n.png, brim_n.png": "unchanged copies of assets/textures/benny05 (08 gains for pom / star were not clearly closer)"
+ },
+ "bake_body_arms": {
+  "run": "probe run p1 (scratch; reproduce with probe08.mjs)",
+  "feather": 8.0,
+  "base": "assets/textures/benny05",
+  "body": {
+   "px": 26721,
+   "seen_texels": 24918,
+   "rejected_texels": 1440,
+   "weight_gt_0": 50483,
+   "weight_1": 27317,
+   "share_of_map_from_08": 0.0693,
+   "clipped_share": 0.0,
+   "median_albedo_08": [
+    0.405,
+    0.124,
+    0.278
+   ],
+   "median_albedo_05_same_texels": [
+    0.434,
+    0.15,
+    0.296
+   ],
+   "ratio_08_over_05": [
+    0.958,
+    0.759,
+    0.848
+   ],
+   "unseen_fill": "benny05 x ratio"
+  },
+  "armL": {
+   "px": 977,
+   "seen_texels": 1365,
+   "rejected_texels": 63,
+   "weight_gt_0": 3504,
+   "weight_1": 1605,
+   "share_of_map_from_08": 0.0734,
+   "clipped_share": 0.0,
+   "median_albedo_08": [
+    0.452,
+    0.144,
+    0.312
+   ],
+   "median_albedo_05_same_texels": [
+    0.429,
+    0.141,
+    0.275
+   ],
+   "ratio_08_over_05": [
+    0.958,
+    0.759,
+    0.848
+   ],
+   "unseen_fill": "benny05 x ratio"
+  },
+  "armR": {
+   "px": 608,
+   "seen_texels": 872,
+   "rejected_texels": 0,
+   "weight_gt_0": 2170,
+   "weight_1": 801,
+   "share_of_map_from_08": 0.042,
+   "clipped_share": 0.0,
+   "median_albedo_08": [
+    0.269,
+    0.059,
+    0.183
+   ],
+   "median_albedo_05_same_texels": [
+    0.386,
+    0.156,
+    0.347
+   ],
+   "ratio_08_over_05": [
+    0.958,
+    0.759,
+    0.848
+   ],
+   "unseen_fill": "benny05 x ratio"
+  }
+ },
+ "refine_step1": {
+  "body": {
+   "px": 26721,
+   "texels": 24918,
+   "mean_abs_corr": 0.0398,
+   "mean_change": 0.0209
+  },
+  "armL": {
+   "px": 977,
+   "texels": 1365,
+   "mean_abs_corr": 0.0432,
+   "mean_change": 0.0164
+  },
+  "armR": {
+   "px": 608,
+   "texels": 872,
+   "mean_abs_corr": 0.0366,
+   "mean_change": 0.0134
+  }
+ },
+ "refine_step2": {
+  "body": {
+   "px": 26721,
+   "texels": 24918,
+   "mean_abs_corr": 0.0264,
+   "mean_change": 0.0125
+  },
+  "armL": {
+   "px": 977,
+   "texels": 1365,
+   "mean_abs_corr": 0.0373,
+   "mean_change": 0.0136
+  },
+  "armR": {
+   "px": 608,
+   "texels": 872,
+   "mean_abs_corr": 0.0304,
+   "mean_change": 0.0105
+  }
+ },
+ "classgain_crown_brim": {
+  "crown": {
+   "classes": {
+    "white": {
+     "gain": [
+      1.1104,
+      1.0332,
+      1.1096
+     ],
+     "approved_px": 6322,
+     "game_px": 5859,
+     "approved_median": [
+      251,
+      220,
+      244
+     ],
+     "game_median": [
+      246,
+      221,
+      255
+     ]
+    },
+    "purple": {
+     "gain": [
+      0.9056,
+      0.4765,
+      0.9477
+     ],
+     "approved_px": 4710,
+     "game_px": 4599,
+     "approved_median": [
+      130,
+      17,
+      233
+     ],
+     "game_median": [
+      132,
+      17,
+      233
+     ]
+    }
+   },
+   "clipped_share": 0.0
+  },
+  "brim": {
+   "classes": {
+    "all": {
+     "gain": [
+      0.9357,
+      0.7978,
+      0.9943
+     ],
+     "approved_px": 10086,
+     "game_px": 6780,
+     "approved_median": [
+      116,
+      10,
+      234
+     ],
+     "game_median": [
+      120,
+      8,
+      244
+     ]
+    }
+   },
+   "clipped_share": 0.0
+  }
+ },
+ "sha256": {
+  "armL.png": "feb92165693dbd0301e5b3ec5941cce7b74d6819af0e665f49315d7e50855e64",
+  "armR.png": "30fab1fb5566fdf290c0dd1e80a669d7b4378b61fc43d214ccc74624ea43dd85",
+  "body.png": "b3a85dee202b712f85ec6eb57c94f6970140e98282ee2d4b80cc3a7c329cbbe0",
+  "brim.png": "4f4d7a0d0f418e21c4ec4d995537a1316deef321f7428939cf35db943c94a406",
+  "brim_n.png": "316550a43fb5f03b8be21beb7fdf20fee44eb5fa0741e6fa7522b3fa65a75af2",
+  "crown.png": "7ae0bcdcb8265f6a013f38896fb80d29428cf374b1ced4e613168dcd10c85974",
+  "crown_n.png": "e91874b81cf1ad64227011b24cca8c4b29ef644f2805056bbb1894160ef84a38",
+  "pom.png": "38c806472caf72506ded6fb1b3ed6f8e3394a6acdb55e6673f0c2283aa0b8f3a",
+  "star.png": "932bbbd451e36b7129938b581cef4f8060730cefd4e7ed47c08df32909193cce"
+ }
+}

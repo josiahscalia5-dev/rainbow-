@@ -1,0 +1,114 @@
+{
+  "editions": 31,
+  "sourceFileAssociations": 26077,
+  "uniqueVerifiedGitBlobs": 2362,
+  "hydratedLFS": 23,
+  "approvedReferenceChecksAcrossVersions": 399,
+  "GLB": 13,
+  "Blender": 10,
+  "builds": [
+    {
+      "edition": "Codex_s06-benny-fitted-knit-cuff",
+      "commit": "393c83ceaed1d3261ce72a3aec2824be18627e03",
+      "typecheck": "passed",
+      "viteProduction": "passed",
+      "dependencies": "Existing locked project dependency installation"
+    }
+  ],
+  "modelChecks": [
+    {
+      "name": "benny.glb",
+      "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1",
+      "type": "GLB",
+      "nodes": 39
+    },
+    {
+      "name": "lids05.glb",
+      "sha256": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c",
+      "type": "GLB",
+      "nodes": 6
+    },
+    {
+      "name": "rainbow_girl.glb",
+      "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528",
+      "type": "GLB",
+      "nodes": 194
+    },
+    {
+      "name": "0-world.glb",
+      "sha256": "e5bb181d8d6b9eae22865db65c593ad4b3b980cfbf46f04bb992f50c28809a9f",
+      "type": "GLB",
+      "nodes": 2
+    },
+    {
+      "name": "screen05_layout.glb",
+      "sha256": "8567f56ef76fa3ef6a898e23148111ea4d67fffb6146f04ece9e4b62c565a9ed",
+      "type": "GLB",
+      "nodes": 18
+    },
+    {
+      "name": "screen05_layout.glb",
+      "sha256": "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0",
+      "type": "GLB",
+      "nodes": 17
+    },
+    {
+      "name": "collider.glb",
+      "sha256": "cdaf62b116a7d74662c07da4272ad73629cbb5625979f7288de02b160c7bc9d2",
+      "type": "GLB",
+      "nodes": 2
+    },
+    {
+      "name": "draft05_underlay.glb",
+      "sha256": "3aabf9f058ac662b580a0096a36a90657156ac0b0905eb1eb05777cc0eed1778",
+      "type": "GLB",
+      "nodes": 1
+    },
+    {
+      "name": "collider.glb",
+      "sha256": "d7e952d0e53fcacdfc75eb5b27193396c007daef83d2052a18f3a76cf342d48a",
+      "type": "GLB",
+      "nodes": 2
+    },
+    {
+      "name": "full05_underlay.glb",
+      "sha256": "f1e40d63fddd88d63a8f0da36f042d7b1736ceff5769d06eb0f8045b7c83e7f5",
+      "type": "GLB",
+      "nodes": 1
+    },
+    {
+      "name": "lids05e.glb",
+      "sha256": "978793113ee9433255f396e0a226e82218ab2a61c4687a503a475755aaa014a9",
+      "type": "GLB",
+      "nodes": 6
+    },
+    {
+      "name": "s07-banks.glb",
+      "sha256": "3811352879f3ea38f3f42a902fa207bfeda698702fb4da245414eaf638c64a7d",
+      "type": "GLB",
+      "nodes": 4
+    },
+    {
+      "name": "screen-07-fitted-paddle.glb",
+      "sha256": "788be872e113048ac688379b9d85a095b60cb342b70134ef7f9b55b16aef3c48",
+      "type": "GLB",
+      "nodes": 1
+    },
+    {
+      "name": "marble05_projection.blend",
+      "sha256": "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb",
+      "type": "Blender",
+      "openedIn": "Blender 5.3.0",
+      "objects": 4,
+      "scenes": 1
+    },
+    {
+      "name": "lids05.blend",
+      "sha256": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0",
+      "type": "Blender",
+      "openedIn": "Blender 5.3.0",
+      "objects": 7,
+      "scenes": 1
+    }
+  ]
+}

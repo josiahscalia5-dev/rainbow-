@@ -1,0 +1,20 @@
+const path = require('node:path');
+const fs = require('node:fs');
+const {pathToFileURL} = require('node:url');
+const previous = '/tmp/rainbow-reconstruction.etSm9SmK';
+const games = {'04':'games/04', '05':'fitted/05', '06':'alternatives/06', '07':'wallfit/07', '08':'games/08'};
+(async () => {
+  const deps = '/tmp/rainbow-visual-audit.X0POSzUq/runtime-deps';
+  const { createServer }=await import(pathToFileURL(path.join(deps,'node_modules/vite/dist/node/index.js')).href);
+  const list=[];
+  for (const [id,local] of Object.entries(games)) {
+    const game=path.join(previous,local), cache=path.join(__dirname,'hd-vite',id);
+    const port=7400+Number(id);
+    const server=await createServer({root:game,cacheDir:cache,logLevel:'error',server:{host:'127.0.0.1',port,strictPort:true,hmr:false,watch:{ignored:['**/*']},fs:{allow:[game,deps,cache]}}});
+    await server.listen();
+    list.push(server);
+  }
+  console.log('Five saved renderers listening on loopback');
+  fs.writeFileSync(path.join(__dirname,'hd-ready'),String(process.pid));
+  for(const event of ['SIGTERM','SIGINT'])process.on(event,async()=>{await Promise.all(list.map(s=>s.close()));process.exit(0);});
+})().catch(e=>{ console.error(e.message); process.exitCode=1; });

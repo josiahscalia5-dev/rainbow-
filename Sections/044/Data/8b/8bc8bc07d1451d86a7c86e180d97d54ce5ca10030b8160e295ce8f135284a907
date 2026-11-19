@@ -1,0 +1,35 @@
+{
+ "label": "BEFORE",
+ "approved": "references/06_crest_the_rinse_arch.png",
+ "capture": "qa/match/06/06_BEFORE_current_game.png",
+ "size": [
+  864,
+  1536
+ ],
+ "FULL": {
+  "mean_abs": 81.56,
+  "within_10": 0.0113,
+  "within_20": 0.0501,
+  "ssim_lum": 0.1775
+ },
+ "BELOWHUD": {
+  "mean_abs": 84.31,
+  "within_10": 0.0097,
+  "within_20": 0.0407,
+  "ssim_lum": 0.1731
+ },
+ "LAYOUT": {
+  "mean_abs": 70.21,
+  "within_20": 0.0589
+ },
+ "mean_rgb_approved": [
+  152.8,
+  131.3,
+  204.3
+ ],
+ "mean_rgb_capture": [
+  169.5,
+  78.7,
+  195.1
+ ]
+}

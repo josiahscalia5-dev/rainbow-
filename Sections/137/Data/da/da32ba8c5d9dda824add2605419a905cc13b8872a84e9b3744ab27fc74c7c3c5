@@ -1,0 +1,7 @@
+{
+ "when": "2026-11-17 r3",
+ "method": "node scripts/capture.mjs at HEAD (main checkout) vs a git worktree of 752d6d8 (line A before any Screen 06 src change), same container",
+ "default_05_06_07_08": "0 px different below the HUD strip (rows >= 208 of 1536); the HUD strip (rows 31-207) differs in the temporary worktree's own run only",
+ "match08_08": "0 px different below the HUD strip (same note)",
+ "ringa26_nearfloor05_0_vs_qa/pilot05/wave9/baseline/05.png": "HEAD: 0 px different, FULL frame (the worktree run differs only in its HUD strip, proving the HUD difference is the worktree's, not the switch code's)"
+}

@@ -1,0 +1,16 @@
+{
+  "time": "2026-11-18T21:53:20.730702+00:00",
+  "base": {
+    "branch": "claude/rainbow-s04-match-c17",
+    "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+  },
+  "branch": "codex/s04-sweeping-waterbands",
+  "paths": [
+    "src/world/match04m4.ts"
+  ],
+  "lead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "remoteHeadCountAtCheck": 138
+}

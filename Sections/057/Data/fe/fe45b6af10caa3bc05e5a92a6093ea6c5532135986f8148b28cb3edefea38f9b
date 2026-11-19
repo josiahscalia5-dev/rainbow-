@@ -1,0 +1,1 @@
+spector-live {'launch': 'System Chromium 156 via isolated loopback-only launcher, SwiftShader WebGL2', 'spectorSource': '755e6a7671e58424fcfda1270823a71e91de3553', 'bundle': '0.9.33', 'page': '**Page loaded:** Rainbow\n**URL:** http://127.0.0.1:8147/__spector07.h

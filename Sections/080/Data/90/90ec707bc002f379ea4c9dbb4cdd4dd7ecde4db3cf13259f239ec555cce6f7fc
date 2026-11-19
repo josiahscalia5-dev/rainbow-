@@ -1,0 +1,833 @@
+{
+  "created": "2026-11-16T14:29:22.069Z",
+  "commit": "088dd3fc77c0cf18f1e853ffb27a0945e27b1f0b",
+  "query": "liquid05=1&roundfoam05=1",
+  "viewport": {
+    "width": 432,
+    "height": 768,
+    "deviceScaleFactor": 1
+  },
+  "note": "Real WebGL rendering and browser input events; simulation is stepped deterministically. Not Android hardware performance.",
+  "checks": {
+    "keyboardSteering": {
+      "pass": true,
+      "events": [
+        {
+          "key": "ArrowLeft",
+          "before": 0,
+          "after": -1.65,
+          "pass": true
+        },
+        {
+          "key": "ArrowRight",
+          "before": 0,
+          "after": 1.64,
+          "pass": true
+        }
+      ]
+    },
+    "pointerPressAndDrag": {
+      "pass": true,
+      "before": 0,
+      "rightPress": 1.659,
+      "leftDrag": -0.087
+    },
+    "hudPauseResume": {
+      "pass": true,
+      "before": 134.272,
+      "paused": 134.272,
+      "resumed": 136.105
+    },
+    "keyboardPauseResume": {
+      "pass": true,
+      "paused": 136.105,
+      "resumed": 137.938
+    },
+    "replayButton": {
+      "pass": true,
+      "before": {
+        "mode": "end",
+        "stage": "11",
+        "s": 435.192,
+        "lat": 0,
+        "coins": 2500,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -109.565,
+        "bennyVisible": false,
+        "cam": [
+          11.2,
+          -99.1,
+          -304
+        ]
+      },
+      "after": {
+        "mode": "intro",
+        "stage": "01",
+        "s": 0,
+        "lat": 0,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -109.565,
+        "bennyVisible": true,
+        "cam": [
+          11.2,
+          -99.1,
+          -304
+        ]
+      }
+    },
+    "finiteFarGeometry": {
+      "pass": true,
+      "vertices": 2783,
+      "triangles": 5280
+    },
+    "bankAndUvContinuity": {
+      "pass": true,
+      "banks": [
+        {
+          "side": -1,
+          "s": 181.2217279895434,
+          "axialResidual": 1.329492071988625e-14,
+          "lateralGap": 4.952260823642973e-11,
+          "staticSurfaceGap": 0.7211090718885532
+        },
+        {
+          "side": 1,
+          "s": 179.93683230185133,
+          "axialResidual": -2.3953061756287752e-14,
+          "lateralGap": 1.290967333034132e-12,
+          "staticSurfaceGap": 0.46337115077419483
+        }
+      ],
+      "seamUvGap": 0.0000024676860164163372
+    },
+    "layoutBlendContinuity": {
+      "pass": true,
+      "localJumps": [
+        {
+          "z": 0,
+          "maxDelta": 0.0022451079216048164
+        },
+        {
+          "z": 2,
+          "maxDelta": 0.00045409351696124034
+        },
+        {
+          "z": 10,
+          "maxDelta": 0.00044264045096165106
+        }
+      ],
+      "channelJoins": [
+        {
+          "s": 114.68830202823243,
+          "centreDelta": 0,
+          "widthDelta": 0.0005749999946789153
+        },
+        {
+          "s": 192.92412082521383,
+          "centreDelta": 0,
+          "widthDelta": 0.00013888888657476173
+        }
+      ]
+    },
+    "animatedWater": {
+      "pass": true,
+      "seconds": 0.6,
+      "meanAbsoluteRgb": 30.38506760728983
+    },
+    "phaseBoundarySamples": {
+      "pass": true,
+      "threshold": 15,
+      "units": "mean absolute RGB difference, range 0–255, at 1/60-second steps",
+      "samples": [
+        {
+          "from": 11.233333333333333,
+          "to": 11.25,
+          "meanAbsoluteRgb": 6.15546410608139
+        },
+        {
+          "from": 11.25,
+          "to": 11.266666666666667,
+          "meanAbsoluteRgb": 6.2183029590437
+        },
+        {
+          "from": 11.983333333333333,
+          "to": 12,
+          "meanAbsoluteRgb": 5.328826180678033
+        },
+        {
+          "from": 12,
+          "to": 12.016666666666667,
+          "meanAbsoluteRgb": 5.181331243059638
+        }
+      ]
+    },
+    "screen05To06": {
+      "pass": true,
+      "stage": "06",
+      "maxCameraStep": 0.21470910553583306,
+      "maxBennyYStep": 0.10699999999999932,
+      "nonMonotonicSteps": 0
+    },
+    "noBrowserErrors": {
+      "pass": false,
+      "count": 1
+    }
+  },
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "captures": [
+    {
+      "file": "qa/codex-water/tests/liquid05/time_11_2333.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.398,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.233333333333333
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/time_11_2500.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.398,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.25
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/time_11_2667.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.398,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.266666666666667
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/time_11_9833.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.35,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.983333333333333
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/time_12_0000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/time_12_0167.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.347,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.016666666666667
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/time_12_6000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.354,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.6
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/ride_s168_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 168.188,
+        "lat": 0,
+        "coins": 1470,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.817,
+        "bennyVisible": true,
+        "cam": [
+          1.37,
+          -39.37,
+          -102.4
+        ]
+      },
+      "targetS": 168.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/ride_s174_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 174.055,
+        "lat": 0,
+        "coins": 1480,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.105,
+        "bennyVisible": true,
+        "cam": [
+          1.78,
+          -39.61,
+          -108.25
+        ]
+      },
+      "targetS": 174.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/ride_s180_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 180.105,
+        "lat": 0,
+        "coins": 1480,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.386,
+        "bennyVisible": true,
+        "cam": [
+          3.24,
+          -39.83,
+          -113.82
+        ]
+      },
+      "targetS": 180.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/ride_s184_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 184.138,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.412,
+        "bennyVisible": true,
+        "cam": [
+          3.03,
+          -40.01,
+          -117.68
+        ]
+      },
+      "targetS": 184.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/ride_s188_42.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 188.538,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.979,
+        "bennyVisible": true,
+        "cam": [
+          3.27,
+          -40.55,
+          -122.25
+        ]
+      },
+      "targetS": 188.42412082521383
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/ride_s189_42.png",
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 189.455,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.78,
+        "bennyVisible": true,
+        "cam": [
+          3.09,
+          -40.64,
+          -123.21
+        ]
+      },
+      "targetS": 189.42412082521383
+    },
+    {
+      "file": "qa/codex-water/tests/liquid05/ride_s192_92.png",
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 192.938,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.265,
+        "bennyVisible": true,
+        "cam": [
+          2.17,
+          -40.91,
+          -126.73
+        ]
+      },
+      "targetS": 192.92412082521383
+    }
+  ],
+  "geometry": {
+    "liquidEnabled": true,
+    "finite": true,
+    "vertices": 2783,
+    "triangles": 5280,
+    "seamS": 180.0383020282329,
+    "seamLongitudinal": 180.03829956054688,
+    "seamUvGap": 0.0000024676860164163372,
+    "rows": [
+      {
+        "z": -0.01,
+        "xB": -0.07127997762177007,
+        "hw": 2.482715166201011,
+        "cL": -1.33133704826162,
+        "wL": 0.23407039851491357,
+        "cR": 1.0594879790644154,
+        "wR": 0.48828590253398313,
+        "core": -0.26303228660813716
+      },
+      {
+        "z": 0,
+        "xB": -0.08422350153828861,
+        "hw": 2.495781307396247,
+        "cL": -1.3333884060156795,
+        "wL": 0.234069087347856,
+        "cR": 1.0597170161665792,
+        "wR": 0.4882280682831198,
+        "core": -0.2639151853921821
+      },
+      {
+        "z": 0.01,
+        "xB": -0.09067255126182583,
+        "hw": 2.5023517364566192,
+        "cL": -1.3353903436696284,
+        "wL": 0.23407322434742636,
+        "cR": 1.060120172406077,
+        "wR": 0.48808663858395845,
+        "core": -0.26464179275004174
+      },
+      {
+        "z": 1.99,
+        "xB": -0.7202746587531486,
+        "hw": 3.059913953574428,
+        "cL": -1.7775825979783992,
+        "wL": 0.5548688266587986,
+        "cR": 1.1800673343876629,
+        "wR": 0.38175885320750563,
+        "core": -0.21220264506972178
+      },
+      {
+        "z": 2,
+        "xB": -0.7225458691321933,
+        "hw": 3.061185953935989,
+        "cL": -1.77780028553933,
+        "wL": 0.5548907718834647,
+        "cR": 1.1810706444635457,
+        "wR": 0.3797227870417441,
+        "core": -0.21078082811703192
+      },
+      {
+        "z": 2.01,
+        "xB": -0.7248134857739451,
+        "hw": 3.062445034619077,
+        "cL": -1.7779970892417816,
+        "wL": 0.5549104093884505,
+        "cR": 1.1820876030436478,
+        "wR": 0.37766388404323553,
+        "core": -0.20933148042645935
+      },
+      {
+        "z": 9.99,
+        "xB": -1.498540511355222,
+        "hw": 2.8806748199833976,
+        "cL": -3.284554302444276,
+        "wL": 0.547327852220416,
+        "cR": 0.2874798933269447,
+        "wR": 0.5473267967622384,
+        "core": -1.4985366768295767
+      },
+      {
+        "z": 10,
+        "xB": -1.5003703703703701,
+        "hw": 2.8812962962962962,
+        "cL": -3.286774074074074,
+        "wL": 0.5474462962962963,
+        "cR": 0.2860333333333336,
+        "wR": 0.5474462962962963,
+        "core": -1.5003703703703701
+      },
+      {
+        "z": 10.01,
+        "xB": -1.502196371958162,
+        "hw": 2.8819203624091223,
+        "cL": -3.2889869966518175,
+        "wL": 0.5475648688577333,
+        "cR": 0.2845942527354939,
+        "wR": 0.5475648688577333,
+        "core": -1.502196371958162
+      },
+      {
+        "z": 24,
+        "xB": -1.9373854244928626,
+        "hw": 3.3710894064613073,
+        "cL": -4.027460856498873,
+        "wL": 0.6405069872276484,
+        "cR": 0.1526900075131481,
+        "wR": 0.6405069872276484,
+        "core": -1.9373854244928626
+      },
+      {
+        "z": 60,
+        "xB": 2.5230464646464648,
+        "hw": 3.3075339154269927,
+        "cL": 0.47237543708172947,
+        "wL": 0.6284314439311286,
+        "cR": 4.5737174922112,
+        "wR": 0.6284314439311286,
+        "core": 2.5230464646464648
+      },
+      {
+        "z": 110,
+        "xB": 2.050490661601773,
+        "hw": 3.3,
+        "cL": 0.004490661601773027,
+        "wL": 0.627,
+        "cR": 4.096490661601773,
+        "wR": 0.627,
+        "core": 2.050490661601773
+      },
+      {
+        "z": 215,
+        "xB": -2.7910921700280715,
+        "hw": 3.039488210045386,
+        "cL": -4.67557486025621,
+        "wL": 0.5775027599086233,
+        "cR": -0.9066094797999322,
+        "wR": 0.5775027599086233,
+        "core": -2.7910921700280715
+      },
+      {
+        "z": 330,
+        "xB": 0.09680000000000014,
+        "hw": 3.2376,
+        "cL": -1.910512,
+        "wL": 0.615144,
+        "cR": 2.104112,
+        "wR": 0.615144,
+        "core": 0.09680000000000014
+      }
+    ],
+    "localJumps": [
+      {
+        "z": 0,
+        "maxDelta": 0.0022451079216048164
+      },
+      {
+        "z": 2,
+        "maxDelta": 0.00045409351696124034
+      },
+      {
+        "z": 10,
+        "maxDelta": 0.00044264045096165106
+      }
+    ],
+    "banks": [
+      {
+        "side": -1,
+        "s": 181.2217279895434,
+        "axialResidual": 1.329492071988625e-14,
+        "lateralGap": 4.952260823642973e-11,
+        "staticSurfaceGap": 0.7211090718885532
+      },
+      {
+        "side": 1,
+        "s": 179.93683230185133,
+        "axialResidual": -2.3953061756287752e-14,
+        "lateralGap": 1.290967333034132e-12,
+        "staticSurfaceGap": 0.46337115077419483
+      }
+    ],
+    "channelJoins": [
+      {
+        "s": 114.68830202823243,
+        "centreDelta": 0,
+        "widthDelta": 0.0005749999946789153
+      },
+      {
+        "s": 192.92412082521383,
+        "centreDelta": 0,
+        "widthDelta": 0.00013888888657476173
+      }
+    ],
+    "note": "Static surface gaps are measured before animated vertex displacement and reported separately; visual overlap is inspected in ride captures."
+  },
+  "ride": {
+    "samples": [
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 168.188,
+          "lat": 0,
+          "coins": 1470,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.817,
+          "bennyVisible": true,
+          "cam": [
+            1.37,
+            -39.37,
+            -102.4
+          ]
+        },
+        "steps": 195,
+        "maxCameraStep": 0.19104973174543985,
+        "maxBennyYStep": 0.01899999999999835,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 174.055,
+          "lat": 0,
+          "coins": 1480,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.105,
+          "bennyVisible": true,
+          "cam": [
+            1.78,
+            -39.61,
+            -108.25
+          ]
+        },
+        "steps": 32,
+        "maxCameraStep": 0.19131126469708754,
+        "maxBennyYStep": 0.015000000000000568,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 180.105,
+          "lat": 0,
+          "coins": 1480,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.386,
+          "bennyVisible": true,
+          "cam": [
+            3.24,
+            -39.83,
+            -113.82
+          ]
+        },
+        "steps": 33,
+        "maxCameraStep": 0.18788294228056093,
+        "maxBennyYStep": 0.019000000000005457,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 184.138,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.412,
+          "bennyVisible": true,
+          "cam": [
+            3.03,
+            -40.01,
+            -117.68
+          ]
+        },
+        "steps": 22,
+        "maxCameraStep": 0.18466185312620073,
+        "maxBennyYStep": 0.015000000000000568,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 188.538,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.979,
+          "bennyVisible": true,
+          "cam": [
+            3.27,
+            -40.55,
+            -122.25
+          ]
+        },
+        "steps": 24,
+        "maxCameraStep": 0.21470910553583306,
+        "maxBennyYStep": 0.030000000000001137,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 189.455,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.78,
+          "bennyVisible": true,
+          "cam": [
+            3.09,
+            -40.64,
+            -123.21
+          ]
+        },
+        "steps": 5,
+        "maxCameraStep": 0.20322401432901885,
+        "maxBennyYStep": 0.045000000000001705,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 192.938,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -41.265,
+          "bennyVisible": true,
+          "cam": [
+            2.17,
+            -40.91,
+            -126.73
+          ]
+        },
+        "steps": 19,
+        "maxCameraStep": 0.19748417658132675,
+        "maxBennyYStep": 0.10699999999999932,
+        "nonMonotonicSteps": 0
+      }
+    ],
+    "maxCameraStep": 0.21470910553583306,
+    "maxBennyYStep": 0.10699999999999932,
+    "nonMonotonicSteps": 0
+  },
+  "stats": {
+    "fps": 105,
+    "calls": 80,
+    "triangles": 593413,
+    "geometries": 342,
+    "textures": 61,
+    "modules": {
+      "water": "vfx/index.ts",
+      "benny": "assets/models/benny.glb",
+      "girl": "assets/models/rainbow_girl.glb"
+    },
+    "courseLength": 435.1923632433159
+  },
+  "pass": false
+}

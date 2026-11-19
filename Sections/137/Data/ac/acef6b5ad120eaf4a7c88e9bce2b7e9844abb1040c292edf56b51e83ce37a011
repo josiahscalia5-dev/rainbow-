@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-18T00:38:33+00:00",
+    "reason": "daemon",
+    "result": "no-change",
+    "files_staged": 0,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-lead-c7",
+    "note": "following session branch 'claude/rainbow-lead-c7' (config branch 'ccr-9c4a8ad6-xovgsx')",
+    "commit": "c8ff2448327051b9d62d03fb4bf13cfcde8d4a24",
+    "duration_s": 5
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-lead-c7",
+  "last_verified_remote_sha": "c8ff2448327051b9d62d03fb4bf13cfcde8d4a24",
+  "last_successful_backup_utc": "2026-11-18T00:38:33+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=156); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-18T00:40:00+00:00"
+}

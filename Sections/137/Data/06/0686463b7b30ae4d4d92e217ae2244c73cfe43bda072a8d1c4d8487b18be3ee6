@@ -1,0 +1,41 @@
+{
+ "worktree": "/home/user/wt/s05",
+ "branch": "claude/rainbow-s05-match-c15",
+ "head": "34aadd1131e4825dae12e0c9a9a665ebbb30b720",
+ "time": "2026-11-18T18:33:46+00:00",
+ "dirty_tracked": [
+  "src/world/environment.ts",
+  "src/world/match05far.ts",
+  "tools/match05/r8_shots.mjs"
+ ],
+ "untracked_copied": [
+  "qa/match/05/r14/step4_trans/before/shots.json",
+  "qa/match/05/r14/step4_trans/before/t102_06.png",
+  "qa/match/05/r14/step4_trans/before/x100.png",
+  "qa/match/05/r14/step4_trans/before/x101.png",
+  "qa/match/05/r14/step4_trans/before/x103.png",
+  "qa/match/05/r14/step4_trans/before/x105.png",
+  "qa/match/05/r14/step4_trans/before/x99.png",
+  "qa/match/05/r15/KEPT_START.txt",
+  "qa/match/05/r15/step1_trans/before/shots.json",
+  "qa/match/05/r15/step1_trans/before/x100.png",
+  "qa/match/05/r15/step1_trans/before/x101.png",
+  "qa/match/05/r15/step1_trans/before/x103.png",
+  "qa/match/05/r15/step1_trans/before/x105.png",
+  "qa/match/05/r15/step1_trans/before/x97R.png",
+  "qa/match/05/r15/step1_trans/before/x99.png",
+  "tools/match05/r15_probe.mjs"
+ ],
+ "untracked_skipped": [
+  "qa/match/05/r15/step1_trans/before/t95_left.png",
+  "qa/match/05/r15/step1_trans/before/t95_right.png",
+  "qa/match/05/r15/step1_trans/before/t95_through_screen.png",
+  "qa/match/05/r15/step1_trans/before/t98_end.png",
+  "qa/match/05/r15/step1_trans/before/x90.png",
+  "qa/match/05/r15/step1_trans/before/x93.png",
+  "qa/match/05/r15/step1_trans/before/x96.png",
+  "qa/match/05/r15/step1_trans/before/x97.png",
+  "qa/match/05/r15/step1_trans/before/x97L.png"
+ ],
+ "restore": "git switch claude/rainbow-s05-match-c15 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c15/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c15/untracked/* into the worktree"
+}

@@ -1,0 +1,168 @@
+from pathlib import Path
+import shutil,sys
+from make_paddle_texture import make
+root=Path.cwd()
+def replace(s,a,b):
+ if s.count(a)!=1:raise RuntimeError('Expected one occurrence of '+a[:90]+', found '+str(s.count(a)))
+ return s.replace(a,b)
+def write(sid,p,s):
+ game=root/'games'/sid/p;repo=root/'repos'/sid/p;game.write_text(s);repo.parent.mkdir(parents=True,exist_ok=True);repo.write_text(s)
+def paddle():
+ sid='07';p='src/world/match07.ts';s=(root/'games'/sid/p).read_text()
+ asset='assets/textures/match07/paddleFace07.png';make(next((root/'games/07/references').glob('07_*.png')),root/'games/07'/asset)
+ shutil.copyfile(root/'games/07'/asset,root/'repos/07'/asset)
+ s=replace(s,'  const M = { wall: mat(tWall, 1), water: mat(tRiver, 2), gold: mat(pGold, 0, 1 / 1.2) };',"""  const M = { wall: mat(tWall, 1), water: mat(tRiver, 2), gold: mat(pGold, 0, 1 / 1.2) };
+  let paddleFace: THREE.ShaderMaterial | null = null;
+  if (fixGold && flag05('cx07PaddleFace')) {
+    const painted = await new THREE.TextureLoader().loadAsync(tex('paddleFace07.png'));
+    painted.colorSpace = THREE.NoColorSpace;
+    painted.anisotropy = 4;
+    paddleFace = mat(pGold, 0, 1 / 1.2);
+    paddleFace.defines = { PAINTED_PADDLE_FACE: 1 };
+    paddleFace.uniforms.uPaddleFace = { value: painted };
+    paddleFace.uniforms.uPaddleWidth = { value: L.paddles[2].w };
+  }""")
+ s=replace(s,'  vUv = uv;',"""#ifdef PAINTED_PADDLE_FACE
+  vPaddleLocal = position;
+  vPaddleNormal = normal;
+#endif
+  vUv = uv;""")
+ s=replace(s,'const VERT = /* glsl */ `\nuniform mat4 uProjVP;',"""const VERT = /* glsl */ `
+#ifdef PAINTED_PADDLE_FACE
+varying vec3 vPaddleLocal;
+varying vec3 vPaddleNormal;
+#endif
+uniform mat4 uProjVP;""")
+ s=replace(s,'const FRAG = /* glsl */ `\nuniform sampler2D uPlate;',"""const FRAG = /* glsl */ `
+#ifdef PAINTED_PADDLE_FACE
+varying vec3 vPaddleLocal;
+varying vec3 vPaddleNormal;
+uniform sampler2D uPaddleFace;
+uniform float uPaddleWidth;
+#endif
+uniform sampler2D uPlate;""")
+ s=replace(s,'  gl_FragColor = vec4(pjInverse(t), 1.0);',"""#ifdef PAINTED_PADDLE_FACE
+  // Rectified bands are attached to the modeled paddle, independent of the projector.
+  float across = clamp(0.5 - vPaddleLocal.x / uPaddleWidth, 0.005, 0.995);
+  float radial = clamp(0.5 - vPaddleLocal.y / 1.2, 0.0, 1.0);
+  float axial = clamp(0.5 + vPaddleLocal.z / (uPaddleWidth * 0.42), 0.0, 1.0);
+  vec3 localN = normalize(vPaddleNormal);
+  vec3 front = texture2D(uPaddleFace, vec2(across, mix(0.995, 0.505, radial))).rgb;
+  vec3 underside = texture2D(uPaddleFace, vec2(across, mix(0.015, 0.495, axial))).rgb;
+  float under = smoothstep(0.12, 0.86, -localN.y);
+  vec3 enamel = mix(front, underside, under);
+  vec3 viewDir = normalize(cameraPosition - vW);
+  float glint = pow(max(dot(reflect(-uKey, nn), viewDir), 0.0), 32.0);
+  enamel += vec3(0.15, 0.12, 0.08) * glint;
+  t = mix(t, enamel, smoothstep(0.45, 2.5, distance(cameraPosition, uProjPos)));
+#endif
+  gl_FragColor = vec4(pjInverse(t), 1.0);""")
+ s=replace(s,"const o = add(g, M.gold, 'paddle' + i);","const o = add(g, i === 2 && paddleFace ? paddleFace : M.gold, 'paddle' + i);")
+ write(sid,p,s)
+def arch():
+ sid='06';p='src/world/match06.ts';s=(root/'games'/sid/p).read_text()
+ s=replace(s,"    const axisAt = (a: number) => {","""    const elbow = qs?.get('cx06RinseElbow') === '1';
+    // A circular elbow ends the sight line gradually beyond the crest. Its inner radius
+    // stays positive, and the tube, ring centres and end cap share the same frames.
+    const elbowStart = course.sample(sE - 20).pos.sub(O).dot(ax);
+    const elbowRadius = 3.45 * Rt;
+    const elbowAngle = 0.94;
+    const axisAt = (a: number) => {
+      if (elbow && a > elbowStart) {
+        const travel = a - elbowStart;
+        const angle = Math.min(travel / elbowRadius, elbowAngle);
+        const c = Math.cos(angle), sn = Math.sin(angle);
+        const tangent = ax.clone().multiplyScalar(c).addScaledVector(Rx, sn);
+        const right = Rx.clone().multiplyScalar(c).addScaledVector(ax, -sn);
+        const centre = O.clone().addScaledVector(ax, elbowStart + elbowRadius * sn)
+          .addScaledVector(Rx, elbowRadius * (1 - c))
+          .addScaledVector(tangent, Math.max(0, travel - elbowRadius * elbowAngle));
+        return { p: centre, t: tangent, r: right, u: Ux };
+      }""")
+ s=replace(s,'        lg.applyQuaternion(BEND ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), fr.t) : qRot);',"""        if (elbow) {
+          // Parallel transport the original lathe basis so the painted gold profile and lights stay on the rim.
+          const sweepRotation = new THREE.Quaternion().setFromUnitVectors(ax, fr.t);
+          lg.applyQuaternion(qRot).applyQuaternion(sweepRotation);
+        } else {
+          lg.applyQuaternion(BEND ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), fr.t) : qRot);
+        }""")
+ write(sid,p,s)
+def waves():
+ sid='04';p='src/world/match04m4.ts';s=(root/'games'/sid/p).read_text()
+ s=replace(s,'    float as = abs(vS);\n    float wan =',"""    float as = abs(vS);
+#ifdef SWEPT_WATERBANDS
+    // Both banks follow a fixed S on the existing 3D trough. The wall contact stays in place.
+    float sweep = 1.10 * sin(along * 0.39 + 0.35) + 0.24 * sin(along * 0.73 - 0.55);
+    float taper = 1.0 - smoothstep(0.73 * uSB0.z, uSB0.z, abs(vS));
+    as += taper * (0.48 + sign(vS) * sweep);
+#endif
+    float wan =""")
+ s=replace(s,'fragmentShader: RIVER_FRAG, side: THREE.DoubleSide','fragmentShader: RIVER_FRAG, defines: M04.num(\'cx04WaterSweep\', 0) > 0 ? { SWEPT_WATERBANDS: 1 } : {}, side: THREE.DoubleSide')
+ # The pink underpaint follows the same S as the retained painted band.
+ s=replace(s,'    float side = smoothstep(uPk.y, uPk.y + 0.7, abs(vS)) * (1.0 - smoothstep(uPk.z, uPk.z + 0.9, abs(vS)));',"""    float bandArc = abs(vS);
+#ifdef SWEPT_WATERBANDS
+    bandArc = sweptArc(vS, along);
+#endif
+    float side = smoothstep(uPk.y, uPk.y + 0.7, bandArc) * (1.0 - smoothstep(uPk.z, uPk.z + 0.9, bandArc));""")
+ s=replace(s,"float chev(vec2 p, float hw, float th) {","""#ifdef SWEPT_WATERBANDS
+float sweptArc(float section, float along) {
+  float sweep = 1.10 * sin(along * 0.39 + 0.35) + 0.24 * sin(along * 0.73 - 0.55);
+  float taper = 1.0 - smoothstep(0.73 * uSB0.z, uSB0.z, abs(section));
+  return abs(section) + taper * (0.48 + sign(section) * sweep);
+}
+#endif
+float chev(vec2 p, float hw, float th) {""")
+ s=replace(s,'''    float sweep = 1.10 * sin(along * 0.39 + 0.35) + 0.24 * sin(along * 0.73 - 0.55);
+    float taper = 1.0 - smoothstep(0.73 * uSB0.z, uSB0.z, abs(vS));
+    as += taper * (0.48 + sign(vS) * sweep);''','    as = sweptArc(vS, along);')
+ write(sid,p,s)
+def bays():
+ sid='05';p='src/vfx/proj05Tunnel.ts';s=(root/'games'/sid/p).read_text()
+ s=replace(s,'const M05WTILE_GLSL = /* glsl */ `','''const CLEAN_BAYS = flag05('cx05WallBays');
+const CLEAN_BAYS_GLSL = /* glsl */ `
+  {
+    // Use a gold-free, rectified panel from the closest painted bay when the original bay is under-resolved.
+    // The tube's angular and axial coordinates keep the slot pitch fixed under steering.
+    vec2 source = puv * uPtWallSize;
+    vec2 dx = dFdx(source), dy = dFdy(source);
+    float footprint = abs(dx.x * dy.y - dx.y * dy.x) / max(max(length(dx), length(dy)), 0.00001);
+    float away = smoothstep(0.35, 2.5, distance(cameraPosition, uM05Eye.xyz));
+    float weight = away * (1.0 - smoothstep(0.60, 1.35, footprint));
+    weight *= smoothstep(0.012, 0.08, pt) * (1.0 - smoothstep(0.92, 0.988, pt));
+    vec2 panels = vec2(vPerfUv.x * 46.5 / 5.0, vPerfUv.y / 9.5);
+    vec2 swatch = 1.0 - abs(2.0 * fract(0.5 * panels) - 1.0);
+    vec2 localUV = (vec2(1534.0, 623.0) + swatch * vec2(219.0, 181.0)) / uPtWallSize;
+    pc = mix(pc, texture2D(uPtWall, localUV).rgb, weight);
+  }`;
+const M05WTILE_GLSL = /* glsl */ `''')
+ s=replace(s,"${M05WALL ? M05WALL_GLSL : ''}\n  gl_FragColor", "${M05WALL ? M05WALL_GLSL : ''}${CLEAN_BAYS && ENV05 ? CLEAN_BAYS_GLSL : ''}\n  gl_FragColor")
+ s=s.replace('M05WALL || M05WTILE','M05WALL || M05WTILE || CLEAN_BAYS')
+ s=replace(s,"+ (M05WTILE ? '|m05wtile' : '');","+ (M05WTILE ? '|m05wtile' : '') + (CLEAN_BAYS ? '|painted-bays' : '');")
+ write(sid,p,s)
+def chamber():
+ sid='08';p='src/world/match08.ts';s=(root/'games'/sid/p).read_text()
+ # Measure the local heading independently at each world-space depth from Claudia's original river table.
+ # Project onto the local normal and lay a curved interior flow band, pinning both outer water contacts.
+ s=replace(s,'      float d = vW.x - r.x, ad = abs(d);',"""      float d = vW.x - r.x;
+#ifdef CHAMBER_CURRENT
+      // The quilted near texture is straight when sampled solely along world z.
+      // Continue the measured S-shaped river into its interior while pinning the outer contacts.
+      float heading = (riv(vW.z + 0.85).x - riv(vW.z - 0.85).x) / 1.7;
+      float channel = clamp(d / h, -1.0, 1.0);
+      float interior = 1.0 - channel * channel;
+      float travel = uNear.x - vW.z;
+      float arc = 0.82 * sin(0.61 * travel - 0.45) + 0.22 * sin(1.11 * travel + 0.6);
+      d -= interior * (arc + 0.32 * clamp(heading, -1.0, 1.0));
+#endif
+      float ad = abs(d);""")
+ s=replace(s,'      tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), (uNear.x - vW.z) / uNear.y);',"""      float downriver = uNear.x - vW.z;
+#ifdef CHAMBER_CURRENT
+      downriver -= 0.60 * heading * d * interior;
+#endif
+      tuv = vec2(0.5 + sign(d) * xb / (2.0 * uNq.w), downriver / uNear.y);""")
+ marker='    vertexShader: VERT, fragmentShader: FRAG,'
+ if s.count(marker)!=1:raise RuntimeError('Chamber material '+str(s.count(marker)))
+ s=s.replace(marker,"    defines: flag05('cx08ChamberCurrent') ? { CHAMBER_CURRENT: 1 } : {},\n"+marker)
+ write(sid,p,s)
+for n,func in [('07',paddle),('06',arch),('04',waves),('05',bays),('08',chamber)]:
+ if n in sys.argv[1:]:func();print(n,'ready',flush=True)

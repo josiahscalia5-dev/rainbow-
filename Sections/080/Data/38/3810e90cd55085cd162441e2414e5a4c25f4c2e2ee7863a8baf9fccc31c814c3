@@ -1,0 +1,44 @@
+"""Make a convenient Android PDF using the actual saved pictures, one whole frame per page."""
+from pathlib import Path
+from io import BytesIO
+import json
+from PIL import Image
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.utils import ImageReader
+import fitz
+root=Path(__file__).resolve().parent;package=root/'payload'
+rows=json.loads((root/'media-records.json').read_text());cases=json.loads((root/'cases.json').read_text())
+stages={'04':('Through the Five Arrows','Fifth_Gold_Ring','forward-20','hard-right'),'05':('Flow Into the Current','Final_Bend_Highlights','last-right-bend','hard-left'),'06':('Crest the Rinse Arch','Crest_Release','crest-release','hard-left'),'07':('Dive the Washer Tube','Plunge_Outlet_Foam','plunge-bottom','two-thirds-down'),'08':('Final Spin Chamber','Chamber_Flow_Distance','hard-right','platform-and-spouts')}
+doc=package/'Rainbow_Visual_Review.pdf';cv=Canvas(str(doc),pageCompression=1)
+cv.setTitle('Rainbow | Approved artwork and actual gameplay'); cv.setAuthor('Rainbow project review')
+count=0
+def picture(row,title,subtitle):
+ global count
+ path=Path(row['local'])
+ with Image.open(path) as im:
+  w,h=im.size; width=540.;height=width*h/w;header=56
+  cv.setPageSize((width,height+header));cv.setFillColorRGB(.10,.08,.18);cv.rect(0,height,width,header,stroke=0,fill=1)
+  cv.setFillColorRGB(1,1,1);cv.setFont('Helvetica-Bold',16);cv.drawString(16,height+33,title)
+  cv.setFillColorRGB(.91,.88,.97);cv.setFont('Helvetica',9);cv.drawString(16,height+15,subtitle)
+  if row['accuracy']=='art' and im.format=='JPEG':image=ImageReader(str(path))
+  else:
+   view=im.convert('RGB');view.thumbnail((600,1100),Image.Resampling.LANCZOS);buf=BytesIO();view.save(buf,'JPEG',quality=72,subsampling=2,optimize=True);buf.seek(0);image=ImageReader(buf)
+  cv.drawImage(image,0,0,width=width,height=height)
+  cv.showPage();count+=1
+def get(case,section,pose):return next(r for r in rows if r['case']==case and r['section']==section and r['name'].rsplit('/',1)[-1]==pose)
+for sc,(title,case,first,second) in stages.items():
+ marker=cases[case]['status'].lower();approval=next(r for r in rows if r['screen']==sc and r['accuracy']=='art' and r['name'].endswith('APPROVED_ORIGINAL'))
+ picture(approval,sc+'  '+title,'APPROVED   |   Original artwork   |   Every moving view in this PDF is for review.')
+ for pose in ['opening',first,second]:
+  for section in ['CLAUDIA_BEFORE','CODEX_NEW']:
+   r=get(case,section,pose);name='Claudia retained' if section=='CLAUDIA_BEFORE' else 'Codex '+marker
+   picture(r,sc+'  '+name+'   |   '+pose.replace('-',' '),title+'   |   '+case.replace('_',' ')+'   |   '+r['commit'][:12])
+ if sc=='06':
+  for section in ['CLAUDIA_BEFORE','CODEX_NEW']:
+   r=get('Benny_Fitted_Knit_Cuff',section,'opening')
+   picture(r,'06  Benny beanie  |  '+('Claudia retained' if section=='CLAUDIA_BEFORE' else 'Codex candidate'),'Original framing   |   Fitted knit cuff experiment   |   '+r['commit'][:12])
+cv.save()
+with fitz.open(doc) as f:
+ assert len(f)==count and all(len(p.get_images())==1 and p.get_text().strip() for p in f)
+print(count,'individual full-frame pages',doc.stat().st_size,'bytes',flush=True)
+

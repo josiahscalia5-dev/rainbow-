@@ -1,0 +1,718 @@
+# Subagent agent-af51923537e86162d — session 78821565-d674-5be9-a7dd-5afd2dc12d7a
+
+### 🧑 User — 2026-11-16T02:20:16.484Z
+
+You are the water-fx-specialist for the existing RAINBOW 3D game in /home/user/rainbow- (real playable Three.js game; never restart or redesign it). A previous Claude account ran out of credits while you were mid-way through Screen 05 wave 8b; you are now CONTINUING that work as wave 9.
+
+Read first, in this order:
+1. /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md (rules, file ownership, ranked gaps, capture/report commands)
+2. Your own wave-8 log qa/pilot05/wave8/water/NOTES.md (logged through it05 — best so far: mad 50.7, hue 0.880, edge 0.189; an it06 capture folder exists without a log entry: check it and add a short "recovered" note). The current code = your it05/it06 state plus the other specialists' parallel edits.
+3. qa/pilot05/REQUESTS.md (wave8/wave9 lines; you posted the SEAM LOOK for path-camera's farRiverMaterial).
+4. The approved image references/05_flow_into_the_current.png and the recovered live capture qa/pilot05/wave9/baseline/05.png (look at both, and at crops).
+
+Your files ONLY: src/vfx/waterRibbon.ts, src/vfx/glsl.ts, docs/vfx/*. Far river beyond the forced-tunnel seam = path-camera (far05.ts / farRiverMaterial). Foam, splash, bubbles = foam-bubbles-particles. Never edit camera, course, Benny, gameplay, Game.ts. All changes gated to the 05 river block so 03/04/06/07/08 do not change. Use the Edit tool. No git commits (coordinator autosave pushes).
+
+Wave-9 goals (approved image always wins), from your own "still short of" list plus the coordinator's read:
+1. Broad, flowing hot-pink S-RIBBONS sweeping through the MIDDLE of the river as in the approved image (live pink still mostly hugs the edges; the near pink reads as straight diagonal planks at the lower corners) — curved satin sweeps that wind with the S-curves.
+2. Thick, vibrant, highly polished electric-blue/cyan water: deeper near body, big bright near flares (ref near p95 ≈246 vs live ≈203), ~2× glints (ref near/mid peaks 347/618 vs live ≈183/504), glossy reflections, sense of depth and flow.
+3. Keep Benny's contact clean glossy cyan (no white band, no pink right behind him).
+
+Prioritise substantial visible improvements, not tiny tweaks. Max 6 captures (qa/pilot05/wave9/water/itNN), screen_report + your m05 metrics each time, LOOK at the side-by-side, revert what is not closer. Budgets ≤130 draw calls / ≤650k tris; keep shaders efficient for Android. End: npx tsc --noEmit, regression capture 03 04 06 07 08 vs qa/pilot05/wave9/baseline (unchanged below the HUD), ride check through 05. NOTES in qa/pilot05/wave9/water/NOTES.md (plan first, log after every capture). Other specialists edit other files in parallel; if a capture fails because their file is mid-edit, wait a minute and retry.
+
+Final report to me (≤25 lines): files changed, kept iteration, measured before/after numbers (mad, hue_corr, edge_corr, river-mid and Benny+near bands, near p95, glint counts, pink share), regression result, what is left. Never invent fidelity percentages.
+
+### 🤖 Claude — 2026-11-16T02:20:17.456Z
+
+I'll start by reading the coordination docs in the order given.
+
+### 🤖 Claude — 2026-11-16T02:20:17.887Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md"}`
+
+### 🧑 User — 2026-11-16T02:20:17.901Z
+
+> ↩︎ result: 1	# Screen 05: wave 9 (recovery session `01Kbt6BV`, branch `claude/rainbow-3d-account-recovery-xex5hc`)
+> 2	
+> 3	Started 2026-11-16 ~02:30 UTC on a NEW Claude account. Wave 8 (session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`) stopped
+> 4	mid-iteration when that account ran out of credits: water had reached it05/it06, foam it05, environment it02 (log only
+> 5	up to it01), path-camera it02 (log EMPTY). All their edits are in the code as it is now. Wave 9 = each specialist
+> 6	CONTINUES its own wave-8 work from where it stopped. Do not redo finished work. All owners/rules of
+> 7	`COORDINATION_WAVE6.md` / `COORDINATION_WAVE8.md` still apply (strict file ownership, Edit tool only, NOTES first,
+> 8	no commits — the coordinator's 5-minute autosave pushes everything, no paid generation / World Labs calls, no
+> 9	invented percentages).
+> 10	
+> 11	## Verified at start (coordinator)
+> 12	* `scripts/resume-newest-work.sh` → RESUME CHECK OK: every `ccr-*`/`claude/*` branch contained, LFS 24/24 real files,
+> 13	  refs 12/12, 10 agents, `tsc` OK, continuity ok (gaps 0, 07→08 drop 61.19).
+> 14	* `node scripts/gameplay-test.mjs` on the recovered code → **pass** (8/8 checks, plunge 61.41, errors []).
+> 15	* Baseline for wave 9 …[+5735 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:18.361Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/water/NOTES.md"}`
+
+### 🧑 User — 2026-11-16T02:20:18.375Z
+
+> ↩︎ result: 1	# water-fx-specialist, wave 8b (Screen 05) — thick glossy cyan-and-pink S-river
+> 2	
+> 3	Owns only `src/vfx/waterRibbon.ts`, `src/vfx/glsl.ts`, `docs/vfx/*` (Edit tool only). Camera, course, Benny, gameplay,
+> 4	05→06 and 07→08 protected. Far river beyond the forced-tunnel seam = path-camera's `farRiverMaterial` (seam look agreed
+> 5	via `wave8` lines in `qa/pilot05/REQUESTS.md`). Baseline/PREV = `qa/pilot05/wave8/baseline/05.png`. All changes gated to
+> 6	the 05 river block (sw = 1 only on 05) so 03/04/06/07/08 do not change.
+> 7	
+> 8	## Plan (5 lines, biggest visual change first)
+> 9	1. Pink AND cyan get one anisotropic "speed-streak" texture along the flow (dense fine bright dashes 4–8 px apart in the
+> 10	   mid field, long fanning streaks in the near field, octaves faded by pixel size) instead of flat pink + marble silk lines.
+> 11	2. Pink bands: soft BRUSHED edges (pink/cyan streaks interleave over ≈20 % of the width, light rim instead of violet),
+> 12	   strong cross-band gradient (deep magenta-violet outer edge → hot pink → pink-white streaks on the core side).
+> 13	3. Near field: the straight flat pink wedges become curved, soft, streaky satin sweeps fanning from Benny's sides; near
+> 14	   cyan  …[+6435 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:19.365Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/pilot05/wave8/water/ /home/user/rainbow-/qa/pilot05/wave9/ /home/user/rainbow-/qa/pilot05/wave9/* 2>&1 | head -80", "description": "List wave8 water and wave9 folders"}`
+
+### 🧑 User — 2026-11-16T02:20:19.396Z
+
+> ↩︎ result: /home/user/rainbow-/qa/pilot05/wave8/water/:
+> total 44
+> drwxr-xr-x 9 root root 4096 Nov 16 02:12 .
+> drwxr-xr-x 7 root root 4096 Nov 16 02:12 ..
+> -rw-r--r-- 1 root root 7531 Nov 16 02:12 NOTES.md
+> drwxr-xr-x 2 root root 4096 Nov 16 02:12 it00
+> drwxr-xr-x 2 root root 4096 Nov 16 02:12 it01
+> drwxr-xr-x 2 root root 4096 Nov 16 02:12 it02
+> drwxr-xr-x 2 root root 4096 Nov 16 02:12 it03
+> drwxr-xr-x 2 root root 4096 Nov 16 02:12 it04
+> drwxr-xr-x 2 root root 4096 Nov 16 02:12 it05
+> drwxr-xr-x 2 root root 4096 Nov 16 02:12 it06
+> 
+> /home/user/rainbow-/qa/pilot05/wave9/:
+> total 16
+> drwxr-xr-x  4 root root 4096 Nov 16 02:18 .
+> drwxr-xr-x 15 root root 4096 Nov 16 02:19 ..
+> drwxr-xr-x  2 root root 4096 Nov 16 02:19 baseline
+> drwxr-xr-x  2 root root 4096 Nov 16 02:15 recovered
+> 
+> /home/user/rainbow-/qa/pilot05/wave9/baseline:
+> total 7996
+> drwxr-xr-x 2 root root    4096 Nov 16 02:19 .
+> drwxr-xr-x 4 root root    4096 Nov 16 02:18 ..
+> -rw-r--r-- 1 root root  689327 Nov 16 02:18 03.png
+> -rw-r--r-- 1 root root 1006397 Nov 16 02:18 04.png
+> -rw-r--r-- 1 root root 1750841 Nov 16 02:18 05.png
+> -rw-r--r-- 1 root root 1504496 Nov 16 02:18 06.png
+> -rw-r--r-- 1 root root 1786768 Nov 16 02:18 07.png
+> -rw-r--r-- 1 root root 1428957 Nov 16 0 …[+650 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:21.996Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/pilot05/wave8/water/it05 /home/user/rainbow-/qa/pilot05/wave8/water/it06; cat /home/user/rainbow-/qa/pilot05/wave8/water/it05/metrics.md /home/user/rainbow-/qa/pilot05/wave8/water/it06/metrics.md 2>&1; cat /home/user/rainbow-/qa/pilot05/wave9/recovered/metrics.md", "description": "Inspect it05/it06 capture folders and metrics"}`
+
+### 🧑 User — 2026-11-16T02:20:22.027Z
+
+> ↩︎ result: /home/user/rainbow-/qa/pilot05/wave8/water/it05:
+> total 15412
+> drwxr-xr-x 2 root root    4096 Nov 16 02:12 .
+> drwxr-xr-x 9 root root    4096 Nov 16 02:12 ..
+> -rw-r--r-- 1 root root 1716919 Nov 16 02:12 05.png
+> -rw-r--r-- 1 root root 1833363 Nov 16 02:12 05_highlight_NOW.png
+> -rw-r--r-- 1 root root 1934638 Nov 16 02:12 05_highlight_PREV.png
+> -rw-r--r-- 1 root root 2242461 Nov 16 02:12 05_overlay_NOW.png
+> -rw-r--r-- 1 root root 2289406 Nov 16 02:12 05_overlay_PREV.png
+> -rw-r--r-- 1 root root 5735413 Nov 16 02:12 05_side_by_side.png
+> -rw-r--r-- 1 root root     451 Nov 16 02:12 metrics.json
+> -rw-r--r-- 1 root root     436 Nov 16 02:12 metrics.md
+> 
+> /home/user/rainbow-/qa/pilot05/wave8/water/it06:
+> total 15480
+> drwxr-xr-x 2 root root    4096 Nov 16 02:12 .
+> drwxr-xr-x 9 root root    4096 Nov 16 02:12 ..
+> -rw-r--r-- 1 root root 1739913 Nov 16 02:12 05.png
+> -rw-r--r-- 1 root root 1851411 Nov 16 02:12 05_highlight_NOW.png
+> -rw-r--r-- 1 root root 1934638 Nov 16 02:12 05_highlight_PREV.png
+> -rw-r--r-- 1 root root 2247543 Nov 16 02:12 05_overlay_NOW.png
+> -rw-r--r-- 1 root root 2289406 Nov 16 02:12 05_overlay_PREV.png
+> -rw-r--r-- 1 root root 5761282 Nov 16 02:12 05_side_by_side.png
+> -rw-r--r-- 1 root root     452 No …[+1373 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:22.939Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"wave8\\|wave9\" qa/pilot05/REQUESTS.md | tail -40; git log --oneline | head -5; git status --short | head -30", "description": "Read wave8/9 request lines and git state"}`
+
+### 🧑 User — 2026-11-16T02:20:22.994Z
+
+> ↩︎ result: 11:- wave8 path-camera-transition-engineer → washer-environment-modeler (02:20 UTC): FAR RINGS. Measured ref ring radii about the VP (499,479), rays at 90/120/150°: ≈270 / 170 / 104 / 62 / 45 / 31 px, then the warm throat (r<25). Live calibration r ≈ 10000/D → virtual depths ≈ 40 (your real ring #1, keep) / 59 / 97 / 161 / 222 / 322. My far block will put far rings at D ≈ 59, 97, 161, 222, 322 (ringDv). Please DROP the real 05 ring at sF05 (rings05's last entry, depth 53.25 → r≈189, it is the 'ring #2 too big'); my far ring at D≈59 replaces it (r≈170). My block checks `rings05` itself for an entry within ±0.5 of sF05: while it is there my D≈59 ring stays OFF (never a double ring); once you remove it from `rings05` my ring switches on by itself — tell me here when it is gone. The far river (farRiverMaterial + far05.ts) is mine; the real-ring list and lids stay yours.
+> 12:- wave8 washer-environment-modeler → path-camera-transition-engineer (02:58 UTC): DONE — the real 05 ring at sF05 is gone from `rings05` (environment.ts: `ringSlots05` keeps the slot for the lid pair camera-side of it and the slot-row phase; `rings05 = ringSlots05` minus the entry within ±0.5 of sF05), so your D≈59 r …[+2505 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:23.966Z
+
+Now let me look at the approved reference and the recovered baseline.
+
+### 🤖 Claude — 2026-11-16T02:20:24.316Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-16T02:20:24.339Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:20:24.696Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/baseline/05.png"}`
+
+### 🧑 User — 2026-11-16T02:20:24.745Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:20:34.676Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/water/it06/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T02:20:36.604Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T02:20:36.598Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T02:20:41.006Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; find / -name \"m05*.py\" -not -path \"*/proc/*\" 2>/dev/null | head; find / -name \"cyanstat*\" -not -path \"/proc/*\" 2>/dev/null | head; ls scripts | head -50; ls /tmp/claude-0/-home-user-rainbow-/ 2>/dev/null", "description": "Search for previous m05 metric script and list scripts"}`
+
+### 🧑 User — 2026-11-16T02:20:44.078Z
+
+> ↩︎ result: __pycache__
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> resume-newest-work.sh
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> water-lab.mjs
+> 01bc3c9a-a2f6-468a-be48-29b6d67c4ab6
+> 78821565-d674-5be9-a7dd-5afd2dc12d7a
+> 98179720-f017-4a7e-b613-3167b8cf426a
+
+### 🤖 Claude — 2026-11-16T02:20:46.487Z
+
+> 🔧 **Bash** `{"command": "ls -la /tmp/claude-0/-home-user-rainbow-/*/ /tmp/claude-0/-home-user-rainbow-/*/scratchpad 2>/dev/null | head -40; grep -rl \"glint\" /home/user/rainbow-/qa --include=*.py 2>/dev/null | head", "description": "Check other scratchpads for prior scripts"}`
+
+### 🧑 User — 2026-11-16T02:20:46.528Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/01bc3c9a-a2f6-468a-be48-29b6d67c4ab6/:
+> total 12
+> drwx------ 3 root root 4096 Nov 16 02:15 .
+> drwx------ 5 root root 4096 Nov 16 02:15 ..
+> drwx------ 2 root root 4096 Nov 16 02:15 scratchpad
+> 
+> /tmp/claude-0/-home-user-rainbow-/01bc3c9a-a2f6-468a-be48-29b6d67c4ab6/scratchpad:
+> total 8
+> drwx------ 2 root root 4096 Nov 16 02:15 .
+> drwx------ 3 root root 4096 Nov 16 02:15 ..
+> 
+> /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/:
+> total 16
+> drwx------ 4 root root 4096 Nov 16 02:12 .
+> drwx------ 5 root root 4096 Nov 16 02:15 ..
+> drwx------ 4 root root 4096 Nov 16 02:20 scratchpad
+> drwxr-xr-x 2 root root 4096 Nov 16 02:20 tasks
+> 
+> /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad:
+> total 1484
+> drwx------ 4 root root    4096 Nov 16 02:20 .
+> drwx------ 4 root root    4096 Nov 16 02:12 ..
+> drwxr-xr-x 2 root root    4096 Nov 16 02:15 logs
+> -rw-r--r-- 1 root root 1503229 Nov 16 02:20 vp_cmp_base.png
+> drwxr-xr-x 2 root root    4096 Nov 16 02:20 w9
+> 
+> /tmp/claude-0/-home-user-rainbow-/98179720-f017-4a7e-b613-3167b8cf426a/:
+> total 12
+> drwx------ 3 root root 4096 Nov 16 02:15 .
+> drwx------ 5 root root 4096 Nov 16 02:15 ..
+> drwx------ 2 root …[+457 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:49.098Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; wc -l src/vfx/waterRibbon.ts src/vfx/glsl.ts scripts/screen_report.py scripts/compare.py; ls docs/vfx; git diff --stat HEAD~30 -- src/vfx/waterRibbon.ts src/vfx/glsl.ts | tail -3", "description": "Check file sizes of water shaders and scripts"}`
+
+### 🧑 User — 2026-11-16T02:20:49.177Z
+
+> ↩︎ result: 908 src/vfx/waterRibbon.ts
+>   168 src/vfx/glsl.ts
+>    93 scripts/screen_report.py
+>   175 scripts/compare.py
+>  1344 total
+> water.md
+> water_01.png
+> water_01_low.png
+> water_02.png
+> water_03.png
+> water_03_low.png
+> water_04.png
+> water_04_chevrons_topdown.png
+> water_05.png
+> water_05_low.png
+> water_06.png
+> water_07.png
+> water_07mid.png
+> water_08.png
+> water_09.png
+> water_09_low.png
+> water_10.png
+> water_11.png
+> water_stats.json
+> water_stats_low.json
+>  src/vfx/glsl.ts        |   8 +-
+>  src/vfx/waterRibbon.ts | 231 ++++++++++++++++++++++++++-----------------------
+>  2 files changed, 130 insertions(+), 109 deletions(-)
+
+### 🤖 Claude — 2026-11-16T02:20:50.448Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-16T02:20:50.582Z
+
+> ↩︎ result: 1	/**
+> 2	 * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+> 3	 *
+> 4	 * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> 5	 * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+> 6	 * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and
+> 7	 * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+> 8	 * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 9	 * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+> 10	 * drain-away for the 11 outro.
+> 11	 */
+> 12	import * as THREE from 'three';
+> 13	import type { Course, StageId } from '../world/course';
+> 14	import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15	
+> 16	/** wave amplitude per stage (units); blended across boundaries */
+> 17	const AMP: Partial<Record<StageId, number>> = {
+> 18	  '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10': 0.08, '11': 0.05,
+> 19	};
+> 20	export const EDGE_LIFT = 0.28;
+> 21	
+> 22	/**
+> 23 …[+44934 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:50.798Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts"}`
+
+### 🧑 User — 2026-11-16T02:20:50.819Z
+
+> ↩︎ result: 1	/** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> 2	import * as THREE from 'three';
+> 3	
+> 4	export const NOISE_GLSL = /* glsl */ `
+> 5	float hash12(vec2 p) {
+> 6	  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+> 7	  p3 += dot(p3, p3.yzx + 33.33);
+> 8	  return fract((p3.x + p3.y) * p3.z);
+> 9	}
+> 10	float vnoise(vec2 p) {
+> 11	  vec2 i = floor(p);
+> 12	  vec2 f = fract(p);
+> 13	  vec2 u = f * f * (3.0 - 2.0 * f);
+> 14	  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15	             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 16	}
+> 17	float fbm3(vec2 p) {
+> 18	  float a = 0.5, s = 0.0;
+> 19	  for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+> 20	  return s;
+> 21	}
+> 22	// cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> 23	float cells(vec2 p) {
+> 24	  vec2 i = floor(p);
+> 25	  vec2 f = fract(p);
+> 26	  float md = 8.0;
+> 27	  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+> 28	    vec2 g = vec2(float(x), float(y));
+> 29	    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 30	    vec2 r = g + o - f;
+> 31	    md = min(md, dot(r, r));
+> 32	  }
+> 33	  return sqrt(md);
+> 34	}
+> 35	vec3 ir …[+7466 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:52.410Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 754, "limit": 160}`
+
+### 🧑 User — 2026-11-16T02:20:52.429Z
+
+> ↩︎ result: 754	
+> 755	  // 04: exactly five glowing chevrons pointing downhill (direction of travel)
+> 756	  if (uChevron.z > 0.5) {
+> 757	    float x = u * vHalfW;
+> 758	    for (int k = 0; k < 5; k++) {
+> 759	      float y = s - (uChevron.x + float(k) * uChevron.y);
+> 760	      if (abs(y) < 2.4 && abs(x) < 1.6) {
+> 761	        // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+> 762	        float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+> 763	        float arm = smoothstep(1.2, 1.1, abs(x));
+> 764	        float core = smoothstep(0.2, 0.11, dist) * arm;
+> 765	        float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+> 766	        col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+> 767	        col = mix(col, vec3(2.2, 2.4, 2.5), core);
+> 768	      }
+> 769	    }
+> 770	  }
+> 771	  gl_FragColor = vec4(col, 1.0);
+> 772	  ${FRAG_TAIL}
+> 773	}
+> 774	`;
+> 775	
+> 776	export interface Ribbon {
+> 777	  mesh: THREE.Mesh;
+> 778	  uniforms: Record<string, THREE.IUniform>;
+> 779	  s0: number;
+> 780	  s1: number;
+> 781	  heightAt(s: number, lateral: number, t: number): number;
+> 782	}
+> 783	
+> 784	export function createRibbon(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' } …[+5508 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:02.083Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/screen_report.py; sed -n 1,60p scripts/compare.py", "description": "Read screen report script and compare helper"}`
+
+### 🧑 User — 2026-11-16T02:21:02.145Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """One-screen reference report: approved reference vs one or more labelled live captures.
+> 
+>     python3 -I scripts/screen_report.py 05 OUT_DIR PREV=qa/.../05.png NOW=qa/.../05.png
+> 
+> Writes into OUT_DIR (nothing else is touched; qa/report_metrics.json stays as it is):
+>   NN_side_by_side.png       REFERENCE | each capture (same height, labelled)
+>   NN_overlay_<LABEL>.png    50 % blend of the reference and that capture
+>   NN_highlight_<LABEL>.png  the capture with a transparent red tint where it differs most from the
+>                             reference (|ΔRGB| smoothed; tint alpha ∝ difference above a threshold)
+>   metrics.json / metrics.md raw numbers per capture: whole-frame mad / hue_corr / edge_corr (same
+>                             method as scripts/compare.py) and mad per horizontal band of the frame
+> These are crude, reproducible indicators, NOT a fidelity percentage.
+> """
+> from __future__ import annotations
+> 
+> import json
+> import sys
+> from pathlib import Path
+> 
+> import numpy as np
+> from PIL import Image, ImageFilter
+> 
+> sys.path.insert(0, str(Path(__file__).resolve().parent))
+> import compare as C  # noqa: E402  (reuses REFS, mask_for, hue_hist, corr, edges, label)
+> 
+> # hori …[+6208 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:05.333Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nfor p in ['references/05_flow_into_the_current.png','qa/pilot05/wave9/baseline/05.png','qa/pilot05/wave8/water/it06/05.png','qa/pilot05/wave8/water/it05/05.png']:\n  print(p, Image.open(p).size, Image.open(p).mode)\n\"; mkdir -p /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water", "description": "Check image sizes and create scratch dir"}`
+
+### 🧑 User — 2026-11-16T02:21:05.433Z
+
+> ↩︎ result: references/05_flow_into_the_current.png (864, 1536) RGB
+> qa/pilot05/wave9/baseline/05.png (864, 1536) RGB
+> qa/pilot05/wave8/water/it06/05.png (864, 1536) RGB
+> qa/pilot05/wave8/water/it05/05.png (864, 1536) RGB
+
+### 🤖 Claude — 2026-11-16T02:21:20.291Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py", "content": "#!/usr/bin/env python3\n\"\"\"Water-fx m05 metrics (re-created in wave 9 from the wave-8 NOTES definitions).\nusage: python3 -I m05.py IMG [IMG ...]\n\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import uniform_filter, maximum_filter\n\n\ndef load(p):\n    return np.asarray(Image.open(p).convert(\"RGB\").resize((864, 1536), Image.LANCZOS)).astype(np.float32)\n\n\ndef hsv(a):\n    return np.asarray(Image.fromarray(a.astype(np.uint8)).con …[+2810 chars]`
+
+### 🧑 User — 2026-11-16T02:21:20.318Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:21:22.191Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py references/05_flow_into_the_current.png qa/pilot05/wave8/baseline/05.png qa/pilot05/wave8/water/it05/05.png qa/pilot05/wave8/water/it06/05.png qa/pilot05/wave9/baseline/05.png", "description": "Run m05 metrics on ref, wave8 baseline, it05, it06, wave9 baseline"}`
+
+### 🧑 User — 2026-11-16T02:21:22.337Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py", line 8, in <module>
+>     from scipy.ndimage import uniform_filter, maximum_filter
+> ModuleNotFoundError: No module named 'scipy'
+
+### 🤖 Claude — 2026-11-16T02:21:27.133Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py", "old_string": "from PIL import Image\nfrom scipy.ndimage import uniform_filter, maximum_filter\n", "new_string": "from PIL import Image, ImageFilter\n\n\ndef uniform_filter(L, k):\n    r = k // 2\n    p = np.pad(L, r + 1, mode=\"edge\").astype(np.float64)\n    c = p.cumsum(0).cumsum(1)\n    H, W = L.shape\n    s = (c[k:k + H, k:k + W] - c[0:H, k:k + W] - c[k:k + H, 0:W] + c[0:H, 0:W])\n    return (s / (k * k)).astype(np.float32)\n\n\ndef maximum_filter(L, k):\n  …[+143 chars]`
+
+### 🧑 User — 2026-11-16T02:21:27.150Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:21:28.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py references/05_flow_into_the_current.png qa/pilot05/wave8/baseline/05.png qa/pilot05/wave8/water/it05/05.png qa/pilot05/wave8/water/it06/05.png qa/pilot05/wave9/baseline/05.png", "description": "Run m05 metrics on ref and captures"}`
+
+### 🧑 User — 2026-11-16T02:21:31.055Z
+
+> ↩︎ result: near lum p5/p50/p95/std                       | 104.9 / 130.7 / 245.7 / 40.4 | 119.9 / 136.0 / 214.7 / 29.7 | 112.6 / 127.4 / 193.9 / 26.8 | 113.8 / 133.9 / 205.5 / 29.2 | 113.8 / 133.3 / 204.9 / 29.1
+> mid water lum p5/p50/p95/std                  | 100.9 / 134.0 / 190.1 / 27.1 | 97.6 / 140.1 / 192.2 / 29.0 | 111.5 / 145.7 / 192.7 / 25.3 | 111.2 / 146.7 / 193.0 / 25.7 | 109.2 / 146.3 / 193.0 / 26.3
+> glint peaks near y1200-1536 / mid y700-1200   | 27 / 44 | 0 / 19 | 8 / 29 | 0 / 27 | 0 / 21
+> pink share near y1000-1536 / mid y620-1000    | 14.9 % / 28.2 % | 15.5 % / 27.1 % | 15.6 % / 28.1 % | 15.6 % / 28.2 % | 15.6 % / 28.2 %
+> pink behind Benny x245-600 y1200-1360         | 1.38 % | 5.83 % | 4.09 % | 4.04 % | 4.04 %
+> pink median mid                               | #F23FE8 | #F654EC | #F549EA | #F64AEB | #F549EB
+> pink lum p10-p90 (mid)                        | 106-178 | 119-187 | 107-181 | 105-183 | 103-182
+> cyan median mid                               | #06AAF9 | #18A6FF | #2BB6FF | #2CB6FF | #2CB6FF
+> cyan median near y1300                        | #01A3F7 | #14B0FF | #0B9FF8 | #13A3FC | #12A3FC
+> cyan median near y1400                        | #019AF1 | #08A4FF | #0496EF | #0C9BF2 | #0B9BF2
+>  …[+328 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:37.827Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)\nnb=a[1260:1470,170:690]\nfs={'601':nb@[0.299,0.587,0.114],'709':nb@[0.2126,0.7152,0.0722],'mean':nb.mean(2),'hsl':(nb.max(2)+nb.min(2))/2,'max':nb.max(2)}\nfor k,v in fs.items(): print(k, np.percentile(v,[5,50,95]).round(1), v.std().round(1))\n\"\n", "description": "Find luminance formula matching old m05 numbers"}`
+
+### 🧑 User — 2026-11-16T02:21:38.057Z
+
+> ↩︎ result: 601 [104.9 130.7 245.7] 40.4
+> 709 [105.9 138.1 247.1] 40.0
+> mean [120.  145.3 246. ] 36.6
+> hsl [113.  127.5 243. ] 38.8
+> max [220. 247. 255.] 14.6
+
+### 🤖 Claude — 2026-11-16T02:21:44.078Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport numpy as np, sys\nsys.path.insert(0,'/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water')\nfrom m05 import uniform_filter, maximum_filter, load\nfor p in ['references/05_flow_into_the_current.png','qa/pilot05/wave8/baseline/05.png','qa/pilot05/wave8/water/it05/05.png']:\n  a=load(p); L=a.mean(2); m15=uniform_filter(L,15)\n  res=[]\n  for k in (3,5):\n    mx=maximum_filter(L,k)\n    for crit in ('min180','min200','L200','L220'):\n      if crit=='min180': w=a.min(2)>=180\n      elif crit=='min200': …[+296 chars]`
+
+### 🧑 User — 2026-11-16T02:21:46.128Z
+
+> ↩︎ result: references 3min180:2137/3860 3min200:2001/3410 3L200:2340/4930 3L220:2177/4240 5min180:1311/2393 5min200:1233/2134 5L200:1440/3082 5L220:1332/2634
+> baseline 3min180:2650/2362 3min200:2241/2073 3L200:3414/4205 3L220:2896/2863 5min180:2166/1714 5min200:1834/1543 5L200:2783/2864 5L220:2404/2042
+> it05 3min180:3806/2899 3min200:3161/2463 3L200:4045/4036 3L220:3031/3109 5min180:2839/2002 5min200:2362/1702 5L200:2946/2785 5L220:2182/2149
+
+### 🤖 Claude — 2026-11-16T02:21:52.844Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport numpy as np, sys\nsys.path.insert(0,'/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water')\nfrom m05 import uniform_filter, maximum_filter, load\nfor p in ['references/05_flow_into_the_current.png','qa/pilot05/wave8/baseline/05.png','qa/pilot05/wave8/water/it05/05.png']:\n  a=load(p); L=a.mean(2); m15=uniform_filter(L,15)\n  res=[]\n  for k in (9,15):\n    mx=maximum_filter(L,k)\n    for crit in ('min180','L200','L220','none'):\n      if crit=='min180': w=a.min(2)>=180\n      elif crit=='L200': w= …[+339 chars]`
+
+### 🧑 User — 2026-11-16T02:21:59.143Z
+
+> ↩︎ result: references 9min180:766/1423 9L200:823/1787 9L220:770/1542 9none:948/2112 15min180:493/868 15L200:517/1015 15L220:499/921 15none:575/1132
+> baseline 9min180:1662/1119 9L200:2151/1765 9L220:1932/1286 9none:2195/2476 15min180:1249/820 15L200:1587/1167 15L220:1503/894 15none:1607/1522
+> it05 9min180:1883/1258 9L200:1906/1735 9L220:1432/1336 9none:1915/2872 15min180:1324/927 15L200:1329/1169 15L220:1096/949 15none:1333/1914
+
+### 🤖 Claude — 2026-11-16T02:22:12.230Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py", "old_string": "def lum(a):\n    return 0.299 * a[..., 0] + 0.587 * a[..., 1] + 0.114 * a[..., 2]", "new_string": "def lum(a):\n    # wave-8 m05 used the plain RGB mean (reproduces its ref near p5/p50/p95/std 120.3/145.3/246.3/36.6)\n    return a.mean(axis=2)\n\n\ndef blobs(mask, amin=2, amax=600):\n    \"\"\"count 8-connected components of mask with amin <= area <= amax (sparse BFS, no scipy)\"\"\"\n    H, W = mask.shape\n    seen = np.zeros_like(mask, dtype=boo …[+649 chars]`
+
+### 🧑 User — 2026-11-16T02:22:12.287Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:22:16.882Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py", "old_string": "    # glints: near-white local maxima >= 25 above their 15x15 mean\n    mean15 = uniform_filter(L, 15)\n    mx = maximum_filter(L, 5)\n    sat = hsv(a)[..., 1]\n    pk = (L == mx) & (L >= mean15 + 25) & (L > 200) & (sat < 110)\n    out[\"glint peaks near y1200-1536 / mid y700-1200\"] = \"%d / %d\" % (pk[1200:].sum(), pk[700:1200].sum())", "new_string": "    # glints (wave-9 definition): blobs (2..600 px) of near-white pixels (min channel >= 190) t …[+499 chars]`
+
+### 🧑 User — 2026-11-16T02:22:16.901Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:22:18.637Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; time python3 -I /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/m05.py references/05_flow_into_the_current.png qa/pilot05/wave8/baseline/05.png qa/pilot05/wave8/water/it05/05.png qa/pilot05/wave8/water/it06/05.png qa/pilot05/wave9/baseline/05.png", "description": "Run recalibrated m05 metrics"}`
+
+### 🧑 User — 2026-11-16T02:22:20.174Z
+
+> ↩︎ result: near lum p5/p50/p95/std                       | 120.0 / 145.3 / 246.0 / 36.6 | 135.7 / 150.3 / 223.7 / 27.6 | 126.7 / 142.0 / 203.3 / 26.1 | 128.0 / 148.3 / 213.3 / 28.1 | 128.0 / 148.0 / 213.0 / 28.0
+> mid water lum p5/p50/p95/std                  | 125.3 / 158.3 / 208.7 / 26.6 | 118.3 / 163.7 / 215.3 / 29.4 | 140.7 / 169.0 / 210.3 / 24.3 | 141.0 / 170.0 / 211.3 / 24.8 | 140.0 / 169.7 / 211.0 / 25.0
+> glint blobs near y1200-1536 / mid y700-1200   | 271 / 290 | 113 / 216 | 184 / 262 | 196 / 349 | 203 / 367
+> glint px near / mid                           | 9631 / 7190 | 4559 / 3502 | 5648 / 4291 | 5549 / 3811 | 5734 / 4045
+> pink share near y1000-1536 / mid y620-1000    | 14.9 % / 28.2 % | 15.5 % / 27.1 % | 15.6 % / 28.1 % | 15.6 % / 28.2 % | 15.6 % / 28.2 %
+> pink behind Benny x245-600 y1200-1360         | 1.38 % | 5.83 % | 4.09 % | 4.04 % | 4.04 %
+> pink median mid                               | #F23FE8 | #F654EC | #F549EA | #F64AEB | #F549EB
+> pink lum p10-p90 (mid)                        | 145-207 | 159-216 | 141-212 | 140-213 | 138-213
+> cyan median mid                               | #06AAF9 | #18A6FF | #2BB6FF | #2CB6FF | #2CB6FF
+> cyan median near y1300                        | #01A3F7 | #14 …[+501 chars]
+
+### 🤖 Claude — 2026-11-16T02:22:27.301Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water; cat > $S/crop.py <<'EOF'\nimport sys\nfrom PIL import Image\n# usage: crop.py OUT x0 y0 x1 y1 IMG... (side by side, full res)\nout = sys.argv[1]; x0, y0, x1, y1 = map(int, sys.argv[2:6]); ims = sys.argv[6:]\ncs = [Image.open(p).convert('RGB').resize((864, 1536)).crop((x0, y0, x1, y1)) for p in ims]\nW = sum(c.width for c in cs) + 8 * (len(cs) - 1)\no = Image.new('RGB', (W, cs[0].height), (0, 0, 0))\nx = 0\nfor c in cs:\n    o.paste(c, (x, 0)); x += c.width + 8\no.save …[+210 chars]`
+
+### 🧑 User — 2026-11-16T02:22:27.676Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:22:28.989Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/mid_ref_base.png"}`
+
+### 🧑 User — 2026-11-16T02:22:29.030Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:22:40.735Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water; python3 -I $S/crop.py $S/near_ref_base.png 0 1000 864 1536 references/05_flow_into_the_current.png qa/pilot05/wave9/baseline/05.png", "description": "Create near-field crop comparison"}`
+
+### 🧑 User — 2026-11-16T02:22:41.136Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:22:42.953Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/near_ref_base.png"}`
+
+### 🧑 User — 2026-11-16T02:22:42.989Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:23:00.079Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water; cat > $S/runs.py <<'EOF'\nimport sys, numpy as np\nsys.path.insert(0, sys.argv[1])\nfrom m05 import load, masks\nims = sys.argv[2:]\nrows = list(range(560, 1001, 30)) + [1060, 1120, 1180, 1240, 1280, 1320, 1360, 1400, 1440]\nM = []\nfor p in ims:\n    a = load(p); _, pk = masks(a)\n    # smooth the mask a bit across x (5 px) and rows ±3\n    M.append(pk)\nfor y in rows:\n    line = f\"y{y:4d}: \"\n    for pk in M:\n        r = pk[y-3:y+4].mean(0) > 0.5\n        runs = …[+441 chars]`
+
+### 🧑 User — 2026-11-16T02:23:00.564Z
+
+> ↩︎ result: y 560: 29-47 140-161 162-172 194-203 204-222 263-271 364-399 504-527 581-587 606-620 623-642 643-653 711-749 753-777 838-864| 0-22 32-54 64-70 76-83 90-135 205-215 218-228 230-240 241-271 311-350 456-465 470-508 568-597 650-695 737-747 748-757 771-780 783-793 796-808 810-816| 
+> y 590: 38-79 89-100 104-149 152-207 212-223 270-300 308-332 539-585 691-710 711-734 741-763 770-791 800-822 831-849| 0-64 72-94 101-110 126-144 217-229 231-242 243-284 332-356 361-382 527-534 537-548 553-562 662-670 721-766 768-779 782-794| 
+> y 620: 49-63 130-137 141-168 173-181 243-325 641-702 742-755 761-767 846-857| 0-6 17-47 50-133 139-157 293-330 550-583 591-606 720-761 764-776| 
+> y 650: 63-122 128-138 278-384 707-767 820-826| 0-59 68-93 100-106 108-152 156-174 318-364 625-684 688-723 841-864| 
+> y 680: 0-12 82-90 93-99 117-150 159-168 323-404 742-756 759-778 784-809| 4-93 309-404 728-740 749-776      | 
+> y 710: 2-26 34-41 96-108 289-377 754-807 | 0-38 228-245 247-258 260-272 275-337 339-400 734-811| 
+> y 740: 9-29 38-64 224-252 265-308 724-765 781-827| 0-9 158-177 190-197 207-250 255-315 682-802| 
+> y 770: 0-6 8-19 131-253 661-789 853-861  | 98-235 252-261 662-693 694-714 722-753 756-767 830-860| 
+> y 800: 56-191  …[+1393 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:07.116Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water; python3 -I -c \"\nfrom PIL import Image\nfor n,p in [('ref','references/05_flow_into_the_current.png'),('base','qa/pilot05/wave9/baseline/05.png')]:\n  im=Image.open(p).convert('RGB').crop((0,620,432,880)).resize((864,520),Image.LANCZOS); im.save('$S/zoom_mid_'+n+'.png')\n\"", "description": "Make 2x zoom crops of left mid river"}`
+
+### 🧑 User — 2026-11-16T02:23:07.579Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:23:09.090Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/zoom_mid_ref.png"}`
+
+### 🧑 User — 2026-11-16T02:23:09.117Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:23:09.700Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/water/zoom_mid_base.png"}`
+
+### 🧑 User — 2026-11-16T02:23:09.731Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:23:38.409Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,60p scripts/capture.mjs; grep -n \"water\" scripts/water-lab.mjs | head -20", "description": "Inspect capture script header and water-lab"}`
+
+### 🧑 User — 2026-11-16T02:23:38.490Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3605 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:41.272Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"startVite\" -A25 scripts/lib/pw.mjs | head -45", "description": "Check startVite port handling"}`
+
+### 🧑 User — 2026-11-16T02:23:41.319Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-16T02:23:45.346Z
+
+Now I'll add the "recovered" it06 entry to the wave-8 log before changing anything.
+
+### 🤖 Claude — 2026-11-16T02:23:50.849Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave8/water/NOTES.md", "old_string": "cyanstat: cyan lum p50 169/155/144 (ref 157/148/141), pink 181/181 (ref 173/176). Seen: hot-pink satin S-ribbons\nwith light lines along the bends, deep glossy near body; still short of the ref's big near flares and mid glitter.\n", "new_string": "cyanstat: cyan lum p50 169/155/144 (ref 157/148/141), pink 181/181 (ref 173/176). Seen: hot-pink satin S-ribbons\nwith light lines along the bends, deep glossy near body; still short of the ref's big near flares and mid glitter.\n\n### it06 — REC …[+798 chars]`
+
+### 🧑 User — 2026-11-16T02:23:50.898Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave8/water/NOTES.md has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:23:53.294Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; tail -c 1500 qa/pilot05/wave8/water/NOTES.md; git log --oneline -3; git status --short | head", "description": "Verify NOTES tail and git state"}`
+
+### 🧑 User — 2026-11-16T02:23:53.368Z
+
+> ↩︎ result: bon.ts`, now in the code): mid flares flA twice as many rows along
+> the flow (v5·0.15) with longer arms (stretch 3.8); near lens flares bigger/brighter (density 0.85, 120 px, 7 px thick)
+> + a 2nd smaller set (0.6 / 60 px / 4.5 px); near wake sweeps keep full streaks (dk × (1 + 0.9·pW)).
+> Measured (`it06/metrics.md`): mad 50.7 / hue 0.879 / edge 0.192, river mid 47.7, Benny+near 46.8 (it05: 50.7 / 0.880 /
+> 0.189 / 48.0 / 46.6). m05 (re-created script, same near-box definition): near lum p5/p50/p95 128/148.3/213.3 (it05
+> 126.7/142/203.3, ref 120/145.3/246). Kept: it is the state the wave-9 baseline was captured from (plus other owners' edits).
+> 
+> ### it06 (FINAL, kept) — 0 console errors, 86 calls, 567,415 tris
+> Changes: near sweeps keep full streak lines (dk × (1 + 0.9·pW)); mid flares flA twice as many rows along the flow, 22 px
+> arms; near lens flares 120 px / T7 ×1.8 + 2nd set 60 px; near star flares ×(1.2 + 1.0·lane).
+> Measured: report mad 50.7 / hue 0.879 / edge 0.192 (best edge), mid 47.7 (it05 48.0, baseline 47.2), near 46.8.
+> m05: near p5/p50/p95 128/148.3/213.3 (ref 120/145/246), glints near 191 / mid 367 (peak metric DROPPED vs it05 504:
+> the longer glowing flA arms raise the 15×15 lo …[+555 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:57.157Z
+
+The coordinator just merged the original it06 log entry, so my recovered entry is redundant. I'll shrink it to a one-line pointer.
+
+### 🤖 Claude — 2026-11-16T02:24:01.264Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave8/water/NOTES.md", "old_string": "### it06 — RECOVERED in wave 9 (capture existed, log entry lost when the wave-8 account ran out of credits)\nChanges (from the `(it06 …)` comments in `waterRibbon.ts`, now in the code): mid flares flA twice as many rows along\nthe flow (v5·0.15) with longer arms (stretch 3.8); near lens flares bigger/brighter (density 0.85, 120 px, 7 px thick)\n+ a 2nd smaller set (0.6 / 60 px / 4.5 px); near wake sweeps keep full streaks (dk × (1 + 0.9·pW)).\nMeasured (`it06/metrics.md`): mad 50.7 / hue 0 …[+542 chars]`
+
+### 🧑 User — 2026-11-16T02:24:01.299Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave8/water/NOTES.md has been updated successfully.
+

@@ -1,0 +1,39 @@
+from pathlib import Path
+p=Path('games/06/src/world/match06.ts')
+code=p.read_text()
+def replace(old,new):
+    global code
+    if code.count(old)!=1: raise ValueError(old)
+    code=code.replace(old,new)
+replace('uniform sampler2D uDepth;','''uniform sampler2D uDepth;
+#ifdef CREST_WALL_JOIN
+uniform sampler2D uCrestWallConfidence;
+#endif''')
+replace('        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);','''        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+#ifdef CREST_WALL_JOIN
+        // The fitted river hides some *painted wall* at the locked camera. Recover that known wall
+        // color only on a genuinely deeper surface along the measured 3D river silhouette.
+        float cropY = (uv.y * 1536.0 - (1536.0 - 704.0)) / 256.0;
+        if (cropY > 0.0 && cropY < 1.0) {
+          float confidence = texture2D(uCrestWallConfidence, vec2(uv.x, cropY)).r;
+          float behindCrest = smoothstep(0.05 * zs + 0.1, 0.12 * zs + 0.1, zf - zs);
+          float released = smoothstep(0.01, 0.16, distance(cameraPosition, uProjPos));
+          vis = mix(vis, 1.0, confidence * behindCrest * released);
+        }
+#endif''')
+replace("  let tRiver: THREE.Texture | null = null, tFoam: THREE.Texture | null = null;",'''  const crestWallConfidence = GEO && qs?.get('cx06CrestJoin') === '1'
+    ? await loader.loadAsync(tex('crest06_wall_confidence.png')) : null;
+  if (crestWallConfidence) {
+    crestWallConfidence.colorSpace = THREE.NoColorSpace;
+    crestWallConfidence.minFilter = THREE.LinearMipmapLinearFilter;
+  }
+  const addCrestWallJoin = (material: THREE.ShaderMaterial) => {
+    if (crestWallConfidence) {
+      material.defines.CREST_WALL_JOIN = 1;
+      material.uniforms.uCrestWallConfidence = { value: crestWallConfidence };
+    }
+  };
+  let tRiver: THREE.Texture | null = null, tFoam: THREE.Texture | null = null;''')
+replace("    add(g, tubeMat, 'tube');","    addCrestWallJoin(tubeMat);\n    add(g, tubeMat, 'tube');")
+replace("      add(rg, rm, 'rings');","      addCrestWallJoin(rm);\n      add(rg, rm, 'rings');")
+p.write_text(code)

@@ -1,0 +1,91 @@
+
+> rainbow-washer-game@0.1.0 build
+> tsc --noEmit && vite build --outDir /tmp/rainbow-reconstruction.etSm9SmK/built-fitted/05
+
+vite v5.4.21 building for production...
+transforming...
+✓ 67 modules transformed.
+rendering chunks...
+computing gzip size...
+../../built-fitted/05/assets/proj05_flow-BAiCnmU4.json                         0.29 kB │ gzip:   0.21 kB
+../../built-fitted/05/assets/frame05-DNA2xr_f.json                             0.49 kB │ gzip:   0.25 kB
+../../built-fitted/05/assets/frame05-Bbin5Ho_.json                             0.49 kB │ gzip:   0.25 kB
+../../built-fitted/05/assets/tunnel05-Bs3stdxT.json                            0.54 kB │ gzip:   0.26 kB
+../../built-fitted/05/assets/wake05-DcssPocz.json                              0.70 kB │ gzip:   0.43 kB
+../../built-fitted/05/index.html                                               0.74 kB │ gzip:   0.45 kB
+../../built-fitted/05/assets/env05-EtsQcKMR.json                               0.74 kB │ gzip:   0.32 kB
+../../built-fitted/05/assets/proj05_near-qlKZYA1s.json                         1.27 kB │ gzip:   0.63 kB
+../../built-fitted/05/assets/channel05-CXrSWKUO.json                           1.97 kB │ gzip:   0.58 kB
+../../built-fitted/05/assets/near_mask-Rg_vwmJZ.png                            3.41 kB
+../../built-fitted/05/assets/proj05_WT2-DA9wcZic.png                           3.82 kB
+../../built-fitted/05/assets/baloo-2-vietnamese-800-normal-ConLnEgt.woff2      4.80 kB
+../../built-fitted/05/assets/plus05-DwpMvL2a.png                               4.93 kB
+../../built-fitted/05/assets/baloo-2-vietnamese-700-normal-h4tlcePq.woff2      5.41 kB
+../../built-fitted/05/assets/proj05_WT-DK9x33q_.png                            6.38 kB
+../../built-fitted/05/assets/baloo-2-vietnamese-800-normal-GQACmpuv.woff       6.74 kB
+../../built-fitted/05/assets/baloo-2-vietnamese-700-normal-DoF59Mjc.woff       7.28 kB
+../../built-fitted/05/assets/bub05-Cgq1dhnQ.json                              11.26 kB │ gzip:   2.86 kB
+../../built-fitted/05/assets/heart05-DVqDffHj.png                             13.74 kB
+../../built-fitted/05/assets/baloo-2-latin-ext-800-normal-C_Iwmf1s.woff2      15.07 kB
+../../built-fitted/05/assets/baloo-2-latin-ext-700-normal-Mlh7kdab.woff2      16.04 kB
+../../built-fitted/05/assets/proj05_WN-BH265x7t.png                           16.50 kB
+../../built-fitted/05/assets/armR-ChUX-PkZ.png                                17.82 kB
+../../built-fitted/05/assets/baloo-2-latin-800-normal-BbF3Etk1.woff2          18.63 kB
+../../built-fitted/05/assets/armL-D4I42_QG.png                                18.81 kB
+../../built-fitted/05/assets/coin05-2ZWNRpCs.png                              19.28 kB
+../../built-fitted/05/assets/baloo-2-latin-700-normal-CqTg7A15.woff2          19.44 kB
+../../built-fitted/05/assets/baloo-2-latin-ext-800-normal-D-iCxxqE.woff       19.67 kB
+../../built-fitted/05/assets/frame05-gHusFCXa.png                             19.72 kB
+../../built-fitted/05/assets/baloo-2-latin-ext-700-normal-D6LeXASg.woff       20.42 kB
+../../built-fitted/05/assets/pause05-CsMOX3zC.png                             21.45 kB
+../../built-fitted/05/assets/baloo-2-latin-800-normal-B8BXfZF7.woff           22.60 kB
+../../built-fitted/05/assets/baloo-2-latin-700-normal-Ld3Zm3l2.woff           23.41 kB
+../../built-fitted/05/assets/frame05-D54xjUbo.png                             26.90 kB
+../../built-fitted/05/assets/proj05_lut-Daarf_dC.json                         27.02 kB │ gzip:   8.29 kB
+../../built-fitted/05/assets/proj05_lut-DnS-R26W.json                         27.41 kB │ gzip:   8.51 kB
+../../built-fitted/05/assets/proj05_lut-BXv9_ZY5.json                         27.50 kB │ gzip:   8.36 kB
+../../built-fitted/05/assets/star-guWTOEth.png                                49.54 kB
+../../built-fitted/05/assets/marble05_env_1024-BW6Rb9aP.jpg                   51.15 kB
+../../built-fitted/05/assets/baloo-2-devanagari-800-normal-BURIY0wZ.woff2     57.00 kB
+../../built-fitted/05/assets/proj05_D-CmsqWTVk.png                            58.92 kB
+../../built-fitted/05/assets/baloo-2-devanagari-700-normal-D37Te3iF.woff2     65.86 kB
+../../built-fitted/05/assets/coin05_face-CrmWzyQ5.png                         74.12 kB
+../../built-fitted/05/assets/proj05_A-5VDw7Q1T.png                            85.54 kB
+../../built-fitted/05/assets/baloo-2-devanagari-800-normal-YLp1oUqR.woff      89.07 kB
+../../built-fitted/05/assets/baloo-2-devanagari-700-normal-CEIF4sJg.woff      97.58 kB
+../../built-fitted/05/assets/proj05_A_pad-Ft-LkEll.png                       101.68 kB
+../../built-fitted/05/assets/pom-D_k0aBeu.png                                145.91 kB
+../../built-fitted/05/assets/bub05-CNJGBZg6.png                              146.40 kB
+../../built-fitted/05/assets/ring05-BB9eTfd2.png                             172.30 kB
+../../built-fitted/05/assets/proj05_T-DVqjEGH-.png                           179.10 kB
+../../built-fitted/05/assets/brim_n-BklwSDg5.png                             185.22 kB
+../../built-fitted/05/assets/brim-BWBkT9_1.png                               198.17 kB
+../../built-fitted/05/assets/wake05-BNjLNMBa.png                             222.95 kB
+../../built-fitted/05/assets/proj05_F-Ch3_k_Fg.png                           229.66 kB
+../../built-fitted/05/assets/crown_n-BaeMFzxb.png                            294.54 kB
+../../built-fitted/05/assets/body-DCzvOxe3.png                               317.15 kB
+../../built-fitted/05/assets/proj05_F-F_hHB7_E.png                           342.19 kB
+../../built-fitted/05/assets/proj05_F-DxDq4HLq.png                           344.55 kB
+../../built-fitted/05/assets/crown-BgzQ0Myx.png                              375.67 kB
+../../built-fitted/05/assets/wall05SlotDetail-DzzTqnNm.png                   495.01 kB
+../../built-fitted/05/assets/proj05_N-DjQNqiJL.png                           622.47 kB
+../../built-fitted/05/assets/proj05_T2-DmbUVN6c.png                          740.53 kB
+../../built-fitted/05/assets/lids05-A3RjQaaU.glb                             992.17 kB
+../../built-fitted/05/assets/lids05e-CcXUawGH.glb                          1,011.88 kB
+../../built-fitted/05/assets/benny-BNj-9CQ9.glb                            1,126.89 kB
+../../built-fitted/05/assets/ring05e-Eo2Jq8QH.png                          1,176.70 kB
+../../built-fitted/05/assets/wall05-DF_Pc3CE.png                           1,633.06 kB
+../../built-fitted/05/assets/proj05_E-DFJ3OZzy.png                         2,031.18 kB
+../../built-fitted/05/assets/proj05_E-BmUIq7VA.png                         2,032.07 kB
+../../built-fitted/05/assets/proj05_E-D-xqGgAB.png                         2,035.01 kB
+../../built-fitted/05/assets/proj05_E-Cqz5vxtW.png                         2,035.97 kB
+../../built-fitted/05/assets/proj05_E-CKXG2tdm.png                         2,036.26 kB
+../../built-fitted/05/assets/proj05_E-Bc5Zu5XQ.png                         2,049.27 kB
+../../built-fitted/05/assets/wall05e-EHDEUvr_.png                          3,281.64 kB
+../../built-fitted/05/assets/rainbow_girl-BGmVI95Z.glb                     3,546.48 kB
+../../built-fitted/05/assets/main-CXqpzoXj.css                                 3.02 kB │ gzip:   0.65 kB
+../../built-fitted/05/assets/runtime-KexrdEXc.js                               1.69 kB │ gzip:   1.01 kB
+../../built-fitted/05/assets/runtime-A3ffXP2-.js                              17.85 kB │ gzip:   7.30 kB
+../../built-fitted/05/assets/vfx-DQxeN06B.js                                  56.48 kB │ gzip:  19.08 kB
+../../built-fitted/05/assets/main-C7dfPNj_.js                                987.06 kB │ gzip: 290.32 kB
+✓ built in 15.80s

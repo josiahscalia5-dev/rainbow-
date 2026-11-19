@@ -1,0 +1,17 @@
+import pathlib,bpy,json
+summary=[]
+for file in sorted(pathlib.Path('asset-check').rglob('*.blend')):
+ bpy.ops.wm.open_mainfile(filepath=str(file.resolve()),load_ui=False,use_scripts=False)
+ meshes=[o for o in bpy.data.objects if o.type=='MESH']
+ cams=[o.name for o in bpy.data.objects if o.type=='CAMERA']
+ summary.append({'asset':str(file),'stored_version':tuple(bpy.data.version),'meshes':len(meshes),'cameras':cams,'names':[o.name for o in meshes[:7]]})
+ print('OPEN',file,'meshes',len(meshes),'cameras',len(cams),flush=True)
+p=pathlib.Path('asset-check/qa/pilot05/full_reference_match/env/lid/lids05.blend')
+bpy.ops.wm.open_mainfile(filepath=str(p.resolve()),load_ui=False,use_scripts=False)
+s=bpy.context.scene
+s.render.engine='CYCLES';s.cycles.device='CPU';s.cycles.use_denoising=False;s.cycles.samples=2
+s.render.resolution_x=108;s.render.resolution_y=192;s.render.resolution_percentage=100
+s.render.filepath=str(pathlib.Path('paddle-camera-check.png').resolve())
+bpy.ops.render.render(write_still=True)
+print('RENDER',bpy.app.version_string,s.camera.name,s.render.resolution_x,s.render.resolution_y,flush=True)
+pathlib.Path('blender-evidence.json').write_text(json.dumps(summary,indent=2))

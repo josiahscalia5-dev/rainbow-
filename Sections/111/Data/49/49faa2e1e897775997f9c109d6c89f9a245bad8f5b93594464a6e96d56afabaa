@@ -1,0 +1,31 @@
+diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
+index fe11b335..fab3fd77 100644
+--- a/src/vfx/foam.ts
++++ b/src/vfx/foam.ts
+@@ -556,7 +556,10 @@ const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT
+ /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+ function hide07(course: Course): [number, number] | null {
+   if (!flag05('match07') || !flag05('m07foam')) return null;
+-  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
++  // r17 '&m07foamb=1': the walls stay away to the end of 07 (they no longer start again partway down the drop with a cut);
++  // fully back at the 08 start, so 08 keeps its berm
++  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;
++  return [course.marks['07_plunge_top'] + 9, end];
+ }
+ 
+ /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index c5693986..36b63a35 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -227,7 +227,9 @@ export const proj05Pending: Promise<unknown>[] = [];
+ /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the sheet's lifted white edges step aside (null = off) */
+ function HIDE07R(course: Course): [number, number] | null {
+   if (!flag05('match07') || !flag05('m07foam')) return null;
+-  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
++  // r17 '&m07foamb=1': see hide07 in foam.ts (to the end of 07)
++  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;
++  return [course.marks['07_plunge_top'] + 9, end];
+ }
+ 
+ export function channel05(course: Course, s: number): { c: number; hw: number } {

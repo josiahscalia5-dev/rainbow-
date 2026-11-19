@@ -1,0 +1,21 @@
+{
+  "branch": "codex/s04-approved-gold-bay",
+  "commit": "c0c06b2ad4fdfb6f6a8942068d7d820f0887268a",
+  "sourceCommit": "3ea6c52e0a4cbd49b918f8b61336250814123151",
+  "verifiedUTC": "2026-11-19T00:58:02.522352+00:00",
+  "verifiedFiles": 58,
+  "lfsDownloads": [
+    {
+      "path": "experiments/codex/s04-approved-gold-bay/CLAUDIA_BEFORE/ride.mp4",
+      "bytes": 3790969,
+      "downloadedSha256": "ed6100a4e18561ccee50a59ea9e6c88878289a5fe6a7eed78026f830a799eab1"
+    },
+    {
+      "path": "experiments/codex/s04-approved-gold-bay/CODEX_NEW/ride.mp4",
+      "bytes": 3784695,
+      "downloadedSha256": "87307cc62729180d498bfcc266e33d7f3eacf62f75b05cc031379a68a6b93d68"
+    }
+  ],
+  "originalsVerified": 13,
+  "evidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/c0c06b2ad4fdfb6f6a8942068d7d820f0887268a/experiments/codex/s04-approved-gold-bay"
+}

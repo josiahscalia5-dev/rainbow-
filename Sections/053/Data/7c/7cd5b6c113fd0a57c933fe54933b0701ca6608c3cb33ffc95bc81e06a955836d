@@ -1,0 +1,9 @@
+import {
+  ShaderPass
+} from "./chunk-FRJWEK5B.js";
+import "./chunk-UPWUDPT6.js";
+import "./chunk-XQEWRMFI.js";
+export {
+  ShaderPass
+};
+//# sourceMappingURL=three_examples_jsm_postprocessing_ShaderPass__js.js.map

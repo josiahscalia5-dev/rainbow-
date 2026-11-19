@@ -1,0 +1,89 @@
+import hashlib,html,json,shutil,sys,zipfile
+from pathlib import Path
+from PIL import Image
+root=Path.cwd(); paths=Path('/workspace/library-files');deliver=paths/'Rainbow-Motion-Toolchain'
+deliver.mkdir(parents=True,exist_ok=True)
+primary=['04','05','06','07','08']
+allstages=primary+['04r']
+names={'04':'Through the Five Arrows','05':'Flow into the Current','06':'Crest the Rinse Arch','07':'Dive the Washer Tube','08':'Final Spin Chamber','04r':'Screen 04 gold-ring specialist'}
+heads=json.loads((root/'heads.json').read_text());proof={};sources={}
+def copy(a,b):
+ b.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(a,b)
+def zipdir(label,src):
+ name=deliver/(label+'.zip')
+ with zipfile.ZipFile(name,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=2) as z:
+  for f in sorted(src.rglob('*')):
+   if f.is_file(): z.write(f,str(f.relative_to(src.parent)))
+ return name
+def href(p,title):
+ return '<a href="'+html.escape(str(p))+'">'+html.escape(title)+'</a>'
+def layout(title,body):
+ return '''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'''+html.escape(title)+'''</title><style>
+ :root{color-scheme:dark;font-family:system-ui,sans-serif}body{background:#181522;color:#faf8ff;max-width:48rem;margin:auto;padding:1rem 1.25rem 3rem;line-height:1.55}a{color:#89e4ff;text-underline-offset:.18em}li{margin:.45rem 0}video{display:block;max-height:72vh;max-width:100%;margin:1rem 0;background:#21172b}h1,h2{line-height:1.18}h2{margin-top:2.1rem}p{margin:.7rem 0}small{color:#ded6eb}
+ </style><main><h1>'''+html.escape(title)+'</h1>'+body+'</main></html>'
+for sid in allstages:
+ data=root/'captures'/sid; dest=deliver/'screens'/sid
+ report=json.loads((data/'stills.json').read_text())
+ ref=next((root/'games'/sid/'references').glob(sid[:2]+'_*.png'))
+ with Image.open(ref) as im: suffix='.jpg' if im.format=='JPEG' else '.png'
+ origin='APPROVED'+suffix;copy(ref,dest/origin);base=data/'approved.png';copy(base,dest/'CLAUDIA_BEFORE.png')
+ for s in report['shots']:
+  if s['name']!='approved':copy(data/(s['name']+'.png'),dest/(s['name']+'.png'))
+ copy(root/'fresh'/sid/'fresh-opening.png',dest/'independent-opening.png')
+ for f in ['stills.json','clip.json','clip-check.json','ride.mp4']:
+  if (data/f).exists():copy(data/f,dest/f)
+ copy(root/'metrics'/f'{sid}.json',dest/'opening-measurements.json')
+ for a in (root/'archives'/sid).glob('*.png'):copy(a,dest/'Claudia-archived'/a.name)
+ if sid=='08':
+  for f in ['hard-left-after-feedback.png','hard-right-after-feedback.png','post-feedback.json']:copy(root/'clear08'/f,dest/f)
+ if sid=='07':
+  for f in ['halfway-down.png','two-thirds-down.png','just-before-plunge-bottom.png','descent.json']:
+   copy(root/'fresh/07'/f,dest/f)
+  copy(data/'gameplay.json',dest/'gameplay.json')
+ files=list(s['name']+'.png' for s in report['shots'] if s['name']!='approved')
+ if sid=='07':files+=['halfway-down.png','two-thirds-down.png','just-before-plunge-bottom.png']
+ if sid in primary:
+  meta=json.loads((data/'clip-check.json').read_text());n=meta['media'];proof[sid]={'stills':1+len(files),'clipFrames':int(n['nb_frames']),'seconds':float(n['duration']),'lastStage':meta['last']['stage']}
+ else:proof[sid]={'stills':1+len(files)}
+ metric=json.loads((dest/'opening-measurements.json').read_text())
+ q=metric['approvedVsBefore'];proof[sid]['within20Percent']=q['within20Percent'];proof[sid]['pixelmatchMismatches']=q['pixelmatchMismatches'];proof[sid]['independentRepeatChangedPixels']=metric['beforeVsRepeat']['exactDifferences']
+ body='<p>'+href('../../index.html','All five screens')+'</p><p>Captured from '+html.escape(heads[sid]['branch'])+' at '+heads[sid]['commit'][:12]+'.</p><ul><li>'+href(origin,'Original approved artwork')+'</li><li>'+href('CLAUDIA_BEFORE.png','Claudia’s retained opening')+'</li></ul>'
+ if sid in primary:body+='<video controls playsinline preload="metadata" src="ride.mp4"></video><p>'+href('ride.mp4','Open the full uninterrupted swimming clip')+'</p>'
+ if sid=='08':body+='<p>Steering bumps trigger the game HUD. Open the same positions after the feedback clears. '+href('hard-left-after-feedback.png','Hard left')+' · '+href('hard-right-after-feedback.png','Hard right')+'</p>'
+ body+='<h2>Claudia’s original saved captures</h2><ul>'+''.join('<li>'+href('Claudia-archived/'+a.name,a.stem.replace('_',' '))+'</li>' for a in sorted((dest/'Claudia-archived').glob('*.png')))+'</ul>'
+ body+='<h2>Native gameplay views</h2><ul>'+''.join('<li>'+href(f,f[:-4].replace('-',' ').capitalize())+'</li>' for f in files)+'</ul><p>'+href('opening-measurements.json','Whole-frame measurements')+'</p>'
+ (dest/'index.html').write_text(layout(names[sid],body))
+ zipdir('Screen-'+sid+'-evidence',dest)
+compare=deliver/'screen-07-paddle'
+copy(deliver/'screens/07/APPROVED.jpg',compare/'APPROVED.jpg')
+copy(deliver/'screens/07/CLAUDIA_BEFORE.png',compare/'CLAUDIA_BEFORE_opening.png')
+copy(root/'fresh/07/candidate-opening.png',compare/'CODEX_TEST_opening.png')
+for st in ['early','angled-left','forward','hard-left','hard-right','plunge']:
+ for a,b in [('before','CLAUDIA_BEFORE'),('candidate','CODEX_TEST')]:
+  copy(root/'paddle-test'/f'{st}-{a}.png',compare/f'{b}_{st}.png')
+for k in ['gameplay.json','trial.json','measurements.json','CLAUDIA_BEFORE-steering.mp4','CODEX_TEST-steering.mp4','steering-clip.json']:copy(root/'paddle-test'/k,compare/k)
+zipdir('Screen-07-paddle-experiment',compare)
+skill=deliver/'proposal';shutil.copytree(root/'proposed',skill,dirs_exist_ok=True)
+zipdir('rainbow-visual-motion-matcher-proposal',skill)
+evidence=deliver/'evidence';evidence.mkdir(exist_ok=True)
+copy(root/'archives/provenance.json',evidence/'Claudia-archive-provenance.json')
+copy(root/'toolchain-guide.md',deliver/'TOOLCHAIN.md')
+for f in ['heads.json','asset-sources.json','reference-checks.json','queries.json','toolchain/package.json','toolchain/package-lock.json','reviewed/spector-source/mcp/package-lock.json','metrics/helper-recheck.json','diagnostic-output/skill-discovery.json','diagnostic-output/blender-live.json','diagnostic-output/spector-live.json','diagnostic-output/microsoft-live.json','diagnostic-output/chrome-live.json','diagnostic-output/playwright-07.png','diagnostic-output/three-explicit-live.json','diagnostic-output/three-live.json']:
+ p=root/f
+ if p.exists():copy(p,evidence/('spector-mcp-package-lock.json' if f=='reviewed/spector-source/mcp/package-lock.json' else p.name))
+for f in ['motion.cjs','fresh-opening.cjs','paddle-test.cjs','paddle-clips.cjs','post-feedback.cjs','frames-review.py']:
+ copy(root/f,evidence/'run'/f)
+for f in ['heads.json','queries.json']:copy(root/f,evidence/'run'/f)
+copy(root/'docs/07/scripts/gameplay-test.mjs',evidence/'run/docs/07/scripts/gameplay-test.mjs')
+(evidence/'capture-summary.json').write_text(json.dumps(proof,indent=2))
+stage_links=''.join('<li>'+href('screens/'+s+'/index.html',s+'  '+names[s])+'</li>' for s in allstages)
+motion='<p>Play each ride from its inlet through the next boundary. Open a native view to zoom in. The artwork represents the approved starting angle.</p><ul>'+stage_links+'</ul>'
+items=[('APPROVED.jpg','Original approved Screen 07'),('CLAUDIA_BEFORE_opening.png','Claudia opening'),('CODEX_TEST_opening.png','Codex test opening'),('CLAUDIA_BEFORE_forward.png','Claudia forward'),('CODEX_TEST_forward.png','Codex test forward'),('CLAUDIA_BEFORE_hard-left.png','Claudia hard left'),('CODEX_TEST_hard-left.png','Codex test hard left'),('CLAUDIA_BEFORE_hard-right.png','Claudia hard right'),('CODEX_TEST_hard-right.png','Codex test hard right')]
+motion+='<h2>Screen 07 paddle trial</h2><p>Only the third paddle’s painted material was varied in a disposable browser tab. The original and both gameplay versions open as separate full-size images.</p><ul>'+''.join('<li>'+href('screen-07-paddle/'+p,title)+'</li>' for p,title in items)+'</ul>'
+for filename,label in [('APPROVED.jpg','APPROVED'),('CLAUDIA_BEFORE_opening.png','CLAUDIA BEFORE'),('CODEX_TEST_opening.png','CODEX TEST')]:
+ path='screen-07-paddle/'+filename
+ motion+='<details><summary>'+label+'</summary><p><a href="'+path+'"><img loading="lazy" width="864" height="1536" style="display:block;width:100%;height:auto" alt="'+label+' at the approved Screen 07 viewpoint" src="'+path+'"></a></p></details>'
+motion+='<p>'+href('screen-07-paddle/CLAUDIA_BEFORE-steering.mp4','Play Claudia’s steering clip')+' · '+href('screen-07-paddle/CODEX_TEST-steering.mp4','Play the paddle trial at the same poses')+'</p>'
+motion+='<p>'+href('REPORT.md','Findings and next experiment')+' · '+href('proposal/.agents/skills/rainbow-visual-motion-matcher/SKILL.md','Skill draft')+'</p>'
+(deliver/'index.html').write_text(layout('Rainbow motion review',motion))
+print(json.dumps(proof,indent=2))

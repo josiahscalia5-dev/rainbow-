@@ -1,0 +1,13 @@
+{
+  "targetSDK": 34,
+  "package": "com.rainbow.washergame",
+  "assembleDebug": true,
+  "verifiedSignature": "APK Signature Scheme v2",
+  "embeddedWebFilesVerified": 77,
+  "crestMaskPresent": [
+    "mask06_crest_release-CQabyfEO.png"
+  ],
+  "sha256": "29e0ca930a9ecbf4e5998720baea6fc1bb66f7a7e123547a24e8e4a58e6743f9",
+  "connectedPhysicalDevices": 0,
+  "screen06Source": "41d4d840b9325bf810397ed6bfe28002603723c8"
+}

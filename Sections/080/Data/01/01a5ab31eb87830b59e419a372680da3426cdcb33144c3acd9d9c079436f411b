@@ -1,0 +1,32 @@
+[
+  {
+    "stage": "04",
+    "size": [
+      432,
+      768
+    ],
+    "changedPixels": 82718,
+    "maxChannelDifference": 170,
+    "pixelIdentical": false
+  },
+  {
+    "stage": "06",
+    "size": [
+      432,
+      768
+    ],
+    "changedPixels": 2,
+    "maxChannelDifference": 1,
+    "pixelIdentical": false
+  },
+  {
+    "stage": "07",
+    "size": [
+      432,
+      768
+    ],
+    "changedPixels": 2,
+    "maxChannelDifference": 1,
+    "pixelIdentical": false
+  }
+]

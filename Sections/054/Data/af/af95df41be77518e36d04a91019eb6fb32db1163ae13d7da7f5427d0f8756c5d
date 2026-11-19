@@ -1,0 +1,145 @@
+{
+  "checkedUTC": "2026-11-19T00:41:50.646460+00:00",
+  "Blender": {
+    "version": "5.3.0",
+    "officialBlenderLabMCP": "1.0.3",
+    "sourceCommit": "2cea8d566dde07fbac28a61d698909d69724e853",
+    "singleConnection": true,
+    "scene": {
+      "version": "5.3.0",
+      "meshes": {
+        "left_bank": 864,
+        "left_foam": 2940,
+        "right_bank": 804,
+        "right_foam": 2520
+      },
+      "curves": [
+        "left_spine",
+        "right_spine"
+      ],
+      "camera": "reference_camera",
+      "packed_images": [
+        "near_bank.png",
+        "near_foam.png"
+      ]
+    }
+  },
+  "Image2Blender": {
+    "version": "0.1.0",
+    "source": "03fca53c1f44619550b25593834ac8c57fee5746",
+    "installationScope": "temporary Codex CLI profile",
+    "actualReopenedEditableScene": true,
+    "validatedSpecification": {
+      "ok": true,
+      "mode": "strict-quality",
+      "errors": [],
+      "warnings": [],
+      "stats": {
+        "components": 6,
+        "materials": 2,
+        "details": 12,
+        "passes": 4,
+        "reviews": 5
+      }
+    },
+    "decodedImageSize": [
+      864,
+      1536
+    ]
+  },
+  "ThreeJS": {
+    "version": "0.170.0",
+    "liveWebGL": {
+      "stage": "07",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "lost": false,
+      "paddle": "m07_paddle2",
+      "geometry": "BoxGeometry",
+      "material": "ShaderMaterial",
+      "depthTest": true,
+      "near": 0.05,
+      "far": 1200,
+      "triangles": 287709
+    }
+  },
+  "MicrosoftPlaywrightMCP": {
+    "version": "0.0.86",
+    "actualSteering": {
+      "stage": "07",
+      "s": 283.056,
+      "lateral": -2.25,
+      "actualDrawingBuffer": [
+        432,
+        768
+      ]
+    }
+  },
+  "PlaywrightAutomation": {
+    "playwright": "1.57.0",
+    "chromium": "156.0.8078.79",
+    "ffmpeg": "7.1.5",
+    "simulatedHz": 60,
+    "clipFPS": 12,
+    "stills": [
+      864,
+      1536
+    ],
+    "clips": [
+      648,
+      1152
+    ]
+  },
+  "ChromeDevToolsMCP": {
+    "version": "1.13.0",
+    "readActualRenderer": true
+  },
+  "ThreeJSDevToolsMCP": {
+    "version": "0.5.0",
+    "liveNamedPaddles": 5,
+    "renderCalls": 153,
+    "temporaryExplicitInspectionHook": true
+  },
+  "Spector": {
+    "MCPVersion": "1.0.0",
+    "libraryVersion": "0.9.33",
+    "drawCalls": 153,
+    "shaderPrograms": 33,
+    "webGLErrors": 0
+  },
+  "Pixelmatch": {
+    "version": "7.1.0",
+    "threshold": 0.1,
+    "includedAntialiasOnly": false
+  },
+  "skill": {
+    "SHA": "3b57658f78fd5d7dce498d2743f1a09a173a570a",
+    "path": ".agents/skills/rainbow-visual-motion-matcher/SKILL.md"
+  },
+  "depthImagesDecoded": 20,
+  "cameraOrLandmarkFiles": 10,
+  "representativeBlenderAndGLBOpened": 4,
+  "existingCourseContinuity": "passed",
+  "GitLFS": "git-lfs/3.6.1 (GitHub; linux amd64; go 1.24.4)",
+  "AndroidBuild": {
+    "targetSDK": 34,
+    "package": "com.rainbow.washergame",
+    "assembleDebug": true,
+    "verifiedSignature": "APK Signature Scheme v2",
+    "embeddedWebFilesVerified": 77,
+    "crestMaskPresent": [
+      "mask06_crest_release-CQabyfEO.png"
+    ],
+    "sha256": "29e0ca930a9ecbf4e5998720baea6fc1bb66f7a7e123547a24e8e4a58e6743f9",
+    "connectedPhysicalDevices": 0,
+    "screen06Source": "41d4d840b9325bf810397ed6bfe28002603723c8"
+  },
+  "androidTools": {
+    "platform": 34,
+    "buildTools": "34.0.0",
+    "platformTools": "37.0.1",
+    "gradle": "8.2.1",
+    "openJDK": "21.0.13"
+  },
+  "physicalAndroidEvidence": "No connected physical device. Device frame time, touch, thermals and sustained performance still require a hardware run."
+}

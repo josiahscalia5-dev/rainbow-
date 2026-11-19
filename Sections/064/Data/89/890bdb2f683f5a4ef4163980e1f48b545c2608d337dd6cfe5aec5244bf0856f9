@@ -1,0 +1,48 @@
+{
+  "BEFORE": {
+    "passedAssertions": {
+      "pauseFreezes": true,
+      "continuousTravel": true,
+      "noCameraCut": true,
+      "noTeleport": true,
+      "plunge": true,
+      "realCoinPickups": true,
+      "victory": true,
+      "heartsLostOnWallBump": true
+    },
+    "startingScore": 1330,
+    "collectedCoins": 91,
+    "finishingScore": 2240,
+    "standardFullGameHearts": 4,
+    "stageRideMinimumHearts": 5,
+    "additionalFullGame": {
+      "hearts": 5,
+      "coins": 91,
+      "score": 2240,
+      "collisions": []
+    }
+  },
+  "NEW": {
+    "passedAssertions": {
+      "pauseFreezes": true,
+      "continuousTravel": true,
+      "noCameraCut": true,
+      "noTeleport": true,
+      "plunge": true,
+      "realCoinPickups": true,
+      "victory": true,
+      "heartsLostOnWallBump": true
+    },
+    "startingScore": 1330,
+    "collectedCoins": 91,
+    "finishingScore": 2240,
+    "standardFullGameHearts": 4,
+    "stageRideMinimumHearts": 5,
+    "additionalFullGame": {
+      "hearts": 5,
+      "coins": 91,
+      "score": 2240,
+      "collisions": []
+    }
+  }
+}

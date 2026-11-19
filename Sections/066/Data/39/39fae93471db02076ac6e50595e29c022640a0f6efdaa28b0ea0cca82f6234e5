@@ -1,0 +1,8 @@
+/**
+ * Comprehensive tests for every exported function in capture-analyzer.ts.
+ *
+ * These are pure functions that take raw Spector.js capture data and return
+ * typed analysis results.  No browser, no side effects, no excuses for
+ * missing edge cases.
+ */
+export {};

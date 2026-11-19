@@ -1,0 +1,35 @@
+# Screen 05 wave 7: foam-bubbles-particles (executes the wave-6b plan)
+
+Started 2026-11-16 (account 8, branch ccr-4f6c3e0e-5kxgr0). Baseline `qa/pilot05/wave7/baseline/05.png` (86 calls,
+633,521 tris). Files: src/vfx/foam.ts, bubbles.ts, riderSplash.ts, spray.ts, index.ts only (Edit tool).
+Tools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py` (measurements), ref foam ramp in `../../wave6/foam/NOTES.md`.
+
+## Plan (5 lines)
+1. Soap ramp (05-gated, set uniform/constant, NOT the unwired wave-6a patch): lavender-white tops -> periwinkle -> blue
+   -> blue-violet crevices on the berm, berm puffs and flank impostor bubbles; white only on top caps.
+2. Right heap (x 680-864, y 770-950): fewer/lower/smaller bubbles (find which system draws it first: isolation capture).
+3. VP rims: low small-bubble band hugging both river edges, purple wall visible above it.
+4. Near clumps: left y 980-1100 / 1200-1330, small lower-right clump x 610-790 y 1217-1300.
+5. Keep spray fan + iridescent bubbles (a few more small ones near the banks); <= 6 captures; tsc; regress 03 04 06 07 08.
+
+## Log
+* iso (`iso_norafts`, waterhide=foamRafts): the right heap x 680-864 y 770-950 and all near clumps are the flank
+  impostor bubbles (rafts); the VP rims are the berm + berm puffs. Baseline rowprof: right heap 124-179 px/row at
+  y 780-900 (ref rim 19-66 px/row, inner edge 30 -> 158 -> 70 px from the frame edge over y 700-940).
+* it01 (05 frame: 86 calls, 634,673 tris): foam.ts SOAP05_GLSL (soap05 ramp + soapT view-space top light) used by
+  BERM_FRAG (uSt05 ramp, set in createBerm), PUFF_VERT/FRAG (instanceColor.x = ao + 2q, q = 05 weight x 8, set in
+  build()/addPuff), BANK_BUB_FRAG (rafts, 05-only). updateRafts: RIM_R ref-measured inner-edge profile for the right
+  rim (80 px wide band, heap/outer kinds skipped, lift x0.5, r x0.85), BANK_ENV seeds searched to the ref's clump
+  rows, BANK_PX L 180 -> 150. Seen: right heap gone, narrow diagonal right rim; foam reads lavender-grey (too flat,
+  R > G), lower-right clump too big (x 640-864, y 1110-1300: right env 0.48 at ds -0.26), lower-left clump squeezed
+  to the frame edge by the rider clearance (k = 0.22). Measured (foamcol): Rfar 24.4k px WHITE 35 % SHADE 27 %,
+  heapR 21.6 % / max run 132 (baseline 35.1 % / 160; ref 14.0 % / 65). screen_report mad 59.0 -> 56.9 (includes
+  other specialists' concurrent env/water edits).
+* it02 (86 calls, 632,561 tris): soap05 stops shifted azure (G >= R mid-tones, ref near clumps 70 % (222,230,253)),
+  stronger silhouette crevice term (0.3 + 0.45 low); right near clumps get their own envelope BANK_ENV[2] (searched:
+  0 for ds -0.4..2.6, 1 for -1.45..-0.75), blended into the rim envelope over ds 1.4-2.6; behind-Benny clearances
+  relaxed (rider x0.5, core x0.4 at ds <= -1.2); 22 % of body bubbles are big bumps (r x1.55, lift x0.45). Seen:
+  foam now blue-white shaded like the ref; lower-right clump in place (inner x 640) but spread to the frame edge;
+  near clumps read as loose grape scatter; lower-left inner edge x 160 (ref 214, rider clearance). foamcol: Lfar
+  WHITE 30.5 % SHADE 43.2 %, Rfar 31.6 / 43.1, Lnear 12.7 / 45.1, Rnear 15.2 / 43.4 (ref 22.6/48.1, 22.8/44.2,
+  29.9/47.7, 33.5/48.1); heapR 21.5 % / 129 px. mad 59.0 -> 55.5.

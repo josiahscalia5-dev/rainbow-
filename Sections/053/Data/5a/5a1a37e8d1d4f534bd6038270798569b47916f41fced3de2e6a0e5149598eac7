@@ -1,0 +1,197 @@
+{
+  "screen": "06",
+  "verifiedSource": {
+    "commit": "4f19dc683215e86bc1841b95851264fce5bfff90",
+    "branch": "codex/s06-benny-fitted-knit-cuff",
+    "parent": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "sourceFiles": [
+      "assets/textures/match06/benny06_cuff.png",
+      "src/characters/benny/knitCuff06.ts",
+      "src/game/Game.ts"
+    ],
+    "utc": "2026-11-19T01:00:47.577113+00:00",
+    "purpose": "Isolated experimental source, pending visual review.",
+    "initialSource": "36d85df0b1708c493aac4e51dc02a4d79768e353"
+  },
+  "retainedOpeningRepeatedExactly": true,
+  "opening": {
+    "width": 864,
+    "height": 1536,
+    "threshold": 0.1,
+    "includeAA": false,
+    "approvedVsBefore": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049550,
+      "within20Percent": 79.08573857060185,
+      "pixelmatchMismatches": 262246
+    },
+    "approvedVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049481,
+      "within20Percent": 79.08053927951389,
+      "pixelmatchMismatches": 262472
+    },
+    "beforeVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 19666,
+      "within20Pixels": 1312222,
+      "within20Percent": 98.87861086998457,
+      "pixelmatchMismatches": 12997
+    },
+    "beforeVsRepeat": {
+      "pixels": 1327104,
+      "exactDifferences": 0,
+      "within20Pixels": 1327104,
+      "within20Percent": 100,
+      "pixelmatchMismatches": 0
+    }
+  },
+  "simulationHz": 60,
+  "clip": {
+    "codec_name": "h264",
+    "width": 648,
+    "height": 1152,
+    "avg_frame_rate": "12/1",
+    "duration": "5.250000",
+    "nb_frames": "63",
+    "side_data_list": [
+      {}
+    ]
+  },
+  "routeMatchedFrames": 63,
+  "matchedCameraAndGameState": true,
+  "poseCount": 14,
+  "skips": [],
+  "safeRun": {
+    "start": 1330,
+    "coins": 91,
+    "score": 2240,
+    "stage": "11",
+    "hearts": 5,
+    "collisions": []
+  },
+  "gameplayAssertions": {
+    "pauseFreezes": true,
+    "continuousTravel": true,
+    "noCameraCut": true,
+    "noTeleport": true,
+    "plunge": true,
+    "realCoinPickups": true,
+    "victory": true,
+    "heartsLostOnWallBump": true
+  },
+  "stageTransitions": [
+    [
+      0,
+      "06"
+    ],
+    [
+      4.916666666666667,
+      "07"
+    ]
+  ],
+  "poseSummaries": {
+    "opening": {
+      "versusClaudiaPixelsOver30SumChannelError": 19046,
+      "versusParentPixelsOver30SumChannelError": 19046,
+      "versusParentAnyPixelChange": 19666,
+      "parentMaximumChannelChange": 205
+    },
+    "forward-03": {
+      "versusClaudiaPixelsOver30SumChannelError": 15695,
+      "versusParentPixelsOver30SumChannelError": 15695,
+      "versusParentAnyPixelChange": 19597,
+      "parentMaximumChannelChange": 198
+    },
+    "forward-06": {
+      "versusClaudiaPixelsOver30SumChannelError": 14578,
+      "versusParentPixelsOver30SumChannelError": 14578,
+      "versusParentAnyPixelChange": 14842,
+      "parentMaximumChannelChange": 197
+    },
+    "forward-10": {
+      "versusClaudiaPixelsOver30SumChannelError": 13548,
+      "versusParentPixelsOver30SumChannelError": 13548,
+      "versusParentAnyPixelChange": 13749,
+      "parentMaximumChannelChange": 175
+    },
+    "forward-20": {
+      "versusClaudiaPixelsOver30SumChannelError": 12054,
+      "versusParentPixelsOver30SumChannelError": 12054,
+      "versusParentAnyPixelChange": 12207,
+      "parentMaximumChannelChange": 171
+    },
+    "hard-left": {
+      "versusClaudiaPixelsOver30SumChannelError": 12856,
+      "versusParentPixelsOver30SumChannelError": 12856,
+      "versusParentAnyPixelChange": 13069,
+      "parentMaximumChannelChange": 175
+    },
+    "hard-right": {
+      "versusClaudiaPixelsOver30SumChannelError": 13577,
+      "versusParentPixelsOver30SumChannelError": 13577,
+      "versusParentAnyPixelChange": 13714,
+      "parentMaximumChannelChange": 185
+    },
+    "inlet": {
+      "versusClaudiaPixelsOver30SumChannelError": 13618,
+      "versusParentPixelsOver30SumChannelError": 13618,
+      "versusParentAnyPixelChange": 13934,
+      "parentMaximumChannelChange": 189
+    },
+    "middle": {
+      "versusClaudiaPixelsOver30SumChannelError": 12253,
+      "versusParentPixelsOver30SumChannelError": 12253,
+      "versusParentAnyPixelChange": 12408,
+      "parentMaximumChannelChange": 172
+    },
+    "deep": {
+      "versusClaudiaPixelsOver30SumChannelError": 10202,
+      "versusParentPixelsOver30SumChannelError": 10202,
+      "versusParentAnyPixelChange": 10323,
+      "parentMaximumChannelChange": 165
+    },
+    "crest-release": {
+      "versusClaudiaPixelsOver30SumChannelError": 16988,
+      "versusParentPixelsOver30SumChannelError": 16988,
+      "versusParentAnyPixelChange": 22176,
+      "parentMaximumChannelChange": 203,
+      "palePixels": {
+        "regionXYXY": [
+          282,
+          1088,
+          574,
+          1248
+        ],
+        "threshold": "minimum RGB channel above 140 and channel range below 85",
+        "parent": 18028,
+        "new": 18028
+      }
+    },
+    "arch-exit": {
+      "versusClaudiaPixelsOver30SumChannelError": 10028,
+      "versusParentPixelsOver30SumChannelError": 10028,
+      "versusParentAnyPixelChange": 10169,
+      "parentMaximumChannelChange": 175
+    },
+    "last-in-stage": {
+      "versusClaudiaPixelsOver30SumChannelError": 13709,
+      "versusParentPixelsOver30SumChannelError": 13709,
+      "versusParentAnyPixelChange": 18573,
+      "parentMaximumChannelChange": 196
+    },
+    "across-transition": {
+      "versusClaudiaPixelsOver30SumChannelError": 0,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 2583,
+      "parentMaximumChannelChange": 1
+    }
+  },
+  "geometryDiagnostics": {}
+}

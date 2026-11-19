@@ -1,0 +1,60 @@
+{
+  "project": "RAINBOW \u2014 11-screen 3D mobile game",
+  "repo_full_name": "josiahscalia5-dev/rainbow-",
+  "remote_name": "origin",
+  "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-3d-account-transfer-syorak",
+  "session_branch_patterns": [
+    "ccr-*",
+    "claude/*"
+  ],
+  "commit_trailer": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_012NR93QW6kw1gqxbSo348sF",
+  "claude_projects_glob": "~/.claude/projects/-home-user-rainbow-*",
+  "allowlist": [
+    "*.md",
+    ".gitignore",
+    ".gitattributes",
+    ".claude/agents",
+    ".claude/skills",
+    ".claude/commands",
+    ".claude/rules",
+    ".claude/settings.json",
+    ".mcp.json.template",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "tsconfig.node.json",
+    "vite.config.ts",
+    "capacitor.config.ts",
+    "index.html",
+    "src",
+    "public",
+    "assets",
+    "references",
+    "character_references",
+    "screenshots",
+    "qa",
+    "docs",
+    "scripts",
+    "tools",
+    "tests",
+    "backups",
+    "android",
+    "builds"
+  ],
+  "status_only_paths": [
+    "backups/BACKUP_STATUS.json",
+    "backups/BACKUP_LOG.md"
+  ],
+  "max_plain_git_file_mb": 49,
+  "push_retries": 4,
+  "protected_branches": [
+    "ccr-6f431adf-7h0m8y",
+    "claude/rainbow-3d-recovery-m4v347",
+    "ccr-d4bb0ad3-8ycajb",
+    "ccr-8b6fc834-7kd55l",
+    "ccr-e033f912-8b40f5"
+  ],
+  "original_branch_note": "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); claude/rainbow-3d-recovery-m4v347 = recovery backup from accounts 2\u20133 (last 8f869da + autosaves to b83b7e0). Since account 5 (2026-11-15 ~20:53 UTC) the earlier session branches ccr-d4bb0ad3-8ycajb (account 4, last 648f531) and ccr-8b6fc834-7kd55l (account 3, last 8a36270) are protected too: both are fully contained in ccr-e033f912-8b40f5. Since account 6 (2026-11-15 ~21:41 UTC) ccr-e033f912-8b40f5 (account 5, last 3c0fe33) is protected too: it is fully contained in claude/rainbow-3d-account-transfer-syorak.",
+  "branch_history_note": "Account 2 recovery work lives on claude/rainbow-3d-recovery-m4v347. Account 3 started on ccr-8b6fc834-7kd55l (from f2a86ab) and at the user's request (2026-11-15 ~19:40 UTC) fast-forwarded claude/rainbow-3d-recovery-m4v347 to 8a36270 and continues there. New cloud sessions may get a new ccr-* branch; the autosave follows it via session_branch_patterns but never pushes to protected_branches. Account 4 (2026-11-15 ~19:48 UTC) works on ccr-d4bb0ad3-8ycajb, which already contains every commit of the recovery branch, ccr-8b6fc834-7kd55l and the original; at the user's request the recovery branch is now protected too. Each new cloud session follows its own ccr-*/claude/* branch via session_branch_patterns. Account 5 (2026-11-15 ~20:53 UTC) works on ccr-e033f912-8b40f5, created from 648f531 (the newest ccr-d4bb0ad3-8ycajb commit); verified after an unshallow fetch that it contains the original (81e639e), the recovery branch (b83b7e0), ccr-8b6fc834-7kd55l (8a36270) and ccr-d4bb0ad3-8ycajb (648f531). Account 6 (2026-11-15 ~21:41 UTC) works on claude/rainbow-3d-account-transfer-syorak, whose first commit sits on 3c0fe33 (the newest ccr-e033f912-8b40f5 commit, 3 autosaves after d6ab3a2); verified after an unshallow fetch that it contains 81e639e, b83b7e0, 8a36270, 648f531 and 3c0fe33."
+}

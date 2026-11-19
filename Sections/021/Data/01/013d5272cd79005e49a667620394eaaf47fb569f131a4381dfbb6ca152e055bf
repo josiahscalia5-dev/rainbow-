@@ -1,0 +1,485 @@
+# Subagent agent-ae2100bc45217d150 — session 4504d324-f312-5957-a7e6-3580c7fc5f29
+
+### 🧑 User — 2026-11-17T01:15:58.385Z
+
+You are the animation-and-gameplay-engineer for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).
+
+Your complete task is written in the file `qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md`. Read that file FIRST and in full: the top paragraph "RESUMED RUN #3" (this relaunch, written for you now), the "YOUR FOCUS NOW" paragraph, the older RESUMED paragraph, and the "ORIGINAL BRIEF (unchanged)". Then read `qa/pilot05/full_reference_match/COORDINATION.md` (all of it, newest section at the end) and your notes `qa/pilot05/full_reference_match/hud/NOTES.md` and `qa/pilot05/full_reference_match/coins/NOTES.md`. Continue from their "Remaining" lists — do NOT redo finished steps (HUD markup/CSS/icons and the 15 solved coin placements + approved coin face texture exist).
+
+Short version of the focus: finish the real game HUD (bar, heart 5/5, coin counter number, pause button, the "05 • FLOW INTO THE CURRENT" banner) and the approved coin placements (the approved picture shows the coin trail running on to the vanishing point; only 6 coins read clearly in the recovery capture), verified in REAL game captures, not only in the harness. Everything stays behind `on05('hud05')` / `on05('coins05')`; default build pixel-identical; screens 04/06 checked; the coin counter must still count up and `scripts/gameplay-test.mjs` must pass; `npm run -s test:continuity` must pass.
+
+Hard rules: only your own files (`src/ui/hud.ts` + its CSS, `src/gameplay/coins.ts`, folders `hud/`, `coins/`, assets under `assets/textures/hud05/`, `assets/textures/coins05/`); no git commands at all (a five-minute autosave commits and pushes everything); no credits, no API keys, no new packages, never `playwright install`; one game capture at a time (render slots are shared, waiting is normal); keep every source file syntactically valid at every moment (`npx tsc --noEmit`). Update your NOTES.md files after every finished step.
+
+Final message to me: measured before → after numbers for the HUD + text and coins regions and the whole frame, gameplay test result, the files you changed, what still differs and why, default-identity proof, and any REQUESTS. Report honestly with numbers.
+
+### 🤖 Claude — 2026-11-17T01:16:01.765Z
+
+I'll start by reading the brief file in full.
+
+### 🤖 Claude — 2026-11-17T01:16:03.367Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md; echo ----; wc -l /home/user/rainbow-/qa/pilot05/full_reference_match/COORDINATION.md /home/user/rainbow-/qa/pilot05/full_reference_match/hud/NOTES.md /home/user/rainbow-/qa/pilot05/full_reference_match/coins/NOTES.md", "description": "Read the brief and count note file lengths"}`
+
+### 🧑 User — 2026-11-17T01:16:03.399Z
+
+> ↩︎ result: RESUMED RUN #3 (NEW Claude account, 2026-11-17 ~01:20 UTC, session 01Q46SCH, working branch claude/rainbow-account-transfer-npxahd = everything of claude/rainbow-restore-env-setup-bxn85h incl. its last commit 9c50d67). Your run relaunched at ~01:00 UTC (session 01AvQv6S) was interrupted after ~10 minutes when that account ran out of credits; processes and scratchpads never survive. Everything it wrote into the repository is still here. Tools re-verified in THIS session (really run): Blender 5.3.0 at /usr/local/bin/blender (bpy, Workbench/EEVEE/Cycles renders, 7/7 .blend, benny.glb / rainbow_girl.glb / lids05.glb with 6 paddles, GLB round trip; tools/proj05/lid_blender.py rebuilt lids05.glb byte-identical, tools/proj05/tunnel_bake.py reproduced wall05.png / ring05.png identical, camera_lock_05.py OK), Playwright Chromium 153 + WebGL2 (SwiftShader), Node 22, Python numpy/Pillow/OpenCV/SciPy, ffmpeg, Android SDK 34. The user uploaded the approved Screen 05 again (pixel-identical to references/05_flow_into_the_current.png) and said: 'I just want it to look exactly like the one I upload ... the same background ... same scenery around it, same everything ... or at least 90 %, 95 % close  …[+8197 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:06.387Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/pilot05/full_reference_match/COORDINATION.md", "description": "Read the coordination document"}`
+
+### 🧑 User — 2026-11-17T01:16:06.406Z
+
+> ↩︎ result: # Screen 05 FULL REFERENCE MATCH — coordination (started 2026-11-16 ~23:20 UTC, branch `ccr-e546a360-cxmton`)
+> 
+> Authority: the user's order, word for word: `ORDER_USER_VERBATIM.md` (Parts 1–22). Read YOUR parts there first.
+> Source of truth for every pixel: `references/05_flow_into_the_current.png` (864 × 1536),
+> plus `references/water/05_water_isolated_original.png`. Never modify these (13 hashes: `sha256sum -c scripts/reference.sha256`).
+> 
+> ## Rules for everyone (coordinator + specialists)
+> 1. **Default build stays pixel-identical.** Everything new sits behind a URL switch read with
+>    `import { on05 } from '../vfx/waterRibbon'` → `on05('<your switch>')` (true for `?<your switch>=1` or the master
+>    `?match05=1`). Check after every change:
+>    `node scripts/capture.mjs 05 --out=<scratch dir>` must equal `qa/pilot05/current_default_05.png` (0 differing pixels);
+>    then `git checkout -q qa/capture_log.json`.
+> 2. **Screen 05 only.** Other screens must not change (check 04, 06, 07 with your switch on vs off when your change
+>    could reach them). Global things (HUD, Benny, coin look) are still switch-gated; say so in your notes.
+> 3. **Only your own files** (table below). Need a change elsewher …[+20600 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:07.005Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/pilot05/full_reference_match/hud/NOTES.md; echo -----; cat /home/user/rainbow-/qa/pilot05/full_reference_match/coins/NOTES.md", "description": "Read the HUD and coins notes"}`
+
+### 🧑 User — 2026-11-17T01:16:07.036Z
+
+> ↩︎ result: # Screen 05 HUD (`hud05`): animation-and-gameplay-engineer, CHECKPOINT NOTES (work in progress)
+> 
+> Status at checkpoint (2026-11-17 ~00:50 UTC): HUD code is written and typechecks (`npx tsc --noEmit` clean). It has
+> NOT been measured in a real game capture yet. The default build is untouched: every change is behind
+> `on05('hud05')` (true for `?hud05=1` or `?match05=1`).
+> 
+> ## Files changed / created
+> | file | what | gated? |
+> |---|---|---|
+> | `src/ui/hud.ts` | `HUD05 = on05('hud05')`; adds class `m05` on `#hud`, appends `CSS05()` rules (`#hud.m05 …`) and, only when HUD05, a different bar markup (capsule `.pill05`, dividers `.div05`, icon `<img>` sprites, live `data-k="hearts"` / `data-k="coins"` spans, `.pbtn.p05` pause button keeps `data-k="pause"` + the click handler). Default CSS string and default markup are unchanged (same text). Tunables are in `H05` (bar box, number font size/weight/left/top, banner centre/top/height/min-width/font size/skew). | yes |
+> | `assets/textures/hud05/{heart05,plus05,coin05,pause05}.png` + `hud05_icons.json` | static icon sprites cut from the approved picture (feathered rect/circle crops) | only loaded when HUD05 |
+> | `qa/pilot05/full_reference_match/hud/icon_ …[+12644 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:12.665Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls -la qa/pilot05/full_reference_match/ qa/pilot05/full_reference_match/hud qa/pilot05/full_reference_match/coins qa/pilot05/full_reference_match/recovery_s01Av 2>&1 | head -80; wc -l src/ui/hud.ts src/gameplay/coins.ts qa/pilot05/full_reference_match/hud/probe05.mjs; ls assets/textures/hud05 assets/textures/coins05", "description": "List the match folders and my files"}`
+
+### 🧑 User — 2026-11-17T01:16:12.706Z
+
+> ↩︎ result: qa/pilot05/full_reference_match/:
+> total 2504
+> drwxr-xr-x 14 root root    4096 Nov 17 01:16 .
+> drwxr-xr-x 22 root root    4096 Nov 17 01:10 ..
+> -rw-r--r--  1 root root  484196 Nov 17 01:10 01_APPROVED.png
+> -rw-r--r--  1 root root 1953900 Nov 17 01:10 02_BEFORE.png
+> -rw-r--r--  1 root root   21981 Nov 17 01:15 COORDINATION.md
+> -rw-r--r--  1 root root    2357 Nov 17 01:10 ORDER_USER_2026-11-17.md
+> -rw-r--r--  1 root root   31323 Nov 17 01:10 ORDER_USER_VERBATIM.md
+> drwxr-xr-x  2 root root    4096 Nov 17 01:10 before
+> drwxr-xr-x  4 root root    4096 Nov 17 01:10 benny
+> drwxr-xr-x  2 root root    4096 Nov 17 01:10 briefs
+> drwxr-xr-x  2 root root    4096 Nov 17 01:10 coins
+> drwxr-xr-x  5 root root    4096 Nov 17 01:10 coordinator
+> drwxr-xr-x  3 root root    4096 Nov 17 01:10 env
+> drwxr-xr-x  2 root root    4096 Nov 17 01:10 hud
+> drwxr-xr-x  2 root root    4096 Nov 17 01:10 masks
+> drwxr-xr-x  8 root root    4096 Nov 17 01:10 recovery_s018
+> drwxr-xr-x  2 root root    4096 Nov 17 01:10 recovery_s01Av
+> drwxr-xr-x  2 root root    4096 Nov 17 01:16 recovery_s01Q4
+> drwxr-xr-x  2 root root    4096 Nov 17 01:10 stack_2340
+> 
+> qa/pilot05/full_reference_match/coins:
+> total 20
+> drwxr-xr-x  2 root root 4096 Nov 17 01:10 .
+> d …[+1268 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:15.111Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/ui/hud.ts"}`
+
+### 🧑 User — 2026-11-17T01:16:15.157Z
+
+> ↩︎ result: 1	/**
+> 2	 * DOM HUD overlay (never painted into the 3D world). Sizes use a 9:16 frame unit `--u`
+> 3	 * (1u = 1% of the portrait frame height) so the layout matches the 864×1536 references.
+> 4	 */
+> 5	import '@fontsource/baloo-2/700.css';
+> 6	import '@fontsource/baloo-2/800.css';
+> 7	import type { StageId } from '../world/course';
+> 8	import { STAGE_TITLES } from '../world/course';
+> 9	import { on05 } from '../vfx/waterRibbon';
+> 10	
+> 11	/**
+> 12	 * `?hud05=1` (or `?match05=1`), Screen 05 full reference match (qa/pilot05/full_reference_match/hud/NOTES.md): the top
+> 13	 * bar and the level banner re-laid to the approved picture's measured pixels (864 x 1536 frame; 1 px = 1/15.36 u):
+> 14	 * bar x 33-825 / y 13-100 (opaque flat purple ~ (88, 2, 127), light rim), heart-section capsule x 33-331, dividers at
+> 15	 * x 344 and 707 (y 27-86), banner x 120-746 / y 113-181. The four static icons (heart, plus, coin, pause button) are
+> 16	 * sprites cut from the approved picture (qa/pilot05/full_reference_match/hud/icon_bake.py → assets/textures/hud05/);
+> 17	 * the hearts value, the coin counter and the level title stay live DOM text (the counter is never hard-coded).
+> 18	 * A global HUD change: with the switch on, eve …[+17372 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:15.459Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/gameplay/coins.ts"}`
+
+### 🧑 User — 2026-11-17T01:16:15.478Z
+
+> ↩︎ result: 1	/**
+> 2	 * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 3	 * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+> 4	 * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+> 5	 * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+> 6	 */
+> 7	import * as THREE from 'three';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import { canvasTexture } from '../world/materials';
+> 10	import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 11	
+> 12	export const COIN_VALUE = 10;
+> 13	
+> 14	/** `?coins05=1` / `?match05=1`: Screen 05 reference coins (measured 05 layout C05M + approved coin look, all screens) */
+> 15	const COINS05 = on05('coins05');
+> 16	/**
+> 17	 * coins05 LOOK: the face texture IS the approved nearest coin (qa/pilot05/full_reference_match/coins/coin_bake.py →
+> 18	 * assets/textures/coins05/coin05_face.png: un-foreshortened to a disc, texel = display colour) and the milled edge uses the
+> 19	 * approved coin's edge-band colours; both are drawn unlit through the post-chain inverse PROJ05_INVERSE, so the screen
+> 20	 * …[+16719 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:15.906Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/hud/probe05.mjs"}`
+
+### 🧑 User — 2026-11-17T01:16:15.927Z
+
+> ↩︎ result: 1	#!/usr/bin/env node
+> 2	// Screen 05 HUD + coins probe (animation-and-gameplay-engineer, full reference match). Run from the repo root.
+> 3	// One real game session per query (render slot via scripts/lib/pw.mjs), locked 05 checkpoint exactly like
+> 4	// scripts/capture.mjs (time frozen at 12, 864 x 1536, dpr 1). Writes, per query tag:
+> 5	//   <out>/<tag>.png        full frame (= capture.mjs 05 output)
+> 6	//   <out>/<tag>_nohud.png  the same frame with #hud hidden (background for the HUD harness)
+> 7	//   <out>/<tag>.json       HUD element rects, coinScreen(), camera(), coin defs near the checkpoint
+> 8	//   [--solve=targets.json] also solves course (s, lat) for each approved coin centre (see solveCoins below)
+> 9	// usage: node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR tag1='query' [tag2='query' ...] [--solve=FILE]
+> 10	import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+> 11	import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../../../scripts/lib/pw.mjs';
+> 12	
+> 13	const args = process.argv.slice(2);
+> 14	const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') :  …[+6767 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:21.669Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"coinScreen\\|probe\\b\\|probe(\\|drawList\\|qa3d\\|coinDefs\\|refCoins\\|setCoins\\|hud\\.\\(set\\|show\\)\" src/game/Game.ts | head -60; ls qa/pilot05/full_reference_match/recovery_s01Q4; cat qa/pilot05/full_reference_match/recovery_s01Q4/*.json 2>/dev/null | head -60", "description": "Check the QA API in Game.ts and the newest coordinator capture"}`
+
+### 🧑 User — 2026-11-17T01:16:21.702Z
+
+> ↩︎ result: 139:    hud.setStage(id);
+> 215:    if (t >= T.spin && st.stage === '01') { st.stage = '02'; hud.setStage('02'); }
+> 326:    hud.setVisible(true);
+> 331:    hud.showHint('Drag or hold left / right to steer');
+> 332:    setTimeout(() => hud.showHint(null), 3500);
+> 350:      hud.setHearts(st.hearts);
+> 358:        hud.setHearts(5);
+> 366:    if (got) { st.coins += got * COIN_VALUE; hud.setCoins(st.coins); }
+> 452:      hud.showVictory(true, true);
+> 458:  hud.setVisible(false);
+> 459:  hud.setCoins(st.coins);
+> 460:  hud.setHearts(st.hearts);
+> 461:  hud.setStage('03');
+> 487:    hud.showPaused(st.paused);
+> 492:    hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
+> 592:      hud.showHint(null);
+> 610:    st.coins = course.stage(refId).refCoins || START_COINS;
+> 611:    hud.setCoins(st.coins);
+> 612:    hud.setHearts(5);
+> 630:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 637:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 639:    coinScreen() {
+> 671:    probe(x = 0, y = 0) {
+> 679:    drawList() {
+> 6 …[+183 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:26.309Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 595,700p src/game/Game.ts; ls -la qa/pilot05/full_reference_match/recovery_s01Q4", "description": "Read the QA API section of Game.ts"}`
+
+### 🧑 User — 2026-11-17T01:16:26.357Z
+
+> ↩︎ result: st.lat = cp.lat ?? 0;
+>       coins.resetUntil(sTarget + 0.5);
+>       setStage(stageOf(sTarget));
+>       if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     f …[+5250 chars]
+
+### 🤖 Claude — 2026-11-17T01:16:39.520Z
+
+Let me look at the approved picture and the recovery capture (crops of the HUD and coin regions).
+
+### 🤖 Claude — 2026-11-17T01:16:43.088Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/hc05/r3 && cd /home/user/rainbow- && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('qa/pilot05/full_reference_match/recovery_s01Av/05_match05_at_recovery.png').convert('RGB')\nbox=(330,440,640,800)\nw=box[2]-box[0];h=box[3]-box[1]\nim=Image.new('RGB',(w*2*2+10,h*2),'white')\nim.paste(a.crop(box).resize((w*2,h*2)),(0,0)); im.paste(b.crop(box).resize((w*2,h*2)),(w*2+10,0))\nim.save('/tmp/claude-0/hc05/r3/coins_cmp.png')\nbox=(0,0,864,200)\nim=Image.new('RGB',(864,410),'white'); im. …[+181 chars]`
+
+### 🧑 User — 2026-11-17T01:16:43.599Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:16:46.156Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/r3/coins_cmp.png"}`
+
+### 🧑 User — 2026-11-17T01:16:46.193Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:16:46.477Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/r3/hud_cmp.png"}`
+
+### 🧑 User — 2026-11-17T01:16:46.506Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:17:12.412Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('qa/pilot05/full_reference_match/recovery_s01Av/05_match05_at_recovery.png').convert('RGB')\nc=Image.open('qa/pilot05/full_reference_match/stack_2340/05_match05.png').convert('RGB')\nbox=(400,440,600,600)\nw=box[2]-box[0];h=box[3]-box[1]\nk=3\nim=Image.new('RGB',(w*k*3+20,h*k),'white')\nfor i,x in enumerate([a,b,c]): im.paste(x.crop(box).resize((w*k,h*k),Image.NEAREST),(i*(w*k+10),0))\nim.save('/tmp/claude-0/hc05/r3/far_cmp.png')\n\"; npx tsc --noEmit && ec …[+69 chars]`
+
+### 🧑 User — 2026-11-17T01:17:14.584Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-17T01:17:15.605Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/r3/far_cmp.png"}`
+
+### 🧑 User — 2026-11-17T01:17:15.622Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:17:27.155Z
+
+The typecheck is clean. Next I'll run the probe (it also serves as the first real capture with both switches) with `--vis` to see what hides the far coins.
+
+### 🤖 Claude — 2026-11-17T01:17:28.299Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p scripts/lib/pw.mjs | grep -n \"slot\\|SLOT\\|lock\" | head -20; ls /tmp/claude-0/ 2>/dev/null; ps aux | grep -c \"[c]hrom\"", "description": "Check render slot mechanism and running browsers"}`
+
+### 🧑 User — 2026-11-17T01:17:28.362Z
+
+> ↩︎ result: 16:export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 19: * Cross-process render slots (2026-11-16, full reference match): several specialists capture the game at the same time on
+> 21: * script that starts the dev server waits here for one of RAINBOW_RENDER_SLOTS (default 2) slots and frees it on close /
+> 22: * exit. A slot whose owner process is gone is taken over; after 40 minutes of waiting the script runs anyway.
+> 26:  const slots = Math.max(1, Number(process.env.RAINBOW_RENDER_SLOTS ?? 2));
+> 30:    for (let i = 0; i < slots; i++) {
+> 31:      const dir = `/tmp/rainbow-render-slot-${i}`;
+> -home-user-rainbow-
+> cache-break-state-4504d324-f312-5957-a7e6-3580c7fc5f29.json
+> hc05
+> 7
+
+### 🤖 Claude — 2026-11-17T01:17:31.042Z
+
+> 🔧 **Bash** `{"command": "STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && timeout 1500 node qa/pilot05/full_reference_match/hud/probe05.mjs --out=/tmp/claude-0/hc05/r3/p1 --vis new=\"$STACK&hud05=1&coins05=1\" 2>&1 | tail -5", "description": "Run the HUD/coin probe with both switches and coin visibility", "timeout": 1600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T01:17:31.088Z
+
+> ↩︎ result: Command running in background with ID: baan4qgv8. Output is being written to: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/baan4qgv8.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T01:17:33.114Z
+
+While that runs, let me look at how the course and far geometry are built around the end of stage 05.
+
+### 🤖 Claude — 2026-11-17T01:17:34.075Z
+
+> 🔧 **Bash** `{"command": "grep -n \"05_crest\\|'05'\\|\\\"05\\\"\" src/world/course.ts | head -30; grep -rn \"refCoins\" src/world/course.ts | head", "description": "Find stage 05 definitions in course.ts"}`
+
+### 🧑 User — 2026-11-17T01:17:34.308Z
+
+> ↩︎ result: 16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 53:  '05': 'FLOW INTO THE CURRENT',
+> 142:/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
+> 257:  mark('05');
+> 268:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> 328:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 426:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 480:    this.st05 = this.stage('05');
+> 482:    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+> 489:    this.marks['05_crest'] = best;
+> 34:  refCoins: number;
+> 416:      id, title: STAGE_TITLES[id], s0, s1, width: 5, tube: 0, tubeKind: 'none', speed: 11, refCoins: 0,
+> 422:      def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
+> 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 426:      def('05', m['05'], m[ …[+568 chars]
+
+### 🤖 Claude — 2026-11-17T01:17:35.621Z
+
+> 🔧 **Bash** `{"command": "sed -n 240,345p src/world/course.ts", "description": "Read the 05/06 course construction"}`
+
+### 🧑 User — 2026-11-17T01:17:35.656Z
+
+> ↩︎ result: const pitch4 = THREE.MathUtils.degToRad(32);
+>   const d4 = V(0, -Math.sin(pitch4), -Math.cos(pitch4));
+>   // pull-down arc from the drain lip into the steep slide pitch
+>   const R4a = 9;
+>   seg(7, (t) => {
+>     const a = pitch4 * t;
+>     return s4.clone().add(V(0, -R4a * (1 - Math.cos(a)), -R4a * Math.sin(a)));
+>   });
+>   const s4b = pts[pts.length - 1].clone();
+>   seg(16, (t) => s4b.clone().addScaledVector(d4, 34 * t));
+>   // pull out of the slide into the horizontal current
+>   const s4c = pts[pts.length - 1].clone();
+>   const R4 = 12;
+>   seg(8, (t) => {
+>     const a = -pitch4 + pitch4 * t;
+>     return s4c.clone().add(V(0, R4 * (Math.cos(-pitch4) - Math.cos(a)), R4 * (Math.sin(-pitch4) - Math.sin(a))));
+>   });
+>   mark('05');
+>   // ---- 05: long STRAIGHT perforated current tube (ref 05: concentric rings, ONE vanishing point);
+>   // the wide stream winds in S-curves inside it. Here only the straight line s5 → s5+L05 (slight
+>   // descent) is laid; the lateral S-offset meander05(u) is added after smoothing (see the end of
+>   // buildRoute). Offset and slope vanish at both ends, so 04 and 06 join tangentially and s6 (hence
+>   // 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on the line.
+>   cons …[+3890 chars]
+
+### 🤖 Claude — 2026-11-17T01:17:39.830Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/full_reference_match/masks/ && sed -n 1,60p tools/match05/metrics.py", "description": "List masks and read the metrics tool"}`
+
+### 🧑 User — 2026-11-17T01:17:39.855Z
+
+> ↩︎ result: benny_and_hat.png
+> bubbles.png
+> bubbles_approved.json
+> coins.png
+> distant_tunnel_and_glow.png
+> foam_banks.png
+> gold_rings_and_front_frame.png
+> hud_and_text.png
+> purple_walls.png
+> region_index.png
+> region_preview.png
+> regions.json
+> side_fittings.png
+> wake_splash.png
+> water.png
+> """Screen 05 full reference match — whole-frame and per-region comparison of a REAL game capture with the APPROVED image.
+> Masks: qa/pilot05/full_reference_match/masks/region_index.png (tools/match05/regions.py; every pixel in exactly one region).
+> Per region and for the whole frame: pixels, mean |dRGB| (0-255, mean over channels), share within 10 / 20 levels,
+> luminance SSIM (Gaussian sigma 1.5), mean signed RGB (capture - approved: colour contamination).
+> These are pixel statistics, NOT a universal "visual similarity percentage"; each number is reported next to its mask.
+> usage: python3 -I tools/match05/metrics.py <capture.png> <out_prefix> [--proof <before.png>]
+>   -> <out_prefix>REGION_METRICS.json, <out_prefix>FULL_FRAME_METRICS.json
+>   --proof also writes 04_DIFFERENCE.png and 05_OVERLAY.png next to the prefix"""
+> import json, sys, os
+> import numpy as np
+> from PIL import Image, ImageDraw
+> from scipy.ndimage import gaussian_filte …[+3196 chars]
+
+### 🤖 Claude — 2026-11-17T01:17:42.484Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image; import numpy as np\nm=np.asarray(Image.open('qa/pilot05/full_reference_match/masks/coins.png').convert('L'))>127\nys,xs=np.nonzero(m); print(m.sum(), xs.min(),xs.max(),ys.min(),ys.max())\nfrom scipy.ndimage import label\nl,n=label(m); print('components',n)\nfor i in range(1,n+1):\n  yy,xx=np.nonzero(l==i); print(i,len(yy),xx.min(),xx.max(),yy.min(),yy.max())\n\"", "description": "Inspect the coins mask components"}`
+
+### 🧑 User — 2026-11-17T01:17:42.948Z
+
+> ↩︎ result: 27437 51 860 466 781
+> components 10
+> 1 1005 442 496 466 496
+> 2 6590 400 551 484 603
+> 3 732 226 270 557 586
+> 4 3639 444 519 581 645
+> 5 76 648 663 585 593
+> 6 117 663 681 589 603
+> 7 5255 504 593 622 700
+> 8 513 831 860 654 684
+> 9 9072 416 532 677 781
+> 10 438 51 86 724 751
+
+### 🤖 Claude — 2026-11-17T01:17:46.380Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/baan4qgv8.output; ls /tmp/claude-0/hc05/r3/p1 2>/dev/null; ls -la /tmp/rainbow-render-slot-* 2>/dev/null | head", "description": "Check probe progress and render slots"}`
+
+### 🧑 User — 2026-11-17T01:17:46.386Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/baan4qgv8.output ls /tmp/claude-0/hc05/r3/p1 ls -la /tmp/rainbow-render-slot-* head. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-17T01:17:48.660Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/baan4qgv8.output; ls /tmp/claude-0/hc05/r3/p1 2>/dev/null; ls -la /tmp/rainbow-render-slot-*/ 2>/dev/null | head -20", "description": "Check probe progress and render slots"}`
+
+### 🧑 User — 2026-11-17T01:17:48.695Z
+
+> ↩︎ result: new.json
+> new.png
+> new_nohud.png
+> total 12
+> drwxr-xr-x  2 root root 4096 Nov 17 01:17 .
+> drwxrwxrwt 14 root root 4096 Nov 17 01:17 ..
+> -rw-r--r--  1 root root    4 Nov 17 01:17 pid
+
+### 🤖 Claude — 2026-11-17T01:17:51.429Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/hc05/r3/p1 && python3 -I -c \"\nimport json; d=json.load(open('new.json'))\nprint('coinsText',d['coinsText'],'errors',d['errors'])\nprint('state',d['state'])\nfor c in d['coinScreen']: print(c)\nprint('sCp',d['sCp'],'s05',d['s05'])\nfor v in d.get('coinVis',[]): print(v['i'],v['x'],v['y'],v['d'],v['first'],v['d0'],v['hits'][:3])\n\"", "description": "Read probe results for coins"}`
+
+### 🧑 User — 2026-11-17T01:17:51.478Z
+
+> ↩︎ result: coinsText 1,420 errors []
+> state {'mode': 'ride', 'stage': '05', 's': 132.438, 'lat': 0, 'coins': 1420, 'hearts': 5, 'paused': False, 'bennyY': -41.348, 'bennyVisible': True, 'cam': [1.92, -37.94, -68.28]}
+> {'i': 20, 'x': 474, 'y': 725, 'd': 96}
+> {'i': 21, 'x': 549, 'y': 659, 'd': 70}
+> {'i': 22, 'x': 482, 'y': 612, 'd': 56}
+> {'i': 23, 'x': 431, 'y': 575, 'd': 43}
+> {'i': 24, 'x': 466, 'y': 545, 'd': 28}
+> {'i': 25, 'x': 496, 'y': 533, 'd': 20}
+> {'i': 26, 'x': 518, 'y': 524, 'd': 17}
+> {'i': 27, 'x': 532, 'y': 517, 'd': 13}
+> {'i': 28, 'x': 537, 'y': 509, 'd': 10}
+> {'i': 29, 'x': 534, 'y': 502, 'd': 8}
+> {'i': 30, 'x': 526, 'y': 497, 'd': 7}
+> {'i': 31, 'x': 516, 'y': 492, 'd': 6}
+> {'i': 32, 'x': 507, 'y': 489, 'd': 5}
+> {'i': 33, 'x': 498, 'y': 487, 'd': 5}
+> {'i': 34, 'x': 491, 'y': 485, 'd': 4}
+> {'i': 35, 'x': 463, 'y': 482, 'd': 20}
+> {'i': 36, 'x': 459, 'y': 446, 'd': 20}
+> {'i': 37, 'x': 455, 'y': 409, 'd': 19}
+> {'i': 38, 'x': 449, 'y': 375, 'd': 19}
+> {'i': 39, 'x': 442, 'y': 346, 'd': 18}
+> {'i': 40, 'x': 435, 'y': 324, 'd': 18}
+> {'i': 41, 'x': 429, 'y': 312, 'd': 17}
+> {'i': 42, 'x': 427, 'y': 314, 'd': 16}
+> {'i': 43, 'x': 434, 'y': 330, 'd': 16}
+> {'i': 44, 'x': 447, 'y': 353, 'd': 15}
+> {'i': 45, 'x': 462, 'y': 3 …[+17313 chars]
+

@@ -1,0 +1,9 @@
+{
+  "package": "openjdk-21-jdk-headless",
+  "version": "21.0.13+9-1~deb13u2",
+  "sha256": "fc39e84c52e86abb9e335bdf7bcec37a5fafbcb2eb4aa4893bd5ceec7dc941d2",
+  "repository": "https://deb.debian.org/debian-security",
+  "signature": "Debian archive keyring via sqv",
+  "jlink": "21.0.13",
+  "javac": "javac 21.0.13"
+}

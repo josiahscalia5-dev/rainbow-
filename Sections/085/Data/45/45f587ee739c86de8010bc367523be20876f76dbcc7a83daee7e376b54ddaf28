@@ -1,0 +1,28 @@
+from pathlib import Path
+import json
+import numpy as np
+from PIL import Image
+v=Path.cwd();folder=v/'proof/07';layout=json.load(open(v/'games/07/assets/textures/match07/proj07.json'));model=json.load(open(v/'fitted-model/paddleShape07.json'))
+local=np.array(model['positions']).reshape(-1,3)+model['origin'];world=local@np.array([layout['X'],layout['U'],-np.array(layout['D'])])+layout['water']
+poses={p['name']:p for p in json.load(open(folder/'NEW/poses.json')) if 'camera' in p}
+old=json.load(open('/tmp/rainbow-motion-tools.ef8YVWIN/paddle-test/measurements.json'))['poses']
+def rgba(p):
+ return np.asarray(Image.open(p).convert('RGB'),np.int16)
+def project(cam):
+ m=np.array(cam['matrixWorld']).reshape(4,4).T
+ points=(world-m[:3,3])@m[:3,:3]
+ f=np.tan(np.radians(cam['fov']/2));dist=-points[:,2]
+ xy=np.stack([432*(1+points[:,0]/dist/f/cam['aspect']),768*(1-points[:,1]/dist/f)],axis=1)
+ return [round(float(k),2) for k in [*xy.min(0),*xy.max(0)]]
+observed=[]
+for name,prev in [('opening','opening'),('forward-10','forward'),('hard-left','hard-left'),('hard-right','hard-right')]:
+ observed.append({'pose':name,'baselineVisibleMaskBBox':old[prev]['hide-two']['bboxXYXYExclusive'],'fittedGeometryProjectedBounds':project(poses[name]['camera'])})
+ref=rgba(next((v/'games/07/references').glob('07_*png')))
+box=(slice(355,475),slice(335,437));errors={}
+for variant in ('BEFORE','NEW','initial-trial','masked-material'):
+ file=folder/variant/'opening.png'
+ if file.is_file():errors[variant]=float(np.abs(rgba(file)[box]-ref[box]).mean())
+(folder/'paddle-geometry-check.json').write_text(json.dumps({'model':json.load(open('fit-07.json')),
+ 'baselineMask':'Published object-only visibility diagnostic with m07_paddle2 hidden. Coordinates in native pixels, last x/y exclusive.',
+ 'fittedBounds':'Projected vertices in the live camera matrix. Foreground rings can occlude part of this extent.',
+ 'positions':observed,'openingMeanAbsoluteChannelErrorInBox':errors,'openingBoxXYXY':[335,355,437,475]},indent=2)+'\n')

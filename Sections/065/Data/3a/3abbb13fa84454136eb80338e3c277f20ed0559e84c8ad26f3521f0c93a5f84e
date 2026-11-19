@@ -1,0 +1,76 @@
+{
+  "media": {
+    "codec_name": "h264",
+    "width": 324,
+    "height": 576,
+    "avg_frame_rate": "12/1",
+    "duration": "12.250000",
+    "nb_frames": "147",
+    "side_data_list": [
+      {}
+    ]
+  },
+  "first": {
+    "index": 0,
+    "simulationTime": 0,
+    "s": 247.14,
+    "stage": "07",
+    "lat": 0,
+    "steer": 0,
+    "hearts": 5,
+    "coins": 1420,
+    "cam": [
+      8.62,
+      -43.81,
+      -170.15
+    ],
+    "benny": -48.033
+  },
+  "last": {
+    "index": 146,
+    "simulationTime": 12.166666666666666,
+    "s": 392.456,
+    "stage": "08",
+    "lat": -0.109,
+    "steer": 0.045500000000000006,
+    "hearts": 5,
+    "coins": 1600,
+    "cam": [
+      12.96,
+      -108.3,
+      -274.99
+    ],
+    "benny": -113.164
+  },
+  "stageChanges": [
+    {
+      "frame": 144,
+      "from": "07",
+      "to": "08",
+      "s": 390.733
+    }
+  ],
+  "minHearts": 5,
+  "steerMin": -0.92,
+  "steerMax": 0.92,
+  "largestConsecutiveChanges": [
+    {
+      "frame": 63,
+      "meanAbsoluteRgb": 52.888760288065846,
+      "stage": "07",
+      "s": 310.043
+    },
+    {
+      "frame": 15,
+      "meanAbsoluteRgb": 52.50406700102881,
+      "stage": "07",
+      "s": 262.043
+    },
+    {
+      "frame": 64,
+      "meanAbsoluteRgb": 50.96952160493827,
+      "stage": "07",
+      "s": 311.043
+    }
+  ]
+}

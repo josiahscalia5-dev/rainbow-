@@ -1,0 +1,2525 @@
+{
+ "q": "match08=1&camclear=1",
+ "apk": null,
+ "size": [
+  270,
+  600
+ ],
+ "steer": 1,
+ "steerPlan": null,
+ "patched": [
+  "zone_basin/LatheGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/ShapeGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_basin/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/TorusGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "zone_tubes/LatheGeometry",
+  "tube05_far",
+  "tube05_far",
+  "foam_berm",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_banks/IcosahedronGeometry",
+  "foam_whirlpool/IcosahedronGeometry"
+ ],
+ "rows": [
+  {
+   "t": 40,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_000_t40.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 273.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -48.949,
+   "bennyVisible": true,
+   "cam": [
+    12.61,
+    -45.54,
+    -194.84
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0675,
+    "hidden": 0.102,
+    "box": [
+     0.2,
+     0.607,
+     0.641,
+     0.83
+    ],
+    "depth": 8.14,
+    "fgFrame": 0.1655,
+    "fgOnBenny": 0.009,
+    "occluders": [],
+    "centreY": -48.949,
+    "up": [
+     -0.437,
+     0.896,
+     0.078
+    ],
+    "rootY": -48.949,
+    "surfaceY": -49.296,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.722,
+    "centreAboveSurface": 0.387
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 29.03,
+      "obj": "Mesh<foam_banks<water_system<Scene",
+      "p": [
+       10.92,
+       -49.57,
+       -223.54
+      ]
+     },
+     {
+      "d": 29.22,
+      "obj": "foam_berm<foam_banks<water_system<Scene",
+      "p": [
+       10.91,
+       -49.6,
+       -223.73
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 40.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_001_t40.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 276.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -48.845,
+   "bennyVisible": true,
+   "cam": [
+    11.4,
+    -45.52,
+    -197.58
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0698,
+    "hidden": 0.099,
+    "box": [
+     0.222,
+     0.603,
+     0.678,
+     0.833
+    ],
+    "depth": 7.99,
+    "fgFrame": 0.176,
+    "fgOnBenny": 0.034,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.032
+     }
+    ],
+    "centreY": -48.845,
+    "up": [
+     -0.567,
+     0.823,
+     0.035
+    ],
+    "rootY": -48.845,
+    "surfaceY": -49.177,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.613,
+    "centreAboveSurface": 0.404
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 61.48,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       8.86,
+       -54.14,
+       -258.4
+      ]
+     },
+     {
+      "d": 191.57,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       3.48,
+       -72.4,
+       -387.1
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 40.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_002_t40.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 279.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -49.072,
+   "bennyVisible": true,
+   "cam": [
+    10.48,
+    -45.55,
+    -200.23
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0706,
+    "hidden": 0.227,
+    "box": [
+     0.333,
+     0.63,
+     0.785,
+     0.867
+    ],
+    "depth": 7.98,
+    "fgFrame": 0.1453,
+    "fgOnBenny": 0.154,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.103
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.075
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.018
+     }
+    ],
+    "centreY": -49.072,
+    "up": [
+     -0.589,
+     0.804,
+     -0.08
+    ],
+    "rootY": -49.072,
+    "surfaceY": -49.295,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.779,
+    "centreAboveSurface": 0.278
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 59.2,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       9.86,
+       -54.02,
+       -258.81
+      ]
+     },
+     {
+      "d": 226.92,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       8.11,
+       -78.03,
+       -424.8
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 40.75,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_003_t40.75.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 282.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -49.354,
+   "bennyVisible": true,
+   "cam": [
+    10.16,
+    -45.66,
+    -202.86
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0704,
+    "hidden": 0.288,
+    "box": [
+     0.489,
+     0.647,
+     0.922,
+     0.885
+    ],
+    "depth": 8.02,
+    "fgFrame": 0.119,
+    "fgOnBenny": 0.242,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.194
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.061
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.025
+     }
+    ],
+    "centreY": -49.354,
+    "up": [
+     -0.477,
+     0.863,
+     -0.163
+    ],
+    "rootY": -49.354,
+    "surfaceY": -49.678,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.73,
+    "centreAboveSurface": 0.375
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 56.99,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       11.68,
+       -54.02,
+       -259.22
+      ]
+     },
+     {
+      "d": 224.64,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       16.15,
+       -78.6,
+       -425
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 41,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_004_t41.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 285.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -49.828,
+   "bennyVisible": true,
+   "cam": [
+    10.48,
+    -45.87,
+    -205.55
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0642,
+    "hidden": 0.19,
+    "box": [
+     0.644,
+     0.662,
+     1,
+     0.902
+    ],
+    "depth": 8.07,
+    "fgFrame": 0.1033,
+    "fgOnBenny": 0.134,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.1
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.052
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.048
+     }
+    ],
+    "centreY": -49.828,
+    "up": [
+     -0.318,
+     0.934,
+     -0.162
+    ],
+    "rootY": -49.828,
+    "surfaceY": -50.19,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.651,
+    "centreAboveSurface": 0.387
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 54.16,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.7,
+       -54,
+       -259
+      ]
+     },
+     {
+      "d": 222.36,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       23.69,
+       -79.23,
+       -425
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 41.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_005_t41.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 288.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 3,
+   "paused": false,
+   "bennyY": -50.443,
+   "bennyVisible": true,
+   "cam": [
+    11.29,
+    -46.18,
+    -208.34
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0482,
+    "hidden": 0.09,
+    "box": [
+     0.737,
+     0.667,
+     1,
+     0.907
+    ],
+    "depth": 8.14,
+    "fgFrame": 0.1273,
+    "fgOnBenny": 0.125,
+    "occluders": [
+     {
+      "obj": "spray < water_system",
+      "onBenny": 0.073
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.041
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.039
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.018
+     }
+    ],
+    "centreY": -50.443,
+    "up": [
+     -0.16,
+     0.981,
+     -0.111
+    ],
+    "rootY": -50.443,
+    "surfaceY": -50.758,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.724,
+    "centreAboveSurface": 0.321
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 50.69,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       15.26,
+       -53.91,
+       -258.28
+      ]
+     },
+     {
+      "d": 219.91,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       28.52,
+       -79.7,
+       -425
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 41.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_006_t41.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 291.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 3,
+   "paused": false,
+   "bennyY": -50.903,
+   "bennyVisible": true,
+   "cam": [
+    12.51,
+    -46.53,
+    -211.15
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0465,
+    "hidden": 0.075,
+    "box": [
+     0.733,
+     0.657,
+     1,
+     0.893
+    ],
+    "depth": 8.3,
+    "fgFrame": 0.1126,
+    "fgOnBenny": 0.031,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.02
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.013
+     }
+    ],
+    "centreY": -50.903,
+    "up": [
+     -0.024,
+     0.998,
+     -0.062
+    ],
+    "rootY": -50.903,
+    "surfaceY": -51.245,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.756,
+    "centreAboveSurface": 0.343
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 46.97,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.32,
+       -53.76,
+       -257.41
+      ]
+     },
+     {
+      "d": 210.59,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       29.61,
+       -78.98,
+       -418.53
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 41.75,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_007_t41.75.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 294.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 3,
+   "paused": false,
+   "bennyY": -51.28,
+   "bennyVisible": true,
+   "cam": [
+    13.67,
+    -46.87,
+    -214.09
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0536,
+    "hidden": 0.105,
+    "box": [
+     0.685,
+     0.65,
+     1,
+     0.877
+    ],
+    "depth": 8.54,
+    "fgFrame": 0.1569,
+    "fgOnBenny": 0.043,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.033
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.019
+     }
+    ],
+    "centreY": -51.28,
+    "up": [
+     0.05,
+     0.998,
+     -0.049
+    ],
+    "rootY": -51.28,
+    "surfaceY": -51.607,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.747,
+    "centreAboveSurface": 0.328
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 43.41,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.73,
+       -53.54,
+       -256.88
+      ]
+     },
+     {
+      "d": 213.99,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       28.75,
+       -79.75,
+       -425
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 42,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_008_t42.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 297.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 3,
+   "paused": false,
+   "bennyY": -51.378,
+   "bennyVisible": true,
+   "cam": [
+    14.48,
+    -47.13,
+    -217.16
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0596,
+    "hidden": 0.123,
+    "box": [
+     0.581,
+     0.635,
+     0.993,
+     0.855
+    ],
+    "depth": 8.7,
+    "fgFrame": 0.1603,
+    "fgOnBenny": 0.031,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.021
+     }
+    ],
+    "centreY": -51.378,
+    "up": [
+     0.007,
+     0.998,
+     -0.056
+    ],
+    "rootY": -51.378,
+    "surfaceY": -51.683,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.724,
+    "centreAboveSurface": 0.305
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 40.18,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.51,
+       -53.18,
+       -256.83
+      ]
+     },
+     {
+      "d": 210.51,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       25.13,
+       -78.85,
+       -425
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 42.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_009_t42.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 300.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 3,
+   "paused": false,
+   "bennyY": -51.164,
+   "bennyVisible": true,
+   "cam": [
+    14.78,
+    -47.28,
+    -220.33
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0592,
+    "hidden": 0.066,
+    "box": [
+     0.474,
+     0.62,
+     0.874,
+     0.835
+    ],
+    "depth": 8.69,
+    "fgFrame": 0.1662,
+    "fgOnBenny": 0.014,
+    "occluders": [],
+    "centreY": -51.164,
+    "up": [
+     -0.124,
+     0.991,
+     -0.041
+    ],
+    "rootY": -51.164,
+    "surfaceY": -51.557,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.695,
+    "centreAboveSurface": 0.396
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 37.2,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       15.8,
+       -52.73,
+       -257.11
+      ]
+     },
+     {
+      "d": 206.99,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       20.46,
+       -77.64,
+       -425
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 42.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_010_t42.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 303.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 3,
+   "paused": false,
+   "bennyY": -51.098,
+   "bennyVisible": true,
+   "cam": [
+    14.68,
+    -47.33,
+    -223.48
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0615,
+    "hidden": 0.104,
+    "box": [
+     0.4,
+     0.622,
+     0.8,
+     0.842
+    ],
+    "depth": 8.52,
+    "fgFrame": 0.1703,
+    "fgOnBenny": 0.041,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.028
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.016
+     }
+    ],
+    "centreY": -51.098,
+    "up": [
+     -0.263,
+     0.964,
+     -0.023
+    ],
+    "rootY": -51.098,
+    "surfaceY": -51.412,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.777,
+    "centreAboveSurface": 0.326
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 34.54,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       14.39,
+       -52.38,
+       -257.65
+      ]
+     },
+     {
+      "d": 203.71,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       12.98,
+       -77.11,
+       -425
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 42.75,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_011_t42.75.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 306.557,
+   "lat": 1.994,
+   "coins": 1350,
+   "hearts": 2,
+   "paused": false,
+   "bennyY": -51.262,
+   "bennyVisible": true,
+   "cam": [
+    14.39,
+    -47.33,
+    -226.52
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0635,
+    "hidden": 0.087,
+    "box": [
+     0.381,
+     0.633,
+     0.793,
+     0.857
+    ],
+    "depth": 8.41,
+    "fgFrame": 0.169,
+    "fgOnBenny": 0.091,
+    "occluders": [
+     {
+      "obj": "spray < water_system",
+      "onBenny": 0.081
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.012
+     }
+    ],
+    "centreY": -51.262,
+    "up": [
+     -0.331,
+     0.943,
+     -0.039
+    ],
+    "rootY": -51.262,
+    "surfaceY": -51.605,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.651,
+    "centreAboveSurface": 0.364
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 32.03,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       12.31,
+       -52.35,
+       -258.09
+      ]
+     },
+     {
+      "d": 163.23,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       3.76,
+       -72.93,
+       -387.38
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 43,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_012_t43.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 309.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 2,
+   "paused": false,
+   "bennyY": -51.326,
+   "bennyVisible": true,
+   "cam": [
+    14.12,
+    -47.36,
+    -229.53
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0634,
+    "hidden": 0.249,
+    "box": [
+     0.463,
+     0.62,
+     0.878,
+     0.845
+    ],
+    "depth": 8.41,
+    "fgFrame": 0.1785,
+    "fgOnBenny": 0.113,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.09
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.059
+     }
+    ],
+    "centreY": -51.326,
+    "up": [
+     -0.345,
+     0.933,
+     -0.1
+    ],
+    "rootY": -51.326,
+    "surfaceY": -51.686,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.691,
+    "centreAboveSurface": 0.386
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 29.41,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       11.65,
+       -52.72,
+       -258.34
+      ]
+     },
+     {
+      "d": 163.52,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       0.35,
+       -77.19,
+       -389.71
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 43.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_013_t43.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 312.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 2,
+   "paused": false,
+   "bennyY": -52.056,
+   "bennyVisible": true,
+   "cam": [
+    13.79,
+    -47.53,
+    -232.51
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0601,
+    "hidden": 0.226,
+    "box": [
+     0.478,
+     0.607,
+     0.867,
+     0.83
+    ],
+    "depth": 8.66,
+    "fgFrame": 0.1887,
+    "fgOnBenny": 0.139,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.1
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.059
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.023
+     }
+    ],
+    "centreY": -52.056,
+    "up": [
+     -0.311,
+     0.915,
+     -0.258
+    ],
+    "rootY": -52.056,
+    "surfaceY": -52.371,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.765,
+    "centreAboveSurface": 0.345
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 27.98,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       12.25,
+       -54.52,
+       -259.56
+      ]
+     },
+     {
+      "d": 169.79,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       4.46,
+       -89.91,
+       -396.66
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 43.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_014_t43.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 315.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 2,
+   "paused": false,
+   "bennyY": -53.365,
+   "bennyVisible": true,
+   "cam": [
+    13.43,
+    -47.78,
+    -235.5
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0537,
+    "hidden": 0.228,
+    "box": [
+     0.504,
+     0.587,
+     0.881,
+     0.797
+    ],
+    "depth": 9.15,
+    "fgFrame": 0.2536,
+    "fgOnBenny": 0.162,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.078
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.059
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.058
+     }
+    ],
+    "centreY": -53.365,
+    "up": [
+     -0.263,
+     0.862,
+     -0.433
+    ],
+    "rootY": -53.365,
+    "surfaceY": -53.639,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.694,
+    "centreAboveSurface": 0.318
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 28.45,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       12.93,
+       -58.48,
+       -261.85
+      ]
+     },
+     {
+      "d": 186.24,
+      "obj": "Mesh<laundry_room<Group<zone_chamber<washer_world",
+      "p": [
+       10.14,
+       -117.85,
+       -408.02
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 43.75,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_015_t43.75.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 318.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 2,
+   "paused": false,
+   "bennyY": -55.009,
+   "bennyVisible": true,
+   "cam": [
+    13.24,
+    -48.2,
+    -238.62
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0482,
+    "hidden": 0.235,
+    "box": [
+     0.519,
+     0.553,
+     0.878,
+     0.757
+    ],
+    "depth": 9.66,
+    "fgFrame": 0.2787,
+    "fgOnBenny": 0.188,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.099
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.086
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.07
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.017
+     }
+    ],
+    "centreY": -55.009,
+    "up": [
+     -0.25,
+     0.758,
+     -0.602
+    ],
+    "rootY": -55.009,
+    "surfaceY": -55.304,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.671,
+    "centreAboveSurface": 0.389
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 31.08,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.26,
+       -64.7,
+       -264.96
+      ]
+     },
+     {
+      "d": 74.33,
+      "obj": "m08_chamber<match08_projection<Scene",
+      "p": [
+       13.29,
+       -87.66,
+       -301.61
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 44,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_016_t44.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 321.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 2,
+   "paused": false,
+   "bennyY": -57.172,
+   "bennyVisible": true,
+   "cam": [
+    13.27,
+    -49.1,
+    -241.87
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0449,
+    "hidden": 0.27,
+    "box": [
+     0.511,
+     0.533,
+     0.852,
+     0.728
+    ],
+    "depth": 9.98,
+    "fgFrame": 0.3269,
+    "fgOnBenny": 0.243,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.133
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.103
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.092
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.024
+     }
+    ],
+    "centreY": -57.172,
+    "up": [
+     -0.248,
+     0.629,
+     -0.737
+    ],
+    "rootY": -57.172,
+    "surfaceY": -57.399,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.745,
+    "centreAboveSurface": 0.362
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 36.83,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.36,
+       -74.08,
+       -268.93
+      ]
+     },
+     {
+      "d": 56.88,
+      "obj": "m08_chamber<match08_projection<Scene",
+      "p": [
+       13.41,
+       -87.68,
+       -283.67
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 44.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_017_t44.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 324.557,
+   "lat": 2.25,
+   "coins": 1350,
+   "hearts": 1,
+   "paused": false,
+   "bennyY": -59.759,
+   "bennyVisible": true,
+   "cam": [
+    13.32,
+    -50.53,
+    -244.99
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0428,
+    "hidden": 0.352,
+    "box": [
+     0.504,
+     0.525,
+     0.833,
+     0.715
+    ],
+    "depth": 10.24,
+    "fgFrame": 0.3398,
+    "fgOnBenny": 0.255,
+    "occluders": [
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.124
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.118
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.074
+     },
+     {
+      "obj": "Mesh(MeshStandardMaterial#ffc890,1552v) < zone_tubes < washer_world",
+      "onBenny": 0.066
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.014
+     }
+    ],
+    "centreY": -59.759,
+    "up": [
+     -0.247,
+     0.462,
+     -0.852
+    ],
+    "rootY": -59.759,
+    "surfaceY": -59.927,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.661,
+    "centreAboveSurface": 0.365
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 54.53,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.37,
+       -94.41,
+       -277.37
+      ]
+     },
+     {
+      "d": 58.96,
+      "obj": "Mesh<zone_chamber<washer_world<Scene",
+      "p": [
+       13.38,
+       -97.98,
+       -280
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 44.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_018_t44.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 327.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 1,
+   "paused": false,
+   "bennyY": -62.504,
+   "bennyVisible": true,
+   "cam": [
+    13.29,
+    -52.64,
+    -248.08
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0433,
+    "hidden": 0.233,
+    "box": [
+     0.511,
+     0.533,
+     0.848,
+     0.723
+    ],
+    "depth": 10.16,
+    "fgFrame": 0.3136,
+    "fgOnBenny": 0.242,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.084
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.077
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.074
+     },
+     {
+      "obj": "spray < water_system",
+      "onBenny": 0.055
+     },
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.021
+     }
+    ],
+    "centreY": -62.504,
+    "up": [
+     -0.247,
+     0.383,
+     -0.89
+    ],
+    "rootY": -62.504,
+    "surfaceY": -62.642,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.69,
+    "centreAboveSurface": 0.36
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 62.28,
+      "obj": "m08_pipe<match08_projection<Scene",
+      "p": [
+       13.32,
+       -108.25,
+       -276.13
+      ]
+     },
+     {
+      "d": 67.94,
+      "obj": "water_ribbon<water_system<Scene",
+      "p": [
+       13.32,
+       -113.3,
+       -278.67
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 44.75,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_019_t44.75.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 330.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 1,
+   "paused": false,
+   "bennyY": -65.306,
+   "bennyVisible": true,
+   "cam": [
+    13.34,
+    -55.7,
+    -251.16
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0506,
+    "hidden": 0.223,
+    "box": [
+     0.504,
+     0.582,
+     0.87,
+     0.782
+    ],
+    "depth": 9.39,
+    "fgFrame": 0.2419,
+    "fgOnBenny": 0.181,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.093
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.076
+     },
+     {
+      "obj": "spray < water_system",
+      "onBenny": 0.031
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.024
+     }
+    ],
+    "centreY": -65.306,
+    "up": [
+     -0.247,
+     0.348,
+     -0.904
+    ],
+    "rootY": -65.306,
+    "surfaceY": -65.426,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.758,
+    "centreAboveSurface": 0.344
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 13.47,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.34,
+       -68.38,
+       -255.72
+      ]
+     },
+     {
+      "d": 55.86,
+      "obj": "m08_pipe<match08_projection<Scene",
+      "p": [
+       13.35,
+       -108.26,
+       -270.08
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 45,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_020_t45.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 333.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 1,
+   "paused": false,
+   "bennyY": -68.128,
+   "bennyVisible": true,
+   "cam": [
+    13.35,
+    -58.93,
+    -253.25
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0574,
+    "hidden": 0.154,
+    "box": [
+     0.504,
+     0.618,
+     0.889,
+     0.835
+    ],
+    "depth": 8.83,
+    "fgFrame": 0.1837,
+    "fgOnBenny": 0.106,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.072
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.028
+     },
+     {
+      "obj": "spray < water_system",
+      "onBenny": 0.021
+     }
+    ],
+    "centreY": -68.128,
+    "up": [
+     -0.247,
+     0.333,
+     -0.91
+    ],
+    "rootY": -68.128,
+    "surfaceY": -68.244,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.713,
+    "centreAboveSurface": 0.347
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 47.64,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -104.64,
+       -266.68
+      ]
+     },
+     {
+      "d": 48.38,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -105.35,
+       -266.89
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 45.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_021_t45.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 336.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 1,
+   "paused": false,
+   "bennyY": -70.937,
+   "bennyVisible": true,
+   "cam": [
+    13.35,
+    -61.9,
+    -254.62
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0602,
+    "hidden": 0.138,
+    "box": [
+     0.5,
+     0.627,
+     0.904,
+     0.847
+    ],
+    "depth": 8.65,
+    "fgFrame": 0.2059,
+    "fgOnBenny": 0.096,
+    "occluders": [
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.078
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.048
+     }
+    ],
+    "centreY": -70.937,
+    "up": [
+     -0.247,
+     0.332,
+     -0.91
+    ],
+    "rootY": -70.937,
+    "surfaceY": -71.059,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.667,
+    "centreAboveSurface": 0.368
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 41.78,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -102.22,
+       -265.54
+      ]
+     },
+     {
+      "d": 42.51,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -102.93,
+       -265.73
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 45.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_022_t45.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 339.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 1,
+   "paused": false,
+   "bennyY": -73.768,
+   "bennyVisible": true,
+   "cam": [
+    13.35,
+    -64.78,
+    -255.75
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0609,
+    "hidden": 0.138,
+    "box": [
+     0.5,
+     0.637,
+     0.904,
+     0.858
+    ],
+    "depth": 8.58,
+    "fgFrame": 0.1505,
+    "fgOnBenny": 0.066,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.055
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.035
+     }
+    ],
+    "centreY": -73.768,
+    "up": [
+     -0.247,
+     0.331,
+     -0.91
+    ],
+    "rootY": -73.768,
+    "surfaceY": -73.88,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.757,
+    "centreAboveSurface": 0.337
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 39.33,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -102.8,
+       -265.81
+      ]
+     },
+     {
+      "d": 40.03,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -103.48,
+       -265.99
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 45.75,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_023_t45.75.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 342.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 1,
+   "paused": false,
+   "bennyY": -76.591,
+   "bennyVisible": true,
+   "cam": [
+    13.35,
+    -67.62,
+    -256.8
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0615,
+    "hidden": 0.178,
+    "box": [
+     0.504,
+     0.638,
+     0.9,
+     0.863
+    ],
+    "depth": 8.55,
+    "fgFrame": 0.1712,
+    "fgOnBenny": 0.09,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.078
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.039
+     }
+    ],
+    "centreY": -76.591,
+    "up": [
+     -0.247,
+     0.331,
+     -0.91
+    ],
+    "rootY": -76.591,
+    "surfaceY": -76.694,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.786,
+    "centreAboveSurface": 0.309
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 10.06,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -77.35,
+       -259.36
+      ]
+     },
+     {
+      "d": 37.65,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       13.35,
+       -104.02,
+       -266.39
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 46,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_024_t46.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 248.602,
+   "lat": -0.219,
+   "coins": 1360,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -48.142,
+   "bennyVisible": true,
+   "cam": [
+    9.49,
+    -44.21,
+    -171.64
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0846,
+    "hidden": 0.025,
+    "box": [
+     0.393,
+     0.632,
+     0.874,
+     0.903
+    ],
+    "depth": 7.07,
+    "fgFrame": 0.1024,
+    "fgOnBenny": 0.001,
+    "occluders": [],
+    "centreY": -48.142,
+    "up": [
+     -0.075,
+     0.993,
+     -0.094
+    ],
+    "rootY": -48.142,
+    "surfaceY": -48.644,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.513,
+    "centreAboveSurface": 0.505
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 27.58,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       17.34,
+       -49.63,
+       -197.51
+      ]
+     },
+     {
+      "d": 27.76,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       17.4,
+       -49.66,
+       -197.68
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 46.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_025_t46.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 251.559,
+   "lat": 1.154,
+   "coins": 1360,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -48.436,
+   "bennyVisible": true,
+   "cam": [
+    10.98,
+    -44.46,
+    -173.27
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0682,
+    "hidden": 0.059,
+    "box": [
+     0.548,
+     0.645,
+     0.985,
+     0.88
+    ],
+    "depth": 7.95,
+    "fgFrame": 0.133,
+    "fgOnBenny": 0.053,
+    "occluders": [
+     {
+      "obj": "bubbles_big < bubbles < water_system",
+      "onBenny": 0.05
+     }
+    ],
+    "centreY": -48.436,
+    "up": [
+     -0.158,
+     0.983,
+     -0.091
+    ],
+    "rootY": -48.436,
+    "surfaceY": -48.922,
+    "surfaceObj": "water_ribbon < water_system",
+    "bottomAboveSurface": -0.59,
+    "centreAboveSurface": 0.495
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 28.18,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.99,
+       -48.69,
+       -200.47
+      ]
+     },
+     {
+      "d": 28.41,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       17.04,
+       -48.73,
+       -200.7
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 46.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_026_t46.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 254.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -48.643,
+   "bennyVisible": true,
+   "cam": [
+    12.79,
+    -44.63,
+    -175.57
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0634,
+    "hidden": 0.129,
+    "box": [
+     0.593,
+     0.637,
+     1,
+     0.867
+    ],
+    "depth": 8.34,
+    "fgFrame": 0.1422,
+    "fgOnBenny": 0.093,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.052
+     },
+     {
+      "obj": "bubbles_big < bubbles < water_system",
+      "onBenny": 0.031
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.025
+     }
+    ],
+    "centreY": -48.643,
+    "up": [
+     -0.152,
+     0.985,
+     -0.08
+    ],
+    "rootY": -48.643,
+    "surfaceY": -48.978,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.767,
+    "centreAboveSurface": 0.341
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 26.44,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.8,
+       -48.55,
+       -201.4
+      ]
+     },
+     {
+      "d": 26.7,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.84,
+       -48.59,
+       -201.66
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 46.75,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_027_t46.75.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 257.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -48.989,
+   "bennyVisible": true,
+   "cam": [
+    13.83,
+    -44.81,
+    -178.4
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0618,
+    "hidden": 0.172,
+    "box": [
+     0.556,
+     0.642,
+     0.981,
+     0.87
+    ],
+    "depth": 8.5,
+    "fgFrame": 0.144,
+    "fgOnBenny": 0.093,
+    "occluders": [
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.073
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.029
+     }
+    ],
+    "centreY": -48.989,
+    "up": [
+     -0.065,
+     0.996,
+     -0.062
+    ],
+    "rootY": -48.989,
+    "surfaceY": -49.355,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.643,
+    "centreAboveSurface": 0.368
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 25.01,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.36,
+       -48.58,
+       -203
+      ]
+     },
+     {
+      "d": 25.35,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       16.39,
+       -48.63,
+       -203.34
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 47,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_028_t47.00.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 260.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -49.454,
+   "bennyVisible": true,
+   "cam": [
+    14.55,
+    -45.06,
+    -181.45
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0603,
+    "hidden": 0.213,
+    "box": [
+     0.537,
+     0.655,
+     0.97,
+     0.88
+    ],
+    "depth": 8.65,
+    "fgFrame": 0.172,
+    "fgOnBenny": 0.152,
+    "occluders": [
+     {
+      "obj": "coins",
+      "onBenny": 0.063
+     },
+     {
+      "obj": "foam_berm < foam_banks < water_system",
+      "onBenny": 0.061
+     },
+     {
+      "obj": "Mesh(ShaderMaterial,240v) < foam_banks < water_system",
+      "onBenny": 0.053
+     },
+     {
+      "obj": "water_ribbon < water_system",
+      "onBenny": 0.019
+     }
+    ],
+    "centreY": -49.454,
+    "up": [
+     0.027,
+     0.998,
+     -0.056
+    ],
+    "rootY": -49.454,
+    "surfaceY": -49.785,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.734,
+    "centreAboveSurface": 0.332
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 22.49,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       15.8,
+       -48.49,
+       -203.65
+      ]
+     },
+     {
+      "d": 24.14,
+      "obj": "Mesh<zone_tubes<washer_world<Scene",
+      "p": [
+       15.89,
+       -48.75,
+       -205.27
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 47.25,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_029_t47.25.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 263.557,
+   "lat": 2.25,
+   "coins": 1360,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -49.574,
+   "bennyVisible": true,
+   "cam": [
+    14.9,
+    -45.31,
+    -184.61
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0587,
+    "hidden": 0.074,
+    "box": [
+     0.493,
+     0.643,
+     0.889,
+     0.862
+    ],
+    "depth": 8.76,
+    "fgFrame": 0.1557,
+    "fgOnBenny": 0.024,
+    "occluders": [
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.013
+     },
+     {
+      "obj": "foam_banks < water_system",
+      "onBenny": 0.01
+     }
+    ],
+    "centreY": -49.574,
+    "up": [
+     0.022,
+     0.998,
+     -0.059
+    ],
+    "rootY": -49.574,
+    "surfaceY": -49.95,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.732,
+    "centreAboveSurface": 0.377
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 32.41,
+      "obj": "Mesh<foam_banks<water_system<Scene",
+      "p": [
+       15.3,
+       -50.2,
+       -216.64
+      ]
+     },
+     {
+      "d": 32.48,
+      "obj": "Mesh<foam_banks<water_system<Scene",
+      "p": [
+       15.3,
+       -50.21,
+       -216.72
+      ]
+     }
+    ]
+   },
+   "inside": []
+  },
+  {
+   "t": 47.5,
+   "file": "qa/gameplay_video/moving_r3/steer1/f_030_t47.50.png",
+   "mode": "ride",
+   "stage": "07",
+   "s": 266.557,
+   "lat": 2.137,
+   "coins": 1360,
+   "hearts": 4,
+   "paused": false,
+   "bennyY": -49.43,
+   "bennyVisible": true,
+   "cam": [
+    14.75,
+    -45.48,
+    -187.79
+   ],
+   "near2": 0,
+   "near05": 0,
+   "nearBy": [],
+   "benny": {
+    "maskShare": 0.0594,
+    "hidden": 0.065,
+    "box": [
+     0.374,
+     0.63,
+     0.767,
+     0.85
+    ],
+    "depth": 8.67,
+    "fgFrame": 0.1624,
+    "fgOnBenny": 0.011,
+    "occluders": [
+     {
+      "obj": "rider_splash < water_system",
+      "onBenny": 0.011
+     }
+    ],
+    "centreY": -49.43,
+    "up": [
+     -0.086,
+     0.996,
+     -0.03
+    ],
+    "rootY": -49.43,
+    "surfaceY": -49.929,
+    "surfaceObj": "foam_berm < foam_banks < water_system",
+    "bottomAboveSurface": -0.518,
+    "centreAboveSurface": 0.501
+   },
+   "ray": {
+    "centre": [
+     {
+      "d": 42.18,
+      "obj": "water_ribbon<water_system<Scene",
+      "p": [
+       13.64,
+       -51.62,
+       -229.5
+      ]
+     },
+     {
+      "d": 55.01,
+      "obj": "water_ribbon<water_system<Scene",
+      "p": [
+       13.3,
+       -53.49,
+       -242.2
+      ]
+     }
+    ]
+   },
+   "inside": []
+  }
+ ],
+ "errors": []
+}

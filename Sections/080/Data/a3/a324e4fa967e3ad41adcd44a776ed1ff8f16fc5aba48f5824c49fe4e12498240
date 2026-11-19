@@ -1,0 +1,123 @@
+[
+ {
+  "name": "f00_checkpoint",
+  "cp": "07",
+  "dist": 0,
+  "steer": null,
+  "frames": 0,
+  "s": 273.299,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1940
+ },
+ {
+  "name": "f03_forward3u",
+  "cp": "07",
+  "dist": 3,
+  "steer": null,
+  "frames": 15,
+  "s": 276.141,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1940
+ },
+ {
+  "name": "f06_forward6u",
+  "cp": "07",
+  "dist": 6,
+  "steer": null,
+  "frames": 30,
+  "s": 279.099,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1950
+ },
+ {
+  "name": "f10_forward10u",
+  "cp": "07",
+  "dist": 10,
+  "steer": null,
+  "frames": 50,
+  "s": 283.182,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1960
+ },
+ {
+  "name": "f20_forward20u",
+  "cp": "07",
+  "dist": 20,
+  "steer": null,
+  "frames": 100,
+  "s": 293.098,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1970
+ },
+ {
+  "name": "s_left_steer",
+  "cp": "07",
+  "dist": 6,
+  "steer": -1,
+  "frames": 30,
+  "s": 279.174,
+  "lat": -2.25,
+  "stage": "07",
+  "coins": 1940
+ },
+ {
+  "name": "s_right_steer",
+  "cp": "07",
+  "dist": 6,
+  "steer": 1,
+  "frames": 30,
+  "s": 279.106,
+  "lat": 2.25,
+  "stage": "07",
+  "coins": 1940
+ },
+ {
+  "name": "d0_before_drop_8u",
+  "cp": "07a_plunge_top",
+  "dist": -7,
+  "steer": null,
+  "frames": 157,
+  "s": 305.057,
+  "lat": 0.01,
+  "stage": "07",
+  "coins": 2010
+ },
+ {
+  "name": "d1_drop_start",
+  "cp": "07a_plunge_top",
+  "dist": 0,
+  "steer": null,
+  "frames": 0,
+  "s": 311.544,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1940
+ },
+ {
+  "name": "d2_drop_4u",
+  "cp": "07a_plunge_top",
+  "dist": 4,
+  "steer": null,
+  "frames": 20,
+  "s": 315.649,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1950
+ },
+ {
+  "name": "d3_drop_mid",
+  "cp": "07b_plunge_mid",
+  "dist": 0,
+  "steer": null,
+  "frames": 0,
+  "s": 351.293,
+  "lat": 0,
+  "stage": "07",
+  "coins": 1940
+ }
+]

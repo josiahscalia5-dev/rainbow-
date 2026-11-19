@@ -1,0 +1,75 @@
+from pathlib import Path
+from PIL import Image
+import sys,subprocess as sp,hashlib,json,os,numpy as np
+p=Path(__file__).parent;past=Path("/tmp/rainbow-final-fidelity.RuUP0xJ2");oldRepos=Path('/tmp/rainbow-reconstruction.etSm9SmK/repos')
+def load(f):return json.loads(f.read_text())
+def write(f,d):f.write_text(json.dumps(d,indent=2,ensure_ascii=False)+'\n')
+def rgba(f):return np.asarray(Image.open(f).convert('RGB'),dtype=np.int16)
+def stream(f):
+ return json.loads(sp.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=codec_name,width,height,nb_frames,avg_frame_rate,duration','-of','json',str(f)]))['streams'][0]
+for s in sys.argv[1:]:
+ loc=p
+ old=past/'repos'/s/'experiments/codex'/('fidelity-'+s);bl=old/'CLAUDIA_BEFORE';new=loc/'proof'/s/'NEW'
+ prev=old/'CODEX_NEW' if s in ['04','06','08'] else (oldRepos/s/'experiments/codex'/s/'NEW' if s=='05' else bl)
+ info=load(p/'baseline.json' if s=='06' else loc/('baseline-'+s+'.json'))
+ chk=load(p/('checkpoint-'+s+'.json'))
+ assert hashlib.sha256((old/'APPROVED.jpg').read_bytes()).hexdigest()==info['approved']['sha256']
+ poseB,poseN=(load(x/'poses.json') for x in [bl,new])
+ assert [e['name'] for e in poseB]==[e['name'] for e in poseN]
+ fields=['name','kind','steer','simFrames','target','stageBounds','clock','shaderTime','state','camera','benny']
+ drift=[[b['name'],key] for b,n in zip(poseB,poseN) for key in fields if b.get(key)!=n.get(key)]
+ assert not drift,drift
+ routeB,routeN=(load(x/'route.json')['frames'] for x in [bl,new])
+ routeFields=['i','time','shaderTime','s','stage','lat','steer','hearts','coins','camera']
+ drift=[[idx,field] for idx,(b,n) in enumerate(zip(routeB,routeN)) for field in routeFields if b.get(field)!=n.get(field)]
+ assert len(routeB)==len(routeN) and not drift,drift[:5]
+ assert min(v['hearts'] for v in routeN)==5
+ clipB,clipN=(stream(x/'ride.mp4') for x in [bl,new]);assert clipB==clipN and clipN['codec_name']=='h264' and int(clipN['nb_frames'])==len(routeN)
+ safe=load(new/'full-safe-ride.json')['success'];checks=load(new/'gameplay.json')['checks']
+ assert all(v['pass'] for v in checks.values()) and len(checks)==8
+ assert (safe['start'],safe['coins'],safe['score'],safe['hearts'],safe['stage'])==(1330,91,2240,5,'11') and not safe['collisions']
+ repro=oldRepos/'skill/.agents/skills/rainbow-visual-motion-matcher/scripts/compare-opening.py'
+ repeat=loc/'proof'/s/'BEFORE/opening-repeat.png'
+ env=dict(os.environ,NODE_PATH='/tmp/rainbow-motion-tools.ef8YVWIN/toolchain/node_modules')
+ opening=json.loads(sp.check_output([sys.executable,str(repro),str(old/'APPROVED.jpg'),str(bl/'opening.png'),'--candidate',str(new/'opening.png'),'--repeat',str(repeat)],env=env))
+ assert opening['beforeVsRepeat']['exactDifferences']==0
+ report={'screen':s,'verifiedSource':chk,'retainedOpeningRepeatedExactly':True,'opening':opening,'simulationHz':60,'clip':clipN,'routeMatchedFrames':len(routeN),'matchedCameraAndGameState':True,'poseCount':sum('skip' not in x for x in poseN),'skips':[x for x in poseN if 'skip'in x],'safeRun':{k:safe[k] for k in ['start','coins','score','stage','hearts','collisions']},'gameplayAssertions':{k:v['pass'] for k,v in checks.items()},'stageTransitions':[(v['time'],v['stage']) for i,v in enumerate(routeN) if i==0 or v['stage']!=routeN[i-1]['stage']],'poseSummaries':{},'geometryDiagnostics':{}}
+ for pose in poseN:
+  if 'skip' in pose:continue
+  name=pose['name'];b=rgba(bl/(name+'.png'));c=rgba(prev/(name+'.png'));n=rgba(new/(name+'.png'))
+  assert b.shape==c.shape==n.shape==(1536,864,3)
+  dc=np.abs(c-n);changed=dc.sum(axis=2)>30
+  row={'versusClaudiaPixelsOver30SumChannelError':int((np.abs(b-n).sum(axis=2)>30).sum()),'versusParentPixelsOver30SumChannelError':int(changed.sum()),'versusParentAnyPixelChange':int((dc.sum(2)>0).sum()),'parentMaximumChannelChange':int(dc.max())}
+  if s=='06' and name=='crest-release':
+   def count(a):
+    a=a[1088:1248,282:574];return int(((a.min(2)>140)&(a.max(2)-a.min(2)<85)).sum())
+   row['palePixels']={'regionXYXY':[282,1088,574,1248],'threshold':'minimum RGB channel above 140 and channel range below 85','parent':count(c),'new':count(n)}
+  if s=='07':
+   def white(a):
+    a=a[420:];return int(((a.min(2)>166)&(a.max(2)-a.min(2)<77)).sum())
+   row['palePixelCountBelowRow420']={'parent':white(c),'new':white(n)}
+  if s=='04':
+   walls=np.zeros_like(changed);walls[250:1100,:205]=True;walls[250:1100,659:]=True
+   row['changedOuterWallRegion']=int((walls&changed).sum())
+  if s in ['05','08']:
+   a=c[1060:1480,160:704];z=n[1060:1480,160:704]
+   row['foregroundMeanAbsChannelChange']=round(float(np.abs(z-a).mean()),3)
+  report['poseSummaries'][name]=row
+ if s=='06':
+  report['geometryDiagnostics']['staticMask']=load(p/'floor-isolation/mask-summary.json')
+  poses=[load(p/'release-poses'/q/'poses.json') for q in ['CLAUDIA','PREVIOUS_FOAM','NEW']]
+  assert all(poses[0][i].get(k)==g[i].get(k) for g in poses[1:] for i in range(len(g)) for k in fields)
+  report['additionalMatchedCrestPoses']=[x['name'] for x in poses[0]]
+ if s=='07':
+  folder=loc/'outlet-diagnostics';b,n=(load(folder/q/'geometry.json') for q in ['BEFORE','NEW'])
+  assert b['bounds']==n['bounds'] and b['groups']['upstream']==n['groups']['upstream'] and b['groups']['following']==n['groups']['following'] and b['groups']['chamber']!=n['groups']['chamber']
+  w=lambda a:(a.min(2)>166)&(a.max(2)-a.min(2)<77)
+  pixels={}
+  for nm in ['plunge-bottom','last-in-stage','across-transition']:
+   pixels[nm]={}
+   for q in ['BEFORE','NEW']:
+    rendered=rgba(folder/q/(nm+'-all.png'));allP=w(rendered);without=w(rgba(folder/q/(nm+'-foam-off.png')));withoutBerm=w(rgba(folder/q/(nm+'-berm-off.png')))
+    pixels[nm][q]={'foamGroupWhitePixels':int((allP&~without).sum()),'continuousBermWhitePixels':int((allP&~withoutBerm).sum())}
+  report['geometryDiagnostics']={'before':b,'new':n,'layerIsolatedCounts':pixels,'classification':'pixel white when all channels exceed 166 and their range is below 77'}
+ write(p/('quality-'+s+'.json'),report)
+ print(s,'verified',len(routeN),'matched video frames;',report['poseCount'],'native poses',flush=True)

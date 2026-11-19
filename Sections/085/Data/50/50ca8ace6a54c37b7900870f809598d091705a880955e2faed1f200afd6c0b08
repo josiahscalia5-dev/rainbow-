@@ -1,0 +1,28 @@
+{
+  "branch": "codex/s07-shared-outlet-bank",
+  "commit": "ba1ac8b419d5ac6b6ba43667b0de06e056464a4f",
+  "source": "31bffebe08cf123b615b3c515030f6157b7ca667",
+  "protectedBase": {
+    "branch": "claude/rainbow-s07-match-c17",
+    "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+  },
+  "evidenceFiles": 103,
+  "LFS_verifiedRemoteBytes": [
+    {
+      "asset": "CLAUDIA_BEFORE/ride.mp4",
+      "size": 17964350,
+      "sha256": "486adcb88342784a7d9fc68141a1ed3bb65ef7afbabe870f4cb0ee93ee9c16ca"
+    },
+    {
+      "asset": "CODEX_NEW/ride.mp4",
+      "size": 17990401,
+      "sha256": "2c188f9499cc5a0b270cd0415ee450ec231cbf251c49b788aac02f9ea34a6530"
+    }
+  ],
+  "downloadTested": [
+    "APPROVED.jpg",
+    "Review_on_Android.pdf",
+    "CODEX_NEW moving picture"
+  ],
+  "verifiedUTC": "2026-11-19T02:06:52.912452+00:00"
+}

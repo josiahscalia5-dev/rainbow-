@@ -1,0 +1,1092 @@
+# Subagent agent-a52fe238922a756d7 — session 025fdfec-0536-5765-8355-e6c259e1aa5d
+
+### 🧑 User — 2026-11-15T21:49:56.175Z
+
+You are the washer-environment-modeler for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). This is Screen 05 **wave 5** on a new Claude account. Wave 4 was cut off at 21:18 UTC while you were mid-edit in `src/world/tube.ts` (rounded double-lip ring band, flat "slab" lid profile, forced-perspective far-tunnel helper). Every edit you saved is in the tree: CONTINUE from it, do not revert or start over.
+
+Read first (briefly): `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE5.md` (measured baseline table, rules), `qa/pilot05/COORDINATION_WAVE3.md` (targets 1–3, ownership), lines for you in `qa/pilot05/REQUESTS.md`, and the END (last ~150 lines) of your wave-4 transcript `backups/claude-sessions/d8784a51-ef7d-54bd-9459-c5d061a0acfa/subagents/agent-ab0084779f3629691.md` to see exactly what you were doing. Check whether your tube.ts helpers are actually wired up. Then LOOK at `references/05_flow_into_the_current.png` and `qa/pilot05/wave5/baseline/05.png`.
+
+You own ONLY: `src/world/materials.ts`, `src/world/tube.ts`, `src/world/environment.ts`, `src/render/env.ts`, `src/render/grade.ts`, `tools/blender/*`. Read anything; edit nothing else. Camera is LOCKED. Water, foam and Benny specialists are editing their own files at the same time.
+
+Fix, in priority order (numbers from the coordinator's measurement on the baseline):
+1. **VP glow far too large**: now a warm disc ≈ x 350–650, y 340–640 with a white core, which makes the tunnel look short. Ref: a small bright warm light at the VP (≈498, 500), core ≲ 40 px, halo ≲ 120 px, with ≥ 8 gold rings visibly receding into it (ring tops on the VP column ≈105 → 60 → 25 → 20 → ≤15 px spacing).
+2. **Walls too bright and pink-orange/pastel**: deep dark metallic violet (#992FC2) and magenta (#CD32AA) with black, high-contrast oval/capsule perforation slots and lengthwise white-pink specular streaks.
+3. **Rings**: polished reflective yellow-gold, not flat orange: pale-yellow highlights #FCE082, gold mids #F4B70F…#F9A640, copper only on the shadowed side; visible band depth/double lip.
+4. **Wall lids**: the current orange striped fan/scallop shapes → copper-gold half-dome / flat round lids seen at an angle, one per bay, symmetric on both walls (ref §5.5 in `qa/scene_comparisons.md` if present).
+5. Lower priority: the near gold frame ring visible in both bottom corners (ref x 0–120 and 744–864, y 1280–1536) and bottom arc.
+
+Blender 5.3.0 is installed headless (`blender -b qa/worldlabs/05/blender/screen05_layout.blend --python <script>`; objects: Tunnel05, 13 RingMark05_*, CyanCore05, River05). Use it only if it helps you measure ring spacing/VP against the ref; do not build an unrelated prototype and do not block on it.
+
+Rules: write `qa/pilot05/wave5/environment/NOTES.md` FIRST (short plan), and update it after EVERY capture (what changed in which function, measured px numbers) so progress survives a cut-off. Max 5 captures: `timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/environment/itNN`. Side-by-side: `python3 scripts/triptych.py OUT.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/pilot05/wave5/baseline/05.png NOW=<capture>`. Materials are shared with 03/04/06/07: at the end do ONE regression capture `timeout 900 node scripts/capture.mjs 04 06 07 --out=qa/pilot05/wave5/environment/regress` and compare with `screenshots/NN.png`; nothing there may get worse. `npx tsc --noEmit` must pass. Do not commit/push (autosave does). No paid services. Report measured numbers only, no fidelity percentages. Final answer: a short summary of what changed (file:function), before/after numbers, what is left.
+
+### 🤖 Claude — 2026-11-15T21:50:01.270Z
+
+I'll start by reading the coordination docs and my previous transcript's end.
+
+### 🤖 Claude — 2026-11-15T21:50:02.268Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat qa/pilot05/COORDINATION_WAVE5.md; echo ======; sed -n 1,200p qa/pilot05/COORDINATION_WAVE3.md | head -150", "description": "Read wave 5 and wave 3 coordination docs"}`
+
+### 🧑 User — 2026-11-15T21:50:02.306Z
+
+> ↩︎ result: # Screen 05: wave 5 (account 6, session branch `claude/rainbow-3d-account-transfer-syorak`)
+> 
+> Started 2026-11-15 ~22:00 UTC. Wave 4 (account 5) was cut off at 21:18 UTC: every edit pushed by the
+> 21:18 autosave (`3c0fe33`) is in the tree and is **kept**. Nothing after 21:18 reached GitHub (no
+> specialist NOTES.md from wave 4). `COORDINATION_WAVE3.md` still holds targets 1–10, file ownership and
+> rules; `COORDINATION_WAVE4.md` still holds the CAMERA LOCK. This file only adds wave-5 facts.
+> 
+> ## Baseline for wave 5 (recovered tree, `1764258`)
+> * Approved target: `references/05_flow_into_the_current.png` (immutable, 864×1536).
+> * Live game now: `qa/pilot05/wave5/baseline/05.png` (stage 05, s 132.44, 121 calls, 608k tris).
+> * Previous version (wave-4 start): `qa/pilot05/wave4/baseline/05.png`.
+> * Gameplay baseline (must not regress): `qa/pilot05/wave5/baseline/gameplay_test.json` — pass, 2139
+>   steps, 91 coins, plunge 61.41, pause/resume, heart loss, victory 11. Continuity: drop 61.19, gaps ≈ 0.
+> * Your own wave-4 transcript (read the END of it, it shows exactly where you stopped):
+>   `backups/claude-sessions/d8784a51-ef7d-54bd-9459-c5d061a0acfa/subagents/agent-<id>.md`
+>   environment `ab0084779f36 …[+11662 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:03.650Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n -i -B2 -A8 \"environment\\|washer\" qa/pilot05/REQUESTS.md | head -120; ls qa/pilot05/wave5/ qa/pilot05/wave5/* 2>/dev/null | head -50", "description": "Read requests for environment modeler and list wave5 dirs"}`
+
+### 🧑 User — 2026-11-15T21:50:03.694Z
+
+> ↩︎ result: qa/pilot05/wave5/:
+> baseline
+> 
+> qa/pilot05/wave5/baseline:
+> 05.png
+> continuity_report.json
+> gameplay_test.json
+
+### 🤖 Claude — 2026-11-15T21:50:07.125Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; tail -c 3000 qa/pilot05/REQUESTS.md; echo; echo =====; f=backups/claude-sessions/d8784a51-ef7d-54bd-9459-c5d061a0acfa/subagents/agent-ab0084779f3629691.md; wc -l $f; tail -150 $f", "description": "Read requests tail and wave-4 transcript end"}`
+
+### 🧑 User — 2026-11-15T21:50:07.161Z
+
+> ↩︎ result: terline; the ref has clear glossy cyan right under him). If you want a hint of contact, use at most `col += uCyanBright * 0.18 * (1.0 - smoothstep(0.0, rb * 0.3, rr)) * k;` (cyan, never uFoam/white). Keep the pink-band parting, `rings` and `wakeV` as they are. The V spray fan itself is mine (riderSplash.ts / spray.ts) and is being rebuilt as soft translucent white/cyan droplet streaks.
+> - water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE 19:58 UTC. Deleted the white `contact` → uFoam mix in waterRibbon.ts FRAG (Benny block); replaced by the faint cyan hint you suggested. Confirmed by my own isolation pair qa/pilot05/wave3/water/it08_iso (rim) vs it08_iso_nowake (no rim). rings/wakeV/band parting kept.
+> - water-fx-specialist → coordinator (FYI, tooling): `scripts/capture.mjs --q=waterhide=a,b` does NOT pass the hide list: the arg parser does `a.slice(2).split('=')` and keeps only the 2nd piece, so the URL gets `&waterhide` with no value (every part stays visible). One-line fix for the owner: `const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true];`. Until then isolation captures made with --q=waterhide=... are not isolated.
+> - coordin …[+15905 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:14.073Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git log --oneline | head -5; git status --short | head -30; npx tsc --noEmit 2>&1 | head -30", "description": "Check git state and TypeScript compile"}`
+
+### 🧑 User — 2026-11-15T21:50:18.034Z
+
+> ↩︎ result: bc65a4d autosave: Rainbow 2026-11-15 21:46 UTC
+> 1764258 autosave: Rainbow 2026-11-15 21:41 UTC
+> 3c0fe33 autosave: Rainbow 2026-11-15 21:18 UTC
+> e174e5b autosave: Rainbow 2026-11-15 21:13 UTC
+> 922d904 autosave: Rainbow 2026-11-15 21:08 UTC
+>  M qa/capture_log.json
+> ?? qa/pilot05/COORDINATION_WAVE5.md
+> ?? qa/pilot05/wave5/
+
+### 🤖 Claude — 2026-11-15T21:50:22.163Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; wc -l src/world/materials.ts src/world/tube.ts src/world/environment.ts src/render/env.ts src/render/grade.ts; grep -n \"^export function\\|^export const\\|^export type\\|^function \" src/world/tube.ts src/world/materials.ts; echo ===; grep -n \"bandGeometry\\|wallLidGeometry\\|farTunnel\\|forced\\|slab\\|band:\\|PERF_RIVER\\|virtualDepth\\|tunnelEndGlow\\|withFarGlow\" src/world/*.ts src/game/*.ts src/render/*.ts | grep -v \"^src/world/tube.ts.*function\\b\" | head -50", "description": "List exports and check wiring of wave-4 helpers"}`
+
+### 🧑 User — 2026-11-15T21:50:22.239Z
+
+> ↩︎ result: 567 src/world/materials.ts
+>   601 src/world/tube.ts
+>   636 src/world/environment.ts
+>    60 src/render/env.ts
+>    26 src/render/grade.ts
+>  1890 total
+> src/world/tube.ts:22:export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0.9): TubePath {
+> src/world/tube.ts:30:export function straightTubePath(
+> src/world/tube.ts:144:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> src/world/tube.ts:168:export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
+> src/world/tube.ts:229:export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments = 96): THREE.BufferGeometry {
+> src/world/tube.ts:260:export function roundBandGeometry(height = 0.095, width = 0.78, lipHeight = 0.045, lipWidth = 0.26, groove = 0.07, segments = 96): THREE.BufferGeometry {
+> src/world/tube.ts:286:export type BandOpts = { height?: number; width?: number; lipHeight?: number; lipWidth?: number; groove?: number; segments?: number };
+> src/world/tube.ts:288:export type RingOpts = { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { dep …[+5414 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:26.589Z
+
+The wave-4 helpers (band, slab, virtualDepth, river) exist but environment.ts doesn't use them yet. Let me read the relevant code.
+
+### 🤖 Claude — 2026-11-15T21:50:27.240Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 180,340p src/world/environment.ts", "description": "Read 05 tunnel section of environment.ts"}`
+
+### 🧑 User — 2026-11-15T21:50:27.278Z
+
+> ↩︎ result: const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
+>   const goldPath = courseTubePath(course, r04, 0.9);
+>   const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, g0, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));
+>   zones.tubes.add(goldPipe);
+>   zones.tubes.add(buildRings(goldPath, g0 + 0.2, s05 - 1, 1.6, goldMat, { tube: 0.05, inset: 0.02 }));
+>   // big mouth rings at the drain
+>   for (let i = 0; i < 4; i++) {
+>     const s = g0 + 0.05 + i * 0.3;
+>     zones.tubes.add(buildRings(goldPath, s, s + 0.01, 1, goldMat, { tube: 0.07, extra: 0.4 + i * 0.22 }));
+>   }
+> 
+>   // =====================================================================================
+>   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+>   // =====================================================================================
+>   const s08 = course.stage('08').s0;
+>   const pinkFlow = pinkFlowMaterial();
+>   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+>   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+>   // hot magenta near → violet mid-tunnel → warm yellow-white core at the  …[+9839 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:32.462Z
+
+Now let me look at the reference and baseline images.
+
+### 🤖 Claude — 2026-11-15T21:50:32.961Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-15T21:50:32.975Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:50:33.299Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/baseline/05.png"}`
+
+### 🧑 User — 2026-11-15T21:50:33.351Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:50:38.334Z
+
+Let me write NOTES.md first, then inspect the wave-4 helpers in tube.ts.
+
+### 🤖 Claude — 2026-11-15T21:50:43.978Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/wave5/environment && cat > /home/user/rainbow-/qa/pilot05/wave5/environment/NOTES.md <<'EOF'\n# wave 5 · washer-environment-modeler · Screen 05\n\n## Plan (written first, 22:0x UTC)\n1. VP glow: shrink `tunnelEndGlowMaterial` disc to a small warm core (≲40 px) + halo (≲120 px); extend the\n   visible tunnel with the wave-4 forced-perspective far-tunnel helper (tube.ts) so ≥8 rings recede into it.\n2. Walls: darker metallic violet/magenta (environment.ts `wallBase`, materials.ts `perforatedMetal`), black\n   capsule slots, white-pink lengthwi …[+744 chars]`
+
+### 🧑 User — 2026-11-15T21:50:44.032Z
+
+> ↩︎ result: * and pokes through the stream where it hugs the wall (06 arch).
+>  * Lathe around local Z; radial values are fractions of the tube radius, axial values are world units
+>  * (the instance scales z by 1). Interior corners are duplicated so every facet keeps a crisp normal.
+>  */
+> export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments = 96): THREE.BufferGeometry {
+>   const w = width / 2;
+>   const d = depth;
+>   const lipW = Math.min(0.16, width * 0.15), groove = Math.min(0.07, width * 0.06);
+>   // traversed from +z to -z so LatheGeometry's faces/normals point INWARD (toward the tunnel axis)
+>   const prof: [number, number][] = [
+>     [1.03, w], [1 - d * 0.5, w], // far side (hidden from the rider)
+>     [1 - d, w - 0.05], // far chamfer
+>     [1 - d, -w + lipW + groove + 0.02], // the flat band
+>     [1 - d * 0.55, -w + lipW + groove * 0.5], // dark groove (recessed toward the wall)
+>     [1 - d - lip, -w + lipW], [1 - d - lip, -w + 0.05], // raised lip
+>     [1 - d * 0.35, -w], // lip's camera-facing side → thin bright contour
+>     [1.03, -w],
+>   ];
+>   const pts: THREE.Vector2[] = [];
+>   prof.forEach(([x, y], i) => {
+>     pts.push(new THREE.Vector2(x, y));
+>     if (i > 0 && i < prof.leng …[+4954 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:45.298Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 350,601p src/world/tube.ts", "description": "Read lid helpers and far tunnel helper in tube.ts"}`
+
+### 🧑 User — 2026-11-15T21:50:45.331Z
+
+> ↩︎ result: path: TubePath,
+>   s0: number,
+>   s1: number,
+>   spacing: number,
+>   material: THREE.Material,
+>   opts: {
+>     angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number;
+>     skip?: (s: number, centre: THREE.Vector3, size: number) => boolean;
+>     /** explicit lid positions along the path (default: s0, s0 + spacing, … s1) */
+>     positions?: number[];
+>     /**
+>      * 'hood' (legacy 06/07 D-hood), 'dome' (half puck with a domed cap) or 'slab' (ref 05 wave 4: a flat
+>      * copper-gold half-disc lid standing out of the wall — flat underside, rounded edges, a straight
+>      * polished rim band and a flat top, like the ref's wall-mounted nozzle lids)
+>      */
+>     shape?: 'hood' | 'dome' | 'slab';
+>   } = {},
+> ): THREE.InstancedMesh {
+>   const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
+>   const list: number[] = opts.positions ?? [];
+>   if (!opts.positions) for (let s = s0; s <= s1 + 1e-6; s += spacing) list.push(s);
+>   const n = Math.max(1, list.length) * 2;
+>   const mesh = new THREE.InstancedMesh(geo, material, n);
+>   const size = opts.size ?? 1.6;
+>   const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 18);
+>   const tilt = ang + THREE. …[+11849 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:50.744Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls node_modules/.bin | grep -i -E \"tsx|vite-node|esbuild|ts-node\"; grep -n \"'05'\" src/game/*.ts src/world/course.ts | head -20; grep -n \"STAGE_CAM\" -A3 src/game/cameraRig.ts | head -40", "description": "Find TS runners and stage 05 camera config"}`
+
+### 🧑 User — 2026-11-15T21:50:50.804Z
+
+> ↩︎ result: esbuild
+> vite-node
+> src/game/Game.ts:29:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> src/game/Game.ts:130:    basin: ['02', '05'],
+> src/game/Game.ts:527:    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+> src/game/cameraRig.ts:31:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> src/game/cameraRig.ts:116:    // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
+> src/game/cameraRig.ts:121:    const st5 = this.course.stage('05');
+> src/game/cameraRig.ts:122:    const p5 = STAGE_CAM['05'] as CamParams;
+> src/world/course.ts:16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> src/world/course.ts:53:  '05': 'FLOW INTO THE CURRENT',
+> src/world/course.ts:205:  mark('05');
+> src/world/course.ts:216:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> src/world/course.ts:276:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> s …[+1640 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:54.351Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,200p scripts/capture.mjs | grep -n \"q=\\|__rainbow\\|evaluate\\|camera\\|stats\" | head -30; grep -n \"__rainbow\\s*=\\|__rainbow =\" -A30 src/game/Game.ts src/main.ts 2>/dev/null | grep -n \"camera\\|coinScreen\\|:\" | head -30", "description": "Inspect capture script hooks and debug API"}`
+
+### 🧑 User — 2026-11-15T21:50:54.454Z
+
+> ↩︎ result: 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+> 35:    const err = await page.evaluate(() => window.__error);
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+> 38:    const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+> 40:    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+> 41:    await page.evaluate(() => document.fonts.ready);
+> 45:    const stats = await page.evaluate(() => window.__rainbow.stats());
+> 46:    const state = await page.evaluate(() => window.__rainbow.state());
+> 47:    log.shots.push({ id, file: `${outDir}/${name}`, size: [w, h], checkpoint: st, state, stats });
+> 48:    console.log(id, '→', `${outDir}/${name}`, JSON.stringify({ stage: state.stage, s: state.s, y: state.bennyY, calls: stats.calls, tris: stats.triangles, modules: stats.modules }));
+> 1:src/game/Game.ts:639:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-15T21:50:56.024Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 560,640p src/game/Game.ts; cat scripts/capture.mjs | head -60", "description": "Read debug API and capture script"}`
+
+### 🧑 User — 2026-11-15T21:50:56.067Z
+
+> ↩︎ result: if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.s …[+7199 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:02.341Z
+
+Let me measure the reference ring structure along the VP column and compare with baseline.
+
+### 🤖 Claude — 2026-11-15T21:51:03.244Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"import PIL, numpy; print(PIL.__version__, numpy.__version__)\"; cat scripts/triptych.py | head -30", "description": "Check python imaging libs and triptych script"}`
+
+### 🧑 User — 2026-11-15T21:51:03.361Z
+
+> ↩︎ result: 12.3.0 2.5.3
+> import sys
+> from PIL import Image, ImageDraw, ImageFont
+> # usage: triptych.py out.png h label1=path1 label2=path2 ...
+> out, H = sys.argv[1], int(sys.argv[2])
+> items = [a.split('=',1) for a in sys.argv[3:]]
+> ims = []
+> for lab, p in items:
+>     im = Image.open(p).convert('RGB')
+>     w = round(im.width * H / im.height)
+>     ims.append((lab, im.resize((w, H), Image.LANCZOS)))
+> pad, top = 8, 34
+> W = sum(i.width for _, i in ims) + pad * (len(ims) + 1)
+> canvas = Image.new('RGB', (W, H + top + pad), (24, 18, 32))
+> d = ImageDraw.Draw(canvas)
+> try: f = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 20)
+> except Exception: f = ImageFont.load_default()
+> x = pad
+> for lab, im in ims:
+>     canvas.paste(im, (x, top)); d.text((x + 6, 7), lab, fill=(255, 255, 255), font=f); x += im.width + pad
+> canvas.save(out)
+> print(out, canvas.size)
+
+### 🤖 Claude — 2026-11-15T21:51:15.814Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/measure.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\ndef load(p): return np.asarray(Image.open(p).convert('RGB')).astype(float)\ndef gold_mask(a):\n    r,g,b=a[...,0],a[...,1],a[...,2]\n    return (r>180)&(g>110)&(b<150)&(r-b>90)\ndef column(a, x=498, y0=150, y1=520):\n    m=gold_mask(a[:, x-3:x+4]).any(1)\n    runs=[];y=y0\n    while y<y1:\n        if m[y]:\n            s=y\n            …[+1833 chars]`
+
+### 🧑 User — 2026-11-15T21:51:16.196Z
+
+> ↩︎ result: references/05_flow_into_the_current.png white(>235) region (np.int64(200), np.int64(699), np.int64(250), np.int64(699)) n 9470
+> references/05_flow_into_the_current.png warm(r>230,g>170) bbox (np.int64(250), np.int64(749), np.int64(250), np.int64(699)) n 24305
+> references/05_flow_into_the_current.png gold runs on x=498 above VP: [(190, 199), (202, 202), (204, 221), (228, 228), (303, 314), (378, 379), (413, 417), (432, 437), (442, 443), (445, 450), (452, 473), (486, 489)]
+> references/05_flow_into_the_current.png Lwall median #BF36B4 dark<60 0.07 p10 77 p90 209 gold% 0.08
+> references/05_flow_into_the_current.png Rwall median #CF3DB6 dark<60 0.07 p10 78 p90 216 gold% 0.12
+> references/05_flow_into_the_current.png ceil median #B2359F dark<60 0.04 p10 81 p90 197 gold% 0.15
+> references/05_flow_into_the_current.png gold pixels median #FB984D p90 #FFE280
+> baseline/05.png white(>235) region (np.int64(200), np.int64(699), np.int64(254), np.int64(699)) n 24576
+> baseline/05.png warm(r>230,g>170) bbox (np.int64(250), np.int64(749), np.int64(250), np.int64(699)) n 117589
+> baseline/05.png gold runs on x=498 above VP: [(182, 186), (213, 228), (246, 258), (272, 277), (280, 282), (285, 285), (287, 289), (292,  …[+290 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:23.153Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/'\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((248,250,748,600))\nb=Image.open('qa/pilot05/wave5/baseline/05.png').convert('RGB').crop((248,250,748,600))\nc=Image.new('RGB',(1000+8,350),(0,0,0)); c.paste(a,(0,0)); c.paste(b,(508,0)); c=c.resize((2016,700)); c.save(S+'vp_crop.png')\n\"", "description": "Crop VP region of ref and baseline side by side"}`
+
+### 🧑 User — 2026-11-15T21:51:23.673Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:51:25.293Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/vp_crop.png"}`
+
+### 🧑 User — 2026-11-15T21:51:25.632Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T21:51:25.628Z
+
+[Image: original 2016x700, displayed at 2000x694. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T21:51:29.349Z
+
+The glow disc fills the whole tunnel end cross-section. I need the actual geometry numbers (stage bounds, camera depth, ring positions) to plan the forced-perspective extension.
+
+### 🤖 Claude — 2026-11-15T21:51:30.549Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"new Course\\|buildCourse\\|createCourse\\|export class Course\\|export function\" src/world/course.ts | head; grep -n \"course\\b\\|Course(\" src/game/Game.ts | head -5; sed -n 100,175p src/game/cameraRig.ts", "description": "Find course constructor and camera rig 05 code"}`
+
+### 🧑 User — 2026-11-15T21:51:30.612Z
+
+> ↩︎ result: 73:export function funnelY(r: number): number {
+> 131:export function meander05(u: number): number {
+> 309:export class Course {
+> 526:export function validateContinuity(c: Course): ContinuityReport {
+> 5: *   ride   (03–10)  interactive: auto-propelled along the course, steer left/right, real coin pickups,
+> 16:import { Course, StageId, WORLD } from '../world/course';
+> 79:  const course = new Course();
+> 80:  const env = buildEnvironment(course);
+> 82:  const water = await loadWater(course);
+>     outPos.copy(straightPos).lerp(curvedPos, Math.max(pitchBend, 0.35));
+>     outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);
+>     outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
+>     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
+>     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
+>     const st3 = this.course.stage('03');
+>     const w3 = THREE.MathUtils.smoothstep(s, st3.s0 - 6, st3.s0 + 2) * (1 - THREE.MathUtils.smoothstep(s, st3.s1 - 6, st3.s1 + 1));
+>     if (w3 > 0) {
+>       const B = WORLD.basin;
+>       const wp = benny.clone().add(new THREE.Vector3(2.8, 3.6, 5.6));
+>       const drain = new …[+2892 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:36.157Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 56,80p src/game/cameraRig.ts; grep -n \"CameraRig\\|rideCam\\b =\" src/game/Game.ts | head -5; grep -n \"axis\" src/game/Game.ts | head -10; grep -n \"export function buildEnvironment\" -A30 src/world/environment.ts | grep -n \"return\\|axis\\|perfPath\" | head", "description": "Inspect CameraRig constructor and axis wiring"}`
+
+### 🧑 User — 2026-11-15T21:51:36.220Z
+
+> ↩︎ result: return acc;
+> }
+> 
+> export class RideCamera {
+>   readonly pos = new THREE.Vector3();
+>   readonly target = new THREE.Vector3();
+>   readonly up = new THREE.Vector3(0, 1, 0);
+>   fov = 70;
+>   private init = false;
+>   /** optional straight tunnel axis + the s-range where the camera aligns to it */
+>   axis: { path: TubePath; s0: number; s1: number } | null = null;
+> 
+>   constructor(private course: Course) {}
+> 
+>   /** desired pose for Benny at (s, lateral) */
+>   desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+>     const p = camParamsAt(this.course, s);
+>     const f = this.course.sample(s);
+>     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+>     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+>     let up = f.up.clone();
+>     if (this.axis) {
+>       const a = this.axis;
+>       const w = THREE.MathUtils.smoothstep(s, a.s0, a.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, a.s1 - 10, a.s1));
+>       if (w > 0) {
+> 96:  const rideCam = new RideCamera(course);
+> 97:  rideCam.axis = env.tubeAxis;
+> 231:      // tumble = rolling cartwheels seen by the camera: face the lens, roll around the view axis
+> 357:    // 03 wh …[+69 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:40.081Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"tubeR\\b\\|const tubeR\\|tubeAxis\" src/world/environment.ts | head; sed -n 30,60p src/world/tube.ts; grep -n \"'05_crest'\\|05_crest\" src/world/course.ts | head -3; grep -n \"'05'\" src/game/Game.ts", "description": "Find tubeR and straightTubePath definitions"}`
+
+### 🧑 User — 2026-11-15T21:51:40.144Z
+
+> ↩︎ result: 28:  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> 176:  const tubeR = (s: number) => course.prop('tube', s);
+> 180:  const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
+> 221:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> 416:    tubeAxis: { path: perfPath, s0: s05, s1: course.marks['07_plunge_top'] },
+> export function straightTubePath(
+>   course: Course,
+>   s0: number,
+>   s1: number,
+>   opts: { window: number; taper: number; baseRadius: (s: number) => number },
+> ): TubePath {
+>   const ds = 0.5;
+>   const n = Math.ceil((s1 - s0) / ds) + 1;
+>   const S = (i: number) => Math.min(s1, s0 + i * ds);
+>   const axis: THREE.Vector3[] = [];
+>   const cp: THREE.Vector3[] = [];
+>   for (let i = 0; i < n; i++) cp.push(course.sample(S(i)).pos.clone());
+>   for (let i = 0; i < n; i++) {
+>     const s = S(i);
+>     const taper = THREE.MathUtils.smoothstep(s, s0, s0 + opts.taper) * (1 - THREE.MathUtils.smoothstep(s, s1 - opts.taper, s1));
+>     const W = opts.window * taper;
+>     const k = Math.round(W / ds);
+>     let x = 0, z = 0, wsum = 0;
+>     for (let j = i - k; j <= i + k; j++) {
+>       const jj = THREE.MathUtils.clamp(j, 0, n -  …[+1196 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:33.828Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 40,150p src/world/materials.ts", "description": "Read far glow / virtual depth code in materials.ts"}`
+
+### 🧑 User — 2026-11-15T21:52:33.858Z
+
+> ↩︎ result: * the glossy metal catches light around every slot (refs 05–07). Height amplitudes in world units.
+>    */
+>   relief?: { corrugation: number; bevel: number; bevelWidth?: number };
+>   /** emissive glow colour hugging every hole edge (refs: hot-pink glowing slot outlines) */
+>   rimColor?: THREE.ColorRepresentation;
+>   rimStrength?: number;
+>   /** warm "light at the end of the tunnel": emissive that grows with view distance */
+>   farGlow?: FarGlow;
+>   /** dedicated reflection environment (e.g. washerTubeEnv()) instead of scene.environment */
+>   envMap?: THREE.Texture | null;
+>   envMapIntensity?: number;
+>   /**
+>    * forced-perspective section (05 far tunnel): the geometry carries a per-vertex `fgExtra` attribute =
+>    * virtual minus real depth, so the distance glow / mid tint behave as if the tunnel ran on for hundreds
+>    * of units (see buildForcedTunnel in tube.ts)
+>    */
+>   virtualDepth?: boolean;
+>   /**
+>    * paint a far stream on the tunnel floor (forced-perspective section only): band centred on the
+>    * bottom (uv.x = 0.5), half width in uv.x, visible beyond `from` virtual units
+>    */
+>   river?: { halfWidth: number; from: number; core: THREE.ColorRepresentation; band: THREE.ColorRepresentation;  …[+4651 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:38.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"animated\" src/world/environment.ts | head; grep -n \"env.update\\|env.animated\\|animated\" src/game/Game.ts | head; sed -n 20,40p src/world/environment.ts; sed -n 400,425p src/world/environment.ts", "description": "Check animated hook signature and env return"}`
+
+### 🧑 User — 2026-11-15T21:52:38.430Z
+
+> ↩︎ result: 49:  const animated: ((t: number, dt: number) => void)[] = [];
+> 298:  animated.push(pinkFlow.update);
+> 402:    animated.push(stream.update);
+> 407:    update: (t, dt) => animated.forEach((f) => f(t, dt)),
+> 497:    env.update(time, dt);
+>   roomA: LaundryRoom & { anchor: THREE.Object3D };
+>   roomC: LaundryRoom & { anchor: THREE.Object3D };
+>   towel: TowelMesh; // on the chamber platform (08–11)
+>   drumTowel: TowelMesh; // bundle wrapped around Benny in drum A (01–02)
+>   laundry: { sock: THREE.Object3D; shirt: THREE.Object3D };
+>   /** groups toggled per scene for performance */
+>   zones: Record<'drumA' | 'basin' | 'tubes' | 'chamber', THREE.Group>;
+>   /** straight 05–07 tunnel axis (camera alignment) */
+>   tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> }
+> 
+> const sm = (a: number, b: number, x: number) => {
+>   const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1);
+>   return t * t * (3 - 2 * t);
+> };
+> 
+> export function buildEnvironment(course: Course): Environment {
+>   const root = new THREE.Group();
+>   root.name = 'washer_world';
+>   const zones = {
+>     drumA: new THREE.Group(),
+>     const stream = buildPourStream(wall.clone().add(new THREE.Vector3(-side * 2.0 * scale, -1.6 * scale, 0) …[+963 chars]
+
+### 🤖 Claude — 2026-11-15T21:53:17.461Z
+
+Now let me build a small measuring script (vite-node) that computes the locked 05 camera pose and projects ring positions, so I can plan the far tunnel without spending captures.
+
+### 🤖 Claude — 2026-11-15T21:53:29.858Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/.claude_probe05.ts 2>/dev/null <<'EOF'\nEOF\nrm -f /home/user/rainbow-/.claude_probe05.ts\nS=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad\ncat > $S/probe05.ts <<'EOF'\nimport * as THREE from '/home/user/rainbow-/node_modules/three/build/three.module.js';\nimport { Course } from '/home/user/rainbow-/src/world/course';\nimport { straightTubePath, tubeCenterAt } from '/home/user/rainbow-/src/world/tube';\nimport { RideCamera, STAGE_CAM } from '/home/user/rainbow-/src/game/cameraRig';\nconst course = new Course();\nconst t …[+2666 chars]`
+
+### 🧑 User — 2026-11-15T21:53:31.044Z
+
+> ↩︎ result: s05 114.69 s06 188.92 s08 389.22 crest 132.44 fov 62 cam 1.92,-37.94,-68.28
+> axis tan 0.000,-0.042,-0.999 sCam05 126.04 sGlow05 183.02
+> s 122.04 D -3.79 R 7.60 centre 469,702 top 439,2456 bottom 544,-3624 left 3285,758 depth 3.36
+> s 128.04 D 2.00 R 7.60 centre 561,28 top 2217,-81775 bottom 499,3103 left -3889,107 depth 3.38
+> s 134.04 D 8.00 R 7.60 centre 514,376 top 537,-1319 bottom 499,1462 left -697,381 depth 3.40
+> s 140.04 D 13.97 R 7.60 centre 508,422 top 519,-431 bottom 500,1085 left -194,423 depth 3.41
+> s 146.04 D 19.92 R 7.60 centre 506,439 top 513,-130 bottom 500,918 left 11,440 depth 3.42
+> s 152.04 D 25.90 R 7.60 centre 504,449 top 509,22 bottom 500,823 left 122,449 depth 3.43
+> s 158.04 D 31.77 R 7.60 centre 503,455 top 507,112 bottom 500,763 left 192,456 depth 3.44
+> s 164.04 D 37.71 R 7.60 centre 503,460 top 506,174 bottom 500,721 left 240,460 depth 3.48
+> s 170.04 D 43.61 R 7.60 centre 502,464 top 505,218 bottom 500,691 left 275,464 depth 3.52
+> s 176.04 D 49.33 R 7.60 centre 502,466 top 504,250 bottom 500,667 left 301,466 depth 3.53
+> s 182.04 D 55.04 R 7.60 centre 499,468 top 501,275 bottom 497,648 left 317,468 depth 3.53
+> s 183.02 D 55.93 R 7.62 centre 498,467 top 499,277 bottom 496, …[+402 chars]
+
+### 🤖 Claude — 2026-11-15T21:54:56.057Z
+
+Key numbers: live VP is at (500, 479); real rings stop at depth D≈55 (sGlow05), where the end-glow disc (radius ≈190 px) closes the tunnel. Let me measure the ref's VP and ring radii precisely.
+
+### 🤖 Claude — 2026-11-15T21:55:03.199Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(float)\nlum=a.mean(2)\nsub=lum[400:560,420:580]\nys,xs=np.nonzero(sub>=sub.max()-6); print('ref brightest', xs.mean()+420, ys.mean()+400, sub.max())\n# white-ish core size: pixels with min channel > 235 near VP\nwc=(a.min(2)>230)\nys,xs=np.nonzero(wc[420:560,420:580]); print('ref core (min ch>230) bbox', xs.min()+420,xs.max()+420,ys.min()+420,ys.max()+420, len(xs))\nwarm=(a[...,0]>245)&(a[...,1]>200)&(a[..., …[+1020 chars]`
+
+### 🧑 User — 2026-11-15T21:55:03.660Z
+
+> ↩︎ result: ref brightest 505.1621621621622 500.4932432432432 254.33333333333334
+> ref core (min ch>230) bbox 420 579 450 559 346
+> ref warm (r>245,g>200,b>120) bbox 380 619 380 599 2480
+> row 470 [(200, 209), (212, 238), (328, 330), (334, 347), (394, 398), (400, 406), (427, 429), (431, 439), (441, 443), (455, 459), (462, 465), (467, 532), (535, 535), (538, 542), (552, 555), (579, 580), (627, 628), (633, 634), (700, 716), (728, 729), (737, 742), (754, 810), (822, 835), (838, 844)]
+> row 480 [(201, 201), (215, 231), (234, 238), (335, 344), (400, 406), (440, 444), (449, 451), (453, 489), (510, 532), (539, 542), (551, 553), (578, 579), (624, 633), (639, 640), (700, 715), (727, 729), (734, 741), (752, 802), (812, 819)]
+> row 488 [(201, 203), (216, 232), (234, 236), (238, 238), (345, 345), (441, 446), (453, 459), (483, 484), (488, 501), (504, 510), (518, 519), (522, 540), (548, 553), (577, 578), (623, 632), (698, 714), (720, 725), (730, 740), (752, 776)]
+> live core (min>230) bbox 250 749 303 699 14398
+> live warm bbox 250 749 250 696 85233
+
+### 🤖 Claude — 2026-11-15T21:57:00.970Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 200,380p src/world/materials.ts", "description": "Read perforatedMetal shader code"}`
+
+### 🧑 User — 2026-11-15T21:57:01.008Z
+
+> ↩︎ result: }
+> 
+> export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {
+>   const mat = new THREE.MeshStandardMaterial({
+>     color: o.color ?? '#d13fd6',
+>     metalness: o.metalness ?? 0.72,
+>     roughness: o.roughness ?? 0.26,
+>     emissive: new THREE.Color(o.emissive ?? '#9a1fa8'),
+>     emissiveIntensity: o.emissiveIntensity ?? 0.26,
+>     side: o.side ?? THREE.BackSide,
+>     envMapIntensity: o.envMapIntensity ?? 1.0,
+>   });
+>   if (o.envMap) mat.envMap = o.envMap;
+>   const relief = o.relief;
+>   // mean hole coverage of one cell (capsule area / cell area): sub-pixel slot rows fade to this instead
+>   // of aliasing into moiré stripes down the tunnel
+>   const hs = o.slotHalf ?? [((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.62 : 0.5)), ((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.24 : 0.5))];
+>   const rr = Math.min(hs[0], hs[1]);
+>   const holeCover = THREE.MathUtils.clamp(4 * hs[0] * hs[1] - (4 - Math.PI) * rr * rr, 0, 1);
+>   const river = o.river;
+>   const uniforms = {
+>     uHoleColor: { value: new THREE.Color(o.holeColor ?? '#2b0640') },
+>     uSlot: { value: o.slot ?? 1 },
+>     uRepeat: { value: new THREE.Vector2(o.repeatU ?? 64, o.repeatV ?? 1.2) },
+>     uHoleSize: { value: o.holeSize ?? …[+7383 chars]
+
+### 🤖 Claude — 2026-11-15T21:57:02.406Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 150,200p src/world/materials.ts; sed -n 380,540p src/world/materials.ts", "description": "Read tube strips, env cube, glow and gold materials"}`
+
+### 🧑 User — 2026-11-15T21:57:02.455Z
+
+> ↩︎ result: }
+> 
+> export function withTubeStrips<T extends THREE.MeshStandardMaterial>(mat: T, s: TubeStrips, source: 'attribute' | 'instance', key: string): T {
+>   const uniforms = {
+>     uStripColor: { value: new THREE.Color(s.color).multiplyScalar(s.intensity) },
+>     uStripP: { value: new THREE.Vector4(s.count, s.width, 0, s.alt ?? 0.7) },
+>   };
+>   const prev = mat.onBeforeCompile;
+>   mat.onBeforeCompile = (shader, r) => {
+>     prev.call(mat, shader, r);
+>     Object.assign(shader.uniforms, uniforms);
+>     const axis = source === 'instance'
+>       ? `vTubeAxis = normalize((viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz);
+> vTubeUp = normalize((viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 1.0, 0.0, 0.0)).xyz);`
+>       : `vTubeAxis = normalize((viewMatrix * modelMatrix * vec4(tubeAxis, 0.0)).xyz);
+> vTubeUp = normalize((viewMatrix * modelMatrix * vec4(tubeUp, 0.0)).xyz);`;
+>     shader.vertexShader = shader.vertexShader
+>       .replace('#include <common>', `#include <common>
+> varying vec3 vTubeAxis; varying vec3 vTubeUp;
+> ${source === 'attribute' ? 'attribute vec3 tubeAxis; attribute vec3 tubeUp;' : ''}`)
+>       .replace('#include <project_vertex>', `#include <project_vertex>
+> ${ax …[+8751 chars]
+
+### 🤖 Claude — 2026-11-15T21:58:37.847Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 60,228p src/world/tube.ts", "description": "Read straight path tail and buildTubeGeometry"}`
+
+### 🧑 User — 2026-11-15T21:58:37.885Z
+
+> ↩︎ result: // filtered 06 axis has no yaw kink and 06 itself is unchanged.
+>   const wRun = new Array<number>(n).fill(0);
+>   const wXZ = new Array<number>(n).fill(0);
+>   const runDepth = new Array<number>(n).fill(0);
+>   for (const r of course.straightAxes ?? []) {
+>     if (r.s1 <= s0 || r.s0 >= s1) continue;
+>     const ab = r.b.clone().sub(r.a);
+>     const ab2 = ab.lengthSq();
+>     for (let i = 0; i < n; i++) {
+>       const s = S(i);
+>       const wIn = THREE.MathUtils.smoothstep(s, r.s0, r.s0 + 12);
+>       const w = wIn * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 6, r.s1 + 2));
+>       const wl = wIn * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 18, r.s1 + 2));
+>       if (wl <= wXZ[i]) continue;
+>       wXZ[i] = wl;
+>       wRun[i] = w;
+>       runDepth[i] = r.floorDepth;
+>       const u = cp[i].clone().sub(r.a).dot(ab) / ab2;
+>       const onLine = r.a.clone().addScaledVector(ab, u);
+>       axis[i].x += (onLine.x - axis[i].x) * wl;
+>       axis[i].z += (onLine.z - axis[i].z) * wl;
+>       axis[i].y += (onLine.y - axis[i].y) * w;
+>     }
+>   }
+>   const WU = new THREE.Vector3(0, 1, 0);
+>   const frames: Frame[] = axis.map((p, i) => {
+>     const a = axis[Math.max(0, i - 2)], b = axis[Math.min(n - 1, i + 2)];
+>     const tan = b.clone() …[+6825 chars]
+
+### 🤖 Claude — 2026-11-15T21:58:46.171Z
+
+Let me compare the near-wall detail (left wall) of ref and baseline at 2x.
+
+### 🤖 Claude — 2026-11-15T21:58:49.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/'\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((0,180,330,560))\nb=Image.open('qa/pilot05/wave5/baseline/05.png').convert('RGB').crop((0,180,330,560))\nc=Image.new('RGB',(668,380)); c.paste(a,(0,0)); c.paste(b,(338,0)); c.resize((1336,760)).save(S+'wall_crop.png')\n\"", "description": "Crop left wall of ref and baseline"}`
+
+### 🧑 User — 2026-11-15T21:58:49.789Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:58:51.454Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/wall_crop.png"}`
+
+### 🧑 User — 2026-11-15T21:58:51.495Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:00:06.923Z
+
+I have the full picture now. Let me check `grade.ts`/`env.ts` and where `sGlow05`/glow names are referenced elsewhere before editing.
+
+### 🤖 Claude — 2026-11-15T22:00:08.263Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/render/grade.ts; sed -n 1,60p src/render/env.ts | head -60; grep -rn \"tube05_end_glow\\|sGlow05\\|ForcedTunnel\\|wallLidBasis\" src --include=*.ts | grep -v \"src/world/environment.ts\\|src/world/tube.ts\"", "description": "Read grade/env render files and grep external refs"}`
+
+### 🧑 User — 2026-11-15T22:00:08.326Z
+
+> ↩︎ result: /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+>     fragmentShader: /* glsl */ `
+>       uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+>       void main(){
+>         vec4 c = texture2D(tDiffuse, vUv);
+>         float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+>         vec3 col = mix(vec3(l), c.rgb, uSat);
+>         col = (col - 0.5) * uCon + 0.5;
+>         vec2 d = vUv - 0.5; d.x *= 0.75;
+>         col *= 1.0 - uVig * smoothstep(0.25, 0.75, length(d));
+>         gl_FragColor = vec4(clamp(col, 0.0, 1.0), c.a …[+2883 chars]
+
+### 🤖 Claude — 2026-11-15T22:01:00.428Z
+
+Plan is set. Updating NOTES.md with the measured baseline and design before editing.
+
+### 🤖 Claude — 2026-11-15T22:01:08.429Z
+
+> 🔧 **Bash** `{"command": "cat >> /home/user/rainbow-/qa/pilot05/wave5/environment/NOTES.md <<'EOF'\n\n## Measured baseline (qa/pilot05/wave5/baseline/05.png vs ref), my script measure.py\n* Locked 05 camera (vite-node probe of RideCamera at 05_crest): eye s≈126, VP (500, 479), f≈1278 px.\n  Real 05 rings (bay 6) at depth D 37.7/43.6/49.3/55.0 → tops y 174/218/250/275; the straight ends at\n  D≈56 (sGlow05 = s06 − 5.9), so the end-glow disc filled the whole cross-section (radius ≈190 px).\n* Warm px (r>245,g>200,b>120): ref 2,480 · live 85,233. Core (min ch >230) px: ref 346 · live 14,398.\n* Ref ring radii …[+983 chars]`
+
+### 🧑 User — 2026-11-15T22:01:08.464Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:01:09.378Z
+
+Now the tube.ts changes: knot mapping, chord geometry, and instance placement in `ForcedTunnel`.
+
+### 🤖 Claude — 2026-11-15T22:01:18.930Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  readonly q: THREE.Vector3;\n  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number) {\n    const f = path.frame(sF);\n    this.c0 = tubeCenterAt(path, sF);\n    this.T = f.tan.clone(); this.U = f.up.clone(); this.Rt = f.right.clone();\n    this.R = path.radius(sF);\n    const rel = this.c0.clone().sub(eye);\n    this.D0 = rel.dot(this.T);\n    this.q = rel.negate().addScaledVector(this.T, this.D0); // eye − c0 minus its axial part\n  } …[+2069 chars]`
+
+### 🧑 User — 2026-11-15T22:01:18.967Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:01:20.827Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "        const k = i * (radial + 1) + j;\n        p.toArray(pos, k * 3);\n        d.toArray(nor, k * 3);\n        uv[k * 2] = j / radial; uv[k * 2 + 1] = this.sF + Z;", "new_string": "        const k = i * (radial + 1) + j;\n        p.toArray(pos, k * 3);\n        d.toArray(nor, k * 3);\n        uv[k * 2] = j / radial; uv[k * 2 + 1] = this.sF + this.uOfZ(Z);"}`
+
+### 🧑 User — 2026-11-15T22:01:20.856Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:01:35.858Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "    g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];\n    g.setIndex(idx);\n    g.computeBoundingSphere();\n    return g;\n  }\n}", "new_string": "    g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];\n    g.setIndex(idx);\n    g.computeBoundingSphere();\n    return g;\n  }\n\n  /**\n   * The virtual tunnel's water surface: a flat chord across the section at `level` (relative to the tube\n   * centre, along U) — uv.x 0..1 across, uv.y = sF + u. Because the section is a d …[+3639 chars]`
+
+### 🧑 User — 2026-11-15T22:01:35.891Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:03:01.313Z
+
+Now the far-river material in materials.ts (MeshBasicMaterial-based so morph targets work automatically).
+
+### 🤖 Claude — 2026-11-15T22:03:12.120Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "export function gold(opts: { roughness?: number; emissive?: number; color?: THREE.ColorRepresentation } = {}): THREE.MeshStandardMaterial {", "new_string": "/**\n * Far stream of the 05 forced-perspective tunnel (ForcedTunnel.chordGeometry): the water surface beyond\n * the real ribbon, seen only as a thin winding band toward the vanishing point — a cyan core meandering\n * between two hot-pink bands, blue edges, white foam lips, glossy flow streaks, warming into the VP glow\n * with the virtual de …[+2384 chars]`
+
+### 🧑 User — 2026-11-15T22:03:12.155Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:03:15.044Z
+
+Now the environment.ts 05 section: new bays, band rings, slab lids and the wired forced-perspective far tunnel.
+
+### 🤖 Claude — 2026-11-15T22:03:15.995Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"^import\" src/world/environment.ts; grep -n \"05 current (ref 05)\\|animated.push(pinkFlow.update)\" src/world/environment.ts", "description": "Locate imports and the 05 section bounds"}`
+
+### 🧑 User — 2026-11-15T22:03:16.038Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> 8:import { Course, WORLD, funnelY } from './course';
+> 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, tunnelEndGlowMaterial, type FarGlow, type TubeStrips } from './materials';
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+> 11:import { STAGE_CAM } from '../game/cameraRig';
+> 12:import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
+> 13:import { buildTowel, TowelMesh } from './towel';
+> 223:  // ---- 05 current (ref 05): EVENLY spaced ring bays anchored to the 05 checkpoint camera ----
+> 298:  animated.push(pinkFlow.update);
+
+### 🤖 Claude — 2026-11-15T22:04:06.822Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cp src/world/environment.ts $S/environment.before.ts; cat > $S/sec05.ts <<'EOF'\n  // ---- 05 current (ref 05): long ring bays + forced-perspective far tunnel, anchored to the 05 camera ----\n  // Ref 05 ring radii about the VP: 288,192,122,85,66,54,45 px → from the locked checkpoint eye the rings sit\n  // at depth ≈36/55 (near bays ≈17–19 units) and then recede in ever longer bays to a small warm light.\n  // The straight only runs ≈56 units ahead of that eye before it fl …[+12945 chars]`
+
+### 🧑 User — 2026-11-15T22:04:13.477Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:04:19.276Z
+
+tsc passes. The 'slab' lid profile has fixed 0.13 edge rounding which breaks for thickness < 0.26; let me make it proportional.
+
+### 🤖 Claude — 2026-11-15T22:04:22.043Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "        [0, 0.03], [0.55, 0.03], [0.62, 0.0], [0.86, 0.0], [0.95, 0.025], [0.995, 0.08], [1.0, 0.13],\n        [1.0, h - 0.13], [0.995, h - 0.08], [0.95, h - 0.025], [0.86, h], [0.45, h + 0.015], [0, h + 0.02],\n      ]", "new_string": "        // (edge rounding scales with the thickness so thin pucks stay valid)\n        [0, 0.15 * h], [0.55, 0.15 * h], [0.62, 0.0], [0.86, 0.0], [0.95, 0.12 * h], [0.995, 0.3 * h], [1.0, 0.42 * h],\n        [1.0, 0.58 * h], [0.995, 0.7 * h], [0.95, 0.88 * h], [0.86, h], …[+44 chars]`
+
+### 🧑 User — 2026-11-15T22:04:22.089Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:04:24.435Z
+
+Before spending a capture, let me verify the far-tunnel projection numerically with the probe (rings, glow, lids, eye formula vs. the real rig).
+
+### 🤖 Claude — 2026-11-15T22:04:41.249Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad\ncat > $S/probe05b.ts <<'EOF'\nimport * as THREE from '/home/user/rainbow-/node_modules/three/build/three.module.js';\nimport { Course } from '/home/user/rainbow-/src/world/course';\nimport { straightTubePath, tubeCenterAt, ForcedTunnel, wallLidBasis } from '/home/user/rainbow-/src/world/tube';\nimport { RideCamera, STAGE_CAM } from '/home/user/rainbow-/src/game/cameraRig';\nconst course = new Course();\nconst tubeR = (s: number) => course.prop('tube', s);\nconst s05 = course.stage('05').s0, s06 =  …[+3624 chars]`
+
+### 🧑 User — 2026-11-15T22:04:42.851Z
+
+> ↩︎ result: eye formula 1.920,-37.943,-68.281 rig 1.920,-37.943,-68.281
+> sF 180.04 D0 53.19 zEnd 376.8 uEnd 154.3 real len 5.91
+> VP [ 500, 479 ]
+> real s129.0 top 703,-9268 | real s146.0 top 513,-130 | real s163.0 top 506,165 | real s180.0 top 503,268
+> virt n1 Z 33 z 5.07 top 488,351 left 371,473 rTop 128 rLeft 129
+> virt n2 Z 71 z 5.53 top 481,392 left 400,475 rTop 87 rLeft 100
+> virt n3 Z 107 z 5.68 top 477,412 left 415,477 rTop 67 rLeft 85
+> virt n4 Z 143 z 5.76 top 475,425 left 424,477 rTop 54 rLeft 76
+> virt n5 Z 181 z 5.81 top 473,434 left 431,478 rTop 45 rLeft 69
+> virt n6 Z 223 z 5.84 top 472,441 left 436,479 rTop 38 rLeft 64
+> virt n7 Z 269 z 5.87 top 471,447 left 440,479 rTop 32 rLeft 60
+> virt n8 Z 321 z 5.89 top 470,452 left 444,479 rTop 27 rLeft 56
+> glow centre [ 470, 480 ] radius px 23
+> chord level -4.03
+> chord centre Z 0 [ 499, 568 ]
+> chord centre Z 10 [ 494, 554 ]
+> chord centre Z 32 [ 487, 536 ]
+> chord centre Z 70 [ 480, 519 ]
+> chord centre Z 142 [ 475, 505 ]
+> chord centre Z 320 [ 470, 494 ]
+> lid s 137.5 R side at [ 1413, 208 ] tip [ 1158, 229 ]
+> lid s 154.5 R side at [ 853, 375 ] tip [ 756, 383 ]
+> lid s 171.5 R side at [ 719, 417 ] tip [ 659, 422 ]
+
+### 🤖 Claude — 2026-11-15T22:05:10.750Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = []) {\n    const f = path.frame(sF);\n    this.c0 = tubeCenterAt(path, sF);\n    this.T = f.tan.clone(); this.U = f.up.clone(); this.Rt = f.right.clone();", "new_string": "  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE …[+506 chars]`
+
+### 🧑 User — 2026-11-15T22:05:10.786Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:05:16.254Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'PY'\np='/home/user/rainbow-/src/world/environment.ts'\ns=open(p).read()\nrep=[\n(\"  const bay05 = 17;\\n\",\"  const bay05 = 15.5;\\n\"),\n(\"  // 05 walls: 7 dark capsule-slot rows per 17-unit bay, centred between the bands (rows ≈2.4 apart),\",\"  // 05 walls: 7 dark capsule-slot rows per 15.5-unit bay, centred between the bands (rows ≈2.2 apart),\"),\n(\"    repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.05] as [number, number],\",\"    repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.055] as [number, number],\"),\n(\"const lid05 = { shape: 'slab'  …[+927 chars]`
+
+### 🧑 User — 2026-11-15T22:05:20.779Z
+
+> ↩︎ result: 329:    const ringDv = [86, 124, 160, 196, 234, 276, 322, 374];
+> 330:    const knots: [number, number][] = [[0, 0], ...ringDv.map((d, i) => [(i + 1) * bay05, Math.max(d - D0, (i + 1) * bay05)] as [number, number])];
+> 332:    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
+> 350:    for (let n = 1; n <= ringDv.length; n++) {
+
+### 🤖 Claude — 2026-11-15T22:05:26.221Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cd /home/user/rainbow-; sed -i 's/bay = 17,/bay = 15.5,/; s/new ForcedTunnel(perfPath, sF, eye, 6, zEnd, knots)/new ForcedTunnel(perfPath, sF, eye, 6, zEnd, knots, T)/; s/wallLidBasis(perfPath.frame(s), 1, 12, -8)/wallLidBasis(perfPath.frame(s), 1, 8, -4)/; s/addScaledVector(b.X, 2))/addScaledVector(b.X, 2.3))/; s/sF - 8.5 - 34, sF - 8.5 - 17, sF - 8.5/sF - 7.75 - 31, sF - 7.75 - 15.5, sF - 7.75/' $S/probe05b.ts; timeout 120 npx vite-node $S/probe05b.ts 2>&1 | tail -22", "description": "Re-run pro …[+36 chars]`
+
+### 🧑 User — 2026-11-15T22:05:27.437Z
+
+> ↩︎ result: sF 180.04 D0 53.19 zEnd 376.8 uEnd 140.7 real len 5.91
+> VP [ 500, 479 ]
+> real s118.0 top 472,1695 | real s133.5 top 541,-1479 | real s149.0 top 511,-43 | real s164.5 top 506,179 | real s180.0 top 503,268
+> virt n1 Z 33 z 5.07 top 502,350 left 385,472 rTop 129 rLeft 115
+> virt n2 Z 71 z 5.53 top 501,390 left 420,474 rTop 89 rLeft 80
+> virt n3 Z 107 z 5.68 top 501,410 left 438,475 rTop 69 rLeft 62
+> virt n4 Z 143 z 5.76 top 501,423 left 449,476 rTop 56 rLeft 51
+> virt n5 Z 181 z 5.81 top 500,432 left 457,476 rTop 47 rLeft 43
+> virt n6 Z 223 z 5.84 top 500,439 left 464,477 rTop 40 rLeft 36
+> virt n7 Z 269 z 5.87 top 500,445 left 469,477 rTop 34 rLeft 31
+> virt n8 Z 321 z 5.89 top 500,450 left 473,477 rTop 29 rLeft 27
+> glow centre [ 500, 477 ] radius px 23
+> chord level -4.03
+> chord centre Z 0 [ 499, 568 ]
+> chord centre Z 10 [ 499, 554 ]
+> chord centre Z 32 [ 500, 535 ]
+> chord centre Z 70 [ 500, 518 ]
+> chord centre Z 142 [ 500, 503 ]
+> chord centre Z 320 [ 500, 492 ]
+> lid s 141.3 R side at [ 1179, 328 ] tip [ 965, 344 ]
+> lid s 156.8 R side at [ 829, 407 ] tip [ 727, 414 ]
+> lid s 172.3 R side at [ 718, 434 ] tip [ 650, 439 ]
+
+### 🤖 Claude — 2026-11-15T22:05:45.603Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's/  const bay05 = 15.5;/  const bay05 = 14;/; s|// 05 walls: 7 dark capsule-slot rows per 15.5-unit bay, centred between the bands (rows ≈2.2 apart),|// 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),|' src/world/environment.ts && grep -n \"bay05 = \\|rows 2 apart\" src/world/environment.ts && npx tsc --noEmit && (timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/environment/it01 2>&1 | tail -5)", "description": "Set bay 14, type-check, run capture 1", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T22:06:07.416Z
+
+> ↩︎ result: 231:  const bay05 = 14;
+> 236:  // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
+> 05 → qa/pilot05/wave5/environment/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":125,"tris":634089,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T22:06:10.517Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 scripts/triptych.py $S/tri01.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/pilot05/wave5/baseline/05.png NOW=qa/pilot05/wave5/environment/it01/05.png; grep -c \"error\" qa/capture_log.json; python3 -c \"import json;print(json.load(open('qa/capture_log.json'))['errors'][:5])\"", "description": "Build triptych for capture 1 and check console errors"}`
+
+### 🧑 User — 2026-11-15T22:06:11.428Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri01.png (1889, 1142)
+> 1
+> []
+
+### 🤖 Claude — 2026-11-15T22:06:12.573Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri01.png"}`
+
+### 🧑 User — 2026-11-15T22:06:12.825Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:06:22.849Z
+
+Big change: the tunnel now recedes through many rings into a small VP. Let me zoom on the VP region and measure.
+
+### 🤖 Claude — 2026-11-15T22:06:26.047Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -c \"\nfrom PIL import Image\nS='$S/'\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((248,250,748,600))\nb=Image.open('qa/pilot05/wave5/environment/it01/05.png').convert('RGB').crop((248,250,748,600))\nc=Image.new('RGB',(1008,350)); c.paste(a,(0,0)); c.paste(b,(508,0)); c.resize((2016,700)).save(S+'vp01.png')\n\"; python3 $S/measure.py qa/pilot05/wave5/environment/it01/05.png 2>&1 | grep -v \"white\\|warm(r\"", "description": "Crop VP r …[+32 chars]`
+
+### 🧑 User — 2026-11-15T22:06:27.040Z
+
+> ↩︎ result: it01/05.png gold runs on x=498 above VP: [(182, 215), (264, 266), (269, 285), (351, 352), (356, 356), (358, 358), (390, 398), (410, 416), (423, 427), (431, 436), (438, 442), (444, 452), (454, 455), (457, 465), (488, 491)]
+> it01/05.png Lwall median #C222B8 dark<60 0.04 p10 104 p90 206 gold% 0.30
+> it01/05.png Rwall median #CE41CC dark<60 0.02 p10 103 p90 223 gold% 0.23
+> it01/05.png ceil median #BE39BE dark<60 0.01 p10 90 p90 208 gold% 0.28
+> it01/05.png gold pixels median #FFAF4E p90 #FFD17D
+
+### 🤖 Claude — 2026-11-15T22:06:28.831Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/vp01.png"}`
+
+### 🧑 User — 2026-11-15T22:06:29.077Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T22:06:29.073Z
+
+[Image: original 2016x700, displayed at 2000x694. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T22:06:44.654Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -c \"\nfrom PIL import Image\nS='$S/'\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((0,180,330,560))\nb=Image.open('qa/pilot05/wave5/environment/it01/05.png').convert('RGB').crop((0,180,330,560))\nc=Image.new('RGB',(668,380)); c.paste(a,(0,0)); c.paste(b,(338,0)); c.resize((1336,760)).save(S+'wall01.png')\n\"", "description": "Crop left wall of capture 1 vs ref"}`
+
+### 🧑 User — 2026-11-15T22:06:45.215Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:06:46.978Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/wall01.png"}`
+
+### 🧑 User — 2026-11-15T22:06:47.018Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:07:33.868Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/vp.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nfor p in sys.argv[1:]:\n    a=np.asarray(Image.open(p).convert('RGB')).astype(float)\n    win=a[380:600,380:620]\n    core=(win.min(2)>230); warm=(win[...,0]>245)&(win[...,1]>200)&(win[...,2]>120)\n    ys,xs=np.nonzero(core)\n    lum=win.mean(2); by,bx=np.unravel_index(np.argmax(lum),lum.shape)\n    # core blob around brightest: radius where lum drops below 230 along row\n    def extent(row):\n        x=bx\n  …[+854 chars]`
+
+### 🧑 User — 2026-11-15T22:07:34.375Z
+
+> ↩︎ result: references brightest 482 587 core(min>230) px 995 warm px 2480 core width on row(lum>=225) 18 warm halo width on row 6
+> baseline brightest 422 529 core(min>230) px 3549 warm px 43480 core width on row(lum>=225) 9 warm halo width on row 239
+> it01 brightest 592 584 core(min>230) px 2980 warm px 7816 core width on row(lum>=225) 32 warm halo width on row 11
+
+### 🤖 Claude — 2026-11-15T22:07:43.168Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/vp.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\ndef run(p, vx, vy):\n    a=np.asarray(Image.open(p).convert('RGB')).astype(float)\n    win=a[vy-70:vy+30, vx-90:vx+90]   # VP neighbourhood above the river\n    lum=win.mean(2)\n    core=(win.min(2)>225); warm=(win[...,0]>240)&(win[...,1]>170)&(win[...,2]>90)\n    def span(mask, cx, cy):\n        r=mask[cy]; x1=cx\n        while x1<r.size-1 and r[x1]: x1+=1\n        x0=cx\n        while x0>0 and r[x0]: x0-=1\ …[+638 chars]`
+
+### 🧑 User — 2026-11-15T22:07:43.606Z
+
+> ↩︎ result: references VP (503, 498) lum@VP 229 core px 410 warm px 2208 core w/h-up (0, 0) warm w/h-up (0, 0)
+> baseline VP (500, 478) lum@VP 249 core px 1997 warm px 18000 core w/h-up (46, 37) warm w/h-up (179, 70)
+> it01 VP (500, 478) lum@VP 249 core px 171 warm px 8056 core w/h-up (7, 5) warm w/h-up (43, 23)
+
+### 🤖 Claude — 2026-11-15T22:08:16.385Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'PY'\np='/home/user/rainbow-/src/world/materials.ts'\ns=open(p).read()\nrep=[\n(\"const tubeEnvs: Partial<Record<'wall' | 'gold', THREE.CubeTexture>> = {};\",\"const tubeEnvs: Partial<Record<'wall' | 'gold' | 'gold05', THREE.CubeTexture>> = {};\"),\n(\"export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeTexture {\",\"export function washerTubeEnv(variant: 'wall' | 'gold' | 'gold05' = 'wall'): THREE.CubeTexture {\"),\n(\"  const isGold = variant === 'gold';\",\"  const isGold = variant !== 'wall';\"),\n(\"  const cBaseTop  …[+4995 chars]`
+
+### 🧑 User — 2026-11-15T22:08:20.567Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:08:22.421Z
+
+Updating NOTES with it01 results before capture 2.
+
+### 🤖 Claude — 2026-11-15T22:08:30.572Z
+
+> 🔧 **Bash** `{"command": "cat >> /home/user/rainbow-/qa/pilot05/wave5/environment/NOTES.md <<'EOF'\n\n## it01 (environment.ts 05 section rewritten; tube.ts ForcedTunnel knots/axis/chord/placeInstances; materials.ts farRiverMaterial)\n* bay05 6 → 14 (rings05 every 14 back from sF05 = sCam05 + 54), band rings (`band05`), slab lids, far tunnel wired.\n* Probe (vite-node, same eye as RideCamera): ring tops on the VP column 191(real) 268(real, sF) 350 390 410 423 432\n  439 445 450 → spacing ≈77, 82, 40, 20, 13, 9, 7, 6, 5 px (ref 96, 70, 37, 19, 12, 9). Far VP (500, 477), end glow r 23 px.\n* Capture: calls 12 …[+1096 chars]`
+
+### 🧑 User — 2026-11-15T22:08:48.973Z
+
+> ↩︎ result: 05 → qa/pilot05/wave5/environment/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":144,"tris":634317,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri02.png (1889, 1142)
+
+### 🤖 Claude — 2026-11-15T22:08:54.570Z
+
+Draw calls rose from 125 to 144 between captures. Let me check whether that came from my change or from other specialists' concurrent edits.
+
+### 🤖 Claude — 2026-11-15T22:08:55.937Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git status --short | grep -v \"^??\" ; git diff --stat | tail -3; ls -la --time-style=+%H:%M src/vfx/*.ts src/characters/benny/*.ts src/game/Game.ts | awk '{print $6, $7}' | sort | tail -8; date -u +%H:%M", "description": "Check which files changed recently"}`
+
+### 🧑 User — 2026-11-15T22:08:56.124Z
+
+> ↩︎ result: M assets/models/benny.glb
+>  M docs/characters/benny_turntable.png
+>  M docs/vfx/water_05_low.png
+>  M docs/vfx/water_stats_low.json
+>  M qa/capture_log.json
+>  M qa/pilot05/wave5/benny/NOTES.md
+>  M qa/pilot05/wave5/environment/NOTES.md
+>  M qa/pilot05/wave5/foam/NOTES.md
+>  M qa/pilot05/wave5/water/NOTES.md
+>  M src/characters/benny/build.ts
+>  M src/characters/benny/textures.ts
+>  M src/vfx/foam.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/environment.ts
+>  M src/world/materials.ts
+>  M src/world/tube.ts
+>  src/world/materials.ts                |  32 ++++++++++++++------------
+>  src/world/tube.ts                     |   8 +++++--
+>  16 files changed, 207 insertions(+), 72 deletions(-)
+> 21:41 src/vfx/spray.ts
+> 21:41 src/vfx/whirlpool.ts
+> 21:57 src/characters/benny/benny-lab.ts
+> 22:03 src/characters/benny/runtime.ts
+> 22:05 src/vfx/waterRibbon.ts
+> 22:06 src/characters/benny/build.ts
+> 22:08 src/characters/benny/textures.ts
+> 22:08 src/vfx/foam.ts
+> 22:08
+
+### 🤖 Claude — 2026-11-15T22:08:58.565Z
+
+The rise comes with other specialists' concurrent changes (a re-exported `benny.glb`, foam.ts); my pass added no meshes. I'll note it and verify later with a hide test if needed. Viewing capture 2.
+
+### 🤖 Claude — 2026-11-15T22:08:59.606Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri02.png"}`
+
+### 🧑 User — 2026-11-15T22:08:59.908Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:09:02.100Z
+
+Lids now read as chunky pucks and the walls are more violet. Let me zoom on both regions.
+
+### 🤖 Claude — 2026-11-15T22:09:06.401Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -c \"\nfrom PIL import Image\nS='$S/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB'); n=Image.open('qa/pilot05/wave5/environment/it02/05.png').convert('RGB')\nc=Image.new('RGB',(1008,730)); c.paste(r.crop((248,250,748,600)),(0,0)); c.paste(n.crop((248,250,748,600)),(508,0))\nc.paste(r.crop((0,180,330,560)).resize((250,288)),(0,355)); c.paste(n.crop((0,180,330,560)).resize((250,288)),(508,355))\nc.paste(r.crop((534,180,864,560)).resize((250,2 …[+342 chars]`
+
+### 🧑 User — 2026-11-15T22:09:07.958Z
+
+> ↩︎ result: it02/05.png gold runs on x=498 above VP: [(182, 194), (198, 215), (264, 265), (279, 280), (282, 283), (285, 285), (390, 398), (410, 416), (423, 427), (431, 436), (438, 442), (444, 448), (452, 452), (454, 462), (490, 491)]
+> it02/05.png Lwall median #A326BB dark<60 0.11 p10 46 p90 207 gold% 0.37
+> it02/05.png Rwall median #B742C6 dark<60 0.07 p10 88 p90 220 gold% 0.22
+> it02/05.png ceil median #AF40BA dark<60 0.06 p10 79 p90 206 gold% 0.22
+> it02/05.png gold pixels median #FFAF65 p90 #FFD58B
+> references VP (503, 498) lum@VP 229 core px 410 warm px 2208 core w/h-up (0, 0) warm w/h-up (0, 0)
+> it02 VP (500, 478) lum@VP 250 core px 230 warm px 7969 core w/h-up (12, 7) warm w/h-up (63, 35)
+
+### 🤖 Claude — 2026-11-15T22:09:09.924Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/det02.png"}`
+
+### 🧑 User — 2026-11-15T22:09:10.165Z
+
+> ↩︎ result: [image]
+

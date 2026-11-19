@@ -1,0 +1,33 @@
+import json
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+root = Path(__file__).parent
+plan = json.loads((root / (sys.argv[1] if len(sys.argv) > 1 else "snapshot-plan.json")).read_text())
+for name, entry in plan.items():
+    repo = root / name
+    ref = "refs/heads/" + entry["branch"]
+    if not ref.startswith("refs/heads/codex/downloads/"):
+        raise ValueError("Unexpected destination")
+    def head():
+        result = subprocess.run(["git", "ls-remote", "--heads", "origin", ref], cwd=repo,
+                                check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        return result.stdout.split()[0] if result.stdout.strip() else None
+    commits = entry["commits"]
+    old = head()
+    if old is not None and old not in commits:
+        raise RuntimeError("Existing unrelated evidence branch; stopping")
+    start = commits.index(old) + 1 if old else 0
+    for n, sha in enumerate(commits[start:], start + 1):
+        result = subprocess.run(["git", "push", "--quiet", "origin", sha + ":" + ref],
+                                cwd=repo, capture_output=True, text=True)
+        if result.returncode and head() != sha:
+            details = re.sub(r"https?://\S+", "[GitHub]", result.stderr.strip())
+            raise RuntimeError(f"Batch {n} of {name} failed: {details[:450]}")
+        print(name, "batch", n, "of", len(commits), flush=True)
+    confirmed = head()
+    if confirmed != commits[-1]:
+        raise RuntimeError("Remote evidence revision differs")
+    print("Verified", entry["branch"], confirmed, flush=True)

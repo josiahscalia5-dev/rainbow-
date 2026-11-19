@@ -1,0 +1,44 @@
+from pathlib import Path
+from PIL import Image
+import numpy as np,json,sys
+root=Path(__file__).parent;old=Path('/tmp/rainbow-reconstruction.etSm9SmK/repos')
+def save(p,x):p.write_text(json.dumps(x,indent=2)+'\n')
+def read(p):return json.loads(p.read_text())
+def im(f):return np.array(Image.open(f).convert('RGB'),dtype=np.int16)
+if '06' in sys.argv:
+ data={};digests={}
+ for file in (root/'compat06').glob('*/meshes.json'):
+  j=read(file);group=file.parent.name;r=np.array(j['ringCenters']);delta=np.diff(r,axis=0);spacing=np.linalg.norm(delta,axis=1);heading=delta/spacing[:,None]
+  angle=np.degrees(np.arccos(np.clip(heading@heading[0],-1,1)));st=j['stage'];sample=[p for p in j['centerLine'] if st['s0']<=p['s']<=st['s1']]
+  data[group]={'rings':len(r),'spacingRange':[float(spacing.min()),float(spacing.max())],'largestHeadingFromFirstDegrees':float(angle.max()),'sampledCourseCenterVertices':len(sample),'maximumFloorCenterOffset':max(p['offset'] for p in sample)}
+  digests[group]=j['meshes']
+ if 'ring-and-foam' in digests: data['compatibleRingTubeFloorIdentical']=digests['ring-only']==digests['ring-and-foam']
+ save(root/'geometry06.json',data)
+if '07' in sys.argv:
+ data={}
+ for file in (root/'downstream07').glob('*.json'):
+  j=read(file);a=im(file.with_name(file.stem+'-stage-ownership.png'))
+  green=(a[:,:,1]>180)&(a[:,:,0]<60)&(a[:,:,2]<65);red=(a[:,:,0]>180)&(a[:,:,1]<35)&(a[:,:,2]<40)
+  hits=[k['s'] for k in j['hits']]
+  data[file.stem]={'greenUpstreamBermPixels':int(green[86:].sum()),'redDownstreamBermPixels':int(red[86:].sum()),'geometricRayCourseRange':[min(hits),max(hits)],'stageExit':j['stageBounds'][1]}
+ save(root/'ownership07.json',data)
+if '04' in sys.argv:
+ ctl=old/'04/experiments/codex/04/NEW';new=root/'proof/04/NEW'
+ summary={}
+ for view in ['opening','forward-10','middle','hard-right','forward-20','last-in-stage']:
+  a=im(ctl/(view+'.png'));b=im(new/(view+'.png'));d=np.abs(a-b);mask=d.sum(2)>50;ys,xs=mask.nonzero();summary[view]={'changedRGBOver50':int(mask.sum()),'largestChannelChange':int(d.max()),'central80PercentRectangle':[int(np.quantile(xs,.1)),int(np.quantile(ys,.1)),int(np.quantile(xs,.9)),int(np.quantile(ys,.9))] if len(xs) else None}
+ save(root/'ring04.json',summary)
+if '05' in sys.argv:
+ ctl=old/'05/experiments/codex/05/NEW';new=root/'proof/05/NEW';diag=root/'layers/05/BEFORE'
+ summary={}
+ for view in ['last-left-bend','last-right-bend','last-in-stage']:
+  if not (new/(view+'.png')).exists():continue
+  ref=im(diag/(view+'--retained.png'));near=(np.abs(ref-im(diag/(view+'--no-near-water.png'))).sum(2)>30);far=(np.abs(ref-im(diag/(view+'--no-far-water.png'))).sum(2)>30)
+  a=im(ctl/(view+'.png'));b=im(new/(view+'.png'));d=np.abs(a-b)
+  water=np.repeat(np.repeat(near,2,0),2,1);water[:960]=False;water&=(a.min(2)<165)&(a[:,:,2]>145)
+  lum=lambda x:.2126*x[:,:,0]+.7152*x[:,:,1]+.0722*x[:,:,2]
+  m=water[4:]&water[:-4]
+  def detail(x):
+   y=lum(x);return float(np.abs(y[4:]-y[:-4])[m].mean()) if m.any() else None
+  summary[view]={'nativeLowerWaterMaskPixels':int(water.sum()),'nearRiverDiagnosticLowerPixels':int(near[432:].sum()),'farRiverDiagnosticLowerPixels':int(far[432:].sum()),'meanAbsoluteLuminanceChangeOver4VerticalPixels':{'priorPreparedWall':detail(a),'new':detail(b)},'meanAbsoluteColourChangeWithinMask':float(d[water].mean()) if water.any() else None}
+ save(root/'river05.json',summary)

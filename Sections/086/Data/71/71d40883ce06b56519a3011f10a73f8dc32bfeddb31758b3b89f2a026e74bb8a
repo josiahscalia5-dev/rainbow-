@@ -1,0 +1,13 @@
+from pathlib import Path
+import os,subprocess,time
+from guides import OUT
+p=Path.cwd()
+while not (OUT/'PACKAGE_VERIFICATION.json').is_file():
+    log=(p/'finalization.log').read_text()
+    if 'Traceback' in log:raise RuntimeError('Packaging verification requires attention')
+    time.sleep(3)
+env={**os.environ,'NODE_PATH':'/tmp/rainbow-motion-tools.ef8YVWIN/toolchain/node_modules'}
+subprocess.run(['node','phone-check.cjs'],env=env,check=True)
+subprocess.run(['python3','delivery_check.py'],check=True)
+subprocess.run(['python3','stop_export_server.py'],check=True)
+(p/'ready-to-send').write_text('Verified and complete\n')

@@ -1,0 +1,637 @@
+{
+  "nativeSize": [
+    864,
+    1536
+  ],
+  "coinCount": 15,
+  "distanceFromInletTested": [
+    10,
+    30
+  ],
+  "courseSampleInterval": 0.25,
+  "routeSampleCount": 81,
+  "lockedCamera": {
+    "translationWorld": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotationLocalRadians": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "lensChangeDegrees": 0.0,
+    "coinPixelRms": 0.0,
+    "worstCoinPixelError": 0.0,
+    "projectedRouteSamplesInWall": 38,
+    "maximumWallOverlapPx": 48.261
+  },
+  "coinOnlyCameraRefit": {
+    "translationWorld": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotationLocalRadians": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "lensChangeDegrees": 0.0,
+    "coinPixelRms": 0.0,
+    "worstCoinPixelError": 0.0,
+    "projectedRouteSamplesInWall": 38,
+    "maximumWallOverlapPx": 48.261
+  },
+  "equalPixelWeightRouteAndCoinRefit": {
+    "translationWorld": [
+      -0.11567,
+      -0.21827,
+      -0.72664
+    ],
+    "rotationLocalRadians": [
+      0.01131,
+      0.01208,
+      -0.04831
+    ],
+    "lensChangeDegrees": 4.38176,
+    "coinPixelRms": 8.97568,
+    "worstCoinPixelError": 16.35994,
+    "projectedRouteSamplesInWall": 35,
+    "maximumWallOverlapPx": 47.748
+  },
+  "refitBounds": {
+    "translationPerAxis": 1.5,
+    "rotationPerAxisRad": 0.16,
+    "fovChangeDegrees": 6
+  },
+  "worstFixedViewCentreline": {
+    "stationFromInlet": 13.75,
+    "world": [
+      0.1548,
+      -36.26126,
+      -141.58667
+    ],
+    "imagePixel": [
+      461,
+      649
+    ],
+    "opticalDepth": 9.08072,
+    "distanceInsidePurpleMaskNearestNativePixel": 48.166
+  },
+  "nearerOccluderSamples": [
+    {
+      "depth": 1.0,
+      "clearanceToAssumedFullSwimEnvelope": 2.648
+    },
+    {
+      "depth": 1.25,
+      "clearanceToAssumedFullSwimEnvelope": 2.477
+    },
+    {
+      "depth": 1.5,
+      "clearanceToAssumedFullSwimEnvelope": 2.308
+    },
+    {
+      "depth": 1.75,
+      "clearanceToAssumedFullSwimEnvelope": 2.139
+    },
+    {
+      "depth": 2.0,
+      "clearanceToAssumedFullSwimEnvelope": 1.969
+    },
+    {
+      "depth": 2.25,
+      "clearanceToAssumedFullSwimEnvelope": 1.8
+    },
+    {
+      "depth": 2.5,
+      "clearanceToAssumedFullSwimEnvelope": 1.632
+    },
+    {
+      "depth": 2.75,
+      "clearanceToAssumedFullSwimEnvelope": 1.463
+    },
+    {
+      "depth": 3.0,
+      "clearanceToAssumedFullSwimEnvelope": 1.295
+    },
+    {
+      "depth": 3.25,
+      "clearanceToAssumedFullSwimEnvelope": 1.129
+    },
+    {
+      "depth": 3.5,
+      "clearanceToAssumedFullSwimEnvelope": 0.964
+    },
+    {
+      "depth": 3.75,
+      "clearanceToAssumedFullSwimEnvelope": 0.799
+    },
+    {
+      "depth": 4.0,
+      "clearanceToAssumedFullSwimEnvelope": 0.638
+    },
+    {
+      "depth": 4.25,
+      "clearanceToAssumedFullSwimEnvelope": 0.477
+    },
+    {
+      "depth": 4.5,
+      "clearanceToAssumedFullSwimEnvelope": 0.318
+    },
+    {
+      "depth": 4.75,
+      "clearanceToAssumedFullSwimEnvelope": 0.16
+    },
+    {
+      "depth": 5.0,
+      "clearanceToAssumedFullSwimEnvelope": 0.004
+    },
+    {
+      "depth": 5.25,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 5.5,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 5.75,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 6.0,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 6.25,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 6.5,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 6.75,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 7.0,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 7.25,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 7.5,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 7.75,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 8.0,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 8.25,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 8.5,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 8.75,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    },
+    {
+      "depth": 9.0,
+      "clearanceToAssumedFullSwimEnvelope": 0.0
+    }
+  ],
+  "occluderLimit": "Single worst ray only. Sampled lane spans +/-3.4 laterally and -.45 to 2.25 vertically. Clearance is a diagnostic estimate, not engine collision or proof that a plate could attach to a wall or clear the moving camera.",
+  "relativeDA3Samples": {
+    "purpleAt461_649": 2.3223,
+    "cyanAt148_649": 0.9539
+  },
+  "depthLimit": "The DA3 output has relative monocular depth. It is not a surveyed distance in game units.",
+  "inferredGuide": [
+    {
+      "sourceCentrePx": [
+        267.6,
+        716.1
+      ],
+      "diameterPx": 101.0,
+      "proposedSurfacePx": [
+        267.6,
+        753.47
+      ],
+      "assumedCameraDepth": 7.92821,
+      "worldAtThatDepth": [
+        -0.79956,
+        -36.78485,
+        -140.09722
+      ],
+      "retainedCoinWorld": [
+        -0.80813,
+        -36.55726,
+        -140.14034
+      ],
+      "retainedStationFromInlet": 12.42748
+    },
+    {
+      "sourceCentrePx": [
+        178.6,
+        623.8
+      ],
+      "diameterPx": 82.0,
+      "proposedSurfacePx": [
+        178.6,
+        654.14
+      ],
+      "assumedCameraDepth": 7.78406,
+      "worldAtThatDepth": [
+        -1.30772,
+        -36.16518,
+        -139.96866
+      ],
+      "retainedCoinWorld": [
+        -1.31455,
+        -35.98376,
+        -140.00303
+      ],
+      "retainedStationFromInlet": 12.60436
+    },
+    {
+      "sourceCentrePx": [
+        234.3,
+        548.1
+      ],
+      "diameterPx": 59.0,
+      "proposedSurfacePx": [
+        234.3,
+        569.93
+      ],
+      "assumedCameraDepth": 9.1009,
+      "worldAtThatDepth": [
+        -1.45317,
+        -35.71109,
+        -141.3966
+      ],
+      "retainedCoinWorld": [
+        -1.45892,
+        -35.55847,
+        -141.42552
+      ],
+      "retainedStationFromInlet": 13.98575
+    },
+    {
+      "sourceCentrePx": [
+        319.6,
+        521.3
+      ],
+      "diameterPx": 43.0,
+      "proposedSurfacePx": [
+        319.6,
+        537.21
+      ],
+      "assumedCameraDepth": 11.91494,
+      "worldAtThatDepth": [
+        -1.66585,
+        -35.51726,
+        -144.31461
+      ],
+      "retainedCoinWorld": [
+        -1.67133,
+        -35.37164,
+        -144.34221
+      ],
+      "retainedStationFromInlet": 16.72512
+    },
+    {
+      "sourceCentrePx": [
+        407.6,
+        534.0
+      ],
+      "diameterPx": 32.0,
+      "proposedSurfacePx": [
+        407.6,
+        545.84
+      ],
+      "assumedCameraDepth": 11.38868,
+      "worldAtThatDepth": [
+        -0.74437,
+        -35.58623,
+        -143.93759
+      ],
+      "retainedCoinWorld": [
+        -0.74827,
+        -35.48265,
+        -143.95722
+      ],
+      "retainedStationFromInlet": 16.2864
+    },
+    {
+      "sourceCentrePx": [
+        505.9,
+        586.1
+      ],
+      "diameterPx": 22.0,
+      "proposedSurfacePx": [
+        505.9,
+        594.24
+      ],
+      "assumedCameraDepth": 18.3646,
+      "worldAtThatDepth": [
+        -0.8432,
+        -36.40181,
+        -151.00104
+      ],
+      "retainedCoinWorld": [
+        -0.84752,
+        -36.28698,
+        -151.0228
+      ],
+      "retainedStationFromInlet": 23.28427
+    },
+    {
+      "sourceCentrePx": [
+        557.5,
+        623.0
+      ],
+      "diameterPx": 19.0,
+      "proposedSurfacePx": [
+        557.5,
+        630.03
+      ],
+      "assumedCameraDepth": 20.43132,
+      "worldAtThatDepth": [
+        -0.30156,
+        -37.07971,
+        -153.12116
+      ],
+      "retainedCoinWorld": [
+        -0.30571,
+        -36.96937,
+        -153.14207
+      ],
+      "retainedStationFromInlet": 25.49618
+    },
+    {
+      "sourceCentrePx": [
+        594.8,
+        644.1
+      ],
+      "diameterPx": 19.0,
+      "proposedSurfacePx": [
+        594.8,
+        651.13
+      ],
+      "assumedCameraDepth": 21.60499,
+      "worldAtThatDepth": [
+        0.21387,
+        -37.52813,
+        -154.35394
+      ],
+      "retainedCoinWorld": [
+        0.20948,
+        -37.41146,
+        -154.37605
+      ],
+      "retainedStationFromInlet": 26.85412
+    },
+    {
+      "sourceCentrePx": [
+        619.1,
+        654.7
+      ],
+      "diameterPx": 19.0,
+      "proposedSurfacePx": [
+        619.1,
+        661.73
+      ],
+      "assumedCameraDepth": 22.15789,
+      "worldAtThatDepth": [
+        0.59529,
+        -37.7638,
+        -154.95741
+      ],
+      "retainedCoinWorld": [
+        0.59078,
+        -37.64414,
+        -154.98008
+      ],
+      "retainedStationFromInlet": 27.5661
+    },
+    {
+      "sourceCentrePx": [
+        642.7,
+        662.7
+      ],
+      "diameterPx": 16.0,
+      "proposedSurfacePx": [
+        642.7,
+        668.62
+      ],
+      "assumedCameraDepth": 22.4421,
+      "worldAtThatDepth": [
+        0.99176,
+        -37.91329,
+        -155.30183
+      ],
+      "retainedCoinWorld": [
+        0.98791,
+        -37.81123,
+        -155.32117
+      ],
+      "retainedStationFromInlet": 28.03694
+    },
+    {
+      "sourceCentrePx": [
+        659.5,
+        668.0
+      ],
+      "diameterPx": 14.0,
+      "proposedSurfacePx": [
+        659.5,
+        673.18
+      ],
+      "assumedCameraDepth": 22.59687,
+      "worldAtThatDepth": [
+        1.28103,
+        -38.00999,
+        -155.50095
+      ],
+      "retainedCoinWorld": [
+        1.27764,
+        -37.92007,
+        -155.51799
+      ],
+      "retainedStationFromInlet": 28.33566
+    },
+    {
+      "sourceCentrePx": [
+        675.2,
+        675.9
+      ],
+      "diameterPx": 13.0,
+      "proposedSurfacePx": [
+        675.2,
+        680.71
+      ],
+      "assumedCameraDepth": 22.91061,
+      "worldAtThatDepth": [
+        1.55594,
+        -38.17917,
+        -155.84801
+      ],
+      "retainedCoinWorld": [
+        1.55275,
+        -38.09452,
+        -155.86405
+      ],
+      "retainedStationFromInlet": 28.79052
+    },
+    {
+      "sourceCentrePx": [
+        687.8,
+        684.4
+      ],
+      "diameterPx": 10.0,
+      "proposedSurfacePx": [
+        687.8,
+        688.1
+      ],
+      "assumedCameraDepth": 23.23067,
+      "worldAtThatDepth": [
+        1.78322,
+        -38.3503,
+        -156.1918
+      ],
+      "retainedCoinWorld": [
+        1.78073,
+        -38.28427,
+        -156.20432
+      ],
+      "retainedStationFromInlet": 29.2354
+    },
+    {
+      "sourceCentrePx": [
+        696.0,
+        692.1
+      ],
+      "diameterPx": 7.0,
+      "proposedSurfacePx": [
+        696.0,
+        694.69
+      ],
+      "assumedCameraDepth": 23.50335,
+      "worldAtThatDepth": [
+        1.93633,
+        -38.50427,
+        -156.47503
+      ],
+      "retainedCoinWorld": [
+        1.93457,
+        -38.4575,
+        -156.48389
+      ],
+      "retainedStationFromInlet": 29.59884
+    },
+    {
+      "sourceCentrePx": [
+        703.4,
+        701.1
+      ],
+      "diameterPx": 8.0,
+      "proposedSurfacePx": [
+        703.4,
+        704.06
+      ],
+      "assumedCameraDepth": 23.99296,
+      "worldAtThatDepth": [
+        2.08357,
+        -38.74226,
+        -156.9658
+      ],
+      "retainedCoinWorld": [
+        2.08152,
+        -38.68771,
+        -156.97614
+      ],
+      "retainedStationFromInlet": 30.1662
+    }
+  ],
+  "guideLimit": "The image fixes the coin centres. Surface points and depths are modeling guides. They do not replace the ride centreline. Coin world placements were fitted from the same saved camera, so reprojection is a calibration check and not an independent photograph.",
+  "openingComparisons": {
+    "Claudia": {
+      "wholeFrame": {
+        "nativeBox": [
+          0,
+          0,
+          864,
+          1536
+        ],
+        "meanAbsoluteRgb": 16.1988,
+        "within20Percent": 79.0857
+      },
+      "crestAperture": {
+        "nativeBox": [
+          295,
+          575,
+          560,
+          710
+        ],
+        "meanAbsoluteRgb": 4.9195,
+        "within20Percent": 92.5255
+      },
+      "goldAndSlottedWall": {
+        "nativeBox": [
+          335,
+          242,
+          858,
+          557
+        ],
+        "meanAbsoluteRgb": 0.9644,
+        "within20Percent": 98.63
+      }
+    },
+    "structural": {
+      "wholeFrame": {
+        "nativeBox": [
+          0,
+          0,
+          864,
+          1536
+        ],
+        "meanAbsoluteRgb": 44.8263,
+        "within20Percent": 38.0865
+      },
+      "crestAperture": {
+        "nativeBox": [
+          295,
+          575,
+          560,
+          710
+        ],
+        "meanAbsoluteRgb": 104.3163,
+        "within20Percent": 2.144
+      },
+      "goldAndSlottedWall": {
+        "nativeBox": [
+          335,
+          242,
+          858,
+          557
+        ],
+        "meanAbsoluteRgb": 61.7307,
+        "within20Percent": 12.3014
+      }
+    }
+  }
+}

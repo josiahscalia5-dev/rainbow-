@@ -1,0 +1,18 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 264f61f..ab5bebc 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -758,9 +758,12 @@ export function addM04(ctx: M04Ctx) {
+     const items: { p: THREE.Vector3; r: number; s: number }[] = [];
+     // `m04foam2` (default with m04foam under m04river): irregular heaped clumps instead of evenly spaced rows
+     const heaped = M04.num('m04foam2', 1) > 0.5;
++    // r14 `&m04foamr=L`: the painted foam clouds sit round the ENTRANCE RIM only — the edge banks stop L u inside the
++    // opening (user: no foam walls inside the tunnel); the banks before the opening stay
++    const rimL = M04.num('m04foamr', 1e9);
+     for (const side of [-1, 1]) {
+       let a = 0.2 + rnd() * 0.5;
+-      while (heaped && a < len - 1) {
++      while (heaped && a < Math.min(len - 1, rimL)) {
+         const f3 = M04.foam3;                                     // round 9: low soft banks hugging the river edge
+         const cl = 0.5 + Math.pow(rnd(), 1.3) * 2.4;            // clump length along the river
+         const H = (0.2 + Math.pow(rnd(), 1.8) * 1.1) * (f3 ? 0.35 : 1);   // heap height (a few tall heaps, many low ones)

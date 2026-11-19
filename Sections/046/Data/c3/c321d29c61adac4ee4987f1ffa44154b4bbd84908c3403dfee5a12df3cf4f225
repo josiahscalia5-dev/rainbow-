@@ -1,0 +1,30 @@
+{
+  "verified": {
+    "opening": {
+      "nodes": 41,
+      "identicalWorldTransformsOutsideGarment": 35,
+      "allPositionNormalUVAndSkinBuffersMatch": true,
+      "cameraAndGameStateMatch": true
+    },
+    "hard-left": {
+      "nodes": 41,
+      "identicalWorldTransformsOutsideGarment": 35,
+      "allPositionNormalUVAndSkinBuffersMatch": true,
+      "cameraAndGameStateMatch": true
+    },
+    "hard-right": {
+      "nodes": 41,
+      "identicalWorldTransformsOutsideGarment": 35,
+      "allPositionNormalUVAndSkinBuffersMatch": true,
+      "cameraAndGameStateMatch": true
+    }
+  },
+  "intentionalGarmentTransformNodes": [
+    "hat",
+    "hat_brim",
+    "hat_crown",
+    "hat_star",
+    "pom",
+    "fur_pom"
+  ]
+}

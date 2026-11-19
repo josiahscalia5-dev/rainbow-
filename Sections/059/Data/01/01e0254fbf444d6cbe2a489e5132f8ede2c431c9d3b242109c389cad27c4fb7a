@@ -1,0 +1,154 @@
+# BlenderSculptSpec Format
+
+The spec is the contract between what the image shows and what gets built.
+No build pass may run until `validate_spec.py --strict-quality` passes.
+This document and `../scripts/validate_spec.py` must stay in sync.
+
+Runtime location convention: `image2blender-runs/<meta.name>/spec.json` in the
+user's working directory, with renders in `image2blender-runs/<meta.name>/renders/`.
+
+## Top-level shape
+
+```json
+{
+  "meta": { … },
+  "detailInventory": [ … ],
+  "components": [ … ],
+  "materials": [ … ],
+  "passes": [ … ],
+  "anatomy": { … },        // character class only
+  "layout": { … },         // scene class only
+  "reviewHistory": [ … ]   // appended by the review loop, starts []
+}
+```
+
+All ids (`meta.name`, component ids, material ids) match `^[a-z][a-z0-9_]*$` —
+they become Blender object/material/collection names and variables in bpy code.
+
+## meta
+
+| Field | Required | Notes |
+|---|---|---|
+| `name` | yes | snake_case subject id; also the Blender collection name |
+| `referenceImage` | yes (warned) | path to the source image |
+| `class` | yes | `object` \| `character` \| `scene` |
+| `complexity` | yes | `simple` \| `moderate` \| `complex` — drives depth gates below |
+| `stylization` | strict-warned | `faithful` \| `stylized` — expectation agreed with the user |
+| `units` | no | default `meters` |
+| `approxSize` | no | `[x, y, z]` real-world estimate in meters |
+
+## detailInventory
+
+Identity-defining features found by scanning the image as a 3×3 grid
+(`gridCell`: `R1C1`…`R3C3`, row 1 = top). Every entry must land somewhere:
+
+```json
+{ "id": "handle_taper", "gridCell": "R2C3",
+  "description": "handle thicker at both joins",
+  "mapsTo": "component:handle" }
+```
+
+`mapsTo` is `component:<id>` or `material:<id>` and must resolve. If a detail
+maps nowhere, either the component tree is missing something (fix the spec) or
+the detail is noise (drop it deliberately, don't silently forget it).
+
+## components
+
+One entry per Blender object. `id` = the object's name in the scene.
+
+| Field | Required | Notes |
+|---|---|---|
+| `id`, `role` | yes | role: `primary` (identity-carrying) \| `secondary` \| `detail` |
+| `parent` | yes (`null` for roots) | parent component id; ≥1 root required, no cycles |
+| `strategy` | yes | `primitive` \| `curve` \| `metaball` \| `geonodes` \| `boolean` \| `asset` |
+| `buildNotes` | warned | concrete recipe, e.g. "cylinder 48 verts, solidify 3mm, subsurf 2" |
+| `material` | no | material id, must exist in `materials` |
+| `criticalFeatures` | strict: required for `primary` | what makes this part recognizable |
+| `pivotNote` | no | where the origin should sit (animation readiness) |
+
+Strategy guidance: `primitive` + modifiers covers most hard-surface parts;
+`curve` for handles/cables/trim (bevel_depth + taper); `metaball` for blobby
+organics before conversion; `geonodes` for repetition/scatter; `boolean` for
+cutouts; `asset` only under the Poly Haven policy (models allowed only if the
+user asked for speed over fidelity).
+
+## materials
+
+```json
+{ "id": "ceramic_glaze",
+  "bsdf": { "baseColor": [0.92, 0.88, 0.83], "metallic": 0.0, "roughness": 0.22 },
+  "textureStrategy": "procedural",
+  "notes": "subtle noise bump 0.02" }
+```
+
+- `bsdf.baseColor` required (linear RGB 0–1). `metallic`, `roughness`, plus any
+  other Principled inputs as needed (`ior`, `transmission`, `emission`…).
+- `textureStrategy`: `flat` (BSDF params only) \| `procedural` (noise/voronoi/
+  wave node setups) \| `polyhaven` (downloaded PBR set, Path A servers only).
+- Estimate PBR values from the image: highlight tightness → roughness;
+  colored reflections/white speculars → metallic; visible interior → thickness.
+
+## passes
+
+Ordered array; each pass 1–5 criteria (strict: ≥2 when complexity ≥ moderate).
+Criteria must be **visually checkable statements** — a reviewer looking at the
+render and the reference must be able to answer yes/no.
+
+```json
+{ "id": "blockout",
+  "criteria": ["mug height:diameter ratio within ~10% of reference",
+               "handle bounding volume on correct side"] }
+```
+
+Required pass ids by class:
+
+- `object` / `character`: `blockout`, `structure`, `form`, `materials`, `detail`, `lighting` (all 6, in that order)
+- `scene`: at least `blockout`, `form`, `materials`, `lighting` (per-object work is folded into scene passes)
+
+## anatomy (class = character; strict-required)
+
+```json
+{ "headsTall": 7.5,
+  "proportionUnit": "heads",
+  "landmarks": ["crown", "chin", "shoulder_line", "waist", "knee", "sole"] }
+```
+
+≥5 landmarks. Landmarks anchor proportion checks during blockout/structure.
+
+## layout (class = scene; strict-required)
+
+```json
+{ "camera": "eye-level 3/4 view from doorway, ~24mm equivalent",
+  "zones": [
+    { "id": "desk_area", "contents": ["desk", "chair", "monitor"] },
+    { "id": "window_wall", "contents": ["window", "curtain"] }
+  ] }
+```
+
+`camera` (viewpoint description) and ≥1 zone. Zones become sub-collections.
+
+## reviewHistory
+
+The review loop appends one entry per verdict:
+
+```json
+{ "pass": "form", "attempt": 2, "angles": ["front", "three_quarter"],
+  "verdict": "refine-code",
+  "notes": "handle cross-section too round vs flat outer face",
+  "criteriaMet": ["wall thickness visible at rim"],
+  "criteriaFailed": ["handle taper reads correctly"] }
+```
+
+Verdicts: `continue` | `refine-spec` | `refine-code` | `request-input` | `stop`
+(rules in [pass-rubrics.md](pass-rubrics.md)).
+
+## Depth gates (strict-quality)
+
+| complexity | min components | min detailInventory |
+|---|---|---|
+| simple | 1 | 0 |
+| moderate | 3 | 6 |
+| complex | 6 | 12 |
+
+If the subject genuinely can't fill the gate, the complexity rating is wrong —
+downgrade it deliberately rather than padding the inventory with noise.

@@ -1,0 +1,491 @@
+{
+ "query": "match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04mv=1",
+ "shots": [
+  {
+   "name": "f10_forward10u",
+   "dist": 10,
+   "steer": null,
+   "s": 88.34,
+   "lat": 0,
+   "counts": {
+    "water_system:water_whirlpool": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "benny": {
+     "objects": 23,
+     "changed_px": 69268,
+     "share": 0.0522
+    },
+    "coins": {
+     "objects": 1,
+     "changed_px": 14739,
+     "share": 0.0111
+    },
+    "m04:m04_room_wall": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04mv_overlay": {
+     "objects": 10,
+     "changed_px": 505594,
+     "share": 0.381
+    },
+    "m04:m04_room_far": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04:m04_water": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04:m04_ring_tunnel": {
+     "objects": 1,
+     "changed_px": 80702,
+     "share": 0.0608
+    },
+    "m04:m04_ring_mouth": {
+     "objects": 1,
+     "changed_px": 84574,
+     "share": 0.0637
+    },
+    "m04:m04_ring_glow": {
+     "objects": 1,
+     "changed_px": 1727,
+     "share": 0.0013
+    },
+    "m04:m04_river": {
+     "objects": 1,
+     "changed_px": 365146,
+     "share": 0.2751
+    },
+    "m04:m04_foam": {
+     "objects": 1,
+     "changed_px": 158712,
+     "share": 0.1196
+    },
+    "m04:m04_bubbles": {
+     "objects": 1,
+     "changed_px": 25774,
+     "share": 0.0194
+    },
+    "m04:m04_bulbs": {
+     "objects": 1,
+     "changed_px": 576,
+     "share": 0.0004
+    },
+    "m04_splash": {
+     "objects": 1,
+     "changed_px": 8481,
+     "share": 0.0064
+    }
+   },
+   "dominant": {
+    "m04:m04_ring_mouth": 84387,
+    "(none: no single group changes it)": 42638,
+    "m04:m04_bulbs": 230,
+    "m04mv_overlay": 499399,
+    "m04:m04_ring_tunnel": 77087,
+    "m04:m04_ring_glow": 1681,
+    "m04:m04_bubbles": 16149,
+    "m04:m04_foam": 152613,
+    "m04:m04_river": 363691,
+    "coins": 14567,
+    "benny": 68528,
+    "m04_splash": 6134
+   },
+   "legend": [
+    {
+     "c": "water_system:water_whirlpool",
+     "rgb": [
+      255,
+      61,
+      61
+     ]
+    },
+    {
+     "c": "benny",
+     "rgb": [
+      61,
+      255,
+      118
+     ]
+    },
+    {
+     "c": "coins",
+     "rgb": [
+      174,
+      61,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_room_wall",
+     "rgb": [
+      255,
+      231,
+      61
+     ]
+    },
+    {
+     "c": "m04mv_overlay",
+     "rgb": [
+      61,
+      223,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_room_far",
+     "rgb": [
+      255,
+      61,
+      166
+     ]
+    },
+    {
+     "c": "m04:m04_water",
+     "rgb": [
+      109,
+      255,
+      61
+     ]
+    },
+    {
+     "c": "m04:m04_ring_tunnel",
+     "rgb": [
+      69,
+      61,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_ring_mouth",
+     "rgb": [
+      255,
+      126,
+      61
+     ]
+    },
+    {
+     "c": "m04:m04_ring_glow",
+     "rgb": [
+      61,
+      255,
+      183
+     ]
+    },
+    {
+     "c": "m04:m04_river",
+     "rgb": [
+      239,
+      61,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_foam",
+     "rgb": [
+      214,
+      255,
+      61
+     ]
+    },
+    {
+     "c": "m04:m04_bubbles",
+     "rgb": [
+      61,
+      158,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_bulbs",
+     "rgb": [
+      255,
+      61,
+      101
+     ]
+    },
+    {
+     "c": "m04_splash",
+     "rgb": [
+      61,
+      255,
+      78
+     ]
+    }
+   ],
+   "cover": {
+    "view1": {
+     "in_frame_px": 1327104,
+     "depth_visible_px": 1300357,
+     "image_opaque_px": 859629,
+     "usable_px": 837466,
+     "share_of_frame_usable": 0.631
+    },
+    "view2": {
+     "in_frame_px": 211236,
+     "depth_visible_px": 211051,
+     "image_opaque_px": 151317,
+     "usable_px": 151170,
+     "share_of_frame_usable": 0.1139
+    },
+    "weights": {
+     "w0": 1,
+     "w1": 0
+    },
+    "cam_to_view_cam": [
+     0.951,
+     9.07
+    ]
+   }
+  },
+  {
+   "name": "f20_forward20u",
+   "dist": 20,
+   "steer": null,
+   "s": 98.181,
+   "lat": 0,
+   "counts": {
+    "water_system:water_whirlpool": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "benny": {
+     "objects": 23,
+     "changed_px": 69105,
+     "share": 0.0521
+    },
+    "coins": {
+     "objects": 1,
+     "changed_px": 3673,
+     "share": 0.0028
+    },
+    "m04:m04_room_wall": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04mv_overlay": {
+     "objects": 10,
+     "changed_px": 497488,
+     "share": 0.3749
+    },
+    "m04:m04_room_far": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04:m04_water": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04:m04_ring_tunnel": {
+     "objects": 1,
+     "changed_px": 187641,
+     "share": 0.1414
+    },
+    "m04:m04_ring_mouth": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04:m04_ring_glow": {
+     "objects": 1,
+     "changed_px": 2482,
+     "share": 0.0019
+    },
+    "m04:m04_river": {
+     "objects": 1,
+     "changed_px": 389404,
+     "share": 0.2934
+    },
+    "m04:m04_foam": {
+     "objects": 1,
+     "changed_px": 145462,
+     "share": 0.1096
+    },
+    "m04:m04_bubbles": {
+     "objects": 1,
+     "changed_px": 21426,
+     "share": 0.0161
+    },
+    "m04:m04_bulbs": {
+     "objects": 1,
+     "changed_px": 0,
+     "share": 0
+    },
+    "m04_splash": {
+     "objects": 1,
+     "changed_px": 8539,
+     "share": 0.0064
+    }
+   },
+   "dominant": {
+    "m04:m04_ring_tunnel": 185154,
+    "(none: no single group changes it)": 29253,
+    "m04mv_overlay": 494135,
+    "m04:m04_ring_glow": 2369,
+    "m04:m04_bubbles": 13064,
+    "m04:m04_foam": 138150,
+    "m04:m04_river": 387790,
+    "coins": 2993,
+    "benny": 68349,
+    "m04_splash": 5847
+   },
+   "legend": [
+    {
+     "c": "water_system:water_whirlpool",
+     "rgb": [
+      255,
+      61,
+      61
+     ]
+    },
+    {
+     "c": "benny",
+     "rgb": [
+      61,
+      255,
+      118
+     ]
+    },
+    {
+     "c": "coins",
+     "rgb": [
+      174,
+      61,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_room_wall",
+     "rgb": [
+      255,
+      231,
+      61
+     ]
+    },
+    {
+     "c": "m04mv_overlay",
+     "rgb": [
+      61,
+      223,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_room_far",
+     "rgb": [
+      255,
+      61,
+      166
+     ]
+    },
+    {
+     "c": "m04:m04_water",
+     "rgb": [
+      109,
+      255,
+      61
+     ]
+    },
+    {
+     "c": "m04:m04_ring_tunnel",
+     "rgb": [
+      69,
+      61,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_ring_mouth",
+     "rgb": [
+      255,
+      126,
+      61
+     ]
+    },
+    {
+     "c": "m04:m04_ring_glow",
+     "rgb": [
+      61,
+      255,
+      183
+     ]
+    },
+    {
+     "c": "m04:m04_river",
+     "rgb": [
+      239,
+      61,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_foam",
+     "rgb": [
+      214,
+      255,
+      61
+     ]
+    },
+    {
+     "c": "m04:m04_bubbles",
+     "rgb": [
+      61,
+      158,
+      255
+     ]
+    },
+    {
+     "c": "m04:m04_bulbs",
+     "rgb": [
+      255,
+      61,
+      101
+     ]
+    },
+    {
+     "c": "m04_splash",
+     "rgb": [
+      61,
+      255,
+      78
+     ]
+    }
+   ],
+   "cover": {
+    "view1": {
+     "in_frame_px": 1327104,
+     "depth_visible_px": 1062806,
+     "image_opaque_px": 921412,
+     "usable_px": 691907,
+     "share_of_frame_usable": 0.5214
+    },
+    "view2": {
+     "in_frame_px": 1327104,
+     "depth_visible_px": 1296528,
+     "image_opaque_px": 857937,
+     "usable_px": 835730,
+     "share_of_frame_usable": 0.6297
+    },
+    "weights": {
+     "w0": 0,
+     "w1": 1
+    },
+    "cam_to_view_cam": [
+     10.786,
+     0.765
+    ]
+   }
+  }
+ ]
+}

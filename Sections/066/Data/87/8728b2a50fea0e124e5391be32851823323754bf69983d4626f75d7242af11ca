@@ -1,0 +1,12 @@
+import json,urllib.request,urllib.parse,urllib.error
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+names=['@playwright/mcp','chrome-devtools-mcp','pixelmatch','pngjs','spectorjs','threejs-devtools-mcp','@threejs/devtools','spectorjs-mcp','three-devtools-mcp']
+def fetch(n):
+ try:
+  with urllib.request.urlopen('https://registry.npmjs.org/'+urllib.parse.quote(n,safe='@')+'/latest',timeout=15) as r:j=json.load(r)
+  print(n,j.get('version'),j.get('repository',{}),flush=True)
+  return n,{k:j.get(k) for k in ('name','version','repository','gitHead','dist','engines','license','bin','scripts','dependencies')}
+ except urllib.error.HTTPError as ex:print(n,ex.code,flush=True);return n,{'http':ex.code}
+with ThreadPoolExecutor(max_workers=5) as ex:d=dict(ex.map(fetch,names))
+Path('registry.json').write_text(json.dumps(d,indent=2))

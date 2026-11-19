@@ -1,0 +1,7 @@
+Failed to create secure directory (/home/agent/.config/pulse): Read-only file system
+00:02.144  reports          | WARNING Path 'games/06/references/06_crest_the_rinse_arch.png' cannot be made relative for Image 'Owner-approved Screen 06 original'
+Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+00:02.233  blend            | Read blend: "/tmp/rainbow-s06-coin-arc-RoZNOWum/authoring/Screen06_Crest_Routes.blend"
+Extensions: writing cache failed ([Errno 30] Read-only file system: '/home/agent/.config/blender/5.3').
+Info: Saved as "Screen06_Crest_Routes.blend"
+pa_write() failed while trying to wake up the mainloop: Operation not permitted

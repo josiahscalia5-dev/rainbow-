@@ -1,0 +1,29 @@
+# Rainbow session — session 0e24ab6b-2aa5-557c-9d94-6391f984005c
+
+### 🧑 User — 2026-11-17T20:28:19.354Z
+
+TASK FROM LEAD CLAUDIA (session_013VHsJ9SbWPe9YXRvtUSngc, branch ccr-f983b317-2vt0zh). This brief is also saved at docs/briefs/2026-11-17-r5/S08_BENNY.md on the lead branch.
+
+You are the SCREEN 08 BENNY SPECIALIST (benny-character-artist role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work or earlier Benny variants. Lead = session `session_013VHsJ9SbWPe9YXRvtUSngc` (branch `ccr-f983b317-2vt0zh`). Screen 08 is my highest priority.
+
+Your branch: **`claude/rainbow-s08-benny08-bake-c5`**, created by the lead at `claude/rainbow-s08-benny08-bake-c4` @ `fb72cc5052df908b994afeb41e7f598abc24e18d` (round 5b done + transcript autosaves). Push ONLY this branch. Never write to `-c4` or any older branch.
+
+FIRST read (from `ccr-f983b317-2vt0zh` via `git fetch origin ccr-f983b317-2vt0zh && git show FETCH_HEAD:…`): `docs/briefs/2026-11-17-r5/COMMON_RULES.md`, then `docs/briefs/2026-11-17-r4/COMMON_RULES.md`, `docs/briefs/2026-11-17-r4/USER_DECISIONS.md` (decision 1 = Benny), `docs/briefs/2026-11-17-r4/S08_BENNY.md` (round-5 brief: still binding for proofs, ownership, switches) and the r3 + r2 COMMON_RULES. Then on YOUR branch: `CLAUDE.md`, `qa/match/08/NOTES.md`, and your own saved work: `qa/match/08/benny08/STATUS.md`, `NOTES.md`, `SHARED_CHANGES.md`, `review_r5/final/`, `src/characters/benny/*`, `assets/textures/benny08/`.
+
+## Where round 5 stopped (account 4)
+* r5b is the current `?match08=1` Benny: r3b (the user's preferred base: softer fur strands, softer silhouette, crisp cuff ribs, fuller splash ring) + the user's decision "rounder and fuller": body ≈1.1× the brim width (approved ≈1.09×), body fur ×1.04, beanie ×0.94, stubby high arms. Benny+splash within 20 levels 62.2 % (r2 65.7, r3b 65.3, r4 65.4 — a visual choice, the user asked for the fuller shape); scenery 97.3 % unchanged.
+* Switches that reproduce earlier variants: r3b `b08full=0`; r4 `b08hi=1&b08pom=1&b08full=0`; r2 `b08r3=0`; rejected taper `b08shape=1` (opt-in, keep it OFF — the user rejected "slimmer toward the water").
+* Pictures `qa/match/08/benny08/review_r5/final/` (1_APPROVED / 2_BEFORE_r3b / 3_NEW + moving). APK `builds/rainbow-debug-08benny-2026-11-17-r5b.apk` (NOT phone-tested). Nothing approved.
+* Open (the user's words, 2026-11-17 transfer file §12): fur still looks too sharp; "prioritize better fur clumps and pom-pom yarn tufts rather than endless minor parameter changes that lower quality". Parameter tweaks all measured worse — this needs a new fur clump model or bake.
+
+## Your milestone (round 6), one factor at a time, each behind its own NEW switch, keep only what is VISIBLY closer to the approved Benny
+1. Startup check (r5 COMMON_RULES). Re-render the r5b BEFORE set at the approved view + `closeup_APPROVED.png` crop (only if `review_r5/final/` frames are missing or not reproducible) and record the exact BEFORE URL.
+2. **Soft layered fur clumps** like the painting: larger, rounded, overlapping clumps with soft tips and gentle shading on the round pink body (a new clump-card / shell layer or a bake from the approved picture onto the body), NOT stiff radial spikes. Fix the pale jagged fur tips / pale streaks at the left-arm edge. Keep the full round r5b silhouette (wider than the brim, round bottom in the splash).
+3. **Pom-pom yarn tufts** in the approved light violet: soft, shaded, slightly irregular yarn tufts instead of a smooth ball or spikes.
+4. Benny must stay a real animated 3D character: fur, hat, pom-pom and splash stay attached while swimming and steering — check moving frames (swimming forward, steering left, steering right) at the same crop.
+5. Proofs after the last kept change: tsc clean; default build 0 px; `?match08=1` scenery band unchanged (97.3 %); r5b, r3b, r4 and r2 URLs reproducible 0 px with the new switches off; gameplay 8/8 + 91 coins / 2,240 with and without match08; 04–07 with the switch: only Benny changes.
+6. Deliver separate full-size **1 APPROVED · 2 BEFORE (r5b) · 3 NEW** at the approved view + the same Benny close-up crop for each + moving frames (no collages) in `qa/match/08/benny08/review_r6/`; numbers (Benny+splash, scenery, whole) reported honestly — a lower number can still look closer, say so. APK with `match08=1` only if a change is kept (`builds/rainbow-debug-08benny-2026-11-17-r6.apk`, Git LFS, NOT phone-tested). `STATUS.md`, `NOTES.md`, `SHARED_CHANGES.md` updated.
+
+## Coordination
+You OWN `src/characters/benny/*` and `assets/textures/benny0*/`. Never edit `src/world/match08.ts`, `assets/textures/match08/*`, `tools/match08/` (the Screen 08 scenery specialist runs in parallel on `claude/rainbow-s08-scenery-c5`), `cameraRig.ts`, `match.ts`, `camClear.ts`, `coins.ts`, HUD, references, protected branches. No paid jobs of any kind. Work lean (no subagents, one heavy render at a time). If usage is clearly running low: update `STATUS.md` with the exact next step, commit, push, verify remote == HEAD, tell the lead, stop. When the milestone is done: push, verify remote SHA == HEAD, ONE `send_message` to `session_013VHsJ9SbWPe9YXRvtUSngc` (picture paths, numbers, SHA, open problems in VISUAL terms), then stop and wait.
+

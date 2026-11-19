@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-17T17:50:01+00:00",
+    "reason": "daemon",
+    "result": "committed+pushed",
+    "files_staged": 4,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-s08-camclear-c3",
+    "note": "following session branch 'claude/rainbow-s08-camclear-c3' (config branch 'ccr-9c4a8ad6-xovgsx')",
+    "commit": "d6c402bf7ce1f0d0f565419e5580a57f14a69757",
+    "duration_s": 13
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-s08-camclear-c3",
+  "last_verified_remote_sha": "d6c402bf7ce1f0d0f565419e5580a57f14a69757",
+  "last_successful_backup_utc": "2026-11-17T17:50:01+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=476); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-17T17:55:00+00:00"
+}

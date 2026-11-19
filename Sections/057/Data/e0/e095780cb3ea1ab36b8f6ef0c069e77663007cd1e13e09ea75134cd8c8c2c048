@@ -1,0 +1,17 @@
+from pathlib import Path
+import hashlib, shutil,json,subprocess,sys
+root=Path(__file__).parent;out=Path('/workspace/library-files/Rainbow-Crest-and-Swimming-Review')
+old=Path('/tmp/rainbow-reconstruction.etSm9SmK/repos')
+hd=Path('/tmp/rainbow-review-package.Ag1cgebC/proof')
+labels={'08':['forward-03','hard-left','platform-and-spouts'],'06':['hard-left','hard-right','crest-release','arch-exit'],'07':['two-thirds-down','plunge-bottom'],'04':['forward-20'],'05':['last-left-bend','last-right-bend']}
+out.mkdir(parents=True,exist_ok=True)
+def filehash(f):return hashlib.sha256(f.read_bytes()).hexdigest()
+for sid in sys.argv[1:]:
+ b=old/sid/'experiments/codex'/sid;n=root/'proof'/sid/'NEW';dest=out/sid;dest.mkdir(exist_ok=True)
+ to=[('Approved'+sid+'.jpg',b/'APPROVED.jpg')]
+ for label,where in [('Claudia',b/'BEFORE'),('Codex',n)]:
+  for nm in ['opening',*labels[sid]]:to.append((label+sid+'-'+nm+'.png',where/(nm+'.png')))
+ if sid in ('04','05','08'):to.append(('EarlierCandidate'+sid+'-'+labels[sid][0]+'.png',b/'NEW'/(labels[sid][0]+'.png')))
+ for name,src in to:
+  if src.is_file() and not (dest/name).exists():
+   shutil.copyfile(src,dest/name)

@@ -1,0 +1,96 @@
+from pathlib import Path
+import json,csv,io,hashlib,zipfile,re,shutil
+p=Path(__file__).resolve().parent; dest=p/'payload'; dest.mkdir(exist_ok=True)
+root=Path('/tmp/rainbow-crest-release.V85M78Mo');older=Path('/tmp/rainbow-final-fidelity.RuUP0xJ2');history=Path('/tmp/rainbow-review-package.Ag1cgebC');library=Path('/workspace/library-files/Rainbow-ChatGPT-Review')
+def read(f):return json.loads(f.read_text())
+def digest(f):
+    with f.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+def clean(s):return re.sub(r'[^A-Za-z0-9._-]+','_',str(s)).strip('_')
+entries=[];cases={}
+def add(s,role,label,branch,commit,logical,f,desired,accuracy='review',source_hash=None,case=None,section=''):
+    if not f.is_file():raise FileNotFoundError(f)
+    kind='video' if f.suffix.lower() in ['.mp4','.webm','.mov','.mkv'] or Path(logical).suffix.lower() in ['.mp4','.webm','.mov','.mkv'] else 'image'
+    h=source_hash or digest(f)
+    entries.append(dict(screen=s,status=role,edition=label,branch=branch,commit=commit,sourcePath=logical,local=str(f),name=desired,accuracy=accuracy,sha=h,kind=kind,case=case,section=section))
+def store_case(key,s,label,role,branch,commit,protected,folder,short):
+    cases[key]=dict(screen=s,label=label,status=role,branch=branch,commit=commit,retained=protected,sourceDirectory=str(folder),finding=short,items={})
+orig=read(root/'original-github-artwork.json')['screens']
+for s,info in orig.items():
+    f=root/'from-original-github'/info['path'];assert digest(f)==info['sha256']
+    add(s,'APPROVED','Original artwork',info['retained']['branch'],info['retained']['commit'],info['path'],f,f'03_SCREENS/Screen_{s}/APPROVED_ORIGINAL', 'art',info['sha256'],section='approved')
+    old=older/'repos'/s/'experiments/codex'/('fidelity-'+s)
+    for f in sorted((old/'CLAUDIA_BEFORE').iterdir()):
+        if f.suffix.lower() not in ['.png','.jpg','.mp4']:continue
+        # One repeat opening is represented in the current complete evidence catalog as well.
+        add(s,'CLAUDIA RETAINED','Latest verified Claudia gameplay',info['retained']['branch'],info['retained']['commit'],f'CLAUDIA_BEFORE/{f.name}',f,f'03_SCREENS/Screen_{s}/CLAUDIA_RETAINED/{f.stem}', 'baseline',section='retained')
+order=[('06',root,'Crest_Release'),('07',root,'Plunge_Outlet_Foam'),('04',root/'entrance-gold','Fifth_Gold_Ring'),('05',root,'Final_Bend_Highlights'),('08',root,'Chamber_Flow_Distance'),('06',root/'benny-cuff','Benny_Fitted_Knit_Cuff'),('06',root/'benny-material','Benny_Fur_And_Yarn'),('04',root,'Earlier_Ring_Coating')]
+issues={'Crest_Release':['crest-release','hard-left'],'Plunge_Outlet_Foam':['plunge-bottom','two-thirds-down'],'Fifth_Gold_Ring':['forward-20','last-in-stage'],'Final_Bend_Highlights':['last-right-bend'],'Chamber_Flow_Distance':['hard-right'],'Benny_Fitted_Knit_Cuff':['hard-left','hard-right'],'Benny_Fur_And_Yarn':['hard-right'],'Earlier_Ring_Coating':['forward-20']}
+for s,loc,label in order:
+    pub=read(loc/('published-'+s+'.json')); review=read(loc/('decision-'+s+'.json'));status=review['status']
+    repo=(root/'repo' if s=='06' else root/'round2/repos'/s) if loc==root else loc/'repos'/s
+    prefix='experiments/codex/'+pub['branch'].split('/')[-1];folder=repo/prefix
+    hashes=read(folder/'checksums.json');case=label;store_case(case,s,label,status,pub['branch'],pub['commit'],orig[s]['retained'],folder,review['short'])
+    for logical,h in sorted(hashes.items()):
+        f=folder/logical
+        if f.suffix.lower() not in ['.png','.jpg','.jpeg','.webp','.mp4']:continue
+        if digest(f)!=h: raise ValueError('Bad experimental evidence checksum')
+        part=Path(logical).parts[0]
+        if part=='CODEX_NEW':desired=f'03_SCREENS/Screen_{s}/CODEX_{status}_{label}/{f.stem}';acc='key' if f.stem in ['opening',*issues[label]] else 'fresh'
+        elif part=='CLAUDIA_BEFORE':desired=f'03_SCREENS/Screen_{s}/CLAUDIA_RETAINED/{f.stem}';acc='baseline'
+        elif logical=='APPROVED.jpg':desired=f'03_SCREENS/Screen_{s}/APPROVED_ORIGINAL';acc='art'
+        else:
+            desired=f'03_SCREENS/Screen_{s}/Diagnostics/{label}/{str(Path(logical).with_suffix(""))}';acc='review'
+            if 'character-review' in logical and 'character-native' in logical:acc='key'
+        itemstatus=status if part=='CODEX_NEW' else ('CLAUDIA RETAINED' if part=='CLAUDIA_BEFORE' else 'APPROVED' if logical=='APPROVED.jpg' else 'DIAGNOSTIC OR EARLIER COMPARISON')
+        add(s,itemstatus,label,pub['branch'],pub['commit'],prefix+'/'+logical,f,desired,acc,h,case,part)
+    cases[case]['watch']=review['watch'];cases[case]['primary']=issues[label]
+# Preserve the complete preceding five-stage comparison round as its own revision.
+for s in orig:
+    pub=read(older/('published-'+s+'.json'));folder=older/'repos'/s/'experiments/codex'/('fidelity-'+s)
+    first=(folder/'REPORT.md').read_text().splitlines()
+    status=next((k for k in ['REJECTED','CANDIDATE'] if any(k in line.upper() for line in first[:6])),'HISTORICAL EXPERIMENT')
+    label='Previous_'+pub['branch'].split('/')[-1];case=label
+    store_case(case,s,label,status,pub['branch'],pub['commit'],orig[s]['retained'],folder,next((v for v in first[1:6] if v.strip()),'Previous isolated trial'))
+    for logical,h in sorted(read(folder/'checksums.json').items()):
+        f=folder/logical
+        if f.suffix.lower() not in ['.png','.jpg','.jpeg','.webp','.mp4']:continue
+        assert digest(f)==h
+        part=Path(logical).parts[0]
+        acc='art' if logical=='APPROVED.jpg' else 'baseline' if part=='CLAUDIA_BEFORE' else 'review'
+        desired=f'03_SCREENS/Screen_{s}/Earlier/{label}/{str(Path(logical).with_suffix(""))}'
+        add(s,status if part=='CODEX_NEW' else 'HISTORICAL COMPARISON',label,pub['branch'],pub['commit'],f'experiments/codex/fidelity-{s}/'+logical,f,desired,acc,h,case,part)
+# Earlier review files carry byte provenance for all original native images, including specialist WIP.
+for row in read(history/'final-images.json'):
+    f=Path(row['file']);s=row['screen'];assert digest(f)==row['sha256']
+    acc='art' if row['status'].startswith('APPROVED') else 'review'
+    add(s,row['status'],row.get('section','Earlier'),str(row.get('branch') or ''),str(row.get('evidence_commit') or row.get('commit') or ''),row.get('source',''),f,f"03_SCREENS/Screen_{s}/Earlier/Archive/{clean(row.get('section','') or 'Originals')}/{clean(row['stem'])}",acc,row['sha256'],section='history')
+for row in read(history/'original-videos.json'):
+    f=Path(row['file']);s=row['screen'];assert digest(f)==row['sha256']
+    add(s,row['status'],row.get('section','Earlier original recording'),str(row.get('branch') or ''),str(row.get('evidence_commit') or row.get('commit') or ''),row.get('source',''),f,f"03_SCREENS/Screen_{s}/Earlier/Recordings/{clean(row['stem'])}",'review',row['sha256'],section='history')
+# Include all motion masters from the previous phone review as well as the saved original recordings.
+with zipfile.ZipFile(library/'Rainbow_Gameplay_Videos.zip') as z:
+    out=p/'saved-film-inputs';out.mkdir(exist_ok=True)
+    rows=list(csv.DictReader(io.StringIO(z.read('FILE_INDEX.csv').decode('utf-8-sig'))))
+    for row in rows:
+        logical=row['file_inside_this_zip'];data=z.read(logical);h=hashlib.sha256(data).hexdigest()
+        f=out/(h+'.mp4')
+        if not f.exists():f.write_bytes(data)
+        s=row['screen'];a=row.get('status','SAVED RECORDING')
+        add(s,a,'Previous full motion master',row.get('source_branch',''),row.get('evidence_commit') or row.get('source_commit',''),row.get('source_path',logical),f,f'03_SCREENS/Screen_{s}/Earlier/Previous_Motion_Masters/'+clean(Path(logical).stem),'review',h,section='history')
+    docs=dest/'05_REVIEW_RECORDS'/'Earlier_Phone_Review'/'Video_Indexes';docs.mkdir(parents=True,exist_ok=True)
+    for n in z.namelist():
+        if Path(n).suffix.lower() in ['.md','.csv','.json','.txt']:
+            f=docs/n;f.parent.mkdir(parents=True,exist_ok=True);f.write_bytes(z.read(n))
+with zipfile.ZipFile(library/'Rainbow_Visual_Images.zip') as z:
+    docs=dest/'05_REVIEW_RECORDS'/'Earlier_Phone_Review'/'Image_Indexes'
+    for n in z.namelist():
+        if Path(n).suffix.lower() in ['.md','.csv','.json','.txt']:
+            f=docs/n;f.parent.mkdir(parents=True,exist_ok=True);f.write_bytes(z.read(n))
+priority={'art':0,'baseline':1,'key':2,'fresh':3,'review':4}
+catalog={}
+for e in entries:
+    h=e['sha']
+    if h not in catalog or priority[e['accuracy']]<priority[catalog[h]['accuracy']]:catalog[h]=e.copy()
+(p/'media-catalog.json').write_text(json.dumps(catalog,separators=(',',':')));(p/'media-records.json').write_text(json.dumps(entries,separators=(',',':')));(p/'cases.json').write_text(json.dumps(cases,indent=2))
+from collections import Counter
+print('Unique media',Counter(r['kind'] for r in catalog.values()),'original MiB', {k:round(sum(Path(r['local']).stat().st_size for r in catalog.values() if r['kind']==k)/2**20) for k in ['image','video']}, 'review entries',len(entries),flush=True)

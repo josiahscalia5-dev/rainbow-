@@ -1,0 +1,8 @@
+{
+  "when": "2026-11-16T01:57:38.491Z",
+  "renderer": null,
+  "shots": [],
+  "errors": [
+    "[05] ReferenceError: marblePano05 is not defined\n    at buildEnvironment (http://127.0.0.1:5201/src/world/environment.ts:224:13)\n    at startGame (http://127.0.0.1:5201/src/game/Game.ts:60:15)\n    at http://127.0.0.1:5201/src/main.ts:15:1"
+  ]
+}

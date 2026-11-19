@@ -1,0 +1,96 @@
+from pathlib import Path,PurePosixPath
+from collections import Counter
+import csv,io,os,json,hashlib,sys,zipfile,tempfile,shutil,re,struct,subprocess as sp,stat,urllib.parse,datetime
+from html.parser import HTMLParser
+from PIL import Image
+import fitz
+root=Path(__file__).resolve().parent;pkg=root/'payload'
+delivery=Path('/workspace/shared/downloads/Rainbow_Full_Code_and_Screens_ChatGPT.zip')
+extracted=root/'restored-download'
+def sha(path):
+ with path.open('rb') as x:return hashlib.file_digest(x,'sha256').hexdigest()
+def contained(name):
+ p=PurePosixPath(name)
+ return not p.is_absolute() and '..' not in p.parts and '\\' not in name and '\x00' not in name and not p.parts[0].endswith(':')
+def mime_check_and_links(base):
+ with fitz.open(base/'Rainbow_Visual_Review.pdf') as pdf:
+  assert len(pdf)==37 and all(len(page.get_images())==1 for page in pdf)
+ def assertlinks(source,urls):
+  for url in urls:
+   if url.startswith(('https://','http://','#','mailto:')):continue
+   name=urllib.parse.unquote(url.split('#')[0])
+   dest=(source.parent/name).resolve(); assert dest.is_relative_to(base) and dest.is_file(),(source.relative_to(base),name)
+ for source in [base/'START_HERE.md',*base.glob('03_SCREENS/Screen_*/REVIEW_THIS_SCREEN.md')]:
+  assertlinks(source,re.findall(r'\[[^]]+\]\(([^)]+)\)',source.read_text()))
+ class Hyperlinks(HTMLParser):
+  def __init__(self):super().__init__();self.urls=[]
+  def handle_starttag(self,tag,attrs):
+   if tag=='a':self.urls.extend(v for k,v in attrs if k=='href')
+ parser=Hyperlinks();source=base/'OPEN_ON_PHONE.html';parser.feed(source.read_text());assertlinks(source,parser.urls)
+ stamp_rows=list(csv.DictReader((base/'05_REVIEW_RECORDS/MEDIA_INDEX.csv').open()))
+ assert len(stamp_rows)==1294 and all((base/r['file_in_zip']).is_file() for r in stamp_rows)
+def package():
+ paths=sorted((p for p in pkg.rglob('*') if p.is_file() and p!=pkg/'SHA256SUMS.txt'),key=lambda p:p.relative_to(pkg).as_posix())
+ with (pkg/'SHA256SUMS.txt').open('w',encoding='utf8',newline='\n') as log:
+  for p in paths:
+   name=p.relative_to(pkg).as_posix();assert '\r' not in name and '\n' not in name and contained(name) and not p.is_symlink()
+   log.write(sha(p)+'  '+name+'\n')
+ mime_check_and_links(pkg)
+ paths+= [pkg/'SHA256SUMS.txt']
+ paths.sort(key=lambda p:(len(p.relative_to(pkg).parts)!=1,p.relative_to(pkg).as_posix()))
+ modes={}
+ for v in json.loads((pkg/'02_VERSIONS/INDEX.json').read_text())['variants'].values():
+  for n,x in json.loads((pkg/v['index']).read_text())['files'].items():
+   if x['mode']=='100755':modes[x['file']]=0o755
+ archive=root/'ready-for-delivery.zip'
+ with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6,allowZip64=True) as z:
+  for p in paths:
+   name=p.relative_to(pkg).as_posix();entry=zipfile.ZipInfo(name,date_time=(2026,11,19,1,10,0))
+   entry.create_system=3;entry.external_attr=(stat.S_IFREG|modes.get(name,0o644))<<16;entry.compress_type=zipfile.ZIP_STORED if p.suffix.lower() in {'.avif','.webp','.mp4'} else zipfile.ZIP_DEFLATED
+   entry._compresslevel=6;entry.file_size=p.stat().st_size
+   with p.open('rb') as src,z.open(entry,'w') as out:shutil.copyfileobj(src,out,length=1024*512)
+ print('Archive',archive.stat().st_size,'bytes',len(paths),'files',flush=True)
+ return archive
+def verify(archive):
+ with zipfile.ZipFile(archive) as z:
+  names=z.namelist();assert set(names)=={p.relative_to(pkg).as_posix() for p in pkg.rglob('*') if p.is_file()};assert len(set(names))==len(names) and all(contained(n) and not n.endswith('/') for n in names)
+  coll=Counter(n.casefold() for n in names);assert not [n for n,count in coll.items() if count>1],[(n,count) for n,count in coll.items() if count>1][:6]
+  assert z.testzip() is None
+  if extracted.exists():raise FileExistsError('Independent extraction directory already exists')
+  z.extractall(extracted)
+ digestlist={}
+ for rec in (extracted/'SHA256SUMS.txt').read_text().splitlines():
+  h, name=rec.split('  ',1);assert name not in digestlist and contained(name);digestlist[name]=h
+ assert set(digestlist)==set(names)-{'SHA256SUMS.txt'}
+ for name,h in digestlist.items():assert sha(extracted/name)==h,name
+ mime_check_and_links(extracted)
+ images=json.loads((root/'compact-image-outputs.json').read_text());videos=json.loads((root/'compact-video-outputs.json').read_text())
+ for h,item in images.items():
+  f=extracted/item['file'];assert digestlist[item['file']]==item['packagedSHA256']
+  with Image.open(f) as pic:
+   assert pic.size==(item['nativeWidth'],item['nativeHeight']);pic.load()
+   if item['pixelExact']:assert hashlib.sha256(pic.convert(item['sourceMode']).tobytes()).hexdigest()==item['sourcePixelSHA256']
+   if item['encoding']=='unaltered original bytes':assert sha(f)==h
+ for h,item in videos.items():
+  f=extracted/item['file'];assert digestlist[item['file']]==item['packagedSHA256']
+  stream=json.loads(sp.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=codec_name,width,height,nb_frames','-of','json',str(f)]))['streams'][0]
+  assert (stream['codec_name'],stream['width'],stream['height'],int(stream['nb_frames']))==('h264',item['nativeWidth'],item['nativeHeight'],item['frames'])
+ sp.run([sys.executable,str(root/'screen-secrets.py'),str(extracted)],check=True)
+ sp.run([sys.executable,str(root/'verify-source-and-build.py'),str(extracted)],check=True)
+ proof={'sha256':sha(archive),'compressedBytes':archive.stat().st_size,'files':len(names),'nativeImagesDecoded':len(images),'verifiedH264Recordings':len(videos),'openingAndIssueImagesPixelVerified':sum(x['pixelExact'] for x in images.values()),'verifiedPDFPages':37,'verifiedGuideLinks':True,'verifiedZIPCRC':True,'verifiedAllExtractedSHA256':True,'gameSourceVerifiedAfterExtraction':True,'sourceEditions':31}
+ (root/'delivery-proof.json').write_text(json.dumps(proof,indent=2)+'\n');print(json.dumps(proof),flush=True)
+ if archive.stat().st_size>512000000:raise RuntimeError('Archive exceeds the target size. Review the optional PDF encoding.')
+ delivery.parent.mkdir(parents=True,exist_ok=True)
+ if delivery.exists():
+  if sha(delivery)!=proof['sha256']:raise FileExistsError('A different delivery file already exists.')
+ else:
+  with tempfile.NamedTemporaryFile(prefix='.rainbow-review-',dir=delivery.parent,delete=False) as out:
+   with archive.open('rb') as src:shutil.copyfileobj(src,out,length=1024*1024)
+   scratch=Path(out.name)
+  assert sha(scratch)==proof['sha256'];scratch.chmod(0o644);os.replace(scratch,delivery)
+ print('Verified download',delivery,flush=True)
+if __name__=='__main__':
+ archive=package() if len(sys.argv)<2 else root/'ready-for-delivery.zip'
+ if archive.stat().st_size>512000000:print('Oversize before extraction',archive.stat().st_size,flush=True);sys.exit(3)
+ verify(archive)
+

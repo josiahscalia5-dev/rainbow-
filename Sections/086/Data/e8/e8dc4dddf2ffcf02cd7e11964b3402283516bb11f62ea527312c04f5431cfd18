@@ -1,0 +1,98 @@
+[
+  {
+    "file": "Rainbow_Visual_Images.zip",
+    "bytes": 197005588,
+    "mediaFiles": 449,
+    "entries": 497,
+    "sha256": "e66e802cef08bf5761ee5883cff9da27531507a6f82f2a7856480ee7934ea68f",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Source_Images/Rainbow_Visual_Images_Part01.zip",
+    "bytes": 122134501,
+    "mediaFiles": 77,
+    "entries": 87,
+    "sha256": "953fe41d4fa98cfc40dc5a8af66c0a16c481addbc6241546fc51c84615c8a46b",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Source_Images/Rainbow_Visual_Images_Part02.zip",
+    "bytes": 191461118,
+    "mediaFiles": 105,
+    "entries": 116,
+    "sha256": "4d8c0725e656bf689c7febd0bcc3c02a101bce0da7d89e33db23d7a48ed7d99a",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Source_Images/Rainbow_Visual_Images_Part03.zip",
+    "bytes": 140594327,
+    "mediaFiles": 70,
+    "entries": 81,
+    "sha256": "7216b99d30e46b15a9ba265f94fd6d554a2565b7c7f4d9914d88290350a81b01",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Source_Images/Rainbow_Visual_Images_Part04.zip",
+    "bytes": 107593768,
+    "mediaFiles": 57,
+    "entries": 73,
+    "sha256": "158e9a940acbb6a7d7cef0f23fb38a67c3bacae451c1da473b0ad4c9c0684410",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Source_Images/Rainbow_Visual_Images_Part05.zip",
+    "bytes": 115230939,
+    "mediaFiles": 72,
+    "entries": 88,
+    "sha256": "b82015a692c3c8e487509b39ff88f1d637d513a1ace79246d0c5cd0bfb6aea1a",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Source_Images/Rainbow_Visual_Images_Part06.zip",
+    "bytes": 153846891,
+    "mediaFiles": 68,
+    "entries": 78,
+    "sha256": "bff15ad0c3c01f68e7a098bdf7a3d88c546d22c6743c72c76a2f660766be03ea",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Small_Image_Batches/Screen_04_Image_Batch.zip",
+    "bytes": 12375398,
+    "mediaFiles": 9,
+    "entries": 19,
+    "sha256": "eb42712f74d76cf3144ee18ecbd187072fde94f90d9f47cff3898a61945d42fc",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Small_Image_Batches/Screen_05_Image_Batch.zip",
+    "bytes": 17521140,
+    "mediaFiles": 9,
+    "entries": 20,
+    "sha256": "75e13cd2996fcdfce1df38d9d7acb874fd63250c43bb73605e6a31c87f03de6b",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Small_Image_Batches/Screen_06_Image_Batch.zip",
+    "bytes": 17903407,
+    "mediaFiles": 9,
+    "entries": 20,
+    "sha256": "9bf79ac2941b82256e2ef204f385f2b6718c4d30df3e360b302879782f25d9af",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Small_Image_Batches/Screen_07_Image_Batch.zip",
+    "bytes": 16097444,
+    "mediaFiles": 9,
+    "entries": 25,
+    "sha256": "40b7c42ca6f7035beb0cb15f66d846e4bdfc8a99090209fddef261086763d006",
+    "crcAndChecksums": "verified"
+  },
+  {
+    "file": "Small_Image_Batches/Screen_08_Image_Batch.zip",
+    "bytes": 18331647,
+    "mediaFiles": 9,
+    "entries": 19,
+    "sha256": "ed9888c518f23cbd5a0480823b0c65786372653055f2209226ece3b025d1a417",
+    "crcAndChecksums": "verified"
+  }
+]

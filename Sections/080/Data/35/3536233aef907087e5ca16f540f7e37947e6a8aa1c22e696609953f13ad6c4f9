@@ -1,0 +1,4 @@
+  draft world 5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f (marble-1.0-draft): 7 LFS + 13 files
+  full  world c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 (marble-1.1): 8 LFS + 13 files
+  qa/worldlabs: 71 tracked files; ledger, prompt, input reference and 5 scripts checked
+@@ ok both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250

@@ -1,0 +1,173 @@
+"""Collect verified visual evidence and assign stable review names."""
+from pathlib import Path
+from zipfile import ZipFile
+from PIL import Image
+from collections import defaultdict
+import hashlib, json, re, subprocess
+
+ROOT=Path.cwd()
+LIB=Path('/workspace/library-files')
+CURRENT=LIB/'Rainbow-Reconstruction-Experiments'
+OLD=LIB/'Rainbow-Motion-Toolchain'
+V=Path('/tmp/rainbow-reconstruction.etSm9SmK')
+ids=('04','05','06','07','08')
+verified=json.load(open(CURRENT/'verification.json'))['protectedRefs']
+remote={r.split()[1].removeprefix('refs/heads/'):r.split()[0] for r in (ROOT/'remote-heads.txt').read_text().splitlines()}
+images=[];videos=[];keys=set()
+def safe(name):
+    return re.sub(r'[^A-Z0-9]+','_',name.upper()).strip('_')
+def pose(name):
+    k={'opening':'OPENING','inlet':'ENTRANCE','last-in-stage':'FINAL_APPROACH','across-transition':'STAGE_TRANSITION','CLAUDIA_BEFORE':'OPENING'}
+    if name.startswith('forward-') and name.split('-')[-1].isdigit():return 'FORWARD'+name.split('-')[-1].lstrip('0').zfill(2)
+    return k.get(name,safe(name))
+def sha(data):return hashlib.sha256(data).hexdigest()
+def add(sid,subdir,stem,file,status,desc,branch,commit,source_path,rank,**extra):
+    file=Path(file)
+    rec=dict(screen=sid,section=subdir,stem='SCREEN'+sid+'_'+stem,status=status,description=desc,branch=branch,commit=commit,source=source_path,rank=rank,file=str(file),**extra)
+    key=(sid,subdir,rec['stem'])
+    if key in keys:raise ValueError('Duplicate name '+str(key))
+    keys.add(key)
+    if extra.get('movie'):
+        videos.append(rec);return
+    with Image.open(file) as im:
+        rec.update(width=im.width,height=im.height,format=im.format)
+        assert im.format in ('JPEG','PNG','WEBP'),file
+    rec['sha256']=sha(file.read_bytes())
+    images.append(rec)
+
+TRIALS={
+ '05':{'initial-trial':('MIRRORED_WALL','Earlier wall sampling duplicated a bubble during hard left.')},
+ '06':{'initial-trial':('TIGHT_TUNNEL_BEND','The first elbow sent the passage off the right of the view at +10.')},
+ '07':{'initial-trial':('FULL_FACE_REPAINT','The broad repaint covered the retained highlight.'),
+       'masked-material':('MASKED_PADDLE_MATERIAL','The masked material kept the old oversized box.'),
+       'fitted-body-only':('SOLID_WITH_DUPLICATE_EDGE','The fitted solid exposed an extra painted gold edge behind it.')}}
+
+for sid in ids:
+    d=CURRENT/('Screen-'+sid);pr=json.load(open(d/'provenance.json'));r=pr['base'];br=pr['branch'];tip=verified['codexBranches'][sid]['verifiedCommit']
+    assert remote[r['branch']]==r['commit'] and remote[br]==tip
+    ref=d/'APPROVED.jpg';checks=json.load(open(d/'reference-and-source-check.json'))['verifiedReferenceHashes']
+    assert sha(ref.read_bytes())==pr['referenceSHA256']==checks[pr['referencePath']]
+    add(sid,'','APPROVED',ref,'APPROVED','Original approved full screen. Exact original bytes.',r['branch'],r['commit'],pr['referencePath'],0,exact=True)
+    origin='experiments/codex/'+sid+'/'
+    datahash=json.load(open(d/'sha256.json'))
+    raw=lambda f:origin+f.relative_to(d).as_posix()
+    for lab,s,note in [('BEFORE','CLAUDIA','Retained gameplay reproduced from the specialist checkpoint.'),('NEW','CODEX_CANDIDATE','Current isolated candidate. Owner approval pending.')]:
+        srcbranch=r['branch'] if lab=='BEFORE' else br
+        srccommit=r['commit'] if lab=='BEFORE' else pr['experimentSource']
+        for p in sorted((d/lab).glob('*.png')):
+            if p.stem=='opening-repeat':continue
+            assert sha(p.read_bytes())==datahash[p.relative_to(d).as_posix()]
+            add(sid,'Current',s+'_'+pose(p.stem),p,'CLAUDIA RETAINED' if lab=='BEFORE' else 'CANDIDATE',note,srcbranch,srccommit,raw(p),0,evidence_commit=tip,pose=p.stem)
+        p=d/lab/'ride.mp4';assert sha(p.read_bytes())==datahash[p.relative_to(d).as_posix()]
+        add(sid,'Recorded_Originals',s+'_ORIGINAL_RIDE_324',p,'CLAUDIA RETAINED' if lab=='BEFORE' else 'CANDIDATE',note,srcbranch,srccommit,raw(p),0,evidence_commit=tip,movie=True)
+    for folder,(label,desc) in TRIALS.get(sid,{}).items():
+        directory=d/folder
+        source=re.findall(r'\b[a-f0-9]{40}\b',(directory/'README.md').read_text())[-1]
+        assert not subprocess.run(['git','-C',str(V/'repos'/sid),'merge-base','--is-ancestor',source,tip]).returncode
+        for p in sorted(directory.glob('*.png')):
+            assert sha(p.read_bytes())==datahash[p.relative_to(d).as_posix()]
+            priority=1 if p.stem in ('opening','forward-10','hard-left','hard-right','plunge-lip') else 4
+            add(sid,'Codex_Rejected/'+label,'CODEX_REJECTED_'+label+'_'+pose(p.stem),p,'REJECTED',desc,br,source,raw(p),priority,evidence_commit=tip)
+        p=directory/'ride.mp4';assert sha(p.read_bytes())==datahash[p.relative_to(d).as_posix()]
+        add(sid,'Rejected_Rides','CODEX_REJECTED_'+label+'_RIDE',p,'REJECTED',desc,br,source,raw(p),3,evidence_commit=tip,movie=True)
+    for dr,lab,description in [('detail','STEERING_DETAIL','A native-scale crop. Use the corresponding full-size steering picture for the whole frame.'),
+                               ('wall-diagnostic','WALL_DIAGNOSTIC','Diagnostic view with geometry hidden or isolated. It is not a normal ride.')]:
+        for p in sorted((d/dr).glob('*.png')):
+            assert sha(p.read_bytes())==datahash[p.relative_to(d).as_posix()]
+            who=('CLAUDIA' if p.stem=='BEFORE' else 'CODEX_CANDIDATE') if dr=='detail' else 'CODEX_DIAGNOSTIC'
+            status=('CLAUDIA RETAINED' if who=='CLAUDIA' else 'CANDIDATE') if dr=='detail' else 'DIAGNOSTIC'
+            add(sid,'Diagnostics',who+'_'+lab+'_'+safe(p.stem),p,status,description,br if who!='CLAUDIA' else r['branch'],pr['experimentSource'] if who!='CLAUDIA' else r['commit'],raw(p),1 if dr=='detail' else 4,evidence_commit=tip)
+
+for row in json.load(open('pulled-index.json')):
+    g=row['group'];sid=row['screen'];br=row['branch'];h=row['commit'];src=row['path'];ext=Path(src).suffix.lower()
+    if ext=='.json':continue
+    p=row['file'];stem=Path(src).stem
+    if g=='water-reference':
+        add('05','','APPROVED_WATER_DETAIL',p,'APPROVED DETAIL','Original supplementary water artwork. The full-screen approved composition is SCREEN05_APPROVED.jpg.',br,h,src,0,exact=True);continue
+    if g.startswith('specialist'):
+        tail=src.split('/r17/')[1]
+        older='/before/' in tail.lower() or '2_before_' in stem.lower()
+        wip='unfinished' in tail.lower()
+        ring=g=='specialist-04r'
+        start='/start/' in tail.lower()
+        who='CLAUDIA_UNFINISHED_GLINT' if wip else 'CLAUDIA_RING_SPECIALIST' if ring else 'CLAUDIA_PRIOR_TO_RETAINED' if older else 'CLAUDIA_SAVED'
+        status='CLAUDIA WIP' if wip else 'CLAUDIA EARLIER' if older else 'CLAUDIA RING SPECIALIST' if ring else 'CLAUDIA ARCHIVED'
+        section='Claudia_Saved/'+('Unfinished_glint' if wip else 'Independent_ring_specialist' if ring else 'Earlier_in_round' if older else 'Retained_round17')
+        name=src.split('/r17/')[1].split('/')[-1]
+        clean=re.sub(r'^(?:[1-3]_(?:BEFORE|NEW)_|NEW_)','',Path(name).stem,flags=re.I)
+        if start:clean='START_'+clean
+        desc='Claudia’s direct specialist archive. This precedes the retained improvement.' if older else 'Claudia’s own saved specialist evidence.'
+        if wip:desc='Claudia’s unfinished glint draft. The retained Screen 08 baseline uses the earlier visibility pass.'
+        if ring:desc='Claudia’s independent gold-ring specialist. It has a different branch from the Screen 04 scenery baseline.'
+        if ext in ['.mp4','.webm']:
+            add(sid,'Claudia_Specialist_Clips',who+'_ORIGINAL_SPECIALIST_CLIP',p,status,desc,br,h,src,1,movie=True,git_blob=row['blob']);continue
+        add(sid,section,who+'_'+safe(clean),p,status,desc,br,h,src,4 if (older or wip) else 2,git_blob=row['blob']);continue
+    if g.startswith('old05-'):
+        kind=g.split('-')[-1];base={'liquid':'LIQUID_WATER','study':'WATER_REFERENCE_STUDY','fit':'REFERENCE_FIT','glow':'GLOW_PILOT'}[kind]
+        inner=src.split('/',2)[-1] if kind!='glow' else src.split('wave12/')[1]
+        label='CANDIDATE';desc='Earlier isolated Screen 05 water experiment. No owner acceptance is recorded.'
+        if kind=='study':
+            label='REJECTED';desc='The later reference-fit report identifies the previous reference-water study as rejected.'
+        if kind=='liquid' and ('iteration01' in inner or 'iteration02' in inner):
+            label='REJECTED';desc='Superseded flat or blurred liquid-water trial.'
+        if kind=='fit' and ('iteration01' in inner or 'iteration02' in inner):
+            label='REJECTED';desc='Earlier reference-fit version with flat color or a reflection lookup problem.'
+        if any(k in inner.lower() for k in ('current','default','previous-preserved','coordinates/baseline')):
+            label='HISTORICAL_BASELINE';desc='Historical comparison beside this older water trial. Use Current/ for Claudia’s latest retained build.'
+        if ('diagnostic' in inner or 'overlay' in inner or 'water-coordinates' in inner):
+            label='DIAGNOSTIC';desc='Water-fit measurement or extraction diagram. It is not normal gameplay.'
+        if kind=='glow':
+            label='HISTORICAL_BASELINE' if 'default_after' in inner else ('CANDIDATE' if 'CHOSEN' in inner or 'W12_full' in inner else 'DIAGNOSTIC')
+            desc='Wave 12 tuning record. CHOSEN is the study’s internal selection. Owner acceptance is not documented.'
+        name=Path(inner).with_suffix('').as_posix()
+        priority=2 if inner in ['NEW.png','IMPROVED.png','CURRENT.png'] or 'CHOSEN' in inner else 5
+        add('05','Historical_Screen05/'+base,'HISTORICAL_'+label+'_'+base+'_'+safe(name),p,label,desc,br,h,src,priority,git_blob=row['blob']);continue
+
+# The earlier motion audit and the independent gold-ring run supply extra positions.
+for s in ('04','04r','05','06','07','08'):
+    sid=s[:2];br=verified['protectedBranches'][s]['branch'];h=remote[br];d=OLD/'screens'/s
+    for p in sorted(d.glob('*.png')):
+        if p.stem=='independent-opening':continue
+        lab='CLAUDIA_RING_SPECIALIST' if s=='04r' else 'CLAUDIA_EARLIER_MOTION_AUDIT'
+        add(sid,'Earlier_Motion_Audit',lab+'_'+pose(p.stem),p,'CLAUDIA RING SPECIALIST' if s=='04r' else 'CLAUDIA RETAINED','A prior audit of the same authenticated checkpoint. Capture clocks and steering can differ from Current/.',br,h,'Saved motion audit/screens/'+s+'/'+p.name,3 if s=='04r' or 'feedback' in p.stem else 5)
+    if (d/'ride.mp4').exists():
+        add(sid,'Earlier_Motion_Audit','CLAUDIA_EARLIER_RECORDED_RIDE',d/'ride.mp4','CLAUDIA RETAINED','Earlier inlet-to-exit motion audit of the same checkpoint.',br,h,'Saved motion audit/screens/'+s+'/ride.mp4',3,movie=True)
+
+# Include only visual files listed in the original curated audit and their provenance.
+zpath=LIB/'Rainbow-visual-audit-2026-11-18.zip'; cache=ROOT/'unpacked';cache.mkdir(exist_ok=True)
+with ZipFile(zpath) as z:
+    provenance=json.loads(z.read('evidence/image-provenance.json'))
+    for n in z.namelist():
+        if not n.startswith(('CLAUDIA-kept-checkpoint/','CLAUDIA-moving-views/')) or not n.endswith('.png'):continue
+        rec=next(x for x in provenance if x['file']==n);data=z.read(n)
+        assert sha(data)==rec['sha256']
+        f=cache/(sha(data)+'.png');f.write_bytes(data); sid=Path(n).name[:2]
+        h=rec.get('source_commit') or verified['protectedBranches'][sid]['commit']
+        br=next((k for k,v in remote.items() if v==h and k.startswith('claude/rainbow-s'+sid)),verified['protectedBranches'][sid]['branch'])
+        add(sid,'Earlier_Specialist_Audit','CLAUDIA_ARCHIVE_'+safe(Path(n).parent.name)+'_'+safe(Path(n).stem),f,'CLAUDIA ARCHIVED',rec['description'],br,h,rec.get('source_path') or n,4)
+
+bankbranch='codex/s07-magenta-bank-shape';banktip=remote[bankbranch]
+b07=verified['protectedBranches']['07'];d=LIB/'Rainbow-S07-Image2Blender'
+bankdir='experiments/image2blender/s07-magenta-bank-shape/'
+for p in sorted(d.glob('*.png')):
+    if p.name.startswith('BLENDER_GEOMETRY_'):continue
+    isbase=p.stem.startswith('CLAUDIA_BEFORE_')
+    part=p.stem.split('CLAUDIA_BEFORE_' if isbase else 'IMAGE2BLENDER_TEST_')[-1]
+    add('07','Historical_Bank_Experiment',('CLAUDIA_BANK_TEST_BASELINE_' if isbase else 'CODEX_REJECTED_IMAGE2BLENDER_BANK_')+safe(part),p,'CLAUDIA RETAINED' if isbase else 'REJECTED','The wider bank improved forward travel but crowded the cyan lane on both hard turns.',b07['branch'] if isbase else bankbranch,b07['commit'] if isbase else banktip,bankdir+'comparison/'+p.name,2,evidence_commit=banktip)
+with ZipFile(LIB/'Rainbow-S07-Image2Blender-test.zip') as z:
+    for n in z.namelist():
+        if not n.endswith('.png') or not n.startswith(('run/renders/','rejected-tuning/')):continue
+        data=z.read(n);f=cache/(sha(data)+'.png');f.write_bytes(data)
+        isgame=n.startswith('rejected-tuning/')
+        add('07','Historical_Bank_Experiment/'+('Rejected_steering' if isgame else 'Blender_only'),
+            'CODEX_REJECTED_BANK_'+('GAMEPLAY_' if isgame else 'BLENDER_ONLY_')+safe(Path(n).stem),f,'REJECTED','Rejected early steering pass.' if isgame else 'Isolated model render. It shows only the reconstructed component and is not a gameplay screenshot.',bankbranch,banktip,bankdir+n,2 if isgame or 'final' in n else 6,evidence_commit=banktip)
+d=OLD/'screen-07-paddle'
+for p in sorted(d.iterdir()):
+    if p.suffix not in ('.png','.mp4'):continue
+    base=p.name.startswith('CLAUDIA')
+    tag=re.sub(r'^(CLAUDIA_BEFORE|CODEX_TEST)[_-]','',p.stem)
+    add('07','Historical_Paddle_Material',('CLAUDIA_ANGLE_TEST_BASELINE_' if base else 'CODEX_REJECTED_ANGLE_ONLY_')+safe(tag),p,'CLAUDIA RETAINED' if base else 'REJECTED','Disposable angular material test. Forward and left retained wall spill. The hard-right result flattened the gold highlight.',b07['branch'],b07['commit'],'Saved motion audit/screen-07-paddle/'+p.name,2,movie=p.suffix=='.mp4',temporary_trial=not base)
+
+(ROOT/'images.json').write_text(json.dumps(images,indent=2))
+(ROOT/'videos.json').write_text(json.dumps(videos,indent=2))
+print('Catalogued',len(images),'image records,',len(videos),'existing video records')

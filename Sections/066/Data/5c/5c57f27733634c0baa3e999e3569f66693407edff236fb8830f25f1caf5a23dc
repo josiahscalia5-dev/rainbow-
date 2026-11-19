@@ -1,0 +1,24 @@
+import json,subprocess
+from pathlib import Path
+root=Path.cwd()
+project=root/'proposed'
+p=subprocess.Popen(['codex','-c','sqlite_home='+json.dumps(str(root/'skill-profile/sqlite')),'app-server'],cwd=project,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=open(root/'diagnostic-output/skill-server.log','w'),text=True)
+def call(method,params,id=None):
+    qry={'jsonrpc':'2.0','method':method,'params':params}
+    if id is not None:qry['id']=id
+    p.stdin.write(json.dumps(qry)+'\n');p.stdin.flush()
+    if id is None:return
+    for line in p.stdout:
+        result=json.loads(line)
+        if result.get('id')==id:return result
+    raise RuntimeError('app-server exited before responding')
+try:
+    call('initialize',{'clientInfo':{'name':'rainbow-skill-validation','version':'1'}},1)
+    call('initialized',{})
+    result=call('skills/list',{'cwds':[str(project)],'forceReload':True},2)
+    data=result.get('result',{}).get('data',[])
+    matches=[{k:v.get(k) for k in ('name','scope','enabled','path')} for entry in data for v in entry.get('skills',[]) if v.get('name')=='rainbow-visual-motion-matcher']
+    (root/'diagnostic-output/skill-discovery.json').write_text(json.dumps(matches,indent=2));print(matches)
+    if not matches:raise ValueError('Skill not discovered')
+finally:
+    p.terminate();p.wait(timeout=5)

@@ -1,0 +1,101 @@
+import asyncio, json, re, importlib.util, sys, traceback
+from datetime import timedelta
+from pathlib import Path
+from contextlib import AsyncExitStack
+
+root=Path.cwd()
+module_spec=importlib.util.spec_from_file_location("schema",root/"mcp-schemas.py")
+module=importlib.util.module_from_spec(module_spec)
+module_spec.loader.exec_module(module)
+out=root/"diagnostic-output"
+queries=json.loads((root/"queries.json").read_text())
+async def call(client,tool_name,**args):
+ result=await client.call_tool(tool_name,args,read_timeout_seconds=timedelta(seconds=130))
+ strings=[]
+ for block in result.content:
+  if block.type=="text": strings.append(block.text)
+  if block.type=="image":
+   import base64
+   (out/(tool_name+".png")).write_bytes(base64.b64decode(block.data))
+ s="\n".join(strings)
+ if result.isError: raise RuntimeError(tool_name+": "+s[:650])
+ return s
+def write(label,data):
+ (out/(label+'.json')).write_text(json.dumps(data,indent=1));print(label,str(data)[:250],flush=True)
+
+async def browser_tools():
+ async with AsyncExitStack() as stack:
+  three,_=await module.connect(stack,'three')
+  mic,_=await module.connect(stack,'microsoft')
+  chrome,_=await module.connect(stack,'chrome')
+  proof={}
+  await call(mic,'browser_resize',width=432,height=768)
+  await call(mic,'browser_navigate',url='http://127.0.0.1:19578/?qa=1&dpr=1&'+queries['07'])
+  expression="""async () => {
+    for(let i=0;i<700 && !window.__rainbow?.ready;i++) await new Promise(r=>setTimeout(r,100));
+    const r=window.__rainbow; if(!r?.ready)throw Error(window.__error||'Game failed to start');
+    r.run(false);r.goto('07');r.setSteer(-1);r.step(50);r.setSteer(null);r.freezeAt(12+50/60);r.drawList();
+    const d=r.qa3d(); window.__THREE_SCENE__=d.scene;window.__THREE_RENDERER__=d.renderer;window.__THREE_CAMERA__=d.camera;
+    return {stage:r.state().stage,s:r.state().s,lateral:r.state().lat,actualDrawingBuffer:[d.renderer.domElement.width,d.renderer.domElement.height]};
+  }"""
+  proof['real_steering']=await call(mic,'browser_evaluate',function=expression)
+  preserved=root/'playwright-07.png'
+  if preserved.exists():
+   import shutil
+   shutil.copyfile(preserved,out/'playwright-07.png');proof['screenshot']='Native screenshot already verified from the same isolated Microsoft steering probe.'
+  else: proof['screenshot']=await call(mic,'browser_take_screenshot',type='png',filename=str(out/'playwright-07.png'))
+  write('microsoft-live',proof)
+  pages=await call(chrome,'list_pages')
+  indices=re.findall(r'(\d+):[^\n]*?http://127\.0\.0\.1:19578/',pages)
+  if not indices: raise RuntimeError('Chrome could not find the live QA tab: '+pages[:300])
+  page=int(indices[-1]);await call(chrome,'select_page',pageId=page)
+  gl_js="""() => {const q=window.__rainbow,d=q.qa3d(),gl=d.renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info');const m=d.scene.getObjectByName('m07_paddle2');return {stage:q.state().stage,webgl:gl.getParameter(gl.VERSION),renderer:ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):null,lost:gl.isContextLost(),paddle:m.name,geometry:m.geometry.type,material:m.material.type,depthTest:m.material.depthTest,near:d.camera.near,far:d.camera.far,triangles:d.renderer.info.render.triangles}}"""
+  c={'actual_context':await call(chrome,'evaluate_script',pageId=page,function=gl_js), 'asset_requests':await call(chrome,'list_network_requests',pageId=page,pageSize=6,resourceTypes=['image'])}
+  write('chrome-live',c)
+  r={'connection':await call(three,'bridge_status')}
+  for name,args in [('find_objects',{'namePattern':'^m07_paddle'}),('object_details',{'name':'m07_paddle2'}),('clipping_details',{}),('renderer_info',{})]:
+   try:r[name]=await call(three,name,**args)
+   except Exception as e:r[name]=str(e)
+  write('three-live',r)
+
+async def three_explicit():
+ async with AsyncExitStack() as stack:
+  three,_=await module.connect(stack,'three')
+  mic,_=await module.connect(stack,'microsoft')
+  await call(mic,'browser_resize',width=324,height=576)
+  await call(mic,'browser_navigate',url='http://127.0.0.1:8147/?qa=1&dpr=1&'+queries['07'])
+  code="async () => {\n   for(let i=0;i<800 && !window.__rainbow?.ready;i++) await new Promise(r=>setTimeout(r,100));\n   const r=window.__rainbow;r.run(false);r.goto('07');r.drawList();const d=r.qa3d();\n   window.__THREE_SCENE__=d.scene;window.__THREE_RENDERER__=d.renderer;window.__THREE_CAMERA__=d.camera;\n   window.__THREEJS_DEVTOOLS_PORT__=19578;window.__THREEJS_DEVTOOLS_NO_OVERLAY__=true;\n   const script=document.createElement('script');script.src='/__three-inspector.js';\n   await new Promise((resolve,reject)=>{script.onload=resolve;script.onerror=reject;document.head.appendChild(script)});\n   return {stage:r.state().stage,childCount:d.scene.children.length,bridge:window.__THREEJS_DEVTOOLS_BRIDGE__};\n  }"
+  r={'wiring':'Explicit game scene from its live QA API; verified inspector injected in the disposable tab after the game initialized.','page':await call(mic,'browser_evaluate',function=code)}
+  await asyncio.sleep(.6)
+  for name,args in [('bridge_status',{}),('find_objects',{'namePattern':'^m07_paddle'}),('object_details',{'name':'m07_paddle2'}),('clipping_details',{}),('renderer_info',{})]:
+   r[name]=await call(three,name,**args)
+  write('three-explicit-live',r)
+  assert json.loads(r['find_objects'])['count']==5, r['find_objects']
+
+async def spector():
+ async with AsyncExitStack() as stack:
+  client,_=await module.connect(stack,'spector')
+  p={'launch':'System Chromium 156 via isolated loopback-only launcher, SwiftShader WebGL2','spectorSource':'755e6a7671e58424fcfda1270823a71e91de3553','bundle':'0.9.33'}
+  p['page']=await call(client,'load_url',url='http://127.0.0.1:8147/__spector07.html?qa=1&dpr=0.25&'+queries['07'])
+  for i in range(35):
+   val=await call(client,'get_console_logs')
+   if 'RAINBOW_SPECTOR_REAL_STAGE' in val:break
+   await asyncio.sleep(0.5)
+  p['stage_console']=next((x[:280] for x in val.splitlines() if 'RAINBOW_SPECTOR_REAL_STAGE' in x),'stage marker missing')
+  p['canvas']=await call(client,'list_canvases')
+  p['capture']=await call(client,'capture_frame',quickCapture=True)
+  p['context']=await call(client,'get_context_info')
+  for name in ('get_draw_calls','get_shaders','get_textures','get_webgl_state'):
+   try:
+    res=await call(client,name,**({'programIndex':0} if name=='get_shaders' else {}))
+    (out/('spector-'+name+'.txt')).write_text(res)
+    p[name]={'length':len(res),'first':res[:390]}
+   except Exception as e:p[name]=str(e)
+  write('spector-live',p)
+
+async def main():
+ job=sys.argv[1]
+ try:await (spector() if job=='spector' else three_explicit() if job=='three-explicit' else browser_tools())
+ except Exception as e:
+  write(job+'-failure',{'error':str(e),'detail':traceback.format_exc()[-4200:]});raise
+asyncio.run(main())

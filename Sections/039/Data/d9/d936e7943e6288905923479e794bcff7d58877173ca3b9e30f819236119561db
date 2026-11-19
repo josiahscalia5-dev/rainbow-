@@ -1,0 +1,627 @@
+# Subagent agent-a0204aae384750b81 — session 7c0df0fc-7d43-5a1e-bb66-c0bb31003a42
+
+### 🧑 User — 2026-11-16T00:41:53.310Z
+
+You are resuming Screen 05 water work on the Rainbow game in /home/user/rainbow- (branch ccr-4f6c3e0e-5kxgr0). This is an existing game: do not restart or redesign anything.
+
+Read first: qa/pilot05/COORDINATION_WAVE7.md, qa/pilot05/COORDINATION_WAVE6.md (owners, rules, ranked difference table), and your own wave-6 plan in qa/pilot05/wave6/water/NOTES.md (written but never executed — account 7 ran out of usage before any capture). Look at the approved image references/05_flow_into_the_current.png and the live baseline qa/pilot05/wave7/baseline/05.png (Read both PNGs).
+
+You own ONLY src/vfx/waterRibbon.ts, src/vfx/glsl.ts and docs/vfx/* (Edit tool only). Keep the `coreLateral` export (signature + values), the clear cyan contact under Benny, pink-free water behind Benny, and the coins on the core. The water must stay real-time animated shader geometry on the existing contiguous spline.
+
+Targets, biggest area first:
+1. Near field (y 1000–1536): replace the two wide flat vertical pink sheets with DIAGONAL pink sweeps that leave Benny's sides and fan out toward the bottom corners (reference runs at y≈1300: x≈124–206 and 613–698), narrower, satin with silk streaks.
+2. Near field: remove the "∩" pool-ripple crest arcs; use flow-aligned long white speed streaks, glossy thick cyan body (~#02A2F7/#0199F0), bright cyan-white highlights, many small 4-point star glints.
+3. Mid field (y 560–1000): pull the pink band centres toward the reference positions and give the core crests/troughs and flowing highlights so the river reads thick, winding in S-bends into the distant light.
+
+Method: write qa/pilot05/wave7/water/NOTES.md first (5-line plan), then iterate: `timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave7/water/itNN`, then `python3 -I scripts/screen_report.py 05 qa/pilot05/wave7/water/itNN PREV=qa/pilot05/wave7/baseline/05.png NOW=qa/pilot05/wave7/water/itNN/05.png`, and LOOK at the side-by-side PNG each time. At most 6 iterations. Revert anything that does not make the whole frame look closer. Two other specialists (washer-environment-modeler, foam-bubbles-particles) edit their own files at the same time — never touch theirs. Camera and course are LOCKED. Ride check: the 05→06 ride must not show warps or pops (capture a couple of s values via window.__rainbow if you change anything that moves with distance).
+
+At the end: `npx tsc --noEmit` must pass; ONE regression capture of 03 04 06 07 (`--out=qa/pilot05/wave7/water/regress`) and look at them — glsl.ts/waterRibbon.ts are shared, so gate 05-only changes and confirm the other stages did not change unintentionally. Do not commit or push (autosave does). No paid generation, no secrets, never touch references/ or character_references/. Measured numbers only; no invented fidelity percentages.
+
+Final report (concise): what you changed (file + function), your best iteration's 05.png and side-by-side paths, measured numbers, regression result, anything left undone.
+
+### 🤖 Claude — 2026-11-16T00:41:54.556Z
+
+I'll start by reading the coordination docs and my prior plan.
+
+### 🤖 Claude — 2026-11-16T00:41:55.664Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -30 && git branch --show-current && ls qa/pilot05/ qa/pilot05/wave7 qa/pilot05/wave6 2>&1 | head -50", "description": "Check git status and QA directories"}`
+
+### 🧑 User — 2026-11-16T00:41:55.703Z
+
+> ↩︎ result: M qa/capture_log.json
+> ?? qa/pilot05/COORDINATION_WAVE7.md
+> ?? qa/pilot05/wave7/
+> ccr-4f6c3e0e-5kxgr0
+> qa/pilot05/:
+> 05_before_81e639e.png
+> 05_partial_f2a86ab.png
+> 05_ref_before_partial.png
+> COORDINATION.md
+> COORDINATION_WAVE3.md
+> COORDINATION_WAVE4.md
+> COORDINATION_WAVE5.md
+> COORDINATION_WAVE6.md
+> COORDINATION_WAVE7.md
+> REQUESTS.md
+> benny
+> camera
+> environment
+> foam
+> water
+> wave3
+> wave3_baseline
+> wave4
+> wave5
+> wave6
+> wave7
+> 
+> qa/pilot05/wave6:
+> camera_lock
+> coordinator
+> current
+> director
+> environment
+> foam
+> pathcam
+> proof
+> regress0408
+> water
+> 
+> qa/pilot05/wave7:
+> baseline
+
+### 🤖 Claude — 2026-11-16T00:41:56.164Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE7.md"}`
+
+### 🧑 User — 2026-11-16T00:41:56.178Z
+
+> ↩︎ result: 1	# Screen 05: wave 7 (account 8, session branch `ccr-4f6c3e0e-5kxgr0`)
+> 2	
+> 3	Started 2026-11-16 ~00:45 UTC. Branch `ccr-4f6c3e0e-5kxgr0` contains the newest commit of account 7's
+> 4	`ccr-93add0fa-q17ey6` (`6cf0b4f`) + autosaves. Nothing lost. Wave 6b was planned (NOTES.md in
+> 5	`qa/pilot05/wave6/{environment,water,foam}/`) but stopped by account 7's usage limit before any capture:
+> 6	**wave 7 executes those wave-6b plans.** All rules, owners and targets of `COORDINATION_WAVE6.md` still apply.
+> 7	
+> 8	## Verified at start (this session)
+> 9	* LFS 9/9 restored, `git lfs fsck` OK. References 12/12 SHA OK. `tsc` OK.
+> 10	* Gameplay test pass (victory, heart loss on wall bump, plunge 61.41, errors []). Continuity gaps 0.
+> 11	* Baseline capture: `qa/pilot05/wave7/baseline/05.png` (86 calls, 633,521 tris) — identical tree to wave 6's
+> 12	  `regress0408/now/05.png` (camera LOCKED, S-curve refit kept).
+> 13	
+> 14	## Owners (unchanged from wave 6 — edit only your own files/sections, Edit tool only)
+> 15	| Specialist | Owns | Wave-7 targets (COORDINATION_WAVE6 table rows) |
+> 16	|---|---|---|
+> 17	| washer-environment-modeler | as in wave 6 | 1 rings, 2 walls, 6 lids, 8 VP, then 9 near gold frame corners |
+> 18	| wa …[+916 chars]
+
+### 🤖 Claude — 2026-11-16T00:41:56.616Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE6.md"}`
+
+### 🧑 User — 2026-11-16T00:41:56.629Z
+
+> ↩︎ result: 1	# Screen 05: wave 6 (account 7, session branch `ccr-93add0fa-q17ey6`)
+> 2	
+> 3	Started 2026-11-15 ~23:05 UTC. Branch `ccr-93add0fa-q17ey6` = `claude/rainbow-3d-account-transfer-syorak`
+> 4	(`7ae64c3`, now PROTECTED) + autosaves. Every wave-5 edit is in the tree and is **kept**.
+> 5	`COORDINATION_WAVE3/4/5.md` still hold the older targets and measured numbers; this file adds wave 6.
+> 6	
+> 7	## The new method (user, 2026-11-15): whole-frame progress, not endless micro-tweaks
+> 8	* The **camera stays LOCKED** (`STAGE_CAM['05']`, checkpoint `05_crest`, s 132.44). The coordinator
+> 9	  formalises the lock in Blender 5.3 (`qa/pilot05/wave6/camera_lock/`): the game camera exported into the
+> 10	  existing `screen05_layout.blend`, the reference as the camera background, a 50 % overlay render, and
+> 11	  `landmarks.json` = reference landmarks (VP, ring tops, coins, pink-band centre lines, foam edges, Benny
+> 12	  box) with their **back-projected world positions** on the river surface (s, lateral). Use it when it
+> 13	  appears (≈30 min after the start); until then the numbers below are enough.
+> 14	* Every iteration must make a **visible whole-frame difference** toward the reference. Judge it on the
+> 15	  full sid …[+6433 chars]
+
+### 🤖 Claude — 2026-11-16T00:41:57.020Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/water/NOTES.md"}`
+
+### 🧑 User — 2026-11-16T00:41:57.038Z
+
+> ↩︎ result: 1	# water-fx-specialist, wave 6 (Screen 05)
+> 2	
+> 3	Owns only `src/vfx/waterRibbon.ts`, `src/vfx/glsl.ts`, `docs/vfx/*`. Camera LOCKED. `coreLateral` export kept
+> 4	(signature + values). Kept from wave 5: no pink fins behind Benny, S-band phase, smooth band clamp (`smin`).
+> 5	
+> 6	## Plan (5 lines, biggest area first)
+> 7	1. Near field y 1000–1536: replace the vertical pink side sheets by DIAGONAL sweeps that leave Benny's sides
+> 8	   and fan out toward the bottom corners (ref runs y1300 x 124–206 / 613–698), narrower, satin + silk streaks.
+> 9	2. Near field: remove the "∩" pool-ripple crest arcs; instead flow-aligned long white speed streaks, glossy
+> 10	   cyan body (#02A2F7 / #0199F0), bright cyan-white highlights, many small 4-point star glints.
+> 11	3. Mid field y 560–1000: pull the band centres toward the ref (L reaches x≈27 at y900 and leaves the frame;
+> 12	   R ≈780/670/650/790 at y700/820/900/980); give the core crests/troughs + flowing highlights (thick river).
+> 13	4. Keep: clear cyan contact under Benny, pink-free water behind Benny, coins on the core (coreLateral).
+> 14	5. Max 8 captures qa/pilot05/wave6/water/itNN, revert anything not closer as a whole frame; then ONE
+> 15	   regression cap …[+99 chars]
+
+### 🤖 Claude — 2026-11-16T00:41:57.976Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-16T00:41:57.998Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:41:58.375Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/baseline/05.png"}`
+
+### 🧑 User — 2026-11-16T00:41:58.429Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:41:59.396Z
+
+Now the water source files.
+
+### 🤖 Claude — 2026-11-16T00:42:00.689Z
+
+> 🔧 **Bash** `{"command": "wc -l src/vfx/waterRibbon.ts src/vfx/glsl.ts && ls docs/vfx/ && git log --oneline -5 && ls qa/pilot05/wave6/water qa/pilot05/wave5 2>&1 | head; ls scripts/ | head -50", "description": "File sizes and recent commits"}`
+
+### 🧑 User — 2026-11-16T00:42:00.733Z
+
+> ↩︎ result: 824 src/vfx/waterRibbon.ts
+>   136 src/vfx/glsl.ts
+>   960 total
+> water.md
+> water_01.png
+> water_01_low.png
+> water_02.png
+> water_03.png
+> water_03_low.png
+> water_04.png
+> water_04_chevrons_topdown.png
+> water_05.png
+> water_05_low.png
+> water_06.png
+> water_07.png
+> water_07mid.png
+> water_08.png
+> water_09.png
+> water_09_low.png
+> water_10.png
+> water_11.png
+> water_stats.json
+> water_stats_low.json
+> d25db2f autosave: Rainbow 2026-11-16 00:37 UTC
+> 6cf0b4f autosave: Rainbow 2026-11-16 00:34 UTC
+> 2b6d11e autosave: Rainbow 2026-11-16 00:02 UTC
+> 82db1ba autosave: Rainbow 2026-11-15 23:59 UTC
+> baabc3c autosave: Rainbow 2026-11-15 23:53 UTC
+> qa/pilot05/wave5:
+> baseline
+> benny
+> combined
+> environment
+> foam
+> water
+> 
+> qa/pilot05/wave6/water:
+> NOTES.md
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> water-lab.mjs
+
+### 🤖 Claude — 2026-11-16T00:42:01.088Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-16T00:42:01.200Z
+
+> ↩︎ result: 1	/**
+> 2	 * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+> 3	 *
+> 4	 * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> 5	 * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+> 6	 * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and
+> 7	 * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+> 8	 * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 9	 * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+> 10	 * drain-away for the 11 outro.
+> 11	 */
+> 12	import * as THREE from 'three';
+> 13	import type { Course, StageId } from '../world/course';
+> 14	import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15	
+> 16	/** wave amplitude per stage (units); blended across boundaries */
+> 17	const AMP: Partial<Record<StageId, number>> = {
+> 18	  '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10': 0.08, '11': 0.05,
+> 19	};
+> 20	export const EDGE_LIFT = 0.28;
+> 21	
+> 22	/**
+> 23 …[+45024 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:02.580Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts"}`
+
+### 🧑 User — 2026-11-16T00:42:02.598Z
+
+> ↩︎ result: 1	/** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> 2	import * as THREE from 'three';
+> 3	
+> 4	export const NOISE_GLSL = /* glsl */ `
+> 5	float hash12(vec2 p) {
+> 6	  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+> 7	  p3 += dot(p3, p3.yzx + 33.33);
+> 8	  return fract((p3.x + p3.y) * p3.z);
+> 9	}
+> 10	float vnoise(vec2 p) {
+> 11	  vec2 i = floor(p);
+> 12	  vec2 f = fract(p);
+> 13	  vec2 u = f * f * (3.0 - 2.0 * f);
+> 14	  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15	             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 16	}
+> 17	float fbm3(vec2 p) {
+> 18	  float a = 0.5, s = 0.0;
+> 19	  for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+> 20	  return s;
+> 21	}
+> 22	// cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> 23	float cells(vec2 p) {
+> 24	  vec2 i = floor(p);
+> 25	  vec2 f = fract(p);
+> 26	  float md = 8.0;
+> 27	  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+> 28	    vec2 g = vec2(float(x), float(y));
+> 29	    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 30	    vec2 r = g + o - f;
+> 31	    md = min(md, dot(r, r));
+> 32	  }
+> 33	  return sqrt(md);
+> 34	}
+> 35	vec3 ir …[+5450 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:03.481Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p scripts/screen_report.py && ls qa/pilot05/wave5/water | head && ls qa/pilot05/wave7/baseline", "description": "Inspect screen_report script and wave5 water dir"}`
+
+### 🧑 User — 2026-11-16T00:42:03.518Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """One-screen reference report: approved reference vs one or more labelled live captures.
+> 
+>     python3 -I scripts/screen_report.py 05 OUT_DIR PREV=qa/.../05.png NOW=qa/.../05.png
+> 
+> Writes into OUT_DIR (nothing else is touched; qa/report_metrics.json stays as it is):
+>   NN_side_by_side.png       REFERENCE | each capture (same height, labelled)
+>   NN_overlay_<LABEL>.png    50 % blend of the reference and that capture
+>   NN_highlight_<LABEL>.png  the capture with a transparent red tint where it differs most from the
+>                             reference (|ΔRGB| smoothed; tint alpha ∝ difference above a threshold)
+>   metrics.json / metrics.md raw numbers per capture: whole-frame mad / hue_corr / edge_corr (same
+>                             method as scripts/compare.py) and mad per horizontal band of the frame
+> These are crude, reproducible indicators, NOT a fidelity percentage.
+> """
+> from __future__ import annotations
+> 
+> import json
+> import sys
+> from pathlib import Path
+> 
+> import numpy as np
+> from PIL import Image, ImageFilter
+> 
+> sys.path.insert(0, str(Path(__file__).resolve().parent))
+> import compare as C  # noqa: E402  (reuses REFS, mask_for, hue_hist, corr, edges, label)
+> 
+> # hori …[+2903 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:06.552Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave5/water/NOTES.md | head -120; ls qa/pilot05/wave6/regress0408/ qa/pilot05/wave6/regress0408/now 2>&1 | head; ls qa/pilot05/wave6/camera_lock/", "description": "Read wave5 water notes and list regress/camera-lock"}`
+
+### 🧑 User — 2026-11-16T00:42:06.594Z
+
+> ↩︎ result: # water-fx-specialist, wave 5 (Screen 05)
+> 
+> Owns only `src/vfx/waterRibbon.ts`, `src/vfx/glsl.ts`, `docs/vfx/*`. Camera locked. `coreLateral` export kept.
+> Start tree = wave-4 tree incl. my last wave-4 edits (trail taper, silk dashes, flowGlint, H5 +0.2·near5).
+> 
+> ## Plan (priority order)
+> 1. Pink "fins" behind Benny (x 100–750, y 1200–1360) = the 05 wake `trail` term in FRAG (curved sweep,
+>    tc 0.5→1.5 u). Remove it; instead let the two main S-bands continue PAST Benny at the image sides
+>    (near rows: lat ≈ ±1.4–2 u ⇒ x 0–150 / 700–864), feathered, so the water under/behind him is cyan.
+> 2. Near field y 1200–1536 (flat blue road): cross-flow ripple crests + troughs with real contrast, fresnel/
+>    reflection streaks, bump normals on near5, many small 4-point star glints (flB denser, smaller).
+> 3. S-bands: larger lateral swing (sbend amplitude + a 2nd harmonic), keep continuous (no split / clamp
+>    breaks), wider glossy ribbons with silk streaks.
+> Max 5 captures `qa/pilot05/wave5/water/itNN`; then one regression capture 03 04 06 07.
+> 
+> ## Log
+> (updated after every capture)
+> 
+> ### Facts measured before editing (probe of the locked 05 view, scratch probe.mjs)
+> * Benny s 132.44, lat 0, screen (419 …[+6689 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:09.137Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave6/camera_lock/README.md | head -80; python3 -c \"\nimport json;d=json.load(open('qa/pilot05/wave6/camera_lock/landmarks.json'));print(list(d.keys()) if isinstance(d,dict) else type(d))\"", "description": "Read camera lock README and landmarks keys"}`
+
+### 🧑 User — 2026-11-16T00:42:09.197Z
+
+> ↩︎ result: # Screen 05 CAMERA LOCK (wave 6, coordinator, 2026-11-15)
+> 
+> **Status: LOCKED and verified.** Every specialist works against this camera. Do not change
+> `STAGE_CAM['05']` or the `05_crest` checkpoint.
+> 
+> ## The lock
+> | | Value |
+> |---|---|
+> | Camera (Three.js world) | position (1.920, −37.943, −68.281), target (0.691, −44.312, −91.803), vFOV 62°, aspect 0.5625 (864×1536) — exact world matrix in `camera05.json` |
+> | Checkpoint | `05_crest`, s 132.438 (Benny on the stream's left crest) |
+> | Blender | `screen05_camera_lock.blend` (Blender 5.3): `Cam05` = the exact game matrix (axes converted), sensor fit VERTICAL, 864×1536, the approved reference as Cam05's background image (50 %), markers `RefCoin05_*` (reference coins back-projected) and `GameCoin05_*` (game coin anchors) |
+> | Overlay | `camera_lock_overlay.png` — reference 50 % + Blender layout render from Cam05 + VP crosses (white = ref, cyan = game) + coin residual lines |
+> 
+> ## Measured alignment (reference vs live game, pixels at 864×1536)
+> | Landmark | Reference | Game | Δ |
+> |---|---|---|---|
+> | Vanishing point | (498.6, 479.4) | (499.8, 480.2) tunnel axis projected | 1.4 px |
+> | Coin 1 centre / Ø | (474, 726) / 96 | (488, 739) / 93 | +14, +1 …[+3393 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:13.597Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,200p scripts/capture.mjs", "description": "Read capture script"}`
+
+### 🧑 User — 2026-11-16T00:42:13.630Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3246 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:14.941Z
+
+Writing my wave-7 plan first, as required.
+
+### 🤖 Claude — 2026-11-16T00:42:20.289Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/water/NOTES.md", "content": "# water-fx-specialist, wave 7 (Screen 05) — executes the wave-6b plan (qa/pilot05/wave6/water/NOTES.md)\n\nOwns only `src/vfx/waterRibbon.ts`, `src/vfx/glsl.ts`, `docs/vfx/*` (Edit tool only). Camera + course LOCKED.\nKeep: `coreLateral` export (signature + values), clear cyan contact under Benny, pink-free water behind Benny,\ncoins on the core. Baseline/PREV = `qa/pilot05/wave7/baseline/05.png`.\n\n## Plan (5 lines, biggest area first)\n1. Near field y 1000–1536: replace the two wide flat vertical pink sheets by …[+918 chars]`
+
+### 🧑 User — 2026-11-16T00:42:20.320Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave7/water/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:42:21.790Z
+
+Let me crop the near field of the reference and baseline side by side at full resolution.
+
+### 🤖 Claude — 2026-11-16T00:42:25.545Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && cd /home/user/rainbow- && python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('qa/pilot05/wave7/baseline/05.png').convert('RGB')\nS='/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/'\nfor name,(y0,y1) in {'near':(1000,1536),'mid':(540,1010)}.items():\n  out=Image.new('RGB',(864*2+10,y1-y0))\n  out.paste(r.crop((0,y0,864,y1)),(0,0)); out.paste(b.crop((0,y0,864,y1)),(874,0))\n  out.sa …[+79 chars]`
+
+### 🧑 User — 2026-11-16T00:42:26.140Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:42:26.393Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/near_cmp.png"}`
+
+### 🧑 User — 2026-11-16T00:42:26.443Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:42:42.731Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"__rainbow\" src --include=*.ts | head -20 && ls scripts/lib && cat scripts/water-lab.mjs | head -60", "description": "Find the __rainbow debug API"}`
+
+### 🧑 User — 2026-11-16T00:42:42.782Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:660:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> pw.mjs
+> #!/usr/bin/env node
+> // Screenshots the water lab at every scene checkpoint into docs/vfx/ (+ stats JSON).
+> //   node scripts/water-lab.mjs [01 03 04 ...] [--q=low]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const presets = args.filter((a) => !a.startsWith('--'));
+> const list = presets.length ? presets : ['01', '02', '03', '04', '05', '06', '07', '07mid', '08', '09', '10', '11'];
+> const qArg = (args.find((a) => a.startsWith('--q=')) ?? '--q=high').slice(4);
+> const extra = args.filter((a) => a.startsWith('--') && !a.startsWith('--q=')).map((a) => a.slice(2)).join('&');
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5201);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> mkdirSync('docs/vfx', { recursive: true });
+> const st …[+796 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:44.079Z
+
+> 🔧 **Bash** `{"command": "sed -n 560,680p src/game/Game.ts", "description": "Read QA API section of Game.ts"}`
+
+### 🧑 User — 2026-11-16T00:42:44.117Z
+
+> ↩︎ result: if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.s …[+4694 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:52.208Z
+
+Let me measure pink runs per row in the reference and baseline.
+
+### 🤖 Claude — 2026-11-16T00:42:58.366Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/tools/pinkruns.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\ndef pinkmask(a):\n    a=a.astype(np.float32)/255; r,g,b=a[...,0],a[...,1],a[...,2]\n    mx=a.max(-1); mn=a.min(-1); sat=(mx-mn)/(mx+1e-6)\n    # magenta/pink: r high, g low relative, b mid-high\n    return (r>0.55)&(r>g+0.25)&(b>g+0.1)&(sat>0.35)\ndef runs(row, minlen=8):\n    out=[];st=None\n    for i,v in enumerate(list( …[+729 chars]`
+
+### 🧑 User — 2026-11-16T00:42:58.797Z
+
+> ↩︎ result: == references/05_flow_into_the_current.png
+> 560 [(28, 45), (57, 77), (87, 107), (116, 134), (140, 160), (207, 215), (263, 273), (359, 404), (502, 528), (607, 619), (622, 640), (643, 653), (711, 747), (753, 775), (779, 804), (808, 863)]
+> 600 [(41, 59), (62, 72), (98, 105), (111, 127), (129, 154), (159, 180), (185, 196), (255, 323), (568, 598), (605, 633), (687, 756), (764, 784), (794, 816), (827, 847)]
+> 640 [(58, 85), (89, 105), (123, 140), (251, 367), (681, 689), (692, 707), (718, 755), (806, 817), (819, 829)]
+> 680 [(0, 9), (81, 88), (118, 148), (160, 167), (317, 348), (352, 408), (747, 755), (760, 777), (786, 818)]
+> 720 [(0, 28), (262, 366), (742, 837)]
+> 760 [(9, 23), (156, 271), (676, 700), (714, 794)]
+> 800 [(47, 198), (376, 398), (400, 410), (419, 427), (449, 470), (590, 618), (633, 730), (831, 847), (849, 860)]
+> 840 [(0, 73), (75, 149), (357, 373), (480, 496), (561, 633), (638, 650), (653, 680), (795, 802), (841, 863)]
+> 880 [(0, 111), (572, 608), (630, 695), (801, 808), (818, 863)]
+> 920 [(0, 12), (21, 53), (63, 71), (602, 758)]
+> 960 [(0, 17), (313, 321), (650, 695), (700, 726), (731, 782), (803, 849)]
+> 1000 [(322, 329), (700, 863)]
+> 1040 [(236, 279), (316, 533), (540, 549), (565, 607), (765 …[+2306 chars]
+
+### 🤖 Claude — 2026-11-16T00:43:24.185Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/worldlabs/05/marble_user_world/ 2>&1 | head; sed -n 1,60p scripts/lib/pw.mjs", "description": "List Marble screenshot dir and read pw helper"}`
+
+### 🧑 User — 2026-11-16T00:43:24.226Z
+
+> ↩︎ result: total 1364
+> drwxr-xr-x 2 root root    4096 Nov 16 00:42 .
+> drwxr-xr-x 6 root root    4096 Nov 16 00:43 ..
+> -rw-r--r-- 1 root root 1207068 Nov 16 00:42 vibrant_tunnel_of_fortune_screenshot.png
+> -rw------- 1 root root  177708 Nov 16 00:42 vibrant_tunnel_of_fortune_screenshot.webp
+> // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127. …[+493 chars]
+
+### 🤖 Claude — 2026-11-16T00:43:25.427Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/marble_user_world/vibrant_tunnel_of_fortune_screenshot.png"}`
+
+### 🧑 User — 2026-11-16T00:43:25.463Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:43:27.818Z
+
+Now the probe of the locked 05 view (screen position of ribbon points by s and lateral).
+
+### 🤖 Claude — 2026-11-16T00:43:37.367Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/tools/probe.mjs <<'EOF'\n// probe the locked 05 view: project ribbon points (s, lat) to screen pixels\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst out = process.argv[2];\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5233);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 …[+1872 chars]`
+
+### 🧑 User — 2026-11-16T00:43:50.521Z
+
+> ↩︎ result: ok {
+>   mode: 'ride',
+>   stage: '05',
+>   s: 132.438,
+>   lat: 0,
+>   coins: 1420,
+>   hearts: 5,
+>   paused: false,
+>   bennyY: -41.348,
+>   bennyVisible: true,
+>   cam: [ 1.92, -37.94, -68.28 ]
+> } [ 114.68830202823243, 188.92412082521383 ] 62 0.5625
+
+### 🤖 Claude — 2026-11-16T00:44:01.828Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/tools/proj.py <<'EOF'\nimport json, sys, math, numpy as np\nD=json.load(open(sys.argv[1]))\ncam=D['cam']; M=np.array(cam['matrixWorld']).reshape(4,4).T\nV=np.linalg.inv(M)\nf=1/math.tan(math.radians(cam['fov'])/2); asp=cam['aspect']\ndef proj(p):\n    q=[REDACTED-EMAIL]([*p,1.0]); x=q[0]/-q[2]*f/asp; y=q[1]/-q[2]*f\n    return ((x+1)/2*864, (1-y)/2*1536, -q[2])\ndef pt(r,lat):\n    hw=r['hw']; u=min(1,abs(lat)/hw)\n    return np.array(r['pos'])+np.array(r['right'])*lat+np.array(r['up'])*0.28*u* …[+825 chars]`
+
+### 🧑 User — 2026-11-16T00:44:02.034Z
+
+> ↩︎ result: benny {'x': -0.03, 'y': -0.37, 'z': 0.986, 'visible': True, 'cam': [1.92, -37.94, -68.28], 'benny': [1.52, -41.35, -74.73]}
+>  s     db    y(lat0) x(lat0) px/u  hw   core  latL@x0  latR@x864
+>  129.2  -3.24  1691.0   372.3  328.1 5.48 -0.38   -1.13    1.50
+>  129.4  -3.04  1633.2   376.9  312.4 5.48 -0.39   -1.21    1.56
+>  129.6  -2.84  1580.6   381.3  298.2 5.47 -0.39   -1.28    1.62
+>  129.8  -2.64  1532.7   385.3  285.2 5.47 -0.39   -1.35    1.68
+>  130.0  -2.44  1488.7   389.1  273.3 5.47 -0.40   -1.42    1.74
+>  130.2  -2.24  1448.2   392.7  262.4 5.46 -0.40   -1.50    1.80
+>  130.4  -2.04  1410.9   395.9  252.3 5.46 -0.40   -1.57    1.86
+>  130.6  -1.84  1376.3   398.9  242.9 5.46 -0.41   -1.64    1.91
+>  130.8  -1.64  1344.2   401.6  234.3 5.45 -0.41   -1.71    1.97
+>  131.0  -1.44  1314.3   404.2  226.2 5.45 -0.41   -1.79    2.03
+>  131.2  -1.24  1286.5   406.6  218.6 5.45 -0.42   -1.86    2.09
+>  131.4  -1.04  1260.4   409.0  211.5 5.45 -0.42   -1.93    2.15
+>  131.6  -0.84  1235.9   411.4  204.9 5.44 -0.42   -2.01    2.21
+>  131.8  -0.64  1213.0   413.8  198.7 5.44 -0.42   -2.08    2.27
+>  132.0  -0.44  1191.4   416.1  192.8 5.44 -0.42   -2.16    2.32
+>  132.2  -0.24  1171.0   418.4  187.3 5.44 -0.42   - …[+5324 chars]
+

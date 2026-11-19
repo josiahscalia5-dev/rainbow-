@@ -1,0 +1,130 @@
+{
+  "load_url": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "format": "uri",
+        "description": "The URL to navigate to (e.g. 'https://threejs.org/examples/#webgl_animation_keyframes')"
+      }
+    },
+    "required": [
+      "url"
+    ]
+  },
+  "load_playground": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "snippetId": {
+        "type": "string",
+        "description": "Playground snippet ID, e.g. 'ABC123' or 'ABC123#5' for a specific revision"
+      }
+    },
+    "required": [
+      "snippetId"
+    ]
+  },
+  "take_screenshot": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "list_canvases": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "select_canvas": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "index": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991,
+        "description": "Canvas index (from list_canvases)"
+      }
+    },
+    "required": [
+      "index"
+    ]
+  },
+  "capture_frame": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "quickCapture": {
+        "default": false,
+        "description": "If true, skips thumbnail generation for faster capture",
+        "type": "boolean"
+      }
+    }
+  },
+  "get_draw_calls": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "get_command_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "commandId": {
+        "type": "number",
+        "description": "The command ID from the capture (see get_draw_calls)"
+      }
+    },
+    "required": [
+      "commandId"
+    ]
+  },
+  "get_shaders": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "programIndex": {
+        "description": "Specific program index to retrieve. Omit to get all programs.",
+        "type": "number"
+      }
+    }
+  },
+  "get_textures": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "get_webgl_state": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "get_context_info": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "get_console_logs": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "level": {
+        "default": "all",
+        "description": "Filter by log level",
+        "type": "string",
+        "enum": [
+          "all",
+          "error",
+          "warning",
+          "log"
+        ]
+      },
+      "clear": {
+        "default": false,
+        "description": "Clear the log buffer after reading",
+        "type": "boolean"
+      }
+    }
+  }
+}

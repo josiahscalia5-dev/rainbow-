@@ -1,0 +1,41 @@
+from pathlib import Path
+from PIL import Image
+import numpy as np, json,sys
+root=Path(__file__).parent
+old=Path('/tmp/rainbow-reconstruction.etSm9SmK/repos')
+def im(f):return np.array(Image.open(f).convert('RGB'),dtype=np.int16)
+def dump(p,j):p.write_text(json.dumps(j,indent=2)+'\n')
+def mask(a,b):return np.abs(a-b).sum(2)>30
+for id in sys.argv[1:]:
+ c=old/id/'experiments/codex'/id
+ b=c/('NEW' if id in ['04','05','08'] else 'BEFORE');n=root/'proof'/id/'NEW'
+ comparisons={}
+ for f in sorted(n.glob('*.png')):
+  if not (b/f.name).exists():continue
+  a=im(b/f.name); t=im(f);m=mask(a,t)
+  comparisons[f.stem]={'changedRGBOver30':int(m.sum()),'allChanged':int(np.any(a!=t,axis=2).sum()),'lowerFrameChangedRGBOver30':int(m[768:].sum())}
+ dump(root/('diff-'+id+'.json'),comparisons)
+ if id=='06':
+  out={}
+  for v in ('BEFORE','NEW'):
+   q=root/'layers/06'/v;out[v]={}
+   for title in ('hard-left','hard-right','crest-release','arch-exit'):
+    a=im(q/(title+'--retained.png'));bennyOut=im(q/(title+'--no-benny.png'))
+    noFoam=im(q/(title+'--no-clusters.png'));neither=im(q/(title+'--no-clusters-no-benny.png'))
+    wide=mask(noFoam,neither);seen=mask(a,bennyOut)
+    out[v][title]={'unobscuredBennyPixels':int(wide.sum()),'clusterBlockedBennyPixels':int((wide&~seen).sum()),'observedBennyPixels':int(seen.sum())}
+  dump(root/'benny06.json',out)
+ if id=='07':
+  out={}
+  for t in ('halfway-down','two-thirds-down','plunge-bottom','last-in-stage'):
+   ff=root/'layers/07/BEFORE';oldim=im(ff/(t+'--retained.png'));nl=im(ff/(t+'--no-lather.png'))
+   if not (n/(t+'.png')).exists():continue
+   # Match the NEW raster to the layer diagnostic grid. Use low-pass samples of the native retained frame as control.
+   rend=lambda file:np.array(Image.open(file).convert('RGB').resize((432,768),Image.Resampling.LANCZOS),dtype=np.int16)
+   before=rend(c/'BEFORE'/(t+'.png'));after=rend(n/(t+'.png'))
+   white=lambda a:(a.min(2)>166)&((a.max(2)-a.min(2))<77)
+   selection=white(oldim)&~white(nl)&mask(oldim,nl);selection[:85]=False
+   covered=selection&white(before)
+   out[t]={'retainedWhiteLatherPixels':int(covered.sum()),'stillWhiteOnCandidate':int((covered&white(after)).sum()),'allWhiteBefore':int(white(before)[85:].sum()),'allWhiteNew':int(white(after)[85:].sum())}
+  dump(root/'white07.json',out)
+ print(id,{k:v['changedRGBOver30'] for k,v in comparisons.items() if k in ('opening','hard-left','hard-right','forward-20','halfway-down','two-thirds-down','plunge-bottom','last-in-stage')})

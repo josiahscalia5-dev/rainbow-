@@ -1,0 +1,44 @@
+{
+ "body": {
+  "px": 34916,
+  "texels": 24181,
+  "mean_abs_corr": 0.0257,
+  "mean_change": 0.0127,
+  "pixel_err_before_lin": 0.0549
+ },
+ "crown": {
+  "px": 15648,
+  "texels": 25744,
+  "mean_abs_corr": 0.0272,
+  "mean_change": 0.0109,
+  "pixel_err_before_lin": 0.0288
+ },
+ "brim": {
+  "px": 12578,
+  "texels": 20027,
+  "mean_abs_corr": 0.017,
+  "mean_change": 0.0073,
+  "pixel_err_before_lin": 0.0184
+ },
+ "pom": {
+  "px": 10824,
+  "texels": 10486,
+  "mean_abs_corr": 0.0286,
+  "mean_change": 0.0139,
+  "pixel_err_before_lin": 0.0438
+ },
+ "armL": {
+  "px": 1260,
+  "texels": 1702,
+  "mean_abs_corr": 0.0221,
+  "mean_change": 0.011,
+  "pixel_err_before_lin": 0.0333
+ },
+ "armR": {
+  "px": 1174,
+  "texels": 1612,
+  "mean_abs_corr": 0.0248,
+  "mean_change": 0.0132,
+  "pixel_err_before_lin": 0.0365
+ }
+}

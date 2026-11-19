@@ -1,0 +1,8 @@
+ring game   rays |  APPROVED centre  r_mid  band |      GAME centre  r_mid  band | dr_in dr_out |d|
+A    r22      35 | [np.float64(463.7), np.float64(507.5)]  475.5  65.4 | [np.float64(489.1), np.float64(507.1)]  499.4  70.0 |   1.1   2.8   2.9
+B    r23     427 | [np.float64(469.2), np.float64(458.0)]  248.0  40.0 | [np.float64(474.7), np.float64(464.5)]  251.3  39.0 |   1.2   2.9   7.3
+C    f0      511 | [np.float64(486.4), np.float64(456.9)]  149.1  20.4 | [np.float64(487.6), np.float64(459.6)]  150.1  19.0 |   0.1   0.2   2.7
+D    f1      527 | [np.float64(491.3), np.float64(466.1)]   90.8  11.7 | [np.float64(492.2), np.float64(467.6)]   91.4  11.0 |  -0.2   0.5   1.9
+E    f2      576 | [np.float64(497.0), np.float64(466.0)]   57.0   8.0 | [np.float64(494.6), np.float64(472.1)]   58.0   7.0 |   0.2  -0.9   3.9
+F    f3      599 | [np.float64(497.0), np.float64(467.0)]   40.0   6.0 | [np.float64(495.9), np.float64(474.2)]   41.0   5.0 |   0.0  -1.0   4.2
+G    f4      644 | [np.float64(497.0), np.float64(468.0)]   28.0   5.0 | [np.float64(497.0), np.float64(475.7)]   29.4   3.5 |   0.7  -0.7   4.5

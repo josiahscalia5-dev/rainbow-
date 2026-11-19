@@ -1,0 +1,22 @@
+from pathlib import Path
+import subprocess as sp,json,hashlib,io
+from PIL import Image
+p=Path(__file__).resolve().parent
+lead=json.loads((p/'baseline.json').read_text())['lead']['commit']
+old=Path('/tmp/rainbow-final-fidelity.RuUP0xJ2/repos/08/experiments/codex/fidelity-08/toolchain')
+j=json.loads((old/'depth-and-camera-inventory.json').read_text());assert j['lead']==lead
+g=['git','--git-dir=/tmp/rainbow-visual-audit.X0POSzUq/objects.git','show']
+for f in j['depthImages']:
+    raw=sp.check_output([*g,lead+':'+f['path']]); im=Image.open(io.BytesIO(raw));im.load()
+    assert hashlib.sha256(raw).hexdigest()==f['sha256'] and list(im.size)==f['size'] and list(im.convert('L').getextrema())==f['range']
+tested={}
+for sid,files in j['cameraFiles'].items():
+    tested[sid]=[]
+    w=p if sid=='06' else p/'round2'
+    for rec in files:
+        fn=w/'games'/sid/rec['path'];specialist=json.loads((p/('checkpoint-'+sid+'.json')).read_text())['retained']['commit']
+        raw=fn.read_bytes() if fn.is_file() else sp.check_output(['git','--git-dir=/tmp/rainbow-visual-audit.X0POSzUq/objects.git','show',specialist+':'+rec['path']]);v=json.loads(raw);assert list(v)[:len(rec['fields'])]==rec['fields']
+        tested[sid].append({'path':rec['path'],'sha256':hashlib.sha256(raw).hexdigest()})
+assert len(j['depthImages'])==20 and sum(map(len,tested.values()))==10
+(p/'depth-recheck.json').write_text(json.dumps({'lead':lead,'redecodedDepthImages':j['depthImages'],'currentCameraData':tested},indent=2)+'\n')
+print(len(j['depthImages']),'depth maps and',sum(map(len,tested.values())),'camera files verified')

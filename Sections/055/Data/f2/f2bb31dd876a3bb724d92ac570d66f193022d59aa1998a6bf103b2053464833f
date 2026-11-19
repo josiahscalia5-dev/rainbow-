@@ -1,0 +1,36 @@
+{
+  "method": "Restricted fixed upper ring crop x 532..851, y 208..534 at the final pose. Count pixels with green within 18 of red and 35 above blue, with red and green over 105, before and after. This distinguishes the olive reflection photographed here without rating an unpictured pose.",
+  "roles": {
+    "retained": {
+      "yellowGreenPixels": 2757,
+      "cropPixels": 104640
+    },
+    "previous": {
+      "yellowGreenPixels": 2757,
+      "cropPixels": 104640
+    },
+    "new": {
+      "yellowGreenPixels": 2386,
+      "cropPixels": 104640
+    }
+  },
+  "markedChanges": {
+    "rule": "sum of absolute RGB differences >30 within the fixed crop",
+    "pixelCount": 36600,
+    "parentRGBmedian": [
+      243,
+      159,
+      36
+    ],
+    "newRGBmedian": [
+      218,
+      156,
+      62
+    ],
+    "medianShiftPerChannel": [
+      -19,
+      -2,
+      26
+    ]
+  }
+}

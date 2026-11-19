@@ -1,0 +1,18 @@
+from pathlib import Path
+import os,subprocess,shutil,tarfile
+root=Path(__file__).resolve().parent
+p=Path('/tmp/rainbow-final-fidelity.RuUP0xJ2')
+repo=p/'repos/06';base=p/'games/06';sample=root/'rainbow-build';sample.mkdir(exist_ok=True)
+g=['git','-C',str(repo)]
+with subprocess.Popen(g+['archive','HEAD','android','capacitor.config.ts'],stdout=subprocess.PIPE,stderr=subprocess.PIPE) as proc:
+ with tarfile.open(fileobj=proc.stdout,mode='r|') as t:t.extractall(sample,filter='data')
+ assert proc.wait()==0
+for item in ['package.json','package-lock.json','tsconfig.json']:shutil.copyfile(base/item,sample/item)
+for item,target in [('node_modules',base/'node_modules'),('dist',p/'production/06')]:
+ link=sample/item
+ if not link.exists():link.symlink_to(target.resolve(),target_is_directory=True)
+env=dict(os.environ,ANDROID_HOME=str(root/'sdk'),ANDROID_SDK_ROOT=str(root/'sdk'),GRADLE_USER_HOME=str(root/'gradle-cache'),ANDROID_USER_HOME=str(root/'device-state'),CI='1')
+for nm,cmd,cwd in [('capacitor', [str(sample/'node_modules/.bin/cap'),'sync','android'],sample),('gradle',['bash','gradlew','assembleDebug','--no-daemon','--max-workers=2','--console=plain'],sample/'android')]:
+ with (root/(nm+'.log')).open('w') as out:r=subprocess.run(cmd,cwd=cwd,env=env,stdout=out,stderr=subprocess.STDOUT)
+ print(nm,r.returncode,flush=True)
+ if r.returncode:break

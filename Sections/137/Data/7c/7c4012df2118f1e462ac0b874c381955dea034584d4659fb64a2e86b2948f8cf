@@ -1,0 +1,24 @@
+{
+  "last_run": {
+    "time": "2026-11-18T15:23:24+00:00",
+    "reason": "daemon",
+    "result": "committed+pushed",
+    "files_staged": 4,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-restore-autosave-1mgga0",
+    "wip_snapshots": [
+      "claude/rainbow-s04-match-c13: 0 modified, 0 new file(s) snapshotted",
+      "claude/rainbow-s05-match-c13: 1 modified, 0 new file(s) snapshotted",
+      "claude/rainbow-s08-scenery-c13: 0 modified, 0 new file(s) snapshotted"
+    ],
+    "commit": "713aa53995d9cbd96b622b484bde3353cab24768",
+    "duration_s": 25
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-restore-autosave-1mgga0",
+  "last_verified_remote_sha": "713aa53995d9cbd96b622b484bde3353cab24768",
+  "last_successful_backup_utc": "2026-11-18T15:23:24+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=466); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-18T15:25:00+00:00"
+}

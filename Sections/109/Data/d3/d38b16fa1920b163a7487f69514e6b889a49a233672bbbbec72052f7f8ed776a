@@ -1,0 +1,107 @@
+# Rainbow autosave log
+
+Newest last. `pushed` = remote SHA verified equal to local HEAD.
+
+| Time (UTC) | Reason | Result | Commit | Branch | Files staged | Pushed+verified | Error |
+|---|---|---|---|---|---|---|---|
+| 2026-11-15T16:44:56+00:00 | initial-backup | committed+pushed | `f1c94d0f8e32` | `ccr-6f431adf-7h0m8y` | 51 | True |  |
+| 2026-11-15T16:45:19+00:00 | test:no-change | committed+pushed | `b06f9396cdca` | `ccr-6f431adf-7h0m8y` | 6 | True |  |
+| 2026-11-15T16:45:33+00:00 | test:cron-env-1 | committed+pushed | `543e70350fe2` | `ccr-6f431adf-7h0m8y` | 6 | True |  |
+| 2026-11-15T16:45:36+00:00 | test:cron-env-2 | no-change | `543e70350fe2` | `ccr-6f431adf-7h0m8y` | 0 | True |  |
+| 2026-11-15T16:50:01+00:00 | cron | committed+pushed | `3f69e64577a4` | `ccr-6f431adf-7h0m8y` | 13 | True |  |
+| 2026-11-15T16:55:01+00:00 | cron | committed+pushed | `9ca20972a67a` | `ccr-6f431adf-7h0m8y` | 25 | True |  |
+| 2026-11-15T17:00:01+00:00 | cron | committed+pushed | `8f5ed76a91f1` | `ccr-6f431adf-7h0m8y` | 20 | True |  |
+| 2026-11-15T17:05:01+00:00 | cron | committed+pushed | `f6f4777a3f79` | `ccr-6f431adf-7h0m8y` | 31 | True |  |
+| 2026-11-15T17:10:01+00:00 | cron | committed+pushed | `e1af619c7e65` | `ccr-6f431adf-7h0m8y` | 47 | True |  |
+| 2026-11-15T17:15:01+00:00 | cron | committed+pushed | `cd85ef34ab3e` | `ccr-6f431adf-7h0m8y` | 46 | True |  |
+| 2026-11-15T17:20:01+00:00 | cron | committed+pushed | `ed710dba277b` | `ccr-6f431adf-7h0m8y` | 50 | True |  |
+| 2026-11-15T17:25:01+00:00 | cron | committed+pushed | `645c5edacfea` | `ccr-6f431adf-7h0m8y` | 23 | True |  |
+| 2026-11-15T17:30:01+00:00 | cron | committed+pushed | `c9464e161029` | `ccr-6f431adf-7h0m8y` | 15 | True |  |
+| 2026-11-15T17:35:01+00:00 | cron | committed+pushed | `6b6df7a2d1b5` | `ccr-6f431adf-7h0m8y` | 11 | True |  |
+| 2026-11-15T17:40:01+00:00 | cron | committed+pushed | `e7bafa471aa0` | `ccr-6f431adf-7h0m8y` | 16 | True |  |
+| 2026-11-15T17:45:01+00:00 | cron | committed+pushed | `e798ac52c5fd` | `ccr-6f431adf-7h0m8y` | 59 | True |  |
+| 2026-11-15T17:50:01+00:00 | cron | committed+pushed | `45a9f7fc825e` | `ccr-6f431adf-7h0m8y` | 31 | True |  |
+| 2026-11-15T17:55:01+00:00 | cron | committed+pushed | `c2770a4557b2` | `ccr-6f431adf-7h0m8y` | 111 | True |  |
+| 2026-11-15T18:00:01+00:00 | cron | committed+pushed | `f8e4b839b9cf` | `ccr-6f431adf-7h0m8y` | 50 | True |  |
+| 2026-11-15T18:05:39+00:00 | hook:SessionStart | error | `—` | `ccr-6f431adf-7h0m8y` | 0 | False | current branch 'claude/rainbow-3d-recovery-m4v347' != verified branch 'ccr-6f431adf-7h0m8y'; refusing to push |
+| 2026-11-15T18:08:51+00:00 | hook:Stop | error | `—` | `ccr-6f431adf-7h0m8y` | 0 | False | current branch 'claude/rainbow-3d-recovery-m4v347' != verified branch 'ccr-6f431adf-7h0m8y'; refusing to push |
+| 2026-11-15T18:09:27+00:00 | hook:Stop | error | `—` | `ccr-6f431adf-7h0m8y` | 0 | False | current branch 'claude/rainbow-3d-recovery-m4v347' != verified branch 'ccr-6f431adf-7h0m8y'; refusing to push |
+| 2026-11-15T18:10:39+00:00 | daemon | error | `—` | `ccr-6f431adf-7h0m8y` | 0 | False | current branch 'claude/rainbow-3d-recovery-m4v347' != verified branch 'ccr-6f431adf-7h0m8y'; refusing to push |
+| 2026-11-15T18:15:27+00:00 | manual | committed+pushed | `9142ae93a2e6` | `claude/rainbow-3d-recovery-m4v347` | 9 | True |  |
+| 2026-11-15T18:15:39+00:00 | daemon | committed+pushed | `5a68d2af7535` | `claude/rainbow-3d-recovery-m4v347` | 6 | True |  |
+| 2026-11-15T18:20:43+00:00 | daemon | committed+pushed | `6d929a7524fa` | `claude/rainbow-3d-recovery-m4v347` | 12 | True |  |
+| 2026-11-15T18:25:47+00:00 | daemon | committed+pushed | `0b3ada566558` | `claude/rainbow-3d-recovery-m4v347` | 6 | True |  |
+| 2026-11-15T18:29:59+00:00 | manual | committed+pushed | `339184bd1827` | `claude/rainbow-3d-recovery-m4v347` | 6 | True |  |
+| 2026-11-15T18:30:33+00:00 | hook:Stop | committed+pushed | `edc8c8ae24da` | `claude/rainbow-3d-recovery-m4v347` | 6 | True |  |
+| 2026-11-15T18:30:44+00:00 | hook:Stop | committed+pushed | `551f0d4ecd8e` | `claude/rainbow-3d-recovery-m4v347` | 4 | True |  |
+| 2026-11-15T18:30:52+00:00 | daemon | no-change | `551f0d4ecd8e` | `claude/rainbow-3d-recovery-m4v347` | 0 | True |  |
+| 2026-11-15T18:33:33+00:00 | manual | committed+pushed | `fc3d2d357238` | `claude/rainbow-3d-recovery-m4v347` | 7 | True |  |
+| 2026-11-15T18:33:53+00:00 | hook:Stop | committed+pushed | `6501f6239422` | `claude/rainbow-3d-recovery-m4v347` | 6 | True |  |
+| 2026-11-15T18:34:27+00:00 | hook:Stop | committed+pushed | `50ed4a724486` | `claude/rainbow-3d-recovery-m4v347` | 4 | True |  |
+| 2026-11-15T18:35:53+00:00 | daemon | committed+pushed | `d2c8f7b831f6` | `claude/rainbow-3d-recovery-m4v347` | 6 | True |  |
+| 2026-11-15T18:40:59+00:00 | daemon | committed+pushed | `d8e2683e1a78` | `claude/rainbow-3d-recovery-m4v347` | 21 | True |  |
+| 2026-11-15T18:45:43+00:00 | manual | committed+pushed | `af80fb1bdd9c` | `claude/rainbow-3d-recovery-m4v347` | 29 | True |  |
+| 2026-11-15T18:46:03+00:00 | hook:Stop | committed+pushed | `d962444c2b73` | `claude/rainbow-3d-recovery-m4v347` | 9 | True |  |
+| 2026-11-15T18:51:07+00:00 | daemon | committed+pushed | `0719fd3173e7` | `claude/rainbow-3d-recovery-m4v347` | 31 | True |  |
+| 2026-11-15T18:54:05+00:00 | manual | committed+pushed | `fc70e5608f02` | `claude/rainbow-3d-recovery-m4v347` | 29 | True |  |
+| 2026-11-15T18:54:36+00:00 | hook:Stop | committed+pushed | `70b100d38ff3` | `claude/rainbow-3d-recovery-m4v347` | 17 | True |  |
+| 2026-11-15T18:54:55+00:00 | hook:Stop | committed+pushed | `428d3fbdea7f` | `claude/rainbow-3d-recovery-m4v347` | 8 | True |  |
+| 2026-11-15T18:56:16+00:00 | daemon | committed+pushed | `ca185227cea0` | `claude/rainbow-3d-recovery-m4v347` | 19 | True |  |
+| 2026-11-15T19:01:23+00:00 | daemon | committed+pushed | `18453dcc84e3` | `claude/rainbow-3d-recovery-m4v347` | 12 | True |  |
+| 2026-11-15T19:10:09+00:00 | daemon | error | `—` | `claude/rainbow-3d-recovery-m4v347` | 0 | False | current branch 'ccr-8b6fc834-7kd55l' != verified branch 'claude/rainbow-3d-recovery-m4v347'; refusing to push |
+| 2026-11-15T19:13:57+00:00 | manual:account3-recovery-test | committed+pushed | `ecbd15f124fb` | `ccr-8b6fc834-7kd55l` | 8 | True |  |
+| 2026-11-15T19:15:09+00:00 | daemon | committed+pushed | `4f33276c375d` | `ccr-8b6fc834-7kd55l` | 6 | True |  |
+| 2026-11-15T19:20:13+00:00 | daemon | committed+pushed | `47bdf3672a5c` | `ccr-8b6fc834-7kd55l` | 34 | True |  |
+| 2026-11-15T19:25:21+00:00 | daemon | committed+pushed | `d70381294225` | `ccr-8b6fc834-7kd55l` | 44 | True |  |
+| 2026-11-15T19:30:30+00:00 | daemon | committed+pushed | `470c27dac2bf` | `ccr-8b6fc834-7kd55l` | 36 | True |  |
+| 2026-11-15T19:35:37+00:00 | daemon | committed+pushed | `8a36270c96c2` | `ccr-8b6fc834-7kd55l` | 41 | True |  |
+| 2026-11-15T19:39:36+00:00 | manual:switch-to-recovery-branch | committed+pushed | `da75045d1f64` | `claude/rainbow-3d-recovery-m4v347` | 39 | True |  |
+| 2026-11-15T19:40:48+00:00 | daemon | committed+pushed | `1f39bba296f7` | `claude/rainbow-3d-recovery-m4v347` | 8 | True |  |
+| 2026-11-15T19:42:00+00:00 | manual:user-save-request | committed+pushed | `8f869daa366b` | `claude/rainbow-3d-recovery-m4v347` | 8 | True |  |
+| 2026-11-15T19:42:17+00:00 | hook:Stop | committed+pushed | `e6cfff2ebd72` | `claude/rainbow-3d-recovery-m4v347` | 6 | True |  |
+| 2026-11-15T19:42:30+00:00 | hook:Stop | committed+pushed | `fc03dd9a3225` | `claude/rainbow-3d-recovery-m4v347` | 4 | True |  |
+| 2026-11-15T19:48:37+00:00 | hook:SessionStart | committed+pushed | `e9a2292fa71e` | `ccr-d4bb0ad3-8ycajb` | 4 | True |  |
+| 2026-11-15T19:53:37+00:00 | daemon | committed+pushed | `94f13b35a0c2` | `ccr-d4bb0ad3-8ycajb` | 27 | True |  |
+| 2026-11-15T19:54:36+00:00 | hook:Stop | committed+pushed | `aaf20f7ffc5c` | `ccr-d4bb0ad3-8ycajb` | 18 | True |  |
+| 2026-11-15T19:54:56+00:00 | hook:Stop | committed+pushed | `66e859dc5bc2` | `ccr-d4bb0ad3-8ycajb` | 10 | True |  |
+| 2026-11-15T19:58:43+00:00 | daemon | committed+pushed | `fbb4755e7b30` | `ccr-d4bb0ad3-8ycajb` | 30 | True |  |
+| 2026-11-15T20:01:07+00:00 | hook:Stop | committed+pushed | `d7b74e30a508` | `ccr-d4bb0ad3-8ycajb` | 24 | True |  |
+| 2026-11-15T20:01:14+00:00 | manual:stop-hook | committed+pushed | `2c7bdb8e5319` | `ccr-d4bb0ad3-8ycajb` | 9 | True |  |
+| 2026-11-15T20:01:24+00:00 | hook:Stop | committed+pushed | `3ef4a9236088` | `ccr-d4bb0ad3-8ycajb` | 6 | True |  |
+| 2026-11-15T20:03:52+00:00 | daemon | committed+pushed | `5a19aa668db0` | `ccr-d4bb0ad3-8ycajb` | 25 | True |  |
+| 2026-11-15T20:08:58+00:00 | daemon | committed+pushed | `82b9e3525e20` | `ccr-d4bb0ad3-8ycajb` | 46 | True |  |
+| 2026-11-15T20:10:08+00:00 | manual:autosave-upgrade | committed+pushed | `dc552853a308` | `ccr-d4bb0ad3-8ycajb` | 8 | True |  |
+| 2026-11-15T20:12:15+00:00 | manual:task-end | committed+pushed | `be69ba2875d6` | `ccr-d4bb0ad3-8ycajb` | 19 | True |  |
+| 2026-11-15T20:12:33+00:00 | hook:Stop | committed+pushed | `c70e7a537b70` | `ccr-d4bb0ad3-8ycajb` | 7 | True |  |
+| 2026-11-15T20:12:39+00:00 | hook:stop-request | committed+pushed | `f603bc00a343` | `ccr-d4bb0ad3-8ycajb` | 4 | True |  |
+| 2026-11-15T20:14:08+00:00 | daemon | committed+pushed | `bb268ecbc11c` | `ccr-d4bb0ad3-8ycajb` | 9 | True |  |
+| 2026-11-15T20:15:09+00:00 | manual:task-end | committed+pushed | `49761aceff93` | `ccr-d4bb0ad3-8ycajb` | 18 | True |  |
+| 2026-11-15T20:15:24+00:00 | hook:Stop | committed+pushed | `a59f3e40fff3` | `ccr-d4bb0ad3-8ycajb` | 6 | True |  |
+| 2026-11-15T20:19:14+00:00 | daemon | committed+pushed | `997933811048` | `ccr-d4bb0ad3-8ycajb` | 16 | True |  |
+| 2026-11-15T20:24:21+00:00 | daemon | no-change | `997933811048` | `ccr-d4bb0ad3-8ycajb` | 0 | True |  |
+| 2026-11-15T20:33:47+00:00 | daemon | committed+pushed | `6f8d56a53db1` | `ccr-d4bb0ad3-8ycajb` | 3 | True |  |
+| 2026-11-15T20:53:31+00:00 | hook:SessionStart | committed+pushed | `87d7f6aa1979` | `ccr-e033f912-8b40f5` | 4 | True |  |
+| 2026-11-15T20:55:23+00:00 | manual:recovery | committed+pushed | `a6e21ca78a00` | `ccr-e033f912-8b40f5` | 6 | True |  |
+| 2026-11-15T20:58:31+00:00 | daemon | committed+pushed | `8a5321ab6286` | `ccr-e033f912-8b40f5` | 6 | True |  |
+| 2026-11-15T21:03:35+00:00 | daemon | committed+pushed | `af01611dc514` | `ccr-e033f912-8b40f5` | 19 | True |  |
+| 2026-11-15T21:08:05+00:00 | hook:Stop | committed+pushed | `9bbab72003e0` | `ccr-e033f912-8b40f5` | 23 | True |  |
+| 2026-11-15T21:08:10+00:00 | manual:checkpoint | committed+pushed | `d6ab3a2db171` | `ccr-e033f912-8b40f5` | 6 | True |  |
+| 2026-11-15T21:08:18+00:00 | hook:Stop | committed+pushed | `fe0ff7147823` | `ccr-e033f912-8b40f5` | 4 | True |  |
+| 2026-11-15T21:08:41+00:00 | daemon | committed+pushed | `922d904a2bd0` | `ccr-e033f912-8b40f5` | 8 | True |  |
+| 2026-11-15T21:13:45+00:00 | daemon | committed+pushed | `e174e5b4e329` | `ccr-e033f912-8b40f5` | 18 | True |  |
+| 2026-11-15T21:41:19+00:00 | daemon | committed+pushed | `176425892b3c` | `claude/rainbow-3d-account-transfer-syorak` | 4 | True |  |
+| 2026-11-15T21:46:24+00:00 | daemon | committed+pushed | `bc65a4d60618` | `claude/rainbow-3d-account-transfer-syorak` | 4 | True |  |
+| 2026-11-15T21:50:58+00:00 | manual:account6-config | committed+pushed | `f72ea4547cc0` | `claude/rainbow-3d-account-transfer-syorak` | 21 | True |  |
+| 2026-11-15T21:51:29+00:00 | daemon | committed-local-only | `ff03254edcb4` | `claude/rainbow-3d-account-transfer-syorak` | 14 | False | push failed after retries: Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29/verify": Forbidden
+error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |
+| 2026-11-15T21:54:04+00:00 | hook:Stop | committed-local-only | `e4996dfc5f2c` | `claude/rainbow-3d-account-transfer-syorak` | 22 | False | push failed after retries: Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29/verify": Forbidden
+error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |
+| 2026-11-15T21:57:44+00:00 | daemon | committed-local-only | `8ee9b1c76557` | `claude/rainbow-3d-account-transfer-syorak` | 15 | False | push failed after retries: Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29/verify": Forbidden
+error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |
+| 2026-11-15T21:59:43+00:00 | manual:lfs-host-fix | committed+pushed | `e2e8b2838702` | `claude/rainbow-3d-account-transfer-syorak` | 17 | True |  |
+| 2026-11-15T22:00:06+00:00 | hook:Stop | committed+pushed | `c323a5689767` | `claude/rainbow-3d-account-transfer-syorak` | 10 | True |  |
+| 2026-11-15T22:03:33+00:00 | manual:worldlabs-setup | committed+pushed | `eadf7d84e996` | `claude/rainbow-3d-account-transfer-syorak` | 36 | True |  |
+| 2026-11-15T22:03:55+00:00 | hook:Stop | committed+pushed | `1135c916fd7c` | `claude/rainbow-3d-account-transfer-syorak` | 11 | True |  |
+| 2026-11-15T22:04:01+00:00 | daemon | committed+pushed | `99480ca40599` | `claude/rainbow-3d-account-transfer-syorak` | 4 | True |  |
+| 2026-11-15T22:04:13+00:00 | manual:stop-hook | committed+pushed | `7f331b4eface` | `claude/rainbow-3d-account-transfer-syorak` | 9 | True |  |
+| 2026-11-15T22:04:34+00:00 | manual:stop-hook | committed+pushed | `df7818f6a61d` | `claude/rainbow-3d-account-transfer-syorak` | 15 | True |  |

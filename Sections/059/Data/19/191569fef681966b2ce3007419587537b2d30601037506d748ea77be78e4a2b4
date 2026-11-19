@@ -1,0 +1,22 @@
+import json, subprocess
+from pathlib import Path
+repo=str(Path.cwd())
+p=subprocess.Popen(['codex','-c','sqlite_home='+json.dumps(repo+'/cli-profile/sqlite'),'app-server'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=open("cli-profile/app-server.log","w"),text=True)
+def call(payload):
+    p.stdin.write(json.dumps(payload)+'\n');p.stdin.flush()
+    if 'id' not in payload: return
+    while True:
+        line=p.stdout.readline()
+        if not line:break
+        item=json.loads(line)
+        if item.get('id')==payload['id']:return item
+try:
+    call({'jsonrpc':'2.0','id':1,'method':'initialize','params':{'clientInfo':{'name':'image2blender_isolated_check','version':'1'}}})
+    call({'jsonrpc':'2.0','method':'initialized','params':{}})
+    answer=call({'jsonrpc':'2.0','id':2,'method':'skills/list','params':{'cwds':[repo],'forceReload':True}})
+    data=answer.get('result',{}).get('data',[])
+    matches=[{k:skill.get(k) for k in ('name','path','scope','enabled')} for item in data for skill in item.get('skills',[]) if skill.get('name')=='image-to-blender']
+    print(json.dumps(matches if matches else {'error':answer.get('error','Skill not listed')}))
+    Path('skill-discovery.json').write_text(json.dumps(matches,indent=2))
+finally:
+    p.terminate();p.wait(timeout=4)

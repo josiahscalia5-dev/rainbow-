@@ -1,0 +1,767 @@
+/**
+ * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.
+ * REAL 3D proxy geometry of "Crest the Rinse Arch", built around the game's own 06 river (which under the switch follows
+ * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera
+ * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
+ *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
+ *     into 07, continued straight along the river's heading so the painted far rings stay concentric
+ *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+ *   * a dark end cap far down the tunnel
+ * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+ * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+ * and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or showed edge-on / far smaller)
+ * get RING-STRUCTURED tiles unwrapped from the artwork in the surface's own coordinates (tube: wall angle x s, the
+ * painted gold rings + slotted metal; floor: lateral x s, the painted water) — stretch x magnification guard + projector
+ * depth test. The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+ * Without the switch nothing in this file runs and the game is unchanged.
+ */
+import * as THREE from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+import type { Course } from './course';
+
+interface Layout06 {
+  camera: { matrixWorld: number[]; fov: number; size: [number, number]; pos: number[] };
+  R: number;
+  hA: number;
+  ext: number;
+  s0: number;
+  s1: number;
+  Lfloor: number;
+  tiles: {
+    tube: { wallAngle: [number, number]; period: number; anglePeriod: number };
+    floor: { lateralPeriod: number; period: number };
+    floor2?: { lateralPeriod: number; period: number };
+    r6?: { Wc: number; Wb: number; hb: number; river: { period: number }; foamPeriod: number };
+  };
+}
+
+export interface Match06 {
+  group: THREE.Group;
+  bakeDepth(renderer: THREE.WebGLRenderer): void;
+  sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;
+  /** r7 `&m06bub=1`: 0 at the approved viewpoint .. 1 once the camera has left it (the painting only covers that view) */
+  away(cam: THREE.Vector3): number;
+  /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
+  setAway(a: number): void;
+}
+
+const VERT = /* glsl */ `
+uniform mat4 uProjVP;
+attribute vec2 aTile;
+attribute vec2 aLS;
+varying vec4 vProj;
+varying vec3 vW;
+varying vec3 vN;
+varying vec2 vTile;
+varying vec2 vLS;
+void main() {
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vProj = uProjVP * wp;
+  vW = wp.xyz;
+  vTile = aTile;
+  vLS = aLS;
+  vN = normalize(mat3(modelMatrix) * normal);
+  gl_Position = projectionMatrix * viewMatrix * wp;
+}`;
+
+const FRAG = /* glsl */ `
+uniform sampler2D uPlate;
+uniform sampler2D uDepth;
+uniform float uUseDepth;
+uniform vec2 uNearFar;
+uniform sampler2D uTile;
+uniform vec3 uProjPos;
+uniform vec4 uPjPost;
+uniform vec2 uPjRes;
+uniform vec3 uDbg;
+uniform sampler2D uMask;
+uniform float uFloor;
+uniform float uUseMask;
+// r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+// built from the approved painted water, world-anchored and flowing downstream (uR6p = Wc, Wb, river period, foam period)
+uniform float uGeo;
+uniform float uR6;
+uniform vec4 uR6p;
+uniform float uTime;
+uniform sampler2D uRiver;
+uniform sampler2D uFoam;
+// r7 m06ring: modeled gold rings (uRing = 1) around the straight tunnel axis (origin, direction, right, up)
+uniform float uRing;
+uniform vec3 uAxO;
+uniform vec3 uAxD;
+uniform vec3 uAxR;
+uniform vec3 uAxU;
+uniform float uRingH;
+uniform float uBendAng; // r11 m06bend: ring bulb angle per vertex (vTile.x) instead of around the straight axis
+uniform float uPanel;
+// r15 m06gold: the user's painted ring band (tools/match06/make_ring06.py) along each modeled ring's profile
+uniform float uGold;
+uniform sampler2D uRingTex;
+varying vec4 vProj;
+varying vec3 vW;
+varying vec3 vN;
+varying vec2 vTile;
+varying vec2 vLS;
+${PROJ05_INVERSE}
+float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
+void main() {
+  // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)
+  vec3 pc = texture2D(uTile, vTile).rgb;
+  vec3 nn = normalize(vN);
+  float al = abs(vLS.x);
+  if (uR6 > 0.5 && uFloor > 0.5) {
+    float sF = vLS.y - uTime * 1.2;
+    float ax = clamp(vLS.x / (2.0 * uR6p.x) + 0.5, 0.0, 1.0);
+    vec3 r1 = texture2D(uRiver, vec2(ax, sF / uR6p.z)).rgb;
+    vec3 r2 = texture2D(uRiver, vec2(ax, sF / (uR6p.z * 1.37) + 0.43)).rgb;
+    float bw = 0.5 + 0.5 * sin(vLS.y * 0.37 + vLS.x * 0.6) * sin(vLS.y * 0.13 + 1.7);
+    vec3 riv = mix(r1, r2, smoothstep(0.25, 0.75, bw));
+    float fr = pow(1.0 - abs(dot(nn, normalize(cameraPosition - vW))), 4.0);
+    riv += fr * 0.22 * vec3(0.9, 0.85, 1.0);
+    vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+    pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+  }
+  if (uRing > 0.5) {
+    // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
+    vec3 V = normalize(cameraPosition - vW);
+    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+    vec3 Rf = reflect(-V, n2);
+    float fw = dot(Rf, uAxD);
+    vec3 env = mix(vec3(0.46, 0.20, 0.55), vec3(1.0, 0.80, 0.50), smoothstep(-0.35, 0.9, fw));
+    env = mix(env, vec3(1.0, 0.96, 0.86), pow(max(fw, 0.0), 10.0));
+    float fres = pow(1.0 - max(dot(n2, V), 0.0), 3.0);
+    vec3 g = vec3(1.0, 0.60, 0.20) * (0.24 + 0.95 * env) + fres * vec3(1.0, 0.82, 0.55) * 0.45;
+    g += vec3(1.0, 0.9, 0.7) * 0.5 * pow(max(dot(Rf, normalize(uAxD + uAxU * 0.35)), 0.0), 40.0);
+    // r7b: the painted bands' bright yellow-white lines on the lips and band edges
+    float lipL = smoothstep(0.07, 0.0, abs(abs(vLS.x) - 0.22)) + smoothstep(0.09, 0.0, abs(abs(vLS.x) - (uRingH - 0.12)));
+    g = mix(g, vec3(1.0, 0.90, 0.60), clamp(lipL, 0.0, 1.0) * 0.55);
+    vec3 q = vW - uAxO;
+    float ang = uBendAng > 0.5 ? vTile.x : atan(dot(q, uAxU), dot(q, uAxR));
+    // r7b: fewer, bigger warm bulbs with a soft halo (the painted rings' amber light dots)
+    float cell = fract(ang / 6.2831853 * 56.0) - 0.5;
+    float bd = length(vec2(cell * 2.6, vLS.x / 0.16));
+    g += vec3(1.0, 0.62, 0.28) * 0.35 * smoothstep(0.3, 0.0, abs(vLS.x)) + vec3(1.0, 0.7, 0.35) * 0.5 * smoothstep(1.1, 0.0, bd);
+    pc = mix(g, vec3(1.0, 0.96, 0.84), smoothstep(0.5, 0.15, bd));
+    if (uGold > 0.5) {
+      // r15 m06gold: vTile = (angle around the ring, position across the painted band: 0 = outer face edge .. 1 = far lip);
+      // a light view-dependent sheen keeps the polish alive while moving (painted highlights stay world-anchored).
+      // r16 v2: faded in by the camera's distance from the approved viewpoint, exactly as the game's away factor
+      // (0 up to 0.6 u: the approved start view keeps its previous pixels exactly; full gold from 2 u on)
+      float gw = smoothstep(0.6, 2.0, distance(cameraPosition, uProjPos));
+      float gfr = pow(1.0 - abs(dot(nn, V)), 3.0);
+      vec3 gc = texture2D(uRingTex, vTile).rgb;
+      gc = mix(gc, vec3(1.0, 0.93, 0.80), gfr * 0.18);
+      pc = mix(pc, gc, gw);
+    }
+  }
+  if (uPanel > 0.5 && uFloor < 0.5 && uRing < 0.5) {
+    // r7b m06ring: crisp perforated lilac washer metal between the rings (the painted panels: rows of short dark rounded
+    // slots running around the tunnel, pink-white sheen toward the glow), instead of the magnified blurry far-ring crop
+    vec3 q = vW - uAxO;
+    float al = dot(q, uAxD);
+    vec3 qr = q - uAxD * al;
+    float arc = atan(dot(qr, uAxU), dot(qr, uAxR)) * length(qr);
+    vec3 V = normalize(cameraPosition - vW);
+    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+    float fw = dot(reflect(-V, n2), uAxD);
+    // colours measured from the approved picture's walls (display values): shadow / median / lit magenta-purple,
+    // lilac-blue toward the glow, near-black magenta slots (3-8 % of the wall)
+    float lit = smoothstep(-0.7, 0.8, fw);
+    vec3 base = mix(vec3(0.42, 0.19, 0.50), vec3(0.67, 0.34, 0.74), lit);
+    base = mix(base, vec3(0.56, 0.38, 0.88), 0.45 * smoothstep(0.2, 0.95, fw));
+    base += vec3(0.9, 0.6, 0.95) * 0.16 * pow(max(fw, 0.0), 8.0);
+    float row = floor(al / 0.55);
+    vec2 p = vec2((fract(arc / 0.62 + 0.5 * mod(row, 2.0)) - 0.5) * 0.62, (fract(al / 0.55) - 0.5) * 0.55);
+    float d = length(max(abs(p) - vec2(0.13, 0.03), 0.0)) - 0.03;
+    float aa = max(fwidth(d), 1e-4);
+    float slot = (1.0 - smoothstep(-aa, aa, d)) * (1.0 - smoothstep(20.0, 60.0, distance(cameraPosition, vW)));
+    float lip = (1.0 - smoothstep(-aa, aa, abs(d - 0.03) - 0.012)) * step(0.0, -p.y);
+    vec3 pan = mix(base, vec3(0.24, 0.02, 0.22), slot) + vec3(0.85, 0.55, 0.95) * 0.18 * lip * (1.0 - slot);
+    pc = mix(pc, pan, 0.85);
+  }
+  vec3 t = pc;
+  float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
+  // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
+  // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
+  float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
+  // r6 m06flow: on the river the flowing painted-water material takes over sooner from the stretched projection
+  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);
+  if (vProj.w > 0.0) {
+    vec3 ndc = vProj.xyz / vProj.w;
+    vec2 uv = ndc.xy * 0.5 + 0.5;
+    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {
+      float vis = 1.0;
+      if (uUseDepth > 0.5) {
+        float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
+        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+      }
+      float w = vis * keep;
+      // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
+      // tunnel wall seen through the crest loop / beside the river) or Benny's blurry provisional fill (R), the floor
+      // shows the painted-water tile as soon as the camera leaves the approved view (the approved view is unchanged)
+      if (uFloor > 0.5 && uUseMask > 0.5) {
+        vec4 mk = texture2D(uMask, uv);
+        float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+        float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
+        w *= 1.0 - max(mk.r, mk.g) * away * inWater;
+      }
+      // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
+      // shows the ring-structured wall tile once the camera leaves the approved view (the real river geometry carries
+      // the water there)
+      if (uFloor < 0.5 && uGeo > 0.5 && uUseMask > 0.5) {
+        float awayT = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+        w *= 1.0 - (1.0 - texture2D(uMask, uv).g) * awayT;
+      }
+      // m06ring: the modeled rings show the approved pixels only AT the approved view, their own 3D gold once away
+      if (uRing > 0.5) w *= 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+      t = mix(pc, texture2D(uPlate, uv).rgb, w);
+    }
+  }
+  gl_FragColor = vec4(pjInverse(t), 1.0);
+  if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
+}`;
+
+// r16 `&m06fclu=1`: one foam lobe / small bubble of the painted 06 foam heaps (camera-facing sprite; aB = centre + radius,
+// aS >= 1 = a foam lobe with bubble pores, < 1 = a small shiny bubble). Shrinks away inside uNear (u) of the camera.
+const FOAMC_VERT = /* glsl */ `
+attribute vec4 aB;
+attribute float aS;
+uniform vec2 uNear;
+varying vec2 vUv;
+varying float vS;
+varying float vF;
+varying float vPx;
+void main() {
+  vUv = uv * 2.0 - 1.0;
+  vS = aS;
+  vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);
+  vF = smoothstep(uNear.x, uNear.y, -mv.z);
+  mv.xy += position.xy * aB.w * 2.0 * vF;
+  vPx = aB.w * vF * projectionMatrix[1][1] / max(-mv.z, 0.1); // on-screen radius (fraction of the half-height)
+  gl_Position = projectionMatrix * mv;
+}`;
+// colours = the approved picture's foam heaps (display values, lower corners + crest): white tops (253,252,253), pale
+// lilac (238,230,252), lilac-blue (191,192,250), cool shadow (159,172,247); pores = darker lilac-blue dots with a glint
+const FOAMC_FRAG = /* glsl */ `
+uniform vec4 uPjPost;
+uniform vec2 uPjRes;
+varying vec2 vUv;
+varying float vS;
+varying float vF;
+varying float vPx;
+${PROJ05_INVERSE}
+float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+void main() {
+  float r = length(vUv);
+  if (r > 1.0 || vF < 0.02) discard;
+#ifdef RIM
+  if (r < 0.80) discard;
+#else
+  if (r > 0.86) discard;
+#endif
+  bool lobe = vS >= 1.0;
+  float s = fract(vS);
+  vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));
+  float lt = dot(nrm, normalize(vec3(-0.35, 0.78, 0.52)));
+  vec3 cSh = vec3(0.62, 0.67, 0.97), cMid = vec3(0.75, 0.75, 0.98), cLi = vec3(0.93, 0.90, 0.99), cW = vec3(0.99, 0.99, 0.995);
+  vec3 col = mix(cSh, cMid, smoothstep(-0.25, 0.30, lt));
+  col = mix(col, cLi, smoothstep(0.30, 0.66, lt));
+  col = mix(col, cW, smoothstep(0.62, 0.92, lt));
+  if (lobe) {
+    // bubble pores on the shaded lower part of a foam lobe (the painted froth texture)
+    // pores keep the painted bubble size: more, finer pores on lobes that are big on screen (near the camera)
+    float cells = clamp(vPx * 60.0, 4.5, 16.0);
+    vec2 q = vUv * cells + s * 17.0;
+    vec2 id = floor(q), f = fract(q) - 0.5;
+    vec2 jt = vec2(h21(id), h21(id + 7.3)) - 0.5;
+    float pr = 0.10 + 0.12 * h21(id + 3.1);
+    float pd = length(f - jt * 0.5);
+    float pore = (1.0 - smoothstep(pr * 0.7, pr, pd)) * step(0.35, h21(id + 11.0)) * smoothstep(0.55, 0.15, lt) * smoothstep(0.95, 0.6, r);
+    col = mix(col, cSh * 0.80, pore * 0.85);
+    col = mix(col, cW, (1.0 - smoothstep(0.0, pr * 0.35, length(f - jt * 0.5 - vec2(-0.3, 0.3) * pr))) * pore * 0.8);
+  } else {
+    // a small shiny soap bubble: crisp window highlight + tiny second glint
+    float hl = smoothstep(0.22, 0.08, length((vUv - vec2(-0.36, 0.40)) * vec2(1.0, 1.3)));
+    float hl2 = smoothstep(0.10, 0.03, length(vUv - vec2(0.36, -0.42)));
+    col = mix(col, vec3(1.0), clamp(hl + 0.6 * hl2, 0.0, 1.0));
+  }
+  // light rim on the shadow side (the foam film seen edge-on), faintly pink <-> cyan
+  float ang = atan(vUv.y, vUv.x) + s * 6.2832;
+  vec3 iri = mix(vec3(0.98, 0.84, 0.99), vec3(0.82, 0.95, 1.0), 0.5 + 0.5 * sin(ang * 2.0 + r * 5.0));
+  float fr = smoothstep(0.66, 0.97, r) * (0.35 + 0.65 * (1.0 - clamp(lt, 0.0, 1.0)));
+  col = mix(col, iri, fr * (lobe ? 0.45 : 0.7));
+  float a = 1.0;
+#ifdef RIM
+  a = 1.0 - 0.6 * smoothstep(0.86, 1.0, r);
+#endif
+  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), a);
+}`;
+
+const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
+
+export async function buildMatch06(course: Course): Promise<Match06> {
+  const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
+  const loader = new THREE.TextureLoader();
+  const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
+  plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+  plate.minFilter = THREE.LinearMipmapLinearFilter;
+  plate.anisotropy = 8;
+
+  // the projector = the locked game camera the picture was matched to (far enough for the deep painted tunnel)
+  const [W, H] = L.camera.size;
+  const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.3, L.ext + 160);
+  proj.matrixWorld.fromArray(L.camera.matrixWorld);
+  proj.matrixWorld.decompose(proj.position, proj.quaternion, proj.scale);
+  proj.matrixWorldInverse.copy(proj.matrixWorld).invert();
+  proj.updateProjectionMatrix();
+  const projVP = new THREE.Matrix4().multiplyMatrices(proj.projectionMatrix, proj.matrixWorldInverse);
+
+  const depthRT = new THREE.WebGLRenderTarget(1024, Math.round((1024 * H) / W), { depthBuffer: true });
+  depthRT.depthTexture = new THREE.DepthTexture(depthRT.width, depthRT.height, THREE.UnsignedIntType);
+  const shared = {
+    uPlate: { value: plate },
+    uDepth: { value: depthRT.depthTexture as THREE.Texture },
+    uUseDepth: { value: 0 },
+    uNearFar: { value: new THREE.Vector2(proj.near, proj.far) },
+    uProjVP: { value: projVP },
+    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
+    uPjRes: { value: new THREE.Vector2(W, H) },
+    uProjPos: { value: proj.position.clone() },
+    uTime: { value: 0 },
+  };
+  const loadTile = async (name: string) => {
+    const t = await loader.loadAsync(tex(`tile_${name}.png`));
+    t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 8;
+    t.minFilter = THREE.LinearMipmapLinearFilter; return t;
+  };
+  // r3 (2026-11-17, qa/match/06/NOTES.md): masks + rectified repeating floor tile; `&m06v=2` = the round-2 result
+  const v2 = typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06v') === '2';
+  const TF2 = !v2 ? L.tiles.floor2 : undefined;
+  const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile(TF2 ? 'floor2' : 'floor')]);
+  if (TF2) tFloor.wrapT = THREE.RepeatWrapping; // seamless along the river (mirrored only across it)
+  // r6 switches (each its own factor): `&m06geo=1` narrow river + foam banks + tunnel walls down to the banks;
+  // `&m06flow=1` river / foam material from the approved painted water, flowing (needs m06geo)
+  const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
+  const R6 = !v2 ? L.tiles.r6 : undefined;
+  const GEO = !!R6 && qs?.get('m06geo') === '1';
+  const FLOW = GEO && qs?.get('m06flow') === '1';
+  const mask = v2 ? null : await loader.loadAsync(tex('mask06.png'));
+  if (mask) { mask.colorSpace = THREE.NoColorSpace; mask.generateMipmaps = false; mask.minFilter = THREE.LinearFilter; }
+  let tRiver: THREE.Texture | null = null, tFoam: THREE.Texture | null = null;
+  if (FLOW) {
+    [tRiver, tFoam] = await Promise.all([loader.loadAsync(tex('tile_river6.png')), loader.loadAsync(tex('tile_foam6.png'))]);
+    for (const t of [tRiver, tFoam]) {
+      t.colorSpace = THREE.NoColorSpace; t.wrapS = THREE.ClampToEdgeWrapping; t.wrapT = THREE.RepeatWrapping;
+      t.anisotropy = 8; t.minFilter = THREE.LinearMipmapLinearFilter;
+    }
+  }
+  const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);
+  const mat = (tile: THREE.Texture, floor = false) => new THREE.ShaderMaterial({
+    vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+    uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
+      uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 },
+      uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
+      uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
+      uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
+      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
+  });
+
+  const finishProjection = (group: THREE.Group, setAway: (a: number) => void): Match06 => {
+    return {
+      group,
+      bakeDepth(renderer) {
+        const prevRT = renderer.getRenderTarget();
+        const scene = new THREE.Scene();
+        const clone = group.clone(true);
+        clone.visible = true;
+        clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+        scene.add(clone);
+        clone.updateMatrixWorld(true);
+        renderer.setRenderTarget(depthRT);
+        renderer.clear();
+        renderer.render(scene, proj);
+        renderer.setRenderTarget(prevRT);
+        shared.uUseDepth.value = 1;
+      },
+      setAway,
+      away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+      sync(renderer, w, h) {
+        shared.uPjPost.value.x = renderer.toneMappingExposure;
+        if (FLOW) shared.uTime.value = performance.now() / 1000;
+        shared.uPjRes.value.set(w, h);
+      },
+    };
+  };
+  if (FLOW && qs?.get('m06tun') === '1' && qs.get('cx06ArchedPassage') === '1') {
+    const { buildArchedPassage06 } = await import('./archedPassage06');
+    return finishProjection(await buildArchedPassage06(mat), () => {});
+  }
+
+  // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
+  const f1 = course.sample(L.s1);
+  const T1 = f1.tan.clone().normalize(), P1 = f1.pos.clone(), U1 = f1.up.clone(), R1 = f1.right.clone();
+  const frame = (s: number) => {
+    if (s <= L.s1) { const f = course.sample(s); return { pos: f.pos.clone(), up: f.up.clone(), right: f.right.clone() }; }
+    return { pos: P1.clone().addScaledVector(T1, s - L.s1), up: U1.clone(), right: R1.clone() };
+  };
+  const sList: number[] = [];
+  for (let s = L.s0; s < L.s1; s += 0.5) sList.push(s);
+  for (let s = L.s1; s <= L.s1 + L.ext + 1e-6; s += 2) sList.push(s);
+
+  // grid helper: rows along s, columns across (closed ring for the tube)
+  const grid = (cols: number, vert: (s: number, j: number, fr: ReturnType<typeof frame>) => [THREE.Vector3, number, number?], sK: number) => {
+    const pos: number[] = [], tile: number[] = [], idx: number[] = [], ls: number[] = [];
+    for (const s of sList) {
+      const fr = frame(s);
+      for (let j = 0; j <= cols; j++) { const [p, a, l] = vert(s, j, fr); pos.push(p.x, p.y, p.z); tile.push(a, s / sK); ls.push(l ?? 0, s); }
+    }
+    const n = cols + 1;
+    for (let i = 0; i < sList.length - 1; i++) for (let j = 0; j < cols; j++) {
+      const a = i * n + j, b = a + 1, c = a + n, d = c + 1;
+      idx.push(a, c, b, b, c, d);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('aTile', new THREE.Float32BufferAttribute(tile, 2));
+    g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
+    g.setIndex(idx);
+    g.computeVertexNormals();
+    return g;
+  };
+
+  const group = new THREE.Group();
+  group.name = 'match06_projection';
+  const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm06_' + name; o.frustumCulled = false; group.add(o); return o; };
+  const TT = L.tiles.tube, TF = TF2 ?? L.tiles.floor;
+  const RAD = 128;
+  // tunnel tube around the river: angle 0 = right, pi/2 = up; tile angle coordinate starts at the right bank
+  // r6 `m06geo`: the tube's lower walls are drawn in so they rise straight from the foam banks (|l| = Wb at the water
+  // line) instead of meeting the water 3.3 u further out under a 2x too wide water slab; above yTop the tube is unchanged
+  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);
+  // r7 `&m06tun=1` (qa/match/06/r7/NOTES.md): the painted tunnel is a STRAIGHT cylinder of concentric rings with the river
+  // winding inside it; the proxy tube below follows the river's crest (+36° / -33°) and 40° turn, so while moving the
+  // rings turned into twisted diagonal bands. Here: a straight cylinder (radius `&m06tunr=`, default 14) whose axis is
+  // parallel to the projector's ray through the painted vanishing point (`&m06tunax=chord`: along the 06 stage chord
+  // instead), placed through the river's centroid so the whole 06 river stays inside. Same projection, same tile.
+  const TUN = qs?.get('m06tun') === '1';
+  let tunCap: { pos: THREE.Vector3; dir: THREE.Vector3; r: number } | null = null;
+  if (TUN) {
+    const Rt = Number(qs?.get("m06tunr")) || 14;
+    const vp = (TT as { vp?: [number, number] }).vp ?? [W / 2, H / 2];
+    let ax = new THREE.Vector3((vp[0] / W) * 2 - 1, 1 - (vp[1] / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
+    const sA = L.s0 + 12, sE = L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage
+    if (qs?.get('m06tunax') === 'chord') ax = course.sample(sE).pos.sub(course.sample(sA).pos).normalize();
+    const C = proj.position.clone();
+    // axis through the centroid of the 06 river (perpendicular to ax), lifted `&m06tunh=` (default 3) above it
+    const cen = new THREE.Vector3(); let n = 0;
+    for (let s = L.s0; s <= sE; s += 1) { const q = course.sample(s).pos.sub(C); cen.add(q.addScaledVector(ax, -q.dot(ax))); n++; }
+    cen.multiplyScalar(1 / n);
+    const Ux = new THREE.Vector3(0, 1, 0).addScaledVector(ax, -ax.y).normalize(), Rx = new THREE.Vector3().crossVectors(ax, Ux).normalize();
+    const hq = Number(qs?.get('m06tunh'));
+    const O = C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
+    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = P1.clone().sub(O).dot(ax) + L.ext;
+    const kS = L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
+    // r11 `&m06bend=1` (lead, qa/match/06/r11/NOTES.md): the painted tunnel BENDS down-right with the river (BLUEPRINT_06:
+    // the inner ring centres drift toward the glow; Depth Anything 3: the glow is the far end of a deep tube that turns away).
+    // The straight cylinder ignored the river's right turn after the crest, so while swimming it showed a long centred
+    // bullseye of 15+ rings. Here the axis stays straight up to the crest top, then turns horizontally (about world Y, the
+    // pitch of ax kept, the frame rotated with it = no twist) by the river's own heading change at the same axial distance
+    // (smoothed over 8 u); after the river ends it keeps the last heading. Radius, ring profile / spacing, tile, projection
+    // and the approved view are unchanged (the projector repaints any geometry with the approved pixels there).
+    const BEND = qs?.get('m06bend') === '1';
+    const DA = 0.5, nA = Math.ceil((a1 + 400 - a0) / DA) + 1;
+    const fP: THREE.Vector3[] = [], fT: THREE.Vector3[] = [], fR: THREE.Vector3[] = [], fU: THREE.Vector3[] = [];
+    if (BEND) {
+      const ah = new THREE.Vector3(ax.x, 0, ax.z).normalize();
+      const yawOf = (v: THREE.Vector3) => { const hv = new THREE.Vector3(v.x, 0, v.z).normalize(); return Math.atan2(new THREE.Vector3().crossVectors(ah, hv).y, ah.dot(hv)); };
+      let sTop = L.s0, yTopC = -Infinity;
+      for (let s = L.s0; s <= sE; s += 0.5) { const y = course.sample(s).pos.y; if (y > yTopC) { yTopC = y; sTop = s; } }
+      const smp: [number, number][] = [];
+      for (let s = sTop; s <= sE + 20; s += 0.5) { const q = course.sample(s); smp.push([q.pos.clone().sub(O).dot(ax), yawOf(q.tan)]); }
+      const aTop = smp[0][0], yaw0 = smp[0][1];
+      const raw = new Float32Array(nA);
+      let k = 0;
+      for (let i = 0; i < nA; i++) {
+        const a = a0 + i * DA;
+        if (a <= aTop) continue;
+        while (k < smp.length - 2 && smp[k + 1][0] < a) k++;
+        const [aa, ya] = smp[k], [ab, yb] = smp[Math.min(k + 1, smp.length - 1)];
+        const t = ab > aa ? THREE.MathUtils.clamp((a - aa) / (ab - aa), 0, 1) : 1;
+        raw[i] = ya + (yb - ya) * t - yaw0;
+      }
+      // `&m06bendw=` half-width of the smoothing box (u, default 4), `&m06bendk=` share of the river's turn (default 1)
+      const bw = Number(qs?.get('m06bendw')) || 4, bk = qs?.get('m06bendk') ? Number(qs?.get('m06bendk')) : 1;
+      const W8 = Math.round(bw / DA), yaw = new Float32Array(nA);
+      for (let i = 0; i < nA; i++) { let sum = 0, c = 0; for (let j = Math.max(0, i - W8); j <= Math.min(nA - 1, i + W8); j++) { sum += raw[j]; c++; } yaw[i] = bk * sum / c; }
+      const Yw = new THREE.Vector3(0, 1, 0);
+      let p = O.clone().addScaledVector(ax, a0);
+      for (let i = 0; i < nA; i++) {
+        const qy = new THREE.Quaternion().setFromAxisAngle(Yw, yaw[i]);
+        const t = ax.clone().applyQuaternion(qy);
+        fP.push(p.clone()); fT.push(t); fR.push(Rx.clone().applyQuaternion(qy)); fU.push(Ux.clone().applyQuaternion(qy));
+        p = p.clone().addScaledVector(t, DA);
+      }
+      console.info('[match06] m06bend', { sTop, aTop: +aTop.toFixed(1), yawEndDeg: +THREE.MathUtils.radToDeg(yaw[nA - 1]).toFixed(1) });
+    }
+    const axisAt = (a: number) => {
+      if (!BEND) return { p: O.clone().addScaledVector(ax, a), t: ax, r: Rx, u: Ux };
+      const i = THREE.MathUtils.clamp(Math.round((a - a0) / DA), 0, nA - 1);
+      return { p: fP[i].clone().addScaledVector(fT[i], a - (a0 + i * DA)), t: fT[i], r: fR[i], u: fU[i] };
+    };
+    const pos: number[] = [], tl: number[] = [], ls: number[] = [], idx: number[] = [];
+    const rows: number[] = [];
+    for (let a = a0; a < a0 + 90; a += 0.5) rows.push(a);
+    for (let a = a0 + 90; a <= a1; a += 2) rows.push(a);
+    // r7 `&m06ring=1`: the far tunnel narrows so the rings converge into a SMALL glow (the full-radius end cap was a big
+    // flat pale disc of the painted vanishing-point glow once the camera moved)
+    const RING = qs?.get('m06ring') === '1';
+    const radAt = (a: number) => (RING ? Rt * (1 - 0.82 * THREE.MathUtils.smoothstep(a, a1 - 200, a1)) : Rt);
+    for (const a of rows) for (let j = 0, f = axisAt(a); j <= RAD; j++) {
+      const th = (j / RAD) * Math.PI * 2, Ra = radAt(a);
+      const p = f.p.clone().addScaledVector(f.r, Ra * Math.cos(th)).addScaledVector(f.u, Ra * Math.sin(th));
+      pos.push(p.x, p.y, p.z);
+      let aa = th; if (aa > TT.wallAngle[1]) aa -= Math.PI * 2;
+      tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
+    }
+    const nC = RAD + 1;
+    for (let i = 0; i < rows.length - 1; i++) for (let j = 0; j < RAD; j++) { const a = i * nC + j, b = a + 1, c = a + nC, d = c + 1; idx.push(a, c, b, b, c, d); }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('aTile', new THREE.Float32BufferAttribute(tl, 2));
+    g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
+    g.setIndex(idx); g.computeVertexNormals();
+    const tubeMat = mat(tTube);
+    add(g, tubeMat, 'tube');
+    { const fe = axisAt(a1); tunCap = { pos: fe.p.clone(), dir: fe.t.clone(), r: radAt(a1) }; }
+    if (RING) {
+      // r7b: procedural perforated panels between the rings, OPT-IN `&m06panel=1` (looked flat/plastic vs the painted tile: not kept)
+      if (qs?.get('m06panel') === '1') Object.assign(tubeMat.uniforms, { uPanel: { value: 1 }, uAxO: { value: O.clone() },
+        uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+      // r7 `&m06ring=1` (qa/match/06/r7/NOTES.md): REAL modeled gold rings instead of the flat painted ring stripes of the
+      // magnified wall tile. Profile = the painted ring: a thick polished band with two raised lips and a groove carrying
+      // a row of warm bulbs. Spacing from the approved picture: the two nearest painted ring groups (≈ 485 and 355 px
+      // above the vanishing point) are solved to axial positions through the locked camera; rings repeat at that
+      // spacing along the tunnel. Shading: polished gold reflecting the tunnel's warm glow ahead + purple walls (shader
+      // uRing). At the approved view the rings show the approved pixels (projection), fading to 3D gold as the camera
+      // leaves it, so the approved view is unchanged.
+      const Wr = Number(qs?.get("m06ringw")) || 2.2, Dr = Number(qs?.get('m06ringd')) || 0.55;
+      const yPx = (a: number) => {
+        const p = O.clone().addScaledVector(ax, a).addScaledVector(Ux, radAt(a)).project(proj);
+        return ((1 - p.y) / 2) * H;
+      };
+      const solve = (rPx: number) => { // painted ring top at vp.y - rPx -> axial position (a nearer ring's top is HIGHER: smaller y)
+        let lo = Math.max(a0, C.clone().sub(O).dot(ax) + 1), hi = a1 - 10;
+        for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (yPx(m) > vp[1] - rPx) hi = m; else lo = m; }
+        return (lo + hi) / 2;
+      };
+      const aN = solve(485), aF = solve(355), dA = Math.max(2.5, aF - aN);
+      // r15 `&m06gold=1` (qa/match/06/r15/PROGRESS.md): the rings carry the user's PAINTED ring band (straightened from the
+      // approved picture's nearest ring) instead of the procedural shading whose camera-facing faces read as dull
+      // rust-brown hoops. Rows of the band run along the ring profile: the outer painted tier on the camera-facing face,
+      // the wide bright tier with the highlight dashes on the inner cylinder, the yellow lip line at its far end
+      // (`&m06goldf=` share of the band on the face, default 0.37); 4 mirrored repeats around the ring (no seam).
+      const GOLD = qs?.get('m06gold') === '1';
+      let tRing: THREE.Texture | null = null;
+      if (GOLD) {
+        tRing = await loader.loadAsync(tex('tile_ring6.png'));
+        tRing.colorSpace = THREE.NoColorSpace; tRing.wrapS = THREE.MirroredRepeatWrapping; tRing.wrapT = THREE.ClampToEdgeWrapping;
+        tRing.anisotropy = 8; tRing.minFilter = THREE.LinearMipmapLinearFilter;
+      }
+      const VF = Number(qs?.get('m06goldf')) || 0.37;
+      const prof: THREE.Vector2[] = [];
+      const pr = (r: number, y: number) => prof.push(new THREE.Vector2(r, y));
+      const h = Wr / 2;
+      pr(0.25, -h); pr(-Dr, -h); pr(-Dr - 0.08, -h + 0.12); pr(-Dr - 0.08, -0.22); pr(-Dr + 0.12, -0.16);
+      pr(-Dr + 0.12, 0.16); pr(-Dr - 0.08, 0.22); pr(-Dr - 0.08, h - 0.12); pr(-Dr, h); pr(0.25, h);
+      // m06gold: position across the painted band for each profile point (face 0 -> 2: 0..VF, inner cylinder 2 -> 8: VF..1)
+      const vProf: number[] = [0];
+      { const seg = (i: number) => prof[i].distanceTo(prof[i - 1]);
+        const face = seg(1) + seg(2); let cyl = 0; for (let i = 3; i <= 8; i++) cyl += seg(i);
+        let acc = 0; for (let i = 1; i <= 2; i++) { acc += seg(i); vProf.push((VF * acc) / face); }
+        acc = 0; for (let i = 3; i <= 8; i++) { acc += seg(i); vProf.push(VF + ((1 - VF) * acc) / cyl); }
+        vProf.push(1); }
+      const parts: THREE.BufferGeometry[] = [];
+      const qRot = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), ax);
+      // the lathe's local x/z must line up with Rx/Ux for the bulb angle; build each ring directly in world space
+      // r7b: only the nearer rings are modeled (up to `&m06ringn=`, default 10 spacings past the nearest painted ring); the
+      // far ones bunched into a busy moiré — beyond them the painted rings + the tapering tunnel carry the depth
+      const nMax = Number(qs?.get('m06ringn')) || 99; // r7b: limiting to 10 left an empty hole at the centre (not kept)
+      for (let k = Math.ceil((a0 + 2 - aN) / dA); k <= nMax && aN + k * dA < a1 - 20 && parts.length < 70; k++) {
+        const a = aN + k * dA, Ra = radAt(a), sc = Ra / Rt;
+        const lp = prof.map((v) => new THREE.Vector2(Ra + v.x * sc, v.y * sc));
+        const lg = new THREE.LatheGeometry(lp, 128);
+        const fr = axisAt(a);
+        lg.applyQuaternion(BEND ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), fr.t) : qRot);
+        lg.translate(fr.p.x, fr.p.y, fr.p.z);
+        const n = lg.attributes.position.count, lsA = new Float32Array(n * 2), tA = new Float32Array(n * 2);
+        for (let i = 0; i < n; i++) lsA[i * 2] = lp[i % lp.length].y / sc; // local axial offset inside the band
+        // r11 m06bend: the bulb angle = the lathe's own angle (continuous, the seam column is duplicated) for bent rings
+        if (BEND) for (let i = 0; i < n; i++) tA[i * 2] = (Math.floor(i / lp.length) / 128) * Math.PI * 2 - Math.PI;
+        else if (GOLD) for (let i = 0; i < n; i++) { tA[i * 2] = (Math.floor(i / lp.length) / 128) * 4; tA[i * 2 + 1] = vProf[i % lp.length]; }
+        lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lsA, 2));
+        lg.setAttribute('aTile', new THREE.Float32BufferAttribute(tA, 2));
+        lg.deleteAttribute('uv');
+        parts.push(lg);
+      }
+      const rg = mergeGeometries(parts);
+      rg.computeVertexNormals();
+      const rm = mat(tTube);
+      Object.assign(rm.uniforms, { uRing: { value: 1 }, uGold: { value: GOLD ? 1 : 0 }, uRingTex: { value: tRing ?? tTube }, uRingH: { value: h }, uBendAng: { value: BEND ? 1 : 0 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
+        uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+      add(rg, rm, 'rings');
+      console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
+      if (qs?.get('m06pad') === '1') {
+        // r7c `&m06pad=1`: the two painted gold paddle blades (drum lifters) on the upper-left wall, as real beveled gold
+        // half-moon blades where the locked camera's rays through the painted paddles (≈ 287,242 and 155,397 px) meet
+        // the tunnel wall, repeated at the ring spacing so they stay while Benny swims; shading = the rings' gold
+        // (no bulbs); approved view = the approved pixels (same fade as the rings)
+        const hitWall = (px: number, py: number) => {
+          const d = new THREE.Vector3((px / W) * 2 - 1, 1 - (py / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
+          const q0 = C.clone().sub(O), qp = q0.clone().addScaledVector(ax, -q0.dot(ax)), dp = d.clone().addScaledVector(ax, -d.dot(ax));
+          const A = dp.dot(dp), Bq = 2 * qp.dot(dp), Cq = qp.dot(qp) - Rt * Rt;
+          const t = (-Bq + Math.sqrt(Math.max(0, Bq * Bq - 4 * A * Cq))) / (2 * A);
+          const p = C.clone().addScaledVector(d, t).sub(O), a = p.dot(ax), rr = p.addScaledVector(ax, -a);
+          return { a, th: Math.atan2(rr.dot(Ux), rr.dot(Rx)) };
+        };
+        const Rp = Number(qs?.get('m06padr')) || 1.6;
+        const sh = new THREE.Shape(); sh.moveTo(-Rp, 0); sh.lineTo(Rp, 0); sh.absarc(0, 0, Rp, 0, Math.PI, false);
+        const blade = new THREE.ExtrudeGeometry(sh, { depth: 0.24, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.06, bevelSegments: 2, curveSegments: 28 });
+        blade.translate(0, 0, -0.12); blade.deleteAttribute('uv');
+        const pads: THREE.BufferGeometry[] = [];
+        for (const pd of [hitWall(287, 242), hitWall(155, 397)]) {
+          for (let k = -1; k <= 12; k++) {
+            const a = pd.a + k * dA; if (a < a0 + 2 || a > a1 - 220) continue;
+            const Ra = radAt(a), rh = Rx.clone().multiplyScalar(Math.cos(pd.th)).addScaledVector(Ux, Math.sin(pd.th));
+            const X = ax.clone(), Y = rh.clone().negate(), Z = new THREE.Vector3().crossVectors(X, Y);
+            const m4 = new THREE.Matrix4().makeBasis(X, Y, Z).setPosition(O.clone().addScaledVector(ax, a).addScaledVector(rh, Ra + 0.05));
+            const bg = blade.clone().applyMatrix4(m4), n = bg.attributes.position.count;
+            bg.setAttribute('aLS', new THREE.Float32BufferAttribute(new Float32Array(n * 2).fill(5), 2));
+            bg.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(n * 2), 2));
+            pads.push(bg);
+          }
+        }
+        const pm = mat(tTube);
+        Object.assign(pm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uUseMask: { value: 0 }, uAxO: { value: O.clone() },
+          uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+        add(mergeGeometries(pads), pm, 'paddles');
+      }
+    }
+    // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the
+    // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage
+    while (sList.length && sList[sList.length - 1] > sE + 20) sList.pop();
+  } else add(grid(RAD, (_s, j, fr) => {
+    const th = (j / RAD) * Math.PI * 2;
+    let lx = L.R * Math.cos(th);
+    const ly = L.hA + L.R * Math.sin(th);
+    if (GEO && R6) {
+      const t = Math.min(1, Math.max(0, (yTop - ly) / yTop)), k = t * t * (3 - 2 * t);
+      lx -= Math.sign(lx) * k * (Lw - R6.Wb);
+    }
+    const p = GEO ? fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly)
+      : fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Math.cos(th)).addScaledVector(fr.up, L.R * Math.sin(th));
+    let a = th; if (a > TT.wallAngle[1]) a -= Math.PI * 2; // continuous over the wall (the part under the water is never seen)
+    return [p, (a - TT.wallAngle[0]) / TT.anglePeriod];
+  }, TT.period), mat(tTube), 'tube');
+  // river floor: the game river's own width + 1 u of foam bank each side (the painted gap between the river loops then
+  // lands on the tunnel beyond, not on a wide water slab), never wider than the tube
+  const FC = 32;
+  // r6 `m06geo`: the painted river is only ~4.5 u wide at Benny (tools/match06/make_river06.py): water |l| <= Wc, then a
+  // slightly raised foam bank to Wb where the tunnel wall starts (the game river and steering are unchanged)
+  add(grid(FC, (s, j, fr) => {
+    const half = GEO && R6 ? R6.Wb : Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+    const l = -half + (2 * half * j) / FC;
+    const p = fr.pos.clone().addScaledVector(fr.right, l);
+    if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
+    return [p, l / TF.lateralPeriod, l];
+  }, TF.period), mat(tFloor, true), 'floor');
+  // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
+  // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
+  // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+  let foamClouds: THREE.InstancedMesh | null = null;
+  const foamSprites: THREE.Mesh[] = [];
+  if (GEO && R6 && qs?.get('m06foam') === '1') {
+    let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    const items: { p: THREE.Vector3; r: number; up: THREE.Vector3 }[] = [];
+    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
+      const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
+      for (let i = 0; i < n; i++) {
+        const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;
+        const l = side * (R6.Wc + 0.25 + rnd() * 1.3);
+        items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rnd() * 0.12), r, up: fr.up });
+      }
+    }
+    // r16 `&m06fclu=1` (qa/match/06/r16/PROGRESS.md): the painted 06 foam is soft lilac-white cumulus heaps made of many
+    // round foam lobes and small bubbles (white tops, cool lilac-blue undersides, tiny bubble pores along the lower edges),
+    // not smooth pink-white plastic balls. Same layout as m06foam; every blob becomes a low heap of lobes + small bubbles
+    // (camera-facing sprites, two passes: opaque cores + see-through rims; the Screen 04 `m04fclu` method with 06's own
+    // painted colours), world-anchored, shrinking away right in front of the camera. `&m06fcs=` heap size, `&m06fck=`
+    // bubble count scale, `&m06fcn=` distance (u) below which they shrink away. A separate random stream: every other
+    // layout is unchanged.
+    if (qs?.get('m06fclu') === '1') {
+      const num = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && Number.isFinite(v) ? v : d; };
+      const fcs = num('m06fcs', 1.25), fck = num('m06fck', 1), fcn = num('m06fcn', 1.4);
+      let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
+      const aB: number[] = [], aS: number[] = [];
+      for (const it of items) {
+        const R = it.r * fcs, n = Math.min(24, Math.max(3, Math.round((2 + 30 * R) * fck)));
+        const t1 = new THREE.Vector3().crossVectors(it.up, new THREE.Vector3(1, 0, 0));
+        if (t1.lengthSq() < 1e-4) t1.set(0, 0, 1);
+        t1.normalize(); const t2 = new THREE.Vector3().crossVectors(it.up, t1).normalize();
+        const base = it.p.clone().addScaledVector(it.up, -it.r * 0.35);
+        for (let i = 0; i < n; i++) {
+          // a flattened dome of lobes round the blob centre: bigger lobes on top, small bubbles round the foot
+          const th = rnd2() * Math.PI * 2, d = R * Math.sqrt(rnd2()) * 1.1;
+          const lobe = i === 0 || rnd2() < 0.22;
+          const rho = lobe ? R * (0.45 + rnd2() * 0.25) : Math.max(0.025, R * (0.12 + Math.pow(rnd2(), 1.5) * 0.30));
+          const hgt = lobe ? R * (0.15 + 0.35 * rnd2()) * (1 - d / (1.2 * R)) : rho * 0.5;
+          const p = base.clone().addScaledVector(t1, Math.cos(th) * d).addScaledVector(t2, Math.sin(th) * d).addScaledVector(it.up, rho * 0.55 + Math.max(0, hgt));
+          aB.push(p.x, p.y, p.z, rho); aS.push(rnd2() + (lobe ? 1 : 0)); // aS >= 1: a foam lobe (pores), < 1: a small bubble
+        }
+      }
+      const quad = new THREE.PlaneGeometry(1, 1);
+      const g = new THREE.InstancedBufferGeometry();
+      g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
+      g.setAttribute('aB', new THREE.InstancedBufferAttribute(new Float32Array(aB), 4));
+      g.setAttribute('aS', new THREE.InstancedBufferAttribute(new Float32Array(aS), 1));
+      g.instanceCount = aS.length;
+      for (const rim of [false, true]) {
+        const m = new THREE.ShaderMaterial({ vertexShader: FOAMC_VERT, fragmentShader: (rim ? '#define RIM\n' : '') + FOAMC_FRAG,
+          transparent: rim, depthWrite: !rim, fog: false,
+          uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uNear: { value: new THREE.Vector2(fcn * 0.5, fcn) } } });
+        const o = new THREE.Mesh(g, m);
+        o.name = rim ? 'm06_foamclu_rim' : 'm06_foamclu'; o.frustumCulled = false; o.visible = false; o.renderOrder = rim ? 4 : 3;
+        group.add(o); foamSprites.push(o);
+      }
+      console.info('[match06] m06fclu', { blobs: items.length, sprites: aS.length });
+    } else {
+      const fm = new THREE.MeshStandardMaterial({ color: 0xf7f0ff, roughness: 0.55, metalness: 0, emissive: new THREE.Color(0x9a7ac0), emissiveIntensity: 0.4 });
+      foamClouds = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 2), fm, items.length);
+      const m4 = new THREE.Matrix4();
+      items.forEach((it, i) => { m4.makeScale(it.r, it.r * 0.8, it.r).setPosition(it.p); foamClouds!.setMatrixAt(i, m4); });
+      foamClouds.name = 'm06_foamclouds'; foamClouds.visible = false; foamClouds.frustumCulled = false;
+      group.add(foamClouds);
+    }
+  }
+  // far end cap of the tunnel (the glowing vanishing point)
+  const fe = frame(L.s1 + L.ext);
+  const cap = new THREE.Mesh(new THREE.CircleGeometry(tunCap ? tunCap.r : L.R, 64), mat(tTube));
+  cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));
+  // m06tun: the cap shows the painted glowing vanishing point (the wall/water mask would swap it for a flat tile colour)
+  if (tunCap) { cap.position.copy(tunCap.pos); cap.lookAt(cap.position.clone().sub(tunCap.dir)); (cap.material as THREE.ShaderMaterial).uniforms.uUseMask.value = 0; }
+  else { cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA); cap.lookAt(cap.position.clone().sub(T1)); }
+  cap.name = 'm06_end'; cap.frustumCulled = false;
+  group.add(cap);
+
+  // QA only: `&m06dbg=1` tints the tube green and the river floor red (which proxy surface a pixel comes from)
+  if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06dbg') === '1') {
+    group.traverse((o) => {
+      const u = ((o as THREE.Mesh).material as THREE.ShaderMaterial)?.uniforms?.uDbg;
+      if (u) u.value.set(o.name === 'm06_floor' ? 1 : 0, o.name === 'm06_floor' ? 0 : 1, 0);
+    });
+  }
+  return finishProjection(group, (a) => {
+    if (foamClouds) foamClouds.visible = a > 0.5;
+    for (const o of foamSprites) o.visible = a > 0.5;
+  });
+}

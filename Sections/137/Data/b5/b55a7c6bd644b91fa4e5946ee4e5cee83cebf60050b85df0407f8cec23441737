@@ -1,0 +1,9 @@
+# RAINBOW — permanent rules for Claude Code
+
+This repo MUST be a fresh isolated game. The authoritative brief is `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`. Read it before coding, and preserve `references/*.png` and `character_references/official_cartoon_girl_original.jpg` unchanged. Do not import anything from prior games.
+
+Locked target = 11 stages, 01–11, plus one separate cartoon-girl reference. Character identity override = the new cartoon girl (same rig/model/style) in opening, scene 10 and scene 11; legacy photo girls are framing references only. Benny's pink fluff, violet eyes, knitted star hat and paw pads stay consistent. Ending is **11 · SAFELY HOME**, real-time victory, with `FINAL SPIN COMPLETE`, girl lifts/holds towel while Benny hides.
+
+Real 3D interactive mobile portrait gameplay; 01–02 real-time cinematics; 03–10 interactive ride; 11 victory cinematic. No wallpaper/collage/slideshow/video as interactive substitute. Water must run along contiguous spline geometry, with actual huge 07→08 downward tube transition. Include depth and continuity tests and per-scene Playwright screenshots; compare each original and live result. Use established Blender/PBR/glTF models and efficient Three.js shaders. Strive for similarity, disclose differences, do not invent fidelity scores.
+
+Create/reuse project specialists from `.claude/agents/`, including water-fx-specialist and cartoon-girl-character-artist; do not claim fictional official plugins. Check /mcp tools; don't expose secrets or spend paid credits without approval. Do not claim repo creation or pushes unless verified.

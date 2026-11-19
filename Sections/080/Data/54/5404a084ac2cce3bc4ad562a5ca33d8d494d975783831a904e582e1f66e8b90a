@@ -1,0 +1,151 @@
+"""Export exact source trees by revision, store identical files once, and hydrate actual runtime and design assets."""
+from pathlib import Path,PurePosixPath
+from collections import Counter,defaultdict
+import os,sys,json,hashlib,subprocess as sp,re,shutil,tempfile,concurrent.futures
+p=Path(__file__).parent.resolve();repo=p/'sources.git';dest=p/'payload';dest.mkdir(exist_ok=True)
+trees=json.loads((p/'trees.json').read_text());meta=json.loads((p/'remote.json').read_text());metaRefs=meta['refs']
+latest=Path('/tmp/rainbow-crest-release.V85M78Mo'); lead=json.loads((latest/'eight-trials-verified.json').read_text())['verifiedLead']['branch']
+stage_names={'claude/rainbow-s04-match-c17':'Claudia_S04','claude/rainbow-s04-ringtex-c17':'Claudia_S04_Gold_Ring','claude/rainbow-s05-match-c17':'Claudia_S05','claude/rainbow-s06-match-c17':'Claudia_S06','claude/rainbow-s07-match-c17':'Claudia_S07','claude/rainbow-s08-scenery-c17':'Claudia_S08'}
+key=lambda ref: 'Claudia_Lead' if ref==lead else stage_names.get(ref,ref.replace('codex/','Codex_').replace('/','_'))
+depth=json.loads((latest/'depth-recheck.json').read_text());depth_paths={row['path'] for row in depth['redecodedDepthImages']}
+assets_ext={'.blend','.glb','.gltf','.obj','.mtl','.fbx','.exr','.hdr','.bin'}
+code_ext={'.py','.mjs','.js','.cjs','.ts','.tsx','.jsx','.glsl','.vert','.frag','.json','.csv','.tsv','.toml','.yaml','.yml','.sh','.md','.html','.css','.patch','.sha256','.txt','.svg','.ini','.xml'}
+def relevant(name):
+    z=PurePosixPath(name);a=z.parts
+    if any(i in {'node_modules','.env','.git','.gradle','__pycache__','.idea'} for i in a) or z.suffix.lower() in {'.p12','.pem','.key','.keystore','.jks','.pfx'}:return False
+    if len(a)==1:return z.name in {'.gitattributes','.gitignore','.mcp.json.template'} or z.suffix.lower() in code_ext
+    if a[0] in {'src','android','assets','public','scripts','tools','references','character_references','.agents','.claude','docs'}:return True
+    if a[0] in {'qa','experiments'}:
+        return z.suffix.lower() in (assets_ext|code_ext) or name in depth_paths or (a[0]=='experiments' and 'model' in a and z.suffix.lower() in {'.png','.jpg','.webp'})
+    return False
+selected={n:{k:v for k,v in m.items() if relevant(k)} for n,m in trees.items()}
+ids={v[1] for tree in selected.values() for v in tree.values()}
+run=lambda cmd,**kw:sp.run(cmd,stdout=sp.PIPE,stderr=sp.PIPE,check=True,**kw)
+basecmd=['git','-C',str(repo)]
+def checked_ids(ids):
+    data=''.join(h+'\n' for h in sorted(ids)).encode()
+    env=dict(os.environ,GIT_NO_LAZY_FETCH='1')
+    lines=run(basecmd+['--no-lazy-fetch','cat-file','--batch-check=%(objectname) %(objecttype) %(objectsize)'],input=data,env=env).stdout.decode().splitlines()
+    return [line.split()[0] for line in lines if line.endswith(' missing')]
+missing=checked_ids(ids)
+print('Source blobs',len(ids),'not cached locally',len(missing),flush=True)
+fallback=[]
+for start in range(0,len(missing),120):
+    batch=missing[start:start+120]
+    trial=sp.run(basecmd+['-c','fetch.negotiationAlgorithm=noop','fetch','origin','--quiet','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','--stdin'],input=('\n'.join(batch)+'\n').encode(),stdout=sp.PIPE,stderr=sp.PIPE)
+    if trial.returncode:
+        safe=re.sub(r'https?://[^ ]+','[service]',trial.stderr.decode(errors='replace'))
+        print('Batch direct object fetch:',safe[-350:].replace('\n',' '),flush=True)
+        fallback=checked_ids(ids);break
+if fallback:
+    recover=p/'github-blob-recovery';recover.mkdir(exist_ok=True)
+    def get_blob(h):
+        f=recover/h
+        for attempt in range(3):
+            if not f.is_file():
+                with f.open('wb') as of:
+                    ret=sp.run(['gh','api','-H','Accept: application/vnd.github.raw+json','repos/josiahscalia5-dev/rainbow-/git/blobs/'+h],stdout=of,stderr=sp.PIPE)
+                if ret.returncode:
+                    f.unlink(missing_ok=True);continue
+            data=f.read_bytes()
+            if data.startswith(b'{') and hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()!=h:
+                try:
+                    import base64
+                    j=json.loads(data)
+                    assert j.get('sha')==h and j['encoding']=='base64'
+                    data=base64.b64decode(j['content']);f.write_bytes(data)
+                except (ValueError,AssertionError,KeyError):pass
+            if hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()==h:
+                stored=run(basecmd+['hash-object','-w','--stdin'],input=data).stdout.decode().strip();assert stored==h
+                return h
+            f.unlink(missing_ok=True)
+        raise RuntimeError('Could not recover tracked blob '+h)
+    print('Recovering remaining exact Git objects through private GitHub',len(fallback),flush=True)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as group:
+        for i,_ in enumerate(group.map(get_blob,fallback),1):
+            if i%120==0:print('Recovered',i,'of',len(fallback),flush=True)
+assert not checked_ids(ids)
+pool=p/'gitBlobs';pool.mkdir(exist_ok=True)
+proc=sp.Popen(basecmd+['cat-file','--batch'],stdin=sp.PIPE,stdout=sp.PIPE,stderr=sp.PIPE)
+pointers={}
+for h in sorted(ids):
+    f=pool/h
+    if not f.is_file():
+        proc.stdin.write((h+'\n').encode());proc.stdin.flush();a,typ,size=proc.stdout.readline().split();assert a.decode()==h and typ==b'blob'
+        with f.open('wb') as out:
+            remaining=int(size)
+            while remaining:
+                data=proc.stdout.read(min(1024*1024,remaining));assert data;out.write(data);remaining-=len(data)
+        assert proc.stdout.read(1)==b'\n'
+    if f.stat().st_size<850:
+        data=f.read_bytes()
+        if data.startswith(b'version https://git-lfs.github.com/spec/'):
+            match=re.search(rb'oid sha256:([0-9a-f]{64})\s+size (\d+)',data);assert match
+            pointers[h]=(match[1].decode(),int(match[2]))
+proc.stdin.close();assert proc.wait()==0
+def sha_file(f):
+    with f.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+# Prior local game checkouts and LFS caches are read only.
+oid_set={v[0] for v in pointers.values()};named_paths=defaultdict(set)
+for tree in selected.values():
+    for path,(_,h) in tree.items():
+        if h in pointers:named_paths[(PurePosixPath(path).name,pointers[h][1])].add(pointers[h][0])
+file_names={name for name,size in named_paths}
+rawfiles={}
+for root in Path('/tmp').glob('rainbow-*'):
+    if root==p:continue
+    for folder,sub,files in os.walk(root,followlinks=False):
+        sub[:]=[i for i in sub if i not in {'node_modules','blender-cache','blender-config','mcp-cache','npm-cache','gradle-cache','gradle-dist','sdk','isolated-jdk21','runtime-deps','spector-browser','toolchain','jdk-source','vite','bridge-source','reviewed','__pycache__'}]
+        if folder.endswith('/.git'): sub[:]=[i for i in sub if i=='lfs']
+        for n in files:
+            f=Path(folder)/n
+            if n in oid_set and n not in rawfiles:
+                if f.is_file() and sha_file(f)==n:rawfiles[n]=f
+            elif n in file_names:
+                try:size=f.stat().st_size
+                except OSError:continue
+                needed=named_paths.get((n,size),set())-rawfiles.keys()
+                if needed:
+                    got=sha_file(f)
+                    if got in needed:rawfiles[got]=f
+# Only unresolved LFS objects actually used by a selected revision are retrieved.
+lfs=p/'hydrated';lfs.mkdir(exist_ok=True)
+def hydrate(item):
+    h,(sha,size)=item
+    if sha in rawfiles:return sha,rawfiles[sha]
+    out=lfs/sha
+    if not out.exists():
+        temp=out.with_suffix('.'+h[:12]+'.part')
+        with temp.open('wb') as f:
+            r=sp.run(basecmd+['-c','lfs.storage='+str(p/'lfs-store'),'lfs','smudge','--','review-asset'],input=(pool/h).read_bytes(),stdout=f,stderr=sp.PIPE)
+        if r.returncode or temp.stat().st_size!=size or sha_file(temp)!=sha:raise RuntimeError('Failed to hydrate required source binary '+sha[:12])
+        temp.replace(out)
+    assert out.stat().st_size==size and sha_file(out)==sha
+    return sha,out
+print('Tracked LFS binaries',len(oid_set),'already recovered',len(rawfiles),flush=True)
+unique={sha:(h,(sha,size)) for h,(sha,size) in pointers.items()}
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as group:
+    for oid,f in group.map(hydrate,unique.values()):rawfiles[oid]=f
+real={h:rawfiles[pointers[h][0]] if h in pointers else pool/h for h in ids}
+sizes=Counter();mode_map={};variants={};where={};sha_saved={}
+def emit(obj,rel):
+    f=dest/rel;f.parent.mkdir(parents=True,exist_ok=True)
+    if not f.exists():
+        try:os.link(obj,f)
+        except OSError:shutil.copyfile(obj,f)
+    assert f.stat().st_size==obj.stat().st_size
+for ref in [lead,*[n for n in selected if n!=lead]]:
+    idn=key(ref);files={}
+    for name,(mode,h) in sorted(selected[ref].items()):
+        assert mode in ['100644','100755'],(name,mode)
+        if h not in where:
+            rel=(Path('01_GAME')/name if ref==lead else Path('02_VERSIONS')/idn/'files'/name).as_posix()
+            where[h]=rel;sha_saved[h]=sha_file(real[h]);emit(real[h],rel)
+            sizes[rel.split('/')[0]]+=real[h].stat().st_size
+        files[name]={'file':where[h],'sha256':sha_saved[h],'gitBlob':h,'mode':mode,'bytes':real[h].stat().st_size}
+    manifest={'name':idn,'branch':ref,'commit':metaRefs[ref],'fileCount':len(files),'files':files}
+    out=dest/'02_VERSIONS'/idn/'SOURCE_TREE.json';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(manifest,separators=(',',':'),ensure_ascii=False)+'\n')
+    variants[idn]={'branch':ref,'commit':metaRefs[ref],'fileCount':len(files),'index':out.relative_to(dest).as_posix()}
+summary={'lead':lead,'variants':variants,'uniqueSourceBlobs':len(where),'actualHydratedLfs':len(rawfiles),'sourceBytesRaw':dict(sizes)}
+(dest/'02_VERSIONS'/'INDEX.json').write_text(json.dumps(summary,indent=2)+'\n');(p/'source-receipt.json').write_text(json.dumps(summary,indent=2)+'\n')
+print('Materialized uniquely',len(where),'files across',len(variants),'source revisions, raw MiB',round(sum(sizes.values())/2**20),flush=True)

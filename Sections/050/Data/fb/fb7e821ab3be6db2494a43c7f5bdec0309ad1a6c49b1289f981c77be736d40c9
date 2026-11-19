@@ -1,0 +1,63 @@
+import hashlib
+import json
+from pathlib import Path
+import re
+import subprocess
+
+root = Path(__file__).parent
+repo = root / "files-repository"
+groups = json.loads((root / "split-verification.json").read_text())
+branch = "codex/rainbow-review-files"
+ref = "refs/heads/" + branch
+origin = "https://github.com/josiahscalia5-dev/rainbow-.git"
+def git(*args):
+    result = subprocess.run(["git", *args], cwd=repo, capture_output=True, text=True)
+    if result.returncode:
+        msg = re.sub(r"https?://\S+", "[GitHub]", result.stderr)
+        raise RuntimeError(msg[:650])
+    return result.stdout.strip()
+
+plan_file = root / "ordinary-zip-plan.json"
+if not plan_file.exists():
+    git("init", "-q", "-b", branch)
+    git("config", "user.name", "Codex")
+    git("config", "user.email", "codex@users.noreply.github.com")
+    git("config", "core.attributesFile", "/dev/null")
+    git("config", "core.autocrlf", "false")
+    git("config", "gc.auto", "0")
+    git("remote", "add", "origin", origin)
+    if git("ls-remote", "--heads", "origin", ref):
+        raise RuntimeError("A different download branch already exists")
+    lines = ["# Rainbow review ZIP files", "",
+             "Tap a ZIP filename below. On its GitHub file page, tap the download arrow or open the file menu and choose **Download raw file**. Each ZIP opens independently in Android’s Files app.", ""]
+    for group, docs in groups.items():
+        lines += ["## " + group.replace("_", " "), ""]
+        for part in docs["parts"]:
+            screens = ", ".join(f"{s:02}" for s in part["screens"])
+            lines.append(f"- [Part {part['name'][-5]} · Screens {screens} · {round(part['bytes']/1_000_000)} MB]({part['name']})")
+        lines.append("")
+    lines += ["The four ZIPs contain every file from the original two review packages. All approved artwork and capture files retain their original bytes. Each ZIP includes README_FIRST.md with sources, version labels, camera conditions and limitations.", ""]
+    (repo / "Downloads" / "README.md").write_text("\n".join(lines), encoding="utf-8")
+    git("add", "--", "Downloads/README.md")
+    commits = []
+    all_parts = [p for g in groups.values() for p in g["parts"]]
+    for p in all_parts:
+        name = p["name"]
+        git("add", "--", "Downloads/" + name)
+        git("commit", "-q", "-m", "Save the standalone " + name + " download")
+        commits.append(git("rev-parse", "HEAD"))
+    tracked = set(git("ls-tree", "--name-only", "-r", "HEAD").splitlines())
+    assert tracked == {"Downloads/README.md"} | {"Downloads/" + part["name"] for part in all_parts}
+    plan_file.write_text(json.dumps({"branch": branch,"commits":commits,"parts":all_parts}))
+plan = json.loads(plan_file.read_text())
+remote = git("ls-remote", "--heads", "origin", ref)
+head = remote.split()[0] if remote else None
+if head and head not in plan["commits"]:
+    raise RuntimeError("Remote branch advanced outside the delivery task")
+start = plan["commits"].index(head) + 1 if head else 0
+for i, sha in enumerate(plan["commits"][start:], start):
+    git("-c", "pack.window=0", "-c", "pack.compression=1", "push", "--quiet", "origin", sha + ":" + ref)
+    print("Saved ordinary ZIP", plan["parts"][i]["name"], flush=True)
+confirmed = git("ls-remote", "--heads", "origin", ref)
+assert confirmed.split() == [plan["commits"][-1], ref]
+print("Verified private file branch", plan["commits"][-1], flush=True)

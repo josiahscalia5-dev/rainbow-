@@ -1,0 +1,153 @@
+{
+  "model": {
+    "station": -22.87653652255319,
+    "vertices": 304,
+    "triangles": 604,
+    "radialRange": [
+      4.081825922840872,
+      6.079372580686305
+    ],
+    "wallRadius": 5.843921330510962,
+    "axialExtent": 1.1645001909594477,
+    "contactVertices": 33,
+    "crop": [
+      336,
+      382,
+      444,
+      458
+    ],
+    "visibleTrace": [
+      [
+        [
+          363,
+          396
+        ],
+        [
+          382,
+          391
+        ],
+        [
+          411,
+          402
+        ],
+        [
+          429,
+          417
+        ]
+      ],
+      [
+        [
+          346,
+          423
+        ],
+        [
+          363,
+          418
+        ],
+        [
+          404,
+          425
+        ],
+        [
+          430,
+          439
+        ]
+      ],
+      [
+        [
+          348,
+          426
+        ],
+        [
+          365,
+          439
+        ],
+        [
+          406,
+          451
+        ],
+        [
+          427,
+          442
+        ]
+      ]
+    ],
+    "nearestHiddenSurface": "Retained axial station and tray depth. Inferred rounded rear returns into the left wall."
+  },
+  "baselineMask": "Published object-only visibility diagnostic with m07_paddle2 hidden. Coordinates in native pixels, last x/y exclusive.",
+  "fittedBounds": "Projected vertices in the live camera matrix. Foreground rings can occlude part of this extent.",
+  "positions": [
+    {
+      "pose": "opening",
+      "baselineVisibleMaskBBox": [
+        340,
+        361,
+        428,
+        469
+      ],
+      "fittedGeometryProjectedBounds": [
+        346.0,
+        394.78,
+        430.0,
+        445.11
+      ]
+    },
+    {
+      "pose": "forward-10",
+      "baselineVisibleMaskBBox": [
+        226,
+        298,
+        348,
+        450
+      ],
+      "fittedGeometryProjectedBounds": [
+        232.1,
+        345.2,
+        348.56,
+        415.46
+      ]
+    },
+    {
+      "pose": "hard-left",
+      "baselineVisibleMaskBBox": [
+        379,
+        273,
+        512,
+        441
+      ],
+      "fittedGeometryProjectedBounds": [
+        386.32,
+        325.6,
+        516.58,
+        402.3
+      ]
+    },
+    {
+      "pose": "hard-right",
+      "baselineVisibleMaskBBox": [
+        60,
+        268,
+        199,
+        440
+      ],
+      "fittedGeometryProjectedBounds": [
+        66.96,
+        321.51,
+        201.76,
+        400.49
+      ]
+    }
+  ],
+  "openingMeanAbsoluteChannelErrorInBox": {
+    "BEFORE": 0.18826252723311546,
+    "NEW": 0.2158496732026144,
+    "initial-trial": 0.18826252723311546,
+    "masked-material": 0.18826252723311546
+  },
+  "openingBoxXYXY": [
+    335,
+    355,
+    437,
+    475
+  ]
+}

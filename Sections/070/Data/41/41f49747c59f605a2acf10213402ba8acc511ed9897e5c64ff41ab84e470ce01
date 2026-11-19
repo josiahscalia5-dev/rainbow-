@@ -1,0 +1,220 @@
+{
+  "Crest_Release": {
+    "screen": "06",
+    "label": "Crest_Release",
+    "status": "CANDIDATE",
+    "branch": "codex/s06-crest-release-water",
+    "commit": "283cae3c6709bf0e4b47872f000c583e76408f80",
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/repo/experiments/codex/s06-crest-release-water",
+    "finding": "The water beneath Benny reads as part of the crest again when he starts moving.",
+    "items": {},
+    "watch": "In the ride, inspect the release around 1.0 seconds, the arch bend near 2.0 seconds and the exit around 4.0 seconds. The separate matched sequence samples +0.6, +1.1, +1.5 and +2.2 game units.",
+    "primary": [
+      "crest-release",
+      "hard-left"
+    ]
+  },
+  "Plunge_Outlet_Foam": {
+    "screen": "07",
+    "label": "Plunge_Outlet_Foam",
+    "status": "REJECTED",
+    "branch": "codex/s07-outlet-foam-clusters",
+    "commit": "8d47a1ea95d51308bebd4d68280e037e31184804",
+    "retained": {
+      "branch": "claude/rainbow-s07-match-c17",
+      "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/round2/repos/07/experiments/codex/s07-outlet-foam-clusters",
+    "finding": "The bend opens up, but exposed white ledges break the river\u2019s edge at the plunge outlet.",
+    "items": {},
+    "watch": "Watch from approximately 5.4 to 11.8 seconds. Compare two-thirds-down, plunge-bottom and last-in-stage. The outlet becomes easier to see late in the swim, but the white slashes beside the water become sharper.",
+    "primary": [
+      "plunge-bottom",
+      "two-thirds-down"
+    ]
+  },
+  "Fifth_Gold_Ring": {
+    "screen": "04",
+    "label": "Fifth_Gold_Ring",
+    "status": "CANDIDATE",
+    "branch": "codex/s04-approved-gold-bay",
+    "commit": "c0c06b2ad4fdfb6f6a8942068d7d820f0887268a",
+    "retained": {
+      "branch": "claude/rainbow-s04-match-c17",
+      "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/entrance-gold/repos/04/experiments/codex/s04-approved-gold-bay",
+    "finding": "The fifth ring bay now carries the warm amber groove and pink-blue glints visible on your original gold entrance.",
+    "items": {},
+    "watch": "Watch the fifth bay approach from about 1.9 to 3.2 seconds. Compare the +20 and final-in-stage images with both Claudia\u2019s retained frames and the previous thicker-lip candidate.",
+    "primary": [
+      "forward-20",
+      "last-in-stage"
+    ]
+  },
+  "Final_Bend_Highlights": {
+    "screen": "05",
+    "label": "Final_Bend_Highlights",
+    "status": "REJECTED",
+    "branch": "codex/s05-anchored-bend-highlights",
+    "commit": "3c8e9812b6ce3b3895a8616ec338999469ffbed2",
+    "retained": {
+      "branch": "claude/rainbow-s05-match-c17",
+      "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/round2/repos/05/experiments/codex/s05-anchored-bend-highlights",
+    "finding": "The last S-bend still smears and the new shading breaks up the blue water unevenly.",
+    "items": {},
+    "watch": "Compare the last-left-bend and last-right-bend images and the 5.4\u20136.7 second section of the ride. The blue near water, the right-side foam and the far water past the turn are visible together here.",
+    "primary": [
+      "last-right-bend"
+    ]
+  },
+  "Chamber_Flow_Distance": {
+    "screen": "08",
+    "label": "Chamber_Flow_Distance",
+    "status": "REJECTED",
+    "branch": "codex/s08-chamber-flow-distance",
+    "commit": "7ad2a51caa1722751cdf61662a3a8ff1e741e817",
+    "retained": {
+      "branch": "claude/rainbow-s08-scenery-c17",
+      "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/round2/repos/08/experiments/codex/s08-chamber-flow-distance",
+    "finding": "The glints follow the chamber\u2019s measured curve, but the foreground water shows no clear visual improvement.",
+    "items": {},
+    "watch": "Watch the early river at +3 and the hard-right view around 1.1 seconds. Compare the platform-and-spouts pose and the exit to see how the scene holds together around the water.",
+    "primary": [
+      "hard-right"
+    ]
+  },
+  "Benny_Fitted_Knit_Cuff": {
+    "screen": "06",
+    "label": "Benny_Fitted_Knit_Cuff",
+    "status": "CANDIDATE",
+    "branch": "codex/s06-benny-fitted-knit-cuff",
+    "commit": "393c83ceaed1d3261ce72a3aec2824be18627e03",
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/benny-cuff/repos/06/experiments/codex/s06-benny-fitted-knit-cuff",
+    "finding": "The rolled purple cuff now shows individual violet yarn ribs at almost the spacing and color of the approved beanie.",
+    "items": {},
+    "watch": "Open the original, Claudia\u2019s opening and the new opening separately. Inspect the rolled purple cuff beneath the pale stripe and to the left of the gold star. The hard-turn photographs show whether the same stitches stay attached when either side of the beanie is exposed. Watch the complete swim into the next stage to see the retained Screen 07 material return.",
+    "primary": [
+      "hard-left",
+      "hard-right"
+    ]
+  },
+  "Benny_Fur_And_Yarn": {
+    "screen": "06",
+    "label": "Benny_Fur_And_Yarn",
+    "status": "REJECTED",
+    "branch": "codex/s06-benny-original-fibers",
+    "commit": "2c8f2091fa046c4ee2a6d075d16edf6c86831b87",
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/benny-material/repos/06/experiments/codex/s06-benny-original-fibers",
+    "finding": "The violet stripe shows more weave, but the added grain leaves Benny\u2019s hat and coat visibly different from the artwork.",
+    "items": {},
+    "watch": "Inspect the beginning, the first crest release and the hard-right view at native resolution. Compare the ribbed cuff and yellow star on the original with the woven bands and star face in the two game versions. The two complete swims use 63 identical camera and gameplay states.",
+    "primary": [
+      "hard-right"
+    ]
+  },
+  "Earlier_Ring_Coating": {
+    "screen": "04",
+    "label": "Earlier_Ring_Coating",
+    "status": "REJECTED",
+    "branch": "codex/s04-reflected-ring-bays",
+    "commit": "f0dbba6223db3656ded6e420c4a4c5626c8686d4",
+    "retained": {
+      "branch": "claude/rainbow-s04-match-c17",
+      "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+    },
+    "sourceDirectory": "/tmp/rainbow-crest-release.V85M78Mo/round2/repos/04/experiments/codex/s04-reflected-ring-bays",
+    "finding": "The new reflection puts muted green-gold streaks on the deeper ring shoulders.",
+    "items": {},
+    "watch": "Watch the deeper corridor in the final second of the swim. Compare forward-20 and last-in-stage with the immediate previous ring candidate in PRIOR_CANDIDATE.",
+    "primary": [
+      "forward-20"
+    ]
+  },
+  "Previous_s04-distant-ring-profile": {
+    "screen": "04",
+    "label": "Previous_s04-distant-ring-profile",
+    "status": "CANDIDATE",
+    "branch": "codex/s04-distant-ring-profile",
+    "commit": "38ad7b0dfc042f34e8239d4bea7448248375b371",
+    "retained": {
+      "branch": "claude/rainbow-s04-match-c17",
+      "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+    },
+    "sourceDirectory": "/tmp/rainbow-final-fidelity.RuUP0xJ2/repos/04/experiments/codex/fidelity-04",
+    "finding": "CANDIDATE for the owner\u2019s review.",
+    "items": {}
+  },
+  "Previous_s05-final-bend-river-uv": {
+    "screen": "05",
+    "label": "Previous_s05-final-bend-river-uv",
+    "status": "REJECTED",
+    "branch": "codex/s05-final-bend-river-uv",
+    "commit": "232f0272f4cab935fee5365f88cbee9a5c9a55b1",
+    "retained": {
+      "branch": "claude/rainbow-s05-match-c17",
+      "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+    },
+    "sourceDirectory": "/tmp/rainbow-final-fidelity.RuUP0xJ2/repos/05/experiments/codex/fidelity-05",
+    "finding": "REJECTED as the final-bend correction. Keep Claudia\u2019s retained water and the earlier wall candidate.",
+    "items": {}
+  },
+  "Previous_s06-crest-foam-clearance": {
+    "screen": "06",
+    "label": "Previous_s06-crest-foam-clearance",
+    "status": "CANDIDATE",
+    "branch": "codex/s06-crest-foam-clearance",
+    "commit": "394609842ebc30c2832e23b8992c7d9a868ba0c0",
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "sourceDirectory": "/tmp/rainbow-final-fidelity.RuUP0xJ2/repos/06/experiments/codex/fidelity-06",
+    "finding": "CANDIDATE for the owner\u2019s review.",
+    "items": {}
+  },
+  "Previous_s07-plunge-bank-continuity": {
+    "screen": "07",
+    "label": "Previous_s07-plunge-bank-continuity",
+    "status": "REJECTED",
+    "branch": "codex/s07-plunge-bank-continuity",
+    "commit": "d146def1ae978d00b4c4409a876cd5e9854d6294",
+    "retained": {
+      "branch": "claude/rainbow-s07-match-c17",
+      "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+    },
+    "sourceDirectory": "/tmp/rainbow-final-fidelity.RuUP0xJ2/repos/07/experiments/codex/fidelity-07",
+    "finding": "REJECTED as the full plunge correction. Claudia\u2019s retained game is the baseline.",
+    "items": {}
+  },
+  "Previous_s08-fitted-foreground-water": {
+    "screen": "08",
+    "label": "Previous_s08-fitted-foreground-water",
+    "status": "CANDIDATE",
+    "branch": "codex/s08-fitted-foreground-water",
+    "commit": "bca810eb1cffd5fae1274ce7fa02fec892b47c6c",
+    "retained": {
+      "branch": "claude/rainbow-s08-scenery-c17",
+      "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+    },
+    "sourceDirectory": "/tmp/rainbow-final-fidelity.RuUP0xJ2/repos/08/experiments/codex/fidelity-08",
+    "finding": "CANDIDATE for owner review.",
+    "items": {}
+  }
+}

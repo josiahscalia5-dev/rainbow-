@@ -1,0 +1,11 @@
+{
+ "note": "target = approved water where visible; registered + colour-matched + Poisson-blended original artwork in the holes",
+ "water_px": 805156,
+ "fill_px": 219642,
+ "coins_px": 27437,
+ "benny_px": 219642,
+ "flow_px_median": 33.91580892073044,
+ "flow_px_p95": 49.45922088019505,
+ "approved_vs_artwork_registered_mean_abs_visible_water": 49.39036641310028,
+ "approved_vs_artwork_plain_mean_abs_visible_water": 56.21185220141379
+}

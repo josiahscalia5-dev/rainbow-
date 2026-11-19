@@ -1,0 +1,11 @@
+{
+ "source": "assets/textures/env05/wall05e.png row N1 (rows 96-159, slots removed)",
+ "w": 2048,
+ "h": 4,
+ "masked_fraction": 0.4499320983886719,
+ "mean_rgb": [
+  0.7744919061660767,
+  0.22835899889469147,
+  0.8084655404090881
+ ]
+}

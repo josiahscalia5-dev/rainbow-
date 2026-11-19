@@ -1,0 +1,101 @@
+# Subagent agent-a580f77e550e42d39 — session 515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1
+
+### 🤖 Claude — 2026-11-15T16:54:14.369Z
+
+> 🔧 **Agent** `{"description": "Cartoon girl character artist", "subagent_type": "fork", "prompt": "You are now acting as the **cartoon-girl-character-artist** specialist (see .claude/agents/cartoon-girl-character-artist.md). Build the ONE official cartoon girl model + rig (identity = `character_references/official_cartoon_girl_original.jpg`, NOT the realistic girls in refs 01/10/11), exported to GLB, used in scene 01 (walking away), 10 (visible through the door) and 11 (leaning in, hands on the folded purple towel — her face is close-up there, so face quality matters most).\n\nSCOPE — only create/edit: `src …[+3706 chars]`
+
+### 🧑 User — 2026-11-15T16:54:14.382Z
+
+> ↩︎ result: Fork started — that fork is you.
+
+<fork-boilerplate>
+You are a worker fork. The transcript above is the parent's history — inherited reference, not your situation. You are NOT a continuation of that agent. Execute ONE directive, then stop.
+
+Hard rules:
+- Do NOT spawn subagents with the Agent tool. The "default to forking" guidance is for the parent; you ARE the fork, execute directly.
+- One shot: report once and stop. No follow-up questions, no proposed next steps, no waiting for the user.
+
+Guidelines (your directive may override any of these):
+- Stay in scope. Other forks may be handling adjacent work; if you spot something outside your directive, note it in a sentence and move on.
+- Open with one line restating your task, so the parent can spot scope drift at a glance.
+- Be concise — as short as the answer allows, no shorter. Plain text, no preamble, no meta-commentary.
+- If you committed changes, list the paths and commit hashes in your report.
+</fork-boilerplate>
+
+Your directive: You are now acting as the **cartoon-girl-character-artist** specialist (see .claude/agents/cartoon-girl-character-artist.md). Build the ONE official cartoon girl model + rig (identity = `character_references/official_cartoon_girl_original.jpg`, NOT the realistic girls in refs 01/10/11), exported to GLB, used in scene 01 (walking away), 10 (visible through the door) and 11 (leaning in, hands on the folded purple towel — her face is close-up there, so face quality matters most).
+
+SCOPE — only create/edit: `src/characters/girl/**`, `assets/models/rainbow_girl.glb`, `docs/characters/girl*`. Do NOT edit other files (other agents work in src/game, src/world, src/vfx, src/characters/benny concurrently). Do NOT run git commands (cron autosave commits every 5 min). Request shared-file changes (tools/model-lab.ts, src/characters/types.ts, src/render/env.ts, scripts/export-models.mjs) in your final report instead of editing.
+
+DELIVERABLES
+1. `src/characters/girl/build.ts` exporting `buildGirl(): BuiltModel` (src/characters/types.ts). Procedural Three.js geometry + canvas textures only. Contract: origin between the feet on the floor, faces +Z, up +Y, total height ≈ 26 units (child-like cartoon proportions, big head ~1/4.5 of height, same art direction as Benny: soft, warm, glossy 3D-animated look — NO photoreal/semi-real faces). A joint-hierarchy rig of named Object3D joints: `girl_root`, `hips`, `spine`, `chest`, `neck`, `head`, `ponytail` (+ a few child curl joints for sway), `shoulderL/R`, `upperArmL/R`, `forearmL/R`, `handL/R`, `thighL/R`, `shinL/R`, `footL/R`, eyelid joints for blinking. (Rigid parts parented to joints is acceptable; document honestly that it is not skin-weighted.)
+   Identity checklist: curly dark/warm-brown HIGH ponytail with voluminous ringlets (silhouette must read from behind and through glass), a few curly strands at temples/forehead; purple headband tied into a BIG purple bow on top with a small gold/yellow star; large brown cartoon eyes with big highlights and lashes, friendly rounded face, rosy cheeks, warm open smile; gold hoop earrings; lavender-and-white horizontally STRIPED hoodie (hood bunched at the back, ribbed white hem/cuffs) with a gold star patch on the upper sleeve; blue jeans with cuffed/rolled hems and a cargo pocket with a yellow star patch; purple-and-white sneakers with yellow star on the side, white soles/laces, white socks.
+   Animation clips (natural, casual, non-robotic, normal human pace; include subtle breathing/secondary motion and blinks): `idle`, `walk` (~1.0–1.1 s cycle, arm swing, ponytail sway), `carryTowel` (arms holding a bundle in front), `dropLoad` (lean toward a front-loader door and pour/push the bundle in), `closeDoor` (swing arm to push the door shut), `laundryCounter` (standing at a counter folding, back/side to camera), `leanReachTowel` (lean forward ~35–45°, both hands reaching down/forward onto a towel at waist-to-chest height, friendly smile), `holdTowel` (hands holding the folded towel, slight lift).
+2. `src/characters/girl/runtime.ts` exporting `loadGirl(): Promise<GirlRuntime>` (GLTFLoader with `new URL('../../../assets/models/rainbow_girl.glb', import.meta.url).href`; AnimationMixer with crossfading `play()`; procedural blink if not in clips; expose handL/handR). Upgrade materials at runtime if needed (e.g. hair sheen, fabric) but keep GLB materials sensible on their own.
+3. Run `node scripts/export-models.mjs girl` (writes assets/models/rainbow_girl.glb + docs/characters/girl_turntable.png: front / three-quarter / side / back). Also render poses: `node scripts/export-models.mjs girl --turntable-only --anim=leanReachTowel --t=1.2` and `--anim=walk --t=0.3`. LOOK at the PNGs with the Read tool next to the official reference and iterate several rounds until the face, hair silhouette, bow, stripes, star placement, jeans and sneakers read unmistakably as HER from front, side and back. Do not accept "sort of similar".
+4. `docs/characters/girl.md`: joints, clips, materials, tri count, identity checklist status, known gaps (honest).
+
+Final report (short): files, GLB size, tris, clip list, what matches, what differs, shared-file change requests.
+
+### 🤖 Claude — 2026-11-15T17:01:00.384Z
+
+Building the official cartoon girl: model + rig, GLB export, runtime loader, turntables and docs.
+
+### 🤖 Claude — 2026-11-15T17:01:01.584Z
+
+> 🔧 **Bash** `{"command": "ls src src/characters src/characters/* 2>/dev/null; ls assets/models docs 2>/dev/null; grep -n \"GLTFExporter\\|texture.flipY\\|flipY\" node_modules/three/examples/jsm/exporters/GLTFExporter.js | head -20", "description": "Check current tree and exporter flipY handling"}`
+
+### 🧑 User — 2026-11-15T17:01:01.625Z
+
+> ↩︎ result: src/characters/types.ts
+> 
+> src:
+> characters
+> main.ts
+> render
+> vfx
+> world
+> 
+> src/characters:
+> benny
+> types.ts
+> 
+> src/characters/benny:
+> build.ts
+> fur.ts
+> runtime.ts
+> textures.ts
+> assets/models:
+> 
+> docs:
+> characters
+> path_graph.md
+> 65:class GLTFExporter {
+> 515:				generator: 'THREE.GLTFExporter r' + REVISION
+> 703:			console.warn( 'THREE.GLTFExporter: userData of \'' + object.name + '\' ' +
+> 941:			console.warn( 'THREE.GLTFExporter: UV channels for metalnessMap and roughnessMap textures must match.' );
+> 945:		console.warn( 'THREE.GLTFExporter: Merged metalnessMap and roughnessMap textures.' );
+> 956:			throw new Error( 'THREE.GLTFExporter: setTextureUtils() must be called to process compressed textures.' );
+> 1231:			throw new Error( 'THREE.GLTFExporter: Unsupported bufferAttribute component type: ' + attribute.array.constructor.name );
+> 1277:	 * @param  {Boolean} flipY before writing out the image
+> 1281:	processImage( image, format, flipY, mimeType = 'image/png' ) {
+> 1295:			const key = mimeType + ':flipY/' + flipY.toString();
+> 1312:			if ( flipY === true ) {
+> 1323:					console.error( 'GLTFExporter: Only RGBAFormat is supported.', format );
+> 1329:					console.warn( 'GLTFExporter: Image size is bigger than maxTextureSize …[+733 chars]
+
+### 🤖 Claude — 2026-11-15T17:01:56.964Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/girl/textures.ts", "content": "/**\n * Canvas textures for the official cartoon girl (identity: character_references/official_cartoon_girl_original.jpg).\n * All procedural — no external images. Exported into the GLB as embedded PNGs by GLTFExporter.\n */\nimport * as THREE from 'three';\n\nexport function rng(seed: number) {\n  let a = seed >>> 0;\n  return () => {\n    a |= 0;\n    a = (a + 0x6d2b79f5) | 0;\n    let t = Math.imul(a ^ (a >>> 15), 1 | a);\n    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;\n    return ((t ^ (t >>> 14)) >>> 0)  …[+9673 chars]`
+
+### 🧑 User — 2026-11-15T17:01:57.146Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/girl/textures.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:04:56.199Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/girl/build.ts", "content": "/**\n * ONE official cartoon girl — procedural model + joint-hierarchy rig + animation clips.\n * Identity source: character_references/official_cartoon_girl_original.jpg (NOT the realistic girls in refs 01/10/11).\n *\n * Contract: origin between the feet on the floor, faces +Z, up +Y, height ≈ 26 units.\n * Her LEFT is +X, her RIGHT is −X. Rig = named Object3D joints with rigid parts parented to them\n * (not skin-weighted). Clips target joints by name; blinking is done by the runtime (eyelidL/R).\n */\nimport * as …[+43359 chars]`
+
+### 🧑 User — 2026-11-15T17:04:56.417Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/girl/build.ts (file state is current in your context — no need to Read it back)
+

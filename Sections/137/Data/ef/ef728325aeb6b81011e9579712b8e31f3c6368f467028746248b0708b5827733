@@ -1,0 +1,19 @@
+{
+  "last_run": {
+    "time": "2026-11-16T12:27:57+00:00",
+    "reason": "manual:water-it04-review",
+    "result": "committed+pushed",
+    "files_staged": 21,
+    "pushed_verified": true,
+    "branch": "ccr-251ed97c-ty2xvp",
+    "commit": "3b1dfc1ce1a25682c8808e2d006511e2daacdc84",
+    "duration_s": 18
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "ccr-251ed97c-ty2xvp",
+  "last_verified_remote_sha": "3b1dfc1ce1a25682c8808e2d006511e2daacdc84",
+  "last_successful_backup_utc": "2026-11-16T12:27:57+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=311); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-16T12:30:00+00:00"
+}

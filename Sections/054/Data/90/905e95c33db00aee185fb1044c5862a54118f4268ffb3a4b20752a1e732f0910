@@ -1,0 +1,14 @@
+{
+  "commit": "e56ab3a42cc886d88eba4c8ca2df5b039f7eec64",
+  "branch": "codex/s08-chamber-flow-distance",
+  "parent": "bca810eb1cffd5fae1274ce7fa02fec892b47c6c",
+  "retained": {
+    "branch": "claude/rainbow-s08-scenery-c17",
+    "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+  },
+  "sourceFiles": [
+    "src/world/match08.ts"
+  ],
+  "utc": "2026-11-19T00:36:24.523649+00:00",
+  "purpose": "Isolated experimental source, pending visual review."
+}

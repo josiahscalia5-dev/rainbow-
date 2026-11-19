@@ -1,0 +1,7 @@
+{
+  "screen": "05",
+  "branch": "codex/s05-final-bend-river-uv",
+  "commit": "4fa3e0fc4c400ef8c247460359e90fb169c53c07",
+  "verified": "2026-11-18T23:47:25.408403+00:00",
+  "sourceFile": "src/vfx/waterRibbon.ts"
+}

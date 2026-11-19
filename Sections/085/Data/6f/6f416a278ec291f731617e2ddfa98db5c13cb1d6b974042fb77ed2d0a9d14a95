@@ -1,0 +1,38 @@
+"""Rectify the third Screen 07 paddle's front and underside from the unmodified 864 x 1536 artwork."""
+from pathlib import Path
+import sys
+import numpy as np
+from PIL import Image, ImageDraw, ImageFilter
+
+def bezier(points, amount):
+    u=amount[:,None]
+    a,b,c,d=np.asarray(points,dtype=np.float64)
+    return (1-u)**3*a+3*(1-u)**2*u*b+3*(1-u)*u**2*c+u**3*d
+
+def make(source,dest):
+    art=np.asarray(Image.open(source).convert('RGB'),dtype=float)
+    u=np.linspace(.025,.975,192);v=np.linspace(.04,.96,64)
+    # These three traces follow the upper lip, lower lip, and shadowed base of the approved paddle.
+    rim=bezier([(363,396),(382,391),(411,402),(429,417)],u)
+    lip=bezier([(346,423),(363,418),(404,425),(430,439)],u)
+    base=bezier([(348,426),(365,439),(406,451),(427,442)],u)
+    result=[]
+    for top,bottom in [(rim,lip),(lip,base)]:
+        xy=top[None,:,:]*(1-v[:,None,None])+bottom[None,:,:]*v[:,None,None]
+        x,y=xy[:,:,0],xy[:,:,1];ix,iy=x.astype(int),y.astype(int);dx=(x-ix)[:,:,None];dy=(y-iy)[:,:,None]
+        row=(1-dx)*(1-dy)*art[iy,ix]+dx*(1-dy)*art[iy,ix+1]+(1-dx)*dy*art[iy+1,ix]+dx*dy*art[iy+1,ix+1]
+        result.append(row)
+    paint = Image.fromarray(np.concatenate(result).round().astype('uint8')).convert('RGB')
+    # The right third of the opaque atlas records the approved silhouette. The left two thirds carry the painted bands.
+    outline = np.vstack([rim, base[::-1]])
+    mask = Image.new('L', (192 * 4, 128 * 4), 0)
+    cropOrigin = np.array([336, 382])
+    cropExtent = np.array([108, 76])
+    points = (outline - cropOrigin) / cropExtent * np.array(mask.size)
+    ImageDraw.Draw(mask).polygon([tuple(p) for p in points], fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(2.8)).resize(paint.size, Image.Resampling.LANCZOS)
+    atlas = Image.new('RGB', (288, 128))
+    atlas.paste(paint, (0, 0))
+    atlas.paste(mask.resize((96, 128), Image.Resampling.LANCZOS).convert('RGB'), (192, 0))
+    atlas.save(dest)
+if __name__=='__main__':make(Path(sys.argv[1]),Path(sys.argv[2]))

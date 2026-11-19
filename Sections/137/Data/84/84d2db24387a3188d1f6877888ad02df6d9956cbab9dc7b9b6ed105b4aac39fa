@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-17T16:13:20+00:00",
+    "reason": "daemon",
+    "result": "committed+pushed",
+    "files_staged": 1,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-s06-match",
+    "note": "following session branch 'claude/rainbow-s06-match' (config branch 'ccr-9c4a8ad6-xovgsx')",
+    "commit": "5b667ef69ce9be4e07445427ede3c58591bc8389",
+    "duration_s": 108
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-s06-match",
+  "last_verified_remote_sha": "5b667ef69ce9be4e07445427ede3c58591bc8389",
+  "last_successful_backup_utc": "2026-11-17T16:13:20+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=144); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-17T16:20:00+00:00"
+}

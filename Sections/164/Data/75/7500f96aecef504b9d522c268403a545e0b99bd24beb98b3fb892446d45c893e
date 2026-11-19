@@ -1,0 +1,43 @@
+{
+ "worktree": "/home/user/wt/s07",
+ "branch": "claude/rainbow-s07-match-c18",
+ "head": "8651edf92525a9aab82b02fad9aa44621216708a",
+ "time": "2026-11-19T02:35:48+00:00",
+ "dirty_tracked": [
+  "src/vfx/foam.ts",
+  "src/vfx/waterRibbon.ts",
+  "src/world/match07.ts"
+ ],
+ "untracked_copied": [
+  "qa/match/07/r17/step3_foamb/BEFORE/motion.json",
+  "qa/match/07/r17/step3_foamb/BEFORE/t95_through_screen.png",
+  "qa/match/07/r17/step3_foamb/NEW/motion.json",
+  "qa/match/07/r17/step3_foamb/NEW/t95_through_screen.png",
+  "qa/match/07/r17/step3_foamb/try_ramp5/motion.json",
+  "qa/match/07/r17/step3_foamb/try_ramp5/t95_through_screen.png",
+  "qa/match/07/r17/step3_foamb/try_ramp8/motion.json",
+  "qa/match/07/r17/step3_foamb/try_ramp8/t95_through_screen.png",
+  "qa/match/07/r17/step4_nearf/NEW/motion.json",
+  "qa/match/07/r18/step3_foamb/BEFORE/motion.json",
+  "qa/match/07/r18/step3_foamb/BEFORE/t88_through_screen.png",
+  "qa/match/07/r18/step3_foamb/BEFORE/t95_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW/motion.json",
+  "qa/match/07/r18/step3_foamb/NEW/t88_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW/t95_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW2/motion.json",
+  "qa/match/07/r18/step3_foamb/NEW2/t88_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW2/t95_through_screen.png",
+  "tools/match07/audit_r18.mjs"
+ ],
+ "untracked_skipped": [
+  "qa/match/07/r18/step3_foamb/BEFORE/t66_through_screen.png",
+  "qa/match/07/r18/step3_foamb/BEFORE/t72_through_screen.png",
+  "qa/match/07/r18/step3_foamb/BEFORE/t80_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW/t66_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW/t72_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW/t80_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW2/t72_through_screen.png",
+  "qa/match/07/r18/step3_foamb/NEW2/t80_through_screen.png"
+ ],
+ "restore": "git switch claude/rainbow-s07-match-c18 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s07-match-c18/tracked.patch && copy backups/wip/claude__rainbow-s07-match-c18/untracked/* into the worktree"
+}

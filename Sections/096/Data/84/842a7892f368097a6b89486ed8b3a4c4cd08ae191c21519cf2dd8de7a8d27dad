@@ -1,0 +1,51 @@
+{
+  "verifiedUTC": "2026-11-19T02:22:52.632551+00:00",
+  "branch": "codex/s06-world-space-rinse-arch",
+  "tip": "d51ea1e8d3d676c1c7d6d4f9fa16096fd5413714",
+  "gameSource": "a1c1f0c7e35239c9f7065a56f19b79264313994c",
+  "protectedBase": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+  "verifiedFiles": 87,
+  "lfsBytesRecovered": 142365796,
+  "lfs": {
+    "85f66c3f03c13cf1a8279d501d06b1f57ed3fd95d0123fcaa593f8a5fb7a9d0e": {
+      "size": 2391256,
+      "path": "assets/reconstruction06/rinse_arch.glb"
+    },
+    "e636c67d7a5393a90ce1af91a5b048f2c5b33bcf3eb23e4886c28c65fdee2a8d": {
+      "size": 2988101,
+      "path": "experiments/codex/s06-world-space-rinse-arch/editable/Screen06_Rinse_Arch.blend"
+    },
+    "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1": {
+      "size": 7491213,
+      "path": "experiments/codex/s06-world-space-rinse-arch/CLAUDIA_BEFORE/ride.mp4"
+    },
+    "8e7cf38d2272a058e5d9705898411e48f986943d1b77e5e96d1113b2ebd98cfd": {
+      "size": 7675744,
+      "path": "experiments/codex/s06-world-space-rinse-arch/CODEX_NEW/ride.mp4"
+    },
+    "2d9ed43d4064ed86066e6da823a48800e0e2a8426b650dc090ac280a2d13e86c": {
+      "size": 88471779,
+      "path": "experiments/codex/s06-world-space-rinse-arch/Screen06_Review.zip"
+    },
+    "6d3c16b46dc958d16e103829cb8ab2ba1bc0eb15e5bf4cd4d1a8cea0a56c7733": {
+      "size": 613503,
+      "path": "experiments/codex/s06-world-space-rinse-arch/editable/Crest_Fit_Study.blend"
+    },
+    "974b5e35a80c7da4fcaf3f63a7abba07f64ebcfa8965c2c0ed69507d81d2286a": {
+      "size": 3557162,
+      "path": "experiments/codex/s06-world-space-rinse-arch/editable/Screen06_Rinse_Arch.blend"
+    },
+    "8315f94ca7b0744825c3ffbd56bdf7a781b2c56ac601792c6910b90fe7faeed8": {
+      "size": 29177038,
+      "path": "experiments/codex/s06-world-space-rinse-arch/mobile/Rainbow_Crest_Proof.apk"
+    }
+  },
+  "githubRenderedInlineImages": 5,
+  "byteVerifiedPrivateDownloads": [
+    "APPROVED.jpg",
+    "CLAUDIA_BEFORE/opening.png",
+    "CODEX_NEW/opening.png",
+    "Review_on_Android.pdf"
+  ],
+  "protectedTipDifferencesObserved": []
+}

@@ -1,0 +1,30 @@
+"""Preserve the previous local evidence commit and publish the identical files through Git LFS."""
+import json, os, pathlib, shutil, subprocess, sys
+root=pathlib.Path(sys.argv[1])
+old=root/'repo'
+new=root/'publish-lfs'
+new.mkdir(exist_ok=True)
+repo=new/'repo';repo.mkdir(exist_ok=True)
+spec=json.loads((root/'source.json').read_text())
+branch=spec['branch'];folder='experiments/'+branch
+env=dict(os.environ,GIT_LFS_SKIP_SMUDGE='1')
+def git(*a):return subprocess.check_output(['git','-C',str(repo),*a],env=env)
+git('init','--quiet')
+git('remote','add','origin','https://github.com/josiahscalia5-dev/rainbow-.git')
+git('config','user.name','Codex');git('config','user.email','codex@users.noreply.github.com')
+git('config','core.sparseCheckout','true')
+git('config','remote.origin.promisor','true');git('config','remote.origin.partialclonefilter','blob:none')
+(repo/'.git/objects/info/alternates').write_text(str(old/'.git/objects')+'\n')
+shutil.copyfile(old/'.git/shallow',repo/'.git/shallow')
+shutil.copyfile(old/'.git/info/sparse-checkout',repo/'.git/info/sparse-checkout')
+git('lfs','install','--local')
+git('switch','--quiet','-c',branch,spec['commit'])
+assert git('rev-parse','HEAD').decode().strip()==spec['commit']
+assert not git('ls-remote','--heads','origin','refs/heads/'+branch).strip()
+assert git('config','--get','filter.lfs.process').strip()==b'git-lfs filter-process'
+for p in (old/folder).rglob('*'):
+    if not p.is_file() or p.name=='SHA256.json':continue
+    target=repo/p.relative_to(old);target.parent.mkdir(parents=True,exist_ok=True);os.link(p,target)
+shutil.copyfile(root/'source.json',new/'source.json')
+shutil.copyfile(root/'remote-before-publish.tsv',new/'remote-before-publish.tsv')
+print('Original local commit kept intact. The fresh index uses explicit binary storage for MP4 and ZIP.')

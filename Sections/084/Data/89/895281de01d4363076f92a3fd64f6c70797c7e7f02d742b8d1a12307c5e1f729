@@ -1,0 +1,67 @@
+{
+  "viewport": [
+    432,
+    768
+  ],
+  "includedRows": [
+    90,
+    690
+  ],
+  "rule": "All RGB channels >166 and their range <77. Count light pixels that stop meeting the threshold when visibility of the named layer is disabled, also checking the other visibility toggle on the identical frame. Because overlapping pale surfaces can conceal each other this is a visible contribution count.",
+  "poses": {
+    "plunge-bottom": {
+      "BEFORE": {
+        "paleInAllLayers": 79680,
+        "lostWithFoamOffButPersistsWithWaterOff": 34995,
+        "lostWithWaterOffButPersistsWithFoamOff": 2300,
+        "lostWithEitherLayerOff": 0,
+        "persistsWithBothIndependentToggles": 42385,
+        "lostWithContinuousBermOff": 19052
+      },
+      "NEW": {
+        "paleInAllLayers": 59378,
+        "lostWithFoamOffButPersistsWithWaterOff": 24256,
+        "lostWithWaterOffButPersistsWithFoamOff": 2715,
+        "lostWithEitherLayerOff": 0,
+        "persistsWithBothIndependentToggles": 32407,
+        "lostWithContinuousBermOff": 12559
+      }
+    },
+    "last-in-stage": {
+      "BEFORE": {
+        "paleInAllLayers": 79070,
+        "lostWithFoamOffButPersistsWithWaterOff": 32381,
+        "lostWithWaterOffButPersistsWithFoamOff": 2500,
+        "lostWithEitherLayerOff": 0,
+        "persistsWithBothIndependentToggles": 44189,
+        "lostWithContinuousBermOff": 17281
+      },
+      "NEW": {
+        "paleInAllLayers": 55998,
+        "lostWithFoamOffButPersistsWithWaterOff": 19930,
+        "lostWithWaterOffButPersistsWithFoamOff": 3315,
+        "lostWithEitherLayerOff": 0,
+        "persistsWithBothIndependentToggles": 32753,
+        "lostWithContinuousBermOff": 10139
+      }
+    },
+    "across-transition": {
+      "BEFORE": {
+        "paleInAllLayers": 74861,
+        "lostWithFoamOffButPersistsWithWaterOff": 29500,
+        "lostWithWaterOffButPersistsWithFoamOff": 2136,
+        "lostWithEitherLayerOff": 53,
+        "persistsWithBothIndependentToggles": 43172,
+        "lostWithContinuousBermOff": 13057
+      },
+      "NEW": {
+        "paleInAllLayers": 47851,
+        "lostWithFoamOffButPersistsWithWaterOff": 16060,
+        "lostWithWaterOffButPersistsWithFoamOff": 3017,
+        "lostWithEitherLayerOff": 51,
+        "persistsWithBothIndependentToggles": 28723,
+        "lostWithContinuousBermOff": 6502
+      }
+    }
+  }
+}

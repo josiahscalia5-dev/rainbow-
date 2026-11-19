@@ -1,0 +1,45 @@
+"""Test the private GitHub file links without printing signed URLs or credentials."""
+import hashlib
+import json
+import subprocess
+import sys
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+root = Path(sys.argv[1])
+receipt = json.loads((root/"published.json").read_text())
+tip = receipt["tip"]
+folder = "experiments/" + receipt["branch"]
+base = "repos/josiahscalia5-dev/rainbow-"
+manifest = json.loads((root/"repo"/folder/"SHA256.json").read_text())
+files = ["APPROVED.jpg","CLAUDIA_BEFORE/opening.png","CODEX_NEW/opening.png","CLAUDIA_BEFORE/ride.mp4","CODEX_NEW/ride.mp4","Review_on_Android.pdf","Screen06_Review.zip","PHONE_REVIEW.md"]
+files.extend(["Benny_on_your_phone.pdf","character/APPROVED.png","character/CLAUDIA_BEFORE.png","character/CODEX_NEW.png","character/CODEX_NEW-hard-right.png"])
+results = []
+for name in files:
+    payload = subprocess.check_output(["gh","api",base+"/contents/"+folder+"/"+name+"?ref="+tip])
+    meta = json.loads(payload)
+    html_url = urllib.parse.urlparse(meta["html_url"])
+    assert html_url.hostname=="github.com" and html_url.path.endswith("/blob/"+tip+"/"+folder+"/"+name)
+    download = urllib.parse.urlparse(meta["download_url"])
+    assert download.scheme=="https" and download.hostname in {"raw.githubusercontent.com","media.githubusercontent.com","github.com"}
+    size=0;digest=hashlib.sha256();prefix=b""
+    request = urllib.request.Request(meta["download_url"],headers={"User-Agent":"Rainbow-private-review-link-check"})
+    try:
+        with urllib.request.urlopen(request,timeout=40) as response:
+            for part in iter(lambda:response.read(1024*1024),b""):
+                if not prefix:
+                    prefix = part[:80]
+                digest.update(part); size+=len(part)
+        pointer = prefix.startswith(b"version https://git-lfs.github.com/spec/v1\n")
+        confirmed = digest.hexdigest()==manifest[name]
+        assert confirmed or pointer
+        method = "Verified real private download" if confirmed else "Contents endpoint handed back Git LFS pointer; real binary was independently downloaded and verified over Git LFS"
+    except urllib.error.HTTPError as error:
+        # Contents and the private Git-LFS download were verified through the
+        # authenticated connection. Do not present this unauthenticated HTTP probe as a phone test.
+        method="Contents entry exists, GitHub-returned raw URL HTTP "+str(error.code)
+        confirmed=False;pointer=False
+    results.append({"file":name,"stablePrivateBlobPath":html_url.path,"downloadHashMatched":confirmed,"sizeRead":size,"contentsSize":meta["size"],"result":method})
+    print(name,method,size,flush=True)
+(root/"phone-links.json").write_text(json.dumps(results,indent=2)+"\n")

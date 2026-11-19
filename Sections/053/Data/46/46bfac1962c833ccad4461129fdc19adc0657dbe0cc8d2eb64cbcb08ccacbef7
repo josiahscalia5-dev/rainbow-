@@ -1,0 +1,106 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, shutil, subprocess as sp, sys
+
+root = Path(__file__).resolve().parent
+previous = Path('/tmp/rainbow-final-fidelity.RuUP0xJ2')
+first = Path('/tmp/rainbow-reconstruction.etSm9SmK/repos')
+skill_sha = '3b57658f78fd5d7dce498d2743f1a09a173a570a'
+def data(p): return json.loads(p.read_text())
+def write(p, obj):
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(obj, indent=2, ensure_ascii=False)+'\n')
+def put(a, b):
+    b.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(a,b)
+def tree(src,dst):
+    for path in sorted(src.rglob('*')):
+        if path.is_file(): put(path, dst/path.relative_to(src))
+def sha(p):
+    with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+def git(repo,*args):
+    return sp.check_output(['git','-C',str(repo),*args],text=True,stderr=sp.PIPE).strip()
+names={'04':'Through the Five Arrows','05':'Flow into the Current','06':'Crest the Rinse Arch','07':'Dive the Washer Tube','08':'Final Spin Chamber'}
+selected={'04':['forward-20','last-in-stage'],'05':['last-left-bend','last-right-bend'],'06':['crest-release','hard-left','hard-right'],'07':['two-thirds-down','plunge-bottom','last-in-stage'],'08':['forward-03','hard-right','platform-and-spouts']}
+for sid in sys.argv[1:]:
+    local=root if sid=='06' else root/'round2'
+    repo=root/'repo' if sid=='06' else local/'repos'/sid
+    checkpoint=data(root/('checkpoint-'+sid+'.json'))
+    base=data(root/'baseline.json' if sid=='06' else local/('baseline-'+sid+'.json'))
+    out=repo/'experiments/codex'/checkpoint['branch'].split('/')[-1]
+    old=previous/'repos'/sid/'experiments/codex'/('fidelity-'+sid)
+    originReport=data(root/'original-github-artwork.json')['screens'][sid]
+    original=root/'from-original-github'/base['approved']['path']
+    assert original.read_bytes()==(old/'APPROVED.jpg').read_bytes()
+    assert sha(original)==base['approved']['sha256']
+    quality=data(root/('quality-'+sid+'.json'))
+    review=data(root/('decision-'+sid+'.json'))
+    assert review['status'] in ['CANDIDATE','REJECTED']
+    assert git(repo,'rev-parse','HEAD')==checkpoint['commit']
+    assert (root/('film-'+sid+'.json')).is_file()
+    put(original,out/'APPROVED.jpg')
+    tree(old/'CLAUDIA_BEFORE',out/'CLAUDIA_BEFORE')
+    fresh=local/'proof'/sid
+    put(fresh/'BEFORE/opening-repeat.png',out/'CLAUDIA_BEFORE/opening-repeat.png')
+    tree(fresh/'NEW',out/'CODEX_NEW')
+    assert (fresh/'NEW/full-safe-ride.json').is_file()
+    if sid!='07':
+        immediate=first/sid/'experiments/codex'/sid/'NEW' if sid=='05' else old/'CODEX_NEW'
+        for pose in [*selected[sid],'opening']:put(immediate/(pose+'.png'),out/'PRIOR_CANDIDATE'/(pose+'.png'))
+        put(immediate/'poses.json',out/'PRIOR_CANDIDATE'/'poses.json')
+    measures=out/'measurements'
+    write(measures/'matched-gameplay-and-opening.json',quality)
+    write(measures/'original-artwork-on-github.json',originReport)
+    put(root/('film-'+sid+'.json'),measures/'decoded-motion.json')
+    put(old/'measurements/clip-timestamps.json',measures/'clip-timestamps.json')
+    assert quality['matchedCameraAndGameState']
+    q = out/'reproduce'
+    put(local/'fixture'/sid/'gameplay-test.mjs',q/'fixture'/sid/'gameplay-test.mjs')
+    put(local/'capture.cjs',q/'capture.cjs')
+    for key in ['flags','queries']:write(q/(key+'.json'),{sid:data(local/(key+'.json'))[sid]})
+    for f in ['compare-opening.py','score-rgba.mjs']:put(first/'skill/.agents/skills/rainbow-visual-motion-matcher/scripts'/f,q/f)
+    if sid=='06':
+        tree(root/'floor-isolation',out/'floor-isolation')
+        tree(root/'release-poses',out/'crest-release-sequence')
+        for f in ['floor-isolation.cjs','release-focus.cjs','bake-crest-mask.py']:put(local/f,q/f)
+        tools=out/'toolchain'
+        put(root/'android-receipt.json',tools/'verified-android-build.json')
+        put(root/'current-tools.json',tools/'verified-live-tools.json')
+        put(root/'depth-recheck.json',tools/'verified-depth-and-camera-files.json')
+        put(root/'reopened-assets-current.json',tools/'verified-editable-models.json')
+        put(root/'continuity-report.json',tools/'verified-course-continuity.json')
+        oldtools=previous/'repos/08/experiments/codex/fidelity-08/toolchain'
+        for name in ['depth-and-camera-inventory.json','reopened-models.json']:put(oldtools/name,tools/name)
+        for f in ['benny06.json','geometry06.json']:put(old/'measurements'/f,measures/('prior-'+f))
+    if sid=='07':
+        tree(local/'outlet-diagnostics',out/'outlet-layer-isolation')
+        put(local/'diagnose-outlet.cjs',q/'diagnose-outlet.cjs')
+        put(root/'measure-outlet-surfaces.py',q/'measure-outlet-surfaces.py')
+        put(root/'outlet-layer-ownership.json',measures/'outlet-layer-ownership.json')
+    if sid=='08':
+        tree(local/'chamber-diagnostics',out/'chamber-flow-diagnostics')
+        put(root/'verify-original-artwork.py',q/'verify-original-artwork.py')
+        put(root/'original-github-artwork.json',measures/'all-five-originals-on-github.json')
+        for role in ['BEFORE','NEW']:
+            write(measures/('project-comparator-'+role+'.json'),[data(root/('official-'+k+'-'+role+'.json')) for k in ['04','05','06','07','08']])
+        put(local/'inspect-flow-distance.cjs',q/'inspect-flow-distance.cjs')
+    if sid in ['05','08']:put(root/('water-detail-'+sid+'.json'),measures/'water-highlight-length.json')
+    if sid=='04':put(root/'ring-detail-04.json',measures/'deep-ring-color.json')
+    write(out/'provenance.json',{'claudiaLead':base['lead'],'claudiaRetained':checkpoint['retained'],'verifiedBeforeEditUTC':base['utc'],'precedingExperimentOrRetained':base['parent'],'experimentalSource':checkpoint,'approvedArtwork':base['approved'],'recordedResolution':[864,1536],'savedSkillCommit':skill_sha,'queryForClaudia':data(local/'queries.json')[sid],'additionalQueryForExperiment':data(local/'flags.json')[sid],'visualDisposition':review['status'],'ownerApproval':'Pending','originalVerified':True})
+    opening=quality['opening'];before=opening['approvedVsBefore'];new=opening['approvedVsCandidate'];diff=opening['beforeVsCandidate']
+    rows=[f"# Screen {sid} · {names[sid]}",review['status']+'. '+review['short'],*review['paragraphs'],
+          '## Opening and movement',f"The exact original file is APPROVED.jpg. Its source in the project is {base['approved']['path']}. Both files have SHA-256 {sha(original)}. All gameplay stills are separate images at 864 × 1536.",
+          f"Across the entire opening, {before['within20Percent']:.4f}% of retained pixels and {new['within20Percent']:.4f}% of experimental pixels fall within a mean absolute RGB channel error of 20 on the 0–255 scale. Pixelmatch 7.1.0 at threshold 0.1, excluding antialias-only discrepancies, counts {before['pixelmatchMismatches']:,} and {new['pixelmatchMismatches']:,} differing pixels against the artwork. The opening comparison between the two game versions contains {diff['exactDifferences']:,} pixels with any channel difference. The fresh retained capture exactly reproduces the archived opening.",
+          f"CLAUDIA_BEFORE and CODEX_NEW each contain {quality['poseCount']} playable views and a complete H.264 swim at 648 × 1152. The {quality['routeMatchedFrames']} video frames align on course position, steering, camera, clock, coins and hearts. The game advances at 60 steps per second. The films sample it at 12 frames per second. The route logs and pose logs record the exact inputs, cameras and timestamps.",
+          'The pose set covers the opening, forward movement, maximum left and right steering, the main bend or drop, the last in-stage view and the following transition. '+('The +20 view would cross the exit of this short chamber. Its skipped state is documented in poses.json.' if sid=='08' else 'The forward poses include +3, +6, +10 and +20 game units where they keep Benny in the stage.'),
+          review['watch'],review['proposals'],
+          '## Game and verification',f"All eight gameplay assertions passed. The successful full ride began at 1,330, collected 91 coins and finished in Stage 11 at 2,240 with five hearts and zero collisions. The wall-hit assertion intentionally uses a different ride. The route and test outputs are in CODEX_NEW. TypeScript and the production Vite build passed.",
+          'The cloud uses Chromium WebGL 2 with SwiftShader. A physical Android device is needed to measure sustained frame times, touch response and heat. The Screen 06 Android package verification and modeling tool checks are recorded on the Screen 06 evidence branch.',
+          '## Reproduction and recovery',f"Claudia’s retained commit is {checkpoint['retained']['commit']} on {checkpoint['retained']['branch']}. The experimental source is {checkpoint['commit']} on {checkpoint['branch']}. The parent used for the isolated adjustment is {checkpoint['parent']}. The provenance file records the exact visual switches. These switches enable the trial on its own branch.",
+          'Start Vite from an isolated checkout with the project lockfile and saved assets. Set RAINBOW_BASE_URL to the local server. Run these commands from the evidence directory. The default capture output is under reproduce/proof. The pinned toolchain uses Playwright 1.57.0, Chromium and FFmpeg.',
+          '\x60\x60\x60sh\nnode reproduce/capture.cjs stills '+sid+':BEFORE '+sid+':NEW\nnode reproduce/capture.cjs repeat '+sid+':BEFORE\nnode reproduce/capture.cjs ride '+sid+':BEFORE '+sid+':NEW\nnode reproduce/capture.cjs full-safe '+sid+':NEW\n\x60\x60\x60',
+          'The original artwork supplies one approved camera per stage. The additional moving views are proposed interpretations until the owner approves specific frames. No experimental switch has been promoted. [Motion-matching skill and project rules](https://github.com/josiahscalia5-dev/rainbow-/tree/'+skill_sha+')']
+    (out/'REPORT.md').write_text('\n\n'.join(rows)+'\n')
+    manifest={f.relative_to(out).as_posix():sha(f) for f in sorted(out.rglob('*')) if f.is_file() and f.name!='checksums.json'}
+    write(out/'checksums.json',manifest)
+    print(sid,len(manifest),'evidence files measured')

@@ -1,0 +1,27 @@
+{
+  "width": 864,
+  "height": 1536,
+  "threshold": 0.1,
+  "includeAA": false,
+  "approvedVsBefore": {
+    "pixels": 1327104,
+    "exactDifferences": 499992,
+    "within20Pixels": 1062291,
+    "within20Percent": 80.04579897280092,
+    "pixelmatchMismatches": 249370
+  },
+  "approvedVsCandidate": {
+    "pixels": 1327104,
+    "exactDifferences": 500041,
+    "within20Pixels": 1062289,
+    "within20Percent": 80.04564826871142,
+    "pixelmatchMismatches": 249372
+  },
+  "beforeVsCandidate": {
+    "pixels": 1327104,
+    "exactDifferences": 1348,
+    "within20Pixels": 1327076,
+    "within20Percent": 99.99789014274691,
+    "pixelmatchMismatches": 28
+  }
+}

@@ -1,0 +1,16 @@
+{
+ "worktree": "/home/user/wt/s08",
+ "branch": "claude/rainbow-s08-scenery-c10",
+ "head": "e1c7d0b78c955c61e656982cbda1a61d4fbf7213",
+ "time": "2026-11-18T11:12:00+00:00",
+ "dirty_tracked": [
+  "src/world/match08.ts"
+ ],
+ "untracked_copied": [
+  "assets/textures/match08/near08_detail.json",
+  "assets/textures/match08/near08_detail.png",
+  "tools/match08/near08.py"
+ ],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s08-scenery-c10 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s08-scenery-c10/tracked.patch && copy backups/wip/claude__rainbow-s08-scenery-c10/untracked/* into the worktree"
+}

@@ -1,0 +1,14 @@
+from pathlib import Path
+import os,subprocess,time,sys
+v=Path.cwd();sid=sys.argv[1]
+out=v/'worker-logs';out.mkdir(exist_ok=True)
+rule={'04':('04:BEFORE 04:NEW','06:BEFORE 04:BEFORE'),'05':('05:BEFORE 05:NEW','05:BEFORE'),'08':('08:BEFORE 08:NEW','07:BEFORE 08:BEFORE')}[sid]
+while not (v/'proof'/sid/'NEW/gameplay.json').exists():
+    time.sleep(4)
+env={**os.environ,'NODE_PATH':'/opt/codex/cua_node/lib/node_modules'}
+if sid=='05':env['RAINBOW_BASE_URL']='http://127.0.0.1:5905'
+for mode,jobs in [('repeat',rule[1]),('ride',rule[0])]:
+    with (out/(sid+'-'+mode+'.log')).open('w') as log:
+        p=subprocess.run(['node','capture.cjs',mode,*jobs.split()],env=env,stdout=log,stderr=subprocess.STDOUT)
+    if p.returncode:raise SystemExit(p.returncode)
+print(sid,'queued capture work done')

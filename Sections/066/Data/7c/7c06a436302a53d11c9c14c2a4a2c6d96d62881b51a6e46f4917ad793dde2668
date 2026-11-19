@@ -1,0 +1,7 @@
+/**
+ * Spector.js MCP Server — entry point.
+ *
+ * Registers all MCP tools and connects to the stdio transport.
+ * Tool names, descriptions, and schemas are the public API and must not change.
+ */
+export {};

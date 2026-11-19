@@ -1,0 +1,20 @@
+{
+  "branch": "codex/s04-distant-ring-profile",
+  "commit": "38ad7b0dfc042f34e8239d4bea7448248375b371",
+  "sourceCommit": "33e1b117205526e59b0f14735ae1b200b6dd3b5e",
+  "verifiedUTC": "2026-11-18T23:54:01.426192+00:00",
+  "verifiedFiles": 61,
+  "lfsDownloads": [
+    {
+      "file": "experiments/codex/fidelity-04/CLAUDIA_BEFORE/ride.mp4",
+      "size": 3790969,
+      "verifiedDownloadedSHA256": "ed6100a4e18561ccee50a59ea9e6c88878289a5fe6a7eed78026f830a799eab1"
+    },
+    {
+      "file": "experiments/codex/fidelity-04/CODEX_NEW/ride.mp4",
+      "size": 3789317,
+      "verifiedDownloadedSHA256": "06801ada527377f26004610a37b9cd35b586baac1e7433c6cd595acd808aecd5"
+    }
+  ],
+  "evidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/38ad7b0dfc042f34e8239d4bea7448248375b371/experiments/codex/fidelity-04"
+}

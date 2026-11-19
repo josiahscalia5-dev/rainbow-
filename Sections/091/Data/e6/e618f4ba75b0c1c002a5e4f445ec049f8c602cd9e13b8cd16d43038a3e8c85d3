@@ -1,0 +1,16 @@
+"""Seal the review inventory and create one evidence commit on the isolated branch."""
+import subprocess,hashlib,json,sys
+from pathlib import Path
+root=Path.cwd();repo=root/'repo';spec=json.loads((root/'source.json').read_text())
+folder='experiments/'+spec['branch'];out=repo/folder
+def git(*a):return subprocess.check_output(['git','-C',str(repo),*a]).decode().strip()
+def digest(p):
+ with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+assert git('branch','--show-current')==spec['branch'] and git('rev-parse','HEAD')==spec['commit']
+assert (out/'Screen06_Review.zip').stat().st_size>10_000_000 and (out/'checks/motion.json').stat().st_size>0
+m={p.relative_to(out).as_posix():digest(p) for p in sorted(out.rglob('*')) if p.is_file() and p.relative_to(out).as_posix()!='SHA256.json'}
+(out/'SHA256.json').write_text(json.dumps(m,indent=2)+'\n')
+git('add','--',folder)
+changed=git('diff','--cached','--name-only').splitlines()
+assert all(p.startswith(folder+'/') for p in changed) and len(changed)==len(m)+1,(len(changed),len(m))
+git('commit','-q','-m',sys.argv[1]);print(git('rev-parse','HEAD'),len(m)+1)

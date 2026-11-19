@@ -1,0 +1,1047 @@
+import{W as ce,V as w,B as ve,F as Et,w as Ct,P as K,S as Rt,D as fe,N as Nt,a as Tt,M as Zt,f as ue,G as Pe,b as oo,C as To,c as ie,E as Ht,d as Me,e as Vo,g as kt,h as re,I as Ne,i as Lo,j as le,k as Wo,l as No,m as to,n as jt,Q as ho,o as Uo,p as fo,q as Ie,r as vo,s as po,t as Io,u as Do,v as ro}from"./main-Ce2jX8_r.js";const go=Math.PI*2/Math.log(9.6/2.8),ze=.12,Bo=`
+uniform float uTime;
+varying vec2 vPolar;   // r, theta
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_vertex>
+attribute vec2 aPolar;
+void main() {
+  float r = aPolar.x;
+  float th = aPolar.y;
+  float w = 0.09 * sin(th * 3.0 - log(r) * 9.0 + uTime * 3.0) * smoothstep(2.6, 4.0, r);
+  vec3 p = position + vec3(0.0, w, 0.0);
+  vec4 wp = modelMatrix * vec4(p, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * normal);
+  vPolar = aPolar;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,qo=`
+uniform float uTime;
+uniform float uSpiralC;
+uniform float uRim;
+uniform float uDrain;
+uniform vec3 uCyanDeep;
+uniform vec3 uCyan;
+uniform vec3 uCyanBright;
+uniform vec3 uPink;
+uniform vec3 uPinkLight;
+uniform vec3 uFoam;
+uniform vec3 uHaze;
+uniform vec3 uLightDir;
+uniform vec3 uCut[8];     // 04 slide axis polyline (world); funnel is opened where the tube passes
+uniform float uCutR;
+varying vec2 vPolar;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_fragment>
+float segDist(vec3 p, vec3 a, vec3 b) {
+  vec3 ab = b - a;
+  float t = clamp(dot(p - a, ab) / max(dot(ab, ab), 1e-4), 0.0, 1.0);
+  return length(p - a - ab * t);
+}
+${Nt}
+// noise periodic in x with period P (lattice wrap) -> no seam where theta wraps
+float pn(vec2 p, float P) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  float x0 = mod(i.x, P), x1 = mod(i.x + 1.0, P);
+  return mix(mix(hash12(vec2(x0, i.y)), hash12(vec2(x1, i.y)), u.x),
+             mix(hash12(vec2(x0, i.y + 1.0)), hash12(vec2(x1, i.y + 1.0)), u.x), u.y);
+}
+float pfbm(vec2 p, float P) {
+  return 0.5 * pn(p, P) + 0.25 * pn(p * 2.0 + vec2(0.0, 7.3), P * 2.0) + 0.125 * pn(p * 4.0 + vec2(0.0, 3.1), P * 4.0);
+}
+float pcells(vec2 p, float P) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  float md = 8.0;
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 g = vec2(float(x), float(y));
+    vec2 q = vec2(mod(i.x + g.x, P), i.y + g.y);
+    vec2 o = vec2(hash12(q), hash12(q + 19.7));
+    vec2 r = g + o - f;
+    md = min(md, dot(r, r));
+  }
+  return sqrt(md);
+}
+void main() {
+  float r = vPolar.x;
+  float th = vPolar.y;
+  float dc = 1e4;
+  for (int i = 0; i < 7; i++) dc = min(dc, segDist(vPosW, uCut[i], uCut[i + 1]));
+  if (dc < uCutR) discard;
+  float lipFoam = 1.0 - smoothstep(uCutR, uCutR + 0.6, dc);
+  float lr = log(r);
+  // band coordinate is constant along the course flow lines; it rotates with time (swirl)
+  float band = th - uSpiralC * lr;
+  float swirl = band * (3.0 / 6.28318) + uTime * 0.45;
+  // along-flow coordinate (inward motion) for streaks
+  float along = lr * 6.0 + uTime * 1.6;
+  float sw = band * (3.0 / 6.28318); // static part (periodic: +3 per turn)
+  float n = pfbm(vec2(sw * 2.0 + uTime * 0.9, along * 0.6), 6.0);
+  float bandF = fract(swirl + 0.18 * (n - 0.5));
+  float pinkM = smoothstep(0.38, 0.46, bandF) * (1.0 - smoothstep(0.7, 0.78, bandF));
+  float foamM = smoothstep(0.84, 0.9, bandF) * (1.0 - smoothstep(0.96, 1.0, bandF));
+  foamM += smoothstep(0.02, 0.06, bandF) * (1.0 - smoothstep(0.08, 0.13, bandF)) * 0.55;
+  vec3 cyanCol = mix(uCyanDeep, uCyan, 0.5 + 0.5 * n);
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.6, 0.85, n) * 0.6);
+  vec3 col = mix(cyanCol, mix(uPink, uPinkLight, n), pinkM);
+  float c = pcells(vec2(sw * 22.0 + uTime * 9.9, along * 2.5), 66.0);
+  col = mix(col, mix(uFoam, vec3(0.93, 0.88, 1.0), c), clamp(foamM * (0.7 + 0.3 * c), 0.0, 1.0));
+  // streak highlights
+  float lines = pow(pn(vec2(sw * 40.0 + uTime * 18.0, along * 1.2), 120.0), 7.0);
+  col += vec3(1.0) * lines * 2.0;
+  // glossy
+  vec3 N = normalize(vNormalW + vec3(n - 0.5, 0.0, 0.5 - n) * 0.3);
+  vec3 V = normalize(cameraPosition - vPosW);
+  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
+  col = mix(col, mix(uHaze, vec3(1.0), 0.5), fres * 0.18);
+  vec3 H = normalize(normalize(uLightDir) + V);
+  col += pow(clamp(dot(N, H), 0.0, 1.0), 70.0) * 1.4;
+  // sparkles
+  vec2 g = vec2(sw * 30.0 + uTime * 13.5, along * 3.0);
+  float hs = hash12(vec2(mod(floor(g.x), 90.0), floor(g.y)));
+  col += step(0.94, hs) * smoothstep(0.2, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 6.0 + hs * 50.0)) * 1.3;
+  // drain glow (bright light rising from the gold tube below) and white foam rim
+  col = mix(col, vec3(1.6, 1.5, 1.2), smoothstep(uDrain + 1.6, uDrain, r) * 0.55);
+  float rimFoam = smoothstep(uRim - 1.4, uRim - 0.2, r + 0.4 * (vnoise(vec2(th * 6.0, uTime)) - 0.5));
+  col = mix(col, uFoam, rimFoam * 0.85);
+  col = mix(col, mix(uFoam, vec3(0.93, 0.88, 1.0), c), lipFoam * 0.9);
+  gl_FragColor = vec4(col, 1.0);
+  ${Tt}
+}
+`;function Eo(t,e){const n=ce.basin,c=t==="high"?56:32,s=t==="high"?128:72,u=n.drainRadius,o=n.rimRadius+.4,z=[],f=[],L=[],g=[];for(let P=0;P<=c;P++){const l=P/c,m=u+(o-u)*Math.pow(l,1.35),h=ue(m)+ze,k=.05,y=(ue(m+k)-ue(Math.max(u*.6,m-k)))/(2*k);for(let V=0;V<=s;V++){const q=V/s*Math.PI*2,R=Math.sin(q),A=Math.cos(q);z.push(n.center.x+m*R,h,n.center.z+m*A);const $=new w(-y*R,1,-y*A).normalize();L.push($.x,$.y,$.z),f.push(m,q)}}for(let P=0;P<c;P++)for(let l=0;l<s;l++){const m=P*(s+1)+l,h=m+1,k=m+s+1,y=k+1;g.push(m,h,k,h,y,k)}const T=new ve;T.setAttribute("position",new Et(z,3)),T.setAttribute("normal",new Et(L,3)),T.setAttribute("aPolar",new Et(f,2)),T.setIndex(g),T.computeBoundingSphere();const v=Ct({uTime:{value:0},uSpiralC:{value:go},uRim:{value:n.rimRadius},uDrain:{value:n.drainRadius},uCyanDeep:{value:K.cyanDeep.clone()},uCyan:{value:K.cyan.clone()},uCyanBright:{value:K.cyanBright.clone()},uPink:{value:K.pink.clone()},uPinkLight:{value:K.pinkLight.clone()},uFoam:{value:K.foam.clone()},uHaze:{value:K.haze.clone()},uLightDir:{value:new w(.3,1,.45).normalize()},uCut:{value:e.points.slice(0,8)},uCutR:{value:e.radius}}),F=new Rt({uniforms:v,vertexShader:Bo,fragmentShader:qo,fog:!0,side:fe}),b=new Zt(T,F);return b.name="water_whirlpool",{mesh:b,uniforms:v}}function jo(t,e,n){const c=ce.basin,s=t-c.center.x,u=e-c.center.z,o=Math.max(.1,Math.hypot(s,u)),z=Math.atan2(s,u),f=Math.min(1,Math.max(0,(o-2.6)/1.4));return .09*Math.sin(z*3-Math.log(o)*9+n*3)*f*f*(3-2*f)}const Ho=`
+uniform float uTime;
+uniform float uAgitation;
+varying vec3 vPosW;
+varying float vH;
+varying vec3 vN;
+#include <fog_pars_vertex>
+float waveH(vec2 p, float t, float amp) {
+  return amp * (0.55 * sin(p.x * 1.1 + p.y * 0.6 + t * 1.8)
+              + 0.35 * sin(-p.x * 0.7 + p.y * 1.5 - t * 2.3)
+              + 0.22 * sin(p.x * 2.3 - p.y * 1.9 + t * 3.1));
+}
+void main() {
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  float amp = 0.3 + uAgitation * 0.5;
+  float h = waveH(wp.xz, uTime, amp);
+  vec2 p = wp.xz; float t = uTime;
+  float dhx = amp * (0.55 * 1.1 * cos(p.x * 1.1 + p.y * 0.6 + t * 1.8) - 0.35 * 0.7 * cos(-p.x * 0.7 + p.y * 1.5 - t * 2.3) + 0.22 * 2.3 * cos(p.x * 2.3 - p.y * 1.9 + t * 3.1));
+  float dhz = amp * (0.55 * 0.6 * cos(p.x * 1.1 + p.y * 0.6 + t * 1.8) + 0.35 * 1.5 * cos(-p.x * 0.7 + p.y * 1.5 - t * 2.3) - 0.22 * 1.9 * cos(p.x * 2.3 - p.y * 1.9 + t * 3.1));
+  vN = normalize(vec3(-dhx, 1.0, -dhz));
+  wp.y += h;
+  vH = h / amp;
+  vPosW = wp.xyz;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Oo=`
+uniform float uTime;
+uniform float uAgitation;
+uniform vec3 uDrumC;     // centre x, y, radius
+uniform vec3 uCyanDeep;
+uniform vec3 uCyan;
+uniform vec3 uCyanBright;
+uniform vec3 uPink;
+uniform vec3 uPinkLight;
+uniform vec3 uFoam;
+uniform vec3 uHaze;
+uniform vec3 uLightDir;
+varying vec3 vPosW;
+varying float vH;
+varying vec3 vN;
+#include <fog_pars_fragment>
+${Nt}
+void main() {
+  vec2 d = vPosW.xy - uDrumC.xy;
+  if (dot(d, d) > uDrumC.z * uDrumC.z) discard;
+  vec2 p = vPosW.xz;
+  float n = fbm3(p * 0.55 + vec2(uTime * 0.25, -uTime * 0.15));
+  // layered bands roughly parallel to the wave crests
+  float field = sin(p.x * 1.9 + p.y * 1.25 + uTime * 1.1 + n * 4.5);
+  float pinkM = smoothstep(0.3, 0.46, field);
+  vec3 cyanCol = mix(uCyanDeep, uCyan, 0.45 + 0.55 * n);
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.35, 0.9, vH) * 0.55);
+  vec3 col = mix(cyanCol, mix(uPink, uPinkLight, n), pinkM);
+  // foam on the band seams and on crests
+  float seam = 1.0 - smoothstep(0.04, 0.2, abs(field - 0.38) - 0.06 * (vnoise(p * 6.0) - 0.5));
+  float c = cells(p * 3.2 + vec2(uTime * 0.4, 0.0));
+  float crest = smoothstep(0.42, 0.85, vH + (n - 0.5) * 0.5);
+  float foamM = clamp(seam + crest * (0.85 + 0.15 * uAgitation), 0.0, 1.0) * smoothstep(0.02, 0.32, c + 0.08);
+  col = mix(col, mix(uFoam * 1.15, vec3(0.9, 0.86, 1.0), c * 0.8), foamM);
+  // streak highlights
+  float ln = vnoise(vec2((p.x * 1.9 + p.y * 1.25) * 4.0 + n * 4.5, (p.y - p.x * 0.6) * 0.9 - uTime * 0.6));
+  col += smoothstep(0.8, 0.93, ln) * 1.4;
+  float rip = vnoise(p * 9.0 + vec2(uTime * 1.3, uTime * 0.7));
+  // gloss (normal from the analytic wave slope is approximated by screen derivatives)
+  vec3 N = normalize(vN + vec3(n - 0.5 + (rip - 0.5) * 0.6, 0.0, 0.5 - n + (rip - 0.5) * 0.4) * 0.35);
+  vec3 V = normalize(cameraPosition - vPosW);
+  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
+  col = mix(col, mix(uHaze, vec3(1.0), 0.6), fres * 0.25);
+  vec3 H = normalize(normalize(uLightDir) + V);
+  col += pow(clamp(dot(N, H), 0.0, 1.0), 90.0) * 2.2;
+  vec2 g = p * 2.6 + vec2(uTime * 0.3, 0.0);
+  float hs = hash12(floor(g));
+  col += step(0.9, hs) * smoothstep(0.24, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 6.0 + hs * 50.0)) * 1.4;
+  gl_FragColor = vec4(col, 1.0);
+  ${Tt}
+}
+`,$o=`
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_vertex>
+void main() {
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * normal);
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Go=`
+uniform float uTime;
+uniform float uSwirl;
+uniform vec3 uDrumC;
+uniform vec3 uCyan;
+uniform vec3 uCyanBright;
+uniform vec3 uPink;
+uniform vec3 uPinkLight;
+uniform vec3 uFoam;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_fragment>
+${Nt}
+float pn(vec2 p, float P) {
+  vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
+  float x0 = mod(i.x, P), x1 = mod(i.x + 1.0, P);
+  return mix(mix(hash12(vec2(x0, i.y)), hash12(vec2(x1, i.y)), u.x),
+             mix(hash12(vec2(x0, i.y + 1.0)), hash12(vec2(x1, i.y + 1.0)), u.x), u.y);
+}
+void main() {
+  vec2 d = vPosW.xy - uDrumC.xy;
+  float th = atan(d.y, d.x);             // -pi..pi
+  float a = th / 6.28318 + 0.5;          // 0..1 around
+  float z = vPosW.z;
+  float spin = a * 4.0 + z * 0.22 + uTime * 0.9;     // 4 bands per turn, spiralling along z
+  float n = pn(vec2(a * 8.0 + uTime * 1.8, z * 0.8), 8.0);
+  float f = fract(spin + 0.25 * (n - 0.5));
+  float pinkM = smoothstep(0.42, 0.5, f) * (1.0 - smoothstep(0.72, 0.8, f));
+  float foamM = smoothstep(0.86, 0.92, f) * (1.0 - smoothstep(0.97, 1.0, f));
+  vec3 col = mix(mix(uCyan, uCyanBright, n), mix(uPink, uPinkLight, n), pinkM);
+  col = mix(col, uFoam, foamM);
+  col += pow(pn(vec2(a * 96.0 + uTime * 20.0, z * 2.0), 96.0), 7.0) * 1.6;
+  // more water low in the drum, ragged gaps higher up so the perforated wall shows through
+  float low = smoothstep(0.35, -0.6, d.y / uDrumC.z);
+  float gaps = smoothstep(0.25, 0.55, pn(vec2(a * 6.0 - uTime * 0.6, z * 0.35 + 3.0), 6.0) + low * 0.6);
+  float alpha = uSwirl * clamp(0.5 + 0.5 * gaps + foamM * 0.3, 0.0, 0.96);
+  // keep the door opening readable: thin out only right at the door
+  alpha *= 1.0 - 0.7 * smoothstep(1.8, 3.3, z);
+  gl_FragColor = vec4(col, alpha);
+  ${Tt}
+}
+`;function Ko(t){const e=ce.drumA,n=new Pe;n.name="water_drumA";const c=t==="high"?72:36,s=2*Math.sqrt(e.radius**2-(e.waterY-e.center.y)**2)+1.4,u=e.zDoor-.15-e.zBack,o=new oo(s,u,c,Math.round(c*(u/s)));o.rotateX(-Math.PI/2),o.translate(e.center.x,e.waterY,e.zBack+u/2);const z={uTime:{value:0},uAgitation:{value:0},uDrumC:{value:new w(e.center.x,e.center.y,e.radius-.04)},uCyanDeep:{value:K.cyanDeep.clone()},uCyan:{value:K.cyan.clone()},uCyanBright:{value:K.cyanBright.clone()},uPink:{value:K.pink.clone()},uPinkLight:{value:K.pinkLight.clone()},uFoam:{value:K.foam.clone()},uHaze:{value:K.haze.clone()},uLightDir:{value:new w(-.2,1,.6).normalize()}},f=Ct(z),L=new Zt(o,new Rt({uniforms:f,vertexShader:Ho,fragmentShader:Oo,fog:!0,side:fe}));L.name="water_drumA_surface",n.add(L);const g=new To(e.radius-.3,e.radius-1.5,e.zDoor-e.zBack-.6,t==="high"?72:40,12,!0);g.rotateX(Math.PI/2),g.translate(e.center.x,e.center.y,(e.zDoor+e.zBack)/2-.1);const T=Ct({uTime:f.uTime,uSwirl:{value:0},uDrumC:f.uDrumC,uCyan:{value:K.cyan.clone()},uCyanBright:{value:K.cyanBright.clone()},uPink:{value:K.pink.clone()},uPinkLight:{value:K.pinkLight.clone()},uFoam:{value:K.foam.clone()}});T.uTime=f.uTime,T.uDrumC=f.uDrumC;const v=new Zt(g,new Rt({uniforms:T,vertexShader:$o,fragmentShader:Go,fog:!0,transparent:!0,depthWrite:!1,side:fe}));return v.name="water_drumA_swirl",v.renderOrder=2,v.visible=!1,n.add(v),{group:n,surface:L,swirl:v,uniforms:f,swirlUniforms:T,heightAt(F,b,P){const l=.3+f.uAgitation.value*.5;return e.waterY+l*(.55*Math.sin(F*1.1+b*.6+P*1.8)+.35*Math.sin(-F*.7+b*1.5-P*2.3)+.22*Math.sin(F*2.3-b*1.9+P*3.1))}}}const Jo=`
+uniform float uTime;
+attribute vec2 aWave;    // x = profile parameter p (0 foot .. 1 lip), y = s
+attribute vec3 aOut;     // outward (left) direction at this row
+attribute float aEnv;    // height envelope 0..1
+varying vec2 vWave;
+varying float vEnv;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_vertex>
+void main() {
+  float p = aWave.x;
+  float s = aWave.y;
+  // rolling: the lip breathes and a bulge travels along the wall with the flow
+  float roll = sin(s * 0.45 - uTime * 2.2) * 0.5 + sin(s * 0.17 - uTime * 0.9) * 0.5;
+  vec3 pos = position;
+  pos += normal * (0.35 * roll * p * aEnv);
+  pos += aOut * (-0.6 * p * p * (0.5 + 0.5 * sin(uTime * 1.6 + s * 0.3)) * aEnv);
+  vec4 wp = modelMatrix * vec4(pos, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * normal);
+  vWave = aWave;
+  vEnv = aEnv;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Xo=`
+uniform float uTime;
+uniform float uSpeed;
+uniform vec3 uCyanDeep;
+uniform vec3 uCyan;
+uniform vec3 uCyanBright;
+uniform vec3 uPink;
+uniform vec3 uPinkLight;
+uniform vec3 uFoam;
+uniform vec3 uHaze;
+uniform vec3 uLightDir;
+varying vec2 vWave;
+varying float vEnv;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_fragment>
+${Nt}
+void main() {
+  float p = vWave.x;
+  float s = vWave.y;
+  // streaks run up the face toward the lip and along with the flow
+  vec2 q = vec2(s * 0.5 - uTime * uSpeed * 0.5, p * 5.0 - uTime * 1.2);
+  float n = fbm3(q * vec2(0.6, 0.8));
+  float band = fract(p * 2.2 + 0.35 * (n - 0.5) + s * 0.03);
+  float pinkM = smoothstep(0.45, 0.55, band) * (1.0 - smoothstep(0.8, 0.9, band));
+  vec3 col = mix(mix(uCyanDeep, uCyan, 0.4 + 0.6 * n), mix(uPink, uPinkLight, n), pinkM);
+  col = mix(col, uCyanBright, smoothstep(0.55, 0.85, n) * 0.5 * (1.0 - pinkM));
+  float ln = vnoise(vec2(s * 0.9 - uTime * uSpeed * 0.7 + n * 2.0, p * 9.0 - uTime * 1.5));
+  col += smoothstep(0.8, 0.93, ln) * 1.5;
+  // foam: crest + foot
+  float c = cells(vec2(s * 2.0 - uTime * uSpeed * 0.6, p * 14.0 - uTime));
+  float crest = smoothstep(0.74, 0.9, p + (n - 0.5) * 0.12);
+  float foot = 1.0 - smoothstep(0.02, 0.1, p);
+  col = mix(col, mix(uFoam, vec3(0.94, 0.9, 1.0), c), clamp(crest + foot * 0.7, 0.0, 1.0) * (0.75 + 0.25 * c));
+  // gloss / translucency
+  vec3 N = normalize(vNormalW);
+  vec3 V = normalize(cameraPosition - vPosW);
+  if (dot(N, V) < 0.0) N = -N;
+  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
+  col = mix(col, mix(uHaze, vec3(1.0), 0.5), fres * 0.22);
+  vec3 H = normalize(normalize(uLightDir) + V);
+  col += pow(clamp(dot(N, H), 0.0, 1.0), 60.0) * 1.5;
+  vec2 g = vec2(s * 3.0, p * 18.0);
+  float hs = hash12(floor(g));
+  col += step(0.95, hs) * smoothstep(0.2, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 6.0 + hs * 50.0)) * 1.3;
+  float alpha = clamp(0.82 + crest * 0.18, 0.0, 1.0) * smoothstep(0.0, 0.18, vEnv);
+  gl_FragColor = vec4(col, alpha);
+  ${Tt}
+}
+`;function lo(t,e,n,c,s,u){const o=1-s;return u.set(0,0).addScaledVector(t,o*o*o).addScaledVector(e,3*o*o*s).addScaledVector(n,3*o*s*s).addScaledVector(c,s*s*s),u}function Qo(t,e,n=9){const c=t.stage("09"),s=c.s0-4,u=t.stage("10").s0+3,o=e==="high"?90:50,z=e==="high"?28:16,f=[],L=[],g=[],T=[],v=[],F=[],b=[],P=new ie,l=new ie,m=new w;for(let V=0;V<=o;V++){const q=s+(u-s)*V/o,R=t.sample(q),A=t.widthAt(q)/2,$=(q-s)/(u-s),x=Math.pow(Math.sin(Math.PI*Math.min(1,Math.max(0,$))),.75),Q=n*x,et=R.right.clone().negate(),O=new ie(0,Ht),Y=new ie(3.4,.6+.2*Q),st=new ie(4.6,Q*1.06),mt=new ie(1-.15*Q,Q*.8);for(let ut=0;ut<=z;ut++){const X=ut/z;lo(O,Y,st,mt,X,P),lo(O,Y,st,mt,Math.min(1,X+.01),l),m.copy(R.pos).addScaledVector(et,A+P.x).addScaledVector(R.up,P.y),f.push(m.x,m.y,m.z);const Mt=l.x-P.x,zt=l.y-P.y,Vt=new w().addScaledVector(et,zt).addScaledVector(R.up,-Mt).normalize().negate();L.push(Vt.x,Vt.y,Vt.z),g.push(X,q),T.push(et.x,et.y,et.z),v.push(x),ut===z&&V%4===0&&x>.35&&b.push(m.clone())}}for(let V=0;V<o;V++)for(let q=0;q<z;q++){const R=V*(z+1)+q,A=R+1,$=R+z+1,x=$+1;F.push(R,$,A,A,$,x)}const h=new ve;h.setAttribute("position",new Et(f,3)),h.setAttribute("normal",new Et(L,3)),h.setAttribute("aWave",new Et(g,2)),h.setAttribute("aOut",new Et(T,3)),h.setAttribute("aEnv",new Et(v,1)),h.setIndex(F),h.computeBoundingSphere();const k=Ct({uTime:{value:0},uSpeed:{value:c.speed},uCyanDeep:{value:K.cyanDeep.clone()},uCyan:{value:K.cyan.clone()},uCyanBright:{value:K.cyanBright.clone()},uPink:{value:K.pink.clone()},uPinkLight:{value:K.pinkLight.clone()},uFoam:{value:K.foam.clone()},uHaze:{value:K.haze.clone()},uLightDir:{value:new w(.3,1,.45).normalize()}}),y=new Zt(h,new Rt({uniforms:k,vertexShader:Jo,fragmentShader:Xo,fog:!0,transparent:!0,side:fe}));return y.name="water_final_wave",y.renderOrder=1,{mesh:y,uniforms:k,crest:b,s0:s,s1:u}}const Yo=`
+varying vec2 vLocal;
+varying vec3 vPosW;
+attribute vec2 aLocal;
+#include <fog_pars_vertex>
+void main() {
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vPosW = wp.xyz;
+  vLocal = aLocal;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Zo=`
+uniform float uTime;
+uniform float uAmount;
+uniform vec3 uCyanDeep;
+uniform vec3 uCyan;
+uniform vec3 uCyanBright;
+uniform vec3 uPink;
+uniform vec3 uFoam;
+varying vec2 vLocal;   // -1..1 in the puddle patch
+varying vec3 vPosW;
+#include <fog_pars_fragment>
+${Nt}
+void main() {
+  vec2 p = vLocal;
+  float ang = atan(p.y, p.x);
+  float rad = 0.72 + 0.22 * sin(ang * 3.0 + vPosW.x) + 0.12 * vnoise(vec2(ang * 2.0 + vPosW.z, 1.0)) - 0.06;
+  float d = length(p);
+  float inside = smoothstep(rad, rad - 0.06, d);
+  if (inside * uAmount < 0.01) discard;
+  vec2 q = vPosW.xz;
+  float n = fbm3(q * 0.9 + vec2(uTime * 0.15, -uTime * 0.1));
+  vec3 col = mix(uCyanDeep, uCyan, n);
+  col = mix(col, uCyanBright, smoothstep(0.55, 0.85, n) * 0.6);
+  col = mix(col, uPink, smoothstep(0.72, 0.8, vnoise(q * 1.4 + 9.0)) * 0.3);
+  float rim = smoothstep(rad - 0.2, rad - 0.03, d) * inside;
+  float c = cells(q * 4.0);
+  col = mix(col, uFoam, rim * (0.5 + 0.5 * smoothstep(0.2, 0.5, c)));
+  float lines = pow(vnoise(vec2(q.x * 5.0 + uTime * 0.3, q.y * 1.5)), 6.0);
+  col += lines * 1.5;
+  vec2 g = q * 5.0;
+  float hs = hash12(floor(g));
+  col += step(0.92, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 5.0 + hs * 40.0)) * 1.6;
+  gl_FragColor = vec4(col, inside * uAmount * 0.88);
+  ${Tt}
+}
+`;function ta(){const t=ce.chamber,e=ce.platform,n=Ct({uTime:{value:0},uAmount:{value:0},uCyanDeep:{value:K.cyanDeep.clone()},uCyan:{value:K.cyan.clone()},uCyanBright:{value:K.cyanBright.clone()},uPink:{value:K.pink.clone()},uFoam:{value:K.foam.clone()}}),c=new Rt({uniforms:n,vertexShader:Yo,fragmentShader:Zo,fog:!0,transparent:!0,depthWrite:!1,polygonOffset:!0,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),s=new Pe;s.name="water_puddles";const u=[[-5.5,e.center.z+7,3.2,1.7],[4.8,e.center.z+6,3,1.5],[-1,e.center.z+9.5,2.6,1.3],[1.5,e.center.z+4.2,2.2,1.1],[-7.5,e.center.z+3,1.6,1],[7.8,e.center.z+9,1.7,.9]];for(const[o,z,f,L]of u){const T=[],v=[],F=[];for(let l=0;l<=16;l++)for(let m=0;m<=16;m++){const h=-1+2*m/16,k=-1+2*l/16,y=o+h*f,V=t.center.y-Math.sqrt(Math.max(0,t.radius**2-y*y))+.05;T.push(t.center.x+y,V,z+k*L),v.push(h,k)}for(let l=0;l<16;l++)for(let m=0;m<16;m++){const h=l*17+m,k=h+1,y=h+16+1,V=y+1;F.push(h,y,k,k,y,V)}const b=new ve;b.setAttribute("position",new Et(T,3)),b.setAttribute("aLocal",new Et(v,2)),b.setIndex(F),b.computeBoundingSphere();const P=new Zt(b,c);P.renderOrder=1,s.add(P)}return{group:s,uniforms:n}}const Fe=-.6,Ae=1.2,he=t=>{const e=Math.sin(t*127.1+311.7)*43758.5453;return e-Math.floor(e)},me=t=>{const e=Math.floor(t),n=t-e,c=n*n*(3-2*n);return he(e)*(1-c)+he(e+1)*c};function xo(t,e){return .55*me(t*.33+e*31.7)+.45*me(t*1.05+e*7.3)}function ea(t,e,n){const c=t/.95,s=e/.62+n*11.3,u=Math.floor(c),o=Math.floor(s);let z=0;for(let f=-1;f<=1;f++)for(let L=-1;L<=1;L++){const g=u+f,T=o+L,v=he(g*17.13+T*3.71),F=he(g*5.31+T*19.7+4.2),b=.45+.4*he(g*7.7+T*13.1+9.9),P=(g+v-c)/b,l=(T+F-s)/b;z=Math.max(z,1-(P*P+l*l))}return Math.max(0,z)}function oa(t,e,n){const c=Math.max(0,(e+Fe)/e),s=Ht*c*c*c-.07,u=.08+.22*n,o=Ht+.14+.5*n,z=-.95;if(t<=u){const L=Math.min(1,Math.max(0,(t-Fe)/(u-Fe)));return s+(o-s)*(1-(1-L)*(1-L))}const f=Math.min(1,(t-u)/(Ae-u));return o+(z-o)*f*f}function wo(t,e,n,c){const s=Math.min(1,Math.max(0,(e+.3)/.35))*Math.min(1,Math.max(0,(Ae-.1-e)/.4));return oa(e,c,xo(t,n))+.2*s*Math.sqrt(ea(t,e,n))}const ao=`
+const vec3 SOAP_CREV = vec3(0.23, 0.22, 0.66);
+vec3 soap05(float t) {
+  t = clamp(t, 0.0, 1.0) * 5.0;
+  vec3 c = mix(SOAP_CREV, vec3(0.26, 0.38, 0.84), clamp(t, 0.0, 1.0));
+  c = mix(c, vec3(0.38, 0.54, 0.97), clamp(t - 1.0, 0.0, 1.0));
+  c = mix(c, vec3(0.56, 0.63, 0.96), clamp(t - 2.0, 0.0, 1.0));
+  c = mix(c, vec3(0.78, 0.79, 0.98), clamp(t - 3.0, 0.0, 1.0));
+  return mix(c, vec3(1.05, 1.03, 1.08), clamp(t - 4.0, 0.0, 1.0));
+}
+float soapT(vec3 Nv) {
+  vec3 Lv = normalize(vec3(-0.35, 0.8, 0.5));
+  float wrap = clamp(dot(Nv, Lv) * 0.55 + 0.5, 0.0, 1.0);
+  float up = clamp(Nv.y * 0.5 + 0.5, 0.0, 1.0);
+  return smoothstep(0.1, 0.8, wrap * 0.6 + up * 0.4);
+}
+`,aa=`
+attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
+uniform float uTime;
+varying vec3 vFoam;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_vertex>
+void main() {
+  // gentle breathing of the lather (never at the water line)
+  float k = smoothstep(-0.2, 0.3, aFoam.x);
+  vec3 p = position + normal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+  vec4 wp = modelMatrix * vec4(p, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * normal);
+  vFoam = aFoam;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,na=`
+uniform float uTime;
+uniform vec2 uOutro;     // amount, chamber start s
+uniform vec3 uLightDir;
+uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+uniform vec2 uHide07;    // r8 m07foam: berm hidden on s in (x, y)
+varying vec3 vFoam;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_fragment>
+${Nt}
+${No}
+${ao}
+void main() {
+  float s = vFoam.y;
+  #ifdef PROJ05
+  // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
+  // (dithered over 3 u at both joins; 04 / 06 keep their berm)
+  float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
+  if (pjIn > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < pjIn) discard;
+  #endif
+  #ifdef HIDE07
+  // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+  // tile (with its painted soft foam banks) shows instead; dithered over 3 u at both ends, 07 level stretch and 08 keep
+  // their berm
+  float h7 = smoothstep(uHide07.x, uHide07.x + 3.0, s) * (1.0 - smoothstep(uHide07.y - 3.0, uHide07.y, s));
+  if (h7 > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < h7) discard;
+  #endif
+  if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+    float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 + 0.3;
+    if (n < uOutro.x * 1.15) discard;
+  }
+  vec2 p = vec2(vFoam.x * vFoam.z * 1.1, s - uTime * 0.25);
+  // detail fade with distance (cells per pixel)
+  float fw = max(fwidth(p.x), fwidth(p.y));
+  float k1 = 1.0 - smoothstep(0.12, 0.3, fw * 1.6);
+  float k2 = 1.0 - smoothstep(0.12, 0.3, fw * 3.8);
+  float c1 = mix(0.45, cells(p * 1.6), k1);
+  #ifdef LOW_Q
+  float c2 = c1;
+  #else
+  float c2 = mix(0.45, cells(p * 3.8 + 11.0), k2);
+  #endif
+  // bubble domes: bright cell centres, deep crevices between bubbles
+  float bub = (1.0 - c1 * c1) * 0.6 + (1.0 - c2 * c2) * 0.4;
+  vec3 N0 = normalize(vNormalW);
+  if (!gl_FrontFacing) N0 = -N0;
+  #ifdef LOW_Q
+  vec3 N = N0;
+  #else
+  vec3 N = bumpNormal(vPosW, N0, bub * 0.1);
+  #endif
+  vec3 L = normalize(uLightDir);
+  vec3 V = normalize(cameraPosition - vPosW);
+  float diff = 0.55 + 0.45 * max(dot(N, L), 0.0);
+  vec3 white = vec3(1.0, 1.0, 1.0);
+  vec3 lav = vec3(0.7, 0.68, 0.98);
+  vec3 col = mix(lav, white, 0.3 + 0.7 * clamp(N.y * 0.5 + 0.5, 0.0, 1.0)) * diff;
+  col = mix(col, lav * 0.8, smoothstep(0.6, 0.95, c1) * 0.7 * k1);
+  col = mix(col, lav * 0.9, smoothstep(0.65, 0.95, c2) * 0.4 * k2);
+  // tiny pores (open bubbles)
+  #ifndef LOW_Q
+  vec2 pp = p * 7.0 + 5.0;
+  float pc = cells(pp);
+  float kp = 1.0 - smoothstep(0.1, 0.25, fw * 7.0);
+  col = mix(col, vec3(0.58, 0.56, 0.88), (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, hash12(floor(pp))) * 0.75 * kp);
+  #endif
+  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 28.0);
+  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
+  col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;
+  col *= 0.96;
+  // 05 (wave 7): the low rim under the puffs reads as small piled soap bubbles: white only on the cell
+  // tops, periwinkle bodies, blue-violet crevices between the cells (ref 05 rim)
+  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
+  // 05: the bank stops just past its bubble crest with a scalloped (cell) edge, so the purple wall shows right above
+  // the rim instead of a pale lather slope (ref 05; e is the raw offset outward from the stream edge)
+  if (vFoam.x > mix(9.0, 0.3 + 0.45 * (1.0 - c1), k05)) discard;
+  if (k05 > 0.0) {
+    vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);
+    float t5 = soapT(Nv) * 0.55 + 0.45 * mix(0.55, bub, max(k1, 0.3)) - 0.1;
+    t5 -= smoothstep(0.55, 0.95, c1) * 0.45 * k1 + smoothstep(0.62, 0.95, c2) * 0.25 * k2;
+    vec3 c5 = soap05(t5);
+    #ifndef LOW_Q
+    c5 = mix(c5, SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, hash12(floor(pp))) * 0.7 * kp);
+    #endif
+    c5 += vec3(1.0) * spec * 0.3;
+    col = mix(col, c5, k05);
+  }
+  gl_FragColor = vec4(col, 1.0);
+  ${Tt}
+}
+`,sa=`
+uniform float uTime;
+varying vec3 vNormalW;
+varying vec3 vPosW;
+varying vec3 vLocal;
+varying vec3 vInst;
+varying float vW5;
+#include <fog_pars_vertex>
+void main() {
+  // instanceColor.x = ao + 2 q, q = 0..8 = the 05 soap-shading weight x 8 (wave 7; ao <= 1 so floor(x / 2) = q)
+  float q5 = floor(instanceColor.x * 0.5);
+  vInst = vec3(instanceColor.x - 2.0 * q5, instanceColor.yz);
+  vW5 = q5 / 8.0;
+  float br = 1.0 + 0.035 * sin(uTime * 1.7 + instanceColor.y * 40.0);
+  vec4 wp = modelMatrix * instanceMatrix * vec4(position * br, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal);
+  vLocal = normal;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,ia=`
+uniform vec3 uLightDir;
+varying vec3 vNormalW;
+varying vec3 vPosW;
+varying vec3 vLocal;
+varying vec3 vInst;
+varying float vW5;
+#include <fog_pars_fragment>
+${Nt}
+${ao}
+void main() {
+  vec3 N = normalize(vNormalW);
+  vec3 V = normalize(cameraPosition - vPosW);
+  vec3 L = normalize(uLightDir);
+  float wrap = clamp(dot(N, L) * 0.55 + 0.5, 0.0, 1.0);
+  float upF = clamp(N.y * 0.5 + 0.5, 0.0, 1.0);
+  float lit = smoothstep(0.18, 0.88, wrap * 0.65 + upF * 0.35);
+  vec3 c5 = vec3(0.0);
+  if (vW5 > 0.0) {
+    // 05 (wave 7): ref soap ramp, view-space top light: white caps, periwinkle bodies, blue crevice rims
+    vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);
+    float z = clamp(Nv.z, 0.0, 1.0);
+    float t5 = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - Nv.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
+    c5 = soap05(t5 + 0.04 * vInst.z);
+    #ifndef LOW_Q
+    vec3 an5 = abs(vLocal);
+    vec2 pc5 = (an5.x > an5.z ? vLocal.zy : vLocal.xy) * 2.6 + vInst.y * 17.0;
+    float kp5 = 1.0 - smoothstep(0.2, 0.45, fwidth(pc5.x) + fwidth(pc5.y));
+    c5 = mix(c5, SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, cells(pc5))) * step(0.6, hash12(floor(pc5) + vInst.y * 31.0)) * kp5 * 0.5);
+    #endif
+    c5 += vec3(1.0) * pow(max(dot(reflect(-V, N), L), 0.0), 26.0) * 0.25;
+  }
+  vec3 lav = vec3(0.47, 0.44, 0.88);
+  vec3 top = mix(vec3(1.1, 1.04, 1.16), vec3(1.04, 1.06, 1.16), clamp(vInst.z, 0.0, 1.0));
+  top = mix(top, vec3(1.12, 1.02, 1.12), clamp(-vInst.z, 0.0, 1.0));
+  vec3 col = mix(lav, top, lit);
+  #ifndef LOW_Q
+  // pores: small open bubbles on the puff skin (puff-local, two planar projections, no seam)
+  vec3 an = abs(vLocal);
+  vec2 pc = (an.x > an.z ? vLocal.zy : vLocal.xy) * 2.6 + vInst.y * 17.0;
+  float cp = cells(pc);
+  float kp = 1.0 - smoothstep(0.2, 0.45, fwidth(pc.x) + fwidth(pc.y));
+  float pore = (1.0 - smoothstep(0.1, 0.2, cp)) * step(0.6, hash12(floor(pc) + vInst.y * 31.0));
+  col = mix(col, lav * 0.95, pore * kp * 0.6 * lit);
+  #endif
+  // soap-film rim (cool lavender, a touch of pink) + soft glint
+  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.4);
+  col = mix(col, vec3(0.8, 0.68, 1.0), fres * 0.42);
+  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 26.0);
+  col += vec3(1.0) * spec * 0.3;
+  col *= mix(0.68, 1.0, vInst.x);
+  col = mix(col, c5, vW5);
+  gl_FragColor = vec4(col, 1.0);
+  ${Tt}
+}
+`;function Ke(t){let e=t>>>0;return()=>{e=e+1831565813>>>0;let n=e;return n=Math.imul(n^n>>>15,n|1),n^=n+Math.imul(n^n>>>7,n|61),((n^n>>>14)>>>0)/4294967296}}function ra(t){const e=Ct({uTime:{value:0},uLightDir:{value:new w(.3,1,.45).normalize()}});return{mat:new Rt({uniforms:e,vertexShader:sa,fragmentShader:ia,fog:!0,defines:t==="low"?{LOW_Q:1}:{}}),uniforms:e}}const la=`
+vec4 microFoam(vec2 p, float dens) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  float d1 = 8.0, d2 = 8.0;
+  vec2 r1 = vec2(0.0), h1 = vec2(0.0);
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 g = vec2(float(x), float(y));
+    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+    vec2 r = g + o - f;
+    float dd = dot(r, r);
+    if (dd < d1) { d2 = d1; d1 = dd; r1 = r; h1 = vec2(hash12(i + g + 7.3), hash12(i + g + 3.1)); }
+    else if (dd < d2) d2 = dd;
+  }
+  d1 = sqrt(d1); d2 = sqrt(d2);
+  float rad = 0.17 + 0.2 * h1.x;
+  float on = step(h1.y, dens);
+  vec2 dir = -r1 / max(d1, 1e-4);
+  float hole = (1.0 - smoothstep(rad * 0.68, rad, d1)) * on;
+  float ring = smoothstep(rad * 0.7, rad, d1) * (1.0 - smoothstep(rad, rad * 1.55, d1));
+  float lip = ring * on * clamp(dot(dir, vec2(0.6, -0.8)) * 0.7 + 0.45, 0.0, 1.0);
+  float dome = smoothstep(0.0, 0.32, d2 - d1);
+  float speck = (1.0 - smoothstep(0.03, 0.08, length(-r1 - vec2(-0.13, 0.15)))) * (1.0 - on) * step(0.55, h1.x);
+  return vec4(hole, lip, dome, speck);
+}
+`,ca=`
+varying vec2 vP;
+varying vec3 vInst;
+varying float vBig;
+varying vec3 vCv;
+varying float vR;
+#include <fog_pars_vertex>
+void main() {
+  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+  float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);
+  vec4 mvPosition = viewMatrix * c;
+  vCv = mvPosition.xyz;
+  vR = r;
+  // wave 7: 0 for bubbles <= ~18 px, 1 for >= ~40 px on screen (the ref's big near bumps show large white caps)
+  vBig = smoothstep(0.012, 0.026, projectionMatrix[1][1] * r / max(-mvPosition.z, 0.01));
+  mvPosition.xyz += normalize(-mvPosition.xyz) * r * 0.6;
+  mvPosition.xy += position.xy * r;
+  vP = position.xy;
+  vInst = instanceColor;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,ma=`
+uniform mat4 projectionMatrix;
+uniform vec3 uLightDir;
+uniform float uTime;
+varying vec2 vP;
+varying vec3 vInst;
+varying float vBig;
+varying vec3 vCv;
+varying float vR;
+#include <fog_pars_fragment>
+${Nt}
+${ao}
+${la}
+void main() {
+  float px = 2.0 / max(fwidth(vP.x), 1e-4);
+  float d = length(vP);
+  float ang = atan(vP.y, vP.x);
+  float nS = clamp(floor(px / 8.0), 5.0, 16.0);
+  float sc = abs(sin(ang * nS * 0.5 + vInst.y * 31.0));
+  float amp = 0.11 * smoothstep(16.0, 34.0, px) * smoothstep(0.45, -0.35, vP.y / max(d, 1e-3));
+  float R = 1.0 - amp * (1.0 - sc);
+  if (d > R) discard;
+  vec2 q = vP / R;
+  float z = sqrt(max(1.0 - dot(q, q), 0.0));
+  vec3 Nv = vec3(q, z);
+  vec4 clip = projectionMatrix * vec4(vCv + vR * vec3(vP, z * R), 1.0);
+  gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
+  // wave 7 ramp: white top caps, lavender-white bodies, periwinkle / blue undersides; lower / side silhouette = the
+  // blue-violet crevice between piled bubbles; inner / lower bubbles of a pile (ambient occlusion vInst.x) bluer
+  // wave 8: steeper key light from the upper left (ref lumps: white caps only on the lit top, lavender middle, blue lower
+  // half); soapT put a sphere's centre at t ~0.86 (near white), so the clumps read grey-white
+  float tl = dot(Nv, normalize(vec3(-0.4, 0.85, 0.35)));
+  float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5) * (0.25 + 0.35 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;
+  // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
+  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 8.0, 1.2, 12.0) + vInst.y * 37.0;
+  float dens = clamp(0.25 + 0.9 * smoothstep(0.35, -0.6, q.y) + 0.35 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);
+  vec4 mf = microFoam(mp, dens);
+  float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
+  // wave 8 (it04): tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
+  // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)
+  // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps
+  t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);
+  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;
+  vec3 col = soap05(t + 0.04 * vInst.z);
+  col = mix(col, vec3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, t) * 0.3);
+  col += vec3(1.0) * mf.w * 0.45 * kf;
+  vec3 Lv = (viewMatrix * vec4(normalize(uLightDir), 0.0)).xyz;
+  float rl = max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0);
+  col += vec3(1.0) * (pow(rl, 24.0) * 0.25 + pow(rl, 6.0) * 0.1);
+  // tiny bubbles: lavender-white glossy body, thin blue rim, white speck (the lace at the ref waterlines)
+  float tiny = 1.0 - smoothstep(9.0, 16.0, px);
+  vec2 qs = vP - vec2(-0.32, 0.34);
+  vec3 cb = mix(soap05(0.8 + 0.1 * vInst.z), soap05(0.12), smoothstep(0.5, 0.95, d)) + vec3(1.0) * exp(-dot(qs, qs) * 14.0) * 0.55;
+  col = mix(col, cb, tiny);
+  gl_FragColor = vec4(col, 1.0);
+  ${Tt}
+}
+`;function ua(){const t=Ct({uTime:{value:0},uLightDir:{value:new w(.3,1,.45).normalize()}});return{mat:new Rt({uniforms:t,vertexShader:ca,fragmentShader:ma,fog:!0}),uniforms:t}}function co(t){const e=new Lo(1,t),n=e.attributes.position,c=e.attributes.normal,s=new w;for(let u=0;u<n.count;u++)s.fromBufferAttribute(n,u).normalize(),c.setXYZ(u,s.x,s.y,s.z);return e}const ne=-3.4,mo=15,Je=12.5,ha=[170,200],fa=135,va=!1,pa=[[58.457,.835,.581],[607.242,.459,.357],[267.601,1.094,.563]],se=[[2.6,60],[3.4,70],[4.4,105],[5.5,140],[6.6,158],[7.8,153],[9,135],[10.3,104],[11.6,70],[12.9,30]],da=80;function ga(t){if(t<=se[0][0])return se[0][1];for(let e=1;e<se.length;e++)if(t<=se[e][0]){const[n,c]=se[e-1],[s,u]=se[e];return c+(u-c)*(t-n)/(s-n)}return se[se.length-1][1]}const xa=1.3,wa=1.45;function yo(t){const e=t.stage("05"),n=(c,s,u)=>{const o=Math.min(1,Math.max(0,(u-c)/(s-c)));return o*o*(3-2*o)};return c=>1-.6*n(e.s0-6,e.s0-1,c)*(1-n(e.s1-1,e.s1+4,c))}const bo=(t,e)=>e<1&&t>Ht?Ht+(t-Ht)*e:t;function eo(t){return!le("match07")||!le("m07foam")?null:[t.marks["07_plunge_top"]+9,t.marks["07_plunge_bottom"]-12]}function Mo(t){if(!le("match07")||!le("m07foam")||!le("cx07OutletFoam"))return()=>1;const e=t.stage("08");return(n,c)=>{if(n<=e.s0||n>=e.s1)return 1;const s=jt.smoothstep(n,e.s0,e.s0+1.4),u=1-jt.smoothstep(n,e.s1-2.2,e.s1),o=jt.smoothstep(xo(n*.57,c),.4,.68);return jt.lerp(1,.1+.38*o,s*u)}}function ya(t,e,n,c,s){const u=yo(t),o=Mo(t),z=s==="high"?.32:.8,f=s==="high"?[Fe,-.4,-.25,-.1,.04,.18,.34,.52,.75,.98,Ae]:[Fe,-.2,.15,.55,Ae],L=Math.ceil((n-e)/z)+1,g=f.length,T=L*g*2,v=new Float32Array(T*3),F=new Float32Array(T*3),b=new w;let P=0;const l=[];for(let A=0;A<L;A++){const $=Math.min(n,e+A*z);l.push($);const x=t.sample($),Q=t.widthAt($)/2;for(const et of[-1,1]){const O=o($,et);for(let Y=0;Y<g;Y++){const st=f[Y],mt=u($),ut=bo(wo($,st,et,Q),mt),X=st>0?st*(.1+.9*mt):st,Mt=O===1?ut:Ht+(ut-Ht)*O;b.copy(x.pos).addScaledVector(x.right,et*(Q+X*O)).addScaledVector(x.up,Mt),b.toArray(v,P*3),F[P*3]=st,F[P*3+1]=$,F[P*3+2]=et,P++}}}const m=[],h=g*2;for(let A=0;A<L-1;A++){const $=l[A];if(!(l[A+1]>c[0]&&$<c[1]))for(let Q=0;Q<2;Q++)for(let et=0;et<g-1;et++){const O=A*h+Q*g+et,Y=O+1,st=O+h,mt=st+1;Q===1?m.push(O,Y,st,Y,mt,st):m.push(O,st,Y,Y,st,mt)}}const k=new ve;k.setAttribute("position",new kt(v,3)),k.setAttribute("aFoam",new kt(F,3)),k.setIndex(m),k.computeVertexNormals();const y=t.stage("05"),V=Ct({uTime:{value:0},uOutro:{value:new ie(0,t.stage("08").s0)},uLightDir:{value:new w(.3,1,.45).normalize()},uSt05:{value:new Wo(y.s0-1,y.s0+2,y.s1-1,y.s1+4)},uHide07:{value:new ie(...eo(t)??[0,0])}}),q=new Rt({uniforms:V,vertexShader:aa,fragmentShader:na,fog:!0,side:fe,defines:{...s==="low"?{LOW_Q:1}:{},...to&&!le("projfoam05")?{PROJ05:1}:{},...eo(t)?{HIDE07:1}:{}}}),R=new Zt(k,q);return R.name="foam_berm",R.frustumCulled=!1,{mesh:R,uniforms:V}}function ba(t,e){const{s0:n,s1:c,quality:s}=e,u=e.height??(()=>0),o=Ke(1337),z=s==="high"?1:.5,f=co(s==="high"?1:0),L=s==="high"?co(0):f,g=ra(s),T=g.mat,v=new Pe;v.name="foam_banks";const F=t.stage("03"),b=t.stage("04"),P=24,l=[];let m=0;const h=new Me,k=new ho,y=new w,V=new Uo,q=new Vo,R=[],A=eo(t),$=(a,S,d,p)=>{if(!a.length)return;const W=a.reduce((C,ot)=>C+(ot.imp?0:1),0),I=W?new Ne(f,T,W):null;let N=0;for(const C of a){k.setFromEuler(V.set(o()*6,o()*6,o()*6)),y.set(C.r,C.r*(.78+o()*.22),C.r);const ot=o();if(C.imp){R.push({p:C.p,r:C.r,c:[C.ao,ot,C.tint]});continue}A&&C.s!==void 0&&C.s>A[0]+1.5&&C.s<A[1]-1.5&&y.set(0,0,0),h.compose(C.p,k,y),I.setMatrixAt(N,h),I.setColorAt(N,q.setRGB(C.ao+2*Math.round(Math.min(1,Math.max(0,C.w5??0))*8),ot,C.tint)),N++}I&&(I.instanceMatrix.needsUpdate=!0,I.instanceColor&&(I.instanceColor.needsUpdate=!0),I.computeBoundingSphere(),S.add(I),l.push({mesh:I,sa:d,sb:p}),m+=W)},x=[F.s0+4,b.s0-6],Q=ya(t,n,c,x,s);v.add(Q.mesh);const et=a=>a>x[0]&&a<x[1],O=t.stage("05"),Y=yo(t),st=Mo(t),mt=a=>a>O.s0-4&&a<O.s1+2,ut=a=>a>O.s0+2&&a<O.s1-2,X=(a,S,d,p)=>{const W=t.sample(a),I=t.widthAt(a)/2,N=Y(a),C=bo(wo(a,S,d,I),N)+p,ot=S>0?S*(.1+.9*N):S,yt=st(a,d),it=yt===1?C:Ht+(C-Ht)*yt;return W.pos.clone().addScaledVector(W.right,d*(I+ot*yt)).addScaledVector(W.up,it)},Mt=(a,S,d,p,W,I,N)=>{const C=Math.min(c,Math.max(n,S));if(et(C))return;const ot=ut(C);if(ot){const yt=he(C*13.1+d*7.7+p*3.3);W*=.5+.95*yt*yt,I-=.4*W}W*=Math.sqrt(st(C,p)),a.push({p:X(C,d,p,I),r:W,ao:N,tint:o()*2-1,w5:Vt(C),imp:ot,s:C})},zt=(a,S,d)=>{const p=Math.min(1,Math.max(0,(d-a)/(S-a)));return p*p*(3-2*p)},Vt=a=>zt(O.s0-1,O.s0+2,a)*(1-zt(O.s1-1,O.s1+4,a)),Ft=s==="high"?.36:.62;for(let a=n;a<c;a+=P){const S=Math.min(c,a+P),d=[];for(let p=a;p<S;p+=Ft)if(!et(p)){for(const W of[-1,1]){const I=s==="high"&&o()<.55?2:1;for(let N=0;N<I;N++){const C=(.11+o()*.13)*(mt(p)?.85:1);Mt(d,p+(o()-.5)*Ft,-.32+o()*.82,W,C,C*(.05+o()*.3),.8+.2*o())}if(o()<.65){const N=.06+o()*.06;Mt(d,p+(o()-.5)*Ft,-.58+o()*.28,W,N,N*.15,.9)}}if(o()<(s==="high"?.16:.1)){const W=o()<.5?-1:1,I=5+(o()*6|0),N=-.1+o()*.55,C=mt(p);for(let ot=0;ot<I;ot++){const yt=(.15+o()*.18)*(C?.6:1),it=ot>2&&o()<.4&&!C?yt*.65:0,J=yt*(.1+o()*.45)+it;Mt(d,p+(o()-.5)*1.8,N+(o()-.5)*.55,W,yt,J,.72+.28*Math.min(1,J/(yt*.9)))}}}$(d,v,a-2,S+2)}{const a=Ke(9091),S=s==="high"?7:3;for(let d=O.s0+2;d<O.s1-2;d+=Ft)for(const p of[-1,1])for(let W=0;W<S;W++){const I=d+(a()-.5)*Ft,N=W<3,C=N?-.6+a()*.35:-.35+a()*.75,ot=a(),yt=N?.025+.03*ot*ot:.035+.06*ot*ot;R.push({p:X(I,C,p,yt*(N?.2:-.1)),r:yt,c:[N?.95:.75+.25*a(),a(),a()*2-1]})}}const Pt=new Pe;Pt.name="foam_whirlpool";const Z=ce.basin;Pt.position.set(Z.center.x,0,Z.center.z);const Bt=[],lt=Math.round(26*z);for(let a=0;a<lt;a++){const S=o()*Math.PI*2,d=10+(o()*16|0);for(let p=0;p<d;p++){const W=S+(o()-.5)*.35,I=Z.rimRadius-.7+(o()-.4)*1.3,N=.18+o()*.42;Bt.push({p:new w(I*Math.sin(W),ue(I)+ze+N*.35+o()*.55,I*Math.cos(W)),r:N,ao:.75+.25*o(),tint:o()*2-1})}}const Ot=Math.round(200*z);for(let a=0;a<Ot;a++){const S=o()*Math.PI*2,d=Z.rimRadius-.4+(o()-.5)*.6,p=.1+o()*.18;Bt.push({p:new w(d*Math.sin(S),ue(d)+ze+p*.3,d*Math.cos(S)),r:p,ao:.85+.15*o(),tint:o()*2-1})}const te=Math.round(60*z);for(let a=0;a<te;a++){const S=a%3*Math.PI*2/3+.4,d=3+o()*(Z.rimRadius-3.6),p=S+go*Math.log(d)+(o()-.5)*.12,W=.07+o()*.13;Bt.push({p:new w(d*Math.sin(p),ue(d)+ze+W*.3,d*Math.cos(p)),r:W,ao:.85+.15*o(),tint:o()*2-1})}$(Bt,Pt,F.s0-30,b.s0+25),v.add(Pt);const i=t.stage("05"),_=(a,S,d)=>{const p=Math.min(1,Math.max(0,(d-a)/(S-a)));return p*p*(3-2*p)},r=s==="high"?40:22,U=s==="high"?7:5,tt=new Float32Array(2*r*U*3),E=new Float32Array(2*r*U*3),D=[];for(let a=0;a<2;a++)for(let S=0;S<r-1;S++)for(let d=0;d<U-1;d++){const p=(a*r+S)*U+d,W=p+1,I=p+U,N=I+1;Ma(D,a,p,W,I,N)}const H=new ve;H.setAttribute("position",new kt(tt,3).setUsage(re)),H.setAttribute("aFoam",new kt(E,3).setUsage(re)),H.setAttribute("normal",new kt(new Float32Array(2*r*U*3),3).setUsage(re)),H.setIndex(D);const B=new Zt(H,Q.mesh.material);B.name="foam_flank",B.frustumCulled=!1,B.visible=!1,v.add(B);const St=new Float32Array(r);for(let a=0;a<r;a++)St[a]=ne+(mo-ne)*Math.pow(a/(r-1),1.5);const wt=[new Float32Array(r),new Float32Array(r)],ht=[new Float32Array(r),new Float32Array(r)],rt=[new Float32Array(r),new Float32Array(r)],ct=[new Float32Array(r),new Float32Array(r)],vt=(a,S)=>.7*me(a*.5+S*17.3)+.3*me(a*1.15+S*5.1),qt=(a,S)=>{const[d,p,W]=pa[S];return _(W,W+.12,.65*me(a*p+d)+.35*me(a*p*2.3+d*1.7+11))},$t=[new Float32Array(r),new Float32Array(r)],M=(a,S,d)=>{const p=.035+.05*me(S*1.4+d*9.1+40),W=Math.min(1,a/.3);return-.05+(.05+p)*(1-(1-W)*(1-W))},G=s==="high"?.16:.3,ft=s==="high"?13:7,at=Math.ceil((Je-ne)/G)+3,Ut=2*at*ft,Gt=Ke(4242),pe=ua(),nt=new Ne(new oo(2,2),pe.mat,Ut);nt.name="foam_rafts",nt.frustumCulled=!1,nt.renderOrder=1;for(let a=0;a<Ut;a++){const S=a%ft;nt.setColorAt(a,q.setRGB(S<2||S>=8?.86+.1*Gt():.8+.2*Gt(),Gt(),Gt()*2-1)),nt.setMatrixAt(a,h.makeScale(0,0,0))}nt.instanceColor&&(nt.instanceColor.needsUpdate=!0),nt.visible=!1,v.add(nt),m+=Ut;const _t=new Ne(nt.geometry,pe.mat,Math.max(1,R.length));_t.name="foam_rim05",_t.frustumCulled=!1,_t.count=R.length,R.forEach((a,S)=>{_t.setMatrixAt(S,h.makeScale(a.r,a.r,a.r).setPosition(a.p)),_t.setColorAt(S,q.setRGB(a.c[0],a.c[1],a.c[2]))}),_t.instanceMatrix.needsUpdate=!0,_t.instanceColor&&(_t.instanceColor.needsUpdate=!0),v.add(_t),m+=R.length;const Po=s==="high"?[[-.04,.12,.01,.016,.2,1],[0,.14,.014,.02,.1,1],[.12,.5,.065,.06,-.3,1],[.2,.55,.06,.055,-.2,1],[.2,.5,.1,.06,-.5,.6],[.6,.4,.065,.05,-.15,1],[.05,.9,.022,.024,.35,1],[.3,.65,.045,.045,-.05,1],[-.16,.16,.007,.011,.3,.7],[0,.5,.016,.018,.25,1],[.1,.8,.013,.016,.55,.8],[-.08,.3,.008,.01,.35,.8],[.4,.6,.02,.02,.3,.8]]:[[-.04,.12,.012,.018,.15,1],[.12,.5,.065,.06,-.25,1],[.15,.5,.1,.05,-.45,.7],[.55,.45,.065,.05,-.1,1],[.1,.8,.05,.05,0,1],[0,.6,.02,.02,.3,1],[-.12,.25,.009,.012,.3,.8]],So=s==="high"?[4,5,7]:[2,3],ko=s==="high"?[2,3]:[1],pt={s:0,lat:0,str:0,target:0,fed:!1},dt={s:0,pos:new w,tan:new w,up:new w,right:new w},Ce=new w,De=new w,no=new w,Re=[];let Be=0,so=0;const qe=(a,S)=>De.copy(dt.pos).addScaledVector(dt.right,S).addScaledVector(dt.up,so).project(a).x,Ee=(a,S,d,p)=>{let W=qe(a,d)-S,I=qe(a,p)-S;for(let N=0;N<5&&Math.abs(I)>1e-4;N++){const C=I-W;if(Math.abs(C)<1e-7)break;const ot=Math.max(-14,Math.min(14,p-I*(p-d)/C));d=p,W=I,p=ot,I=qe(a,p)-S}return p},_o=()=>{for(let a=0;a<Ut;a++)nt.setMatrixAt(a,h.makeScale(0,0,0));nt.instanceMatrix.needsUpdate=!0},zo=(a,S,d,p,W)=>{pt.fed||(pt.target=0),pt.fed=!1,pt.str=S>0?pt.str+(pt.target-pt.str)*Math.min(1,S*4):pt.target;const I=_(i.s0+2,i.s0+7,d)*(1-_(i.s1-7,i.s1-2,d))*pt.str*(1-p);Re.length=0,Be=0;const N=W;if(!(I>.01&&!!N&&N.isPerspectiveCamera)){nt.visible&&_o(),nt.visible=!1,B.visible=!1;return}nt.visible=!0,B.visible=va,pe.uniforms.uTime.value=a,N.updateMatrixWorld(),N.getWorldPosition(no);let ot=0;for(let it=0;it<2;it++){const J=it===0?-1:1;for(let At=0;At<r;At++){const It=St[At],bt=Math.min(c,Math.max(n,pt.s+It));t.sample(bt,dt);const Kt=t.widthAt(bt)/2;so=u(bt,J*2.5,a);const Jt=De.copy(no).sub(dt.pos).dot(dt.right),Xt=vt(bt,J);let ee,de,Qt;if(it===0){const j=_(-.6,.2,It);Qt=qt(bt,0),ee=214+(ha[0]*(.72+.28*Xt)-214)*j,de=157+(fa-157)*j}else{const j=_(1.4,2.6,It);Qt=qt(bt,2)+(qt(bt,1)-qt(bt,2))*j,ee=214+(ga(It)*(.85+.3*Xt)-214)*j,de=150+(da-150)*j}$t[it][At]=Qt;const oe=2*ee/864*Qt,Te=oe-2*de/864,Lt=Ee(N,J,Jt+J*1.5,Jt+J*3),ge=oe>.002?Ee(N,J*(1-oe),Jt+J*1,Lt):Lt,Se=Te>.004?Ee(N,J*(1-Te),ge,Lt):Lt,ke=_(-.5,-1.2,It),je=xa*(1-_(2.5,4.5,Math.abs(It)))*(1-.68*ke),He=wa*(1-.75*ke);let gt=Math.max(J*ge,J*pt.lat+je,J*fo(t,bt)+He);gt=Math.min(gt,Kt-.3);const Dt=Math.max(gt+.12,Math.min(Se===Lt?J*Lt+.55:J*Se,Kt+.15));gt=Dt-(Dt-gt)*I,wt[it][At]=J*gt,ht[it][At]=J*Dt;const ae=u(bt,J*gt,a),xe=u(bt,J*Dt,a);if(rt[it][At]=ae,ct[it][At]=xe,Re.length<80&&At%2===0){const j=De.copy(dt.pos).addScaledVector(dt.right,J*gt).addScaledVector(dt.up,ae).project(N);Re.push({kind:J<0?"L":"R",ds:+It.toFixed(2),lat:+(J*gt).toFixed(2),k:+(Dt-gt).toFixed(2),y:+((1-j.y)/2).toFixed(3),x:+((1+j.x)/2).toFixed(3),env:+Qt.toFixed(2),s:+bt.toFixed(2)})}for(let j=0;j<U;j++){const we=Math.pow(j/(U-1),.85),Oe=J*(gt+Math.min(.1,(Dt-gt)*.3)+(Dt-gt-Math.min(.1,(Dt-gt)*.3))*we),Ve=_(.06,.45,Qt),$e=ae+(xe-ae)*we+M(we,bt,J)*Ve-.1*(1-Ve);Ce.copy(dt.pos).addScaledVector(dt.right,Oe).addScaledVector(dt.up,$e),Ce.toArray(tt,ot*3),E[ot*3]=2*((we-.3)*(Dt-gt)),E[ot*3+1]=2*bt,E[ot*3+2]=J,ot++}}}const yt=Math.floor((pt.s+ne)/G);for(let it=0;it<2;it++){const J=it===0?-1:1;for(let At=0;At<at;At++){const It=yt+At,bt=(It%at+at)%at,Kt=j=>he(It*7.13+J*3.7+j*1.31),Jt=(It+.5+(Kt(0)-.5)*.7)*G,Xt=Jt-pt.s,ee=(it*at+bt)*ft,de=I*(1-_(Je-1.5,Je,Xt))*_(ne,ne+.3,Xt);if(de<.02||Jt<n||Jt>c){for(let j=0;j<ft;j++)nt.setMatrixAt(ee+j,h.makeScale(0,0,0));continue}const Qt=Math.pow(Math.min(1,Math.max(0,(Xt-ne)/(mo-ne))),1/1.5)*(r-1),oe=Math.min(r-2,Math.floor(Qt)),Te=Qt-oe,Lt=j=>j[oe]+(j[oe+1]-j[oe])*Te,ge=Lt(wt[it]),Se=Lt(ht[it]),ke=Lt(rt[it]),je=Lt(ct[it]),He=_(.06,.45,Lt($t[it])),gt=Math.abs(Se-ge);t.sample(Jt,dt);const Dt=Math.min(2,.9+.1*Math.max(0,Xt))*de*Math.min(1,gt/.3)*He,ae=J>0?_(1.4,2.6,Xt):0,xe=1-_(2,3,Xt);for(let j=0;j<ft;j++){const[we,Oe,Ve,$e,Ge,Fo]=Po[j];if(Kt(10+j)>Fo||ae>.5&&So.includes(j)){nt.setMatrixAt(ee+j,h.makeScale(0,0,0));continue}const Le=.5+(Math.min(1,we+Oe*Kt(20+j))-.5)*(1-.25*xe),io=ko.includes(j)&&Kt(50+j)<.22,_e=(Ve+$e*Kt(30+j))*Dt*(1-.3*ae)*(io?1.55:1)*(1+.05*xe),Ao=(Ge<0?Ge:Ge*(1-.5*ae))*(io?.45:1)+.12*xe*Math.sin(Math.PI*Le);if(_e<.004){nt.setMatrixAt(ee+j,h.makeScale(0,0,0));continue}const Co=ge+(Se-ge)*Le,Ro=ke+(je-ke)*Le+M(Le,Jt,J)+_e*Ao;Ce.copy(dt.pos).addScaledVector(dt.right,Co).addScaledVector(dt.up,Ro).addScaledVector(dt.tan,(Kt(40+j)-.5)*G),h.makeScale(_e,_e,_e).setPosition(Ce),nt.setMatrixAt(ee+j,h),Be++}}}nt.instanceMatrix.needsUpdate=!0};return{group:v,whirlGroup:Pt,berm:Q.mesh,rafts:nt,rim05:_t,flank:B,instanceCount:m,rider(a,S,d){pt.s=a,pt.lat=S,pt.target=d,pt.fed=!0},qaRafts:()=>({visible:nt.visible,puffs:Ut,shown:Be,clumps:Re.slice()}),update(a,S,d,p=0,W){Q.uniforms.uTime.value=a,Q.uniforms.uOutro.value.x=p;const I=t.stage("08").s0;g.uniforms.uTime.value=a;for(let N=0;N<l.length;N++){const C=l[N];C.mesh.visible=C.sb>d-12&&C.sa<d+130&&!(p>.3&&C.sb>I+8),C.mesh.visible&&(C.mesh.geometry=C.sb>d-12&&C.sa<d+30?f:L)}_t.visible=R.length>0&&i.s1-2>d-12&&i.s0+2<d+130&&p<.3,Pt.rotation.y=-a*.45*(Math.PI*2/3),zo(a,S,d,p,W)}}}function Ma(t,e,n,c,s,u){e===1?t.push(n,c,s,c,u,s):t.push(n,s,c,c,s,u)}const Pa=`
+attribute float aSeed;
+uniform float uFocal;   // pixels per unit at depth 1 (viewport height / (2 tan(fov/2)))
+uniform float uMaxPx;   // cap on the on-screen diameter
+uniform float uNear;    // fade-out distance from the camera
+varying vec2 vP;
+varying float vSeed;
+varying float vFade;
+varying float vPx;
+#include <fog_pars_vertex>
+void main() {
+  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+  float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);
+  vec4 cv = viewMatrix * c;
+  float depth = max(-cv.z, 0.01);
+  float px = 2.0 * r * uFocal / depth;
+  float k = min(1.0, uMaxPx / max(px, 1e-3));
+  r *= k;
+  vPx = px * k;
+  vFade = smoothstep(uNear, uNear * 1.8, depth) * step(0.0005, r);
+  vP = position.xy;
+  vSeed = aSeed;
+  vec4 mvPosition = cv + vec4(position.xy * r, 0.0, 0.0);
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Sa=`
+uniform float uTime;
+varying vec2 vP;
+varying float vSeed;
+varying float vFade;
+varying float vPx;
+#include <fog_pars_fragment>
+${Nt}
+void main() {
+  float d2 = dot(vP, vP);
+  if (d2 > 1.0 || vFade < 0.01) discard;
+  float d = sqrt(d2);
+  float z = sqrt(1.0 - d2);
+  float f = 1.0 - z;                                   // 0 centre → 1 silhouette
+  // swirling thin film: magenta / violet / cyan bands with a little gold (ref 05)
+  float sw = vnoise(vP * 2.2 + vec2(uTime * 0.3 + vSeed * 13.0, vSeed * 7.0));
+  float hue = f * 0.85 + sw * 0.75 + vP.x * 0.25 - vP.y * 0.2 + vSeed;
+  vec3 film = iridescent(hue);
+  film = vec3(film.r, film.g * 0.55 + 0.1, min(1.0, film.b * 1.1 + 0.1));   // less green
+  film *= 0.74;                                        // stay under the tone-mapping knee: saturated
+  float rim = smoothstep(0.5, 0.97, d);
+  float edge = smoothstep(0.88, 0.97, d) * (1.0 - smoothstep(0.975, 1.0, d));
+  // window highlights: a soft bright pane up-left, a small one down-right, sparkle dots on the rim
+  vec2 q1 = (vP - vec2(-0.36, 0.42)) * vec2(2.2, 3.0);
+  float hl = exp(-dot(q1, q1) * 2.2) * 1.2;
+  vec2 q2 = vP - vec2(0.42, -0.45);
+  hl += exp(-dot(q2, q2) * 55.0) * 0.7;
+  float ang = atan(vP.y, vP.x);
+  hl += smoothstep(0.8, 0.93, d) * (1.0 - smoothstep(0.95, 1.0, d)) * pow(max(0.0, sin(ang * 4.0 + vSeed * 31.0)), 30.0) * 0.9;
+  // tiny bubbles: keep only the ring + one glint (no shimmering detail below ~14 px)
+  float small = 1.0 - smoothstep(10.0, 22.0, vPx);
+  hl *= 1.0 - 0.5 * small;
+  vec3 col = film * (0.55 + 0.75 * rim) + vec3(1.0) * edge * 0.45 + vec3(1.05) * hl;
+  float a = 0.14 + 0.1 * sw + rim * 0.6 + edge * 0.35 + hl;
+  gl_FragColor = vec4(col, clamp(a, 0.0, 0.95) * vFade);
+  ${Tt}
+}
+`,ka=`
+attribute float aSize;
+attribute float aSeed;
+uniform float uScale;
+uniform float uMaxPx;
+varying float vSeed;
+varying float vPx;
+#include <fog_pars_vertex>
+void main() {
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  float px = aSize * uScale / max(-mvPosition.z, 0.01);
+  gl_PointSize = aSize > 0.0 ? clamp(px, 2.0, uMaxPx) : 0.0;
+  vPx = gl_PointSize;
+  vSeed = aSeed;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,_a=`
+uniform float uTime;
+varying float vSeed;
+varying float vPx;
+#include <fog_pars_fragment>
+${Nt}
+void main() {
+  vec2 c = gl_PointCoord - 0.5;
+  float d = length(c) * 2.0;
+  if (d > 1.0) discard;
+  float ring = smoothstep(0.5, 0.85, d) * (1.0 - smoothstep(0.9, 1.0, d));
+  vec3 irid = iridescent(d * 0.7 + vSeed + atan(c.y, c.x) * 0.12);
+  irid = vec3(irid.r, irid.g * 0.55 + 0.1, irid.b) * 0.8;
+  float hl = smoothstep(0.26, 0.0, length(c - vec2(-0.17, -0.17)));
+  vec3 col = mix(vec3(1.0), irid, 0.6) * ring * 1.2 + vec3(1.0) * hl * 1.4 + irid * 0.25;
+  // tiny sprites must not read as solid white dots: keep rim + glint, fade the very smallest
+  float alpha = clamp(ring * 0.8 + hl + 0.12, 0.0, 1.0) * (0.35 + 0.65 * smoothstep(3.0, 8.0, vPx));
+  gl_FragColor = vec4(col, alpha);
+  ${Tt}
+}
+`;let Ue=2827;function Yt(){Ue=Ue+1831565813>>>0;let t=Ue;return t=Math.imul(t^t>>>15,t|1),t^=t+Math.imul(t^t>>>7,t|61),((t^t>>>14)>>>0)/4294967296}function xt(t,e){return t+Yt()*(e-t)}const za={high:{big:19,small:12,small05:22},low:{big:14,small:8,small05:12}},Fa=.19,Xe=24,Qe=[25,65],uo=66,Aa=120,Ye=22;function Ca(t,e){const n=e.quality,c=za[n],s=Math.max(c.big,16),u=n==="high"?170:80,o=new Pe;o.name="bubbles";const z=ce.drumA,f=t.marks["02_drain"]??t.stage("03").s0,L=t.stage("05"),g=new oo(2,2),T=new Float32Array(s).map(()=>Yt());g.setAttribute("aSeed",new Ie(T,1));const v=Ct({uTime:{value:0},uFocal:{value:1e3},uMaxPx:{value:uo},uNear:{value:3.2}}),F=new Ne(g,new Rt({uniforms:v,vertexShader:Pa,fragmentShader:Sa,fog:!0,transparent:!0,depthWrite:!1}),s);F.name="bubbles_big",F.frustumCulled=!1,F.renderOrder=5,o.add(F);const b=new Float32Array(u*3),P=new Float32Array(u),l=new Float32Array(u).map(()=>Yt()),m=new ve;m.setAttribute("position",new kt(b,3).setUsage(re)),m.setAttribute("aSize",new kt(P,1).setUsage(re)),m.setAttribute("aSeed",new kt(l,1));const h=Ct({uTime:{value:0},uScale:{value:600},uMaxPx:{value:Ye}}),k=new vo(m,new Rt({uniforms:h,vertexShader:ka,fragmentShader:_a,fog:!0,transparent:!0,depthWrite:!1}));k.name="bubbles_small",k.frustumCulled=!1,k.renderOrder=4,o.add(k);const y=()=>({s:0,pos:new w,vel:new w,size:1,phase:0,age:0,life:1}),V=Array.from({length:s},y),q=Array.from({length:u},y),R=new w,A=new w,$=new w,x={pos:new w,dir:new w(0,0,-1),right:new w(1,0,0),up:new w(0,1,0),tanV:.6,tanH:.34,inv:new Me,ok:!1},Q=(i,_=0)=>{if(!x.ok)return 1;const r=$.copy(i).applyMatrix4(x.inv),U=-r.z;if(U<2.5)return-1;const tt=r.x/(U*x.tanH),E=r.y/(U*x.tanV);if(Math.abs(tt)>1.12||E<-1.12||E>1.1)return-1;if(E>.62)return 0;const D=_/(U*x.tanH),H=E<.1?.47:.3;if(Math.abs(tt)-D<H)return 0;if(Y>1&&E<=O[Y-1]&&E>=O[0]-.4){let B=0;for(;B<Y-2&&O[B+1]<E;)B++;const St=Math.min(1,Math.max(0,(E-O[B])/Math.max(1e-4,O[B+1]-O[B]))),wt=et[B]+(et[B+1]-et[B])*St;if(Math.abs(tt-wt)-D<Fa)return 0}return 1},et=new Float32Array(Xe),O=new Float32Array(Xe);let Y=0,st=1e3,mt=1;const ut={s:0,pos:new w,tan:new w,up:new w,right:new w},X={s:0,pos:new w,tan:new w,up:new w,right:new w},Mt=new w,zt=(i,_,r,U)=>{if(i.phase=Yt()*6.28,i.age=U?xt(.5,3):0,i.life=xt(7,15),_<f){const H=xt(0,Math.PI*2),B=Math.sqrt(Yt())*(z.radius-.9),St=z.center.x+Math.cos(H)*B,wt=r?xt(z.waterY-.2,z.center.y+z.radius*.7):xt(z.waterY+.05,z.waterY+1.6),ht=xt(z.zBack+.6,z.zDoor-.4);i.pos.set(St,wt,ht),i.s=_,i.vel.set(xt(-.15,.15),xt(.05,.25),xt(-.1,.1)),i.size=r?Yt()<.25?xt(.45,.85):xt(.16,.42):xt(.05,.16);return}t.sample(Math.max(e.sStart,_),ut);const tt=Yt()<.5?-1:1,E=1536;let D=6;for(let H=0;H<5;H++){const St=1-2*(U?xt(530,1290):xt(530,820))/E,wt=tt*xt(r?.55:.5,.97);Mt.copy(x.dir).addScaledVector(x.right,wt*x.tanH).addScaledVector(x.up,St*x.tanV);const ht=Mt.dot(ut.up);let rt=ht<-.001?A.copy(ut.pos).sub(x.pos).dot(ut.up)/ht:40;rt=Math.min(40,Math.max(3,rt)),D=Math.max(3.9,rt*xt(r?.55:.6,.92));let ct=_;for(let M=0;M<4;M++){R.copy(x.pos).addScaledVector(Mt,D),ct=_;for(let at=0;at<2;at++)t.sample(Math.min(t.length,Math.max(e.sStart,ct)),X),ct+=A.copy(R).sub(X.pos).dot(X.tan);ct=Math.min(t.length-.3,Math.max(e.sStart,ct)),t.sample(ct,X);const G=t.widthAt(ct)/2,ft=A.copy(R).sub(X.pos).dot(X.right);if(Math.abs(ft)<=G+Ae+.3)break;D*=.85}const vt=A.copy(R).sub(X.pos).dot(X.up);vt<.15&&R.addScaledVector(X.up,.15-vt),i.pos.copy(R),i.s=ct;const qt=t.prop(ct,"speed")*(r?.1:.2);i.vel.copy(X.tan).multiplyScalar(qt).addScaledVector(X.up,xt(.04,.16));const $t=Math.max(2.5,A.copy(i.pos).sub(x.pos).dot(x.dir));if(r){const M=Qe[0]+(Qe[1]-Qe[0])*Math.pow(Yt(),1.25);i.size=jt.clamp(M*mt*$t/(2*st),.05,.5)}else{const M=6+14*Math.pow(Yt(),1.4);i.size=jt.clamp(M*mt*$t/st,.02,.3)}if(Q(i.pos,r?i.size:i.size*.5)>0)break}};let Vt=-1e9;const Ft=new w(1e9,1e9,1e9),Pt=new Me,Z=new ho,Bt=new w,lt=new w,Ot=new Me,te=new w;return{group:o,big:F,small:k,counts:{big:s,small:u},qaScreen(i,_,r){const U={big:[],small:[]};if(!i.isPerspectiveCamera)return U;const tt=r/(2*Math.tan(jt.degToRad(i.fov)/2)),E=v.uMaxPx.value*(r/(window.innerHeight*Math.min(2,window.devicePixelRatio||1)));for(let D=0;D<s;D++){if(F.getMatrixAt(D,Ot),te.setFromMatrixScale(Ot),te.x<1e-4)continue;lt.setFromMatrixPosition(Ot);const H=lt.clone().applyMatrix4(i.matrixWorldInverse).z*-1;H<.1||(lt.project(i),!(Math.abs(lt.x)>1.05||Math.abs(lt.y)>1.05)&&U.big.push([Math.round((lt.x*.5+.5)*_),Math.round((.5-lt.y*.5)*r),Math.round(Math.min(E,2*te.x*tt/H))]))}for(let D=0;D<u;D++){if(P[D]<=0)continue;lt.fromArray(b,D*3);const H=lt.clone().applyMatrix4(i.matrixWorldInverse).z*-1;H<.1||(lt.project(i),!(Math.abs(lt.x)>1.05||Math.abs(lt.y)>1.05)&&U.small.push([Math.round((lt.x*.5+.5)*_),Math.round((.5-lt.y*.5)*r),Math.round(Math.min(Ye*(r/1536),P[D]*tt/H))]))}return U},update(i,_,r,U,tt=1){v.uTime.value=i,h.uTime.value=i;const E=U;if(x.ok=!!E.isPerspectiveCamera,x.ok&&(U.updateMatrixWorld(),x.inv.copy(U.matrixWorldInverse),U.getWorldPosition(x.pos),U.getWorldDirection(x.dir),x.right.setFromMatrixColumn(U.matrixWorld,0).normalize(),x.up.setFromMatrixColumn(U.matrixWorld,1).normalize(),x.tanV=Math.tan(jt.degToRad(E.fov)/2),x.tanH=x.tanV*E.aspect),Y=0,x.ok&&r>=f)for(let M=0;M<Xe;M++){const G=Math.min(t.length,r+1+M*M*.06+M*.5);t.sample(G,X),A.copy(X.pos).addScaledVector(X.right,fo(t,G)).addScaledVector(X.up,.05);const ft=A.applyMatrix4(x.inv),at=-ft.z;if(at<1)continue;const Ut=ft.y/(at*x.tanV);Y>0&&Ut<=O[Y-1]||(et[Y]=ft.x/(at*x.tanH),O[Y]=Ut,Y++)}const D=(typeof window<"u"?window.innerHeight:800)*(typeof window<"u"?Math.min(2,window.devicePixelRatio||1):1),H=E.isPerspectiveCamera?D/(2*Math.tan(jt.degToRad(E.fov)/2)):600,B=D/1536;st=H,mt=B;const St=x.ok&&Ft.distanceToSquared(x.pos)>4;x.ok&&Ft.copy(x.pos);const wt=Math.abs(r-Vt)>25||St&&r>=f,ht=Vt<f!=r<f;if(wt||ht){Ue=(2827^Math.round(r*16))>>>0;for(const M of V)zt(M,r,!0,!0);for(const M of q)zt(M,r,!1,!0)}Vt=r,h.uScale.value=H,h.uMaxPx.value=Ye*B,v.uFocal.value=H;const rt=r<f;v.uMaxPx.value=(rt?Aa:uo)*B,v.uNear.value=rt?1.2:2.6;const ct=(M,G)=>{if(M.age+=_,M.pos.addScaledVector(M.vel,_),R.set(Math.sin(i*1.3+M.phase),Math.cos(i*1.1+M.phase*1.7),Math.sin(i*.9+M.phase*.6)).multiplyScalar(.12*_),M.pos.add(R),rt){M.age>M.life&&zt(M,r,G,!1);return}const ft=M.s<Math.min(r,t.length-32)-(G?3:2),at=Q(M.pos,G?M.size:0);ft||at<0||M.age>M.life?zt(M,r,G,!1):at===0&&(M.life=Math.min(M.life,M.age+.25))},vt=Math.round((rt?Math.min(s,16):c.big)*tt),qt=r>L.s0+1&&r<L.s1-1,$t=Math.round((rt?u*.95:qt?c.small05:c.small)*tt);for(let M=0;M<s;M++){const G=V[M];ct(G,!0);const ft=M<vt?Math.min(1,G.age*1.5,(G.life-G.age)*2):0,at=G.size*Math.max(0,ft)*(1+.04*Math.sin(i*4+G.phase));Bt.set(at,at,at),Pt.compose(G.pos,Z,Bt),F.setMatrixAt(M,Pt)}F.instanceMatrix.needsUpdate=!0;for(let M=0;M<u;M++){const G=q[M];ct(G,!1),G.pos.toArray(b,M*3),P[M]=M<$t?G.size*Math.max(0,Math.min(1,G.age*3,(G.life-G.age)*3)):0}m.attributes.position.needsUpdate=!0,m.attributes.aSize.needsUpdate=!0}}}const Ra=`
+attribute float aSize;
+attribute float aAlpha;
+uniform float uScale;
+varying float vAlpha;
+#include <fog_pars_vertex>
+void main() {
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  gl_PointSize = clamp(aSize * uScale / -mvPosition.z, 1.0, 28.0);
+  vAlpha = aAlpha;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Ta=`
+varying float vAlpha;
+#include <fog_pars_fragment>
+void main() {
+  vec2 c = gl_PointCoord - 0.5;
+  float d = length(c) * 2.0;
+  if (d > 1.0) discard;
+  float body = 1.0 - smoothstep(0.7, 1.0, d);
+  float rim = smoothstep(0.45, 0.85, d) * body;
+  float hl = smoothstep(0.32, 0.0, length(c - vec2(-0.14, -0.14)));
+  vec3 col = mix(vec3(0.5, 0.88, 1.0), vec3(1.15, 1.18, 1.2), clamp(rim * 0.6 + hl, 0.0, 1.0));
+  gl_FragColor = vec4(col, (body * 0.38 + rim * 0.3 + hl * 0.5) * vAlpha);
+  ${Tt}
+}
+`;function Va(t){const e=t==="high"?600:220,n=new Float32Array(e*3),c=new Float32Array(e*3),s=new Float32Array(e),u=new Float32Array(e),o=new Float32Array(e).fill(1e9),z=new Float32Array(e).fill(1),f=new ve;f.setAttribute("position",new kt(n,3).setUsage(re)),f.setAttribute("aSize",new kt(s,1).setUsage(re)),f.setAttribute("aAlpha",new kt(u,1).setUsage(re));const L=Ct({uScale:{value:600}}),g=new vo(f,new Rt({uniforms:L,vertexShader:Ra,fragmentShader:Ta,fog:!0,transparent:!0,depthWrite:!1}));g.name="spray",g.frustumCulled=!1,g.renderOrder=6;let T=0;return{points:g,capacity:e,emit(v,F,b,P){const l=T;T=(T+1)%e,v.toArray(n,l*3),F.toArray(c,l*3),s[l]=b,o[l]=0,z[l]=P},update(v,F){const b=F,P=(typeof window<"u"?window.innerHeight:800)*(typeof window<"u"?Math.min(2,window.devicePixelRatio||1):1);L.uScale.value=b.isPerspectiveCamera?P/(2*Math.tan(jt.degToRad(b.fov)/2)):600;for(let l=0;l<e;l++){if(o[l]>z[l]){u[l]=0;continue}o[l]+=v,c[l*3+1]-=18*v,n[l*3]+=c[l*3]*v,n[l*3+1]+=c[l*3+1]*v,n[l*3+2]+=c[l*3+2]*v;const m=o[l]/z[l];u[l]=m<1?Math.min(1,(1-m)*2.5):0}f.attributes.position.needsUpdate=!0,f.attributes.aSize.needsUpdate=!0,f.attributes.aAlpha.needsUpdate=!0}}}const Wt={root0:1.25,root1:.72,dir0:.78,dir1:.1,rootMin:.56},ye=6,La=`
+attribute vec2 aUV;      // x: 0 tail .. 1 head (along the streak), y: -1..1 across
+attribute vec4 aJet;     // x: side (-1 / 1), y: across a (0 outer .. 1 inner), z: phase, w: seed
+uniform float uTime;
+uniform float uR;        // waterline radius of Benny's body (units): jet roots sit on this circle
+uniform float uLen;      // max jet length (units)
+uniform float uH;        // max arc height (units)
+uniform float uStrength; // 0..1
+varying vec2 vUV;
+varying float vTau;
+varying float vSeed;
+varying float vFroth;
+#include <fog_pars_vertex>
+float hs(float n) { return fract(sin(n * 91.345 + 3.17) * 43758.5453); }
+vec3 jetPos(float tau, float side, float a, float seed, float froth) {
+  float thR = mix(${Wt.root0.toFixed(3)}, ${Wt.root1.toFixed(3)}, a) + (hs(seed * 3.1) - 0.5) * 0.14;
+  // jets curl slightly outward as they fly (ref: the outer streaks bend towards the banks)
+  float phi = mix(${Wt.dir0.toFixed(3)}, ${Wt.dir1.toFixed(3)}, a) + (hs(seed * 5.7) - 0.5) * 0.3 + 0.18 * tau;
+  vec2 root = vec2(sin(thR), cos(thR)) * max(uR, ${Wt.rootMin.toFixed(3)}) * (0.9 + 0.12 * hs(seed * 2.3));
+  float len = uLen * (0.6 + 0.4 * hs(seed * 7.3)) * (0.85 + 0.15 * sin(3.14159 * a)) * (0.55 + 0.45 * uStrength);
+  len *= mix(1.0, 0.5, froth);
+  vec2 q = root + vec2(sin(phi), cos(phi)) * tau * len;
+  // most jets skim low over the water (ref: a flat fan), one in five is flung up as a high arc
+  float tall = step(0.8, hs(seed * 29.3));
+  float H = uH * mix(0.22 + 0.4 * hs(seed * 9.1), 1.0 + 0.35 * hs(seed * 9.1), tall) * (1.1 - 0.4 * a) * uStrength * mix(1.0, 0.4, froth);
+  float tp = pow(max(tau, 0.0), 0.7);
+  float y = H * 4.0 * tp * (1.0 - tp) - 0.012;
+  return vec3(side * q.x, y, q.y);
+}
+void main() {
+  float side = aJet.x;
+  float a = aJet.y;
+  float seed = aJet.w;
+  float froth = step(0.6, hs(seed * 17.9));
+  // life cycle: the streak's head runs from the root (tau 0) to the landing point (tau 1)
+  float rate = mix(1.5, 2.5, hs(seed * 11.3)) * mix(1.0, 1.4, froth);
+  float cyc = fract(aJet.z + uTime * rate);
+  float tl = mix(0.22, 0.5, hs(seed * 13.7)) * mix(1.0, 0.6, froth);
+  float head = cyc * (1.0 + tl);
+  float tau = clamp(head - (1.0 - aUV.x) * tl, 0.0, 1.0);
+  vec3 p = jetPos(tau, side, a, seed, froth);
+  vec3 tg = jetPos(min(tau + 0.03, 1.0), side, a, seed, froth) - jetPos(max(tau - 0.03, 0.0), side, a, seed, froth);
+  vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
+  vec2 tv = (modelViewMatrix * vec4(tg, 0.0)).xy;
+  float tl2 = length(tv);
+  vec2 nrm = tl2 > 1e-5 ? vec2(-tv.y, tv.x) / tl2 : vec2(0.0, 1.0);
+  // thin jets (≈2–5 px wide at Benny's distance), wider soft froth; tapered tail, round head
+  float w = mix(mix(0.011, 0.024, hs(seed * 19.1)), mix(0.05, 0.095, hs(seed * 23.3)), froth);
+  w *= mix(0.35, 1.0, smoothstep(0.0, 0.7, aUV.x)) * (0.7 + 0.3 * uStrength);
+  mvPosition.xy += nrm * aUV.y * w;
+  vUV = aUV;
+  vTau = tau;
+  vSeed = seed;
+  vFroth = froth;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Wa=`
+uniform float uStrength;
+varying vec2 vUV;
+varying float vTau;
+varying float vSeed;
+varying float vFroth;
+#include <fog_pars_fragment>
+${Nt}
+void main() {
+  float ac = abs(vUV.y);
+  float across = 1.0 - smoothstep(0.25, 1.0, ac);
+  float along = smoothstep(0.0, 0.75, vUV.x);
+  // fade in as it leaves the water under the fur, fade out as it falls back in
+  float life = smoothstep(0.0, 0.1, vTau) * (1.0 - smoothstep(0.78, 1.0, vTau));
+  // late in flight the jet breaks into droplet beads
+  float bead = 1.0 - smoothstep(0.18, 0.42, abs(fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5));
+  float breakup = smoothstep(0.42, 0.75, vTau);
+  float jet = across * along * mix(1.0, bead, breakup);
+  // froth: bubbly white lace (open cells), soft all round
+  float lc = cells(vec2(vUV.x * 2.6 + vSeed * 31.0, vUV.y * 1.3 + vSeed * 17.0));
+  float lace = (1.0 - smoothstep(0.25, 0.55, lc)) * (1.0 - smoothstep(0.5, 1.0, ac)) * smoothstep(0.0, 0.35, vUV.x);
+  float k = mix(jet, lace, vFroth);
+  float alpha = k * life * uStrength * mix(0.95, 0.75, vFroth);
+  if (alpha < 0.015) discard;
+  // white core, cyan translucent edges; froth slightly lavender in its crevices
+  vec3 cyan = vec3(0.42, 0.86, 1.0);
+  vec3 white = vec3(1.12, 1.14, 1.18);
+  vec3 col = mix(cyan, white, mix(smoothstep(0.1, 0.9, across) * (0.55 + 0.45 * along), 0.85, vFroth));
+  col = mix(col, vec3(0.86, 0.84, 1.06), vFroth * smoothstep(0.15, 0.4, lc) * 0.35);
+  gl_FragColor = vec4(col, alpha);
+  ${Tt}
+}
+`;function Na(t){const e=t==="high"?150:60,n=new Float32Array((ye+1)*2*2);for(let l=0;l<=ye;l++)n.set([l/ye,-1,l/ye,1],l*4);const c=[];for(let l=0;l<ye;l++){const m=l*2,h=m+1,k=m+2,y=m+3;c.push(m,k,h,h,k,y)}const s=new po;s.setAttribute("aUV",new kt(n,2)),s.setAttribute("position",new kt(new Float32Array((ye+1)*2*3),3)),s.setIndex(c);const u=e*2,o=new Float32Array(u*4);let z=0;for(const l of[-1,1])for(let m=0;m<e;m++){const h=y=>{const V=Math.sin(y*127.1+l*311.7)*43758.5453;return V-Math.floor(V)},k=Math.min(1,Math.max(0,(m+h(m*1.7))/e));o[z++]=l,o[z++]=.5+(k-.5)*(.75+.25*Math.abs(k-.5)*2),o[z++]=(m*.6180339+h(m*3.3)*.25)%1,o[z++]=h(m*5.1+.37)}s.setAttribute("aJet",new Ie(o,4)),s.instanceCount=u;const f=Ct({uTime:{value:0},uR:{value:.45},uLen:{value:1.25},uH:{value:.34},uStrength:{value:0}}),L=new Rt({uniforms:f,vertexShader:La,fragmentShader:Wa,fog:!0,transparent:!0,depthWrite:!1,side:fe}),g=new Zt(s,L);g.name="rider_splash",g.frustumCulled=!1,g.renderOrder=3,g.visible=!1;const T=new Me,v=new w,F=new w;let b=0,P=!1;return{mesh:g,uniforms:f,place(l,m,h,k,y){v.copy(m).multiplyScalar(-1),F.crossVectors(h,v).normalize(),T.makeBasis(F,h,v),g.quaternion.setFromRotationMatrix(T),g.position.copy(l),f.uR.value=k,b=y,P=!0},update(l,m){f.uTime.value=l,P||(b=0),P=!1;const h=f.uStrength.value,k=m>0?h+(b-h)*Math.min(1,m*6):b;f.uStrength.value=k,g.visible=k>.01}}}const be=8,Ua=`
+attribute vec2 aUV;      // x: 0 root .. 1 tail, y: -1..1 across
+attribute vec4 aJet;     // x: side, y: across a (0 outer .. 1 inner), z: phase, w: seed
+attribute float aType;
+uniform float uTime;
+uniform float uR;
+uniform float uLen;
+uniform float uStrength;
+varying vec2 vUV;
+varying float vSeed;
+varying float vType;
+varying float vLen;
+varying float vTau;
+#include <fog_pars_vertex>
+float hs(float n) { return fract(sin(n * 91.345 + 3.17) * 43758.5453); }
+vec3 ropePos(float u, float side, float a, float seed, float len) {
+  // root on the waterline circle (from beside the body to its back flank), direction measured from straight back
+  // roots just outside the fur's silhouette (the waterline chord uR hides under the body from the chase camera)
+  #ifdef WATER05
+  // W10 (?water05=1): approved splash = a wide fan of thin water threads leaving Benny's lower back and flanks
+  // (straight back … ≈65° out), curling outward along their length; not two dense white "wings"
+  float thR = mix(1.5, 0.35, a) + (hs(seed * 3.1) - 0.5) * 0.22;
+  float phi = mix(1.1, 0.08, a) + (hs(seed * 5.7) - 0.5) * 0.34 + 0.35 * u * u;
+  #else
+  float thR = mix(1.4, 0.5, a) + (hs(seed * 3.1) - 0.5) * 0.18;
+  float phi = mix(0.62, 0.06, a) + (hs(seed * 5.7) - 0.5) * 0.26 + 0.25 * u * u;
+  #endif
+  vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * (1.3 + 0.2 * hs(seed * 2.3));
+  vec2 q = root + vec2(sin(phi), cos(phi)) * u * len;
+  // ropes ride on the surface with small humps (whitewater, not flying jets)
+  float y = 0.035 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
+  return vec3(side * q.x, y, q.y);
+}
+vec3 jetPos(float tau, float side, float a, float seed) {
+  float thR = mix(1.6, 0.8, a) + (hs(seed * 3.1) - 0.5) * 0.2;
+  float phi = mix(1.2, 0.45, a) + (hs(seed * 5.7) - 0.5) * 0.35;
+  vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * 1.4;
+  float len = (0.3 + 0.5 * hs(seed * 7.3)) * (0.55 + 0.45 * uStrength);
+  vec2 q = root + vec2(sin(phi), cos(phi)) * tau * len;
+  float H = (0.12 + 0.3 * hs(seed * 9.1)) * uStrength;
+  return vec3(side * q.x, H * 4.0 * tau * (1.0 - tau) + 0.02, q.y);
+}
+void main() {
+  float side = aJet.x, a = aJet.y, seed = aJet.w;
+  vec3 p, tg;
+  float w;
+  vLen = 1.0;
+  vTau = aUV.x;
+  if (aType < 0.5) {
+    // rope: fixed shape, breathing length; the lace texture flows along it in the fragment shader
+    float len = uLen * (0.35 + 0.65 * hs(seed * 7.3)) * (0.9 + 0.1 * sin(uTime * 2.3 + seed * 20.0)) * (0.5 + 0.5 * uStrength);
+    vLen = len;
+    p = ropePos(aUV.x, side, a, seed, len);
+    tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
+    #ifdef WATER05
+    // W10: thin threads (≈2–5 px near the camera), a little longer, so the water shows between them
+    len *= 1.15;
+    vLen = len;
+    p = ropePos(aUV.x, side, a, seed, len);
+    tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
+    w = mix(0.015, 0.004, pow(aUV.x, 0.7)) * (0.55 + 0.7 * hs(seed * 19.1));
+    #else
+    w = mix(0.034, 0.008, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));
+    #endif
+  } else if (aType < 1.5) {
+    // crown droplet jet: the head runs root -> landing, the jet is a short chain of beads
+    float rate = mix(1.6, 2.6, hs(seed * 11.3));
+    float cyc = fract(aJet.z + uTime * rate);
+    float tl = 0.3;
+    float tau = clamp(cyc * (1.0 + tl) - (1.0 - aUV.x) * tl, 0.0, 1.0);
+    vTau = tau;
+    p = jetPos(tau, side, a, seed);
+    tg = jetPos(min(tau + 0.03, 1.0), side, a, seed) - jetPos(max(tau - 0.03, 0.0), side, a, seed);
+    w = mix(0.009, 0.018, hs(seed * 23.3));
+  } else {
+    // root froth: lace pads hugging the fur's silhouette at the water, from beside the body round to its back flank
+    float th = mix(1.7, 0.3, a) + (hs(seed * 3.1) - 0.5) * 0.12;
+    vec2 root = vec2(sin(th), cos(th)) * max(uR, 0.5) * (1.25 + 0.15 * hs(seed * 2.9));
+    vec2 dir = vec2(sin(th + 0.35), cos(th + 0.35));
+    float len = 0.2 + 0.18 * hs(seed * 7.3);
+    vLen = len;
+    vec2 q = root + dir * aUV.x * len;
+    p = vec3(side * q.x, 0.06 + 0.04 * sin(3.14159 * aUV.x), q.y);
+    tg = vec3(side * dir.x, 0.0, dir.y);
+    w = (0.05 + 0.045 * hs(seed * 19.1)) * (1.0 - 0.35 * aUV.x);
+  }
+  vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
+  vec2 tv = (modelViewMatrix * vec4(tg, 0.0)).xy;
+  float tl2 = length(tv);
+  vec2 nrm = tl2 > 1e-5 ? vec2(-tv.y, tv.x) / tl2 : vec2(0.0, 1.0);
+  mvPosition.xy += nrm * aUV.y * w * (0.7 + 0.3 * uStrength);
+  vUV = aUV;
+  vSeed = seed;
+  vType = aType;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`,Ia=`
+uniform float uTime;
+uniform float uStrength;
+varying vec2 vUV;
+varying float vSeed;
+varying float vType;
+varying float vLen;
+varying float vTau;
+#include <fog_pars_fragment>
+${Nt}
+void main() {
+  float ac = abs(vUV.y);
+  vec3 cyan = vec3(0.45, 0.88, 1.0);
+  vec3 white = vec3(1.1, 1.12, 1.16);
+  vec3 blue = vec3(0.42, 0.6, 1.0);
+  vec3 col;
+  float alpha;
+  if (vType < 0.5) {
+    // whitewater rope: bubbly lace flowing back along it, lumpy edges, white root -> translucent cyan tail
+    // chain of foam lumps (cells along the rope set a lumpy outline), breaking into separate blobs further out
+    vec2 lp = vec2(vUV.x * vLen * 7.0 - uTime * 2.6 + vSeed * 31.0, vUV.y * 0.8 + vSeed * 7.0);
+    float lc = cells(lp);
+    float lump = 1.0 - smoothstep(0.25, 0.75, lc);
+    float edge = 1.0 - smoothstep(0.25 + 0.6 * lump, 0.35 + 0.65 * lump, ac);
+    float tail = 1.0 - smoothstep(0.55, 1.0, vUV.x);
+    float brk = mix(1.0, smoothstep(0.3, 0.6, lump), smoothstep(0.2, 0.75, vUV.x));
+    float hole = (1.0 - smoothstep(0.1, 0.2, cells(lp * 2.7 + 3.0))) * (1.0 - smoothstep(0.6, 1.0, ac));
+    // it04: white only in the rope core, translucent cyan edges / tail, so the water shows between the strands
+    alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x) * mix(0.9, 0.45, smoothstep(0.3, 1.0, ac + vUV.x * 0.5));
+    col = mix(cyan, white, clamp(1.2 - vUV.x * 0.9 - ac * 0.9, 0.0, 1.0));
+    col = mix(col, blue, hole * 0.55 * (1.0 - vUV.x));
+  } else if (vType < 1.5) {
+    // crown droplets: a chain of round beads, fading in off the water and out as they fall back
+    // it05: small translucent water beads (cyan body, bright rim / glint), not white flakes
+    vec2 bq = vec2((fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5) * 2.4, vUV.y);
+    float bd = length(bq);
+    float bead = 1.0 - smoothstep(0.6, 0.9, bd);
+    float life = smoothstep(0.0, 0.12, vTau) * (1.0 - smoothstep(0.75, 1.0, vTau));
+    alpha = bead * life * (0.45 + 0.45 * smoothstep(0.3, 0.8, bd));
+    col = mix(cyan, white, 0.35 + 0.6 * smoothstep(0.35, 0.8, bd));
+  } else {
+    // froth collar: fine bubbles (white with blue open holes), soft all round
+    vec2 lp = vec2(vUV.x * vLen * 14.0 - uTime * 1.2 + vSeed * 17.0, vUV.y * 2.2 + vSeed * 5.0);
+    float lc = cells(lp);
+    float hole = 1.0 - smoothstep(0.1, 0.22, lc);
+    float lace = 1.0 - smoothstep(0.45, 0.75, lc);
+    float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, vUV.x) * (1.0 - smoothstep(0.6, 1.0, vUV.x));
+    alpha = lace * soft * 0.9;
+    col = mix(white, blue, hole * 0.7);
+  }
+  alpha *= uStrength;
+  if (alpha < 0.02) discard;
+  gl_FragColor = vec4(col, min(alpha, 1.0));
+  ${Tt}
+}
+`;function Da(t){const e=t==="high"?44:20,n=t==="high"?40:16,c=t==="high"?16:8,s=new Float32Array((be+1)*2*2);for(let y=0;y<=be;y++)s.set([y/be,-1,y/be,1],y*4);const u=[];for(let y=0;y<be;y++){const V=y*2,q=V+1,R=V+2,A=V+3;u.push(V,R,q,q,R,A)}const o=new po;o.setAttribute("aUV",new kt(s,2)),o.setAttribute("position",new kt(new Float32Array((be+1)*2*3),3)),o.setIndex(u);const f=(e+n+c)*2,L=new Float32Array(f*4),g=new Float32Array(f);let T=0;for(const y of[-1,1]){const V=R=>{const A=Math.sin(R*127.1+y*311.7)*43758.5453;return A-Math.floor(A)},q=(R,A,$)=>{for(let x=0;x<R;x++){const Q=Math.min(1,Math.max(0,(x+V(x*1.7+$))/R));g[T]=A,L[T*4]=y,L[T*4+1]=Q,L[T*4+2]=(x*.6180339+V(x*3.3+$)*.25)%1,L[T*4+3]=V(x*5.1+.37+$),T++}};q(c,2,11),q(e,0,0),q(n,1,5)}o.setAttribute("aJet",new Ie(L,4)),o.setAttribute("aType",new Ie(g,1)),o.instanceCount=f;const v=Ct({uTime:{value:0},uR:{value:.45},uLen:{value:1.55},uStrength:{value:0}}),F=new Rt({uniforms:v,vertexShader:Ua,fragmentShader:Ia,fog:!0,transparent:!0,depthWrite:!1,side:fe,...Io?{defines:{WATER05:1}}:{}}),b=new Zt(o,F);b.name="rider_splash05",b.frustumCulled=!1,b.renderOrder=3,b.visible=!1;const P=new Me,l=new w,m=new w;let h=0,k=!1;return{mesh:b,uniforms:v,place(y,V,q,R,A){l.copy(V).multiplyScalar(-1),m.crossVectors(q,l).normalize(),P.makeBasis(m,q,l),b.quaternion.setFromRotationMatrix(P),b.position.copy(y),v.uR.value=R,h=A,k=!0},update(y,V){v.uTime.value=y,k||(h=0),k=!1;const q=v.uStrength.value,R=V>0?q+(h-q)*Math.min(1,V*6):h;v.uStrength.value=R,b.visible=R>.01}}}const Ea=.55,Ze=.86,We=(t,e,n)=>{const c=Math.min(1,Math.max(0,(n-t)/(e-t)));return c*c*(3-2*c)};function ja(t,e={}){const n=e.quality??"high",c=new Pe;c.name="water_system";const s=t.marks["02_drain"]??t.stage("02").s1-2,u=t.stage("03"),o=t.stage("04"),z=t.stage("08"),f=t.stage("09"),L=s-1,g=Do(t,{s0:L,s1:t.length,quality:n}),T=[];for(let i=0;i<8;i++){const _=o.s0-3+i/7*34,r=t.sample(_);T.push(r.pos.clone().addScaledVector(r.up,1.2))}const v=Eo(n,{points:T,radius:Math.max(3.6,t.stage("04").tube*.85)}),F=Ko(n),b=Qo(t,n),P=ta(),l=ba(t,{s0:L,s1:t.length,quality:n,height:(i,_,r)=>g.heightAt(i,_,r)}),m=Ca(t,{quality:n,sStart:L}),h=Va(n),k=Na(n),y=Da(n),V=t.stage("05"),q=i=>We(V.s0+2,V.s0+5,i)*(1-We(V.s1-5,V.s1-2,i));c.add(g.mesh,v.mesh,F.group,b.mesh,P.group,l.group,m.group,h.points,k.mesh,y.mesh);const R={ribbon:g.mesh,whirlpool:v.mesh,drum:F.group,drumSwirl:F.swirl,finalWave:b.mesh,puddles:P.group,foam:l.group,foamBerm:l.berm,foamRafts:l.rafts,foamRim05:l.rim05,foamFlank:l.flank,bubbles:m.group,bubblesSmall:m.small,bubblesBig:m.big,spray:h.points,splashCrown:k.mesh,splash05:y.mesh},A={drumSwirl:0,drumAgitation:0,outro:0},$=typeof location<"u"?(new URLSearchParams(location.search).get("waterhide")??"").split(",").filter(Boolean):[];to&&!le("projfoam05")&&$.push("foamRim05","foamFlank","foamRafts");const x=$.includes("ribbonWake");let Q=0,et=0;const O=new w,Y=new w,st=new w,mt=new w,ut=new w,X=new w,Mt=new w,zt=new w;let Vt=-1,Ft=24301;const Pt=()=>{Ft=Ft+1831565813>>>0;let i=Ft;return i=Math.imul(i^i>>>15,i|1),i^=i+Math.imul(i^i>>>7,i|61),((i^i>>>14)>>>0)/4294967296},Z=(i,_)=>i+Pt()*(_-i);let Bt=-1e9,lt=null;const Ot=i=>We(u.s0+.5,u.s0+3.5,i)*(1-We(o.s0-9,o.s0-1.5,i)),te=(i,_,r)=>{if(i<L){const ht=t.pointAt(i,_,0,O),rt=t.sample(i).up;return(F.heightAt(ht.x,ht.z,r)-ht.y)/Math.max(.3,rt.y)}const U=g.heightAt(i,_,r),tt=Ot(i);if(tt<=0)return U;const E=t.sample(i),D=O.copy(E.pos).addScaledVector(E.right,_),H=ce.basin,B=Math.hypot(D.x-H.center.x,D.z-H.center.z),wt=(ue(B)+ze+jo(D.x,D.z,r)-D.y)/Math.max(.3,E.up.y);return U*(1-tt)+wt*tt};return typeof window<"u"&&new URLSearchParams(location.search).has("qa")&&(window.__waterQA=()=>{const i=lt;if(!i)return null;const _=window.innerWidth,r=window.innerHeight;return{bubbles:m.qaScreen(i,_,r),rafts:l.qaRafts(),fanStrength:k.uniforms.uStrength.value,waterlineR:g.uniforms.uBennyR.value}}),{group:c,controls:A,parts:R,...g.ready||ro.length?{ready:Promise.all([g.ready,...ro]).then(()=>{})}:{},surfaceHeight:te,stats:()=>({instances:l.instanceCount,bubbles:m.counts.big,smallBubbles:m.counts.small,sprayCapacity:h.capacity}),update(i,_,r,U){Math.abs(r-Bt)>25&&(Ft=24301^Math.round(r*16)),Bt=r,lt=U,Q=r,et=i,g.uniforms.uTime.value=i,v.uniforms.uTime.value=i,F.uniforms.uTime.value=i,F.uniforms.uAgitation.value=A.drumAgitation,F.swirlUniforms.uSwirl.value=A.drumSwirl,F.swirl.visible=A.drumSwirl>.001,b.uniforms.uTime.value=i,P.uniforms.uTime.value=i,P.uniforms.uAmount.value=A.outro,g.uniforms.uOutro.value.x=A.outro,P.group.visible=A.outro>.001,F.group.visible=r<u.s0+12,v.mesh.visible=r>s-8&&r<o.s0+45,b.mesh.visible=r>z.s0-25,(r<L||Ot(r)>.5)&&(g.uniforms.uBenny.value.z=0),l.update(i,_,r,A.outro,U);const tt=to&&!le("projbub05")?1-q(r):1;if(m.update(i,_,r,U,(1-.7*A.outro)*tt),b.mesh.visible&&r>f.s0-20&&r<f.s1+20&&A.outro<.5){const E=n==="high"?3:1;for(let D=0;D<E;D++){const H=b.crest[Pt()*b.crest.length|0];if(!H)break;const B=t.sample(Math.min(t.length,Math.max(0,r)));Y.copy(B.right).multiplyScalar(Z(1,3.5)).addScaledVector(B.up,Z(1.5,4)).addScaledVector(B.tan,Z(-1,2)),h.emit(H,Y,Z(.08,.2),Z(.5,1))}}h.update(_,U),k.update(i,_),y.update(i,_);for(const E of $){const D=R[E];D&&(D.visible=!1)}},wake(i,_,r,U,tt){const E=t.sample(Math.max(0,Q)),D=st.copy(i).sub(E.pos),H=Math.min(t.length,Math.max(0,Q+D.dot(E.tan))),B=t.sample(H);D.copy(i).sub(B.pos);const St=D.dot(B.right),wt=D.dot(B.up)-te(H,St,et),ht=Math.sqrt(Math.max(Ze*Ze-wt*wt,(.35*Ze)**2)),rt=Math.min(1,U/8);H>=L&&Ot(H)<.5&&!x&&(g.uniforms.uBenny.value.set(H,St,rt),g.uniforms.uBennyR.value=ht);const ct=O.copy(i).addScaledVector(B.up,-wt),vt=q(H);k.place(ct,_,B.up,ht,vt>0?rt*(1-vt):rt),vt>0&&y.place(ct,_,B.up,ht,rt*vt),Vt>=0&&tt>1e-4&&Mt.distanceToSquared(i)<9?zt.copy(i).sub(Mt).divideScalar(tt):zt.set(0,0,0),Mt.copy(i),Vt=et;const qt=(n==="high"?150:55)*rt*(vt>0?1+1.4*vt:1),$t=Math.min(vt>0?26:14,Math.floor(qt*tt+Pt())),M=Y.copy(B.up);X.copy(_).multiplyScalar(-1);for(let G=0;G<$t;G++){const ft=Pt()<.5?-1:1,at=Pt(),Ut=vt>0?1.5-.9*at:Wt.root0+(Wt.root1-Wt.root0)*at,Gt=(vt>0?.8-.6*at:Wt.dir0+(Wt.dir1-Wt.dir0)*at)+Z(-.12,.12),pe=Z(.1,.55),nt=Math.max(ht,Wt.rootMin)*.95;mt.copy(ct).addScaledVector(r,ft*(Math.sin(Ut)*nt+Math.sin(Gt)*pe*.9)).addScaledVector(X,Math.cos(Ut)*nt+Math.cos(Gt)*pe*.9).addScaledVector(M,Z(.04,.16));const _t=Z(1.1,2.6);ut.copy(zt).addScaledVector(r,ft*Math.sin(Gt)*_t).addScaledVector(X,Math.cos(Gt)*_t).addScaledVector(M,Z(1.2,3)),h.emit(mt,ut,vt>0?Z(.012,.04):Z(.018,.05),Z(.3,.6))}l.rider(H,St,rt)},splash(i,_,r){const U=Math.round(30*r*(n==="high"?1:.5));for(let tt=0;tt<U;tt++){const E=ut.set(Z(-1,1),0,Z(-1,1)).normalize().multiplyScalar(Z(1,4)*r);E.addScaledVector(_,Z(3,7)*r),h.emit(i,E,Z(.06,.16),Z(.5,1.1))}}}}export{Ea as BENNY_RIDE_OFFSET,K as PALETTE,ja as createWater};

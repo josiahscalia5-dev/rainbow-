@@ -1,0 +1,18 @@
+import hashlib,json,pathlib,subprocess,sys,urllib.request
+root=pathlib.Path(sys.argv[1]);j=json.loads((root/'phone-commit.json').read_text())
+folder='experiments/codex/s06-benny-reference-pink'
+api='repos/josiahscalia5-dev/rainbow-/contents/'+folder+'/'+j['file']+'?ref='+j['tip']
+meta=json.loads(subprocess.check_output(['gh','api',api]))
+assert meta['type']=='file' and meta['size']==j['size']
+total=0;digest=hashlib.sha256()
+req=urllib.request.Request(meta['download_url'],headers={'User-Agent':'Rainbow Android native review verification'})
+with urllib.request.urlopen(req,timeout=90) as resp:
+    status=resp.status
+    headerSize=resp.headers.get('Content-Length')
+    for data in iter(lambda:resp.read(1024*1024),b''):
+        digest.update(data);total+=len(data)
+matches=total==j['size'] and digest.hexdigest()==j['sha256']
+record={'status':status,'expected':j['size'],'bodyBytes':total,'contentLength':headerSize,'verifiedSha256':matches,'blobPath':meta['html_url'],'tip':j['tip']}
+(root/'compact-download.json').write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps(record),flush=True)
+assert matches

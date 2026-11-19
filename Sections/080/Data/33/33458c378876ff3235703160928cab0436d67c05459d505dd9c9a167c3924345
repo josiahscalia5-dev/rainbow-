@@ -1,0 +1,41 @@
+{
+  "created": "2026-11-16T14:44:02.039Z",
+  "sourceCommit": "088dd3fc77c0cf18f1e853ffb27a0945e27b1f0b",
+  "query": "",
+  "pass": true,
+  "description": "Original source farRiverLayout/farRiverGeometry compared with current implementation, same unchanged Course/Tube/camera parameters; all attributes, index and morph-target buffers SHA256-compared.",
+  "before": {
+    "attributes": {
+      "position": "71f69737a4fd2937be6a539dee91529cc046b8e96618b93ddd206c5b41d0443f",
+      "normal": "e9f715f8fa92b95c19350108bdb4a042c1edc8f6c453d398107f4e1a5196424c",
+      "uv": "f1cbd4c73e04f90e13c67ff3a650b4f533e9f47ec62bac2928f93a2fbf807956",
+      "aRivLat": "d66587e2a8af1b3834c33409a9bd63f8a3575952be5b9c1ad3fdbcaa98d334c4",
+      "aRivA": "ff4f523fc2727b4fdd3f1a0e43abc00a9724a0c8f3d2c53242f49b5b24423504",
+      "aRivB": "31f571805c45bbdf6977d62c811c53975c50d44e648afde44526564ba53e2732",
+      "fgExtra": "75e7c2046aac9be7e751357ac0c6da5d828b580f3c46af6368639f13f5f3efff"
+    },
+    "index": "5bf2611699b7d19f1373aa8205182f75a7b24947a22cde7771e6f2675b8ddad2",
+    "morph": {
+      "position": [
+        "46af990ddefe0f6b9d6deaf0375d093e610e4f2813d8a0d5bc59babe0b3f3621"
+      ]
+    }
+  },
+  "after": {
+    "attributes": {
+      "position": "71f69737a4fd2937be6a539dee91529cc046b8e96618b93ddd206c5b41d0443f",
+      "normal": "e9f715f8fa92b95c19350108bdb4a042c1edc8f6c453d398107f4e1a5196424c",
+      "uv": "f1cbd4c73e04f90e13c67ff3a650b4f533e9f47ec62bac2928f93a2fbf807956",
+      "aRivLat": "d66587e2a8af1b3834c33409a9bd63f8a3575952be5b9c1ad3fdbcaa98d334c4",
+      "aRivA": "ff4f523fc2727b4fdd3f1a0e43abc00a9724a0c8f3d2c53242f49b5b24423504",
+      "aRivB": "31f571805c45bbdf6977d62c811c53975c50d44e648afde44526564ba53e2732",
+      "fgExtra": "75e7c2046aac9be7e751357ac0c6da5d828b580f3c46af6368639f13f5f3efff"
+    },
+    "index": "5bf2611699b7d19f1373aa8205182f75a7b24947a22cde7771e6f2675b8ddad2",
+    "morph": {
+      "position": [
+        "46af990ddefe0f6b9d6deaf0375d093e610e4f2813d8a0d5bc59babe0b3f3621"
+      ]
+    }
+  }
+}

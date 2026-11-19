@@ -1,0 +1,210 @@
+"""Create a phone-readable evidence folder without re-encoding the original artwork or native frames."""
+from pathlib import Path
+from html import escape
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+import zipfile
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parent
+OUTPUT = Path('/workspace/library-files/Rainbow-Reconstruction-Experiments')
+OLD = Path('/tmp/rainbow-motion-tools.ef8YVWIN')
+SKILL = ROOT/'repos/skill/.agents/skills/rainbow-visual-motion-matcher'
+TITLES = {'04':'Through the Five Arrows','05':'Flow into the Current','06':'Crest the Rinse Arch',
+          '07':'Dive the Washer Tube','08':'Final Spin Chamber'}
+NAMES = {'opening':'Approved opening viewpoint','forward-03':'Forward +3','forward-06':'Forward +6',
+         'forward-10':'Forward +10','forward-20':'Forward +20','hard-left':'Hard left at +12',
+         'hard-right':'Hard right at +12','inlet':'Inlet','middle':'Middle','deep':'Deep water',
+         'passing-arrows':'Passing the arrows','last-left-bend':'Last bend, left','last-right-bend':'Last bend, right',
+         'crest-release':'Crest release at +1.1','arch-exit':'Arch exit','plunge-lip':'Plunge lip',
+         'halfway-down':'Halfway down the plunge','two-thirds-down':'Two-thirds down the plunge','plunge-bottom':'Plunge bottom',
+         'platform-and-spouts':'Platform and spouts','river-bend':'Chamber river bend','last-in-stage':'Final approach',
+         'across-transition':'First frame across the handoff'}
+
+
+def read(path):
+    return json.loads(path.read_text())
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def link_file(src, dst):
+    dst.parent.mkdir(parents=True,exist_ok=True)
+    if dst.exists():
+        if sha(src)==sha(dst):
+            return
+        dst.unlink()
+    try:
+        os.link(src,dst)
+    except OSError:
+        shutil.copyfile(src,dst)
+
+
+def copy_assets(src,dst):
+    for p in sorted(src.rglob('*')):
+        if p.is_file():
+            link_file(p,dst/p.relative_to(src))
+
+
+def document(title,body):
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{escape(title)}</title><style>
+*{{box-sizing:border-box}}html{{color-scheme:dark}}body{{margin:0;background:#15131c;color:#f6f1f5;font:17px/1.52 Roboto,system-ui,sans-serif}}
+main{{max-width:56rem;padding:1.5rem clamp(1rem,4vw,2.5rem) 4rem;margin:auto}}h1{{font-size:clamp(1.8rem,7vw,3.2rem);line-height:1.08;margin:.6em 0}}h2{{margin:1.8em 0 .6em}}h3{{font-size:1.05rem}}a{{color:#96e6fe}}section{{margin:1.4rem 0}}p{{max-width:72ch}}
+figure{{margin:1.5rem 0 2.2rem}}figcaption{{font-weight:650;margin:.5rem 0}} img,video{{display:block;max-width:100%;height:auto;border-radius:3px}}table{{border-collapse:collapse;width:100%}}td,th{{text-align:left;padding:.55rem .45rem;border-bottom:1px solid #48414e}}
+video{{width:min(100%,27rem)}} small{{color:#d3c9d6}}ul{{padding-left:1.2rem}} .view{{border-top:1px solid #48414e;padding:.55rem 0}} .view a{{display:inline-block;padding:.4rem .7rem .4rem 0}}code{{overflow-wrap:anywhere}}</style></head><body><main>{body}</main></body></html>"""
+
+
+def native_fig(label,path):
+    return f'<figure><figcaption>{escape(label)} · <a href="{path}">Open full size</a></figcaption><a href="{path}"><img loading="lazy" src="{path}" width="864" height="1536" alt="{escape(label)}"></a></figure>'
+
+
+def publish(sid):
+    src = ROOT/'proof'/sid
+    dest=ROOT/'repos'/sid/'experiments/codex'/sid
+    rev=read(ROOT/('base-'+sid+'.json'))
+    facts=read(ROOT/('verdict-'+sid+'.json'))
+    mv=read(src/'motion-checks.json')
+    metrics=read(src/'opening-metrics.json')
+    commit=(ROOT/('source-'+sid+'.txt')).read_text().strip()
+    ref=next((ROOT/'games'/sid/'references').glob(sid+'_*.png'))
+    refhash=read(OLD/'reference-checks.json')['manifest']['references/'+ref.name]
+    assert sha(ref)==refhash
+    copy_assets(src,dest)
+    link_file(ROOT/('source-check-'+sid+'.json'),dest/'reference-and-source-check.json')
+    link_file(ref,dest/'APPROVED.jpg')
+    for v in ('BEFORE','NEW'):
+        assert (dest/v/'opening.png').is_file()
+    provenance=read(ROOT/'archive-provenance.json')
+    archives={k.split('/',1)[1]:v for k,v in provenance.items() if k.startswith(sid+'/')}
+    for name,record in archives.items():
+        alt=ROOT/'extra-archives'/sid/name
+        origin=alt if alt.exists() else OLD/'archives'/sid/name
+        assert sha(origin)==record['sha256']
+        link_file(origin,dest/'claudia-archive'/name)
+    if sid=='04':
+        ring_name='3_NEW_a00_approved_view.png'
+        ring_record=provenance['04r/'+ring_name]
+        ring_file=OLD/'archives/04r'/ring_name
+        assert sha(ring_file)==ring_record['sha256']
+        archive_name='gold-ring-specialist-opening.png'
+        link_file(ring_file,dest/'claudia-archive'/archive_name)
+        archives[archive_name]={**ring_record,'branch':'claude/rainbow-s04-ringtex-c17'}
+    (dest/'claudia-archive/provenance.json').write_text(json.dumps(archives,indent=2)+'\n')
+    for name in ('capture.cjs','queries.json','flags.json','analyze.py'):
+        link_file(ROOT/name,dest/'reproduce'/name)
+    if sid=='05':
+        link_file(ROOT/'slot-detail.py',dest/'reproduce/slot-detail.py')
+    for file in (SKILL/'scripts').iterdir():
+        link_file(file,dest/'reproduce'/file.name)
+
+    provenance={**rev,'experimentSource':commit,'referencePath':'references/'+ref.name,'referenceSHA256':refhash,
+                'matchRule':'All 864 × 1536 pixels, including HUD and Benny. Mean absolute RGB channel error ≤20 in 8-bit RGB. Pixelmatch 7.1.0 threshold 0.1, includeAA false.',
+                'capture':{'renderer':'Three.js in Chromium 156, SwiftShader','control':'Playwright 1.57, fixed 1/60 simulation steps','resolution':'864 × 1536 stills, 324 × 576 H.264 clips at 12 frames per second','baseline':'Retained features at the recorded Claudia specialist tip','passed':'Production build and the existing eight gameplay assertions in both variants'},
+                'retainedQuery':read(ROOT/'queries.json')[sid],'experimentFlag':read(ROOT/'flags.json')[sid]}
+    (dest/'provenance.json').write_text(json.dumps(provenance,indent=2)+'\n')
+    original=metrics['approvedVsBefore'];new=metrics['approvedVsCandidate'];repeat=metrics['beforeVsRepeat'];between=metrics['beforeVsCandidate']
+    stats=f"RGB agreement at the approved pose was {original['within20Percent']:.3f}% before and {new['within20Percent']:.3f}% in the experiment. Pixelmatch counted {original['pixelmatchMismatches']:,} and {new['pixelmatchMismatches']:,} mismatches respectively over {original['pixels']:,} pixels. The independent opening repeat changed {repeat['exactDifferences']:,} pixels. The before and new openings differed at {between['exactDifferences']:,} pixels."
+    archive_note="The before image reproduces the retained specialist tip on the same renderer as the experiment. Claudia’s original archived captures and their paths are included separately."
+    if sid=='04':
+        archive_note+=' The separate gold-ring specialist’s saved opening is also available in Claudia’s archive. The scenery experiment begins at the Screen 04 scenery specialist’s tip.'
+    if sid=='05':
+        archive_note+=' Claudia’s retained transition pass saved end-of-stage views. Its matched opening was recaptured from that commit.'
+    if (src/'archive-opening-check.json').exists():
+        ac=read(src/'archive-opening-check.json'); archive_note+=f" Claudia’s archived opening and the fresh before differed at {ac['exactDifferences']:,} decoded pixels."
+    report=[f'# Screen {sid} · {TITLES[sid]}',f"**{facts['status']}.** {facts['decision']}",facts['change'],facts['motion'],facts['remaining'],
+        f"**Interpretation for review.** {facts['inference']}",stats,"The RGB agreement counts full-frame pixels whose mean absolute RGB difference is at most 20 on an 8-bit scale. Pixelmatch 7.1.0 uses a threshold of 0.1 and excludes antialias mismatches. Each moving pair uses the same game state, camera, steering and shader clock. The moving views have no photographed reference score.",archive_note,
+        f"Both complete rides retained five hearts through the {sid} to {mv['ride']['nextStage']} handoff. Each clip spans {mv['ride']['frames']} encoded frames at 12 fps. Both variants passed all eight existing gameplay assertions, collected 91 coins and advanced the total from 1,330 to 2,240. Hard-steer collision diagnostics are separate from the successful rides. Android phone frame times and thermal behavior still require a device test.",
+        f"**Checkpoint** `{rev['base']['branch']}` at `{rev['base']['commit']}`. The isolated experimental source is `{commit}` on `{rev['branch']}`.",
+        '''## Reproduce
+
+Use this branch in an isolated checkout with its locked game dependencies. Start its Vite server on loopback with its usual project config. Run from the project root with Playwright 1.57 and a compatible Chromium executable available to Node. Set `RAINBOW_BASE_URL` to the local game URL and `RAINBOW_CHROMIUM` to the browser executable. The capture scripts write into their own evidence folder. A system FFmpeg is needed for H.264 clips.''',
+        f"""\x60\x60\x60sh
+node experiments/codex/{sid}/reproduce/capture.cjs stills {sid}:BEFORE {sid}:NEW
+node experiments/codex/{sid}/reproduce/capture.cjs repeat {sid}:BEFORE
+node experiments/codex/{sid}/reproduce/capture.cjs ride {sid}:BEFORE {sid}:NEW
+python3 experiments/codex/{sid}/reproduce/analyze.py {sid}
+\x60\x60\x60""",
+        "The approved original, native opening and movement images, continuous clips, gameplay assertions, per-frame journey logs, GPU counts, comparison metrics and archived specialist evidence are in this directory."]
+    if sid=='04':
+        report=[entry.replace('python3 experiments/codex/04/reproduce/analyze.py 04','node experiments/codex/04/reproduce/capture.cjs full-safe 04:BEFORE 04:NEW\npython3 experiments/codex/04/reproduce/analyze.py 04') for entry in report]
+        report.insert(8,'The standard coin-seeking 03–11 suite took one heart in Screen 04 on the retained checkpoint and the experiment. A separate full-game ride with the same coin targets and 0.85 units of wall clearance collected all 91 coins and finished at 2,240 with five hearts on both variants. The logged collision and complete intact-heart rides are in each variant directory.')
+    (dest/'REPORT.md').write_text('\n\n'.join(report)+'\n')
+    movement=''
+    for r in mv['stills']:
+        name=r['name']
+        if name=='opening':
+            continue
+        if 'skipped' in r:
+            movement+=f'<div class="view"><strong>{NAMES[name]}</strong><br>Outside this stage at the requested distance.</div>'
+            continue
+        movement+=f'<div class="view"><strong>{escape(NAMES[name])}</strong><br><a href="BEFORE/{name}.png">Claudia before</a> <a href="NEW/{name}.png">Codex new</a></div>'
+    arcs=''.join(f'<li><a href="claudia-archive/{escape(n,quote=True)}">{escape(n)}</a></li>' for n in archives)
+    body=f"""<h1>Screen {sid}<br>{TITLES[sid]}</h1><p><strong>{escape(facts['status'])}.</strong> {escape(facts['decision'])}</p><p>{escape(facts['motion'])}</p><p>{escape(facts['remaining'])}</p>
+<h2>Opening comparison</h2><p>{escape(stats)}</p><p>{escape(archive_note)}</p>
+{native_fig('APPROVED','APPROVED.jpg')}{native_fig('CLAUDIA BEFORE','BEFORE/opening.png')}{native_fig('CODEX NEW','NEW/opening.png')}
+<h2>Continuous swimming</h2>
+<figure><figcaption>Claudia before · <a href="BEFORE/ride.mp4">Open clip</a></figcaption><video controls playsinline preload="none" poster="BEFORE/inlet.png" src="BEFORE/ride.mp4"></video></figure>
+<figure><figcaption>Codex new · <a href="NEW/ride.mp4">Open clip</a></figcaption><video controls playsinline preload="none" poster="NEW/inlet.png" src="NEW/ride.mp4"></video></figure>
+<h2>Matched moving views</h2>{movement}<h2>Claudia’s saved captures</h2><ul>{arcs}</ul>
+<p><a href="REPORT.md">Experiment report</a> · <a href="opening-metrics.json">Opening measurements</a> · <a href="motion-checks.json">Motion verification</a> · <a href="provenance.json">Checkpoint and settings</a></p>"""
+    crops={'05':('hard-left',(0,420,245,770),'left wall slots'),
+           '07':('hard-right',(40,245,250,465),'third gold paddle')}
+    if sid in crops:
+        chosen,box,subject=crops[sid]
+        detail=dest/'detail';detail.mkdir(exist_ok=True)
+        for variant in ('BEFORE','NEW'):
+            with Image.open(dest/variant/(chosen+'.png')) as frame:
+                frame.crop(box).save(detail/(variant+'.png'))
+        (detail/'coordinates.json').write_text(json.dumps({'sourcePose':chosen,'cropBoundsXYXY':box,'nativePixelScale':1},indent=2)+'\n')
+        body += f'<h2>{escape(subject.capitalize())}</h2><p>Native detail from {escape(NAMES[chosen])}. <a href="detail/BEFORE.png">Claudia before</a> · <a href="detail/NEW.png">Codex new</a></p>'
+    if sid=='07' and (dest/'model').is_dir():
+        body += '<h2>Editable paddle</h2><p><a href="model/screen-07-fitted-paddle.blend">Blender scene</a> · <a href="model/screen-07-fitted-paddle.glb">GLB mesh</a> · <a href="paddle-geometry-check.json">Paddle footprint</a></p>'
+    if (dest/'fitted-body-only').is_dir():
+        body += '<p><a href="fitted-body-only/README.md">Fitted body before repairing the supporting wall</a> · <a href="fitted-body-only/forward-10.png">Forward +10</a> · <a href="wall-diagnostic/body-forward-10-hidden.png">Object hidden for diagnosis</a> · <a href="fitted-body-only/ride.mp4">Full ride</a></p>'
+    if (dest/'masked-material').is_dir():
+        body += '<p><a href="masked-material/README.md">Rejected material-only pass</a> · <a href="masked-material/forward-10.png">Forward +10</a> · <a href="masked-material/ride.mp4">Full ride</a></p>'
+    if (dest/'initial-trial').exists():
+        body += '<h2>Rejected first pass</h2><p><a href="initial-trial/README.md">Reason</a> · <a href="initial-trial/opening.png">Opening</a> · <a href="initial-trial/forward-10.png">Forward +10</a> · <a href="initial-trial/hard-right.png">Hard right</a> · <a href="initial-trial/ride.mp4">Full ride</a></p>'
+    passes=(('initial-trial','First pass'),('masked-material','Material repair on the original paddle'),('fitted-body-only','Fitted paddle before repairing its supporting wall'))
+    previous=[]
+    for sub,label in passes:
+        group=dest/sub
+        if not (group/'opening.png').exists():
+            continue
+        explanation=(group/'README.md').read_text().split('\n\n',1)[-1].strip()
+        body_trial=f'<h1>Screen {sid}<br>{escape(label)}</h1><p>{escape(explanation)}</p>'
+        score=read(group/'opening-metrics.json')
+        body_trial+=f'<p>At the approved pose RGB agreement was {score["approvedVsBefore"]["within20Percent"]:.3f}% before and {score["approvedVsCandidate"]["within20Percent"]:.3f}% in this pass. <a href="opening-metrics.json">Full measurements</a></p>'
+        body_trial+=native_fig('APPROVED','../APPROVED.jpg')+native_fig('CLAUDIA BEFORE','../BEFORE/opening.png')+native_fig('CODEX NEW · rejected pass','opening.png')
+        body_trial+='<h2>Continuous swimming</h2><p><a href="../BEFORE/ride.mp4">Claudia before</a> · <a href="ride.mp4">This pass</a></p><h2>Matched moving views</h2>'
+        for rel in sorted(group.glob('*.png')):
+            if rel.stem in ('opening','opening-repeat') or rel.stem not in NAMES:
+                continue
+            body_trial+=f'<div class="view"><strong>{escape(NAMES[rel.stem])}</strong><br><a href="../BEFORE/{rel.name}">Claudia before</a> <a href="{rel.name}">Codex trial</a></div>'
+        (group/'index.html').write_text(document(f'Rainbow {sid} · {label}',body_trial))
+        previous.append(f'<li><a href="{sub}/index.html">{escape(label)} · full comparison</a></li>')
+    if previous:
+        body+='<h2>Earlier passes in this experiment</h2><ul>'+''.join(previous)+'</ul>'
+    (dest/'index.html').write_text(document(f'Rainbow · {sid} · {TITLES[sid]}',body))
+    manifest={str(p.relative_to(dest)):sha(p) for p in sorted(dest.rglob('*')) if p.is_file() and p.name!='sha256.json'}
+    (dest/'sha256.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    mob=OUTPUT/('Screen-'+sid)
+    copy_assets(dest,mob)
+    with zipfile.ZipFile(OUTPUT/('Screen-'+sid+'.zip'),'w',compression=zipfile.ZIP_STORED,allowZip64=True) as z:
+        for p in sorted(mob.rglob('*')):
+            if p.is_file():
+                z.write(p, arcname=str(p.relative_to(OUTPUT)))
+    print(sid,'saved',len(manifest),'files',flush=True)
+
+if __name__=='__main__':
+    OUTPUT.mkdir(parents=True,exist_ok=True)
+    for sid in sys.argv[1:]:
+        publish(sid)

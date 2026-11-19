@@ -1,0 +1,35 @@
+{
+  "verifiedUTC": "2026-11-19T02:51:12.631463+00:00",
+  "branch": "codex/s06-benny-layered-coat",
+  "tip": "35dd903dc09f08d7b3262b9cab2753ad0d40d19c",
+  "gameSource": "bf61823aa512cb6f6326a0423178b49b8945154f",
+  "protectedBase": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+  "verifiedFiles": 121,
+  "lfsBytesRecovered": 143759484,
+  "lfs": {
+    "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1": {
+      "size": 7491213,
+      "path": "experiments/codex/s06-benny-layered-coat/CLAUDIA_BEFORE/ride.mp4"
+    },
+    "0bfb0b7913926cab29def5ba56aa1d18ddcaa286300f6fa7489620aecf1ae5f5": {
+      "size": 7432820,
+      "path": "experiments/codex/s06-benny-layered-coat/CODEX_NEW/ride.mp4"
+    },
+    "d725dd818c2a618bf5e2586da1942af29f5ea653ed478ec8d90ce84840e39895": {
+      "size": 121376005,
+      "path": "experiments/codex/s06-benny-layered-coat/Screen06_Review.zip"
+    },
+    "84e58a2793dd914276e14ad379dff3237f8178f96488132ad38ce7237e44d437": {
+      "size": 7459446,
+      "path": "experiments/codex/s06-benny-layered-coat/first-pass/ride.mp4"
+    }
+  },
+  "githubRenderedInlineImages": 7,
+  "byteVerifiedPrivateDownloads": [
+    "APPROVED.jpg",
+    "CLAUDIA_BEFORE/opening.png",
+    "CODEX_NEW/opening.png",
+    "Review_on_Android.pdf"
+  ],
+  "protectedTipDifferencesObserved": []
+}

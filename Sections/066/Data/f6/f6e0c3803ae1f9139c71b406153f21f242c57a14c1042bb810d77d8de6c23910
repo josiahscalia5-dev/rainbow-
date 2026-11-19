@@ -1,0 +1,20 @@
+{
+  "width": 864,
+  "height": 1536,
+  "threshold": 0.1,
+  "includeAA": false,
+  "approvedVsBefore": {
+    "pixels": 1327104,
+    "exactDifferences": 909941,
+    "within20Pixels": 1086099,
+    "within20Percent": 81.8397804542824,
+    "pixelmatchMismatches": 223531
+  },
+  "beforeVsRepeat": {
+    "pixels": 1327104,
+    "exactDifferences": 198,
+    "within20Pixels": 1327103,
+    "within20Percent": 99.99992464795525,
+    "pixelmatchMismatches": 1
+  }
+}

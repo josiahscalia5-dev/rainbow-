@@ -1,0 +1,38 @@
+{
+  "fixedCropXYXY": [
+    145,
+    640,
+    695,
+    1275
+  ],
+  "measurement": "Native opening, fixed rectangle. It includes the actor and neighboring water. Soft original silhouettes are hand read within roughly eight pixels.",
+  "originalVsRetainedCrop": {
+    "meanAbsoluteChannelError": 35.733321,
+    "pixelsInsideTolerance20": 198853,
+    "samplePixels": 349250
+  },
+  "originalVsExperimentalCrop": {
+    "meanAbsoluteChannelError": 35.744127,
+    "pixelsInsideTolerance20": 198810,
+    "samplePixels": 349250
+  },
+  "anyChangedOutsideCrop": 0,
+  "sumRGBOver30OutsideCrop": 0,
+  "sumRGBOver30InsideCrop": 24912,
+  "anyChangedOutsideVisibleActorPlus2px": 0,
+  "approximateOriginalSize": [
+    435,
+    459
+  ],
+  "retainedSize": {
+    "visibleDensePixelBoundsXYXY": [
+      198,
+      717,
+      645,
+      1193
+    ],
+    "width": 448,
+    "height": 477,
+    "changedPixelsInLargestBody": 129387
+  }
+}

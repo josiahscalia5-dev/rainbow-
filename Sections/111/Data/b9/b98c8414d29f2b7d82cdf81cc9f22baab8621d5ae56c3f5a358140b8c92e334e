@@ -1,0 +1,159 @@
+import hashlib
+import io
+import json
+import os
+import subprocess
+import zipfile
+from pathlib import Path
+from urllib.parse import quote
+
+import numpy as np
+from PIL import Image
+
+root = Path.cwd()
+cutoff = json.loads(Path('latest-heads.json').read_text())
+heads = cutoff['heads']
+baseline = json.loads(Path('heads.json').read_text())
+names = {
+    'lead': 'ccr-bbe2b27e-oxfh1w',
+    '04': 'claude/rainbow-s04-match-c17',
+    '04r': 'claude/rainbow-s04-ringtex-c17',
+    '05': 'claude/rainbow-s05-match-c17',
+    '06': 'claude/rainbow-s06-match-c17',
+    '07': 'claude/rainbow-s07-match-c17',
+    '08': 'claude/rainbow-s08-scenery-c17',
+}
+reftext = Path('read/lead/scripts/reference.sha256').read_text()
+manifest = dict((line.split()[1], line.split()[0]) for line in reftext.splitlines() if line)
+for name, checksum in manifest.items():
+    assert hashlib.sha256((Path('read/lead')/name).read_bytes()).hexdigest() == checksum, name
+
+measurements = {}
+entries = []
+images = []
+http = 'https://github.com/josiahscalia5-dev/rainbow-/blob/'
+def frame(file, folder, commit, repo_file=None, identification=''):
+    file = Path(file)
+    data = file.read_bytes()
+    with Image.open(io.BytesIO(data)) as img:
+        w, h = img.size
+    assert (w,h)==(864,1536), file
+    if repo_file:
+        oid = subprocess.check_output(['git','--git-dir=objects.git','rev-parse', commit+':'+repo_file],text=True).strip()
+        b = hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+        assert oid == b, (file,oid,b)
+    else:
+        oid = None
+    images.append(dict(file=folder,source_commit=commit,source_path=repo_file,source_url=http+commit+'/'+quote(repo_file) if repo_file else None,
+                       sha256=hashlib.sha256(data).hexdigest(),git_blob=oid,dimensions=[w,h],description=identification))
+    entries.append((folder,data))
+
+current_captures = {
+    '04':('04-current-check/04-r17.png','04-current-check/report.json','04-r17','04-current-queries.json'),
+    '04r':('04r-current-check/04r-r17.png','04r-current-check/report.json','04r-r17','04r-current-queries.json'),
+    '05':('checkpoints/05.png','checkpoints/report.json','05','queries.json'),
+    '06':('checkpoints/06.png','checkpoints/report.json','06','queries.json'),
+    '07':('07-current-check/07-r17.png','07-current-check/report.json','07-r17','07-current-queries.json'),
+    '08':('new-checkpoints/08-r17.png','new-checkpoints/report.json','08-r17','new-queries.json'),
+}
+capture_heads={'04':'ad5fbac592444e90fd1b53d62e7fa0b62391c032','04r':'ee3bfac993e2615cb2010672f78322ce788d0db8','05':baseline['05'],'06':baseline['06'],
+               '07':'4aeed609ea7022a287aa816c4d26944a0a71e14f','08':'ddecbc078fb2eff2154f905a3bc9f3525f515172'}
+for scene,(file,report,state_id,queryfile) in current_captures.items():
+    screen=scene[:2]
+    orig=next(Path('read/lead/references').glob(screen+'_*.png'))
+    source=str(orig.relative_to('read/lead'))
+    if scene != '04r':
+        frame(orig,'APPROVED/'+orig.name,heads['lead'],source,'Original approved artwork')
+    dest='CLAUDIA-kept-checkpoint/'+scene+'.png'
+    frame(file,dest,capture_heads[scene],identification='Independent frozen game capture of Claudia’s kept settings')
+    a=np.asarray(Image.open(orig).convert('RGB')).astype('int16')
+    b=np.asarray(Image.open(file).convert('RGB')).astype('int16')
+    within=np.sum(np.abs(a-b).sum(axis=2)<=60)
+    state=json.loads(Path(report).read_text())[state_id]
+    assert state['stage']==screen and not state['errors'] and not state['responses'], state
+    measurements[scene]={'source_commit':capture_heads[scene],'query':json.loads(Path(queryfile).read_text())[state_id],
+                         'approved_image':orig.name,'capture':dest,'matching_pixels':int(within),
+                         'whole_frame_pixels':int(a.shape[0]*a.shape[1]),
+                         'percent_whole_frame_with_mean_channel_error_at_most_20':float(100*within/(a.shape[0]*a.shape[1])),
+                         'mean_absolute_channel_error':float(np.abs(a-b).mean()),'runtime':state}
+
+proofs=[
+ ('04','latest/04','qa/match/04/r17/s1_end/NEW/f20_forward20u.png','04-forward-tunnel'),
+ ('04r','latest/04r','qa/match/04/r17/ringpaint/step5_dots/3_NEW_f10_forward10u.png','04-ring-specialist'),
+ ('05','read/05','qa/match/05/r14/step3_m05bank/new/k81_kink_left.png','05-late-bend-left'),
+ ('06','read/06','qa/match/06/r16/step1_m06gold/START_v2/NEW_forward1.1u.png','06-just-over-crest'),
+ ('06','read/06','qa/match/06/r16/step1_m06gold/NEW/f10_forward10u.png','06-forward-rings'),
+ ('07','latest/07','qa/match/07/r17/step2_nearw/NEW/f10_forward10u.png','07-forward-water'),
+ ('07','latest/07','qa/match/07/r17/step2_nearw/NEW/s_left_hard.png','07-hard-left'),
+ ('08','latest/08','qa/match/08/r17/step1_m08vh/3_NEW_f10_forward10u.png','08-forward-cups'),
+ ('08','latest/08','qa/match/08/r17/step1_m08vh/3_NEW_s_right_hard.png','08-hard-right-platform'),
+]
+for scene,base,source,label in proofs:
+    frame(Path(base)/source,'CLAUDIA-moving-views/'+label+'.png',capture_heads[scene],source,'Saved specialist gameplay')
+motionpath=Path('07-current-motion/report.json')
+if motionpath.is_file():
+    motion=json.loads(motionpath.read_text())['07-r17']
+    assert not motion['errors'] and not motion['responses']
+    for shot in motion['shots']:
+        assert shot['stage']=='07'
+        name=shot['name']
+        if name in ('t66','t80'):
+            frame(Path('07-current-motion')/(name+'.png'),'CLAUDIA-moving-views/07-plunge-'+name+'.png',capture_heads['07'],
+                  identification='Independent real-game capture at '+name[1:]+' percent of the ride from the approved checkpoint to the end of Screen 07')
+    entries.append(('evidence/screen07-motion.json',json.dumps(motion,indent=2).encode()))
+else:
+    raise RuntimeError('Waiting for current Screen 07 movement capture')
+
+backups={}
+for lead,folder,round_id in ((baseline['prev'],'read/prev',16),(heads['lead'],'latest/lead',17)):
+    backups[str(round_id)]={'lead_commit':lead, 'branches':{}}
+    for f in sorted((Path(folder)/'backups/wip').glob('*-c'+str(round_id)+'/INFO.json')):
+        info=json.loads(f.read_text())
+        fields=('branch','head','time','dirty_tracked','untracked_copied','untracked_skipped')
+        backups[str(round_id)]['branches'][info['branch']]={k:info[k] for k in fields}
+assert all(len(record['branches'])==6 for record in backups.values())
+def add_json(name,data):
+    entries.append((name,(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode()))
+add_json('evidence/branches.json',{'repository':'josiahscalia5-dev/rainbow-','verified_utc':cutoff['time'],
+    'tips':{names[k]:v for k,v in heads.items()},'account16_recovery_lead':baseline['prev']})
+add_json('evidence/image-provenance.json',images)
+add_json('evidence/measurements.json',measurements)
+add_json('evidence/recovery-inventory.json',backups)
+entries.append(('evidence/reference.sha256',reftext.encode()))
+for source,archive in [('blender-evidence.json','evidence/eight-blender-assets.json'),
+        ('screen07-bridge-report.json','evidence/screen07-blender-mcp.json'),
+        ('latest/07/qa/match/07/r17/step2_nearw/gameplay_new.json','evidence/claudia-screen07-gameplay.json')]:
+    entries.append((archive,Path(source).read_bytes()))
+readme="""Rainbow visual audit, 18 November 2026
+
+APPROVED contains the five original artworks. CLAUDIA-kept-checkpoint contains fresh, frozen captures of the retained game settings. Screen 04 has independent scenery and ring branches. CLAUDIA-moving-views contains full-size individual images of the key discrepancies. Two plunge views reproduce the current Screen 07 game in desktop Chromium. All PNGs are 864 by 1536. All game images depict Claudia’s work. The audit produced no experimental gameplay artwork.
+
+The branch snapshot and screen evidence have explicit commits in the evidence folder. See image-provenance.json for each image’s role, checksum, and source. The reference checksum file covers all 13 locked references, including eight beyond the five artworks delivered here. All 13 passed verification.
+
+Whole-frame measurements use the native approved checkpoint, with all HUD, character and collectible pixels included. Count pixels with mean absolute RGB channel error at most 20 on the 0 to 255 scale, then divide by all 1,327,104 pixels. See measurements.json for exact counts, launch settings and game state. A single fixed-view artwork cannot provide a registered image metric for a different camera position. The moving views are assessed visually.
+
+Ride-wide priority
+1. Screen 07. The level stretch has working cyan near water, narrow straight magenta stripes and flat adjacent foam. The white lather walls return abruptly farther down the plunge. The Account 17 work-in-progress archive includes Claudia’s separate attempt to fix that cut.
+2. Screen 06. The distant tunnel becomes a centered sequence of hoops after the crest. The artwork carries the crest across the frame into a low rightward bend. Check the crossed arches just after the checkpoint, bubble shading, ripple rings and paddle visibility.
+3. Screen 04. The entrance, mixed bubbles, side bands and glowing far opening are retained. The ring specialist retained the rounded copper ring profile and painted lip dots. The near water still needs sweeping magenta bands. The rings still need the artwork’s pink-violet reflections and the far light needs a softer haze.
+4. Screen 05. The retained V wake, paddle lids and foam bank establish the channel. A hard left near the late bend smears the purple slots and cuts a gold paddle. The foam bank changes to a tall slab and the entry to Screen 06 needs continuity.
+5. Screen 08. The washer chamber, gold rim, spouts and shelf stay readable in motion. Check the rectangle around the towel on hard turns, the platform ends, near-water glints, and the edge foam. A +20 forward shot belongs to Stage 09 and was excluded from this ranking.
+
+Blender’s portable official release 5.3.0 opened eight saved .blend files. Blender Lab’s MCP v1.0.3 returned the saved Screen 07 camera and texture dimensions over a temporary local bridge. Image2Blender was inspected at source commit 03fca53c1f44619550b25593834ac8c57fee5746. It was not installed or run. The smoke test did not assess an Android device.
+
+The proposed first experiment would adjust the shape of one existing magenta riverbank on the level stretch of Screen 07 with the saved reference camera, materials and visual geometry. Check the frame at the approved camera, forward views, both hard turns and the plunge. Claudia’s unfinished work on the late lather walls is recorded separately in the recovery inventory. Future experiments require a fresh branch and three separate full-size APPROVED, BEFORE and NEW images. The owner decides what to accept.
+"""
+entries.append(('READ-ME.txt',readme.encode()))
+out=Path('/workspace/library-files/Rainbow-visual-audit-2026-11-18.zip')
+temp=out.with_suffix('.building')
+with zipfile.ZipFile(temp,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=3) as z:
+    for name,data in entries:
+        z.writestr(name,data)
+with zipfile.ZipFile(temp) as z:
+    assert z.testzip() is None
+    assert len(z.namelist())==len(set(z.namelist()))
+    for im in images:
+        assert hashlib.sha256(z.read(im['file'])).hexdigest()==im['sha256']
+os.replace(temp,out)
+print('Verified',len(images),'native images,',len(entries),'entries,',round(out.stat().st_size/1048576,1),'MiB')
+print('Scores',{k:round(v['percent_whole_frame_with_mean_channel_error_at_most_20'],2) for k,v in measurements.items()})

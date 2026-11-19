@@ -1,0 +1,28 @@
+from pathlib import Path
+import json
+from datetime import datetime,timezone
+from subprocess import check_output
+p=Path.cwd();g=['git','-C',str(p/'repos/06')]
+def refs(data):return {b.removeprefix('refs/heads/'):a for a,b in (line.split() for line in data.splitlines())}
+old=refs((p/'live-heads.tsv').read_text());remote=refs(check_output(g+['ls-remote','--heads','origin'],text=True))
+screens=['04','05','06','07','08'];r=lambda path:json.loads(path.read_text())
+changedClaudia={key:{'start':old.get(key),'end':remote.get(key)} for key in set(old)|set(remote) if key.startswith(('ccr-','claude/')) and old.get(key)!=remote.get(key)}
+assert not changedClaudia,changedClaudia
+b=r(p/'base-06.json');lead=b['lead'];assert remote[lead['branch']]==lead['commit']
+specialist={s:r(p/('base-'+s+'.json'))['specialist'] for s in screens};specialist['04-ring']={'branch':'claude/rainbow-s04-ringtex-c17','commit':b['ringSpecialist']}
+assert all(remote[x['branch']]==x['commit'] for x in specialist.values())
+candidate={s:r(p/('published-'+s+'.json')) for s in screens};assert all(remote[x['branch']]==x['commit'] for x in candidate.values())
+assert all(len(x['lfsDownloads'])==2 for x in candidate.values())
+originals={}
+import hashlib
+for s in screens:
+ bl=r(p/('base-'+s+'.json'));dig={}
+ for file,value in bl['referenceManifest'].items():
+  with (p/'games'/s/file).open('rb') as f: hh=hashlib.file_digest(f,'sha256').hexdigest()
+  assert hh==value
+  dig[file]=hh
+ assert bl['referenceManifest']==b['referenceManifest']
+ originals[s]=len(dig)
+result={'utc':datetime.now(timezone.utc).isoformat(),'lead':lead,'specialists':specialist,'candidateTips':{s:x['commit'] for s,x in candidate.items()},'remoteCount':len(remote),'changedClaudiaRefs':changedClaudia,'allReferenceHashesCheckedInEachExperiment':originals,'lfsVideosDownloadedAndVerified':sum(len(x['lfsDownloads']) for x in candidate.values()),'totalEvidenceFilesVerified':sum(x['verifiedFiles'] for x in candidate.values())}
+(p/'final-remote-proof.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))

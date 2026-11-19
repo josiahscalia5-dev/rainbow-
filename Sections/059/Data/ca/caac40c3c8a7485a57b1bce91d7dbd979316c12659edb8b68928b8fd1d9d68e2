@@ -1,0 +1,44 @@
+{
+  "version": "5.3.0",
+  "meshes": {
+    "left_bank": {
+      "vertices": 864,
+      "faces": 715,
+      "modifiers": [
+        "SOLIDIFY"
+      ]
+    },
+    "left_foam": {
+      "vertices": 2940,
+      "faces": 2520,
+      "modifiers": []
+    },
+    "right_bank": {
+      "vertices": 804,
+      "faces": 665,
+      "modifiers": [
+        "SOLIDIFY"
+      ]
+    },
+    "right_foam": {
+      "vertices": 2520,
+      "faces": 2160,
+      "modifiers": []
+    }
+  },
+  "splines": {
+    "left_spine": 22,
+    "right_spine": 21
+  },
+  "packedImages": {
+    "near_bank.png": [
+      268,
+      388
+    ],
+    "near_foam.png": [
+      114,
+      144
+    ]
+  },
+  "camera": "reference_camera"
+}

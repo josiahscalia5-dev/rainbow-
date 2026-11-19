@@ -1,0 +1,48 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const { chromium } = require('playwright');
+const { pathToFileURL } = require('node:url');
+const root = __dirname;
+async function main() {
+  const { createServer } = await import(pathToFileURL(path.join(root,'runtime-deps/node_modules/vite/dist/node/index.js')).href);
+  const browser = await chromium.launch({executablePath:'/usr/bin/chromium', args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']});
+  const evidence = path.join(root,'checkpoints');
+  fs.mkdirSync(evidence,{recursive:true});
+  const report = {};
+  try {
+    for (const [k,proof] of Object.entries(JSON.parse(fs.readFileSync(path.join(root,'queries.json'))))) {
+      const gameRoot = path.join(root,'copies',k);
+      const modules = path.join(gameRoot,'node_modules');
+      if (!fs.existsSync(modules)) fs.symlinkSync(path.join(root,'runtime-deps/node_modules'),modules,'dir');
+      const server = await createServer({root:gameRoot,cacheDir:path.join(root,'vite-cache',k),server:{host:'127.0.0.1',port:5375,strictPort:false,hmr:false,watch:{ignored:['**/*']},fs:{allow:[gameRoot,path.join(root,'runtime-deps'),path.join(root,'vite-cache')]}},logLevel:'error'});
+      await server.listen();
+      const url = server.resolvedUrls.local[0];
+      const page = await browser.newPage({viewport:{width:864,height:1536},deviceScaleFactor:1});
+      const errors=[],responses=[];
+      page.on('pageerror',e=>errors.push(e.message));
+      page.on('console',m=>{if(m.type()==='error') errors.push(m.text())});
+      page.on('response',r=>{if(r.status()>=400) responses.push([r.status(),new URL(r.url()).pathname])});
+      try {
+        await page.route('**/*',route=>{const host=new URL(route.request().url()).hostname; return ['','localhost','127.0.0.1'].includes(host)?route.continue():route.abort();});
+        await page.goto(url+'?qa=1&dpr=1&'+proof,{timeout:90000});
+        await page.waitForFunction(()=>window.__rainbow?.ready===true||window.__error,undefined,{timeout:100000});
+        const initError=await page.evaluate(()=>window.__error); if(initError) throw new Error(initError);
+        await page.evaluate(k=>window.__rainbow.goto(k.slice(0,2)),k);
+        await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(resolve)));
+        await page.evaluate(()=>document.fonts.ready);
+        await page.waitForTimeout(250);
+        await page.screenshot({path:path.join(evidence,k+'.png'),timeout:90000});
+        const state=await page.evaluate(()=>window.__rainbow.state());
+        report[k]={stage:state.stage,s:state.s,coins:state.coins,hearts:state.hearts,errors,responses};
+        console.log(k,JSON.stringify(report[k]));
+      } catch (e) {
+        report[k]={issue:e.message,errors,responses};
+        console.log(k,JSON.stringify(report[k]).slice(0,1200));
+      } finally {
+        fs.writeFileSync(path.join(evidence,'report.json'),JSON.stringify(report,null,2));
+        await page.close(); await server.close();
+      }
+    }
+  } finally {await browser.close();}
+}
+main().catch(e=>{console.error(e);process.exitCode=1});

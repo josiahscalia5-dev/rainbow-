@@ -1,0 +1,47 @@
+import hashlib,os,json,subprocess as sp,shutil,sys
+from pathlib import Path
+from datetime import datetime,timezone
+root=Path.cwd(); pack=Path("/tmp/rainbow-one-review.MG1VK6V4/payload"); previous=Path("/tmp/rainbow-s06-rinse-world-6N8q2x2g")
+url='https://github.com/josiahscalia5-dev/rainbow-.git'
+branch='codex/s06-arched-washer-passage';save='codex/checkpoint-s06-before-arched-passage'
+heads={x.split()[1].removeprefix('refs/heads/'):x.split()[0] for x in Path('/tmp/rainbow06-current-refs-nov19.tsv').read_text().splitlines()}
+spec='claude/rainbow-s06-match-c18';base=heads[spec];source=pack.parent/'sources.git'
+versions=json.loads((pack/'02_VERSIONS/INDEX.json').read_text())['variants'];version=versions['Claudia_S06']
+assert version['commit']==base and branch not in heads, 'A newer specialist or existing experiment needs review.'
+repo=root/'repo';repo.mkdir()
+def git(*args,inp=None):return sp.check_output(['git','-C',str(repo),*args],input=inp)
+git('init','-q');(repo/'.git/objects/info/alternates').write_text(str(source/'objects')+'\n')
+for k,val in {'remote.origin.url':url,'remote.origin.fetch':'+refs/heads/*:refs/remotes/origin/*','remote.origin.promisor':'true','remote.origin.partialclonefilter':'blob:none','user.name':'Codex','user.email':'codex@users.noreply.github.com','gc.auto':'0'}.items():git('config','--local',k,val)
+git('lfs','install','--local')
+git('fetch','--filter=blob:none','--depth=1','--no-tags','--quiet','origin','refs/heads/'+spec+':refs/remotes/origin/'+spec)
+assert git('rev-parse','refs/remotes/origin/'+spec).decode().strip()==base
+patterns=['/.gitattributes','/src/world/match06.ts','/src/world/archedPassage06.ts','/assets/arched-passage06/','/tools/blender/arched-passage06/','/experiments/'+branch+'/']
+git('sparse-checkout','set','--no-cone','--stdin',inp=('\n'.join(patterns)+'\n').encode())
+git('-c','filter.lfs.process=','-c','filter.lfs.required=false','checkout','-q','-b',branch,base)
+remote=lambda *names:{l.split()[1].decode().removeprefix('refs/heads/'):l.split()[0].decode() for l in git('ls-remote','--heads','origin',*['refs/heads/'+name for name in names]).splitlines()}
+before=remote(spec,save,branch)
+assert before[spec]==base and branch not in before
+if save not in before:
+ env=dict(os.environ,GIT_LFS_SKIP_PUSH='1');sp.run(['git','-C',str(repo),'push','--quiet','origin',base+':refs/heads/'+save],env=env,check=True)
+assert remote(spec,save)=={spec:base,save:base}
+g=root/'games/06';g.mkdir(parents=True)
+index=json.loads((pack/version['index']).read_text())['files'];refs={}
+for name,row in index.items():
+ p=pack/row['file'];dest=g/name;dest.parent.mkdir(parents=True,exist_ok=True)
+ if hashlib.sha256(p.read_bytes()).hexdigest()!=row['sha256']:raise ValueError(name)
+ if name.startswith(('assets/','references/','character_references/','public/')): os.link(p,dest)
+ else:shutil.copyfile(p,dest)
+(g/'node_modules').symlink_to('/tmp/rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules')
+for line in (g/'scripts/reference.sha256').read_text().splitlines():
+ h,n=line.split(maxsplit=1);assert hashlib.sha256((g/n).read_bytes()).hexdigest()==h;refs[n]=h
+approved='references/06_crest_the_rinse_arch.png'
+assert git('show','HEAD:'+approved)==(g/approved).read_bytes()
+for f in ('src/world/match06.ts','src/world/course.ts','src/game/Game.ts','src/gameplay/coins.ts'):assert git('show','HEAD:'+f)==(g/f).read_bytes()
+for n in ['capture.cjs','serve.cjs','queries.json']:shutil.copyfile(previous/n,root/n)
+(root/'flags.json').write_text(json.dumps({'06':'cx06ArchedPassage=1'})+'\n')
+(root/'proof/06/BEFORE').mkdir(parents=True);actual=Path('/tmp/rainbow-s06-coin-arc-RoZNOWum/proof/06/BEFORE')
+for p in actual.glob('*'):os.link(p,root/'proof/06/BEFORE'/p.name)
+for name in ['diagnostics','authoring','checkpoint']: (root/name).mkdir()
+cp={'branch':branch,'checkpointBranch':save,'checkpointVerified':True,'retained':{'branch':spec,'commit':base},'lead':{'branch':'ccr-ae71d3a5-80naq2','commit':heads['ccr-ae71d3a5-80naq2']},'previousFurCandidate':heads['codex/s06-benny-layered-coat'],'previousRejectedRoute':heads['codex/s06-approved-crest-route'],'previousRejectedRebuild':heads['codex/s06-world-space-rinse-arch'],'verifiedAt':datetime.now(timezone.utc).isoformat(),'filesVerified':len(index),'references':refs,'officialArtwork':approved}
+(root/'baseline.json').write_text(json.dumps(cp,indent=2)+'\n');shutil.copyfile(root/'baseline.json',root/'checkpoint/source-checkpoint.json')
+print('Remote checkpoint',save,base,'hydrated checkout',len(index),'verified files, original',refs[approved])

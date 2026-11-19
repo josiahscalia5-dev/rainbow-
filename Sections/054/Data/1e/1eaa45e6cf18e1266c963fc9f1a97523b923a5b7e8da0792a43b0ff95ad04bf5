@@ -1,0 +1,14 @@
+{
+  "commit": "91e91b57f81dbc0567ec6709d8d09f553a3631f7",
+  "branch": "codex/s05-anchored-bend-highlights",
+  "parent": "8729b96daeb2b73ff27a20b5435fb8eba923d4f2",
+  "retained": {
+    "branch": "claude/rainbow-s05-match-c17",
+    "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+  },
+  "sourceFiles": [
+    "src/vfx/waterRibbon.ts"
+  ],
+  "utc": "2026-11-19T00:36:09.595185+00:00",
+  "purpose": "Isolated experimental source, pending visual review."
+}

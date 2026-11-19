@@ -1,0 +1,81 @@
+/**
+ * Manages the Playwright browser lifecycle for the Spector.js MCP server.
+ *
+ * All mutable browser state (the browser instance, page, console logs,
+ * selected canvas index) is encapsulated in the {@link BrowserManager} class
+ * so that it can be tested and replaced without module-level singletons.
+ */
+import { type Page } from "playwright";
+import type { ConsoleEntry, CanvasInfo } from "./types.js";
+/** Optional configuration for {@link BrowserManager}. */
+export interface BrowserManagerConfig {
+    /** Launch the browser in headless mode (default: `true`). */
+    headless?: boolean;
+    /** Viewport dimensions (default: 1920×1080). */
+    viewport?: {
+        width: number;
+        height: number;
+    };
+}
+/**
+ * Owns the Playwright browser, context, and page.
+ *
+ * Only one page is active at a time. Navigation resets console logs and the
+ * selected canvas index.
+ */
+export declare class BrowserManager {
+    private browser;
+    private context;
+    private page;
+    private consoleLogs;
+    private selectedCanvasIndex;
+    private readonly config;
+    /** Guards against concurrent `ensureBrowser()` calls launching multiple browsers. */
+    private launchPromise;
+    constructor(config?: BrowserManagerConfig);
+    /**
+     * Return the active page, launching a browser if necessary.
+     *
+     * Uses a promise-based lock to prevent concurrent callers from launching
+     * multiple browser instances (TOCTOU race).
+     */
+    ensureBrowser(): Promise<Page>;
+    private launchBrowser;
+    /** Close the browser and release all resources. */
+    close(): Promise<void>;
+    /**
+     * Navigate to an arbitrary URL and wait for at least one canvas.
+     *
+     * @throws {NavigationError} when the navigation itself fails.
+     */
+    navigateToUrl(url: string): Promise<{
+        title: string;
+        canvasCount: number;
+    }>;
+    /**
+     * Navigate to a Babylon.js Playground by snippet ID and extract source.
+     *
+     * @throws {NavigationError} when the playground fails to load.
+     */
+    navigateToPlayground(snippetId: string): Promise<{
+        code: string | null;
+    }>;
+    /** Enumerate all `<canvas>` elements on the current page. */
+    listCanvases(): Promise<CanvasInfo[]>;
+    /** Set the canvas index that will be used for the next capture. */
+    setSelectedCanvas(index: number): void;
+    /** Get the currently selected canvas index. */
+    getSelectedCanvas(): number;
+    /** Return the active page, or `null` if no page is open. */
+    getPage(): Page | null;
+    /** Return a shallow copy of all captured console entries. */
+    getConsoleLogs(): ConsoleEntry[];
+    /** Clear the console log buffer. */
+    clearConsoleLogs(): void;
+}
+/**
+ * Return (and lazily create) the default shared {@link BrowserManager}.
+ *
+ * Use this in production; in tests, instantiate `BrowserManager` directly.
+ */
+export declare function getDefaultBrowserManager(): BrowserManager;

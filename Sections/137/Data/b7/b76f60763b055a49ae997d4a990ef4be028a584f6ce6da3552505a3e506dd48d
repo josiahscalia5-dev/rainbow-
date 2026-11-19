@@ -1,0 +1,18 @@
+{
+ "worktree": "/home/user/wt/s07",
+ "branch": "claude/rainbow-s07-match-c16",
+ "head": "669420afe13e6d30b2f1d835a3a15c88967d8b76",
+ "time": "2026-11-18T19:37:09+00:00",
+ "dirty_tracked": [
+  "qa/match/07/r16/PROGRESS.md",
+  "src/world/match07.ts"
+ ],
+ "untracked_copied": [
+  "assets/textures/match07/near07.json",
+  "assets/textures/match07/near_bank.png",
+  "assets/textures/match07/near_foam.png",
+  "tools/match07/near_tiles_r16.py"
+ ],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s07-match-c16 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s07-match-c16/tracked.patch && copy backups/wip/claude__rainbow-s07-match-c16/untracked/* into the worktree"
+}

@@ -1,0 +1,12 @@
+FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 7.93, 'within_10': 0.8137, 'within_20': 0.8944, 'ssim_lum': 0.8791, 'mean_signed_rgb': [-1.8, -0.3, 0.3]}
+gold_rings_and_front_frame   px  125730  mean   9.11  <=10 0.740  <=20 0.882  ssim 0.826  signed [-3.0, -0.8, 2.3]
+purple_walls                 px  312706  mean   5.27  <=10 0.867  <=20 0.942  ssim 0.916  signed [-1.0, -0.1, -1.4]
+side_fittings                px   13776  mean   2.94  <=10 0.902  <=20 0.959  ssim 0.923  signed [-0.3, -0.1, 1.0]
+water                        px  480736  mean   3.55  <=10 0.939  <=20 0.965  ssim 0.957  signed [-2.4, -0.6, -0.2]
+foam_banks                   px   28862  mean   2.65  <=10 0.960  <=20 0.989  ssim 0.967  signed [-0.2, -0.6, -0.7]
+benny_and_hat                px   93061  mean  19.20  <=10 0.587  <=20 0.730  ssim 0.659  signed [-5.8, -1.3, 1.0]
+wake_splash                  px   83491  mean  11.55  <=10 0.703  <=20 0.820  ssim 0.811  signed [9.5, 7.0, 1.4]
+coins                        px   27437  mean  30.38  <=10 0.266  <=20 0.486  ssim 0.459  signed [-11.0, -3.0, 5.3]
+bubbles                      px   29304  mean   5.02  <=10 0.864  <=20 0.934  ssim 0.956  signed [-1.7, -2.3, -1.1]
+hud_and_text                 px  125488  mean  17.20  <=10 0.575  <=20 0.737  ssim 0.799  signed [-4.1, -2.2, 2.4]
+distant_tunnel_and_glow      px    6513  mean   2.43  <=10 0.926  <=20 0.971  ssim 0.936  signed [-0.2, 0.4, 1.0]

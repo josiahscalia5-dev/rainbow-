@@ -1,0 +1,10 @@
+from pathlib import Path
+import os,sys,subprocess
+p=Path.cwd()
+env=dict(os.environ,NODE_PATH='/opt/codex/cua_node/lib/node_modules',RAINBOW_BASE_URL='http://127.0.0.1:8096')
+for mode,variant in [('stills','NEW'),('ride','NEW'),('full-safe','NEW'),('repeat','BEFORE')]:
+ with (p/('qa-'+mode+'.log')).open('w') as out:
+  result=subprocess.run(['node','capture.cjs',mode,'06:'+variant],cwd=p,env=env,stdout=out,stderr=subprocess.STDOUT)
+ if result.returncode:
+  print(mode,(p/('qa-'+mode+'.log')).read_text()[-1400:],flush=True);sys.exit(result.returncode)
+ print(mode,variant,'passed',flush=True)

@@ -1,0 +1,205 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index dfaeb9d2..b78163e8 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -59,6 +59,10 @@ export interface M04Ctx {
+ const VERT = /* glsl */ `
+ uniform mat4 uProjVP;
+ attribute vec2 aK;
++#ifdef RFEW
++attribute vec2 aF;          // r18 m04rfew: x = ring coordinate along the tunnel in painted-period units, y = ring scale
++varying vec2 vF;
++#endif
+ varying vec4 vProj;
+ varying vec3 vW;
+ varying vec3 vN;
+@@ -68,6 +72,9 @@ void main() {
+   vProj = uProjVP * wp;
+   vW = wp.xyz;
+   vK = aK;
++#ifdef RFEW
++  vF = aF;
++#endif
+   vN = normalize(mat3(modelMatrix) * normal);
+   gl_Position = projectionMatrix * viewMatrix * wp;
+ }`;
+@@ -109,6 +116,11 @@ uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highl
+ uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)
+ uniform vec4 uRDots;       // r16 m04rpdots: x = amount, y = dot cells per ring, z = fraction of cells lit, w = core radius (u)
+ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)
++#ifdef RFEW
++uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
++uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
++varying vec2 vF;
++#endif
+ varying vec4 vProj;
+ varying vec3 vW;
+ varying vec3 vN;
+@@ -166,6 +178,18 @@ void main() {
+   vec3 qr = q - uAxD * al;
+   float rr = length(qr);
+   float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left
++#ifdef RFEW
++  if (vK.y > -0.5) {
++    // r18 m04rfew: telescoping rings — every ring is a copy of the template ring scaled by vF.y about a centre on the
++    // water line; angle and radius are taken around the ring's OWN centre, in template units, and the position along
++    // the ring comes from the ring coordinate (painted-period units), so texture, lip, groove and dots shrink with it
++    float sF = max(vF.y, 1e-3);
++    qr -= uAxU * (1.0 - sF) * uRFewG;
++    rr = length(qr) / sF;
++    ang = atan(dot(qr, uAxR), dot(qr, uAxU));
++    al = vF.x;
++  }
++#endif
+   vec3 R = reflect(-V, n);
+   float part = vK.x;
+   float dc = distance(cameraPosition, vW);
+@@ -339,6 +363,24 @@ void main() {
+       col = mix(col, pr, uRPaint);
+     }
+   }
++#ifdef RFEW
++  if (vK.y > -0.5 && uRFewW.y > 0.0) {
++    // r18 m04rfew: the light at the end of the painted telescope floods the deep rings: copper -> orange -> yellow ->
++    // warm yellow-white (the painted band medians measured ring by ring toward the vanishing point, as gains over the
++    // copper; r16 m04rwarm table), graded by how far this ring has shrunk (uRFewW.x = scale of the warm-white rings).
++    // The end disc is the light itself.
++    float x = 6.0 * clamp(log(max(vF.y, 1e-3)) / log(uRFewW.x), 0.0, 1.0);
++    vec3 wg = vec3(1.0);
++    wg = mix(wg, vec3(1.07, 1.16, 1.52), clamp(x, 0.0, 1.0));
++    wg = mix(wg, vec3(1.13, 1.24, 1.82), clamp(x - 1.0, 0.0, 1.0));
++    wg = mix(wg, vec3(1.24, 1.44, 1.95), clamp(x - 2.0, 0.0, 1.0));
++    wg = mix(wg, vec3(1.31, 1.68, 2.11), clamp(x - 3.0, 0.0, 1.0));
++    wg = mix(wg, vec3(1.33, 1.99, 2.32), clamp(x - 4.0, 0.0, 1.0));
++    wg = mix(wg, vec3(1.35, 2.46, 2.80), clamp(x - 5.0, 0.0, 1.0));
++    col *= mix(vec3(1.0), wg, uRFewW.y);
++    if (part > 3.5) col = mix(vec3(1.0, 0.98, 0.90), vec3(1.0, 0.86, 0.55), smoothstep(0.15, 1.0, clamp(rr / 3.8, 0.0, 1.0)));
++  }
++#endif
+   col = clamp(col, 0.0, 1.0);
+   // the approved view shows the approved pixels (the projector IS this camera there)
+   if (uAway < 0.999 && vProj.w > 0.0) {
+@@ -681,21 +723,67 @@ export function addM04(ctx: M04Ctx) {
+     // painted bands), a rounded lip bead (hot spots), a step back out (the thin dark groove); a = distance down the tunnel
+     const prof: { r: number; a: number; part: number }[] = [];
+     const ringOf: number[] = [];
+-    const nP = Math.ceil(len / P);
+-    for (let k = 0; k < nP; k++) {
+-      const a = k * P;
+-      const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };
+-      pushP(r + 0.22, a + 0.01, 2);
+-      pushP(r + 0.17, a + 0.07, 0);
+-      pushP(r + 0.07, a + P * 0.5, 0);
+-      // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)
+-      pushP(r - 0.05, a + P - 0.56 * gw, 0);
+-      pushP(r - 0.10, a + P - 0.48 * gw, 1);
+-      pushP(r - 0.22, a + P - 0.39 * gw, 1);
+-      pushP(r - 0.28 * Math.min(gw, 1.4), a + P - 0.27 * gw, 1);
+-      pushP(r - 0.23, a + P - 0.15 * gw, 1);
+-      pushP(r - 0.08, a + P - 0.07 * gw, 2);
+-      pushP(r + 0.22, a + P - 0.01, 2);
++    // r18 `m04rfew=1`: FEW, THICK rings telescoping into the light like the painted tunnel. Measured on the approved picture
++    // (upper-left walls, the cleanest): every painted groove circle is ~0.76 x the previous one, 11 rings deep (338, 254,
++    // 194, 149, 114, 87, 65, 50, 35, 27, 22 px) — the game's constant 4.6 u cylinder gives 0.75 -> 0.9 instead (a long
++    // corridor of many thin rings to a pin-point). Benny never swims beyond ~30.4 u inside the opening (the 04 group is
++    // hidden after stage 04), so from `m04rfa` u on every ring is a smaller copy of the ring before it (`m04rfq` per
++    // ring, scaled about a point on the water line `m04rfh` u above it, so the river runs on into the light), its band a
++    // broad cone narrowing to its lip (it faces the camera like the painted bands). Optional `m04rfg`: each corridor ring
++    // period this many times the previous (painted spacing seen as a cylinder grows ~1.3x per ring). Texture, lip line,
++    // groove and dots keep their painted proportions on every ring (ring coordinate in painted-period units).
++    const rfew = M04.num('m04rfew', 0) > 0;
++    const fV: number[] = [], fS: number[] = [];   // per profile point: ring coordinate (painted-period units), ring scale
++    let capA = len, capS = 1;
++    if (!rfew) {
++      const nP = Math.ceil(len / P);
++      for (let k = 0; k < nP; k++) {
++        const a = k * P;
++        const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };
++        pushP(r + 0.22, a + 0.01, 2);
++        pushP(r + 0.17, a + 0.07, 0);
++        pushP(r + 0.07, a + P * 0.5, 0);
++        // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)
++        pushP(r - 0.05, a + P - 0.56 * gw, 0);
++        pushP(r - 0.10, a + P - 0.48 * gw, 1);
++        pushP(r - 0.22, a + P - 0.39 * gw, 1);
++        pushP(r - 0.28 * Math.min(gw, 1.4), a + P - 0.27 * gw, 1);
++        pushP(r - 0.23, a + P - 0.15 * gw, 1);
++        pushP(r - 0.08, a + P - 0.07 * gw, 2);
++        pushP(r + 0.22, a + P - 0.01, 2);
++      }
++    } else {
++      const g = M04.num('m04rfg', 1), aT = M04.num('m04rfa', 30), q = M04.num('m04rfq', 0.75), sMin = M04.num('m04rfmin', 0.03);
++      const L = 0.56 * gw;                                     // lip bead + groove: template size on every ring
++      let A = 0, s0 = 1, Pc = P, tP = 0;
++      for (let k = 0; k < 400 && s0 >= sMin; k++) {
++        const tele = A >= aT - 1e-6;
++        if (tele && !tP) tP = Pc;                                // telescope template period = the corridor's last
++        const PU = tele ? tP : Pc, s1 = tele ? s0 * q : 1, B = PU - L;
++        const A0 = A;
++        const pushP = (rr: number, aa: number, part: number) => {
++          const band = aa <= B;
++          const s = band ? s0 + (s1 - s0) * (aa / B) : s1;
++          const wa = band ? aa * (s0 + s) / 2 : B * (s0 + s1) / 2 + (aa - B) * s1;   // along, integrated over the scale
++          prof.push({ r: rr, a: A0 + wa, part }); ringOf.push(k);
++          fV.push(k * P + (band ? aa * (P - L) / B : aa - (PU - P))); fS.push(s);
++        };
++        pushP(r + 0.22, 0.01, 2);
++        pushP(r + 0.17, 0.07, 0);
++        if (tele) for (let i = 1; i < 6; i++) pushP(r + 0.17 + (-0.05 - 0.17) * (i / 6), 0.07 + (B - 0.07) * (i / 6), 0);
++        else pushP(r + 0.07, PU * 0.5, 0);
++        pushP(r - 0.05, PU - 0.56 * gw, 0);
++        pushP(r - 0.10, PU - 0.48 * gw, 1);
++        pushP(r - 0.22, PU - 0.39 * gw, 1);
++        pushP(r - 0.28 * Math.min(gw, 1.4), PU - 0.27 * gw, 1);
++        pushP(r - 0.23, PU - 0.15 * gw, 1);
++        pushP(r - 0.08, PU - 0.07 * gw, 2);
++        pushP(r + 0.22, PU - 0.01, 2);
++        A = A0 + B * (s0 + s1) / 2 + L * s1;
++        s0 = s1; if (!tele) Pc *= g;
++      }
++      capA = A; capS = s0;
++      console.info('[match04] m04rfew', { g, aT, q, rings: ringOf[ringOf.length - 1] + 1, end: +capA.toFixed(2), endScale: +capS.toFixed(3) });
+     }
+     const tun = lathe(prof, 160, (j) => ringOf[j]);
+     // below the water line the corrugation flattens to the plain wall (no saw-tooth where the beads cross the water)
+@@ -711,6 +799,22 @@ export function addM04(ctx: M04Ctx) {
+       }
+       tun.computeVertexNormals();
+     }
++    // r18 `m04rfew`: scale every telescoping ring about its centre on the water line (lathe-local z = up)
++    const rfGz = -cy + M04.num('m04rfh', 0);
++    if (rfew) {
++      const pa = tun.attributes.position as THREE.BufferAttribute, nPt = prof.length;
++      const aF = new Float32Array(pa.count * 2);
++      for (let i = 0; i < pa.count; i++) {
++        const j = i % nPt, s = fS[j];
++        pa.setX(i, pa.getX(i) * s); pa.setZ(i, rfGz + (pa.getZ(i) - rfGz) * s);
++        aF[i * 2] = fV[j]; aF[i * 2 + 1] = s;
++      }
++      tun.setAttribute('aF', new THREE.Float32BufferAttribute(aF, 2));
++      tun.computeVertexNormals();
++      gm.defines = { RFEW: '' };
++      gm.uniforms.uRFewG = { value: rfGz };
++      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };
++    }
+     // lathe axis = +y; rotate so y -> -z (down the tunnel), then place at the mouth
+     tun.rotateX(-Math.PI / 2).translate(cx, cy, z0);
+     const tm = new THREE.Mesh(tun, gm); tm.name = 'm04_ring_tunnel'; group.add(tm);
+@@ -735,12 +839,15 @@ export function addM04(ctx: M04Ctx) {
+     mouth.rotateX(-Math.PI / 2).translate(cx, cy, z0);
+     const mm = new THREE.Mesh(mouth, gm); mm.name = 'm04_ring_mouth'; group.add(mm);
+     // far glow instead of the flat end cap
+-    const cap = new THREE.CircleGeometry(r + 0.2, 64).translate(cx, cy, z0 - len);
++    // (r18 m04rfew: at the telescope's end, the size of its last ring, centred on that ring)
++    const cap = rfew ? new THREE.CircleGeometry((r + 0.22) * capS, 64).translate(cx, cy + rfGz * (1 - capS), z0 - capA)
++      : new THREE.CircleGeometry(r + 0.2, 64).translate(cx, cy, z0 - len);
+     const nC = cap.attributes.position.count;
+     cap.setAttribute('aK', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 4 : 0)), 2));
++    if (rfew) cap.setAttribute('aF', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 0 : capS)), 2));
+     const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
+     ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
+-    console.info('[match04] m04ring', { period: P, rings: nP });
++    console.info('[match04] m04ring', { period: P, rings: ringOf[ringOf.length - 1] + 1 });
+     if (M04.mouth) {
+       const mt = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_mouth.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+       mt.colorSpace = THREE.NoColorSpace; mt.flipY = false; mt.wrapS = THREE.RepeatWrapping; mt.wrapT = THREE.ClampToEdgeWrapping;

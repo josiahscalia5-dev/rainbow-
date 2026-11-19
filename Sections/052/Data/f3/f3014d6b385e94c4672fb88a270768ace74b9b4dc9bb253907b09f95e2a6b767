@@ -1,0 +1,91 @@
+[
+  {
+    "id": "meshy/v7.1/image-to-3d",
+    "url": "https://fal.ai/models/meshy/v7.1/image-to-3d",
+    "http": 200,
+    "billingText": [
+      ", \"rig_task_id\": null } A base model without textures costs $0.80 . Adding textures brings the total to $1.20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 (I",
+      " textures costs $0.80 . Adding textures brings the total to $1.20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 (Image to 3D) API on fal",
+      "ures brings the total to $1.20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 (Image to 3D) API on fal",
+      ".20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 (Image to 3D) API on fal",
+      "all. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 (Image to 3D) API on fal"
+    ]
+  },
+  {
+    "id": "meshy/v7.1/multi-image-to-3d",
+    "url": "https://fal.ai/models/meshy/v7.1/multi-image-to-3d",
+    "http": 200,
+    "billingText": [
+      ", \"rig_task_id\": null } A base model without textures costs $0.80 . Adding textures brings the total to $1.20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 Mu",
+      " textures costs $0.80 . Adding textures brings the total to $1.20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 Multi (Image to 3D) API on fal",
+      "ures brings the total to $1.20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 Multi (Image to 3D) API on fal",
+      ".20 . Optional auto-rigging adds $0.20 , and animation adds $0.12 per call. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 Multi (Image to 3D) API on fal",
+      "all. A textured model with auto-rigging and animation costs $1.52 . Meshy 7.1 Multi (Image to 3D) API on fal"
+    ]
+  },
+  {
+    "id": "tripo3d/h3.1/image-to-3d",
+    "url": "https://fal.ai/models/tripo3d/h3.1/image-to-3d",
+    "http": 200,
+    "billingText": [
+      "206, \"content_type\": \"image/png\" } } Your request will cost $0.20 (without textures), $0.30 (with standard textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 (Image to 3D) A",
+      "e/png\" } } Your request will cost $0.20 (without textures), $0.30 (with standard textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 (Image to 3D) API on fal",
+      "0.20 (without textures), $0.30 (with standard textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 (Image to 3D) API on fal",
+      " textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 (Image to 3D) API on fal",
+      "xtures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 (Image to 3D) API on fal"
+    ]
+  },
+  {
+    "id": "tripo3d/h3.1/multiview-to-3d",
+    "url": "https://fal.ai/models/tripo3d/h3.1/multiview-to-3d",
+    "http": 200,
+    "billingText": [
+      "298, \"content_type\": \"image/png\" } } Your request will cost $0.20 (without textures), $0.30 (with standard textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 Multiview to 3D",
+      "e/png\" } } Your request will cost $0.20 (without textures), $0.30 (with standard textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 Multiview to 3D (Image to 3D) API on fal",
+      "0.20 (without textures), $0.30 (with standard textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 Multiview to 3D (Image to 3D) API on fal",
+      " textures), or $0.40 (with HD textures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 Multiview to 3D (Image to 3D) API on fal",
+      "xtures), plus an additional $0.20 for detailed geometry and $0.05 for quad mesh if selected. Tripo H3.1 Multiview to 3D (Image to 3D) API on fal"
+    ]
+  },
+  {
+    "id": "fal-ai/hunyuan-3d/v3.1/pro/image-to-3d",
+    "url": "https://fal.ai/models/fal-ai/hunyuan-3d/v3.1/pro/image-to-3d",
+    "http": 200,
+    "billingText": [
+      "ent_type\": \"model/gltf-binary\" } } } Your request will cost $0.375 per generation. For $1.00 , you can run this model 2 times. Enabling PBR materials adds $0.15 . Using multi-view images adds $0.15 . Custom face count adds $0.15 . Hunyuan 3D Pro (Image to 3",
+      "ry\" } } } Your request will cost $0.375 per generation. For $1.00 , you can run this model 2 times. Enabling PBR materials adds $0.15 . Using multi-view images adds $0.15 . Custom face count adds $0.15 . Hunyuan 3D Pro (Image to 3D) API on fal",
+      "you can run this model 2 times. Enabling PBR materials adds $0.15 . Using multi-view images adds $0.15 . Custom face count adds $0.15 . Hunyuan 3D Pro (Image to 3D) API on fal",
+      "ing PBR materials adds $0.15 . Using multi-view images adds $0.15 . Custom face count adds $0.15 . Hunyuan 3D Pro (Image to 3D) API on fal",
+      "Using multi-view images adds $0.15 . Custom face count adds $0.15 . Hunyuan 3D Pro (Image to 3D) API on fal"
+    ]
+  },
+  {
+    "id": "fal-ai/trellis-2",
+    "url": "https://fal.ai/models/fal-ai/trellis-2",
+    "http": 200,
+    "billingText": [
+      "00f70f34d23b69a912b5fe60487.glb\" } } Your request will cost $0.25 for 512p resolution, $0.30 for 1024p resolution and $0.35 for 1536p resolution. Trellis 2 (Image to 3D) API on fal",
+      ".glb\" } } Your request will cost $0.25 for 512p resolution, $0.30 for 1024p resolution and $0.35 for 1536p resolution. Trellis 2 (Image to 3D) API on fal",
+      "t $0.25 for 512p resolution, $0.30 for 1024p resolution and $0.35 for 1536p resolution. Trellis 2 (Image to 3D) API on fal"
+    ]
+  },
+  {
+    "id": "fal-ai/sam-3/3d-objects",
+    "url": "https://fal.ai/models/fal-ai/sam-3/3d-objects",
+    "http": 200,
+    "billingText": [
+      "DvU.png\", \"file_size\": 4404019 } ] } Your request will cost $0.02 per unit. SAM 3D Objects [image-to-3d] SAM 3D Objects reconstructs 3D geometry and texture from a single image at $0.02 per generation. Trading multi-view requirements for single-image conven",
+      "reconstructs 3D geometry and texture from a single image at $0.02 per generation. Trading multi-view requirements for single-image convenience, it handles real-world clutter and occlusion that trip up traditional photogrammetry. Built for product visualizat",
+      "That Scales SAM 3D Objects delivers production 3D assets at $0.02 per reconstruction, enabling 50 generations per dollar on fal. Metric Result Context Cost per Generation $0.02 50 reconstructions per $1.00 on fal Output Formats Gaussian splat (.ply) + GLB m",
+      "er dollar on fal. Metric Result Context Cost per Generation $0.02 50 reconstructions per $1.00 on fal Output Formats Gaussian splat (.ply) + GLB mesh Dual format for rendering and game engine workflows Segmentation Methods Text/point/box prompts + manual ma",
+      "lt Context Cost per Generation $0.02 50 reconstructions per $1.00 on fal Output Formats Gaussian splat (.ply) + GLB mesh Dual format for rendering and game engine workflows Segmentation Methods Text/point/box prompts + manual masks Auto-segmentation or prec",
+      "al context understanding for cluttered real-world images at $0.02 per generation, using segmentation-driven reconstruction to handle occlusion and scene complexity. Tripo3D delivers production-ready stylized 3D models at $0.20-$0.40 depending on texture qua",
+      "ty. Tripo3D delivers production-ready stylized 3D models at $0.20-$0.40 depending on texture quality, optimized for clean-input workflows where background isolation is already handled. Hunyuan3D v2 \u2013 SAM 3D Objects extracts and reconstructs specific objects",
+      "ipo3D delivers production-ready stylized 3D models at $0.20-$0.40 depending on texture quality, optimized for clean-input workflows where background isolation is already handled. Hunyuan3D v2 \u2013 SAM 3D Objects extracts and reconstructs specific objects from ",
+      "objects from complex scenes using SAM-based segmentation at $0.02 per generation. Hunyuan3D v2 generates complete 3D assets from single images at $0.017 per generation, focusing on versatile asset creation with native 3D generation rather than reconstructio",
+      "uan3D v2 generates complete 3D assets from single images at $0.017 per generation, focusing on versatile asset creation with native 3D generation rather than reconstruction from real-world photos. Hyper3D Rodin \u2013 SAM 3D Objects handles real-world photograph",
+      "andles real-world photography with occlusion and clutter at $0.02 per generation with dual Gaussian splat and GLB output. Hyper3D Rodin generates production-ready 3D models with PBR materials at $0.40 per generation, supporting both image-to-3D and text-to-",
+      " generates production-ready 3D models with PBR materials at $0.40 per generation, supporting both image-to-3D and text-to-3D workflows for CG-friendly assets. SAM 3D: Single-Image 3D Object Reconstruction | fal"
+    ]
+  }
+]

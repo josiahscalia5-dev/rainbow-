@@ -1,0 +1,44 @@
+import json,subprocess,pathlib,re
+from collections import defaultdict
+t=json.load(open('trees.json'))
+mapping=defaultdict(list)
+for k, entries in t.items():
+    n=k[:2]
+    for p,oid in entries.items():
+        suffix=pathlib.PurePosixPath(p).suffix.lower()
+        take=False
+        if k=='prev':
+            take=p.startswith('backups/wip/') and p.endswith('/INFO.json') and 'c16/' in p
+        elif k=='lead':
+            take=('/' not in p and suffix in {'.md'} or p in ['.gitattributes','scripts/reference.sha256','scripts/setup-image-blaster.sh','scripts/cloud-env-setup.sh'] or p.startswith(('docs/','qa/da3/','references/','character_references/')) and (suffix in {'.md','.txt'} or p.startswith(('references/','character_references/'))) or p.startswith(('qa/review_r','qa/pilot05','qa/imageblaster','qa/worldlabs','qa/screen_videos','qa/lead_r6','qa/parallel_preview')) and suffix=='.md' or p.startswith('backups/') and (p.count('/')==1 and suffix in {'.md','.json'} or re.search(r'c1[67]/(INFO.json|tracked.patch)$',p) or re.search(r'c1[67]/.*(PROGRESS.md|KEPT_START.txt)$',p)))
+        else:
+            take=p.startswith('qa/match/'+n+'/') and (suffix in {'.md','.txt'} or re.search(r'/(r16|r14)/.*(motion|shots|gameplay|metric).*\.json$',p)) or p.endswith('.blend') or p.startswith('assets/models/') and suffix=='.glb' or p.startswith('qa/tools_check/') and suffix=='.md'
+            take=take or p.startswith('assets/textures/match'+n+'/') and suffix in {'.json','.png'} and re.search(r'(tile_|near|ring|patch_|cam[0-9])',p) is not None
+            if k=='04':
+                take=take or p.startswith('qa/match/04/r16/s3_sband/') and suffix in {'.png','.mp4'}
+            if k=='04r':
+                take=take or p.startswith('qa/match/04/r16/ringpaint/') and (p.startswith('qa/match/04/r16/ringpaint/step3_lip/') or '2_BEFORE_' in p or 'step4_warm/3_NEW_f20' in p) and suffix in {'.png','.mp4'}
+            if k=='05':
+                take=take or p.startswith('qa/match/05/r14/step3_m05bank/') and suffix in {'.png','.mp4'} or p.startswith('assets/textures/tunnel05/') and suffix=='.png'
+            if k=='06':
+                take=take or p.startswith('qa/match/06/r16/step1_m06gold/') and suffix in {'.png','.mp4'}
+            if k=='07':
+                take=take or p.startswith('qa/match/07/r16/step1/') and suffix in {'.png','.mp4'}
+            if k=='08':
+                take=take or p.startswith('qa/match/08/r16/step1_m08sr/') and suffix in {'.png','.mp4'}
+        if take: mapping[oid].append([k,p])
+def fetch(ids):
+    r=subprocess.run(['git','--git-dir=objects.git','-c','gc.auto=0','-c','fetch.negotiationAlgorithm=noop','fetch','--quiet','--no-tags','--no-write-fetch-head','--filter=blob:none','--recurse-submodules=no','--stdin','origin'],input=''.join(i+'\n' for i in ids).encode(),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    if r.returncode: raise RuntimeError(r.stderr.decode()[:800])
+ids=sorted(mapping)
+print(f'{len(ids)} distinct audit objects; {sum(map(len,mapping.values()))} paths',flush=True)
+for offset in range(0,len(ids),80):
+    group=ids[offset:offset+80]
+    fetch(group)
+    for oid in group:
+        b=subprocess.check_output(['git','--git-dir=objects.git','cat-file','blob',oid])
+        for k,p in mapping[oid]:
+            dst=pathlib.Path('read')/k/p
+            dst.parent.mkdir(exist_ok=True,parents=True)
+            dst.write_bytes(b)
+print('Downloaded audit evidence into scratch only.',flush=True)

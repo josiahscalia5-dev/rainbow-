@@ -1,0 +1,7 @@
+[mcp_servers.blender]
+command = '/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3'
+args = ["-m", "blmcp"]
+[mcp_servers.blender.env]
+BLENDER_MCP_HOST = "127.0.0.1"
+BLENDER_MCP_PORT = "17574"
+PYTHONPATH = '/tmp/rainbow-visual-audit.X0POSzUq/bridge-source/mcp:/tmp/rainbow-visual-audit.X0POSzUq/bridge-docutils.whl'

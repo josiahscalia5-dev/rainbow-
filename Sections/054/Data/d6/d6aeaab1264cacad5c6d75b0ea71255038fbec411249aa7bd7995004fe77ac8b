@@ -1,0 +1,582 @@
+{
+  "screen": "06",
+  "verifiedSource": {
+    "commit": "41d4d840b9325bf810397ed6bfe28002603723c8",
+    "branch": "codex/s06-crest-release-water",
+    "parent": "394609842ebc30c2832e23b8992c7d9a868ba0c0",
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "sourceFiles": [
+      "src/world/match06.ts",
+      "assets/textures/match06/mask06_crest_release.png"
+    ],
+    "utc": "2026-11-19T00:35:52.087262+00:00",
+    "purpose": "Isolated experimental source, pending visual review."
+  },
+  "retainedOpeningRepeatedExactly": true,
+  "opening": {
+    "width": 864,
+    "height": 1536,
+    "threshold": 0.1,
+    "includeAA": false,
+    "approvedVsBefore": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049550,
+      "within20Percent": 79.08573857060185,
+      "pixelmatchMismatches": 262246
+    },
+    "approvedVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049550,
+      "within20Percent": 79.08573857060185,
+      "pixelmatchMismatches": 262246
+    },
+    "beforeVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 0,
+      "within20Pixels": 1327104,
+      "within20Percent": 100,
+      "pixelmatchMismatches": 0
+    },
+    "beforeVsRepeat": {
+      "pixels": 1327104,
+      "exactDifferences": 0,
+      "within20Pixels": 1327104,
+      "within20Percent": 100,
+      "pixelmatchMismatches": 0
+    }
+  },
+  "simulationHz": 60,
+  "clip": {
+    "codec_name": "h264",
+    "width": 648,
+    "height": 1152,
+    "avg_frame_rate": "12/1",
+    "duration": "5.250000",
+    "nb_frames": "63",
+    "side_data_list": [
+      {}
+    ]
+  },
+  "routeMatchedFrames": 63,
+  "matchedCameraAndGameState": true,
+  "poseCount": 14,
+  "skips": [],
+  "safeRun": {
+    "start": 1330,
+    "coins": 91,
+    "score": 2240,
+    "stage": "11",
+    "hearts": 5,
+    "collisions": []
+  },
+  "gameplayAssertions": {
+    "pauseFreezes": true,
+    "continuousTravel": true,
+    "noCameraCut": true,
+    "noTeleport": true,
+    "plunge": true,
+    "realCoinPickups": true,
+    "victory": true,
+    "heartsLostOnWallBump": true
+  },
+  "stageTransitions": [
+    [
+      0,
+      "06"
+    ],
+    [
+      4.916666666666667,
+      "07"
+    ]
+  ],
+  "poseSummaries": {
+    "opening": {
+      "versusClaudiaPixelsOver30SumChannelError": 0,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "forward-03": {
+      "versusClaudiaPixelsOver30SumChannelError": 43221,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 7146,
+      "parentMaximumChannelChange": 21
+    },
+    "forward-06": {
+      "versusClaudiaPixelsOver30SumChannelError": 40780,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "forward-10": {
+      "versusClaudiaPixelsOver30SumChannelError": 36001,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "forward-20": {
+      "versusClaudiaPixelsOver30SumChannelError": 35992,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "hard-left": {
+      "versusClaudiaPixelsOver30SumChannelError": 81542,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 4777,
+      "parentMaximumChannelChange": 2
+    },
+    "hard-right": {
+      "versusClaudiaPixelsOver30SumChannelError": 129413,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "inlet": {
+      "versusClaudiaPixelsOver30SumChannelError": 119357,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 186,
+      "parentMaximumChannelChange": 17
+    },
+    "middle": {
+      "versusClaudiaPixelsOver30SumChannelError": 44822,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "deep": {
+      "versusClaudiaPixelsOver30SumChannelError": 105479,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "crest-release": {
+      "versusClaudiaPixelsOver30SumChannelError": 49885,
+      "versusParentPixelsOver30SumChannelError": 49885,
+      "versusParentAnyPixelChange": 66563,
+      "parentMaximumChannelChange": 218,
+      "palePixels": {
+        "regionXYXY": [
+          282,
+          1088,
+          574,
+          1248
+        ],
+        "threshold": "minimum RGB channel above 140 and channel range below 85",
+        "parent": 18028,
+        "new": 3871
+      }
+    },
+    "arch-exit": {
+      "versusClaudiaPixelsOver30SumChannelError": 260999,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    },
+    "last-in-stage": {
+      "versusClaudiaPixelsOver30SumChannelError": 61586,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 4666,
+      "parentMaximumChannelChange": 2
+    },
+    "across-transition": {
+      "versusClaudiaPixelsOver30SumChannelError": 0,
+      "versusParentPixelsOver30SumChannelError": 0,
+      "versusParentAnyPixelChange": 0,
+      "parentMaximumChannelChange": 0
+    }
+  },
+  "geometryDiagnostics": {
+    "staticMask": {
+      "size": [
+        864,
+        1536
+      ],
+      "opaqueOcclusionPixels": 128283,
+      "blueMaskPixels": 115833,
+      "fullWeightPixels": 98678,
+      "boundsInPlate": [
+        206,
+        730,
+        632,
+        1176
+      ],
+      "sourceMaskSHA256": "3188de6d644637d8bedbcd56d3620ec968b7754a9f70fe10a437de5062dca761",
+      "experimentalMaskSHA256": "1ec5e21917b6b681d7f0f9a15995e8ddd66b012964a7e9dbe1ec2e1ae2e7cbfe",
+      "releaseSamples": [
+        {
+          "pixel": [
+            290,
+            1080
+          ],
+          "platePixel": [
+            302.827,
+            1015.068
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            350,
+            1080
+          ],
+          "platePixel": [
+            360.348,
+            1014.99
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            410,
+            1080
+          ],
+          "platePixel": [
+            417.893,
+            1014.912
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            470,
+            1080
+          ],
+          "platePixel": [
+            475.464,
+            1014.835
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            530,
+            1080
+          ],
+          "platePixel": [
+            533.061,
+            1014.757
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            570,
+            1080
+          ],
+          "platePixel": [
+            571.472,
+            1014.706
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            290,
+            1120
+          ],
+          "platePixel": [
+            302.79,
+            1051.512
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            350,
+            1120
+          ],
+          "platePixel": [
+            360.266,
+            1051.452
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            410,
+            1120
+          ],
+          "platePixel": [
+            417.768,
+            1051.388
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            470,
+            1120
+          ],
+          "platePixel": [
+            475.296,
+            1051.326
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            530,
+            1120
+          ],
+          "platePixel": [
+            532.85,
+            1051.265
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            570,
+            1120
+          ],
+          "platePixel": [
+            571.234,
+            1051.223
+          ],
+          "actorMask": 201,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            290,
+            1160
+          ],
+          "platePixel": [
+            302.752,
+            1087.911
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            350,
+            1160
+          ],
+          "platePixel": [
+            360.184,
+            1087.864
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            410,
+            1160
+          ],
+          "platePixel": [
+            417.644,
+            1087.817
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            470,
+            1160
+          ],
+          "platePixel": [
+            475.129,
+            1087.77
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            530,
+            1160
+          ],
+          "platePixel": [
+            532.64,
+            1087.723
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            570,
+            1160
+          ],
+          "platePixel": [
+            570.996,
+            1087.692
+          ],
+          "actorMask": 0,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            290,
+            1200
+          ],
+          "platePixel": [
+            302.712,
+            1124.316
+          ],
+          "actorMask": 122,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            350,
+            1200
+          ],
+          "platePixel": [
+            360.103,
+            1124.284
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            410,
+            1200
+          ],
+          "platePixel": [
+            417.521,
+            1124.252
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            470,
+            1200
+          ],
+          "platePixel": [
+            474.965,
+            1124.223
+          ],
+          "actorMask": 255,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            530,
+            1200
+          ],
+          "platePixel": [
+            532.437,
+            1124.194
+          ],
+          "actorMask": 0,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            570,
+            1200
+          ],
+          "platePixel": [
+            570.765,
+            1124.172
+          ],
+          "actorMask": 0,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            290,
+            1240
+          ],
+          "platePixel": [
+            302.672,
+            1160.666
+          ],
+          "actorMask": 0,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            350,
+            1240
+          ],
+          "platePixel": [
+            360.021,
+            1160.652
+          ],
+          "actorMask": 17,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            410,
+            1240
+          ],
+          "platePixel": [
+            417.398,
+            1160.636
+          ],
+          "actorMask": 221,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            470,
+            1240
+          ],
+          "platePixel": [
+            474.802,
+            1160.622
+          ],
+          "actorMask": 3,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            530,
+            1240
+          ],
+          "platePixel": [
+            532.233,
+            1160.608
+          ],
+          "actorMask": 0,
+          "priorFillMask": 255
+        },
+        {
+          "pixel": [
+            570,
+            1240
+          ],
+          "platePixel": [
+            570.535,
+            1160.597
+          ],
+          "actorMask": 0,
+          "priorFillMask": 255
+        }
+      ]
+    }
+  },
+  "additionalMatchedCrestPoses": [
+    "opening",
+    "before-release",
+    "crest-release",
+    "after-release",
+    "water-exposed"
+  ]
+}

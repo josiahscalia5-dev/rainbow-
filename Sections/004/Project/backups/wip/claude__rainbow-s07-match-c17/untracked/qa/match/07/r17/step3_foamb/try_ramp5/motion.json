@@ -1,0 +1,101 @@
+{
+ "screen": "07",
+ "query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1",
+ "shots": [
+  {
+   "name": "t50_through_screen",
+   "dist": "t0.5",
+   "steer": null,
+   "mode": "ride",
+   "stage": "07",
+   "s": 332.27,
+   "lat": 0,
+   "coins": 2060,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -66.084,
+   "bennyVisible": true,
+   "cam": [
+    12.91,
+    -56.63,
+    -251.86
+   ],
+   "frames": 293,
+   "s0": 273.056,
+   "s1": 390.1617102628636,
+   "target": 331.6088551314318
+  },
+  {
+   "name": "t66_through_screen",
+   "dist": "t0.66",
+   "steer": null,
+   "mode": "ride",
+   "stage": "07",
+   "s": 351.063,
+   "lat": 0,
+   "coins": 2090,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -83.754,
+   "bennyVisible": true,
+   "cam": [
+    12.91,
+    -74.78,
+    -259.41
+   ],
+   "frames": 387,
+   "s0": 273.056,
+   "s1": 390.1617102628636,
+   "target": 350.34576877348997
+  },
+  {
+   "name": "t80_through_screen",
+   "dist": "t0.8",
+   "steer": null,
+   "mode": "ride",
+   "stage": "07",
+   "s": 367.468,
+   "lat": 0,
+   "coins": 2120,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -99.149,
+   "bennyVisible": true,
+   "cam": [
+    12.91,
+    -90.19,
+    -265.01
+   ],
+   "frames": 469,
+   "s0": 273.056,
+   "s1": 390.1617102628636,
+   "target": 366.7405682102909
+  },
+  {
+   "name": "t95_through_screen",
+   "dist": "t0.95",
+   "steer": null,
+   "mode": "ride",
+   "stage": "07",
+   "s": 385.063,
+   "lat": 0,
+   "coins": 2150,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -111.885,
+   "bennyVisible": true,
+   "cam": [
+    12.91,
+    -104.71,
+    -270.93
+   ],
+   "frames": 557,
+   "s0": 273.056,
+   "s1": 390.1617102628636,
+   "target": 384.3064247497204
+  }
+ ],
+ "console": [
+  "[m07nearw] checkpoint s 273.26 centre line 1.10 0.53 0.09 -0.16 -0.19 -0.07 0.11 0.29 0.41 0.40 0.24 -0.05 -0.38 -0.68 -0.94 -1.17 -1.37 -1.55 -1.68 -1.71 -1.60 -1.30 -0.80 -0.14 0.56 1.19 1.69 2.04 2.26 2.35 2.31 2.15 1.90 1.59 1.28 1.03 0.88 0.86 0.96 1.14 1.34 1.50 1.57 1.52 1.35 1.11 0.84 0.61 0.48 0.47 0.57 0.75 0.95 1.10 1.15 1.09 0.92 0.70 0.49 0.37 0.40 0.58 0.85 1.16"
+ ]
+}

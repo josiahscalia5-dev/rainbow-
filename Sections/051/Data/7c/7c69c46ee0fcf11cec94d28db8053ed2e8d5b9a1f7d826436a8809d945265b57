@@ -1,0 +1,9 @@
+{
+  "commit": "3b57658f78fd5d7dce498d2743f1a09a173a570a",
+  "files": {
+    ".agents/skills/rainbow-visual-motion-matcher/SKILL.md": "8f3e3473a85b240cf1fef9e9554fdf99d2acd78ec1506c0a1e758956b8332c34",
+    ".agents/skills/rainbow-visual-motion-matcher/scripts/compare-opening.py": "aa3dfe24d2900a90ab431ab16272aad8b077058cf2f4831b5b5f8cb7d5309772",
+    ".agents/skills/rainbow-visual-motion-matcher/scripts/score-rgba.mjs": "d87f0751a3cb099857fc09c6d4893126d149aeef1e14a13965dbb3e1bde6ee98",
+    "AGENTS.md": "15396a703cbd01199b3ecd4bf600a6f5b88ba41f93d60e382e6c7dc9f1e6ca1d"
+  }
+}

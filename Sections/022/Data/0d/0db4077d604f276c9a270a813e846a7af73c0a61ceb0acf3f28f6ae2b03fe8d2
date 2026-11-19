@@ -1,0 +1,36 @@
+# Google Flow opening / ending videos
+
+The game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D
+game without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.
+
+## Where to put the files
+
+| File | Plays | Hand-off |
+|---|---|---|
+| `public/video/intro.mp4` (or `.webm`) | at launch and on Replay, instead of the real-time 01 | the live 3D intro is held at the "girl walks away" moment (`T.cp01`) under the video, then revealed by a 0.7 s cross-fade and continued in real time: 02 Whirlpool Tumble → 03 ride |
+| `public/video/ending.mp4` (or `.webm`) — optional | when Benny reaches 11, before the victory frame | the real-time 11 frame (the official cartoon girl holds the towel, Benny hidden, **FINAL SPIN COMPLETE**) is revealed by a cross-fade |
+
+If a file is missing, the real-time 3D cinematic plays instead. Videos are always muted and inline.
+Tap skips the video (after 0.6 s).
+
+## Recommended export
+
+* Portrait 9:16 (1080×1920 or 720×1280). Landscape clips are letterboxed, not cropped.
+* H.264 MP4 (AAC track optional — it is muted anyway). Keep it short (≈5–10 s) and under ~15 MB:
+  the file is bundled into the Android APK.
+* End the intro on the girl walking away from the closed washer door, seen from inside the drum if
+  possible, so the cross-fade lands on the matching 3D shot. End the ending video just before the
+  "girl holds the towel" pose.
+* `.mp4` files are stored with Git LFS (see `.gitattributes`); the autosave backs them up automatically.
+
+## Testing
+
+* Try a clip without copying it: `?introVideo=/path/under/project/root.mp4` (same for `endingVideo`);
+  `?video=0` disables videos; QA captures (`?qa`) never play them.
+* `npm run test:cinematic` — headless Chromium test of both paths (with a generated VP8 test clip and
+  without any video). Result: `qa/cinematic_test.json`. Last run 2026-11-15: **pass** (overlay shown,
+  3D held paused underneath, resumed after the fade and advanced 01 → 02; fallback without video OK).
+  Note: this Chromium build has no H.264, so the automated test uses WebM; MP4 playback must be
+  checked on a real Android device.
+
+Implementation: `src/ui/cinematicVideo.ts`, hooks in `src/game/Game.ts` (`playIntroVideo`, `startOutro`).

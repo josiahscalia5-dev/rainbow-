@@ -1,0 +1,27 @@
+from pathlib import Path
+from PIL import Image,ImageDraw
+import numpy as np,json,sys
+p=Path(__file__).resolve().parent
+past=Path('/tmp/rainbow-final-fidelity.RuUP0xJ2')
+s=sys.argv[1]
+old=past/'repos'/s/'experiments/codex'/('fidelity-'+s)
+bl=old/'CLAUDIA_BEFORE'
+prev=old/'CODEX_NEW' if s in ['04','06','08'] else Path('/tmp/rainbow-reconstruction.etSm9SmK/repos/05/experiments/codex/05/NEW') if s=='05' else bl
+loc=p if s=='06' else p/'round2'
+n=loc/'proof'/s/'NEW'
+poses=sys.argv[2:]
+can=Image.new('RGB',(432,290*len(poses)))
+draw=ImageDraw.Draw(can)
+for j,pose in enumerate(poses):
+ files=[old/'APPROVED.jpg',prev/(pose+'.png'),n/(pose+'.png')]
+ if not all(f.is_file() for f in files):continue
+ for i,f in enumerate(files):
+  im=Image.open(f).convert('RGB');im.thumbnail((144,256),Image.Resampling.LANCZOS);can.paste(im,(144*i,290*j+22))
+  draw.text((1+144*i,290*j+3),('Original','Prior','New')[i],fill='white')
+ draw.text((2,290*j+278),pose,fill='white')
+ c,z=[np.asarray(Image.open(f).convert('RGB'),dtype=np.int16) for f in files[1:]]
+ change=np.abs(c-z);strong=change.sum(2)>30
+ if strong.any():
+  y,x=np.where(strong)
+  print(pose,int(strong.sum()),'xy 10,50,90th',np.percentile(x,[10,50,90]).astype(int).tolist(),np.percentile(y,[10,50,90]).astype(int).tolist())
+can.save(p/('internal-'+s+'.jpg'),quality=86)

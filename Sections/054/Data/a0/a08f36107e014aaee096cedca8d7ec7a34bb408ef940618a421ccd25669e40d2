@@ -1,0 +1,18 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import subprocess as sp,json,hashlib
+p=Path(__file__).resolve().parent
+old=Path('/tmp/rainbow-final-fidelity.RuUP0xJ2')
+def refs(text):return {b.removeprefix('refs/heads/'):a for a,b in (v.split() for v in text.splitlines())}
+def read(f):return json.loads(f.read_text())
+start=refs((old/'live-heads.tsv').read_text())
+remote=refs(sp.check_output(['git','-C',str(p/'repo'),'ls-remote','--heads','origin'],text=True))
+prefix=('ccr-','claude/');changed={n:{'initial':start.get(n),'current':remote.get(n)} for n in sorted(set(start)|set(remote)) if n.startswith(prefix) and start.get(n)!=remote.get(n)}
+base=read(p/'baseline.json'); stages=['04','05','06','07','08']
+assert all(remote[x['branch']]==x['commit'] for x in [base['lead'],*base['specialists'].values()]),changed
+assembled={s:read(p/('published-'+s+'.json')) for s in stages}
+for s,x in assembled.items():assert remote[x['branch']]==x['commit'] and x['originalsVerified']==13 and len(x['lfsDownloads'])==2
+totals={'referenceManifestVerifiedInEachScreen':13,'separateScreenExperiments':5,'nativeMovingAndOpeningPosePairs':sum(read(p/('quality-'+s+'.json'))['poseCount'] for s in stages),'matchedFramesAcrossFilms':sum(read(p/('quality-'+s+'.json'))['routeMatchedFrames'] for s in stages),'videosDownloadedFromGitLFSAndVerified':sum(len(x['lfsDownloads']) for x in assembled.values()),'evidenceFilesHashed':sum(x['verifiedFiles'] for x in assembled.values())}
+result={'utc':datetime.now(timezone.utc).isoformat(),'lead':base['lead'],'specialists':base['specialists'],'protectedRefsSeen':sum(k.startswith(prefix) for k in remote),'protectedRefsChangedWhileWorking':changed,'pushedExperimentalTips':{s:x['commit'] for s,x in assembled.items()},'totals':totals,'device':read(p/'android-receipt.json'),'screenDisposition':{s:read(p/('decision-'+s+'.json'))['status'] for s in stages}}
+(p/'whole-run-verification.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(totals));print('Protected branch changes',len(changed))

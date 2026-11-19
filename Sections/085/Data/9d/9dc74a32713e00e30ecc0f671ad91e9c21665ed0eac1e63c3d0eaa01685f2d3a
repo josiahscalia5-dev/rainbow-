@@ -1,0 +1,16 @@
+{
+  "time": "2026-11-18T21:53:15.189454+00:00",
+  "base": {
+    "branch": "claude/rainbow-s06-match-c17",
+    "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+  },
+  "branch": "codex/s06-curved-rinse-arch",
+  "paths": [
+    "src/world/match06.ts"
+  ],
+  "lead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "remoteHeadCountAtCheck": 138
+}

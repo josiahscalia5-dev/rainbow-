@@ -1,0 +1,38 @@
+import subprocess,os,sys,json,hashlib,math
+from pathlib import Path
+from PIL import Image
+import numpy as np
+root=Path(__file__).parent;old=Path('/tmp/rainbow-reconstruction.etSm9SmK/repos');hd=Path('/tmp/rainbow-review-package.Ag1cgebC/proof')
+skill=old/'skill/.agents/skills/rainbow-visual-motion-matcher/scripts'
+def load(p):return json.loads(p.read_text())
+def write(p,d):p.write_text(json.dumps(d,indent=2)+'\n')
+def probe(f):
+ j=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=codec_name,width,height,pix_fmt,avg_frame_rate,duration,nb_frames','-of','json',str(f)]));return j['streams'][0]
+for sid in sys.argv[1:]:
+ c=old/sid/'experiments/codex'/sid;b=c/'BEFORE';n=root/'proof'/sid/'NEW'
+ if not (n/'opening.png').exists():continue
+ repeat=root/'proof'/sid/'BEFORE/opening-repeat.png'
+ cmd=[sys.executable,str(skill/'compare-opening.py'),str(c/'APPROVED.jpg'),str(b/'opening.png'),'--candidate',str(n/'opening.png'),'--repeat',str(repeat if repeat.exists() else b/'opening-repeat.png')]
+ j=json.loads(subprocess.check_output(cmd,env=dict(os.environ,NODE_PATH='/tmp/rainbow-motion-tools.ef8YVWIN/toolchain/node_modules')))
+ j['repeatSource']='fresh retained capture' if repeat.exists() else 'archived matched control';write(root/('opening-'+sid+'.json'),j)
+ if not (n/'gameplay.json').exists():continue
+ poseOld=load(b/'poses.json');poseNew=load(n/'poses.json')
+ assert [p['name'] for p in poseOld]==[p['name'] for p in poseNew]
+ keys=('name','kind','steer','simFrames','target','stageBounds','clock','shaderTime','state','camera','benny')
+ drift=[]
+ for before,after in zip(poseOld,poseNew):
+  for k in keys:
+   if before.get(k)!=after.get(k):drift.append([after['name'],k])
+  if 'skip' not in after:
+   assert Image.open(n/(after['name']+'.png')).size==(864,1536)
+ write(root/('poses-'+sid+'.json'),{'stills':len(poseNew),'cameraStateClockDifferences':drift,'allGameplayAssertions':{k:v['pass'] for k,v in load(n/'gameplay.json')['checks'].items()}})
+ if not (n/'route.json').exists():continue
+ x,y=load(hd/sid/'BEFORE/route.json'),load(n/'route.json')
+ k=('i','time','shaderTime','s','stage','lat','steer','hearts','coins','camera')
+ assert len(x['frames'])==len(y['frames'])
+ diff=[[i,field] for i,(a,b0) in enumerate(zip(x['frames'],y['frames'])) for field in k if a[field]!=b0[field]]
+ clips={v:probe(f) for v,f in [('before',hd/sid/'BEFORE/ride.mp4'),('new',n/'ride.mp4')]}
+ for v in clips.values():assert (v['codec_name'],v['width'],v['height'],v['avg_frame_rate'],int(v['nb_frames']))==('h264',648,1152,'12/1',len(x['frames']))
+ changes=[{'time':f['time'],'stage':f['stage']} for i,f in enumerate(y['frames']) if i==0 or f['stage']!=y['frames'][i-1]['stage']]
+ write(root/('route-'+sid+'.json'),{'clips':clips,'simulatedHz':60,'matchedFrames':len(x['frames']),'cameraStateClockDifferences':diff,'minimumHeartsDuringRide':min(f['hearts'] for f in y['frames']),'stageTransitions':changes,'drawCallRange':[min(f['calls'] for f in y['frames']),max(f['calls'] for f in y['frames'])],'maxTriangles':max(f['triangles'] for f in y['frames'])})
+ print(sid,'pose',drift,'ride',len(diff),'opening',j['approvedVsCandidate']['within20Percent'],flush=True)

@@ -1,0 +1,126 @@
+{
+ "screen": "04",
+ "query": "match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1",
+ "shots": [
+  {
+   "name": "a00_approved_view",
+   "dist": 0,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 77.413,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -21.896,
+   "bennyVisible": true,
+   "cam": [
+    2.426523820795029,
+    -15.972574812385812,
+    -21.04613131293788
+   ],
+   "frames": 0,
+   "cam_to_view_cams": [
+    8.16,
+    18.17
+   ]
+  },
+  {
+   "name": "f06_forward6u",
+   "dist": 6,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 83.48,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -24.735,
+   "bennyVisible": true,
+   "cam": [
+    2.404385456521106,
+    -18.020166051834725,
+    -24.793807845276284
+   ],
+   "frames": 26,
+   "cam_to_view_cams": [
+    3.89,
+    13.91
+   ]
+  },
+  {
+   "name": "f10_forward10u",
+   "dist": 10,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 87.446,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -26.864,
+   "bennyVisible": true,
+   "cam": [
+    2.401897357959389,
+    -20.040780549920438,
+    -28.11481118722006
+   ],
+   "frames": 43,
+   "cam_to_view_cams": [
+    0,
+    10.02
+   ]
+  },
+  {
+   "name": "f20_forward20u",
+   "dist": 20,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 97.48,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -32.15,
+   "bennyVisible": true,
+   "cam": [
+    2.4015026338029517,
+    -25.343681602873797,
+    -36.61742940341272
+   ],
+   "frames": 86,
+   "cam_to_view_cams": [
+    10.02,
+    0
+   ]
+  },
+  {
+   "name": "s_left_hard",
+   "dist": 12,
+   "steer": -1,
+   "mode": "ride",
+   "stage": "04",
+   "s": 89.546,
+   "lat": -1.65,
+   "coins": 1360,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -27.864,
+   "bennyVisible": true,
+   "cam": [
+    0.7782730774352788,
+    -21.144827591663976,
+    -29.891463294430984
+   ],
+   "frames": 52,
+   "cam_to_view_cams": [
+    2.65,
+    8.09
+   ]
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-15T21:41:19+00:00",
+    "reason": "daemon",
+    "result": "committed+pushed",
+    "files_staged": 4,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-3d-account-transfer-syorak",
+    "note": "following session branch 'claude/rainbow-3d-account-transfer-syorak' (config branch 'ccr-e033f912-8b40f5')",
+    "commit": "176425892b3c0e8f27730262cd7dc262400cc36d",
+    "duration_s": 5
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-3d-account-transfer-syorak",
+  "last_verified_remote_sha": "176425892b3c0e8f27730262cd7dc262400cc36d",
+  "last_successful_backup_utc": "2026-11-15T21:41:19+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=312); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-15T21:45:00+00:00"
+}

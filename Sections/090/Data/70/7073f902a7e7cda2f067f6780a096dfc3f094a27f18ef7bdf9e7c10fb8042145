@@ -1,0 +1,66 @@
+{
+  "whole": {
+    "xyxy": [
+      0,
+      0,
+      864,
+      1536
+    ],
+    "retained": {
+      "meanAbsRGB": 16.1988,
+      "pctWithin20": 79.086
+    },
+    "trial": {
+      "meanAbsRGB": 16.1762,
+      "pctWithin20": 79.1
+    }
+  },
+  "purpleAperture": {
+    "xyxy": [
+      295,
+      575,
+      560,
+      710
+    ],
+    "retained": {
+      "meanAbsRGB": 4.9195,
+      "pctWithin20": 92.526
+    },
+    "trial": {
+      "meanAbsRGB": 4.8827,
+      "pctWithin20": 92.526
+    }
+  },
+  "goldAndSlottedWall": {
+    "xyxy": [
+      335,
+      242,
+      858,
+      557
+    ],
+    "retained": {
+      "meanAbsRGB": 0.9644,
+      "pctWithin20": 98.63
+    },
+    "trial": {
+      "meanAbsRGB": 0.8478,
+      "pctWithin20": 98.768
+    }
+  },
+  "benny": {
+    "xyxy": [
+      205,
+      730,
+      635,
+      1172
+    ],
+    "retained": {
+      "meanAbsRGB": 58.8118,
+      "pctWithin20": 29.345
+    },
+    "trial": {
+      "meanAbsRGB": 58.7205,
+      "pctWithin20": 29.357
+    }
+  }
+}

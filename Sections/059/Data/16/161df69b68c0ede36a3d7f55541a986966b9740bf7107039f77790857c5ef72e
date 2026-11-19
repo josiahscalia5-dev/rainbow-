@@ -1,0 +1,96 @@
+# Blender MCP Setup & Troubleshooting
+
+This skill runs the same way in **Claude Code**, **Codex CLI**, and **Cursor**
+— each loads this plugin's own manifest (`.claude-plugin/`, `.codex-plugin/`,
+`.cursor-plugin/` respectively) but all three point at this same skill folder
+and bundle the same `blender-mcp` server. What differs across hosts is only
+the exact tool name your agent sees in its tool list (below) — the workflow
+in [SKILL.md](../SKILL.md) is identical regardless.
+
+The skill talks to Blender through an MCP server. Two servers are supported;
+both use the same architecture: an **add-on inside Blender** listening on
+`localhost:9876` + an **MCP server process** that your coding tool launches
+and that relays requests to the add-on.
+
+> Run only ONE Blender-side add-on at a time — both servers bind port 9876.
+
+## Path A — bundled server (ahujasid/blender-mcp, default)
+
+The plugin already bundles the client side (`uvx blender-mcp`) for all three
+hosts; nothing to configure beyond installing the plugin itself. The user
+still needs, once:
+
+1. **uv** installed via the official installer (NOT `pip install uv`):
+   `curl -LsSf https://astral.sh/uv/install.sh | sh`
+2. **Blender 3.0+** with the addon:
+   - Download `addon.py` from https://github.com/ahujasid/blender-mcp
+   - Blender → Edit → Preferences → Add-ons → Install… → select `addon.py`
+   - Enable the checkbox "Interface: Blender MCP"
+3. **Start the bridge** (every Blender session):
+   - In the 3D viewport press `N` → "BlenderMCP" tab → "Connect to MCP server"
+
+Underlying tools this server exposes (base names — see the next section for
+how each host prefixes them):
+
+| Tool | Purpose |
+|---|---|
+| `get_scene_info` | scene inventory (objects, materials, counts) |
+| `get_object_info` | one object's transforms/mesh/material data |
+| `execute_blender_code` | run Python (bpy) inside Blender |
+| `get_viewport_screenshot` | capture the user's current viewport |
+| `search_polyhaven_assets` / `download_polyhaven_asset` | CC0 textures / HDRIs / models |
+| `set_texture` | apply a downloaded Poly Haven texture |
+| Hyper3D / Sketchfab tools | AI-generated or searched assets (off by default in this skill's policy) |
+
+## Path B — official Blender Lab MCP (user-configured)
+
+Maintained by the Blender team (`projects.blender.org/lab/blender_mcp`).
+Users who prefer it configure the server themselves (following Blender Lab's
+docs for whichever host they're on); this plugin does not bundle it.
+
+1. Add-on install, either:
+   - Blender extensions repository (search "MCP"), or
+   - Download the ZIP from https://www.blender.org/lab/mcp-server/ →
+     Preferences → Get Extensions → dropdown menu → "Install from Disk…"
+2. Add-on settings: Host `localhost`, Port `9876`, enable Auto Start.
+3. The official server also exposes `execute_blender_code` (plus bpy docs
+   introspection); it may lack a viewport-screenshot tool — the skill's
+   render-to-file fallback covers it.
+
+## Tool names by host
+
+The same server, different agents — each host namespaces MCP tool names
+differently, and the exact format has shifted across versions of each tool.
+Don't assume the string below; look at what actually shows up in your tool
+list / autocomplete and use that.
+
+| Host | Path A (bundled `blender` server) tool name pattern, e.g. `execute_blender_code` |
+|---|---|
+| Claude Code (this plugin) | `mcp__plugin_image2blender_blender__execute_blender_code` |
+| Codex CLI | commonly `mcp__blender__execute_blender_code` (some versions show `blender:execute_blender_code`) |
+| Cursor | has varied across releases (seen as `mcp_blender_execute_blender_code` and as the bare tool name); check the agent's tool list rather than assuming |
+
+If a name in this doc or in SKILL.md doesn't match what you see, prefer what
+your tool list actually shows — these strings drift as each host ships
+updates.
+
+## Skill behavior with either server
+
+- The core loop only requires `execute_blender_code` + a way to see results.
+- Capture: prefer `get_viewport_screenshot` when available; otherwise (and for
+  all deterministic multi-angle review renders) use render-to-file via bpy
+  (see [bpy-patterns.md](bpy-patterns.md)) and Read the PNG.
+- Poly Haven tools exist only on Path A. On Path B fall back to procedural
+  textures and a sun/area three-point light rig.
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `get_scene_info` errors / connection refused | Add-on not connected | In Blender: N-panel → BlenderMCP → Connect (Path A) or check Auto Start (Path B); confirm Blender is running |
+| `uvx: command not found` | uv missing or installed via pip | Install with the official uv installer, restart the terminal/session |
+| First MCP call hangs then fails | Server can't reach add-on | Port 9876 blocked or two add-ons fighting for it — disable one, restart Blender |
+| Timeouts on big operations | One `execute_blender_code` doing too much | Split the pass into smaller chunks (< a few seconds of work each) |
+| Official extension "not found in repository" | Repo index not synced / SSL blocked | Refresh repositories, or install the ZIP from disk |
+| Screenshot tool missing | Official server (Path B) | Use the render-to-file capture pattern |
+| Scene changed in ways user didn't expect | Arbitrary Python ran in their file | Always work in the skill's own collection; ask the user to save before the first build pass |

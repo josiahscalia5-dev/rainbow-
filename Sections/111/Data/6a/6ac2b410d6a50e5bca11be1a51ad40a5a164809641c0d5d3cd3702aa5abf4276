@@ -1,0 +1,24 @@
+import os,json,pathlib,subprocess,hashlib
+tree=json.load(open('trees.json'))
+picked=[('05',p) for p in tree['05'] if p.endswith('.blend')]
+picked+= [('lead',p) for p in tree['lead'] if p in ['qa/worldlabs/05/pilot/draft/collider.glb','qa/worldlabs/05/pilot/full/collider.glb','qa/worldlabs/05/pilot/draft/pano.png','qa/worldlabs/05/pilot/full/pano.png','qa/imageblaster/08/world/0-world.glb','qa/imageblaster/08/world/0-world-pano.png']]
+dest=pathlib.Path('asset-check')
+for k,p in picked:
+ b=subprocess.check_output(['git','--git-dir=objects.git','cat-file','blob',tree[k][p]])
+ hashed=False
+ if b.startswith(b'version https://git-lfs.github.com/spec/v1'):
+  sha=b.decode().split('oid sha256:')[1].split()[0]
+  b=subprocess.check_output(['git','-C','objects.git','lfs','smudge','--',p],input=b,stderr=subprocess.PIPE,env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_LFS_SKIP_SMUDGE':'0'})
+  assert hashlib.sha256(b).hexdigest()==sha,(p,'mismatch')
+  hashed=True
+ path=dest/p
+ path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(b)
+ if p.endswith('.png'):
+  from PIL import Image
+  with Image.open(path) as im: print(p,im.size, 'LFS hash verified' if hashed else 'Git blob',flush=True)
+ elif p.endswith('.glb'):
+  import struct
+  assert b[:4]==b'glTF'
+  gltf=json.loads(b[20:20+struct.unpack_from('<I',b,12)[0]])
+  print(p,'meshes',len(gltf.get('meshes',[])),'LFS hash verified' if hashed else 'Git blob',flush=True)
+ else: print(p,len(b),'LFS hash verified' if hashed else 'Git blob',flush=True)

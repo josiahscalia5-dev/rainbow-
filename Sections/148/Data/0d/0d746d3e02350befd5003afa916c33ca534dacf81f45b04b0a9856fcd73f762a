@@ -1,0 +1,164 @@
+diff --git a/qa/capture_log.json b/qa/capture_log.json
+index 95cdc5fb..bb701300 100644
+--- a/qa/capture_log.json
++++ b/qa/capture_log.json
+@@ -1,10 +1,10 @@
+ {
+-  "when": "2026-11-18T02:20:33.958Z",
++  "when": "2026-11-18T12:51:36.153Z",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "shots": [
+     {
+       "id": "05",
+-      "file": "/tmp/claude-0/-home-user-rainbow-/34a99d7d-6040-575b-bc96-e7c61af49d17/scratchpad/capE/05.png",
++      "file": "/tmp/claude-0/-home-user-rainbow-/165d9785-b934-5127-ba04-3006ec07d851/scratchpad/lockB/05.png",
+       "size": [
+         864,
+         1536
+@@ -31,9 +31,9 @@
+         ]
+       },
+       "stats": {
+-        "fps": 66.5,
+-        "calls": 80,
+-        "triangles": 568274,
++        "fps": 88.4,
++        "calls": 81,
++        "triangles": 578036,
+         "geometries": 111,
+         "textures": 65,
+         "modules": {
+@@ -42,8 +42,8 @@
+           "girl": "assets/models/rainbow_girl.glb"
+         },
+         "courseLength": 435.1923632433159,
+-        "firstFrameCalls": 158,
+-        "firstFrameTriangles": 569210
++        "firstFrameCalls": 159,
++        "firstFrameTriangles": 578972
+       }
+     }
+   ],
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 8a4eab87..956a8efb 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -413,6 +413,23 @@ export const M05FBANK: boolean = M05BLEND && q05('m05fbank');
+ export const M05FMAG: boolean = M05BLEND && q05('m05fmag');
+ /** m05fmag: depth of the far seam from the locked 05 eye (ForcedTunnel.D0), set by environment.ts */
+ export const m05fmagD0 = { value: 53.25 };
++/**
++ * `&m05fpaint=1` (Screen 05 round 12, needs m05fmag + projnear05 (on with match05); src/world/materials.ts
++ * farRiverMaterial): where m05fmag shows the far river's own continuation (the baked far picture F would be magnified),
++ * that continuation was drawn in flat procedural colours (smooth cyan, flat pink, no glints). Under the switch its water
++ * wears the APPROVED painted near water itself — the crisp near tile T2 (cyan core with white glints and glossy streaks
++ * between the hot-pink satin bands) — laid across the far layout band by band (left band, core, right band of T2 onto the
++ * far river's own cL / core / cR, so the formation keeps winding as painted) and along the virtual arc length
++ * (world-anchored), flowing toward the camera with the ribbon's own two-phase flow. Foam rims stay. Locked view: the
++ * far block is not live there → weight 0 → unchanged.
++ */
++export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
++/** m05fpaint: shared uniforms (T2 texture + its start / half period, the ribbon's flow vector), filled by attachProj05 */
++export const m05fpaint = {
++  uPjT2: { value: null as THREE.Texture | null },
++  uPjT2S: { value: new THREE.Vector2(0, 1) },
++  uPjFlow: { value: new THREE.Vector4(1.6, 0.55, 0, 0) },
++};
+ /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
+ export const m05foamK = { value: 0 };
+ /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
+@@ -2148,6 +2165,12 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
+   }
+   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
+   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
++  if (M05FPAINT) {
++    // m05fpaint (Screen 05 round 12): the far river shares T2 and the flow vector (same uniform objects)
++    m05fpaint.uPjT2.value = empty;
++    u.uPjT2 = m05fpaint.uPjT2; u.uPjT2S = m05fpaint.uPjT2S;
++    m05fpaint.uPjFlow.value.copy(u.uPjFlow.value as THREE.Vector4);
++  }
+   const loader = new THREE.TextureLoader();
+   const load = (url: string, mip: boolean, repeat: boolean) =>
+     new Promise<THREE.Texture>((res, rej) =>
+diff --git a/src/world/materials.ts b/src/world/materials.ts
+index 7744187e..5b3362eb 100644
+--- a/src/world/materials.ts
++++ b/src/world/materials.ts
+@@ -4,7 +4,7 @@
+  * up the candy PMREM environment, with shader patches for the perforations and glow.
+  */
+ import * as THREE from 'three';
+-import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, m05blend, m05fmagD0 } from '../vfx/waterRibbon';
++import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
+ import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
+ 
+ export interface PerforatedOptions {
+@@ -858,8 +858,43 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
+  * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
+  * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
+  */
++/**
++ * `&m05fpaint=1` (Screen 05 round 12): where m05fmag drops the magnified F, the far river's water wears the approved
++ * near tile T2 laid band by band onto the far layout (T2 columns measured: left pink band u −0.76 … −0.60 centre −0.69,
++ * cyan core centre −0.27, right pink band 0.06 … 0.45 centre 0.25), along the virtual arc length, two-phase flow
++ * toward the camera like the ribbon. Inserted before the VP glow; foam rims (foamIn) stay on top.
++ */
++const FPAINT_PARS = `uniform sampler2D uFpT2; uniform vec2 uFpT2S; uniform vec4 uFpFlow; uniform float uFpTime;
++float fpSeg(float x, float x0, float x1, float u0, float u1) { return mix(u0, u1, clamp((x - x0) / max(x1 - x0, 1e-3), 0.0, 1.0)); }
++float fpU(float lat, float xB, float hw, float cL, float wL, float cR, float wR, float core) {
++  float a0 = xB - hw, a1 = cL - wL, a2 = cL, a3 = cL + wL, a4 = core, a5 = cR - wR, a6 = cR, a7 = cR + wR, a8 = xB + hw;
++  if (lat < a1) return fpSeg(lat, a0, a1, -0.84, -0.76);
++  if (lat < a2) return fpSeg(lat, a1, a2, -0.76, -0.69);
++  if (lat < a3) return fpSeg(lat, a2, a3, -0.69, -0.60);
++  if (lat < a4) return fpSeg(lat, a3, a4, -0.60, -0.27);
++  if (lat < a5) return fpSeg(lat, a4, a5, -0.27, 0.06);
++  if (lat < a6) return fpSeg(lat, a5, a6, 0.06, 0.25);
++  if (lat < a7) return fpSeg(lat, a6, a7, 0.25, 0.45);
++  return fpSeg(lat, a7, a8, 0.45, 0.52);
++}
++`;
++const FPAINT_APPLY = `  {
++    // m05fpaint (Screen 05 round 12): the approved near water T2 where F would be magnified (same weight as m05fmag)
++    float fpW = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, Zv);
++    fpW *= 1.0 - foamIn;
++    if (fpW > 0.0) {
++      float fu = fpU(lat, xB, hw, cL, wL, cR, wR, core);
++      float ph = fract(uFpTime * uFpFlow.y + uFpFlow.z);
++      float fD = uFpFlow.x * uFpFlow.w;
++      float sA = s + fD * (ph - 0.5), sB = s + fD * (fract(ph + 0.5) - 0.5);
++      vec3 tA = texture2D(uFpT2, vec2(fu * 0.5 + 0.5, (sA - uFpT2S.x) / uFpT2S.y)).rgb;
++      vec3 tB = texture2D(uFpT2, vec2(fu * 0.5 + 0.5, (sB - uFpT2S.x) / uFpT2S.y)).rgb;
++      col = mix(col, pjInverse(mix(tB, tA, 1.0 - abs(2.0 * ph - 1.0))), fpW);
++    }
++  }
++`;
+ /** `&m05fmag=1` (Screen 05 round 11): weight of the baked far picture F — 0 where swimming magnifies it (block live) */
+-const FMAG_PRE = 'float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w);\n  ';
++const FMAG_PRE ='float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5)) * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w);\n  ';
+ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+   // wins the depth test against the real ribbon's continuation it covers just behind the seam
+@@ -1113,6 +1148,14 @@ float rivCells(vec2 p) {
+         .replace('#include <common>', '#include <common>\n' + pj.pars)
+         .replace('  diffuseColor.rgb = col;\n}', '  ' + (M05FMAG ? FMAG_PRE + pj.apply.replace(/\)\.a\);$/, ').a * fmK);') : pj.apply) + '\n  diffuseColor.rgb = col;\n}');
+       if (M05FMAG) shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\n' + (M05FBANK ? '' : 'uniform vec4 uFbP; ') + 'uniform float uFmD0;');
++      if (M05FPAINT) {
++        // `&m05fpaint=1` (Screen 05 round 12): shared T2 / flow (attachProj05) and the ribbon's clock
++        Object.assign(shader.uniforms, { uFpT2: m05fpaint.uPjT2, uFpT2S: m05fpaint.uPjT2S, uFpFlow: m05fpaint.uPjFlow, uFpTime: m05blendTime.u ?? { value: 0 } });
++        const glowLine = '  float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);';
++        shader.fragmentShader = shader.fragmentShader
++          .replace('#include <common>', '#include <common>\n' + FPAINT_PARS)
++          .replace(glowLine, FPAINT_APPLY + glowLine);
++      }
+       if (M05FBANK) {
+         shader.fragmentShader = shader.fragmentShader
+           .replace('#include <common>', '#include <common>\nuniform vec4 uFbP;\n#ifndef FARW05\nuniform float uRivD0;\n#endif')
+@@ -1156,7 +1199,7 @@ float rivCells(vec2 p) {
+   }
+   if (pj) {
+     const key = mat.customProgramCacheKey;
+-    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '');
++    mat.customProgramCacheKey = () => key() + '-proj05' + (M05FBANK ? '-m05fbank' : '') + (M05FMAG ? '-m05fmag' : '') + (M05FPAINT ? '-m05fpaint' : '');
+     mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };
+     mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);
+   }

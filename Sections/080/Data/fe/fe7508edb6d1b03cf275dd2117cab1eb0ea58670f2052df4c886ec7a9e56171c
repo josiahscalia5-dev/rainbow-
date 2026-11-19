@@ -1,0 +1,98 @@
+{
+ "screen": "04",
+ "query": "match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1",
+ "shots": [
+  {
+   "name": "f06_forward6u",
+   "dist": 6,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 84.339,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -25.202,
+   "bennyVisible": true,
+   "cam": [
+    2.4,
+    -18.48,
+    -25.56
+   ],
+   "frames": 26,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 83.413
+  },
+  {
+   "name": "s_right_hard",
+   "dist": 12,
+   "steer": 1,
+   "mode": "ride",
+   "stage": "04",
+   "s": 90.248,
+   "lat": 1.65,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -28.241,
+   "bennyVisible": true,
+   "cam": [
+    4.03,
+    -21.55,
+    -30.54
+   ],
+   "frames": 52,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 89.413
+  },
+  {
+   "name": "t33_through_screen",
+   "dist": "t0.33",
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 90.481,
+   "lat": 0.006,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -28.461,
+   "bennyVisible": true,
+   "cam": [
+    2.41,
+    -21.67,
+    -30.74
+   ],
+   "frames": 53,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 89.7138496693167
+  },
+  {
+   "name": "t66_through_screen",
+   "dist": "t0.66",
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 102.849,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -35.004,
+   "bennyVisible": true,
+   "cam": [
+    2.4,
+    -28.22,
+    -41.23
+   ],
+   "frames": 106,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 102.0146993386334
+  }
+ ]
+}

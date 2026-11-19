@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Marble 05 locked render</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","@sparkjsdev/spark":"./node_modules/@sparkjsdev/spark/dist/spark.module.js"}}</script>
+</head><body>
+<script type="module">
+// Screen 05 Marble feasibility: render the Marble world (Gaussian splats, World Labs Spark renderer) from the camera
+// that reproduces the approved 864x1536 frame. Query: spz=<file>&px=&py=&pz=&pitch=&f=&cx=&cy=  (Three.js frame of the
+// Marble world; SplatMesh rotated 180 deg about X, as in World Labs' own examples).
+import * as THREE from "three";
+import { SplatMesh, SparkRenderer } from "@sparkjsdev/spark";
+const q = new URLSearchParams(location.search);
+const W = 864, H = 1536, f = +(q.get("f") || 700), cx = +(q.get("cx") || 432), cy = +(q.get("cy") || 482.5);
+const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x000000);
+scene.add(new SparkRenderer({ renderer }));
+const half = Math.max(cy, H - cy), fullH = 2 * half;
+const cam = new THREE.PerspectiveCamera(2 * Math.atan(half / f) * 180 / Math.PI, W / fullH, 0.01, 1000);
+cam.setViewOffset(W, fullH, (W / 2 - cx), half - cy, W, H);
+cam.position.set(+(q.get("px") || 0), +(q.get("py") || 0), +(q.get("pz") || 0));
+cam.rotation.set(THREE.MathUtils.degToRad(+(q.get("pitch") || 6)), 0, 0);
+const splat = new SplatMesh({ url: q.get("spz") });
+splat.quaternion.set(1, 0, 0, 0);
+scene.add(splat);
+await splat.initialized;
+let n = 0; const t0 = performance.now(); console.log("initialized", (t0/1000).toFixed(1));
+renderer.setAnimationLoop(() => { renderer.render(scene, cam); n++; if (n % 2 === 0) console.log("frame", n, ((performance.now() - t0) / 1000).toFixed(1)); if (n === +(q.get("frames") || 12)) window.__done = true; });
+</script></body></html>

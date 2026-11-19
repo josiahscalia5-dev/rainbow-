@@ -1,0 +1,60 @@
+from pathlib import Path
+import json,shutil,os,subprocess,sys,hashlib,time
+import numpy as np
+from PIL import Image
+import analyze
+v=Path.cwd();old=Path('/tmp/rainbow-motion-tools.ef8YVWIN')
+for sid in sys.argv[1:]:
+ src=v/'proof'/sid
+ if sid=='04':
+  while not all((src/variant/'full-safe-ride.json').is_file() for variant in ('BEFORE','NEW')):time.sleep(4)
+ art=next((v/'games'/sid/'references').glob(sid+'_*.png'))
+ if sid in ('06','07') and not (src/'initial-trial').is_dir():
+  assert (src/'NEW/route.json').is_file() and (src/'NEW/gameplay.json').is_file()
+  alt=v/'altproof/proof'/sid/'NEW'
+  assert (alt/'route.json').is_file() and (alt/'gameplay.json').is_file()
+  assert {x.name for x in alt.glob('*.png')}=={x.name for x in (src/'NEW').glob('*.png')}
+  initial=src/'initial-trial';(src/'NEW').rename(initial)
+  if sid=='07':
+   fit=v/'fitproof/proof/07/NEW'
+   while not (fit/'gameplay.json').is_file() or not (fit/'route.json').is_file():time.sleep(4)
+   shutil.copytree(alt,src/'masked-material',copy_function=os.link)
+   (src/'masked-material/README.md').write_text('# Rejected material-only repair\n\nThe source mask preserved Claudia’s front highlight, but the old block still exposed copper above and below the paddle at +10. The fitted solid addresses that measured silhouette. Source '+(v/'masked-07.txt').read_text().strip()+'\n')
+   wall=v/'wallproof/proof/07/NEW'
+   while not (wall/'gameplay.json').is_file() or not (wall/'route.json').is_file():time.sleep(4)
+   shutil.copytree(fit,src/'fitted-body-only',copy_function=os.link)
+   (src/'fitted-body-only/README.md').write_text('# Fitted body before the supporting wall was repaired\n\nThe fitted paddle tracks the approved silhouette. At +10 a second gold edge appears behind it. Hiding the fitted paddle traced the edge to the stored projection on the near washer tube. Source '+(v/'first-solid-07.txt').read_text().strip()+'\n')
+   diag=src/'wall-diagnostic';diag.mkdir(exist_ok=True)
+   for lab,source in [('body',v/'fitdiag/proof/07/NEW'),('tile',v/'cleanproof/proof/07/NEW')]:
+    for f in source.glob('*.png'):shutil.copyfile(f,diag/(lab+'-'+f.name))
+   alt=wall
+   model=src/'model';model.mkdir(exist_ok=True)
+   for file in (v/'fitted-model').glob('*'):
+    if file.is_file() and file.suffix in ('.blend','.glb','.json','.png'):shutil.copyfile(file,model/file.name)
+   for file in ('fit-paddle.py','save-fitted-blender.py','paddle-wall-patch.py','fit-07.json','wall-bay-fit.json'):shutil.copyfile(v/file,model/file)
+  shutil.copytree(alt,src/'NEW',copy_function=os.link)
+  note={'06':'The first single tight elbow pushed the tunnel opening off the right edge at +10. The revised bend separates the near right-hand turn from the farther curve.',
+        '07':'The first whole-face repaint removed wall slots but also covered Claudia’s successful front highlight. The revised material protects the traced paddle and corrects violet wall projection spill.'}[sid]
+  (initial/'README.md').write_text(f'# Rejected first pass for Screen {sid}\n\n'+note+'\n\nThe opening and moving comparisons use the shared APPROVED.jpg and BEFORE directory. This pass used source commit '+(v/('first-'+sid+'.txt')).read_text().strip()+'. The native stills, route log, continuous clip and regression results are retained here.\n')
+ if sid=='05' and not (src/'initial-trial').is_dir():
+  fit=v/'fitproof/proof/05/NEW'
+  while not (fit/'route.json').is_file() or not (fit/'gameplay.json').is_file():time.sleep(4)
+  (src/'NEW').rename(src/'initial-trial');shutil.copytree(fit,src/'NEW',copy_function=os.link)
+  (src/'initial-trial/README.md').write_text('# Rejected sampling test\n\nMirroring the painted patch displaced several perforations and repeated a photographed bubble in the wall on hard-left steering. The next pass reads edge detail at Claudia’s existing slot coordinates. Source '+(v/'first-05.txt').read_text().strip()+'\n')
+  shutil.copyfile(v/'slot-extraction.json',src/'slot-extraction.json')
+ env={**os.environ,'NODE_PATH':str(old/'toolchain/node_modules')}
+ engine=v/'repos/skill/.agents/skills/rainbow-visual-motion-matcher/scripts/compare-opening.py'
+ for test,out in [('NEW','opening-metrics.json')]+[(name,name+'/opening-metrics.json') for name in ('initial-trial','masked-material','fitted-body-only') if (src/name).is_dir()]:
+  data=subprocess.check_output(['python3',str(engine),str(art),str(src/'BEFORE/opening.png'),'--candidate',str(src/test/'opening.png'),'--repeat',str(src/'BEFORE/opening-repeat.png')],env=env)
+  (src/out).write_bytes(data)
+ archive={'04':old/'archives/04/a00_approved_view.png','06':v/'extra-archives/06/NEW_checkpoint.png','07':old/'archives/07/a00_approved_view.png','08':old/'archives/08/3_NEW_a00_approved_view.png'}.get(sid)
+ if archive:
+  a,b=analyze.rgba(archive),analyze.rgba(src/'BEFORE/opening.png')
+  d=np.abs(a-b)
+  (src/'archive-opening-check.json').write_text(json.dumps({'archived':archive.name,'fresh':'BEFORE/opening.png',
+      'pixels':int(d.shape[0]*d.shape[1]),'exactDifferences':int(np.any(d,axis=2).sum()),
+      'averageChannelError':float(d.mean()),'largestChannelDelta':int(d.max())},indent=2)+'\n')
+ res={'screen':sid,'stills':analyze.validate_stills(src,sid),'ride':analyze.validate_ride(src,sid)}
+ (src/'motion-checks.json').write_text(json.dumps(res,indent=2)+'\n')
+ if sid=='07':subprocess.run(['python3','geometry-check.py'],check=True)
+ print(sid,'completed',len(res['stills']),res['ride']['frames'],flush=True)

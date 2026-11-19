@@ -1,0 +1,351 @@
+{
+  "timeUTC": "2026-11-18T22:27:13.478828+00:00",
+  "protectedBranches": {
+    "lead": {
+      "branch": "ccr-bbe2b27e-oxfh1w",
+      "commit": "d22ec46b72146d69703d4271cd54c1c852164dff",
+      "liveCommit": "d22ec46b72146d69703d4271cd54c1c852164dff",
+      "sameAsStart": true
+    },
+    "04": {
+      "branch": "claude/rainbow-s04-match-c17",
+      "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032",
+      "liveCommit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032",
+      "sameAsStart": true
+    },
+    "04r": {
+      "branch": "claude/rainbow-s04-ringtex-c17",
+      "commit": "0f275af1e3d4e9276e5a4016d0335a85fe055e58",
+      "liveCommit": "0f275af1e3d4e9276e5a4016d0335a85fe055e58",
+      "sameAsStart": true
+    },
+    "05": {
+      "branch": "claude/rainbow-s05-match-c17",
+      "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0",
+      "liveCommit": "f033f7cc895752907621f82fb9d6bee4899ac0e0",
+      "sameAsStart": true
+    },
+    "06": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+      "liveCommit": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+      "sameAsStart": true
+    },
+    "07": {
+      "branch": "claude/rainbow-s07-match-c17",
+      "commit": "8651edf92525a9aab82b02fad9aa44621216708a",
+      "liveCommit": "8651edf92525a9aab82b02fad9aa44621216708a",
+      "sameAsStart": true
+    },
+    "08": {
+      "branch": "claude/rainbow-s08-scenery-c17",
+      "commit": "3c0fa97090afb2c0fca41898774db7247e23e522",
+      "liveCommit": "3c0fa97090afb2c0fca41898774db7247e23e522",
+      "sameAsStart": true
+    }
+  },
+  "codexBranches": {
+    "04": {
+      "branch": "codex/s04-sweeping-waterbands",
+      "verifiedCommit": "13cf566586fb72be002a005bd84fe8cd50bad33f"
+    },
+    "05": {
+      "branch": "codex/s05-perforated-wall-bays",
+      "verifiedCommit": "8729b96daeb2b73ff27a20b5435fb8eba923d4f2"
+    },
+    "06": {
+      "branch": "codex/s06-curved-rinse-arch",
+      "verifiedCommit": "0478646a45ee68dc81656f0da12baf7f06501bf5"
+    },
+    "07": {
+      "branch": "codex/s07-painted-paddle-face",
+      "verifiedCommit": "fc13469e0383260dd9a0720581afa538bd53f807"
+    },
+    "08": {
+      "branch": "codex/s08-curved-chamber-current",
+      "verifiedCommit": "19970fa9de964db8836814a57c773a0f45ffde29"
+    },
+    "skill": {
+      "branch": "codex/rainbow-visual-motion-matcher",
+      "verifiedCommit": "3b57658f78fd5d7dce498d2743f1a09a173a570a"
+    }
+  },
+  "artifactHashesVerified": 418,
+  "portraitReviewAt393Pixels": {
+    "04": {
+      "viewport": 393,
+      "content": 393,
+      "dimensions": [
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ]
+      ],
+      "clips": [
+        [
+          324,
+          576,
+          3.5
+        ],
+        [
+          324,
+          576,
+          3.5
+        ]
+      ]
+    },
+    "05": {
+      "viewport": 393,
+      "content": 393,
+      "dimensions": [
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ]
+      ],
+      "clips": [
+        [
+          324,
+          576,
+          7
+        ],
+        [
+          324,
+          576,
+          7
+        ]
+      ]
+    },
+    "06": {
+      "viewport": 393,
+      "content": 393,
+      "dimensions": [
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ]
+      ],
+      "clips": [
+        [
+          324,
+          576,
+          5.25
+        ],
+        [
+          324,
+          576,
+          5.25
+        ]
+      ]
+    },
+    "07": {
+      "viewport": 393,
+      "content": 393,
+      "dimensions": [
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ]
+      ],
+      "clips": [
+        [
+          324,
+          576,
+          12.25
+        ],
+        [
+          324,
+          576,
+          12.25
+        ]
+      ]
+    },
+    "08": {
+      "viewport": 393,
+      "content": 393,
+      "dimensions": [
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ],
+        [
+          864,
+          1536
+        ]
+      ],
+      "clips": [
+        [
+          324,
+          576,
+          1.833333
+        ],
+        [
+          324,
+          576,
+          1.833333
+        ]
+      ]
+    }
+  },
+  "productionBuilds": {
+    "04": {
+      "sourceCommit": "4c8a9bf762fe3fe0a350cc00d417c67b54f0b623",
+      "typecheck": "tsc --noEmit passed",
+      "releaseBuild": "\u2713 built in 8.09s"
+    },
+    "05": {
+      "sourceCommit": "c631d602ec63c3a5eefca6473cdfeff7613acf14",
+      "typecheck": "tsc --noEmit passed",
+      "releaseBuild": "\u2713 built in 15.80s"
+    },
+    "06": {
+      "sourceCommit": "8a80c70d19b72cfaa6432c9a98f821d5a521c815",
+      "typecheck": "tsc --noEmit passed",
+      "releaseBuild": "\u2713 built in 10.47s"
+    },
+    "07": {
+      "sourceCommit": "851bf53f1ae7b21175c7d8fe727760b18a3f82ca",
+      "typecheck": "tsc --noEmit passed",
+      "releaseBuild": "\u2713 built in 12.06s"
+    },
+    "08": {
+      "sourceCommit": "4e68fa16d3e3cdf3350f0c3f561cbe705375a55e",
+      "typecheck": "tsc --noEmit passed",
+      "releaseBuild": "\u2713 built in 7.07s"
+    }
+  },
+  "androidHardwareTest": "Pending physical-device frame-time and sustained-load measurements",
+  "remoteMediaDownloads": {
+    "04": [
+      {
+        "file": "experiments/codex/04/BEFORE/ride.mp4",
+        "bytes": 1559973,
+        "sha256": "23f5fc5dafa51a7079bd377f7c653843cf8481b13ce79e2580207fe8f49c0fe9"
+      },
+      {
+        "file": "experiments/codex/04/NEW/ride.mp4",
+        "bytes": 1560547,
+        "sha256": "97a6c6983a9e44e660c834ae280d20e7ec97c917d28ad84d27acc09506c6c6d7"
+      }
+    ],
+    "05": [
+      {
+        "file": "experiments/codex/05/BEFORE/ride.mp4",
+        "bytes": 4130469,
+        "sha256": "e439ed9313cee94e84b601ac684e653d53b056ccf8253e6875f09e80ab919482"
+      },
+      {
+        "file": "experiments/codex/05/NEW/ride.mp4",
+        "bytes": 4173197,
+        "sha256": "d15cc175684256ee21279c16d881f8636c9c286a6cda4fc7bb92914d42bb6471"
+      },
+      {
+        "file": "experiments/codex/05/initial-trial/ride.mp4",
+        "bytes": 4210632,
+        "sha256": "3b17dab243b1c388ca5f5c50eddcd43374bba55bfc9c85dc4c824021d6d9f7b1"
+      }
+    ],
+    "06": [
+      {
+        "file": "experiments/codex/06/BEFORE/ride.mp4",
+        "bytes": 3114549,
+        "sha256": "1d36f2a7dfe8ab1d5cd04a91aadae3668f26bcf301394d93a0cf2e0c7ba47da8"
+      },
+      {
+        "file": "experiments/codex/06/NEW/ride.mp4",
+        "bytes": 3031312,
+        "sha256": "c32286cd60f1bfd1089123a9a4f4bc8e0ecebfb9100dcfeaa74c907eeabee2e3"
+      },
+      {
+        "file": "experiments/codex/06/initial-trial/ride.mp4",
+        "bytes": 2789841,
+        "sha256": "1ad4a184cd33de704d274d256787092a7713decca2ed538f3904995c3e386ff6"
+      }
+    ],
+    "07": [
+      {
+        "file": "experiments/codex/07/BEFORE/ride.mp4",
+        "bytes": 7426159,
+        "sha256": "350eda64db8d03efde780a2c8b7bdcbb99d508f0b697da970c203d11b3f2248d"
+      },
+      {
+        "file": "experiments/codex/07/NEW/ride.mp4",
+        "bytes": 7424952,
+        "sha256": "c037cdb9fa944a85cf9ecfa89e8e01a81a9d33d76b30352ad0a85fd442e209b6"
+      },
+      {
+        "file": "experiments/codex/07/fitted-body-only/ride.mp4",
+        "bytes": 7427343,
+        "sha256": "f8a34d2023ed45350322551c0cfaff32899d366a065bb63634d16435b7c4f35f"
+      },
+      {
+        "file": "experiments/codex/07/initial-trial/ride.mp4",
+        "bytes": 7425663,
+        "sha256": "d5e87eb788cc09a3383c00ba6faee38e04fc626b204c5050720c8057a82e507c"
+      },
+      {
+        "file": "experiments/codex/07/masked-material/ride.mp4",
+        "bytes": 7427811,
+        "sha256": "f8b2ca07ae92aef6c5b343e279cc785c433a8ba72e51bb2483bc82351a1198ce"
+      },
+      {
+        "file": "experiments/codex/07/model/screen-07-fitted-paddle.blend",
+        "bytes": 111863,
+        "sha256": "dea3dda91604349f37dbb58bbdd2ec13d36e83d3844b8891e27cec5130dd510e"
+      },
+      {
+        "file": "experiments/codex/07/model/screen-07-fitted-paddle.glb",
+        "bytes": 22640,
+        "sha256": "788be872e113048ac688379b9d85a095b60cb342b70134ef7f9b55b16aef3c48"
+      }
+    ],
+    "08": [
+      {
+        "file": "experiments/codex/08/BEFORE/ride.mp4",
+        "bytes": 1071662,
+        "sha256": "5d859f09d45c324c001b585e48df4f48458576248a3728e7aa3b9b81c6437ac8"
+      },
+      {
+        "file": "experiments/codex/08/NEW/ride.mp4",
+        "bytes": 1084995,
+        "sha256": "534c20540f9a2240a812d413910ba1d18ec05b0cc5b17b575da0a87aa5f24d5f"
+      }
+    ]
+  }
+}

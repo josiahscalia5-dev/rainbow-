@@ -1,0 +1,92 @@
+"""Create mobile review media without resizing. Canonical evidence and measured copies retain provenance."""
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+from PIL import Image
+from collections import Counter
+import numpy as np,subprocess as sp,hashlib,io,re,os,shutil,json,sys
+root=Path(__file__).parent;dest=root/'payload';catalog=json.loads((root/'media-catalog.json').read_text());kind=sys.argv[1]
+jobs=[(h,r) for h,r in catalog.items() if r['kind']==kind];work=root/('metrics-'+kind);work.mkdir(exist_ok=True)
+names=set()
+for h,row in jobs:
+    label=row['name']
+    if label.lower() in names:label+='-'+h[:9]
+    names.add(label.lower());row['name']=label
+def sha(f):
+    with f.open('rb') as i:return hashlib.file_digest(i,'sha256').hexdigest()
+def image_one(item):
+    h,row=item;f=Path(row['local']);receipt=work/(h+'.json')
+    if receipt.exists():
+        prev=json.loads(receipt.read_text());out=dest/prev['file']
+        if out.is_file() and sha(out)==prev['packagedSHA256']:return prev
+    with Image.open(f) as im:
+        original_format=im.format;has_alpha='A' in im.getbands() or 'transparency' in im.info
+        orig=im.convert('RGBA' if has_alpha else 'RGB');width,height=orig.size
+    accuracy=row['accuracy'];out=dest/row['name'];out.parent.mkdir(parents=True,exist_ok=True)
+    pix=np.asarray(orig);pixsha=hashlib.sha256(orig.tobytes()).hexdigest()
+    if accuracy=='art':
+        ext={'PNG':'.png','JPEG':'.jpg','WEBP':'.webp'}[original_format];out=out.parent/(out.name+ext)
+        shutil.copyfile(f,out);method='unaltered original bytes';mae=p99=0.;exact=True
+    else:
+        out=out.parent/(out.name+'.webp')
+        exact=accuracy in ['baseline','key']
+        if exact:
+            orig.save(out,'WEBP',lossless=True,method=1,exact=True);method='lossless WebP at original dimensions';mae=p99=0.
+        else:
+            qualities=[92,96] if accuracy=='fresh' else [88,94,97]
+            for q in qualities:
+                orig.save(out,'WEBP',quality=q,method=2,exact=True)
+                with Image.open(out) as rec:
+                    if rec.size!=orig.size:raise ValueError('Image dimensions changed')
+                    a=np.asarray(rec.convert(orig.mode))
+                diff=np.abs(pix[:,:,:3].astype(np.int16)-a[:,:,:3].astype(np.int16)).astype(np.uint8)
+                hist=np.bincount(diff.ravel(),minlength=256);cum=hist.cumsum();mae=float(hist@np.arange(256)/cum[-1]);p99=float(np.searchsorted(cum,cum[-1]*.99))
+                if has_alpha:assert np.array_equal(a[:,:,3],pix[:,:,3])
+                if mae<=(2.9 if accuracy=='fresh' else 3.9) and p99<=(16 if accuracy=='fresh' else 21):break
+            else:
+                orig.save(out,'WEBP',lossless=True,method=1,exact=True);exact=True;mae=p99=0.
+            method='lossless WebP at original dimensions' if exact else 'native-size WebP review copy, quality '+str(q)
+        if exact:
+            with Image.open(out) as rec:assert rec.size==(width,height) and hashlib.sha256(rec.convert(orig.mode).tobytes()).hexdigest()==pixsha
+    rec={'file':out.relative_to(dest).as_posix(),'packagedSHA256':sha(out),'nativeWidth':width,'nativeHeight':height,'bytes':out.stat().st_size,'encoding':method,'pixelExact':exact,'sourcePixelSHA256':pixsha,'sourceMode':orig.mode,'meanAbsSourceRGBError':round(mae,5),'p99AbsSourceRGBError':p99}
+    receipt.write_text(json.dumps(rec)+'\n');return rec
+def probe(f):
+    options=['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=codec_name,width,height,nb_frames,avg_frame_rate,duration,pix_fmt:format=duration','-of','json',str(f)]
+    s=json.loads(sp.check_output(options))['streams'][0]
+    if not s.get('nb_frames') or s['nb_frames']=='N/A':
+        n=sp.check_output(['ffprobe','-v','error','-threads','1','-select_streams','v:0','-count_frames','-show_entries','stream=nb_read_frames','-of','default=nw=1:nk=1',str(f)]).decode().strip()
+        s['nb_frames']=n
+    return s
+def measure_ssim(src,new):
+    cmd=['ffmpeg','-nostdin','-hide_banner','-loglevel','info','-threads','1','-i',str(src),'-threads','1','-i',str(new),'-filter_complex_threads','1','-filter_complex','[0:v]settb=AVTB,setpts=PTS-STARTPTS[a];[1:v]settb=AVTB,setpts=PTS-STARTPTS[b];[a][b]ssim=shortest=1','-an','-f','null','-']
+    ret=sp.run(cmd,stdout=sp.DEVNULL,stderr=sp.PIPE,check=True)
+    vals=re.findall(rb'All:([0-9.]+)',ret.stderr);assert vals
+    return float(vals[-1])
+def video_one(item):
+    h,row=item;f=Path(row['local']);receipt=work/(h+'.json')
+    if receipt.exists():
+        prev=json.loads(receipt.read_text());out=dest/prev['file']
+        if out.is_file() and sha(out)==prev['packagedSHA256']:return prev
+    before=probe(f);out=dest/(row['name']+'.mp4');out.parent.mkdir(parents=True,exist_ok=True)
+    exact=False;metric=0;latest=('CODEX_' in row['name'] or 'CLAUDIA_RETAINED' in row['name'])
+    if f.stat().st_size<800_000 and before['codec_name']=='h264' and f.suffix.lower()=='.mp4':exact=True
+    if not exact:
+        for crf in [21,18,16]:
+            args=['ffmpeg','-y','-nostdin','-v','error','-threads','1','-i',str(f),'-map','0:v:0','-map','0:a?','-sn','-dn','-map_metadata','-1','-c:v','libx264','-threads','2','-preset','fast','-crf',str(crf),'-pix_fmt','yuv420p','-fps_mode','passthrough','-c:a','aac','-b:a','128k','-movflags','+faststart',str(out)]
+            sp.run(args,stdout=sp.DEVNULL,stderr=sp.PIPE,check=True)
+            after=probe(out);assert before['width']==after['width'] and before['height']==after['height'] and int(before['nb_frames'])==int(after['nb_frames']),(f.name,before,after)
+            metric=measure_ssim(f,out)
+            if metric>=(.98 if latest else .975):break
+        if f.suffix.lower()=='.mp4' and before['codec_name']=='h264' and (out.stat().st_size>f.stat().st_size*.96 or metric<.975):exact=True
+    if exact:shutil.copyfile(f,out);metric=1.0
+    after=probe(out);assert after['codec_name']=='h264' and int(before['nb_frames'])==int(after['nb_frames']) and (after['width'],after['height'])==(before['width'],before['height'])
+    if before.get('duration') and after.get('duration'):assert abs(float(before['duration'])-float(after['duration']))<=.16
+    rec={'file':out.relative_to(dest).as_posix(),'packagedSHA256':sha(out),'nativeWidth':after['width'],'nativeHeight':after['height'],'frames':int(after['nb_frames']),'fps':after['avg_frame_rate'],'seconds':after.get('duration'),'bytes':out.stat().st_size,'encoding':'original H.264 film bytes' if exact else 'H.264 review copy at original dimensions and frame count','sourceVideoSSIM':metric,'byteExact':exact}
+    receipt.write_text(json.dumps(rec)+'\n');return rec
+process=image_one if kind=='image' else video_one;workers=3 if kind=='image' else 2
+with ThreadPoolExecutor(max_workers=workers) as executor:
+    outputs={}
+    for i,(job,rec) in enumerate(zip(jobs,executor.map(process,jobs)),1):
+        outputs[job[0]]=rec
+        if i%(100 if kind=='image' else 10)==0:print(kind,i,'of',len(jobs),flush=True)
+(root/(kind+'-outputs.json')).write_text(json.dumps(outputs,indent=2,ensure_ascii=False)+'\n')
+print(kind,len(outputs),round(sum(r['bytes'] for r in outputs.values())/2**20,1),'MiB',flush=True)

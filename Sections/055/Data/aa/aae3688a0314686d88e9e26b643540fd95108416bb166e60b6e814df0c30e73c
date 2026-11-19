@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#5b1a8c" />
+    <title>Rainbow</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #2a0b46; overflow: hidden; touch-action: none; }
+      #app { position: fixed; inset: 0; }
+      canvas#scene { display: block; width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="app"><canvas id="scene"></canvas></div>
+    <script type="module" src="/src/main.ts"></script>
+  <script>
+ const tick = () => {
+   const r=window.__rainbow;
+   if (!r?.ready) return requestAnimationFrame(tick);
+   r.run(false); r.goto('07'); r.setSteer(-1); r.step(45); r.setSteer(null); r.freezeAt(12.75); r.drawList();
+   console.info('RAINBOW_SPECTOR_REAL_STAGE',r.state().stage);
+   function draw(){r.drawList();requestAnimationFrame(draw)}
+   requestAnimationFrame(draw);
+ }; requestAnimationFrame(tick);
+</script></body>
+</html>

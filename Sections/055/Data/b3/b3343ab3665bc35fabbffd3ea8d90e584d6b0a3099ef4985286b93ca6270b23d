@@ -1,0 +1,6 @@
+{
+  "07": "cx07OutletFoam=1",
+  "04": "cx04WaterSweep=1&cx04DeepRim=1&cx04RiverReflection=1",
+  "05": "cx05WallBays=1&cx05PhysicalBend=1",
+  "08": "cx08ChamberCurrent=1&cx08BankShoulder=1&cx08FlowDistance=1"
+}

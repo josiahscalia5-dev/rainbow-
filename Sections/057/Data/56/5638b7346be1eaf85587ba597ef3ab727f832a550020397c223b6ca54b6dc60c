@@ -1,0 +1,65 @@
+{
+  "bridge": "2cea8d566dde07fbac28a61d698909d69724e853",
+  "onlyBridge": true,
+  "closed": true,
+  "scene": {
+    "version": "5.3.0",
+    "meshes": {
+      "left_bank": 864,
+      "left_foam": 2940,
+      "right_bank": 804,
+      "right_foam": 2520
+    },
+    "curves": [
+      "left_spine",
+      "right_spine"
+    ],
+    "camera": "reference_camera",
+    "packed_images": [
+      "near_bank.png",
+      "near_foam.png"
+    ]
+  },
+  "image2blender": {
+    "plugin": "image2blender@image2blender",
+    "version": "0.1.0",
+    "source": "03fca53c1f44619550b25593834ac8c57fee5746",
+    "native_marketplace_install": true,
+    "scope": "temporary Codex CLI profile",
+    "skill_and_helpers_byte_identical": true,
+    "configured_mcp_servers": [
+      "Blender Lab v1.0.3"
+    ],
+    "blender": "5.3.0",
+    "session": "background, loopback",
+    "bundled_community_server_started": false,
+    "freshHelpers": {
+      "probe_image.py": {
+        "ok": true,
+        "path": "/tmp/rainbow-fal-towel-yzIzBqSp/games/08/references/07_dive_the_washer_tube.png",
+        "format": "jpeg",
+        "width": 864,
+        "height": 1536,
+        "aspectRatio": 1.778,
+        "minSide": 864,
+        "megapixels": 1.33,
+        "fileSizeBytes": 494067,
+        "warnings": [],
+        "errors": []
+      },
+      "validate_spec.py": {
+        "ok": true,
+        "mode": "strict-quality",
+        "errors": [],
+        "warnings": [],
+        "stats": {
+          "components": 6,
+          "materials": 2,
+          "details": 12,
+          "passes": 4,
+          "reviews": 5
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# Local run artifacts (specs/renders belong to the user's working project, not this repo)
+work/
+output/
+*.blend
+*.blend1
