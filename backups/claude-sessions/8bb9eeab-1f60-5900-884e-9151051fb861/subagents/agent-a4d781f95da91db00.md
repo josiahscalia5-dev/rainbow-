@@ -2083,3 +2083,95 @@ Early and hard-right views look clean: a handful of thick rings telescoping into
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=$(cat $S/K6.txt) && node scripts/capture.mjs 04 --q=\"$K6\" --out=$S/sv_k6 >/dev/null 2>&1; node scripts/capture.mjs 04 --q=\"$K6&m04rfew=1&m04rfg=1.2\" --out=$S/sv_rf >/dev/null 2>&1; git checkout qa/capture_log.json; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/sv_k6/04.png $S/sv_rf/04.png $S/sv_rf_diff.png 0.1 180 1536", "description": "Frozen start view K6 vs K6 plus telescope, pixel diff", "timeout": 600000}`
 
+### 🧑 User — 2026-11-19T18:14:45.462Z
+
+> ↩︎ result: Updated 1 path from the index
+> {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/sv_k6/04.png","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/sv_rf/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-19T18:14:52.773Z
+
+Start view: 0 differing pixels. Now the full 12-shot NEW set for the candidate (`m04rfew=1&m04rfg=1.2`).
+
+### 🤖 Claude — 2026-11-19T18:14:55.447Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=$(cat $S/K6.txt) && D=qa/match/04/r18/ringpaint/step7_rfew && mkdir -p $D && node tools/lead_r6/motion_audit.mjs 04 $D \"$K6&m04rfew=1&m04rfg=1.2\" 2>&1 | grep -E \"pageerror|Error|t95\" | head -5; cd $D && for f in *.png; do mv \"$f\" \"3_NEW_$f\"; done; ls", "description": "Render full 12-shot NEW audit for step 7", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T18:17:55.539Z
+
+> ↩︎ result: 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> 3_NEW_a00_approved_view.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_s_right_steer.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+> motion.json
+
+### 🤖 Claude — 2026-11-19T18:18:01.508Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && python3 -c \"\nfrom PIL import Image\nS='$S/'\nB='qa/match/04/r18/ringpaint/step6_var/3_NEW_'; N='qa/match/04/r18/ringpaint/step7_rfew/3_NEW_'\nfor sh in ['f03_forward3u','f10_forward10u','t33_through_screen','s_left_hard']:\n    a=Image.open(B+sh+'.png').convert('RGB').crop((0,180,864,1300)); b=Image.open(N+sh+'.png').convert('RGB').crop((0,180,864,1300))\n    c=Image.new('RGB',(864*2+10,1120),'white'); c.paste(a,(0,0)); c.paste(b,(874,0)); c.resize((c.width//2,c …[+367 chars]`
+
+### 🧑 User — 2026-11-19T18:18:03.849Z
+
+> ↩︎ result: [('a00_ap', 1330), ('f03_fo', 1330), ('f06_fo', 1330), ('f10_fo', 1330), ('f20_fo', 1330), ('s_left', 1350), ('s_righ', 1330), ('s_left', 1360), ('s_righ', 1330), ('t33_th', 1330), ('t66_th', 1330), ('t95_th', 1330)]
+> [('a00_ap', 1330), ('f03_fo', 1330), ('f06_fo', 1330), ('f10_fo', 1330), ('f20_fo', 1330), ('s_left', 1350), ('s_righ', 1330), ('s_left', 1360), ('s_righ', 1330), ('t33_th', 1330), ('t66_th', 1330), ('t95_th', 1330)]
+
+### 🤖 Claude — 2026-11-19T18:18:06.753Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s7_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T18:18:06.796Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:18:07.469Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s7_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-19T18:18:07.498Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:18:08.131Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s7_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-19T18:18:08.189Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:18:13.720Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 1,40p tools/lead_r13/swim_clip.mjs; ls qa/match/04/r17/ringpaint/step5_dots/*.mp4; git log --oneline -1 -- qa/match/04/r17/ringpaint/step5_dots/clip_NEW_swim.mp4 | cat; git show --stat HEAD~2 | head -5", "description": "Read swim clip tool options"}`
+
+### 🧑 User — 2026-11-19T18:18:13.812Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+1310 chars]
+
+### 🤖 Claude — 2026-11-19T18:18:23.244Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && sed 's/width: 864, height: 1536/width: 432, height: 768/' /home/user/wt/s04b/tools/lead_r13/swim_clip.mjs > $S/swim_half.mjs && grep -c \"432\" $S/swim_half.mjs && which ffmpeg && cd /home/user/wt/s04b && K6=$(cat $S/K6.txt) && (time node $S/swim_half.mjs 04 $S/clipB 3.6 \"$K6\") 2>&1 | grep -E \"frames|real|pageerror\" ; (time node $S/swim_half.mjs 04 $S/clipN 3.6 \"$K6&m04rfew=1&m04rfg=1.2\") 2>&1 | grep -E \"frames|real|pageerror\"", "description": "Render half-size BEFORE and NEW swim …[+33 chars]`
+

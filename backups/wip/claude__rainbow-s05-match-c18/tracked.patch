@@ -37,7 +37,7 @@ index d26167ab..f6e91c7a 100644
    return mat;
  }
 diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
-index 04234594..468196b0 100644
+index 04234594..ac0023dc 100644
 --- a/src/vfx/waterRibbon.ts
 +++ b/src/vfx/waterRibbon.ts
 @@ -385,6 +385,14 @@ export const m05fw = {
@@ -48,26 +48,33 @@ index 04234594..468196b0 100644
 + * `&m05pink=1` (Screen 05 round 18, needs m05far; src/world/environment.ts): the glossy magenta floor sheet that lines the
 + * tube under the stream (1.9 rad wide) reaches up the lower walls above the foam banks; steering hard left in the kink it
 + * stood in the bottom-left corner as a flat hot-pink triangle beyond the foam (painted: slotted wall, foam clouds).
-+ * While swimming in 05 the sheet is cut to the part under the river (± `m05pinka` rad from the bottom, default 0.8).
-+ * Locked view: unchanged (cut only away from the locked eye); 06 / 07 sheets unchanged.
++ * While the 05 far block is live (swimming in 05) the 05 sheet and the first 06 piece seen from 05 are cut to the part under
++ * the river (± `m05pinka` rad from the bottom, default 0.8). Locked view and 06 / 07: unchanged (the block is not live there).
 + */
 +export const M05PINK: boolean = MATCH05 && q05('m05far') && q05('m05pink');
  /**
   * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
   * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
 diff --git a/src/world/environment.ts b/src/world/environment.ts
-index ad5da2a7..a6038186 100644
+index ad5da2a7..ae8bd247 100644
 --- a/src/world/environment.ts
 +++ b/src/world/environment.ts
-@@ -10,7 +10,7 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
+@@ -10,13 +10,13 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
  import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
  import { STAGE_CAM } from '../game/cameraRig';
  import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 -import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, m05wcrispNum } from '../vfx/waterRibbon';
-+import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, M05PINK, m05eye, m05wcrispNum } from '../vfx/waterRibbon';
++import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, M05PINK, m05wcrispNum } from '../vfx/waterRibbon';
  import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05fcloud=1 only
  import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
  import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+ import { flow05Shared, flow05Textures } from '../vfx/flow05';
+ import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+-import { withClip05Std, m05farPre } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
++import { withClip05Std, m05farPre, clip05 } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
+ import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
+ import { buildTowel, TowelMesh } from './towel';
+ 
 @@ -387,12 +387,31 @@ export function buildEnvironment(course: Course): Environment {
      : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
    const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
@@ -79,14 +86,14 @@ index ad5da2a7..a6038186 100644
 +    pm.map = pinkFlow.material.map; pm.emissiveMap = pinkFlow.material.emissiveMap;   // the same animated texture
 +    const half = m05wcrispNum('m05pinka', 0.8) / 1.9;
 +    pm.onBeforeCompile = (shader) => {
-+      shader.uniforms.uM05Eye = m05eye;
++      shader.uniforms.uClip05N = clip05.uClip05N;   // non-zero only while the 05 far block is live (never at the locked eye, never in 06)
 +      shader.vertexShader = shader.vertexShader
 +        .replace('void main() {', 'varying float vM05Arc;\nvoid main() {')
 +        .replace('#include <uv_vertex>', '#include <uv_vertex>\nvM05Arc = uv.x;');
 +      shader.fragmentShader = shader.fragmentShader
-+        .replace('void main() {', `uniform vec4 uM05Eye; varying float vM05Arc;
++        .replace('void main() {', `uniform vec3 uClip05N; varying float vM05Arc;
 +void main() {
-+  if (uM05Eye.w > 0.5 && distance(cameraPosition, uM05Eye.xyz) > 0.02 && abs(vM05Arc - 0.5) > ${half.toFixed(4)}) discard;`);
++  if (dot(uClip05N, uClip05N) > 0.25 && abs(vM05Arc - 0.5) > ${half.toFixed(4)}) discard;`);
 +    };
 +    pm.customProgramCacheKey = () => 'pink05cut';
 +    pink05 = pm;
@@ -97,7 +104,7 @@ index ad5da2a7..a6038186 100644
        zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, warp }), mat));
        // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
 -      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
-+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pink05 && mat === perf05Mat ? pink05 : pinkFlow.material));
++      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pink05 && (mat === perf05Mat || a < sGlow05 + 1) ? pink05 : pinkFlow.material));
      }
    };
    addWall(s05, sGlow05, perf05Mat, warp05);

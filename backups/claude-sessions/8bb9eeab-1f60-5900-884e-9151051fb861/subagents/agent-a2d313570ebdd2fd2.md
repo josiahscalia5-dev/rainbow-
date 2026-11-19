@@ -1749,3 +1749,368 @@ WIP pushed (`a710f3db`, remote matches). Now the paddle test at hard left.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05lidf=1&m05pink=1&m05pinka=0.5\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try5b && timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" k81_kink_left 5275 2>&1 | grep -i error | head -3; python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nb=Image.open(S+'try5b/k81_kink_left.png').convert('RGB').crop((0,850,430,1300)).resize((430,450)).save(S+'pink_b.png')\"", "descript …[+58 chars]`
 
+### 🧑 User — 2026-11-19T18:15:17.299Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:15:19.916Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/pink_b.png"}`
+
+### 🧑 User — 2026-11-19T18:15:19.942Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:15:37.113Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05lidf=1&m05pink=1&m05pinka=0.5\" && GRID='0,0' EXTRA_JS='(async()=>{const r=window.__rainbow;const m=await import(\"/src/world/far05.ts\");const d=m.far05Debug;const out=[];for(const [x,y] of [[-0.93,-0.393],[-0.97,-0.37],[-0.95,-0.42]]){const h=r.probe(x,y)[0];const P=h.p;const rel=[P[0]-d.ft.c0.x,P[1]-d.ft.c0.y,P[2]-d.ft.c0.z];const z=rel[0]*d.ft.T.x+rel[1]*d.ft.T.y+rel[2]*d.ft.T.z;out.push({x,y,obj:h.obj,d:h.d,zFromSF:+z.toFixed(2),sGlowMinusSF:+(d.sGlow05-d.sF05).toFixed(2)});}return out;})()' time …[+178 chars]`
+
+### 🧑 User — 2026-11-19T18:16:34.108Z
+
+> ↩︎ result: == t81L s 179.341 stage 05 cam -0.03,-39.17,-114.47 far-open 0 extra [{"x":-0.93,"y":-0.393,"obj":"tube05_far_wall<zone_tubes<washer_world<Scene","d":12.14,"zFromSF":3.13,"sGlowMinusSF":2.99},{"x":-0.97,"y":-0.37,"obj":"tube05_far_wall<zone_tubes<washer_world<Scene","d":12.15,"zFromSF":3.14,"sGlowMinusSF":2.99},{"x":-0.95,"y":-0.42,"obj":"tube05_far_wall<zone_tubes<washer_world<Scene","d":11.89,"zFromSF":2.82,"sGlowMinusSF":2.99}]
+
+### 🤖 Claude — 2026-11-19T18:16:44.959Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export const clip05\\b\\|export const clip05 \\|uClip05N\" src/vfx/clip05.ts | head -5; grep -n \"clip05\" src/world/environment.ts | head -3", "description": "Check clip05 uniform exports"}`
+
+### 🧑 User — 2026-11-19T18:16:45.024Z
+
+> ↩︎ result: 11:export const clip05 = {
+> 13:  uClip05N: { value: new THREE.Vector3() },
+> 32:  mat.fragmentShader = mat.fragmentShader.replace('void main() {', `uniform vec3 uClip05P; uniform vec3 uClip05N;
+> 35:    vec3 cd = ${posVar} - uClip05P; float ca = dot(cd, uClip05N);
+> 36:    if (ca > ${margin.toFixed(2)} && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;
+> 19:import { withClip05Std, m05farPre } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
+
+### 🤖 Claude — 2026-11-19T18:16:54.454Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert s.count(a)==1, (p, a[:70], s.count(a))\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/world/environment.ts', [\n(\"import { withClip05Std, m05farPre } from '../vfx/clip05';\", \"import { withClip05Std, m05farPre, clip05 } from '../vfx/clip05';\"),\n(\"\"\"    pm.onBeforeCompile = (shader) => {\n      shader.uniforms.uM05Eye = m05eye;\"\"\", \"\"\"    pm.onBeforeCompile = (shader) => {\n      shader.uniforms.uClip05N = clip05.uClip05N;   // non …[+1737 chars]`
+
+### 🧑 User — 2026-11-19T18:17:02.572Z
+
+> ↩︎ result: ok
+> 414:      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pink05 && (mat === perf05Mat || a < sGlow05 + 1) ? pink05 : pinkFlow.material));
+
+### 🤖 Claude — 2026-11-19T18:17:08.401Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05lidf=1&m05pink=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try6 && timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" k81_kink_left 5275 2>&1 | grep -i error | head -3; python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nImage.open(S+'try6/k81_kink_left.png').convert('RGB').crop((0,850,430,1300)).save(S+'pink_c.png')\"", "description": "Re-render the corner with th …[+32 chars]`
+
+### 🧑 User — 2026-11-19T18:18:05.691Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:18:08.198Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/pink_c.png"}`
+
+### 🧑 User — 2026-11-19T18:18:08.244Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:18:13.754Z
+
+The corner now shows the slotted wall down to the foam. Now the full proof set: BEFORE (kept set) and NEW (+ `m05wcrisp=1&m05lidf=1&m05pink=1`) at the same 16 positions.
+
+### 🤖 Claude — 2026-11-19T18:18:16.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r18/step2_wall && mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && K=\"$(cat qa/match/05/r18/KEPT_START.txt)\" && L=a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,f20_forward20u,s_left_hard,s_right_hard,t33_through_screen,t66_through_screen,k81_kink_left,k81_kink_right,t95_through_screen,x97,x97L,x97R,t98_end && (timeout 2400 node tools/match05/r8_shots.mjs $D/before \"$K\" $L 5275 > $D/before.log 2>&1; timeout 2400 node tools/match05/r8_shots.mjs $D/new \"$K&m05wcrisp=1&m05lidf=1&m05pink=1\" $L 5275 …[+146 chars]`
+
+### 🧑 User — 2026-11-19T18:18:16.881Z
+
+> ↩︎ result: Command running in background with ID: b9was75hz. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/b9was75hz.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-19T18:18:22.090Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls tools/lead_r13/ 2>/dev/null; sed -n 1,30p tools/lead_r13/swim_clip.mjs 2>/dev/null | head -30", "description": "Check the swim clip tool usage"}`
+
+### 🧑 User — 2026-11-19T18:18:22.337Z
+
+> ↩︎ result: swim_clip.mjs
+> #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => c …[+932 chars]
+
+### 🤖 Claude — 2026-11-19T18:18:37.731Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s05/tools/match05/r18_clip.mjs", "content": "#!/usr/bin/env node\n// Screen 05 round 18: a short REAL-GAMEPLAY swimming clip from a chosen point of Stage 05 (read-only), half size.\n// Same stepping as tools/lead_r13/swim_clip.mjs (game simulation, camera rig, coins unchanged; shader clock running), but it\n// first rides to <startFrac> of the stage, then: straight 0–0.25, hard left 0.25–0.6, hard right 0.6–0.85, straight.\n// Frames OUT/0000.png … at <fps>; encode: ffmpeg -framerate <fps> -i OUT/%04d.png -pix_fmt yuv420p clip.mp4\n//   node tools/match05/r18_clip. …[+2116 chars]`
+
+### 🧑 User — 2026-11-19T18:18:37.800Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s05/tools/match05/r18_clip.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T18:18:40.690Z
+
+> 🔧 **Bash** `{"command": "sleep 240; cat /home/user/wt/s05/qa/match/05/r18/step2_wall/before.log 2>/dev/null | cut -c1-80; cat /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log 2>/dev/null | cut -c1-80", "description": "Wait and check render progress", "timeout": 300000}`
+
+### 🧑 User — 2026-11-19T18:18:40.705Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 240 followed by: cat /home/user/wt/s05/qa/match/05/r18/step2_wall/before.log cut -c1-80 cat /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log cut -c1-80. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T18:18:43.192Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/wt/s05/qa/match/05/r18/step2_wall/before.log 2>/dev/null | cut -c1-80; cat /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log 2>/dev/null | cut -c1-80", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-19T18:18:43.384Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:18:47.418Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor,SendMessage", "max_results": 2}`
+
+### 🧑 User — 2026-11-19T18:18:47.437Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-19T18:18:51.610Z
+
+> 🔧 **Bash** `{"command": "until grep -q done /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/b9was75hz.output 2>/dev/null; do sleep 5; done; cat /home/user/wt/s05/qa/match/05/r18/step2_wall/before.log | cut -c1-90; cat /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log | cut -c1-90", "description": "Wait for proof renders to finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-19T18:18:51.671Z
+
+> ↩︎ result: Command running in background with ID: btjokyyqo. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/btjokyyqo.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-19T18:18:54.502Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s05/qa/match/05/r18/step2_wall/before/ /home/user/wt/s05/qa/match/05/r18/step2_wall/new/ 2>/dev/null", "description": "List rendered proof shots so far"}`
+
+### 🧑 User — 2026-11-19T18:18:54.539Z
+
+> ↩︎ result: Exit code 2
+> /home/user/wt/s05/qa/match/05/r18/step2_wall/before/:
+
+### 🤖 Claude — 2026-11-19T18:18:57.978Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"M05BANK\\|bankCell\" src/vfx/foam.ts | head -20", "description": "Locate the m05bank foam code"}`
+
+### 🧑 User — 2026-11-19T18:18:58.220Z
+
+> ↩︎ result: 17:import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05BANK, M05FLAT, M05CLOUD, M05CAUL, m05foamK } from './waterRibbon';
+> 133:#ifdef M05BANK
+> 136:vec4 bankCell(vec2 p) {
+> 187:  #ifdef M05BANK
+> 191:  vec4 bkB = bankCell(bq);
+> 195:  vec4 bkS = bankCell(bq * 2.4 + 7.3);
+> 201:  #ifdef M05BANKCUT
+> 241:  #ifdef M05BANK
+> 259:    #ifdef M05BANK
+> 787:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(M05BERM ? { M05BERM: 1 } : {}), ...(M05BANK ? { M05BANK: 1 } : {}), ...(M05BANK && M05CLIP ? { M05BANKCUT: 1 } : {}) },
+> 792:  withClip05(mat, 'vPosW', M05BANK ? 0.45 : 0);
+
+### 🤖 Claude — 2026-11-19T18:19:00.174Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 100,290p src/vfx/foam.ts", "description": "Read the berm foam shader"}`
+
+### 🧑 User — 2026-11-19T18:19:00.310Z
+
+> ↩︎ result: varying vec3 vFoam;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_vertex>
+> void main() {
+>   // gentle breathing of the lather (never at the water line)
+>   float k = smoothstep(-0.2, 0.3, aFoam.x);
+>   vec3 p = position + normal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+>   vec4 wp = modelMatrix * vec4(p, 1.0);
+>   vPosW = wp.xyz;
+>   vNormalW = normalize(mat3(modelMatrix) * normal);
+>   vFoam = aFoam;
+>   vec4 mvPosition = viewMatrix * wp;
+>   gl_Position = projectionMatrix * mvPosition;
+>   #include <fog_vertex>
+> }
+> `;
+> 
+> const BERM_FRAG = /* glsl */ `
+> uniform float uTime;
+> uniform vec2 uOutro;     // amount, chamber start s
+> uniform vec3 uLightDir;
+> uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> #ifdef M05BERM
+> uniform float uRide05;   // m05berm: ride factor (0 at the locked 05 checkpoint, 1 after 2 u of riding)
+> #endif
+> varying vec3 vFoam;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${FRAG_FX_GLSL}
+> ${SOAP05_GLSL}
+> #ifdef M05BANK
+> // m05bank (Screen 05 round 14): one layer of piled foam bubbles in cell units: x = dome height (0 between bubbles),
+> // y = crease width f2 - f1 ( …[+7483 chars]
+
+### 🤖 Claude — 2026-11-19T18:19:04.060Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s05/qa/match/05/r18/step2_wall/before/ /home/user/wt/s05/qa/match/05/r18/step2_wall/new/ 2>/dev/null | head -40; ls -d /tmp/rainbow-render-slot-* 2>/dev/null; for d in /tmp/rainbow-render-slot-*; do cat $d/pid 2>/dev/null; echo; done", "description": "Check render progress and render slots"}`
+
+### 🧑 User — 2026-11-19T18:19:04.119Z
+
+> ↩︎ result: /home/user/wt/s05/qa/match/05/r18/step2_wall/before/:
+> /tmp/rainbow-render-slot-0
+> 4915
+
+### 🤖 Claude — 2026-11-19T18:19:06.493Z
+
+> 🔧 **Bash** `{"command": "ps -o pid,etime,pcpu,args -p 4915 2>/dev/null | cut -c1-200; ps aux --sort=-pcpu | head -8 | cut -c1-180", "description": "Inspect what holds the render slot"}`
+
+### 🧑 User — 2026-11-19T18:19:06.709Z
+
+> ↩︎ result: PID     ELAPSED %CPU COMMAND
+>  4915       00:49  2.5 node tools/match05/r8_shots.mjs qa/match/05/r18/step2_wall/before match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foa
+> USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+> root      3881  110  2.5 54959232 414708 ?     S<l  18:14   5:13 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-p
+> root      4828  103  2.0 54954724 343520 ?     S<l  18:17   1:33 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-p
+> root      5084 96.0  1.5 54942304 253772 ?     S<l  18:18   0:41 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-p
+> root      4973 83.6  2.2 54956412 365796 ?     S<l  18:18   0:40 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-p
+> root      5101  5.0  1.4 1518482108 236032 ?   Sl   18:18   0:02 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --typ …[+330 chars]
+
+### 🤖 Claude — 2026-11-19T18:19:10.530Z
+
+> 🔧 **Monitor** `{"description": "s05 proof renders progress (shot lines)", "timeout_ms": 1800000, "command": "cd /home/user/wt/s05/qa/match/05/r18/step2_wall && touch before.log new.log && tail -n +1 -F before.log new.log 2>/dev/null | grep --line-buffered -E \"^[a-z0-9_]+ s |error|Error|pageerror\""}`
+
+### 🧑 User — 2026-11-19T18:19:10.724Z
+
+> ↩︎ result: Monitor started (task bsik80bxl, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-19T18:19:17.251Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,60p qa/match/05/r14/step3_m05bank/new/shots.json | head -5; python3 -I -c \"\nimport json;d=json.load(open('qa/match/05/r17/step1_trans/new/shots.json'));print([ (s['name'],s['s'],round(s['lat'],2)) for s in d['shots']])\"", "description": "Check shot positions from the previous round"}`
+
+### 🧑 User — 2026-11-19T18:19:17.936Z
+
+> ↩︎ result: {
+>  "query": "match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1&m05bank=1",
+>  "shots": [
+>   {
+>    "name": "a00_approved_view",
+> [('t95_through_screen', 186.835, 0), ('t98_end', 188.357, 0), ('x97', 187.807, 0), ('x98p5', 188.724, 0), ('x99', 189.091, 0), ('x97L', 187.807, -3.61), ('x97R', 187.807, 3.61)]
+
+### 🤖 Claude — 2026-11-19T18:19:25.515Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"foam_berm\\|function createBerm\\|bermGeometry\\|aFoam\" src/vfx/foam.ts | head -20", "description": "Locate berm geometry construction"}`
+
+### 🧑 User — 2026-11-19T18:19:25.660Z
+
+> ↩︎ result: 98:attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
+> 106:  float k = smoothstep(-0.2, 0.3, aFoam.x);
+> 107:  vec3 p = position + normal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+> 111:  vFoam = aFoam;
+> 718:function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+> 770:  geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+> 794:  mesh.name = 'foam_berm';
+> 1034:  bankGeo.setAttribute('aFoam', new THREE.BufferAttribute(bankFoam, 3).setUsage(THREE.DynamicDrawUsage));
+> 1230:      bankGeo.attributes.aFoam.needsUpdate = true;
+
+### 🤖 Claude — 2026-11-19T18:19:27.689Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 718,800p src/vfx/foam.ts", "description": "Read berm geometry builder"}`
+
+### 🧑 User — 2026-11-19T18:19:27.735Z
+
+> ↩︎ result: function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+>   const hk = bermScale05(course);
+>   const ds = quality === 'high' ? 0.32 : 0.8;
+>   const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
+>   const rows = Math.ceil((s1 - s0) / ds) + 1;
+>   const C = E.length;
+>   const n = rows * C * 2;
+>   const pos = new Float32Array(n * 3);
+>   const foam = new Float32Array(n * 3);
+>   const tmp = new THREE.Vector3();
+>   let k = 0;
+>   const rowS: number[] = [];
+>   for (let i = 0; i < rows; i++) {
+>     const s = Math.min(s1, s0 + i * ds);
+>     rowS.push(s);
+>     const f = course.sample(s);
+>     const hw = course.widthAt(s) / 2;
+>     for (const side of [-1, 1]) {
+>       for (let j = 0; j < C; j++) {
+>         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
+>         // at the water line (keeps the lace edge flush with the stream)
+>         const e = E[j];
+>         const k05 = hk(s);
+>         const h = squashBerm(bermSurface(s, e, side, hw), k05);
+>         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow ban …[+2646 chars]
+
+### 🤖 Claude — 2026-11-19T18:19:31.026Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"startVite\\|opt.q\\|--q\" scripts/gameplay-test.mjs | head -5", "description": "Check gameplay test options"}`
+
+### 🧑 User — 2026-11-19T18:19:31.247Z
+
+> ↩︎ result: 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 20:const vite = await startVite(5213);
+
+### 🤖 Claude — 2026-11-19T18:19:34.199Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s05/qa/match/05/r18/step2_wall/before/shots.json ]; do sleep 5; done; ls /home/user/wt/s05/qa/match/05/r18/step2_wall/before/ | wc -l", "description": "Wait for the BEFORE set to finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-19T18:19:34.253Z
+
+> ↩︎ result: Command running in background with ID: bk50s9hqr. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bk50s9hqr.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-19T18:19:37.365Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"function squashBerm\\|function bermSurface\\|function bermScale05\\|const BERM_IN\\|const BERM_OUT\" -A14 src/vfx/foam.ts | head -80", "description": "Read berm surface shape helpers"}`
+
+### 🧑 User — 2026-11-19T18:19:37.485Z
+
+> ↩︎ result: 28:export const BERM_IN = -0.6;
+> 29:export const BERM_OUT = 1.2;
+> 30-const hash1 = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+> 31-const noise1 = (x: number) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return hash1(i) * (1 - u) + hash1(i + 1) * u; };
+> 32-/** 0..1 lumpiness of the bank at (s, side) — CPU only, baked into the mesh and the puff placement */
+> 33-export function bermLump(s: number, side: number): number {
+> 34-  return 0.55 * noise1(s * 0.33 + side * 31.7) + 0.45 * noise1(s * 1.05 + side * 7.3);
+> 35-}
+> 36-/** CPU cellular "bubble dome" field (0..1) so the bank silhouette is a pile of round lumps */
+> 37-export function bermDomes(s: number, e: number, side: number): number {
+> 38-  const gs = s / 0.95, ge = e / 0.62 + side * 11.3;
+> 39-  const i0 = Math.floor(gs), j0 = Math.floor(ge);
+> 40-  let best = 0;
+> 41-  for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) {
+> 42-    const i = i0 + di, j = j0 + dj;
+> 43-    const ox = hash1(i * 17.13 + j * 3.71), oy = hash1(i * 5.31 + j * 19.7 + 4.2);
+> --
+> 67:export function bermSurface(s: number, e: number, side: number, hw: number): number {
+> 68-  const domeK = Math …[+1978 chars]
+
+### 🤖 Claude — 2026-11-19T18:19:40.259Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s05/qa/match/05/r18/step2_wall/new/shots.json ]; do sleep 5; done; echo new-done", "description": "Wait for the NEW set to finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-19T18:19:40.425Z
+
+> ↩︎ result: Command running in background with ID: bmlu3u9n2. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bmlu3u9n2.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-19T18:19:43.151Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s05/qa/match/05/r18/step2_wall/before/ 2>/dev/null; tail -3 /home/user/wt/s05/qa/match/05/r18/step2_wall/before.log | cut -c1-60", "description": "Check BEFORE progress"}`
+
+### 🧑 User — 2026-11-19T18:19:43.942Z
+
+> ↩︎ result: a00_approved_view.png
+> a00_approved_view s 133.108 lat 0 coins 1420 benny -0.02 -0.
+
