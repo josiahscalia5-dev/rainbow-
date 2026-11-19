@@ -701,3 +701,105 @@ Handoff notes for round 18 are written. Saving, then relaunching the five Screen
 
 > 🔧 **Bash** `{"command": "timeout 200 python3 scripts/rainbow-autosave.py --reason manual:r18-coordination 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified'", "description": "Save round-18 coordination docs", "timeout": 240000}`
 
+### 🧑 User — 2026-11-19T02:27:31.815Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "cd4eef5e357270f5d418779c06ed5b4e8b925702",
+
+### 🤖 Claude — 2026-11-19T02:27:42.476Z
+
+> 🔧 **Agent** `{"description": "Screen 04 painted rings r18", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Rainbow project's `washer-environment-modeler`, round 18, resuming the Screen 04 PAINTED-RING test (\"s04tex\"), VISUALS ONLY. The previous session's environment closed at ~21:11 UTC 2026-11-18 while you were mid-step; you continue exactly where you stopped.\n\nWHERE YOU WORK\n* Git worktree `/home/user/wt/s04b`, branch `claude/rainbow-s04-ringtex-c18` (already pushed; = the newest `-c17` tip `0f275af1` + your unfinished account-17 edit restored UNCOMM …[+2935 chars]`
+
+### 🧑 User — 2026-11-19T02:27:42.502Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a4d781f95da91db00 (internal ID - do not mention to user. Use SendMessage with to: 'a4d781f95da91db00', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a4d781f95da91db00.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T02:27:53.724Z
+
+> 🔧 **Agent** `{"description": "Screen 04 near water bands r18", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the Rainbow project's `foam-bubbles-particles` specialist, round 18, resuming Screen 04 \"Through the Five Arrows\" (\"s04\"), VISUALS ONLY. The previous session's environment closed at ~21:11 UTC 2026-11-18 while you were mid-step; you continue exactly where you stopped.\n\nWHERE YOU WORK\n* Git worktree `/home/user/wt/s04`, branch `claude/rainbow-s04-match-c18` (already pushed; = the newest `-c17` tip `ad5fbac5` + your unfinished account-17 edit restored  …[+3058 chars]`
+
+### 🧑 User — 2026-11-19T02:27:53.742Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a4d2f0802b168dc00 (internal ID - do not mention to user. Use SendMessage with to: 'a4d2f0802b168dc00', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a4d2f0802b168dc00.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T02:28:04.474Z
+
+> 🔧 **Agent** `{"description": "Screen 05 left wall r18", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Rainbow project's `water-fx-specialist`, acting as the Screen 05 \"Flow Into the Current\" visual worker (\"s05\"), round 18, VISUALS ONLY. The previous session's environment closed at ~21:11 UTC 2026-11-18 right after your r17 step 1; you continue from there.\n\nWHERE YOU WORK\n* Git worktree `/home/user/wt/s05`, branch `claude/rainbow-s05-match-c18` (already pushed; = the newest `-c17` tip `f033f7cc`; restored untracked `qa/match/05/r17/KEPT_STEP1.txt` — commit …[+2930 chars]`
+
+### 🧑 User — 2026-11-19T02:28:04.499Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a2d313570ebdd2fd2 (internal ID - do not mention to user. Use SendMessage with to: 'a2d313570ebdd2fd2', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a2d313570ebdd2fd2.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T02:28:14.027Z
+
+> 🔧 **Agent** `{"description": "Screen 06 start flash r18", "subagent_type": "reference-match-director", "run_in_background": true, "prompt": "You are the Rainbow project's `reference-match-director`, acting as the Screen 06 \"Crest the Rinse Arch\" visual worker (\"s06\"), round 18, VISUALS ONLY. The previous session's environment closed at ~21:11 UTC 2026-11-18 right after your r17 step 2; you continue from there.\n\nWHERE YOU WORK\n* Git worktree `/home/user/wt/s06`, branch `claude/rainbow-s06-match-c18` (already pushed; = the newest `-c17` tip `c649fcbc`; no unfinished edits). Dev-server / tool port 5276 …[+2792 chars]`
+
+### 🧑 User — 2026-11-19T02:28:14.048Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a1183ccf73271fcf7 (internal ID - do not mention to user. Use SendMessage with to: 'a1183ccf73271fcf7', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a1183ccf73271fcf7.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T02:28:24.976Z
+
+> 🔧 **Agent** `{"description": "Screen 07 lather walls r18", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Rainbow project's `water-fx-specialist`, acting as the Screen 07 \"Dive the Washer Tube\" visual worker (\"s07\"), round 18, VISUALS ONLY. The previous session's environment closed at ~21:11 UTC 2026-11-18 while you were mid-step; you continue exactly where you stopped.\n\nWHERE YOU WORK\n* Git worktree `/home/user/wt/s07`, branch `claude/rainbow-s07-match-c18` (already pushed; = the newest `-c17` tip `8651edf9` + your unfinished account-17 edits restored UNCO …[+3135 chars]`
+
+### 🧑 User — 2026-11-19T02:28:24.992Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a27bc2af86f8cdd32 (internal ID - do not mention to user. Use SendMessage with to: 'a27bc2af86f8cdd32', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a27bc2af86f8cdd32.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T02:28:27.333Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;a=json.load(open('backups/AGENTS_STATUS.json'));print(list(a.keys()));\nr=a.get('running') or a.get('_note');print(str(r)[:600])\"", "description": "Inspect AGENTS_STATUS structure"}`
+
+### 🧑 User — 2026-11-19T02:28:27.386Z
+
+> ↩︎ result: ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped', 'round3_stopped', 'round4_done', 'backup_2026_11_17_1945', 'round4_stopped_account4', 'round5_account5', 'round6_account6', 'round9_account9', 'running_now_account8_archived', 'round12_account12', 'round13_account13', 'round14_account14', 'round15_account15', 'round16_account16', 'round17_account17']
+> None
+
+### 🤖 Claude — 2026-11-19T02:28:29.139Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;a=json.load(open('backups/AGENTS_STATUS.json'));print(a['updated_utc'],a['updated_by_session']);print(json.dumps(a['running_now'])[:700]);print(json.dumps(a['round17_account17'])[:900])\"", "description": "Show current running_now and round17 entries"}`
+
+### 🧑 User — 2026-11-19T02:28:29.204Z
+
+> ↩︎ result: 2026-11-18T20:55Z session_01VCMXoYUDAtThkAJzb9fwd7 (account 17, lead ccr-bbe2b27e-oxfh1w)
+> {"_note": "see round17_account17.running (six background workers in the account-17 lead container, relaunched ~20:55 UTC from the account-16 20:14 UTC WIP snapshots)"}
+> {"lead_branch": "ccr-bbe2b27e-oxfh1w", "started_from": "account-16 lead ccr-e42bb3c0-jpif8d @ e057fe80 (merged into the fresh session branch at the user's \"do exactly where we left off\"; old base ccr-5495e9c4-g0apvl 77bce73 added backups only)", "coordination": "docs/briefs/2026-11-18-r17/COORDINATION.md", "resume": "docs/briefs/2026-11-18-r17/RESUME_R17.md", "running": [{"screen": "04 test (s04tex)", "agent": "washer-environment-modeler", "branch": "claude/rainbow-s04-ringtex-c17", "from": "3fdcbc0b + WIP", "worktree": "/home/user/wt/s04b", "port": 5274, "task": "step 5 m04rpdots (light dots on ring lips), then pinker sheen separately"}, {"screen": "04 (s04)", "agent": "foam-bubbles-particles", "branch": "claude/rainbow-s04-match-c17", "from": "465e4c59 + WIP", "worktree": "/home/user/wt/s04", "port": 5273, "task": "m04end (distant glowing opening), then near-water pink/cyan bands rou
+
+### 🤖 Claude — 2026-11-19T02:28:39.679Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\na=json.load(open(p))\na['round17_account17']['stopped']=\"environment closed after the 21:11 UTC save (d22ec46); workers mid-step; WIP in backups/wip/*-c17/ restored on -c18 branches in round 18\"\na['updated_utc']='2026-11-19T02:50Z'\na['updated_by_session']='session_01AvQv6SAH2NyYjSPRMtFps6 (round 18, lead ccr-ae71d3a5-80naq2)'\na['running_now']={'_note':'see round18.running (five background workers in the round-18 lead container, relaunched ~02:50 UTC from the r17 21:11 UTC WIP snapshots); Screen 08 PAUSED by the u …[+1803 chars]`
+
+### 🧑 User — 2026-11-19T02:28:39.809Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-19T02:28:42.430Z
+
+> 🔧 **Bash** `{"command": "timeout 200 python3 scripts/rainbow-autosave.py --reason manual:r18-workers-launched 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified'; echo \"HEAD $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/ccr-ae71d3a5-80naq2 | cut -f1)\"; git lfs ls-files 2>/dev/null | wc -l", "description": "Save and verify remote SHA equals HEAD", "timeout": 240000}`
+
