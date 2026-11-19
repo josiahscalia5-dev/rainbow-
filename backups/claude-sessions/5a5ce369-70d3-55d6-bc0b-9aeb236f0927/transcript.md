@@ -3651,3 +3651,11 @@ This session's worker process was restarted. If your previous turn was already c
 
 You've hit your 5-hour limit · resets 12:10am (UTC)
 
+### 🧑 User — 2026-11-19T21:47:10.662Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-19T21:47:12.275Z
+
+You've hit your 5-hour limit · resets 12:10am (UTC)
+
