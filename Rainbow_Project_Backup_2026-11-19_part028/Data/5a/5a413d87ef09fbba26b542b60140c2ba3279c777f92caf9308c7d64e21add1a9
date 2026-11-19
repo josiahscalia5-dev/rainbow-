@@ -1,0 +1,531 @@
+# Subagent agent-af0701b821695cc10 — session 660b5801-7aff-5a84-b502-101fe8d932bd
+
+### 🧑 User — 2026-11-18T20:45:34.388Z
+
+You are the Rainbow project's `washer-environment-modeler`, round 17 (Claude account 17), resuming the Screen 04 PAINTED-RING test ("s04tex"), VISUALS ONLY. The previous account ran out of usage at ~20:14 UTC 2026-11-18 while you were mid-step; you continue exactly where you stopped.
+
+WHERE YOU WORK
+* Git worktree `/home/user/wt/s04b`, branch `claude/rainbow-s04-ringtex-c17` (already pushed; = the newest `-c16` tip `3fdcbc0b` + your unfinished account-16 edit restored UNCOMMITTED in `src/world/match04m4.ts`). Dev-server / tool port 5274.
+* Commit and `git push -u origin claude/rainbow-s04-ringtex-c17` after every step and at each safe milestone. Push ONLY that branch; never force-push / rebase / merge; never write any `-c16` or older branch. Another worker edits `/home/user/wt/s04` (same file `match04m4.ts`, other code region) — never touch that worktree or any other worktree. `/home/user/rainbow-` is the lead checkout: read-only for you.
+
+READ FIRST, in this order (absolute paths, the lead checkout):
+1. `/home/user/rainbow-/docs/briefs/2026-11-18-r17/RESUME_R17.md` — common part + section "s04tex": you were on step 5 `m04rpdots` (painted-style light dots on every ring lip), on top of the KEPT step 3 set `&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28`; a slightly pinker sheen is a SEPARATE factor afterwards.
+2. Your launch brief `/home/user/rainbow-/docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md` — read every `-c15` as `-c17` and the `r15` / `r16` log folders as `r17` (`qa/match/04/r17/ringpaint/`), but keep reading `qa/match/04/r16/ringpaint/` (your NOTES / pictures) for what was already done.
+3. The binding rules it names (`/home/user/rainbow-/docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`, `.../2026-11-18-r15/USER_ORDER_R15_VISUAL.md`, `.../r10/RULES_R10.md`, `.../r8/COMMON_RULES.md`).
+Then `git diff` in your worktree, decide whether the unfinished edit is step 5 as described, finish it (or discard it explicitly with a note), prove it, commit + push.
+
+RULES: every change is a URL switch, default build unchanged; approved start view unchanged (Pixelmatch: `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536`); never change Benny, coins (91 / 2,240), physics, input, HUD, camera framing or other screens; `references/*.png` unchanged; no paid jobs; do not reinstall tools (never `playwright install`); never commit or print secrets. Six workers share 4 CPU cores: render only the shots you need, clips at half size.
+
+PROOF + REPORTING: separate full-size APPROVED / BEFORE / NEW pictures from the real game (no collages), plain visual words, verdict GOOD IMPROVEMENT / NOT AN IMPROVEMENT / NOT YET PROVEN. Log in `qa/match/04/r17/ringpaint/NOTES.md`. After each finished step: commit + push, then SendMessage to "main" with: step + URL switch, commit SHA, verdict, absolute folder of the NEW pictures, and the single most visible remaining difference. Keep it short, then continue with the next most visible ring difference without waiting. If blocked (paid job needed, design question the approved picture does not answer), tell "main" and continue with something else.
+
+### 🤖 Claude — 2026-11-18T20:45:35.657Z
+
+I'll start by reading the resume brief and launch brief.
+
+### 🤖 Claude — 2026-11-18T20:45:36.745Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/docs/briefs/2026-11-18-r17/ /home/user/rainbow-/docs/briefs/2026-11-18-r15/ ; wc -l /home/user/rainbow-/docs/briefs/2026-11-18-r17/RESUME_R17.md", "description": "List brief folders and size of resume brief"}`
+
+### 🧑 User — 2026-11-18T20:45:36.780Z
+
+> ↩︎ result: /home/user/rainbow-/docs/briefs/2026-11-18-r15/:
+> COORDINATION.md
+> GITHUB_3D_TOOLS.md
+> S04B_RINGTEX_LAUNCH.md
+> S04_LAUNCH.md
+> S05_LAUNCH.md
+> S06_LAUNCH.md
+> S07_LAUNCH.md
+> S08_LAUNCH.md
+> USER_ORDER_R15_VISUAL.md
+> 
+> /home/user/rainbow-/docs/briefs/2026-11-18-r17/:
+> COORDINATION.md
+> RESUME_R17.md
+> setup_worker.sh
+> 60 /home/user/rainbow-/docs/briefs/2026-11-18-r17/RESUME_R17.md
+
+### 🤖 Claude — 2026-11-18T20:45:37.862Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r17/RESUME_R17.md"}`
+
+### 🧑 User — 2026-11-18T20:45:37.879Z
+
+> ↩︎ result: 1	# Round 17 resume notes — where each round-16 worker stopped (account 16 stopped saving at 20:14 UTC)
+> 2	
+> 3	Every worker below was cut off mid-step. Its committed work is on its `-c16` tip; its UNFINISHED edits (tracked diff + new files)
+> 4	were captured by the account-16 autosave at 20:14 UTC in `backups/wip/<branch>-c16/` on `origin/ccr-e42bb3c0-jpif8d` (`e057fe80`)
+> 5	and are applied, UNCOMMITTED, in the worker's `-c17` worktree exactly as the worker left them. Large renders listed under
+> 6	`untracked_skipped` in each `INFO.json` were not saved: re-render what you need. The old container's scratchpad files are gone.
+> 7	
+> 8	Common to all: user order 2026-11-18 ~18:55 UTC (`docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md`) — VISUALS ONLY, biggest
+> 9	visible difference first, APPROVED / BEFORE / NEW pictures from the real game, plain visual words, minimal checks (approved start view
+> 10	unchanged, coins unchanged: 91 coins / 2,240). Your launch brief is the r15 one named below; read every `-c15` as `-c17` and every
+> 11	`r15` log folder as `r17` (`qa/match/<NN>/r17/`), but keep reading `qa/match/<NN>/r15/` and `r16/` for what was already done.
+> 12	FIRST: read your own `r16/PROGRESS.md`  …[+4959 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:38.368Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md"}`
+
+### 🧑 User — 2026-11-18T20:45:38.392Z
+
+> ↩︎ result: 1	# Round 15 — Screen 04 controlled test: the user's PAINTED rings on every 3D ring (washer-environment-modeler)
+> 2	
+> 3	You are the Rainbow project's `washer-environment-modeler`, acting as texture-projection artist for ONE controlled, non-destructive
+> 4	test on playable Screen 04 "Through the Five Arrows", VISUALS ONLY. The user asked (2026-11-18 ~18:30 UTC): reuse the ACTUAL approved
+> 5	image details on our existing real 3D tunnel (camera matching + selective texture projection, masking Benny / HUD / other elements),
+> 6	instead of generating new environments. No video, no flat background, no projection that ghosts, stretches or tears while Benny moves.
+> 7	
+> 8	## Where you work
+> 9	* Git worktree `/home/user/wt/s04b`, branch `claude/rainbow-s04-ringtex-c15` (from `fc28323a`, the newest Screen 04 tip). Commit and
+> 10	  `git push -u origin claude/rainbow-s04-ringtex-c15` after every step. Push ONLY that branch; never force-push / rebase / merge.
+> 11	  Another worker edits `/home/user/wt/s04` (foam, same file `src/world/match04m4.ts`, other code region) — never touch that worktree.
+> 12	* Binding rules: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`, `docs/briefs/2026-11-18-r10/RULES_R10.md …[+6271 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:39.833Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git status --short | head -30 && git log --oneline -5 && git diff --stat && git diff", "description": "Show worktree state and the unfinished diff"}`
+
+### 🧑 User — 2026-11-18T20:45:40.022Z
+
+> ↩︎ result: M src/world/match04m4.ts
+> ?? node_modules
+> 3fdcbc0b Screen 04 r16 step 4: warmer gold toward the end glow (m04rwarm, off by default) — NOT AN IMPROVEMENT; step-3 BEFORE/NEW swim clips
+> 29415ddc Screen 04 r16 step 3: painted lip line + groove on the visible lip front (m04rplu=3.95, m04rpgu=4.28 on m04rpaint soft/jitter) — GOOD IMPROVEMENT (ring shape/surface)
+> 9eb8d19e Screen 04 r16 step 2: painted rings, soft light columns + per-ring angle offset (m04rpsoft=1, m04rpj=0.35) — NOT YET PROVEN
+> 620414f9 Screen 04 r16 step 1: painted inner rings on every 3D ring band (m04rpaint=1; L4) — NOT YET PROVEN
+> fc28323a Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GOOD IMPROVEMENT (small)
+>  src/world/match04m4.ts | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+> index f6e05a61..60ae907f 100644
+> --- a/src/world/match04m4.ts
+> +++ b/src/world/match04m4.ts
+> @@ -107,6 +107,7 @@ uniform vec4 uRLip;        // x: painted lip-line s, y: modeled u that carries t
+>                             // w: modeled u where the painted groove begins (held dark to the period end)
+>  uniform float uRJit;       // per-ring ang …[+3458 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:40.688Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s04b/qa/match/04/r16/ringpaint/ /home/user/wt/s04b/qa/match/04/r17/ 2>&1 | head -60", "description": "List r16 ringpaint folder and r17 folder"}`
+
+### 🧑 User — 2026-11-18T20:45:40.725Z
+
+> ↩︎ result: ls: cannot access '/home/user/wt/s04b/qa/match/04/r17/': No such file or directory
+> /home/user/wt/s04b/qa/match/04/r16/ringpaint/:
+> total 33412
+> drwxr-xr-x 6 root root    4096 Nov 18 20:43 .
+> drwxr-xr-x 3 root root    4096 Nov 18 20:43 ..
+> -rw-r--r-- 1 root root  392932 Nov 18 20:43 1_APPROVED.png
+> -rw-r--r-- 1 root root 2330649 Nov 18 20:43 2_BEFORE_a00_approved_view.png
+> -rw-r--r-- 1 root root 2080191 Nov 18 20:43 2_BEFORE_f03_forward3u.png
+> -rw-r--r-- 1 root root 1932758 Nov 18 20:43 2_BEFORE_f06_forward6u.png
+> -rw-r--r-- 1 root root 1692497 Nov 18 20:43 2_BEFORE_f10_forward10u.png
+> -rw-r--r-- 1 root root 1662155 Nov 18 20:43 2_BEFORE_f20_forward20u.png
+> -rw-r--r-- 1 root root 1587066 Nov 18 20:43 2_BEFORE_s_left_hard.png
+> -rw-r--r-- 1 root root 1568138 Nov 18 20:43 2_BEFORE_s_right_hard.png
+> -rw-r--r-- 1 root root 1669127 Nov 18 20:43 2_BEFORE_t66_through_screen.png
+> -rw-r--r-- 1 root root 1625516 Nov 18 20:43 2_BEFORE_t95_through_screen.png
+> -rw-r--r-- 1 root root 2332046 Nov 18 20:43 3_NEW_a00_approved_view.png
+> -rw-r--r-- 1 root root 2087350 Nov 18 20:43 3_NEW_f03_forward3u.png
+> -rw-r--r-- 1 root root 1948564 Nov 18 20:43 3_NEW_f06_forward6u.png
+> -rw-r--r-- 1 root root 1730087 Nov 18 20:43 3_ …[+869 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:41.931Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/qa/match/04/r16/ringpaint/NOTES.md"}`
+
+### 🧑 User — 2026-11-18T20:45:41.955Z
+
+> ↩︎ result: 1	# Screen 04 — painted-ring test `&m04rpaint` (round 16, continues the cut-off round-15 worker)
+> 2	
+> 3	Brief: `docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md` + round-16 changes (`docs/briefs/2026-11-18-r16/RESUME_R16.md` "s04tex").
+> 4	Branch `claude/rainbow-s04-ringtex-c16` (from `fc28323a`). History of earlier Screen 04 rounds: `qa/match/04/r15/` and older.
+> 5	
+> 6	BEFORE query = kept L4 (`docs/briefs/2026-11-18-r15/S04_LAUNCH.md` "Kept set now"); BEFORE frames = `qa/match/04/r14/s11_rimfoam/L4/`
+> 7	(same build: this branch only adds code that is off by default). NEW = L4 + the switch named below.
+> 8	
+> 9	## What the switch does
+> 10	* `tools/match04/ring_paint04.py` (round-15 worker, unchanged here) straightens ONE painted inner ring of the approved picture
+> 11	  (`plate04_hybrid.png`: Benny / coins filled) into `assets/textures/match04/tile_ring_paint.png` — columns = angle around the tunnel
+> 12	  (0 = top, + = right), rows = position inside the painted ring (groove -> broad band -> bright lip line at 0.79 -> next groove).
+> 13	  Bubbles masked and filled from neighbouring angles; the under-water half mirrored from the upper walls. `tile_ring_paint_soft.png`
+> 14	  = the same with the long l …[+7590 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:42.935Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip /home/user/wt/s04b/qa/match/04/r16/ringpaint/step4_warm; ls /home/user/wt/s04b/qa/match/04/r16/", "description": "List step3 and step4 folders"}`
+
+### 🧑 User — 2026-11-18T20:45:42.968Z
+
+> ↩︎ result: /home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip:
+> total 21472
+> drwxr-xr-x 2 root root    4096 Nov 18 20:43 .
+> drwxr-xr-x 6 root root    4096 Nov 18 20:43 ..
+> -rw-r--r-- 1 root root 2329591 Nov 18 20:43 3_NEW_a00_approved_view.png
+> -rw-r--r-- 1 root root 2080353 Nov 18 20:43 3_NEW_f03_forward3u.png
+> -rw-r--r-- 1 root root 1945140 Nov 18 20:43 3_NEW_f06_forward6u.png
+> -rw-r--r-- 1 root root 1705835 Nov 18 20:43 3_NEW_f10_forward10u.png
+> -rw-r--r-- 1 root root 1689284 Nov 18 20:43 3_NEW_f20_forward20u.png
+> -rw-r--r-- 1 root root 1630149 Nov 18 20:43 3_NEW_s_left_hard.png
+> -rw-r--r-- 1 root root 1633374 Nov 18 20:43 3_NEW_s_right_hard.png
+> -rw-r--r-- 1 root root 1677303 Nov 18 20:43 3_NEW_t66_through_screen.png
+> -rw-r--r-- 1 root root 1673856 Nov 18 20:43 3_NEW_t95_through_screen.png
+> -rw-r--r-- 1 root root 2498163 Nov 18 20:43 clip_BEFORE_swim.mp4
+> -rw-r--r-- 1 root root 2427186 Nov 18 20:43 clip_NEW_swim.mp4
+> -rw-r--r-- 1 root root    4172 Nov 18 20:43 motion.json
+> -rw-r--r-- 1 root root  667440 Nov 18 20:43 start_view_pixeldiff_BEFORE_vs_NEW.png
+> 
+> /home/user/wt/s04b/qa/match/04/r16/ringpaint/step4_warm:
+> total 6816
+> drwxr-xr-x 2 root root    4096 Nov 18 20:43 .
+> drwxr-xr-x 6 root root    4096 No …[+362 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:44.135Z
+
+Now the binding rules (brief skim) and the shader context around the unfinished edit.
+
+### 🤖 Claude — 2026-11-18T20:45:46.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs; wc -l 2026-11-18-r13/USER_VISUAL_GOAL_R13.md 2026-11-18-r15/USER_ORDER_R15_VISUAL.md 2026-11-18-r10/RULES_R10.md 2026-11-18-r8/COMMON_RULES.md 2026-11-18-r17/COORDINATION.md; cat 2026-11-18-r15/USER_ORDER_R15_VISUAL.md; cat 2026-11-18-r17/COORDINATION.md", "description": "Read binding rule files sizes and order docs"}`
+
+### 🧑 User — 2026-11-18T20:45:46.105Z
+
+> ↩︎ result: 55 2026-11-18-r13/USER_VISUAL_GOAL_R13.md
+>    12 2026-11-18-r15/USER_ORDER_R15_VISUAL.md
+>    32 2026-11-18-r10/RULES_R10.md
+>    44 2026-11-18-r8/COMMON_RULES.md
+>    54 2026-11-18-r17/COORDINATION.md
+>   197 total
+> # User order — 2026-11-18 ~18:55 UTC (account 15) — BINDING for every worker and every future account
+> 
+> User's words: "To make them exactly or very close to my approved screens — work on the visual part … not all technical problems. Make
+> sure it looks like the visual part, like scenery and all the stuff that looks like my approved screens. When a pink character goes
+> through my screens, it looks like it would have for my approved screens."
+> 
+> Meaning (adds to `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`, never replaces it):
+> * Work ONLY on what can be SEEN: scenery, rings, walls, water, foam, bubbles, paddles / cups / props, colours, lighting — on all five
+>   playable screens 04–08 — so that while Benny (the pink character) swims through, every view looks like the approved picture.
+> * No technical clean-up, refactors, metrics or tool projects unless a visual step needs them. Checks stay minimal (approved start view
+>   unchanged, coins unchanged). Report in plain visual words wit …[+5517 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:47.802Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs; cat 2026-11-18-r13/USER_VISUAL_GOAL_R13.md 2026-11-18-r10/RULES_R10.md 2026-11-18-r8/COMMON_RULES.md", "description": "Read remaining binding rule files"}`
+
+### 🧑 User — 2026-11-18T20:45:47.837Z
+
+> ↩︎ result: # User-approved visual goal — 2026-11-18 ~15:00 UTC (account 13) — BINDING for every specialist and every future Claude account
+> 
+> The user approved this understanding in their own words: "YES, CLAUDIA. I approve your visual-first plan for all five original
+> approved Rainbow screens." It adds to (never replaces) `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`,
+> `docs/briefs/2026-11-18-r10/RULES_R10.md` and `docs/briefs/2026-11-18-r8/COMMON_RULES.md`.
+> 
+> ## 1. What the user wants
+> * The user ALREADY DESIGNED the game. The approved pictures `references/04_…png` … `references/08_…png` are BLUEPRINTS, not
+>   inspiration: recreate THOSE exact environments as faithfully as technically possible as real playable 3D.
+> * The scenery must look like the approved world THROUGHOUT Benny's natural swimming — start, middle, end, and while he steers hard
+>   left / right. A matching first screenshot that turns into a generic tunnel is a failure.
+> * No redesign, no simplification, no added or different scenery, no generic orange ring corridor, no flat blue/ramp water, no giant
+>   foam walls, no stretched / smeared / torn textures, no double-exposed or duplicate rings, no clipping, no style drift.
+> * Where a …[+11301 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:49.348Z
+
+Now the shader context around the painted-ring path in my worktree.
+
+### 🤖 Claude — 2026-11-18T20:45:50.546Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"uRPaint\\|uRLip\\|uRJit\\|rr\\b\\|float rr\\|float al\\|float ang\\|float uu\\|uL\\b\\|float uL\\|h21\\|float gl\\b\\|facing\" src/world/match04m4.ts | head -60", "description": "Locate variables used by the dots code"}`
+
+### 🧑 User — 2026-11-18T20:45:50.582Z
+
+> ↩︎ result: 10: *  m04bub   — iridescent soap bubbles floating in the tunnel air (camera-facing bubble discs), same visibility rule.
+> 90:uniform float uLipBulb;
+> 92:uniform float uLen;
+> 104:uniform float uRPaint;     // r15 m04rpaint: mix of the user's PAINTED inner ring (tile_ring_paint.png) on every inner ring band
+> 106:uniform vec4 uRLip;        // x: painted lip-line s, y: modeled u that carries the painted lip line, z: modeled shading amount,
+> 108:uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring
+> 116:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 148:float streaks(float ang, float ring) {
+> 152:    float c = (h21(vec2(ring, fi * 3.1)) * 2.0 - 1.0) * 2.6;
+> 153:    float w = 0.12 + 0.30 * h21(vec2(ring, fi * 5.7));
+> 155:    s += (0.45 + 0.55 * h21(vec2(ring, fi * 9.3))) * exp(-d * d / (w * w));
+> 164:  float al = dot(q, uAxD);
+> 166:  float rr = length(qr);
+> 167:  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left
+> 171:  float facing = clamp(dot(n, V), 0.0, 1.0);
+> 176:    float rad = clamp(rr / 3.6, 0.0, 1.0);
+> 185:    float gl = pow(max(dot(R, uAxD), 0.0), 6.0);
+> 190:      …[+3873 chars]
+
+### 🤖 Claude — 2026-11-18T20:45:51.929Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 155, "limit": 180}`
+
+### 🧑 User — 2026-11-18T20:45:51.950Z
+
+> ↩︎ result: 155	    s += (0.45 + 0.55 * h21(vec2(ring, fi * 9.3))) * exp(-d * d / (w * w));
+> 156	  }
+> 157	  return s;
+> 158	}
+> 159	void main() {
+> 160	  vec3 V = normalize(cameraPosition - vW);
+> 161	  vec3 n = normalize(vN);
+> 162	  if (dot(n, V) < 0.0) n = -n;
+> 163	  vec3 q = vW - uAxO;
+> 164	  float al = dot(q, uAxD);
+> 165	  vec3 qr = q - uAxD * al;
+> 166	  float rr = length(qr);
+> 167	  float ang = atan(dot(qr, uAxR), dot(qr, uAxU));         // 0 = tunnel top, < 0 = left
+> 168	  vec3 R = reflect(-V, n);
+> 169	  float part = vK.x;
+> 170	  float dc = distance(cameraPosition, vW);
+> 171	  float facing = clamp(dot(n, V), 0.0, 1.0);
+> 172	  vec3 col;
+> 173	  if (part > 3.5) {
+> 174	    // the far glow (painted vanishing point): small warm-white core, orange-gold outside with faint far rings
+> 175	    // soft warm-white core, yellow-orange glow, orange toward the rim (matches the far bands), no hard target rings
+> 176	    float rad = clamp(rr / 3.6, 0.0, 1.0);
+> 177	    col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
+> 178	    col = mix(col, uGoldY > 0.5 ? vec3(0.98, 0.70, 0.22) : vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+> 179	    col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(log(m …[+11498 chars]
+
+### 🤖 Claude — 2026-11-18T20:46:00.267Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 636,760p src/world/match04m4.ts", "description": "Read ring geometry/profile construction code"}`
+
+### 🧑 User — 2026-11-18T20:46:00.303Z
+
+> ↩︎ result: const gm = new THREE.ShaderMaterial({
+>       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
+>       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+>         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+>         uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector4(M04.num('m04rpsl', 0.79), 0, M04.num('m04rpsh', 0.15), 0) }, uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rww', 0.45)) },
+>         uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.05)) },
+>         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: {  …[+9020 chars]
+
+### 🤖 Claude — 2026-11-18T20:46:11.292Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n -A3 \"Kept set now\" /home/user/rainbow-/docs/briefs/2026-11-18-r15/S04_LAUNCH.md | head; ls qa/match/04/r16/ qa/match/04/r14/s11_rimfoam/L4/ 2>&1 | head -30; cat qa/match/04/r16/ringpaint/step3_lip/motion.json | head -40", "description": "Find the kept L4 query and BEFORE frames"}`
+
+### 🧑 User — 2026-11-18T20:46:11.338Z
+
+> ↩︎ result: 35:Kept set now (= r14 L4):
+> 36-`match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5`
+> 37-
+> 38-## Your tasks (in order; biggest visible difference first)
+> qa/match/04/r14/s11_rimfoam/L4/:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 
+> qa/match/04/r16/:
+> ringpaint
+> {
+>  "screen": "04",
+>  "query": "match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04a …[+1269 chars]
+
+### 🤖 Claude — 2026-11-18T20:46:18.796Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && mkdir -p /tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex && S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex && identify references/04_through_the_five_arrows.png && convert references/04_through_the_five_arrows.png -crop 600x420+190+440 +repage -resize 200% $S/appr_centre_zoom.png && convert qa/match/04/r16/ringpaint/step3_lip/3_NEW_f20_forward20u.png -crop 864x700+0+300 +repage $S/step3_f20_crop.png && identify qa/match/04/r16/ringpaint/step3_lip/3_NEW_f20_forward20u.png", …[+67 chars]`
+
+### 🧑 User — 2026-11-18T20:46:19.743Z
+
+> ↩︎ result: references/04_through_the_five_arrows.png JPEG 864x1536 864x1536+0+0 8-bit sRGB 392932B 0.000u 0:00.001
+> qa/match/04/r16/ringpaint/step3_lip/3_NEW_f20_forward20u.png PNG 864x1536 864x1536+0+0 8-bit sRGB 1.61103MiB 0.000u 0:00.000
+
+### 🤖 Claude — 2026-11-18T20:46:21.320Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex/appr_centre_zoom.png"}`
+
+### 🧑 User — 2026-11-18T20:46:21.349Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:46:21.933Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex/step3_f20_crop.png"}`
+
+### 🧑 User — 2026-11-18T20:46:21.997Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:46:30.749Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 1,60p tools/lead_r6/motion_audit.mjs | grep -n \"port\\|PORT\\|localhost\\|http\\|argv\\|vite\\|preview\" ; grep -n \"port\\|PORT\\|localhost\\|argv\" scripts/capture.mjs | head -20; ps aux | grep -E \"vite|node\" | grep -v grep | awk '{print $2, $11, $12, $13, $14, $15, $16}' | head -20", "description": "Check how capture tools pick a server port"}`
+
+### 🧑 User — 2026-11-18T20:46:30.828Z
+
+> ↩︎ result: 4:// Run from the checkout to test (vite serves the current directory):
+> 6:import { mkdirSync, writeFileSync } from 'node:fs';
+> 7:import { pathToFileURL } from 'node:url';
+> 8:const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> 9:const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> 12:const vite = await startVite(5270 + Number(SCREEN));
+> 23:  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+> 25:  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> 47:  await browser.close(); await vite.close?.();
+> 8:import { mkdirSync, writeFileSync } from 'node:fs';
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 11:const args = process.argv.slice(2);
+> 30:    const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+> 47:    // first use). Render once more (after the screenshot) and report that per-frame cost as calls/tris.
+> 96 /opt/node22/bin/claude --preload /home/claude/.claude/remote/spare.sock   
+> 121 /bin/sh -c if ! { [
+> 1888 node /root/.npm/_npx/a5b920f00216d246/node_modules/.bin/playwright-mcp --headle …[+415 chars]
+
+### 🤖 Claude — 2026-11-18T20:46:32.215Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"startVite\" -A25 scripts/lib/pw.mjs | head -45", "description": "Read startVite helper"}`
+
+### 🧑 User — 2026-11-18T20:46:32.245Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-18T20:46:34.170Z
+
+The audit tool starts its own Vite on 5274 (falls back to the next free port). Let me check whether it can render a subset of shots, since CPU is shared.
+
+### 🤖 Claude — 2026-11-18T20:46:34.872Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 1,50p tools/lead_r6/motion_audit.mjs", "description": "Read motion audit script"}`
+
+### 🧑 User — 2026-11-18T20:46:34.912Z
+
+> ↩︎ result: // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [...(process.env.EXTRA_SHOTS ? JSON.parse(process.env.EXTRA_SHOTS) : []),   // r11: optional extra [name, dist, stee …[+1885 chars]
+
+### 🤖 Claude — 2026-11-18T20:46:40.377Z
+
+No shot filter exists, so I'll make a scratchpad copy of the audit with an `ONLY` filter (same shots, same positions) to render just the frames I need.
+
+### 🤖 Claude — 2026-11-18T20:46:46.994Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex; sed -e \"s#^try {#const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;\\ntry {#\" -e \"s#  for (const \\[name, dist, steer\\] of SHOTS) {#  for (const [name, dist, steer] of SHOTS.filter((s) => !ONLY || ONLY.includes(s[0]))) {#\" /home/user/wt/s04b/tools/lead_r6/motion_audit.mjs > $S/audit_only.mjs && grep -n \"ONLY\" $S/audit_only.mjs\ncat > $S/q.sh <<'EOF'\nL4='match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m …[+714 chars]`
+
+### 🧑 User — 2026-11-18T20:46:47.067Z
+
+> ↩︎ result: 22:const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
+> 28:  for (const [name, dist, steer] of SHOTS.filter((s) => !ONLY || ONLY.includes(s[0]))) {
+> ok
+
+### 🤖 Claude — 2026-11-18T20:46:49.835Z
+
+First render of the unfinished step-5 code (two shots: f20 and t66, where the rings fill the frame) to check it compiles and how the dots look.
+
+### 🤖 Claude — 2026-11-18T20:46:51.910Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex; source $S/q.sh; cd /home/user/wt/s04b && time ONLY=f20_forward20u,t66_through_screen node $S/audit_only.mjs 04 $S/dots_v1 \"$K3&m04rpdots=1\" 2>&1 | tail -5", "description": "Render two shots with the light dots switch on", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T20:48:01.112Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 04 f20_forward20u s 98.88 lat 0 stage 04 frames 86
+> 04 t66_through_screen s 102.928 lat 0 stage 04 frames 106
+> 
+> real	1m9.164s
+> user	0m1.589s
+> sys	0m0.382s
+
+### 🤖 Claude — 2026-11-18T20:48:06.566Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex; python3 -c \"\nimport json\nfor f in ['/home/user/wt/s04b/qa/match/04/r16/ringpaint/step3_lip/motion.json','$S/dots_v1/motion.json','/home/user/wt/s04b/qa/match/04/r14/s11_rimfoam/L4/motion.json']:\n  d=json.load(open(f))\n  print(f.split('/')[-2], [(s['name'], round(s['s'],2), s['s0'], s['frames'], s['cam']) for s in d['shots'] if s['name'] in ('f20_forward20u','t66_through_screen')])\n\"", "description": "Compare shot positions with earlier renders"}`
+
+### 🧑 User — 2026-11-18T20:48:06.670Z
+
+> ↩︎ result: step3_lip [('f20_forward20u', 98.19, 77.413, 86, [2.4, -25.75, -37.27]), ('t66_through_screen', 102.85, 77.413, 106, [2.4, -28.22, -41.22])]
+> dots_v1 [('f20_forward20u', 98.88, 77.413, 86, [2.4, -26.14, -37.9]), ('t66_through_screen', 102.93, 77.413, 106, [2.4, -28.26, -41.29])]
+> L4 [('f20_forward20u', 98.18, 77.413, 86, [2.4, -25.75, -37.27]), ('t66_through_screen', 102.94, 77.413, 106, [2.4, -28.27, -41.3])]
+
+### 🤖 Claude — 2026-11-18T20:48:09.373Z
+
+Same frame counts; the small position drift (≤0.7 u) is inherent to the audit tool and was present in earlier rounds too. Let me look at the result.
+
+### 🤖 Claude — 2026-11-18T20:48:10.791Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex; cd $S && convert dots_v1/f20_forward20u.png -crop 864x700+0+300 +repage dots_v1_f20_crop.png", "description": "Crop the new f20 frame"}`
+
+### 🧑 User — 2026-11-18T20:48:11.568Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T20:48:13.231Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex/dots_v1_f20_crop.png"}`
+
+### 🧑 User — 2026-11-18T20:48:13.307Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T20:48:47.363Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "        float arc = (fract(cfl) - 0.5 - jx) * 6.2831853 * rr / uRDots.y;    // world units along the ring\n        float du = uu - uL - 0.03;                                            // world units from the painted lip line\n        float bs = uRDots.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, ri)));\n        float bsE = max(bs, 1.2 * max(fwidth(arc), 1e-4));\n        float on = step(1.0 - uRDots.z, h21(vec2(ci, ri + 11.0))) * uRDots.x * min(1.0, bs / bsE + 0.35);\n        float d = length(vec2(arc, du)); …[+1217 chars]`
+
+### 🧑 User — 2026-11-18T20:48:47.806Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:48:48.220Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "M04.num('m04rpds', 0.05)) },", "new_string": "M04.num('m04rpds', 0.06)) },"}`
+
+### 🧑 User — 2026-11-18T20:48:48.516Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:48:51.744Z
+
+Halo reach along the ring (3 × 1.5 × bs ≈ 0.27 u) could cross a cell border for the most-jittered dots; I'll narrow the jitter so no halo gets clipped.
+
+### 🤖 Claude — 2026-11-18T20:48:53.053Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "        float jx = (h21(vec2(ci + 1.7, ri + 3.1)) - 0.5) * 0.7;", "new_string": "        float jx = (h21(vec2(ci + 1.7, ri + 3.1)) - 0.5) * 0.5;"}`
+
+### 🧑 User — 2026-11-18T20:48:53.741Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T20:48:55.477Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/660b5801-7aff-5a84-b502-101fe8d932bd/scratchpad/s04tex; source $S/q.sh; cd /home/user/wt/s04b && ONLY=f20_forward20u,t66_through_screen node $S/audit_only.mjs 04 $S/dots_v2 \"$K3&m04rpdots=1\" 2>&1 | grep -v \"allow list\" | tail -4 && cd $S && convert dots_v2/f20_forward20u.png -crop 864x700+0+300 +repage dots_v2_f20_crop.png", "description": "Re-render two shots with the fixed dots", "timeout": 600000}`
+
