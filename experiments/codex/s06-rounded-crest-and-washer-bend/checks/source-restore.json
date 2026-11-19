@@ -1,0 +1,11 @@
+{
+  "editableGameSha256": "be82dad7350fafe331239803c5358e744afb2a71fe4addd62b1d13012ad4de9e",
+  "restoredSourceMembers": 329,
+  "verifiedScripts": [
+    "verify:refs",
+    "typecheck",
+    "test:continuity",
+    "build"
+  ],
+  "restoredProductionFilesExactlyMatchMotionBuild": 80
+}

@@ -1,0 +1,21 @@
+{
+  "nativeDimensions": [
+    864,
+    1536
+  ],
+  "allPixelsIncludingHUD": true,
+  "pairs": {
+    "previousVsArt": {
+      "meanAbsoluteEncodedRgbChannelErrorOutOf255": 16.182938689557613,
+      "completeRgbPixelsSame": 704127
+    },
+    "revisedVsArt": {
+      "meanAbsoluteEncodedRgbChannelErrorOutOf255": 16.18640639065715,
+      "completeRgbPixelsSame": 701895
+    },
+    "revisedVsPrevious": {
+      "meanAbsoluteEncodedRgbChannelErrorOutOf255": 0.0519165541409465,
+      "completeRgbPixelsSame": 1259284
+    }
+  }
+}

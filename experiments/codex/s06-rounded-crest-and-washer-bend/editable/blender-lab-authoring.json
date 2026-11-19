@@ -1,0 +1,40 @@
+{
+  "bridgeCommit": "2cea8d566dde07fbac28a61d698909d69724e853",
+  "blender": {
+    "blender": "5.3.0",
+    "ringAndPaddleComponents": {
+      "m06_arched_wall": 3,
+      "m06_arched_ring": 12,
+      "m06_arched_paddle": 4
+    },
+    "parts": {
+      "m06_crest_upper_water": {
+        "vertices": 2323,
+        "polygons": 2200
+      },
+      "m06_crest_outer_soffit": {
+        "vertices": 1111,
+        "polygons": 1000
+      },
+      "m06_crest_foam_additions": {
+        "vertices": 9212,
+        "polygons": 11172
+      },
+      "m06_arched_wall": {
+        "vertices": 13941,
+        "polygons": 26656
+      },
+      "m06_arched_ring": {
+        "vertices": 11640,
+        "polygons": 20736
+      },
+      "m06_arched_paddle": {
+        "vertices": 362,
+        "polygons": 628
+      }
+    },
+    "kilobytes": 1631
+  },
+  "singleLoopbackConnectionClosed": true,
+  "inputCommit": "d350d02eb14c20010f1b3dcfae4ff9fdb2154150"
+}

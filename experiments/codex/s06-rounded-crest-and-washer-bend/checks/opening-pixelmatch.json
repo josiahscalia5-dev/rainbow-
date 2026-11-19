@@ -1,0 +1,19 @@
+{
+  "method": "Pixelmatch 7.1.0 full encoded sRGB frame including HUD. All pixels including antialiasing are eligible.",
+  "width": 864,
+  "height": 1536,
+  "options": {
+    "threshold": 0.1,
+    "includeAA": true
+  },
+  "frames": {
+    "previous": {
+      "mismatchedPixels": 262362,
+      "total": 1327104
+    },
+    "revised": {
+      "mismatchedPixels": 262385,
+      "total": 1327104
+    }
+  }
+}

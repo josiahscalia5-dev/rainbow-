@@ -1,0 +1,471 @@
+{
+  "originalSha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "matchedPoses": {
+    "opening": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 198.91,
+      "previousDraw": {
+        "calls": 49,
+        "triangles": 271253,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 49,
+        "triangles": 290901,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "forward-03": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 202.027,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "forward-06": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 204.96,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "forward-10": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 208.993,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "forward-20": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 219.077,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "hard-left": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 211.01,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "hard-right": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 211.01,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "inlet": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 189.233,
+      "previousDraw": {
+        "calls": 54,
+        "triangles": 278091,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 54,
+        "triangles": 297739,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "middle": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 216,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "deep": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 229.933,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "crest-release": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 200.01,
+      "previousDraw": {
+        "calls": 49,
+        "triangles": 271253,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 49,
+        "triangles": 290901,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "arch-exit": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 233.233,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "last-in-stage": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 242.479,
+      "previousDraw": {
+        "calls": 53,
+        "triangles": 274891,
+        "textures": 38,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 53,
+        "triangles": 294539,
+        "textures": 38,
+        "contextLost": false
+      }
+    },
+    "across-transition": {
+      "fieldsVerified": [
+        "camera",
+        "clock",
+        "shaderTime",
+        "simFrames",
+        "kind",
+        "steer",
+        "target",
+        "stageBounds",
+        "state",
+        "benny"
+      ],
+      "gameUnits": 243.63,
+      "previousDraw": {
+        "calls": 249,
+        "triangles": 698855,
+        "textures": 61,
+        "contextLost": false
+      },
+      "revisedDraw": {
+        "calls": 249,
+        "triangles": 698855,
+        "textures": 61,
+        "contextLost": false
+      }
+    }
+  },
+  "videos": {
+    "previous": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "r_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ],
+      "sha256": "a637255063862bf110155a1067d18a931673a6d9bb91613d33bb3c830b065029",
+      "rangeGameUnits": [
+        189.05,
+        246.171
+      ],
+      "rangeSteering": [
+        -0.92,
+        0.92
+      ],
+      "stages": [
+        "06",
+        "07"
+      ],
+      "minimumHearts": 5
+    },
+    "revised": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "r_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ],
+      "sha256": "7eb91a1eb6bad4f9ba9974d79412976cc7156b00dc642619d666782803f94ae0",
+      "rangeGameUnits": [
+        189.05,
+        246.171
+      ],
+      "rangeSteering": [
+        -0.92,
+        0.92
+      ],
+      "stages": [
+        "06",
+        "07"
+      ],
+      "minimumHearts": 5
+    }
+  },
+  "gameplay": {
+    "previous": {
+      "start": 1330,
+      "score": 2240,
+      "hearts": 5,
+      "coins": 91,
+      "stage": "11",
+      "collisions": [],
+      "margin": 0.85,
+      "gameplayAssertionsPassed": 8
+    },
+    "revised": {
+      "start": 1330,
+      "score": 2240,
+      "hearts": 5,
+      "coins": 91,
+      "stage": "11",
+      "collisions": [],
+      "margin": 0.85,
+      "gameplayAssertionsPassed": 8
+    }
+  },
+  "matchedVideoFrames": 63,
+  "matchedFrameFields": [
+    "i",
+    "time",
+    "shaderTime",
+    "s",
+    "stage",
+    "lat",
+    "steer",
+    "hearts",
+    "coins",
+    "camera"
+  ],
+  "allViewsHaveSameCharacterAndCamera": true
+}

@@ -1,0 +1,48 @@
+{
+  "repository": "https://github.com/josiahscalia5-dev/rainbow-",
+  "checkpointBranch": "codex/s06-recessed-rinse-shoulder",
+  "checkpointCommit": "d350d02eb14c20010f1b3dcfae4ff9fdb2154150",
+  "retainedBranch": "claude/rainbow-s06-match-c18",
+  "retainedCommit": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+  "leadBranch": "ccr-ae71d3a5-80naq2",
+  "leadCommit": "08dce491ec04a5a022ea4d9351cdaa0d9fcd5605",
+  "checkedAt": "2026-11-19T13:18:26.953867+00:00",
+  "materializedProjectFilesChecked": 759,
+  "modifiedMaterializedTrackedFiles": [
+    "qa/continuity_report.json"
+  ],
+  "extraMaterializedProjectFiles": [],
+  "stagedChanges": [],
+  "references": {
+    "references/04_through_the_five_arrows.png": {
+      "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193",
+      "encoded": "JPEG",
+      "width": 864,
+      "height": 1536
+    },
+    "references/05_flow_into_the_current.png": {
+      "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+      "encoded": "JPEG",
+      "width": 864,
+      "height": 1536
+    },
+    "references/06_crest_the_rinse_arch.png": {
+      "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+      "encoded": "JPEG",
+      "width": 864,
+      "height": 1536
+    },
+    "references/07_dive_the_washer_tube.png": {
+      "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9",
+      "encoded": "JPEG",
+      "width": 864,
+      "height": 1536
+    },
+    "references/08_final_spin_chamber.png": {
+      "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14",
+      "encoded": "JPEG",
+      "width": 864,
+      "height": 1536
+    }
+  }
+}

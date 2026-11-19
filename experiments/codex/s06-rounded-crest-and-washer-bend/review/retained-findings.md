@@ -1,0 +1,11 @@
+# Screen 06 retained gameplay review
+
+Checkpoint d350d02eb14c20010f1b3dcfae4ff9fdb2154150. The approved bytes have SHA-256 3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe. Source coordinates below use the unscaled 864 × 1,536 images. The continuous ride is 63 frames at 12 fps plus a Screen 07 transition.
+
+1. The exposed outer crest reads as a sheet with a sharp tip. Gold/purple wall details ride over the top edge and its cyan body grazes the near bank at a pointed end, especially in both hard turns and the 1.58–3.33 s footage. At hard-left the feature occupies approximately x0–635, y360–804. A closer correction would keep the visible hole under the crest and an uninterrupted wet path around Benny, give the near rim a rounded water roll, and make its landing visibly join the bank.
+
+2. At +3 the right shoulder below Benny (about x580–830, y820–1230) carries a diagonal fragment of photographed foam and washer wall inside the cyan-pink water. Later, during the +20 to final bend (about 3.83–4.5 s of the ride), the pink banks show long parallel streaks. The approved artwork has short curved flashes and localized wakes within broad flowing cyan/pink bands. Clean world-anchored water here should retain recognizable bend direction with no nonwater ghost pixels or abrupt texture scale changes.
+
+3. The deeper ring-and-river joins lack the reference’s architectural depth. At +20 and the final approach (about 3.33–4.83 s), thin deep gold hoops curve around regularly patterned purple metal. Broad nearer gold parts terminate abruptly with rectangular bottoms at the river; visible examples in last-in-stage.png lie near x300,y860 and x710,y997. The foam along the join forms a line of evenly spaced faceted white objects. Better in motion means the round rings visibly seat against their bank/wall, highlights remain varied, and the foam groups into soft, irregular, lilac-shadowed clusters, with the actual course and wet lane continuous.
+
+Separately, the approved opening Benny has layered tufts, knit furrows at the cuff, individual pom-pom strands, and more dimensional pink shading. The retained overall scale is close. The scenery pass should preserve Benny, gameplay, timing and opening camera.

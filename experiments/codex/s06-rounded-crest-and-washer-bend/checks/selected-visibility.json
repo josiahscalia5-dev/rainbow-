@@ -1,0 +1,155 @@
+{
+  "dimensions": [
+    270,
+    480
+  ],
+  "screenCoordinates": "zero origin at top left, exclusive right/bottom",
+  "samples": {
+    "opening": {
+      "previous": {
+        "upperVisiblePixels": 1802,
+        "undersideVisiblePixels": 527,
+        "region": [
+          78,
+          155,
+          117,
+          174
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_crest_upper_water": 273,
+          "other drawn content": 176,
+          "m06_arched_water": 166,
+          "m06_crest_outer_soffit": 126
+        }
+      },
+      "revised": {
+        "upperVisiblePixels": 4086,
+        "undersideVisiblePixels": 1,
+        "region": [
+          78,
+          155,
+          117,
+          174
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_crest_upper_water": 397,
+          "other drawn content": 176,
+          "m06_arched_water": 166,
+          "m06_arched_wall": 2
+        }
+      }
+    },
+    "forward-03": {
+      "previous": {
+        "upperVisiblePixels": 3311,
+        "undersideVisiblePixels": 1070,
+        "region": [
+          72,
+          180,
+          106,
+          188
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_arched_wall": 121,
+          "other drawn content": 100,
+          "m06_crest_upper_water": 39,
+          "m06_arched_ring": 12
+        }
+      },
+      "revised": {
+        "upperVisiblePixels": 5465,
+        "undersideVisiblePixels": 0,
+        "region": [
+          72,
+          180,
+          106,
+          188
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_arched_wall": 100,
+          "other drawn content": 100,
+          "m06_arched_ring": 72
+        }
+      }
+    },
+    "forward-06": {
+      "previous": {
+        "upperVisiblePixels": 4705,
+        "undersideVisiblePixels": 1317,
+        "region": [
+          50,
+          135,
+          65,
+          150
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_crest_upper_water": 119,
+          "m06_crest_outer_soffit": 106
+        }
+      },
+      "revised": {
+        "upperVisiblePixels": 5681,
+        "undersideVisiblePixels": 8,
+        "region": [
+          50,
+          135,
+          65,
+          150
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_crest_upper_water": 225
+        }
+      }
+    },
+    "forward-20": {
+      "previous": {
+        "upperVisiblePixels": 3644,
+        "undersideVisiblePixels": 790
+      },
+      "revised": {
+        "upperVisiblePixels": 2734,
+        "undersideVisiblePixels": 0
+      }
+    },
+    "hard-left": {
+      "previous": {
+        "upperVisiblePixels": 7389,
+        "undersideVisiblePixels": 1838,
+        "region": [
+          8,
+          122,
+          61,
+          145
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_crest_upper_water": 684,
+          "m06_crest_outer_soffit": 532,
+          "m06_arched_ring": 3
+        }
+      },
+      "revised": {
+        "upperVisiblePixels": 7252,
+        "undersideVisiblePixels": 85,
+        "region": [
+          8,
+          122,
+          61,
+          145
+        ],
+        "visibleRegionPixelsByFirstSurface": {
+          "m06_crest_upper_water": 1219
+        }
+      }
+    },
+    "hard-right": {
+      "previous": {
+        "upperVisiblePixels": 3700,
+        "undersideVisiblePixels": 870
+      },
+      "revised": {
+        "upperVisiblePixels": 3074,
+        "undersideVisiblePixels": 7
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "previous": {
+    "sha256First": "583ee43b0095305710a8dadafebfe5183192549af62a09c4b3b21926cd4bbbc9",
+    "sha256Repeat": "583ee43b0095305710a8dadafebfe5183192549af62a09c4b3b21926cd4bbbc9",
+    "identicalDecodedPixels": true
+  },
+  "revised": {
+    "sha256First": "e09aebdd956538ea26949846fcbbb86ffb30ff096895c5707cfa3e8014a83fd8",
+    "sha256Repeat": "e09aebdd956538ea26949846fcbbb86ffb30ff096895c5707cfa3e8014a83fd8",
+    "identicalDecodedPixels": true
+  }
+}

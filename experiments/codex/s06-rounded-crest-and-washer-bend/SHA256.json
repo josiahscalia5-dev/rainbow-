@@ -1,0 +1,446 @@
+{
+  "APPROVED/SCREEN06_APPROVED.jpg": {
+    "bytes": 497882,
+    "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  "PREVIOUS_GAME/across-transition.png": {
+    "bytes": 1667907,
+    "sha256": "294c939023f80acc97bebd3043ac398f8e833529a50c3af0cd310aa2ae3ba9c3"
+  },
+  "PREVIOUS_GAME/arch-exit.png": {
+    "bytes": 1971972,
+    "sha256": "6b06f48244610c2f9b2f86ea3fa1811262f3fec91ead497c01064c3d7aae2ef0"
+  },
+  "PREVIOUS_GAME/crest-release.png": {
+    "bytes": 2318873,
+    "sha256": "ac81174aadf6d4a4f11057f6d79683207e6ad69aa5228103b63b560f66b3a56b"
+  },
+  "PREVIOUS_GAME/deep.png": {
+    "bytes": 2015675,
+    "sha256": "f484ad88060b256e52064bda981e917e192623580ec2bb6917c8a6a8ac9aa379"
+  },
+  "PREVIOUS_GAME/forward-03.png": {
+    "bytes": 2016499,
+    "sha256": "ba3802d621ff6405c2d0ce26b3cf454da96e4547de13497670ad14dccde3cf7c"
+  },
+  "PREVIOUS_GAME/forward-06.png": {
+    "bytes": 1916321,
+    "sha256": "09c07688de490f212d2717b9877a653416166f07332cc825707b96d78a7f9a2c"
+  },
+  "PREVIOUS_GAME/forward-10.png": {
+    "bytes": 1942591,
+    "sha256": "0179dbc27670366b9d170048f00e5e97d1b87892f74da63ed242582435cef8fe"
+  },
+  "PREVIOUS_GAME/forward-20.png": {
+    "bytes": 2013273,
+    "sha256": "2979e91c8fafef881c31043b04b46a225ab526aeda3fce4799bbe4453022feae"
+  },
+  "PREVIOUS_GAME/full-safe-ride.json": {
+    "bytes": 9294,
+    "sha256": "9c56d6a1c258dd5932cc59ffdf7c4ae60e1f5a4506820ec42da464f310e2e27a"
+  },
+  "PREVIOUS_GAME/gameplay.json": {
+    "bytes": 14415,
+    "sha256": "a900ef9b52e6de5487902d85c15f773d7bfd12161475a659cb704ab8f777075f"
+  },
+  "PREVIOUS_GAME/hard-left.png": {
+    "bytes": 1937864,
+    "sha256": "44c040683e25e9af21b7881675432d62cbbc0ccc4a6a28f5ee9e3d65c0196dd5"
+  },
+  "PREVIOUS_GAME/hard-right.png": {
+    "bytes": 1981302,
+    "sha256": "2db942e9645b352405d8df456112073f417027dc4e17657603209d4a4e1bde37"
+  },
+  "PREVIOUS_GAME/inlet.png": {
+    "bytes": 1986053,
+    "sha256": "72bf64d6876755efbcd23b3c838684c5cf7b9c57594b8586d628d4408a9b57d6"
+  },
+  "PREVIOUS_GAME/last-in-stage.png": {
+    "bytes": 1834799,
+    "sha256": "a0292ac1a047f7127b471ee8875b50bedebadd9a42a712f9e7c74b92d21dd7ae"
+  },
+  "PREVIOUS_GAME/middle.png": {
+    "bytes": 1982860,
+    "sha256": "f89ad3e9e1a2deafbfbc5f5584db437e6a949b11b8a8e3e1885b699ee70e7fbe"
+  },
+  "PREVIOUS_GAME/opening.png": {
+    "bytes": 2448914,
+    "sha256": "583ee43b0095305710a8dadafebfe5183192549af62a09c4b3b21926cd4bbbc9"
+  },
+  "PREVIOUS_GAME/poses.json": {
+    "bytes": 26465,
+    "sha256": "f7efe987f00e7b152e59499482a663707787f2b87f2b6df21e547ba979324285"
+  },
+  "PREVIOUS_GAME/ride.mp4": {
+    "bytes": 8605671,
+    "sha256": "a637255063862bf110155a1067d18a931673a6d9bb91613d33bb3c830b065029"
+  },
+  "PREVIOUS_GAME/route.json": {
+    "bytes": 14857,
+    "sha256": "fb4458adb04adcec8dcb02b20bee8d24e4484444fb6df1225ce6a43c6263bef9"
+  },
+  "README_FIRST.md": {
+    "bytes": 1597,
+    "sha256": "d09002193cdd78ff61ede48804f0b3495d69fc6f0709cfb1e5b3f69b7be0f0fe"
+  },
+  "RESTORE_AND_CAPTURE.md": {
+    "bytes": 4465,
+    "sha256": "503336e5aacbccb05011319dfbecdea3d618db5dbe5f837cbfed17b1d09ee125"
+  },
+  "RESULT.md": {
+    "bytes": 5217,
+    "sha256": "b67365ea766dc8c4027ed6e43702697c60279259ffa5bd86778d53e35c40d3c6"
+  },
+  "REVISED_GAME/across-transition.png": {
+    "bytes": 1667978,
+    "sha256": "a0e818be6b7bd2486657506245d262b997c8124ac295a2a728181a9d7c775b71"
+  },
+  "REVISED_GAME/arch-exit.png": {
+    "bytes": 1973134,
+    "sha256": "9c21a5eba2191fd20739b510eea731ec289fa88d167b942bba4cd2892b0961c9"
+  },
+  "REVISED_GAME/crest-release.png": {
+    "bytes": 2314340,
+    "sha256": "25f594cfd38ed69c8a53747385185dca2e72aaff855dd189fbdfbe5969a80b4a"
+  },
+  "REVISED_GAME/deep.png": {
+    "bytes": 2013863,
+    "sha256": "84e14eadd91d1fa7e7d983f4443e58cc006f223369fc09b68711aae59274408a"
+  },
+  "REVISED_GAME/forward-03.png": {
+    "bytes": 1879392,
+    "sha256": "29fac4692aff72faed4d5f7315c06528181f0ce8bc584afa1d21c81d3bc00363"
+  },
+  "REVISED_GAME/forward-06.png": {
+    "bytes": 1885968,
+    "sha256": "7078ce5f3f9ebbfd7a83033cd0d441fa34dbdfa5dfb868ff9f25c8a963f701c6"
+  },
+  "REVISED_GAME/forward-10.png": {
+    "bytes": 1929507,
+    "sha256": "164009ec4bbf5b9bd508adc9ad28f7ae7312bc7a72620f837b674a0832ffc46f"
+  },
+  "REVISED_GAME/forward-20.png": {
+    "bytes": 1988015,
+    "sha256": "f0402152294d621fa44e8e37fa71f858e2e41090af3e9133fa39fa5579f93252"
+  },
+  "REVISED_GAME/full-safe-ride.json": {
+    "bytes": 9294,
+    "sha256": "9c56d6a1c258dd5932cc59ffdf7c4ae60e1f5a4506820ec42da464f310e2e27a"
+  },
+  "REVISED_GAME/gameplay.json": {
+    "bytes": 14415,
+    "sha256": "a900ef9b52e6de5487902d85c15f773d7bfd12161475a659cb704ab8f777075f"
+  },
+  "REVISED_GAME/hard-left.png": {
+    "bytes": 1916372,
+    "sha256": "5a219b65431f937f8ee38bbe2518173017719d692889c02596938207e1294750"
+  },
+  "REVISED_GAME/hard-right.png": {
+    "bytes": 1959438,
+    "sha256": "b757fd6317ce385761eb0618af6364c62830b8355e9f1f9714a94cc644bf878d"
+  },
+  "REVISED_GAME/inlet.png": {
+    "bytes": 1947870,
+    "sha256": "ecb29053793d340448d474c16c3f2c95f87a75f8631f8a42eed669aa1faf5798"
+  },
+  "REVISED_GAME/last-in-stage.png": {
+    "bytes": 1866291,
+    "sha256": "ae3c1105a206a8a224e790e0bf60f44bf9eedd62ed76981ad6e56bea9138d6db"
+  },
+  "REVISED_GAME/middle.png": {
+    "bytes": 1976029,
+    "sha256": "6fea5a423e1f7a57a6fde59cbac10d898aea252ba32bf66b5b173b50aad3b977"
+  },
+  "REVISED_GAME/opening-repeat.png": {
+    "bytes": 2448997,
+    "sha256": "e09aebdd956538ea26949846fcbbb86ffb30ff096895c5707cfa3e8014a83fd8"
+  },
+  "REVISED_GAME/opening.png": {
+    "bytes": 2448997,
+    "sha256": "e09aebdd956538ea26949846fcbbb86ffb30ff096895c5707cfa3e8014a83fd8"
+  },
+  "REVISED_GAME/poses.json": {
+    "bytes": 26465,
+    "sha256": "ba650f6c0d4f6bef578db6e3ca419c6631500d47a164fbc9bb6e1419e66c1a26"
+  },
+  "REVISED_GAME/ride.mp4": {
+    "bytes": 8618257,
+    "sha256": "7eb91a1eb6bad4f9ba9974d79412976cc7156b00dc642619d666782803f94ae0"
+  },
+  "REVISED_GAME/route.json": {
+    "bytes": 14857,
+    "sha256": "1008616edd30599fdc0b6515c174f35615da986c76a3a3cc6898f77c481a8a20"
+  },
+  "SOURCE_OVERLAY/assets/rounded-crest06/rounded-spillway.glb": {
+    "bytes": 1671028,
+    "sha256": "63cb19b84ad196b09592401a3a99a3b45e10d9146137dbeccac76a113f90bf20"
+  },
+  "SOURCE_OVERLAY/src/world/archedPassage06.ts": {
+    "bytes": 14516,
+    "sha256": "b0b692be2933d62e4239c356fa09eb567902ddff35837da81137784617e8e5a8"
+  },
+  "SOURCE_OVERLAY/src/world/match06.ts": {
+    "bytes": 48978,
+    "sha256": "284518a99cf6bc44f794ef8a49a5ca30d56557c26b23f5bd2eb1b0e5ce0f544b"
+  },
+  "SOURCE_OVERLAY/tools/blender/rounded-crest06/build_rounded_crest.py": {
+    "bytes": 13880,
+    "sha256": "2f8d9fda8e006b1098f2fe9ce6e7af4041158daf5166ca1690e7356b618bba24"
+  },
+  "SOURCE_OVERLAY/tools/blender/rounded-crest06/washer-seats.json": {
+    "bytes": 2777,
+    "sha256": "d52078b40c28c28f540d166983e058c6ca844ef54a718250a51f4d9c5e616ecd"
+  },
+  "checkpoint/checkpoint.json": {
+    "bytes": 1689,
+    "sha256": "84c140da202238a8c00b4c48fd98084470359be45ba445d7ed1c80e825ccc3d2"
+  },
+  "checkpoint/uncommitted/qa/continuity_report.json": {
+    "bytes": 2701,
+    "sha256": "bf2ae0abc397509a083aba162ae6a073f6d41ea58f9c26fb50cd756cacb10112"
+  },
+  "checks/android-devices.txt": {
+    "bytes": 26,
+    "sha256": "36f15c2fe32964a6fbe902e914a47739d4e6304b0d3e812bf08096ff0419b7ae"
+  },
+  "checks/crest-window.json": {
+    "bytes": 1070,
+    "sha256": "bad085b2187bcf4646ce83913fdbb23048f86eef75b16e17c3712c4072fda9b3"
+  },
+  "checks/independent-opening-repeat.json": {
+    "bytes": 464,
+    "sha256": "b1b7a3d18ee226eaec67bbbf9e9693988fc90c111cc0f4056317295ff233dec6"
+  },
+  "checks/matched-movement.json": {
+    "bytes": 9448,
+    "sha256": "297b8d0f4be080edf4f5f08c8928719b6f7bbc73a8aa47278d4fb6893342e2f6"
+  },
+  "checks/motion-skill-opening.json": {
+    "bytes": 821,
+    "sha256": "ed55800a34301f06d6623a070bcb16bcc65e63bcbf1fbfe1ec3072752967f3e5"
+  },
+  "checks/opening-pixelmatch.json": {
+    "bytes": 401,
+    "sha256": "2cd0755065d82d9199a3cf48a6c26d3456b31bc9ad49433bd7f74b2f209f8873"
+  },
+  "checks/opening-rgb.json": {
+    "bytes": 523,
+    "sha256": "e0ad8b89261413ee31f25f2870da4e24d69f721a980cc7a3b8a2329a2aeff09e"
+  },
+  "checks/selected-visibility.json": {
+    "bytes": 3495,
+    "sha256": "b82814adec7c4ec06b0b7a9a2746281626e7f28fc658a343498969f0927470fd"
+  },
+  "checks/source-restore-build.log": {
+    "bytes": 6141,
+    "sha256": "dee90bddc2eb6b9626de77466d2ca5a55c148e442e4e274f9b21621a8075a126"
+  },
+  "checks/source-restore-continuity.log": {
+    "bytes": 839,
+    "sha256": "e46298370f5c7332b268e9c000efa53f9e15788546e595d4cd3ed1cc18d36b32"
+  },
+  "checks/source-restore-refs.log": {
+    "bytes": 680,
+    "sha256": "dbb9d260332f3abc29bd0ea1cba11366e32120f651a49a277c5987645db65cc3"
+  },
+  "checks/source-restore-typecheck.log": {
+    "bytes": 55,
+    "sha256": "f1b629d2b3cb53e8960ee9265562b91cfc39aec56cc36feb2c19bad92244e30e"
+  },
+  "checks/source-restore.json": {
+    "bytes": 282,
+    "sha256": "a0f31122a063d822e1c45537fd2befa3d836abb4f1c24a559b5dae3ea7dfc140"
+  },
+  "diagnostics/previous/forward-03-opaque-surface-id.png": {
+    "bytes": 55554,
+    "sha256": "dcaaa9baa270a5e848e986542aa3d55bf15b4d87a5e8ef69b95dc6a6c9d044ee"
+  },
+  "diagnostics/previous/forward-06-opaque-surface-id.png": {
+    "bytes": 47847,
+    "sha256": "057ced6eb2a04ac90278f9ad5434b008e230283ef138f8ae464257b6631b8f7c"
+  },
+  "diagnostics/previous/forward-20-opaque-surface-id.png": {
+    "bytes": 41695,
+    "sha256": "6f25a8de2ad6d931c4b129f1fd23e4c9df8c78fe74d0fbf72fd1b9e1a78fe23c"
+  },
+  "diagnostics/previous/hard-left-opaque-surface-id.png": {
+    "bytes": 37705,
+    "sha256": "54a7d5eb73eb4b4bc8a5c0d1620bcc7391fb0b2ef8e54e9d343631daaaabec4c"
+  },
+  "diagnostics/previous/hard-right-opaque-surface-id.png": {
+    "bytes": 45106,
+    "sha256": "a9b4aaf54c5d9133e1f30ce7b0e3497ac23479190abce984fb5f6f6c032b0e15"
+  },
+  "diagnostics/previous/opening-opaque-surface-id.png": {
+    "bytes": 42397,
+    "sha256": "222cf824b50e0935b893e09e9feb610747500223de860e937b570f17c5f3db78"
+  },
+  "diagnostics/previous/surface-ids.json": {
+    "bytes": 37162,
+    "sha256": "9a39e6df274dcca4ac14342601c9e3adbb6dbb2fbaa7fdbf722b23f9a340679a"
+  },
+  "diagnostics/selected/forward-03-opaque-surface-id.png": {
+    "bytes": 55014,
+    "sha256": "506d9fadfb2a37b2a9ba6104e85254a6a77022971dfe45b825b3b73553f7bf0e"
+  },
+  "diagnostics/selected/forward-06-opaque-surface-id.png": {
+    "bytes": 47182,
+    "sha256": "d1d6dda9b42c1948abc2d99776d5efc163a9b6bae64468ca3c2adffaabb95812"
+  },
+  "diagnostics/selected/forward-20-opaque-surface-id.png": {
+    "bytes": 42039,
+    "sha256": "7a58ce7646ae3e8e36158129e7eb9d36cf20a37eff60488ca56635df59885a03"
+  },
+  "diagnostics/selected/hard-left-opaque-surface-id.png": {
+    "bytes": 37686,
+    "sha256": "a4a0731ef2b96c0fc70bb76f9aef5f630c07933505159b5a02e1eb7a9c1cca82"
+  },
+  "diagnostics/selected/hard-right-opaque-surface-id.png": {
+    "bytes": 45414,
+    "sha256": "dea48bdbbd158ca2f0ef265d15bab6e5ece63777864cc4f74d010ea20174036f"
+  },
+  "diagnostics/selected/opening-opaque-surface-id.png": {
+    "bytes": 42412,
+    "sha256": "0da9f0a1105f59ffbfa17046b1a24952693d6e5d27d970198e689c7c96866ad5"
+  },
+  "diagnostics/selected/surface-ids.json": {
+    "bytes": 36080,
+    "sha256": "18fe95a0b008baacfaae819e7742a7ec934cf953bc695a90d96983013ac44b40"
+  },
+  "diagnostics/superseded/forward-03-opaque-surface-id.png": {
+    "bytes": 55068,
+    "sha256": "f3cf8c4b2079b4dff86a28af78ab8d004c90c67867f8ddccf57731c4b3c7c1ee"
+  },
+  "diagnostics/superseded/forward-03.png": {
+    "bytes": 248600,
+    "sha256": "75477eca23926400e5a8da3968c07d18dbc59a57a8468c5790ae32acc32f6823"
+  },
+  "diagnostics/superseded/geometry.py": {
+    "bytes": 13491,
+    "sha256": "c96d978d52d41b1c4263955d9ff5656bc51b7b0e9ab8d12da75144db9f0030a0"
+  },
+  "diagnostics/superseded/surface-ids.json": {
+    "bytes": 36807,
+    "sha256": "a215a2e4da291236d6f8a60933c8160630b9676ca4a0e16ed7498cd70cdf4d54"
+  },
+  "editable/INPUT_Previous_Crest.blend": {
+    "bytes": 4853050,
+    "sha256": "2638382a313af652068b30ab002e47bea0eebfb8aecf10a1bd90e0708dcf2618"
+  },
+  "editable/Screen06_Rounded_Crest_Authoring.blend": {
+    "bytes": 5307257,
+    "sha256": "2a5a384d51e0f9ed4695dcf6130813992b3b197824992876d8dd1a50d8d3bd8f"
+  },
+  "editable/Screen06_Rounded_Crest_Runtime.blend": {
+    "bytes": 5444058,
+    "sha256": "cf645b051c2421e5c6bfdaa5489c13a82b653ab4d58e2c745fa88c95af305f39"
+  },
+  "editable/blender-lab-authoring.json": {
+    "bytes": 930,
+    "sha256": "79a5ba19196c2bbc504295ef6429da52e246182b671ab3e259050d9d4067600e"
+  },
+  "editable/build-editable.py": {
+    "bytes": 10174,
+    "sha256": "d2ca97cb0d11e4e316fc01fea771e99e6e309b9e36de5b7a7b58c790db9224d7"
+  },
+  "editable/editable-source.json.gz": {
+    "bytes": 2574957,
+    "sha256": "635f3895c12093a82c2251db975deeaf5a5f0b6a3cebff24be41a43a7e106d48"
+  },
+  "editable/export-runtime.cjs": {
+    "bytes": 6349,
+    "sha256": "5e00b132624e1b4845c48b1ef9b10d70cbdab2f9024530dc44e83afabebd5778"
+  },
+  "editable/verification.json": {
+    "bytes": 1920,
+    "sha256": "e1cce58c2eb3ef309d6fc76afad43af480c9faa6f0dc8db77d46d6eeb28debd6"
+  },
+  "editable/verify-editable.py": {
+    "bytes": 4632,
+    "sha256": "133d60214aa155e1a22e986834e7b5c59f4be2e33fd0632e0d9d94a008f36b09"
+  },
+  "playable/BUILD_CHECKS.json": {
+    "bytes": 13575,
+    "sha256": "0e5367a1ae80d32d1b78eefe28417d161057bdb8a40f94df859a2619f6ea0f08"
+  },
+  "playable/Rainbow_Screen06_Editable_Game.zip": {
+    "bytes": 40204994,
+    "sha256": "be82dad7350fafe331239803c5358e744afb2a71fe4addd62b1d13012ad4de9e"
+  },
+  "playable/Rainbow_Screen06_Rounded_Crest_Candidate.apk": {
+    "bytes": 30236782,
+    "sha256": "64056f70b332a9fef8a2ec5559235070163c677efb0ef078bab7efb15bcaba18"
+  },
+  "playable/Rainbow_Screen06_Rounded_Crest_Playable_Web.zip": {
+    "bytes": 26245323,
+    "sha256": "1ef5ad89ad9ffeb24a1f16103ee0ac3c5c16ae02cc88325f625e3b0293f30d8d"
+  },
+  "playable/reproduce/README_BUILD.md": {
+    "bytes": 2405,
+    "sha256": "1fddbd89622d73f1636d2c98db592d27734d2430fa69f2f8a29f48e3348f8f7d"
+  },
+  "playable/reproduce/package-web.py": {
+    "bytes": 2935,
+    "sha256": "3816c3fae8c0d4d4f994edb4674536dfe63afde60eaeba635fc9c7b78e9dac62"
+  },
+  "playable/reproduce/prepare-android.py": {
+    "bytes": 2197,
+    "sha256": "02413a68a657105323f9cb6ea511d454c46984b7c36f104d33c8eea361e3c4f5"
+  },
+  "playable/reproduce/test-launcher.cjs": {
+    "bytes": 4291,
+    "sha256": "ceae7592ee5009db3fb62bc544d348316764d5d7ce693a079c6545b21d1e6147"
+  },
+  "playable/reproduce/verify-build.py": {
+    "bytes": 3615,
+    "sha256": "7c5da66edf89e59c71c27a9b0e2c549d1ae0e2105f540aee8300669a13d8ed7d"
+  },
+  "reproduce/capture.cjs": {
+    "bytes": 11991,
+    "sha256": "cceea4728d0223625ffd96cdf83fdf271b486c95dfa1e473777874a6ae52ca68"
+  },
+  "reproduce/check-motion.py": {
+    "bytes": 3989,
+    "sha256": "5f42eca999449f98aad609baebfd8e65f82c782d2a92e58932189ffae0de56cf"
+  },
+  "reproduce/compare-opening.py": {
+    "bytes": 1377,
+    "sha256": "aa3dfe24d2900a90ab431ab16272aad8b077058cf2f4831b5b5f8cb7d5309772"
+  },
+  "reproduce/fixture/06/gameplay-test.mjs": {
+    "bytes": 7990,
+    "sha256": "29cc66029c795106926074e0310c3b8eb9ed6aa90d986fef3aefe2988a9487fd"
+  },
+  "reproduce/flags.json": {
+    "bytes": 28,
+    "sha256": "f6c67a6b81b4d3ebc70a096c68790a0b50acf72fb58683dfd0a83d9f9a1e4d38"
+  },
+  "reproduce/inspect-surfaces.py": {
+    "bytes": 1451,
+    "sha256": "2cc6b5629460427f6c0c8331c48438eb0199fc1bc63b43d9941091967e1b906f"
+  },
+  "reproduce/opaque-surfaces.cjs": {
+    "bytes": 6284,
+    "sha256": "ec05152538f8acd42e274fd6cf5f7c809668ceec0e5c2a2ab3370ef2dd620506"
+  },
+  "reproduce/opening-pixelmatch.mjs": {
+    "bytes": 1118,
+    "sha256": "542aaedf9f351ab56ca8e38878228bd40d483d9a0738abcf41d4e1987fc652fc"
+  },
+  "reproduce/queries.json": {
+    "bytes": 151,
+    "sha256": "1157942ba7ede0749c68d468a249260a2f57271be1ab86ae06acfa0e7358b885"
+  },
+  "reproduce/score-rgba.mjs": {
+    "bytes": 2334,
+    "sha256": "d87f0751a3cb099857fc09c6d4893126d149aeef1e14a13965dbb3e1bde6ee98"
+  },
+  "review/final-findings.md": {
+    "bytes": 3644,
+    "sha256": "f01b6f12a432fa565be6f48a92410d1f51bbf8c799c424b0f7c4609bbfeaffad"
+  },
+  "review/retained-findings.md": {
+    "bytes": 2247,
+    "sha256": "5804e4aa593391befae82960679bf5ab537fd37fb7457014d43f82766f4d4d56"
+  }
+}

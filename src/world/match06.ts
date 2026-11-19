@@ -397,7 +397,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   };
   if (FLOW && qs?.get('m06tun') === '1' && qs.get('cx06ArchedPassage') === '1') {
     const { buildArchedPassage06 } = await import('./archedPassage06');
-    return finishProjection(await buildArchedPassage06(mat, course, qs.get('cx06OpenCrest') === '1'), () => {});
+    const openCrest = qs.get('cx06OpenCrest') === '1';
+    const roundedCrest = openCrest && qs.get('cx06RoundedCrest') === '1';
+    return finishProjection(await buildArchedPassage06(mat, course, openCrest, roundedCrest), () => {});
   }
 
   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)

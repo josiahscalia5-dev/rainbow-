@@ -1,0 +1,34 @@
+{
+  "width": 864,
+  "height": 1536,
+  "threshold": 0.1,
+  "includeAA": false,
+  "approvedVsBefore": {
+    "pixels": 1327104,
+    "exactDifferences": 622977,
+    "within20Pixels": 1049796,
+    "within20Percent": 79.10427517361111,
+    "pixelmatchMismatches": 262035
+  },
+  "approvedVsCandidate": {
+    "pixels": 1327104,
+    "exactDifferences": 625209,
+    "within20Pixels": 1049778,
+    "within20Percent": 79.10291883680556,
+    "pixelmatchMismatches": 262057
+  },
+  "beforeVsCandidate": {
+    "pixels": 1327104,
+    "exactDifferences": 67820,
+    "within20Pixels": 1326833,
+    "within20Percent": 99.97957959587191,
+    "pixelmatchMismatches": 241
+  },
+  "beforeVsRepeat": {
+    "pixels": 1327104,
+    "exactDifferences": 0,
+    "within20Pixels": 1327104,
+    "within20Percent": 100,
+    "pixelmatchMismatches": 0
+  }
+}

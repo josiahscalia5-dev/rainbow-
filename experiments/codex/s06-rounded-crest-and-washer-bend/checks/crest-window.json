@@ -1,0 +1,47 @@
+{
+  "frameDimensions": [
+    270,
+    480
+  ],
+  "frame": "forward-03",
+  "selection": "Fixed native rectangle around the opening beside the coin, supplied by the independent reviewer. ID buffer crop uses scale 270/864 and floors/ceils endpoints.",
+  "nativeRect": [
+    140,
+    510,
+    380,
+    715
+  ],
+  "IDRect": [
+    43,
+    159,
+    119,
+    224
+  ],
+  "versions": {
+    "previous": {
+      "m06_arched_water": 1586,
+      "m06_crest_upper_water": 1395,
+      "other drawn content": 1256,
+      "m06_crest_outer_soffit": 347,
+      "m06_arched_wall": 209,
+      "m06_arched_foam": 131,
+      "m06_arched_ring": 16
+    },
+    "firstRound": {
+      "m06_crest_upper_water": 1912,
+      "m06_arched_water": 1586,
+      "other drawn content": 1256,
+      "m06_arched_foam": 135,
+      "m06_arched_wall": 41,
+      "m06_arched_ring": 10
+    },
+    "selected": {
+      "m06_arched_water": 1586,
+      "other drawn content": 1256,
+      "m06_crest_upper_water": 967,
+      "m06_arched_wall": 719,
+      "m06_arched_ring": 277,
+      "m06_arched_foam": 135
+    }
+  }
+}
