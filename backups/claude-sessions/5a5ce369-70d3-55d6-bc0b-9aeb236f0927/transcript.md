@@ -2617,3 +2617,122 @@ The clip is finishing. I'll add it and run the final save as soon as it's writte
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/briefs/2026-11-19-r19/RESUME_R19.md'; s=open(p).read()\nold='(`qa/match/04/r19_thrixel/NOTES.md` on `claude/rainbow-s04-thrixel-c19`):'\nassert old in s\ns=s.replace(old,'(`qa/match/04/r19_thrixel/NOTES.md` on `claude/rainbow-s04-thrixel-c19` @ `1bf28be4`; review set for the user:\\n  `qa/review_r19/thrixel_foam/` on the lead):',1)\nopen(p,'w').write(s); print('ok')\nEOF\ntimeout 300 python3 scripts/rainbow-autosave.py --reason manual:r19-handoff-ready 2>&1 | grep -E '\"result\"|pushed_verified|c19'; H=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote  …[+313 chars]`
 
+### 🧑 User — 2026-11-19T20:04:40.540Z
+
+> ↩︎ result: ok
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>     "claude/rainbow-s04-match-c19: 0 modified, 0 new file(s) snapshotted",
+>     "claude/rainbow-s04-ringtex-c19: 0 modified, 0 new file(s) snapshotted",
+>     "claude/rainbow-s04-thrixel-c19: 0 modified, 0 new file(s) snapshotted",
+>     "claude/rainbow-s05-match-c19: 0 modified, 0 new file(s) snapshotted"
+> lead local 5b062f727a3755afae8a9fd09f2c5c1ee08f7a24
+> lead remote 5b062f727a3755afae8a9fd09f2c5c1ee08f7a24 MATCH
+> AUTOSAVE OK | branch ccr-d00ac5ec-gabdsh | scheduler daemon | last verified backup 2026-11-19T20:04:27+00:00 (0.2 min ago) | local 5b062f7 remote 5b062f7 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-19T20:04:46.838Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files | grep -i thrixel; git ls-files qa/review_r19/thrixel_foam qa/match/04/r19_falfoam docs/briefs/2026-11-19-r19 | head -20", "description": "Confirm model, review set and notes are committed"}`
+
+### 🧑 User — 2026-11-19T20:04:47.058Z
+
+> ↩︎ result: d523085b0e * qa/match/04/r19_thrixel/foam_cluster_thrixel.glb
+> 88bd736399 * qa/review_r19/thrixel_foam/10_NEW_swim_clip_thrixel.mp4
+> 599c21c725 * qa/review_r19/thrixel_foam/9_BEFORE_swim_clip.mp4
+> docs/briefs/2026-11-19-r19/COORDINATION.md
+> docs/briefs/2026-11-19-r19/RESUME_R19.md
+> docs/briefs/2026-11-19-r19/setup_worker.sh
+> qa/match/04/r19_falfoam/NOTES.md
+> qa/match/04/r19_falfoam/cropB.png
+> qa/match/04/r19_falfoam/cropL.png
+> qa/match/04/r19_falfoam/cropR.png
+> qa/match/04/r19_falfoam/fal_result.json
+> qa/match/04/r19_falfoam/fal_submit.json
+> qa/match/04/r19_falfoam/input_box.txt
+> qa/match/04/r19_falfoam/input_foamR_384.jpg
+> qa/match/04/r19_falfoam/input_foamR_384.webp
+> qa/match/04/r19_falfoam/input_foamR_512.png
+> qa/match/04/r19_falfoam/input_foamR_rgba.png
+> qa/match/04/r19_falfoam/mask_viz4.png
+> qa/review_r19/thrixel_foam/10_NEW_swim_clip_thrixel.mp4
+> qa/review_r19/thrixel_foam/1_APPROVED.png
+> qa/review_r19/thrixel_foam/2_SAME_CAMERA_with_thrixel_model.png
+> qa/review_r19/thrixel_foam/3_BEFORE_swimming_2u.png
+> qa/review_r19/thrixel_foam/4_NEW_swimming_2u_thrixel.png
+
+### 🤖 Claude — 2026-11-19T20:04:53.207Z
+
+Everything is saved and verified. Sending you the comparison pictures and clips:
+
+### 🤖 Claude — 2026-11-19T20:04:56.260Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r19/thrixel_foam/1_APPROVED.png", "/home/user/rainbow-/qa/review_r19/thrixel_foam/2_SAME_CAMERA_with_thrixel_model.png", "/home/user/rainbow-/qa/review_r19/thrixel_foam/3_BEFORE_swimming_2u.png", "/home/user/rainbow-/qa/review_r19/thrixel_foam/4_NEW_swimming_2u_thrixel.png", "/home/user/rainbow-/qa/review_r19/thrixel_foam/5_BEFORE_steering_right.png", "/home/user/rainbow-/qa/review_r19/thrixel_foam/6_NEW_steering_right_thrixel.png"], "caption": "Thrixel foam test, Screen 04: your approved screen; the same camera with the Thrixel model added (bottom rig …[+164 chars]`
+
+### 🧑 User — 2026-11-19T20:04:57.853Z
+
+> ↩︎ result: 6 files delivered to user.
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/1_APPROVED.png → file_uuid: b3c10676-12bb-4a02-aee0-d7d95e0dadf8
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/2_SAME_CAMERA_with_thrixel_model.png → file_uuid: b8e07af8-1c32-4d28-83e0-4188e14bdac4
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/3_BEFORE_swimming_2u.png → file_uuid: f0e84abb-128c-44c7-b58e-2361056f66d1
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/4_NEW_swimming_2u_thrixel.png → file_uuid: 30259764-fb9b-4b58-bf18-c4699b37c5de
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/5_BEFORE_steering_right.png → file_uuid: f676cc7c-fec8-49ba-a9ef-3ebd39d65a4b
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/6_NEW_steering_right_thrixel.png → file_uuid: 3a20508b-0e67-44ba-9c27-cf6e95a77aa5
+
+### 🤖 Claude — 2026-11-19T20:04:58.062Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r19/thrixel_foam/9_BEFORE_swim_clip.mp4", "/home/user/rainbow-/qa/review_r19/thrixel_foam/10_NEW_swim_clip_thrixel.mp4"], "caption": "Moving view, before and with the Thrixel model. The model is only on screen for the first half-second, at the bottom right, as Benny swims away from the start.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-19T20:04:58.689Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/9_BEFORE_swim_clip.mp4 → file_uuid: 7498aa99-4562-4dbe-81db-fa987c935ef5
+>   /home/user/rainbow-/qa/review_r19/thrixel_foam/10_NEW_swim_clip_thrixel.mp4 → file_uuid: f0722d92-649e-4ef4-aaeb-71c3f8c52371
+
+### 🤖 Claude — 2026-11-19T20:05:19.386Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+**Thrixel did not make Screen 04 closer to your approved picture.** It made one foam model, which is now in the running game as a separate test version, and it looks worse than the foam the game already has. The test used **8 cubes** (250 → 242) and **1 of your 4 free sculpt runs** (3 left until 1 December), all from the free allocation.
+
+**What happened in the test:**
+- **Model:** Thrixel made it from the foam heap beside Benny in your approved picture. From the front it has the right soft, pearly lilac-white bubbles. Seen from the side it's a thin curved shell with pink-purple edges, not a rounded heap. A "detail" pass wouldn't fix that shape, so I didn't pay for one.
+- **In the game:** it's added only when a test switch is on, so the normal game and all finished work are unchanged. It uses the game's existing camera and lighting and sits exactly where your painted heap is.
+- **Same camera as your picture** (2nd image): it looks like a cut-out card with sharp edges standing in the water. Your heap is a low pile of big, glossy, separate bubbles. In the normal game this view already shows your painting exactly, so any model can only add a difference here.
+- **While swimming and steering** (images 3–6 and the clips): the game's existing foam is puffy white clouds of round bubbles, close to your heaps. The Thrixel model shows up as a flat, torn-looking pink-lilac sheet on top of them. It's on screen for under half a second as Benny swims off.
+
+My recommendation: don't spend more on Thrixel for foam as it is. The weak point was mainly what I gave it, a flat diagonal strip of painted foam cut out of your picture. If you want one more free try, a clean, separate picture of a single round heap could give a properly rounded model, for 8–11 cubes and one more free sculpt run. I'll only do that if you say so.
+
+The model file is saved in the project, and the Thrixel download link is `https://api.thrixel.com/api/v1/c55e6a88-10db-432c-abaf-3f56e345fee5/download?format=glb`. Separately, the one fal.ai request was rejected before any model was made, and a rejected request like that normally isn't charged. I can't read your fal balance from here to confirm.
+
+**All three workers finished their current step and stopped cleanly:**
+- **Screen 04 water:** while Benny steers, the white-cyan blobs and the pink smear behind him are gone.
+- **Screen 04 gold rings:** the nearest rings now have crisp, machined edge lines instead of a soft blur.
+- **Screen 05:** the smeared left wall is now a crisp violet-magenta slotted wall, and the pink corner smear is gone. One part (a paddle fix) made things worse, so it was left out.
+
+Screen 05 left 30 extra render pictures uncommitted on purpose; its 8 key pictures per set are saved and none of its code is unsaved.
+
+**The handoff is ready for a fresh session.** Start it on branch **`ccr-d00ac5ec-gabdsh`**.
+- **Saved commit:** `5b062f727a3755afae8a9fd09f2c5c1ee08f7a24`, and GitHub has exactly the same commit.
+- **Continuation note:** `docs/briefs/2026-11-19-r19/RESUME_R19.md` lists each worker's progress, its saved branch and commit, and its next tasks in order. The main handoff file, the new-account prompt and `CLAUDE.md` all point to it.
+- **First job in the fresh session:** the combined Screen 04 preview I promised you (rings, water and foam together).
+
+**Backup status:**
+- **Large files (models and videos):** all real files here, and the new ones (the Thrixel model and both clips) are uploaded to GitHub.
+- **Worker branches on GitHub, each matching its local copy:**
+
+  | Worker | Branch | Commit |
+  |---|---|---|
+  | Screen 04 water | `claude/rainbow-s04-match-c19` | `97fcb8b6` |
+  | Screen 04 rings | `claude/rainbow-s04-ringtex-c19` | `1cff16f2` |
+  | Screen 05 | `claude/rainbow-s05-match-c19` | `eb7233e3` |
+  | Thrixel test version | `claude/rainbow-s04-thrixel-c19` | `1bf28be4` |
+
+- **Specialists:** all 10 are present and unchanged. None are running now; Screens 06 and 07 are where Round 18 left them, and 08 is paused.
+- **Connected and working:** World Labs Marble (5,420 credits, none spent), fal.ai, Thrixel, GitHub, Hugging Face, and the browser tool. Blender, the Android build kit and the browser are ready.
+- **Five-minute autosave:** running.
+- **What can't carry over:** running workers and logins don't transfer to a new session, but all their work and restart notes are saved.
+
+### 🧑 User — 2026-11-19T20:05:23.828Z
+
+So maybe use Blender if the Thrixel model, whatever. It doesn't work for that certain thing that you're trying to use a Thrixel model for.
+
