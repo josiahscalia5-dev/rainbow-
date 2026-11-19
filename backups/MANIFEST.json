@@ -709,12 +709,12 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c20/INFO.json",
    "bytes": 463,
-   "sha256": "d5330fbffce1190295a5c84e3d002a7d3ac41444ef6c7a8d68f6e257c4766fb5"
+   "sha256": "be7999e9953ce9b402dba240531e862e4bdee87937df5120e14836d403a3d267"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
    "bytes": 494,
-   "sha256": "824d8b7d934c2e61ad89b727eec8e14f1adf04e2d47cadb5371e4f53f55fe40b"
+   "sha256": "03a656ba24da0279829f360faa312a9fb6a2503a9abc7507ea4fd7181b71646c"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c10/INFO.json",
@@ -1224,7 +1224,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c20/INFO.json",
    "bytes": 477,
-   "sha256": "d0c67fd0d22b924f3e1ecb1a7bf4695bc67169d6b22f48c54e9fb835d9bb5069"
+   "sha256": "8333532cacbaaa150676f32318a9db8c5ace16b71065b12d606cd0a40870c2ae"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
@@ -1234,7 +1234,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c19/INFO.json",
    "bytes": 487,
-   "sha256": "fb92431b723a2ee81dd415f3f41537ff51a65e92d766a8d4504dc4377590ee4b"
+   "sha256": "2fa7303e7868e71b820fe1a00e5a4681047f4f896ae4d449fdfcd0387aeace03"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1379,7 +1379,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c20/INFO.json",
    "bytes": 486,
-   "sha256": "b2e877034513c4ff8c467680c8faeb4898f5782d872e9104c883e11df129f724"
+   "sha256": "753436ff89fa23c1a4963307b84c76fa463c7fd597f16e9b1aa50eb39cbbad12"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/INFO.json",
@@ -1824,7 +1824,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/INFO.json",
    "bytes": 2358,
-   "sha256": "f4c82ae9d777649bb007e33a18608f44dc29989218646c35433bd913c8df0329"
+   "sha256": "44a997cc4c3bc887d4ca49640fc7dfea0ebfaa8a1909fe4793cb66cb7adb7204"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",

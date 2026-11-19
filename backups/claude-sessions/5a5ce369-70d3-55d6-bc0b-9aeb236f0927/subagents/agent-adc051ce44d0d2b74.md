@@ -188,3 +188,57 @@ I'll start by reading my own notes and the coordination files.
 
 > 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 1, "limit": 470}`
 
+### 🧑 User — 2026-11-19T20:43:28.628Z
+
+> ↩︎ result: 1	/**
+> 2	 * Screen 04 milestone M4 (round 8, qa/match/04/NOTES.md) — sub-switches of `?match04=1`, each `&m04…=1`, default off:
+> 3	 *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+> 4	 *             approved picture's mouth ring r 3.58 → 4.11 and the painted stacked ring bands), shaded as polished gold
+> 5	 *             (warm glow down the tunnel, pink / violet / cyan water reflections on the lower walls, glints, a row of
+> 6	 *             amber bulbs on the opening and on every ring lip). In the approved view these surfaces show the approved
+> 7	 *             pixels (camera projection, unchanged); they fade to their own crisp 3D gold as the camera leaves that view.
+> 8	 *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+> 9	 *             view (the painting carries them there), shown once the camera has left it.
+> 10	 *  m04bub   — iridescent soap bubbles floating in the tunnel air (camera-facing bubble discs), same visibility rule.
+> 11	 *  m04arrow — the five glowing blue chevron arrows drawn crisp on the water (distance-field shape at the painted
+> 12	 *   …[+30284 chars]
+
+### 🤖 Claude — 2026-11-19T20:43:32.136Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"m04r[a-z0-9]*'\" src/world/match04m4.ts | head -80", "description": "List m04r* URL parameters"}`
+
+### 🧑 User — 2026-11-19T20:43:32.169Z
+
+> ↩︎ result: 33:  ring: on('m04ring'),
+> 38:  river: on('m04river'),
+> 41:  room: on('m04room'),
+> 978:        uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector4(M04.num('m04rpsl', 0.79), 0, M04.num('m04rpsh', 0.15), 0) }, uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rww', 0.45)) },
+> 979:        uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.06)) }, uRVar: { value: 0 },
+> 980:        uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
+> 981:        uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
+> 982:        uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
+> 983:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { va …[+2423 chars]
+
+### 🤖 Claude — 2026-11-19T20:43:34.978Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 960, "limit": 220}`
+
+### 🧑 User — 2026-11-19T20:43:34.996Z
+
+> ↩︎ result: 960	  const Mw = group.matrixWorld;
+> 961	  const toW = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z).applyMatrix4(Mw);
+> 962	  const axO = toW(cx, cy, z0), axD = toW(cx, cy, z0 - 1).sub(axO).normalize();
+> 963	  const axU = toW(cx, cy + 1, z0).sub(axO).normalize(), axR = toW(cx + 1, cy, z0).sub(axO).normalize();
+> 964	  const away = { value: 0 };
+> 965	  const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+> 966	  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+> 967	  const updaters: ((a: number) => void)[] = [];
+> 968	  let endCap: THREE.Mesh | null = null;
+> 969	
+> 970	  if (M04.ring) {
+> 971	    const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+> 972	    ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
+> 973	    ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
+> 974	    const gm = new THREE.ShaderMaterial({
+> 975	      vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, f …[+16787 chars]
+
