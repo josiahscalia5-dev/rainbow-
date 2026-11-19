@@ -1,6 +1,13 @@
 {
  "screen": "07",
  "query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07nearf=1",
+ "marks": {
+  "07": 247.06,
+  "07_plunge_top": 312.41,
+  "07_plunge_mid_end": 374.14,
+  "07_plunge_bottom": 390.07,
+  "08": 390.16
+ },
  "shots": [
   {
    "name": "f06_forward6u",
@@ -8,7 +15,7 @@
    "steer": null,
    "mode": "ride",
    "stage": "07",
-   "s": 279.67,
+   "s": 279.669,
    "lat": 0,
    "coins": 1950,
    "hearts": 5,
@@ -31,17 +38,17 @@
    "steer": null,
    "mode": "ride",
    "stage": "07",
-   "s": 283.663,
+   "s": 283.683,
    "lat": 0,
    "coins": 1960,
    "hearts": 5,
    "paused": false,
-   "bennyY": -50.104,
+   "bennyY": -50.105,
    "bennyVisible": true,
    "cam": [
     10.99,
     -47.23,
-    -204.54
+    -204.56
    ],
    "frames": 50,
    "s0": 273.056,
@@ -54,7 +61,7 @@
    "steer": null,
    "mode": "ride",
    "stage": "07",
-   "s": 293.662,
+   "s": 293.664,
    "lat": 0,
    "coins": 1970,
    "hearts": 5,
@@ -72,58 +79,12 @@
    "target": 293.056
   },
   {
-   "name": "s_left_steer",
-   "dist": 6,
-   "steer": -1,
-   "mode": "ride",
-   "stage": "07",
-   "s": 279.659,
-   "lat": -2.25,
-   "coins": 1940,
-   "hearts": 5,
-   "paused": false,
-   "bennyY": -49.704,
-   "bennyVisible": true,
-   "cam": [
-    9.84,
-    -47.02,
-    -200.55
-   ],
-   "frames": 30,
-   "s0": 273.056,
-   "s1": 390.1617102628636,
-   "target": 279.056
-  },
-  {
-   "name": "s_right_steer",
-   "dist": 6,
-   "steer": 1,
-   "mode": "ride",
-   "stage": "07",
-   "s": 279.71,
-   "lat": 2.25,
-   "coins": 1940,
-   "hearts": 5,
-   "paused": false,
-   "bennyY": -49.887,
-   "bennyVisible": true,
-   "cam": [
-    13.29,
-    -47.02,
-    -200.81
-   ],
-   "frames": 30,
-   "s0": 273.056,
-   "s1": 390.1617102628636,
-   "target": 279.056
-  },
-  {
    "name": "s_left_hard",
    "dist": 12,
    "steer": -1,
    "mode": "ride",
    "stage": "07",
-   "s": 285.662,
+   "s": 285.659,
    "lat": -2.25,
    "coins": 1940,
    "hearts": 4,
@@ -133,7 +94,7 @@
    "cam": [
     8.36,
     -47.34,
-    -205.99
+    -205.98
    ],
    "frames": 60,
    "s0": 273.056,
@@ -146,7 +107,7 @@
    "steer": 1,
    "mode": "ride",
    "stage": "07",
-   "s": 285.66,
+   "s": 285.659,
    "lat": 2.25,
    "coins": 1940,
    "hearts": 4,

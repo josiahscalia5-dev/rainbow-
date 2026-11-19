@@ -4,7 +4,7 @@ The wall atlas (assets/textures/env05/wall05e.png, built by tools/env05/proj_bak
 approved near bay N1 in rows 592 … 847 (u = angle round the tube, 2048 texels; v = depth within the bay, 256 texels). It is
 the sharpest and cleanest painted wall of the atlas. This tool removes its dark slots (and their pink rims) by
 interpolating ALONG THE TUNNEL (v) across each slot — the painted light streaks run along the tunnel, so they stay
-continuous — then smooths along v only, and writes a short field (2048 x 64). The game shader (src/vfx/proj05Tunnel.ts,
+continuous — then takes one profile round the tube (2048 x 4). The game shader (src/vfx/proj05Tunnel.ts,
 M05WCRISP_GLSL) uses it as the metal colour of the crisp slotted wall where a far bay's picture is magnified while swimming;
 the slots themselves are drawn there at the painted size and shape.
 
@@ -45,13 +45,22 @@ if bad_cols.any():
     for c in range(3):
         for y in range(H):
             clean[y, bad_cols, c] = np.interp(np.where(bad_cols)[0], good_x, clean[y, good_x, c])
-# smooth along the tunnel only (keeps the streaks crisp round the tube), then resample to 64 rows
-clean = gaussian_filter1d(clean, sigma=4.0, axis=0, mode="reflect")
-field = np.stack([np.interp(np.linspace(0, H - 1, 64), ys, clean[:, x, c]) for x in range(W) for c in range(3)], 1)
-field = field.reshape(64, W, 3)
+# ONE profile round the tube: the painted streaks run along the tunnel (straight lines toward the vanishing point), the
+# atlas draws them slightly tilted, so averaging many rows would blur them round the tube. Per column: the median of the
+# un-masked texels of the central band (rows 96 … 159) of N1, gaps filled from the slot-free interpolation above.
+band = slice(96, 160)
+prof = np.zeros((W, 3), np.float32)
+for x in range(W):
+    good = ~mask[band, x]
+    src = N1[band, x] if good.sum() >= 6 else clean[band, x]
+    sel = src[good] if good.sum() >= 6 else src
+    prof[x] = np.median(sel, axis=0)
+# a light smoothing round the tube (one texel) only against single-texel noise
+prof = gaussian_filter1d(prof, sigma=0.7, axis=0, mode="wrap")
+field = np.repeat(prof[None], 4, axis=0)
 img = (np.clip(field, 0, 1) * 255 + 0.5).astype(np.uint8)
 Image.fromarray(img).save(os.path.join(out, "wall_field.png"), optimize=True)
-rep = {"source": "assets/textures/env05/wall05e.png row N1", "w": W, "h": 64, "masked_fraction": float(mask.mean()),
-       "mean_rgb": [float(v) for v in field.reshape(-1, 3).mean(0)]}
+rep = {"source": "assets/textures/env05/wall05e.png row N1 (rows 96-159, slots removed)", "w": W, "h": 4,
+       "masked_fraction": float(mask.mean()), "mean_rgb": [float(v) for v in prof.mean(0)]}
 json.dump(rep, open(os.path.join(out, "wall_field.json"), "w"), indent=1)
 print(json.dumps(rep))

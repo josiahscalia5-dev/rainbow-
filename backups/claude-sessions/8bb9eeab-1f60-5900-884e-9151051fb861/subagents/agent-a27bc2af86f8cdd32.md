@@ -1430,3 +1430,273 @@ Pushed and verified. Now the report to main.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/nf1 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07nearf=1\" && node tools/match07/audit_r18.mjs 07 $S \"$K\" f06_forward6u,f10_forward10u,f20_forward20u,s_left_hard,s_right_hard 2>&1 | grep -E \"^07|error\" | head", "description": "Render the step-4 draft at level-stretch shots", "timeout": 900000}`
 
+### 🧑 User — 2026-11-19T02:41:45.852Z
+
+> ↩︎ result: 07 f06_forward6u s 279.669 lat 0 stage 07 frames 30
+> 07 f10_forward10u s 283.683 lat 0 stage 07 frames 50
+> 07 f20_forward20u s 293.664 lat 0 stage 07 frames 100
+> 07 s_left_hard s 285.659 lat -2.25 stage 07 frames 60
+> 07 s_right_hard s 285.659 lat 2.25 stage 07 frames 60
+
+### 🤖 Claude — 2026-11-19T02:41:47.527Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/nf1/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-19T02:41:47.592Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:41:48.137Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/nf1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T02:41:48.205Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:42:18.375Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\ndef cls(p):\n    r,g,b=[int(x) for x in p[:3]]\n    if r>200 and g>200 and b>200: return 'W'\n    if r>170 and b>150 and g<140: return 'M'\n    if b>180 and g>150 and r<160: return 'C'\n    if r>200 and g>120 and b<110: return 'G'\n    return '.'\nfor name in ['qa/match/07/r18/APPROVED_07.png','qa/match/07/r17/step2_nearw/NEW/f10_forward10u.png','qa/match/07/r17/step2_nearw/NEW/f20_forward20u.png']:\n    im=np.array(Image.open(name).convert('RGB'))\n    print(name, im.shape)\n    for y in [100 …[+190 chars]`
+
+### 🧑 User — 2026-11-19T02:42:18.754Z
+
+> ↩︎ result: qa/match/07/r18/APPROVED_07.png (1536, 864, 3)
+> 1000 ..M.MMWWWWWW.C.CCCCCCCWCCCWCCCCCC.MMM..M.MMM.M..WWWWMM.WWW.WWMW.GG....M.......CWC.CCCWCCC.C......MWMW.MMMMMM
+> 1100 ......MMM.WWMMMMMMMMMM..W.M.MMMM...MM..MM.MMMMMM.MMMMMM.MMMMMMM.M..MM.MM..MMMMM.CCCCCCCW..CCCCWMMMMMMMMMMMMM
+> 1200 MMMMMMWMMMMMMMMMM.W...CCCCCCCCCCCCCCC..............M.....M..M........W.C.CCCCC..CCCWWWWW...MMMMMMMMMMMM.....
+> 1300 MMMM.WMMWMMMM....WC.CCC.CCCCWCCCWCCCCCCCCCCC......CCCCCCCCCCCCCCCCCCCC.........CCC.......W.WCC.C.....W....WW
+> 1400 ...MMM.MMMWW.MMMMMMMMMMM....WW........C.CC....CCCCCCCCC.CCCCCCCCCCC...WCCWWWWCCCWWCCCCCCWWWW..WW....C..WWWWW
+> 1500 .......GGGGW.G..MMMMMM....MMMMMMMWWWWWWWMM.MMMMMMMM.........CCCCCCCCC...............CC......G.WWWWWG.GGG....
+> qa/match/07/r17/step2_nearw/NEW/f10_forward10u.png (1536, 864, 3)
+> 1000 MMMM.MMMMMMMMMMMMM......CCCCCCCCCC...M.M.MM.MMMMMMMMMMMMMMMMMMMMMMMMMM.CCCCWC.C.CCCCCCWMMMMMMMMMMMM........W
+> 1100 MMMMMMMMMMMMMW.......C.C.CCCC.CCCCCCWCC.C.WWWWCCCC...CCC.CCCCCCCCCCCC.WWWWWWWCWCC.CC..WW.....W..MMMMMMMMMMMM
+> 1200 MMMM.MM...............CCCCCCCCCCCCWCCCCCCCCCCCCCCCCCCCCCCCCCCC.CCCCCCCCCCCCCCCCCCCCCCCC....CCCCC.CC.CCCCC.MM
+> 1300 M.CCCCCCCCCCCCCCCC......CCCCCCCCCCCCCCCCCCC.CCCCCCC....C …[+1030 chars]
+
+### 🤖 Claude — 2026-11-19T02:42:43.266Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 30, "limit": 36}`
+
+### 🧑 User — 2026-11-19T02:42:43.286Z
+
+> ↩︎ result: 30	}
+> 31	interface Tiles07 { wall: { theta: [number, number]; along: [number, number]; bay: number }; river: { lateral: [number, number]; along: [number, number] } }
+> 32	
+> 33	export interface Match07 {
+> 34	  group: THREE.Group;
+> 35	  bakeDepth(renderer: THREE.WebGLRenderer): void;
+> 36	  sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;
+> 37	  /** M3 '?m07tube=1': true from the hand-over point on — the plunge tube shows and the fitted proxy ends at its depth */
+> 38	  setPlunge(on: boolean): void;
+> 39	}
+> 40	
+> 41	const VERT = /* glsl */ `
+> 42	uniform mat4 uProjVP;
+> 43	uniform float uCtr[64];   // r16 '?m07nearw=1': river centre line (tube-local x) every uCtrA.y units of depth from uCtrA.x
+> 44	uniform vec3 uCtrA;       // first depth, step, on (z)
+> 45	varying vec4 vProj;
+> 46	varying vec3 vW;
+> 47	varying vec3 vN;
+> 48	varying vec3 vL;
+> 49	varying vec2 vUv;
+> 50	varying float vCtr;
+> 51	void main() {
+> 52	  vUv = uv;
+> 53	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 54	  vProj = uProjVP * wp;
+> 55	  vW = wp.xyz;
+> 56	  vL = (uGroupInv * wp).xyz;
+> 57	  vCtr = 0.0;
+> 58	  if (uCtrA.z > 0.5) {
+> 59	    float ia = clamp((-vL.z - uCtrA.x) / uCtrA.y, 0.0, 62.999);
+> 60	    int i0 = int(floor(ia));
+> 61	    vCtr = mix( …[+158 chars]
+
+### 🤖 Claude — 2026-11-19T02:42:43.916Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 419,520p src/world/match07.ts", "description": "Read geometry construction in match07"}`
+
+### 🧑 User — 2026-11-19T02:42:43.957Z
+
+> ↩︎ result: const zBack = 20, zEnd = -110;
+>   // purple tube: cylinder along the axis, from behind the camera to far beyond the painted bright end
+>   const tube = new THREE.CylinderGeometry(T.r, T.r, zBack - zEnd, 160, 130, true);
+>   tube.rotateX(Math.PI / 2).translate(T.ax, T.h, (zBack + zEnd) / 2);
+>   add(tube, M.wall, 'tube');
+>   add(new THREE.CircleGeometry(T.r, 64).translate(T.ax, T.h, zEnd), M.wall, 'tube_end');
+>   // water plane at Benny's water level (the painted S-river, pink banks, foam), cut by the tube walls
+>   const halfW = T.r + 0.5;
+>   const wp = new THREE.PlaneGeometry(2 * halfW, zBack - zEnd, 48, 260);
+>   wp.rotateX(-Math.PI / 2).translate(T.ax, 0, (zBack + zEnd) / 2);
+>   add(wp, M.water, 'water');
+>   // paddles: blocks standing out of the wall at the painted spots (width from the painting, 1.2 u deep into the tube)
+>   for (const [i, p] of L.paddles.entries()) {
+>     const q = new THREE.Vector3(...p.pos).sub(base);
+>     const lx = q.dot(X), ly = q.dot(U), lz = -q.dot(Dv);
+>     const ang = Math.atan2(ly - T.h, lx - T.ax);
+>     const depth = 1.2, w = p.w;
+>     // M2 '?m07gold=1': rounded block (bevelled edges catch the light and read as solid metal while passing close)
+>     const g = fixGold ? ne …[+4733 chars]
+
+### 🤖 Claude — 2026-11-19T02:42:58.191Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json; d=json.load(open('assets/textures/match07/river07.json')); print(d.keys()); \nfor k,v in d.items():\n  if isinstance(v,list): print(k, len(v), [round(x,2) for x in v[:80]])\n  else: print(k, v)\n\"; ls assets/textures/match07/; python3 -c \"\nfrom PIL import Image; im=Image.open('/home/user/wt/s07/assets/textures/match07/near_bank.png'); print(im.size, im.mode)\"", "description": "Inspect painted river centre data and near tiles"}`
+
+### 🧑 User — 2026-11-19T02:42:58.373Z
+
+> ↩︎ result: dict_keys(['note', 'z', 'x', 'along', 'lat', 'target_x'])
+> note Screen 07 painted river centre on the water plane (tools/match07/river_coins07.py)
+> z 9 [-201.45, -207.18, -211.95, -219.86, -226.7, -228.38, -230.35, -232.33, -234.31]
+> x 9 [10.1, 12.61, 9.15, 9.35, 7.13, 13.09, 12.6, 13.13, 15.45]
+> along 9 [0.0, 5.77, 10.51, 18.41, 25.27, 27.0, 29.0, 31.0, 33.0]
+> lat 9 [0.0, 0.73, -0.6, -1.74, -1.2, 0.33, 1.13, 1.85, 2.35]
+> target_x 9 [10.27, 11.17, 9.97, 9.06, 9.8, 11.38, 12.23, 13.01, 13.56]
+> cam07_locked.json
+> coins07.json
+> near07.json
+> near_bank.png
+> near_foam.png
+> patch_gold.png
+> patch_wall.png
+> plate07_fillmask.png
+> plate07_fillmask_soft.png
+> plate07_hybrid.png
+> proj07.json
+> river07.json
+> tile_river.png
+> tile_river_clean.png
+> tile_wall.png
+> tile_wall_clean.png
+> tile_wall_ring.png
+> tiles07.json
+> (268, 388) RGB
+
+### 🤖 Claude — 2026-11-19T02:43:30.327Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('assets/textures/match07/near_bank.png'); b=Image.open('assets/textures/match07/near_foam.png'); print(b.size)\nc=Image.new('RGB',(a.width*2+b.width+20, max(a.height,b.height)),(0,0,0)); c.paste(a,(0,0)); c.paste(a.resize((a.width,a.height)),(a.width+10,0)); c.paste(b,(2*a.width+20,0)); c.save('/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/tiles.png')\"", "description": "Compose near tiles into one preview image"}`
+
+### 🧑 User — 2026-11-19T02:43:30.567Z
+
+> ↩︎ result: (114, 144)
+
+### 🤖 Claude — 2026-11-19T02:43:31.401Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/tiles.png"}`
+
+### 🧑 User — 2026-11-19T02:43:31.422Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:44:36.726Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && mkdir -p qa/match/07/r18/step4_nearf_rejected && cp /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/nf1/s_left_hard.png /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/nf1/motion.json qa/match/07/r18/step4_nearf_rejected/ && rm -rf qa/match/07/r17/step4_nearf && ls qa/match/07/r18/step4_nearf_rejected", "description": "Keep one record picture of the rejected draft"}`
+
+### 🧑 User — 2026-11-19T02:44:37.083Z
+
+> ↩︎ result: motion.json
+> s_left_hard.png
+
+### 🤖 Claude — 2026-11-19T02:44:38.101Z
+
+Now replacing the draft in the shader with the band design.
+
+### 🤖 Claude — 2026-11-19T02:44:40.249Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "uniform vec4 uNearF;      // r17 '?m07nearf=1': extra magenta bank width beyond the band, cloud cell length along, foam detail size, on (w)", "new_string": "uniform vec4 uBand;       // r18 '?m07band=1': S-sweep of the river centre off Benny's lane: amplitude, wavelength, phase (along), on (w)\nuniform vec4 uBand2;      // r18 m07band: reach of Benny's lane (lane ± steer + body), cyan core half-width, min band width, band tile width"}`
+
+### 🧑 User — 2026-11-19T02:44:40.294Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:44:57.358Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "float h07(float n) { return fract(sin(n * 12.9898 + 4.1) * 43758.5453); }\n// r17 m07nearf: separate puffy foam CLOUDS on the bank beyond the magenta band — three rows of round puffs (world-anchored\n// cells along the river, random size / place, some cells empty so clusters stand apart and the magenta bank shows\n// between them); the highest puff wins, so overlapping puffs make lumpy clusters with crevices. xyz = puff normal\n// (tube-local), w = coverage (anti-aliased)\nvec4 nearClouds(float along,  …[+4061 chars]`
+
+### 🧑 User — 2026-11-19T02:44:58.161Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:45:07.031Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    u = uNearM * abs(mod(t + 1.0, 2.0) - 1.0);", "new_string": "    u = uNearM * abs(mod(t, 2.0) - 1.0);"}`
+
+### 🧑 User — 2026-11-19T02:45:07.113Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:45:09.280Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "  // r17: on top of m07nearw, a thick magenta bank + separate puffy foam clouds beyond the band (no flat pale foam sheet at\n  // hard left / right)\n  const nearF = flag05('m07nearf');", "new_string": "  // r18: on top of m07nearw, the painted near-river proportions — narrow cyan core, thick magenta bands, world-anchored S-sweep\n  // (the r17 draft '&m07nearf' was rejected: qa/match/07/r18/PROGRESS.md)\n  const band = nearW && flag05('m07band');"}`
+
+### 🧑 User — 2026-11-19T02:45:09.362Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:45:12.591Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    // r17: magenta bank 0.6 u wider (the painted bands are thick), cloud cells every 0.8 u along, foam detail tile 0.75 u\n    uNearF: { value: new THREE.Vector4(0.6, 0.8, 0.75, nearW && nearF ? 1 : 0) },", "new_string": "    // r18 m07band: S-sweep ±0.6 u every 14 u; Benny's reach lane ± 2.25 steer + 0.6 body; cyan core ±1.1 u; band ≥ 0.95 u;\n    // band tile read 0.9 u wide (≈ the painted band at the bottom of the picture). Tunables ?m07bA= / ?m07bL= / ?m07bC=\n    uBand: { value: new THREE.Vector4 …[+144 chars]`
+
+### 🧑 User — 2026-11-19T02:45:12.643Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:45:15.011Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"^import\\|flag05\\b\" src/world/match07.ts | head; grep -rn \"export function flag05\\|export function num05\\|export const num\\|URLSearchParams\" src/ | head", "description": "Find URL flag helpers"}`
+
+### 🧑 User — 2026-11-19T02:45:15.086Z
+
+> ↩︎ result: 16:import * as THREE from 'three';
+> 17:import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> 18:import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+> 19:import type { Course } from './course';
+> 266:  const fixFill = flag05('m07fill');
+> 267:  const fixAng = flag05('m07ang');
+> 268:  const fixGold = flag05('m07gold');
+> 269:  const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
+> 270:  const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)
+> 273:  const fixRing = flag05('m07ring');
+> src/ui/cinematicVideo.ts:57:  const q = new URLSearchParams(location.search);
+> src/ui/cinematicVideo.ts:78:  const focus = opts.focus ?? new URLSearchParams(location.search).get('videoFocus') ?? '50% 50%';
+> src/characters/girl/girl-lab.ts:13:const q = new URLSearchParams(location.search);
+> src/characters/benny/benny-lab.ts:18:const q = new URLSearchParams(location.search);
+> src/characters/benny/runtime.ts:27:  const qp = new URLSearchParams(location.search).get('quality');
+> src/characters/benny/runtime.ts:55:  const v = parseFloat …[+536 chars]
+
+### 🤖 Claude — 2026-11-19T02:45:17.947Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;", "new_string": "const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;\n/** r18: numeric URL tunable (QA only), default when absent or not a number */\nconst num07 = (k: string, def: number) => {\n  const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get(k) ?? '') : NaN;\n  return Number.isFinite(v) ? v : def;\n};"}`
+
+### 🧑 User — 2026-11-19T02:45:18.025Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:45:19.200Z
+
+Now the centre line: with the band switch, the centre is Benny's lane only (the S is added analytically in the shader).
+
+### 🤖 Claude — 2026-11-19T02:45:22.556Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "      const painted = along < 0 ? 0 : THREE.MathUtils.clamp(lerpT(Rv.along, Rv.lat, along) - lane, -0.3, 0.3);\n      const tail = 0.6 * Math.sin(((along - aEnd) / 18) * Math.PI * 2);\n      const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);\n      ctr[k] = lane + painted * (1 - kk) + tail * kk;", "new_string": "      const painted = along < 0 ? 0 : THREE.MathUtils.clamp(lerpT(Rv.along, Rv.lat, along) - lane, -0.3, 0.3);\n      const tail = 0.6 * Math.sin(((along - aEnd) / 18) * Math.PI  …[+230 chars]`
+
+### 🧑 User — 2026-11-19T02:45:22.653Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:45:23.660Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"nearF\\|uNearF\\|nearClouds\\|h07(\" src/world/match07.ts; timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc_exit=$?", "description": "Check leftovers and type-check"}`
+
+### 🧑 User — 2026-11-19T02:45:35.479Z
+
+> ↩︎ result: 71:uniform vec2 uNearFar;
+> 206:float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
+> 262:export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+> 267:    t.wrapS = t.wrapT = wrap; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8;
+> 322:    uNearFar: { value: new THREE.Vector2(proj.near, proj.far) },
+> tsc_exit=0
+
+### 🤖 Claude — 2026-11-19T02:45:40.093Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/b1 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1\" && node tools/match07/audit_r18.mjs 07 $S \"$K\" f06_forward6u,f10_forward10u,f20_forward20u,s_left_hard,s_right_hard 2>&1 | grep -E \"^07|rror\" | head", "description": "Render first try of the band design", "timeout": 900000}`
+

@@ -1179,3 +1179,185 @@ Redirect received: ring structure first. Let me look at the zoom I just made (it
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git fetch -q origin 2>/dev/null; git branch -r | grep -i \"s04\" | head; ", "description": "List Screen 04 remote branches"}`
 
+### 🧑 User — 2026-11-19T02:43:00.877Z
+
+> ↩︎ result: Command did not complete within its 120s timeout and was moved to the background (ID: bvmf762de). Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bvmf762de.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. No output had been read from it when it was moved. A program that buffers its output, or a pipe into one such as tail, can keep the output file empty until the command finishes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-19T02:43:02.991Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 2>/dev/null && git -C /home/user/wt/s04 rev-parse --abbrev-ref HEAD; git -C /home/user/wt/s04b branch -a 2>/dev/null | grep -i s04 | head", "description": "Read the s04 worker's branch name (read-only)"}`
+
+### 🧑 User — 2026-11-19T02:43:03.081Z
+
+> ↩︎ result: claude/rainbow-s04-match-c18
+> + claude/rainbow-s04-match-c18
+> + claude/rainbow-s04-preview-c18
+> * claude/rainbow-s04-ringtex-c18
+>   remotes/origin/claude/rainbow-s04-match-c17
+>   remotes/origin/claude/rainbow-s04-match-c18
+>   remotes/origin/claude/rainbow-s04-ringtex-c17
+>   remotes/origin/claude/rainbow-s04-ringtex-c18
+
+### 🤖 Claude — 2026-11-19T02:43:04.699Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git show claude/rainbow-s04-match-c18:src/world/match04m4.ts | grep -n \"m04end\" | head -20", "description": "Read s04 branch m04end code locations (read-only)"}`
+
+### 🧑 User — 2026-11-19T02:43:04.802Z
+
+> ↩︎ result: 503:/** r16 `&m04end=1`: the distant glowing opening (own material on the far end disc; the ring shader is untouched). The disc
+> 856:  if (endCap && M04.num('m04end', 0) > 0) {
+> 857:    // r16 `&m04end=1`: the distant glowing opening (END_FRAG): m04eg glow point height (fraction of r), m04eq ring shrink per
+> 865:    console.info('[match04] m04end', { water: (0.02 - cy) / r });
+
+### 🤖 Claude — 2026-11-19T02:43:06.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git show claude/rainbow-s04-match-c18:src/world/match04m4.ts | sed -n 500,560p; git show claude/rainbow-s04-match-c18:src/world/match04m4.ts | sed -n 845,870p", "description": "Read the s04 far-end glow implementation (read-only)"}`
+
+### 🧑 User — 2026-11-19T02:43:06.807Z
+
+> ↩︎ result: gl_FragColor = vec4(pjInverse(col), 1.0);
+> }`;
+> 
+> /** r16 `&m04end=1`: the distant glowing opening (own material on the far end disc; the ring shader is untouched). The disc
+>  * paints the tunnel CONTINUING beyond the modelled rings — a telescoping series of copper-gold rings that shrink toward a
+>  * small hot white-gold light just above the water, the river converging into that light — instead of a flat orange disc.
+>  * Rings = the circle family through each disc point whose centres slide from the tunnel axis (bore) to the glow point. */
+> const END_VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> uniform vec3 uC;             // tube axis x, y (group-local) and radius
+> varying vec4 vProj;
+> varying vec2 vLoc;
+> void main() {
+>   vec4 wp = modelMatrix * vec4(position, 1.0);
+>   vProj = uProjVP * wp;
+>   vLoc = (position.xy - uC.xy) / uC.z;
+>   gl_Position = projectionMatrix * viewMatrix * wp;
+> }`;
+> const END_FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAway;
+> uniform vec4 uE;             // x glow point height (fraction of r, < 0 below the axis), y ring shrink per ring, z core size, w halo size
+> uniform vec4 uE2;            // x water level (fraction of r …[+4155 chars]
+
+### 🤖 Claude — 2026-11-19T02:43:11.669Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git show claude/rainbow-s04-match-c18:src/world/match04m4.ts | grep -n \"endCap\" | head; git diff HEAD claude/rainbow-s04-match-c18 --stat -- src/world/match04m4.ts", "description": "Check how the s04 branch defines endCap"}`
+
+### 🧑 User — 2026-11-19T02:43:11.716Z
+
+> ↩︎ result: 745:  let endCap: THREE.Mesh | null = null;
+> 821:    endCap = cm;
+> 856:  if (endCap && M04.num('m04end', 0) > 0) {
+> 859:    endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
+>  src/world/match04m4.ts | 362 ++++++++++++++++++++++++++++++++++---------------
+>  1 file changed, 255 insertions(+), 107 deletions(-)
+
+### 🤖 Claude — 2026-11-19T02:43:16.847Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -c \"\nimport json; j=json.load(open('assets/textures/match04/ring_paint04.json'))\nfor k,v in j.items():\n  if k!='note': print(k, v)\n\"; ls tools/match04/", "description": "Print painted ring measurements"}`
+
+### 🧑 User — 2026-11-19T02:43:16.944Z
+
+> ↩︎ result: periods [1]
+> size [2048, 160]
+> good [-1.6788545977046043, 1.8813400617055092]
+> s_lip 0.790625
+> s_dark 0.003125
+> groove_circles [[433.82, 789.44, 331.65], [442.02, 789.42, 262.16], [443.16, 782.93, 206.71], [446.89, 765.99, 160.14]]
+> grooves_top_q [0.075, 1.058, 2.05, 3.008]
+> profile [75.0, 77.6, 83.7, 89.0, 93.1, 95.5, 95.5, 96.0, 97.9, 99.7, 101.7, 102.4, 100.3, 100.0, 100.5, 100.9, 101.7, 101.9, 102.0, 101.8, 102.0, 102.0, 102.2, 102.8, 103.2, 103.1, 102.9, 102.7, 102.7, 102.9, 102.9, 102.9, 103.1, 103.2, 103.3, 103.8, 104.5, 105.3, 106.3, 106.9, 107.7, 108.1, 108.6, 109.1, 109.2, 109.3, 109.4, 109.2, 109.3, 109.2, 109.0, 108.9, 109.1, 109.5, 109.3, 109.1, 108.9, 109.4, 110.4, 111.0, 111.5, 111.9, 112.2, 112.3, 112.2, 112.1, 112.0, 111.9, 111.9, 111.8, 111.8, 111.9, 112.0, 112.2, 112.3, 112.5, 112.6, 112.9, 113.0, 113.2, 113.2, 113.2, 113.3, 113.4, 113.5, 113.5, 113.5, 113.6, 113.8, 114.0, 114.5, 114.9, 115.3, 115.7, 115.7, 116.7, 117.1, 117.1, 117.2, 117.4, 117.6, 117.9, 118.4, 118.9, 118.5, 118.6, 119.3, 119.7, 120.2, 120.7, 120.9, 121.2, 121.1, 121.9, 122.8, 123.7, 124.9, 125.0, 124.8, 124.6, 125.8, 129.4, 132.9, 139.2, 146.0, 151.4, 154.3, 153.1, 150.9, 144.6, 135.0, 124.6, 117.5, 1 …[+497 chars]
+
+### 🤖 Claude — 2026-11-19T02:43:25.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && python3 -I -c \"\nimport numpy as np, cv2\nfrom scipy.signal import find_peaks\nfor name,f in (('APPROVED','references/04_through_the_five_arrows.png'),('GAME3D','$S/sv_3d/04.png')):\n    im=cv2.imread(f).astype(np.float32)\n    L=[REDACTED-EMAIL]([0.11,0.59,0.3],np.float32)\n    col=L[380:700, 430:460].mean(1)\n    col=cv2.GaussianBlur(col.reshape(-1,1),(1,0),sigmaX=0,sigmaY=1.2).ravel()\n    pk,_=find_peaks(-col, prominence=6)\n    print(name, 'groove y:', [int( …[+105 chars]`
+
+### 🧑 User — 2026-11-19T02:43:26.956Z
+
+> ↩︎ result: APPROVED groove y: [398, 415, 464, 519, 531, 544, 579, 607, 630, 648]
+> GAME3D groove y: [405, 454, 463, 512, 530, 562, 584, 599, 612, 622, 631, 654]
+
+### 🤖 Claude — 2026-11-19T02:44:14.985Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"visible\" src/world/match04.ts | head -20; grep -n \"s1\\|length\" src/world/course.ts | head -20", "description": "Check when the 04 group is hidden and stage lengths"}`
+
+### 🧑 User — 2026-11-19T02:44:15.077Z
+
+> ↩︎ result: 101:    // inside the tunnel the visible water is narrower: draw the painted banks a little closer to the walls
+> 294:    hideOld: (names) => group.children.forEach((o) => { if (names.includes(o.name)) o.visible = false; }) });
+> 314:    uMvDbg: { value: 0 },   // r12 QA only (tools/match04/diag04.mjs): 1 / 2 = view 1 / 2 coverage colours (R depth-visible, G image alpha, B in frame)
+> 397:    splash.visible = false;
+> 411:      clone.visible = true;
+> 420:        clone.traverse((o) => { if (o.userData.mv) o.visible = false; });
+> 442:            u.value *= fade; o.visible = u.value > 0.01;
+> 11: * Every stage is a range of arc-length `s` on a single centripetal Catmull-Rom spline, so position
+> 25:  /** arc-length range on the course */
+> 27:  s1: number;
+> 92:  /** arc-length range of the stretch on the course */
+> 94:  s1: number;
+> 119:  /** length of the straight tunnel line (units) */
+> 121:  /** wavelength along the line (crest → crest of the same side) */
+> 156:  const n = k.length;
+> 175: * here before the 06 arch too (old sine +1.71 u at u 62). Its amplitude is solved (secant on Course.length)
+> 176: * so the route keeps EXACTLY its old length 435.193. Why the length must stay: besides geometry, the wate …[+510 chars]
+
+### 🤖 Claude — 2026-11-19T02:44:16.788Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -rn \"match04_projection\\|m04group\\|group.visible\" src --include=*.ts | grep -v \"^src/world/match04m4\" | head -10", "description": "Find where the Screen 04 group visibility is managed"}`
+
+### 🧑 User — 2026-11-19T02:44:16.873Z
+
+> ↩︎ result: src/world/match04.ts:223:  group.name = 'match04_projection';
+> src/vfx/index.ts:188:      puddles.group.visible = controls.outro > 0.001;
+> src/vfx/index.ts:190:      drum.group.visible = focusS < st03.s0 + 12;
+> src/game/Game.ts:109:  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+> src/game/Game.ts:119:  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); if (m04.splash) scene.add(m04.splash); }
+> src/game/Game.ts:125:  if (hidden.has('water')) water.group.visible = false;
+> src/game/Game.ts:126:  if (hidden.has('coins')) coins.group.visible = false;
+> src/game/Game.ts:173:    if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+> src/game/Game.ts:174:    if (m04) { m04On = st.stage === '04'; m04.group.visible = m04On; if (m04On) { env.zones.basin.visible = false; env.zones.tubes.visible = false; } }
+
+### 🤖 Claude — 2026-11-19T02:45:24.557Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 60,255p src/world/match04m4.ts", "description": "Read ring vertex shader and GOLD_FRAG start"}`
+
+### 🧑 User — 2026-11-19T02:45:24.610Z
+
+> ↩︎ result: uniform mat4 uProjVP;
+> attribute vec2 aK;
+> varying vec4 vProj;
+> varying vec3 vW;
+> varying vec3 vN;
+> varying vec2 vK;
+> void main() {
+>   vec4 wp = modelMatrix * vec4(position, 1.0);
+>   vProj = uProjVP * wp;
+>   vW = wp.xyz;
+>   vK = aK;
+>   vN = normalize(mat3(modelMatrix) * normal);
+>   gl_Position = projectionMatrix * viewMatrix * wp;
+> }`;
+> 
+> // polished gold, art-directed in DISPLAY colours measured on the approved picture (then pjInverse like the plate):
+> // groove (110,35,5) / shadow band (168,70,18) / mid (205,97,28) / lit (245,143,38) / hot lip (255,204,77) / glint.
+> // Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;
+> // the far rings warm toward the glowing vanishing point; violet / pink water reflections on the lower walls.
+> const GOLD_FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAway;
+> uniform vec3 uAxO;
+> uniform vec3 uAxD;
+> uniform vec3 uAxU;
+> uniform vec3 uAxR;
+> uniform float uNB;
+> uniform float uP;
+> uniform float uLipBulb;
+> uniform float uBulbR;
+> uniform float uLen;
+> uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+> uniform sampler2D uRingTil …[+10171 chars]
+

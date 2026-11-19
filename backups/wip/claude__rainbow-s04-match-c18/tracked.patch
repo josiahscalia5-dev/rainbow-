@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index a8fe480..f9a423c 100644
+index a8fe4802..3466c152 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -317,7 +317,10 @@ uniform vec4 uNB;            // r17 m04nband: x on, y Benny along (local), z Ben
@@ -74,16 +74,26 @@ index a8fe480..f9a423c 100644
      if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
    }
    if (uA5.x > 0.5) {
-@@ -934,7 +958,13 @@ export function addM04(ctx: M04Ctx) {
+@@ -866,6 +890,7 @@ export function addM04(ctx: M04Ctx) {
+   }
+   const a5b = new THREE.Vector4(M04.num('m04a5w', 1.3), M04.num('m04a5s', 2.2), 0, M04.num('m04a5d', 30));
+   const nbU = new THREE.Vector4(M04.num('m04nband', 0) > 0 && M04.num('m04sband', 0) > 0 ? 1 : 0, 0, 0, M04.num('m04nbh', 1.1));
++  const nwOn = nbU.x > 0 && M04.num('m04nwhirl', 0) > 0;   // r18 m04nwhirl (needs m04nband)
+   const MwInv = Mw.clone().invert();
+   if (M04.river) {
+     const nX = 28, nA = Math.ceil(len / 0.5);
+@@ -933,8 +958,14 @@ export function addM04(ctx: M04Ctx) {
+         // r17 `&m04nband=1` (needs m04sband): the bands round Benny — m04nbh inner arc hugging him, m04nba back to normal this far
          // ahead of him, m04nbb widening behind him (b * d^2), m04nbr half-stripe width near him (0 = one stretched band), m04nbs tile
          // span walked, m04nbp pinch at his sides, m04nbf lateral follow of Benny (0..1)
-         uNB3: { value: new THREE.Vector2(M04.num('m04nbr', 0.9), M04.num('m04nbs', 0.7)) },
+-        uNB3: { value: new THREE.Vector2(M04.num('m04nbr', 0.9), M04.num('m04nbs', 0.7)) },
 -        uNB: { value: nbU }, uNB2: { value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
++        uNB3: { value: new THREE.Vector2(M04.num('m04nbr', nwOn ? 1.3 : 0.9), M04.num('m04nbs', 0.7)) },   // r18: broader stripes with the whirl
 +        // r18 `&m04nwhirl=1` (needs m04nband): the bands wrap round Benny — m04nwk along squash of the ellipse behind him (the
 +        // nearest stripe closes under him m04nbh / m04nwk u behind), m04nwe its centre ahead of him, m04nwm / m04nwl S-meander
 +        // amplitude / wavelength of the band edge ahead (0 = off)
-+        uNB4: { value: new THREE.Vector4(nbU.x > 0 && M04.num('m04nwhirl', 0) > 0 ? M04.num('m04nwk', 0.7) : 0, M04.num('m04nwe', 0.3),
-+          nbU.x > 0 && M04.num('m04nwhirl', 0) > 0 ? M04.num('m04nwm', 0) : 0, M04.num('m04nwl', 9)) },
++        uNB4: { value: new THREE.Vector4(nwOn ? M04.num('m04nwk', 0.5) : 0, M04.num('m04nwe', 0.3), nwOn ? M04.num('m04nwm', 0.35) : 0,
++          M04.num('m04nwl', 7)) },
 +        uNB5: { value: M04.num('m04nwt', 1) },   // m04nwt spiral twist (0 = closed U rings)
 +        uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
          uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },

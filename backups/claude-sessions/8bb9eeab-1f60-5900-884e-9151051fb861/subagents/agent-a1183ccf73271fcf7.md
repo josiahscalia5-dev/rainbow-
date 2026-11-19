@@ -918,3 +918,155 @@ Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && O=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try2 && node tools/match06/r16_start.mjs $O NEW@1.1 \"$K&m06st=1\" NEW \"$K&m06st=1\" 2>&1 | grep -v \"allow list\"; node /home/user/tools-pixelmatch/pixeldiff.mjs ../../../tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/BEFORE.png $O/NEW.png $O/diff.png 0.1 180 1536", …[+93 chars]`
 
+### 🧑 User — 2026-11-19T02:41:49.455Z
+
+> ↩︎ result: Exit code 1
+> NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+> NEW s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> node:fs:560
+>   return binding.open(
+>                  ^
+> 
+> Error: ENOENT: no such file or directory, open '../../../tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/BEFORE.png'
+>     at Object.openSync (node:fs:560:18)
+>     at Object.readFileSync (node:fs:444:35)
+>     at file:///home/user/tools-pixelmatch/pixeldiff.mjs:8:28
+>     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+>     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+>     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+>   errno: -2,
+>   code: 'ENOENT',
+>   syscall: 'open',
+>   path: '../../../tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/BEFORE.png'
+> }
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-19T02:41:51.582Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/try1/BEFORE.png $S/try2/NEW.png $S/try2/diff.png 0.1 180 1536", "description": "Diff checkpoint BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-19T02:41:52.090Z
+
+> ↩︎ result: {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/BEFORE.png","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try2/NEW.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-19T02:41:54.018Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try2/[REDACTED-EMAIL]"}`
+
+### 🧑 User — 2026-11-19T02:41:54.101Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:42:09.456Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06; python3 -c \"\nfrom PIL import Image\nS='$S/'\nims=[Image.open(S+f).crop((100,850,760,1350)) for f in ['try1/[REDACTED-EMAIL]','try1/[REDACTED-EMAIL]','try2/[REDACTED-EMAIL]']]\nw,h=ims[0].size\no=Image.new('RGB',(w,h*3+20),'black')\nfor i,im in enumerate(ims): o.paste(im,(0,i*(h+10)))\no.save(S+'cmp_benny.png')\n\"", "description": "Compare Benny-region crops BEFORE/try1/try2"}`
+
+### 🧑 User — 2026-11-19T02:42:09.967Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:42:11.911Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/cmp_benny.png"}`
+
+### 🧑 User — 2026-11-19T02:42:11.982Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:42:25.210Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06; python3 -c \"\nfrom PIL import Image\nS='$S/'\nims=[Image.open(S+f).crop((0,400,864,700)) for f in ['try1/BEFORE.png','try1/[REDACTED-EMAIL]','try1/[REDACTED-EMAIL]','try2/[REDACTED-EMAIL]']]\nw,h=ims[0].size\no=Image.new('RGB',(w,h*4+30),'black')\nfor i,im in enumerate(ims): o.paste(im,(0,i*(h+10)))\no.save(S+'cmp_crest.png')\n\"", "description": "Compare crest crops checkpoint/BEFORE/try1/try2"}`
+
+### 🧑 User — 2026-11-19T02:42:25.709Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:42:27.455Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/cmp_crest.png"}`
+
+### 🧑 User — 2026-11-19T02:42:27.517Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:43:59.688Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\na=s.index(\"        // r18 m06st: a tunnel / ring fragment the approved view never saw because the river crest (much nearer) hid it\")\nb=s.index(\"        // r18 m06st: on the river, the painted Benny's provisional fill (mask R)\")\nnew='''        // r18 m06st: the crest-top layer. In the approved view the painted crest top (its water, the foam heaps on its bank)\n        // lands partly on the far tunnel wall just above the river's real edge, and the tunnel right behind the crest is\n        / …[+2886 chars]`
+
+### 🧑 User — 2026-11-19T02:43:59.822Z
+
+> ↩︎ result: 11: * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+> 103:// uStM = 1 on the tunnel / rings / end cap (gaps opened behind the crest are filled from the painted wall just above it);
+> 109:uniform vec3 uProjF;
+> 221:      float filled = 0.0, filledR = 0.0;
+> 245:            float den = dot(rd, uProjF);
+> 247:              vec4 q = uProjVP * vec4(cameraPosition + rd * ((zc - dot(cameraPosition - uProjPos, uProjF)) / den), 1.0);
+> 248:              if (q.w > 0.0) { uvF = clamp(q.xy / q.w * 0.5 + 0.5, 0.0005, 0.9995); filled = 1.0; }
+> 258:            if (textureLod(uMask, u2, 0.0).r < 0.5) { uvF = clamp(2.0 * u2 - uv, 0.0005, 0.9995); filledR = 1.0; break; }
+> 262:      float w = (stOn > 0.5 ? (filled > 0.5 ? hold : vis) * edge : vis) * keep;
+> 274:          float rOff = filledR > 0.5 ? 1.0 - hold : smoothstep(0.01, 0.06, dAp);
+> 281:      if (uFloor < 0.5 && uGeo > 0.5 && uUseMask > 0.5 && filled < 0.5) {
+> 286:      if (uRing > 0.5) w *= stOn > 0.5 ? (filled > 0.5 ? 1.0 : hold) : 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+> 288:      if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
+> 289:      if (filledR >  …[+256 chars]
+
+### 🤖 Claude — 2026-11-19T02:44:07.282Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\na=s.index(\"        // r18 m06st: on the river, the painted Benny's provisional fill (mask R)\")\nb=s.index(\"      float w = (stOn > 0.5 ? (filled > 0.5 ? hold : vis) * edge : vis) * keep;\")\n# keep the closing brace of the uUseDepth block\nseg=s[a:b]\nclose=seg[seg.rindex(\"      }\\n\"):]\ns=s[:a]+close+s[b:]\nold='''          float rOff = filledR > 0.5 ? 1.0 - hold : smoothstep(0.01, 0.06, dAp);\n          w *= (1.0 - mk.r * rOff * inWater) * (1.0 - mk.g * (1.0 - hold) * inWater);'''\nnew=' …[+995 chars]`
+
+### 🧑 User — 2026-11-19T02:44:07.361Z
+
+> ↩︎ result: // edge pixels continue instead of a hard cut to the tile
+>     float edge = 1.0;
+>     bool inside = uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0;
+>     if (stOn > 0.5 && !inside) {
+>       vec2 o = max(max(-uv, uv - 1.0), 0.0);
+>       edge = (1.0 - smoothstep(0.0, 0.03, max(o.x, o.y))) * hold;
+>       uv = clamp(uv, 0.0005, 0.9995);
+>     }
+>     if (inside || (stOn > 0.5 && edge > 0.0)) {
+>       float vis = 1.0;
+>       vec2 uvF = uv; // r18 m06st: where the plate is read (moved up to the painted wall above an occluding crest)
+>       float filled = 0.0;
+>       if (uUseDepth > 0.5) {
+>         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
+>         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+>         // r18 m06st: the crest-top layer. In the approved view the painted crest top (its water, the foam heaps on its bank)
+>         // lands partly on the far tunnel wall just above the river's real edge, and the tunnel right behind the crest is
+>         // hidden. Once the camera rises over the crest, those tunnel / ring fragments ((i) hidden behind the crest, or (ii)
+>         // carrying painted water / foam with the river's edge just below them) read the ap …[+4209 chars]
+
+### 🤖 Claude — 2026-11-19T02:44:18.660Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\ns=s.replace('''          // r18 m06st: the pale ghost of the painted Benny (his provisional fill) gives way at once (to the mirrored painted\n          // water, or the river material where there is none); the painted wall seen through the crest loop stays until\n          // the hand-over\n          // (soft edge: the fill mask averaged over a 12 px disc, so the painted water and the river material meet softly)''',\n'''          // r18 m06st: the pale ghost of the painted Benny (his provisional …[+2044 chars]`
+
+### 🧑 User — 2026-11-19T02:44:59.593Z
+
+> ↩︎ result: 104:// uStK = march step in the projector's depth map (uv)
+> 118:  // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)
+> 416:  if (TF2) tFloor.wrapT = THREE.RepeatWrapping; // seamless along the river (mirrored only across it)
+> 616:      // (`&m06goldf=` share of the band on the face, default 0.37); 4 mirrored repeats around the ring (no seam).
+> NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:45:01.611Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try3/[REDACTED-EMAIL]"}`
+
+### 🧑 User — 2026-11-19T02:45:01.707Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:45:10.351Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/tools/errs.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5276);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await browser.newPage({ viewport: { width: 432, height: 768 }, deviceScaleFactor: 1 });\npage.on('console', (m …[+881 chars]`
+
+### 🧑 User — 2026-11-19T02:45:19.827Z
+
+> ↩︎ result: error THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> ERROR: 0:260: 'uProjVP' : undeclared identifier
+
+### 🤖 Claude — 2026-11-19T02:45:25.585Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\ns=s.replace(\"uniform float uStK;\\nuniform vec3 uProjF;\\n\",\"uniform float uStK;\\nuniform vec3 uProjF;\\nuniform mat4 uProjVP;\\n\",1)\nopen(p,'w').write(s)\nEOF\nK=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && O=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try3 && node tools/match06/r16_start.mjs $O NEW@1.1 \"$K&m06st=1\" NEW \"$K&m06st=1\" 2>&1 | grep -v \"allow list\"; node /home/use …[+258 chars]`
+

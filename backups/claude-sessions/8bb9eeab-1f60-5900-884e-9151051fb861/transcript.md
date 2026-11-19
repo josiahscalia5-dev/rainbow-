@@ -1397,3 +1397,287 @@ Combining the Screen 04 water and ring improvements into one preview now. I'll b
 > What it does: until now every 3D ring wore ONE straightened painted ring (painted ring 1, the plain copper one). The painting's
 > inner rings differ: ring 0 (first …[+1614 chars]
 
+### 🤖 Claude — 2026-11-19T02:41:02.071Z
+
+> 🔧 **Bash** `{"command": "git merge-base 31372d6 9eb27e6; echo \"rc=$?\"; cat .git/shallow 2>/dev/null | wc -l; git diff --stat 31372d6 9eb27e6 -- src/ tools/ assets/ | tail -15", "description": "Check merge base and code differences between branches"}`
+
+### 🧑 User — 2026-11-19T02:41:02.266Z
+
+> ↩︎ result: rc=1
+> 7
+>  assets/textures/match04/ring_paint04.json          | 206 ++++++++++++
+>  assets/textures/match04/tile_ring_paint.png        | Bin 0 -> 367275 bytes
+>  assets/textures/match04/tile_ring_paint_soft.png   | Bin 0 -> 278149 bytes
+>  assets/textures/match04/tile_ring_paint_var.png    | Bin 0 -> 1040636 bytes
+>  .../textures/match04/tile_ring_paint_var_soft.png  | Bin 0 -> 788890 bytes
+>  assets/textures/match04/tile_side04.png            | Bin 74008 -> 0 bytes
+>  src/world/match04.ts                               |   2 +-
+>  src/world/match04m4.ts                             | 362 ++++++---------------
+>  tools/match04/ring_paint04.py                      | 258 +++++++++++++++
+>  tools/match04/ring_paint04_var.py                  |  95 ++++++
+>  tools/match04/sideband04.py                        |  52 ---
+>  11 files changed, 667 insertions(+), 308 deletions(-)
+
+### 🤖 Claude — 2026-11-19T02:41:07.239Z
+
+> 🔧 **Bash** `{"command": "timeout 300 git fetch --deepen=150 origin \"+claude/rainbow-s04-ringtex-c17:refs/remotes/origin/claude/rainbow-s04-ringtex-c17\" \"+claude/rainbow-s04-match-c17:refs/remotes/origin/claude/rainbow-s04-match-c17\" 2>&1 | tail -2; git merge-base 31372d6 9eb27e6; echo rc=$?", "description": "Deepen history to find the common ancestor", "timeout": 360000}`
+
+### 🧑 User — 2026-11-19T02:41:42.001Z
+
+> ↩︎ result: fc28323a5573bd56c34593f6fa0b8709c0bd9fce
+> rc=0
+
+### 🤖 Claude — 2026-11-19T02:41:44.066Z
+
+> 🔧 **Bash** `{"command": "git log -1 --format='%h %ci %s' fc28323; git diff --stat fc28323 9eb27e6 -- src/ tools/ assets/ | tail -8; echo; git diff --stat fc28323 31372d6 -- src/ tools/ assets/ | tail -8", "description": "Show what each branch changed since common ancestor"}`
+
+### 🧑 User — 2026-11-19T02:41:44.162Z
+
+> ↩︎ result: fc28323a 2026-11-18 17:20:02 +0000 Screen 04 r14 step 9: entrance-rim foam clouds only (m04foamr, m04foamn0/n1; L4) — GOOD IMPROVEMENT (small)
+>  assets/textures/match04/tile_ring_paint.png        | Bin 0 -> 367275 bytes
+>  assets/textures/match04/tile_ring_paint_soft.png   | Bin 0 -> 278149 bytes
+>  assets/textures/match04/tile_ring_paint_var.png    | Bin 0 -> 1040636 bytes
+>  .../textures/match04/tile_ring_paint_var_soft.png  | Bin 0 -> 788890 bytes
+>  src/world/match04m4.ts                             |  99 ++++++++
+>  tools/match04/ring_paint04.py                      | 258 +++++++++++++++++++++
+>  tools/match04/ring_paint04_var.py                  |  95 ++++++++
+>  8 files changed, 658 insertions(+)
+> 
+>  assets/textures/match04/tile_side04.png | Bin 0 -> 74008 bytes
+>  src/world/match04.ts                    |   2 +-
+>  src/world/match04m4.ts                  | 263 +++++++++++++++++++++++++++++++-
+>  tools/match04/sideband04.py             |  52 +++++++
+>  4 files changed, 308 insertions(+), 9 deletions(-)
+
+### 🤖 Claude — 2026-11-19T02:41:49.176Z
+
+> 🔧 **Bash** `{"command": "WT=/home/user/wt/s04p B=claude/rainbow-s04-preview-c18 && exec 9>backups/.autosave.lock && flock 9 && git worktree add --no-checkout -b $B $WT 31372d6 >/dev/null 2>&1 && printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C $WT sparse-checkout set --no-cone --stdin && git -C $WT read-tree -mu HEAD && ln -sfn /home/user/rainbow-/node_modules $WT/node_modules && flock -u 9 && cd $WT && git merge --no-edit -m \"Screen 04 preview (user OK 2026-11-19 ~03:35 UTC): combine water (s04 31372d6) + painted rings (s04tex 9eb27e6), both behind  …[+197 chars]`
+
+### 🧑 User — 2026-11-19T02:41:55.952Z
+
+> ↩︎ result: create mode 100644 qa/match/04/r18/ringpaint/step6_var/texture_NEW_tile_ring_paint_var_soft.png
+>  create mode 100644 tools/match04/ring_paint04.py
+>  create mode 100644 tools/match04/ring_paint04_var.py
+> d0835548 Screen 04 preview (user OK 2026-11-19 ~03:35 UTC): combine water (s04 31372d6) + painted rings (s04tex 9eb27e6), both behind URL switches
+> 9eb27e6e Screen 04 r18 step 6: m04rpvar=1 three painted rings (pink-violet sheen), ring-0 lip humps refilled
+> tsc=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:41:58.194Z
+
+The two Screen 04 versions combined without conflicts and the code checks pass. Rendering the combined preview pictures now.
+
+### 🤖 Claude — 2026-11-19T02:41:59.851Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && ls tools/match04/ | head -30; grep -n \"node tools\\|node scripts\" qa/match/04/r18/PROGRESS.md | head -8; python3 -c \"import json;m=json.load(open('qa/match/04/r18/s2_nband/NEW/motion.json'));print(list(m.keys()) if isinstance(m,dict) else m[0])\" | head -c 600", "description": "Find the Screen 04 shot rendering tool"}`
+
+### 🧑 User — 2026-11-19T02:41:59.931Z
+
+> ↩︎ result: ab04.mjs
+> audit04.mjs
+> bennypts04.mjs
+> blueprint04.py
+> coins04.py
+> diag04.mjs
+> fal_plate04.py
+> fit_proxies04.py
+> make_plate04.py
+> make_river04_m3.py
+> make_tiles04.py
+> metrics04.py
+> motion04.mjs
+> mouth04.py
+> mv04_fill.py
+> mv04_prep.py
+> nochev04.py
+> probe04.mjs
+> ring_paint04.py
+> ring_paint04_var.py
+> sideband04.py
+> solve_cam04.py
+> splash04.py
+> vtile04.py
+> waterline04.py
+> 20:* Start view: `node scripts/capture.mjs 04` K17-1 vs K18-2 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+> ['screen', 'query', 'shots']
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:42:02.119Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && head -40 tools/match04/motion04.mjs; python3 -c \"import json;m=json.load(open('qa/match/04/r18/s2_nband/NEW/motion.json'));print(m['query']);print(json.dumps(m['shots'])[:500])\"; grep -rn \"motion04.mjs\" qa/match/04/r18/PROGRESS.md qa/match/04/r17/PROGRESS.md | head -3", "description": "Read motion04 tool usage and the kept query"}`
+
+### 🧑 User — 2026-11-19T02:42:02.209Z
+
+> ↩︎ result: // Screen 04 moving-camera test (read-only): from the 04 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node tools/match04/motion04.mjs <outDir> [q]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match04=1';
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5268);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   // [name, forward distance (u), steer]
+>   const shots = process.env.M04_SHOTS ? JSON.parse(process.env.M04_SHOTS) : [['f00_checkpoint', 0, null], ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f15_forwar …[+2275 chars]
+
+### 🤖 Claude — 2026-11-19T02:42:05.238Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && grep -rln \"t66_through_screen\" tools/ scripts/ 2>/dev/null | head; ", "description": "Find the script that renders the standard shot set"}`
+
+### 🧑 User — 2026-11-19T02:42:05.285Z
+
+> ↩︎ result: tools/lead_r6/motion_audit.mjs
+> tools/match04/audit04.mjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:42:07.084Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && head -30 tools/match04/audit04.mjs | cut -c1-220; grep -n \"argv\\|env\\.\\|startVite\\|mp4\\|clip\" tools/match04/audit04.mjs | head -20", "description": "Read audit04 usage"}`
+
+### 🧑 User — 2026-11-19T02:42:07.159Z
+
+> ↩︎ result: // Screen 04 r8: the lead's moving audit (tools/lead_r6/motion_audit.mjs) with a selectable SHOTS subset, so a step can be
+> // rendered only at the 2–4 audit positions where it shows best (same shot names as qa/match/04/r8/BEFORE/).
+> //   node tools/match04/audit04.mjs <outDir> "<query>" [shot1,shot2,...]   (no list = all 12)
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, Q = '', PICK = ''] = process.argv.slice(2);
+> const SCREEN = '04';
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5274);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> const ALL = [
+>   ['a00_approved_view', 0, null],
+>   ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f20_forward20u', 20, null],
+>   ['s_left_steer', 6, -1], ['s_right_steer', 6, 1], ['s_left_hard', 12, -1], ['s_right_hard', 12, 1],
+>   ['t33_through_screen', 't0.33', null], ['t66_through_screen', 't0.66', null], ['t95_through_screen', 't0.95', null] …[+1027 chars]
+
+### 🤖 Claude — 2026-11-19T02:42:11.557Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad && mkdir -p $SP && sed 's/startVite(5274)/startVite(5279)/' /home/user/wt/s04p/tools/match04/audit04.mjs > $SP/audit04_p.mjs && grep -n \"startVite(\" $SP/audit04_p.mjs && grep -n \"export async function startVite\" -A8 /home/user/wt/s04p/scripts/lib/pw.mjs | head -12", "description": "Make a port-5279 copy of the shot tool"}`
+
+### 🧑 User — 2026-11-19T02:42:11.588Z
+
+> ↩︎ result: 11:const vite = await startVite(5279);
+> 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+
+### 🤖 Claude — 2026-11-19T02:42:15.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && SP=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad && L4=$(sed -n 36p /home/user/rainbow-/docs/briefs/2026-11-18-r15/S04_LAUNCH.md | tr -d '`') && Q=\"$L4&m04fclu=1&m04sband=1&m04end=1&m04nband=1&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28&m04rpdots=1&m04rpvar=1\" && echo \"$Q\" > qa/match/04/r18/PREVIEW_QUERY.txt && timeout 1500 node $SP/audit04_p.mjs qa/match/04/r18/preview/NEW \"$Q\" 2>&1 | grep -v \"^console\" | tail -14", "description": "Render the combined Screen 04 preview shots", "timeout": 160000 …[+2 chars]`
+
+### 🧑 User — 2026-11-19T02:45:09.789Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 04 a00_approved_view s 78.351 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.148 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.184 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.149 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.183 lat 0 stage 04 frames 86
+> 04 s_left_steer s 84.181 lat -1.65 stage 04 frames 26
+> 04 s_right_steer s 84.183 lat 1.65 stage 04 frames 26
+> 04 s_left_hard s 90.248 lat -1.65 stage 04 frames 52
+> 04 s_right_hard s 90.287 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.483 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.848 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:45:11.891Z
+
+Preview pictures are rendered. Checking them at full size before sending.
+
+### 🤖 Claude — 2026-11-19T02:45:12.397Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04p/qa/match/04/r18/preview/NEW/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-19T02:45:12.477Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:45:12.861Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04p/qa/match/04/r18/preview/NEW/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:45:12.956Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:45:16.024Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/04/r18/preview/NEW/a00_approved_view.png /home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/a00_approved_view.png - 0.1 180 1536", "description": "Confirm the start view is unchanged in the preview"}`
+
+### 🧑 User — 2026-11-19T02:45:16.595Z
+
+> ↩︎ result: {"a":"qa/match/04/r18/preview/NEW/a00_approved_view.png","b":"/home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/a00_approved_view.png","rows":[180,1536],"threshold":0.1,"diff_pixels":177626,"total":1171584,"diff_pct":15.1612}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:45:20.305Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && sed -n 1,25p scripts/capture.mjs | cut -c1-200 | grep -n \"argv\\|--q\\|startVite\\|out\\|usage\" ", "description": "Read capture.mjs arguments"}`
+
+### 🧑 User — 2026-11-19T02:45:20.357Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 11:const args = process.argv.slice(2);
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 24:const vite = await startVite(5201);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:45:21.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && sed -n 1,30p scripts/capture.mjs | cut -c1-220", "description": "Read capture.mjs header"}`
+
+### 🧑 User — 2026-11-19T02:45:21.739Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+727 chars]
+
+### 🤖 Claude — 2026-11-19T02:45:23.298Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && grep -n \"opt.q\\|qa=1\" scripts/capture.mjs | head -5", "description": "Check how capture.mjs takes a query"}`
+
+### 🧑 User — 2026-11-19T02:45:23.364Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:45:26.942Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && Q=$(cat qa/match/04/r18/PREVIEW_QUERY.txt) && QB=\"${Q%%&m04rpaint=1*}\" && echo \"BEFORE ends: ${QB: -40}\" && timeout 900 node scripts/capture.mjs 04 --out=qa/match/04/r18/preview/start_BEFORE \"--q=$QB\" 2>&1 | grep -v \"outside of Vite\" | tail -2 && timeout 900 node scripts/capture.mjs 04 --out=qa/match/04/r18/preview/start_NEW \"--q=$Q\" 2>&1 | grep -v \"outside of Vite\" | tail -2 && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/04/r18/preview/start_BEFORE/04.png qa/match/04/r18/preview/start_NEW/04.png - 0.1 180 1536", "description": "Det …[+65 chars]`
+
