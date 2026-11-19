@@ -10,13 +10,13 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
-import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, m05wcrispNum } from '../vfx/waterRibbon';
+import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, M05PINK, M05LIDF, m05wcrispNum } from '../vfx/waterRibbon';
 import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05fcloud=1 only
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
-import { withClip05Std, m05farPre } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
+import { withClip05Std, m05farPre, clip05 } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -387,12 +387,31 @@ export function buildEnvironment(course: Course): Environment {
     : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
+  // `&m05pink=1` (Screen 05 round 18, waterRibbon.ts M05PINK): the 05 sheet cut to the part under the river while swimming
+  let pink05: THREE.Material | null = null;
+  if (M05PINK) {
+    const pm = pinkFlow.material.clone();
+    pm.map = pinkFlow.material.map; pm.emissiveMap = pinkFlow.material.emissiveMap;   // the same animated texture
+    const half = m05wcrispNum('m05pinka', 0.8) / 1.9;
+    pm.onBeforeCompile = (shader) => {
+      shader.uniforms.uClip05N = clip05.uClip05N;   // non-zero only while the 05 far block is live (never at the locked eye, never in 06)
+      shader.vertexShader = shader.vertexShader
+        .replace('void main() {', 'varying float vM05Arc;\nvoid main() {')
+        .replace('#include <uv_vertex>', '#include <uv_vertex>\nvM05Arc = uv.x;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('void main() {', `uniform vec3 uClip05N; varying float vM05Arc;
+void main() {
+  if (dot(uClip05N, uClip05N) > 0.25 && abs(vM05Arc - 0.5) > ${half.toFixed(4)}) discard;`);
+    };
+    pm.customProgramCacheKey = () => 'pink05cut';
+    pink05 = pm;
+  }
   const addWall = (a0: number, a1: number, mat: THREE.Material, warp?: TubeWarp) => {
     for (let a = a0; a < a1 - 0.01; a += chunk) {
       const b = Math.min(a1, a + chunk + 0.6);
       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, warp }), mat));
       // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pink05 && (mat === perf05Mat || a < sGlow05 + 1) ? pink05 : pinkFlow.material));
     }
   };
   addWall(s05, sGlow05, perf05Mat, warp05);
@@ -669,6 +688,18 @@ export function buildEnvironment(course: Course): Environment {
       course,   // used only under `&m05blend=1` (Screen 05 round 9, match05far.ts)
       popS: M05TRANS ? course.stage('06').s0 : undefined,   // `&m05trans=1` (Screen 05 round 15): removed as Benny enters 06
       clouds: farClouds05 ?? undefined,
+      // `&m05lidf=1` (Screen 05 round 18): while the block is live its own paddle pairs replace the Blender far pair L3 / R3
+      onLive: M05LIDF && PROJLID05 ? (() => {
+        let far3: THREE.Object3D[] | null = null;   // the Blender L3 / R3 (found once the GLB has loaded)
+        return (live: boolean) => {
+          farLids.visible = live;
+          if (!far3) {
+            const g = zones.tubes.getObjectByName('tube05_lids_blender');
+            if (g) { far3 = []; g.traverse((o) => { if (/_[LR]3$/.test(o.name)) far3!.push(o); }); }
+          }
+          far3?.forEach((o) => { o.visible = !live; });
+        };
+      })() : undefined,
     }) : null;
     if (farClouds05 && liveFar) {
       farClouds05.mesh.onBeforeRender = (_r, _s, cam) => liveFar(cam);

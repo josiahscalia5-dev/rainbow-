@@ -370,21 +370,26 @@ export const m05fw = {
   uM05FwT: { value: new THREE.Vector3(0, 0, 1) },
   uM05FwP: { value: new THREE.Vector4(0, 6, 0, 0) },
   uM05FwK: { value: Array.from({ length: 8 }, () => new THREE.Vector2(0, 0)) },
-  /** `&m05lidf=1`: (eye depth of the seam at the locked eye, live eye depth), eye offsets from the axis (locked, live) */
-  uM05FwD: { value: new THREE.Vector2(53, 53) },
-  uM05FwQL: { value: new THREE.Vector3() },
-  uM05FwQ: { value: new THREE.Vector3() },
 };
 /**
- * `&m05lidf=1` (Screen 05 round 18, needs m05far; src/vfx/proj05Tunnel.ts lidProjMaterial): the approved far paddles L3 / R3
- * (and the far tips of L2 / R2) are Blender trays fitted onto the far block's wall as it is compressed for the LOCKED eye
- * (4 … 5.4 u past the seam = virtual depth ≈ 21 … 56). The far block re-fits itself to the live eye every frame, the trays
- * did not: while swimming they floated 2 … 3 u inside the tunnel as a flat, cut-off gold chunk (hard left, t81: x 150–300,
- * y 440–540). Under the switch their vertices past the seam go through the same mapping as the far block (locked
- * compression undone → virtual tunnel → live compression), so they stay on the far wall as real paddles that approach like
- * the rings. Nearer than the seam nothing moves; at the locked eye and after the block is gone: identity (0 px at the lock).
+ * `&m05lidf=1` (Screen 05 round 18, needs m05far; src/world/environment.ts + match05far.ts): the approved small far paddles
+ * L3 / R3 are Blender trays fitted onto the far block's wall as it is compressed for the LOCKED eye (4.2 … 5.4 u past the
+ * seam = virtual depth ≈ 21 … 56). The far block re-fits itself to the live eye every frame, the trays did not: while
+ * swimming they floated 2 … 3 u inside the tunnel as a flat, cut-off gold chunk (hard left, t81: x 150–300, y 440–540).
+ * (Mapping their vertices through the live block was tried first: in true depth they are ≈ 27 u long slivers, so they
+ * became long thin gold blades along the walls.) Under the switch, while the far block is live, L3 / R3 are hidden and the
+ * far block's own paddle pair in front of each far ring is shown instead (placed by the block every frame, paddle size in
+ * true depth: one pair per bay, as the painting shows in front of its rings). At the locked eye: L3 / R3 as before (0 px).
  */
 export const M05LIDF: boolean = MATCH05 && q05('m05far') && q05('m05lidf');
+/**
+ * `&m05pink=1` (Screen 05 round 18, needs m05far; src/world/environment.ts): the glossy magenta floor sheet that lines the
+ * tube under the stream (1.9 rad wide) reaches up the lower walls above the foam banks; steering hard left in the kink it
+ * stood in the bottom-left corner as a flat hot-pink triangle beyond the foam (painted: slotted wall, foam clouds).
+ * While the 05 far block is live (swimming in 05) the 05 sheet and the first 06 piece seen from 05 are cut to the part under
+ * the river (± `m05pinka` rad from the bottom, default 0.8). Locked view and 06 / 07: unchanged (the block is not live there).
+ */
+export const M05PINK: boolean = MATCH05 && q05('m05far') && q05('m05pink');
 /**
  * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
  * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by

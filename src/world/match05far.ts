@@ -104,6 +104,8 @@ export interface LiveFar05Args {
   riverUp: (z: number) => number;
   /** `&m05blend=1` (round 9): the real course (the far river's first rows are laid onto the ribbon's surface at the seam) */
   course?: Course;
+  /** `&m05lidf=1` (round 18): told every frame whether the block is live (swimming in 05) or at the locked eye / gone */
+  onLive?: (live: boolean) => void;
   /** `&m05fcloud=1` (round 12): foam-cloud lumps along both far banks (src/vfx/foam.ts createFarCloud05) */
   clouds?: { mesh: THREE.InstancedMesh; lumps: FarLump05[] };
 }
@@ -171,10 +173,8 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
   const rivOpenOrig = (rg.morphAttributes.position[0].array as Float32Array).slice();
   const eyeLock = c0.clone().addScaledVector(T, -D0lock).add(ft.q);
   m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye
-  if (M05WCRISP || M05LIDF) {
+  if (M05WCRISP) {
     // `&m05wcrisp=1` (round 18): the far wall's exact tunnel coordinate per pixel (src/vfx/proj05Tunnel.ts)
-    // `&m05lidf=1` (round 18): the locked eye's seam depth and axis offset (the far paddles' locked compression)
-    m05fw.uM05FwD.value.x = D0lock; m05fw.uM05FwQL.value.copy(ft.q);
     m05fw.uM05FwC.value.copy(c0); m05fw.uM05FwT.value.copy(T);
     const kn = ft.knots.length >= 2 ? ft.knots : [[0, 0], [1, 1]] as [number, number][];
     m05fw.uM05FwK.value.forEach((v, i) => {
@@ -392,10 +392,9 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
       far05Coins.T.copy(T);
     }
     // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
-    if (M05WCRISP || M05LIDF) {
-      m05fw.uM05FwP.value.set(zs, L, sF, atLock || open > 0.5 ? 0 : 1);
-      m05fw.uM05FwD.value.y = D0; m05fw.uM05FwQ.value.copy(q);
-    }
+    if (M05WCRISP) m05fw.uM05FwP.value.set(zs, L, sF, atLock || open > 0.5 ? 0 : 1);
+    // `&m05lidf=1` (round 18): the far block's own paddle pairs while it is live, the Blender L3 / R3 at the locked eye
+    if (M05LIDF) a.onLive?.(!atLock && open < 0.5);
     if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
     else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
     // `&m05seam=1` (Screen 05 round 8): the seam's course position for the near river's design hand-over (waterRibbon.ts)

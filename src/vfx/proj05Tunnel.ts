@@ -14,7 +14,7 @@
  * materials are wrapped only when a switch is on, every default shader program is unchanged.
  */
 import * as THREE from 'three';
-import { M05WALL, M05WTILE, M05WCRISP, M05LIDF, m05wcrispNum, m05fw, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
+import { M05WALL, M05WTILE, M05WCRISP, m05wcrispNum, m05fw, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
 // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
 const flag05 = on05;
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -86,31 +86,6 @@ function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, fog: false });
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, shared);
-    if (M05LIDF) {
-      // `&m05lidf=1` (round 18, waterRibbon.ts M05LIDF): past the seam the tray follows the live far block — undo the
-      // locked compression (zs = 0: Z = z / (1 − z / L), lateral scale about the locked eye's axis offset), redo the live one
-      Object.assign(shader.uniforms, m05fw);
-      const pv = '#include <project_vertex>';
-      if (!shader.vertexShader.includes(pv)) { console.error('[rainbow] m05lidf: project_vertex not found'); return; }
-      shader.vertexShader = shader.vertexShader
-        .replace('void main() {', 'uniform vec3 uM05FwC; uniform vec3 uM05FwT; uniform vec4 uM05FwP; uniform vec2 uM05FwD; uniform vec3 uM05FwQL; uniform vec3 uM05FwQ;\nvoid main() {')
-        .replace(pv, `vec4 wpL = modelMatrix * vec4(transformed, 1.0);
-if (uM05FwP.w > 0.5) {
-  vec3 rel = wpL.xyz - uM05FwC;
-  float zL = dot(rel, uM05FwT);
-  if (zL > 0.0) {
-    float Lf = uM05FwP.y, zs = uM05FwP.x;
-    float zc = min(zL, Lf * 0.995);
-    float ZV = zc / (1.0 - zc / Lf);
-    vec3 lat = rel - uM05FwT * zL;
-    vec3 oV = uM05FwQL + (lat - uM05FwQL) * (uM05FwD.x + ZV) / (uM05FwD.x + zc);
-    float zN = ZV <= zs ? ZV : zs + (ZV - zs) / (1.0 + (ZV - zs) / Lf);
-    wpL.xyz = uM05FwC + uM05FwT * zN + uM05FwQ + (oV - uM05FwQ) * (uM05FwD.y + zN) / (uM05FwD.y + ZV);
-  }
-}
-vec4 mvPosition = viewMatrix * wpL;
-gl_Position = projectionMatrix * mvPosition;`);
-    }
     shader.fragmentShader = shader.fragmentShader
       .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;
 ${PROJ05_INVERSE}
@@ -118,7 +93,7 @@ void main() {`)
       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
 gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
   };
-  mat.customProgramCacheKey = () => 'ptlid05' + (M05LIDF ? '-lidf' : '');
+  mat.customProgramCacheKey = () => 'ptlid05';
   mat.onBeforeRender = (renderer) => livePost(renderer);
   return mat;
 }
