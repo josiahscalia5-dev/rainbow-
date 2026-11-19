@@ -23,7 +23,7 @@ export interface FurParams {
 export interface FurHandle {
   mesh: THREE.InstancedMesh;
   material: THREE.MeshStandardMaterial;
-  uniforms: { uTime: { value: number }; uWind: { value: THREE.Vector3 } };
+  uniforms: { uTime: { value: number }; uWind: { value: THREE.Vector3 }; uMaskCol: { value: THREE.Color } };
 }
 
 export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
@@ -39,6 +39,8 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
     uShort: { value: new THREE.Vector3(p.short?.[3] ?? 2, p.short?.[4] ?? 3, p.short?.[5] ?? 1) },
     uTime: { value: 0 },
     uWind: { value: new THREE.Vector3() },
+    /** QA segmentation colour (only compiled in when material.defines.BENNY_MASK is set, see runtime.ts) */
+    uMaskCol: { value: new THREE.Color(1, 0, 0) },
   };
   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -110,9 +112,17 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         '#include <emissivemap_fragment>',
         `#include <emissivemap_fragment>
         totalEmissiveRadiance += diffuseColor.rgb * 0.10 * vLayer;`,
+      )
+      .replace(
+        '#include <dithering_fragment>',
+        `#include <dithering_fragment>
+        #ifdef BENNY_MASK
+        gl_FragColor = vec4(uMaskCol, 1.0);
+        #endif`,
       );
+    shader.fragmentShader = shader.fragmentShader.replace('uniform vec3 uTip;', 'uniform vec3 uTip; uniform vec3 uMaskCol;');
   };
-  material.customProgramCacheKey = () => `benny-fur-${shells}`;
+  material.customProgramCacheKey = () => `benny-fur-${shells}${material.defines?.BENNY_MASK !== undefined ? '-mask' : ''}`;
 
   const mesh = new THREE.InstancedMesh(src.geometry, material, shells);
   const I = new THREE.Matrix4();
