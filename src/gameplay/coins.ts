@@ -10,11 +10,13 @@ import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05 } from '../vfx/waterRibbon';
 import coins08 from '../../assets/textures/match08/coins08.json';
 import coins06 from '../../assets/textures/match06/coins06.json';
+import crestRoute06 from '../../assets/textures/match06/crest-route.json';
 
 export const COIN_VALUE = 10;
 
 /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
-export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+interface PictureAnchor { origin: number[]; animatedUp: number[]; phase: number }
+export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number]; pictureAnchor?: PictureAnchor }
 
 /**
  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
@@ -57,7 +59,14 @@ export function coinLayout(course: Course): CoinDef[] {
   if (m06) {
     const a = st('06');
     for (let i = 0; i < 3; i++) add('06', a.s0 + 1 + i, -0.4 + 0.4 * i);
-    for (const c of coins06.coins) add(course.stageAtS(c.s).id, c.s, c.lat, c.h, { scale: c.scale, faceTo: coins06.faceTo as [number, number, number] });
+    const fitted = flag05('cx06CrestRoute') ? crestRoute06.coins : undefined;
+    coins06.coins.forEach((original, i) => {
+      const anchor = fitted?.[i];
+      const c = anchor ?? original;
+      add(course.stageAtS(c.s).id, c.s, c.lat, c.h, {
+        scale: c.scale, faceTo: coins06.faceTo as [number, number, number], pictureAnchor: anchor,
+      });
+    });
   }
   // 07 — winding trail, continuing down the plunge
   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
@@ -176,18 +185,26 @@ export function createCoins(course: Course): CoinSystem {
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
 
+  const pictureUp = new THREE.Vector3();
   const place = (time: number) => {
     defs.forEach((d, i) => {
       const f = course.sample(d.s);
+      const phase = d.pictureAnchor?.phase ?? i;
       let scale = 1;
+      let lift = 0.08 * Math.sin(time * 3 + phase);
       if (collected[i]) {
         if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
         const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
         if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
         scale = 1 + k * 0.8;
-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+        lift = k * 1.6;
+      }
+      if (d.pictureAnchor) {
+        // The physical pickup is seated on the new river. The painted diameter
+        // and bob stay calibrated to the original camera at its adjusted depth.
+        p.fromArray(d.pictureAnchor.origin).addScaledVector(pictureUp.fromArray(d.pictureAnchor.animatedUp), lift);
       } else {
-        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + lift);
       }
       back.copy(f.tan).negate();
       // `?match08=1` / `?match06=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
@@ -197,7 +214,7 @@ export function createCoins(course: Course): CoinSystem {
       basis.makeBasis(right, upV, back);
       q.setFromRotationMatrix(basis);
       // tilted coins (05) only wobble a little so the face stays toward the camera; picture coins (08) barely
-      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + phase * 0.7));
       q.multiply(spin);
       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
       m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));

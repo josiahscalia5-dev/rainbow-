@@ -15,6 +15,7 @@ import * as THREE from 'three';
 import { flag05 } from '../vfx/waterRibbon';
 import river08 from '../../assets/textures/match08/river08.json';
 import path06 from '../../assets/textures/match06/path06.json';
+import { applyCrestRoute06 } from './crestRoute06';
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
@@ -496,6 +497,9 @@ export class Course {
       const t = tan[i];
       return acc.addScaledVector(t, -acc.dot(t)).normalize();
     });
+    if ((flag05('match06') || flag05('matchall')) && flag05('cx06CrestRoute')) {
+      applyCrestRoute06(m['06'], this.ds, pos, tan, sm);
+    }
     for (let i = 0; i < this.N; i++) {
       pos[i].toArray(this.P, i * 3);
       tan[i].toArray(this.T, i * 3);
