@@ -1099,12 +1099,12 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/INFO.json",
    "bytes": 477,
-   "sha256": "c790ea15cf6799d39c0e9fe776366dc991604ab2dd699ff3d7cb77c1e374c60a"
+   "sha256": "ccb8633a595dc8de54aa1361b1e1fd11a306b731c089aa22b0aec3bff43d7608"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
    "bytes": 538,
-   "sha256": "c6c7706ff4079eadb7e67a1d7de2057f891a5d33d48a0038e45967d3f201e88c"
+   "sha256": "c85032c42260d8242934eb9e1342ee8ab8c9fb4bcaba339286e6e9095cb1b5f8"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview_v2/swim_clip_half.mp4",
@@ -1179,7 +1179,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c18/INFO.json",
    "bytes": 486,
-   "sha256": "d36146181b71ac2fb7633cabc24939b0af74437a8b0bf3143530acfe317ff962"
+   "sha256": "a4c78feb91dc26ed159f236beccb176711f88b34f54f1318d789764e09a38bc4"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1523,8 +1523,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/INFO.json",
-   "bytes": 1651,
-   "sha256": "4c91261a359ca1fcc834e8dd08259088bc6b1255f43d4f91f67b47d6c01c63f1"
+   "bytes": 1814,
+   "sha256": "3a80dfb22ed4c55d1830896a378014a56b593c9becd786c2b9f2810d8b5f476d"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/tracked.patch",
@@ -1589,7 +1589,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/INFO.json",
    "bytes": 536,
-   "sha256": "d4892adbbf61ac5f8b19ff41724f343f9ec7436587fa31655822b2f796d6a094"
+   "sha256": "578c9a426f41a0976e51ff4a2158c7fbdd27a0d07ee189dd306408fa2ca6c497"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/tracked.patch",
@@ -1734,7 +1734,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/INFO.json",
    "bytes": 477,
-   "sha256": "683818b5bbe803246bffdf994ca44e05dcb0a371d8e3ca0cb9872e7937606916"
+   "sha256": "844b5b48d1c389e4cbcdca867fe9c6138b14e5eb4aee2f1bde9e2e7a06310685"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",

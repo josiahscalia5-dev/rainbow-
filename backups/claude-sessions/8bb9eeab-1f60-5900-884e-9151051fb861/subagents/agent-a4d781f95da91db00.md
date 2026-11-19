@@ -2286,3 +2286,107 @@ Frame to frame the telescope and its glow change smoothly: no popping, no seams,
 
 > ↩︎ result: (Bash completed with no output)
 
+### 🤖 Claude — 2026-11-19T18:27:19.167Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/sv3d_k7_zoom.png"}`
+
+### 🧑 User — 2026-11-19T18:27:19.231Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:27:33.027Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/qa/match/04/r18/ringpaint/step7_rfew/3_NEW_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T18:27:33.080Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:28:09.051Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && Q=$(echo \"$K7\" | sed 's/&m04rpsoft=1//') && echo \"$Q\" | grep -c rpsoft; ONLY=f10_forward10u,t33_through_screen,s_left_hard node $S/audit_only.mjs 04 $S/s8a \"$Q\" 2>&1 | grep -E \"pageerror|Error\" | head; python3 -c \"\nfrom PIL import Image\nS='$S/'\nfor sh in ['f10_forward10u','t33_through_screen','s_left_hard']:\n    a=Image.open('qa/match/04/r18/ringpaint/step7_rfew/3_NEW_'+sh+'.png').convert('RGB').crop((0,180,864,900)); b=Image.op …[+290 chars]`
+
+### 🧑 User — 2026-11-19T18:29:02.760Z
+
+> ↩︎ result: 0
+
+### 🤖 Claude — 2026-11-19T18:29:06.386Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s8a_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T18:29:06.414Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:29:07.056Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s8a_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-19T18:29:07.099Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:29:20.943Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -I -c \"\nimport numpy as np, cv2\nfor f in ['tile_ring_paint_var_soft.png','tile_ring_paint_var.png']:\n    t=cv2.imread('assets/textures/match04/'+f).astype(np.float32)\n    nc=t.shape[1]; psi=np.linspace(-np.pi,np.pi,nc,endpoint=False); up=np.abs(psi)<1.4\n    for k in range(3):\n        r=t[k*160:(k+1)*160]\n        band=r[int(0.1*160):int(0.72*160)][:,up].reshape(-1,3); lip=r[int(0.76*160):int(0.84*160)][:,up].reshape(-1,3)\n        L=[REDACTED-EMAIL]([0.11,0.59,0.3])\n        print(f[:24],'ring',k,'band mean BGR',band.mean(0).round(0),'luma p …[+681 chars]`
+
+### 🧑 User — 2026-11-19T18:29:21.413Z
+
+> ↩︎ result: tile_ring_paint_var_soft ring 0 band mean BGR [ 61.  85. 185.] luma p5/50/95 [ 83. 111. 147.]  lip BGR [ 79.  98. 205.]
+> tile_ring_paint_var_soft ring 1 band mean BGR [ 47.  98. 198.] luma p5/50/95 [ 94. 115. 169.]  lip BGR [ 51. 126. 222.]
+> tile_ring_paint_var_soft ring 2 band mean BGR [ 41.  81. 181.] luma p5/50/95 [ 88. 104. 133.]  lip BGR [ 52. 115. 219.]
+> tile_ring_paint_var.png ring 0 band mean BGR [ 60.  84. 184.] luma p5/50/95 [ 80. 108. 154.]  lip BGR [ 79.  98. 204.]
+> tile_ring_paint_var.png ring 1 band mean BGR [ 48.  98. 199.] luma p5/50/95 [ 91. 113. 187.]  lip BGR [ 51. 126. 222.]
+> tile_ring_paint_var.png ring 2 band mean BGR [ 41.  81. 181.] luma p5/50/95 [ 86. 103. 139.]  lip BGR [ 52. 115. 219.]
+> painted inner rings upper arc BGR [ 40.  88. 193.] luma p5/50/95 [ 79. 108. 170.] n 109244
+>    (all pixels, incl. pink/violet) [ 52.  89. 190.]
+
+### 🤖 Claude — 2026-11-19T18:29:29.967Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -I -c \"\nimport numpy as np, cv2\ndef st(f, y0=200, y1=760):\n    A=cv2.imread(f).astype(np.float32)[y0:y1]\n    b,g,r=A[...,0],A[...,1],A[...,2]; gm=(r>g*1.15)&(g>b*1.05)&(r>90)\n    v=A[gm]; L=[REDACTED-EMAIL]([0.11,0.59,0.3]); allv=A.reshape(-1,3)\n    return v.mean(0).round(0), np.percentile(L,[5,25,50,75,95]).round(0), gm.mean().round(2), allv.mean(0).round(0)\nprint('APPROVED ring area y380-760', st('references/04_through_the_five_arrows.png',380,760))\nfor sh in ['f03_forward3u','f10_forward10u','f20_forward20u','t66_through_screen','t95_th …[+172 chars]`
+
+### 🧑 User — 2026-11-19T18:29:31.561Z
+
+> ↩︎ result: APPROVED ring area y380-760 (array([ 46., 103., 204.], dtype=float32), array([ 82., 101., 120., 148., 195.]), np.float64(0.52), array([115., 120., 202.], dtype=float32))
+> f03_forward3u K7 (array([ 56., 112., 208.], dtype=float32), array([ 91., 110., 127., 157., 201.]), np.float64(0.53), array([117., 124., 206.], dtype=float32))
+> f10_forward10u K7 (array([ 44.,  94., 190.], dtype=float32), array([ 88., 100., 111., 130., 165.]), np.float64(0.89), array([ 52.,  96., 190.], dtype=float32))
+> f20_forward20u K7 (array([ 47.,  94., 190.], dtype=float32), array([ 93., 102., 111., 126., 162.]), np.float64(0.92), array([ 53.,  96., 190.], dtype=float32))
+> t66_through_screen K7 (array([ 49.,  97., 194.], dtype=float32), array([ 89., 103., 116., 134., 168.]), np.float64(0.91), array([ 56.,  99., 195.], dtype=float32))
+> t95_through_screen K7 (array([ 52., 101., 195.], dtype=float32), array([ 86., 104., 118., 141., 182.]), np.float64(0.8), array([ 69., 106., 195.], dtype=float32))
+
+### 🤖 Claude — 2026-11-19T18:30:00.951Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"pr \\*= 1.0 - uRLip.z + uRLip.z \\* facing;\" src/world/match04m4.ts; grep -n \"uniform float uRVar;\" src/world/match04m4.ts; grep -n \"uRVar: { value: 0 },\" src/world/match04m4.ts", "description": "Locate insertion points for the polish switch"}`
+
+### 🧑 User — 2026-11-19T18:30:01.035Z
+
+> ↩︎ result: 324:      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading
+> 118:uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)
+> 703:        uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.06)) }, uRVar: { value: 0 },
+
+### 🤖 Claude — 2026-11-19T18:30:03.403Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 116, "limit": 4}`
+
+### 🧑 User — 2026-11-19T18:30:03.505Z
+
+> ↩︎ result: 116	uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)
+> 117	uniform vec4 uRDots;       // r16 m04rpdots: x = amount, y = dot cells per ring, z = fraction of cells lit, w = core radius (u)
+> 118	uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)
+> 119	#ifdef RFEW
+
+### 🤖 Claude — 2026-11-19T18:30:04.061Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 320, "limit": 8}`
+
+### 🧑 User — 2026-11-19T18:30:04.082Z
+
+> ↩︎ result: 320	        uvR.y = (idx + clamp(sp, 0.004, 0.996)) / uRVar;
+> 321	        gS /= uRVar;
+> 322	      }
+> 323	      vec3 pr = textureGrad(uRTex, uvR, vec2(dax / 6.2831853, gS.x), vec2(day / 6.2831853, gS.y)).rgb;
+> 324	      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading
+> 325	      if (uRWarm.x > 0.0) {
+> 326	        // r16 m04rwarm: the painted rings keep their copper near the viewer, then the last rings before the glowing end
+> 327	        // turn orange -> yellow -> warm yellow-white (band medians measured ring by ring on the approved picture, R 100 ->
+
