@@ -39,3 +39,101 @@ Still different: (1) at hard left the nearest ring's upper-left wall becomes a s
 painted ring 0's left side, but up close it looks less polished than the painted gold); (2) the painted rings are brighter
 and more contrasty overall (white-hot yellow highlights on the upper rings, deeper shadows in the grooves); the game rings
 are a slightly flatter, mid-tone copper.
+
+## Step 7 — ring STRUCTURE: few, thick rings telescoping into the warm light: K6 + `&m04rfew=1&m04rfg=1.2` (lead redirect)
+K6 = K5 + `&m04rpvar=1` (step 6 kept). BEFORE = `step6_var/3_NEW_<shot>.png` (K6, same build: step-7 code is off by default).
+Why: measured on the approved picture (upper-left walls, the cleanest), every painted groove circle is ~0.76 x the previous one
+over 11 rings (338, 254, 194, 149, 114, 87, 65, 50, 35, 27, 22 px): a quick telescope into the light. The game's constant
+4.6 u cylinder gives 0.75 rising to 0.9 — a long corridor of many thin rings to a small orange ball at 90 u.
+What it does (`src/world/match04m4.ts`, ring block + GOLD_FRAG under `#define RFEW`, default off; default build untouched):
+* corridor (where Benny swims, to ~30 u inside the opening; the 04 scenery is hidden once stage 04 ends at ~30.4 u): ring 0
+  keeps the kept 4.6 u period, each next period 1.2x longer (`m04rfg`) -> 5 broad rings (0, 4.6, 10.1, 16.7, 24.7 u);
+* from 30 u (`m04rfa`) every ring is a smaller copy of the ring before it (x0.75 per ring, `m04rfq`), scaled about a point on
+  the water line, its band a broad cone narrowing to its lip (faces the viewer like the painted bands), ending at ~55 u in
+  a small end disc; painted texture, lip line, groove and light dots keep their painted proportions on every ring;
+* the deep rings take on the painting's warm light (copper -> orange -> yellow -> warm white, the gains measured ring by ring
+  on the painting in step 4, graded by ring size, `m04rfw`/`m04rfk`) and a warm-white light with a yellow-orange glow sits
+  at the end (`m04rfl`, `m04rfc`, `m04rfo`; drawn on rings / end disc only, never over Benny, coins or water);
+* the river trough is narrowed with the telescope (same centre), so its cyan lane and pink banks converge into the light
+  instead of being cut by straight diagonal edges at the narrowing walls (first try without this showed those cuts). Done
+  from the ring block when the river mesh is added (no edit in the river code; `m04rfriv=0` switches it off).
+Pictures (full size, real game): NEW `step7_rfew/3_NEW_<shot>.png` (12 shots, `step7_rfew/motion.json`); BEFORE
+`step6_var/3_NEW_<shot>.png`; APPROVED `1_APPROVED.png`. Clips (half size 432x768, 3.6 s straight / left / right / straight,
+real gameplay; Screen 04 fills the first ~1.9 s, then 05 which is identical in both): `step7_rfew/clip_BEFORE_swim.mp4`,
+`step7_rfew/clip_NEW_swim.mp4`.
+Checks: approved start view unchanged — frozen `scripts/capture.mjs 04` K6 vs K6 + switch, Pixelmatch rows 180–1536:
+**0 differing pixels**. Coins at all 12 shots identical to BEFORE (1,330 / 1,350 / 1,360 where picked up). Hearts, Benny,
+camera, HUD untouched. tsc clean. Frame-by-frame check of the clip around the telescope: no popping, seams or flicker.
+Verdict: **GOOD IMPROVEMENT (big, ring structure)** — from forward 3 u to the end and at hard left / right the tunnel is now a
+handful of broad, thick polished rings that telescope quickly into a warm yellow-white light, with the river converging into
+it, like the painted tunnel; before, a long straight corridor of ~20 thin copper rings ran to a small orange ball.
+Still different: (1) the rings are a deeper copper-orange than the painting's brighter, more polished yellow-gold with
+white-hot highlights (step 8 = brightness / polish, as planned); (2) the painted light at the end is a little larger and
+whiter; (3) for the s04 worker / lead: with `m04rfew` the end disc moves to the telescope's end and shrinks to its last ring,
+so `m04end` (s04's painted far opening on that disc) would need refitting if both are combined.
+
+## Step 7 fix — seam at the top of every ring (found while doing step 8)
+With `m04rfew` the lathe's first and last vertex columns (they coincide at the tunnel top) got different normals, so a thin
+vertical line ran through each band at the top and the lip edge showed a small step there (visible at t66 when zoomed). The
+seam normals are now welded (telescope path only). K7 BEFORE frames for step 8 were re-rendered with the fix
+(`step8_pol/2_BEFORE_<shot>.png`); start view K6 vs fixed K7: 0 differing pixels.
+
+## Step 8 — bright polished gold: K7 + `&m04rpol=1` (K7 = K6 + `&m04rfew=1&m04rfg=1.2`)
+Measured on ring pixels: while swimming (f10 / f20 / t66) the rings were flatter than the painted ring area: luma p50 111,
+p75 130, p95 165 against the painting's 120 / 148 / 195 (darks equal). The straightened textures match the painted inner-ring
+pixels (the painted bright parts — lip lines, highlight streaks — shrink to a few pixels up close), so the fix is the polish,
+not a recolour. What it does (painted-ring path, default off): the painted ring's own highlights lifted above a pivot
+(`m04rpp` 0.42, gain `m04rpgh` 0.5; darks slightly deeper `m04rpgl` 0.15) and a sharp warm-white sheen that mirrors the bright
+end of the tunnel and moves with the view (`m04rpsp` 0.25; grazing brightening `m04rpfr`, 0 by default).
+After: f10 p50 123 / p75 149 / p95 186, t66 130 / 153 / 187, hard left 136 / 159 / 190.
+Pictures: `step8_pol/2_BEFORE_<shot>.png` (K7 with the seam fix) and `step8_pol/3_NEW_<shot>.png`, 12 shots each; APPROVED
+`1_APPROVED.png`. Clip (half size, real gameplay): `step8_pol/clip_NEW_swim.mp4`; BEFORE clip `step7_rfew/clip_NEW_swim.mp4`.
+Checks: start view K7 vs K7 + `m04rpol=1`: **0 differing pixels** (`step8_pol/start_view_pixeldiff_BEFORE_vs_NEW.png`); coins
+identical at all 12 shots; frame-by-frame clip check: no sparkle noise, seams or flicker.
+Verdict: **GOOD IMPROVEMENT (moderate, ring look)** — the rings read as brighter, polished yellow-gold with strong warm
+highlight streaks on every band, instead of a duller brownish copper; ring edges, grooves and light dots stay crisp.
+Still different: (1) at f10 / t66 the top third of the frame is the near ring band seen from inside, one broad smooth copper
+surface (the painting shows the big gold washer rim and the pink room there — lead note; next); (2) the nearest ring's
+upper-left wall at hard left is a soft pink haze (painted ring 0's sheen).
+
+## Step 9 (r19) — crisp lip and groove lines on the near rings: K8 + `&m04rpcr=1` (K8 = K7 + `&m04rpol=1`)
+Started on account 18 just before its usage limit (code + 10 NEW stills restored uncommitted); finished, checked and kept on
+account 19 (branch `claude/rainbow-s04-ringtex-c19`).
+Why: up close (f10, t66, hard left) the near ring's lip is the 160-row painted texture magnified many times, so its thin bright
+lip line and dark groove soften into one broad blurred copper surface; the painting's rings always show a crisp bright line on
+each lip and a dark gap behind it, which is what makes them read as separate, neat, polished rings.
+What it does (painted-ring path only, default off): draws the painted thin warm-white lip line and the thin dark red-brown groove
+line (not black) at their modelled places on every ring, world-anchored, anti-aliased to the pixel footprint and faded out where
+thinner than a pixel (far rings keep the painted texture, no shimmer). Widths `m04rpcb` 0.011, `m04rpcd` 0.014, `m04rpcc` 0.012.
+Pictures (full size, real game): NEW `step9_crisp/3_NEW_<shot>.png` (12 shots; a00 / f03 re-rendered on account 19, motion log
+`step9_crisp/motion.json`); BEFORE = `step8_pol/3_NEW_<shot>.png` (K8); APPROVED `1_APPROVED.png`. Clip (half size, real
+gameplay, 3.6 s straight / left / right / straight): `step9_crisp/clip_NEW_swim.mp4`; BEFORE clip `step8_pol/clip_NEW_swim.mp4`.
+Checks: approved start view unchanged — frozen `scripts/capture.mjs 04` K8 vs K8 + `m04rpcr=1`, Pixelmatch rows 180–1536:
+**0 differing pixels** (`step9_crisp/start_view_pixeldiff_BEFORE_vs_NEW.png`); coins identical to BEFORE at all 12 shots
+(1,330 / 1,350 / 1,360); tsc clean; clip checked frame to frame (incl. the steering frames): the new lines stay continuous, no
+breaks, popping or shimmer on near or far rings.
+Verdict: **GOOD IMPROVEMENT (small, ring neatness)** — the nearest rings now have a crisp thin bright line along each lip and a
+dark groove line under it (clearest at t66, f10 and hard left), so even the big near ring overhead reads as a neat machined gold
+ring instead of a soft blurred band. Kept: K9 = K8 + `&m04rpcr=1`.
+Still different: the top third at f10 / t66 is still the near ring band seen from inside (broad copper surface) where the
+painting's start view shows the gold washer rim and the pink room; and the soft pink haze on the nearest ring's upper-left wall
+at hard left (task 2, next).
+
+## (r19) WHERE I STOPPED / NEXT (handover to a fresh session, lead's order ~19:45 UTC)
+Stopped after step 9 (kept, commit `8d3d6c39`). Task 2 was NOT started (no code changed after step 9).
+Kept set **K9** = K8 + `&m04rpcr=1` (full query, `?qa=1&dpr=1&` + this):
+`match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28&m04rpdots=1&m04rpvar=1&m04rfew=1&m04rfg=1.2&m04rpol=1&m04rpcr=1`
+BEFORE pictures for the next step = `step9_crisp/3_NEW_<shot>.png` (12 shots) + `step9_crisp/clip_NEW_swim.mp4`.
+Helpers (scratchpad, recreate in seconds): subset audit = `tools/lead_r6/motion_audit.mjs` with the closing `];` of the shot
+list replaced by `].filter((s) => !process.env.ONLY || process.env.ONLY.split(",").includes(s[0]));` (run with
+`ONLY=f10_forward10u,s_left_hard ...`); half-size clip = `tools/lead_r13/swim_clip.mjs` with `width: 864, height: 1536` ->
+`width: 432, height: 768` (3.6 s, encode 24 fps libx264 crf 20). Start view check: `scripts/capture.mjs 04 --q=...` both
+sets, then `git checkout qa/capture_log.json`, Pixelmatch rows 180-1536.
+Next tasks, in order:
+1. Steering glitch check with K9: at hard left / right and while steering, any seam, stretch, flicker or popping on the nearest
+   ring (user's bar: "no glitches"). Then the soft pink-mauve haze on the nearest ring's upper-left wall at hard left (seen in
+   `step9_crisp/3_NEW_s_left_hard.png`, about x 0-250, y 250-550): it is painted ring 0's left side (`m04rpvar` atlas row 0,
+   `idx = ri0` for the first three rings, GOLD_FRAG painted-ring branch ~line 318); the painting shows ring 0 crisp polished gold
+   there. Fix behind a new switch, prove, report.
+2. The top-third band at f10 / t66: the near ring band seen from inside is one broad copper surface where the painting's start
+   view shows the gold washer rim and the pink room.
