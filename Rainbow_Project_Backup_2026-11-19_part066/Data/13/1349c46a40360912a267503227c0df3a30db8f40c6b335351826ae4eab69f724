@@ -1,0 +1,19 @@
+from urllib.request import urlopen,Request
+import json,hashlib,base64,tarfile,io
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+r=json.load(open('registry.json'));root=Path('reviewed');root.mkdir(exist_ok=True)
+def fetch(n):
+ info=r[n];base=n.split('/')[-1];raw=urlopen(info['dist']['tarball'],timeout=30).read()
+ algorithm,expected=info['dist']['integrity'].split('-',1)
+ assert base64.b64encode(hashlib.new(algorithm,raw).digest()).decode()==expected
+ with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
+  names=archive.getnames()
+  for p in names:
+   pp=Path(p); assert not pp.is_absolute() and '..' not in pp.parts
+   entry=archive.getmember(p)
+   if not entry.isfile():continue
+   if p.lower().endswith(('readme.md','package.json')) and p.count('/')==1 or p in ('package/cli.js','package/dist/index.js','package/src/index.ts'):
+    out=root/base/pp.name;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(archive.extractfile(entry).read())
+ print(n,'archive verified',len(raw),'source',info['repository'].get('url'),flush=True)
+with ThreadPoolExecutor(max_workers=4) as e:list(e.map(fetch,['@playwright/mcp','chrome-devtools-mcp','threejs-devtools-mcp','spectorjs']))

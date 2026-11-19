@@ -1,0 +1,70 @@
+{
+  "hash": "f44ec334",
+  "configHash": "b9bf1694",
+  "lockfileHash": "a05bea31",
+  "browserHash": "2b5ae0ca",
+  "optimized": {
+    "three": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/build/three.module.js",
+      "file": "three.js",
+      "fileHash": "1b29e0de",
+      "needsInterop": false
+    },
+    "three/examples/jsm/geometries/RoundedBoxGeometry.js": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js",
+      "file": "three_examples_jsm_geometries_RoundedBoxGeometry__js.js",
+      "fileHash": "b8634cc5",
+      "needsInterop": false
+    },
+    "three/examples/jsm/loaders/GLTFLoader.js": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+      "file": "three_examples_jsm_loaders_GLTFLoader__js.js",
+      "fileHash": "6d2f1834",
+      "needsInterop": false
+    },
+    "three/examples/jsm/postprocessing/EffectComposer.js": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+      "file": "three_examples_jsm_postprocessing_EffectComposer__js.js",
+      "fileHash": "75f9418c",
+      "needsInterop": false
+    },
+    "three/examples/jsm/postprocessing/OutputPass.js": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+      "file": "three_examples_jsm_postprocessing_OutputPass__js.js",
+      "fileHash": "17d904b2",
+      "needsInterop": false
+    },
+    "three/examples/jsm/postprocessing/RenderPass.js": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+      "file": "three_examples_jsm_postprocessing_RenderPass__js.js",
+      "fileHash": "774a1f83",
+      "needsInterop": false
+    },
+    "three/examples/jsm/postprocessing/ShaderPass.js": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/examples/jsm/postprocessing/ShaderPass.js",
+      "file": "three_examples_jsm_postprocessing_ShaderPass__js.js",
+      "fileHash": "76319147",
+      "needsInterop": false
+    },
+    "three/examples/jsm/postprocessing/UnrealBloomPass.js": {
+      "src": "../../../../rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+      "file": "three_examples_jsm_postprocessing_UnrealBloomPass__js.js",
+      "fileHash": "d261843f",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-3DNKUNSP": {
+      "file": "chunk-3DNKUNSP.js"
+    },
+    "chunk-E67WJ3KD": {
+      "file": "chunk-E67WJ3KD.js"
+    },
+    "chunk-FH54XL4O": {
+      "file": "chunk-FH54XL4O.js"
+    },
+    "chunk-VDLSONRA": {
+      "file": "chunk-VDLSONRA.js"
+    }
+  }
+}

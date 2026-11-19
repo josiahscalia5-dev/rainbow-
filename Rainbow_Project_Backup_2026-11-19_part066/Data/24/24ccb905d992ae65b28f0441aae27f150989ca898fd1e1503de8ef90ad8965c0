@@ -1,0 +1,9 @@
+/**
+ * Sanity tests for shared constants.
+ *
+ * These are intentionally lightweight — we're not testing that someone can
+ * define an array, we're testing that the SPECIFIC VALUES we depend on
+ * elsewhere are present and mapped correctly.  If someone accidentally
+ * deletes "drawArraysInstanced" from DRAW_CALL_NAMES, we want to know.
+ */
+export {};

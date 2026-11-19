@@ -1,0 +1,53 @@
+{
+  "04": {
+    "stills": 11,
+    "clipFrames": 42,
+    "seconds": 3.5,
+    "lastStage": "05",
+    "within20Percent": 81.8397804542824,
+    "pixelmatchMismatches": 223531,
+    "independentRepeatChangedPixels": 198
+  },
+  "05": {
+    "stills": 12,
+    "clipFrames": 84,
+    "seconds": 7.0,
+    "lastStage": "06",
+    "within20Percent": 89.44242500964506,
+    "pixelmatchMismatches": 119454,
+    "independentRepeatChangedPixels": 0
+  },
+  "06": {
+    "stills": 12,
+    "clipFrames": 63,
+    "seconds": 5.25,
+    "lastStage": "07",
+    "within20Percent": 79.08573857060185,
+    "pixelmatchMismatches": 262246,
+    "independentRepeatChangedPixels": 21
+  },
+  "07": {
+    "stills": 15,
+    "clipFrames": 147,
+    "seconds": 12.25,
+    "lastStage": "08",
+    "within20Percent": 80.04579897280092,
+    "pixelmatchMismatches": 249370,
+    "independentRepeatChangedPixels": 0
+  },
+  "08": {
+    "stills": 12,
+    "clipFrames": 22,
+    "seconds": 1.833333,
+    "lastStage": "09",
+    "within20Percent": 84.0857235001929,
+    "pixelmatchMismatches": 197021,
+    "independentRepeatChangedPixels": 0
+  },
+  "04r": {
+    "stills": 6,
+    "within20Percent": 81.83993115837191,
+    "pixelmatchMismatches": 223529,
+    "independentRepeatChangedPixels": 0
+  }
+}

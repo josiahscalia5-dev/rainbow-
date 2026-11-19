@@ -1,0 +1,50 @@
+const fs=require('node:fs'),path=require('node:path');
+const {chromium}=require('playwright');
+const queries=require('./queries.json');
+async function main(){
+ const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--disable-background-networking']});
+ try {
+ for(const id of process.argv.slice(2)){
+  const out=path.join(__dirname,'fresh',id);fs.mkdirSync(out,{recursive:true});
+  const sid=id.slice(0,2),port=id==='04r'?5664:5600+Number(id);
+  const page=await browser.newPage({viewport:{width:864,height:1536},deviceScaleFactor:1});page.setDefaultTimeout(120000);
+  await page.route('**/*',r=>['','127.0.0.1','localhost'].includes(new URL(r.request().url()).hostname)?r.continue():r.abort());
+  await page.goto('http://127.0.0.1:'+port+'/?qa=1&dpr=1&'+queries[id]);
+  await page.waitForFunction(()=>window.__rainbow?.ready,null,{timeout:150000});
+  await page.evaluate(()=>document.fonts.ready);
+  await page.evaluate(sid=>{
+    const r=window.__rainbow;r.run(false);r.goto(sid);r.setSteer(null);r.drawList();
+  },sid);
+  const capture=async name=>{await page.waitForTimeout(160);await page.screenshot({path:path.join(out,name+'.png'),animations:'disabled',timeout:90000})};
+  await capture('fresh-opening');
+  if(id==='07'){
+   await page.evaluate(()=>{
+    const r=window.__rainbow, p=r.qa3d().scene.getObjectByName('m07_paddle2'),old=p.material,next=old.clone();
+    next.uniforms=old.uniforms;
+    const token='smoothstep(0.970, 0.995, dot(normalize(cameraPosition - vW), normalize(uProjPos - vW)))';
+    if(!old.fragmentShader.includes(token)) throw Error('Unexpected paddle material');
+    next.fragmentShader=old.fragmentShader.replace(token,token.replace('0.970, 0.995','0.987, 0.998'));
+    p.material=next;window.__openingMaterial=old;r.drawList();
+   });
+   await capture('candidate-opening');
+   await page.evaluate(()=>{const r=window.__rainbow;r.qa3d().scene.getObjectByName('m07_paddle2').material=window.__openingMaterial;r.drawList()});
+   const extra=[];
+   for(const [name,fraction] of [['halfway-down',.5],['two-thirds-down',2/3],['just-before-plunge-bottom',.97]]){
+    const m=await page.evaluate(([name,f])=>{
+      const r=window.__rainbow;r.run(false);r.startRideAt('06');r.unfreeze();r.setSteer(0);r.step(1);
+      const mark=r.course.marks,start=mark['07_plunge_top'],bottom=mark['07_plunge_bottom'];
+      const target=start+(bottom-start)*f;let n=0;
+      while(r.state().s<target-.001&&n<5000){r.step(1);n++}
+      r.setSteer(null);r.freezeAt(12+n/60);r.drawList();
+      return {name,fractionDownPlunge:f,start,bottom,target,frames:n,state:r.state(),camera:r.camera()};
+    },[name,fraction]);
+    if(m.state.stage!=='07')throw Error('Wrong stage for descent');
+    extra.push(m);await capture(name);
+   }
+   fs.writeFileSync(path.join(out,'descent.json'),JSON.stringify(extra,null,1));
+  }
+  await page.close();console.log('fresh independent',id);
+ }
+ }finally{await browser.close()}
+}
+main().catch(e=>{console.error(e.stack);process.exitCode=1});

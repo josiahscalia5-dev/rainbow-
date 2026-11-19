@@ -1,0 +1,63 @@
+/**
+ * Pure data-transformation functions for analysing Spector.js capture data.
+ *
+ * Every function here is side-effect-free: it takes raw capture structures as
+ * input and returns typed results. This makes the logic easy to unit-test
+ * without a browser.
+ *
+ * **Important:** These functions run on the Node side. The `page.evaluate()`
+ * callbacks in `spector-bridge.ts` duplicate some of this logic because they
+ * execute in the browser context and cannot import Node modules.
+ */
+import type { RawCommand, RawCapture, CaptureSummary, DrawCallInfo, ShaderInfo, TextureInfo, WebGLStateDiff } from "./types.js";
+/**
+ * Count unique shader programs referenced by commands in a capture.
+ *
+ * Programs are identified by the `__SPECTOR_Object_TAG.id` attached to each
+ * command's `DrawCall.programStatus.program`.
+ */
+export declare function countPrograms(commands: RawCommand[]): number;
+/**
+ * Extract GL error strings from a command list.
+ *
+ * Errors are identified by `getError` commands whose `result` is non-zero.
+ */
+export declare function extractErrors(commands: RawCommand[]): string[];
+/**
+ * Build a {@link CaptureSummary} from a raw Spector capture object.
+ */
+export declare function buildCaptureSummary(capture: RawCapture): CaptureSummary;
+/**
+ * Extract draw-call and clear commands from a raw command list.
+ */
+export declare function extractDrawCalls(commands: RawCommand[]): DrawCallInfo[];
+/**
+ * Extract shader program info from commands that carry `DrawCall` metadata.
+ *
+ * Optionally filter to a single program by zero-based index.
+ */
+export declare function extractShaders(commands: RawCommand[], programIndex?: number): ShaderInfo[];
+/**
+ * Extract texture upload commands from the command list.
+ */
+export declare function extractTextures(commands: RawCommand[]): TextureInfo[];
+/**
+ * Compute the diff between the initial and final WebGL state snapshots.
+ */
+export declare function computeStateDiff(initState: Record<string, unknown>, endState: Record<string, unknown>): {
+    initial: Record<string, unknown>;
+    final: Record<string, unknown>;
+    diff: WebGLStateDiff[];
+};
+/**
+ * Extract context information from a raw capture object.
+ *
+ * Returns a plain record suitable for JSON serialisation.
+ */
+export declare function extractContextInfo(capture: RawCapture): Record<string, unknown>;
+/**
+ * Extract detailed information for a single command by ID.
+ *
+ * Returns `null` when the command is not found.
+ */
+export declare function extractCommandDetails(commands: RawCommand[], commandId: number): Record<string, unknown> | null;
