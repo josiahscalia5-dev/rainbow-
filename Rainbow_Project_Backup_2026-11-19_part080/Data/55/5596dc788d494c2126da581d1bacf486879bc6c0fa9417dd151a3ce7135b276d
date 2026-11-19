@@ -1,0 +1,32 @@
+[
+  {
+    "file": "03_SCREENS/Screen_07/Earlier/Previous_Motion_Masters/SCREEN07_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "savedBytes": 5029923,
+    "sourceVideoSSIM": 0.953077,
+    "frames": 147
+  },
+  {
+    "file": "03_SCREENS/Screen_05/Earlier/Previous_Motion_Masters/SCREEN05_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "savedBytes": 2976059,
+    "sourceVideoSSIM": 0.953385,
+    "frames": 84
+  },
+  {
+    "file": "03_SCREENS/Screen_07/Earlier/Recordings/SCREEN07_CLAUDIA_EARLIER_RECORDED_RIDE.mp4",
+    "savedBytes": 1341510,
+    "sourceVideoSSIM": 0.955525,
+    "frames": 147
+  },
+  {
+    "file": "03_SCREENS/Screen_07/Earlier/Recordings/SCREEN07_CLAUDIA_ORIGINAL_RIDE_324.mp4",
+    "savedBytes": 1310335,
+    "sourceVideoSSIM": 0.955055,
+    "frames": 147
+  },
+  {
+    "file": "03_SCREENS/Screen_07/Earlier/Recordings/SCREEN07_CODEX_REJECTED_MASKED_PADDLE_MATERIAL_RIDE.mp4",
+    "savedBytes": 1307713,
+    "sourceVideoSSIM": 0.954842,
+    "frames": 147
+  }
+]

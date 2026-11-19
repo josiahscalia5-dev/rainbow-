@@ -1,0 +1,76 @@
+{
+ "BEFORE": {
+  "FULL": {
+   "within_20": 0.0665,
+   "mean_abs": 74.31,
+   "ssim": 0.1867
+  },
+  "BELOWHUD": {
+   "within_20": 0.0581,
+   "mean_abs": 75.93,
+   "ssim": 0.1877
+  },
+  "SCENERY": {
+   "within_20": 0.0601,
+   "mean_abs": 74.52,
+   "ssim": 0.1975
+  },
+  "upper_tunnel_rings_paddles_y200_560": {
+   "within_20": 0.0378,
+   "mean_abs": 74.89,
+   "ssim": 0.1118
+  },
+  "middle_river_coins_far_rings_y560_900": {
+   "within_20": 0.0614,
+   "mean_abs": 74.45,
+   "ssim": 0.1224
+  },
+  "lower_water_foam_y900_1536_noBenny": {
+   "within_20": 0.075,
+   "mean_abs": 74.33,
+   "ssim": 0.305
+  },
+  "BENNY": {
+   "within_20": 0.0428,
+   "mean_abs": 87.14,
+   "ssim": 0.1098
+  }
+ },
+ "NEW": {
+  "FULL": {
+   "within_20": 0.8006,
+   "mean_abs": 15.0,
+   "ssim": 0.7896
+  },
+  "BELOWHUD": {
+   "within_20": 0.8672,
+   "mean_abs": 10.4,
+   "ssim": 0.8536
+  },
+  "SCENERY": {
+   "within_20": 0.9554,
+   "mean_abs": 3.83,
+   "ssim": 0.9498
+  },
+  "upper_tunnel_rings_paddles_y200_560": {
+   "within_20": 0.9996,
+   "mean_abs": 0.15,
+   "ssim": 0.9978
+  },
+  "middle_river_coins_far_rings_y560_900": {
+   "within_20": 0.9035,
+   "mean_abs": 7.96,
+   "ssim": 0.8954
+  },
+  "lower_water_foam_y900_1536_noBenny": {
+   "within_20": 0.9564,
+   "mean_abs": 3.85,
+   "ssim": 0.9497
+  },
+  "BENNY": {
+   "within_20": 0.1661,
+   "mean_abs": 62.61,
+   "ssim": 0.0888
+  }
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "note": "round 4: pixels differing (any channel) [count, rows y0-y1, max level diff]; current tree vs start commit 72fb6129 (worktree captures); 05 vs protected baseline",
+ "differing": {
+  "default_06": [
+   39918,
+   [
+    33,
+    204
+   ],
+   243
+  ],
+  "default_07": [
+   53061,
+   [
+    33,
+    204
+   ],
+   242
+  ],
+  "default_08": [
+   34999,
+   [
+    33,
+    204
+   ],
+   242
+  ],
+  "match08_08": [
+   35008,
+   [
+    33,
+    204
+   ],
+   242
+  ],
+  "match07_07": [
+   53210,
+   [
+    33,
+    204
+   ],
+   242
+  ],
+  "05_ringa26_nearfloor0_vs_wave9_baseline": [
+   128689,
+   [
+    0,
+    1121
+   ],
+   72
+  ]
+ }
+}

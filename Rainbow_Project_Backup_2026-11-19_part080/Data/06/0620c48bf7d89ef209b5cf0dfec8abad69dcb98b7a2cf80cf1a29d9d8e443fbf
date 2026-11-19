@@ -1,0 +1,66 @@
+{
+ "screen": "04",
+ "query": "match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04arr5=1&m04a5n0=2&m04a5n1=3.5&m04a5w=1.6&m04ry=2.2",
+ "shots": [
+  {
+   "name": "f06_forward6u",
+   "dist": 6,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 84.321,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -25.192,
+   "bennyVisible": true,
+   "cam": [
+    2.4,
+    -18.47,
+    -25.54
+   ],
+   "frames": 26
+  },
+  {
+   "name": "f10_forward10u",
+   "dist": 10,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 88.148,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -27.228,
+   "bennyVisible": true,
+   "cam": [
+    2.4,
+    -20.44,
+    -28.76
+   ],
+   "frames": 43
+  },
+  {
+   "name": "f20_forward20u",
+   "dist": 20,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 98.181,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -32.53,
+   "bennyVisible": true,
+   "cam": [
+    2.4,
+    -25.75,
+    -37.27
+   ],
+   "frames": 86
+  }
+ ]
+}

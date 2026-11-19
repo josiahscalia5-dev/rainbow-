@@ -1,0 +1,40 @@
+from pathlib import Path
+from fractions import Fraction
+import sys,subprocess as sp,re,json,hashlib,tempfile,os
+root=Path(__file__).resolve().parent;pkg=root/'payload'
+catalog=json.loads((root/'media-catalog.json').read_text());meta=json.loads((root/'compact-video-outputs.json').read_text())
+temp=root/'historical-mobile-encodings';temp.mkdir(exist_ok=True)
+size=(root/'ready-for-delivery.zip').stat().st_size;minimum_savings=max(0,size-507500000)
+savings=0;modified=[]
+def ssim(a,b):
+ cmd=['ffmpeg','-nostdin','-hide_banner','-loglevel','info','-threads','1','-i',str(a),'-threads','1','-i',str(b),'-filter_complex_threads','1','-filter_complex','[0:v]settb=AVTB,setpts=PTS-STARTPTS[a];[1:v]settb=AVTB,setpts=PTS-STARTPTS[b];[a][b]ssim=shortest=1','-an','-f','null','-']
+ result=sp.run(cmd,stdout=sp.DEVNULL,stderr=sp.PIPE,check=True);return float(re.findall(rb'All:([0-9.]+)',result.stderr)[-1])
+def probe(b):
+ return json.loads(sp.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=codec_name,width,height,avg_frame_rate,nb_frames,duration','-of','json',str(b)]))['streams'][0]
+candidates=[(h,e) for h,e in meta.items() if '/Earlier/' in e['file'] and 'Previous_s' not in e['file']]
+candidates.sort(key=lambda row:-row[1]['bytes'])
+for h,e in candidates:
+ if savings>=minimum_savings:break
+ src=Path(catalog[h]['local']);new=temp/(h+'.mp4');old=pkg/e['file']
+ for crf in [27,25]:
+  args=['ffmpeg','-nostdin','-y','-v','error','-threads','1','-i',str(src),'-map','0:v:0','-map','0:a?','-sn','-dn','-map_metadata','-1','-c:v','libx264','-threads','3','-preset','slow','-crf',str(crf),'-pix_fmt','yuv420p','-fps_mode','passthrough','-c:a','aac','-b:a','128k','-movflags','+faststart',str(new)]
+  sp.run(args,stdout=sp.DEVNULL,stderr=sp.PIPE,check=True)
+  if new.stat().st_size>=e['bytes']*.95:break
+  agreement=ssim(src,new)
+  if agreement<.950:continue
+  info=probe(new)
+  assert info['codec_name']=='h264' and (info['width'],info['height'],int(info['nb_frames']))==(e['nativeWidth'],e['nativeHeight'],e['frames'])
+  assert Fraction(info['avg_frame_rate'])==Fraction(e['fps'])
+  if e.get('seconds') and info.get('duration'):assert abs(float(info['duration'])-float(e['seconds']))<=.16
+  with new.open('rb') as f:checksum=hashlib.file_digest(f,'sha256').hexdigest()
+  reduction=e['bytes']-new.stat().st_size;savings+=reduction
+  modified.append({'file':e['file'],'savedBytes':reduction,'sourceVideoSSIM':agreement,'frames':e['frames']})
+  e.update(bytes=new.stat().st_size,packagedSHA256=checksum,byteExact=False,sourceVideoSSIM=agreement,encoding='Native H.264 mobile review copy of an earlier recording, full frame count, CRF '+str(crf))
+  new.replace(old);(root/'compact-metrics-video'/(h+'.json')).write_text(json.dumps(e)+'\n')
+  print('Historic motion optimized',len(modified),round(savings/1e6,2),'MB',flush=True)
+  break
+(root/'compact-video-outputs.json').write_text(json.dumps(meta,indent=2,ensure_ascii=False)+'\n')
+(root/'historical-mobile-receipt.json').write_text(json.dumps(modified,indent=2)+'\n')
+print('Total savings',savings,'needed',minimum_savings,flush=True)
+assert savings>=minimum_savings
+

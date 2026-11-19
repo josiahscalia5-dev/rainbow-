@@ -1,0 +1,5 @@
+SCENERY = whole frame minus benny_and_hat, hud_and_text, coins ( 1081118 px ); BAND = rows
+BEFORE match05: scenery mean 6.66, within 20 91.6 %
+   bands (within 20 %): 0-192:74.3 192-384:95.1 384-576:93.7 576-768:91.7 768-960:79.3 960-1152:85.9 1152-1344:90.5 1344-1536:92.1
+NEW match05+tgtvis05: scenery mean 5.60, within 20 93.3 %
+   bands (within 20 %): 0-192:74.3 192-384:95.1 384-576:93.7 576-768:91.8 768-960:87.2 960-1152:88.5 1152-1344:90.5 1344-1536:92.1

@@ -1,0 +1,47 @@
+{
+  "receipts": [
+    {
+      "report": "final/capture.json",
+      "checkedFiles": 48,
+      "changedFiles": [],
+      "pass": true
+    },
+    {
+      "report": "default-preserved/capture.json",
+      "checkedFiles": 48,
+      "changedFiles": [],
+      "pass": true
+    },
+    {
+      "report": "previous-preserved/capture.json",
+      "checkedFiles": 48,
+      "changedFiles": [],
+      "pass": true
+    },
+    {
+      "report": "tests/final/report.json",
+      "checkedFiles": 45,
+      "changedFiles": [],
+      "pass": true
+    },
+    {
+      "report": "tests/geometry-final2/report.json",
+      "checkedFiles": 45,
+      "changedFiles": [],
+      "pass": true
+    },
+    {
+      "report": "tests/seam-numeric.json",
+      "checkedFiles": 5,
+      "changedFiles": [],
+      "pass": true
+    },
+    {
+      "report": "tests/android-source-sha256.json",
+      "checkedFiles": 49,
+      "changedFiles": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
