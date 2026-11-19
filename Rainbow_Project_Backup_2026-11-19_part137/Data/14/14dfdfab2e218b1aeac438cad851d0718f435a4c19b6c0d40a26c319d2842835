@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-16T10:40:49+00:00",
+    "reason": "daemon",
+    "result": "error",
+    "files_staged": 0,
+    "pushed_verified": false,
+    "branch": "ccr-251ed97c-ty2xvp",
+    "note": "following session branch 'ccr-251ed97c-ty2xvp' (config branch 'ccr-44f84024-ii5iih')",
+    "error": "git add -- backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.md backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.sanitized.jsonl .claude/agents/android-build-performance.md .claude/agents/animation-and-gameplay-engineer.md .claude/agents/benny-character-artist.md .claude/agents/cartoon-girl-character-artist.md .claude/agents/foam-bubbles-particles.md .claude/agents/path-camera-transition-engineer.md .claude/agents/playwright-visual-qa.md .claude/agents/reference-match-director.md .claude/agents/washer-environment-modeler.md .claude/agents/water-fx-s",
+    "duration_s": 4
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "ccr-251ed97c-ty2xvp",
+  "last_verified_remote_sha": "973f86a4f344f3f6dc12707758618480b3f2b214",
+  "last_successful_backup_utc": "2026-11-16T10:37:30+00:00",
+  "consecutive_failures": 1,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=311); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-16T10:45:00+00:00"
+}

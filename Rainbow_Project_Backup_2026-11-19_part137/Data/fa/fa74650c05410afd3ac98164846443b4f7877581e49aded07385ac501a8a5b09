@@ -1,0 +1,19 @@
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 956a8efb..83e35a15 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -424,6 +424,14 @@ export const m05fmagD0 = { value: 53.25 };
+  * far block is not live there → weight 0 → unchanged.
+  */
+ export const M05FPAINT: boolean = M05FMAG && q05('m05fpaint');
++/**
++ * `&m05fedge=1` (Screen 05 round 12, needs m05fmag; src/world/materials.ts farRiverMaterial): the far river's floor ran
++ * up to 9 u beyond the water edge right behind the seam (a wide flat pale-lilac wedge on the left bank at t66 … t95, huge
++ * when steering left at t95). The painting has only a narrow foam band along the water with the slotted wall coming
++ * down behind it — which is what the far river already does deeper in (rim ≈ 1.3 u). Where the block is live and its
++ * picture magnified, the floor keeps that narrow rim near the seam too. Locked view: block not live → unchanged.
++ */
++export const M05FEDGE: boolean = M05FMAG && q05('m05fedge');
+ /** m05fpaint: shared uniforms (T2 texture + its start / half period, the ribbon's flow vector), filled by attachProj05 */
+ export const m05fpaint = {
+   uPjT2: { value: null as THREE.Texture | null },

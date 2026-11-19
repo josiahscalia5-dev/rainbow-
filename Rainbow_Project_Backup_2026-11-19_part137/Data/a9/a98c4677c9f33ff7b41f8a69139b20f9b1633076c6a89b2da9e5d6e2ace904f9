@@ -1,0 +1,10 @@
+{
+ "worktree": "/home/user/wt/s04b",
+ "branch": "claude/rainbow-s04-ringtex-c17",
+ "head": "ee3bfac993e2615cb2010672f78322ce788d0db8",
+ "time": "2026-11-18T20:59:45+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s04-ringtex-c17 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-ringtex-c17/tracked.patch && copy backups/wip/claude__rainbow-s04-ringtex-c17/untracked/* into the worktree"
+}

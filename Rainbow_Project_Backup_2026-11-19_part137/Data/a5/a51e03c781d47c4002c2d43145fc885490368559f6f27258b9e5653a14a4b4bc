@@ -1,0 +1,15 @@
+{
+ "worktree": "/home/user/wt/s06",
+ "branch": "claude/rainbow-s06-match-c15",
+ "head": "47f696defd0a3fadc2e4bc803461189c375770db",
+ "time": "2026-11-18T18:42:30+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [
+  "qa/match/06/r15/BEFORE/f06_forward6u.png"
+ ],
+ "untracked_skipped": [
+  "qa/match/06/r15/BEFORE/a00_approved_view.png",
+  "qa/match/06/r15/BEFORE/f03_forward3u.png"
+ ],
+ "restore": "git switch claude/rainbow-s06-match-c15 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s06-match-c15/tracked.patch && copy backups/wip/claude__rainbow-s06-match-c15/untracked/* into the worktree"
+}

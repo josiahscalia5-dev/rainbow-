@@ -1,0 +1,16 @@
+diff --git a/qa/match/08/r12/PROGRESS.md b/qa/match/08/r12/PROGRESS.md
+index c6030710..cdaef738 100644
+--- a/qa/match/08/r12/PROGRESS.md
++++ b/qa/match/08/r12/PROGRESS.md
+@@ -108,3 +108,11 @@ Kept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1`
+   and bubbles (the painted floor / wall boundary does not follow the fitted drum exactly), so foam clusters and bubble
+   pieces appeared on the wall; the hard edges stayed. Saved as
+   `/home/user/wt/s08/qa/match/08/r12/wip_m08drot_not_kept.patch`, reverted (one honest try; method stopped).
++
++## Tried — `&m08floor=1` (floor parts the approved view missed → the painted floor's own hole grid) — NOT KEPT (NOT AN IMPROVEMENT)
++* Tried: `tools/match08/floor08.py` (a hole-grid cell averaged from the cleanest piece of the painted floor, world-anchored
++  repeat) as the floor's fallback, with the walls' soft 5 × 5-tap hand-over. Result: the multi-tap visibility test fails on
++  the grazing floor (neighbouring taps see nearer floor), so the tile washed over the painted RIVER near Benny (faded grid
++  over the water when steering hard right / at the stage end) — clearly worse. The hard-edged wedge behind the lower-left cup
++  that this was aimed at turned out to be the DRUM's fill tile (still there). Patch:
++  `/home/user/wt/s08/qa/match/08/r12/wip_m08floor_not_kept.patch` (+ tile in `qa/match/08/r12/wip_m08floor/`), reverted.

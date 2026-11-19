@@ -1,0 +1,14 @@
+{
+ "worktree": "/home/user/wt/s05",
+ "branch": "claude/rainbow-s05-match-c10",
+ "head": "bed8253d96dad94f6cb937f4a8bc26adc6975754",
+ "time": "2026-11-18T11:13:10+00:00",
+ "dirty_tracked": [
+  "src/vfx/waterRibbon.ts",
+  "src/world/environment.ts",
+  "tools/match05/r10_probe.mjs"
+ ],
+ "untracked_copied": [],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s05-match-c10 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c10/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c10/untracked/* into the worktree"
+}

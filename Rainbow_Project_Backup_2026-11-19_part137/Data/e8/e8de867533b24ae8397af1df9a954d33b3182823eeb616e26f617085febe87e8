@@ -1,0 +1,54 @@
+{
+  "01": {
+    "preset": "01",
+    "s": 0,
+    "stage": "01",
+    "calls": 7,
+    "triangles": 24608,
+    "points": 500,
+    "avgFrameMsSwiftShader": 0.6,
+    "instances": 1219,
+    "bubbles": 22,
+    "smallBubbles": 280,
+    "sprayCapacity": 220
+  },
+  "03": {
+    "preset": "03",
+    "s": 44.88,
+    "stage": "03",
+    "calls": 12,
+    "triangles": 40756,
+    "points": 500,
+    "avgFrameMsSwiftShader": 0.6,
+    "instances": 1219,
+    "bubbles": 22,
+    "smallBubbles": 280,
+    "sprayCapacity": 220
+  },
+  "05": {
+    "preset": "05",
+    "s": 139.73,
+    "stage": "05",
+    "calls": 13,
+    "triangles": 31136,
+    "points": 500,
+    "avgFrameMsSwiftShader": 0.9,
+    "instances": 1219,
+    "bubbles": 22,
+    "smallBubbles": 280,
+    "sprayCapacity": 220
+  },
+  "09": {
+    "preset": "09",
+    "s": 415.77,
+    "stage": "09",
+    "calls": 11,
+    "triangles": 27976,
+    "points": 500,
+    "avgFrameMsSwiftShader": 0.7,
+    "instances": 1219,
+    "bubbles": 22,
+    "smallBubbles": 280,
+    "sprayCapacity": 220
+  }
+}

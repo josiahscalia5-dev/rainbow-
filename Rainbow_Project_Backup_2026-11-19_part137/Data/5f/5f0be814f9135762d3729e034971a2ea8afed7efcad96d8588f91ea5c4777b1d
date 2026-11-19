@@ -1,0 +1,15 @@
+diff --git a/qa/match/08/r12/PROGRESS.md b/qa/match/08/r12/PROGRESS.md
+index 8d9b09d3..e22a28c4 100644
+--- a/qa/match/08/r12/PROGRESS.md
++++ b/qa/match/08/r12/PROGRESS.md
+@@ -92,3 +92,10 @@ Kept query: `K11&m08cup=1&m08rw=1&m08drum=1&m08ring=1`
+ * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r12/step4_m08ring/1_APPROVED.png`,
+   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `t95_through_screen`, `f10_forward10u`, `t66_through_screen`
+   (BEFORE = `...&m08drum=1`, NEW = `+&m08ring=1`, rendered fresh, same positions).
++
++## Tried — `&m08glint=1` (near-water glints at painted size) — NOT KEPT (NOT AN IMPROVEMENT)
++* Tried: the m08near tile at the painted scale in the lane's middle and along the river (banks take up the rest of the lane,
++  piecewise like the swim remap). Result at forward 10 u: glints smaller, but the near water then shows visible repeats of
++  the same small glints and the magenta / cyan banks are stretched sideways ≈ 3.4× into flat smears; the BEFORE (bold
++  glossy strokes ≈ 2× painted size) reads closer to the approved picture's bold near water. Code saved as
++  `/home/user/wt/s08/qa/match/08/r12/wip_m08glint_not_kept.patch`, reverted (one honest try; method stopped).

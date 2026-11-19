@@ -1,0 +1,36 @@
+{
+ "z0": -279.43797316502713,
+ "period": 8.0,
+ "halfWidth": 3.0500000000000003,
+ "lane": 2.95,
+ "core": 0.7,
+ "texelsPerU": [
+  220.0,
+  165.0
+ ],
+ "layout": {
+  "x": [
+   -3.0500000000000003,
+   -0.7,
+   0.7,
+   3.0500000000000003
+  ],
+  "a": [
+   -0.71451895347912,
+   -0.5395025363817353,
+   0.37950253638173526,
+   0.6245189534791199
+  ],
+  "c": -0.08000000000000002,
+  "paintedHalfWidth": 1.5233865856585165
+ },
+ "block": [
+  64,
+  224
+ ],
+ "overlap": [
+  28,
+  96
+ ],
+ "note": "u = 0.5 + x_b / (2 halfWidth), x_b = lateral offset from the lane centre (u; |x| <= core 1:1, beyond: core + (|x| - core) (lane - core) / (h - core) for a lane of half width h); v = (z0 - z) / period (repeat). Painted scale; assembled by image quilting from the approved picture's own near band (nq08.py v4, r14: rectified along the painted flow, zone quilting, mirrored blocks allowed)"
+}

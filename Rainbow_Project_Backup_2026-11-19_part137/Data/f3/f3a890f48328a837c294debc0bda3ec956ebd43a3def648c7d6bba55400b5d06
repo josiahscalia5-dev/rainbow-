@@ -1,0 +1,17 @@
+{
+ "worktree": "/home/user/wt/s08",
+ "branch": "claude/rainbow-s08-scenery-c13",
+ "head": "f7dc9625cbf471396fe5cb18b44046893d0fc89d",
+ "time": "2026-11-18T14:57:27+00:00",
+ "dirty_tracked": [
+  "qa/capture_log.json",
+  "src/world/match08.ts"
+ ],
+ "untracked_copied": [
+  "assets/textures/match08/urcup08.json",
+  "assets/textures/match08/urcup08.png",
+  "tools/match08/urcup08.py"
+ ],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s08-scenery-c13 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s08-scenery-c13/tracked.patch && copy backups/wip/claude__rainbow-s08-scenery-c13/untracked/* into the worktree"
+}

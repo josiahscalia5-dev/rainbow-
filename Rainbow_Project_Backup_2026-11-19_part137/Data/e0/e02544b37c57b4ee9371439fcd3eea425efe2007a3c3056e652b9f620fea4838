@@ -1,0 +1,42 @@
+{
+  "when": "2026-11-16T18:33:16.185Z",
+  "size": [
+    864,
+    1536
+  ],
+  "frames": 14,
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "note": "headless Chromium, WebGL2 on SwiftShader (CPU rasteriser): RELATIVE cost only, not device fps",
+  "variants": [
+    {
+      "name": "default",
+      "query": "",
+      "runs": [
+        2592.8,
+        2474.2
+      ],
+      "calls": 86,
+      "tris": 567415,
+      "textures": 43,
+      "geometries": 102,
+      "errors": [],
+      "medianMs": 2474.2,
+      "vsFirst": 1
+    },
+    {
+      "name": "proj05",
+      "query": "proj05=1",
+      "runs": [
+        2432.9,
+        2520
+      ],
+      "calls": 84,
+      "tris": 554329,
+      "textures": 49,
+      "geometries": 102,
+      "errors": [],
+      "medianMs": 2432.9,
+      "vsFirst": 0.983
+    }
+  ]
+}

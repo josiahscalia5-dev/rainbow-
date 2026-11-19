@@ -1,0 +1,38 @@
+{
+ "w": 256,
+ "h": 160,
+ "rows": {
+  "left": {
+   "y0": 0,
+   "h": 48,
+   "visible": 0.312,
+   "mean_rgb": [
+    211.7,
+    119.2,
+    54.1
+   ]
+  },
+  "right": {
+   "y0": 56,
+   "h": 48,
+   "visible": 0.354,
+   "mean_rgb": [
+    210.8,
+    118.7,
+    53.1
+   ]
+  },
+  "lip": {
+   "y0": 112,
+   "h": 48,
+   "visible": 0.26,
+   "mean_rgb": [
+    231.5,
+    135.9,
+    95.1
+   ]
+  }
+ },
+ "sigma_u": 3.0,
+ "note": "u = uv.x along the arc, v = uv.y across the band (0 = edge toward the stream)"
+}

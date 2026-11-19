@@ -1,0 +1,51 @@
+{
+  "when": "2026-11-17T20:38:30.488Z",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "shots": [
+    {
+      "id": "07",
+      "file": "/tmp/claude-0/-home-user-rainbow-/0e24ab6b-2aa5-557c-9d94-6391f984005c/scratchpad/o/n/07.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 273.0571025358885,
+        "y": -49.658956808643595
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 273.057,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -49.659,
+        "bennyVisible": true,
+        "cam": [
+          10.93,
+          -45.6,
+          -195.35
+        ]
+      },
+      "stats": {
+        "fps": 75,
+        "calls": 181,
+        "triangles": 678151,
+        "geometries": 210,
+        "textures": 61,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 434.80128046909186,
+        "firstFrameCalls": 259,
+        "firstFrameTriangles": 679087
+      }
+    }
+  ],
+  "errors": []
+}

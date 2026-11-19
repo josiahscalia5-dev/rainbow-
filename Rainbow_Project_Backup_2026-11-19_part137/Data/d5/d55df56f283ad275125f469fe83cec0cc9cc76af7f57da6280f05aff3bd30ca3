@@ -1,0 +1,19 @@
+{
+  "last_run": {
+    "time": "2026-11-15T18:10:39+00:00",
+    "reason": "daemon",
+    "result": "error",
+    "files_staged": 0,
+    "pushed_verified": false,
+    "branch": "ccr-6f431adf-7h0m8y",
+    "error": "current branch 'claude/rainbow-3d-recovery-m4v347' != verified branch 'ccr-6f431adf-7h0m8y'; refusing to push",
+    "duration_s": 0
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "ccr-6f431adf-7h0m8y",
+  "last_verified_remote_sha": "f8e4b839b9cf402fb17fb9273b3ed02f88942e9a",
+  "last_successful_backup_utc": "2026-11-15T18:00:01+00:00",
+  "consecutive_failures": 4,
+  "schedule": "cron */5 * * * * (container-local; see backups/RECOVERY.md for limits)",
+  "next_scheduled_utc": "2026-11-15T18:15:00+00:00"
+}

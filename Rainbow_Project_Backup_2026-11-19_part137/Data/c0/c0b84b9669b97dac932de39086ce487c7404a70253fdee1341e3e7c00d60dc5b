@@ -1,0 +1,14 @@
+{
+ "worktree": "/home/user/wt/s06",
+ "branch": "claude/rainbow-s06-match-c16",
+ "head": "bd017740fc33122c0e7ead834adb44b3beba5c17",
+ "time": "2026-11-18T19:37:09+00:00",
+ "dirty_tracked": [
+  "src/world/match06.ts"
+ ],
+ "untracked_copied": [
+  "tools/match06/r16_start.mjs"
+ ],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s06-match-c16 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s06-match-c16/tracked.patch && copy backups/wip/claude__rainbow-s06-match-c16/untracked/* into the worktree"
+}

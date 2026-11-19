@@ -1,0 +1,79 @@
+[
+ {
+  "id": "01",
+  "mad": 61.3,
+  "hue_corr": 0.524,
+  "edge_corr": 0.04,
+  "masked": "girl identity region"
+ },
+ {
+  "id": "02",
+  "mad": 68.6,
+  "hue_corr": 0.689,
+  "edge_corr": -0.004,
+  "masked": ""
+ },
+ {
+  "id": "03",
+  "mad": 66.1,
+  "hue_corr": 0.419,
+  "edge_corr": 0.008,
+  "masked": "phone outline"
+ },
+ {
+  "id": "04",
+  "mad": 68.7,
+  "hue_corr": 0.61,
+  "edge_corr": 0.094,
+  "masked": ""
+ },
+ {
+  "id": "05",
+  "mad": 71.8,
+  "hue_corr": 0.567,
+  "edge_corr": -0.018,
+  "masked": ""
+ },
+ {
+  "id": "06",
+  "mad": 76.9,
+  "hue_corr": 0.598,
+  "edge_corr": -0.002,
+  "masked": ""
+ },
+ {
+  "id": "07",
+  "mad": 68.3,
+  "hue_corr": 0.496,
+  "edge_corr": -0.041,
+  "masked": ""
+ },
+ {
+  "id": "08",
+  "mad": 72.9,
+  "hue_corr": 0.622,
+  "edge_corr": -0.036,
+  "masked": ""
+ },
+ {
+  "id": "09",
+  "mad": 72.2,
+  "hue_corr": 0.805,
+  "edge_corr": -0.025,
+  "masked": ""
+ },
+ {
+  "id": "10",
+  "mad": 78.2,
+  "hue_corr": 0.706,
+  "edge_corr": -0.027,
+  "masked": "girl identity region"
+ },
+ {
+  "id": "11",
+  "mad": 69.7,
+  "hue_corr": 0.779,
+  "edge_corr": 0.111,
+  "masked": "girl identity region"
+ }
+]

@@ -1,0 +1,65 @@
+{
+ "AB": {
+  "own": 0.303,
+  "mirror": 0.0,
+  "reflect": 0.454,
+  "nearest_t": 0.0,
+  "translate": 0.087,
+  "from_BC": 0.156
+ },
+ "BC": {
+  "own": 0.472,
+  "mirror": 0.0,
+  "reflect": 0.499,
+  "nearest_t": 0.0,
+  "translate": 0.029,
+  "from_BC": 0.0
+ },
+ "CD": {
+  "own": 0.462,
+  "mirror": 0.0,
+  "reflect": 0.506,
+  "nearest_t": 0.0,
+  "translate": 0.032,
+  "from_BC": 0.0
+ },
+ "DE": {
+  "own": 0.523,
+  "mirror": 0.019,
+  "reflect": 0.458,
+  "nearest_t": 0.0,
+  "translate": 0.0,
+  "from_BC": 0.0
+ },
+ "EF": {
+  "own": 0.497,
+  "mirror": 0.01,
+  "reflect": 0.493,
+  "nearest_t": 0.0,
+  "translate": 0.0,
+  "from_BC": 0.0
+ },
+ "FG": {
+  "own": 0.468,
+  "mirror": 0.042,
+  "reflect": 0.49,
+  "nearest_t": 0.0,
+  "translate": 0.0,
+  "from_BC": 0.0
+ },
+ "GX": {
+  "own": 0.314,
+  "mirror": 0.058,
+  "reflect": 0.627,
+  "nearest_t": 0.0,
+  "translate": 0.0,
+  "from_BC": 0.0
+ },
+ "ring_B": {
+  "own_columns": 0.44,
+  "theta_deg_own": [
+   0.1,
+   359.9
+  ]
+ }
+}

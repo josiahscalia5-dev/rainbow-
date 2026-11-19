@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-16T19:07:54+00:00",
+    "reason": "hook:Stop",
+    "result": "committed+pushed",
+    "files_staged": 4,
+    "pushed_verified": true,
+    "branch": "ccr-e546a360-cxmton",
+    "note": "following session branch 'ccr-e546a360-cxmton' (config branch 'claude/rainbow-05-water-projection')",
+    "commit": "4abe12e76cb9d2d121e8d0f38325a64588d2443b",
+    "duration_s": 7
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "ccr-e546a360-cxmton",
+  "last_verified_remote_sha": "4abe12e76cb9d2d121e8d0f38325a64588d2443b",
+  "last_successful_backup_utc": "2026-11-16T19:07:54+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1000); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-16T19:10:00+00:00"
+}

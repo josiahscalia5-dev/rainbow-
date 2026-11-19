@@ -1,0 +1,17 @@
+{
+ "src": "assets/textures/benny08/body.png",
+ "out": "assets/textures/benny08/body_r3.png",
+ "rows": [
+  190,
+  236
+ ],
+ "ref_rows": [
+  238,
+  262
+ ],
+ "specks": 1309,
+ "band_lum_before": 87.1,
+ "band_lum_after": 116.0,
+ "ref_lum": 118.6,
+ "changed_px": 47076
+}

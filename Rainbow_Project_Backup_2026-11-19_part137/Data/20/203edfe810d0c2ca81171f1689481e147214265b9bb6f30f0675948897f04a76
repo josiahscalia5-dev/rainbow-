@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-18T16:28:17+00:00",
+    "reason": "bootstrap:background",
+    "result": "committed+pushed",
+    "files_staged": 4,
+    "pushed_verified": true,
+    "branch": "ccr-6c7564b1-fmlt1w",
+    "note": "following session branch 'ccr-6c7564b1-fmlt1w' (config branch 'claude/rainbow-restore-autosave-1mgga0')",
+    "commit": "d76584f8048ad27863d5538765caba816c8bcd9d",
+    "duration_s": 10
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "ccr-6c7564b1-fmlt1w",
+  "last_verified_remote_sha": "d76584f8048ad27863d5538765caba816c8bcd9d",
+  "last_successful_backup_utc": "2026-11-18T16:28:17+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1037); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-18T16:30:00+00:00"
+}

@@ -1,0 +1,20 @@
+{
+  "last_run": {
+    "time": "2026-11-18T01:46:35+00:00",
+    "reason": "daemon",
+    "result": "committed+pushed",
+    "files_staged": 9,
+    "pushed_verified": true,
+    "branch": "ccr-58dd182e-m48xwk",
+    "note": "following session branch 'ccr-58dd182e-m48xwk' (config branch 'ccr-9c4a8ad6-xovgsx')",
+    "commit": "82c957632b37e1b4c4feb7e1c9af0576d59d33dc",
+    "duration_s": 11
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "ccr-58dd182e-m48xwk",
+  "last_verified_remote_sha": "82c957632b37e1b4c4feb7e1c9af0576d59d33dc",
+  "last_successful_backup_utc": "2026-11-18T01:46:35+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=535); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-18T01:50:00+00:00"
+}

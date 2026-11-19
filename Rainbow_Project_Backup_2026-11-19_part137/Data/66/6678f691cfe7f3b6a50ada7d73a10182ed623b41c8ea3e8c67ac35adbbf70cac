@@ -1,0 +1,13 @@
+{
+ "source": "V04-1 (user PROVISIONAL view, mv04_V04-1.png)",
+ "RY": 2.2,
+ "half_arc": 4.846627156044098,
+ "near": 3.0,
+ "far": 13.0,
+ "period": 8.203125,
+ "hole_share": 0.6926231384277344,
+ "size": [
+  512,
+  840
+ ]
+}

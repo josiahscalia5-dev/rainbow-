@@ -1,0 +1,22 @@
+diff --git a/qa/match/08/r11/PROGRESS.md b/qa/match/08/r11/PROGRESS.md
+index 3521712e..f10f24a7 100644
+--- a/qa/match/08/r11/PROGRESS.md
++++ b/qa/match/08/r11/PROGRESS.md
+@@ -25,3 +25,17 @@ Kept query: `K10&m08ceil=1`
+   cup's top is still cut by a line (its dome lies partly in the arch's shadow).
+ * Images (separate, full size): `/home/user/wt/s08/qa/match/08/r11/step1_m08ceil/1_APPROVED.png`,
+   `2_BEFORE_<shot>.png`, `3_NEW_<shot>.png` for `f10_forward10u`, `t66_through_screen`, `t95_through_screen`.
++
++## Task 2 — lower arch legs while swimming (defect A/E) — TRIED (geometry check), NOT KEPT, no code
++* Where the painted lower legs are: rows 800–1180 of the approved picture reach the water only ≈ 6–8 u ahead of the
++  approved camera, ≈ 1.2–2 u from the river centre — i.e. at Benny's own depth and INSIDE his steering lane (±2.22 u +
++  body ≈ ±2.95 u). The painting shows the moment Benny passes between the legs. Today those pixels lie on the floor
++  plane (the fitted ring is a circle whose lower part is under the water), so they pass under the camera by forward 3 u.
++* Static options checked with the fitted camera: at the m08far ring depth (≈ 27 u) the water line is at picture row
++  ≈ 737, so a leg there is either hidden behind the big near cups (visible only ≈ 0.7 u between the cup underside and
++  the water while swimming) or stands in front of painted river / cup pixels (an upright slab carrying river pixels —
++  the ghost-slab defect). A leg near its painted depth (6–8 u) is passed within the first 1–3 u and would cut through
++  Benny when he steers. The frame-filling legs while swimming would need an arch that travels forward WITH Benny
++  (forced perspective, the reviewer's suggestion); because the painted legs stand inside the steering lane, Benny would
++  pass through them when steering hard, and it is the "picture following Benny" the user rejected → user's decision,
++  not built. m08far (top band + upper legs) stays the best fixed-world framing.

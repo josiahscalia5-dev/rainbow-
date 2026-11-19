@@ -1,0 +1,19 @@
+{
+  "last_run": {
+    "time": "2026-11-16T02:56:00+00:00",
+    "reason": "daemon",
+    "result": "committed+pushed",
+    "files_staged": 1,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-3d-account-recovery-xex5hc",
+    "commit": "9175c16b29001f9256613acd1397db7502a6dcf9",
+    "duration_s": 98
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-3d-account-recovery-xex5hc",
+  "last_verified_remote_sha": "9175c16b29001f9256613acd1397db7502a6dcf9",
+  "last_successful_backup_utc": "2026-11-16T02:56:00+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=139); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-16T03:00:00+00:00"
+}

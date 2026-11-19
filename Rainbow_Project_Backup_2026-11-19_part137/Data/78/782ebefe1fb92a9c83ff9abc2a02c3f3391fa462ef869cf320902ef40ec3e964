@@ -1,0 +1,66 @@
+{
+ "BEFORE": {
+  "whole": {
+   "within_20": 0.0501,
+   "ssim": 0.1775,
+   "mean_abs": 81.56
+  },
+  "scenery": {
+   "within_20": 0.0411,
+   "ssim": 0.1964,
+   "mean_abs": 81.83
+  },
+  "upper": {
+   "within_20": 0.014,
+   "ssim": 0.1321,
+   "mean_abs": 85.01
+  },
+  "middle": {
+   "within_20": 0.0451,
+   "ssim": 0.1457,
+   "mean_abs": 84.34
+  },
+  "lower": {
+   "within_20": 0.0651,
+   "ssim": 0.2764,
+   "mean_abs": 77.89
+  },
+  "benny+splash": {
+   "within_20": 0.0403,
+   "ssim": 0.1206,
+   "mean_abs": 90.21
+  }
+ },
+ "NEW": {
+  "whole": {
+   "within_20": 0.7913,
+   "ssim": 0.7848,
+   "mean_abs": 16.15
+  },
+  "scenery": {
+   "within_20": 0.9879,
+   "ssim": 0.9868,
+   "mean_abs": 1.03
+  },
+  "upper": {
+   "within_20": 0.9781,
+   "ssim": 0.9768,
+   "mean_abs": 1.37
+  },
+  "middle": {
+   "within_20": 0.9843,
+   "ssim": 0.983,
+   "mean_abs": 1.49
+  },
+  "lower": {
+   "within_20": 0.9983,
+   "ssim": 0.9976,
+   "mean_abs": 0.53
+  },
+  "benny+splash": {
+   "within_20": 0.5525,
+   "ssim": 0.525,
+   "mean_abs": 36.64
+  }
+ }
+}

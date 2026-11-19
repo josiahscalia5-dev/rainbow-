@@ -1,0 +1,19 @@
+{
+  "last_run": {
+    "time": "2026-11-17T00:51:12+00:00",
+    "reason": "manual:specialists-relaunched",
+    "result": "committed+pushed",
+    "files_staged": 10,
+    "pushed_verified": true,
+    "branch": "claude/rainbow-restore-env-setup-bxn85h",
+    "commit": "4a19ed94c22beb7bd4addb3c15463e2b1fd475e9",
+    "duration_s": 7
+  },
+  "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+  "branch": "claude/rainbow-restore-env-setup-bxn85h",
+  "last_verified_remote_sha": "4a19ed94c22beb7bd4addb3c15463e2b1fd475e9",
+  "last_successful_backup_utc": "2026-11-17T00:51:12+00:00",
+  "consecutive_failures": 0,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1009); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-17T00:55:00+00:00"
+}
