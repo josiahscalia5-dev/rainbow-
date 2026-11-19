@@ -2652,3 +2652,47 @@ Saving everything now: the lead branch, every worker branch, unfinished edits, t
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r18/RESUME_R18.md <<'EOF'\n\n## UPDATE 2026-11-19 ~18:55 UTC (user: \"save everything\") — where each worker is now\n| Worker | Branch tip (pushed) | State | Next |\n|---|---|---|---|\n| s04tex | `617556fd` | running | kept K8 (… `m04rpvar`, `m04rfew&m04rfg=1.2`, `m04rpol`); next: smooth copper band in the top third, steering seam check |\n| s04 | `a6219412` | running | kept K18-3b + `m04flo` (`m04nband`, `m04nwhirl`, `m04nwc=1.3`, `m04flo`); next: whirl smear while steering, coin over Benny, colour up the low banks |\n| s05 | `acbeeeea` | running | s …[+1350 chars]`
 
+### 🧑 User — 2026-11-19T18:48:22.045Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "wip_snapshots": [
+>     "claude/rainbow-s04-match-c18: 1 modified, 16 new file(s) snapshotted",
+>     "claude/rainbow-s04-ringtex-c18: 1 modified, 0 new file(s) snapshotted",
+>     "claude/rainbow-s04-preview-c18: 0 modified, 0 new file(s) snapshotted",
+>     "claude/rainbow-s05-match-c18: 2 modified, 4 new file(s) snapshotted",
+>     "claude/rainbow-s06-match-c18: 1 modified, 1 new file(s) snapshotted",
+>     "claude/rainbow-s07-match-c18: 0 modified, 0 new file(s) snapshotted"
+>   "commit": "d73ec72b7634e87989d8d0d40398806f0ab385f6",
+> AUTOSAVE OK | branch ccr-ae71d3a5-80naq2 | scheduler daemon | last verified backup 2026-11-19T18:48:05+00:00 (0.3 min ago) | local d73ec72 remote d73ec72 (match) | uncommitted 0
+> HEAD d73ec72b7634e87989d8d0d40398806f0ab385f6
+> REMOTE d73ec72b7634e87989d8d0d40398806f0ab385f6
+
+### 🤖 Claude — 2026-11-19T18:48:40.841Z
+
+Everything is saved to your GitHub repository and checked: GitHub has the same commit as this workspace for every branch.
+
+- **Main branch:** `ccr-ae71d3a5-80naq2`, at commit `d73ec72b7634e87989d8d0d40398806f0ab385f6`. The five-minute autosave is running.
+- **Each worker's branch:** all pushed and matching.
+
+  | Worker | Branch | Commit |
+  |---|---|---|
+  | 04 water | `claude/rainbow-s04-match-c18` | `a6219412` |
+  | 04 rings | `claude/rainbow-s04-ringtex-c18` | `617556fd` |
+  | 04 combined preview | `claude/rainbow-s04-preview-c18` | `c338978b` |
+  | 05 | `claude/rainbow-s05-match-c18` | `acbeeeea` |
+  | 06 | `claude/rainbow-s06-match-c18` | `c649fcbc` |
+  | 07 | `claude/rainbow-s07-match-c18` | `8accdad0` |
+
+- **Unfinished work:** every half-done edit from the 04, 05 and 06 workers is copied into the backup folder on each save, so nothing in progress is lost.
+- **Agents:** all 10 specialist definitions are in the repo and unchanged. The status file (`backups/AGENTS_STATUS.json`) and the resume notes (`docs/briefs/2026-11-19-r18/RESUME_R18.md`) say where each worker stopped and how to restart it.
+- **Chat history:** this whole conversation and all five workers' transcripts are in `backups/claude-sessions/`, with secrets removed.
+- **Pictures and clips:** every comparison I sent you is in `qa/review_r18/`.
+- **Large files:** the 70 big files (models, Marble world files, the Android app) were confirmed on GitHub at the start of this session. New ones go up with each save.
+
+**What can't be saved to GitHub:**
+- **Workers in progress:** the running workers themselves stop when the session closes. Their work and restart notes are saved, so a new session can pick them up.
+- **Logins and keys:** your Claude, GitHub and World Labs logins and API keys are never written into the repo, for security. The keys stay in your cloud environment's settings.
+
+There was one gap today: nothing reached GitHub between 02:57 and 18:09 UTC, while the session was closed. Nothing was lost, and everything since has been saved.
+

@@ -1,3 +1,28 @@
+diff --git a/qa/match/04/r18/PROGRESS.md b/qa/match/04/r18/PROGRESS.md
+index c512d5d9..e078b112 100644
+--- a/qa/match/04/r18/PROGRESS.md
++++ b/qa/match/04/r18/PROGRESS.md
+@@ -79,3 +79,20 @@ Query (K18-4): K18-3b + `&m04flo=1` (needs `m04fclu`; defaults `m04floh` 0.25 he
+ * Pictures: `qa/match/04/r18/s4_flo/1_APPROVED.png`, `BEFORE/` (K18-3b: f03, f06, f10, t33, t95, hard left / right), `NEW/`
+   (K18-4, 12 shots), `NEW_swim_clip_half.mp4` (half size, 3.6 s).
+ * Note: this commit also carries the first, UNPROVEN code of the next step `&m04sswirl=1` (bank ribbons curving up the sides; off by default, not in any kept set yet).
++
++## Step 5 — no smear while steering (lead: glitch seen in a real 4 s swim clip) — `&m04nwq=2&m04nwr=3.2` — GOOD IMPROVEMENT (glitch fix)
++Query (K18-5): K18-4 + `&m04nwq=2&m04nwr=3.2` (both inside `m04nwhirl`; 0 = the step-3/4 behaviour).
++* Cause (lead clip ≈1.0–2.0 s, reproduced with the same recipe `swim_clip.mjs 04 … 4`): while Benny steers to a side the camera
++  falls farther behind him. (a) The whirl's cyan pocket / corridor follow Benny out of the clean centre lane and laid bare the raw
++  painted river tile, magnified into big white-cyan cloud blobs; (b) far behind Benny the whirl's outer arcs grew into one broad
++  stretched pink smear. The steady stills never show either.
++* Code (`src/world/match04m4.ts`, river shader only): `m04nwr=3.2` the whirl reaches only 3.2 u round Benny (fading over 1 u),
++  beyond it the bands run as the straight flowing stripes again; `m04nwq=2` the water the whirl leaves bare at / behind Benny shows
++  the painted cyan streaks of the band strip's lane side (sampled across its cyan end with per-lane offsets so the streaks run with
++  the flow side by side, not as bands straight across the river); the arrow lane ahead of Benny is untouched.
++* Rejected tries (scratch only): `m04nwq=1` (clean lane water: still soft white blotches when seen close at a grazing angle); the
++  painted cyan from one strip column (faint light bands straight across the corridor); a sample range reaching the violet part
++  (the water under Benny turned pink-violet); a first version that also re-coloured the arrow lane ahead.
++* Coin over Benny at ≈2.0 s (lead glitch 2): NOT scenery / water — the normal coin pickup: a collected coin pops at Benny's own
++  position (rises 1.6 u, shrinks away in 0.35 s, `src/gameplay/coins.ts` 197–203), so for that moment it is really in front of him.
++  Not changed here (coins are off-limits to this branch).
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
 index 1e6b46a4..f3156dcb 100644
 --- a/src/world/match04m4.ts
