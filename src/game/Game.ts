@@ -27,6 +27,7 @@ import { MATCH } from './match';
 import { buildMatch08 } from '../world/match08';
 import { buildMatch06 } from '../world/match06';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+import { prepareFittedCuff06 } from '../characters/benny/knitCuff06';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
 const START_COINS = 1330;
@@ -101,6 +102,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const water = await loadWater(course);
   scene.add(water.group);
   const benny = await loadBennyRuntime();
+  const setCuff06 = await prepareFittedCuff06(benny.root);
   scene.add(benny.root);
   const girl = await loadGirlRuntime();
   const coins = createCoins(course);
@@ -173,6 +175,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     }
     if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
     if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+    setCuff06?.(st.stage === '06');
     const inDrum = i <= 1;
     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
   };
