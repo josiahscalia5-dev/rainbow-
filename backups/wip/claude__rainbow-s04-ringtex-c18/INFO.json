@@ -2,11 +2,35 @@
  "worktree": "/home/user/wt/s04b",
  "branch": "claude/rainbow-s04-ringtex-c18",
  "head": "af6b7d47fd667bce7a6974d348bb80f3c7fc9ea8",
- "time": "2026-11-19T18:35:37+00:00",
+ "time": "2026-11-19T18:40:53+00:00",
  "dirty_tracked": [
   "src/world/match04m4.ts"
  ],
- "untracked_copied": [],
- "untracked_skipped": [],
+ "untracked_copied": [
+  "qa/match/04/r18/ringpaint/step8_pol/before/f06_forward6u.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/f10_forward10u.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/f20_forward20u.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/motion.json",
+  "qa/match/04/r18/ringpaint/step8_pol/before/s_left_hard.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/s_left_steer.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/s_right_hard.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/s_right_steer.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/t33_through_screen.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/t66_through_screen.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/t95_through_screen.png",
+  "qa/match/04/r18/ringpaint/step8_pol/f06_forward6u.png",
+  "qa/match/04/r18/ringpaint/step8_pol/f10_forward10u.png",
+  "qa/match/04/r18/ringpaint/step8_pol/f20_forward20u.png",
+  "qa/match/04/r18/ringpaint/step8_pol/s_left_hard.png",
+  "qa/match/04/r18/ringpaint/step8_pol/s_left_steer.png",
+  "qa/match/04/r18/ringpaint/step8_pol/s_right_hard.png",
+  "qa/match/04/r18/ringpaint/step8_pol/s_right_steer.png"
+ ],
+ "untracked_skipped": [
+  "qa/match/04/r18/ringpaint/step8_pol/a00_approved_view.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/a00_approved_view.png",
+  "qa/match/04/r18/ringpaint/step8_pol/before/f03_forward3u.png",
+  "qa/match/04/r18/ringpaint/step8_pol/f03_forward3u.png"
+ ],
  "restore": "git switch claude/rainbow-s04-ringtex-c18 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-ringtex-c18/tracked.patch && copy backups/wip/claude__rainbow-s04-ringtex-c18/untracked/* into the worktree"
 }

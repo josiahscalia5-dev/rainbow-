@@ -2328,3 +2328,195 @@ The corner now shows the slotted wall down to the foam. Now the full proof set: 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\na=\"\"\"      onLive: M05LIDF && PROJLID05 ? (live: boolean) => {\n        farLids.visible = live;\n        const g = zones.tubes.getObjectByName('tube05_lids_blender');\n        g?.traverse((o) => { if (/_[LR]3$/.test(o.name)) o.visible = !live; });\n      } : undefined,\"\"\"\nb=\"\"\"      onLive: M05LIDF && PROJLID05 ? (() => {\n        let far3: THREE.Object3D[] | null = null;   // the Blender L3 / R3 (found once the GLB has loaded)\n        return (live: boolean) => {\n          farLid …[+1180 chars]`
 
+### 🧑 User — 2026-11-19T18:36:09.203Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:36:12.298Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try8_strip.png"}`
+
+### 🧑 User — 2026-11-19T18:36:12.334Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:36:20.517Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r18/step2_wall && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nc=Image.new('RGB',(1240,533))\nfor i,(d,n) in enumerate([('before','s_left_hard'),('new','s_left_hard'),('before','s_right_hard'),('new','s_right_hard')]): c.paste(Image.open(d+'/'+n+'.png').convert('RGB').resize((300,533)),(i*300+(20 if i>1 else 0),0))\nc.save(S+'cmpS.png')\"", "description": "Compare hard-steer start views BEFORE/NEW"}`
+
+### 🧑 User — 2026-11-19T18:36:20.902Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:36:21.686Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/cmpS.png"}`
+
+### 🧑 User — 2026-11-19T18:36:21.761Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:36:31.657Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=2&m05lidf=1&m05pink=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try9 && timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" s_left_hard,s_right_hard,t33_through_screen 5275 2>&1 | grep -i error | head -3; python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nN='/home/user/wt/s05/qa/match/05/r18/step2_wall/new/'\nc=Image.new('RGB',(1240,533))\nfor i,(d,n) in enumerate([(N,' …[+297 chars]`
+
+### 🧑 User — 2026-11-19T18:38:06.852Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:38:10.093Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/cmpM2.png"}`
+
+### 🧑 User — 2026-11-19T18:38:10.148Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:38:21.863Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r18/step2_wall && rm -rf $D/new && K=\"$(cat qa/match/05/r18/KEPT_START.txt)\" && NQ=\"$K&m05wcrisp=1&m05lidf=1&m05pink=1\" && L=a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,f20_forward20u,s_left_hard,s_right_hard,t33_through_screen,t66_through_screen,k81_kink_left,k81_kink_right,t95_through_screen,x97,x97L,x97R,t98_end && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05 && (timeout 2400 node tools/match05/r8_shots.mjs $D/new \"$NQ\" $L 5275 > $D/new.log 2>&1; timeout 900 node scripts/capt …[+377 chars]`
+
+### 🧑 User — 2026-11-19T18:38:21.931Z
+
+> ↩︎ result: Command running in background with ID: bih70mlfz. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bih70mlfz.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-19T18:38:27.502Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git add src tools/match05/r18_clip.mjs && git commit -q -m \"Screen 05 r18 step 2 WIP: m05lidf = far block's own paddle pairs while swimming (vertex remap made 27 u blades), m05pink = floor sheet cut under the river while the far block is live\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6SAH2NyYjSPRMtFps6\" && timeout 100 git push -q origin claude/rainbow-s05-match-c18 2>&1 | tail -2; git rev-parse --short HEAD; git ls-remote origin refs/heads/claude/rainbow-s05-match-c18 | cut -c1-8", "de …[+58 chars]`
+
+### 🧑 User — 2026-11-19T18:38:31.554Z
+
+> ↩︎ result: acbeeeea
+> acbeeeea
+
+### 🤖 Claude — 2026-11-19T18:38:38.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r18/step2_wall && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nc=Image.new('RGB',(900,533))\nfor i,n in enumerate(['k81_kink_left','k81_kink_right','t66_through_screen']): c.paste(Image.open('before/'+n+'.png').convert('RGB').resize((300,533)),(i*300,0))\nc.save(S+'kink_before.png')\"", "description": "Look at kink views for the next biggest difference"}`
+
+### 🧑 User — 2026-11-19T18:38:38.801Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:38:39.734Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/kink_before.png"}`
+
+### 🧑 User — 2026-11-19T18:38:39.839Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:38:49.036Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)\" && GRID='0.2,-0.76;0.35,-0.5;0.45,-0.3;0.3,-0.9' timeout 600 node tools/match05/r15_probe.mjs \"$Q\" t81R 5275 2>&1 | tail -5", "description": "Probe the big foam balls at hard right in the kink", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T18:39:31.470Z
+
+> ↩︎ result: == t81R s 179.099 stage 05 cam 6.35,-40.38,-111.46 far-open 0 extra null
+>    0.2,-0.76 proj05_apron<washer_world<Scene d3.4 | water_ribbon<water_system<Scene d3.58 | foam_rim05<foam_banks<water_system<Scene d3.94
+>    0.35,-0.5 foam_rim05<foam_banks<water_system<Scene d5.55 | water_ribbon<water_system<Scene d7.24 | Mesh<zone_tubes<washer_world<Scene d9.64
+>    0.45,-0.3 water_ribbon<water_system<Scene d9.66 | Mesh<zone_tubes<washer_world<Scene d11.03 | tube05_far_wall<zone_tubes<washer_world<Scene d11.31
+>    0.3,-0.9 proj05_apron<washer_world<Scene d3.38 | foam_rim05<foam_banks<water_system<Scene d3.62 | foam_berm<foam_banks<water_system<Scene d3.85
+
+### 🤖 Claude — 2026-11-19T18:39:36.442Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"foam_rim05\\|M05CLOUD\\|M05FRIM\\|BANK_BUB_FRAG\\|function createRim05\\|rim05\" src/vfx/foam.ts | head -40", "description": "Locate the rim impostor bubbles code"}`
+
+### 🧑 User — 2026-11-19T18:39:36.517Z
+
+> ↩︎ result: 17:import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05BANK, M05FLAT, M05CLOUD, M05CAUL, m05foamK } from './waterRibbon';
+> 260:    // m05bank: piled-bubble shading as the bank lumps (BANK_BUB_FRAG): key light from the upper left, white caps only on
+> 459:const BANK_BUB_FRAG = /* glsl */ `
+> 557:  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: vs, fragmentShader: BANK_BUB_FRAG, fog: true });
+> 634:  rim05: THREE.InstancedMesh;
+> 947:  // `&m05cloud=1` (Screen 05 round 10, waterRibbon.ts M05CLOUD): big puffy foam CLOUDS on both 05 banks — clusters of
+> 951:  if (M05CLOUD) {
+> 1086:  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+> 1087:  rim05.name = 'foam_rim05';
+> 1088:  rim05.frustumCulled = false;
+> 1089:  rim05.count = imp05.length;
+> 1091:    rim05.setMatrixAt(i, tmpM.makeScale(b.r, b.r, b.r).setPosition(b.p));
+> 1092:    rim05.setColorAt(i, tmpC.setRGB(b.c[0], b.c[1], b.c[2]));
+> 1094:  rim05.instanceMatrix.needsUpdate = true;
+> 1095:  if (rim05.instanceColor) rim05.instanceColor.needsUpdate = true;
+> 1096:  group.add(rim05);
+> 1291:    rim05,
+> 1311:      rim05.visible = imp05.length > 0 && st05.s1 - 2 > focusS - 12 && st05.s0 + 2  …[+30 chars]
+
+### 🤖 Claude — 2026-11-19T18:39:39.055Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 440,560p src/vfx/foam.ts && sed -n 940,1000p src/vfx/foam.ts", "description": "Read the bank bubble impostor shader and cloud placement"}`
+
+### 🧑 User — 2026-11-19T18:39:39.110Z
+
+> ↩︎ result: vec4 mvPosition = viewMatrix * c;
+>   vCv = mvPosition.xyz;
+>   vR = r;
+>   // wave 7: 0 for bubbles <= ~18 px, 1 for >= ~40 px on screen (the ref's big near bumps show large white caps)
+>   vBig = smoothstep(0.012, 0.026, projectionMatrix[1][1] * r / max(-mvPosition.z, 0.01));
+>   mvPosition.xyz += normalize(-mvPosition.xyz) * r * 0.6;
+>   mvPosition.xy += position.xy * r;
+>   vP = position.xy;
+>   vInst = instanceColor;
+>   gl_Position = projectionMatrix * mvPosition;
+>   #include <fog_vertex>
+> }
+> `;
+> /**
+>  * wave 8 (05 only: rafts + the 05 berm puffs): one foam lump = a sphere impostor with the true per-pixel sphere depth,
+>  * so lumps sink into the water and into each other with curved creases (a merged low foam mound, not stacked discs);
+>  * the lower outline of larger lumps is scalloped by small piled bubbles; the micro texture packs tiny open bubbles on
+>  * the lower half / flanks; bubbles under ~14 px render as glossy little soap bubbles with a thin blue rim.
+>  */
+> const BANK_BUB_FRAG = /* glsl */ `
+> uniform mat4 projectionMatrix;
+> uniform vec3 uLightDir;
+> uniform float uTime;
+> varying vec2 vP;
+> varying vec3 vInst;
+> varying float vBig;
+> varying vec3 vCv;
+> varying float vR;
+> #include <fog_pars_fragment>
+> ${NOISE_ …[+8569 chars]
+
+### 🤖 Claude — 2026-11-19T18:39:42.899Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n -i \"m05caul\" -A6 qa/match/05/r11/PROGRESS.md qa/match/05/r12/PROGRESS.md 2>/dev/null | cut -c1-300 | head -30", "description": "Check the past verdict for m05caul"}`
+
+### 🧑 User — 2026-11-19T18:39:43.055Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:39:45.541Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn -i \"m05caul\" qa/match/05/ --include=*.md | cut -c1-400 | head -10", "description": "Search all notes for m05caul"}`
+
+### 🧑 User — 2026-11-19T18:39:45.744Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:39:48.198Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"M05CAUL\" -B12 src/vfx/waterRibbon.ts | head -30", "description": "Read the m05caul switch description"}`
+
+### 🧑 User — 2026-11-19T18:39:48.281Z
+
+> ↩︎ result: 440- * Different from the rejected m05lump (which only moved the bank's end 0.5 … 1.9 u before the seam with a noise edge).
+> 441- * Locked view: the berm is not drawn there (ride factor 0) → unchanged.
+> 442- */
+> 443-export const M05BANK: boolean = M05BERM && q05('m05bank');
+> 444-/** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
+> 445-export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
+> 446-/**
+> 447- * `&m05caul=1` (Screen 05 round 11, needs m05cloud; src/vfx/foam.ts BANK_BUB_FRAG): the 05 bank foam lumps that are big on
+> 448- * screen read as smooth round balls; the painted foam is cauliflower — each pile made of many small piled bubbles. Lumps
+> 449- * larger than ≈24 px are drawn as a pile of sub-bubbles (cells ≈ 16 px across, each its own small dome with a blue-violet
+> 450- * crease between them) with a scalloped outline all round. Swimming only (these lumps are not drawn at the locked view).
+> 451- */
+> 452:export const M05CAUL: boolean = M05CLOUD && q05('m05caul');
+
+### 🤖 Claude — 2026-11-19T18:39:54.488Z
+
+> 🔧 **Bash** `{"command": "until grep -q done /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bih70mlfz.output 2>/dev/null; do sleep 15; done; cat /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bih70mlfz.output; grep -ci error /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log", "description": "Wait for NEW set, lock check and gameplay test", "timeout": 5400000}`
+

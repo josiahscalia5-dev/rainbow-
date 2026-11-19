@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 1e6b46a4..2e352118 100644
+index 1e6b46a4..6b2b30a0 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -321,6 +321,8 @@ uniform vec4 uNB4;           // r18 m04nwhirl: x along squash of the whirl ellip
@@ -27,7 +27,7 @@ index 1e6b46a4..2e352118 100644
      col = mix(col, laneC, kl * uLane.z);
    }
    float fringe = 0.0, edgeY = uEdge.y;
-@@ -456,12 +460,22 @@ void main() {
+@@ -456,12 +460,23 @@ void main() {
          float fo = mix(1.0, uNB2.w, smoothstep(0.0, uNB2.x, d));            // centred on Benny at / behind him
          vec2 wq = vec2(vS - uNB.z * fo, uNB4.x * min(d - uNB4.y, 0.0));
          rr = length(wq);
@@ -45,13 +45,14 @@ index 1e6b46a4..2e352118 100644
 +          // m04nwq=2: the painted cyan streaks of the band strip's lane side instead (crisp at any distance, flowing along)
 +          vec3 bare = laneCol;
 +          if (uNB7.x > 1.5) { float vq = fl / uSB0.w; bare = mix(texture2D(uSB, vec2(0.93, vq)).rgb, texture2D(uSB, vec2(0.93, vq * 0.81 + 0.29)).rgb, w); }
-+          col = mix(col, bare, (1.0 - smoothstep(uSB0.z - 1.2, uSB0.z - 0.6, abs(vS))) * (1.0 - smoothstep(uNB7.y > 0.0 ? uNB7.y : 9.0, (uNB7.y > 0.0 ? uNB7.y : 9.0) + 1.0, rr)));
++          col = mix(col, bare, (1.0 - smoothstep(uSB0.z - 1.2, uSB0.z - 0.6, abs(vS))) * (1.0 - smoothstep(uNB7.y > 0.0 ? uNB7.y : 9.0, (uNB7.y > 0.0 ? uNB7.y : 9.0) + 1.0, rr))
++            * smoothstep(uNB4.y + 1.5, uNB4.y, d));                // only at / behind Benny: the arrow lane ahead stays as it was
 +        }
 +        rr = mix(abs(sv), rr, wf);
        }
        inner = mix(min(hug, uSB0.y), uSB0.y, smoothstep(0.15 * uNB2.x, uNB2.x, d));
        if (uNB4.z > 0.0) {
-@@ -988,6 +1002,8 @@ export function addM04(ctx: M04Ctx) {
+@@ -988,6 +1003,8 @@ export function addM04(ctx: M04Ctx) {
          uNB5: { value: M04.num('m04nwt', 1) },   // m04nwt spiral twist (0 = closed U rings)
          // m04nwc / m04nwcs: cyan corridor straight behind Benny (half width, soft edge; m04nwc=0 = off, the r18 step-3 look)
          uNB6: { value: new THREE.Vector2(nwOn ? M04.num('m04nwc', 0) : 0, M04.num('m04nwcs', 0.8)) },

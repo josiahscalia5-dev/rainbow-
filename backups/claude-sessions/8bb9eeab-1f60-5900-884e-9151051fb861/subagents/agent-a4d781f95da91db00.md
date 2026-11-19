@@ -2574,3 +2574,27 @@ Normal run-to-run timing jitter (±0.7 u), not a change. Now judging the polish 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -i \"s/M04.num('m04rpp', 0.37), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.1)/M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)/; s/M04.num('m04rpsp', 0.3), M04.num('m04rpfr', 0.06)/M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)/\" src/world/match04m4.ts && grep -n \"m04rpgh\\|m04rpsp\" src/world/match04m4.ts && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && ONLY=f10_forward10u,t66_through_screen,s_left_hard node $S/a …[+1115 chars]`
 
+### 🧑 User — 2026-11-19T18:36:02.232Z
+
+> ↩︎ result: 721:        uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
+> 722:        uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
+> f10_forward10u K7   (array([ 44.,  94., 190.], dtype=float32), array([ 88., 100., 111., 130., 165., 195.]))
+> f10_forward10u pol3 (array([ 52., 105., 201.], dtype=float32), array([ 88., 103., 123., 149., 186., 208.]))
+> t66_through_screen K7   (array([ 49.,  97., 194.], dtype=float32), array([ 89., 103., 116., 134., 168., 197.]))
+> t66_through_screen pol3 (array([ 58., 109., 207.], dtype=float32), array([ 88., 111., 130., 153., 187., 208.]))
+> s_left_hard K7   (array([ 51., 100., 199.], dtype=float32), array([ 89., 106., 120., 141., 170., 197.]))
+> s_left_hard pol3 (array([ 60., 113., 213.], dtype=float32), array([ 88., 113., 136., 159., 190., 209.]))
+> [This command modified 1 file you've previously read: ../wt/s04b/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-19T18:36:06.537Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s8e_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-19T18:36:06.582Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:36:20.859Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && D=qa/match/04/r18/ringpaint/step8_pol && mkdir -p $D/before && node tools/lead_r6/motion_audit.mjs 04 $D/before \"$K7\" 2>&1 | grep -E \"pageerror|Error\"; node tools/lead_r6/motion_audit.mjs 04 $D \"$K7&m04rpol=1\" 2>&1 | grep -E \"pageerror|Error\"; cd $D && for f in before/*.png; do b=$(basename $f); mv \"$f\" \"2_BEFORE_$b\"; done; mv before/motion.json motion_BEFORE.json; rmdir before; for f in [a-z]*.png; do mv \"$f\" \"3_NEW_$f\"; don …[+119 chars]`
+
