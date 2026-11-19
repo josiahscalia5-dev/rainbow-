@@ -1,9 +1,0 @@
-# Paste this into Claude Code in the NEW Rainbow folder
-
-I'm starting **a brand-new separate game project called Rainbow**, not editing any older game. Please **read and execute `Rainbow_Claude_Code_Master_Prompt_11_Screens.md` completely**, with `README_FIRST.md`, `REFERENCE_ORDER.md`, `TOOL_SETUP_AND_VERIFICATION.md`, `VISUAL_QA_CHECKLIST.md`, all **11 exact PNG screenshots in `references/`**, and **the official cartoon girl image in `character_references/`** as the only approved visual sources.
-
-All 11 scenes must be implemented in the correct order as a premium, real playable, 3D portrait Android-ready game. The girl in `official_cartoon_girl_original.jpg` **replaces the previous human character identity in the opening, Scene 10 where visible, and final Scene 11**. Preserve Benny exactly. Scene 11 is the **real final `11 · SAFELY HOME` victory**, with `FINAL SPIN COMPLETE`; the girl holds the purple towel while Benny remains hidden. The screenshot's original more realistic girl is NOT the identity to retain. **Scene 07 must travel a long way DOWN and connect physically and continuously to Scene 08.**
-
-Set up or verify Blender MCP, Playwright MCP and optionally Meshy, Hyper3D and World Labs Atlas/Marble following documentation; create the ten focused agents in `.claude/agents/`, including a real **Water FX Specialist** custom agent for the vivid cyan-and-pink moving water, foam and bubbles. Use one consistent rig for Benny and one for the cartoon girl across scenes. Use screenshot-vs-reference QA; deliver separate 01–11 rendered screens and 07→08 continuity proof. Create/verify a NEW private GitHub repo only with access and authorization; report actual URL/branch/pushed SHA, not assumptions. Ask before paid credit use.
-
-Start by inspecting the original files and verifying tools, then create an initial real playable 3D build and progress milestone. Do not stop at another plan or generate 2D screen mockups and call them gameplay.
