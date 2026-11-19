@@ -1,4 +1,0 @@
-{
- "actual_context": "Script ran on page and returned:\n```json\n{\"stage\":\"07\",\"webgl\":\"WebGL 2.0 (OpenGL ES 3.0 Chromium)\",\"renderer\":\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\",\"lost\":false,\"paddle\":\"m07_paddle2\",\"geometry\":\"BoxGeometry\",\"material\":\"ShaderMaterial\",\"depthTest\":true,\"near\":0.05,\"far\":1200,\"triangles\":287709}\n```",
- "asset_requests": "## Network requests\nNo requests found."
-}

@@ -1,0 +1,970 @@
+{
+  "method": "Decoded real H.264 clips, averaged to 216 by 384 pixels. Measure rows 35 through 344 to exclude the HUD. Changed count uses maximum absolute channel difference above 18. Adjacent-frame mean absolute RGB change identifies moments to inspect for popping. Compression can produce small differences beyond the changed surface. These are diagnostics, not accuracy scores for unseen viewpoints.",
+  "frames": 63,
+  "highestDifferenceTimes": [
+    1.0833333333333333,
+    0,
+    0.08333333333333333,
+    0.16666666666666666,
+    0.25
+  ],
+  "largestIncreaseInAdjacentFrameChange": {
+    "time": 0.75,
+    "stage": "06",
+    "station": 197.3,
+    "camera": [
+      2.431143318455052,
+      -37.97607902558464,
+      -129.9536995173955
+    ],
+    "changedPixels_channelGt18": 0,
+    "averageChannelDifference": 1.151,
+    "temporalDeltaBefore": 38.993,
+    "temporalDeltaNew": 39.006,
+    "addedTemporalDelta": 0.013
+  },
+  "timeline": [
+    {
+      "time": 0,
+      "stage": "06",
+      "station": 189.05,
+      "camera": [
+        3.5692831938151888,
+        -41.23219464167138,
+        -122.72570821796546
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 0.877
+    },
+    {
+      "time": 0.08333333333333333,
+      "stage": "06",
+      "station": 189.966,
+      "camera": [
+        3.6989635682101527,
+        -41.62611103644086,
+        -123.61233309408568
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.05,
+      "temporalDeltaBefore": 50.142,
+      "temporalDeltaNew": 50.144,
+      "addedTemporalDelta": 0.002
+    },
+    {
+      "time": 0.16666666666666666,
+      "stage": "06",
+      "station": 190.883,
+      "camera": [
+        3.738000897478071,
+        -41.848459744677314,
+        -124.46332636736356
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.086,
+      "temporalDeltaBefore": 45.249,
+      "temporalDeltaNew": 45.242,
+      "addedTemporalDelta": -0.007
+    },
+    {
+      "time": 0.25,
+      "stage": "06",
+      "station": 191.8,
+      "camera": [
+        3.6710423627102426,
+        -41.71922988124951,
+        -125.28998503054584
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.126,
+      "temporalDeltaBefore": 36.238,
+      "temporalDeltaNew": 36.25,
+      "addedTemporalDelta": 0.012
+    },
+    {
+      "time": 0.3333333333333333,
+      "stage": "06",
+      "station": 192.716,
+      "camera": [
+        3.5372099454984416,
+        -41.350249406774296,
+        -126.09599270272889
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.18,
+      "temporalDeltaBefore": 28.676,
+      "temporalDeltaNew": 28.678,
+      "addedTemporalDelta": 0.002
+    },
+    {
+      "time": 0.4166666666666667,
+      "stage": "06",
+      "station": 193.633,
+      "camera": [
+        3.36051413052499,
+        -40.82262778987832,
+        -126.88332726461407
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.147,
+      "temporalDeltaBefore": 31.623,
+      "temporalDeltaNew": 31.626,
+      "addedTemporalDelta": 0.003
+    },
+    {
+      "time": 0.5,
+      "stage": "06",
+      "station": 194.55,
+      "camera": [
+        3.1565422159319043,
+        -40.18993616088301,
+        -127.65709795884187
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.206,
+      "temporalDeltaBefore": 34.897,
+      "temporalDeltaNew": 34.889,
+      "addedTemporalDelta": -0.008
+    },
+    {
+      "time": 0.5833333333333334,
+      "stage": "06",
+      "station": 195.466,
+      "camera": [
+        2.937100605081117,
+        -39.490542339123806,
+        -128.42480711642474
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.112,
+      "temporalDeltaBefore": 33.534,
+      "temporalDeltaNew": 33.539,
+      "addedTemporalDelta": 0.005
+    },
+    {
+      "time": 0.6666666666666666,
+      "stage": "06",
+      "station": 196.383,
+      "camera": [
+        2.702270394301104,
+        -38.74496692682185,
+        -129.18889084316447
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.233,
+      "temporalDeltaBefore": 35.645,
+      "temporalDeltaNew": 35.649,
+      "addedTemporalDelta": 0.004
+    },
+    {
+      "time": 0.75,
+      "stage": "06",
+      "station": 197.3,
+      "camera": [
+        2.431143318455052,
+        -37.97607902558464,
+        -129.9536995173955
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.151,
+      "temporalDeltaBefore": 38.993,
+      "temporalDeltaNew": 39.006,
+      "addedTemporalDelta": 0.013
+    },
+    {
+      "time": 0.8333333333333334,
+      "stage": "06",
+      "station": 198.216,
+      "camera": [
+        2.1100543339200852,
+        -37.20130212712132,
+        -130.72412697526715
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.278,
+      "temporalDeltaBefore": 42.781,
+      "temporalDeltaNew": 42.788,
+      "addedTemporalDelta": 0.007
+    },
+    {
+      "time": 0.9166666666666666,
+      "stage": "06",
+      "station": 199.133,
+      "camera": [
+        1.741319383453621,
+        -36.434233017306106,
+        -131.5068115935039
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.21,
+      "temporalDeltaBefore": 46.169,
+      "temporalDeltaNew": 46.159,
+      "addedTemporalDelta": -0.01
+    },
+    {
+      "time": 1,
+      "stage": "06",
+      "station": 200.05,
+      "camera": [
+        1.3391871244802531,
+        -35.68881777731995,
+        -132.30979677627738
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.449,
+      "temporalDeltaBefore": 53.91,
+      "temporalDeltaNew": 53.89,
+      "addedTemporalDelta": -0.02
+    },
+    {
+      "time": 1.0833333333333333,
+      "stage": "06",
+      "station": 200.966,
+      "camera": [
+        0.927927194159305,
+        -34.97460244569351,
+        -133.13888293435963
+      ],
+      "changedPixels_channelGt18": 154,
+      "averageChannelDifference": 1.571,
+      "temporalDeltaBefore": 51.51,
+      "temporalDeltaNew": 51.498,
+      "addedTemporalDelta": -0.012
+    },
+    {
+      "time": 1.1666666666666667,
+      "stage": "06",
+      "station": 201.883,
+      "camera": [
+        0.5352257190342689,
+        -34.30215847524702,
+        -133.9992093581871
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.256,
+      "temporalDeltaBefore": 48.527,
+      "temporalDeltaNew": 48.535,
+      "addedTemporalDelta": 0.008
+    },
+    {
+      "time": 1.25,
+      "stage": "06",
+      "station": 202.8,
+      "camera": [
+        0.18509035803637008,
+        -33.680836472631356,
+        -134.89241906020519
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.298,
+      "temporalDeltaBefore": 45.829,
+      "temporalDeltaNew": 45.829,
+      "addedTemporalDelta": 0.0
+    },
+    {
+      "time": 1.3333333333333333,
+      "stage": "06",
+      "station": 203.716,
+      "camera": [
+        -0.10722801318746497,
+        -33.12102563621624,
+        -135.81790943979794
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.076,
+      "temporalDeltaBefore": 43.282,
+      "temporalDeltaNew": 43.282,
+      "addedTemporalDelta": 0.0
+    },
+    {
+      "time": 1.4166666666666667,
+      "stage": "06",
+      "station": 204.633,
+      "camera": [
+        -0.33651157239841845,
+        -32.63296621698646,
+        -136.7714880456218
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.123,
+      "temporalDeltaBefore": 41.138,
+      "temporalDeltaNew": 41.131,
+      "addedTemporalDelta": -0.007
+    },
+    {
+      "time": 1.5,
+      "stage": "06",
+      "station": 205.55,
+      "camera": [
+        -0.5062536358516427,
+        -32.225807945108386,
+        -137.74729506929305
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.161,
+      "temporalDeltaBefore": 38.372,
+      "temporalDeltaNew": 38.366,
+      "addedTemporalDelta": -0.006
+    },
+    {
+      "time": 1.5833333333333333,
+      "stage": "06",
+      "station": 206.466,
+      "camera": [
+        -0.6263973049081742,
+        -31.90657206899199,
+        -138.73691614688832
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.18,
+      "temporalDeltaBefore": 40.437,
+      "temporalDeltaNew": 40.438,
+      "addedTemporalDelta": 0.001
+    },
+    {
+      "time": 1.6666666666666667,
+      "stage": "06",
+      "station": 207.383,
+      "camera": [
+        -0.7098776494763492,
+        -31.67829669928598,
+        -139.73151566352888
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.179,
+      "temporalDeltaBefore": 40.285,
+      "temporalDeltaNew": 40.289,
+      "addedTemporalDelta": 0.004
+    },
+    {
+      "time": 1.75,
+      "stage": "06",
+      "station": 208.3,
+      "camera": [
+        -0.7626323587304709,
+        -31.538328348421604,
+        -140.72399682129952
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.315,
+      "temporalDeltaBefore": 42.287,
+      "temporalDeltaNew": 42.289,
+      "addedTemporalDelta": 0.002
+    },
+    {
+      "time": 1.8333333333333333,
+      "stage": "06",
+      "station": 209.216,
+      "camera": [
+        -0.7685495791672046,
+        -31.47886023334376,
+        -141.7075829397615
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.191,
+      "temporalDeltaBefore": 41.539,
+      "temporalDeltaNew": 41.535,
+      "addedTemporalDelta": -0.004
+    },
+    {
+      "time": 1.9166666666666667,
+      "stage": "06",
+      "station": 210.133,
+      "camera": [
+        -0.7138252155733936,
+        -31.490459656655066,
+        -142.67633871705533
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.302,
+      "temporalDeltaBefore": 42.472,
+      "temporalDeltaNew": 42.47,
+      "addedTemporalDelta": -0.002
+    },
+    {
+      "time": 2,
+      "stage": "06",
+      "station": 211.05,
+      "camera": [
+        -0.5962948142186577,
+        -31.563531709114283,
+        -143.62429713359253
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.062,
+      "temporalDeltaBefore": 43.249,
+      "temporalDeltaNew": 43.25,
+      "addedTemporalDelta": 0.001
+    },
+    {
+      "time": 2.0833333333333335,
+      "stage": "06",
+      "station": 211.966,
+      "camera": [
+        -0.41974217439338296,
+        -31.689449541688536,
+        -144.54589111661497
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.306,
+      "temporalDeltaBefore": 44.075,
+      "temporalDeltaNew": 44.073,
+      "addedTemporalDelta": -0.002
+    },
+    {
+      "time": 2.1666666666666665,
+      "stage": "06",
+      "station": 212.883,
+      "camera": [
+        -0.18967481888855736,
+        -31.86074385462747,
+        -145.4367139247115
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.149,
+      "temporalDeltaBefore": 43.311,
+      "temporalDeltaNew": 43.312,
+      "addedTemporalDelta": 0.001
+    },
+    {
+      "time": 2.25,
+      "stage": "06",
+      "station": 213.8,
+      "camera": [
+        0.0894283536501537,
+        -32.071232766901915,
+        -146.29320153633137
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.271,
+      "temporalDeltaBefore": 42.172,
+      "temporalDeltaNew": 42.174,
+      "addedTemporalDelta": 0.002
+    },
+    {
+      "time": 2.3333333333333335,
+      "stage": "06",
+      "station": 214.716,
+      "camera": [
+        0.412298072789146,
+        -32.31587146020433,
+        -147.11308572380202
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.008,
+      "temporalDeltaBefore": 43.198,
+      "temporalDeltaNew": 43.188,
+      "addedTemporalDelta": -0.01
+    },
+    {
+      "time": 2.4166666666666665,
+      "stage": "06",
+      "station": 215.633,
+      "camera": [
+        0.7572472119755429,
+        -32.594203313223645,
+        -147.89855571345956
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.278,
+      "temporalDeltaBefore": 42.403,
+      "temporalDeltaNew": 42.408,
+      "addedTemporalDelta": 0.005
+    },
+    {
+      "time": 2.5,
+      "stage": "06",
+      "station": 216.55,
+      "camera": [
+        1.072654090944361,
+        -32.91031701666402,
+        -148.66275617239742
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.135,
+      "temporalDeltaBefore": 39.717,
+      "temporalDeltaNew": 39.716,
+      "addedTemporalDelta": -0.001
+    },
+    {
+      "time": 2.5833333333333335,
+      "stage": "06",
+      "station": 217.466,
+      "camera": [
+        1.3275036756501497,
+        -33.265192970598825,
+        -149.42077055992743
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.258,
+      "temporalDeltaBefore": 35.799,
+      "temporalDeltaNew": 35.804,
+      "addedTemporalDelta": 0.005
+    },
+    {
+      "time": 2.6666666666666665,
+      "stage": "06",
+      "station": 218.383,
+      "camera": [
+        1.52304865723793,
+        -33.65490495131163,
+        -150.183036493768
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.029,
+      "temporalDeltaBefore": 33.646,
+      "temporalDeltaNew": 33.65,
+      "addedTemporalDelta": 0.004
+    },
+    {
+      "time": 2.75,
+      "stage": "06",
+      "station": 219.3,
+      "camera": [
+        1.6754375270814765,
+        -34.07337832933144,
+        -150.95343833114887
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.222,
+      "temporalDeltaBefore": 34.411,
+      "temporalDeltaNew": 34.414,
+      "addedTemporalDelta": 0.003
+    },
+    {
+      "time": 2.8333333333333335,
+      "stage": "06",
+      "station": 220.216,
+      "camera": [
+        1.8048733977065523,
+        -34.515286656366314,
+        -151.7320000914278
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.287,
+      "temporalDeltaBefore": 37.12,
+      "temporalDeltaNew": 37.122,
+      "addedTemporalDelta": 0.002
+    },
+    {
+      "time": 2.9166666666666665,
+      "stage": "06",
+      "station": 221.133,
+      "camera": [
+        1.9363679105268294,
+        -34.97619263430716,
+        -152.512261365138
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.084,
+      "temporalDeltaBefore": 37.191,
+      "temporalDeltaNew": 37.195,
+      "addedTemporalDelta": 0.004
+    },
+    {
+      "time": 3,
+      "stage": "06",
+      "station": 222.05,
+      "camera": [
+        2.0954217318112964,
+        -35.44840781951003,
+        -153.28377191734492
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.273,
+      "temporalDeltaBefore": 34.719,
+      "temporalDeltaNew": 34.707,
+      "addedTemporalDelta": -0.012
+    },
+    {
+      "time": 3.0833333333333335,
+      "stage": "06",
+      "station": 222.966,
+      "camera": [
+        2.3032328830648425,
+        -35.87844854517479,
+        -154.03481757674925
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.171,
+      "temporalDeltaBefore": 27.158,
+      "temporalDeltaNew": 27.163,
+      "addedTemporalDelta": 0.005
+    },
+    {
+      "time": 3.1666666666666665,
+      "stage": "06",
+      "station": 223.883,
+      "camera": [
+        2.572053014034521,
+        -36.27779686868996,
+        -154.7557645428425
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.303,
+      "temporalDeltaBefore": 27.325,
+      "temporalDeltaNew": 27.337,
+      "addedTemporalDelta": 0.012
+    },
+    {
+      "time": 3.25,
+      "stage": "06",
+      "station": 224.8,
+      "camera": [
+        2.9087784332561886,
+        -36.66587352098291,
+        -155.43904096352816
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.106,
+      "temporalDeltaBefore": 29.094,
+      "temporalDeltaNew": 29.107,
+      "addedTemporalDelta": 0.013
+    },
+    {
+      "time": 3.3333333333333335,
+      "stage": "06",
+      "station": 225.716,
+      "camera": [
+        3.3212754048144877,
+        -37.053788268784196,
+        -156.07663319581334
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.281,
+      "temporalDeltaBefore": 31.549,
+      "temporalDeltaNew": 31.55,
+      "addedTemporalDelta": 0.001
+    },
+    {
+      "time": 3.4166666666666665,
+      "stage": "06",
+      "station": 226.633,
+      "camera": [
+        3.8084690667146384,
+        -37.447882021240304,
+        -156.66603125479108
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.209,
+      "temporalDeltaBefore": 34.811,
+      "temporalDeltaNew": 34.8,
+      "addedTemporalDelta": -0.011
+    },
+    {
+      "time": 3.5,
+      "stage": "06",
+      "station": 227.55,
+      "camera": [
+        4.359221957415143,
+        -37.85217814945533,
+        -157.21239272869963
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.286,
+      "temporalDeltaBefore": 37.181,
+      "temporalDeltaNew": 37.175,
+      "addedTemporalDelta": -0.006
+    },
+    {
+      "time": 3.5833333333333335,
+      "stage": "06",
+      "station": 228.466,
+      "camera": [
+        4.9586857055847595,
+        -38.24238823658733,
+        -157.72412683257969
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.073,
+      "temporalDeltaBefore": 39.556,
+      "temporalDeltaNew": 39.543,
+      "addedTemporalDelta": -0.013
+    },
+    {
+      "time": 3.6666666666666665,
+      "stage": "06",
+      "station": 229.383,
+      "camera": [
+        5.589960907998226,
+        -38.575778461805605,
+        -158.21622647130616
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.255,
+      "temporalDeltaBefore": 39.728,
+      "temporalDeltaNew": 39.71,
+      "addedTemporalDelta": -0.018
+    },
+    {
+      "time": 3.75,
+      "stage": "06",
+      "station": 230.3,
+      "camera": [
+        6.231217868963064,
+        -38.962988047240906,
+        -158.7047909569419
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.144,
+      "temporalDeltaBefore": 37.574,
+      "temporalDeltaNew": 37.586,
+      "addedTemporalDelta": 0.012
+    },
+    {
+      "time": 3.8333333333333335,
+      "stage": "06",
+      "station": 231.216,
+      "camera": [
+        6.862523864243869,
+        -39.44163337564093,
+        -159.20995090251154
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.215,
+      "temporalDeltaBefore": 31.489,
+      "temporalDeltaNew": 31.488,
+      "addedTemporalDelta": -0.001
+    },
+    {
+      "time": 3.9166666666666665,
+      "stage": "06",
+      "station": 232.133,
+      "camera": [
+        7.464430155939937,
+        -39.98641561688075,
+        -159.7507766863864
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.033,
+      "temporalDeltaBefore": 30.171,
+      "temporalDeltaNew": 30.178,
+      "addedTemporalDelta": 0.007
+    },
+    {
+      "time": 4,
+      "stage": "06",
+      "station": 233.05,
+      "camera": [
+        8.014273353989857,
+        -40.51135889831129,
+        -160.34460492535686
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.192,
+      "temporalDeltaBefore": 29.157,
+      "temporalDeltaNew": 29.148,
+      "addedTemporalDelta": -0.009
+    },
+    {
+      "time": 4.083333333333333,
+      "stage": "06",
+      "station": 233.966,
+      "camera": [
+        8.48409455033368,
+        -41.021218607457676,
+        -161.01837528222615
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.259,
+      "temporalDeltaBefore": 28.489,
+      "temporalDeltaNew": 28.485,
+      "addedTemporalDelta": -0.004
+    },
+    {
+      "time": 4.166666666666667,
+      "stage": "06",
+      "station": 234.883,
+      "camera": [
+        8.831668369216658,
+        -41.528911536655826,
+        -161.8107230440968
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.164,
+      "temporalDeltaBefore": 39.017,
+      "temporalDeltaNew": 39.019,
+      "addedTemporalDelta": 0.002
+    },
+    {
+      "time": 4.25,
+      "stage": "06",
+      "station": 235.8,
+      "camera": [
+        9.03303147894321,
+        -42.05696002066326,
+        -162.73654949155255
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.304,
+      "temporalDeltaBefore": 45.091,
+      "temporalDeltaNew": 45.09,
+      "addedTemporalDelta": -0.001
+    },
+    {
+      "time": 4.333333333333333,
+      "stage": "06",
+      "station": 236.716,
+      "camera": [
+        9.086638073117511,
+        -42.4870904456658,
+        -163.7603824111506
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.193,
+      "temporalDeltaBefore": 52.349,
+      "temporalDeltaNew": 52.344,
+      "addedTemporalDelta": -0.005
+    },
+    {
+      "time": 4.416666666666667,
+      "stage": "06",
+      "station": 237.633,
+      "camera": [
+        8.998220784121537,
+        -42.84647212027895,
+        -164.84813934179917
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.342,
+      "temporalDeltaBefore": 53.491,
+      "temporalDeltaNew": 53.502,
+      "addedTemporalDelta": 0.011
+    },
+    {
+      "time": 4.5,
+      "stage": "06",
+      "station": 238.552,
+      "camera": [
+        8.790663335940609,
+        -43.1545450462384,
+        -165.96614397740893
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.205,
+      "temporalDeltaBefore": 51.487,
+      "temporalDeltaNew": 51.481,
+      "addedTemporalDelta": -0.006
+    },
+    {
+      "time": 4.583333333333333,
+      "stage": "06",
+      "station": 239.475,
+      "camera": [
+        8.508522849000105,
+        -43.367964128805134,
+        -167.06630657841046
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.261,
+      "temporalDeltaBefore": 50.508,
+      "temporalDeltaNew": 50.493,
+      "addedTemporalDelta": -0.015
+    },
+    {
+      "time": 4.666666666666667,
+      "stage": "06",
+      "station": 240.405,
+      "camera": [
+        8.246956018588246,
+        -43.513430132334804,
+        -168.08079549394142
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.353,
+      "temporalDeltaBefore": 47.49,
+      "temporalDeltaNew": 47.495,
+      "addedTemporalDelta": 0.005
+    },
+    {
+      "time": 4.75,
+      "stage": "06",
+      "station": 241.342,
+      "camera": [
+        8.118451289566243,
+        -43.625053009284436,
+        -168.9705636378416
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.367,
+      "temporalDeltaBefore": 48.095,
+      "temporalDeltaNew": 48.082,
+      "addedTemporalDelta": -0.013
+    },
+    {
+      "time": 4.833333333333333,
+      "stage": "06",
+      "station": 242.289,
+      "camera": [
+        8.204854644473059,
+        -43.74248585527243,
+        -169.72480076770654
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 1.34,
+      "temporalDeltaBefore": 44.724,
+      "temporalDeltaNew": 44.699,
+      "addedTemporalDelta": -0.025
+    },
+    {
+      "time": 4.916666666666667,
+      "stage": "07",
+      "station": 243.245,
+      "camera": [
+        8.495702991629427,
+        -43.870017098711976,
+        -170.3844743289252
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 0.0,
+      "temporalDeltaBefore": 66.707,
+      "temporalDeltaNew": 66.705,
+      "addedTemporalDelta": -0.002
+    },
+    {
+      "time": 5,
+      "stage": "07",
+      "station": 244.211,
+      "camera": [
+        8.951935966896071,
+        -44.000282904131836,
+        -171.02297562938355
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 0.0,
+      "temporalDeltaBefore": 33.911,
+      "temporalDeltaNew": 33.911,
+      "addedTemporalDelta": 0.0
+    },
+    {
+      "time": 5.083333333333333,
+      "stage": "07",
+      "station": 245.187,
+      "camera": [
+        9.52031368481377,
+        -44.13288115294797,
+        -171.65501740440376
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 0.0,
+      "temporalDeltaBefore": 34.577,
+      "temporalDeltaNew": 34.577,
+      "addedTemporalDelta": 0.0
+    },
+    {
+      "time": 5.166666666666667,
+      "stage": "07",
+      "station": 246.171,
+      "camera": [
+        10.110034625629654,
+        -44.24818482801831,
+        -172.32211929732918
+      ],
+      "changedPixels_channelGt18": 0,
+      "averageChannelDifference": 0.0,
+      "temporalDeltaBefore": 38.028,
+      "temporalDeltaNew": 38.028,
+      "addedTemporalDelta": 0.0
+    }
+  ]
+}

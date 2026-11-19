@@ -1,1 +1,0 @@
-{'version': '5.3.0', 'meshes': {'left_bank': 864, 'left_foam': 2940, 'right_bank': 804, 'right_foam': 2520}, 'curves': ['left_spine', 'right_spine'], 'camera': 'reference_camera', 'packed_images': ['near_bank.png', 'near_foam.png']}
