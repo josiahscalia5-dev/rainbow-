@@ -1,0 +1,20 @@
+{
+  "branch": "codex/s08-fitted-foreground-water",
+  "commit": "bca810eb1cffd5fae1274ce7fa02fec892b47c6c",
+  "sourceCommit": "ad66a3a3eda766347669a086d35aa22aa13a7093",
+  "verifiedUTC": "2026-11-19T00:03:25.197368+00:00",
+  "verifiedFiles": 72,
+  "lfsDownloads": [
+    {
+      "file": "experiments/codex/fidelity-08/CLAUDIA_BEFORE/ride.mp4",
+      "size": 2528482,
+      "verifiedDownloadedSHA256": "c6d4bf5102763257e81499c1c504b0c686f37da28ffe86d0f1c1aee9248f91bf"
+    },
+    {
+      "file": "experiments/codex/fidelity-08/CODEX_NEW/ride.mp4",
+      "size": 2559787,
+      "verifiedDownloadedSHA256": "89d5581c33ce6415078dba9ae31bc0f4cb7d4e6282c271a6fdd319a32950f261"
+    }
+  ],
+  "evidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/bca810eb1cffd5fae1274ce7fa02fec892b47c6c/experiments/codex/fidelity-08"
+}

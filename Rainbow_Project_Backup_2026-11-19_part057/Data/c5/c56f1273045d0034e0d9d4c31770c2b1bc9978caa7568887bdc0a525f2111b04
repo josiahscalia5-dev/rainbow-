@@ -1,5 +1,0 @@
-{
-  "status": "CANDIDATE for owner review.",
-  "visual": "More cyan water is visible beside Benny on hard left and hard right. The left magenta bank keeps its curved path and a lower, narrower shoulder. On the native bottom quarter, the earlier curved candidate had 228,997 magenta pixels on hard left and 101,576 on hard right. The fitted version has 189,565 and 84,916. The approved artwork supplies no exact pixel count for these two views.",
-  "limits": "At +3 the long cyan highlights are still visible. Later views can show repeated glints from the saved water tile. The opening has identical mean-RGB tolerance agreement with the artwork and one Pixelmatch difference between Claudia and the trial. A mesh comparison found changes only in the chamber floor among 22 named meshes. The new shoulder peaks at about 0.106 game units above its previous height. Its unseen shape is an interpretation awaiting review."
-}

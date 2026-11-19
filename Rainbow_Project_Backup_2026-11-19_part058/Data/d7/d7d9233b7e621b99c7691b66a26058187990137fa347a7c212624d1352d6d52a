@@ -1,0 +1,20 @@
+{
+  "branch": "codex/s06-crest-foam-clearance",
+  "commit": "394609842ebc30c2832e23b8992c7d9a868ba0c0",
+  "sourceCommit": "e0e3ed187fe4596bd351a5e4cb4d62d796e92250",
+  "verifiedUTC": "2026-11-18T23:53:19.612745+00:00",
+  "verifiedFiles": 131,
+  "lfsDownloads": [
+    {
+      "file": "experiments/codex/fidelity-06/CLAUDIA_BEFORE/ride.mp4",
+      "size": 7491213,
+      "verifiedDownloadedSHA256": "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1"
+    },
+    {
+      "file": "experiments/codex/fidelity-06/CODEX_NEW/ride.mp4",
+      "size": 7559656,
+      "verifiedDownloadedSHA256": "5cd1e41d5af6cd106084f78492996e14cbf2a45e3ad228dbecb79af88cb7c3cb"
+    }
+  ],
+  "evidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/394609842ebc30c2832e23b8992c7d9a868ba0c0/experiments/codex/fidelity-06"
+}
