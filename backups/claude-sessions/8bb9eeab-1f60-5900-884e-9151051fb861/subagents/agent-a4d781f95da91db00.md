@@ -2598,3 +2598,113 @@ Normal run-to-run timing jitter (±0.7 u), not a change. Now judging the polish 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && D=qa/match/04/r18/ringpaint/step8_pol && mkdir -p $D/before && node tools/lead_r6/motion_audit.mjs 04 $D/before \"$K7\" 2>&1 | grep -E \"pageerror|Error\"; node tools/lead_r6/motion_audit.mjs 04 $D \"$K7&m04rpol=1\" 2>&1 | grep -E \"pageerror|Error\"; cd $D && for f in before/*.png; do b=$(basename $f); mv \"$f\" \"2_BEFORE_$b\"; done; mv before/motion.json motion_BEFORE.json; rmdir before; for f in [a-z]*.png; do mv \"$f\" \"3_NEW_$f\"; don …[+119 chars]`
 
+### 🧑 User — 2026-11-19T18:41:17.012Z
+
+> ↩︎ result: 2_BEFORE_a00_approved_view.png
+> 2_BEFORE_f03_forward3u.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_f10_forward10u.png
+> 2_BEFORE_f20_forward20u.png
+> 2_BEFORE_s_left_hard.png
+> 2_BEFORE_s_left_steer.png
+> 2_BEFORE_s_right_hard.png
+> 2_BEFORE_s_right_steer.png
+> 2_BEFORE_t33_through_screen.png
+> 2_BEFORE_t66_through_screen.png
+> 2_BEFORE_t95_through_screen.png
+> 3_NEW_a00_approved_view.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_s_right_steer.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+> motion.json
+> motion_BEFORE.json
+
+### 🤖 Claude — 2026-11-19T18:41:24.638Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && D=qa/match/04/r18/ringpaint/step8_pol && node scripts/capture.mjs 04 --q=\"$K7\" --out=$S/sv_k7b >/dev/null 2>&1; node scripts/capture.mjs 04 --q=\"$K7&m04rpol=1\" --out=$S/sv_pol >/dev/null 2>&1; git checkout qa/capture_log.json; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/sv_k6/04.png $S/sv_k7b/04.png $S/d1.png 0.1 180 1536 | grep -o '\"diff_pixels\":[0-9]*'; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/sv_k7b/04.png $S/sv_pol/0 …[+380 chars]`
+
+### 🧑 User — 2026-11-19T18:42:16.177Z
+
+> ↩︎ result: Updated 1 path from the index
+> "diff_pixels":0
+> "diff_pixels":0
+> [('a00_a', 1330, 1330), ('f03_f', 1330, 1330), ('f06_f', 1330, 1330), ('f10_f', 1330, 1330), ('f20_f', 1330, 1330), ('s_lef', 1350, 1350), ('s_rig', 1330, 1330), ('s_lef', 1360, 1360), ('s_rig', 1330, 1330), ('t33_t', 1330, 1330), ('t66_t', 1330, 1330), ('t95_t', 1330, 1330)]
+
+### 🤖 Claude — 2026-11-19T18:42:18.981Z
+
+Start view 0 px (both K6→K7-with-weld and K7→polish), coins identical. A look at two full-size NEW frames for glitches.
+
+### 🤖 Claude — 2026-11-19T18:42:19.590Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/qa/match/04/r18/ringpaint/step8_pol/3_NEW_t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:42:19.655Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:42:20.131Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/qa/match/04/r18/ringpaint/step8_pol/2_BEFORE_t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:42:20.191Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:42:23.793Z
+
+NEW reads as brighter, polished yellow-gold with stronger warm highlights; BEFORE is a duller brownish copper. Rendering the half-size NEW clip.
+
+### 🤖 Claude — 2026-11-19T18:42:28.335Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && D=qa/match/04/r18/ringpaint/step8_pol && rm -rf $S/clipP && node $S/swim_half.mjs 04 $S/clipP 3.6 \"$K7&m04rpol=1\" 2>&1 | grep -E \"frames|pageerror\"; ffmpeg -loglevel error -y -framerate 24 -i $S/clipP/%04d.png -pix_fmt yuv420p -c:v libx264 -crf 20 $D/clip_NEW_swim.mp4 && ls -la $D/clip_NEW_swim.mp4 && python3 -c \"\nfrom PIL import Image\nS='$S/'\nfr=list(range(20,44,2))\nc=Image.new('RGB',(216*6,240*2))\nfor i,f in enumerate(fr):\n    c …[+228 chars]`
+
+### 🧑 User — 2026-11-19T18:44:40.368Z
+
+> ↩︎ result: frames 86
+> -rw-r--r-- 1 root root 2298927 Nov 19 18:44 qa/match/04/r18/ringpaint/step8_pol/clip_NEW_swim.mp4
+
+### 🤖 Claude — 2026-11-19T18:44:43.457Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/flickerP.png"}`
+
+### 🧑 User — 2026-11-19T18:44:43.487Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:44:46.096Z
+
+Smooth frame to frame: no sparkle noise, no seam. Logging, committing and reporting.
+
+### 🤖 Claude — 2026-11-19T18:44:59.402Z
+
+> 🔧 **Bash** `{"command": "cat >> /home/user/wt/s04b/qa/match/04/r18/ringpaint/NOTES.md <<'EOF'\n\n## Step 7 fix — seam at the top of every ring (found while doing step 8)\nWith `m04rfew` the lathe's first and last vertex columns (they coincide at the tunnel top) got different normals, so a thin\nvertical line ran through each band at the top and the lip edge showed a small step there (visible at t66 when zoomed). The\nseam normals are now welded (telescope path only). K7 BEFORE frames for step 8 were re-rendered with the fix\n(`step8_pol/2_BEFORE_<shot>.png`); start view K6 vs fixed K7: 0 differing pixels. …[+2899 chars]`
+
+### 🧑 User — 2026-11-19T18:45:12.612Z
+
+> ↩︎ result: 617556fdb4c5ca35abb8d585c018b0fac67dd2f8
+> 617556fdb4c5ca35abb8d585c018b0fac67dd2f8	refs/heads/claude/rainbow-s04-ringtex-c18
+
+### 🤖 Claude — 2026-11-19T18:45:19.496Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s04tex step 8 polish kept + seam fix", "message": "s04tex step 8 `&m04rpol=1` (on top of K7 = K6 + `&m04rfew=1&m04rfg=1.2`): GOOD IMPROVEMENT (moderate).\nCommit 617556fd on claude/rainbow-s04-ringtex-c18 (pushed, remote = HEAD).\nWhat changed visually: the rings now read as brighter, polished yellow-gold, with strong warm highlight streaks on every band. Before, they were a duller brownish copper. Ring edges, grooves and light dots stay crisp; the clip shows no sparkle noise or flicker.\nMeasured on ring pixels at f10/t66 (luma, before → after):\n- median 111 → 123- …[+937 chars]`
+
+### 🧑 User — 2026-11-19T18:45:19.514Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-19T18:45:31.707Z
+
+Step 8 reported (kept set K8). Next, the lead's note: the top third at f10/t66. Let me look at that area at full resolution in the current set.
+
+### 🤖 Claude — 2026-11-19T18:45:35.659Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && cd /home/user/wt/s04b && python3 -c \"\nfrom PIL import Image\na=Image.open('qa/match/04/r18/ringpaint/step8_pol/3_NEW_f10_forward10u.png').convert('RGB').crop((0,180,864,560))\nb=Image.open('qa/match/04/r18/ringpaint/step8_pol/3_NEW_t66_through_screen.png').convert('RGB').crop((0,180,864,560))\nc=Image.new('RGB',(864,770),'white'); c.paste(a,(0,0)); c.paste(b,(0,390)); c.save('$S/top_third.png')\n\"; python3 -c \"\nimport json\nj=json.load(open('/home/user/wt/s04b/qa/match/04/r18/ringpai …[+198 chars]`
+
