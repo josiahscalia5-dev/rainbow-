@@ -332,3 +332,165 @@ Tools ready. Now type-check, then start-view check K18-4 vs K18-5, and try recov
 > lfs_rc=0
 > -rw-r--r-- 1 root root 1063266 Nov 19 19:29 /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/before_clip.mp4
 
+### 🤖 Claude — 2026-11-19T19:30:08.338Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; cd /home/user/wt/s04 && cp $S/before_clip.mp4 qa/match/04/r18/s5_nwfix/BEFORE_swim_clip_half.mp4 && cat > $S/run5.sh <<EOF\nset -x\ncd /home/user/wt/s04\nK4=\\$(cat $S/K18-4.txt); K5=\\$(cat $S/K18-5.txt); D=qa/match/04/r18/s5_nwfix\nnode scripts/capture.mjs 04 \"--q=\\$K4\" --out=$S/cap_k4 >/dev/null 2>&1; git checkout -- qa/capture_log.json\nnode scripts/capture.mjs 04 \"--q=\\$K5\" --out=$S/cap_k5 >/dev/null 2>&1; git checkout -- qa/capture_log.json\nnode /home/user/tools-pixelmatch/pixeldiff.m …[+399 chars]`
+
+### 🧑 User — 2026-11-19T19:30:08.400Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-19T19:30:11.217Z
+
+> 🔧 **Bash** `{"command": "bash /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/run5.sh 2>&1 | grep -v \"allow list\"", "description": "Render start-view check, NEW stills and NEW clip frames", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-19T19:30:11.243Z
+
+> ↩︎ result: Command running in background with ID: bqdf4k9cl. Output is being written to: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bqdf4k9cl.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-19T19:30:13.196Z
+
+While that renders, I'll read the launch brief and the approved picture.
+
+### 🤖 Claude — 2026-11-19T19:30:14.414Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/docs/briefs/2026-11-18-r15/S04_LAUNCH.md; echo ----; cat /home/user/rainbow-/docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md | head -60", "description": "Read the s04 launch brief and visual-only user order"}`
+
+### 🧑 User — 2026-11-19T19:30:14.450Z
+
+> ↩︎ result: # Round 15 (account 15) — Screen 04 worker launch prompt (lead-directed; agent foam-bubbles-particles)
+> 
+> You are the Rainbow project's `foam-bubbles-particles` specialist, working for the LEAD on playable Screen 04 "Through the Five Arrows",
+> VISUALS ONLY. (Account 14's lead ran 04 itself and ran out of usage at ~17:46 UTC; you continue on a NEW branch. Nothing was lost.)
+> 
+> ## Where you work
+> * Git worktree `/home/user/wt/s04` on branch `claude/rainbow-s04-match-c15` (created from `claude/rainbow-s04-match-c14` @ `fc28323a`,
+>   the newest account-14 tip; no unfinished edits were left). `node_modules` is a symlink to the lead checkout.
+> * Commit and `git push -u origin claude/rainbow-s04-match-c15` after every step (kept or rejected). Push ONLY that branch. Never
+>   force-push, rebase, reset, merge, or write any other branch (every `-c14` / `-c13` / older branch is protected).
+> * Captures: `node tools/lead_r6/motion_audit.mjs 04 <outDir> "<query>"` (12 frames: a00 approved view, f03/f06/f10/f20 forward,
+>   t33/t66/t95 through the screen, hard / soft left + right) — its a00 is NOT deterministic (bubbles / shader clock), so check the
+>   start view with `node scripts/capture.mjs 04 --q=<query>`  …[+6757 chars]
+
+### 🤖 Claude — 2026-11-19T19:30:16.972Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/references/04_through_the_five_arrows.png"}`
+
+### 🧑 User — 2026-11-19T19:30:16.997Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:30:20.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uSS\\|sswirl\\|m04ss\" src/world/match04m4.ts | head -40", "description": "Locate the unproven m04sswirl code"}`
+
+### 🧑 User — 2026-11-19T19:30:20.120Z
+
+> ↩︎ result: 326:uniform vec4 uSS;            // r18 m04sswirl: x swing of the band pattern across the bank (u, 0 = off), y its wavelength along (u),
+> 406:  if (uSS.z > 0.0) {
+> 407:    // r18 m04sswirl: the water's top edge against the gold wall laps up and down in soft tongues (painted: no straight
+> 409:    float lw = 0.5 + 0.5 * sin(along * 6.2832 / uSS.w + (vS < 0.0 ? 0.7 : 2.9));
+> 411:    edgeY = uEdge.y - uSS.z * lw;
+> 498:    if (uSS.x > 0.0) {
+> 499:      // r18 m04sswirl: the painted pink / violet ribbons on the banks curve UP toward the wall and back down in long S-sweeps
+> 502:      asB = as + uSS.x * 4.0 * kk * (1.0 - kk) * sin(along * 6.2832 / uSS.y + (vS < 0.0 ? 1.3 : 4.1) + 1.5 * vn(vec2(along * 0.07, vS < 0.0 ? 1.0 : 5.0)));
+> 1014:        // r18 `&m04sswirl=1` (needs m04sband): m04ssa swing of the bank ribbons (u), m04ssl its wavelength, m04ssz lapping top
+> 1015:        // edge depth (u, 0 = straight edge), m04ssw lap wavelength
+> 1016:        uSS: { value: M04.num('m04sswirl', 0) > 0 && M04.num('m04sband', 0) > 0
+> 1017:          ? new THREE.Vector4(M04.num('m04ssa', 0.45), M04.num('m04ssl', 6.5), M04.num('m04ssz', 0.0), M04.num('m04ssw', 3.2))
+
+### 🤖 Claude — 2026-11-19T19:30:23.734Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 280, "limit": 300}`
+
+### 🧑 User — 2026-11-19T19:30:23.769Z
+
+> ↩︎ result: 280	const RIVER_VERT = /* glsl */ `
+> 281	uniform mat4 uProjVP;
+> 282	attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+> 283	varying vec4 vProj;
+> 284	varying vec3 vL;
+> 285	varying float vS;
+> 286	void main() {
+> 287	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 288	  vProj = uProjVP * wp;
+> 289	  vL = position;
+> 290	  vS = aR.x;
+> 291	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 292	}`;
+> 293	const RIVER_FRAG = /* glsl */ `
+> 294	uniform sampler2D uPlate;
+> 295	uniform vec4 uPjPost;
+> 296	uniform vec2 uPjRes;
+> 297	uniform float uAway;
+> 298	uniform sampler2D uRiv;
+> 299	uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> 300	uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
+> 301	uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+> 302	uniform vec2 uLane4;         // r14 m04lcn: deep-blue fade-in window ahead of the camera (start, full); off when y <= x
+> 303	uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+> 304	uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strengt …[+22162 chars]
+
+### 🤖 Claude — 2026-11-19T19:30:26.739Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bqdf4k9cl.output | grep -v \"allow list\" | tail -20", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-19T19:30:26.744Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bqdf4k9cl.output grep -v "allow list" tail -20. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T19:30:29.939Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bqdf4k9cl.output | grep -v \"allow list\" | tail -20", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-19T19:30:30.003Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T19:30:34.330Z
+
+> 🔧 **Bash** `{"command": "pgrep -af \"capture.mjs|audit.mjs|swim.mjs|pixeldiff\" | cut -c1-160; ls /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/", "description": "List running render processes and scratch files"}`
+
+### 🧑 User — 2026-11-19T19:30:34.414Z
+
+> ↩︎ result: 6808 node scripts/capture.mjs 04 --q=match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6
+> K18-4.txt
+> K18-5.txt
+> before_clip.mp4
+> cap_k4
+> cap_k5
+> lfs.err
+> prompt_Screen_04_near_water_bands_r18.txt
+> prompt_Screen_04_painted_rings_r18.txt
+> prompt_Screen_05_left_wall_r18.txt
+> prompt_Screen_06_start_flash_r18.txt
+> prompt_Screen_07_lather_walls_r18.txt
+> run5.sh
+> s04tex
+> s05
+> tools
+
+### 🤖 Claude — 2026-11-19T19:30:40.947Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; mkdir -p $S/rev && cd /home/user/wt/s04/qa/match/04/r18/s5_nwfix && convert BEFORE/clip_1_29s.png BEFORE/clip_1_58s.png BEFORE/clip_1_83s.png BEFORE/clip_2_00s.png -resize 40% +append $S/rev/before_clip_strip.png && convert NEW/clip_1_29s.png NEW/clip_1_58s.png NEW/clip_1_83s.png NEW/clip_2_00s.png -resize 40% +append $S/rev/new_old_clip_strip.png && echo ok", "description": "Build review strips of BEFORE and restored NEW clip frames"}`
+
+### 🧑 User — 2026-11-19T19:30:43.268Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-19T19:30:47.254Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/rev/before_clip_strip.png"}`
+
+### 🧑 User — 2026-11-19T19:30:47.300Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:30:47.909Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/rev/new_old_clip_strip.png"}`
+
+### 🧑 User — 2026-11-19T19:30:47.950Z
+
+> ↩︎ result: [image]
+

@@ -2,16 +2,16 @@
  "worktree": "/home/user/wt/s05",
  "branch": "claude/rainbow-s05-match-c19",
  "head": "ef5dd0cdce837c4738afa4e34f9cdefc332d2678",
- "time": "2026-11-19T19:30:09+00:00",
+ "time": "2026-11-19T19:30:59+00:00",
  "dirty_tracked": [
   "qa/capture_log.json"
  ],
  "untracked_copied": [
   "qa/match/05/r18/step2_wall/1_APPROVED.png",
-  "qa/match/05/r18/step2_wall/before/shots.json",
-  "qa/match/05/r18/step2_wall/gameplay_step2.json",
-  "qa/match/05/r18/step2_wall/new/shots.json"
+  "qa/match/05/r18/step2_wall/gameplay_step2.json"
  ],
- "untracked_skipped": [],
+ "untracked_skipped": [
+  "qa/match/05/r18/step2_wall/before/a00_approved_view.png"
+ ],
  "restore": "git switch claude/rainbow-s05-match-c19 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c19/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c19/untracked/* into the worktree"
 }
