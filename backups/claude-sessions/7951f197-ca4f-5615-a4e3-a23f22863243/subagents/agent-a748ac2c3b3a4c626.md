@@ -1644,3 +1644,317 @@ The fur albedo change barely moved the rendered colour: the red channel stays cl
 
 > ↩︎ result: {'mean': [242, 57, 179], 'sat': [0.63, 0.77, 0.9], 'val': [0.82, 1.0, 1.0]} {'mean': [207, 74, 151], 'sat': [0.53, 0.65, 0.77], 'val': [0.61, 0.84, 0.99]}
 
+### 🤖 Claude — 2026-11-19T23:46:27.329Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/fur.ts'\ns=open(p).read()\nrep=[\n(\"    uTint: { value: THREE.Color };\\n  };\\n}\",\n \"    uTint: { value: THREE.Color };\\n    uComb: { value: THREE.Vector4 };\\n  };\\n}\"),\n(\"    uTint: { value: new THREE.Color(1, 1, 1) },\\n  };\",\n \"    uTint: { value: new THREE.Color(1, 1, 1) },\\n    /** `?benny20=1`: x = comb ALONG the surface toward his feet (fraction of the fur length), y = lift off the surface\\n     *  (normal push factor, < 1: strands lie flatter), z = strand-to-strand brightness variation, w  …[+2581 chars]`
+
+### 🧑 User — 2026-11-19T23:46:36.251Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-19T23:46:41.097Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bb1nv3y6x.output | grep -v \"outside of Vite\"", "description": "Check calibration sweep output"}`
+
+### 🧑 User — 2026-11-19T23:46:41.216Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:46:43.554Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/benny/qa/benny/r20/probe/c/ 2>&1; uptime; cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bjagxappq.output | tail -3", "description": "Check sweep files and load"}`
+
+### 🧑 User — 2026-11-19T23:46:43.676Z
+
+> ↩︎ result: total 9748
+> drwxr-xr-x 2 root root    4096 Nov 19 23:46 .
+> drwxr-xr-x 5 root root    4096 Nov 19 23:44 ..
+> -rw-r--r-- 1 root root 2336179 Nov 19 23:45 c0_base.png
+> -rw-r--r-- 1 root root  127273 Nov 19 23:45 c0_base_mask.png
+> -rw-r--r-- 1 root root 2357635 Nov 19 23:45 c1_k0.08.png
+> -rw-r--r-- 1 root root  127273 Nov 19 23:45 c1_k0.08_mask.png
+> -rw-r--r-- 1 root root 2371745 Nov 19 23:46 c2_k0.18.png
+> -rw-r--r-- 1 root root  127273 Nov 19 23:46 c2_k0.18_mask.png
+> -rw-r--r-- 1 root root 2373459 Nov 19 23:46 c3_k0.35.png
+> -rw-r--r-- 1 root root  127273 Nov 19 23:46 c3_k0.35_mask.png
+>  23:46:43 up 30 min,  0 user,  load average: 14.94, 11.66, 6.73
+
+### 🤖 Claude — 2026-11-19T23:46:48.263Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor,SendMessage", "max_results": 2}`
+
+### 🧑 User — 2026-11-19T23:46:48.274Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-19T23:46:50.091Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/wt/benny/qa/benny/r20/probe/c/probe.json ]; do sleep 3; done; echo done", "description": "Wait for calibration sweep to finish", "timeout": 600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-19T23:46:50.152Z
+
+> ↩︎ result: Command running in background with ID: bctrhmw11. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bctrhmw11.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-19T23:46:52.511Z
+
+While it finishes, the fitter: per part and channel, interpolate rendered mean vs grey albedo, then invert for the approved target.
+
+### 🤖 Claude — 2026-11-19T23:47:02.178Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/benny/tools/benny20/calfit.py", "content": "\"\"\"Solve per-part albedo (linear RGB) from a grey calibration sweep rendered through the live 04 lighting + post chain.\nEach sweep frame sets every part's albedo factor to grey k (probe variants c1..cN, names *_k<k>.png + *_mask.png).\nPer part and channel the rendered MEAN of the part's pixels is interpolated over log k and inverted for the APPROVED mean.\nusage: python3 -I tools/benny20/calfit.py <probe_dir>\"\"\"\nimport sys, glob, re, json\nimport numpy as np\nfrom PIL import Image\n\nd = sys.argv[1]\nTARGET = {   …[+1861 chars]`
+
+### 🧑 User — 2026-11-19T23:47:02.280Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/benny/tools/benny20/calfit.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T23:47:04.861Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I tools/benny20/calfit.py qa/benny/r20/probe/c; python3 -I tools/benny20/score.py qa/benny/r20/probe/c/c0_base.png qa/benny/r20/probe/c/c0_base_mask.png | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['cuff_bottom_c'], d['iou_all'], d['iou_hat'], d['iou_fur'], d['fur_hsv'])\"", "description": "Fit albedo from calibration sweep"}`
+
+### 🧑 User — 2026-11-19T23:47:06.795Z
+
+> ↩︎ result: {
+>  "fur": {
+>   "albedo_linear": [
+>    0.3975,
+>    0.0861,
+>    0.2019
+>   ],
+>   "rendered_means": {
+>    "0.08": [
+>     98,
+>     70,
+>     95
+>    ],
+>    "0.18": [
+>     145,
+>     113,
+>     142
+>    ],
+>    "0.35": [
+>     198,
+>     160,
+>     193
+>    ],
+>    "0.6": [
+>     234,
+>     195,
+>     231
+>    ]
+>   },
+>   "target": [
+>    207,
+>    74,
+>    151
+>   ]
+>  },
+>  "pom": {
+>   "albedo_linear": [
+>    0.1016,
+>    0.0067,
+>    0.4425
+>   ],
+>   "rendered_means": {
+>    "0.08": [
+>     115,
+>     92,
+>     106
+>    ],
+>    "0.18": [
+>     174,
+>     147,
+>     163
+>    ],
+>    "0.35": [
+>     228,
+>     199,
+>     217
+>    ],
+>    "0.6": [
+>     249,
+>     227,
+>     243
+>    ]
+>   },
+>   "target": [
+>    133,
+>    30,
+>    229
+>   ]
+>  },
+>  "cuff": {
+>   "albedo_linear": [
+>    0.3414,
+>    1.7845,
+>    0.3145
+>   ],
+>   "rendered_means": {
+>    "0.08": [
+>     50,
+>     3,
+>     104
+>    ],
+>    "0.18": [
+>     74,
+>     4,
+>     159
+>    ],
+>    "0.35": [
+>     104,
+>     4,
+>     218
+>    ],
+>    "0.6": [
+>     133,
+>     9,
+>     249
+>    ]
+>   },
+>   "target": [
+>    103,
+>    16,
+>    209
+>   ]
+>  },
+>  "star": {
+>   "albedo_linear": [
+>    0.3389,
+>    0.7543,
+>    1.5405
+>   ],
+>   "rendered_means": {
+>    "0.08": [
+>     152,
+>     90,
+>     5
+>    ],
+>    "0.18": [
+>     210,
+>     122,
+>     5
+>    ],
+>    "0.35": [
+>     254,
+>     158,
+>     12
+>    ],
+>    "0.6": [
+>     255,
+>     175,
+>     45
+>     …[+160 chars]
+
+### 🤖 Claude — 2026-11-19T23:47:26.690Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "offset": 38, "limit": 95}`
+
+### 🧑 User — 2026-11-19T23:47:26.841Z
+
+> ↩︎ result: 38	export const FUR20: Record<string, Partial<FurParams>> = {
+> 39	  fur_body: { shells: n('bsh', 28), length: n('blen', 0.15), gravity: n('bgr', 0.55) },
+> 40	  fur_armL: { shells: n('ash', 16), length: n('alen', 0.08), gravity: n('agr', 0.3) },
+> 41	  fur_armR: { shells: n('ash', 16), length: n('alen', 0.08), gravity: n('agr', 0.3) },
+> 42	  fur_pom: { shells: n('psh', 20), length: n('plen', 0.12), gravity: n('pgr', 0.04) },
+> 43	};
+> 44	
+> 45	/** lock shader parameters per part (fur.ts uLock / uShade) and flat albedo (sRGB) */
+> 46	const LOCK20: Record<string, { lock: [number, number, number, number]; shade: [number, number, number, number]; color: string }> = {
+> 47	  fur_body: {
+> 48	    lock: [n('blx', 12), n('bly', 0.72), n('blz', 0.62), n('blw', 120)],
+> 49	    shade: [n('bsx', 0.42), n('bsy', 0.22), n('bsz', 0.4), n('bsw', 0.4)],
+> 50	    color: col('bcol', '#e0508f'),
+> 51	  },
+> 52	  fur_armL: {
+> 53	    lock: [n('alx', 18), 0.72, n('alz', 0.8), 140],
+> 54	    shade: [0.5, 0.2, 0.35, 0.35],
+> 55	    color: col('acol', '#e0508f'),
+> 56	  },
+> 57	  fur_armR: {
+> 58	    lock: [n('alx', 18), 0.72, n('alz', 0.8), 140],
+> 59	    shade: [0.5, 0.2, 0.35, 0.35],
+> 60	    color: col('acol', '#e0508f'),
+> 61	  },
+> 62	  fur_pom: …[+3014 chars]
+
+### 🤖 Claude — 2026-11-19T23:47:49.870Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\nstart=s.index(\"/** shell-fur overrides\")\nend=s.index(\"const T = (f: string)\")\nnew='''/** linear RGB QA override `?b20<key>=r,g,b` */\nfunction lin(key: string, def: [number, number, number]): [number, number, number] {\n  const v = (QS?.get(`b20${key}`) ?? '').split(',').map(Number);\n  return v.length === 3 && v.every(Number.isFinite) ? (v as [number, number, number]) : def;\n}\n\n/** shell-fur overrides (merged over the GLB's userData.fur and benny05's FUR05) */\nexport cons …[+4273 chars]`
+
+### 🧑 User — 2026-11-19T23:47:56.693Z
+
+> ↩︎ result: 32:function col(key: string, def: string): string {
+> TSC_OK
+
+### 🤖 Claude — 2026-11-19T23:48:05.610Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\na=s.index(\"/** colour QA override `?b20<key>=rrggbb` */\")\nb=s.index(\"/** linear RGB QA override\")\ns=s[:a]+s[b:]\nopen(p,'w').write(s)\nEOF\ntimeout 300 npx tsc --noEmit -p . && echo TSC_OK\ncat > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/v4.json <<'EOF'\n[\n {\"name\": \"d0_default\"},\n {\"name\": \"d1_finer\", \"js\": \"const f=B.furs.find(f=>f.mesh.name==='fur_body'); f.uniforms.uLock.value.set(44,0.95,0.7,300);\"},\n {\"name\": \"d2_ …[+961 chars]`
+
+### 🧑 User — 2026-11-19T23:50:00.636Z
+
+> ↩︎ result: TSC_OK
+> at 04 s 78.813
+> variant d0_default 17998 ms
+> variant d1_finer 19289 ms
+> variant d2_comb12 19582 ms
+> variant d3_shade 17516 ms
+> d0_default
+> [1256, 1271] 0.6529 0.7545 0.2814 [341, 502, 961, 1117] {'mean': [241, 65, 164], 'sat': [0.62, 0.74, 0.85], 'val': [0.82, 1.0, 1.0]}
+> d1_finer
+> [1256, 1271] 0.654 0.7541 0.2833 [341, 502, 961, 1117] {'mean': [243, 67, 167], 'sat': [0.61, 0.73, 0.84], 'val': [0.84, 1.0, 1.0]}
+> d2_comb12
+> [1256, 1271] 0.6494 0.7548 0.2738 [341, 502, 961, 1117] {'mean': [245, 71, 169], 'sat': [0.6, 0.71, 0.83], 'val': [0.85, 1.0, 1.0]}
+> d3_shade
+> [1256, 1271] 0.6494 0.7548 0.2738 [341, 502, 961, 1117] {'mean': [244, 71, 169], 'sat': [0.6, 0.71, 0.83], 'val': [0.85, 1.0, 1.0]}
+
+### 🤖 Claude — 2026-11-19T23:50:04.479Z
+
+Unexpected: rendered fur still bright and fur IoU dropped. Let me look.
+
+### 🤖 Claude — 2026-11-19T23:50:06.987Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I tools/benny20/crop.py qa/benny/r20/probe/d/d0_default.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/d0.png && python3 -I tools/benny20/crop.py qa/benny/r20/probe/d/d0_default_mask.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/d0m.png", "description": "Crop d0 render and mask"}`
+
+### 🧑 User — 2026-11-19T23:50:07.611Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:50:08.329Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/d0.png"}`
+
+### 🧑 User — 2026-11-19T23:50:08.358Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:50:08.881Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/d0m.png"}`
+
+### 🧑 User — 2026-11-19T23:50:08.906Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:50:37.983Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nfrom PIL import Image\nfor n in ['d0_default','d1_finer','d2_comb12']:\n    im=Image.open(f'qa/benny/r20/probe/d/{n}.png'); im.crop((240,1230,560,1400)).resize((640,340),Image.LANCZOS).save(f'/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/fur_{n}.png')\n\"; grep -n \"goto\\|freezeAt\\|run(true)\\|step(\" tools/match04/motion04.mjs | head", "description": "Crop fur detail and check motion04 start method"}`
+
+### 🧑 User — 2026-11-19T23:50:38.519Z
+
+> ↩︎ result: 14:  await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+> 21:      const r = window.__rainbow; r.goto('04'); const s0 = r.state().s; r.setSteer(steer);
+> 22:      let k = 0; while (r.state().s < s0 + dist && k < 2000) { r.step(1); k++; }
+> 24:      r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
+
+### 🤖 Claude — 2026-11-19T23:50:39.286Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/fur_d1_finer.png"}`
+
+### 🧑 User — 2026-11-19T23:50:39.309Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:51:11.467Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/probe.mjs'\ns=open(p).read()\nold=\"    r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);\\n    return r.state();\"\nnew=\"    // deterministic frame: frozen shader / animation clock (same freeze as tools/lead_r13/swim_clip.mjs), no real-time loop\\n    r.freezeAt(Number(${'$'}{0} || 12)); r.step(1, 1e-4); r.drawList();\\n    return r.state();\"\nnew=\"    // deterministic frame: frozen shader / animation clock (as tools/lead_r13/swim_clip.mjs), no real-time  …[+2067 chars]`
+

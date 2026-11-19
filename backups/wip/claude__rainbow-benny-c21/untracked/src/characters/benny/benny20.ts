@@ -28,63 +28,72 @@ function n(key: string, def: number): number {
   const v = parseFloat(QS?.get(`b20${key}`) ?? '');
   return Number.isFinite(v) ? v : def;
 }
-/** colour QA override `?b20<key>=rrggbb` */
-function col(key: string, def: string): string {
-  const v = QS?.get(`b20${key}`) ?? '';
-  return /^[0-9a-f]{6}$/i.test(v) ? `#${v}` : def;
+/** linear RGB QA override `?b20<key>=r,g,b` */
+function lin(key: string, def: [number, number, number]): [number, number, number] {
+  const v = (QS?.get(`b20${key}`) ?? '').split(',').map(Number);
+  return v.length === 3 && v.every(Number.isFinite) ? (v as [number, number, number]) : def;
 }
 
 /** shell-fur overrides (merged over the GLB's userData.fur and benny05's FUR05) */
 export const FUR20: Record<string, Partial<FurParams>> = {
-  fur_body: { shells: n('bsh', 28), length: n('blen', 0.15), gravity: n('bgr', 0.55) },
-  fur_armL: { shells: n('ash', 16), length: n('alen', 0.08), gravity: n('agr', 0.3) },
-  fur_armR: { shells: n('ash', 16), length: n('alen', 0.08), gravity: n('agr', 0.3) },
+  fur_body: { shells: n('bsh', 28), length: n('blen', 0.13), gravity: n('bgr', 0.1) },
+  fur_armL: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
+  fur_armR: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
   fur_pom: { shells: n('psh', 20), length: n('plen', 0.12), gravity: n('pgr', 0.04) },
 };
 
-/** lock shader parameters per part (fur.ts uLock / uShade) and flat albedo (sRGB) */
-const LOCK20: Record<string, { lock: [number, number, number, number]; shade: [number, number, number, number]; color: string }> = {
+type V4 = [number, number, number, number];
+/** lock shader parameters per part (fur.ts uLock / uShade / uComb) and flat albedo (LINEAR rgb). Albedos solved from a
+ *  grey calibration sweep through the live 04 lighting + post chain (tools/benny20/calfit.py, qa/benny/r20/probe/c) for
+ *  the approved means: fur (207, 74, 151), pompom (133, 30, 229) */
+const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, number, number] }> = {
   fur_body: {
-    lock: [n('blx', 12), n('bly', 0.72), n('blz', 0.62), n('blw', 120)],
-    shade: [n('bsx', 0.42), n('bsy', 0.22), n('bsz', 0.4), n('bsw', 0.4)],
-    color: col('bcol', '#e0508f'),
+    lock: [n('blx', 30), n('bly', 0.9), n('blz', 0.7), n('blw', 220)],
+    shade: [n('bsx', 0.35), n('bsy', 0.25), n('bsz', 0.45), n('bsw', 0.35)],
+    comb: [n('bcx', 0.8), n('bcy', 0.6), n('bcz', 0.2), 0],
+    color: lin('bcol', [0.3975, 0.0861, 0.2019]),
   },
   fur_armL: {
-    lock: [n('alx', 18), 0.72, n('alz', 0.8), 140],
-    shade: [0.5, 0.2, 0.35, 0.35],
-    color: col('acol', '#e0508f'),
+    lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
+    shade: [0.35, 0.25, 0.45, 0.35],
+    comb: [n('acx', 0.5), 0.7, 0.2, 0],
+    color: lin('acol', [0.3975, 0.0861, 0.2019]),
   },
   fur_armR: {
-    lock: [n('alx', 18), 0.72, n('alz', 0.8), 140],
-    shade: [0.5, 0.2, 0.35, 0.35],
-    color: col('acol', '#e0508f'),
+    lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
+    shade: [0.35, 0.25, 0.45, 0.35],
+    comb: [n('acx', 0.5), 0.7, 0.2, 0],
+    color: lin('acol', [0.3975, 0.0861, 0.2019]),
   },
   fur_pom: {
-    lock: [n('plx', 22), n('ply', 0.75), n('plz', 1.0), n('plw', 160)],
+    lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],
     shade: [n('psx', 0.45), n('psy', 0.3), n('psz', 0.35), n('psw', 0.3)],
-    color: col('pcol', '#8a3cf0'),
+    comb: [0, 1, n('pcz', 0.2), 0],
+    color: lin('pcol', [0.1016, 0.0067, 0.4425]),
   },
 };
 
-/** beanie geometry on top of benny05's HAT05 (hat-local) */
+/** beanie geometry on top of benny05's HAT05 (hat-local). Measured at the 04 start view against the approved silhouette
+ *  (tools/benny20/score.py): cuff bottom on the centre column 1276 → 1271 px target, pompom 168 px wide like the approved */
 export const HAT20 = {
   /** uniform scale of the whole beanie (cuff, crown, star, pompom) about the head centre */
   scale: n('hs', 1.1),
   /** extra drop along the body's up axis (units) */
-  drop: n('hd', 0.06),
+  drop: n('hd', 0.35),
   /** pompom: extra scale and lift (hat-local, after the beanie scale) */
-  pomScale: n('ps', 1.2),
+  pomScale: n('ps', 1.03),
   pomDY: n('pdy', 0.0),
   /** star felt patch: thickness factor (GLB bevelled star ≈ 0.11 thick) */
   starFlat: n('sf', 0.3),
 };
 
-/** colour factors (linear multipliers on the knit / felt maps) */
+/** colour factors (LINEAR multipliers on the knit / felt maps, solved like the fur) + knit normal strength */
 const MAT20 = {
-  crown: col('ccol', '#ffffff'),
-  brim: col('rcol', '#ffffff'),
-  star: col('scol', '#ffffff'),
-  normal: n('kn', 1.0),
+  crown: lin('ccol', [0.82, 0.82, 0.78]),
+  brim: lin('rcol', [0.34, 0.34, 0.31]),
+  star: lin('scol', [0.34, 0.75, 1.0]),
+  crownN: n('kcn', 2.0),
+  brimN: n('kbn', 2.5),
 };
 
 const T = (f: string) => new URL(`../../../assets/textures/benny20/${f}`, import.meta.url).href;
@@ -128,11 +137,12 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
     d.BENNY20 = '';
     if (d.BENNY05 === undefined) d.BENNY05 = '';
     mat.map = white;
-    mat.color.set(spec.color);
+    mat.color.setRGB(...spec.color);
     f.uniforms.uRoot.value.setRGB(1, 1, 1);
     f.uniforms.uTip.value.setRGB(1, 1, 1);
     f.uniforms.uLock.value.set(...spec.lock);
     f.uniforms.uShade.value.set(...spec.shade);
+    f.uniforms.uComb.value.set(...spec.comb);
     mat.needsUpdate = true;
   }
 
@@ -153,23 +163,23 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   }
 
   // ---- knit maps on the crown / cuff ----
-  const knit = (name: string, map: string, nmap: string, factor: string) => {
+  const knit = (name: string, map: string, nmap: string, factor: [number, number, number], ns: number) => {
     const m = get(name) as THREE.Mesh | undefined;
     const tex = maps[map];
     if (!m || !tex) return;
     const mat = (m.material as THREE.MeshStandardMaterial).clone();
     mat.map = tex;
-    mat.color.set(factor);
+    mat.color.setRGB(...factor);
     const nt = maps[nmap];
     mat.normalMap = nt;
-    if (nt) mat.normalScale.setScalar(MAT20.normal);
+    if (nt) mat.normalScale.setScalar(ns);
     mat.roughness = 0.92;
     mat.metalness = 0;
     mat.needsUpdate = true;
     m.material = mat;
   };
-  knit('hat_crown', 'crown.png', 'crown_n.png', MAT20.crown);
-  knit('hat_brim', 'brim.png', 'brim_n.png', MAT20.brim);
+  knit('hat_crown', 'crown.png', 'crown_n.png', MAT20.crown, MAT20.crownN);
+  knit('hat_brim', 'brim.png', 'brim_n.png', MAT20.brim, MAT20.brimN);
 
   // ---- star: flat stitched felt patch ----
   const star = get('hat_star') as THREE.Mesh | undefined;
@@ -179,7 +189,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
     mat.map = maps['star.png'];
     mat.normalMap = maps['star_n.png'];
     mat.normalScale.setScalar(1);
-    mat.color.set(MAT20.star);
+    mat.color.setRGB(...MAT20.star);
     mat.roughness = 0.97;
     mat.metalness = 0;
     mat.emissive.setRGB(1, 0.72, 0.2);

@@ -21,7 +21,8 @@ try {
   const st = await page.evaluate(async ([scr, dist]) => {
     const r = window.__rainbow; r.goto(scr); const s0 = r.state().s;
     let k = 0; while (r.state().s < s0 + dist && k < 2000) { r.step(1); k++; }
-    r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
+    // deterministic frame: frozen shader / animation clock (as tools/lead_r13/swim_clip.mjs), no real-time loop
+    r.freezeAt(12); r.step(1, 1e-4); r.drawList();
     return r.state();
   }, [SCR, Number(DIST)]);
   console.log('at', SCR, 's', st.s);

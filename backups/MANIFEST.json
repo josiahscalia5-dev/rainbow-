@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19348,
-   "sha256": "bdc5b90fdcac43210610859b62fa01e8db7e3ad3b1057dbca2bed6add406af12"
+   "sha256": "a4ba31bf7970b3dfd0da2644e839b25c0aa1bd7afa12cd8de923250a860f0204"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -858,8 +858,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/INFO.json",
-   "bytes": 3224,
-   "sha256": "51100a12a3f6bdfff1054434780d88d98955db3fddba9a01ef4755a8d29fde3a"
+   "bytes": 3307,
+   "sha256": "acfc523288a2c5a60f52e68fe990aa6731cfbfc1e470f83c2bacfe69d77563e5"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/tracked.patch",
@@ -923,6 +923,11 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/probe/c/c1_k0.08_mask.png",
+   "bytes": 127273,
+   "sha256": "0f3f02483872dd278c9ab5802068213fd6489a83bda4065549ea99c2faa91c9d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/probe/c/c2_k0.18_mask.png",
    "bytes": 127273,
    "sha256": "0f3f02483872dd278c9ab5802068213fd6489a83bda4065549ea99c2faa91c9d"
   },
@@ -1063,8 +1068,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/tools/benny20/score.py",
-   "bytes": 3607,
-   "sha256": "848650ac6bec44855f260c188932e3408ddc4b4c94b5445cc3ce27be32628ae9"
+   "bytes": 4406,
+   "sha256": "21c7276208a5a0205a3868ec4541ebc28e4656ed129348d75799baa9759e94e9"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/tools/benny20/widths.py",
@@ -1594,7 +1599,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/INFO.json",
    "bytes": 506,
-   "sha256": "8d81886cb71bff11f32a144f5198f4cf7262ccda357185ebf55558b18fa240cc"
+   "sha256": "fac2759520093aee88f8b90477eb874aea5bb8dd220d490216b35e8bc2cf7237"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/tracked.patch",
@@ -1764,7 +1769,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/INFO.json",
    "bytes": 515,
-   "sha256": "d5b6bcdc5a38b24ec33d0a5a8d4ce7123efa3f61b61ff62b4c510e852d388e79"
+   "sha256": "265af72c6a2e5f32433e4e01eaab0d117fa60ad1fafbf70f580cf554b7975803"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/tracked.patch",
