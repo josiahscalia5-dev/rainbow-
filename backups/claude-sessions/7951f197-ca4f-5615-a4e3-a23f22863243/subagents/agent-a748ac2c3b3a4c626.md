@@ -2103,3 +2103,7 @@ Relative to Benny's height, the tilted beanie (f0) sits ~36 px too low but has t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T23:57:29.798Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/fur.ts'\ns=open(p).read()\nold=\"\"\"            // wispy, separated strands toward the outside / top of a lock; dense core\n            if (lt > 0.2 && sd > mix(0.95, 0.42, smoothstep(0.35, 1.0, rr) * smoothstep(0.2, 0.9, lt))) discard;\n          }\"\"\"\nnew=\"\"\"            // dense lock core; wispy, separated strands only toward the lock's rim and tip\n            if (lt > 0.3 && rr > 0.5 && sd > mix(0.95, 0.45, smoothstep(0.5, 1.0, rr) * smoothstep(0.3, 1.0, lt))) discard;\n          }\n          // rounde …[+2589 chars]`
+

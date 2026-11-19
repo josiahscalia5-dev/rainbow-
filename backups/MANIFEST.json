@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19348,
-   "sha256": "7e73c3f0c15b7e7afdb43c6c1afe03d8a5655c7c63d2b36de8ba692f4bc26fbe"
+   "sha256": "7b942e74dab096fffff8cd5992dab9b2514399c40b6eacac26e33705ade70b2a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 1748,
-   "sha256": "268c32bc5f94d9709fee2709be5308b754ee9f5031fc1b31db78c58c8a6fe92e"
+   "sha256": "cc7ff7606c0250622c402271b7fe9fc5c25da82d67426ca5c0c7bbacb24db307"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -864,12 +864,12 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c21/INFO.json",
    "bytes": 4827,
-   "sha256": "c10cd01e35ba15f83bc1b38691276cec298969ce20653fc61f07fd5e4bbbceeb"
+   "sha256": "faea66305e7ae2441a4e76c4be0cfc73f74c3c6c7a434c72386d68e7a4a1cfd8"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/tracked.patch",
-   "bytes": 9236,
-   "sha256": "924e177353538431180ff0fc0f8d389c4cd67f8139cf776ea2ea143ecad1d762"
+   "bytes": 10041,
+   "sha256": "0608194c3ec9bd99a62e4c843415339708acee71e7152dba73bdad3cf840e7d3"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/probe/a/a0_default.png",
@@ -1338,8 +1338,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/src/characters/benny/benny20.ts",
-   "bytes": 10039,
-   "sha256": "dc28ff7ad4596811c2e8f4c8f5d957974daeead4d4f957a945534e6e2ade3cb5"
+   "bytes": 10071,
+   "sha256": "0ab7ee1fa87f6045fdec4d566eedce42b02864f4b939b0142f2ed372ee02bf96"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/tools/benny20/approved_mask04.png",
@@ -1899,12 +1899,12 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/INFO.json",
    "bytes": 584,
-   "sha256": "6cffc09236aa24ec40b1377e8042826c90bb24e96e59ca18d94b868ed673a769"
+   "sha256": "83b12a3a3c4871d1250f34a54b536608406ddaf116b55c7154ba664ba24088ef"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/tracked.patch",
-   "bytes": 16313,
-   "sha256": "b6b5ebac2c8455526f1d200c3aa1e96ce1c7fc9d3555fe946f037c41e31e314b"
+   "bytes": 16685,
+   "sha256": "3318e37e1e6534c33c8301d4c38b279ace6841d6fa56354624d4f9ac2851b512"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/untracked/assets/models/match04/foam_bank04.glb",
@@ -2079,7 +2079,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/INFO.json",
    "bytes": 515,
-   "sha256": "3f801d2f00864da0192f02891e91a84a294fe104fdb5f1611afa8e18d83b3d9f"
+   "sha256": "4b9a3428e092cc4493e97f048dafa39f4e29682132d2068f8ccb0424b17ae3fb"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/tracked.patch",

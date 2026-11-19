@@ -1571,3 +1571,44 @@ It works when run alone. Here's what it records:
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:save-everything-v2 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified|skipping|error'; git show --stat --format='%h %s' HEAD | grep -E 'rainbow-autosave.py|LIVE_TOOLS|CLAUDE.md|^[0-9a-f]{7}'; python3 -I scripts/autosave-status.py", "description": "Save script changes and verify on GitHub", "timeout": 400000}`
 
+### 🧑 User — 2026-11-19T23:57:46.180Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "f8ef000d1edd70b0de4f6d17828b19e0c955f9f5",
+> f8ef000 autosave: Rainbow 2026-11-19 23:57 UTC
+>  CLAUDE.md                                          |   4 +-
+>  backups/LIVE_TOOLS_STATE.json                      |  56 ++++
+> AUTOSAVE OK | branch ccr-681a37bb-5jqfbu | scheduler daemon | last verified backup 2026-11-19T23:57:28+00:00 (0.3 min ago) | local f8ef000 remote f8ef000 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-19T23:57:48.885Z
+
+> 🔧 **Bash** `{"command": "git log -1 --format='%h %ci' -- scripts/rainbow-autosave.py && git diff HEAD --quiet -- scripts/rainbow-autosave.py && echo \"script on GitHub = local\" && git grep -c 'snapshot_live_tools' HEAD -- scripts/rainbow-autosave.py", "description": "Confirm the updated script is committed"}`
+
+### 🧑 User — 2026-11-19T23:57:49.308Z
+
+> ↩︎ result: d6312d4 2026-11-19 23:56:51 +0000
+> script on GitHub = local
+> HEAD:scripts/rainbow-autosave.py:2
+
+### 🤖 Claude — 2026-11-19T23:57:56.473Z
+
+Yes. Everything now saves to your GitHub repository every 5 minutes, and I've checked it on GitHub. The newest save, `f8ef000`, matches this session exactly.
+
+**What each five-minute save includes:**
+- **The game:** code, pictures, Blender and Marble files, notes and the project instructions.
+- **The ten specialists:** their definitions are saved. A new record (`backups/LIVE_TOOLS_STATE.json`), written fresh on every save, also lists each one with a fingerprint, so any change to them shows up.
+- **The three workers running now** (Benny and the two Screen 04 workers): each one's unfinished edits and new pictures are copied into the save, even before the worker commits them. Each worker also pushes its own branch after every finished step.
+- **Plugins, servers and hooks:** the same record lists the plugins, the configured servers and the save hooks, by name only. Nothing secret goes in it.
+
+**Two things I fixed just now:**
+- **Pictures were being skipped.** The worker snapshot had a 2 MB size limit, so 30 of Benny's full-size screenshots and clips weren't saved. I raised the limit to 5 MB per file. The last save included all 101 of Benny's new files, with none skipped.
+- **Plugins and servers weren't recorded live.** Before, they were only described in a hand-written list. They're now recorded fresh on every save.
+
+**What GitHub can't hold:**
+- **Your account settings:** the Claude login, the claude.ai connectors (World Labs Atlas, GitHub) and the API keys (World Labs, fal) belong to your account and this environment. I check them at the start of each session instead.
+- **The running workers themselves:** a running worker can't be saved. Its instructions, notes and unfinished work are all saved, so it can be restarted where it stopped.
+- **Saves stop when the environment is closed.** Nothing can save while it isn't running. The next session reports any gap.
+
+The Benny worker is still on the fur colour and texture. I'll show you the result when it's proven.
+
