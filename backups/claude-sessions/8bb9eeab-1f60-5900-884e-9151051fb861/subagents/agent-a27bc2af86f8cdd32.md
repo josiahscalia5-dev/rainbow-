@@ -1366,3 +1366,63 @@ Restoring the stray formatting change (`build =(`) so the shared file only diffe
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git commit -q -F - <<'EOF'\nScreen 07 r18 step 3: &m07foamb=1 — no white lather walls restarting part-way down the drop (GOOD IMPROVEMENT, small-moderate)\n\nFinishes the r17 unfinished step 3. With the switch, the game's tall white lather bank stays away down the 07 drop to 5 u before\nthe 08 start, then grows back out of the water (full height at the 08 start, 08 keeps its bank); puffs ride on the growing bank.\nFixes the r17 draft bug (the ramp flattened the bank over the whole course before the end of 07). Shared foam.ts / waterRibbon.ts\nchanges are be …[+611 chars]`
 
+### 🧑 User — 2026-11-19T02:40:00.286Z
+
+> ↩︎ result: To https://github.com/josiahscalia5-dev/rainbow-
+>    8651edf..48d2ae6  claude/rainbow-s07-match-c18 -> claude/rainbow-s07-match-c18
+> branch 'claude/rainbow-s07-match-c18' set up to track 'origin/claude/rainbow-s07-match-c18'.
+> 48d2ae6e5aa87766aaec0377c46f1f50066754ec
+> 48d2ae6e5aa87766aaec0377c46f1f50066754ec	refs/heads/claude/rainbow-s07-match-c18
+
+### 🤖 Claude — 2026-11-19T02:40:01.147Z
+
+Pushed and verified. Now the report to main.
+
+### 🤖 Claude — 2026-11-19T02:40:01.548Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-19T02:40:01.555Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-19T02:40:07.745Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s07 step 3 m07foamb done, pushed", "message": "s07 r18 step 3 `&m07foamb=1` (no white lather walls restarting part-way down the 07 drop) is done and pushed: 48d2ae6e5aa87766aaec0377c46f1f50066754ec on claude/rainbow-s07-match-c18.\nVerdict: GOOD IMPROVEMENT, small to moderate, and only in the drop. At t72, t80 and t88 the two tall white walls that started again half-way down are gone from the lower and middle part of the view. In their place you see the purple slotted tube, the gold rings and the painted pink/cyan banks. Close to the 08 inlet the bank now rises softl …[+1010 chars]`
+
+### 🧑 User — 2026-11-19T02:40:07.758Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-19T02:40:13.015Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 60, "limit": 235}`
+
+### 🧑 User — 2026-11-19T02:40:13.038Z
+
+> ↩︎ result: 60	    int i0 = int(floor(ia));
+> 61	    vCtr = mix(uCtr[i0], uCtr[i0 + 1], ia - float(i0));
+> 62	  }
+> 63	  vN = normalize(mat3(modelMatrix) * normal);
+> 64	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 65	}`;
+> 66	
+> 67	const FRAG = /* glsl */ `
+> 68	uniform sampler2D uPlate;
+> 69	uniform sampler2D uDepth;
+> 70	uniform float uUseDepth;
+> 71	uniform vec2 uNearFar;
+> 72	uniform sampler2D uTile;
+> 73	uniform float uMode;      // 0 = triplanar patch, 1 = tube wall unwrap, 2 = river unwrap
+> 74	uniform float uPatchK;
+> 75	uniform vec4 uTube;       // ax, h, ring R2 depth, bay length
+> 76	uniform vec2 uTheta;      // unwrap angle range (rad): right water line .. left water line over the top
+> 77	uniform vec4 uRiver;      // lateral min, lateral max, along min, along max
+> 78	uniform vec3 uProjPos;
+> 79	uniform vec4 uPjPost;
+> 80	uniform vec2 uPjRes;
+> 81	uniform sampler2D uFill;   // M2 '?m07fill=1': provisional-fill mask of the plate (1 = filled, not original pixels)
+> 82	uniform float uFillTile;  // 1 = on the water, filled plate pixels give way to the river tile
+> 83	uniform vec2 uAng;        // M2 '?m07ang=1': view-vs-projector angle cosines (full plate above x, tile below y); x < 0 = off
+> 84	uniform float uGoldLit;   / …[+13315 chars]
+

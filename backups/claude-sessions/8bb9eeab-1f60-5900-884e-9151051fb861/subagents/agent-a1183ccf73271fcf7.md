@@ -872,3 +872,11 @@ Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:40:24.871Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "        // r18 m06st: a tunnel / ring fragment the approved view never saw because the river crest (much nearer) hid it\n        // (the camera rose over the crest): take the painted wall straight above the crest in the approved picture\n        // (first projector pixel whose depth is the tunnel again and whose painted pixel is wall, mask G)\n        if (stOn > 0.5 && uStM > 0.5 && hold > 0.0 && zs < 0.8 * zf) {\n          for (int k = 1; k <= 96; k++) {\n            vec2 u2 = uv + vec2(0.0, float(k)  …[+1894 chars]`
+
+### 🧑 User — 2026-11-19T02:40:24.924Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
