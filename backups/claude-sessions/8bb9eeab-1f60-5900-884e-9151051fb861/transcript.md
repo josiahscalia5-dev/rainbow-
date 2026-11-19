@@ -2317,3 +2317,93 @@ Newest Screen 04 pictures are rendered. Recording a short real swim clip next, t
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && git add qa/match/04/r18/PREVIEW_QUERY_v2.txt qa/match/04/r18/preview_v2/NEW && git commit -qm \"Screen 04 preview v2 shots (water f952838b + rings 9eb27e6)\" && timeout 200 git push -q origin claude/rainbow-s04-preview-c18 2>&1 | tail -1; echo \"preview $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/claude/rainbow-s04-preview-c18 | cut -c1-7)\"; cd /home/user/rainbow- && python3 - <<'EOF'\np='docs/briefs/2026-11-19-r18/COORDINATION.md'\ns=open(p).read()\nadd=\"\"\"\n## ~04:40–18:05 UTC: all five workers stopped at the 5-hour usage l …[+1534 chars]`
 
+### 🧑 User — 2026-11-19T18:25:24.629Z
+
+> ↩︎ result: preview d0cc88d3 remote d0cc88d
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+
+### 🤖 Claude — 2026-11-19T18:25:27.934Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s04p/qa/match/04/r18/preview_v2/; cp /home/user/wt/s04p/qa/match/04/r18/preview_v2/swim_clip_half.mp4 /home/user/rainbow-/qa/review_r18/show_1815/04_7_NOW_swim_clip.mp4 && ffprobe -v error -show_entries format=duration -of csv=p=0 /home/user/rainbow-/qa/review_r18/show_1815/04_7_NOW_swim_clip.mp4", "description": "Check and copy the Screen 04 swim clip"}`
+
+### 🧑 User — 2026-11-19T18:25:28.199Z
+
+> ↩︎ result: total 1768
+> drwxr-xr-x 3 root root    4096 Nov 19 18:24 .
+> drwxr-xr-x 8 root root    4096 Nov 19 18:12 ..
+> drwxr-xr-x 2 root root    4096 Nov 19 18:14 NEW
+> -rw-r--r-- 1 root root 1797297 Nov 19 18:24 swim_clip_half.mp4
+> 4.000000
+
+### 🤖 Claude — 2026-11-19T18:25:32.304Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad && ffmpeg -loglevel error -y -ss 2.6 -i /home/user/rainbow-/qa/review_r18/show_1815/04_7_NOW_swim_clip.mp4 -frames:v 1 $SP/clip04_f26.png && echo ok", "description": "Extract a frame from the swim clip"}`
+
+### 🧑 User — 2026-11-19T18:25:32.682Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-19T18:25:34.893Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/clip04_f26.png"}`
+
+### 🧑 User — 2026-11-19T18:25:34.934Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:25:41.628Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad && cd $SP && for t in 1.0 1.6 2.0 2.3; do ffmpeg -loglevel error -y -ss $t -i /home/user/rainbow-/qa/review_r18/show_1815/04_7_NOW_swim_clip.mp4 -frames:v 1 c_$t.png; done; python3 -c \"\nfrom PIL import Image\nims=[Image.open('c_%s.png'%t) for t in ('1.0','1.6','2.0','2.3')]\nw,h=ims[0].size; out=Image.new('RGB',(w*4,h))\nfor i,im in enumerate(ims): out.paste(im,(i*w,0))\nout.save('c_strip.png')\"", "description": "Extract frames to see when clip leaves Screen 04"}`
+
+### 🧑 User — 2026-11-19T18:25:43.319Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T18:25:45.978Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/c_strip.png"}`
+
+### 🧑 User — 2026-11-19T18:25:46.035Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:25:54.342Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/review_r18/show_1815 && ffmpeg -loglevel error -y -i 04_7_NOW_swim_clip.mp4 -t 2.2 -c:v libx264 -pix_fmt yuv420p 04_7_NOW_swim_clip_04only.mp4 && rm 04_7_NOW_swim_clip.mp4 && ls", "description": "Trim the clip to the Screen 04 part only"}`
+
+### 🧑 User — 2026-11-19T18:25:56.995Z
+
+> ↩︎ result: 04_1_APPROVED.png
+> 04_2_GAME_start.png
+> 04_3_BEFORE_swimming_a.png
+> 04_4_NOW_swimming_a.png
+> 04_5_BEFORE_swimming_b.png
+> 04_6_NOW_swimming_b.png
+> 04_7_NOW_swim_clip_04only.mp4
+> 07_1_APPROVED.png
+> 07_2_BEFORE_swimming.png
+> 07_3_NOW_swimming.png
+> 07_4_NOW_swim_clip.mp4
+
+### 🤖 Claude — 2026-11-19T18:26:00.489Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r18/show_1815/04_7_NOW_swim_clip_04only.mp4"], "caption": "Screen 04 NOW: real swimming clip (straight, then steering) — the whole of Screen 04 from start to the hand-over.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-19T18:26:00.935Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/review_r18/show_1815/04_7_NOW_swim_clip_04only.mp4 → file_uuid: f5061d07-92bb-406b-8178-e7ab45b132ea
+
+### 🤖 Claude — 2026-11-19T18:26:05.474Z
+
+> 🔧 **SendMessage** `{"to": "a4d2f0802b168dc00", "summary": "Steering smear + coin over Benny in clip", "message": "Lead: I recorded a real 4 s swim clip with the combined preview (your f952838b + rings 9eb27e6; preview branch claude/rainbow-s04-preview-c18). Two glitches show while steering that the stills don't show, and the user just asked for \"no glitches\":\n(1) While Benny steers left or right, the near pink/cyan whirl smears into big stretched blobs filling the lower half of the frame (clip ≈1.0–2.0 s).\n(2) At ≈2.0 s a coin is drawn on top of Benny's body. That may be the normal coin pickup; check whether …[+480 chars]`
+
+### 🧑 User — 2026-11-19T18:26:05.503Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a4d2f0802b168dc00 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a4d2f0802b168dc00","name":"a4d2f0802b168dc00","ref":"03fa86"}}
+
+### 🤖 Claude — 2026-11-19T18:26:10.432Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && timeout 240 python3 scripts/rainbow-autosave.py --reason manual:show-1815-clip 2>&1 | grep -E '\"result\"|pushed_verified'", "description": "Save the show-me set", "timeout": 300000}`
+

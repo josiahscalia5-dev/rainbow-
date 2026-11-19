@@ -2,11 +2,18 @@
  "worktree": "/home/user/wt/s04",
  "branch": "claude/rainbow-s04-match-c18",
  "head": "f952838b6eee573882296b3fb9145566b2dbecca",
- "time": "2026-11-19T18:25:15+00:00",
+ "time": "2026-11-19T18:26:17+00:00",
  "dirty_tracked": [
   "src/world/match04m4.ts"
  ],
  "untracked_copied": [
+  "qa/match/04/r18/s4_flo/1_APPROVED.png",
+  "qa/match/04/r18/s4_flo/BEFORE/f06_forward6u.png",
+  "qa/match/04/r18/s4_flo/BEFORE/f10_forward10u.png",
+  "qa/match/04/r18/s4_flo/BEFORE/s_left_hard.png",
+  "qa/match/04/r18/s4_flo/BEFORE/s_right_hard.png",
+  "qa/match/04/r18/s4_flo/BEFORE/t33_through_screen.png",
+  "qa/match/04/r18/s4_flo/BEFORE/t95_through_screen.png",
   "qa/match/04/r18/s4_flo/NEW/f06_forward6u.png",
   "qa/match/04/r18/s4_flo/NEW/f10_forward10u.png",
   "qa/match/04/r18/s4_flo/NEW/f20_forward20u.png",
@@ -16,9 +23,11 @@
   "qa/match/04/r18/s4_flo/NEW/s_right_hard.png",
   "qa/match/04/r18/s4_flo/NEW/t33_through_screen.png",
   "qa/match/04/r18/s4_flo/NEW/t66_through_screen.png",
-  "qa/match/04/r18/s4_flo/NEW/t95_through_screen.png"
+  "qa/match/04/r18/s4_flo/NEW/t95_through_screen.png",
+  "qa/match/04/r18/s4_flo/NEW_swim_clip_half.mp4"
  ],
  "untracked_skipped": [
+  "qa/match/04/r18/s4_flo/BEFORE/f03_forward3u.png",
   "qa/match/04/r18/s4_flo/NEW/a00_approved_view.png",
   "qa/match/04/r18/s4_flo/NEW/f03_forward3u.png",
   "qa/match/04/r18/s4_flo/NEW/s_right_steer.png"
