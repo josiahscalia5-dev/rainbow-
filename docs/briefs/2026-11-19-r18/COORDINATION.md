@@ -53,3 +53,16 @@ straight corridor of many thin copper rings + flat water + big foam heaps — th
 ("FEW, THICK, polished yellow-gold rings", "no generic orange ring corridor", "no giant foam walls"). Both 04 workers redirected:
 s04tex → step 7 ring STRUCTURE (few thick yellow-gold telescoping bands; polish on hold); s04 → S-curve river, river curving up the
 sides, low foam instead of heaps. Pictures: `qa/review_r18/04_where_it_drifts/`.
+
+## ~04:40–18:05 UTC: all five workers stopped at the 5-hour usage limit (resets 07:20 UTC); environment closed 02:57–~18:00
+Backup gap: nothing reached GitHub 02:57 → 18:09 UTC (one local daemon save at 11:58 was pushed only at 18:09, `655ac54`).
+07 r18 step 4 `&m07band=1` (s07 `8accdad0`, kept set K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1): GOOD IMPROVEMENT
+(worker; lead at full size: thick magenta satin bands curve in from both sides beside a winding cyan core at f10 / f20).
+04 r18 step 3b `&m04nwc=1.3` (s04 `f952838b`): GOOD IMPROVEMENT (small): cyan right round / below Benny, pink from the corners.
+s04tex committed `676b484f` step 7 WIP `m04rfew` (not proven) before the limit.
+
+## User ~18:00 UTC: "Can you do it or not?" (Screen 04 + 05 exactly like the approved screens)
+Lead answer: NO to 100 % identical while swimming (one painted view; the inside must be rebuilt); YES to the start view (already the
+painting) and to a faithful, glitch-free rebuild with every painted object, target ≈ 9/10 by eye. Resumed s04, s04tex, s05 (their
+transcripts); s06 + s07 left stopped to save usage for 04 / 05 (user may ask to restart them). User: "show me" → newest 04 (preview
+v2 = water f952838b + rings 9eb27e6, `claude/rainbow-s04-preview-c18`) and 07 step 4 shown: `qa/review_r18/show_1815/`.
