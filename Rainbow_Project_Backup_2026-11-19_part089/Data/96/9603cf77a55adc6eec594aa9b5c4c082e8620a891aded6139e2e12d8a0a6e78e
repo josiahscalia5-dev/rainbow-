@@ -1,0 +1,92 @@
+[
+  {
+    "screen": "04",
+    "stem": "SCREEN04_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT",
+    "status": "CLAUDIA RETAINED",
+    "directPath": "Individual_Videos/SCREEN04_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "ed6100a4e18561ccee50a59ea9e6c88878289a5fe6a7eed78026f830a799eab1",
+    "bytes": 3790969,
+    "duration": "3.500000"
+  },
+  {
+    "screen": "04",
+    "stem": "SCREEN04_CODEX_CANDIDATE_ENTRANCE_TO_EXIT",
+    "status": "CANDIDATE",
+    "directPath": "Individual_Videos/SCREEN04_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "5fe66c58810ae7159c3c5b0be4dae8d38c0bf6ca20de0e6edd61dae97d12c3a7",
+    "bytes": 3778866,
+    "duration": "3.500000"
+  },
+  {
+    "screen": "05",
+    "stem": "SCREEN05_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT",
+    "status": "CLAUDIA RETAINED",
+    "directPath": "Individual_Videos/SCREEN05_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "5f2cfebcf1ee7a4bcb4a6826f6882199e20280af528551e60f13efba8b9eae1a",
+    "bytes": 10312979,
+    "duration": "7.000000"
+  },
+  {
+    "screen": "05",
+    "stem": "SCREEN05_CODEX_CANDIDATE_ENTRANCE_TO_EXIT",
+    "status": "CANDIDATE",
+    "directPath": "Individual_Videos/SCREEN05_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "dc1a246f6ae1b2a49941aaf84f8e077cb9cd032b3c0f862c78cec57c34d8730b",
+    "bytes": 10487979,
+    "duration": "7.000000"
+  },
+  {
+    "screen": "06",
+    "stem": "SCREEN06_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT",
+    "status": "CLAUDIA RETAINED",
+    "directPath": "Individual_Videos/SCREEN06_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1",
+    "bytes": 7491213,
+    "duration": "5.250000"
+  },
+  {
+    "screen": "06",
+    "stem": "SCREEN06_CODEX_CANDIDATE_ENTRANCE_TO_EXIT",
+    "status": "CANDIDATE",
+    "directPath": "Individual_Videos/SCREEN06_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "3c5c4157bcf2acd8bfbb5dc8ee19000c26eb82d29a9d6ffa613293e898ef2505",
+    "bytes": 7234337,
+    "duration": "5.250000"
+  },
+  {
+    "screen": "07",
+    "stem": "SCREEN07_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT",
+    "status": "CLAUDIA RETAINED",
+    "directPath": "Individual_Videos/SCREEN07_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "486adcb88342784a7d9fc68141a1ed3bb65ef7afbabe870f4cb0ee93ee9c16ca",
+    "bytes": 17964350,
+    "duration": "12.250000"
+  },
+  {
+    "screen": "07",
+    "stem": "SCREEN07_CODEX_CANDIDATE_ENTRANCE_TO_EXIT",
+    "status": "CANDIDATE",
+    "directPath": "Individual_Videos/SCREEN07_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "fe10433de2046b5aa1bd915846848d80c328b6c21f463cc712a861794ade2eb4",
+    "bytes": 17952727,
+    "duration": "12.250000"
+  },
+  {
+    "screen": "08",
+    "stem": "SCREEN08_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT",
+    "status": "CLAUDIA RETAINED",
+    "directPath": "Individual_Videos/SCREEN08_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "c6d4bf5102763257e81499c1c504b0c686f37da28ffe86d0f1c1aee9248f91bf",
+    "bytes": 2528482,
+    "duration": "1.833333"
+  },
+  {
+    "screen": "08",
+    "stem": "SCREEN08_CODEX_CANDIDATE_ENTRANCE_TO_EXIT",
+    "status": "CANDIDATE",
+    "directPath": "Individual_Videos/SCREEN08_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "sha256": "2594a52f95867ef17eed901b4cb62bf32c88adf6f4fb8e059e7a05ace7c66a36",
+    "bytes": 2516639,
+    "duration": "1.833333"
+  }
+]

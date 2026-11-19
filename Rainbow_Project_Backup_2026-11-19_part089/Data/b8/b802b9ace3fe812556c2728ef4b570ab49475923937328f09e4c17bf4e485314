@@ -1,0 +1,144 @@
+"""Build standard, independently extractable review ZIP files."""
+from pathlib import Path
+from zipfile import ZipFile
+from collections import Counter
+import hashlib,json,os,shutil,sys
+from guides import *
+
+def archive(dst,media,docs):
+    dst.parent.mkdir(parents=True,exist_ok=True)
+    partial=dst.with_suffix('.partial')
+    ordered={'README_FIRST.md':docs['README_FIRST.md'],**media,**{k:v for k,v in docs.items() if k!='README_FIRST.md'}}
+    assert len(ordered)==len(docs)+len(media)
+    hashes=[]
+    with ZipFile(partial,'w',allowZip64=True) as z:
+        for name,data in ordered.items():
+            assert not name.startswith('/') and '..' not in Path(name).parts
+            put(z,name,data)
+            if isinstance(data,Path):
+                with data.open('rb') as stream:h=hashlib.file_digest(stream,'sha256').hexdigest()
+            else:h=hashlib.sha256(data if isinstance(data,bytes) else data.encode()).hexdigest()
+            hashes.append(h+'  '+name)
+        put(z,'SHA256SUMS.txt','\n'.join(hashes)+'\n')
+    assert partial.stat().st_size<200_000_000,(dst,partial.stat().st_size)
+    os.replace(partial,dst)
+    return {'path':dst.relative_to(OUT).as_posix(),'bytes':dst.stat().st_size,'files':len(ordered)+1,'media':len(media),'sha256':hashlib.sha256(dst.read_bytes()).hexdigest()}
+
+NATIVE_KEYS=['requested_role_filename','file_inside_this_zip','screen','status','description','original_dimensions','source_format','source_sha256','packaged_sha256','source_branch','source_commit','evidence_commit','source_path','disposable_trial','representation','mean_channel_error','channel_error_99th_percentile']
+def img_index(rows,canon,mode):
+    result=[]
+    for r in rows:
+        target=r['nativeCanonical'] if mode=='native' else r['canonical']
+        item=canon.get(target)
+        if item is None:continue
+        result.append({'requested_role_filename':r['nativeName'] if mode=='native' else r['name'],'file_inside_this_zip':target,'screen':r['screen'],'status':r['status'],'description':r['description'],
+            'original_dimensions':str(r['width'])+'x'+str(r['height']),'source_format':r['format'],'source_sha256':r['sha256'],
+            'packaged_sha256':item['sha256'] if mode=='native' else item['shareHash'],'source_branch':r['branch'],'source_commit':r['commit'],
+            'evidence_commit':r.get('evidence_commit',''),'source_path':r['source'],'disposable_trial':r.get('temporary_trial',False),
+            'representation':'unchanged source bytes' if mode=='native' else item['quality'],'mean_channel_error':0 if mode=='native' else item['meanError'],
+            'channel_error_99th_percentile':0 if mode=='native' else item['p99Error']})
+    return csvbytes(NATIVE_KEYS,result)
+def link_copy(src,dst):
+    dst.parent.mkdir(parents=True,exist_ok=True)
+    if dst.exists():
+        assert hashlib.sha256(dst.read_bytes()).digest()==hashlib.sha256(src.read_bytes()).digest()
+        if not os.path.samefile(src,dst):
+            return
+    staging=dst.with_name('.'+dst.name+'.copying')
+    shutil.copyfile(src,staging)
+    os.replace(staging,dst)
+    assert not os.path.samefile(src,dst)
+def correct_old(rows):
+    map=load(ROOT/'early-branch-map.json')
+    for r in rows:
+        if r['section']=='Earlier_Specialist_Audit':r['branch']=map.get(r['commit'],r['branch'])
+    return rows
+def native():
+    rows=correct_old(load(ROOT/'converted.json'))
+    chosen=[r for r in rows if r['nativeCanonical']==r['nativeName']]
+    out=[];choices={};byfile={}
+    for sid in IDS:
+        stage=[r for r in chosen if r['screen']==sid]
+        sets=[stage]
+        if sum(r['rawSize'] for r in stage)>194_000_000:
+            current=[r for r in stage if not r['section'].startswith(('Codex_Rejected','Historical','Earlier'))]
+            old=[r for r in stage if r not in current]
+            sets=[current,old]
+        for subset in sets:
+            ix=len(out)+1
+            dst=OUT/'Source_Images'/('Rainbow_Visual_Images_Part'+f'{ix:02d}'+'.zip')
+            files={r['nativeName']:Path(r['file']) for r in subset}
+            index={r['nativeName']:r for r in subset}
+            why=('all source images for this stage' if len(sets)==1 else 'the approved artwork, current gameplay, Claudia’s stored images and related diagnostics' if subset is sets[0] else 'earlier tests, rejected experiments and prior motion captures')
+            intro='This standalone native-image ZIP contains '+why+' for Screen '+sid+'. Every image is stored at its original dimensions with its original bytes. Extract this part on its own. The current opening and steering pairs have different filenames even where their pixels agree.'
+            docs={'README_FIRST.md':guide('native',intro,[sid]),'FILE_INDEX.csv':img_index(rows,index,'native'),**stage_reports(sid)}
+            cert=archive(dst,files,docs)
+            cert.update(screen=sid,number=ix,scope=why)
+            out.append(cert)
+            for r in subset:byfile[r['nativeName']]=cert['path']
+        # An optional nine-picture review batch for Android users extracting files manually.
+        sel=[r for r in stage if (r['stem']=='SCREEN'+sid+'_APPROVED') or (r['section']=='Current' and r.get('pose') in PICKS[sid])]
+        assert len(sel)==9,(sid,len(sel))
+        files={r['nativeName']:Path(r['file']) for r in sel}; idx={r['nativeName']:r for r in sel}
+        docs={'README_FIRST.md':guide('batch',f'This nine-picture Android batch contains the exact approved artwork and four full-size Claudia/candidate pairs for Screen {sid}. The master image ZIP includes the other viewpoints.',[sid]),'FILE_INDEX.csv':img_index(sel,idx,'native'),**stage_reports(sid)}
+        dst=OUT/'Small_Image_Batches'/('Screen_'+sid+'_Image_Batch.zip')
+        cert=archive(dst,files,docs);cert.update(screen=sid)
+        cert['pictures']=[]
+        for r in sorted(sel,key=lambda r:(not r.get('exact'),PICKS[sid].index(r.get('pose')) if r.get('pose') in PICKS[sid] else -1,r['stem'])):
+            dst=OUT/'Selected_Stills'/('Screen_'+sid)/Path(r['nativeName']).name
+            link_copy(Path(r['file']),dst)
+            cert['pictures'].append({'name':r['stem'],'path':dst.relative_to(OUT).as_posix()})
+        choices[sid]=cert
+    Path('native-packets.json').write_text(json.dumps(out,indent=2));Path('small-batches.json').write_text(json.dumps(choices,indent=2))
+    Path('native-part-for-file.json').write_text(json.dumps(byfile))
+    print('Source parts',[(x['number'],x['screen'],round(x['bytes']/1e6,2)) for x in out],
+          'small batches',[(x['screen'],round(x['bytes']/1e6,1)) for x in choices.values()],flush=True)
+def images():
+    rows=load(ROOT/'final-images.json')
+    packs=load(ROOT/'native-part-for-file.json')
+    chosen={r['name']:r for r in rows if r['canonical']==r['name']}
+    files={name:Path(r['share']) for name,r in chosen.items()}
+    totals=Counter(r['quality'] for r in chosen.values())
+    summary=f'This Android upload package contains {len(files)} separately viewable, full-dimension images covering {len(rows)} labeled source records. It includes all 70 matched current viewpoints as 140 separate Claudia/candidate files. Every approved image keeps the original bytes. Gameplay review JPEGs retain the full source pixel grid. FILE_INDEX.csv identifies pixel-identical historical aliases and the compression applied per file.'
+    readme=guide('images',summary)
+    readme+='\n## Original-image parts\n\nThe source collection is also available in numbered standalone ZIPs. Each contains complete original image files. SOURCE_PARTS.csv maps every review filename to its original file and part. These source packages are useful for subtle texture differences or additional pixel measurements. The five small phone batches each contain one original and four matched pairs.\n'
+    for x in load(ROOT/'native-packets.json'):readme+=f"\n- Part {x['number']:02d}, Screen {x['screen']}, {x['scope']}.\n"
+    meta=[{'review_filename':r['name'],'file_in_compact_package':r['canonical'],'source_part':Path(packs[r['nativeCanonical']]).name,'file_in_native_part':r['nativeCanonical']} for r in rows]
+    docs={'README_FIRST.md':readme,'FIVE_SCREEN_REPAIR_PLAN.md':(ROOT/'repair-plan.md').read_bytes(),'FILE_INDEX.csv':img_index(rows,chosen,'compact'),'SOURCE_PARTS.csv':csvbytes(list(meta[0]),meta)}
+    for s in IDS:docs.update(stage_reports(s))
+    cert=archive(OUT/'Rainbow_Visual_Images.zip',files,docs)
+    cert['imageRecords']=len(rows);cert['qualityCounts']=dict(totals);cert['primaryNativePairs']=70;cert['byScreen']=dict(Counter(r['screen'] for r in chosen.values()))
+    Path('image-package.json').write_text(json.dumps(cert,indent=2))
+    print('Image package',len(files),cert['bytes'],flush=True)
+def videos():
+    original=load(ROOT/'original-videos.json');hd=sum([load(ROOT/('hd-checked-'+s+'.json')) for s in IDS],[])
+    rows=hd+original; chosen={r['name']:r for r in rows if r['name']==r['canonical']}
+    files={name:Path(r['file']) for name,r in chosen.items()}
+    intro=f'This Android video upload contains {len(hd)} high-detail paired entrance-to-exit rides and {len(original)} saved supporting recordings. Start with the two full-journey MP4s at the top of each screen folder. All clips are H.264. The supporting clips preserve their original dimensions, timing and bytes.'
+    readme=guide('videos',intro)
+    docs={'README_FIRST.md':readme,'FIVE_SCREEN_REPAIR_PLAN.md':(ROOT/'repair-plan.md').read_bytes()}
+    items=[]
+    for r in rows:
+        items.append({'file_inside_this_zip':r['name'],'screen':r['screen'],'status':r['status'],'description':r['description'],'pixels':str(r['width'])+'x'+str(r['height']),
+                      'fps':r['r_frame_rate'],'seconds':r['duration'],'frames':r['nb_frames'],'codec':r['codec_name'],'pixel_format':r['pix_fmt'],
+                      'source_branch':r['branch'],'source_commit':r['commit'],'evidence_commit':r.get('evidence_commit',''),'source_path':r['source'],'source_clip_sha256':r.get('originalClipSHA256',r['sha256']),
+                      'packaged_sha256':r['sha256'],'disposable_trial':r.get('temporary_trial',False)})
+    docs['FILE_INDEX.csv']=csvbytes(list(items[0]),items)
+    allmarks=[dict(screen=s,**r) for s,vs in load(ROOT/'bookmarks.json').items() for r in vs]
+    docs['VIDEO_TIMESTAMPS.csv']=csvbytes(list(allmarks[0]),allmarks)
+    for sid in IDS:
+        docs.update(stage_reports(sid))
+        checked=[{'file':r['name'],'sourceOriginalSHA256':r['originalClipSHA256'],'hdSHA256':r['sha256'],
+                  'identicalRecordedFields':r['conditionsMatchedAcrossEveryFrame'],'frames':int(r['nb_frames']),
+                  'compositionComparedToPreviousCapture':r['comparisonToSavedRide']} for r in hd if r['screen']==sid]
+        docs['Screen_'+sid+'/Reports/HD_REPLAY_VERIFICATION.json']=jsonbytes(checked)
+    cert=archive(OUT/'Rainbow_Gameplay_Videos.zip',files,docs)
+    cert['hdRides']=len(hd);cert['savedClips']=len(original);cert['framesInTenHDPairs']=sum(int(r['nb_frames']) for r in hd)
+    for r in hd:
+        dst=OUT/'Individual_Videos'/Path(r['name']).name;link_copy(Path(r['file']),dst)
+        r['directPath']=dst.relative_to(OUT).as_posix()
+    Path('individual-videos.json').write_text(json.dumps([{k:r[k] for k in ('screen','stem','status','directPath','sha256','bytes','duration')} for r in hd],indent=2))
+    Path('video-package.json').write_text(json.dumps(cert,indent=2))
+    print('Video package',len(files),cert['bytes'],flush=True)
+if __name__=='__main__':
+    {'native':native,'images':images,'videos':videos}[sys.argv[1]]()

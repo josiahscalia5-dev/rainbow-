@@ -1,0 +1,51 @@
+from collections import defaultdict
+from pathlib import Path
+import json,hashlib,io
+from PIL import Image
+import numpy as np
+rows=json.load(open('final-images.json'))
+sha=defaultdict(list)
+for r in rows:sha[r['sha256']].append(r)
+physical=[r for r in rows if r['name']==r['canonical']]
+groups=defaultdict(list)
+for r in physical:
+    if r['section']=='Current':groups[(r['screen'],r['pose'])].append(r)
+def same_compression(r,q):
+    out=Path('image-cache')/r['sha256']/('q'+str(q)+'s0.jpg')
+    with Image.open(r['file']) as im:
+        ref=im.convert('RGB')
+        if not out.exists():ref.save(out,'JPEG',quality=q,subsampling=0,optimize=True,progressive=True)
+        a=np.asarray(ref,dtype=np.int16)
+    with Image.open(out) as im:b=np.asarray(im.convert('RGB'),dtype=np.int16)
+    x=np.abs(a-b);hist=np.bincount(x.reshape(-1),minlength=256)
+    meta=dict(share=str(out.resolve()),shareSize=out.stat().st_size,shareHash=hashlib.sha256(out.read_bytes()).hexdigest(),quality='JPEG quality '+str(q)+' 4:4:4',meanError=round(float(x.mean()),4),p99Error=int(np.searchsorted(np.cumsum(hist),x.size*.99)))
+    for v in sha[r['sha256']]:v.update(meta)
+changed=0
+for pair in groups.values():
+    assert len(pair)==2
+    qs=[int(x['quality'].split()[2]) for x in pair]
+    if qs[0]==qs[1]:continue
+    for r in pair:
+        if int(r['quality'].split()[2])!=min(qs):same_compression(r,min(qs));changed+=1
+rename={}
+def use_exact(items):
+    keys={r['sha256'] for r in items}
+    for key in keys:
+        for r in sha[key]:
+            old=r['name']
+            r.update(share=r['file'],shareHash=key,shareSize=r['rawSize'],quality='original bytes',meanError=0.,p99Error=0,ext=r['rawExt'])
+            r['name']=str(Path(old).with_suffix('.'+r['rawExt']));rename[old]=r['name']
+    for r in rows:r['canonical']=rename.get(r['canonical'],r['canonical'])
+def total():return sum(r['shareSize'] for r in rows if r['canonical']==r['name'])
+crop=[r for r in physical if r['section']=='Diagnostics' and 'STEERING_DETAIL' in r['stem']]
+assert len(crop)==4
+use_exact(crop)
+exactpairs=[]
+for k in [('07','hard-right'),('05','hard-left')]:
+    pair=groups[k];keys={r['sha256'] for r in pair}
+    extra=sum(x['rawSize']-x['shareSize'] for x in physical if x['sha256'] in keys)
+    if total()+extra<199_120_000:
+        use_exact(pair);exactpairs.append(k)
+assert all(p[0]['quality']==p[1]['quality'] for p in groups.values())
+Path('final-images.json').write_text(json.dumps(rows))
+print('Matched compression for',len(groups),'pairs, adjusted',changed,'source frames; exact diagnostic crops',len(crop),'full exact moving pairs',exactpairs,'image payload bytes',total())

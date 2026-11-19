@@ -1,0 +1,60 @@
+from pathlib import Path
+import hashlib, json, subprocess, io
+from collections import defaultdict
+
+root=Path.cwd()
+github=['git','-C',str(root/'history.git')]
+heads={r.split()[1].removeprefix('refs/heads/'):r.split()[0] for r in (root/'remote-heads.txt').read_text().splitlines()}
+saved=json.load(open('/workspace/library-files/Rainbow-Reconstruction-Experiments/verification.json'))['protectedRefs']['protectedBranches']
+requests=[]
+def tree(branch, prefix):
+    data=subprocess.check_output(github+['ls-tree','-rz',branch,'--',prefix])
+    return [(p.decode(),h.decode()) for e in data.split(b'\0') if e for m,p in [e.split(b'\t',1)] for _,_,h in [m.split()]]
+def add(kind,sid,branch, entries):
+    requests.extend([dict(group=kind,screen=sid,branch=branch,commit=heads[branch],path=p,blob=h) for p,h in entries])
+for key in ['04','04r','05','06','07','08']:
+    prefix='qa/match/'+key[:2]+'/r17/'
+    br=saved[key]['branch']
+    hits=[(p,h) for p,h in tree(br,prefix) if p.lower().endswith(('.png','.jpg','.jpeg','.mp4','.webm')) and 'approved.png' not in p.lower().split('/')[-1] and 'collage' not in p.lower()]
+    add('specialist-'+key,key[:2],br,hits)
+br=saved['05']['branch']
+add('water-reference','05',br,tree(br,'references/water/05_water_isolated_original.png'))
+for name,branch,path in [
+    ('liquid','codex/screen05-water-hfb8p0-20261116','qa/codex-water'),
+    ('study','codex/screen05-approved-water-study-20261116','qa/approved-water-study'),
+    ('fit','codex/screen05-reference-fit-20261116','qa/reference-fit')]:
+    hits=[]
+    for p,h in tree(branch,path):
+        inner=p.removeprefix(path+'/')
+        if '/tests/' in p or inner=='APPROVED.png':continue
+        if p.lower().endswith(('.png','.jpg')) or inner in ['measure-final.json','tests/final-source-provenance.json']:hits.append((p,h))
+    if name=='study':hits.extend(tree(branch,path+'/tests/final-source-provenance.json'))
+    add('old05-'+name,'05',branch,hits)
+branch='codex/screen05-water-experiment-20261116'
+hits=[(p,h) for p,h in tree(branch,'qa/pilot05/wave12/') if (('/glow/' in p and p.endswith('.png')) or ('/factors/' in p and p.endswith('/05.png')) or p.endswith('/tests/default_after/05.png'))]
+add('old05-glow','05',branch,hits)
+local=root/'pulled';local.mkdir(exist_ok=True)
+byh=defaultdict(list)
+for r in requests:byh[r['blob']].append(r)
+objects=local/'blobs';objects.mkdir(exist_ok=True)
+missing=[]
+for h,vals in byh.items():
+    if (objects/h).exists():continue
+    missing.append(h)
+if missing:
+    prefetch=subprocess.run(github+['-c','fetch.negotiationAlgorithm=noop','fetch','-q','--no-tags','--no-write-fetch-head','--filter=blob:none','origin','--stdin'],input=('\n'.join(missing)+'\n').encode(),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    print('Batch prefetch',prefetch.returncode,len(missing),'blobs',flush=True)
+for h,rs in byh.items():
+    out=objects/h
+    if not out.exists():
+        raw=subprocess.check_output(github+['cat-file','blob',h])
+        assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()==h
+        if raw.startswith(b'version https://git-lfs.github.com/spec/v1'):
+            expected=raw.decode().split('oid sha256:')[1].split()[0]
+            raw=subprocess.check_output(github+['lfs','smudge','--',rs[0]['path']],input=raw,stderr=subprocess.PIPE)
+            assert hashlib.sha256(raw).hexdigest()==expected
+        out.write_bytes(raw)
+    sha=hashlib.sha256(out.read_bytes()).hexdigest()
+    for r in rs:r['file']=str(out);r['sha256']=sha
+(root/'pulled-index.json').write_text(json.dumps(requests,indent=2))
+print('Retrieved',len(requests),'authenticated evidence paths,',len(byh),'distinct source blobs')
