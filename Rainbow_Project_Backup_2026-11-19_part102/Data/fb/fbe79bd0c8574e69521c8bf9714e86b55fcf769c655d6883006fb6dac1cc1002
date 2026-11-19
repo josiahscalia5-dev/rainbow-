@@ -1,0 +1,344 @@
+# Subagent agent-ae5de932c09c31983 — session 94cf04e3-ba8e-597b-bef0-28aeffba4499
+
+### 🧑 User — 2026-11-16T01:43:11.146Z
+
+You are the washer-environment-modeler for RAINBOW (repo /home/user/rainbow-), a real-time 3D Three.js + TypeScript portrait mobile game. This is wave 8 of the Screen 05 visual pilot: your SECOND pass after wave 7, which you finished (it06 kept). Work ONLY in your own code sections and evidence folder.
+
+READ FIRST (in this order): `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE8.md` (assignment + rules), the "Owners" and "Rules" sections of `qa/pilot05/COORDINATION_WAVE6.md`, your own wave-7 notes `qa/pilot05/wave7/environment/NOTES.md` (especially "Measured" and "Left undone"), and `qa/pilot05/REQUESTS.md`.
+
+GOAL: make the Screen 05 tunnel environment match the APPROVED image `references/05_flow_into_the_current.png` (864×1536, immutable; it always beats the Marble world). Baseline of the current tree: `qa/pilot05/wave8/baseline/05.png`. Optional modelling/texture references (secondary): Marble splat analysis `qa/worldlabs/05/pilot/{draft,full}/analysis/bay_unrolled.png`, `wall_unrolled.png`, and the full-world panorama `qa/worldlabs/05/pilot/full/pano.png`.
+
+YOUR CODE (Edit tool only; never rewrite a shared file): `src/world/materials.ts` (all EXCEPT `farRiverMaterial`), `src/world/tube.ts` (all EXCEPT `class ForcedTunnel`), `src/world/environment.ts` (all EXCEPT the block starting at `// ---- 05 far tunnel` and the coordinator's STAGE ANCHORS block), `src/render/env.ts`, `src/render/grade.ts`. Camera/course/game files are LOCKED.
+
+TASKS (from your "Left undone" list + the coordinator's whole-frame read), in priority order:
+1. RINGS: live rings read as dim salmon/copper matte bands; in the approved image they READ as bright, glowing yellow-gold with dense bright marquee bulbs and a halo. Your wave-7 measurement found the approved ring body between spots is actually reddish-copper (197,79,77), so the gold impression probably comes from bulb density/brightness, the white-yellow highlight line and glow — measure before changing body hue, and judge on the whole frame.
+2. WALLS: too VIOLET (violet share 70–80 % vs ref 29–46 %) and dark; approved walls are luminous magenta-pink metal with regular capsule-slot rows and strong lengthwise white-pink streaks (yours 2.0–3.6 % vs ref 5.1 %). Try a warmer F0 between '#d49cf4' and the old '#f29ad6', or magenta lit panels.
+3. LIDS: live lids read as flat plank-like slabs; approved = glossy rounded copper-gold half-dome pucks seen at an angle, highlight on top (V std 0.15 vs ref 0.22). Fix the SHAPE first, then shading.
+4. VP CORE (your section): now too small/orange; approved = warm white-gold light with the rings receding evenly into it.
+5. Near gold frame corners: gold share 32/33/43 % vs ref 43/50/45 % (BL/BR/bottom arc) — tune only after 1–4.
+
+The path-camera-transition-engineer runs IN PARALLEL on the far tunnel block (far river, far coins, far ring DEPTHS via ringDv, far foam). Never edit that block. It may ask you (via REQUESTS.md, prefixed `wave8`) to drop/flatten the real ring at sF05 — read REQUESTS.md between iterations and answer there. Your ring/lid MATERIALS (gold05/lidMat05/glowT05) are also used by its far rings, so keep them sign-robust.
+
+PROCESS: write `qa/pilot05/wave8/environment/NOTES.md` FIRST (5-line plan), update it after every capture. Capture: `timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/environment/itNN`. Report: `python3 -I scripts/screen_report.py 05 qa/pilot05/wave8/environment/itNN PREV=qa/pilot05/wave8/baseline/05.png NOW=qa/pilot05/wave8/environment/itNN/05.png` — Read the side-by-side PNG every time. At most 6 iterations; revert anything that does not look closer and change approach rather than nudging constants. Budget for the whole 05 frame: ≤130 draw calls, ≤650k tris. Note: the far-river/tunnel band also moves with path-camera's parallel edits — attribute changes carefully (isolation captures in a scratch dir are fine).
+
+FINISH: `npx tsc --noEmit` passes; regression capture `timeout 600 node scripts/capture.mjs 04 06 07 08 --out=qa/pilot05/wave8/environment/regress` vs `qa/pilot05/wave8/baseline/NN.png`: 04/07/08 pixel-identical below the HUD unless your shared materials are meant to affect them (then look and say so); 06 keeps its stage anchors. Beware: three's UUIDs use Math.random, so creating objects mid-function can shift later canvas textures (you hit this in wave 7 — build new objects last).
+
+RULES: no git commits or pushes (a 5-minute autosave does that), never touch `references/` or `character_references/`, no paid generation, no secrets, no invented fidelity percentages.
+
+RETURN: what you changed (file + function), each iteration's metrics (whole-frame mad, tunnel+VP band, your measured windows: ring colour, wall violet/spec share, lid V std, VP, near-frame gold share), what you kept or reverted, tsc + regression results, and what is left undone.
+
+### 🤖 Claude — 2026-11-16T01:43:12.005Z
+
+I'll start by reading the required documents in order.
+
+### 🤖 Claude — 2026-11-16T01:43:13.111Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/COORDINATION_WAVE8.md && echo ---- && ls qa/pilot05/ qa/pilot05/wave8 qa/pilot05/wave8/* 2>/dev/null | head -50", "description": "Read wave 8 coordination file and list folders"}`
+
+### 🧑 User — 2026-11-16T01:43:13.140Z
+
+> ↩︎ result: # Screen 05: wave 8 (transfer session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
+> 
+> Started 2026-11-16 ~01:45 UTC. Branch contains every earlier branch (incl. account 8's `ccr-4f6c3e0e-5kxgr0` to
+> `0fe0b0c`). Wave 7 (water, foam, environment) is DONE and kept. All owners/rules of `COORDINATION_WAVE6.md` still
+> apply (strict file ownership, Edit tool only, NOTES first, no commits, no paid generation, no invented %).
+> 
+> ## Verified at start
+> * LFS 24/24 (fresh-clone download test), refs 12/12, 10 agents, `tsc` OK, continuity ok (gaps 0, drop 61.19),
+>   gameplay test pass (8/8 checks, plunge 61.41, errors []).
+> * Baseline: `qa/pilot05/wave8/baseline/{04,05,06,07,08}.png` (05: 87 calls, 634,961 tris; budget ≤130 / ≤650k).
+>   Captures render with the game's default bloom (UnrealBloom 0.2 / threshold 0.94 — weak; coordinator-owned, not
+>   changed this wave).
+> 
+> ## Coordinator's whole-frame read (approved vs baseline, ranked)
+> | # | Element | Live (baseline) | Approved | Owner |
+> |---|---|---|---|---|
+> | 1 | Far river y≈420–560 | straight pink/blue/violet striped WEDGE into the VP (reads as 06) | narrow cyan core with pink bands still winding in S-bends right into the VP | path-camera |
+> | 2 | Coins to the …[+2785 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:14.211Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,400p' qa/pilot05/COORDINATION_WAVE6.md | grep -n -A60 -i '## Owners' | head -120", "description": "Read Owners and Rules from wave 6 coordination"}`
+
+### 🧑 User — 2026-11-16T01:43:14.235Z
+
+> ↩︎ result: 39:## Owners (STRICT — edit only your own files/sections; use the Edit tool, never rewrite a shared file with Write)
+> 40-| Specialist | Owns |
+> 41-|---|---|
+> 42-| washer-environment-modeler | `src/world/materials.ts` (all EXCEPT `farRiverMaterial`), `src/world/tube.ts` (all EXCEPT `class ForcedTunnel`), `src/world/environment.ts` (all EXCEPT the block that starts at `// ---- 05 far tunnel` and builds farWall/farRiver/farRings/farLids/glow), `src/render/env.ts`, `src/render/grade.ts`, `tools/blender/*` except `tools/blender/camera_lock_05.py` |
+> 43-| path-camera-transition-engineer | `class ForcedTunnel` in `tube.ts`, the `// ---- 05 far tunnel` block in `environment.ts`, `farRiverMaterial` in `materials.ts`, new files `src/world/far05*.ts` |
+> 44-| water-fx-specialist | `src/vfx/waterRibbon.ts`, `src/vfx/glsl.ts`, `docs/vfx/*` |
+> 45-| foam-bubbles-particles | `src/vfx/foam.ts`, `src/vfx/bubbles.ts`, `src/vfx/riderSplash.ts`, `src/vfx/spray.ts`, `src/vfx/index.ts` |
+> 46-| coordinator (main session) | camera (LOCKED), `src/game/*`, `src/world/course.ts`, `src/gameplay/*`, `scripts/*`, `tools/blender/camera_lock_05.py`, tests, reports |
+> 47-| benny-character-artist | not running this wave: Ben …[+2241 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:15.013Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave7/environment/NOTES.md; echo ----; cat qa/pilot05/REQUESTS.md", "description": "Read wave 7 notes and requests file"}`
+
+### 🧑 User — 2026-11-16T01:43:15.034Z
+
+> ↩︎ result: # wave 7 · washer-environment-modeler · Screen 05 (executes the wave-6b plan)
+> 
+> ## Plan (written first, before any capture)
+> 1. RINGS: new `withBandShading` (materials.ts) on `gold05` (environment.ts, real + far rings): stylised cross-section from the
+>    band's object-space axial/radial coordinate — dark copper-rose lip contours, unclipped orange-gold body, pale white-yellow
+>    highlight line on the crown, dark groove, bright lip line, analytic marquee spots (28/turn); far rings blend warm (no pale-yellow "target").
+> 2. WALLS (`wall05` only): drop the corrugation/bevel relief that bends the strip reflections into the "marble swirl", faint shaded slot lips
+>    (no pink dotted outline), plumper shorter capsule slots, more violet base, brighter straight white-pink lengthwise streaks.
+> 3. LIDS (`lidMat05` + `lid05`): rose-copper half-disc pucks with `withLidShading` (white highlight on the rim's top edge, thin orange edge
+>    lines, lighter underside), bigger/more tilted, placed just camera-side of each ring like the reference.
+> 4. VP: `glow05` orange and earlier (warm throat r<50 px, no purple gaps), `tunnelEndGlowMaterial` smaller pale core + orange halo.
+> 5. Only if 1–3 look clearly closer: …[+11200 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:16.239Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-16T01:43:16.251Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:43:16.645Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/baseline/05.png"}`
+
+### 🧑 User — 2026-11-16T01:43:16.701Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:43:18.682Z
+
+Writing my plan to NOTES first, as required.
+
+### 🤖 Claude — 2026-11-16T01:43:24.288Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/wave8/environment && cat > /home/user/rainbow-/qa/pilot05/wave8/environment/NOTES.md <<'EOF'\n# wave 8 · washer-environment-modeler · Screen 05 (second pass after wave 7 it06)\n\n## Plan (written first, before any capture)\n1. RINGS (gold05/withBandShading, sign-robust): measure ref ring #1/#2 bulb pitch/size/brightness + highlight line + halo first;\n   then denser, bigger, brighter warm-white bulbs with a yellow halo + a brighter white-yellow crown line; body hue only if measured.\n2. WALLS (wall05): warmer F0/base toward magenta-pink (bet …[+846 chars]`
+
+### 🧑 User — 2026-11-16T01:43:24.333Z
+
+> ↩︎ result: 65cafe8 wave 8 started: path-camera + environment specialists (brief qa/pilot05/COORDINATION_WAVE8.md)
+> a6116a0 autosave: Rainbow 2026-11-16 01:42 UTC
+> ef2aba9 autosave: Rainbow 2026-11-16 01:39 UTC
+> 7fa616c autosave: Rainbow 2026-11-16 01:39 UTC
+> 7ff2a69 autosave: Rainbow 2026-11-16 01:38 UTC
+> ?? qa/pilot05/wave8/environment/
+
+### 🤖 Claude — 2026-11-16T01:43:26.152Z
+
+> 🔧 **Bash** `{"command": "wc -l src/world/materials.ts src/world/tube.ts src/world/environment.ts src/render/env.ts src/render/grade.ts && grep -n \"export function\\|export const\\|^function\\|^const\\|^export class\\|^class\" src/world/materials.ts | head -80", "description": "List sizes and top-level symbols of owned files"}`
+
+### 🧑 User — 2026-11-16T01:43:26.202Z
+
+> ↩︎ result: 867 src/world/materials.ts
+>    764 src/world/tube.ts
+>    797 src/world/environment.ts
+>     60 src/render/env.ts
+>     26 src/render/grade.ts
+>   2514 total
+> 72:const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange; uniform vec3 uMidTint; uniform vec3 uMidRange;
+> 82:const FG_VIRTUAL_VERT_PARS = `#ifdef FG_VIRTUAL
+> 85:const FG_VIRTUAL_VERT = `#ifdef FG_VIRTUAL
+> 89:const FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, mt); totalEmissiveRadiance *= 1.0 - mt * 0.5;
+> 92:function farGlowUniforms(g: FarGlow) {
+> 105:export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string, virtualDepth = false): T {
+> 152:export function withTubeStrips<T extends THREE.MeshStandardMaterial>(mat: T, s: TubeStrips, source: 'attribute' | 'instance', key: string): T {
+> 205:const lin3 = (r: number, g: number, b: number) => new THREE.Vector3(r, g, b);
+> 228:export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> 327:export function withLidShading<T extends THREE.MeshStandardMaterial>(mat: T, key: string): T {
+> 386:export fun …[+1207 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:27.003Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts"}`
+
+### 🧑 User — 2026-11-16T01:43:27.134Z
+
+> ↩︎ result: 1	/**
+> 2	 * Washer-world materials: procedural perforated magenta metal (round holes for drums, circumferential
+> 3	 * slots for tunnels), thick reflective gold, chrome, glass — all PBR (MeshStandardMaterial) so they pick
+> 4	 * up the candy PMREM environment, with shader patches for the perforations and glow.
+> 5	 */
+> 6	import * as THREE from 'three';
+> 7	
+> 8	export interface PerforatedOptions {
+> 9	  /** base metal colour */
+> 10	  color?: THREE.ColorRepresentation;
+> 11	  /** colour of the hole interiors */
+> 12	  holeColor?: THREE.ColorRepresentation;
+> 13	  /** 0 = round holes (drum), 1 = slots elongated along u (tunnel rings) */
+> 14	  slot?: number;
+> 15	  /** pattern repeats: holes around u (per 0..1) and per uv-unit along v */
+> 16	  repeatU?: number;
+> 17	  repeatV?: number;
+> 18	  /** hole size relative to its cell (0..1) */
+> 19	  holeSize?: number;
+> 20	  emissive?: THREE.ColorRepresentation;
+> 21	  emissiveIntensity?: number;
+> 22	  metalness?: number;
+> 23	  roughness?: number;
+> 24	  side?: THREE.Side;
+> 25	  /** bright stripe highlights running along v (tunnel light streaks) */
+> 26	  streaks?: number;
+> 27	  /** number of procedural lengthwise streaks around u (default 9) */
+> 28	  streakCount?: number;
+> 29	  /**
+> 3 …[+47765 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:27.782Z
+
+Now the environment file.
+
+### 🤖 Claude — 2026-11-16T01:43:28.143Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts"}`
+
+### 🧑 User — 2026-11-16T01:43:28.254Z
+
+> ↩︎ result: 1	/**
+> 2	 * Builds the whole washer world in absolute coordinates around the master course.
+> 3	 * Drum A (01–02) → chute → whirlpool basin room (03) → gold ring pipe (04) → perforated current tube
+> 4	 * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> 5	 */
+> 6	import * as THREE from 'three';
+> 7	import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> 8	import { Course, WORLD, funnelY } from './course';
+> 9	import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, type FarGlow, type TubeStrips } from './materials';
+> 10	import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 11	import { STAGE_CAM } from '../game/cameraRig';
+> 12	import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
+> 13	import { buildTowel, TowelMesh } from './towel';
+> 14	
+> 15	export interface Environment {
+> 16	  group: THREE.Group;
+> 17	  update …[+49188 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:30.082Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function\\|export class\\|^function\\|^class\\|^export interface\\|^interface\" src/world/tube.ts", "description": "List symbols in tube.ts"}`
+
+### 🧑 User — 2026-11-16T01:43:30.111Z
+
+> ↩︎ result: 13:export interface Frame { pos: THREE.Vector3; tan: THREE.Vector3; up: THREE.Vector3; right: THREE.Vector3 }
+> 15:export interface TubePath {
+> 22:export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0.9): TubePath {
+> 30:export function straightTubePath(
+> 144:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 149:export interface TubeGeoOptions {
+> 168:export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
+> 229:export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments = 96): THREE.BufferGeometry {
+> 260:export function roundBandGeometry(height = 0.095, width = 0.78, lipHeight = 0.045, lipWidth = 0.26, groove = 0.07, segments = 96): THREE.BufferGeometry {
+> 290:export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
+> 295:export function buildRings(
+> 309:export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
+> 353:export function buildWallLids(
+> 410:export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: …[+274 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:31.723Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 225, "limit": 235}`
+
+### 🧑 User — 2026-11-16T01:43:31.744Z
+
+> ↩︎ result: 225	 * and pokes through the stream where it hugs the wall (06 arch).
+> 226	 * Lathe around local Z; radial values are fractions of the tube radius, axial values are world units
+> 227	 * (the instance scales z by 1). Interior corners are duplicated so every facet keeps a crisp normal.
+> 228	 */
+> 229	export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments = 96): THREE.BufferGeometry {
+> 230	  const w = width / 2;
+> 231	  const d = depth;
+> 232	  const lipW = Math.min(0.16, width * 0.15), groove = Math.min(0.07, width * 0.06);
+> 233	  // traversed from +z to -z so LatheGeometry's faces/normals point INWARD (toward the tunnel axis)
+> 234	  const prof: [number, number][] = [
+> 235	    [1.03, w], [1 - d * 0.5, w], // far side (hidden from the rider)
+> 236	    [1 - d, w - 0.05], // far chamfer
+> 237	    [1 - d, -w + lipW + groove + 0.02], // the flat band
+> 238	    [1 - d * 0.55, -w + lipW + groove * 0.5], // dark groove (recessed toward the wall)
+> 239	    [1 - d - lip, -w + lipW], [1 - d - lip, -w + 0.05], // raised lip
+> 240	    [1 - d * 0.35, -w], // lip's camera-facing side → thin bright contour
+> 241	    [1.03, -w],
+> 242	  ];
+> 243	  const pts: THREE.Vector2[] = [];
+> 244	  prof.forEach(([x,  …[+12388 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:34.633Z
+
+> 🔧 **Bash** `{"command": "ls -R qa/pilot05/wave7/environment | head -60; ls scripts/ | head -50", "description": "List wave 7 evidence and scripts"}`
+
+### 🧑 User — 2026-11-16T01:43:34.664Z
+
+> ↩︎ result: qa/pilot05/wave7/environment:
+> NOTES.md
+> it01
+> it02
+> it03
+> it04
+> it05
+> it06
+> regress
+> 
+> qa/pilot05/wave7/environment/it01:
+> 05.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+> 
+> qa/pilot05/wave7/environment/it02:
+> 05.png
+> 05_highlight_IT01.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_IT01.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+> 
+> qa/pilot05/wave7/environment/it03:
+> 05.png
+> 05_highlight_IT02.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_IT02.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+> 
+> qa/pilot05/wave7/environment/it04:
+> 05.png
+> 05_highlight_IT03.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_IT03.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+> 
+> qa/pilot05/wave7/environment/it05:
+> 05.png
+> 05_highlight_IT04.png
+> 05_highlight_NOW.png
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export- …[+270 chars]
+
