@@ -1,5 +1,5 @@
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index a7a0dfd..ab926ed 100644
+index a7a0dfd..f30eb93 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -98,6 +98,14 @@ uniform float uPanel;
@@ -55,7 +55,7 @@ index a7a0dfd..ab926ed 100644
 +    if (inside || (stOn > 0.5 && edge > 0.0)) {
        float vis = 1.0;
 +      vec2 uvF = uv; // r18 m06st: where the plate is read (moved up to the painted wall above an occluding crest)
-+      float filled = 0.0;
++      float filled = 0.0, filledR = 0.0;
        if (uUseDepth > 0.5) {
          float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
          vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
@@ -76,11 +76,11 @@ index a7a0dfd..ab926ed 100644
 +        }
 +        // r18 m06st: on the river, the painted Benny's provisional fill (mask R) = the painted water just in front of his
 +        // base mirrored about the fill's lower edge (the hidden back half of his splash ring and ripple rings)
-+        if (stOn > 0.5 && uFloor > 0.5 && uUseMask > 0.5 && textureLod(uMask, uv, 0.0).r > 0.5) {
++        if (stOn > 0.5 && uFloor > 0.5 && uUseMask > 0.5 && hold > 0.0 && textureLod(uMask, uv, 0.0).r > 0.5) {
 +          for (int k = 1; k <= 160; k++) {
-+            vec2 u2 = uv - vec2(0.0, float(k) * 2.0 / uPjRes.y);
++            vec2 u2 = uv - vec2(0.0, float(k) * 2.0 / 1536.0);
 +            if (u2.y < 0.001) break;
-+            if (textureLod(uMask, u2, 0.0).r < 0.5) { uvF = clamp(2.0 * u2 - uv, 0.0005, 0.9995); filled = 1.0; break; }
++            if (textureLod(uMask, u2, 0.0).r < 0.5) { uvF = clamp(2.0 * u2 - uv, 0.0005, 0.9995); filledR = 1.0; break; }
 +          }
 +        }
        }
@@ -89,15 +89,17 @@ index a7a0dfd..ab926ed 100644
        // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
        // tunnel wall seen through the crest loop / beside the river) or Benny's blurry provisional fill (R), the floor
        // shows the painted-water tile as soon as the camera leaves the approved view (the approved view is unchanged)
-@@ -204,18 +254,24 @@ void main() {
+@@ -204,18 +254,27 @@ void main() {
          vec4 mk = texture2D(uMask, uv);
          float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
          float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
 -        w *= 1.0 - max(mk.r, mk.g) * away * inWater;
 +        if (stOn > 0.5) {
-+          // r18 m06st: the pale ghost of the painted Benny (his provisional fill) gives way to the painted water at once;
-+          // the painted wall seen through the crest loop stays until the hand-over
-+          w *= (1.0 - mk.r * smoothstep(0.01, 0.06, dAp) * inWater) * (1.0 - mk.g * (1.0 - hold) * inWater);
++          // r18 m06st: the pale ghost of the painted Benny (his provisional fill) gives way at once (to the mirrored painted
++          // water, or the river material where there is none); the painted wall seen through the crest loop stays until
++          // the hand-over
++          float rOff = filledR > 0.5 ? 1.0 - hold : smoothstep(0.01, 0.06, dAp);
++          w *= (1.0 - mk.r * rOff * inWater) * (1.0 - mk.g * (1.0 - hold) * inWater);
 +        } else w *= 1.0 - max(mk.r, mk.g) * away * inWater;
        }
        // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
@@ -115,11 +117,12 @@ index a7a0dfd..ab926ed 100644
 +      if (uRing > 0.5) w *= stOn > 0.5 ? hold : 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
 +      vec3 pl = texture2D(uPlate, uv).rgb;
 +      if (filled > 0.5) pl = mix(textureLod(uPlate, uvF, 0.0).rgb, pl, vis);
++      if (filledR > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
 +      t = mix(pc, pl, w);
      }
    }
    gl_FragColor = vec4(pjInverse(t), 1.0);
-@@ -329,6 +385,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -329,6 +388,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      uPjRes: { value: new THREE.Vector2(W, H) },
      uProjPos: { value: proj.position.clone() },
      uTime: { value: 0 },
@@ -129,7 +132,7 @@ index a7a0dfd..ab926ed 100644
    };
    const loadTile = async (name: string) => {
      const t = await loader.loadAsync(tex(`tile_${name}.png`));
-@@ -357,10 +416,19 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -357,10 +419,19 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      }
    }
    const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);

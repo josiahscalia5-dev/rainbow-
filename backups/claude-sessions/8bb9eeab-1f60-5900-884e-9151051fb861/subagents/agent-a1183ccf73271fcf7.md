@@ -880,3 +880,37 @@ Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
 
 > ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-19T02:40:32.361Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"vec2 uvF = uv\" -A 75 src/world/match06.ts | head -90", "description": "Show the current projection block"}`
+
+### 🧑 User — 2026-11-19T02:40:32.394Z
+
+> ↩︎ result: 219:      vec2 uvF = uv; // r18 m06st: where the plate is read (moved up to the painted wall above an occluding crest)
+> 220-      float filled = 0.0;
+> 221-      if (uUseDepth > 0.5) {
+> 222-        float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
+> 223-        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+> 224-        // r18 m06st: a tunnel / ring fragment the approved view never saw because the river crest (much nearer) hid it
+> 225-        // (the camera rose over the crest): the painted wall just above the crest in the approved picture, mirrored
+> 226-        // about the crest's edge (first projector pixel whose depth is the tunnel again and whose painted pixel is wall,
+> 227-        // mask G) — the slotted wall pattern continues down instead of one edge pixel smeared into a streak
+> 228-        if (stOn > 0.5 && uStM > 0.5 && hold > 0.0 && zs < 0.8 * zf) {
+> 229-          for (int k = 1; k <= 96; k++) {
+> 230-            vec2 u2 = uv + vec2(0.0, float(k) * uStK);
+> 231-            if (u2.y > 0.999) break;
+> 232-            float z2 = linZ(textureLod(uDepth, u2, 0.0).r);
+> 233-            if (z2 > 0.8 * zf && textureLod(uMask, u2, 0.0).g > 0.5) {
+> 234-            …[+3648 chars]
+
+### 🤖 Claude — 2026-11-19T02:40:43.785Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\nold_start=s.index(\"        // r18 m06st: on the river, the painted Benny's provisional fill (mask R)\")\nold_end=s.index(\"      t = mix(pc, pl, w);\\n\")+len(\"      t = mix(pc, pl, w);\\n\")\nnew='''        // r18 m06st: on the river, the painted Benny's provisional fill (mask R) = the painted water just in front of his\n        // base mirrored about the fill's lower edge (the hidden back half of his splash ring and ripple rings)\n        if (stOn > 0.5 && uFloor > 0.5 && uUseMask > 0.5 && h …[+2826 chars]`
+
+### 🧑 User — 2026-11-19T02:40:43.872Z
+
+> ↩︎ result: 220:      float filled = 0.0, filledR = 0.0;
+> 245:            if (textureLod(uMask, u2, 0.0).r < 0.5) { uvF = clamp(2.0 * u2 - uv, 0.0005, 0.9995); filledR = 1.0; break; }
+> 261:          float rOff = filledR > 0.5 ? 1.0 - hold : smoothstep(0.01, 0.06, dAp);
+> 276:      if (filledR > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
+

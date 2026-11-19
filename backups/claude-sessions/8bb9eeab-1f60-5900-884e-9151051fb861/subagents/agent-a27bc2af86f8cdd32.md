@@ -1426,3 +1426,7 @@ Pushed and verified. Now the report to main.
 > 83	uniform vec2 uAng;        // M2 '?m07ang=1': view-vs-projector angle cosines (full plate above x, tile below y); x < 0 = off
 > 84	uniform float uGoldLit;   / …[+13315 chars]
 
+### 🤖 Claude — 2026-11-19T02:40:34.696Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/nf1 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07nearf=1\" && node tools/match07/audit_r18.mjs 07 $S \"$K\" f06_forward6u,f10_forward10u,f20_forward20u,s_left_hard,s_right_hard 2>&1 | grep -E \"^07|error\" | head", "description": "Render the step-4 draft at level-stretch shots", "timeout": 900000}`
+

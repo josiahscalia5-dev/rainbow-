@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18410,
-   "sha256": "75a6dd911c3e9f7bae49c895e75d07b71f0ba530711f8d232956ceff9a3d3305"
+   "sha256": "bad2f9acd503b4f578f209e789681a6a1f6bd7e8d0045007f5a025eaeed802ac"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1099,7 +1099,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/INFO.json",
    "bytes": 506,
-   "sha256": "0e8ac8344aeab1189d123e06b48be8396fa9d6b1f2fa9ff31db21d415ffb8695"
+   "sha256": "f118026fd477157eed138cb680ba8a5892408e3420cd9c262ac44a020704bd1b"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/tracked.patch",
@@ -1174,7 +1174,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c18/INFO.json",
    "bytes": 486,
-   "sha256": "a9be10e2156b40c8c067bae03fcecb79fc7d73e8fccc404b519352c6e19f0c27"
+   "sha256": "d6ad185f495ed0872f16883f63dd541f58f7ceece7f912719af635d43b3e2955"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1519,7 +1519,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/INFO.json",
    "bytes": 477,
-   "sha256": "53df38527bb73d4f250b02b165c550b0ff5e14bcd02e6c1e768ba69744763369"
+   "sha256": "f7f8f183626f742ea52150766442f7e916e25414f3bac3b07a076f43db5f7412"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -1564,12 +1564,12 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/INFO.json",
    "bytes": 536,
-   "sha256": "a400aed2552e2b21a689b2ba0cb417a95dc2eb9aa526d371097060fd5d752e4b"
+   "sha256": "8dd1888ab07c7dadc12ecc2416f925a13926e1faa19055d181f32a6aecc6a2ff"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/tracked.patch",
-   "bytes": 8767,
-   "sha256": "135fae2c9134ff95066519ac7e86811ae1eed5918b8de0a452e056d561e366ac"
+   "bytes": 9616,
+   "sha256": "a6aafda64d2dfdb1a08ae0aaaef266dcb30788bb1239632f1de2fd7ec58e11b3"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/untracked/tools/match06/r18_dbg.mjs",
@@ -1709,7 +1709,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/INFO.json",
    "bytes": 527,
-   "sha256": "d31df2db3fb6dd21680e2eab3f615fc09db564784e10ae31163d935849577b76"
+   "sha256": "b6bc522ffeb70ace78ab05ea83d28cae0fa507b33ce2b461a20280110a85af55"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/untracked/qa/match/07/r17/step4_nearf/NEW/motion.json",
