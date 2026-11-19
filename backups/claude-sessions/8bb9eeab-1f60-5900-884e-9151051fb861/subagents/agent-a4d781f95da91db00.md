@@ -1840,3 +1840,56 @@ The machine restarted; my step-7 edit is intact but uncommitted. I'll protect it
 > cmp_f10_forward10u.png
 > cmp_f20_forward20u.png
 
+### 🤖 Claude — 2026-11-19T18:09:43.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"m04river\\|m04_river\\|RIVER_VERT\\|aR'\" src/world/match04m4.ts | head -20", "description": "Locate river trough code"}`
+
+### 🧑 User — 2026-11-19T18:09:43.775Z
+
+> ↩︎ result: 15: *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+> 17: *  m04pink  — (round 9, with m04river) the broad pink / magenta swirl bands on both sides of the narrow cyan arrow lane.
+> 18: *  m04arr5  — (round 9, with m04river) the five glowing chevrons as painted: fat flat white-cyan bars nested one after
+> 38:  river: on('m04river'),
+> 393:/** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+> 397:const RIVER_VERT = /* glsl */ `
+> 878:  // `m04river`: the wide painted river trough inside the tunnel (world-anchored, replaces the flat ramp there)
+> 915:    g.setAttribute('aR', new THREE.Float32BufferAttribute(aR, 2));
+> 921:    const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+> 937:    const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
+> 938:    console.info('[match04] m04river', { xW, RY, XF });
+> 965:    // `m04foam2` (default with m04foam under m04river): irregular heaped clumps instead of evenly spaced rows
+> 1118:    const river = group …[+56 chars]
+
+### 🤖 Claude — 2026-11-19T18:09:46.470Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 393,430p src/world/match04m4.ts; sed -n 878,940p src/world/match04m4.ts; sed -n 1110,1130p src/world/match04m4.ts", "description": "Read river trough geometry and shader inputs"}`
+
+### 🧑 User — 2026-11-19T18:09:46.563Z
+
+> ↩︎ result: /** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+>  * the approved water design (tile_river3: pink swirl ribbons, cyan streams, foam edges) by arc length across the trough,
+>  * two offset samples blended by slow world-anchored noise (no visible 4.7 u repeat), flowing down the slide, and the
+>  * glowing chevron arrows drawn crisp (distance field) on the centre lane. */
+> const RIVER_VERT = /* glsl */ `
+> uniform mat4 uProjVP;
+> attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
+> varying vec4 vProj;
+> varying vec3 vL;
+> varying float vS;
+> void main() {
+>   vec4 wp = modelMatrix * vec4(position, 1.0);
+>   vProj = uProjVP * wp;
+>   vL = position;
+>   vS = aR.x;
+>   gl_Position = projectionMatrix * viewMatrix * wp;
+> }`;
+> const RIVER_FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAway;
+> uniform sampler2D uRiv;
+> uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
+> uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue alon …[+8258 chars]
+
