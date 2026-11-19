@@ -1,0 +1,46 @@
+from pathlib import Path
+import shutil
+p=Path.cwd();f=p/'games/04/src/world/match04m4.ts';s=f.read_text()
+def change(a,b):
+ global s
+ assert s.count(a)==1,a
+ s=s.replace(a,b)
+change('uniform sampler2D uRingTile; // tile_ring.png',"""#ifdef C X04_REFLECT_RIVER
+uniform sampler2D uReflectedRiver;
+uniform vec4 uRiverPlane; // height relative to the ring axis, mouth depth, flat lane half-width, lateral scale
+uniform float uWaterTime;
+#endif
+uniform sampler2D uRingTile; // tile_ring.png""".replace('C X','CX'))
+change('    // a few cool blue-violet glints on the bands',"""    #ifdef CX04_REFLECT_RIVER
+    if (ring >= 4.0 && ring <= 7.0 && part < 1.5) {
+      // Intersect the reflected view ray with the flat middle of the real river mesh.
+      // The painted current's original 8 by 4.652 unit tile supplies the reflection.
+      float down = -dot(R, uAxU);
+      float rayLength = (dot(q, uAxU) - uRiverPlane.x) / max(down, 0.015);
+      vec3 hit = q + R * rayLength;
+      float lateral = dot(hit, uAxR);
+      float along = dot(hit, uAxD);
+      float contact = smoothstep(0.025, 0.18, down) * smoothstep(0.0, 0.5, rayLength)
+                    * (1.0 - smoothstep(10.0, 15.0, rayLength))
+                    * (1.0 - smoothstep(uRiverPlane.z - 0.55, uRiverPlane.z, abs(lateral)))
+                    * smoothstep(0.0, 2.0, along) * (1.0 - smoothstep(uLen - 2.0, uLen, along));
+      float flow = along - uRiverPlane.y - uWaterTime * 0.9;
+      vec2 sampleUV = vec2(0.5 + lateral * uRiverPlane.w / 8.0, (flow - 1.7572621) / 4.6517529);
+      vec3 waterLight = texture2D(uReflectedRiver, sampleUV, 2.0).rgb;
+      float polish = 0.16 + 0.18 * pow(1.0 - facing, 2.0);
+      col = mix(col, waterLight * vec3(1.0, 0.86, 0.79), contact * polish);
+    }
+    #endif
+    // a few cool blue-violet glints on the bands""")
+change('  const time = { value: 0 };','')
+change('  const away = { value: 0 };',"""  const away = { value: 0 };
+  const time = { value: 0 };
+  const reflectedRiver = { value: null as THREE.Texture | null };""")
+change('      defines: deepRim ? { CX04_DEEP_RIM: deepRimIndex } : {},',"""      defines: {
+        ...(deepRim ? { CX04_DEEP_RIM: deepRimIndex } : {}),
+        ...(M04.river && on('cx04RiverReflection') ? { CX04_REFLECT_RIVER: 1 } : {}),
+      },""")
+change('        uP: { value: M04.num(\'m04ringp\', 2.6) }',"""        uReflectedRiver: reflectedRiver, uRiverPlane: { value: new THREE.Vector4(0.02 - cy, z0, M04.num('m04xf', 2.1), M04.num('m04rk', 1)) }, uWaterTime: time,
+        uP: { value: M04.num('m04ringp', 2.6) }""")
+change('    riv.colorSpace = THREE.NoColorSpace;', '    reflectedRiver.value = riv;\n    riv.colorSpace = THREE.NoColorSpace;')
+f.write_text(s);shutil.copyfile(f,p/'repos/04/src/world/match04m4.ts')
