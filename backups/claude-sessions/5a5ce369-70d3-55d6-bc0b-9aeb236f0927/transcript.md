@@ -2971,3 +2971,49 @@ Compiles cleanly. Rendering the start view with the Blender heap forced visible,
 
 > 🔧 **Bash** `{"command": "R=qa/review_r19/blender_foam && mkdir -p $R && T=/home/user/wt/s04t/qa/match/04 && cp references/04_through_the_five_arrows.png $R/1_APPROVED.png && cp $T/r19_blendfoam/tune/b5.png $R/2_SAME_CAMERA_with_blender_heap.png && cp $T/r19_thrixel/BEFORE/f02_forward2u.png $R/3_BEFORE_swimming_2u.png && cp $T/r19_blendfoam/NEW/f02_forward2u.png $R/4_NEW_swimming_2u_blender.png && cp $T/r19_thrixel/BEFORE/s3_right_steer.png $R/5_BEFORE_steering_right.png && cp $T/r19_blendfoam/NEW/s3_right_steer.png $R/6_NEW_steering_right_blender.png && cp $T/r19_blendfoam/view_low_side.png $R/7_blender_m …[+1932 chars]`
 
+### 🧑 User — 2026-11-19T20:17:04.131Z
+
+> ↩︎ result: ok
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+> lead local 1e4cdba31991699948e47e3996a29f3b490c65c8 remote 1e4cdba31991699948e47e3996a29f3b490c65c8 MATCH
+> AUTOSAVE OK | branch ccr-d00ac5ec-gabdsh | scheduler daemon | last verified backup 2026-11-19T20:16:49+00:00 (0.2 min ago) | local 1e4cdba remote 1e4cdba (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-19T20:17:11.655Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r19/blender_foam/1_APPROVED.png", "/home/user/rainbow-/qa/review_r19/blender_foam/2_SAME_CAMERA_with_blender_heap.png", "/home/user/rainbow-/qa/review_r19/blender_foam/3_BEFORE_swimming_2u.png", "/home/user/rainbow-/qa/review_r19/blender_foam/4_NEW_swimming_2u_blender.png", "/home/user/rainbow-/qa/review_r19/blender_foam/5_BEFORE_steering_right.png", "/home/user/rainbow-/qa/review_r19/blender_foam/6_NEW_steering_right_blender.png", "/home/user/rainbow-/qa/review_r19/blender_foam/8_BEFORE_swim_clip.mp4", "/home/user/rainbow-/qa/review_r19/blender_foam/9 …[+353 chars]`
+
+### 🧑 User — 2026-11-19T20:17:14.036Z
+
+> ↩︎ result: 8 files delivered to user.
+>   /home/user/rainbow-/qa/review_r19/blender_foam/1_APPROVED.png → file_uuid: 32bb59d1-80aa-4368-ad65-380445cd83a0
+>   /home/user/rainbow-/qa/review_r19/blender_foam/2_SAME_CAMERA_with_blender_heap.png → file_uuid: be6a6fac-b3c9-4234-9756-200567d49ac4
+>   /home/user/rainbow-/qa/review_r19/blender_foam/3_BEFORE_swimming_2u.png → file_uuid: 1145dd1a-e722-46c0-bf6a-8789dc205d9b
+>   /home/user/rainbow-/qa/review_r19/blender_foam/4_NEW_swimming_2u_blender.png → file_uuid: 6eb01e50-f7b1-4c6d-a3da-5365bd6eb00f
+>   /home/user/rainbow-/qa/review_r19/blender_foam/5_BEFORE_steering_right.png → file_uuid: 9f1ad75a-10bd-4765-b247-08fac86bf26f
+>   /home/user/rainbow-/qa/review_r19/blender_foam/6_NEW_steering_right_blender.png → file_uuid: 9d6185fa-4de3-46f3-ad8a-aeb8107a4af5
+>   /home/user/rainbow-/qa/review_r19/blender_foam/8_BEFORE_swim_clip.mp4 → file_uuid: 83ba10de-18a7-4fb2-9854-3e632e193e3c
+>   /home/user/rainbow-/qa/review_r19/blender_foam/9_NEW_swim_clip_blender.mp4 → file_uuid: 7ab083b7-5a68-42e7-bc7d-cec54ef5af17
+
+### 🤖 Claude — 2026-11-19T20:17:30.954Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Blender worked much better than Thrixel for the foam, and it cost nothing. I built the heap the way your painting shows it: a low, wide pile of 46 big, separate, glossy round bubbles, the biggest along the top and smaller ones at the ends and the waterline. In the game it gets a pearly lilac-white finish with pale blue-lilac shading.
+
+**My verdict: promising.** It's a small improvement where it sits, but I haven't added it to the main version yet.
+
+- **Same camera as your picture** (2nd image): a heap of big glossy lilac-white bubbles on the spot where yours is painted, at about the same size. Yours is still a little richer, with more tiny bubbles at the waterline and sharp white highlight dots. In the normal game this view shows your painting itself, so nothing changes there.
+- **While swimming and steering** (images 4 and 6 against 3 and 5): it reads as a solid pile of glossy pearly bubbles, like your painted heap. The Thrixel model looked like a torn flat sheet.
+- **In motion** (the clips): it fades in as Benny leaves the start view, stays solid with no flicker or popping, and passes out of view after about half a second.
+- **The catch:** it sits next to the game's existing foam, which is white, cloud-like puffs of tiny bubbles, so the right bank now mixes two different looks.
+
+The finish took five free tries. The first came out like pink cotton balls because the game's pink-purple lighting tinted it; a cooler blue-lilac base color fixed that.
+
+To make the whole bank look like your painting, the next step would be to give **all** the bank foam on Screen 04 this same glossy-bubble look, behind its own switch, and show you before and after pictures. That's free in credits but uses Claude usage. Tell me if you want it, either in this session or as the first job for the Screen 04 water/foam worker in the fresh session.
+
+- **This session's branch:** `ccr-d00ac5ec-gabdsh`, at commit `1e4cdba31991699948e47e3996a29f3b490c65c8`; GitHub matches.
+- **Blender test version:** `claude/rainbow-s04-blendfoam-c19`, at commit `41ea03d1`. The heap model is uploaded to GitHub.
+- **Notes:** written up in `qa/match/04/r19_blendfoam/NOTES.md`, and the continuation note for the fresh session now includes this result.
+- **Five-minute autosave:** running.
+
