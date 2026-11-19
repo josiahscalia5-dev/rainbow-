@@ -526,3 +526,169 @@ Understood: I'll finish step 5 only, then write the handoff block and stop. Wait
 
 > 🔧 **Bash** `{"command": "until grep -q \"ALLDONE\" /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bqdf4k9cl.output; do sleep 5; done; grep -v \"allow list\" /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bqdf4k9cl.output | grep -v \"^+ \\(cd\\|K4\\|K5\\|D=\\|cp\\|mkdir\\|rm\\|node\\|git\\)\" | cut -c1-300", "description": "Block until step-5 renders finish, show results", "timeout": 2400000}`
 
+### 🧑 User — 2026-11-19T19:38:24.480Z
+
+> ↩︎ result: ++ cat /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/K18-4.txt
+> ++ cat /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/K18-5.txt
+> {"a":"/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/cap_k4/04.png","b":"/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/cap_k5/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> + grep '^04\|rror'
+> 04 a00_approved_view s 78.274 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.148 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.183 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.149 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.183 lat 0 stage 04 frames 86
+> 04 s_left_steer s 84.183 lat -1.65 stage 04 frames 26
+> 04 s_right_steer s 84.183 lat 1.65 stage 04 frames 26
+> 04 s_left_hard s 90.249 lat -1.65 stage 04 frames 52
+> 04 s_right_hard s 90.248 lat 1.65 stage 04 frames 52
+> 04 t33_through_screen s 90.481 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.849 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.674 lat 0 stage 04 frames 153
+> + grep 'frames\|rror'
+> + MAXF=55
+> frames 55
+> + echo …[+38 chars]
+
+### 🤖 Claude — 2026-11-19T19:38:27.757Z
+
+Start view 0 px differ. Now I'll place the NEW stills, encode the NEW clip and build review strips.
+
+### 🤖 Claude — 2026-11-19T19:38:32.170Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; cd /home/user/wt/s04 && D=qa/match/04/r18/s5_nwfix && cp $S/new5/*.png $S/new5/motion.json $D/NEW/ && ffmpeg -v error -y -framerate 24 -i $S/g5/%04d.png -frames:v 55 -vf scale=432:768 -pix_fmt yuv420p -c:v libx264 -crf 22 $D/NEW_swim_clip_half.mp4 && for f in 0031 0038 0044 0048; do t=$(python3 -c \"print(f'{int(\\\"$f\\\")/24:.2f}'.replace('.','_'))\"); cp $S/g5/$f.png $D/NEW/clip_${t}s.png; done; ls $D/NEW | wc -l; ls -la $D/NEW_swim_clip_half.mp4; convert $D/NEW/clip_1_29s.png $D/NEW/clip_1_58s …[+330 chars]`
+
+### 🧑 User — 2026-11-19T19:38:37.208Z
+
+> ↩︎ result: 17
+> -rw-r--r-- 1 root root 1026414 Nov 19 19:38 qa/match/04/r18/s5_nwfix/NEW_swim_clip_half.mp4
+> ok
+
+### 🤖 Claude — 2026-11-19T19:38:41.532Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/rev/new_clip_strip.png"}`
+
+### 🧑 User — 2026-11-19T19:38:41.570Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:38:42.148Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/rev/new_stills.png"}`
+
+### 🧑 User — 2026-11-19T19:38:42.193Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:38:51.567Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; cd /home/user/wt/s04/qa/match/04/r18/s5_nwfix && convert BEFORE/clip_2_00s.png NEW/clip_2_00s.png -crop 864x900+0+636 +repage -resize 50% +append $S/rev/c200.png; echo ok", "description": "Crop lower halves of the 2.00 s frames side by side"}`
+
+### 🧑 User — 2026-11-19T19:38:52.085Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-19T19:38:54.860Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/rev/c200.png"}`
+
+### 🧑 User — 2026-11-19T19:38:54.877Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:39:15.215Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/qa/match/04/r18/PROGRESS.md", "old_string": "  Not changed here (coins are off-limits to this branch).", "new_string": "  Not changed here (coins are off-limits to this branch).\n* (r19) Finished on `claude/rainbow-s04-match-c19` (the account ran out at 18:54 while the final renders ran; re-rendered here).\n* Start view: `node scripts/capture.mjs 04` K18-4 vs K18-5 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).\n* WHAT LOOKS BETTER (clip 1.29 / 1.58 / 1.83 / 2.00 s, hard left / right): while Benny steers to the side, the big whit …[+1851 chars]`
+
+### 🧑 User — 2026-11-19T19:39:15.362Z
+
+> ↩︎ result: The file /home/user/wt/s04/qa/match/04/r18/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T19:39:16.470Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git check-attr filter -- qa/match/04/r18/s5_nwfix/NEW_swim_clip_half.mp4 qa/match/04/r18/s5_nwfix/NEW/f06_forward6u.png; git status --short | head; du -sh qa/match/04/r18/s5_nwfix", "description": "Check LFS attributes and pending files"}`
+
+### 🧑 User — 2026-11-19T19:39:16.542Z
+
+> ↩︎ result: qa/match/04/r18/s5_nwfix/NEW_swim_clip_half.mp4: filter: lfs
+> qa/match/04/r18/s5_nwfix/NEW/f06_forward6u.png: filter: unspecified
+>  M qa/match/04/r18/PROGRESS.md
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? qa/match/04/r18/s5_nwfix/
+> 51M	qa/match/04/r18/s5_nwfix
+
+### 🤖 Claude — 2026-11-19T19:39:23.180Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git add src/world/match04m4.ts qa/match/04/r18/PROGRESS.md qa/match/04/r18/s5_nwfix && git commit -q -F - <<'EOF'\nScreen 04 r18/r19 step 5: no smear while steering (m04nwq=2, m04nwr=3.2) — GOOD IMPROVEMENT (glitch fix)\n\nWhile Benny steers to the side the whirl no longer lays bare the raw river tile as big white-cyan\ncloud blobs and no longer stretches into a broad pink smear far behind him: the whirl reaches only\n3.2 u round Benny, and the bare water at / behind him shows the painted cyan streaks of the band\nstrip. URL switches only (inside m04nwhirl) …[+477 chars]`
+
+### 🧑 User — 2026-11-19T19:39:32.984Z
+
+> ↩︎ result: a621941..88a6b83  claude/rainbow-s04-match-c19 -> claude/rainbow-s04-match-c19
+> branch 'claude/rainbow-s04-match-c19' set up to track 'origin/claude/rainbow-s04-match-c19'.
+> 88a6b837418fc9ed8f3ea23f5955e43cd5ff16a1
+> 88a6b837418fc9ed8f3ea23f5955e43cd5ff16a1	refs/heads/claude/rainbow-s04-match-c19
+
+### 🤖 Claude — 2026-11-19T19:39:34.882Z
+
+Step 5 pushed (remote == HEAD). Now the handoff block.
+
+### 🤖 Claude — 2026-11-19T19:39:47.981Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && cat >> qa/match/04/r18/PROGRESS.md <<'EOF'\n\n## (r19) WHERE I STOPPED / NEXT — handoff to a fresh session (lead order 2026-11-19 ~19:40 UTC: finish the batch, then stop)\nStopped after step 5 (committed + pushed, `claude/rainbow-s04-match-c19` @ `88a6b837`). No unfinished edits, nothing uncommitted.\nNext account: branch `claude/rainbow-s04-match-c20` from the newest `-c19` tip; worktree / port 5273 as before.\nKept set K18-5 (full query):\n`match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04 …[+2370 chars]`
+
+### 🧑 User — 2026-11-19T19:39:51.380Z
+
+> ↩︎ result: 88a6b83..97fcb8b  claude/rainbow-s04-match-c19 -> claude/rainbow-s04-match-c19
+> 97fcb8b66f4b9df7d12b4596f30458c52811a254
+> 97fcb8b66f4b9df7d12b4596f30458c52811a254	refs/heads/claude/rainbow-s04-match-c19
+> ?? node_modules
+
+### 🤖 Claude — 2026-11-19T19:39:53.591Z
+
+Remote == HEAD. Now the report to the lead.
+
+### 🤖 Claude — 2026-11-19T19:39:53.944Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-19T19:39:53.952Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-19T19:40:01.349Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s04 step 5 done, handoff pushed, stopping", "message": "s04 FINAL: step 5 \"no smear while steering\" (&m04nwq=2&m04nwr=3.2) is a GOOD IMPROVEMENT (glitch fix), committed 88a6b837; handoff block committed and pushed, claude/rainbow-s04-match-c19 @ 97fcb8b66f4b9df7d12b4596f30458c52811a254 (remote = HEAD). Stopping now.\n- What you see: while Benny steers, the white-cyan cloud blobs in the water beside/behind him and the broad pink smear far behind him are gone. That water now shows clean cyan streaks flowing with the current. The whirl round Benny in the steady shots  …[+884 chars]`
+
+### 🧑 User — 2026-11-19T19:40:01.362Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-19T19:40:09.484Z
+
+Step 5 (no smear while steering) is finished and pushed. As the lead asked, I stopped there and did not start a new step.
+
+**Step 5: `&m04nwq=2&m04nwr=3.2`. Verdict: GOOD IMPROVEMENT (glitch fix).**
+- **What changed:** while Benny steers to the side, the big white-cyan cloud blobs in the water beside and behind him are gone, and so is the broad stretched pink smear far behind him. That water now shows clean glossy cyan streaks flowing with the current. You can see it in the clip at 1.58 s, 1.83 s and 2.00 s, and in the hard-left and hard-right shots.
+- **What stayed the same:** the whirl round Benny in the steady shots looks as before. The approved start view is unchanged (0 px different on the game screenshot). Coin counts match BEFORE in every matching shot.
+- **Kept set:** K18-5 = K18-4 + `&m04nwq=2&m04nwr=3.2`. The full query is in the log.
+- **Commits** on `claude/rainbow-s04-match-c19`:
+  - step 5: `88a6b837`
+  - handoff note: `97fcb8b66f4b9df7d12b4596f30458c52811a254`
+- The branch on GitHub matches my local copy. Nothing is left uncommitted except the `node_modules` link, which was never committed.
+
+**Biggest remaining difference:** the river is still a flat ribbon that ends in a straight edge against the gold wall. In the painting, the magenta and pink swirls curve up the tunnel sides.
+
+**Next tasks, in order** (in the "(r19) WHERE I STOPPED / NEXT" block at the end of the log):
+1. Prove or reject `&m04sswirl=1`. Its code is already in the file but it is unproven and in no kept set.
+2. Tint the low foam banks pink and cyan like the painting.
+3. Check the 4 s swim clip for seams, popping and stretched textures while steering.
+
+I sent the lead the final report with the commit SHA.
+
+Files are in `/home/user/wt/s04/qa/match/04/r18/`:
+- Log with the handoff block: `PROGRESS.md`
+- Approved picture: `s5_nwfix/1_APPROVED.png`
+- BEFORE stills: `s5_nwfix/BEFORE/`
+- NEW stills: `s5_nwfix/NEW/`
+- Clips (half size): `s5_nwfix/BEFORE_swim_clip_half.mp4` and `s5_nwfix/NEW_swim_clip_half.mp4`
+

@@ -1,34 +1,10 @@
 {
  "worktree": "/home/user/wt/s04",
  "branch": "claude/rainbow-s04-match-c19",
- "head": "a62194120d786a4007652427fd397bac1b688614",
- "time": "2026-11-19T19:38:28+00:00",
- "dirty_tracked": [
-  "qa/match/04/r18/PROGRESS.md",
-  "src/world/match04m4.ts"
- ],
- "untracked_copied": [
-  "qa/match/04/r18/s5_nwfix/1_APPROVED.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/clip_1_29s.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/clip_1_58s.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/clip_1_83s.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/clip_2_00s.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/f06_forward6u.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/f10_forward10u.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/f20_forward20u.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/s_left_hard.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/s_left_steer.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/s_right_hard.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/t33_through_screen.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/t66_through_screen.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE/t95_through_screen.png",
-  "qa/match/04/r18/s5_nwfix/BEFORE_swim_clip_half.mp4",
-  "qa/match/04/r18/s5_nwfix/NEW/clip_1_29s.png",
-  "qa/match/04/r18/s5_nwfix/NEW/clip_1_58s.png",
-  "qa/match/04/r18/s5_nwfix/NEW/clip_1_83s.png",
-  "qa/match/04/r18/s5_nwfix/NEW/clip_2_00s.png",
-  "qa/match/04/r18/s5_nwfix/NEW/motion.json"
- ],
+ "head": "97fcb8b66f4b9df7d12b4596f30458c52811a254",
+ "time": "2026-11-19T19:43:41+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [],
  "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s04-match-c19 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c19/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c19/untracked/* into the worktree"
 }
