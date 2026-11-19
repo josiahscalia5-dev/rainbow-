@@ -1047,3 +1047,7 @@ Once Thrixel is connected, I'll run the test exactly as you described:
 - **fal.ai** can turn a picture into a 3D model, but that spends your paid fal credits, so I'd name the job and its cost first.
 - **Blender** can model the foam cluster from your picture for free.
 
+### 🧑 User — 2026-11-19T19:32:52.308Z
+
+Fal.ai but what ever u think is the best one
+

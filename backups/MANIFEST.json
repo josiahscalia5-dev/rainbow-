@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18874,
-   "sha256": "5057546c402a33d66655783efc4fb8a82821ac27b78cd147f706f0a88f85e2d2"
+   "sha256": "519fb4b44cee115f49f2e0316f4196bf6c2d146c11345b9ffa5c492c1c7d5dbd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1209,7 +1209,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c19/INFO.json",
    "bytes": 1599,
-   "sha256": "e7c0302ce13f5c75b5fda2998a633bd5884638467ff19d901f7f7359b18f5f0c"
+   "sha256": "28d50716b54f385ec0bd428f571c061db20a27852466a8154829ff53121d5e69"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c19/tracked.patch",
@@ -1459,7 +1459,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c19/INFO.json",
    "bytes": 1336,
-   "sha256": "7e1291ee2cbc89cd9eff85fe1d847b7ad0b298201c752f8d82b438ab2811bdd3"
+   "sha256": "3a1e57502e0537dc8812e59cd7f61532ef04d3911e76373a113958e69421f60f"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c19/tracked.patch",
@@ -1898,8 +1898,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/INFO.json",
-   "bytes": 700,
-   "sha256": "4bbd0f43501efcd2ab3ae6bc80292a0a8ef9aeac90ab1e67fd855c8c5bcac2e3"
+   "bytes": 665,
+   "sha256": "85638d6d091b3d781442981a22de1ff05dc57e5847c0300053057c8af5e6dfba"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/tracked.patch",
@@ -1912,19 +1912,9 @@
    "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
   },
   {
-   "path": "backups/wip/claude__rainbow-s05-match-c19/untracked/qa/match/05/r18/step2_wall/before/shots.json",
-   "bytes": 80889,
-   "sha256": "53ac4ff2a6fa56a38cd9aa785cc1c06703266d41f94a2495cdb4dc25327c2589"
-  },
-  {
    "path": "backups/wip/claude__rainbow-s05-match-c19/untracked/qa/match/05/r18/step2_wall/gameplay_step2.json",
    "bytes": 14940,
    "sha256": "13e5b8b95f683944f49229bfacfbf62c978b3c731b47e715c17743ed412755a6"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s05-match-c19/untracked/qa/match/05/r18/step2_wall/new/shots.json",
-   "bytes": 80920,
-   "sha256": "c0be91378bf87eb185cad77436d6020a0bb1cac7dfd148cf4b1177e345f72623"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
