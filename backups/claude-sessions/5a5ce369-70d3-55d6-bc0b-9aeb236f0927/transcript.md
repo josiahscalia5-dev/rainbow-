@@ -1686,3 +1686,55 @@ The compact version of the picture is ready, with no long repeated runs in its e
 
 > 🔧 **mcp__Thrixel__thrixel_sculpt_model** `{"image": "data:image/webp;base64,UklGRp4uAABXRUJQVlA4WAoAAAAQAAAAfwEAfwEAQUxQSEMPAAABCUdu20gSHGd21f8f3Mu4c5q5RfR/AvQnZUPNWdOKEUs+WvaAhboPmFBVUm1s5oCk5e1191bwGknUKJth2B71HOftIEjU0oqRoRRmN1HjujtDTuWIz58ChUnZToDkFAmzCUPC2wwECkSqeL/1/SZ7kwhVJRaSGMROvCNccn/usekNF6m9sTe7t9vtdom6G9aZgfcGRv3wGWrbtmHk/x8vU8oSERPA0Ou+Ykw9YOryjKmZtm2y8QffzxETkJ6wbVvcRv6/664qy5bZDjqcTJihmRnnw8zMzPxZ0Y4ZVsyfYZ4JzTSFmTvtJG7HjpllSVXPQrJiyTneepcRMQEN//nPf/7zH+1BUFMWe6gkqSkf3fjiPtWOBf2hb5I1v7md2hXT/ol4rDGqnSSYMP/UHMV4/aYnRvD5Yse22O9tf3gYjy8WfbPh9bX3OUw+L9i1A7/fsWux3+t8fU+MPF729VdjPL5Y9OYKvH72sY3m9aLHduXw+LLMPmHyd9DcNIvf/0iTIY …[+15563 chars]`
 
+### 🧑 User — 2026-11-19T19:44:12.196Z
+
+> ↩︎ result: Sculpted "A soft rounded cluster of pearly lilac-white soap foam bubbles, glossy cartoon style."
+> Download: https://api.thrixel.com/api/v1/c55e6a88-10db-432c-abaf-3f56e345fee5/download?format=glb
+> submission_id: c55e6a88-10db-432c-abaf-3f56e345fee5
+> For a game: load it from "models/a-soft-rounded-cluster-of-pearly-lilac-white.glb" and pass {"models/a-soft-rounded-cluster-of-pearly-lilac-white.glb": "c55e6a88-10db-432c-abaf-3f56e345fee5"} in thrixel_publish_game's `assets`. Build the scene from models like this one, not code-built shapes.
+> 5,992 triangles across 1 mesh part
+> Filed under project: Rainbow
+> 
+> Next: thrixel_reduce_triangles to hit a triangle budget (free), or thrixel_retexture_model to restyle it. A detail pass is optional here - Sculptor output is already dense and textured.
+> [image]
+> [Image: source: /root/.claude/projects/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tool-results/mcp-Thrixel-blob-1795117452192-ubmjqt.png]
+
+### 🤖 Claude — 2026-11-19T19:44:20.733Z
+
+> 🔧 **mcp__Thrixel__thrixel_inspect_model** `{"submission_id": "c55e6a88-10db-432c-abaf-3f56e345fee5"}`
+
+### 🤖 Claude — 2026-11-19T19:44:20.744Z
+
+> 🔧 **mcp__Thrixel__thrixel_account_status** `{}`
+
+### 🤖 Claude — 2026-11-19T19:44:22.606Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/04/r19_thrixel && mkdir -p $D && curl -sS -L --max-time 120 -o $D/foam_cluster_thrixel.glb -w \"HTTP %{http_code} %{size_download} bytes\\n\" \"https://api.thrixel.com/api/v1/c55e6a88-10db-432c-abaf-3f56e345fee5/download?format=glb\"; file $D/foam_cluster_thrixel.glb; head -c 120 $D/foam_cluster_thrixel.glb | strings | head -3", "description": "Download the Thrixel foam GLB", "timeout": 180000}`
+
+### 🧑 User — 2026-11-19T19:45:28.466Z
+
+> ↩︎ result: A soft rounded cluster of pearly lilac-white soap foam bubbles, glossy cartoon style.
+> status: completed  phase: 4
+> total: 5,992 triangles across 1 mesh parts
+> up-axis: y (every Thrixel GLB is Y-up - no need to detect it)
+> bounds: min (-0.2617, 0, -0.1112)  max (0.2617, 1.0007, 0.1112)  size (0.5234, 1.0007, 0.2224)
+> 
+> geom0 (Mesh) - 5,992 tris
+> [image]
+> [Image: source: /root/.claude/projects/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tool-results/mcp-Thrixel-blob-1795117528461-7shcsg.png]
+
+### 🧑 User — 2026-11-19T19:45:29.828Z
+
+> ↩︎ result: {"result":"Connected to https://api.thrixel.com\nKey: MCP connector (Claude) (user)\nPlan: free\nCubes: 242\n  -> covers 17 detail passes (14 each, 11 from a prompt alone), 30 sculpts (8 each, 22 from a prompt alone), 48 retextures (5 each, 20 from a prompt alone), 48 rigs (5 each).\nRuns left this month: sculptor 3/4, detailer 4/4, texture 4/4, rig 4/4 (resets 2026-12-01)\nConcurrency: 0 of 2 running\n  -> room for 2 more right now.\nGPU lane: 0 job(s) queued or running service-wide"}
+
+### 🧑 User — 2026-11-19T19:45:30.866Z
+
+> ↩︎ result: HTTP 200 1834448 bytes
+> qa/match/04/r19_thrixel/foam_cluster_thrixel.glb: glTF binary model, version 2, length 1834448 bytes
+> glTF
+> JSON{"scene":0,"scenes":[{"nodes":[0]}],"asset":{"version":"2.0","generator":"https://github.com/mikedh/
+
+### 🤖 Claude — 2026-11-19T19:45:50.382Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/04/r19_thrixel && cat > /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/inspect_glb.py <<'EOF'\nimport bpy, sys, math, mathutils\nargv=sys.argv[sys.argv.index('--')+1:]; glb,out=argv\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.ops.import_scene.gltf(filepath=glb)\nobjs=[o for o in bpy.context.scene.objects if o.type=='MESH']\npts=[[REDACTED-EMAIL](c) for o in objs for c in o.bound_box]\nmn=mathutils.Vector([min(p[i] for p in pts) for i in range(3)]); mx=mathutils.Vector([max(p[i] for p in pts) for i in range(3)])\nctr=(mn+mx)/ …[+1697 chars]`
+

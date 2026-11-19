@@ -2,24 +2,14 @@
  "worktree": "/home/user/wt/s05",
  "branch": "claude/rainbow-s05-match-c19",
  "head": "ef5dd0cdce837c4738afa4e34f9cdefc332d2678",
- "time": "2026-11-19T19:43:41+00:00",
+ "time": "2026-11-19T19:48:54+00:00",
  "dirty_tracked": [
   "qa/capture_log.json"
  ],
  "untracked_copied": [
   "qa/match/05/r18/step2_wall/1_APPROVED.png",
   "qa/match/05/r18/step2_wall/before/shots.json",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0000.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0001.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0002.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0003.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0004.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0005.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0006.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0007.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0008.png",
-  "qa/match/05/r18/step2_wall/clip_new_frames/0009.png",
-  "qa/match/05/r18/step2_wall/gameplay_step2.json",
+  "qa/match/05/r18/step2_wall/gameplay_step2_all3.json",
   "qa/match/05/r18/step2_wall/new/shots.json"
  ],
  "untracked_skipped": [
@@ -54,7 +44,22 @@
   "qa/match/05/r18/step2_wall/new/t98_end.png",
   "qa/match/05/r18/step2_wall/new/x97.png",
   "qa/match/05/r18/step2_wall/new/x97L.png",
-  "qa/match/05/r18/step2_wall/new/x97R.png"
+  "qa/match/05/r18/step2_wall/new/x97R.png",
+  "qa/match/05/r18/step2_wall/new_kept/a00_approved_view.png",
+  "qa/match/05/r18/step2_wall/new_kept/f03_forward3u.png",
+  "qa/match/05/r18/step2_wall/new_kept/f06_forward6u.png",
+  "qa/match/05/r18/step2_wall/new_kept/f10_forward10u.png",
+  "qa/match/05/r18/step2_wall/new_kept/f20_forward20u.png",
+  "qa/match/05/r18/step2_wall/new_kept/k81_kink_left.png",
+  "qa/match/05/r18/step2_wall/new_kept/k81_kink_right.png",
+  "qa/match/05/r18/step2_wall/new_kept/s_left_hard.png",
+  "qa/match/05/r18/step2_wall/new_kept/s_right_hard.png",
+  "qa/match/05/r18/step2_wall/new_kept/t33_through_screen.png",
+  "qa/match/05/r18/step2_wall/new_kept/t66_through_screen.png",
+  "qa/match/05/r18/step2_wall/new_kept/t95_through_screen.png",
+  "qa/match/05/r18/step2_wall/new_kept/t98_end.png",
+  "qa/match/05/r18/step2_wall/new_kept/x97.png",
+  "qa/match/05/r18/step2_wall/new_kept/x97L.png"
  ],
  "restore": "git switch claude/rainbow-s05-match-c19 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c19/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c19/untracked/* into the worktree"
 }
