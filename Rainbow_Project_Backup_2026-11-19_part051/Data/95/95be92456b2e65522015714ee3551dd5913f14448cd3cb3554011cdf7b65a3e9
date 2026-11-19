@@ -1,0 +1,44 @@
+from pathlib import Path
+import json,hashlib,re,subprocess as sp,shutil
+from datetime import datetime,timezone
+v=Path("/tmp/rainbow-final-fidelity.RuUP0xJ2")
+t=Path.cwd()
+a=Path("/tmp/rainbow-claudia-transfer.u9XkC10f/android-runtime")
+m=Path("/tmp/rainbow-motion-tools.ef8YVWIN")
+out=v/'repos/08/experiments/codex/fidelity-08'
+d=out/'toolchain'
+d.mkdir(parents=True,exist_ok=True)
+def load(p):return json.loads(p.read_text())
+def sha(p):
+ with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+def save(p,obj):p.write_text(json.dumps(obj,indent=2,ensure_ascii=False)+'\n')
+diag=t/'diagnostic-output'
+b=load(diag/'blender-live.json');assert b['closed'] and b['onlyBridge'] and b['scene']['version']=='5.3.0'
+i=b['image2blender'];assert i['freshHelpers']['validate_spec.py']['ok'] and i['freshHelpers']['probe_image.py']['ok']
+g=load(diag/'three-explicit-live.json');render=json.loads(g['renderer_info']);assert json.loads(g['find_objects'])['count']==5
+s=load(diag/'spector-live.json');assert 'No GL errors detected' in s['capture']
+c=load(diag/'chrome-live.json');rc=json.loads(c['actual_context'].split('```json\n')[1].split('\n```')[0]);assert rc['stage']=='07' and rc['lost'] is False
+pw=load(diag/'microsoft-live.json');q=json.loads(pw['real_steering'].split('### Result\n')[1].split('\n###')[0]);assert q['lateral']<0
+deps=load(m/'toolchain/package.json')['dependencies']
+cam=load(t/'scene-evidence.json');assert len(cam['depthImages'])==20 and all(len(val)==2 for val in cam['cameraFiles'].values())
+native=load(a/'android-debug-verified.json');assert native['allEmbeddedViteFilesByteEqual']==78 and native['targetSDK']==34
+cont=load(t/'original-continuity-test/qa/continuity_report.json');assert cont['ok']
+model=load(t/'reopened-assets.json');assert len(model)==4
+tests={}
+for n in ['04','05','06','07','08']:
+ pose=load(v/('poses-'+n+'.json'));route=load(v/('route-'+n+'.json'));op=load(v/('opening-'+n+'.json'));safe=load(v/'proof'/n/'NEW/full-safe-ride.json')['success']
+ assert all(pose['allGameplayAssertions'].values()) and len(pose['allGameplayAssertions'])==8
+ assert (safe['start'],safe['coins'],safe['score'],safe['hearts'])==(1330,91,2240,5)
+ assert not route['cameraStateClockDifferences'] and op['repeatSource']=='fresh retained capture'
+ data=load(v/'proof'/n/'NEW/poses.json')
+ # Retain the count of records and count only poses inside the stage for actual image files.
+ stills=sum(1 for p in data if 'skip' not in p)
+ tests[n]={'source':load(v/('source-'+n+'.json'))['commit'],'retained':load(v/('base-'+n+'.json'))['specialist'],'newNativeScreenshots':stills,'capturedVideoFrames':route['matchedFrames'],'fullRide':{k:safe[k] for k in ['start','coins','score','hearts','stage','collisions']},'passedGameplayAssertions':8,'matchedCameraStateClock':True,'freshRetainedOpeningPixelDifferences':op['beforeVsRepeat']['exactDifferences']}
+threever=sp.check_output(['node','-p',"require('./games/06/node_modules/three/package.json').version"],cwd=v,text=True).strip()
+probes={'checkedUTC':datetime.now(timezone.utc).isoformat(),'lead':load(v/'base-06.json')['lead'],'Blender':{'version':b['scene']['version'],'distributionSHA256':(t/'blender-package-sha.txt').read_text().split()[0],'officialBridgeVersion':'1.0.3','officialBridgeCommit':b['bridge'],'wasOnlyActiveBridge':b['onlyBridge'],'sceneReopenedViaMCP':b['scene']},'Image2Blender':{'version':i['version'],'commit':i['source'],'scope':i['scope'],'approvedImageDecoded':True,'strictSpecChecks':i['freshHelpers']['validate_spec.py'],'editableReopenedBlenderAndGLB':True},'ThreeJS':{'version':threever,'webglContext':rc['webgl'],'renderer':rc['renderer'],'contextLost':rc['lost'],'cloudRendering':'software'},'MicrosoftPlaywrightMCP':{'version':deps['@playwright/mcp'],'steerTest':q},'deterministicCapture':{'playwright':'1.57.0','chromium':'156.0.8078.79','ffmpeg':'7.1.5','simulatedHz':60,'clipFPS':12,'stills':[864,1536],'clips':[648,1152]},'ChromeDevToolsMCP':{'version':deps['chrome-devtools-mcp'],'depthTest':rc['depthTest'],'cameraNear':rc['near'],'cameraFar':rc['far'],'timeOfTestRepresentativePaddle':rc['paddle']},'ThreeJSDevToolsMCP':{'version':deps['threejs-devtools-mcp'],'explicitTemporaryActiveSceneHook':True,'visibleStage07PaddlesFound':5,'realRendererDraws':render['render']['calls']},'SpectorJSMCP':{'version':'1.0.0','commit':s['spectorSource'],'spectorjs':s['bundle'],'draws':int(re.search(r'Draw calls: (\d+)',s['capture']).group(1)),'shaderPrograms':int(re.search(r'Shader programs: (\d+)',s['capture']).group(1)),'glErrors':0},'Pixelmatch':{'version':deps['pixelmatch'],'threshold':0.1,'includedAntialiasOnly':False},'skill':load(t/'retained-skill.json'),'legacyImageQA':{'sourcePath':'scripts/compare.py','checkedScriptSHA256':sha(t/'retained-comparison-tool/NEW/scripts/compare.py'),'comparedOpenings':list(tests),'reports':['opening-metrics-claudia.json','opening-metrics-experiments.json']},'existingContinuityScript':{'path':'scripts/continuity-test.ts','checkedScriptSHA256':sha(t/'original-continuity-test/scripts/continuity-test.ts'),'pass':True},'gitLFS':sp.check_output(['git','lfs','version'],text=True).strip(),'nativeAndroid':native,'androidBuildTools':load(a/'installed.json'),'Gradle':load(a/'gradle-source-check.json'),'JDK':load(a/'jdk-verified.json'),'stageEvidence':tests,'depthGeometryFiles':len(cam['depthImages']),'savedCameraOrLandmarkFiles':sum(len(v) for v in cam['cameraFiles'].values())}
+save(d/'checks.json',probes)
+for src,n in [(t/'scene-evidence.json','depth-and-camera-inventory.json'),(t/'reopened-assets.json','reopened-models.json'),(t/'qa_da3_2026-11-18_metrics.json','saved-depth-measurements.json'),(t/'retained-comparison-tool/BEFORE/qa/report_metrics.json','opening-metrics-claudia.json'),(t/'retained-comparison-tool/NEW/qa/report_metrics.json','opening-metrics-experiments.json'),(t/'original-continuity-test/qa/continuity_report.json','course-continuity.json')]:save(d/n,load(src))
+(out/'reproduce').mkdir(exist_ok=True);(out/'measurements').mkdir(exist_ok=True)
+shutil.copyfile(v/'chamber-probe.cjs',out/'reproduce/chamber-probe.cjs')
+for var in ['BEFORE','NEW']:shutil.copyfile(v/'chamber-geometry'/(var+'.json'),out/'measurements'/('chamber-meshes-'+var.lower()+'.json'))
+print('Verified toolchain records and chamber geometry for Screen 08',flush=True)

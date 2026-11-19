@@ -1,0 +1,1459 @@
+{
+  "scene_tree": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "depth": {
+        "description": "Max tree depth (default: 3)",
+        "type": "number"
+      },
+      "types": {
+        "description": "Filter by type: Mesh, Light, Group, etc.",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "maxChildren": {
+        "description": "Max children per node (default: 15 compact, 100 JSON)",
+        "type": "number"
+      },
+      "compact": {
+        "description": "Compact text tree (default: true)",
+        "type": "boolean"
+      }
+    }
+  },
+  "object_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Object name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Object UUID",
+        "type": "string"
+      },
+      "path": {
+        "description": "Dot path: \"Scene.MyGroup.MyMesh\"",
+        "type": "string"
+      }
+    }
+  },
+  "find_objects": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "type": {
+        "description": "Object type: Mesh, Group, InstancedMesh, Light, etc.",
+        "type": "string"
+      },
+      "material": {
+        "description": "Material name or type",
+        "type": "string"
+      },
+      "visible": {
+        "description": "Filter by visibility",
+        "type": "boolean"
+      },
+      "namePattern": {
+        "description": "Regex to match object names",
+        "type": "string"
+      },
+      "property": {
+        "description": "Custom property name to check",
+        "type": "string"
+      },
+      "value": {
+        "description": "Expected value of the custom property",
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      },
+      "hasGeometry": {
+        "description": "Objects with/without geometry",
+        "type": "boolean"
+      },
+      "minChildren": {
+        "description": "Minimum number of children",
+        "type": "number"
+      },
+      "limit": {
+        "description": "Max results (default: 50, max: 200)",
+        "type": "number"
+      }
+    }
+  },
+  "raycast": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "x": {
+        "type": "number",
+        "description": "Normalized device X (-1 to 1, 0 = center)"
+      },
+      "y": {
+        "type": "number",
+        "description": "Normalized device Y (-1 to 1, 0 = center)"
+      },
+      "maxHits": {
+        "description": "Max hits (default: 10)",
+        "type": "number"
+      }
+    },
+    "required": [
+      "x",
+      "y"
+    ]
+  },
+  "click_inspect": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "timeout": {
+        "description": "Max wait in seconds (default: 15, max: 60)",
+        "type": "number"
+      }
+    }
+  },
+  "scene_diff": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "action": {
+        "description": "snapshot=save, diff=compare with saved, auto=snapshot if none else diff (default)",
+        "type": "string",
+        "enum": [
+          "snapshot",
+          "diff",
+          "auto"
+        ]
+      }
+    }
+  },
+  "layer_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "set_object_transform": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Object name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Object UUID",
+        "type": "string"
+      },
+      "position": {
+        "description": "[x, y, z]",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "rotation": {
+        "description": "[x, y, z] in radians",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "scale": {
+        "description": "[x, y, z]",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "visible": {
+        "description": "Show/hide",
+        "type": "boolean"
+      }
+    }
+  },
+  "set_layers": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Object name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Object UUID",
+        "type": "string"
+      },
+      "target": {
+        "description": "\"camera\" to target the camera",
+        "type": "string",
+        "const": "camera"
+      },
+      "layer": {
+        "description": "Layer 0-31 to enable/disable",
+        "type": "number"
+      },
+      "enabled": {
+        "description": "Enable or disable that layer",
+        "type": "boolean"
+      },
+      "mask": {
+        "description": "Set the bitmask directly",
+        "type": "number"
+      }
+    }
+  },
+  "material_list": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "material_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Material name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Material UUID",
+        "type": "string"
+      }
+    }
+  },
+  "shader_list": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "shader_source": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "materialName": {
+        "description": "Material name",
+        "type": "string"
+      },
+      "materialUuid": {
+        "description": "Material UUID",
+        "type": "string"
+      }
+    }
+  },
+  "texture_list": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "texture_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Texture name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Texture UUID",
+        "type": "string"
+      }
+    }
+  },
+  "texture_preview": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Texture name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Texture UUID",
+        "type": "string"
+      },
+      "maxSize": {
+        "description": "Max dimension in px (default: 512)",
+        "type": "number"
+      }
+    }
+  },
+  "set_material_property": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Material name, or name of a mesh using it",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Material UUID",
+        "type": "string"
+      },
+      "property": {
+        "type": "string",
+        "description": "color, emissive, emissiveIntensity, roughness, metalness, opacity, transparent, wireframe, visible, side, depthWrite, depthTest, alphaTest, flatShading, fog, envMapIntensity; physical: clearcoat, clearcoatRoughness, transmission, thickness, ior, sheen, sheenColor, sheenRoughness, iridescence, anisotropy, dispersion, specularIntensity, specularColor, attenuationColor"
+      },
+      "value": {
+        "description": "Hex string for colors (\"#ff0000\"), number for scalars, boolean for flags",
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      }
+    },
+    "required": [
+      "property",
+      "value"
+    ]
+  },
+  "set_uniform": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Material name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Material UUID",
+        "type": "string"
+      },
+      "uniform": {
+        "type": "string",
+        "description": "Uniform name, e.g. uTime, uColor"
+      },
+      "value": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ]
+          }
+        ],
+        "description": "Hex string for Color, {x,y,z} for vectors, number/boolean for scalars"
+      }
+    },
+    "required": [
+      "uniform",
+      "value"
+    ]
+  },
+  "set_texture": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Texture name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Texture UUID",
+        "type": "string"
+      },
+      "wrapS": {
+        "description": "1000=Repeat, 1001=ClampToEdge, 1002=MirroredRepeat",
+        "type": "number"
+      },
+      "wrapT": {
+        "description": "Same values as wrapS",
+        "type": "number"
+      },
+      "minFilter": {
+        "description": "1003=Nearest, 1006=Linear, 1008=LinearMipmapLinear",
+        "type": "number"
+      },
+      "magFilter": {
+        "description": "1003=Nearest, 1006=Linear",
+        "type": "number"
+      },
+      "anisotropy": {
+        "description": "1-16",
+        "type": "number"
+      },
+      "flipY": {
+        "type": "boolean"
+      },
+      "colorSpace": {
+        "description": "srgb, srgb-linear",
+        "type": "string"
+      },
+      "repeat": {
+        "description": "[x, y] repeat",
+        "minItems": 2,
+        "maxItems": 2,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "offset": {
+        "description": "[x, y] offset",
+        "minItems": 2,
+        "maxItems": 2,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "rotation": {
+        "description": "Radians",
+        "type": "number"
+      }
+    }
+  },
+  "shadow_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "scene_background": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "env_map_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "fog_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "set_light": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Light name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Light UUID",
+        "type": "string"
+      },
+      "color": {
+        "description": "#RRGGBB",
+        "type": "string"
+      },
+      "intensity": {
+        "type": "number"
+      },
+      "position": {
+        "description": "[x, y, z]",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "castShadow": {
+        "type": "boolean"
+      },
+      "groundColor": {
+        "description": "HemisphereLight ground color, #RRGGBB",
+        "type": "string"
+      }
+    }
+  },
+  "set_shadow": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Object or light name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Object or light UUID",
+        "type": "string"
+      },
+      "castShadow": {
+        "type": "boolean"
+      },
+      "receiveShadow": {
+        "type": "boolean"
+      },
+      "bias": {
+        "description": "Light only, e.g. -0.0001",
+        "type": "number"
+      },
+      "normalBias": {
+        "description": "Light only",
+        "type": "number"
+      },
+      "radius": {
+        "description": "Blur radius (light only)",
+        "type": "number"
+      },
+      "blurSamples": {
+        "description": "VSM blur samples (light only)",
+        "type": "number"
+      },
+      "mapSize": {
+        "description": "[width, height] shadow map resolution",
+        "minItems": 2,
+        "maxItems": 2,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "cameraNear": {
+        "type": "number"
+      },
+      "cameraFar": {
+        "type": "number"
+      },
+      "cameraLeft": {
+        "description": "DirectionalLight",
+        "type": "number"
+      },
+      "cameraRight": {
+        "description": "DirectionalLight",
+        "type": "number"
+      },
+      "cameraTop": {
+        "description": "DirectionalLight",
+        "type": "number"
+      },
+      "cameraBottom": {
+        "description": "DirectionalLight",
+        "type": "number"
+      }
+    }
+  },
+  "set_fog": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "color": {
+        "description": "#RRGGBB",
+        "type": "string"
+      },
+      "near": {
+        "description": "Fog only",
+        "type": "number"
+      },
+      "far": {
+        "description": "Fog only",
+        "type": "number"
+      },
+      "density": {
+        "description": "FogExp2 only",
+        "type": "number"
+      },
+      "background": {
+        "description": "Scene background color, #RRGGBB",
+        "type": "string"
+      }
+    }
+  },
+  "camera_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "renderer_info": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "renderer_settings": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "clipping_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "postprocessing_list": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "set_camera": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "position": {
+        "description": "[x, y, z]",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "rotation": {
+        "description": "[x, y, z] in radians",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "fov": {
+        "description": "PerspectiveCamera",
+        "type": "number"
+      },
+      "near": {
+        "type": "number"
+      },
+      "far": {
+        "type": "number"
+      },
+      "zoom": {
+        "type": "number"
+      },
+      "aspect": {
+        "description": "PerspectiveCamera",
+        "type": "number"
+      },
+      "left": {
+        "description": "OrthographicCamera",
+        "type": "number"
+      },
+      "right": {
+        "description": "OrthographicCamera",
+        "type": "number"
+      },
+      "top": {
+        "description": "OrthographicCamera",
+        "type": "number"
+      },
+      "bottom": {
+        "description": "OrthographicCamera",
+        "type": "number"
+      }
+    }
+  },
+  "set_renderer": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "toneMapping": {
+        "description": "0=None 1=Linear 2=Reinhard 3=Cineon 4=ACESFilmic 6=AgX 7=Neutral",
+        "type": "number"
+      },
+      "toneMappingExposure": {
+        "type": "number"
+      },
+      "outputColorSpace": {
+        "description": "srgb, srgb-linear",
+        "type": "string"
+      },
+      "pixelRatio": {
+        "type": "number"
+      },
+      "sortObjects": {
+        "type": "boolean"
+      },
+      "localClippingEnabled": {
+        "type": "boolean"
+      },
+      "shadowMapEnabled": {
+        "type": "boolean"
+      },
+      "shadowMapType": {
+        "description": "0=Basic 1=PCF 2=PCFSoft 3=VSM",
+        "type": "number"
+      }
+    }
+  },
+  "set_clipping": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "target": {
+        "description": "Default: renderer",
+        "type": "string",
+        "enum": [
+          "renderer",
+          "material"
+        ]
+      },
+      "name": {
+        "description": "Material (target=material) name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Material (target=material) UUID",
+        "type": "string"
+      },
+      "localClippingEnabled": {
+        "description": "Renderer",
+        "type": "boolean"
+      },
+      "planes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "normal": {
+              "minItems": 3,
+              "maxItems": 3,
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "description": "[x, y, z]"
+            },
+            "constant": {
+              "type": "number",
+              "description": "Distance from origin"
+            }
+          },
+          "required": [
+            "normal",
+            "constant"
+          ]
+        }
+      },
+      "clipIntersection": {
+        "description": "Material: intersection instead of union",
+        "type": "boolean"
+      },
+      "clipShadows": {
+        "description": "Material",
+        "type": "boolean"
+      },
+      "enabled": {
+        "description": "false removes the material's planes",
+        "type": "boolean"
+      }
+    }
+  },
+  "set_postprocessing": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "passIndex": {
+        "description": "From postprocessing_list",
+        "type": "number"
+      },
+      "passName": {
+        "description": "Pass name or class, e.g. \"UnrealBloomPass\"",
+        "type": "string"
+      },
+      "enabled": {
+        "type": "boolean"
+      },
+      "uniforms": {
+        "description": "{ \"threshold\": 0.5, \"strength\": 1.0 }",
+        "type": "object",
+        "propertyNames": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                },
+                "w": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        }
+      },
+      "effectIndex": {
+        "description": "Effect inside an EffectPass (postprocessing library)",
+        "type": "number"
+      },
+      "effectParams": {
+        "description": "{ \"intensity\": 2.0 }",
+        "type": "object",
+        "propertyNames": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                },
+                "w": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "geometry_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Mesh name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Mesh UUID",
+        "type": "string"
+      }
+    }
+  },
+  "instanced_mesh_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "InstancedMesh name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "InstancedMesh UUID",
+        "type": "string"
+      },
+      "sampleCount": {
+        "description": "Instances to sample (default: 5, max: 20)",
+        "type": "number"
+      },
+      "startIndex": {
+        "description": "First sampled index (default: 0)",
+        "type": "number"
+      }
+    }
+  },
+  "batched_mesh_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "BatchedMesh name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "BatchedMesh UUID",
+        "type": "string"
+      }
+    }
+  },
+  "morph_targets": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "skeleton_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "animation_details": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "set_instanced_mesh": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "InstancedMesh name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "InstancedMesh UUID",
+        "type": "string"
+      },
+      "count": {
+        "description": "Visible instances",
+        "type": "number"
+      },
+      "visible": {
+        "type": "boolean"
+      },
+      "frustumCulled": {
+        "type": "boolean"
+      }
+    }
+  },
+  "set_morph_target": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Mesh name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Mesh UUID",
+        "type": "string"
+      },
+      "index": {
+        "description": "Morph target index",
+        "type": "number"
+      },
+      "targetName": {
+        "description": "Morph target name (from morphTargetDictionary)",
+        "type": "string"
+      },
+      "influence": {
+        "type": "number",
+        "description": "0-1"
+      }
+    },
+    "required": [
+      "influence"
+    ]
+  },
+  "set_animation": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "mixerIndex": {
+        "description": "From animation_details (default: 0)",
+        "type": "number"
+      },
+      "timeScale": {
+        "description": "Mixer time scale",
+        "type": "number"
+      },
+      "time": {
+        "description": "Seek mixer time (not recorded as a change)",
+        "type": "number"
+      },
+      "clipName": {
+        "description": "Target action by clip name",
+        "type": "string"
+      },
+      "actionWeight": {
+        "description": "0-1",
+        "type": "number"
+      },
+      "actionTimeScale": {
+        "type": "number"
+      },
+      "actionPaused": {
+        "type": "boolean"
+      },
+      "play": {
+        "type": "boolean"
+      },
+      "stop": {
+        "type": "boolean"
+      }
+    }
+  },
+  "web_audit": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "performance_snapshot": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "perf_monitor": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "duration": {
+        "description": "Seconds (default: 3, max: 30)",
+        "type": "number"
+      },
+      "includeFrameTimes": {
+        "description": "Include raw frame times (default: false)",
+        "type": "boolean"
+      }
+    }
+  },
+  "draw_call_breakdown": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "memory_stats": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "dispose_check": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "console_capture": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "clear": {
+        "description": "Clear the buffer",
+        "type": "boolean"
+      },
+      "level": {
+        "type": "string",
+        "enum": [
+          "log",
+          "warn",
+          "error"
+        ]
+      },
+      "limit": {
+        "description": "Max messages (default: 50)",
+        "type": "number"
+      }
+    }
+  },
+  "toggle_overlay": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "description": "true=show, false=hide, omit=toggle",
+        "type": "boolean"
+      }
+    }
+  },
+  "overlay_selected": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "highlight_object": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Object name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Object UUID",
+        "type": "string"
+      },
+      "mode": {
+        "description": "Default: wireframe",
+        "type": "string",
+        "enum": [
+          "wireframe",
+          "visibility"
+        ]
+      },
+      "enabled": {
+        "description": "Default: true",
+        "type": "boolean"
+      }
+    }
+  },
+  "toggle_wireframe": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Object (omit for whole scene) name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Object (omit for whole scene) UUID",
+        "type": "string"
+      },
+      "enabled": {
+        "description": "true=on, false=restore, omit=toggle",
+        "type": "boolean"
+      }
+    }
+  },
+  "bounding_boxes": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Target object (omit for all meshes) name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Target object (omit for all meshes) UUID",
+        "type": "string"
+      },
+      "enabled": {
+        "description": "true=show (default), false=remove all",
+        "type": "boolean"
+      },
+      "clear": {
+        "description": "Remove all boxes",
+        "type": "boolean"
+      },
+      "color": {
+        "description": "Hex number (default: 0x00ff00)",
+        "type": "number"
+      },
+      "recursive": {
+        "description": "Include children of target",
+        "type": "boolean"
+      },
+      "onlyVisible": {
+        "description": "Only visible objects (default: true)",
+        "type": "boolean"
+      },
+      "limit": {
+        "description": "Max boxes (default: 50)",
+        "type": "number"
+      }
+    }
+  },
+  "add_helper": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "target": {
+        "description": "Target object name",
+        "type": "string"
+      },
+      "targetUuid": {
+        "description": "Target object UUID",
+        "type": "string"
+      },
+      "type": {
+        "description": "Default: box",
+        "type": "string",
+        "enum": [
+          "box",
+          "axes",
+          "skeleton",
+          "arrow",
+          "grid",
+          "polar_grid",
+          "camera",
+          "directional_light",
+          "spot_light",
+          "point_light",
+          "hemisphere_light",
+          "plane"
+        ]
+      },
+      "size": {
+        "description": "Axes/Grid/light helper size (default: 1)",
+        "type": "number"
+      },
+      "color": {
+        "description": "Hex number (default: 0x00ff00)",
+        "type": "number"
+      },
+      "direction": {
+        "description": "[x, y, z] for ArrowHelper/PlaneHelper",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "origin": {
+        "description": "[x, y, z] origin for ArrowHelper",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "length": {
+        "description": "ArrowHelper length (default: 1)",
+        "type": "number"
+      },
+      "divisions": {
+        "description": "GridHelper divisions (default: 10)",
+        "type": "number"
+      }
+    }
+  },
+  "remove_helper": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "helperId": {
+        "type": "string",
+        "description": "ID returned by add_helper"
+      }
+    },
+    "required": [
+      "helperId"
+    ]
+  },
+  "run_js": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "JavaScript body. Vars: scene, renderer, camera, gl"
+      }
+    },
+    "required": [
+      "code"
+    ]
+  },
+  "take_screenshot": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "width": {
+        "description": "Width in pixels (default: canvas width)",
+        "type": "number"
+      },
+      "height": {
+        "description": "Height in pixels (default: canvas height)",
+        "type": "number"
+      }
+    }
+  },
+  "annotated_screenshot": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "width": {
+        "description": "Width in pixels (default: canvas width)",
+        "type": "number"
+      },
+      "height": {
+        "description": "Height in pixels (default: canvas height)",
+        "type": "number"
+      }
+    }
+  },
+  "capture_frames": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "fps": {
+        "description": "Frames per second (default: 30)",
+        "type": "number"
+      },
+      "duration": {
+        "description": "Seconds to record (default: 3)",
+        "type": "number"
+      },
+      "format": {
+        "description": "png = lossless (default), jpeg = smaller/faster",
+        "type": "string",
+        "enum": [
+          "png",
+          "jpeg"
+        ]
+      },
+      "width": {
+        "description": "Width in pixels (default: canvas width)",
+        "type": "number"
+      },
+      "height": {
+        "description": "Height in pixels (default: canvas height)",
+        "type": "number"
+      }
+    }
+  },
+  "scene_export": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Object (omit for entire scene) name",
+        "type": "string"
+      },
+      "uuid": {
+        "description": "Object (omit for entire scene) UUID",
+        "type": "string"
+      },
+      "binary": {
+        "description": "GLB (default) or glTF JSON",
+        "type": "boolean"
+      }
+    }
+  },
+  "pending_changes": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "style": {
+        "description": "Code flavour (default: both)",
+        "type": "string",
+        "enum": [
+          "vanilla",
+          "r3f",
+          "both"
+        ]
+      },
+      "clear": {
+        "description": "Forget the listed changes (after writing them to code)",
+        "type": "boolean"
+      }
+    }
+  },
+  "revert_changes": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "ids": {
+        "description": "Change ids to revert (default: all)",
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "gltf_to_r3f": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "filePath": {
+        "type": "string",
+        "description": "Absolute or relative path to the .glb/.gltf file"
+      },
+      "typescript": {
+        "description": "Generate TypeScript (default: true)",
+        "type": "boolean"
+      },
+      "preload": {
+        "description": "Add useGLTF.preload() (default: true)",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "filePath"
+    ]
+  },
+  "bridge_status": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  },
+  "set_dev_port": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "port": {
+        "type": "number",
+        "description": "Dev server port, e.g. 3000, 5173, 8080"
+      }
+    },
+    "required": [
+      "port"
+    ]
+  },
+  "set_dev_url": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "Full URL, e.g. https://my-app.vercel.app"
+      }
+    },
+    "required": [
+      "url"
+    ]
+  }
+}

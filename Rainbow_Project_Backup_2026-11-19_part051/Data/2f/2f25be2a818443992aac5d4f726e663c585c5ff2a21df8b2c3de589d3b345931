@@ -1,0 +1,29 @@
+from pathlib import Path,PurePosixPath
+from xml.etree import ElementTree as ET
+import hashlib,json,os,shutil,subprocess,zipfile
+root=Path(__file__).resolve().parent
+sdk=root/'sdk';outs=[]
+def revision(e):return tuple(int(e.findtext('revision/'+k,'0')) for k in ('major','minor','micro','preview'))
+pairs=[('platforms;android-34','Android SDK Platform 34'),('build-tools;34.0.0','Android SDK Build-Tools 34'),('platform-tools','Android SDK Platform-Tools'),('cmdline-tools;17.0','Android SDK Command-line Tools')]
+els=ET.parse(root/'packages.xml').findall('.//remotePackage')
+for key,display in pairs:
+ avail=sorted([e for e in els if e.get('path')==key and e.findtext('display-name')==display and revision(e)[3]==0 and (e.find('channelRef') is None or e.find('channelRef').get('ref')=='channel-0')],key=revision,reverse=True)
+ assert avail,key
+ e=avail[0];opts=[a for a in e.findall('./archives/archive') if a.findtext('host-os') in (None,'linux')];c=opts[0].find('complete')
+ url=c.findtext('url');filename=PurePosixPath(url).name;assert url==filename
+ f=root/filename
+ if not f.exists():subprocess.run(['curl','-fsSL','--retry','2','--max-time','180','-o',str(f),'https://dl.google.com/android/repository/'+url],check=True)
+ assert f.stat().st_size==int(c.findtext('size')) and hashlib.sha1(f.read_bytes()).hexdigest()==c.findtext('checksum')
+ dst=sdk.joinpath(*key.split(';'));dst.mkdir(parents=True,exist_ok=True)
+ with zipfile.ZipFile(f) as z:
+  assert z.testzip() is None
+  for el in z.infolist():
+   pt=PurePosixPath(el.filename);assert not pt.is_absolute() and '..' not in pt.parts
+   if len(pt.parts)<2 or el.is_dir():continue
+   dest=dst.joinpath(*pt.parts[1:]);dest.parent.mkdir(parents=True,exist_ok=True)
+   with z.open(el) as inn,dest.open('wb') as out:shutil.copyfileobj(inn,out)
+   mode=el.external_attr>>16
+   if mode&0o111:dest.chmod(0o755)
+ outs.append({'package':key,'revision':revision(e),'filename':filename,'registrySHA1':c.findtext('checksum'),'verifiedBytes':f.stat().st_size,'SHA256':hashlib.sha256(f.read_bytes()).hexdigest()})
+ (root/'installed.json').write_text(json.dumps(outs,indent=2))
+ print(key,revision(e),'verified',flush=True)

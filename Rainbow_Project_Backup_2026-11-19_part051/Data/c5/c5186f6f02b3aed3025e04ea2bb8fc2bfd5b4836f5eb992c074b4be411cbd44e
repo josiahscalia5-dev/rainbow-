@@ -1,0 +1,1 @@
+three-explicit-live {'wiring': 'Explicit game scene from its live QA API; verified inspector injected in the disposable tab after the game initialized.', 'page': '### Result\n{\n  "stage": "07",\n  "childCount": 9,\n  "bridge": true\n}\n### Ran Playwright code\n```js\na

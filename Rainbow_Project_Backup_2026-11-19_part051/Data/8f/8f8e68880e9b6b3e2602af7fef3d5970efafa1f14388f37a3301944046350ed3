@@ -1,0 +1,15 @@
+# Reference vs live — reproducible metrics
+
+Method: `scripts/compare.py` (Pillow/numpy). mad = mean |ΔRGB| at 1/4 scale (lower is closer);
+hue_corr = 36-bin hue-histogram correlation of saturated pixels (−1…1, higher is closer);
+edge_corr = Sobel edge-map correlation at 1/8 scale (−1…1, structure/composition indicator).
+These are crude indicators, not a fidelity percentage. Girl-identity regions (01/10/11) and the
+03 phone outline are masked.
+
+| Screen | mad | hue_corr | edge_corr | masked |
+|---|---|---|---|---|
+| 04 | 11.3 | 0.94 | 0.764 | — |
+| 05 | 5.6 | 0.996 | 0.943 | — |
+| 06 | 14.3 | 0.985 | 0.728 | — |
+| 07 | 13.3 | 0.992 | 0.736 | — |
+| 08 | 10.0 | 0.991 | 0.842 | — |
