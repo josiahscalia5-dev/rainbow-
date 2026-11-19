@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 14963a9..5e56319 100644
+index 14963a9..dd0cc66 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -488,8 +488,8 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
@@ -22,16 +22,27 @@ index 14963a9..5e56319 100644
      col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
    }
    if (uPk.x > 0.5) {
+@@ -1296,7 +1296,7 @@ export function addM04(ctx: M04Ctx) {
+     // ramped in from m04wua0 to m04wua1 u inside the opening. They share the river's vertex buffer (so the m04rfew
+     // telescope shrinks them with the river) but are drawn by their own see-through mesh (soft lapping top edge).
+     const idxUp: number[] = [];
+-    const wuH = Math.min(1.8, M04.num('m04wuh', 1.5));      // highest climb (arc u above the old edge; the wall is flat below ~1.8)
++    const wuH = Math.min(1.8, M04.num('m04wuh', 1.7));      // highest climb (arc u above the old edge; the wall is flat below ~1.8)
+     if (wup) {
+       const nE = 12, base = pos.length / 3, W = nE + 1;
+       const a0 = M04.num('m04wua0', 1.4), a1 = M04.num('m04wua1', 4.0);
 @@ -1376,10 +1376,10 @@ export function addM04(ctx: M04Ctx) {
            : new THREE.Vector4(0, 1, 0, 1) },
          // r19b `&m04wup=1` (needs m04sband): m04wuh highest climb (u up the wall), m04wul tongue wavelength, m04wud tongue
          // depth, m04wub band share at the old edge, m04wun0 / m04wun1 / m04wuf the climb falls to m04wuf of it from m04wun0
 -        // to m04wun1 u ahead of Benny, m04wus soft top edge, m04wuv tongue drift with the current, m04wut band column at the crest
-+        // to m04wun1 u ahead of Benny, m04wus soft top edge, m04wuv tongue drift with the current, m04wut band column at the crest, m04wuw crest lace
-         uWU: { value: wup ? new THREE.Vector4(wuH, M04.num('m04wul', 12), M04.num('m04wud', 0.15), M04.num('m04wub', 0.6)) : new THREE.Vector4(0, 1, 0, 1) },
-         uWU2: { value: new THREE.Vector4(M04.num('m04wun0', 2), M04.num('m04wun1', 14), M04.num('m04wuf', 0.3), M04.num('m04wus', 0.15)) },
+-        uWU: { value: wup ? new THREE.Vector4(wuH, M04.num('m04wul', 12), M04.num('m04wud', 0.15), M04.num('m04wub', 0.6)) : new THREE.Vector4(0, 1, 0, 1) },
+-        uWU2: { value: new THREE.Vector4(M04.num('m04wun0', 2), M04.num('m04wun1', 14), M04.num('m04wuf', 0.3), M04.num('m04wus', 0.15)) },
 -        uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), 0, M04.num('m04wut', 0.08)) },
-+        uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.7), M04.num('m04wut', 0.08)) },
++        // to m04wun1 u ahead of Benny, m04wus soft top edge, m04wuv tongue drift with the current, m04wut band column at the crest, m04wuw crest lace
++        uWU: { value: wup ? new THREE.Vector4(wuH, M04.num('m04wul', 9), M04.num('m04wud', 0.35), M04.num('m04wub', 0.6)) : new THREE.Vector4(0, 1, 0, 1) },
++        uWU2: { value: new THREE.Vector4(M04.num('m04wun0', 2), M04.num('m04wun1', 14), M04.num('m04wuf', 0.3), M04.num('m04wus', 0.6)) },
++        uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },
          uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
          uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
          uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },

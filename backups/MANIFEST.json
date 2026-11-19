@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19348,
-   "sha256": "be3c3acadcc662aa1b3d687dad14cf10a09b86ffa89f7236a33380aeab001e5d"
+   "sha256": "bea6271aee58b78f12d5127d431dfab76811613deea21ae47490b0cd29973f8d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -858,13 +858,73 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/INFO.json",
-   "bytes": 493,
-   "sha256": "8bcf34e5c81e0b21b54898e8abe648d897674cac0bf96c300bd77ca72661408f"
+   "bytes": 1191,
+   "sha256": "1b87d17cf1053ef4b4a2037db9e7ab850bdd747abf5335eb77c9c6f78a9d6961"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/tracked.patch",
    "bytes": 664,
    "sha256": "ec9dc710e9c88384168a305af2f58aae62940f37747dd125da5fa2c5f4628df8"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/closeup_f00.png",
+   "bytes": 799906,
+   "sha256": "e9a5403bf534c80f6552c5fc1f5d061555f608317736aada403b9e1dd5d57318"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/f06_forward6u.png",
+   "bytes": 1975591,
+   "sha256": "ef1d283a4f082e5630da32d9268c83336cd7e984d692df321ee77df17a27da5f"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/s06_start.png",
+   "bytes": 1820569,
+   "sha256": "b0f09166f40cf8adf5620bd2183febf59a47772a90b0bc851a930c59f7c6bd5b"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/s06_swim3u.png",
+   "bytes": 1780860,
+   "sha256": "a03f82f5f9dfa650c4f1ebca8264db1d4a4c3b1e1390d5858d8fac11f3ae0b6d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/s07_start.png",
+   "bytes": 1935452,
+   "sha256": "438893983fbe47fb955ac684c8fb7f5db74b045a8bac6546056c770573f998d8"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/s07_swim3u.png",
+   "bytes": 1944069,
+   "sha256": "4a215ec8de710d56594e2ae953399e89fcd049613619730e42653c90110b3b7a"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/s_left_steer.png",
+   "bytes": 1975478,
+   "sha256": "27c5b7ee332c7b0b651904a7ab4196c0683ce2f06aabbf4d1d2de3e409db3691"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/shots.json",
+   "bytes": 773,
+   "sha256": "e87b9d96df55342686ec69b53ba2ef563140ce26d8fe0582e8d7860112bd027a"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/shots_other.json",
+   "bytes": 913,
+   "sha256": "dd6524f3aaf51140d4f839562f47c8a054b652ff36ce74d6f89486032f776591"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/tools/benny20/landmarks.py",
+   "bytes": 2198,
+   "sha256": "b00f5ee4576c55c0bbe203b3e61bf3a6e388864d557702ea08ce8fb300ad5757"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/tools/benny20/runs.py",
+   "bytes": 916,
+   "sha256": "d2871497abadf2e5d9f9c3f2ba0f2a1853f5022b8cbc970d1dfcb5d076b91439"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/tools/benny20/widths.py",
+   "bytes": 956,
+   "sha256": "83db4480cc7b0cea8d975fcb345b15696e7f64e446865350cec604df694658bd"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
@@ -1388,8 +1448,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/INFO.json",
-   "bytes": 477,
-   "sha256": "1eb0874aa1cda275fe5814631fdc26fae8aee870c8fbc6b971e2039e382200e5"
+   "bytes": 506,
+   "sha256": "95a03fe41ddcbdd181f8ac1f07209c87e9f0b0ada670bef01f63767074a3ec3f"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c21/tracked.patch",
+   "bytes": 3642,
+   "sha256": "97a22858dc53d5e34ca4bcdd6c35e85a0bfbe715fb74e7f703d6b2f4344dff8c"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
@@ -1554,7 +1619,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/INFO.json",
    "bytes": 486,
-   "sha256": "0fd8c47fde4cfb1663388c2e06737620bd050526431b527f447adca24ad08534"
+   "sha256": "1f26800b7ccb9092d5cbc2437038c67a1ffef4222fd71bdec2e57adf79c2af01"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/INFO.json",

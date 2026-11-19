@@ -1076,3 +1076,483 @@ The box classes are polluted by the background swirls and coins. I'll compare ce
 > y1280 P: 259-530 w=271
 > y1320 P: 293-484 w=191
 
+### 🤖 Claude — 2026-11-19T23:35:51.434Z
+
+Colour bridging is unreliable on knit. Let me check the runtime's QA mask hook to get a clean game silhouette.
+
+### 🤖 Claude — 2026-11-19T23:35:52.607Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"BENNY_MASK\\|__bennyQA\\|mask\" src/characters/benny/runtime.ts | head -20; sed -n 140,330p src/characters/benny/runtime.ts | grep -n \"QA\\|mask\" | head", "description": "Find mask QA hooks in runtime"}`
+
+### 🧑 User — 2026-11-19T23:35:52.685Z
+
+> ↩︎ result: 47: * Wave 5: 0.22 → 0.12. Measured in the live 05 capture with the re-exported GLB (flat-ID mask): 0.22 put the pom top at
+> 223:  // ---- QA segmentation mask (`?bennyMask`, or window.__bennyQA.mask(true) in ?qa pages) ----
+> 226:    const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body), b05 };
+> 227:    if (qs.has('qa') || qs.has('bennyMask')) (window as unknown as { __bennyQA?: typeof qa }).__bennyQA = qa;
+> 228:    if (qs.has('bennyMask')) qa.mask(true);
+> 246:function maskColour(name: string): string {
+> 252:    f.uniforms.uMaskCol.value.set(maskColour(f.mesh.name));
+> 254:    if (on) d.BENNY_MASK = ''; else delete d.BENNY_MASK;
+> 266:      m.material = new THREE.MeshBasicMaterial({ color: maskColour(m.name), fog: false });
+> 84:  // ---- QA segmentation mask (`?bennyMask`, or window.__bennyQA.mask(true) in ?qa pages) ----
+> 87:    const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body), b05 };
+> 88:    if (qs.has('qa') || qs.has('bennyMask')) (window as unknown as { __bennyQA?: typeof qa }).__bennyQA = qa;
+> 89:    if (qs.has('bennyMask')) qa.mask(true);
+> 107:function maskColour(name: string): string {
+> 113:    f.uniforms.uMa …[+136 chars]
+
+### 🤖 Claude — 2026-11-19T23:35:54.258Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log | grep -v \"console error\\|outside of Vite\"; ls /home/user/wt/benny/qa/benny/r20/t1/*/", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-19T23:35:54.798Z
+
+> ↩︎ result: f00_start 04 s 78.344 lat 0 04 coins 1330
+> f03_forward3u 04 s 81.151 lat 0 04 coins 1330
+> f06_forward6u 04 s 84.195 lat 0 04 coins 1330
+> s_left_steer 04 s 84.183 lat -1.65 04 coins 1350
+> s_right_steer 04 s 84.184 lat 1.65 04 coins 1330
+> s05_start 05 s 133.196 lat 0 05 coins 1420
+> s05_swim3u 05 s 136.107 lat 0 05 coins 1420
+> s06_start 06 s 199.475 lat 0 06 coins 1680
+> s06_swim3u 06 s 202.592 lat 0 06 coins 1690
+> s07_start 07 s 273.66 lat 0 07 coins 1940
+> s07_swim3u 07 s 276.658 lat 0 07 coins 1950
+> /home/user/wt/benny/qa/benny/r20/t1/before/:
+> closeup_f00.png
+> f00_start.png
+> f03_forward3u.png
+> f06_forward6u.png
+> s05_start.png
+> s05_swim3u.png
+> s06_start.png
+> s06_swim3u.png
+> s07_start.png
+> s07_swim3u.png
+> s_left_steer.png
+> s_right_steer.png
+> shots.json
+> shots_other.json
+> 
+> /home/user/wt/benny/qa/benny/r20/t1/benny05/:
+
+### 🤖 Claude — 2026-11-19T23:35:58.778Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"__rainbow\\b\\|drawList\\|freezeAt\\|render: \\|renderOnce\\|redraw\" src/game/Game.ts | head -20; sed -n 246,275p src/characters/benny/runtime.ts", "description": "Inspect __rainbow QA API and mask colours"}`
+
+### 🧑 User — 2026-11-19T23:35:59.076Z
+
+> ↩︎ result: 9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 684:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 738:    drawList() {
+> 762:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> function maskColour(name: string): string {
+>   for (const [re, c] of MASK_COLS) if (re.test(name)) return c;
+>   return '#ff0000';
+> }
+> function setMask(scene: THREE.Object3D, furs: FurHandle[], on: boolean): void {
+>   for (const f of furs) {
+>     f.uniforms.uMaskCol.value.set(maskColour(f.mesh.name));
+>     const d = f.material.defines ?? (f.material.defines = {});
+>     if (on) d.BENNY_MASK = ''; else delete d.BENNY_MASK;
+>     f.material.needsUpdate = true;
+>   }
+>   scene.traverse((o) => {
+>     const m = o as THREE.Mesh;
+>     if (!m.isMesh || (m as unknown as THREE.InstancedMesh).isInstancedMesh) return;
+>     const ud = m.userData as { qaOrig?: THREE.Material | THREE.Material[]; qaVis?: boolean };
+>     if (on && !ud.qaOrig) {
+>       ud.qaOrig = m.material;
+>       ud.qaVis = m.visible;
+>       // face decals sit on the red body: hide them so their alpha edges do not leak texture colours
+>       if (/^(blush|mouth_)/.test(m.name)) m.visible = false;
+>       m.material = new TH …[+314 chars]
+
+### 🤖 Claude — 2026-11-19T23:36:02.555Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"MASK_COLS\" -A12 src/characters/benny/runtime.ts | head -16; sed -n 730,760p src/game/Game.ts", "description": "Read mask colours and drawList API"}`
+
+### 🧑 User — 2026-11-19T23:36:02.899Z
+
+> ↩︎ result: 240:const MASK_COLS: [RegExp, string][] = [
+> 241-  [/^fur_pom/, '#00ff00'],
+> 242-  [/^hat_crown/, '#00ffff'],
+> 243-  [/^hat_brim/, '#0000ff'],
+> 244-  [/^hat_star/, '#000000'],
+> 245-];
+> 246-function maskColour(name: string): string {
+> 247:  for (const [re, c] of MASK_COLS) if (re.test(name)) return c;
+> 248-  return '#ff0000';
+> 249-}
+> 250-function setMask(scene: THREE.Object3D, furs: FurHandle[], on: boolean): void {
+> 251-  for (const f of furs) {
+> 252-    f.uniforms.uMaskCol.value.set(maskColour(f.mesh.name));
+> 253-    const d = f.material.defines ?? (f.material.defines = {});
+> 254-    if (on) d.BENNY_MASK = ''; else delete d.BENNY_MASK;
+> 255-    f.material.needsUpdate = true;
+>     probe(x = 0, y = 0) {
+>       const rc = new THREE.Raycaster();
+>       rc.setFromCamera(new THREE.Vector2(x, y), camera);
+>       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.obje …[+1513 chars]
+
+### 🤖 Claude — 2026-11-19T23:36:18.864Z
+
+I'll add an optional flat-colour mask capture to the shot tool so I can measure the game's hat/pom/fur silhouettes exactly.
+
+### 🤖 Claude — 2026-11-19T23:36:24.920Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"import cv2; print(cv2.__version__)\"; python3 - <<'EOF'\np='tools/benny20/shots.mjs'\ns=open(p).read()\nold=\"\"\"    log.push({ name, scr, dist, steer, frames: st.frames, s: st.s, lat: st.lat, stage: st.stage, coins: st.coins });\"\"\"\nnew=\"\"\"    if (process.env.B20_MASK) {\n      // flat part-colour mask of Benny alone (white background): fur red, pom green, crown cyan, cuff blue, star black\n      await page.evaluate(() => {\n        const { scene, camera, renderer } = window.__rainbow.qa3d();\n        const benny = scene.getObjectB …[+1324 chars]`
+
+### 🧑 User — 2026-11-19T23:36:25.430Z
+
+> ↩︎ result: 5.1.0
+> 30:    if (process.env.B20_MASK) {
+
+### 🤖 Claude — 2026-11-19T23:36:31.690Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/shots.mjs'\ns=open(p).read()\nold=\"const cc = renderer.getClearColor(benny.position.clone());\"\nnew=\"let Ctor; scene.traverse((o) => { if (!Ctor && o.material?.color) Ctor = o.material.color.constructor; }); const cc = renderer.getClearColor(new Ctor());\"\nassert old in s\ns=s.replace(old,new); open(p,'w').write(s)\nEOF\ncat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log | grep -v \"console error\\|outside of Vite\" | tail -6", "description": "Fix clear-colour save in mask c …[+8 chars]`
+
+### 🧑 User — 2026-11-19T23:36:31.803Z
+
+> ↩︎ result: s05_start 05 s 133.196 lat 0 05 coins 1420
+> s05_swim3u 05 s 136.107 lat 0 05 coins 1420
+> s06_start 06 s 199.475 lat 0 06 coins 1680
+> s06_swim3u 06 s 202.592 lat 0 06 coins 1690
+> s07_start 07 s 273.66 lat 0 07 coins 1940
+> s07_swim3u 07 s 276.658 lat 0 07 coins 1950
+
+### 🤖 Claude — 2026-11-19T23:36:33.100Z
+
+Now an approved-Benny silhouette via GrabCut (OpenCV is available), to compare against game masks.
+
+### 🤖 Claude — 2026-11-19T23:36:39.341Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && S=/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c && python3 -I - <<EOF\nimport cv2, numpy as np\nim = cv2.imread('/home/user/rainbow-/references/04_through_the_five_arrows.png')\nx0,y0,x1,y1 = 170,940,620,1430\nc = im[y0:y1, x0:x1].copy()\nmask = np.zeros(c.shape[:2], np.uint8)\nrect = (12, 25, 440, 460)   # inside crop: x 182-622, y 965-1425\nbg = np.zeros((1,65),np.float64); fg=np.zeros((1,65),np.float64)\ncv2.grabCut(c, mask, rect, bg, fg, 8, cv2.GC_INIT_WITH_RECT)\nm = np.where((mask==1)|(mask==3),255,0).astype(np. …[+540 chars]`
+
+### 🤖 Claude — 2026-11-19T23:36:40.389Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_gc_vis.png"}`
+
+### 🧑 User — 2026-11-19T23:36:42.572Z
+
+> ↩︎ result: bbox 188 591 965 1408 area 111283
+
+### 🧑 User — 2026-11-19T23:36:42.589Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:36:48.682Z
+
+GrabCut is usable (misses the star, adds a little water at bottom-left). Row extents from it, then the game mask once benny05 renders finish.
+
+### 🤖 Claude — 2026-11-19T23:36:52.286Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nimport cv2, numpy as np\nm=cv2.imread('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_gc_mask.png',0)\nfor y in range(970,1410,15):\n    xs=np.nonzero(m[y])[0]\n    print(y, (xs.min(), xs.max(), xs.max()-xs.min()) if len(xs) else None)\n\"; cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log | grep -v \"console error\\|outside of Vite\" | tail -3", "description": "Approved mask row extents"}`
+
+### 🧑 User — 2026-11-19T23:36:52.784Z
+
+> ↩︎ result: 970 (np.int64(381), np.int64(433), np.int64(52))
+> 985 (np.int64(352), np.int64(455), np.int64(103))
+> 1000 (np.int64(335), np.int64(466), np.int64(131))
+> 1015 (np.int64(329), np.int64(477), np.int64(148))
+> 1030 (np.int64(320), np.int64(484), np.int64(164))
+> 1045 (np.int64(317), np.int64(485), np.int64(168))
+> 1060 (np.int64(305), np.int64(482), np.int64(177))
+> 1075 (np.int64(285), np.int64(496), np.int64(211))
+> 1090 (np.int64(273), np.int64(506), np.int64(233))
+> 1105 (np.int64(259), np.int64(515), np.int64(256))
+> 1120 (np.int64(246), np.int64(516), np.int64(270))
+> 1135 (np.int64(238), np.int64(514), np.int64(276))
+> 1150 (np.int64(234), np.int64(547), np.int64(313))
+> 1165 (np.int64(234), np.int64(551), np.int64(317))
+> 1180 (np.int64(237), np.int64(551), np.int64(314))
+> 1195 (np.int64(234), np.int64(553), np.int64(319))
+> 1210 (np.int64(202), np.int64(550), np.int64(348))
+> 1225 (np.int64(190), np.int64(575), np.int64(385))
+> 1240 (np.int64(191), np.int64(587), np.int64(396))
+> 1255 (np.int64(193), np.int64(590), np.int64(397))
+> 1270 (np.int64(201), np.int64(587), np.int64(386))
+> 1285 (np.int64(205), np.int64(573), np.int64(368))
+> 1300 (np.int64(209), np.int64(546), np.int64(337))
+> 1315 (np.int64(201), np.int64( …[+455 chars]
+
+### 🤖 Claude — 2026-11-19T23:37:04.441Z
+
+Let me count the approved stripes on the crown's left side (not hidden by the pompom), zoomed 3x.
+
+### 🤖 Claude — 2026-11-19T23:37:07.173Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/04_through_the_five_arrows.png')\nim.crop((225,1030,345,1280)).resize((360,750),Image.LANCZOS).save('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_left3x.png')\nim.crop((440,1030,560,1280)).resize((360,750),Image.LANCZOS).save('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_right3x.png')\n\"", "description": "Zoom approved crown left and right sides"}`
+
+### 🧑 User — 2026-11-19T23:37:07.676Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:37:08.473Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_left3x.png"}`
+
+### 🧑 User — 2026-11-19T23:37:08.503Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:37:18.429Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log | grep -v \"console error\\|outside of Vite\" | tail -12; ls /home/user/wt/benny/qa/benny/r20/t1/benny05/", "description": "Check benny05 render progress"}`
+
+### 🧑 User — 2026-11-19T23:37:18.718Z
+
+> ↩︎ result: f00_start 04 s 78.344 lat 0 04 coins 1330
+> f03_forward3u 04 s 81.151 lat 0 04 coins 1330
+> f06_forward6u 04 s 84.195 lat 0 04 coins 1330
+> s_left_steer 04 s 84.183 lat -1.65 04 coins 1350
+> s_right_steer 04 s 84.184 lat 1.65 04 coins 1330
+> s05_start 05 s 133.196 lat 0 05 coins 1420
+> s05_swim3u 05 s 136.107 lat 0 05 coins 1420
+> s06_start 06 s 199.475 lat 0 06 coins 1680
+> s06_swim3u 06 s 202.592 lat 0 06 coins 1690
+> s07_start 07 s 273.66 lat 0 07 coins 1940
+> s07_swim3u 07 s 276.658 lat 0 07 coins 1950
+> f00_start.png
+> f03_forward3u.png
+> f06_forward6u.png
+> s_left_steer.png
+
+### 🤖 Claude — 2026-11-19T23:37:49.690Z
+
+While benny05 finishes, let me check the approved fur colour statistics inside the approved mask, and look at the baked 05 body map.
+
+### 🤖 Claude — 2026-11-19T23:37:56.924Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nimport cv2, numpy as np\nfrom PIL import Image\nm=cv2.imread('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_gc_mask.png',0)>0\na=np.asarray(Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB')).astype(int)\nR,G,B=a[...,0],a[...,1],a[...,2]\nfur=m&(R>90)&(R>B+5)&(G<0.62*R)\nfur[:1275]=False\nv=a[fur]; L=v.mean(1)\nprint('approved fur n',fur.sum(),'median',np.median(v,0),'mean',v.mean(0).astype(int))\nfor p in (10,25,50,75,90): \n    idx=np.argsort(L)[int(len( …[+939 chars]`
+
+### 🧑 User — 2026-11-19T23:37:57.625Z
+
+> ↩︎ result: approved fur n 28424 median [213.  71. 150.] mean [207  74 151]
+>  p10 [161  44 115] 106
+>  p25 [199  47 120] 122
+>  p50 [220  70 142] 144
+>  p75 [245  94 163] 167
+>  p90 [248 113 192] 184
+> approved pom median [133.  30. 229.] p10/p90 L [ 78 130 178]
+> approved cuff median [103.  16. 209.]
+> approved white median [233. 182. 233.] 9071
+> approved crown violet median [104.  15. 216.]
+> approved star median [252. 195.  70.] 1191 472 527 1150 1186
+
+### 🤖 Claude — 2026-11-19T23:38:02.570Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log | grep -v \"console error\\|outside of Vite\" | tail -8; ls /home/user/wt/benny/qa/benny/r20/t1/benny05/", "description": "Check benny05 render progress"}`
+
+### 🧑 User — 2026-11-19T23:38:02.667Z
+
+> ↩︎ result: s06_swim3u 06 s 202.592 lat 0 06 coins 1690
+> s07_start 07 s 273.66 lat 0 07 coins 1940
+> s07_swim3u 07 s 276.658 lat 0 07 coins 1950
+> f00_start 04 s 78.273 lat 0 04 coins 1330
+> f03_forward3u 04 s 81.149 lat 0 04 coins 1330
+> f06_forward6u 04 s 84.205 lat 0 04 coins 1330
+> s_left_steer 04 s 84.181 lat -1.65 04 coins 1350
+> s_right_steer 04 s 84.183 lat 1.65 04 coins 1330
+> f00_start.png
+> f03_forward3u.png
+> f06_forward6u.png
+> s05_start.png
+> s_left_steer.png
+> s_right_steer.png
+> shots.json
+
+### 🤖 Claude — 2026-11-19T23:38:03.816Z
+
+Now writing `benny20.ts` (builds on benny05; every parameter has a `?b20…` URL override for tuning).
+
+### 🤖 Claude — 2026-11-19T23:38:33.379Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "content": "/**\n * Round 20 Benny — `?benny20=1` (benny-character-artist, qa/benny/r19b/PROGRESS.md). Off (default): nothing in this file\n * runs, every material, geometry and shader program is the previous one.\n *\n * Builds ON benny05 (benny05.ts also runs whenever benny20 is on: approved-pixel maps, beanie seat, damped roll) and then\n * moves Benny toward the APPROVED Screen 04 Benny (references/04_through_the_five_arrows.png, the largest, sharpest view):\n *  1. Fur: soft plush LOCKS instead of single needles (fur.ts  …[+7780 chars]`
+
+### 🧑 User — 2026-11-19T23:38:33.447Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/benny/src/characters/benny/benny20.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T23:38:39.122Z
+
+Now wiring it into `runtime.ts` (benny05 runs whenever benny20 is on; nothing changes when both are off).
+
+### 🤖 Claude — 2026-11-19T23:38:46.531Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/runtime.ts'\ns=open(p).read()\nrep=[\n(\"import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';\",\n \"import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';\\nimport { BENNY20, FUR20, applyBenny20, loadBenny20Maps } from './benny20';\\n/** benny05's look also runs under `?benny20=1` (benny20.ts builds on it); both off: nothing runs */\\nconst B05 = BENNY05 || BENNY20;\"),\n(\"  const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;\\n  retu …[+1580 chars]`
+
+### 🧑 User — 2026-11-19T23:38:53.620Z
+
+> ↩︎ result: 9:import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+> 12:const B05 = BENNY05 || BENNY20;
+> TSC_OK
+
+### 🤖 Claude — 2026-11-19T23:39:20.780Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\nold=\"\"\"    star.material = mat;\n  }\n}\n\"\"\"\nnew=\"\"\"    star.material = mat;\n  }\n\n  // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload\n  if (QS?.has('qa') && typeof window !== 'undefined') {\n    (window as unknown as { __b20?: unknown }).__b20 = { scene, furs, hat, pom, star, HAT20, LOCK20 };\n  }\n}\n\"\"\"\nassert s.count(old)==1\ns=s.replace(old,new); open(p,'w').write(s)\nEOF\ncat > tools/benny20/probe.mjs <<'EOF'\n …[+4096 chars]`
+
+### 🧑 User — 2026-11-19T23:39:24.704Z
+
+> ↩︎ result: TSC_OK
+> [This command modified 1 file you've previously read: ../wt/benny/src/characters/benny/benny20.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-19T23:39:25.875Z
+
+Task-1 renders are done. Let me crop the close-ups and look at BEFORE vs benny05 at the 04 start view and in motion.
+
+### 🤖 Claude — 2026-11-19T23:39:27.626Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny/qa/benny/r20/t1 && for v in before benny05; do python3 -I /home/user/wt/benny/tools/benny20/crop.py $v/f00_start.png $v/closeup_f00.png; for s in f03_forward3u s_left_steer s_right_steer; do python3 -I /home/user/wt/benny/tools/benny20/crop.py $v/$s.png $v/closeup_$s.png 120 760 744 1460; done; done; ls benny05", "description": "Crop close-ups for both variants"}`
+
+### 🤖 Claude — 2026-11-19T23:39:28.029Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/qa/benny/r20/t1/benny05/closeup_f00.png"}`
+
+### 🧑 User — 2026-11-19T23:39:30.246Z
+
+> ↩︎ result: closeup_f00.png
+> closeup_f03_forward3u.png
+> closeup_s_left_steer.png
+> closeup_s_right_steer.png
+> f00_start.png
+> f03_forward3u.png
+> f06_forward6u.png
+> s05_start.png
+> s05_swim3u.png
+> s06_start.png
+> s06_swim3u.png
+> s07_start.png
+> s07_swim3u.png
+> s_left_steer.png
+> s_right_steer.png
+> shots.json
+> shots_other.json
+
+### 🧑 User — 2026-11-19T23:39:30.272Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:39:34.026Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/qa/benny/r20/t1/benny05/closeup_s_left_steer.png"}`
+
+### 🧑 User — 2026-11-19T23:39:34.059Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:39:34.432Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/qa/benny/r20/t1/before/closeup_s_left_steer.png"}`
+
+### 🧑 User — 2026-11-19T23:39:34.470Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:39:40.709Z
+
+benny05 on 04: beanie clearly better (real knit, cream stripes), fur unchanged (neon needles), star glossier lemon. Quick look at the 05/06/07 start views (side-by-side only for my own judgement).
+
+### 🤖 Claude — 2026-11-19T23:39:43.859Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny/qa/benny/r20/t1 && python3 -I -c \"\nfrom PIL import Image\nfor s in ['s05_start','s06_start','s07_start']:\n    a=Image.open(f'before/{s}.png').crop((150,700,714,1500)); b=Image.open(f'benny05/{s}.png').crop((150,700,714,1500))\n    c=Image.new('RGB',(a.width*2+10,a.height),'white'); c.paste(a,(0,0)); c.paste(b,(a.width+10,0)); c=c.resize((c.width*3//4,c.height*3//4)); c.save(f'/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/sbs_{s}.png')\n\"", "description": "Make private side-by-side checks for 05/06/07"}`
+
+### 🧑 User — 2026-11-19T23:39:44.533Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:39:44.820Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/sbs_s06_start.png"}`
+
+### 🧑 User — 2026-11-19T23:39:44.849Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:39:47.368Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/sbs_s07_start.png"}`
+
+### 🧑 User — 2026-11-19T23:39:47.418Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:39:54.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && ls qa/match/04/r19/ | head -30; find qa/match/04/r19 -name \"*.mp4\" | head", "description": "Look for existing v3 swim clips"}`
+
+### 🧑 User — 2026-11-19T23:39:54.773Z
+
+> ↩︎ result: PREVIEW_QUERY_v3.txt
+> preview_v3
+> qa/match/04/r19/preview_v3/swim_clip_half.mp4
+> qa/match/04/r19/preview_v3/swim_clip_full.mp4
+
+### 🤖 Claude — 2026-11-19T23:39:57.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && ffprobe -v error -show_entries format=duration:stream=width,height,nb_frames -of compact qa/match/04/r19/preview_v3/swim_clip_half.mp4; ls qa/match/04/r19/preview_v3 | head", "description": "Probe existing BEFORE clip"}`
+
+### 🧑 User — 2026-11-19T23:39:58.021Z
+
+> ↩︎ result: stream|width=432|height=768|nb_frames=96
+> format|duration=4.000000
+> f00_start_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_steer.png
+> s_right_steer.png
+> swim_clip_full.mp4
+> swim_clip_half.mp4
+
+### 🤖 Claude — 2026-11-19T23:40:00.418Z
+
+The BEFORE clip exists (4 s, half size). I'll render the benny05 clip in the background at low priority while I start the benny20 probe.
+
+### 🤖 Claude — 2026-11-19T23:40:04.522Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && V3=$(cat qa/match/04/r19/PREVIEW_QUERY_v3.txt) && rm -rf /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/clip05 && nice -n 10 node tools/lead_r13/swim_clip.mjs 04 /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/clip05 4 \"$V3&benny05=1\" 2>&1 | grep -v \"console\\|outside of Vite\" | tail -3 && ffmpeg -v error -y -framerate 24 -i /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/clip05/%04d.png -vf scale=432:768 -pix_fmt yuv420p -c:v libx264 -crf 20 qa/benn …[+137 chars]`
+
+### 🧑 User — 2026-11-19T23:40:04.593Z
+
+> ↩︎ result: Command running in background with ID: bjagxappq. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bjagxappq.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-19T23:40:08.020Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && cat > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/v1.json <<'EOF'\n[\n {\"name\": \"a0_default\"}\n]\nEOF\nV3=$(cat qa/match/04/r19/PREVIEW_QUERY_v3.txt); B20_MASK=1 timeout 600 node tools/benny20/probe.mjs qa/benny/r20/probe/a \"$V3&benny20=1\" /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/v1.json 2>&1 | grep -v \"outside of Vite\" | tail -8", "description": "First benny20 probe render at 04 start", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T23:40:43.395Z
+
+> ↩︎ result: at 04 s 78.226
+> variant a0_default 13509 ms
+
+### 🤖 Claude — 2026-11-19T23:40:46.462Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny/qa/benny/r20/probe/a && python3 -I /home/user/wt/benny/tools/benny20/crop.py a0_default.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/a0.png && python3 -I /home/user/wt/benny/tools/benny20/crop.py a0_default_mask.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/a0m.png", "description": "Crop first benny20 render and mask"}`
+
+### 🧑 User — 2026-11-19T23:40:46.879Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:40:47.511Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/a0.png"}`
+
+### 🧑 User — 2026-11-19T23:40:47.538Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:40:48.060Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/a0m.png"}`
+
+### 🧑 User — 2026-11-19T23:40:48.081Z
+
+> ↩︎ result: [image]
+

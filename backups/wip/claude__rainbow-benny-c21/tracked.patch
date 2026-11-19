@@ -1,8 +1,87 @@
+diff --git a/src/characters/benny/runtime.ts b/src/characters/benny/runtime.ts
+index 894a962..e214782 100644
+--- a/src/characters/benny/runtime.ts
++++ b/src/characters/benny/runtime.ts
+@@ -7,6 +7,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+ import type { BennyRuntime } from '../types';
+ import { makeFur, type FurHandle, type FurParams } from './fur';
+ import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
++import { BENNY20, FUR20, applyBenny20, loadBenny20Maps } from './benny20';
++/** benny05's look also runs under `?benny20=1` (benny20.ts builds on it); both off: nothing runs */
++const B05 = BENNY05 || BENNY20;
+ 
+ const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+ 
+@@ -33,8 +36,10 @@ export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Pro
+   const src = await loadScene();
+   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
+   // `?benny05=1` / `?match05=1` only: the maps baked from the approved Screen 05 (benny05.ts)
+-  const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;
+-  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });
++  const maps05 = B05 ? await loadBenny05Maps() : undefined;
++  // `?benny20=1` only: the round-20 knit / felt maps (benny20.ts)
++  const maps20 = BENNY20 ? await loadBenny20Maps() : undefined;
++  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05, maps20 });
+ }
+ 
+ /**
+@@ -74,7 +79,7 @@ function ridePitch(): number {
+ export function createBennyRuntime(
+   scene: THREE.Object3D,
+   clips: THREE.AnimationClip[],
+-  opts: { furQuality?: 'high' | 'low'; maps05?: Record<string, THREE.Texture | null> } = {},
++  opts: { furQuality?: 'high' | 'low'; maps05?: Record<string, THREE.Texture | null>; maps20?: Record<string, THREE.Texture | null> } = {},
+ ): BennyRuntime {
+   const root = new THREE.Group();
+   root.name = 'Benny';
+@@ -89,7 +94,8 @@ export function createBennyRuntime(
+   });
+   for (const m of toReplace) {
+     const p = { ...(m.userData.fur as FurParams) };
+-    if (BENNY05 && FUR05[m.name]) Object.assign(p, FUR05[m.name]);
++    if (B05 && FUR05[m.name]) Object.assign(p, FUR05[m.name]);
++    if (BENNY20 && FUR20[m.name]) Object.assign(p, FUR20[m.name]);
+     if (opts.furQuality === 'low') p.shells = Math.max(6, Math.round(p.shells * 0.6));
+     const h = makeFur(m, p);
+     m.parent!.add(h.mesh);
+@@ -97,8 +103,10 @@ export function createBennyRuntime(
+     furs.push(h);
+   }
+   // `?benny05=1` / `?match05=1`: the Screen-05 reference-matched look, on Benny himself (benny05.ts). Off: nothing runs.
+-  const b05 = BENNY05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
+-  if (BENNY05) clips = dampedClips(clips);
++  const b05 = B05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
++  if (B05) clips = dampedClips(clips);
++  // `?benny20=1`: the round-20 approved-04 look on top (benny20.ts). Off: nothing runs.
++  if (BENNY20) applyBenny20(scene, furs, opts.maps20 ?? {});
+ 
+   // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
+   // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)
 diff --git a/tools/benny20/shots.mjs b/tools/benny20/shots.mjs
-index 44b0587..3b4f5eb 100644
+index 44b0587..3239ced 100644
 --- a/tools/benny20/shots.mjs
 +++ b/tools/benny20/shots.mjs
-@@ -30,4 +30,4 @@ try {
+@@ -27,7 +27,24 @@ try {
+     }, [scr, dist, steer]);
+     await page.waitForTimeout(150);
+     await page.screenshot({ path: `${OUT}/${name}.png` });
++    if (process.env.B20_MASK) {
++      // flat part-colour mask of Benny alone (white background): fur red, pom green, crown cyan, cuff blue, star black
++      await page.evaluate(() => {
++        const { scene, camera, renderer } = window.__rainbow.qa3d();
++        const benny = scene.getObjectByName('Benny');
++        const keep = new Set(); for (let o = benny; o; o = o.parent) keep.add(o);
++        const vis = [];
++        scene.traverse((o) => { if (o === scene || keep.has(o)) return; let inB = false; for (let p = o.parent; p; p = p.parent) if (p === benny) { inB = true; break; } if (inB) return; vis.push([o, o.visible]); if (!o.isLight) o.visible = false; });
++        const bg = scene.background; scene.background = null;
++        let Ctor; scene.traverse((o) => { if (!Ctor && o.material?.color) Ctor = o.material.color.constructor; }); const cc = renderer.getClearColor(new Ctor()); const ca = renderer.getClearAlpha();
++        window.__bennyQA.mask(true);
++        renderer.setClearColor(0xffffff, 1); renderer.setRenderTarget(null); renderer.clear(); renderer.render(scene, camera);
++        window.__b20restore = () => { window.__bennyQA.mask(false); for (const [o, v] of vis) o.visible = v; scene.background = bg; renderer.setClearColor(cc, ca); };
++      });
++      await page.screenshot({ path: `${OUT}/${name}_mask.png` });
++      await page.evaluate(() => { window.__b20restore(); });
++    }
      log.push({ name, scr, dist, steer, frames: st.frames, s: st.s, lat: st.lat, stage: st.stage, coins: st.coins });
      console.log(name, scr, 's', st.s, 'lat', st.lat, st.stage, 'coins', st.coins);
    }
