@@ -1,0 +1,53 @@
+from pathlib import Path
+import shutil,os,subprocess,json
+from PIL import Image
+import numpy as np
+from scipy import ndimage
+root=Path.cwd();v=root/'second'; v.mkdir();(v/'games').mkdir();g=v/'games/06'
+subprocess.run(['cp','-al',str(root/'games/06'),str(g)],check=True)
+for n in ['serve.cjs','capture.cjs','queries.json','flags.json','baseline.json']:shutil.copyfile(root/n,v/n)
+for n in ['proof/06/NEW','authoring','diagnostics']:(v/n).mkdir(parents=True,exist_ok=True)
+(v/'proof/06/BEFORE').symlink_to(root.resolve()/'proof/06/BEFORE',target_is_directory=True)
+for n in ['cal-0.1.png','cal-0.38.png','full.png','hidden-fur_body.png','native-parts.json','material-fit.json','photographed-state.json']:os.link(root/'authoring'/n,v/'authoring'/n)
+for n in ['src/characters/benny/fur.ts','assets/textures/match06/coat-locks.png']:
+ p=g/n;p.unlink();shutil.copyfile(root/'games/06'/n,p)
+p=g/'src/characters/benny/fur.ts';s=p.read_text()
+a=s.index('            // Solid overlapping lock');b=s.index('            #else',a)
+s=s[:a]+'''            // Fill the tapered lock through the shell stack. Only its outermost
+            // layer breaks into individual hairs, so the coat casts a shared shadow.
+            float lockHeight = 0.30 + 0.62 * lock.a;
+            if (layer > lockHeight + (hgt - 0.50) * 0.035) discard;
+            if (layer > lockHeight - 0.035 && best > 0.62) discard;
+'''+s[b:]
+idx=s.index("      .replace(\n        '#include <emissivemap_fragment>'")
+s=s[:idx]+"""      .replace(
+        '#include <normal_fragment_maps>',
+        `#include <normal_fragment_maps>
+        #ifdef RAINBOW_COAT06
+        // Height is measured on the actual coat. Directional lights therefore catch
+        // the high side of an overlapping tuft when Benny leans or turns.
+        float height06 = coatSurface(vBase).a * 0.009;
+        vec3 dpdx06 = dFdx(-vViewPosition), dpdy06 = dFdy(-vViewPosition);
+        vec3 side06 = cross(dpdy06, normal), along06 = cross(normal, dpdx06);
+        float det06 = dot(dpdx06, side06);
+        vec3 slope06 = sign(det06) * (dFdx(height06) * side06 + dFdy(height06) * along06);
+        normal = normalize(abs(det06) * normal - slope06);
+        #endif`,
+      )
+"""+s[idx:]
+p.write_text(s)
+orig=np.asarray(Image.open(root/'games/06/references/06_crest_the_rinse_arch.png').convert('RGB'),dtype=float)
+before=np.asarray(Image.open(root/'proof/06/NEW/opening.png').convert('RGB'),dtype=float)
+def srgb(s):
+ a=s/255;return np.where(a<.04045,a/12.92,((a+.055)/1.055)**2.4)
+target=np.median(orig[1090:1155,360:500],axis=(0,1)); observed=np.median(before[1090:1155,360:500],axis=(0,1))
+# Dampen feedback in channels near saturation. Per-channel limits come from the two
+# measured greys, which bound the reliable interpolation interval on the coat.
+mul=np.clip((srgb(target)/np.maximum(.015,srgb(observed)))**.75,[.63,.8,.7],[1.35,1.9,1.4])
+p=g/'assets/textures/match06/coat-locks.png';tile=np.array(Image.open(p).convert('RGBA'))
+tile[:,:,:3]=np.rint(np.clip(tile[:,:,:3].astype(float)*mul,0,255)).astype('uint8')
+tile[:,:,3]=np.rint(ndimage.gaussian_filter(tile[:,:,3].astype(float),.9,mode='wrap')).astype('uint8')
+Image.fromarray(tile,'RGBA').save(p)
+diagnosis={'reason':'First coat still showed too many independent high-frequency points. Give overlapping measured locks continuous relief, reserve fine strands for the tips, and fit pink balance from the live camera.',
+ 'sourceWindowXYXY':[360,1090,500,1155],'originalWindowMedianSRGB':target.tolist(),'firstWindowMedianSRGB':observed.tolist(),'linearFeedback':mul.tolist(),'heightBlurInTileTexels':.9}
+(v/'authoring/refinement.json').write_text(json.dumps(diagnosis,indent=2)+'\n');print(diagnosis)
