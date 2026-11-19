@@ -101,6 +101,14 @@ uniform sampler2D uMouthTex;
 uniform vec3 uMouthRho;    // tile rows: rho at the top row, rho at the bottom row (fitted mouth plane z0); z: rho offset
                            // (the painted band lies 0.1 u inside the fitted outer radius: lips onto the modeled lips)
 uniform vec3 uProjPos;
+uniform float uRPaint;     // r15 m04rpaint: mix of the user's PAINTED inner ring (tile_ring_paint.png) on every inner ring band
+uniform sampler2D uRTex;   // cols psi -pi..pi (0 = top, + = right), rows s 0 (painted groove) .. 1 (next groove), deeper
+uniform vec4 uRLip;        // x: painted lip-line s, y: modeled u that carries the painted lip line, z: modeled shading amount,
+                           // w: modeled u where the painted groove begins (held dark to the period end)
+uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highlights do not line up ring after ring
+uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)
+uniform vec4 uRDots;       // r16 m04rpdots: x = amount, y = dot cells per ring, z = fraction of cells lit, w = core radius (u)
+uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -262,6 +270,73 @@ void main() {
       col = textureGrad(uMouthTex, uvM, gx, gy).rgb;
       // a soft polished sheen that moves with the view (the painted highlights stay where they were painted)
       col += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);
+    }
+    if (!mouth && uRPaint > 0.0 && part < 2.5) {
+      // r15 m04rpaint: the user's painted inner ring, straightened (tools/match04/ring_paint04.py), on this ring at its
+      // own (angle, position inside the period): painted groove on the modeled groove corner, painted bright lip line on
+      // the modeled lip apex, piecewise linear in between. World-anchored (no projector) -> nothing slides while swimming.
+      float uu = fract(al / uP) * uP;
+      float uL = uRLip.y, sL = uRLip.x, uG = min(uRLip.w, uP);
+      bool bandSide = uu < uL;
+      float sl = bandSide ? sL / uL : (1.0 - sL) / max(uG - uL, 1e-3);   // ds / du
+      float sp = bandSide ? uu * sl : min(sL + (uu - uL) * sl, 1.0);
+      if (uu >= uG) sl = 0.0;
+      float dax = dFdx(ang), day = dFdy(ang);
+      dax -= 6.2831853 * floor(dax / 6.2831853 + 0.5); day -= 6.2831853 * floor(day / 6.2831853 + 0.5);
+      float rj = uRJit * (2.0 * h21(vec2(floor(al / uP), 5.3)) - 1.0);
+      vec2 uvR = vec2((ang + rj) / 6.2831853 + 0.5, sp);
+      vec2 gS = vec2(dFdx(al), dFdy(al)) * sl;
+      if (uRVar > 0.5) {
+        // r17 m04rpvar: atlas of the painted inner rings 0, 1, 2 (pink-violet sheen / plain copper / pink-left + violet
+        // glints). The first 3D rings follow the painted order, deeper rings take one of them at random.
+        float ri0 = floor(al / uP);
+        float idx = ri0 < uRVar ? ri0 : min(floor(h21(vec2(ri0, 9.1)) * uRVar), uRVar - 1.0);
+        uvR.y = (idx + clamp(sp, 0.004, 0.996)) / uRVar;
+        gS /= uRVar;
+      }
+      vec3 pr = textureGrad(uRTex, uvR, vec2(dax / 6.2831853, gS.x), vec2(day / 6.2831853, gS.y)).rgb;
+      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading
+      if (uRWarm.x > 0.0) {
+        // r16 m04rwarm: the painted rings keep their copper near the viewer, then the last rings before the glowing end
+        // turn orange -> yellow -> warm yellow-white (band medians measured ring by ring on the approved picture, R 100 ->
+        // 24 px from the vanishing point, as gains over the copper of the straightened ring). Graded by how far along the
+        // remaining tunnel the fragment lies (0 = camera, 1 = the end glow), from uRWarm.y on: light at the end of the
+        // tunnel, steady while steering. (The painting's rings shrink into a small core; the game's keep the tunnel radius,
+        // so a grade by screen distance alone barely reached any ring.)
+        float alc = dot(vW - cameraPosition, uAxD);
+        float dEc = dot(uAxO + uAxD * uLen - cameraPosition, uAxD);
+        float x = 6.0 * smoothstep(uRWarm.y, 1.0, alc / max(dEc, 1.0));
+        vec3 wg = vec3(1.0);
+        wg = mix(wg, vec3(1.07, 1.16, 1.52), clamp(x, 0.0, 1.0));
+        wg = mix(wg, vec3(1.13, 1.24, 1.82), clamp(x - 1.0, 0.0, 1.0));
+        wg = mix(wg, vec3(1.24, 1.44, 1.95), clamp(x - 2.0, 0.0, 1.0));
+        wg = mix(wg, vec3(1.31, 1.68, 2.11), clamp(x - 3.0, 0.0, 1.0));
+        wg = mix(wg, vec3(1.33, 1.99, 2.32), clamp(x - 4.0, 0.0, 1.0));
+        wg = mix(wg, vec3(1.35, 2.46, 2.80), clamp(x - 5.0, 0.0, 1.0));
+        pr *= mix(vec3(1.0), wg, uRWarm.x);
+      }
+      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
+      if (uRDots.x > 0.0) {
+        // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,
+        // ~14-16 per ring, some cells dark), on the painted bright lip line; world-anchored. Far dots keep ~1 px size
+        // (dimmer) instead of vanishing, like the small dots on the painted far rings.
+        float ri = floor(al / uP);
+        float cfl = (ang + rj) / 6.2831853 * uRDots.y + 0.5 * mod(ri, 2.0);
+        float ci = floor(cfl);
+        float jx = (h21(vec2(ci + 1.7, ri + 3.1)) - 0.5) * 0.5;
+        float arc = (fract(cfl) - 0.5 - jx) * 6.2831853 * rr / uRDots.y;    // world units along the ring
+        float du = uu - uL - 0.03;                                            // world units from the painted lip line
+        float bs = uRDots.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, ri)));
+        // pixel footprint from the wrap-free angle derivatives (fwidth(arc) jumps at every cell border -> dashed lines)
+        float fa = rr * (abs(dax) + abs(day)), fu = fwidth(al);
+        float ea = max(bs * 1.5, 0.9 * fa), eu = max(bs, 0.9 * fu);         // painted dots: a little longer along the lip
+        float on = step(1.0 - uRDots.z, h21(vec2(ci, ri + 11.0))) * uRDots.x * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
+        float d = length(vec2(arc / ea, du / eu));                            // 1 = edge of the bright core
+        pr += vec3(1.0, 0.62, 0.20) * 0.60 * smoothstep(3.0, 0.0, d) * on;   // orange halo
+        pr = mix(pr, vec3(1.0, 0.95, 0.76), smoothstep(1.0, 0.35, d) * on);  // yellow-white core
+      }
+      // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint
+      col = mix(col, pr, uRPaint);
     }
   }
   col = clamp(col, 0.0, 1.0);
@@ -752,10 +827,34 @@ export function addM04(ctx: M04Ctx) {
       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+        uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector4(M04.num('m04rpsl', 0.79), 0, M04.num('m04rpsh', 0.15), 0) }, uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rww', 0.45)) },
+        uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.06)) }, uRVar: { value: 0 },
         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
     const gw = M04.num('m04ringgw', 1);
     const P = M04.num('m04ringp', 2.6); // ring period along the tunnel (painted ring spacing seen from the approved camera)
+    // r15 `m04rpaint=k`: the user's painted inner ring (straightened from the approved picture) on every inner ring band
+    const rpaint = M04.num('m04rpaint', 0);
+    if (rpaint > 0) {
+      // `m04rpsoft=1`: the variant whose long radial highlight streaks are softened away from the lip line (short glows)
+      // r17 `m04rpvar=1`: the atlas of painted rings 0, 1, 2 (tools/match04/ring_paint04_var.py) instead of ring 1 alone
+      const rvar = M04.num('m04rpvar', 0) > 0;
+      const soft = M04.num('m04rpsoft', 0) > 0;
+      const rtUrl = rvar ? (soft ? new URL('../../assets/textures/match04/tile_ring_paint_var_soft.png', import.meta.url).href
+        : new URL('../../assets/textures/match04/tile_ring_paint_var.png', import.meta.url).href)
+        : soft ? new URL('../../assets/textures/match04/tile_ring_paint_soft.png', import.meta.url).href
+        : new URL('../../assets/textures/match04/tile_ring_paint.png', import.meta.url).href;
+      gm.uniforms.uRVar.value = rvar ? 3 : 0;
+      const rt = new THREE.TextureLoader().load(rtUrl, (t) => { t.needsUpdate = true; });
+      rt.colorSpace = THREE.NoColorSpace; rt.flipY = false; rt.wrapS = THREE.RepeatWrapping; rt.wrapT = THREE.RepeatWrapping;
+      rt.minFilter = THREE.LinearMipmapLinearFilter; rt.anisotropy = 8;
+      gm.uniforms.uRTex.value = rt; gm.uniforms.uRPaint.value = rpaint;
+      // painted lip line onto the modeled lip apex (profile below: r - 0.28 gw at a + P - 0.27 gw), painted groove at the
+      // period end (the modeled groove corner); both overridable (`m04rplu`, `m04rpgu` in u inside the period)
+      const rl = gm.uniforms.uRLip.value as THREE.Vector4;
+      rl.y = M04.num('m04rplu', P - 0.27 * gw); rl.w = M04.num('m04rpgu', P);
+      console.info('[match04] m04rpaint', { k: rpaint, lipS: rl.x, lipU: rl.y, grooveU: rl.w, jitter: gm.uniforms.uRJit.value, warm: (gm.uniforms.uRWarm.value as THREE.Vector2).toArray() });
+    }
     // stepped polished washers: per period a broad band narrowing slightly toward the glow (faces the camera like the
     // painted bands), a rounded lip bead (hot spots), a step back out (the thin dark groove); a = distance down the tunnel
     const prof: { r: number; a: number; part: number }[] = [];
