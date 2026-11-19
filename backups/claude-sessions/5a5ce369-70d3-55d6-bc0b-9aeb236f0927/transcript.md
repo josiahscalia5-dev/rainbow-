@@ -2736,3 +2736,118 @@ Screen 05 left 30 extra render pictures uncommitted on purpose; its 8 key pictur
 
 So maybe use Blender if the Thrixel model, whatever. It doesn't work for that certain thing that you're trying to use a Thrixel model for.
 
+### 🤖 Claude — 2026-11-19T20:06:04.243Z
+
+Good idea. Blender is free, and I can build exactly the shape your painting shows instead of hoping a generator guesses it: a **low, wide pile of big, glossy, separate round bubbles** in pearly lilac-white, lying along the right bank. I'll test it the same way as the Thrixel model: inspect it first, add it behind its own switch in the separate test version, then compare the same camera, swimming and a moving clip. No credits are involved.
+
+Building the foam heap in Blender:
+
+### 🤖 Claude — 2026-11-19T20:06:22.849Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s04t/tools/blender && cat > /home/user/wt/s04t/tools/blender/foam_cluster04.py <<'EOF'\n# r19 (lead): Screen 04 bank foam heap built in Blender (free, deterministic) after the Thrixel test was not an improvement.\n# The approved picture's right-bank heap: a LOW, WIDE pile of BIG glossy separate round bubbles (mixed sizes, biggest on the\n# ridge, small ones at the waterline and ends), pearly lilac-white, a pinker tint at one end, bluish undersides.\n# Built lying flat: +X = along the bank (length), +Y = across (depth), +Z = up (glTF +Y). Exported as one mesh …[+3951 chars]`
+
+### 🧑 User — 2026-11-19T20:06:24.845Z
+
+> ↩︎ result: FOAM_HEAP {'bubbles': 46, 'tris': 21984, 'dims': (3.481, 2.445, 1.236), 'seed': 40419}
+> -rw-r--r-- 1 root root 672696 Nov 19 20:06 assets/models/match04/foam_heap_blender04.glb
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T20:06:30.139Z
+
+46 bubbles, about 22,000 triangles. Checking the file kept its colors, then rendering it to inspect before it goes in the game:
+
+### 🤖 Claude — 2026-11-19T20:06:34.394Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && python3 -c \"\nimport json,struct\nb=open('assets/models/match04/foam_heap_blender04.glb','rb').read(); L=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+L])\nprint([list(p['attributes'].keys()) for m in j['meshes'] for p in m['primitives']], j.get('extensionsUsed'))\"; S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; sed -e \"s/views={'front':(0,-1,0),'side':(1,0,0),'top':(0,0,1),'three_quarter':(0.8,-1,0.6),'back':(0,1,0)}/views={'three_quarter':(0.9,-1,0.7),'low_side':(0.15,-1,0.25)}/\" $S/inspect_glb.py > $S/in …[+343 chars]`
+
+### 🧑 User — 2026-11-19T20:07:21.690Z
+
+> ↩︎ result: [['POSITION', 'NORMAL', 'TEXCOORD_0', 'COLOR_0']] None
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> view_low_side.png
+> view_three_quarter.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T20:07:25.441Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_blendfoam/view_three_quarter.png"}`
+
+### 🧑 User — 2026-11-19T20:07:25.460Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:07:25.761Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_blendfoam/view_low_side.png"}`
+
+### 🧑 User — 2026-11-19T20:07:25.796Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:07:35.009Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/src/world/match04m4.ts", "offset": 1326, "limit": 48}`
+
+### 🧑 User — 2026-11-19T20:07:35.029Z
+
+> ↩︎ result: 1326	
+> 1327	  // r19 `&m04tfoam=1` — THRIXEL TEST (qa/match/04/r19_thrixel/NOTES.md): ONE Thrixel-sculpted foam-cluster model
+> 1328	  // (assets/models/thrixel/foam_cluster_s04.glb, made from the painted right-bank heap beside Benny, approved frame
+> 1329	  // x 600–864 y 980–1200) laid on the right bank where that heap is painted. Anchor: the approved camera's ray through pixel
+> 1330	  // (m04tfx, m04tfy) meets the water plane (group-local y = 0). Same visibility rule as the other 3D foam: hidden in the
+> 1331	  // approved view (the painting carries the heap there), fading in as the camera leaves it; `m04tfshow=1` forces it visible
+> 1332	  // (same-camera check only). Lit by the game's existing lights + environment map. Tunables: m04tfs length along the bank (u),
+> 1333	  // m04tft tilt back from upright (deg; 90 = lying flat, bubble face up), m04tfw yaw (deg), m04tfl lift (u), m04tfo shift
+> 1334	  // toward the wall (u), m04tfz shift along the river (u, + = toward the camera).
+> 1335	  if (M04.num('m04tfoam', 0) > 0) {
+> 1336	    const inv = Mw.clone().invert();
+> 1337	    proj.updateMatrixWorld();
+> 1338	    const ndc = new THREE.Vector3(M04.num('m04tfx', 735) / 864 * 2 - 1, 1 - M04.num('m04tfy', …[+2429 chars]
+
+### 🤖 Claude — 2026-11-19T20:08:05.153Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04t/src/world/match04m4.ts", "old_string": "  if (M04.num('m04tfoam', 0) > 0) {\n    const inv = Mw.clone().invert();\n    proj.updateMatrixWorld();\n    const ndc = new THREE.Vector3(M04.num('m04tfx', 735) / 864 * 2 - 1, 1 - M04.num('m04tfy', 1150) / 1536 * 2, 0.5);\n    const o = proj.position.clone().applyMatrix4(inv);\n    const d = ndc.unproject(proj).applyMatrix4(inv).sub(o).normalize();\n    const hit = o.clone().addScaledVector(d, -o.y / d.y);\n    const holder = new THREE.Group(); holder.name = 'm04_thrixel_foam'; holder.visible = fa …[+5983 chars]`
+
+### 🧑 User — 2026-11-19T20:08:05.338Z
+
+> ↩︎ result: The file /home/user/wt/s04t/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T20:08:17.802Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ns=s.replace(\"dflt: { x: number; y: number; s: number; t: number; w: number; l: number },\",\"dflt: { x: number; y: number; s: number; t: number; w: number; l: number; base?: boolean },\",1)\ns=s.replace(\"      m.position.y += size.y / 2;                                   // rest the model's base on the anchor\\n\",\"      if (dflt.base) m.position.y += size.y / 2;                    // rest the model's base on the anchor (Blender heap)\\n\",1)\ns=s.replace(\"{ x: 735, y: 1150, s: 3.0, t: 0, …[+750 chars]`
+
+### 🧑 User — 2026-11-19T20:08:20.670Z
+
+> ↩︎ result: ok
+> tools/match04/tfoam_shots04.mjs:1
+> tools/match04/tfoam_clip04.mjs:1
+> tsc exit=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T20:08:24.388Z
+
+Compiles cleanly. Rendering the start view with the Blender heap forced visible, to see how it lines up against your painted heap:
+
+### 🤖 Claude — 2026-11-19T20:08:26.641Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && Q=\"$(tr -d '\\n' < qa/match/04/r18/PREVIEW_QUERY_v2.txt)\"; D=qa/match/04/r19_blendfoam/tune; M04_SHOTS='[[\"b1_default\",0,null]]' timeout 600 node tools/match04/tfoam_shots04.mjs $D \"$Q&m04bfoam=1&m04bfshow=1\" 2>&1 | grep -E \"^b1|rror\" | head -3; python3 -c \"\nfrom PIL import Image\nImage.open('$D/b1_default.png').crop((430,860,864,1330)).save('$D/b1_default_crop.png')\"", "description": "Render start view with the Blender heap visible", "timeout": 620000}`
+
+### 🧑 User — 2026-11-19T20:08:42.856Z
+
+> ↩︎ result: b1_default s 78.117 lat 0 04 coins 1330
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T20:08:46.676Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_blendfoam/tune/b1_default_crop.png"}`
+
+### 🧑 User — 2026-11-19T20:08:46.706Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:09:11.843Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ns=s.replace(\"vertexColors: true, color: 0xffffff, roughness: 0.2, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08,\",\"vertexColors: true, color: new THREE.Color(M04.num('m04bfc', 0) > 0 ? '#e4e2ff' : '#ffffff'), roughness: M04.num('m04bfr', 0.2), metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08,\",1)\ns=s.replace(\"iridescenceIOR: 1.3, sheen: 0.6, sheenColor\",\"iridescenceIOR: 1.3, sheen: M04.num('m04bfsh', 0.6), sheenColor\",1)\nopen(p,'w').write(s); print('ok')\nEOF\nQ=\"$(tr -d …[+677 chars]`
+
