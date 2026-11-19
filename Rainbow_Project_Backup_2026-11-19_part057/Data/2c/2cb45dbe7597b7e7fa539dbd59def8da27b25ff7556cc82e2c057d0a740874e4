@@ -1,0 +1,26 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,subprocess as sp
+root=Path(__file__).parent
+def read(path):return json.loads(path.read_text())
+def parse(s):return {ref.removeprefix('refs/heads/'):tip for tip,ref in (row.split() for row in s.splitlines() if row.strip())}
+original=parse(Path('/tmp/rainbow-final-fidelity.RuUP0xJ2/live-heads.tsv').read_text())
+remote=parse(sp.check_output(['git','-C',str(root/'repo'),'ls-remote','--heads','origin'],text=True))
+protected={k for k in set(original)|set(remote) if k.startswith(('ccr-','claude/'))};drift={k:[original.get(k),remote.get(k)] for k in protected if original.get(k)!=remote.get(k)}
+trials=[(root,s) for s in ['04','05','06','07','08']]+[(root/'entrance-gold','04'),(root/'benny-material','06'),(root/'benny-cuff','06')]
+art=read(root/'original-github-artwork.json')['screens']
+summaries={};totals={'nativePairs':0,'matchedMovieFrames':0,'freshGitLfsMovieDownloads':0,'hashedEvidenceFiles':0}
+for loc,s in trials:
+    pub=read(loc/('published-'+s+'.json'));src=read(loc/('checkpoint-'+s+'.json'))
+    quality=read(loc/('quality-'+s+'.json'));decision=read(loc/('decision-'+s+'.json'))
+    branch=pub['branch'];assert remote.get(branch)==pub['commit'];assert remote.get(src['retained']['branch'])==src['retained']['commit']
+    assert len(pub['lfsDownloads'])==2 and pub['originalsVerified']==13
+    assert quality['matchedCameraAndGameState'] and quality['retainedOpeningRepeatedExactly'] and len(quality['gameplayAssertions'])==8 and all(quality['gameplayAssertions'].values())
+    h=quality['safeRun'];assert (h['start'],h['score'],h['coins'],h['hearts'],h['stage'])==(1330,2240,91,5,'11') and not h['collisions']
+    canonical=root/'from-original-github'/art[s]['path'];assert hashlib.sha256(canonical.read_bytes()).hexdigest()==art[s]['sha256']
+    totals['nativePairs']+=quality['poseCount'];totals['matchedMovieFrames']+=quality['routeMatchedFrames'];totals['freshGitLfsMovieDownloads']+=2;totals['hashedEvidenceFiles']+=pub['verifiedFiles']
+    summaries[branch]={'screen':s,'commit':pub['commit'],'sourceCheckpoint':src['commit'],'status':decision['status'],'review':pub['evidence'],'nativePoses':quality['poseCount'],'matchedFilmFrames':quality['routeMatchedFrames'],'originalSHA256':art[s]['sha256']}
+assert len(summaries)==8 and not drift,drift
+receipt={'checkedUTC':datetime.now(timezone.utc).isoformat(),'verifiedLead':read(root/'baseline.json')['lead'],'protectedBranchesChecked':len(protected),'changedProtectedBranches':drift,'trials':summaries,'totals':totals,'physicalAndroidDevices':read(root/'benny-cuff/android-receipt.json')['connectedPhysicalDevices'],'reviewPages':{'scenery':'https://chatgpt.com/space/page_e25cdb3c009c8191825b4bd9cf3421d0','character':'https://chatgpt.com/space/page_af4f8b03564481919f3c14bdbc0b6b24','proposedViews':'https://chatgpt.com/space/page_bdb50110e1b88191b4e0ac285d4e340b'}}
+(root/'eight-trials-verified.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print('Protected branches verified',len(protected),'Codex branches verified',len(summaries),totals)

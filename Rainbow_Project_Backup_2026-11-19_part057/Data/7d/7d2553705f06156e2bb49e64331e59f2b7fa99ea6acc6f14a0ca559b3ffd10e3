@@ -1,0 +1,67 @@
+{
+  "across-transition": {
+    "changedRGBOver30": 0,
+    "allChanged": 0,
+    "lowerFrameChangedRGBOver30": 0
+  },
+  "deep": {
+    "changedRGBOver30": 305451,
+    "allChanged": 423346,
+    "lowerFrameChangedRGBOver30": 298988
+  },
+  "forward-03": {
+    "changedRGBOver30": 82185,
+    "allChanged": 394778,
+    "lowerFrameChangedRGBOver30": 79741
+  },
+  "forward-06": {
+    "changedRGBOver30": 382693,
+    "allChanged": 529879,
+    "lowerFrameChangedRGBOver30": 379938
+  },
+  "forward-10": {
+    "changedRGBOver30": 308008,
+    "allChanged": 428284,
+    "lowerFrameChangedRGBOver30": 301218
+  },
+  "hard-left": {
+    "changedRGBOver30": 407409,
+    "allChanged": 535197,
+    "lowerFrameChangedRGBOver30": 398171
+  },
+  "hard-right": {
+    "changedRGBOver30": 234344,
+    "allChanged": 308492,
+    "lowerFrameChangedRGBOver30": 229532
+  },
+  "inlet": {
+    "changedRGBOver30": 31984,
+    "allChanged": 141569,
+    "lowerFrameChangedRGBOver30": 27634
+  },
+  "last-in-stage": {
+    "changedRGBOver30": 319635,
+    "allChanged": 413701,
+    "lowerFrameChangedRGBOver30": 315846
+  },
+  "middle": {
+    "changedRGBOver30": 368778,
+    "allChanged": 522763,
+    "lowerFrameChangedRGBOver30": 366028
+  },
+  "opening": {
+    "changedRGBOver30": 1,
+    "allChanged": 72174,
+    "lowerFrameChangedRGBOver30": 1
+  },
+  "platform-and-spouts": {
+    "changedRGBOver30": 352705,
+    "allChanged": 495261,
+    "lowerFrameChangedRGBOver30": 349784
+  },
+  "river-bend": {
+    "changedRGBOver30": 332656,
+    "allChanged": 462787,
+    "lowerFrameChangedRGBOver30": 328835
+  }
+}

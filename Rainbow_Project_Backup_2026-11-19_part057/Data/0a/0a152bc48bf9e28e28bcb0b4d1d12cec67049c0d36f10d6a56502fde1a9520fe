@@ -1,0 +1,52 @@
+{
+ "screen": "08",
+ "query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1",
+ "shots": [
+  {
+   "name": "s_left_steer",
+   "dist": 6,
+   "steer": -1,
+   "mode": "ride",
+   "stage": "08",
+   "s": 398.122,
+   "lat": -1.85,
+   "coins": 2050,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -112.991,
+   "bennyVisible": true,
+   "cam": [
+    10.82,
+    -109.8,
+    -280.26
+   ],
+   "frames": 38,
+   "s0": 391.427,
+   "s1": 404.3684155787043,
+   "target": 397.427
+  },
+  {
+   "name": "s_right_steer",
+   "dist": 6,
+   "steer": 1,
+   "mode": "ride",
+   "stage": "08",
+   "s": 398.018,
+   "lat": 1.85,
+   "coins": 2040,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -113.06,
+   "bennyVisible": true,
+   "cam": [
+    14.09,
+    -109.99,
+    -280.55
+   ],
+   "frames": 38,
+   "s0": 391.427,
+   "s1": 404.3684155787043,
+   "target": 397.427
+  }
+ ]
+}

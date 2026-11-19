@@ -1,0 +1,9 @@
+from pathlib import Path
+import shutil
+root=Path(__file__).parent
+game=root/'games/06-combined';shutil.copytree(root/'games/06',game,symlinks=True)
+new=(game/'src/world/match06.ts').read_text()
+prev=Path('/tmp/rainbow-reconstruction.etSm9SmK/repos/06/src/world/match06.ts').read_text()
+head='    let seed = 12345;';tail='  // far end cap of the tunnel'
+i,j=new.index(head),new.index(tail);a,b=prev.index(head),prev.index(tail)
+(game/'src/world/match06.ts').write_text(prev[:a]+new[i:j]+prev[b:])

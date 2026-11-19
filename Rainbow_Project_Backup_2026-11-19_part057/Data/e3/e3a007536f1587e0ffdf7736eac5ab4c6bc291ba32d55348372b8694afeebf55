@@ -1,0 +1,24 @@
+from pathlib import Path
+import json,shutil
+r=Path(__file__).parent
+old=Path('/tmp/rainbow-reconstruction.etSm9SmK')
+hd=Path('/tmp/rainbow-review-package.Ag1cgebC/hd-capture.cjs').read_text()
+shutil.copyfile(old/'queries.json',r/'queries.json')
+flags={'06':'cx06CrestFoam=1','07':'cx07PlungeBanks=1','04':'cx04WaterSweep=1&cx04DeepRim=1','05':'cx05WallBays=1&cx05BendUV=1'}
+(r/'flags.json').write_text(json.dumps(flags))
+src=(old/'capture.cjs').read_text()
+hdroute=hd[hd.index('async function route('):hd.index('async function verifyFullRide(')]
+src=src[:src.index('async function route(')]+hdroute+src[src.index('async function verifyFullRide('):]
+src=src.replace('viewport:view,deviceScaleFactor:1','viewport:view,deviceScaleFactor:mode==="ride"?2:1')
+src=src.replace('qa=1&dpr=1&','qa=1&dpr=\x27+(mode==="ride"?2:1)+\x27&')
+src=src.replace('5800+Number(id)','7900+Number(id)')
+src=src.replace("const q=queries[id]+(variant==='NEW'?'&'+flags[id]:'');","const q=queries[id]+(variant==='NEW'?'&'+flags[id]:'')+(process.env.RAINBOW_EXTRA?'&'+process.env.RAINBOW_EXTRA:'');")
+src=src.replace('if(!fs.existsSync(f))f=path.join(process.cwd(),\x27scripts/gameplay-test.mjs\x27);',"if(!fs.existsSync(f))f=path.join(root,'fixture',id,'gameplay-test.mjs');")
+src=src.replace('(async()=>{\n const browser=await chromium.launch','module.exports={open,pose,route,views,gameplay,verifyFullRide};\nif(require.main===module)(async()=>{\n const browser=await chromium.launch')
+(r/'capture.cjs').write_text(src)
+for sid in flags:
+    dst=r/'fixture'/sid;dst.mkdir(parents=True,exist_ok=True)
+    p=Path('/tmp/rainbow-motion-tools.ef8YVWIN/docs')/sid/'scripts/gameplay-test.mjs'
+    if not p.exists():p=old/'games'/sid/'scripts/gameplay-test.mjs'
+    if not p.exists():p=Path('/tmp/rainbow-motion-tools.ef8YVWIN/docs/07/scripts/gameplay-test.mjs')
+    shutil.copyfile(p,dst/'gameplay-test.mjs')

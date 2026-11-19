@@ -1,0 +1,43 @@
+{
+  "claudiaLead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "claudiaRetained": {
+    "branch": "claude/rainbow-s05-match-c17",
+    "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+  },
+  "verifiedBeforeEditUTC": "2026-11-19T00:33:26.031201+00:00",
+  "precedingExperimentOrRetained": {
+    "branch": "codex/s05-perforated-wall-bays",
+    "commit": "8729b96daeb2b73ff27a20b5435fb8eba923d4f2"
+  },
+  "experimentalSource": {
+    "commit": "91e91b57f81dbc0567ec6709d8d09f553a3631f7",
+    "branch": "codex/s05-anchored-bend-highlights",
+    "parent": "8729b96daeb2b73ff27a20b5435fb8eba923d4f2",
+    "retained": {
+      "branch": "claude/rainbow-s05-match-c17",
+      "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+    },
+    "sourceFiles": [
+      "src/vfx/waterRibbon.ts"
+    ],
+    "utc": "2026-11-19T00:36:09.595185+00:00",
+    "purpose": "Isolated experimental source, pending visual review."
+  },
+  "approvedArtwork": {
+    "path": "references/05_flow_into_the_current.png",
+    "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  "recordedResolution": [
+    864,
+    1536
+  ],
+  "savedSkillCommit": "3b57658f78fd5d7dce498d2743f1a09a173a570a",
+  "queryForClaudia": "match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1&m05bank=1&m05trans=1",
+  "additionalQueryForExperiment": "cx05WallBays=1&cx05PhysicalBend=1",
+  "visualDisposition": "REJECTED",
+  "ownerApproval": "Pending",
+  "originalVerified": true
+}

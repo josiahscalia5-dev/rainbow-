@@ -1,0 +1,9 @@
+from pathlib import Path
+import subprocess,sys
+root=Path(__file__).parent
+for s in sys.argv[1:]:
+ game=root/'games'/s
+ for kind,cmd in [('types',[str(game/'node_modules/.bin/tsc'),'--noEmit']),('build',[str(game/'node_modules/.bin/vite'),'build','--outDir',str(root/'production'/s),'--logLevel','warn'])]:
+  o=subprocess.run(cmd,cwd=game,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
+  (root/f'{kind}-{s}.log').write_text(o.stdout)
+  print(s,kind,o.returncode,o.stdout[-160:] if o.returncode else '',flush=True)

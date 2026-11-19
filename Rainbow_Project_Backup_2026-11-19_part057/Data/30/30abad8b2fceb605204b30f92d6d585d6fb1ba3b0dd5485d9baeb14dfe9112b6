@@ -1,0 +1,24 @@
+const fs = require('node:fs');
+const {chromium} = require('playwright');
+const {open, pose} = require('./capture.cjs');
+const views = [ ['opening','forward',0], ['hard-right','forward',12,1], ['hard-left','forward',12,-1], ['platform-and-spouts','forward',7.5]];
+const labels = {BEFORE:'RETAINED',NEW:'EXISTING_OUTLINE'};
+(async () => {
+  const browser = await chromium.launch({executablePath:'/usr/bin/chromium',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-background-networking']});
+  try {
+    for (const [variant,label] of Object.entries(labels)) {
+      const errors = [], states = [];
+      const page = await open(browser,'08',variant,{width:864,height:1536},errors);
+      fs.mkdirSync(label,{recursive:true});
+      for (const view of views) {
+        const metadata = await pose(page,'08',view);
+        if(metadata.skip || metadata.gl.contextLost)throw new Error('Unusable capture '+view[0]);
+        states.push(metadata);
+        await page.screenshot({path:label+'/'+view[0]+'.png',animations:'disabled'});
+      }
+      if(errors.length)throw new Error(errors.join(' | '));
+      fs.writeFileSync(label+'/states.json',JSON.stringify(states,null,2));
+      await page.close();
+    }
+  } finally { await browser.close(); }
+})().catch(err=>{console.error(err.message);process.exitCode=1});

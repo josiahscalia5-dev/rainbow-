@@ -1,0 +1,13 @@
+{
+  "branch": "claude/rainbow-s07-match-c17",
+  "commit": "8651edf92525a9aab82b02fad9aa44621216708a",
+  "path": "references/07_dive_the_washer_tube.png",
+  "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9",
+  "size": [
+    864,
+    1536
+  ],
+  "encoding": "JPEG",
+  "bytes": 494067,
+  "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/8651edf92525a9aab82b02fad9aa44621216708a/references/07_dive_the_washer_tube.png"
+}

@@ -1,9 +1,0 @@
-{
-  "screen": "04",
-  "duration": 3.5,
-  "nearestCoursePositionsInContinuousClip": {
-    "forward-20": 2,
-    "hard-right": 1.4166666666666667,
-    "last-in-stage": 3.1666666666666665
-  }
-}

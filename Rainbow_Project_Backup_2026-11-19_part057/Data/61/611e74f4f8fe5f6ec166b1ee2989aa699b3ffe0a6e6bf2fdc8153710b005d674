@@ -1,0 +1,51 @@
+{
+  "utc": "2026-11-19T00:03:34.129857+00:00",
+  "lead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "specialists": {
+    "04": {
+      "branch": "claude/rainbow-s04-match-c17",
+      "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+    },
+    "05": {
+      "branch": "claude/rainbow-s05-match-c17",
+      "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+    },
+    "06": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "07": {
+      "branch": "claude/rainbow-s07-match-c17",
+      "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+    },
+    "08": {
+      "branch": "claude/rainbow-s08-scenery-c17",
+      "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+    },
+    "04-ring": {
+      "branch": "claude/rainbow-s04-ringtex-c17",
+      "commit": "0f275af1e3d4e9276e5a4016d0335a85fe055e58"
+    }
+  },
+  "candidateTips": {
+    "04": "38ad7b0dfc042f34e8239d4bea7448248375b371",
+    "05": "232f0272f4cab935fee5365f88cbee9a5c9a55b1",
+    "06": "394609842ebc30c2832e23b8992c7d9a868ba0c0",
+    "07": "d146def1ae978d00b4c4409a876cd5e9854d6294",
+    "08": "bca810eb1cffd5fae1274ce7fa02fec892b47c6c"
+  },
+  "remoteCount": 153,
+  "changedClaudiaRefs": {},
+  "allReferenceHashesCheckedInEachExperiment": {
+    "04": 13,
+    "05": 13,
+    "06": 13,
+    "07": 13,
+    "08": 13
+  },
+  "lfsVideosDownloadedAndVerified": 10,
+  "totalEvidenceFilesVerified": 444
+}

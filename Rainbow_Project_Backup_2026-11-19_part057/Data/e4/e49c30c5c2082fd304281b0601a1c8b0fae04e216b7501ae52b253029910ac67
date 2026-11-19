@@ -1,0 +1,25 @@
+from pathlib import Path
+root=Path(__file__).parent
+def edit(file,pairs):
+ p=root/file;s=p.read_text()
+ for before,after in pairs:
+  assert before in s,before;s=s.replace(before,after)
+ p.write_text(s)
+edit('film.py',[("'06':[.25,.85","'08':[.2,.55,1.0,1.4,2.05,2.5,3.0], '06':[.25,.85")])
+edit('strips.py',[("cols={'04':","cols={'08':['opening','forward-03','forward-06','hard-left','hard-right','last-in-stage'],'04':")])
+edit('assess.py',[("in ['04','05']","in ['04','05','08']")])
+edit('prepare_mobile.py',[("labels={'06':","labels={'08':['forward-03','hard-left','platform-and-spouts'],'06':"),("in ('04','05')","in ('04','05','08')")])
+edit('bundle.py',[
+ ("names={'06':","names={'08':'Final Spin Chamber','06':"),
+ (" if s=='05':\n  s5=",''' if s=='08':
+  decision=read(root/'decision-08.json')
+  return (decision['status'],[decision['visual'],
+   'The retained chamber floor carried the river on a plane. This trial uses its existing mesh to raise a low, irregular shoulder along the fitted left bank. The center of the water stays at its established height. The quilted near-water material now switches in according to the least-resolved texture direction and shifts the painted magenta edge 0.46 game units outward. The door, platform, towel, ring and four spouts use their existing geometry and transforms.',
+   decision['limits'],
+   'This isolated test follows the renewed instruction to improve all five worlds. The round-17 retained and earlier curved-current commits both remain available. Interpret the early foreground and hard-left contact as proposed moving views.'])
+ if s=='05':
+  s5='''),
+ ("if sid in ('04','05'):\n  ctrl","if sid in ('04','05','08'):\n  ctrl"),
+ ("['opening.png','forward-20.png','hard-left.png','hard-right.png','last-in-stage.png','poses.json']","['opening.png','hard-left.png','hard-right.png','last-in-stage.png','poses.json']+(['forward-20.png'] if sid!='08' else ['forward-03.png'])"),
+ ("'05':['river05.json']","'05':['river05.json'],'08':['chamber08.json']"),
+ ("{'06':'In the continuous footage, compare","{'08':'The clip follows the chamber from its inlet, past the fixed spouts and platform, through the final handoff. Use measurements/clip-timestamps.json to find the foreground and platform poses by distance. The +20 pose falls outside this stage.', '06':'In the continuous footage, compare")])

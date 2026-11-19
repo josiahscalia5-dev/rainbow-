@@ -1,0 +1,70 @@
+{
+  "utc": "2026-11-19T00:53:31.566139+00:00",
+  "lead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "specialists": {
+    "04": {
+      "branch": "claude/rainbow-s04-match-c17",
+      "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+    },
+    "05": {
+      "branch": "claude/rainbow-s05-match-c17",
+      "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+    },
+    "06": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "07": {
+      "branch": "claude/rainbow-s07-match-c17",
+      "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+    },
+    "08": {
+      "branch": "claude/rainbow-s08-scenery-c17",
+      "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+    },
+    "04-ring": {
+      "branch": "claude/rainbow-s04-ringtex-c17",
+      "commit": "0f275af1e3d4e9276e5a4016d0335a85fe055e58"
+    }
+  },
+  "protectedRefsSeen": 132,
+  "protectedRefsChangedWhileWorking": {},
+  "pushedExperimentalTips": {
+    "04": "f0dbba6223db3656ded6e420c4a4c5626c8686d4",
+    "05": "3c8e9812b6ce3b3895a8616ec338999469ffbed2",
+    "06": "283cae3c6709bf0e4b47872f000c583e76408f80",
+    "07": "8d47a1ea95d51308bebd4d68280e037e31184804",
+    "08": "7ad2a51caa1722751cdf61662a3a8ff1e741e817"
+  },
+  "totals": {
+    "referenceManifestVerifiedInEachScreen": 13,
+    "separateScreenExperiments": 5,
+    "nativeMovingAndOpeningPosePairs": 70,
+    "matchedFramesAcrossFilms": 358,
+    "videosDownloadedFromGitLFSAndVerified": 10,
+    "evidenceFilesHashed": 346
+  },
+  "device": {
+    "targetSDK": 34,
+    "package": "com.rainbow.washergame",
+    "assembleDebug": true,
+    "verifiedSignature": "APK Signature Scheme v2",
+    "embeddedWebFilesVerified": 77,
+    "crestMaskPresent": [
+      "mask06_crest_release-CQabyfEO.png"
+    ],
+    "sha256": "29e0ca930a9ecbf4e5998720baea6fc1bb66f7a7e123547a24e8e4a58e6743f9",
+    "connectedPhysicalDevices": 0,
+    "screen06Source": "41d4d840b9325bf810397ed6bfe28002603723c8"
+  },
+  "screenDisposition": {
+    "04": "REJECTED",
+    "05": "REJECTED",
+    "06": "CANDIDATE",
+    "07": "REJECTED",
+    "08": "REJECTED"
+  }
+}

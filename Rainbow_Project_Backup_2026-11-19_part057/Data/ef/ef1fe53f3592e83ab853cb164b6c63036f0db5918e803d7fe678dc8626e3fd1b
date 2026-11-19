@@ -1,0 +1,32 @@
+from pathlib import Path
+import json,os,shutil,socket,subprocess as sp,time
+d=Path.cwd();original=Path("/tmp/rainbow-claudia-transfer.u9XkC10f/tool-verification");root=d.parent;game=root/'round2/games/07'
+for nm in ['__spector07.html','__three-inspector.js']:
+ shutil.copyfile(original/'games/07'/nm,game/nm)
+q=json.loads((root/'round2/queries.json').read_text());q['07']+='&cx07OutletFoam=1'
+(d/'queries.json').write_text(json.dumps(q))
+for nm in ['mcp-schemas.py','live-plugins.py','private-browser.cjs']:
+ source=(original/nm).read_text().replace('19477','19577').replace('19478','19578').replace(':5607',':8147').replace('/tmp/rbmcp-f1',str(d/'mcp-tmp'))
+ (d/nm).write_text(source)
+def ready(port):
+ try:
+  with socket.create_connection(('127.0.0.1',port),timeout=.4):return True
+ except OSError:return False
+assert not ready(19577) and not ready(19578)
+env=dict(os.environ,NODE_PATH='/opt/codex/cua_node/lib/node_modules')
+with (d/'diagnostic-output/private-browser.log').open('w') as logs:
+ proc=sp.Popen(['node','private-browser.cjs'],env=env,stdout=logs,stderr=sp.STDOUT)
+ try:
+  for i in range(75):
+   if ready(19577):break
+   if proc.poll() is not None:raise RuntimeError('Browser quit on startup')
+   time.sleep(.4)
+  for mode in ['browser','three-explicit','spector']:
+   with (d/'diagnostic-output'/('test-'+mode+'.log')).open('w') as log:
+    ret=sp.run(['python','live-plugins.py',mode],env=env,stdout=log,stderr=sp.STDOUT)
+   print(mode,ret.returncode,flush=True)
+   if ret.returncode:raise RuntimeError(mode+' diagnostic did not pass')
+ finally:
+  proc.terminate()
+  try:proc.wait(timeout=15)
+  except sp.TimeoutExpired:proc.kill();proc.wait()
