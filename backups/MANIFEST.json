@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18411,
-   "sha256": "e8db15333101358954dbc10a189824efd72050a139b730d34529939ec07b13d2"
+   "sha256": "1a5102380a2736a449f5f257fa381b2b96ed460d0b2e7ca962830842b881e5e4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1099,12 +1099,12 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/INFO.json",
    "bytes": 477,
-   "sha256": "12c11df7a8f1effbcfa9bc8555241e5c4525d96f5225fc0ff26259f85ae6566b"
+   "sha256": "8752fa4a5d2684ae02e1704e2e73fcb084b5a16b629b4babab9f25c798a27f9e"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
    "bytes": 512,
-   "sha256": "d95e7b4bbe2a7defb729cf8fb34e7016733e684dc207e47e7a3e037040af2766"
+   "sha256": "b12ac264739fe0a782c5f5dfa90550d5901925d90b09eef803c7504edb4dd251"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/tracked.patch",
@@ -1179,7 +1179,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c18/INFO.json",
    "bytes": 486,
-   "sha256": "23865172f3c7f1ef00d62af95fc00aa108c8ab4b72a2697e669f95dff7082fff"
+   "sha256": "40c52dce0ad40babae9c497ea9da1a90b01e0731fb291582eae8e3d8ceb00a2a"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1524,7 +1524,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/INFO.json",
    "bytes": 477,
-   "sha256": "6ec98b8380a1a823c1611961be48385041da1d05779528f0a575b22ae87c548e"
+   "sha256": "832df195d2594e2a8770d956f57e551c19a2280283b93e6beebb92aaecae0d57"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -1569,7 +1569,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/INFO.json",
    "bytes": 536,
-   "sha256": "b2a19a513b63bc66a9eb160b6ce2a0cc400e8f5f02bb0da5d9634691b08f315e"
+   "sha256": "4a5bb7b44a55b162bf0c6cc3657a052621d715a3585dd5c56bb9f585e1bda100"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/tracked.patch",
@@ -1714,7 +1714,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/INFO.json",
    "bytes": 477,
-   "sha256": "130a924d60bbddb59d64fe99af73315ba70d1d3d86798b9db07b807ff027fa07"
+   "sha256": "1c54c66d7441e53da472a31dae9d94ca46ad374ba4d00a14c5937112cf4d0c06"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",

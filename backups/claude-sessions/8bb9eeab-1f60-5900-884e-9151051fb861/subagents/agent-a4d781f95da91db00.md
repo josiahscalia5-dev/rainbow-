@@ -1893,3 +1893,193 @@ The machine restarted; my step-7 edit is intact but uncommitted. I'll protect it
 > uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
 > uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue alon …[+8258 chars]
 
+### 🤖 Claude — 2026-11-19T18:10:16.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && node -e \"console.log(require('three/package.json').version)\" 2>/dev/null || grep '\"version\"' node_modules/three/package.json; grep -n \"childadded\" node_modules/three/src/core/Object3D.js | head -3; grep -n \"bakeDepth\" src/world/match04.ts | head -3", "description": "Check three.js version and childadded event support"}`
+
+### 🧑 User — 2026-11-19T18:10:16.739Z
+
+> ↩︎ result: "version": "0.170.0",
+> 28:const _childaddedEvent = { type: 'childadded', child: null };
+> 342:			_childaddedEvent.child = object;
+> 343:			this.dispatchEvent( _childaddedEvent );
+> 33:  bakeDepth(renderer: THREE.WebGLRenderer): void;
+> 407:    bakeDepth(renderer) {
+
+### 🤖 Claude — 2026-11-19T18:10:32.069Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };", "new_string": "      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };\n      // the river runs on INTO the telescope: once the river trough mesh is added to the group (built further down, before\n      // the projector depth bake), its cross-section is scaled with the rings about the same water-line centre, so its\n      // pink banks and cyan lan …[+1475 chars]`
+
+### 🧑 User — 2026-11-19T18:10:32.086Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T18:10:34.196Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"uRFewW = { value\" src/world/match04m4.ts", "description": "Locate the uniform line to edit"}`
+
+### 🧑 User — 2026-11-19T18:10:34.233Z
+
+> ↩︎ result: 816:      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };
+
+### 🤖 Claude — 2026-11-19T18:10:36.234Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 800, "limit": 20}`
+
+### 🧑 User — 2026-11-19T18:10:36.263Z
+
+> ↩︎ result: 800	      tun.computeVertexNormals();
+> 801	    }
+> 802	    // r18 `m04rfew`: scale every telescoping ring about its centre on the water line (lathe-local z = up)
+> 803	    const rfGz = -cy + M04.num('m04rfh', 0);
+> 804	    if (rfew) {
+> 805	      const pa = tun.attributes.position as THREE.BufferAttribute, nPt = prof.length;
+> 806	      const aF = new Float32Array(pa.count * 2);
+> 807	      for (let i = 0; i < pa.count; i++) {
+> 808	        const j = i % nPt, s = fS[j];
+> 809	        pa.setX(i, pa.getX(i) * s); pa.setZ(i, rfGz + (pa.getZ(i) - rfGz) * s);
+> 810	        aF[i * 2] = fV[j]; aF[i * 2 + 1] = s;
+> 811	      }
+> 812	      tun.setAttribute('aF', new THREE.Float32BufferAttribute(aF, 2));
+> 813	      tun.computeVertexNormals();
+> 814	      gm.defines = { RFEW: '' };
+> 815	      gm.uniforms.uRFewG = { value: rfGz };
+> 816	      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };
+> 817	    }
+> 818	    // lathe axis = +y; rotate so y -> -z (down the tunnel), then place at the mouth
+> 819	    tun.rotateX(-Math.PI / 2).translate(cx, cy, z0);
+
+### 🤖 Claude — 2026-11-19T18:10:43.503Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };\n    }", "new_string": "      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };\n      // the river runs on INTO the telescope: once the river trough mesh is added to the group (built further down, before\n      // the projector depth bake), its cross-section is scaled with the rings about the same water-line centre, so its\n      // pink banks and c …[+1489 chars]`
+
+### 🧑 User — 2026-11-19T18:10:43.548Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:10:50.832Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=$(cat $S/K6.txt) && ONLY=f20_forward20u,t66_through_screen,t95_through_screen node $S/audit_only.mjs 04 $S/rf3g \"$K6&m04rfew=1&m04rfg=1.2\" 2>&1 | grep -E \"pageerror|Error\" | head -5; ls $S/rf3g", "description": "Render telescope with river narrowing", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T18:11:34.701Z
+
+> ↩︎ result: f20_forward20u.png
+> motion.json
+> t66_through_screen.png
+> t95_through_screen.png
+
+### 🤖 Claude — 2026-11-19T18:11:37.179Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf3g/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:11:37.235Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:11:40.715Z
+
+The river now converges into the light with its pink banks intact, no clipped edges. Checking the other two shots.
+
+### 🤖 Claude — 2026-11-19T18:11:41.873Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf3g/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:11:41.941Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:11:52.980Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"const sprites\\|function sprites\" src/world/match04m4.ts; sed -n \"$(grep -n 'const sprites' src/world/match04m4.ts | cut -d: -f1),+30p\" src/world/match04m4.ts; grep -n \"const BULB_VERT\\|BULB_VERT =\" src/world/match04m4.ts", "description": "Read the sprite helper"}`
+
+### 🧑 User — 2026-11-19T18:11:53.063Z
+
+> ↩︎ result: 968:  const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number, opaque = false, near = [1.2, 2.6]) => {
+>   const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number, opaque = false, near = [1.2, 2.6]) => {
+>     const quad = new THREE.PlaneGeometry(1, 1);
+>     const g = new THREE.InstancedBufferGeometry();
+>     g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
+>     const aB = new Float32Array(items.length * 4), aS = new Float32Array(items.length);
+>     items.forEach((it, i) => { const w = it.p.clone().applyMatrix4(Mw); aB.set([w.x, w.y, w.z, it.r], i * 4); aS[i] = it.s; });
+>     g.setAttribute('aB', new THREE.InstancedBufferAttribute(aB, 4));
+>     g.setAttribute('aS', new THREE.InstancedBufferAttribute(aS, 1));
+>     g.instanceCount = items.length;
+>     const alpha = { value: 0 };
+>     const m = new THREE.ShaderMaterial({ vertexShader: SPRITE_VERT, fragmentShader: frag, transparent: !opaque, depthWrite: opaque, fog: false,
+>       uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value:  …[+1356 chars]
+
+### 🤖 Claude — 2026-11-19T18:12:11.050Z
+
+I'll add the painted light as an angular glow on the ring surfaces around the end of the telescope (shader only, rings and end disc only, so Benny, coins and water are never washed over).
+
+### 🤖 Claude — 2026-11-19T18:12:15.903Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "    col *= mix(vec3(1.0), wg, uRFewW.y);\n    if (part > 3.5) col = mix(vec3(1.0, 0.98, 0.90), vec3(1.0, 0.86, 0.55), smoothstep(0.15, 1.0, clamp(rr / 3.8, 0.0, 1.0)));\n  }\n#endif", "new_string": "    col *= mix(vec3(1.0), wg, uRFewW.y);\n    if (part > 3.5) col = mix(vec3(1.0, 0.98, 0.90), vec3(1.0, 0.86, 0.55), smoothstep(0.15, 1.0, clamp(rr / 3.8, 0.0, 1.0)));\n    // the painted light itself: a warm-white core and a yellow-orange glow round the end of the telescope, spread over\n    // the dee …[+458 chars]`
+
+### 🧑 User — 2026-11-19T18:12:15.940Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:12:18.257Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)", "new_string": "uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)\nuniform vec3 uRFewE;       // r18 m04rfew: world position of the telescope's end (the light)\nuniform vec3 uRFewL;       // r18 m04rfew: light strength, core and glow angular radius (rad) (m04rfl, m04rfc, m04rfo)"}`
+
+### 🧑 User — 2026-11-19T18:12:18.294Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:12:20.615Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };\n      // the river runs on", "new_string": "      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };\n      gm.uniforms.uRFewE = { value: toW(cx, cy + rfGz * (1 - capS), z0 - capA) };\n      gm.uniforms.uRFewL = { value: new THREE.Vector3(M04.num('m04rfl', 1), M04.num('m04rfc', 0.018), M04.num('m04rfo', 0.07)) };\n      // the river runs on"}`
+
+### 🧑 User — 2026-11-19T18:12:20.722Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:12:27.582Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=$(cat $S/K6.txt) && ONLY=f06_forward6u,t66_through_screen,s_right_hard node $S/audit_only.mjs 04 $S/rf4g \"$K6&m04rfew=1&m04rfg=1.2\" 2>&1 | grep -E \"pageerror|Error\" | head -5; ls $S/rf4g", "description": "Render telescope with the end light", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T18:13:30.645Z
+
+> ↩︎ result: f06_forward6u.png
+> motion.json
+> s_right_hard.png
+> t66_through_screen.png
+
+### 🤖 Claude — 2026-11-19T18:13:33.131Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf4g/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:13:33.199Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:13:36.050Z
+
+The end now glows warm yellow-white over the deep rings, like the painted light. Checking the early view and hard right for glitches.
+
+### 🤖 Claude — 2026-11-19T18:13:37.295Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf4g/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-19T18:13:37.338Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:13:37.966Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf4g/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-19T18:13:38.013Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:13:50.303Z
+
+Early and hard-right views look clean: a handful of thick rings telescoping into a warm light, with the river converging into it. Now the checks: the frozen start view first.
+
+### 🤖 Claude — 2026-11-19T18:13:53.302Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=$(cat $S/K6.txt) && node scripts/capture.mjs 04 --q=\"$K6\" --out=$S/sv_k6 >/dev/null 2>&1; node scripts/capture.mjs 04 --q=\"$K6&m04rfew=1&m04rfg=1.2\" --out=$S/sv_rf >/dev/null 2>&1; git checkout qa/capture_log.json; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/sv_k6/04.png $S/sv_rf/04.png $S/sv_rf_diff.png 0.1 180 1536", "description": "Frozen start view K6 vs K6 plus telescope, pixel diff", "timeout": 600000}`
+

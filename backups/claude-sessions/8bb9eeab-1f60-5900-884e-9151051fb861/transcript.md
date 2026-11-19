@@ -2093,3 +2093,109 @@ Your picture is one painted moment, seen from one spot. When Benny swims forward
 
 **Backup gap:** nothing reached GitHub from 02:57 to 18:09 UTC, because the session was closed and a save from 11:58 got stuck here. Everything is saved and checked now, at commit `655ac54`.
 
+### 🧑 User — 2026-11-19T18:12:07.304Z
+
+Okay, well, show me because I I don't want to. No offense, but I'm not gonna waste my time. If you can't make my exact approved screens, or at least some of them, I don't even mean all of them. At least some of them for now. But yeah, show me. I guess.
+
+### 🤖 Claude — 2026-11-19T18:12:12.797Z
+
+I'll put together the newest Screen 04, with the water and rings combined, plus the new Screen 07 pink bands.
+
+### 🤖 Claude — 2026-11-19T18:12:14.557Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && git status --short | grep -v node_modules; git -C /home/user/wt/s04 log --oneline -1; git -C /home/user/wt/s04b log --oneline -1; grep -rln \"swim_clip\\|NEW_swim\" /home/user/wt/s04/tools/match04/ /home/user/wt/s04/qa/match/04/r18/PROGRESS.md 2>/dev/null | head; ls /home/user/wt/s04/tools/match04/ | grep -i -E \"clip|swim|video\"", "description": "Check preview state and find the clip tool"}`
+
+### 🧑 User — 2026-11-19T18:12:14.640Z
+
+> ↩︎ result: M qa/capture_log.json
+> f952838b Screen 04 r18 step 3b: cyan right round and below Benny, pink from the corners (m04nwc) — GOOD IMPROVEMENT
+> 676b484f Screen 04 r18 step 7 WIP: m04rfew telescoping rings (behind switch, off by default, not yet proven)
+> /home/user/wt/s04/qa/match/04/r18/PROGRESS.md
+
+### 🤖 Claude — 2026-11-19T18:12:16.918Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"clip\" /home/user/wt/s04/qa/match/04/r18/PROGRESS.md | head -5; ls /home/user/wt/s04/tools/ | head -40 | tr '\\n' ' '", "description": "Find how swim clips are made"}`
+
+### 🧑 User — 2026-11-19T18:12:16.970Z
+
+> ↩︎ result: 4:`&m04nband=1`) and its stills / half-size clip, restored uncommitted. History: `qa/match/04/r17/PROGRESS.md`, `r16/`, `r15/`.
+> 23:  both sides, like the painted swirl bands that wrap round Benny in the approved picture. In the clip they stay on the water and
+> 29:  `motion_a00_f03_r18.json`); `NEW_swim_clip_half.mp4` (half size, 3.6 s straight / left / right / straight, rendered in r17 and
+> 42:* WHAT LOOKS CLOSER (f03, f06, t33, t66, t95, steering and hard left / right, clip): the near water was long straight pink / cyan
+> 45:  the bands beside the arrow lane wave gently instead of running as straight rails. In the clip the whirl stays wrapped round Benny
+> blender imageblaster lead_r13 lead_r6 make_env_geometry_ref.py make_env_plate.py make_env_plate_v2.py make_env_plate_v3.py marble05 match match04 match08 model-lab.html model-lab.ts proj05 qa water-lab.html water-lab.ts worldlabs
+
+### 🤖 Claude — 2026-11-19T18:12:19.404Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"mp4\" /home/user/wt/s04/tools/lead_r13 /home/user/wt/s04/tools/qa /home/user/wt/s04/tools/match /home/user/wt/s04/scripts 2>/dev/null | head -8", "description": "Search for clip recording scripts"}`
+
+### 🧑 User — 2026-11-19T18:12:19.468Z
+
+> ↩︎ result: /home/user/wt/s04/tools/lead_r13/swim_clip.mjs
+> /home/user/wt/s04/scripts/cinematic-test.mjs
+> /home/user/wt/s04/scripts/apk-web-check.mjs
+
+### 🤖 Claude — 2026-11-19T18:12:21.689Z
+
+> 🔧 **Bash** `{"command": "head -20 /home/user/wt/s04/tools/lead_r13/swim_clip.mjs | cut -c1-200; grep -n \"startVite(\" /home/user/wt/s04/tools/lead_r13/swim_clip.mjs", "description": "Read swim clip tool usage"}`
+
+### 🧑 User — 2026-11-19T18:12:21.737Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+260 chars]
+
+### 🤖 Claude — 2026-11-19T18:12:25.657Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"Kept set\\|K18-3\\b\" qa/match/04/r18/PROGRESS.md | head -8 | cut -c1-260", "description": "Find s04 current kept set"}`
+
+### 🧑 User — 2026-11-19T18:12:25.710Z
+
+> ↩︎ result: 8:Kept set K17-1 (= r17 step 1):
+> 33:Query (K18-3): K18-2 + `&m04nwhirl=1` (needs `m04nband`; defaults `m04nwk` 0.5, `m04nwe` 0.3, `m04nwt` 1, `m04nwm` 0.35,
+> 41:* Start view: `node scripts/capture.mjs 04` K18-2 vs K18-3 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+> 51:* Pictures: `qa/match/04/r18/s3_nwhirl/1_APPROVED.png`, `BEFORE/` (K18-2 = the step-2 NEW set), `NEW/` (K18-3, 12 shots),
+> 55:Query (K18-3b): K18-3 + `&m04nwc=1.3` (soft edge `m04nwcs` 0.8; `m04nwc` 0 = the step-3 look).
+> 58:* Start view: K18-3 vs K18-3b → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+> 62:* Pictures: `qa/match/04/r18/s3b_nwc/1_APPROVED.png`, `BEFORE/` (K18-3, from the step-3 NEW set), `NEW/` (K18-3b: f03, f06, f10,
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T18:12:30.752Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && git checkout -- qa/capture_log.json && git merge --no-edit -m \"Screen 04 preview v2: + s04 f952838b (m04nwhirl, m04nwc)\" f952838b 2>&1 | tail -1 && npx tsc --noEmit && echo TSC_OK && Q=\"$(cat qa/match/04/r18/PREVIEW_QUERY.txt)&m04nwhirl=1&m04nwc=1.3\" && echo \"$Q\" > qa/match/04/r18/PREVIEW_QUERY_v2.txt && SP=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad && (timeout 1500 node $SP/audit04_p.mjs qa/match/04/r18/preview_v2/NEW \"$Q\" \"a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,t66_through_screen,s_lef …[+121 chars]`
+
+### 🧑 User — 2026-11-19T18:14:17.059Z
+
+> ↩︎ result: create mode 100644 qa/match/04/r18/s3b_nwc/NEW/t95_through_screen.png
+> TSC_OK
+> 04 a00_approved_view s 78.358 lat 0 stage 04 frames 0
+> 04 f03_forward3u s 81.153 lat 0 stage 04 frames 13
+> 04 f06_forward6u s 84.181 lat 0 stage 04 frames 26
+> 04 f10_forward10u s 88.148 lat 0 stage 04 frames 43
+> 04 s_left_hard s 90.249 lat -1.65 stage 04 frames 52
+> 04 t66_through_screen s 102.848 lat -0.006 stage 04 frames 106
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T18:14:18.929Z
+
+Newest Screen 04 pictures are rendered. Recording a short real swim clip next, then I'll send everything together.
+
+### 🤖 Claude — 2026-11-19T18:14:21.368Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && Q=\"$(cat qa/match/04/r18/PREVIEW_QUERY_v2.txt)\" && O=qa/match/04/r18/preview_v2/clip_frames && timeout 1500 node tools/lead_r13/swim_clip.mjs 04 $O 4 \"$Q\" 2>&1 | grep -v \"outside of Vite\" | tail -2; ls $O | wc -l; ffmpeg -loglevel error -y -framerate 24 -i $O/%04d.png -vf scale=432:768 -pix_fmt yuv420p qa/match/04/r18/preview_v2/swim_clip_half.mp4 && rm -rf $O && ls -la qa/match/04/r18/preview_v2/", "description": "Record and encode a half-size Screen 04 swim clip", "timeout": 1600000}`
+

@@ -1,0 +1,103 @@
+diff --git a/src/vfx/proj05Tunnel.ts b/src/vfx/proj05Tunnel.ts
+index d26167ab..f6e91c7a 100644
+--- a/src/vfx/proj05Tunnel.ts
++++ b/src/vfx/proj05Tunnel.ts
+@@ -73,7 +73,9 @@ const lids05Ready: Promise<void> | null = PROJLID05
+       if (!map) return;
+       map.colorSpace = THREE.NoColorSpace;          // the texels ARE display values: the shader undoes the post chain
+       map.needsUpdate = true;
+-      m.material = lidProjMaterial(map);
++      // `&m05lidf=1` (round 18): only the far pair L3 / R3 (wholly past the seam) follows the live far block; L2 / R2 only
++      // reach past the seam with their far tips (remapping those stretched them into a pale cut slab)
++      m.material = lidProjMaterial(map, M05LIDF && /_[LR]3$/.test(m.name));
+       m.frustumCulled = false;
+     });
+     lids05Scene = gltf.scene;
+@@ -82,11 +84,11 @@ const lids05Ready: Promise<void> | null = PROJLID05
+   : null;
+ if (lids05Ready) proj05Pending.push(lids05Ready);
+ 
+-function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
++function lidProjMaterial(map: THREE.Texture, farLive = false): THREE.MeshBasicMaterial {
+   const mat = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, fog: false });
+   mat.onBeforeCompile = (shader) => {
+     Object.assign(shader.uniforms, shared);
+-    if (M05LIDF) {
++    if (farLive) {
+       // `&m05lidf=1` (round 18, waterRibbon.ts M05LIDF): past the seam the tray follows the live far block — undo the
+       // locked compression (zs = 0: Z = z / (1 − z / L), lateral scale about the locked eye's axis offset), redo the live one
+       Object.assign(shader.uniforms, m05fw);
+@@ -118,7 +120,7 @@ void main() {`)
+       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+ gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
+   };
+-  mat.customProgramCacheKey = () => 'ptlid05' + (M05LIDF ? '-lidf' : '');
++  mat.customProgramCacheKey = () => 'ptlid05' + (farLive ? '-lidf' : '');
+   mat.onBeforeRender = (renderer) => livePost(renderer);
+   return mat;
+ }
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 04234594..468196b0 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -385,6 +385,14 @@ export const m05fw = {
+  * the rings. Nearer than the seam nothing moves; at the locked eye and after the block is gone: identity (0 px at the lock).
+  */
+ export const M05LIDF: boolean = MATCH05 && q05('m05far') && q05('m05lidf');
++/**
++ * `&m05pink=1` (Screen 05 round 18, needs m05far; src/world/environment.ts): the glossy magenta floor sheet that lines the
++ * tube under the stream (1.9 rad wide) reaches up the lower walls above the foam banks; steering hard left in the kink it
++ * stood in the bottom-left corner as a flat hot-pink triangle beyond the foam (painted: slotted wall, foam clouds).
++ * While swimming in 05 the sheet is cut to the part under the river (± `m05pinka` rad from the bottom, default 0.8).
++ * Locked view: unchanged (cut only away from the locked eye); 06 / 07 sheets unchanged.
++ */
++export const M05PINK: boolean = MATCH05 && q05('m05far') && q05('m05pink');
+ /**
+  * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
+  * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
+diff --git a/src/world/environment.ts b/src/world/environment.ts
+index ad5da2a7..a6038186 100644
+--- a/src/world/environment.ts
++++ b/src/world/environment.ts
+@@ -10,7 +10,7 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
+ import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
+ import { STAGE_CAM } from '../game/cameraRig';
+ import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+-import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, m05wcrispNum } from '../vfx/waterRibbon';
++import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, M05PINK, m05eye, m05wcrispNum } from '../vfx/waterRibbon';
+ import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05fcloud=1 only
+ import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+ import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+@@ -387,12 +387,31 @@ export function buildEnvironment(course: Course): Environment {
+     : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+   const chunk = 40;
++  // `&m05pink=1` (Screen 05 round 18, waterRibbon.ts M05PINK): the 05 sheet cut to the part under the river while swimming
++  let pink05: THREE.Material | null = null;
++  if (M05PINK) {
++    const pm = pinkFlow.material.clone();
++    pm.map = pinkFlow.material.map; pm.emissiveMap = pinkFlow.material.emissiveMap;   // the same animated texture
++    const half = m05wcrispNum('m05pinka', 0.8) / 1.9;
++    pm.onBeforeCompile = (shader) => {
++      shader.uniforms.uM05Eye = m05eye;
++      shader.vertexShader = shader.vertexShader
++        .replace('void main() {', 'varying float vM05Arc;\nvoid main() {')
++        .replace('#include <uv_vertex>', '#include <uv_vertex>\nvM05Arc = uv.x;');
++      shader.fragmentShader = shader.fragmentShader
++        .replace('void main() {', `uniform vec4 uM05Eye; varying float vM05Arc;
++void main() {
++  if (uM05Eye.w > 0.5 && distance(cameraPosition, uM05Eye.xyz) > 0.02 && abs(vM05Arc - 0.5) > ${half.toFixed(4)}) discard;`);
++    };
++    pm.customProgramCacheKey = () => 'pink05cut';
++    pink05 = pm;
++  }
+   const addWall = (a0: number, a1: number, mat: THREE.Material, warp?: TubeWarp) => {
+     for (let a = a0; a < a1 - 0.01; a += chunk) {
+       const b = Math.min(a1, a + chunk + 0.6);
+       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, warp }), mat));
+       // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
++      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pink05 && mat === perf05Mat ? pink05 : pinkFlow.material));
+     }
+   };
+   addWall(s05, sGlow05, perf05Mat, warp05);

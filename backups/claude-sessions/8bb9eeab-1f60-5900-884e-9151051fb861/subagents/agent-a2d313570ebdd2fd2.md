@@ -1630,3 +1630,122 @@ Typecheck is clean. I'll save the work-in-progress behind its switches first (no
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05lidf=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try3 && timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" k81_kink_left,t66_through_screen,s_left_hard 5275 2>&1 | grep -i \"error\" | head; ls $OUT; cat /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bia6fsdh7.output", "description": "Render the paddle remap test shots", "timeout": 900000}`
 
+### 🧑 User — 2026-11-19T18:10:10.594Z
+
+> ↩︎ result: k81_kink_left.png
+> s_left_hard.png
+> shots.json
+> t66_through_screen.png
+> Updated 1 path from the index
+> a710f3db
+> a710f3db
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-19T18:10:12.565Z
+
+WIP pushed (`a710f3db`, remote matches). Now the paddle test at hard left.
+
+### 🤖 Claude — 2026-11-19T18:10:13.710Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try3/k81_kink_left.png"}`
+
+### 🧑 User — 2026-11-19T18:10:13.762Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:10:20.296Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nim=Image.open(S+'try3/k81_kink_left.png').convert('RGB')\na=im.crop((0,340,420,560)).resize((840,440),Image.LANCZOS); a.save(S+'try3_lids_l.png')\nim.crop((640,360,864,520)).resize((448,320),Image.LANCZOS).save(S+'try3_lids_r.png')\"", "description": "Zoom on the remapped paddles"}`
+
+### 🧑 User — 2026-11-19T18:10:20.576Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:10:21.397Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try3_lids_l.png"}`
+
+### 🧑 User — 2026-11-19T18:10:21.423Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:10:34.491Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"lidProjMaterial\" src/vfx/proj05Tunnel.ts", "description": "Find lid material creation sites"}`
+
+### 🧑 User — 2026-11-19T18:10:34.534Z
+
+> ↩︎ result: 76:      m.material = lidProjMaterial(map);
+> 85:function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
+
+### 🤖 Claude — 2026-11-19T18:10:42.028Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\ns=open(p).read()\npairs=[\n(\"      m.material = lidProjMaterial(map);\", \"      // `&m05lidf=1` (round 18): only the far pair L3 / R3 (wholly past the seam) follows the live far block; L2 / R2 only\\n      // reach past the seam with their far tips (remapping those stretched them into a pale cut slab)\\n      m.material = lidProjMaterial(map, M05LIDF && /_[LR]3$/.test(m.name));\"),\n(\"function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {\", \"function lidProjMaterial(map: THREE.Texture, fa …[+825 chars]`
+
+### 🧑 User — 2026-11-19T18:11:42.980Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:11:45.534Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try4/k81_kink_left.png"}`
+
+### 🧑 User — 2026-11-19T18:11:45.586Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:11:55.315Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 150,240p src/world/tube.ts | grep -n \"arc\\|uv\\|vScale\\|th =\" | head -20", "description": "Check tube geometry uv with arc option"}`
+
+### 🧑 User — 2026-11-19T18:11:55.369Z
+
+> ↩︎ result: 9:  vScale?: number;
+> 11:  arc?: number;
+> 31:   * Positions only; normals, uv and the strip attributes stay those of the circle. Undefined = unchanged geometry.
+> 39:  const vScale = o.vScale ?? 1;
+> 40:  const arc = o.arc ?? Math.PI * 2;
+> 45:  const uv = new Float32Array(rings * (radial + 1) * 2);
+> 58:      const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom
+> 73:      uv[k * 2] = j / radial;
+> 74:      uv[k * 2 + 1] = s / vScale;
+> 87:  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+
+### 🤖 Claude — 2026-11-19T18:12:06.340Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"m05eye\" src/world/environment.ts | head -3; grep -n \"^import\" src/world/environment.ts | head -30 | grep waterRibbon", "description": "Check imports in environment.ts"}`
+
+### 🧑 User — 2026-11-19T18:12:06.383Z
+
+> ↩︎ result: 13:import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, m05wcrispNum } from '../vfx/waterRibbon';
+
+### 🤖 Claude — 2026-11-19T18:12:21.153Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert s.count(a)==1, (p, a[:70], s.count(a))\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/waterRibbon.ts', [(\"\"\"export const M05LIDF: boolean = MATCH05 && q05('m05far') && q05('m05lidf');\"\"\",\n\"\"\"export const M05LIDF: boolean = MATCH05 && q05('m05far') && q05('m05lidf');\n/**\n * `&m05pink=1` (Screen 05 round 18, needs m05far; src/world/environment.ts): the glossy magenta floor sheet that lines the\n * tube under the stream (1.9 rad w …[+3378 chars]`
+
+### 🧑 User — 2026-11-19T18:12:24.787Z
+
+> ↩︎ result: ok
+> 417:  addWall(s05, sGlow05, perf05Mat, warp05);
+
+### 🤖 Claude — 2026-11-19T18:12:32.688Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05lidf=1&m05pink=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try5 && timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" k81_kink_left,s_left_hard,s_right_hard 5275 2>&1 | grep -i error | head -3; python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\na=Image.open(S+'try4/k81_kink_left.png').convert('RGB').crop((0,850,430,1300)); b=Image.open(S+'try5/k81_kink_left.png'). …[+219 chars]`
+
+### 🧑 User — 2026-11-19T18:14:08.098Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:14:10.703Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/pink_cmp.png"}`
+
+### 🧑 User — 2026-11-19T18:14:10.742Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:14:18.235Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05lidf=1&m05pink=1&m05pinka=0.5\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try5b && timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" k81_kink_left 5275 2>&1 | grep -i error | head -3; python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nb=Image.open(S+'try5b/k81_kink_left.png').convert('RGB').crop((0,850,430,1300)).resize((430,450)).save(S+'pink_b.png')\"", "descript …[+58 chars]`
+
