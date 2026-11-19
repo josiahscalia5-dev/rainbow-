@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18410,
-   "sha256": "664165027563d0b3af7df197be147fc2f9a51199302d68462d46f5df670710f6"
+   "sha256": "6b82eccaf5b52135aacf29f83a475dc95220c44df67884bbec8d95955fecbb10"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1099,7 +1099,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/INFO.json",
    "bytes": 1208,
-   "sha256": "1e29aaa003d43f1605bb43430769a8665a8bfe3667dd70151ffd01c416037afc"
+   "sha256": "e38a55c30ca20fb86aff1d1f24475478764efdc6e9a4a4d290caabe6bb8bd7f6"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/tracked.patch",
@@ -1163,73 +1163,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
-   "bytes": 1276,
-   "sha256": "6d24396cb6ac8964ded6fda9d63ed052135b749523ef82a8c56349c0f65f3b79"
+   "bytes": 512,
+   "sha256": "5c4ef13ff0209dbd1bddf15d8531889656f3cf9ace3cc4cd7c456af29e4e9385"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/tracked.patch",
-   "bytes": 1732,
-   "sha256": "0903e35bc8c36c9949b1efecbb3c4d3ea9f61434f30dd044624ff56ebb2a7b7f"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/PREVIEW_QUERY.txt",
-   "bytes": 804,
-   "sha256": "30b80e8d41e9ee254fe55f8ef68dc110d6aec1a82b818912c7cb3f684f5ff22f"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/f06_forward6u.png",
-   "bytes": 1984555,
-   "sha256": "9fa3a56a39ab6424b4093d24e8268440055f578dda62b2b019c1442d4d6b3dbc"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/f10_forward10u.png",
-   "bytes": 1777754,
-   "sha256": "9b882a954bfab363c54a4be8885e8d9e0ce289497420a14f1c3222276e035b51"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/f20_forward20u.png",
-   "bytes": 1709426,
-   "sha256": "450f7af02dcbafbdca737c6ad0844e7a0ebde8c97d3bcca30d4a77c53b73ae44"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/motion.json",
-   "bytes": 5360,
-   "sha256": "2e617ae3568d853415a17a654b04d299ec47b132f0d439ef6f0e48b315e1c723"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/s_left_hard.png",
-   "bytes": 1709674,
-   "sha256": "74ede2b9f932084c4299bb281f6ed9a449c6fccf4ece2ade2ff0c0584d5c9fdf"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/s_left_steer.png",
-   "bytes": 1979593,
-   "sha256": "c1e8977361eda6364b71b6370391650e81f6b6fd0b94da7242a6849554503614"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/s_right_hard.png",
-   "bytes": 1622234,
-   "sha256": "6e03ceae3fa3a4e24920510c0761ab851db49d9e22289accb19920c41470807e"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/s_right_steer.png",
-   "bytes": 1962201,
-   "sha256": "f834f0d878bcc65883faf3115ec18e0da53ced81677d3b995d2299ae1d88eda8"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/t33_through_screen.png",
-   "bytes": 1734056,
-   "sha256": "ceadf5fb7c19c1ad83705a1787f8a276cacab1c59923bfdee2c87b93d1bb7f5e"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/t66_through_screen.png",
-   "bytes": 1724889,
-   "sha256": "86b4ca707c1cfde45e4b2d037613c25ef9e5d18030799705b35f81b419df503f"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-preview-c18/untracked/qa/match/04/r18/preview/NEW/t95_through_screen.png",
-   "bytes": 1722113,
-   "sha256": "41158c7cfaa60da1df047599a62928669fc4fa3f2316d1acead4ae53403c9ac0"
+   "bytes": 1729,
+   "sha256": "a26e1460734b9505a1d18ce623b0e1defdc534b5ccb751a0231d261f959cb2f8"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1299,7 +1239,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c18/INFO.json",
    "bytes": 486,
-   "sha256": "48b203a1030578b3505937daf5bce389e32a4c13d095e6cd1dd8c68bbb097dc0"
+   "sha256": "acba628ed6d682a9889dfad754c5be979a94b1c38f6b78c0f3534944ab58989d"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1644,7 +1584,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/INFO.json",
    "bytes": 743,
-   "sha256": "abefb6a3323ed06f9d6391842836234e180cb3b442d6e11c0dcf0e9b30aad69e"
+   "sha256": "18308a2577f8fab520626a71e43b7f135c8fa9b75b502f27164cce386bbe1743"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/tracked.patch",
@@ -1709,7 +1649,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/INFO.json",
    "bytes": 536,
-   "sha256": "ce67e2211250d4381a74f19f5d66da3f5e3ad521d345a807a18b2f74c66d0000"
+   "sha256": "e4032ff2af7305ca3803769b25fe74264bed72fca95a0f474e45a3a15cac5611"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/tracked.patch",
@@ -1854,7 +1794,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/INFO.json",
    "bytes": 618,
-   "sha256": "66c4d566e828ab1c19342ae39bb7b282229e47fb2513ed573143ac9435271908"
+   "sha256": "e3ceeb99a644c06a1f60bb990da5295bd7e8e769da37ea53e8169710a3208275"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/tracked.patch",

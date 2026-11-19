@@ -1,5 +1,5 @@
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index ac16c01f..a6ce559e 100644
+index ac16c01f..b12f2550 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -92,7 +92,8 @@ uniform float uNearM;     // share of the bank tile's columns that is the magent
@@ -12,7 +12,7 @@ index ac16c01f..a6ce559e 100644
  varying vec2 vUv;
  varying vec4 vProj;
  varying vec3 vW;
-@@ -103,61 +104,38 @@ ${PROJ05_INVERSE}
+@@ -103,61 +104,37 @@ ${PROJ05_INVERSE}
  // r16 m07nearw: [foam | magenta | trim | cyan | cyan | trim | magenta | foam] across a winding centre line, world-anchored.
  // Both banks are the painted lower-left band straightened (tools/match07/near_tiles_r16.py) at about the painted near
  // scale; the right bank reads another stretch of the strip (no mirror image across the centre).
@@ -74,10 +74,9 @@ index ac16c01f..a6ce559e 100644
 +  float u;
 +  if (a < Rc) u = uNearM + (1.0 - uNearM) * (1.0 - a / Rc);
 +  else if (uBand.w > 0.5) {
-+    // the band tile read at a fixed world width, mirrored outward (inner edge → outer edge → back), never into the trim
-+    float t = (a - Rc) / bw;
-+    u = uNearM * abs(mod(t, 2.0) - 1.0);
-+    if (t > 1.0) u = min(u, 0.88 * uNearM);
++    // the band tile's magenta columns spread across the whole (varying) band width (wide soft satin highlights where the band
++    // is thick; no mirrored repeats, which read as a diamond lattice)
++    u = uNearM * (1.0 - clamp((a - Rc) / max(Ro - Rc, 1e-3), 0.0, 1.0));
 +  } else u = uNearM * clamp((R - a) / mw, 0.0, 1.0);
    float v = along / uNearW.z;
    vec3 cL = texture2D(uNearTile, vec2(u, v)).rgb;
@@ -97,7 +96,7 @@ index ac16c01f..a6ce559e 100644
    // painted foam clouds on the banks: two offset readings of the foam tile blended by a slow world mask (no wallpaper grid)
    vec2 fp = vec2(vL.x, along) / uNearW.w;
    vec3 f1 = texture2D(uFoamTile, fp).rgb;
-@@ -272,6 +250,11 @@ void main() {
+@@ -272,6 +249,11 @@ void main() {
  }`;
  
  const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
@@ -109,7 +108,7 @@ index ac16c01f..a6ce559e 100644
  
  /** M3 '?m07tube=1': the plunge continuation needs the course (arc samples) and where it starts / ends */
  export interface Plunge07 { course: Course; sA: number; sB: number; fade: [number, number] }
-@@ -298,9 +281,9 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -298,9 +280,9 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // lane at about the painted near scale, painted foam clouds on the banks (tools/match07/near_tiles_r16.py)
    const nearW = flag05('m07nearw');
    const wallFoamOn = flag05('m07wfoam'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)
@@ -122,7 +121,7 @@ index ac16c01f..a6ce559e 100644
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-@@ -365,8 +348,10 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -365,8 +347,10 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      uNearTile: { value: tNear },
      uFoamTile: { value: tFoam },
      uWF: { value: new THREE.Vector3(0.3, 0.5, wallFoamOn ? 1 : 0) },
@@ -135,7 +134,7 @@ index ac16c01f..a6ce559e 100644
    };
    if (nearW) {
      // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
-@@ -398,7 +383,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -398,7 +382,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const painted = along < 0 ? 0 : THREE.MathUtils.clamp(lerpT(Rv.along, Rv.lat, along) - lane, -0.3, 0.3);
        const tail = 0.6 * Math.sin(((along - aEnd) / 18) * Math.PI * 2);
        const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);

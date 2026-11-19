@@ -1728,3 +1728,43 @@ The start view is unchanged in the preview, checked pixel by pixel. Saving the p
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:47:32.608Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/briefs/2026-11-19-r18/COORDINATION.md'\ns=open(p).read()\nrow=\"| 4 (~04:00) | 04 COMBINED PREVIEW (user OK ~03:35 \\\"Yes all once\\\"): new branch `claude/rainbow-s04-preview-c18` @ `d8b4722` = s04 `31372d6` + s04tex `9eb27e6` (clean merge, tsc clean; worktree `/home/user/wt/s04p`, port 5279; query `qa/match/04/r18/PREVIEW_QUERY.txt`) | shown to the user: water bands + painted ring sheen together; start view 0 px (deterministic capture). Visible flaw (both): at hard right the water ends in a straight flat edge against the wall (painted: river curving u …[+441 chars]`
+
+### 🤖 Claude — 2026-11-19T02:47:34.962Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r18/04_combined_preview/1_APPROVED.png", "qa/review_r18/04_combined_preview/2_BEFORE_f06_forward6u.png", "qa/review_r18/04_combined_preview/3_NEW_f06_forward6u.png", "qa/review_r18/04_combined_preview/2_BEFORE_t66_through_screen.png", "qa/review_r18/04_combined_preview/3_NEW_t66_through_screen.png", "qa/review_r18/04_combined_preview/2_BEFORE_s_right_hard.png", "qa/review_r18/04_combined_preview/3_NEW_s_right_hard.png"], "caption": "Screen 04 combined preview: APPROVED, then BEFORE (start of today) / NEW (water + rings together) at three spots.", "status": "normal", "disp …[+15 chars]`
+
+### 🧑 User — 2026-11-19T02:47:46.003Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+
+### 🧑 User — 2026-11-19T02:47:47.579Z
+
+> ↩︎ result: 7 files delivered to user.
+>   /home/user/rainbow-/qa/review_r18/04_combined_preview/1_APPROVED.png → file_uuid: e98c2523-c77e-4ad7-a9e4-05c132e0e6a0
+>   /home/user/rainbow-/qa/review_r18/04_combined_preview/2_BEFORE_f06_forward6u.png → file_uuid: 694ab82b-8cee-42ab-9494-7690d4ab699a
+>   /home/user/rainbow-/qa/review_r18/04_combined_preview/3_NEW_f06_forward6u.png → file_uuid: 1bd11448-443f-418e-b645-f71313ab53f9
+>   /home/user/rainbow-/qa/review_r18/04_combined_preview/2_BEFORE_t66_through_screen.png → file_uuid: d359363c-eff3-44e7-803a-b67c57b55984
+>   /home/user/rainbow-/qa/review_r18/04_combined_preview/3_NEW_t66_through_screen.png → file_uuid: 72a4400a-b5fa-4082-a194-bd96d716a8e5
+>   /home/user/rainbow-/qa/review_r18/04_combined_preview/2_BEFORE_s_right_hard.png → file_uuid: 08b52e64-be79-4c66-84e1-7c1b5be1b790
+>   /home/user/rainbow-/qa/review_r18/04_combined_preview/3_NEW_s_right_hard.png → file_uuid: ce2f1f7f-c302-424c-925c-79dfc9fade63
+
+### 🤖 Claude — 2026-11-19T02:47:52.531Z
+
+I've combined the Screen 04 water and ring improvements into one preview. The attached pictures are your APPROVED screen, then BEFORE (how 04 looked at the start of today) and NEW (water and rings together) at three spots: just inside the tunnel, deep in the tunnel, and steering hard right.
+
+- **What's new together:**
+  - The water around Benny now has glossy pink and cyan streaks instead of one plain cyan sheet.
+  - The inner rings carry your soft pink-violet shine instead of all being plain copper.
+- **Start view:** the view that matches your approved picture is still exactly the same, checked pixel by pixel.
+- **Your normal game:** unchanged. The preview is on its own branch, `claude/rainbow-s04-preview-c18`, and both workers' own branches are untouched. The pictures are also saved in `qa/review_r18/04_combined_preview/`.
+
+**Still wrong in the preview:**
+- The tunnel is still a long corridor of many thin rings, where your painting has a few thick yellow-gold ones. The ring worker is rebuilding that now.
+- When Benny steers hard right, the water stops at a straight flat edge against the wall. In your painting the river curves up the sides. The water worker has that next, along with replacing the big foam heaps with low foam.
+
+When those two big fixes are done, I'll rebuild the preview with everything included and show you again.
+
