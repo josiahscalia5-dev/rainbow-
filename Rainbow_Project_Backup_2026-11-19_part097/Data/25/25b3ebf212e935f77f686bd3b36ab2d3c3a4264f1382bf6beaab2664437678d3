@@ -1,0 +1,56 @@
+{
+  "method": "Closest ray on the unit sphere through any native water-labelled pixel. The distance to that ray is a world-space lower bound for the distance to any directly visible water point, even if its depth varies freely. Pixels are tested at their centres, giving subpixel uncertainty. The source mask includes the lower foreground and is not restricted to the partial new ribbon.",
+  "appliesTo": "Visible water inside the original picture. Occluded or outside-frame water is unconstrained; the three reported extrema need not share a station.",
+  "retainedStations": [
+    12.5,
+    30
+  ],
+  "spacing": 0.25,
+  "results": {
+    "centre": {
+      "lateralOffset": 0.0,
+      "insideFrame": 71,
+      "farthestWorldOffsetFromAnyVisibleWaterRay": 0.34231,
+      "stationFromInlet": 13.75,
+      "projectedLocation": [
+        461.068,
+        648.911
+      ],
+      "nearestPaintedWaterPixel": [
+        457,
+        697
+      ],
+      "numberWithMinimumOffsetOverQuarterUnit": 2
+    },
+    "hardLeft": {
+      "lateralOffset": -2.95,
+      "insideFrame": 70,
+      "farthestWorldOffsetFromAnyVisibleWaterRay": 1.03824,
+      "stationFromInlet": 24.0,
+      "projectedLocation": [
+        388.016,
+        623.541
+      ],
+      "nearestPaintedWaterPixel": [
+        385,
+        691
+      ],
+      "numberWithMinimumOffsetOverQuarterUnit": 27
+    },
+    "hardRight": {
+      "lateralOffset": 2.95,
+      "insideFrame": 61,
+      "farthestWorldOffsetFromAnyVisibleWaterRay": 2.166,
+      "stationFromInlet": 30.0,
+      "projectedLocation": [
+        836.568,
+        699.194
+      ],
+      "nearestPaintedWaterPixel": [
+        711,
+        705
+      ],
+      "numberWithMinimumOffsetOverQuarterUnit": 61
+    }
+  }
+}

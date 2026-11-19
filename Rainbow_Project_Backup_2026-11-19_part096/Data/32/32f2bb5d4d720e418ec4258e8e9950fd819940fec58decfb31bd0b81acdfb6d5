@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Rainbow Crest Proof</string>
-    <string name="title_activity_main">Rainbow Crest Proof</string>
-    <string name="package_name">com.rainbow.washergame.crestproof</string>
-    <string name="custom_url_scheme">com.rainbow.washergame.crestproof</string>
-</resources>
