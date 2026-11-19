@@ -1,0 +1,187 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index f6c98dd..1fd1fff 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -436,15 +436,17 @@ void main() {
+  * glowing chevron arrows drawn crisp (distance field) on the centre lane. */
+ const RIVER_VERT = /* glsl */ `
+ uniform mat4 uProjVP;
+-attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0
++attribute vec2 aR;          // x: signed arc length across the trough (u), y: 0 (r19b m04wup: how far the climb is ramped in, 0..1)
+ varying vec4 vProj;
+ varying vec3 vL;
+ varying float vS;
++varying float vC;
+ void main() {
+   vec4 wp = modelMatrix * vec4(position, 1.0);
+   vProj = uProjVP * wp;
+   vL = position;
+   vS = aR.x;
++  vC = aR.y;
+   gl_Position = projectionMatrix * viewMatrix * wp;
+ }`;
+ const RIVER_FRAG = /* glsl */ `
+@@ -482,12 +484,19 @@ uniform vec2 uNB7;           // r18 m04nwq / m04nwr: x clean lane water where th
+                              // round Benny (u; 0 = unlimited) — beyond it the bands run straight again (no smear when the camera lags)
+ uniform vec4 uSS;            // r18 m04sswirl: x swing of the band pattern across the bank (u, 0 = off), y its wavelength along (u),
+                              // z how far the water's top edge laps back down in tongues (u, 0 = straight edge), w lap wavelength (u)
+-uniform vec4 uA5;          // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
++uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above the old water edge (arc u, 0 = off), y tongue
++                             // wavelength along (u), z tongue depth (0..1 of the climb), w share of the painted band sequence
++                             // reached at the old edge (the rest — pink satin -> lilac crest — climbs the wall)
++uniform vec4 uWU2;           // r19b m04wup: x / y the climb falls from full (x u ahead of Benny) to z of it (y u ahead), w soft top edge (u)
++uniform vec4 uWU3;           // r19b m04wup: x old water edge (arc u), y tongue drift with the current (0..1), z lean of the band
++                             // stripes up the wall (stripe shift per u along), w band tile column at the crest (0 = lilac sparkle)
++uniform vec4 uA5;        // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+ uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+ uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
+ varying vec4 vProj;
+ varying vec3 vL;
+ varying float vS;
++varying float vC;
+ ${PROJ05_INVERSE}
+ float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+ float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+@@ -560,6 +569,21 @@ void main() {
+     col = mix(col, laneC, kl * uLane.z);
+   }
+   float fringe = 0.0, edgeY = uEdge.y;
++  // r19b m04wup: as painted, the water does not stop in a straight flat line against the gold wall — the pink / magenta
++  // satin bands sweep UP the tunnel sides in long rising tongues (higher round Benny, lower far ahead), their lilac crest
++  // lapping the wall. ext = arc up the wall above the old water edge, wuE = this spot's top edge (both in u).
++  float ext = abs(vS) - uWU3.x, wuE = 0.0, wuK = 0.0;
++  if (uWU.x > 0.0) {
++    float sd = vS < 0.0 ? 0.0 : 1.0;
++    float bA = uNB.x > 0.5 ? uNB.y : uA5b.z + 6.4;                       // Benny's position down the slide
++    float env = mix(1.0, uWU2.z, smoothstep(uWU2.x, uWU2.y, along - bA));
++    float ph = (along - uTime * 0.9 * uWU3.y) * 6.2832 / uWU.y + sd * 2.6 + 2.2 * vn(vec2(along * 0.06, 3.0 + sd * 6.0));
++    float tg = 0.5 + 0.5 * sin(ph);
++    tg = tg * tg * (3.0 - 2.0 * tg);                                      // long rounded crests, short troughs
++    wuK = clamp(vC, 0.0, 1.0);                                            // ramped in from the opening
++    wuE = uWU.x * env * (1.0 - uWU.z * (1.0 - tg)) * wuK;
++    edgeY = uWU3.x + wuE;                                                 // the lilac fringe rides the climbing crest
++  }
+   if (uSS.z > 0.0) {
+     // r18 m04sswirl: the water's top edge against the gold wall laps up and down in soft tongues (painted: no straight
+     // hard line where the water meets the wall); the lilac fringe follows the lapping edge
+@@ -661,6 +685,13 @@ void main() {
+     float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
+     float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0;
+     float tb = clamp((asB + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
++    if (uWU.x > 0.0) {
++      // r19b m04wup: the painted band sequence (cyan by the lane -> violet -> hot-pink satin -> lilac sparkle) reaches only
++      // its pink part at the old water edge; the rest climbs the wall, its stripes running parallel to the rising crest
++      float bq = mix(1.0, uWU.w, wuK);
++      float tq = mix(1.0, 1.0 - uWU3.w / max(uSB1.z, 0.05), wuK);          // the crest stays pink-violet (not the lilac column)
++      tb = ext > 0.0 ? bq + (tq - bq) * clamp(ext / max(wuE, 0.05), 0.0, 1.0) : tb * bq;
++    }
+     float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
+     float ub = (1.0 - tb) * uSB1.z;
+     vec3 bc = mix(texture2D(uSB, vec2(ub, vb)).rgb, texture2D(uSB, vec2(ub, vb * 0.81 + 0.29)).rgb, w);
+@@ -716,11 +747,18 @@ void main() {
+     col = mix(col, vec3(0.96, 1.0, 1.0), (1.0 - smoothstep(-px, px, abs(d + uArr.w * 0.12) - uArr.w * 0.10)) * fade);
+   }
+   col = clamp(col, 0.0, 1.0);
++  float alpha = 1.0;
++#ifdef CLIMB
++  // r19b m04wup: the climbing water on the wall (own see-through mesh): soft top edge, nothing above it; hidden in the
++  // approved view (the painted picture is shown there), fading in with the rest of the 3D scenery
++  if (uAway < 0.001 || ext > wuE) discard;
++  alpha = 1.0 - smoothstep(wuE - uWU2.w, wuE, ext);
++#endif
+   if (uAway < 0.999 && vProj.w > 0.0) {
+     vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+     if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
+   }
+-  gl_FragColor = vec4(pjInverse(col), 1.0);
++  gl_FragColor = vec4(pjInverse(col), alpha);
+ }`;
+ 
+ /** r16 `&m04end=1`: the distant glowing opening (own material on the far end disc; the ring shader is untouched). The disc
+@@ -1222,13 +1260,18 @@ export function addM04(ctx: M04Ctx) {
+   if (M04.river) {
+     const nX = 28, nA = Math.ceil(len / 0.5);
+     const pos: number[] = [], aR: number[] = [], idx: number[] = [];
++    // r19b m04wup: the trough edge then ends a hair IN FRONT of the flattened lower wall (r + 0.05; m04wug u inside it) instead
++    // of 0.03 u behind it, so no sliver of gold wall shows between the river and the water climbing the wall near the camera
++    const wup = M04.num('m04wup', 0) > 0;
++    const Rt = wup ? r + 0.05 - M04.num('m04wug', 0.1) : r + 0.08;
++    const xWr = wup ? Math.sqrt(Math.max(0, Rt * Rt - (cy - RY) ** 2)) : xW;
+     // cross-section: flat lane |x| <= XF (a hair above the old water plane), then sides curving up to the wall
+     const xs: { x: number; y: number }[] = [];
+     for (let i = 0; i <= nX; i++) {
+       const u = (i / nX) * 2 - 1, au = Math.abs(u);
+       const kf = 0.45; // share of the half section that is the flat lane
+       let x: number, y: number;
+-      if (au <= kf) { x = (au / kf) * XF; y = 0.02; } else { const t = (au - kf) / (1 - kf); x = XF + (xW - XF) * t; y = 0.02 + RY * t * t; }
++      if (au <= kf) { x = (au / kf) * XF; y = 0.02; } else { const t = (au - kf) / (1 - kf); x = XF + (xWr - XF) * t; y = 0.02 + RY * t * t; }
+       xs.push({ x: Math.sign(u) * x, y });
+     }
+     const arc: number[] = [0]; const mid = nX / 2;
+@@ -1247,6 +1290,35 @@ export function addM04(ctx: M04Ctx) {
+       const p0 = j * (nX + 1) + i, p1 = p0 + 1, p2 = p0 + nX + 1, p3 = p2 + 1;
+       idx.push(p0, p2, p1, p1, p2, p3);
+     }
++    // r19b `&m04wup=1`: the water CLIMBING THE WALL (see RIVER_FRAG / CLIMB): per row, nE more points on each side going up
++    // the wall circle from the old water edge (moving a hair in front of the flattened lower wall, below the ring beads),
++    // ramped in from m04wua0 to m04wua1 u inside the opening. They share the river's vertex buffer (so the m04rfew
++    // telescope shrinks them with the river) but are drawn by their own see-through mesh (soft lapping top edge).
++    const idxUp: number[] = [];
++    const wuH = Math.min(1.8, M04.num('m04wuh', 1.5));      // highest climb (arc u above the old edge; the wall is flat below ~1.8)
++    if (wup) {
++      const nE = 12, base = pos.length / 3, W = nE + 1;
++      const a0 = M04.num('m04wua0', 1.4), a1 = M04.num('m04wua1', 4.0);
++      const th0 = Math.atan2(xWr, cy - RY);                   // the trough edge angle (from straight down) on its circle Rt
++      for (let j = 0; j <= nT; j++) {
++        const a = -aB + (j / nT) * (len + aB);
++        const k2 = THREE.MathUtils.smoothstep(a, a0, a1), k = THREE.MathUtils.smoothstep(a, -0.6, 1.4);
++        for (let i = 0; i <= nX; i++) aR[(j * (nX + 1) + i) * 2 + 1] = k2;   // the trough knows the ramp too (top edge, bands)
++        for (const sd of [-1, 1]) {
++          const ex = cx + sd * xWr, ey = 0.02 + (RY - 0.02) * k;           // this row's trough edge point
++          for (let e = 0; e <= nE; e++) {
++            const s = (wuH * e) / nE, th = th0 + s / Rt;
++            const px = cx + sd * Rt * Math.sin(th), py = cy - Rt * Math.cos(th);
++            pos.push(ex + (px - ex) * k2, ey + (py - ey) * k2, z0 - a);
++            aR.push(sd * (arc[nX] + s * k2), k2);
++          }
++        }
++      }
++      for (let j = 0; j < nT; j++) for (let sI = 0; sI < 2; sI++) for (let e = 0; e < nE; e++) {
++        const p0 = base + (j * 2 + sI) * W + e, p1 = p0 + 1, p2 = p0 + 2 * W, p3 = p2 + 1;
++        idxUp.push(p0, p2, p1, p1, p2, p3);
++      }
++    }
+     const g = new THREE.BufferGeometry();
+     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+     g.setAttribute('aR', new THREE.Float32BufferAttribute(aR, 2));
+@@ -1301,11 +1373,30 @@ export function addM04(ctx: M04Ctx) {
+         uSS: { value: M04.num('m04sswirl', 0) > 0 && M04.num('m04sband', 0) > 0
+           ? new THREE.Vector4(M04.num('m04ssa', 0.45), M04.num('m04ssl', 6.5), M04.num('m04ssz', 0.0), M04.num('m04ssw', 3.2))
+           : new THREE.Vector4(0, 1, 0, 1) },
++        // r19b `&m04wup=1` (needs m04sband): m04wuh highest climb (u up the wall), m04wul tongue wavelength, m04wud tongue
++        // depth, m04wub band share at the old edge, m04wun0 / m04wun1 / m04wuf the climb falls to m04wuf of it from m04wun0
++        // to m04wun1 u ahead of Benny, m04wus soft top edge, m04wuv tongue drift with the current, m04wut band column at the crest
++        uWU: { value: wup ? new THREE.Vector4(wuH, M04.num('m04wul', 12), M04.num('m04wud', 0.3), M04.num('m04wub', 0.6)) : new THREE.Vector4(0, 1, 0, 1) },
++        uWU2: { value: new THREE.Vector4(M04.num('m04wun0', 3), M04.num('m04wun1', 18), M04.num('m04wuf', 0.45), M04.num('m04wus', 0.15)) },
++        uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), 0, M04.num('m04wut', 0.08)) },
+         uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
+         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
+         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
+         uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
+     const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
++    if (wup) {
++      // the climbing water: same vertex buffer (already shrunk with the telescope when the river was added just above),
++      // own index, the river shader with CLIMB (soft top edge, blended); invisible during the projector depth bake
++      const gu = new THREE.BufferGeometry();
++      gu.setAttribute('position', g.attributes.position); gu.setAttribute('aR', g.attributes.aR); gu.setIndex(idxUp);
++      const um = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, defines: { CLIMB: '' }, uniforms: rm.uniforms,
++        side: THREE.DoubleSide, fog: false, transparent: true, depthWrite: false, extensions: { derivatives: true } as never,
++        polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 });
++      const umesh = new THREE.Mesh(gu, um); umesh.name = 'm04_river_up'; umesh.renderOrder = 1; umesh.frustumCulled = false; umesh.visible = false;
++      group.add(umesh);
++      updaters.push((a) => { umesh.visible = a > 0.01; });
++      console.info('[match04] m04wup', { tris: idxUp.length / 3, wuH, edgeArc: +arc[nX].toFixed(3) });
++    }
+     console.info('[match04] m04river', { xW, RY, XF });
+   }
+ 

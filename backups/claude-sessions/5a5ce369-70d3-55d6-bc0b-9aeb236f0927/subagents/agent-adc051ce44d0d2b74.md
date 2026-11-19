@@ -604,3 +604,160 @@ Now I understand the problem. Let me look at the mouth/painted ring dots area an
 >   const Mw = group.matrixWorld;
 > 0945907 Screen 04 preview v3: combined query (K18-5 water/foam + K9 rings) + start / swim / steer shots + swim clips
 
+### 🤖 Claude — 2026-11-19T20:48:45.756Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)\n#ifdef RFEW", "new_string": "uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)\nuniform vec4 uRNear;       // r19b m04rnear: x amount, y target sub-band length (world u), z/w sub-band size on screen (px) where\n                           // the near-band detail starts / is …[+409 chars]`
+
+### 🧑 User — 2026-11-19T20:48:45.980Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T20:49:07.505Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen\n      if (uRCr.x > 0.0) {", "new_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen\n      if (uRNear.x > 0.0 && uu < uL) {\n        // r19b m04rnear: the NEAR band seen from inside. While swimming, the band of the ring Benny is in fills the top half\n        // of the view and the painted ring (160 texture rows for a whole ring) is …[+5255 chars]`
+
+### 🧑 User — 2026-11-19T20:49:07.715Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T20:49:15.462Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "        uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },", "new_string": "        uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },\n        // r19b `m04rnear=1`: the near band seen from inside resolves into the painted washer rim's polished sub-bands\n        uRNear: { value: new THREE.Vector4(M04.num('m04rnear', 0), M04 …[+431 chars]`
+
+### 🧑 User — 2026-11-19T20:49:15.646Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T20:49:16.266Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc-exit $?", "description": "Type-check the project"}`
+
+### 🧑 User — 2026-11-19T20:49:21.050Z
+
+> ↩︎ result: tsc-exit 0
+
+### 🤖 Claude — 2026-11-19T20:49:27.272Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad && Q=$(cat qa/match/04/r19/PREVIEW_QUERY_v3.txt) && echo \"$Q\" > $S/s04tex/V3.txt && ONLY=f10_forward10u,f20_forward20u timeout 600 node $S/s04tex/audit_only.mjs 04 $S/s04tex/n1 \"$Q&m04rnear=1\" 2>&1 | grep -v \"^\\s*$\" | tail -8", "description": "Render f10/f20 with near-band detail switch"}`
+
+### 🧑 User — 2026-11-19T20:50:06.214Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 04 f10_forward10u s 88.285 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.187 lat 0 stage 04 frames 86
+
+### 🤖 Claude — 2026-11-19T20:50:10.972Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/n1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T20:50:11.026Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:50:22.119Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('$S/s04tex/n1/f20_forward20u.png').convert('RGB')\nb=Image.open('qa/match/04/r19/preview_v3/f20_forward20u.png').convert('RGB')\nw=Image.new('RGB',(864*2+10,800),'white'); w.paste(b.crop((0,0,864,800)),(0,0)); w.paste(a.crop((0,0,864,800)),(874,0)); w.save('$S/s04tex/cmp_f20.png')\n\"", "description": "Side-by-side crop f20 BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-19T20:50:22.658Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T20:50:25.564Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/cmp_f20.png"}`
+
+### 🧑 User — 2026-11-19T20:50:25.619Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:51:08.421Z
+
+The sub-rims show, but the bands still look flat, the bulbs and reflections are too weak. I'll rework it into a polished-tube reflection model so each sub-band gets a moving highlight.
+
+### 🤖 Claude — 2026-11-19T20:51:23.275Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "          float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip\n          // (a) rounded polished tube: dark just after the groove, brightening to a broad highlight before the rim\n          float sh = smoothstep(0.0, 0.78, xs) - 0.5 * smoothstep(0.9, 1.0, xs) * (1.0 - lastS);\n          pr *= 1.0 + uRNear2.x * fd * (sh - 0.45);\n          // (b) the washer rim's yellow-gold: the warm (copper) texels shift toward gold, highlights lift toward warm w …[+3586 chars]`
+
+### 🧑 User — 2026-11-19T20:51:23.456Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T20:51:32.096Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ns=s.replace(\"float eB = e + 0.036, hB = 0.014, hD = 0.016;\",\"float eB = e + 0.04, hB = 0.02, hD = 0.016;\")\ns=s.replace(\"float bs = uRDots.w * 0.8 * (0.6 + 0.8 * h21(vec2(ci + 5.3, rs)));\",\"float bs = uRDots.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, rs)));\")\ns=s.replace(\"M04.num('m04rnh', 0.12)\",\"M04.num('m04rnh', 1)\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"lw\\b\" src/world/match04m4.ts | head; S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; Q=$(cat …[+619 chars]`
+
+### 🧑 User — 2026-11-19T20:52:24.977Z
+
+> ↩︎ result: 650:    float lw = 0.5 + 0.5 * sin(along * 6.2832 / uSS.w + (vS < 0.0 ? 0.7 : 2.9));
+> 651:    lw = 0.65 * lw + 0.35 * vn(vec2(along * 0.8, vS < 0.0 ? 3.0 : 9.0));
+> 652:    edgeY = uEdge.y - uSS.z * lw;
+> 1442:    const flw = flo ? M04.num('m04flw', 1.5) : 1;    // spread of each cluster along / across the edge (wider, low banks)
+> 1455:        items.push({ p: new THREE.Vector3(x + sn * Math.cos(th) * d * 1.05 * flw, py, z + sn * Math.sin(th) * d * 1.05 * flw), r: rho, s: rnd2() });
+> 04 f10_forward10u s 88.846 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.188 lat 0 stage 04 frames 86
+
+### 🤖 Claude — 2026-11-19T20:52:31.870Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/cmp2_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T20:52:31.925Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:52:40.143Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('$S/s04tex/n2/f20_forward20u.png').convert('RGB')\na.crop((0,180,864,560)).save('$S/s04tex/z_f20.png')\"", "description": "Crop f20 top band region"}`
+
+### 🧑 User — 2026-11-19T20:52:40.391Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T20:52:43.650Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/z_f20.png"}`
+
+### 🧑 User — 2026-11-19T20:52:43.684Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:53:02.791Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB')).astype(int)\nreg=im[440:800,80:800].reshape(-1,3)\npink=reg[(reg[:,2]>reg[:,1]+30)&(reg[:,0]>150)]\nprint('pinkish n',len(pink), np.percentile(pink,[25,50,75],axis=0).round())\nvio=reg[(reg[:,2]>reg[:,0]-10)&(reg[:,2]>140)]\nprint('violet n',len(vio), np.percentile(vio,[25,50,75],axis=0).round())\n\"\n", "description": "Sample painted pink/violet reflection colours"}`
+
+### 🧑 User — 2026-11-19T20:53:03.065Z
+
+> ↩︎ result: pinkish n 26906 [[174.  89. 164.]
+>  [211. 118. 207.]
+>  [243. 168. 239.]]
+> violet n 37697 [[ 61. 122. 198.]
+>  [145. 146. 225.]
+>  [199. 181. 247.]]
+
+### 🤖 Claude — 2026-11-19T20:53:19.007Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\nold=\"\"\"            vec3 rc = mix(vec3(1.0, 0.42, 0.78), vec3(0.62, 0.52, 1.0), lane);\n            float nz = 0.5 + 0.5 * sin(hz * 0.55 + hx * 1.1 + 2.0 * sin(hz * 0.21 + hx * 0.6));\n            float sR = uRNear2.w * fd * smoothstep(0.25, 0.9, nz) * exp(-tH / 30.0) * smoothstep(-0.02, -0.25, Ry);\n            pr = mix(pr, rc * max(1.3 * dot(pr, vec3(0.30, 0.59, 0.11)), 0.35), clamp(sR, 0.0, 0.7));\"\"\"\nnew=\"\"\"            vec3 rc = mix(vec3(0.86, 0.46, 0.82), vec3(0.64, 0.56, 0.92),  …[+1704 chars]`
+
+### 🧑 User — 2026-11-19T20:53:57.046Z
+
+> ↩︎ result: 04 f10_forward10u s 88.316 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.204 lat 0 stage 04 frames 86
+
+### 🤖 Claude — 2026-11-19T20:54:00.342Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/z_f20.png"}`
+
+### 🧑 User — 2026-11-19T20:54:00.355Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:54:01.008Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/z_f10.png"}`
+
+### 🧑 User — 2026-11-19T20:54:01.036Z
+
+> ↩︎ result: [image]
+
