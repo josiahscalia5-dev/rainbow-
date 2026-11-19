@@ -64,7 +64,7 @@ index 44af1e56..667b0a9c 100644
 +* The hot-pink triangle in the bottom-left corner at t81L is also the far wall (its baked row holds river / bank colours
 +  at those angles, magnified).
 diff --git a/src/vfx/proj05Tunnel.ts b/src/vfx/proj05Tunnel.ts
-index 14d83222..0e805f03 100644
+index 14d83222..d26167ab 100644
 --- a/src/vfx/proj05Tunnel.ts
 +++ b/src/vfx/proj05Tunnel.ts
 @@ -14,7 +14,7 @@
@@ -72,11 +72,52 @@ index 14d83222..0e805f03 100644
   */
  import * as THREE from 'three';
 -import { M05WALL, M05WTILE, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
-+import { M05WALL, M05WTILE, M05WCRISP, m05wcrispNum, m05fw, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
++import { M05WALL, M05WTILE, M05WCRISP, M05LIDF, m05wcrispNum, m05fw, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
  // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
  const flag05 = on05;
  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-@@ -134,6 +134,10 @@ const shared = {
+@@ -86,6 +86,31 @@ function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
+   const mat = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, fog: false });
+   mat.onBeforeCompile = (shader) => {
+     Object.assign(shader.uniforms, shared);
++    if (M05LIDF) {
++      // `&m05lidf=1` (round 18, waterRibbon.ts M05LIDF): past the seam the tray follows the live far block — undo the
++      // locked compression (zs = 0: Z = z / (1 − z / L), lateral scale about the locked eye's axis offset), redo the live one
++      Object.assign(shader.uniforms, m05fw);
++      const pv = '#include <project_vertex>';
++      if (!shader.vertexShader.includes(pv)) { console.error('[rainbow] m05lidf: project_vertex not found'); return; }
++      shader.vertexShader = shader.vertexShader
++        .replace('void main() {', 'uniform vec3 uM05FwC; uniform vec3 uM05FwT; uniform vec4 uM05FwP; uniform vec2 uM05FwD; uniform vec3 uM05FwQL; uniform vec3 uM05FwQ;\nvoid main() {')
++        .replace(pv, `vec4 wpL = modelMatrix * vec4(transformed, 1.0);
++if (uM05FwP.w > 0.5) {
++  vec3 rel = wpL.xyz - uM05FwC;
++  float zL = dot(rel, uM05FwT);
++  if (zL > 0.0) {
++    float Lf = uM05FwP.y, zs = uM05FwP.x;
++    float zc = min(zL, Lf * 0.995);
++    float ZV = zc / (1.0 - zc / Lf);
++    vec3 lat = rel - uM05FwT * zL;
++    vec3 oV = uM05FwQL + (lat - uM05FwQL) * (uM05FwD.x + ZV) / (uM05FwD.x + zc);
++    float zN = ZV <= zs ? ZV : zs + (ZV - zs) / (1.0 + (ZV - zs) / Lf);
++    wpL.xyz = uM05FwC + uM05FwT * zN + uM05FwQ + (oV - uM05FwQ) * (uM05FwD.y + zN) / (uM05FwD.y + ZV);
++  }
++}
++vec4 mvPosition = viewMatrix * wpL;
++gl_Position = projectionMatrix * mvPosition;`);
++    }
+     shader.fragmentShader = shader.fragmentShader
+       .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;
+ ${PROJ05_INVERSE}
+@@ -93,7 +118,7 @@ void main() {`)
+       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+ gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
+   };
+-  mat.customProgramCacheKey = () => 'ptlid05';
++  mat.customProgramCacheKey = () => 'ptlid05' + (M05LIDF ? '-lidf' : '');
+   mat.onBeforeRender = (renderer) => livePost(renderer);
+   return mat;
+ }
+@@ -134,6 +159,10 @@ const shared = {
    uE5RingSize: { value: new THREE.Vector3(1, 1, 1) },
    /** QA only (scripts/proj05-tunnel-probe.mjs --coords): 1 = write the texture coordinates instead of the colour */
    uPtDbg: { value: 0 },
@@ -87,7 +128,7 @@ index 14d83222..0e805f03 100644
  };
  /** QA accessor for the probe script */
  export const proj05TunnelShared = shared;
-@@ -176,6 +180,11 @@ function loadTextures() {
+@@ -176,6 +205,11 @@ function loadTextures() {
        shared.uE5RingSize.value.set(meta.ring.w, meta.ring.h, meta.ring.rowH);
      }));
    }
@@ -99,7 +140,7 @@ index 14d83222..0e805f03 100644
    if (PROJRING05) {
      jobs.push(load(new URL('../../assets/textures/tunnel05/ring05.png', import.meta.url).href).then((t) => {
        shared.uPtRing.value = t;
-@@ -287,8 +296,70 @@ const M05WTILE_GLSL = /* glsl */ `
+@@ -287,8 +321,70 @@ const M05WTILE_GLSL = /* glsl */ `
      }
    }`;
  
@@ -172,7 +213,7 @@ index 14d83222..0e805f03 100644
  
  /**
   * `?projwall05=1`: wrap a perforatedMetal wall material (real 05 wall or the forced-perspective far wall; both carry
-@@ -298,10 +369,14 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1:
+@@ -298,10 +394,14 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1:
  export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
    const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0, 0)));
    const segT = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector3(segs[i].row, segs[i].t0, segs[i].t1) : new THREE.Vector3(0, 0, 0)));
@@ -188,7 +229,7 @@ index 14d83222..0e805f03 100644
    const prev = mat.onBeforeCompile;
    mat.onBeforeCompile = (shader, r) => {
      prev.call(mat, shader, r);
-@@ -314,22 +389,25 @@ ${PROJ05_INVERSE}
+@@ -314,22 +414,25 @@ ${PROJ05_INVERSE}
  void main() {`)
        .replace('#include <dithering_fragment>', `#include <dithering_fragment>
  { // ?projwall05=1: the approved wall of this bay (texture anchored to the tunnel)
@@ -220,10 +261,10 @@ index 14d83222..0e805f03 100644
    mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
    return mat;
 diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
-index 5da96aa8..e662af08 100644
+index 5da96aa8..04234594 100644
 --- a/src/vfx/waterRibbon.ts
 +++ b/src/vfx/waterRibbon.ts
-@@ -343,6 +343,34 @@ export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
+@@ -343,6 +343,48 @@ export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
   * wall. Off at the locked checkpoint eye (0 px there) and wherever the own row is sharp enough.
   */
  export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
@@ -254,7 +295,21 @@ index 5da96aa8..e662af08 100644
 +  uM05FwT: { value: new THREE.Vector3(0, 0, 1) },
 +  uM05FwP: { value: new THREE.Vector4(0, 6, 0, 0) },
 +  uM05FwK: { value: Array.from({ length: 8 }, () => new THREE.Vector2(0, 0)) },
++  /** `&m05lidf=1`: (eye depth of the seam at the locked eye, live eye depth), eye offsets from the axis (locked, live) */
++  uM05FwD: { value: new THREE.Vector2(53, 53) },
++  uM05FwQL: { value: new THREE.Vector3() },
++  uM05FwQ: { value: new THREE.Vector3() },
 +};
++/**
++ * `&m05lidf=1` (Screen 05 round 18, needs m05far; src/vfx/proj05Tunnel.ts lidProjMaterial): the approved far paddles L3 / R3
++ * (and the far tips of L2 / R2) are Blender trays fitted onto the far block's wall as it is compressed for the LOCKED eye
++ * (4 … 5.4 u past the seam = virtual depth ≈ 21 … 56). The far block re-fits itself to the live eye every frame, the trays
++ * did not: while swimming they floated 2 … 3 u inside the tunnel as a flat, cut-off gold chunk (hard left, t81: x 150–300,
++ * y 440–540). Under the switch their vertices past the seam go through the same mapping as the far block (locked
++ * compression undone → virtual tunnel → live compression), so they stay on the far wall as real paddles that approach like
++ * the rings. Nearer than the seam nothing moves; at the locked eye and after the block is gone: identity (0 px at the lock).
++ */
++export const M05LIDF: boolean = MATCH05 && q05('m05far') && q05('m05lidf');
  /**
   * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
   * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
@@ -314,7 +369,7 @@ index 4c5f1ffe..ad5da2a7 100644
        segs.push({ v0: sF05 + uRing(4) + hwF / dZdu(uRing(4)), v1: sF05 + uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
        segs.push({ v0: sF05 + uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index 57eba2db..c9e4e09d 100644
+index 57eba2db..37cde353 100644
 --- a/src/world/match05far.ts
 +++ b/src/world/match05far.ts
 @@ -22,7 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
@@ -322,16 +377,18 @@ index 57eba2db..c9e4e09d 100644
  import type { FarRiverLayout, FarRiverRow } from './far05';
  import type { Course, CourseSample } from './course';
 -import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';
-+import { EDGE_LIFT, M05BLEND, M05JOIN, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
++import { EDGE_LIFT, M05BLEND, M05JOIN, M05LIDF, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
  import { clip05, m05rideS } from '../vfx/clip05';
  import type { FarLump05 } from '../vfx/foam';
  
-@@ -171,6 +171,17 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -171,6 +171,19 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
    const rivOpenOrig = (rg.morphAttributes.position[0].array as Float32Array).slice();
    const eyeLock = c0.clone().addScaledVector(T, -D0lock).add(ft.q);
    m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye
-+  if (M05WCRISP) {
++  if (M05WCRISP || M05LIDF) {
 +    // `&m05wcrisp=1` (round 18): the far wall's exact tunnel coordinate per pixel (src/vfx/proj05Tunnel.ts)
++    // `&m05lidf=1` (round 18): the locked eye's seam depth and axis offset (the far paddles' locked compression)
++    m05fw.uM05FwD.value.x = D0lock; m05fw.uM05FwQL.value.copy(ft.q);
 +    m05fw.uM05FwC.value.copy(c0); m05fw.uM05FwT.value.copy(T);
 +    const kn = ft.knots.length >= 2 ? ft.knots : [[0, 0], [1, 1]] as [number, number][];
 +    m05fw.uM05FwK.value.forEach((v, i) => {
@@ -344,11 +401,14 @@ index 57eba2db..c9e4e09d 100644
    const glowPos0 = a.glow.position.clone(), glowScale0 = a.glow.scale.x;
  
    const restore = () => {
-@@ -379,6 +390,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -379,6 +392,10 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
        far05Coins.T.copy(T);
      }
      // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
-+    if (M05WCRISP) m05fw.uM05FwP.value.set(zs, L, sF, atLock || open > 0.5 ? 0 : 1);
++    if (M05WCRISP || M05LIDF) {
++      m05fw.uM05FwP.value.set(zs, L, sF, atLock || open > 0.5 ? 0 : 1);
++      m05fw.uM05FwD.value.y = D0; m05fw.uM05FwQ.value.copy(q);
++    }
      if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
      else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
      // `&m05seam=1` (Screen 05 round 8): the seam's course position for the near river's design hand-over (waterRibbon.ts)

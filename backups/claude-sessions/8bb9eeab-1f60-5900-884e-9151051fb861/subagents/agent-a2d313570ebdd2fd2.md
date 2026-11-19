@@ -1568,3 +1568,19 @@ Now add the shared uniform (waterRibbon.ts), write it in the live sync (match05f
 > {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/lock_before/05.png","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/lock_new/05.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
 > IDENTICAL
 
+### 🤖 Claude — 2026-11-19T02:57:16.753Z
+
+Locked view is byte-identical. Now the flat paddle chunk: I'll make the two far Blender paddles follow the live far block through the same forced-perspective mapping (separate switch `&m05lidf=1`).
+
+### 🤖 Claude — 2026-11-19T02:57:35.917Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert s.count(a)==1, (p, a[:70], s.count(a))\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/waterRibbon.ts', [(\n\"\"\"export const m05fw = {\n  uM05FwC: { value: new THREE.Vector3() },\n  uM05FwT: { value: new THREE.Vector3(0, 0, 1) },\n  uM05FwP: { value: new THREE.Vector4(0, 6, 0, 0) },\n  uM05FwK: { value: Array.from({ length: 8 }, () => new THREE.Vector2(0, 0)) },\n};\"\"\",\n\"\"\"export const m05fw = {\n  uM05FwC: { value: new THREE.Vecto …[+4644 chars]`
+
+### 🧑 User — 2026-11-19T02:57:40.370Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-19T02:57:40.789Z
+
+You've hit your 5-hour limit · resets 7:20am (UTC)
+

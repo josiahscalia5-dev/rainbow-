@@ -1884,3 +1884,39 @@ You've hit your 5-hour limit · resets 7:20am (UTC)
 <result>Now a small render helper (copy of the audit tool that renders only the shots I name), then a first look.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-19T02:57:40.889Z
+
+<task-notification>
+<task-id>a2d313570ebdd2fd2</task-id>
+<tool-use-id>toolu_01M8sGhdgyTibNE82x7TTkQC</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a2d313570ebdd2fd2.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 left wall r18" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:20am (UTC) (error type rate_limit, HTTP 429, request id req_011ChBY4qBUPKT9FaWufS9ub, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:20am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Locked view is byte-identical. Now the flat paddle chunk: I'll make the two far Blender paddles follow the live far block through the same forced-perspective mapping (separate switch `&amp;m05lidf=1`).</result>
+</task-notification>
+
+### 🧑 User — 2026-11-19T02:57:54.112Z
+
+<task-notification>
+<task-id>a27bc2af86f8cdd32</task-id>
+<tool-use-id>toolu_01APxBdEPF93EwRhhgWg21pY</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a27bc2af86f8cdd32.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 07 lather walls r18" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:20am (UTC) (error type rate_limit, HTTP 429, request id req_011ChBY5oCw87BDy4j5ikRvr, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:20am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now step 5: the flat pale foam sheet beside the bands at hard left / right. Let me look closely at how the painted foam clouds are drawn.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-19T02:57:56.259Z
+
+<task-notification>
+<task-id>a4d2f0802b168dc00</task-id>
+<tool-use-id>toolu_01Q5z7cEFEB7Wkd9juv1psDL</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/a4d2f0802b168dc00.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 near water bands r18" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:20am (UTC) (error type rate_limit, HTTP 429, request id req_011ChBY5xuLe4Z5HGkTA81sn, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:20am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Testing corridor half-widths 1.3 and 1.7 at f10 and f06.</result>
+</task-notification>
+
