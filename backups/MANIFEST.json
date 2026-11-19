@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 18865,
-   "sha256": "b869e9b4d4473f247f5a5d7955f5bda04878bca81ad1ea8e29e11fdc6c44fa48"
+   "bytes": 18873,
+   "sha256": "91d76f07281cddf794c64a73c763b80249dad37e1d73a9cf03219be313e67246"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 9904,
-   "sha256": "3828ccab26545ae24b37c305274065caccfbde3440fe3870e6566cd5cbd5c4f1"
+   "bytes": 10145,
+   "sha256": "79b4dee3b04f723a6edc8222879997bd2d55a4baab61af88601f21932fcf5057"
   },
   {
    "path": "backups/claude-config/2026-11-18-account12/README.md",
@@ -2525,6 +2525,11 @@
    "path": "docs/briefs/2026-11-19-r18/setup_worker.sh",
    "bytes": 2219,
    "sha256": "e9b207334fddb5422e878bb2f0360ad259499c5f17113166dbb5201fd1407627"
+  },
+  {
+   "path": "docs/briefs/2026-11-19-r19/setup_worker.sh",
+   "bytes": 2191,
+   "sha256": "8a348771b307f46971251ffe890307ae9d1d9e4ce0bb891754a1a34541d24a00"
   },
   {
    "path": "docs/characters/benny.md",
