@@ -93,6 +93,9 @@ uniform float uLipBulb;
 uniform float uBulbR;
 uniform float uLen;
 uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+#ifdef CX04_APPROVED_GOLD_BAY
+uniform sampler2D uApprovedBay;
+#endif
 uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
 uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
 uniform float uBulge;      // r13 m04bulge: each band shaded as a ROUNDED tube (bright middle, darker edges) like the painted rings
@@ -232,6 +235,20 @@ void main() {
       float cb = streaks(ang + 1.3, ring + 31.0);
       col = mix(col, vec3(0.62, 0.66, 1.0), 0.55 * smoothstep(0.7, 1.0, cb) * step(0.55, h21(vec2(ring, 4.4))) * smoothstep(0.1, 0.5, tb));
     }
+    #ifdef CX04_APPROVED_GOLD_BAY
+    if (ring == 4.0 && part < 1.5) {
+      // The nearest fully visible painted bay supplies its actual metal colors.
+      // Index the fitted ring by angle and depth. Where the reference water hides
+      // the metal, keep the existing material on the physical lower shoulder.
+      float observed = 1.0 - smoothstep(1.38, 1.54, abs(ang));
+      float phase = part < 0.5 ? mix(0.035, 0.640625, tb)
+                               : mix(0.640625, 0.90, smoothstep(0.86, 0.995, fract(al / uP)));
+      vec3 measured = texture2D(uApprovedBay, vec2(0.5 + ang / 6.2831853, phase)).rgb;
+      // Keep the existing gloss response to the bright axial light as the observer turns.
+      measured += vec3(1.0, 0.76, 0.46) * 0.055 * gl * (0.4 + 0.6 * facing);
+      col = mix(col, measured, 0.76 * observed);
+    }
+    #endif
     // hot spots / amber bulbs: a row on the opening's face, smaller glints on every ring lip
     bool onFace = part > 2.5 && part < 3.5;
     bool onLip = uLipBulb > 0.5 && part > 0.5 && part < 1.5 && !mouth;
@@ -752,10 +769,23 @@ export function addM04(ctx: M04Ctx) {
     ringTile.colorSpace = THREE.NoColorSpace; ringTile.flipY = false; ringTile.wrapS = THREE.RepeatWrapping; ringTile.wrapT = THREE.ClampToEdgeWrapping;
     ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
     const deepRim = on('cx04DeepRim');
+    let approvedBay: THREE.Texture | null = null;
+    if (deepRim && on('cx04ApprovedGoldBay')) {
+      approvedBay = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/bay04_approved_metal.png', import.meta.url).href);
+      approvedBay.colorSpace = THREE.NoColorSpace;
+      approvedBay.flipY = false;
+      approvedBay.wrapS = THREE.RepeatWrapping;
+      approvedBay.minFilter = THREE.LinearMipmapLinearFilter;
+      approvedBay.anisotropy = 8;
+    }
     const gm = new THREE.ShaderMaterial({
-      defines: deepRim ? { CX04_DEEP_RIM: deepRimIndex } : {},
+      defines: {
+        ...(deepRim ? { CX04_DEEP_RIM: deepRimIndex } : {}),
+        ...(approvedBay ? { CX04_APPROVED_GOLD_BAY: 1 } : {}),
+      },
       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+        ...(approvedBay ? { uApprovedBay: { value: approvedBay } } : {}),
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
