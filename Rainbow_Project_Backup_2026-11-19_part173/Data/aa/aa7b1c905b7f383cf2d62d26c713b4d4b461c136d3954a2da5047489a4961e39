@@ -1,0 +1,544 @@
+/**
+ * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+ *
+ * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+ * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+ * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and
+ * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+ * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+ * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+ * drain-away for the 11 outro.
+ */
+import * as THREE from 'three';
+import type { Course, StageId } from '../world/course';
+import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+
+/** wave amplitude per stage (units); blended across boundaries */
+const AMP: Partial<Record<StageId, number>> = {
+  '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10': 0.08, '11': 0.05,
+};
+export const EDGE_LIFT = 0.28;
+
+/**
+ * Per-stage colour-band layout (blended across stage boundaries, baked into `aStyle`):
+ *  x gate: 1 = pink bands taper off and part around Benny so the water at and behind him is pure
+ *          cyan (ref 05: rows y=1200/1400 are 0% pink); 0 = bands run right past him (refs 04/06/07
+ *          keep pink at the sides near the camera)
+ *  y off:  band-centre offset from the meandering core centre, fraction of the half width
+ *  z wid:  band half width, fraction of the half width
+ * Between the two bands is the electric-cyan core; outside them more cyan, then the foam lace.
+ */
+const BAND_STYLE: Partial<Record<StageId, [number, number, number]>> = {
+  '04': [0, 0.6, 0.19],
+  '05': [1, 0.46, 0.13],
+  '06': [0.4, 0.48, 0.1],
+  '07': [0, 0.52, 0.13],
+};
+const BAND_DEFAULT: [number, number, number] = [0, 0.5, 0.12];
+
+function bandStyleAt(course: Course, s: number): [number, number, number] {
+  const o: [number, number, number] = [0, 0, 0];
+  let w = 0;
+  for (const st of course.stages) {
+    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+    if (a <= 0) continue;
+    const v = BAND_STYLE[st.id] ?? BAND_DEFAULT;
+    o[0] += v[0] * a; o[1] += v[1] * a; o[2] += v[2] * a; w += a;
+  }
+  if (w <= 0) return [...(BAND_STYLE[course.stageAtS(s).id] ?? BAND_DEFAULT)];
+  return [o[0] / w, o[1] / w, o[2] / w];
+}
+
+/**
+ * Ribbon colours in shader (pre-tonemap, linear) space. NeutralToneMapping desaturates anything
+ * whose peak channel passes ≈0.76·exposure, so these were solved by inverting Neutral at the game's
+ * exposure 0.86 (src/render/env.ts). Flat values after tone mapping: cyanDeep #0065D6, cyan #1D89F0,
+ * cyanBright #42C8F7, pinkDeep #E206BE, pink #F741DD (H 308°, not violet), pinkLight #FA93E7. The
+ * streaks/crests/glints added on top lift the rendered cyan median to ≈#06A7FF (ref 05 #039FF6).
+ * Crests/highlights are allowed to desaturate toward white (that is how the ref highlights look).
+ * The shared PALETTE in glsl.ts is untouched (whirlpool, drum and final wave use it).
+ */
+const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+const RIBBON_PAL = {
+  cyanDeep: lin(0.0, 0.15, 0.78),
+  cyan: lin(0.0, 0.31, 1.12),
+  cyanBright: lin(0.04, 0.95, 1.55),
+  pinkDeep: lin(0.9, 0.02, 0.62),
+  pink: lin(1.55, 0.03, 1.2),
+  pinkLight: lin(2.2, 0.5, 1.8),
+};
+
+export function ampAt(course: Course, s: number): number {
+  let v = 0, w = 0;
+  for (const st of course.stages) {
+    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+    if (a > 0) { v += (AMP[st.id] ?? 0.08) * a; w += a; }
+  }
+  let amp = w > 0 ? v / w : 0.08;
+  // calm the long straight of the deep plunge (fast sheet flow)
+  const pt = course.marks['07_plunge_top'], pb = course.marks['07_plunge_bottom'];
+  if (pt !== undefined) amp *= 1 - 0.6 * smooth(pt, pt + 8, s) * (1 - smooth(pb - 8, pb, s));
+  return amp;
+}
+
+function smooth(a: number, b: number, x: number) {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+}
+
+/** CPU mirror of the vertex displacement (keep in sync with VERT). */
+export function ribbonWave(u: number, s: number, t: number, amp: number): number {
+  const au = Math.min(1, Math.abs(u));
+  const trough = EDGE_LIFT * au * au * au;
+  return trough + amp * (0.6 * Math.sin(s * 0.9 - t * 2.4 + u * 1.7) + 0.4 * Math.sin(s * 0.41 + t * 1.5 - u * 2.3));
+}
+
+const VERT = /* glsl */ `
+attribute vec2 aUV;      // x = u (-1..1 across), y = s (arc length)
+attribute float aHalfW;
+attribute float aSpeed;
+attribute float aAmp;
+attribute float aSkirt;  // 0 surface, 1 skirt bottom
+attribute vec3 aStyle;   // band layout: gate, offset, half width (see BAND_STYLE)
+uniform float uTime;
+uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+varying vec2 vUV;
+varying float vHalfW;
+varying float vSpeed;
+varying float vSkirt;
+varying float vHide;
+varying vec3 vStyle;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_vertex>
+void main() {
+  vStyle = aStyle;
+  float u = aUV.x;
+  float s = aUV.y;
+  float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
+  vec3 p = position + normal * h * (1.0 - aSkirt);
+  vec4 wp = modelMatrix * vec4(p, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * normal);
+  vUV = aUV;
+  vHalfW = aHalfW;
+  vSpeed = aSpeed;
+  vSkirt = aSkirt;
+  // hand the stream over to the whirlpool surface during 03 (dithered fade both ways)
+  float inside03 = smoothstep(uHide.x + 0.5, uHide.x + 3.5, s) * (1.0 - smoothstep(uHide.y - 9.0, uHide.y - 1.5, s));
+  vHide = 1.0 - inside03;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`;
+
+const FRAG = /* glsl */ `
+uniform float uTime;
+uniform vec3 uCyanDeep;
+uniform vec3 uCyan;
+uniform vec3 uCyanBright;
+uniform vec3 uPinkDeep;
+uniform vec3 uPink;
+uniform vec3 uPinkLight;
+uniform vec3 uFoam;
+uniform vec3 uFoamLav;
+uniform vec3 uHaze;
+uniform vec3 uLightDir;
+uniform vec3 uBenny;      // s, lateral (units), strength
+uniform float uBennyR;    // Benny's waterline radius (units)
+uniform vec3 uChevron;    // start s, spacing, enabled
+uniform vec2 uOutro;      // amount, chamber start s
+varying vec2 vUV;
+varying float vHalfW;
+varying float vSpeed;
+varying float vSkirt;
+varying float vHide;
+varying vec3 vStyle;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_fragment>
+${NOISE_GLSL}
+${FRAG_FX_GLSL}
+
+// Stationary channel shape (refs 05–07): lateral offset (units) of the electric-cyan core centre
+// relative to the course centreline. Two incommensurate sines + slow noise so the S-curves do not
+// visibly repeat; λ≈26 u differs from the course's own 05 geometry meander (λ≈36 u), so the two beat
+// rather than cancel. It only drifts slowly downstream (+s) at a constant rate (no shear between
+// stage speeds); the strand texture below is what is advected at the local stage speed.
+float meander(float s, float hw) {
+  float a = s - uTime * 0.7;
+  float m = 0.2 * sin(a * 0.24) + 0.08 * sin(a * 0.53 + 1.3) + 0.12 * (vnoise(vec2(a * 0.05, 4.7)) - 0.5);
+  return m * min(hw, 4.5);
+}
+
+// Combed flow lines (ref 05: dense thin bright streaks parallel to the flow, 2–4 px apart in the
+// mid-ground). Anti-aliased stripes across the flow (K lines per unit), each line broken into long
+// random streak segments along v; the stripes fade out once they get closer than ≈3 px.
+float combed(float x, float v, float K, float seed) {
+  float p = x * K;
+  float id = floor(p);
+  float fw = fwidth(p);
+  float hs = hash12(vec2(id, seed));
+  // thin bright core with a soft glow; the line wanders a little inside its slot
+  float d = abs(fract(p) - 0.5 - (hs - 0.5) * 0.4);
+  float line = (1.0 - smoothstep(0.03, 0.06 + fw, d)) * 0.75 + (1.0 - smoothstep(0.0, 0.2 + fw, d)) * 0.35;
+  // each line breaks into tapered streak segments of varying brightness
+  float seg = smoothstep(0.5, 0.9, vnoise(vec2(id * 3.7 + seed, v * 0.2 + hs * 9.0)));
+  return line * seg * (0.45 + 0.55 * hs) * (1.0 - smoothstep(0.22, 0.4, fw));
+}
+
+// advected strand texture ("combed" glossy water lines parallel to the flow)
+// x = lateral units relative to the meander centre, v = advected arc length, aa = 0..1 detail fade
+// returns: x = height 0..1 (shading + bump), y = white glint lines, z = mid strands, w = fine strands
+vec4 strands(float x, float v, vec2 aa) {
+  float a = vnoise(vec2(x * 2.4, v * 0.08));
+  float b = vnoise(vec2(x * 7.0 + a * 1.6, v * 0.19 + 5.0));
+  #ifdef LOW_Q
+  float c = b;
+  #else
+  float c = vnoise(vec2(x * 17.0 + b * 2.2, v * 0.42 + 3.0));
+  #endif
+  b = mix(0.5, b, aa.x);
+  c = mix(0.5, c, aa.y);
+  float h = a * 0.42 + b * 0.34 + c * 0.24;
+  h = smoothstep(0.18, 0.82, h);              // more contrast: deep azure troughs, bright crests
+  float line = smoothstep(0.72, 0.86, c) * aa.y + smoothstep(0.7, 0.86, b) * aa.x * 0.85;
+  // the combed lines follow the large-scale strand warp so they bend with the flow
+  float xw = x + (a - 0.5) * 0.5;
+  line = max(line, combed(xw, v, 6.0, 0.0) * 0.85);
+  #ifndef LOW_Q
+  line = max(line, combed(xw + (b - 0.5) * 0.12, v * 1.3, 15.0, 11.0) * 0.55);
+  #endif
+  return vec4(h, line, b, c);
+}
+
+void main() {
+  float u = vUV.x;
+  float s = vUV.y;
+  // dithered hide (03 hand-over)
+  if (vHide < 0.5) discard;
+  float cutFoam = 1.0 - smoothstep(0.5, 0.85, vHide);
+  // 11 outro: the stream drains away in the chamber, leaving puddles
+  if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+    float n = vnoise(vec2(u * 3.0, s * 0.35)) * 0.7 + 0.3;
+    if (n < uOutro.x * 1.15) discard;
+  }
+
+  // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----
+  float hw = vHalfW;
+  float lat = u * hw;                         // lateral units in the ribbon frame
+  float M = meander(s, hw);
+  float x = lat - M;                          // lateral units in the core's frame
+
+  // detail fade with distance (cells per pixel), keeps far water from shimmering
+  float fwx = fwidth(x);
+  float fws = fwidth(s);
+  // (a noise cell must stay ≳6–8 px wide; the combed lines of ref 05 are 2–4 px apart in the
+  // mid-ground, so fading earlier than this flattens the water into a plain fill)
+  vec2 aa = vec2(1.0 - smoothstep(0.12, 0.26, max(fwx * 7.0, fws * 0.19)),
+                 1.0 - smoothstep(0.09, 0.2, max(fwx * 17.0, fws * 0.42)));
+  // hair-fine combed strands for close-up water (refs: dense parallel flow lines)
+  float aaH = 1.0 - smoothstep(0.14, 0.3, fwx * 46.0);
+  #ifdef LOW_Q
+  aa.y = 0.0;
+  aaH = 0.0;
+  #endif
+
+  // two-phase flow-map advection of the strands (period 4 s; offset scales with stage speed)
+  float ph0 = fract(uTime * 0.25);
+  float ph1 = fract(uTime * 0.25 + 0.5);
+  float w0 = 1.0 - abs(1.0 - 2.0 * ph0);
+  vec4 F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa), strands(x, s - vSpeed * ph0 * 4.0, aa), w0);
+
+  // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
+  // swing outward, so the water at and behind him (the near field) is pure cyan; behind him they
+  // continue only as thin streaks pushed out toward the foam banks
+  float gate = 1.0, part = 0.0;
+  if (vStyle.x > 0.0) {
+    float db = s - uBenny.x;
+    gate = mix(1.0, 0.4 + 0.6 * smoothstep(0.0, 4.5, db), vStyle.x);
+    part = vStyle.x * hw * (0.3 - 0.3 * smoothstep(-1.0, 9.0, db));
+  }
+  float hwc = min(hw, 4.5);
+  float aaw = fwidth(lat) * 0.85 + 0.01;      // ≈1 px edges: no lavender cyan/pink blend zone
+  // flowing, combed band edges (the advected strand texture), scaled down on narrow streams
+  float pert = ((F.z - 0.5) * 0.5 + (F.w - 0.5) * 0.22) * hwc * 0.22;
+  float offL = hw * (vStyle.y + 0.07 * sin(s * 0.13 + 1.7)) + part;
+  float offR = hw * (vStyle.y + 0.07 * sin(s * 0.11 + 4.2)) + part;
+  float wL = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.19 + 0.4)) * gate;
+  float wR = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.17 + 2.9)) * gate;
+  float sdL = x + offL + pert;
+  float sdR = x - offR + pert;
+  float dL = abs(sdL);
+  float dR = abs(sdR);
+  float on = smoothstep(0.02, 0.2, gate);
+  float pL = (1.0 - smoothstep(wL - aaw, wL + aaw, dL)) * on;
+  float pR = (1.0 - smoothstep(wR - aaw, wR + aaw, dR)) * on;
+  // a thin cyan thread splits a band into two streaks along some stretches (ref 05 mid-ground)
+  float rimW = 0.05 * hwc + aaw;
+  float thrW = 0.028 * hwc;
+  float splitOn = smoothstep(0.55, 0.7, vnoise(vec2(s * 0.07, 13.0)));
+  float sL = (1.0 - smoothstep(thrW, thrW + aaw, abs(x + offL + pert * 1.4 + 0.25 * wL * sin(s * 0.5)))) * splitOn;
+  float sR = (1.0 - smoothstep(thrW, thrW + aaw, abs(x - offR + pert * 1.4 - 0.25 * wR * sin(s * 0.45 + 1.0)))) * (1.0 - splitOn);
+  // only split bands that are wide enough (smooth ramp: a hard step cut the band across the flow)
+  pL *= 1.0 - sL * smoothstep(rimW * 1.8, rimW * 2.8, wL);
+  pR *= 1.0 - sR * smoothstep(rimW * 1.8, rimW * 2.8, wR);
+  // hair-thin pink filaments drifting through the cyan core (mid/far field only)
+  float fil = 0.0;
+  #ifndef LOW_Q
+  float fc = hw * 0.18 * sin(s * 0.21 + 0.8);
+  fil = (1.0 - smoothstep(0.025 * hwc, 0.025 * hwc + aaw, abs(x - fc + pert * 0.7)))
+      * smoothstep(0.62, 0.78, vnoise(vec2(s * 0.09, 21.0))) * gate * aa.x;
+  #endif
+  float pinkM = max(max(pL, pR), fil);
+  // glossy rims: light-pink just inside each band edge, bright cyan just outside it
+  float rimIn = max(pL * smoothstep(wL - rimW, wL - aaw, dL), pR * smoothstep(wR - rimW, wR - aaw, dR));
+  float rimOut = max((1.0 - pL) * (1.0 - smoothstep(wL + aaw, wL + rimW * 1.6, dL)),
+                     (1.0 - pR) * (1.0 - smoothstep(wR + aaw, wR + rimW * 1.6, dR))) * on;
+
+  float h = F.x;
+  float hair = 0.5;
+  if (aaH > 0.0) {
+    float sv = s - vSpeed * fract(uTime * 0.5) * 2.0;
+    float hA = vnoise(vec2(x * 46.0 + F.w * 3.0, sv * 0.9));
+    float hB = vnoise(vec2(x * 46.0 + F.w * 3.0, (sv + vSpeed) * 0.9 + 17.0));
+    hair = mix(0.5, mix(hB, hA, 1.0 - abs(1.0 - 2.0 * fract(uTime * 0.5))), aaH);
+  }
+  // deep azure troughs → electric cyan → light-cyan crests (crests stay a minority of the area)
+  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, h));
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.64, 0.95, h) * 0.7 + rimOut * 0.45);
+  // satin ribbon: a soft light streak runs along each band, off-centre toward the core
+  float rel = pL >= pR ? sdL / max(wL, 1e-3) : -sdR / max(wR, 1e-3);   // -1 outer edge .. +1 core side
+  float satin = exp(-pow((rel - 0.3) * 2.2, 2.0));
+  vec3 pinkCol = mix(uPinkDeep, uPink, smoothstep(0.3, 0.72, h + satin * 0.2));
+  pinkCol = mix(pinkCol, uPinkLight, clamp(smoothstep(0.6, 0.92, h) * 0.7 + satin * 0.35 + rimIn * 0.45, 0.0, 1.0));
+  vec3 col = mix(cyanCol, pinkCol, pinkM);
+  col *= 0.88 + 0.24 * hair;
+  vec3 streakCol = mix(vec3(0.6, 1.25, 1.6), vec3(1.6, 0.8, 1.6), pinkM);
+  col += streakCol * smoothstep(0.82, 0.94, hair) * 0.3 * aaH;
+
+  // ---- glossy lighting ----
+  vec3 N0 = normalize(vNormalW);
+  if (!gl_FrontFacing) N0 = -N0;
+  #ifdef LOW_Q
+  vec3 N = normalize(N0 + 0.25 * vec3(h - 0.5, 0.0, F.z - 0.5));
+  #else
+  float bumpAmt = 0.07 * (1.0 - smoothstep(0.1, 0.5, fws));
+  vec3 N = bumpNormal(vPosW, N0, h * bumpAmt);
+  #endif
+  vec3 V = normalize(cameraPosition - vPosW);
+  float nv = clamp(dot(N, V), 0.0, 1.0);
+  float fres = pow(1.0 - nv, 4.0);
+  vec3 R = reflect(-V, N);
+  // tinted (not white) reflection so the glossy far water stays saturated, not pastel
+  vec3 reflTint = mix(uCyanBright, uPinkLight, pinkM);
+  vec3 refl = mix(reflTint, vec3(1.5), smoothstep(0.6, 1.0, R.y) * 0.5);
+  col = mix(col, refl, fres * 0.22);
+  vec3 L = normalize(uLightDir);
+  vec3 H = normalize(L + V);
+  float spec = pow(clamp(dot(N, H), 0.0, 1.0), 120.0);
+  float sheen = pow(clamp(dot(R, L), 0.0, 1.0), 10.0);
+  col += vec3(1.0) * spec * 1.2 + reflTint * sheen * 0.12;
+  // advected glossy streak lines along the flow
+  col += streakCol * F.y * 0.8;
+
+  // ---- foreground ripple crests across the flow (ref 05 near field: arcs of white crest glints
+  // over deep-azure troughs). Only where s is resolved finely (near the camera).
+  float nearK = 1.0 - smoothstep(0.02, 0.05, fws);
+  if (nearK > 0.0) {
+    float ph = s * 5.5 - uTime * 6.0 + 1.3 * sin(lat * 0.8 + s * 0.15) + 2.0 * vnoise(vec2(lat * 0.9, s * 0.5));
+    float crest = pow(0.5 + 0.5 * sin(ph), 40.0) * smoothstep(0.5, 0.8, vnoise(vec2(lat * 3.2, s * 1.1 + 3.0)));
+    col *= 1.0 - 0.14 * nearK * (0.5 - 0.5 * sin(ph));
+    col += mix(vec3(0.9, 1.4, 1.7), vec3(1.7, 1.1, 1.7), pinkM) * crest * nearK * 0.9;
+  }
+
+  // ---- white star glints (4-point, twinkling, carried by the flow) ----
+  #ifdef LOW_Q
+  vec2 g = vec2(lat * 1.2, (s - vSpeed * uTime * 0.6) * 0.8);
+  float hs = hash12(floor(g));
+  float sparkle = step(0.9, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0));
+  col += vec3(1.3) * sparkle;
+  #else
+  // wide cells so the long horizontal arms are not clipped at the cell border in the mid-ground
+  float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);
+  col += vec3(2.0, 2.2, 2.3) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
+  #endif
+
+  // ---- soap-foam lace where the water meets the foam banks ----
+  float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.1;
+  float eu = abs(lat) - vHalfW;               // units from the edge (negative inside)
+  float edge = smoothstep(-0.75, -0.3, eu + edgeN * vHalfW);
+  if (edge > 0.0) {
+    float c = cells(vec2(lat * 3.2, (s - vSpeed * uTime * 0.35) * 3.2));
+    vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
+    col = mix(col, foamCol, edge * smoothstep(0.05, 0.4, c + edge * 0.3));
+  }
+  col = mix(col, uFoamLav * 0.92, vSkirt);
+  float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
+  col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
+
+  // ---- Benny: thin churned waterline ring, ripple rings and a V wake on the surface ----
+  // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
+  // around and behind him stays glossy electric cyan as in ref 05, not a sheet of white lace)
+  if (uBenny.z > 0.0) {
+    float du = lat - uBenny.y;
+    float dv = s - uBenny.x;
+    float rb = uBennyR;
+    float d = length(vec2(du, dv));
+    if (d < rb * 8.0) {
+      float k = uBenny.z;
+      float rr = max(0.0, d - rb * 0.92);
+      float contact = 0.0;
+      if (rr < rb * 0.25) {
+        float lace = smoothstep(0.3, 0.46, cells(vec2(du * 6.0, (dv + uTime * vSpeed * 0.25) * 6.0)));
+        contact = (1.0 - smoothstep(rb * 0.05, rb * 0.22, rr)) * (0.55 + 0.45 * lace);
+      }
+      float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);
+      float back = max(-dv, 0.0);
+      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 0.95) * 6.0) * exp(-back * 0.18) * step(dv, 0.0);
+      col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));
+      col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
+    }
+  }
+
+  // 04: exactly five glowing chevrons pointing downhill (direction of travel)
+  if (uChevron.z > 0.5) {
+    float x = u * vHalfW;
+    for (int k = 0; k < 5; k++) {
+      float y = s - (uChevron.x + float(k) * uChevron.y);
+      if (abs(y) < 2.4 && abs(x) < 1.6) {
+        // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+        float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+        float arm = smoothstep(1.2, 1.1, abs(x));
+        float core = smoothstep(0.2, 0.11, dist) * arm;
+        float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+        col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+        col = mix(col, vec3(2.2, 2.4, 2.5), core);
+      }
+    }
+  }
+  gl_FragColor = vec4(col, 1.0);
+  ${FRAG_TAIL}
+}
+`;
+
+export interface Ribbon {
+  mesh: THREE.Mesh;
+  uniforms: Record<string, THREE.IUniform>;
+  s0: number;
+  s1: number;
+  heightAt(s: number, lateral: number, t: number): number;
+}
+
+export function createRibbon(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): Ribbon {
+  const { s0, s1, quality } = opts;
+  const ds = quality === 'high' ? 0.4 : 0.7;
+  const cols = quality === 'high' ? 18 : 10;
+  const rows = Math.ceil((s1 - s0) / ds) + 1;
+  const vertsPerRow = cols + 1 + 2; // + skirt left/right
+  const n = rows * vertsPerRow;
+  const pos = new Float32Array(n * 3);
+  const nor = new Float32Array(n * 3);
+  const uv = new Float32Array(n * 2);
+  const halfW = new Float32Array(n);
+  const speed = new Float32Array(n);
+  const amp = new Float32Array(n);
+  const skirt = new Float32Array(n);
+  const style = new Float32Array(n * 3);
+  const tmp = new THREE.Vector3();
+  const nrm = new THREE.Vector3();
+  let k = 0;
+  for (let i = 0; i < rows; i++) {
+    const s = Math.min(s1, s0 + i * ds);
+    const f = course.sample(s);
+    const hw = course.widthAt(s) / 2;
+    const sp = Math.max(3, course.prop(s, 'speed'));
+    const a = ampAt(course, s);
+    const bs = bandStyleAt(course, s);
+    const put = (u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {
+      tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);
+      tmp.toArray(pos, k * 3);
+      nn.toArray(nor, k * 3);
+      uv[k * 2] = u;
+      uv[k * 2 + 1] = s;
+      halfW[k] = hw;
+      speed[k] = sp;
+      amp[k] = a;
+      skirt[k] = isSkirt;
+      style[k * 3] = bs[0];
+      style[k * 3 + 1] = bs[1];
+      style[k * 3 + 2] = bs[2];
+      k++;
+    };
+    // left skirt (below left edge)
+    put(-1, -hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right).negate());
+    for (let j = 0; j <= cols; j++) {
+      const u = -1 + (2 * j) / cols;
+      const lift = EDGE_LIFT * Math.abs(u) ** 3;
+      const slope = (EDGE_LIFT * 3 * u * Math.abs(u)) / hw; // d lift / d lateral
+      nrm.copy(f.up).addScaledVector(f.right, -slope).normalize();
+      put(u, u * hw, lift, 0, nrm);
+    }
+    put(1, hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right));
+  }
+  const idx: number[] = [];
+  for (let i = 0; i < rows - 1; i++) {
+    for (let j = 0; j < vertsPerRow - 1; j++) {
+      const a = i * vertsPerRow + j, b = a + 1, c = a + vertsPerRow, d = c + 1;
+      idx.push(a, c, b, b, c, d);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+  geo.setAttribute('aUV', new THREE.BufferAttribute(uv, 2));
+  geo.setAttribute('aHalfW', new THREE.BufferAttribute(halfW, 1));
+  geo.setAttribute('aSpeed', new THREE.BufferAttribute(speed, 1));
+  geo.setAttribute('aAmp', new THREE.BufferAttribute(amp, 1));
+  geo.setAttribute('aSkirt', new THREE.BufferAttribute(skirt, 1));
+  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 3));
+  geo.setIndex(idx);
+  geo.computeBoundingSphere();
+
+  const st03 = course.stage('03'), st04 = course.stage('04'), st08 = course.stage('08');
+  const uniforms = withFog({
+    uTime: { value: 0 },
+    uCyanDeep: { value: RIBBON_PAL.cyanDeep.clone() },
+    uCyan: { value: RIBBON_PAL.cyan.clone() },
+    uCyanBright: { value: RIBBON_PAL.cyanBright.clone() },
+    uPinkDeep: { value: RIBBON_PAL.pinkDeep.clone() },
+    uPink: { value: RIBBON_PAL.pink.clone() },
+    uPinkLight: { value: RIBBON_PAL.pinkLight.clone() },
+    uFoam: { value: PALETTE.foam.clone() },
+    uFoamLav: { value: PALETTE.foamLav.clone() },
+    uHaze: { value: PALETTE.haze.clone() },
+    uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+    uBenny: { value: new THREE.Vector3(0, 0, 0) },
+    uBennyR: { value: 0.7 },
+    uChevron: { value: new THREE.Vector3(st04.s0 + 8.5, 3.6, 1) },
+    uOutro: { value: new THREE.Vector2(0, st08.s0) },
+    uHide: { value: new THREE.Vector4(st03.s0, st04.s0, 0, 0) },
+  });
+  const mat = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: VERT,
+    fragmentShader: FRAG,
+    fog: true,
+    side: THREE.DoubleSide,
+    defines: quality === 'low' ? { LOW_Q: 1 } : {},
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.name = 'water_ribbon';
+  mesh.frustumCulled = false; // one long mesh spanning the whole course
+  return {
+    mesh,
+    uniforms,
+    s0,
+    s1,
+    heightAt(s, lateral, t) {
+      const hw = course.widthAt(s) / 2;
+      return ribbonWave(lateral / hw, s, t, ampAt(course, s));
+    },
+  };
+}
