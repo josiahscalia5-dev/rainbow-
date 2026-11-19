@@ -1079,3 +1079,143 @@ Restoring the stray formatting change (`build =(`) so the shared file only diffe
 > ↩︎ result: Command running in background with ID: bm2xgnqfa. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bm2xgnqfa.output. You will be notified when it completes. To check interim output, use Read on that file path.
 > Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
 
+### 🤖 Claude — 2026-11-19T02:38:28.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && du -sh qa/match/07/r17/step3_foamb/* qa/match/07/r18/step3_foamb/*; ls -la qa/match/07/r18/step3_foamb/NEW2", "description": "Check sizes of proof folders"}`
+
+### 🧑 User — 2026-11-19T02:38:28.361Z
+
+> ↩︎ result: 1.5M	qa/match/07/r17/step3_foamb/BEFORE
+> 1.6M	qa/match/07/r17/step3_foamb/NEW
+> 1.6M	qa/match/07/r17/step3_foamb/try_ramp5
+> 1.6M	qa/match/07/r17/step3_foamb/try_ramp8
+> 9.8M	qa/match/07/r18/step3_foamb/BEFORE
+> 10M	qa/match/07/r18/step3_foamb/NEW
+> 7.6M	qa/match/07/r18/step3_foamb/NEW2
+> total 7784
+> drwxr-xr-x 2 root root    4096 Nov 19 02:34 .
+> drwxr-xr-x 5 root root    4096 Nov 19 02:33 ..
+> -rw-r--r-- 1 root root    2296 Nov 19 02:34 motion.json
+> -rw-r--r-- 1 root root 2386462 Nov 19 02:33 t72_through_screen.png
+> -rw-r--r-- 1 root root 2203107 Nov 19 02:33 t80_through_screen.png
+> -rw-r--r-- 1 root root 1788413 Nov 19 02:34 t88_through_screen.png
+> -rw-r--r-- 1 root root 1575637 Nov 19 02:34 t95_through_screen.png
+
+### 🤖 Claude — 2026-11-19T02:38:33.261Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && rm -rf qa/match/07/r17/step3_foamb qa/match/07/r18/step3_foamb/NEW && mv qa/match/07/r18/step3_foamb/NEW2 qa/match/07/r18/step3_foamb/NEW && cp /home/user/wt/s07/qa/match/07/r16/APPROVED_07.png qa/match/07/r18/APPROVED_07.png 2>/dev/null; sha256sum qa/match/07/r18/APPROVED_07.png references/07_dive_the_washer_tube.png; date -u", "description": "Clean superseded scratch and set up r18 proof folder"}`
+
+### 🧑 User — 2026-11-19T02:38:33.574Z
+
+> ↩︎ result: 75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9  qa/match/07/r18/APPROVED_07.png
+> 75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9  references/07_dive_the_washer_tube.png
+> Thu Nov 19 02:38:33 UTC 2026
+
+### 🤖 Claude — 2026-11-19T02:38:36.415Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-19T02:38:36.479Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:38:36.896Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T02:38:36.977Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:38:39.166Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bm2xgnqfa.output | tail -30; cd /home/user/wt/s07 && git status --short | grep -v \"^??\"", "description": "Read gameplay test result"}`
+
+### 🧑 User — 2026-11-19T02:38:39.457Z
+
+> ↩︎ result: "pauseFreezes": true,
+>   "continuousTravel": true,
+>   "noCameraCut": true,
+>   "noTeleport": true,
+>   "plunge": true,
+>   "realCoinPickups": true,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.866666666666593,
+>   "tBottom": 30.366666666666223,
+>   "t08": 30.366666666666223,
+>   "yTop": -51.95,
+>   "yBottom": -113.095,
+>   "y08": -113.095,
+>   "travelTimeTopToInlet": 6.5,
+>   "verticalDrop": 61.14
+>  },
+>  "errors": []
+> }
+> 
+> real	0m14.676s
+> user	0m1.137s
+> sys	0m0.256s
+>  M src/vfx/foam.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/match07.ts
+> 
+> [exited with code 0]
+>  M src/vfx/foam.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/match07.ts
+
+### 🤖 Claude — 2026-11-19T02:38:41.850Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bm2xgnqfa.output | head -40; ls /home/user/wt/s07/qa/*.json | head; grep -n \"writeFileSync\" /home/user/wt/s07/scripts/gameplay-test.mjs", "description": "Read beginning of gameplay output and where it writes"}`
+
+### 🧑 User — 2026-11-19T02:38:41.970Z
+
+> ↩︎ result: {
+>  "query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1",
+>  "out": "qa/gameplay_test_switch.json",
+>  "pass": true,
+>  "checks": {
+>   "pauseFreezes": true,
+>   "continuousTravel": true,
+>   "noCameraCut": true,
+>   "noTeleport": true,
+>   "plunge": true,
+>   "realCoinPickups": true,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.866666666666593,
+>   "tBottom": 30.366666666666223,
+>   "t08": 30.366666666666223,
+>   "yTop": -51.95,
+>   "yBottom": -113.095,
+>   "y08": -113.095,
+>   "travelTimeTopToInlet": 6.5,
+>   "verticalDrop": 61.14
+>  },
+>  "errors": []
+> }
+> 
+> real	0m14.676s
+> user	0m1.137s
+> sys	0m0.256s
+>  M src/vfx/foam.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/match07.ts
+> 
+> [exited with code 0]
+> /home/user/wt/s07/qa/capture_log.json
+> /home/user/wt/s07/qa/capture_log_1080x1920.json
+> /home/user/wt/s07/qa/cinematic_test.json
+> /home/user/wt/s07/qa/continuity_report.json
+> /home/user/wt/s07/qa/gameplay_test.json
+> /home/user/wt/s07/qa/gameplay_test_switch.json
+> /home/user/wt/s07/qa/report_metrics.json
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 106:  writeFileSync(f, JSON.stringify(result, null, 2));
+> 112:writeF …[+136 chars]
+
