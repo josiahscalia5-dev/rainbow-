@@ -95,3 +95,26 @@ highlight streaks on every band, instead of a duller brownish copper; ring edges
 Still different: (1) at f10 / t66 the top third of the frame is the near ring band seen from inside, one broad smooth copper
 surface (the painting shows the big gold washer rim and the pink room there — lead note; next); (2) the nearest ring's
 upper-left wall at hard left is a soft pink haze (painted ring 0's sheen).
+
+## Step 9 (r19) — crisp lip and groove lines on the near rings: K8 + `&m04rpcr=1` (K8 = K7 + `&m04rpol=1`)
+Started on account 18 just before its usage limit (code + 10 NEW stills restored uncommitted); finished, checked and kept on
+account 19 (branch `claude/rainbow-s04-ringtex-c19`).
+Why: up close (f10, t66, hard left) the near ring's lip is the 160-row painted texture magnified many times, so its thin bright
+lip line and dark groove soften into one broad blurred copper surface; the painting's rings always show a crisp bright line on
+each lip and a dark gap behind it, which is what makes them read as separate, neat, polished rings.
+What it does (painted-ring path only, default off): draws the painted thin warm-white lip line and the thin dark red-brown groove
+line (not black) at their modelled places on every ring, world-anchored, anti-aliased to the pixel footprint and faded out where
+thinner than a pixel (far rings keep the painted texture, no shimmer). Widths `m04rpcb` 0.011, `m04rpcd` 0.014, `m04rpcc` 0.012.
+Pictures (full size, real game): NEW `step9_crisp/3_NEW_<shot>.png` (12 shots; a00 / f03 re-rendered on account 19, motion log
+`step9_crisp/motion.json`); BEFORE = `step8_pol/3_NEW_<shot>.png` (K8); APPROVED `1_APPROVED.png`. Clip (half size, real
+gameplay, 3.6 s straight / left / right / straight): `step9_crisp/clip_NEW_swim.mp4`; BEFORE clip `step8_pol/clip_NEW_swim.mp4`.
+Checks: approved start view unchanged — frozen `scripts/capture.mjs 04` K8 vs K8 + `m04rpcr=1`, Pixelmatch rows 180–1536:
+**0 differing pixels** (`step9_crisp/start_view_pixeldiff_BEFORE_vs_NEW.png`); coins identical to BEFORE at all 12 shots
+(1,330 / 1,350 / 1,360); tsc clean; clip checked frame to frame (incl. the steering frames): the new lines stay continuous, no
+breaks, popping or shimmer on near or far rings.
+Verdict: **GOOD IMPROVEMENT (small, ring neatness)** — the nearest rings now have a crisp thin bright line along each lip and a
+dark groove line under it (clearest at t66, f10 and hard left), so even the big near ring overhead reads as a neat machined gold
+ring instead of a soft blurred band. Kept: K9 = K8 + `&m04rpcr=1`.
+Still different: the top third at f10 / t66 is still the near ring band seen from inside (broad copper surface) where the
+painting's start view shows the gold washer rim and the pink room; and the soft pink haze on the nearest ring's upper-left wall
+at hard left (task 2, next).
