@@ -2520,3 +2520,23 @@ The corner now shows the slotted wall down to the foam. Now the full proof set: 
 
 > 🔧 **Bash** `{"command": "until grep -q done /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bih70mlfz.output 2>/dev/null; do sleep 15; done; cat /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/bih70mlfz.output; grep -ci error /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log", "description": "Wait for NEW set, lock check and gameplay test", "timeout": 5400000}`
 
+### 🧑 User — 2026-11-19T18:45:39.883Z
+
+> ↩︎ result: LOCK-IDENTICAL
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> done
+> 
+> [exited with code 0]
+> 0
+
+### 🤖 Claude — 2026-11-19T18:45:53.333Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r18/step2_wall && python3 -I -c \"\nimport json;d=json.load(open('gameplay_step2.json'))\nprint({k:d[k] for k in d if k not in ('errors',)} if len(json.dumps(d))<1500 else json.dumps(d)[:1500])\"", "description": "Read the gameplay test result"}`
+
+### 🧑 User — 2026-11-19T18:45:53.402Z
+
+> ↩︎ result: {"checks": {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}, "heartsLostOnWallBump": {"pass": true, "hearts": 4}}, "samples": [{"t": 0.5, "s": 45.645, "stage": "03", "y": -13.457, "cam": [-2.62, -7.96, -16.34], "coins": 1330}, {"t": 1, "s": 50.145, "stage": "03", "y": -13.829, "cam": [0.26, -8.46, -19.04], "coins": 1350 …[+300 chars]
+
