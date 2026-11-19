@@ -1,0 +1,21 @@
+{
+  "bounds": [
+    390.1617102628636,
+    405.731391842403
+  ],
+  "groups": {
+    "upstream": {
+      "vertices": 25344,
+      "sha256": "17fa7e1e239f68da5481a7b29ed62fb93f5fc370c20d3513ecb2054dbe1e5208"
+    },
+    "chamber": {
+      "vertices": 1056,
+      "sha256": "46f478617341264f4ce946848607026775e1b233c1e7d88302716909f0ca2fdb"
+    },
+    "following": {
+      "vertices": 2112,
+      "sha256": "4623405cf64ef8f64cdedc789759eb7947ec27dd8731a8bb5e1fbcaf168aadff"
+    }
+  },
+  "mesh": "foam_berm"
+}
