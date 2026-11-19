@@ -2,16 +2,40 @@
  "worktree": "/home/user/wt/s04t",
  "branch": "claude/rainbow-s04-thrixel-c19",
  "head": "c338978b345b64c89e2ebb0f79fa242c5f53f623",
- "time": "2026-11-19T19:54:11+00:00",
+ "time": "2026-11-19T19:59:28+00:00",
  "dirty_tracked": [
   "src/world/match04m4.ts"
  ],
  "untracked_copied": [
   "assets/models/thrixel/foam_cluster_s04.glb",
-  "qa/match/04/r19_thrixel/align1/motion.json"
+  "qa/match/04/r19_thrixel/BEFORE/motion.json",
+  "qa/match/04/r19_thrixel/NEW/motion.json",
+  "qa/match/04/r19_thrixel/SAME_CAMERA_NEW/motion.json",
+  "qa/match/04/r19_thrixel/SAME_CAMERA_NEW_a00_same_camera_crop.png",
+  "qa/match/04/r19_thrixel/align1/motion.json",
+  "qa/match/04/r19_thrixel/approved_crop.png",
+  "qa/match/04/r19_thrixel/tune/motion.json",
+  "qa/match/04/r19_thrixel/tune_t15s32_crop.png",
+  "qa/match/04/r19_thrixel/tune_t40s30_crop.png",
+  "tools/match04/tfoam_clip04.mjs",
+  "tools/match04/tfoam_probe04.mjs",
+  "tools/match04/tfoam_shots04.mjs"
  ],
  "untracked_skipped": [
-  "qa/match/04/r19_thrixel/align1/f00_show.png"
+  "qa/match/04/r19_thrixel/BEFORE/f01_forward1u.png",
+  "qa/match/04/r19_thrixel/BEFORE/f02_forward2u.png",
+  "qa/match/04/r19_thrixel/BEFORE/f03_forward3u.png",
+  "qa/match/04/r19_thrixel/BEFORE/f05_forward5u.png",
+  "qa/match/04/r19_thrixel/BEFORE/s3_right_steer.png",
+  "qa/match/04/r19_thrixel/NEW/f01_forward1u.png",
+  "qa/match/04/r19_thrixel/NEW/f02_forward2u.png",
+  "qa/match/04/r19_thrixel/NEW/f03_forward3u.png",
+  "qa/match/04/r19_thrixel/NEW/f05_forward5u.png",
+  "qa/match/04/r19_thrixel/NEW/s3_right_steer.png",
+  "qa/match/04/r19_thrixel/SAME_CAMERA_NEW/a00_same_camera.png",
+  "qa/match/04/r19_thrixel/align1/f00_show.png",
+  "qa/match/04/r19_thrixel/tune/t15s32.png",
+  "qa/match/04/r19_thrixel/tune/t40s30.png"
  ],
  "restore": "git switch claude/rainbow-s04-thrixel-c19 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-thrixel-c19/tracked.patch && copy backups/wip/claude__rainbow-s04-thrixel-c19/untracked/* into the worktree"
 }

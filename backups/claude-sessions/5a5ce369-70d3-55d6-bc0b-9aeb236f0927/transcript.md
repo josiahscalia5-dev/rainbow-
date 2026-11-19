@@ -2012,3 +2012,293 @@ Checking the code compiles, then rendering the start view with the model forced 
 > motion.json
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-19T19:54:04.512Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_thrixel/align1/f00_show.png"}`
+
+### 🧑 User — 2026-11-19T19:54:04.562Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:54:11.552Z
+
+The model doesn't show at all at the start view. It either didn't load or landed off-screen. Probing the running game to find out:
+
+### 🤖 Claude — 2026-11-19T19:54:12.613Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && sed -n 700,765p src/game/Game.ts | grep -nE \"^\\s+[a-zA-Z]+[:(]|scene|camera\" | head -40", "description": "Check what the game's QA API exposes"}`
+
+### 🧑 User — 2026-11-19T19:54:12.660Z
+
+> ↩︎ result: 3:      camera.updateMatrixWorld();
+> 4:      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+> 9:        const c = p.clone().project(camera);
+> 11:        const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+> 18:    respawns() { return st.respawns; },
+> 19:    /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
+> 20:    camera() {
+> 21:      camera.updateMatrixWorld();
+> 23:      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+> 25:    /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
+> 26:    bennyScreen() {
+> 27:      const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+> 28:      return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };
+> 30:    /** debug: what does a ray from the camera through NDC (x,y) hi …[+652 chars]
+
+### 🤖 Claude — 2026-11-19T19:54:22.817Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && cat > tools/match04/tfoam_probe04.mjs <<'EOF'\n// r19 Thrixel foam test probe (read-only): where is the m04tfoam model, is it loaded, where does it project?\n// usage: node tools/match04/tfoam_probe04.mjs \"<query>\"\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst Q = process.argv[2];\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5268);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, de …[+1684 chars]`
+
+### 🧑 User — 2026-11-19T19:54:38.620Z
+
+> ↩︎ result: console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> {"found":true,"visible":true,"children":0,"meshes":0,"tris":0,"local":[2.37053204306868,0.2,-3.227281858295571],"world":[4.37053204306868,-23.71429284532307,-27.407185148656257],"ndc":[0.7204655742826559,-0.48526633706956335,0.9893452250357789],"px":[743.2411280901074,1140.6845468694246]}
+> console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T19:54:51.698Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json,struct\nb=open('qa/match/04/r19_thrixel/foam_cluster_thrixel.glb','rb').read()\nL=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+L])\nprint('extensionsUsed',j.get('extensionsUsed'),'required',j.get('extensionsRequired'))\nprint('images',[ (i.get('mimeType'),i.get('bufferView')) for i in j.get('images',[])])\nprint('materials',json.dumps(j.get('materials'))[:600])\nprint('meshes',[ (m.get('name'),[list(p['attributes'].keys()) for p in m['primitives']]) for m in j['meshes']])\nEOF\ngrep -n \"BENNY_URL\\s*=\" -r /home/user/wt/s04t/src | head -2;  …[+126 chars]`
+
+### 🧑 User — 2026-11-19T19:54:51.767Z
+
+> ↩︎ result: extensionsUsed None required None
+> images [('image/png', 2), ('image/png', 3)]
+> materials [{"pbrMetallicRoughness": {"baseColorTexture": {"index": 0}, "baseColorFactor": [1.0, 1.0, 1.0, 1.0], "roughnessFactor": 1.0, "metallicFactor": 0.0, "metallicRoughnessTexture": {"index": 1}}, "alphaMode": "OPAQUE", "doubleSided": false}]
+> meshes [('geom0', [['POSITION', 'TEXCOORD_0', 'NORMAL']])]
+> /home/user/wt/s04t/src/characters/benny/runtime.ts:11:const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+
+### 🤖 Claude — 2026-11-19T19:54:57.168Z
+
+The file is a plain model with no special features, so the loader should read it. Adding error reporting and testing the download inside the game:
+
+### 🤖 Claude — 2026-11-19T19:55:02.424Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nold=\"      console.info('[match04] m04tfoam', { hit: hit.toArray().map((v) => +v.toFixed(2)), size: size.toArray().map((v) => +v.toFixed(3)) });\\n    });\"\nnew=\"      console.info('[match04] m04tfoam', { hit: hit.toArray().map((v) => +v.toFixed(2)), size: size.toArray().map((v) => +v.toFixed(3)) });\\n    }).catch((e) => console.error('[match04] m04tfoam load failed', String(e)));\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s); print('ok')\nEOF\nsed -i 's|    const res = a …[+903 chars]`
+
+### 🧑 User — 2026-11-19T19:55:19.866Z
+
+> ↩︎ result: ok
+> console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> {"found":true,"visible":true,"children":0,"meshes":0,"tris":0,"local":[2.37053204306868,0.2,-3.227281858295571],"world":[4.37053204306868,-23.71429284532307,-27.407185148656257],"ndc":[0.745948051110247,-0.5179487373388881,0.9888809551321501],"px":[754.2495580796267,1165.7846302762662]}
+> console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04t/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-19T19:55:30.146Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && grep -n \"fetch\\|setTimeout\" tools/match04/tfoam_probe04.mjs | head; grep -n \"m04tfoam load failed\\|m04tfoam'\" src/world/match04m4.ts | head; ls -la assets/models/thrixel/; head -c 4 assets/models/thrixel/foam_cluster_s04.glb; echo; grep -n \"startVite\" -A15 scripts/lib/pw.mjs | head -25", "description": "Check probe edits and Vite startup helper"}`
+
+### 🧑 User — 2026-11-19T19:55:30.205Z
+
+> ↩︎ result: 16:    r.run(true); await new Promise((res) => setTimeout(res, 6000)); r.run(false);
+> 1335:  if (M04.num('m04tfoam', 0) > 0) {
+> 1362:      console.info('[match04] m04tfoam', { hit: hit.toArray().map((v) => +v.toFixed(2)), size: size.toArray().map((v) => +v.toFixed(3)) });
+> 1363:    }).catch((e) => console.error('[match04] m04tfoam load failed', String(e)));
+> total 1800
+> drwxr-xr-x 2 root root    4096 Nov 19 19:53 .
+> drwxr-xr-x 3 root root    4096 Nov 19 19:53 ..
+> -rw-r--r-- 1 root root 1834448 Nov 19 19:53 foam_cluster_s04.glb
+> glTF
+> 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error …[+86 chars]
+
+### 🤖 Claude — 2026-11-19T19:55:45.829Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && python3 - <<'EOF'\np='tools/match04/tfoam_probe04.mjs'; s=open(p).read()\nold=\"  const res = await page.evaluate(async () => {\"\nnew='''  const fx = await page.evaluate(async () => {\n    const out = [];\n    for (const u of ['/assets/models/thrixel/foam_cluster_s04.glb', '/assets/models/benny.glb']) {\n      try { const r = await fetch(u); out.push([u, r.status, r.headers.get('content-type'), (await r.arrayBuffer()).byteLength]); } catch (e) { out.push([u, String(e)]); }\n    }\n    return out;\n  });\n  console.log('fetch', JSON.stringify(fx));\n  cons …[+1094 chars]`
+
+### 🧑 User — 2026-11-19T19:56:00.793Z
+
+> ↩︎ result: ok
+> 1
+> console: info [match04] m04rpaint {k: 1, lipS: 0.79, lipU: 3.95, grooveU: 4.28, jitter: 0.35}
+> console: info [match04] m04end {water: -0.6284808076336392}
+> console: warning [.WebGL-0x67c001bf800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> fetch [["/assets/models/thrixel/foam_cluster_s04.glb",200,"model/gltf-binary",1834448],["/assets/models/benny.glb",200,"model/gltf-binary",1126892]]
+> console: info [match04] m04tfoam {hit: Array(3), size: Array(3)}
+> console: warning [.WebGL-0x67c001bf800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> resp 403 s/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2
+> console: error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> reqfail r/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2
+> resp 403 s/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2
+> console: error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> reqfail r/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.wof …[+505 chars]
+
+### 🤖 Claude — 2026-11-19T19:56:12.580Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && ls scripts | grep -i -E \"clip|swim|capture\" ; ls tools/match04 | grep -i clip; grep -rn \"swim_clip\" qa/match/04/r18/PROGRESS.md 2>/dev/null | head -2; git -C /home/user/wt/s04 show HEAD:qa/match/04/r18/PROGRESS.md | grep -n \"swim_clip\" | head -3", "description": "Find the swim clip recording tool"}`
+
+### 🧑 User — 2026-11-19T19:56:12.639Z
+
+> ↩︎ result: capture.mjs
+> 29:  `motion_a00_f03_r18.json`); `NEW_swim_clip_half.mp4` (half size, 3.6 s straight / left / right / straight, rendered in r17 and
+> 52:  `NEW_swim_clip_half.mp4` (half size, 3.6 s straight / left / right / straight).
+> 29:  `motion_a00_f03_r18.json`); `NEW_swim_clip_half.mp4` (half size, 3.6 s straight / left / right / straight, rendered in r17 and
+> 52:  `NEW_swim_clip_half.mp4` (half size, 3.6 s straight / left / right / straight).
+> 80:  (K18-4, 12 shots), `NEW_swim_clip_half.mp4` (half size, 3.6 s).
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T19:56:17.767Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git ls-files | grep -i -E \"swim_clip|clip.*\\.mjs\" | head; cd /home/user/rainbow- && git ls-files | grep -i -E \"swim_clip.*mjs|clip.*\\.mjs\" | head", "description": "Locate swim clip script in repo"}`
+
+### 🧑 User — 2026-11-19T19:56:17.823Z
+
+> ↩︎ result: qa/match/04/r15/s1_fclu/NEW_swim_clip.mp4
+> qa/match/04/r16/s3_sband/NEW_swim_clip.mp4
+> qa/match/04/r18/s2_nband/NEW_swim_clip_half.mp4
+> qa/match/04/r18/s3_nwhirl/NEW_swim_clip_half.mp4
+> qa/match/04/r18/s4_flo/NEW_swim_clip_half.mp4
+> qa/match/04/r18/s5_nwfix/BEFORE_swim_clip_half.mp4
+> qa/match/04/r18/s5_nwfix/NEW_swim_clip_half.mp4
+> tools/lead_r13/swim_clip.mjs
+> backups/wip/claude__rainbow-s07-match-c15/untracked/tools/lead_r13/swim_clip.mjs
+> tools/lead_r4/rec_clip.mjs
+
+### 🤖 Claude — 2026-11-19T19:56:21.312Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p tools/lead_r13/swim_clip.mjs; ls /home/user/wt/s04t/tools/lead_r13/ 2>&1 | head", "description": "Read the swim clip tool usage"}`
+
+### 🧑 User — 2026-11-19T19:56:21.346Z
+
+> ↩︎ result: sed: can't read tools/lead_r13/swim_clip.mjs: No such file or directory
+> swim_clip.mjs
+
+### 🤖 Claude — 2026-11-19T19:56:24.607Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && sed -n 1,60p tools/lead_r13/swim_clip.mjs", "description": "Read swim clip tool from test worktree"}`
+
+### 🧑 User — 2026-11-19T19:56:24.639Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+1022 chars]
+
+### 🤖 Claude — 2026-11-19T19:56:38.795Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && python3 - <<'EOF'\nimport re\nwait = '''  if (/m04tfoam=1/.test(Q)) await page.waitForFunction(() => { let ok = false; window.__rainbow.qa3d().scene.traverse((o) => { if (o.name === 'm04_thrixel_foam' && o.children.length) ok = true; }); return ok; }, null, { timeout: 180000 });\n'''\ns=open('tools/match04/motion04.mjs').read()\ns=s.replace(\"// Screen 04 moving-camera test (read-only)\",\"// r19 Thrixel test copy of motion04.mjs: waits until the m04tfoam model has loaded before the first shot.\\n// Screen 04 moving-camera test (read-only)\",1)\nanchor=\"  …[+1074 chars]`
+
+### 🧑 User — 2026-11-19T19:56:53.803Z
+
+> ↩︎ result: ok
+> a00_same_camera s 78.116 lat 0 04 coins 1330
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T19:56:56.839Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_thrixel/SAME_CAMERA_NEW/a00_same_camera.png"}`
+
+### 🧑 User — 2026-11-19T19:56:56.892Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:57:10.453Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && Q=\"$(tr -d '\\n' < qa/match/04/r18/PREVIEW_QUERY_v2.txt)\"; D=qa/match/04/r19_thrixel/tune; for v in \"t40s30:m04tft=40&m04tfs=3.0\" \"t15s32:m04tft=15&m04tfs=3.2&m04tfl=0.5\"; do n=${v%%:*}; q=${v#*:}; M04_SHOTS=\"[[\\\"$n\\\",0,null]]\" timeout 600 node tools/match04/tfoam_shots04.mjs $D \"$Q&m04tfoam=1&m04tfshow=1&$q\" 2>&1 | grep -E \"^$n\" ; done; ls $D", "description": "Render two placement variants at the start view", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-19T19:57:41.280Z
+
+> ↩︎ result: t40s30 s 78.116 lat 0 04 coins 1330
+> t15s32 s 78.117 lat 0 04 coins 1330
+> motion.json
+> t15s32.png
+> t40s30.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T19:57:46.011Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t/qa/match/04/r19_thrixel && python3 -c \"\nfrom PIL import Image\nfor n in ['tune/t40s30','tune/t15s32','SAME_CAMERA_NEW/a00_same_camera']:\n    Image.open(n+'.png').crop((430,860,864,1330)).save(n.replace('/','_')+'_crop.png')\nImage.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').crop((430,860,864,1330)).save('approved_crop.png')\n\"; ls *_crop.png", "description": "Crop the heap area from each variant"}`
+
+### 🧑 User — 2026-11-19T19:57:46.569Z
+
+> ↩︎ result: SAME_CAMERA_NEW_a00_same_camera_crop.png
+> approved_crop.png
+> tune_t15s32_crop.png
+> tune_t40s30_crop.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T19:57:49.752Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_thrixel/approved_crop.png"}`
+
+### 🧑 User — 2026-11-19T19:57:49.769Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:57:50.318Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_thrixel/tune_t40s30_crop.png"}`
+
+### 🧑 User — 2026-11-19T19:57:50.333Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:57:50.703Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_thrixel/tune_t15s32_crop.png"}`
+
+### 🧑 User — 2026-11-19T19:57:50.750Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:58:07.401Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && Q=\"$(tr -d '\\n' < qa/match/04/r18/PREVIEW_QUERY_v2.txt)\"; D=qa/match/04/r19_thrixel; S='[[\"f01_forward1u\",1,null],[\"f02_forward2u\",2,null],[\"f03_forward3u\",3,null],[\"f05_forward5u\",5,null],[\"s3_right_steer\",3,1]]'; (M04_SHOTS=\"$S\" timeout 900 node tools/match04/motion04.mjs $D/BEFORE \"$Q\" 2>&1 | grep -E \"^(f0|s3)\" ) & (M04_SHOTS=\"$S\" timeout 900 node tools/match04/tfoam_shots04.mjs $D/NEW \"$Q&m04tfoam=1&m04tft=40&m04tfs=3.0\" 2>&1 | grep -E \"^(f0|s3)\" | sed 's/^/NEW /'); wait; ls $D/BEFORE $D/NEW", "description": "Render before/with …[+42 chars]`
+
+### 🧑 User — 2026-11-19T19:59:17.273Z
+
+> ↩︎ result: NEW f01_forward1u s 79.284 lat 0 04 coins 1330
+> NEW f02_forward2u s 80.213 lat 0 04 coins 1330
+> NEW f03_forward3u s 81.149 lat 0 04 coins 1330
+> NEW f05_forward5u s 83.248 lat 0 04 coins 1330
+> NEW s3_right_steer s 81.18 lat 0.763 04 coins 1330
+> f01_forward1u s 79.434 lat 0 04 coins 1330
+> f02_forward2u s 80.214 lat 0 04 coins 1330
+> f03_forward3u s 81.148 lat 0 04 coins 1330
+> f05_forward5u s 83.333 lat 0 04 coins 1330
+> s3_right_steer s 81.148 lat 0.753 04 coins 1330
+> [1]+  Done                    ( M04_SHOTS="$S" timeout 900 node tools/match04/motion04.mjs $D/BEFORE "$Q" 2>&1 | grep -E "^(f0|s3)" )
+> qa/match/04/r19_thrixel/BEFORE:
+> f01_forward1u.png
+> f02_forward2u.png
+> f03_forward3u.png
+> f05_forward5u.png
+> motion.json
+> s3_right_steer.png
+> 
+> qa/match/04/r19_thrixel/NEW:
+> f01_forward1u.png
+> f02_forward2u.png
+> f03_forward3u.png
+> f05_forward5u.png
+> motion.json
+> s3_right_steer.png
+> Shell cwd was reset to /home/user/rainbow-
+

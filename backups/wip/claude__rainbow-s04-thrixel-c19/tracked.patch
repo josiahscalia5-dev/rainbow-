@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 7323fe5..e0e74c9 100644
+index 7323fe5..6516f33 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -25,6 +25,7 @@
@@ -50,7 +50,7 @@ index 7323fe5..e0e74c9 100644
 +        const mt = me.material as THREE.MeshStandardMaterial; mt.transparent = true; mt.depthWrite = true; mats.push(mt); me.renderOrder = 3;
 +      });
 +      console.info('[match04] m04tfoam', { hit: hit.toArray().map((v) => +v.toFixed(2)), size: size.toArray().map((v) => +v.toFixed(3)) });
-+    });
++    }).catch((e) => console.error('[match04] m04tfoam load failed', String(e)));
 +    updaters.push((a) => {
 +      const k = show ? 1 : a;
 +      holder.visible = k > 0.01; for (const mt of mats) mt.opacity = k;
