@@ -1,0 +1,19 @@
+{
+  "retained": {
+    "branch": "claude/rainbow-s04-match-c17",
+    "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+  },
+  "path": "references/04_through_the_five_arrows.png",
+  "gitBlob": "d6d8a0e5e16bb1700fba078acda9fb9b435e7c32",
+  "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193",
+  "bytes": 392932,
+  "size": [
+    864,
+    1536
+  ],
+  "originalEncoding": "JPEG",
+  "lfsHydrated": false,
+  "manifestReferenceCount": 13,
+  "verifiedSameBytesAsExperimentAndPhone": true,
+  "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/ad5fbac592444e90fd1b53d62e7fa0b62391c032/references/04_through_the_five_arrows.png"
+}
