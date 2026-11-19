@@ -782,3 +782,50 @@ Restoring the stray formatting change (`build =(`) so the shared file only diffe
 
 > 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW/t80_through_screen.png"}`
 
+### 🧑 User — 2026-11-19T02:32:32.638Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:40.129Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"match08\\|m08\" src/vfx/foam.ts src/vfx/waterRibbon.ts src/game/Game.ts | head -30", "description": "Check how match08 affects foam and water in 08"}`
+
+### 🧑 User — 2026-11-19T02:32:40.172Z
+
+> ↩︎ result: src/game/Game.ts:27:import { buildMatch08 } from '../world/match08';
+> src/game/Game.ts:107:  // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+> src/game/Game.ts:108:  const m08 = MATCH['08'] ? await buildMatch08() : null;
+> src/game/Game.ts:109:  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+> src/game/Game.ts:111:  // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+> src/game/Game.ts:114:  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+> src/game/Game.ts:116:  let m08On = false;
+> src/game/Game.ts:117:  let m08Applied = false;
+> src/game/Game.ts:183:    if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+> src/game/Game.ts:544:    // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+> src/game/Game.ts:545:    if (m08 && ( …[+1272 chars]
+
+### 🤖 Claude — 2026-11-19T02:32:41.559Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"M08_HIDE\" src/game/Game.ts src/world/*.ts | head -5", "description": "Find which water parts match08 hides"}`
+
+### 🧑 User — 2026-11-19T02:32:41.598Z
+
+> ↩︎ result: src/game/Game.ts:110:  const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+> src/game/Game.ts:546:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+
+### 🤖 Claude — 2026-11-19T02:32:46.326Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/BEFORE/t88_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:32:46.404Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:46.829Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW/t88_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:32:46.883Z
+
+> ↩︎ result: [image]
+

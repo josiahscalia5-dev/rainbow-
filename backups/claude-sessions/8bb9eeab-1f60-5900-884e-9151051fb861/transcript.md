@@ -980,3 +980,25 @@ I agree it looks closer. I'm copying the pictures into the main project folder s
 
 > 🔧 **Bash** `{"command": "timeout 200 python3 scripts/rainbow-autosave.py --reason manual:r18-04-step2-review 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified'", "description": "Save the Screen 04 review set", "timeout": 240000}`
 
+### 🧑 User — 2026-11-19T02:32:43.792Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "ea4b523aed281701674cc13dd365dc9ffb64e38a",
+
+### 🤖 Claude — 2026-11-19T02:32:48.213Z
+
+The water on Screen 04 is closer to your picture. Inside the tunnel the water around Benny used to be one plain cyan sheet. Now glossy pink and cyan streaks sweep in close around him on both sides, while the arrow lane ahead stays cyan.
+
+- **Where it shows:** all the way through the tunnel and while steering.
+- **Moving:** in the swim clip the streaks flow smoothly and don't tear.
+- **Start view:** the view that matches your approved picture is unchanged.
+
+I checked the pictures at full size myself as well as the worker. They're attached in this order: APPROVED, then BEFORE / NEW swimming forward, then BEFORE / NEW steering hard right, plus a short swim clip. They're also saved in `qa/review_r18/04_step2_nband/`.
+
+**Still different from your picture:**
+- Your painted streaks curve in big S-shapes that pass under Benny; the game's still run straight. The Screen 04 worker is on that now.
+- The tunnel is still a long straight corridor of many thin gold rings.
+
+The other four workers (04 rings, 05, 06, 07) are still running. I'll show you each result once I've checked it the same way.
+
