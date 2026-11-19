@@ -119,6 +119,8 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
 #ifdef RFEW
 uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
 uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
+uniform vec3 uRFewE;       // r18 m04rfew: world position of the telescope's end (the light)
+uniform vec3 uRFewL;       // r18 m04rfew: light strength, core and glow angular radius (rad) (m04rfl, m04rfc, m04rfo)
 varying vec2 vF;
 #endif
 varying vec4 vProj;
@@ -379,6 +381,12 @@ void main() {
     wg = mix(wg, vec3(1.35, 2.46, 2.80), clamp(x - 5.0, 0.0, 1.0));
     col *= mix(vec3(1.0), wg, uRFewW.y);
     if (part > 3.5) col = mix(vec3(1.0, 0.98, 0.90), vec3(1.0, 0.86, 0.55), smoothstep(0.15, 1.0, clamp(rr / 3.8, 0.0, 1.0)));
+    // the painted light itself: a warm-white core and a yellow-orange glow round the end of the telescope, spread over
+    // the deep rings (angle from the end point as seen by the viewer; only rings / end disc are lit, never Benny or water)
+    float ea = acos(clamp(dot(normalize(vW - cameraPosition), normalize(uRFewE.xyz - cameraPosition)), -1.0, 1.0));
+    float lc = exp(-pow(ea / uRFewL.y, 2.0)), lh = exp(-pow(ea / uRFewL.z, 2.0));
+    col = mix(col, vec3(1.0, 0.97, 0.86), clamp(lc * uRFewL.x, 0.0, 1.0));
+    col += vec3(1.0, 0.70, 0.32) * 0.55 * lh * uRFewL.x;
   }
 #endif
   col = clamp(col, 0.0, 1.0);
@@ -814,6 +822,34 @@ export function addM04(ctx: M04Ctx) {
       gm.defines = { RFEW: '' };
       gm.uniforms.uRFewG = { value: rfGz };
       gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };
+      gm.uniforms.uRFewE = { value: toW(cx, cy + rfGz * (1 - capS), z0 - capA) };
+      gm.uniforms.uRFewL = { value: new THREE.Vector3(M04.num('m04rfl', 1), M04.num('m04rfc', 0.018), M04.num('m04rfo', 0.07)) };
+      // the river runs on INTO the telescope: once the river trough mesh is added to the group (built further down, before
+      // the projector depth bake), its cross-section is scaled with the rings about the same water-line centre, so its
+      // pink banks and cyan lane converge into the light instead of being cut off by the narrowing walls (world-anchored;
+      // the river's own code and shader are untouched; `m04rfriv=0` leaves the river as it is)
+      if (M04.num('m04rfriv', 1) > 0) {
+        const sA = prof.map((p) => p.a), sS = fS.slice();
+        const sAt = (a: number) => {
+          if (a <= sA[0]) return 1;
+          if (a >= sA[sA.length - 1]) return capS;
+          let lo = 0, hi = sA.length - 1;
+          while (hi - lo > 1) { const m = (lo + hi) >> 1; if (sA[m] <= a) lo = m; else hi = m; }
+          return sS[lo] + (sS[hi] - sS[lo]) * ((a - sA[lo]) / Math.max(sA[hi] - sA[lo], 1e-6));
+        };
+        const gy = cy + rfGz;                                     // the shrink centre's height (group y; water = 0)
+        const onAdd = (e: { child: THREE.Object3D }) => {
+          if (e.child.name !== 'm04_river') return;
+          group.removeEventListener('childadded' as never, onAdd as never);
+          const rp = ((e.child as THREE.Mesh).geometry.attributes.position) as THREE.BufferAttribute;
+          for (let i = 0; i < rp.count; i++) {
+            const s = sAt(z0 - rp.getZ(i));
+            if (s < 1) { rp.setX(i, cx + (rp.getX(i) - cx) * s); rp.setY(i, gy + (rp.getY(i) - gy) * s); }
+          }
+          rp.needsUpdate = true; (e.child as THREE.Mesh).geometry.computeBoundingSphere();
+        };
+        group.addEventListener('childadded' as never, onAdd as never);
+      }
     }
     // lathe axis = +y; rotate so y -> -z (down the tunnel), then place at the mouth
     tun.rotateX(-Math.PI / 2).translate(cx, cy, z0);

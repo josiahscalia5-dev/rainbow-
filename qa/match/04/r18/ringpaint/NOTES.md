@@ -39,3 +39,35 @@ Still different: (1) at hard left the nearest ring's upper-left wall becomes a s
 painted ring 0's left side, but up close it looks less polished than the painted gold); (2) the painted rings are brighter
 and more contrasty overall (white-hot yellow highlights on the upper rings, deeper shadows in the grooves); the game rings
 are a slightly flatter, mid-tone copper.
+
+## Step 7 — ring STRUCTURE: few, thick rings telescoping into the warm light: K6 + `&m04rfew=1&m04rfg=1.2` (lead redirect)
+K6 = K5 + `&m04rpvar=1` (step 6 kept). BEFORE = `step6_var/3_NEW_<shot>.png` (K6, same build: step-7 code is off by default).
+Why: measured on the approved picture (upper-left walls, the cleanest), every painted groove circle is ~0.76 x the previous one
+over 11 rings (338, 254, 194, 149, 114, 87, 65, 50, 35, 27, 22 px): a quick telescope into the light. The game's constant
+4.6 u cylinder gives 0.75 rising to 0.9 — a long corridor of many thin rings to a small orange ball at 90 u.
+What it does (`src/world/match04m4.ts`, ring block + GOLD_FRAG under `#define RFEW`, default off; default build untouched):
+* corridor (where Benny swims, to ~30 u inside the opening; the 04 scenery is hidden once stage 04 ends at ~30.4 u): ring 0
+  keeps the kept 4.6 u period, each next period 1.2x longer (`m04rfg`) -> 5 broad rings (0, 4.6, 10.1, 16.7, 24.7 u);
+* from 30 u (`m04rfa`) every ring is a smaller copy of the ring before it (x0.75 per ring, `m04rfq`), scaled about a point on
+  the water line, its band a broad cone narrowing to its lip (faces the viewer like the painted bands), ending at ~55 u in
+  a small end disc; painted texture, lip line, groove and light dots keep their painted proportions on every ring;
+* the deep rings take on the painting's warm light (copper -> orange -> yellow -> warm white, the gains measured ring by ring
+  on the painting in step 4, graded by ring size, `m04rfw`/`m04rfk`) and a warm-white light with a yellow-orange glow sits
+  at the end (`m04rfl`, `m04rfc`, `m04rfo`; drawn on rings / end disc only, never over Benny, coins or water);
+* the river trough is narrowed with the telescope (same centre), so its cyan lane and pink banks converge into the light
+  instead of being cut by straight diagonal edges at the narrowing walls (first try without this showed those cuts). Done
+  from the ring block when the river mesh is added (no edit in the river code; `m04rfriv=0` switches it off).
+Pictures (full size, real game): NEW `step7_rfew/3_NEW_<shot>.png` (12 shots, `step7_rfew/motion.json`); BEFORE
+`step6_var/3_NEW_<shot>.png`; APPROVED `1_APPROVED.png`. Clips (half size 432x768, 3.6 s straight / left / right / straight,
+real gameplay; Screen 04 fills the first ~1.9 s, then 05 which is identical in both): `step7_rfew/clip_BEFORE_swim.mp4`,
+`step7_rfew/clip_NEW_swim.mp4`.
+Checks: approved start view unchanged — frozen `scripts/capture.mjs 04` K6 vs K6 + switch, Pixelmatch rows 180–1536:
+**0 differing pixels**. Coins at all 12 shots identical to BEFORE (1,330 / 1,350 / 1,360 where picked up). Hearts, Benny,
+camera, HUD untouched. tsc clean. Frame-by-frame check of the clip around the telescope: no popping, seams or flicker.
+Verdict: **GOOD IMPROVEMENT (big, ring structure)** — from forward 3 u to the end and at hard left / right the tunnel is now a
+handful of broad, thick polished rings that telescope quickly into a warm yellow-white light, with the river converging into
+it, like the painted tunnel; before, a long straight corridor of ~20 thin copper rings ran to a small orange ball.
+Still different: (1) the rings are a deeper copper-orange than the painting's brighter, more polished yellow-gold with
+white-hot highlights (step 8 = brightness / polish, as planned); (2) the painted light at the end is a little larger and
+whiter; (3) for the s04 worker / lead: with `m04rfew` the end disc moves to the telescope's end and shrinks to its last ring,
+so `m04end` (s04's painted far opening on that disc) would need refitting if both are combined.
