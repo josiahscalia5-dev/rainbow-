@@ -1,0 +1,403 @@
+{
+  "variant": "coat",
+  "source": "bf61823aa512cb6f6326a0423178b49b8945154f",
+  "retained": {
+    "branch": "claude/rainbow-s06-match-c18",
+    "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+  },
+  "originalSHA256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "nativeSize": [
+    864,
+    1536
+  ],
+  "simulationHz": 60,
+  "fixedPoses": 14,
+  "uninterruptedComparisonFrames": 63,
+  "streams": [
+    {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "avg_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ]
+    },
+    {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "avg_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ]
+    }
+  ],
+  "matchingMotionFields": [
+    "i",
+    "time",
+    "shaderTime",
+    "s",
+    "stage",
+    "lat",
+    "steer",
+    "hearts",
+    "coins",
+    "camera"
+  ],
+  "filmScoreDiffersAtFrames": 0,
+  "maximumMatchedCameraError": 0,
+  "opening": {
+    "width": 864,
+    "height": 1536,
+    "threshold": 0.1,
+    "includeAA": false,
+    "approvedVsBefore": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049550,
+      "within20Percent": 79.08573857060185,
+      "pixelmatchMismatches": 262246
+    },
+    "approvedVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 625053,
+      "within20Pixels": 1051886,
+      "within20Percent": 79.26176094714506,
+      "pixelmatchMismatches": 259515
+    },
+    "beforeVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 37739,
+      "within20Pixels": 1296970,
+      "within20Percent": 97.7293414834105,
+      "pixelmatchMismatches": 28027
+    },
+    "beforeVsRepeat": {
+      "pixels": 1327104,
+      "exactDifferences": 0,
+      "within20Pixels": 1327104,
+      "within20Percent": 100,
+      "pixelmatchMismatches": 0
+    }
+  },
+  "nativeMotion": {
+    "opening": {
+      "maxChannelDifference": 255,
+      "changedPixels": 37739,
+      "pixelsChangeGreaterThan10": 37682,
+      "scoreBeforeNew": [
+        1680,
+        1680
+      ],
+      "renderCalls": [
+        45,
+        45
+      ],
+      "visibleTriangles": [
+        283635,
+        283635
+      ],
+      "FOVBeforeNew": [
+        62,
+        62
+      ]
+    },
+    "forward-03": {
+      "maxChannelDifference": 255,
+      "changedPixels": 41071,
+      "pixelsChangeGreaterThan10": 37447,
+      "scoreBeforeNew": [
+        1690,
+        1690
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62,
+        62
+      ]
+    },
+    "forward-06": {
+      "maxChannelDifference": 255,
+      "changedPixels": 38967,
+      "pixelsChangeGreaterThan10": 38775,
+      "scoreBeforeNew": [
+        1700,
+        1700
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62,
+        62
+      ]
+    },
+    "forward-10": {
+      "maxChannelDifference": 252,
+      "changedPixels": 43285,
+      "pixelsChangeGreaterThan10": 42818,
+      "scoreBeforeNew": [
+        1700,
+        1700
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62,
+        62
+      ]
+    },
+    "forward-20": {
+      "maxChannelDifference": 243,
+      "changedPixels": 40369,
+      "pixelsChangeGreaterThan10": 39558,
+      "scoreBeforeNew": [
+        1800,
+        1800
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62,
+        62
+      ]
+    },
+    "hard-left": {
+      "maxChannelDifference": 224,
+      "changedPixels": 33187,
+      "pixelsChangeGreaterThan10": 32158,
+      "scoreBeforeNew": [
+        1720,
+        1720
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62,
+        62
+      ]
+    },
+    "hard-right": {
+      "maxChannelDifference": 246,
+      "changedPixels": 36219,
+      "pixelsChangeGreaterThan10": 35169,
+      "scoreBeforeNew": [
+        1680,
+        1680
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62,
+        62
+      ]
+    },
+    "inlet": {
+      "maxChannelDifference": 253,
+      "changedPixels": 38496,
+      "pixelsChangeGreaterThan10": 38372,
+      "scoreBeforeNew": [
+        1350,
+        1350
+      ],
+      "renderCalls": [
+        52,
+        52
+      ],
+      "visibleTriangles": [
+        338685,
+        338685
+      ],
+      "FOVBeforeNew": [
+        62.003907154997286,
+        62.003907154997286
+      ]
+    },
+    "middle": {
+      "maxChannelDifference": 243,
+      "changedPixels": 42626,
+      "pixelsChangeGreaterThan10": 41905,
+      "scoreBeforeNew": [
+        1530,
+        1530
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62.00391238143432,
+        62.00391238143432
+      ]
+    },
+    "deep": {
+      "maxChannelDifference": 247,
+      "changedPixels": 33319,
+      "pixelsChangeGreaterThan10": 32525,
+      "scoreBeforeNew": [
+        1580,
+        1580
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62.003912388425505,
+        62.003912388425505
+      ]
+    },
+    "crest-release": {
+      "maxChannelDifference": 255,
+      "changedPixels": 36601,
+      "pixelsChangeGreaterThan10": 36551,
+      "scoreBeforeNew": [
+        1680,
+        1680
+      ],
+      "renderCalls": [
+        45,
+        45
+      ],
+      "visibleTriangles": [
+        283635,
+        283635
+      ],
+      "FOVBeforeNew": [
+        62.003912388425505,
+        62.003912388425505
+      ]
+    },
+    "arch-exit": {
+      "maxChannelDifference": 254,
+      "changedPixels": 31050,
+      "pixelsChangeGreaterThan10": 30606,
+      "scoreBeforeNew": [
+        1580,
+        1580
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62.003912388434856,
+        62.003912388434856
+      ]
+    },
+    "last-in-stage": {
+      "maxChannelDifference": 252,
+      "changedPixels": 43994,
+      "pixelsChangeGreaterThan10": 43702,
+      "scoreBeforeNew": [
+        1580,
+        1580
+      ],
+      "renderCalls": [
+        51,
+        51
+      ],
+      "visibleTriangles": [
+        335485,
+        335485
+      ],
+      "FOVBeforeNew": [
+        62.00391238843488,
+        62.00391238843488
+      ]
+    },
+    "across-transition": {
+      "maxChannelDifference": 0,
+      "changedPixels": 0,
+      "pixelsChangeGreaterThan10": 0,
+      "scoreBeforeNew": [
+        1580,
+        1580
+      ],
+      "renderCalls": [
+        249,
+        249
+      ],
+      "visibleTriangles": [
+        698855,
+        698855
+      ],
+      "FOVBeforeNew": [
+        62.00391238843488,
+        62.00391238843488
+      ]
+    }
+  },
+  "eightGameplayAssertions": {
+    "pauseFreezes": true,
+    "continuousTravel": true,
+    "noCameraCut": true,
+    "noTeleport": true,
+    "plunge": true,
+    "realCoinPickups": true,
+    "victory": true,
+    "heartsLostOnWallBump": true
+  },
+  "safeFullRide": {
+    "start": 1330,
+    "score": 2240,
+    "coins": 91,
+    "hearts": 5,
+    "stage": "11",
+    "collisions": []
+  },
+  "transitionTo07AtSeconds": 4.916666666666667
+}
