@@ -1,0 +1,215 @@
+{
+  "coreXYXY": [
+    327,
+    1080,
+    535,
+    1176
+  ],
+  "commonBodyPixels": 18697,
+  "bodyCore": {
+    "approved": {
+      "medianRGB": [
+        229.0,
+        71.0,
+        166.0
+      ],
+      "bodyCoreMeanAbsoluteRGB": 0.0,
+      "furFineDetailRMS": 9.071,
+      "lockContrastRMS": 12.762
+    },
+    "retained": {
+      "medianRGB": [
+        255.0,
+        50.0,
+        188.0
+      ],
+      "bodyCoreMeanAbsoluteRGB": 34.126,
+      "furFineDetailRMS": 17.238,
+      "lockContrastRMS": 10.398
+    },
+    "previousCoat": {
+      "medianRGB": [
+        245.0,
+        105.0,
+        172.0
+      ],
+      "bodyCoreMeanAbsoluteRGB": 30.114,
+      "furFineDetailRMS": 12.371,
+      "lockContrastRMS": 11.892
+    },
+    "presentTrial": {
+      "medianRGB": [
+        221.0,
+        73.0,
+        159.0
+      ],
+      "bodyCoreMeanAbsoluteRGB": 26.313,
+      "furFineDetailRMS": 11.315,
+      "lockContrastRMS": 11.151
+    }
+  },
+  "renderedNativeBounds": {
+    "Benny": {
+      "visibleXYXY": [
+        195,
+        733,
+        646,
+        1198
+      ],
+      "width": 452,
+      "height": 466
+    },
+    "hat": {
+      "visibleXYXY": [
+        263,
+        733,
+        578,
+        1024
+      ],
+      "width": 316,
+      "height": 292
+    },
+    "hat_brim": {
+      "visibleXYXY": [
+        263,
+        880,
+        578,
+        1024
+      ],
+      "width": 316,
+      "height": 145
+    },
+    "fur_pom": {
+      "visibleXYXY": [
+        328,
+        733,
+        488,
+        864
+      ],
+      "width": 161,
+      "height": 132
+    },
+    "fur_body": {
+      "visibleXYXY": [
+        238,
+        898,
+        598,
+        1198
+      ],
+      "width": 361,
+      "height": 301
+    },
+    "fur_armL": {
+      "visibleXYXY": [
+        195,
+        971,
+        248,
+        1040
+      ],
+      "width": 54,
+      "height": 70
+    },
+    "fur_armR": {
+      "visibleXYXY": [
+        585,
+        958,
+        646,
+        1029
+      ],
+      "width": 62,
+      "height": 72
+    }
+  },
+  "originalHandRead": {
+    "wholeWidthHeight": [
+      435,
+      459
+    ],
+    "cuffBottomY": 1026,
+    "uncertaintyPx": 8
+  },
+  "retainedBounds": {
+    "fur_armR": {
+      "visibleBoundsXYXY": [
+        584,
+        961,
+        645,
+        1027
+      ],
+      "width": 62,
+      "height": 67,
+      "visiblePixels": 3055
+    },
+    "hat": {
+      "visibleBoundsXYXY": [
+        229,
+        717,
+        585,
+        1080
+      ],
+      "width": 357,
+      "height": 364,
+      "visiblePixels": 90616
+    },
+    "fur_body": {
+      "visibleBoundsXYXY": [
+        242,
+        964,
+        596,
+        1193
+      ],
+      "width": 355,
+      "height": 230,
+      "visiblePixels": 33455
+    },
+    "fur_armL": {
+      "visibleBoundsXYXY": [
+        198,
+        973,
+        247,
+        1037
+      ],
+      "width": 50,
+      "height": 65,
+      "visiblePixels": 2168
+    },
+    "fur_pom": {
+      "visibleBoundsXYXY": [
+        295,
+        717,
+        480,
+        905
+      ],
+      "width": 186,
+      "height": 189,
+      "visiblePixels": 22389
+    },
+    "Benny": {
+      "visibleBoundsXYXY": [
+        198,
+        717,
+        645,
+        1193
+      ],
+      "width": 448,
+      "height": 477,
+      "visiblePixels": 129387
+    },
+    "hat_brim": {
+      "visibleBoundsXYXY": [
+        229,
+        880,
+        540,
+        1080
+      ],
+      "width": 312,
+      "height": 201,
+      "visiblePixels": 16243
+    }
+  },
+  "fullActorFootprintMeanAbsRGB": {
+    "retained": 77.513,
+    "previousCoat": 75.469,
+    "presentTrial": 49.48
+  }
+}
