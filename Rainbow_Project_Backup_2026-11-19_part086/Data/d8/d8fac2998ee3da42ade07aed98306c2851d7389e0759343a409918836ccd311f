@@ -1,0 +1,128 @@
+from pathlib import Path
+import csv,hashlib,io,json
+from datetime import datetime,timezone
+from zipfile import ZIP_DEFLATED,ZIP_STORED,ZipFile
+
+ROOT=Path.cwd()
+LIB=Path('/workspace/library-files')
+CURRENT=LIB/'Rainbow-Reconstruction-Experiments'
+OUT=LIB/'Rainbow-ChatGPT-Review'
+OUT.mkdir(exist_ok=True)
+IDS=('04','05','06','07','08')
+C=json.load(open(CURRENT/'verification.json'))
+REFS=C['protectedRefs']
+HEAD={r.split()[1].removeprefix('refs/heads/'):r.split()[0] for r in (ROOT/'remote-heads.txt').read_text().splitlines()}
+GITHUB='https://github.com/josiahscalia5-dev/rainbow-'
+TITLES={'04':'Through the Five Arrows','05':'Flow into the Current','06':'Crest the Rinse Arch','07':'Dive the Washer Tube','08':'Final Spin Chamber'}
+WORDS={
+'04':('Pink laundry entrance, gold washer rim, five illuminated arrows and curling cyan-pink water.','The candidate bends the painted pink edges across the retained trough. The distant copper corridor and repetition of the arrows still look uniform.'),
+'05':('Purple perforated washer tunnel, gold rings and paddles, glossy cyan S-river, magenta bands and dimensional foam.','The candidate sharpens the existing slots. The water still stretches at the last bend and the environment changes abruptly at the handoff into 06.'),
+'06':('Sweeping rinse crest, receding curved passage, purple metal, gold rings, ripples and foam.','The candidate turns the existing tunnel and rings right after the crest. A pale patch, long cyan streaks and foam across Benny remain visible.'),
+'07':('Perforated purple washer tube, rounded gold paddles, winding blue river, thick curved magenta banks and descending foam.','The fitted paddle removes wall markings from its front during steering. A small amber edge is visible near its back at +10. Straightening banks, a hard-edged lip and tall white plunge sides remain.'),
+'08':('Large metallic chamber, door, gold ring, perforated platform, folded purple towel, four gold-banded spouts and winding river.','The candidate makes the foreground bank follow the river while the chamber objects hold position. Cyan still smears at +3 and the near pink bank can fill much of the lower frame.')}
+PICKS={'04':['opening','forward-10','hard-left','last-in-stage'],'05':['opening','hard-left','last-right-bend','last-in-stage'],'06':['opening','crest-release','forward-10','last-in-stage'],'07':['opening','hard-right','two-thirds-down','last-in-stage'],'08':['opening','forward-03','hard-left','last-in-stage']}
+TRIALS={'05':{'initial-trial':'Mirrored purple wall patch. A bubble repeated on hard left.'},
+'06':{'initial-trial':'One tight tunnel bend. It pushed the far opening out of frame at +10.'},
+'07':{'initial-trial':'Full paddle repaint. It covered the retained front highlight.','masked-material':'Masked material on the old box. The silhouette still extended above and below the painted paddle.','fitted-body-only':'Fitted solid alone. It exposed a second gold edge painted on the washer wall.'}}
+PROMPT=("Review the five approved Rainbow screens against Claudia’s retained Three.js gameplay and each labeled Codex candidate. Read README_FIRST.md and open the actual media. For each stage, name the largest scenery mismatches at the approved opening and during forward travel, turns, drops and the handoff. Cite a screenshot filename or a video timestamp for each finding. Say which candidates help, which make things worse and what to test next. Measure the approved viewpoint only. For unseen views, assess continuity and flag interpretation. If a file cannot be opened, identify it.")
+def load(path):return json.loads(Path(path).read_text())
+def jsonbytes(x):return (json.dumps(x,indent=2,ensure_ascii=False)+'\n').encode()
+def csvbytes(keys,items):
+    s=io.StringIO(newline='');w=csv.DictWriter(s,fieldnames=keys,extrasaction='ignore',lineterminator='\n');w.writeheader()
+    for r in items:w.writerow({k:(json.dumps(r[k],separators=(',',':'),ensure_ascii=False) if isinstance(r.get(k),(dict,list)) else r.get(k,'')) for k in keys})
+    return s.getvalue().encode()
+def digest(data):return hashlib.sha256(data).hexdigest()
+def put(z,name,value):
+    if isinstance(value,Path):
+        z.write(value,name,compress_type=ZIP_STORED if name.lower().endswith(('.jpg','.png','.webp','.mp4')) else ZIP_DEFLATED)
+    else:
+        z.writestr(name,value if isinstance(value,bytes) else value.encode(),compress_type=ZIP_DEFLATED,compresslevel=6)
+def stage_reports(sid):
+    d=CURRENT/('Screen-'+sid);pre='Screen_'+sid+'/Reports/'
+    mapping={'OPENING_MEASUREMENTS.json':d/'opening-metrics.json','MOTION_MEASUREMENTS.json':d/'motion-checks.json'}
+    for name,src in [('ARCHIVED_OPENING_CHECK.json',d/'archive-opening-check.json'),('PADDLE_GEOMETRY_CHECK.json',d/'paddle-geometry-check.json')]:
+        if src.is_file():mapping[name]=src
+    for folder in TRIALS.get(sid,{}):
+        mapping['REJECTED_'+folder.upper().replace('-','_')+'_OPENING_MEASUREMENTS.json']=d/folder/'opening-metrics.json'
+    prov=load(d/'provenance.json');stats={}
+    st=[];fr=[]
+    for label in ['BEFORE','NEW']:
+        poses=load(d/label/'poses.json');ride=load(d/label/'route.json')
+        for p in poses:
+            if 'skip' in p:
+                st.append(dict(variant=label,pose=p['name'],skipped=p['skip']));continue
+            st.append(dict(variant=label,pose=p['name'],stage=p['state']['stage'],position_s=p['state']['s'],steer=p['steer'],shaderTime=p['shaderTime'],camera=p['camera'],hearts=p['state']['hearts'],triangles=p['gl']['triangles'],drawCalls=p['gl']['calls']))
+        for f in ride['frames']:
+            fr.append(dict(variant=label,frame=f['i'],videoSecond=f['time'],shaderTime=f['shaderTime'],stage=f['stage'],position_s=f['s'],lateral=f['lat'],steer=f['steer'],hearts=f['hearts'],score=f['coins'],cameraPosition=f['camera']))
+        suite=load(d/label/'gameplay.json')['checks'];picks=suite['realCoinPickups']
+        stats[label]={'passedAssertions':{n:r['pass'] for n,r in suite.items()},'startingScore':picks['startCoins'],'collectedCoins':picks['collected'],'finishingScore':picks['endCoins'],'standardFullGameHearts':suite['victory']['finalState']['hearts'],'stageRideMinimumHearts':min(f['hearts'] for f in ride['frames'])}
+        if sid=='04':
+            c=load(d/label/'full-safe-ride.json')['success'];stats[label]['additionalFullGame']={k:c[k] for k in ('hearts','coins','score','collisions')}
+    reports={pre+k:v.read_bytes() for k,v in mapping.items()}
+    reports[pre+'CAMERA_POSES.csv']=csvbytes(['variant','pose','stage','position_s','steer','shaderTime','camera','hearts','drawCalls','triangles','skipped'],st)
+    reports[pre+'RIDE_FRAMES.csv']=csvbytes(['variant','frame','videoSecond','shaderTime','stage','position_s','lateral','steer','hearts','score','cameraPosition'],fr)
+    reports[pre+'GAMEPLAY_CHECKS.json']=jsonbytes(stats)
+    reports[pre+'SOURCE.json']=jsonbytes({'retained':prov['base'],'candidateBranch':prov['branch'],'candidateSourceCommit':prov['experimentSource'],
+                                          'evidenceCommit':REFS['codexBranches'][sid]['verifiedCommit'],'approvedReference':prov['referencePath'],'approvedSHA256':prov['referenceSHA256'],
+                                          'retainedSwitches':prov['retainedQuery'],'candidateSwitch':prov['experimentFlag']})
+    if sid=='07':
+        from zipfile import ZipFile
+        with ZipFile(LIB/'Rainbow-S07-Image2Blender-test.zip') as z:reports[pre+'REJECTED_IMAGE2BLENDER_BANK_MEASUREMENTS.json']=z.read('comparison/measurements.json')
+        reports[pre+'REJECTED_ANGLE_ONLY_MEASUREMENTS.json']=(LIB/'Rainbow-Motion-Toolchain/screen-07-paddle/measurements.json').read_bytes()
+    if sid=='05':
+        for r in load(ROOT/'pulled-index.json'):
+            if r['path'].endswith('measure-final.json'):reports[pre+'HISTORICAL_WATER_FIT_MEASUREMENTS.json']=Path(r['file']).read_bytes()
+    return reports
+def t(sec):return '0:'+f'{sec:05.2f}'
+def guide(mode,desc='',screens=IDS):
+    bookmarks=load(ROOT/'bookmarks.json')
+    lines=['# Rainbow visual review','## Start here',desc,
+    'The five folders are Screen_04, Screen_05, Screen_06, Screen_07 and Screen_08. Each number refers to a playable stage in the existing Rainbow Android game. Benny is the pink swimmer in the purple-and-white beanie.',
+    'For an independent review, inspect the artwork, retained ride and candidate at the same stage position. Write down what you see before checking the supplied observations.',
+    '1. In the image package, open the full-screen SCREEN##_APPROVED.jpg. All five are exact copies of the original approved files. Screen 05 also has a separate original water-detail reference.',
+    '2. In Current/, compare SCREEN##_CLAUDIA_OPENING and SCREEN##_CODEX_CANDIDATE_OPENING. Continue with the same FORWARD, HARD_LEFT, HARD_RIGHT, MIDDLE, DEEP, stage-specific feature, FINAL_APPROACH and STAGE_TRANSITION filenames. The FILE_INDEX.csv identifies every source and any identical shared picture.',
+    '3. In the video package, open SCREEN##_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4 and SCREEN##_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4 directly inside the matching screen folder. These are the ten primary clips. Compare the same timestamp in each.',
+    '4. On Android, attach the two master ZIPs in the same conversation when your app accepts them. If the app cannot open a ZIP, extract one small stage batch in your Files app and attach its original artwork and matched screenshots. The download page also offers the individual MP4s. If video playback is unavailable in chat, the named stills and frame logs show the important positions.',
+    '### Suggested message for ChatGPT',PROMPT,
+    '## Labels',
+    '- APPROVED identifies the owner’s original artwork. CLAUDIA RETAINED identifies the latest saved specialist configuration reproduced in the real game. Claudia_Saved includes originals recorded by Claudia, earlier rounds and the separately labeled unfinished Screen 08 glint work.',
+    '- CANDIDATE identifies a Codex experiment awaiting owner review. REJECTED identifies a test ruled out for promotion. No Codex experiment has an owner-confirmed ACCEPTED status. A diagnostic image may hide an object, show a measurement overlay, or show a Blender component on its own. Use Current/ for normal gameplay.',
+    '- The historical Screen 04 ring specialist came from its own branch. Older Screen 05 water studies and earlier Screen 07 bank and paddle trials have their own labels. A prior default capture in a historical study belongs to that study’s source checkpoint.',
+    '## Screens and verified GitHub checkpoints',
+    'The repository is josiahscalia5-dev/rainbow-. Its live branch tips were checked at '+datetime.fromtimestamp((ROOT/'remote-heads.txt').stat().st_mtime,timezone.utc).strftime('%Y-%m-%d %H:%M UTC')+'. Each source commit identifies the game revision rendered. Each evidence commit identifies the saved comparisons. For an older capture, FILE_INDEX.csv records the checkpoint at the time of capture.']
+    for sid in screens:
+        prov=load(CURRENT/('Screen-'+sid)/'provenance.json');measure=load(CURRENT/('Screen-'+sid)/'opening-metrics.json')
+        base=prov['base'];tip=REFS['codexBranches'][sid]['verifiedCommit'];trial=prov['experimentSource']
+        lines.extend([f'### Screen {sid} · {TITLES[sid]}',WORDS[sid][0],WORDS[sid][1],
+            f"Claudia’s retained branch is `{base['branch']}` at `{base['commit']}`. [GitHub checkpoint]({GITHUB}/commit/{base['commit']})",
+            f"The candidate is on `{prov['branch']}`. Its source commit is `{trial}`. Its saved evidence commit is `{tip}`. [GitHub evidence]({GITHUB}/commit/{tip})",
+            f"Opening RGB agreement was {measure['approvedVsBefore']['within20Percent']:.4f}% for Claudia and {measure['approvedVsCandidate']['within20Percent']:.4f}% for the candidate. Pixelmatch found {measure['approvedVsBefore']['pixelmatchMismatches']:,} and {measure['approvedVsCandidate']['pixelmatchMismatches']:,} mismatches respectively."])
+        for folder,why in TRIALS.get(sid,{}).items():
+            import re
+            text=(CURRENT/('Screen-'+sid)/folder/'README.md').read_text()
+            source=re.findall(r'\b[a-f0-9]{40}\b',text)[-1]
+            lines.append(f'Rejected on the same candidate branch. {why} Source `{source}`. [GitHub revision]({GITHUB}/commit/{source})')
+    lines.extend(['## Video timestamps','Times are measured from the first frame in each primary MP4. Each window was located in the 12 fps ride log by along-course position and checked against the saved footage. A hard-steer still uses an independent input at the named position. The continuous ride uses its recorded steering there.'])
+    for sid in screens:
+        lines.append(f'### {sid} · {TITLES[sid]}')
+        for r in bookmarks[sid]:
+            lines.append(f"- **{t(r['t1'])}–{t(r['t2'])}**, frames {r['first']}–{r['last']}. {r['note']}")
+    lines.extend(['### Supporting recordings','Claudia’s separate 432 × 768 specialist clips are 3.58 seconds long at 24 fps. On 04, inspect the gold band at about 0–1 seconds and the stage change around 2 seconds. On 06, inspect the ring stack and foam over roughly 1–2.5 seconds. On 07, inspect the white banks and river lip at about 1–3 seconds. These clips have their own steering, score and wall bumps. The 07 historical angular-material test has two 3.25-second steering segments. Watch their paddle and banks around 1–2.5 seconds. Their endpoints are the recorded segment endpoints.',
+    '## Camera, gameplay and measurements',
+    'The photographed opening is the single exact design viewpoint for each stage. Native current stills are 864 × 1536 pixels, DPR 1, with matched camera transform, position, steering and shader clock. Opening, entrance and the first frame of the ride are different positions. CAMERA_POSES.csv gives the actual values.',
+    'The primary clips replay the retained real Three.js renderer using the saved fixed-step ride. The CSS viewport remains 324 × 576, the drawing buffer is 648 × 1152, and the stream is H.264 at 12 fps. There are five 1/60-second game steps per recorded frame. Every frame was checked against its original ride for course position, lateral movement, steering, camera, shader clock, hearts and score. The original 324 × 576 recordings are also packaged. Higher physical pixel density changes antialiasing and texture sampling. The GitHub evidence commits identify the saved original rides and images. The high-detail MP4s are fresh exports from those revisions for these packages. Their SHA-256 values are in HD_REPLAY_VERIFICATION.json. That file’s correlation statistic compares two recordings of the same game. OPENING_MEASUREMENTS.json contains the comparison to your original artwork. The higher-detail exports have no separate GitHub commit.',
+    'RGB agreement counts the whole-frame fraction with mean absolute RGB error at most 20 on a 0–255 scale. Pixelmatch 7.1.0 uses threshold 0.1 with antialias mismatches excluded. The reports measure the original source pixels, including Benny and the HUD. Full-size review JPEGs can change individual channel values. For pixel-level work use the standalone native-image ZIP parts.',
+    'Use visual judgment for unpictured moving viewpoints. The reference establishes materials, shapes and composition at its photographed viewpoint. The camera beyond that viewpoint and hidden surfaces require interpretation. An exact reference percentage for the unseen route is unavailable.',
+    'Both retained and candidate builds passed eight gameplay assertions, collected 91 coins, and advanced the full-game score from 1,330 to 2,240. All ten primary stage rides retained five hearts, and all five saved across-transition images matched their baseline exactly. Screen 04’s ordinary full-game coin run lost one heart in both builds. A separate full-game safe route collected 91 and finished at 2,240 with five hearts in each. Screen 08’s separate full-steer collision stills cost one heart in both versions.',
+    '## Historical sources and limits',
+    f"The verified lead is `{REFS['protectedBranches']['lead']['branch']}` at `{REFS['protectedBranches']['lead']['commit']}`. The separate Screen 04 ring specialist is `{REFS['protectedBranches']['04r']['branch']}` at `{REFS['protectedBranches']['04r']['commit']}`.",
+    f"Screen 07’s rejected Image2Blender bank and foam experiment is `codex/s07-magenta-bank-shape` at `{HEAD['codex/s07-magenta-bank-shape']}`. Forward travel widened the banks. Both hard turns crowded the cyan channel. Blender-only images show isolated geometry. The earlier angle-only paddle result came from a disposable in-memory test based on Claudia’s 07 commit. It has saved matched evidence and no separate GitHub implementation commit. The later fitted-paddle candidate is a different result.",
+    'The November 16 Screen 05 historical studies precede Account 17. The reference-fit report identifies the earlier water-reference study as rejected. The later fit and earlier opt-in liquid result have no recorded owner acceptance. The glow study’s CHOSEN label means selected during that tuning run. Its alternative settings are diagnostics. The FILE_INDEX.csv gives the individual captured source paths.',
+    *[f"- `{br}` at `{HEAD[br]}`. [GitHub revision]({GITHUB}/commit/{HEAD[br]})" for br in ['codex/screen05-water-experiment-20261116','codex/screen05-water-hfb8p0-20261116','codex/screen05-approved-water-study-20261116','codex/screen05-reference-fit-20261116']],
+    'The frame at +20 from Screen 08’s approved opening lands outside Stage 08. Use its last in-stage and outgoing frames. Each stage was recorded from its own verified specialist checkpoint. Its outgoing frame shows the destination scene available on that branch. There is no merged five-candidate build in this evidence.',
+    'The 12 fps video sampling can miss a flash shorter than a sampled interval. GPU and gameplay checks were run in desktop Chromium with SwiftShader. Sustained performance on a physical Android phone remains unmeasured. The packages cover playable Screens 04–08. Google Flow video scenes, credentials, recovery backups, development dependencies and model binaries are outside the visual collection.',
+    '## Measurement files','Each screen’s Reports/ directory contains original opening metrics, full-stage motion measurements, camera and ride CSVs, source revisions and gameplay assertions. Relevant rejected-opening and historical fit measurements appear under the same Reports/ folder. SHA256SUMS.txt covers the files actually contained in each ZIP.'])
+    if mode in ('images','videos','mobile'):
+        plan='## Per-screen repair plan\n\n'+(ROOT/'repair-plan.md').read_text().split('\n',1)[1].lstrip()
+        lines.append(plan)
+    return '\n\n'.join(lines)+'\n'

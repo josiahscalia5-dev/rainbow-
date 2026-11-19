@@ -1,0 +1,32 @@
+from pathlib import Path
+from PIL import Image,ImageDraw
+import numpy as np,json,sys
+from analyze import decode_video
+v=Path.cwd();sid=sys.argv[1];mode=sys.argv[2]
+b=v/'proof'/sid/'BEFORE';n=v/'proof'/sid/'NEW'
+version={'06':'altproof','07':'wallproof','05':'fitproof'}.get(sid)
+if version and (v/version/'proof'/sid/'NEW/poses.json').is_file():
+ n=v/version/'proof'/sid/'NEW'
+vis=v/'review';vis.mkdir(exist_ok=True)
+def grid(pairs,w=123,h=218):
+ out=Image.new('RGB',(len(pairs)*w,2*(h+17)),'#171522');draw=ImageDraw.Draw(out)
+ for i,(title,imgs) in enumerate(pairs):
+  for j,img in enumerate(imgs):
+   out.paste(img.convert('RGB').resize((w,h),Image.Resampling.LANCZOS),(i*w,j*(h+17)+17))
+   draw.text((i*w+1,j*(h+17)+1),('BEF ' if j==0 else 'NEW ')+title,fill='white')
+ return out
+if mode=='poses':
+ poses=json.loads((b/'poses.json').read_text());pairs=[]
+ for p in poses:
+  name=p['name'];files=[d/(name+'.png') for d in (b,n)]
+  if all(f.exists() for f in files):pairs.append((name,[Image.open(f) for f in files]))
+ for i in range(0,len(pairs),7):grid(pairs[i:i+7]).save(vis/(sid+'-poses-'+str(i//7)+'.jpg'),quality=92)
+ print('Native pairs inspected',sid,[p[0] for p in pairs])
+else:
+ frames=[decode_video(d/'ride.mp4') for d in (b,n)]
+ rows=json.loads((b/'route.json').read_text())['frames']
+ inds=np.linspace(0,len(rows)-1,min(19,len(rows)),dtype=int).tolist()
+ for i in range(0,len(inds),7):
+  inds2=inds[i:i+7];pairs=[(str(index)+' '+str(round(rows[index]['s'],1)),[Image.fromarray(f[index]) for f in frames]) for index in inds2]
+  grid(pairs,105,187).save(vis/(sid+'-clip-'+str(i//7)+'.jpg'),quality=91)
+ print('Clip ingress, steering and transition',sid,inds)
