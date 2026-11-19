@@ -603,8 +603,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4000,
-   "sha256": "e3edfa83ac35ef88a5ec7e555a686b91f47746e574c9b28a8187e7c2bf93ec5a"
+   "bytes": 3801,
+   "sha256": "befd0b1a45016b9fea2c3080bc92a1cf8412e7cab46fba0f16ea03da42c03df8"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 19339,
-   "sha256": "abf5a004dec025c06931261dd43620a9f4c9c651c235612bccf1671b9e4f920d"
+   "bytes": 19347,
+   "sha256": "191b4faae592b319a3e0a805cf2d8c84aaf8675dcd2e5474c6df4b49a7efaeb8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 10145,
-   "sha256": "79b4dee3b04f723a6edc8222879997bd2d55a4baab61af88601f21932fcf5057"
+   "bytes": 10231,
+   "sha256": "d6a79156be072270e350be7e126449460bdd07c513beed4d487dc41db976e0a5"
   },
   {
    "path": "backups/claude-config/2026-11-18-account12/README.md",
@@ -2805,6 +2805,11 @@
    "path": "docs/briefs/2026-11-19-r19/setup_worker.sh",
    "bytes": 2191,
    "sha256": "8a348771b307f46971251ffe890307ae9d1d9e4ce0bb891754a1a34541d24a00"
+  },
+  {
+   "path": "docs/briefs/2026-11-19-r20/setup_worker.sh",
+   "bytes": 2220,
+   "sha256": "6d6dc6b953f63842dc47c53ec9c29d7c463f45f0894640d3339ca8efec5a96fb"
   },
   {
    "path": "docs/characters/benny.md",
