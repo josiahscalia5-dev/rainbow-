@@ -405,3 +405,93 @@ All four connectors answer: World Labs Marble, GitHub, Hugging Face and Playwrig
 > MATCH
 > AUTOSAVE OK | branch ccr-d00ac5ec-gabdsh | scheduler daemon | last verified backup 2026-11-19T19:22:32+00:00 (0.2 min ago) | local 9c5886f remote 9c5886f (match) | uncommitted 0
 
+### 🤖 Claude — 2026-11-19T19:22:46.200Z
+
+Backup saved and verified. One last item: what the World Labs "worlds 404" warning means.
+
+### 🤖 Claude — 2026-11-19T19:22:47.201Z
+
+> 🔧 **Grep** `{"pattern": "404", "path": "/home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "output_mode": "content", "head_limit": 8}`
+
+### 🧑 User — 2026-11-19T19:22:47.245Z
+
+> ↩︎ result: 174:world 32b5b2f4 → 404 with this key; its files are in Git LFS). fal.ai = the same purchased account (request 01a1ea70 →
+> 199:worlds now 404, outputs in Git LFS); fal.ai reconnected (request 01a1ea70 → COMPLETED); Marble CDN reachable; Atlas
+> 216:still blocked (the allowlist request was denied at the prompt); APK builds still fail on intermittent Maven Central 404s
+> 234:  05 pilot worlds 404). fal.ai = the SAME paid account (request `01a1ea70` → COMPLETED). No paid job started.
+> 288:  404). Account 4's key (5,420 credits, Screen 08 world) is NOT on this environment. fal.ai: RECONNECTED 20:40 UTC by the user via the secure form (host `queue.fal.run`, `Authorization: Key …`); free read of request `01a1ea70` → 200 COMPLETED = the SAME fal account. (Before that: no key
+> 301:  APK builds blocked in this environment (Maven Central 429 / 404).
+> 313:* APKs cannot be built in this environment right now (Maven Central 429 / 404 through the network proxy).
+> 317:stretch) + 3 more beyond s 418.5; the ending video starts at s 404.37 (start of 09). So Benny swims through 2 and the
+> 
+> [Showing results with pagination = limit: 8]
+
+### 🤖 Claude — 2026-11-19T19:22:53.532Z
+
+> 🔧 **Bash** `{"command": "grep -rhoE \"queue\\.fal\\.run/[A-Za-z0-9/_.-]*01a1ea70[A-Za-z0-9-]*[A-Za-z0-9/_-]*\" docs backups scripts 2>/dev/null | sort -u | head -3; grep -rhoE \"01a1ea70-[0-9a-f-]{20,}\" docs backups qa 2>/dev/null | sort -u | head -2; grep -n \"fal\" scripts/verify-assets.py | head -5", "description": "Find saved fal request ID for free read"}`
+
+### 🧑 User — 2026-11-19T19:22:55.570Z
+
+> ↩︎ result: queue.fal.run/fal-ai/flux/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status
+> queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872
+> queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status
+> 01a1ea70-42d8-7943-b035-7bb5f129d872
+
+### 🤖 Claude — 2026-11-19T19:22:58.697Z
+
+> 🔧 **Bash** `{"command": "curl -sS -o /dev/null -w \"HTTP %{http_code}\\n\" --max-time 30 \"https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status\"; curl -sS --max-time 30 \"https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status\" | python3 -c \"import json,sys;print(json.load(sys.stdin).get('status'))\"", "description": "Free status read of saved fal request"}`
+
+### 🧑 User — 2026-11-19T19:22:59.098Z
+
+> ↩︎ result: HTTP 200
+> COMPLETED
+
+### 🤖 Claude — 2026-11-19T19:23:07.853Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/b0wu1dswl.output"}`
+
+### 🧑 User — 2026-11-19T19:23:07.877Z
+
+> ↩︎ result: <system-reminder>Warning: the file exists but the contents are empty.</system-reminder>
+
+### 🤖 Claude — 2026-11-19T19:23:26.079Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Everything is connected and working on this new session, and your work is safe on GitHub. One startup check failed and is now fixed (details below).
+
+**Backup**
+- **Branch:** `ccr-d00ac5ec-gabdsh`, at commit `9c5886f48be8e8207994f52b36d20324fe5c2778`.
+- **GitHub match:** the copy on GitHub has exactly the same commit as here.
+- **Large files (Git LFS):** all 76 are real files here, and all 76 (542 MB) are confirmed on GitHub, including the 17 Marble World Labs files.
+- **Approved pictures:** all 13 are unchanged, including the cartoon-girl reference.
+- **Five-minute autosave:** running.
+- **Nothing lost from the last session:** it saved once more at 19:04, after this session had started. That save holds only backup records (logs and timestamps), no game work, so I didn't merge it.
+
+**Connectors**
+- **World Labs Marble:** your key works and you have 5,420 credits. The Marble tool lists your project "My project" with credits available. I started no paid jobs.
+- **fal.ai:** connected to the same paid account as before.
+- **GitHub, Hugging Face and Playwright (the browser tool):** all answering.
+- **Tools:** Blender 5.3.0, the Android build kit, the browser with 3D (WebGL) support, ffmpeg and ImageMagick are all ready. The code check and the screen-to-screen continuity test passed.
+
+**Specialists and workers**
+- All 10 specialist agents are present and unchanged.
+- The Round 18 workers ran inside the previous session, so they did not carry over and are not running now. This is true for every new session. All their work is saved on GitHub:
+  - **Screen 04 rings:** saved, including your approved combined 04 preview.
+  - **Screen 04 foam, swirls and near water:** saved.
+  - **Screen 05:** saved.
+  - **Screen 06 and Screen 07:** saved; both were already stopped when their usage limit ran out.
+- Each worker's unfinished edits were also saved at 19:05.
+- Screen 08 is still paused, as you asked.
+
+**What failed or can't carry over**
+- **GitHub fetch at startup:** it failed when the session opened. GitHub works fine now: the backup and every worker branch check out. Downloading all branches at once is just slow (over 6 minutes), so it's finishing in the background. It only downloads and never merges anything.
+- **Old Marble worlds:** this key can't see the two earlier worlds because they were made under a previous account. Their files are all saved in Git LFS, so nothing is missing, and it isn't a key problem.
+- **Context7:** this plugin (it looks up programming documentation) needs a sign-in in your claude.ai connector settings. The game work doesn't use it.
+
+To resume, I'd relaunch two workers at once (your limit): Screen 04 (the newer 04 preview) and Screen 05 (the left-wall smear), each continuing from where it stopped. Tell me which screens you want, or a different order.
+
+### 🧑 User — 2026-11-19T19:23:30.661Z
+
+and then continue on where we're at in the chat. You can see in the chat history the last thing where we're at before my other Claude Code credits.
+
