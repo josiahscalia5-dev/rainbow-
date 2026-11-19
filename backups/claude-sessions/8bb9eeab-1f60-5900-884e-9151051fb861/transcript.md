@@ -803,3 +803,39 @@ Handoff notes for round 18 are written. Saving, then relaunching the five Screen
 
 > 🔧 **Bash** `{"command": "timeout 200 python3 scripts/rainbow-autosave.py --reason manual:r18-workers-launched 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified'; echo \"HEAD $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/ccr-ae71d3a5-80naq2 | cut -f1)\"; git lfs ls-files 2>/dev/null | wc -l", "description": "Save and verify remote SHA equals HEAD", "timeout": 240000}`
 
+### 🧑 User — 2026-11-19T02:28:54.501Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "ec760de8aa2b352580c79076179c4f2991fd57ac",
+> HEAD ec760de8aa2b352580c79076179c4f2991fd57ac
+> REMOTE ec760de8aa2b352580c79076179c4f2991fd57ac
+> 71
+
+### 🤖 Claude — 2026-11-19T02:29:13.883Z
+
+I've picked up where last night's session stopped. Workers on Screens 04, 05, 06 and 07 are running again, and Screen 08 is still paused as you asked.
+
+I'm not giving you the full "RAINBOW 3D BACKUP VERIFIED" line, because one start-up check failed:
+- **Download step failed:** the start-up script tries to download all ~140 GitHub branches at once and ran out of time. That has happened before and nothing was broken by it. I downloaded the branches we need one at a time instead, and that worked.
+- **Gap in backups:** none were made from 21:11 UTC last night to 02:15 UTC today (5.1 h), because no session was open. The last session also closed without its normal end-of-session save. Nothing was lost: the 21:11 save already held every worker's unfinished edits, and I restored them.
+
+**Backup status**
+- **GitHub branch:** `ccr-ae71d3a5-80naq2`, commit `ec760de8aa2b352580c79076179c4f2991fd57ac`. GitHub reports the same commit as this workspace.
+- **Large files (Git LFS):** all 70 are real files here and confirmed on GitHub. Your 13 approved pictures are unchanged.
+- **Five-minute autosave:** running on this branch, last save checked against GitHub.
+- **Marble / World Labs:** the key works and you have 5,420 credits. The Atlas connector and the World Labs plugin are both working. Your saved Marble world files are all here, but looking those worlds up online returns "not found", as before. No paid jobs were started.
+- **fal:** key accepted.
+- **Tools:** Blender 5.3.0, the Android build tools, the browser used for screenshots and the game's own tests all passed.
+- **Specialists:** all 10 are unchanged.
+- **Not carried over:** the old session's running workers (relaunched from their saved edits) and some large test pictures that were never saved (they'll be redrawn).
+
+**Working now (visuals only; each result comes as separate full-size APPROVED / BEFORE / NEW pictures)**
+- **04 rings:** brighter, more polished gold rings with the soft pink-violet shine, plus violet and pink water reflections on the lower walls.
+- **04 water:** the painted pink and cyan bands sweeping around Benny in the water just in front of him. It currently looks plain cyan.
+- **05:** the smeared, streaky left wall, the cut-off piece of gold ring and the pink smear in the bottom-left corner, to become the painted crisp purple slotted wall with glossy gold bands.
+- **06:** removing the brief flash just after the start: see-through ring pieces, a striped strip above the wave crest and a pale ghost of the painted Benny on the water. Ripple rings and walls come after.
+- **07:** fixing the white foam walls that restart partway down the drop with a visible cut, then the flat foam sheet in the lower-left corner.
+
+I'll show you each improvement as it's finished.
+

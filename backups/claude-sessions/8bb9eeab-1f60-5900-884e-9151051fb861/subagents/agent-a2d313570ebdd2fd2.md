@@ -369,3 +369,116 @@ I'll start by reading the resume brief and my previous progress notes.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:28:44.500Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"tgtwall05\\|m05wtile\\|tgtfill05\\|tgtvis05\\|m05far\\b\\|'m05far'\" src --include=*.ts | head -40; wc -l src/vfx/*.ts src/world/*.ts | sort -n | tail -20", "description": "Locate wall-related switches in source"}`
+
+### 🧑 User — 2026-11-19T02:28:44.563Z
+
+> ↩︎ result: src/world/match05far.ts:2: * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+> src/world/match05far.ts:18: * Default build and `?match05=1` without `m05far`: this file is never called (environment.ts keeps `openFor`).
+> src/world/match05far.ts:29:export const M05FAR: boolean = MATCH05 && flag05('m05far');
+> src/world/match05far.ts:31: * `&m05end=1` (Screen 05 round 11, needs m05far): the last part of the stage (t ≈ 0.88 … 0.96, Benny ≈ 182 … 186.5)
+> src/world/match05far.ts:53: * `&m05fcoin=1` (Screen 05 round 12, needs m05far; src/gameplay/coins.ts): coin LOOK only. Past the far seam the real
+> src/world/environment.ts:18:import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+> src/world/environment.ts:19:import { withClip05Std, m05farPre } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
+> src/world/environment.ts:632:    // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored
+> src/vfx/index.ts:75:  // `?match05=1&m05far=1&m05edge=1` (Screen 05 round …[+4622 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:47.996Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,140p src/vfx/proj05Tunnel.ts", "description": "Read proj05Tunnel.ts part 1"}`
+
+### 🧑 User — 2026-11-19T02:28:48.028Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection tests for the TUNNEL (2026-11-16, qa/pilot05/proj/tunnel/NOTES.md), same method as the water
+>  * (`?proj05=1`): the user's APPROVED Screen 05 picture, unwrapped into the tunnel's own coordinates and baked into
+>  * textures (tools/proj05/tunnel_rings.py + tunnel_bake.py → assets/textures/tunnel05/), so the design is anchored to the
+>  * 3D tunnel, not pasted over the screen.
+>  *   `?projwall05=1`  the purple metal WALLS: one texture row per wall bay between two gold rings (AB, BC, CD … as the
+>  *                    approved picture shows them from the locked 05 camera); u = angle round the tube, v = depth within
+>  *                    the bay. Bays the picture does not show (in front of ring A, behind the camera) repeat the AB row.
+>  *   `?projring05=1`  the gold RINGS: the band of the approved ring B unwrapped (u = angle round the ring, v = how far the
+>  *                    band stands out of the wall), on every 05 ring; the existing far glow still melts the far rings
+>  *                    into the warm throat.
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure) so the screen shows the approved
+>  * colours; bloom is measured and fed b …[+7236 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:51.200Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,140p src/world/match05far.ts", "description": "Read match05far.ts header and logic"}`
+
+### 🧑 User — 2026-11-19T02:28:51.239Z
+
+> ↩︎ result: /**
+>  * `?match05=1&m05far=1` — Screen 05 round 7 (line B, qa/match/05/NOTES.md "Round 7"): the far forced-perspective tunnel
+>  * of Screen 05 (environment.ts `// ---- 05 far tunnel`, tube.ts ForcedTunnel) recalibrated to the LIVE camera every
+>  * frame instead of folding away.
+>  *
+>  * Why: the far block (rings C … G, the far S-river, the warm throat) is a depth compression along the eye rays of the
+>  * LOCKED checkpoint eye. From ≈34 u before its seam (sF05) it folded away (`openFor`), so from ≈20 u into the stage the
+>  * camera saw the far rings / river morphing out and the 06 arch hall behind them — the "old pink default world" of
+>  * the lead's audit (t66 / t95 frames). The compression is exact for ANY eye position once its two eye-dependent
+>  * constants (D0 = eye depth of the seam, q = eye offset from the axis) follow the eye, so under this switch:
+>  *   * the VIRTUAL tunnel (virtual depth Z beyond sF05, tunnel coordinate v = sF05 + u(Z)) stays put — rings, wall rows,
+>  *     the baked far water F and the far river layout are anchored to it, so everything approaches like real geometry;
+>  *   * the seam slides ahead of the eye so it never comes nearer than the locked view had it (D0lock ≈ …[+7521 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:56.814Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,80p tools/match05/r15_probe.mjs; git log --oneline -12", "description": "Read r15 layer probe tool and recent history"}`
+
+### 🧑 User — 2026-11-19T02:28:56.850Z
+
+> ↩︎ result: // Screen 05 round 15: layer probe through the 05 -> 06 hand-over (read-only). Same stepping as r8_shots.mjs; at each
+> // position runs window.__rainbow.probe on a grid (optionally after PRE_JS) and prints the first hits + camera / far state.
+> //   node tools/match05/r15_probe.mjs "<query>" x97,t98 [port]
+> import { pathToFileURL } from 'node:url';
+> import { realpathSync } from 'node:fs';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [Q = '', ONLY = 'x97', PORT = '5275'] = process.argv.slice(2);
+> const PRE = process.env.PRE_JS || '';
+> const EXTRA = process.env.EXTRA_JS || ''; // async expression evaluated after the render (printed)
+> const GRID = (process.env.GRID || '0,0.6;0,0.3;0,0;0,-0.3;0,-0.6;-0.6,0.3;0.6,0.3;-0.8,-0.3;0.8,-0.3;-0.6,0.7;0.6,0.7').split(';').map((p) => p.split(',').map(Number));
+> const { chromium } = loadPlaywright();
+> const { createServer } = await import('vite');
+> const server = await createServer({ server: { port: Number(PORT), strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] }, fs: { allow: [process.cwd(), realpathSync(`${process.cwd()}/node_modules`)] } }, logLevel:  …[+2548 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:59.286Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,200p tools/match05/r8_shots.mjs", "description": "Read the shot capture tool"}`
+
+### 🧑 User — 2026-11-19T02:28:59.319Z
+
+> ↩︎ result: // Screen 05 round 8: the lead's motion_audit (tools/lead_r6/motion_audit.mjs) with a shot filter + per-shot probes
+> // (coin screen sizes, Benny's screen box). Same shot list / same simulation stepping as the audit, so a shot taken here
+> // equals the audit frame of the same name. Run from the checkout:
+> //   node tools/match05/r8_shots.mjs <outDir> "<query>" [name,name,...|all] [port]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> import { realpathSync, mkdirSync as mk, rmSync, readFileSync } from 'node:fs';
+> // own dev server: node_modules is a symlink into the lead checkout in this worktree, so Vite's default fs allow list
+> // refused the HUD font (fallback font in the HUD). Same render-slot protocol as scripts/lib/pw.mjs.
+> async function startVite(port) {
+>   const slots = Math.max(1, Number(process.env.RAINBOW_RENDER_SLOTS ?? 2));
+>   const alive = (pid) => { try { process.kill(pid, 0); return true; } catch { return false; } };
+>   let free = () => {};
+>   const t0 = Date.now();
+>   outer: for (;;) {
+>     for (let i = 0; i < slots; i …[+4934 chars]
+
+### 🤖 Claude — 2026-11-19T02:29:00.175Z
+
+Let me commit the restored kept-set file and start the r18 log first.
+
+### 🤖 Claude — 2026-11-19T02:29:08.679Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && mkdir -p qa/match/05/r18 && cp qa/match/05/r17/KEPT_STEP1.txt qa/match/05/r18/KEPT_START.txt && cat > qa/match/05/r18/PROGRESS.md <<'EOF'\n# Screen 05 — round 18 (account 18) progress log\n\nWorker: water-fx-specialist on branch `claude/rainbow-s05-match-c18` (worktree `/home/user/wt/s05`, dev-server port 5275).\nStarted from `f033f7cc` (= r17 step 1 `&m05trans=1`, kept). No unfinished code was left.\nBinding: `docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md` (VISUALS ONLY), `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`,\nlaunch brief `docs/brief …[+1609 chars]`
+
+### 🧑 User — 2026-11-19T02:29:11.637Z
+
+> ↩︎ result: 31a61b9
+> 31a61b906090f614b0606299902714d4b8d7cb6c	refs/heads/claude/rainbow-s05-match-c18
+

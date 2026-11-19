@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18380,
-   "sha256": "e41b9bcc69dec17fe2e7671485239989a0ea01fbd73f7616a613ff212a81c66d"
+   "sha256": "516ca154c82b1ba75f95fe609f0d16be330017abc9e04c8d1295ebe83003341e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1099,7 +1099,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/INFO.json",
    "bytes": 1179,
-   "sha256": "6a6d74976aa6d59bed86a7166c9caaf9e55ac9c22696fbd9c8571ed7b0cfabea"
+   "sha256": "0876930cebb96ed01c5faf4188c1e03c00d5a59112a3aa0bbd068a0d257503b2"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c18/tracked.patch",
@@ -1239,8 +1239,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c18/INFO.json",
-   "bytes": 701,
-   "sha256": "1130c308681aeb76f7efc51fc3623aeafb153dee0834764c1598abe951e3a3bb"
+   "bytes": 765,
+   "sha256": "ca7367f7fb888f6a3742457de32f00bdb19e2b1ed51997cb2ae4efec28fd52ca"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c18/tracked.patch",
@@ -1605,7 +1605,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/INFO.json",
    "bytes": 514,
-   "sha256": "e2436093671260f8cf0528bc49c75c693a7a280c2639f69e19c199010d43678f"
+   "sha256": "826e72ad4ffde371913ebcfb9f1e530bd50d7e5a6fd145208825c1e406156bfa"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c18/untracked/qa/match/05/r17/KEPT_STEP1.txt",
@@ -1655,7 +1655,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c18/INFO.json",
    "bytes": 477,
-   "sha256": "e821ffaba72d730d74a95a918ada2823660de334466cee9cb82f65c57cc6d5ba"
+   "sha256": "73902aeea33f810f7a661add3338d62e5c2a036cd94ab991e2205b42ab523b34"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -1790,7 +1790,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/INFO.json",
    "bytes": 1069,
-   "sha256": "a538c4de0e68279c86be3d75f957c12c1ca9a54f07ff5e167570783764372fb0"
+   "sha256": "5f0cbaabf603bae5c63a060484e998b9b050da17eeddfdb130fcd222f67f4c6a"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c18/tracked.patch",

@@ -265,3 +265,232 @@ Now let me look at the approved picture and the step-3 stills.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:28:43.710Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/try_ramp5/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:28:43.767Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:28:44.221Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r17/step3_foamb/try_ramp8/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:28:44.284Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:28:50.846Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"07_plunge_top\\|07_plunge_bottom\\|marks\\['08'\\]\\|marks\\[.08.\\]\" -r src | head -40; grep -n \"marks\" src/world/course.ts | head -30", "description": "Find course marks for the 07 plunge and 08 start"}`
+
+### 🧑 User — 2026-11-19T02:28:50.890Z
+
+> ↩︎ result: src/world/environment.ts:695:    tubeAxis: { path: perfPath, s0: s05, s1: course.marks['07_plunge_top'] },
+> src/world/course.ts:302:  mark('07_plunge_top');
+> src/world/course.ts:323:  mark('07_plunge_bottom');
+> src/world/course.ts:639:    if (s > c.marks['07_plunge_top'] && s < c.marks['08']) minPitch = Math.min(minPitch, THREE.MathUtils.radToDeg(Math.asin(cur.tan.y)));
+> src/world/course.ts:643:  const top = c.marks['07_plunge_top'];
+> src/world/course.ts:644:  const bottom = c.marks['07_plunge_bottom'];
+> src/world/course.ts:646:  const inlet = c.marks['08'];
+> src/vfx/foam.ts:563:  return [course.marks['07_plunge_top'] + 9, r !== null ? r - 5 : course.marks['07_plunge_bottom'] - 12];
+> src/vfx/foam.ts:568:  return course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4;
+> src/vfx/waterRibbon.ts:231:  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;
+> src/vfx/waterRibbon.ts:232:  return [course.marks['07_plunge_top'] + 9, end];
+> src/vfx/waterRibbon.ts:256:  const pt = course.marks['07_plunge_top'], pb = course.marks['07_plunge_bottom'];
+> src/game/cameraRig.ts:122:      const sTop = this.course.marks['07_plunge_to …[+2075 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:53.974Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"plunge_top\\|plunge_bottom\" qa/match/07/*.md qa/match/07/r1*/PROGRESS.md 2>/dev/null | head -20; ls qa/match/07/; ls tools/match07 tools/lead_r6 tools/lead_r13 2>/dev/null", "description": "Look up plunge mark values and tool folders"}`
+
+### 🧑 User — 2026-11-19T02:28:54.065Z
+
+> ↩︎ result: qa/match/07/NOTES.md:85:  `course.sample` every 0.4 u from `07_plunge_top − 4` to `07_plunge_bottom`; centre = path + up·3.10 (+ an offset that
+> qa/match/07/STATUS.md:10:  (s plunge_top+9 → plunge_bottom−12, dithered 3 u at both ends) the game's tall white lather walls (berm + puffs) and the
+> 07_APPROVED.png
+> 07_BEFORE_current_game.png
+> 07_NEW_match07.png
+> FAL_PLATE_REQUEST.md
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> cam
+> geo_match07.json
+> m1
+> m2
+> m2r4
+> m3
+> metrics_BEFORE_NEW.json
+> r15
+> r16
+> r17
+> r7
+> r8
+> rings
+> tools/lead_r13:
+> swim_clip.mjs
+> 
+> tools/lead_r6:
+> motion_audit.mjs
+> motion_metrics.py
+> 
+> tools/match07:
+> audit_r15.mjs
+> audit_r16.mjs
+> axis07.py
+> coinprobe07.mjs
+> diff0px_r7.py
+> fit_proxies07.py
+> lock_projector07.py
+> make_plate07.py
+> metrics07.py
+> motion07.mjs
+> near_tiles_r15.py
+> near_tiles_r16.py
+> plunge_audit_r8.mjs
+> probe07.mjs
+> probe_r7.mjs
+> proof0px_r7.mjs
+> river_coins07.py
+> river_iter07.py
+> solve_cam07.py
+> straighten_wall07.py
+> swim_clip_half.mjs
+
+### 🤖 Claude — 2026-11-19T02:28:55.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,60p qa/match/07/STATUS.md; cat qa/match/07/r16/PROGRESS.md | head -120", "description": "Read 07 STATUS and r16 progress"}`
+
+### 🧑 User — 2026-11-19T02:28:55.687Z
+
+> ↩︎ result: # Screen 07 · DIVE THE WASHER TUBE — status (round 8 / account 8, 2026-11-18 ~01:50 UTC)
+> 
+> Branch `claude/rainbow-s07-match-c8`, started from `3afaa7e9` (= `claude/rainbow-s07-match-c7` tip, M3 done). Nothing is
+> approved until the user says so. **State: WORK IN PROGRESS, paused by the lead (user order: 07 resumes in the next free
+> specialist slot).**
+> 
+> ## Round 8 so far (lead, two look-only switches on top of the M3 kept set K)
+> K = `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1`
+> * `&m07foam=1` (NEW, `src/vfx/foam.ts` + `src/vfx/waterRibbon.ts`, `#ifdef HIDE07` / `HIDE07R`): down the plunge
+>   (s plunge_top+9 → plunge_bottom−12, dithered 3 u at both ends) the game's tall white lather walls (berm + puffs) and the
+>   lifted white outer edges of the game's water sheet step aside, so the matched tube's river tile with its painted
+>   pink/cyan banks and soft blue foam shows instead. Visual verdict: **clearly closer at t50 / t66 / t80**
+>   (`r8/plunge_K/` vs `r8/plunge_foam2/`); t33 unchanged (animation timing only); t95 = the 08 inlet (unchanged, 08 owns it).
+> * `&m07coinsz=1` (existed since the 00:52 autosave, untested before): coins sized against the live ca …[+9831 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:58.495Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && ls qa/match/07/r16/step1/NEW qa/match/07/r16/step1/BEFORE; cat tools/match07/audit_r16.mjs | head -80", "description": "List r16 step1 shots and read audit tool"}`
+
+### 🧑 User — 2026-11-19T02:28:58.537Z
+
+> ↩︎ result: qa/match/07/r16/step1/BEFORE:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t50_through_screen.png
+> t66_through_screen.png
+> t80_through_screen.png
+> t95_through_screen.png
+> 
+> qa/match/07/r16/step1/NEW:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t50_through_screen.png
+> t66_through_screen.png
+> t80_through_screen.png
+> t95_through_screen.png
+> // r16: tools/match07/audit_r15.mjs + an optional 4th argument = comma list of shot names to render (CPU is shared) and the
+> // page's console.info lines logged into motion.json.
+> // r15 (account 15): tools/lead_r6/motion_audit.mjs + the two extra plunge shots t50 / t80 of tools/match07/plunge_audit_r8.mjs (one load).
+> // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera se …[+3127 chars]
+
+### 🤖 Claude — 2026-11-19T02:28:59.568Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:28:59.619Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:29:00.021Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r16/step1/NEW/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:29:00.094Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:29:10.240Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"HIDE07\\|h07\\|hide07\\|end07\\|ramp07\" src/vfx/foam.ts src/vfx/waterRibbon.ts", "description": "Find HIDE07 usage in foam and water ribbon"}`
+
+### 🧑 User — 2026-11-19T02:29:10.279Z
+
+> ↩︎ result: src/vfx/foam.ts:137:  #ifdef HIDE07
+> src/vfx/foam.ts:138:  // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+> src/vfx/foam.ts:556:/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> src/vfx/foam.ts:557:function hide07(course: Course): [number, number] | null {
+> src/vfx/foam.ts:558:  if (!flag05('match07') || !flag05('m07foam')) return null;
+> src/vfx/foam.ts:560:  // cut); over the last 5 u of 07 the bank grows back out of the water (ramp07), full height at the 08 start, so 08 keeps
+> src/vfx/foam.ts:562:  const r = end07(course);
+> src/vfx/foam.ts:566:function end07(course: Course): number | null {
+> src/vfx/foam.ts:567:  if (!flag05('match07') || !flag05('m07foam') || !flag05('m07foamb')) return null;
+> src/vfx/foam.ts:571:function ramp07(course: Course): (s: number) => number {
+> src/vfx/foam.ts:572:  const e = end07(course);
+> src/vfx/foam.ts:580:  const r07 = ramp07(course);
+> src/vfx/foam.ts:641:    uHide07: { value: new THREE.Vector2(...(hide07(course) ?? [0, 0])) },
+> src/vfx/foam.ts:649:    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('pr …[+1495 chars]
+
+### 🤖 Claude — 2026-11-19T02:29:12.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 125,160p src/vfx/foam.ts; sed -n 710,740p src/vfx/waterRibbon.ts; sed -n 1610,1625p src/vfx/waterRibbon.ts; sed -n 576,640p src/vfx/foam.ts", "description": "Read HIDE07 shader code and berm builder"}`
+
+### 🧑 User — 2026-11-19T02:29:12.165Z
+
+> ↩︎ result: #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${FRAG_FX_GLSL}
+> ${SOAP05_GLSL}
+> void main() {
+>   float s = vFoam.y;
+>   #ifdef PROJ05
+>   // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
+>   // (dithered over 3 u at both joins; 04 / 06 keep their berm)
+>   float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
+>   if (pjIn > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < pjIn) discard;
+>   #endif
+>   #ifdef HIDE07
+>   // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+>   // tile (with its painted soft foam banks) shows instead; dithered over 3 u at both ends, 07 level stretch and 08 keep
+>   // their berm
+>   float h7 = smoothstep(uHide07.x, uHide07.x + 3.0, s) * (1.0 - smoothstep(uHide07.y - 3.0, uHide07.y, s));
+>   if (h7 > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < h7) discard;
+>   #endif
+>   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+>     float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 + 0.3;
+>     if (n < uOutro.x * 1.15) discard;
+>   }
+>   vec2 p = vec2 …[+5739 chars]
+
