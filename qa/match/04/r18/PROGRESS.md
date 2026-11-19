@@ -111,3 +111,19 @@ Query (K18-5): K18-4 + `&m04nwq=2&m04nwr=3.2` (both inside `m04nwhirl`; 0 = the 
 
 Kept set K18-5 (r19):
 `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5&m04fclu=1&m04sband=1&m04end=1&m04nband=1&m04nwhirl=1&m04nwc=1.3&m04flo=1&m04nwq=2&m04nwr=3.2`
+
+## (r19) WHERE I STOPPED / NEXT — handoff to a fresh session (lead order 2026-11-19 ~19:40 UTC: finish the batch, then stop)
+Stopped after step 5 (committed + pushed, `claude/rainbow-s04-match-c19` @ `88a6b837`). No unfinished edits, nothing uncommitted.
+Next account: branch `claude/rainbow-s04-match-c20` from the newest `-c19` tip; worktree / port 5273 as before.
+Kept set K18-5 (full query):
+`match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5&m04fclu=1&m04sband=1&m04end=1&m04nband=1&m04nwhirl=1&m04nwc=1.3&m04flo=1&m04nwq=2&m04nwr=3.2`
+Next tasks, in order (one URL switch per step, start view 0 px, coins unchanged, APPROVED / BEFORE / NEW + half-size clip):
+1. `&m04sswirl=1` (code already in `match04m4.ts`, UNPROVEN, in no kept set; tunables `m04ssa` 0.45, `m04ssl` 6.5, `m04ssz` 0,
+   `m04ssw` 3.2): the bank ribbons curve UP the tunnel sides like the painting instead of the water ending in a straight flat edge
+   against the gold wall (most visible at hard right). Prove or reject; try `m04ssz` > 0 for a lapping top edge.
+2. Colour up the low foam banks (`m04flo`) to the painted pink- / cyan-tinted foam (now plain lilac-white); make the entrance-rim
+   banks fuller and more continuous.
+3. Steering glitch sweep with the lead's 4 s clip recipe (first 55 frames = Screen 04): seams, popping, stretched textures.
+Tools (recreate in the scratchpad): `tools/lead_r6/motion_audit.mjs` and `tools/lead_r13/swim_clip.mjs` copied with
+`startVite(Number(process.env.PORT || 5273))`, an `ONLY=` shot filter and a `MAXF=` frame cap (see the r18 transcript). The ≈2.0 s
+coin over Benny is the normal pickup pop: leave coins alone. Never edit the ring shader GOLD_FRAG (s04tex owns the rings).
