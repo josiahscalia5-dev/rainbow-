@@ -30,6 +30,9 @@ export interface FurHandle {
     uRoot: { value: THREE.Color };
     uTip: { value: THREE.Color };
     uClump: { value: number };
+    uLock: { value: THREE.Vector4 };
+    uShade: { value: THREE.Vector4 };
+    uTint: { value: THREE.Color };
   };
 }
 
@@ -50,6 +53,15 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
     uMaskCol: { value: new THREE.Color(1, 0, 0) },
     /** `?benny05=1` only (material.defines.BENNY05, benny05.ts): strand clumping toward tuft centres */
     uClump: { value: 0.42 },
+    /** `?benny20=1` only (material.defines.BENNY20, benny20.ts): soft plush LOCKS instead of single needles —
+     *  x = lock cells per unit, y = lock base radius (cell units), z = vertical lock stretch (< 1: combed, elongated
+     *  downward), w = fine strand cells per unit inside a lock */
+    uLock: { value: new THREE.Vector4(8, 0.72, 0.62, 110) },
+    /** `?benny20=1`: x = colour at the roots / in the creases (fraction), y = extra lightness at the lock tips,
+     *  z = crease darkening between locks, w = lock length variation */
+    uShade: { value: new THREE.Vector4(0.42, 0.22, 0.4, 0.4) },
+    /** `?benny20=1`: colour factor on the baked albedo (dusty rose / mauve calibration) */
+    uTint: { value: new THREE.Color(1, 1, 1) },
   };
   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -94,12 +106,53 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         varying vec2 vB05Uv;
         uniform float uClump;
         #endif
+        #ifdef BENNY20
+        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint;
+        #endif
         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
       )
       .replace(
         '#include <color_fragment>',
         `#include <color_fragment>
+        #ifdef BENNY20
+        {
+          // benny20.ts: plush LOCKS. Each lock = a cone of fine strands that converge toward the lock's axis and end in a
+          // soft point; neighbouring locks overlap at the roots (no bald gaps); darker roots / creases, lighter tips.
+          float layer = vLayer;
+          vec3 qt = vec3(vBase.x, vBase.y * uLock.z, vBase.z) * uLock.x;
+          float td = 10.0; float th = 0.0; vec3 tc = vec3(0.0);
+          for (int k = 0; k < 8; k++) {
+            vec3 o = vec3(float(k & 1), float((k >> 1) & 1), float((k >> 2) & 1));
+            vec3 c = floor(qt - 0.5) + o;
+            vec3 jp = c + 0.5 + (fhash3(c) - 0.5) * 0.85;
+            float d = length(qt - jp);
+            if (d < td) { td = d; th = fhash(c * 2.31 + 0.7); tc = jp; }
+          }
+          float lh = 1.0 - uShade.w * th;                       // this lock's length (fraction of the fur length)
+          float lt = clamp(layer / lh, 0.0, 1.0);
+          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.55);   // lock cross-section radius at this height
+          float rr = td / max(rl, 1e-3);
+          // fine strands, clumped toward the lock axis as they rise (q' = c + (q - c) / (1 - h k))
+          vec3 qs = vBase * uLock.w;
+          vec3 cs = vec3(tc.x / uLock.x, tc.y / (uLock.x * uLock.z), tc.z / uLock.x) * uLock.w;
+          qs = cs + (qs - cs) / max(0.15, 1.0 - 0.8 * lt);
+          vec3 sc = floor(qs);
+          vec3 sp = sc + 0.5 + (fhash3(sc) - 0.5) * 0.7;
+          float sd = length(qs - sp);
+          float sh = fhash(sc * 1.37 + 5.1);
+          if (layer > 0.001) {
+            if (vLenMask < 0.05) discard;
+            if (layer > lh || rr > 1.0) discard;
+            // wispy, separated strands toward the outside / top of a lock; dense core
+            if (lt > 0.2 && sd > mix(0.95, 0.42, smoothstep(0.35, 1.0, rr) * smoothstep(0.2, 0.9, lt))) discard;
+          }
+          float ao = mix(uShade.x, 1.0, smoothstep(0.0, 0.8, lt));
+          float crease = 1.0 - uShade.z * smoothstep(0.45, 1.0, td / uLock.y) * (1.0 - smoothstep(0.0, 0.6, lt));
+          float tip = 1.0 + uShade.y * smoothstep(0.45, 1.0, lt);
+          diffuseColor.rgb *= uTint * ao * crease * tip * (0.9 + 0.12 * th) * (0.93 + 0.14 * sh);
+        }
+        #else
         {
           vec3 q = vBase * uDensity;
           // clumping: strands lean toward low-frequency tuft centres as they rise → plush tufts
@@ -135,7 +188,8 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           #else
           diffuseColor.rgb = mix(uRoot, uTip, smoothstep(0.0, 1.0, layer)) * ao * (0.92 + 0.16 * hgt);
           #endif
-        }`,
+        }
+        #endif`,
       )
       .replace(
         '#include <emissivemap_fragment>',
@@ -156,7 +210,8 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
   };
   material.customProgramCacheKey = () =>
     `benny-fur-${shells}${material.defines?.BENNY_MASK !== undefined ? '-mask' : ''}` +
-    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY_UV !== undefined ? '-uv' : ''}`;
+    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY20 !== undefined ? '-b20' : ''}` +
+    `${material.defines?.BENNY_UV !== undefined ? '-uv' : ''}`;
 
   const mesh = new THREE.InstancedMesh(src.geometry, material, shells);
   const I = new THREE.Matrix4();
