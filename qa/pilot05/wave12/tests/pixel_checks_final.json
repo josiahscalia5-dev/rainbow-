@@ -1,0 +1,29 @@
+{
+ "default_vs_current_default": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "before_vs_wave9_baseline": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0,
+  "note": "first capture differed in 155 px of the HUD bar only (rows 21-104, kept as 05_flaky_HUD_frame.png: a HUD animation caught mid-frame); two re-captures pixel-identical"
+ },
+ "05_glow_vs_G_test": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "06_w12full_vs_default": {
+  "max_pixel_difference": 6,
+  "differing_pixels": 27,
+  "note": "27 px, max 6 levels: invisible (same with silk05+puff05 alone)"
+ },
+ "07_w12full_vs_default": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "04_w12full_vs_default": {
+  "max_pixel_difference": 171,
+  "differing_pixels": 76455,
+  "note": "the 05 river seen through the 04 exit (as with W11 river05)"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "q": "proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1",
+ "frames": [
+  {
+   "file": "qa/pilot05/proj/tunnel/lid/move/move_00.png",
+   "d": 0,
+   "s": 132.622,
+   "lat": 0,
+   "stage": "05",
+   "cam": [
+    1.92,
+    -37.94,
+    -68.3
+   ]
+  },
+  {
+   "file": "qa/pilot05/proj/tunnel/lid/move/move_06.png",
+   "d": 6,
+   "s": 138.488,
+   "lat": 0,
+   "stage": "05",
+   "cam": [
+    1.99,
+    -38.13,
+    -72.87
+   ]
+  },
+  {
+   "file": "qa/pilot05/proj/tunnel/lid/move/move_14.png",
+   "d": 14,
+   "s": 146.555,
+   "lat": 0,
+   "stage": "05",
+   "cam": [
+    2.01,
+    -38.47,
+    -80.86
+   ]
+  }
+ ]
+}
