@@ -1356,3 +1356,44 @@ Still waiting on your answer: should I combine the Screen 04 water and ring impr
 
 Yes all once
 
+### 🤖 Claude — 2026-11-19T02:40:53.056Z
+
+Combining the Screen 04 water and ring improvements into one preview now. I'll build it on its own new branch, so neither worker's branch is touched.
+
+### 🤖 Claude — 2026-11-19T02:40:54.663Z
+
+> 🔧 **Bash** `{"command": "git -C /home/user/wt/s04 log --oneline -3; git -C /home/user/wt/s04b log --oneline -4; git -C /home/user/wt/s04 status --short | head; git -C /home/user/wt/s04b status --short | head; grep -n \"L4\\b\\|L4 =\" /home/user/wt/s04b/qa/match/04/r18/ringpaint/NOTES.md | head -5", "description": "Check the two Screen 04 branch tips and kept sets"}`
+
+### 🧑 User — 2026-11-19T02:40:54.860Z
+
+> ↩︎ result: 31372d6 Screen 04 r18 step 2: painted pink / cyan bands round Benny in the near water (m04nband) — GOOD IMPROVEMENT
+> ad5fbac Screen 04 r17 step 1: distant glowing opening at the end of the tunnel (m04end) — GOOD IMPROVEMENT
+> 9eb27e6 Screen 04 r18 step 6: m04rpvar=1 three painted rings (pink-violet sheen), ring-0 lip humps refilled
+> 0f275af Screen 04 r17 step 5: half-size NEW swim clip for m04rpdots + notes
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? node_modules
+> 7:Kept set K5 = L4 (`docs/briefs/2026-11-18-r15/S04_LAUNCH.md` "Kept set now") +
+
+### 🤖 Claude — 2026-11-19T02:40:56.765Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,20p /home/user/wt/s04b/qa/match/04/r18/ringpaint/NOTES.md; grep -n \"Kept set now\" -A4 docs/briefs/2026-11-18-r15/S04_LAUNCH.md | head -12", "description": "Read ring test kept set definition"}`
+
+### 🧑 User — 2026-11-19T02:40:56.817Z
+
+> ↩︎ result: # Screen 04 — painted-ring test `&m04rpaint` (round 18, continues the cut-off round-17 worker)
+> 
+> Brief: `docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md` + `docs/briefs/2026-11-19-r18/RESUME_R18.md` ("s04tex").
+> Branch `claude/rainbow-s04-ringtex-c18` (= `-c17` tip `0f275af1` + the account-17 unfinished step-6 edit). Steps 1–4:
+> `qa/match/04/r16/ringpaint/NOTES.md`; step 5: `qa/match/04/r17/ringpaint/NOTES.md`.
+> 
+> Kept set K5 = L4 (`docs/briefs/2026-11-18-r15/S04_LAUNCH.md` "Kept set now") +
+> `&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28&m04rpdots=1` (full query in `step6_var/motion.json` minus
+> `&m04rpvar=1`). BEFORE for r18 steps = K5 = `qa/match/04/r17/ringpaint/step5_dots/3_NEW_<shot>.png` (same build: r18 code is
+> off by default). `1_APPROVED.png` (this folder) = `references/04_through_the_five_arrows.png`, byte copy.
+> 
+> ## Step 6 — three painted rings instead of one: K5 + `&m04rpvar=1` (account-17 edit finished, 02:25–02:50 UTC)
+> The unfinished account-17 edit WAS this step; finished and kept, not discarded.
+> What it does: until now every 3D ring wore ONE straightened painted ring (painted ring 1, the plain copper one). The painting's
+> inner rings differ: ring 0 (first …[+1614 chars]
+

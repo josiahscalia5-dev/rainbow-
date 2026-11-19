@@ -964,3 +964,30 @@ Let me commit the restored kept-set file and start the r18 log first.
 > N1 bad overall 0.01 0 0 0 1 4 0 0 1 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0
 > N2 bad overall 0.00 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0
 
+### 🤖 Claude — 2026-11-19T02:40:46.442Z
+
+Diagnosis is clear now. Let me record it, then build the offline clean wall field from the approved near bay N1.
+
+### 🤖 Claude — 2026-11-19T02:40:53.363Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && cat >> qa/match/05/r18/PROGRESS.md <<'EOF'\n\n## Diagnosis for task 2 (2026-11-19, `tools/match05/r15_probe.mjs` at t12L / t81L / x97L)\n* The smeared left wall at hard left (t81L, x97L) and the near walls at the end of 05 are the far block's wall\n  (`tube05_far_wall`). Its bays are laid out by the painting's far ring depths (knots: ring C at virtual depth 5.8 u, D 43.8,\n  E 107.8, F 168.8, G 268.8 beyond the seam), so bay CD is 38 u deep, DE 64 u, EF 61 u, FG 100 u (the painted near bay AB is\n  18 u). The wall picture of each bay (atlas rows BC … FG: 12 …[+1061 chars]`
+
+### 🧑 User — 2026-11-19T02:40:53.417Z
+
+> ↩︎ result: """[match05 copy with tgtvis05, see the block after `hole =`] Screen 05 proj05 — TARGET water image in the approved frame (864x1536, sRGB), from the user's own pictures only:
+>   * where the approved picture shows its water (not hidden by Benny + splash, coins, HUD): the APPROVED pixels;
+>   * under Benny + splash and the bottom gold ring arcs: the user's ORIGINAL isolated water artwork, registered onto the approved water with dense
+>     optical flow (banks / bands line up), colour-matched and blended in with a multi-band blend inside the hidden area (no invented texture);
+>   * the coins too (an along-the-flow interpolation in river space was tried first: it drew straight stripes);
+>     coin_mask.png is kept for the metrics.
+> usage: python3 -I tools/proj05/make_target.py <out_dir>
+> outputs: target_05.png (RGB), water_mask.png (approved water footprint), fill_mask.png (pixels taken from the artwork),
+>          art_registered.png, report.json"""
+> import json, os, sys
+> import numpy as np, cv2
+> from PIL import Image
+> from scipy.ndimage import gaussian_filter, binary_dilation, binary_closing, label
+> 
+> out = sys.argv[1]; os.makedirs(out, exist_ok=True)
+> appr = np.asarray(Image.open("references/05_flow_in …[+365 chars]
+
