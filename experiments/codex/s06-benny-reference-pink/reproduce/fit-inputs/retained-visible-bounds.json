@@ -1,0 +1,79 @@
+{
+  "fur_armR": {
+    "visibleBoundsXYXY": [
+      584,
+      961,
+      645,
+      1027
+    ],
+    "width": 62,
+    "height": 67,
+    "visiblePixels": 3055
+  },
+  "hat": {
+    "visibleBoundsXYXY": [
+      229,
+      717,
+      585,
+      1080
+    ],
+    "width": 357,
+    "height": 364,
+    "visiblePixels": 90616
+  },
+  "fur_body": {
+    "visibleBoundsXYXY": [
+      242,
+      964,
+      596,
+      1193
+    ],
+    "width": 355,
+    "height": 230,
+    "visiblePixels": 33455
+  },
+  "fur_armL": {
+    "visibleBoundsXYXY": [
+      198,
+      973,
+      247,
+      1037
+    ],
+    "width": 50,
+    "height": 65,
+    "visiblePixels": 2168
+  },
+  "fur_pom": {
+    "visibleBoundsXYXY": [
+      295,
+      717,
+      480,
+      905
+    ],
+    "width": 186,
+    "height": 189,
+    "visiblePixels": 22389
+  },
+  "Benny": {
+    "visibleBoundsXYXY": [
+      198,
+      717,
+      645,
+      1193
+    ],
+    "width": 448,
+    "height": 477,
+    "visiblePixels": 129387
+  },
+  "hat_brim": {
+    "visibleBoundsXYXY": [
+      229,
+      880,
+      540,
+      1080
+    ],
+    "width": 312,
+    "height": 201,
+    "visiblePixels": 16243
+  }
+}
