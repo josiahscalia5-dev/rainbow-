@@ -1,25 +1,10 @@
 {
  "worktree": "/home/user/wt/s04b",
  "branch": "claude/rainbow-s04-ringtex-c19",
- "head": "617556fdb4c5ca35abb8d585c018b0fac67dd2f8",
- "time": "2026-11-19T19:33:14+00:00",
- "dirty_tracked": [
-  "src/world/match04m4.ts"
- ],
- "untracked_copied": [
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_f06_forward6u.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_f10_forward10u.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_f20_forward20u.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_s_left_hard.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_s_left_steer.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_s_right_hard.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_s_right_steer.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_t33_through_screen.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_t66_through_screen.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/3_NEW_t95_through_screen.png",
-  "qa/match/04/r18/ringpaint/step9_crisp/motion.json",
-  "qa/match/04/r18/ringpaint/step9_crisp/start_view_pixeldiff_BEFORE_vs_NEW.png"
- ],
+ "head": "1cff16f21742b3cb200bbb559938a88e7dd0c476",
+ "time": "2026-11-19T19:38:28+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [],
  "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s04-ringtex-c19 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-ringtex-c19/tracked.patch && copy backups/wip/claude__rainbow-s04-ringtex-c19/untracked/* into the worktree"
 }

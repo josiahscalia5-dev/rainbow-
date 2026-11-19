@@ -29,3 +29,12 @@ entries marked (r19). If this account runs out: `-c20` branches from each newest
 ## Progress shown to the user
 | # | Screen / step | Verdict |
 |---|---|---|
+| 1 (~19:45) | 04 ring test step 9 `&m04rpcr=1` on K8 (s04tex `8d3d6c39`, K9) | GOOD IMPROVEMENT (small, ring neatness; worker + lead at full size f10 vs step-8 f10): the nearest rings get a crisp thin warm-white line along each lip and a dark red-brown groove line under it instead of one soft blurred copper band; start view 0 px; coins identical; clip continuous while steering. Still: top half of the frame while swimming is the near ring band seen from inside (painting: gold washer rim + pink room) — `/home/user/wt/s04b/qa/match/04/r18/ringpaint/step9_crisp/` |
+
+## ~19:40 UTC user: Thrixel custom connector (`https://api.thrixel.com/mcp`) added — NOT loadable here
+`ListConnectors` → Thrixel `installState: connect_incomplete`, `connected: false`, `enabledInChat: false`; no Thrixel tools in
+this session (connectors load at session start). User order: let the 04 / 05 workers finish their current batch, save +
+verify everything on `ccr-d00ac5ec-gabdsh`, write the continuation note, hand over to a FRESH session (Thrixel test there,
+FREE allocation only). Foam-test preparation: `qa/match/04/r19_falfoam/NOTES.md` (input `input_foamR_rgba.png`). The one fal
+TRELLIS try (request `01a1f54f`) was rejected at input validation (no model; normally not billed). Workers told 19:45 UTC:
+finish only the step in progress, write WHERE I STOPPED / NEXT, push, stop.
