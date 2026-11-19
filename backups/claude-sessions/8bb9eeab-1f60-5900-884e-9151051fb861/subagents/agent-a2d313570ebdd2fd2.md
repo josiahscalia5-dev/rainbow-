@@ -529,3 +529,229 @@ Let me commit the restored kept-set file and start the r18 log first.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r18/KEPT_START.txt) && GRID='-0.9,0.6;-0.9,0.3;-0.9,0;-0.9,-0.3;-0.6,0.6;-0.55,0.37;-0.45,0.35;-0.6,0;-0.6,-0.3;-0.97,-0.37;-0.4,0.5;-0.3,0.1' timeout 600 node tools/match05/r15_probe.mjs \"$Q\" t81L,x97L,t12L 5275 2>&1 | tail -45", "description": "Probe left-wall layers at hard-left positions", "timeout": 600000}`
 
+### 🧑 User — 2026-11-19T02:30:55.837Z
+
+> ↩︎ result: == t81L s 179.314 stage 05 cam -0.04,-39.17,-114.46 far-open 0 extra null
+>    -0.9,0.6 tube05_far_wall<zone_tubes<washer_world<Scene d16.55 | Mesh<zone_tubes<washer_world<Scene d23.75 | Mesh<zone_tubes<washer_world<Scene d23.94
+>    -0.9,0.3 tube05_far_wall<zone_tubes<washer_world<Scene d16.61 | Mesh<zone_tubes<washer_world<Scene d20.36 | Mesh<zone_tubes<washer_world<Scene d20.52
+>    -0.9,0 tube05_far_wall<zone_tubes<washer_world<Scene d15.49 | Mesh<zone_tubes<washer_world<Scene d17.83 | Mesh<zone_tubes<washer_world<Scene d17.99
+>    -0.9,-0.3 tube05_far_wall<zone_tubes<washer_world<Scene d12.94 | Mesh<zone_tubes<washer_world<Scene d15.56 | Mesh<zone_tubes<washer_world<Scene d15.79
+>    -0.6,0.6 tube05_far_wall<zone_tubes<washer_world<Scene d17.7 | Mesh<zone_tubes<washer_world<Scene d20.8 | Mesh<zone_tubes<washer_world<Scene d21.72
+>    -0.55,0.37 lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.34 | lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.67 | tube05_far_wall<zone_tubes<washer_world<Scene d17.99
+>    -0.45,0.35 lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.35 | lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<w …[+4415 chars]
+
+### 🤖 Claude — 2026-11-19T02:31:04.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"05\\b\\|tube05\\|lids05\\|M05\\|PROJ\\w*05\" src/world/environment.ts | head -120", "description": "Map Screen 05 code in environment.ts"}`
+
+### 🧑 User — 2026-11-19T02:31:04.589Z
+
+> ↩︎ result: 4: * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+> 12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> 13:import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD } from '../vfx/waterRibbon';
+> 14:import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05fcloud=1 only
+> 15:import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+> 16:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+> 17:import { flow05Shared, flow05Textures } from '../vfx/flow05';
+> 18:import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './mat …[+10567 chars]
+
+### 🤖 Claude — 2026-11-19T02:31:05.785Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 442,700p src/world/environment.ts", "description": "Read the 05 far-tunnel construction"}`
+
+### 🧑 User — 2026-11-19T02:31:05.835Z
+
+> ↩︎ result: // D0 of the far block is known further down; the eye sits (STAGE_CAM back) behind the crest, so depth(sF05) ≈ sF05 − sCam05 − 0.75
+>     // env05 run #4: the seam fraction from the env05 far ring C depth (as the far wall's segment) — with 59 here and
+>     // E05.farDv[0] there, the BC rows t ≈ 0.64–0.74 were drawn on both walls (texel collisions on the seam circle)
+>     segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(E05 ? E05.farDv[0] : 59, sF05 - sCam05 - 0.75) });
+>     withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+>   }
+>   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
+>   // gold junction collar 04→05 (slightly heavier)
+>   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+>   if (E05) {
+>     // env05: every real 05 ring its own (warped) mesh, own band height and own row of the camera-projection ring atlas
+>     for (const s of rings05) {
+>       const isA = Math.abs(s - ptA05) < 0.5, isB = Math.abs(s - ptB05) < 0.5;
+>       const band = { ...band05near, height: isA ? E05.hA : isB ? E05.hB : band05near.height };
+>       const mat = wi …[+18663 chars]
+
+### 🤖 Claude — 2026-11-19T02:31:10.819Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 140,472p src/vfx/proj05Tunnel.ts", "description": "Read withProj05Wall shader code"}`
+
+### 🧑 User — 2026-11-19T02:31:10.853Z
+
+> ↩︎ result: function loadTextures() {
+>   const loader = new THREE.TextureLoader();
+>   const load = (url: string) =>
+>     new Promise<THREE.Texture>((res, rej) =>
+>       loader.load(url, (t) => {
+>         t.flipY = false;
+>         t.colorSpace = THREE.NoColorSpace;          // the texels ARE display values: the shader undoes the post chain
+>         t.generateMipmaps = false;
+>         t.minFilter = THREE.LinearFilter;
+>         t.magFilter = THREE.LinearFilter;
+>         t.wrapS = THREE.RepeatWrapping;             // round the tube
+>         t.wrapT = THREE.ClampToEdgeWrapping;
+>         t.needsUpdate = true;
+>         res(t);
+>       }, undefined, rej));
+>   const jobs: Promise<unknown>[] = [];
+>   if (PROJWALL05 || ENV05) {
+>     jobs.push(Promise.all([
+>       load(ENV05 ? new URL('../../assets/textures/env05/wall05e.png', import.meta.url).href : new URL('../../assets/textures/tunnel05/wall05.png', import.meta.url).href),
+>       fetch(ENV05 ? new URL('../../assets/textures/env05/env05.json', import.meta.url).href : new URL('../../assets/textures/tunnel05/tunnel05.json', import.meta.url).href).then((r) => r.json()),
+>     ]).then(([t, meta]) => {
+>       shared.uPtWall.value = t;
+>       shared.uPtWallSize.value.set(meta.wall.w …[+19072 chars]
+
+### 🤖 Claude — 2026-11-19T02:31:13.824Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export const on05\\|export function on05\\|export const MATCH05\\|export function flag05\\|export const flag05\\|function q05\\|function qv05\\|const q05\\|const qv05\" -A8 src/vfx/waterRibbon.ts | head -60", "description": "Check how match05 enables sub-switches"}`
+
+### 🧑 User — 2026-11-19T02:31:13.884Z
+
+> ↩︎ result: 152:const q05 = (key: string): boolean => {
+> 153-  try {
+> 154-    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+> 155-  } catch {
+> 156-    /* no location (vite-node / workers) */
+> 157-  }
+> 158-  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> 159-};
+> 160-/** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> 161:export const flag05 = q05;
+> 162-/**
+> 163- * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+> 164- * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+> 165- * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+> 166- * at half the ride speed while still moving downstream in the world.
+> 167- */
+> 168-export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 169-/**
+> --
+> 213:export const MATCH05: boolean = q05('match05');
+> 214:export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> 215-export const PROJ05: boolean = on05('proj05');
+> 216-/**
+> 217- * `?proj05=1&projfar05=1` (2026-11-16 late,  …[+829 chars]
+
+### 🤖 Claude — 2026-11-19T02:31:27.799Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n -i \"m05wall\\|m05wtile\" qa/match/05/NOTES.md qa/match/05/r*/PROGRESS.md qa/match/05/STATUS.md 2>/dev/null | cut -c1-400 | head -30", "description": "Find past verdicts for m05wall and m05wtile"}`
+
+### 🧑 User — 2026-11-19T02:31:27.852Z
+
+> ↩︎ result: qa/match/05/NOTES.md:242:for the far wall's real-scale part and the near bays (behind `?m05wall=1`); (b) modeled gold rings for the far block
+> qa/match/05/r10/PROGRESS.md:116:* `&m05wall=1` (round-9 WIP, crisp procedural slotted metal where the wall picture is magnified) on top of step 2 at
+> qa/match/05/r11/PROGRESS.md:21:## Step 1 — `&m05wtile=1` (B: smeared walls while swimming → crisp painted perforated metal, pink light streaks kept)
+> qa/match/05/r11/PROGRESS.md:22:* Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1`
+> qa/match/05/r11/PROGRESS.md:35:* Locked approved view: 0 px (`scripts/capture.mjs 05`, kept set vs + `m05wtile=1`; the kept set's own two runs differ by
+> qa/match/05/r11/PROGRESS.md:40:* APPROVED: `/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/1_APPROVED.png`
+> qa/match/05/r11/PROGRESS.md:41:* BEFORE: `/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/2_BEFORE_t66_through_screen.png`, `…/2_BEFORE_k81_kink.png`,
+> qa/match/05/r11/PROGRESS.md:43:* NEW: `/home/user/wt/s05/qa/match/05/r11/step1_m05wtile/3_NEW_t66_through_screen.png`, `…/3_NEW_k81_kink.png` …[+4812 chars]
+
+### 🤖 Claude — 2026-11-19T02:31:29.414Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 105,135p qa/match/05/r10/PROGRESS.md; sed -n 15,50p qa/match/05/r11/PROGRESS.md", "description": "Read m05wall r10 verdict and m05wtile r11 step"}`
+
+### 🧑 User — 2026-11-19T02:31:29.452Z
+
+> ↩︎ result: * Locked approved view: 0 px vs step 3.
+> * Still wrong: the clumps are rounder and more ball-like than the painted cauliflower foam; near the camera on hard
+>   steering single lumps are large; the far banks beyond the seam keep the baked foam (softer).
+> * APPROVED: `/home/user/wt/s05/qa/match/05/r10/step4_m05cloud/1_APPROVED.png`
+> * BEFORE (round start): `/home/user/wt/s05/qa/match/05/r10/step4_m05cloud/2_BEFORE_t33_through_screen.png`, `…/2_BEFORE_t66_through_screen.png`,
+>   `…/2_BEFORE_f10_forward10u.png` (step 3: `…/step3_m05flat/3_NEW_*.png`)
+> * NEW: `/home/user/wt/s05/qa/match/05/r10/step4_m05cloud/3_NEW_t33_through_screen.png`, `…/3_NEW_t66_through_screen.png`,
+>   `…/3_NEW_f10_forward10u.png`
+> * Files: `src/vfx/foam.ts` (cloud clusters into the 05 rim impostor list under the switch), `src/vfx/waterRibbon.ts` (M05CLOUD).
+> 
+> ## Tried, not kept
+> * `&m05wall=1` (round-9 WIP, crisp procedural slotted metal where the wall picture is magnified) on top of step 2 at
+>   t66: walls crisp but pale lilac with big regular square slots, and the painted pink light streaks between the rings
+>   are lost — less like the approved walls than the soft BEFORE. Not kept (needs a detail-only version that keeps th …[+4181 chars]
+
+### 🤖 Claude — 2026-11-19T02:31:45.320Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05 && cd /home/user/wt/s05 && python3 -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB'); print(im.size)\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nim.crop((0,180,330,760)).resize((660,1160),Image.LANCZOS).save(S+'appr_leftwall.png')\nim.crop((560,180,864,760)).resize((608,1160),Image.LANCZOS).save(S+'appr_rightwall.png')\n\"", "description": "Crop the approved left and right walls for study …[+2 chars]`
+
+### 🧑 User — 2026-11-19T02:31:46.032Z
+
+> ↩︎ result: (864, 1536)
+
+### 🤖 Claude — 2026-11-19T02:31:47.424Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/appr_leftwall.png"}`
+
+### 🧑 User — 2026-11-19T02:31:47.469Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:07.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nim=Image.open('qa/match/05/r17/step1_trans/new/x97L.png').convert('RGB')\nim.crop((0,180,430,1000)).save(S+'x97L_left.png')\nim=Image.open('/home/user/rainbow-/qa/review_r15/05_step3_bubbly_bank/3_NEW_k81_kink_left.png').convert('RGB')\nim.crop((0,180,430,1150)).save(S+'k81L_left.png')\n\"", "description": "Crop the live left-wall at hard left"}`
+
+### 🧑 User — 2026-11-19T02:32:07.494Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:32:07.925Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/k81L_left.png"}`
+
+### 🧑 User — 2026-11-19T02:32:07.953Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:25.171Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -rn \"far05Debug\\|far05Coins\" src --include=*.ts | grep -v \"^src/world/match05far.ts\" | head; grep -n \"lid05_L3\\|L3\" tools/proj05/lid_blender.py | head", "description": "Find debug exports and L3 lid build"}`
+
+### 🧑 User — 2026-11-19T02:32:25.212Z
+
+> ↩︎ result: src/world/environment.ts:12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> src/world/environment.ts:566:    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });
+> src/world/far05.ts:23:export const far05Debug: Record<string, unknown> = {};
+> src/gameplay/coins.ts:11:import { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)
+> src/gameplay/coins.ts:380:      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS && lastS < far05Coins.popS) {
+> src/gameplay/coins.ts:382:        const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
+> src/gameplay/coins.ts:383:        const o = far05Coins.open;
+> src/gameplay/coins.ts:388:        back.copy(far05Coins.T).negate();
+
+### 🤖 Claude — 2026-11-19T02:32:26.801Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 140,398p src/world/match05far.ts", "description": "Read the live far-block sync"}`
+
+### 🧑 User — 2026-11-19T02:32:26.839Z
+
+> ↩︎ result: const Z = (n / (NJ - 1)) * zMax, r = rowAt(Z);
+>       dj.set([r.xB, r.hw, r.cL, r.wL, r.cR, r.wR, r.core, ft.uOfZ(Z)], n * 8);
+>     }
+>     const tj = new THREE.DataTexture(dj, 2, NJ, THREE.RGBAFormat, THREE.FloatType);
+>     tj.minFilter = tj.magFilter = THREE.NearestFilter;
+>     tj.generateMipmaps = false;
+>     tj.needsUpdate = true;
+>     m05join.uJnLay.value = tj;
+>     m05join.uJnP.value.set(sF, zMax, NJ, 0);
+>   }
+> 
+>   // live state
+>   let D0 = D0lock, zs = 0;
+>   const q = new THREE.Vector3();
+>   const zOf = (Z: number) => (Z <= zs ? Z : zs + (Z - zs) / (1 + (Z - zs) / L));
+>   const kOf = (Z: number) => (D0 + zOf(Z)) / (D0 + Z);
+>   const cOf = (Z: number) => { if (Z <= zs) return 1; const b = 1 + (Z - zs) / L; return 1 / (b * b); };
+>   const tmp = new THREE.Vector3();
+>   const point = (Z: number, o: THREE.Vector3, out: THREE.Vector3) => {
+>     const k = kOf(Z);
+>     return out.copy(c0).addScaledVector(T, zOf(Z)).add(q).addScaledVector(tmp.copy(o).sub(q), k);
+>   };
+> 
+>   // originals, restored whenever the eye is back at the locked checkpoint eye (the locked view stays bit-identical)
+>   const wg = a.farWall.geometry, rg = a.farRiver.geometry;
+>   const keep = (g: THREE.BufferGeometry, names: string[]) => nam …[+13212 chars]
+

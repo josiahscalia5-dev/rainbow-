@@ -403,3 +403,158 @@ I'll start by reading the resume brief and launch brief.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:30:37.613Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn \"match06\\|m06\" src --include=*.ts | grep -v \"^src/world/match06.ts\" | head -60", "description": "Find match06 integration points"}`
+
+### 🧑 User — 2026-11-19T02:30:37.678Z
+
+> ↩︎ result: src/world/course.ts:17:import path06 from '../../assets/textures/match06/path06.json';
+> src/world/course.ts:275:  // `?match06=1` (src/world/match06.ts, qa/match/06/NOTES.md): the 06 river follows the APPROVED picture's painted river
+> src/world/course.ts:276:  // (correction fitted with the locked 06 camera, assets/textures/match06/path06.json); value and slope are 0 at both
+> src/world/course.ts:278:  const m06 = flag05('match06') || flag05('matchall');
+> src/world/course.ts:279:  const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);
+> src/game/match.ts:25:  // 06 (2026-11-17, qa/match/06/NOTES.md): solved offline with the 06 river correction (tools/match06/fit_river06.py) so
+> src/game/cameraRig.ts:13:/** r7 `?match06=1&m06cam=1` only: Screen 06 camera frame = chord toward the river this far ahead (`&m06la=`, default 40) */
+> src/game/cameraRig.ts:14:const M06_CAM = flag05('m06cam');
+> src/game/cameraRig.ts:16:  const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06la')) : NaN;
+> src/game/cameraRig.ts:40:  /** `?match06=1` only (src/game/match.ts): over t …[+3538 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:40.197Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"__rainbow\\s*=\\|__rainbow =\\|drawList\\|freezeAt\\|scene:\" src/game/Game.ts | head -20; sed -n 150,200p src/game/cameraRig.ts", "description": "Inspect debug hooks and camera rig 06 code"}`
+
+### 🧑 User — 2026-11-19T02:30:40.255Z
+
+> ↩︎ result: 686:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 740:    drawList() {
+> 764:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+>         outPos.lerp(benny.clone().add(new THREE.Vector3(...p8.off08)), w8);
+>         outTarget.lerp(new THREE.Vector3(...p8.aim08), w8);
+>         outUp.lerp(new THREE.Vector3(0, 1, 0), w8).normalize();
+>       }
+>     }
+>     // `?match06=1`: the approved Screen 06 view — at the 06 checkpoint (06 start + 10) the camera is exactly Benny +
+>     // off06 (world), looking along dir06, level. Both are stored in the river's LEVEL frame there (smoothed heading, world
+>     // up, no bank) and carried rigidly along the river with Benny, so over the crest and down the far side the camera stays
+>     // the same height above the water behind him and looks along the slope (a fixed world offset ends up under the water
+>     // on the down-slope); half of Benny's steering offset. Blended in around the 06 start and out before 07 (absent = no change)
+>     const p6 = STAGE_CAM['06'];
+>     if (p6 && p6.off06 && p6.dir06) {
+>       const st6 = this.course.stage('06');
+>       const w6 = THREE.MathUtils.smoothstep(s, st6.s0 - 3, st6.s0 + 1.5) * (1 - THREE.MathUtils.smo …[+2686 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:41.453Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 660,764p src/game/Game.ts", "description": "Read the debug API in Game.ts"}`
+
+### 🧑 User — 2026-11-19T02:30:41.533Z
+
+> ↩︎ result: startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simul …[+5102 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:53.103Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r18_dbg.mjs", "content": "// Screen 06 round 18 (QA only): deterministic start-view render like r16_start.mjs, with optional per-surface debug tints\n// (tube green, floor red, rings blue, paddles yellow) to see which proxy surface a pixel comes from.\n//   node tools/match06/r18_dbg.mjs <outDir> \"<query>\" name@D[:tint] [name@D[:tint] ...]\nimport { mkdirSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\n …[+1825 chars]`
+
+### 🧑 User — 2026-11-19T02:30:53.148Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r18_dbg.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:30:55.855Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && time node tools/match06/r18_dbg.mjs /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/dbg \"$K\" tint11@1.1:tint 2>&1 | tail -8", "description": "Render tinted debug view at +1.1u", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T02:31:15.904Z
+
+> ↩︎ result: [match06] m06ring {rings: 25, spacing: 12.87, aN: 36.9, aF: 49.8}
+> [match06] m06fclu {blobs: 1214, sprites: 12053}
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> tint11 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+> 
+> real	0m19.989s
+> user	0m1.506s
+> sys	0m0.377s
+
+### 🤖 Claude — 2026-11-19T02:31:18.948Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/dbg/tint11.png"}`
+
+### 🧑 User — 2026-11-19T02:31:19.015Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:31:28.178Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && node tools/match06/r18_dbg.mjs /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/dbg \"$K\" tint00@0:tint 2>&1 | grep -v \"allow list\"", "description": "Render tinted debug view at checkpoint", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T02:31:45.213Z
+
+> ↩︎ result: [match06] m06ring {rings: 25, spacing: 12.87, aN: 36.9, aF: 49.8}
+> [match06] m06fclu {blobs: 1214, sprites: 12053}
+> tint00 s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:31:46.587Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/dbg/tint00.png"}`
+
+### 🧑 User — 2026-11-19T02:31:46.707Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:22.157Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls -la assets/textures/match06/ && python3 -c \"\nimport json;L=json.load(open('assets/textures/match06/proj06.json'));print({k:v for k,v in L.items() if k!='camera'}); print(L['camera']['pos'], L['camera']['fov'], L['camera']['size'])\"", "description": "List 06 textures and layout json"}`
+
+### 🧑 User — 2026-11-19T02:32:22.240Z
+
+> ↩︎ result: total 4368
+> drwxr-xr-x 2 root root    4096 Nov 19 02:25 .
+> drwxr-xr-x 7 root root    4096 Nov 19 02:25 ..
+> -rw-r--r-- 1 root root    1172 Nov 19 02:25 cam06_locked.json
+> -rw-r--r-- 1 root root    5103 Nov 19 02:25 coins06.json
+> -rw-r--r-- 1 root root  123234 Nov 19 02:25 mask06.png
+> -rw-r--r-- 1 root root     329 Nov 19 02:25 path06.json
+> -rw-r--r-- 1 root root     685 Nov 19 02:25 plate06.json
+> -rw-r--r-- 1 root root    9169 Nov 19 02:25 plate06_fillmask.png
+> -rw-r--r-- 1 root root 2597147 Nov 19 02:25 plate06_hybrid.png
+> -rw-r--r-- 1 root root    1736 Nov 19 02:25 proj06.json
+> -rw-r--r-- 1 root root  272755 Nov 19 02:25 tile_floor.png
+> -rw-r--r-- 1 root root  101002 Nov 19 02:25 tile_floor2.png
+> -rw-r--r-- 1 root root   29844 Nov 19 02:25 tile_foam6.png
+> -rw-r--r-- 1 root root  324413 Nov 19 02:25 tile_ring6.png
+> -rw-r--r-- 1 root root   79967 Nov 19 02:25 tile_river6.png
+> -rw-r--r-- 1 root root  870107 Nov 19 02:25 tile_tube.png
+> -rw-r--r-- 1 root root    4953 Nov 19 02:25 water06.json
+> {'note': 'Screen 06 proxy layout (tools/match06/geo06.py)', 'R': 7.5, 'hA': 3.0, 'sBack': -12.0, 'sAhead07': 34.0, 'ext': 260.0, 'sB': 198.91, 's0': 186.91, 's1': 276.8727903992245, 'Lfloor': 6.87386354243376, 'ti …[+866 chars]
+

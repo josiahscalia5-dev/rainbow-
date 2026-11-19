@@ -690,3 +690,95 @@ Restoring the stray formatting change (`build =(`) so the shared file only diffe
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc_exit=$?", "description": "Type-check the project"}`
 
+### 🧑 User — 2026-11-19T02:30:28.039Z
+
+> ↩︎ result: tsc_exit=0
+
+### 🤖 Claude — 2026-11-19T02:30:38.499Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -e \"s#^// r16: tools/match07/audit_r15.mjs#// r18: tools/match07/audit_r16.mjs + the course marks of 07 / 08 in motion.json and extra plunge shots t72 / t88.\\n// r16: tools/match07/audit_r15.mjs#\" \\\n -e \"s#\\['t80_through_screen', 't0.8', null\\], \\['t95_through_screen', 't0.95', null\\],#['t72_through_screen', 't0.72', null], ['t80_through_screen', 't0.8', null], ['t88_through_screen', 't0.88', null], ['t95_through_screen', 't0.95', null],#\" \\\n -e \"s#const log = \\[\\];#const log = [];\\nlet marks = null;#\" \\\n -e \"s#  for (const \\[name, …[+647 chars]`
+
+### 🧑 User — 2026-11-19T02:30:38.607Z
+
+> ↩︎ result: 0a1
+> > // r18: tools/match07/audit_r16.mjs + the course marks of 07 / 08 in motion.json and extra plunge shots t72 / t88.
+> 19a21
+> > let marks = null;
+> 25c27
+> <   ['t33_through_screen', 't0.33', null], ['t50_through_screen', 't0.5', null], ['t66_through_screen', 't0.66', null], ['t80_through_screen', 't0.8', null], ['t95_through_screen', 't0.95', null],
+> ---
+> >   ['t33_through_screen', 't0.33', null], ['t50_through_screen', 't0.5', null], ['t66_through_screen', 't0.66', null], ['t72_through_screen', 't0.72', null], ['t80_through_screen', 't0.8', null], ['t88_through_screen', 't0.88', null], ['t95_through_screen', 't0.95', null],
+> 32a35,36
+> >   marks = await page.evaluate(() => { const m = window.__rainbow.course.marks; const o = {}; for (const k of Object.keys(m)) if (/^0[78]/.test(k)) o[k] = +m[k].toFixed(2); return o; });
+> >   console.log('marks', JSON.stringify(marks));
+> 53c57
+> <   writeFileSync(`${OUT}/motion.json`, JSON.stringify({ screen: SCREEN, query: Q, shots: log, console: info.filter((t) => t.includes('m07')) }, null, 1));
+> ---
+> >   writeFileSync(`${OUT}/motion.json`, JSON.stringify({ screen: SCREEN, query: Q, marks, shots: log, console: info.filter((t) => t.includes('m07')) }, null, 1 …[+3 chars]
+
+### 🤖 Claude — 2026-11-19T02:30:42.155Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cat qa/match/07/r16/K.txt; mkdir -p qa/match/07/r18/step3_foamb/BEFORE qa/match/07/r18/step3_foamb/NEW", "description": "Show kept set K and create r18 step-3 folders"}`
+
+### 🧑 User — 2026-11-19T02:30:42.245Z
+
+> ↩︎ result: match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1
+
+### 🤖 Claude — 2026-11-19T02:30:44.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1\" && time node tools/match07/audit_r18.mjs 07 qa/match/07/r18/step3_foamb/BEFORE \"$K\" t66_through_screen,t72_through_screen,t80_through_screen,t88_through_screen,t95_through_screen 2>&1 | tail -10", "description": "Render BEFORE plunge shots for step 3", "timeout": 900000}`
+
+### 🧑 User — 2026-11-19T02:31:37.997Z
+
+> ↩︎ result: Failed to load resource: the server responded with a status of 403 (Forbidden)
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> Failed to load resource: the server responded with a status of 403 (Forbidden)
+> Failed to load resource: the server responded with a status of 403 (Forbidden)
+> 07 t66_through_screen s 351.072 lat 0 stage 07 frames 387
+> 07 t72_through_screen s 358.064 lat 0 stage 07 frames 422
+> 07 t80_through_screen s 367.463 lat 0 stage 07 frames 469
+> 07 t88_through_screen s 376.863 lat 0 stage 07 frames 516
+> 07 t95_through_screen s 385.063 lat 0 stage 07 frames 557
+> 
+> real	0m53.287s
+> user	0m1.924s
+> sys	0m0.350s
+
+### 🤖 Claude — 2026-11-19T02:31:41.722Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json\nd=json.load(open('qa/match/07/r18/step3_foamb/BEFORE/motion.json'))\nprint(d['marks'])\nfor s in d['shots']: print(s['name'], s['s'], s['cam'], s['bennyY'])\n\"", "description": "Print course marks and shot positions"}`
+
+### 🧑 User — 2026-11-19T02:31:41.825Z
+
+> ↩︎ result: {'07': 247.06, '07_plunge_top': 312.41, '07_plunge_mid_end': 374.14, '07_plunge_bottom': 390.07, '08': 390.16}
+> t66_through_screen 351.072 [12.91, -74.79, -259.42] -83.763
+> t72_through_screen 358.064 [12.91, -81.36, -261.81] -90.322
+> t80_through_screen 367.463 [12.91, -90.18, -265.01] -99.145
+> t88_through_screen 376.863 [12.91, -98.71, -267.94] -107.409
+> t95_through_screen 385.063 [12.91, -104.71, -270.93] -111.885
+
+### 🤖 Claude — 2026-11-19T02:31:45.185Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1\" && node tools/match07/audit_r18.mjs 07 qa/match/07/r18/step3_foamb/NEW \"$K\" t66_through_screen,t72_through_screen,t80_through_screen,t88_through_screen,t95_through_screen 2>&1 | grep \"^07\"", "description": "Render NEW plunge shots for step 3", "timeout": 900000}`
+
+### 🧑 User — 2026-11-19T02:32:30.771Z
+
+> ↩︎ result: 07 t66_through_screen s 351.075 lat 0 stage 07 frames 387
+> 07 t72_through_screen s 358.062 lat 0 stage 07 frames 422
+> 07 t80_through_screen s 367.463 lat 0 stage 07 frames 469
+> 07 t88_through_screen s 376.863 lat 0 stage 07 frames 516
+> 07 t95_through_screen s 385.063 lat 0 stage 07 frames 557
+
+### 🤖 Claude — 2026-11-19T02:32:32.118Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/BEFORE/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:32:32.164Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:32.589Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW/t80_through_screen.png"}`
+

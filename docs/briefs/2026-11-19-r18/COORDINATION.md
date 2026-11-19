@@ -41,3 +41,4 @@ Worktrees built by `setup_worker.sh` (this folder) under the autosave lock, spar
 | # | Screen / step | Verdict |
 |---|---|---|
 | (r17 1–6) | see `docs/briefs/2026-11-18-r17/COORDINATION.md` | 08 m08vh, 07 m07nearw, 04 m04end, 04 m04rpdots, 06 m06fclu, 05 m05trans: GOOD IMPROVEMENT |
+| 1 (~03:05) | 04 r18 step 2 `&m04nband=1` near-water bands round Benny (s04 `31372d6`) | GOOD IMPROVEMENT (worker + lead at full size): the plain cyan sheet round Benny inside the tunnel now carries glossy pink and cyan streaks sweeping in on both sides (f03 → t95, steering), arrow lane stays cyan; start view 0 px; no tearing in the clip. Still: straight stripes where the painting sweeps in S-curves under Benny; long straight corridor of thin rings — `qa/review_r18/04_step2_nband/` |
