@@ -1,0 +1,95 @@
+{
+  "when": "2026-11-16T01:07:28.813Z",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "shots": [
+    {
+      "id": "04",
+      "file": "qa/pilot05/wave7/foam/regress_fix/04.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "04",
+        "s": 77.41308465825975,
+        "y": -21.89573584663209
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "04",
+        "s": 77.413,
+        "lat": 0,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -21.896,
+        "bennyVisible": true,
+        "cam": [
+          0.72,
+          -14.48,
+          -15.82
+        ]
+      },
+      "stats": {
+        "fps": 60.1,
+        "calls": 97,
+        "triangles": 735140,
+        "geometries": 110,
+        "textures": 41,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 154,
+        "firstFrameTriangles": 735824
+      }
+    },
+    {
+      "id": "05",
+      "file": "qa/pilot05/wave7/foam/regress_fix/05.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "05",
+        "s": 132.4383020282329,
+        "y": -41.348424102617486
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "stats": {
+        "fps": 60.1,
+        "calls": 86,
+        "triangles": 632561,
+        "geometries": 101,
+        "textures": 41,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 143,
+        "firstFrameTriangles": 633245
+      }
+    }
+  ],
+  "errors": []
+}
