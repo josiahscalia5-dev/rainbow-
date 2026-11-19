@@ -10,7 +10,7 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
-import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD } from '../vfx/waterRibbon';
+import { FLOW05, FLOWMAP05, PROJ05, M05FCLOUD, M05WCRISP, m05wcrispNum } from '../vfx/waterRibbon';
 import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05fcloud=1 only
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
@@ -439,6 +439,11 @@ export function buildEnvironment(course: Course): Environment {
     // env05: the near bays get their own atlas rows (N1 = the bay in front of ring A, N2 = nearer), not a copy of AB
     for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: E05 ? (i + 2 === list.length ? PT_ROW.N1 : PT_ROW.N2) : PT_ROW.AB, t0: 0, t1: 1 });
     segs.push({ v0: ptA05 + ptHw05, v1: ptB05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+    if (M05WCRISP === 2) {
+      // `&m05wcrisp=2` (Screen 05 round 18): the near bay AB too, slot rows centred between rings A and B
+      const lAB = ptB05 - ptA05 - 2 * ptHw05, nAB = Math.max(1, Math.round(lAB / m05wcrispNum('m05wpitch', 2.1)));
+      segs[segs.length - 1].ph = [0, nAB, lAB / nAB];
+    }
     // D0 of the far block is known further down; the eye sits (STAGE_CAM back) behind the crest, so depth(sF05) ≈ sF05 − sCam05 − 0.75
     // env05 run #4: the seam fraction from the env05 far ring C depth (as the far wall's segment) — with 59 here and
     // E05.farDv[0] there, the BC rows t ≈ 0.64–0.74 were drawn on both walls (texel collisions on the seam circle)
@@ -540,6 +545,29 @@ export function buildEnvironment(course: Course): Environment {
       const free = rSeg ? rSeg.findIndex((v) => v.x >= 1e9) : -1;
       if (rSeg && rSegT && free >= 0) { rSeg[free].set(sF05, vC, 0, 0); rSegT[free].set(PT_ROW.BC, tSeam, 1); }
       [PT_ROW.CD, PT_ROW.DE, PT_ROW.EF, PT_ROW.FG].forEach((row, n) => segs.push({ v0: sF05 + uRing(n) + hwF / dZdu(uRing(n)), v1: sF05 + uRing(n + 1) - hwF / dZdu(uRing(n + 1)), row, t0: 0, t1: 1 }));
+      if (M05WCRISP) {
+        // `&m05wcrisp=1` (Screen 05 round 18, src/vfx/proj05Tunnel.ts M05WCRISP_GLSL): slot rows at the painted near-wall
+        // pitch in REAL depth (the far bays by their virtual depth), a whole number of rows per bay, centred between the
+        // rings. The BC bay spans the seam (real wall: ring B → sF05; far wall: sF05 → ring C): one phase across both.
+        const P = m05wcrispNum('m05wpitch', 2.1);
+        const lReal = sF05 - (ptB05 + ptHw05), lFar = ft.zOfU(vC - sF05);
+        const nBC = Math.max(1, Math.round((lReal + lFar) / P)), pBC = (lReal + lFar) / nBC;
+        const rSegN = perf05Mat.userData.ptSegN as THREE.Vector3[] | undefined;
+        if (rSeg && rSegT && rSegN) {
+          rSegT.forEach((st, i) => {
+            if (Math.abs(st.x - PT_ROW.BC) > 0.5 || rSeg[i].x >= 1e9) return;
+            if (rSeg[i].y <= sF05 + 1e-6) rSegN[i].set(0, (lReal / pBC) / Math.max(1e-4, st.z - st.y), pBC);   // real part: t 0 … tSeam
+            else { const c1 = (lFar / pBC) / Math.max(1e-4, 1 - tSeam); rSegN[i].set(lReal / pBC - tSeam * c1, c1, pBC); }   // the sliver past the seam
+          });
+        }
+        const c1f = (lFar / pBC) / Math.max(1e-4, 1 - tSeam);
+        segs[0].ph = [lReal / pBC - tSeam * c1f, c1f, pBC];
+        for (let k = 1; k <= 4; k++) {
+          const sg = segs[k], lb = ft.zOfU(sg.v1 - sF05) - ft.zOfU(sg.v0 - sF05), nb = Math.max(1, Math.round(lb / P));
+          sg.ph = [0, nb, lb / nb];
+        }
+        Object.assign(far05Debug, { m05wcrisp: { lReal, lFar, nBC, pBC, tSeam, bays: segs.slice(1, 5).map((sg) => sg.ph) } });
+      }
       const uEnd = ft.uOfZ(zEnd);
       segs.push({ v0: sF05 + uRing(4) + hwF / dZdu(uRing(4)), v1: sF05 + uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
       segs.push({ v0: sF05 + uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });

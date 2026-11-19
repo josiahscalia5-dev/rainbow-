@@ -22,7 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
 import { tubeCenterAt } from './tube';
 import type { FarRiverLayout, FarRiverRow } from './far05';
 import type { Course, CourseSample } from './course';
-import { EDGE_LIFT, M05BLEND, M05JOIN, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05join, m05seam } from '../vfx/waterRibbon';
+import { EDGE_LIFT, M05BLEND, M05JOIN, M05LIDF, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
 import { clip05, m05rideS } from '../vfx/clip05';
 import type { FarLump05 } from '../vfx/foam';
 
@@ -171,6 +171,19 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
   const rivOpenOrig = (rg.morphAttributes.position[0].array as Float32Array).slice();
   const eyeLock = c0.clone().addScaledVector(T, -D0lock).add(ft.q);
   m05eye.value.set(eyeLock.x, eyeLock.y, eyeLock.z, 1);   // `&m05wall=1` (round 9): crisp walls only away from this eye
+  if (M05WCRISP || M05LIDF) {
+    // `&m05wcrisp=1` (round 18): the far wall's exact tunnel coordinate per pixel (src/vfx/proj05Tunnel.ts)
+    // `&m05lidf=1` (round 18): the locked eye's seam depth and axis offset (the far paddles' locked compression)
+    m05fw.uM05FwD.value.x = D0lock; m05fw.uM05FwQL.value.copy(ft.q);
+    m05fw.uM05FwC.value.copy(c0); m05fw.uM05FwT.value.copy(T);
+    const kn = ft.knots.length >= 2 ? ft.knots : [[0, 0], [1, 1]] as [number, number][];
+    m05fw.uM05FwK.value.forEach((v, i) => {
+      if (i < kn.length) { v.set(kn[i][0], kn[i][1]); return; }
+      // past the last knot: continue its slope (ForcedTunnel.interp extrapolates the last segment)
+      const a = kn[kn.length - 2], b = kn[kn.length - 1], du = (i - kn.length + 1) * 1e4;
+      v.set(b[0] + du, b[1] + du * (b[1] - a[1]) / (b[0] - a[0]));
+    });
+  }
   const glowPos0 = a.glow.position.clone(), glowScale0 = a.glow.scale.x;
 
   const restore = () => {
@@ -379,6 +392,10 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
       far05Coins.T.copy(T);
     }
     // foam behind the seam (the rising 06 banks) is clipped while the block is live (src/vfx/clip05.ts)
+    if (M05WCRISP || M05LIDF) {
+      m05fw.uM05FwP.value.set(zs, L, sF, atLock || open > 0.5 ? 0 : 1);
+      m05fw.uM05FwD.value.y = D0; m05fw.uM05FwQ.value.copy(q);
+    }
     if (atLock || open > 0.5) clip05.uClip05N.value.set(0, 0, 0);
     else { clip05.uClip05P.value.copy(c0).addScaledVector(T, zs); clip05.uClip05N.value.copy(T); }
     // `&m05seam=1` (Screen 05 round 8): the seam's course position for the near river's design hand-over (waterRibbon.ts)

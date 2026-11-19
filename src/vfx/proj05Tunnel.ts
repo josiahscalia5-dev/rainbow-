@@ -14,7 +14,7 @@
  * materials are wrapped only when a switch is on, every default shader program is unchanged.
  */
 import * as THREE from 'three';
-import { M05WALL, M05WTILE, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
+import { M05WALL, M05WTILE, M05WCRISP, M05LIDF, m05wcrispNum, m05fw, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
 // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
 const flag05 = on05;
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -86,6 +86,31 @@ function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, fog: false });
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, shared);
+    if (M05LIDF) {
+      // `&m05lidf=1` (round 18, waterRibbon.ts M05LIDF): past the seam the tray follows the live far block — undo the
+      // locked compression (zs = 0: Z = z / (1 − z / L), lateral scale about the locked eye's axis offset), redo the live one
+      Object.assign(shader.uniforms, m05fw);
+      const pv = '#include <project_vertex>';
+      if (!shader.vertexShader.includes(pv)) { console.error('[rainbow] m05lidf: project_vertex not found'); return; }
+      shader.vertexShader = shader.vertexShader
+        .replace('void main() {', 'uniform vec3 uM05FwC; uniform vec3 uM05FwT; uniform vec4 uM05FwP; uniform vec2 uM05FwD; uniform vec3 uM05FwQL; uniform vec3 uM05FwQ;\nvoid main() {')
+        .replace(pv, `vec4 wpL = modelMatrix * vec4(transformed, 1.0);
+if (uM05FwP.w > 0.5) {
+  vec3 rel = wpL.xyz - uM05FwC;
+  float zL = dot(rel, uM05FwT);
+  if (zL > 0.0) {
+    float Lf = uM05FwP.y, zs = uM05FwP.x;
+    float zc = min(zL, Lf * 0.995);
+    float ZV = zc / (1.0 - zc / Lf);
+    vec3 lat = rel - uM05FwT * zL;
+    vec3 oV = uM05FwQL + (lat - uM05FwQL) * (uM05FwD.x + ZV) / (uM05FwD.x + zc);
+    float zN = ZV <= zs ? ZV : zs + (ZV - zs) / (1.0 + (ZV - zs) / Lf);
+    wpL.xyz = uM05FwC + uM05FwT * zN + uM05FwQ + (oV - uM05FwQ) * (uM05FwD.y + zN) / (uM05FwD.y + ZV);
+  }
+}
+vec4 mvPosition = viewMatrix * wpL;
+gl_Position = projectionMatrix * mvPosition;`);
+    }
     shader.fragmentShader = shader.fragmentShader
       .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;
 ${PROJ05_INVERSE}
@@ -93,7 +118,7 @@ void main() {`)
       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
 gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
   };
-  mat.customProgramCacheKey = () => 'ptlid05';
+  mat.customProgramCacheKey = () => 'ptlid05' + (M05LIDF ? '-lidf' : '');
   mat.onBeforeRender = (renderer) => livePost(renderer);
   return mat;
 }
@@ -134,6 +159,10 @@ const shared = {
   uE5RingSize: { value: new THREE.Vector3(1, 1, 1) },
   /** QA only (scripts/proj05-tunnel-probe.mjs --coords): 1 = write the texture coordinates instead of the colour */
   uPtDbg: { value: 0 },
+  /** `&m05wcrisp=1` (round 18): the slot-free painted metal of the approved near bay N1, one profile round the tube */
+  uM05WField: { value: empty as THREE.Texture },
+  /** `&m05wcrisp=1`: magnification window (texels per pixel) of the hand-over from the baked bay to the crisp wall */
+  uM05WC: { value: new THREE.Vector2(m05wcrispNum('m05wc0', 0.35), m05wcrispNum('m05wc1', 0.85)) },
 };
 /** QA accessor for the probe script */
 export const proj05TunnelShared = shared;
@@ -174,6 +203,11 @@ function loadTextures() {
     ]).then(([t, meta]) => {
       shared.uE5Ring.value = t;
       shared.uE5RingSize.value.set(meta.ring.w, meta.ring.h, meta.ring.rowH);
+    }));
+  }
+  if (M05WCRISP) {
+    jobs.push(load(new URL('../../assets/textures/match05/m05wcrisp/wall_field.png', import.meta.url).href).then((t) => {
+      shared.uM05WField.value = t;
     }));
   }
   if (PROJRING05) {
@@ -287,8 +321,70 @@ const M05WTILE_GLSL = /* glsl */ `
     }
   }`;
 
-/** one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1 */
-export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: number }
+/**
+ * `&m05wcrisp=1` (Screen 05 round 18, waterRibbon.ts M05WCRISP): where a bay's own baked row (BC … FG; with `=2` also AB)
+ * would be magnified while swimming, the wall is drawn at the painted near-wall SCALE instead of the bay's stretched
+ * picture: metal = the slot-free painted profile of the approved near bay N1 round the tube (uM05WField: pink / violet
+ * bands, light streaks along the tunnel); slots = dark plum capsules with a pale pink rim (brightest at their ends round
+ * the tube) and a soft pink glow, as on the painted near walls, 46 round the tube and one row every `psn.z` units of real
+ * (virtual) depth, the rows centred in the bay (`psn.xy`: slot-row phase = x + y · t). Analytic, anti-aliased with the
+ * pixel footprint (crisp at any distance; faded to the mean where a slot gets smaller than a few pixels). It replaces the
+ * bay's own colour (`pc0`, before m05wtile), so there is never a second slot pattern under it. Off at the locked eye.
+ */
+const M05FW_GLSL = /* glsl */ `
+  if (uM05FwP.w > 0.5) {
+    // m05wcrisp: invert the live forced perspective from the world position (real depth z past the seam → virtual Z),
+    // then the knots (u, Z) → tunnel coordinate; exact at every pixel, whatever the triangle size
+    vec3 wpF = cameraPosition + transpose(mat3(viewMatrix)) * (-vViewPosition);
+    float zF = dot(wpF - uM05FwC, uM05FwT);
+    float ZF = zF;
+    if (zF > uM05FwP.x) { float e = zF - uM05FwP.x; ZF = uM05FwP.x + e / max(1.0 - e / uM05FwP.y, 1e-3); }
+    float uF = ZF;
+    for (int i = 1; i < 8; i++) {
+      vec2 ka = uM05FwK[i - 1], kb = uM05FwK[i];
+      if (ZF <= kb.y || i == 7) { uF = mix(ka.x, kb.x, (ZF - ka.y) / max(kb.y - ka.y, 1e-4)); break; }
+    }
+    pv = uM05FwP.z + uF;
+  }`;
+
+const M05WCRISP_GLSL = /* glsl */ `
+  if (psn.z > 0.0 && prow < 6.5${M05WCRISP === 2 ? '' : ' && prow > 0.5'}) {
+    vec2 tpc = vec2(vPerfUv.x, puv.y) * uPtWallSize;
+    vec2 jca = dFdx(tpc), jcb = dFdy(tpc);
+    float mC = abs(jca.x * jcb.y - jca.y * jcb.x) / max(max(length(jca), length(jcb)), 1e-5);
+    float rideC = uM05Eye.w > 0.5 ? smoothstep(0.02, 0.5, distance(cameraPosition, uM05Eye.xyz)) : 0.0;
+    float wCr = rideC * (1.0 - smoothstep(uM05WC.x, uM05WC.y, mC));
+    if (wCr > 0.0) {
+      vec3 metal = texture2D(uM05WField, vec2(puv.x, 0.5)).rgb;
+      // slot cell in real units: 46 round the tube (2 pi 7.6 / 46 = 1.04 u), psn.z along it
+      vec2 gc = vec2(vPerfUv.x * 46.0, psn.x + psn.y * pt);
+      vec2 qc = (fract(gc) - 0.5) * vec2(1.038, psn.z);
+      vec2 hsc = vec2(0.34, 0.27) - 0.2;
+      vec2 kc = max(abs(qc) - hsc, 0.0);
+      float dS = length(kc) + min(max(abs(qc.x) - hsc.x, abs(qc.y) - hsc.y), 0.0) - 0.2;
+      float aS = fwidth(dS) * 0.85 + 1e-4;
+      float hole = 1.0 - smoothstep(-aS, aS, dS);
+      // pale pink rim just outside the edge, strongest at the slot's ends round the tube
+      float rim = smoothstep(-aS, aS, dS) * (1.0 - smoothstep(0.035 - aS, 0.035 + aS, dS));
+      float ends = 0.45 + 0.55 * smoothstep(0.12, 0.3, abs(qc.x));
+      float glow = exp(-max(dS, 0.0) / 0.07) * (1.0 - hole);
+      vec3 inside = mix(vec3(0.22, 0.0, 0.15), vec3(0.45, 0.02, 0.19), smoothstep(0.0, -0.12, dS));
+      vec3 cw = mix(metal, vec3(0.96, 0.40, 0.94), glow * 0.28);
+      cw = mix(cw, vec3(1.0, 0.80, 0.97), rim * ends * 0.85);
+      cw = mix(cw, inside, hole);
+      // where a slot is only a few pixels: its mean (no shimmer)
+      float detail = 1.0 - smoothstep(0.035, 0.09, aS);
+      cw = mix(mix(metal, vec3(0.32, 0.02, 0.17), 0.09), cw, detail);
+      pc = mix(pc0, cw, wCr);
+    }
+  }`;
+
+/**
+ * one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1; `&m05wcrisp=1`: `ph` =
+ * (slot-row phase at t = 0, phase per unit t, slot-row pitch in real units) — set by environment.ts, the far bays by
+ * their virtual depth
+ */
+export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: number; ph?: [number, number, number] }
 
 /**
  * `?projwall05=1`: wrap a perforatedMetal wall material (real 05 wall or the forced-perspective far wall; both carry
@@ -298,10 +394,14 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: 
 export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
   const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0, 0)));
   const segT = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector3(segs[i].row, segs[i].t0, segs[i].t1) : new THREE.Vector3(0, 0, 0)));
-  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE ? { uM05Eye: m05eye } : {}) };
+  // `&m05wcrisp=1` (round 18): per bay (slot-row phase at t = 0, phase per unit t, pitch); pitch 0 = not drawn crisp
+  const segN = Array.from({ length: N_SEG }, (_, i) => (segs[i]?.ph ? new THREE.Vector3(...segs[i].ph!) : new THREE.Vector3(0, 0, 0)));
+  const fwExact = M05WCRISP > 0 && key === 'far';   // `&m05wcrisp=1`: the far wall's exact tunnel coordinate per pixel
+  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE || M05WCRISP ? { uM05Eye: m05eye } : {}), ...(M05WCRISP ? { uPtSegN: { value: segN } } : {}), ...(fwExact ? m05fw : {}) };
   // env05 run #4: the bays stay editable until the first render (environment.ts adds the real wall's bay past the seam)
   mat.userData.ptSeg = seg;
   mat.userData.ptSegT = segT;
+  mat.userData.ptSegN = segN;
   const prev = mat.onBeforeCompile;
   mat.onBeforeCompile = (shader, r) => {
     prev.call(mat, shader, r);
@@ -314,22 +414,25 @@ ${PROJ05_INVERSE}
 void main() {`)
       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
 { // ?projwall05=1: the approved wall of this bay (texture anchored to the tunnel)
-  float pv = vPerfUv.y;
+  float pv = vPerfUv.y;${fwExact ? M05FW_GLSL : ''}
   float prow = 0.0;
   float pt = fract((pv - uPtTile.x) / uPtTile.y);
+${M05WCRISP ? '  vec3 psn = vec3(0.0);' : ''}
   for (int i = 0; i < ${N_SEG}; i++) {
     vec4 sg = uPtSeg[i];
-    if (pv >= sg.x && pv < sg.y) { prow = uPtSegT[i].x; pt = mix(uPtSegT[i].y, uPtSegT[i].z, (pv - sg.x) / (sg.y - sg.x)); }
+    if (pv >= sg.x && pv < sg.y) { prow = uPtSegT[i].x; pt = mix(uPtSegT[i].y, uPtSegT[i].z, (pv - sg.x) / (sg.y - sg.x));${M05WCRISP ? ' psn = uPtSegN[i];' : ''} }
   }
   vec2 rw = uPtRows[int(prow + 0.5)];
   vec2 puv = vec2(fract(vPerfUv.x + 0.25), (rw.x + clamp(pt * rw.y, 0.5, rw.y - 0.5)) / uPtWallSize.y);
-  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}
+  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WCRISP ? ' vec3 pc0 = pc;' : ''}${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}${M05WCRISP ? M05WCRISP_GLSL : ''}
   gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);
 }`);
-    if (M05WALL || M05WTILE) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
+    if (M05WALL || M05WTILE || M05WCRISP) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
+    if (M05WCRISP) shader.fragmentShader = shader.fragmentShader.replace('void main() {', `uniform vec3 uPtSegN[${N_SEG}]; uniform sampler2D uM05WField; uniform vec2 uM05WC;\nvoid main() {`);
+    if (fwExact) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec3 uM05FwC; uniform vec3 uM05FwT; uniform vec4 uM05FwP; uniform vec2 uM05FwK[8];\nvoid main() {');
   };
   const prevKey = mat.customProgramCacheKey.bind(mat);
-  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '');
+  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '') + (M05WCRISP ? '|m05wcrisp' + M05WCRISP : '');
   const prevRender = mat.onBeforeRender;
   mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
   return mat;

@@ -344,6 +344,48 @@ export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
  */
 export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
 /**
+ * `&m05wcrisp=1` (Screen 05 round 18, needs m05far; qa/match/05/r18/PROGRESS.md step 2; src/vfx/proj05Tunnel.ts
+ * M05WCRISP_GLSL): THE PAINTED CRISP SLOTTED WALL while swimming. The far block's bays are as deep as the painting's
+ * telescoping far rings make them (bay CD 38 u, DE 64 u, … vs the painted near bay AB 18 u), and each bay's baked picture
+ * plus m05wtile's N1 slot rows were stretched over that whole depth: near the end of 05 and at hard left the camera saw
+ * slots 2.7 … 4.6× too long along the tunnel, magnified into a radially streaked smear. Where a far bay's picture would be
+ * magnified while swimming, the wall is now drawn at the painted near-wall scale: the slot-free painted metal of the
+ * approved near bay N1 (one profile round the tube: tools/match05/wall_field05.py — the pink / violet bands and light
+ * streaks along the tunnel) with dark plum capsule slots with pink rims, 46 round the tube, slot rows every ≈ 2.1 u of
+ * real (virtual) depth, centred in each bay between its gold rings — drawn analytically, so they stay crisp at any distance.
+ * `&m05wcrisp=2`: also the near bay AB. Off at the locked checkpoint eye (0 px there); default build: not compiled.
+ * Tunables (QA): `m05wpitch` (slot-row pitch, u), `m05wc0` / `m05wc1` (magnification window of the hand-over).
+ */
+export const M05WCRISP: number = MATCH05 && q05('m05far') ? (qv05('m05wcrisp') === '2' ? 2 : q05('m05wcrisp') ? 1 : 0) : 0;
+export const m05wcrispNum = (key: string, d: number): number => { const v = qv05(key); return v !== '' && isFinite(+v) ? +v : d; };
+/**
+ * `&m05wcrisp=1`: the live far block's mapping for an EXACT tunnel coordinate per pixel on the far wall. With the eye near
+ * the seam the far wall's vertex rows (uniform in 1/D from the eye) bunch next to the eye and its last triangles span
+ * virtual depths 40 → 430, so the interpolated coordinate jumped at triangle edges (slot rows suddenly 6× denser). The
+ * shader inverts the forced perspective from the world position instead. Written every frame by src/world/match05far.ts:
+ * c0, T = far block origin / axis; p = (zs = real-scale extent, L, sF, live 0/1); knots = (u, Z) of ForcedTunnel.
+ */
+export const m05fw = {
+  uM05FwC: { value: new THREE.Vector3() },
+  uM05FwT: { value: new THREE.Vector3(0, 0, 1) },
+  uM05FwP: { value: new THREE.Vector4(0, 6, 0, 0) },
+  uM05FwK: { value: Array.from({ length: 8 }, () => new THREE.Vector2(0, 0)) },
+  /** `&m05lidf=1`: (eye depth of the seam at the locked eye, live eye depth), eye offsets from the axis (locked, live) */
+  uM05FwD: { value: new THREE.Vector2(53, 53) },
+  uM05FwQL: { value: new THREE.Vector3() },
+  uM05FwQ: { value: new THREE.Vector3() },
+};
+/**
+ * `&m05lidf=1` (Screen 05 round 18, needs m05far; src/vfx/proj05Tunnel.ts lidProjMaterial): the approved far paddles L3 / R3
+ * (and the far tips of L2 / R2) are Blender trays fitted onto the far block's wall as it is compressed for the LOCKED eye
+ * (4 … 5.4 u past the seam = virtual depth ≈ 21 … 56). The far block re-fits itself to the live eye every frame, the trays
+ * did not: while swimming they floated 2 … 3 u inside the tunnel as a flat, cut-off gold chunk (hard left, t81: x 150–300,
+ * y 440–540). Under the switch their vertices past the seam go through the same mapping as the far block (locked
+ * compression undone → virtual tunnel → live compression), so they stay on the far wall as real paddles that approach like
+ * the rings. Nearer than the seam nothing moves; at the locked eye and after the block is gone: identity (0 px at the lock).
+ */
+export const M05LIDF: boolean = MATCH05 && q05('m05far') && q05('m05lidf');
+/**
  * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
  * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
  * back-projecting the approved picture's river through the locked eye: right bank only 0.37–0.67 of the half width right
