@@ -950,3 +950,233 @@ Everything is restored, the three workers are running again, and the current sta
 
 Screens 05, 06 and 07 are not restarted, so effort stays on Benny and Screen 04. Screen 08 stays paused. Nothing changes in the normal game until a change is proven. When the workers report back, I'll check each result at full size and show you your approved screen next to before and now: at the start, swimming, inside the tunnel and steering, plus a swim clip. No credits are being spent.
 
+### 🧑 User — 2026-11-19T23:43:08.285Z
+
+I don't mean to interrupt, but how does it look so far?
+
+### 🤖 Claude — 2026-11-19T23:43:10.321Z
+
+Let me check what each worker has actually produced so far, from their branches and the pictures on disk.
+
+### 🤖 Claude — 2026-11-19T23:43:11.970Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; for w in benny s04 s04b; do echo \"=== $w\"; cd /home/user/wt/$w && git log --format='%h %cr %s' 09459079..HEAD | head -5; git status --short | head -8; find qa -newer /home/user/rainbow-/docs/briefs/2026-11-19-r20/setup_worker.sh -type f \\( -name '*.png' -o -name '*.mp4' -o -name '*.md' \\) 2>/dev/null | sort | head -30; done", "description": "Check workers' commits and new pictures"}`
+
+### 🧑 User — 2026-11-19T23:43:12.350Z
+
+> ↩︎ result: 23:43
+> === benny
+> 8fb1b91 11 minutes ago Benny r19b WIP restored (r20): BENNY20 plush-lock fur shader path (fur.ts, inert until benny20.ts sets the define), benny20 knit / felt-star maps (crown_n regenerated with tools/benny20/knit.py, byte-identical generator), task-1 partial shots
+>  M src/characters/benny/runtime.ts
+>  M tools/benny20/shots.mjs
+> ?? node_modules
+> ?? qa/benny/r20/
+> ?? src/characters/benny/benny20.ts
+> ?? tools/benny20/approved_mask04.png
+> ?? tools/benny20/landmarks.py
+> ?? tools/benny20/probe.mjs
+> qa/01_diff.png
+> qa/01_overlay.png
+> qa/01_side_by_side.png
+> qa/02_diff.png
+> qa/02_overlay.png
+> qa/02_side_by_side.png
+> qa/03_diff.png
+> qa/03_overlay.png
+> qa/03_side_by_side.png
+> qa/04_diff.png
+> qa/04_overlay.png
+> qa/04_side_by_side.png
+> qa/05_diff.png
+> qa/05_overlay.png
+> qa/05_side_by_side.png
+> qa/06_diff.png
+> qa/06_overlay.png
+> qa/06_side_by_side.png
+> qa/07_diff.png
+> qa/07_overlay.png
+> qa/07_side_by_side.png
+> qa/07_to_08_continuity.md
+> qa/08_diff.png
+> qa/08_overlay.png
+> qa/08_side_by_side.png
+> qa/09_diff.png
+> qa/09_overlay.png
+> qa/09_side_by_side.png
+> qa/10_diff.png
+> qa/10_overlay.png
+> === s04
+> dfeb60c 10 minutes ago Screen 04 r20: r19b WIP restored — m04wup (water climbing the tunnel walls), off by default, unprove …[+1353 chars]
+
+### 🤖 Claude — 2026-11-19T23:43:15.641Z
+
+Those `qa/0N_*` files are just the normal checkout. Let me look only at what the workers created themselves:
+
+### 🤖 Claude — 2026-11-19T23:43:16.967Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && git status --short --untracked-files=all | grep -v node_modules | head -30; ls -la qa/benny/r19b/ 2>/dev/null | head; for w in s04 s04b; do echo \"=== $w\"; cd /home/user/wt/$w; git status --short --untracked-files=all --ignored | grep -v node_modules | head -15; git diff --stat; done", "description": "List only worker-created files"}`
+
+### 🧑 User — 2026-11-19T23:43:17.426Z
+
+> ↩︎ result: M src/characters/benny/runtime.ts
+>  M tools/benny20/shots.mjs
+> ?? qa/benny/r20/probe/a/a0_default.png
+> ?? qa/benny/r20/probe/a/a0_default_mask.png
+> ?? qa/benny/r20/probe/a/probe.json
+> ?? qa/benny/r20/probe/b/b1_hatdrop.png
+> ?? qa/benny/r20/probe/b/b1_hatdrop_mask.png
+> ?? qa/benny/r20/probe/b/b2_pom.png
+> ?? qa/benny/r20/probe/b/b2_pom_mask.png
+> ?? qa/benny/r20/probe/b/b3_furcol.png
+> ?? qa/benny/r20/probe/b/b3_furcol_mask.png
+> ?? qa/benny/r20/probe/b/b4_lock24.png
+> ?? qa/benny/r20/t1/before/closeup_f00.png
+> ?? qa/benny/r20/t1/before/closeup_f03_forward3u.png
+> ?? qa/benny/r20/t1/before/closeup_s_left_steer.png
+> ?? qa/benny/r20/t1/before/closeup_s_right_steer.png
+> ?? qa/benny/r20/t1/before/f00_start.png
+> ?? qa/benny/r20/t1/before/f03_forward3u.png
+> ?? qa/benny/r20/t1/before/f06_forward6u.png
+> ?? qa/benny/r20/t1/before/s05_start.png
+> ?? qa/benny/r20/t1/before/s05_swim3u.png
+> ?? qa/benny/r20/t1/before/s06_start.png
+> ?? qa/benny/r20/t1/before/s06_swim3u.png
+> ?? qa/benny/r20/t1/before/s07_start.png
+> ?? qa/benny/r20/t1/before/s07_swim3u.png
+> ?? qa/benny/r20/t1/before/s_left_steer.png
+> ?? qa/benny/r20/t1/before/s_right_steer.png
+> ?? qa/benny/r20/t1/before/shots.json
+> ?? qa/benny/r20/t1/before/shots_other.json
+> ?? qa/ben …[+617 chars]
+
+### 🤖 Claude — 2026-11-19T23:43:22.716Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && ls qa/benny/r20/t1/benny05/ qa/benny/r20/probe/b/; python3 -c \"\nfrom PIL import Image\nfor p in ['qa/benny/r20/t1/before/closeup_f00.png','qa/benny/r20/t1/benny05/closeup_f00.png','qa/benny/r20/probe/b/b3_furcol.png','/home/user/rainbow-/qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png']:\n  im=Image.open(p); print(p, im.size)\"", "description": "List Benny shots and their sizes"}`
+
+### 🧑 User — 2026-11-19T23:43:22.974Z
+
+> ↩︎ result: qa/benny/r20/probe/b/:
+> b1_hatdrop.png
+> b1_hatdrop_mask.png
+> b2_pom.png
+> b2_pom_mask.png
+> b3_furcol.png
+> b3_furcol_mask.png
+> b4_lock24.png
+> b4_lock24_mask.png
+> 
+> qa/benny/r20/t1/benny05/:
+> closeup_f00.png
+> closeup_f03_forward3u.png
+> closeup_s_left_steer.png
+> closeup_s_right_steer.png
+> f00_start.png
+> f03_forward3u.png
+> f06_forward6u.png
+> s05_start.png
+> s05_swim3u.png
+> s06_start.png
+> s06_swim3u.png
+> s07_start.png
+> s07_swim3u.png
+> s_left_steer.png
+> s_right_steer.png
+> shots.json
+> shots_other.json
+> qa/benny/r20/t1/before/closeup_f00.png (675, 810)
+> qa/benny/r20/t1/benny05/closeup_f00.png (675, 810)
+> qa/benny/r20/probe/b/b3_furcol.png (864, 1536)
+> /home/user/rainbow-/qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png (675, 810)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T23:43:23.993Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png"}`
+
+### 🧑 User — 2026-11-19T23:43:24.034Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:43:24.444Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/qa/benny/r20/t1/before/closeup_f00.png"}`
+
+### 🧑 User — 2026-11-19T23:43:24.590Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:43:24.919Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/qa/benny/r20/t1/benny05/closeup_f00.png"}`
+
+### 🧑 User — 2026-11-19T23:43:25.051Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:43:30.923Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad; cd /home/user/wt/benny/qa/benny/r20/probe && python3 -c \"\nfrom PIL import Image\nimport sys\nims=[Image.open(p).convert('RGB').crop((170,900,620,1440)).resize((675,810),Image.LANCZOS) for p in ['a/a0_default.png','b/b1_hatdrop.png','b/b3_furcol.png','b/b4_lock24.png']]\nfor n,im in zip(['a0','b1','b3','b4'],ims): im.save('$S/probe_'+n+'.png')\n\"; ls $S/probe_*; cat a/probe.json | head -c 600", "description": "Crop Benny worker's probe frames for viewing"}`
+
+### 🧑 User — 2026-11-19T23:43:32.037Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_a0.png
+> /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_b1.png
+> /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_b3.png
+> /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_b4.png
+> {
+>  "query": "match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T23:43:33.499Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_b3.png"}`
+
+### 🧑 User — 2026-11-19T23:43:33.531Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:43:34.059Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_b4.png"}`
+
+### 🧑 User — 2026-11-19T23:43:34.094Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:43:47.142Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad; cp /home/user/rainbow-/qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png $S/benny_1_APPROVED.png; cp /home/user/wt/benny/qa/benny/r20/t1/before/closeup_f00.png $S/benny_2_BEFORE_game_now.png; cp /home/user/wt/benny/qa/benny/r20/t1/benny05/closeup_f00.png $S/benny_3_screen05_version_on_04.png; cp $S/probe_b3.png $S/benny_4_rough_test_new_version.png; ls $S/benny_*", "description": "Copy Benny comparison pictures with clear names"}`
+
+### 🧑 User — 2026-11-19T23:43:47.298Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_1_APPROVED.png
+> /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_2_BEFORE_game_now.png
+> /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_3_screen05_version_on_04.png
+> /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_4_rough_test_new_version.png
+
+### 🤖 Claude — 2026-11-19T23:43:51.132Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_1_APPROVED.png", "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_2_BEFORE_game_now.png", "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_3_screen05_version_on_04.png", "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_4_rough_test_new_version.png"], "caption": "Benny close-ups at the Screen 04 start: 1 your approved Benny · 2 the game now · 3 the existing Screen 05 Benny versi …[+105 chars]`
+
+### 🧑 User — 2026-11-19T23:43:52.084Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_1_APPROVED.png → file_uuid: 5f53f8b3-7e12-4fe9-b15c-541dcfbcb0f0
+>   /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_2_BEFORE_game_now.png → file_uuid: 692a0430-deb1-412d-adf9-a8b615bf9eeb
+>   /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_3_screen05_version_on_04.png → file_uuid: 3c3ca5f8-d23f-429f-be86-965ba2192641
+>   /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/benny_4_rough_test_new_version.png → file_uuid: fee387e7-37a3-4825-b455-25c5df86bbe5
+
+### 🤖 Claude — 2026-11-19T23:43:57.678Z
+
+It's early: the workers restarted about 15 minutes ago and none of them has finished a step yet. Only Benny has pictures so far. I've sent four close-ups of him at the Screen 04 start.
+
+**Benny** (pictures 1–4):
+- **Your approved Benny (1):** chunky hand-knit hat with cream and violet stripes, a thick ribbed cuff, a soft lighter-violet pompom, a flat stitched star, and dusty-rose plush fur.
+- **The game now (2):** the hat is smooth and plain, the star is shiny plastic, and the fur is bright neon pink with thin needle strands.
+- **The existing Screen 05 Benny version (3):** the hat is already much closer, with real knit stitches, cream and violet stripes and a ribbed cuff. The fur is still neon needles, the hat is a bit small and the star is still plastic. The worker is still judging this version on 04 and hasn't given a verdict.
+- **A rough test of the new version (4):** this is a tuning experiment, not a result. The hat is bigger and sits lower, the stripes are closer to yours, the star is flatter and more like a patch, and the pompom is lighter. But the fur tufts come out as stiff pink petals instead of soft plush, and the hat looks a little oversized. Those are the next things the worker has to fix.
+
+**Screen 04 rings and Screen 04 water/foam:** both workers have saved their restored half-built work and are still adjusting the code. Neither has rendered a picture yet, so there's nothing to show.
+
+I'll show you each piece as soon as a worker finishes and proves it: your approved picture, the game now, and the new version, while Benny is swimming and steering, plus a short swim clip.
+

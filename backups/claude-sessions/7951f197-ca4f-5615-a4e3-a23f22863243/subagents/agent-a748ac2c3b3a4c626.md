@@ -1556,3 +1556,35 @@ The BEFORE clip exists (4 s, half size). I'll render the benny05 clip in the bac
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T23:41:28.840Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/benny/tools/benny20/score.py", "content": "\"\"\"Score a Benny render against the APPROVED Screen 04 Benny (same camera: the 04 start view).\nAPPROVED parts: GrabCut silhouette (tools/benny20/approved_mask04.png, made once by approved_mask.py) split by colour\n(pink fur / violet+cream hat / pompom = hat colours above the crown's top band). GAME parts: the flat-colour mask render\n(probe.mjs / shots.mjs B20_MASK=1: fur red, pom green, crown cyan, cuff blue, star black on white).\nPrints IoU (all / hat incl. pom / fur), landmark rows on the centre column, widths, and …[+2998 chars]`
+
+### 🧑 User — 2026-11-19T23:41:28.886Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/benny/tools/benny20/score.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T23:41:30.893Z
+
+> 🔧 **Bash** `{"command": "cp /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_gc_mask.png /home/user/wt/benny/tools/benny20/approved_mask04.png && cd /home/user/wt/benny && python3 -I tools/benny20/score.py qa/benny/r20/probe/a/a0_default.png qa/benny/r20/probe/a/a0_default_mask.png", "description": "Score the first benny20 render"}`
+
+### 🧑 User — 2026-11-19T23:41:31.545Z
+
+> ↩︎ result: {"iou_all": 0.7191, "iou_hat": 0.5564, "iou_fur": 0.4356, "bbox_all": [[62, 802, 63, 1400], [188, 591, 965, 1408]], "hat_bbox": [[62, 802, 149, 1217], [188, 591, 965, 1289]], "cuff_bottom_c": [1216, 1271], "fur_c": [[1217, 1381], [1280, 1396]], "pom_bbox": [322, 517, 902, 1085], "med_fur": [255, 68, 168, "L p10/50/90 [130, 162, 187]"], "med_pom": [184, 76, 255, "L p10/50/90 [143, 172, 192]"], "med_cuff": [155, 29, 255, "L p10/50/90 [94, 144, 165]"], "med_crown": [249, 191, 255, "L p10/50/90 [157, 230, 250]"], "med_star": [255, 181, 89, "L p10/50/90 [156, 175, 194]"], "approved_med": {"fur": [213, 71, 150, "L 106/144/184"], "pom": [133, 30, 229, "L 78/130/178"], "cuff": [103, 16, 209], "crown_white": [233, 182, 233], "crown_violet": [104, 15, 216], "star": [252, 195, 70]}}
+
+### 🤖 Claude — 2026-11-19T23:41:53.522Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/score.py'\ns=open(p).read()\nold=\"gall = gm['fur']\"\nnew=\"\"\"# HTML HUD overlays are in the screenshot too: keep only Benny's box\nbox = np.zeros(mk.shape[:2], bool); box[860:1460, 120:744] = True\nfor k in gm: gm[k] &= box\ngall = gm['fur']\"\"\"\ns=s.replace(old,new,1); open(p,'w').write(s)\nEOF\npython3 -I tools/benny20/score.py qa/benny/r20/probe/a/a0_default.png qa/benny/r20/probe/a/a0_default_mask.png", "description": "Restrict scorer to Benny box and rescore"}`
+
+### 🧑 User — 2026-11-19T23:41:54.099Z
+
+> ↩︎ result: {"iou_all": 0.7346, "iou_hat": 0.5742, "iou_fur": 0.4358, "bbox_all": [[193, 599, 902, 1400], [188, 591, 965, 1408]], "hat_bbox": [[241, 566, 902, 1217], [188, 591, 965, 1289]], "cuff_bottom_c": [1216, 1271], "fur_c": [[1217, 1381], [1280, 1396]], "pom_bbox": [322, 517, 902, 1085], "med_fur": [255, 68, 168, "L p10/50/90 [130, 162, 187]"], "med_pom": [184, 76, 255, "L p10/50/90 [143, 172, 192]"], "med_cuff": [157, 28, 255, "L p10/50/90 [130, 147, 166]"], "med_crown": [249, 191, 255, "L p10/50/90 [157, 230, 250]"], "med_star": [255, 181, 89, "L p10/50/90 [156, 175, 194]"], "approved_med": {"fur": [213, 71, 150, "L 106/144/184"], "pom": [133, 30, 229, "L 78/130/178"], "cuff": [103, 16, 209], "crown_white": [233, 182, 233], "crown_violet": [104, 15, 216], "star": [252, 195, 70]}}
+
+### 🤖 Claude — 2026-11-19T23:41:55.564Z
+
+Now a chained variant run (each builds on the previous one) for geometry and fur, with masks.
+
+### 🤖 Claude — 2026-11-19T23:42:04.731Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && cat > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/v2.json <<'EOF'\n[\n {\"name\": \"b1_hatdrop\", \"js\": \"B.hat.position.y -= 0.24;\"},\n {\"name\": \"b2_pom\", \"js\": \"B.pom.scale.multiplyScalar(0.86);\"},\n {\"name\": \"b3_furcol\", \"js\": \"const f=B.furs.find(f=>f.mesh.name==='fur_body'); f.material.color.set('#b5508a'); for (const a of B.furs.filter(f=>/arm/.test(f.mesh.name))) a.material.color.set('#b5508a');\"},\n {\"name\": \"b4_lock24\", \"js\": \"const f=B.furs.find(f=>f.mesh.name==='fur_body'); f.unifo …[+1434 chars]`
+
