@@ -1,7 +1,0 @@
-{
-  "screen": "07",
-  "branch": "codex/s07-plunge-bank-continuity",
-  "commit": "ac10d511420c7b547a2f8b47567f13afe9c9c7cf",
-  "verified": "2026-11-18T23:47:15.575002+00:00",
-  "sourceFile": "src/vfx/foam.ts"
-}

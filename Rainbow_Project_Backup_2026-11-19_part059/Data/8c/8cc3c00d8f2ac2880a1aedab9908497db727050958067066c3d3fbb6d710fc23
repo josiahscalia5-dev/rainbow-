@@ -1,7 +1,0 @@
-{
-  "screen": "06",
-  "branch": "codex/s06-crest-foam-clearance",
-  "commit": "e0e3ed187fe4596bd351a5e4cb4d62d796e92250",
-  "verified": "2026-11-18T23:47:11.069325+00:00",
-  "sourceFile": "src/world/match06.ts"
-}

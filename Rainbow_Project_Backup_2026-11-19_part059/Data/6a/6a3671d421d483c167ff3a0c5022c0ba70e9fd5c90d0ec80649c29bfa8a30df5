@@ -1,8 +1,0 @@
-import json,sys
-from pathlib import Path
-p=Path('image2blender-runs/s07_banks/spec.json')
-s=json.loads(p.read_text());stage=sys.argv[1];verdict=sys.argv[2]
-entries=[v for v in s['reviewHistory'] if v['pass']==stage]
-criteria=next(v['criteria'] for v in s['passes'] if v['id']==stage)
-s['reviewHistory'].append({'pass':stage,'attempt':len(entries)+1,'angles':['reference','oblique'],'verdict':verdict,'criteriaMet':criteria if verdict=='continue' else [],'criteriaFailed':[] if verdict=='continue' else [sys.argv[3]],'notes':sys.argv[3]})
-p.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n')
