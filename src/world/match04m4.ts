@@ -93,6 +93,11 @@ uniform float uLipBulb;
 uniform float uBulbR;
 uniform float uLen;
 uniform vec4 uTone;        // band base, lip base, opening base, streak strength
+#ifdef CX04_REFLECT_RIVER
+uniform sampler2D uReflectedRiver;
+uniform vec4 uRiverPlane; // height relative to the ring axis, mouth depth, flat lane half-width, lateral scale
+uniform float uWaterTime;
+#endif
 uniform sampler2D uRingTile; // tile_ring.png: the painted ring colour at every angle (rows 56..176 = band near edge .. lip)
 uniform float uPaint;      // how much of the painted ring colour drives the bands (m04paint)
 uniform float uBulge;      // r13 m04bulge: each band shaded as a ROUNDED tube (bright middle, darker edges) like the painted rings
@@ -225,6 +230,26 @@ void main() {
       float flank = smoothstep(0.85, 1.55, abs(ang)) * (1.0 - smoothstep(2.30, 2.65, abs(ang)));
       float shoulder = part > 0.5 ? 0.55 : smoothstep(0.26, 0.70, tb);
       col = mix(col, wc * (0.52 + 0.63 * v), 0.34 * flank * shoulder);
+    }
+    #endif
+    #ifdef CX04_REFLECT_RIVER
+    if (ring >= 4.0 && ring <= 7.0 && part < 1.5) {
+      // Intersect the reflected view ray with the flat middle of the real river mesh.
+      // The painted current's original 8 by 4.652 unit tile supplies the reflection.
+      float down = -dot(R, uAxU);
+      float rayLength = (dot(q, uAxU) - uRiverPlane.x) / max(down, 0.015);
+      vec3 hit = q + R * rayLength;
+      float lateral = dot(hit, uAxR);
+      float along = dot(hit, uAxD);
+      float contact = smoothstep(0.025, 0.18, down) * smoothstep(0.0, 0.5, rayLength)
+                    * (1.0 - smoothstep(10.0, 15.0, rayLength))
+                    * (1.0 - smoothstep(uRiverPlane.z - 0.55, uRiverPlane.z, abs(lateral)))
+                    * smoothstep(0.0, 2.0, along) * (1.0 - smoothstep(uLen - 2.0, uLen, along));
+      float flow = along - uRiverPlane.y - uWaterTime * 0.9;
+      vec2 sampleUV = vec2(0.5 + lateral * uRiverPlane.w / 8.0, (flow - 1.7572621) / 4.6517529);
+      vec3 waterLight = texture2D(uReflectedRiver, sampleUV, 2.0).rgb;
+      float polish = 0.16 + 0.18 * pow(1.0 - facing, 2.0);
+      col = mix(col, waterLight * vec3(1.0, 0.86, 0.79), contact * polish);
     }
     #endif
     // a few cool blue-violet glints on the bands (painted reflections of the cyan water)
@@ -742,6 +767,8 @@ export function addM04(ctx: M04Ctx) {
   const axO = toW(cx, cy, z0), axD = toW(cx, cy, z0 - 1).sub(axO).normalize();
   const axU = toW(cx, cy + 1, z0).sub(axO).normalize(), axR = toW(cx + 1, cy, z0).sub(axO).normalize();
   const away = { value: 0 };
+  const time = { value: 0 };
+  const reflectedRiver = { value: null as THREE.Texture | null };
   const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
   const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
   const updaters: ((a: number) => void)[] = [];
@@ -753,10 +780,14 @@ export function addM04(ctx: M04Ctx) {
     ringTile.minFilter = THREE.LinearMipmapLinearFilter; ringTile.anisotropy = 8;
     const deepRim = on('cx04DeepRim');
     const gm = new THREE.ShaderMaterial({
-      defines: deepRim ? { CX04_DEEP_RIM: deepRimIndex } : {},
+      defines: {
+        ...(deepRim ? { CX04_DEEP_RIM: deepRimIndex } : {}),
+        ...(M04.river && on('cx04RiverReflection') ? { CX04_REFLECT_RIVER: 1 } : {}),
+      },
       vertexShader: VERT, fragmentShader: GOLD_FRAG, side: THREE.DoubleSide, fog: false, extensions: { derivatives: true } as never,
       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+        uReflectedRiver: reflectedRiver, uRiverPlane: { value: new THREE.Vector4(0.02 - cy, z0, M04.num('m04xf', 2.1), M04.num('m04rk', 1)) }, uWaterTime: time,
         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
     const baseWidth = M04.num('m04ringgw', 1);
@@ -861,7 +892,7 @@ export function addM04(ctx: M04Ctx) {
   const RY = M04.num('m04ry', 1.0);                         // how high the river sides climb the wall (u above the water)
   const XF = M04.num('m04xf', 1.9);                         // half width of the flat centre lane (Benny's steering room)
   const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
-  const time = { value: 0 };
+
   if (endCap && M04.num('m04end', 0) > 0) {
     // r16 `&m04end=1`: the distant glowing opening (END_FRAG): m04eg glow point height (fraction of r), m04eq ring shrink per
     // ring, m04ec core size, m04eh halo size, m04es glow strength, m04el lane half width on the far floor, m04ek ring contrast
@@ -908,6 +939,7 @@ export function addM04(ctx: M04Ctx) {
     g.setAttribute('aR', new THREE.Float32BufferAttribute(aR, 2));
     g.setIndex(idx);
     const riv = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_river3.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+    reflectedRiver.value = riv;
     riv.colorSpace = THREE.NoColorSpace; riv.flipY = false; riv.wrapS = riv.wrapT = THREE.RepeatWrapping;
     riv.minFilter = THREE.LinearMipmapLinearFilter; riv.anisotropy = 8;
     let sideBand: THREE.Texture | null = null;
