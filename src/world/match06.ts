@@ -367,6 +367,37 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
   });
 
+  const finishProjection = (group: THREE.Group, setAway: (a: number) => void): Match06 => {
+    return {
+      group,
+      bakeDepth(renderer) {
+        const prevRT = renderer.getRenderTarget();
+        const scene = new THREE.Scene();
+        const clone = group.clone(true);
+        clone.visible = true;
+        clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+        scene.add(clone);
+        clone.updateMatrixWorld(true);
+        renderer.setRenderTarget(depthRT);
+        renderer.clear();
+        renderer.render(scene, proj);
+        renderer.setRenderTarget(prevRT);
+        shared.uUseDepth.value = 1;
+      },
+      setAway,
+      away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+      sync(renderer, w, h) {
+        shared.uPjPost.value.x = renderer.toneMappingExposure;
+        if (FLOW) shared.uTime.value = performance.now() / 1000;
+        shared.uPjRes.value.set(w, h);
+      },
+    };
+  };
+  if (FLOW && qs?.get('m06tun') === '1' && qs.get('cx06ArchedPassage') === '1') {
+    const { buildArchedPassage06 } = await import('./archedPassage06');
+    return finishProjection(await buildArchedPassage06(mat), () => {});
+  }
+
   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
   const f1 = course.sample(L.s1);
   const T1 = f1.tan.clone().normalize(), P1 = f1.pos.clone(), U1 = f1.up.clone(), R1 = f1.right.clone();
@@ -729,28 +760,8 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       if (u) u.value.set(o.name === 'm06_floor' ? 1 : 0, o.name === 'm06_floor' ? 0 : 1, 0);
     });
   }
-  return {
-    group,
-    bakeDepth(renderer) {
-      const prevRT = renderer.getRenderTarget();
-      const scene = new THREE.Scene();
-      const clone = group.clone(true);
-      clone.visible = true;
-      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
-      scene.add(clone);
-      clone.updateMatrixWorld(true);
-      renderer.setRenderTarget(depthRT);
-      renderer.clear();
-      renderer.render(scene, proj);
-      renderer.setRenderTarget(prevRT);
-      shared.uUseDepth.value = 1;
-    },
-    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
-    away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
-    sync(renderer, w, h) {
-      shared.uPjPost.value.x = renderer.toneMappingExposure;
-      if (FLOW) shared.uTime.value = performance.now() / 1000;
-      shared.uPjRes.value.set(w, h);
-    },
-  };
+  return finishProjection(group, (a) => {
+    if (foamClouds) foamClouds.visible = a > 0.5;
+    for (const o of foamSprites) o.visible = a > 0.5;
+  });
 }
