@@ -1,0 +1,17 @@
+
+> rainbow-washer-game@0.1.0 verify:refs
+> sha256sum -c scripts/reference.sha256
+
+references/01_inside_washer_girl_and_towel.png: OK
+references/02_mascot_tumbles_in_whirlpool.png: OK
+references/03_whirlpool_twirl.png: OK
+references/04_through_the_five_arrows.png: OK
+references/05_flow_into_the_current.png: OK
+references/06_crest_the_rinse_arch.png: OK
+references/07_dive_the_washer_tube.png: OK
+references/08_final_spin_chamber.png: OK
+references/09_ride_the_final_wave.png: OK
+references/10_slide_into_hiding.png: OK
+references/11_safely_home_final_victory.png: OK
+character_references/official_cartoon_girl_original.jpg: OK
+references/water/05_water_isolated_original.png: OK

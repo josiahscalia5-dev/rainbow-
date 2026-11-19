@@ -1,0 +1,66 @@
+{
+  "whole": {
+    "xyxy": [
+      0,
+      0,
+      864,
+      1536
+    ],
+    "Claudia": {
+      "meanAbsoluteRGB": 16.1988,
+      "within20Percent": 79.0857
+    },
+    "Codex": {
+      "meanAbsoluteRGB": 16.177,
+      "within20Percent": 79.0987
+    }
+  },
+  "underCrest": {
+    "xyxy": [
+      295,
+      575,
+      560,
+      710
+    ],
+    "Claudia": {
+      "meanAbsoluteRGB": 4.9195,
+      "within20Percent": 92.5255
+    },
+    "Codex": {
+      "meanAbsoluteRGB": 4.8827,
+      "within20Percent": 92.5255
+    }
+  },
+  "goldAndWall": {
+    "xyxy": [
+      335,
+      242,
+      858,
+      557
+    ],
+    "Claudia": {
+      "meanAbsoluteRGB": 0.9644,
+      "within20Percent": 98.63
+    },
+    "Codex": {
+      "meanAbsoluteRGB": 0.8477,
+      "within20Percent": 98.7684
+    }
+  },
+  "bennyArea": {
+    "xyxy": [
+      205,
+      730,
+      635,
+      1172
+    ],
+    "Claudia": {
+      "meanAbsoluteRGB": 58.8118,
+      "within20Percent": 29.3455
+    },
+    "Codex": {
+      "meanAbsoluteRGB": 58.7205,
+      "within20Percent": 29.357
+    }
+  }
+}
