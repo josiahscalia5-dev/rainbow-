@@ -1,0 +1,71 @@
+"""Create a compact native phone review and save it as an additive evidence commit."""
+import json,hashlib,os,shutil,subprocess,sys,zipfile
+from pathlib import Path
+root=Path(sys.argv[1]);repo=root/'repo';receipt=json.loads((root/'published.json').read_text())
+folder='experiments/'+receipt['branch'];out=repo/folder
+def git(*a, env=None):return subprocess.check_output(['git','-C',str(repo),*a],env=env).decode().strip()
+def sha(p):
+    with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+ref='refs/heads/'+receipt['branch']
+assert git('rev-parse','HEAD')==receipt['tip']
+assert git('ls-remote','--heads','origin',ref).split()[0]==receipt['tip']
+poses=['opening','forward-03','forward-06','forward-10','forward-20','hard-left','hard-right','deep','last-in-stage']
+description="""# Screen 06 on Android
+
+Open **APPROVED.jpg** first. It is the unchanged original Screen 06 artwork. Open each folder's **opening.png** next to compare the same camera.
+
+| Folder | What Benny swims through |
+| --- | --- |
+| **CLAUDIA_BEFORE** | Claudia's retained game at **c649fcbc35780e11cefce83eb54684f1d55752a5** |
+| **CODEX_NEW** | The isolated pink-fur and fitted-beanie candidate on Claudia's scenery at **6dbeaafbcbc51c63f6513fbcb0e684d15308a553** |
+| **SCENERY_CODEX_NEW** | The bent gold washer and water candidate with Claudia's Benny at **94c36531af3cce486a252e56f75b81595536ad96** |
+
+Each folder contains nine native 864 × 1536 views and an uninterrupted 648 × 1152 H.264 **ride.mp4**. Each film lasts 5.25 seconds. The stage changes at 4.92 seconds. Watch the +3 crest, the hard turns and the far passage. The **character** folder has three close views at original pixel resolution. **REPORT.md** describes Benny. **SCENERY_CODEX_NEW/REPORT.md** describes the washer. Exact measurements are in **checks**.
+
+There are fourteen native poses per candidate in the full review. This smaller phone ZIP selects the opening, +3, +6, +10, +20, left, right, deep and the final in-stage pose, and includes all three complete movies. The separate PDF offers one large picture on each page. Both experiments await your visual approval. Claudia's retained branch and original images are protected.
+
+[All character views](https://github.com/josiahscalia5-dev/rainbow-/blob/6dbeaafbcbc51c63f6513fbcb0e684d15308a553/experiments/codex/s06-benny-reference-pink/PHONE_REVIEW.md) · [All scenery views](https://github.com/josiahscalia5-dev/rainbow-/blob/94c36531af3cce486a252e56f75b81595536ad96/experiments/codex/s06-arched-washer-passage/PHONE_REVIEW.md)
+"""
+archive=out/'Screen06_Phone.zip'
+with zipfile.ZipFile(out/'Screen06_Review.zip') as big, zipfile.ZipFile(archive,'w') as small:
+    available=json.loads(big.read('REVIEW_SHA256.json'))
+    selected=['APPROVED.jpg','REPORT.md']
+    for group in ['CLAUDIA_BEFORE','CODEX_NEW','SCENERY_CODEX_NEW']:
+        selected.append(group+'/ride.mp4')
+        selected.extend(group+'/'+pose+'.png' for pose in poses)
+        selected.append(group+'/route.json')
+    selected.extend(n for n in available if n.startswith('character/') or n.startswith('checks/') or n.startswith('SCENERY_CODEX_NEW/checks/'))
+    selected+=['SCENERY_CODEX_NEW/REPORT.md']
+    sums={}
+    for name in selected:
+        data=big.read(name);h=hashlib.sha256(data).hexdigest();assert h==available[name]
+        small.writestr(name,data,compress_type=zipfile.ZIP_STORED if Path(name).suffix in ('.png','.jpg','.mp4') else zipfile.ZIP_DEFLATED)
+        sums[name]=h
+    small.writestr('README_FIRST.md',description,compress_type=zipfile.ZIP_DEFLATED)
+    sums['README_FIRST.md']=hashlib.sha256(description.encode()).hexdigest()
+    small.writestr('SHA256.json',json.dumps(sums,indent=2)+'\n',compress_type=zipfile.ZIP_DEFLATED)
+assert archive.stat().st_size<87_000_000
+with zipfile.ZipFile(archive) as z:
+    assert z.testzip() is None
+    for name,h in sums.items():
+        with z.open(name) as src:assert hashlib.file_digest(src,'sha256').hexdigest()==h
+local=Path('/workspace/shared/downloads/Rainbow06_Phone_Review.zip')
+if not local.exists():
+    try:os.link(archive,local)
+    except OSError:shutil.copyfile(archive,local)
+assert sha(local)==sha(archive)
+guide=out/'ANDROID_DOWNLOAD.md';guide.write_text('# Screen 06 phone download\n\n[Download the one-file phone ZIP](Screen06_Phone.zip) · [Open the visual review PDF](Review_on_Android.pdf)\n\n'+description.split('\n\n',1)[1])
+manifest=out/'SHA256.json';inventory=json.loads(manifest.read_text())
+for f in (archive,guide):inventory[f.name]=sha(f)
+manifest.write_text(json.dumps(dict(sorted(inventory.items())),indent=2)+'\n')
+git('add','--',folder+'/Screen06_Phone.zip',folder+'/ANDROID_DOWNLOAD.md',folder+'/SHA256.json')
+assert set(git('diff','--cached','--name-only').splitlines())=={folder+'/'+n for n in ['Screen06_Phone.zip','ANDROID_DOWNLOAD.md','SHA256.json']}
+pointer=git('show',':'+folder+'/Screen06_Phone.zip')
+assert 'oid sha256:'+sha(archive) in pointer and 'size '+str(archive.stat().st_size) in pointer
+git('commit','-q','-m','Add a smaller Android download with native comparisons and all three swims')
+tip=git('rev-parse','HEAD');oid=sha(archive)
+git('lfs','push','--object-id','origin',oid)
+git('push','--quiet','origin','HEAD:'+ref,env={**os.environ,'GIT_LFS_SKIP_PUSH':'1'})
+assert git('ls-remote','--heads','origin',ref).split()[0]==tip
+(root/'phone-commit.json').write_text(json.dumps({'tip':tip,'previousTip':receipt['tip'],'file':'Screen06_Phone.zip','size':archive.stat().st_size,'sha256':oid,'files':len(sums)+1},indent=2)+'\n')
+print('Verified additive Android download commit',tip,archive.stat().st_size,flush=True)
