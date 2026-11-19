@@ -1,0 +1,1243 @@
+# Subagent agent-a2a473b347c5f9236 — session d8784a51-ef7d-54bd-9459-c5d061a0acfa
+
+### 🧑 User — 2026-11-15T21:00:33.128Z
+
+You are the benny-character-artist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). This is Screen 05 **wave 4**. Earlier waves were cut off by usage limits; their edits (`src/characters/benny/build.ts`, `runtime.ts`, `benny-lab.ts`) are in the tree. Continue from them, do not revert or start over.
+
+Read first (briefly): `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE4.md`, `qa/pilot05/COORDINATION_WAVE3.md` (target 6, ownership, rules), lines addressed to you in `qa/pilot05/REQUESTS.md`, your earlier notes under `qa/pilot05/benny/` and `qa/pilot05/wave3/benny/`. Then LOOK at `references/05_flow_into_the_current.png` (approved target, 864×1536; Benny from behind) and `qa/pilot05/wave4/baseline/05.png` (live game now). Also check the other screens where Benny appears (`references/02…10`) — Benny must stay the SAME character everywhere.
+
+You own ONLY: `src/characters/benny/*`, `assets/models/benny.glb` (Git LFS; re-export via `scripts/export-models.mjs` Benny part if the game loads the GLB), `docs/characters/benny*`. Read anything; edit nothing else. The camera is LOCKED (Benny's on-screen size is already within ≈25 px of the ref box x 230–612 / y 768–1190). Other specialists are editing water/foam/environment and the coordinator the coins at the same time. If a capture fails because their file is mid-edit, wait 30 s and retry.
+
+The user's correction: "Keep my exact original Benny. Correct his hat-to-body ratio, round pink fluffy body, purple-white beanie, gold star, and pom-pom." In the live capture the beanie reads as a wide, flat, squat disc and the arms as fuzzy wings. Target from the ref (seen from behind):
+* hat incl. pom ≈62% of Benny's visible height, fur body below the cuff ≈38%; the beanie is a tall rounded dome about as wide as the body, not wider;
+* white/purple knit stripes (3 purple bands) with visible stitches, purple ribbed cuff, big fluffy purple pom (≈140 px wide at 05);
+* **yellow/gold star on the front-right of the cuff, facing the camera**;
+* round, full pink fluffy body with both small arm nubs visible (round paws, not wings); violet eyes, paw pads unchanged.
+Do not change his identity, colours or style — only fix proportions and shapes. Keep budgets (fur shells etc.).
+
+Rules: at most 6 capture iterations: `timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave4/benny/itNN` (≈60 s; 4 CPUs are shared). You may also use `src/characters/benny/benny-lab.ts` turntables. Side-by-side: `python3 scripts/triptych.py OUT.png 1100 REF=references/05_flow_into_the_current.png BASE=qa/pilot05/wave4/baseline/05.png NOW=<capture>`. At the end capture `02 04 07 10` once into `qa/pilot05/wave4/benny/regress/` to confirm Benny still looks right everywhere. `npx tsc --noEmit` must pass. Do not commit/push (autosave does). Never touch `references/` or `character_references/`. No paid generation, no secrets. Report only measured numbers, no invented fidelity percentages.
+
+Finish by writing `qa/pilot05/wave4/benny/NOTES.md` (what changed by file:function, before/after measured bbox/ratios on your own capture, what is left), and reply with a short summary including the path of your final capture.
+
+### 🤖 Claude — 2026-11-15T21:00:36.982Z
+
+I'll start by reading the coordination files and my earlier notes.
+
+### 🤖 Claude — 2026-11-15T21:00:38.402Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat qa/pilot05/COORDINATION_WAVE4.md; echo ----; sed -n 1,200p qa/pilot05/COORDINATION_WAVE3.md | head -150; echo ----; grep -n -i benny qa/pilot05/REQUESTS.md | head -50; ls qa/pilot05/benny qa/pilot05/wave3/benny qa/pilot05/wave4 2>&1", "description": "Read coordination docs and list benny notes"}`
+
+### 🧑 User — 2026-11-15T21:00:38.447Z
+
+> ↩︎ result: # Screen 05: wave 4 (account 5, session branch `ccr-e033f912-8b40f5`)
+> 
+> Started 2026-11-15 ~21:05 UTC. Waves 1–3 were each cut off by usage limits; every edit they saved is in the
+> tree and is **kept** (wave 3's resumed agents never ran: the account hit its limit at 20:17 UTC).
+> `COORDINATION_WAVE3.md` still holds: targets 1–10, strict file ownership, rules. This file only adds:
+> 
+> ## Baseline for wave 4
+> * Approved target: `references/05_flow_into_the_current.png` (immutable).
+> * Live game at wave-4 start: `qa/pilot05/wave4/baseline/05.png` (stage 05, s 132.44, 120 calls, 629k tris).
+> * 50 % overlay with the ref landmarks (VP + Benny box): measured VP and Benny's bbox are already within
+>   ≈25 px of the ref, so **the camera is LOCKED** at the current `STAGE_CAM['05']` values (back 6.4, up 3.6,
+>   ahead 18, lookUp −1.92, fov 62, yaw 2.96). Do not ask for camera changes; fix your own element instead.
+> 
+> ## Owners (wave 4)
+> | Area | Owner | Files |
+> |---|---|---|
+> | Camera, path, coins ($ glyph, size, on the cyan core), checkpoints, bloom strength in `Game.ts` | coordinator (main session) | `src/game/cameraRig.ts`, `src/world/course.ts`, `src/gameplay/coins.ts`, `CHECKPOINTS` + bloom lines in `src/ …[+9899 chars]
+
+### 🤖 Claude — 2026-11-15T21:00:41.041Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls -la qa/pilot05/benny/* qa/pilot05/wave3/benny/* qa/pilot05/wave4/baseline; ls src/characters/benny; wc -l src/characters/benny/*; git log --oneline -5; git status --short | head -30", "description": "List benny folders, source files, git status"}`
+
+### 🧑 User — 2026-11-15T21:00:41.084Z
+
+> ↩︎ result: qa/pilot05/benny/before:
+> total 6632
+> drwxr-xr-x 2 root root    4096 Nov 15 20:53 .
+> drwxr-xr-x 4 root root    4096 Nov 15 20:53 ..
+> -rw-r--r-- 1 root root 1097990 Nov 15 20:53 01.png
+> -rw-r--r-- 1 root root 1286327 Nov 15 20:53 02.png
+> -rw-r--r-- 1 root root 1613369 Nov 15 20:53 05.png
+> -rw-r--r-- 1 root root 1384203 Nov 15 20:53 10.png
+> -rw-r--r-- 1 root root 1391519 Nov 15 20:53 11.png
+> 
+> qa/pilot05/benny/iter1:
+> total 1384
+> drwxr-xr-x 2 root root    4096 Nov 15 20:53 .
+> drwxr-xr-x 4 root root    4096 Nov 15 20:53 ..
+> -rw-r--r-- 1 root root 1405947 Nov 15 20:53 05.png
+> 
+> qa/pilot05/wave3/benny/it00:
+> total 2756
+> drwxr-xr-x 2 root root    4096 Nov 15 20:53 .
+> drwxr-xr-x 3 root root    4096 Nov 15 20:53 ..
+> -rw-r--r-- 1 root root 1403849 Nov 15 20:53 05.png
+> -rw-r--r-- 1 root root 1403849 Nov 15 20:53 05_mask.png
+> -rw-r--r-- 1 root root     926 Nov 15 20:53 cap_log.json
+> 
+> qa/pilot05/wave4/baseline:
+> total 1584
+> drwxr-xr-x 2 root root    4096 Nov 15 20:56 .
+> drwxr-xr-x 3 root root    4096 Nov 15 20:56 ..
+> -rw-r--r-- 1 root root 1613064 Nov 15 20:56 05.png
+> benny-lab.html
+> benny-lab.ts
+> build.ts
+> fur.ts
+> runtime.ts
+> textures.ts
+>     6 src/characters/benny/benny-lab.html
+>   139 src/characters/benny/benny-lab.ts
+>   460  …[+543 chars]
+
+### 🤖 Claude — 2026-11-15T21:00:42.739Z
+
+Let me look at the reference and the live baseline.
+
+### 🤖 Claude — 2026-11-15T21:00:43.196Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-15T21:00:43.211Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:00:43.600Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave4/baseline/05.png"}`
+
+### 🧑 User — 2026-11-15T21:00:43.638Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:00:45.023Z
+
+Let me crop Benny's region in both images for a closer comparison.
+
+### 🤖 Claude — 2026-11-15T21:00:47.743Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((180,740,680,1240))\nb=Image.open('qa/pilot05/wave4/baseline/05.png').convert('RGB').crop((180,740,680,1240))\nim=Image.new('RGB',(1000,500)); im.paste(r,(0,0)); im.paste(b,(500,0)); im.save(S+'crop_ref_base.png')\n\"", "description": "Crop Benny region from ref and ba …[+21 chars]`
+
+### 🧑 User — 2026-11-15T21:00:47.984Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:00:48.294Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/characters/benny/build.ts", "description": "Read Benny build.ts"}`
+
+### 🧑 User — 2026-11-15T21:00:48.333Z
+
+> ↩︎ result: /**
+>  * Benny — the ONE canonical mascot model + joint rig (procedural, exported to assets/models/benny.glb).
+>  *
+>  * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70 (lower half bulged
+>  * ~6 % → pear-round plush ball), fur adds ~0.15 (visual half-width ≈ 0.86). The beanie perches on the
+>  * top ~40 % of the ball (brim bottom ≈ +0.10 at the back, +0.24 at the front). Height incl. pom ≈ 2.3.
+>  * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
+>  * Meshes named fur_* receive the runtime shell-fur shader (see fur.ts); their userData carries the
+>  * fur parameters (exported as glTF extras).
+>  */
+> import * as THREE from 'three';
+> import type { BuiltModel } from '../types';
+> import {
+>   BENNY_COLORS as C,
+>   CROWN_REPEAT,
+>   blushTexture,
+>   eyeTexture,
+>   knitCrownTextures,
+>   mouthTexture,
+>   ribbedBrimTextures,
+>   soleTexture,
+> } from './textures';
+> 
+> export const BENNY_DIMS = {
+>   skin: 0.7,
+>   fur: 0.12,
+>   radius: 0.8,
+>   /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */
+>   pear: 0.09,
+>   /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y <  …[+20112 chars]
+
+### 🤖 Claude — 2026-11-15T21:00:49.651Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/crop_ref_base.png"}`
+
+### 🧑 User — 2026-11-15T21:00:49.679Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:01:18.466Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/characters/benny/runtime.ts; echo -----; cat src/characters/benny/fur.ts", "description": "Read Benny runtime.ts and fur.ts"}`
+
+### 🧑 User — 2026-11-15T21:01:18.505Z
+
+> ↩︎ result: /**
+>  * Runtime Benny: loads the canonical assets/models/benny.glb, upgrades fur_* meshes to shell fur,
+>  * and drives expressions + procedural secondary motion on top of the GLB clips.
+>  */
+> import * as THREE from 'three';
+> import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> import type { BennyRuntime } from '../types';
+> import { makeFur, type FurHandle, type FurParams } from './fur';
+> 
+> const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> 
+> let cached: Promise<THREE.Group> | null = null;
+> 
+> function loadScene(): Promise<THREE.Group> {
+>   if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+>     const s = g.scene as THREE.Group;
+>     s.userData.animations = g.animations;
+>     return s;
+>   });
+>   return cached;
+> }
+> 
+> /** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */
+> function defaultFurQuality(): 'high' | 'low' {
+>   if (typeof location === 'undefined') return 'high';
+>   const qp = new URLSearchParams(location.search).get('quality');
+>   const mobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad/i.test(navigator.userAgent);
+>   return qp === 'low' || (qp !== 'high' && …[+14938 chars]
+
+### 🤖 Claude — 2026-11-15T21:01:19.440Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/characters/benny/textures.ts | head -250; grep -rn \"benny\" --include=*.ts src | grep -v \"^src/characters/benny\" | head -30", "description": "Read textures.ts and find benny usage"}`
+
+### 🧑 User — 2026-11-15T21:01:19.491Z
+
+> ↩︎ result: /**
+>  * Canvas-generated textures for Benny (no external downloads).
+>  * All colour maps are sRGB; normal maps are derived from height drawings (linear).
+>  */
+> import * as THREE from 'three';
+> 
+> type Ctx = CanvasRenderingContext2D;
+> 
+> function canvas(w: number, h: number): [HTMLCanvasElement, Ctx] {
+>   const c = document.createElement('canvas');
+>   c.width = w;
+>   c.height = h;
+>   return [c, c.getContext('2d')!];
+> }
+> 
+> function colorTex(c: HTMLCanvasElement, wrap = false): THREE.CanvasTexture {
+>   const t = new THREE.CanvasTexture(c);
+>   t.colorSpace = THREE.SRGBColorSpace;
+>   t.anisotropy = 4;
+>   if (wrap) t.wrapS = THREE.RepeatWrapping;
+>   t.needsUpdate = true;
+>   return t;
+> }
+> 
+> /** Sobel normal map from a grayscale height canvas */
+> function normalFromHeight(src: HTMLCanvasElement, strength: number, wrap = false): THREE.CanvasTexture {
+>   const w = src.width, h = src.height;
+>   const hd = src.getContext('2d')!.getImageData(0, 0, w, h).data;
+>   const [c, ctx] = canvas(w, h);
+>   const out = ctx.createImageData(w, h);
+>   const H = (x: number, y: number) => {
+>     x = wrap ? (x + w) % w : Math.min(w - 1, Math.max(0, x));
+>     y = Math.min(h - 1, Math.max(0, y));
+>     return hd[(y * w + x) * 4] / 255;
+>   };
+>   for (l …[+10809 chars]
+
+### 🤖 Claude — 2026-11-15T21:01:22.648Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"loadBennyRuntime\\|buildBenny\\|benny\" src/game/Game.ts | head; grep -rn \"loadBennyRuntime\" src | head; sed -n 1,80p scripts/export-models.mjs; cat src/characters/benny/benny-lab.ts | head -140", "description": "Inspect how Benny is loaded and exported"}`
+
+### 🧑 User — 2026-11-15T21:01:22.697Z
+
+> ↩︎ result: 25:import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> 84:  const benny = await loadBennyRuntime();
+> 85:  scene.add(benny.root);
+> 89:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 151:  const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+> 154:    out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+> 208:      benny.root.visible = peek > 0.02;
+> 209:      benny.setExpression('peek');
+> 210:      bennyPose(0, 0, st.clock, pose);
+> 211:      benny.root.position.copy(start).add(new THREE.Vector3(0, -1.0 + 1.35 * peek, 0));
+> src/game/Game.ts:25:import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> src/game/Game.ts:84:  const benny = await loadBennyRuntime();
+> src/game/modules.ts:44:export async function loadBennyRuntime(): Promise<BennyRuntime> {
+> #!/usr/bin/env node
+> // Builds the canonical character GLBs from the procedural builders and renders turntables.
+> //   node scripts/export-models.mjs [benny] [girl] [--turntable-only] [--anim=walk --t=0.4]
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { lo …[+9292 chars]
+
+### 🤖 Claude — 2026-11-15T21:01:26.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 30,70p src/game/modules.ts; git log --oneline -3 -- assets/models/benny.glb src/characters/benny/build.ts; ls -la assets/models/benny.glb; head -c 200 assets/models/benny.glb | head -3; git lfs ls-files 2>/dev/null | grep benny", "description": "Check Benny loader and GLB state"}`
+
+### 🧑 User — 2026-11-15T21:01:26.200Z
+
+> ↩︎ result: const qp = new URLSearchParams(location.search).get('quality');
+>       const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+>       const q = qp === 'low' || (qp !== 'high' && mobile) ? 'low' : 'high';
+>       const w = m.createWater(course, { quality: q });
+>       moduleStatus.water = 'vfx/index.ts';
+>       return w;
+>     } catch (e) {
+>       console.error('[rainbow] water module failed, using stand-in', e);
+>     }
+>   }
+>   moduleStatus.water = 'STAND-IN';
+>   return standInWater(course);
+> }
+> 
+> export async function loadBennyRuntime(): Promise<BennyRuntime> {
+>   const f = Object.values(bennyMods)[0];
+>   if (f) {
+>     try {
+>       const m = (await f()) as { loadBenny: () => Promise<BennyRuntime> };
+>       const b = await m.loadBenny();
+>       moduleStatus.benny = 'assets/models/benny.glb';
+>       return b;
+>     } catch (e) {
+>       console.error('[rainbow] Benny module failed, using stand-in', e);
+>     }
+>   }
+>   moduleStatus.benny = 'STAND-IN';
+>   return standInBenny();
+> }
+> 
+> export async function loadGirlRuntime(): Promise<GirlRuntime> {
+>   const f = Object.values(girlMods)[0];
+>   if (f) {
+>     try {
+>       const m = (await f()) as { loadGirl: () => Promise<GirlRuntime> };
+>       const g = await m.loadGirl( …[+620 chars]
+
+### 🤖 Claude — 2026-11-15T21:01:31.542Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git log --oneline -2 -- assets/models/benny.glb; git log --oneline -2 -- src/characters/benny/build.ts; python3 - <<'EOF'\nimport json,struct\nd=open('assets/models/benny.glb','rb').read()\nl=struct.unpack('<I',d[12:16])[0]\nj=json.loads(d[20:20+l])\nfor n in j['nodes']:\n    if n.get('name') in ('hat','pom','hat_star','armL','fur_body','hat_brim','hat_crown'):\n        print(n.get('name'), {k:v for k,v in n.items() if k in('translation','rotation','scale')}, n.get('extras',{}).get('fur',{}).get('bald'))\nfor m in j['meshes']:\n    pass\n# accessor bounds f …[+330 chars]`
+
+### 🧑 User — 2026-11-15T21:01:31.603Z
+
+> ↩︎ result: da75045 autosave: Rainbow 2026-11-15 19:39 UTC
+> fc70e56 full snapshot: game, design agents, specialist work in progress, docs, transcripts
+> 82b9e35 autosave: Rainbow 2026-11-15 20:08 UTC
+> da75045 autosave: Rainbow 2026-11-15 19:39 UTC
+> fur_body {} [0, 0.9982005399352042, -0.0599640064794446, 0.3857142857142858]
+> armL {'translation': [0.7, -0.01, 0.03]} None
+> hat_brim {} None
+> hat_crown {} None
+> hat_star {'rotation': [-0.050396200131099377, 0.9782838362340682, 0.11476725386857117, -0.16507403252773553], 'translation': [-0.4585381808460125, 0.515, -0.6798108094951342]} None
+> pom {'translation': [0, 0.97, -0.03]} None
+> hat {'rotation': [-0.02999550020249566, 0, 0, 0.9995500337489875]} None
+> hat_crown [-0.7249357104301453, 0.46000000834465027, -0.7249357104301453] [0.7249357104301453, 0.9300000071525574, 0.7249357104301453]
+> hat_brim [-0.8030848503112793, 0.23199999332427979, -0.8030848503112793] [0.8030848503112793, 0.5049999952316284, 0.8030848503112793]
+> fur_pom [-0.33000001311302185, -0.33000001311302185, -0.33000001311302185] [0.33000001311302185, 0.33000001311302185, 0.33000001311302185]
+
+### 🤖 Claude — 2026-11-15T21:01:36.655Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls scripts scripts/lib; grep -rln \"benny-lab\" scripts qa tools 2>/dev/null | head; ls tools", "description": "List scripts and lab tooling"}`
+
+### 🧑 User — 2026-11-15T21:01:36.808Z
+
+> ↩︎ result: scripts:
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> capture.mjs
+> cinematic-test.mjs
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> setup-android-sdk.sh
+> setup-blender.sh
+> triptych.py
+> water-lab.mjs
+> 
+> scripts/lib:
+> pw.mjs
+> blender
+> make_env_geometry_ref.py
+> make_env_plate.py
+> make_env_plate_v2.py
+> make_env_plate_v3.py
+> model-lab.html
+> model-lab.ts
+> water-lab.html
+> water-lab.ts
+
+### 🤖 Claude — 2026-11-15T21:01:40.784Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/lib/pw.mjs | head -80; sed -n 1,200p scripts/capture.mjs", "description": "Read Playwright helper and capture script"}`
+
+### 🧑 User — 2026-11-15T21:01:40.821Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+4083 chars]
+
+### 🤖 Claude — 2026-11-15T21:01:46.206Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"'05'\" src/game/cameraRig.ts | head; sed -n 60,130p src/game/cameraRig.ts", "description": "Read stage 05 camera settings"}`
+
+### 🧑 User — 2026-11-15T21:01:46.241Z
+
+> ↩︎ result: 31:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> 116:    // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
+> 121:    const st5 = this.course.stage('05');
+> 122:    const p5 = STAGE_CAM['05'] as CamParams;
+>   readonly pos = new THREE.Vector3();
+>   readonly target = new THREE.Vector3();
+>   readonly up = new THREE.Vector3(0, 1, 0);
+>   fov = 70;
+>   private init = false;
+>   /** optional straight tunnel axis + the s-range where the camera aligns to it */
+>   axis: { path: TubePath; s0: number; s1: number } | null = null;
+> 
+>   constructor(private course: Course) {}
+> 
+>   /** desired pose for Benny at (s, lateral) */
+>   desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+>     const p = camParamsAt(this.course, s);
+>     const f = this.course.sample(s);
+>     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+>     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+>     let up = f.up.clone();
+>     if (this.axis) {
+>       const a = this.axis;
+>       const w = THREE.MathUtils.smoothstep(s, a.s0, a.s …[+3586 chars]
+
+### 🤖 Claude — 2026-11-15T21:02:00.155Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 130,175p src/game/cameraRig.ts; sed -n 20,40p src/game/cameraRig.ts", "description": "Read rest of stage 05 camera block"}`
+
+### 🧑 User — 2026-11-15T21:02:00.188Z
+
+> ↩︎ result: const off = water.clone().sub(af.pos).dot(Rt); // his lateral offset from the tunnel axis
+>       const dz = p5.deadZone ?? 1;
+>       const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+>       const cp = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
+>       const pitch = Math.atan2(p5.up - p5.lookUp, p5.ahead + p5.back);
+>       const yaw = THREE.MathUtils.degToRad(p5.yaw ?? 0);
+>       const look = T.clone().multiplyScalar(Math.cos(pitch) * Math.cos(yaw)).addScaledVector(U, -Math.sin(pitch)).addScaledVector(Rt, -Math.cos(pitch) * Math.sin(yaw));
+>       outPos.lerp(cp, w5);
+>       outTarget.lerp(cp.clone().addScaledVector(look, p5.ahead + p5.back), w5);
+>       outUp.lerp(U, w5).normalize();
+>     }
+>     return p;
+>   }
+> 
+>   update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
+>     const dp = new THREE.Vector3(), dt3 = new THREE.Vector3(), du = new THREE.Vector3();
+>     const p = this.desired(s, lat, dp, dt3, du);
+>     const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
+>     const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
+>     this.pos.lerp(dp, k);
+>     this.target.lerp(dt3, kt);
+>  …[+1817 chars]
+
+### 🤖 Claude — 2026-11-15T21:02:14.197Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((220,760,630,1200))\nr=r.resize((r.width*2,r.height*2),Image.LANCZOS)\n# draw grid lines every 20px original\nfrom PIL import ImageDraw\nd=ImageDraw.Draw(r)\nfor y in range(0,440,20):\n    d.line([(0,y*2),(12,y*2)],fill=(0,0,0)); d.text((14,y*2-5),str(760+y),fill=(0,0,0))\nfor x in range(0,410,20):\n    d.line([(x*2,0),(x*2,10)],fill=(0,0,0))\nr.save(S+'ref_z …[+66 chars]`
+
+### 🧑 User — 2026-11-15T21:02:14.474Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:02:16.266Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/ref_zoom.png"}`
+
+### 🧑 User — 2026-11-15T21:02:16.299Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:02:40.961Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((270,850,600,1040))\nr=r.resize((r.width*3,r.height*3),Image.LANCZOS)\nd=ImageDraw.Draw(r)\nfor y in range(0,190,10):\n    d.line([(0,y*3),(10,y*3)],fill=(0,0,0)); d.text((12,y*3-5),str(850+y),fill=(0,0,0))\nr.save(S+'ref_crown.png')\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB')\n# column profile at x=420 (centre)\nfor y  …[+165 chars]`
+
+### 🧑 User — 2026-11-15T21:02:41.259Z
+
+> ↩︎ result: 760 (1, 153, 229) (0, 179, 253) (1, 141, 218)
+> 766 (15, 185, 255) (0, 187, 255) (24, 156, 221)
+> 772 (245, 254, 249) (8, 241, 255) (12, 190, 250)
+> 778 (255, 190, 255) (4, 202, 249) (0, 223, 249)
+> 784 (237, 136, 238) (0, 176, 252) (7, 234, 250)
+> 790 (246, 63, 249) (3, 157, 247) (12, 248, 248)
+> 796 (255, 202, 255) (4, 156, 242) (132, 255, 255)
+> 802 (203, 61, 244) (0, 158, 244) (0, 231, 247)
+> 808 (192, 52, 249) (2, 162, 248) (0, 196, 255)
+> 814 (114, 20, 241) (0, 159, 243) (0, 169, 250)
+> 820 (143, 38, 255) (0, 162, 247) (1, 170, 251)
+> 826 (47, 6, 186) (0, 168, 251) (4, 173, 254)
+> 832 (122, 43, 223) (0, 177, 254) (0, 174, 253)
+> 838 (203, 63, 255) (1, 174, 253) (3, 183, 255)
+> 844 (180, 56, 255) (0, 188, 251) (0, 189, 253)
+> 850 (18, 0, 110) (4, 225, 254) (0, 195, 253)
+> 856 (48, 5, 147) (0, 249, 251) (5, 207, 255)
+> 862 (2, 0, 35) (1, 207, 254) (13, 203, 237)
+> 868 (8, 0, 87) (0, 183, 253) (4, 225, 233)
+> 874 (1, 0, 69) (0, 183, 247) (15, 215, 249)
+> 880 (47, 7, 166) (5, 198, 255) (43, 221, 251)
+> 886 (1, 0, 56) (176, 248, 255) (238, 224, 255)
+> 892 (9, 0, 70) (206, 137, 253) (234, 162, 255)
+> 898 (125, 79, 144) (255, 214, 255) (93, 4, 244)
+> 904 (196, 134, 159) (92, 27, 189) (236, 164, 255)
+> 910 (243, 184, 206) (66, 0, 24 …[+2396 chars]
+
+### 🤖 Claude — 2026-11-15T21:02:43.188Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/ref_crown.png"}`
+
+### 🧑 User — 2026-11-15T21:02:43.216Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:03:17.209Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls references character_references; ls docs/characters | head -30; sed -n '/5.6/,/5.7/p' qa/scene_comparisons.md | head -40", "description": "List references and Benny docs, read §5.6"}`
+
+### 🧑 User — 2026-11-15T21:03:17.244Z
+
+> ↩︎ result: character_references:
+> official_cartoon_girl_original.jpg
+> 
+> references:
+> 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> benny.md
+> benny_reference_views_glb.png
+> benny_turntable.png
+> benny_turntable_expr_dizzy.png
+> benny_turntable_full_glb.png
+> girl.md
+> girl_face_closeup_lean_glb.png
+> girl_turntable.png
+> girl_turntable_anim_leanReachTowel_t_1_6.png
+> girl_turntable_anim_walk_t_0_3.png
+> | Live captures | `screenshots/01.png`…`11.png` (864×1536; 03 at 727×1536, the reference's own width) plus `screenshots/1080x1920/` |
+> | Side-by-sides | `qa/NN_side_by_side.png`, `qa/NN_overlay.png`, `qa/NN_diff.png` (from `scripts/compare.py`) |
+> | Capture run | 2026-11-15T17:56:22Z, headless Chromium, **SwiftShader software WebGL** (from the `81e639e` `qa/capture_log.json`). Page errors: none. Logged HUD state matched the reference values for every shot. Triangles per shot ranged from 226,929 (11) to 740,386 (04), with 64–299 draw calls. The ≈60  …[+2506 chars]
+
+### 🤖 Claude — 2026-11-15T21:03:18.439Z
+
+Let me see the other references with Benny in a contact sheet to keep him consistent.
+
+### 🤖 Claude — 2026-11-15T21:03:21.990Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/'\nims=[Image.open(f'references/{n}').convert('RGB') for n in ['02_mascot_tumbles_in_whirlpool.png','03_whirlpool_twirl.png','04_through_the_five_arrows.png','06_crest_the_rinse_arch.png','07_dive_the_washer_tube.png','10_slide_into_hiding.png']]\nW=300\nrow=[im.resize((W,int(im.height*W/im.width))) for im in ims]\nH=max(r.height for r in row)\nout=Image.new('RGB',(W*len(row),H))\nfor i,r in enumerate(row): out.paste(r,(i*W,0))\nout.sav …[+84 chars]`
+
+### 🧑 User — 2026-11-15T21:03:22.365Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:03:24.183Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/refs_sheet.png"}`
+
+### 🧑 User — 2026-11-15T21:03:24.308Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:03:35.237Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n -i \"star\" docs/characters/benny.md | head -20; wc -l docs/characters/benny.md", "description": "Check Benny doc for star placement decisions"}`
+
+### 🧑 User — 2026-11-15T21:03:35.270Z
+
+> ↩︎ result: 36:* Gold star: extruded beveled 5-point star, metalness 0.55 + warm emissive, on the brim's top edge at **132° from the
+> 68:1. **Star side:** the references are mirror-inconsistent (front views 01–03 show the star image-right = Benny's left;
+> 69:   rear views 04–10 show it image-right = Benny's right). One rig cannot satisfy both; the star is on Benny's
+> 76 docs/characters/benny.md
+
+### 🤖 Claude — 2026-11-15T21:03:36.506Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny.md"}`
+
+### 🧑 User — 2026-11-15T21:03:36.522Z
+
+> ↩︎ result: 1	# Benny — canonical model, rig & runtime (benny-character-artist)
+> 2	
+> 3	**One** Benny for every scene: `assets/models/benny.glb` (1.18 MB), built procedurally by
+> 4	`src/characters/benny/build.ts` and exported with `node scripts/export-models.mjs benny`
+> 5	(Three.js GLTFExporter in headless Chromium). No external assets, no paid generators, no Blender.
+> 6	The game loads it through `loadBenny()` in `src/characters/benny/runtime.ts`.
+> 7	
+> 8	## Contract
+> 9	* Origin = centre of the round body; faces **+Z**, up +Y (so `root.lookAt(pos + tangent)` points him down the course).
+> 10	* Skin sphere r = 0.70, fur adds ≈ 0.105 → visual body radius ≈ 0.8 (`BennyRuntime.radius = 0.8`).
+> 11	* Height: feet −0.85 → pom top +1.44 ≈ **2.3 units**; width ≈ 1.9 incl. arms.
+> 12	
+> 13	## Rig (joint nodes, rigid parts parented to joints — not skin-weighted)
+> 14	`benny_root › body › { hat › pom, eyes › eyeL / eyeR, mouth, armL, armR, footL, footR }`
+> 15	(armL/footL = Benny's left = +X). Blink = cartoon squash of `eyeL/eyeR` (scale.y).
+> 16	
+> 17	## Animation clips (in the GLB)
+> 18	| clip | length | content |
+> 19	|---|---|---|
+> 20	| `idle` | 2.4 s | gentle bob, arm sway |
+> 21	| `swim` | 0.6 s | paws paddle (alternating), feet k …[+4128 chars]
+
+### 🤖 Claude — 2026-11-15T21:03:36.909Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_reference_views_glb.png"}`
+
+### 🧑 User — 2026-11-15T21:03:36.940Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:04:04.156Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/characters/benny/benny-lab.html; grep -n \"lab\\|benny\" vite.config.* 2>/dev/null | head; cat qa/pilot05/wave3/benny/it00/cap_log.json", "description": "Check lab HTML and wave3 capture log"}`
+
+### 🧑 User — 2026-11-15T21:04:04.205Z
+
+> ↩︎ result: <!doctype html>
+> <html lang="en">
+>   <head><meta charset="UTF-8" /><title>Benny lab</title>
+>     <style>html,body{margin:0;background:#2a0b46}canvas{display:block}</style></head>
+>   <body><canvas id="lab"></canvas><script type="module" src="./benny-lab.ts"></script></body>
+> </html>
+> [
+>   {
+>     "id": "05",
+>     "state": {
+>       "mode": "ride",
+>       "stage": "05",
+>       "s": 132.438,
+>       "lat": 0,
+>       "coins": 1420,
+>       "hearts": 5,
+>       "paused": false,
+>       "bennyY": -41.348,
+>       "bennyVisible": true,
+>       "cam": [
+>         1.92,
+>         -37.94,
+>         -68.28
+>       ]
+>     },
+>     "bennyScreen": {
+>       "x": -0.03,
+>       "y": -0.37,
+>       "z": 0.986,
+>       "visible": true,
+>       "cam": [
+>         1.92,
+>         -37.94,
+>         -68.28
+>       ],
+>       "benny": [
+>         1.52,
+>         -41.35,
+>         -74.73
+>       ]
+>     },
+>     "benny": {
+>       "body": [
+>         1.51,
+>         -41.022,
+>         -74.741
+>       ],
+>       "up": [
+>         -0.025,
+>         0.999,
+>         -0.042
+>       ],
+>       "fwd": [
+>         0.004,
+>         -0.042,
+>         -0.999
+>       ],
+>       "scale": 1,
+>       "dist": 7.17,
+>       "behind": 0.918
+>     },
+>     "elevDeg": 22.96,
+>     "calls": 114,
+>     "tris": 582879,
+>     "errors": []
+>   …[+4 chars]
+
+### 🤖 Claude — 2026-11-15T21:04:13.367Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls -la qa/capture_log.json; python3 -c \"\nimport json;d=json.load(open('qa/capture_log.json'));print(d['when']);\nfor s in d['shots']: print(s['id'], s['file'], json.dumps(s['state']), s['stats'].get('calls'), s['stats'].get('triangles'))\n\"; git diff src/game/cameraRig.ts | head -40", "description": "Check latest capture log and camera diff"}`
+
+### 🧑 User — 2026-11-15T21:04:13.422Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1104 Nov 15 20:56 qa/capture_log.json
+> 2026-11-15T20:56:47.380Z
+> 05 qa/pilot05/wave4/baseline/05.png {"mode": "ride", "stage": "05", "s": 132.438, "lat": 0, "coins": 1420, "hearts": 5, "paused": false, "bennyY": -41.348, "bennyVisible": true, "cam": [1.92, -37.94, -68.28]} 120 629035
+
+### 🤖 Claude — 2026-11-15T21:04:26.387Z
+
+I'll add an exact game-05 camera panel (camera offset taken from the capture log: root→camera = 0.40 right, 3.41 up, 6.45 back; pitch 12.7°, yaw 2.96°) to the lab.
+
+### 🤖 Claude — 2026-11-15T21:04:30.343Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "        : views === 'game'", "new_string": "        : views === 'g05'\n          ? // wave 4: ONE full-size 864×1536 frame with the live stage-05 camera relative to Benny's root, taken\n            // from qa/capture_log.json (root→cam = 0.40 to his right, 3.41 up, 6.45 back; view pitched 12.7° down,\n            // yawed 2.96° left: STAGE_CAM['05']). `&bennyMask` → flat ID colours on grey for pixel measurement.\n            [\n              (() => {\n                const p = Math.atan2 …[+568 chars]`
+
+### 🧑 User — 2026-11-15T21:04:30.388Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:04:32.305Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "    const measure = views === 'measure';\n    const PW = views === 'refs' || views === 'game' || measure ? 432 : 360;\n    const PH = views === 'refs' || views === 'game' || measure ? 768 : 520;", "new_string": "    const g05 = views === 'g05';\n    const measure = views === 'measure' || g05;\n    const PW = g05 ? 864 : views === 'refs' || views === 'game' || measure ? 432 : 360;\n    const PH = g05 ? 1536 : views === 'refs' || views === 'game' || measure ? 768 : 520;"}`
+
+### 🧑 User — 2026-11-15T21:04:32.329Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:04:34.044Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "    scene.background = new THREE.Color(maskBg ?? (views === 'turntable' ? '#3a1060' : measure ? '#00ff00' : '#c0369c'));", "new_string": "    scene.background = new THREE.Color(maskBg ?? (views === 'turntable' ? '#3a1060' : g05 ? '#29a8e8' : measure ? '#00ff00' : '#c0369c'));"}`
+
+### 🧑 User — 2026-11-15T21:04:34.069Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:04:35.501Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "        measure\n          ? new THREE.MeshBasicMaterial({ color: maskBg ?? '#00ff00' })", "new_string": "        measure\n          ? new THREE.MeshBasicMaterial({ color: maskBg ?? (g05 ? '#2bc4f4' : '#00ff00') })"}`
+
+### 🧑 User — 2026-11-15T21:04:35.533Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:04:39.252Z
+
+Now a small runner (scratchpad) that renders the lab panel normal + masked, and a measurement script.
+
+### 🤖 Claude — 2026-11-15T21:04:44.206Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/lab.mjs", "content": "// node lab.mjs OUTPREFIX [src=build|glb] [views=g05] [extra=query]\n// run with cwd = /home/user/rainbow-\nimport { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [out, src = 'build', views = 'g05', extra = ''] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5233);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  for (const mask of [false, true] …[+755 chars]`
+
+### 🧑 User — 2026-11-15T21:04:44.229Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/lab.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:05:05.765Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/measure.py", "content": "\"\"\"Measure Benny parts in a flat-ID mask frame (runtime.ts setMask colours).\npython3 -I measure.py MASK.png [x0 y0 x1 y1 crop offset of a game frame]\nbody/arms/feet red, pom green, cuff blue, crown cyan, star black.\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\n\nim = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)\nR, G, B = im[..., 0], im[..., 1], im[..., 2]\ncls = {\n    'body': (R > 150) & (G < 60) & (B < 60),\n    'pom': (G > 150) &  …[+2651 chars]`
+
+### 🧑 User — 2026-11-15T21:05:05.789Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/measure.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:05:07.028Z
+
+Render the current GLB (= live baseline model) and the current build.ts (wave 3, never exported) in the game-05 lab view.
+
+### 🤖 Claude — 2026-11-15T21:05:09.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; mkdir -p $S/lab; time timeout 600 node $S/lab.mjs $S/lab/glb glb g05 && time timeout 600 node $S/lab.mjs $S/lab/w3build build g05", "description": "Render lab game-05 view for GLB and build", "timeout": 900000}`
+
+### 🧑 User — 2026-11-15T21:05:32.322Z
+
+> ↩︎ result: wrote /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/lab/glb.png {"baseTriangles":15036,"furQuality":"high"}
+> wrote /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/lab/glb_mask.png {"baseTriangles":15036,"furQuality":"high"}
+> 
+> real	0m9.201s
+> user	0m0.867s
+> sys	0m0.183s
+> wrote /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/lab/w3build.png {"baseTriangles":15036,"furQuality":"high"}
+> wrote /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/lab/w3build_mask.png {"baseTriangles":15036,"furQuality":"high"}
+> 
+> real	0m13.797s
+> user	0m0.868s
+> sys	0m0.175s
+
+### 🤖 Claude — 2026-11-15T21:05:33.951Z
+
+Fast (~10 s). Let me validate the lab camera against the live baseline and measure.
+
+### 🤖 Claude — 2026-11-15T21:05:36.964Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; python3 -I $S/measure.py $S/lab/glb_mask.png; echo; python3 -I $S/measure.py $S/lab/w3build_mask.png; python3 -c \"\nfrom PIL import Image\nS='$S/'\nims=[Image.open('qa/pilot05/wave4/baseline/05.png'),Image.open(S+'lab/glb.png'),Image.open(S+'lab/w3build.png')]\nout=Image.new('RGB',(1500,500))\nfor i,im in enumerate(ims): out.paste(im.convert('RGB').crop((180,740,680,1240)),(i*500,0))\nout.save(S+'cmp_base_glb_w3.png')\"", "description": "Measure lab masks and compare crops …[+2 chars]`
+
+### 🧑 User — 2026-11-15T21:05:37.780Z
+
+> ↩︎ result: ALL bbox x 219-618 y 822-1226  (w 400 h 405)
+>   body  x  219- 618 y 1021-1226  w 400 h 206  px 35536
+>   pom   x  349- 502 y  822- 957  w 154 h 136  px 14031
+>   cuff  x  272- 571 y  951-1095  w 300 h 145  px 12885
+>   crown x  287- 557 y  898-1043  w 271 h 146  px 25220
+>   star  x  465- 554 y  998-1087  w  90 h  90  px 3934
+> centre col x=421: top 822  cuff 1045-1095  bottom 1226
+> HAT incl pom (top→cuff bottom @centre) 273 px = 67.4%   BODY below cuff 131 px = 32.3%   of H 405
+> rows (y: red runs | cuff run | crown run | pom run)
+>    822:                               |             |             | 
+>    834:                               |             |             | 395-450 454-456
+>    846:                               |             |             | 376-471 473-475
+>    858:                               |             |             | 368-484
+>    870:                               |             |             | 361-492
+>    882:                               |             |             | 357-493
+>    894:                               |             |             | 355-497
+>    906:                               |             | 339-344 346-352 496-501| 353-492
+>    918:                               |          …[+5544 chars]
+
+### 🤖 Claude — 2026-11-15T21:05:39.750Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/cmp_base_glb_w3.png"}`
+
+### 🧑 User — 2026-11-15T21:05:39.782Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:06:03.656Z
+
+The lab GLB render sits ~40-70 px lower and is seen from a steeper angle than the live baseline, so my lab camera isn't calibrated yet. Let me check what `state().cam` actually reports.
+
+### 🤖 Claude — 2026-11-15T21:06:05.007Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"cam:\\|bennyY\\|goto\\b\\|goto(\" src/game/Game.ts | head -20; grep -n \"h + benny.radius\\|const h =\\|waveH\\|heightAt\" src/game/Game.ts | head", "description": "Find state() cam and Benny height in Game.ts"}`
+
+### 🧑 User — 2026-11-15T21:06:05.052Z
+
+> ↩︎ result: 583:    goto: gotoCheckpoint,
+> 594:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> 622:      return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };
+> 68:    const h = canvas.clientHeight || window.innerHeight;
+> 153:    const h = water.surfaceHeight(s, lat, time);
+> 154:    out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+
+### 🤖 Claude — 2026-11-15T21:06:06.548Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 600,640p src/game/Game.ts; sed -n 540,582p src/game/Game.ts", "description": "Read QA hooks in Game.ts"}`
+
+### 🧑 User — 2026-11-15T21:06:06.582Z
+
+> ↩︎ result: const mesh = coins.group.children[0] as THREE.InstancedMesh;
+>       const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+>       const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+>       camera.updateMatrixWorld();
+>       const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+>       const out: { i: number; x: number; y: number; d: number }[] = [];
+>       coins.defs.forEach((_, i) => {
+>         if (coins.collected[i]) return;
+>         mesh.getMatrixAt(i, m); m.decompose(p, q, sc);
+>         const c = p.clone().project(camera);
+>         if (c.z > 1 || c.z < -1) return;
+>         const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+>         const x = ((c.x + 1) / 2) * W, y = ((1 - c.y) / 2) * H;
+>         if (x < -50 || x > W + 50 || y < -50 || y > H + 50) return;
+>         out.push({ i, x: Math.round(x), y: Math.round(y), d: Math.round((e.x - c.x) * W) });
+>       });
+>       return out;
+>     },
+>     respawns() { return st.respawns; },
+>     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
+>     bennyScreen() {
+>       const v = benny.root.getWorldPos …[+2914 chars]
+
+### 🤖 Claude — 2026-11-15T21:06:30.912Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave4/baseline/05.png').convert('RGB'); b=Image.open('$S/lab/glb.png').convert('RGB')\nfor y in range(760,1240,8):\n    print(y, a.getpixel((421,y)), a.getpixel((300,y)), '   lab', b.getpixel((421,y)), b.getpixel((300,y)))\n\"", "description": "Column colour profile baseline vs lab GLB"}`
+
+### 🧑 User — 2026-11-15T21:06:31.086Z
+
+> ↩︎ result: 760 (140, 218, 255) (255, 107, 255)    lab (9, 180, 226) (9, 180, 226)
+> 768 (179, 122, 255) (255, 117, 255)    lab (9, 180, 226) (9, 180, 226)
+> 776 (167, 99, 255) (17, 197, 255)    lab (9, 180, 226) (9, 180, 226)
+> 784 (139, 57, 255) (119, 220, 255)    lab (9, 180, 226) (9, 180, 226)
+> 792 (132, 47, 255) (7, 173, 255)    lab (9, 180, 226) (9, 180, 226)
+> 800 (129, 38, 255) (0, 162, 255)    lab (9, 180, 226) (9, 180, 226)
+> 808 (176, 100, 255) (12, 170, 255)    lab (9, 180, 226) (9, 180, 226)
+> 816 (155, 60, 255) (0, 167, 255)    lab (9, 180, 226) (9, 180, 226)
+> 824 (136, 26, 255) (10, 172, 255)    lab (9, 180, 226) (9, 180, 226)
+> 832 (101, 14, 255) (3, 170, 255)    lab (166, 129, 252) (9, 180, 226)
+> 840 (155, 44, 255) (0, 168, 255)    lab (121, 67, 243) (9, 180, 226)
+> 848 (115, 15, 255) (22, 171, 255)    lab (137, 87, 248) (9, 180, 226)
+> 856 (147, 32, 255) (46, 181, 255)    lab (136, 85, 248) (9, 180, 226)
+> 864 (145, 29, 255) (124, 223, 255)    lab (121, 60, 243) (9, 180, 226)
+> 872 (106, 21, 249) (106, 206, 255)    lab (130, 77, 247) (9, 180, 226)
+> 880 (166, 71, 255) (255, 221, 255)    lab (74, 18, 196) (9, 180, 226)
+> 888 (146, 83, 255) (255, 231, 255)    lab (107, 44, 240) (9, 180, 226)
+> 896 (255, 216, …[+3077 chars]
+
+### 🤖 Claude — 2026-11-15T21:06:55.284Z
+
+Found it: the tunnel slopes ~2.4° down, so in Benny's own frame the camera sits at 0.50 right, 3.13 up, 6.59 back (25.4° elevation), not the world-frame numbers. Let me fix the lab camera.
+
+### 🤖 Claude — 2026-11-15T21:06:58.880Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "            // from qa/capture_log.json (root→cam = 0.40 to his right, 3.41 up, 6.45 back; view pitched 12.7° down,\n            // yawed 2.96° left: STAGE_CAM['05']). `&bennyMask` → flat ID colours on grey for pixel measurement.\n            [\n              (() => {\n                const p = Math.atan2(3.6 + 1.92, 18 + 6.4), y = THREE.MathUtils.degToRad(2.96);\n                const pos: [number, number, number] = [-0.4, 3.41, -6.45];", "new_string": "            // from qa/capture_lo …[+529 chars]`
+
+### 🧑 User — 2026-11-15T21:06:58.906Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:07:02.338Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; timeout 600 node $S/lab.mjs $S/lab/glb glb g05 >/dev/null && python3 -I $S/measure.py $S/lab/glb_mask.png | head -9; python3 -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave4/baseline/05.png').convert('RGB'); b=Image.open('$S/lab/glb.png').convert('RGB')\nout=Image.new('RGB',(1000,500)); out.paste(a.crop((180,740,680,1240)),(0,0)); out.paste(b.crop((180,740,680,1240)),(500,0)); out.save('$S/cmp_cal.png')\nfor y in range(760,1240,8):\n    print(y, a.getpixel((421, …[+143 chars]`
+
+### 🧑 User — 2026-11-15T21:07:10.769Z
+
+> ↩︎ result: ALL bbox x 206-599 y 763-1162  (w 394 h 400)
+>   body  x  206- 599 y  965-1162  w 394 h 198  px 35941
+>   pom   x  331- 483 y  763- 894  w 153 h 132  px 13452
+>   cuff  x  256- 552 y  898-1029  w 297 h 132  px 12664
+>   crown x  271- 538 y  844- 977  w 268 h 134  px 23570
+>   star  x  445- 534 y  933-1021  w  90 h  89  px 3823
+> centre col x=404: top 763  cuff 979-1029  bottom 1162
+> HAT incl pom (top→cuff bottom @centre) 266 px = 66.5%   BODY below cuff 133 px = 33.2%   of H 400
+> rows (y: red runs | cuff run | crown run | pom run)
+> 760 (140, 218, 255)    lab (9, 180, 226)
+> 776 (167, 99, 255)    lab (140, 91, 248)
+> 792 (132, 47, 255)    lab (142, 93, 249)
+> 808 (176, 100, 255)    lab (82, 26, 199)
+> 824 (136, 26, 255)    lab (130, 79, 247)
+> 840 (155, 44, 255)    lab (81, 21, 207)
+> 856 (147, 32, 255)    lab (112, 63, 245)
+> 872 (106, 21, 249)    lab (72, 14, 208)
+> 888 (146, 83, 255)    lab (98, 46, 229)
+> 904 (255, 222, 255)    lab (222, 207, 249)
+> 920 (255, 213, 255)    lab (205, 197, 245)
+> 936 (130, 55, 255)    lab (59, 15, 183)
+> 952 (253, 189, 255)    lab (51, 11, 176)
+> 968 (253, 189, 255)    lab (181, 184, 240)
+> 984 (181, 89, 255)    lab (160, 110, 250)
+> 1000 (151, 30, 255)    lab (122, 60, 244)
+> 1016 (147, 22, 25 …[+564 chars]
+
+### 🤖 Claude — 2026-11-15T21:07:12.720Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/cmp_cal.png"}`
+
+### 🧑 User — 2026-11-15T21:07:12.743Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:08:07.643Z
+
+The lab now reproduces the live framing (pom top 763 vs 768, waterline 1162 vs 1155). Let me check how the game drives Benny in ride stages (to decide where a pose change can safely go).
+
+### 🤖 Claude — 2026-11-15T21:08:08.790Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"benny.update\\|benny.root.quaternion\\|swim:\" src/game/Game.ts | head -20; sed -n 150,165p src/game/Game.ts; sed -n 350,372p src/game/Game.ts", "description": "Find how Game.ts drives Benny update and pose"}`
+
+### 🧑 User — 2026-11-15T21:08:08.832Z
+
+> ↩︎ result: 212:      benny.root.quaternion.setFromEuler(new THREE.Euler(0, Math.PI + 0.25, 0)); // facing the camera (inside drum)
+> 213:      benny.update(dt, { swim: 0, steer: 0, speed: 0, time: st.clock });
+> 237:      benny.root.quaternion.copy(spinQ).slerp(pose.quat, tumble);
+> 238:      benny.update(dt, { swim: 0.4, steer: 0, speed: 8, time: st.clock, tumble: tumble < 0.99 });
+> 360:    benny.root.quaternion.copy(pose.quat).multiply(tw).multiply(lean);
+> 363:    benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
+> 400:    benny.root.quaternion.copy(pose.quat);
+> 402:    benny.update(dt, { swim: 0.2, steer: 0, speed: 2, time: st.clock });
+> 
+>   const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+>     const f = course.sample(s);
+>     const h = water.surfaceHeight(s, lat, time);
+>     out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+>     const m = new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(f.up, f.tan).normalize(), f.up, f.tan);
+>     out.quat.setFromRotationMatrix(m);
+>     return f;
+>   };
+> 
+>   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() } …[+1854 chars]
+
+### 🤖 Claude — 2026-11-15T21:08:32.665Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"frozen\\|dirty\\|requestAnimationFrame\\|const render\\b\\|function render\\|const stepSim\\|renderer.setAnimationLoop\" src/game/Game.ts | head -30", "description": "Inspect main loop and frozen-time behavior"}`
+
+### 🧑 User — 2026-11-15T21:08:32.696Z
+
+> ↩︎ result: 104:    frozen: null as number | null, // QA: freeze shader time
+> 486:  const stepSim = (dt: number) => {
+> 489:    if (st.frozen === null) st.clock += dt;
+> 496:    const time = st.frozen ?? st.clock;
+> 506:  let dirty = true;
+> 508:  const render = () => { renderer.info.reset(); composer.render(); };
+> 516:    if (!qaMode || running || dirty) { render(); dirty = false; }
+> 517:    requestAnimationFrame(frame);
+> 519:  requestAnimationFrame(frame);
+> 544:    st.frozen = time;
+> 564:        // settle camera springs without moving Benny: run with speed frozen
+> 576:    dirty = false;
+> 585:    unfreeze() { st.frozen = null; input.override = null; },
+
+### 🤖 Claude — 2026-11-15T21:08:34.128Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 484,520p src/game/Game.ts", "description": "Read stepSim and frame loop"}`
+
+### 🧑 User — 2026-11-15T21:08:34.159Z
+
+> ↩︎ result: };
+> 
+>   const stepSim = (dt: number) => {
+>     if (st.paused) return;
+>     st.t += dt;
+>     if (st.frozen === null) st.clock += dt;
+>     if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate(dt);
+>     else if (st.mode === 'outro' || st.mode === 'end') {
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     fill.position.copy(camera.position);
+>     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+>   };
+> 
+>   let last = performance.now();
+>   let fps = 60;
+>   let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   const render = () => { renderer.info.reset(); composer.render(); };
+>   const frame = () => {
+>     const now = performance.now();
+>     const dt = Math.min(0.05, (now - last) / 1000);
+>     last = now;
+>     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+>     if (running) stepSim(dt);
+>     // QA mode renders on demand only (software WebGL is slow; frames are deterministic)
+>     if (!qaMode || running || dirty) { render(); dirty = false; }
+>     requestAnimationFrame(frame);
+>   };
+>   requestAnimationFrame(frame);
+
+### 🤖 Claude — 2026-11-15T21:08:55.587Z
+
+Let me look at how Benny currently appears in the other ride screens (03, 04, 07, 10) to judge the risk of any pose change.
+
+### 🤖 Claude — 2026-11-15T21:08:56.388Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls -la screenshots/ | head -20; ls qa/pilot05/wave3_baseline/ 2>/dev/null", "description": "List existing live screenshots"}`
+
+### 🧑 User — 2026-11-15T21:08:56.438Z
+
+> ↩︎ result: total 13344
+> drwxr-xr-x  3 root root    4096 Nov 15 20:53 .
+> drwxr-xr-x 18 root root    4096 Nov 15 21:07 ..
+> -rw-r--r--  1 root root 1096049 Nov 15 20:53 01.png
+> -rw-r--r--  1 root root 1290509 Nov 15 20:53 02.png
+> -rw-r--r--  1 root root  645650 Nov 15 20:53 03.png
+> -rw-r--r--  1 root root  960211 Nov 15 20:53 04.png
+> -rw-r--r--  1 root root 1537580 Nov 15 20:53 05.png
+> -rw-r--r--  1 root root 1129448 Nov 15 20:53 06.png
+> -rw-r--r--  1 root root 1492779 Nov 15 20:53 07.png
+> -rw-r--r--  1 root root 1343255 Nov 15 20:53 08.png
+> -rw-r--r--  1 root root 1394904 Nov 15 20:53 09.png
+> -rw-r--r--  1 root root 1344162 Nov 15 20:53 10.png
+> drwxr-xr-x  2 root root    4096 Nov 15 20:53 1080x1920
+> -rw-r--r--  1 root root 1394922 Nov 15 20:53 11.png
+> 01.png
+> 02.png
+> 03.png
+> 04.png
+> 06.png
+> 07.png
+> 08.png
+> 09.png
+> 10.png
+> 11.png
+
+### 🤖 Claude — 2026-11-15T21:08:59.998Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/'\nims=[Image.open(f'qa/pilot05/wave3_baseline/{n}.png').convert('RGB') for n in ['02','03','04','07','10']]\nW=300\nrow=[im.resize((W,int(im.height*W/im.width))) for im in ims]\nH=max(r.height for r in row)\nout=Image.new('RGB',(W*len(row),H))\nfor i,r in enumerate(row): out.paste(r,(i*W,0))\nout.save(S+'live_sheet.png')\n\"", "description": "Contact sheet of live screens with Benny"}`
+
+### 🧑 User — 2026-11-15T21:09:00.471Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:09:02.431Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/live_sheet.png"}`
+
+### 🧑 User — 2026-11-15T21:09:02.466Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:09:53.080Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "/** Build the runtime around an already-loaded (or freshly built) Benny scene graph. */", "new_string": "/**\n * Ride lean (rad, about his X axis, + = top forward). While riding he leans into the current like a swimmer, so the\n * rear chase cameras (04–10: ≈ 25° above him) see the beanie and the plush back the way the references paint\n * them (≈ 10–12° above: knit stripes and cuff read as level bands, the dome as a tall cap, not a flat disc).\n * Eased in with the ride lift; cinematics ( …[+499 chars]`
+
+### 🧑 User — 2026-11-15T21:09:53.115Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:10:05.037Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"scene.add(camera\\|new THREE.PerspectiveCamera\" src/game/*.ts | head", "description": "Check whether the camera is in the scene graph"}`
+
+### 🧑 User — 2026-11-15T21:10:05.071Z
+
+> ↩︎ result: src/game/Game.ts:57:  const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+
+### 🤖 Claude — 2026-11-15T21:10:12.922Z
+
+Now apply the pitch in `update()` together with the existing steering lean, eased with the lift.
+
+### 🤖 Claude — 2026-11-15T21:10:13.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"let lift = 0;\\|const liftMax\\|scene.position.y = lift;\\|qLean.setFromEuler\" src/characters/benny/runtime.ts", "description": "Locate lift and lean lines in runtime"}`
+
+### 🧑 User — 2026-11-15T21:10:13.908Z
+
+> ↩︎ result: 130:  let lift = 0;
+> 131:  const liftMax = rideLift();
+> 153:    scene.position.y = lift;
+> 157:    qLean.setFromEuler(eAxis.set(0, -lean * 0.6, -lean));
+
+### 🤖 Claude — 2026-11-15T21:10:17.957Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/runtime.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  let lift = 0;\n  const liftMax = rideLift();\"\"\",\"\"\"  let lift = 0;\n  const liftMax = rideLift();\n  let pitch = 0;\n  const pitchMax = ridePitch();\"\"\",1)\ns=s.replace(\"\"\"    scene.position.y = lift;\"\"\",\"\"\"    scene.position.y = lift;\n    // ride lean into the current (see BENNY_RIDE_PITCH), on the same ease as the lift\n    const pitchTarget = tumble || peek ? 0 : pitchMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);\n    pitch += (pitchTarget  …[+337 chars]`
+
+### 🧑 User — 2026-11-15T21:10:17.999Z
+
+> ↩︎ result: 132:  let pitch = 0;
+> 133:  const pitchMax = ridePitch();
+> 157:    const pitchTarget = tumble || peek ? 0 : pitchMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+> 158:    pitch += (pitchTarget - pitch) * (1 - Math.exp(-dt * 7));
+> 162:    qLean.setFromEuler(eAxis.set(pitch, -lean * 0.6, -lean));
+
+### 🤖 Claude — 2026-11-15T21:10:21.643Z
+
+Now a quick lean sweep in the lab on the live GLB (0°, 8°, 12°, 16°).
+
+### 🤖 Claude — 2026-11-15T21:10:25.597Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; for p in 0 8 12 16; do timeout 600 node $S/lab.mjs $S/lab/glb_p$p glb g05 bennyPitch=$p >/dev/null; echo \"== pitch $p\"; python3 -I $S/measure.py $S/lab/glb_p${p}_mask.png | sed -n '1p;8,9p'; done; python3 -c \"\nfrom PIL import Image\nS='$S/'\nims=[Image.open('references/05_flow_into_the_current.png')]+[Image.open(S+f'lab/glb_p{p}.png') for p in (0,8,12,16)]\nout=Image.new('RGB',(450*5,480))\nfor i,im in enumerate(ims): out.paste(im.convert('RGB').crop((200,740,650,1220)) …[+119 chars]`
+
+### 🧑 User — 2026-11-15T21:11:02.580Z
+
+> ↩︎ result: == pitch 0
+> ALL bbox x 206-599 y 763-1162  (w 394 h 400)
+> HAT incl pom (top→cuff bottom @centre) 266 px = 66.5%   BODY below cuff 133 px = 33.2%   of H 400
+> rows (y: red runs | cuff run | crown run | pom run)
+> == pitch 8
+> ALL bbox x 204-601 y 758-1168  (w 398 h 411)
+> HAT incl pom (top→cuff bottom @centre) 249 px = 60.6%   BODY below cuff 161 px = 39.2%   of H 411
+> rows (y: red runs | cuff run | crown run | pom run)
+> == pitch 12
+> ALL bbox x 204-601 y 754-1167  (w 398 h 414)
+> HAT incl pom (top→cuff bottom @centre) 242 px = 58.5%   BODY below cuff 171 px = 41.3%   of H 414
+> rows (y: red runs | cuff run | crown run | pom run)
+> == pitch 16
+> ALL bbox x 204-598 y 754-1167  (w 395 h 414)
+> HAT incl pom (top→cuff bottom @centre) 231 px = 55.8%   BODY below cuff 182 px = 44.0%   of H 414
+> rows (y: red runs | cuff run | crown run | pom run)
+
+### 🤖 Claude — 2026-11-15T21:11:04.635Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/pitch_sweep.png"}`
+
+### 🧑 User — 2026-11-15T21:11:04.724Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T21:11:04.719Z
+
+[Image: original 2250x480, displayed at 2000x427. Multiply coordinates by 1.13 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T21:11:30.573Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; for p in 0 10; do timeout 600 node $S/lab.mjs $S/lab/w3_p$p build g05 bennyPitch=$p >/dev/null; echo \"== w3 pitch $p\"; python3 -I $S/measure.py $S/lab/w3_p${p}_mask.png | sed -n '1,9p'; done; python3 -c \"\nfrom PIL import Image\nS='$S/'\nims=[Image.open('references/05_flow_into_the_current.png')]+[Image.open(S+f'lab/{n}.png') for n in ('glb_p12','w3_p0','w3_p10')]\nout=Image.new('RGB',(450*4,480))\nfor i,im in enumerate(ims): out.paste(im.convert('RGB').crop((200,740,650 …[+126 chars]`
+
+### 🧑 User — 2026-11-15T21:11:56.060Z
+
+> ↩︎ result: == w3 pitch 0
+> ALL bbox x 194-609 y 704-1162  (w 416 h 459)
+>   body  x  194- 609 y  947-1162  w 416 h 216  px 51168
+>   pom   x  334- 487 y  704- 842  w 154 h 139  px 14723
+>   cuff  x  259- 553 y  873- 974  w 295 h 102  px 14159
+>   crown x  275- 539 y  816- 919  w 265 h 104  px 18343
+>   star  x  454- 536 y  868- 951  w  83 h  84  px 3394
+> centre col x=406: top 704  cuff 921-974  bottom 1162
+> HAT incl pom (top→cuff bottom @centre) 270 px = 58.8%   BODY below cuff 188 px = 41.0%   of H 459
+> rows (y: red runs | cuff run | crown run | pom run)
+> == w3 pitch 10
+> ALL bbox x 197-609 y 699-1168  (w 413 h 470)
+>   body  x  197- 609 y  930-1168  w 413 h 239  px 57501
+>   pom   x  340- 486 y  699- 826  w 147 h 128  px 13206
+>   cuff  x  262- 553 y  873- 946  w 292 h  74  px 14155
+>   crown x  278- 538 y  814- 892  w 261 h  79  px 13267
+>   star  x  456- 537 y  844- 924  w  82 h  81  px 3241
+> centre col x=407: top 699  cuff 891-945  bottom 1168
+> HAT incl pom (top→cuff bottom @centre) 246 px = 52.3%   BODY below cuff 223 px = 47.4%   of H 470
+> rows (y: red runs | cuff run | crown run | pom run)
+
+### 🤖 Claude — 2026-11-15T21:11:58.130Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/w3_sweep.png"}`
+
+### 🧑 User — 2026-11-15T21:11:58.157Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:12:13.218Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad; python3 -I $S/measure.py $S/lab/glb_p12_mask.png; python3 -c \"\nfrom PIL import Image\nb=Image.open('$S/lab/glb_p12.png').convert('RGB')\nfor y in range(750,1180,6): print(y, b.getpixel((404,y)))\n\" | awk 'NR%1==0' | head -80", "description": "Detailed measurement of GLB with 12 deg lean"}`
+
+### 🧑 User — 2026-11-15T21:12:13.509Z
+
+> ↩︎ result: ALL bbox x 204-601 y 754-1167  (w 398 h 414)
+>   body  x  204- 601 y  962-1167  w 398 h 206  px 43977
+>   pom   x  334- 484 y  754- 866  w 151 h 113  px 11363
+>   cuff  x  259- 552 y  901- 996  w 294 h  96  px 13163
+>   crown x  275- 538 y  841- 941  w 264 h 101  px 18182
+>   star  x  448- 534 y  899- 988  w  87 h  90  px 3718
+> centre col x=405: top 754  cuff 942-996  bottom 1167
+> HAT incl pom (top→cuff bottom @centre) 242 px = 58.5%   BODY below cuff 171 px = 41.3%   of H 414
+> rows (y: red runs | cuff run | crown run | pom run)
+>    754:                               |             |             | 
+>    766:                               |             |             | 379-381 383-436 438-441
+>    778:                               |             |             | 362-454
+>    790:                               |             |             | 355-466
+>    802:                               |             |             | 350-471
+>    814:                               |             |             | 349-475
+>    826:                               |             |             | 340-476
+>    838:                               |             |             | 340-342 344-474
+>    850:                               |             | …[+3430 chars]
+
