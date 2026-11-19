@@ -1,31 +1,10 @@
 {
  "worktree": "/home/user/wt/s04",
  "branch": "claude/rainbow-s04-match-c18",
- "head": "f9cb52f9baea95937adf3555db672dd7529a3174",
- "time": "2026-11-19T18:06:55+00:00",
- "dirty_tracked": [
-  "src/world/match04m4.ts"
- ],
- "untracked_copied": [
-  "qa/match/04/r18/s3b_nwc/1_APPROVED.png",
-  "qa/match/04/r18/s3b_nwc/BEFORE/f06_forward6u.png",
-  "qa/match/04/r18/s3b_nwc/BEFORE/f10_forward10u.png",
-  "qa/match/04/r18/s3b_nwc/BEFORE/s_left_hard.png",
-  "qa/match/04/r18/s3b_nwc/BEFORE/s_right_hard.png",
-  "qa/match/04/r18/s3b_nwc/BEFORE/t33_through_screen.png",
-  "qa/match/04/r18/s3b_nwc/BEFORE/t95_through_screen.png",
-  "qa/match/04/r18/s3b_nwc/NEW/f06_forward6u.png",
-  "qa/match/04/r18/s3b_nwc/NEW/f10_forward10u.png",
-  "qa/match/04/r18/s3b_nwc/NEW/motion.json",
-  "qa/match/04/r18/s3b_nwc/NEW/motion_f06_f10.json",
-  "qa/match/04/r18/s3b_nwc/NEW/s_left_hard.png",
-  "qa/match/04/r18/s3b_nwc/NEW/s_right_hard.png",
-  "qa/match/04/r18/s3b_nwc/NEW/t33_through_screen.png",
-  "qa/match/04/r18/s3b_nwc/NEW/t95_through_screen.png"
- ],
- "untracked_skipped": [
-  "qa/match/04/r18/s3b_nwc/BEFORE/f03_forward3u.png",
-  "qa/match/04/r18/s3b_nwc/NEW/f03_forward3u.png"
- ],
+ "head": "f952838b6eee573882296b3fb9145566b2dbecca",
+ "time": "2026-11-19T18:09:37+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [],
+ "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s04-match-c18 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-match-c18/tracked.patch && copy backups/wip/claude__rainbow-s04-match-c18/untracked/* into the worktree"
 }
