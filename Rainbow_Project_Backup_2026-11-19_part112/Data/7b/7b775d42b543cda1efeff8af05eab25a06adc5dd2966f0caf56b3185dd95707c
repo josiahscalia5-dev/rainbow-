@@ -1,0 +1,123 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 0a504c0f..fd49e6a6 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -477,6 +477,84 @@ void main() {
+   gl_FragColor = vec4(pjInverse(col), 1.0);
+ }`;
+ 
++/** r16 `&m04end=1`: the distant glowing opening (own material on the far end disc; the ring shader is untouched). The disc
++ * paints the tunnel CONTINUING beyond the modelled rings — a telescoping series of copper-gold rings that shrink toward a
++ * small hot white-gold light just above the water, the river converging into that light — instead of a flat orange disc.
++ * Rings = the circle family through each disc point whose centres slide from the tunnel axis (bore) to the glow point. */
++const END_VERT = /* glsl */ `
++uniform mat4 uProjVP;
++uniform vec3 uC;             // tube axis x, y (group-local) and radius
++varying vec4 vProj;
++varying vec2 vLoc;
++void main() {
++  vec4 wp = modelMatrix * vec4(position, 1.0);
++  vProj = uProjVP * wp;
++  vLoc = (position.xy - uC.xy) / uC.z;
++  gl_Position = projectionMatrix * viewMatrix * wp;
++}`;
++const END_FRAG = /* glsl */ `
++uniform sampler2D uPlate;
++uniform vec4 uPjPost;
++uniform vec2 uPjRes;
++uniform float uAway;
++uniform vec4 uE;             // x glow point height (fraction of r, < 0 below the axis), y ring shrink per ring, z core size, w halo size
++uniform vec4 uE2;            // x water level (fraction of r), y lane half width (fraction of the floor), z glow strength, w ring contrast
++uniform float uTime;
++varying vec4 vProj;
++varying vec2 vLoc;
++${PROJ05_INVERSE}
++float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
++void main() {
++  vec2 p = vLoc, g = vec2(0.0, uE.x);
++  float s = length(p);
++  for (int i = 0; i < 8; i++) s = length(p - g * (1.0 - s));
++  s = clamp(s, 1e-3, 1.3);
++  vec2 rel = (p - g * (1.0 - s)) / s;                    // where on its own ring this point lies (unit circle)
++  float ph = log(s) / log(uE.y);                         // rings counted from the bore toward the light
++  float f = fract(ph), pw = fwidth(ph);
++  float warm = exp(-s * 2.4);                            // the light floods the deep rings
++  // telescoping rings: a broad copper band brightening toward its inner lip, a hot lip, a thin dark groove
++  float band = smoothstep(0.0, 0.85, f);
++  float lip = smoothstep(0.70, 0.84, f) * (1.0 - smoothstep(0.88, 0.93, f));
++  float groove = smoothstep(0.90, 0.95, f);
++  float rk = (1.0 - smoothstep(0.25, 0.6, pw)) * uE2.w;  // rings too fine to resolve fade to their average
++  vec3 cBand = mix(vec3(0.70, 0.27, 0.16), vec3(0.95, 0.52, 0.22), band);
++  vec3 cLip = vec3(1.0, 0.80, 0.42);
++  vec3 cGr = vec3(0.45, 0.14, 0.12);
++  vec3 ring = mix(cBand, cLip, lip);
++  ring = mix(ring, cGr, groove * 0.85);
++  vec3 col = mix(vec3(0.92, 0.50, 0.24), ring, rk);
++  // pink-violet reflections of the water on the lower ring walls (painted)
++  col = mix(col, vec3(0.80, 0.36, 0.62), 0.35 * smoothstep(-0.2, -0.75, rel.y));
++  col = mix(col, vec3(1.0, 0.86, 0.58), 0.75 * warm);
++  // the river converging into the light: the floor wedge below the rings' water lines
++  float wl = uE2.x;
++  float sf = (g.y - p.y) / max(g.y - wl, 1e-3);         // depth (ring scale) of the floor point here
++  float lx = p.x / max(sf * sqrt(1.0 - wl * wl), 1e-4);  // across the river (-1 .. 1)
++  float onFloor = step(0.0, sf) * (1.0 - smoothstep(0.92, 1.0, abs(lx)));
++  if (onFloor > 0.0) {
++    float al = log(max(sf, 1e-3)) / log(uE.y);
++    vec3 wc = mix(vec3(0.05, 0.50, 0.95), vec3(0.20, 0.80, 1.0), 0.5 + 0.5 * sin(al * 5.0 + lx * 3.0 - uTime * 2.0));
++    wc = mix(wc, vec3(0.92, 0.32, 0.72), smoothstep(uE2.y, uE2.y + 0.25, abs(lx)));             // pink side water
++    wc = mix(wc, vec3(0.56, 0.58, 0.88), smoothstep(0.55, 0.12, sf));                             // lilac haze toward the light
++    vec2 sc = vec2(lx * 9.0, al * 4.0 - uTime * 3.0); vec2 si = floor(sc);
++    wc += vec3(0.75, 0.95, 1.0) * 0.6 * step(0.9, h21(si)) * smoothstep(0.5, 0.0, length(fract(sc) - 0.5)) * (1.0 - smoothstep(0.3, 0.8, fwidth(sc.y)));
++    wc = mix(wc, vec3(1.0, 0.92, 0.80), 0.8 * exp(-sf * 5.0));                                  // the light on the water
++    col = mix(col, wc, onFloor);
++  }
++  // the light itself: hot white-gold core and a warm halo just above the water
++  float d = length(p - g);
++  float halo = exp(-pow(d / uE.w, 2.0)) * uE2.z;
++  col = col * (1.0 + 0.35 * halo) + vec3(1.0, 0.72, 0.36) * 0.45 * halo;
++  col = mix(col, vec3(1.0, 0.97, 0.86), clamp(exp(-pow(d / uE.z, 2.0)) * 1.15 * uE2.z, 0.0, 1.0));
++  col = clamp(col, 0.0, 1.0);
++  if (uAway < 0.999 && vProj.w > 0.0) {
++    vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
++    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
++  }
++  gl_FragColor = vec4(pjInverse(col), 1.0);
++}`;
++
+ /** world-space bubble discs + foam puffs share one tiny shader each (camera-facing sprites in an InstancedMesh) */
+ const SPRITE_VERT = /* glsl */ `
+ attribute vec4 aB;          // xyz world centre, w radius
+@@ -641,6 +719,7 @@ export function addM04(ctx: M04Ctx) {
+   const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+   const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+   const updaters: ((a: number) => void)[] = [];
++  let endCap: THREE.Mesh | null = null;
+ 
+   if (M04.ring) {
+     const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+@@ -716,6 +795,7 @@ export function addM04(ctx: M04Ctx) {
+     const nC = cap.attributes.position.count;
+     cap.setAttribute('aK', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 4 : 0)), 2));
+     const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
++    endCap = cm;
+     ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
+     console.info('[match04] m04ring', { period: P, rings: nP });
+     if (M04.mouth) {
+@@ -750,6 +830,17 @@ export function addM04(ctx: M04Ctx) {
+   const XF = M04.num('m04xf', 1.9);                         // half width of the flat centre lane (Benny's steering room)
+   const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
+   const time = { value: 0 };
++  if (endCap && M04.num('m04end', 0) > 0) {
++    // r16 `&m04end=1`: the distant glowing opening (END_FRAG): m04eg glow point height (fraction of r), m04eq ring shrink per
++    // ring, m04ec core size, m04eh halo size, m04es glow strength, m04el lane half width on the far floor, m04ek ring contrast
++    endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
++      extensions: { derivatives: true } as never,
++      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
++        uC: { value: new THREE.Vector3(cx, cy, r) },
++        uE: { value: new THREE.Vector4(M04.num('m04eg', -0.35), M04.num('m04eq', 0.78), M04.num('m04ec', 0.09), M04.num('m04eh', 0.35)) },
++        uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.0), M04.num('m04ek', 1.0)) } } });
++    console.info('[match04] m04end', { water: (0.02 - cy) / r });
++  }
+   const a5b = new THREE.Vector4(M04.num('m04a5w', 1.3), M04.num('m04a5s', 2.2), 0, M04.num('m04a5d', 30));
+   const MwInv = Mw.clone().invert();
+   if (M04.river) {

@@ -1,0 +1,28 @@
+import json,math,pathlib,bpy
+from mathutils import Matrix, Vector
+from bpy_extras.object_utils import world_to_camera_view
+base=pathlib.Path('copies/07').resolve()
+assets=base/'assets/textures/match07'
+layout=json.loads((assets/'proj07.json').read_text())
+camera=layout['camera']
+width,height=camera['size']
+scene=bpy.context.scene
+scene.render.resolution_x=width;scene.render.resolution_y=height;scene.render.resolution_percentage=100
+data=bpy.data.cameras.new('Saved Screen 07 camera')
+data.type='PERSP';data.sensor_fit='VERTICAL';data.sensor_height=36.0;data.lens=data.sensor_height/(2*math.tan(math.radians(camera['fov'])/2))
+obj=bpy.data.objects.new('Saved Screen 07 camera',data);scene.collection.objects.link(obj);scene.camera=obj
+mw=camera['matrixWorld']
+obj.matrix_world=Matrix([[mw[i+4*j] for j in range(4)] for i in range(4)])
+bpy.context.view_layer.update()
+miss=[]
+for paddle in layout['paddles']:
+ ndc=world_to_camera_view(scene,obj,Vector(paddle['pos']))
+ u,v=ndc.x*width,(1-ndc.y)*height
+ miss.append(math.hypot(u-paddle['px'][0],v-paddle['px'][1]))
+pics=[base/'references/07_dive_the_washer_tube.png',assets/'plate07_hybrid.png',assets/'tile_river_clean.png',assets/'tile_wall_ring.png']
+dims={}
+for p in pics:
+ im=bpy.data.images.load(str(p));dims[p.name]=[int(i) for i in im.size];assert min(im.size)>0
+v={'blender':bpy.app.version_string,'images':dims,'pads':len(miss),'max_pixel_distance_from_saved_paddle_centers':max(miss),'projector_size':[width,height]}
+print('SCREEN07_CHECK',json.dumps(v),flush=True)
+pathlib.Path('screen07-readonly-report.json').write_text(json.dumps(v,indent=2))

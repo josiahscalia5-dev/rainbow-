@@ -1,0 +1,26 @@
+import json,pathlib,re,subprocess,os
+from collections import defaultdict
+t=json.load(open('trees.json'))
+mapping=defaultdict(list)
+for k in ('04','04r','05','06','07','08'):
+ for p,oid in t[k].items():
+  if p.startswith(('src/','assets/','public/','scripts/lib/','references/','character_references/')) or p in ['package.json','package-lock.json','index.html','vite.config.ts','tsconfig.json','scripts/capture.mjs']:
+   mapping[oid].append((k,p))
+existing=subprocess.run(['git','--git-dir=objects.git','cat-file','--batch-check=%(objectname) %(objecttype)'],env={**os.environ,'GIT_NO_LAZY_FETCH':'1'},input='\n'.join(mapping)+'\n',text=True,stdout=subprocess.PIPE,check=True)
+missing=[s.split()[0] for s in existing.stdout.splitlines() if s.endswith('missing')]
+print('Runtime objects needed',len(missing),flush=True)
+for j in range(0,len(missing),55):
+ group=missing[j:j+55]
+ subprocess.run(['git','--git-dir=objects.git','-c','fetch.negotiationAlgorithm=noop','-c','gc.auto=0','fetch','--quiet','--no-tags','--no-write-fetch-head','--filter=blob:none','--recurse-submodules=no','--stdin','origin'],input='\n'.join(group)+'\n',text=True,check=True)
+for oid,paths in mapping.items():
+ blob=subprocess.check_output(['git','--git-dir=objects.git','cat-file','blob',oid])
+ if blob.startswith(b'version https://git-lfs.github.com/spec/v1'):
+  blob=subprocess.check_output(['git','-C','objects.git','lfs','smudge','--',paths[0][1]],input=blob,stderr=subprocess.PIPE,env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_LFS_SKIP_SMUDGE':'0'})
+ rootfile=pathlib.Path('runtime-data')/oid
+ rootfile.parent.mkdir(exist_ok=True)
+ rootfile.write_bytes(blob)
+ for k,p in paths:
+  dest=pathlib.Path('copies')/k/p
+  dest.parent.mkdir(parents=True,exist_ok=True)
+  if not dest.exists():dest.hardlink_to(rootfile)
+print('Read-only inputs for six independent game captures ready.',flush=True)

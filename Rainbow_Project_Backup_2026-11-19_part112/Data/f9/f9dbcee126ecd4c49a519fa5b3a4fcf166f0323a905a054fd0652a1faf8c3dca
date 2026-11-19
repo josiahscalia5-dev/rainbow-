@@ -1,0 +1,38 @@
+from pathlib import Path
+import json,subprocess,datetime,re,os
+base=json.load(open('heads.json'))
+n={'lead':'ccr-bbe2b27e-oxfh1w','04':'claude/rainbow-s04-match-c17','04r':'claude/rainbow-s04-ringtex-c17','05':'claude/rainbow-s05-match-c17','06':'claude/rainbow-s06-match-c17','07':'claude/rainbow-s07-match-c17','08':'claude/rainbow-s08-scenery-c17'}
+git=['git','--git-dir=objects.git']
+def run(*args):return subprocess.check_output(git+list(args),text=True)
+def map_tree(s):return {l.split('\t',1)[1]:l.split()[2] for l in run('ls-tree','-r',s).splitlines()}
+raw=run('ls-remote','--heads','origin',*n.values())
+remote={s.split()[1][11:]:s.split()[0] for s in raw.splitlines()}
+h={k:remote[v] for k,v in n.items()}
+t=datetime.datetime.now(datetime.timezone.utc).isoformat()
+print(t,h,flush=True)
+json.dump(dict(time=t,heads=h),open('latest-heads.json','w'),indent=2)
+changed=[k for k in h if base[k]!=h[k]]
+if changed:subprocess.run(git+['fetch','--quiet','--depth=1','--filter=blob:none','--no-tags','--no-write-fetch-head','origin']+[h[k] for k in changed],check=True)
+refpaths=[s.split(maxsplit=1)[1].strip().lstrip('*') for s in open('read/lead/scripts/reference.sha256')]
+oldtrees=json.load(open('trees.json'));todo={}
+for k in h:
+ latest=map_tree(h[k]);diff=[p for p,oid in latest.items() if oid!=oldtrees[k].get(p)]
+ print(k,run('show','-s','--format=%ct %s',h[k]).strip(),len(diff),'changes','refs',sum(latest[p]==oldtrees['lead'][p] for p in refpaths),flush=True)
+ if k=='lead':
+  select=[p for p in latest if p in ['CLAUDE.md','docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md','docs/briefs/2026-11-18-r17/COORDINATION.md','docs/briefs/2026-11-18-r17/RESUME_R17.md','backups/AGENTS_STATUS.json','backups/TOOL_MANIFEST.json','backups/BACKUP_STATUS.json'] or re.search(r'backups/wip/[^/]+c17/(INFO\.json|tracked\.patch)$',p) or p in diff and re.search(r'backups/wip/[^/]+c17/untracked/.+(PROGRESS\.md|NOTES\.md)$',p) or p.startswith('qa/review_r17/') and p.endswith('.md')]
+ else:
+  select=[p for p in diff if (p.startswith('qa/match/'+k[:2]+'/') and (p.endswith(('.md','.txt','.json')) or p.endswith('.png') and (re.search(r'[23]_(NEW|BEFORE).*?(f10|s_left_hard|s_right_hard|t66|a00)',p,re.I) or re.search(r'/(new|before)/(f10|s_left_hard|s_right_hard|t66|a00|t80)',p,re.I)))) or p.startswith(('src/','assets/'))]
+ for p in select:
+  dest=Path('latest')/k/p
+  todo.setdefault(latest[p],[]).append(dest)
+ if k!='lead':
+  print('Changed progress', [p for p in diff if p.startswith('qa/') and p.endswith('.md')],flush=True)
+missing=[]
+ck=subprocess.run(git+['cat-file','--batch-check=%(objectname) %(objecttype)'],env={**os.environ,'GIT_NO_LAZY_FETCH':'1'},input='\n'.join(todo)+'\n',text=True,stdout=subprocess.PIPE,check=True)
+for s in ck.stdout.splitlines():
+ if s.endswith(' missing'):missing.append(s.split()[0])
+for i in range(0,len(missing),50):
+ subprocess.run(git+['-c','fetch.negotiationAlgorithm=noop','fetch','--quiet','--no-tags','--no-write-fetch-head','--filter=blob:none','--recurse-submodules=no','--stdin','origin'],input='\n'.join(missing[i:i+50])+'\n',text=True,check=True)
+for oid,dests in todo.items():
+ b=subprocess.check_output(git+['cat-file','blob',oid])
+ for dest in dests:dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
