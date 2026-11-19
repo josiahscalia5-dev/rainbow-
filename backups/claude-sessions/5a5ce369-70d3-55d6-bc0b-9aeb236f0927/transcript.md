@@ -3643,3 +3643,11 @@ You've hit your 5-hour limit · resets 12:10am (UTC)
 <result>I'll start by reading my progress log and the coordination docs.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-19T21:38:26.155Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-19T21:38:30.041Z
+
+You've hit your 5-hour limit · resets 12:10am (UTC)
+
