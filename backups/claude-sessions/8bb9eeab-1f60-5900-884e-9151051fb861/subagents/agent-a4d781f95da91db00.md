@@ -2798,3 +2798,28 @@ Step 8 reported (kept set K8). Next, the lead's note: the top third at f10/t66. 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -i \"s/M04.num('m04rpcb', 0.022), M04.num('m04rpcd', 0.03), M04.num('m04rpcc', 0.02)/M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)/\" src/world/match04m4.ts && python3 - <<'EOF'\np='/home/user/wt/s04b/src/world/match04m4.ts'; s=open(p).read()\ns=s.replace(\"pr = mix(pr, vec3(1.0, 0.93, 0.68), 0.85 * cB * uRCr.x);\\n        pr *= 1.0 - 0.62 * max(cD, cC) * uRCr.x;\",\n\"pr = mix(pr, vec3(1.0, 0.92, 0.66), 0.75 * cB * uRCr.x);\\n        pr = mix(pr, pr * vec3(0.55, 0.36, 0.30), max(cD, cC) * uRCr.x);   // dark red-brown  …[+896 chars]`
 
+### 🧑 User — 2026-11-19T18:48:54.424Z
+
+> ↩︎ result: 375:        pr = mix(pr, pr * vec3(0.55, 0.36, 0.30), max(cD, cC) * uRCr.x);   // dark red-brown groove, not black
+> [This command modified 1 file you've previously read: ../wt/s04b/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-19T18:48:58.086Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s9b_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:48:58.144Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:49:03.643Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s9b_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T18:49:03.678Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:49:27.344Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K8=$(cat $S/K8.txt) && D=qa/match/04/r18/ringpaint/step9_crisp && mkdir -p $D && node tools/lead_r6/motion_audit.mjs 04 $D \"$K8&m04rpcr=1\" 2>&1 | grep -E \"pageerror|Error\"; (cd $D && for f in [a-z]*.png; do mv \"$f\" \"3_NEW_$f\"; done); node scripts/capture.mjs 04 --q=\"$K8&m04rpcr=1\" --out=$S/sv_cr >/dev/null 2>&1; git checkout qa/capture_log.json; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/sv_pol/04.png $S/sv_cr/04.png $D/start_view_pixeldiff_BEFORE …[+414 chars]`
+

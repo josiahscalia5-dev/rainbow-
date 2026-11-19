@@ -2585,3 +2585,61 @@ Gameplay 8/8, 91 coins, 1,330 → 2,240; locked view byte-identical. Now judging
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\ns=open(p).read()\na=\"\"\"    if (wCr > 0.0) {\n      vec3 metal = texture2D(uM05WField, vec2(puv.x, 0.5)).rgb;\"\"\"\nb=\"\"\"    if (wCr > 0.0) {\n      vec3 metal = texture2D(uM05WField, vec2(puv.x, 0.5)).rgb;\n      // keep this bay's painted light: the own row's colour around this point (slot / dark texels left out), against the\n      // field's own colour over the same width round the tube → a per-bay tint of the crisp metal (hue + brightness)\n      {\n        float y0 = (rw.x + 0.5) / uPtWallSize.y, y …[+2716 chars]`
 
+### 🧑 User — 2026-11-19T18:48:58.710Z
+
+> ↩︎ result: ok
+> 140:  uM05WC: { value: new THREE.Vector2(m05wcrispNum('m05wc0', 0.25), m05wcrispNum('m05wc1', 0.6)) },
+> t66_through_screen (array([176.,  70., 143.]), array([ 94., 123., 176.]))
+> t95_through_screen (array([162.,  53., 155.]), array([ 56., 124., 172.]))
+> x97L (array([170.,  62., 151.]), array([ 56., 127., 177.]))
+
+### 🤖 Claude — 2026-11-19T18:49:02.381Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try10_strip.png"}`
+
+### 🧑 User — 2026-11-19T18:49:02.414Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:49:08.971Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nImage.open(S+'try10/x97L.png').convert('RGB').crop((0,150,864,900)).resize((648,562)).save(S+'try10_x97L_top.png')\"", "description": "Crop the upper half of x97L for detail check"}`
+
+### 🧑 User — 2026-11-19T18:49:09.201Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:49:10.274Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try10_x97L_top.png"}`
+
+### 🧑 User — 2026-11-19T18:49:10.309Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:49:16.022Z
+
+The colours now sit close to the painted walls (violet-magenta, painted light kept) and t66 keeps more of the painted far tunnel. Re-rendering the final NEW set with this version plus the lock check.
+
+### 🤖 Claude — 2026-11-19T18:49:20.276Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && D=qa/match/05/r18/step2_wall && rm -rf $D/new && K=\"$(cat qa/match/05/r18/KEPT_START.txt)\" && NQ=\"$K&m05wcrisp=1&m05lidf=1&m05pink=1\" && L=a00_approved_view,f03_forward3u,f06_forward6u,f10_forward10u,f20_forward20u,s_left_hard,s_right_hard,t33_through_screen,t66_through_screen,k81_kink_left,k81_kink_right,t95_through_screen,x97,x97L,x97R,t98_end && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05 && (timeout 2400 node tools/match05/r8_shots.mjs $D/new \"$NQ\" $L 5275 > $D/new.log 2>&1; timeout 900 node scripts/capt …[+270 chars]`
+
+### 🧑 User — 2026-11-19T18:49:20.315Z
+
+> ↩︎ result: Command running in background with ID: btpbvkbiz. Output is being written to: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/btpbvkbiz.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-19T18:49:26.088Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git add src && git commit -q -m \"Screen 05 r18 step 2 WIP: m05wcrisp keeps each bay's painted light (tint from the own row, slots excluded), hand-over only where clearly magnified\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6SAH2NyYjSPRMtFps6\" && timeout 100 git push -q origin claude/rainbow-s05-match-c18 2>&1|tail -2; git rev-parse --short HEAD; git ls-remote origin refs/heads/claude/rainbow-s05-match-c18 | cut -c1-8", "description": "Commit and push the refined shader", "timeout": 1200 …[+3 chars]`
+
+### 🧑 User — 2026-11-19T18:49:29.545Z
+
+> ↩︎ result: ef5dd0cd
+> ef5dd0cd
+
+### 🤖 Claude — 2026-11-19T18:49:35.354Z
+
+> 🔧 **Bash** `{"command": "until grep -q done /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/btpbvkbiz.output 2>/dev/null; do sleep 15; done; cat /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/tasks/btpbvkbiz.output; grep -ci error /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log; ls /home/user/wt/s05/qa/match/05/r18/step2_wall/new | wc -l", "description": "Wait for the final NEW set and lock check", "timeout": 5400000}`
+
