@@ -1,0 +1,31 @@
+import concurrent.futures
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+root = Path(__file__).parent
+repo = "josiahscalia5-dev/rainbow-"
+phone = json.loads((root / "phone-plan.json").read_text())["Rainbow_Phone_Review"]["commits"][-1]
+videos = json.loads((root / "snapshot-plan.json").read_text())["Rainbow_Gameplay_Videos"]["commits"][-1]
+phone_hashes = json.loads((root / "phone-manifest.json").read_text())
+video_hashes = json.loads((root / "Rainbow_Gameplay_Videos.manifest.json").read_text())
+requests = [(phone, rel, digest) for rel, digest in phone_hashes.items()]
+for i in range(4, 9):
+    for revision in ("CLAUDIA_RETAINED", "CODEX_CANDIDATE"):
+        path = f"Screen_{i:02}/SCREEN{i:02}_{revision}_ENTRANCE_TO_EXIT.mp4"
+        requests.append((videos, path, video_hashes[path]))
+
+def retrieve(item):
+    commit, rel, expected = item
+    path = f"repos/{repo}/contents/{rel}?ref={commit}"
+    cmd = ["gh", "api", "-H", "Accept: application/vnd.github.v3.raw", path]
+    result = subprocess.run(cmd, capture_output=True)
+    if result.returncode or hashlib.sha256(result.stdout).hexdigest() != expected:
+        raise RuntimeError("Private GitHub file download failed verification for " + rel)
+    return {"path": rel, "bytes": len(result.stdout), "sha256": expected}
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+    verified = list(pool.map(retrieve, requests))
+(root / "phone-remote-check.json").write_text(json.dumps(verified, indent=2))
+print("Private downloads matched for all five image batches, ten individual MP4s, and the mobile index.")

@@ -1,0 +1,76 @@
+"""Prepare private, evidence-only snapshots for GitHub's native ZIP download."""
+from hashlib import sha1, sha256
+import json
+from pathlib import Path, PurePosixPath
+import stat
+import subprocess
+from zipfile import ZipFile
+
+work = Path(__file__).parent
+source = Path("/workspace/library-files/Rainbow-ChatGPT-Review")
+names = ("Rainbow_Visual_Images", "Rainbow_Gameplay_Videos")
+allowed = {".csv", ".jpg", ".json", ".md", ".mp4", ".png", ".txt"}
+remote = "https://github.com/josiahscalia5-dev/rainbow-.git"
+cap = 27 * 1024 * 1024
+plan = {}
+
+for name in names:
+    branch = "codex/downloads/" + name
+    repo = work / name
+    repo.mkdir()
+    def git(*args, data=None):
+        return subprocess.run(["git", *args], cwd=repo, input=data, check=True,
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+    git("init", "-q", "-b", branch)
+    git("config", "user.name", "Codex")
+    git("config", "user.email", "codex@users.noreply.github.com")
+    git("config", "core.autocrlf", "false")
+    git("config", "core.attributesFile", "/dev/null")
+    git("remote", "add", "origin", remote)
+    staging = []
+    staged_bytes = 0
+    refs = []
+    files = {}
+    blobs = {}
+    def checkpoint():
+        git("add", "--pathspec-from-file=-", "--pathspec-file-nul",
+            data=b"\x00".join(s.encode() for s in staging) + b"\x00")
+        git("commit", "-q", "-m", f"Save {name.replace('_', ' ')} evidence batch {len(refs) + 1}")
+        refs.append(git("rev-parse", "HEAD").decode().strip())
+        staging.clear()
+    with ZipFile(source / (name + ".zip")) as archive:
+        entries = sorted((e for e in archive.infolist() if not e.is_dir()),
+                         key=lambda e: ("/" in e.filename, e.filename))
+        for entry in entries:
+            rel = PurePosixPath(entry.filename)
+            if (rel.is_absolute() or rel.as_posix() != entry.filename or
+                any(p.startswith(".") for p in rel.parts) or rel.suffix.lower() not in allowed or
+                stat.S_ISLNK(entry.external_attr >> 16) or str(rel) in files):
+                raise ValueError("Unexpected review member")
+            if staged_bytes + entry.file_size > cap and staging:
+                checkpoint()
+                staged_bytes = 0
+            target = repo.joinpath(*rel.parts)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            content = archive.read(entry)
+            target.write_bytes(content)
+            files[str(rel)] = sha256(content).hexdigest()
+            blobs[str(rel)] = sha1(f"blob {len(content)}\0".encode() + content).hexdigest()
+            staging.append(str(rel))
+            staged_bytes += len(content)
+    if staging:
+        checkpoint()
+    seen = {}
+    for line in git("ls-tree", "-rz", "HEAD").split(b"\x00"):
+        if not line:
+            continue
+        metadata, path = line.split(b"\t", 1)
+        mode, kind, oid = metadata.split()
+        assert (mode, kind) == (b"100644", b"blob")
+        seen[path.decode()] = oid.decode()
+    assert seen == blobs, "Native git blobs must contain the exact collection, including MP4s"
+    assert all(any(path.startswith(f"Screen_{i:02}/") for path in files) for i in range(4, 9))
+    (work / (name + ".manifest.json")).write_text(json.dumps(files), encoding="utf-8")
+    plan[name] = {"branch": branch, "commits": refs, "files": len(files)}
+    print(name, len(files), "original files checked,", len(refs), "transfer batches", flush=True)
+(work / "snapshot-plan.json").write_text(json.dumps(plan), encoding="utf-8")

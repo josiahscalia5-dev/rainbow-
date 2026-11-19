@@ -1,0 +1,12 @@
+from pathlib import Path
+import os,sys,subprocess,json
+root=Path.cwd();engine=root/'proposed/.agents/skills/rainbow-visual-motion-matcher/scripts/compare-opening.py'
+env={**os.environ,'NODE_PATH':str(root/'toolchain/node_modules')}
+for sid in sys.argv[1:]:
+ plot=root/'captures'/sid
+ prefix=sid[:2]
+ ref=next((root/'games'/sid/'references').glob(prefix+'_*.png'))
+ args=[sys.executable,str(engine),str(ref),str(plot/'approved.png'),'--repeat',str(root/'fresh'/sid/'fresh-opening.png')]
+ out=subprocess.check_output(args,env=env)
+ (root/'metrics'/f'{sid}.json').write_bytes(out)
+ d=json.loads(out);q=d['approvedVsBefore']; print(sid,round(q['within20Percent'],3),q['pixelmatchMismatches'],d['beforeVsRepeat']['exactDifferences'])

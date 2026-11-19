@@ -1,0 +1,74 @@
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+from zipfile import ZipFile
+
+root = Path(__file__).parent
+source = Path("/workspace/library-files/Rainbow-ChatGPT-Review")
+plans = json.loads((root / "snapshot-plan.json").read_text())
+name = "Rainbow_Phone_Review"
+branch = "codex/downloads/" + name
+base = "https://github.com/josiahscalia5-dev/rainbow-"
+repo = root / name
+repo.mkdir()
+def git(*args):
+    return subprocess.run(["git", *args], cwd=repo, check=True,
+                          stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+git("init", "-q", "-b", branch)
+git("config", "user.name", "Codex")
+git("config", "user.email", "codex@users.noreply.github.com")
+git("config", "core.autocrlf", "false")
+git("config", "core.attributesFile", "/dev/null")
+git("remote", "add", "origin", base + ".git")
+images = plans["Rainbow_Visual_Images"]
+videos = plans["Rainbow_Gameplay_Videos"]
+lines = [
+    "# Rainbow downloads for your phone", "",
+    "Open this page in Chrome while signed in to your Rainbow GitHub account.", "",
+    f"- [Download all five screens’ images]({base}/archive/refs/heads/{images['branch']}.zip)",
+    f"- [Download all five screens’ gameplay videos]({base}/archive/refs/heads/{videos['branch']}.zip)", "",
+    "Each complete ZIP contains a README_FIRST.md guide. If ChatGPT declines a ZIP, extract it in Android’s Files app and attach the pictures or an MP4 from one screen.", "",
+    "## One screen at a time", "",
+    "Each small image ZIP contains the unchanged approved artwork and four matched pairs of full-size gameplay pictures. The two MP4 links for each screen show Claudia’s retained ride and the unapproved Codex candidate.", ""
+]
+commits = []
+hashes = {}
+for i in range(4, 9):
+    screen = f"Screen_{i:02}"
+    stamp = f"SCREEN{i:02}"
+    batch_file = f"{screen}_Image_Batch.zip"
+    original = source / "Small_Image_Batches" / batch_file
+    with ZipFile(original) as z:
+        assert z.testzip() is None
+        pics = [v for v in z.namelist() if v.lower().endswith((".png", ".jpg"))]
+        assert len(pics) == 9 and f"{screen}/{stamp}_APPROVED.jpg" in pics
+    dest = repo / batch_file
+    shutil.copyfile(original, dest)
+    with dest.open("rb") as f:
+        hashes[batch_file] = hashlib.file_digest(f, "sha256").hexdigest()
+    raw_video = f"{base}/raw/{videos['commits'][-1]}/{screen}"
+    file_browser = f"{base}/tree/{images['commits'][-1]}/{screen}"
+    lines += [
+        f"### Screen {i:02}", "",
+        f"- [Small image ZIP · {dest.stat().st_size / 1_000_000:.0f} MB]({base}/raw/refs/heads/{branch}/{batch_file})",
+        f"- [Claudia’s retained ride]({raw_video}/{stamp}_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4)",
+        f"- [Codex candidate ride]({raw_video}/{stamp}_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4)",
+        f"- [Open the artwork and screenshots individually]({file_browser})", ""
+    ]
+    git("add", "--", batch_file)
+    git("commit", "-q", "-m", f"Save Screen {i:02} phone image ZIP")
+    commits.append(git("rev-parse", "HEAD").decode().strip())
+readme = "\n".join(lines).encode()
+(repo / "README.md").write_bytes(readme)
+hashes["README.md"] = hashlib.sha256(readme).hexdigest()
+git("add", "--", "README.md")
+git("commit", "-q", "-m", "Add private Android review download links")
+commits.append(git("rev-parse", "HEAD").decode().strip())
+for rel, digest in hashes.items():
+    assert hashlib.sha256(git("show", "HEAD:" + rel)).hexdigest() == digest
+record = {name: {"branch": branch, "commits": commits, "files": len(hashes)}}
+(root / "phone-plan.json").write_text(json.dumps(record), encoding="utf-8")
+(root / "phone-manifest.json").write_text(json.dumps(hashes), encoding="utf-8")
+print("Five smaller image ZIPs checked; ten individual ride links indexed")

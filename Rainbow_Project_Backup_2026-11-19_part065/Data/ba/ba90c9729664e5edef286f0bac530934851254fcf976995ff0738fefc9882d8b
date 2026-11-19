@@ -1,0 +1,82 @@
+[
+  {
+    "path": "Screen_04_Image_Batch.zip",
+    "bytes": 12375398,
+    "sha256": "eb42712f74d76cf3144ee18ecbd187072fde94f90d9f47cff3898a61945d42fc"
+  },
+  {
+    "path": "Screen_05_Image_Batch.zip",
+    "bytes": 17521140,
+    "sha256": "75e13cd2996fcdfce1df38d9d7acb874fd63250c43bb73605e6a31c87f03de6b"
+  },
+  {
+    "path": "Screen_06_Image_Batch.zip",
+    "bytes": 17903407,
+    "sha256": "9bf79ac2941b82256e2ef204f385f2b6718c4d30df3e360b302879782f25d9af"
+  },
+  {
+    "path": "Screen_07_Image_Batch.zip",
+    "bytes": 16097444,
+    "sha256": "40b7c42ca6f7035beb0cb15f66d846e4bdfc8a99090209fddef261086763d006"
+  },
+  {
+    "path": "Screen_08_Image_Batch.zip",
+    "bytes": 18331647,
+    "sha256": "ed9888c518f23cbd5a0480823b0c65786372653055f2209226ece3b025d1a417"
+  },
+  {
+    "path": "README.md",
+    "bytes": 4202,
+    "sha256": "8ae101304a51a6f91a8e4c524b199d74b959ec872ab6868067d55d206d116de9"
+  },
+  {
+    "path": "Screen_04/SCREEN04_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 3790969,
+    "sha256": "ed6100a4e18561ccee50a59ea9e6c88878289a5fe6a7eed78026f830a799eab1"
+  },
+  {
+    "path": "Screen_04/SCREEN04_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 3778866,
+    "sha256": "5fe66c58810ae7159c3c5b0be4dae8d38c0bf6ca20de0e6edd61dae97d12c3a7"
+  },
+  {
+    "path": "Screen_05/SCREEN05_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 10312979,
+    "sha256": "5f2cfebcf1ee7a4bcb4a6826f6882199e20280af528551e60f13efba8b9eae1a"
+  },
+  {
+    "path": "Screen_05/SCREEN05_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 10487979,
+    "sha256": "dc1a246f6ae1b2a49941aaf84f8e077cb9cd032b3c0f862c78cec57c34d8730b"
+  },
+  {
+    "path": "Screen_06/SCREEN06_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 7491213,
+    "sha256": "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1"
+  },
+  {
+    "path": "Screen_06/SCREEN06_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 7234337,
+    "sha256": "3c5c4157bcf2acd8bfbb5dc8ee19000c26eb82d29a9d6ffa613293e898ef2505"
+  },
+  {
+    "path": "Screen_07/SCREEN07_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 17964350,
+    "sha256": "486adcb88342784a7d9fc68141a1ed3bb65ef7afbabe870f4cb0ee93ee9c16ca"
+  },
+  {
+    "path": "Screen_07/SCREEN07_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 17952727,
+    "sha256": "fe10433de2046b5aa1bd915846848d80c328b6c21f463cc712a861794ade2eb4"
+  },
+  {
+    "path": "Screen_08/SCREEN08_CLAUDIA_RETAINED_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 2528482,
+    "sha256": "c6d4bf5102763257e81499c1c504b0c686f37da28ffe86d0f1c1aee9248f91bf"
+  },
+  {
+    "path": "Screen_08/SCREEN08_CODEX_CANDIDATE_ENTRANCE_TO_EXIT.mp4",
+    "bytes": 2516639,
+    "sha256": "2594a52f95867ef17eed901b4cb62bf32c88adf6f4fb8e059e7a05ace7c66a36"
+  }
+]

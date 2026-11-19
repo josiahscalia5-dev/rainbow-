@@ -1,0 +1,1478 @@
+{
+  "screen": "07",
+  "stills": [
+    {
+      "name": "opening",
+      "stage": "07",
+      "s": 273.056,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 1348,
+      "channelDeltaAtLeast16": 29,
+      "boundsAt16": [
+        348,
+        366,
+        428,
+        467
+      ],
+      "beforeDraws": {
+        "calls": 153,
+        "triangles": 287709,
+        "textures": 51,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 153,
+        "triangles": 287341,
+        "textures": 53,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-03",
+      "stage": "07",
+      "s": 276.056,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 7474,
+      "channelDeltaAtLeast16": 3827,
+      "boundsAt16": [
+        299,
+        356,
+        403,
+        470
+      ],
+      "beforeDraws": {
+        "calls": 153,
+        "triangles": 287709,
+        "textures": 51,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 153,
+        "triangles": 287341,
+        "textures": 53,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-06",
+      "stage": "07",
+      "s": 279.056,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 11028,
+      "channelDeltaAtLeast16": 6699,
+      "boundsAt16": [
+        247,
+        338,
+        376,
+        466
+      ],
+      "beforeDraws": {
+        "calls": 153,
+        "triangles": 287709,
+        "textures": 51,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 153,
+        "triangles": 287341,
+        "textures": 53,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-10",
+      "stage": "07",
+      "s": 283.056,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 16543,
+      "channelDeltaAtLeast16": 10274,
+      "boundsAt16": [
+        226,
+        298,
+        383,
+        455
+      ],
+      "beforeDraws": {
+        "calls": 153,
+        "triangles": 287709,
+        "textures": 51,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 153,
+        "triangles": 287341,
+        "textures": 53,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-20",
+      "stage": "07",
+      "s": 293.056,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 53577,
+      "channelDeltaAtLeast16": 51053,
+      "boundsAt16": [
+        96,
+        54,
+        392,
+        399
+      ],
+      "beforeDraws": {
+        "calls": 153,
+        "triangles": 287709,
+        "textures": 51,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 153,
+        "triangles": 287341,
+        "textures": 53,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "hard-left",
+      "stage": "07",
+      "s": 285.056,
+      "steer": -1,
+      "hearts": 5,
+      "changedPixels": 15339,
+      "channelDeltaAtLeast16": 8998,
+      "boundsAt16": [
+        379,
+        274,
+        515,
+        447
+      ],
+      "beforeDraws": {
+        "calls": 153,
+        "triangles": 287709,
+        "textures": 51,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 153,
+        "triangles": 287341,
+        "textures": 53,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "hard-right",
+      "stage": "07",
+      "s": 285.056,
+      "steer": 1,
+      "hearts": 5,
+      "changedPixels": 28218,
+      "channelDeltaAtLeast16": 26563,
+      "boundsAt16": [
+        55,
+        268,
+        294,
+        447
+      ],
+      "beforeDraws": {
+        "calls": 153,
+        "triangles": 287709,
+        "textures": 51,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 153,
+        "triangles": 287341,
+        "textures": 53,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "inlet",
+      "stage": "07",
+      "s": 248.103,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 249,
+        "triangles": 701415,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 249,
+        "triangles": 701415,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "middle",
+      "stage": "07",
+      "s": 318.643,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 166,
+        "triangles": 573827,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 166,
+        "triangles": 573459,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "deep",
+      "stage": "07",
+      "s": 355.843,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 71,
+        "triangles": 498051,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 71,
+        "triangles": 497683,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "plunge-lip",
+      "stage": "07",
+      "s": 312.443,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 152,
+        "triangles": 345869,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 152,
+        "triangles": 345501,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "halfway-down",
+      "stage": "07",
+      "s": 351.243,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 73,
+        "triangles": 499959,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 73,
+        "triangles": 499591,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "two-thirds-down",
+      "stage": "07",
+      "s": 364.243,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 71,
+        "triangles": 498051,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 71,
+        "triangles": 497683,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "plunge-bottom",
+      "stage": "07",
+      "s": 387.787,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 124,
+        "triangles": 532255,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 124,
+        "triangles": 531887,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "last-in-stage",
+      "stage": "07",
+      "s": 389.838,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 145,
+        "triangles": 535947,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 145,
+        "triangles": 535579,
+        "textures": 65,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "across-transition",
+      "stage": "08",
+      "s": 390.909,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 161,
+        "triangles": 611767,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 161,
+        "triangles": 611767,
+        "textures": 65,
+        "contextLost": false
+      }
+    }
+  ],
+  "ride": {
+    "frames": 147,
+    "fps": 12,
+    "duration": 12.25,
+    "start": 247.14,
+    "end": 392.456,
+    "nextStage": "08",
+    "minimumHearts": 5,
+    "allMatchedStates": true,
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 324,
+        "height": 576,
+        "r_frame_rate": "12/1",
+        "nb_frames": "147",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "codec_name": "h264",
+        "width": 324,
+        "height": 576,
+        "r_frame_rate": "12/1",
+        "nb_frames": "147",
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "largestRelativeTemporalChanges": [
+      {
+        "frame": 51,
+        "s": 298.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.842,
+        "newMeanChannelChange": 44.048
+      },
+      {
+        "frame": 50,
+        "s": 297.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.23,
+        "newMeanChannelChange": 41.502
+      },
+      {
+        "frame": 52,
+        "s": 299.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 46.867,
+        "newMeanChannelChange": 46.355
+      },
+      {
+        "frame": 49,
+        "s": 296.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.021,
+        "newMeanChannelChange": 36.826
+      }
+    ],
+    "temporalChanges": [
+      {
+        "frame": 1,
+        "s": 248.103,
+        "stage": "07",
+        "beforeMeanChannelChange": 50.488,
+        "newMeanChannelChange": 50.488
+      },
+      {
+        "frame": 2,
+        "s": 249.076,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.304,
+        "newMeanChannelChange": 39.304
+      },
+      {
+        "frame": 3,
+        "s": 250.058,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.211,
+        "newMeanChannelChange": 39.211
+      },
+      {
+        "frame": 4,
+        "s": 251.048,
+        "stage": "07",
+        "beforeMeanChannelChange": 38.731,
+        "newMeanChannelChange": 38.731
+      },
+      {
+        "frame": 5,
+        "s": 252.044,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.483,
+        "newMeanChannelChange": 40.483
+      },
+      {
+        "frame": 6,
+        "s": 253.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.229,
+        "newMeanChannelChange": 41.229
+      },
+      {
+        "frame": 7,
+        "s": 254.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.355,
+        "newMeanChannelChange": 42.355
+      },
+      {
+        "frame": 8,
+        "s": 255.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.27,
+        "newMeanChannelChange": 42.27
+      },
+      {
+        "frame": 9,
+        "s": 256.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.893,
+        "newMeanChannelChange": 40.896
+      },
+      {
+        "frame": 10,
+        "s": 257.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.129,
+        "newMeanChannelChange": 39.133
+      },
+      {
+        "frame": 11,
+        "s": 258.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.116,
+        "newMeanChannelChange": 37.116
+      },
+      {
+        "frame": 12,
+        "s": 259.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.707,
+        "newMeanChannelChange": 35.705
+      },
+      {
+        "frame": 13,
+        "s": 260.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 31.361,
+        "newMeanChannelChange": 31.347
+      },
+      {
+        "frame": 14,
+        "s": 261.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 29.928,
+        "newMeanChannelChange": 29.93
+      },
+      {
+        "frame": 15,
+        "s": 262.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 56.581,
+        "newMeanChannelChange": 56.577
+      },
+      {
+        "frame": 16,
+        "s": 263.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.784,
+        "newMeanChannelChange": 41.779
+      },
+      {
+        "frame": 17,
+        "s": 264.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.226,
+        "newMeanChannelChange": 40.218
+      },
+      {
+        "frame": 18,
+        "s": 265.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.809,
+        "newMeanChannelChange": 39.809
+      },
+      {
+        "frame": 19,
+        "s": 266.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.017,
+        "newMeanChannelChange": 40.031
+      },
+      {
+        "frame": 20,
+        "s": 267.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.285,
+        "newMeanChannelChange": 39.286
+      },
+      {
+        "frame": 21,
+        "s": 268.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.02,
+        "newMeanChannelChange": 42.025
+      },
+      {
+        "frame": 22,
+        "s": 269.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.244,
+        "newMeanChannelChange": 42.255
+      },
+      {
+        "frame": 23,
+        "s": 270.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 38.903,
+        "newMeanChannelChange": 38.901
+      },
+      {
+        "frame": 24,
+        "s": 271.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.036,
+        "newMeanChannelChange": 34.038
+      },
+      {
+        "frame": 25,
+        "s": 272.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.001,
+        "newMeanChannelChange": 35.004
+      },
+      {
+        "frame": 26,
+        "s": 273.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.606,
+        "newMeanChannelChange": 36.588
+      },
+      {
+        "frame": 27,
+        "s": 274.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.25,
+        "newMeanChannelChange": 44.264
+      },
+      {
+        "frame": 28,
+        "s": 275.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 46.474,
+        "newMeanChannelChange": 46.474
+      },
+      {
+        "frame": 29,
+        "s": 276.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.896,
+        "newMeanChannelChange": 42.887
+      },
+      {
+        "frame": 30,
+        "s": 277.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.101,
+        "newMeanChannelChange": 44.071
+      },
+      {
+        "frame": 31,
+        "s": 278.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.384,
+        "newMeanChannelChange": 39.369
+      },
+      {
+        "frame": 32,
+        "s": 279.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.141,
+        "newMeanChannelChange": 35.134
+      },
+      {
+        "frame": 33,
+        "s": 280.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.931,
+        "newMeanChannelChange": 32.937
+      },
+      {
+        "frame": 34,
+        "s": 281.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.411,
+        "newMeanChannelChange": 33.392
+      },
+      {
+        "frame": 35,
+        "s": 282.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.287,
+        "newMeanChannelChange": 33.264
+      },
+      {
+        "frame": 36,
+        "s": 283.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.231,
+        "newMeanChannelChange": 34.202
+      },
+      {
+        "frame": 37,
+        "s": 284.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.701,
+        "newMeanChannelChange": 33.669
+      },
+      {
+        "frame": 38,
+        "s": 285.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.079,
+        "newMeanChannelChange": 33.048
+      },
+      {
+        "frame": 39,
+        "s": 286.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.702,
+        "newMeanChannelChange": 32.644
+      },
+      {
+        "frame": 40,
+        "s": 287.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 30.713,
+        "newMeanChannelChange": 30.651
+      },
+      {
+        "frame": 41,
+        "s": 288.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 28.934,
+        "newMeanChannelChange": 28.883
+      },
+      {
+        "frame": 42,
+        "s": 289.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 29.405,
+        "newMeanChannelChange": 29.324
+      },
+      {
+        "frame": 43,
+        "s": 290.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 28.712,
+        "newMeanChannelChange": 28.606
+      },
+      {
+        "frame": 44,
+        "s": 291.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 29.791,
+        "newMeanChannelChange": 29.681
+      },
+      {
+        "frame": 45,
+        "s": 292.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 29.559,
+        "newMeanChannelChange": 29.473
+      },
+      {
+        "frame": 46,
+        "s": 293.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.061,
+        "newMeanChannelChange": 31.974
+      },
+      {
+        "frame": 47,
+        "s": 294.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.246,
+        "newMeanChannelChange": 32.131
+      },
+      {
+        "frame": 48,
+        "s": 295.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.766,
+        "newMeanChannelChange": 33.6
+      },
+      {
+        "frame": 49,
+        "s": 296.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.021,
+        "newMeanChannelChange": 36.826
+      },
+      {
+        "frame": 50,
+        "s": 297.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.23,
+        "newMeanChannelChange": 41.502
+      },
+      {
+        "frame": 51,
+        "s": 298.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.842,
+        "newMeanChannelChange": 44.048
+      },
+      {
+        "frame": 52,
+        "s": 299.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 46.867,
+        "newMeanChannelChange": 46.355
+      },
+      {
+        "frame": 53,
+        "s": 300.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.807,
+        "newMeanChannelChange": 44.793
+      },
+      {
+        "frame": 54,
+        "s": 301.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 48.167,
+        "newMeanChannelChange": 48.164
+      },
+      {
+        "frame": 55,
+        "s": 302.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 50.121,
+        "newMeanChannelChange": 50.111
+      },
+      {
+        "frame": 56,
+        "s": 303.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 49.516,
+        "newMeanChannelChange": 49.511
+      },
+      {
+        "frame": 57,
+        "s": 304.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 46.994,
+        "newMeanChannelChange": 46.994
+      },
+      {
+        "frame": 58,
+        "s": 305.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 49.744,
+        "newMeanChannelChange": 49.72
+      },
+      {
+        "frame": 59,
+        "s": 306.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 46.468,
+        "newMeanChannelChange": 46.461
+      },
+      {
+        "frame": 60,
+        "s": 307.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.766,
+        "newMeanChannelChange": 42.761
+      },
+      {
+        "frame": 61,
+        "s": 308.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.938,
+        "newMeanChannelChange": 40.96
+      },
+      {
+        "frame": 62,
+        "s": 309.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 51.23,
+        "newMeanChannelChange": 51.233
+      },
+      {
+        "frame": 63,
+        "s": 310.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 55.7,
+        "newMeanChannelChange": 55.68
+      },
+      {
+        "frame": 64,
+        "s": 311.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 54.157,
+        "newMeanChannelChange": 54.147
+      },
+      {
+        "frame": 65,
+        "s": 312.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 50.503,
+        "newMeanChannelChange": 50.521
+      },
+      {
+        "frame": 66,
+        "s": 313.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 46.165,
+        "newMeanChannelChange": 46.157
+      },
+      {
+        "frame": 67,
+        "s": 314.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.484,
+        "newMeanChannelChange": 44.484
+      },
+      {
+        "frame": 68,
+        "s": 315.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.453,
+        "newMeanChannelChange": 41.467
+      },
+      {
+        "frame": 69,
+        "s": 316.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.675,
+        "newMeanChannelChange": 40.683
+      },
+      {
+        "frame": 70,
+        "s": 317.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.569,
+        "newMeanChannelChange": 42.582
+      },
+      {
+        "frame": 71,
+        "s": 318.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 45.368,
+        "newMeanChannelChange": 45.382
+      },
+      {
+        "frame": 72,
+        "s": 319.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.105,
+        "newMeanChannelChange": 41.126
+      },
+      {
+        "frame": 73,
+        "s": 320.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.83,
+        "newMeanChannelChange": 41.839
+      },
+      {
+        "frame": 74,
+        "s": 321.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.82,
+        "newMeanChannelChange": 41.841
+      },
+      {
+        "frame": 75,
+        "s": 322.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 43.362,
+        "newMeanChannelChange": 43.356
+      },
+      {
+        "frame": 76,
+        "s": 323.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.615,
+        "newMeanChannelChange": 42.632
+      },
+      {
+        "frame": 77,
+        "s": 324.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.112,
+        "newMeanChannelChange": 44.105
+      },
+      {
+        "frame": 78,
+        "s": 325.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 43.455,
+        "newMeanChannelChange": 43.449
+      },
+      {
+        "frame": 79,
+        "s": 326.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 44.159,
+        "newMeanChannelChange": 44.152
+      },
+      {
+        "frame": 80,
+        "s": 327.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.996,
+        "newMeanChannelChange": 41.969
+      },
+      {
+        "frame": 81,
+        "s": 328.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.0,
+        "newMeanChannelChange": 41.006
+      },
+      {
+        "frame": 82,
+        "s": 329.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.566,
+        "newMeanChannelChange": 41.572
+      },
+      {
+        "frame": 83,
+        "s": 330.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 42.84,
+        "newMeanChannelChange": 42.874
+      },
+      {
+        "frame": 84,
+        "s": 331.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 45.363,
+        "newMeanChannelChange": 45.4
+      },
+      {
+        "frame": 85,
+        "s": 332.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 46.704,
+        "newMeanChannelChange": 46.715
+      },
+      {
+        "frame": 86,
+        "s": 333.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 43.577,
+        "newMeanChannelChange": 43.591
+      },
+      {
+        "frame": 87,
+        "s": 334.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 41.037,
+        "newMeanChannelChange": 41.013
+      },
+      {
+        "frame": 88,
+        "s": 335.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.773,
+        "newMeanChannelChange": 36.777
+      },
+      {
+        "frame": 89,
+        "s": 336.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.31,
+        "newMeanChannelChange": 37.288
+      },
+      {
+        "frame": 90,
+        "s": 337.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.764,
+        "newMeanChannelChange": 35.77
+      },
+      {
+        "frame": 91,
+        "s": 338.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.225,
+        "newMeanChannelChange": 36.253
+      },
+      {
+        "frame": 92,
+        "s": 339.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.671,
+        "newMeanChannelChange": 36.672
+      },
+      {
+        "frame": 93,
+        "s": 340.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.785,
+        "newMeanChannelChange": 37.778
+      },
+      {
+        "frame": 94,
+        "s": 341.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 38.398,
+        "newMeanChannelChange": 38.402
+      },
+      {
+        "frame": 95,
+        "s": 342.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.987,
+        "newMeanChannelChange": 39.974
+      },
+      {
+        "frame": 96,
+        "s": 343.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.502,
+        "newMeanChannelChange": 40.499
+      },
+      {
+        "frame": 97,
+        "s": 344.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 38.952,
+        "newMeanChannelChange": 38.936
+      },
+      {
+        "frame": 98,
+        "s": 345.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.643,
+        "newMeanChannelChange": 37.627
+      },
+      {
+        "frame": 99,
+        "s": 346.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.481,
+        "newMeanChannelChange": 36.471
+      },
+      {
+        "frame": 100,
+        "s": 347.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.902,
+        "newMeanChannelChange": 35.898
+      },
+      {
+        "frame": 101,
+        "s": 348.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.935,
+        "newMeanChannelChange": 35.914
+      },
+      {
+        "frame": 102,
+        "s": 349.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.998,
+        "newMeanChannelChange": 38.008
+      },
+      {
+        "frame": 103,
+        "s": 350.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 38.037,
+        "newMeanChannelChange": 38.062
+      },
+      {
+        "frame": 104,
+        "s": 351.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.436,
+        "newMeanChannelChange": 37.436
+      },
+      {
+        "frame": 105,
+        "s": 352.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.445,
+        "newMeanChannelChange": 36.462
+      },
+      {
+        "frame": 106,
+        "s": 353.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.91,
+        "newMeanChannelChange": 35.911
+      },
+      {
+        "frame": 107,
+        "s": 354.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.488,
+        "newMeanChannelChange": 35.48
+      },
+      {
+        "frame": 108,
+        "s": 355.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.696,
+        "newMeanChannelChange": 34.677
+      },
+      {
+        "frame": 109,
+        "s": 356.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.067,
+        "newMeanChannelChange": 35.071
+      },
+      {
+        "frame": 110,
+        "s": 357.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.14,
+        "newMeanChannelChange": 34.156
+      },
+      {
+        "frame": 111,
+        "s": 358.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.289,
+        "newMeanChannelChange": 34.282
+      },
+      {
+        "frame": 112,
+        "s": 359.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.036,
+        "newMeanChannelChange": 36.041
+      },
+      {
+        "frame": 113,
+        "s": 360.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 37.265,
+        "newMeanChannelChange": 37.287
+      },
+      {
+        "frame": 114,
+        "s": 361.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 36.925,
+        "newMeanChannelChange": 36.908
+      },
+      {
+        "frame": 115,
+        "s": 362.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 39.391,
+        "newMeanChannelChange": 39.393
+      },
+      {
+        "frame": 116,
+        "s": 363.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.064,
+        "newMeanChannelChange": 40.076
+      },
+      {
+        "frame": 117,
+        "s": 364.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.091,
+        "newMeanChannelChange": 40.118
+      },
+      {
+        "frame": 118,
+        "s": 365.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.489,
+        "newMeanChannelChange": 40.496
+      },
+      {
+        "frame": 119,
+        "s": 366.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 40.64,
+        "newMeanChannelChange": 40.65
+      },
+      {
+        "frame": 120,
+        "s": 367.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 38.784,
+        "newMeanChannelChange": 38.796
+      },
+      {
+        "frame": 121,
+        "s": 368.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.875,
+        "newMeanChannelChange": 35.886
+      },
+      {
+        "frame": 122,
+        "s": 369.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.44,
+        "newMeanChannelChange": 33.43
+      },
+      {
+        "frame": 123,
+        "s": 370.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.137,
+        "newMeanChannelChange": 33.124
+      },
+      {
+        "frame": 124,
+        "s": 371.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.972,
+        "newMeanChannelChange": 32.99
+      },
+      {
+        "frame": 125,
+        "s": 372.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.056,
+        "newMeanChannelChange": 32.057
+      },
+      {
+        "frame": 126,
+        "s": 373.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.309,
+        "newMeanChannelChange": 33.316
+      },
+      {
+        "frame": 127,
+        "s": 374.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 30.982,
+        "newMeanChannelChange": 30.994
+      },
+      {
+        "frame": 128,
+        "s": 375.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 31.551,
+        "newMeanChannelChange": 31.552
+      },
+      {
+        "frame": 129,
+        "s": 376.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 31.427,
+        "newMeanChannelChange": 31.435
+      },
+      {
+        "frame": 130,
+        "s": 377.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.93,
+        "newMeanChannelChange": 32.916
+      },
+      {
+        "frame": 131,
+        "s": 378.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.722,
+        "newMeanChannelChange": 34.72
+      },
+      {
+        "frame": 132,
+        "s": 379.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.777,
+        "newMeanChannelChange": 33.75
+      },
+      {
+        "frame": 133,
+        "s": 380.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 30.577,
+        "newMeanChannelChange": 30.591
+      },
+      {
+        "frame": 134,
+        "s": 381.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 31.071,
+        "newMeanChannelChange": 31.103
+      },
+      {
+        "frame": 135,
+        "s": 382.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.04,
+        "newMeanChannelChange": 33.034
+      },
+      {
+        "frame": 136,
+        "s": 383.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.131,
+        "newMeanChannelChange": 34.12
+      },
+      {
+        "frame": 137,
+        "s": 384.043,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.157,
+        "newMeanChannelChange": 34.149
+      },
+      {
+        "frame": 138,
+        "s": 385.042,
+        "stage": "07",
+        "beforeMeanChannelChange": 34.326,
+        "newMeanChannelChange": 34.34
+      },
+      {
+        "frame": 139,
+        "s": 386.035,
+        "stage": "07",
+        "beforeMeanChannelChange": 33.467,
+        "newMeanChannelChange": 33.453
+      },
+      {
+        "frame": 140,
+        "s": 387.016,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.499,
+        "newMeanChannelChange": 32.506
+      },
+      {
+        "frame": 141,
+        "s": 387.978,
+        "stage": "07",
+        "beforeMeanChannelChange": 30.855,
+        "newMeanChannelChange": 30.855
+      },
+      {
+        "frame": 142,
+        "s": 388.92,
+        "stage": "07",
+        "beforeMeanChannelChange": 30.118,
+        "newMeanChannelChange": 30.113
+      },
+      {
+        "frame": 143,
+        "s": 389.838,
+        "stage": "07",
+        "beforeMeanChannelChange": 30.983,
+        "newMeanChannelChange": 30.975
+      },
+      {
+        "frame": 144,
+        "s": 390.733,
+        "stage": "08",
+        "beforeMeanChannelChange": 38.573,
+        "newMeanChannelChange": 38.565
+      },
+      {
+        "frame": 145,
+        "s": 391.605,
+        "stage": "08",
+        "beforeMeanChannelChange": 31.844,
+        "newMeanChannelChange": 31.837
+      },
+      {
+        "frame": 146,
+        "s": 392.456,
+        "stage": "08",
+        "beforeMeanChannelChange": 30.874,
+        "newMeanChannelChange": 30.883
+      }
+    ]
+  }
+}
