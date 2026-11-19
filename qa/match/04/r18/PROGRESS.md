@@ -61,3 +61,21 @@ Query (K18-3b): K18-3 + `&m04nwc=1.3` (soft edge `m04nwcs` 0.8; `m04nwc` 0 = the
 * Rejected: `m04nwc=1.7` (too much plain cyan, the curving sweep mostly lost).
 * Pictures: `qa/match/04/r18/s3b_nwc/1_APPROVED.png`, `BEFORE/` (K18-3, from the step-3 NEW set), `NEW/` (K18-3b: f03, f06, f10,
   t33, t95, hard left / right).
+
+## Step 4 — LOW soft foam along the water edges instead of tall heaps beside Benny — `&m04flo=1` — GOOD IMPROVEMENT
+Query (K18-4): K18-3b + `&m04flo=1` (needs `m04fclu`; defaults `m04floh` 0.25 heap height, `m04flov` 0.35 cluster dome height,
+`m04flob` 0.6 big-bubble size, `m04flos` 0.55 bubble size, `m04flok` 2.4 bubble count, `m04flw` 1.5 cluster spread).
+* Code (`src/world/match04m4.ts`, foam clusters only): same layout (the same random draws, so every clump stays where it was);
+  each heap a quarter as tall, every cluster a flattened, wider bank of many smaller shiny bubbles with fewer big ones, no puffs heaped
+  up the wall. 13,146 foam bubbles instead of 6,544, but much smaller (about three quarters of the old screen area to fill).
+* Start view: K18-3b vs K18-4 → 0 px differ (the foam is hidden at the approved view).
+* WHAT LOOKS CLOSER (f03, f06, steering, hard left / right, clip): the tall white cumulus heaps standing up beside Benny at f03 /
+  f06 are gone; as painted, the foam now lies LOW along both water edges as banks of many small shiny bubbles; at hard left the pale
+  puff in the bottom-left corner is now a small low bubble patch. In the clip the banks slide past world-anchored, no popping.
+* STILL WRONG: the painted banks round the entrance rim are fuller (more, slightly larger bubbles in long continuous banks); here
+  they are shorter separate patches.
+* Rejected tries (scratch only): heights / domes only (`m04floh` 0.35, `m04flov` 0.45 with the old bubble size: still cloud heaps of
+  big balls); `m04flos` 0.7 / `m04flok` 1.8 (coarser bubbles).
+* Pictures: `qa/match/04/r18/s4_flo/1_APPROVED.png`, `BEFORE/` (K18-3b: f03, f06, f10, t33, t95, hard left / right), `NEW/`
+  (K18-4, 12 shots), `NEW_swim_clip_half.mp4` (half size, 3.6 s).
+* Note: this commit also carries the first, UNPROVEN code of the next step `&m04sswirl=1` (bank ribbons curving up the sides; off by default, not in any kept set yet).
