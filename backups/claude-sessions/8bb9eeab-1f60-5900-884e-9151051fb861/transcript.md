@@ -447,3 +447,257 @@ Autosave is restored and verified on this branch. Now finding the previous lead 
 > Clip (half size 432×768, 3.6 s straight / left / right / straight, real gameplay): `step5_dots/clip_NEW_swim.mp4`; BEFORE clip =
 > `../r16/ringpaint/step3_lip/clip_NEW_swim.mp4`. The dots stay on their r …[+2597 chars]
 
+### 🤖 Claude — 2026-11-19T02:25:16.671Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;i=json.load(open('backups/wip/claude__rainbow-s05-match-c17/INFO.json'));print(i.get('untracked_copied'),i.get('untracked_skipped'))\" | head -c 1500; echo; df -h /home/user | tail -1; du -sh /home/user/rainbow- 2>/dev/null; nproc; free -g | head -2", "description": "Check s05 WIP and disk/CPU resources"}`
+
+### 🧑 User — 2026-11-19T02:25:16.769Z
+
+> ↩︎ result: ['qa/match/05/r17/KEPT_STEP1.txt'] []
+> 
+> /dev/vda        252G   21G   49G  30% /
+> 9.2G	/home/user/rainbow-
+> 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           5           0           9          14
+
+### 🤖 Claude — 2026-11-19T02:25:28.408Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/docs/briefs/2026-11-19-r18 && cat > /home/user/rainbow-/docs/briefs/2026-11-19-r18/setup_worker.sh <<'EOF'\n#!/usr/bin/env bash\n# setup_worker.sh <slug e.g. s04-ringtex> <worktree path>\n# Round 18: newest -c17 tip -> new -c18 branch + sparse worktree, restore the account-17 21:11 UTC WIP snapshot, push.\nset -euo pipefail\nX=\"$1\"; WT=\"$2\"\nR=/home/user/rainbow-\nL=d22ec46b72146d69703d4271cd54c1c852164dff   # last save of the r17 lead ccr-bbe2b27e-oxfh1w (holds backups/wip/*-c17)\nBOLD=\"claude/rainbow-$X-c17\"; BNEW=\"claude/rainbow-$X-c18\"; SLU …[+2357 chars]`
+
+### 🧑 User — 2026-11-19T02:25:54.623Z
+
+> ↩︎ result: s04-match: worktree /home/user/wt/s04 on claude/rainbow-s04-match-c18 (sparse), WIP restored: 1 modified, 13 untracked files
+> s04-match: pushed claude/rainbow-s04-match-c18 = ad5fbac5 (ad5fbac5)
+> s04-match: size 1.6G
+> s04-match: READY
+> s04-ringtex: worktree /home/user/wt/s04b on claude/rainbow-s04-ringtex-c18 (sparse), WIP restored: 2 modified, 3 untracked files
+> s04-ringtex: pushed claude/rainbow-s04-ringtex-c18 = 0f275af1 (0f275af1)
+> s04-ringtex: size 1.6G
+> s04-ringtex: READY
+> s05-match: worktree /home/user/wt/s05 on claude/rainbow-s05-match-c18 (sparse), WIP restored: 0 modified, 1 untracked files
+> s05-match: pushed claude/rainbow-s05-match-c18 = f033f7cc (f033f7cc)
+> s05-match: size 1.1G
+> s05-match: READY
+> s06-match: worktree /home/user/wt/s06 on claude/rainbow-s06-match-c18 (sparse), WIP restored: 0 modified, 0 untracked files
+> s06-match: pushed claude/rainbow-s06-match-c18 = c649fcbc (c649fcbc)
+> s06-match: size 740M
+> s06-match: READY
+> s07-match: worktree /home/user/wt/s07 on claude/rainbow-s07-match-c18 (sparse), WIP restored: 3 modified, 9 untracked files
+> s07-match: pushed claude/rainbow-s07-match-c18 = 8651edf9 (8651edf9)
+> s07-match: size 558M
+> s07-match: READY
+
+### 🤖 Claude — 2026-11-19T02:25:57.866Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/tools-pixelmatch 2>&1 | head; cd /home/user/rainbow- && git ls-files | grep -i pixeldiff | head; grep -rn \"tools-pixelmatch\" docs/briefs/2026-11-18-r1[5-7]/*.md | head -5", "description": "Check Pixelmatch QA tool availability"}`
+
+### 🧑 User — 2026-11-19T02:25:57.916Z
+
+> ↩︎ result: ls: cannot access '/home/user/tools-pixelmatch': No such file or directory
+> docs/briefs/2026-11-18-r16/pixeldiff.mjs
+> docs/briefs/2026-11-18-r15/GITHUB_3D_TOOLS.md:28:| **Pixelmatch** (`mapbox/pixelmatch`) | Tiny perceptual pixel-diff library (anti-aliasing aware, diff image). | INSTALLED for QA only, outside the game: `/home/user/tools-pixelmatch/` (pixelmatch 7 + pngjs 7) with `pixeldiff.mjs A.png B.png [diff.png] [threshold] [yFrom yTo]`. Not a game dependency. Re-install: `cd /home/user/tools-pixelmatch && npm install pixelmatch@7 pngjs@7` (script is in this doc's history / the lead branch). | Measurement only (approved view unchanged, deterministic frames), never proof of looks by itself. |
+> docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md:59:  `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536` (scene rows only; HUD rows 0–180 animate).
+> docs/briefs/2026-11-18-r15/S06_LAUNCH.md:46:`node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536`. 3–5 line verdict in plain visual words:
+> docs/briefs/2026-11-18-r15/S07_LAUNCH.md:45:scenery: `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536`. 3–5 line ve …[+206 chars]
+
+### 🤖 Claude — 2026-11-19T02:26:00.791Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/tools-pixelmatch && cd /home/user/tools-pixelmatch && cp /home/user/rainbow-/docs/briefs/2026-11-18-r16/pixeldiff.mjs . && (echo '{\"name\":\"tools-pixelmatch\",\"private\":true,\"type\":\"module\"}' > package.json) && timeout 180 npm install --silent pixelmatch@7 pngjs@7 2>&1 | tail -3; cd /home/user/rainbow- && node /home/user/tools-pixelmatch/pixeldiff.mjs references/04_five_arrows.png references/04_five_arrows.png 2>&1 | tail -2; ls references/ | head -3", "description": "Rebuild Pixelmatch QA tool and self-test", "timeout": 240000}`
+
+### 🧑 User — 2026-11-19T02:26:01.379Z
+
+> ↩︎ result: Node.js v22.23.5
+> 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+
+### 🤖 Claude — 2026-11-19T02:26:03.140Z
+
+> 🔧 **Bash** `{"command": "ls references/; ls /home/user/tools-pixelmatch/node_modules | head; node /home/user/tools-pixelmatch/pixeldiff.mjs references/05_flow_into_the_current.png references/05_flow_into_the_current.png 2>&1 | tail -4", "description": "Self-test pixeldiff with correct reference name"}`
+
+### 🧑 User — 2026-11-19T02:26:03.212Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> pixelmatch
+> pngjs
+>     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+>     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-19T02:26:04.828Z
+
+> 🔧 **Bash** `{"command": "node /home/user/tools-pixelmatch/pixeldiff.mjs references/05_flow_into_the_current.png references/05_flow_into_the_current.png 2>&1 | head -8; head -15 /home/user/tools-pixelmatch/pixeldiff.mjs", "description": "Show pixeldiff error"}`
+
+### 🧑 User — 2026-11-19T02:26:04.902Z
+
+> ↩︎ result: /home/user/tools-pixelmatch/node_modules/pngjs/lib/sync-reader.js:43
+>     throw new Error("unrecognised content at end of stream");
+>           ^
+> 
+> Error: unrecognised content at end of stream
+>     at SyncReader.process (/home/user/tools-pixelmatch/node_modules/pngjs/lib/sync-reader.js:43:11)
+>     at module.exports (/home/user/tools-pixelmatch/node_modules/pngjs/lib/parser-sync.js:68:10)
+>     at exports.read (/home/user/tools-pixelmatch/node_modules/pngjs/lib/png-sync.js:7:10)
+> // QA only (not a game dependency). Usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold=0.1] [yFrom yTo]
+> // Compares two same-size PNGs with Pixelmatch (anti-aliasing aware), optionally only rows yFrom..yTo-1.
+> import fs from 'node:fs';
+> import { PNG } from 'pngjs';
+> import pixelmatch from 'pixelmatch';
+> const [a, b, diffPath, thr = '0.1', y0s, y1s] = process.argv.slice(2);
+> if (!a || !b) { console.error('usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold] [yFrom yTo]'); process.exit(2); }
+> const A = PNG.sync.read(fs.readFileSync(a)), B = PNG.sync.read(fs.readFileSync(b));
+> if (A.width !== B.width || A.height !== B.height) { console.error(`size mismatch ${A.width}x${A.height} vs ${B.width}x${B.height}`); p …[+541 chars]
+
+### 🤖 Claude — 2026-11-19T02:26:07.211Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && f=$(ls qa/match/04/r17/s2_nband/NEW/*.png | head -1); node /home/user/tools-pixelmatch/pixeldiff.mjs \"$f\" \"$f\" - 0.1 180 1536", "description": "Self-test pixeldiff on a game screenshot"}`
+
+### 🧑 User — 2026-11-19T02:26:07.447Z
+
+> ↩︎ result: {"a":"qa/match/04/r17/s2_nband/NEW/f06_forward6u.png","b":"qa/match/04/r17/s2_nband/NEW/f06_forward6u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:26:10.185Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep claude-bootstrap | grep -v grep | wc -l; grep -E \"^\\| \" backups/BOOTSTRAP_REPORT.md | head -30; head -5 backups/BOOTSTRAP_REPORT.md", "description": "Check whether bootstrap finished"}`
+
+### 🧑 User — 2026-11-19T02:26:10.225Z
+
+> ↩︎ result: 0
+> | Step | Result | Details | s |
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-ae71d3a5-80naq2 @ d22ec46 (session started from ccr-bbe2b27e-oxfh1w) | 1 |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | WARN | GAP: no backup ran from 2026-11-18 21:11 to 2026-11-19 02:15 UTC (5.1 h) - no Claude cloud environment with the autosave was active. Nothing can be saved while an environment is closed; the newest saved state is d22ec46.; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 17 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-17 22:38-20:24 UTC (21.8 h) | 0 |
+> | Git LFS binaries (local) | OK | 70/70 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 2 |
+> | Git LFS on GitHub | OK | 70/70 LFS objects (533 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
+> | Approved references | OK | 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference) | 0 |
+> | Game: 11 screens + code | OK | 11 approved screen references 01-11, source tree src/ (46 fil …[+2283 chars]
+
+### 🤖 Claude — 2026-11-19T02:26:15.222Z
+
+> 🔧 **Bash** `{"command": "curl -sS -o /dev/null -w \"fal %{http_code}\\n\" --max-time 30 https://queue.fal.run/fal-ai/none/requests/00000000-0000-0000-0000-000000000000/status; timeout 60 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -3", "description": "Free checks of fal and World Labs keys"}`
+
+### 🤖 Claude — 2026-11-19T02:26:15.829Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__get_me,mcp__World_Labs_Atlas__list_projects", "max_results": 2}`
+
+### 🧑 User — 2026-11-19T02:26:16.816Z
+
+> ↩︎ result: fal 404
+> @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+
+### 🧑 User — 2026-11-19T02:26:16.828Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-19T02:26:18.280Z
+
+Workspaces for 04, 04 rings, 05, 06 and 07 are rebuilt and pushed on round-18 branches. I'm checking the GitHub and World Labs connections before relaunching the workers.
+
+### 🤖 Claude — 2026-11-19T02:26:18.530Z
+
+> 🔧 **mcp__github__get_me** `{}`
+
+### 🤖 Claude — 2026-11-19T02:26:18.635Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🧑 User — 2026-11-19T02:26:18.995Z
+
+> ↩︎ result: {"login":"josiahscalia5-dev","id":322329431,"profile_url":"https://github.com/josiahscalia5-dev","avatar_url":"https://avatars.githubusercontent.com/u/322329431?v=4","details":{"public_repos":11,"public_gists":0,"followers":0,"following":0,"created_at":"2026-08-29T02:18:36Z","updated_at":"2026-10-18T13:41:20Z"}}
+
+### 🧑 User — 2026-11-19T02:26:19.173Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🤖 Claude — 2026-11-19T02:26:24.653Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/claude-sessions/660b5801-7aff-5a84-b502-101fe8d932bd/transcript.sanitized.jsonl'\nn=0\nfor line in open(p):\n    try: e=json.loads(line)\n    except: continue\n    if e.get('type')!='assistant': continue\n    for c in e.get('message',{}).get('content',[]) or []:\n        if isinstance(c,dict) and c.get('type')=='tool_use' and c.get('name') in ('Agent','Task'):\n            n+=1\n            if n<=2 or 's06' in json.dumps(c.get('input')):\n                print(json.dumps(c['input'],indent=0)[:3500]); print('-----')\nprint(n)\nEOF", "descr …[+45 chars]`
+
+### 🧑 User — 2026-11-19T02:26:24.739Z
+
+> ↩︎ result: {
+> "description": "Screen 04 painted rings r17",
+> "prompt": "You are the Rainbow project's `washer-environment-modeler`, round 17 (Claude account 17), resuming the Screen 04 PAINTED-RING test (\"s04tex\"), VISUALS ONLY. The previous account ran out of usage at ~20:14 UTC 2026-11-18 while you were mid-step; you continue exactly where you stopped.\n\nWHERE YOU WORK\n* Git worktree `/home/user/wt/s04b`, branch `claude/rainbow-s04-ringtex-c17` (already pushed; = the newest `-c16` tip `3fdcbc0b` + your unfinished account-16 edit restored UNCOMMITTED in `src/world/match04m4.ts`). Dev-server / tool port 5274.\n* Commit and `git push -u origin claude/rainbow-s04-ringtex-c17` after every step and at each safe milestone. Push ONLY that branch; never force-push / rebase / merge; never write any `-c16` or older branch. Another worker edits `/home/user/wt/s04` (same file `match04m4.ts`, other code region) \u2014 never touch that worktree or any other worktree. `/home/user/rainbow-` is the lead checkout: read-only for you.\n\nREAD FIRST, in this order (absolute paths, the lead checkout):\n1. `/home/user/rainbow-/docs/briefs/2026-11-18-r17/RESUME_R17.md` \u2014 common part + section \"s04tex\": you …[+8937 chars]
+
+### 🤖 Claude — 2026-11-19T02:26:29.569Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git diff | grep -oE \"m04[a-z0-9]+\" | sort | uniq -c | sort -rn | head -5; cd /home/user/wt/s04b && git diff | grep -oE \"m04[a-z0-9]+\" | sort | uniq -c | sort -rn | head -5; cd /home/user/wt/s07 && git diff | grep -oE \"m07[a-z0-9]+\" | sort | uniq -c | sort -rn | head -6; git diff --stat", "description": "Identify URL switches in unfinished edits"}`
+
+### 🧑 User — 2026-11-19T02:26:30.031Z
+
+> ↩︎ result: 7 m04nband
+>       4 m04sband
+>       3 m04arr5
+>       2 m04nbs
+>       2 m04nbr
+>       4 m04rpvar
+>       3 m04rwarm
+>       3 m04rpsoft
+>       3 m04rpdots
+>       2 m04rpds
+>       7 m07foamb
+>       7 m07foam
+>       4 m07nearf
+>       3 m07wfoam
+>       3 m07nearw
+>  src/vfx/foam.ts        | 26 +++++++++++++++++++++----
+>  src/vfx/waterRibbon.ts |  4 +++-
+>  src/world/match07.ts   | 53 +++++++++++++++++++++++++++++++++++++++++++++++++-
+>  3 files changed, 77 insertions(+), 6 deletions(-)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:26:50.929Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-19-r18/RESUME_R18.md", "content": "# Round 18 resume notes — where each round-17 worker stopped (the account-17 environment closed after its 21:11 UTC save)\n\nEvery worker below was cut off mid-step at ~21:11 UTC 2026-11-18. Its committed work is on its `-c17` tip; its UNFINISHED edits\n(tracked diff + new files) were captured by the 21:11 autosave in `backups/wip/<branch>-c17/` on the r17 lead\n`ccr-bbe2b27e-oxfh1w` @ `d22ec46` and are applied, UNCOMMITTED, in the worker's `-c18` worktree exactly as the worker left them\n(`setup_worker.s …[+5240 chars]`
+
+### 🧑 User — 2026-11-19T02:26:50.967Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-19-r18/RESUME_R18.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:27:07.034Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-19-r18/COORDINATION.md", "content": "# Round 18 — coordination of the playable screens (VISUALS ONLY)\n\nLead session branch **`ccr-ae71d3a5-80naq2`** (session started 2026-11-19 02:15 UTC from the r17 lead `ccr-bbe2b27e-oxfh1w` @\n`d22ec46`, its last save 2026-11-18 21:11 UTC; nothing merged). The account-17 environment closed after that save: no end-of-session\nbackup, 5.1 h with no environment open (nothing could be saved then; nothing was lost — every worker tip and the 21:11 WIP snapshot\nare on GitHub). User's word at start: \"Contin …[+3532 chars]`
+
+### 🧑 User — 2026-11-19T02:27:07.065Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-19-r18/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:27:11.938Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "old_string": "# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 17 (round 17) STATE", "new_string": "# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 18 STATE (2026-11-19 ~02:45 UTC, lead branch `ccr-ae71d3a5-80naq2`)\n\nStarted 02:15 UTC from the r17 lead `ccr-bbe2b27e-oxfh1w` @ `d22ec46` (its last save, 2026-11-18 21:11 UTC; nothing merged). The r17\nenvironment closed after that save; its five 04–07 workers were mid-step — their 21:11 WIP is restored UNCOMMITTED on new `-c18`\nbranches. Screen 08 stays PAUSED (user, 21:02 UTC).  …[+480 chars]`
+
+### 🧑 User — 2026-11-19T02:27:11.991Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:27:17.221Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "**`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ACCOUNT 17\" (lead `ccr-bbe2b27e-oxfh1w`, `-c17` map + where every worker\n   stopped: `docs/briefs/2026-11-18-r17/COORDINATION.md`, `RESUME_R17.md`); before it \"ACCOUNT 16\"", "new_string": "**`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ROUND 18\" (lead `ccr-ae71d3a5-80naq2`, `-c18` map + where every worker\n   stopped: `docs/briefs/2026-11-19-r18/COORDINATION.md`, `RESUME_R18.md`; Screen 08 PAUSED by the user); before it \"ACCOUNT 17\"\n   (lead `cc …[+155 chars]`
+
+### 🧑 User — 2026-11-19T02:27:17.265Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:27:19.010Z
+
+Handoff notes for round 18 are written. Saving, then relaunching the five Screen 04–07 workers in the background.
+
+### 🤖 Claude — 2026-11-19T02:27:20.060Z
+
+> 🔧 **Bash** `{"command": "timeout 200 python3 scripts/rainbow-autosave.py --reason manual:r18-coordination 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified'", "description": "Save round-18 coordination docs", "timeout": 240000}`
+

@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 17971,
-   "sha256": "756ad133e586699d0fc5e45c8368f5a28b479028169926e25bbd1d61df8d7b56"
+   "bytes": 18162,
+   "sha256": "9a5f627dff242152bf9be6075821507de2c54bfa89fa87480f9779a4b31a1d84"
   },
   {
    "path": "README_FIRST.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18380,
-   "sha256": "2d6f443de42b04a86e0feafa4011de18ffa3d49d72d27efd2c103a27aa09e37a"
+   "sha256": "177bccf0983939bdfdfa13eb29741d61a9e97e08bd85dda0af8b08f44e15c255"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1843,8 +1843,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 53965,
-   "sha256": "034422b499c8d6fac4355c23e5ea13ec55541d2e41414bb74fc5ae9aaf06eafc"
+   "bytes": 54833,
+   "sha256": "fe349aa47f0852b91fb7398d1c522ddaf771c0f5fd1a30af29fc504fc52f174a"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -2275,6 +2275,21 @@
    "path": "docs/briefs/2026-11-18-r9/USER_ORDER_STRUCTURAL.md",
    "bytes": 7782,
    "sha256": "d111ceba99498e06a5cda4af777a8cd8078fc5722119544977f08e7ca2276ab7"
+  },
+  {
+   "path": "docs/briefs/2026-11-19-r18/COORDINATION.md",
+   "bytes": 4019,
+   "sha256": "fea2efa18a42cee2f66722cd32824ee7dfb5afc84017a09768df92a10750dfd3"
+  },
+  {
+   "path": "docs/briefs/2026-11-19-r18/RESUME_R18.md",
+   "bytes": 5730,
+   "sha256": "45c0c07b93ea56dbb7142a6a418d9f870e2731001cb86cf1a0e8e7a71d4317d3"
+  },
+  {
+   "path": "docs/briefs/2026-11-19-r18/setup_worker.sh",
+   "bytes": 2219,
+   "sha256": "e9b207334fddb5422e878bb2f0360ad259499c5f17113166dbb5201fd1407627"
   },
   {
    "path": "docs/characters/benny.md",

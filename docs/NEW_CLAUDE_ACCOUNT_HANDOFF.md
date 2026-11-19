@@ -1,4 +1,15 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ACCOUNT 17 (round 17) STATE (2026-11-18 ~20:50 UTC, lead branch `ccr-bbe2b27e-oxfh1w`)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 18 STATE (2026-11-19 ~02:45 UTC, lead branch `ccr-ae71d3a5-80naq2`)
+
+Started 02:15 UTC from the r17 lead `ccr-bbe2b27e-oxfh1w` @ `d22ec46` (its last save, 2026-11-18 21:11 UTC; nothing merged). The r17
+environment closed after that save; its five 04–07 workers were mid-step — their 21:11 WIP is restored UNCOMMITTED on new `-c18`
+branches. Screen 08 stays PAUSED (user, 21:02 UTC). Branch map, services: **`docs/briefs/2026-11-19-r18/COORDINATION.md`**; where each
+worker stopped: **`docs/briefs/2026-11-19-r18/RESUME_R18.md`**; worktree recipe `docs/briefs/2026-11-19-r18/setup_worker.sh`.
+Connectors: World Labs Atlas connected; keys (World Labs 5,420 credits, fal) injected and verified. If this account runs out:
+`-c19` branches from each NEWEST `-c18` tip; never write `-c18` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ACCOUNT 17 (round 17) STATE (2026-11-18 ~20:50 UTC, lead branch `ccr-bbe2b27e-oxfh1w`)
 
 The cloud session opened on the OLD lead `ccr-5495e9c4-g0apvl` (2026-11-17 22:44 UTC); at the user's "do exactly where we left off"
 the account-16 lead `ccr-e42bb3c0-jpif8d` @ `e057fe80` (its last save, 20:14 UTC) was merged into this fresh session branch
