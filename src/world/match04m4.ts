@@ -320,6 +320,7 @@ uniform vec2 uNB3;           // r17 m04nband: x width of one cyan -> pink half s
 uniform vec4 uNB4;           // r18 m04nwhirl: x along squash of the whirl ellipse behind Benny (0 = off), y its centre ahead of Benny (u),
                              // z S-meander amplitude of the band edge ahead of Benny (u, 0 = off), w meander wavelength (u)
 uniform float uNB5;          // r18 m04nwhirl: spiral twist (stripe periods per half turn round Benny; 0 = closed U rings)
+uniform vec2 uNB6;           // r18 m04nwhirl: cyan corridor straight behind Benny — x half width (u, 0 = off), y soft edge (u)
 uniform vec4 uA5;          // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
 uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
 uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
@@ -429,7 +430,7 @@ void main() {
     // r15 m04sband: the side water carries the PAINTED swirl bands (cyan streaks by the lane -> violet -> hot-pink satin
     // ribbon -> lilac sparkle at the wall), cut from references/04 (tools/match04/sideband04.py), by arc length across the
     // trough and world position along it (flowing with the current), two offset samples blended like the river tile
-    float inner = uSB0.y, sv = vS, rr = -1.0, mea = 0.0, twp = 0.0;
+    float inner = uSB0.y, sv = vS, rr = -1.0, mea = 0.0, twp = 0.0, ckc = 1.0;
     if (uNB.x > 0.5) {
       // r17 m04nband: the painted bands sweep in close round Benny (inner edge hugging him at his position and behind
       // him toward the camera) and curve back out to the normal lane width ahead of him (arrow lane stays cyan); the band
@@ -448,6 +449,9 @@ void main() {
         // spiral, not closed rings: a stripe hugging Benny's left side sweeps under him and comes out farther out on his
         // right (uNB5 stripe periods per half turn; whole numbers leave the bands ahead of him unchanged)
         twp = uNB5 * 2.0 * uNB3.x * abs(atan(wq.y, wq.x)) / 3.14159;
+        // as painted, the water right round and straight below Benny stays cyan (white splash); the pink sweeps in from the
+        // lower-left / lower-right and fades out before the middle (no magenta pool under him)
+        if (uNB6.x > 0.0) ckc = 1.0 - smoothstep(uNB4.y, uNB4.y - 1.0, d) * (1.0 - smoothstep(uNB6.x - uNB6.y, uNB6.x, abs(wq.x)));
       }
       inner = mix(min(hug, uSB0.y), uSB0.y, smoothstep(0.15 * uNB2.x, uNB2.x, d));
       if (uNB4.z > 0.0) {
@@ -481,7 +485,7 @@ void main() {
       vec3 b2 = mix(texture2D(uSB, vec2(u2, vb2)).rgb, texture2D(uSB, vec2(u2, vb2 * 0.81 + 0.29)).rgb, w);
       bc = mix(bc, b2, hz * (1.0 - smoothstep(uSB0.z - 0.9, uSB0.z - 0.2, as)));
     }
-    col = mix(col, bc, uSB0.x * smoothstep(inner - uSB1.x, inner + 0.25 * uSB1.x, am));
+    col = mix(col, bc, uSB0.x * ckc * smoothstep(inner - uSB1.x, inner + 0.25 * uSB1.x, am));
     if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
   }
   if (uA5.x > 0.5) {
@@ -965,6 +969,8 @@ export function addM04(ctx: M04Ctx) {
         uNB4: { value: new THREE.Vector4(nwOn ? M04.num('m04nwk', 0.5) : 0, M04.num('m04nwe', 0.3), nwOn ? M04.num('m04nwm', 0.35) : 0,
           M04.num('m04nwl', 7)) },
         uNB5: { value: M04.num('m04nwt', 1) },   // m04nwt spiral twist (0 = closed U rings)
+        // m04nwc / m04nwcs: cyan corridor straight behind Benny (half width, soft edge; m04nwc=0 = off, the r18 step-3 look)
+        uNB6: { value: new THREE.Vector2(nwOn ? M04.num('m04nwc', 0) : 0, M04.num('m04nwcs', 0.8)) },
         uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
