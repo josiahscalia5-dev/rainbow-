@@ -227,7 +227,9 @@ export const proj05Pending: Promise<unknown>[] = [];
 /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the sheet's lifted white edges step aside (null = off) */
 function HIDE07R(course: Course): [number, number] | null {
   if (!flag05('match07') || !flag05('m07foam')) return null;
-  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+  // r17 '&m07foamb=1': see hide07 in foam.ts (to the end of 07)
+  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;
+  return [course.marks['07_plunge_top'] + 9, end];
 }
 
 export function channel05(course: Course, s: number): { c: number; hw: number } {

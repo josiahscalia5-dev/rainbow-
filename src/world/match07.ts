@@ -92,6 +92,7 @@ uniform float uNearM;     // share of the bank tile's columns that is the magent
 uniform sampler2D uNearTile;
 uniform sampler2D uFoamTile;
 uniform vec3 uWF;         // r16 '?m07wfoam=1': foam clouds piled on the lowest wall band — base height, cloud-top height, on (z)
+uniform vec4 uNearF;      // r17 '?m07nearf=1': extra magenta bank width beyond the band, cloud cell length along, foam detail size, on (w)
 varying vec2 vUv;
 varying vec4 vProj;
 varying vec3 vW;
@@ -102,16 +103,61 @@ ${PROJ05_INVERSE}
 // r16 m07nearw: [foam | magenta | trim | cyan | cyan | trim | magenta | foam] across a winding centre line, world-anchored.
 // Both banks are the painted lower-left band straightened (tools/match07/near_tiles_r16.py) at about the painted near
 // scale; the right bank reads another stretch of the strip (no mirror image across the centre).
+float h07(float n) { return fract(sin(n * 12.9898 + 4.1) * 43758.5453); }
+// r17 m07nearf: separate puffy foam CLOUDS on the bank beyond the magenta band — three rows of round puffs (world-anchored
+// cells along the river, random size / place, some cells empty so clusters stand apart and the magenta bank shows
+// between them); the highest puff wins, so overlapping puffs make lumpy clusters with crevices. xyz = puff normal
+// (tube-local), w = coverage (anti-aliased)
+vec4 nearClouds(float along, float a, float side, float Rb) {
+  float L = uNearF.y;
+  float i0 = floor(along / L);
+  float best = -1.0, dd = 2.0;
+  vec3 N = vec3(0.0, 1.0, 0.0);
+  for (int row = 0; row < 3; row++) {
+    float fr = float(row);
+    for (int k = -1; k <= 1; k++) {
+      float i = i0 + float(k);
+      float sd = i * 1.731 + side * 7.13 + fr * 3.37;
+      if (h07(sd) < 0.3 + 0.08 * fr) continue;                          // gaps between the clusters
+      float r = 0.34 + 0.06 * fr + 0.30 * h07(sd + 0.11);
+      float ca = (i + 0.5 + 0.6 * (h07(sd + 0.23) - 0.5)) * L;
+      float cl = Rb + 0.12 + 0.75 * fr + 0.35 * h07(sd + 0.37);
+      vec2 q = vec2(along - ca, a - cl) / r;
+      float q2 = dot(q, q);
+      if (q2 >= 1.0) continue;
+      float hgt = r * sqrt(1.0 - q2);
+      if (hgt > best) { best = hgt; dd = sqrt(q2); N = normalize(vec3(q.y * side, sqrt(1.0 - q2) * 0.8, -q.x)); }
+    }
+  }
+  if (best < 0.0) return vec4(0.0, 1.0, 0.0, 0.0);
+  float aa = clamp(fwidth(dd) * 1.5, 0.002, 0.3);
+  return vec4(N, 1.0 - smoothstep(1.0 - aa, 1.0, dd));
+}
 vec3 nearWater() {
   float along = -vL.z;
   float d = vL.x - vCtr;
   float a = abs(d);
   float R = uNearW.x, mw = uNearW.y;
   float u = a > R - mw ? uNearM * clamp((R - a) / mw, 0.0, 1.0) : uNearM + (1.0 - uNearM) * (1.0 - a / (R - mw));
+  // r17 m07nearf: the magenta band is thicker (stretched outward by uNearF.x) and continues mirrored to the wall
+  if (uNearF.w > 0.5 && a > R - mw) {
+    float t = (a - (R - mw)) / (mw + uNearF.x);
+    u = uNearM * abs(mod(t, 2.0) - 1.0);                                // inner edge → outer edge → back (mirrored)
+  }
   float v = along / uNearW.z;
   vec3 cL = texture2D(uNearTile, vec2(u, v)).rgb;
   vec3 cR = texture2D(uNearTile, vec2(u, v + 0.5)).rgb;
   vec3 river = mix(cL, cR, smoothstep(-0.32, 0.32, d));
+  if (uNearF.w > 0.5) {
+    vec4 cw = nearClouds(along, a, d < 0.0 ? -1.0 : 1.0, R + uNearF.x);
+    vec3 Ld = normalize(vec3(-0.35, 0.85, 0.5));
+    float lam = clamp(dot(cw.xyz, Ld), 0.0, 1.0);
+    vec3 ft = texture2D(uFoamTile, vec2(vL.x, along) / uNearF.z).rgb;
+    vec3 cloud = ft * (0.62 + 0.5 * lam);
+    cloud = mix(cloud, vec3(0.56, 0.54, 0.93), 0.32 * smoothstep(0.35, 0.95, 1.0 - cw.y));   // lilac shade toward the edges
+    cloud += 0.16 * pow(lam, 6.0);                                                        // glossy cloud tops
+    return mix(river, min(cloud, vec3(1.0)), cw.w);
+  }
   // painted foam clouds on the banks: two offset readings of the foam tile blended by a slow world mask (no wallpaper grid)
   vec2 fp = vec2(vL.x, along) / uNearW.w;
   vec3 f1 = texture2D(uFoamTile, fp).rgb;
@@ -252,6 +298,9 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
   // lane at about the painted near scale, painted foam clouds on the banks (tools/match07/near_tiles_r16.py)
   const nearW = flag05('m07nearw');
   const wallFoamOn = flag05('m07wfoam'); // r16: painted foam clouds on the lowest wall band (no hard wall / floor edge when steering hard)
+  // r17: on top of m07nearw, a thick magenta bank + separate puffy foam clouds beyond the band (no flat pale foam sheet at
+  // hard left / right)
+  const nearF = flag05('m07nearf');
   const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
   if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
   const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
@@ -316,6 +365,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
     uNearTile: { value: tNear },
     uFoamTile: { value: tFoam },
     uWF: { value: new THREE.Vector3(0.3, 0.5, wallFoamOn ? 1 : 0) },
+    // r17: magenta bank 0.6 u wider (the painted bands are thick), cloud cells every 0.8 u along, foam detail tile 0.75 u
+    uNearF: { value: new THREE.Vector4(0.6, 0.8, 0.75, nearW && nearF ? 1 : 0) },
   };
   if (nearW) {
     // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted

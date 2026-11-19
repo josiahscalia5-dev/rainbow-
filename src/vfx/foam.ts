@@ -556,12 +556,37 @@ const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT
 /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
 function hide07(course: Course): [number, number] | null {
   if (!flag05('match07') || !flag05('m07foam')) return null;
-  return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
+  // r17 '&m07foamb=1': the walls stay away to near the end of 07 (they no longer start again partway down the drop with a
+  // cut); over the last 5 u of 07 the bank grows back out of the water (ramp07), full height at the 08 start, so 08 keeps
+  // its berm
+  const r = end07(course);
+  return [course.marks['07_plunge_top'] + 9, r !== null ? r - 5 : course.marks['07_plunge_bottom'] - 12];
+}
+/** r17 '&m07foamb=1': arc length of the 08 start (end of 07) or null = off */
+function end07(course: Course): number | null {
+  if (!flag05('match07') || !flag05('m07foam') || !flag05('m07foamb')) return null;
+  return course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4;
+}
+/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it.
+ *  r18 fix: ONLY inside the hidden plunge range (from 3 u past its start, where the shader already discards the whole
+ *  bank); 1 everywhere else, so 04–06, the 07 level stretch and 08 keep their bank (the r17 draft flattened the bank over
+ *  the whole course before the last 5 u of 07) */
+function ramp07(course: Course): (s: number) => number {
+  const e = end07(course);
+  if (e === null) return () => 1;
+  const a = course.marks['07_plunge_top'] + 9 + 3;
+  return (s) => {
+    if (s < a || s >= e) return 1;
+    const u = Math.min(1, Math.max(0, (s - (e - 5)) / 5));
+    return u * u * (3 - 2 * u);
+  };
 }
 
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
-  const hk = bermScale05(course);
+  const hk0 = bermScale05(course);
+  const r07 = ramp07(course);
+  const hk = (s: number) => hk0(s) * r07(s);
   const ds = quality === 'high' ? 0.32 : 0.8;
   const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
   const rows = Math.ceil((s1 - s0) / ds) + 1;
@@ -665,6 +690,9 @@ export function createFoam(
   /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
   const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
   const h07 = hide07(course);
+  // r17 m07foamb: puffs stay away down to the ramp start (h07[1] = 5 u before the 08 start); r18: on the ramp they sit,
+  // smaller, on the growing bank (addPuff / bermPoint below), so it grows back as bubbly foam, not a smooth white slab
+  const e07 = end07(course);
   const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
     if (!list.length) return;
     const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
@@ -676,7 +704,7 @@ export function createFoam(
       tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
       const seed = rand();
       if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
-      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < h07[1] - 1.5) tmpS.set(0, 0, 0); // r8 m07foam
+      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < (e07 !== null ? h07[1] : h07[1] - 1.5)) tmpS.set(0, 0, 0); // r8 m07foam
       tmpM.compose(pf.p, tmpQ, tmpS);
       mesh!.setMatrixAt(i, tmpM);
       // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)
@@ -707,10 +735,12 @@ export function createFoam(
   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
   /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
   const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
+  // r18 '&m07foamb=1': puffs on the end-of-07 ramp sit on the growing bank, smaller and lower while it grows (1 elsewhere)
+  const r07p = ramp07(course);
   const bermPoint = (ss: number, e: number, side: number, lift: number) => {
     const f = course.sample(ss);
     const hw = course.widthAt(ss) / 2;
-    const k05 = bermK(ss);
+    const k05 = bermK(ss) * r07p(ss);
     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
     return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
@@ -725,6 +755,8 @@ export function createFoam(
       r *= 0.5 + 0.95 * hz * hz;
       lift -= 0.4 * r;
     }
+    const g07 = r07p(ss);
+    if (g07 < 1) { r *= 0.35 + 0.65 * g07; lift *= g07; } // r18 m07foamb ramp only (g07 = 1 everywhere else)
     list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });
   };
   const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
