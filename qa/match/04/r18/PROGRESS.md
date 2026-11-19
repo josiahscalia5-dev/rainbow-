@@ -79,3 +79,35 @@ Query (K18-4): K18-3b + `&m04flo=1` (needs `m04fclu`; defaults `m04floh` 0.25 he
 * Pictures: `qa/match/04/r18/s4_flo/1_APPROVED.png`, `BEFORE/` (K18-3b: f03, f06, f10, t33, t95, hard left / right), `NEW/`
   (K18-4, 12 shots), `NEW_swim_clip_half.mp4` (half size, 3.6 s).
 * Note: this commit also carries the first, UNPROVEN code of the next step `&m04sswirl=1` (bank ribbons curving up the sides; off by default, not in any kept set yet).
+
+## Step 5 — no smear while steering (lead: glitch seen in a real 4 s swim clip) — `&m04nwq=2&m04nwr=3.2` — GOOD IMPROVEMENT (glitch fix)
+Query (K18-5): K18-4 + `&m04nwq=2&m04nwr=3.2` (both inside `m04nwhirl`; 0 = the step-3/4 behaviour).
+* Cause (lead clip ≈1.0–2.0 s, reproduced with the same recipe `swim_clip.mjs 04 … 4`): while Benny steers to a side the camera
+  falls farther behind him. (a) The whirl's cyan pocket / corridor follow Benny out of the clean centre lane and laid bare the raw
+  painted river tile, magnified into big white-cyan cloud blobs; (b) far behind Benny the whirl's outer arcs grew into one broad
+  stretched pink smear. The steady stills never show either.
+* Code (`src/world/match04m4.ts`, river shader only): `m04nwr=3.2` the whirl reaches only 3.2 u round Benny (fading over 1 u),
+  beyond it the bands run as the straight flowing stripes again; `m04nwq=2` the water the whirl leaves bare at / behind Benny shows
+  the painted cyan streaks of the band strip's lane side (sampled across its cyan end with per-lane offsets so the streaks run with
+  the flow side by side, not as bands straight across the river); the arrow lane ahead of Benny is untouched.
+* Rejected tries (scratch only): `m04nwq=1` (clean lane water: still soft white blotches when seen close at a grazing angle); the
+  painted cyan from one strip column (faint light bands straight across the corridor); a sample range reaching the violet part
+  (the water under Benny turned pink-violet); a first version that also re-coloured the arrow lane ahead.
+* Coin over Benny at ≈2.0 s (lead glitch 2): NOT scenery / water — the normal coin pickup: a collected coin pops at Benny's own
+  position (rises 1.6 u, shrinks away in 0.35 s, `src/gameplay/coins.ts` 197–203), so for that moment it is really in front of him.
+  Not changed here (coins are off-limits to this branch).
+* (r19) Finished on `claude/rainbow-s04-match-c19` (the account ran out at 18:54 while the final renders ran; re-rendered here).
+* Start view: `node scripts/capture.mjs 04` K18-4 vs K18-5 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+* WHAT LOOKS BETTER (clip 1.29 / 1.58 / 1.83 / 2.00 s, hard left / right): while Benny steers to the side, the big white-cyan
+  cloud blobs in the water behind / beside him and the broad stretched pink smear far behind him are gone; that water now shows
+  clean glossy cyan streaks flowing with the current, and the pink / cyan stripes beyond the whirl run on as long flowing bands.
+  In the steady stills (f03–t95) the accepted whirl round Benny is unchanged (still sweeps in from both sides, cyan pocket +
+  splash). HUD coin counts identical to BEFORE in every matching shot.
+* STILL WRONG: the river is still a flat ribbon ending in a straight edge against the gold wall (painted: magenta / pink swirls
+  curve UP the tunnel sides); the low foam banks are plain lilac-white (painted: pink- / cyan-tinted).
+* Pictures: `qa/match/04/r18/s5_nwfix/1_APPROVED.png`, `BEFORE/` (K18-4: the step-4 NEW set + 4 clip frames), `NEW/` (K18-5,
+  12 shots + clip frames `clip_1_29s` … `clip_2_00s`, `motion.json`), `BEFORE_swim_clip_half.mp4` / `NEW_swim_clip_half.mp4`
+  (half size, first 55 frames ≈ 2.3 s = Screen 04 of the lead's 4 s straight / left / right recipe).
+
+Kept set K18-5 (r19):
+`match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5&m04fclu=1&m04sband=1&m04end=1&m04nband=1&m04nwhirl=1&m04nwc=1.3&m04flo=1&m04nwq=2&m04nwr=3.2`

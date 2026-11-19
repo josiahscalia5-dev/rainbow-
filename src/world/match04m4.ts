@@ -321,6 +321,8 @@ uniform vec4 uNB4;           // r18 m04nwhirl: x along squash of the whirl ellip
                              // z S-meander amplitude of the band edge ahead of Benny (u, 0 = off), w meander wavelength (u)
 uniform float uNB5;          // r18 m04nwhirl: spiral twist (stripe periods per half turn round Benny; 0 = closed U rings)
 uniform vec2 uNB6;           // r18 m04nwhirl: cyan corridor straight behind Benny — x half width (u, 0 = off), y soft edge (u)
+uniform vec2 uNB7;           // r18 m04nwq / m04nwr: x clean lane water where the whirl leaves the water bare (0/1), y whirl radius
+                             // round Benny (u; 0 = unlimited) — beyond it the bands run straight again (no smear when the camera lags)
 uniform vec4 uSS;            // r18 m04sswirl: x swing of the band pattern across the bank (u, 0 = off), y its wavelength along (u),
                              // z how far the water's top edge laps back down in tongues (u, 0 = straight edge), w lap wavelength (u)
 uniform vec4 uA5;          // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
@@ -352,6 +354,7 @@ void main() {
   float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
   vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
   vec3 tileC = col;                                        // r14: the painted tile colour before any re-colouring
+  vec3 laneCol = col;                                      // r18: the clean lane water (for the bare parts of the whirl)
   // the deeper cyan centre lane of the painting
   col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
   if (uLane.x > 0.5) {
@@ -396,6 +399,7 @@ void main() {
         laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * wl);
       }
     }
+    laneCol = laneC;
     col = mix(col, laneC, kl * uLane.z);
   }
   float fringe = 0.0, edgeY = uEdge.y;
@@ -456,12 +460,29 @@ void main() {
         float fo = mix(1.0, uNB2.w, smoothstep(0.0, uNB2.x, d));            // centred on Benny at / behind him
         vec2 wq = vec2(vS - uNB.z * fo, uNB4.x * min(d - uNB4.y, 0.0));
         rr = length(wq);
+        float wf = uNB7.y > 0.0 ? 1.0 - smoothstep(uNB7.y - 1.0, uNB7.y, rr) : 1.0;   // r18 m04nwr: whirl only near Benny
         // spiral, not closed rings: a stripe hugging Benny's left side sweeps under him and comes out farther out on his
         // right (uNB5 stripe periods per half turn; whole numbers leave the bands ahead of him unchanged)
-        twp = uNB5 * 2.0 * uNB3.x * abs(atan(wq.y, wq.x)) / 3.14159;
+        twp = uNB5 * 2.0 * uNB3.x * abs(atan(wq.y, wq.x)) / 3.14159 * wf;
         // as painted, the water right round and straight below Benny stays cyan (white splash); the pink sweeps in from the
         // lower-left / lower-right and fades out before the middle (no magenta pool under him)
         if (uNB6.x > 0.0) ckc = 1.0 - smoothstep(uNB4.y, uNB4.y - 1.0, d) * (1.0 - smoothstep(uNB6.x - uNB6.y, uNB6.x, abs(wq.x)));
+        // r18 m04nwq: where the whirl leaves the water bare (pocket / corridor round Benny) show the clean glossy lane water, not
+        // the raw painted tile magnified into big white cloud blobs (seen beside Benny while he steers to the side)
+        if (uNB7.x > 0.5) {
+          // m04nwq=2: the painted cyan streaks of the band strip's lane side instead (crisp at any distance, flowing along)
+          vec3 bare = laneCol;
+          if (uNB7.x > 1.5) {
+            // walk across the cyan part of the strip with the lateral position and offset each lane along, so the streaks
+            // run with the flow side by side (one column alone gives bands straight across the river)
+            float uq = 0.87 + 0.12 * (0.5 + 0.5 * sin(vS * 2.3 + 0.8 * vn(vec2(vS * 0.9, along * 0.05))));   // cyan end only
+            float vq = fl / uSB0.w + 0.45 * vn(vec2(vS * 1.7 + 4.0, 2.0));
+            bare = mix(texture2D(uSB, vec2(uq, vq)).rgb, texture2D(uSB, vec2(uq, vq * 0.81 + 0.29)).rgb, w);
+          }
+          col = mix(col, bare, (1.0 - smoothstep(uSB0.z - 1.2, uSB0.z - 0.6, abs(vS))) * (1.0 - smoothstep(uNB7.y > 0.0 ? uNB7.y : 9.0, (uNB7.y > 0.0 ? uNB7.y : 9.0) + 1.0, rr))
+            * smoothstep(uNB4.y + 1.5, uNB4.y, d));                // only at / behind Benny: the arrow lane ahead stays as it was
+        }
+        rr = mix(abs(sv), rr, wf);
       }
       inner = mix(min(hug, uSB0.y), uSB0.y, smoothstep(0.15 * uNB2.x, uNB2.x, d));
       if (uNB4.z > 0.0) {
@@ -988,6 +1009,8 @@ export function addM04(ctx: M04Ctx) {
         uNB5: { value: M04.num('m04nwt', 1) },   // m04nwt spiral twist (0 = closed U rings)
         // m04nwc / m04nwcs: cyan corridor straight behind Benny (half width, soft edge; m04nwc=0 = off, the r18 step-3 look)
         uNB6: { value: new THREE.Vector2(nwOn ? M04.num('m04nwc', 0) : 0, M04.num('m04nwcs', 0.8)) },
+        // m04nwq=1: clean lane water in the bare parts of the whirl; m04nwr=R: whirl only within R u of Benny (0 = unlimited)
+        uNB7: { value: new THREE.Vector2(nwOn ? M04.num('m04nwq', 0) : 0, nwOn ? M04.num('m04nwr', 0) : 0) },
         // r18 `&m04sswirl=1` (needs m04sband): m04ssa swing of the bank ribbons (u), m04ssl its wavelength, m04ssz lapping top
         // edge depth (u, 0 = straight edge), m04ssw lap wavelength
         uSS: { value: M04.num('m04sswirl', 0) > 0 && M04.num('m04sband', 0) > 0
