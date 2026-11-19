@@ -1,0 +1,32 @@
+{
+  "claudia": {
+    "size": [
+      864,
+      1536
+    ],
+    "rgbMae0to255": 16.198772917068545,
+    "pixelsWithMeanChannelErrorAtMost20": 1049550,
+    "totalPixels": 1327104,
+    "frameSHA256": "29b2ccf8996e6a9272cc951d1a1b956388323f73a4ce44a446130df53b7ff8df"
+  },
+  "previous": {
+    "size": [
+      864,
+      1536
+    ],
+    "rgbMae0to255": 16.164141870820472,
+    "pixelsWithMeanChannelErrorAtMost20": 1049780,
+    "totalPixels": 1327104,
+    "frameSHA256": "42ad399cfe8d6a39fa0eee115554f6b2892b979ede368a705bb288d84b4c4a34"
+  },
+  "seated": {
+    "size": [
+      864,
+      1536
+    ],
+    "rgbMae0to255": 16.182938689557613,
+    "pixelsWithMeanChannelErrorAtMost20": 1049796,
+    "totalPixels": 1327104,
+    "frameSHA256": "583ee43b0095305710a8dadafebfe5183192549af62a09c4b3b21926cd4bbbc9"
+  }
+}

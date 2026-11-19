@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { lowerOuterShoulder06, reconstructOpenCrest06 } from './openCrest06';
+import { makeCrestGrade06, fitCrestGrade06, reconstructOpenCrest06 } from './openCrest06';
+import type { Course } from './course';
 import { PROJ05_INVERSE } from '../vfx/waterRibbon';
 
 const shellURL = new URL('../../assets/arched-passage06/passage.glb', import.meta.url).href;
@@ -148,7 +149,7 @@ void main() {
 }`;
 
 export async function buildArchedPassage06(
-  makeMaterial: (tile: THREE.Texture, floor?: boolean) => THREE.ShaderMaterial, openCrest = false
+  makeMaterial: (tile: THREE.Texture, floor?: boolean) => THREE.ShaderMaterial, course: Course, openCrest = false
 ): Promise<THREE.Group> {
   const loader = new THREE.TextureLoader();
   const [gltf, panel, gold] = await Promise.all([
@@ -163,7 +164,8 @@ export async function buildArchedPassage06(
   const parts = new Map<Surface, THREE.BufferGeometry[]>();
   const group = new THREE.Group();
   group.name = 'match06';
-  let liner: ReturnType<typeof reconstructOpenCrest06> | undefined;
+  const grade = openCrest ? makeCrestGrade06(course) : undefined;
+  const liner = grade ? reconstructOpenCrest06(grade) : undefined;
   gltf.scene.updateMatrixWorld(true);
   gltf.scene.traverse(obj => {
     if (!(obj instanceof THREE.Mesh)) return;
@@ -174,10 +176,10 @@ export async function buildArchedPassage06(
     if (obj.name === 'RinseWall') seats = obj.userData.seats;
     const geometry = obj.geometry.clone().applyMatrix4(obj.matrixWorld);
     const geometries = parts.get(surface) ?? [];
-    if (openCrest && (surface === 'water' || surface === 'foam' || surface === 'bank')) {
-      lowerOuterShoulder06(geometry);
+    const bankReturn = obj.name === 'Left_inner_washer_return' || obj.name === 'Right_inner_washer_return';
+    if (grade && (surface === 'water' || surface === 'foam' || surface === 'bank' || bankReturn)) {
+      fitCrestGrade06(geometry, grade);
     }
-    if (openCrest && surface === 'water') liner = reconstructOpenCrest06(geometry);
     geometries.push(geometry);
     parts.set(surface, geometries);
     obj.geometry.dispose();

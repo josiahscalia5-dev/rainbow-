@@ -1,0 +1,14 @@
+{
+  "differingTypeScriptSourcesVsParent": [
+    "world/match06.ts",
+    "world/archedPassage06.ts",
+    "world/openCrest06.ts"
+  ],
+  "extractedEditableSourceBuilt": true,
+  "comparison": "SHA-256 of each production output from freshly extracted editable game, using the locally cached versions from the package lock.",
+  "totalCaptureDistFiles": 79,
+  "totalRestoredDistFiles": 79,
+  "byteIdentical": true,
+  "changedOutputs": [],
+  "extractedReferenceAndContinuityChecksPassed": true
+}

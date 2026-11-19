@@ -1,0 +1,58 @@
+{
+  "across-transition": {
+    "pixelsChanged": 2583,
+    "meanChannelDifference0to255": 0.000891917036394033
+  },
+  "arch-exit": {
+    "pixelsChanged": 22127,
+    "meanChannelDifference0to255": 1.2165600184059928
+  },
+  "crest-release": {
+    "pixelsChanged": 266286,
+    "meanChannelDifference0to255": 1.8793880007394548
+  },
+  "deep": {
+    "pixelsChanged": 71081,
+    "meanChannelDifference0to255": 4.221711335358797
+  },
+  "forward-03": {
+    "pixelsChanged": 281995,
+    "meanChannelDifference0to255": 3.958962271733539
+  },
+  "forward-06": {
+    "pixelsChanged": 331116,
+    "meanChannelDifference0to255": 5.942234620145319
+  },
+  "forward-10": {
+    "pixelsChanged": 314896,
+    "meanChannelDifference0to255": 6.2205431274916405
+  },
+  "forward-20": {
+    "pixelsChanged": 143379,
+    "meanChannelDifference0to255": 9.58977668668017
+  },
+  "hard-left": {
+    "pixelsChanged": 467650,
+    "meanChannelDifference0to255": 7.8512801810056585
+  },
+  "hard-right": {
+    "pixelsChanged": 136614,
+    "meanChannelDifference0to255": 6.5642064726401745
+  },
+  "inlet": {
+    "pixelsChanged": 76206,
+    "meanChannelDifference0to255": 0.6078182267554012
+  },
+  "last-in-stage": {
+    "pixelsChanged": 5315,
+    "meanChannelDifference0to255": 0.0021284440907921812
+  },
+  "middle": {
+    "pixelsChanged": 147732,
+    "meanChannelDifference0to255": 8.661448788740998
+  },
+  "opening": {
+    "pixelsChanged": 67277,
+    "meanChannelDifference0to255": 0.08205134387860083
+  }
+}

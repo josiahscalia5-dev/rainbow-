@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import type { Course } from './course';
 
 // Calibrated native camera from assets/textures/match06/cam06_locked.json.
 // It is used to survey the artwork during construction, never to move the mesh.
@@ -94,18 +95,49 @@ function finishGrid(grid: Grid) {
   return mesh;
 }
 
-// Native +3 visibility rays at image x150–250 first hit the outboard shoulder at
-// lateral −3.52 to −3.33 near stations 20–22. Carry the small grade adjustment
-// through foam and rim seats, with full water contact inside the ±2.95 steer limit.
-export function lowerOuterShoulder06(geometry: THREE.BufferGeometry) {
+// Read the retained swim course once. The grade is shared by the water, the rolled
+// bank, its foam and the upper attachment of the washer return. The course stays fixed.
+export function makeCrestGrade06(course: Course) {
+  const inlet = course.stage('06').s0;
+  const sections = Array.from({ length: 65 }, (_, i) => course.sample(inlet + 3 + i * .5));
+
+  return (x: number, y: number, z: number) => {
+    if (z > sections[0].pos.z || z < sections[sections.length - 1].pos.z) return 0;
+    // The crest runs monotonically toward -Z over this interval. Interpolate a continuous
+    // section on the real curve, including its bank angle, instead of using a world-X strip.
+    let lo = 0;
+    let hi = sections.length - 1;
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      if (sections[mid].pos.z > z) lo = mid;
+      else hi = mid;
+    }
+    const a = sections[lo], b = sections[hi];
+    const f = (z - a.pos.z) / (b.pos.z - a.pos.z);
+    const s = 3 + .5 * (lo + f);
+    const dx = x - THREE.MathUtils.lerp(a.pos.x, b.pos.x, f);
+    const dy = y - THREE.MathUtils.lerp(a.pos.y, b.pos.y, f);
+    const lateral = dx * THREE.MathUtils.lerp(a.right.x, b.right.x, f)
+                  + dy * THREE.MathUtils.lerp(a.right.y, b.right.y, f);
+    const heightWeight = 1 - THREE.MathUtils.smoothstep(Math.abs(dy), 1.5, 3.5);
+    const swale = Math.exp(-(((s - 20.8) / 3.4) ** 2));
+    const outside = THREE.MathUtils.smoothstep(-lateral, 2.95, 3.47);
+    // Trim the decorative swell previously added to the riding surface. This leaves the
+    // original wet deck intact, including beneath the mascot and at the steering limits.
+    const swell = Math.exp(-(((s - 13.45) / 3.35) ** 2 + ((lateral + 1.86) / .61) ** 2));
+    const channel = .27 * Math.exp(-(((z + 142.15) / 3.2) ** 2 + ((x - .24) / 2.2) ** 2));
+    const taper = THREE.MathUtils.smoothstep(s, 3, 6) * (1 - THREE.MathUtils.smoothstep(s, 31, 35));
+    return taper * heightWeight * (channel + .47 * swell + .91 * outside * swale);
+  };
+}
+
+type CrestGrade = ReturnType<typeof makeCrestGrade06>;
+
+export function fitCrestGrade06(geometry: THREE.BufferGeometry, grade: CrestGrade) {
   const positions = geometry.getAttribute('position');
   for (let i = 0; i < positions.count; i++) {
-    const x = positions.getX(i);
-    const z = positions.getZ(i);
-    const outside = THREE.MathUtils.smoothstep(-.16 - x, 3.12, 3.42);
-    const station = (z + 148.65) / 2.9;
-    const lowering = .25 * outside * Math.exp(-station * station);
-    positions.setY(i, positions.getY(i) - lowering);
+    const x = positions.getX(i), y = positions.getY(i), z = positions.getZ(i);
+    positions.setY(i, y - grade(x, y, z));
   }
   positions.needsUpdate = true;
   geometry.computeVertexNormals();
@@ -113,24 +145,7 @@ export function lowerOuterShoulder06(geometry: THREE.BufferGeometry) {
   geometry.computeBoundingSphere();
 }
 
-export function reconstructOpenCrest06(water: THREE.BufferGeometry) {
-  // Smooth the central channel over the crest without cutting the swimming surface or
-  // changing the steering/collision course. Its former top intercepted the purple-window rays.
-  // Leave a full, wet support under Benny at both side steering limits and at the release.
-  const positions = water.getAttribute('position');
-  for (let i = 0; i < positions.count; i++) {
-    const x = positions.getX(i);
-    const z = positions.getZ(i);
-    const longitudinal = (z + 142.15) / 3.2;
-    const transverse = (x - .24) / 2.2;
-    const depth = .27 * Math.exp(-longitudinal * longitudinal - transverse * transverse);
-    positions.setY(i, positions.getY(i) - depth);
-  }
-  positions.needsUpdate = true;
-  water.computeVertexNormals();
-  water.computeBoundingBox();
-  water.computeBoundingSphere();
-
+export function reconstructOpenCrest06(grade: CrestGrade) {
   const outerEdge: THREE.Vector3[] = [];
   const innerEdge: THREE.Vector3[] = [];
   const centers: THREE.Vector3[] = [];
@@ -152,7 +167,20 @@ export function reconstructOpenCrest06(water: THREE.BufferGeometry) {
     const t = row / 100;
     const back = outer.getPoint(t);
     const lip = inner.getPoint(t);
-    const middle = center.getPoint(t);
+    const foot = seat.getPoint(t);
+    foot.y -= grade(foot.x, foot.y, foot.z);
+    const landing = THREE.MathUtils.smoothstep(t, .44, .80);
+    // The photographed far arm rejoins the stream. Sink and taper that end onto the
+    // measured outer bank so a swimmer approaching from below sees a continuous curl.
+    // Land the inner edge first and leave a narrow, wet rim on the outboard side.
+    const acrossArm = back.clone().sub(lip);
+    const landingLip = foot.clone();
+    landingLip.y += .025;
+    lip.lerp(landingLip, landing);
+    const rimWidth = THREE.MathUtils.lerp(.42, .07, THREE.MathUtils.smoothstep(t, .82, 1));
+    const rim = landingLip.clone().addScaledVector(acrossArm, Math.min(1, rimWidth / Math.max(.01, acrossArm.length())));
+    back.lerp(rim, landing);
+    const middle = back.clone().lerp(lip, .5);
     station += middle.distanceTo(previousCenter);
     previousCenter = middle;
     const crown = Math.min(.17, back.distanceTo(lip) * .12);
@@ -163,17 +191,31 @@ export function reconstructOpenCrest06(water: THREE.BufferGeometry) {
       addGridVertex(wet, point, .10 + .84 * across, station, column, 11);
     }
 
-    // The perforated sidewall sits below the inboard lip, rather than filling the wet
-    // foreground. Continuous surfaces give the two lips real depth separation around turns.
-    const foot = seat.getPoint(t);
-    const span = lip.distanceTo(foot);
-    for (let column = 0; column <= 8; column++) {
-      const fraction = column / 8;
-      const point = lip.clone().lerp(foot, fraction);
-      point.addScaledVector(referenceForward, Math.min(.12, .09 * span) * Math.sin(Math.PI * fraction));
-      // A photographed slot measures roughly 0.45 × 0.20 course units on this visible
-      // close inner panel. The outboard casing has its own metric UVs at this scale.
-      addGridVertex(casing, point, station * 1.85 / 14, 13 + span * fraction * 1.85, column, 9);
+    // Roll the lip underneath a real overhanging channel. The old line from lip to
+    // seat filled the whole silhouette with a flat metal baffle. Recess the middle
+    // under the water and retain graded footings at both ends, like a built-in flume.
+    const clearance = THREE.MathUtils.smoothstep(t, .15, .34)
+                    * (1 - THREE.MathUtils.smoothstep(t, .76, .94));
+    const thickness = Math.min(.22, .045 + .15 * back.distanceTo(lip));
+    const recess = back.clone().sub(lip);
+    const behind = back.clone().addScaledVector(recess, .40 * clearance);
+    const heel = foot.clone().lerp(behind, clearance);
+    heel.y -= thickness * clearance;
+    const roundedEdge = lip.clone().lerp(back, .22 * clearance);
+    roundedEdge.y -= thickness * (1 + .4 * clearance);
+    const reach = lip.distanceTo(heel);
+    let profileDistance = 0;
+    let lastPoint = lip;
+    for (let column = 0; column <= 10; column++) {
+      const across = column / 10;
+      // A quadratic return bends back beneath the water. Its UV distance follows the
+      // profile in metres so the purple slots keep their size around the rolled edge.
+      const point = lip.clone().lerp(roundedEdge, across)
+        .lerp(roundedEdge.clone().lerp(heel, across), across);
+      point.y -= Math.min(.09, .1 * reach) * Math.sin(Math.PI * across);
+      profileDistance += lastPoint.distanceTo(point);
+      lastPoint = point;
+      addGridVertex(casing, point, station * 1.85 / 14, 13 + profileDistance * 1.85, column, 11);
     }
   }
   return { upper: finishGrid(wet), soffit: finishGrid(casing) };

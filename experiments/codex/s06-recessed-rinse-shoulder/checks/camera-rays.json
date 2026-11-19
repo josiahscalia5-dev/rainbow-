@@ -1,0 +1,1002 @@
+{
+  "nativeSize": [
+    864,
+    1536
+  ],
+  "method": "Nearest intersections with visible named scenery meshes. Distances are in game units. Materials with transparent rendering are recorded separately.",
+  "versions": {
+    "BEFORE": {
+      "opening": {
+        "visibleScenery": [
+          "m06_tube",
+          "m06_rings",
+          "m06_floor",
+          "m06_end"
+        ],
+        "rays": [
+          {
+            "pixel": [
+              365,
+              620
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 9.725,
+                "point": [
+                  -0.662,
+                  -36.103,
+                  -142.044
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_rings",
+                "depth": 50.539,
+                "point": [
+                  -10.662,
+                  -39.18,
+                  -181.494
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 53.345,
+                "point": [
+                  -11.35,
+                  -39.391,
+                  -184.206
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              390,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 9.202,
+                "point": [
+                  -0.358,
+                  -36.277,
+                  -141.562
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 58.607,
+                "point": [
+                  -11.516,
+                  -41.147,
+                  -189.443
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              450,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 9.125,
+                "point": [
+                  0.077,
+                  -36.269,
+                  -141.574
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 75.331,
+                "point": [
+                  -11.847,
+                  -42.798,
+                  -206.37
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_rings",
+                "depth": 75.424,
+                "point": [
+                  -11.864,
+                  -42.808,
+                  -206.461
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              302,
+              599
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 10.296,
+                "point": [
+                  -1.285,
+                  -35.978,
+                  -142.473
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 43.866,
+                "point": [
+                  -11.084,
+                  -37.96,
+                  -174.52
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              250,
+              589
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 10.703,
+                "point": [
+                  -1.807,
+                  -35.917,
+                  -142.734
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_rings",
+                "depth": 37.705,
+                "point": [
+                  -10.708,
+                  -37.299,
+                  -168.189
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 38.448,
+                "point": [
+                  -10.953,
+                  -37.337,
+                  -168.89
+                ],
+                "transparent": false
+              }
+            ]
+          }
+        ]
+      },
+      "forward-03": {
+        "visibleScenery": [
+          "m06_tube",
+          "m06_rings",
+          "m06_floor",
+          "m06_foamclu",
+          "m06_foamclu_rim",
+          "m06_end"
+        ],
+        "rays": [
+          {
+            "pixel": [
+              365,
+              620
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 10.988,
+                "point": [
+                  -0.937,
+                  -35.527,
+                  -145.048
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_rings",
+                "depth": 61.088,
+                "point": [
+                  -11.235,
+                  -42.483,
+                  -193.582
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 62.79,
+                "point": [
+                  -11.584,
+                  -42.719,
+                  -195.231
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              390,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 9.931,
+                "point": [
+                  -0.526,
+                  -35.609,
+                  -144.027
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 68.445,
+                "point": [
+                  -11.413,
+                  -45.082,
+                  -200.734
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              450,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_floor",
+                "depth": 9.826,
+                "point": [
+                  -0.054,
+                  -35.593,
+                  -144.002
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_rings",
+                "depth": 86.583,
+                "point": [
+                  -10.798,
+                  -48.025,
+                  -218.979
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 90.606,
+                "point": [
+                  -11.361,
+                  -48.676,
+                  -222.909
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              302,
+              599
+            ],
+            "hits": [
+              {
+                "object": "m06_rings",
+                "depth": 48.433,
+                "point": [
+                  -10.933,
+                  -39.928,
+                  -180.883
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 50.152,
+                "point": [
+                  -11.368,
+                  -40.138,
+                  -182.533
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              250,
+              589
+            ],
+            "hits": [
+              {
+                "object": "m06_tube",
+                "depth": 42.957,
+                "point": [
+                  -11.19,
+                  -38.908,
+                  -175.204
+                ],
+                "transparent": false
+              }
+            ]
+          }
+        ]
+      },
+      "forward-06": {
+        "visibleScenery": [
+          "m06_tube",
+          "m06_rings",
+          "m06_floor",
+          "m06_foamclu",
+          "m06_foamclu_rim",
+          "m06_end"
+        ],
+        "rays": [
+          {
+            "pixel": [
+              365,
+              620
+            ],
+            "hits": [
+              {
+                "object": "m06_rings",
+                "depth": 71.567,
+                "point": [
+                  -9.994,
+                  -49.158,
+                  -205.966
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 72.424,
+                "point": [
+                  -10.123,
+                  -49.359,
+                  -206.79
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              390,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_rings",
+                "depth": 71.669,
+                "point": [
+                  -8.597,
+                  -50.808,
+                  -205.856
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 73.839,
+                "point": [
+                  -8.882,
+                  -51.365,
+                  -207.934
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              450,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_rings",
+                "depth": 84.569,
+                "point": [
+                  -6.361,
+                  -54.131,
+                  -218.646
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 88.017,
+                "point": [
+                  -6.653,
+                  -55.017,
+                  -221.966
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              302,
+              599
+            ],
+            "hits": [
+              {
+                "object": "m06_rings",
+                "depth": 58.742,
+                "point": [
+                  -10.884,
+                  -45.183,
+                  -193.363
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_tube",
+                "depth": 59.686,
+                "point": [
+                  -11.072,
+                  -45.388,
+                  -194.265
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              250,
+              589
+            ],
+            "hits": [
+              {
+                "object": "m06_tube",
+                "depth": 50.715,
+                "point": [
+                  -11.256,
+                  -43.007,
+                  -185.338
+                ],
+                "transparent": false
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "NEW": {
+      "opening": {
+        "visibleScenery": [
+          "m06_arched_wall",
+          "m06_crest_outer_soffit",
+          "m06_arched_ring",
+          "m06_arched_paddle",
+          "m06_arched_water",
+          "m06_crest_upper_water",
+          "m06_arched_foam",
+          "m06_arched_bank",
+          "m06_arched_end"
+        ],
+        "rays": [
+          {
+            "pixel": [
+              365,
+              620
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 10.265,
+                "point": [
+                  -0.795,
+                  -36.143,
+                  -142.566
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 69.634,
+                "point": [
+                  -15.341,
+                  -40.62,
+                  -199.951
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              390,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 9.732,
+                "point": [
+                  -0.478,
+                  -36.329,
+                  -142.076
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_foam",
+                "depth": 22.433,
+                "point": [
+                  -3.346,
+                  -37.581,
+                  -154.385
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 71.758,
+                "point": [
+                  -14.486,
+                  -42.443,
+                  -202.189
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              450,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 9.699,
+                "point": [
+                  -0.026,
+                  -36.326,
+                  -142.136
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_ring",
+                "depth": 76.326,
+                "point": [
+                  -12.026,
+                  -42.897,
+                  -207.344
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 78.08,
+                "point": [
+                  -12.342,
+                  -43.07,
+                  -209.06
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              302,
+              599
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 10.46,
+                "point": [
+                  -1.333,
+                  -35.987,
+                  -142.629
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_foam",
+                "depth": 19.816,
+                "point": [
+                  -4.064,
+                  -36.54,
+                  -151.56
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_ring",
+                "depth": 63.635,
+                "point": [
+                  -16.855,
+                  -39.127,
+                  -193.391
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 64.477,
+                "point": [
+                  -17.101,
+                  -39.177,
+                  -194.195
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              250,
+              589
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 10.4,
+                "point": [
+                  -1.708,
+                  -35.902,
+                  -142.448
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_bank",
+                "depth": 15.807,
+                "point": [
+                  -3.49,
+                  -36.178,
+                  -147.545
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_foam",
+                "depth": 17.286,
+                "point": [
+                  -3.977,
+                  -36.254,
+                  -148.94
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 60.842,
+                "point": [
+                  -18.334,
+                  -38.483,
+                  -190.001
+                ],
+                "transparent": false
+              }
+            ]
+          }
+        ]
+      },
+      "forward-03": {
+        "visibleScenery": [
+          "m06_arched_wall",
+          "m06_crest_outer_soffit",
+          "m06_arched_ring",
+          "m06_arched_paddle",
+          "m06_arched_water",
+          "m06_crest_upper_water",
+          "m06_arched_foam",
+          "m06_arched_bank",
+          "m06_arched_end"
+        ],
+        "rays": [
+          {
+            "pixel": [
+              365,
+              620
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 11.376,
+                "point": [
+                  -1.017,
+                  -35.581,
+                  -145.424
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 72.234,
+                "point": [
+                  -13.526,
+                  -44.03,
+                  -204.38
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              390,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 10.413,
+                "point": [
+                  -0.616,
+                  -35.687,
+                  -144.494
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 73.938,
+                "point": [
+                  -12.435,
+                  -45.971,
+                  -206.057
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              450,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_water",
+                "depth": 10.348,
+                "point": [
+                  -0.127,
+                  -35.677,
+                  -144.511
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 80.956,
+                "point": [
+                  -10.01,
+                  -47.113,
+                  -213.482
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              302,
+              599
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_wall",
+                "depth": 66.719,
+                "point": [
+                  -15.561,
+                  -42.165,
+                  -198.433
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              250,
+              589
+            ],
+            "hits": [
+              {
+                "object": "m06_crest_upper_water",
+                "depth": 22.016,
+                "point": [
+                  -5.091,
+                  -36.516,
+                  -155.314
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_crest_outer_soffit",
+                "depth": 22.109,
+                "point": [
+                  -5.118,
+                  -36.527,
+                  -155.402
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_ring",
+                "depth": 61.706,
+                "point": [
+                  -16.651,
+                  -41.05,
+                  -193.011
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 62.685,
+                "point": [
+                  -16.937,
+                  -41.162,
+                  -193.941
+                ],
+                "transparent": false
+              }
+            ]
+          }
+        ]
+      },
+      "forward-06": {
+        "visibleScenery": [
+          "m06_arched_wall",
+          "m06_crest_outer_soffit",
+          "m06_arched_ring",
+          "m06_arched_paddle",
+          "m06_arched_water",
+          "m06_crest_upper_water",
+          "m06_arched_foam",
+          "m06_arched_bank",
+          "m06_arched_end"
+        ],
+        "rays": [
+          {
+            "pixel": [
+              365,
+              620
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_ring",
+                "depth": 71.297,
+                "point": [
+                  -9.953,
+                  -49.095,
+                  -205.707
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 72.896,
+                "point": [
+                  -10.194,
+                  -49.469,
+                  -207.243
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              390,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_ring",
+                "depth": 71.026,
+                "point": [
+                  -8.513,
+                  -50.643,
+                  -205.24
+                ],
+                "transparent": false
+              },
+              {
+                "object": "m06_arched_wall",
+                "depth": 72.963,
+                "point": [
+                  -8.767,
+                  -51.14,
+                  -207.095
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              450,
+              650
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_wall",
+                "depth": 78.676,
+                "point": [
+                  -5.862,
+                  -52.616,
+                  -212.973
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              302,
+              599
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_wall",
+                "depth": 68.176,
+                "point": [
+                  -12.76,
+                  -47.236,
+                  -202.377
+                ],
+                "transparent": false
+              }
+            ]
+          },
+          {
+            "pixel": [
+              250,
+              589
+            ],
+            "hits": [
+              {
+                "object": "m06_arched_wall",
+                "depth": 64.248,
+                "point": [
+                  -14.472,
+                  -45.837,
+                  -198.175
+                ],
+                "transparent": false
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

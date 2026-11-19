@@ -1,0 +1,20 @@
+{
+  "BEFORE": {
+    "capture": "29b2ccf8996e6a9272cc951d1a1b956388323f73a4ce44a446130df53b7ff8df",
+    "independentRepeat": "34bc618e509874c394410e8523a134adc3b68e3db6be5e89def7c44f6eeef7ce",
+    "differingDecodedPixels": 1,
+    "coordinatesIfUnderFive": [
+      [
+        322,
+        1017
+      ]
+    ]
+  },
+  "NEW": {
+    "capture": "583ee43b0095305710a8dadafebfe5183192549af62a09c4b3b21926cd4bbbc9",
+    "independentRepeat": "583ee43b0095305710a8dadafebfe5183192549af62a09c4b3b21926cd4bbbc9",
+    "differingDecodedPixels": 0,
+    "coordinatesIfUnderFive": []
+  },
+  "archivedRetainedSHA256": "29b2ccf8996e6a9272cc951d1a1b956388323f73a4ce44a446130df53b7ff8df"
+}

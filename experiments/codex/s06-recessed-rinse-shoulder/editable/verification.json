@@ -1,0 +1,86 @@
+{
+  "blender": "5.3.0",
+  "blendSHA256": "2638382a313af652068b30ab002e47bea0eebfb8aecf10a1bd90e0708dcf2618",
+  "captureSHA256": "7bef8d3845499962181e40ea4dcd97ed3cf25d780e94097dfe79b7bfcc3027d9",
+  "approvedImageSHA256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "maxVertexErrorGameUnits": 0,
+  "maxSurfaceUVError": 0,
+  "verifiedMeshes": [
+    {
+      "name": "m06_arched_wall",
+      "vertices": 13941,
+      "faces": 26656,
+      "changed": true
+    },
+    {
+      "name": "m06_crest_outer_soffit",
+      "vertices": 1111,
+      "faces": 2000,
+      "changed": true
+    },
+    {
+      "name": "m06_arched_ring",
+      "vertices": 11640,
+      "faces": 20736,
+      "changed": false
+    },
+    {
+      "name": "m06_arched_paddle",
+      "vertices": 362,
+      "faces": 628,
+      "changed": false
+    },
+    {
+      "name": "m06_arched_water",
+      "vertices": 18767,
+      "faces": 36672,
+      "changed": true
+    },
+    {
+      "name": "m06_crest_upper_water",
+      "vertices": 1111,
+      "faces": 2000,
+      "changed": true
+    },
+    {
+      "name": "m06_arched_foam",
+      "vertices": 23944,
+      "faces": 39054,
+      "changed": true
+    },
+    {
+      "name": "m06_arched_bank",
+      "vertices": 3830,
+      "faces": 6112,
+      "changed": true
+    },
+    {
+      "name": "m06_arched_end",
+      "vertices": 66,
+      "faces": 64,
+      "changed": false
+    }
+  ],
+  "cameraReprojection": [
+    {
+      "name": "Camera_Opening",
+      "courseStation": 198.91,
+      "maxPixelError": 0.0008326638616543218,
+      "samples": 105
+    },
+    {
+      "name": "Camera_Forward_3",
+      "courseStation": 202.027,
+      "maxPixelError": 0.00040114557815000627,
+      "samples": 108
+    },
+    {
+      "name": "Camera_Forward_6",
+      "courseStation": 204.96,
+      "maxPixelError": 0.000681535009688773,
+      "samples": 103
+    }
+  ],
+  "renderWidth": 864,
+  "renderHeight": 1536
+}

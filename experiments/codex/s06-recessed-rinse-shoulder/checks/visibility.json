@@ -1,0 +1,522 @@
+{
+  "method": "Separate opaque WebGL pass at 270 x 480. Identical camera and retained simulation for each version. Ray depth is in game units. These are visibility measurements, not an artwork similarity score.",
+  "previousCameraFit": {
+    "opening": {
+      "casingPixelsInFull270x480Frame": 82,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_water",
+          "d": 10.03,
+          "p": [
+            -1.2,
+            -35.96,
+            -142.22
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 18.36,
+          "p": [
+            -3.63,
+            -36.45,
+            -150.17
+          ]
+        },
+        {
+          "name": "m06_arched_foam",
+          "d": 19.17,
+          "p": [
+            -3.87,
+            -36.5,
+            -150.94
+          ]
+        },
+        {
+          "name": "m06_arched_ring",
+          "d": 63.63,
+          "p": [
+            -16.83,
+            -39.13,
+            -193.39
+          ]
+        }
+      ]
+    },
+    "forward-03": {
+      "casingPixelsInFull270x480Frame": 300,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_outer_soffit",
+          "d": 22.45,
+          "p": [
+            -4.35,
+            -36.75,
+            -155.95
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 66.75,
+          "p": [
+            -15.55,
+            -42.17,
+            -198.47
+          ]
+        }
+      ],
+      "previouslySpecifiedAperture": {
+        "nativeRectangle": [
+          230,
+          574,
+          340,
+          602
+        ],
+        "sampleCount": 306,
+        "counts": {
+          "m06_arched_wall": 0,
+          "m06_crest_outer_soffit": 131,
+          "m06_arched_ring": 0,
+          "m06_arched_paddle": 0,
+          "m06_arched_water": 8,
+          "m06_crest_upper_water": 67,
+          "m06_arched_foam": 0,
+          "m06_arched_bank": 0,
+          "m06_arched_end": 0
+        },
+        "purpleColorSamples": 202
+      }
+    },
+    "forward-06": {
+      "casingPixelsInFull270x480Frame": 2484,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_outer_soffit",
+          "d": 20.58,
+          "p": [
+            -3.29,
+            -36.88,
+            -156.9
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 68.21,
+          "p": [
+            -12.75,
+            -47.25,
+            -202.41
+          ]
+        }
+      ]
+    },
+    "forward-20": {
+      "casingPixelsInFull270x480Frame": 9124,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_upper_water",
+          "d": 14.59,
+          "p": [
+            0.97,
+            -38.84,
+            -164.76
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 63.98,
+          "p": [
+            1.15,
+            -55.06,
+            -211.41
+          ]
+        }
+      ]
+    },
+    "hard-left": {
+      "casingPixelsInFull270x480Frame": 7642,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_outer_soffit",
+          "d": 15.14,
+          "p": [
+            -2.69,
+            -36.84,
+            -157.76
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 63.01,
+          "p": [
+            -6.76,
+            -53.29,
+            -202.53
+          ]
+        }
+      ]
+    },
+    "hard-right": {
+      "casingPixelsInFull270x480Frame": 7476,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_upper_water",
+          "d": 20.2,
+          "p": [
+            -0.18,
+            -38.3,
+            -162.46
+          ]
+        },
+        {
+          "name": "m06_arched_ring",
+          "d": 64.82,
+          "p": [
+            -3.9,
+            -53.62,
+            -204.2
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 66.72,
+          "p": [
+            -4.06,
+            -54.27,
+            -205.98
+          ]
+        }
+      ]
+    }
+  },
+  "openUndersideTrial": {
+    "opening": {
+      "casingPixelsInFull270x480Frame": 537,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_water",
+          "d": 10.46,
+          "p": [
+            -1.33,
+            -35.99,
+            -142.63
+          ]
+        },
+        {
+          "name": "m06_arched_foam",
+          "d": 19.53,
+          "p": [
+            -3.98,
+            -36.52,
+            -151.29
+          ]
+        },
+        {
+          "name": "m06_arched_ring",
+          "d": 63.63,
+          "p": [
+            -16.83,
+            -39.13,
+            -193.39
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 64.51,
+          "p": [
+            -17.09,
+            -39.18,
+            -194.23
+          ]
+        }
+      ]
+    },
+    "forward-03": {
+      "casingPixelsInFull270x480Frame": 1137,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_wall",
+          "d": 66.75,
+          "p": [
+            -15.55,
+            -42.17,
+            -198.47
+          ]
+        }
+      ],
+      "previouslySpecifiedAperture": {
+        "nativeRectangle": [
+          230,
+          574,
+          340,
+          602
+        ],
+        "sampleCount": 306,
+        "counts": {
+          "m06_arched_wall": 127,
+          "m06_crest_outer_soffit": 0,
+          "m06_arched_ring": 12,
+          "m06_arched_paddle": 0,
+          "m06_arched_water": 0,
+          "m06_crest_upper_water": 67,
+          "m06_arched_foam": 0,
+          "m06_arched_bank": 0,
+          "m06_arched_end": 0
+        },
+        "purpleColorSamples": 190
+      }
+    },
+    "forward-06": {
+      "casingPixelsInFull270x480Frame": 1417,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_wall",
+          "d": 68.21,
+          "p": [
+            -12.75,
+            -47.25,
+            -202.41
+          ]
+        }
+      ]
+    },
+    "forward-20": {
+      "casingPixelsInFull270x480Frame": 1050,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_upper_water",
+          "d": 14.59,
+          "p": [
+            0.97,
+            -38.84,
+            -164.76
+          ]
+        },
+        {
+          "name": "m06_crest_outer_soffit",
+          "d": 14.9,
+          "p": [
+            0.97,
+            -38.94,
+            -165.05
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 63.98,
+          "p": [
+            1.15,
+            -55.06,
+            -211.41
+          ]
+        }
+      ]
+    },
+    "hard-left": {
+      "casingPixelsInFull270x480Frame": 1982,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_wall",
+          "d": 63.01,
+          "p": [
+            -6.76,
+            -53.29,
+            -202.53
+          ]
+        }
+      ]
+    },
+    "hard-right": {
+      "casingPixelsInFull270x480Frame": 1000,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_upper_water",
+          "d": 20.2,
+          "p": [
+            -0.18,
+            -38.3,
+            -162.46
+          ]
+        },
+        {
+          "name": "m06_crest_outer_soffit",
+          "d": 20.46,
+          "p": [
+            -0.2,
+            -38.38,
+            -162.7
+          ]
+        },
+        {
+          "name": "m06_arched_ring",
+          "d": 64.82,
+          "p": [
+            -3.9,
+            -53.62,
+            -204.2
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 66.72,
+          "p": [
+            -4.06,
+            -54.27,
+            -205.98
+          ]
+        }
+      ]
+    }
+  },
+  "seatedCrestCandidate": {
+    "opening": {
+      "casingPixelsInFull270x480Frame": 527,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_water",
+          "d": 10.46,
+          "p": [
+            -1.33,
+            -35.99,
+            -142.63
+          ]
+        },
+        {
+          "name": "m06_arched_foam",
+          "d": 19.53,
+          "p": [
+            -3.98,
+            -36.52,
+            -151.29
+          ]
+        },
+        {
+          "name": "m06_arched_ring",
+          "d": 63.63,
+          "p": [
+            -16.83,
+            -39.13,
+            -193.39
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 64.51,
+          "p": [
+            -17.09,
+            -39.18,
+            -194.23
+          ]
+        }
+      ]
+    },
+    "forward-03": {
+      "casingPixelsInFull270x480Frame": 1070,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_wall",
+          "d": 66.75,
+          "p": [
+            -15.55,
+            -42.17,
+            -198.47
+          ]
+        }
+      ],
+      "previouslySpecifiedAperture": {
+        "nativeRectangle": [
+          230,
+          574,
+          340,
+          602
+        ],
+        "sampleCount": 306,
+        "counts": {
+          "m06_arched_wall": 127,
+          "m06_crest_outer_soffit": 0,
+          "m06_arched_ring": 12,
+          "m06_arched_paddle": 0,
+          "m06_arched_water": 0,
+          "m06_crest_upper_water": 67,
+          "m06_arched_foam": 0,
+          "m06_arched_bank": 0,
+          "m06_arched_end": 0
+        },
+        "purpleColorSamples": 191
+      }
+    },
+    "forward-06": {
+      "casingPixelsInFull270x480Frame": 1317,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_wall",
+          "d": 68.21,
+          "p": [
+            -12.75,
+            -47.25,
+            -202.41
+          ]
+        }
+      ]
+    },
+    "forward-20": {
+      "casingPixelsInFull270x480Frame": 790,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_wall",
+          "d": 63.98,
+          "p": [
+            1.15,
+            -55.06,
+            -211.41
+          ]
+        }
+      ]
+    },
+    "hard-left": {
+      "casingPixelsInFull270x480Frame": 1838,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_arched_wall",
+          "d": 63.01,
+          "p": [
+            -6.76,
+            -53.29,
+            -202.53
+          ]
+        }
+      ]
+    },
+    "hard-right": {
+      "casingPixelsInFull270x480Frame": 870,
+      "screenRayAtFractionalXY_35_39": [
+        {
+          "name": "m06_crest_outer_soffit",
+          "d": 20.49,
+          "p": [
+            -0.2,
+            -38.4,
+            -162.73
+          ]
+        },
+        {
+          "name": "m06_arched_ring",
+          "d": 64.82,
+          "p": [
+            -3.9,
+            -53.62,
+            -204.2
+          ]
+        },
+        {
+          "name": "m06_arched_wall",
+          "d": 66.72,
+          "p": [
+            -4.06,
+            -54.27,
+            -205.98
+          ]
+        }
+      ]
+    }
+  }
+}
