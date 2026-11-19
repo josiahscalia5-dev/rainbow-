@@ -1,0 +1,30 @@
+"""Make the editable .blend useful for further modeling without changing the mobile GLB."""
+import bpy,math,sys
+from pathlib import Path
+from mathutils import Vector
+base,source,destination=map(Path,sys.argv[sys.argv.index('--')+1:]);bpy.ops.wm.open_mainfile(filepath=str(source));scene=bpy.context.scene
+asset=base/'assets/textures/match06';panel=base/'assets/reconstruction06/painted_panel.png';newPanel=bpy.data.images.load(str(panel),check_existing=True);newPanel.pack()
+textures={'wall':(newPanel,3.4,1/2.12),'ring':(bpy.data.images['tile_ring6.png'],4.,1.),'water':(bpy.data.images['tile_river6.png'],1.,1/1.12),'paddle':(bpy.data.images['tile_ring6.png'],1.4,1.),'bank':(bpy.data.images['tile_river6.png'],.16,1/1.18)}
+seen=set()
+for ob in scene.objects:
+ kind=ob.get('surface_family');mat=ob.active_material if ob.type=='MESH' else None
+ if not mat or mat.name in seen:continue
+ seen.add(mat.name);nodes=mat.node_tree.nodes;links=mat.node_tree.links;bs=nodes.get('Principled BSDF')
+ if kind in textures:
+  image,sx,sy=textures[kind];uv=nodes.new('ShaderNodeTexCoord');uv.location=(-1000,160);sc=nodes.new('ShaderNodeVectorMath');sc.operation='MULTIPLY';sc.inputs[1].default_value=(sx,-sy,1);sc.location=(-770,160);off=nodes.new('ShaderNodeVectorMath');off.operation='ADD';off.inputs[1].default_value=(.02 if kind=='bank' else 0.,sy,0.);off.location=(-560,160);tex=nodes.new('ShaderNodeTexImage');tex.image=image;tex.extension='REPEAT';tex.label='Approved physical surface paint';tex.location=(-300,160);links.new(uv.outputs['UV'],sc.inputs[0]);links.new(sc.outputs[0],off.inputs[0]);links.new(off.outputs[0],tex.inputs['Vector']);links.new(tex.outputs['Color'],bs.inputs['Base Color'])
+  if kind=='wall':
+   bump=nodes.new('ShaderNodeBump');bump.inputs['Strength'].default_value=.28;bump.inputs['Distance'].default_value=.055;links.new(tex.outputs['Color'],bump.inputs['Height']);links.new(bump.outputs['Normal'],bs.inputs['Normal']);bump.location=(0,-105)
+ if kind in ('ring','water','bank','paddle'):
+  bs.inputs['Coat Weight'].default_value=.30;bs.inputs['Coat Roughness'].default_value=.21
+ if kind=='foam':
+  noise=nodes.new('ShaderNodeTexNoise');noise.inputs['Scale'].default_value=24.;bump=nodes.new('ShaderNodeBump');bump.inputs['Distance'].default_value=.033;bump.inputs['Strength'].default_value=.22;links.new(noise.outputs['Fac'],bump.inputs['Height']);links.new(bump.outputs['Normal'],bs.inputs['Normal'])
+ref=bpy.data.images.load(str(base/'references/06_crest_the_rinse_arch.png'),check_existing=True);ref.pack();cam=scene.camera;cam.data.show_background_images=True;background=cam.data.background_images.new();background.image=ref;background.alpha=.34;background.show_background_image=False
+import json
+reference_camera = json.loads((asset / 'cam06_locked.json').read_text())
+cam.data.sensor_fit = 'VERTICAL'
+cam.data.lens = cam.data.sensor_height / (2 * math.tan(math.radians(reference_camera['fov']) / 2))
+bpy.context.preferences.filepaths.save_version = 0
+preview=bpy.data.collections.new('Editor preview lighting');scene.collection.children.link(preview);location=cam.matrix_world.translation;forward=cam.matrix_world.to_quaternion()@Vector((0,0,-1));target=location+forward*22
+for name,offset,color,power in [('Violet drum reflection',(7,-4,9),(.68,.35,.98),2500),('Cyan water sheen',(-8,2,4),(.39,.87,1.),1800),('Warm collar reflection',(0,14,6),(1.,.65,.36),1550)]:
+ light=bpy.data.lights.new(name,'AREA');light.energy=power;light.color=color;light.shape='DISK';light.size=8.;obj=bpy.data.objects.new(name,light);preview.objects.link(obj);obj.location=target+Vector(offset);obj.rotation_euler=(target-obj.location).to_track_quat('-Z','Y').to_euler()
+scene['material_preview']='Blender preview uses the packed approved panel, water and gold swatches. Actual Three.js adds fixed-view source assignment, metre-scaled flowing highlights and the game’s established grade.';scene.world=bpy.data.worlds.new('Editor preview ambient');scene.world.color=(.18,.12,.22);bpy.ops.wm.save_as_mainfile(filepath=str(destination),compress=True);print('RAINBOW06 packed material preview',len([o for o in scene.objects if o.type=='MESH']),len([i for i in bpy.data.images if i.packed_file]))

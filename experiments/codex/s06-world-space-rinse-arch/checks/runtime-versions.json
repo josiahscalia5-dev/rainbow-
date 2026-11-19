@@ -1,0 +1,12 @@
+{
+  "Blender": "5.3.0",
+  "BlenderBuild": "02f0899d78e3",
+  "PlaywrightActualCapture": "1.57.0",
+  "Chromium": "156.0.8078.79",
+  "Pixelmatch": "7.1.0",
+  "FFmpeg": "7.1.5",
+  "WebGLRenderer": "Chromium SwiftShader",
+  "AndroidTargetSDK": 34,
+  "verifiedPhysicalAndroidDevices": 0,
+  "motionSkillCommit": "3b57658f78fd5d7dce498d2743f1a09a173a570a"
+}
