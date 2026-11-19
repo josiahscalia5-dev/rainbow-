@@ -1,0 +1,79 @@
+diff --git a/src/vfx/clip05.ts b/src/vfx/clip05.ts
+index 322110e..ad570d5 100644
+--- a/src/vfx/clip05.ts
++++ b/src/vfx/clip05.ts
+@@ -12,15 +12,19 @@ export const clip05 = {
+   uClip05P: { value: new THREE.Vector3() },
+   uClip05N: { value: new THREE.Vector3() },
+ };
+-/** inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position) */
+-export function withClip05(mat: THREE.ShaderMaterial, posVar: string): void {
++/**
++ * inject into a ShaderMaterial whose fragment shader has `varying vec3 <posVar>` (world position). `margin` (default 0 =
++ * the plane itself): the hard cut lies that many units past the plane — only for a material that cuts at the seam itself
++ * (m05bank: the berm keeps / drops whole bubbles by their centre, so a kept bubble may overhang the plane by its radius)
++ */
++export function withClip05(mat: THREE.ShaderMaterial, posVar: string, margin = 0): void {
+   if (!M05CLIP) return;
+   Object.assign(mat.uniforms, clip05);
+   mat.fragmentShader = mat.fragmentShader.replace('void main() {', `uniform vec3 uClip05P; uniform vec3 uClip05N;
+ void main() {
+   {  // ?m05far=1: behind the 05 far tunnel seam, inside its tube (axial 0..40 u, within 9 u of the axis) only
+     vec3 cd = ${posVar} - uClip05P; float ca = dot(cd, uClip05N);
+-    if (ca > 0.0 && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;
++    if (ca > ${margin.toFixed(2)} && ca < 40.0 && length(cd - ca * uClip05N) < 9.0) discard;
+   }`);
+ }
+ 
+diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
+index 9cb87a4..4bc8368 100644
+--- a/src/vfx/foam.ts
++++ b/src/vfx/foam.ts
+@@ -130,6 +130,25 @@ varying vec3 vNormalW;
+ ${NOISE_GLSL}
+ ${FRAG_FX_GLSL}
+ ${SOAP05_GLSL}
++#ifdef M05BANK
++// m05bank (Screen 05 round 14): one layer of piled foam bubbles in cell units: x = dome height (0 between bubbles),
++// y = crease width f2 - f1 (0 on the crease between two bubbles), zw = offset from this point to the bubble's centre
++vec4 bankCell(vec2 p) {
++  vec2 ip = floor(p), fp = fract(p);
++  float f1 = 8.0, f2 = 8.0, br = 0.6;
++  vec2 best = vec2(0.0);
++  for (int yy = -1; yy <= 1; yy++) for (int xx = -1; xx <= 1; xx++) {
++    vec2 g = vec2(float(xx), float(yy));
++    vec2 h = fract(sin(vec2(dot(ip + g, vec2(127.1, 311.7)), dot(ip + g, vec2(269.5, 183.3)))) * 43758.5453);
++    vec2 dv = g + 0.15 + 0.7 * h - fp;
++    float dd = dot(dv, dv);
++    if (dd < f1) { f2 = f1; f1 = dd; best = dv; br = 0.58 + 0.24 * fract(h.x * 7.13 + h.y * 3.1); } else if (dd < f2) { f2 = dd; }
++  }
++  f1 = sqrt(f1); f2 = sqrt(f2);
++  float q = f1 / br;
++  return vec4(sqrt(max(1.0 - q * q, 0.0)), f2 - f1, best);
++}
++#endif
+ void main() {
+   float s = vFoam.y;
+   #ifdef PROJ05
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 90f187b..5da96aa 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -383,6 +383,17 @@ export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+  * reads as a white foam bank instead of the stretched paint / underlayers that showed there (ride factor m05foamK).
+  */
+ export const M05BERM: boolean = M05RIDE && q05('m05berm');
++/**
++ * `&m05bank=1` (Screen 05 round 14, needs m05berm; src/vfx/foam.ts BERM_FRAG, src/vfx/clip05.ts): the near lather bank
++ * while swimming. Its steep inner slope was drawn as smooth pale lather — seen face-on (t75, k81 hard left) a flat pale
++ * lilac panel with straight sides, cut at the far tunnel's seam by the flat clip plane. The painted banks are piles of
++ * foam bubbles. Under the switch that slope is a world-anchored pile of round foam bubbles (two sizes; white lit tops,
++ * periwinkle bodies, blue-violet creases — the same soap ramp as the bank lumps), its crest ends along the bubble tops,
++ * and at the seam whole bubbles are kept or dropped by where their centre lies instead of the plane cutting through them.
++ * Different from the rejected m05lump (which only moved the bank's end 0.5 … 1.9 u before the seam with a noise edge).
++ * Locked view: the berm is not drawn there (ride factor 0) → unchanged.
++ */
++export const M05BANK: boolean = M05BERM && q05('m05bank');
+ /** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
+ export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
+ /**
