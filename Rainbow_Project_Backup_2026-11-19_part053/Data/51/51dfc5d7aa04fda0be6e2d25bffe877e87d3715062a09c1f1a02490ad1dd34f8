@@ -1,0 +1,25 @@
+{
+  "utc": "2026-11-19T00:58:47.985019+00:00",
+  "screen": "06",
+  "lead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "specialist": {
+    "branch": "claude/rainbow-s06-match-c17",
+    "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+  },
+  "parent": {
+    "branch": "claude/rainbow-s06-match-c17",
+    "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+  },
+  "branch": "codex/s06-benny-fitted-knit-cuff",
+  "source": "src/characters/benny/runtime.ts",
+  "priorTrial": "394609842ebc30c2832e23b8992c7d9a868ba0c0",
+  "approved": {
+    "path": "references/06_crest_the_rinse_arch.png",
+    "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  "ringSpecialist": "0f275af1e3d4e9276e5a4016d0335a85fe055e58",
+  "otherClaudiaRefsChanged": []
+}

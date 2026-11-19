@@ -1,0 +1,4 @@
+page.waitForFunction: Timeout 180000ms exceeded.
+    at open (/tmp/rainbow-crest-release.V85M78Mo/benny-cuff/qa-final/capture.cjs:53:13)
+    at async run (/tmp/rainbow-crest-release.V85M78Mo/benny-cuff/qa-final/capture.cjs:164:13)
+    at async /tmp/rainbow-crest-release.V85M78Mo/benny-cuff/qa-final/capture.cjs:195:28

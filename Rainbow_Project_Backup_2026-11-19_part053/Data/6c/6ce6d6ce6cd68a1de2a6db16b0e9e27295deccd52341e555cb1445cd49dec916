@@ -1,0 +1,55 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import sys,subprocess as sp,hashlib,json
+root=Path(__file__).resolve().parent
+def read(p):return json.loads(p.read_text())
+def sha(p):
+    with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+def write(f,obj):f.write_text(json.dumps(obj,indent=2)+'\n')
+for sid in sys.argv[1:]:
+    work=root
+    repo=root/'repos'/sid
+    src=read(root/('checkpoint-'+sid+'.json'))
+    branch=src['branch'];ref='refs/heads/'+branch
+    assert branch.startswith('codex/')
+    prefix='experiments/codex/'+branch.split('/')[-1];ev=repo/prefix
+    def git(*args,binary=False):
+        a=sp.check_output(['git','-C',str(repo),*args],stderr=sp.PIPE)
+        return a if binary else a.decode().strip()
+    hashes=read(ev/'checksums.json')
+    assert all(sha(ev/f)==h for f,h in hashes.items())
+    assert git('branch','--show-current')==branch
+    remote=git('ls-remote','--heads','origin',ref).split()[0]
+    if git('rev-parse','HEAD')==src['commit']:
+        assert remote==src['commit']
+        git('add','--',prefix);git('diff','--cached','--check')
+        actual=git('diff','--cached','--name-only').splitlines()
+        assert set(actual)=={prefix+'/'+x for x in set(hashes)|{'checksums.json'}}
+        git('commit','-qm','Record matched Screen '+sid+' swimming footage, native views and review')
+    tip=git('rev-parse','HEAD')
+    assert git('rev-parse','HEAD^')==src['commit']
+    if remote!=tip:
+        assert remote==src['commit']
+        r=sp.run(['git','-C',str(repo),'push','origin','HEAD:'+ref],stdout=sp.PIPE,stderr=sp.STDOUT,text=True)
+        if r.returncode:
+            (root/('push-error-'+sid+'.log')).write_text(r.stdout[-2500:]);raise RuntimeError('Push failed, see private local log for '+sid)
+    assert git('ls-remote','--heads','origin',ref).split()==[tip,ref]
+    assert all(f in src['sourceFiles'] or f.startswith(prefix+'/') for f in git('diff','--name-only',src['parent'],tip).splitlines())
+    original_count=0
+    for line in git('show',tip+':scripts/reference.sha256').splitlines():
+        if not line.strip() or line.startswith('#'):continue
+        h,file=line.split(maxsplit=1);assert sha(work/'games'/sid/file.lstrip('*'))==h;original_count+=1
+    assert original_count==13 and not git('status','--porcelain')
+    dest=root/'remote-asset-check'/sid;dest.mkdir(parents=True,exist_ok=True)
+    cert=[]
+    for f in sorted(ev.rglob('*.mp4')):
+        relative=f.relative_to(repo).as_posix()
+        pointer=git('show',tip+':'+relative,binary=True)
+        assert pointer.startswith(b'version https://git-lfs.github.com/spec/v1')
+        h=pointer.decode().split('oid sha256:')[1].split()[0]
+        hydrated=sp.run(['git','-C',str(repo),'-c','lfs.storage='+str(dest),'lfs','smudge','--',relative],input=pointer,stdout=sp.PIPE,stderr=sp.PIPE,check=True).stdout
+        assert len(hydrated)==f.stat().st_size and hashlib.sha256(hydrated).hexdigest()==h==sha(f)
+        cert.append({'path':relative,'bytes':len(hydrated),'downloadedSha256':h})
+    assert len(cert)==2
+    write(root/('published-'+sid+'.json'),{'branch':branch,'commit':tip,'sourceCommit':src['commit'],'verifiedUTC':datetime.now(timezone.utc).isoformat(),'verifiedFiles':len(hashes),'lfsDownloads':cert,'originalsVerified':original_count,'evidence':'https://github.com/josiahscalia5-dev/rainbow-/tree/'+tip+'/'+prefix})
+    print(sid,tip,len(hashes),'verified',flush=True)

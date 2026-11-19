@@ -1,6 +1,0 @@
-✔ Copying web assets from dist to android/app/src/main/assets/public in 450.68ms
-✔ Creating capacitor.config.json in android/app/src/main/assets in 9.92ms
-✔ copy android in 546.14ms
-✔ Updating Android plugins in 1.25ms
-✔ update android in 155.17ms
-[info] Sync finished in 0.761s

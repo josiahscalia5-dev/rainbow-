@@ -1,0 +1,2 @@
+src/characters/benny/runtime.ts(38,22): error TS2304: Cannot find name 'loadFittedCuff06'.
+src/characters/benny/runtime.ts(39,13): error TS2304: Cannot find name 'applyFittedCuff06'.

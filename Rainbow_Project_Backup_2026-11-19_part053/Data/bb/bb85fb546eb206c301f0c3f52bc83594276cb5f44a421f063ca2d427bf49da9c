@@ -1,0 +1,21 @@
+{
+  "branch": "codex/s06-benny-fitted-knit-cuff",
+  "commit": "393c83ceaed1d3261ce72a3aec2824be18627e03",
+  "sourceCommit": "4f19dc683215e86bc1841b95851264fce5bfff90",
+  "verifiedUTC": "2026-11-19T01:06:54.493653+00:00",
+  "verifiedFiles": 97,
+  "lfsDownloads": [
+    {
+      "path": "experiments/codex/s06-benny-fitted-knit-cuff/CLAUDIA_BEFORE/ride.mp4",
+      "bytes": 7491213,
+      "downloadedSha256": "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1"
+    },
+    {
+      "path": "experiments/codex/s06-benny-fitted-knit-cuff/CODEX_NEW/ride.mp4",
+      "bytes": 7536424,
+      "downloadedSha256": "2bc6593dbea93de8e17aeace99aeb2daacadf4bdac4d067590274958b1758b13"
+    }
+  ],
+  "originalsVerified": 13,
+  "evidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/393c83ceaed1d3261ce72a3aec2824be18627e03/experiments/codex/s06-benny-fitted-knit-cuff"
+}

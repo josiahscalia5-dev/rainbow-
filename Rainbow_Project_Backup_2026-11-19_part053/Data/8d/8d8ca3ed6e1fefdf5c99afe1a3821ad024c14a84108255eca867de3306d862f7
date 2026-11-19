@@ -1,0 +1,35 @@
+from pathlib import Path
+from PIL import Image
+import numpy as np
+from scipy import ndimage
+import json,hashlib
+p=Path(__file__).resolve().parent
+a=p.parent/'from-original-github/references'
+# Bounding region contains the complete original and gameplay character, including open water nearby.
+regions={'04':(125,875,690,1490),'05':(150,685,690,1280),'06':(145,640,695,1275),'07':(140,635,705,1300),'08':(162,730,700,1315)}
+def digest(f):
+  with f.open('rb') as h:return hashlib.file_digest(h,'sha256').hexdigest()
+def measure(x,y,box):
+  x=x.crop(box);y=y.crop(box);d=np.abs(np.asarray(x.convert('RGB'),int)-np.asarray(y.convert('RGB'),int)).sum(2)
+  mask=d>30;dil=ndimage.binary_dilation(mask,iterations=2);cc,n=ndimage.label(dil);sizes=np.bincount(cc.ravel());sizes[0]=0
+  component=mask&(cc==sizes.argmax());yc,xc=np.nonzero(component);ex=component.sum(0)>=6;ey=component.sum(1)>=6
+  xx=np.flatnonzero(ex);yy=np.flatnonzero(ey);bounds=[int(xx[0]+box[0]),int(yy[0]+box[1]),int(xx[-1]+box[0]),int(yy[-1]+box[1])]
+  return {'visibleDensePixelBoundsXYXY':bounds,'width':bounds[2]-bounds[0]+1,'height':bounds[3]-bounds[1]+1,'changedPixelsInLargestBody':len(xc)},component
+report={}
+for s,box in regions.items():
+  folder=p/'rendered'/s
+  if not (folder/'without-benny.png').exists():continue
+  v=Image.open(folder/'with-benny.png');archive=Path('/tmp/rainbow-final-fidelity.RuUP0xJ2/repos')/s/'experiments/codex'/('fidelity-'+s)/'CLAUDIA_BEFORE/opening.png'
+  retained=Image.open(archive); a0=np.asarray(v.convert('RGB'));a1=np.asarray(retained.convert('RGB'))
+  assert np.array_equal(np.asarray(v.crop(box)),np.asarray(retained.crop(box))),s
+  full_delta=int(np.any(a0!=a1,axis=2).sum())
+  body,mask=measure(v,Image.open(folder/'without-benny.png'),box);cap,maskhat=measure(v,Image.open(folder/'without-hat.png'),box)
+  actor=json.loads((folder/'camera-and-character.json').read_text())['actor']
+  report[s]={'wholeActor':body,'hatIncludingStarAndPom':cap,'characterCropEqualsRetainedOpening':True,'fullFrameChangedPixelsOutsideCrop':full_delta,'rootScale':actor['rootScale'],'keyMaterials':{k:actor['meshes'][k]['materials'] for k in ['fur_body','fur_armL','fur_pom','hat_brim','hat_crown','hat_star']}}
+  source=next(a.glob(s+'_*'));art=Image.open(source)
+  for role,img in [('APPROVED',art),('CLAUDIA',v)]:
+    img.crop(box).save(p/('S'+s+'-'+role+'-character-native.png'))
+  view=np.array(v.crop(box).convert('RGB'));edge=ndimage.binary_dilation(mask,iterations=1)^ndimage.binary_erosion(mask,iterations=2);view[edge]=[45,255,60]
+  Image.fromarray(view).save(p/('mask-check-'+s+'.png'))
+  print(s,body['visibleDensePixelBoundsXYXY'],cap['visibleDensePixelBoundsXYXY'])
+(p/'retained-character-measurements.json').write_text(json.dumps({'rule':'Same native renderer and frozen opening. Compare the same picture with Benny hidden or with only his hat hidden. Visible pixels require the summed absolute RGB channel difference to exceed 30 inside a generous central crop. Retain the largest connected component after 2-pixel dilation, and require six original changed pixels in a row or column to count it toward the bounds. These are visible screen-space bounds and include occlusion.','regions':regions,'screens':report},indent=2)+'\n')

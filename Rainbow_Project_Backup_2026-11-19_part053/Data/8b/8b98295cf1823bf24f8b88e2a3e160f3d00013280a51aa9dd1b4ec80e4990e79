@@ -1,0 +1,237 @@
+{
+  "04": {
+    "retained": {
+      "branch": "claude/rainbow-s04-match-c17",
+      "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+    },
+    "fullNativeEvidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/f0dbba6223db3656ded6e420c4a4c5626c8686d4/experiments/codex/s04-reflected-ring-bays/CLAUDIA_BEFORE",
+    "poses": {
+      "hard-left": {
+        "retainedCourseS": 89.546,
+        "stage": "04",
+        "steer": -1,
+        "shaderTime": 12.866666666666665,
+        "actorCenterNDC": [
+          -0.05,
+          -0.47
+        ],
+        "pixelCropXYXY": [
+          155,
+          814,
+          665,
+          1359
+        ],
+        "wholeFrameSHA256": "c7cf68799e810432dee5c2bf1a1d5ced283e0eb181711abcec192195ed9d2759",
+        "nativeCropSHA256": "1b0c95d4116c30528972f36487226a0c748fa28097dbd4631d9be96220f255fd",
+        "crop": "S04-CLAUDIA-hard-left-character-native.png"
+      },
+      "hard-right": {
+        "retainedCourseS": 89.546,
+        "stage": "04",
+        "steer": 1,
+        "shaderTime": 12.866666666666665,
+        "actorCenterNDC": [
+          -0.04,
+          -0.47
+        ],
+        "pixelCropXYXY": [
+          160,
+          814,
+          670,
+          1359
+        ],
+        "wholeFrameSHA256": "4176b83cddc62d4adca0f5539cb18a49e52bc56960ff5edd8e09c8803cd37206",
+        "nativeCropSHA256": "23c40b191f8cf583ffb162f187901a412253e3f624ce1551c4d108aac0975408",
+        "crop": "S04-CLAUDIA-hard-right-character-native.png"
+      }
+    }
+  },
+  "05": {
+    "retained": {
+      "branch": "claude/rainbow-s05-match-c17",
+      "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+    },
+    "fullNativeEvidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/3c8e9812b6ce3b3895a8616ec338999469ffbed2/experiments/codex/s05-anchored-bend-highlights/CLAUDIA_BEFORE",
+    "poses": {
+      "hard-left": {
+        "retainedCourseS": 144.538,
+        "stage": "05",
+        "steer": -1,
+        "shaderTime": 13.1,
+        "actorCenterNDC": [
+          -0.17,
+          -0.28
+        ],
+        "pixelCropXYXY": [
+          104,
+          668,
+          614,
+          1213
+        ],
+        "wholeFrameSHA256": "7540d2421ca01375d4957b0e054736e75eb035d4bb31b5e7d069b42def2dce73",
+        "nativeCropSHA256": "941d3652e80cfb5a0bdd567a612d641aa03ceea06ecde17eb1903986086a772b",
+        "crop": "S05-CLAUDIA-hard-left-character-native.png"
+      },
+      "hard-right": {
+        "retainedCourseS": 144.538,
+        "stage": "05",
+        "steer": 1,
+        "shaderTime": 13.1,
+        "actorCenterNDC": [
+          0.48,
+          -0.2
+        ],
+        "pixelCropXYXY": [
+          354,
+          607,
+          864,
+          1152
+        ],
+        "wholeFrameSHA256": "8bf1719d4ad953fe6a0817ad331d3cfb1fae9af813011f3a631d6864ae621fae",
+        "nativeCropSHA256": "5511158b753c60bf99b962b5558749bd6a27f59034e06888faf089321620a13d",
+        "crop": "S05-CLAUDIA-hard-right-character-native.png"
+      }
+    }
+  },
+  "06": {
+    "retained": {
+      "branch": "claude/rainbow-s06-match-c17",
+      "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+    },
+    "fullNativeEvidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/283cae3c6709bf0e4b47872f000c583e76408f80/experiments/codex/s06-crest-release-water/CLAUDIA_BEFORE",
+    "poses": {
+      "hard-left": {
+        "retainedCourseS": 211.01,
+        "stage": "06",
+        "steer": -1,
+        "shaderTime": 13.1,
+        "actorCenterNDC": [
+          -0.69,
+          -0.14
+        ],
+        "pixelCropXYXY": [
+          0,
+          561,
+          510,
+          1106
+        ],
+        "wholeFrameSHA256": "0c6e391d3a2e2cd804ecdd016603e2f26de6343c00b2d2d0ddec76b1db558af1",
+        "nativeCropSHA256": "ab0f747e53e7a95ecb8a909a624c5c436830a8c396ea71ebc8ed645ae10f3ae9",
+        "crop": "S06-CLAUDIA-hard-left-character-native.png"
+      },
+      "hard-right": {
+        "retainedCourseS": 211.01,
+        "stage": "06",
+        "steer": 1,
+        "shaderTime": 13.1,
+        "actorCenterNDC": [
+          0.48,
+          -0.09
+        ],
+        "pixelCropXYXY": [
+          354,
+          522,
+          864,
+          1067
+        ],
+        "wholeFrameSHA256": "f1ec2e3497a145ebf79739a0d404a1b9e7a496df0adf2f89175037364d1a7ca6",
+        "nativeCropSHA256": "80627d57eb7fc8bcf6a67072c8a1b43897248e9ca05083d1d9b736109e185e9a",
+        "crop": "S06-CLAUDIA-hard-right-character-native.png"
+      }
+    }
+  },
+  "07": {
+    "retained": {
+      "branch": "claude/rainbow-s07-match-c17",
+      "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+    },
+    "fullNativeEvidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/8d47a1ea95d51308bebd4d68280e037e31184804/experiments/codex/s07-outlet-foam-clusters/CLAUDIA_BEFORE",
+    "poses": {
+      "hard-left": {
+        "retainedCourseS": 285.056,
+        "stage": "07",
+        "steer": -1,
+        "shaderTime": 13,
+        "actorCenterNDC": [
+          -0.03,
+          -0.24
+        ],
+        "pixelCropXYXY": [
+          164,
+          637,
+          674,
+          1182
+        ],
+        "wholeFrameSHA256": "dee4a44072db60b21e6fc93ea4658a4ef3f858f95bf2d94c7ed1e4c0e7773764",
+        "nativeCropSHA256": "5c091391220c9cbb717a43607932dc090b759bb391768421d105d77533a5b571",
+        "crop": "S07-CLAUDIA-hard-left-character-native.png"
+      },
+      "hard-right": {
+        "retainedCourseS": 285.056,
+        "stage": "07",
+        "steer": 1,
+        "shaderTime": 13,
+        "actorCenterNDC": [
+          -0.02,
+          -0.23
+        ],
+        "pixelCropXYXY": [
+          168,
+          630,
+          678,
+          1175
+        ],
+        "wholeFrameSHA256": "554e80aa577a6e232863a11c850cfbe9a70be89619b50bcc56e9cbae9cd6ed0d",
+        "nativeCropSHA256": "5abaa8b76b1a8aa1bb49ea270cab0df2823a0443108bc48def407ca0e4de3d21",
+        "crop": "S07-CLAUDIA-hard-right-character-native.png"
+      }
+    }
+  },
+  "08": {
+    "retained": {
+      "branch": "claude/rainbow-s08-scenery-c17",
+      "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+    },
+    "fullNativeEvidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/7ad2a51caa1722751cdf61662a3a8ff1e741e817/experiments/codex/s08-chamber-flow-distance/CLAUDIA_BEFORE",
+    "poses": {
+      "hard-left": {
+        "retainedCourseS": 403.559,
+        "stage": "08",
+        "steer": -1,
+        "shaderTime": 13.766666666666666,
+        "actorCenterNDC": [
+          -0.31,
+          -0.44
+        ],
+        "pixelCropXYXY": [
+          43,
+          791,
+          553,
+          1336
+        ],
+        "wholeFrameSHA256": "92f78f819d95ca080b45534dffa24616696753d20de0d895ec26f4cff7e2d406",
+        "nativeCropSHA256": "d995e5809acd3f099b058261ea09aac434be8451307c87e96e1371e836395a27",
+        "crop": "S08-CLAUDIA-hard-left-character-native.png"
+      },
+      "hard-right": {
+        "retainedCourseS": 403.559,
+        "stage": "08",
+        "steer": 1,
+        "shaderTime": 13.766666666666666,
+        "actorCenterNDC": [
+          0.13,
+          -0.37
+        ],
+        "pixelCropXYXY": [
+          233,
+          737,
+          743,
+          1282
+        ],
+        "wholeFrameSHA256": "23f24b05d959d66fa1f954992bea0be2d1b08fc3c85841728ed0f19d8274483e",
+        "nativeCropSHA256": "ee6f71037cf31ae37ab38d16440f02a15d6c8496f8edba8a154defd4154e3f27",
+        "crop": "S08-CLAUDIA-hard-right-character-native.png"
+      }
+    }
+  }
+}

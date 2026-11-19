@@ -1,0 +1,30 @@
+const fs=require('node:fs'),path=require('node:path');
+const {chromium}=require('playwright');
+const {open,pose}=require('./capture.cjs');
+(async()=>{
+  const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-background-networking']});
+  try {
+    for(const s of ['04','05','06','07','08']){
+      process.env.RAINBOW_BASE_URL='http://127.0.0.1:'+(s==='06'?8096:8140+Number(s));
+      const errors=[],p=await open(browser,s,'BEFORE',{width:864,height:1536},errors);
+      const state=await pose(p,s,['opening','forward',0]);
+      const folder=path.join(__dirname,'rendered',s);fs.mkdirSync(folder,{recursive:true});
+      await p.screenshot({path:path.join(folder,'with-benny.png'),animations:'disabled'});
+      const info=await p.evaluate(()=>{
+        const r=window.__rainbow,{scene,camera,renderer}=r.qa3d();const hero=scene.getObjectByName('Benny');
+        const hat=hero?.getObjectByName('hat');if(!hero||!hat)throw Error('Missing retained Benny or hat');
+        const nodes={};hero.traverse(n=>{if(n.isMesh){
+          const materials=Array.isArray(n.material)?n.material:[n.material];
+          nodes[n.name]={vertices:n.geometry.attributes.position?.count,materials:materials.map(m=>({name:m.name,type:m.type,map:m.map?.image?.width||null,normalMap:m.normalMap?.image?.width||null}))};
+        }});
+        const pos=hero.position.toArray(),scale=hero.scale.toArray();hat.visible=false;r.drawList();return {names:Object.keys(nodes),meshes:nodes,rootPosition:pos,rootScale:scale};
+      });
+      await p.screenshot({path:path.join(folder,'without-hat.png'),animations:'disabled'});
+      await p.evaluate(()=>{const r=window.__rainbow,hero=r.qa3d().scene.getObjectByName('Benny');hero.getObjectByName('hat').visible=true;hero.visible=false;r.drawList()});
+      await p.screenshot({path:path.join(folder,'without-benny.png'),animations:'disabled'});
+      await p.evaluate(()=>{const r=window.__rainbow;r.qa3d().scene.getObjectByName('Benny').visible=true;r.drawList()});
+      fs.writeFileSync(path.join(folder,'camera-and-character.json'),JSON.stringify({screen:s,camera:state.camera,course:state.state,shaderTime:state.shaderTime,actor:info},null,2)+'\n');
+      await p.close();if(errors.length)throw Error(errors.join('\n'));console.log(s,'retained character photographed at native resolution',Object.keys(info.meshes).length);
+    }
+  }finally{await browser.close()}
+})().catch(e=>{console.error(e);process.exitCode=1});

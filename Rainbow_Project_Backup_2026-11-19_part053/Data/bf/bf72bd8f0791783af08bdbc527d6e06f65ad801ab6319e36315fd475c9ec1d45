@@ -1,0 +1,12 @@
+from pathlib import Path
+import os,sys,subprocess as sp
+p=Path.cwd();s=sys.argv[1]
+env=dict(os.environ,NODE_PATH='/opt/codex/cua_node/lib/node_modules',RAINBOW_BASE_URL='http://127.0.0.1:'+str(8156))
+game=p/'games'/s
+jobs=[('types',[str(game/'node_modules/.bin/tsc'),'--noEmit'],game),('build',[str(game/'node_modules/.bin/vite'),'build','--outDir',str(p/'production'/s),'--logLevel','warn'],game)]
+jobs += [(mode,['node','capture.cjs',mode,s+(':'+('BEFORE' if mode=='repeat' else 'NEW'))],p) for mode in ['stills','ride','full-safe','repeat']]
+for nm,cmd,cwd in jobs:
+ log=p/('qa-'+s+'-'+nm+'.log')
+ with log.open('w') as f:r=sp.run(cmd,cwd=cwd,env=env,stdout=f,stderr=sp.STDOUT)
+ if r.returncode:print(nm,log.read_text()[-2000:],flush=True);sys.exit(r.returncode)
+ print(s,nm,'pass',flush=True)

@@ -1,0 +1,76 @@
+{
+  "sourceSHA256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "mode": "Original Screen 06 cuff, angular unwrap and live two-point material calibration",
+  "nativeLandmarksXYtopBottom": [
+    [
+      300.0,
+      950.0,
+      1002.0
+    ],
+    [
+      324.0,
+      957.0,
+      1011.0
+    ],
+    [
+      350.0,
+      964.0,
+      1017.0
+    ],
+    [
+      380.0,
+      968.5,
+      1022.0
+    ],
+    [
+      408.0,
+      970.4,
+      1025.8
+    ],
+    [
+      438.0,
+      970.3,
+      1025.0
+    ],
+    [
+      461.0,
+      968.8,
+      1023.3
+    ],
+    [
+      480.0,
+      966.5,
+      1020.2
+    ],
+    [
+      492.0,
+      965.0,
+      1018.0
+    ]
+  ],
+  "nativeCuffCenterX": 407.0,
+  "outerRadiusPx": 156.0,
+  "circumferentialRepeats": 7,
+  "atlasSize": [
+    192,
+    64
+  ],
+  "lightingLinearRGB": [
+    1.946217558954293,
+    1.2810979896372037,
+    1.9982585744054997
+  ],
+  "specularApproxLinearRGB": [
+    0.029030127860674604,
+    0.01783659457550482,
+    0.030922905068545448
+  ],
+  "calibrationSelectionXYXY": [
+    349,
+    1040,
+    468,
+    1065
+  ],
+  "sourceAngularSpan": 0.8975979010256552,
+  "sha256": "7fbfbb075740ee35d95abf562cdd5e24d00386080b293fe294ba688237b5901b"
+}

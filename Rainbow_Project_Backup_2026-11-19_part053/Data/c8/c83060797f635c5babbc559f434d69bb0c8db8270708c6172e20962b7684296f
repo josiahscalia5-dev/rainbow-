@@ -1,0 +1,86 @@
+{
+  "method": "Native central visible cuff swatches, measured at the actual location of the cuff in each image. Percentiles describe palette and variation. Rib pitch is the median separation of prominent peaks of row-median luminance. These are component observations, not an opening-frame similarity score.",
+  "originalBoxXYXY": [
+    349,
+    982,
+    468,
+    1013
+  ],
+  "retainedAndNewBoxXYXY": [
+    349,
+    1040,
+    468,
+    1065
+  ],
+  "original": {
+    "rgbPercentiles10_50_90": [
+      [
+        58.0,
+        0.0,
+        189.0
+      ],
+      [
+        115.0,
+        22.0,
+        232.0
+      ],
+      [
+        178.0,
+        68.0,
+        255.0
+      ]
+    ],
+    "luminanceSpread90minus10": 77.88,
+    "observedRibPeaks": 15,
+    "medianRibPitchPixels": 7.0,
+    "pixelCount": 3689
+  },
+  "retained": {
+    "rgbPercentiles10_50_90": [
+      [
+        64.0,
+        0.0,
+        218.0
+      ],
+      [
+        83.0,
+        0.0,
+        249.0
+      ],
+      [
+        105.0,
+        1.0,
+        255.0
+      ]
+    ],
+    "luminanceSpread90minus10": 12.46,
+    "observedRibPeaks": 6,
+    "medianRibPitchPixels": 20.0,
+    "pixelCount": 2975
+  },
+  "new": {
+    "rgbPercentiles10_50_90": [
+      [
+        62.0,
+        0.0,
+        193.0
+      ],
+      [
+        117.0,
+        21.0,
+        234.0
+      ],
+      [
+        175.0,
+        72.0,
+        255.0
+      ]
+    ],
+    "luminanceSpread90minus10": 78.99,
+    "observedRibPeaks": 14,
+    "medianRibPitchPixels": 8.0,
+    "pixelCount": 2975
+  },
+  "retainedMedianColorDistance": 23.666666666666668,
+  "newMedianColorDistance": 1.6666666666666667
+}
