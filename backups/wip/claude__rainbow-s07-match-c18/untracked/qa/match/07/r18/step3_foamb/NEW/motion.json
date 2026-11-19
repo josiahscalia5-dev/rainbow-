@@ -10,6 +10,29 @@
  },
  "shots": [
   {
+   "name": "t66_through_screen",
+   "dist": "t0.66",
+   "steer": null,
+   "mode": "ride",
+   "stage": "07",
+   "s": 351.066,
+   "lat": 0,
+   "coins": 2090,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -83.758,
+   "bennyVisible": true,
+   "cam": [
+    12.91,
+    -74.79,
+    -259.41
+   ],
+   "frames": 387,
+   "s0": 273.056,
+   "s1": 390.1617102628636,
+   "target": 350.34576877348997
+  },
+  {
    "name": "t72_through_screen",
    "dist": "t0.72",
    "steer": null,

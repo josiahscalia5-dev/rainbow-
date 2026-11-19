@@ -970,3 +970,140 @@ Now the log entry, then commit and push.
 > ↩︎ result: Updated 1 path from the index
 > 04.png
 
+### 🤖 Claude — 2026-11-19T02:38:47.321Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB').crop((0,380,864,1000))\nn=Image.open('$S/sv_3d/04.png').convert('RGB').crop((0,380,864,1000))\nc=Image.new('RGB',(864*2+10,620),'white'); c.paste(a,(0,0)); c.paste(n,(874,0)); c.save('$S/sv3d_cmp.png')\n\"", "description": "Side-by-side approved vs 3D-only start view"}`
+
+### 🧑 User — 2026-11-19T02:38:47.964Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:38:50.264Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/sv3d_cmp.png"}`
+
+### 🧑 User — 2026-11-19T02:38:50.335Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:39:04.081Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && ls qa/match/04/r15/ 2>/dev/null; ls qa/match/04/r15/ringpaint 2>/dev/null; grep -rn \"rper\\|ringp\\b\\|period\" qa/match/04/r15/*/NOTES.md qa/match/04/r15/*.md 2>/dev/null | head -20", "description": "Look for earlier ring-period findings"}`
+
+### 🧑 User — 2026-11-19T02:39:04.135Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:39:05.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && ls qa/match/04/; grep -rln \"m04ringp\\|ring period\\|m04rper\" qa/match/04 docs 2>/dev/null | head -20", "description": "Search Screen 04 logs for ring period notes"}`
+
+### 🧑 User — 2026-11-19T02:39:07.989Z
+
+> ↩︎ result: 04_APPROVED.png
+> 04_BEFORE_current_game.png
+> 04_BEFORE_current_game_864x1536.png
+> 04_BEFORE_m2_864x1536.png
+> 04_NEW_m2_864x1536.png
+> 04_NEW_m2_fal04_864x1536.png
+> 04_NEW_m3_864x1536.png
+> 04_NEW_m3_splash_864x1536.png
+> 04_NEW_match04.png
+> 04_NEW_match04_864x1536.png
+> 04_NEW_screen_match.json
+> FAL_PLATE_REQUEST.md
+> NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> fal
+> gameplay_test_match04.json
+> gameplay_test_match04_fal04.json
+> gameplay_test_match04_m2.json
+> gameplay_test_match04_m3.json
+> gameplay_test_match04_m3_final.json
+> motion
+> motion_m2
+> motion_m3
+> r10
+> r11
+> r12
+> r13
+> r14
+> r16
+> r17
+> r18
+> r8
+> r9
+> scenery_metrics_BEFORE_NEW.json
+> scenery_metrics_M1_M2.json
+> scenery_metrics_M2_vs_fal04.json
+> scenery_metrics_M2fal04_vs_M3splash.json
+> qa/match/04/r14/s11_rimfoam/L4/motion.json
+> qa/match/04/r14/s9_lane/I2/motion.json
+> qa/match/04/r14/s9_lane/I1/motion.json
+> qa/match/04/r14/s9_lane/I3/motion.json
+> qa/match/04/r14/s9_lane/I5/motion.json
+> qa/match/04/r14/s9_lane/H2/motion.json
+> qa/match/04/r14/s9_lane/I4/motion.json
+> qa/match/04/r14/s9_lane/H1/motion.json
+> qa/match/04/r14/s8_glow/G3/motion.json
+> qa/match/04/r14/s8_glow/G5/motion.json
+> qa/match/04/r14/s8_glow/G4/motion.json
+> qa/match/04/r14/PROGRESS.md
+> qa/match/04/r14/s10_pink/J2/motion.json
+> q …[+297 chars]
+
+### 🤖 Claude — 2026-11-19T02:39:09.686Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"ringp\\|period\\|thick\" qa/match/04/r14/PROGRESS.md qa/match/04/r13/*.md qa/match/04/r12/*.md 2>/dev/null | head -30", "description": "Grep earlier progress notes for ring period / thickness"}`
+
+### 🧑 User — 2026-11-19T02:39:09.731Z
+
+> ↩︎ result: qa/match/04/r14/PROGRESS.md:4:Query (G5): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03`
+> qa/match/04/r14/PROGRESS.md:8:  G5 = G4 + full fill `m04a3fa=1.0` + thicker white rim `m04a3rw=0.03`. G2/G3/G4/G5 also carry the r13 G2 pink edge
+> qa/match/04/r14/PROGRESS.md:37:Query (L4): `match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.1 …[+3420 chars]
+
+### 🤖 Claude — 2026-11-19T02:39:23.449Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB').crop((40,420,480,800))\nn=Image.open('$S/sv_3d/04.png').convert('RGB').crop((40,420,480,800))\nc=Image.new('RGB',(880*2+10,760),'white'); c.paste(a.resize((880,760)),(0,0)); c.paste(n.resize((880,760)),(890,0)); c.save('$S/sv3d_ul.png')\n\"", "description": "Zoom upper-left ring region approved vs 3D-only"}`
+
+### 🧑 User — 2026-11-19T02:39:23.999Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:39:27.223Z
+
+Redirect received: ring structure first. Let me look at the zoom I just made (it shows the structure too), then read the ring geometry code.
+
+### 🤖 Claude — 2026-11-19T02:39:28.566Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/sv3d_ul.png"}`
+
+### 🧑 User — 2026-11-19T02:39:28.617Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:39:30.020Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"m04ring\\b\\|m04ring'\\|lathe\\|Lathe\\|ringp\\|outerR\\|tunnelR\\|function addM04\\|len =\\|const len\\|const r =\\|uP\\b\" src/world/match04m4.ts | head -60; wc -l src/world/match04m4.ts", "description": "Locate ring geometry construction"}`
+
+### 🧑 User — 2026-11-19T02:39:30.078Z
+
+> ↩︎ result: 3: *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+> 20: *  m04mouth — (round 9, needs m04ring) the approved GOLD WASHER OPENING: the painted mouth ring (thick polished band,
+> 33:  ring: on('m04ring'),
+> 55:  cx: number; cy: number; z0: number; len: number; r: number; outerR: number;
+> 89:uniform float uP;
+> 194:      float u = fract(al / uP) * uP;                       // world units inside this ring period (0 = groove step)
+> 195:      float t = clamp((u - 0.06) / (uP - 0.6), 0.0, 1.0);  // band: 0 at its near edge .. 1 at its lip
+> 278:      float uu = fract(al / uP) * uP;
+> 279:      float uL = uRLip.y, sL = uRLip.x, uG = min(uRLip.w, uP);
+> 286:      float rj = uRJit * (2.0 * h21(vec2(floor(al / uP), 5.3)) - 1.0);
+> 292:        float ri0 = floor(al / uP);
+> 323:        float ri = floor(al / uP);
+> 618:function lathe(prof: { r: number; a: number; part: number }[], segs: number, ringIdx: (i: number) => number) {
+> 620:  const g = new THREE.LatheGeometry(pts, segs);
+> 623:  // LatheGeometry: vertex index = seg * pts.length + j
+> 630:export function addM04(ctx: M04Ctx) {
+> 654:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { valu …[+1097 chars]
+

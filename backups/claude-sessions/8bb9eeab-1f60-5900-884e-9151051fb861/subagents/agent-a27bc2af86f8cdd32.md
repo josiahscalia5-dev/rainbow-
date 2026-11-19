@@ -1219,3 +1219,106 @@ Restoring the stray formatting change (`build =(`) so the shared file only diffe
 > 106:  writeFileSync(f, JSON.stringify(result, null, 2));
 > 112:writeF …[+136 chars]
 
+### 🤖 Claude — 2026-11-19T02:38:45.721Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git check-ignore -v qa/gameplay_test_switch.json; python3 -c \"\nimport json; d=json.load(open('qa/gameplay_test_switch.json')); print(d['query'][-40:], d['pass']); print({k:v for k,v in d.items() if k not in ('checks','plunge','query','errors')})\" | head -20; sed -n 60,106p scripts/gameplay-test.mjs | grep -n \"coin\" ", "description": "Inspect gameplay result for coin count"}`
+
+### 🧑 User — 2026-11-19T02:38:45.856Z
+
+> ↩︎ result: foam=1&m07coinsz=1&m07nearw=1&m07foamb=1 True
+> {'samples': [{'t': 0.5, 's': 45.645, 'stage': '03', 'y': -13.457, 'cam': [-2.62, -7.96, -16.34], 'coins': 1330}, {'t': 1, 's': 50.145, 'stage': '03', 'y': -13.829, 'cam': [0.26, -8.46, -19.04], 'coins': 1350}, {'t': 1.5, 's': 54.645, 'stage': '03', 'y': -14.444, 'cam': [4.19, -9.22, -20.03], 'coins': 1370}, {'t': 2, 's': 59.145, 'stage': '03', 'y': -15.206, 'cam': [7.89, -10.13, -18.37], 'coins': 1380}, {'t': 2.5, 's': 63.645, 'stage': '03', 'y': -16.187, 'cam': [9.4, -11.49, -14.72], 'coins': 1400}, {'t': 3, 's': 68.312, 'stage': '03', 'y': -18.043, 'cam': [8.02, -11.89, -15.45], 'coins': 1420}, {'t': 3.5, 's': 74.238, 'stage': '04', 'y': -20.694, 'cam': [6.94, -11.73, -15.61], 'coins': 1420}, {'t': 4, 's': 81.211, 'stage': '04', 'y': -23.56, 'cam': [1.14, -14.84, -18.72], 'coins': 1430}, {'t': 4.5, 's': 88.211, 'stage': '04', 'y': -27.176, 'cam': [1.13, -17.3, -26.22], 'coins': 1450}, {'t': 5, 's': 95.211, 'stage': '04', 'y': -30.909, 'cam': [1.19, -20.87, -32.5], 'coins': 1470}, {'t': 5.5, 's': 102.211, 'stage': '04', 'y': -34.618, 'cam': [1.19, -24.58, -38.46], 'coins': 1490}, {'t': 6, 's': 109.211, 'stage': '04', 'y': -38.189, 'cam …[+6675 chars]
+
+### 🤖 Claude — 2026-11-19T02:38:46.830Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cat qa/match/07/r17/step2_nearw/gameplay_new.json | head -30; sed -n 1,60p scripts/gameplay-test.mjs | grep -n \"coin\\|2240\\|91\"", "description": "Compare with r17 gameplay record and coin checks"}`
+
+### 🧑 User — 2026-11-19T02:38:47.115Z
+
+> ↩︎ result: {
+>   "checks": {
+>     "pauseFreezes": {
+>       "pass": true,
+>       "sBefore": 45.495,
+>       "sPaused": 45.495,
+>       "sAfter": 49.995
+>     },
+>     "continuousTravel": {
+>       "pass": true,
+>       "nonMonotonicSteps": 0,
+>       "steps": 2144,
+>       "respawns": 0
+>     },
+>     "noCameraCut": {
+>       "pass": true,
+>       "maxCameraJumpPerStep": 0.728
+>     },
+>     "noTeleport": {
+>       "pass": true,
+>       "maxBennyAltitudeJumpPerStep": 0.19,
+>       "at": {
+>         "s": 330.674,
+>         "s1": 330.874,
+>         "stage": "07",
+>         "y0": -64.582,
+>         "y1": -64.772,
+>         "t": 25.4
+>       }
+>     },
+> 7://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 46:  // ---- full run 03 → 11 with a coin-seeking steering policy
+> 51:  const startCoins = prev.coins;
+> 56:  // steering policy: weave gently so Benny crosses coin lines (real pickups)
+> 60:    // coin-seeking: steer toward the lateral offset of the next untaken coin within 12 units
+
+### 🤖 Claude — 2026-11-19T02:38:49.980Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json; d=json.load(open('qa/gameplay_test.json')); c=d['checks']; print(len(c), sum(1 for v in c.values() if v.get('pass')), c['realCoinPickups'], d.get('query','')[-30:])\"; python3 -c \"\nimport json; d=json.load(open('qa/match/07/r17/step2_nearw/gameplay_new.json')); c=d['checks']; print(len(c), sum(1 for v in c.values() if v.get('pass')), c['realCoinPickups'])\"; git status --short qa/", "description": "Extract pass count and coin totals"}`
+
+### 🧑 User — 2026-11-19T02:38:50.062Z
+
+> ↩︎ result: 8 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} 
+> 8 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> ?? qa/gameplay_test_switch.json
+> ?? qa/match/07/r17/step4_nearf/
+> ?? qa/match/07/r18/
+
+### 🤖 Claude — 2026-11-19T02:38:53.598Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 100,115p scripts/gameplay-test.mjs; python3 -c \"\nimport json; d=json.load(open('qa/gameplay_test_switch.json')); c=d['checks']; print(c)\" | head -5; ls -la qa/gameplay_test*.json", "description": "Check gameplay switch output content"}`
+
+### 🧑 User — 2026-11-19T02:38:53.667Z
+
+> ↩︎ result: result.errors = errors;
+> result.pass = Object.values(result.checks).every((c) => c.pass) && errors.length === 0;
+> if (optQ) result.query = optQ;
+> if (optQ || optOut) {
+>   const f = optOut || 'qa/gameplay_test_switch.json';
+>   writeFileSync(f, JSON.stringify(result, null, 2));
+>   console.log(JSON.stringify({ query: optQ, out: f, pass: result.pass, checks: Object.fromEntries(Object.entries(result.checks).map(([k, v]) => [k, v.pass])), plunge: result.plunge, errors }, null, 1));
+>   await browser.close();
+>   await vite.close();
+>   process.exit(result.pass ? 0 : 1);
+> }
+> writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> const p = result.plunge;
+> const md = [
+>   '# 07 → 08 continuity proof (automated)',
+> {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2144, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 330.674, 's1': 330.874, 'stage': '07', 'y0': -64.582, 'y1': -64.772, 't': 25.4}}, 'plunge': {'pass': True, 'tTop': 23.866666666666593, 'tBottom': 30.366666666666223, …[+630 chars]
+
+### 🤖 Claude — 2026-11-19T02:38:59.684Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && mv qa/gameplay_test_switch.json qa/match/07/r18/step3_foamb/gameplay_new.json && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/t66 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1\" && node tools/match07/audit_r18.mjs 07 $S \"$K\" t66_through_screen 2>&1 | grep \"^07\" && cp $S/t66_through_screen.png qa/match/07/r18/step3_foamb/NEW/ && python3 - <<'EOF'\nimport json\na='/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW/motion.json'\nb='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-8 …[+286 chars]`
+
+### 🧑 User — 2026-11-19T02:39:21.595Z
+
+> ↩︎ result: 07 t66_through_screen s 351.066 lat 0 stage 07 frames 387
+> ['t66_through_screen', 't72_through_screen', 't80_through_screen', 't88_through_screen', 't95_through_screen']
+
+### 🤖 Claude — 2026-11-19T02:39:22.728Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:39:22.781Z
+
+> ↩︎ result: [image]
+

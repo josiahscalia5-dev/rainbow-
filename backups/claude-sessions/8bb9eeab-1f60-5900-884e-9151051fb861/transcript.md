@@ -1150,3 +1150,68 @@ I checked these at full size too. They're attached in this order: APPROVED, BEFO
 
 Make my screen 4 exactly like the approved screen what is so hard
 
+### 🤖 Claude — 2026-11-19T02:38:55.376Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md", "description": "Read the binding user visual goal"}`
+
+### 🧑 User — 2026-11-19T02:38:55.406Z
+
+> ↩︎ result: # User-approved visual goal — 2026-11-18 ~15:00 UTC (account 13) — BINDING for every specialist and every future Claude account
+> 
+> The user approved this understanding in their own words: "YES, CLAUDIA. I approve your visual-first plan for all five original
+> approved Rainbow screens." It adds to (never replaces) `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`,
+> `docs/briefs/2026-11-18-r10/RULES_R10.md` and `docs/briefs/2026-11-18-r8/COMMON_RULES.md`.
+> 
+> ## 1. What the user wants
+> * The user ALREADY DESIGNED the game. The approved pictures `references/04_…png` … `references/08_…png` are BLUEPRINTS, not
+>   inspiration: recreate THOSE exact environments as faithfully as technically possible as real playable 3D.
+> * The scenery must look like the approved world THROUGHOUT Benny's natural swimming — start, middle, end, and while he steers hard
+>   left / right. A matching first screenshot that turns into a generic tunnel is a failure.
+> * No redesign, no simplification, no added or different scenery, no generic orange ring corridor, no flat blue/ramp water, no giant
+>   foam walls, no stretched / smeared / torn textures, no double-exposed or duplicate rings, no clipping, no style drift.
+> * Where a …[+3942 chars]
+
+### 🤖 Claude — 2026-11-19T02:38:58.480Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/a00_approved_view.png"}`
+
+### 🧑 User — 2026-11-19T02:38:58.531Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:38:58.937Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-19T02:38:59.021Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:39:11.155Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-19T02:39:11.168Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-19T02:39:21.231Z
+
+> 🔧 **SendMessage** `{"to": "a4d781f95da91db00", "summary": "Redirect s04tex to few thick rings", "message": "Lead redirect for s04tex: change the ring STRUCTURE next and put brightness/polish (step 7) on hold. The user just asked, frustrated, for Screen 04 to look exactly like the approved picture. The biggest visible difference while swimming is the ring structure, not the ring colour: from forward 3 u on, the game shows a long straight corridor of MANY THIN copper rings running to a pin-point. The approved picture, and the binding goal (USER_VISUAL_GOAL_R13 §2: \"a deep telescoping tunnel of FEW, THICK, polishe …[+891 chars]`
+
+### 🧑 User — 2026-11-19T02:39:21.247Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a4d781f95da91db00 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a4d781f95da91db00","name":"a4d781f95da91db00","ref":"bd20ad"}}
+
+### 🤖 Claude — 2026-11-19T02:39:24.782Z
+
+> 🔧 **SendMessage** `{"to": "a4d2f0802b168dc00", "summary": "s04 focus: S-curve river, low foam", "message": "Lead note for s04: keep going with the S-curve sweep of the near bands, and aim for the biggest visible water/foam difference while swimming. The user just asked, frustrated, for Screen 04 to look exactly like the approved picture.\nAfter the S-curves, in order:\n(1) The painted river is a THICK glossy cyan river whose magenta/pink swirls curve UP the sides of the tunnel. The game's water is a flat channel with straight pink side strips.\n(2) At f03 the foam is big white heaps standing up on both sides bes …[+420 chars]`
+
+### 🧑 User — 2026-11-19T02:39:24.799Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a4d2f0802b168dc00 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a4d2f0802b168dc00","name":"a4d2f0802b168dc00","ref":"03fa86"}}
+
+### 🤖 Claude — 2026-11-19T02:39:30.277Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_r18/04_where_it_drifts && mkdir -p $D && cp /home/user/wt/s04/qa/match/04/r18/s2_nband/1_APPROVED.png $D/1_APPROVED.png && cp /home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/a00_approved_view.png $D/2_GAME_start.png && cp /home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/f03_forward3u.png $D/3_GAME_a_moment_later.png && cat >> docs/briefs/2026-11-19-r18/COORDINATION.md <<'EOF'\n\n## User ~03:20 UTC: \"Make my screen 4 exactly like the approved screen what is so hard\"\nLead answer: the start view already IS the painting (the user's own pixels); within a moment of swimming  …[+735 chars]`
+

@@ -43,3 +43,10 @@ Worktrees built by `setup_worker.sh` (this folder) under the autosave lock, spar
 | (r17 1–6) | see `docs/briefs/2026-11-18-r17/COORDINATION.md` | 08 m08vh, 07 m07nearw, 04 m04end, 04 m04rpdots, 06 m06fclu, 05 m05trans: GOOD IMPROVEMENT |
 | 1 (~03:05) | 04 r18 step 2 `&m04nband=1` near-water bands round Benny (s04 `31372d6`) | GOOD IMPROVEMENT (worker + lead at full size): the plain cyan sheet round Benny inside the tunnel now carries glossy pink and cyan streaks sweeping in on both sides (f03 → t95, steering), arrow lane stays cyan; start view 0 px; no tearing in the clip. Still: straight stripes where the painting sweeps in S-curves under Benny; long straight corridor of thin rings — `qa/review_r18/04_step2_nband/` |
 | 2 (~03:15) | 04 ring test step 6 `&m04rpvar=1` on K5 (s04tex `9eb27e6e`) | GOOD IMPROVEMENT (small–moderate, ring colour; worker + lead at full size): the inner rings are no longer one plain copper — the first ring inside and every few rings deeper carry the painted soft pink-violet sheen and violet glints on the lower walls beside the water (clearest t66, f06); notched first-ring lip fixed; start view 0 px. Still: painted rings brighter, more contrasty (white-hot highlights, deeper grooves) → step 7 — `qa/review_r18/04_rings_step6_sheen/` |
+
+## User ~03:20 UTC: "Make my screen 4 exactly like the approved screen what is so hard"
+Lead answer: the start view already IS the painting (the user's own pixels); within a moment of swimming the scenery turns into a long
+straight corridor of many thin copper rings + flat water + big foam heaps — the biggest gap, and exactly what the binding goal forbids
+("FEW, THICK, polished yellow-gold rings", "no generic orange ring corridor", "no giant foam walls"). Both 04 workers redirected:
+s04tex → step 7 ring STRUCTURE (few thick yellow-gold telescoping bands; polish on hold); s04 → S-curve river, river curving up the
+sides, low foam instead of heaps. Pictures: `qa/review_r18/04_where_it_drifts/`.

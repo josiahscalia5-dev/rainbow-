@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index a8fe480..08df9a1 100644
+index a8fe480..df8a305 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -317,7 +317,9 @@ uniform vec4 uNB;            // r17 m04nband: x on, y Benny along (local), z Ben
@@ -18,11 +18,11 @@ index a8fe480..08df9a1 100644
      // ribbon -> lilac sparkle at the wall), cut from references/04 (tools/match04/sideband04.py), by arc length across the
      // trough and world position along it (flowing with the current), two offset samples blended like the river tile
 -    float inner = uSB0.y, sv = vS;
-+    float inner = uSB0.y, sv = vS, rr = -1.0, mea = 0.0;
++    float inner = uSB0.y, sv = vS, rr = -1.0, mea = 0.0, twp = 0.0;
      if (uNB.x > 0.5) {
        // r17 m04nband: the painted bands sweep in close round Benny (inner edge hugging him at his position and behind
        // him toward the camera) and curve back out to the normal lane width ahead of him (arrow lane stays cyan); the band
-@@ -434,10 +436,26 @@ void main() {
+@@ -434,10 +436,30 @@ void main() {
        float d = along - uNB.y;
        sv = vS - uNB.z * uNB2.w;
        float db = max(-d, 0.0), hug = uNB.w + uNB2.y * (uNB2.y < 0.0 ? -db : db * db) - uNB2.z * exp(-d * d / 1.2);  // < 0: straight widening
@@ -32,7 +32,11 @@ index a8fe480..08df9a1 100644
 +        // him), so the pink / cyan stripes curve in from both sides and cross under him in crescents
 +        hug = uNB.w - uNB2.z * exp(-d * d / 1.2);
 +        float fo = mix(1.0, uNB2.w, smoothstep(0.0, uNB2.x, d));            // centred on Benny at / behind him
-+        rr = length(vec2(vS - uNB.z * fo, uNB4.x * min(d - uNB4.y, 0.0)));
++        vec2 wq = vec2(vS - uNB.z * fo, uNB4.x * min(d - uNB4.y, 0.0));
++        rr = length(wq);
++        // spiral, not closed rings: a stripe hugging Benny's left side sweeps under him and comes out farther out on his
++        // right (uNB5 stripe periods per half turn; whole numbers leave the bands ahead of him unchanged)
++        twp = uNB5 * 2.0 * uNB3.x * abs(atan(wq.y, wq.x)) / 3.14159;
 +      }
        inner = mix(min(hug, uSB0.y), uSB0.y, smoothstep(0.15 * uNB2.x, uNB2.x, d));
 +      if (uNB4.z > 0.0) {
@@ -50,14 +54,14 @@ index a8fe480..08df9a1 100644
      float tb = clamp((as + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
      float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
      float ub = (1.0 - tb) * uSB1.z;
-@@ -451,13 +469,14 @@ void main() {
+@@ -451,13 +473,14 @@ void main() {
      if (uNB.x > 0.5 && uNB3.x > 0.0) {
        // r17 m04nband: near Benny the painted strip is walked back and forth (cyan -> hot pink -> cyan -> ...), so several
        // alternating painted pink / cyan stripes curve round him, as in the approved picture (one stretched band otherwise)
 -      float hz = clamp((uSB0.y - inner) / max(uSB0.y - uNB.w, 0.1), 0.0, 1.0);
 -      float pp = 1.0 - abs(fract((as + wan - inner) / (2.0 * uNB3.x)) * 2.0 - 1.0);
 +      float hz = clamp((uSB0.y - inner + mea) / max(uSB0.y - uNB.w, 0.1), 0.0, 1.0);
-+      float pp = 1.0 - abs(fract((am + wan - inner) / (2.0 * uNB3.x)) * 2.0 - 1.0);
++      float pp = 1.0 - abs(fract((am + wan - inner + twp) / (2.0 * uNB3.x)) * 2.0 - 1.0);
        float u2 = 1.0 - pp * uNB3.y;
 -      vec3 b2 = mix(texture2D(uSB, vec2(u2, vb)).rgb, texture2D(uSB, vec2(u2, vb * 0.81 + 0.29)).rgb, w);
 +      float vb2 = rr >= 0.0 ? fl / uSB0.w : vb;                    // r18 whirl: same strip on both sides (no seam under Benny)
@@ -69,7 +73,7 @@ index a8fe480..08df9a1 100644
      if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
    }
    if (uA5.x > 0.5) {
-@@ -934,7 +953,12 @@ export function addM04(ctx: M04Ctx) {
+@@ -934,7 +957,12 @@ export function addM04(ctx: M04Ctx) {
          // ahead of him, m04nbb widening behind him (b * d^2), m04nbr half-stripe width near him (0 = one stretched band), m04nbs tile
          // span walked, m04nbp pinch at his sides, m04nbf lateral follow of Benny (0..1)
          uNB3: { value: new THREE.Vector2(M04.num('m04nbr', 0.9), M04.num('m04nbs', 0.7)) },
