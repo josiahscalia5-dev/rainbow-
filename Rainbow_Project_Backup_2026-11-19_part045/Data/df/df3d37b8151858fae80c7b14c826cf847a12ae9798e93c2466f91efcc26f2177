@@ -1,0 +1,32 @@
+{
+  "verifiedUTC": "2026-11-19T03:22:11.599771+00:00",
+  "branch": "codex/s06-benny-reference-pink",
+  "tip": "6dbeaafbcbc51c63f6513fbcb0e684d15308a553",
+  "gameSource": "ca0c66fa612ec35d21f344200568fb5ab7ba9887",
+  "parent": "35dd903dc09f08d7b3262b9cab2753ad0d40d19c",
+  "protectedBase": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+  "verifiedFiles": 79,
+  "lfsBytesRecovered": 142346641,
+  "lfs": {
+    "1a0ea50d4fc02e8c05d09b41f58ad97ebb9606f7d78257934842464b6e01e0f1": {
+      "size": 7491213,
+      "path": "experiments/codex/s06-benny-reference-pink/CLAUDIA_BEFORE/ride.mp4"
+    },
+    "163a2dc74bbf08117472cab58651204a93b9cbed67828d961e651308bad72f8e": {
+      "size": 7479705,
+      "path": "experiments/codex/s06-benny-reference-pink/CODEX_NEW/ride.mp4"
+    },
+    "4a3b7b3e39273844441b27cf34f0c5237c704ae93e85ecedd566a4fd18b98aa3": {
+      "size": 127375723,
+      "path": "experiments/codex/s06-benny-reference-pink/Screen06_Review.zip"
+    }
+  },
+  "githubRenderedInlineImages": 18,
+  "byteVerifiedPrivateDownloads": [
+    "APPROVED.jpg",
+    "CLAUDIA_BEFORE/opening.png",
+    "CODEX_NEW/opening.png",
+    "Review_on_Android.pdf"
+  ],
+  "protectedTipDifferencesObserved": []
+}
