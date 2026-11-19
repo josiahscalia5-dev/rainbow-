@@ -1,0 +1,261 @@
+{
+  "retainedCommit": "3c0fa97090afb2c0fca41898774db7247e23e522",
+  "urlDifference": "m08towelm=1",
+  "size": [
+    864,
+    1536
+  ],
+  "comparedPoses": {
+    "opening": {
+      "simFrames": 0,
+      "courseDistance": 391.427,
+      "steering": 0,
+      "shaderClock": 12,
+      "camera": {
+        "matrixWorld": [
+          0.9986079290242758,
+          8.673617379884035e-19,
+          -0.05274660263796234,
+          0,
+          -0.008522050523747535,
+          0.9868619310749651,
+          -0.1613409546577108,
+          0,
+          0.05205361413694336,
+          0.1615658658101729,
+          0.9854881492236685,
+          0,
+          12.848494591223917,
+          -109.86621968852464,
+          -274.80055202068365,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 864,
+        "height": 1536,
+        "position": [
+          12.848494591223917,
+          -109.86621968852464,
+          -274.80055202068365
+        ],
+        "target": [
+          9.812,
+          -119.291,
+          -332.288
+        ]
+      },
+      "drawingTriangles": 426277,
+      "drawingTrianglesWithOutline": 426277,
+      "cropXYXY": [
+        371,
+        447,
+        588,
+        554
+      ],
+      "cropPixelsChangedMoreThan10": 20,
+      "cropRGBMeanAbsoluteDifference": 0.16,
+      "wholeFramePixelsChangedMoreThan10": 20
+    },
+    "hard-right": {
+      "simFrames": 76,
+      "courseDistance": 403.559,
+      "steering": 1,
+      "shaderClock": 13.766666666666666,
+      "camera": {
+        "matrixWorld": [
+          0.9986988772072062,
+          0.02564268011023713,
+          -0.04407953745027094,
+          0,
+          -0.031792548999872425,
+          0.9889168438120168,
+          -0.1450265832631031,
+          0,
+          0.039872126769919115,
+          0.14623928672433792,
+          0.988445387730248,
+          0,
+          13.144129534577036,
+          -109.69026528220631,
+          -286.515863170405,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 864,
+        "height": 1536,
+        "position": [
+          13.144129534577036,
+          -109.69026528220631,
+          -286.515863170405
+        ],
+        "target": [
+          12.202202230467094,
+          -113.14497884424127,
+          -309.8666040199518
+        ]
+      },
+      "drawingTriangles": 412021,
+      "drawingTrianglesWithOutline": 412021,
+      "cropXYXY": [
+        312,
+        440,
+        593,
+        578
+      ],
+      "cropPixelsChangedMoreThan10": 7869,
+      "cropRGBMeanAbsoluteDifference": 7.0136,
+      "wholeFramePixelsChangedMoreThan10": 7869
+    },
+    "hard-left": {
+      "simFrames": 76,
+      "courseDistance": 403.559,
+      "steering": -1,
+      "shaderClock": 13.766666666666666,
+      "camera": {
+        "matrixWorld": [
+          0.9990004256961174,
+          0.025645158238201946,
+          -0.036612502207768356,
+          0,
+          -0.03113252873692776,
+          0.9869176970107076,
+          -0.15819047057748276,
+          0,
+          0.03207670671095502,
+          0.15917218722508858,
+          0.9867295980665426,
+          0,
+          10.071549455287474,
+          -110.11409965134058,
+          -286.4111003527661,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 864,
+        "height": 1536,
+        "position": [
+          10.071549455287474,
+          -110.11409965134058,
+          -286.4111003527661
+        ],
+        "target": [
+          9.30593337066127,
+          -113.91326731100065,
+          -309.96264690846306
+        ]
+      },
+      "drawingTriangles": 410485,
+      "drawingTrianglesWithOutline": 410485,
+      "cropXYXY": [
+        408,
+        409,
+        697,
+        549
+      ],
+      "cropPixelsChangedMoreThan10": 8929,
+      "cropRGBMeanAbsoluteDifference": 9.7912,
+      "wholeFramePixelsChangedMoreThan10": 8929
+    },
+    "platform-and-spouts": {
+      "simFrames": 47,
+      "courseDistance": 398.967,
+      "steering": 0,
+      "shaderClock": 12.783333333333333,
+      "camera": {
+        "matrixWorld": [
+          0.9979333276897638,
+          0.00036003680281677247,
+          -0.06425685846300748,
+          0,
+          -0.011552602261770184,
+          0.9846957363205839,
+          -0.17389894839545267,
+          0,
+          0.06321084453648519,
+          0.17428189018243861,
+          0.9826648522703052,
+          0,
+          12.348544017687932,
+          -109.89445123625501,
+          -281.3579498631492,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 864,
+        "height": 1536,
+        "position": [
+          12.348544017687932,
+          -109.89445123625501,
+          -281.3579498631492
+        ],
+        "target": [
+          9.727582113565282,
+          -117.12084091821856,
+          -322.1029701394436
+        ]
+      },
+      "drawingTriangles": 426277,
+      "drawingTrianglesWithOutline": 426277,
+      "cropXYXY": [
+        383,
+        412,
+        632,
+        533
+      ],
+      "cropPixelsChangedMoreThan10": 5746,
+      "cropRGBMeanAbsoluteDifference": 5.843,
+      "wholeFramePixelsChangedMoreThan10": 5746
+    }
+  },
+  "measuredAtApprovedCamera": {
+    "retained": {
+      "wholeFrameRGBMeanAbsoluteError": 12.9914,
+      "wholeFramePercentWithin20MeanRGB": 84.0857,
+      "towelInteriorRGBMeanAbsoluteError": 4.5832
+    },
+    "outline": {
+      "wholeFrameRGBMeanAbsoluteError": 12.9933,
+      "wholeFramePercentWithin20MeanRGB": 84.0842,
+      "towelInteriorRGBMeanAbsoluteError": 4.5832
+    }
+  },
+  "notes": "Same actual scene, frame, clocks and steering. RGB differences use the 0\u2013255 scale. The two-pixel inset of the original towel silhouette assesses visible cloth separately from the door and outline. Hard-turn measurements compare two game renders, not an unseen approved image.",
+  "existingDoorPlateAddedToOutline": {
+    "opening": {
+      "wholeFrameMeanRGBDifference": 0.0,
+      "wholeFramePixelsChangedAbove10": 0,
+      "clothAreaPixelsChangedAbove10": 0,
+      "clothAreaMeanRGBDifference": 0.0
+    },
+    "hard-right": {
+      "wholeFrameMeanRGBDifference": 0.00054,
+      "wholeFramePixelsChangedAbove10": 25,
+      "clothAreaPixelsChangedAbove10": 14,
+      "clothAreaMeanRGBDifference": 0.01191
+    },
+    "hard-left": {
+      "wholeFrameMeanRGBDifference": 0.0234,
+      "wholeFramePixelsChangedAbove10": 734,
+      "clothAreaPixelsChangedAbove10": 490,
+      "clothAreaMeanRGBDifference": 0.52026
+    },
+    "platform-and-spouts": {
+      "wholeFrameMeanRGBDifference": 0.0021,
+      "wholeFramePixelsChangedAbove10": 1,
+      "clothAreaPixelsChangedAbove10": 1,
+      "clothAreaMeanRGBDifference": 0.00188
+    }
+  }
+}
