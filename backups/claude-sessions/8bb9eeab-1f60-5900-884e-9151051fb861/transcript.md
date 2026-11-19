@@ -205,3 +205,51 @@ Restoring the session: the five-minute autosave still points at the previous lea
 > == backups/wip/claude__rainbow-s08-scenery-c17
 > {'branch': 'claude/rainbow-s08-scenery-c17', 'head': '3c0fa97090afb2c0fca41898774db7247e23e522', 'time': '2026-11-18T21:11:23+00:00' …[+11 chars]
 
+### 🤖 Claude — 2026-11-19T02:20:29.962Z
+
+> 🔧 **Bash** `{"command": "timeout 90 git ls-remote origin 'refs/heads/claude/rainbow-s0*-c17' 'refs/heads/claude/rainbow-s0*-c18' 2>&1; for d in backups/wip/*-c17; do echo \"== $d\"; [ -f $d/tracked.patch ] && git apply --stat $d/tracked.patch 2>/dev/null | tail -3; ls $d/untracked 2>/dev/null | head; done", "description": "Check remote c17 tips and WIP patch sizes"}`
+
+### 🧑 User — 2026-11-19T02:20:30.429Z
+
+> ↩︎ result: ad5fbac592444e90fd1b53d62e7fa0b62391c032	refs/heads/claude/rainbow-s04-match-c17
+> 0f275af1e3d4e9276e5a4016d0335a85fe055e58	refs/heads/claude/rainbow-s04-ringtex-c17
+> f033f7cc895752907621f82fb9d6bee4899ac0e0	refs/heads/claude/rainbow-s05-match-c17
+> c649fcbc35780e11cefce83eb54684f1d55752a5	refs/heads/claude/rainbow-s06-match-c17
+> 8651edf92525a9aab82b02fad9aa44621216708a	refs/heads/claude/rainbow-s07-match-c17
+> 3c0fa97090afb2c0fca41898774db7247e23e522	refs/heads/claude/rainbow-s08-scenery-c17
+> == backups/wip/claude__rainbow-s04-match-c17
+>  src/world/match04m4.ts |   36 +++++++++++++++++++++++++++++++++---
+>  1 file changed, 33 insertions(+), 3 deletions(-)
+> qa
+> == backups/wip/claude__rainbow-s04-ringtex-c17
+>  src/world/match04m4.ts        |   22 +++++++++++++++++++---
+>  tools/match04/ring_paint04.py |    5 +++++
+>  2 files changed, 24 insertions(+), 3 deletions(-)
+> assets
+> tools
+> == backups/wip/claude__rainbow-s05-match-c17
+> qa
+> == backups/wip/claude__rainbow-s06-match-c17
+> == backups/wip/claude__rainbow-s07-match-c17
+>  src/vfx/waterRibbon.ts |    4 +++-
+>  src/world/match07.ts   |   53 +++++++++++++++++++++++++++++++++++++++++++++++-
+>  3 files changed, 77 insertions(+), 6 deletions(-)
+> qa
+> == backups/wip/claud …[+26 chars]
+
+### 🤖 Claude — 2026-11-19T02:20:38.670Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'\nc=json.load(open(p))\nprint('before', c['branch'], len(c['protected_branches']))\nc['branch']='ccr-ae71d3a5-80naq2'\nadd=['ccr-bbe2b27e-oxfh1w']+['claude/rainbow-%s-c17'%s for s in ('s04-match','s04-ringtex','s05-match','s06-match','s07-match','s08-scenery')]\nfor b in add:\n    if b not in c['protected_branches']: c['protected_branches'].append(b)\nassert 'ccr-ae71d3a5-80naq2' not in c['protected_branches']\njson.dump(c,open(p,'w'),indent=2); open(p,'a').write('\\n')\nprint('after', c['branch'], len(c['protected_br …[+112 chars]`
+
+### 🧑 User — 2026-11-19T02:20:38.745Z
+
+> ↩︎ result: before ccr-bbe2b27e-oxfh1w 72
+> after ccr-ae71d3a5-80naq2 79
+>  backups/BOOTSTRAP_REPORT.md  | 22 +++++++++++-----------
+>  backups/autosave.config.json | 15 +++++++++++----
+>  2 files changed, 22 insertions(+), 15 deletions(-)
+
+### 🤖 Claude — 2026-11-19T02:20:40.495Z
+
+> 🔧 **Bash** `{"command": "timeout 240 python3 scripts/rainbow-autosave.py --reason manual:session-start-r18 2>&1 | tail -8; python3 -I scripts/autosave-status.py 2>&1 | tail -3", "description": "Run autosave and verify remote match", "timeout": 300000}`
+
