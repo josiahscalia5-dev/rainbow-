@@ -1,5 +1,5 @@
 diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
-index fe11b33..ce40183 100644
+index fe11b33..d4afa7a 100644
 --- a/src/vfx/foam.ts
 +++ b/src/vfx/foam.ts
 @@ -556,12 +556,37 @@ const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT
@@ -42,23 +42,48 @@ index fe11b33..ce40183 100644
    const ds = quality === 'high' ? 0.32 : 0.8;
    const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
    const rows = Math.ceil((s1 - s0) / ds) + 1;
-@@ -665,6 +690,7 @@ export function createFoam(
+@@ -665,6 +690,9 @@ export function createFoam(
    /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
    const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
    const h07 = hide07(course);
-+  const e07 = end07(course); // r17 m07foamb: puffs stay away to the 08 start (the bank grows back without them)
++  // r17 m07foamb: puffs stay away down to the ramp start (h07[1] = 5 u before the 08 start); r18: on the ramp they sit,
++  // smaller, on the growing bank (addPuff / bermPoint below), so it grows back as bubbly foam, not a smooth white slab
++  const e07 = end07(course);
    const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
      if (!list.length) return;
      const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
-@@ -676,7 +702,7 @@ export function createFoam(
+@@ -676,7 +704,7 @@ export function createFoam(
        tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
        const seed = rand();
        if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
 -      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < h07[1] - 1.5) tmpS.set(0, 0, 0); // r8 m07foam
-+      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < (e07 ?? h07[1] - 1.5)) tmpS.set(0, 0, 0); // r8 m07foam
++      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < (e07 !== null ? h07[1] : h07[1] - 1.5)) tmpS.set(0, 0, 0); // r8 m07foam
        tmpM.compose(pf.p, tmpQ, tmpS);
        mesh!.setMatrixAt(i, tmpM);
        // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)
+@@ -707,10 +735,12 @@ export function createFoam(
+   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
+   /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
+   const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
++  // r18 '&m07foamb=1': puffs on the end-of-07 ramp sit on the growing bank, smaller and lower while it grows (1 elsewhere)
++  const r07p = ramp07(course);
+   const bermPoint = (ss: number, e: number, side: number, lift: number) => {
+     const f = course.sample(ss);
+     const hw = course.widthAt(ss) / 2;
+-    const k05 = bermK(ss);
++    const k05 = bermK(ss) * r07p(ss);
+     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
+     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+     return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+@@ -725,6 +755,8 @@ export function createFoam(
+       r *= 0.5 + 0.95 * hz * hz;
+       lift -= 0.4 * r;
+     }
++    const g07 = r07p(ss);
++    if (g07 < 1) { r *= 0.35 + 0.65 * g07; lift *= g07; } // r18 m07foamb ramp only (g07 = 1 everywhere else)
+     list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });
+   };
+   const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
 diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
 index c569398..36b63a3 100644
 --- a/src/vfx/waterRibbon.ts

@@ -657,3 +657,125 @@ Let me view the BEFORE (K5) frames to see the current ring look.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:32:50.696Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -I -c \"\nimport numpy as np, cv2\nt=cv2.imread('assets/textures/match04/tile_ring_paint_var_soft.png').astype(np.float32)\nr0=t[0:160]\nL=cv2.GaussianBlur([REDACTED-EMAIL]([0.11,0.59,0.3],np.float32),(0,0),sigmaX=3,sigmaY=0.8)\n# bright lip row (max) in rows 90..135, dark row under lip in 115..155\nrb=90+np.argmax(L[90:135],0); rd=115+np.argmin(L[115:155],0)\nprint('bright row pct', np.percentile(rb,[5,25,50,75,95]))\nprint('dark row pct', np.percentile(rd,[5,25,50,75,95]))\nfor x in range(0,2048,32): print(x, rb[x], rd[x], int(L[rb[x],x]), end='  …[+89 chars]`
+
+### 🧑 User — 2026-11-19T02:32:51.048Z
+
+> ↩︎ result: bright row pct [114. 121. 125. 126. 128.]
+> dark row pct [134. 135. 135. 139. 154.]
+> 0 124 136 189 | 32 122 154 204 | 64 123 145 164 | 96 128 134 148 | 128 121 135 156 | 160 127 135 142 | 192 126 135 141 | 224 119 154 149 | 256 115 154 214 | 288 123 154 221 | 320 128 135 179 | 352 128 135 145 | 384 121 143 163 | 416 127 135 142 | 448 126 135 141 | 480 123 154 145 | 512 114 154 210 | 544 122 154 222 | 576 128 135 188 | 608 128 135 142 | 640 120 144 167 | 672 127 135 142 | 704 126 135 140 | 736 127 135 142 | 768 128 135 158 | 800 128 135 161 | 832 127 135 162 | 864 126 149 205 | 896 126 135 162 | 928 124 135 121 | 960 125 136 127 | 992 121 134 126 | 1024 120 135 122 | 1056 120 135 107 | 1088 122 135 118 | 1120 125 136 130 | 1152 125 143 146 | 1184 124 135 150 | 1216 117 144 199 | 1248 108 154 192 | 1280 117 154 155 | 1312 124 134 120 | 1344 126 135 137 | 1376 127 135 128 | 1408 126 135 132 | 1440 125 135 147 | 1472 125 136 135 | 1504 126 135 153 | 1536 126 135 178 | 1568 116 154 193 | 1600 114 154 206 | 1632 125 133 141 | 1664 127 135 130 | 1696 125 135 145 | 1728 125 136 135 | 1760 126 135 152 | 1792 126 135 176 | 1824 117 154 189 | 1856 114 154 212 | 1888 124 133 155 | 1920 127 135 12 …[+60 chars]
+
+### 🤖 Claude — 2026-11-19T02:33:01.165Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/tools/match04/ring_paint04_var.py", "offset": 20, "limit": 25}`
+
+### 🧑 User — 2026-11-19T02:33:01.187Z
+
+> ↩︎ result: 20	LW = np.array([0.11, 0.59, 0.3], np.float32)                      # BGR luma
+> 21	
+> 22	
+> 23	def flatten_lip(full, sft, rt):
+> 24	    """re-time every column so the dark line just under the bright lip (the painted lip edge) is ONE straight row rt:
+> 25	    ring 0's lip line still steps up and down by a few rows after the main straightening (kinks on the 3D lip)"""
+> 26	    ns, nc = full.shape[:2]
+> 27	    L = cv2.GaussianBlur(full @ LW, (0, 0), sigmaX=3.0, sigmaY=0.8)
+> 28	    a0, a1 = int(ns * 0.72), int(ns * 0.95)
+> 29	    rd = a0 + np.argmin(L[a0:a1], 0).astype(np.float32)
+> 30	    # robust: a wide median along the angle drops the narrow outliers where a bright light column crosses the lip (no dark
+> 31	    # minimum there); only the broad steps of the lip line (60+ columns) are corrected
+> 32	    rd = gaussian_filter1d(median_filter(rd, size=61, mode="wrap"), 8, mode="wrap")
+> 33	    rt = float(np.median(rd)) if rt is None else rt
+> 34	    print(f"  dark lip edge rows: median {np.median(rd):.1f}, spread {np.percentile(rd, 95) - np.percentile(rd, 5):.1f} -> row {rt:.1f}")
+> 35	    yt = np.arange(ns, dtype=np.float32)[:, None]
+> 36	    ys = np.where(yt <= rt, yt / rt * rd[None, :], rd[None, :] + (yt - rt) / …[+404 chars]
+
+### 🤖 Claude — 2026-11-19T02:33:19.490Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/tools/match04/ring_paint04_var.py", "old_string": "    return [cv2.remap(t, xs, ys.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) for t in (full, sft)]\n\n\ntiles, soft = {}, {}", "new_string": "    return [cv2.remap(t, xs, ys.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) for t in (full, sft)]\n\n\ndef dehump(full, sft):\n    \"\"\"r18: ring 0's bright lip line still rises into ~6 hump-shaped bulges (~80 columns wide, up to 18 rows above the line:\n    painted lip glints smeared upward by t …[+1356 chars]`
+
+### 🧑 User — 2026-11-19T02:33:19.517Z
+
+> ↩︎ result: The file /home/user/wt/s04b/tools/match04/ring_paint04_var.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:33:20.842Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/tools/match04/ring_paint04_var.py", "old_string": "            tiles[K], soft[K] = flatten_lip(tiles[K], soft[K], None)", "new_string": "            tiles[K], soft[K] = flatten_lip(tiles[K], soft[K], None)\n            tiles[K], soft[K] = dehump(tiles[K], soft[K])"}`
+
+### 🧑 User — 2026-11-19T02:33:20.892Z
+
+> ↩︎ result: The file /home/user/wt/s04b/tools/match04/ring_paint04_var.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:33:21.896Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/tools/match04/ring_paint04_var.py", "old_string": "from scipy.ndimage import gaussian_filter1d, median_filter", "new_string": "from scipy.ndimage import gaussian_filter1d, maximum_filter1d, median_filter"}`
+
+### 🧑 User — 2026-11-19T02:33:21.924Z
+
+> ↩︎ result: The file /home/user/wt/s04b/tools/match04/ring_paint04_var.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:33:28.703Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && cp assets/textures/match04/tile_ring_paint_var.png $S/var_old.png && cp assets/textures/match04/tile_ring_paint_var_soft.png $S/var_soft_old.png && time python3 -I tools/match04/ring_paint04_var.py assets/textures/match04 2>&1 | tail -30 && python3 -I -c \"\nimport numpy as np, cv2\nfor n,o in (('tile_ring_paint_var.png','var_old.png'),('tile_ring_paint_var_soft.png','var_soft_old.png')):\n    a=cv2.imread('assets/textures/match04/'+n).astype(int); b=cv2.imread('$ …[+276 chars]`
+
+### 🧑 User — 2026-11-19T02:33:35.220Z
+
+> ↩︎ result: --- painted ring 0
+>   ring 0: lip line s 0.751 (wave 0.171)
+> painted good arc (rad, + = right): [-1.68  1.88]
+> bubble texels masked in the good arc: 5.22 %
+> painted period profile: lip line at s=0.753, darkest at s=0.003
+> 
+> painted ring 0: lip line s 0.753 -> 0.79
+>   dark lip edge rows: median 135.3, spread 21.9 -> row 135.3
+>   lip humps: line row 125.0, 941 columns refilled (rows 93..159)
+> --- painted ring 1
+>   ring 1: lip line s 0.793 (wave 0.163)
+> painted good arc (rad, + = right): [-1.679  1.881]
+> bubble texels masked in the good arc: 0.21 %
+> painted period profile: lip line at s=0.791, darkest at s=0.003
+> 
+> painted ring 1: lip line s 0.791 -> 0.79
+> --- painted ring 2
+>   ring 2: lip line s 0.713 (wave 0.155)
+> painted good arc (rad, + = right): [-1.68  1.88]
+> bubble texels masked in the good arc: 4.98 %
+> painted period profile: lip line at s=0.709, darkest at s=0.003
+> 
+> painted ring 2: lip line s 0.709 -> 0.79
+> wrote tile_ring_paint_var.png (480, 2048, 3)
+> wrote tile_ring_paint_var_soft.png (480, 2048, 3)
+> 
+> real	0m5.959s
+> user	0m8.431s
+> sys	0m1.019s
+> tile_ring_paint_var.png ring0 changed px 59456 ring1 0 ring2 0
+> tile_ring_paint_var_soft.png ring0 changed px 57064 ring1 0 ring2 0
+>  M src/world/match04m4.ts
+>   …[+211 chars]
+
+### 🤖 Claude — 2026-11-19T02:33:39.122Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && python3 -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/match04/tile_ring_paint_var_soft.png')\nim.crop((0,40,2048,200)).resize((2048//2,160*3//2*1)).save('$S/atl0_new.png')\n\"", "description": "Crop new ring-0 atlas rows for inspection"}`
+
+### 🧑 User — 2026-11-19T02:33:39.307Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:33:40.987Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/atl0_new.png"}`
+
+### 🧑 User — 2026-11-19T02:33:41.004Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:33:45.226Z
+
+The lip is now a straight line. Re-rendering the NEW shots with the fixed atlas.
+
+### 🤖 Claude — 2026-11-19T02:33:49.587Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K5=$(cat $S/K5.txt) && rm -rf qa/match/04/r18/ringpaint/step6_var && node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r18/ringpaint/step6_var \"$K5&m04rpvar=1\" 2>&1 | grep -v \"allow list\" | tail -3 && python3 -c \"\nfrom PIL import Image\nS='$S/'\nfor sh in ['f03_forward3u','f10_forward10u','f20_forward20u','t66_through_screen','s_left_hard','s_right_hard','t95_through_screen','f06_forward6u']:\n    b=Image.open('qa/match/04/r17/ringpaint/step5_dots/3_NEW_'+s …[+361 chars]`
+

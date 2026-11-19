@@ -9,7 +9,7 @@ same row (s 0.79, the row the shader puts on the modeled lip). The game then giv
 writes tile_ring_paint_var.png and tile_ring_paint_var_soft.png (3 x 160 rows: painted ring 0, 1, 2; 2048 columns psi)."""
 import json, os, shutil, subprocess, sys, tempfile
 import numpy as np, cv2
-from scipy.ndimage import gaussian_filter1d, median_filter
+from scipy.ndimage import gaussian_filter1d, maximum_filter1d, median_filter
 
 d = sys.argv[1]
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -38,6 +38,33 @@ def flatten_lip(full, sft, rt):
     return [cv2.remap(t, xs, ys.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) for t in (full, sft)]
 
 
+def dehump(full, sft):
+    """r18: ring 0's bright lip line still rises into ~6 hump-shaped bulges (~80 columns wide, up to 18 rows above the line:
+    painted lip glints smeared upward by the straightening, with a faint echo below). On the 3D lip they read as kinks /
+    notches. Like the bubble fill: those columns are refilled from the neighbouring angles of the same rows, from a little
+    above the lip line down to the groove (soft edges); the bands above, and rings 1 / 2, keep their texels."""
+    ns, nc = full.shape[:2]
+    L = cv2.GaussianBlur(full @ LW, (0, 0), sigmaX=3.0, sigmaY=0.8)
+    a0, a1 = int(ns * 0.56), int(ns * 0.85)
+    rb = gaussian_filter1d(a0 + np.argmax(L[a0:a1], 0).astype(np.float32), 3, mode="wrap")
+    med = float(np.median(rb))
+    m = maximum_filter1d((rb < med - 3.5).astype(np.uint8), size=41, mode="wrap") > 0
+    mw = np.clip(gaussian_filter1d(m.astype(np.float32), 4, mode="wrap") * 1.6, 0, 1)
+    r0 = int(med) - 32
+    vw = np.clip((np.arange(ns, dtype=np.float32) - r0) / 8.0, 0, 1)
+    w = (vw[:, None] * mw[None, :])[..., None]
+    x = np.arange(nc, dtype=np.float32); xv = x[~m]
+    print(f"  lip humps: line row {med:.1f}, {int(m.sum())} columns refilled (rows {r0}..{ns - 1})")
+    out = []
+    for t in (full, sft):
+        f = t.copy()
+        for r in range(max(r0, 0), ns):
+            for c in range(3):
+                f[r, :, c] = np.interp(x, xv, t[r, ~m, c], period=nc)
+        out.append(t * (1 - w) + f * w)
+    return out
+
+
 tiles, soft = {}, {}
 with tempfile.TemporaryDirectory() as tmp:
     for K in (0, 1, 2):
@@ -61,6 +88,7 @@ with tempfile.TemporaryDirectory() as tmp:
         ns = tiles[K].shape[0]
         if K == 0:                                                      # only ring 0's lip line steps (rings 1, 2 are clean)
             tiles[K], soft[K] = flatten_lip(tiles[K], soft[K], None)
+            tiles[K], soft[K] = dehump(tiles[K], soft[K])
 for name, acc in (("tile_ring_paint_var.png", tiles), ("tile_ring_paint_var_soft.png", soft)):
     at = np.concatenate([acc[0], acc[1], acc[2]], 0)
     cv2.imwrite(os.path.join(d, name), np.clip(at, 0, 255).astype(np.uint8))

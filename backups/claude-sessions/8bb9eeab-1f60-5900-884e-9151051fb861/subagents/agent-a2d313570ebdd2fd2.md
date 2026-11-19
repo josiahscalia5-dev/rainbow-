@@ -755,3 +755,138 @@ Let me commit the restored kept-set file and start the r18 log first.
 >   const wg = a.farWall.geometry, rg = a.farRiver.geometry;
 >   const keep = (g: THREE.BufferGeometry, names: string[]) => nam …[+13212 chars]
 
+### 🤖 Claude — 2026-11-19T02:33:15.374Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"fgExtra\\|virtualDepth\\|vPerfUv\\|vFgDepth\\|vFg\" src/world/materials.ts | head -40", "description": "Find virtual-depth varyings in materials"}`
+
+### 🧑 User — 2026-11-19T02:33:15.407Z
+
+> ↩︎ result: 56:   * forced-perspective section (05 far tunnel): the geometry carries a per-vertex `fgExtra` attribute =
+> 60:  virtualDepth?: boolean;
+> 75: *  forced-perspective (virtual) depth: real view distance + the per-vertex/per-instance `fgExtra`. */
+> 78:varying float vFgExtra;
+> 79:float fgDist(){ return length(vViewPosition) + vFgExtra; }
+> 85:/** vertex side of FG_VIRTUAL: `fgExtra` is a plain attribute on tube geometry, an instanced one on rings/lids */
+> 87:attribute float fgExtra; varying float vFgExtra;
+> 90:vFgExtra = fgExtra;
+> 109:export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string, virtualDepth = false): T {
+> 112:  if (virtualDepth) mat.defines = { ...(mat.defines ?? {}), FG_VIRTUAL: '' };
+> 116:    if (virtualDepth) {
+> 130:  mat.customProgramCacheKey = () => prevKey() + '|fg2-' + key + (virtualDepth ? '-v' : '');
+> 476:  if (o.farGlow && o.virtualDepth) defines.FG_VIRTUAL = '';
+> 477:  if (river && o.farGlow && o.virtualDepth) defines.PERF_RIVER = '';
+> 483:      .replace('#include <common>', '#include <common>\nvarying vec2 vPerfUv;\n' + FG_VIRTUAL_VERT_PARS)
+> 484:      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvPerfUv = uv;\n' + FG_VIRTUA …[+1037 chars]
+
+### 🤖 Claude — 2026-11-19T02:33:27.307Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"class ForcedTunnel\" -A80 src/world/tube.ts | grep -n \"zOfU\\|uOfZ\\|kOf\\|zOf\\b\\|constructor\\|L:\\|this.L\\|knots\" | head -30", "description": "Inspect ForcedTunnel mapping functions"}`
+
+### 🧑 User — 2026-11-19T02:33:27.351Z
+
+> ↩︎ result: 11:567-   * `knots` ([u, Z] pairs, increasing, starting at [0, 0]): the virtual tunnel coordinate u (continues
+> 14:570-   * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
+> 16:572-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3) {
+> 30:586-    const k = this.knots, b = (1 - a) as 0 | 1;
+> 40:596-  /** virtual depth Z of tunnel coordinate u (see `knots`) */
+> 41:597-  zOfU(u: number) { return this.interp(u, 0); }
+> 43:599-  uOfZ(Z: number) { return this.interp(Z, 1); }
+> 50:606-  zOf(Z: number) { return Z / (1 + Z / this.L); }
+> 51:607-  kOf(Z: number) { return (this.D0 + this.zOf(Z)) / (this.D0 + Z); }
+> 53:609-  cOf(Z: number) { const a = 1 + Z / this.L; return 1 / (a * a); }
+> 56:612-    const k = this.kOf(Z);
+> 57:613-    return out.copy(this.c0).addScaledVector(this.T, this.zOf(Z)).add(this.q).addScaledVector(o.clone().sub(this.q), k);
+> 66:622-    const k = THREE.MathUtils.lerp(this.kOf(Z), openScale, open);
+
+### 🤖 Claude — 2026-11-19T02:33:28.756Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 555,600p src/world/tube.ts", "description": "Read ForcedTunnel constructor and interp"}`
+
+### 🧑 User — 2026-11-19T02:33:28.782Z
+
+> ↩︎ result: * outside the real tube wall at the same depth: the section opens like an iris as the rider arrives.
+>  */
+> export class ForcedTunnel {
+>   readonly c0: THREE.Vector3;
+>   readonly T: THREE.Vector3;
+>   readonly U: THREE.Vector3;
+>   readonly Rt: THREE.Vector3;
+>   readonly R: number;
+>   readonly D0: number;
+>   /** eye offset from the section's centre line, in the cross-section plane */
+>   readonly q: THREE.Vector3;
+>   /**
+>    * `knots` ([u, Z] pairs, increasing, starting at [0, 0]): the virtual tunnel coordinate u (continues
+>    * the real s, so slot rows / ring bays repeat every bay in u) → virtual depth Z, piecewise linear. Ref 05
+>    * draws the far bays longer than the near ones (ring radii 288,192,122,85,66,54,45 px): one ring per
+>    * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
+>    */
+>   constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3) {
+>     const f = path.frame(sF);
+>     this.c0 = tubeCenterAt(path, sF);
+>     // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
+>     // be …[+1173 chars]
+
+### 🤖 Claude — 2026-11-19T02:34:03.500Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && ls -la assets/textures/env05/ && python3 -c \"\nimport json;m=json.load(open('assets/textures/env05/env05.json'));print(json.dumps(m['wall'])[:800]); print(m.keys())\"", "description": "Inspect wall atlas metadata"}`
+
+### 🧑 User — 2026-11-19T02:34:03.562Z
+
+> ↩︎ result: total 18760
+> drwxr-xr-x  2 root root     4096 Nov 19 02:25 .
+> drwxr-xr-x 11 root root     4096 Nov 19 02:25 ..
+> -rw-r--r--  1 root root      230 Nov 19 02:25 bake_report.json
+> -rw-r--r--  1 root root      744 Nov 19 02:25 env05.json
+> -rw-r--r--  1 root root 14693578 Nov 19 02:25 feedback.npz
+> -rw-r--r--  1 root root      493 Nov 19 02:25 frame05.json
+> -rw-r--r--  1 root root    26900 Nov 19 02:25 frame05.png
+> -rw-r--r--  1 root root  1176700 Nov 19 02:25 ring05e.png
+> -rw-r--r--  1 root root  3281637 Nov 19 02:25 wall05e.png
+> {"w": 2048, "h": 992, "rows": {"AB": {"y0": 8, "h": 256}, "BC": {"y0": 272, "h": 128}, "CD": {"y0": 408, "h": 64}, "DE": {"y0": 480, "h": 32}, "EF": {"y0": 520, "h": 16}, "FG": {"y0": 544, "h": 16}, "GX": {"y0": 568, "h": 16}, "N1": {"y0": 592, "h": 256}, "N2": {"y0": 856, "h": 128}}, "gutter": 8}
+> dict_keys(['wall', 'ring', 'note'])
+
+### 🤖 Claude — 2026-11-19T02:34:06.421Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nim=Image.open('assets/textures/env05/wall05e.png').convert('RGB'); print(im.size, im.mode)\nim.resize((1024,496)).save(S+'atlas_half.png')\nim.crop((0,592,2048,848)).resize((1024,128)).save(S+'N1_half.png')\n\"", "description": "Preview the wall atlas and N1 row"}`
+
+### 🧑 User — 2026-11-19T02:34:06.733Z
+
+> ↩︎ result: (2048, 992) RGB
+
+### 🤖 Claude — 2026-11-19T02:34:08.128Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/atlas_half.png"}`
+
+### 🧑 User — 2026-11-19T02:34:08.161Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:34:28.637Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nim=Image.open('assets/textures/env05/wall05e.png').convert('RGB')\nim.crop((0,592,1024,848)).save(S+'N1_a.png')\nim.crop((1024,592,2048,848)).save(S+'N1_b.png')\n\"", "description": "Crop N1 halves at full resolution"}`
+
+### 🧑 User — 2026-11-19T02:34:29.029Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:34:29.593Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/N1_a.png"}`
+
+### 🧑 User — 2026-11-19T02:34:29.619Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:34:30.196Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/N1_b.png"}`
+
+### 🧑 User — 2026-11-19T02:34:30.240Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:35:24.944Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r18/KEPT_START.txt) && GRID='-0.55,0.37' EXTRA_JS='(async()=>{const m=await import(\"/src/world/far05.ts\");const d=m.far05Debug;const T=d.ft.T,c0=d.ft.c0;const {scene}=window.__rainbow.qa3d();const out={sF:d.sF05,sCam:d.sCam05,sGlow:d.sGlow05,s05:d.s05,D0:d.ft.D0,L:d.ft.L,knots:d.knots,rings:d.rings05,q:d.ft.q.toArray()};const THREE_=null;for(const n of [\"lid05_L1\",\"lid05_L2\",\"lid05_L3\",\"lid05_R1\",\"lid05_R2\",\"lid05_R3\"]){const o=scene.getObjectByName(n);if(!o){out[n]=null;continue;}o.updateMatrixWorld(true);const g=o.geometr …[+510 chars]`
+

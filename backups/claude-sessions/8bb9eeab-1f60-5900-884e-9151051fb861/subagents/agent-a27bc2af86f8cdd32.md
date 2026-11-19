@@ -829,3 +829,235 @@ Restoring the stray formatting change (`build =(`) so the shared file only diffe
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:32:50.890Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:32:50.996Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:51.426Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW/t72_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:32:51.472Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:32:51.883Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/BEFORE/t72_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:32:51.956Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:33:03.767Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"bermSurface\\|hk0\\|bermScale05\\|squashBerm\" src/vfx/foam.ts | head -30", "description": "Find where berm surface height is used for puffs"}`
+
+### 🧑 User — 2026-11-19T02:33:03.805Z
+
+> ↩︎ result: 65:export function bermSurface(s: number, e: number, side: number, hw: number): number {
+> 120:uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> 548:function bermScale05(course: Course): (s: number) => number {
+> 554:const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
+> 587:  const hk0 = bermScale05(course);
+> 589:  const hk = (s: number) => hk0(s) * r07(s);
+> 611:        const h = squashBerm(bermSurface(s, e, side, hw), k05);
+> 732:  const bermK = bermScale05(course);
+> 740:    const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
+
+### 🤖 Claude — 2026-11-19T02:33:05.073Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 722,800p src/vfx/foam.ts", "description": "Read puff placement code"}`
+
+### 🧑 User — 2026-11-19T02:33:05.103Z
+
+> ↩︎ result: const skip: [number, number] = [st03.s0 + 4, st04.s0 - 6];
+>   const berm = createBerm(course, s0, s1, skip, quality);
+>   group.add(berm.mesh);
+> 
+>   // ---- cloud banks of puffs hugging both stream edges (ref 05: 10–40 px white-lavender clumps) ----
+>   const inSkip = (s: number) => s > skip[0] && s < skip[1];
+>   // wave 5: in 05 the stream-edge rim toward the VP is a LOW rim of piled bubbles (ref ≈40–60 px), not
+>   // tall heaps: crest puffs × 0.85, heaps × 0.6 and never stacked. Only sizes change, so the shared
+>   // rand() sequence (and every other stage's foam) stays identical.
+>   const st05b = course.stage('05');
+>   const bermK = bermScale05(course);
+>   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
+>   /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
+>   const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
+>   const bermPoint = (ss: number, e: number, side: number, lift: number) => {
+>     const f = course.sample(ss);
+>     const hw = course.widthAt(ss) / 2;
+>     const k05 = bermK(ss);
+>     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
+>     const eS = e > 0 ? e * (0.1 + 0.9 * k05)  …[+3090 chars]
+
+### 🤖 Claude — 2026-11-19T02:33:16.169Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/foam.ts", "offset": 728, "limit": 22}`
+
+### 🧑 User — 2026-11-19T02:33:16.190Z
+
+> ↩︎ result: 728	  // wave 5: in 05 the stream-edge rim toward the VP is a LOW rim of piled bubbles (ref ≈40–60 px), not
+> 729	  // tall heaps: crest puffs × 0.85, heaps × 0.6 and never stacked. Only sizes change, so the shared
+> 730	  // rand() sequence (and every other stage's foam) stays identical.
+> 731	  const st05b = course.stage('05');
+> 732	  const bermK = bermScale05(course);
+> 733	  const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
+> 734	  /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
+> 735	  const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
+> 736	  const bermPoint = (ss: number, e: number, side: number, lift: number) => {
+> 737	    const f = course.sample(ss);
+> 738	    const hw = course.widthAt(ss) / 2;
+> 739	    const k05 = bermK(ss);
+> 740	    const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
+> 741	    const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+> 742	    return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+> 743	  };
+> 744	  const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
+> 745	    const ss = Mat …[+230 chars]
+
+### 🤖 Claude — 2026-11-19T02:33:22.474Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  const bermPoint = (ss: number, e: number, side: number, lift: number) => {\n    const f = course.sample(ss);\n    const hw = course.widthAt(ss) / 2;\n    const k05 = bermK(ss);", "new_string": "  // r18 '&m07foamb=1': puffs on the end-of-07 ramp sit on the growing bank, smaller and lower while it grows (1 elsewhere)\n  const r07p = ramp07(course);\n  const bermPoint = (ss: number, e: number, side: number, lift: number) => {\n    const f = course.sample(ss);\n    const hw = course.widthAt(ss) / 2;\n    con …[+32 chars]`
+
+### 🧑 User — 2026-11-19T02:33:22.504Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:33:23.078Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/vfx/foam.ts", "offset": 746, "limit": 14}`
+
+### 🧑 User — 2026-11-19T02:33:23.104Z
+
+> ↩︎ result: 746	  const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
+> 747	    const ss = Math.min(s1, Math.max(s0, s));
+> 748	    if (inSkip(ss)) return;
+> 749	    const imp = imp05S(ss);
+> 750	    if (imp) {
+> 751	      // 05 fine foam: wide size spread (most lumps smaller, a few larger), sunk into the bank so the rim stays low
+> 752	      const hz = hash1(ss * 13.1 + e * 7.7 + side * 3.3);
+> 753	      r *= 0.5 + 0.95 * hz * hz;
+> 754	      lift -= 0.4 * r;
+> 755	    }
+> 756	    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });
+> 757	  };
+> 758	  const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+> 759	  /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */
+
+### 🤖 Claude — 2026-11-19T02:33:26.334Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "      r *= 0.5 + 0.95 * hz * hz;\n      lift -= 0.4 * r;\n    }\n    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });", "new_string": "      r *= 0.5 + 0.95 * hz * hz;\n      lift -= 0.4 * r;\n    }\n    const g07 = r07p(ss);\n    if (g07 < 1) { r *= 0.35 + 0.65 * g07; lift *= g07; } // r18 m07foamb ramp only (g07 = 1 everywhere else)\n    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });"}`
+
+### 🧑 User — 2026-11-19T02:33:26.372Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:33:28.283Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "  const e07 = end07(course); // r17 m07foamb: puffs stay away to the 08 start (the bank grows back without them)", "new_string": "  // r17 m07foamb: puffs stay away down to the ramp start (h07[1] = 5 u before the 08 start); r18: on the ramp they sit,\n  // smaller, on the growing bank (addPuff / bermPoint below), so it grows back as bubbly foam, not a smooth white slab\n  const e07 = end07(course);"}`
+
+### 🧑 User — 2026-11-19T02:33:28.340Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:33:29.535Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/vfx/foam.ts", "old_string": "pf.s < (e07 ?? h07[1] - 1.5)) tmpS.set(0, 0, 0); // r8 m07foam", "new_string": "pf.s < (e07 !== null ? h07[1] : h07[1] - 1.5)) tmpS.set(0, 0, 0); // r8 m07foam"}`
+
+### 🧑 User — 2026-11-19T02:33:29.586Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:33:33.846Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc_exit=$?; mkdir -p qa/match/07/r18/step3_foamb/NEW2 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1\" && node tools/match07/audit_r18.mjs 07 qa/match/07/r18/step3_foamb/NEW2 \"$K\" t72_through_screen,t80_through_screen,t88_through_screen,t95_through_screen 2>&1 | grep \"^07\"", "description": "Type-check and render NEW2 with puffs on the ramp", "timeout": 900000}`
+
+### 🧑 User — 2026-11-19T02:34:18.716Z
+
+> ↩︎ result: tsc_exit=0
+> 07 t72_through_screen s 358.069 lat 0 stage 07 frames 422
+> 07 t80_through_screen s 367.464 lat 0 stage 07 frames 469
+> 07 t88_through_screen s 376.863 lat 0 stage 07 frames 516
+> 07 t95_through_screen s 385.061 lat 0 stage 07 frames 557
+
+### 🤖 Claude — 2026-11-19T02:34:19.937Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW2/t88_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:34:19.990Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:34:20.388Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW2/t80_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:34:20.454Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:34:23.864Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/NEW2/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:34:23.913Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:34:24.374Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step3_foamb/BEFORE/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:34:24.435Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:34:33.938Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,40p scripts/capture.mjs; grep -n \"argv\\|--q\\|out\" scripts/capture.mjs | head -30", "description": "Read capture script usage"}`
+
+### 🧑 User — 2026-11-19T02:34:34.006Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+2512 chars]
+
+### 🤖 Claude — 2026-11-19T02:34:42.212Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/cap3 && mkdir -p $S && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1\" && git status --short qa/capture_log.json; node scripts/capture.mjs 07 --out=$S/before \"--q=$K\" 2>&1 | grep \"^07\"; node scripts/capture.mjs 07 --out=$S/new \"--q=$K&m07foamb=1\" 2>&1 | grep \"^07\"; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/before/07.png $S/new/07.png $S/diff07.png 0.1 180 1536; git status --short qa/", "description": "Deterministic start-view capture BEFOR …[+44 chars]`
+
+### 🧑 User — 2026-11-19T02:35:32.317Z
+
+> ↩︎ result: 07 → /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/cap3/before/07.png {"stage":"07","s":273.056,"y":-49.642,"calls":153,"tris":287709,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/cap3/new/07.png {"stage":"07","s":273.056,"y":-49.642,"calls":153,"tris":287709,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/cap3/before/07.png","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/cap3/new/07.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+>  M qa/capture_log.json
+> ?? qa/match/07/r17/step3_foamb/
+> ?? qa/match/07/r17/step4_nearf/
+> ?? qa/match/07/r18/
+
+### 🤖 Claude — 2026-11-19T02:35:39.385Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git checkout qa/capture_log.json && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/cap3 && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1\" && node scripts/capture.mjs 05 06 08 --out=$S/before \"--q=$K\" 2>&1 | grep -E \"^0[568]\"; node scripts/capture.mjs 05 06 08 --out=$S/new \"--q=$K&m07foamb=1\" 2>&1 | grep -E \"^0[568]\"; for n in 05 06 08; do node /home/user/tools-pixelmatch/pixeldiff.mjs $S/before/$n.png $S/new/$n.png $S/diff$n.png 0.1 0 1536 | python3 -c \"import json,sys; d=json.load(sys.stdin …[+172 chars]`
+
