@@ -1958,3 +1958,57 @@ Blender is slow here: it renders on the processor with no graphics card, and the
 
 > 🔧 **Bash** `{"command": "timeout 240 python3 scripts/rainbow-autosave.py --reason manual:before-thrixel-import 2>&1 | grep -E '\"result\"|pushed_verified'; H=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/ccr-d00ac5ec-gabdsh | cut -f1); echo \"local $H remote $R $([ \"$H\" = \"$R\" ] && echo MATCH)\"; mkdir -p /home/user/wt/s04t/assets/models/thrixel && cp qa/match/04/r19_thrixel/foam_cluster_thrixel.glb /home/user/wt/s04t/assets/models/thrixel/foam_cluster_s04.glb && grep -n \"^import\" /home/user/wt/s04t/src/world/match04m4.ts; grep -n \"const MwInv\" /home/user/wt/s04t/src/world/ …[+103 chars]`
 
+### 🧑 User — 2026-11-19T19:53:10.977Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+> local 575ca8f9eb6d9ef4db21763e9b0336cda88b5515 remote 575ca8f9eb6d9ef4db21763e9b0336cda88b5515 MATCH
+> 27:import * as THREE from 'three';
+> 28:import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 997:  const MwInv = Mw.clone().invert();
+
+### 🤖 Claude — 2026-11-19T19:53:15.048Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04t/src/world/match04m4.ts", "old_string": "import * as THREE from 'three';\nimport { PROJ05_INVERSE } from '../vfx/waterRibbon';", "new_string": "import * as THREE from 'three';\nimport { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';\nimport { PROJ05_INVERSE } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-19T19:53:15.215Z
+
+> ↩︎ result: The file /home/user/wt/s04t/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T19:53:26.235Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04t/src/world/match04m4.ts", "old_string": "  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {\n    time.value = performance.now() / 1000;", "new_string": "  // r19 `&m04tfoam=1` — THRIXEL TEST (qa/match/04/r19_thrixel/NOTES.md): ONE Thrixel-sculpted foam-cluster model\n  // (assets/models/thrixel/foam_cluster_s04.glb, made from the painted right-bank heap beside Benny, approved frame\n  // x 600–864 y 980–1200) laid on the right bank where that heap is painted. Anchor: the approved camera's ray through pixel\n  // (m04tfx, m04tf …[+2772 chars]`
+
+### 🧑 User — 2026-11-19T19:53:26.445Z
+
+> ↩︎ result: The file /home/user/wt/s04t/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T19:53:32.581Z
+
+Checking the code compiles, then rendering the start view with the model forced visible, to see how it lines up with your painted heap:
+
+### 🤖 Claude — 2026-11-19T19:53:33.525Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo \"tsc exit=$?\"", "description": "Type-check the test version", "timeout": 320000}`
+
+### 🧑 User — 2026-11-19T19:53:37.781Z
+
+> ↩︎ result: tsc exit=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T19:53:42.282Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && Q=\"$(cat qa/match/04/r18/PREVIEW_QUERY_v2.txt | tr -d '\\n')\" && echo \"${Q:0:60}...\" && O=qa/match/04/r19_thrixel/align1 && M04_SHOTS='[[\"f00_show\",0,null]]' timeout 600 node tools/match04/motion04.mjs $O \"$Q&m04tfoam=1&m04tfshow=1\" 2>&1 | grep -v \"^\\s*$\" | tail -5; ls $O", "description": "Render start view with Thrixel foam forced visible", "timeout": 620000}`
+
+### 🧑 User — 2026-11-19T19:54:00.217Z
+
+> ↩︎ result: match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1...
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> f00_show s 78.365 lat 0 04 coins 1330
+> f00_show.png
+> motion.json
+> Shell cwd was reset to /home/user/rainbow-
+
