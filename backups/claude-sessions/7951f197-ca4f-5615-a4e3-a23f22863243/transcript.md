@@ -769,3 +769,99 @@ The previous worker's shallow clone had the Screen-05 Benny bake commit `1b813c8
 
 > 🔧 **Bash** `{"command": "timeout 300 git fetch --depth=1 origin 1b813c860f981c86f70d2a3ecdd6d6ffc6233ba9 2>&1 | tail -2; git cat-file -t 1b813c8 && git show 1b813c8:qa/pilot05/full_reference_match/benny/NOTES.md | head -5 && git -C /home/user/wt/benny cat-file -t 1b813c8", "description": "Fetch the Screen-05 Benny bake commit", "timeout": 320000}`
 
+### 🧑 User — 2026-11-19T23:30:50.724Z
+
+> ↩︎ result: From https://github.com/josiahscalia5-dev/rainbow-
+>  * branch            1b813c860f981c86f70d2a3ecdd6d6ffc6233ba9 -> FETCH_HEAD
+> commit
+> # Benny (benny05) — Screen 05 full reference match · benny-character-artist
+> 
+> STATUS: DONE for this run (RESUMED RUN #3, session 01Q46SCH, 2026-11-17 ~02:00 UTC) — fur colour, knitted beanie, pom-pom,
+> gold star and the character-texture bake are finished, measured in REAL captures and checked in motion / on 03, 04, 06.
+> Switch: `benny05` (`?benny05=1` or `?match05=1`). `npx tsc --noEmit -p .` rc 0 after every edit. Final summary: section 0.
+> commit
+
+### 🤖 Claude — 2026-11-19T23:31:18.391Z
+
+> 🔧 **Bash** `{"command": "git update-ref refs/keep/benny05-bake 1b813c860f981c86f70d2a3ecdd6d6ffc6233ba9 && nproc && cat > docs/briefs/2026-11-19-r20/COORDINATION.md <<'EOF'\n# Round 20 — coordination (lead `ccr-681a37bb-5jqfbu`, started 2026-11-19 23:25 UTC)\n\nSession opened on the r19 lead `ccr-d00ac5ec-gabdsh` @ `0bd0ab5` (21:52 UTC save). User: \"Continue exactly where we left off\".\nWhere we left off: Round 19b (~20:42 UTC) — user: \"start with Benny\" + \"make Screen 04 an 8 out of 10 while swimming\". Its three\nworkers ran ~14 min, then the r19 account hit its 5-hour usage limit (~20:56 UTC, rese …[+3486 chars]`
+
+### 🧑 User — 2026-11-19T23:31:18.461Z
+
+> ↩︎ result: 4
+> staged
+
+### 🤖 Claude — 2026-11-19T23:31:19.494Z
+
+Now relaunching the three workers in the background with their original briefs, updated for this session:
+
+### 🤖 Claude — 2026-11-19T23:31:45.251Z
+
+> 🔧 **Agent** `{"description": "Benny approved look r20", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the Rainbow project's `benny-character-artist`, round 20 (continuation of round 19b, which was cut off by a usage limit after ~14 minutes). VISUALS ONLY: make Benny (the pink fluffy main character) look like the APPROVED Benny on every playable screen, while he swims, moves and steers.\n\nTHE USER'S WORDS (2026-11-19 ~20:40 UTC): \"Compare mine to the approved screen pink character. I want it to look exactly like the pink character, like same texture, same color,  …[+8166 chars]`
+
+### 🧑 User — 2026-11-19T23:31:45.287Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a748ac2c3b3a4c626 (internal ID - do not mention to user. Use SendMessage with to: 'a748ac2c3b3a4c626', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/a748ac2c3b3a4c626.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T23:32:02.701Z
+
+> 🔧 **Agent** `{"description": "Screen 04 water/foam r20", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the Rainbow project's `foam-bubbles-particles` specialist, round 20 (continuation of round 19b, which was cut off by a usage limit after ~14 minutes), Screen 04 \"Through the Five Arrows\" water + foam (\"s04\"), VISUALS ONLY.\n\nGOAL (user, 2026-11-19 ~20:50 UTC): Screen 04 must reach at least 8/10 likeness to the approved picture WHILE BENNY SWIMS: \"when I say I want my approved screen ... I want the same while he's swimming or moving. I want the exact or very …[+5403 chars]`
+
+### 🧑 User — 2026-11-19T23:32:02.725Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a988229a9fd22c1d3 (internal ID - do not mention to user. Use SendMessage with to: 'a988229a9fd22c1d3', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/a988229a9fd22c1d3.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T23:32:19.003Z
+
+> 🔧 **Agent** `{"description": "Screen 04 rings r20", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Rainbow project's `washer-environment-modeler`, round 20 (continuation of round 19b, which was cut off by a usage limit after ~14 minutes), Screen 04 painted rings / tunnel interior (\"s04tex\"), VISUALS ONLY.\n\nGOAL (user, 2026-11-19 ~20:50 UTC): Screen 04 must reach at least 8/10 likeness to the approved picture WHILE BENNY SWIMS: \"when I say I want my approved screen ... I want the same while he's swimming or moving. I want the exact or very close to my a …[+5136 chars]`
+
+### 🧑 User — 2026-11-19T23:32:19.024Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a030a0be71298a035 (internal ID - do not mention to user. Use SendMessage with to: 'a030a0be71298a035', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/a030a0be71298a035.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T23:32:20.487Z
+
+All three workers are running. Now I'll record their state in the agent-status file, the handoff note and the CLAUDE.md pointer, then save and verify on GitHub.
+
+### 🤖 Claude — 2026-11-19T23:32:20.934Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-19T23:32:20.945Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-19T23:32:21.394Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-19T23:32:21.416Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-19T23:32:21.841Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-19T23:32:21.852Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-19T23:32:39.187Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; a=json.load(open(p))\na['updated_utc']='2026-11-19T23:40Z'\na['round20']={'started_utc':'2026-11-19T23:38Z','lead':'ccr-681a37bb-5jqfbu','base':'preview v3 09459079 + r19b WIP (backups/wip/*-c20, 21:52 UTC) restored by docs/briefs/2026-11-19-r20/setup_worker.sh',\n 'why':'r19b workers cut off ~20:56 UTC by the 5-hour usage limit; user 23:25 UTC: continue exactly where we left off',\n 'workers':{\n  'benny':{'branch':'claude/rainbow-benny-c21','agent':'benny-character-artist','worktree':'/home/user/wt/benny','port':527 …[+3507 chars]`
+

@@ -1,4 +1,17 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 19 STATE (2026-11-19 ~20:15 UTC, lead branch `ccr-d00ac5ec-gabdsh`) — HANDOFF READY
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 20 STATE (2026-11-19 ~23:40 UTC, lead branch `ccr-681a37bb-5jqfbu`)
+
+Session opened on the r19 lead `ccr-d00ac5ec-gabdsh` @ `0bd0ab5` (nothing merged; its 23:17 save `f49bc7f` = bookkeeping only).
+User: "Continue exactly where we left off". Round 19b (Benny's approved look + Screen 04 ≥ 8/10 WHILE SWIMMING) had been cut off
+after ~14 min by the r19 account's 5-hour limit (~20:56 UTC); its three workers' unfinished edits (21:52 `backups/wip/*-c20/`) are
+restored on new `-c21` branches and the same three workers RELAUNCHED: Benny `claude/rainbow-benny-c21`, s04 water / foam
+`claude/rainbow-s04-match-c21`, s04 rings `claude/rainbow-s04-ringtex-c21`. Map + verified services:
+**`docs/briefs/2026-11-19-r20/COORDINATION.md`**; recipe `docs/briefs/2026-11-19-r20/setup_worker.sh`. 05 / 06 / 07 not restarted;
+08 PAUSED. This account: World Labs Atlas connector connected, keys (World Labs 5,420 credits, fal) injected and verified; NO
+Thrixel connector. If this account runs out: `-c22` branches from each newest `-c21` tip; never write `-c21` from another account.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 19 STATE (2026-11-19 ~20:15 UTC, lead branch `ccr-d00ac5ec-gabdsh`) — HANDOFF READY
 
 New account, started 19:05 UTC from the r18 lead's 18:56 save (r18 stopped at the usage limit; nothing merged). The r18 04 / 05
 workers were relaunched on `-c19` branches, each finished its step and stopped cleanly for a fresh session (user order ~19:40):
