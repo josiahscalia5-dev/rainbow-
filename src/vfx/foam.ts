@@ -559,9 +559,24 @@ function hide07(course: Course): [number, number] | null {
   return [course.marks['07_plunge_top'] + 9, course.marks['07_plunge_bottom'] - 12];
 }
 
+// The 07 camera can see the front of the shared 08 shoreline before crossing the outlet.
+// Compress the entire apron, including its dry outer skirt, into groups lying on the water.
+function outletFoamScale(course: Course): (s: number, side: number) => number {
+  if (!flag05('match07') || !flag05('m07foam') || !flag05('cx07OutletFoam')) return () => 1;
+  const chamber = course.stage('08');
+  return (s, side) => {
+    if (s <= chamber.s0 || s >= chamber.s1) return 1;
+    const inlet = THREE.MathUtils.smoothstep(s, chamber.s0, chamber.s0 + 1.4);
+    const exit = 1 - THREE.MathUtils.smoothstep(s, chamber.s1 - 2.2, chamber.s1);
+    const heap = THREE.MathUtils.smoothstep(bermLump(s * 0.57, side), 0.40, 0.68);
+    return THREE.MathUtils.lerp(1, 0.10 + 0.38 * heap, inlet * exit);
+  };
+}
+
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
   const hk = bermScale05(course);
+  const outletScale = outletFoamScale(course);
   const ds = quality === 'high' ? 0.32 : 0.8;
   const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
   const rows = Math.ceil((s1 - s0) / ds) + 1;
@@ -578,6 +593,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     const f = course.sample(s);
     const hw = course.widthAt(s) / 2;
     for (const side of [-1, 1]) {
+      const scale = outletScale(s, side);
       for (let j = 0; j < C; j++) {
         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
         // at the water line (keeps the lace edge flush with the stream)
@@ -586,7 +602,8 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
         const h = squashBerm(bermSurface(s, e, side, hw), k05);
         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
-        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+        const surface = scale === 1 ? h : EDGE_LIFT + (h - EDGE_LIFT) * scale;
+        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS * scale)).addScaledVector(f.up, surface);
         tmp.toArray(pos, k * 3);
         foam[k * 3] = e;
         foam[k * 3 + 1] = s;
@@ -704,6 +721,7 @@ export function createFoam(
   // rand() sequence (and every other stage's foam) stays identical.
   const st05b = course.stage('05');
   const bermK = bermScale05(course);
+  const outletScale = outletFoamScale(course);
   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
   /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
   const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
@@ -713,7 +731,9 @@ export function createFoam(
     const k05 = bermK(ss);
     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
-    return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+    const scale = outletScale(ss, side);
+    const surface = scale === 1 ? h : EDGE_LIFT + (h - EDGE_LIFT) * scale;
+    return f.pos.clone().addScaledVector(f.right, side * (hw + eS * scale)).addScaledVector(f.up, surface);
   };
   const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
     const ss = Math.min(s1, Math.max(s0, s));
@@ -725,6 +745,7 @@ export function createFoam(
       r *= 0.5 + 0.95 * hz * hz;
       lift -= 0.4 * r;
     }
+    r *= Math.sqrt(outletScale(ss, side));
     list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });
   };
   const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
