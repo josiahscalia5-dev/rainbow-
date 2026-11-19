@@ -1,0 +1,37 @@
+[
+  {
+    "file": "experiments/codex/07/BEFORE/ride.mp4",
+    "bytes": 7426159,
+    "sha256": "350eda64db8d03efde780a2c8b7bdcbb99d508f0b697da970c203d11b3f2248d"
+  },
+  {
+    "file": "experiments/codex/07/NEW/ride.mp4",
+    "bytes": 7424952,
+    "sha256": "c037cdb9fa944a85cf9ecfa89e8e01a81a9d33d76b30352ad0a85fd442e209b6"
+  },
+  {
+    "file": "experiments/codex/07/fitted-body-only/ride.mp4",
+    "bytes": 7427343,
+    "sha256": "f8a34d2023ed45350322551c0cfaff32899d366a065bb63634d16435b7c4f35f"
+  },
+  {
+    "file": "experiments/codex/07/initial-trial/ride.mp4",
+    "bytes": 7425663,
+    "sha256": "d5e87eb788cc09a3383c00ba6faee38e04fc626b204c5050720c8057a82e507c"
+  },
+  {
+    "file": "experiments/codex/07/masked-material/ride.mp4",
+    "bytes": 7427811,
+    "sha256": "f8b2ca07ae92aef6c5b343e279cc785c433a8ba72e51bb2483bc82351a1198ce"
+  },
+  {
+    "file": "experiments/codex/07/model/screen-07-fitted-paddle.blend",
+    "bytes": 111863,
+    "sha256": "dea3dda91604349f37dbb58bbdd2ec13d36e83d3844b8891e27cec5130dd510e"
+  },
+  {
+    "file": "experiments/codex/07/model/screen-07-fitted-paddle.glb",
+    "bytes": 22640,
+    "sha256": "788be872e113048ac688379b9d85a095b60cb342b70134ef7f9b55b16aef3c48"
+  }
+]

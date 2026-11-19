@@ -1,0 +1,13 @@
+from pathlib import Path
+import subprocess,time,sys
+v=Path.cwd();sid=sys.argv[1]
+needed=['BEFORE/route.json','NEW/route.json','BEFORE/gameplay.json','NEW/gameplay.json','BEFORE/opening-repeat.png']
+paths=[v/'proof'/sid/f for f in needed]
+if sid in ('06','07'):
+ paths.extend([v/'altproof/proof'/sid/'NEW/route.json',v/'altproof/proof'/sid/'NEW/gameplay.json'])
+while not all(p.is_file() for p in paths):
+ time.sleep(4)
+with (v/'worker-logs'/(sid+'-validate.log')).open('w') as log:
+ cmd=subprocess.run(['python3','complete.py',sid],stdout=log,stderr=subprocess.STDOUT)
+if cmd.returncode:raise SystemExit(cmd.returncode)
+print(sid,'data verified',flush=True)

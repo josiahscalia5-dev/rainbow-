@@ -1,0 +1,36 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,os,subprocess,shutil,hashlib,sys,re
+r=Path.cwd();w=Path('/tmp/rainbow-motion-tools.ef8YVWIN');a=Path('/tmp/rainbow-visual-audit.X0POSzUq');heads=json.load(open('heads.json'));remote='https://github.com/josiahscalia5-dev/rainbow-.git'
+names={'07':'codex/s07-painted-paddle-face','06':'codex/s06-curved-rinse-arch','05':'codex/s05-perforated-wall-bays','04':'codex/s04-sweeping-waterbands','08':'codex/s08-curved-chamber-current','skill':'codex/rainbow-visual-motion-matcher'}
+mods={'07':['src/world/match07.ts','assets/textures/match07/paddleFace07.png'],'06':['src/world/match06.ts'],'05':['src/vfx/proj05Tunnel.ts','src/world/match05far.ts'],'04':['src/world/match04m4.ts'],'08':['src/world/match08.ts'],'skill':[]}
+def call(args,**kw):return subprocess.check_output(args,text=True,stderr=subprocess.PIPE,**kw).strip()
+def initialize(sid):
+ rec=heads['lead' if sid=='skill' else sid];wanted=names[sid]
+ live={row.split()[1][11:]:row.split()[0] for row in call(['git','ls-remote','--heads',remote]).splitlines()}
+ check=[rec['branch'],heads['lead']['branch']]
+ if sid=='04':check.append(heads['04r']['branch'])
+ for key in check:assert live[key]==next(p['commit'] for p in heads.values() if p['branch']==key),(sid,key)
+ assert not any(re.search(r'rainbow-s0[4-8].*-c(\d+)$',k) and int(k.rsplit('-c',1)[1])>17 for k in live)
+ if wanted in live:raise RuntimeError(wanted+' already exists; select new isolated branch')
+ dest=r/'repos'/sid;dest.mkdir(parents=True);g=['git','-C',str(dest)]
+ call(g+['init','-q']);alternate=dest/'.git/objects/info/alternates';alternate.write_text(str(a/'objects.git/objects')+'\n')
+ for k,val in [('remote.origin.url',remote),('remote.origin.fetch','+refs/heads/*:refs/remotes/origin/*'),('remote.origin.promisor','true'),('remote.origin.partialclonefilter','blob:none'),('user.name','Codex'),('user.email','codex@users.noreply.github.com')]:call(g+['config','--local',k,val])
+ call(g+['fetch','--quiet','--depth=1','--filter=blob:none','--no-tags','origin','refs/heads/'+rec['branch']+':refs/remotes/origin/'+rec['branch']]);call(g+['lfs','install','--local'])
+ files=['/.gitattributes','/experiments/codex/'+sid+'/',*['/'+f for f in mods[sid]]]
+ if sid=='skill':files+=['/.agents/skills/rainbow-visual-motion-matcher/','/AGENTS.md']
+ call(g+['sparse-checkout','set','--no-cone','--stdin'],input='\n'.join(files)+'\n')
+ call(g+['checkout','-q','-b',wanted,rec['commit']])
+ if sid=='skill':
+  package=Path('/workspace/library-files/Rainbow-Motion-Toolchain/proposal');shutil.copytree(package,dest,dirs_exist_ok=True)
+ else:
+  game=r/'games'/sid;shutil.copytree(w/'games'/sid,game,symlinks=True,ignore=shutil.ignore_patterns('.vite','__spector07.html','__three-inspector.js'),copy_function=shutil.copyfile)
+  for f in mods[sid]:
+   gp=game/f
+   if gp.exists():assert (dest/f).read_bytes()==gp.read_bytes(),f
+  manifest=json.load(open(w/'reference-checks.json'))['manifest']
+  assert all(hashlib.sha256((game/f).read_bytes()).hexdigest()==v for f,v in manifest.items())
+  stash=dest/'experiments/codex'/sid;stash.mkdir(parents=True,exist_ok=True)
+ (r/('base-'+sid+'.json')).write_text(json.dumps({'time':datetime.now(timezone.utc).isoformat(),'base':rec,'branch':wanted,'paths':mods[sid],'lead':heads['lead'],'remoteHeadCountAtCheck':len(live)},indent=2));print(sid,rec['commit'][:12],wanted,flush=True)
+if __name__=='__main__':
+ for sid in sys.argv[1:]:initialize(sid)

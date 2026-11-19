@@ -1,0 +1,16 @@
+{
+  "time": "2026-11-18T21:53:23.229217+00:00",
+  "base": {
+    "branch": "claude/rainbow-s08-scenery-c17",
+    "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+  },
+  "branch": "codex/s08-curved-chamber-current",
+  "paths": [
+    "src/world/match08.ts"
+  ],
+  "lead": {
+    "branch": "ccr-bbe2b27e-oxfh1w",
+    "commit": "d22ec46b72146d69703d4271cd54c1c852164dff"
+  },
+  "remoteHeadCountAtCheck": 138
+}

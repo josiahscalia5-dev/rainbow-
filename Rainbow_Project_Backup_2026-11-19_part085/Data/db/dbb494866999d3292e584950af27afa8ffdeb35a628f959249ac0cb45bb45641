@@ -1,0 +1,25 @@
+"""Read a saved object-visibility diagnostic at the same pose as the new trial."""
+from pathlib import Path
+import json
+import numpy as np
+from PIL import Image
+
+root=Path.cwd()
+old=Path('/tmp/rainbow-motion-tools.ef8YVWIN')/'paddle-test'
+folder=root/'proof/07'
+def rgb(path):
+    return np.asarray(Image.open(path).convert('RGB'),dtype=np.int16)
+def colors(im,mask):
+    r,g,b=im[mask].T
+    return {'sampledVisiblePixels':int(mask.sum()),'violetDominant':int(((b>g+24)&(b>r-12)).sum()),
+            'goldWarm':int(((r>b+30)&(g>b+10)&(r>=g)).sum())}
+rows=[]
+for previous,current in [('opening','opening'),('forward','forward-10'),('hard-left','hard-left'),('hard-right','hard-right')]:
+    boxMask=np.max(np.abs(rgb(old/(previous+'-before.png'))-rgb(old/(previous+'-hide-two.png'))),axis=2)>=16
+    a=rgb(folder/'BEFORE'/(current+'.png'));b=rgb(folder/'NEW'/(current+'.png'))
+    change=np.max(np.abs(a-b),axis=2)>=16
+    rows.append({'name':current,'maskProvenance':'Claudia retained checkpoint, diagnostic with only m07_paddle2 hidden at identical travel and steering',
+                 'before':colors(a,boxMask),'new':colors(b,boxMask),'changesAt16InsideMask':int((boxMask & change).sum()),
+                 'changesAt16OutsideMask':int((~boxMask & change).sum())})
+(folder/'paddle-material-check.json').write_text(json.dumps(rows,indent=2)+'\n')
+for row in rows: print(row['name'],row['before'],row['new'],row['changesAt16OutsideMask'])

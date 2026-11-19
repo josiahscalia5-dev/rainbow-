@@ -1,0 +1,17 @@
+[
+  {
+    "file": "experiments/codex/06/BEFORE/ride.mp4",
+    "bytes": 3114549,
+    "sha256": "1d36f2a7dfe8ab1d5cd04a91aadae3668f26bcf301394d93a0cf2e0c7ba47da8"
+  },
+  {
+    "file": "experiments/codex/06/NEW/ride.mp4",
+    "bytes": 3031312,
+    "sha256": "c32286cd60f1bfd1089123a9a4f4bc8e0ecebfb9100dcfeaa74c907eeabee2e3"
+  },
+  {
+    "file": "experiments/codex/06/initial-trial/ride.mp4",
+    "bytes": 2789841,
+    "sha256": "1ad4a184cd33de704d274d256787092a7713decca2ed538f3904995c3e386ff6"
+  }
+]
