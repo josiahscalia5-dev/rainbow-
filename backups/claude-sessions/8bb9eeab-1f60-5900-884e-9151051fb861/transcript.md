@@ -1681,3 +1681,50 @@ Preview pictures are rendered. Checking them at full size before sending.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && Q=$(cat qa/match/04/r18/PREVIEW_QUERY.txt) && QB=\"${Q%%&m04rpaint=1*}\" && echo \"BEFORE ends: ${QB: -40}\" && timeout 900 node scripts/capture.mjs 04 --out=qa/match/04/r18/preview/start_BEFORE \"--q=$QB\" 2>&1 | grep -v \"outside of Vite\" | tail -2 && timeout 900 node scripts/capture.mjs 04 --out=qa/match/04/r18/preview/start_NEW \"--q=$Q\" 2>&1 | grep -v \"outside of Vite\" | tail -2 && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/04/r18/preview/start_BEFORE/04.png qa/match/04/r18/preview/start_NEW/04.png - 0.1 180 1536", "description": "Det …[+65 chars]`
 
+### 🧑 User — 2026-11-19T02:47:05.493Z
+
+> ↩︎ result: BEFORE ends: m04fclu=1&m04sband=1&m04end=1&m04nband=1
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> {"a":"qa/match/04/r18/preview/start_BEFORE/04.png","b":"qa/match/04/r18/preview/start_NEW/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:47:07.793Z
+
+The start view is unchanged in the preview, checked pixel by pixel. Saving the preview branch and sending you the pictures.
+
+### 🤖 Claude — 2026-11-19T02:47:12.947Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && cat > qa/match/04/r18/preview/README.md <<'EOF'\n# Screen 04 combined preview (user OK 2026-11-19 ~03:35 UTC: \"Yes all once\")\nBranch `claude/rainbow-s04-preview-c18` = s04 `31372d6` (water: m04fclu, m04sband, m04end, m04nband) merged with s04tex `9eb27e6`\n(painted rings: m04rpaint/rpsoft/rpj/rplu/rpgu, m04rpdots, m04rpvar). Clean merge (separate code regions), tsc clean. Default build\nunchanged; everything behind the URL switches in `../PREVIEW_QUERY.txt`.\n* NEW: `NEW/` (12 positions, `tools/match04/audit04.mjs` on port 5279).\n* Start view (determin …[+664 chars]`
+
+### 🧑 User — 2026-11-19T02:47:19.096Z
+
+> ↩︎ result: branch 'claude/rainbow-s04-preview-c18' set up to track 'origin/claude/rainbow-s04-preview-c18'.
+> d8b4722fd416932f722cdcdfc2092135755c6663
+> d8b4722fd416932f722cdcdfc2092135755c6663	refs/heads/claude/rainbow-s04-preview-c18
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T02:47:24.948Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_r18/04_combined_preview && mkdir -p $D && cp /home/user/wt/s04/qa/match/04/r18/s2_nband/1_APPROVED.png $D/1_APPROVED.png && for s in f06_forward6u t66_through_screen s_right_hard; do cp /home/user/wt/s04/qa/match/04/r18/s2_nband/BEFORE/$s.png $D/2_BEFORE_$s.png; cp /home/user/wt/s04p/qa/match/04/r18/preview/NEW/$s.png $D/3_NEW_$s.png; done; ls $D", "description": "Copy combined preview review pictures"}`
+
+### 🧑 User — 2026-11-19T02:47:25.048Z
+
+> ↩︎ result: 1_APPROVED.png
+> 2_BEFORE_f06_forward6u.png
+> 2_BEFORE_s_right_hard.png
+> 2_BEFORE_t66_through_screen.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_t66_through_screen.png
+
+### 🤖 Claude — 2026-11-19T02:47:26.296Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r18/04_combined_preview/3_NEW_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-19T02:47:26.357Z
+
+> ↩︎ result: [image]
+

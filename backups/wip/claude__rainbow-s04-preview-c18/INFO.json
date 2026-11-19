@@ -1,29 +1,12 @@
 {
  "worktree": "/home/user/wt/s04p",
  "branch": "claude/rainbow-s04-preview-c18",
- "head": "d08355482f3872063162228acc88c9bcc607a48a",
- "time": "2026-11-19T02:46:36+00:00",
+ "head": "d8b4722fd416932f722cdcdfc2092135755c6663",
+ "time": "2026-11-19T02:47:40+00:00",
  "dirty_tracked": [
   "qa/capture_log.json"
  ],
- "untracked_copied": [
-  "qa/match/04/r18/PREVIEW_QUERY.txt",
-  "qa/match/04/r18/preview/NEW/f06_forward6u.png",
-  "qa/match/04/r18/preview/NEW/f10_forward10u.png",
-  "qa/match/04/r18/preview/NEW/f20_forward20u.png",
-  "qa/match/04/r18/preview/NEW/motion.json",
-  "qa/match/04/r18/preview/NEW/s_left_hard.png",
-  "qa/match/04/r18/preview/NEW/s_left_steer.png",
-  "qa/match/04/r18/preview/NEW/s_right_hard.png",
-  "qa/match/04/r18/preview/NEW/s_right_steer.png",
-  "qa/match/04/r18/preview/NEW/t33_through_screen.png",
-  "qa/match/04/r18/preview/NEW/t66_through_screen.png",
-  "qa/match/04/r18/preview/NEW/t95_through_screen.png"
- ],
- "untracked_skipped": [
-  "qa/match/04/r18/preview/NEW/a00_approved_view.png",
-  "qa/match/04/r18/preview/NEW/f03_forward3u.png",
-  "qa/match/04/r18/preview/start_BEFORE/04.png"
- ],
+ "untracked_copied": [],
+ "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s04-preview-c18 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-preview-c18/tracked.patch && copy backups/wip/claude__rainbow-s04-preview-c18/untracked/* into the worktree"
 }

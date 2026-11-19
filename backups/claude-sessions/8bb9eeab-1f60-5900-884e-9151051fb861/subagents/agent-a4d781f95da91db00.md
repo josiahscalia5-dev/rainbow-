@@ -1361,3 +1361,36 @@ Redirect received: ring structure first. Let me look at the zoom I just made (it
 > uniform vec4 uTone;        // band base, lip base, opening base, streak strength
 > uniform sampler2D uRingTil …[+10171 chars]
 
+### 🤖 Claude — 2026-11-19T02:46:30.970Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 1,120p tools/match04/ring_paint04.py", "description": "Read the painted ring unwrap model"}`
+
+### 🧑 User — 2026-11-19T02:46:31.096Z
+
+> ↩︎ result: """Screen 04 round 15 `&m04rpaint=k`: the user's PAINTED inner gold rings, straightened from the approved picture, as a
+> texture for every modeled inner ring band (src/world/match04m4.ts GOLD_FRAG).
+> 
+> The painted tunnel is a telescope of rounded copper-gold rings whose centres drift toward the vanishing point and whose
+> outlines are slightly elliptic, so neither a straight-cylinder unwrap nor the simple drifting-centre model gives straight
+> rings. Here the painting gets its OWN ring coordinate system:
+>   1. log-polar unwrap around the drifting centres (make_tiles04.py model) -> painted grooves at the tunnel top (dark
+>      minima) -> groove curves tracked along the angle -> one circle fitted to every groove (q = 0, 1, 2, ... = groove
+>      index, q continuous in between: centre and log radius interpolated);
+>   2. unwrap in (angle, q) -> the residual waviness of every groove tracked again (smooth path search) and fitted with a
+>      low-order Fourier series of the angle -> straightened coordinates: q_k(psi) + s * (q_k+1(psi) - q_k(psi)),
+>      s = position inside the painted period (0 = groove, then the band, the bright lip line, back to the next groove);
+>   3. ONE clean painted period (ring i …[+5452 chars]
+
+### 🤖 Claude — 2026-11-19T02:46:38.232Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 -I -c \"\nimport numpy as np, cv2\nfrom scipy.ndimage import gaussian_filter\nfrom scipy.signal import find_peaks\nA=cv2.imread('assets/textures/match04/plate04_hybrid.png').astype(np.float32)\nLW=np.array([0.11,0.59,0.3],np.float32)\nVP,MC,RM=np.array([490.,690.]),np.array([434.,792.]),347.0\nNCP=1024; psiA=np.linspace(-np.pi,np.pi,NCP,endpoint=False)\nNRL=900; lr=np.linspace(np.log(370),np.log(12),NRL); rl=np.exp(lr)\nRR,PS=np.meshgrid(rl,psiA,indexing='ij')\ncc=VP[None,None]+(RR/RM)[...,None]*(MC-VP)[None,None]\nu=cc[...,0]+RR*np.sin(PS); v=cc[. …[+581 chars]`
+
+### 🧑 User — 2026-11-19T02:46:41.555Z
+
+> ↩︎ result: top dark minima r px: [321.3, 242.3, 225.4, 214.5, 156.9, 116.9, 85.9, 64.3, 50.0, 39.4, 31.5]
+> top bright maxima r px: [250.8, 229.7, 220.3, 169.3, 122.0, 94.1, 70.2, 53.3, 42.7, 34.4]
+> upper-left dark minima r px: [337.6, 253.6, 193.5, 149.3, 114.3, 86.9, 64.5, 49.8, 35.4, 27.3, 21.5]
+> upper-left bright maxima r px: [278.0, 210.4, 165.5, 124.3, 92.0, 71.2, 53.5, 39.4, 29.7, 23.0]
+> upper-right dark minima r px: [333.8, 303.4, 242.3, 166.1, 151.6, 126.2, 111.3, 89.9, 66.8, 53.9, 45.2]
+> upper-right bright maxima r px: [352.1, 328.7, 265.5, 181.3, 160.5, 135.2, 119.7, 98.9, 73.4, 57.3, 47.7, 20.5]
+
