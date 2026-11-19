@@ -1,0 +1,26 @@
+{
+ "default_vs_qa/pilot05/current_default_05.png": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "BEFORE(?ringa=26&nearfloor05=0)_vs_qa/pilot05/wave9/baseline/05.png": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "water05_vs_qa/pilot05/wave10/water/05_NEW.png": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "04_river05_vs_default": {
+  "max_pixel_difference": 169,
+  "differing_pixels": 70552
+ },
+ "06_river05_vs_default": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "07_river05_vs_default": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ }
+}

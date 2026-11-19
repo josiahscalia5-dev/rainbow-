@@ -1,3 +1,6 @@
+> ⚠ **HISTORICAL KIT FILE.** The Rainbow game already exists and must never be restarted. For a new Claude account or
+> session use `backups/START_NEW_CLAUDE_ACCOUNT.md` and follow `CLAUDE.md`. (Original kit: `backups/source-package/`.)
+
 # Rainbow NEW 11-screen Claude Code kit — START HERE
 
 You have **11 original, untouched approved stage screenshots** plus **1 original new official cartoon girl reference**, and the complete updated master prompt. This replaces the earlier 10-screen brief.

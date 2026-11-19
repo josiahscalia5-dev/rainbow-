@@ -1,0 +1,18 @@
+You are the SCREEN 08 CAMERA SPECIALIST (path-camera-transition-engineer role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead coordinator = session `session_01VCMXob2ipUeLE1o7yXNSsZ` (branch `ccr-5495e9c4-g0apvl`).
+
+Your branch: **`claude/rainbow-s08-camclear-c2`**, continued from `claude/rainbow-s08-camclear` @ `5547670` (newest remote commit of the previous account's camera specialist). Push ONLY `claude/rainbow-s08-camclear-c2`. Never merge, cherry-pick, force-push, reset or rebase.
+
+FIRST read the binding common rules: `git fetch origin ccr-5495e9c4-g0apvl && git show FETCH_HEAD:docs/briefs/2026-11-17-r2/COMMON_RULES.md`. Then read `CLAUDE.md`, `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`, `qa/match/08/NOTES.md`, `docs/PARALLEL_PROGRESS.md` (section "User gameplay recording").
+
+## What already exists
+* My phone recording of the match08 APK: `qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4` (Git LFS, 720×1602, 30 fps) + 1 fps sheets `user_video_1fps_00-23s.png`, `user_video_1fps_24-48s.png`. First read: 03 at 4–6 s a white sheet over the view; 04 at 7–10 s a white sheet, then the whole frame inside a pink wall at 8 s; 05 11–16 s; 06 18–20 s drum wall + gold band fill the view; 07 33–36 s a gold ring band fills the frame; 08 38–39 s = the match08 reconstruction; 09 40 s; 10 41–43 s; 11 44–48 s.
+* The previous session's WIP (commit `5547670`, NO NOTES yet): `src/game/camClear.ts` + switch-guarded edits in `cameraRig.ts` / `Game.ts` = obstruction fixes for 04/06/07/08 behind `?camclear=1`; tools `tools/camclear/` (probe.mjs, timeline.mjs, camtrace.mjs, ringpos.mjs, sheet.py); scans `qa/gameplay_video/scan/{default,match08}/`; timelines of the source build and of both APKs `qa/gameplay_video/timeline/`; traces `qa/gameplay_video/trace/`.
+
+## Your milestone
+1. Verify the WIP: tsc clean; default build 0 px (camclear off); the approved 08 view under `?match08=1` 0 px different with AND without camclear (the approved framing must not move); gameplay 8/8 + 91 / 2,240 with `camclear=1`; continuity test unchanged (07→08 huge downward drop ≈ 61 u, all joins gap 0). Write `qa/gameplay_video/NOTES.md`.
+2. For every problem moment of my video, put side by side as SEPARATE full-size frames: my video frame | the current build at the same moment | `camclear=1` at the same moment — 03 4–6 s, 04 7–10 s, 06 18–20 s, 07 33–36 s and the 07→08 drop, 08 38–40 s (does the match08 view engage and hold?), 09–11 40–47 s. Fix only what the newer builds still show; each fix minimal and camclear-guarded.
+3. Moving check through 07 → 08 → 09 with `match08=1&camclear=1`: no walls, rings, foam or washer parts between the view and Benny; no stretched texture revealed by a fix; steering, collisions and coin pickup unchanged.
+4. `qa/gameplay_video/STATUS.md`, `SHARED_CHANGES.md`, and an APK with `match08=1&camclear=1` if the fixes hold. Report to me in VISUAL terms (what blocked the view, what it looks like now) — I don't want camera/movement jargon.
+
+## Coordination
+You own `src/game/camClear.ts`, `tools/camclear/`, `qa/gameplay_video/` and the camclear-guarded parts of `cameraRig.ts` / `Game.ts`. Never change Benny files or any screen's scenery/texture files (match04–08). The Screen 08 BENNY specialist works at the same time on `claude/rainbow-s08-benny08-bake-c2`; the Screen 04, 06 and 07 agents own the LOOK of their approved views under `match04/06/07` — if a fix needs their geometry changed, write it in NOTES and tell the lead instead of editing it. No paid jobs. When done: push, verify, send the lead ONE short status with `send_message` (session_id `session_01VCMXob2ipUeLE1o7yXNSsZ`) and stop and wait.
