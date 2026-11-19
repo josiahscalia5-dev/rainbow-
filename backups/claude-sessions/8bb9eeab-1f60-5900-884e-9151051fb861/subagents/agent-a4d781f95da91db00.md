@@ -2731,3 +2731,70 @@ Step 8 reported (kept set K8). Next, the lead's note: the top third at f10/t66. 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T18:46:17.547Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"pr += vec3(1.0, 0.86, 0.55) \\* 0.10 \\* gl \\* smoothstep(0.0, 0.2, facing);   // moving polished sheen\" src/world/match04m4.ts", "description": "Locate the sheen line for insertion"}`
+
+### 🧑 User — 2026-11-19T18:46:17.586Z
+
+> ↩︎ result: 361:      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
+
+### 🤖 Claude — 2026-11-19T18:46:20.345Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 356, "limit": 8}`
+
+### 🧑 User — 2026-11-19T18:46:20.379Z
+
+> ↩︎ result: 356	        wg = mix(wg, vec3(1.31, 1.68, 2.11), clamp(x - 3.0, 0.0, 1.0));
+> 357	        wg = mix(wg, vec3(1.33, 1.99, 2.32), clamp(x - 4.0, 0.0, 1.0));
+> 358	        wg = mix(wg, vec3(1.35, 2.46, 2.80), clamp(x - 5.0, 0.0, 1.0));
+> 359	        pr *= mix(vec3(1.0), wg, uRWarm.x);
+> 360	      }
+> 361	      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
+> 362	      if (uRDots.x > 0.0) {
+> 363	        // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,
+
+### 🤖 Claude — 2026-11-19T18:46:38.082Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen\n      if (uRDots.x > 0.0) {", "new_string": "      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen\n      if (uRCr.x > 0.0) {\n        // r18 m04rpcr: the painted thin bright lip line and thin dark groove line drawn CRISP at their modeled places\n        // (bright line where the lip bead starts to turn inward, dark line ending at the lip apex = …[+935 chars]`
+
+### 🧑 User — 2026-11-19T18:46:38.137Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:46:42.149Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\nimport re\np='src/world/match04m4.ts'; s=open(p).read()\ns=s.replace(\"uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening\\n\",\n\"uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening\\nuniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)\\n\",1)\ns=s.replace(\"        uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0. …[+480 chars]`
+
+### 🧑 User — 2026-11-19T18:46:46.311Z
+
+> ↩︎ result: 121:uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)
+> 363:      if (uRCr.x > 0.0) {
+> 370:        float dB = abs(uu - (uL + uRCr.y)), dD = abs(uu - (uG - uRCr.z)), dC = uu;
+> 371:        float cB = clamp((uRCr.y + 0.5 * fu - dB) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.y / fu);
+> 372:        float cD = clamp((uRCr.z + 0.5 * fu - dD) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.z / fu);
+> 373:        float cC = clamp((uRCr.w + 0.5 * fu - dC) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.w / fu);
+> 374:        pr = mix(pr, vec3(1.0, 0.93, 0.68), 0.85 * cB * uRCr.x);
+> 375:        pr *= 1.0 - 0.62 * max(cD, cC) * uRCr.x;
+> 738:        uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.022), M04.num('m04rpcd', 0.03), M04.num('m04rpcc', 0.02)) },
+
+### 🤖 Claude — 2026-11-19T18:46:53.964Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K8=\"$(cat $S/K7.txt)&m04rpol=1\" && echo \"$K8\" > $S/K8.txt && ONLY=f10_forward10u,t66_through_screen,s_left_hard node $S/audit_only.mjs 04 $S/s9a \"$K8&m04rpcr=1\" 2>&1 | grep -E \"pageerror|Error\" | head; python3 -c \"\nfrom PIL import Image\nS='$S/'\nfor sh in ['f10_forward10u','t66_through_screen','s_left_hard']:\n    a=Image.open('qa/match/04/r18/ringpaint/step8_pol/3_NEW_'+sh+'.png').convert('RGB').crop((0,180,864,700)); b=Image.open(S+'s9a/'+sh+'.png').c …[+215 chars]`
+
+### 🧑 User — 2026-11-19T18:47:34.913Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:47:38.240Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s9a_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:47:38.277Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:47:54.701Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -i \"s/M04.num('m04rpcb', 0.022), M04.num('m04rpcd', 0.03), M04.num('m04rpcc', 0.02)/M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)/\" src/world/match04m4.ts && python3 - <<'EOF'\np='/home/user/wt/s04b/src/world/match04m4.ts'; s=open(p).read()\ns=s.replace(\"pr = mix(pr, vec3(1.0, 0.93, 0.68), 0.85 * cB * uRCr.x);\\n        pr *= 1.0 - 0.62 * max(cD, cC) * uRCr.x;\",\n\"pr = mix(pr, vec3(1.0, 0.92, 0.66), 0.75 * cB * uRCr.x);\\n        pr = mix(pr, pr * vec3(0.55, 0.36, 0.30), max(cD, cC) * uRCr.x);   // dark red-brown  …[+896 chars]`
+

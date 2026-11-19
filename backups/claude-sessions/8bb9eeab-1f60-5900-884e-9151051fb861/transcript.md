@@ -2578,3 +2578,77 @@ Still to do before I show you Screen 04 again:
 
 Once those two are in, I'll combine the rings, water and foam into one preview. Then I'll send you a single set of APPROVED / BEFORE / NOW pictures and a swim clip.
 
+### 🧑 User — 2026-11-19T18:47:17.707Z
+
+Make sure you save everything to my GitHub repository. Make sure everything is saved. All the agents, all everything, the chat history, everything.
+
+### 🤖 Claude — 2026-11-19T18:47:22.698Z
+
+Saving everything now: the lead branch, every worker branch, unfinished edits, the agent notes and the chat history.
+
+### 🤖 Claude — 2026-11-19T18:47:24.561Z
+
+> 🔧 **Bash** `{"command": "ls -la backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/ backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents 2>/dev/null | head -20; git check-ignore -v backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/transcript.md; git ls-files backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861 | head", "description": "Check chat-history backup files for this session"}`
+
+### 🧑 User — 2026-11-19T18:47:24.651Z
+
+> ↩︎ result: backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/:
+> total 2004
+> drwxr-xr-x  3 root root    4096 Nov 19 18:45 .
+> drwxr-xr-x 38 root root    4096 Nov 19 02:20 ..
+> drwxr-xr-x  2 root root    4096 Nov 19 18:45 subagents
+> -rw-r--r--  1 root root  186344 Nov 19 18:45 transcript.md
+> -rw-r--r--  1 root root 1850738 Nov 19 18:45 transcript.sanitized.jsonl
+> 
+> backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents:
+> total 7260
+> drwxr-xr-x 2 root root    4096 Nov 19 18:45 .
+> drwxr-xr-x 3 root root    4096 Nov 19 18:45 ..
+> -rw-r--r-- 1 root root   83727 Nov 19 02:57 agent-a1183ccf73271fcf7.md
+> -rw-r--r-- 1 root root  981413 Nov 19 02:57 agent-a1183ccf73271fcf7.sanitized.jsonl
+> -rw-r--r-- 1 root root  120182 Nov 19 11:58 agent-a27bc2af86f8cdd32.md
+> -rw-r--r-- 1 root root 1129470 Nov 19 11:58 agent-a27bc2af86f8cdd32.sanitized.jsonl
+> -rw-r--r-- 1 root root  167136 Nov 19 18:45 agent-a2d313570ebdd2fd2.md
+> -rw-r--r-- 1 root root 1661498 Nov 19 18:45 agent-a2d313570ebdd2fd2.sanitized.jsonl
+> -rw-r--r-- 1 root root  125200 Nov 19 18:45 agent-a4d2f0802b168dc00.md
+> -rw-r--r-- 1 root root 1371228 Nov 19 18:45 agent-a4d2f0802b168dc00.sanitized.jsonl
+> backups/claude-sessions/8bb9eeab-1f60-5900-884e- …[+996 chars]
+
+### 🤖 Claude — 2026-11-19T18:47:30.674Z
+
+> 🔧 **Bash** `{"command": "for w in s04:claude/rainbow-s04-match-c18 s04b:claude/rainbow-s04-ringtex-c18 s04p:claude/rainbow-s04-preview-c18 s05:claude/rainbow-s05-match-c18 s06:claude/rainbow-s06-match-c18 s07:claude/rainbow-s07-match-c18; do d=${w%%:*}; b=${w#*:}; L=$(git -C /home/user/wt/$d rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/$b | cut -f1); n=$(git -C /home/user/wt/$d status --short | grep -v node_modules | wc -l); echo \"$d $b local ${L:0:8} remote ${R:0:8} $([ \"$L\" = \"$R\" ] && echo MATCH || echo DIFF) uncommitted=$n | $(git -C /home/user/wt/$d log -1 --format=%s | cut -c …[+89 chars]`
+
+### 🧑 User — 2026-11-19T18:47:34.258Z
+
+> ↩︎ result: s04 claude/rainbow-s04-match-c18 local a6219412 remote a6219412 MATCH uncommitted=2 | Screen 04 r18 step 4: low soft foam along the water edges instead of t
+> s04b claude/rainbow-s04-ringtex-c18 local 617556fd remote 617556fd MATCH uncommitted=1 | Screen 04 r18 step 8: m04rpol=1 bright polished gold (highlights + mov
+> s04p claude/rainbow-s04-preview-c18 local d0cc88d3 remote d0cc88d3 MATCH uncommitted=1 | Screen 04 preview v2 shots (water f952838b + rings 9eb27e6)
+> s05 claude/rainbow-s05-match-c18 local acbeeeea remote acbeeeea MATCH uncommitted=3 | Screen 05 r18 step 2 WIP: m05lidf = far block's own paddle pairs while
+> s06 claude/rainbow-s06-match-c18 local c649fcbc remote c649fcbc MATCH uncommitted=2 | Screen 06 r17 step 2: foam as bubbly soap clusters (m06fclu) — GOOD 
+> s07 claude/rainbow-s07-match-c18 local 8accdad0 remote 8accdad0 MATCH uncommitted=0 | Screen 07 r18 step 4: &m07band=1 — thick magenta bands sweeping in S
+
+### 🤖 Claude — 2026-11-19T18:47:39.724Z
+
+> 🔧 **Bash** `{"command": "git -C /home/user/wt/s06 status --short | grep -v node_modules; git -C /home/user/wt/s06 diff --stat | tail -2; git -C /home/user/wt/s04p status --short | grep -v node_modules", "description": "Inspect stopped workers' uncommitted edits"}`
+
+### 🧑 User — 2026-11-19T18:47:39.839Z
+
+> ↩︎ result: M src/world/match06.ts
+> ?? tools/match06/r18_dbg.mjs
+>  src/world/match06.ts | 148 +++++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 139 insertions(+), 9 deletions(-)
+> ?? qa/match/04/r18/preview_v2/swim_clip_half.mp4
+
+### 🤖 Claude — 2026-11-19T18:47:52.096Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && git add qa/match/04/r18/preview_v2/swim_clip_half.mp4 && git commit -qm \"Screen 04 preview v2: half-size real swim clip (04 part = first 2.2 s)\" && timeout 120 git push -q origin claude/rainbow-s04-preview-c18 && echo \"pushed $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/claude/rainbow-s04-preview-c18 | cut -c1-8)\"; cd /home/user/rainbow- && python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\na=json.load(open(p))\na['updated_utc']='2026-11-19T18:55Z'\nr=a['round18']\ntips={'s04-ringtex':('617556fd','RUNNING','step 8 …[+2089 chars]`
+
+### 🧑 User — 2026-11-19T18:47:56.195Z
+
+> ↩︎ result: pushed c338978b remote c338978b
+> ok
+
+### 🤖 Claude — 2026-11-19T18:48:05.236Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r18/RESUME_R18.md <<'EOF'\n\n## UPDATE 2026-11-19 ~18:55 UTC (user: \"save everything\") — where each worker is now\n| Worker | Branch tip (pushed) | State | Next |\n|---|---|---|---|\n| s04tex | `617556fd` | running | kept K8 (… `m04rpvar`, `m04rfew&m04rfg=1.2`, `m04rpol`); next: smooth copper band in the top third, steering seam check |\n| s04 | `a6219412` | running | kept K18-3b + `m04flo` (`m04nband`, `m04nwhirl`, `m04nwc=1.3`, `m04flo`); next: whirl smear while steering, coin over Benny, colour up the low banks |\n| s05 | `acbeeeea` | running | s …[+1350 chars]`
+

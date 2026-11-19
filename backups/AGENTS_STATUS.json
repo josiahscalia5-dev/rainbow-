@@ -1,7 +1,7 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-19T02:50Z",
+  "updated_utc": "2026-11-19T18:55Z",
   "updated_by_session": "session_01AvQv6SAH2NyYjSPRMtFps6 (round 18, lead ccr-ae71d3a5-80naq2)",
   "running_now": {
     "_note": "see round18.running (five background workers in the round-18 lead container, relaunched ~02:50 UTC from the r17 21:11 UTC WIP snapshots); Screen 08 PAUSED by the user"
@@ -942,7 +942,9 @@
         "from": "0f275af1 + WIP",
         "worktree": "/home/user/wt/s04b",
         "port": 5274,
-        "task": "step 6 m04rpvar (brighter polished rings, pink-violet sheen, violet/pink lower-wall reflections)"
+        "task": "step 8 m04rpol KEPT (K8 = K5 + m04rpvar + m04rfew&m04rfg=1.2 + m04rpol); next: broad smooth copper band in the top third, then steering seam check",
+        "tip": "617556fd",
+        "status": "RUNNING"
       },
       {
         "screen": "04 (s04)",
@@ -951,7 +953,9 @@
         "from": "ad5fbac5 + WIP",
         "worktree": "/home/user/wt/s04",
         "port": 5273,
-        "task": "r17 step 2 m04nband (pink/cyan bands round Benny in the near water), then next visible difference"
+        "task": "kept K18-3b + m04flo (m04nband, m04nwhirl, m04nwc=1.3, m04flo); next: whirl smearing while steering, coin drawn over Benny, then swirls up the low banks (colour only, keep r13 lowered side water)",
+        "tip": "a6219412",
+        "status": "RUNNING"
       },
       {
         "screen": "05 (s05)",
@@ -960,7 +964,9 @@
         "from": "f033f7cc",
         "worktree": "/home/user/wt/s05",
         "port": 5275,
-        "task": "task 2: smeared left wall / cut-off paddle chunk / pink corner smear at hard left; crisp purple slotted walls"
+        "task": "step 2 WIP m05lidf (far paddles follow the far block) committed unproven; task 2 left-wall smear",
+        "tip": "acbeeeea",
+        "status": "RUNNING"
       },
       {
         "screen": "06 (s06)",
@@ -969,7 +975,9 @@
         "from": "c649fcbc",
         "worktree": "/home/user/wt/s06",
         "port": 5276,
-        "task": "rank 3 start-view flash at +1.1 u, then ripple rings, walls, paddle lids"
+        "task": "rank 3 start-view flash at +1.1 u: unfinished edit match06.ts +139 / tools/match06/r18_dbg.mjs (snapshot in backups/wip/claude__rainbow-s06-match-c18/); restart by SendMessage/relaunch from RESUME_R18 + its r18 PROGRESS",
+        "tip": "c649fcbc",
+        "status": "STOPPED (5-hour usage limit 2026-11-19 ~04:40 UTC; left stopped to save usage for 04/05)"
       },
       {
         "screen": "07 (s07)",
@@ -978,9 +986,18 @@
         "from": "8651edf9 + WIP",
         "worktree": "/home/user/wt/s07",
         "port": 5277,
-        "task": "step 3 m07foamb (lather walls restart with a cut), then m07nearf / foam sheet at hard left / S-curve bands"
+        "task": "kept K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1; next step 5: real 3D puffy foam clouds instead of the flat pale sheet at hard left / right; lead note: thin sliver across a gold paddle at f10",
+        "tip": "8accdad0",
+        "status": "STOPPED (5-hour usage limit; left stopped to save usage for 04/05)"
       }
     ],
-    "relaunch": "bash docs/briefs/2026-11-19-r18/setup_worker.sh <slug> <worktree> (from -c17 tips); next account: -c19 from each newest -c18 tip + backups/wip/"
+    "relaunch": "bash docs/briefs/2026-11-19-r18/setup_worker.sh <slug> <worktree> (from -c17 tips); next account: -c19 from each newest -c18 tip + backups/wip/",
+    "preview": {
+      "branch": "claude/rainbow-s04-preview-c18",
+      "worktree": "/home/user/wt/s04p",
+      "what": "user-approved (2026-11-19 ~03:35 \"Yes all once\") combined Screen 04 preview: v2 = s04 f952838b + s04tex 9eb27e6; next v3 = newest s04 + s04tex (m04rfew, m04rpol) with s04 m04end refitted to the moved end disc",
+      "query": "qa/match/04/r18/PREVIEW_QUERY_v2.txt"
+    },
+    "usage_note": "all five workers hit the 5-hour usage limit at ~04:40 UTC 2026-11-19 (reset 07:20); environment closed 02:57-~18:00 UTC; s04, s04tex, s05 resumed 18:07 UTC"
   }
 }

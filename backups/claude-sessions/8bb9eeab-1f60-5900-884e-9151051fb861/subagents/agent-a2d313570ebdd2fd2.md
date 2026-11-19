@@ -2540,3 +2540,48 @@ The corner now shows the slotted wall down to the foam. Now the full proof set: 
 
 > ↩︎ result: {"checks": {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}, "heartsLostOnWallBump": {"pass": true, "hearts": 4}}, "samples": [{"t": 0.5, "s": 45.645, "stage": "03", "y": -13.457, "cam": [-2.62, -7.96, -16.34], "coins": 1330}, {"t": 1, "s": 50.145, "stage": "03", "y": -13.829, "cam": [0.26, -8.46, -19.04], "coins": 1350 …[+300 chars]
 
+### 🤖 Claude — 2026-11-19T18:45:56.060Z
+
+Gameplay 8/8, 91 coins, 1,330 → 2,240; locked view byte-identical. Now judging the final NEW pictures against BEFORE.
+
+### 🤖 Claude — 2026-11-19T18:45:59.656Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r18/step2_wall && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\ndef pair(names,out):\n  c=Image.new('RGB',(len(names)*2*300+ (len(names)-1)*20,533),(0,0,0))\n  x=0\n  for n in names:\n    for d in ['before','new']:\n      c.paste(Image.open(d+'/'+n+'.png').convert('RGB').resize((300,533)),(x,0)); x+=300\n    x+=20\n  c.save(S+out)\npair(['x97L','k81_kink_left'],'fA.png'); pair(['x97','t98_end'],'fB.png'); pair(['t66_through_screen','f20_forward20u'],'fC.png'); pa …[+97 chars]`
+
+### 🧑 User — 2026-11-19T18:46:00.790Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:46:00.854Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/fA.png"}`
+
+### 🧑 User — 2026-11-19T18:46:00.887Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:46:08.112Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/fC.png"}`
+
+### 🧑 User — 2026-11-19T18:46:08.148Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:46:29.586Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\ndef m(p,box):\n  a=np.asarray(Image.open(p).convert('RGB').crop(box)).reshape(-1,3).astype(float); \n  l=a.mean(1); return a.mean(0).round(), np.percentile(l,[10,50,90]).round()\nprint('approved left wall B-C', m('references/05_flow_into_the_current.png',(250,330,330,430)))\nprint('approved left wall A-B', m('references/05_flow_into_the_current.png',(60,450,200,700)))\nprint('approved top wall', m('references/05_flow_into_the_current.png',(330,200,560,260)))\nD='qa/match/05/r18/step2_wall/'\nfor n …[+268 chars]`
+
+### 🧑 User — 2026-11-19T18:46:30.123Z
+
+> ↩︎ result: approved left wall B-C (array([186.,  71., 160.]), array([ 86., 133., 199.]))
+> approved left wall A-B (array([177.,  78., 196.]), array([ 84., 149., 215.]))
+> approved top wall (array([195.,  88., 125.]), array([ 88., 132., 188.]))
+> t66_through_screen before (array([179.,  71., 141.]), array([ 70., 131., 186.])) new (array([203.,  70., 162.]), array([118., 140., 181.]))
+> t95_through_screen before (array([156.,  45., 166.]), array([ 65., 122., 178.])) new (array([194.,  51., 178.]), array([ 74., 143., 185.]))
+> x97L before (array([163.,  55., 153.]), array([ 56., 125., 183.])) new (array([190.,  57., 177.]), array([ 60., 142., 188.]))
+
+### 🤖 Claude — 2026-11-19T18:47:02.468Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\ns=open(p).read()\na=\"\"\"    if (wCr > 0.0) {\n      vec3 metal = texture2D(uM05WField, vec2(puv.x, 0.5)).rgb;\"\"\"\nb=\"\"\"    if (wCr > 0.0) {\n      vec3 metal = texture2D(uM05WField, vec2(puv.x, 0.5)).rgb;\n      // keep this bay's painted light: the own row's colour around this point (slot / dark texels left out), against the\n      // field's own colour over the same width round the tube → a per-bay tint of the crisp metal (hue + brightness)\n      {\n        float y0 = (rw.x + 0.5) / uPtWallSize.y, y …[+2716 chars]`
+

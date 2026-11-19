@@ -56,3 +56,16 @@ described below, finish or discard it (never silently), commit + push, then cont
 ## s08 — PAUSED by the user (2026-11-18 ~21:02 UTC). Final `3c0fa970` on `claude/rainbow-s08-scenery-c17` (K16 kept; `&m08gl=1`
 near-water glints committed UNFINISHED / not proven, behind its switch only). Resume only when the user asks; then `-c18` from
 `3c0fa970` (no WIP).
+
+## UPDATE 2026-11-19 ~18:55 UTC (user: "save everything") — where each worker is now
+| Worker | Branch tip (pushed) | State | Next |
+|---|---|---|---|
+| s04tex | `617556fd` | running | kept K8 (… `m04rpvar`, `m04rfew&m04rfg=1.2`, `m04rpol`); next: smooth copper band in the top third, steering seam check |
+| s04 | `a6219412` | running | kept K18-3b + `m04flo` (`m04nband`, `m04nwhirl`, `m04nwc=1.3`, `m04flo`); next: whirl smear while steering, coin over Benny, colour up the low banks |
+| s05 | `acbeeeea` | running | step 2 WIP `m05lidf` committed unproven; task 2 left-wall smear |
+| s06 | `c649fcbc` | STOPPED (usage limit; left stopped for 04/05) | unfinished rank-3 edit (`match06.ts` +139, `tools/match06/r18_dbg.mjs`) in `backups/wip/claude__rainbow-s06-match-c18/` |
+| s07 | `8accdad0` | STOPPED (usage limit; left stopped for 04/05) | step 5: real 3D puffy foam clouds at hard left / right; thin sliver across a gold paddle at f10 |
+| preview | `claude/rainbow-s04-preview-c18` @ `c338978b` | user-approved combined 04 preview (v2) | v3 = newest s04 + s04tex, refit `m04end` to the moved end disc |
+If the running workers are cut off: their unfinished edits are in `backups/wip/<branch>/` (every autosave); next account → `-c19`
+branches from these tips + WIP (`setup_worker.sh` with `-c18` → `-c19`). Transcripts (lead + all five workers, sanitized):
+`backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/` (+ `subagents/`).
