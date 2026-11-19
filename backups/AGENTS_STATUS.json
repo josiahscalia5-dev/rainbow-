@@ -1,7 +1,7 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-19T18:55Z",
+  "updated_utc": "2026-11-19T19:40Z",
   "updated_by_session": "session_01AvQv6SAH2NyYjSPRMtFps6 (round 18, lead ccr-ae71d3a5-80naq2)",
   "running_now": {
     "_note": "see round18.running (five background workers in the round-18 lead container, relaunched ~02:50 UTC from the r17 21:11 UTC WIP snapshots); Screen 08 PAUSED by the user"
@@ -999,5 +999,53 @@
       "query": "qa/match/04/r18/PREVIEW_QUERY_v2.txt"
     },
     "usage_note": "all five workers hit the 5-hour usage limit at ~04:40 UTC 2026-11-19 (reset 07:20); environment closed 02:57-~18:00 UTC; s04, s04tex, s05 resumed 18:07 UTC"
+  },
+  "round19": {
+    "lead": "ccr-d00ac5ec-gabdsh",
+    "started_utc": "2026-11-19T19:05Z",
+    "map": "docs/briefs/2026-11-19-r19/COORDINATION.md",
+    "setup": "docs/briefs/2026-11-19-r19/setup_worker.sh",
+    "workers": {
+      "s04": {
+        "branch": "claude/rainbow-s04-match-c19",
+        "from": "a6219412 + WIP step 5 m04nwq/m04nwr",
+        "agent": "foam-bubbles-particles",
+        "worktree": "/home/user/wt/s04",
+        "state": "RUNNING",
+        "next": "finish step 5 steering-smear fix; then m04sswirl, foam colour, glitches"
+      },
+      "s04tex": {
+        "branch": "claude/rainbow-s04-ringtex-c19",
+        "from": "617556fd (K8) + WIP step 9 top-third band",
+        "agent": "washer-environment-modeler",
+        "worktree": "/home/user/wt/s04b",
+        "state": "RUNNING",
+        "next": "finish step 9; steering seam check; pink haze ring 0"
+      },
+      "s05": {
+        "branch": "claude/rainbow-s05-match-c19",
+        "from": "ef5dd0cd (step 2 code committed)",
+        "agent": "water-fx-specialist",
+        "worktree": "/home/user/wt/s05",
+        "state": "RUNNING",
+        "next": "re-render step 2 proof set; then near water / near walls at end of 05"
+      },
+      "s06": {
+        "state": "STOPPED (not restarted; usage for 04/05)",
+        "resume": "claude/rainbow-s06-match-c18 @ c649fcbc + backups/wip/claude__rainbow-s06-match-c18/"
+      },
+      "s07": {
+        "state": "STOPPED (not restarted; usage for 04/05)",
+        "resume": "claude/rainbow-s07-match-c18 @ 8accdad0"
+      },
+      "s08": {
+        "state": "PAUSED by the user"
+      },
+      "preview04": {
+        "state": "lead builds v3 from newest s04 + s04tex + m04end refit",
+        "v2": "claude/rainbow-s04-preview-c18 @ c338978b"
+      }
+    },
+    "if_cut_off": "-c20 branches from each newest -c19 tip + backups/wip/<branch>/ snapshot"
   }
 }

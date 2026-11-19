@@ -741,3 +741,145 @@ All three snapshots match GitHub. Next: write the restart script, protect the ol
 
 > 🔧 **Bash** `{"command": "pkill -f \"^git fetch origin$\" 2>/dev/null; sleep 1; rm -f .git/shallow.lock 2>/dev/null; mkdir -p /home/user/wt && for w in s04-match:/home/user/wt/s04 s04-ringtex:/home/user/wt/s04b s05-match:/home/user/wt/s05; do bash docs/briefs/2026-11-19-r19/setup_worker.sh ${w%%:*} ${w#*:} 2>&1 | tail -5; done", "description": "Build the three -c19 worker worktrees", "timeout": 600000}`
 
+### 🧑 User — 2026-11-19T19:27:57.974Z
+
+> ↩︎ result: s04-match: worktree /home/user/wt/s04 on claude/rainbow-s04-match-c19 (sparse), WIP restored: 2 modified, 20 untracked files
+> s04-match: pushed claude/rainbow-s04-match-c19 = a6219412 (a6219412)
+> s04-match: size 1.8G
+> s04-match: READY
+> s04-ringtex: worktree /home/user/wt/s04b on claude/rainbow-s04-ringtex-c19 (sparse), WIP restored: 1 modified, 12 untracked files
+> s04-ringtex: pushed claude/rainbow-s04-ringtex-c19 = 617556fd (617556fd)
+> s04-ringtex: size 1.7G
+> s04-ringtex: READY
+> s05-match: worktree /home/user/wt/s05 on claude/rainbow-s05-match-c19 (sparse), WIP restored: 1 modified, 4 untracked files
+> s05-match: pushed claude/rainbow-s05-match-c19 = ef5dd0cd (ef5dd0cd)
+> s05-match: size 1.1G
+> s05-match: READY
+
+### 🤖 Claude — 2026-11-19T19:28:02.699Z
+
+> 🔧 **Bash** `{"command": "for d in s04 s04b s05; do echo \"== $d\"; git -C /home/user/wt/$d status --short | grep -v node_modules | head -25; git -C /home/user/wt/$d diff --stat | tail -3; done; head -c 200 /home/user/wt/s04b/assets/textures/match04/tile_ring_paint_var.png | file -", "description": "Show restored unfinished edits per worker"}`
+
+### 🧑 User — 2026-11-19T19:28:02.853Z
+
+> ↩︎ result: == s04
+>  M qa/match/04/r18/PROGRESS.md
+>  M src/world/match04m4.ts
+> ?? qa/match/04/r18/s5_nwfix/
+>  qa/match/04/r18/PROGRESS.md | 17 +++++++++++++++++
+>  src/world/match04m4.ts      | 25 ++++++++++++++++++++++++-
+>  2 files changed, 41 insertions(+), 1 deletion(-)
+> == s04b
+>  M src/world/match04m4.ts
+> ?? qa/match/04/r18/ringpaint/step9_crisp/
+>  src/world/match04m4.ts | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> == s05
+>  M qa/capture_log.json
+> ?? qa/match/05/r18/step2_wall/
+>  qa/capture_log.json | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+> /dev/stdin: PNG image data, 2048 x 480, 8-bit/color RGB, non-interlaced
+
+### 🤖 Claude — 2026-11-19T19:28:05.457Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents && for a in a4d2f0802b168dc00 a4d781f95da91db00 a2d313570ebdd2fd2; do echo \"=================== $a\"; python3 - \"agent-$a.md\" <<'EOF'\nimport re,sys\nt=open(sys.argv[1]).read()\nparts=re.split(r'\\n### (🧑 User|🤖 Claude) — (\\S+)\\n',t)\nout=[]\nfor i in range(1,len(parts)-2,3):\n    who,ts,body=parts[i],parts[i+1],parts[i+2].strip()\n    if who.startswith('🤖') and not body.startswith('>'):\n        out.append(ts+' | '+body[:700].replace('\\n',' '))\nprint('\\n'.join(out[-8:]))\nEOF\ndo …[+59 chars]`
+
+### 🧑 User — 2026-11-19T19:28:05.580Z
+
+> ↩︎ result: =================== a4d2f0802b168dc00
+> 2026-11-19T18:26:32.727Z | My foam clip is clean: the low banks slide past world-anchored, with no popping. I'll commit the low-foam step first, then reproduce the steering glitch the lead found.
+> 2026-11-19T18:27:02.816Z | Reproducing glitch (1): the lead's 4-second recipe with my kept set, rendering only the first 2.3 s (the Screen 04 part).
+> 2026-11-19T18:31:38.666Z | Type-check clean. Testing the steering clip (first 2.3 s) with `&m04nwq=1&m04nwr=3.2`.
+> 2026-11-19T18:45:55.808Z | Start view unchanged (0 px). Now check the stills against BEFORE, to make sure the radius limit hasn't flattened the accepted whirl.
+> 2026-11-19T18:48:03.838Z | While that renders, glitch (2): the coin drawn over Benny at about 2.0 s. Let me check how coins draw at pickup, to tell whether it is scenery or water (mine) or the normal pickup effect.
+> 2026-11-19T18:48:28.809Z | While the renders finish, I'll draft the step-5 log entry.
+> 2026-11-19T18:48:43.562Z | Still rendering the clip. I'll wait for the task to finish.
+> 2026-11-19T18:54:55.394Z | You've hit your 5-hour limit · resets 11pm (UTC)
+> =================== a4d781f95da91db00
+> 2026-11-19T18:25:14.324Z | The clip cover …[+2438 chars]
+
+### 🤖 Claude — 2026-11-19T19:28:13.164Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; cat \"$S/prompt_Screen_04_painted_rings_r18.txt\"; echo; echo =====; git -C /home/user/wt/s05 log --oneline -4; git -C /home/user/wt/s04b log --oneline -2; git -C /home/user/wt/s04 log --oneline -2; tail -20 /home/user/wt/s04/qa/match/04/r18/PROGRESS.md", "description": "Read full previous rings prompt and worker logs"}`
+
+### 🧑 User — 2026-11-19T19:28:13.220Z
+
+> ↩︎ result: You are the Rainbow project's `washer-environment-modeler`, round 18, resuming the Screen 04 PAINTED-RING test ("s04tex"), VISUALS ONLY. The previous session's environment closed at ~21:11 UTC 2026-11-18 while you were mid-step; you continue exactly where you stopped.
+> 
+> WHERE YOU WORK
+> * Git worktree `/home/user/wt/s04b`, branch `claude/rainbow-s04-ringtex-c18` (already pushed; = the newest `-c17` tip `0f275af1` + your unfinished account-17 edit restored UNCOMMITTED: `src/world/match04m4.ts` +22, `tools/match04/ring_paint04.py` +5, new `tools/match04/ring_paint04_var.py`, `assets/textures/match04/tile_ring_paint_var.png` + `_soft.png`). Dev-server / tool port 5274.
+> * Commit and `git push -u origin claude/rainbow-s04-ringtex-c18` after every step and at each safe milestone. Push ONLY that branch; never force-push / rebase / merge; never write any `-c17` or older branch. Another worker edits `/home/user/wt/s04` (same file `match04m4.ts`, other code region) — never touch that worktree or any other worktree. `/home/user/rainbow-` is the lead checkout: read-only for you.
+> 
+> READ FIRST, in this order (absolute paths, the lead checkout):
+> 1. `/home/user/rainbow-/docs/briefs/2026-11-19-r18/RESU …[+5507 chars]
+
+### 🤖 Claude — 2026-11-19T19:28:24.932Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; sed -n '/^RULES/,$p' \"$S/prompt_Screen_05_left_wall_r18.txt\"; nproc; free -g | head -2; ls /home/user/wt/s04b/qa/match/04/r18/ringpaint/step9_crisp/ | head; tail -12 /home/user/wt/s04b/qa/match/04/r18/ringpaint/NOTES.md; tail -15 /home/user/wt/s05/qa/match/05/r18/PROGRESS.md", "description": "Read s05 rules, machine size, ring and 05 notes"}`
+
+### 🧑 User — 2026-11-19T19:28:24.993Z
+
+> ↩︎ result: RULES: every change is a URL switch, default build unchanged; approved start view unchanged (locked view 0 px: `node scripts/capture.mjs 05 --q=...`; Pixelmatch on game screenshots: `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536`); never change Benny, coins (91 / 2,240, gameplay 8/8), physics, input, HUD, camera framing or other screens; `references/*.png` and `references/water/` unchanged; never the oval / enlarged "big tunnel"; no paid jobs; do not reinstall tools (never `playwright install`); never commit or print secrets. Five workers share 4 CPU cores: render only the shots you need, clips at half size.
+> 
+> PROOF + REPORTING: separate full-size APPROVED / BEFORE / NEW pictures from the real game (no collages), plain visual words, verdict GOOD IMPROVEMENT / NOT AN IMPROVEMENT / NOT YET PROVEN. Log in `qa/match/05/r18/PROGRESS.md`. After each finished step: commit + push, then SendMessage to "main" with: step + URL switch, commit SHA, verdict, absolute folder of the NEW pictures, and the single most visible remaining difference. Keep it short, then continue with the next task without waiting. If blocked, tell "main" and continue with something els …[+3285 chars]
+
+### 🤖 Claude — 2026-11-19T19:28:31.943Z
+
+Everything is in place. Writing the Round 19 map (so a future session can pick this up too), then restarting the three workers.
+
+### 🤖 Claude — 2026-11-19T19:28:44.104Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-19-r19/COORDINATION.md", "content": "# Round 19 — coordination (new account, lead `ccr-d00ac5ec-gabdsh`, started 2026-11-19 19:05 UTC)\n\nThe r18 lead `ccr-ae71d3a5-80naq2` and all its workers stopped at the 5-hour usage limit at 18:54–18:55 UTC (last lead\nsaves 18:56 `74839a0` + 19:04 `20e2a73` — the 19:04 save holds only backup bookkeeping, nothing to merge). User at 19:25 UTC:\n\"continue on where we're at in the chat\". Nothing merged; r18 lead + every `-c18` branch added to `protected_branches`.\n\n## Services verified at start (free …[+2434 chars]`
+
+### 🧑 User — 2026-11-19T19:28:44.309Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-19-r19/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T19:29:02.572Z
+
+> 🔧 **Agent** `{"description": "Screen 04 water r19", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the Rainbow project's `foam-bubbles-particles` specialist, round 19, resuming Screen 04 \"Through the Five Arrows\" (\"s04\"), VISUALS ONLY. The previous account ran out of usage at 18:54 UTC 2026-11-19 while you were mid-step; you continue exactly where you stopped. (You are a fresh agent: your earlier self's transcript is at `/home/user/rainbow-/backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents/agent-a4d2f0802b168dc00.md` — read its LAST part fo …[+4382 chars]`
+
+### 🧑 User — 2026-11-19T19:29:02.618Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a249104efbd37e2de (internal ID - do not mention to user. Use SendMessage with to: 'a249104efbd37e2de', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/a249104efbd37e2de.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T19:29:17.873Z
+
+> 🔧 **Agent** `{"description": "Screen 04 rings r19", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Rainbow project's `washer-environment-modeler`, round 19, resuming the Screen 04 PAINTED-RING test (\"s04tex\"), VISUALS ONLY. The previous account ran out of usage at 18:55 UTC 2026-11-19 while you were mid-step; you continue exactly where you stopped. (You are a fresh agent: your earlier self's transcript is at `/home/user/rainbow-/backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents/agent-a4d781f95da91db00.md` — read its LAST part for deta …[+4366 chars]`
+
+### 🧑 User — 2026-11-19T19:29:17.905Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a2214992a787bfd99 (internal ID - do not mention to user. Use SendMessage with to: 'a2214992a787bfd99', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/a2214992a787bfd99.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T19:29:34.479Z
+
+> 🔧 **Agent** `{"description": "Screen 05 left wall r19", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Rainbow project's `water-fx-specialist`, acting as the Screen 05 \"Flow Into the Current\" visual worker (\"s05\"), round 19, VISUALS ONLY. The previous account ran out of usage at 18:55 UTC 2026-11-19 while you were mid-step; you continue exactly where you stopped. (You are a fresh agent: your earlier self's transcript is at `/home/user/rainbow-/backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents/agent-a2d313570ebdd2fd2.md` — read its LAST par …[+4590 chars]`
+
+### 🧑 User — 2026-11-19T19:29:34.501Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad5dec093271e0603 (internal ID - do not mention to user. Use SendMessage with to: 'ad5dec093271e0603', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/ad5dec093271e0603.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T19:29:36.685Z
+
+All three workers are running again. Recording their state in the status file and saving.
+
+### 🤖 Claude — 2026-11-19T19:29:44.287Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\na=json.load(open(p))\na['updated_utc']='2026-11-19T19:40Z'\na['round19']={\n 'lead':'ccr-d00ac5ec-gabdsh','started_utc':'2026-11-19T19:05Z',\n 'map':'docs/briefs/2026-11-19-r19/COORDINATION.md','setup':'docs/briefs/2026-11-19-r19/setup_worker.sh',\n 'workers':{\n  's04':{'branch':'claude/rainbow-s04-match-c19','from':'a6219412 + WIP step 5 m04nwq/m04nwr','agent':'foam-bubbles-particles','worktree':'/home/user/wt/s04','state':'RUNNING','next':'finish step 5 steering-smear fix; then m04sswirl, foam colour, glitches'},\n …[+1393 chars]`
+
