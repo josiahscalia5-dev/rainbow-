@@ -35,3 +35,14 @@ BEFORE (v3) / NOW in motion. If this account runs out: `-c22` branches from each
 ## Progress shown to the user
 | # | Screen / step | Verdict |
 |---|---|---|
+
+## ~23:50 UTC user: Benny must be a "100%" match of the approved Benny — fur texture + pink colour first, in EVERY state
+User: "Make sure Benny looks a lot more like the approved screen's Benny pink character ... Like the fur, the pink texture, like
+the color of the texture ... I want it to look like the 100% everything about the pink character from my approved screen ...
+All of this states as well." (= start, swimming, steering, every screen). Relayed to the Benny worker with the lead's fur
+measurement (04 start close-up, body below the cuff, HSV): APPROVED mean RGB (200,70,146), hue ~324°, sat median 0.66,
+brightness p10/50/90 0.57/0.80/0.98 · GAME v3 (255,92,179), hue 328°, brightness 1.00/1.00/1.00 (clipped, no shadow) · benny05
+(247,107,194), brightness 0.89/1.00/1.00 · worker probe b3 too saturated (sat median 0.79). Hue is right; the neon look = flat
+clipped brightness. Target: the approved brightness spread (deep rose creases / underside → bright tips), saturation ≤ approved;
+very fine dense silky strands combed downward in soft overlapping layers (worker probes b3/b4 read as stiff petals: rejected
+direction). Fur first, then hat / pompom / star.

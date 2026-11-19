@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/benny",
  "branch": "claude/rainbow-benny-c21",
  "head": "8fb1b91ad76420152f2f28e324c0c8abc9548caf",
- "time": "2026-11-19T23:44:07+00:00",
+ "time": "2026-11-19T23:46:03+00:00",
  "dirty_tracked": [
   "src/characters/benny/runtime.ts",
   "tools/benny20/shots.mjs"
@@ -18,6 +18,8 @@
   "qa/benny/r20/probe/b/b6_pomcol_mask.png",
   "qa/benny/r20/probe/b/b7_knitcol_mask.png",
   "qa/benny/r20/probe/b/probe.json",
+  "qa/benny/r20/probe/c/c0_base_mask.png",
+  "qa/benny/r20/probe/c/c1_k0.08_mask.png",
   "qa/benny/r20/t1/before/closeup_f00.png",
   "qa/benny/r20/t1/before/closeup_f03_forward3u.png",
   "qa/benny/r20/t1/before/closeup_s_left_steer.png",
@@ -57,6 +59,8 @@
   "qa/benny/r20/probe/b/b5_shade.png",
   "qa/benny/r20/probe/b/b6_pomcol.png",
   "qa/benny/r20/probe/b/b7_knitcol.png",
+  "qa/benny/r20/probe/c/c0_base.png",
+  "qa/benny/r20/probe/c/c1_k0.08.png",
   "qa/benny/r20/t1/before/f00_start.png",
   "qa/benny/r20/t1/before/f03_forward3u.png",
   "qa/benny/r20/t1/before/s05_start.png",

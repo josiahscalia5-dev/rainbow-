@@ -1588,3 +1588,51 @@ Now a chained variant run (each builds on the previous one) for geometry and fur
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && cat > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/v2.json <<'EOF'\n[\n {\"name\": \"b1_hatdrop\", \"js\": \"B.hat.position.y -= 0.24;\"},\n {\"name\": \"b2_pom\", \"js\": \"B.pom.scale.multiplyScalar(0.86);\"},\n {\"name\": \"b3_furcol\", \"js\": \"const f=B.furs.find(f=>f.mesh.name==='fur_body'); f.material.color.set('#b5508a'); for (const a of B.furs.filter(f=>/arm/.test(f.mesh.name))) a.material.color.set('#b5508a');\"},\n {\"name\": \"b4_lock24\", \"js\": \"const f=B.furs.find(f=>f.mesh.name==='fur_body'); f.unifo …[+1434 chars]`
 
+### 🧑 User — 2026-11-19T23:44:09.664Z
+
+> ↩︎ result: at 04 s 78.397
+> variant b1_hatdrop 13004 ms
+> variant b2_pom 11884 ms
+> variant b3_furcol 13436 ms
+> variant b4_lock24 12030 ms
+> variant b5_shade 12153 ms
+> variant b6_pomcol 15557 ms
+> variant b7_knitcol 16254 ms
+> b1_hatdrop
+> {'iou_all': 0.734, 'iou_hat': 0.7664, 'iou_fur': 0.4629, 'cuff_bottom_c': [1259, 1271], 'pom_bbox': [322, 518, 943, 1130], 'hat_bbox': [[242, 564, 943, 1260], [188, 591, 965, 1289]]}
+> {'med_fur': [255, 64, 168, 'L p10/50/90 [126, 161, 188]'], 'med_pom': [184, 76, 255, 'L p10/50/90 [143, 172, 192]'], 'med_cuff': [157, 28, 255, 'L p10/50/90 [131, 147, 166]'], 'med_crown': [247, 190, 255, 'L p10/50/90 [157, 229, 250]'], 'med_star': [255, 181, 88, 'L p10/50/90 [155, 175, 193]']}
+> b2_pom
+> {'iou_all': 0.7404, 'iou_hat': 0.7777, 'iou_fur': 0.4629, 'cuff_bottom_c': [1259, 1271], 'pom_bbox': [337, 504, 958, 1116], 'hat_bbox': [[242, 564, 958, 1260], [188, 591, 965, 1289]]}
+> {'med_fur': [255, 64, 168, 'L p10/50/90 [126, 161, 188]'], 'med_pom': [183, 75, 255, 'L p10/50/90 [143, 172, 192]'], 'med_cuff': [157, 28, 255, 'L p10/50/90 [131, 147, 166]'], 'med_crown': [245, 188, 255, 'L p10/50/90 [157, 228, 250]'], 'med_star': [255, 181, 88, 'L p10/50/90 [155, 175, 193]']}
+> b3_furcol
+> {'iou_all': …[+2425 chars]
+
+### 🤖 Claude — 2026-11-19T23:44:18.734Z
+
+The fur albedo change barely moved the rendered colour: the red channel stays clipped at 255 through the 04 post chain. I'll look at b7 visually, then run a colour calibration sweep.
+
+### 🤖 Claude — 2026-11-19T23:44:20.330Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I tools/benny20/crop.py qa/benny/r20/probe/b/b7_knitcol.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/b7.png", "description": "Crop b7 variant"}`
+
+### 🧑 User — 2026-11-19T23:44:20.798Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:44:21.284Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/b7.png"}`
+
+### 🧑 User — 2026-11-19T23:44:21.320Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:44:54.880Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\nimport json\nbase = (\"B.hat.position.y -= 0.31; B.pom.scale.multiplyScalar(0.86);\"\n        \"for (const f of B.furs) { if (f.mesh.name==='fur_body') { f.uniforms.uLock.value.set(24,0.8,0.62,140); f.uniforms.uShade.value.set(0.3,0.3,0.5,0.4); f.uniforms.uGravity.value=0.3; f.uniforms.uFurLen.value=0.13; } \"\n        \"if (f.mesh.name==='fur_pom') { f.uniforms.uLock.value.set(40,0.75,1,220); } }\")\nv = [{\"name\": \"c0_base\", \"js\": base}]\nfor i, k in enumerate([0.08, 0.18, 0.35, 0.6]):\n    js = (f\"for (const f of B.furs) if (f. …[+1183 chars]`
+
+### 🧑 User — 2026-11-19T23:45:46.646Z
+
+> ↩︎ result: Command was moved to the background (ID: bb1nv3y6x) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bb1nv3y6x.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
