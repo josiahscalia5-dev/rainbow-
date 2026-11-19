@@ -1,0 +1,19 @@
+{
+  "retained": {
+    "branch": "claude/rainbow-s05-match-c17",
+    "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+  },
+  "path": "references/05_flow_into_the_current.png",
+  "gitBlob": "0ec66892cb4da4c799b10d82141657dfea42aab2",
+  "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+  "bytes": 484196,
+  "size": [
+    864,
+    1536
+  ],
+  "originalEncoding": "JPEG",
+  "lfsHydrated": false,
+  "manifestReferenceCount": 13,
+  "verifiedSameBytesAsExperimentAndPhone": true,
+  "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/f033f7cc895752907621f82fb9d6bee4899ac0e0/references/05_flow_into_the_current.png"
+}

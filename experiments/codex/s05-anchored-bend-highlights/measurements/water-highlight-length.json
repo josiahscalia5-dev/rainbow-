@@ -1,0 +1,83 @@
+{
+  "method": "Native x 128..735, y 1040..1489. Restrict to cyan pixels where green-red >38, blue-red >40, green >78 and blue >100. Count vertical contiguous runs at least 4 px, with luma >150 and >8 brighter than local cyan-weighted luma (Gaussian sigma 12 px, support above 0.8). Directions projected into the image depend on the bend. These counts describe bright paint in this crop, not approval or similarity.",
+  "poses": {
+    "last-left-bend": {
+      "retained": {
+        "cyanMaskPixels": 153028,
+        "highlightPixels": 16899,
+        "verticalRunsAtLeast4px": 951,
+        "verticalRun95thPx": 54.0,
+        "verticalRunsOver30px": 131,
+        "longestVerticalRunPx": 89
+      },
+      "parent": {
+        "cyanMaskPixels": 153028,
+        "highlightPixels": 16899,
+        "verticalRunsAtLeast4px": 951,
+        "verticalRun95thPx": 54.0,
+        "verticalRunsOver30px": 131,
+        "longestVerticalRunPx": 89
+      },
+      "new": {
+        "cyanMaskPixels": 153028,
+        "highlightPixels": 20289,
+        "verticalRunsAtLeast4px": 1349,
+        "verticalRun95thPx": 35.59999999999991,
+        "verticalRunsOver30px": 122,
+        "longestVerticalRunPx": 170
+      }
+    },
+    "last-right-bend": {
+      "retained": {
+        "cyanMaskPixels": 153172,
+        "highlightPixels": 19521,
+        "verticalRunsAtLeast4px": 1517,
+        "verticalRun95thPx": 26.0,
+        "verticalRunsOver30px": 33,
+        "longestVerticalRunPx": 107
+      },
+      "parent": {
+        "cyanMaskPixels": 153172,
+        "highlightPixels": 19521,
+        "verticalRunsAtLeast4px": 1517,
+        "verticalRun95thPx": 26.0,
+        "verticalRunsOver30px": 33,
+        "longestVerticalRunPx": 107
+      },
+      "new": {
+        "cyanMaskPixels": 152798,
+        "highlightPixels": 15234,
+        "verticalRunsAtLeast4px": 1259,
+        "verticalRun95thPx": 25.0,
+        "verticalRunsOver30px": 40,
+        "longestVerticalRunPx": 73
+      }
+    },
+    "last-in-stage": {
+      "retained": {
+        "cyanMaskPixels": 189171,
+        "highlightPixels": 15351,
+        "verticalRunsAtLeast4px": 1506,
+        "verticalRun95thPx": 17.0,
+        "verticalRunsOver30px": 0,
+        "longestVerticalRunPx": 25
+      },
+      "parent": {
+        "cyanMaskPixels": 189171,
+        "highlightPixels": 15351,
+        "verticalRunsAtLeast4px": 1506,
+        "verticalRun95thPx": 17.0,
+        "verticalRunsOver30px": 0,
+        "longestVerticalRunPx": 25
+      },
+      "new": {
+        "cyanMaskPixels": 189171,
+        "highlightPixels": 15351,
+        "verticalRunsAtLeast4px": 1506,
+        "verticalRun95thPx": 17.0,
+        "verticalRunsOver30px": 0,
+        "longestVerticalRunPx": 25
+      }
+    }
+  }
+}
