@@ -1,0 +1,175 @@
+{
+  "when": "2026-11-15T22:13:58.191Z",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "shots": [
+    {
+      "id": "03",
+      "file": "qa/pilot05/wave5/foam/regress/03.png",
+      "size": [
+        727,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "03",
+        "s": 48.49515264641385,
+        "y": -13.425452851565133
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "03",
+        "s": 48.495,
+        "lat": 0.3,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -13.425,
+        "bennyVisible": true,
+        "cam": [
+          -0.36,
+          -8.77,
+          -19.15
+        ]
+      },
+      "stats": {
+        "fps": 61.9,
+        "calls": 152,
+        "triangles": 736696,
+        "geometries": 108,
+        "textures": 41,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923435286779
+      }
+    },
+    {
+      "id": "04",
+      "file": "qa/pilot05/wave5/foam/regress/04.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "04",
+        "s": 77.41308465825975,
+        "y": -21.895735537052705
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "04",
+        "s": 77.413,
+        "lat": 0,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -21.896,
+        "bennyVisible": true,
+        "cam": [
+          0.72,
+          -14.48,
+          -15.82
+        ]
+      },
+      "stats": {
+        "fps": 64,
+        "calls": 154,
+        "triangles": 736784,
+        "geometries": 110,
+        "textures": 41,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923435286779
+      }
+    },
+    {
+      "id": "06",
+      "file": "qa/pilot05/wave5/foam/regress/06.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "06",
+        "s": 198.9241011105758,
+        "y": -37.451722448012504
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 198.924,
+        "lat": 0,
+        "coins": 1680,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -37.452,
+        "bennyVisible": true,
+        "cam": [
+          0.98,
+          -38.81,
+          -132.8
+        ]
+      },
+      "stats": {
+        "fps": 60.1,
+        "calls": 128,
+        "triangles": 551701,
+        "geometries": 90,
+        "textures": 41,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923435286779
+      }
+    },
+    {
+      "id": "07",
+      "file": "qa/pilot05/wave5/foam/regress/07.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 273.05708282125045,
+        "y": -49.65895895311968
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 273.057,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -49.659,
+        "bennyVisible": true,
+        "cam": [
+          10.93,
+          -45.6,
+          -195.35
+        ]
+      },
+      "stats": {
+        "fps": 60.3,
+        "calls": 237,
+        "triangles": 669219,
+        "geometries": 189,
+        "textures": 52,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923435286779
+      }
+    }
+  ],
+  "errors": []
+}
