@@ -667,3 +667,412 @@ I'll render task 1 fresh into `qa/benny/r20/t1/`: 04 shots with the exact v3 que
 > ↩︎ result: 33:} finally { writeFileSync(`${OUT}/${process.env.B20_LOG ?? 'shots.json'}`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }
 > 13:  B20_LOG=shots_other.json B20_SHOTS="$SO" node tools/benny20/shots.mjs $O/$v "$B57$ext" 2>&1 | grep -v "^console warning" | tail -8
 
+### 🤖 Claude — 2026-11-19T23:33:20.103Z
+
+> 🔧 **Bash** `{"command": "bash /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/bin/t1.sh > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log 2>&1", "description": "Render task-1 shots in background", "run_in_background": true}`
+
+### 🧑 User — 2026-11-19T23:33:20.135Z
+
+> ↩︎ result: Command running in background with ID: bvuek5rmy. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bvuek5rmy.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-19T23:33:21.465Z
+
+While that renders, I'll study the approved Screen 04 Benny at native resolution.
+
+### 🤖 Claude — 2026-11-19T23:33:23.223Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nfor n in ['04_through_the_five_arrows','05_flow_into_the_current','06_crest_the_rinse_arch','07_dive_the_washer_tube','08_final_spin_chamber']:\n    im=Image.open(f'references/{n}.png'); print(n, im.size, im.mode)\n\"; git show 1b813c8:qa/pilot05/full_reference_match/benny/NOTES.md | head -120", "description": "Reference sizes and benny05 bake notes"}`
+
+### 🧑 User — 2026-11-19T23:33:23.558Z
+
+> ↩︎ result: 04_through_the_five_arrows (864, 1536) RGB
+> 05_flow_into_the_current (864, 1536) RGB
+> 06_crest_the_rinse_arch (864, 1536) RGB
+> 07_dive_the_washer_tube (864, 1536) RGB
+> 08_final_spin_chamber (864, 1536) RGB
+> # Benny (benny05) — Screen 05 full reference match · benny-character-artist
+> 
+> STATUS: DONE for this run (RESUMED RUN #3, session 01Q46SCH, 2026-11-17 ~02:00 UTC) — fur colour, knitted beanie, pom-pom,
+> gold star and the character-texture bake are finished, measured in REAL captures and checked in motion / on 03, 04, 06.
+> Switch: `benny05` (`?benny05=1` or `?match05=1`). `npx tsc --noEmit -p .` rc 0 after every edit. Final summary: section 0.
+> 
+> ## 0. FINAL RESULT (all numbers from REAL `scripts/capture.mjs 05` captures, `tools/match05/metrics.py`, same masks)
+> BEFORE = `before.png` (STACK; re-captured 02:00 UTC: still 0 px different) · NEW = `new.png` (STACK + `benny05=1`,
+> = `cap/new_f5/05.png`; metrics `NEW_REGION_METRICS.json`, `NEW_FULL_FRAME_METRICS.json`).
+> | | mean abs ΔRGB | ≤10 | ≤20 | SSIM (lum) |
+> |---|---:|---:|---:|---:|
+> | Benny + hat region (93,061 px) BEFORE → NEW | **49.71 → 19.24** | 6.6 % → 58.7 % | **23.5 % → 73.0 %** | 0.087 → 0.655 |
+> | whole frame (1,327,104 px) BEFORE →  …[+10458 chars]
+
+### 🤖 Claude — 2026-11-19T23:33:26.726Z
+
+> 🔧 **Bash** `{"command": "git ls-tree -r --name-only refs/keep/benny05-bake -- qa/pilot05/full_reference_match/benny 2>/dev/null | head -80 || git ls-tree -r --name-only 1b813c8 -- qa/pilot05/full_reference_match/benny | head -80", "description": "List benny05 bake work files in commit"}`
+
+### 🧑 User — 2026-11-19T23:33:26.836Z
+
+> ↩︎ result: qa/pilot05/full_reference_match/benny/NEW_FULL_FRAME_METRICS.json
+> qa/pilot05/full_reference_match/benny/NEW_REGION_METRICS.json
+> qa/pilot05/full_reference_match/benny/NOTES.md
+> qa/pilot05/full_reference_match/benny/before.png
+> qa/pilot05/full_reference_match/benny/bennyseg.py
+> qa/pilot05/full_reference_match/benny/cap/before/05.png
+> qa/pilot05/full_reference_match/benny/cap/before/FULL_FRAME_METRICS.json
+> qa/pilot05/full_reference_match/benny/cap/before/REGION_METRICS.json
+> qa/pilot05/full_reference_match/benny/cap/before_low/05.png
+> qa/pilot05/full_reference_match/benny/cap/before_low/FULL_FRAME_METRICS.json
+> qa/pilot05/full_reference_match/benny/cap/before_low/REGION_METRICS.json
+> qa/pilot05/full_reference_match/benny/cap/before_mask/05.png
+> qa/pilot05/full_reference_match/benny/cap/hide/05.png
+> qa/pilot05/full_reference_match/benny/cap/new/05.png
+> qa/pilot05/full_reference_match/benny/cap/new/FULL_FRAME_METRICS.json
+> qa/pilot05/full_reference_match/benny/cap/new/REGION_METRICS.json
+> qa/pilot05/full_reference_match/benny/cap/new_an16/05.png
+> qa/pilot05/full_reference_match/benny/cap/new_an16/FULL_FRAME_METRICS.json
+> qa/pilot05/full_reference_match/benny/cap/new_an16/REGION_METRICS.json
+> qa/pilot05 …[+3688 chars]
+
+### 🤖 Claude — 2026-11-19T23:33:28.234Z
+
+> 🔧 **Bash** `{"command": "git ls-tree -r --name-only 1b813c8 -- qa/pilot05/full_reference_match/benny | sed -n 80,200p", "description": "List remaining benny05 bake files"}`
+
+### 🧑 User — 2026-11-19T23:33:28.270Z
+
+> ↩︎ result: qa/pilot05/full_reference_match/benny/work/b2/tex/brim.png
+> qa/pilot05/full_reference_match/benny/work/b2/tex/brim_n.png
+> qa/pilot05/full_reference_match/benny/work/b2/tex/brim_seen.png
+> qa/pilot05/full_reference_match/benny/work/b2/tex/crown.png
+> qa/pilot05/full_reference_match/benny/work/b2/tex/crown_n.png
+> qa/pilot05/full_reference_match/benny/work/b2/tex/crown_seen.png
+> qa/pilot05/full_reference_match/benny/work/b2/tex/pom.png
+> qa/pilot05/full_reference_match/benny/work/b2/tex/pom_seen.png
+> qa/pilot05/full_reference_match/benny/work/b3/calA.png
+> qa/pilot05/full_reference_match/benny/work/b3/calC.png
+> qa/pilot05/full_reference_match/benny/work/b3/calD.png
+> qa/pilot05/full_reference_match/benny/work/b3/calE.png
+> qa/pilot05/full_reference_match/benny/work/b3/restore.png
+> qa/pilot05/full_reference_match/benny/work/b3/shot0.png
+> qa/pilot05/full_reference_match/benny/work/b3/uv.f32
+> qa/pilot05/full_reference_match/benny/work/bake.py
+> qa/pilot05/full_reference_match/benny/work/bands.py
+> qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs
+> qa/pilot05/full_reference_match/benny/work/f1/in/armL.png
+> qa/pilot05/full_reference_match/benny/work/f1/in/armR.png
+> qa/pilot05/full_reference_match/benny/work/f …[+5738 chars]
+
+### 🤖 Claude — 2026-11-19T23:33:33.452Z
+
+Let me look at the approved 04 Benny at native resolution in detail (hat and fur separately, 2x).
+
+### 🤖 Claude — 2026-11-19T23:33:35.893Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/04_through_the_five_arrows.png')\nim.crop((230,960,560,1180)).resize((660,440),Image.LANCZOS).save('$S/ap04_hat2x.png')\nim.crop((200,1160,600,1400)).resize((800,480),Image.LANCZOS).save('$S/ap04_fur2x.png')\n\"", "description": "Crop approved 04 hat and fur at 2x"}`
+
+### 🧑 User — 2026-11-19T23:33:36.292Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:33:37.140Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_hat2x.png"}`
+
+### 🧑 User — 2026-11-19T23:33:37.165Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:33:37.759Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap04_fur2x.png"}`
+
+### 🧑 User — 2026-11-19T23:33:37.808Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:33:44.818Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log; ls /home/user/wt/benny/qa/benny/r20/t1/* 2>/dev/null; uptime", "description": "Check task-1 render progress"}`
+
+### 🧑 User — 2026-11-19T23:33:44.935Z
+
+> ↩︎ result: 23:33:44 up 17 min,  0 user,  load average: 4.46, 1.39, 0.59
+
+### 🤖 Claude — 2026-11-19T23:33:47.159Z
+
+Measuring the approved 04 Benny's vertical bands along his centre column.
+
+### 🤖 Claude — 2026-11-19T23:33:49.070Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('references/04_through_the_five_arrows.png').convert('RGB')).astype(int)\nx=400\nprev=None\nfor y in range(950,1420,4):\n    r,g,b=a[y,x-3:x+4].mean(0).astype(int)\n    print(y,(r,g,b))\n\" | paste - - - | head -50", "description": "Sample approved colours down Benny's centre column"}`
+
+### 🧑 User — 2026-11-19T23:33:49.947Z
+
+> ↩︎ result: 950 (np.int64(157), np.int64(234), np.int64(251))	954 (np.int64(205), np.int64(244), np.int64(247))	958 (np.int64(195), np.int64(247), np.int64(253))
+> 962 (np.int64(17), np.int64(190), np.int64(245))	966 (np.int64(10), np.int64(170), np.int64(247))	970 (np.int64(123), np.int64(172), np.int64(247))
+> 974 (np.int64(230), np.int64(223), np.int64(250))	978 (np.int64(250), np.int64(224), np.int64(251))	982 (np.int64(251), np.int64(210), np.int64(252))
+> 986 (np.int64(251), np.int64(165), np.int64(251))	990 (np.int64(239), np.int64(128), np.int64(251))	994 (np.int64(214), np.int64(106), np.int64(249))
+> 998 (np.int64(195), np.int64(86), np.int64(247))	1002 (np.int64(209), np.int64(110), np.int64(246))	1006 (np.int64(192), np.int64(83), np.int64(248))
+> 1010 (np.int64(150), np.int64(42), np.int64(250))	1014 (np.int64(131), np.int64(29), np.int64(252))	1018 (np.int64(157), np.int64(57), np.int64(240))
+> 1022 (np.int64(211), np.int64(114), np.int64(251))	1026 (np.int64(155), np.int64(48), np.int64(249))	1030 (np.int64(142), np.int64(34), np.int64(246))
+> 1034 (np.int64(126), np.int64(26), np.int64(245))	1038 (np.int64(106), np.int64(4), np.int64(229))	1042 (np.int64(98), np.int64(12), np.int64(222))
+> 104 …[+4681 chars]
+
+### 🤖 Claude — 2026-11-19T23:34:00.259Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log; ls /home/user/wt/benny/qa/benny/r20/t1/* 2>/dev/null", "description": "Wait and check render progress"}`
+
+### 🧑 User — 2026-11-19T23:34:00.265Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log ls /home/user/wt/benny/qa/benny/r20/t1/*. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-19T23:34:01.944Z
+
+While renders run, I'll read the full fur shader and the GLB build facts I need for benny20.
+
+### 🤖 Claude — 2026-11-19T23:34:02.300Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/src/characters/benny/fur.ts"}`
+
+### 🧑 User — 2026-11-19T23:34:02.377Z
+
+> ↩︎ result: 1	/**
+> 2	 * Real-time shell-texturing fur for Benny (mobile-safe, one draw call per furry part).
+> 3	 *
+> 4	 * Each fur_* mesh becomes an InstancedMesh with `shells` instances; gl_InstanceID selects the
+> 5	 * shell layer, which is pushed out along the normal (plus a little gravity droop). A hashed 3-D
+> 6	 * strand grid decides per-fragment whether a strand still exists at that height (tapering strands),
+> 7	 * so the fur keeps a fluffy silhouette from every angle. Built on MeshStandardMaterial via
+> 8	 * onBeforeCompile so scene lighting, IBL and fog all still apply.
+> 9	 */
+> 10	import * as THREE from 'three';
+> 11	
+> 12	export interface FurParams {
+> 13	  length: number;
+> 14	  density: number;
+> 15	  shells: number;
+> 16	  root: string;
+> 17	  tip: string;
+> 18	  gravity?: number;
+> 19	  bald?: [number, number, number, number];
+> 20	  short?: [number, number, number, number, number, number];
+> 21	}
+> 22	
+> 23	export interface FurHandle {
+> 24	  mesh: THREE.InstancedMesh;
+> 25	  material: THREE.MeshStandardMaterial;
+> 26	  uniforms: {
+> 27	    uTime: { value: number };
+> 28	    uWind: { value: THREE.Vector3 };
+> 29	    uMaskCol: { value: THREE.Color };
+> 30	    uRoot: { value: THREE.Color };
+> 31	    uTip: { value: THREE.Color };
+> 32	   …[+10335 chars]
+
+### 🤖 Claude — 2026-11-19T23:34:19.205Z
+
+Let me view the restored knit textures (crown, brim, star) to judge them.
+
+### 🤖 Claude — 2026-11-19T23:34:22.755Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny/assets/textures/benny20 && S=/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c && python3 -I -c \"\nfrom PIL import Image\nc=Image.open('crown.png'); print(c.size); c.crop((0,0,512,512)).save('$S/crown_q.png')\nb=Image.open('brim.png'); print(b.size); b.crop((0,0,768,256)).save('$S/brim_q.png')\ns=Image.open('star.png'); print(s.size); s.save('$S/star_v.png')\n\"; cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log", "description": "Crop knit textures for viewing; check render log"}`
+
+### 🧑 User — 2026-11-19T23:34:23.209Z
+
+> ↩︎ result: (2048, 512)
+> (2048, 256)
+> (512, 512)
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> console error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console error Failed to load resource: the server responded with a status of 403 (Forbidden)
+> f00_start 04 s 78.344 lat 0 04 coins 1330
+> f03_forward3u 04 s 81.151 lat 0 04 coins 1330
+> f06_forward6u 04 s 84.195 lat 0 04 coins 1330
+> s_left_steer 04 s 84.183 lat -1.65 04 coins 1350
+> s_right_steer 04 s 84.184 lat 1.65 04 coins 1330
+
+### 🤖 Claude — 2026-11-19T23:34:23.904Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/crown_q.png"}`
+
+### 🧑 User — 2026-11-19T23:34:23.920Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:34:24.508Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/star_v.png"}`
+
+### 🧑 User — 2026-11-19T23:34:24.574Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:34:27.237Z
+
+04 shots are done for BEFORE. Let me crop the close-ups as they come in.
+
+### 🤖 Claude — 2026-11-19T23:34:28.708Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && ls qa/benny/r20/t1/*; python3 -I tools/benny20/crop.py qa/benny/r20/t1/before/f00_start.png qa/benny/r20/t1/before/closeup_f00.png && cmp qa/benny/r20/t1/before/closeup_f00.png qa/benny/r19b/t1/before/closeup_f00.png && echo SAME_AS_R19B", "description": "Crop BEFORE close-up and compare with r19b"}`
+
+### 🧑 User — 2026-11-19T23:34:29.038Z
+
+> ↩︎ result: Exit code 1
+> f00_start.png
+> f03_forward3u.png
+> f06_forward6u.png
+> s_left_steer.png
+> s_right_steer.png
+> shots.json
+> qa/benny/r20/t1/before/closeup_f00.png qa/benny/r19b/t1/before/closeup_f00.png differ: char 44, line 3
+
+### 🤖 Claude — 2026-11-19T23:34:31.603Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/benny/r20/t1/before/closeup_f00.png qa/benny/r19b/t1/before/closeup_f00.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/d.png 0.1 180 1536 2>&1 | tail -3", "description": "Pixel-diff new vs old BEFORE close-up"}`
+
+### 🧑 User — 2026-11-19T23:34:31.929Z
+
+> ↩︎ result: {"a":"qa/benny/r20/t1/before/closeup_f00.png","b":"qa/benny/r19b/t1/before/closeup_f00.png","rows":[180,810],"threshold":0.1,"diff_pixels":17307,"total":425250,"diff_pct":4.0698}
+
+### 🤖 Claude — 2026-11-19T23:34:46.746Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"hat\\|pom\\|star\\|brim\\|crown\" src/characters/benny/build.ts | head -60", "description": "Find hat, pompom and star construction in build.ts"}`
+
+### 🧑 User — 2026-11-19T23:34:46.795Z
+
+> ↩︎ result: 6: * top ~40 % of the ball (brim bottom ≈ +0.10 at the back, +0.24 at the front). Height incl. pom ≈ 2.3.
+> 7: * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
+> 31:  /** centre (below the ball centre) and width of that bulge */
+> 43:  /** beanie tilt (rad, about X; + = front down). Wave 4: back to a slight backward tilt so the front brim clears the
+> 45:   *  (runtime.ts BENNY_RIDE_PITCH), not from tipping the hat over his face */
+> 46:  hatTilt: -0.04,
+> 47:  /** hat-local cuff bottom (front ≈ +0.25, back ≈ +0.19 above the ball centre). Wave 4: the beanie sits DOWN on the
+> 48:   *  head again (wave 3's 0.40 perched it like a small cap and pushed the pom 60 px above the ref) */
+> 49:  brimBottom: 0.22,
+> 51:  brimR: 0.8,
+> 54:  /** crown dome height above its base (inside the cuff). Wave 4: taller rounded dome (ref 05 rear: ≈ 95 px of knit
+> 55:   *  between the cuff and the pom, the old 0.44 showed 76 px) */
+> 56:  crownH: 0.53,
+> 57:  /** pom-pom core radius; the shell fur adds ≈ 0.1 → ≈ 0.5 × the cuff width (ref 05: ≈ 140–150 px / 295) */
+> 58:  pomR: 0.31,
+> 59:  /** star badge: angle around the hat from the front (deg, toward −X = his right), centre height a …[+2992 chars]
+
+### 🤖 Claude — 2026-11-19T23:34:48.264Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 386,440p src/characters/benny/build.ts; grep -n \"fur_pom\\|pomR\\|'pom'\" src/characters/benny/build.ts | head", "description": "Read star placement and pompom build code"}`
+
+### 🧑 User — 2026-11-19T23:34:48.370Z
+
+> ↩︎ result: hat.add(crown);
+>   // puffy gold star badge sewn on the lower white stripe just above the cuff, rear-RIGHT (−X): image-right of
+>   // centre in the rear gameplay views (ref 05: centre at ≈ +0.68 of the cuff half-width, ≈ 0.11 × the cuff width
+>   // above the cuff's top edge, ≈ 0.27 × the cuff width across, its lower points overlapping the cuff). Its face
+>   // is turned toward the back (normal 160° from the front) and leans back against the sloping crown (tilted 25°
+>   // up), so the rear ride cameras (10–25° above Benny) see it face-on, never edge-on.
+>   const starGeo = new THREE.ExtrudeGeometry(starShape(0.165, 0.083), {
+>     depth: 0.02,
+>     bevelEnabled: true,
+>     bevelThickness: 0.045,
+>     bevelSize: 0.032,
+>     bevelSegments: 4,
+>   });
+>   starGeo.center();
+>   const star = named(
+>     new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.12, roughness: 0.3, emissive: '#ffb800', emissiveIntensity: 0.22 })),
+>     'hat_star',
+>   );
+>   const sa = THREE.MathUtils.degToRad(D.starAng);
+>   // wave 4: centred on the cuff's top edge (ref 05: ≈ 40 % of the star on the cuff, the rest on the white band);
+>   // leans back only 12° because the runtime's ride lean (≈ 13°) tips it the rest of the way towar …[+2420 chars]
+
+### 🤖 Claude — 2026-11-19T23:34:51.873Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/t1.log | grep -v \"console error\\|outside of Vite\"; ls /home/user/wt/benny/qa/benny/r20/t1/*/", "description": "Check render log"}`
+
+### 🧑 User — 2026-11-19T23:34:51.939Z
+
+> ↩︎ result: f00_start 04 s 78.344 lat 0 04 coins 1330
+> f03_forward3u 04 s 81.151 lat 0 04 coins 1330
+> f06_forward6u 04 s 84.195 lat 0 04 coins 1330
+> s_left_steer 04 s 84.183 lat -1.65 04 coins 1350
+> s_right_steer 04 s 84.184 lat 1.65 04 coins 1330
+> closeup_f00.png
+> f00_start.png
+> f03_forward3u.png
+> f06_forward6u.png
+> s05_start.png
+> s_left_steer.png
+> s_right_steer.png
+> shots.json
+
+### 🤖 Claude — 2026-11-19T23:34:58.175Z
+
+While renders continue, I'll write a small landmark tool (violet hat / cuff / fur rows and widths) to compare approved vs game numerically.
+
+### 🤖 Claude — 2026-11-19T23:35:07.786Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/benny/tools/benny20/landmarks.py", "content": "\"\"\"Benny landmarks in an 864x1536 frame (Screen 04 start-view box x 170-620, y 900-1440 by default):\ncolour classes (violet knit / pom, cream-white knit, pink fur, gold star) -> per-class bbox, pixel count, median colour,\nand the cuff's width at its lower rows. Read-only; for comparing APPROVED vs game captures at the same camera.\nusage: python3 -I tools/benny20/landmarks.py <frame.png> [x0 y0 x1 y1]\"\"\"\nimport sys, json\nimport numpy as np\nfrom PIL import Image\n\na = sys.argv[1:]\nbox = tuple(int(v) for v i …[+1730 chars]`
+
+### 🧑 User — 2026-11-19T23:35:07.852Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/benny/tools/benny20/landmarks.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T23:35:08.892Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && for f in /home/user/rainbow-/references/04_through_the_five_arrows.png qa/benny/r20/t1/before/f00_start.png; do python3 -I tools/benny20/landmarks.py $f; done", "description": "Run landmarks on approved and BEFORE frames"}`
+
+### 🧑 User — 2026-11-19T23:35:09.805Z
+
+> ↩︎ result: {"violet": {"n": 42936, "x": [176, 611], "y": [920, 1420], "med": [126, 31, 224], "mean": [127, 39, 217]}, "white": {"n": 40637, "x": [174, 617], "y": [976, 1433], "med": [241, 188, 247], "mean": [233, 189, 238]}, "fur": {"n": 38230, "x": [173, 613], "y": [1009, 1435], "med": [225, 75, 158], "mean": [216, 77, 160]}, "gold": {"n": 5578, "x": [170, 522], "y": [901, 1181], "med": [252, 198, 43], "mean": [249, 196, 44]}, "cuff_rows": [1217, 1247, 304], "fur_L_p10_p50_p90": [110, 154, 189]}
+> {"violet": {"n": 39499, "x": [184, 613], "y": [918, 1375], "med": [113, 15, 255], "mean": [117, 25, 245]}, "white": {"n": 25938, "x": [171, 617], "y": [1028, 1435], "med": [254, 201, 240], "mean": [240, 191, 235]}, "fur": {"n": 50645, "x": [176, 607], "y": [935, 1351], "med": [255, 93, 179], "mean": [253, 91, 179]}, "gold": {"n": 8569, "x": [171, 528], "y": [901, 1154], "med": [255, 201, 30], "mean": [254, 192, 42]}, "cuff_rows": [1076, 1180, 272], "fur_L_p10_p50_p90": [155, 175, 194]}
+
+### 🤖 Claude — 2026-11-19T23:35:16.596Z
+
+The box classes are polluted by the background swirls and coins. I'll compare centre-column profiles instead (approved vs BEFORE game).
+
+### 🤖 Claude — 2026-11-19T23:35:19.359Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nA=np.asarray(Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB')).astype(int)\nG=np.asarray(Image.open('qa/benny/r20/t1/before/f00_start.png').convert('RGB')).astype(int)\ndef cls(p):\n    r,g,b=p\n    if b>140 and g<110 and b>r+25 and b>g+90: return 'V'\n    if r>175 and g>130 and b>175: return 'W'\n    if r>120 and r>b+15 and g<0.62*r: return 'P'\n    return '.'\nfor name,im,x in (('APP',A,400),('GAME',G,400)):\n    s=''\n    for y in range(900,1440,3):\n …[+136 chars]`
+
+### 🧑 User — 2026-11-19T23:35:19.835Z
+
+> ↩︎ result: APP ..........W.......WW....WWWWWW.VVVVVVVVV.VVVVVVVVVVVVVVVV......VVVVVVVVVVVVVV..WWWWWWWWVVVVVVVVVV.WWWWWWWWWVVVVVVVVVVVVVVVVV...PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP....................
+> GAME ...........VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVWWWWWWWVVVVVVVVVVVWWWWWWWWWVVVVVVVVVVVVVVVVVVVPWPPPWWPWPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPW..........................
+
+### 🤖 Claude — 2026-11-19T23:35:28.841Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && cat > tools/benny20/runs.py <<'EOF'\n\"\"\"colour-class runs down a column (V violet, W cream-white, P pink fur, . other) for APPROVED vs game frames.\nusage: python3 -I tools/benny20/runs.py <x> <y0> <y1> <frame.png>...\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nx, y0, y1 = (int(v) for v in sys.argv[1:4])\ndef cls(p):\n    r, g, b = p\n    if b > 120 and g < 110 and b > r + 25 and b > g + 70: return 'V'\n    if r > 175 and g > 130 and b > 175: return 'W'\n    if r > 110 and r > b + 10 and g < 0.62 * r: return 'P'\n    return '.'\nfor f …[+779 chars]`
+
+### 🧑 User — 2026-11-19T23:35:29.499Z
+
+> ↩︎ result: references/04_through_the_five_arrows.png .940-952 W953-958 .959-971 W972-989 V993-1019 V1023-1131 .1132-1136 W1137-1158 V1159-1190 W1192-1218 V1219-1271 .1272-1279 P1280-1382 .1383-1396 V1397-1402 .1403-1419
+> before/f00_start.png V940-964 V966-1053 W1054-1074 V1075-1107 W1109-1134 V1135-1192 P1203-1207 W1208-1213 P1219-1357 .1360-1368 .1370-1419
+> references/04_through_the_five_arrows.png .940-1058 W1059-1069 V1071-1074 W1075-1085 W1088-1101 V1103-1109 V1114-1135 V1138-1159 W1162-1193 V1195-1254 P1257-1369 .1376-1381 W1382-1390 .1391-1419
+> before/f00_start.png .940-1060 V1061-1090 W1091-1118 V1119-1176 P1194-1217 W1224-1227 P1228-1249 P1251-1318 P1322-1327 .1328-1342 .1345-1419
+
+### 🤖 Claude — 2026-11-19T23:35:47.991Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && cat > tools/benny20/widths.py <<'EOF'\n\"\"\"horizontal extent of the colour class under (xc, y) for several rows (same classes as runs.py, gaps <= 6 px bridged).\nusage: python3 -I tools/benny20/widths.py <frame.png> <xc> <y>...\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nim = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)\nxc = int(sys.argv[2])\ndef cls(p):\n    r, g, b = p\n    if b > 120 and g < 110 and b > r + 25 and b > g + 70: return 'V'\n    if r > 175 and g > 130 and b > 175: return 'W'\n    if r > 110 and r > b  …[+833 chars]`
+
+### 🧑 User — 2026-11-19T23:35:48.840Z
+
+> ↩︎ result: APPROVED
+> y1050 V: 335-473 w=138
+> y1100 V: 333-466 w=133
+> y1150 .: 400-400 w=0
+> y1175 V: 324-477 w=153
+> y1205 W: 318-456 w=138
+> y1235 V: 269-539 w=270
+> y1260 V: 317-482 w=165
+> y1300 P: 243-543 w=300
+> y1330 P: 251-525 w=274
+> y1360 P: 272-479 w=207
+> GAME
+> y990 V: 344-473 w=129
+> y1020 V: 347-469 w=122
+> y1065 W: 332-499 w=167
+> y1090 V: 299-497 w=198
+> y1120 W: 305-471 w=166
+> y1150 V: 258-478 w=220
+> y1180 V: 313-518 w=205
+> y1240 W: 396-401 w=5
+> y1280 P: 259-530 w=271
+> y1320 P: 293-484 w=191
+

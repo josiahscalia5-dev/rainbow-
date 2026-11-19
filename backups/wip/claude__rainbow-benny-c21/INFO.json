@@ -2,11 +2,30 @@
  "worktree": "/home/user/wt/benny",
  "branch": "claude/rainbow-benny-c21",
  "head": "8fb1b91ad76420152f2f28e324c0c8abc9548caf",
- "time": "2026-11-19T23:33:24+00:00",
+ "time": "2026-11-19T23:35:58+00:00",
  "dirty_tracked": [
   "tools/benny20/shots.mjs"
  ],
- "untracked_copied": [],
- "untracked_skipped": [],
+ "untracked_copied": [
+  "qa/benny/r20/t1/before/closeup_f00.png",
+  "qa/benny/r20/t1/before/f06_forward6u.png",
+  "qa/benny/r20/t1/before/s06_start.png",
+  "qa/benny/r20/t1/before/s06_swim3u.png",
+  "qa/benny/r20/t1/before/s07_start.png",
+  "qa/benny/r20/t1/before/s07_swim3u.png",
+  "qa/benny/r20/t1/before/s_left_steer.png",
+  "qa/benny/r20/t1/before/shots.json",
+  "qa/benny/r20/t1/before/shots_other.json",
+  "tools/benny20/landmarks.py",
+  "tools/benny20/runs.py",
+  "tools/benny20/widths.py"
+ ],
+ "untracked_skipped": [
+  "qa/benny/r20/t1/before/f00_start.png",
+  "qa/benny/r20/t1/before/f03_forward3u.png",
+  "qa/benny/r20/t1/before/s05_start.png",
+  "qa/benny/r20/t1/before/s05_swim3u.png",
+  "qa/benny/r20/t1/before/s_right_steer.png"
+ ],
  "restore": "git switch claude/rainbow-benny-c21 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-benny-c21/tracked.patch && copy backups/wip/claude__rainbow-benny-c21/untracked/* into the worktree"
 }
