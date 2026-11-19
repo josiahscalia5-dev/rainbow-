@@ -43,3 +43,36 @@ Shots: `tools/match07/audit_r18.mjs` (= audit_r16 + course marks in motion.json 
   still fill both sides — they belong to 08 (paused), the approved 07 picture has low foam clouds there; (2) a straight horizontal
   seam line crosses the river and walls at about y 930–1090 in t66 / t80 / t88 (was there before, BEFORE has it too); (3) on the level stretch: thin
   straight magenta bands near Benny and the flat pale foam sheet at hard left (step 4).
+
+## Step 4 — `&m07band=1`: thick magenta bands sweeping in S-curves beside Benny (level stretch) — finished 02:45–03:00 UTC
+* The r17 step-4 draft `&m07nearf=1` (a magenta bank widened outward + round "foam clouds" drawn in the floor shader) was rendered
+  once and **rejected (NOT AN IMPROVEMENT)**: at hard left the clouds read as flat oval stickers with a sky-photo texture on a
+  magenta floor, and at forward 10 u nothing changed near Benny. Record: `r18/step4_nearf_rejected/s_left_hard.png`. Its code was
+  removed (it was only behind its own switch); the r17 `motion.json` of that draft was deleted.
+* Problem (r17 step-2 NEW f10 / f20): below Benny the whole bottom of the frame was glossy cyan; the magenta bands ran as thin
+  straight ribbons at the very edges of the frame, parallel to Benny's path. In the approved picture the cyan core is narrow
+  (about 1.5 × Benny's width) and thick magenta satin bands sweep in big curves right beside him (lower left of the picture).
+* Change (`src/world/match07.ts`, `nearWater()`, only with `m07nearw` + `m07band`): cyan core ±1.1 u (was ±1.85), the river centre
+  sweeps in a world-anchored S off Benny's lane (±0.6 u, every 14 u, so the bands curve across the view as he swims), the band
+  is at least 0.95 u wide and on the outside of each bend widens to cover everywhere Benny can steer (lane ± 2.25 u + body), so he
+  never swims on the foam; the painted band tile is spread across the band (no mirrored repeats: those read as a diamond lattice in
+  a first try), and the band → foam edge is scalloped instead of a straight cut. Tunables `m07bA`, `m07bL`, `m07bC` (QA only).
+* Query NEW: `K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1`; BEFORE: the same without `m07band`.
+* Pictures (separate, full size, real game):
+  - APPROVED `/home/user/wt/s07/qa/match/07/r18/APPROVED_07.png`
+  - BEFORE `/home/user/wt/s07/qa/match/07/r17/step2_nearw/NEW/` (identical code at these level-stretch positions: `m07foamb` acts
+    only in the drop; not re-rendered to save CPU)
+  - NEW `/home/user/wt/s07/qa/match/07/r18/step4_band/NEW/` (a00, f03, f06, f10, f20, steer + hard left / right)
+  - clip `/home/user/wt/s07/qa/match/07/r18/step4_band/swim_NEW_band.mp4` (real gameplay, 3.6 s straight / left / right, half size)
+* Checks: approved start view, deterministic `scripts/capture.mjs 07` BEFORE vs NEW: **0 px** (rows 180–1536; 153 calls / 287,709
+  triangles both). Gameplay with the NEW query: **8/8 pass, 91 coins, 1,330 → 2,240** (`step4_band/gameplay_new.json`).
+  Shader-only change in Screen 07's own file; no shared code touched.
+* **Verdict: GOOD IMPROVEMENT** (clear at forward 10 / 20 u, small at forward 6 u and steering; start view and forward 3 u unchanged).
+  - f10: below Benny a narrow winding glossy cyan core with the bubbly white trim, and thick magenta satin bands curving in from
+    both sides — the lower-left magenta sweep of the approved picture; before, the whole bottom was cyan.
+  - f20: the cyan core bends past Benny with a wide magenta band filling the lower left and another curving in on the right.
+  - hard left / right: Benny swims on a wider magenta band with a scalloped foam edge.
+* Still wrong (most visible first): (1) at hard left / right the bank beyond the band is still a flat pale lilac-white foam
+  sheet lying on the floor (painted: separate puffy foam clouds standing up); (2) at the plunge top (clip frame ≈80) the game's
+  tall white lather wall shows on the right before the drop's hidden range starts; (3) the soft blurry hand-over zone at forward
+  6 u / steering between the projected picture and the near water.
