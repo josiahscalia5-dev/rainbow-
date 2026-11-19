@@ -1,0 +1,141 @@
+diff --git a/qa/capture_log.json b/qa/capture_log.json
+index c927218..a35057f 100644
+--- a/qa/capture_log.json
++++ b/qa/capture_log.json
+@@ -1,10 +1,10 @@
+ {
+-  "when": "2026-11-17T16:46:59.297Z",
++  "when": "2026-11-18T19:28:33.822Z",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "shots": [
+     {
+       "id": "04",
+-      "file": "/tmp/claude-0/-home-user-rainbow-/5da1976e-e37f-577a-8581-540689c95ad9/scratchpad/capnew/04.png",
++      "file": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/s04/cap_before/04.png",
+       "size": [
+         864,
+         1536
+@@ -31,21 +31,26 @@
+         ]
+       },
+       "stats": {
+-        "fps": 60.2,
+-        "calls": 47,
+-        "triangles": 170432,
+-        "geometries": 63,
+-        "textures": 40,
++        "fps": 81.2,
++        "calls": 50,
++        "triangles": 246719,
++        "geometries": 66,
++        "textures": 43,
+         "modules": {
+           "water": "vfx/index.ts",
+           "benny": "assets/models/benny.glb",
+           "girl": "assets/models/rainbow_girl.glb"
+         },
+         "courseLength": 435.1923632433159,
+-        "firstFrameCalls": 47,
+-        "firstFrameTriangles": 170432
++        "firstFrameCalls": 50,
++        "firstFrameTriangles": 246719
+       }
+     }
+   ],
+-  "errors": []
++  "errors": [
++    "[04] Failed to load resource: the server responded with a status of 403 (Forbidden)",
++    "[04] Failed to load resource: the server responded with a status of 403 (Forbidden)",
++    "[04] Failed to load resource: the server responded with a status of 403 (Forbidden)",
++    "[04] Failed to load resource: the server responded with a status of 403 (Forbidden)"
++  ]
+ }
+\ No newline at end of file
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 3a8d392..0a504c0 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -308,6 +308,11 @@ uniform vec4 uArr;           // arrow spacing, first arrow (along), half width,
+ uniform float uZ0;
+ uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength
+ uniform float uPkH;          // r14 m04pkh: pink only where the painted tile is pink (0 = off)
++uniform sampler2D uSB;       // r15 m04sband: the painted swirl bands (tile_side04: across = lane side .. wall side reversed)
++uniform vec4 uSB0;           // x strength, y inner |arc| where the bands start, z outer |arc| (water edge), w tile length along (u)
++uniform vec4 uSB1;           // x blend width at the inner side, y re-apply the lilac-white edge fringe (0/1), z tile part used
++                             // (1 = cyan..lilac, less = start nearer the pink ribbon), w slow lateral wander of the bands (u)
++uniform vec2 uSB2;           // far ahead of the camera (x -> y u) the bands smooth into long unbroken stripes (no repeat ribs)
+ uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+ uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+ uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
+@@ -383,6 +388,7 @@ void main() {
+     }
+     col = mix(col, laneC, kl * uLane.z);
+   }
++  float fringe = 0.0;
+   if (uEdge.x > 0.5) {
+     // r13 m04edge: soft irregular water edge against the gold wall — pink / magenta current then a lilac-white lacy fringe
+     // in broken patches (no straight hard line, no tall foam): uEdge.y = half arc to the edge, z = fringe width, w = strength
+@@ -391,7 +397,8 @@ void main() {
+     float patchy = smoothstep(0.35, 0.75, 0.65 * n1 + 0.35 * n2);
+     vec3 pinkC = mix(vec3(0.78, 0.16, 0.66), vec3(1.0, 0.45, 0.82), n2);
+     col = mix(col, pinkC, uEdge.w * smoothstep(uEdge.y - uEdge.z * 2.2, uEdge.y - uEdge.z, abs(vS)) * (0.5 + 0.5 * n1));
+-    col = mix(col, vec3(0.97, 0.90, 1.0), uEdge.w * e * patchy);
++    fringe = uEdge.w * e * patchy;
++    col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
+   }
+   if (uPk.x > 0.5) {
+     // m04pink: the painted broad pink / magenta swirl bands either side of the cyan lane; the swirl structure (the
+@@ -411,6 +418,25 @@ void main() {
+     }
+     col = mix(col, pk, side * uPk.w * pkMix);
+   }
++  if (uSB0.x > 0.0) {
++    // r15 m04sband: the side water carries the PAINTED swirl bands (cyan streaks by the lane -> violet -> hot-pink satin
++    // ribbon -> lilac sparkle at the wall), cut from references/04 (tools/match04/sideband04.py), by arc length across the
++    // trough and world position along it (flowing with the current), two offset samples blended like the river tile
++    float as = abs(vS);
++    float wan = uSB1.w * (vn(vec2(along * 0.11, sign(vS) * 5.0 + 2.0)) - 0.5) * 2.0;
++    float tb = clamp((as + wan - uSB0.y) / max(0.1, uSB0.z - uSB0.y), 0.0, 1.0);
++    float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
++    float ub = (1.0 - tb) * uSB1.z;
++    vec3 bc = mix(texture2D(uSB, vec2(ub, vb)).rgb, texture2D(uSB, vec2(ub, vb * 0.81 + 0.29)).rgb, w);
++    float kd = uSB2.y > uSB2.x ? smoothstep(uSB2.x, uSB2.y, along - uA5b.z) : 0.0;
++    if (kd > 0.0) {
++      vec3 sm = vec3(0.0);
++      for (int i = 0; i < 6; i++) sm += texture2D(uSB, vec2(ub, vb + float(i) * 0.167), 1.0).rgb;
++      bc = mix(bc, sm / 6.0, kd);
++    }
++    col = mix(col, bc, uSB0.x * smoothstep(uSB0.y - uSB1.x, uSB0.y + 0.25 * uSB1.x, as));
++    if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
++  }
+   if (uA5.x > 0.5) {
+     // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
+     float k5 = floor((along - uA5.z) / uA5.y + 0.5);
+@@ -761,6 +787,12 @@ export function addM04(ctx: M04Ctx) {
+     const riv = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_river3.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+     riv.colorSpace = THREE.NoColorSpace; riv.flipY = false; riv.wrapS = riv.wrapT = THREE.RepeatWrapping;
+     riv.minFilter = THREE.LinearMipmapLinearFilter; riv.anisotropy = 8;
++    let sideBand: THREE.Texture | null = null;
++    if (M04.num('m04sband', 0) > 0) {
++      sideBand = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_side04.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
++      sideBand.colorSpace = THREE.NoColorSpace; sideBand.flipY = false; sideBand.wrapS = THREE.ClampToEdgeWrapping; sideBand.wrapT = THREE.RepeatWrapping;
++      sideBand.minFilter = THREE.LinearMipmapLinearFilter; sideBand.anisotropy = 8;
++    }
+     // tiles04.json river3: lateral +-4 u, along 1.757 .. 6.409 u from Benny's checkpoint water point
+     const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+       extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
+@@ -776,6 +808,14 @@ export function addM04(ctx: M04Ctx) {
+         uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
+         uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
+         uPkH: { value: M04.num('m04pkh', 0) },
++        // r15 `&m04sband=1`: painted swirl bands on the side water (m04sbs strength, m04sbi inner arc, m04sbl tile length u,
++        // m04sbw inner blend width, m04sbf 1 = keep the lilac-white edge fringe on top, m04sbu tile part, m04sbn wander,
++        // m04sbd0 / m04sbd1 far smoothing window ahead of the camera)
++        // r16 defaults (= variant D, chosen by eye at f06 / t66 / hard right): bands from 2.0 u across, the cyan..pink part of the
++        // tile (0.7), 10 u long satin stripes with a slow 0.5 u lateral wander, 0.95 strength
++        uSB: { value: sideBand }, uSB1: { value: new THREE.Vector4(M04.num('m04sbw', 0.45), M04.num('m04sbf', 1), M04.num('m04sbu', 0.7), M04.num('m04sbn', 0.5)) },
++        uSB2: { value: new THREE.Vector2(M04.num('m04sbd0', 0), M04.num('m04sbd1', 0)) },
++        uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
+         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
+         uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
+     const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
