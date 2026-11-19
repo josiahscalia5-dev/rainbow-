@@ -1,0 +1,15 @@
+{
+  "commit": "7a04d763a1ab108aa11588ede0ee338f4acd6817",
+  "branch": "codex/review/five-screens-on-android-20261119",
+  "pdfBytes": 6865555,
+  "pdfSHA256": "ac2d266c872d8b7b999cc60be3387744434a7532520df2414b108df0c1f81e7f",
+  "renderedInlineImages": 15,
+  "pages": 19,
+  "officialPages": {
+    "04": 1,
+    "05": 4,
+    "06": 7,
+    "07": 12,
+    "08": 17
+  }
+}

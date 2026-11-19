@@ -1,0 +1,31 @@
+from pathlib import Path
+import hashlib, json, os, shutil, subprocess as sp, sys
+from datetime import datetime,timezone
+root=Path(__file__).resolve().parent;parent=Path('/tmp/rainbow-crest-release.V85M78Mo/round2');review=Path('/tmp/rainbow-one-review.MG1VK6V4')
+pkg=review/'payload';variants=json.loads((pkg/'02_VERSIONS/INDEX.json').read_text())['variants']
+specialist=variants['Claudia_S07'];branch='codex/s07-shared-outlet-bank';source='https://github.com/josiahscalia5-dev/rainbow-.git'
+tip=sp.check_output(['git','ls-remote','--heads',source,'refs/heads/'+specialist['branch'],'refs/heads/'+branch]).decode().splitlines()
+assert len(tip)==1 and tip[0].split()[0]==specialist['commit']
+repo=root/'repo';repo.mkdir()
+def git(*args,inp=None):return sp.check_output(['git','-C',str(repo),*args],input=inp,stderr=sp.PIPE)
+git('init','-q')
+(repo/'.git/objects/info/alternates').write_text(str(review/'sources.git/objects')+'\n')
+for k,v in {'remote.origin.url':source,'remote.origin.fetch':'+refs/heads/*:refs/remotes/origin/*','remote.origin.promisor':'true','remote.origin.partialclonefilter':'blob:none','user.name':'Codex','user.email':'codex@users.noreply.github.com','gc.auto':'0'}.items():git('config','--local',k,v)
+git('lfs','install','--local')
+git('fetch','--depth=1','--filter=blob:none','--quiet','--no-tags','origin','refs/heads/'+specialist['branch']+':refs/remotes/origin/'+specialist['branch'])
+git('sparse-checkout','set','--no-cone','--stdin',inp=b'/.gitattributes\n/src/vfx/foam.ts\n/src/vfx/waterRibbon.ts\n/src/vfx/plungeShore.ts\n/experiments/codex/s07-shared-outlet-bank/\n')
+git('-c','filter.lfs.process=','-c','filter.lfs.required=false','checkout','-q','-b',branch,specialist['commit'])
+g=root/'games/07';g.parent.mkdir(parents=True)
+sp.run([sys.executable,str(pkg/'02_VERSIONS/materialize_version.py'),'Claudia_S07',str(g)],stdout=sp.DEVNULL,check=True)
+(g/'node_modules').symlink_to('/tmp/rainbow-visual-audit.X0POSzUq/runtime-deps/node_modules',target_is_directory=True)
+for f in ['capture.cjs','serve.cjs','queries.json']:shutil.copyfile(parent/f,root/f)
+shutil.copytree(parent/'fixture/07',root/'fixture/07')
+(root/'flags.json').write_text(json.dumps({'07':'cx07ShoreJoin=1'})+'\n')
+code='src/vfx/waterRibbon.ts';assert git('show','HEAD:'+code)==(g/code).read_bytes()==(repo/code).read_bytes()
+refs={}
+for line in (g/'scripts/reference.sha256').read_text().splitlines():
+ h,n=line.split(maxsplit=1);assert hashlib.sha256((g/n).read_bytes()).hexdigest()==h;refs[n]=h
+approved='references/07_dive_the_washer_tube.png';d={'branch':branch,'retained':{'branch':specialist['branch'],'commit':specialist['commit']},'time':datetime.now(timezone.utc).isoformat(),'references':refs,'officialArtwork':approved,'source':code}
+(root/'baseline.json').write_text(json.dumps(d,indent=2)+'\n')
+print('Isolated from verified Screen 07',specialist['commit'],'with',len(refs),'verified reference files.')
+

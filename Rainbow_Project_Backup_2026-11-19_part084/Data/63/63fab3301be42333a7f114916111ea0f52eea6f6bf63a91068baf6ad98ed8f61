@@ -1,0 +1,54 @@
+from pathlib import Path,PurePosixPath
+import hashlib,json,subprocess as sp,zipfile,re,urllib.parse,shutil,sys,tempfile
+root=Path(__file__).resolve().parent;exp=json.loads((root/'private-review-tree.json').read_text());local=json.loads((root/'delivery-proof.json').read_text())
+base=json.loads((root/'remote.json').read_text());repo='josiahscalia5-dev/rainbow-';api='repos/'+repo
+releaseid=(root/'new-private-release-id.txt').read_text().strip();tag='codex-review-20261119-393c83c-'+local['sha256'][:8]
+def gh(args,data=None):
+ q=sp.run(['gh','api',*args],input=data,stdout=sp.PIPE,stderr=sp.PIPE,timeout=180)
+ try:j=json.loads(q.stdout)
+ except ValueError:j={}
+ return q.returncode,j
+def verifyref(n):
+ p=sp.run(['git','ls-remote','https://github.com/'+repo+'.git',n,n+'^{}'],stdout=sp.PIPE,stderr=sp.PIPE,check=True)
+ return exp['commit'] in {line.split()[0] for line in p.stdout.decode().splitlines()}
+assert verifyref('refs/heads/'+exp['branch'])
+private=gh([api]);assert private[0]==0 and private[1]['private']
+status,release=gh([api+'/releases/'+releaseid]);assert status==0
+link='https://github.com/'+repo+'/archive/'+exp['commit']+'.zip';reference=exp['commit']
+release_link=None
+if release['draft']:
+ note='Download the complete Rainbow review in one ZIP. It contains the full playable source, five original gameplay screens, retained and experimental results, 48 swimming recordings, and a 37-page review PDF.\n\n[Download the private review ZIP](https://github.com/'+repo+'/archive/refs/tags/'+tag+'.zip)\n\nAfter extracting the ZIP, open START_HERE.md or OPEN_ON_PHONE.html. The root SHA256SUMS.txt covers every other file. This tag points to an isolated review snapshot. Game branches and original artwork remain protected.\n'
+ payload={'tag_name':tag,'draft':False,'prerelease':True,'target_commitish':exp['commit'],'make_latest':'false','body':note}
+ status,release=gh(['--method','PATCH',api+'/releases/'+releaseid,'--input','-'],json.dumps(payload).encode())
+ print('Review release metadata',status,release.get('draft'),release.get('tag_name'),release.get('message',''),flush=True)
+if status==0 and release.get('draft') is False and release['tag_name']==tag and verifyref('refs/tags/'+tag):
+ reference=tag;link='https://github.com/'+repo+'/archive/refs/tags/'+tag+'.zip';release_link=release['html_url']
+out=root/'authenticated-download';out.mkdir(exist_ok=True)
+zipfile_path=out/'Rainbow_GitHub_review_snapshot.zip'
+print('Downloading the private GitHub ZIP by verified reference',reference,flush=True)
+for attempt in range(3):
+ with zipfile_path.open('wb') as stream:
+  res=sp.run(['gh','api',api+'/zipball/'+reference],stdout=stream,stderr=sp.PIPE,timeout=1200)
+ if res.returncode==0 and zipfile.is_zipfile(zipfile_path):break
+ print('Download status',res.returncode,re.findall(r'HTTP [0-9]+|unexpected EOF|timed? out',res.stderr.decode(errors='replace'),re.I),'bytes',zipfile_path.stat().st_size,flush=True)
+else:raise RuntimeError('The private reference archive was not downloadable.')
+localzip=Path('/workspace/shared/downloads/Rainbow_Full_Code_and_Screens_ChatGPT.zip')
+with zipfile.ZipFile(localzip) as z:
+ checks={n:h for h,n in (line.split('  ',1) for line in z.read('SHA256SUMS.txt').decode().splitlines())}
+ checks['SHA256SUMS.txt']=hashlib.sha256(z.read('SHA256SUMS.txt')).hexdigest()
+with zipfile.ZipFile(zipfile_path) as z:
+ entries=[i for i in z.infolist() if not i.is_dir()];prefix={PurePosixPath(i.filename).parts[0] for i in entries};assert len(prefix)==1
+ plain={str(PurePosixPath(i.filename).relative_to(next(iter(prefix)))):i for i in entries};assert len(plain)==len(entries) and set(plain)==set(checks),(len(plain),len(checks),list(set(checks)-set(plain))[:5],list(set(plain)-set(checks))[:5])
+ for name,e in plain.items():
+  with z.open(e) as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==checks[name],name
+ assert z.testzip() is None
+print('Mobile mirror verified',len(checks),'files',zipfile_path.stat().st_size,'bytes',flush=True)
+assert zipfile_path.stat().st_size<=512000000
+listing=sp.check_output(['git','ls-remote','--heads','https://github.com/'+repo+'.git']).decode()
+current={k.removeprefix('refs/heads/'):v for v,k in [s.split() for s in listing.splitlines()]}
+changed=[n for n,h in base['refs'].items() if current.get(n)!=h]
+with zipfile_path.open('rb') as f:zipsha=hashlib.file_digest(f,'sha256').hexdigest()
+receipt={**local,'download':link,'releasePage':release_link,'releaseTag':tag if release_link else None,'private':True,'snapshotCommit':exp['commit'],'newReviewBranch':exp['branch'],'downloadedGitHubArchiveBytes':zipfile_path.stat().st_size,'downloadedGitHubArchiveSHA256':zipsha,'allGitHubFilesMatchLocalArchive':True,'branchTipsChangedSinceReview':changed,'GitHubTopFolder':next(iter(prefix))}
+(root/'published-review-proof.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps({k:receipt[k] for k in ['download','releasePage','snapshotCommit','downloadedGitHubArchiveBytes','allGitHubFilesMatchLocalArchive','branchTipsChangedSinceReview']}),flush=True)
+
