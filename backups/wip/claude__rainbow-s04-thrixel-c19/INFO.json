@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s04t",
  "branch": "claude/rainbow-s04-thrixel-c19",
  "head": "1bf28be46af4cb341dd9da83d52eb8176d3e4522",
- "time": "2026-11-19T20:09:41+00:00",
+ "time": "2026-11-19T20:14:56+00:00",
  "dirty_tracked": [
   "src/world/match04m4.ts",
   "tools/match04/tfoam_clip04.mjs",
@@ -10,16 +10,29 @@
  ],
  "untracked_copied": [
   "assets/models/match04/foam_heap_blender04.glb",
+  "qa/match/04/r19_blendfoam/CANDIDATE_QUERY_ADD.txt",
+  "qa/match/04/r19_blendfoam/NEW/motion.json",
   "qa/match/04/r19_blendfoam/tune/b1_default_crop.png",
   "qa/match/04/r19_blendfoam/tune/b2_crop.png",
+  "qa/match/04/r19_blendfoam/tune/b3_crop.png",
+  "qa/match/04/r19_blendfoam/tune/b4_crop.png",
+  "qa/match/04/r19_blendfoam/tune/b5_crop.png",
   "qa/match/04/r19_blendfoam/tune/motion.json",
   "qa/match/04/r19_blendfoam/view_low_side.png",
   "qa/match/04/r19_blendfoam/view_three_quarter.png",
   "tools/blender/foam_cluster04.py"
  ],
  "untracked_skipped": [
+  "qa/match/04/r19_blendfoam/NEW/f01_forward1u.png",
+  "qa/match/04/r19_blendfoam/NEW/f02_forward2u.png",
+  "qa/match/04/r19_blendfoam/NEW/f03_forward3u.png",
+  "qa/match/04/r19_blendfoam/NEW/f05_forward5u.png",
+  "qa/match/04/r19_blendfoam/NEW/s3_right_steer.png",
   "qa/match/04/r19_blendfoam/tune/b1_default.png",
-  "qa/match/04/r19_blendfoam/tune/b2.png"
+  "qa/match/04/r19_blendfoam/tune/b2.png",
+  "qa/match/04/r19_blendfoam/tune/b3.png",
+  "qa/match/04/r19_blendfoam/tune/b4.png",
+  "qa/match/04/r19_blendfoam/tune/b5.png"
  ],
  "restore": "git switch claude/rainbow-s04-thrixel-c19 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-thrixel-c19/tracked.patch && copy backups/wip/claude__rainbow-s04-thrixel-c19/untracked/* into the worktree"
 }

@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18874,
-   "sha256": "2aa1cb1954c755f844c2f40a3c2a877e665d013481214713df6a42eda1204a26"
+   "sha256": "4d13500e1fa44767ba82ba08770cdc20a71e63a74fa81f80ac5ac997dee37c68"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1209,7 +1209,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c19/INFO.json",
    "bytes": 477,
-   "sha256": "e279f41097b6b016eda6f320ce0d06b2b308471ae624e21073574364bd6d61f6"
+   "sha256": "c02eadaeeb42958fc5715d8e56478c44b184fb04287ef441e9c094e43e34b4ca"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
@@ -1354,12 +1354,52 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c19/INFO.json",
    "bytes": 486,
-   "sha256": "5bfbeb2ef05bcaf17d243880103071b41706b90169a580f70569b41bd84cf033"
+   "sha256": "3a3862520f357c5d237c4f89ce4bd57b25100de76de747a7680ea94b407ca687"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/INFO.json",
-   "bytes": 486,
-   "sha256": "e2229282ef5e343e6dd946ec185d023819fc2785628b05f0358c0b12a950e4b8"
+   "bytes": 1027,
+   "sha256": "1f10be4063fbba48046dfbcd1ff893b4e12f1ae2e0d4a50dc18c1742e2f47d03"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/tracked.patch",
+   "bytes": 8838,
+   "sha256": "c934b57f2e461230a932e81a19542afe9c3434b070c302aa40742a3e144d5f1f"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/assets/models/match04/foam_heap_blender04.glb",
+   "bytes": 672696,
+   "sha256": "464237f137499a79851ab3d5e490e04295ddc593f2d6fa2e73e36fb05bcf4f7e"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/b1_default_crop.png",
+   "bytes": 285984,
+   "sha256": "d2ad20620374f10222d88b11415d130d735fd0f7e41814b4c3bfcecc11b3403d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/b2_crop.png",
+   "bytes": 305788,
+   "sha256": "ad47e91474f6ed8b6f5786fad05843fbec7741d55f0d9ef0e4a29959620460bf"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/motion.json",
+   "bytes": 130,
+   "sha256": "2d2ac8d1bc4737264904ce9af9064fde6c2b4de97502903de63e382158439671"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/view_low_side.png",
+   "bytes": 266131,
+   "sha256": "2470757ce77e12cac037afb16026460ef762933af7fa31b2bc67ecbde3cfc8d4"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/view_three_quarter.png",
+   "bytes": 268479,
+   "sha256": "5f90d29e24ab96f347c39be4a4569266eaa7e3afe207b3a97873094cd549f336"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/tools/blender/foam_cluster04.py",
+   "bytes": 4005,
+   "sha256": "8f5b70c261ce321af0dfa37f512d225d1c51e999c6b2829d9728f3df9ab93fe7"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c10/INFO.json",
@@ -1734,7 +1774,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/INFO.json",
    "bytes": 2358,
-   "sha256": "f53f2aef3819b7ad3330b369b606b7915a0fa9ce8cd39bc3bb12649820e0342b"
+   "sha256": "01a3aee662cff140db333360fc76fb7c409358111b53907e7b6dd0f2f389b3e7"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
