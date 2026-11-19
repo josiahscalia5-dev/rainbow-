@@ -396,6 +396,10 @@ uniform vec4 uNB4;           // r18 m04nwhirl: x along squash of the whirl ellip
                              // z S-meander amplitude of the band edge ahead of Benny (u, 0 = off), w meander wavelength (u)
 uniform float uNB5;          // r18 m04nwhirl: spiral twist (stripe periods per half turn round Benny; 0 = closed U rings)
 uniform vec2 uNB6;           // r18 m04nwhirl: cyan corridor straight behind Benny — x half width (u, 0 = off), y soft edge (u)
+uniform vec2 uNB7;           // r18 m04nwq / m04nwr: x clean lane water where the whirl leaves the water bare (0/1), y whirl radius
+                             // round Benny (u; 0 = unlimited) — beyond it the bands run straight again (no smear when the camera lags)
+uniform vec4 uSS;            // r18 m04sswirl: x swing of the band pattern across the bank (u, 0 = off), y its wavelength along (u),
+                             // z how far the water's top edge laps back down in tongues (u, 0 = straight edge), w lap wavelength (u)
 uniform vec4 uA5;          // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
 uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
 uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
@@ -425,6 +429,7 @@ void main() {
   float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
   vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
   vec3 tileC = col;                                        // r14: the painted tile colour before any re-colouring
+  vec3 laneCol = col;                                      // r18: the clean lane water (for the bare parts of the whirl)
   // the deeper cyan centre lane of the painting
   col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
   if (uLane.x > 0.5) {
@@ -469,17 +474,26 @@ void main() {
         laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * wl);
       }
     }
+    laneCol = laneC;
     col = mix(col, laneC, kl * uLane.z);
   }
-  float fringe = 0.0;
+  float fringe = 0.0, edgeY = uEdge.y;
+  if (uSS.z > 0.0) {
+    // r18 m04sswirl: the water's top edge against the gold wall laps up and down in soft tongues (painted: no straight
+    // hard line where the water meets the wall); the lilac fringe follows the lapping edge
+    float lw = 0.5 + 0.5 * sin(along * 6.2832 / uSS.w + (vS < 0.0 ? 0.7 : 2.9));
+    lw = 0.65 * lw + 0.35 * vn(vec2(along * 0.8, vS < 0.0 ? 3.0 : 9.0));
+    edgeY = uEdge.y - uSS.z * lw;
+    if (abs(vS) > edgeY) discard;
+  }
   if (uEdge.x > 0.5) {
     // r13 m04edge: soft irregular water edge against the gold wall — pink / magenta current then a lilac-white lacy fringe
     // in broken patches (no straight hard line, no tall foam): uEdge.y = half arc to the edge, z = fringe width, w = strength
-    float e = smoothstep(uEdge.y - uEdge.z, uEdge.y - 0.04, abs(vS));
+    float e = smoothstep(edgeY - uEdge.z, edgeY - 0.04, abs(vS));
     float n1 = vn(vec2(fl * 0.9, sign(vS) * 7.0 + abs(vS) * 2.0)), n2 = vn(vec2(fl * 2.7 + 3.0, abs(vS) * 6.0));
     float patchy = smoothstep(0.35, 0.75, 0.65 * n1 + 0.35 * n2);
     vec3 pinkC = mix(vec3(0.78, 0.16, 0.66), vec3(1.0, 0.45, 0.82), n2);
-    col = mix(col, pinkC, uEdge.w * smoothstep(uEdge.y - uEdge.z * 2.2, uEdge.y - uEdge.z, abs(vS)) * (0.5 + 0.5 * n1));
+    col = mix(col, pinkC, uEdge.w * smoothstep(edgeY - uEdge.z * 2.2, edgeY - uEdge.z, abs(vS)) * (0.5 + 0.5 * n1));
     fringe = uEdge.w * e * patchy;
     col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
   }
@@ -521,12 +535,29 @@ void main() {
         float fo = mix(1.0, uNB2.w, smoothstep(0.0, uNB2.x, d));            // centred on Benny at / behind him
         vec2 wq = vec2(vS - uNB.z * fo, uNB4.x * min(d - uNB4.y, 0.0));
         rr = length(wq);
+        float wf = uNB7.y > 0.0 ? 1.0 - smoothstep(uNB7.y - 1.0, uNB7.y, rr) : 1.0;   // r18 m04nwr: whirl only near Benny
         // spiral, not closed rings: a stripe hugging Benny's left side sweeps under him and comes out farther out on his
         // right (uNB5 stripe periods per half turn; whole numbers leave the bands ahead of him unchanged)
-        twp = uNB5 * 2.0 * uNB3.x * abs(atan(wq.y, wq.x)) / 3.14159;
+        twp = uNB5 * 2.0 * uNB3.x * abs(atan(wq.y, wq.x)) / 3.14159 * wf;
         // as painted, the water right round and straight below Benny stays cyan (white splash); the pink sweeps in from the
         // lower-left / lower-right and fades out before the middle (no magenta pool under him)
         if (uNB6.x > 0.0) ckc = 1.0 - smoothstep(uNB4.y, uNB4.y - 1.0, d) * (1.0 - smoothstep(uNB6.x - uNB6.y, uNB6.x, abs(wq.x)));
+        // r18 m04nwq: where the whirl leaves the water bare (pocket / corridor round Benny) show the clean glossy lane water, not
+        // the raw painted tile magnified into big white cloud blobs (seen beside Benny while he steers to the side)
+        if (uNB7.x > 0.5) {
+          // m04nwq=2: the painted cyan streaks of the band strip's lane side instead (crisp at any distance, flowing along)
+          vec3 bare = laneCol;
+          if (uNB7.x > 1.5) {
+            // walk across the cyan part of the strip with the lateral position and offset each lane along, so the streaks
+            // run with the flow side by side (one column alone gives bands straight across the river)
+            float uq = 0.87 + 0.12 * (0.5 + 0.5 * sin(vS * 2.3 + 0.8 * vn(vec2(vS * 0.9, along * 0.05))));   // cyan end only
+            float vq = fl / uSB0.w + 0.45 * vn(vec2(vS * 1.7 + 4.0, 2.0));
+            bare = mix(texture2D(uSB, vec2(uq, vq)).rgb, texture2D(uSB, vec2(uq, vq * 0.81 + 0.29)).rgb, w);
+          }
+          col = mix(col, bare, (1.0 - smoothstep(uSB0.z - 1.2, uSB0.z - 0.6, abs(vS))) * (1.0 - smoothstep(uNB7.y > 0.0 ? uNB7.y : 9.0, (uNB7.y > 0.0 ? uNB7.y : 9.0) + 1.0, rr))
+            * smoothstep(uNB4.y + 1.5, uNB4.y, d));                // only at / behind Benny: the arrow lane ahead stays as it was
+        }
+        rr = mix(abs(sv), rr, wf);
       }
       inner = mix(min(hug, uSB0.y), uSB0.y, smoothstep(0.15 * uNB2.x, uNB2.x, d));
       if (uNB4.z > 0.0) {
@@ -538,9 +569,16 @@ void main() {
     }
     float as = abs(sv);
     float am = rr >= 0.0 ? rr : as;                       // r18: where the bands start (whirl ellipse, else the lateral arc)
+    float asB = as;
+    if (uSS.x > 0.0) {
+      // r18 m04sswirl: the painted pink / violet ribbons on the banks curve UP toward the wall and back down in long S-sweeps
+      // (world-anchored; zero shift at the bands' inner start and at the water edge, so neither moves)
+      float kk = clamp((as - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
+      asB = as + uSS.x * 4.0 * kk * (1.0 - kk) * sin(along * 6.2832 / uSS.y + (vS < 0.0 ? 1.3 : 4.1) + 1.5 * vn(vec2(along * 0.07, vS < 0.0 ? 1.0 : 5.0)));
+    }
     float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
     float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0;
-    float tb = clamp((as + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
+    float tb = clamp((asB + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
     float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
     float ub = (1.0 - tb) * uSB1.z;
     vec3 bc = mix(texture2D(uSB, vec2(ub, vb)).rgb, texture2D(uSB, vec2(ub, vb * 0.81 + 0.29)).rgb, w);
@@ -1070,6 +1108,13 @@ export function addM04(ctx: M04Ctx) {
         uNB5: { value: M04.num('m04nwt', 1) },   // m04nwt spiral twist (0 = closed U rings)
         // m04nwc / m04nwcs: cyan corridor straight behind Benny (half width, soft edge; m04nwc=0 = off, the r18 step-3 look)
         uNB6: { value: new THREE.Vector2(nwOn ? M04.num('m04nwc', 0) : 0, M04.num('m04nwcs', 0.8)) },
+        // m04nwq=1: clean lane water in the bare parts of the whirl; m04nwr=R: whirl only within R u of Benny (0 = unlimited)
+        uNB7: { value: new THREE.Vector2(nwOn ? M04.num('m04nwq', 0) : 0, nwOn ? M04.num('m04nwr', 0) : 0) },
+        // r18 `&m04sswirl=1` (needs m04sband): m04ssa swing of the bank ribbons (u), m04ssl its wavelength, m04ssz lapping top
+        // edge depth (u, 0 = straight edge), m04ssw lap wavelength
+        uSS: { value: M04.num('m04sswirl', 0) > 0 && M04.num('m04sband', 0) > 0
+          ? new THREE.Vector4(M04.num('m04ssa', 0.45), M04.num('m04ssl', 6.5), M04.num('m04ssz', 0.0), M04.num('m04ssw', 3.2))
+          : new THREE.Vector4(0, 1, 0, 1) },
         uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
@@ -1113,19 +1158,26 @@ export function addM04(ctx: M04Ctx) {
     const clu = M04.num('m04fclu', 0) > 0;
     const fch = clu ? M04.num('m04fch', 0.75) : 1, fcs = M04.num('m04fcs', 1.3), fck = M04.num('m04fck', 1.0), fcr = M04.num('m04fcr', 0.035);
     const fcb = M04.num('m04fcb', 1.25);   // bubble size scale inside a cluster
+    // r18 `&m04flo=1` (with m04fclu): the painted foam LIES along the water edge as low banks of many small bubbles — same layout
+    // (same random draws), heaps m04floh as tall, each cluster dome squashed to m04flov of its height, big bubbles m04flob
+    // as big, no puffs heaped up the wall
+    const flo = clu && M04.num('m04flo', 0) > 0;
+    const floh = flo ? M04.num('m04floh', 0.25) : 1, flov = flo ? M04.num('m04flov', 0.35) : 1, flob = flo ? M04.num('m04flob', 0.6) : 1;
+    const flos = flo ? M04.num('m04flos', 0.55) : 1, flok = flo ? M04.num('m04flok', 2.4) : 1;   // bubble size / count scale
+    const flw = flo ? M04.num('m04flw', 1.5) : 1;    // spread of each cluster along / across the edge (wider, low banks)
     let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
     const emit = (x: number, y: number, z: number, rad: number, s: number, base: number) => {
       if (!clu) { items.push({ p: new THREE.Vector3(x, y, z), r: rad, s }); return; }
       const R = rad * fcs;
-      const n = Math.min(48, Math.max(4, Math.round((5 + 60 * R) * fck)));
+      const n = Math.min(Math.round(48 * flok), Math.max(4, Math.round((5 + 60 * R) * fck * flok)));
       for (let i = 0; i < n; i++) {
         // a surface-biased point of a flattened dome round the puff centre (the hidden inside needs no bubbles)
         const th = rnd2() * Math.PI * 2, c = rnd2() * 1.6 - 0.6, sn = Math.sqrt(Math.max(0, 1 - c * c));
         const d = R * (0.35 + 0.55 * Math.sqrt(rnd2()));
         const big = rnd2() < 0.16;
-        const rho = Math.max(fcr, R * fcb * (big ? 0.52 + rnd2() * 0.22 : 0.18 + Math.pow(rnd2(), 1.4) * 0.30));
-        const py = Math.max(base + rho * 0.45, y + c * d * 0.7);
-        items.push({ p: new THREE.Vector3(x + sn * Math.cos(th) * d * 1.05, py, z + sn * Math.sin(th) * d * 1.05), r: rho, s: rnd2() });
+        const rho = Math.max(fcr, R * fcb * flos * (big ? (0.52 + rnd2() * 0.22) * flob : 0.18 + Math.pow(rnd2(), 1.4) * 0.30));
+        const py = Math.max(base + rho * 0.45, y + c * d * 0.7 * flov);
+        items.push({ p: new THREE.Vector3(x + sn * Math.cos(th) * d * 1.05 * flw, py, z + sn * Math.sin(th) * d * 1.05 * flw), r: rho, s: rnd2() });
       }
     };
     for (const side of [-1, 1]) {
@@ -1133,7 +1185,7 @@ export function addM04(ctx: M04Ctx) {
       while (heaped && a < Math.min(len - 1, rimL)) {
         const f3 = M04.foam3;                                     // round 9: low soft banks hugging the river edge
         const cl = 0.5 + Math.pow(rnd(), 1.3) * 2.4;            // clump length along the river
-        const H = (0.2 + Math.pow(rnd(), 1.8) * 1.1) * (f3 ? 0.35 : 1) * fch;   // heap height (a few tall heaps, many low ones)
+        const H = (0.2 + Math.pow(rnd(), 1.8) * 1.1) * (f3 ? 0.35 : 1) * fch * floh;   // heap height (a few tall heaps, many low ones)
         const reach = (0.3 + rnd() * 0.5 + H * 0.6) * (f3 ? 0.6 : 1);     // how far the clump spills into the river
         const n = Math.round((6 + cl * (8 + H * 22)) * (f3 ? 0.75 : 1));
         const lean = (rnd() - 0.5) * 0.6;
@@ -1143,7 +1195,9 @@ export function addM04(ctx: M04Ctx) {
           const big = rnd() < 0.18;
           const rad = (big ? 0.28 + rnd() * 0.30 : 0.06 + Math.pow(rnd(), 1.7) * 0.24) * (1 - 0.45 * hf) * (f3 ? (big ? 0.5 : 0.75) : 1);
           const d = Math.min(xW - XF + 0.4, rnd() * reach * env + lean * t * 0.5);   // inward from the wall
-          const onWall = rnd() < (f3 ? 0.08 : 0.25);              // some puffs heaped up the lower wall
+          const ow = rnd() < (f3 ? 0.08 : 0.25);                  // some puffs heaped up the lower wall
+          if (ow && flo) { rnd(); rnd(); }                         // r18 m04flo: none up the wall (same draws -> same layout)
+          const onWall = ow && !flo;
           const tt = Math.max(0, 1 - Math.max(0, d) / Math.max(0.1, xW - XF));
           const ys = onWall ? RY + rnd() * (f3 ? 0.25 : 0.7) * env * fch : 0.02 + RY * tt * tt;
           const x = side * (onWall ? xW - 0.12 - rnd() * 0.15 : XF + (xW - XF) * tt - 0.05);
@@ -1171,7 +1225,7 @@ export function addM04(ctx: M04Ctx) {
       for (let i = 0; i < n; i++) {
         const rad = (0.16 + rnd() * 0.34) * (M04.foam3 ? 0.7 : 1);
         const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);
-        const y = rad * 0.55 + rnd() * 0.3 * fch, z = z0 - a + rnd() * 0.3;
+        const y = rad * 0.55 * (flo ? flov : 1) + rnd() * 0.3 * fch * floh, z = z0 - a + rnd() * 0.3;
         emit(x, y, z, rad, rnd(), 0);
       }
     }
