@@ -301,6 +301,11 @@ void main() {
 const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
 
 export async function buildMatch06(course: Course): Promise<Match06> {
+  if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('cx06RinseWorld') === '1') {
+    const { buildRinseArch06 } = await import('./rinseArch06');
+    return buildRinseArch06();
+  }
+
   const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
   const loader = new THREE.TextureLoader();
   const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
