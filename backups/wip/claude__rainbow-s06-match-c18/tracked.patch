@@ -1,5 +1,5 @@
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index a7a0dfd1..495117ce 100644
+index a7a0dfd1..72d6bcdf 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -98,6 +98,20 @@ uniform float uPanel;
@@ -44,7 +44,7 @@ index a7a0dfd1..495117ce 100644
        float gfr = pow(1.0 - abs(dot(nn, V)), 3.0);
        vec3 gc = texture2D(uRingTex, vTile).rgb;
        gc = mix(gc, vec3(1.0, 0.93, 0.80), gfr * 0.18);
-@@ -187,16 +208,87 @@ void main() {
+@@ -187,16 +208,88 @@ void main() {
    float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
    // r6 m06flow: on the river the flowing painted-water material takes over sooner from the stretched projection
    float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);
@@ -83,6 +83,7 @@ index a7a0dfd1..495117ce 100644
 +        if (stOn > 0.5 && hold > 0.0) {
 +          float zc = -1.0, bw = 1.0;
 +          if (zs < uStO * zf) {
++            dbgZ = 1.0;
 +            // (i) hidden behind a nearer surface: up the projector image to that surface's edge (its silhouette depth)
 +            zc = zs;
 +            for (int k = 1; k <= 48; k++) {
@@ -134,7 +135,7 @@ index a7a0dfd1..495117ce 100644
        // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
        // tunnel wall seen through the crest loop / beside the river) or Benny's blurry provisional fill (R), the floor
        // shows the painted-water tile as soon as the camera leaves the approved view (the approved view is unchanged)
-@@ -204,18 +296,35 @@ void main() {
+@@ -204,18 +297,35 @@ void main() {
          vec4 mk = texture2D(uMask, uv);
          float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
          float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
@@ -172,11 +173,11 @@ index a7a0dfd1..495117ce 100644
 +      vec3 pl = texture2D(uPlate, uv).rgb;
 +      if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
 +      t = mix(pc, pl, w);
-+      if (uStDbg > 0.5) t = vec3(filled, filled > 0.5 ? dbgB : 0.0, uFloor);
++      if (uStDbg > 0.5) t = vec3(dbgZ * filled, (1.0 - dbgZ) * dbgB * filled, uFloor * 0.5 + 0.5 * (1.0 - vis));
      }
    }
    gl_FragColor = vec4(pjInverse(t), 1.0);
-@@ -329,6 +438,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -329,6 +439,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      uPjRes: { value: new THREE.Vector2(W, H) },
      uProjPos: { value: proj.position.clone() },
      uTime: { value: 0 },
@@ -190,7 +191,7 @@ index a7a0dfd1..495117ce 100644
    };
    const loadTile = async (name: string) => {
      const t = await loader.loadAsync(tex(`tile_${name}.png`));
-@@ -357,10 +473,23 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -357,10 +474,23 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      }
    }
    const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);

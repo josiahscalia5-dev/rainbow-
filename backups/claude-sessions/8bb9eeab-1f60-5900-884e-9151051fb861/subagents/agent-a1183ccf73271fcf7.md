@@ -1318,3 +1318,68 @@ Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
 > 255	                for (int j = 1; j <= 4; j++) {
 > 256	                  float z3 = linZ(textureLod(uDepth, u2 + vec2(0.0, float(j) * uStK * …[+1021 chars]
 
+### 🤖 Claude — 2026-11-19T02:54:55.267Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='/home/user/wt/s06/src/world/match06.ts'\ns=open(p).read()\na=s.index(\"        if (stOn > 0.5 && hold > 0.0) {\\n          float zc = -1.0, bw = 1.0;\")\nb=s.index(\"          if (zc > 0.0 && bw > 0.0) {\")\nnew='''        if (stOn > 0.5 && hold > 0.0) {\n          float zc = -1.0, bw = 1.0;\n          if (zs < uStO * zf) {\n            // (i) hidden behind a nearer surface: up the projector image to that surface's edge (its silhouette depth)\n            zc = zs;\n            for (int k = 1; k <= 48; k++) {\n              vec2 u2 = uv …[+2356 chars]`
+
+### 🧑 User — 2026-11-19T02:55:42.599Z
+
+> ↩︎ result: 229:      float filled = 0.0, dbgB = 0.0, dbgZ = 0.0;
+> NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:55:44.896Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/line_zoom9.png"}`
+
+### 🧑 User — 2026-11-19T02:55:44.928Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:55:52.933Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='/home/user/wt/s06/src/world/match06.ts'\ns=open(p).read()\ns=s.replace(\"          if (zs < uStO * zf) {\\n            // (i) hidden\",\"          if (zs < uStO * zf) {\\n            dbgZ = 1.0;\\n            // (i) hidden\",1)\ns=s.replace(\"      if (uStDbg > 0.5) t = vec3(filled, filled > 0.5 ? dbgB : 0.0, uFloor);\",\n            \"      if (uStDbg > 0.5) t = vec3(dbgZ * filled, (1.0 - dbgZ) * dbgB * filled, uFloor * 0.5 + 0.5 * (1.0 - vis));\")\nopen(p,'w').write(s)\nEOF\nK=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1 …[+471 chars]`
+
+### 🧑 User — 2026-11-19T02:56:24.510Z
+
+> ↩︎ result: stdbg2 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:56:26.907Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/stdbg2_crop.png"}`
+
+### 🧑 User — 2026-11-19T02:56:26.928Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:57:03.635Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"bakeDepth(renderer) {\" -A 16 src/world/match06.ts && grep -n \"const depthRT\" -A 3 src/world/match06.ts", "description": "Show the depth bake code"}`
+
+### 🧑 User — 2026-11-19T02:57:03.674Z
+
+> ↩︎ result: 864:    bakeDepth(renderer) {
+> 865-      const prevRT = renderer.getRenderTarget();
+> 866-      const scene = new THREE.Scene();
+> 867-      const clone = group.clone(true);
+> 868-      clone.visible = true;
+> 869-      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+> 870-      scene.add(clone);
+> 871-      clone.updateMatrixWorld(true);
+> 872-      renderer.setRenderTarget(depthRT);
+> 873-      renderer.clear();
+> 874-      renderer.render(scene, proj);
+> 875-      renderer.setRenderTarget(prevRT);
+> 876-      shared.uUseDepth.value = 1;
+> 877-    },
+> 878-    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
+> 879-    away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+> 880-    sync(renderer, w, h) {
+> 430:  const depthRT = new THREE.WebGLRenderTarget(1024, Math.round((1024 * H) / W), { depthBuffer: true });
+> 431-  depthRT.depthTexture = new THREE.DepthTexture(depthRT.width, depthRT.height, THREE.UnsignedIntType);
+> 432-  const shared = {
+> 433-    uPlate: { value: plate },
+
+### 🤖 Claude — 2026-11-19T02:57:04.351Z
+
+You've hit your 5-hour limit · resets 7:20am (UTC)
+

@@ -1428,3 +1428,143 @@ Now add the shared uniform (waterRibbon.ts), write it in the live sync (match05f
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1\" && GRID='-0.954,-0.432;-0.97,-0.40;-0.93,-0.45;-0.98,-0.47' timeout 600 node tools/match05/r15_probe.mjs \"$Q\" t81L 5275 2>&1 | tail -5", "description": "Probe the hot-pink corner surface", "timeout": 600000}`
 
+### 🧑 User — 2026-11-19T02:55:17.620Z
+
+> ↩︎ result: == t81L s 179.063 stage 05 cam -0.16,-39.22,-114.38 far-open 0 extra null
+>    -0.954,-0.432 Mesh<zone_tubes<washer_world<Scene d11.39 | tube05_far_wall<zone_tubes<washer_world<Scene d11.59 | Mesh<zone_tubes<washer_world<Scene d11.69
+>    -0.97,-0.4 Mesh<zone_tubes<washer_world<Scene d11.59 | tube05_far_wall<zone_tubes<washer_world<Scene d11.73 | Mesh<zone_tubes<washer_world<Scene d11.9
+>    -0.93,-0.45 Mesh<zone_tubes<washer_world<Scene d11.39 | tube05_far_wall<zone_tubes<washer_world<Scene d11.56 | Mesh<zone_tubes<washer_world<Scene d11.68
+>    -0.98,-0.47 Mesh<zone_tubes<washer_world<Scene d11.05 | tube05_far_wall<zone_tubes<washer_world<Scene d11.27 | Mesh<zone_tubes<washer_world<Scene d11.28
+
+### 🤖 Claude — 2026-11-19T02:55:22.660Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1\" && GRID='0,0' EXTRA_JS='(async()=>{const {scene,camera}=window.__rainbow.qa3d();const T=await import(\"/node_modules/.vite/deps/three.js\").catch(()=>null);const res=[];const R=new (camera.constructor.prototype.constructor===undefined?Object:Object)();const rc=new (Object.getPrototypeOf(scene).constructor===undefined?Object:Object)();return null})()' true; sed -n 395,420p src/world/environment.ts", "description": "Inspect the pink flow sheet code in environment"}`
+
+### 🧑 User — 2026-11-19T02:55:22.778Z
+
+> ↩︎ result: zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+>     }
+>   };
+>   addWall(s05, sGlow05, perf05Mat, warp05);
+>   addWall(sGlow05, s08, perfTubeMat);
+>   // 06/07 rings and the 04→05 junction collar (unchanged look)
+>   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+>   ringMat.envMap = goldEnv;
+>   ringMat.envMapIntensity = 1.3;
+>   // `&m05edge=1` (Screen 05 round 8): the first 06 ring (s ≈ 187) behind the 05 far tunnel's seam showed as an orange
+>   // tray on the left bank while swimming; clipped only behind the seam, only while that block is live (no-op otherwise)
+>   withClip05Std(ringMat, 1.5);
+>   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+>   // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+>   // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
+>   // strip lights as marquee spots
+>  …[+941 chars]
+
+### 🤖 Claude — 2026-11-19T02:55:24.320Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 383,397p src/world/environment.ts", "description": "Read addWall and pink flow sheet"}`
+
+### 🧑 User — 2026-11-19T02:55:24.416Z
+
+> ↩︎ result: }
+>   // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
+>   const strips05: TubeStrips = WALL05
+>     ? { ...strips, intensity: 5.6, width: 0.02, alt: 0.8 }
+>     : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+>   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+>   const chunk = 40;
+>   const addWall = (a0: number, a1: number, mat: THREE.Material, warp?: TubeWarp) => {
+>     for (let a = a0; a < a1 - 0.01; a += chunk) {
+>       const b = Math.min(a1, a + chunk + 0.6);
+>       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, warp }), mat));
+>       // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+>       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+>     }
+>   };
+
+### 🤖 Claude — 2026-11-19T02:55:34.461Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"pinkFlow\" src/world/environment.ts | head -5 && grep -n \"export function pinkFlowSheet\\|pinkFlow\\b\" src/world/materials.ts | head", "description": "Locate the pink flow sheet material"}`
+
+### 🧑 User — 2026-11-19T02:55:34.870Z
+
+> ↩︎ result: 203:  const pinkFlow = pinkFlowMaterial();
+> 395:      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+> 694:  animated.push(pinkFlow.update);
+> 1058:function pinkFlowMaterial() {
+
+### 🤖 Claude — 2026-11-19T02:55:36.567Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1058,1100p src/world/environment.ts; grep -n \"inset\" src/world/tube.ts | head -8", "description": "Read pinkFlowMaterial and inset meaning"}`
+
+### 🧑 User — 2026-11-19T02:55:36.801Z
+
+> ↩︎ result: function pinkFlowMaterial() {
+>   const tex = canvasTexture(256, 512, (c, w, h) => {
+>     const g = c.createLinearGradient(0, 0, w, 0);
+>     g.addColorStop(0, '#c81f9c'); g.addColorStop(0.5, '#ff4fc0'); g.addColorStop(1, '#c81f9c');
+>     c.fillStyle = g; c.fillRect(0, 0, w, h);
+>     for (let i = 0; i < 260; i++) {
+>       const x = Math.random() * w, y = Math.random() * h, l = 20 + Math.random() * 90;
+>       c.strokeStyle = Math.random() > 0.35 ? 'rgba(255,190,240,0.55)' : 'rgba(120,230,255,0.45)';
+>       c.lineWidth = 1 + Math.random() * 3;
+>       c.beginPath(); c.moveTo(x, y); c.bezierCurveTo(x + 8, y + l * 0.3, x - 8, y + l * 0.6, x + 3, y + l); c.stroke();
+>     }
+>   });
+>   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+>   const material = new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: '#ff3fb8', emissiveIntensity: 0.35, metalness: 0.2, roughness: 0.12, envMapIntensity: 1.4, side: THREE.DoubleSide });
+>   return { material, update: (t: number) => { tex.offset.y = -t * 0.9; } };
+> }
+> 161:  /** radius offset (negative = inset toward the axis) */
+> 162:  inset?: number;
+> 203:    const r = path.radius(s) + (o.inset ?? 0);
+> 315:  tube?: number; double?: boolean; inset?: number; extra? …[+506 chars]
+
+### 🤖 Claude — 2026-11-19T02:55:54.146Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1,30p scripts/capture.mjs | head -40; ls /home/user/tools-pixelmatch/", "description": "Check capture script usage"}`
+
+### 🧑 User — 2026-11-19T02:55:54.234Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+742 chars]
+
+### 🤖 Claude — 2026-11-19T02:55:56.709Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"opt.q\\|strictPort\\|--q\" scripts/capture.mjs scripts/lib/pw.mjs | head", "description": "Check query and port handling in capture"}`
+
+### 🧑 User — 2026-11-19T02:55:56.998Z
+
+> ↩︎ result: scripts/capture.mjs:33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> scripts/lib/pw.mjs:54:  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+
+### 🤖 Claude — 2026-11-19T02:56:01.402Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05 && K=\"$(cat qa/match/05/r18/KEPT_START.txt)\" && timeout 600 node scripts/capture.mjs 05 --q=\"$K\" --out=$S/lock_before >/dev/null 2>&1; timeout 600 node scripts/capture.mjs 05 --q=\"$K&m05wcrisp=1\" --out=$S/lock_new > /dev/null 2>&1; ls $S/lock_before $S/lock_new; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/lock_before/05.png $S/lock_new/05.png $S/lock_diff.png 0.1 180 1536 2>&1 | tail -3; cmp $S/lock_before/05.png $S/lock_new/05.png && echo IDENTICAL", "descri …[+74 chars]`
+
+### 🧑 User — 2026-11-19T02:56:54.262Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/lock_before:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/lock_new:
+> 05.png
+> {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/lock_before/05.png","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/lock_new/05.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> IDENTICAL
+
