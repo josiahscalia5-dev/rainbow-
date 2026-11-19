@@ -1,0 +1,52 @@
+import hashlib,json,shutil,zipfile
+from pathlib import Path
+from PIL import Image
+base=Path.cwd()
+task=base/'experiment-git/experiments/image2blender/s07-magenta-bank-shape'
+run=base/'image2blender-runs/s07_banks'
+def copy(src,dest):
+    dest=task/dest
+    dest.parent.mkdir(parents=True,exist_ok=True)
+    shutil.copyfile(src,dest)
+copy('report.md','README.md')
+copy('replay.md','reproduce/REPLAY.md')
+for name in ('s07-banks.blend','s07-banks.glb'):copy(run/name,'model/'+name)
+for name in ('spec.json','intake.json','validation.json','reopened-blend.json','installation.json'):copy(run/name,'run/'+name)
+for name in ('sections.json','trace.json'):copy(Path('inputs')/name,'run/'+name)
+for p in (run/'renders').glob('*.png'):copy(p,'run/renders/'+p.name)
+for p in Path('comparison').glob('*'):copy(p,'comparison/'+p.name)
+copy('inputs/approved-07.png','comparison/APPROVED.jpg')
+copy('first-preview/IMAGE2BLENDER_TEST_right12.png','rejected-tuning/hard-right-first-tuning.png')
+for name in ('trace.py','profiles.py','blender_scene.py','mcp-call.py','compare.cjs','playable-preview.mjs','measure.py','verify-blend.py'):
+    copy(Path('bin')/name,'reproduce/'+name)
+copy('kept-query.txt','reproduce/kept-query.txt')
+clean=[{'step':j['step'],'results':[r.get('result') for r in j['results']]} for line in (run/'mcp-log.jsonl').read_text().splitlines() if (j:=json.loads(line))]
+(task/'run/mcp-steps.json').write_text(json.dumps(clean,indent=2)+'\n')
+e=json.loads((task/'comparison/runtime.json').read_text());m=json.loads((task/'comparison/measurements.json').read_text())
+assert not e['browserErrors'] and not e['failedResources']
+assert all(k['passes']==8 and k['tests']==8 and k['checks']['realCoinPickups']['collected']==91 and k['checks']['realCoinPickups']['endCoins']==2240 for k in e['checks'].values())
+assert m['pairs']['opening']['changedWholeFramePixels']==m['pairs']['plunge66']['changedWholeFramePixels']==0
+assert hashlib.sha256((task/'comparison/APPROVED.jpg').read_bytes()).hexdigest()=='75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9'
+for p in (task/'comparison').glob('*'):
+    if p.suffix in ('.png','.jpg'):
+        with Image.open(p) as im:
+            assert im.size==(864,1536)
+            im.verify()
+hashes=[hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(task)) for p in sorted(task.rglob('*')) if p.is_file() and p.name!='SHA256SUMS']
+(task/'SHA256SUMS').write_text('\n'.join(hashes)+'\n')
+library=Path('/workspace/library-files')
+export=library/'Rainbow-S07-Image2Blender'
+export.mkdir(exist_ok=True)
+for p in (task/'comparison').iterdir():
+    if p.suffix in ('.png','.jpg'):shutil.copyfile(p,export/p.name)
+for p in (task/'model').iterdir():shutil.copyfile(p,export/p.name)
+shutil.copyfile(task/'run/renders/final_reference.png',export/'BLENDER_GEOMETRY_approved_camera.png')
+shutil.copyfile(task/'run/renders/final_oblique.png',export/'BLENDER_GEOMETRY_oblique.png')
+archive=library/'Rainbow-S07-Image2Blender-test.zip'
+with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=3) as z:
+    for p in sorted(task.rglob('*')):
+        if p.is_file():z.write(p,str(p.relative_to(task)))
+with zipfile.ZipFile(archive) as z:
+    assert z.testzip() is None
+    for p in (task/'model').iterdir():assert z.read('model/'+p.name)==p.read_bytes()
+print(len(hashes),'evidence and source files,',archive.stat().st_size,'archive bytes')

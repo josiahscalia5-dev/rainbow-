@@ -1,0 +1,7 @@
+{
+  "screen": "08",
+  "branch": "codex/s08-fitted-foreground-water",
+  "commit": "ad66a3a3eda766347669a086d35aa22aa13a7093",
+  "verified": "2026-11-18T23:54:07.003025+00:00",
+  "sourceFile": "src/world/match08.ts"
+}

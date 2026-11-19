@@ -1,0 +1,24 @@
+{
+  "name": "image2blender",
+  "displayName": "Image to Blender",
+  "version": "0.1.0",
+  "description": "Turn a reference image into a quality-gated, procedural 3D model in Blender via Blender MCP. Bundles the blender-mcp server and an image-to-blender skill with a spec-first, pass-locked build pipeline and vision review loop.",
+  "author": {
+    "name": "titanism",
+    "email": "prime@medai.im"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "blender",
+    "3d",
+    "image-to-3d",
+    "mcp",
+    "procedural-modeling"
+  ],
+  "mcpServers": {
+    "blender": {
+      "command": "uvx",
+      "args": ["blender-mcp"]
+    }
+  }
+}

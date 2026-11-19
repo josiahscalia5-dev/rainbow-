@@ -1,0 +1,22 @@
+from pathlib import Path
+from PIL import Image,ImageDraw
+import sys
+root=Path(__file__).parent;old=Path('/tmp/rainbow-reconstruction.etSm9SmK/repos')
+def strip(name,cols,rows):
+ w,h=156,277
+ pic=Image.new('RGB',(w*len(cols),(h+17)*len(rows)),(22,22,24)); d=ImageDraw.Draw(pic)
+ for i,(label,files) in enumerate(rows):
+  for j,f in enumerate(files):
+   if f.exists():
+    thumb=Image.open(f).convert('RGB');thumb.thumbnail((w,h));pic.paste(thumb,(w*j,(h+17)*i+17))
+   d.text((w*j+1,(h+17)*i+2),label+' '+cols[j],fill='white')
+ pic.save(root/(name+'.jpg'),quality=87)
+if __name__=='__main__':
+ for sid in sys.argv[1:]:
+  cols={'08':['opening','forward-03','forward-06','hard-left','hard-right','last-in-stage'],'04':['opening','forward-10','forward-20','middle','last-in-stage'],'05':['opening','middle','last-left-bend','last-right-bend','last-in-stage'],'06':['opening','hard-left','hard-right','crest-release','arch-exit'],'07':['opening','plunge-lip','halfway-down','two-thirds-down','plunge-bottom','last-in-stage']}[sid]
+  b=old/sid/'experiments/codex'/sid/'BEFORE'; n=root/'proof'/sid/'NEW'
+  rows=[('Before',[b/(x+'.png') for x in cols]),('New',[n/(x+'.png') for x in cols])]
+  strip('compare-'+sid,cols,rows)
+  if sid=='05':
+   cols=['last-left-bend','last-right-bend','last-in-stage']
+   strip('probe-05',cols,[(k,[root/'layers/05/BEFORE'/(x+'--'+k+'.png') for x in cols]) for k in ('retained','no-near-water','no-far-water')])

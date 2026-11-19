@@ -1,0 +1,21 @@
+{
+  "name": "image2blender",
+  "owner": {
+    "name": "titanism",
+    "email": "prime@medai.im"
+  },
+  "metadata": {
+    "description": "Image-to-3D reconstruction for Blender: bundles the blender-mcp server and a spec-first, review-gated image-to-blender skill"
+  },
+  "plugins": [
+    {
+      "name": "image2blender",
+      "source": "./",
+      "description": "Turn a reference image into a quality-gated, procedural 3D model in Blender via Blender MCP",
+      "version": "0.1.0",
+      "author": {
+        "name": "titanism"
+      }
+    }
+  ]
+}

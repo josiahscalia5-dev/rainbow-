@@ -1,0 +1,153 @@
+---
+name: image-to-blender
+description: Turn a reference image into a quality-gated, procedural 3D model or scene in Blender through Blender MCP, using a spec-first, pass-locked build pipeline with a vision review loop. Use this whenever the user provides or mentions an image (photo, product shot, concept art, character art, room or diorama) and wants it modeled, recreated, or rebuilt in 3D or in Blender — including phrasings like "model this", "make this in 3D", "recreate this photo in Blender", "turn this picture into an asset", or when they want to continue or refine a previous image-to-blender run. Requires a running Blender instance with a Blender MCP add-on connected.
+allowed-tools: mcp__plugin_image2blender_blender__get_scene_info mcp__plugin_image2blender_blender__get_object_info mcp__plugin_image2blender_blender__execute_blender_code mcp__plugin_image2blender_blender__get_viewport_screenshot mcp__plugin_image2blender_blender__search_polyhaven_assets mcp__plugin_image2blender_blender__download_polyhaven_asset mcp__plugin_image2blender_blender__set_texture Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/*)
+---
+
+# Image to Blender
+
+Rebuild what an image shows as a procedural 3D model in a live Blender scene.
+
+A single image underdetermines 3D — the back of the object is a guess, scale is
+an inference, materials are read from highlights. Winging it produces models
+that look almost right and are unfixable because nobody knows what "right" was.
+This skill converts that guesswork into checkable increments: write down what
+the image shows (spec), build in locked passes, and after every pass compare a
+render against the reference and record an explicit verdict. Progress is only
+what a capture proves. (Methodology adapted from img2threejs.)
+
+Work through the phases in order. Do not skip gates — each exists because the
+failure it blocks is expensive to discover later.
+
+## Phase 0 — Connect & protect
+
+1. Call `get_scene_info`. If it fails, the Blender-side add-on isn't connected:
+   read [references/setup.md](references/setup.md) and walk the user through it
+   before doing anything else.
+2. Note which server you're on — the exact tool names in your tool list vary
+   by host and by which Blender MCP server is connected (see
+   [references/setup.md](references/setup.md) for the mapping). The core loop
+   only needs an `execute_blender_code`-equivalent and a way to capture a
+   render; if there's no dedicated viewport-screenshot tool, rely on the
+   render-to-file capture in
+   [references/bpy-patterns.md](references/bpy-patterns.md) — the review loop
+   uses render-to-file for formal reviews regardless.
+3. `execute_blender_code` runs arbitrary Python in the user's live file. If the
+   scene is not empty, ask the user to save before the first build pass, and
+   confine every created or deleted object to the run's own collection.
+4. Create the work dir `image2blender-runs/<subject_name>/` (with `renders/`)
+   in the user's working directory. Everything the run produces — spec,
+   renders — lives there, so a run can be resumed or audited later.
+
+## Phase 1 — Intake gate
+
+1. Read the reference image (vision) and run `scripts/probe_image.py <image>`
+   — that path is relative to this SKILL.md's own directory, not your shell's
+   working directory, so resolve it to an absolute path before calling it.
+   Hard rejections (unknown format, tiny image) end the attempt — ask for a
+   better image instead of building on sand. Surface warnings honestly.
+2. Judge suitability: is there an identifiable subject? Is enough of it visible
+   to infer the hidden sides? Multiple unrelated subjects → ask which one.
+3. Classify: `class` (`object` | `character` | `scene`) and `complexity`
+   (`simple` | `moderate` | `complex`). When in doubt between two complexity
+   ratings, pick the higher one — the gates scale with it.
+4. Set expectations with the user now, not after six passes: single-image
+   reconstruction yields a faithful stylized approximation, not photogrammetry.
+   Agree on `faithful` vs `stylized` and record it in the spec.
+
+## Phase 2 — Spec first
+
+Read [references/spec-format.md](references/spec-format.md), then author
+`image2blender-runs/<name>/spec.json`:
+
+1. Scan the image as a 3×3 grid, cell by cell, and list every
+   identity-defining detail into `detailInventory` — the features someone who
+   knows the subject would miss first. Skimping here is how builds end up
+   generic; the strict gate below enforces minimums by complexity.
+2. Design the component tree (one entry per future Blender object), materials
+   (Principled BSDF estimates from the image), and per-pass acceptance
+   criteria. Criteria must be visually checkable yes/no statements.
+3. Gate: run `scripts/validate_spec.py <spec> --strict-quality` (again, resolve
+   the script path against this skill's own directory). Fix and re-run until
+   it passes. No build pass may run before this passes — the validator is
+   deterministic and cheap; your vision time is not.
+
+## Phase 3 — Pass-locked build
+
+Read [references/pass-rubrics.md](references/pass-rubrics.md) and
+[references/bpy-patterns.md](references/bpy-patterns.md) before the first pass.
+
+Build order: `blockout → structure → form → materials → detail → lighting`.
+One pass per iteration — never build ahead of an unreviewed pass, because an
+error in proportions (blockout) invalidates every hour spent on materials.
+
+Per pass, via `execute_blender_code`:
+
+- Self-contained chunks (re-import, redefine helpers), small enough to stay
+  under the server timeout — one component or rig per call.
+- Object names = spec component ids; delete-by-name before create so re-runs
+  are idempotent.
+- After each chunk, verify with printed output or `get_object_info` — for
+  structural criteria trust `get_scene_info` over eyeballs.
+
+## Phase 4 — Review loop (after every pass)
+
+1. **Capture**: render ≥2 fixed angles to
+   `image2blender-runs/<name>/renders/<pass>_<angle>.png` using the pattern in
+   bpy-patterns.md. Same angles every iteration so progress is comparable.
+   From the materials pass on, rendered shading is mandatory.
+2. **Compare**: Read the reference, then the renders. Walk this pass's
+   criteria one by one; then sweep the 3×3 grid for regressions.
+3. **Verdict** — exactly one, recorded in `reviewHistory` before anything else:
+
+   | Verdict | Meaning |
+   |---|---|
+   | `continue` | every criterion verified in a capture → next pass |
+   | `refine-spec` | spec is wrong/missing → fix spec, re-validate, rebuild pass |
+   | `refine-code` | spec right, build wrong → fix only the failing criteria |
+   | `request-input` | image ambiguous → ask the user, record the answer |
+   | `stop` | fidelity unreachable → honest final summary |
+
+4. **Termination**: max 3 repair attempts per pass; 2 consecutive repairs with
+   no visible improvement → escalate to `request-input` with your best attempt
+   shown side-by-side with the reference. Never loop silently.
+
+## Phase 5 — Scene track
+
+When `class` is `scene`, keep the same discipline with the scene remapping in
+pass-rubrics.md: blockout places zone volumes and the camera from
+`layout`, per-object mini-loops run inside form/materials batched by zone, and
+lighting carries the mood. Arrangement, proportion, and palette beat per-object
+detail — that's what makes a scene read.
+
+## Phase 6 — Finish
+
+1. Tidy: everything in the run collection, objects named per spec, transforms
+   applied where sensible, origins per `pivotNote`.
+2. Final captures: the three review angles plus one framing that matches the
+   reference composition.
+3. Report to the user: what matches the reference, what is deliberately
+   stylized, what the image didn't reveal (and was therefore invented). Honest
+   limitations beat implied perfection — the user will see them anyway.
+4. Offer exports: save as `.blend` or export glTF/FBX/OBJ — only with the
+   user's go-ahead, and never overwrite their file without asking.
+
+## Asset policy
+
+Geometry is modeled procedurally (primitives, modifiers, curves, geometry
+nodes) — that is the point of the skill: editable, animation-ready results.
+Poly Haven textures/HDRIs are welcome where `textureStrategy: polyhaven` says
+so (bundled server only). Hyper3D/Sketchfab model generation or import is
+opt-in: only when the user explicitly prefers speed over editability, and
+record it as `strategy: asset` in the spec.
+
+## Files
+
+| File | Read when |
+|---|---|
+| [references/setup.md](references/setup.md) | Phase 0 fails, or user asks about installation/servers |
+| [references/spec-format.md](references/spec-format.md) | Before authoring the spec (Phase 2) |
+| [references/pass-rubrics.md](references/pass-rubrics.md) | Before the first build pass; when unsure about a verdict |
+| [references/bpy-patterns.md](references/bpy-patterns.md) | Before the first build pass; when writing capture/material code |
+| `scripts/probe_image.py` | Phase 1 (execute, don't read) |
+| `scripts/validate_spec.py` | Phase 2 gate and after every spec edit (execute, don't read) |

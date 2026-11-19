@@ -1,0 +1,14 @@
+{
+  "plugin": "image2blender@image2blender",
+  "version": "0.1.0",
+  "source": "03fca53c1f44619550b25593834ac8c57fee5746",
+  "native_marketplace_install": true,
+  "scope": "temporary Codex CLI profile",
+  "skill_and_helpers_byte_identical": true,
+  "configured_mcp_servers": [
+    "Blender Lab v1.0.3"
+  ],
+  "blender": "5.3.0",
+  "session": "background, loopback",
+  "bundled_community_server_started": false
+}

@@ -1,0 +1,47 @@
+{
+  "clips": {
+    "before": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "pix_fmt": "yuvj420p",
+      "avg_frame_rate": "12/1",
+      "duration": "12.250000",
+      "nb_frames": "147",
+      "side_data_list": [
+        {}
+      ]
+    },
+    "new": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "pix_fmt": "yuvj420p",
+      "avg_frame_rate": "12/1",
+      "duration": "12.250000",
+      "nb_frames": "147",
+      "side_data_list": [
+        {}
+      ]
+    }
+  },
+  "simulatedHz": 60,
+  "matchedFrames": 147,
+  "cameraStateClockDifferences": [],
+  "minimumHeartsDuringRide": 5,
+  "stageTransitions": [
+    {
+      "time": 0,
+      "stage": "07"
+    },
+    {
+      "time": 12,
+      "stage": "08"
+    }
+  ],
+  "drawCallRange": [
+    69,
+    248
+  ],
+  "maxTriangles": 704383
+}
