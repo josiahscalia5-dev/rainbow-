@@ -19,7 +19,7 @@ try {
   page.on('pageerror', (e) => console.error('pageerror', e.message));
   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
-  if (/m04tfoam=1/.test(Q)) await page.waitForFunction(() => { let ok = false; window.__rainbow.qa3d().scene.traverse((o) => { if (o.name === 'm04_thrixel_foam' && o.children.length) ok = true; }); return ok; }, null, { timeout: 180000 });
+  if (/m04[tb]foam=1/.test(Q)) await page.waitForFunction(() => { let ok = false; window.__rainbow.qa3d().scene.traverse((o) => { if ((o.name === 'm04_thrixel_foam' || o.name === 'm04_blender_foam') && o.children.length) ok = true; }); return ok; }, null, { timeout: 180000 });
   await page.evaluate((id) => window.__rainbow.goto(id), SCREEN);
   const n = Math.round(Number(SECS) * fps);
   for (let i = 0; i < n; i++) {
