@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "asset": "assets/textures/fit05-sheen.png",
+  "kind": "single-channel optical/sheen material parameter; not colour or emissive imagery",
+  "dimensions": [
+    1024,
+    2048
+  ],
+  "pngMode": "L",
+  "channel": "r",
+  "colourSpace": "NoColorSpace",
+  "sRange": [
+    128.5,
+    190.0
+  ],
+  "lateralRange": [
+    -6.6,
+    6.6
+  ],
+  "rationalScale": 3.0,
+  "mapping": {
+    "u": "(lateral+6.6)/13.2",
+    "v": "(1-1/(1+(s-128.5)/3))/(1-1/(1+(190-128.5)/3))",
+    "orientation": "PNG row0 is sMin, column0 is lateralMin. Set THREE.Texture.flipY=false."
+  },
+  "scalarMeaning": {
+    "cyan": {
+      "0": "shadow",
+      "0.45": "body",
+      "0.8": "median sheen",
+      "1": "strong measured sheen"
+    },
+    "magenta": {
+      "0": "shadow",
+      "0.5": "body",
+      "1": "measured sheen"
+    }
+  },
+  "referencePalettesDisplayRGB": {
+    "cyan": [
+      [
+        1.0,
+        133.0,
+        225.0
+      ],
+      [
+        1.0,
+        166.5,
+        248.0
+      ],
+      [
+        0.0,
+        205.0,
+        253.0
+      ],
+      [
+        13.0,
+        237.0,
+        251.0
+      ]
+    ],
+    "magenta": [
+      [
+        237.0,
+        39.0,
+        205.0
+      ],
+      [
+        245.5,
+        80.5,
+        248.5
+      ],
+      [
+        245.0,
+        139.5,
+        244.0
+      ]
+    ]
+  },
+  "calibratedPaletteKnots": {
+    "cyan": [
+      {
+        "scalar": 0.0,
+        "targetSrgb255": [
+          1.0,
+          133.0,
+          225.0
+        ],
+        "shaderLinear": [
+          0.07222027,
+          0.29244633,
+          0.61634315
+        ],
+        "forwardSrgb255": [
+          1.0,
+          133.0,
+          225.0
+        ],
+        "maxError255": 2.4868995751603507e-14
+      },
+      {
+        "scalar": 0.45,
+        "targetSrgb255": [
+          1.0,
+          166.5,
+          248.0
+        ],
+        "shaderLinear": [
+          0.08128029,
+          0.42511657,
+          0.7695623
+        ],
+        "forwardSrgb255": [
+          1.0,
+          166.5,
+          248.0
+        ],
+        "maxError255": 2.842170943040401e-14
+      },
+      {
+        "scalar": 0.8,
+        "targetSrgb255": [
+          0.0,
+          205.0,
+          253.0
+        ],
+        "shaderLinear": [
+          0.0902526,
+          0.61507873,
+          0.84784105
+        ],
+        "forwardSrgb255": [
+          0.0,
+          205.0,
+          253.0
+        ],
+        "maxError255": 0.0
+      },
+      {
+        "scalar": 1.0,
+        "targetSrgb255": [
+          13.0,
+          237.0,
+          251.0
+        ],
+        "shaderLinear": [
+          0.11524333,
+          0.81196928,
+          0.88675652
+        ],
+        "forwardSrgb255": [
+          13.0,
+          237.0,
+          251.0
+        ],
+        "maxError255": 2.842170943040401e-14
+      }
+    ],
+    "magenta": [
+      {
+        "scalar": 0.0,
+        "targetSrgb255": [
+          237.0,
+          39.0,
+          205.0
+        ],
+        "shaderLinear": [
+          0.64236965,
+          0.10429476,
+          0.50863974
+        ],
+        "forwardSrgb255": [
+          237.0,
+          39.0,
+          205.0
+        ],
+        "maxError255": 0.0
+      },
+      {
+        "scalar": 0.5,
+        "targetSrgb255": [
+          245.5,
+          80.5,
+          248.5
+        ],
+        "shaderLinear": [
+          0.74089841,
+          0.1870074,
+          0.75571943
+        ],
+        "forwardSrgb255": [
+          245.5,
+          80.5,
+          248.5
+        ],
+        "maxError255": 2.842170943040401e-14
+      },
+      {
+        "scalar": 1.0,
+        "targetSrgb255": [
+          245.0,
+          139.5,
+          244.0
+        ],
+        "shaderLinear": [
+          0.81441881,
+          0.37493118,
+          0.8092223
+        ],
+        "forwardSrgb255": [
+          245.0,
+          139.5,
+          244.0
+        ],
+        "maxError255": 2.842170943040401e-14
+      }
+    ]
+  },
+  "intendedUse": "Advected optical field and/or finite-difference normal influence on actual 3D water; never a screen-space overlay.",
+  "counts": {
+    "referenceWaterInterior": 564679,
+    "excludedObjectOrWhitePixels": 245402,
+    "mappedSamples": 298672,
+    "knownFieldTexels": 308633,
+    "inpaintedFieldTexels": 1788519
+  },
+  "reprojectionScalarError": {
+    "mean": 0.021091161060091686,
+    "median": 0.008504174091412756,
+    "p95": 0.08222912755945992
+  },
+  "sourceSha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+  "featureSha256": "da13c44f5a5517631f15f2f2e79b26a7b185dc0917c6a3a1e2de1bf03c45c5e6",
+  "coordinatesSha256": "7fb3922df2aa295184e99f2cb04d32ff9e7a3c1c06421d496bf7fcd1faf0eaf6",
+  "assetSha256": "b1cc43ffea2b93c8b55639ac0a195520202411020256f366bcab15bb20aa00f1",
+  "limitations": [
+    "Single approved camera provides no observations behind actors or outside the image; these are smoothly inferred.",
+    "Bright white glints are excluded and remain separate live geometric reflections.",
+    "Far mesh uses a different coordinate frame and is intentionally excluded."
+  ]
+}

@@ -1,0 +1,3 @@
+f20_forward20u         LAYOUT20  17.1 %  PALETTE  85.7 %
+t33_through_screen     LAYOUT20  17.7 %  PALETTE  84.9 %
+t66_through_screen     LAYOUT20   9.3 %  PALETTE  79.4 %

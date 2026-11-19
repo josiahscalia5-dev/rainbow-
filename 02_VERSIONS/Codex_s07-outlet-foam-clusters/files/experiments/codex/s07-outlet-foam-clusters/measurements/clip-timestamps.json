@@ -1,0 +1,12 @@
+{
+  "screen": "07",
+  "duration": 12.25,
+  "nearestCoursePositionsInContinuousClip": {
+    "forward-20": 3.8333333333333335,
+    "hard-right": 3.1666666666666665,
+    "halfway-down": 8.666666666666666,
+    "two-thirds-down": 9.75,
+    "plunge-bottom": 11.75,
+    "last-in-stage": 11.916666666666666
+  }
+}

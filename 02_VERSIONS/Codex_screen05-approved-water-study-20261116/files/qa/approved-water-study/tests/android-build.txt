@@ -1,0 +1,344 @@
+Rainbow approved-water-study Android compilation
+2026-11-16T16:06:10.053521+00:00
+Source base: 4abf5483949de3893ee4d96d0c1f6e0ff9e86a89
+Branch: codex/screen05-approved-water-study-20261116
+Build switch: VITE_RAINBOW_Q05=reference05=1
+Java: full Eclipse Temurin17; Gradle8.2.1; compile/target SDK34; build-tools34.0.0
+Source fingerprint: qa/approved-water-study/tests/android-source-sha256.json
+Physical Android device/emulator runtime and performance: NOT TESTED. This is compilation and package validation only.
+
+COMMAND: npm run build
+
+> rainbow-washer-game@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 56 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                               0.74 kB │ gzip:   0.45 kB
+dist/assets/baloo-2-vietnamese-800-normal-ConLnEgt.woff2      4.80 kB
+dist/assets/baloo-2-vietnamese-700-normal-h4tlcePq.woff2      5.41 kB
+dist/assets/baloo-2-vietnamese-800-normal-GQACmpuv.woff       6.74 kB
+dist/assets/baloo-2-vietnamese-700-normal-DoF59Mjc.woff       7.28 kB
+dist/assets/baloo-2-latin-ext-800-normal-C_Iwmf1s.woff2      15.07 kB
+dist/assets/baloo-2-latin-ext-700-normal-Mlh7kdab.woff2      16.04 kB
+dist/assets/baloo-2-latin-800-normal-BbF3Etk1.woff2          18.63 kB
+dist/assets/baloo-2-latin-700-normal-CqTg7A15.woff2          19.44 kB
+dist/assets/baloo-2-latin-ext-800-normal-D-iCxxqE.woff       19.67 kB
+dist/assets/baloo-2-latin-ext-700-normal-D6LeXASg.woff       20.42 kB
+dist/assets/baloo-2-latin-800-normal-B8BXfZF7.woff           22.60 kB
+dist/assets/baloo-2-latin-700-normal-Ld3Zm3l2.woff           23.41 kB
+dist/assets/marble05_env_1024-BW6Rb9aP.jpg                   51.15 kB
+dist/assets/baloo-2-devanagari-800-normal-BURIY0wZ.woff2     57.00 kB
+dist/assets/baloo-2-devanagari-700-normal-D37Te3iF.woff2     65.86 kB
+dist/assets/baloo-2-devanagari-800-normal-YLp1oUqR.woff      89.07 kB
+dist/assets/baloo-2-devanagari-700-normal-CEIF4sJg.woff      97.58 kB
+dist/assets/benny-BNj-9CQ9.glb                            1,126.89 kB
+dist/assets/rainbow_girl-BGmVI95Z.glb                     3,546.48 kB
+dist/assets/main-CXqpzoXj.css                                 3.02 kB │ gzip:   0.65 kB
+dist/assets/runtime-C9fFI2i3.js                               1.72 kB │ gzip:   1.02 kB
+dist/assets/runtime-DK8f3VDt.js                               9.14 kB │ gzip:   3.99 kB
+dist/assets/GLTFLoader-Co4Yn7y1.js                           46.06 kB │ gzip:  13.68 kB
+dist/assets/vfx-DGD4E3Pt.js                                  86.58 kB │ gzip:  29.01 kB
+dist/assets/main-kmUVvL1I.js                                831.51 kB │ gzip: 236.71 kB
+✓ built in 5.78s
+EXIT: 0
+COMMAND: npx cap sync android
+✔ Copying web assets from dist to android/app/src/main/assets/public in 53.40ms
+✔ Creating capacitor.config.json in android/app/src/main/assets in 1.22ms
+✔ copy android in 88.37ms
+✔ Updating Android plugins in 8.57ms
+✔ update android in 88.43ms
+[info] Sync finished in 0.196s
+EXIT: 0
+COMMAND: python3 /tmp/rainbow-gradle.py assembleDebug --no-daemon --max-workers=2
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :app
+WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+
+> Configure project :capacitor-cordova-android-plugins
+WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-android:preBuild UP-TO-DATE
+> Task :capacitor-android:preDebugBuild UP-TO-DATE
+> Task :capacitor-android:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:preBuild UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :capacitor-android:generateDebugResValues UP-TO-DATE
+> Task :capacitor-android:generateDebugResources UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:writeDebugAarMetadata
+> Task :capacitor-android:packageDebugResources UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:generateDebugResValues
+> Task :capacitor-cordova-android-plugins:generateDebugResources
+> Task :capacitor-cordova-android-plugins:packageDebugResources
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-android:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-android:processDebugManifest UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:extractDeepLinksDebug
+> Task :capacitor-android:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-android:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-android:generateDebugRFile UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:compileDebugLibraryResources
+> Task :capacitor-cordova-android-plugins:processDebugManifest
+> Task :capacitor-cordova-android-plugins:parseDebugLocalResources
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :capacitor-android:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:generateDebugRFile
+> Task :capacitor-android:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :capacitor-android:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :capacitor-android:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:javaPreCompileDebug
+> Task :capacitor-android:compileDebugShaders NO-SOURCE
+> Task :capacitor-cordova-android-plugins:compileDebugJavaWithJavac NO-SOURCE
+> Task :capacitor-android:generateDebugAssets UP-TO-DATE
+> Task :capacitor-android:packageDebugAssets UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:bundleLibCompileToJarDebug
+> Task :capacitor-cordova-android-plugins:mergeDebugShaders
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:compileDebugShaders NO-SOURCE
+> Task :capacitor-cordova-android-plugins:generateDebugAssets UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:packageDebugAssets
+> Task :app:mergeDebugAssets
+> Task :capacitor-android:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:compressDebugAssets
+> Task :capacitor-cordova-android-plugins:bundleLibRuntimeToJarDebug
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :capacitor-android:processDebugJavaRes NO-SOURCE
+> Task :capacitor-cordova-android-plugins:processDebugJavaRes NO-SOURCE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:mergeDebugGlobalSynthetics UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-android:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-android:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-android:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugJniLibFolders
+> Task :capacitor-cordova-android-plugins:mergeDebugNativeLibs NO-SOURCE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:copyDebugJniLibsProjectOnly
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :capacitor-android:stripDebugDebugSymbols NO-SOURCE
+> Task :capacitor-android:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :capacitor-android:extractDebugAnnotations UP-TO-DATE
+> Task :capacitor-android:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :capacitor-android:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :capacitor-android:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :capacitor-android:prepareDebugArtProfile UP-TO-DATE
+> Task :capacitor-android:prepareLintJarForPublish UP-TO-DATE
+> Task :capacitor-android:mergeDebugJavaResource UP-TO-DATE
+> Task :capacitor-android:syncDebugLibJars UP-TO-DATE
+> Task :capacitor-android:bundleDebugAar UP-TO-DATE
+> Task :capacitor-android:assembleDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:stripDebugDebugSymbols NO-SOURCE
+> Task :capacitor-cordova-android-plugins:copyDebugJniLibsProjectAndLocalJars
+> Task :capacitor-cordova-android-plugins:extractDebugAnnotations
+> Task :capacitor-cordova-android-plugins:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:prepareDebugArtProfile UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:prepareLintJarForPublish UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugJavaResource
+> Task :capacitor-cordova-android-plugins:syncDebugLibJars
+> Task :capacitor-cordova-android-plugins:bundleDebugAar
+> Task :capacitor-cordova-android-plugins:assembleDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug
+
+BUILD SUCCESSFUL in 33s
+82 actionable tasks: 23 executed, 59 up-to-date
+EXIT: 0
+APK: /workspace/artifacts/rainbow-approved-water-study.apk
+Bytes: 7627278
+SHA256: e350d7c0018c014ba5c26264f78e9175421e8013dae3f7917d187a5632d5ebf0
+COMMAND: /workspace/android-sdk/build-tools/34.0.0/apksigner verify --verbose /workspace/artifacts/rainbow-approved-water-study.apk
+Verifies
+Verified using v1 scheme (JAR signing): true
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+WARNING: META-INF/com/android/build/gradle/app-metadata.properties not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.activity_activity.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.annotation_annotation-experimental.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.appcompat_appcompat-resources.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.appcompat_appcompat.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.arch.core_core-runtime.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.coordinatorlayout_coordinatorlayout.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.core_core-ktx.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.core_core-splashscreen.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.core_core.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.cursoradapter_cursoradapter.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.customview_customview.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.drawerlayout_drawerlayout.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.emoji2_emoji2-views-helper.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.emoji2_emoji2.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.fragment_fragment.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.interpolator_interpolator.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.lifecycle_lifecycle-livedata-core.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.lifecycle_lifecycle-livedata.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.lifecycle_lifecycle-process.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.lifecycle_lifecycle-runtime.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.lifecycle_lifecycle-viewmodel-savedstate.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.lifecycle_lifecycle-viewmodel.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.loader_loader.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.profileinstaller_profileinstaller.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.savedstate_savedstate.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.startup_startup-runtime.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.tracing_tracing.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.vectordrawable_vectordrawable-animated.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.vectordrawable_vectordrawable.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.versionedparcelable_versionedparcelable.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.viewpager_viewpager.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/androidx.webkit_webkit.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/kotlinx_coroutines_android.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/kotlinx_coroutines_core.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/services/kotlinx.coroutines.CoroutineExceptionHandler not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+WARNING: META-INF/services/kotlinx.coroutines.internal.MainDispatcherFactory not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.
+COMMAND: /workspace/android-sdk/build-tools/34.0.0/aapt dump badging /workspace/artifacts/rainbow-approved-water-study.apk
+package: name='com.rainbow.washergame' versionCode='1' versionName='1.0' platformBuildVersionName='14' platformBuildVersionCode='34' compileSdkVersion='34' compileSdkVersionCodename='14'
+sdkVersion:'22'
+targetSdkVersion:'34'
+uses-permission: name='android.permission.INTERNET'
+uses-permission: name='com.rainbow.washergame.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+application-label:'Rainbow'
+application-label-af:'Rainbow'
+application-label-am:'Rainbow'
+application-label-ar:'Rainbow'
+application-label-as:'Rainbow'
+application-label-az:'Rainbow'
+application-label-be:'Rainbow'
+application-label-bg:'Rainbow'
+application-label-bn:'Rainbow'
+application-label-bs:'Rainbow'
+application-label-ca:'Rainbow'
+application-label-cs:'Rainbow'
+application-label-da:'Rainbow'
+application-label-de:'Rainbow'
+application-label-el:'Rainbow'
+application-label-en-AU:'Rainbow'
+application-label-en-CA:'Rainbow'
+application-label-en-GB:'Rainbow'
+application-label-en-IN:'Rainbow'
+application-label-en-XC:'Rainbow'
+application-label-es:'Rainbow'
+application-label-es-US:'Rainbow'
+application-label-et:'Rainbow'
+application-label-eu:'Rainbow'
+application-label-fa:'Rainbow'
+application-label-fi:'Rainbow'
+application-label-fr:'Rainbow'
+application-label-fr-CA:'Rainbow'
+application-label-gl:'Rainbow'
+application-label-gu:'Rainbow'
+application-label-hi:'Rainbow'
+application-label-hr:'Rainbow'
+application-label-hu:'Rainbow'
+application-label-hy:'Rainbow'
+application-label-in:'Rainbow'
+application-label-is:'Rainbow'
+application-label-it:'Rainbow'
+application-label-iw:'Rainbow'
+application-label-ja:'Rainbow'
+application-label-ka:'Rainbow'
+application-label-kk:'Rainbow'
+application-label-km:'Rainbow'
+application-label-kn:'Rainbow'
+application-label-ko:'Rainbow'
+application-label-ky:'Rainbow'
+application-label-lo:'Rainbow'
+application-label-lt:'Rainbow'
+application-label-lv:'Rainbow'
+application-label-mk:'Rainbow'
+application-label-ml:'Rainbow'
+application-label-mn:'Rainbow'
+application-label-mr:'Rainbow'
+application-label-ms:'Rainbow'
+application-label-my:'Rainbow'
+application-label-nb:'Rainbow'
+application-label-ne:'Rainbow'
+application-label-nl:'Rainbow'
+application-label-or:'Rainbow'
+application-label-pa:'Rainbow'
+application-label-pl:'Rainbow'
+application-label-pt:'Rainbow'
+application-label-pt-BR:'Rainbow'
+application-label-pt-PT:'Rainbow'
+application-label-ro:'Rainbow'
+application-label-ru:'Rainbow'
+application-label-si:'Rainbow'
+application-label-sk:'Rainbow'
+application-label-sl:'Rainbow'
+application-label-sq:'Rainbow'
+application-label-sr:'Rainbow'
+application-label-sr-Latn:'Rainbow'
+application-label-sv:'Rainbow'
+application-label-sw:'Rainbow'
+application-label-ta:'Rainbow'
+application-label-te:'Rainbow'
+application-label-th:'Rainbow'
+application-label-tl:'Rainbow'
+application-label-tr:'Rainbow'
+application-label-uk:'Rainbow'
+application-label-ur:'Rainbow'
+application-label-uz:'Rainbow'
+application-label-vi:'Rainbow'
+application-label-zh-CN:'Rainbow'
+application-label-zh-HK:'Rainbow'
+application-label-zh-TW:'Rainbow'
+application-label-zu:'Rainbow'
+application-icon-120:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-240:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-320:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-480:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-640:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-65534:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application: label='Rainbow' icon='res/mipmap-anydpi-v26/ic_launcher.xml'
+application-debuggable
+launchable-activity: name='com.rainbow.washergame.MainActivity'  label='Rainbow' icon=''
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+main
+other-receivers
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
+densities: '120' '160' '240' '320' '480' '640' '65534'
+Source fingerprint unchanged throughout build: True
+Restored tracked files changed by cap sync/build: []
+Tracked Android preservation: True
+RESULT: PASS

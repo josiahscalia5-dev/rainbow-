@@ -1,0 +1,19 @@
+{
+ "capture": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/cap3/05.png",
+ "whole_frame": {
+  "px": 1327104,
+  "share_of_frame": 1.0,
+  "mean_abs": 8.16,
+  "within_10": 0.8101,
+  "within_20": 0.8908,
+  "ssim_lum": 0.8749,
+  "mean_signed_rgb": [
+   -1.7,
+   -0.0,
+   0.5
+  ]
+ },
+ "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
+ "mse": 497.1,
+ "psnr_db": 21.17
+}

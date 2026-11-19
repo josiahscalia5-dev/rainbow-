@@ -1,0 +1,876 @@
+{
+  "screen": "06",
+  "stills": [
+    {
+      "name": "opening",
+      "stage": "06",
+      "s": 198.91,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 57830,
+      "channelDeltaAtLeast16": 557,
+      "boundsAt16": [
+        166,
+        184,
+        863,
+        539
+      ],
+      "beforeDraws": {
+        "calls": 45,
+        "triangles": 283635,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 45,
+        "triangles": 283635,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-03",
+      "stage": "06",
+      "s": 202.027,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 306637,
+      "channelDeltaAtLeast16": 206599,
+      "boundsAt16": [
+        65,
+        23,
+        863,
+        597
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-06",
+      "stage": "06",
+      "s": 204.96,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 454062,
+      "channelDeltaAtLeast16": 361002,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        674
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-10",
+      "stage": "06",
+      "s": 208.993,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 544745,
+      "channelDeltaAtLeast16": 496034,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        774
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "forward-20",
+      "stage": "06",
+      "s": 219.077,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 607220,
+      "channelDeltaAtLeast16": 561918,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        844
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "hard-left",
+      "stage": "06",
+      "s": 211.01,
+      "steer": -1,
+      "hearts": 5,
+      "changedPixels": 545881,
+      "channelDeltaAtLeast16": 501174,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        791
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "hard-right",
+      "stage": "06",
+      "s": 211.01,
+      "steer": 1,
+      "hearts": 5,
+      "changedPixels": 549930,
+      "channelDeltaAtLeast16": 506901,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        1084
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "inlet",
+      "stage": "06",
+      "s": 189.233,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 131615,
+      "channelDeltaAtLeast16": 73714,
+      "boundsAt16": [
+        337,
+        246,
+        863,
+        1128
+      ],
+      "beforeDraws": {
+        "calls": 52,
+        "triangles": 338685,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 52,
+        "triangles": 338685,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "middle",
+      "stage": "06",
+      "s": 216,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 584756,
+      "channelDeltaAtLeast16": 541533,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        856
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "deep",
+      "stage": "06",
+      "s": 229.933,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 606043,
+      "channelDeltaAtLeast16": 557351,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        874
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "crest-release",
+      "stage": "06",
+      "s": 200.01,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 215227,
+      "channelDeltaAtLeast16": 89617,
+      "boundsAt16": [
+        140,
+        91,
+        863,
+        555
+      ],
+      "beforeDraws": {
+        "calls": 45,
+        "triangles": 283635,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 45,
+        "triangles": 283635,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "arch-exit",
+      "stage": "06",
+      "s": 233.233,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 570173,
+      "channelDeltaAtLeast16": 524104,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        868
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "last-in-stage",
+      "stage": "06",
+      "s": 242.479,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 791708,
+      "channelDeltaAtLeast16": 750948,
+      "boundsAt16": [
+        0,
+        0,
+        863,
+        1306
+      ],
+      "beforeDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 51,
+        "triangles": 335485,
+        "textures": 40,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "across-transition",
+      "stage": "07",
+      "s": 243.63,
+      "steer": 0,
+      "hearts": 5,
+      "changedPixels": 0,
+      "channelDeltaAtLeast16": 0,
+      "boundsAt16": null,
+      "beforeDraws": {
+        "calls": 249,
+        "triangles": 698855,
+        "textures": 63,
+        "contextLost": false
+      },
+      "newDraws": {
+        "calls": 249,
+        "triangles": 698855,
+        "textures": 63,
+        "contextLost": false
+      }
+    }
+  ],
+  "ride": {
+    "frames": 63,
+    "fps": 12,
+    "duration": 5.25,
+    "start": 189.05,
+    "end": 246.171,
+    "nextStage": "07",
+    "minimumHearts": 5,
+    "allMatchedStates": true,
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 324,
+        "height": 576,
+        "r_frame_rate": "12/1",
+        "nb_frames": "63",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "codec_name": "h264",
+        "width": 324,
+        "height": 576,
+        "r_frame_rate": "12/1",
+        "nb_frames": "63",
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "largestRelativeTemporalChanges": [
+      {
+        "frame": 50,
+        "s": 234.883,
+        "stage": "06",
+        "beforeMeanChannelChange": 38.28,
+        "newMeanChannelChange": 35.619
+      },
+      {
+        "frame": 47,
+        "s": 232.133,
+        "stage": "06",
+        "beforeMeanChannelChange": 29.657,
+        "newMeanChannelChange": 27.072
+      },
+      {
+        "frame": 49,
+        "s": 233.966,
+        "stage": "06",
+        "beforeMeanChannelChange": 29.085,
+        "newMeanChannelChange": 26.598
+      },
+      {
+        "frame": 48,
+        "s": 233.05,
+        "stage": "06",
+        "beforeMeanChannelChange": 29.554,
+        "newMeanChannelChange": 27.079
+      }
+    ],
+    "temporalChanges": [
+      {
+        "frame": 1,
+        "s": 189.966,
+        "stage": "06",
+        "beforeMeanChannelChange": 50.074,
+        "newMeanChannelChange": 49.966
+      },
+      {
+        "frame": 2,
+        "s": 190.883,
+        "stage": "06",
+        "beforeMeanChannelChange": 48.0,
+        "newMeanChannelChange": 48.009
+      },
+      {
+        "frame": 3,
+        "s": 191.8,
+        "stage": "06",
+        "beforeMeanChannelChange": 34.567,
+        "newMeanChannelChange": 34.533
+      },
+      {
+        "frame": 4,
+        "s": 192.716,
+        "stage": "06",
+        "beforeMeanChannelChange": 28.094,
+        "newMeanChannelChange": 28.097
+      },
+      {
+        "frame": 5,
+        "s": 193.633,
+        "stage": "06",
+        "beforeMeanChannelChange": 30.058,
+        "newMeanChannelChange": 29.997
+      },
+      {
+        "frame": 6,
+        "s": 194.55,
+        "stage": "06",
+        "beforeMeanChannelChange": 32.894,
+        "newMeanChannelChange": 32.822
+      },
+      {
+        "frame": 7,
+        "s": 195.466,
+        "stage": "06",
+        "beforeMeanChannelChange": 31.871,
+        "newMeanChannelChange": 31.78
+      },
+      {
+        "frame": 8,
+        "s": 196.383,
+        "stage": "06",
+        "beforeMeanChannelChange": 33.124,
+        "newMeanChannelChange": 33.009
+      },
+      {
+        "frame": 9,
+        "s": 197.3,
+        "stage": "06",
+        "beforeMeanChannelChange": 36.345,
+        "newMeanChannelChange": 36.33
+      },
+      {
+        "frame": 10,
+        "s": 198.216,
+        "stage": "06",
+        "beforeMeanChannelChange": 39.433,
+        "newMeanChannelChange": 39.414
+      },
+      {
+        "frame": 11,
+        "s": 199.133,
+        "stage": "06",
+        "beforeMeanChannelChange": 42.623,
+        "newMeanChannelChange": 42.703
+      },
+      {
+        "frame": 12,
+        "s": 200.05,
+        "stage": "06",
+        "beforeMeanChannelChange": 49.591,
+        "newMeanChannelChange": 49.601
+      },
+      {
+        "frame": 13,
+        "s": 200.966,
+        "stage": "06",
+        "beforeMeanChannelChange": 49.667,
+        "newMeanChannelChange": 49.816
+      },
+      {
+        "frame": 14,
+        "s": 201.883,
+        "stage": "06",
+        "beforeMeanChannelChange": 46.181,
+        "newMeanChannelChange": 46.581
+      },
+      {
+        "frame": 15,
+        "s": 202.8,
+        "stage": "06",
+        "beforeMeanChannelChange": 43.554,
+        "newMeanChannelChange": 44.19
+      },
+      {
+        "frame": 16,
+        "s": 203.716,
+        "stage": "06",
+        "beforeMeanChannelChange": 41.481,
+        "newMeanChannelChange": 42.094
+      },
+      {
+        "frame": 17,
+        "s": 204.633,
+        "stage": "06",
+        "beforeMeanChannelChange": 39.767,
+        "newMeanChannelChange": 40.513
+      },
+      {
+        "frame": 18,
+        "s": 205.55,
+        "stage": "06",
+        "beforeMeanChannelChange": 37.625,
+        "newMeanChannelChange": 38.269
+      },
+      {
+        "frame": 19,
+        "s": 206.466,
+        "stage": "06",
+        "beforeMeanChannelChange": 38.749,
+        "newMeanChannelChange": 39.072
+      },
+      {
+        "frame": 20,
+        "s": 207.383,
+        "stage": "06",
+        "beforeMeanChannelChange": 38.473,
+        "newMeanChannelChange": 38.73
+      },
+      {
+        "frame": 21,
+        "s": 208.3,
+        "stage": "06",
+        "beforeMeanChannelChange": 39.968,
+        "newMeanChannelChange": 40.015
+      },
+      {
+        "frame": 22,
+        "s": 209.216,
+        "stage": "06",
+        "beforeMeanChannelChange": 39.574,
+        "newMeanChannelChange": 39.903
+      },
+      {
+        "frame": 23,
+        "s": 210.133,
+        "stage": "06",
+        "beforeMeanChannelChange": 40.516,
+        "newMeanChannelChange": 40.955
+      },
+      {
+        "frame": 24,
+        "s": 211.05,
+        "stage": "06",
+        "beforeMeanChannelChange": 40.72,
+        "newMeanChannelChange": 40.966
+      },
+      {
+        "frame": 25,
+        "s": 211.966,
+        "stage": "06",
+        "beforeMeanChannelChange": 41.93,
+        "newMeanChannelChange": 42.457
+      },
+      {
+        "frame": 26,
+        "s": 212.883,
+        "stage": "06",
+        "beforeMeanChannelChange": 41.173,
+        "newMeanChannelChange": 41.793
+      },
+      {
+        "frame": 27,
+        "s": 213.8,
+        "stage": "06",
+        "beforeMeanChannelChange": 40.724,
+        "newMeanChannelChange": 41.34
+      },
+      {
+        "frame": 28,
+        "s": 214.716,
+        "stage": "06",
+        "beforeMeanChannelChange": 40.906,
+        "newMeanChannelChange": 41.412
+      },
+      {
+        "frame": 29,
+        "s": 215.633,
+        "stage": "06",
+        "beforeMeanChannelChange": 41.267,
+        "newMeanChannelChange": 40.907
+      },
+      {
+        "frame": 30,
+        "s": 216.55,
+        "stage": "06",
+        "beforeMeanChannelChange": 38.972,
+        "newMeanChannelChange": 38.227
+      },
+      {
+        "frame": 31,
+        "s": 217.466,
+        "stage": "06",
+        "beforeMeanChannelChange": 35.577,
+        "newMeanChannelChange": 34.006
+      },
+      {
+        "frame": 32,
+        "s": 218.383,
+        "stage": "06",
+        "beforeMeanChannelChange": 33.083,
+        "newMeanChannelChange": 31.544
+      },
+      {
+        "frame": 33,
+        "s": 219.3,
+        "stage": "06",
+        "beforeMeanChannelChange": 33.817,
+        "newMeanChannelChange": 32.342
+      },
+      {
+        "frame": 34,
+        "s": 220.216,
+        "stage": "06",
+        "beforeMeanChannelChange": 35.284,
+        "newMeanChannelChange": 33.436
+      },
+      {
+        "frame": 35,
+        "s": 221.133,
+        "stage": "06",
+        "beforeMeanChannelChange": 35.79,
+        "newMeanChannelChange": 33.934
+      },
+      {
+        "frame": 36,
+        "s": 222.05,
+        "stage": "06",
+        "beforeMeanChannelChange": 33.978,
+        "newMeanChannelChange": 32.543
+      },
+      {
+        "frame": 37,
+        "s": 222.966,
+        "stage": "06",
+        "beforeMeanChannelChange": 27.829,
+        "newMeanChannelChange": 25.843
+      },
+      {
+        "frame": 38,
+        "s": 223.883,
+        "stage": "06",
+        "beforeMeanChannelChange": 28.107,
+        "newMeanChannelChange": 26.616
+      },
+      {
+        "frame": 39,
+        "s": 224.8,
+        "stage": "06",
+        "beforeMeanChannelChange": 29.68,
+        "newMeanChannelChange": 28.094
+      },
+      {
+        "frame": 40,
+        "s": 225.716,
+        "stage": "06",
+        "beforeMeanChannelChange": 32.932,
+        "newMeanChannelChange": 31.384
+      },
+      {
+        "frame": 41,
+        "s": 226.633,
+        "stage": "06",
+        "beforeMeanChannelChange": 35.548,
+        "newMeanChannelChange": 33.754
+      },
+      {
+        "frame": 42,
+        "s": 227.55,
+        "stage": "06",
+        "beforeMeanChannelChange": 37.767,
+        "newMeanChannelChange": 35.709
+      },
+      {
+        "frame": 43,
+        "s": 228.466,
+        "stage": "06",
+        "beforeMeanChannelChange": 39.789,
+        "newMeanChannelChange": 37.981
+      },
+      {
+        "frame": 44,
+        "s": 229.383,
+        "stage": "06",
+        "beforeMeanChannelChange": 39.685,
+        "newMeanChannelChange": 38.265
+      },
+      {
+        "frame": 45,
+        "s": 230.3,
+        "stage": "06",
+        "beforeMeanChannelChange": 37.738,
+        "newMeanChannelChange": 35.705
+      },
+      {
+        "frame": 46,
+        "s": 231.216,
+        "stage": "06",
+        "beforeMeanChannelChange": 30.433,
+        "newMeanChannelChange": 28.296
+      },
+      {
+        "frame": 47,
+        "s": 232.133,
+        "stage": "06",
+        "beforeMeanChannelChange": 29.657,
+        "newMeanChannelChange": 27.072
+      },
+      {
+        "frame": 48,
+        "s": 233.05,
+        "stage": "06",
+        "beforeMeanChannelChange": 29.554,
+        "newMeanChannelChange": 27.079
+      },
+      {
+        "frame": 49,
+        "s": 233.966,
+        "stage": "06",
+        "beforeMeanChannelChange": 29.085,
+        "newMeanChannelChange": 26.598
+      },
+      {
+        "frame": 50,
+        "s": 234.883,
+        "stage": "06",
+        "beforeMeanChannelChange": 38.28,
+        "newMeanChannelChange": 35.619
+      },
+      {
+        "frame": 51,
+        "s": 235.8,
+        "stage": "06",
+        "beforeMeanChannelChange": 41.67,
+        "newMeanChannelChange": 40.971
+      },
+      {
+        "frame": 52,
+        "s": 236.716,
+        "stage": "06",
+        "beforeMeanChannelChange": 49.615,
+        "newMeanChannelChange": 48.707
+      },
+      {
+        "frame": 53,
+        "s": 237.633,
+        "stage": "06",
+        "beforeMeanChannelChange": 51.743,
+        "newMeanChannelChange": 50.245
+      },
+      {
+        "frame": 54,
+        "s": 238.552,
+        "stage": "06",
+        "beforeMeanChannelChange": 50.29,
+        "newMeanChannelChange": 49.873
+      },
+      {
+        "frame": 55,
+        "s": 239.475,
+        "stage": "06",
+        "beforeMeanChannelChange": 47.999,
+        "newMeanChannelChange": 48.288
+      },
+      {
+        "frame": 56,
+        "s": 240.405,
+        "stage": "06",
+        "beforeMeanChannelChange": 46.083,
+        "newMeanChannelChange": 46.551
+      },
+      {
+        "frame": 57,
+        "s": 241.342,
+        "stage": "06",
+        "beforeMeanChannelChange": 45.539,
+        "newMeanChannelChange": 45.67
+      },
+      {
+        "frame": 58,
+        "s": 242.289,
+        "stage": "06",
+        "beforeMeanChannelChange": 42.101,
+        "newMeanChannelChange": 42.495
+      },
+      {
+        "frame": 59,
+        "s": 243.245,
+        "stage": "07",
+        "beforeMeanChannelChange": 62.088,
+        "newMeanChannelChange": 59.927
+      },
+      {
+        "frame": 60,
+        "s": 244.211,
+        "stage": "07",
+        "beforeMeanChannelChange": 31.409,
+        "newMeanChannelChange": 31.409
+      },
+      {
+        "frame": 61,
+        "s": 245.187,
+        "stage": "07",
+        "beforeMeanChannelChange": 32.032,
+        "newMeanChannelChange": 32.032
+      },
+      {
+        "frame": 62,
+        "s": 246.171,
+        "stage": "07",
+        "beforeMeanChannelChange": 35.337,
+        "newMeanChannelChange": 35.337
+      }
+    ]
+  }
+}

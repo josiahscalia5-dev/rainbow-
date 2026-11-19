@@ -1,0 +1,35 @@
+{
+ "label": "11def",
+ "approved": "references/11_safely_home_final_victory.png",
+ "capture": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/default/11.png",
+ "size": [
+  864,
+  1536
+ ],
+ "FULL": {
+  "mean_abs": 76.81,
+  "within_10": 0.0112,
+  "within_20": 0.0486,
+  "ssim_lum": 0.1783
+ },
+ "BELOWHUD": {
+  "mean_abs": 77.5,
+  "within_10": 0.0106,
+  "within_20": 0.045,
+  "ssim_lum": 0.1881
+ },
+ "LAYOUT": {
+  "mean_abs": 64.21,
+  "within_20": 0.0455
+ },
+ "mean_rgb_approved": [
+  173.6,
+  91.1,
+  155.9
+ ],
+ "mean_rgb_capture": [
+  216.1,
+  100.7,
+  193.6
+ ]
+}

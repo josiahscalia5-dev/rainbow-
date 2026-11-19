@@ -1,0 +1,12 @@
+{
+  "title": "Carry the entrance gold into the fifth ring bay",
+  "status": "CANDIDATE",
+  "short": "The fifth ring bay now carries the warm amber groove and pink-blue glints visible on your original gold entrance.",
+  "paragraphs": [
+    "The original entrance has two gold grooves enclosing a curved band. I used Claudia’s measured centers and radii to read colors along the visible upper half of that band. Those colors follow the angle and depth of the fifth existing ring bay as Benny swims through it. The lower half of this test bay keeps the existing metal where the entrance’s foam and water hide the source.",
+    "At +20 the generic yellow lip now has an amber recess and distinct cool-blue and pink glints. Near the exit the upper shoulder reflects a deeper copper-violet color. In the matched turn and swim, the markings stay attached to the same metal. This pass adds one texture to the existing material. It adds zero rings or draw passes.",
+    "The earlier curved water and fuller fourth ring lip are carried by the experimental parent. Against that parent the opening pixels are identical. The change to the fifth bay alone affects 43,684 pixels at +20 and 124,586 at the final in-stage view under a summed RGB difference threshold of 30. These counts identify visible changes. The untouched neighboring rings still have a smoother and more regular finish than the entrance. The older olive-toned coating stays rejected."
+  ],
+  "watch": "Watch the fifth bay approach from about 1.9 to 3.2 seconds. Compare the +20 and final-in-stage images with both Claudia’s retained frames and the previous thicker-lip candidate.",
+  "proposals": "The cool reflected streak and amber recess in the deeper bay are proposed extensions of the original metal. Your review determines whether to use this appearance in other bays."
+}

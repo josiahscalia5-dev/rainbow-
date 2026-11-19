@@ -1,0 +1,57 @@
+{
+  "opening": {
+    "changedRGBOver50": 0,
+    "largestChannelChange": 4,
+    "central80PercentRectangle": null
+  },
+  "forward-10": {
+    "changedRGBOver50": 4032,
+    "largestChannelChange": 219,
+    "central80PercentRectangle": [
+      237,
+      602,
+      586,
+      830
+    ]
+  },
+  "middle": {
+    "changedRGBOver50": 9609,
+    "largestChannelChange": 185,
+    "central80PercentRectangle": [
+      158,
+      573,
+      715,
+      870
+    ]
+  },
+  "hard-right": {
+    "changedRGBOver50": 7866,
+    "largestChannelChange": 208,
+    "central80PercentRectangle": [
+      102,
+      591,
+      567,
+      839
+    ]
+  },
+  "forward-20": {
+    "changedRGBOver50": 30219,
+    "largestChannelChange": 223,
+    "central80PercentRectangle": [
+      23,
+      543,
+      821,
+      939
+    ]
+  },
+  "last-in-stage": {
+    "changedRGBOver50": 46,
+    "largestChannelChange": 158,
+    "central80PercentRectangle": [
+      24,
+      121,
+      721,
+      928
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+f03_forward3u          LAYOUT20   3.3 %  PALETTE  77.2 %
+s_left_steer           LAYOUT20   3.5 %  PALETTE  75.7 %
+s_right_steer          LAYOUT20   3.5 %  PALETTE  75.0 %

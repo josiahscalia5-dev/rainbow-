@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "variant": "default",
+      "before": "qa/codex-water/CURRENT.png",
+      "after": "qa/approved-water-study/default-preserved/05.png",
+      "size": [
+        864,
+        1536
+      ],
+      "changedPixels": 0,
+      "maxChannelDifference": 0,
+      "identical": true
+    },
+    {
+      "variant": "previous-liquid05",
+      "before": "qa/codex-water/IMPROVED.png",
+      "after": "qa/approved-water-study/previous-preserved/05.png",
+      "size": [
+        864,
+        1536
+      ],
+      "changedPixels": 0,
+      "maxChannelDifference": 0,
+      "identical": true
+    }
+  ],
+  "pass": true
+}

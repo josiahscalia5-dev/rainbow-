@@ -1,0 +1,30 @@
+{
+ "screen": "04",
+ "query": "match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1&m04room=1&m04foam3=1&m04ry=2.2&m04rk=0.82",
+ "shots": [
+  {
+   "name": "a00_approved_view",
+   "dist": 0,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 77.413,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -21.896,
+   "bennyVisible": true,
+   "cam": [
+    2.426523820795029,
+    -15.972574812385812,
+    -21.04613131293788
+   ],
+   "frames": 0,
+   "cam_to_view_cams": [
+    8.16,
+    18.17
+   ]
+  }
+ ]
+}

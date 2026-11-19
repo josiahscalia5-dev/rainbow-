@@ -1,0 +1,20 @@
+completed: FAIL
+{
+  "out": "qa/approved-water-study/tests/geometry-final",
+  "pass": false,
+  "checks": {
+    "completed": false
+  },
+  "errors": [
+    "page.evaluate: TypeError: Cannot read properties of undefined (reading 'getY')\n    at object.onAfterRender (eval at evaluate (:311:30), <anonymous>:111:35)\n    at o.onAfterRender (http://127.0.0.1:5267/src/game/Game.ts:644:16)\n    at renderObject (http://127.0.0.1:5267/node_modules/.vite/deps/chunk-UG26MVNH.js?v=26367d13:17899:14)\n    at renderObjects (http://127.0.0.1:5267/node_modules/.vite/deps/chunk-UG26MVNH.js?v=26367d13:17879:11)\n    at renderScene (http://127.0.0.1:5267/node_modules/.vite/deps/chunk-UG26MVNH.js?v=26367d13:17798:37)\n    at WebGLRenderer.render (http://127.0.0.1:5267/node_modules/.vite/deps/chunk-UG26MVNH.js?v=26367d13:17709:9)\n    at RenderPass.render (http://127.0.0.1:5267/node_modules/.vite/deps/three_examples_jsm_postprocessing_RenderPass__js.js?v=26367d13:45:14)\n    at EffectComposer.render (http://127.0.0.1:5267/node_modules/.vite/deps/three_examples_jsm_postprocessing_EffectComposer__js.js?v=26367d13:138:12)\n    at render (http://127.0.0.1:5267/src/game/Game.ts:468:14)\n    at Object.drawList (http://127.0.0.1:5267/src/game/Game.ts:647:7)\n    at /workspace/rainbow/scripts/reference05-check.mjs:135:32"
+  ],
+  "warnings": [
+    {
+      "page": "main",
+      "url": "http://127.0.0.1:5267/favicon.ico",
+      "status": 404,
+      "source": "console",
+      "reason": "Pre-existing missing browser favicon; no game asset is substituted."
+    }
+  ]
+}

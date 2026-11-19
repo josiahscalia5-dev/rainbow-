@@ -1,0 +1,14 @@
+{
+  "stills": 16,
+  "cameraStateClockDifferences": [],
+  "allGameplayAssertions": {
+    "pauseFreezes": true,
+    "continuousTravel": true,
+    "noCameraCut": true,
+    "noTeleport": true,
+    "plunge": true,
+    "realCoinPickups": true,
+    "victory": true,
+    "heartsLostOnWallBump": true
+  }
+}

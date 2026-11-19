@@ -1,0 +1,19 @@
+{
+ "capture": "qa/pilot05/full_reference_match/env/work/k2/05.png",
+ "whole_frame": {
+  "px": 1327104,
+  "share_of_frame": 1.0,
+  "mean_abs": 18.17,
+  "within_10": 0.6638,
+  "within_20": 0.7479,
+  "ssim_lum": 0.7176,
+  "mean_signed_rgb": [
+   2.5,
+   1.1,
+   3.2
+  ]
+ },
+ "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
+ "mse": 1710.6,
+ "psnr_db": 15.8
+}

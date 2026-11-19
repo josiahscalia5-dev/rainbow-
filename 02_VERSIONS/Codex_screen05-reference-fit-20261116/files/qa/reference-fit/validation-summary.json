@@ -1,0 +1,99 @@
+{
+  "sourceCommit": "60bfd8cf7f51a8e174768f52492c210e0331e0fa",
+  "mainChecks": {
+    "defaultPixelsUnchanged": true,
+    "fitWaterDrawn": true,
+    "screen05To06Continuity": true,
+    "gameplayMatchesDefault": true,
+    "keyboardSteering": true,
+    "pointerSteering": true,
+    "hudPauseResume": true,
+    "keyboardPauseResume": true,
+    "lowQualityRender": true,
+    "noBrowserErrors": true
+  },
+  "defaultAndFitResourceCounts": {
+    "defaultResources": {
+      "calls": 86,
+      "triangles": 567415,
+      "geometries": 102,
+      "textures": 43,
+      "modules": {
+        "water": "vfx/index.ts",
+        "benny": "assets/models/benny.glb",
+        "girl": "assets/models/rainbow_girl.glb"
+      },
+      "courseLength": 435.1923632433159
+    },
+    "fitResources": {
+      "calls": 87,
+      "triangles": 585111,
+      "geometries": 104,
+      "textures": 48,
+      "modules": {
+        "water": "vfx/index.ts",
+        "benny": "assets/models/benny.glb",
+        "girl": "assets/models/rainbow_girl.glb"
+      },
+      "courseLength": 435.1923632433159
+    },
+    "lowResources": {
+      "calls": 87,
+      "triangles": 442293,
+      "geometries": 103,
+      "textures": 48,
+      "modules": {
+        "water": "vfx/index.ts",
+        "benny": "assets/models/benny.glb",
+        "girl": "assets/models/rainbow_girl.glb"
+      },
+      "courseLength": 435.1923632433159
+    }
+  },
+  "timing": {
+    "method": "Fresh page; goto(05,12), stop the automatic loop, unfreeze animation, and set zero steering. Three simulation/render/readback frames warm up the scene. Each of exactly eight measured frames times step(1,1/60), drawList(), and synchronous WebGL readPixels(1x1) together. The even-count median is the average of both middle values; every raw sample is retained.",
+    "defaultSamplesMs": [
+      2188.300000000745,
+      1919.2000000011176,
+      2071.89999999851,
+      2072.9000000003725,
+      2274.699999999255,
+      1928.0999999996275,
+      2021.2000000011176,
+      2019.300000000745
+    ],
+    "fitSamplesMs": [
+      2033.0999999996275,
+      2028.2000000011176,
+      2011.7999999988824,
+      2018.0999999996275,
+      1213.7999999988824,
+      1263.9000000003725,
+      1224,
+      1189.7000000011176
+    ],
+    "defaultMedianMs": 2046.5499999998137,
+    "fitMedianMs": 1637.8499999996275,
+    "interpretation": "One eight-sample run per variant on host SwiftShader CPU rendering. Fit samples have two distinct timing groups. No reliable speedup, sustained frame rate, or Android/device FPS is established."
+  },
+  "authoredPoseComparison": {
+    "reference": "qa/reference-fit/iteration04/05.png",
+    "actual": "qa/reference-fit/tests/temporal-final/authored-pose-12.png",
+    "referenceSha256": "19cfbc11a56fab14b4fa9a296bd78a773974d3e01e7861cfa5ec279b49f5df11",
+    "actualSha256": "ba334093a8ee6ba9a1131770418335e9ce6f0ada7cb5757f4d0f746a163a8f07",
+    "changedPixels": 2317,
+    "maxChannelDelta": 1,
+    "pixelsAboveOneLevel": 0,
+    "meanAbsoluteChannelDelta": 0.0007305380738811729,
+    "strictPixelIdentity": {
+      "pass": false
+    },
+    "authoredPoseWithinOneChannelLevel": {
+      "pass": true,
+      "rationale": "A separate maximum-error bound on decoded 8-bit channels, not pixel identity. A one-level difference is consistent with render quantization; the cause is not proven by this bound."
+    },
+    "note": "Computed independently from the actual saved images while the original temporal run continues; original strict failure is preserved."
+  },
+  "visualStatus": "Not an exact or user-approved match. Distant foam connection and some fine reflection/color details remain different.",
+  "deviceStatus": "Separate Android debug APK built and signatures/assets verified; no physical Android runtime or performance test."
+}

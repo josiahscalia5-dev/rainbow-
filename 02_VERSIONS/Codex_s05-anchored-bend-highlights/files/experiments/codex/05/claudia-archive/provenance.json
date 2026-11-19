@@ -1,0 +1,14 @@
+{
+  "t95_through_screen.png": {
+    "path": "qa/match/05/r17/step1_trans/new/t95_through_screen.png",
+    "sourceCommit": "f033f7cc895752907621f82fb9d6bee4899ac0e0",
+    "gitBlob": "8218253caff7bc69b28467ec3b58910d273c5bbe",
+    "sha256": "9a2ac464b4685790ba8f9eb8f51263e1639381c59cfbba6ab547a3b530ce5b56"
+  },
+  "x97L.png": {
+    "path": "qa/match/05/r17/step1_trans/new/x97L.png",
+    "sourceCommit": "f033f7cc895752907621f82fb9d6bee4899ac0e0",
+    "gitBlob": "edbe5aadc58c62b64c9817f88e7537fd255fb848",
+    "sha256": "c7e1a02d67e681abbb3630c95408614097401f0f252dd2abaeeab702ce83827d"
+  }
+}

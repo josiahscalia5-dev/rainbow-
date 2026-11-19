@@ -1,0 +1,1 @@
+{"wall_own_texels": 310999, "wall_seen_texels": 519130, "ring_own_texels": 59357, "ring_seen_texels": 156179, "wall_pixels_used": 244427, "wall_pixels_seen": 336556, "ring_pixels_used": 89401, "ring_pixels_seen": 150093}

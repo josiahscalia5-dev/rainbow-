@@ -1,0 +1,98 @@
+{
+ "screen": "04",
+ "query": "match04=1&m04ring=1&m04river=1&m04foam=1&m04bub=1&m04mouth=1",
+ "shots": [
+  {
+   "name": "f03_forward3u",
+   "dist": 3,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 81.307,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -23.608,
+   "bennyVisible": true,
+   "cam": [
+    2.41,
+    -17.06,
+    -23.12
+   ],
+   "frames": 13,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 80.413
+  },
+  {
+   "name": "f06_forward6u",
+   "dist": 6,
+   "steer": null,
+   "mode": "ride",
+   "stage": "04",
+   "s": 84.183,
+   "lat": 0,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -25.117,
+   "bennyVisible": true,
+   "cam": [
+    2.4,
+    -18.4,
+    -25.43
+   ],
+   "frames": 26,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 83.413
+  },
+  {
+   "name": "s_left_steer",
+   "dist": 6,
+   "steer": -1,
+   "mode": "ride",
+   "stage": "04",
+   "s": 84.183,
+   "lat": -1.65,
+   "coins": 1350,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -25.019,
+   "bennyVisible": true,
+   "cam": [
+    1.14,
+    -18.4,
+    -25.43
+   ],
+   "frames": 26,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 83.413
+  },
+  {
+   "name": "s_right_steer",
+   "dist": 6,
+   "steer": 1,
+   "mode": "ride",
+   "stage": "04",
+   "s": 84.215,
+   "lat": 1.65,
+   "coins": 1330,
+   "hearts": 5,
+   "paused": false,
+   "bennyY": -25.052,
+   "bennyVisible": true,
+   "cam": [
+    3.67,
+    -18.41,
+    -25.46
+   ],
+   "frames": 26,
+   "s0": 77.413,
+   "s1": 114.68830202823243,
+   "target": 83.413
+  }
+ ]
+}

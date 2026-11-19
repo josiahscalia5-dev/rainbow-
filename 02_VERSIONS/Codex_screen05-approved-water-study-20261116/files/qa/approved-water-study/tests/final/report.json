@@ -1,0 +1,2626 @@
+{
+  "created": "2026-11-16T16:06:12.926Z",
+  "commit": "f51910b48fd3b983943699a51993496944899cc0",
+  "branch": "codex/screen05-approved-water-study-20261116",
+  "sourceHashes": {
+    "src/vfx/reference05Geometry.ts": "d8e9661ce065fdd0a0739d5356491bb527f2f2b19879fcfe084a15cdc669fead",
+    "src/characters/benny/benny-lab.html": "cd43ae8fbb22e2b07e6f88518c08ad92d525fe9d1533438a7a4573964736a054",
+    "src/characters/benny/benny-lab.ts": "8571f4ece727b54b91bf48a465db48f949af809927d5ac4b1c3e29281af5d7b6",
+    "src/characters/benny/build.ts": "7f0cf0e0740197cab5c1cb347d95fe37be3d3f442e27bb07fcee6e9d07c307ad",
+    "src/characters/benny/fur.ts": "8fd897055b834224cb3dcf3ec4d9406041835130bfdd9ed3718f41157ffc161e",
+    "src/characters/benny/runtime.ts": "21cfc091a4c4b00a95e9886868f30479ba3b3d4a70375a11eb2744f832f2d5f3",
+    "src/characters/benny/textures.ts": "3af300f15af918ff77018a9fda81e965ede8bc7c6b877eec302c2216ceeb7e48",
+    "src/characters/girl/build.ts": "c749e2b3bbd9cba11ab60a85f8b9681678e951685c25f8fb3f261edb810e1e59",
+    "src/characters/girl/girl-lab.html": "3f027137ab722a5f0f3859140283432c1e516091f1c6ae444e99f73d83041b62",
+    "src/characters/girl/girl-lab.ts": "4be581946af9c9625a6c501748c78bef2742a43d90321e724554a1a9afce6bf1",
+    "src/characters/girl/runtime.ts": "3e06fa933489bca7bc608dcde2485e8aa0f5c81318cbe25758a1361fb56dda7e",
+    "src/characters/girl/textures.ts": "9398e5103e5b9ffce7f393c6411acf9e06fee7ecc114475a3e76444fd949a531",
+    "src/characters/types.ts": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a",
+    "src/game/Game.ts": "57133c4a0f1937f8b78165a6834a4583b25718e429bd788dad729aed500e9e49",
+    "src/game/cameraRig.ts": "ce017bd50ca169b6f6f868108a176deed47738474d16518225cef9632a2d6806",
+    "src/game/modules.ts": "d9f4bc92b8ddaa143f6f99b80663a5e37ae06453f2603106cff9bcfc52fb68e4",
+    "src/gameplay/coins.ts": "ccfa96bb76f993750010813b788e999e441111aa70238b2ccf1d4b12705d3c7a",
+    "src/gameplay/input.ts": "a932c2ec6ce2979efc6b539cdfe56cca1045d2d012c5a489f85ff2cb19e46eee",
+    "src/main.ts": "77a2f053b1004e90d468bcce71691313ca9befd45c38f5c8097447515fbe904e",
+    "src/render/env.ts": "e6b4c0e86eb9dd05154e436cea3c3dee5189daed160b6be514bd07524cc372c1",
+    "src/render/grade.ts": "f4573a37b5493b836d60cf23604c156f08ab28db60b5a64a34faf60ce321eec8",
+    "src/ui/cinematicVideo.ts": "04a804a4d39389fe968d068cd143311d6478d78cb067b0aea3a807b5d30494eb",
+    "src/ui/hud.ts": "8f276df29ad1047573d7bf00e2e1308cdd0a74a93b25890700a672f915229bbe",
+    "src/vfx/bubbles.ts": "42821ec0e90c60d5ea2683c36232099efdba3301dc88aa2d81e27345086470cb",
+    "src/vfx/drumWater.ts": "41622a2706ea078c4c5a318e816ba29c432dcef3b6e50f45be6beecba8ddfddf",
+    "src/vfx/finalWave.ts": "12a07f4e9e342b2e876af760f97e1c4f50df03bbe07646fd589e6d32fa03a39a",
+    "src/vfx/flow05.ts": "76ad51b59e596f1904fc48bb295fae5a388f5a04f304a20efd217010bd8a948b",
+    "src/vfx/foam.ts": "498dac76b7f5287564b6953a3c27e233b93a0dc567a5c84ad864c8951d8f4bce",
+    "src/vfx/foam05Options.ts": "6c32838a9e5ee19959a8fc4a72ea8b3acf3b30cd28ee6c7fbd013cb93236f8f9",
+    "src/vfx/glsl.ts": "1e1a135f0aff44d43643b48c9dc438f98bf9dde76b85e59cec48420dc514ae20",
+    "src/vfx/index.ts": "ac0e674dabd79b9078592b8efacfe0ea4762359dd2258a61682ab9bde8d5bf22",
+    "src/vfx/liquid05.ts": "8a74bca534074a2a9559ef3fd54bf7d157b1e2f6a06ad3cde9e3f8fef72ecd0d",
+    "src/vfx/puddles.ts": "f364cdf4a4d7be7ddbaa3b3c2c6c5b8f4f7d4fa853c58fc92f49c90c66adf75d",
+    "src/vfx/reference05.ts": "3b56d3f4fb2eeaf5e9bb19a25c4c4a47047d67846063debbd3f79967925b58d1",
+    "src/vfx/riderSplash.ts": "72c66581f8261ebcc56d7564c2a63b261777334c9f71915ed100282b1c53a4a0",
+    "src/vfx/spray.ts": "79649fa8d284943986414c09989d296805aa799db5da963979e7dfc3e088fd79",
+    "src/vfx/waterRibbon.ts": "ca557dbc8f160313323956564bbdaf681dc78bef962bb3402d0e46118483df98",
+    "src/vfx/whirlpool.ts": "d574e2cea4b81cdd608ed58b3a98b0793906a092e70a0b4ff90f207cba144ff4",
+    "src/world/course.ts": "d1957d911bf2091e6b4ff13f3dca4e568ae0fc836e0fccdc6b254ea29aaab0af",
+    "src/world/environment.ts": "f8a9592a9edb9352a4d7814afb9a44f067d2c58cf0ef6042660c7bb20ea86d5c",
+    "src/world/far05.ts": "c33f5fdd3cadf537f1564d3a813f37d25c51d03e6b23ea9dea039c85d47c53ac",
+    "src/world/laundryRoom.ts": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679",
+    "src/world/materials.ts": "fdc6f3a054aed4da84a4653864e0efc8c4a081ef3302377d40b8c39a4f73c9ef",
+    "src/world/towel.ts": "c6f65ee435296d6a1c53ff4f56dc7d0ed76917b91dd8c962e20134f91215cee0",
+    "src/world/tube.ts": "256dabe69e3b802ce73f1c67825c390b5ae2a6fe71832ac54b5b3bc4542a42ab"
+  },
+  "query": "reference05=1",
+  "effectiveQuery": "reference05=1&qa=1&dpr=1",
+  "temporalOnly": false,
+  "viewport": {
+    "width": 432,
+    "height": 768,
+    "deviceScaleFactor": 1
+  },
+  "note": "Real WebGL rendering and browser input events; simulation is stepped deterministically. Not Android hardware performance.",
+  "checks": {
+    "keyboardSteering": {
+      "pass": true,
+      "events": [
+        {
+          "key": "ArrowLeft",
+          "before": 0,
+          "after": -1.65,
+          "pass": true
+        },
+        {
+          "key": "ArrowRight",
+          "before": 0,
+          "after": 1.64,
+          "pass": true
+        }
+      ]
+    },
+    "pointerPressAndDrag": {
+      "pass": true,
+      "before": 0,
+      "rightPress": 1.659,
+      "leftDrag": -0.087
+    },
+    "hudPauseResume": {
+      "pass": true,
+      "before": 134.272,
+      "paused": 134.272,
+      "resumed": 136.105
+    },
+    "keyboardPauseResume": {
+      "pass": true,
+      "paused": 136.105,
+      "resumed": 137.938
+    },
+    "replayButton": {
+      "pass": true,
+      "before": {
+        "mode": "end",
+        "stage": "11",
+        "s": 435.192,
+        "lat": 0,
+        "coins": 2500,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -109.565,
+        "bennyVisible": false,
+        "cam": [
+          11.2,
+          -99.1,
+          -304
+        ]
+      },
+      "after": {
+        "mode": "intro",
+        "stage": "01",
+        "s": 0,
+        "lat": 0,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -109.565,
+        "bennyVisible": true,
+        "cam": [
+          11.2,
+          -99.1,
+          -304
+        ]
+      }
+    },
+    "finiteFarGeometry": {
+      "pass": true,
+      "vertices": 2783,
+      "triangles": 5280,
+      "envelopeSamples": 101
+    },
+    "bankAndUvContinuity": {
+      "pass": true,
+      "banks": [
+        {
+          "side": -1,
+          "s": 180.22531155690598,
+          "axialResidual": -2.634004125923184e-14,
+          "lateralGap": 1.8239409982356847e-11,
+          "staticSurfaceGap": 0.6838305136705664
+        },
+        {
+          "side": 1,
+          "s": 179.9335810123623,
+          "axialResidual": -5.090372567906343e-14,
+          "lateralGap": 1.4379164525735177e-11,
+          "staticSurfaceGap": 0.5007202269102836
+        }
+      ],
+      "longitudinalMapping": "actual near s varies across the oblique seam",
+      "seamUvGap": 0.18700925106398358
+    },
+    "baseSurfaceBridge": {
+      "pass": true,
+      "vertices": [
+        {
+          "vertex": 3,
+          "s": 180.22531127929688,
+          "u": -0.8183742165565491,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000020167971627091266,
+          "waveDirectionGap": 2.772875972836752e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 4,
+          "s": 180.17510986328125,
+          "u": -0.7574824690818787,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 9.076600908980042e-7,
+          "waveDirectionGap": 4.2362039625458347e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 5,
+          "s": 180.13539123535156,
+          "u": -0.6963207721710205,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.00000407789614299144,
+          "waveDirectionGap": 2.0692129392320732e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 6,
+          "s": 180.10317993164062,
+          "u": -0.6349426507949829,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000033216212543534303,
+          "waveDirectionGap": 2.93842207935095e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 7,
+          "s": 180.0765380859375,
+          "u": -0.5733903646469116,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000005468885568390671,
+          "waveDirectionGap": 5.340642409362622e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 8,
+          "s": 180.0541229248047,
+          "u": -0.5116968154907227,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000024686079498250803,
+          "waveDirectionGap": 3.135906142359668e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 9,
+          "s": 180.03500366210938,
+          "u": -0.44988754391670227,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000025288657438889467,
+          "waveDirectionGap": 2.95036196744122e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 10,
+          "s": 180.01852416992188,
+          "u": -0.3879826068878174,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000027985761684853526,
+          "waveDirectionGap": 2.674742327197627e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 11,
+          "s": 180.004150390625,
+          "u": -0.3259977400302887,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000012969721665273137,
+          "waveDirectionGap": 7.571251105141872e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 12,
+          "s": 179.99151611328125,
+          "u": -0.2639455199241638,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 3.499145591247397e-7,
+          "waveDirectionGap": 1.880091287681662e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 13,
+          "s": 179.98031616210938,
+          "u": -0.20183604955673218,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000004449550608456817,
+          "waveDirectionGap": 6.697393101495422e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 14,
+          "s": 179.9702606201172,
+          "u": -0.13959652185440063,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000004572756599593437,
+          "waveDirectionGap": 4.1979024204945683e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 15,
+          "s": 179.9612579345703,
+          "u": -0.07728567719459534,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000002185373104505551,
+          "waveDirectionGap": 1.492755352171727e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 16,
+          "s": 179.95323181152344,
+          "u": -0.014966023154556751,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000019174125320244083,
+          "waveDirectionGap": 1.1143548661699379e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 17,
+          "s": 179.94601440429688,
+          "u": 0.0473615936934948,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000001927887348563456,
+          "waveDirectionGap": 4.4592118718793586e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 18,
+          "s": 179.9394989013672,
+          "u": 0.1096963956952095,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000041401491077371684,
+          "waveDirectionGap": 8.190993404017281e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 19,
+          "s": 179.93357849121094,
+          "u": 0.17203769087791443,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000036880608545194404,
+          "waveDirectionGap": 1.4328885390806543e-7,
+          "uvGap": 0
+        }
+      ],
+      "tolerances": {
+        "staticGap": 0.0001,
+        "waveDirectionGap": 0.0001,
+        "amplitudeGap": 0.000001
+      }
+    },
+    "baseFoamSupportHeight": {
+      "pass": true,
+      "maximum": 0.28,
+      "vertices": [
+        {
+          "vertex": 0,
+          "u": -1.4151138067245483,
+          "lift": 0.27999588804089676
+        },
+        {
+          "vertex": 1,
+          "u": -1.2041411399841309,
+          "lift": 0.27999597836444023
+        },
+        {
+          "vertex": 2,
+          "u": -1.1119179725646973,
+          "lift": 0.2799992768941177
+        },
+        {
+          "vertex": 20,
+          "u": 0.4915366470813751,
+          "lift": 0.03325212504675333
+        },
+        {
+          "vertex": 21,
+          "u": 0.8111320734024048,
+          "lift": 0.14942919568498816
+        },
+        {
+          "vertex": 22,
+          "u": 1.1307895183563232,
+          "lift": 0.2799982702532419
+        }
+      ]
+    },
+    "layoutBlendContinuity": {
+      "pass": true,
+      "localJumps": [
+        {
+          "z": 0,
+          "maxDelta": 0.0005122098253739216
+        },
+        {
+          "z": 2,
+          "maxDelta": 0.00033290451300627133
+        },
+        {
+          "z": 5,
+          "maxDelta": 0.00029851096610578054
+        },
+        {
+          "z": 10,
+          "maxDelta": 0.0003434358560081563
+        },
+        {
+          "z": 24,
+          "maxDelta": 0.00018187303196293136
+        },
+        {
+          "z": 27,
+          "maxDelta": 0.000252022457058132
+        }
+      ],
+      "channelJoins": [
+        {
+          "s": 114.68830202823243,
+          "centreDelta": 0,
+          "widthDelta": 0.0005749999946789153
+        },
+        {
+          "s": 192.92412082521383,
+          "centreDelta": 0,
+          "widthDelta": 0.00013888888657476173
+        }
+      ]
+    },
+    "farEntryTangents": {
+      "pass": true,
+      "tolerance": 0.03,
+      "derivativeStep": 0.01,
+      "samples": [
+        {
+          "z": 2,
+          "slopeMismatch": {
+            "xB": 0.0011144215686709202,
+            "hw": 0.0011082604986167865,
+            "cL": 0.00008037588650200433,
+            "cR": 0.000043096198110159634,
+            "wL": 0.00003947704560469667,
+            "wR": 0.000053093176533014486
+          },
+          "maxSlopeMismatch": 0.0011144215686709202
+        },
+        {
+          "z": 27,
+          "slopeMismatch": {
+            "xB": 0.00022138292254947345,
+            "hw": 0.00005691983950839585,
+            "cL": 0.00025210266256792124,
+            "cR": 0.00013274887018521753,
+            "wL": 0.000027654163081702876,
+            "wR": 0.000005547914205816795
+          },
+          "maxSlopeMismatch": 0.00025210266256792124
+        }
+      ]
+    },
+    "liveReferenceGeometry": {
+      "pass": false,
+      "focusS": 132.62163536156623,
+      "stateS": 132.438,
+      "meshes": [],
+      "note": "Inspect actual rendered mesh attributes and compiled uniform identity. Local zero-weight protection is checked on those attributes. Rendered animated seam, triangle residuals and layer raycasts are tested separately by scripts/reference05-seam.ts."
+    },
+    "localWaterContact": {
+      "pass": true,
+      "focusS": 132.62163536156623,
+      "protectedAheadDistance": 10,
+      "meshes": [],
+      "note": "The visible target-frame correction is zero over all sampled near-ribbon vertices behind Benny and through 10 units ahead. Detailed full-width sampled contact regression is also in the numerical seam report."
+    },
+    "animatedWater": {
+      "pass": true,
+      "seconds": 0.6,
+      "meanAbsoluteRgb": 25.42569249922191,
+      "maskedPixels": 4284
+    },
+    "temporalStepSamples": {
+      "pass": true,
+      "threshold": 15,
+      "units": "mean absolute RGB difference, range 0–255, at 1/60-second steps in water-coloured lower outer strips",
+      "samples": [
+        {
+          "from": 11.983333333333333,
+          "to": 12,
+          "meanAbsoluteRgb": 4.2023754075454125,
+          "maskedPixels": 4294
+        },
+        {
+          "from": 12,
+          "to": 12.016666666666667,
+          "meanAbsoluteRgb": 2.931939605110337,
+          "maskedPixels": 4305
+        }
+      ]
+    },
+    "screen05To06": {
+      "pass": true,
+      "stage": "06",
+      "maxCameraStep": 0.21470910553583306,
+      "maxBennyYStep": 0.10699999999999932,
+      "nonMonotonicSteps": 0
+    },
+    "lowQualityShader": {
+      "pass": true,
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.9986658287817988,
+          -0.0021497500655029284,
+          -0.05159400157207067,
+          0,
+          -0.011394273178140263,
+          0.9653330416232079,
+          -0.2607724856828803,
+          0,
+          0.05036599013525768,
+          0.26101244668624896,
+          0.9640206272235845,
+          0,
+          1.920288434729371,
+          -37.94339912418104,
+          -68.28062556286872,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 432,
+        "height": 768,
+        "position": [
+          1.920288434729371,
+          -37.94339912418104,
+          -68.28062556286872
+        ],
+        "target": [
+          0.6913582754290832,
+          -44.31210282332552,
+          -91.80272886712419
+        ]
+      },
+      "stats": {
+        "calls": 86,
+        "triangles": 425205,
+        "geometries": 102,
+        "textures": 45,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159
+      },
+      "contextLost": false,
+      "query": "reference05=1&qa=1&dpr=1&quality=low",
+      "failedGameAssets": [],
+      "note": "Compilation and render/resource evidence only; no frame-rate claim."
+    },
+    "noBrowserErrors": {
+      "pass": true,
+      "count": 0,
+      "gameResourceErrors": [],
+      "nonGameResourceWarnings": [
+        {
+          "page": "main",
+          "url": "http://127.0.0.1:5267/favicon.ico",
+          "status": 404,
+          "source": "console",
+          "reason": "Pre-existing missing browser favicon; no game asset is substituted."
+        }
+      ]
+    }
+  },
+  "errors": [],
+  "failedResources": [],
+  "nonGameResourceWarnings": [
+    {
+      "page": "main",
+      "url": "http://127.0.0.1:5267/favicon.ico",
+      "status": 404,
+      "source": "console",
+      "reason": "Pre-existing missing browser favicon; no game asset is substituted."
+    }
+  ],
+  "captures": [
+    {
+      "file": "qa/approved-water-study/tests/final/main_quality_05.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12,
+      "query": "reference05=1&qa=1&dpr=1"
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/time_11_9833.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.35,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.983333333333333
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/time_12_0000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/time_12_0167.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.347,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.016666666666667
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/time_12_2000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.34,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.2
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/time_12_4000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.341,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.4
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/time_12_6000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.354,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.6
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/ride_s168_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 168.188,
+        "lat": 0,
+        "coins": 1470,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.817,
+        "bennyVisible": true,
+        "cam": [
+          1.37,
+          -39.37,
+          -102.4
+        ]
+      },
+      "targetS": 168.0383020282329
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/ride_s174_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 174.055,
+        "lat": 0,
+        "coins": 1480,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.105,
+        "bennyVisible": true,
+        "cam": [
+          1.78,
+          -39.61,
+          -108.25
+        ]
+      },
+      "targetS": 174.0383020282329
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/ride_s180_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 180.105,
+        "lat": 0,
+        "coins": 1480,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.386,
+        "bennyVisible": true,
+        "cam": [
+          3.24,
+          -39.83,
+          -113.82
+        ]
+      },
+      "targetS": 180.0383020282329
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/ride_s184_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 184.138,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.412,
+        "bennyVisible": true,
+        "cam": [
+          3.03,
+          -40.01,
+          -117.68
+        ]
+      },
+      "targetS": 184.0383020282329
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/ride_s188_42.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 188.538,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.979,
+        "bennyVisible": true,
+        "cam": [
+          3.27,
+          -40.55,
+          -122.25
+        ]
+      },
+      "targetS": 188.42412082521383
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/ride_s189_42.png",
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 189.455,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.78,
+        "bennyVisible": true,
+        "cam": [
+          3.09,
+          -40.64,
+          -123.21
+        ]
+      },
+      "targetS": 189.42412082521383
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/ride_s192_92.png",
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 192.938,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.265,
+        "bennyVisible": true,
+        "cam": [
+          2.17,
+          -40.91,
+          -126.73
+        ]
+      },
+      "targetS": 192.92412082521383
+    },
+    {
+      "file": "qa/approved-water-study/tests/final/low_quality_05.png",
+      "waterTime": 12,
+      "query": "reference05=1&qa=1&dpr=1&quality=low",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.9986658287817988,
+          -0.0021497500655029284,
+          -0.05159400157207067,
+          0,
+          -0.011394273178140263,
+          0.9653330416232079,
+          -0.2607724856828803,
+          0,
+          0.05036599013525768,
+          0.26101244668624896,
+          0.9640206272235845,
+          0,
+          1.920288434729371,
+          -37.94339912418104,
+          -68.28062556286872,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 432,
+        "height": 768,
+        "position": [
+          1.920288434729371,
+          -37.94339912418104,
+          -68.28062556286872
+        ],
+        "target": [
+          0.6913582754290832,
+          -44.31210282332552,
+          -91.80272886712419
+        ]
+      },
+      "stats": {
+        "calls": 86,
+        "triangles": 425205,
+        "geometries": 102,
+        "textures": 45,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159
+      },
+      "contextLost": false
+    }
+  ],
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "mainQualityResources": {
+    "calls": 86,
+    "triangles": 566647,
+    "geometries": 103,
+    "textures": 45,
+    "modules": {
+      "water": "vfx/index.ts",
+      "benny": "assets/models/benny.glb",
+      "girl": "assets/models/rainbow_girl.glb"
+    },
+    "courseLength": 435.1923632433159
+  },
+  "geometry": {
+    "referenceEnabled": true,
+    "liquidEnabled": true,
+    "finite": true,
+    "vertices": 2783,
+    "triangles": 5280,
+    "seamS": 180.0383020282329,
+    "seamLongitudinal": 180.22531127929688,
+    "seamUvGap": 0.18700925106398358,
+    "rows": [
+      {
+        "z": -0.01,
+        "xB": 0.4907896002108061,
+        "hw": 2.0667255607859367,
+        "cL": -0.7941048338193224,
+        "wL": 0.18768296325150924,
+        "cR": 1.038104296506535,
+        "wR": 0.4706003378633844,
+        "core": -0.01945895596233127
+      },
+      {
+        "z": 0,
+        "xB": 0.488374833994069,
+        "hw": 2.068266527287342,
+        "cL": -0.7966570745339041,
+        "wL": 0.18755469093935614,
+        "cR": 1.0373329954823334,
+        "wR": 0.4705691533896605,
+        "core": -0.021169270750937524
+      },
+      {
+        "z": 0.01,
+        "xB": 0.48621911996024536,
+        "hw": 2.0695481898753423,
+        "cL": -0.7992269677895387,
+        "wL": 0.18743371423101618,
+        "cR": 1.0365505449580041,
+        "wR": 0.4705002244027031,
+        "core": -0.02287146650161076
+      },
+      {
+        "z": 1.99,
+        "xB": 0.19029939031456267,
+        "hw": 2.191439026705268,
+        "cL": -1.2292574388397586,
+        "wL": 0.19020210572765445,
+        "cR": 0.8326898000664462,
+        "wR": 0.4873739937978788,
+        "core": -0.3468697634217684
+      },
+      {
+        "z": 2,
+        "xB": 0.1892445670996321,
+        "hw": 2.19156741473443,
+        "cL": -1.2309219011444688,
+        "wL": 0.19020038420462976,
+        "cR": 0.831469225749557,
+        "wR": 0.4871455526656469,
+        "core": -0.3481989219279644
+      },
+      {
+        "z": 2.01,
+        "xB": 0.18820088810038826,
+        "hw": 2.1916847201586056,
+        "cL": -1.232587167208044,
+        "cR": 0.8302482204706866,
+        "wL": 0.19019905745206112,
+        "wR": 0.4869176424651803,
+        "core": -0.3495287658752383
+      },
+      {
+        "z": 9.99,
+        "xB": -0.8380588247979757,
+        "hw": 2.511719456547366,
+        "cL": -2.448720740729992,
+        "cR": 0.09601560139911647,
+        "wL": 0.28049945339013876,
+        "wR": 0.5387570552315425,
+        "core": -1.3054813705861394
+      },
+      {
+        "z": 10,
+        "xB": -0.8394239211198579,
+        "hw": 2.512325842918523,
+        "cL": -2.4504379442829562,
+        "cR": 0.09530484890146562,
+        "wL": 0.2807025463028856,
+        "wR": 0.5388447825797176,
+        "core": -1.3066376658291612
+      },
+      {
+        "z": 10.01,
+        "xB": -0.8407888065591909,
+        "hw": 2.5129325470370145,
+        "cL": -2.452155098635913,
+        "cR": 0.09459491652454777,
+        "wL": 0.2809058297206673,
+        "wR": 0.538932529598189,
+        "core": -1.3077934409944434
+      },
+      {
+        "z": 24,
+        "xB": -1.842703724558892,
+        "hw": 3.3363198593764305,
+        "cL": -3.91493666340011,
+        "cR": 0.1824605869589988,
+        "wL": 0.6202149138143358,
+        "wR": 0.638181298057195,
+        "core": -1.8752212303419853
+      },
+      {
+        "z": 26.99,
+        "xB": -1.6012071308804494,
+        "hw": 3.3999162256240902,
+        "cL": -3.7091552364729905,
+        "cR": 0.5067403955689682,
+        "wL": 0.6459839144746414,
+        "wR": 0.6459841355371302,
+        "core": -1.6012075309832556
+      },
+      {
+        "z": 27,
+        "xB": -1.6,
+        "hw": 3.4,
+        "cL": -3.708,
+        "wL": 0.646,
+        "cR": 0.508,
+        "wR": 0.646,
+        "core": -1.6
+      },
+      {
+        "z": 27.01,
+        "xB": -1.5987906552903253,
+        "hw": 3.4000832051775145,
+        "cL": -3.706842242500384,
+        "wL": 0.6460158089837278,
+        "cR": 0.5092609319197337,
+        "wR": 0.6460158089837278,
+        "core": -1.5987906552903253
+      },
+      {
+        "z": 60,
+        "xB": 2.5230464646464648,
+        "hw": 3.265873329401012,
+        "cL": 0.49820500041783733,
+        "wL": 0.6205159325861923,
+        "cR": 4.547887928875092,
+        "wR": 0.6205159325861923,
+        "core": 2.5230464646464648
+      },
+      {
+        "z": 110,
+        "xB": 2.050490661601773,
+        "hw": 3.3,
+        "cL": 0.004490661601773027,
+        "wL": 0.627,
+        "cR": 4.096490661601773,
+        "wR": 0.627,
+        "core": 2.050490661601773
+      },
+      {
+        "z": 215,
+        "xB": -2.7910921700280715,
+        "hw": 3.038188777768229,
+        "cL": -4.674769212244374,
+        "wL": 0.5772558677759635,
+        "cR": -0.9074151278117697,
+        "wR": 0.5772558677759635,
+        "core": -2.7910921700280715
+      },
+      {
+        "z": 330,
+        "xB": 0.09680000000000014,
+        "hw": 3.2376,
+        "cL": -1.910512,
+        "wL": 0.615144,
+        "cR": 2.104112,
+        "wR": 0.615144,
+        "core": 0.09680000000000014
+      }
+    ],
+    "localJumps": [
+      {
+        "z": 0,
+        "maxDelta": 0.0005122098253739216
+      },
+      {
+        "z": 2,
+        "maxDelta": 0.00033290451300627133
+      },
+      {
+        "z": 5,
+        "maxDelta": 0.00029851096610578054
+      },
+      {
+        "z": 10,
+        "maxDelta": 0.0003434358560081563
+      },
+      {
+        "z": 24,
+        "maxDelta": 0.00018187303196293136
+      },
+      {
+        "z": 27,
+        "maxDelta": 0.000252022457058132
+      }
+    ],
+    "entryTangents": [
+      {
+        "z": 2,
+        "slopeMismatch": {
+          "xB": 0.0011144215686709202,
+          "hw": 0.0011082604986167865,
+          "cL": 0.00008037588650200433,
+          "cR": 0.000043096198110159634,
+          "wL": 0.00003947704560469667,
+          "wR": 0.000053093176533014486
+        },
+        "maxSlopeMismatch": 0.0011144215686709202
+      },
+      {
+        "z": 27,
+        "slopeMismatch": {
+          "xB": 0.00022138292254947345,
+          "hw": 0.00005691983950839585,
+          "cL": 0.00025210266256792124,
+          "cR": 0.00013274887018521753,
+          "wL": 0.000027654163081702876,
+          "wR": 0.000005547914205816795
+        },
+        "maxSlopeMismatch": 0.00025210266256792124
+      }
+    ],
+    "ribbonEnvelope": [
+      {
+        "z": 0,
+        "xB": 0.488374833994069,
+        "hw": 2.068266527287342,
+        "cL": -0.7966570745339041,
+        "wL": 0.18755469093935614,
+        "cR": 1.0373329954823334,
+        "wR": 0.4705691533896605,
+        "core": -0.021169270750937524
+      },
+      {
+        "z": 0.5,
+        "xB": 0.36951468085949724,
+        "hw": 2.1426881081752196,
+        "cL": -0.9672326839177502,
+        "wL": 0.19281714379848,
+        "cR": 0.9937362156314468,
+        "wR": 0.4717778973369043,
+        "core": -0.12622861091236384
+      },
+      {
+        "z": 1,
+        "xB": 0.312514287132194,
+        "hw": 2.1565148437296022,
+        "cL": -1.0597642840971973,
+        "wL": 0.1916807915319935,
+        "cR": 0.9442762899936933,
+        "wR": 0.4890297993515357,
+        "core": -0.2064185009615231
+      },
+      {
+        "z": 1.5,
+        "xB": 0.24695284280537344,
+        "hw": 2.179338759129576,
+        "cL": -1.1367941410634828,
+        "wL": 0.1879627469311033,
+        "cR": 0.8906794628302422,
+        "wR": 0.4960047686329564,
+        "core": -0.2770783499675468
+      },
+      {
+        "z": 2,
+        "xB": 0.1892445670996321,
+        "hw": 2.19156741473443,
+        "cL": -1.2309219011444688,
+        "wL": 0.19020038420462976,
+        "cR": 0.831469225749557,
+        "wR": 0.4871455526656469,
+        "core": -0.3481989219279644
+      },
+      {
+        "z": 2.5,
+        "xB": 0.1358486359871051,
+        "hw": 2.1985278048801327,
+        "cL": -1.3140943543510817,
+        "cR": 0.7711161667299051,
+        "wL": 0.19053365477477582,
+        "wR": 0.4768145924716625,
+        "core": -0.4146295626590316
+      },
+      {
+        "z": 3,
+        "xB": 0.08010573759619356,
+        "hw": 2.2076624180264632,
+        "cL": -1.390912447069651,
+        "cR": 0.7145971014644783,
+        "wL": 0.19179504171085332,
+        "wR": 0.4714412582136538,
+        "core": -0.47798078105398656
+      },
+      {
+        "z": 3.5,
+        "xB": 0.022207483503660287,
+        "hw": 2.218879263862311,
+        "cL": -1.4564421627056372,
+        "cR": 0.6638561506479479,
+        "wL": 0.1940631152227005,
+        "wR": 0.4731905233405883,
+        "core": -0.5358567100877885
+      },
+      {
+        "z": 4,
+        "xB": -0.03765451471373221,
+        "hw": 2.232086352076564,
+        "cL": -1.5117541681921682,
+        "cR": 0.6185106928927895,
+        "wL": 0.1972908629865319,
+        "wR": 0.48143147146943444,
+        "core": -0.5886920418911405
+      },
+      {
+        "z": 4.5,
+        "xB": -0.09928864547922123,
+        "hw": 2.24719169235811,
+        "cL": -1.5640976995112774,
+        "cR": 0.5757825389074737,
+        "wL": 0.2013015836032924,
+        "wR": 0.4926565396511128,
+        "core": -0.6398350583258121
+      },
+      {
+        "z": 5,
+        "xB": -0.16250329721604415,
+        "hw": 2.264103294395837,
+        "cL": -1.6271532037939127,
+        "cR": 0.5303985530536685,
+        "wL": 0.20578312144074115,
+        "wR": 0.5003640962175512,
+        "core": -0.6956678127585272
+      },
+      {
+        "z": 5.5,
+        "xB": -0.22710685834743838,
+        "hw": 2.282729167878635,
+        "cL": -1.7029382017154528,
+        "cR": 0.4816217370494168,
+        "wL": 0.21067272555076255,
+        "wR": 0.5034805575941816,
+        "core": -0.7570621483547275
+      },
+      {
+        "z": 6,
+        "xB": -0.2929077172966411,
+        "hw": 2.3029773224953902,
+        "cL": -1.7808430766042238,
+        "cR": 0.4336248884736028,
+        "wL": 0.21617722775978326,
+        "wR": 0.5068093369065753,
+        "core": -0.8189251486387064
+      },
+      {
+        "z": 6.5,
+        "xB": -0.35971426248688987,
+        "hw": 2.3247557679349917,
+        "cL": -1.8606180526326883,
+        "cR": 0.38655577633274263,
+        "wL": 0.22228331413693098,
+        "wR": 0.5103316535504079,
+        "core": -0.8810553078567114
+      },
+      {
+        "z": 7,
+        "xB": -0.4273348823414221,
+        "hw": 2.3479725138863285,
+        "cL": -1.9420133258312058,
+        "cR": 0.3405624980843685,
+        "wL": 0.22897777443575265,
+        "wR": 0.5140286944919911,
+        "core": -0.943250873901538
+      },
+      {
+        "z": 7.5,
+        "xB": -0.49557796528347503,
+        "hw": 2.3725355700382886,
+        "cL": -2.024779144825928,
+        "cR": 0.2957925373320232,
+        "wL": 0.23624720463023188,
+        "wR": 0.5178817073060489,
+        "core": -1.005310555084861
+      },
+      {
+        "z": 8,
+        "xB": -0.5642518997362859,
+        "hw": 2.3983529460797595,
+        "cL": -2.1086658866288093,
+        "cR": 0.2523918792677624,
+        "wL": 0.2440777276803647,
+        "wR": 0.5218720875118389,
+        "core": -1.0670341835962605
+      },
+      {
+        "z": 8.5,
+        "xB": -0.6331650741230923,
+        "hw": 2.42533265169963,
+        "cL": -2.1934241274797417,
+        "cR": 0.21050418386216585,
+        "wL": 0.2524547325272931,
+        "wR": 0.5259814602076158,
+        "core": -1.1282233356489493
+      },
+      {
+        "z": 9,
+        "xB": -0.7021258768671317,
+        "hw": 2.453382696586789,
+        "cL": -2.2788047087408074,
+        "cR": 0.17027001680185605,
+        "wL": 0.2613626313179965,
+        "wR": 0.5301917560034386,
+        "core": -1.1886819083121967
+      },
+      {
+        "z": 9.5,
+        "xB": -0.770942696391641,
+        "hw": 2.4824110904301238,
+        "cL": -2.3645587978426463,
+        "cR": 0.13182613817452415,
+        "wL": 0.2707846348595406,
+        "wR": 0.5344852812523192,
+        "core": -1.2482166530304506
+      },
+      {
+        "z": 10,
+        "xB": -0.8394239211198579,
+        "hw": 2.512325842918523,
+        "cL": -2.4504379442829562,
+        "cR": 0.09530484890146562,
+        "wL": 0.2807025463028856,
+        "wR": 0.5388447825797176,
+        "core": -1.3066376658291612
+      },
+      {
+        "z": 10.5,
+        "xB": -0.9073779394750197,
+        "hw": 2.5430349637408765,
+        "cL": -2.5361941306771008,
+        "cR": 0.0608333949176223,
+        "wL": 0.2910965730562513,
+        "wR": 0.5432535057113766,
+        "core": -1.363758834207302
+      },
+      {
+        "z": 11,
+        "xB": -0.9746131398803637,
+        "hw": 2.5744464625860695,
+        "cL": -2.6215798188608397,
+        "cR": 0.02853342909913259,
+        "wL": 0.3019451569280395,
+        "wR": 0.5476952485995012,
+        "core": -1.4193982407165846
+      },
+      {
+        "z": 11.5,
+        "xB": -1.0409379107591277,
+        "hw": 2.6064683491429923,
+        "cL": -2.706347991045189,
+        "cR": -0.0014794690616084516,
+        "wL": 0.31322482249931666,
+        "wR": 0.5521544088472825,
+        "core": -1.4733785232273817
+      },
+      {
+        "z": 12,
+        "xB": -1.1061606405345483,
+        "hw": 2.6390086331005334,
+        "cL": -2.7902521860233858,
+        "cR": -0.029096216033382305,
+        "wL": 0.32491004372585214,
+        "wR": 0.5566160254317617,
+        "core": -1.5255271918813387
+      },
+      {
+        "z": 12.5,
+        "xB": -1.1700897176298632,
+        "hw": 2.6719753241475805,
+        "cL": -2.873046530429984,
+        "cR": -0.05421458907607435,
+        "wL": 0.3369731287697154,
+        "wR": 0.56106581472504,
+        "core": -1.5756769027306914
+      },
+      {
+        "z": 13,
+        "xB": -1.2325335304683103,
+        "hw": 2.7052764319730214,
+        "cL": -2.9544857650520675,
+        "cR": -0.07673953332308936,
+        "wL": 0.34938412306043154,
+        "wR": 0.5654902008138302,
+        "core": -1.623665688064278
+      },
+      {
+        "z": 13.5,
+        "xB": -1.2933004674731263,
+        "hw": 2.7388199662657455,
+        "cL": -3.0343252661925812,
+        "cR": -0.09658341111625979,
+        "wL": 0.3621107305856942,
+        "wR": 0.5698763401173519,
+        "core": -1.6693371434202495
+      },
+      {
+        "z": 14,
+        "xB": -1.3521989170675486,
+        "hw": 2.772513936714641,
+        "cL": -3.112321062085784,
+        "cR": -0.11366619359324925,
+        "wL": 0.3751182534116365,
+        "wR": 0.5742121403035697,
+        "core": -1.7125405712854833
+      },
+      {
+        "z": 14.5,
+        "xB": -1.4090372676748146,
+        "hw": 2.8062663530085947,
+        "cL": -3.188229844364821,
+        "cR": -0.12791559452744483,
+        "wL": 0.38836954943265994,
+        "wR": 0.5784862735037741,
+        "core": -1.75313108148169
+      },
+      {
+        "z": 15,
+        "xB": -1.4636239077181625,
+        "hw": 2.8399852248364965,
+        "cL": -3.2618089745814176,
+        "cR": -0.13926714642034166,
+        "wL": 0.4018250083508216,
+        "wR": 0.5826881838255072,
+        "core": -1.7909696482382225
+      },
+      {
+        "z": 15.5,
+        "xB": -1.515767225620828,
+        "hw": 2.8735785618872343,
+        "cL": -3.3328164857776867,
+        "cR": -0.14766421884641834,
+        "wL": 0.4154425458847789,
+        "wR": 0.5868080891638296,
+        "core": -1.8259231239515779
+      },
+      {
+        "z": 16,
+        "xB": -1.5652756098060499,
+        "hw": 2.906954373849696,
+        "cL": -3.40101107911007,
+        "cR": -0.15305797905051133,
+        "wL": 0.42917761620829237,
+        "wR": 0.5908369773109308,
+        "core": -1.8578642096316098
+      },
+      {
+        "z": 16.5,
+        "xB": -1.6119574486970647,
+        "hw": 2.9400206704127707,
+        "cL": -3.4661521155253827,
+        "cR": -0.15540729479767035,
+        "wL": 0.442983242618287,
+        "wR": 0.594766596364084,
+        "core": -1.8866713820344252
+      },
+      {
+        "z": 17,
+        "xB": -1.6556211307171107,
+        "hw": 2.9726854612653457,
+        "cL": -3.527999602488988,
+        "cR": -0.1546785794755159,
+        "wL": 0.4568100664324699,
+        "wR": 0.5985894394319428,
+        "core": -1.9122287774819884
+      },
+      {
+        "z": 17.5,
+        "xB": -1.6960750442894243,
+        "hw": 3.0048567560963098,
+        "cL": -3.5863141757650894,
+        "cR": -0.1508455794490795,
+        "wL": 0.4706064141165084,
+        "wR": 0.6022987236391814,
+        "core": -1.9344260323684208
+      },
+      {
+        "z": 18,
+        "xB": -1.7331275778372435,
+        "hw": 3.0364425645945516,
+        "cL": -3.640857076249148,
+        "cR": -0.1438891036681449,
+        "wL": 0.48431838264076377,
+        "wR": 0.6058883634294783,
+        "core": -1.9531580803530038
+      },
+      {
+        "z": 18.5,
+        "xB": -1.766587119783806,
+        "hw": 3.067350896448959,
+        "cL": -3.691390121852405,
+        "cR": -0.13379669552707707,
+        "wL": 0.4978899430665841,
+        "wR": 0.6093529381668422,
+        "core": -1.96832490623987
+      },
+      {
+        "z": 19,
+        "xB": -1.7962620585523474,
+        "hw": 3.0974897613484207,
+        "cL": -3.737675674438542,
+        "cR": -0.12056224697713747,
+        "wL": 0.5112630623621554,
+        "wR": 0.6126876540352827,
+        "core": -1.9798312565444034
+      },
+      {
+        "z": 19.5,
+        "xB": -1.8219607825661064,
+        "hw": 3.1267671689818237,
+        "cL": -3.779476601812452,
+        "cR": -0.10418555489130576,
+        "wL": 0.5243778434479088,
+        "wR": 0.6158883002368216,
+        "core": -1.9875863067463355
+      },
+      {
+        "z": 20,
+        "xB": -1.843491680248321,
+        "hw": 3.155091129038058,
+        "cL": -3.8165562347611304,
+        "cR": -0.08467181968157877,
+        "wL": 0.5371726834714896,
+        "wR": 0.6189511994878505,
+        "core": -1.991503285229535
+      },
+      {
+        "z": 20.5,
+        "xB": -1.8606631400222275,
+        "hw": 3.1823696512060113,
+        "cL": -3.8486783191466865,
+        "cR": -0.062031086168767846,
+        "wL": 0.5495844503122788,
+        "wR": 0.6218731528138287,
+        "core": -1.991499053908502
+      },
+      {
+        "z": 21,
+        "xB": -1.8732835503110634,
+        "hw": 3.2085107451745722,
+        "cL": -3.875606963051477,
+        "cR": -0.03627762670478929,
+        "wL": 0.5615486773154775,
+        "wR": 0.6246513786423261,
+        "core": -1.9874936455415575
+      },
+      {
+        "z": 21.5,
+        "xB": -1.8811612995380662,
+        "hw": 3.233422420632628,
+        "cL": -3.897106578975359,
+        "cR": -0.007429266547445135,
+        "wL": 0.5729997762557466,
+        "wR": 0.627283446194408,
+        "core": -1.9794097577307328
+      },
+      {
+        "z": 22,
+        "xB": -1.884104776126473,
+        "hw": 3.2570126872690675,
+        "cL": -3.912941821085062,
+        "cR": 0.024493348512304003,
+        "wL": 0.5838712685304052,
+        "wR": 0.6297672031743641,
+        "core": -1.9671722036083585
+      },
+      {
+        "z": 22.5,
+        "xB": -1.8819223684995228,
+        "hw": 3.2791895547727794,
+        "cL": -3.9228775175156803,
+        "cR": 0.05946754227057349,
+        "wL": 0.5940960345821872,
+        "wR": 0.6321006977577801,
+        "core": -1.9507073192103497
+      },
+      {
+        "z": 23,
+        "xB": -1.8744224650804497,
+        "hw": 3.299861032832651,
+        "cL": -3.92667859772428,
+        "cR": 0.09746945597830292,
+        "wL": 0.6036065815515552,
+        "wR": 0.6342820948779522,
+        "core": -1.929942327536187
+      },
+      {
+        "z": 23.5,
+        "xB": -1.861413454292494,
+        "hw": 3.318935131137572,
+        "cL": -3.924110014895643,
+        "cR": 0.13847495395649823,
+        "wL": 0.612335329158573,
+        "wR": 0.6363095868106456,
+        "core": -1.9048046592956087
+      },
+      {
+        "z": 24,
+        "xB": -1.842703724558892,
+        "hw": 3.3363198593764305,
+        "cL": -3.91493666340011,
+        "cR": 0.1824605869589988,
+        "wL": 0.6202149138143358,
+        "wR": 0.638181298057195,
+        "core": -1.8752212303419853
+      },
+      {
+        "z": 24.5,
+        "xB": -1.8181016643028807,
+        "hw": 3.3519232272381134,
+        "cL": -3.8989232913035434,
+        "cR": 0.22940461328273232,
+        "wL": 0.6271785109619578,
+        "wR": 0.6398951845259486,
+        "core": -1.8411176757924008
+      },
+      {
+        "z": 25,
+        "xB": -1.7874156619476982,
+        "hw": 3.36565324441151,
+        "cL": -3.8758344079294473,
+        "cR": 0.2792880776255102,
+        "wL": 0.6331601756471189,
+        "wR": 0.641448927012057,
+        "core": -1.8024175408344376
+      },
+      {
+        "z": 25.5,
+        "xB": -1.7504541059165817,
+        "hw": 3.377417920585509,
+        "cL": -3.8454341864731663,
+        "cR": 0.3320959476913061,
+        "wL": 0.6380952013181692,
+        "wR": 0.6428398189756019,
+        "core": -1.7590414282196465
+      },
+      {
+        "z": 26,
+        "xB": -1.7070253846327685,
+        "hw": 3.3871252654489985,
+        "cL": -3.8074863616682135,
+        "cR": 0.38781830854303756,
+        "wL": 0.6419204968557893,
+        "wR": 0.6440646486180706,
+        "core": -1.7109061024437286
+      },
+      {
+        "z": 26.5,
+        "xB": -1.6569378865194953,
+        "hw": 3.3946832886908656,
+        "cL": -3.761754122504717,
+        "cR": 0.44645161470286565,
+        "wL": 0.6445749818322121,
+        "wR": 0.6451195752571726,
+        "core": -1.6579235506134058
+      },
+      {
+        "z": 27,
+        "xB": -1.6,
+        "hw": 3.4,
+        "cL": -3.708,
+        "wL": 0.646,
+        "cR": 0.508,
+        "wR": 0.646,
+        "core": -1.6
+      },
+      {
+        "z": 27.5,
+        "xB": -1.5371151606291757,
+        "hw": 3.403852317554241,
+        "cL": -3.647503597512805,
+        "wL": 0.6467319403353058,
+        "cR": 0.5732732762544535,
+        "wR": 0.6467319403353058,
+        "core": -1.5371151606291757
+      },
+      {
+        "z": 28,
+        "xB": -1.4695399682953245,
+        "hw": 3.407100591715976,
+        "cL": -3.5819423351592294,
+        "wL": 0.6473491124260354,
+        "cR": 0.6428623985685804,
+        "wR": 0.6473491124260354,
+        "core": -1.4695399682953245
+      },
+      {
+        "z": 28.5,
+        "xB": -1.397643411666379,
+        "hw": 3.409781804733728,
+        "cL": -3.5117081306012903,
+        "wL": 0.6478585428994083,
+        "cR": 0.7164213072685321,
+        "wR": 0.6478585428994083,
+        "core": -1.397643411666379
+      },
+      {
+        "z": 29,
+        "xB": -1.321794479410272,
+        "hw": 3.4119329388560162,
+        "cL": -3.4371929015010023,
+        "wL": 0.6482672583826431,
+        "cR": 0.7936039426804582,
+        "wR": 0.6482672583826431,
+        "core": -1.321794479410272
+      },
+      {
+        "z": 29.5,
+        "xB": -1.2423621601949368,
+        "hw": 3.4135909763313603,
+        "cL": -3.3587885655203804,
+        "wL": 0.6485822855029585,
+        "cR": 0.8740642451305067,
+        "wR": 0.6485822855029585,
+        "core": -1.2423621601949368
+      },
+      {
+        "z": 30,
+        "xB": -1.1597154426883054,
+        "hw": 3.414792899408284,
+        "cL": -3.2768870403214416,
+        "wL": 0.648810650887574,
+        "cR": 0.9574561549448308,
+        "wR": 0.648810650887574,
+        "core": -1.1597154426883054
+      },
+      {
+        "z": 30.5,
+        "xB": -1.074223315558311,
+        "hw": 3.415575690335305,
+        "cL": -3.1918802435662,
+        "wL": 0.648959381163708,
+        "cR": 1.043433612449578,
+        "wR": 0.648959381163708,
+        "core": -1.074223315558311
+      },
+      {
+        "z": 31,
+        "xB": -0.9862547674728862,
+        "hw": 3.415976331360947,
+        "cL": -3.1041600929166733,
+        "wL": 0.6490355029585799,
+        "cR": 1.1316505579709006,
+        "wR": 0.6490355029585799,
+        "core": -0.9862547674728862
+      },
+      {
+        "z": 31.5,
+        "xB": -0.896178787099964,
+        "hw": 3.416031804733728,
+        "cL": -3.014118506034875,
+        "wL": 0.6490460428994083,
+        "cR": 1.2217609318349474,
+        "wR": 0.6490460428994083,
+        "core": -0.896178787099964
+      },
+      {
+        "z": 32,
+        "xB": -0.8043643631074768,
+        "hw": 3.41577909270217,
+        "cL": -2.922147400582822,
+        "wL": 0.6489980276134123,
+        "cR": 1.3134186743678684,
+        "wR": 0.6489980276134123,
+        "core": -0.8043643631074768
+      },
+      {
+        "z": 32.5,
+        "xB": -0.7111804841633573,
+        "hw": 3.415255177514793,
+        "cL": -2.828638694222529,
+        "wL": 0.6488984837278107,
+        "cR": 1.4062777258958141,
+        "wR": 0.6488984837278107,
+        "core": -0.7111804841633573
+      },
+      {
+        "z": 33,
+        "xB": -0.6169961389355388,
+        "hw": 3.4144970414201183,
+        "cL": -2.7339843046160124,
+        "wL": 0.6487544378698225,
+        "cR": 1.4999920267449345,
+        "wR": 0.6487544378698225,
+        "core": -0.6169961389355388
+      },
+      {
+        "z": 33.5,
+        "xB": -0.5221803160919541,
+        "hw": 3.4135416666666663,
+        "cL": -2.6385761494252873,
+        "wL": 0.6485729166666666,
+        "cR": 1.5942155172413792,
+        "wR": 0.6485729166666666,
+        "core": -0.5221803160919541
+      },
+      {
+        "z": 34,
+        "xB": -0.42710200430053513,
+        "hw": 3.4124260355029588,
+        "cL": -2.5428061463123695,
+        "wL": 0.6483609467455622,
+        "cR": 1.6886021377112992,
+        "wR": 0.6483609467455622,
+        "core": -0.42710200430053513
+      },
+      {
+        "z": 34.5,
+        "xB": -0.3321301922292157,
+        "hw": 3.411187130177515,
+        "cL": -2.4470662129392746,
+        "wL": 0.6481255547337279,
+        "cR": 1.7828058284808435,
+        "wR": 0.6481255547337279,
+        "core": -0.3321301922292157
+      },
+      {
+        "z": 35,
+        "xB": -0.23763386854592733,
+        "hw": 3.409861932938856,
+        "cL": -2.351748266968018,
+        "wL": 0.6478737672583826,
+        "cR": 1.8764805298761633,
+        "wR": 0.6478737672583826,
+        "core": -0.23763386854592733
+      },
+      {
+        "z": 35.5,
+        "xB": -0.14398202191860388,
+        "hw": 3.408487426035503,
+        "cL": -2.2572442260606156,
+        "wL": 0.6476126109467456,
+        "cR": 1.969280182223408,
+        "wR": 0.6476126109467456,
+        "core": -0.14398202191860388
+      },
+      {
+        "z": 36,
+        "xB": -0.051543641015177666,
+        "hw": 3.4071005917159765,
+        "cL": -2.163946007879083,
+        "wL": 0.6473491124260355,
+        "cR": 2.060858725848728,
+        "wR": 0.6473491124260355,
+        "core": -0.051543641015177666
+      },
+      {
+        "z": 36.5,
+        "xB": 0.03931228549641863,
+        "hw": 3.405738412228797,
+        "cL": -2.072245530085435,
+        "wL": 0.6470902983234714,
+        "cR": 2.1508701010782727,
+        "wR": 0.6470902983234714,
+        "core": 0.03931228549641863
+      },
+      {
+        "z": 37,
+        "xB": 0.12821676894825254,
+        "hw": 3.404437869822485,
+        "cL": -1.9825347103416882,
+        "wL": 0.6468431952662721,
+        "cR": 2.2389682482381934,
+        "wR": 0.6468431952662721,
+        "core": 0.12821676894825254
+      },
+      {
+        "z": 37.5,
+        "xB": 0.2148008206723903,
+        "hw": 3.403235946745562,
+        "cL": -1.895205466309858,
+        "wL": 0.6466148298816567,
+        "cR": 2.324807107654639,
+        "wR": 0.6466148298816567,
+        "core": 0.2148008206723903
+      },
+      {
+        "z": 38,
+        "xB": 0.2986954520009001,
+        "hw": 3.4021696252465485,
+        "cL": -1.81064971565196,
+        "wL": 0.6464122287968442,
+        "cR": 2.4080406196537605,
+        "wR": 0.6464122287968442,
+        "core": 0.2986954520009001
+      },
+      {
+        "z": 38.5,
+        "xB": 0.3795316742658481,
+        "hw": 3.4012758875739646,
+        "cL": -1.7292593760300101,
+        "wL": 0.6462424186390533,
+        "cR": 2.4883227245617063,
+        "wR": 0.6462424186390533,
+        "core": 0.3795316742658481
+      },
+      {
+        "z": 39,
+        "xB": 0.4569404987993037,
+        "hw": 3.4005917159763315,
+        "cL": -1.651426365106022,
+        "wL": 0.646112426035503,
+        "cR": 2.5653073627046292,
+        "wR": 0.646112426035503,
+        "core": 0.4569404987993037
+      },
+      {
+        "z": 39.5,
+        "xB": 0.5305529369333315,
+        "hw": 3.400154092702169,
+        "cL": -1.5775426005420132,
+        "wL": 0.6460292776134121,
+        "cR": 2.6386484744086762,
+        "wR": 0.6460292776134121,
+        "core": 0.5305529369333315
+      },
+      {
+        "z": 40,
+        "xB": 0.6,
+        "hw": 3.4,
+        "cL": -1.508,
+        "wL": 0.646,
+        "cR": 2.708,
+        "wR": 0.646,
+        "core": 0.6
+      },
+      {
+        "z": 40.5,
+        "xB": 0.6670140993549448,
+        "hw": 3.400042046440972,
+        "cL": -1.441011969438458,
+        "wL": 0.6460079888237846,
+        "cR": 2.7750401681483474,
+        "wR": 0.6460079888237846,
+        "core": 0.6670140993549448
+      },
+      {
+        "z": 41,
+        "xB": 0.7335460443606322,
+        "hw": 3.4001627604166664,
+        "cL": -1.374554867097701,
+        "wL": 0.6460309244791667,
+        "cR": 2.841646955818965,
+        "wR": 0.6460309244791667,
+        "core": 0.7335460443606322
+      },
+      {
+        "z": 41.5,
+        "xB": 0.799554443359375,
+        "hw": 3.40035400390625,
+        "cL": -1.3086650390624999,
+        "wL": 0.6460672607421876,
+        "cR": 2.90777392578125,
+        "wR": 0.6460672607421876,
+        "core": 0.799554443359375
+      },
+      {
+        "z": 42,
+        "xB": 0.8649979046934866,
+        "hw": 3.400607638888889,
+        "cL": -1.2433788314176244,
+        "wL": 0.6461154513888889,
+        "cR": 2.9733746408045976,
+        "wR": 0.6461154513888889,
+        "core": 0.8649979046934866
+      },
+      {
+        "z": 42.5,
+        "xB": 0.9298350367052801,
+        "hw": 3.40091552734375,
+        "cL": -1.1787325902478447,
+        "wL": 0.6461739501953125,
+        "cR": 3.038402663658405,
+        "wR": 0.6461739501953125,
+        "core": 0.9298350367052801
+      },
+      {
+        "z": 43,
+        "xB": 0.9940244477370689,
+        "hw": 3.40126953125,
+        "cL": -1.1147626616379314,
+        "wL": 0.6462412109375,
+        "cR": 3.102811557112069,
+        "wR": 0.6462412109375,
+        "core": 0.9940244477370689
+      },
+      {
+        "z": 43.5,
+        "xB": 1.0575247461311663,
+        "hw": 3.4016615125868053,
+        "cL": -1.051505391672653,
+        "wL": 0.646315687391493,
+        "cR": 3.1665548839349853,
+        "wR": 0.646315687391493,
+        "core": 1.0575247461311663
+      },
+      {
+        "z": 44,
+        "xB": 1.1202945402298852,
+        "hw": 3.402083333333333,
+        "cL": -0.9889971264367814,
+        "wL": 0.6463958333333333,
+        "cR": 3.2295862068965517,
+        "wR": 0.6463958333333333,
+        "core": 1.1202945402298852
+      },
+      {
+        "z": 44.5,
+        "xB": 1.1822924383755387,
+        "hw": 3.40252685546875,
+        "cL": -0.9272742120150863,
+        "wL": 0.6464801025390625,
+        "cR": 3.291859088766164,
+        "wR": 0.6464801025390625,
+        "core": 1.1822924383755387
+      },
+      {
+        "z": 45,
+        "xB": 1.2434770489104405,
+        "hw": 3.4029839409722222,
+        "cL": -0.8663729944923371,
+        "wL": 0.6465669487847222,
+        "cR": 3.353327092313218,
+        "wR": 0.6465669487847222,
+        "core": 1.2434770489104405
+      },
+      {
+        "z": 45.5,
+        "xB": 1.3038069801769037,
+        "hw": 3.403446451822916,
+        "cL": -0.8063298199533044,
+        "wL": 0.646654825846354,
+        "cR": 3.413943780307112,
+        "wR": 0.646654825846354,
+        "core": 1.3038069801769037
+      },
+      {
+        "z": 46,
+        "xB": 1.3632408405172414,
+        "hw": 3.40390625,
+        "cL": -0.7471810344827587,
+        "wL": 0.6467421875,
+        "cR": 3.4736627155172415,
+        "wR": 0.6467421875,
+        "core": 1.3632408405172414
+      },
+      {
+        "z": 46.5,
+        "xB": 1.4217372382737665,
+        "hw": 3.404355197482639,
+        "cL": -0.6889629841654694,
+        "wL": 0.6468274875217014,
+        "cR": 3.5324374607130027,
+        "wR": 0.6468274875217014,
+        "core": 1.4217372382737665
+      },
+      {
+        "z": 47,
+        "xB": 1.479254781788793,
+        "hw": 3.40478515625,
+        "cL": -0.631712015086207,
+        "wL": 0.6469091796875001,
+        "cR": 3.590221578663793,
+        "wR": 0.6469091796875001,
+        "core": 1.479254781788793
+      },
+      {
+        "z": 47.5,
+        "xB": 1.5357520794046335,
+        "hw": 3.40518798828125,
+        "cL": -0.5754644733297414,
+        "wL": 0.6469857177734375,
+        "cR": 3.6469686321390085,
+        "wR": 0.6469857177734375,
+        "core": 1.5357520794046335
+      },
+      {
+        "z": 48,
+        "xB": 1.5911877394636014,
+        "hw": 3.4055555555555554,
+        "cL": -0.5202567049808431,
+        "wL": 0.6470555555555555,
+        "cR": 3.7026321839080456,
+        "wR": 0.6470555555555555,
+        "core": 1.5911877394636014
+      },
+      {
+        "z": 48.5,
+        "xB": 1.6455203703080097,
+        "hw": 3.4058797200520834,
+        "cL": -0.4661250561242818,
+        "wL": 0.6471171468098958,
+        "cR": 3.757165796740301,
+        "wR": 0.6471171468098958,
+        "core": 1.6455203703080097
+      },
+      {
+        "z": 49,
+        "xB": 1.6987085802801722,
+        "hw": 3.40615234375,
+        "cL": -0.4131058728448278,
+        "wL": 0.6471689453125,
+        "cR": 3.8105230334051723,
+        "wR": 0.6471689453125,
+        "core": 1.6987085802801722
+      },
+      {
+        "z": 49.5,
+        "xB": 1.7507109777224015,
+        "hw": 3.4063652886284723,
+        "cL": -0.36123550122725145,
+        "wL": 0.6472094048394097,
+        "cR": 3.8626574566720544,
+        "wR": 0.6472094048394097,
+        "core": 1.7507109777224015
+      },
+      {
+        "z": 50,
+        "xB": 1.8014861709770114,
+        "hw": 3.4065104166666664,
+        "cL": -0.31055028735632195,
+        "wL": 0.6472369791666667,
+        "cR": 3.9135226293103447,
+        "wR": 0.6472369791666667,
+        "core": 1.8014861709770114
+      }
+    ],
+    "banks": [
+      {
+        "side": -1,
+        "s": 180.22531155690598,
+        "axialResidual": -2.634004125923184e-14,
+        "lateralGap": 1.8239409982356847e-11,
+        "staticSurfaceGap": 0.6838305136705664
+      },
+      {
+        "side": 1,
+        "s": 179.9335810123623,
+        "axialResidual": -5.090372567906343e-14,
+        "lateralGap": 1.4379164525735177e-11,
+        "staticSurfaceGap": 0.5007202269102836
+      }
+    ],
+    "channelJoins": [
+      {
+        "s": 114.68830202823243,
+        "centreDelta": 0,
+        "widthDelta": 0.0005749999946789153
+      },
+      {
+        "s": 192.92412082521383,
+        "centreDelta": 0,
+        "widthDelta": 0.00013888888657476173
+      }
+    ],
+    "bridgeVertices": [
+      {
+        "vertex": 3,
+        "s": 180.22531127929688,
+        "u": -0.8183742165565491,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000020167971627091266,
+        "waveDirectionGap": 2.772875972836752e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 4,
+        "s": 180.17510986328125,
+        "u": -0.7574824690818787,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 9.076600908980042e-7,
+        "waveDirectionGap": 4.2362039625458347e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 5,
+        "s": 180.13539123535156,
+        "u": -0.6963207721710205,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.00000407789614299144,
+        "waveDirectionGap": 2.0692129392320732e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 6,
+        "s": 180.10317993164062,
+        "u": -0.6349426507949829,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000033216212543534303,
+        "waveDirectionGap": 2.93842207935095e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 7,
+        "s": 180.0765380859375,
+        "u": -0.5733903646469116,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000005468885568390671,
+        "waveDirectionGap": 5.340642409362622e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 8,
+        "s": 180.0541229248047,
+        "u": -0.5116968154907227,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000024686079498250803,
+        "waveDirectionGap": 3.135906142359668e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 9,
+        "s": 180.03500366210938,
+        "u": -0.44988754391670227,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000025288657438889467,
+        "waveDirectionGap": 2.95036196744122e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 10,
+        "s": 180.01852416992188,
+        "u": -0.3879826068878174,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000027985761684853526,
+        "waveDirectionGap": 2.674742327197627e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 11,
+        "s": 180.004150390625,
+        "u": -0.3259977400302887,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000012969721665273137,
+        "waveDirectionGap": 7.571251105141872e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 12,
+        "s": 179.99151611328125,
+        "u": -0.2639455199241638,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 3.499145591247397e-7,
+        "waveDirectionGap": 1.880091287681662e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 13,
+        "s": 179.98031616210938,
+        "u": -0.20183604955673218,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000004449550608456817,
+        "waveDirectionGap": 6.697393101495422e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 14,
+        "s": 179.9702606201172,
+        "u": -0.13959652185440063,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000004572756599593437,
+        "waveDirectionGap": 4.1979024204945683e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 15,
+        "s": 179.9612579345703,
+        "u": -0.07728567719459534,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000002185373104505551,
+        "waveDirectionGap": 1.492755352171727e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 16,
+        "s": 179.95323181152344,
+        "u": -0.014966023154556751,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000019174125320244083,
+        "waveDirectionGap": 1.1143548661699379e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 17,
+        "s": 179.94601440429688,
+        "u": 0.0473615936934948,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000001927887348563456,
+        "waveDirectionGap": 4.4592118718793586e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 18,
+        "s": 179.9394989013672,
+        "u": 0.1096963956952095,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000041401491077371684,
+        "waveDirectionGap": 8.190993404017281e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 19,
+        "s": 179.93357849121094,
+        "u": 0.17203769087791443,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000036880608545194404,
+        "waveDirectionGap": 1.4328885390806543e-7,
+        "uvGap": 0
+      }
+    ],
+    "supportLifts": [
+      {
+        "vertex": 0,
+        "u": -1.4151138067245483,
+        "lift": 0.27999588804089676
+      },
+      {
+        "vertex": 1,
+        "u": -1.2041411399841309,
+        "lift": 0.27999597836444023
+      },
+      {
+        "vertex": 2,
+        "u": -1.1119179725646973,
+        "lift": 0.2799992768941177
+      },
+      {
+        "vertex": 20,
+        "u": 0.4915366470813751,
+        "lift": 0.03325212504675333
+      },
+      {
+        "vertex": 21,
+        "u": 0.8111320734024048,
+        "lift": 0.14942919568498816
+      },
+      {
+        "vertex": 22,
+        "u": 1.1307895183563232,
+        "lift": 0.2799982702532419
+      }
+    ],
+    "maxSupportLift": 0.28,
+    "liveReference": {
+      "focusS": 132.62163536156623,
+      "stateS": 132.438,
+      "meshes": [],
+      "note": "Inspect actual rendered mesh attributes and compiled uniform identity. Local zero-weight protection is checked on those attributes. Rendered animated seam, triangle residuals and layer raycasts are tested separately by scripts/reference05-seam.ts."
+    },
+    "note": "banks.staticSurfaceGap measures the legacy unbridged floor formula. bridgeVertices compares banked base first-row positions/wave vectors before the dynamic reference target blend. Rendered reference seam and triangle residuals are tested separately by scripts/reference05-seam.ts; ride captures support visual review."
+  },
+  "motionDirection": {
+    "verifiedNumerically": false,
+    "evidenceTimes": [
+      12,
+      12.2,
+      12.4,
+      12.6
+    ],
+    "note": "Review the actual frozen frame sequence for reflection travel toward the camera. Pixel activity alone does not certify direction; no shader-formula mirror is used as a direction test."
+  },
+  "ride": {
+    "samples": [
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 168.188,
+          "lat": 0,
+          "coins": 1470,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.817,
+          "bennyVisible": true,
+          "cam": [
+            1.37,
+            -39.37,
+            -102.4
+          ]
+        },
+        "steps": 195,
+        "maxCameraStep": 0.19104973174543985,
+        "maxBennyYStep": 0.01899999999999835,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 174.055,
+          "lat": 0,
+          "coins": 1480,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.105,
+          "bennyVisible": true,
+          "cam": [
+            1.78,
+            -39.61,
+            -108.25
+          ]
+        },
+        "steps": 32,
+        "maxCameraStep": 0.19131126469708754,
+        "maxBennyYStep": 0.015000000000000568,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 180.105,
+          "lat": 0,
+          "coins": 1480,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.386,
+          "bennyVisible": true,
+          "cam": [
+            3.24,
+            -39.83,
+            -113.82
+          ]
+        },
+        "steps": 33,
+        "maxCameraStep": 0.18788294228056093,
+        "maxBennyYStep": 0.019000000000005457,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 184.138,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.412,
+          "bennyVisible": true,
+          "cam": [
+            3.03,
+            -40.01,
+            -117.68
+          ]
+        },
+        "steps": 22,
+        "maxCameraStep": 0.18466185312620073,
+        "maxBennyYStep": 0.015000000000000568,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 188.538,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.979,
+          "bennyVisible": true,
+          "cam": [
+            3.27,
+            -40.55,
+            -122.25
+          ]
+        },
+        "steps": 24,
+        "maxCameraStep": 0.21470910553583306,
+        "maxBennyYStep": 0.030000000000001137,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 189.455,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.78,
+          "bennyVisible": true,
+          "cam": [
+            3.09,
+            -40.64,
+            -123.21
+          ]
+        },
+        "steps": 5,
+        "maxCameraStep": 0.20322401432901885,
+        "maxBennyYStep": 0.045000000000001705,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 192.938,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -41.265,
+          "bennyVisible": true,
+          "cam": [
+            2.17,
+            -40.91,
+            -126.73
+          ]
+        },
+        "steps": 19,
+        "maxCameraStep": 0.19748417658132675,
+        "maxBennyYStep": 0.10699999999999932,
+        "nonMonotonicSteps": 0
+      }
+    ],
+    "maxCameraStep": 0.21470910553583306,
+    "maxBennyYStep": 0.10699999999999932,
+    "nonMonotonicSteps": 0
+  },
+  "stats": {
+    "calls": 80,
+    "triangles": 592645,
+    "geometries": 343,
+    "textures": 61,
+    "modules": {
+      "water": "vfx/index.ts",
+      "benny": "assets/models/benny.glb",
+      "girl": "assets/models/rainbow_girl.glb"
+    },
+    "courseLength": 435.1923632433159
+  },
+  "sourceChangedDuringRun": [],
+  "pass": false
+}

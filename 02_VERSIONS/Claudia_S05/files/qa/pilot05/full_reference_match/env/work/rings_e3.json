@@ -1,0 +1,205 @@
+{
+ "A": {
+  "key": "r22",
+  "px": 90269,
+  "approved_source": "scan from r 330",
+  "rays_compared": 35,
+  "approved": {
+   "centre": [
+    463.7,
+    507.5
+   ],
+   "r_mid": 475.5,
+   "band_px_median": 65.4,
+   "r_in_mean": 462.7,
+   "r_out_mean": 529.1
+  },
+  "game": {
+   "centre": [
+    489.1,
+    507.1
+   ],
+   "r_mid": 499.4,
+   "band_px_median": 70.0,
+   "r_in_mean": 463.8,
+   "r_out_mean": 531.9
+  },
+  "d_r_in_mean": 1.1,
+  "d_r_out_mean": 2.8,
+  "abs_d_edges_mean": 2.9
+ },
+ "B": {
+  "key": "r23",
+  "px": 40352,
+  "approved_source": "measured",
+  "rays_compared": 426,
+  "approved": {
+   "centre": [
+    469.2,
+    458.1
+   ],
+   "r_mid": 248.0,
+   "band_px_median": 40.0,
+   "r_in_mean": 229.2,
+   "r_out_mean": 267.5
+  },
+  "game": {
+   "centre": [
+    476.4,
+    468.6
+   ],
+   "r_mid": 254.0,
+   "band_px_median": 38.0,
+   "r_in_mean": 233.4,
+   "r_out_mean": 270.5
+  },
+  "d_r_in_mean": 4.2,
+  "d_r_out_mean": 3.0,
+  "abs_d_edges_mean": 8.8
+ },
+ "C": {
+  "key": "f0",
+  "px": 12436,
+  "approved_source": "measured",
+  "rays_compared": 506,
+  "approved": {
+   "centre": [
+    486.4,
+    456.9
+   ],
+   "r_mid": 149.1,
+   "band_px_median": 20.4,
+   "r_in_mean": 143.5,
+   "r_out_mean": 162.3
+  },
+  "game": {
+   "centre": [
+    488.6,
+    461.2
+   ],
+   "r_mid": 151.2,
+   "band_px_median": 18.5,
+   "r_in_mean": 144.7,
+   "r_out_mean": 162.5
+  },
+  "d_r_in_mean": 1.2,
+  "d_r_out_mean": 0.2,
+  "abs_d_edges_mean": 3.2
+ },
+ "D": {
+  "key": "f1",
+  "px": 4538,
+  "approved_source": "measured",
+  "rays_compared": 523,
+  "approved": {
+   "centre": [
+    491.4,
+    466.1
+   ],
+   "r_mid": 90.8,
+   "band_px_median": 11.7,
+   "r_in_mean": 86.3,
+   "r_out_mean": 96.6
+  },
+  "game": {
+   "centre": [
+    492.8,
+    468.5
+   ],
+   "r_mid": 92.0,
+   "band_px_median": 10.5,
+   "r_in_mean": 86.8,
+   "r_out_mean": 97.1
+  },
+  "d_r_in_mean": 0.4,
+  "d_r_out_mean": 0.5,
+  "abs_d_edges_mean": 2.2
+ },
+ "E": {
+  "key": "f2",
+  "px": 2014,
+  "approved_source": "circle guess",
+  "rays_compared": 572,
+  "approved": {
+   "centre": [
+    497.0,
+    466.0
+   ],
+   "r_mid": 57.0,
+   "band_px_median": 8.0,
+   "r_in_mean": 53.4,
+   "r_out_mean": 61.4
+  },
+  "game": {
+   "centre": [
+    495.0,
+    472.5
+   ],
+   "r_mid": 58.4,
+   "band_px_median": 6.5,
+   "r_in_mean": 54.0,
+   "r_out_mean": 60.6
+  },
+  "d_r_in_mean": 0.6,
+  "d_r_out_mean": -0.9,
+  "abs_d_edges_mean": 4.1
+ },
+ "F": {
+  "key": "f3",
+  "px": 1085,
+  "approved_source": "circle guess",
+  "rays_compared": 594,
+  "approved": {
+   "centre": [
+    497.0,
+    467.0
+   ],
+   "r_mid": 40.0,
+   "band_px_median": 6.0,
+   "r_in_mean": 37.2,
+   "r_out_mean": 43.2
+  },
+  "game": {
+   "centre": [
+    496.2,
+    474.5
+   ],
+   "r_mid": 41.2,
+   "band_px_median": 4.5,
+   "r_in_mean": 37.4,
+   "r_out_mean": 42.2
+  },
+  "d_r_in_mean": 0.2,
+  "d_r_out_mean": -1.0,
+  "abs_d_edges_mean": 4.3
+ },
+ "G": {
+  "key": "f4",
+  "px": 615,
+  "approved_source": "circle guess",
+  "rays_compared": 642,
+  "approved": {
+   "centre": [
+    497.0,
+    468.0
+   ],
+   "r_mid": 28.0,
+   "band_px_median": 5.0,
+   "r_in_mean": 25.5,
+   "r_out_mean": 30.5
+  },
+  "game": {
+   "centre": [
+    497.1,
+    475.8
+   ],
+   "r_mid": 29.5,
+   "band_px_median": 3.5,
+   "r_in_mean": 26.3,
+   "r_out_mean": 29.8
+  },
+  "d_r_in_mean": 0.8,
+  "d_r_out_mean": -0.7,
+  "abs_d_edges_mean": 4.6
+ }
+}

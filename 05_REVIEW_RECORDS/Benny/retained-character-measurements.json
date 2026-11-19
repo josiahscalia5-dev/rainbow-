@@ -1,0 +1,442 @@
+{
+  "rule": "Same native renderer and frozen opening. Compare the same picture with Benny hidden or with only his hat hidden. Visible pixels require the summed absolute RGB channel difference to exceed 30 inside a generous central crop. Retain the largest connected component after 2-pixel dilation, and require six original changed pixels in a row or column to count it toward the bounds. These are visible screen-space bounds and include occlusion.",
+  "regions": {
+    "04": [
+      125,
+      875,
+      690,
+      1490
+    ],
+    "05": [
+      150,
+      685,
+      690,
+      1280
+    ],
+    "06": [
+      145,
+      640,
+      695,
+      1275
+    ],
+    "07": [
+      140,
+      635,
+      705,
+      1300
+    ],
+    "08": [
+      162,
+      730,
+      700,
+      1315
+    ]
+  },
+  "screens": {
+    "04": {
+      "wholeActor": {
+        "visibleDensePixelBoundsXYXY": [
+          190,
+          953,
+          594,
+          1413
+        ],
+        "width": 405,
+        "height": 461,
+        "changedPixelsInLargestBody": 109633
+      },
+      "hatIncludingStarAndPom": {
+        "visibleDensePixelBoundsXYXY": [
+          235,
+          953,
+          545,
+          1242
+        ],
+        "width": 311,
+        "height": 290,
+        "changedPixelsInLargestBody": 57660
+      },
+      "characterCropEqualsRetainedOpening": true,
+      "fullFrameChangedPixelsOutsideCrop": 198,
+      "rootScale": [
+        1,
+        1,
+        1
+      ],
+      "keyMaterials": {
+        "fur_body": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "fur_armL": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "fur_pom": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "hat_brim": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_crown": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_star": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      }
+    },
+    "05": {
+      "wholeActor": {
+        "visibleDensePixelBoundsXYXY": [
+          232,
+          778,
+          610,
+          1188
+        ],
+        "width": 379,
+        "height": 411,
+        "changedPixelsInLargestBody": 92795
+      },
+      "hatIncludingStarAndPom": {
+        "visibleDensePixelBoundsXYXY": [
+          278,
+          778,
+          569,
+          1031
+        ],
+        "width": 292,
+        "height": 254,
+        "changedPixelsInLargestBody": 48620
+      },
+      "characterCropEqualsRetainedOpening": true,
+      "fullFrameChangedPixelsOutsideCrop": 0,
+      "rootScale": [
+        1,
+        1,
+        1
+      ],
+      "keyMaterials": {
+        "fur_body": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": null
+          }
+        ],
+        "fur_armL": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ],
+        "fur_pom": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 512,
+            "normalMap": null
+          }
+        ],
+        "hat_brim": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_crown": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_star": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      }
+    },
+    "06": {
+      "wholeActor": {
+        "visibleDensePixelBoundsXYXY": [
+          198,
+          717,
+          645,
+          1193
+        ],
+        "width": 448,
+        "height": 477,
+        "changedPixelsInLargestBody": 129387
+      },
+      "hatIncludingStarAndPom": {
+        "visibleDensePixelBoundsXYXY": [
+          229,
+          717,
+          585,
+          1080
+        ],
+        "width": 357,
+        "height": 364,
+        "changedPixelsInLargestBody": 90616
+      },
+      "characterCropEqualsRetainedOpening": true,
+      "fullFrameChangedPixelsOutsideCrop": 0,
+      "rootScale": [
+        1,
+        1,
+        1
+      ],
+      "keyMaterials": {
+        "fur_body": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "fur_armL": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "fur_pom": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "hat_brim": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_crown": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_star": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      }
+    },
+    "07": {
+      "wholeActor": {
+        "visibleDensePixelBoundsXYXY": [
+          270,
+          742,
+          681,
+          1216
+        ],
+        "width": 412,
+        "height": 475,
+        "changedPixelsInLargestBody": 116966
+      },
+      "hatIncludingStarAndPom": {
+        "visibleDensePixelBoundsXYXY": [
+          307,
+          742,
+          634,
+          1033
+        ],
+        "width": 328,
+        "height": 292,
+        "changedPixelsInLargestBody": 59646
+      },
+      "characterCropEqualsRetainedOpening": true,
+      "fullFrameChangedPixelsOutsideCrop": 0,
+      "rootScale": [
+        1,
+        1,
+        1
+      ],
+      "keyMaterials": {
+        "fur_body": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "fur_armL": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "fur_pom": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ],
+        "hat_brim": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_crown": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_star": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      }
+    },
+    "08": {
+      "wholeActor": {
+        "visibleDensePixelBoundsXYXY": [
+          270,
+          892,
+          595,
+          1233
+        ],
+        "width": 326,
+        "height": 342,
+        "changedPixelsInLargestBody": 64512
+      },
+      "hatIncludingStarAndPom": {
+        "visibleDensePixelBoundsXYXY": [
+          329,
+          892,
+          556,
+          1087
+        ],
+        "width": 228,
+        "height": 196,
+        "changedPixelsInLargestBody": 28066
+      },
+      "characterCropEqualsRetainedOpening": true,
+      "fullFrameChangedPixelsOutsideCrop": 0,
+      "rootScale": [
+        1,
+        1,
+        1
+      ],
+      "keyMaterials": {
+        "fur_body": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": null
+          }
+        ],
+        "fur_armL": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ],
+        "fur_pom": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 512,
+            "normalMap": null
+          }
+        ],
+        "hat_brim": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_crown": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ],
+        "hat_star": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      }
+    }
+  }
+}

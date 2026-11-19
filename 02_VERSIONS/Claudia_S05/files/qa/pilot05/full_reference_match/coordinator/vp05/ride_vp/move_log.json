@@ -1,0 +1,38 @@
+{
+ "q": "proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1&projvp05=1",
+ "frames": [
+  {
+   "file": "qa/pilot05/full_reference_match/coordinator/vp05/ride_vp/move_05.png",
+   "d": 5,
+   "s": 137.572,
+   "cam": [
+    1.97,
+    -38.1,
+    -71.98
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/coordinator/vp05/ride_vp/move_10.png",
+   "d": 10,
+   "s": 142.522,
+   "cam": [
+    2.02,
+    -38.3,
+    -76.84
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/coordinator/vp05/ride_vp/move_20.png",
+   "d": 20,
+   "s": 152.605,
+   "cam": [
+    1.93,
+    -38.72,
+    -86.86
+   ],
+   "lat": 0
+  }
+ ]
+}

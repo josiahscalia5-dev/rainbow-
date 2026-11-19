@@ -1,0 +1,19 @@
+{
+ "capture": "qa/pilot05/full_reference_match/benny/cap/new/05.png",
+ "whole_frame": {
+  "px": 1327104,
+  "share_of_frame": 1.0,
+  "mean_abs": 32.04,
+  "within_10": 0.4562,
+  "within_20": 0.5473,
+  "ssim_lum": 0.5443,
+  "mean_signed_rgb": [
+   2.3,
+   0.6,
+   -1.2
+  ]
+ },
+ "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
+ "mse": 3196.3,
+ "psnr_db": 13.08
+}

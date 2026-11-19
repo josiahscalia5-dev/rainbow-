@@ -1,0 +1,11 @@
+{
+ "note": "m08floor hole-grid cell (u along +x, v along -z), repeat; tools/match08/floor08.py (r12)",
+ "x0": 13.35,
+ "z0": -289.15,
+ "periodX": 0.3754892349243164,
+ "periodZ": 0.9370181560516357,
+ "size": [
+  150,
+  375
+ ]
+}

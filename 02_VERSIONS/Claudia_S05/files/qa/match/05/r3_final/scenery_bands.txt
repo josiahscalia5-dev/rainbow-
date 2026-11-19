@@ -1,0 +1,5 @@
+SCENERY = whole frame minus benny_and_hat, hud_and_text, coins
+BEFORE M1 tgtvis05: scenery mean 5.60, within 20 93.3 %
+   bands (within 20 %): 0-192:76.1 192-384:95.1 384-576:96.0 576-768:96.6 768-960:91.5 960-1152:95.1 1152-1344:91.6 1344-1536:92.1
+NEW +tgtfill05=3 +tgtwall05: scenery mean 5.32, within 20 93.7 %
+   bands (within 20 %): 0-192:76.1 192-384:95.1 384-576:96.0 576-768:97.0 768-960:94.7 960-1152:95.1 1152-1344:91.6 1344-1536:92.1

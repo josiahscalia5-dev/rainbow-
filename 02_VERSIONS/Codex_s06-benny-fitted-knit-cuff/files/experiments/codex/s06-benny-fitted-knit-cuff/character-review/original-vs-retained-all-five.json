@@ -1,0 +1,636 @@
+{
+  "artworkMethod": "Manual screen-space extents read on the 864 × 1536 GitHub originals at 25-pixel grid spacing with native pixels visible. Treat soft fur and splash borders as approximate within about 8 pixels. Positive y points downward. The hat measure includes the pom, cuff and visible star.",
+  "gameMethod": "Same native renderer and frozen opening. Compare the same picture with Benny hidden or with only his hat hidden. Visible pixels require the summed absolute RGB channel difference to exceed 30 inside a generous central crop. Retain the largest connected component after 2-pixel dilation, and require six original changed pixels in a row or column to count it toward the bounds. These are visible screen-space bounds and include occlusion.",
+  "screens": {
+    "04": {
+      "originalArtwork": {
+        "retained": {
+          "branch": "claude/rainbow-s04-match-c17",
+          "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+        },
+        "path": "references/04_through_the_five_arrows.png",
+        "gitBlob": "d6d8a0e5e16bb1700fba078acda9fb9b435e7c32",
+        "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193",
+        "bytes": 392932,
+        "size": [
+          864,
+          1536
+        ],
+        "originalEncoding": "JPEG",
+        "lfsHydrated": false,
+        "manifestReferenceCount": 13,
+        "verifiedSameBytesAsExperimentAndPhone": true,
+        "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/ad5fbac592444e90fd1b53d62e7fa0b62391c032/references/04_through_the_five_arrows.png"
+      },
+      "originalApproximateWholeBounds": [
+        190,
+        966,
+        592,
+        1401
+      ],
+      "originalApproximateHatBounds": [
+        231,
+        966,
+        554,
+        1275
+      ],
+      "retained": {
+        "wholeActor": {
+          "visibleDensePixelBoundsXYXY": [
+            190,
+            953,
+            594,
+            1413
+          ],
+          "width": 405,
+          "height": 461,
+          "changedPixelsInLargestBody": 109633
+        },
+        "hatIncludingStarAndPom": {
+          "visibleDensePixelBoundsXYXY": [
+            235,
+            953,
+            545,
+            1242
+          ],
+          "width": 311,
+          "height": 290,
+          "changedPixelsInLargestBody": 57660
+        },
+        "characterCropEqualsRetainedOpening": true,
+        "fullFrameChangedPixelsOutsideCrop": 198,
+        "rootScale": [
+          1,
+          1,
+          1
+        ],
+        "keyMaterials": {
+          "fur_body": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "fur_armL": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "fur_pom": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "hat_brim": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_crown": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_star": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ]
+        }
+      },
+      "originalApproximateSize": [
+        403,
+        436
+      ],
+      "retainedVisibleSize": [
+        405,
+        461
+      ],
+      "horizontalCenterDifferencePx": 1.0,
+      "topDifferencePx": -13,
+      "cuffBottomDifferencePx": -33,
+      "visual": "The pink body is close in width. The smooth knitted bands and flat pom differ visibly from the original tufted, ribbed hat."
+    },
+    "05": {
+      "originalArtwork": {
+        "retained": {
+          "branch": "claude/rainbow-s05-match-c17",
+          "commit": "f033f7cc895752907621f82fb9d6bee4899ac0e0"
+        },
+        "path": "references/05_flow_into_the_current.png",
+        "gitBlob": "0ec66892cb4da4c799b10d82141657dfea42aab2",
+        "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+        "bytes": 484196,
+        "size": [
+          864,
+          1536
+        ],
+        "originalEncoding": "JPEG",
+        "lfsHydrated": false,
+        "manifestReferenceCount": 13,
+        "verifiedSameBytesAsExperimentAndPhone": true,
+        "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/f033f7cc895752907621f82fb9d6bee4899ac0e0/references/05_flow_into_the_current.png"
+      },
+      "originalApproximateWholeBounds": [
+        230,
+        767,
+        612,
+        1188
+      ],
+      "originalApproximateHatBounds": [
+        275,
+        767,
+        575,
+        1029
+      ],
+      "retained": {
+        "wholeActor": {
+          "visibleDensePixelBoundsXYXY": [
+            232,
+            778,
+            610,
+            1188
+          ],
+          "width": 379,
+          "height": 411,
+          "changedPixelsInLargestBody": 92795
+        },
+        "hatIncludingStarAndPom": {
+          "visibleDensePixelBoundsXYXY": [
+            278,
+            778,
+            569,
+            1031
+          ],
+          "width": 292,
+          "height": 254,
+          "changedPixelsInLargestBody": 48620
+        },
+        "characterCropEqualsRetainedOpening": true,
+        "fullFrameChangedPixelsOutsideCrop": 0,
+        "rootScale": [
+          1,
+          1,
+          1
+        ],
+        "keyMaterials": {
+          "fur_body": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": null
+            }
+          ],
+          "fur_armL": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 256,
+              "normalMap": null
+            }
+          ],
+          "fur_pom": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 512,
+              "normalMap": null
+            }
+          ],
+          "hat_brim": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_crown": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_star": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 256,
+              "normalMap": null
+            }
+          ]
+        }
+      },
+      "originalApproximateSize": [
+        383,
+        422
+      ],
+      "retainedVisibleSize": [
+        379,
+        411
+      ],
+      "horizontalCenterDifferencePx": 0.0,
+      "topDifferencePx": 11,
+      "cuffBottomDifferencePx": 2,
+      "visual": "The textured hat and pink coat reproduce the original more closely than the other retained openings. The pom is a little lower."
+    },
+    "06": {
+      "originalArtwork": {
+        "retained": {
+          "branch": "claude/rainbow-s06-match-c17",
+          "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+        },
+        "path": "references/06_crest_the_rinse_arch.png",
+        "gitBlob": "4000c6f7294b5f55f9141b0d6ad810fdad920a90",
+        "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+        "bytes": 497882,
+        "size": [
+          864,
+          1536
+        ],
+        "originalEncoding": "JPEG",
+        "lfsHydrated": false,
+        "manifestReferenceCount": 13,
+        "verifiedSameBytesAsExperimentAndPhone": true,
+        "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/c649fcbc35780e11cefce83eb54684f1d55752a5/references/06_crest_the_rinse_arch.png"
+      },
+      "originalApproximateWholeBounds": [
+        202,
+        733,
+        636,
+        1191
+      ],
+      "originalApproximateHatBounds": [
+        261,
+        733,
+        574,
+        1026
+      ],
+      "retained": {
+        "wholeActor": {
+          "visibleDensePixelBoundsXYXY": [
+            198,
+            717,
+            645,
+            1193
+          ],
+          "width": 448,
+          "height": 477,
+          "changedPixelsInLargestBody": 129387
+        },
+        "hatIncludingStarAndPom": {
+          "visibleDensePixelBoundsXYXY": [
+            229,
+            717,
+            585,
+            1080
+          ],
+          "width": 357,
+          "height": 364,
+          "changedPixelsInLargestBody": 90616
+        },
+        "characterCropEqualsRetainedOpening": true,
+        "fullFrameChangedPixelsOutsideCrop": 0,
+        "rootScale": [
+          1,
+          1,
+          1
+        ],
+        "keyMaterials": {
+          "fur_body": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "fur_armL": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "fur_pom": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "hat_brim": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_crown": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_star": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ]
+        }
+      },
+      "originalApproximateSize": [
+        435,
+        459
+      ],
+      "retainedVisibleSize": [
+        448,
+        477
+      ],
+      "horizontalCenterDifferencePx": 2.5,
+      "topDifferencePx": -16,
+      "cuffBottomDifferencePx": 54,
+      "visual": "The hat is visibly wider and reaches farther down the body. The original shows individual strands and ridges across the crown and cuff."
+    },
+    "07": {
+      "originalArtwork": {
+        "retained": {
+          "branch": "claude/rainbow-s07-match-c17",
+          "commit": "8651edf92525a9aab82b02fad9aa44621216708a"
+        },
+        "path": "references/07_dive_the_washer_tube.png",
+        "gitBlob": "407d8731c24bdde5cc69edc7f459c206d2df9c31",
+        "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9",
+        "bytes": 494067,
+        "size": [
+          864,
+          1536
+        ],
+        "originalEncoding": "JPEG",
+        "lfsHydrated": false,
+        "manifestReferenceCount": 13,
+        "verifiedSameBytesAsExperimentAndPhone": true,
+        "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/8651edf92525a9aab82b02fad9aa44621216708a/references/07_dive_the_washer_tube.png"
+      },
+      "originalApproximateWholeBounds": [
+        207,
+        778,
+        640,
+        1222
+      ],
+      "originalApproximateHatBounds": [
+        262,
+        778,
+        587,
+        1055
+      ],
+      "retained": {
+        "wholeActor": {
+          "visibleDensePixelBoundsXYXY": [
+            270,
+            742,
+            681,
+            1216
+          ],
+          "width": 412,
+          "height": 475,
+          "changedPixelsInLargestBody": 116966
+        },
+        "hatIncludingStarAndPom": {
+          "visibleDensePixelBoundsXYXY": [
+            307,
+            742,
+            634,
+            1033
+          ],
+          "width": 328,
+          "height": 292,
+          "changedPixelsInLargestBody": 59646
+        },
+        "characterCropEqualsRetainedOpening": true,
+        "fullFrameChangedPixelsOutsideCrop": 0,
+        "rootScale": [
+          1,
+          1,
+          1
+        ],
+        "keyMaterials": {
+          "fur_body": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "fur_armL": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "fur_pom": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ],
+          "hat_brim": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_crown": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_star": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": null,
+              "normalMap": null
+            }
+          ]
+        }
+      },
+      "originalApproximateSize": [
+        434,
+        445
+      ],
+      "retainedVisibleSize": [
+        412,
+        475
+      ],
+      "horizontalCenterDifferencePx": 52.0,
+      "topDifferencePx": -36,
+      "cuffBottomDifferencePx": -22,
+      "visual": "Benny sits farther right and the pom is higher in the retained opening. The broad smooth hat stripes and relatively uniform pink coat differ from the artwork."
+    },
+    "08": {
+      "originalArtwork": {
+        "retained": {
+          "branch": "claude/rainbow-s08-scenery-c17",
+          "commit": "3c0fa97090afb2c0fca41898774db7247e23e522"
+        },
+        "path": "references/08_final_spin_chamber.png",
+        "gitBlob": "9d8e79430233b8cc49c8b30621e7678a8564655e",
+        "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14",
+        "bytes": 492730,
+        "size": [
+          864,
+          1536
+        ],
+        "originalEncoding": "JPEG",
+        "lfsHydrated": false,
+        "manifestReferenceCount": 13,
+        "verifiedSameBytesAsExperimentAndPhone": true,
+        "url": "https://github.com/josiahscalia5-dev/rainbow-/blob/3c0fa97090afb2c0fca41898774db7247e23e522/references/08_final_spin_chamber.png"
+      },
+      "originalApproximateWholeBounds": [
+        259,
+        847,
+        598,
+        1214
+      ],
+      "originalApproximateHatBounds": [
+        298,
+        847,
+        560,
+        1066
+      ],
+      "retained": {
+        "wholeActor": {
+          "visibleDensePixelBoundsXYXY": [
+            270,
+            892,
+            595,
+            1233
+          ],
+          "width": 326,
+          "height": 342,
+          "changedPixelsInLargestBody": 64512
+        },
+        "hatIncludingStarAndPom": {
+          "visibleDensePixelBoundsXYXY": [
+            329,
+            892,
+            556,
+            1087
+          ],
+          "width": 228,
+          "height": 196,
+          "changedPixelsInLargestBody": 28066
+        },
+        "characterCropEqualsRetainedOpening": true,
+        "fullFrameChangedPixelsOutsideCrop": 0,
+        "rootScale": [
+          1,
+          1,
+          1
+        ],
+        "keyMaterials": {
+          "fur_body": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": null
+            }
+          ],
+          "fur_armL": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 256,
+              "normalMap": null
+            }
+          ],
+          "fur_pom": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 512,
+              "normalMap": null
+            }
+          ],
+          "hat_brim": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_crown": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 1024,
+              "normalMap": 1024
+            }
+          ],
+          "hat_star": [
+            {
+              "name": "",
+              "type": "MeshStandardMaterial",
+              "map": 256,
+              "normalMap": null
+            }
+          ]
+        }
+      },
+      "originalApproximateSize": [
+        340,
+        368
+      ],
+      "retainedVisibleSize": [
+        326,
+        342
+      ],
+      "horizontalCenterDifferencePx": 4.0,
+      "topDifferencePx": 45,
+      "cuffBottomDifferencePx": 21,
+      "visual": "The knitted hat and coat retain their fine detail. The game pom is lower and the visible character is shorter than in the original."
+    }
+  }
+}
