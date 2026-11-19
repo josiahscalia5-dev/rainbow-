@@ -1,8 +1,0 @@
-{
-  "pairedResidualAlreadyReported": "report.json renderedDeltas.steps[].changeOfMovingMinusControl is abs((moving[t+dt]-still[t+dt])-(moving[t]-still[t])).",
-  "movingPageHistory": "The first run rendered an additional full-size authored time-12 pose before the small temporal series.",
-  "stillPageHistory": "The first run began directly at time14.48 on an independent page.",
-  "limitation": "Particle RNG/pool state and warmup histories are not guaranteed identical. The control subtraction is an approximation and must not be called pure water-flow isolation.",
-  "primaryEvidence": "Analytic phase/weight conditions and finite live geometry attributes; actual saved frames and their deltas are supplementary observational evidence.",
-  "futureHarnessFix": "The script now gives the still page a time-12 warmup. No captures were rerun and the original strict pose identity failure remains unchanged."
-}

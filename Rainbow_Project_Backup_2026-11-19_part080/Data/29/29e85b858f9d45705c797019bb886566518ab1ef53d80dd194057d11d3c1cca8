@@ -1,9 +1,0 @@
-0 current {"medianMs":4735,"minMs":4177.7,"calls":86,"tris":567415,"textures":43,"errors":1}
-0 improved {"medianMs":4398.6,"minMs":4295.7,"calls":86,"tris":567415,"textures":45,"errors":0}
-0 current_low {"medianMs":3636.1,"minMs":3283.4,"calls":86,"tris":425525,"textures":43,"errors":0}
-0 improved_low {"medianMs":3666.9,"minMs":3477.9,"calls":86,"tris":425525,"textures":45,"errors":0}
-1 current {"medianMs":4592.3,"minMs":4341.7,"calls":86,"tris":567415,"textures":43,"errors":0}
-1 improved {"medianMs":5392.4,"minMs":4274.4,"calls":86,"tris":567415,"textures":45,"errors":0}
-1 current_low {"medianMs":3837.3,"minMs":3591.3,"calls":86,"tris":425525,"textures":43,"errors":0}
-1 improved_low {"medianMs":3587.5,"minMs":3378.8,"calls":86,"tris":425525,"textures":45,"errors":0}
-[["current",4592.3,1,43],["improved",4398.6,0.958,45],["current_low",3636.1,0.792,43],["improved_low",3587.5,0.781,45]]
