@@ -709,7 +709,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c20/INFO.json",
    "bytes": 2319,
-   "sha256": "a2203f4024d2d4d4aaa2672d1d6c610ea6496c37ab5015ccd648a5e16c88413a"
+   "sha256": "45a8d00bbf6ff0a8292f72040d296ae8d882c06cd64332c8c24fd79519977bd1"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c20/tracked.patch",
@@ -859,7 +859,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
    "bytes": 494,
-   "sha256": "8f9203f982d0a5a890862c9fadf87b2c8fb3e377cd8dc5dc6c5e90335ab61a2b"
+   "sha256": "3870d6bea9522a0c758710b812b9130077556f4eea63d88d7d0680717bb1ff45"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c10/INFO.json",
@@ -1369,7 +1369,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c20/INFO.json",
    "bytes": 506,
-   "sha256": "0417ac49140b3e4b5bd7a4f495c15df9a5501b809066293b5f3ce4e077b3dac2"
+   "sha256": "5b6a9e2b8b6a8cf0bdb8fd46b6fd447b6a86a3b46a67fd77afe2e75fc1a603f7"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c20/tracked.patch",
@@ -1384,7 +1384,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c19/INFO.json",
    "bytes": 487,
-   "sha256": "a0bb325eb6582d1adfca708101d876c98f19a82d7fc86be57da0f842001497c5"
+   "sha256": "6e49af31ec97b187d268ad7d9c0eca9517b256effce76f37f7f63fa0f9386f60"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1529,7 +1529,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c20/INFO.json",
    "bytes": 515,
-   "sha256": "9a0d9ee32094359dcc044ff4992df72f09248025fc1f0bfd2b157243a69a70d0"
+   "sha256": "7c1e088fcc5ac80c54ffa65887c88545d9aa8281847f34c04de7f94f31714979"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c20/tracked.patch",
@@ -1979,7 +1979,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/INFO.json",
    "bytes": 2358,
-   "sha256": "eca40f63aa1b0fb49262b599e95a06049c799f529187e62b2ba76831a37f45db"
+   "sha256": "921860a99fc1ff8aefdea3983306749450edbe503ddd897af04cc81d6d659261"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
