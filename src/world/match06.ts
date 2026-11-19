@@ -205,6 +205,9 @@ void main() {
         float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
         float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
         w *= 1.0 - max(mk.r, mk.g) * away * inWater;
+        // A baked blue texel marks floor hidden by 3D Benny at the locked opening.
+        // Use the existing world-space flowing river there, even just after crest release.
+        w *= 1.0 - mk.b;
       }
       // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
       // shows the ring-structured wall tile once the camera leaves the approved view (the real river geometry carries
@@ -346,7 +349,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   const R6 = !v2 ? L.tiles.r6 : undefined;
   const GEO = !!R6 && qs?.get('m06geo') === '1';
   const FLOW = GEO && qs?.get('m06flow') === '1';
-  const mask = v2 ? null : await loader.loadAsync(tex('mask06.png'));
+  // The isolated crest test stores the occluded provisional Benny fill in the unused blue channel.
+  const crestReleaseWater = FLOW && qs?.get('cx06CrestRelease') === '1';
+  const maskName = crestReleaseWater ? 'mask06_crest_release.png' : 'mask06.png';
+  const mask = v2 ? null : await loader.loadAsync(tex(maskName));
   if (mask) { mask.colorSpace = THREE.NoColorSpace; mask.generateMipmaps = false; mask.minFilter = THREE.LinearFilter; }
   let tRiver: THREE.Texture | null = null, tFoam: THREE.Texture | null = null;
   if (FLOW) {
