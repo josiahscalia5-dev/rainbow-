@@ -1,0 +1,50 @@
+{
+  "Rainbow_Visual_Images": {
+    "files": 497,
+    "parts": [
+      {
+        "name": "Rainbow_Visual_Images_Part01.zip",
+        "bytes": 96855972,
+        "sha256": "aaf3a1456e2097ac42a675966888ac0141ac286f14110c5afe5a357ddf5c6161",
+        "screens": [
+          4,
+          6,
+          8
+        ]
+      },
+      {
+        "name": "Rainbow_Visual_Images_Part02.zip",
+        "bytes": 100246254,
+        "sha256": "03b17849cae7955d2a577bbbaf160849e6e9e0e9cd677f3427d1666b3a6a5dcc",
+        "screens": [
+          5,
+          7
+        ]
+      }
+    ]
+  },
+  "Rainbow_Gameplay_Videos": {
+    "files": 88,
+    "parts": [
+      {
+        "name": "Rainbow_Gameplay_Videos_Part01.zip",
+        "bytes": 87302036,
+        "sha256": "e8df5baac66dc192bec1b0b33f2175c0541f1098fefd0e383eef73c9f2a6fc6a",
+        "screens": [
+          4,
+          5,
+          6,
+          8
+        ]
+      },
+      {
+        "name": "Rainbow_Gameplay_Videos_Part02.zip",
+        "bytes": 85414714,
+        "sha256": "68d2a7395a27eeb7cb1caa7c12c43c3b32521b9828848d4d782b6f3c184d9e2d",
+        "screens": [
+          7
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+import concurrent.futures
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+from zipfile import ZipFile
+
+root = Path(__file__).parent
+plan = json.loads((root / "ordinary-zip-plan.json").read_text())
+sha = plan["commits"][-1]
+repo = "josiahscalia5-dev/rainbow-"
+contents = "repos/" + repo + "/contents/Downloads"
+verified_dir = root / "verified-from-github"
+verified_dir.mkdir(exist_ok=True)
+directory = json.loads(subprocess.check_output(["gh", "api", contents + "?ref=" + sha]))
+entries = {f["name"]:f for f in directory}
+assert set(entries) == {"README.md"} | {p["name"] for p in plan["parts"]}
+
+def download(p):
+    name = p["name"]
+    target = verified_dir / name
+    e = entries[name]
+    assert e["type"] == "file" and e["size"] == p["bytes"]
+    endpoint = f"{contents}/{name}?ref={sha}"
+    with target.open("wb") as out:
+        result = subprocess.run(["gh", "api", "-H", "Accept: application/vnd.github.v3.raw", endpoint],
+                                stdout=out, stderr=subprocess.PIPE)
+    if result.returncode:
+        raise RuntimeError(f"Private raw file route returned CLI status {result.returncode} for {name}")
+    with target.open("rb") as f:
+        digest = hashlib.file_digest(f, "sha256").hexdigest()
+    assert digest == p["sha256"] and target.stat().st_size == p["bytes"], name
+    with ZipFile(target) as archive:
+        assert archive.testzip() is None
+        members = [v.filename for v in archive.infolist() if not v.is_dir()]
+    print("Private file download verified", name, p["bytes"], flush=True)
+    return {"name":name,"sha256":digest,"bytes":p["bytes"],"html_url":e["html_url"],"members":members}
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+    results = list(pool.map(download, plan["parts"]))
+source = Path("/workspace/library-files/Rainbow-ChatGPT-Review")
+counts = {}
+for prefix in ("Rainbow_Visual_Images", "Rainbow_Gameplay_Videos"):
+    all_paths = set()
+    with ZipFile(source / (prefix + ".zip")) as original:
+        for row in results:
+            if not row["name"].startswith(prefix + "_Part"):
+                continue
+            with ZipFile(verified_dir / row["name"]) as got:
+                for path in row["members"]:
+                    if path == "START_HERE.md":
+                        continue
+                    assert original.read(path) == got.read(path), path
+                    all_paths.add(path)
+        assert all_paths == {m.filename for m in original.infolist() if not m.is_dir()}
+    counts[prefix] = len(all_paths)
+for row in results:
+    del row["members"]
+# Read the directory's canonical URL from the parent, without exposing raw download tokens.
+parent = json.loads(subprocess.check_output(["gh", "api", f"repos/{repo}/contents?ref={sha}"]))
+folder = next(f["html_url"] for f in parent if f["name"] == "Downloads")
+receipt = {"folder_url":folder,"branch":plan["branch"],"commit":sha,"counts":counts,"files":results}
+(root / "github-verified.json").write_text(json.dumps(receipt, indent=2))
+print(folder, "byte-identical original members", sum(counts.values()), flush=True)

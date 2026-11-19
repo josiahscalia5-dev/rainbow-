@@ -1,0 +1,54 @@
+[
+  {
+    "package": "platforms;android-34",
+    "revision": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "filename": "platform-34-ext7_r03.zip",
+    "registrySHA1": "1f2e9478d6a7601425ceaa553311dc43191f103d",
+    "verifiedBytes": 63180081,
+    "SHA256": "16fdb74c55e59ae3ef52def135aec713508467bd56d7dabcd8c9be31fa8b20f3"
+  },
+  {
+    "package": "build-tools;34.0.0",
+    "revision": [
+      34,
+      0,
+      0,
+      0
+    ],
+    "filename": "build-tools_r34-linux.zip",
+    "registrySHA1": "d6d58e0c6925a9e4d9a541e84cd1f405c2f9d2a9",
+    "verifiedBytes": 61224257,
+    "SHA256": "e858c4b60069d0431051b225d384413b1643e1289b00a4825aed347f25bd510f"
+  },
+  {
+    "package": "platform-tools",
+    "revision": [
+      37,
+      0,
+      1,
+      0
+    ],
+    "filename": "platform-tools_r37.0.1-linux.zip",
+    "registrySHA1": "477254aa5f903c15cf51001717bdf347fb6b53e0",
+    "verifiedBytes": 9054187,
+    "SHA256": "d230f13842f60f782a8645f9c813f8f845bf36089ea7289f28c48f17979313f1"
+  },
+  {
+    "package": "cmdline-tools;17.0",
+    "revision": [
+      17,
+      0,
+      0,
+      0
+    ],
+    "filename": "commandlinetools-linux-12700392_latest.zip",
+    "registrySHA1": "da3424ea38b72d85258174a76aa286b7d4e0b700",
+    "verifiedBytes": 163426701,
+    "SHA256": "330f0db00456c26d0a7e6c7793a022fe170e5dbc03472f76e121db37cb6d4744"
+  }
+]
