@@ -3578,3 +3578,29 @@ That's enough to brief the workers. Recording the Round 19b plan, then launching
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; a=json.load(open(p))\na['updated_utc']='2026-11-19T20:58Z'\na['round19b']={'started_utc':'2026-11-19T20:57Z','base':'preview v3 claude/rainbow-s04-preview-c19 @ 09459079','user_rule':'approved screen = same look while swimming/moving (CLAUDE.md §6)',\n 'workers':{\n  'benny':{'branch':'claude/rainbow-benny-c20','agent':'benny-character-artist','worktree':'/home/user/wt/benny','state':'RUNNING','log':'qa/benny/r19b/PROGRESS.md','next':'judge benny05 on 04; benny20 approved look (dusty-rose plush fur, chunky knit hat, y …[+995 chars]`
 
+### 🧑 User — 2026-11-19T20:43:12.869Z
+
+> ↩︎ result: ok
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-d00ac5ec-gabdsh | scheduler daemon | last verified backup 2026-11-19T20:42:59+00:00 (0.2 min ago) | local b664717 remote b664717 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-19T20:43:23.205Z
+
+Benny is started, and both Screen 04 workers are running again, all aimed at your approved screen **while Benny swims**. I've also saved your rule in the project instructions so every future session follows it: "my approved screen" always means the same look while swimming, moving and steering, not just the start.
+
+**How we get Screen 04 from about 6/10 to 8/10 while swimming.** These are the four biggest differences I saw in the current version, and each is now assigned:
+
+1. **The river** (water/foam worker): right now it's a flat strip with a straight edge against the gold wall. It will get the pink and cyan swirls curving up the tunnel sides, like your painting.
+2. **The top half of the tunnel** (rings worker): right now it's one plain orange-copper surface. It will get crisp, polished yellow-gold ring bands with bright rims, glowing bulbs, warm light and soft pink/violet reflections.
+3. **The foam** (water/foam worker): right now it's small white puffs. It will get soft, pearly lilac heaps of big glossy bubbles along both banks, built from the Blender heap you just saw so the whole bank matches.
+4. **Benny** (Benny worker): he's in every frame, so he matters for the score too. He starts from the Screen 05 version, whose colors and knit were taken from your approved picture, and goes further:
+   - dusty-rose plush fur in soft, longer tufts instead of neon needles
+   - a bigger chunky hand-knit hat with cream and violet stripes
+   - a soft yarn pompom in a lighter violet
+   - a flat stitched felt star instead of the plastic one
+
+If all four land well, 8/10 while swimming is realistic. I won't call it 8/10 until you've seen it in motion.
+
+Nothing changes in the normal game until each piece is proven. Each worker reports after every finished step. I'll check the results at full size, combine the kept ones into one updated Screen 04, and show you your approved screen next to before and now, at the start, swimming, inside the tunnel and steering, plus a swim clip. No credits are being spent; it's all Blender and code, and everything saves to GitHub automatically.
+

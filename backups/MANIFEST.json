@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18875,
-   "sha256": "021d0a32eb71e1baf8ba2f01c3f2471f5c531d744d95fb5af0ce82e5c7660076"
+   "sha256": "7731c95d8267303ebe35add5ffd35cc872ab65f0d3b76651fb480a31f3138dd2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -707,9 +707,14 @@
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
   },
   {
+   "path": "backups/wip/claude__rainbow-benny-c20/INFO.json",
+   "bytes": 463,
+   "sha256": "d5330fbffce1190295a5c84e3d002a7d3ac41444ef6c7a8d68f6e257c4766fb5"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
    "bytes": 494,
-   "sha256": "b643c3635f8cbdff89aba395d99b34c1f79d7aaae99e8439144185d72502f5f2"
+   "sha256": "824d8b7d934c2e61ad89b727eec8e14f1adf04e2d47cadb5371e4f53f55fe40b"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c10/INFO.json",
@@ -1217,6 +1222,11 @@
    "sha256": "270de92eacebcf7c9ac616aebd7eb3ab1aa5e006c7bf6abab7ac0b5bd5c74b93"
   },
   {
+   "path": "backups/wip/claude__rainbow-s04-match-c20/INFO.json",
+   "bytes": 477,
+   "sha256": "d0c67fd0d22b924f3e1ecb1a7bf4695bc67169d6b22f48c54e9fb835d9bb5069"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
    "bytes": 486,
    "sha256": "d9480401ac0b634590fbecf2a5d780dee67eb27c9f0f76f2a36ca04ac4d9117e"
@@ -1224,7 +1234,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c19/INFO.json",
    "bytes": 487,
-   "sha256": "2fc31cd6573d66c7561ec03684f7a2e37388ad764b48c630de551c7dde1dadfe"
+   "sha256": "fb92431b723a2ee81dd415f3f41537ff51a65e92d766a8d4504dc4377590ee4b"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1365,6 +1375,11 @@
    "path": "backups/wip/claude__rainbow-s04-ringtex-c19/INFO.json",
    "bytes": 486,
    "sha256": "8e515555a8174c4c6c791e0db2aeb99adafac1b91e77e6b2c12cca2b1768b266"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-ringtex-c20/INFO.json",
+   "bytes": 486,
+   "sha256": "b2e877034513c4ff8c467680c8faeb4898f5782d872e9104c883e11df129f724"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/INFO.json",
@@ -1809,7 +1824,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/INFO.json",
    "bytes": 2358,
-   "sha256": "3c56ac5741df7d8f690f74a1322e8025cea101817565a3b383ddb0413a5da93a"
+   "sha256": "f4c82ae9d777649bb007e33a18608f44dc29989218646c35433bd913c8df0329"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
