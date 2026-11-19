@@ -25,6 +25,7 @@ import { RideCamera } from './cameraRig';
 import { flag05 } from '../vfx/waterRibbon';
 import { MATCH } from './match';
 import { prepareCoat06 } from '../characters/benny/coat06';
+import { prepareReferencePink06 } from '../characters/benny/referencePink06';
 import { buildMatch08 } from '../world/match08';
 import { buildMatch06 } from '../world/match06';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
@@ -103,7 +104,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
   scene.add(water.group);
   const benny = await loadBennyRuntime();
   scene.add(benny.root);
-  const coat06 = MATCH['06'] && qs.get('cx06LayeredCoat') === '1' ? await prepareCoat06(benny.root) : undefined;
+  let coat06: ((enabled: boolean) => void) | undefined;
+  if (MATCH['06'] && qs.get('cx06ReferencePink') === '1') coat06 = await prepareReferencePink06(benny.root);
+  else if (MATCH['06'] && qs.get('cx06LayeredCoat') === '1') coat06 = await prepareCoat06(benny.root);
   const girl = await loadGirlRuntime();
   const coins = createCoins(course);
   scene.add(coins.group);

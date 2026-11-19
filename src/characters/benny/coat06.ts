@@ -5,11 +5,23 @@ import * as THREE from 'three';
 export const coatSurface06 = `
   #ifdef RAINBOW_COAT06
   uniform sampler2D uCoatLocks06;
+  #ifdef RAINBOW_REFERENCE_PINK
+  uniform vec2 uReferenceLoops;
+  uniform float uReferenceRelief;
+  uniform vec3 uDyeLower, uDyeMiddle, uDyeUpper;
+  #endif
   vec4 coatSurface(vec3 point) {
     vec3 n = normalize(point);
     float longitude = atan(n.x, n.z);
     float latitude = asin(clamp(n.y, -1.0, 1.0));
+    #ifdef RAINBOW_REFERENCE_PINK
+    vec2 uv = vec2(longitude * uReferenceLoops.x / 6.2831853, latitude * uReferenceLoops.y / 3.14159265);
+    // Small continuous offsets break up rows of locks around the body. The phase is periodic
+    // around the longitudinal seam and stays attached to the real mesh through animation.
+    uv.y += .16 * sin(5.*longitude + 3.*latitude) + .10 * sin(8.*longitude - 1.7*latitude);
+    #else
     vec2 uv = vec2(longitude * (12.0 / 6.2831853), latitude * (5.2 / 3.14159265));
+    #endif
     // The locked fur swatch follows gravity. These continuous offsets comb the
     // locks toward the flanks with no screen-space or camera input.
     uv.x += 0.19 * sin(longitude * 2.0) * sin(latitude + 0.6);

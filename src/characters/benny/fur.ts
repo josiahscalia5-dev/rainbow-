@@ -152,6 +152,12 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           float upper = smoothstep(-0.80, 0.08, normalize(vBase).y);
           vec3 undercoat = mix(vec3(0.60, 0.44, 0.86), vec3(1.0), upper);
           diffuseColor.rgb = lock.rgb * undercoat * mix(0.85, 1.04, layer);
+          #ifdef RAINBOW_REFERENCE_PINK
+          float localHeight = normalize(vBase).y;
+          vec3 dye = mix(uDyeLower,uDyeMiddle,smoothstep(-.42,.05,localHeight));
+          dye = mix(dye,uDyeUpper,smoothstep(.06,.39,localHeight));
+          diffuseColor.rgb *= dye;
+          #endif
           #endif
         }`,
       )
@@ -161,7 +167,11 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         #ifdef RAINBOW_COAT06
         // Height is measured on the actual coat. Directional lights therefore catch
         // the high side of an overlapping tuft when Benny leans or turns.
+        #ifdef RAINBOW_REFERENCE_PINK
+        float height06 = coatSurface(vBase).a * uReferenceRelief;
+        #else
         float height06 = coatSurface(vBase).a * 0.009;
+        #endif
         vec3 dpdx06 = dFdx(-vViewPosition), dpdy06 = dFdy(-vViewPosition);
         vec3 side06 = cross(dpdy06, normal), along06 = cross(normal, dpdx06);
         float det06 = dot(dpdx06, side06);
