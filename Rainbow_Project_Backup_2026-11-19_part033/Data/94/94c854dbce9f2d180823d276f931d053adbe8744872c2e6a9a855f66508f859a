@@ -1,0 +1,38 @@
+diff --git a/src/world/match08.ts b/src/world/match08.ts
+index 333d6073..367c889b 100644
+--- a/src/world/match08.ts
++++ b/src/world/match08.ts
+@@ -294,13 +294,28 @@ export async function buildMatch08(): Promise<Match08> {
+   const swimOn = flag05('m08swim');
+   const RV: { z: number[]; x: number[]; width: number[] } = await fetch(new URL('../../assets/textures/match08/river08.json', import.meta.url).href).then((r) => r.json());
+   const rivData = new Float32Array(64 * 4);
+-  const rz0 = RV.z[0], rz1 = RV.z[RV.z.length - 1];
++  // z descending arrays -> centre x, width at z (clamped at both ends)
++  const rivAt = (R: { z: number[]; x: number[]; width: number[] }, z: number): [number, number] => {
++    let k = 0; while (k < R.z.length - 2 && R.z[k + 1] > z) k++;
++    const f = THREE.MathUtils.clamp((z - R.z[k]) / (R.z[k + 1] - R.z[k]), 0, 1);
++    return [R.x[k] + (R.x[k + 1] - R.x[k]) * f, R.width[k] + (R.width[k + 1] - R.width[k]) * f];
++  };
++  // `&m08rw=1` (r12): near the camera river08's traced edges follow Benny's splash crest / the arch feet, not the banks
++  // (0.8-2.5 u instead of the painted ~3-4.5 u), so the swim remap stretched the near water sideways up to ~13x and
++  // jumped where the trace starts. Render remap only: the bank-to-bank width read on the picture (rivnear08.py) near the
++  // camera, river08 beyond (the gameplay path in course.ts is unchanged)
++  let RN: { z: number[]; x: number[]; width: number[]; blend: [number, number] } | null = null;
++  if (flag05('m08rw')) RN = await fetch(new URL('../../assets/textures/match08/river08_near.json', import.meta.url).href).then((r) => r.json());
++  const rz0 = RN ? Math.max(RV.z[0], RN.z[0]) : RV.z[0], rz1 = RV.z[RV.z.length - 1];
+   for (let i = 0; i < 64; i++) {
+     const z = rz0 + ((rz1 - rz0) * i) / 63;
+-    let k = 0; while (k < RV.z.length - 2 && RV.z[k + 1] > z) k++;
+-    const f = THREE.MathUtils.clamp((z - RV.z[k]) / (RV.z[k + 1] - RV.z[k]), 0, 1);
+-    rivData[i * 4] = RV.x[k] + (RV.x[k + 1] - RV.x[k]) * f;
+-    rivData[i * 4 + 1] = RV.width[k] + (RV.width[k + 1] - RV.width[k]) * f;
++    let [x, w] = rivAt(RV, z);
++    if (RN) {
++      const [xn, wn] = rivAt(RN, z), b = THREE.MathUtils.smoothstep(z, RN.blend[1], RN.blend[0]);
++      x += (xn - x) * b; w += (wn - w) * b;
++    }
++    rivData[i * 4] = x;
++    rivData[i * 4 + 1] = w;
+   }
+   const rivTex = new THREE.DataTexture(rivData, 64, 1, THREE.RGBAFormat, THREE.FloatType);
+   rivTex.minFilter = rivTex.magFilter = THREE.NearestFilter; rivTex.needsUpdate = true;
