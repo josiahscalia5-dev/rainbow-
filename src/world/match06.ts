@@ -68,6 +68,9 @@ void main() {
 const FRAG = /* glsl */ `
 uniform sampler2D uPlate;
 uniform sampler2D uDepth;
+#ifdef CREST_WALL_JOIN
+uniform sampler2D uCrestWallConfidence;
+#endif
 uniform float uUseDepth;
 uniform vec2 uNearFar;
 uniform sampler2D uTile;
@@ -195,6 +198,20 @@ void main() {
       if (uUseDepth > 0.5) {
         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+#ifdef CREST_WALL_JOIN
+        // The fitted river hides some *painted wall* at the locked camera. Recover that known wall
+        // color only on a genuinely deeper surface along the measured 3D river silhouette.
+        float cropY = (uv.y * 1536.0 - (1536.0 - 704.0)) / 256.0;
+        if (cropY > 0.0 && cropY < 1.0) {
+          float confidence = texture2D(uCrestWallConfidence, vec2(uv.x, cropY)).r;
+          float behindCrest = smoothstep(0.05 * zs + 0.1, 0.12 * zs + 0.1, zf - zs);
+          // This occluded paint is reliable only during the same handoff to physical metal
+          // used by the retained ring shader. At larger parallax the painted slots split across rings.
+          float travel = distance(cameraPosition, uProjPos);
+          float released = smoothstep(0.01, 0.16, travel) * (1.0 - smoothstep(0.60, 1.20, travel));
+          vis = mix(vis, 1.0, confidence * behindCrest * released);
+        }
+#endif
       }
       float w = vis * keep;
       // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
@@ -348,6 +365,18 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   const FLOW = GEO && qs?.get('m06flow') === '1';
   const mask = v2 ? null : await loader.loadAsync(tex('mask06.png'));
   if (mask) { mask.colorSpace = THREE.NoColorSpace; mask.generateMipmaps = false; mask.minFilter = THREE.LinearFilter; }
+  const crestWallConfidence = GEO && qs?.get('cx06CrestJoin') === '1'
+    ? await loader.loadAsync(tex('crest06_wall_confidence.png')) : null;
+  if (crestWallConfidence) {
+    crestWallConfidence.colorSpace = THREE.NoColorSpace;
+    crestWallConfidence.minFilter = THREE.LinearMipmapLinearFilter;
+  }
+  const addCrestWallJoin = (material: THREE.ShaderMaterial) => {
+    if (crestWallConfidence) {
+      material.defines.CREST_WALL_JOIN = 1;
+      material.uniforms.uCrestWallConfidence = { value: crestWallConfidence };
+    }
+  };
   let tRiver: THREE.Texture | null = null, tFoam: THREE.Texture | null = null;
   if (FLOW) {
     [tRiver, tFoam] = await Promise.all([loader.loadAsync(tex('tile_river6.png')), loader.loadAsync(tex('tile_foam6.png'))]);
@@ -501,6 +530,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
     g.setIndex(idx); g.computeVertexNormals();
     const tubeMat = mat(tTube);
+    addCrestWallJoin(tubeMat);
     add(g, tubeMat, 'tube');
     { const fe = axisAt(a1); tunCap = { pos: fe.p.clone(), dir: fe.t.clone(), r: radAt(a1) }; }
     if (RING) {
@@ -578,6 +608,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       const rm = mat(tTube);
       Object.assign(rm.uniforms, { uRing: { value: 1 }, uGold: { value: GOLD ? 1 : 0 }, uRingTex: { value: tRing ?? tTube }, uRingH: { value: h }, uBendAng: { value: BEND ? 1 : 0 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
         uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+      addCrestWallJoin(rm);
       add(rg, rm, 'rings');
       console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
       if (qs?.get('m06pad') === '1') {
