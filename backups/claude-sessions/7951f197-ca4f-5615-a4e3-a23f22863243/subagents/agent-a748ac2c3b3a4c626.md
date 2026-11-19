@@ -471,3 +471,199 @@ Deterministic. Copying crown_n.png in, then type-check and commit the restored W
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && git add src/characters/benny/fur.ts assets/textures/benny20 tools/benny20 qa/benny/r19b && git status --short | head && git commit -q -m \"Benny r19b WIP restored (r20): BENNY20 plush-lock fur shader path (fur.ts, inert until benny20.ts sets the define), benny20 knit / felt-star maps (crown_n regenerated with tools/benny20/knit.py, byte-identical generator), task-1 partial shots\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6TLZS4PskPeQPtgXRz\" && git push -u origin claude/rainbow-benny-c2 …[+154 chars]`
 
+### 🧑 User — 2026-11-19T23:32:40.392Z
+
+> ↩︎ result: A  assets/textures/benny20/brim.png
+> A  assets/textures/benny20/brim_n.png
+> A  assets/textures/benny20/crown.png
+> A  assets/textures/benny20/crown_n.png
+> A  assets/textures/benny20/knit_params.json
+> A  assets/textures/benny20/star.png
+> A  assets/textures/benny20/star_n.png
+> A  qa/benny/r19b/QUERY_0507_base.txt
+> A  qa/benny/r19b/t1/before/closeup_f00.png
+> A  qa/benny/r19b/t1/before/f06_forward6u.png
+> To https://github.com/josiahscalia5-dev/rainbow-
+>    0945907..8fb1b91  claude/rainbow-benny-c21 -> claude/rainbow-benny-c21
+> branch 'claude/rainbow-benny-c21' set up to track 'origin/claude/rainbow-benny-c21'.
+> 8fb1b91ad76420152f2f28e324c0c8abc9548caf
+> 8fb1b91ad76420152f2f28e324c0c8abc9548caf	refs/heads/claude/rainbow-benny-c21
+
+### 🤖 Claude — 2026-11-19T23:32:41.846Z
+
+WIP is safe at `8fb1b91`. Now let me see how benny05 is wired into the runtime and fur builder.
+
+### 🤖 Claude — 2026-11-19T23:32:42.848Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"benny05\\|BENNY05\\|FUR05\\|applyBenny05\\|dampedClips\\|loadBenny05Maps\" -r src --include=*.ts | grep -v \"^src/characters/benny/benny05.ts\" | head -40", "description": "Find benny05 integration points"}`
+
+### 🧑 User — 2026-11-19T23:32:42.892Z
+
+> ↩︎ result: src/characters/benny/fur.ts:54:    /** `?benny05=1` only (material.defines.BENNY05, benny05.ts): strand clumping toward tuft centres */
+> src/characters/benny/fur.ts:76:        #ifdef BENNY05
+> src/characters/benny/fur.ts:89:        #ifdef BENNY05
+> src/characters/benny/fur.ts:105:        #ifdef BENNY05
+> src/characters/benny/fur.ts:161:          #ifdef BENNY05
+> src/characters/benny/fur.ts:184:          #ifdef BENNY05
+> src/characters/benny/fur.ts:185:          // benny05.ts: colour = material colour x baked albedo map (map_fragment above); the shells only add the
+> src/characters/benny/fur.ts:205:        #if defined(BENNY_UV) && defined(BENNY05)
+> src/characters/benny/fur.ts:206:        gl_FragColor = vec4(vB05Uv, uMaskCol.r, vLayer); // QA bake pass (benny05.ts): uv, part id, shell layer
+> src/characters/benny/fur.ts:213:    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY20 !== undefined ? '-b20' : ''}` +
+> src/characters/benny/runtime.ts:9:import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+> src/characters/benny/runtime.ts:35:  // `?benny05=1` / `?match05=1` only: the maps baked from the approved Screen 05 (benny05.ts)
+> src/chara …[+677 chars]
+
+### 🤖 Claude — 2026-11-19T23:32:45.863Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"export function flag05\" -A25 src/vfx/waterRibbon.ts; sed -n 1,140p src/characters/benny/runtime.ts", "description": "Read flag05 helper and runtime.ts"}`
+
+### 🧑 User — 2026-11-19T23:32:45.916Z
+
+> ↩︎ result: /**
+>  * Runtime Benny: loads the canonical assets/models/benny.glb, upgrades fur_* meshes to shell fur,
+>  * and drives expressions + procedural secondary motion on top of the GLB clips.
+>  */
+> import * as THREE from 'three';
+> import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> import type { BennyRuntime } from '../types';
+> import { makeFur, type FurHandle, type FurParams } from './fur';
+> import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+> 
+> const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> 
+> let cached: Promise<THREE.Group> | null = null;
+> 
+> function loadScene(): Promise<THREE.Group> {
+>   if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+>     const s = g.scene as THREE.Group;
+>     s.userData.animations = g.animations;
+>     return s;
+>   });
+>   return cached;
+> }
+> 
+> /** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */
+> function defaultFurQuality(): 'high' | 'low' {
+>   if (typeof location === 'undefined') return 'high';
+>   const qp = new URLSearchParams(location.search).get('quality');
+>   const mobile = typeof navigator !== 'undefined' && /And …[+5766 chars]
+
+### 🤖 Claude — 2026-11-19T23:32:47.555Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"flag05\" src/vfx/waterRibbon.ts | head -5; grep -n \"function flag05\" -A20 -r src | head -30; sed -n 540,575p src/game/Game.ts", "description": "Locate flag05 and Game.ts benny tint"}`
+
+### 🧑 User — 2026-11-19T23:32:47.601Z
+
+> ↩︎ result: 167:export const flag05 = q05;
+>     // `?match04=1` on Screen 04: the projected scenery carries the approved river, arrows, foam and bubbles
+>     if (m04 && (m04On || m04Applied) && !(m08 && m08On)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m04On; }
+>       m04Applied = m04On;
+>     }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+>     if (m08 && b08 && b08Rest) {
+>       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
+>       const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
+>       b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08Rest.body.z * bz);
+>       const hk = m08On ? M08_BENNY.hat : 1;
+>       b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
+>       if (b08.aux) {
+>         const off = new THREE.Vector3(m08On ? M08_BENNY.dx : 0, m08On ? M08_BENNY.lift : 0, 0).applyQuaternion(benny.root.quaternion.clone().invert());
+>         b08.aux.position.copy(b08Rest.pos).add(off);
+>       }
+>       const cm = b08.crown?.material as THREE.MeshSt …[+935 chars]
+
+### 🤖 Claude — 2026-11-19T23:32:49.556Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 140,170p src/vfx/waterRibbon.ts; grep -n \"benny\\b\\|benny\\.\\|Benny\" src/game/Game.ts | grep -i \"match04\\|m04\\|scale\\|04\" | head -20", "description": "Read q05 flag helper; Benny refs in 04 code"}`
+
+### 🧑 User — 2026-11-19T23:32:49.608Z
+
+> ↩︎ result: * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+>  * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+>  * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+>  * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+>  * Guarded read: false in vite-node / workers (no `location`).
+>  */
+> /**
+>  * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+>  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+>  */
+> const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> /**
+>  * `?match05=1` (2026-11-17): the user's one address for the approved Screen 05 — every 05 match switch at once (approved
+>  * water, tunnel walls, gold rings, near gold frame, Blender paddles, sharp riding water; flow along the streaks is
+>  * `projflow05=2`, read in attachProj05). Without it nothing changes.
+>  */
+> const MATCH05_KEYS = ['proj05', 'projwall0 …[+1150 chars]
+
+### 🤖 Claude — 2026-11-19T23:32:53.279Z
+
+Let me check the shot/clip tools and current CPU load before rendering.
+
+### 🤖 Claude — 2026-11-19T23:32:54.027Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && uptime; sed -n 1,80p tools/lead_r13/swim_clip.mjs | head -80", "description": "Check load and read the swim clip tool"}`
+
+### 🧑 User — 2026-11-19T23:32:54.098Z
+
+> ↩︎ result: 23:32:54 up 16 min,  0 user,  load average: 0.91, 0.51, 0.28
+> #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceSca …[+1040 chars]
+
+### 🤖 Claude — 2026-11-19T23:32:56.778Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"export async function startVite\" -A30 scripts/lib/pw.mjs", "description": "Read startVite helper for port handling"}`
+
+### 🧑 User — 2026-11-19T23:32:56.814Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-19T23:33:06.973Z
+
+I'll render task 1 fresh into `qa/benny/r20/t1/`: 04 shots with the exact v3 query (BEFORE) and v3 + `benny05=1`, then the 05/06/07 start + swim frames with the 05/07 base query.
+
+### 🤖 Claude — 2026-11-19T23:33:12.836Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/bin && cat > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/bin/t1.sh <<'EOF'\n#!/bin/bash\n# task-1 renders: 04 (v3 query) + 05/06/07 (0507 base), BEFORE vs +benny05\nset -e\ncd /home/user/wt/benny\nV3=$(cat qa/match/04/r19/PREVIEW_QUERY_v3.txt)\nB57=$(cat qa/benny/r19b/QUERY_0507_base.txt)\nO=qa/benny/r20/t1\nS04='[[\"f00_start\",\"04\",0,null],[\"f03_forward3u\",\"04\",3,null],[\"f06_forward6u\",\"04\",6,null],[\"s_left_steer\",\"04\",6,-1],[\"s_right_st …[+702 chars]`
+
+### 🧑 User — 2026-11-19T23:33:12.878Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:33:17.952Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/shots.mjs'\ns=open(p).read()\ns=s.replace(\"writeFileSync(`${OUT}/shots.json`\",\"writeFileSync(`${OUT}/${process.env.B20_LOG ?? 'shots.json'}`\")\nopen(p,'w').write(s)\nEOF\ngrep -n B20_LOG tools/benny20/shots.mjs && sed -i 's#B20_SHOTS=\"$SO\" node#B20_LOG=shots_other.json B20_SHOTS=\"$SO\" node#' /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/bin/t1.sh && grep -n B20_LOG /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/bin/t1.sh", "description": "Let …[+36 chars]`
+
+### 🧑 User — 2026-11-19T23:33:18.045Z
+
+> ↩︎ result: 33:} finally { writeFileSync(`${OUT}/${process.env.B20_LOG ?? 'shots.json'}`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }
+> 13:  B20_LOG=shots_other.json B20_SHOTS="$SO" node tools/benny20/shots.mjs $O/$v "$B57$ext" 2>&1 | grep -v "^console warning" | tail -8
+

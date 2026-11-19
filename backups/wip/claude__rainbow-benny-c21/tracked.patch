@@ -1,0 +1,10 @@
+diff --git a/tools/benny20/shots.mjs b/tools/benny20/shots.mjs
+index 44b0587..3b4f5eb 100644
+--- a/tools/benny20/shots.mjs
++++ b/tools/benny20/shots.mjs
+@@ -30,4 +30,4 @@ try {
+     log.push({ name, scr, dist, steer, frames: st.frames, s: st.s, lat: st.lat, stage: st.stage, coins: st.coins });
+     console.log(name, scr, 's', st.s, 'lat', st.lat, st.stage, 'coins', st.coins);
+   }
+-} finally { writeFileSync(`${OUT}/shots.json`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }
++} finally { writeFileSync(`${OUT}/${process.env.B20_LOG ?? 'shots.json'}`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }

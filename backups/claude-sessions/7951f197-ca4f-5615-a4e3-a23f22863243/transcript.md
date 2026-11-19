@@ -865,3 +865,88 @@ All three workers are running. Now I'll record their state in the agent-status f
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; a=json.load(open(p))\na['updated_utc']='2026-11-19T23:40Z'\na['round20']={'started_utc':'2026-11-19T23:38Z','lead':'ccr-681a37bb-5jqfbu','base':'preview v3 09459079 + r19b WIP (backups/wip/*-c20, 21:52 UTC) restored by docs/briefs/2026-11-19-r20/setup_worker.sh',\n 'why':'r19b workers cut off ~20:56 UTC by the 5-hour usage limit; user 23:25 UTC: continue exactly where we left off',\n 'workers':{\n  'benny':{'branch':'claude/rainbow-benny-c21','agent':'benny-character-artist','worktree':'/home/user/wt/benny','port':527 …[+3507 chars]`
 
+### 🧑 User — 2026-11-19T23:32:50.495Z
+
+> ↩︎ result: ok
+>   ],
+>   "commit": "fdfb4f144aac7c74e0fdbac197156b5e218e73cc",
+>   "duration_s": 10
+> }
+> AUTOSAVE OK | branch ccr-681a37bb-5jqfbu | scheduler daemon | last verified backup 2026-11-19T23:32:39+00:00 (0.2 min ago) | local fdfb4f1 remote fdfb4f1 (match) | uncommitted 0
+> remote: fdfb4f144aac7c74e0fdbac197156b5e218e73cc
+> local:  fdfb4f144aac7c74e0fdbac197156b5e218e73cc
+
+### 🤖 Claude — 2026-11-19T23:32:53.063Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %s' -4 && git show --stat --format= HEAD~1 HEAD | grep -v 'claude-sessions\\|MANIFEST\\|BACKUP_' | head -15; git status --short | head", "description": "Confirm round-20 notes were committed"}`
+
+### 🧑 User — 2026-11-19T23:32:53.255Z
+
+> ↩︎ result: fdfb4f1 autosave: Rainbow 2026-11-19 23:32 UTC
+> 54571f6 autosave: Rainbow 2026-11-19 23:30 UTC
+> 9632fbc autosave: Rainbow 2026-11-19 23:25 UTC
+> 823ddfd autosave: Rainbow 2026-11-19 23:25 UTC
+>  backups/BOOTSTRAP_REPORT.md                        |  28 +-
+>  backups/CONVERSATION_INDEX.md                      |   2 +-
+>  backups/autosave.config.json                       | 288 ++++-----
+>  .../transcript.md                                  | 650 +++++++++++++++++++++
+>  .../transcript.sanitized.jsonl                     | 173 ++++++
+>  backups/wip/claude__rainbow-benny-c21/INFO.json    |  41 ++
+>  .../wip/claude__rainbow-benny-c21/tracked.patch    | 104 ++++
+>  .../untracked/assets/textures/benny20/brim.png     | Bin 0 -> 667484 bytes
+>  .../untracked/assets/textures/benny20/brim_n.png   | Bin 0 -> 974654 bytes
+>  .../untracked/assets/textures/benny20/crown.png    | Bin 0 -> 1870254 bytes
+>  .../assets/textures/benny20/knit_params.json       |  69 +++
+>  .../untracked/assets/textures/benny20/star.png     | Bin 0 -> 307803 bytes
+>  .../untracked/assets/textures/benny20/star_n.png   | Bin 0 -> 264868 bytes
+>  .../untracked/qa/benny/r19b/QUERY_0507_base.txt    |   1 +
+>  .../qa/benny/r19b/t1/before/closeup_f00.png       …[+25 chars]
+
+### 🤖 Claude — 2026-11-19T23:32:55.779Z
+
+> 🔧 **Bash** `{"command": "for f in CLAUDE.md docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md backups/AGENTS_STATUS.json docs/briefs/2026-11-19-r20/COORDINATION.md docs/briefs/2026-11-19-r20/setup_worker.sh; do echo \"$f -> $(git log -1 --format=%h -- $f)\"; done; git grep -c 'ROUND 20' HEAD -- CLAUDE.md docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "description": "Verify each round-20 file is in a commit"}`
+
+### 🧑 User — 2026-11-19T23:32:55.845Z
+
+> ↩︎ result: CLAUDE.md -> fdfb4f1
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md -> fdfb4f1
+> backups/AGENTS_STATUS.json -> fdfb4f1
+> docs/briefs/2026-11-19-r20/COORDINATION.md -> fdfb4f1
+> docs/briefs/2026-11-19-r20/setup_worker.sh -> 54571f6
+> HEAD:CLAUDE.md:1
+> HEAD:docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md:1
+
+### 🤖 Claude — 2026-11-19T23:33:16.567Z
+
+Everything is restored, the three workers are running again, and the current state is saved on GitHub.
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+- **Branch:** `ccr-681a37bb-5jqfbu`. This session started from the round-19 lead branch `ccr-d00ac5ec-gabdsh`. Nothing was merged.
+- **Commit:** `fdfb4f144aac7c74e0fdbac197156b5e218e73cc`. `git ls-remote` on GitHub returns the same SHA as local HEAD.
+- **Git LFS:** 83 of 83 large files (models, APK, Marble files, Blender files) are real files here and confirmed on GitHub LFS. All 13 approved reference pictures are unchanged.
+- **Five-minute autosave:** running and confirmed against GitHub. It also snapshots the workers' unfinished edits.
+- **Specialists:** all 10 are present and unchanged. Three are running (below); the other seven are available but idle.
+- **World Labs:** the Atlas connector is connected (project "My project", credits available) and the Marble key authenticates (5,420 credits). The old worlds return "not found" because they were made on an earlier account; their files are safe in Git LFS. No paid job was started.
+- **fal:** connected to the same account as before.
+- **Tools:** Blender 5.3.0, Android SDK 34, Node 22, the Python image libraries, Chromium with WebGL, ffmpeg and ImageMagick are all ready. The type check and the stage-joins check pass.
+- **Plugins and servers:** the GitHub, Playwright, World Labs Atlas and Claude Docs servers are connected. Plugins on this account are Playwright, the TypeScript language server and the World Labs plugin.
+
+**Problems and gaps**
+- **Startup fetch:** the startup fetch from GitHub failed once. I fetched the branch by hand afterwards and nothing was missing. The one newer save on the old branch (23:17 UTC) only held backup timestamps, so I left it alone.
+- **Backup gap:** nothing was saved from 21:52 to 23:17 UTC because no environment was running. No game work was lost: the workers had already stopped at about 20:56.
+- **Not available on this account:**
+  - the Thrixel connector
+  - the superpowers, frontend-design, feature-dev and code-review plugins (these belong to the Claude account, not the repository, and the game doesn't need them)
+  - Context7, which still needs a sign-in
+
+  If you want any of these, you'd turn them on in claude.ai settings.
+
+**Where we left off.** At 20:42 UTC you asked me to start on Benny and to get Screen 04 to 8/10 while he swims. About 14 minutes after the three workers started, the previous account hit its 5-hour usage limit and all three were cut off mid-step. I put their unfinished work onto new branches and restarted each one from where it stopped:
+
+1. **Benny** (`claude/rainbow-benny-c21`): dusty-rose plush fur in soft tufts instead of neon needles, a bigger chunky knit hat with cream and violet stripes, a soft lighter-violet pompom, and a flat stitched felt star. His softer-fur work and the new hat and star textures were restored.
+2. **Screen 04 water and foam** (`claude/rainbow-s04-match-c21`): the pink and cyan swirls should curve up the tunnel sides instead of ending in a straight edge. The bank foam should become glossy lilac bubble heaps, built from the Blender heap you saw. Its half-built "water up the walls" code was restored.
+3. **Screen 04 rings** (`claude/rainbow-s04-ringtex-c21`): the plain orange-copper band across the top half inside the tunnel should become polished yellow-gold ring bands with bright rims, glowing bulbs and soft pink and violet reflections. Its partly built polished-ring code was restored.
+
+Screens 05, 06 and 07 are not restarted, so effort stays on Benny and Screen 04. Screen 08 stays paused. Nothing changes in the normal game until a change is proven. When the workers report back, I'll check each result at full size and show you your approved screen next to before and now: at the start, swimming, inside the tunnel and steering, plus a swim clip. No credits are being spent.
+
