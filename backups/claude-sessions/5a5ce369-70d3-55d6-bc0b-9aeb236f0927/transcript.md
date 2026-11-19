@@ -3116,3 +3116,213 @@ The two sets combine cleanly, with no clashing settings. Type-checking, then ren
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04p3 && SP=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad && mkdir -p qa/match/04/r19/preview_v3 && Q=\"$(cat $SP/q_water.txt)&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28&m04rpdots=1&m04rpvar=1&m04rfew=1&m04rfg=1.2&m04rpol=1&m04rpcr=1\" && echo \"$Q\" > qa/match/04/r19/PREVIEW_QUERY_v3.txt && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -2; echo \"tsc=$?\"; D=qa/match/04/r19/preview_v3; (timeout 1500 node tools/lead_r13/swim_clip.mjs 04 $SP/clip_v3 4 \"$Q\" 2>&1 | grep -E \"frames|rror\"; ffmpeg -y -loglevel e …[+615 chars]`
 
+### 🧑 User — 2026-11-19T20:34:30.775Z
+
+> ↩︎ result: tsc=0
+> f00_start_view s 78.432 lat 0 04 coins 1330
+> f03_forward3u s 81.149 lat 0 04 coins 1330
+> f06_forward6u s 84.183 lat 0 04 coins 1330
+> f10_forward10u s 88.148 lat 0 04 coins 1330
+> f20_forward20u s 98.181 lat 0 04 coins 1330
+> s_left_steer s 84.246 lat -1.65 04 coins 1350
+> s_right_steer s 84.183 lat 1.65 04 coins 1330
+> frames 96
+> CLIP_OK
+> [1]+  Done                    ( timeout 1500 node tools/lead_r13/swim_clip.mjs 04 $SP/clip_v3 4 "$Q" 2>&1 | grep -E "frames|rror"; ffmpeg -y -loglevel error -framerate 24 -i $SP/clip_v3/%04d.png -vf scale=432:768 -pix_fmt yuv420p $D/swim_clip_half.mp4 && ffmpeg -y -loglevel error -framerate 24 -i $SP/clip_v3/%04d.png -pix_fmt yuv420p -crf 20 $D/swim_clip_full.mp4 && echo CLIP_OK )
+> f00_start_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_steer.png
+> s_right_steer.png
+> swim_clip_full.mp4
+> swim_clip_half.mp4
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T20:34:35.460Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04p3/qa/match/04/r19/preview_v3/f00_start_view.png"}`
+
+### 🧑 User — 2026-11-19T20:34:35.533Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:34:36.023Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04p3/qa/match/04/r19/preview_v3/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-19T20:34:36.083Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:34:36.412Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04p3/qa/match/04/r19/preview_v3/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T20:34:36.458Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:34:44.339Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04p3/qa/match/04/r19/preview_v3/s_left_steer.png"}`
+
+### 🧑 User — 2026-11-19T20:34:44.388Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:34:44.996Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py | head -1; pgrep -af \"git push\" | head -2", "description": "Check the backup push finished"}`
+
+### 🧑 User — 2026-11-19T20:34:45.795Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-d00ac5ec-gabdsh | scheduler daemon | last verified backup 2026-11-19T20:33:13+00:00 (1.5 min ago) | local bf32af5 remote bf32af5 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-19T20:34:54.674Z
+
+The backup is synced again: GitHub matches this session at `bf32af5`.
+
+Now the close look at Benny: cropping him from your approved picture and from the same camera in the game:
+
+### 🤖 Claude — 2026-11-19T20:34:57.189Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_r19/screen04_now && mkdir -p $R && python3 - <<'EOF'\nfrom PIL import Image\nR='qa/review_r19/screen04_now'\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\ng=Image.open('/home/user/wt/s04p3/qa/match/04/r19/preview_v3/f00_start_view.png').convert('RGB')\nbox=(170,900,620,1440)\na.crop(box).resize((675,810),Image.LANCZOS).save(f'{R}/benny_1_APPROVED_closeup.png')\ng.crop(box).resize((675,810),Image.LANCZOS).save(f'{R}/benny_2_GAME_closeup.png')\nEOF\nls $R", "description": "Crop Benny close-ups from approved and game"}`
+
+### 🧑 User — 2026-11-19T20:34:57.775Z
+
+> ↩︎ result: benny_1_APPROVED_closeup.png
+> benny_2_GAME_closeup.png
+
+### 🤖 Claude — 2026-11-19T20:35:01.203Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png"}`
+
+### 🧑 User — 2026-11-19T20:35:01.235Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:35:01.522Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r19/screen04_now/benny_2_GAME_closeup.png"}`
+
+### 🧑 User — 2026-11-19T20:35:01.563Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:35:21.799Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s05/qa/match/05/r18/step2_wall/NEW/ | head -20; ls /home/user/rainbow-/qa/review_r18/show_1815/ | grep 07; git -C /home/user/rainbow- ls-tree -r --name-only origin/claude/rainbow-s06-match-c18 2>/dev/null | grep \"qa/match/06/r17/.*NEW.*png\" | head -5", "description": "Find newest pictures for screens 05, 06, 07"}`
+
+### 🧑 User — 2026-11-19T20:35:21.896Z
+
+> ↩︎ result: a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> k81_kink_left.png
+> k81_kink_right.png
+> s_left_hard.png
+> s_right_hard.png
+> shots.json
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> t98_end.png
+> x97.png
+> x97L.png
+> x97R.png
+> 07_1_APPROVED.png
+> 07_2_BEFORE_swimming.png
+> 07_3_NOW_swimming.png
+> 07_4_NOW_swim_clip.mp4
+
+### 🤖 Claude — 2026-11-19T20:35:25.739Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s05/qa/match/05/r18/step2_wall/NEW/t33_through_screen.png"}`
+
+### 🤖 Claude — 2026-11-19T20:35:25.967Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r18/show_1815/07_3_NOW_swimming.png"}`
+
+### 🧑 User — 2026-11-19T20:35:26.015Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-19T20:35:26.062Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:35:26.230Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-19T20:35:26.244Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:35:26.584Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/07_dive_the_washer_tube.png"}`
+
+### 🧑 User — 2026-11-19T20:35:26.624Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:35:49.309Z
+
+I have what I need. Saving the new Screen 04 preview to its own branch and putting the pictures together:
+
+### 🤖 Claude — 2026-11-19T20:35:57.108Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p3 && git add qa/match/04/r19 && git -c user.name=Claude -c user.email=noreply@anthropic.com commit -q -F - <<'EOF'\nScreen 04 preview v3: combined query (K18-5 water/foam + K9 rings) + start / swim / steer shots + swim clips\n\nv2 (c338978b, user-approved combined preview) + s04 c19 97fcb8b6 + s04tex c19 1cff16f2, both merged\ncleanly (no conflicting switches). Query: qa/match/04/r19/PREVIEW_QUERY_v3.txt. m04end not refitted yet.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_018Sg3AUbSK5nc5dd7NL38mT\ …[+1184 chars]`
+
+### 🧑 User — 2026-11-19T20:36:04.978Z
+
+> ↩︎ result: Uploading LFS objects: 100% (2/2), 9.7 MB | 0 B/s, done.
+> v3 local 09459079 remote 09459079 MATCH
+> 12
+
+### 🤖 Claude — 2026-11-19T20:36:11.071Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r19/screen04_now/04_1_APPROVED.png", "/home/user/rainbow-/qa/review_r19/screen04_now/04_2_NOW_start_view.png", "/home/user/rainbow-/qa/review_r19/screen04_now/04_3_NOW_swimming_into_ring.png", "/home/user/rainbow-/qa/review_r19/screen04_now/04_4_NOW_inside_tunnel.png", "/home/user/rainbow-/qa/review_r19/screen04_now/04_5_NOW_steering_left.png", "/home/user/rainbow-/qa/review_r19/screen04_now/04_6_NOW_swim_clip.mp4"], "caption": "Screen 04 now (newest rings + water + foam combined): your approved screen, then the real game at the start, swimming into th …[+125 chars]`
+
+### 🤖 Claude — 2026-11-19T20:36:12.472Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png", "/home/user/rainbow-/qa/review_r19/screen04_now/benny_2_GAME_closeup.png"], "caption": "Benny close-up, same camera: your approved Benny, then the game's Benny.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-19T20:36:12.733Z
+
+> ↩︎ result: 6 files delivered to user.
+>   /home/user/rainbow-/qa/review_r19/screen04_now/04_1_APPROVED.png → file_uuid: 87840fec-81e5-49b4-9f92-cee75cbb0b31
+>   /home/user/rainbow-/qa/review_r19/screen04_now/04_2_NOW_start_view.png → file_uuid: 201e262b-b369-4de8-8687-58f790094423
+>   /home/user/rainbow-/qa/review_r19/screen04_now/04_3_NOW_swimming_into_ring.png → file_uuid: 8a571e62-c05d-4a4c-9463-c6ba19845988
+>   /home/user/rainbow-/qa/review_r19/screen04_now/04_4_NOW_inside_tunnel.png → file_uuid: ea91b2a9-4edb-4681-8eb7-a2445e66f341
+>   /home/user/rainbow-/qa/review_r19/screen04_now/04_5_NOW_steering_left.png → file_uuid: db3a934d-affd-4a3f-a2d5-6a6388a9a077
+>   /home/user/rainbow-/qa/review_r19/screen04_now/04_6_NOW_swim_clip.mp4 → file_uuid: 40e15ff7-8416-4edf-bc25-f747433de711
+
+### 🧑 User — 2026-11-19T20:36:12.982Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png → file_uuid: f034de63-7a62-44f4-85f7-84a85033258f
+>   /home/user/rainbow-/qa/review_r19/screen04_now/benny_2_GAME_closeup.png → file_uuid: a0cfb9dd-8fce-4e8e-bc72-3c9b6296b397
+
+### 🤖 Claude — 2026-11-19T20:36:14.425Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r19/screen04_now/05_1_APPROVED.png", "/home/user/rainbow-/qa/review_r19/screen04_now/05_2_NOW_swimming.png", "/home/user/rainbow-/qa/review_r19/screen04_now/07_1_APPROVED.png", "/home/user/rainbow-/qa/review_r19/screen04_now/07_2_NOW_swimming.png"], "caption": "The other two closest screens: 05 approved vs now (while swimming), and 07 approved vs now (while swimming).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-19T20:36:15.838Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/review_r19/screen04_now/05_1_APPROVED.png → file_uuid: 667b191a-ea58-47ba-9401-7ae7edfd21ee
+>   /home/user/rainbow-/qa/review_r19/screen04_now/05_2_NOW_swimming.png → file_uuid: cdddd1b6-0ff9-46a5-b17a-91fc2fd23bf0
+>   /home/user/rainbow-/qa/review_r19/screen04_now/07_1_APPROVED.png → file_uuid: 86086d15-a767-43ea-b291-958921d2e76c
+>   /home/user/rainbow-/qa/review_r19/screen04_now/07_2_NOW_swimming.png → file_uuid: d341937d-7b2c-4018-8755-620d22936e9c
+
+### 🤖 Claude — 2026-11-19T20:36:27.294Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r19/COORDINATION.md <<'EOF'\n| 6 (~20:45) | 04 COMBINED PREVIEW v3 (lead): `claude/rainbow-s04-preview-c19` @ `09459079` = v2 + s04 `97fcb8b6` + s04tex `1cff16f2` (clean merges; query `qa/match/04/r19/PREVIEW_QUERY_v3.txt`) | shown to the user with 05 / 07 NOW frames and Benny close-ups — `qa/review_r19/screen04_now/`. Lead's by-eye rating given on request (start view ≈ 8.5/10 — scenery is the painting, Benny differs; swimming ≈ 6/10). m04end not refitted yet. |\n\n## ~20:40 UTC user: Benny must look like the approved Benny (\"100% clone\", \"mine loo …[+1171 chars]`
+

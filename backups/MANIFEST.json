@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18874,
-   "sha256": "fa4d5836bb9fc9446eb3356dafb689fbaaceba63ac7b998b5477b1f46c45e054"
+   "sha256": "6b9481f9d64e1658e44296a40b6e407d4da033a9472229934ca14f8abe6241e1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -709,7 +709,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
    "bytes": 494,
-   "sha256": "4cb9a452247aa9d0edcff718978192451d9a87f4175e58dfbd5ed2c855021a44"
+   "sha256": "9709865dfabf4d7e4e35ee037479b712e00a8e2296aff26582fb8086ae2a7dfc"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c10/INFO.json",
@@ -1214,12 +1214,47 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c19/INFO.json",
    "bytes": 477,
-   "sha256": "60b3643be6580a981572a5463045f50b23fc77f401684d94de26c41cfc13135c"
+   "sha256": "e6bd12863529e13199f9f70e63ff564c585d0bacd87018b9036b0aabbfaee43c"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
    "bytes": 486,
    "sha256": "d9480401ac0b634590fbecf2a5d780dee67eb27c9f0f76f2a36ca04ac4d9117e"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-preview-c19/INFO.json",
+   "bytes": 927,
+   "sha256": "2d512f30571bcf47d55b034963b32a0d3a8c7f21763a49fb095b0a0df714d32c"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-preview-c19/untracked/qa/match/04/r19/PREVIEW_QUERY_v3.txt",
+   "bytes": 897,
+   "sha256": "314ad307ce68cb6cef68dd93d001eac1ff922efb328ecc2844b34310b3c62400"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-preview-c19/untracked/qa/match/04/r19/preview_v3/f06_forward6u.png",
+   "bytes": 1966700,
+   "sha256": "5e44c3501c57740d677182aaaeb7264b959aa151dd1e00376e08859fec9cfbf8"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-preview-c19/untracked/qa/match/04/r19/preview_v3/f10_forward10u.png",
+   "bytes": 1731206,
+   "sha256": "d84e2f59096dd7de6037c51d55b6463e6b141f7f4f29f77750ab37f220661e2a"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-preview-c19/untracked/qa/match/04/r19/preview_v3/f20_forward20u.png",
+   "bytes": 1647812,
+   "sha256": "158ea7f31868202cf6b1eba5b6ad93539cd3e52967eee71ed71dc462674b4a67"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-preview-c19/untracked/qa/match/04/r19/preview_v3/motion.json",
+   "bytes": 987,
+   "sha256": "38f87e182b28afd6cddc976b0edba67b8240319fd49533ba29bd437c7464291f"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-preview-c19/untracked/qa/match/04/r19/preview_v3/s_left_steer.png",
+   "bytes": 1964048,
+   "sha256": "ff5c7cd8ea3db184407dd39c958dfd887085dbb852749f6331523638913a3870"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c15/INFO.json",
@@ -1359,7 +1394,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c19/INFO.json",
    "bytes": 486,
-   "sha256": "9f051e12ccd191c6111d627d8ac3092d1b85d73cbcec74fb899541f7576bd21b"
+   "sha256": "bd0f08e30619e2b15f9bc70cb7341ede76afe2ec1d69b24cf38e2f0042b5f73c"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/INFO.json",
@@ -1804,7 +1839,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/INFO.json",
    "bytes": 2358,
-   "sha256": "34595c6aa7e2a188b50e3dd03d3265f08884ef3fbc2294d67d3f2ff28e23c9ca"
+   "sha256": "21027c13613b75a3783ead5ff863bfecc36b6eca7743400ca13e482072e4442d"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2618,8 +2653,8 @@
   },
   {
    "path": "docs/briefs/2026-11-19-r19/COORDINATION.md",
-   "bytes": 5948,
-   "sha256": "7abe23dd01750060c6d1fc8233c2d764f964b769a36a3d6ae2ed23de59486d68"
+   "bytes": 7380,
+   "sha256": "689c033d31bb693f7ff18975f6b793bb1b2c31b81eaaa7910d5dbd0ba6f44967"
   },
   {
    "path": "docs/briefs/2026-11-19-r19/RESUME_R19.md",
@@ -12715,6 +12750,66 @@
    "path": "qa/review_r19/blender_foam/9_NEW_swim_clip_blender.mp4",
    "bytes": 1793201,
    "sha256": "dbe54933f756ee93176c614bd60ea5df12872da84591d67720cb7507a0ac446c"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/04_1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/04_2_NOW_start_view.png",
+   "bytes": 2335474,
+   "sha256": "5dd2936ed4f2a3e56d5ba2e286f7c2a5a77ed7e7ed7d4cd88bc29d4744f84bbd"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/04_3_NOW_swimming_into_ring.png",
+   "bytes": 2106822,
+   "sha256": "093e9fbce214fd9c6d3373090506ee9e3651754f72f40aa92e7a0c5ea5ea8197"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/04_4_NOW_inside_tunnel.png",
+   "bytes": 1731206,
+   "sha256": "d84e2f59096dd7de6037c51d55b6463e6b141f7f4f29f77750ab37f220661e2a"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/04_5_NOW_steering_left.png",
+   "bytes": 1964048,
+   "sha256": "ff5c7cd8ea3db184407dd39c958dfd887085dbb852749f6331523638913a3870"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/04_6_NOW_swim_clip.mp4",
+   "bytes": 7933351,
+   "sha256": "50550620c2d1cc5df70b52ae8606ba5e9e2db09253ebade00168aed8498497ea"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/05_1_APPROVED.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/05_2_NOW_swimming.png",
+   "bytes": 2405093,
+   "sha256": "450d8ba4b39033f0ad51c858f9adcbea55ffad8ce7fa2a7ff75d7e3328b224af"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/07_1_APPROVED.png",
+   "bytes": 494067,
+   "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/07_2_NOW_swimming.png",
+   "bytes": 2349035,
+   "sha256": "74530f767cebd9202b5ded7d7253fea55f090e72e29d429c99808f13a3009d92"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png",
+   "bytes": 883068,
+   "sha256": "aed391fb8b6922296257eb31cfe37c4e9067ae6cab29e96feec0186f9c0952a3"
+  },
+  {
+   "path": "qa/review_r19/screen04_now/benny_2_GAME_closeup.png",
+   "bytes": 797726,
+   "sha256": "6ecba8843940e4101bc5711fa46b333a739ab845399fdf8e632e6adc3b794da3"
   },
   {
    "path": "qa/review_r19/thrixel_foam/10_NEW_swim_clip_thrixel.mp4",

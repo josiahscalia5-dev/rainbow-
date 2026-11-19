@@ -47,3 +47,13 @@ finish only the step in progress, write WHERE I STOPPED / NEXT, push, stop.
 | 4 (~20:15) | 04 Thrixel foam cluster `&m04tfoam=1` (lead, `claude/rainbow-s04-thrixel-c19`) | NOT AN IMPROVEMENT: thin bubble relief model reads as a flat jagged cut-out sheet; the existing 3D foam is closer. 8 cubes + 1 free sculpt run — `qa/match/04/r19_thrixel/NOTES.md` |
 All three workers stopped after their step (user order); handoff `RESUME_R19.md`.
 | 5 (~20:20) | 04 Blender bank-foam heap `&m04bfoam=1` (lead, `claude/rainbow-s04-blendfoam-c19` @ `41ea03d1`) | PROMISING, small improvement at that spot: 46 big glossy lilac-white bubbles read like the painted heap while swimming (far better than Thrixel); mixes with the cloud-style bank foam; free — `qa/match/04/r19_blendfoam/NOTES.md`, `qa/review_r19/blender_foam/` |
+| 6 (~20:45) | 04 COMBINED PREVIEW v3 (lead): `claude/rainbow-s04-preview-c19` @ `09459079` = v2 + s04 `97fcb8b6` + s04tex `1cff16f2` (clean merges; query `qa/match/04/r19/PREVIEW_QUERY_v3.txt`) | shown to the user with 05 / 07 NOW frames and Benny close-ups — `qa/review_r19/screen04_now/`. Lead's by-eye rating given on request (start view ≈ 8.5/10 — scenery is the painting, Benny differs; swimming ≈ 6/10). m04end not refitted yet. |
+
+## ~20:40 UTC user: Benny must look like the approved Benny ("100% clone", "mine looks really cartoonish")
+Lead comparison at the 04 start view (`qa/review_r19/screen04_now/benny_1_APPROVED_closeup.png` / `benny_2_GAME_closeup.png`):
+overall size within ~5 %; hat ~10 % too small and sits a little high. Differences: fur neon hot pink + thin needle strands (painted:
+dusty rose / mauve plush, long soft clumped tufts, darker underneath); hat smooth pale-pink stripes, 2 stripes (painted: chunky
+hand-knit, visible V stitches, cream-white + violet, more stripes, thick ribbed brim — the Screen 05 build's Benny hat is already
+closer); pompom spiky dark violet (painted: chunky soft yarn, lighter violet); star = shiny 3D plastic (painted: flat stitched felt
+patch). Proposed (waiting for the user's go): benny-character-artist, URL switch, the painted back-view pixels as texture
+reference / projection + softer longer clumped fur shells; APPROVED / BEFORE / NEW on all five screens.

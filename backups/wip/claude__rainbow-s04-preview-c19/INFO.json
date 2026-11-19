@@ -1,21 +1,10 @@
 {
  "worktree": "/home/user/wt/s04p3",
  "branch": "claude/rainbow-s04-preview-c19",
- "head": "45c46cc5c72ff10fdeba4fdb1377cd5d40f6917a",
- "time": "2026-11-19T20:33:22+00:00",
+ "head": "09459079de00a674f0d3d3cdba5cc25e92b856ba",
+ "time": "2026-11-19T20:36:35+00:00",
  "dirty_tracked": [],
- "untracked_copied": [
-  "qa/match/04/r19/PREVIEW_QUERY_v3.txt",
-  "qa/match/04/r19/preview_v3/f06_forward6u.png",
-  "qa/match/04/r19/preview_v3/f10_forward10u.png",
-  "qa/match/04/r19/preview_v3/f20_forward20u.png",
-  "qa/match/04/r19/preview_v3/motion.json",
-  "qa/match/04/r19/preview_v3/s_left_steer.png"
- ],
- "untracked_skipped": [
-  "qa/match/04/r19/preview_v3/f00_start_view.png",
-  "qa/match/04/r19/preview_v3/f03_forward3u.png",
-  "qa/match/04/r19/preview_v3/s_right_steer.png"
- ],
+ "untracked_copied": [],
+ "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s04-preview-c19 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-preview-c19/tracked.patch && copy backups/wip/claude__rainbow-s04-preview-c19/untracked/* into the worktree"
 }
