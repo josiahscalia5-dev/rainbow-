@@ -1,7 +1,0 @@
-const {chromium}=require('playwright');
-(async()=>{const browser=await chromium.connectOverCDP('http://127.0.0.1:19477');const pages=browser.contexts().flatMap(c=>c.pages());let selected=pages.find(p=>p.url().includes(':19478/?qa=1'));
- if(!selected){console.log('No earlier diagnostic tab, using a disposable direct page');selected=await browser.contexts()[0].newPage();await selected.goto('http://127.0.0.1:5607/?qa=1&dpr=.2&'+require('./queries.json')['07'],{timeout:100000});await selected.waitForFunction(()=>window.__rainbow?.ready,null,{timeout:150000})}
- console.log(await selected.evaluate(()=>{const r=window.__rainbow;r.run(false);r.startRideAt('06');r.unfreeze();r.setSteer(0);r.step(1);const range=r.course.stage('07');while(r.state().s<range.s0+.04)r.step(1);
- const changes=[];let last=r.state(),peak=0;for(let index=0;index<580;index++){const v=r.state(),p=(v.s-range.s0)/(range.s1-range.s0);const steer=p<.12?0:p<.33?-.84:p<.47?.8:p<.64?.03:p<.78?.70:p<.91?-.72:0;r.setSteer(steer);if(index)r.step(5);const n=r.state();if(n.hearts!==last.hearts||n.s<last.s)changes.push([index,n.s,n.hearts]);last=n;peak=Math.max(peak,n.s);if(n.s>range.s1+.4)return {frames:index+1,peak,changes,respawns:r.respawns()}}
- return {last,peak,changes,respawns:r.respawns()}}));
- await browser.close();})().catch(e=>{console.error(e.message);process.exitCode=1});

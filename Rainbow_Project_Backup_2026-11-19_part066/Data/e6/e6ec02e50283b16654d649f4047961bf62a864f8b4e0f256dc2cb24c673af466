@@ -1,7 +1,0 @@
-{
- "connection": "Bridge: connected\nProxy: http://localhost:19478 \u2192 http://127.0.0.1:5607\n\nThree.js app is accessible.\n\nPlaywright:\n  Same browser: restart with CDP_PORT=9229, then npx @playwright/mcp --cdp-endpoint http://localhost:9229\n  Or navigate any Playwright browser to http://localhost:19478 \u2014 the bridge is injected automatically.",
- "find_objects": "{\n  \"count\": 0,\n  \"objects\": []\n}",
- "object_details": "call() got multiple values for argument 'name'",
- "clipping_details": "{\n  \"renderer\": {\n    \"localClippingEnabled\": false,\n    \"globalClippingEnabled\": false,\n    \"globalPlanes\": []\n  },\n  \"materialClipping\": null,\n  \"clippingGroups\": null\n}",
- "renderer_info": "{\n  \"renderer\": \"WebGLRenderer\",\n  \"backend\": \"webgl\",\n  \"render\": {\n    \"calls\": 153,\n    \"triangles\": 287709,\n    \"points\": 600,\n    \"lines\": 0,\n    \"frame\": 67\n  },\n  \"memory\": {\n    \"geometries\": 130,\n    \"textures\": 45\n  },\n  \"programs\": 34,\n  \"canvas\": {\n    \"width\": 432,\n    \"height\": 768\n  },\n  \"pixelRatio\": 1,\n  \"capabilities\": {\n    \"maxTextures\": 32,\n    \"maxVertexTextures\": 32,\n    \"maxTextureSize\": 8192,\n    \"maxCubemapSize\": 16384,\n    \"precision\": \"highp\"\n  },\n  \"outputColorSpace\": \"srgb\",\n  \"toneMapping\": 7,\n  \"shadowMap\": {\n    \"enabled\": false,\n    \"type\": 1\n  }\n}"
-}

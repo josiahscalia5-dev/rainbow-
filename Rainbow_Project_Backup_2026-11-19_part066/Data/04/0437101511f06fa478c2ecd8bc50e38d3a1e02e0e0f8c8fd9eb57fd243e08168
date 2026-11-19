@@ -1,8 +1,0 @@
-/**
- * Tests for the custom error hierarchy.
- *
- * Every MCP error carries a machine-readable `code`, a human-readable
- * `message`, and a correct `name`.  We verify all of that here, plus
- * prototype-chain correctness so `instanceof` works as expected.
- */
-export {};

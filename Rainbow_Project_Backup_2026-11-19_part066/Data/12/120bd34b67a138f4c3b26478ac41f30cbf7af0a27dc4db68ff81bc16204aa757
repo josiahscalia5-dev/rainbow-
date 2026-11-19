@@ -1,8 +1,0 @@
-/**
- * Shared type definitions for the Spector.js MCP server.
- *
- * This file is intentionally free of runtime logic — only interfaces, types,
- * and type-only exports live here.
- */
-export {};
-//# sourceMappingURL=types.js.map

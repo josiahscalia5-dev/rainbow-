@@ -1,3 +1,0 @@
-[      39ms] [ERROR] [rainbow] Benny module failed, using stand-in TypeError: Failed to fetch
-    at http://127.0.0.1:19478/@fs/tmp/rainbow-motion-tools.ef8YVWIN/vite/07/deps/chunk-VDLSONRA.js?v=dcd726dd:25860:28 @ http://127.0.0.1:19478/?qa=1&dpr=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1:21
-[   15417ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:5607/favicon.ico:1
