@@ -697,3 +697,153 @@ I'll start by reading the resume brief and launch brief.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:35:46.835Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/tools && cat > /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/tools/dscan.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5276);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await …[+1445 chars]`
+
+### 🧑 User — 2026-11-19T02:36:04.351Z
+
+> ↩︎ result: [{"D":-6,"note":"n/a"},{"D":-4,"note":"n/a"},{"D":-3,"note":"n/a"},{"D":-2,"note":"n/a"},{"D":-1,"note":"n/a"},{"D":-0.5,"note":"n/a"},{"D":0,"s":198.91,"d":0},{"D":0.3,"s":199.277,"d":0.072},{"D":0.6,"s":199.643,"d":0.224},{"D":1.1,"s":200.01,"d":0.439},{"D":1.5,"s":200.56,"d":0.851},{"D":2,"s":200.927,"d":1.17},{"D":2.5,"s":201.477,"d":1.696},{"D":3,"s":202.027,"d":2.264},{"D":4,"s":202.943,"d":3.265},{"D":6,"s":204.96,"d":5.542}]
+
+### 🤖 Claude — 2026-11-19T02:36:59.373Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && node -e \"console.log(require('three/package.json').version)\"; grep -n \"textureLod\\|texture2DLod\" -r src | head", "description": "Check three.js version and textureLod usage"}`
+
+### 🧑 User — 2026-11-19T02:36:59.689Z
+
+> ↩︎ result: node:internal/modules/cjs/loader:671
+>       throw e;
+>       ^
+> 
+> Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './package.json' is not defined by "exports" in /home/user/wt/s06/node_modules/three/package.json
+>     at exportsNotFound (node:internal/modules/esm/resolve:318:10)
+>     at packageExportsResolve (node:internal/modules/esm/resolve:665:9)
+>     at resolveExports (node:internal/modules/cjs/loader:664:36)
+>     at Function._findPath (node:internal/modules/cjs/loader:731:31)
+>     at Function._resolveFilename (node:internal/modules/cjs/loader:1415:27)
+>     at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+>     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+>     at Function._load (node:internal/modules/cjs/loader:1216:25)
+>     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+>     at Module.require (node:internal/modules/cjs/loader:1527:12) {
+>   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+> }
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-19T02:37:01.187Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep '\"version\"' node_modules/three/package.json; grep -rn \"textureLod\\|texture2DLodEXT\\|textureGrad\" src | head -5", "description": "Check three version and any textureLod usage"}`
+
+### 🧑 User — 2026-11-19T02:37:01.253Z
+
+> ↩︎ result: "version": "0.170.0",
+
+### 🤖 Claude — 2026-11-19T02:37:03.589Z
+
+Now I'll implement the start-view switch `&m06st=1` in the shader.
+
+### 🤖 Claude — 2026-11-19T02:37:06.687Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "uniform float uGold;\nuniform sampler2D uRingTex;\nvarying vec4 vProj;", "new_string": "uniform float uGold;\nuniform sampler2D uRingTex;\n// r18 m06st (qa/match/06/r18/PROGRESS.md): the start view keeps the approved look a little longer and cleanly. uSt = on;\n// uStW = camera distance from the approved viewpoint (u) over which the approved pixels hand over to the 3D materials;\n// uStM = 1 on the tunnel / rings / end cap (gaps opened behind the crest are filled from the painted wall just above it);\n …[+159 chars]`
+
+### 🧑 User — 2026-11-19T02:37:06.889Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:09.893Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "void main() {\n  // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)\n  vec3 pc = texture2D(uTile, vTile).rgb;\n  vec3 nn = normalize(vN);\n  float al = abs(vLS.x);", "new_string": "void main() {\n  // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)\n  vec3 pc = texture2D(uTile, vTile).rgb;\n  vec3 nn = normalize(vN);\n  float al = abs(vLS.x);\n  // r18 m06st: off exactly at the approved viewpoint (the approved start view keeps its pixe …[+292 chars]`
+
+### 🧑 User — 2026-11-19T02:37:09.924Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:11.960Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      float gw = smoothstep(0.6, 2.0, distance(cameraPosition, uProjPos));\n      float gfr = pow(1.0 - abs(dot(nn, V)), 3.0);", "new_string": "      float gw = smoothstep(0.6, 2.0, distance(cameraPosition, uProjPos));\n      // r18 m06st: the rings hand over from the approved pixels straight to the painted band (never the procedural shading)\n      if (stOn > 0.5) gw = 1.0;\n      float gfr = pow(1.0 - abs(dot(nn, V)), 3.0);"}`
+
+### 🧑 User — 2026-11-19T02:37:12.052Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:31.976Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  if (vProj.w > 0.0) {\n    vec3 ndc = vProj.xyz / vProj.w;\n    vec2 uv = ndc.xy * 0.5 + 0.5;\n    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {\n      float vis = 1.0;\n      if (uUseDepth > 0.5) {\n        float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);\n        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);\n      }\n      float w = vis * keep;\n      // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels t …[+5097 chars]`
+
+### 🧑 User — 2026-11-19T02:37:32.015Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:38.464Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    if (inside || edge * hold > 0.0) {", "new_string": "    if (inside || (stOn > 0.5 && edge * hold > 0.0)) {"}`
+
+### 🧑 User — 2026-11-19T02:37:38.503Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:45.920Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      edge = 1.0 - smoothstep(0.0, 0.03, max(o.x, o.y));\n      uv = clamp(uv, 0.0005, 0.9995);", "new_string": "      edge = (1.0 - smoothstep(0.0, 0.03, max(o.x, o.y))) * hold;\n      uv = clamp(uv, 0.0005, 0.9995);"}`
+
+### 🧑 User — 2026-11-19T02:37:45.951Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:46.924Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    if (inside || (stOn > 0.5 && edge * hold > 0.0)) {", "new_string": "    if (inside || (stOn > 0.5 && edge > 0.0)) {"}`
+
+### 🧑 User — 2026-11-19T02:37:46.949Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:51.775Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      float w = (stOn > 0.5 ? max(vis, filled) * edge : vis) * keep;", "new_string": "      float w = (stOn > 0.5 ? max(vis, filled * hold) * edge : vis) * keep;"}`
+
+### 🧑 User — 2026-11-19T02:37:51.819Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:58.178Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);", "new_string": "  const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);\n  // r18 `&m06st=1` (qa/match/06/r18/PROGRESS.md): the start view without the flash — between the approved viewpoint and\n  // `&m06stw=a,b` u from it (default 0.6,1.2) the approved pixels stay (no see-through ring arcs, no tile ghosts), gaps that\n  // open behind the crest are …[+585 chars]`
+
+### 🧑 User — 2026-11-19T02:37:58.329Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:59.719Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    uProjPos: { value: proj.position.clone() },\n    uTime: { value: 0 },\n  };", "new_string": "    uProjPos: { value: proj.position.clone() },\n    uTime: { value: 0 },\n    uSt: { value: 0 },\n    uStW: { value: new THREE.Vector2(0.6, 1.2) },\n    uStK: { value: 0.001 },\n  };"}`
+
+### 🧑 User — 2026-11-19T02:37:59.747Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:38:01.022Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 },", "new_string": "      uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 }, uStM: { value: floor ? 0 : 1 },"}`
+
+### 🧑 User — 2026-11-19T02:38:01.059Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:38:09.632Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  shared.uSt = { value: ST ? 1 : 0 };\n  shared.uStW = { value: new THREE.Vector2(stw.length === 2 && stw.every(Number.isFinite) ? stw[0] : 0.6, stw.length === 2 && stw.every(Number.isFinite) ? stw[1] : 1.2) };\n  shared.uStK = { value: 1.5 / depthRT.height };", "new_string": "  shared.uSt.value = ST && !!mask ? 1 : 0;\n  if (stw.length === 2 && stw.every(Number.isFinite)) shared.uStW.value.set(stw[0], stw[1]);\n  shared.uStK.value = 1.5 / depthRT.height;"}`
+
+### 🧑 User — 2026-11-19T02:38:09.662Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:38:10.597Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -5; echo tsc-exit $?", "description": "Type-check the project", "timeout": 320000}`
+
+### 🧑 User — 2026-11-19T02:38:16.583Z
+
+> ↩︎ result: tsc-exit 0
+

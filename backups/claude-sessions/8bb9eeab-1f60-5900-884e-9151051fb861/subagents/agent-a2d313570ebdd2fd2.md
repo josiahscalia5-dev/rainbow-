@@ -890,3 +890,34 @@ Let me commit the restored kept-set file and start the r18 log first.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r18/KEPT_START.txt) && GRID='-0.55,0.37' EXTRA_JS='(async()=>{const m=await import(\"/src/world/far05.ts\");const d=m.far05Debug;const T=d.ft.T,c0=d.ft.c0;const {scene}=window.__rainbow.qa3d();const out={sF:d.sF05,sCam:d.sCam05,sGlow:d.sGlow05,s05:d.s05,D0:d.ft.D0,L:d.ft.L,knots:d.knots,rings:d.rings05,q:d.ft.q.toArray()};const THREE_=null;for(const n of [\"lid05_L1\",\"lid05_L2\",\"lid05_L3\",\"lid05_R1\",\"lid05_R2\",\"lid05_R3\"]){const o=scene.getObjectByName(n);if(!o){out[n]=null;continue;}o.updateMatrixWorld(true);const g=o.geometr …[+510 chars]`
 
+### 🧑 User — 2026-11-19T02:36:28.987Z
+
+> ↩︎ result: == t81L s 179.081 stage 05 cam -0.15,-39.22,-114.38 far-open 0 extra {"sF":180.0383020282329,"sCam":126.03830202823289,"sGlow":183.02412082521383,"s05":114.68830202823243,"D0":53.24896756963126,"L":6,"knots":[[0,0],[7,5.751032430368738],[21,43.75103243036874],[35,107.75103243036874],[49,168.75103243036875],[63,268.75103243036875]],"rings":[124.03830202823289,138.0383020282329,146.0383020282329,164.38830202823289],"q":[0.0767714284766885,-0.26754592938159316,0.011147747057563606],"lid05_L1":["-31.52","-15.44"],"lid05_L2":["-11.01","3.91"],"lid05_L3":["4.66","5.42"],"lid05_R1":["-30.08","-9.35"],"lid05_R2":["-10.41","4.35"],"lid05_R3":["4.22","5.41"]}
+>    -0.55,0.37 lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.38 | lid05_L3<tube05_lids_blender<tube05_lids05<zone_tubes<washer_world d12.71 | tube05_far_wall<zone_tubes<washer_world<Scene d18.01
+
+### 🤖 Claude — 2026-11-19T02:37:51.479Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n -i \"m05slot\" -A12 qa/match/05/r13/PROGRESS.md | head -60", "description": "Read rejected m05slot to avoid repeating it"}`
+
+### 🧑 User — 2026-11-19T02:37:51.529Z
+
+> ↩︎ result: 12:## Step 1 — `&m05slot=1` (account-12 unfinished wall-slot edit, class B) — NOT AN IMPROVEMENT, reverted
+> 13-* Tested on the round-12 kept set with `tools/match05/r8_shots.mjs` at a00, f03, f06, f10, f20, s_left_hard, s_right_hard, t33.
+> 14-* What the edit does: where the wall picture is magnified while swimming, it lifts the blurred painted slot blobs out of the
+> 15-  metal (local max) and draws crisp slim capsule slots on a measured grid (46.5 round the tube, rows every 1.9 u).
+> 16-* By eye: start view unchanged (as designed). At t33 / f20 the far bays' messy double pattern of big blurred blobs becomes
+> 17-  regular rows of slim dark slots — closer there. BUT close to the wall (s_left_hard, f10, s_right_hard) the painted blobs are
+> 18-  only partly lifted out and stay as a pale ghost grid that is OFFSET from the new slot grid, so the wall shows two slot
+> 19-  patterns at once (doubled slots), and the new slots look like flat dark stickers without the painted pink rim / glossy edge.
+> 20-  The brief's condition was "no oversized or doubled slots" → not clearly closer → reverted (`git checkout` of both files).
+> 21:* Patch kept for reference only (not applied): `qa/match/05/r13/step1_m05slo …[+1675 chars]
+
+### 🤖 Claude — 2026-11-19T02:38:17.800Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s05/tools/match05 && cd /home/user/wt/s05 && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('assets/textures/env05/wall05e.png').convert('RGB')).astype(np.float32)/255\nN1=a[592:848]\nlum=N1.mean(2)\ndark=(lum<0.25).astype(np.float32)\nprint('dark frac',dark.mean())\nprof=dark.mean(1)\nprint(' '.join(f'{v:.2f}' for v in prof))\n# autocorrelation of row profile\np=prof-prof.mean()\nac=[(p[:-k]*p[k:]).mean() for k in range(1,90)]\nk=int(np.argmax(ac[20:80]))+21\nprint('period',k)\n# per block phase\nP=38.2\nfor x0 in range …[+242 chars]`
+
+### 🧑 User — 2026-11-19T02:38:18.261Z
+
+> ↩︎ result: dark frac 0.08612251
+> 0.02 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.02 0.03 0.06 0.06 0.07 0.09 0.11 0.11 0.11 0.11 0.12 0.12 0.12 0.10 0.08 0.09 0.10 0.09 0.09 0.10 0.12 0.14 0.15 0.17 0.19 0.19 0.19 0.18 0.16 0.14 0.13 0.12 0.11 0.10 0.09 0.08 0.08 0.09 0.10 0.10 0.08 0.07 0.07 0.08 0.09 0.08 0.07 0.05 0.05 0.06 0.07 0.06 0.06 0.06 0.07 0.07 0.08 0.08 0.07 0.09 0.10 0.11 0.13 0.12 0.12 0.15 0.16 0.15 0.14 0.13 0.16 0.14 0.14 0.12 0.12 0.12 0.12 0.11 0.09 0.08 0.08 0.07 0.09 0.09 0.09 0.09 0.08 0.08 0.08 0.09 0.09 0.07 0.05 0.03 0.03 0.02 0.04 0.05 0.07 0.12 0.14 0.16 0.18 0.18 0.17 0.12 0.12 0.11 0.10 0.12 0.12 0.12 0.11 0.10 0.09 0.08 0.09 0.10 0.13 0.13 0.14 0.12 0.11 0.13 0.12 0.11 0.09 0.06 0.04 0.02 0.01 0.01 0.01 0.03 0.04 0.06 0.09 0.12 0.12 0.13 0.12 0.12 0.12 0.11 0.10 0.08 0.06 0.05 0.05 0.06 0.06 0.06 0.07 0.06 0.07 0.08 0.08 0.11 0.12 0.14 0.16 0.17 0.17 0.17 0.15 0.14 0.13 0.10 0.06 0.04 0.02 0.03 0.03 0.04 0.06 0.07 0.09 0.09 0.09 0.08 0.09 0.09 0.08 0.09 0.11 0.12 0.12 0.12 0.10 0.08 0.08 0.07 0.07 0.05 0.03 0.03 0.03 0.02 0.03 0.03 0.05 0.07 0.11 0.16 0.17 0.17 0.19 0.19 0.21 0.21 0.21 0.18 0.13 0.11 0.10 0.05 0.04 0.05 0.05 0.05 0.05 0.05 0.06 0.06 0.05 0.04 …[+334 chars]
+

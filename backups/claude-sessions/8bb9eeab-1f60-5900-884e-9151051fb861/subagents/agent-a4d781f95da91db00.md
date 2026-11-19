@@ -779,3 +779,189 @@ The lip is now a straight line. Re-rendering the NEW shots with the fixed atlas.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K5=$(cat $S/K5.txt) && rm -rf qa/match/04/r18/ringpaint/step6_var && node tools/lead_r6/motion_audit.mjs 04 qa/match/04/r18/ringpaint/step6_var \"$K5&m04rpvar=1\" 2>&1 | grep -v \"allow list\" | tail -3 && python3 -c \"\nfrom PIL import Image\nS='$S/'\nfor sh in ['f03_forward3u','f10_forward10u','f20_forward20u','t66_through_screen','s_left_hard','s_right_hard','t95_through_screen','f06_forward6u']:\n    b=Image.open('qa/match/04/r17/ringpaint/step5_dots/3_NEW_'+s …[+361 chars]`
 
+### 🧑 User — 2026-11-19T02:36:33.947Z
+
+> ↩︎ result: 04 t33_through_screen s 90.483 lat 0.006 stage 04 frames 53
+> 04 t66_through_screen s 102.848 lat 0 stage 04 frames 106
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-19T02:36:35.933Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/cmp_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T02:36:35.978Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:36:36.595Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/cmp_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-19T02:36:36.670Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:36:43.544Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/cmp_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:36:43.590Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:36:47.132Z
+
+Kinks are gone. Re-checking the frozen start view with the final atlas, then copying the proof pictures.
+
+### 🤖 Claude — 2026-11-19T02:36:52.050Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K5=$(cat $S/K5.txt) && node scripts/capture.mjs 04 --q=\"$K5&m04rpvar=1\" --out=$S/sv_new2 >/dev/null 2>&1; D=qa/match/04/r18/ringpaint/step6_var && node /home/user/tools-pixelmatch/pixeldiff.mjs $S/sv_before/04.png $S/sv_new2/04.png $D/start_view_pixeldiff_BEFORE_vs_NEW.png 0.1 180 1536; git checkout qa/capture_log.json; cd $D && for f in a00_approved_view f03_forward3u f06_forward6u f10_forward10u f20_forward20u s_left_steer s_right_steer s_left_hard s_right_har …[+500 chars]`
+
+### 🧑 User — 2026-11-19T02:37:16.862Z
+
+> ↩︎ result: {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/sv_before/04.png","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/sv_new2/04.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> Updated 1 path from the index
+> approved-identical
+> 3_NEW_a00_approved_view.png
+> 3_NEW_f03_forward3u.png
+> 3_NEW_f06_forward6u.png
+> 3_NEW_f10_forward10u.png
+> 3_NEW_f20_forward20u.png
+> 3_NEW_s_left_hard.png
+> 3_NEW_s_left_steer.png
+> 3_NEW_s_right_hard.png
+> 3_NEW_s_right_steer.png
+> 3_NEW_t33_through_screen.png
+> 3_NEW_t66_through_screen.png
+> 3_NEW_t95_through_screen.png
+> motion.json
+> start_view_pixeldiff_BEFORE_vs_NEW.png
+> texture_NEW_tile_ring_paint_var_soft.png
+
+### 🤖 Claude — 2026-11-19T02:37:19.835Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && time npx tsc --noEmit -p . 2>&1 | tail -5; sha256sum -c scripts/reference.sha256 2>&1 | tail -3", "description": "Typecheck and verify reference image hashes", "timeout": 600000}`
+
+### 🧑 User — 2026-11-19T02:37:25.020Z
+
+> ↩︎ result: real	0m5.132s
+> user	0m5.439s
+> sys	0m0.266s
+> references/11_safely_home_final_victory.png: OK
+> character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+
+### 🤖 Claude — 2026-11-19T02:37:25.807Z
+
+Now the log entry, then commit and push.
+
+### 🤖 Claude — 2026-11-19T02:37:40.703Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04b/qa/match/04/r18/ringpaint/NOTES.md", "content": "# Screen 04 — painted-ring test `&m04rpaint` (round 18, continues the cut-off round-17 worker)\n\nBrief: `docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md` + `docs/briefs/2026-11-19-r18/RESUME_R18.md` (\"s04tex\").\nBranch `claude/rainbow-s04-ringtex-c18` (= `-c17` tip `0f275af1` + the account-17 unfinished step-6 edit). Steps 1–4:\n`qa/match/04/r16/ringpaint/NOTES.md`; step 5: `qa/match/04/r17/ringpaint/NOTES.md`.\n\nKept set K5 = L4 (`docs/briefs/2026-11-18-r15/S04_LAUNCH.md` \"Kept set now\") +\n`&m04rpaint= …[+3477 chars]`
+
+### 🧑 User — 2026-11-19T02:37:40.762Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04b/qa/match/04/r18/ringpaint/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:37:46.179Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && du -sh qa/match/04/r18 && git add src/world/match04m4.ts tools/match04/ring_paint04.py tools/match04/ring_paint04_var.py assets/textures/match04/tile_ring_paint_var.png assets/textures/match04/tile_ring_paint_var_soft.png qa/match/04/r18 && git status --short | grep -v node_modules && git commit -q -m \"Screen 04 r18 step 6: m04rpvar=1 three painted rings (pink-violet sheen), ring-0 lip humps refilled\n\nFinishes the account-17 unfinished edit: atlas of painted inner rings 0/1/2 behind &m04rpvar=1 (default off),\ndehump() removes the kinks on ring 0's lip. …[+503 chars]`
+
+### 🧑 User — 2026-11-19T02:37:51.052Z
+
+> ↩︎ result: 23M	qa/match/04/r18
+> A  assets/textures/match04/tile_ring_paint_var.png
+> A  assets/textures/match04/tile_ring_paint_var_soft.png
+> A  qa/match/04/r18/ringpaint/1_APPROVED.png
+> A  qa/match/04/r18/ringpaint/NOTES.md
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_a00_approved_view.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_f03_forward3u.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_f06_forward6u.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_f10_forward10u.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_f20_forward20u.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_s_left_hard.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_s_left_steer.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_s_right_hard.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_s_right_steer.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_t33_through_screen.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_t66_through_screen.png
+> A  qa/match/04/r18/ringpaint/step6_var/3_NEW_t95_through_screen.png
+> A  qa/match/04/r18/ringpaint/step6_var/motion.json
+> A  qa/match/04/r18/ringpaint/step6_var/start_view_pixeldiff_BEFORE_vs_NEW.png
+> A  qa/match/04/r18/ringpaint/step6_var/texture_NEW_tile_ring_paint_var_soft.png
+> M  src/wo …[+393 chars]
+
+### 🤖 Claude — 2026-11-19T02:37:52.223Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-19T02:37:52.231Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-19T02:37:58.036Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s04tex step 6 kept, report", "message": "s04tex step 6 `&m04rpvar=1` (three painted rings instead of one) KEPT on K5 — GOOD IMPROVEMENT (small to moderate, ring colour).\nCommit 9eb27e6e on claude/rainbow-s04-ringtex-c18 (pushed, remote = HEAD). This finishes the account-17 edit. I also fixed a defect it had: notches/kinks on the first ring's lip, which I filled in.\nWhat looks closer: inner rings are no longer all the same plain copper. The first ring inside the opening, and every few rings deeper, now carry the painting's soft pink-violet sheen and violet glints on …[+892 chars]`
+
+### 🧑 User — 2026-11-19T02:37:58.058Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-19T02:38:04.355Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"away\" src/world/match04m4.ts | head -40", "description": "Find how the plate-to-3D blend (uAway) is driven"}`
+
+### 🧑 User — 2026-11-19T02:38:04.425Z
+
+> ↩︎ result: 493:    // along grows down the slide (away from the camera), the apex points away; v = 0 on the front V line, < 0 toward
+> 639:  const away = { value: 0 };
+> 651:        uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
+> 661:      // `m04rpsoft=1`: the variant whose long radial highlight streaks are softened away from the lip line (short glows)
+> 816:      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
+> 960:  // far away; hidden at the approved viewpoint (the painted picture is shown there). The flat river chevrons are switched off.
+> 1046:    away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+
+### 🤖 Claude — 2026-11-19T02:38:05.666Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 1030,1060p src/world/match04m4.ts", "description": "Read uAway update logic"}`
+
+### 🧑 User — 2026-11-19T02:38:05.709Z
+
+> ↩︎ result: }
+>       const m = new THREE.Mesh(texGeo ?? base, coreT ?? core), g = new THREE.Mesh(coreT && lum > 0 ? texGeo! : halo, glow);
+>       m.position.set(cx, 0, z0 - a); g.position.set(cx, 0, z0 - a - 0.002);
+>       m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
+>       m.visible = g.visible = false;                                     // invisible during the projector depth bake
+>       group.add(g); group.add(m);
+>       arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow] });
+>       arrowsOut.push({ mesh: g, za: z0 - a, mats: [] });
+>     }
+>     updaters.push((a) => { arrA = a; });
+>     console.info('[match04] m04arr3d', { arrows: arrowsOut.length / 2, sp, tilt: M04.num('m04a3k', 38) });
+>   }
+> 
+>   out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
+>     time.value = performance.now() / 1000;
+>     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+>     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+>     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+>     for (const u of updaters) …[+1128 chars]
+
+### 🤖 Claude — 2026-11-19T02:38:07.278Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"fade1\\b\\|const fade\\|fade =\" src/world/match04m4.ts | head", "description": "Find fade distance parameters"}`
+
+### 🧑 User — 2026-11-19T02:38:07.363Z
+
+> ↩︎ result: 514:    float fade = smoothstep(-2.0, 0.5, ac) ;
+> 640:  const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+> 1046:    away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+
+### 🤖 Claude — 2026-11-19T02:38:11.436Z
+
+`m04fade0/m04fade1` let me show the 3D rings at the approved viewpoint (analysis only). Rendering that for a direct tone comparison.
+
+### 🤖 Claude — 2026-11-19T02:38:13.958Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K5=$(cat $S/K5.txt) && node scripts/capture.mjs 04 --q=\"$K5&m04rpvar=1&m04fade0=-2&m04fade1=-1\" --out=$S/sv_3d >/dev/null 2>&1; git checkout qa/capture_log.json; ls $S/sv_3d", "description": "Capture start view with 3D rings fully shown (analysis)", "timeout": 600000}`
+

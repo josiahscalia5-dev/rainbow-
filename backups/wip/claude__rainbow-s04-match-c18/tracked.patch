@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index a8fe480..8d0f471 100644
+index a8fe480..08df9a1 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -317,7 +317,9 @@ uniform vec4 uNB;            // r17 m04nband: x on, y Benny along (local), z Ben
@@ -45,12 +45,12 @@ index a8fe480..8d0f471 100644
      float as = abs(sv);
 -    float wan = uSB1.w * (vn(vec2(along * 0.11, sign(vS) * 5.0 + 2.0)) - 0.5) * 2.0;
 +    float am = rr >= 0.0 ? rr : as;                       // r18: where the bands start (whirl ellipse, else the lateral arc)
-+    float sg = rr >= 0.0 ? clamp(vS * 2.0, -1.0, 1.0) : sign(vS);   // r18 whirl: no left / right jump where the crescents cross
++    float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
 +    float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0;
      float tb = clamp((as + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
      float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
      float ub = (1.0 - tb) * uSB1.z;
-@@ -451,13 +469,13 @@ void main() {
+@@ -451,13 +469,14 @@ void main() {
      if (uNB.x > 0.5 && uNB3.x > 0.0) {
        // r17 m04nband: near Benny the painted strip is walked back and forth (cyan -> hot pink -> cyan -> ...), so several
        // alternating painted pink / cyan stripes curve round him, as in the approved picture (one stretched band otherwise)
@@ -59,7 +59,9 @@ index a8fe480..8d0f471 100644
 +      float hz = clamp((uSB0.y - inner + mea) / max(uSB0.y - uNB.w, 0.1), 0.0, 1.0);
 +      float pp = 1.0 - abs(fract((am + wan - inner) / (2.0 * uNB3.x)) * 2.0 - 1.0);
        float u2 = 1.0 - pp * uNB3.y;
-       vec3 b2 = mix(texture2D(uSB, vec2(u2, vb)).rgb, texture2D(uSB, vec2(u2, vb * 0.81 + 0.29)).rgb, w);
+-      vec3 b2 = mix(texture2D(uSB, vec2(u2, vb)).rgb, texture2D(uSB, vec2(u2, vb * 0.81 + 0.29)).rgb, w);
++      float vb2 = rr >= 0.0 ? fl / uSB0.w : vb;                    // r18 whirl: same strip on both sides (no seam under Benny)
++      vec3 b2 = mix(texture2D(uSB, vec2(u2, vb2)).rgb, texture2D(uSB, vec2(u2, vb2 * 0.81 + 0.29)).rgb, w);
        bc = mix(bc, b2, hz * (1.0 - smoothstep(uSB0.z - 0.9, uSB0.z - 0.2, as)));
      }
 -    col = mix(col, bc, uSB0.x * smoothstep(inner - uSB1.x, inner + 0.25 * uSB1.x, as));
@@ -67,7 +69,7 @@ index a8fe480..8d0f471 100644
      if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
    }
    if (uA5.x > 0.5) {
-@@ -934,7 +952,12 @@ export function addM04(ctx: M04Ctx) {
+@@ -934,7 +953,12 @@ export function addM04(ctx: M04Ctx) {
          // ahead of him, m04nbb widening behind him (b * d^2), m04nbr half-stripe width near him (0 = one stretched band), m04nbs tile
          // span walked, m04nbp pinch at his sides, m04nbf lateral follow of Benny (0..1)
          uNB3: { value: new THREE.Vector2(M04.num('m04nbr', 0.9), M04.num('m04nbs', 0.7)) },
