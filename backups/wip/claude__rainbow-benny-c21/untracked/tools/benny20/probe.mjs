@@ -22,7 +22,8 @@ try {
     const r = window.__rainbow; r.goto(scr); const s0 = r.state().s;
     let k = 0; while (r.state().s < s0 + dist && k < 2000) { r.step(1); k++; }
     // deterministic frame: frozen shader / animation clock (as tools/lead_r13/swim_clip.mjs), no real-time loop
-    r.freezeAt(12); r.step(1, 1e-4); r.drawList();
+    // two normal steps first (the motion04 start view runs two real frames after goto: the camera settles on its rig)
+    r.step(2); r.freezeAt(12); r.step(1, 1e-4); r.drawList();
     return r.state();
   }, [SCR, Number(DIST)]);
   console.log('at', SCR, 's', st.s);

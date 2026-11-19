@@ -269,7 +269,9 @@ def snapshot_worktrees() -> list[str]:
             (dest / "tracked.patch").write_bytes(g("diff", "HEAD", "--binary").stdout)
         for rel in untracked:
             src = wt / rel
-            if src.is_file() and src.stat().st_size <= 2_000_000 and total + src.stat().st_size <= 30_000_000:
+            # user order 2026-11-19 ~23:55 UTC ("save everything ... every 5 minutes"): limits raised from 2 MB / 30 MB so a
+            # worker's full-size game captures (~2-2.5 MB PNG each) and half-size clips are no longer skipped
+            if src.is_file() and src.stat().st_size <= 5_000_000 and total + src.stat().st_size <= 150_000_000:
                 out = dest / "untracked" / rel
                 out.parent.mkdir(parents=True, exist_ok=True)
                 out.write_bytes(src.read_bytes()); copied.append(rel); total += src.stat().st_size
@@ -281,6 +283,59 @@ def snapshot_worktrees() -> list[str]:
         (dest / "INFO.json").write_text(json.dumps(info, indent=1) + "\n")
         notes.append(f"{br}: {len(dirty)} modified, {len(copied)} new file(s) snapshotted")
     return notes
+
+
+def snapshot_live_tools() -> None:
+    """User order 2026-11-19 ~23:55 UTC: every five-minute save also records the LIVE state of the specialists, worker
+    branches, plugins and MCP servers -> backups/LIVE_TOOLS_STATE.json (names / versions / hashes only, never values of
+    settings, so no secret can end up in it). Static restore instructions stay in backups/TOOL_MANIFEST.json."""
+    home = Path.home()
+
+    def jload(p: Path):
+        try:
+            return json.loads(p.read_text())
+        except Exception:
+            return None
+
+    agents = {}
+    for f in sorted((REPO / ".claude" / "agents").glob("*.md")):
+        agents[f.stem] = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
+    inst = jload(home / ".claude" / "plugins" / "installed_plugins.json") or {}
+    synced = []
+    for m in (home / ".claude" / "plugins" / "synced").glob("*/manifest.json"):
+        for p in (jload(m) or {}).get("plugins", []):
+            synced.append(p.get("description", "")[:90])
+    user_set = jload(home / ".claude" / "settings.json") or {}
+    proj_set = jload(REPO / ".claude" / "settings.json") or {}
+    mcp_names = set()
+    for cfg in (home / ".claude.json", REPO / ".mcp.json"):
+        mcp_names.update(((jload(cfg) or {}).get("mcpServers") or {}).keys())
+    for pj in (home / ".claude" / "plugins" / "cache").glob("*/*/*/mcp.json"):
+        mcp_names.update(((jload(pj) or {}).get("mcpServers") or jload(pj) or {}).keys())
+    workers = []
+    wl = git("worktree", "list", "--porcelain", check=False).stdout
+    for block in wl.strip().split("\n\n"):
+        kv = dict(line.split(" ", 1) if " " in line else (line, "") for line in block.splitlines())
+        if kv.get("worktree") and Path(kv["worktree"]).resolve() != REPO.resolve():
+            workers.append({"worktree": kv["worktree"], "branch": kv.get("branch", "").replace("refs/heads/", ""),
+                            "head": kv.get("HEAD", "")[:12]})
+    status = jload(REPO / "backups" / "AGENTS_STATUS.json") or {}
+    rounds = sorted(k for k in status if k.startswith("round"))
+    state = {
+        "time_utc": now_utc().isoformat(),
+        "lead_branch": git("rev-parse", "--abbrev-ref", "HEAD", check=False).stdout.strip(),
+        "specialists_sha256_16": agents,
+        "workers_git_worktrees": workers,
+        "workers_status_latest_round": {rounds[-1]: status[rounds[-1]].get("workers")} if rounds else None,
+        "plugins_installed_locally": sorted((inst.get("plugins") or {}).keys()),
+        "plugins_enabled_user_settings": sorted(k for k, v in (user_set.get("enabledPlugins") or {}).items() if v),
+        "plugins_synced_from_claude_account": synced,
+        "mcp_servers_configured": sorted(mcp_names),
+        "hooks_project": sorted((proj_set.get("hooks") or {}).keys()),
+        "note": "claude.ai connectors (World Labs Atlas, GitHub) and API keys are per Claude account / environment and "
+                "cannot be stored in git; the lead verifies them at session start (docs/briefs/*/COORDINATION.md).",
+    }
+    (REPO / "backups" / "LIVE_TOOLS_STATE.json").write_text(json.dumps(state, indent=1) + "\n")
 
 
 def main() -> int:
@@ -346,6 +401,10 @@ def main() -> int:
                 row["wip_snapshots"] = wip
         except Exception as e:  # a snapshot problem must never block the backup itself
             row["wip_error"] = str(e)[:300]
+        try:
+            snapshot_live_tools()
+        except Exception as e:  # never blocks the backup
+            row["live_tools_error"] = str(e)[:300]
 
         # ---- 3. stage allow-listed paths ----------------------------------------------
         # tracked status/log files: start from HEAD; they are refreshed from the live log only when a

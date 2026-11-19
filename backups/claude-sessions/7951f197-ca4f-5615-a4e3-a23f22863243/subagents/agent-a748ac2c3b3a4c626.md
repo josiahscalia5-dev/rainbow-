@@ -1958,3 +1958,115 @@ Unexpected: rendered fur still bright and fur IoU dropped. Let me look.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/probe.mjs'\ns=open(p).read()\nold=\"    r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);\\n    return r.state();\"\nnew=\"    // deterministic frame: frozen shader / animation clock (same freeze as tools/lead_r13/swim_clip.mjs), no real-time loop\\n    r.freezeAt(Number(${'$'}{0} || 12)); r.step(1, 1e-4); r.drawList();\\n    return r.state();\"\nnew=\"    // deterministic frame: frozen shader / animation clock (as tools/lead_r13/swim_clip.mjs), no real-time  …[+2067 chars]`
 
+### 🧑 User — 2026-11-19T23:53:32.936Z
+
+> ↩︎ result: at 04 s 77.414
+> variant e0_l18 23670 ms
+> variant e1_l24 16527 ms
+> variant e2_l14 20269 ms
+> variant e3_l18_s0.45 20941 ms
+> variant e4_l18_s0.6 19573 ms
+> variant e5_l18_s0.75 19960 ms
+> e0_l18
+> [1356, 1271] 0.7051 0.5116 0.206 [[1353, 1449], [1280, 1396]] {'mean': [246, 76, 170], 'sat': [0.58, 0.69, 0.8], 'val': [0.87, 1.0, 1.0]}
+> e1_l24
+> [1357, 1271] 0.7044 0.5118 0.2063 [[1357, 1459], [1280, 1396]] {'mean': [246, 77, 170], 'sat': [0.59, 0.69, 0.79], 'val': [0.87, 1.0, 1.0]}
+> e2_l14
+> [1358, 1271] 0.7038 0.5118 0.2053 [[1357, 1449], [1280, 1396]] {'mean': [246, 76, 170], 'sat': [0.58, 0.7, 0.79], 'val': [0.87, 1.0, 1.0]}
+> e3_l18_s0.45
+> [1356, 1271] 0.7051 0.5116 0.206 [[1353, 1449], [1280, 1396]] {'mean': [187, 50, 115], 'sat': [0.65, 0.73, 0.86], 'val': [0.58, 0.73, 0.89]}
+> e4_l18_s0.6
+> [1356, 1271] 0.7051 0.5116 0.206 [[1353, 1449], [1280, 1396]] {'mean': [213, 64, 134], 'sat': [0.62, 0.7, 0.81], 'val': [0.67, 0.84, 1.0]}
+> e5_l18_s0.75
+> [1356, 1271] 0.7051 0.5116 0.206 [[1353, 1449], [1280, 1396]] {'mean': [230, 75, 149], 'sat': [0.58, 0.68, 0.77], 'val': [0.75, 0.93, 1.0]}
+
+### 🤖 Claude — 2026-11-19T23:53:46.422Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/benny/r20/probe/e/e4_l18_s0.6.png'); print(im.size)\nim.crop((150,980,714,1500)).save('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/e4.png')\n\"", "description": "Crop e4 variant around Benny"}`
+
+### 🧑 User — 2026-11-19T23:53:46.622Z
+
+> ↩︎ result: (864, 1536)
+
+### 🤖 Claude — 2026-11-19T23:53:47.675Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/e4.png"}`
+
+### 🧑 User — 2026-11-19T23:53:47.732Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:54:12.623Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"eye\\|joint('eyes'\\|mouth\" src/characters/benny/build.ts | head -20", "description": "Find eye placement in Benny build"}`
+
+### 🧑 User — 2026-11-19T23:54:12.687Z
+
+> ↩︎ result: 7: * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
+> 17:  eyeTexture,
+> 19:  mouthTexture,
+> 44:   *  eyes (refs 02/03); the rear ride views get their low, level look from the runtime's ride lean instead
+> 69: * and bulged radially (strongest at the sides/back, faded out on the face so eyes, blush and mouth keep
+> 221:  const eyes = joint('eyes');
+> 222:  body.add(eyes);
+> 223:  const eyeR = 0.178;
+> 224:  const eyeGeo = domeGeometry(eyeR, 32, 12);
+> 225:  eyeGeo.scale(1, 1.06, 0.55);
+> 226:  const eyeMatHappy = std({ map: eyeTexture('happy'), roughness: 0.12, metalness: 0 });
+> 227:  const eyeMatDizzy = std({ map: eyeTexture('dizzy'), roughness: 0.12, metalness: 0 });
+> 232:    const e = joint(side > 0 ? 'eyeL' : 'eyeR');
+> 235:    eyes.add(e);
+> 236:    const happy = named(new THREE.Mesh(eyeGeo, eyeMatHappy), side > 0 ? 'eyeL_happy' : 'eyeR_happy');
+> 237:    const dizzy = named(new THREE.Mesh(eyeGeo, eyeMatDizzy), side > 0 ? 'eyeL_dizzy' : 'eyeR_dizzy');
+> 242:      // eye-local: +X of the eye frame points to Benny's left when looking from the front
+> 245:      lash.position.set(Math.cos(ang) * eyeR * 1.0, Math.sin(ang) * eyeR * 1.05, 0.045);
+> 264:  // mouth decals  …[+50 chars]
+
+### 🤖 Claude — 2026-11-19T23:54:14.323Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 228,236p src/characters/benny/build.ts; grep -n \"eyeY\\|eyeX\\|eyeZ\\|eyeUp\\|eyeH\" src/characters/benny/build.ts | head", "description": "Read eye position values"}`
+
+### 🧑 User — 2026-11-19T23:54:14.377Z
+
+> ↩︎ result: const lashMat = std({ color: '#241036', roughness: 0.5 });
+>   for (const side of [1, -1] as const) {
+>     // side +1 = Benny's left (+X), −1 = right (−X)
+>     const dir = new THREE.Vector3(0.34 * side, -0.005, 0.94).normalize();
+>     const e = joint(side > 0 ? 'eyeL' : 'eyeR');
+>     e.position.copy(dir).multiplyScalar(0.665);
+>     e.lookAt(dir.clone().multiplyScalar(5));
+>     eyes.add(e);
+>     const happy = named(new THREE.Mesh(eyeGeo, eyeMatHappy), side > 0 ? 'eyeL_happy' : 'eyeR_happy');
+
+### 🤖 Claude — 2026-11-19T23:54:58.420Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\nrep=[\n(\"  /** extra drop along the body's up axis (units) */\\n  drop: n('hd', 0.35),\",\n \"  /** extra drop along the body's up axis (units) */\\n  drop: n('hd', 0.18),\\n  /** backward tilt about the hat's X axis (rad, − = top toward his back): the BACK of the cuff (what the rear chase\\n   *  cameras see) comes down to the approved seat while the FRONT stays above his eyes (eye tops ≈ +0.18) */\\n  tilt: n('ht', -0.23),\\n  /** body-fur bald zone under the cuff: cos of the con …[+2653 chars]`
+
+### 🧑 User — 2026-11-19T23:55:02.863Z
+
+> ↩︎ result: 51:    lock: [n('blx', 18), n('bly', 1.0), n('blz', 0.85), n('blw', 260)],
+> 53:    comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.25), 0],
+> 54:    color: lin('bcol', [0.23, 0.075, 0.136]),
+> TSC_OK
+
+### 🤖 Claude — 2026-11-19T23:55:15.118Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\nimport json\ndef hat(D,T,W):\n    return (f\"const h=B.hat, r=h.userData.b20rest; h.position.y=r.y-{D}; h.rotation.x=r.rx+{T};\"\n            f\"const u=B.furs.find(f=>f.mesh.name==='fur_body').uniforms.uBald.value; const a=-0.04+({T}); u.set(0,Math.cos(a),Math.sin(a),{W});\")\nV=[{\"name\":\"f0_tilt23\"},\n   {\"name\":\"f1_tilt15\",\"js\":hat(0.25,-0.15,0.1)},\n   {\"name\":\"f2_tilt0\",\"js\":hat(0.35,0,-0.09)}]\njson.dump(V,open('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/v6.json','w'))\nEOF\nV …[+714 chars]`
+
+### 🧑 User — 2026-11-19T23:56:13.663Z
+
+> ↩︎ result: at 04 s 77.881
+> variant f0_tilt23 15186 ms
+> variant f1_tilt15 13603 ms
+> variant f2_tilt0 15802 ms
+> f0_tilt23
+> [1307, 1271] 0.861 0.7662 0.5661 [[1308, 1396], [1280, 1396]] [321, 501, 976, 1154] [229, 568, 976, 1307] {'mean': [202, 66, 138], 'sat': [0.6, 0.66, 0.78], 'val': [0.63, 0.79, 0.96]}
+> f1_tilt15
+> [1307, 1271] 0.8466 0.7414 0.551 [[1308, 1396], [1280, 1396]] [323, 499, 980, 1154] [230, 568, 980, 1307] {'mean': [202, 66, 138], 'sat': [0.6, 0.66, 0.78], 'val': [0.63, 0.79, 0.96]}
+> f2_tilt0
+> [1300, 1271] 0.8189 0.7139 0.5686 [[1301, 1396], [1280, 1396]] [327, 501, 987, 1148] [232, 567, 987, 1301] {'mean': [203, 67, 138], 'sat': [0.6, 0.66, 0.78], 'val': [0.64, 0.8, 0.96]}
+
+### 🤖 Claude — 2026-11-19T23:56:37.524Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/score.py'\ns=open(p).read()\na=\"# colour medians in the real render\"\nnew='''# frame-to-frame camera settle moves Benny a few px: best IoU over vertical shifts + cuff height as a fraction of Benny\nbest = (0, -1, -1, -1)\nfor dy in range(-50, 51, 2):\n    sh = lambda m: np.roll(m, dy, 0)\n    v = (iou(sh(gall), aall), iou(sh(ghat), ahat), iou(sh(gm['fur']), afur | (am & ~ahat)))\n    if v[0] > best[1]: best = (dy, *[round(x, 4) for x in v])\nout['shift_best'] = {'dy': best[0], 'iou_all': best[1], 'iou_hat': best[2], ' …[+643 chars]`
+

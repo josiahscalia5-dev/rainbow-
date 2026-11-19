@@ -61,6 +61,15 @@ out = {
     'fur_c': [col_rows(gm['fur']), [1280, 1396]],
     'pom_bbox': bbox(gm['pom']),
 }
+# frame-to-frame camera settle moves Benny a few px: best IoU over vertical shifts + cuff height as a fraction of Benny
+best = (0, -1, -1, -1)
+for dy in range(-50, 51, 2):
+    sh = lambda m: np.roll(m, dy, 0)
+    v = (iou(sh(gall), aall), iou(sh(ghat), ahat), iou(sh(gm['fur']), afur | (am & ~ahat)))
+    if v[0] > best[1]: best = (dy, *[round(x, 4) for x in v])
+out['shift_best'] = {'dy': best[0], 'iou_all': best[1], 'iou_hat': best[2], 'iou_fur': best[3]}
+bb = bbox(gall); cbt = col_rows(gm['cuff'])
+if bb and cbt: out['cuff_frac'] = [round((cbt[1] - bb[2]) / (bb[3] - bb[2]), 3), round((1271 - 965) / (1408 - 965), 3)]
 # colour medians in the real render per game part vs approved
 amed = {'fur': np.median(A[afur & (np.arange(A.shape[0])[:, None] > 1275)], 0)}
 for k in ('fur', 'pom', 'cuff', 'crown', 'star'):

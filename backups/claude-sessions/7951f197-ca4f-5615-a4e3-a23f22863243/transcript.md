@@ -1260,3 +1260,154 @@ The worker now has your approved Benny's measured light-to-dark range as its tar
 
 A perfect 100% copy isn't possible for a 3D character that moves and turns, but the fur colour and texture can get very close. I'll judge it at full size first. Then I'll show you your Benny, the game now and the new version at the start, swimming and steering, on Screens 04–07, plus a swim clip. I've saved your order in the project notes.
 
+### 🧑 User — 2026-11-19T23:55:48.381Z
+
+Make sure you save everything to my GitHub repository every 5 minutes, and make sure everything, like all the specialists, agents, servers, the plugins, everything's all saved to my GitHub repository every 5 minutes.
+
+### 🤖 Claude — 2026-11-19T23:55:55.828Z
+
+The five-minute autosave is already running. Let me confirm it covers everything you listed (the workers' unfinished edits, the specialists, plugins and servers) and doesn't just save the main branch.
+
+### 🤖 Claude — 2026-11-19T23:55:58.483Z
+
+> 🔧 **Bash** `{"command": "pgrep -af 'autosave-daemon|rainbow-autosave' | head -5; grep -n 'INTERVAL\\|sleep\\|300' scripts/autosave-daemon.sh | head -8; echo ---; tail -8 backups/BACKUP_LOG.md | cut -c1-160; echo ---; ls -la backups/wip/ | grep c21; for b in benny s04-match s04-ringtex; do python3 -c \"import json;d=json.load(open('backups/wip/claude__rainbow-$b-c21/INFO.json'));print('$b',d['time'],d['head'][:8],len(d.get('dirty_tracked',[])),'tracked',len(d.get('untracked_copied',[])),'new files',len(d.get('untracked_skipped',[])),'skipped')\"; done", "description": "Check autosave daemon cadence and wor …[+15 chars]`
+
+### 🧑 User — 2026-11-19T23:55:58.834Z
+
+> ↩︎ result: 1018 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> 2:# Fallback scheduler used only when cron is unavailable: one autosave every 300 s.
+> 6:  sleep 300
+> ---
+> | 2026-11-19T23:30:40+00:00 | daemon | committed+pushed | `54571f6a8e08` | `ccr-681a37bb-5jqfbu` | 41 | True |  |
+> | 2026-11-19T23:32:39+00:00 | manual:r20-relaunch | committed+pushed | `fdfb4f144aac` | `ccr-681a37bb-5jqfbu` | 47 | True |  |
+> | 2026-11-19T23:33:18+00:00 | hook:Stop | committed+pushed | `7edc2a52f269` | `ccr-681a37bb-5jqfbu` | 15 | True |  |
+> | 2026-11-19T23:35:50+00:00 | daemon | committed+pushed | `fac466727675` | `ccr-681a37bb-5jqfbu` | 24 | True |  |
+> | 2026-11-19T23:41:05+00:00 | daemon | committed+pushed | `4c5a5d4adf45` | `ccr-681a37bb-5jqfbu` | 32 | True |  |
+> | 2026-11-19T23:43:58+00:00 | hook:Stop | committed+pushed | `d0b1ac5f2419` | `ccr-681a37bb-5jqfbu` | 23 | True |  |
+> | 2026-11-19T23:45:53+00:00 | manual:benny-order | committed+pushed | `1e6b38810e03` | `ccr-681a37bb-5jqfbu` | 14 | True |  |
+> | 2026-11-19T23:46:17+00:00 | hook:Stop | committed+pushed | `601874344424` | `ccr-681a37bb-5jqfbu` | 15 | True |  |
+> ---
+> drwxr-xr-x  3 root root 4096 Nov 19 23:51 claude__rainbow-benny-c21
+> drwxr-xr-x  3 root roo …[+354 chars]
+
+### 🤖 Claude — 2026-11-19T23:56:00.001Z
+
+> 🔧 **Bash** `{"command": "grep -n -i 'plugin\\|mcp\\|agents\\|allow\\|TOOL_MANIFEST\\|settings.json\\|skip.*size\\|MAX_\\|max_bytes' scripts/rainbow-autosave.py | head -40; python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print({k:v for k,v in d.items() if k!='protected_branches'})\" | head -c 1500", "description": "Check what the autosave includes"}`
+
+### 🧑 User — 2026-11-19T23:56:00.151Z
+
+> ↩︎ result: 12:  4. stages ONLY allow-listed paths (respecting .gitignore), scans staged text for secrets,
+> 148:    """Small manifest of tracked/allow-listed files (path, bytes, sha256) for recovery checks."""
+> 150:    for rel in sorted(allowlisted_files()):
+> 177:def allowlisted_files() -> list[str]:
+> 178:    """Allow-listed files that git would track (tracked + untracked-not-ignored)."""
+> 179:    out = git("ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", *CFG["allowlist"],
+> 192:    limit = CFG["max_plain_git_file_mb"] * 1024 * 1024
+> 319:            # explicitly allowed session-branch pattern (protected branches were rejected above).
+> 350:        # ---- 3. stage allow-listed paths ----------------------------------------------
+> 354:        files = allowlisted_files()
+> 359:        # also record deletions of tracked allow-listed files that were removed on disk
+> 361:        deleted = [x for x in git("ls-files", "--deleted", "-z", "--", *CFG["allowlist"],
+> {'project': 'RAINBOW — 11-screen 3D mobile game', 'repo_full_name': 'josiahscalia5-dev/rainbow-', 'remote_name': 'origin', 'remote_url_must_contain': 'github.com/josiahscalia5-dev/rainbow-', 'branch': 'ccr-681a37bb-5jqfbu', 'session_bra …[+1627 chars]
+
+### 🤖 Claude — 2026-11-19T23:56:12.575Z
+
+> 🔧 **Bash** `{"command": "grep -n 'skipped\\|small\\|wip_max\\|WIP_MAX\\|kb\\|KB' scripts/rainbow-autosave.py | head -20; python3 -c \"\nimport json,os;d=json.load(open('backups/wip/claude__rainbow-benny-c21/INFO.json'))\ntot=0\nfor f in d['untracked_skipped']:\n  p='/home/user/wt/benny/'+f\n  s=os.path.getsize(p) if os.path.exists(p) else -1; tot+=max(s,0)\n  print(s//1024,'KB',f)\nprint('total MB',tot/1e6)\" | tail -12", "description": "Find why Benny snapshot skipped files"}`
+
+### 🧑 User — 2026-11-19T23:56:12.690Z
+
+> ↩︎ result: 245:    (`git diff HEAD --binary`) and small untracked files. Committed with this autosave to the SESSION branch only —
+> 278:                "untracked_skipped": [u for u in untracked if u not in copied],
+> 328:                row["result"] = "skipped"
+> 432:        if row["result"] not in ("skipped",):
+> 2342 KB qa/benny/r20/t1/before/s05_start.png
+> 2210 KB qa/benny/r20/t1/before/s05_swim3u.png
+> 1985 KB qa/benny/r20/t1/before/s_right_steer.png
+> 2318 KB qa/benny/r20/t1/benny05/f00_start.png
+> 2083 KB qa/benny/r20/t1/benny05/f03_forward3u.png
+> 2382 KB qa/benny/r20/t1/benny05/s05_start.png
+> 2243 KB qa/benny/r20/t1/benny05/s05_swim3u.png
+> 1909 KB qa/benny/r20/t1/benny05/s07_swim3u.png
+> 1950 KB qa/benny/r20/t1/benny05/s_left_steer.png
+> 2021 KB qa/benny/r20/t1/benny05/s_right_steer.png
+> 2430 KB qa/benny/r20/t1/benny05/swim_clip_half.mp4
+> total MB 68.801466
+
+### 🤖 Claude — 2026-11-19T23:56:13.925Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "offset": 236, "limit": 60}`
+
+### 🧑 User — 2026-11-19T23:56:14.001Z
+
+> ↩︎ result: 236	    if remote_sha != head:
+> 237	        return False, f"remote verification mismatch: remote={remote_sha or 'none'} local={head}"
+> 238	    return True, ""
+> 239	
+> 240	
+> 241	def snapshot_worktrees() -> list[str]:
+> 242	    """User order 2026-11-18: also preserve UNFINISHED specialist work. For every other git worktree of this repo
+> 243	    (specialists work in /home/user/wt/<sNN> on their own branches) write, read-only (--no-optional-locks: never takes
+> 244	    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 245	    (`git diff HEAD --binary`) and small untracked files. Committed with this autosave to the SESSION branch only —
+> 246	    the specialist branches themselves are never touched."""
+> 247	    notes: list[str] = []
+> 248	    wl = git("worktree", "list", "--porcelain", check=False).stdout
+> 249	    root = REPO / "backups" / "wip"
+> 250	    for block in wl.strip().split("\n\n"):
+> 251	        kv = dict(line.split(" ", 1) if " " in line else (line, "") for line in block.splitlines())
+> 252	        wt = Path(kv.get("worktree", ""))
+> 253	        if not wt or wt.resolve() == REPO.resolve() or not wt.exists():
+> 254	            continue
+> 255	         …[+2482 chars]
+
+### 🤖 Claude — 2026-11-19T23:56:29.575Z
+
+> 🔧 **Bash** `{"command": "grep -n 'snapshot_worktrees()\\|def seed_live\\|^import\\|^from\\|HOME\\|Path.home' scripts/rainbow-autosave.py | head -20; grep -n 'png\\|mp4\\|glb' .gitattributes | head; du -sh .git 2>/dev/null | cut -f1", "description": "Find snapshot call site and LFS rules"}`
+
+### 🧑 User — 2026-11-19T23:56:29.715Z
+
+> ↩︎ result: 21:from __future__ import annotations
+> 23:import argparse
+> 24:import datetime as dt
+> 25:import fcntl
+> 26:import fnmatch
+> 27:import hashlib
+> 28:import json
+> 29:import os
+> 30:import re
+> 31:import subprocess
+> 32:import sys
+> 33:import time
+> 34:import urllib.request
+> 35:from pathlib import Path
+> 91:def seed_live() -> None:
+> 241:def snapshot_worktrees() -> list[str]:
+> 344:            wip = snapshot_worktrees()
+> 436:            sched = (Path.home() / ".rainbow-autosave-install.log").read_text().strip().splitlines()[-1]
+> 4:*.glb   filter=lfs diff=lfs merge=lfs -text
+> 12:*.mp4   filter=lfs diff=lfs merge=lfs -text
+> 6.8G
+
+### 🤖 Claude — 2026-11-19T23:56:30.990Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "offset": 336, "limit": 16}`
+
+### 🧑 User — 2026-11-19T23:56:31.019Z
+
+> ↩︎ result: 336	                                str(REPO), CFG["claude_projects_glob"]], capture_output=True, text=True, timeout=300)
+> 337	            if p.returncode != 0:
+> 338	                row["transcript_error"] = p.stderr.strip()[-300:]
+> 339	        else:
+> 340	            row["transcript_note"] = ("repo privacy could not be verified" if private is None
+> 341	                                      else "repo is NOT private") + " — transcripts not refreshed"
+> 342	        refresh_manifest()
+> 343	        try:
+> 344	            wip = snapshot_worktrees()
+> 345	            if wip:
+> 346	                row["wip_snapshots"] = wip
+> 347	        except Exception as e:  # a snapshot problem must never block the backup itself
+> 348	            row["wip_error"] = str(e)[:300]
+> 349	
+> 350	        # ---- 3. stage allow-listed paths ----------------------------------------------
+> 351	        # tracked status/log files: start from HEAD; they are refreshed from the live log only when a
+

@@ -48,22 +48,22 @@ type V4 = [number, number, number, number];
  *  the approved means: fur (207, 74, 151), pompom (133, 30, 229) */
 const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, number, number] }> = {
   fur_body: {
-    lock: [n('blx', 30), n('bly', 0.9), n('blz', 0.7), n('blw', 220)],
-    shade: [n('bsx', 0.35), n('bsy', 0.25), n('bsz', 0.45), n('bsw', 0.35)],
-    comb: [n('bcx', 0.8), n('bcy', 0.6), n('bcz', 0.2), 0],
-    color: lin('bcol', [0.3975, 0.0861, 0.2019]),
+    lock: [n('blx', 18), n('bly', 1.0), n('blz', 0.85), n('blw', 260)],
+    shade: [n('bsx', 0.3), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],
+    comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.25), 0],
+    color: lin('bcol', [0.23, 0.075, 0.136]),
   },
   fur_armL: {
     lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
     shade: [0.35, 0.25, 0.45, 0.35],
     comb: [n('acx', 0.5), 0.7, 0.2, 0],
-    color: lin('acol', [0.3975, 0.0861, 0.2019]),
+    color: lin('acol', [0.23, 0.075, 0.136]),
   },
   fur_armR: {
     lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
     shade: [0.35, 0.25, 0.45, 0.35],
     comb: [n('acx', 0.5), 0.7, 0.2, 0],
-    color: lin('acol', [0.3975, 0.0861, 0.2019]),
+    color: lin('acol', [0.23, 0.075, 0.136]),
   },
   fur_pom: {
     lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],
@@ -79,7 +79,12 @@ export const HAT20 = {
   /** uniform scale of the whole beanie (cuff, crown, star, pompom) about the head centre */
   scale: n('hs', 1.1),
   /** extra drop along the body's up axis (units) */
-  drop: n('hd', 0.35),
+  drop: n('hd', 0.18),
+  /** backward tilt about the hat's X axis (rad, − = top toward his back): the BACK of the cuff (what the rear chase
+   *  cameras see) comes down to the approved seat while the FRONT stays above his eyes (eye tops ≈ +0.18) */
+  tilt: n('ht', -0.23),
+  /** body-fur bald zone under the cuff: cos of the cone angle around the (tilted) hat up axis (GLB 0.414) */
+  baldW: n('bw', 0.17),
   /** pompom: extra scale and lift (hat-local, after the beanie scale) */
   pomScale: n('ps', 1.03),
   pomDY: n('pdy', 0.0),
@@ -149,12 +154,18 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   // ---- beanie: bigger, lower ----
   const hat = get('hat');
   if (hat) {
+    hat.userData.b20rest = { y: hat.position.y, rx: hat.rotation.x, s: hat.scale.x };
     hat.scale.multiplyScalar(HAT20.scale);
     hat.position.y -= HAT20.drop;
-    // body fur stays bald under the (now lower) cuff: threshold follows the new cuff bottom (fur.ts uBald.w = cos angle)
+    hat.rotation.x += HAT20.tilt;
+    // body fur stays bald under the (now lower, tilted) cuff: cone axis follows the tilt (fur.ts uBald: xyz axis, w = cos)
     const body = furs.find((f) => f.mesh.name === 'fur_body');
     const ub = (body?.uniforms as unknown as { uBald?: { value: THREE.Vector4 } } | undefined)?.uBald;
-    if (ub) ub.value.w -= n('bald', 0.05);
+    if (ub) {
+      ub.value.w = HAT20.baldW;
+      const ax = new THREE.Vector3(ub.value.x, ub.value.y, ub.value.z).applyAxisAngle(new THREE.Vector3(1, 0, 0), HAT20.tilt);
+      ub.value.set(ax.x, ax.y, ax.z, HAT20.baldW);
+    }
   }
   const pom = get('pom');
   if (pom) {

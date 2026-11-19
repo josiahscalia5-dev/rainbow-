@@ -25,14 +25,21 @@ for k in range(NS):
         t = rnd.random(); env = math.sin(math.pi * t) ** 0.6           # taller in the middle, tapering at both ends
         r = (0.08 + (rnd.random() ** 1.7) * 0.34) * (0.55 + 0.45 * env)
         cands.append((r, t, env))
-    cands.sort(key=lambda c: -c[0])   # big bubbles first, small ones fill the gaps
+    cands.sort(key=lambda c: -c[0] * rnd.uniform(0.7, 1.3))   # mostly big bubbles first, small ones fill in / on top
     skew = rnd.uniform(-0.25, 0.25)    # the ridge peaks off-centre (no two heaps alike)
     for r, t, env in cands:
         for _ in range(30):
             x = (t - 0.5) * L + rnd.uniform(-0.08, 0.08)
             y = rnd.gauss(0, 0.24 * W) * (0.6 + 0.4 * env)
-            ridge = math.exp(-(y / (0.42 * W)) ** 2) * env * (1.0 + skew * (t - 0.5) * 2)
-            z = r * 0.55 + max(0.0, ridge) * rnd.uniform(0.03, 0.34)   # LOW heaps (the painted banks lie low and wide)
+            ridge = max(0.0, math.exp(-(y / (0.42 * W)) ** 2) * env * (1.0 + skew * (t - 0.5) * 2))
+            # r20: DROP the bubble onto the heap — it rests on the water (sunk 10 %) or on the bubbles below it (slight
+            # overlap, the painted bubbles squeeze together), so the heap stacks 2-3 round bubbles deep at its ridge
+            # instead of one half-sunk layer; spots that would pile higher than the low ridge envelope are skipped
+            z = r * 0.9
+            for c2, r2 in placed:
+                dxy = math.hypot(x - c2.x, y - c2.y); reach = 0.86 * (r + r2)
+                if dxy < reach: z = max(z, c2.z + math.sqrt(reach * reach - dxy * dxy))
+            if z - r * 0.9 > 0.75 * ridge + 0.02: continue
             c = Vector((x, y, z))
             if free(c, r):
                 placed.append((c, r)); break
