@@ -761,3 +761,72 @@ The sub-rims show, but the bands still look flat, the bulbs and reflections are 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T20:54:21.832Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('$S/s04tex/n3/f10_forward10u.png').convert('RGB'); a.crop((0,0,864,300)).save('$S/s04tex/z_f10top.png')\"", "description": "Crop very top of f10"}`
+
+### 🧑 User — 2026-11-19T20:54:22.120Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T20:54:27.342Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/z_f10top.png"}`
+
+### 🧑 User — 2026-11-19T20:54:27.353Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:54:36.922Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; cd /home/user/wt/s04b; Q=$(cat $S/s04tex/V3.txt); ONLY=f20_forward20u timeout 600 node $S/s04tex/audit_only.mjs 04 $S/s04tex/dbg \"$Q&m04rnear=1&m04rnr=0.6&m04rpds=0.3\" 2>&1 | grep \"^04\\|error\" ; python3 -c \"\nfrom PIL import Image\na=Image.open('$S/s04tex/dbg/f20_forward20u.png').convert('RGB'); a.crop((0,180,864,560)).save('$S/s04tex/z_dbg.png')\"", "description": "Debug render with oversized bulbs"}`
+
+### 🧑 User — 2026-11-19T20:55:09.933Z
+
+> ↩︎ result: 04 f20_forward20u s 98.37 lat 0 stage 04 frames 86
+
+### 🤖 Claude — 2026-11-19T20:55:13.423Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/z_dbg.png"}`
+
+### 🧑 User — 2026-11-19T20:55:13.453Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:55:32.147Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert a in s, a[:60]; s=s.replace(a,b)\nrep(\"\"\"uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)\"\"\",\n\"\"\"uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)\nuniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z reflection patchiness (0 = even stripe), w bulb size\"\"\")\nrep(\"\"\"            float sR = uRNear2.w * fd * …[+2140 chars]`
+
+### 🧑 User — 2026-11-19T20:56:16.134Z
+
+> ↩︎ result: 04 f10_forward10u s 88.326 lat 0 stage 04 frames 43
+> 04 f20_forward20u s 98.187 lat 0 stage 04 frames 86
+
+### 🤖 Claude — 2026-11-19T20:56:19.594Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/z_f20.png"}`
+
+### 🧑 User — 2026-11-19T20:56:19.616Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:56:20.286Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/s04tex/n4/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-19T20:56:20.355Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:56:34.416Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('$S/s04tex/n4/f20_forward20u.png').convert('RGB'); a.crop((0,220,240,360)).resize((960,560),Image.NEAREST).save('$S/s04tex/z_seam.png')\"", "description": "Zoom suspected seam"}`
+
+### 🧑 User — 2026-11-19T20:56:34.594Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T20:56:34.770Z
+
+You've hit your 5-hour limit · resets 12:10am (UTC)
+

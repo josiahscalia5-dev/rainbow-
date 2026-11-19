@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index f6c98dd..1fd1fff 100644
+index f6c98dd..14963a9 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -436,15 +436,17 @@ void main() {
@@ -64,7 +64,23 @@ index f6c98dd..1fd1fff 100644
    if (uSS.z > 0.0) {
      // r18 m04sswirl: the water's top edge against the gold wall laps up and down in soft tongues (painted: no straight
      // hard line where the water meets the wall); the lilac fringe follows the lapping edge
-@@ -661,6 +685,13 @@ void main() {
+@@ -571,12 +595,13 @@ void main() {
+   if (uEdge.x > 0.5) {
+     // r13 m04edge: soft irregular water edge against the gold wall — pink / magenta current then a lilac-white lacy fringe
+     // in broken patches (no straight hard line, no tall foam): uEdge.y = half arc to the edge, z = fringe width, w = strength
+-    float e = smoothstep(edgeY - uEdge.z, edgeY - 0.04, abs(vS));
++    float ew = uEdge.z * mix(1.0, 0.45, wuK);                             // r19b m04wup: a narrower lace on the climbing crest
++    float e = smoothstep(edgeY - ew, edgeY - 0.04, abs(vS));
+     float n1 = vn(vec2(fl * 0.9, sign(vS) * 7.0 + abs(vS) * 2.0)), n2 = vn(vec2(fl * 2.7 + 3.0, abs(vS) * 6.0));
+     float patchy = smoothstep(0.35, 0.75, 0.65 * n1 + 0.35 * n2);
+     vec3 pinkC = mix(vec3(0.78, 0.16, 0.66), vec3(1.0, 0.45, 0.82), n2);
+     col = mix(col, pinkC, uEdge.w * smoothstep(edgeY - uEdge.z * 2.2, edgeY - uEdge.z, abs(vS)) * (0.5 + 0.5 * n1));
+-    fringe = uEdge.w * e * patchy;
++    fringe = uEdge.w * e * patchy * mix(1.0, 0.7, wuK);
+     col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
+   }
+   if (uPk.x > 0.5) {
+@@ -661,6 +686,13 @@ void main() {
      float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
      float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0;
      float tb = clamp((asB + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
@@ -78,7 +94,7 @@ index f6c98dd..1fd1fff 100644
      float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
      float ub = (1.0 - tb) * uSB1.z;
      vec3 bc = mix(texture2D(uSB, vec2(ub, vb)).rgb, texture2D(uSB, vec2(ub, vb * 0.81 + 0.29)).rgb, w);
-@@ -716,11 +747,18 @@ void main() {
+@@ -716,11 +748,18 @@ void main() {
      col = mix(col, vec3(0.96, 1.0, 1.0), (1.0 - smoothstep(-px, px, abs(d + uArr.w * 0.12) - uArr.w * 0.10)) * fade);
    }
    col = clamp(col, 0.0, 1.0);
@@ -98,7 +114,7 @@ index f6c98dd..1fd1fff 100644
  }`;
  
  /** r16 `&m04end=1`: the distant glowing opening (own material on the far end disc; the ring shader is untouched). The disc
-@@ -1222,13 +1260,18 @@ export function addM04(ctx: M04Ctx) {
+@@ -1222,13 +1261,18 @@ export function addM04(ctx: M04Ctx) {
    if (M04.river) {
      const nX = 28, nA = Math.ceil(len / 0.5);
      const pos: number[] = [], aR: number[] = [], idx: number[] = [];
@@ -118,7 +134,7 @@ index f6c98dd..1fd1fff 100644
        xs.push({ x: Math.sign(u) * x, y });
      }
      const arc: number[] = [0]; const mid = nX / 2;
-@@ -1247,6 +1290,35 @@ export function addM04(ctx: M04Ctx) {
+@@ -1247,6 +1291,35 @@ export function addM04(ctx: M04Ctx) {
        const p0 = j * (nX + 1) + i, p1 = p0 + 1, p2 = p0 + nX + 1, p3 = p2 + 1;
        idx.push(p0, p2, p1, p1, p2, p3);
      }
@@ -154,15 +170,15 @@ index f6c98dd..1fd1fff 100644
      const g = new THREE.BufferGeometry();
      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
      g.setAttribute('aR', new THREE.Float32BufferAttribute(aR, 2));
-@@ -1301,11 +1373,30 @@ export function addM04(ctx: M04Ctx) {
+@@ -1301,11 +1374,30 @@ export function addM04(ctx: M04Ctx) {
          uSS: { value: M04.num('m04sswirl', 0) > 0 && M04.num('m04sband', 0) > 0
            ? new THREE.Vector4(M04.num('m04ssa', 0.45), M04.num('m04ssl', 6.5), M04.num('m04ssz', 0.0), M04.num('m04ssw', 3.2))
            : new THREE.Vector4(0, 1, 0, 1) },
 +        // r19b `&m04wup=1` (needs m04sband): m04wuh highest climb (u up the wall), m04wul tongue wavelength, m04wud tongue
 +        // depth, m04wub band share at the old edge, m04wun0 / m04wun1 / m04wuf the climb falls to m04wuf of it from m04wun0
 +        // to m04wun1 u ahead of Benny, m04wus soft top edge, m04wuv tongue drift with the current, m04wut band column at the crest
-+        uWU: { value: wup ? new THREE.Vector4(wuH, M04.num('m04wul', 12), M04.num('m04wud', 0.3), M04.num('m04wub', 0.6)) : new THREE.Vector4(0, 1, 0, 1) },
-+        uWU2: { value: new THREE.Vector4(M04.num('m04wun0', 3), M04.num('m04wun1', 18), M04.num('m04wuf', 0.45), M04.num('m04wus', 0.15)) },
++        uWU: { value: wup ? new THREE.Vector4(wuH, M04.num('m04wul', 12), M04.num('m04wud', 0.15), M04.num('m04wub', 0.6)) : new THREE.Vector4(0, 1, 0, 1) },
++        uWU2: { value: new THREE.Vector4(M04.num('m04wun0', 2), M04.num('m04wun1', 14), M04.num('m04wuf', 0.3), M04.num('m04wus', 0.15)) },
 +        uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), 0, M04.num('m04wut', 0.08)) },
          uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
          uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },

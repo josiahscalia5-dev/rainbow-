@@ -3604,3 +3604,42 @@ If all four land well, 8/10 while swimming is realistic. I won't call it 8/10 un
 
 Nothing changes in the normal game until each piece is proven. Each worker reports after every finished step. I'll check the results at full size, combine the kept ones into one updated Screen 04, and show you your approved screen next to before and now, at the start, swimming, inside the tunnel and steering, plus a swim clip. No credits are being spent; it's all Blender and code, and everything saves to GitHub automatically.
 
+### 🧑 User — 2026-11-19T20:56:34.737Z
+
+<task-notification>
+<task-id>a475f71b44a5f5357</task-id>
+<tool-use-id>toolu_01KVMHWtzXvpwrGNU7CS34GS</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/a475f71b44a5f5357.output</output-file>
+<status>failed</status>
+<summary>Agent "Benny approved look r19b" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 12:10am (UTC) (error type rate_limit, HTTP 429, request id req_011ChCxLehBxH4kV8MgXJC6d, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 12:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+
+### 🤖 Claude — 2026-11-19T20:56:36.081Z
+
+You've hit your 5-hour limit · resets 12:10am (UTC)
+
+### 🧑 User — 2026-11-19T20:56:36.100Z
+
+<task-notification>
+<task-id>adc051ce44d0d2b74</task-id>
+<tool-use-id>toolu_01A15Lq4v4BVBG2KmS7nMzVU</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/adc051ce44d0d2b74.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 rings r19b" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 12:10am (UTC) (error type rate_limit, HTTP 429, request id req_011ChCxLf32Arn8ep2ZgAsoZ, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 12:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The sub-rims show, but the bands still look flat, the bulbs and reflections are too weak. I'll rework it into a polished-tube reflection model so each sub-band gets a moving highlight.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-19T20:56:58.365Z
+
+<task-notification>
+<task-id>a5b506d8de68666e1</task-id>
+<tool-use-id>toolu_01LGNGfVqrknn3j5ykL32Y93</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/a5b506d8de68666e1.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 water/foam r19b" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 12:10am (UTC) (error type rate_limit, HTTP 429, request id req_011ChCxNPh6hSjp2P6qoL3PZ, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 12:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>I'll start by reading my progress log and the coordination docs.</result>
+</task-notification>
+
