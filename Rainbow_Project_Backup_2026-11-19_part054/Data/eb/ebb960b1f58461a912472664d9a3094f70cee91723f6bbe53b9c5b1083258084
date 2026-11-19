@@ -1,0 +1,9 @@
+from pathlib import Path
+import shutil
+d=Path.cwd()/'verification';d.mkdir(exist_ok=True)
+prev=Path("/tmp/rainbow-claudia-transfer.u9XkC10f/tool-verification")
+for x in ['games','toolchain','reviewed','spector-browser']:
+ (d/x).symlink_to((prev/x).resolve(),target_is_directory=True)
+for x in ['diagnostic-output','blender-config','blender-cache','mcp-tmp','mcp-cache','mcp-config']:(d/x).mkdir(exist_ok=True)
+for x in ['verify-blender.py','mcp-schemas.py','loopback-only.cjs']:
+ shutil.copyfile(prev/x,d/x)

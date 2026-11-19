@@ -1,0 +1,297 @@
+{
+  "lead": "d22ec46b72146d69703d4271cd54c1c852164dff",
+  "redecodedDepthImages": [
+    {
+      "path": "qa/da3/2026-11-18/04_2_GAME_depth_at_approved_view.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "33627516ed4aca815427c6d102b9562e58108232b76b80cfdbc5f820d104f066"
+    },
+    {
+      "path": "qa/da3/2026-11-18/04_3_DA3_DA3MONO-LARGE_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        174
+      ],
+      "sha256": "c38dd72c7e0e0708f0f44983501150098cc709e3b3b267dd57471552b2dc73eb"
+    },
+    {
+      "path": "qa/da3/2026-11-18/04_4_DA3_DA3MONO-LARGE_disagreement.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        254
+      ],
+      "sha256": "1370d76312080f73721d4323bfeb3f93d60b6f43cc83a038c0e9e9588f32b657"
+    },
+    {
+      "path": "qa/da3/2026-11-18/04_5_DA3MONO_own_scale_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        32,
+        206
+      ],
+      "sha256": "8f23df23f160ed7f5209948fb2375a997f22f5fe52383dafbcc64949ca0255fa"
+    },
+    {
+      "path": "qa/da3/2026-11-18/05_2_GAME_depth_at_approved_view.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "4a21ef69ccf3d0acf8dbb50d9b41dc5448a40e8e02a07c5c589090293676aac8"
+    },
+    {
+      "path": "qa/da3/2026-11-18/05_3_DA3_DA3MONO-LARGE_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "104d9ed3758aaa3d6027bdaa21d276450bfb7dfe9a7b63123bc1eb31e37d3e06"
+    },
+    {
+      "path": "qa/da3/2026-11-18/05_4_DA3_DA3MONO-LARGE_disagreement.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        254
+      ],
+      "sha256": "9c7e52ab35695ce7df5dcbad93a3a332f963855ee0bd99bd0f06f694014d44dd"
+    },
+    {
+      "path": "qa/da3/2026-11-18/05_5_DA3MONO_own_scale_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        32,
+        206
+      ],
+      "sha256": "79c50a274c7a0b1a2dfc2ff00b700a912795d9e8414f03055e1ce0b3aeebb8b3"
+    },
+    {
+      "path": "qa/da3/2026-11-18/06_2_GAME_depth_at_approved_view.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "be3034513eef3501e05052cb2de0f0d11ee4f4be27ef40e189e5d9470ddb6b14"
+    },
+    {
+      "path": "qa/da3/2026-11-18/06_3_DA3_DA3MONO-LARGE_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "2704812ed745cb6b29dfda243bba780d58deba51405e08af8f39579010780d4a"
+    },
+    {
+      "path": "qa/da3/2026-11-18/06_4_DA3_DA3MONO-LARGE_disagreement.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        254
+      ],
+      "sha256": "6c3470c9bbc8beed35b8e8787137da2cf6193eeadc44204355cfcd80665bd3fb"
+    },
+    {
+      "path": "qa/da3/2026-11-18/06_5_DA3MONO_own_scale_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        32,
+        206
+      ],
+      "sha256": "31e841391dafa014f1ea1aa25f2b758a9933179235f2797ef9bfdcab2ef1cf43"
+    },
+    {
+      "path": "qa/da3/2026-11-18/07_2_GAME_depth_at_approved_view.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "e444a496cea2ac053179a6754e2889cffb310a67a727e427887b4bd9f0fbd826"
+    },
+    {
+      "path": "qa/da3/2026-11-18/07_3_DA3_DA3MONO-LARGE_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "98fe78e46de5ad85c961652d58827a954abd469033d113ccad448a0c58ce5fa1"
+    },
+    {
+      "path": "qa/da3/2026-11-18/07_4_DA3_DA3MONO-LARGE_disagreement.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        255
+      ],
+      "sha256": "90296b27a20efd57db6e452d268cfd0072ea6984a05ed45918f23b5ae7b199a2"
+    },
+    {
+      "path": "qa/da3/2026-11-18/07_5_DA3MONO_own_scale_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        32,
+        206
+      ],
+      "sha256": "9a8a5851fe8d0cd3a50a73b340722934e74a2f6d496f8bd6de6d2c8691664d13"
+    },
+    {
+      "path": "qa/da3/2026-11-18/08_2_GAME_depth_at_approved_view.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "36efba8c1d05c0fdce688b4567985cef7cc0195eb207825f3d85bce92a857b0b"
+    },
+    {
+      "path": "qa/da3/2026-11-18/08_3_DA3_DA3MONO-LARGE_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        206
+      ],
+      "sha256": "e6934eee7df4d768388e04c4b7eaef3a53fb7c25a66655f8b31aa34aeeb62419"
+    },
+    {
+      "path": "qa/da3/2026-11-18/08_4_DA3_DA3MONO-LARGE_disagreement.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        0,
+        254
+      ],
+      "sha256": "a0e041dec745633cf752fb5e5401d5e8601a8a5559392d281c7e68a36f56b49e"
+    },
+    {
+      "path": "qa/da3/2026-11-18/08_5_DA3MONO_own_scale_depth.png",
+      "size": [
+        864,
+        1536
+      ],
+      "range": [
+        32,
+        206
+      ],
+      "sha256": "028b13c1309a247a2714c2ff2aac855ca87f048a09a065d38c9c2a0446e94fdc"
+    }
+  ],
+  "currentCameraData": {
+    "04": [
+      {
+        "path": "assets/textures/match04/cam04_locked.json",
+        "sha256": "b9e9fbeab6310935fbf0c1a78811179692a3db3166dc11f21dbfcdec8e01418c"
+      },
+      {
+        "path": "assets/textures/match04/proj04.json",
+        "sha256": "4b02ce9760eaea9a873705dbb34420415c7bf197d4dfb4b17a06365f6a656368"
+      }
+    ],
+    "05": [
+      {
+        "path": "qa/pilot05/wave6/camera_lock/camera05.json",
+        "sha256": "5ff4d1a80eecabc003a0012a5a4e1fde0f10da41cab584a52c9da24f4bcb3ed3"
+      },
+      {
+        "path": "qa/pilot05/wave6/camera_lock/landmarks.json",
+        "sha256": "ec28c4bf069f078f540ec8a37d5298ddc44899a6f6d1cba741899e01067390e7"
+      }
+    ],
+    "06": [
+      {
+        "path": "assets/textures/match06/cam06_locked.json",
+        "sha256": "ea8893358035815dcbaa23dc05983df111211d2f46a5c48dd85f8dbb8decbf63"
+      },
+      {
+        "path": "assets/textures/match06/proj06.json",
+        "sha256": "121f901e41312adfdd2a0a0e2d2040491613aeeaaae306215bb15b4879083198"
+      }
+    ],
+    "07": [
+      {
+        "path": "assets/textures/match07/cam07_locked.json",
+        "sha256": "b63350616673bd309162135053a63bd1f74f0625f09c9608af9a0dd64506a4de"
+      },
+      {
+        "path": "assets/textures/match07/proj07.json",
+        "sha256": "0551d41ce98bd16a2d9bfe01e7410f9135f7f267742cd68d4d51575c1345cb2d"
+      }
+    ],
+    "08": [
+      {
+        "path": "assets/textures/match08/cam08_locked.json",
+        "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
+      },
+      {
+        "path": "assets/textures/match08/proj08.json",
+        "sha256": "c839818082995627eb39a9d2fec325fdcdced5c11048c96e9683b6847f9d1dad"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "commit": "6a5bc52854542aebac32c4d5b543e0fd7a4ff97e",
+  "branch": "codex/s04-reflected-ring-bays",
+  "parent": "38ad7b0dfc042f34e8239d4bea7448248375b371",
+  "retained": {
+    "branch": "claude/rainbow-s04-match-c17",
+    "commit": "ad5fbac592444e90fd1b53d62e7fa0b62391c032"
+  },
+  "sourceFiles": [
+    "src/world/match04m4.ts"
+  ],
+  "utc": "2026-11-19T00:36:03.781998+00:00",
+  "purpose": "Isolated experimental source, pending visual review."
+}

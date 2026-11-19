@@ -1,0 +1,11 @@
+{
+  "status": "REJECTED",
+  "short": "The glints follow the chamber’s measured curve, but the foreground water shows no clear visual improvement.",
+  "paragraphs": [
+    "The previous chamber candidate narrowed the magenta shoulder and exposed more cyan water beside Benny. This trial keeps that physical shoulder and bases the highlights on the distance traveled along the curved channel. The positions and world transforms of all 22 named chamber meshes match the preceding candidate, including the washer door, ring, perforated platform, purple towel and four spouts.",
+    "Across the sampled floor the fitted river travels 52.883 game units while the longitudinal span is 51.956. That difference changes which glints pass Benny on turns. At +3, the long foreground strokes still have the same shape. Across the fixed cyan crop the longest vertical bright run measures 38 pixels in both versions. Under hard right the longest run increases from 77 to 90 pixels. These counts describe the camera view, not similarity to an unpictured reference.",
+    "The exact approved Screen 08 has separated bright strokes that bend around a winding cyan channel and leave the gold rim and platform legible. Shifting the existing repeating glints does not reproduce those shapes in the moving foreground. Keep the earlier chamber shoulder candidate. The next physical test should measure the transverse width and direction of individual highlights across the near-water and projected-floor join."
+  ],
+  "watch": "Watch the early river at +3 and the hard-right view around 1.1 seconds. Compare the platform-and-spouts pose and the exit to see how the scene holds together around the water.",
+  "proposals": "Use the existing chamber shoulder’s hard turns and platform approach to review the unseen foreground. The new flow-coordinate calculation is saved for inspection. This trial is rejected as a visual replacement."
+}

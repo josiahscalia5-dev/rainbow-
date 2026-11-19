@@ -1,0 +1,21 @@
+{
+  "branch": "codex/s05-anchored-bend-highlights",
+  "commit": "3c8e9812b6ce3b3895a8616ec338999469ffbed2",
+  "sourceCommit": "91e91b57f81dbc0567ec6709d8d09f553a3631f7",
+  "verifiedUTC": "2026-11-19T00:52:36.281119+00:00",
+  "verifiedFiles": 56,
+  "lfsDownloads": [
+    {
+      "path": "experiments/codex/s05-anchored-bend-highlights/CLAUDIA_BEFORE/ride.mp4",
+      "bytes": 10312979,
+      "downloadedSha256": "5f2cfebcf1ee7a4bcb4a6826f6882199e20280af528551e60f13efba8b9eae1a"
+    },
+    {
+      "path": "experiments/codex/s05-anchored-bend-highlights/CODEX_NEW/ride.mp4",
+      "bytes": 10648588,
+      "downloadedSha256": "f48333b60b48d495753f42e61bc1bbf61fe825824f32d785208b82f049eb7d97"
+    }
+  ],
+  "originalsVerified": 13,
+  "evidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/3c8e9812b6ce3b3895a8616ec338999469ffbed2/experiments/codex/s05-anchored-bend-highlights"
+}

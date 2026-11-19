@@ -1,0 +1,396 @@
+{
+  "screen": "05",
+  "camera": {
+    "matrixWorld": [
+      0.9986658287817988,
+      -0.0021497500655029284,
+      -0.05159400157207067,
+      0,
+      -0.011394273178140263,
+      0.9653330416232079,
+      -0.2607724856828803,
+      0,
+      0.05036599013525768,
+      0.26101244668624896,
+      0.9640206272235845,
+      0,
+      1.920288434729371,
+      -37.94339912418104,
+      -68.28062556286872,
+      1
+    ],
+    "fov": 62,
+    "aspect": 0.5625,
+    "near": 0.05,
+    "far": 1200,
+    "width": 864,
+    "height": 1536,
+    "position": [
+      1.920288434729371,
+      -37.94339912418104,
+      -68.28062556286872
+    ],
+    "target": [
+      0.6913582754290832,
+      -44.31210282332552,
+      -91.80272886712419
+    ]
+  },
+  "course": {
+    "mode": "ride",
+    "stage": "05",
+    "s": 132.438,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -41.348,
+    "bennyVisible": true,
+    "cam": [
+      1.92,
+      -37.94,
+      -68.28
+    ]
+  },
+  "shaderTime": 12,
+  "actor": {
+    "names": [
+      "eyeL_happy",
+      "eyeL_dizzy",
+      "lash_L_05",
+      "lash_L_085",
+      "eyeR_happy",
+      "eyeR_dizzy",
+      "lash_R_05",
+      "lash_R_085",
+      "blushL",
+      "blushR",
+      "nose",
+      "mouth_happy",
+      "mouth_dizzy",
+      "mouth_peek",
+      "palmL",
+      "fur_armL",
+      "palmR",
+      "fur_armR",
+      "soleL",
+      "fur_footL",
+      "soleR",
+      "fur_footR",
+      "hat_brim",
+      "hat_crown",
+      "hat_star",
+      "fur_pom",
+      "fur_body"
+    ],
+    "meshes": {
+      "eyeL_happy": {
+        "vertices": 429,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "eyeL_dizzy": {
+        "vertices": 429,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "lash_L_05": {
+        "vertices": 27,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      },
+      "lash_L_085": {
+        "vertices": 27,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      },
+      "eyeR_happy": {
+        "vertices": 429,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "eyeR_dizzy": {
+        "vertices": 429,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "lash_R_05": {
+        "vertices": 27,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      },
+      "lash_R_085": {
+        "vertices": 27,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      },
+      "blushL": {
+        "vertices": 121,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 128,
+            "normalMap": null
+          }
+        ]
+      },
+      "blushR": {
+        "vertices": 121,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 128,
+            "normalMap": null
+          }
+        ]
+      },
+      "nose": {
+        "vertices": 117,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      },
+      "mouth_happy": {
+        "vertices": 81,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "mouth_dizzy": {
+        "vertices": 81,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "mouth_peek": {
+        "vertices": 81,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "palmL": {
+        "vertices": 26,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "fur_armL": {
+        "vertices": 315,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "palmR": {
+        "vertices": 26,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "fur_armR": {
+        "vertices": 315,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "soleL": {
+        "vertices": 30,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "fur_footL": {
+        "vertices": 391,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      },
+      "soleR": {
+        "vertices": 30,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "fur_footR": {
+        "vertices": 391,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": null,
+            "normalMap": null
+          }
+        ]
+      },
+      "hat_brim": {
+        "vertices": 873,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ]
+      },
+      "hat_crown": {
+        "vertices": 1746,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": 1024
+          }
+        ]
+      },
+      "hat_star": {
+        "vertices": 588,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 256,
+            "normalMap": null
+          }
+        ]
+      },
+      "fur_pom": {
+        "vertices": 825,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 512,
+            "normalMap": null
+          }
+        ]
+      },
+      "fur_body": {
+        "vertices": 1813,
+        "materials": [
+          {
+            "name": "",
+            "type": "MeshStandardMaterial",
+            "map": 1024,
+            "normalMap": null
+          }
+        ]
+      }
+    },
+    "rootPosition": [
+      1.517729813032036,
+      -41.348424102617486,
+      -74.72784289137282
+    ],
+    "rootScale": [
+      1,
+      1,
+      1
+    ]
+  }
+}

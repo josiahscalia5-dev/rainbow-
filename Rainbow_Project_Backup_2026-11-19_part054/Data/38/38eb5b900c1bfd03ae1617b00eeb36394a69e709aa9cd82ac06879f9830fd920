@@ -1,0 +1,21 @@
+from pathlib import Path
+import shutil
+p=Path.cwd()
+file=p/'games/06/src/world/match06.ts'
+s=file.read_text()
+mask="  const mask = v2 ? null : await loader.loadAsync(tex('mask06.png'));"
+new="""  // The isolated crest test stores the occluded provisional Benny fill in the unused blue channel.
+  const crestReleaseWater = FLOW && qs?.get('cx06CrestRelease') === '1';
+  const maskName = crestReleaseWater ? 'mask06_crest_release.png' : 'mask06.png';
+  const mask = v2 ? null : await loader.loadAsync(tex(maskName));"""
+mix="        w *= 1.0 - max(mk.r, mk.g) * away * inWater;"
+updated=mix+"""
+        // A baked blue texel marks floor hidden by 3D Benny at the locked opening.
+        // Use the existing world-space flowing river there, even just after crest release.
+        w *= 1.0 - mk.b;"""
+assert s.count(mask)==1 and s.count(mix)==1
+file.write_text(s.replace(mask,new).replace(mix,updated))
+shutil.copyfile(file,p/'repo/src/world/match06.ts')
+asset='assets/textures/match06/mask06_crest_release.png'
+(p/'repo'/asset).parent.mkdir(parents=True,exist_ok=True)
+shutil.copyfile(p/'games/06'/asset,p/'repo'/asset)

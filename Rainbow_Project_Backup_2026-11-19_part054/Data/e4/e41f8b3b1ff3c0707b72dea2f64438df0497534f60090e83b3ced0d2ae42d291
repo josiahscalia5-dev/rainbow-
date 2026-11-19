@@ -1,0 +1,21 @@
+{
+  "branch": "codex/s04-reflected-ring-bays",
+  "commit": "f0dbba6223db3656ded6e420c4a4c5626c8686d4",
+  "sourceCommit": "6a5bc52854542aebac32c4d5b543e0fd7a4ff97e",
+  "verifiedUTC": "2026-11-19T00:45:24.947925+00:00",
+  "verifiedFiles": 53,
+  "lfsDownloads": [
+    {
+      "path": "experiments/codex/s04-reflected-ring-bays/CLAUDIA_BEFORE/ride.mp4",
+      "bytes": 3790969,
+      "downloadedSha256": "ed6100a4e18561ccee50a59ea9e6c88878289a5fe6a7eed78026f830a799eab1"
+    },
+    {
+      "path": "experiments/codex/s04-reflected-ring-bays/CODEX_NEW/ride.mp4",
+      "bytes": 3863914,
+      "downloadedSha256": "07adc46f47a3f9b74f7762172a92b156c1e2f68a1247f42da2001c57179e0df2"
+    }
+  ],
+  "originalsVerified": 13,
+  "evidence": "https://github.com/josiahscalia5-dev/rainbow-/tree/f0dbba6223db3656ded6e420c4a4c5626c8686d4/experiments/codex/s04-reflected-ring-bays"
+}

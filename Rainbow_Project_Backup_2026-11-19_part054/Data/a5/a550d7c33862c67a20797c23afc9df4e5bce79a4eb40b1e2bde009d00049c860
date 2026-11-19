@@ -1,0 +1,15 @@
+{
+  "commit": "41d4d840b9325bf810397ed6bfe28002603723c8",
+  "branch": "codex/s06-crest-release-water",
+  "parent": "394609842ebc30c2832e23b8992c7d9a868ba0c0",
+  "retained": {
+    "branch": "claude/rainbow-s06-match-c17",
+    "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+  },
+  "sourceFiles": [
+    "src/world/match06.ts",
+    "assets/textures/match06/mask06_crest_release.png"
+  ],
+  "utc": "2026-11-19T00:35:52.087262+00:00",
+  "purpose": "Isolated experimental source, pending visual review."
+}

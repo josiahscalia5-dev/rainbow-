@@ -1,0 +1,39 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import os,hashlib,json,shutil,subprocess as sp
+old=Path("/tmp/rainbow-final-fidelity.RuUP0xJ2");p=Path.cwd();repo=p/'repo';repo.mkdir()
+url='https://github.com/josiahscalia5-dev/rainbow-.git'
+target='codex/s06-crest-release-water';base=json.loads((old/'published-06.json').read_text());checkpoint=json.loads((old/'base-06.json').read_text());res=json.loads((old/'final-remote-proof.json').read_text())
+def git(*args,inp=None):
+ return sp.check_output(['git',*args],cwd=repo,input=inp,text=True,stderr=sp.PIPE).strip()
+def refs(data):return {ref.removeprefix('refs/heads/'):sha for sha,ref in (line.split() for line in data.splitlines())}
+live=refs(git('ls-remote','--heads',url));initial=refs((old/'live-heads.tsv').read_text())
+assert not any(live.get(k)!=initial.get(k) for k in set(live)|set(initial) if k.startswith(('ccr-','claude/')))
+assert target not in live and live[base['branch']]==base['commit']
+for q in [res['lead'],*res['specialists'].values()]:assert live[q['branch']]==q['commit']
+git('init','-q')
+(repo/'.git/objects/info/alternates').write_text(str(old/'repos/06/.git/objects')+'\n')
+for k,v in {'remote.origin.url':url,'remote.origin.fetch':'+refs/heads/*:refs/remotes/origin/*','remote.origin.promisor':'true','remote.origin.partialclonefilter':'blob:none','user.name':'Codex','user.email':'codex@users.noreply.github.com','gc.auto':'0'}.items():git('config','--local',k,v)
+git('lfs','install','--local')
+git('fetch','--quiet','--depth=1','--filter=blob:none','--no-tags','origin','refs/heads/'+base['branch']+':refs/remotes/origin/'+base['branch'])
+git('sparse-checkout','set','--no-cone','--stdin',inp='/.gitattributes\n/src/world/match06.ts\n/assets/textures/match06/mask06_crest_release.png\n/experiments/codex/s06-crest-release-water/\n')
+git('-c','filter.lfs.process=','-c','filter.lfs.required=false','checkout','-q','-b',target,base['commit'])
+src=old/'games/06';game=p/'games/06';game.mkdir(parents=True)
+for f in src.iterdir():
+ if f.name in ['src','scripts']:shutil.copytree(f,game/f.name,symlinks=True)
+ elif f.name=='assets':pass
+ elif f.is_dir():(game/f.name).symlink_to(f.resolve(),target_is_directory=True)
+ elif f.is_file():shutil.copyfile(f,game/f.name)
+for rel,expand in [('assets','textures'),('assets/textures','match06'),('assets/textures/match06',None)]:
+ dest=game/rel;dest.mkdir(exist_ok=True);source=src/rel
+ for f in source.iterdir():
+  if f.name!=expand:(dest/f.name).symlink_to(f.resolve(),target_is_directory=f.is_dir())
+assert (repo/'src/world/match06.ts').read_bytes()==(game/'src/world/match06.ts').read_bytes()
+for key,h in checkpoint['referenceManifest'].items():assert hashlib.sha256((game/key).read_bytes()).hexdigest()==h
+(p/'baseline.json').write_text(json.dumps({'utc':datetime.now(timezone.utc).isoformat(),'lead':res['lead'],'specialists':res['specialists'],'parent':{k:base[k] for k in ['branch','commit']},'separateCurvedCandidate':checkpoint['priorCandidate'],'branch':target,'approved':{'path':'references/06_crest_the_rinse_arch.png','sha256':checkpoint['referenceManifest']['references/06_crest_the_rinse_arch.png']},'newerClaudiaRefs':[],'claudiaC17RecordedWIPFiles':0},indent=2)+'\n')
+for f in ['capture.cjs','serve.cjs']:shutil.copyfile(old/f,p/f)
+flags=json.loads((old/'flags.json').read_text());qq=json.loads((old/'queries.json').read_text())
+(p/'queries.json').write_text(json.dumps({'06':qq['06']})+'\n')
+(p/'flags.json').write_text(json.dumps({'06':flags['06']+'&cx06CrestRelease=1'})+'\n')
+shutil.copytree(old/'fixture/06',p/'fixture/06')
+print('Isolated branch at verified tip',base['commit'],flush=True)
