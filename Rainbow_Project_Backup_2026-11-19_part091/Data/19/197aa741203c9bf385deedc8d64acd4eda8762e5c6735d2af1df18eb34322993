@@ -1,0 +1,13 @@
+{
+  "source": "plate06_hybrid.png",
+  "regionXYXY": [
+    235,
+    269,
+    316,
+    373
+  ],
+  "physicalArcWidth": 4.0,
+  "physicalLength": 2.12,
+  "angle": 2.545,
+  "station": 76.39999999999996
+}

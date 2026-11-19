@@ -1,0 +1,272 @@
+{
+  "retained": {
+    "branch": "claude/rainbow-s06-match-c18",
+    "commit": "c649fcbc35780e11cefce83eb54684f1d55752a5"
+  },
+  "approvedSHA256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "native": [
+    864,
+    1536
+  ],
+  "simulationHz": 60,
+  "matchedCamerasStatesSteeringClocks": true,
+  "uninterruptedFilm": {
+    "codec_name": "h264",
+    "width": 648,
+    "height": 1152,
+    "avg_frame_rate": "12/1",
+    "duration": "5.250000",
+    "nb_frames": "63",
+    "side_data_list": [
+      {}
+    ]
+  },
+  "matchedMovieFrames": 63,
+  "numberOfNativePoses": 14,
+  "assertions": {
+    "pauseFreezes": true,
+    "continuousTravel": true,
+    "noCameraCut": true,
+    "noTeleport": true,
+    "plunge": true,
+    "realCoinPickups": true,
+    "victory": true,
+    "heartsLostOnWallBump": true
+  },
+  "fullRide": {
+    "start": 1330,
+    "coins": 91,
+    "score": 2240,
+    "hearts": 5,
+    "stage": "11",
+    "collisions": []
+  },
+  "checkpoints": {
+    "opening": {
+      "changedPixels": 261224,
+      "pixelsWithAChannelChangingOver10": 2909,
+      "drawsBeforeNew": [
+        45,
+        47
+      ],
+      "trianglesBeforeNew": [
+        283635,
+        267253
+      ],
+      "contextLost": false
+    },
+    "forward-03": {
+      "changedPixels": 1147926,
+      "pixelsWithAChannelChangingOver10": 1065323,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "forward-06": {
+      "changedPixels": 1179851,
+      "pixelsWithAChannelChangingOver10": 1108606,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "forward-10": {
+      "changedPixels": 1191678,
+      "pixelsWithAChannelChangingOver10": 1129018,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "forward-20": {
+      "changedPixels": 1183653,
+      "pixelsWithAChannelChangingOver10": 1108076,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "hard-left": {
+      "changedPixels": 1201580,
+      "pixelsWithAChannelChangingOver10": 1139896,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "hard-right": {
+      "changedPixels": 1200243,
+      "pixelsWithAChannelChangingOver10": 1146965,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "inlet": {
+      "changedPixels": 1142847,
+      "pixelsWithAChannelChangingOver10": 1082962,
+      "drawsBeforeNew": [
+        52,
+        52
+      ],
+      "trianglesBeforeNew": [
+        338685,
+        274091
+      ],
+      "contextLost": false
+    },
+    "middle": {
+      "changedPixels": 1200199,
+      "pixelsWithAChannelChangingOver10": 1123594,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "deep": {
+      "changedPixels": 1215452,
+      "pixelsWithAChannelChangingOver10": 1154900,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "crest-release": {
+      "changedPixels": 1048967,
+      "pixelsWithAChannelChangingOver10": 564307,
+      "drawsBeforeNew": [
+        45,
+        47
+      ],
+      "trianglesBeforeNew": [
+        283635,
+        267253
+      ],
+      "contextLost": false
+    },
+    "arch-exit": {
+      "changedPixels": 1212400,
+      "pixelsWithAChannelChangingOver10": 1160824,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "last-in-stage": {
+      "changedPixels": 1182997,
+      "pixelsWithAChannelChangingOver10": 1134574,
+      "drawsBeforeNew": [
+        51,
+        51
+      ],
+      "trianglesBeforeNew": [
+        335485,
+        270891
+      ],
+      "contextLost": false
+    },
+    "across-transition": {
+      "changedPixels": 2583,
+      "pixelsWithAChannelChangingOver10": 0,
+      "drawsBeforeNew": [
+        249,
+        249
+      ],
+      "trianglesBeforeNew": [
+        698855,
+        698855
+      ],
+      "contextLost": false
+    }
+  },
+  "transitions": [
+    [
+      0,
+      "06"
+    ],
+    [
+      4.916666666666667,
+      "07"
+    ]
+  ],
+  "opening": {
+    "width": 864,
+    "height": 1536,
+    "threshold": 0.1,
+    "includeAA": false,
+    "approvedVsBefore": {
+      "pixels": 1327104,
+      "exactDifferences": 625052,
+      "within20Pixels": 1049550,
+      "within20Percent": 79.08573857060185,
+      "pixelmatchMismatches": 262246
+    },
+    "approvedVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 619566,
+      "within20Pixels": 1049722,
+      "within20Percent": 79.09869912229938,
+      "pixelmatchMismatches": 262151
+    },
+    "beforeVsCandidate": {
+      "pixels": 1327104,
+      "exactDifferences": 261224,
+      "within20Pixels": 1324284,
+      "within20Percent": 99.78750723379629,
+      "pixelmatchMismatches": 2784
+    },
+    "beforeVsRepeat": {
+      "pixels": 1327104,
+      "exactDifferences": 0,
+      "within20Pixels": 1327104,
+      "within20Percent": 100,
+      "pixelmatchMismatches": 0
+    }
+  }
+}

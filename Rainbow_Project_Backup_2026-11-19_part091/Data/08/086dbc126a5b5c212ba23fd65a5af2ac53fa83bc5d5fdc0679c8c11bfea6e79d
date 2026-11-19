@@ -1,0 +1,191 @@
+{
+  "method": "World-space cubic through the 15 pictured coin contacts with the retained start and exit tangents. Fitted optical depths are interpretations. The geometry is parameterized by actual arc length. Course positions and tangents are untouched outside the local segment.",
+  "inlet": 188.90987977543415,
+  "exit": 242.87279039922475,
+  "beginFromInlet": 10.45,
+  "endFromInlet": 48.0,
+  "geometricLength": 37.559165778236995,
+  "unchangedDistanceBudget": 37.55,
+  "physicalLengthRatio": 1.0002440952925964,
+  "smallestCentreRadius": 1.2758990024371835,
+  "maximumWorldShift": 2.491379300202749,
+  "nativeCameraWallCheck": {
+    "retained": {
+      "countInsideWall": 38,
+      "maxWallOverlapPixels": 48.2611,
+      "openingToPlus20SampleCount": 81,
+      "plus3_75Pixel": [
+        461.068,
+        648.911
+      ]
+    },
+    "experiment": {
+      "countInsideWall": 23,
+      "maxWallOverlapPixels": 75.8881,
+      "openingToPlus20SampleCount": 81,
+      "plus3_75Pixel": [
+        225.206,
+        673.518
+      ]
+    }
+  },
+  "sourceContactsPx": [
+    [
+      267.6,
+      753.47
+    ],
+    [
+      178.6,
+      654.14
+    ],
+    [
+      234.3,
+      569.93
+    ],
+    [
+      319.6,
+      537.21
+    ],
+    [
+      407.6,
+      545.84
+    ],
+    [
+      505.9,
+      594.24
+    ],
+    [
+      557.5,
+      630.03
+    ],
+    [
+      594.8,
+      651.13
+    ],
+    [
+      619.1,
+      661.73
+    ],
+    [
+      642.7,
+      668.62
+    ],
+    [
+      659.5,
+      673.18
+    ],
+    [
+      675.2,
+      680.71
+    ],
+    [
+      687.8,
+      688.1
+    ],
+    [
+      696.0,
+      694.69
+    ],
+    [
+      703.4,
+      704.06
+    ]
+  ],
+  "fittedCentrePx": [
+    [
+      269.796,
+      749.4
+    ],
+    [
+      224.52,
+      662.025
+    ],
+    [
+      263.093,
+      595.735
+    ],
+    [
+      333.045,
+      560.083
+    ],
+    [
+      403.665,
+      560.591
+    ],
+    [
+      504.72,
+      599.176
+    ],
+    [
+      559.328,
+      629.136
+    ],
+    [
+      596.961,
+      649.519
+    ],
+    [
+      621.132,
+      660.279
+    ],
+    [
+      643.428,
+      668.879
+    ],
+    [
+      659.465,
+      675.0
+    ],
+    [
+      674.876,
+      682.251
+    ],
+    [
+      687.461,
+      689.454
+    ],
+    [
+      695.343,
+      695.396
+    ],
+    [
+      703.877,
+      704.138
+    ]
+  ],
+  "solvedDepths": [
+    8.0579,
+    8.9198,
+    9.8594,
+    10.7024,
+    11.6163,
+    13.402,
+    14.6947,
+    15.7088,
+    16.385,
+    17.0176,
+    17.4885,
+    17.9653,
+    18.3922,
+    18.6837,
+    19.0778
+  ],
+  "inferredPassageStations": [
+    12.75732,
+    13.91272,
+    15.04122,
+    16.0958,
+    17.18562,
+    19.24654,
+    20.72715,
+    21.8955,
+    22.68315,
+    23.42889,
+    23.98762,
+    24.55559,
+    25.06218,
+    25.40819,
+    25.86702
+  ],
+  "solverConverged": false
+}

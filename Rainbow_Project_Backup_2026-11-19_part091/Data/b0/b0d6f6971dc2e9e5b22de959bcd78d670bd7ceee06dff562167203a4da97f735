@@ -1,0 +1,66 @@
+[
+  {
+    "file": "APPROVED.jpg",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/APPROVED.jpg",
+    "downloadHashMatched": true,
+    "sizeRead": 497882,
+    "contentsSize": 497882,
+    "result": "Verified real private download"
+  },
+  {
+    "file": "CLAUDIA_BEFORE/opening.png",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/CLAUDIA_BEFORE/opening.png",
+    "downloadHashMatched": true,
+    "sizeRead": 2450511,
+    "contentsSize": 2450511,
+    "result": "Verified real private download"
+  },
+  {
+    "file": "CODEX_NEW/opening.png",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/CODEX_NEW/opening.png",
+    "downloadHashMatched": true,
+    "sizeRead": 2450880,
+    "contentsSize": 2450880,
+    "result": "Verified real private download"
+  },
+  {
+    "file": "CLAUDIA_BEFORE/ride.mp4",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/CLAUDIA_BEFORE/ride.mp4",
+    "downloadHashMatched": true,
+    "sizeRead": 7491213,
+    "contentsSize": 7491213,
+    "result": "Verified real private download"
+  },
+  {
+    "file": "CODEX_NEW/ride.mp4",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/CODEX_NEW/ride.mp4",
+    "downloadHashMatched": true,
+    "sizeRead": 7648858,
+    "contentsSize": 7648858,
+    "result": "Verified real private download"
+  },
+  {
+    "file": "Review_on_Android.pdf",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/Review_on_Android.pdf",
+    "downloadHashMatched": true,
+    "sizeRead": 22893791,
+    "contentsSize": 22893791,
+    "result": "Verified real private download"
+  },
+  {
+    "file": "Screen06_Review.zip",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/Screen06_Review.zip",
+    "downloadHashMatched": true,
+    "sizeRead": 131201713,
+    "contentsSize": 131201713,
+    "result": "Verified real private download"
+  },
+  {
+    "file": "PHONE_REVIEW.md",
+    "stablePrivateBlobPath": "/josiahscalia5-dev/rainbow-/blob/a28f9a895d309d2ea0bedd0baf1e2fb4e5929c26/experiments/codex/s06-approved-crest-route/PHONE_REVIEW.md",
+    "downloadHashMatched": true,
+    "sizeRead": 1076,
+    "contentsSize": 1076,
+    "result": "Verified real private download"
+  }
+]
