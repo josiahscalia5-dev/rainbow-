@@ -2009,6 +2009,23 @@ void main() {
         t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * dW0, 0.0, 1.0);
         tgt = mix(t0, tgt, uPjFlow2.w);
       }
+      #ifdef CX05_PHYSICAL_BEND
+      // Keep the S-shaped color bands. Replace the stretched foreground illumination
+      // with the broad satin highlights at their original scale on the actual ribbon.
+      float bendWeight = smoothstep(CX05_BEND_IN, CX05_BEND_IN + 5.0, vUV.y)
+                       * (1.0 - smoothstep(CX05_BEND_OUT - 2.2, CX05_BEND_OUT, vUV.y));
+      float core = smoothstep(0.03, 0.29, min(tgt.g, tgt.b) - tgt.r);
+      if (bendWeight > 0.0 && core > 0.0) {
+        // T2 was rectified over 6.565 course units. Measure travel from the mesh's
+        // arc coordinate instead of reusing the chase-camera projection coordinate.
+        vec2 tileA = vec2(uA * 0.5 + 0.5, (vUV.y + sA - s - uPjT2S.x) / uPjT2S.y);
+        vec2 tileB = vec2(uB * 0.5 + 0.5, (vUV.y + sB - s - uPjT2S.x) / uPjT2S.y);
+        vec3 source = mix(texture2D(uPjT2, tileB).rgb, texture2D(uPjT2, tileA).rgb, wA);
+        vec3 luma = vec3(0.2126, 0.7152, 0.0722);
+        float lightChange = clamp(dot(source - tgt, luma), -0.26, 0.26);
+        tgt = clamp(tgt + vec3(lightChange * bendWeight * core * 0.84), 0.0, 1.0);
+      }
+      #endif
       #ifdef M05BLEND
       tgt = mix(tgt, fbC.rgb, fbK);                 // F carries the approved haze: treated as the exact layer (fog below)
       wEx = mix(wEx, 1.0, fbK);
@@ -2204,13 +2221,20 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
   }
   const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;
+  const stage05 = course.stage('05');
+  const bendStyle = M05JOIN && q05('cx05PhysicalBend') ? {
+    CX05_PHYSICAL_BEND: 1,
+    CX05_BEND_IN: THREE.MathUtils.lerp(stage05.s0, stage05.s1, 0.66).toFixed(3),
+    CX05_BEND_OUT: stage05.s1.toFixed(3),
+  } : {};
+
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05JOIN ? { M05JOIN: 1 } : {}), ...(M05VEE2 ? { M05VEE2: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
+    defines: { ...bendStyle, ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(M05WD ? { M05WD: 1 } : {}), ...(M05RIDE ? { M05RIDE: 1 } : {}), ...(M05SEAM ? { M05SEAM: 1 } : {}), ...(M05BLEND ? { M05BLEND: 1 } : {}), ...(M05FMAG ? { M05FMAG: 1 } : {}), ...(M05JOIN ? { M05JOIN: 1 } : {}), ...(M05VEE2 ? { M05VEE2: 1 } : {}), ...(M05NEAR ? { M05NEAR: 1, M05NEAR_S0: m05nearS0().toFixed(3) } : {}), ...(M05GEO ? { M05GEO: 1 } : {}), ...(M05FOLD || M05FLAT ? { M05FOLD: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
