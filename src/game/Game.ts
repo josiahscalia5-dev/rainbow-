@@ -24,6 +24,7 @@ import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
 import { flag05 } from '../vfx/waterRibbon';
 import { MATCH } from './match';
+import { prepareCoat06 } from '../characters/benny/coat06';
 import { buildMatch08 } from '../world/match08';
 import { buildMatch06 } from '../world/match06';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
@@ -102,6 +103,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   scene.add(water.group);
   const benny = await loadBennyRuntime();
   scene.add(benny.root);
+  const coat06 = MATCH['06'] && qs.get('cx06LayeredCoat') === '1' ? await prepareCoat06(benny.root) : undefined;
   const girl = await loadGirlRuntime();
   const coins = createCoins(course);
   scene.add(coins.group);
@@ -172,6 +174,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
     }
     if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+    coat06?.(st.stage === '06');
     if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
     const inDrum = i <= 1;
     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;

@@ -8,6 +8,7 @@
  * onBeforeCompile so scene lighting, IBL and fog all still apply.
  */
 import * as THREE from 'three';
+import { coatSurface06 } from './coat06';
 
 export interface FurParams {
   length: number;
@@ -94,6 +95,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         varying vec2 vB05Uv;
         uniform float uClump;
         #endif
+        ${coatSurface06}
         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
       )
@@ -121,11 +123,22 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
             if (d < best) { best = d; hgt = fhash(c * 1.7 + 3.1); }
           }
           float layer = vLayer;
+          #ifdef RAINBOW_COAT06
+          vec4 lock = coatSurface(vBase);
+          #endif
           if (layer > 0.001) {
             if (vLenMask < 0.05) discard;
             float strandH = 0.55 + 0.45 * hgt;
             float radius = 0.78 * (1.0 - 0.85 * layer / strandH);
+            #ifdef RAINBOW_COAT06
+            // Fill the tapered lock through the shell stack. Only its outermost
+            // layer breaks into individual hairs, so the coat casts a shared shadow.
+            float lockHeight = 0.30 + 0.62 * lock.a;
+            if (layer > lockHeight + (hgt - 0.50) * 0.035) discard;
+            if (layer > lockHeight - 0.035 && best > 0.62) discard;
+            #else
             if (layer > strandH || best > radius) discard;
+            #endif
           }
           float ao = mix(0.55, 1.0, smoothstep(0.0, 0.9, layer));
           #ifdef BENNY05
@@ -135,7 +148,26 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           #else
           diffuseColor.rgb = mix(uRoot, uTip, smoothstep(0.0, 1.0, layer)) * ao * (0.92 + 0.16 * hgt);
           #endif
+          #ifdef RAINBOW_COAT06
+          float upper = smoothstep(-0.80, 0.08, normalize(vBase).y);
+          vec3 undercoat = mix(vec3(0.60, 0.44, 0.86), vec3(1.0), upper);
+          diffuseColor.rgb = lock.rgb * undercoat * mix(0.85, 1.04, layer);
+          #endif
         }`,
+      )
+      .replace(
+        '#include <normal_fragment_maps>',
+        `#include <normal_fragment_maps>
+        #ifdef RAINBOW_COAT06
+        // Height is measured on the actual coat. Directional lights therefore catch
+        // the high side of an overlapping tuft when Benny leans or turns.
+        float height06 = coatSurface(vBase).a * 0.009;
+        vec3 dpdx06 = dFdx(-vViewPosition), dpdy06 = dFdy(-vViewPosition);
+        vec3 side06 = cross(dpdy06, normal), along06 = cross(normal, dpdx06);
+        float det06 = dot(dpdx06, side06);
+        vec3 slope06 = sign(det06) * (dFdx(height06) * side06 + dFdy(height06) * along06);
+        normal = normalize(abs(det06) * normal - slope06);
+        #endif`,
       )
       .replace(
         '#include <emissivemap_fragment>',
