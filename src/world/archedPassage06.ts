@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { reconstructOpenCrest06 } from './openCrest06';
 import { PROJ05_INVERSE } from '../vfx/waterRibbon';
 
 const shellURL = new URL('../../assets/arched-passage06/passage.glb', import.meta.url).href;
@@ -133,6 +134,13 @@ void main() {
       correct = 0.;
 #endif
       float weight = seen * fit * mix(correct,1.,sameFootprint);
+#ifdef OPEN_CREST_WATER
+      // Retire painted walls, coins and filled character silhouettes promptly from water.
+      // Beyond the registered pose their shine belongs to objects at a different depth.
+      vec2 exclusion=texture2D(uMask,uvRef).rg;
+      float movingSeparation=smoothstep(.06,1.5,parallax+.5*approach);
+      weight *= 1.-movingSeparation*max(exclusion.x,exclusion.y);
+#endif
       paint = mix(paint,texture2D(uPlate,uvRef).rgb,weight);
     }
   }
@@ -140,7 +148,7 @@ void main() {
 }`;
 
 export async function buildArchedPassage06(
-  makeMaterial: (tile: THREE.Texture, floor?: boolean) => THREE.ShaderMaterial
+  makeMaterial: (tile: THREE.Texture, floor?: boolean) => THREE.ShaderMaterial, openCrest = false
 ): Promise<THREE.Group> {
   const loader = new THREE.TextureLoader();
   const [gltf, panel, gold] = await Promise.all([
@@ -153,6 +161,9 @@ export async function buildArchedPassage06(
   }
   let seats: number[] = [];
   const parts = new Map<Surface, THREE.BufferGeometry[]>();
+  const group = new THREE.Group();
+  group.name = 'match06';
+  let liner: ReturnType<typeof reconstructOpenCrest06> | undefined;
   gltf.scene.updateMatrixWorld(true);
   gltf.scene.traverse(obj => {
     if (!(obj instanceof THREE.Mesh)) return;
@@ -163,6 +174,7 @@ export async function buildArchedPassage06(
     if (obj.name === 'RinseWall') seats = obj.userData.seats;
     const geometry = obj.geometry.clone().applyMatrix4(obj.matrixWorld);
     const geometries = parts.get(surface) ?? [];
+    if (openCrest && surface === 'water') liner = reconstructOpenCrest06(geometry);
     geometries.push(geometry);
     parts.set(surface, geometries);
     obj.geometry.dispose();
@@ -170,8 +182,6 @@ export async function buildArchedPassage06(
     for (const material of sourceMaterials) material.dispose();
   });
   if (seats?.length !== 12) throw new Error('Screen 06 gold seat stations missing');
-  const group = new THREE.Group();
-  group.name = 'match06';
   for (const family of families) {
     const batch = parts.get(family);
     if (!batch?.length) throw new Error('Missing Screen 06 surface ' + family);
@@ -187,6 +197,13 @@ export async function buildArchedPassage06(
     const mesh = new THREE.Mesh(geometry, material);
     mesh.name = 'm06_arched_' + family;
     group.add(mesh);
+    if (openCrest && family === 'water') material.defines.OPEN_CREST_WATER = 1;
+    if (liner && (family === 'water' || family === 'wall')) {
+      const section = new THREE.Mesh(family === 'water' ? liner.upper : liner.soffit, material);
+      section.name = family === 'water' ? 'm06_crest_upper_water' : 'm06_crest_outer_soffit';
+      group.add(section);
+    }
+
   }
   return group;
 }

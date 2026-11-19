@@ -1,0 +1,23 @@
+{
+  "method": "Pixelmatch 7.1.0 YIQ color difference, full encoded sRGB frame, includes HUD and anti-aliased pixels",
+  "width": 864,
+  "height": 1536,
+  "options": {
+    "threshold": 0.1,
+    "includeAA": true
+  },
+  "frames": {
+    "claudia": {
+      "mismatchedPixels": 262573,
+      "total": 1327104
+    },
+    "previous": {
+      "mismatchedPixels": 262478,
+      "total": 1327104
+    },
+    "candidate": {
+      "mismatchedPixels": 262361,
+      "total": 1327104
+    }
+  }
+}

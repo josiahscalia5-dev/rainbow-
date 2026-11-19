@@ -375,7 +375,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
         const scene = new THREE.Scene();
         const clone = group.clone(true);
         clone.visible = true;
-        clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+        clone.traverse((o) => {
+          if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide });
+        });
         scene.add(clone);
         clone.updateMatrixWorld(true);
         renderer.setRenderTarget(depthRT);
@@ -395,7 +397,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   };
   if (FLOW && qs?.get('m06tun') === '1' && qs.get('cx06ArchedPassage') === '1') {
     const { buildArchedPassage06 } = await import('./archedPassage06');
-    return finishProjection(await buildArchedPassage06(mat), () => {});
+    return finishProjection(await buildArchedPassage06(mat, qs.get('cx06OpenCrest') === '1'), () => {});
   }
 
   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)

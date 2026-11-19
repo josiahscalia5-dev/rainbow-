@@ -1,0 +1,92 @@
+{
+  "blender": "5.3.0",
+  "blendSHA256": "a46702ba939975d62c5e4bcf6d0d1c7f0bd39a8f005b9df657bd2cfeaa3bcd40",
+  "captureSHA256": "5a65009d72e24503b5e2aa4a4f5f1876d515e7b4ba5a353978ad0def8691cde1",
+  "approvedImageSHA256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "maxVertexErrorGameUnits": 0,
+  "maxSurfaceUVError": 0,
+  "verifiedMeshes": [
+    {
+      "name": "m06_arched_wall",
+      "vertices": 13941,
+      "faces": 26656,
+      "changed": false
+    },
+    {
+      "name": "m06_crest_perforated_return",
+      "vertices": 2010,
+      "faces": 670,
+      "changed": true
+    },
+    {
+      "name": "m06_arched_ring",
+      "vertices": 11640,
+      "faces": 20736,
+      "changed": false
+    },
+    {
+      "name": "m06_arched_paddle",
+      "vertices": 362,
+      "faces": 628,
+      "changed": false
+    },
+    {
+      "name": "m06_arched_water",
+      "vertices": 112452,
+      "faces": 37484,
+      "changed": true
+    },
+    {
+      "name": "m06_crest_clear_water",
+      "vertices": 1200,
+      "faces": 400,
+      "changed": true
+    },
+    {
+      "name": "m06_arched_foam",
+      "vertices": 23944,
+      "faces": 39054,
+      "changed": false
+    },
+    {
+      "name": "m06_arched_bank",
+      "vertices": 3830,
+      "faces": 6112,
+      "changed": false
+    },
+    {
+      "name": "m06_crest_rolled_sills",
+      "vertices": 810,
+      "faces": 270,
+      "changed": true
+    },
+    {
+      "name": "m06_arched_end",
+      "vertices": 66,
+      "faces": 64,
+      "changed": false
+    }
+  ],
+  "cameraReprojection": [
+    {
+      "name": "Camera_Opening",
+      "courseStation": 198.91,
+      "maxPixelError": 0.001155032141859435,
+      "samples": 107
+    },
+    {
+      "name": "Camera_Forward_3",
+      "courseStation": 202.027,
+      "maxPixelError": 0.0010065454929841225,
+      "samples": 103
+    },
+    {
+      "name": "Camera_Forward_6",
+      "courseStation": 204.96,
+      "maxPixelError": 0.003756816144549166,
+      "samples": 105
+    }
+  ],
+  "renderWidth": 864,
+  "renderHeight": 1536
+}

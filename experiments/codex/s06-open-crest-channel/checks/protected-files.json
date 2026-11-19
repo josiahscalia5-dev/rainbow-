@@ -1,0 +1,13 @@
+{
+  "inherited": "94c36531af3cce486a252e56f75b81595536ad96",
+  "retained": "c649fcbc35780e11cefce83eb54684f1d55752a5",
+  "baselineFiles": 317,
+  "candidateFiles": 318,
+  "unchanged": 315,
+  "changedOrAdded": [
+    "src/world/archedPassage06.ts",
+    "src/world/match06.ts",
+    "src/world/openCrest06.ts"
+  ],
+  "originalArtwork": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+}

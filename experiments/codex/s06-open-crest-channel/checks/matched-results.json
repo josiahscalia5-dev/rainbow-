@@ -1,0 +1,276 @@
+{
+  "referenceSha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "conditions": {
+    "opening": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-03": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-06": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-10": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-20": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "hard-left": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "hard-right": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "inlet": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "middle": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "deep": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "crest-release": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "arch-exit": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "last-in-stage": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "across-transition": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    }
+  },
+  "refsOpening": {
+    "claudia": {
+      "rgbMae_0_255": 16.198772917068545,
+      "pixelMaxChannelOver16_pct": 24.616081331983025
+    },
+    "priorCodex": {
+      "rgbMae_0_255": 16.176959504806455,
+      "pixelMaxChannelOver16_pct": 24.59837360146605
+    },
+    "new": {
+      "rgbMae_0_255": 16.16270566084748,
+      "pixelMaxChannelOver16_pct": 24.598976417824073
+    }
+  },
+  "pairedOpeningVsPrior": {
+    "rgbMae_0_255": 0.28123568311149694,
+    "pixelMaxChannelOver16_pct": 0.15635549286265432
+  },
+  "motionVideo": {
+    "claudia": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "r_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ],
+      "start": {
+        "i": 0,
+        "time": 0,
+        "shaderTime": 18.73333333333333,
+        "s": 189.05,
+        "stage": "06",
+        "lat": 0,
+        "steer": 0,
+        "hearts": 5,
+        "coins": 1440,
+        "camera": [
+          3.5692831938151888,
+          -41.23219464167138,
+          -122.72570821796546
+        ],
+        "calls": 52,
+        "triangles": 338685
+      },
+      "exit": {
+        "i": 62,
+        "time": 5.166666666666667,
+        "shaderTime": 23.9,
+        "s": 246.171,
+        "stage": "07",
+        "lat": 0.315,
+        "steer": -0.03705,
+        "hearts": 5,
+        "coins": 1550,
+        "camera": [
+          10.110034625629654,
+          -44.24818482801831,
+          -172.32211929732918
+        ],
+        "calls": 182,
+        "triangles": 699263
+      },
+      "frames": 63
+    },
+    "new": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "r_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ],
+      "start": {
+        "i": 0,
+        "time": 0,
+        "shaderTime": 18.73333333333333,
+        "s": 189.05,
+        "stage": "06",
+        "lat": 0,
+        "steer": 0,
+        "hearts": 5,
+        "coins": 1440,
+        "camera": [
+          3.5692831938151888,
+          -41.23219464167138,
+          -122.72570821796546
+        ],
+        "calls": 54,
+        "triangles": 277691
+      },
+      "exit": {
+        "i": 62,
+        "time": 5.166666666666667,
+        "shaderTime": 23.9,
+        "s": 246.171,
+        "stage": "07",
+        "lat": 0.315,
+        "steer": -0.03705,
+        "hearts": 5,
+        "coins": 1550,
+        "camera": [
+          10.110034625629654,
+          -44.24818482801831,
+          -172.32211929732918
+        ],
+        "calls": 182,
+        "triangles": 699263
+      },
+      "frames": 63
+    }
+  },
+  "gameplay": {
+    "claudia": {
+      "assertionsPassed": 8,
+      "coins": 91,
+      "score": 2240,
+      "hearts": 5
+    },
+    "new": {
+      "assertionsPassed": 8,
+      "coins": 91,
+      "score": 2240,
+      "hearts": 5
+    }
+  },
+  "pairedMovingSimulation": true
+}

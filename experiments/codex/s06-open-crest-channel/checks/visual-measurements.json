@@ -1,0 +1,28 @@
+{
+  "comparison": "Actual rendered opening only, whole frame including HUD and Benny. Each channel delta is absolute in encoded RGB.",
+  "CL_vs_art": {
+    "pixels_exact": 0.5290105372299383,
+    "pixels_avg_rgb_delta_20_or_less": 0.7908573857060185,
+    "mean_channel_absolute_delta": 16.198772917068545
+  },
+  "OLD_vs_art": {
+    "pixels_exact": 0.5331443504050926,
+    "pixels_avg_rgb_delta_20_or_less": 0.7909869912229939,
+    "mean_channel_absolute_delta": 16.176959504806455
+  },
+  "NEW_vs_art": {
+    "pixels_exact": 0.5364945023148148,
+    "pixels_avg_rgb_delta_20_or_less": 0.7910502869405864,
+    "mean_channel_absolute_delta": 16.16270566084748
+  },
+  "new_vs_previous_opening": {
+    "pixels_exact": 0.8689733434606481,
+    "pixels_avg_rgb_delta_20_or_less": 0.9984515154803241,
+    "mean_channel_absolute_delta": 0.28123568311149694
+  },
+  "continuous_video": {
+    "fps": 12.0,
+    "frames": 63,
+    "duration_s": 5.25
+  }
+}
