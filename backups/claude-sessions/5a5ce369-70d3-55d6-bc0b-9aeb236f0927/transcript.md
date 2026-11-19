@@ -3364,3 +3364,217 @@ A perfect 100% copy isn't possible for a character that moves in 3D, but from be
 
 Should I start on Benny now, in this session?
 
+### 🧑 User — 2026-11-19T20:39:37.696Z
+
+Yeah, start with Benny, but how can we make where you said while swimming for Scream 4? I want to make it an 8 out of 10. How can we make this happen? Please, please, I really want to get this done for Scream 4, okay? And like I said, when I say I want my approved screen, I always mean now for always remember now that when I want my approved screen, like I said, I want the same while he's swimming or moving. I want the exact or very close to my approved screen.
+
+### 🤖 Claude — 2026-11-19T20:40:15.600Z
+
+I'll start Benny now and relaunch both Screen 04 workers aimed at 8/10 while swimming. First I'm recording your rule permanently in the project instructions: "my approved screen" always means the same look **while Benny swims and moves**, not just the start. Then I'll check Benny's existing files and notes so his worker starts from the right base.
+
+### 🤖 Claude — 2026-11-19T20:40:21.060Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='CLAUDE.md'; s=open(p).read()\nanchor='**USER DECISIONS 2026-11-17 ~19:00 UTC (account 4)'\nassert anchor in s\nadd='''**PERMANENT USER ORDER 2026-11-19 ~20:50 UTC (round 19): \"my approved screen\" ALWAYS means the same look WHILE Benny swims /\nmoves / steers — exact or very close to the approved picture in motion, never only the start view.** Judge and report every\nplayable-screen result in motion (start, swimming, inside, steering + a clip). Current target: Screen 04 ≥ 8/10 while swimming;\nBenny = the approved Benny (dusty-rose plush fur, chunky hand-kni …[+692 chars]`
+
+### 🧑 User — 2026-11-19T20:40:21.153Z
+
+> ↩︎ result: ok
+> benny-lab.html
+> benny-lab.ts
+> benny05.ts
+> build.ts
+> fur.ts
+> runtime.ts
+> textures.ts
+> benny-lab.html
+> benny-lab.ts
+> benny05.ts
+> build.ts
+> fur.ts
+> runtime.ts
+> textures.ts
+> docs/briefs/2026-11-17-r4/S08_BENNY.md
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md
+> docs/PARALLEL_PROGRESS.md
+> /home/user/wt/s04p3/src/characters/benny/benny05.ts:2: * Screen 05 FULL REFERENCE MATCH — Benny (`?benny05=1`, or the master `?match05=1`; qa/pilot05/full_reference_match/benny/).
+> /home/user/wt/s04p3/src/characters/benny/benny05.ts:22:// branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+> /home/user/wt/s04p3/src/characters/benny/benny05.ts:26:export const BENNY05: boolean = on05('benny05');
+> /home/user/wt/s04p3/src/characters/benny/benny05.ts:140:const T = (f: string) => new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href;
+> /home/user/wt/s04p3/src/characters/benny/benny05.ts:160: *  The GLB star keeps its own UVs (a benny05 copy of the geometry gets these). */
+
+### 🤖 Claude — 2026-11-19T20:40:25.798Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p3 && sed -n 1,40p src/characters/benny/benny05.ts | cut -c1-200; head -30 docs/briefs/2026-11-17-r4/S08_BENNY.md | cut -c1-200; grep -n \"3b\\|round 3\" docs/briefs/2026-11-17-r4/USER_DECISIONS.md | head -5", "description": "Read the Screen 05 Benny variant and Benny notes"}`
+
+### 🧑 User — 2026-11-19T20:40:25.858Z
+
+> ↩︎ result: /**
+>  * Screen 05 FULL REFERENCE MATCH — Benny (`?benny05=1`, or the master `?match05=1`; qa/pilot05/full_reference_match/benny/).
+>  *
+>  * Applied to Benny HIMSELF (every screen sees the same corrected character while the switch is on), on top of the
+>  * unchanged canonical assets/models/benny.glb, rig and clips. Off (default): nothing in this file runs, every material,
+>  * geometry and shader program is the previous one.
+>  *
+>  *  1. Beanie geometry (visual only, hat-local): cuff band thinner and the whole beanie a little lower on the head, pom-pom
+>  *     lower and slightly toward his right, star re-seated — measured against the approved picture at the locked 05 frame.
+>  *  2. Swim-clip body roll damped (the clip's ±0.05 rad side wobble tipped the beanie ~13 px sideways at the pom; the
+>  *     approved Benny rides upright). Pitch bob, paddling, feet, steering lean and every gameplay transform are unchanged.
+>  *  3. Albedo maps baked from the APPROVED pixels into each part's own UV space (tools: benny/work/bake.py): the beanie's
+>  *     knit stitches / stripes / ribbed cuff, the pom-pom yarn, the cotton-candy fur colour and its shading. The maps are
+>  *     solved through the live lighting and  …[+1953 chars]
+
+### 🤖 Claude — 2026-11-19T20:40:55.903Z
+
+> 🔧 **Bash** `{"command": "V=0945907988eb5b5c1cb7ef7c1ee8b5ac0a6b2b21; V=$(git -C /home/user/wt/s04p3 rev-parse HEAD); echo \"v3=$V\"; exec 9>backups/.autosave.lock && flock -w 600 9 && git -C /home/user/wt/s04 switch -q -c claude/rainbow-s04-match-c20 $V && git -C /home/user/wt/s04b switch -q -c claude/rainbow-s04-ringtex-c20 $V && git worktree add --no-checkout -b claude/rainbow-benny-c20 /home/user/wt/benny $V >/dev/null 2>&1 && printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C /home/user/wt/benny sparse-checkout set --no-cone --stdin && git -C /home/ …[+788 chars]`
+
+### 🧑 User — 2026-11-19T20:41:10.576Z
+
+> ↩︎ result: v3=09459079de00a674f0d3d3cdba5cc25e92b856ba
+> claude/rainbow-s04-match-c20 0945907 remote 09459079
+> claude/rainbow-s04-ringtex-c20 0945907 remote 09459079
+> claude/rainbow-benny-c20 0945907 remote 09459079
+> build_05_river_scene.py
+> camera_lock_05.py
+> import_world_asset.py
+> make_synthetic_tunnel.py
+> marble05_projection.py
+> render_05_proof.py
+
+### 🤖 Claude — 2026-11-19T20:41:16.085Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/pilot05/full_reference_match/benny/ 2>/dev/null | head -20; ls /home/user/wt/benny/assets/textures/benny05/ | head; ls /home/user/wt/benny/assets/models/ | head", "description": "Locate the Screen 05 Benny bake tools and textures"}`
+
+### 🧑 User — 2026-11-19T20:41:16.127Z
+
+> ↩︎ result: armL.png
+> armR.png
+> body.png
+> brim.png
+> brim_n.png
+> crown.png
+> crown_n.png
+> pom.png
+> star.png
+> benny.glb
+> lids05.glb
+> rainbow_girl.glb
+
+### 🤖 Claude — 2026-11-19T20:41:20.569Z
+
+> 🔧 **Bash** `{"command": "git ls-files | grep -i \"full_reference_match/benny\\|benny/work\" | head -10; git log --all --oneline -1 -- 'qa/pilot05/full_reference_match/benny/*' 2>/dev/null | head -2; grep -rn \"bake.py\" /home/user/wt/benny/src/characters/benny/benny05.ts | head -2", "description": "Search the repo for the Benny bake tool"}`
+
+### 🧑 User — 2026-11-19T20:41:21.080Z
+
+> ↩︎ result: 1b813c8 autosave: Rainbow 2026-11-18 00:10 UTC
+> 12: *  3. Albedo maps baked from the APPROVED pixels into each part's own UV space (tools: benny/work/bake.py): the beanie's
+
+### 🤖 Claude — 2026-11-19T20:41:26.514Z
+
+> 🔧 **Bash** `{"command": "git show --stat --format='%h %ci %s' 1b813c8 -- 'qa/pilot05/full_reference_match/benny/*' 2>/dev/null | head -20; git ls-tree -r --name-only 1b813c8 -- qa/pilot05/full_reference_match/benny 2>/dev/null | head -30", "description": "List the Benny bake files in that saved commit"}`
+
+### 🧑 User — 2026-11-19T20:41:29.860Z
+
+> ↩︎ result: 1b813c8 2026-11-18 00:10:34 +0000 autosave: Rainbow 2026-11-18 00:10 UTC
+> 
+>  .../benny/NEW_FULL_FRAME_METRICS.json              |  19 +
+>  .../benny/NEW_REGION_METRICS.json                  | 148 ++++
+>  qa/pilot05/full_reference_match/benny/NOTES.md     | 197 +++++
+>  qa/pilot05/full_reference_match/benny/before.png   | Bin 0 -> 2180494 bytes
+>  qa/pilot05/full_reference_match/benny/bennyseg.py  |  58 ++
+>  .../full_reference_match/benny/cap/before/05.png   | Bin 0 -> 2180494 bytes
+>  .../benny/cap/before/FULL_FRAME_METRICS.json       |  19 +
+>  .../benny/cap/before/REGION_METRICS.json           | 148 ++++
+>  .../benny/cap/before_low/05.png                    | Bin 0 -> 2167769 bytes
+>  .../benny/cap/before_low/FULL_FRAME_METRICS.json   |  19 +
+>  .../benny/cap/before_low/REGION_METRICS.json       | 148 ++++
+>  .../benny/cap/before_mask/05.png                   | Bin 0 -> 2026280 bytes
+>  .../full_reference_match/benny/cap/hide/05.png     | Bin 0 -> 2180494 bytes
+>  .../full_reference_match/benny/cap/new/05.png      | Bin 0 -> 2228174 bytes
+>  .../benny/cap/new/FULL_FRAME_METRICS.json          |  19 +
+>  .../benny/cap/new/REGION_METRICS.json              | 148 ++++
+>  .../full_reference_match/benny/cap/new_an16/05 …[+2002 chars]
+
+### 🤖 Claude — 2026-11-19T20:41:34.510Z
+
+> 🔧 **Bash** `{"command": "git ls-tree -r --name-only 1b813c8 -- qa/pilot05/full_reference_match/benny | grep -v \"/cap/\" | head -30", "description": "List non-capture files of the Benny bake folder"}`
+
+### 🧑 User — 2026-11-19T20:41:34.555Z
+
+> ↩︎ result: qa/pilot05/full_reference_match/benny/NEW_FULL_FRAME_METRICS.json
+> qa/pilot05/full_reference_match/benny/NEW_REGION_METRICS.json
+> qa/pilot05/full_reference_match/benny/NOTES.md
+> qa/pilot05/full_reference_match/benny/before.png
+> qa/pilot05/full_reference_match/benny/bennyseg.py
+> qa/pilot05/full_reference_match/benny/gameplay.json
+> qa/pilot05/full_reference_match/benny/new.png
+> qa/pilot05/full_reference_match/benny/steer/move_00.png
+> qa/pilot05/full_reference_match/benny/steer/move_08.png
+> qa/pilot05/full_reference_match/benny/steer/move_17.png
+> qa/pilot05/full_reference_match/benny/steer/move_log.json
+> qa/pilot05/full_reference_match/benny/steer/steer_L_025.png
+> qa/pilot05/full_reference_match/benny/steer/steer_L_050.png
+> qa/pilot05/full_reference_match/benny/steer/steer_L_080.png
+> qa/pilot05/full_reference_match/benny/steer/steer_R_025.png
+> qa/pilot05/full_reference_match/benny/steer/steer_R_050.png
+> qa/pilot05/full_reference_match/benny/steer/steer_R_080.png
+> qa/pilot05/full_reference_match/benny/views/cmp_off.png
+> qa/pilot05/full_reference_match/benny/views/cmp_on.png
+> qa/pilot05/full_reference_match/benny/views/turntable_off.png
+> qa/pilot05/full_reference_match/benny/views/turntable_on.png
+> qa/pilot …[+491 chars]
+
+### 🤖 Claude — 2026-11-19T20:41:38.599Z
+
+That's enough to brief the workers. Recording the Round 19b plan, then launching all three:
+
+### 🤖 Claude — 2026-11-19T20:41:45.679Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r19/COORDINATION.md <<'EOF'\n\n## Round 19b (~20:55 UTC) — user: \"start with Benny\" + \"make Screen 04 an 8 out of 10 while swimming\"\nPERMANENT user rule (also in CLAUDE.md §6): \"my approved screen\" = the same look WHILE swimming / moving / steering.\nAll three workers start from preview v3 `09459079` (so BEFORE = what the user just saw); the lead merges their kept steps into\npreview v4 / v5 and shows APPROVED / BEFORE (v3) / NOW in motion.\n| Worker | Branch | Agent | Worktree | Port | Tasks |\n|---|---|---|---|---|---|\n| Benny | `claude/rain …[+1278 chars]`
+
+### 🧑 User — 2026-11-19T20:41:45.720Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-19T20:42:16.559Z
+
+> 🔧 **Agent** `{"description": "Benny approved look r19b", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the Rainbow project's `benny-character-artist`, round 19b. VISUALS ONLY: make Benny (the pink fluffy main character) look like the APPROVED Benny on every playable screen, while he swims, moves and steers.\n\nTHE USER'S WORDS (2026-11-19 ~20:40 UTC): \"Compare mine to the approved screen pink character. I want it to look exactly like the pink character, like same texture, same color, same look. Pretty much, I want 100% clone of the pink character for my approved  …[+6572 chars]`
+
+### 🧑 User — 2026-11-19T20:42:16.598Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a475f71b44a5f5357 (internal ID - do not mention to user. Use SendMessage with to: 'a475f71b44a5f5357', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/a475f71b44a5f5357.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T20:42:34.511Z
+
+> 🔧 **Agent** `{"description": "Screen 04 water/foam r19b", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the Rainbow project's `foam-bubbles-particles` specialist, round 19b, Screen 04 \"Through the Five Arrows\" water + foam (\"s04\"), VISUALS ONLY.\n\nGOAL (user, 2026-11-19 ~20:50 UTC): Screen 04 must reach at least 8/10 likeness to the approved picture WHILE BENNY SWIMS: \"when I say I want my approved screen ... I want the same while he's swimming or moving. I want the exact or very close to my approved screen.\" The lead rated the current combined preview v3 a …[+4423 chars]`
+
+### 🧑 User — 2026-11-19T20:42:34.537Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a5b506d8de68666e1 (internal ID - do not mention to user. Use SendMessage with to: 'a5b506d8de68666e1', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/a5b506d8de68666e1.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T20:42:48.516Z
+
+> 🔧 **Agent** `{"description": "Screen 04 rings r19b", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Rainbow project's `washer-environment-modeler`, round 19b, Screen 04 painted rings / tunnel interior (\"s04tex\"), VISUALS ONLY.\n\nGOAL (user, 2026-11-19 ~20:50 UTC): Screen 04 must reach at least 8/10 likeness to the approved picture WHILE BENNY SWIMS: \"when I say I want my approved screen ... I want the same while he's swimming or moving. I want the exact or very close to my approved screen.\" The lead rated the combined preview v3 about 6/10 while swimmi …[+3851 chars]`
+
+### 🧑 User — 2026-11-19T20:42:48.552Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: adc051ce44d0d2b74 (internal ID - do not mention to user. Use SendMessage with to: 'adc051ce44d0d2b74', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/adc051ce44d0d2b74.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-19T20:42:58.940Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; a=json.load(open(p))\na['updated_utc']='2026-11-19T20:58Z'\na['round19b']={'started_utc':'2026-11-19T20:57Z','base':'preview v3 claude/rainbow-s04-preview-c19 @ 09459079','user_rule':'approved screen = same look while swimming/moving (CLAUDE.md §6)',\n 'workers':{\n  'benny':{'branch':'claude/rainbow-benny-c20','agent':'benny-character-artist','worktree':'/home/user/wt/benny','state':'RUNNING','log':'qa/benny/r19b/PROGRESS.md','next':'judge benny05 on 04; benny20 approved look (dusty-rose plush fur, chunky knit hat, y …[+995 chars]`
+

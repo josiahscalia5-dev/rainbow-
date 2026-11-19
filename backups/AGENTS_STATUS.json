@@ -1,7 +1,7 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-19T20:15Z",
+  "updated_utc": "2026-11-19T20:58Z",
   "updated_by_session": "session_01AvQv6SAH2NyYjSPRMtFps6 (round 18, lead ccr-ae71d3a5-80naq2)",
   "running_now": {
     "_note": "see round18.running (five background workers in the round-18 lead container, relaunched ~02:50 UTC from the r17 21:11 UTC WIP snapshots); Screen 08 PAUSED by the user"
@@ -1061,5 +1061,37 @@
     },
     "if_cut_off": "-c20 branches from each newest -c19 tip + backups/wip/<branch>/ snapshot",
     "resume": "docs/briefs/2026-11-19-r19/RESUME_R19.md"
+  },
+  "round19b": {
+    "started_utc": "2026-11-19T20:57Z",
+    "base": "preview v3 claude/rainbow-s04-preview-c19 @ 09459079",
+    "user_rule": "approved screen = same look while swimming/moving (CLAUDE.md §6)",
+    "workers": {
+      "benny": {
+        "branch": "claude/rainbow-benny-c20",
+        "agent": "benny-character-artist",
+        "worktree": "/home/user/wt/benny",
+        "state": "RUNNING",
+        "log": "qa/benny/r19b/PROGRESS.md",
+        "next": "judge benny05 on 04; benny20 approved look (dusty-rose plush fur, chunky knit hat, yarn pompom, felt star)"
+      },
+      "s04": {
+        "branch": "claude/rainbow-s04-match-c20",
+        "agent": "foam-bubbles-particles",
+        "worktree": "/home/user/wt/s04",
+        "state": "RUNNING",
+        "log": "qa/match/04/r18/PROGRESS.md (r19b)",
+        "next": "swirls up the sides; Blender bubble-heap bank foam; m04end refit"
+      },
+      "s04tex": {
+        "branch": "claude/rainbow-s04-ringtex-c20",
+        "agent": "washer-environment-modeler",
+        "worktree": "/home/user/wt/s04b",
+        "state": "RUNNING",
+        "log": "qa/match/04/r18/ringpaint/NOTES.md (r19b)",
+        "next": "top half inside the tunnel: painted ring bands; steering haze; colour"
+      }
+    },
+    "if_cut_off": "new branches from each newest c20 tip + backups/wip/<branch>/ snapshot"
   }
 }

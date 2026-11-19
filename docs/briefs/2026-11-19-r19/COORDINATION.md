@@ -57,3 +57,13 @@ hand-knit, visible V stitches, cream-white + violet, more stripes, thick ribbed 
 closer); pompom spiky dark violet (painted: chunky soft yarn, lighter violet); star = shiny 3D plastic (painted: flat stitched felt
 patch). Proposed (waiting for the user's go): benny-character-artist, URL switch, the painted back-view pixels as texture
 reference / projection + softer longer clumped fur shells; APPROVED / BEFORE / NEW on all five screens.
+
+## Round 19b (~20:55 UTC) — user: "start with Benny" + "make Screen 04 an 8 out of 10 while swimming"
+PERMANENT user rule (also in CLAUDE.md §6): "my approved screen" = the same look WHILE swimming / moving / steering.
+All three workers start from preview v3 `09459079` (so BEFORE = what the user just saw); the lead merges their kept steps into
+preview v4 / v5 and shows APPROVED / BEFORE (v3) / NOW in motion.
+| Worker | Branch | Agent | Worktree | Port | Tasks |
+|---|---|---|---|---|---|
+| Benny | `claude/rainbow-benny-c20` | benny-character-artist | `/home/user/wt/benny` | 5278 | 1 judge `&benny05=1` (approved-pixel albedo + finer clumped fur, built for 05) on 04 + other screens; 2 `&benny20=1`: re-bake from the 04 approved Benny too, dusty-rose plush fur (long soft clumped tufts, darker underneath, not needles), beanie ~10 % bigger / lower, chunky knit cream / violet stripes + ribbed cuff, soft yarn pompom (lighter violet), flat stitched felt star |
+| s04 water / foam | `claude/rainbow-s04-match-c20` | foam-bubbles-particles | `/home/user/wt/s04` | 5273 | 1 river curving UP the tunnel sides with the painted pink / cyan swirls (`m04sswirl` prove / reject; no straight edge against the wall); 2 soft lilac bubble-heap foam along both banks (lead's Blender heap `claude/rainbow-s04-blendfoam-c19`); 3 refit `m04end` to the K9 rings; 4 foam tint, steering glitch sweep |
+| s04tex rings | `claude/rainbow-s04-ringtex-c20` | washer-environment-modeler | `/home/user/wt/s04b` | 5274 | 1 the top half inside the tunnel: plain orange-copper near band → the painted crisp polished ring bands, bright rims, bulbs, warm light; 2 steering haze on the nearest ring; 3 tunnel colour (yellow-gold + pink / violet reflections) |

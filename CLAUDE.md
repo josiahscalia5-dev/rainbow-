@@ -99,6 +99,12 @@ update that file when its state changes. Tool versions, plugins, MCP servers, ho
 pushes or tests unless verified.
 
 ## 6. The game (authoritative brief `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`)
+**PERMANENT USER ORDER 2026-11-19 ~20:50 UTC (round 19): "my approved screen" ALWAYS means the same look WHILE Benny swims /
+moves / steers — exact or very close to the approved picture in motion, never only the start view.** Judge and report every
+playable-screen result in motion (start, swimming, inside, steering + a clip). Current target: Screen 04 ≥ 8/10 while swimming;
+Benny = the approved Benny (dusty-rose plush fur, chunky hand-knit cream/violet hat, soft yarn pompom, stitched felt star) on
+every screen. Plan + workers: `docs/briefs/2026-11-19-r19/COORDINATION.md` ("Round 19b").
+
 **USER DECISIONS 2026-11-17 ~19:00 UTC (account 4) — full text `docs/briefs/2026-11-17-r4/USER_DECISIONS.md`:**
 Benny: round 3b = preferred base, compare with r2 / r4 / approved; body rounder and fuller, fur soft (not spiky).
 `?match08=1&coins08px=1` = preferred coin version (lead verified in gameplay 19:05: 8/8, 91 / 2,240, all 9 painted
