@@ -1292,3 +1292,29 @@ Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:54:42.462Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 238, "limit": 40}`
+
+### 🧑 User — 2026-11-19T02:54:42.479Z
+
+> ↩︎ result: 238	        // px (a smooth warp, no seam). The painted crest top moves down with the river instead of tearing away from it,
+> 239	        // and the gap behind it shows the painted wall (no gold stripes, no smeared streaks).
+> 240	        // On the river itself: parts the crest hid are read the same way (i); its grazing edges (depth within 20 %) keep the
+> 241	        // approved pixels instead of a bright line of the river material.
+> 242	        if (stOn > 0.5 && hold > 0.0) {
+> 243	          float zc = -1.0, bw = 1.0;
+> 244	          dbgZ = 1.0;
+> 245	          if (zs < uStO * zf) zc = zs;
+> 246	          else if (uStM < 0.5) vis = 1.0;
+> 247	          else {
+> 248	            for (int k = 1; k <= 48; k++) {
+> 249	              vec2 u2 = uv - vec2(0.0, float(k) * uStK);
+> 250	              if (u2.y < 0.001) break;
+> 251	              float z2 = linZ(textureLod(uDepth, u2, 0.0).r);
+> 252	              if (z2 < uStO * zf) {
+> 253	                // back up in 1 px steps to the river's exact edge (seen edge-on its depth changes fast per pixel)
+> 254	                zc = z2;
+> 255	                for (int j = 1; j <= 4; j++) {
+> 256	                  float z3 = linZ(textureLod(uDepth, u2 + vec2(0.0, float(j) * uStK * …[+1021 chars]
+

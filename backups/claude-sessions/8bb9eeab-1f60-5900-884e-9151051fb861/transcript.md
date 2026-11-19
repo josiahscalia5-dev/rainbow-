@@ -1796,3 +1796,48 @@ That "other Claude session" is an agent working inside this same session — a s
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:54:26.815Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_r18/04_step3_nwhirl && mkdir -p $D && S=/home/user/wt/s04/qa/match/04/r18/s3_nwhirl && cp $S/1_APPROVED.png $D/1_APPROVED.png && cp $S/BEFORE/f10_forward10u.png $D/2_BEFORE_f10_forward10u.png && cp $S/NEW/f10_forward10u.png $D/3_NEW_f10_forward10u.png && ls $S/*.mp4 && cp $S/NEW_swim_clip_half.mp4 $D/4_NEW_swim_clip_half.mp4 && python3 - <<'EOF'\np='docs/briefs/2026-11-19-r18/COORDINATION.md'\ns=open(p).read()\nrow=\"| 5 (~04:10) | 04 r18 step 3 `&m04nwhirl=1` (s04 `f9cb52f9`) | GOOD IMPROVEMENT (worker + lead at full size): the near pink / cyan bands no longer run as  …[+782 chars]`
+
+### 🤖 Claude — 2026-11-19T02:54:29.214Z
+
+> 🔧 **SendMessage** `{"to": "a4d2f0802b168dc00", "summary": "Ack nwhirl; minor colour balance note", "message": "Lead: m04nwhirl accepted. I checked it at full size and showed it to the user.\nOne small colour note for when you are in that code anyway (don't stop the \"swirls up the sides\" step for it): at f10 the bottom centre under Benny is now a big magenta pool. In the painting the water right round and just below Benny is mostly cyan, and the pink sweeps in from the lower-left and lower-right corners.", "type": "message", "recipient": "a4d2f0802b168dc00", "recipient_kind": "agent", "content": "Lead: m04nwhir …[+38 chars]`
+
+### 🧑 User — 2026-11-19T02:54:43.190Z
+
+> ↩︎ result: /home/user/wt/s04/qa/match/04/r18/s3_nwhirl/NEW_swim_clip_half.mp4
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+
+### 🧑 User — 2026-11-19T02:54:43.206Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a4d2f0802b168dc00 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a4d2f0802b168dc00","name":"a4d2f0802b168dc00","ref":"03fa86"}}
+
+### 🤖 Claude — 2026-11-19T02:54:46.008Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r18/04_step3_nwhirl/1_APPROVED.png", "qa/review_r18/04_step3_nwhirl/2_BEFORE_f10_forward10u.png", "qa/review_r18/04_step3_nwhirl/3_NEW_f10_forward10u.png", "qa/review_r18/04_step3_nwhirl/4_NEW_swim_clip_half.mp4"], "caption": "Screen 04 water: APPROVED, BEFORE (straight stripes), NEW (curving swirl round Benny), plus a short swim clip.", "status": "proactive", "display": "render"}`
+
+### 🧑 User — 2026-11-19T02:54:46.951Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/review_r18/04_step3_nwhirl/1_APPROVED.png → file_uuid: fac3d7b3-2016-4bc3-98a6-7ecde0d38d61
+>   /home/user/rainbow-/qa/review_r18/04_step3_nwhirl/2_BEFORE_f10_forward10u.png → file_uuid: 988eab88-415c-4dd2-9c02-50b024a943c5
+>   /home/user/rainbow-/qa/review_r18/04_step3_nwhirl/3_NEW_f10_forward10u.png → file_uuid: ebe74351-90c7-4363-a6d0-400d16fe4113
+>   /home/user/rainbow-/qa/review_r18/04_step3_nwhirl/4_NEW_swim_clip_half.mp4 → file_uuid: b8623ee7-3edf-4176-b794-8a7c708aad2b
+
+### 🤖 Claude — 2026-11-19T02:54:51.226Z
+
+The water on Screen 04 is another step closer to your picture. The pink and cyan streaks around Benny used to run in straight lines past him. Now they curve in from both sides and sweep under him in a swirl, with cyan water and a white splash right around him, like your painted whirl. The bands beside the arrow lane wave gently instead of running like straight rails.
+
+- **Moving:** in the swim clip the swirl stays around Benny while he steers, with no seams or tearing.
+- **Start view:** the view that matches your approved picture is unchanged.
+
+I checked it at full size. Attached are APPROVED, BEFORE, NEW and the clip; they're also saved in `qa/review_r18/04_step3_nwhirl/`.
+
+**Still different from your picture:**
+- **Colour mix:** there's now a bit too much pink directly below Benny. In your picture that spot is mostly cyan, and the pink sweeps in from the corners. I've told the water worker.
+- **Up the walls:** the pink swirls stay on the floor of the channel, while yours curve up the tunnel walls. That's what the water worker is doing now, then the big foam heaps.
+
+Meanwhile the ring worker is rebuilding the tunnel as a few thick gold rings.
+
