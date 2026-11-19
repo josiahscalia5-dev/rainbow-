@@ -36,11 +36,18 @@ export interface Match08 {
 }
 
 const VERT = /* glsl */ `
+#ifdef CHAMBER_FLOW_DISTANCE
+attribute float aFlowDistance;
+varying float vFlowDistance;
+#endif
 uniform mat4 uProjVP;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
 void main() {
+#ifdef CHAMBER_FLOW_DISTANCE
+  vFlowDistance = aFlowDistance;
+#endif
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vProj = uProjVP * wp;
   vW = wp.xyz;
@@ -49,6 +56,9 @@ void main() {
 }`;
 
 const FRAG = /* glsl */ `
+#ifdef CHAMBER_FLOW_DISTANCE
+varying float vFlowDistance;
+#endif
 uniform sampler2D uPlate;
 uniform sampler2D uDepth;
 uniform float uUseDepth;
@@ -320,7 +330,12 @@ void main() {
       if (uSr > 0.5) xb = mix(ad, uNq.y + (ad - uNq.y) * (uNq.z - uNq.y) / max(h - uNq.y, 1e-3), smoothstep(0.3 * uNq.y, 1.7 * uNq.y, ad));
       float downriver = uNear.x - vW.z;
 #ifdef CHAMBER_CURRENT
+#ifdef CHAMBER_FLOW_DISTANCE
+      // Project the lateral offset onto the centerline tangent in the chamber's x/z plane.
+      downriver = vFlowDistance - heading * d * inversesqrt(1.0 + heading * heading) * interior;
+#else
       downriver -= 0.60 * heading * d * interior;
+#endif
 #endif
       float tileX = sign(d) * xb;
 #ifdef FITTED_CHAMBER_BANK
@@ -485,10 +500,12 @@ export async function buildMatch08(): Promise<Match08> {
     cupMk = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/cupw08_mask.png', import.meta.url).href);
     cupMk.colorSpace = THREE.NoColorSpace; cupMk.generateMipmaps = false; cupMk.minFilter = THREE.LinearFilter;
   }
+  const flowDistance = bankShoulder && NQ !== null && flag05('cx08FlowDistance');
   const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
     defines: {
       ...(flag05('cx08ChamberCurrent') ? { CHAMBER_CURRENT: 1 } : {}),
       ...(bankShoulder && swimMode ? { FITTED_CHAMBER_BANK: 1 } : {}),
+      ...(flowDistance && swimMode ? { CHAMBER_FLOW_DISTANCE: 1 } : {}),
     },
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
@@ -721,6 +738,39 @@ export async function buildMatch08(): Promise<Match08> {
       vertices.setY(i, vertices.getY(i) + lift);
     }
     fl.computeVertexNormals();
+  }
+  if (flowDistance && NQ) {
+    // Reproduce the shader's fitted river center and integrate its physical length.
+    // Store the result on the existing floor so the glints travel with the bend.
+    const subdivisions = 8;
+    const segments = 63 * subdivisions;
+    const dz = (rz0 - rz1) / segments;
+    const distance = new Float64Array(segments + 1);
+    const centerX = (row: number) => rivData[4 * THREE.MathUtils.clamp(row, 0, 63)];
+    const smoothed = flag05('m08sr');
+    const centerAt = (sample: number) => {
+      const row = Math.floor(sample), t = sample - row;
+      if (!smoothed) return THREE.MathUtils.lerp(centerX(row), centerX(row + 1), t);
+      const t2 = t * t, t3 = t2 * t;
+      return (centerX(row - 1) * (1 - 3 * t + 3 * t2 - t3) + centerX(row) * (4 - 6 * t2 + 3 * t3)
+        + centerX(row + 1) * (1 + 3 * t + 3 * t2 - 3 * t3) + centerX(row + 2) * t3) / 6;
+    };
+    let lastX = centerAt(0);
+    for (let i = 1; i <= segments; i++) {
+      const x = centerAt(i / subdivisions);
+      distance[i] = distance[i - 1] + Math.hypot(dz, x - lastX);
+      lastX = x;
+    }
+    const distanceAtZ = (z: number) => {
+      const sample = (rz0 - z) / dz;
+      const i = THREE.MathUtils.clamp(Math.floor(sample), 0, segments - 1);
+      return THREE.MathUtils.lerp(distance[i], distance[i + 1], sample - i);
+    };
+    const anchor = distanceAtZ(NQ.z0);
+    const vertices = fl.getAttribute('position');
+    const along = new Float32Array(vertices.count);
+    for (let i = 0; i < vertices.count; i++) along[i] = distanceAtZ(vertices.getZ(i)) - anchor;
+    fl.setAttribute('aFlowDistance', new THREE.BufferAttribute(along, 1));
   }
   add(fl, M.floor, 'floor');
   // platform: top disc tilted toward the camera as painted, rim, leg skirt to the floor
