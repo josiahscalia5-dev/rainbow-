@@ -1411,3 +1411,163 @@ The five-minute autosave is already running. Let me confirm it covers everything
 > 350	        # ---- 3. stage allow-listed paths ----------------------------------------------
 > 351	        # tracked status/log files: start from HEAD; they are refreshed from the live log only when a
 
+### 🤖 Claude — 2026-11-19T23:56:35.440Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "            if src.is_file() and src.stat().st_size <= 2_000_000 and total + src.stat().st_size <= 30_000_000:", "new_string": "            # user order 2026-11-19 ~23:55 UTC (\"save everything ... every 5 minutes\"): limits raised from 2 MB / 30 MB so a\n            # worker's full-size game captures (~2-2.5 MB PNG each) and half-size clips are no longer skipped\n            if src.is_file() and src.stat().st_size <= 5_000_000 and total + src.stat().st_size <= 150_000_000:"}`
+
+### 🧑 User — 2026-11-19T23:56:35.548Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T23:56:37.135Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "        except Exception as e:  # a snapshot problem must never block the backup itself\n            row[\"wip_error\"] = str(e)[:300]\n", "new_string": "        except Exception as e:  # a snapshot problem must never block the backup itself\n            row[\"wip_error\"] = str(e)[:300]\n        try:\n            snapshot_live_tools()\n        except Exception as e:  # never blocks the backup\n            row[\"live_tools_error\"] = str(e)[:300]\n"}`
+
+### 🧑 User — 2026-11-19T23:56:37.201Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T23:56:47.836Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "def main() -> int:\n    ap = argparse.ArgumentParser()", "new_string": "def snapshot_live_tools() -> None:\n    \"\"\"User order 2026-11-19 ~23:55 UTC: every five-minute save also records the LIVE state of the specialists, worker\n    branches, plugins and MCP servers -> backups/LIVE_TOOLS_STATE.json (names / versions / hashes only, never values of\n    settings, so no secret can end up in it). Static restore instructions stay in backups/TOOL_MANIFEST.json.\"\"\"\n    home = Path.home()\n\n    …[+2949 chars]`
+
+### 🧑 User — 2026-11-19T23:56:47.957Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T23:56:52.225Z
+
+Now a real save to test both changes, then a check that the new record contains only names (no secret values) and that Benny's pictures are included this time:
+
+### 🤖 Claude — 2026-11-19T23:56:55.031Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import ast;ast.parse(open('scripts/rainbow-autosave.py').read())\" && python3 scripts/rainbow-autosave.py --reason manual:save-everything 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified|error' ; cat backups/LIVE_TOOLS_STATE.json | head -60; for b in benny s04-match s04-ringtex; do python3 -c \"import json;d=json.load(open('backups/wip/claude__rainbow-$b-c21/INFO.json'));print('$b',d['time'][11:19],len(d['untracked_copied']),'new files saved,',len(d['untracked_skipped']),'skipped')\"; done; git show --stat HEAD | grep -c 'wip/claude__rainbow-benny-c21'", "descrip …[+68 chars]`
+
+### 🧑 User — 2026-11-19T23:56:55.481Z
+
+> ↩︎ result: cat: backups/LIVE_TOOLS_STATE.json: No such file or directory
+> benny 23:56:46 101 new files saved, 0 skipped
+> s04-match 23:56:46 2 new files saved, 0 skipped
+> s04-ringtex 23:56:46 0 new files saved, 0 skipped
+> 1
+
+### 🤖 Claude — 2026-11-19T23:56:58.058Z
+
+Benny's pictures are now saved: 101 files, none skipped. But the new tools record wasn't written, so let me see why:
+
+### 🤖 Claude — 2026-11-19T23:56:59.705Z
+
+> 🔧 **Bash** `{"command": "tail -3 backups/BACKUP_LOG.md | cut -c1-200; python3 -c \"\nimport json;d=json.load(open('backups/BACKUP_STATUS.json'));r=d.get('last_run') or d\nprint({k:(str(v)[:200]) for k,v in r.items() if 'error' in k or k in ('result','reason','commit')})\" ; ls backups/.live/ | head", "description": "Look for the live-tools error in the save status"}`
+
+### 🧑 User — 2026-11-19T23:56:59.872Z
+
+> ↩︎ result: | 2026-11-19T23:45:53+00:00 | manual:benny-order | committed+pushed | `1e6b38810e03` | `ccr-681a37bb-5jqfbu` | 14 | True |  |
+> | 2026-11-19T23:46:17+00:00 | hook:Stop | committed+pushed | `601874344424` | `ccr-681a37bb-5jqfbu` | 15 | True |  |
+> | 2026-11-19T23:51:20+00:00 | daemon | committed+pushed | `cf48970463c0` | `ccr-681a37bb-5jqfbu` | 28 | True |  |
+> {'reason': 'daemon', 'result': 'committed+pushed', 'commit': 'cf48970463c0fd9cdf9db4b70f35b50d9cfd92f2'}
+> BACKUP_LOG.md
+> BACKUP_STATUS.json
+> BOOTSTRAP_REPORT.json
+> bootstrap-hook.log
+> bootstrap-results.jsonl
+> bootstrap.lock
+> bootstrap.log
+> continuity.log
+> lfs-pull.log
+> npm-ci.log
+
+### 🤖 Claude — 2026-11-19T23:57:03.131Z
+
+> 🔧 **Bash** `{"command": "git log -2 --format='%h %ci %s'; git status --short | wc -l; python3 scripts/rainbow-autosave.py --reason manual:save-everything 2>&1 | tail -25", "description": "Rerun the save and show its full output", "timeout": 400000}`
+
+### 🧑 User — 2026-11-19T23:57:03.291Z
+
+> ↩︎ result: d6312d4 2026-11-19 23:56:51 +0000 autosave: Rainbow 2026-11-19 23:56 UTC
+> cf48970 2026-11-19 23:51:31 +0000 autosave: Rainbow 2026-11-19 23:51 UTC
+> 0
+> another autosave is running; skipping
+
+### 🤖 Claude — 2026-11-19T23:57:09.261Z
+
+> 🔧 **Bash** `{"command": "tail -3 scripts/rainbow-autosave.py; python3 -c \"\nimport importlib.util,sys\nspec=importlib.util.spec_from_file_location('ra','scripts/rainbow-autosave.py'); m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)\nm.snapshot_live_tools(); print('ok')\" 2>&1 | tail -5", "description": "Run the live-tools snapshot function alone"}`
+
+### 🧑 User — 2026-11-19T23:57:09.496Z
+
+> ↩︎ result: if __name__ == "__main__":
+>     sys.exit(main())
+> ok
+
+### 🤖 Claude — 2026-11-19T23:57:12.086Z
+
+It works when run alone. Here's what it records:
+
+### 🤖 Claude — 2026-11-19T23:57:13.708Z
+
+> 🔧 **Bash** `{"command": "cat backups/LIVE_TOOLS_STATE.json | python3 -c \"import json,sys;d=json.load(sys.stdin);d['workers_status_latest_round']='(...)';print(json.dumps(d,indent=1))\"; grep -ciE 'token|api[_-]?key|secret|password' backups/LIVE_TOOLS_STATE.json", "description": "Show the live tools record and scan for secrets"}`
+
+### 🧑 User — 2026-11-19T23:57:13.773Z
+
+> ↩︎ result: {
+>  "time_utc": "2026-11-19T23:57:09+00:00",
+>  "lead_branch": "ccr-681a37bb-5jqfbu",
+>  "specialists_sha256_16": {
+>   "android-build-performance": "b0c45161860a960c",
+>   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
+>   "benny-character-artist": "cde203afa8b927cb",
+>   "cartoon-girl-character-artist": "52058503a3558580",
+>   "foam-bubbles-particles": "f6341dcde1ea07e5",
+>   "path-camera-transition-engineer": "4244cc8249008d7f",
+>   "playwright-visual-qa": "0f14c32fb4af423f",
+>   "reference-match-director": "b977e3f7592f4276",
+>   "washer-environment-modeler": "7abdea786d530d79",
+>   "water-fx-specialist": "b160f12ff93db70e"
+>  },
+>  "workers_git_worktrees": [
+>   {
+>    "worktree": "/home/user/wt/benny",
+>    "branch": "claude/rainbow-benny-c21",
+>    "head": "8fb1b91ad764"
+>   },
+>   {
+>    "worktree": "/home/user/wt/s04",
+>    "branch": "claude/rainbow-s04-match-c21",
+>    "head": "dfeb60c47c51"
+>   },
+>   {
+>    "worktree": "/home/user/wt/s04b",
+>    "branch": "claude/rainbow-s04-ringtex-c21",
+>    "head": "81b37b6c64e6"
+>   }
+>  ],
+>  "workers_status_latest_round": "(...)",
+>  "plugins_installed_locally": [
+>   "worldlabs@worldlabs"
+>  ],
+>  "plugins_enabled_user_settings": [
+>   "worldlabs@worldlabs"
+>  ],
+>  "plugins_synced_from_claude_acc …[+526 chars]
+
+### 🤖 Claude — 2026-11-19T23:57:21.993Z
+
+> 🔧 **Bash** `{"command": "pgrep -af 'rainbow-autosave.py' | grep -v pgrep | head -3; tail -2 backups/.live/BACKUP_LOG.md 2>/dev/null | cut -c1-170; git log -1 --format='%h %ci'; git ls-remote origin refs/heads/ccr-681a37bb-5jqfbu | cut -c1-12", "description": "Check whether the running save finished"}`
+
+### 🧑 User — 2026-11-19T23:57:22.651Z
+
+> ↩︎ result: | 2026-11-19T23:51:20+00:00 | daemon | committed+pushed | `cf48970463c0` | `ccr-681a37bb-5jqfbu` | 28 | True |  |
+> | 2026-11-19T23:56:37+00:00 | daemon | committed+pushed | `d6312d4da86c` | `ccr-681a37bb-5jqfbu` | 71 | True |  |
+> d6312d4 2026-11-19 23:56:51 +0000
+> d6312d4da86c
+
+### 🤖 Claude — 2026-11-19T23:57:26.752Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "  files, `INFO.json` with restore steps). Never commit secrets;", "new_string": "  files, `INFO.json` with restore steps; since 2026-11-19 ~23:55 UTC files up to 5 MB / 150 MB per worktree, so full-size\n  captures and clips are included) and writes `backups/LIVE_TOOLS_STATE.json` (specialists + hashes, worker branches,\n  plugins, MCP servers, hooks — names only). Never commit secrets;"}`
+
+### 🧑 User — 2026-11-19T23:57:26.933Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T23:57:28.557Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:save-everything-v2 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified|skipping|error'; git show --stat --format='%h %s' HEAD | grep -E 'rainbow-autosave.py|LIVE_TOOLS|CLAUDE.md|^[0-9a-f]{7}'; python3 -I scripts/autosave-status.py", "description": "Save script changes and verify on GitHub", "timeout": 400000}`
+

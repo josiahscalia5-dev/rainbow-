@@ -63,7 +63,9 @@ match `?match05=1` with env05 / benny05 / hud05 / coins05 / splash05m / bub05 �
   five-minute GitHub autosave (`python3 -I scripts/autosave-status.py` → `AUTOSAVE OK … (match)`), save immediately after
   every kept visual improvement and before ending, verify remote SHA == local HEAD. Since 2026-11-18 every autosave also
   snapshots each specialist worktree's UNFINISHED edits (read-only) into `backups/wip/<branch>/` (`tracked.patch`, small new
-  files, `INFO.json` with restore steps). Never commit secrets; never claim running agents or logins transfer (save their
+  files, `INFO.json` with restore steps; since 2026-11-19 ~23:55 UTC files up to 5 MB / 150 MB per worktree, so full-size
+  captures and clips are included) and writes `backups/LIVE_TOOLS_STATE.json` (specialists + hashes, worker branches,
+  plugins, MCP servers, hooks — names only). Never commit secrets; never claim running agents or logins transfer (save their
   definitions, work and restart instructions); never merge or overwrite specialist branches without the user's OK.
   TRAP: the GitHub DEFAULT branch (`ccr-6f431adf-7h0m8y`, protected original 11-15) has an OLD hook that does NOT restore
   newer work — a new account must start its session on the branch named at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`.

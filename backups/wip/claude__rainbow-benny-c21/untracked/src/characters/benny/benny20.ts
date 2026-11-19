@@ -50,25 +50,25 @@ const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, nu
   fur_body: {
     lock: [n('blx', 18), n('bly', 1.0), n('blz', 0.85), n('blw', 260)],
     shade: [n('bsx', 0.3), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],
-    comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.25), 0],
+    comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.12), n('bcw', 0.35)],
     color: lin('bcol', [0.23, 0.075, 0.136]),
   },
   fur_armL: {
     lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
     shade: [0.35, 0.25, 0.45, 0.35],
-    comb: [n('acx', 0.5), 0.7, 0.2, 0],
+    comb: [n('acx', 0.5), 0.8, 0.12, 0.3],
     color: lin('acol', [0.23, 0.075, 0.136]),
   },
   fur_armR: {
     lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
     shade: [0.35, 0.25, 0.45, 0.35],
-    comb: [n('acx', 0.5), 0.7, 0.2, 0],
+    comb: [n('acx', 0.5), 0.8, 0.12, 0.3],
     color: lin('acol', [0.23, 0.075, 0.136]),
   },
   fur_pom: {
     lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],
     shade: [n('psx', 0.45), n('psy', 0.3), n('psz', 0.35), n('psw', 0.3)],
-    comb: [0, 1, n('pcz', 0.2), 0],
+    comb: [0, 1, n('pcz', 0.12), n('pcw', 0.3)],
     color: lin('pcol', [0.1016, 0.0067, 0.4425]),
   },
 };
@@ -79,7 +79,7 @@ export const HAT20 = {
   /** uniform scale of the whole beanie (cuff, crown, star, pompom) about the head centre */
   scale: n('hs', 1.1),
   /** extra drop along the body's up axis (units) */
-  drop: n('hd', 0.18),
+  drop: n('hd', 0.02),
   /** backward tilt about the hat's X axis (rad, − = top toward his back): the BACK of the cuff (what the rear chase
    *  cameras see) comes down to the approved seat while the FRONT stays above his eyes (eye tops ≈ +0.18) */
   tilt: n('ht', -0.23),

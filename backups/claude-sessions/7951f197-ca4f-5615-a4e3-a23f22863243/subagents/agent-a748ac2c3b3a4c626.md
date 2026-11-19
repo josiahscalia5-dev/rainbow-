@@ -2070,3 +2070,36 @@ Unexpected: rendered fur still bright and fur IoU dropped. Let me look.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/score.py'\ns=open(p).read()\na=\"# colour medians in the real render\"\nnew='''# frame-to-frame camera settle moves Benny a few px: best IoU over vertical shifts + cuff height as a fraction of Benny\nbest = (0, -1, -1, -1)\nfor dy in range(-50, 51, 2):\n    sh = lambda m: np.roll(m, dy, 0)\n    v = (iou(sh(gall), aall), iou(sh(ghat), ahat), iou(sh(gm['fur']), afur | (am & ~ahat)))\n    if v[0] > best[1]: best = (dy, *[round(x, 4) for x in v])\nout['shift_best'] = {'dy': best[0], 'iou_all': best[1], 'iou_hat': best[2], ' …[+643 chars]`
 
+### 🧑 User — 2026-11-19T23:56:43.276Z
+
+> ↩︎ result: b/b1_hatdrop
+> {'dy': 36, 'iou_all': 0.8151, 'iou_hat': 0.7146, 'iou_fur': 0.6351} [0.71, 0.691] [197, 597, 943, 1388]
+> c/c0_base
+> {'dy': 30, 'iou_all': 0.7708, 'iou_hat': 0.6228, 'iou_fur': 0.529} [0.749, 0.691] [195, 597, 975, 1377]
+> f/f0_tilt23
+> {'dy': 6, 'iou_all': 0.8677, 'iou_hat': 0.7377, 'iou_fur': 0.5659} [0.775, 0.691] [194, 594, 976, 1403]
+> f/f1_tilt15
+> {'dy': 6, 'iou_all': 0.8507, 'iou_hat': 0.7093, 'iou_fur': 0.549} [0.773, 0.691] [194, 594, 980, 1403]
+> f/f2_tilt0
+> {'dy': 6, 'iou_all': 0.822, 'iou_hat': 0.6801, 'iou_fur': 0.5661} [0.752, 0.691] [194, 594, 987, 1403]
+
+### 🤖 Claude — 2026-11-19T23:56:48.539Z
+
+Relative to Benny's height, the tilted beanie (f0) sits ~36 px too low but has the best overall silhouette match (IoU 0.868). Let me view f0 for the fur look, then refine the drop.
+
+### 🤖 Claude — 2026-11-19T23:56:50.337Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I tools/benny20/crop.py qa/benny/r20/probe/f/f0_tilt23.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/f0.png", "description": "Crop f0 close-up"}`
+
+### 🧑 User — 2026-11-19T23:56:50.675Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:56:51.484Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/f0.png"}`
+
+### 🧑 User — 2026-11-19T23:56:51.519Z
+
+> ↩︎ result: [image]
+

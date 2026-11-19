@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 14963a9..8fa4d65 100644
+index 14963a9..ec403d3 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -25,6 +25,7 @@
@@ -54,7 +54,7 @@ index 14963a9..8fa4d65 100644
          uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
          uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
          uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
-@@ -1421,6 +1422,112 @@ export function addM04(ctx: M04Ctx) {
+@@ -1421,6 +1422,114 @@ export function addM04(ctx: M04Ctx) {
    };
    let seed = 4321; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
    const waterHalf = Math.sqrt(Math.max(0, r * r - cy * cy)); // where the water meets the tunnel wall
@@ -67,7 +67,7 @@ index 14963a9..8fa4d65 100644
 +  // foam's m04foamn0 / m04foamn1, like the sprite bubbles) so nothing pops in the face. Tunables: m04bbs heap size,
 +  // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m04bbi iridescence,
 +  // m04bbr roughness, m04bbk sink into the water (share of the heap height), m04bbw inside-rim heaps (0 = none), m04bbl
-+  // blue-lilac shading toward each bubble's outline, m04bbg thin bright rim.
++  // blue-lilac shading toward each bubble's outline, m04bbg thin bright rim, m04bbh white sparkle.
 +  const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[]) => {
 +    let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
 +    const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
@@ -101,15 +101,17 @@ index 14963a9..8fa4d65 100644
 +      roughness: M04.num('m04bbr', 0.08), metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08,
 +      iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
 +      emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.2), transparent: true, depthWrite: true });
-+    const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.55)), rimW = M04.num('m04bbg', 0.35);
++    const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.55)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
 +    mat.onBeforeCompile = (sh) => {
-+      sh.uniforms.uBNear = { value: near }; sh.uniforms.uBRim = { value: rimC }; sh.uniforms.uBRimW = { value: rimW };
++      sh.uniforms.uBNear = { value: near }; sh.uniforms.uBRim = { value: rimC }; sh.uniforms.uBRimW = { value: rimW }; sh.uniforms.uBGl = { value: glint };
 +      // the painted foam bubbles: pale lilac-white faces, soft blue-lilac shading toward each bubble's outline, a thin bright rim
-+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;')
++      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;\nuniform float uBGl;')
 +        .replace('#include <opaque_fragment>', `{
 +    float nv = saturate(dot(normal, geometryViewDir));
 +    outgoingLight = mix(outgoingLight, outgoingLight * uBRim.rgb, uBRim.a * pow(1.0 - nv, 1.4));
 +    outgoingLight += vec3(1.0, 0.96, 1.0) * uBRimW * pow(1.0 - nv, 6.0);
++    // the painted white sparkle on every bubble (upper left, as the painting is lit), view-space so it rides with each bubble
++    outgoingLight = mix(outgoingLight, vec3(1.0), uBGl * smoothstep(0.93, 0.975, dot(normal, normalize(vec3(-0.45, 0.6, 0.66)))));
 +  }
 +  #include <opaque_fragment>`);
 +      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 aC;\nuniform vec2 uBNear;')
@@ -167,7 +169,7 @@ index 14963a9..8fa4d65 100644
    if (M04.foam && M04.river) {
      // the painted foam clouds: big white puffy balls piled along both river edges where the river meets the gold wall,
      // in clusters of varied size with short gaps, plus bigger banks before the opening
-@@ -1444,6 +1551,10 @@ export function addM04(ctx: M04Ctx) {
+@@ -1444,6 +1553,10 @@ export function addM04(ctx: M04Ctx) {
      const flos = flo ? M04.num('m04flos', 0.55) : 1, flok = flo ? M04.num('m04flok', 2.4) : 1;   // bubble size / count scale
      const flw = flo ? M04.num('m04flw', 1.5) : 1;    // spread of each cluster along / across the edge (wider, low banks)
      let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
@@ -178,7 +180,7 @@ index 14963a9..8fa4d65 100644
      const emit = (x: number, y: number, z: number, rad: number, s: number, base: number) => {
        if (!clu) { items.push({ p: new THREE.Vector3(x, y, z), r: rad, s }); return; }
        const R = rad * fcs;
-@@ -1467,6 +1578,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1467,6 +1580,7 @@ export function addM04(ctx: M04Ctx) {
          const reach = (0.3 + rnd() * 0.5 + H * 0.6) * (f3 ? 0.6 : 1);     // how far the clump spills into the river
          const n = Math.round((6 + cl * (8 + H * 22)) * (f3 ? 0.75 : 1));
          const lean = (rnd() - 0.5) * 0.6;
@@ -186,7 +188,7 @@ index 14963a9..8fa4d65 100644
          for (let i = 0; i < n; i++) {
            const t = rnd(), env = Math.pow(Math.sin(Math.PI * t), 0.7);
            const hf = Math.pow(rnd(), 1.6) * env;                 // height fraction inside the heap
-@@ -1504,12 +1616,15 @@ export function addM04(ctx: M04Ctx) {
+@@ -1504,12 +1618,15 @@ export function addM04(ctx: M04Ctx) {
          const rad = (0.16 + rnd() * 0.34) * (M04.foam3 ? 0.7 : 1);
          const x = cx + side * (waterHalf + 0.3 + rnd() * 2.2);
          const y = rad * 0.55 * (flo ? flov : 1) + rnd() * 0.3 * fch * floh, z = z0 - a + rnd() * 0.3;
