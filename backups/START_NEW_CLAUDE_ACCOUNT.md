@@ -1,6 +1,22 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-18 ~19:15 UTC, account 16 → next account) — use THIS prompt
+## ▶ NEWEST (2026-11-19 ~20:15 UTC, round 19 → next session / account) — use THIS prompt
+Before pasting: connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a Claude Code cloud session on the
+repo, branch **`ccr-d00ac5ec-gabdsh`** (round-19 lead; NOT the default branch). Connectors on claude.ai: World Labs Marble,
+Thrixel (`https://api.thrixel.com/mcp`, optional), Hugging Face (optional). Keys are checked with free reads first.
+
+> RAINBOW — continue my EXISTING game exactly where round 19 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ROUND 19"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (binding) and
+>    `docs/briefs/2026-11-19-r19/RESUME_R19.md` + `COORDINATION.md`.
+> 2. Continue each `-c19` branch on its own NEW `-c20` branch (recipe `docs/briefs/2026-11-19-r19/setup_worker.sh`), relaunch the
+>    04 / 05 workers from their "(r19) WHERE I STOPPED / NEXT" blocks, and build the combined Screen 04 preview v3.
+> 3. Show every result as separate full-size APPROVED / BEFORE / NEW pictures labelled GOOD IMPROVEMENT, NOT AN IMPROVEMENT or
+>    NOT YET PROVEN. No paid jobs or new Thrixel / Marble assets without my approval.
+
+---
+
+## ▶ (2026-11-18 ~19:15 UTC, account 16 → next account) — superseded by the prompt above
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a
 Claude Code cloud session on the repo, branch **`ccr-e42bb3c0-jpif8d`** (account-16 lead; NOT the default branch). Claude checks
 the keys first with free reads and opens the secure forms only if a check fails (World Labs `api.worldlabs.ai` header

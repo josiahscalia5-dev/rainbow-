@@ -1,4 +1,17 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 18 STATE (2026-11-19 ~02:45 UTC, lead branch `ccr-ae71d3a5-80naq2`)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 19 STATE (2026-11-19 ~20:15 UTC, lead branch `ccr-d00ac5ec-gabdsh`) — HANDOFF READY
+
+New account, started 19:05 UTC from the r18 lead's 18:56 save (r18 stopped at the usage limit; nothing merged). The r18 04 / 05
+workers were relaunched on `-c19` branches, each finished its step and stopped cleanly for a fresh session (user order ~19:40):
+s04 `claude/rainbow-s04-match-c19` @ `97fcb8b6` (K18-5 steering-smear fix), s04tex `claude/rainbow-s04-ringtex-c19` @ `1cff16f2`
+(K9 crisp ring lines), s05 `claude/rainbow-s05-match-c19` @ `eb7233e3` (crisp slotted left wall). 06 / 07 still on their `-c18` tips;
+08 PAUSED. Thrixel connector (user's sign-in) tested once on Screen 04 foam: NOT AN IMPROVEMENT (8 cubes, 1 free sculpt run;
+`qa/match/04/r19_thrixel/NOTES.md`). Where everyone stopped + next tasks: **`docs/briefs/2026-11-19-r19/RESUME_R19.md`**; map
+`docs/briefs/2026-11-19-r19/COORDINATION.md`; recipe `docs/briefs/2026-11-19-r19/setup_worker.sh`. Next round: `-c20` branches
+from each newest `-c19` tip. Open lead task: the combined Screen 04 preview v3.
+
+---
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 18 STATE (2026-11-19 ~02:45 UTC, lead branch `ccr-ae71d3a5-80naq2`)
 
 Started 02:15 UTC from the r17 lead `ccr-bbe2b27e-oxfh1w` @ `d22ec46` (its last save, 2026-11-18 21:11 UTC; nothing merged). The r17
 environment closed after that save; its five 04–07 workers were mid-step — their 21:11 WIP is restored UNCOMMITTED on new `-c18`

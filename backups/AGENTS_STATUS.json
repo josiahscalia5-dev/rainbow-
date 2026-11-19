@@ -1,7 +1,7 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-19T19:40Z",
+  "updated_utc": "2026-11-19T20:15Z",
   "updated_by_session": "session_01AvQv6SAH2NyYjSPRMtFps6 (round 18, lead ccr-ae71d3a5-80naq2)",
   "running_now": {
     "_note": "see round18.running (five background workers in the round-18 lead container, relaunched ~02:50 UTC from the r17 21:11 UTC WIP snapshots); Screen 08 PAUSED by the user"
@@ -1011,24 +1011,30 @@
         "from": "a6219412 + WIP step 5 m04nwq/m04nwr",
         "agent": "foam-bubbles-particles",
         "worktree": "/home/user/wt/s04",
-        "state": "RUNNING",
-        "next": "finish step 5 steering-smear fix; then m04sswirl, foam colour, glitches"
+        "state": "STOPPED (handoff)",
+        "next": "m04sswirl prove/reject; pink/cyan foam banks; steering glitch sweep",
+        "tip": "97fcb8b66f4b9df7d12b4596f30458c52811a254",
+        "kept": "K18-5 (+ m04nwq=2&m04nwr=3.2)"
       },
       "s04tex": {
         "branch": "claude/rainbow-s04-ringtex-c19",
         "from": "617556fd (K8) + WIP step 9 top-third band",
         "agent": "washer-environment-modeler",
         "worktree": "/home/user/wt/s04b",
-        "state": "RUNNING",
-        "next": "finish step 9; steering seam check; pink haze ring 0"
+        "state": "STOPPED (handoff)",
+        "next": "steering check + pink haze ring 0; top-third band f10/t66",
+        "tip": "1cff16f2",
+        "kept": "K9 (+ m04rpcr=1)"
       },
       "s05": {
         "branch": "claude/rainbow-s05-match-c19",
         "from": "ef5dd0cd (step 2 code committed)",
         "agent": "water-fx-specialist",
         "worktree": "/home/user/wt/s05",
-        "state": "RUNNING",
-        "next": "re-render step 2 proof set; then near water / near walls at end of 05"
+        "state": "STOPPED (handoff)",
+        "next": "flat gold paddle chunk k81L; plain cyan near water end of 05",
+        "tip": "eb7233e3646640397f14e360f601aeff088d7536",
+        "kept": "KEPT_STEP2.txt (+ m05wcrisp, m05pink; m05lidf rejected)"
       },
       "s06": {
         "state": "STOPPED (not restarted; usage for 04/05)",
@@ -1044,8 +1050,16 @@
       "preview04": {
         "state": "lead builds v3 from newest s04 + s04tex + m04end refit",
         "v2": "claude/rainbow-s04-preview-c18 @ c338978b"
+      },
+      "thrixel04": {
+        "state": "DONE - NOT AN IMPROVEMENT",
+        "branch": "claude/rainbow-s04-thrixel-c19",
+        "notes": "qa/match/04/r19_thrixel/NOTES.md",
+        "cost": "8 cubes + 1 free sculpt run (242 cubes, 3 sculpt runs left until 2026-12-01)",
+        "thrixel_submission": "c55e6a88-10db-432c-abaf-3f56e345fee5"
       }
     },
-    "if_cut_off": "-c20 branches from each newest -c19 tip + backups/wip/<branch>/ snapshot"
+    "if_cut_off": "-c20 branches from each newest -c19 tip + backups/wip/<branch>/ snapshot",
+    "resume": "docs/briefs/2026-11-19-r19/RESUME_R19.md"
   }
 }

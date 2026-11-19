@@ -38,3 +38,11 @@ verify everything on `ccr-d00ac5ec-gabdsh`, write the continuation note, hand ov
 FREE allocation only). Foam-test preparation: `qa/match/04/r19_falfoam/NOTES.md` (input `input_foamR_rgba.png`). The one fal
 TRELLIS try (request `01a1f54f`) was rejected at input validation (no model; normally not billed). Workers told 19:45 UTC:
 finish only the step in progress, write WHERE I STOPPED / NEXT, push, stop.
+
+## Progress continued (19:50–20:15 UTC)
+| # | Screen / step | Verdict |
+|---|---|---|
+| 2 (~19:55) | 04 r18 step 5 `&m04nwq=2&m04nwr=3.2` (s04 `88a6b837`, K18-5; handoff `97fcb8b6`) | GOOD IMPROVEMENT (glitch fix, worker): while Benny steers, the white-cyan cloud blobs beside / behind him and the broad pink smear far behind him are gone; clean cyan streaks flow with the current; steady whirl unchanged; start view 0 px; coins same — `/home/user/wt/s04/qa/match/04/r18/s5_nwfix/` |
+| 3 (~20:05) | 05 r18 step 2 `&m05wcrisp=1&m05pink=1` (s05 `eb7233e3`; `m05lidf` NOT AN IMPROVEMENT, left out) | GOOD IMPROVEMENT (worker): mid / end of 05 and hard left: smeared streaky walls → crisp violet-magenta slotted wall with clean dark slots and glossy streaks; hot-pink corner smear gone; locked view byte-identical; gameplay 8/8, 91 coins, 2,240 — `/home/user/wt/s05/qa/match/05/r18/step2_wall/` |
+| 4 (~20:15) | 04 Thrixel foam cluster `&m04tfoam=1` (lead, `claude/rainbow-s04-thrixel-c19`) | NOT AN IMPROVEMENT: thin bubble relief model reads as a flat jagged cut-out sheet; the existing 3D foam is closer. 8 cubes + 1 free sculpt run — `qa/match/04/r19_thrixel/NOTES.md` |
+All three workers stopped after their step (user order); handoff `RESUME_R19.md`.
