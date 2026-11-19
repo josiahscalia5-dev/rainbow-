@@ -1,2 +1,0 @@
-benny.glb {"errors":0,"warnings":2,"infos":12,"generator":"THREE.GLTFExporter r170","animations":4,"materials":18,"tris":12372,"topErrors":[]}
-rainbow_girl.glb {"errors":0,"warnings":0,"infos":67,"generator":"THREE.GLTFExporter r170","animations":9,"materials":26,"tris":84036,"topErrors":[]}

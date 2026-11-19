@@ -1,2 +1,0 @@
-{"pass":false,"A":false,"B":true,"C":true,"D":false,"E":true,"finalE":2240,"errors":[]}
-exit=1
