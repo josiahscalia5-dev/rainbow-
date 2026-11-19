@@ -1,0 +1,6 @@
+Failed to create secure directory (/home/agent/.config/pulse): Read-only file system
+00:00.929  blend            | Read blend: "/tmp/rainbow-s06-rinse-world-6N8q2x2g/editable/Screen06_Rinse_Arch.blend"
+Info: Saved as "Screen06_Rinse_Arch_Materials.blend"
+RAINBOW06 packed material preview 22 6
+Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+pa_write() failed while trying to wake up the mainloop: Operation not permitted

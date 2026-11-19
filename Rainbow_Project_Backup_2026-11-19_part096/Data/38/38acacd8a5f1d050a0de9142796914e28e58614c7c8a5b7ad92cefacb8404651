@@ -1,0 +1,59 @@
+Failed to create secure directory (/home/agent/.config/pulse): Read-only file system
+/tmp/rainbow-s06-rinse-world-6N8q2x2g/games/06/tools/reconstruction06/build-arch.py:16: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.diffuse_color=(*col,1);m.use_nodes=True;b=m.node_tree.nodes.get('Principled BSDF');b.inputs['Base Color'].default_value=(*col,1);b.inputs['Metallic'].default_value=metal;b.inputs['Roughness'].default_value=rough
+Extensions: writing cache failed ([Errno 30] Read-only file system: '/home/agent/.config/blender/5.3').
+Info: Saved as "Screen06_Rinse_Arch.blend"
+INFO Draco is available, use library at /tmp/rainbow-visual-audit.X0POSzUq/blender-test/blender-5.3.0-linux-x64/lib/libbf_intern_draco_bridge.so
+INFO MeshOptimizer is available, use library at /tmp/rainbow-visual-audit.X0POSzUq/blender-test/blender-5.3.0-linux-x64/lib/libbf_intern_meshopt_bridge.so
+02:12:21 | INFO: Starting glTF 2.0 export
+02:12:21 | INFO: Extracting primitive: RinseBank_left
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseBank_right
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseEnd
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseFoam
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinsePaddle_00
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinsePaddle_01
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinsePaddle_02
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinsePaddle_03
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_00
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_01
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_02
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_03
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_04
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_05
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_06
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_07
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_08
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_09
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_10
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_11
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseRing_12
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseWall
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Extracting primitive: RinseWater
+02:12:21 | INFO: Primitives created: 1
+02:12:21 | INFO: Finished glTF 2.0 export in 0.1954495906829834 s
+
+RAINBOW06 world export 13 rings 127 foam groups 2431728
+Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+pa_write() failed while trying to wake up the mainloop: Operation not permitted
