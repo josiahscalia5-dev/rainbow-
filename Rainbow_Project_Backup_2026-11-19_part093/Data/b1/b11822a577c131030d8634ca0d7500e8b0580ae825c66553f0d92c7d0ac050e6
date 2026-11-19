@@ -1,0 +1,410 @@
+{
+  "base": {
+    "ok": true,
+    "boundaries": [
+      {
+        "from": "01",
+        "to": "02",
+        "s": 0.01,
+        "posGap": 0,
+        "tangentAngleDeg": 0.249,
+        "upAngleDeg": 0.249,
+        "altitude": -2.4
+      },
+      {
+        "from": "02",
+        "to": "03",
+        "s": 41,
+        "posGap": -0.0001,
+        "tangentAngleDeg": 0.653,
+        "upAngleDeg": 0.467,
+        "altitude": -11.87
+      },
+      {
+        "from": "03",
+        "to": "04",
+        "s": 70.41,
+        "posGap": 0,
+        "tangentAngleDeg": 0.905,
+        "upAngleDeg": 0.568,
+        "altitude": -19.41
+      },
+      {
+        "from": "04",
+        "to": "05",
+        "s": 114.69,
+        "posGap": 0,
+        "tangentAngleDeg": 0.183,
+        "upAngleDeg": 0.182,
+        "altitude": -40.63
+      },
+      {
+        "from": "05",
+        "to": "06",
+        "s": 188.91,
+        "posGap": 0,
+        "tangentAngleDeg": 0.218,
+        "upAngleDeg": 0.215,
+        "altitude": -43.35
+      },
+      {
+        "from": "06",
+        "to": "07",
+        "s": 242.87,
+        "posGap": 0,
+        "tangentAngleDeg": 0.112,
+        "upAngleDeg": 0.034,
+        "altitude": -48.5
+      },
+      {
+        "from": "07",
+        "to": "08",
+        "s": 385.06,
+        "posGap": 0,
+        "tangentAngleDeg": 0.41,
+        "upAngleDeg": 0.334,
+        "altitude": -113.5
+      },
+      {
+        "from": "08",
+        "to": "09",
+        "s": 400.63,
+        "posGap": 0,
+        "tangentAngleDeg": 0.117,
+        "upAngleDeg": 0.192,
+        "altitude": -113.59
+      },
+      {
+        "from": "09",
+        "to": "10",
+        "s": 415.85,
+        "posGap": 0,
+        "tangentAngleDeg": 0.079,
+        "upAngleDeg": 0.13,
+        "altitude": -113.47
+      },
+      {
+        "from": "10",
+        "to": "11",
+        "s": 431.03,
+        "posGap": 0,
+        "tangentAngleDeg": 0.003,
+        "upAngleDeg": 0.003,
+        "altitude": -110.16
+      }
+    ],
+    "maxStepTangentDeg": 6.202,
+    "maxStepPos": 0.253,
+    "plunge": {
+      "entryAltitude07": -48.5,
+      "plungeTop": {
+        "s": 306.25,
+        "y": -52.31
+      },
+      "plungeMid": {
+        "s": 345.61,
+        "y": -83.56
+      },
+      "plungeBottom": {
+        "s": 384.97,
+        "y": -113.49
+      },
+      "inlet08": {
+        "s": 385.06,
+        "y": -113.5
+      },
+      "verticalDrop": 61.19,
+      "minPitchDeg": -70
+    }
+  },
+  "experiment": {
+    "ok": true,
+    "boundaries": [
+      {
+        "from": "01",
+        "to": "02",
+        "s": 0.01,
+        "posGap": 0,
+        "tangentAngleDeg": 0.249,
+        "upAngleDeg": 0.249,
+        "altitude": -2.4
+      },
+      {
+        "from": "02",
+        "to": "03",
+        "s": 41,
+        "posGap": -0.0001,
+        "tangentAngleDeg": 0.653,
+        "upAngleDeg": 0.467,
+        "altitude": -11.87
+      },
+      {
+        "from": "03",
+        "to": "04",
+        "s": 70.41,
+        "posGap": 0,
+        "tangentAngleDeg": 0.905,
+        "upAngleDeg": 0.568,
+        "altitude": -19.41
+      },
+      {
+        "from": "04",
+        "to": "05",
+        "s": 114.69,
+        "posGap": 0,
+        "tangentAngleDeg": 0.183,
+        "upAngleDeg": 0.182,
+        "altitude": -40.63
+      },
+      {
+        "from": "05",
+        "to": "06",
+        "s": 188.91,
+        "posGap": 0,
+        "tangentAngleDeg": 0.218,
+        "upAngleDeg": 0.215,
+        "altitude": -43.35
+      },
+      {
+        "from": "06",
+        "to": "07",
+        "s": 242.87,
+        "posGap": 0,
+        "tangentAngleDeg": 0.112,
+        "upAngleDeg": 0.034,
+        "altitude": -48.5
+      },
+      {
+        "from": "07",
+        "to": "08",
+        "s": 385.06,
+        "posGap": 0,
+        "tangentAngleDeg": 0.41,
+        "upAngleDeg": 0.334,
+        "altitude": -113.5
+      },
+      {
+        "from": "08",
+        "to": "09",
+        "s": 400.63,
+        "posGap": 0,
+        "tangentAngleDeg": 0.117,
+        "upAngleDeg": 0.192,
+        "altitude": -113.59
+      },
+      {
+        "from": "09",
+        "to": "10",
+        "s": 415.85,
+        "posGap": 0,
+        "tangentAngleDeg": 0.079,
+        "upAngleDeg": 0.13,
+        "altitude": -113.47
+      },
+      {
+        "from": "10",
+        "to": "11",
+        "s": 431.03,
+        "posGap": 0,
+        "tangentAngleDeg": 0.003,
+        "upAngleDeg": 0.003,
+        "altitude": -110.16
+      }
+    ],
+    "maxStepTangentDeg": 7.357,
+    "maxStepPos": 0.253,
+    "plunge": {
+      "entryAltitude07": -48.5,
+      "plungeTop": {
+        "s": 306.25,
+        "y": -52.31
+      },
+      "plungeMid": {
+        "s": 345.61,
+        "y": -83.56
+      },
+      "plungeBottom": {
+        "s": 384.97,
+        "y": -113.49
+      },
+      "inlet08": {
+        "s": 385.06,
+        "y": -113.5
+      },
+      "verticalDrop": 61.19,
+      "minPitchDeg": -70
+    }
+  },
+  "sameStageStations": true,
+  "unchangedMaxOutsideSection": 0,
+  "maxCentreShift": 2.2630191755758706,
+  "maxLocalSpeedDifferenceFraction": 0.002784383602965068,
+  "fifteenCoins": [
+    {
+      "sourcePixel": [
+        267.6,
+        716.1,
+        101
+      ],
+      "depthRatio": 1,
+      "s": 201.6913328834788,
+      "lateral": -0.1399914024148693,
+      "height": 0.26381815966016664
+    },
+    {
+      "sourcePixel": [
+        178.6,
+        623.8,
+        82
+      ],
+      "depthRatio": 1,
+      "s": 202.07886883074207,
+      "lateral": -0.4650996764808577,
+      "height": 0.8302452620451115
+    },
+    {
+      "sourcePixel": [
+        234.3,
+        548.1,
+        59
+      ],
+      "depthRatio": 1,
+      "s": 203.3260867475886,
+      "lateral": 0.04675062606123401,
+      "height": 0.6922558768773661
+    },
+    {
+      "sourcePixel": [
+        319.6,
+        521.3,
+        43
+      ],
+      "depthRatio": 1,
+      "s": 205.96345914089926,
+      "lateral": -0.7287023348848797,
+      "height": 0.3298433732696864
+    },
+    {
+      "sourcePixel": [
+        407.6,
+        534,
+        32
+      ],
+      "depthRatio": 1,
+      "s": 205.8894034757639,
+      "lateral": 0.26251115903170263,
+      "height": 0.17577875510169547
+    },
+    {
+      "sourcePixel": [
+        505.9,
+        586.1,
+        22
+      ],
+      "depthRatio": 0.9179999999999999,
+      "s": 211.15148926371705,
+      "lateral": -1.1806855807761565,
+      "height": 0.9677138967625216
+    },
+    {
+      "sourcePixel": [
+        557.5,
+        623,
+        19
+      ],
+      "depthRatio": 0.8919999999999999,
+      "s": 212.72994837665954,
+      "lateral": -1.1846926067424295,
+      "height": 0.7904331360875428
+    },
+    {
+      "sourcePixel": [
+        594.8,
+        644.1,
+        19
+      ],
+      "depthRatio": 0.8855,
+      "s": 213.81430821472833,
+      "lateral": -1.1323468860959374,
+      "height": 0.6865896750378673
+    },
+    {
+      "sourcePixel": [
+        619.1,
+        654.7,
+        19
+      ],
+      "depthRatio": 0.8985,
+      "s": 214.69655362004494,
+      "lateral": -1.139035515688465,
+      "height": 0.7435887259345159
+    },
+    {
+      "sourcePixel": [
+        642.7,
+        662.7,
+        16
+      ],
+      "depthRatio": 0.9309999999999999,
+      "s": 215.78254409695143,
+      "lateral": -1.165920287420835,
+      "height": 0.9743939949267861
+    },
+    {
+      "sourcePixel": [
+        659.5,
+        668,
+        14
+      ],
+      "depthRatio": 0.9309999999999999,
+      "s": 216.0641170349169,
+      "lateral": -0.9828956621796348,
+      "height": 0.9592389780202432
+    },
+    {
+      "sourcePixel": [
+        675.2,
+        675.9,
+        13
+      ],
+      "depthRatio": 0.9375,
+      "s": 216.61951389337077,
+      "lateral": -0.9142055864366967,
+      "height": 1.002207665657068
+    },
+    {
+      "sourcePixel": [
+        687.8,
+        684.4,
+        10
+      ],
+      "depthRatio": 0.9375,
+      "s": 217.03257318729663,
+      "lateral": -0.8382134711380484,
+      "height": 0.982204730686191
+    },
+    {
+      "sourcePixel": [
+        696,
+        692.1,
+        7
+      ],
+      "depthRatio": 0.944,
+      "s": 217.5080390044502,
+      "lateral": -0.8572851393981525,
+      "height": 1.0000295649062982
+    },
+    {
+      "sourcePixel": [
+        703.4,
+        701.1,
+        8
+      ],
+      "depthRatio": 0.9375,
+      "s": 217.89377364182994,
+      "lateral": -0.85216935672847,
+      "height": 0.9587065326540094
+    }
+  ],
+  "identicalModelAtOpening": true
+}

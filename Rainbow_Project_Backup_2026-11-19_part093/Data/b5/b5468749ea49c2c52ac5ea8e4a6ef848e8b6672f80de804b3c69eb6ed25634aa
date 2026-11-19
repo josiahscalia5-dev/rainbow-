@@ -1,0 +1,38 @@
+from pathlib import Path
+import os,shutil,json,sys
+root=Path(sys.argv[1]);mode=sys.argv[2]
+k=Path("/tmp/rainbow-s06-rinse-world-6N8q2x2g");last=k/'repo/experiments/codex/s06-world-space-rinse-arch/reproduce'
+spec=json.loads((root/'baseline.json').read_text());out=root/'repo/experiments'/spec['branch'];out.mkdir(parents=True,exist_ok=True)
+def transfer(src,dst):
+ src=Path(src);dst=Path(dst);dst.parent.mkdir(parents=True,exist_ok=True)
+ if dst.exists():return
+ try:os.link(src,dst)
+ except OSError:shutil.copyfile(src,dst)
+transfer(root/'games/06'/spec['officialArtwork'],out/'APPROVED.jpg')
+for folder,dest in [('BEFORE','CLAUDIA_BEFORE'),('NEW','CODEX_NEW')]+([('NEW_AT_CLAUDIA_CAMERA','AT_CLAUDIA_CAMERA')] if mode=='curve' else []):
+ for p in (root/'proof/06'/folder).glob('*'):
+  if p.is_file() and p.name!='opening-repeat.png':transfer(p,out/dest/p.name)
+for fname in ['compare-opening.py','score-rgba.mjs']:
+ transfer(last/fname,out/'reproduce'/fname)
+for fname in ['capture.cjs','queries.json','flags.json','validate-captures.py','build-phone-review.py']:
+ transfer(root/fname,out/'reproduce'/fname)
+transfer(root/'games/06/scripts/gameplay-test.mjs',out/'reproduce/fixture/06/gameplay-test.mjs')
+transfer(root/'baseline.json',out/'checks/baseline.json')
+if (root/'source.json').exists():transfer(root/'source.json',out/'checks/source.json')
+for fname in ['motion.json','opening.json','blender-inspection.json','course-verification.json','final-fit.json','material-fit.json','native-parts.json','character-comparison.json']:
+ if (root/'authoring'/fname).is_file():transfer(root/'authoring'/fname,out/'checks'/fname)
+for fname in ['build.txt','types.log','base-continuity.txt']:
+ if (root/'diagnostics'/fname).is_file():transfer(root/'diagnostics'/fname,out/'checks'/fname)
+if mode=='curve':
+ for fname in ['Screen06_Crest_Routes.blend','retained-river.json','experiment-river.json']:
+  transfer(root/'authoring'/fname,out/'editable'/fname)
+ transfer(root/'authoring/blender-river.py',out/'reproduce/blender-river.py')
+ transfer(root/'matched-moving.cjs',out/'reproduce/matched-moving.cjs')
+ transfer(k/'inputs/course.json',out/'reproduce/retained-course.json')
+else:
+ transfer(root/'character-probe.cjs',out/'reproduce/character-probe.cjs')
+ for fname in ['cal-0.1.png','cal-0.38.png','photographed-state.json']:
+  transfer(root/'authoring'/fname,out/'measurement-inputs'/fname)
+ if (root/'actor-geometry.cjs').is_file():transfer(root/'actor-geometry.cjs',out/'reproduce/actor-geometry.cjs')
+ if (root/'character-geometry-proof.json').is_file():transfer(root/'character-geometry-proof.json',out/'checks/actor-geometry.json')
+print(out)
