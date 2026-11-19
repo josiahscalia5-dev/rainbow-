@@ -1,0 +1,16 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index f6c98dd..86f399c 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -119,6 +119,11 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
+ uniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it
+ uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening
+ uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)
++uniform vec4 uRNear;       // r19b m04rnear: x amount, y target sub-band length (world u), z/w sub-band size on screen (px) where
++                           // the near-band detail starts / is full
++uniform vec4 uRNear2;      // r19b m04rnear: x rounded-tube shading, y rim + groove lines, z yellow-gold grade, w pink / violet reflection
++uniform vec4 uRNear3;      // r19b m04rnear: x bulbs on the sub-rims, y highlight lift, z corridor ring growth (m04rfg), w lip + groove size (u)
++uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)
+ #ifdef RFEW
+ uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
+ uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
