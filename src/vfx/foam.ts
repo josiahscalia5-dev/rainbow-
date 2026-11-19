@@ -15,6 +15,7 @@
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
 import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
+import { outletRange, outletWeight, outletFoam } from './plungeShore';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
@@ -562,6 +563,7 @@ function hide07(course: Course): [number, number] | null {
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
   const hk = bermScale05(course);
+  const shore = outletRange(course);
   const ds = quality === 'high' ? 0.32 : 0.8;
   const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
   const rows = Math.ceil((s1 - s0) / ds) + 1;
@@ -577,6 +579,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     rowS.push(s);
     const f = course.sample(s);
     const hw = course.widthAt(s) / 2;
+    const shoreMix = outletWeight(s, shore);
     for (const side of [-1, 1]) {
       for (let j = 0; j < C; j++) {
         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
@@ -586,7 +589,13 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
         const h = squashBerm(bermSurface(s, e, side, hw), k05);
         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
-        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+        let offset = eS, height = h;
+        if (shoreMix) {
+          const bank = outletFoam(s, side, (e - BERM_IN) / (BERM_OUT - BERM_IN), bermLump(s, side));
+          offset = THREE.MathUtils.lerp(eS, bank.offset, shoreMix);
+          height = THREE.MathUtils.lerp(h, bank.height, shoreMix);
+        }
+        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + offset)).addScaledVector(f.up, height);
         tmp.toArray(pos, k * 3);
         foam[k * 3] = e;
         foam[k * 3 + 1] = s;
@@ -704,6 +713,7 @@ export function createFoam(
   // rand() sequence (and every other stage's foam) stays identical.
   const st05b = course.stage('05');
   const bermK = bermScale05(course);
+  const shore = outletRange(course);
   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
   /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
   const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
@@ -713,6 +723,13 @@ export function createFoam(
     const k05 = bermK(ss);
     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+    const shoreMix = outletWeight(ss, shore);
+    if (shoreMix) {
+      const bank = outletFoam(ss, side, (e - BERM_IN) / (BERM_OUT - BERM_IN), bermLump(ss, side));
+      const offset = THREE.MathUtils.lerp(eS, bank.offset, shoreMix);
+      const height = THREE.MathUtils.lerp(h, bank.height + lift * 0.6, shoreMix);
+      return f.pos.clone().addScaledVector(f.right, side * (hw + offset)).addScaledVector(f.up, height);
+    }
     return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
   };
   const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
@@ -725,6 +742,7 @@ export function createFoam(
       r *= 0.5 + 0.95 * hz * hz;
       lift -= 0.4 * r;
     }
+    r *= THREE.MathUtils.lerp(1, 0.60 + 0.16 * bermLump(ss, side), outletWeight(ss, shore));
     list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });
   };
   const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };

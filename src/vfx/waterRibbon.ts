@@ -11,6 +11,7 @@
  */
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
+import { outletRange, outletWeight, outletWidth, OUTLET_CONTACT_HEIGHT } from './plungeShore';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
 
@@ -352,6 +353,10 @@ uniform float uTime;
 uniform vec3 uCyanDeep;
 uniform vec3 uCyan;
 uniform vec3 uCyanBright;
+#ifdef PLUNGE_SHORE
+uniform sampler2D uOutletBank;
+uniform vec2 uOutletLimits;
+#endif
 uniform vec3 uPinkDeep;
 uniform vec3 uPink;
 uniform vec3 uPinkLight;
@@ -1374,6 +1379,18 @@ void main() {
     col = mix(col, foamCol, edge * smoothstep(0.05, 0.4, c + edge * 0.3));
   }
   col = mix(col, uFoamLav * 0.92, vSkirt);
+#ifdef PLUNGE_SHORE
+  float outlet = smoothstep(uOutletLimits.x, uOutletLimits.x + 1.4, s)
+    * (1.0 - smoothstep(uOutletLimits.y - 2.2, uOutletLimits.y, s));
+  float wetEdge = smoothstep(-0.36, -0.04, abs(lat) - vHalfW);
+  if (outlet * wetEdge > 0.0) {
+    // Use Claudia's straightened magenta strip only on the real inclined bank and its wet rim.
+    // The row advances in world units. The two sides use different stretches of the original magenta water.
+    float bankU = mix(0.31, 0.018, clamp(vSkirt, 0.0, 1.0));
+    vec3 paint = texture2D(uOutletBank, vec2(bankU, s / 2.7 - uTime * 0.09 + step(0.0, u) * 0.49)).rgb;
+    col = mix(col, paint, outlet * wetEdge);
+  }
+#endif
   float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
   col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
 
@@ -1506,6 +1523,7 @@ export interface Ribbon {
 
 export function createRibbon(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): Ribbon {
   const { s0, s1, quality } = opts;
+  const shore = outletRange(course);
   const ds = quality === 'high' ? 0.4 : 0.7;
   const cols = quality === 'high' ? 18 : 10;
   const rows = Math.ceil((s1 - s0) / ds) + 1;
@@ -1550,8 +1568,19 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
       if (chan && ch) { chan[k * 2] = ch.c; chan[k * 2 + 1] = ch.hw; }
       k++;
     };
-    // left skirt (below left edge)
-    put(-1, -hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right).negate());
+    const shoreMix = outletWeight(s, shore);
+    const putOuterEdge = (side: number) => {
+      if (!shoreMix) {
+        put(side, side * hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right).multiplyScalar(side));
+        return;
+      }
+      const offset = outletWidth(s, side);
+      const outer = THREE.MathUtils.lerp(hw * 1.01, hw + offset, shoreMix);
+      const height = THREE.MathUtils.lerp(EDGE_LIFT - 0.7, OUTLET_CONTACT_HEIGHT, shoreMix);
+      nrm.copy(f.right).multiplyScalar(side).lerp(f.up, shoreMix * offset / (offset + EDGE_LIFT - OUTLET_CONTACT_HEIGHT)).normalize();
+      put(side, side * outer, height, 1, nrm);
+    };
+    putOuterEdge(-1);
     for (let j = 0; j <= cols; j++) {
       const u = -1 + (2 * j) / cols;
       const lift = EDGE_LIFT * Math.abs(u) ** 3;
@@ -1559,7 +1588,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
       nrm.copy(f.up).addScaledVector(f.right, -slope).normalize();
       put(u, u * hw, lift, 0, nrm);
     }
-    put(1, hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right));
+    putOuterEdge(1);
   }
   const idx: number[] = [];
   for (let i = 0; i < rows - 1; i++) {
@@ -1629,6 +1658,18 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
   }
   const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;
+  let outletTextureReady: Promise<void> | undefined;
+  if (shore) {
+    const bankUniform: THREE.IUniform<THREE.Texture | null> = { value: null };
+    Object.assign(uniforms, { uOutletLimits: { value: new THREE.Vector2(...shore) }, uOutletBank: bankUniform });
+    const url = new URL('../../assets/textures/match07/near_bank.png', import.meta.url).href;
+    outletTextureReady = new THREE.TextureLoader().loadAsync(url).then(texture => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.anisotropy = 4;
+      bankUniform.value = texture;
+    });
+  }
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,
@@ -1637,6 +1678,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     side: THREE.DoubleSide,
     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}), ...(HIDE07R(course) ? { HIDE07R: 1 } : {}) },
   });
+  if (shore) mat.defines.PLUNGE_SHORE = 1;
   const mesh = new THREE.Mesh(geo, mat);
   if (proj) mesh.onBeforeRender = proj.onBeforeRender;
   mesh.name = 'water_ribbon';
@@ -1650,7 +1692,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
       const hw = course.widthAt(s) / 2;
       return ribbonWave(lateral / hw, s, t, ampAt(course, s));
     },
-    ready: proj?.ready,
+    ready: outletTextureReady ? Promise.all([proj?.ready, outletTextureReady]).then(() => undefined) : proj?.ready,
   };
 }
 
