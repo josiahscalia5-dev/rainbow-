@@ -1373,6 +1373,13 @@ void main() {
   float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.1;
   float eu = abs(lat) - vHalfW;               // units from the edge (negative inside)
   float edge = smoothstep(-0.75, -0.3, eu + edgeN * vHalfW);
+#ifdef PLUNGE_SHORE
+  // The actual lather now follows the outside of the shared incline. The original white lace
+  // would draw a second foam line on the water at the previous shoreline.
+  float outlet = smoothstep(uOutletLimits.x, uOutletLimits.x + 1.4, s)
+    * (1.0 - smoothstep(uOutletLimits.y - 2.2, uOutletLimits.y, s));
+  edge *= 1.0 - outlet;
+#endif
   if (edge > 0.0) {
     float c = cells(vec2(lat * 3.2, (s - vSpeed * uTime * 0.35) * 3.2));
     vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
@@ -1380,8 +1387,6 @@ void main() {
   }
   col = mix(col, uFoamLav * 0.92, vSkirt);
 #ifdef PLUNGE_SHORE
-  float outlet = smoothstep(uOutletLimits.x, uOutletLimits.x + 1.4, s)
-    * (1.0 - smoothstep(uOutletLimits.y - 2.2, uOutletLimits.y, s));
   float wetEdge = smoothstep(-0.36, -0.04, abs(lat) - vHalfW);
   if (outlet * wetEdge > 0.0) {
     // Use Claudia's straightened magenta strip only on the real inclined bank and its wet rim.
