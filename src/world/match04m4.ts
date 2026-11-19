@@ -119,6 +119,12 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
 uniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it
 uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening
 uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)
+uniform vec4 uRNear;       // r19b m04rnear: x amount, y target sub-band length (world u), z/w sub-band size on screen (px) where
+                           // the near-band detail starts / is full
+uniform vec4 uRNear2;      // r19b m04rnear: x rounded-tube shading, y rim + groove lines, z yellow-gold grade, w pink / violet reflection
+uniform vec4 uRNear3;      // r19b m04rnear: x bulbs on the sub-rims, y highlight lift, z corridor ring growth (m04rfg), w lip + groove size (u)
+uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)
+uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z reflection patchiness (0 = even stripe), w bulb size
 #ifdef RFEW
 uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
 uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
@@ -360,6 +366,88 @@ void main() {
         pr *= mix(vec3(1.0), wg, uRWarm.x);
       }
       pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
+      if (uRNear.x > 0.0 && uu < uL) {
+        // r19b m04rnear: the NEAR band seen from inside. While swimming, the band of the ring Benny is in fills the top half
+        // of the view and the painted ring (160 texture rows for a whole ring) is magnified ~10x into one broad, smooth
+        // orange-copper surface. The painting's nearest ring (the gold washer rim) is several polished yellow-gold tubes with
+        // bright rims, thin dark grooves and glowing bulbs, with soft pink / violet reflections of the water. So once a band
+        // is large on screen it resolves into that structure: N sub-bands (about uRNear.y world u each, world-anchored),
+        // each a rounded polished tube with a crisp warm-white rim line, a dark groove and a row of bulbs, graded toward the
+        // washer rim's yellow-gold, reflecting the pink / cyan river below. It fades in with the sub-band's size on screen
+        // (far rings and the approach keep the plain painted ring, no popping); the geometric lip, groove and dots stay.
+        float kI = floor(al / uP);
+        float Bk = uP * pow(uRNear3.z, kI) - uRNear3.w;            // this corridor ring's band length (world u)
+        float Ns = max(1.0, floor(Bk / uRNear.y + 0.5));
+        float ls = uL / Ns;                                          // sub-band length (ring units)
+        float wS = uu / ls, si = floor(wS), xs = wS - si;
+        float fuN = max(fwidth(al), 1e-5);
+        float fd = smoothstep(uRNear.z, uRNear.w, ls / fuN) * uRNear.x;
+#ifdef RFEW
+        fd *= step(0.999, vF.y);                                     // corridor rings only (the telescope stays painted)
+#endif
+        if (fd > 0.001) {
+          float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip
+          // (a) each sub-band a rounded polished tube bulging into the tunnel: its normal tilts from facing back toward the
+          // viewer (just after the groove) to facing down the tunnel (at the rim); what that normal mirrors shades it, so
+          // the highlight sits where the painting puts it (toward the rim) and slides over the tubes as Benny swims
+          float th = (xs - 0.5) * 1.5;
+          vec3 nT = normalize(n * cos(th) + uAxD * sin(th));
+          vec3 RT = reflect(-V, nT);
+          float fz = dot(RT, uAxD);
+          float sh = smoothstep(0.0, 0.7, xs) - 0.4 * smoothstep(0.9, 1.0, xs) * (1.0 - lastS);
+          pr *= 1.0 + uRNear2.x * fd * (sh - 0.5);
+          // (b) the washer rim's yellow-gold: the warm (copper) texels shift toward gold; the tube highlight mirrors the
+          // bright end of the tunnel (broad warm gold + a sharp warm-white core)
+          float warm = smoothstep(0.04, 0.22, pr.r - pr.b);
+          pr.g *= 1.0 + 0.22 * uRNear2.z * fd * warm;
+          pr.b *= 1.0 - 0.10 * uRNear2.z * fd * warm;
+          float hl = pow(max(fz, 0.0), 6.0), hc = pow(max(fz, 0.0), 40.0);
+          pr += (vec3(1.0, 0.74, 0.30) * 0.45 * hl + vec3(1.0, 0.95, 0.78) * 0.9 * hc) * uRNear3.y * fd;
+          // (c) soft pink / violet reflections: the polished tubes mirror the river below (violet-blue lane, pink banks),
+          // as soft patches; moves with the view, world-anchored on the water
+          vec3 qW = vW - uAxO;
+          float py = dot(qW, uAxU), Ry = dot(RT, uAxU);
+          if (uRNear2.w > 0.0 && Ry < -0.02) {
+            float tH = (uRNearW - py) / Ry;
+            float hx = dot(qW, uAxR) + dot(RT, uAxR) * tH, hz = dot(qW, uAxD) + dot(RT, uAxD) * tH;
+            float lane = 1.0 - smoothstep(0.8, 1.7, abs(hx));
+            vec3 rc = mix(vec3(0.86, 0.46, 0.82), vec3(0.64, 0.56, 0.92), lane);   // painted pink (211,118,207) / violet
+            float nz = 0.5 + 0.5 * sin(hz * 0.55 + hx * 1.1 + 2.0 * sin(hz * 0.21 + hx * 0.6));
+            // soft patches around the ring too (the painted pink / violet sheens are radial smears a few tenths of a radian
+            // wide), world-anchored on the ring and different on every sub-band
+            float pa = mix(1.0, smoothstep(0.35, 1.1, streaks(ang + rj, kI * 5.0 + si + 61.0)), uRNear4.z);
+            float sR = uRNear2.w * fd * smoothstep(0.3, 0.85, nz) * pa * exp(-tH / 30.0) * smoothstep(-0.02, -0.2, Ry);
+            pr = mix(pr, rc * (0.8 + 0.4 * dot(pr, vec3(0.30, 0.59, 0.11))), clamp(sR, 0.0, 0.7));
+          }
+          // (d) the sub-rims (not on the last sub-band: the modelled lip carries its own line, groove and dots)
+          float bi = floor(uu / ls + 0.5);
+          if (bi > 0.5 && bi < Ns - 0.5) {
+            float e = uu - bi * ls;                                  // signed ring units from the sub-rim (< 0 = before it)
+            float eB = e + 0.04, hB = 0.02, hD = 0.016;
+            float cB = clamp((hB + 0.5 * fuN - abs(eB)) / fuN, 0.0, 1.0) * min(1.0, 2.0 * hB / fuN);
+            float cD = clamp((hD + 0.5 * fuN - abs(e - 0.004)) / fuN, 0.0, 1.0) * min(1.0, 2.0 * hD / fuN);
+            float gS = exp(-pow(min(eB, 0.0) / 0.09, 2.0)) * step(e, 0.0);   // the rounded rim catching the light
+            pr += vec3(1.0, 0.80, 0.42) * 0.22 * gS * fd * uRNear2.y;
+            pr = mix(pr, vec3(1.0, 0.93, 0.70), 0.8 * cB * fd * uRNear2.y);
+            pr = mix(pr, pr * vec3(0.50, 0.32, 0.26), cD * fd * uRNear2.y);
+            if (uRNear3.x > 0.0) {
+              // a row of glowing bulbs on each sub-rim (yellow-white core, orange halo), irregular, some dark
+              float rs = kI * 7.0 + bi;
+              float cfl = (ang + rj) / 6.2831853 * uRNear4.x + 0.5 * mod(bi, 2.0);
+              float ci = floor(cfl);
+              float jx = (h21(vec2(ci + 1.7, rs + 3.1)) - 0.5) * 0.5;
+              float arc = (fract(cfl) - 0.5 - jx) * 6.2831853 * rr / uRNear4.x;
+              float bs = uRNear4.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, rs)));
+              float faN = rr * (abs(dax) + abs(day));
+              float ea = max(bs * 1.5, 0.9 * faN), eu = max(bs, 0.9 * fuN);
+              float onB = step(1.0 - uRNear4.y, h21(vec2(ci, rs + 11.0))) * uRNear3.x * fd * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
+              float dd = length(vec2(arc / ea, eB / eu));
+              pr += vec3(1.0, 0.62, 0.20) * 0.70 * smoothstep(3.5, 0.0, dd) * onB;
+              pr = mix(pr, vec3(1.0, 0.96, 0.80), smoothstep(1.0, 0.35, dd) * onB);
+            }
+          }
+        }
+      }
       if (uRCr.x > 0.0) {
         // r18 m04rpcr: the painted thin bright lip line and thin dark groove line drawn CRISP at their modeled places
         // (bright line where the lip bead starts to turn inward, dark line ending at the lip apex = the inner edge every
@@ -980,6 +1068,12 @@ export function addM04(ctx: M04Ctx) {
         uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
         uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
         uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
+        // r19b `m04rnear=1`: the near band seen from inside resolves into the painted washer rim's polished sub-bands
+        uRNear: { value: new THREE.Vector4(M04.num('m04rnear', 0), M04.num('m04rnbs', 2.0), M04.num('m04rnw0', 45), M04.num('m04rnw1', 140)) },
+        uRNear2: { value: new THREE.Vector4(M04.num('m04rnt', 0.5), M04.num('m04rnl', 1), M04.num('m04rng', 1), M04.num('m04rnr', 0.35)) },
+        uRNear3: { value: new THREE.Vector4(M04.num('m04rnd', 1), M04.num('m04rnh', 1), M04.num('m04rfew', 0) > 0 ? M04.num('m04rfg', 1) : 1, 0.56 * M04.num('m04ringgw', 1)) },
+        uRNearW: { value: -cy },
+        uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnrp', 1), M04.num('m04rnbz', 0.08)) },
         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
     const gw = M04.num('m04ringgw', 1);
