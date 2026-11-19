@@ -1215,3 +1215,38 @@ Make my screen 4 exactly like the approved screen what is so hard
 
 > 🔧 **Bash** `{"command": "D=qa/review_r18/04_where_it_drifts && mkdir -p $D && cp /home/user/wt/s04/qa/match/04/r18/s2_nband/1_APPROVED.png $D/1_APPROVED.png && cp /home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/a00_approved_view.png $D/2_GAME_start.png && cp /home/user/wt/s04/qa/match/04/r18/s2_nband/NEW/f03_forward3u.png $D/3_GAME_a_moment_later.png && cat >> docs/briefs/2026-11-19-r18/COORDINATION.md <<'EOF'\n\n## User ~03:20 UTC: \"Make my screen 4 exactly like the approved screen what is so hard\"\nLead answer: the start view already IS the painting (the user's own pixels); within a moment of swimming  …[+735 chars]`
 
+### 🧑 User — 2026-11-19T02:39:42.225Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+
+### 🤖 Claude — 2026-11-19T02:39:44.337Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/review_r18/04_where_it_drifts/1_APPROVED.png", "qa/review_r18/04_where_it_drifts/2_GAME_start.png", "qa/review_r18/04_where_it_drifts/3_GAME_a_moment_later.png"], "caption": "Screen 04: your approved picture, the game at the start, and the game a moment after Benny starts swimming.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-19T02:39:45.583Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_r18/04_where_it_drifts/1_APPROVED.png → file_uuid: d97521d8-9426-477e-b2e0-90636e5716ae
+>   /home/user/rainbow-/qa/review_r18/04_where_it_drifts/2_GAME_start.png → file_uuid: 295489bb-75b4-479e-97da-573f8872df5b
+>   /home/user/rainbow-/qa/review_r18/04_where_it_drifts/3_GAME_a_moment_later.png → file_uuid: fa1063ec-58ed-4674-b087-f8af896e72f1
+
+### 🤖 Claude — 2026-11-19T02:39:56.022Z
+
+You're right to push on this. The first picture I just sent is your approved screen and the second is the game at the start: they're the same, because the game shows your own painting there. The third is the game a moment after Benny starts swimming, and that's where it goes wrong.
+
+**What's hard:** your picture is one painted moment, seen from one spot. As soon as Benny swims in, everything in front of him has to be built as a real 3D tunnel, including parts your painting never shows. A painting can't be stretched over that without smearing, so it has to be rebuilt piece by piece in your design.
+
+**What went wrong:** the rebuilt part is wrong in three big ways, which you can see in the third picture:
+- **Rings:** your tunnel has a few thick, polished yellow-gold rings. The game shows a long straight corridor of many thin copper rings.
+- **Water:** your river is thick, with pink swirls curving up the tunnel sides. The game's water is a flat channel with straight pink strips.
+- **Foam:** yours is soft and low along the edges. The game has big white heaps beside Benny.
+
+The last few steps polished small details, like the light dots and the shine, instead of fixing those big things. That was the wrong order, and I've changed it:
+- **Rings:** the ring worker has stopped polishing and is rebuilding the tunnel as a few thick yellow-gold rings, like your painting.
+- **Water and foam:** the water worker is making the river curve up the sides in your S-shaped pink swirls, and replacing the foam heaps with low foam along the edges.
+
+**What "exactly" can mean:** at the start it already is exactly your picture. While swimming, the best possible is a faithful rebuild of your design, never a pixel-for-pixel copy, because the painting only shows one view. I'll show you full-size BEFORE / NEW pictures of the rings and water as soon as each is done.
+
+The water and ring improvements are on two separate test versions right now. Do you want me to combine them into one preview so you can see Screen 04 with everything at once? Combining two branches needs your OK.
+

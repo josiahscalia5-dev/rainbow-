@@ -1322,3 +1322,47 @@ Restoring the stray formatting change (`build =(`) so the shared file only diffe
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:39:42.639Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/PROGRESS.md", "content": "# Screen 07 · round 18 (account 18) — progress log\n\nBranch `claude/rainbow-s07-match-c18` (worktree `/home/user/wt/s07`), start = `-c17` tip `8651edf9` + the round-17 worker's unfinished\nedits (`src/world/match07.ts` +53, `src/vfx/foam.ts` +26, `src/vfx/waterRibbon.ts` +4), restored uncommitted. Briefs:\n`docs/briefs/2026-11-19-r18/RESUME_R18.md` (s07) + `docs/briefs/2026-11-18-r15/S07_LAUNCH.md`. VISUALS ONLY. Nothing is approved\nuntil the user says so. Earlier work: `qa/match/07/r17/PROGRESS.md`, `r16/`, `r15/`.\n …[+3911 chars]`
+
+### 🧑 User — 2026-11-19T02:39:42.666Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s07/qa/match/07/r18/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-19T02:39:49.005Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -i 's/seam line crosses the river and walls at about y 930–1000 in t66 \\/ t80 \\/ t88 (was there before)/seam line crosses the river and walls at about y 930–1090 in t66 \\/ t80 \\/ t88 (was there before, BEFORE has it too)/' qa/match/07/r18/PROGRESS.md && git add src/vfx/foam.ts src/vfx/waterRibbon.ts src/world/match07.ts tools/match07/audit_r18.mjs qa/match/07/r18 && git status --short && git diff --cached --stat", "description": "Stage step-3 files"}`
+
+### 🧑 User — 2026-11-19T02:39:49.567Z
+
+> ↩︎ result: A  qa/match/07/r18/APPROVED_07.png
+> A  qa/match/07/r18/PROGRESS.md
+> A  qa/match/07/r18/step3_foamb/BEFORE/motion.json
+> A  qa/match/07/r18/step3_foamb/BEFORE/t66_through_screen.png
+> A  qa/match/07/r18/step3_foamb/BEFORE/t72_through_screen.png
+> A  qa/match/07/r18/step3_foamb/BEFORE/t80_through_screen.png
+> A  qa/match/07/r18/step3_foamb/BEFORE/t88_through_screen.png
+> A  qa/match/07/r18/step3_foamb/BEFORE/t95_through_screen.png
+> A  qa/match/07/r18/step3_foamb/NEW/motion.json
+> A  qa/match/07/r18/step3_foamb/NEW/t66_through_screen.png
+> A  qa/match/07/r18/step3_foamb/NEW/t72_through_screen.png
+> A  qa/match/07/r18/step3_foamb/NEW/t80_through_screen.png
+> A  qa/match/07/r18/step3_foamb/NEW/t88_through_screen.png
+> A  qa/match/07/r18/step3_foamb/NEW/t95_through_screen.png
+> A  qa/match/07/r18/step3_foamb/gameplay_new.json
+> M  src/vfx/foam.ts
+> M  src/vfx/waterRibbon.ts
+> M  src/world/match07.ts
+> A  tools/match07/audit_r18.mjs
+> ?? node_modules
+> ?? qa/match/07/r17/step4_nearf/
+>  qa/match/07/r18/APPROVED_07.png                    | Bin 0 -> 494067 bytes
+>  qa/match/07/r18/PROGRESS.md                        |  45 +
+>  qa/match/07/r18/step3_foamb/BEFORE/motion.json     | 131 +++
+>  .../r18/step3_foamb/BEFORE/t66_through_screen. …[+1282 chars]
+
+### 🤖 Claude — 2026-11-19T02:39:55.556Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git commit -q -F - <<'EOF'\nScreen 07 r18 step 3: &m07foamb=1 — no white lather walls restarting part-way down the drop (GOOD IMPROVEMENT, small-moderate)\n\nFinishes the r17 unfinished step 3. With the switch, the game's tall white lather bank stays away down the 07 drop to 5 u before\nthe 08 start, then grows back out of the water (full height at the 08 start, 08 keeps its bank); puffs ride on the growing bank.\nFixes the r17 draft bug (the ramp flattened the bank over the whole course before the end of 07). Shared foam.ts / waterRibbon.ts\nchanges are be …[+611 chars]`
+

@@ -851,3 +851,24 @@ Now I'll implement the start-view switch `&m06st=1` in the shader.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && O=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1 && node tools/match06/r16_start.mjs $O BEFORE \"$K\" NEW \"$K&m06st=1\" BEFORE@1.1 \"$K\" NEW@1.1 \"$K&m06st=1\" 2>&1 | grep -v \"allow list\"; for p in \"\" \"@1.1\"; do node /home/user/tools-pixelmatch/pixeldiff.mjs \"$O/BEFORE$p.png\" \"$O/NEW$p.png\" $O/diff$p.png 0.1 180 1536; done", "description": "Render BEFORE/NEW start views and diff them", "tim …[+14 chars]`
 
+### 🧑 User — 2026-11-19T02:39:33.106Z
+
+> ↩︎ result: BEFORE s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> NEW s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> BEFORE@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+> NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+> {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/BEFORE.png","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/NEW.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/[REDACTED-EMAIL]","b":"/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/[REDACTED-EMAIL]","rows":[180,1536],"threshold":0.1,"diff_pixels":127622,"total":1171584,"diff_pct":10.8931}
+
+### 🤖 Claude — 2026-11-19T02:39:34.219Z
+
+Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
+
+### 🤖 Claude — 2026-11-19T02:39:35.448Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try1/[REDACTED-EMAIL]"}`
+
+### 🧑 User — 2026-11-19T02:39:35.497Z
+
+> ↩︎ result: [image]
+

@@ -1107,3 +1107,71 @@ Redirect received: ring structure first. Let me look at the zoom I just made (it
 > 630:export function addM04(ctx: M04Ctx) {
 > 654:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { valu …[+1097 chars]
 
+### 🤖 Claude — 2026-11-19T02:39:55.623Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 600,760p src/world/match04m4.ts", "description": "Read ring lathe construction code"}`
+
+### 🧑 User — 2026-11-19T02:39:55.667Z
+
+> ↩︎ result: uniform float uAlpha;
+> varying vec2 vUv;
+> varying float vS;
+> varying float vF;
+> ${PROJ05_INVERSE}
+> void main() {
+>   float r = length(vUv);
+>   if (r > 1.0) discard;
+>   float core = smoothstep(0.17, 0.09, r);
+>   float glow = exp(-r * r / 0.06);
+>   float halo = exp(-r * r / 0.30) * (1.0 - smoothstep(0.7, 1.0, r));
+>   float streak = exp(-vUv.x * vUv.x / 0.008) * exp(-vUv.y * vUv.y / 0.30) * 0.6;
+>   vec3 col = mix(vec3(1.0, 0.62, 0.16), vec3(1.0, 0.86, 0.42), clamp(glow + streak, 0.0, 1.0));
+>   col = mix(col, vec3(1.0, 0.99, 0.90), core);
+>   float a = clamp(core + 0.85 * glow + 0.35 * halo + streak, 0.0, 1.0) * (0.75 + 0.25 * vS);
+>   gl_FragColor = vec4(pjInverse(col), a * uAlpha * vF);
+> }`;
+> 
+> function lathe(prof: { r: number; a: number; part: number }[], segs: number, ringIdx: (i: number) => number) {
+>   const pts = prof.map((p) => new THREE.Vector2(p.r, p.a));
+>   const g = new THREE.LatheGeometry(pts, segs);
+>   const n = g.attributes.position.count;
+>   const k = new Float32Array(n * 2);
+>   // LatheGeometry: vertex index = seg * pts.length + j
+>   for (let i = 0; i < n; i++) { const j = i % pts.length; k[i * 2] = prof[j].part; k[i * 2 + 1] = ringIdx(j); }
+>   g.setAttribute('aK', new THREE.Float32BufferAttribut …[+10861 chars]
+
+### 🤖 Claude — 2026-11-19T02:39:58.444Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -rn \"addM04(\" src | head; grep -rn \"outerR\" src/world/*.ts | grep -v match04m4 | head", "description": "Find addM04 caller and tunnel dimensions"}`
+
+### 🧑 User — 2026-11-19T02:39:58.503Z
+
+> ↩︎ result: src/world/match04.ts:293:  const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+> src/world/match04m4.ts:630:export function addM04(ctx: M04Ctx) {
+> src/world/match04.ts:28:  tube: { r: number; ax: number; h: number; mouthS: number; outerR: number };
+> src/world/match04.ts:253:  const ring = new THREE.Shape(); ring.absarc(0, 0, T.outerR, 0, Math.PI * 2, false);
+> src/world/match04.ts:293:  const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+
+### 🤖 Claude — 2026-11-19T02:40:00.086Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 200,300p src/world/match04.ts; cat assets/textures/match04/proj04.json | head -60", "description": "Read tunnel placement and projector config"}`
+
+### 🧑 User — 2026-11-19T02:40:00.153Z
+
+> ↩︎ result: };
+>   const [pGold, pWater, pWall] = await Promise.all([loadPatch('gold'), loadPatch('water'), loadPatch('wall')]);
+>   const loadTile = async (name: string) => {
+>     const t = await new THREE.TextureLoader().loadAsync(tex(`tile_${name}.png`));
+>     t.colorSpace = THREE.NoColorSpace; t.flipY = false; t.wrapS = t.wrapT = THREE.RepeatWrapping;
+>     t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8; t.needsUpdate = true; return t;
+>   };
+>   const [tRing, tRiver] = await Promise.all([loadTile('ring'), loadTile(RIVER04 ? 'chev3' : 'river')]);
+>   const tRiv3 = RIVER04 ? await loadTile('river3') : tRiver;
+>   const tiles = await fetch(tex('tiles04.json')).then((r) => r.json());
+>   const r3 = tiles.river3 ?? { lateral: [-4, 4], alongFromBenny: [0, 1] };
+>   const riv3A = new THREE.Vector4(r3.lateral[1], r3.alongFromBenny[0], r3.alongFromBenny[1] - r3.alongFromBenny[0], 0);
+>   const mat = (patch: THREE.Texture, k: number, mode = 0, tile: THREE.Texture | null = null, tileA = new THREE.Vector4()) => new THREE.ShaderMaterial({
+>     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+>     extensions: { derivatives: true } as never,
+>     uniforms: { ...shared, uPatch: { valu …[+7421 chars]
+
