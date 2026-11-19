@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s05",
  "branch": "claude/rainbow-s05-match-c18",
  "head": "a710f3db4182d406b9923b1f52e6460b5567b5fa",
- "time": "2026-11-19T18:26:52+00:00",
+ "time": "2026-11-19T18:27:24+00:00",
  "dirty_tracked": [
   "src/vfx/proj05Tunnel.ts",
   "src/vfx/waterRibbon.ts",
@@ -30,7 +30,10 @@
   "qa/match/05/r18/step2_wall/before/x97.png",
   "qa/match/05/r18/step2_wall/before/x97L.png",
   "qa/match/05/r18/step2_wall/before/x97R.png",
-  "qa/match/05/r18/step2_wall/new/a00_approved_view.png"
+  "qa/match/05/r18/step2_wall/new/a00_approved_view.png",
+  "qa/match/05/r18/step2_wall/new/f03_forward3u.png",
+  "qa/match/05/r18/step2_wall/new/f06_forward6u.png",
+  "qa/match/05/r18/step2_wall/new/f10_forward10u.png"
  ],
  "restore": "git switch claude/rainbow-s05-match-c18 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-match-c18/tracked.patch && copy backups/wip/claude__rainbow-s05-match-c18/untracked/* into the worktree"
 }
