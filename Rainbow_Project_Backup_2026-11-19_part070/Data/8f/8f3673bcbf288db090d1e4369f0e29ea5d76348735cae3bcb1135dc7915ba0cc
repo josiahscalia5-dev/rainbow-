@@ -1,0 +1,14 @@
+{
+  "sha256": "3fb798fdfcc68128f1eaf2f86767520dfb30fdc79e887c8a6f5aefa397abf726",
+  "compressedBytes": 506670407,
+  "files": 3595,
+  "nativeImagesDecoded": 718,
+  "verifiedH264Recordings": 48,
+  "openingAndIssueImagesPixelVerified": 58,
+  "verifiedPDFPages": 37,
+  "verifiedGuideLinks": true,
+  "verifiedZIPCRC": true,
+  "verifiedAllExtractedSHA256": true,
+  "gameSourceVerifiedAfterExtraction": true,
+  "sourceEditions": 31
+}
