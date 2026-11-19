@@ -71,3 +71,27 @@ Still different: (1) the rings are a deeper copper-orange than the painting's br
 white-hot highlights (step 8 = brightness / polish, as planned); (2) the painted light at the end is a little larger and
 whiter; (3) for the s04 worker / lead: with `m04rfew` the end disc moves to the telescope's end and shrinks to its last ring,
 so `m04end` (s04's painted far opening on that disc) would need refitting if both are combined.
+
+## Step 7 fix — seam at the top of every ring (found while doing step 8)
+With `m04rfew` the lathe's first and last vertex columns (they coincide at the tunnel top) got different normals, so a thin
+vertical line ran through each band at the top and the lip edge showed a small step there (visible at t66 when zoomed). The
+seam normals are now welded (telescope path only). K7 BEFORE frames for step 8 were re-rendered with the fix
+(`step8_pol/2_BEFORE_<shot>.png`); start view K6 vs fixed K7: 0 differing pixels.
+
+## Step 8 — bright polished gold: K7 + `&m04rpol=1` (K7 = K6 + `&m04rfew=1&m04rfg=1.2`)
+Measured on ring pixels: while swimming (f10 / f20 / t66) the rings were flatter than the painted ring area: luma p50 111,
+p75 130, p95 165 against the painting's 120 / 148 / 195 (darks equal). The straightened textures match the painted inner-ring
+pixels (the painted bright parts — lip lines, highlight streaks — shrink to a few pixels up close), so the fix is the polish,
+not a recolour. What it does (painted-ring path, default off): the painted ring's own highlights lifted above a pivot
+(`m04rpp` 0.42, gain `m04rpgh` 0.5; darks slightly deeper `m04rpgl` 0.15) and a sharp warm-white sheen that mirrors the bright
+end of the tunnel and moves with the view (`m04rpsp` 0.25; grazing brightening `m04rpfr`, 0 by default).
+After: f10 p50 123 / p75 149 / p95 186, t66 130 / 153 / 187, hard left 136 / 159 / 190.
+Pictures: `step8_pol/2_BEFORE_<shot>.png` (K7 with the seam fix) and `step8_pol/3_NEW_<shot>.png`, 12 shots each; APPROVED
+`1_APPROVED.png`. Clip (half size, real gameplay): `step8_pol/clip_NEW_swim.mp4`; BEFORE clip `step7_rfew/clip_NEW_swim.mp4`.
+Checks: start view K7 vs K7 + `m04rpol=1`: **0 differing pixels** (`step8_pol/start_view_pixeldiff_BEFORE_vs_NEW.png`); coins
+identical at all 12 shots; frame-by-frame clip check: no sparkle noise, seams or flicker.
+Verdict: **GOOD IMPROVEMENT (moderate, ring look)** — the rings read as brighter, polished yellow-gold with strong warm
+highlight streaks on every band, instead of a duller brownish copper; ring edges, grooves and light dots stay crisp.
+Still different: (1) at f10 / t66 the top third of the frame is the near ring band seen from inside, one broad smooth copper
+surface (the painting shows the big gold washer rim and the pink room there — lead note; next); (2) the nearest ring's
+upper-left wall at hard left is a soft pink haze (painted ring 0's sheen).

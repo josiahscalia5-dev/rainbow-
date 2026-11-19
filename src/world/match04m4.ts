@@ -116,6 +116,8 @@ uniform float uRJit;       // per-ring angle offset (rad, +-): the painted highl
 uniform vec2 uRWarm;       // r16 m04rwarm: x = amount, y = where the grade starts (fraction of the camera -> end-glow distance)
 uniform vec4 uRDots;       // r16 m04rpdots: x = amount, y = dot cells per ring, z = fraction of cells lit, w = core radius (u)
 uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)
+uniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it
+uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening
 #ifdef RFEW
 uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
 uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
@@ -321,7 +323,22 @@ void main() {
         gS /= uRVar;
       }
       vec3 pr = textureGrad(uRTex, uvR, vec2(dax / 6.2831853, gS.x), vec2(day / 6.2831853, gS.y)).rgb;
-      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading
+      if (uRPol.x > 0.0) {
+        // r18 m04rpol: POLISHED gold. While swimming the near bands fill the view and the painted rings' bright parts
+        // (lip lines, highlight streaks) shrink to a few pixels, so the rings read flatter than the painting (measured on
+        // ring pixels at f10 / f20 / t66: luma p50 111, p75 130, p95 165 vs the painting's 120 / 148 / 195; darks equal).
+        // (1) the painted ring's own highlights lifted to the painting's range (contrast above a pivot, darks kept),
+        // (2) a sharp warm-white sheen mirroring the bright end of the tunnel that moves with the view, and a trace of
+        // grazing-angle brightening (polished metal).
+        pr *= 1.0 - uRLip.z + uRLip.z * facing;
+        float l0 = dot(pr, vec3(0.30, 0.59, 0.11));
+        float l1 = l0 + (l0 > uRPol.y ? uRPol.z : uRPol.w) * (l0 - uRPol.y);
+        pr *= mix(1.0, l1 / max(l0, 1e-3), uRPol.x);
+        float glS = pow(max(dot(R, uAxD), 0.0), 24.0);
+        pr += (vec3(1.0, 0.90, 0.62) * uRPol2.x * glS + vec3(1.0, 0.78, 0.42) * uRPol2.y * pow(1.0 - facing, 4.0)) * uRPol.x;
+      } else {
+        pr *= 1.0 - uRLip.z + uRLip.z * facing;                        // gentle modeled shading
+      }
       if (uRWarm.x > 0.0) {
         // r16 m04rwarm: the painted rings keep their copper near the viewer, then the last rings before the glowing end
         // turn orange -> yellow -> warm yellow-white (band medians measured ring by ring on the approved picture, R 100 ->
@@ -701,6 +718,8 @@ export function addM04(ctx: M04Ctx) {
         uAway: away, uAxO: { value: axO }, uAxD: { value: axD }, uAxU: { value: axU }, uAxR: { value: axR }, uNB: { value: M04.num('m04nb', 28) },
         uRPaint: { value: 0 }, uRTex: { value: null }, uRLip: { value: new THREE.Vector4(M04.num('m04rpsl', 0.79), 0, M04.num('m04rpsh', 0.15), 0) }, uRJit: { value: M04.num('m04rpj', 0) }, uRWarm: { value: new THREE.Vector2(M04.num('m04rwarm', 0), M04.num('m04rww', 0.45)) },
         uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.06)) }, uRVar: { value: 0 },
+        uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
+        uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
     });
     const gw = M04.num('m04ringgw', 1);
@@ -819,6 +838,14 @@ export function addM04(ctx: M04Ctx) {
       }
       tun.setAttribute('aF', new THREE.Float32BufferAttribute(aF, 2));
       tun.computeVertexNormals();
+      // weld the lathe seam (first and last vertex columns coincide at the tunnel top): without it the two columns get
+      // different normals and the shading / polished sheen shows a vertical seam at the top of every ring
+      const na = tun.attributes.normal as THREE.BufferAttribute, last = pa.count / nPt - 1, nv = new THREE.Vector3();
+      for (let j = 0; j < nPt; j++) {
+        const i0 = j, i1 = last * nPt + j;
+        nv.set(na.getX(i0) + na.getX(i1), na.getY(i0) + na.getY(i1), na.getZ(i0) + na.getZ(i1)).normalize();
+        na.setXYZ(i0, nv.x, nv.y, nv.z); na.setXYZ(i1, nv.x, nv.y, nv.z);
+      }
       gm.defines = { RFEW: '' };
       gm.uniforms.uRFewG = { value: rfGz };
       gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };
