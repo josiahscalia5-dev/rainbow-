@@ -28,3 +28,36 @@ Query (K18-2): K17-1 + `&m04nband=1` (defaults `m04nbh` 1.1, `m04nba` 4.2, `m04n
   code path is unchanged); `NEW/` (K18-2, 12 shots: 10 rendered in r17 and restored, a00 + f03 re-rendered in r18,
   `motion_a00_f03_r18.json`); `NEW_swim_clip_half.mp4` (half size, 3.6 s straight / left / right / straight, rendered in r17 and
   restored from Git LFS). The restored stills moved from `qa/match/04/r17/s2_nband/` to here.
+
+## Step 3 — the near bands WHIRL round Benny (S-curve sweep, crossing under him) — `&m04nwhirl=1` — GOOD IMPROVEMENT
+Query (K18-3): K18-2 + `&m04nwhirl=1` (needs `m04nband`; defaults `m04nwk` 0.5, `m04nwe` 0.3, `m04nwt` 1, `m04nwm` 0.35,
+`m04nwl` 7, and `m04nbr` 1.3 when the whirl is on).
+* Code (`src/world/match04m4.ts`, river shader only): behind Benny (toward the camera) the band edge is no longer two lines opening
+  outward but an ellipse centred on Benny (cyan pocket + splash round him); the pink / cyan stripes follow it and spiral: a stripe
+  hugging his left side sweeps diagonally under him and comes out farther out on his right (one stripe period per half turn, so the
+  bands ahead of him are not shifted). Broader stripes (1.3 u). Ahead of Benny the band edge swings in and out in gentle
+  world-anchored S-curves (0.35 u, every 7 u, left / right in opposite phase). Inside the whirl the left / right tile offset and the
+  lateral wander are shared, so there is no seam where the stripes cross. Rings, foam, arrows, coins, Benny, camera untouched.
+* Start view: `node scripts/capture.mjs 04` K18-2 vs K18-3 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+* WHAT LOOKS CLOSER (f03, f06, t33, t66, t95, steering and hard left / right, clip): the near water was long straight pink / cyan
+  stripes running past Benny and opening out toward the camera; now glossy pink and cyan bands swirl round him like the painted
+  whirl — they curve in from both sides and sweep diagonally under him, with a cyan pocket and white splash right round him, and
+  the bands beside the arrow lane wave gently instead of running as straight rails. In the clip the whirl stays wrapped round Benny
+  as he steers (like his own wake) while its colours flow with the current; no seams or tearing.
+* STILL WRONG: the swirl is more regular than the painting (even stripe widths, little sparkle inside the bands); the pink bands
+  stay on the floor of the channel — the painted magenta swirls curve UP the tunnel sides; f03 foam heaps stand tall beside Benny.
+* Rejected tries (scratch only): closed U rings (`m04nwt=0`, read like a target), mirror spiral (`m04nwt=-1`, wrong direction vs the
+  painting), stripes 0.9 u / squash 0.7 (many thin rings); first try had a vertical seam and then a zigzag at the lane centre (fixed).
+* Pictures: `qa/match/04/r18/s3_nwhirl/1_APPROVED.png`, `BEFORE/` (K18-2 = the step-2 NEW set), `NEW/` (K18-3, 12 shots),
+  `NEW_swim_clip_half.mp4` (half size, 3.6 s straight / left / right / straight).
+
+## Step 3b — cyan right round and straight below Benny (lead colour note on step 3) — `&m04nwc=1.3` — GOOD IMPROVEMENT (small)
+Query (K18-3b): K18-3 + `&m04nwc=1.3` (soft edge `m04nwcs` 0.8; `m04nwc` 0 = the step-3 look).
+* Code (`src/world/match04m4.ts`, river shader only, inside the whirl): behind Benny a soft cyan corridor 1.3 u either side of
+  him; the whirl stripes still curve in from the sides but fade into the cyan water before they reach the middle.
+* Start view: K18-3 vs K18-3b → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+* WHAT LOOKS CLOSER (f06, f10, t33, t95, hard left / right): the big magenta pool under Benny at f06 / f10 is gone; as painted, the
+  water right round and just below him is cyan with his white splash, and the pink sweeps in from the lower-left and lower-right.
+* Rejected: `m04nwc=1.7` (too much plain cyan, the curving sweep mostly lost).
+* Pictures: `qa/match/04/r18/s3b_nwc/1_APPROVED.png`, `BEFORE/` (K18-3, from the step-3 NEW set), `NEW/` (K18-3b: f03, f06, f10,
+  t33, t95, hard left / right).
