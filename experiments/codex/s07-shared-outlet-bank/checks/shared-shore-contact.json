@@ -1,0 +1,24 @@
+{
+  "contactInterval": [
+    390.1617102628636,
+    402.1617102628636
+  ],
+  "constantSection": [
+    391.5617102628636,
+    399.9617102628636
+  ],
+  "overlapLateral": 0.045,
+  "overlapVertical": 0.035,
+  "surfaces": {
+    "water_ribbon": {
+      "sampledVertices": 42,
+      "maximumLocalWidthError": 0.0000053321435280473395,
+      "maximumLocalHeightError": 0.0000110147424545598
+    },
+    "foam_berm": {
+      "sampledVertices": 52,
+      "maximumLocalWidthError": 0.000007052472309698743,
+      "maximumLocalHeightError": 0.000015070522956905918
+    }
+  }
+}
