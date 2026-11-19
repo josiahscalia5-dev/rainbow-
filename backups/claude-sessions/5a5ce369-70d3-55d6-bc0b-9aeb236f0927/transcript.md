@@ -1738,3 +1738,223 @@ The compact version of the picture is ready, with no long repeated runs in its e
 
 > 🔧 **Bash** `{"command": "D=qa/match/04/r19_thrixel && cat > /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/inspect_glb.py <<'EOF'\nimport bpy, sys, math, mathutils\nargv=sys.argv[sys.argv.index('--')+1:]; glb,out=argv\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.ops.import_scene.gltf(filepath=glb)\nobjs=[o for o in bpy.context.scene.objects if o.type=='MESH']\npts=[[REDACTED-EMAIL](c) for o in objs for c in o.bound_box]\nmn=mathutils.Vector([min(p[i] for p in pts) for i in range(3)]); mx=mathutils.Vector([max(p[i] for p in pts) for i in range(3)])\nctr=(mn+mx)/ …[+1697 chars]`
 
+### 🧑 User — 2026-11-19T19:50:50.742Z
+
+> ↩︎ result: Command did not complete within its 300s timeout and was moved to the background (ID: bp98mlfno). Output is being written to: /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bp98mlfno.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. No output had been read from it when it was moved. A program that buffers its output, or a pipe into one such as tail, can keep the output file empty until the command finishes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-19T19:50:54.470Z
+
+Blender is slow here: it renders on the processor with no graphics card, and the Screen 05 worker is still rendering too. Checking what's done so far:
+
+### 🤖 Claude — 2026-11-19T19:50:55.870Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/match/04/r19_thrixel/; cat /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/tasks/bp98mlfno.output | tail -5; uptime", "description": "Check Blender render progress and load"}`
+
+### 🧑 User — 2026-11-19T19:50:55.969Z
+
+> ↩︎ result: total 2904
+> drwxr-xr-x 2 root root    4096 Nov 19 19:50 .
+> drwxr-xr-x 5 root root    4096 Nov 19 19:45 ..
+> -rw-r--r-- 1 root root 1834448 Nov 19 19:45 foam_cluster_thrixel.glb
+> -rw-r--r-- 1 root root  293850 Nov 19 19:46 view_front.png
+> -rw-r--r-- 1 root root  271608 Nov 19 19:47 view_side.png
+> -rw-r--r-- 1 root root  293110 Nov 19 19:50 view_three_quarter.png
+> -rw-r--r-- 1 root root  264701 Nov 19 19:48 view_top.png
+>  19:50:55 up 46 min,  0 user,  load average: 6.61, 5.94, 4.80
+
+### 🤖 Claude — 2026-11-19T19:50:58.734Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r19_thrixel/view_front.png"}`
+
+### 🧑 User — 2026-11-19T19:50:58.759Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:50:59.183Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r19_thrixel/view_side.png"}`
+
+### 🧑 User — 2026-11-19T19:50:59.201Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:50:59.584Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r19_thrixel/view_three_quarter.png"}`
+
+### 🧑 User — 2026-11-19T19:50:59.612Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T19:51:24.754Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock 9 && git worktree add --no-checkout -b claude/rainbow-s04-thrixel-c19 /home/user/wt/s04t c338978b345b64c89e2ebb0f79fa242c5f53f623 >/dev/null 2>&1 && printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C /home/user/wt/s04t sparse-checkout set --no-cone --stdin && git -C /home/user/wt/s04t read-tree -mu HEAD && ln -sfn /home/user/rainbow-/node_modules /home/user/wt/s04t/node_modules; flock -u 9; exec 9>&-; cd /home/user/wt/s04t && git log --oneline -1 && grep -n \"m04fclu\\|m04foam\\b\\|'m04foam …[+195 chars]`
+
+### 🧑 User — 2026-11-19T19:51:28.061Z
+
+> ↩︎ result: c338978 Screen 04 preview v2: half-size real swim clip (04 part = first 2.2 s)
+> 8: *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+> 15: *  m04foam3 — (round 9, with m04foam + m04river) LOW soft foam hugging the river banks (heaps a third as tall, smaller
+> 34:  foam: on('m04foam'),
+> 698:  // r15 m04fclu: foam bubbles shrink away as they near the camera (no pale puff popping in the screen corners)
+> 755:// r15 `&m04fclu=1`: ONE small shiny foam bubble of the painted foam clusters (references/04: heaps of many pearly lilac-white
+> 1105:    // `m04foam2` (default with m04foam under m04river): irregular heaped clumps instead of evenly spaced rows
+> 1110:    // r15 `&m04fclu=1`: every puff becomes a LOW heap of MANY small shiny bubbles (the painted foam), same layout as the
+> 1113:    const clu = M04.num('m04fclu', 0) > 0;
+> 1191:      console.info('[match04] m04fclu', { bubbles: items.length });
+> 1355 src/world/match04m4.ts
+> ab04.mjs
+> audit04.mjs
+> bennypts04.mjs
+> blueprint04.py
+> coins04.py
+> diag04.mjs
+> fal_plate04.py
+> fit_proxies04.py
+> make_plate04.py
+> make_river04_m3.py
+> make_tiles04.py
+> metrics04.py
+> motion04.mjs
+> mouth04.py
+> mv04_fill.py
+> mv0 …[+179 chars]
+
+### 🤖 Claude — 2026-11-19T19:51:32.026Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/src/world/match04m4.ts", "offset": 1095, "limit": 110}`
+
+### 🧑 User — 2026-11-19T19:51:32.045Z
+
+> ↩︎ result: 1095	    mesh.name = name; mesh.frustumCulled = false; mesh.renderOrder = order; mesh.visible = false; // invisible during the projector depth bake
+> 1096	    group.add(mesh);
+> 1097	    updaters.push((a) => { alpha.value = a; mesh.visible = a > 0.01; });
+> 1098	  };
+> 1099	  let seed = 4321; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+> 1100	  const waterHalf = Math.sqrt(Math.max(0, r * r - cy * cy)); // where the water meets the tunnel wall
+> 1101	  if (M04.foam && M04.river) {
+> 1102	    // the painted foam clouds: big white puffy balls piled along both river edges where the river meets the gold wall,
+> 1103	    // in clusters of varied size with short gaps, plus bigger banks before the opening
+> 1104	    const items: { p: THREE.Vector3; r: number; s: number }[] = [];
+> 1105	    // `m04foam2` (default with m04foam under m04river): irregular heaped clumps instead of evenly spaced rows
+> 1106	    const heaped = M04.num('m04foam2', 1) > 0.5;
+> 1107	    // r14 `&m04foamr=L`: the painted foam clouds sit round the ENTRANCE RIM only — the edge banks stop L u inside the
+> 1108	    // opening (user: no foam walls inside the tunnel); the banks before the opening stay
+> 1109	    const rimL  …[+7037 chars]
+
+### 🤖 Claude — 2026-11-19T19:51:33.036Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && sed -n 1,60p src/world/match04m4.ts; grep -n \"^export\\|^function\\|^const M04\\|scene.add\\|group.add\" src/world/match04m4.ts | head -40; ls tools/ | head -40; cat qa/match/04/r18/preview_v2/NEW/motion.json | head -30", "description": "Read module structure and shot tooling"}`
+
+### 🧑 User — 2026-11-19T19:51:33.101Z
+
+> ↩︎ result: /**
+>  * Screen 04 milestone M4 (round 8, qa/match/04/NOTES.md) — sub-switches of `?match04=1`, each `&m04…=1`, default off:
+>  *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+>  *             approved picture's mouth ring r 3.58 → 4.11 and the painted stacked ring bands), shaded as polished gold
+>  *             (warm glow down the tunnel, pink / violet / cyan water reflections on the lower walls, glints, a row of
+>  *             amber bulbs on the opening and on every ring lip). In the approved view these surfaces show the approved
+>  *             pixels (camera projection, unchanged); they fade to their own crisp 3D gold as the camera leaves that view.
+>  *  m04foam  — puffy 3D foam banks along both water edges (the painted white-lilac foam clusters), hidden in the approved
+>  *             view (the painting carries them there), shown once the camera has left it.
+>  *  m04bub   — iridescent soap bubbles floating in the tunnel air (camera-facing bubble discs), same visibility rule.
+>  *  m04arrow — the five glowing blue chevron arrows drawn crisp on the water (distance-field shape at the painted
+>  *             spacing) instead …[+4669 chars]
+
+### 🤖 Claude — 2026-11-19T19:51:45.922Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && head -40 tools/match04/motion04.mjs; grep -n \"addM04(\" -r src | head -3; grep -n \"cx\\b\\|cy:\\|z0:\\|len:\\|outerR\" src/world/*.ts | grep -v match04m4 | head -10", "description": "Read motion shot tool and M04 context setup"}`
+
+### 🧑 User — 2026-11-19T19:51:45.972Z
+
+> ↩︎ result: // Screen 04 moving-camera test (read-only): from the 04 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node tools/match04/motion04.mjs <outDir> [q]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match04=1';
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5268);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   // [name, forward distance (u), steer]
+>   const shots = process.env.M04_SHOTS ? JSON.parse(process.env.M04_SHOTS) : [['f00_checkpoint', 0, null], ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f15_forwar …[+2446 chars]
+
+### 🤖 Claude — 2026-11-19T19:51:56.030Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && grep -n \"__rainbow\\s*=\" -r src | head -3; grep -n \"__rainbow = {\" -A40 -r src/main.ts 2>/dev/null | grep -oE \"^\\S+-\\s+[a-zA-Z]+[:(]\" | head -40; sed -n 225,300p src/world/match04.ts", "description": "Find QA API and Screen 04 group setup"}`
+
+### 🧑 User — 2026-11-19T19:51:56.110Z
+
+> ↩︎ result: src/game/Game.ts:762:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+>   group.matrixAutoUpdate = false;
+>   group.matrix.makeBasis(X, U, Dn).setPosition(new THREE.Vector3(...L.water));
+>   // round 9 `&m04lay=1` — FEASIBILITY TEST ONLY (not kept, qa/match/04/r9/PROGRESS.md "Foundation"): the whole washer
+>   // front as STATIC geometry scaled about the approved camera by 'm04layk' (same approved picture, opening k times as
+>   // far). Shows why a static bigger/farther front cannot hold the composition on the fixed course: the painted pool
+>   // ends up 3.39*(k-1) u below Benny's water and Benny's path / coins run through the middle of the opening.
+>   if (M04.lay) {
+>     const k = M04.num('m04layk', 3.0), P = proj.position;
+>     group.matrix.premultiply(new THREE.Matrix4().makeTranslation(-P.x, -P.y, -P.z)).premultiply(new THREE.Matrix4().makeScale(k, k, k)).premultiply(new THREE.Matrix4().makeTranslation(P.x, P.y, P.z));
+>   }
+>   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm04_' + name; group.add(o); return o; };
+> 
+>   const T = L.tube;
+>   // round 8 `&m04ring=1`: the tunnel (and the water in it) runs on to  …[+4674 chars]
+
+### 🤖 Claude — 2026-11-19T19:52:18.163Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && grep -rn \"GLTFLoader\" src | head -5; grep -rn \"HemisphereLight\\|DirectionalLight\\|AmbientLight\\|RoomEnvironment\\|scene.environment\" src | head -8; grep -n \"updaters\" src/world/match04m4.ts | head -8; grep -n \"return {\" src/world/match04m4.ts | tail -3; sed -n 835,860p src/world/match04m4.ts; cat .gitattributes | head", "description": "Check loaders, lights and fade hooks in the code"}`
+
+### 🧑 User — 2026-11-19T19:52:18.287Z
+
+> ↩︎ result: src/characters/girl/runtime.ts:6:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> src/characters/girl/runtime.ts:12:  const gltf = await new GLTFLoader().loadAsync(url);
+> src/characters/benny/runtime.ts:6:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> src/characters/benny/runtime.ts:16:  if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+> src/vfx/proj05Tunnel.ts:18:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> src/characters/girl/girl-lab.ts:24:    scene.environment = createCandyEnvironment(renderer);
+> src/characters/girl/girl-lab.ts:26:    scene.add(new THREE.HemisphereLight('#fff0ff', '#7a2a9c', 1.1));
+> src/characters/girl/girl-lab.ts:27:    const key = new THREE.DirectionalLight('#fff6ec', 2.4);
+> src/characters/girl/girl-lab.ts:30:    const rim = new THREE.DirectionalLight('#ff9be6', 1.2);
+> src/characters/benny/benny-lab.ts:116:    scene.environment = createCandyEnvironment(renderer);
+> src/characters/benny/benny-lab.ts:119:    scene.add(new THREE.HemisphereLight('#ffe9ff', '#7a2a9c', 1.1));
+> src/characters/benny/benny-lab.ts:120:    const key = new THREE.DirectionalLight('#ffffff', 2.2);
+> src/ch …[+3652 chars]
+
+### 🤖 Claude — 2026-11-19T19:52:23.788Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && grep -rn \"environment\\s*=\\|Light(\" src/game src/world src/characters/benny/runtime.ts src/scene* 2>/dev/null | head -10; sed -n 1320,1355p src/world/match04m4.ts", "description": "Find game scene lighting and M04 update loop"}`
+
+### 🧑 User — 2026-11-19T19:52:23.850Z
+
+> ↩︎ result: src/game/Game.ts:49:  scene.environment = createCandyEnvironment(renderer);
+> src/game/Game.ts:53:  scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+> src/game/Game.ts:54:  const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+> src/game/Game.ts:58:  const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+>       arrowsOut.push({ mesh: g, za: z0 - a, mats: [] });
+>     }
+>     updaters.push((a) => { arrA = a; });
+>     console.info('[match04] m04arr3d', { arrows: arrowsOut.length / 2, sp, tilt: M04.num('m04a3k', 38) });
+>   }
+> 
+>   out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
+>     time.value = performance.now() / 1000;
+>     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+>     if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
+>     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+>     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+>     for (const u of updaters) u(a2);
+>     if (arrowsOut.length) {
+>       const cz = -a5b.z;                                                // camera local z (forward = -z)
+>   …[+1562 chars]
+
+### 🤖 Claude — 2026-11-19T19:52:53.102Z
+
+> 🔧 **Bash** `{"command": "timeout 240 python3 scripts/rainbow-autosave.py --reason manual:before-thrixel-import 2>&1 | grep -E '\"result\"|pushed_verified'; H=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/ccr-d00ac5ec-gabdsh | cut -f1); echo \"local $H remote $R $([ \"$H\" = \"$R\" ] && echo MATCH)\"; mkdir -p /home/user/wt/s04t/assets/models/thrixel && cp qa/match/04/r19_thrixel/foam_cluster_thrixel.glb /home/user/wt/s04t/assets/models/thrixel/foam_cluster_s04.glb && grep -n \"^import\" /home/user/wt/s04t/src/world/match04m4.ts; grep -n \"const MwInv\" /home/user/wt/s04t/src/world/ …[+103 chars]`
+
