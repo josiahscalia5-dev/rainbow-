@@ -1,0 +1,26 @@
+{
+ "PREV": {
+  "file": "qa/pilot05/wave9/baseline/05.png",
+  "mad": 50.6,
+  "hue_corr": 0.875,
+  "edge_corr": 0.195,
+  "bands": {
+   "hud": 54.0,
+   "tunnel+VP": 58.6,
+   "river mid": 47.6,
+   "Benny+near water": 46.5
+  }
+ },
+ "NOW": {
+  "file": "qa/pilot05/wave9/water/it02/05.png",
+  "mad": 51.8,
+  "hue_corr": 0.831,
+  "edge_corr": 0.2,
+  "bands": {
+   "hud": 55.6,
+   "tunnel+VP": 59.9,
+   "river mid": 47.4,
+   "Benny+near water": 48.7
+  }
+ }
+}
