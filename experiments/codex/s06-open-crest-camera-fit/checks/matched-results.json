@@ -1,0 +1,318 @@
+{
+  "referenceSha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe",
+  "conditions": {
+    "opening": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-03": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-06": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-10": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "forward-20": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "hard-left": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "hard-right": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "inlet": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "middle": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "deep": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "crest-release": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "arch-exit": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "last-in-stage": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    },
+    "across-transition": {
+      "camera": true,
+      "clock": true,
+      "shaderTime": true,
+      "simFrames": true,
+      "steer": true,
+      "target": true,
+      "state": true,
+      "benny": true
+    }
+  },
+  "refsOpening": {
+    "claudia": {
+      "rgbMae_0_255": 16.198772917068545,
+      "pixelMaxChannelOver16_pct": 24.616081331983025
+    },
+    "priorCodex": {
+      "rgbMae_0_255": 16.176959504806455,
+      "pixelMaxChannelOver16_pct": 24.59837360146605
+    },
+    "new": {
+      "rgbMae_0_255": 16.164141870820472,
+      "pixelMaxChannelOver16_pct": 24.601161627121915
+    },
+    "firstOpenCrestFit": {
+      "rgbMae_0_255": 16.16270566084748,
+      "pixelMaxChannelOver16_pct": 24.598976417824073
+    }
+  },
+  "pairedOpeningVsPrior": {
+    "rgbMae_0_255": 0.2873366870016718,
+    "pixelMaxChannelOver16_pct": 0.16336323302469136
+  },
+  "motionVideo": {
+    "claudia": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "r_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ],
+      "start": {
+        "i": 0,
+        "time": 0,
+        "shaderTime": 18.73333333333333,
+        "s": 189.05,
+        "stage": "06",
+        "lat": 0,
+        "steer": 0,
+        "hearts": 5,
+        "coins": 1440,
+        "camera": [
+          3.5692831938151888,
+          -41.23219464167138,
+          -122.72570821796546
+        ],
+        "calls": 52,
+        "triangles": 338685
+      },
+      "exit": {
+        "i": 62,
+        "time": 5.166666666666667,
+        "shaderTime": 23.9,
+        "s": 246.171,
+        "stage": "07",
+        "lat": 0.315,
+        "steer": -0.03705,
+        "hearts": 5,
+        "coins": 1550,
+        "camera": [
+          10.110034625629654,
+          -44.24818482801831,
+          -172.32211929732918
+        ],
+        "calls": 182,
+        "triangles": 699263
+      },
+      "frames": 63
+    },
+    "new": {
+      "codec_name": "h264",
+      "width": 648,
+      "height": 1152,
+      "r_frame_rate": "12/1",
+      "duration": "5.250000",
+      "nb_frames": "63",
+      "side_data_list": [
+        {}
+      ],
+      "start": {
+        "i": 0,
+        "time": 0,
+        "shaderTime": 18.73333333333333,
+        "s": 189.05,
+        "stage": "06",
+        "lat": 0,
+        "steer": 0,
+        "hearts": 5,
+        "coins": 1440,
+        "camera": [
+          3.5692831938151888,
+          -41.23219464167138,
+          -122.72570821796546
+        ],
+        "calls": 54,
+        "triangles": 277691
+      },
+      "exit": {
+        "i": 62,
+        "time": 5.166666666666667,
+        "shaderTime": 23.9,
+        "s": 246.171,
+        "stage": "07",
+        "lat": 0.315,
+        "steer": -0.03705,
+        "hearts": 5,
+        "coins": 1550,
+        "camera": [
+          10.110034625629654,
+          -44.24818482801831,
+          -172.32211929732918
+        ],
+        "calls": 182,
+        "triangles": 699263
+      },
+      "frames": 63
+    }
+  },
+  "gameplay": {
+    "claudia": {
+      "assertionsPassed": 8,
+      "coins": 91,
+      "score": 2240,
+      "hearts": 5
+    },
+    "new": {
+      "assertionsPassed": 8,
+      "coins": 91,
+      "score": 2240,
+      "hearts": 5
+    }
+  },
+  "pairedOpeningVsFirstFit": {
+    "rgbMae_0_255": 0.01053270881558642,
+    "pixelMaxChannelOver16_pct": 0.010850694444444444
+  },
+  "canonicalFileHashes": {
+    "claudia": {
+      "middle.png": "d6cda4ff3616888a12a183b0bc6e947da1593f12df9ac7c9a9d299c9b90a6a48",
+      "across-transition.png": "a0e818be6b7bd2486657506245d262b997c8124ac295a2a728181a9d7c775b71",
+      "deep.png": "29132e5d88df703e2b5d3a293dd0536b2dd7f367aead175417e862d20f039886",
+      "forward-20.png": "1b3ef87cc43b2fb59806e8132d8c20ed607cfd37734ddba7cf0de71e1109a51f",
+      "inlet.png": "fe4c3a5eb1887fb37b1bbd3e5b4634f0b906a3a70f6b8d2eabeb5ecbde9a8c63",
+      "opening.png": "29b2ccf8996e6a9272cc951d1a1b956388323f73a4ce44a446130df53b7ff8df",
+      "hard-right.png": "f1ec2e3497a145ebf79739a0d404a1b9e7a496df0adf2f89175037364d1a7ca6",
+      "arch-exit.png": "7057352149c463bbefed978f4d8776102f39cb2f7933a1354b7a48ffec5bf02e",
+      "hard-left.png": "0c6e391d3a2e2cd804ecdd016603e2f26de6343c00b2d2d0ddec76b1db558af1",
+      "forward-06.png": "8c9fa33760c7064ad1d2fa8707262f84cd15cc7f1143a87f956258a6fb35b1d5",
+      "crest-release.png": "662efff29a7b5d3325cf69e9dd0c6c83528977583a30907f340ea61668493aa9",
+      "last-in-stage.png": "db07a6a414afe6a3fe57909583585e276dde0fd0a42ed6dc79ebc3907524dd13",
+      "forward-10.png": "ab4f9f2ce91c9a2f19cb4d68c516f044a6e71d639925460823a7fc77f2c97123",
+      "forward-03.png": "7b134b23cf963ad285129b1ffba33bf4612088d1e1baa22fba2d9e4aae3ca4d2"
+    },
+    "new": {
+      "middle.png": "4332ad3fa2d7017b0adc63ddff3eab557ed134e914d43fd3244d6a0a62a30fe8",
+      "across-transition.png": "f01822725fc0ee5358112301ef804e4c969aeedf2d34428686600c25e70f7767",
+      "deep.png": "045e4761a75cb4652430db756aede65c05297501b8506d906c1f9806770a5a40",
+      "forward-20.png": "eeccf4510d4dbb265993f4bd5d875485ed0f8a7a9e7994b3a5515e0323f79a30",
+      "inlet.png": "efa443066f6e82bfb50b9b4bd15bb83524c58bbb3f00d06a8e9a8d0d56fc0eb4",
+      "opening.png": "42ad399cfe8d6a39fa0eee115554f6b2892b979ede368a705bb288d84b4c4a34",
+      "hard-right.png": "6b3ab008d7b38f363685d288824402482874b85ece919840198ae1d2016defdb",
+      "arch-exit.png": "82fcf1ddaba9aada68ad5bf79042c3bdd9efce0d7f873e85ecc7ae264e586e64",
+      "hard-left.png": "64624ea806d187cd0d880cf704a8fec6f622cbf86f924752bd1b5c4cccea50bc",
+      "forward-06.png": "d37760d63839f92151310fea382e382d0aa5bba7887848d63bf00c95f442b2be",
+      "crest-release.png": "251b023585be78fc2d2c17aaadad2decb63b16b04100de1a018e9e3283149533",
+      "last-in-stage.png": "bdcf1184f87de2e4266fd9a50f07239d4655abfc28eca271d98e4016b63c96c7",
+      "forward-10.png": "cdffca79e5b6ba358335453ab250c69614817ec5aabe26d88145a0d80c34d5b3",
+      "forward-03.png": "971465c1ba1feb2db8ce8079dc67ab9f7a0cc4b43410f39841cfd617413d44fc"
+    }
+  },
+  "pairedMovingSimulation": true
+}

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { reconstructOpenCrest06 } from './openCrest06';
+import { lowerOuterShoulder06, reconstructOpenCrest06 } from './openCrest06';
 import { PROJ05_INVERSE } from '../vfx/waterRibbon';
 
 const shellURL = new URL('../../assets/arched-passage06/passage.glb', import.meta.url).href;
@@ -174,6 +174,9 @@ export async function buildArchedPassage06(
     if (obj.name === 'RinseWall') seats = obj.userData.seats;
     const geometry = obj.geometry.clone().applyMatrix4(obj.matrixWorld);
     const geometries = parts.get(surface) ?? [];
+    if (openCrest && (surface === 'water' || surface === 'foam' || surface === 'bank')) {
+      lowerOuterShoulder06(geometry);
+    }
     if (openCrest && surface === 'water') liner = reconstructOpenCrest06(geometry);
     geometries.push(geometry);
     parts.set(surface, geometries);

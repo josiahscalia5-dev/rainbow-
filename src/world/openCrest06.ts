@@ -14,12 +14,58 @@ const focalLength = halfHeight / Math.tan(31 * Math.PI / 180);
 // Depths seat the visible curl on the existing outboard shoulder. Both ends taper into
 // the washer casing and water; the cyan arm never crosses the existing swimming lane.
 const upperCrestSurvey: [number, number, number, number][] = [
-  [-140, 760, 904, 6.8], [-50, 658, 790, 8.65], [0, 589, 720, 9.7],
-  [84, 530, 650, 11.9], [172, 493, 604, 14.6], [250, 482, 578, 17.0],
-  [316, 484, 588, 19.0], [364, 493, 577, 20.9], [402, 503, 575, 22.6],
-  [457, 523, 588, 24.5], [510, 550, 610, 26.7], [558, 582, 638, 28.7],
-  [606, 614, 663, 30.0], [655, 650, 685, 31.8], [682, 676, 699, 32.8],
-  [701, 701, 720, 33.4], [711, 726, 737, 33.9], [715, 760, 765, 34.4]
+  [-250, 1130, 1150, 6.1],
+  [-140, 820, 860, 7.7],
+  [-50, 658, 790, 8.65],
+  [0, 589, 720, 9.7],
+  [84, 530, 650, 12.0],
+  [172, 493, 604, 16.3],
+  [250, 482, 578, 20.5],
+  [316, 484, 588, 24.2],
+  [364, 493, 577, 24.9],
+  [402, 503, 575, 25.3],
+  [457, 523, 588, 25.8],
+  [510, 550, 610, 26.9],
+  [558, 582, 638, 28.7],
+  [606, 614, 663, 30.0],
+  [655, 650, 685, 31.8],
+  [682, 676, 699, 32.8],
+  [701, 701, 720, 33.4],
+  [715, 737, 750, 33.9],
+  [733, 778, 802, 34.5],
+  [755, 830, 848, 35.3],
+  [780, 875, 886, 36.9],
+  [804, 899, 905, 38.5],
+  [821, 908, 911, 39.1],
+];
+
+// Feet of the machine casing sampled from the same physical river geometry as Benny.
+// The exposed upper sheet now rejoins water at both ends. At the deep turn the lower
+// silhouette follows the blue bank continuously instead of hanging above it.
+const outerBankSeats: [number, number, number][] = [
+  [-2.566, -38.269, -137.662],
+  [-2.866, -37.437, -139.113],
+  [-3.071, -36.987, -139.86],
+  [-3.361, -36.616, -140.62],
+  [-3.73, -35.832, -143.071],
+  [-3.349, -35.639, -147.449],
+  [-3.073, -36.738, -151.424],
+  [-2.505, -37.713, -154.505],
+  [-2.276, -37.973, -155.368],
+  [-2.152, -38.139, -155.793],
+  [-1.884, -38.47, -156.633],
+  [-1.442, -38.886, -157.857],
+  [-0.623, -39.724, -159.793],
+  [0.08, -40.504, -161.255],
+  [0.989, -41.499, -162.98],
+  [1.542, -42.074, -163.97],
+  [1.91, -42.55, -164.61],
+  [2.463, -43.198, -165.555],
+  [3.014, -43.898, -166.484],
+  [3.74, -44.737, -167.709],
+  [4.659, -45.768, -169.276],
+  [5.579, -46.634, -170.881],
+  [6.116, -47.016, -171.855],
 ];
 
 function surveyedPoint(x: number, y: number, depth: number) {
@@ -46,6 +92,25 @@ function finishGrid(grid: Grid) {
   mesh.setAttribute('uv', new THREE.Float32BufferAttribute(grid.texcoords, 2));
   mesh.computeVertexNormals();
   return mesh;
+}
+
+// Native +3 visibility rays at image x150–250 first hit the outboard shoulder at
+// lateral −3.52 to −3.33 near stations 20–22. Carry the small grade adjustment
+// through foam and rim seats, with full water contact inside the ±2.95 steer limit.
+export function lowerOuterShoulder06(geometry: THREE.BufferGeometry) {
+  const positions = geometry.getAttribute('position');
+  for (let i = 0; i < positions.count; i++) {
+    const x = positions.getX(i);
+    const z = positions.getZ(i);
+    const outside = THREE.MathUtils.smoothstep(-.16 - x, 3.12, 3.42);
+    const station = (z + 148.65) / 2.9;
+    const lowering = .25 * outside * Math.exp(-station * station);
+    positions.setY(i, positions.getY(i) - lowering);
+  }
+  positions.needsUpdate = true;
+  geometry.computeVertexNormals();
+  geometry.computeBoundingBox();
+  geometry.computeBoundingSphere();
 }
 
 export function reconstructOpenCrest06(water: THREE.BufferGeometry) {
@@ -78,6 +143,7 @@ export function reconstructOpenCrest06(water: THREE.BufferGeometry) {
   const outer = new THREE.CatmullRomCurve3(outerEdge);
   const inner = new THREE.CatmullRomCurve3(innerEdge);
   const center = new THREE.CatmullRomCurve3(centers);
+  const seat = new THREE.CatmullRomCurve3(outerBankSeats.map(point => new THREE.Vector3(...point)));
   const wet: Grid = { positions: [], texcoords: [], indices: [] };
   const casing: Grid = { positions: [], texcoords: [], indices: [] };
   let previousCenter = center.getPoint(0);
@@ -99,12 +165,15 @@ export function reconstructOpenCrest06(water: THREE.BufferGeometry) {
 
     // The perforated sidewall sits below the inboard lip, rather than filling the wet
     // foreground. Continuous surfaces give the two lips real depth separation around turns.
-    const drop = .18 + 2.6 * Math.pow(Math.sin(Math.PI * t), .75);
+    const foot = seat.getPoint(t);
+    const span = lip.distanceTo(foot);
     for (let column = 0; column <= 8; column++) {
       const fraction = column / 8;
-      const point = lip.clone().addScaledVector(referenceForward, .12 * Math.sin(Math.PI * fraction) + .38 * fraction);
-      point.y -= drop * fraction;
-      addGridVertex(casing, point, station / 14, 13 + drop * fraction, column, 9);
+      const point = lip.clone().lerp(foot, fraction);
+      point.addScaledVector(referenceForward, Math.min(.12, .09 * span) * Math.sin(Math.PI * fraction));
+      // A photographed slot measures roughly 0.45 × 0.20 course units on this visible
+      // close inner panel. The outboard casing has its own metric UVs at this scale.
+      addGridVertex(casing, point, station * 1.85 / 14, 13 + span * fraction * 1.85, column, 9);
     }
   }
   return { upper: finishGrid(wet), soffit: finishGrid(casing) };
