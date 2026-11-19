@@ -284,3 +284,51 @@ I'll start by reading the coordination docs and my own progress log.
 > /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/tools/swim.mjs:14:const vite = await startVite(Number(process.env.PORT || 5273));
 > /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9ae …[+413 chars]
 
+### 🤖 Claude — 2026-11-19T19:29:46.624Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"startVite\\|--q=\\|--out=\" scripts/capture.mjs | head; grep -n \"export async function startVite\" -A15 scripts/lib/pw.mjs | head -25", "description": "Check capture script port and vite helper"}`
+
+### 🧑 User — 2026-11-19T19:29:46.661Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 24:const vite = await startVite(5201);
+> 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-19T19:29:49.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1,40p scripts/capture.mjs | grep -n \"q\\b\\|argv\\|query\\|Q\" | head", "description": "Check how capture parses the query option"}`
+
+### 🧑 User — 2026-11-19T19:29:49.873Z
+
+> ↩︎ result: 11:const args = process.argv.slice(2);
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+
+### 🤖 Claude — 2026-11-19T19:29:53.753Z
+
+Tools ready. Now type-check, then start-view check K18-4 vs K18-5, and try recovering the BEFORE clip from LFS.
+
+### 🤖 Claude — 2026-11-19T19:29:57.070Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; cd /home/user/wt/s04 && python3 -I -c \"\nimport json\nq=json.load(open('qa/match/04/r18/s5_nwfix/NEW/motion.json'))['query']\nassert q.endswith('&m04nwq=2&m04nwr=3.2')\nopen('$S/K18-5.txt','w').write(q)\nopen('$S/K18-4.txt','w').write(q[:-len('&m04nwq=2&m04nwr=3.2')])\nprint(len(q))\n\" && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; echo tsc_rc=$?; timeout 120 git lfs smudge < qa/match/04/r18/s5_nwfix/BEFORE_swim_clip_half.mp4 > $S/before_clip.mp4 2>$S/lfs.err; echo lfs_rc=$?; ls -la $S/bef …[+129 chars]`
+
+### 🧑 User — 2026-11-19T19:29:59.900Z
+
+> ↩︎ result: 770
+> tsc_rc=0
+> lfs_rc=0
+> -rw-r--r-- 1 root root 1063266 Nov 19 19:29 /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/before_clip.mp4
+
